@@ -3,6 +3,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import os.path
 import re
 import subprocess
 import unittest
@@ -412,16 +413,16 @@ class CheckSingletonInHeadersTest(unittest.TestCase):
     self.assertEqual(0, len(warnings))
 
 
-class CheckNoDeprecatedCompiledResourcesGYPTest(unittest.TestCase):
-  def testNoDeprecatedCompiledResourcsGYP(self):
+class CheckNoDeprecatedCompiledResourcesGypTest(unittest.TestCase):
+  def testNoDeprecatedCompiledResourcsGyp(self):
     mock_input_api = MockInputApi()
     mock_input_api.files = [MockFile('some/js/compiled_resources.gyp', [])]
-    errors = PRESUBMIT._CheckNoDeprecatedCompiledResourcesGYP(mock_input_api,
+    errors = PRESUBMIT._CheckNoDeprecatedCompiledResourcesGyp(mock_input_api,
                                                               MockOutputApi())
     self.assertEquals(1, len(errors))
 
     mock_input_api.files = [MockFile('some/js/compiled_resources2.gyp', [])]
-    errors = PRESUBMIT._CheckNoDeprecatedCompiledResourcesGYP(mock_input_api,
+    errors = PRESUBMIT._CheckNoDeprecatedCompiledResourcesGyp(mock_input_api,
                                                               MockOutputApi())
     self.assertEquals(0, len(errors))
 
@@ -469,41 +470,77 @@ class InvalidIfDefinedMacroNamesTest(unittest.TestCase):
 
 
 class CheckAddedDepsHaveTetsApprovalsTest(unittest.TestCase):
-  def testFilesToCheckForIncomingDeps(self):
-    changed_lines = [
-      '"+breakpad",',
-      '"+chrome/installer",',
-      '"+chrome/plugin/chrome_content_plugin_client.h",',
-      '"+chrome/utility/chrome_content_utility_client.h",',
-      '"+chromeos/chromeos_paths.h",',
-      '"+components/crash/content",',
-      '"+components/nacl/common",',
-      '"+content/public/browser/render_process_host.h",',
-      '"+jni/fooblat.h",',
-      '"+grit",  # For generated headers',
-      '"+grit/generated_resources.h",',
-      '"+grit/",',
-      '"+policy",  # For generated headers and source',
-      '"+sandbox",',
-      '"+tools/memory_watcher",',
-      '"+third_party/lss/linux_syscall_support.h",',
+
+  def calculate(self, old_include_rules, old_specific_include_rules,
+                new_include_rules, new_specific_include_rules):
+    return PRESUBMIT._CalculateAddedDeps(
+        os.path, 'include_rules = %r\nspecific_include_rules = %r' % (
+            old_include_rules, old_specific_include_rules),
+        'include_rules = %r\nspecific_include_rules = %r' % (
+            new_include_rules, new_specific_include_rules))
+
+  def testCalculateAddedDeps(self):
+    old_include_rules = [
+        '+base',
+        '-chrome',
+        '+content',
+        '-grit',
+        '-grit/",',
+        '+jni/fooblat.h',
+        '!sandbox',
     ]
-    files_to_check = PRESUBMIT._FilesToCheckForIncomingDeps(re, changed_lines)
+    old_specific_include_rules = {
+        'compositor\.*': {
+            '+cc',
+        },
+    }
+
+    new_include_rules = [
+        '-ash',
+        '+base',
+        '+chrome',
+        '+components',
+        '+content',
+        '+grit',
+        '+grit/generated_resources.h",',
+        '+grit/",',
+        '+jni/fooblat.h',
+        '+policy',
+        '+third_party/WebKit',
+    ]
+    new_specific_include_rules = {
+        'compositor\.*': {
+            '+cc',
+        },
+        'widget\.*': {
+            '+gpu',
+        },
+    }
+
     expected = set([
-      'breakpad/DEPS',
-      'chrome/installer/DEPS',
-      'chrome/plugin/chrome_content_plugin_client.h',
-      'chrome/utility/chrome_content_utility_client.h',
-      'chromeos/chromeos_paths.h',
-      'components/crash/content/DEPS',
-      'components/nacl/common/DEPS',
-      'content/public/browser/render_process_host.h',
-      'policy/DEPS',
-      'sandbox/DEPS',
-      'tools/memory_watcher/DEPS',
-      'third_party/lss/linux_syscall_support.h',
+        'chrome/DEPS',
+        'gpu/DEPS',
+        'components/DEPS',
+        'policy/DEPS',
+        'third_party/WebKit/DEPS',
     ])
-    self.assertEqual(expected, files_to_check);
+    self.assertEqual(
+        expected,
+        self.calculate(old_include_rules, old_specific_include_rules,
+                       new_include_rules, new_specific_include_rules))
+
+  def testCalculateAddedDepsIgnoresPermutations(self):
+    old_include_rules = [
+        '+base',
+        '+chrome',
+    ]
+    new_include_rules = [
+        '+chrome',
+        '+base',
+    ]
+    self.assertEqual(set(),
+                     self.calculate(old_include_rules, {}, new_include_rules,
+                                    {}))
 
 
 class JSONParsingTest(unittest.TestCase):
@@ -792,7 +829,6 @@ class TryServerMasterTest(unittest.TestCase):
             'win_chromium_rel',
             'win_chromium_x64_dbg',
             'win_chromium_x64_rel',
-            'win_drmemory',
             'win_nacl_sdk',
             'win_nacl_sdk_build',
             'win_rel_naclmore',
@@ -866,6 +902,10 @@ class PydepsNeedsUpdatingTest(unittest.TestCase):
                                                checker_for_tests=self.checker)
 
   def testAddedPydep(self):
+    # PRESUBMIT._CheckPydepsNeedsUpdating is only implemented for Android.
+    if self.mock_input_api.platform != 'linux2':
+      return []
+
     self.mock_input_api.files = [
       MockAffectedFile('new.pydeps', [], action='A'),
     ]
@@ -875,6 +915,10 @@ class PydepsNeedsUpdatingTest(unittest.TestCase):
     self.assertTrue('PYDEPS_FILES' in str(results[0]))
 
   def testRemovedPydep(self):
+    # PRESUBMIT._CheckPydepsNeedsUpdating is only implemented for Android.
+    if self.mock_input_api.platform != 'linux2':
+      return []
+
     self.mock_input_api.files = [
       MockAffectedFile(PRESUBMIT._ALL_PYDEPS_FILES[0], [], action='D'),
     ]
@@ -884,6 +928,10 @@ class PydepsNeedsUpdatingTest(unittest.TestCase):
     self.assertTrue('PYDEPS_FILES' in str(results[0]))
 
   def testRandomPyIgnored(self):
+    # PRESUBMIT._CheckPydepsNeedsUpdating is only implemented for Android.
+    if self.mock_input_api.platform != 'linux2':
+      return []
+
     self.mock_input_api.files = [
       MockAffectedFile('random.py', []),
     ]
@@ -892,6 +940,10 @@ class PydepsNeedsUpdatingTest(unittest.TestCase):
     self.assertEqual(0, len(results), 'Unexpected results: %r' % results)
 
   def testRelevantPyNoChange(self):
+    # PRESUBMIT._CheckPydepsNeedsUpdating is only implemented for Android.
+    if self.mock_input_api.platform != 'linux2':
+      return []
+
     self.mock_input_api.files = [
       MockAffectedFile('A.py', []),
     ]
@@ -906,6 +958,10 @@ class PydepsNeedsUpdatingTest(unittest.TestCase):
     self.assertEqual(0, len(results), 'Unexpected results: %r' % results)
 
   def testRelevantPyOneChange(self):
+    # PRESUBMIT._CheckPydepsNeedsUpdating is only implemented for Android.
+    if self.mock_input_api.platform != 'linux2':
+      return []
+
     self.mock_input_api.files = [
       MockAffectedFile('A.py', []),
     ]
@@ -921,6 +977,10 @@ class PydepsNeedsUpdatingTest(unittest.TestCase):
     self.assertTrue('File is stale' in str(results[0]))
 
   def testRelevantPyTwoChanges(self):
+    # PRESUBMIT._CheckPydepsNeedsUpdating is only implemented for Android.
+    if self.mock_input_api.platform != 'linux2':
+      return []
+
     self.mock_input_api.files = [
       MockAffectedFile('C.py', []),
     ]
@@ -934,6 +994,53 @@ class PydepsNeedsUpdatingTest(unittest.TestCase):
     self.assertEqual(2, len(results))
     self.assertTrue('File is stale' in str(results[0]))
     self.assertTrue('File is stale' in str(results[1]))
+
+
+class AndroidDeprecatedTestAnnotationTest(unittest.TestCase):
+  def testCheckAndroidTestAnnotationUsage(self):
+    mock_input_api = MockInputApi()
+    mock_output_api = MockOutputApi()
+
+    mock_input_api.files = [
+        MockAffectedFile('LalaLand.java', [
+          'random stuff'
+        ]),
+        MockAffectedFile('CorrectUsage.java', [
+          'import android.support.test.filters.LargeTest;',
+          'import android.support.test.filters.MediumTest;',
+          'import android.support.test.filters.SmallTest;',
+        ]),
+        MockAffectedFile('UsedDeprecatedLargeTestAnnotation.java', [
+          'import android.test.suitebuilder.annotation.LargeTest;',
+        ]),
+        MockAffectedFile('UsedDeprecatedMediumTestAnnotation.java', [
+          'import android.test.suitebuilder.annotation.MediumTest;',
+        ]),
+        MockAffectedFile('UsedDeprecatedSmallTestAnnotation.java', [
+          'import android.test.suitebuilder.annotation.SmallTest;',
+        ]),
+        MockAffectedFile('UsedDeprecatedSmokeAnnotation.java', [
+          'import android.test.suitebuilder.annotation.Smoke;',
+        ])
+    ]
+    msgs = PRESUBMIT._CheckAndroidTestAnnotationUsage(
+        mock_input_api, mock_output_api)
+    self.assertEqual(1, len(msgs),
+                     'Expected %d items, found %d: %s'
+                     % (1, len(msgs), msgs))
+    self.assertEqual(4, len(msgs[0].items),
+                     'Expected %d items, found %d: %s'
+                     % (4, len(msgs[0].items), msgs[0].items))
+    self.assertTrue('UsedDeprecatedLargeTestAnnotation.java:1' in msgs[0].items,
+                    'UsedDeprecatedLargeTestAnnotation not found in errors')
+    self.assertTrue('UsedDeprecatedMediumTestAnnotation.java:1'
+                    in msgs[0].items,
+                    'UsedDeprecatedMediumTestAnnotation not found in errors')
+    self.assertTrue('UsedDeprecatedSmallTestAnnotation.java:1' in msgs[0].items,
+                    'UsedDeprecatedSmallTestAnnotation not found in errors')
+    self.assertTrue('UsedDeprecatedSmokeAnnotation.java:1' in msgs[0].items,
+                    'UsedDeprecatedSmokeAnnotation not found in errors')
+
 
 
 class LogUsageTest(unittest.TestCase):
@@ -1061,6 +1168,36 @@ class LogUsageTest(unittest.TestCase):
     self.assertTrue('HasDottedTag.java' in msgs[4].items)
     self.assertTrue('HasOldTag.java' in msgs[4].items)
 
+class GoogleAnswerUrlFormatTest(unittest.TestCase):
+
+  def testCatchAnswerUrlId(self):
+    input_api = MockInputApi()
+    input_api.files = [
+      MockFile('somewhere/file.cc',
+               ['char* host = '
+                '  "https://support.google.com/chrome/answer/123456";']),
+      MockFile('somewhere_else/file.cc',
+               ['char* host = '
+                '  "https://support.google.com/chrome/a/answer/123456";']),
+    ]
+
+    warnings = PRESUBMIT._CheckGoogleSupportAnswerUrl(
+      input_api, MockOutputApi())
+    self.assertEqual(1, len(warnings))
+    self.assertEqual(2, len(warnings[0].items))
+
+  def testAllowAnswerUrlParam(self):
+    input_api = MockInputApi()
+    input_api.files = [
+      MockFile('somewhere/file.cc',
+               ['char* host = '
+                '  "https://support.google.com/chrome/?p=cpn_crash_reports";']),
+    ]
+
+    warnings = PRESUBMIT._CheckGoogleSupportAnswerUrl(
+      input_api, MockOutputApi())
+    self.assertEqual(0, len(warnings))
+
 class HardcodedGoogleHostsTest(unittest.TestCase):
 
   def testWarnOnAssignedLiterals(self):
@@ -1088,6 +1225,116 @@ class HardcodedGoogleHostsTest(unittest.TestCase):
 
     warnings = PRESUBMIT._CheckHardcodedGoogleHostsInLowerLayers(
       input_api, MockOutputApi())
+    self.assertEqual(0, len(warnings))
+
+
+class ForwardDeclarationTest(unittest.TestCase):
+  def testCheckHeadersOnlyOutsideThirdParty(self):
+    mock_input_api = MockInputApi()
+    mock_input_api.files = [
+      MockAffectedFile('somewhere/file.cc', [
+        'class DummyClass;'
+      ]),
+      MockAffectedFile('third_party/header.h', [
+        'class DummyClass;'
+      ])
+    ]
+    warnings = PRESUBMIT._CheckUselessForwardDeclarations(mock_input_api,
+      MockOutputApi())
+    self.assertEqual(0, len(warnings))
+
+  def testNoNestedDeclaration(self):
+    mock_input_api = MockInputApi()
+    mock_input_api.files = [
+      MockAffectedFile('somewhere/header.h', [
+        'class SomeClass {',
+        ' protected:',
+        '  class NotAMatch;',
+        '};'
+      ])
+    ]
+    warnings = PRESUBMIT._CheckUselessForwardDeclarations(mock_input_api,
+      MockOutputApi())
+    self.assertEqual(0, len(warnings))
+
+  def testSubStrings(self):
+    mock_input_api = MockInputApi()
+    mock_input_api.files = [
+      MockAffectedFile('somewhere/header.h', [
+        'class NotUsefulClass;',
+        'struct SomeStruct;',
+        'UsefulClass *p1;',
+        'SomeStructPtr *p2;'
+      ])
+    ]
+    warnings = PRESUBMIT._CheckUselessForwardDeclarations(mock_input_api,
+      MockOutputApi())
+    self.assertEqual(2, len(warnings))
+
+  def testUselessForwardDeclaration(self):
+    mock_input_api = MockInputApi()
+    mock_input_api.files = [
+      MockAffectedFile('somewhere/header.h', [
+        'class DummyClass;',
+        'struct DummyStruct;',
+        'class UsefulClass;',
+        'std::unique_ptr<UsefulClass> p;'
+      ])
+    ]
+    warnings = PRESUBMIT._CheckUselessForwardDeclarations(mock_input_api,
+      MockOutputApi())
+    self.assertEqual(2, len(warnings))
+
+  def testBlinkHeaders(self):
+    mock_input_api = MockInputApi()
+    mock_input_api.files = [
+      MockAffectedFile('third_party/WebKit/header.h', [
+        'class DummyClass;',
+        'struct DummyStruct;',
+      ]),
+      MockAffectedFile('third_party\\WebKit\\header.h', [
+        'class DummyClass;',
+        'struct DummyStruct;',
+      ])
+    ]
+    warnings = PRESUBMIT._CheckUselessForwardDeclarations(mock_input_api,
+      MockOutputApi())
+    self.assertEqual(4, len(warnings))
+
+
+class RiskyJsTest(unittest.TestCase):
+  def testArrowWarnInIos9Code(self):
+    mock_input_api = MockInputApi()
+    mock_output_api = MockOutputApi()
+
+    mock_input_api.files = [
+      MockAffectedFile('components/blah.js', ["shouldn't use => here"]),
+    ]
+    warnings = PRESUBMIT._CheckForRiskyJsFeatures(
+        mock_input_api, mock_output_api)
+    self.assertEqual(1, len(warnings))
+
+    mock_input_api.files = [
+      MockAffectedFile('ios/blee.js', ['might => break folks']),
+    ]
+    warnings = PRESUBMIT._CheckForRiskyJsFeatures(
+        mock_input_api, mock_output_api)
+    self.assertEqual(1, len(warnings))
+
+    mock_input_api.files = [
+      MockAffectedFile('ui/webui/resources/blarg.js', ['on => iOS9']),
+    ]
+    warnings = PRESUBMIT._CheckForRiskyJsFeatures(
+        mock_input_api, mock_output_api)
+    self.assertEqual(1, len(warnings))
+
+  def testArrowsAllowedInChromeCode(self):
+    mock_input_api = MockInputApi()
+    mock_input_api.files = [
+      MockAffectedFile('chrome/browser/resources/blah.js', 'arrow => OK here'),
+    ]
+    warnings = PRESUBMIT._CheckForRiskyJsFeatures(
+        mock_input_api, MockOutputApi())
     self.assertEqual(0, len(warnings))
 
 

@@ -8,17 +8,15 @@
 
 namespace blink {
 
-FontDataForRangeSet::FontDataForRangeSet(const FontDataForRangeSet& other)
-{
-    m_fontData = other.m_fontData;
-    m_rangeSet = other.m_rangeSet;
+FontDataForRangeSet::FontDataForRangeSet(const FontDataForRangeSet& other) {
+  font_data_ = other.font_data_;
+  range_set_ = other.range_set_;
 }
 
-FontDataForRangeSetFromCache::~FontDataForRangeSetFromCache()
-{
-    if (m_fontData && !m_fontData->isCustomFont()) {
-        FontCache::fontCache()->releaseFontData(m_fontData.get());
-    }
+FontDataForRangeSetFromCache::~FontDataForRangeSetFromCache() {
+  if (font_data_ && !font_data_->IsCustomFont()) {
+    FontCache::GetFontCache()->ReleaseFontData(font_data_.Get());
+  }
 }
 
-} // namespace blink
+}  // namespace blink

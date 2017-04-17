@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <script src="../resources/testharness.js"></script>
-<script src="../resources/testharness-helpers.js"></script>
 <script src="../resources/testharnessreport.js"></script>
 <script src="../fast/dom/custom/testutils.js"></script>
 <body>
@@ -23,8 +22,7 @@ if (fork()) {
     return watcher.wait_for('message');
   })).then(t.step_func((event) => {
     assert_equals(event.data, 'PASS child done');
-    let e = new window.C();
-    assert_true(e instanceof C, 'should have created an element');
+    assert_throws(null, () => new window.C());
     t.done();
   }));
 } else {

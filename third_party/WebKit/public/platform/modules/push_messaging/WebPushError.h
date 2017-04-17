@@ -10,26 +10,24 @@
 namespace blink {
 
 struct WebPushError {
-    enum ErrorType {
-        ErrorTypeAbort = 0,
-        ErrorTypeNetwork,
-        ErrorTypeNotFound,
-        ErrorTypeNotSupported,
-        ErrorTypePermissionDenied,
-        ErrorTypeUnknown,
-        ErrorTypeLast = ErrorTypeUnknown
-    };
+  enum ErrorType {
+    kErrorTypeAbort = 0,
+    kErrorTypeNetwork,
+    kErrorTypeNone,
+    kErrorTypeNotAllowed,
+    kErrorTypeNotFound,
+    kErrorTypeNotSupported,
+    kErrorTypeInvalidState,
+    kErrorTypeLast = kErrorTypeInvalidState
+  };
 
-    WebPushError(ErrorType errorType, const WebString& message)
-        : errorType(errorType)
-        , message(message)
-    {
-    }
+  WebPushError(ErrorType error_type, const WebString& message)
+      : error_type(error_type), message(message) {}
 
-    ErrorType errorType;
-    WebString message;
+  ErrorType error_type;
+  WebString message;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebPushError_h
+#endif  // WebPushError_h

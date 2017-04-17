@@ -22,9 +22,15 @@ cr.define('settings', function() {
   /**
    * Fake of the chrome.languageSettingsPrivate API.
    * @constructor
+   * @extends {TestBrowserProxy}
    * @implements {LanguageSettingsPrivate}
    */
   function FakeLanguageSettingsPrivate() {
+    // List of method names expected to be tested with whenCalled()
+    settings.TestBrowserProxy.call(this, [
+      'getSpellcheckWords',
+    ]);
+
     /** @type {!Array<!chrome.languageSettingsPrivate.Language>} */
     this.languages = [{
       // English and some variants.
@@ -85,10 +91,21 @@ cr.define('settings', function() {
       displayName: 'US Dvorak keyboard',
       languageCodes: ['en', 'en-US'],
       enabled: true,
+    }, {
+      id: '_comp_ime_abcdefghijklmnopqrstuvwxyzabcdefxkb:sw:sw',
+      displayName: 'Swahili keyboard',
+      languageCodes: ['sw', 'tk'],
+      enabled: false,
+    }, {
+      id: '_comp_ime_abcdefghijklmnopqrstuvwxyzabcdefxkb:us:sw',
+      displayName: 'US Swahili keyboard',
+      languageCodes: ['en', 'en-US', 'sw'],
+      enabled: false,
     }];
   }
 
   FakeLanguageSettingsPrivate.prototype = {
+    __proto__: settings.TestBrowserProxy.prototype,
     // Methods for use in testing.
 
     /** @param {SettingsPrefsElement} */
@@ -110,16 +127,42 @@ cr.define('settings', function() {
     },
 
     /**
-     * Sets the accepted languages, used to decide which languages to translate,
-     * generate the Accept-Language header, etc.
-     * @param {!Array<string>} languageCodes
+     * Enables a language, adding it to the Accept-Language list (used to decide
+     * which languages to translate, generate the Accept-Language header, etc.).
+     * @param {string} languageCode
      */
-    setLanguageList: function(languageCodes) {
-      var languages = languageCodes.join(',');
-      this.settingsPrefs_.set('prefs.intl.accept_languages.value', languages);
+    enableLanguage: function(languageCode) {
+      var languageCodes = this.settingsPrefs_.prefs.intl.accept_languages.value;
+      var languages = languageCodes.split(',');
+      if (languages.indexOf(languageCode) != -1)
+        return;
+      languages.push(languageCode);
+      languageCodes = languages.join(',');
+      this.settingsPrefs_.set(
+          'prefs.intl.accept_languages.value', languageCodes);
       if (cr.isChromeOS) {
         this.settingsPrefs_.set(
-            'prefs.settings.language.preferred_languages.value', languages);
+            'prefs.settings.language.preferred_languages.value', languageCodes);
+      }
+    },
+
+    /**
+     * Disables a language, removing it from the Accept-Language list.
+     * @param {string} languageCode
+     */
+    disableLanguage: function(languageCode) {
+      var languageCodes = this.settingsPrefs_.prefs.intl.accept_languages.value;
+      var languages = languageCodes.split(',');
+      var index = languages.indexOf(languageCode);
+      if (index == -1)
+        return;
+      languages.splice(index, 1);
+      languageCodes = languages.join(',');
+      this.settingsPrefs_.set(
+          'prefs.intl.accept_languages.value', languageCodes);
+      if (cr.isChromeOS) {
+        this.settingsPrefs_.set(
+            'prefs.settings.language.preferred_languages.value', languageCodes);
       }
     },
 
@@ -136,13 +179,18 @@ cr.define('settings', function() {
      * Gets the custom spell check words, in sorted order.
      * @param {function(!Array<string>):void} callback
      */
-    getSpellcheckWords: wrapAssertNotReached('getSpellcheckWords'),
+    getSpellcheckWords: function(callback) {
+      callback([]);
+      this.methodCalled('getSpellcheckWords');
+    },
 
     /**
      * Adds a word to the custom dictionary.
      * @param {string} word
      */
-    addSpellcheckWord: wrapAssertNotReached('addSpellcheckWord'),
+    addSpellcheckWord: function(word) {
+      // Current tests don't actually care about this implementation.
+    },
 
     /**
      * Removes a word from the custom dictionary.
@@ -179,7 +227,18 @@ cr.define('settings', function() {
      * methods, enabling the input method for the current user. Chrome OS only.
      * @param {string} inputMethodId
      */
-    addInputMethod: wrapAssertNotReached('addInputMethod'),
+    addInputMethod: function(inputMethodId) {
+      assert(cr.isChromeOS);
+      var inputMethod = this.componentExtensionImes.find(function(ime) {
+        return ime.id == inputMethodId;
+      });
+      assertTrue(!!inputMethod);
+      inputMethod.enabled = true;
+      var prefPath = 'prefs.settings.language.preload_engines.value';
+      var enabledInputMethods = this.settingsPrefs_.get(prefPath).split(',');
+      enabledInputMethods.push(inputMethodId);
+      this.settingsPrefs_.set(prefPath, enabledInputMethods.join(','))
+    },
 
     /**
      * Removes the input method from the current user's list of enabled input

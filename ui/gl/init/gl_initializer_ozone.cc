@@ -4,57 +4,27 @@
 
 #include "ui/gl/init/gl_initializer.h"
 
-#include "base/bind.h"
 #include "base/logging.h"
 #include "ui/gl/gl_bindings.h"
-#include "ui/gl/gl_egl_api_implementation.h"
 #include "ui/gl/gl_gl_api_implementation.h"
-#include "ui/gl/gl_implementation_osmesa.h"
-#include "ui/gl/gl_osmesa_api_implementation.h"
-#include "ui/gl/gl_surface_egl.h"
-#include "ui/ozone/public/ozone_platform.h"
-#include "ui/ozone/public/surface_factory_ozone.h"
+#include "ui/gl/gl_surface.h"
+#include "ui/gl/init/ozone_util.h"
 
 namespace gl {
 namespace init {
 
-namespace {
-
-ui::SurfaceFactoryOzone* GetSurfaceFactory() {
-  return ui::OzonePlatform::GetInstance()->GetSurfaceFactoryOzone();
-}
-
-bool InitializeStaticEGLInternal() {
-  if (!GetSurfaceFactory()->LoadEGLGLES2Bindings(
-          base::Bind(&AddGLNativeLibrary),
-          base::Bind(&SetGLGetProcAddressProc))) {
-    return false;
-  }
-
-  SetGLImplementation(kGLImplementationEGLGLES2);
-  InitializeStaticGLBindingsGL();
-  InitializeStaticGLBindingsEGL();
-
-  return true;
-}
-
-}  // namespace
-
 bool InitializeGLOneOffPlatform() {
+  if (HasGLOzone())
+    return GetGLOzone()->InitializeGLOneOffPlatform();
+
   switch (GetGLImplementation()) {
-    case kGLImplementationEGLGLES2:
-      if (!GLSurfaceEGL::InitializeOneOff(
-              GetSurfaceFactory()->GetNativeDisplay())) {
-        LOG(ERROR) << "GLSurfaceEGL::InitializeOneOff failed.";
-        return false;
-      }
-      return true;
-    case kGLImplementationOSMesaGL:
     case kGLImplementationMockGL:
+    case kGLImplementationStubGL:
       return true;
     default:
-      return false;
+      NOTREACHED();
   }
+  return false;
 }
 
 bool InitializeStaticGLBindings(GLImplementation implementation) {
@@ -62,15 +32,16 @@ bool InitializeStaticGLBindings(GLImplementation implementation) {
   // unit tests have initialized with kGLImplementationMock, we don't want to
   // later switch to another GL implementation.
   DCHECK_EQ(kGLImplementationNone, GetGLImplementation());
-  ui::OzonePlatform::InitializeForGPU();
+
+  if (HasGLOzone(implementation)) {
+    return GetGLOzone(implementation)
+        ->InitializeStaticGLBindings(implementation);
+  }
 
   switch (implementation) {
-    case kGLImplementationOSMesaGL:
-      return InitializeStaticGLBindingsOSMesaGL();
-    case kGLImplementationEGLGLES2:
-      return InitializeStaticEGLInternal();
     case kGLImplementationMockGL:
-      SetGLImplementation(kGLImplementationMockGL);
+    case kGLImplementationStubGL:
+      SetGLImplementation(implementation);
       InitializeStaticGLBindingsGL();
       return true;
     default:
@@ -81,15 +52,21 @@ bool InitializeStaticGLBindings(GLImplementation implementation) {
 }
 
 void InitializeDebugGLBindings() {
-  InitializeDebugGLBindingsEGL();
+  if (HasGLOzone()) {
+    GetGLOzone()->InitializeDebugGLBindings();
+    return;
+  }
+
   InitializeDebugGLBindingsGL();
-  InitializeDebugGLBindingsOSMESA();
 }
 
-void ClearGLBindingsPlatform() {
-  ClearGLBindingsEGL();
-  ClearGLBindingsGL();
-  ClearGLBindingsOSMESA();
+void ShutdownGLPlatform() {
+  if (HasGLOzone()) {
+    GetGLOzone()->ShutdownGL();
+    return;
+  }
+
+  ClearBindingsGL();
 }
 
 }  // namespace init

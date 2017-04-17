@@ -6,13 +6,13 @@
 
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
-#include "chrome/browser/ui/autofill/save_card_bubble_controller.h"
-#include "chrome/browser/ui/chrome_style.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
+#include "chrome/browser/ui/cocoa/chrome_style.h"
 #import "chrome/browser/ui/cocoa/info_bubble_view.h"
 #import "chrome/browser/ui/cocoa/info_bubble_window.h"
 #import "chrome/browser/ui/cocoa/toolbar/toolbar_controller.h"
-#include "grit/components_strings.h"
+#include "components/autofill/core/browser/ui/save_card_bubble_controller.h"
+#include "components/strings/grit/components_strings.h"
 #include "skia/ext/skia_utils_mac.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
 #import "ui/base/cocoa/controls/hyperlink_text_view.h"
@@ -71,7 +71,7 @@ const LegalMessageLines SaveCardBubbleViewBridge::GetLegalMessageLines() const {
 
 void SaveCardBubbleViewBridge::OnSaveButton() {
   if (controller_)
-    controller_->OnSaveButton();
+    controller_->OnSaveButton(base::string16());
   Hide();
 }
 
@@ -99,11 +99,13 @@ void SaveCardBubbleViewBridge::OnBubbleClosed() {
 }
 
 void SaveCardBubbleViewBridge::Hide() {
-  // SaveCardBubbleViewBridge::OnBubbleClosed won't be able to call
-  // OnBubbleClosed on the bubble controller since we null the reference to it
-  // below. So we need to call it here.
-  controller_->OnBubbleClosed();
-  controller_ = nullptr;
+  if (controller_) {
+    // SaveCardBubbleViewBridge::OnBubbleClosed won't be able to call
+    // OnBubbleClosed on the bubble controller since we null the reference to it
+    // below. So we need to call it here.
+    controller_->OnBubbleClosed();
+    controller_ = nullptr;
+  }
   [view_controller_ close];
 }
 
@@ -284,7 +286,7 @@ void SaveCardBubbleViewBridge::Hide() {
 
   // Cancel button.
   base::scoped_nsobject<NSButton> cancelButton([SaveCardBubbleViewCocoa
-      makeButton:l10n_util::GetNSString(IDS_AUTOFILL_SAVE_CARD_PROMPT_DENY)]);
+      makeButton:l10n_util::GetNSString(IDS_NO_THANKS)]);
   [cancelButton setTarget:self];
   [cancelButton setAction:@selector(onCancelButton:)];
   [cancelButton setKeyEquivalent:@"\e"];

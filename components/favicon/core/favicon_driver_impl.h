@@ -10,18 +10,13 @@
 
 #include "base/macros.h"
 #include "components/favicon/core/favicon_driver.h"
+#include "components/favicon/core/favicon_handler.h"
 
 class GURL;
-class SkBitmap;
-
 namespace bookmarks {
 class BookmarkModel;
 }
 
-namespace gfx {
-class Image;
-class Size;
-}
 
 namespace history {
 class HistoryService;
@@ -29,8 +24,6 @@ class HistoryService;
 
 namespace favicon {
 
-class FaviconDriverObserver;
-class FaviconHandler;
 class FaviconService;
 struct FaviconURL;
 
@@ -41,29 +34,24 @@ struct FaviconURL;
 // fetches the given page's icons, requesting them from history backend. If the
 // icon is not available or expired, the icon will be downloaded and saved in
 // the history backend.
-class FaviconDriverImpl : public FaviconDriver {
+class FaviconDriverImpl : public FaviconDriver,
+                          public FaviconHandler::Delegate {
  public:
-  // Favicon download callback.
-  // Public for testing.
-  void DidDownloadFavicon(int id,
-                          int http_status_code,
-                          const GURL& image_url,
-                          const std::vector<SkBitmap>& bitmaps,
-                          const std::vector<gfx::Size>& original_bitmap_sizes);
-
   // FaviconDriver implementation.
   void FetchFavicon(const GURL& url) override;
+
+  // FaviconHandler::Delegate implementation.
   bool IsBookmarked(const GURL& url) override;
-  bool HasPendingTasksForTest() override;
+
+  // Returns whether the driver is waiting for a download to complete or for
+  // data from the FaviconService. Reserved for testing.
+  bool HasPendingTasksForTest();
 
  protected:
   FaviconDriverImpl(FaviconService* favicon_service,
                     history::HistoryService* history_service,
                     bookmarks::BookmarkModel* bookmark_model);
   ~FaviconDriverImpl() override;
-
-  // Returns whether downloading favicon for |url| previously failed.
-  bool WasUnableToDownloadFavicon(const GURL& url);
 
   // Informs FaviconService that the favicon for |url| is out of date. If
   // |force_reload| is true, then discard information about favicon download
@@ -87,9 +75,7 @@ class FaviconDriverImpl : public FaviconDriver {
   bookmarks::BookmarkModel* bookmark_model_;
 
   // FaviconHandlers used to download the different kind of favicons.
-  // |touch_icon_handler_| may be null depending on the platform and variations.
-  std::unique_ptr<FaviconHandler> favicon_handler_;
-  std::unique_ptr<FaviconHandler> touch_icon_handler_;
+  std::vector<std::unique_ptr<FaviconHandler>> handlers_;
 
   DISALLOW_COPY_AND_ASSIGN(FaviconDriverImpl);
 };

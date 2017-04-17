@@ -21,6 +21,8 @@
 
 namespace subresource_filter {
 
+class FirstPartyOrigin;
+
 // The integer type used to represent N-grams.
 using NGram = uint64_t;
 // The hasher used for hashing N-grams.
@@ -28,7 +30,7 @@ using NGramHasher = Uint64Hasher;
 // The hash table probe sequence used both by the ruleset builder and matcher.
 using NGramHashTableProber = DefaultProber<NGram, NGramHasher>;
 
-constexpr size_t kNGramSize = 6;
+constexpr size_t kNGramSize = 5;
 static_assert(kNGramSize <= sizeof(NGram), "NGram type is too narrow.");
 
 // The class used to construct flat data structures representing the set of URL
@@ -36,13 +38,15 @@ static_assert(kNGramSize <= sizeof(NGram), "NGram type is too narrow.");
 // FlatBufferBuilder storing the structures.
 class RulesetIndexer {
  public:
+  // The current binary format version of the indexed ruleset.
+  static const int kIndexedFormatVersion;
+
   RulesetIndexer();
   ~RulesetIndexer();
 
-  // Adds |rule| to the ruleset unless the rule has unsupported filter options,
-  // in which case the |rule| can be serialized partially and not added to the
-  // index. Return value indicates whether the |rule| has been serialized
-  // completely and added to the index.
+  // Adds |rule| to the ruleset and the index unless the |rule| has unsupported
+  // filter options, in which case the data structures remain unmodified.
+  // Returns whether the |rule| has been serialized and added to the index.
   bool AddUrlRule(const proto::UrlRule& rule);
 
   // Finalizes construction of the data structures.
@@ -91,6 +95,7 @@ class RulesetIndexer {
 
   MutableUrlPatternIndex blacklist_;
   MutableUrlPatternIndex whitelist_;
+  MutableUrlPatternIndex activation_;
 
   flatbuffers::FlatBufferBuilder builder_;
 
@@ -109,22 +114,26 @@ class IndexedRulesetMatcher {
   // |size|.
   IndexedRulesetMatcher(const uint8_t* buffer, size_t size);
 
+  // Returns whether the subset of subresource filtering rules specified by the
+  // |activation_type| should be disabled for the |document| loaded from
+  // |parent_document_origin|. Always returns false if |activation_type| ==
+  // ACTIVATION_TYPE_UNSPECIFIED or the |document_url| is not valid. Unlike
+  // page-level activation, such rules can be used to have fine-grained control
+  // over the activation of filtering within (sub-)documents.
+  bool ShouldDisableFilteringForDocument(
+      const GURL& document_url,
+      const url::Origin& parent_document_origin,
+      proto::ActivationType activation_type) const;
+
   // Returns whether the network request to |url| of |element_type| initiated by
-  // |initiator| is allowed to proceed. Always returns true, if the |url| is not
-  // valid or |element_type| == ELEMENT_TYPE_UNSPECIFIED.
-  bool IsAllowed(const GURL& url,
-                 const url::Origin& initiator,
-                 proto::ElementType element_type) const;
+  // |document_origin| is not allowed to proceed. Always returns false if the
+  // |url| is not valid or |element_type| == ELEMENT_TYPE_UNSPECIFIED.
+  bool ShouldDisallowResourceLoad(const GURL& url,
+                                  const FirstPartyOrigin& first_party,
+                                  proto::ElementType element_type,
+                                  bool disable_generic_rules) const;
 
  private:
-  // Returns whether the network request matches a particular part of the index.
-  // |is_third_party| should reflect relation between |url| and |initiator|.
-  static bool IsMatch(const flat::UrlPatternIndex* index,
-                      const GURL& url,
-                      const url::Origin& initiator,
-                      proto::ElementType element_type,
-                      bool is_third_party);
-
   const flat::IndexedRuleset* root_;
 
   DISALLOW_COPY_AND_ASSIGN(IndexedRulesetMatcher);

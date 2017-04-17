@@ -10,11 +10,10 @@
 Polymer({
   is: 'settings-startup-urls-page',
 
-  behaviors: [WebUIListenerBehavior],
+  behaviors: [CrScrollableBehavior, WebUIListenerBehavior],
 
   properties: {
-    /** @type {settings.StartupUrlsPageBrowserProxy} */
-    browserProxy_: Object,
+    prefs: Object,
 
     /**
      * Pages to load upon browser startup.
@@ -27,43 +26,60 @@ Polymer({
 
     /** @private {?StartupPageInfo} */
     startupUrlDialogModel_: Object,
+
+    /** @private {Object}*/
+    lastFocused_: Object,
   },
+
+  /** @private {?settings.StartupUrlsPageBrowserProxy} */
+  browserProxy_: null,
+
+  /**
+   * The element to return focus to, when the startup-url-dialog is closed.
+   * @private {?HTMLElement}
+   */
+  startupUrlDialogAnchor_: null,
 
   /** @override */
   attached: function() {
     this.browserProxy_ = settings.StartupUrlsPageBrowserProxyImpl.getInstance();
     this.addWebUIListener('update-startup-pages', function(startupPages) {
+      // If an "edit" URL dialog was open, close it, because the underlying page
+      // might have just been removed (and model indices have changed anyway).
+      if (this.startupUrlDialogModel_)
+        this.destroyUrlDialog_();
       this.startupPages_ = startupPages;
+      this.updateScrollableContents();
     }.bind(this));
     this.browserProxy_.loadStartupPages();
 
     this.addEventListener(settings.EDIT_STARTUP_URL_EVENT, function(event) {
-      this.startupUrlDialogModel_ = event.detail;
-      this.openDialog_();
+      this.startupUrlDialogModel_ = event.detail.model;
+      this.startupUrlDialogAnchor_ = event.detail.anchor;
+      this.showStartupUrlDialog_ = true;
       event.stopPropagation();
     }.bind(this));
   },
 
-  /** @private */
-  onAddPageTap_: function() {
-    this.openDialog_();
-  },
-
   /**
-   * Opens the dialog and registers a listener for removing the dialog from the
-   * DOM once is closed. The listener is destroyed when the dialog is removed
-   * (because of 'restamp').
+   * @param {!Event} e
    * @private
    */
-  openDialog_: function() {
+  onAddPageTap_: function(e) {
+    e.preventDefault();
     this.showStartupUrlDialog_ = true;
-    this.async(function() {
-      var dialog = this.$$('settings-startup-url-dialog');
-      dialog.addEventListener('iron-overlay-closed', function() {
-        this.showStartupUrlDialog_ = false;
-        this.startupUrlDialogModel_ = null;
-      }.bind(this));
-    }.bind(this));
+    this.startupUrlDialogAnchor_ = /** @type {!HTMLElement} */ (
+        this.$$('#addPage a[is=action-link]'));
+  },
+
+  /** @private */
+  destroyUrlDialog_: function() {
+    this.showStartupUrlDialog_ = false;
+    this.startupUrlDialogModel_ = null;
+    if (this.startupUrlDialogAnchor_) {
+      this.startupUrlDialogAnchor_.focus();
+      this.startupUrlDialogAnchor_ = null;
+    }
   },
 
   /** @private */

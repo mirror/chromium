@@ -22,15 +22,18 @@
 
 namespace printing {
 
-namespace {
-
+// property names
 const char kIppCollate[] = "sheet-collate";  // RFC 3381
 const char kIppCopies[] = CUPS_COPIES;
 const char kIppColor[] = CUPS_PRINT_COLOR_MODE;
 const char kIppMedia[] = CUPS_MEDIA;
 const char kIppDuplex[] = CUPS_SIDES;
 
+// collation values
 const char kCollated[] = "collated";
+const char kUncollated[] = "uncollated";
+
+namespace {
 
 const int kMicronsPerMM = 1000;
 const double kMMPerInch = 25.4;
@@ -62,11 +65,11 @@ ColorModel ColorModelFromIppColor(base::StringPiece ippColor) {
 }
 
 bool PrinterSupportsValue(const CupsOptionProvider& printer,
-                          base::StringPiece name,
-                          base::StringPiece value) {
+                          const char* name,
+                          const char* value) {
   std::vector<base::StringPiece> values =
       printer.GetSupportedOptionValueStrings(name);
-  return ContainsValue(values, value);
+  return base::ContainsValue(values, value);
 }
 
 DuplexMode PrinterDefaultDuplex(const CupsOptionProvider& printer) {
@@ -102,11 +105,10 @@ gfx::Size DimensionsToMicrons(base::StringPiece value) {
     return {0, 0};
   }
 
-  std::vector<std::string> pieces = base::SplitString(
-      dims, "x", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
   double width;
   double height;
-
+  std::vector<std::string> pieces = base::SplitString(
+      dims, "x", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
   if (pieces.size() != 2 || !base::StringToDouble(pieces[0], &width) ||
       !base::StringToDouble(pieces[1], &height)) {
     return {0, 0};
@@ -114,7 +116,6 @@ gfx::Size DimensionsToMicrons(base::StringPiece value) {
 
   int width_microns;
   int height_microns;
-
   switch (unit) {
     case MILLIMETERS:
       width_microns = width * kMicronsPerMM;
@@ -136,19 +137,19 @@ PrinterSemanticCapsAndDefaults::Paper ParsePaper(base::StringPiece value) {
   // <name>_<width>x<height>{in,mm}
   // e.g. na_letter_8.5x11in, iso_a4_210x297mm
 
-  std::vector<base::StringPiece> pieces = base::SplitStringPiece(
+  const std::vector<base::StringPiece> pieces = base::SplitStringPiece(
       value, "_", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
   // we expect at least a display string and a dimension string
   if (pieces.size() < 2)
     return PrinterSemanticCapsAndDefaults::Paper();
-
-  base::StringPiece dimensions = pieces.back();
 
   std::string display = pieces[0].as_string();
   for (size_t i = 1; i <= pieces.size() - 2; ++i) {
     display.append(" ");
     pieces[i].AppendToString(&display);
   }
+
+  base::StringPiece dimensions = pieces.back();
 
   PrinterSemanticCapsAndDefaults::Paper paper;
   paper.display_name = display;
@@ -191,8 +192,8 @@ void ExtractColor(const CupsOptionProvider& printer,
 void ExtractCopies(const CupsOptionProvider& printer,
                    PrinterSemanticCapsAndDefaults* printer_info) {
   // copies
-  int upper_bound;
   int lower_bound;
+  int upper_bound;
   CopiesRange(printer, &lower_bound, &upper_bound);
   printer_info->copies_capable = (lower_bound != -1) && (upper_bound >= 2);
 }
@@ -214,7 +215,6 @@ std::vector<ColorModel> SupportedColorModels(
 
   std::vector<base::StringPiece> color_modes =
       printer.GetSupportedOptionValueStrings(kIppColor);
-
   for (base::StringPiece color : color_modes) {
     ColorModel color_model = ColorModelFromIppColor(color);
     if (color_model != UNKNOWN_COLOR_MODEL) {

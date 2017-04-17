@@ -7,15 +7,16 @@
 #include <utility>
 #include <vector>
 
-#include "ash/common/session/session_state_delegate.h"
-#include "ash/common/wm_shell.h"
+#include "ash/session/session_controller.h"
+#include "ash/shell.h"
 #include "ash/shell/example_factory.h"
 #include "ash/shell/toplevel_window.h"
+#include "ash/shell_port.h"
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/i18n/case_conversion.h"
 #include "base/i18n/string_search.h"
-#include "base/memory/scoped_vector.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -111,7 +112,7 @@ class WindowTypeShelfItem : public app_list::AppListItem {
         break;
       }
       case LOCK_SCREEN: {
-        WmShell::Get()->GetSessionStateDelegate()->LockScreen();
+        Shell::Get()->session_controller()->LockScreen();
         break;
       }
       case WIDGETS_WINDOW: {
@@ -119,9 +120,7 @@ class WindowTypeShelfItem : public app_list::AppListItem {
         break;
       }
       case EXAMPLES_WINDOW: {
-        views::examples::ShowExamplesWindow(
-            views::examples::QUIT_ON_CLOSE, NULL,
-            std::unique_ptr<ScopedVector<views::examples::ExampleBase>>());
+        views::examples::ShowExamplesWindow(views::examples::QUIT_ON_CLOSE);
         break;
       }
       default:
@@ -216,43 +215,14 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
     }
   }
 
-  gfx::ImageSkia CreateSearchBoxIcon() {
-    const base::string16 icon_text = base::ASCIIToUTF16("ash");
-    const gfx::Size icon_size(32, 32);
-
-    gfx::Canvas canvas(icon_size, 1.0f, false /* is_opaque */);
-    canvas.DrawStringRectWithFlags(
-        icon_text, gfx::FontList(), SK_ColorBLACK, gfx::Rect(icon_size),
-        gfx::Canvas::TEXT_ALIGN_CENTER | gfx::Canvas::NO_SUBPIXEL_RENDERING);
-
-    return gfx::ImageSkia(canvas.ExtractImageRep());
-  }
-
   void DecorateSearchBox(app_list::SearchBoxModel* search_box_model) {
-    search_box_model->SetIcon(CreateSearchBoxIcon());
     search_box_model->SetHintText(base::ASCIIToUTF16("Type to search..."));
   }
 
   // Overridden from app_list::AppListViewDelegate:
-  bool ForceNativeDesktop() const override { return false; }
-
-  void SetProfileByPath(const base::FilePath& profile_path) override {
-    // Nothing needs to be done.
-  }
-
-  const Users& GetUsers() const override { return users_; }
-
-  bool ShouldCenterWindow() const override { return false; }
-
   app_list::AppListModel* GetModel() override { return model_.get(); }
 
   app_list::SpeechUIModel* GetSpeechUI() override { return &speech_ui_; }
-
-  void GetShortcutPathForApp(
-      const std::string& app_id,
-      const base::Callback<void(const base::FilePath&)>& callback) override {
-    callback.Run(base::FilePath());
-  }
 
   void OpenSearchResult(app_list::SearchResult* result,
                         bool auto_launch,
@@ -289,7 +259,8 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
           base::UTF8ToUTF16(WindowTypeShelfItem::GetTitle(type));
       if (base::i18n::StringSearchIgnoringCaseAndAccents(query, title, NULL,
                                                          NULL)) {
-        model_->results()->Add(new ExampleSearchResult(type, query));
+        model_->results()->Add(
+            base::MakeUnique<ExampleSearchResult>(type, query));
       }
     }
   }
@@ -303,28 +274,16 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
   }
 
   void Dismiss() override {
-    DCHECK(WmShell::HasInstance());
-    WmShell::Get()->DismissAppList();
+    DCHECK(ShellPort::HasInstance());
+    Shell::Get()->DismissAppList();
   }
 
   void ViewClosing() override {
     // Nothing needs to be done.
   }
 
-  void OpenHelp() override {
-    // Nothing needs to be done.
-  }
-
-  void OpenFeedback() override {
-    // Nothing needs to be done.
-  }
-
   void StartSpeechRecognition() override { NOTIMPLEMENTED(); }
   void StopSpeechRecognition() override { NOTIMPLEMENTED(); }
-
-  void ShowForProfileByPath(const base::FilePath& profile_path) override {
-    // Nothing needs to be done.
-  }
 
   views::View* CreateStartPageWebView(const gfx::Size& size) override {
     return NULL;
@@ -343,7 +302,6 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
 
   std::unique_ptr<app_list::AppListModel> model_;
   app_list::SpeechUIModel speech_ui_;
-  Users users_;
 
   DISALLOW_COPY_AND_ASSIGN(ExampleAppListViewDelegate);
 };

@@ -25,30 +25,24 @@
 
 #include "core/css/CSSFontFeatureValue.h"
 
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
 CSSFontFeatureValue::CSSFontFeatureValue(const AtomicString& tag, int value)
-    : CSSValue(FontFeatureClass)
-    , m_tag(tag)
-    , m_value(value)
-{
+    : CSSValue(kFontFeatureClass), tag_(tag), value_(value) {}
+
+String CSSFontFeatureValue::CustomCSSText() const {
+  StringBuilder builder;
+  builder.Append('\'');
+  builder.Append(tag_);
+  builder.Append("' ");
+  builder.AppendNumber(value_);
+  return builder.ToString();
 }
 
-String CSSFontFeatureValue::customCSSText() const
-{
-    StringBuilder builder;
-    builder.append('\'');
-    builder.append(m_tag);
-    builder.append("' ");
-    builder.appendNumber(m_value);
-    return builder.toString();
+bool CSSFontFeatureValue::Equals(const CSSFontFeatureValue& other) const {
+  return tag_ == other.tag_ && value_ == other.value_;
 }
 
-bool CSSFontFeatureValue::equals(const CSSFontFeatureValue& other) const
-{
-    return m_tag == other.m_tag && m_value == other.m_value;
-}
-
-} // namespace blink
+}  // namespace blink

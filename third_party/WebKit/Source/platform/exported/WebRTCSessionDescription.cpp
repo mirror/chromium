@@ -30,78 +30,74 @@
 
 #include "public/platform/WebRTCSessionDescription.h"
 
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefCounted.h"
 #include "public/platform/WebString.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefCounted.h"
 
 namespace blink {
 
-class WebRTCSessionDescriptionPrivate final : public RefCounted<WebRTCSessionDescriptionPrivate> {
-public:
-    static PassRefPtr<WebRTCSessionDescriptionPrivate> create(const WebString& type, const WebString& sdp);
+class WebRTCSessionDescriptionPrivate final
+    : public RefCounted<WebRTCSessionDescriptionPrivate> {
+ public:
+  static PassRefPtr<WebRTCSessionDescriptionPrivate> Create(
+      const WebString& type,
+      const WebString& sdp);
 
-    WebString type() { return m_type; }
-    void setType(const WebString& type) { m_type = type; }
+  WebString GetType() { return type_; }
+  void SetType(const WebString& type) { type_ = type; }
 
-    WebString sdp() { return m_sdp; }
-    void setSdp(const WebString& sdp) { m_sdp = sdp; }
+  WebString Sdp() { return sdp_; }
+  void SetSdp(const WebString& sdp) { sdp_ = sdp; }
 
-private:
-    WebRTCSessionDescriptionPrivate(const WebString& type, const WebString& sdp);
+ private:
+  WebRTCSessionDescriptionPrivate(const WebString& type, const WebString& sdp);
 
-    WebString m_type;
-    WebString m_sdp;
+  WebString type_;
+  WebString sdp_;
 };
 
-PassRefPtr<WebRTCSessionDescriptionPrivate> WebRTCSessionDescriptionPrivate::create(const WebString& type, const WebString& sdp)
-{
-    return adoptRef(new WebRTCSessionDescriptionPrivate(type, sdp));
+PassRefPtr<WebRTCSessionDescriptionPrivate>
+WebRTCSessionDescriptionPrivate::Create(const WebString& type,
+                                        const WebString& sdp) {
+  return AdoptRef(new WebRTCSessionDescriptionPrivate(type, sdp));
 }
 
-WebRTCSessionDescriptionPrivate::WebRTCSessionDescriptionPrivate(const WebString& type, const WebString& sdp)
-    : m_type(type)
-    , m_sdp(sdp)
-{
+WebRTCSessionDescriptionPrivate::WebRTCSessionDescriptionPrivate(
+    const WebString& type,
+    const WebString& sdp)
+    : type_(type), sdp_(sdp) {}
+
+void WebRTCSessionDescription::Assign(const WebRTCSessionDescription& other) {
+  private_ = other.private_;
 }
 
-void WebRTCSessionDescription::assign(const WebRTCSessionDescription& other)
-{
-    m_private = other.m_private;
+void WebRTCSessionDescription::Reset() {
+  private_.Reset();
 }
 
-void WebRTCSessionDescription::reset()
-{
-    m_private.reset();
+void WebRTCSessionDescription::Initialize(const WebString& type,
+                                          const WebString& sdp) {
+  private_ = WebRTCSessionDescriptionPrivate::Create(type, sdp);
 }
 
-void WebRTCSessionDescription::initialize(const WebString& type, const WebString& sdp)
-{
-    m_private = WebRTCSessionDescriptionPrivate::create(type, sdp);
+WebString WebRTCSessionDescription::GetType() const {
+  DCHECK(!private_.IsNull());
+  return private_->GetType();
 }
 
-WebString WebRTCSessionDescription::type() const
-{
-    ASSERT(!m_private.isNull());
-    return m_private->type();
+void WebRTCSessionDescription::SetType(const WebString& type) {
+  DCHECK(!private_.IsNull());
+  return private_->SetType(type);
 }
 
-void WebRTCSessionDescription::setType(const WebString& type)
-{
-    ASSERT(!m_private.isNull());
-    return m_private->setType(type);
+WebString WebRTCSessionDescription::Sdp() const {
+  DCHECK(!private_.IsNull());
+  return private_->Sdp();
 }
 
-WebString WebRTCSessionDescription::sdp() const
-{
-    ASSERT(!m_private.isNull());
-    return m_private->sdp();
+void WebRTCSessionDescription::SetSDP(const WebString& sdp) {
+  DCHECK(!private_.IsNull());
+  return private_->SetSdp(sdp);
 }
 
-void WebRTCSessionDescription::setSDP(const WebString& sdp)
-{
-    ASSERT(!m_private.isNull());
-    return m_private->setSdp(sdp);
-}
-
-} // namespace blink
-
+}  // namespace blink

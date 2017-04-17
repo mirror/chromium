@@ -79,9 +79,6 @@ function startTimeline()
 
 function test()
 {
-    var panel = WebInspector.panels.timeline;
-    panel._model._currentTarget = WebInspector.targetManager.mainTarget();
-
     InspectorTest.runTestSuite([
         function testStartStopTimeline(next)
         {
@@ -171,15 +168,15 @@ function test()
     ]);
 
     function printTimelineAndTimestampEvents() {
-        panel._tracingModel.sortedProcesses().forEach(function(process)
+        InspectorTest.tracingModel().sortedProcesses().forEach(function(process)
         {
             process.sortedThreads().forEach(function(thread)
             {
                 thread.events().forEach(function(event)
                 {
-                   if (event.hasCategory(WebInspector.TimelineModel.Category.Console))
+                   if (event.hasCategory(TimelineModel.TimelineModel.Category.Console))
                        InspectorTest.addResult(event.name);
-                   else if (event.name === WebInspector.TimelineModel.RecordType.TimeStamp)
+                   else if (event.name === TimelineModel.TimelineModel.RecordType.TimeStamp)
                        InspectorTest.addResult(event.args["data"]["message"]);
                 });
             });

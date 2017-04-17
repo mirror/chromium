@@ -15,6 +15,8 @@
 #include "net/base/proxy_delegate.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_proxy_client_socket_wrapper.h"
+#include "net/log/net_log_source_type.h"
+#include "net/log/net_log_with_source.h"
 #include "net/socket/client_socket_factory.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/client_socket_pool_base.h"
@@ -83,12 +85,14 @@ HttpProxyConnectJob::HttpProxyConnectJob(
     SSLClientSocketPool* ssl_pool,
     Delegate* delegate,
     NetLog* net_log)
-    : ConnectJob(group_name,
-                 base::TimeDelta() /* The socket takes care of timeouts */,
-                 priority,
-                 respect_limits,
-                 delegate,
-                 BoundNetLog::Make(net_log, NetLog::SOURCE_CONNECT_JOB)),
+    : ConnectJob(
+          group_name,
+          base::TimeDelta() /* The socket takes care of timeouts */,
+          priority,
+          respect_limits,
+          delegate,
+          NetLogWithSource::Make(net_log,
+                                 NetLogSourceType::HTTP_PROXY_CONNECT_JOB)),
       client_socket_(new HttpProxyClientSocketWrapper(
           group_name,
           priority,
@@ -216,7 +220,7 @@ int HttpProxyClientSocketPool::RequestSocket(const std::string& group_name,
                                              RespectLimits respect_limits,
                                              ClientSocketHandle* handle,
                                              const CompletionCallback& callback,
-                                             const BoundNetLog& net_log) {
+                                             const NetLogWithSource& net_log) {
   const scoped_refptr<HttpProxySocketParams>* casted_socket_params =
       static_cast<const scoped_refptr<HttpProxySocketParams>*>(socket_params);
 
@@ -228,7 +232,7 @@ void HttpProxyClientSocketPool::RequestSockets(
     const std::string& group_name,
     const void* params,
     int num_sockets,
-    const BoundNetLog& net_log) {
+    const NetLogWithSource& net_log) {
   const scoped_refptr<HttpProxySocketParams>* casted_params =
       static_cast<const scoped_refptr<HttpProxySocketParams>*>(params);
 
@@ -239,6 +243,12 @@ void HttpProxyClientSocketPool::CancelRequest(
     const std::string& group_name,
     ClientSocketHandle* handle) {
   base_.CancelRequest(group_name, handle);
+}
+
+void HttpProxyClientSocketPool::SetPriority(const std::string& group_name,
+                                            ClientSocketHandle* handle,
+                                            RequestPriority priority) {
+  base_.SetPriority(group_name, handle, priority);
 }
 
 void HttpProxyClientSocketPool::ReleaseSocket(
@@ -254,6 +264,11 @@ void HttpProxyClientSocketPool::FlushWithError(int error) {
 
 void HttpProxyClientSocketPool::CloseIdleSockets() {
   base_.CloseIdleSockets();
+}
+
+void HttpProxyClientSocketPool::CloseIdleSocketsInGroup(
+    const std::string& group_name) {
+  base_.CloseIdleSocketsInGroup(group_name);
 }
 
 int HttpProxyClientSocketPool::IdleSocketCount() const {

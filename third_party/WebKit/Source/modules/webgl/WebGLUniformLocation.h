@@ -32,26 +32,29 @@
 
 namespace blink {
 
-class WebGLUniformLocation final : public GarbageCollected<WebGLUniformLocation>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static WebGLUniformLocation* create(WebGLProgram*, GLint location);
+class WebGLUniformLocation final
+    : public GarbageCollected<WebGLUniformLocation>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    WebGLProgram* program() const;
+ public:
+  static WebGLUniformLocation* Create(WebGLProgram*, GLint location);
 
-    GLint location() const;
+  WebGLProgram* Program() const;
 
-    DECLARE_TRACE();
+  GLint Location() const;
 
-protected:
-    WebGLUniformLocation(WebGLProgram*, GLint location);
+  DECLARE_TRACE();
 
-private:
-    Member<WebGLProgram> m_program;
-    GLint m_location;
-    unsigned m_linkCount;
+ protected:
+  WebGLUniformLocation(WebGLProgram*, GLint location);
+
+ private:
+  Member<WebGLProgram> program_;
+  GLint location_;
+  unsigned link_count_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebGLUniformLocation_h
+#endif  // WebGLUniformLocation_h

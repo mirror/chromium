@@ -38,55 +38,59 @@ class Predicate;
 class Step;
 
 class Filter final : public Expression {
-public:
-    Filter(Expression*, HeapVector<Member<Predicate>>&);
-    ~Filter() override;
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  Filter(Expression*, HeapVector<Member<Predicate>>&);
+  ~Filter() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    Value evaluate(EvaluationContext&) const override;
+  Value Evaluate(EvaluationContext&) const override;
 
-private:
-    Value::Type resultType() const override { return Value::NodeSetValue; }
+ private:
+  Value::Type ResultType() const override { return Value::kNodeSetValue; }
 
-    Member<Expression> m_expr;
-    HeapVector<Member<Predicate>> m_predicates;
+  Member<Expression> expr_;
+  HeapVector<Member<Predicate>> predicates_;
 };
 
 class LocationPath final : public Expression {
-public:
-    LocationPath();
-    ~LocationPath() override;
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  LocationPath();
+  ~LocationPath() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    Value evaluate(EvaluationContext&) const override;
-    void setAbsolute(bool value) { m_absolute = value; setIsContextNodeSensitive(!m_absolute); }
-    void evaluate(EvaluationContext&, NodeSet&) const; // nodes is an input/output parameter
-    void appendStep(Step*);
-    void insertFirstStep(Step*);
+  Value Evaluate(EvaluationContext&) const override;
+  void SetAbsolute(bool value) {
+    absolute_ = value;
+    SetIsContextNodeSensitive(!absolute_);
+  }
+  void Evaluate(EvaluationContext&,
+                NodeSet&) const;  // nodes is an input/output parameter
+  void AppendStep(Step*);
+  void InsertFirstStep(Step*);
 
-private:
-    Value::Type resultType() const override { return Value::NodeSetValue; }
+ private:
+  Value::Type ResultType() const override { return Value::kNodeSetValue; }
 
-    HeapVector<Member<Step>> m_steps;
-    bool m_absolute;
+  HeapVector<Member<Step>> steps_;
+  bool absolute_;
 };
 
 class Path final : public Expression {
-public:
-    Path(Expression*, LocationPath*);
-    ~Path() override;
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  Path(Expression*, LocationPath*);
+  ~Path() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    Value evaluate(EvaluationContext&) const override;
+  Value Evaluate(EvaluationContext&) const override;
 
-private:
-    Value::Type resultType() const override { return Value::NodeSetValue; }
+ private:
+  Value::Type ResultType() const override { return Value::kNodeSetValue; }
 
-    Member<Expression> m_filter;
-    Member<LocationPath> m_path;
+  Member<Expression> filter_;
+  Member<LocationPath> path_;
 };
 
-} // namespace XPath
+}  // namespace XPath
 
-} // namespace blink
-#endif // XPathPath_h
+}  // namespace blink
+#endif  // XPathPath_h

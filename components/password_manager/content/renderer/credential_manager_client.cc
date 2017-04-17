@@ -11,11 +11,11 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
-#include "components/password_manager/content/public/cpp/type_converters.h"
+#include "base/memory/ptr_util.h"
 #include "components/password_manager/core/common/credential_manager_types.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_view.h"
-#include "services/shell/public/cpp/interface_provider.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/WebCredential.h"
 #include "third_party/WebKit/public/platform/WebCredentialManagerError.h"
 #include "third_party/WebKit/public/platform/WebFederatedCredential.h"
@@ -26,27 +26,67 @@ namespace password_manager {
 
 namespace {
 
+void WebCredentialToCredentialInfo(const blink::WebCredential& credential,
+                                   CredentialInfo* out) {
+  out->id = credential.Id().Utf16();
+  out->name = credential.GetName().Utf16();
+  out->icon = credential.GetIconURL();
+  if (credential.IsPasswordCredential()) {
+    out->type = CredentialType::CREDENTIAL_TYPE_PASSWORD;
+    out->password = static_cast<const blink::WebPasswordCredential&>(credential)
+                        .Password()
+                        .Utf16();
+  } else {
+    DCHECK(credential.IsFederatedCredential());
+    out->type = CredentialType::CREDENTIAL_TYPE_FEDERATED;
+    out->federation =
+        static_cast<const blink::WebFederatedCredential&>(credential)
+            .Provider();
+  }
+}
+
+std::unique_ptr<blink::WebCredential> CredentialInfoToWebCredential(
+    const CredentialInfo& info) {
+  switch (info.type) {
+    case CredentialType::CREDENTIAL_TYPE_FEDERATED:
+      return base::MakeUnique<blink::WebFederatedCredential>(
+          blink::WebString::FromUTF16(info.id), info.federation,
+          blink::WebString::FromUTF16(info.name), info.icon);
+    case CredentialType::CREDENTIAL_TYPE_PASSWORD:
+      return base::MakeUnique<blink::WebPasswordCredential>(
+          blink::WebString::FromUTF16(info.id),
+          blink::WebString::FromUTF16(info.password),
+          blink::WebString::FromUTF16(info.name), info.icon);
+    case CredentialType::CREDENTIAL_TYPE_EMPTY:
+      return nullptr;
+  }
+
+  NOTREACHED();
+  return nullptr;
+}
+
 blink::WebCredentialManagerError GetWebCredentialManagerErrorFromMojo(
     mojom::CredentialManagerError error) {
   switch (error) {
     case mojom::CredentialManagerError::DISABLED:
       return blink::WebCredentialManagerError::
-          WebCredentialManagerDisabledError;
+          kWebCredentialManagerDisabledError;
     case mojom::CredentialManagerError::PENDINGREQUEST:
       return blink::WebCredentialManagerError::
-          WebCredentialManagerPendingRequestError;
+          kWebCredentialManagerPendingRequestError;
     case mojom::CredentialManagerError::PASSWORDSTOREUNAVAILABLE:
       return blink::WebCredentialManagerError::
-          WebCredentialManagerPasswordStoreUnavailableError;
+          kWebCredentialManagerPasswordStoreUnavailableError;
     case mojom::CredentialManagerError::UNKNOWN:
-      return blink::WebCredentialManagerError::WebCredentialManagerUnknownError;
+      return blink::WebCredentialManagerError::
+          kWebCredentialManagerUnknownError;
     case mojom::CredentialManagerError::SUCCESS:
       NOTREACHED();
       break;
   }
 
   NOTREACHED();
-  return blink::WebCredentialManagerError::WebCredentialManagerUnknownError;
+  return blink::WebCredentialManagerError::kWebCredentialManagerUnknownError;
 }
 
 // Takes ownership of blink::WebCredentialManagerClient::NotificationCallbacks
@@ -74,14 +114,14 @@ NotificationCallbacksWrapper::NotificationCallbacksWrapper(
 
 NotificationCallbacksWrapper::~NotificationCallbacksWrapper() {
   if (callbacks_)
-    callbacks_->onError(blink::WebCredentialManagerUnknownError);
+    callbacks_->OnError(blink::kWebCredentialManagerUnknownError);
 }
 
 void NotificationCallbacksWrapper::NotifySuccess() {
   // Call onSuccess() and reset callbacks to avoid calling onError() in
   // destructor.
   if (callbacks_) {
-    callbacks_->onSuccess();
+    callbacks_->OnSuccess();
     callbacks_.reset();
   }
 }
@@ -96,7 +136,7 @@ class RequestCallbacksWrapper {
 
   ~RequestCallbacksWrapper();
 
-  void NotifySuccess(mojom::CredentialInfoPtr info);
+  void NotifySuccess(const CredentialInfo& info);
 
   void NotifyError(mojom::CredentialManagerError error);
 
@@ -113,23 +153,21 @@ RequestCallbacksWrapper::RequestCallbacksWrapper(
 
 RequestCallbacksWrapper::~RequestCallbacksWrapper() {
   if (callbacks_)
-    callbacks_->onError(blink::WebCredentialManagerUnknownError);
+    callbacks_->OnError(blink::kWebCredentialManagerUnknownError);
 }
 
-void RequestCallbacksWrapper::NotifySuccess(mojom::CredentialInfoPtr info) {
+void RequestCallbacksWrapper::NotifySuccess(const CredentialInfo& info) {
   // Call onSuccess() and reset callbacks to avoid calling onError() in
   // destructor.
   if (callbacks_) {
-    std::unique_ptr<blink::WebCredential> credential =
-        info.To<std::unique_ptr<blink::WebCredential>>();
-    callbacks_->onSuccess(std::move(credential));
+    callbacks_->OnSuccess(CredentialInfoToWebCredential(info));
     callbacks_.reset();
   }
 }
 
 void RequestCallbacksWrapper::NotifyError(mojom::CredentialManagerError error) {
   if (callbacks_) {
-    callbacks_->onError(GetWebCredentialManagerErrorFromMojo(error));
+    callbacks_->OnError(GetWebCredentialManagerErrorFromMojo(error));
     callbacks_.reset();
   }
 }
@@ -141,12 +179,12 @@ void RespondToNotificationCallback(
 
 void RespondToRequestCallback(RequestCallbacksWrapper* callbacks_wrapper,
                               mojom::CredentialManagerError error,
-                              mojom::CredentialInfoPtr info) {
+                              const base::Optional<CredentialInfo>& info) {
   if (error == mojom::CredentialManagerError::SUCCESS) {
-    DCHECK(!info.is_null());
-    callbacks_wrapper->NotifySuccess(std::move(info));
+    DCHECK(info);
+    callbacks_wrapper->NotifySuccess(*info);
   } else {
-    DCHECK(info.is_null());
+    DCHECK(!info);
     callbacks_wrapper->NotifyError(error);
   }
 }
@@ -156,7 +194,7 @@ void RespondToRequestCallback(RequestCallbacksWrapper* callbacks_wrapper,
 CredentialManagerClient::CredentialManagerClient(
     content::RenderView* render_view)
     : content::RenderViewObserver(render_view) {
-  render_view->GetWebView()->setCredentialManagerClient(this);
+  render_view->GetWebView()->SetCredentialManagerClient(this);
 }
 
 CredentialManagerClient::~CredentialManagerClient() {}
@@ -164,20 +202,21 @@ CredentialManagerClient::~CredentialManagerClient() {}
 // -----------------------------------------------------------------------------
 // Access mojo CredentialManagerService.
 
-void CredentialManagerClient::dispatchStore(
+void CredentialManagerClient::DispatchStore(
     const blink::WebCredential& credential,
     blink::WebCredentialManagerClient::NotificationCallbacks* callbacks) {
   DCHECK(callbacks);
   ConnectToMojoCMIfNeeded();
 
-  mojom::CredentialInfoPtr info = mojom::CredentialInfo::From(credential);
+  CredentialInfo info;
+  WebCredentialToCredentialInfo(credential, &info);
   mojo_cm_service_->Store(
-      std::move(info),
+      info,
       base::Bind(&RespondToNotificationCallback,
                  base::Owned(new NotificationCallbacksWrapper(callbacks))));
 }
 
-void CredentialManagerClient::dispatchRequireUserMediation(
+void CredentialManagerClient::DispatchRequireUserMediation(
     blink::WebCredentialManagerClient::NotificationCallbacks* callbacks) {
   DCHECK(callbacks);
   ConnectToMojoCMIfNeeded();
@@ -187,7 +226,7 @@ void CredentialManagerClient::dispatchRequireUserMediation(
                  base::Owned(new NotificationCallbacksWrapper(callbacks))));
 }
 
-void CredentialManagerClient::dispatchGet(
+void CredentialManagerClient::DispatchGet(
     bool zero_click_only,
     bool include_passwords,
     const blink::WebVector<blink::WebURL>& federations,
@@ -200,7 +239,7 @@ void CredentialManagerClient::dispatchGet(
     federation_vector.push_back(federations[i]);
 
   mojo_cm_service_->Get(
-      zero_click_only, include_passwords, std::move(federation_vector),
+      zero_click_only, include_passwords, federation_vector,
       base::Bind(&RespondToRequestCallback,
                  base::Owned(new RequestCallbacksWrapper(callbacks))));
 }

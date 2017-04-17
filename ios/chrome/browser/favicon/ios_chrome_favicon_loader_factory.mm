@@ -13,6 +13,10 @@
 #import "ios/chrome/browser/favicon/favicon_loader.h"
 #include "ios/chrome/browser/favicon/favicon_service_factory.h"
 
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
+
 FaviconLoader* IOSChromeFaviconLoaderFactory::GetForBrowserState(
     ios::ChromeBrowserState* browser_state) {
   return static_cast<FaviconLoader*>(
@@ -43,9 +47,9 @@ IOSChromeFaviconLoaderFactory::BuildServiceInstanceFor(
     web::BrowserState* context) const {
   ios::ChromeBrowserState* browser_state =
       ios::ChromeBrowserState::FromBrowserState(context);
-  return base::WrapUnique(
-      new FaviconLoader(ios::FaviconServiceFactory::GetForBrowserState(
-          browser_state, ServiceAccessType::IMPLICIT_ACCESS)));
+  return base::MakeUnique<FaviconLoader>(
+      ios::FaviconServiceFactory::GetForBrowserState(
+          browser_state, ServiceAccessType::IMPLICIT_ACCESS));
 }
 
 web::BrowserState* IOSChromeFaviconLoaderFactory::GetBrowserStateToUse(

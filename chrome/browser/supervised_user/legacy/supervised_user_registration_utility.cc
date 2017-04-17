@@ -14,6 +14,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/rand_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/chrome_signin_client_factory.h"
@@ -32,10 +33,10 @@
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_client.h"
 #include "components/signin/core/browser/signin_manager.h"
+#include "components/sync/base/get_session_name.h"
 #include "content/public/browser/browser_thread.h"
 #include "google_apis/gaia/gaia_urls.h"
 #include "google_apis/gaia/google_service_auth_error.h"
-#include "sync/util/get_session_name.h"
 
 using base::DictionaryValue;
 
@@ -59,9 +60,9 @@ class SupervisedUserRegistrationUtilityImpl
   // Registers a new supervised user with the server. |supervised_user_id| is a
   // new unique ID for the new supervised user. If its value is the same as that
   // of one of the existing supervised users, then the same user will be created
-  // on this machine (and if he has no avatar in sync, his avatar will be
+  // on this machine (and if they have no avatar in sync, their avatar will be
   // updated). |info| contains necessary information like the display name of
-  // the user and his avatar. |callback| is called with the result of the
+  // the user and their avatar. |callback| is called with the result of the
   // registration. We use the info here and not the profile, because on Chrome
   // OS the profile of the supervised user does not yet exist.
   void Register(const std::string& supervised_user_id,
@@ -290,8 +291,7 @@ void SupervisedUserRegistrationUtilityImpl::Register(
   const char* kAvatarKey = supervised_users::kChromeAvatarIndex;
 #endif
   supervised_user_shared_settings_service_->SetValue(
-      pending_supervised_user_id_, kAvatarKey,
-      base::FundamentalValue(info.avatar_index));
+      pending_supervised_user_id_, kAvatarKey, base::Value(info.avatar_index));
   if (need_password_update) {
     password_update_.reset(new SupervisedUserSharedSettingsUpdate(
         supervised_user_shared_settings_service_, pending_supervised_user_id_,

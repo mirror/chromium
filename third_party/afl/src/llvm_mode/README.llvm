@@ -161,24 +161,19 @@ do not fully reset the critical state, you may end up with false positives or
 waste a whole lot of CPU power doing nothing useful at all. Be particularly
 wary of memory leaks and of the state of file descriptors.
 
-When running in this mode, the execution paths will inherently vary a bit
-depending on whether the input loop is being entered for the first time or
-executed again. To avoid spurious warnings, the feature implies 
-AFL_NO_VAR_CHECK and hides the "variable path" warnings in the UI.
-
 PS. Because there are task switches still involved, the mode isn't as fast as
 "pure" in-process fuzzing offered, say, by LLVM's LibFuzzer; but it is a lot
 faster than the normal fork() model, and compared to in-process fuzzing,
 should be a lot more robust.
 
-6) Bonus feature #3: new 'trace-pc' mode
-----------------------------------------
+6) Bonus feature #3: new 'trace-pc-guard' mode
+----------------------------------------------
 
 Recent versions of LLVM are shipping with a built-in execution tracing feature
-that is fairly usable for AFL, without the need to post-process the assembly
-or install any compiler plugins. See:
+that provides AFL with the necessary tracing data without the need to
+post-process the assembly or install any compiler plugins. See:
 
-  http://clang.llvm.org/docs/SanitizerCoverage.html#tracing-pcs
+  http://clang.llvm.org/docs/SanitizerCoverage.html#tracing-pcs-with-guards
 
 As of this writing, the feature is only available on SVN trunk, and is yet to
 make it to an official release of LLVM. Nevertheless, if you have a
@@ -187,10 +182,7 @@ this way:
 
   AFL_TRACE_PC=1 make clean all
 
-Since a form of 'trace-pc' is also supported in GCC, this mode may become a
-longer-term solution to all our needs.
+Note that this mode is currently about 20-30% slower than "vanilla"
+afl-clang-fast, and about 5-10% slower than afl-clang. I am not entirely sure
+why.
 
-Note that this mode supports AFL_INST_RATIO at run time, not at compilation
-time. This is somewhat similar to the behavior of the QEMU mode. Because of
-the need to support it at run time, the mode is also a tad slower than the
-plugin-based approach.

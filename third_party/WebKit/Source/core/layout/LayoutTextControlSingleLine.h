@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2006, 2007, 2009 Apple Inc. All rights reserved.
- * Copyright (C) 2008 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ * Copyright (C) 2008 Torch Mobile Inc. All rights reserved.
+ *               (http://www.torchmobile.com/)
  * Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
  *
  * This library is free software; you can redistribute it and/or
@@ -31,73 +32,83 @@ namespace blink {
 class HTMLInputElement;
 
 class LayoutTextControlSingleLine : public LayoutTextControl {
-public:
-    LayoutTextControlSingleLine(HTMLInputElement*);
-    ~LayoutTextControlSingleLine() override;
-    // FIXME: Move createInnerEditorStyle() to TextControlInnerEditorElement.
-    PassRefPtr<ComputedStyle> createInnerEditorStyle(const ComputedStyle& startStyle) const final;
+ public:
+  LayoutTextControlSingleLine(HTMLInputElement*);
+  ~LayoutTextControlSingleLine() override;
+  // FIXME: Move createInnerEditorStyle() to TextControlInnerEditorElement.
+  PassRefPtr<ComputedStyle> CreateInnerEditorStyle(
+      const ComputedStyle& start_style) const final;
 
-    void capsLockStateMayHaveChanged();
+  void CapsLockStateMayHaveChanged();
 
-protected:
-    Element* containerElement() const;
-    Element* editingViewPortElement() const;
-    HTMLInputElement* inputElement() const;
+ protected:
+  Element* ContainerElement() const;
+  Element* EditingViewPortElement() const;
+  HTMLInputElement* InputElement() const;
 
-private:
-    bool hasControlClip() const final;
-    LayoutRect controlClipRect(const LayoutPoint&) const final;
-    bool isOfType(LayoutObjectType type) const override { return type == LayoutObjectTextField || LayoutTextControl::isOfType(type); }
+ private:
+  bool HasControlClip() const final;
+  LayoutRect ControlClipRect(const LayoutPoint&) const final;
+  bool IsOfType(LayoutObjectType type) const override {
+    return type == kLayoutObjectTextField || LayoutTextControl::IsOfType(type);
+  }
 
-    void paint(const PaintInfo&, const LayoutPoint&) const override;
-    void layout() override;
+  void Paint(const PaintInfo&, const LayoutPoint&) const override;
+  void UpdateLayout() override;
 
-    bool nodeAtPoint(HitTestResult&, const HitTestLocation& locationInContainer, const LayoutPoint& accumulatedOffset, HitTestAction) final;
+  bool NodeAtPoint(HitTestResult&,
+                   const HitTestLocation& location_in_container,
+                   const LayoutPoint& accumulated_offset,
+                   HitTestAction) final;
 
-    void autoscroll(const IntPoint&) final;
+  void Autoscroll(const IntPoint&) final;
 
-    // Subclassed to forward to our inner div.
-    LayoutUnit scrollLeft() const final;
-    LayoutUnit scrollTop() const final;
-    LayoutUnit scrollWidth() const final;
-    LayoutUnit scrollHeight() const final;
-    void setScrollLeft(LayoutUnit) final;
-    void setScrollTop(LayoutUnit) final;
+  // Subclassed to forward to our inner div.
+  LayoutUnit ScrollLeft() const final;
+  LayoutUnit ScrollTop() const final;
+  LayoutUnit ScrollWidth() const final;
+  LayoutUnit ScrollHeight() const final;
+  void SetScrollLeft(LayoutUnit) final;
+  void SetScrollTop(LayoutUnit) final;
 
-    int textBlockWidth() const;
-    float getAvgCharWidth(const AtomicString& family) const final;
-    LayoutUnit preferredContentLogicalWidth(float charWidth) const final;
-    LayoutUnit computeControlLogicalHeight(LayoutUnit lineHeight, LayoutUnit nonContentHeight) const override;
-    void styleDidChange(StyleDifference, const ComputedStyle* oldStyle) final;
-    void addOverflowFromChildren() final;
+  int TextBlockWidth() const;
+  float GetAvgCharWidth(const AtomicString& family) const final;
+  LayoutUnit PreferredContentLogicalWidth(float char_width) const final;
+  LayoutUnit ComputeControlLogicalHeight(
+      LayoutUnit line_height,
+      LayoutUnit non_content_height) const override;
+  void StyleDidChange(StyleDifference, const ComputedStyle* old_style) final;
+  void AddOverflowFromChildren() final;
 
-    bool allowsOverflowClip() const override { return false; }
+  bool AllowsOverflowClip() const override { return false; }
 
-    bool textShouldBeTruncated() const;
-    HTMLElement* innerSpinButtonElement() const;
+  bool TextShouldBeTruncated() const;
+  HTMLElement* InnerSpinButtonElement() const;
 
-    bool m_shouldDrawCapsLockIndicator;
+  bool should_draw_caps_lock_indicator_;
 };
 
-DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutTextControlSingleLine, isTextField());
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutTextControlSingleLine, IsTextField());
 
 // ----------------------------
 
-class LayoutTextControlInnerBlock : public LayoutBlockFlow {
-public:
-    LayoutTextControlInnerBlock(Element* element) : LayoutBlockFlow(element) { }
-    bool shouldIgnoreOverflowPropertyForInlineBlockBaseline() const override { return true; }
+class LayoutTextControlInnerEditor : public LayoutBlockFlow {
+ public:
+  LayoutTextControlInnerEditor(Element* element) : LayoutBlockFlow(element) {}
+  bool ShouldIgnoreOverflowPropertyForInlineBlockBaseline() const override {
+    return true;
+  }
 
-private:
-    bool isIntrinsicallyScrollable(ScrollbarOrientation orientation) const override
-    {
-        return orientation == HorizontalScrollbar;
-    }
-    bool scrollsOverflowX() const override { return hasOverflowClip(); }
-    bool scrollsOverflowY() const override { return false; }
-    bool hasLineIfEmpty() const override { return true; }
+ private:
+  bool IsIntrinsicallyScrollable(
+      ScrollbarOrientation orientation) const override {
+    return orientation == kHorizontalScrollbar;
+  }
+  bool ScrollsOverflowX() const override { return HasOverflowClip(); }
+  bool ScrollsOverflowY() const override { return false; }
+  bool HasLineIfEmpty() const override { return true; }
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

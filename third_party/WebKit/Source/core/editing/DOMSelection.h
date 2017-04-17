@@ -27,16 +27,15 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 #ifndef DOMSelection_h
 #define DOMSelection_h
 
 #include "bindings/core/v8/ScriptWrappable.h"
+#include "core/dom/ContextLifecycleObserver.h"
 #include "core/editing/Position.h"
 #include "core/editing/VisibleSelection.h"
-#include "core/frame/DOMWindowProperty.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -45,75 +44,94 @@ class Node;
 class Range;
 class TreeScope;
 
-class CORE_EXPORT DOMSelection final : public GarbageCollected<DOMSelection>, public ScriptWrappable, public DOMWindowProperty {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(DOMSelection);
-public:
-    static DOMSelection* create(const TreeScope* treeScope)
-    {
-        return new DOMSelection(treeScope);
-    }
+class CORE_EXPORT DOMSelection final : public GarbageCollected<DOMSelection>,
+                                       public ScriptWrappable,
+                                       public ContextClient {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(DOMSelection);
 
-    void clearTreeScope();
+ public:
+  static DOMSelection* Create(const TreeScope* tree_scope) {
+    return new DOMSelection(tree_scope);
+  }
 
-    // Safari Selection Object API
-    // These methods return the valid equivalents of internal editing positions.
-    Node* baseNode() const;
-    int baseOffset() const;
-    Node* extentNode() const;
-    int extentOffset() const;
-    String type() const;
-    void setBaseAndExtent(Node* baseNode, int baseOffset, Node* extentNode, int extentOffset, ExceptionState&);
-    void modify(const String& alter, const String& direction, const String& granularity);
+  void ClearTreeScope();
 
-    // Mozilla Selection Object API
-    // In Firefox, anchor/focus are the equal to the start/end of the selection,
-    // but reflect the direction in which the selection was made by the user. That does
-    // not mean that they are base/extent, since the base/extent don't reflect
-    // expansion.
-    // These methods return the valid equivalents of internal editing positions.
-    Node* anchorNode() const;
-    int anchorOffset() const;
-    Node* focusNode() const;
-    int focusOffset() const;
-    bool isCollapsed() const;
-    int rangeCount() const;
-    void collapse(Node*, int offset, ExceptionState&);
-    void collapseToEnd(ExceptionState&);
-    void collapseToStart(ExceptionState&);
-    void extend(Node*, int offset, ExceptionState&);
-    Range* getRangeAt(int, ExceptionState&);
-    void removeAllRanges();
-    void addRange(Range*);
-    void deleteFromDocument();
-    bool containsNode(const Node*, bool partlyContained) const;
-    void selectAllChildren(Node*, ExceptionState&);
+  // Safari Selection Object API
+  // These methods return the valid equivalents of internal editing positions.
+  Node* baseNode() const;
+  unsigned baseOffset() const;
+  Node* extentNode() const;
+  unsigned extentOffset() const;
+  String type() const;
+  void setBaseAndExtent(Node* base_node,
+                        unsigned base_offset,
+                        Node* extent_node,
+                        unsigned extent_offset,
+                        ExceptionState& = ASSERT_NO_EXCEPTION);
+  void modify(const String& alter,
+              const String& direction,
+              const String& granularity);
 
-    String toString();
+  // Mozilla Selection Object API
+  // In Firefox, anchor/focus are the equal to the start/end of the selection,
+  // but reflect the direction in which the selection was made by the user. That
+  // does not mean that they are base/extent, since the base/extent don't
+  // reflect expansion.
+  // These methods return the valid equivalents of internal editing positions.
+  Node* anchorNode() const;
+  unsigned anchorOffset() const;
+  Node* focusNode() const;
+  unsigned focusOffset() const;
+  bool isCollapsed() const;
+  unsigned rangeCount() const;
+  void collapse(Node*, unsigned offset, ExceptionState&);
+  void collapseToEnd(ExceptionState&);
+  void collapseToStart(ExceptionState&);
+  void extend(Node*, unsigned offset, ExceptionState&);
+  Range* getRangeAt(unsigned, ExceptionState&) const;
+  void removeRange(Range*);
+  void removeAllRanges();
+  void addRange(Range*);
+  void deleteFromDocument();
+  bool containsNode(const Node*, bool partly_contained) const;
+  void selectAllChildren(Node*, ExceptionState&);
 
-    // Microsoft Selection Object API
-    void empty();
+  String toString();
 
-    DECLARE_VIRTUAL_TRACE();
+  // Microsoft Selection Object API
+  void empty();
 
-private:
-    explicit DOMSelection(const TreeScope*);
+  DECLARE_VIRTUAL_TRACE();
 
-    bool isAvailable() const;
+ private:
+  explicit DOMSelection(const TreeScope*);
 
-    // Convenience method for accessors, does not check m_frame present.
-    const VisibleSelection& visibleSelection() const;
+  bool IsAvailable() const;
 
-    Node* shadowAdjustedNode(const Position&) const;
-    int shadowAdjustedOffset(const Position&) const;
+  void UpdateFrameSelection(const SelectionInDOMTree&, Range*) const;
+  // Convenience methods for accessors, does not check m_frame present.
+  const VisibleSelection& GetVisibleSelection() const;
+  bool IsBaseFirstInSelection() const;
+  const Position& AnchorPosition() const;
 
-    bool isValidForPosition(Node*) const;
+  Node* ShadowAdjustedNode(const Position&) const;
+  unsigned ShadowAdjustedOffset(const Position&) const;
 
-    void addConsoleError(const String& message);
+  bool IsValidForPosition(Node*) const;
 
-    Member<const TreeScope> m_treeScope;
+  void AddConsoleError(const String& message);
+  Range* PrimaryRangeOrNull() const;
+  EphemeralRange CreateRangeFromSelectionEditor() const;
+
+  bool IsSelectionOfDocument() const;
+  void CacheRangeIfSelectionOfDocument(Range*) const;
+  Range* DocumentCachedRange() const;
+  void ClearCachedRangeIfSelectionOfDocument();
+
+  Member<const TreeScope> tree_scope_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMSelection_h
+#endif  // DOMSelection_h

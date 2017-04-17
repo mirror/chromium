@@ -34,29 +34,32 @@
 #include "core/events/EventDispatchResult.h"
 #include "platform/heap/Handle.h"
 
-
 namespace blink {
 
 class Event;
 class EventDispatcher;
 
-class EventDispatchMediator : public GarbageCollectedFinalized<EventDispatchMediator> {
-public:
-    static EventDispatchMediator* create(Event*);
-    virtual ~EventDispatchMediator() { }
-    DECLARE_VIRTUAL_TRACE();
-    virtual DispatchEventResult dispatchEvent(EventDispatcher&) const;
-    Event& event() const { return *m_event; }
+class EventDispatchMediator
+    : public GarbageCollectedFinalized<EventDispatchMediator> {
+ public:
+  static EventDispatchMediator* Create(Event*);
+  virtual ~EventDispatchMediator() {}
+  DECLARE_VIRTUAL_TRACE();
+  virtual DispatchEventResult DispatchEvent(EventDispatcher&) const;
+  Event& GetEvent() const { return *event_; }
 
-protected:
-    explicit EventDispatchMediator(Event*);
-    EventDispatchMediator() { }
-    void setEvent(Event* event) { ASSERT(event); m_event = event; }
+ protected:
+  explicit EventDispatchMediator(Event*);
+  EventDispatchMediator() {}
+  void SetEvent(Event* event) {
+    DCHECK(event);
+    event_ = event;
+  }
 
-private:
-    Member<Event> m_event;
+ private:
+  Member<Event> event_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // EventDispatchMediator_h
+#endif  // EventDispatchMediator_h

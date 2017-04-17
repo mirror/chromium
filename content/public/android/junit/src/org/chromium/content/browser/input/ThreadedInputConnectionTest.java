@@ -6,6 +6,7 @@ package org.chromium.content.browser.input;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -19,10 +20,8 @@ import android.view.KeyCharacterMap;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import org.chromium.base.ThreadUtils;
-import org.chromium.base.test.util.Feature;
-import org.chromium.testing.local.LocalRobolectricTestRunner;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -30,6 +29,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.annotation.Config;
+
+import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.Feature;
+import org.chromium.testing.local.LocalRobolectricTestRunner;
+
+import java.util.concurrent.Callable;
 
 /**
  * Unit tests for {@ThreadedInputConnection}.
@@ -43,6 +48,7 @@ public class ThreadedInputConnectionTest {
     InOrder mInOrder;
     View mView;
     Context mContext;
+    boolean mRunningOnUiThread;
 
     @Before
     public void setUp() throws Exception {
@@ -58,7 +64,12 @@ public class ThreadedInputConnectionTest {
         when(mContext.getSystemService(Context.INPUT_METHOD_SERVICE)).thenReturn(Mockito.mock(
                 InputMethodManager.class));
         // Let's create Handler for test thread and pretend that it is running on IME thread.
-        mConnection = new ThreadedInputConnection(mView, mImeAdapter, new Handler());
+        mConnection = new ThreadedInputConnection(mView, mImeAdapter, new Handler()) {
+            @Override
+            protected boolean runningOnUiThread() {
+                return mRunningOnUiThread;
+            }
+        };
     }
 
     @Test
@@ -69,12 +80,12 @@ public class ThreadedInputConnectionTest {
         mInOrder.verify(mImeAdapter).sendCompositionToNative("hello", 1, false, 0);
 
         // Renderer updates states asynchronously.
-        mConnection.updateStateOnUiThread("hello", 5, 5, 0, 5, true, true);
+        mConnection.updateStateOnUiThread("hello", 5, 5, 0, 5, true, false);
         mInOrder.verify(mImeAdapter).updateSelection(5, 5, 0, 5);
         assertEquals(0, mConnection.getQueueForTest().size());
 
         // Prepare to call requestTextInputStateUpdate.
-        mConnection.updateStateOnUiThread("hello", 5, 5, 0, 5, true, false);
+        mConnection.updateStateOnUiThread("hello", 5, 5, 0, 5, true, true);
         assertEquals(1, mConnection.getQueueForTest().size());
         when(mImeAdapter.requestTextInputStateUpdate()).thenReturn(true);
 
@@ -84,11 +95,11 @@ public class ThreadedInputConnectionTest {
         // IME app calls finishComposingText().
         mConnection.finishComposingText();
         mInOrder.verify(mImeAdapter).finishComposingText();
-        mConnection.updateStateOnUiThread("hello", 5, 5, -1, -1, true, true);
+        mConnection.updateStateOnUiThread("hello", 5, 5, -1, -1, true, false);
         mInOrder.verify(mImeAdapter).updateSelection(5, 5, -1, -1);
 
         // Prepare to call requestTextInputStateUpdate.
-        mConnection.updateStateOnUiThread("hello", 5, 5, -1, -1, true, false);
+        mConnection.updateStateOnUiThread("hello", 5, 5, -1, -1, true, true);
         assertEquals(1, mConnection.getQueueForTest().size());
         when(mImeAdapter.requestTextInputStateUpdate()).thenReturn(true);
 
@@ -102,7 +113,7 @@ public class ThreadedInputConnectionTest {
     @Feature({"TextInput"})
     public void testPressingDeadKey() {
         // On default keyboard "Alt+i" produces a dead key '\u0302'.
-        mConnection.setCombiningAccent(0x0302);
+        mConnection.setCombiningAccentOnUiThread(0x0302);
         mConnection.updateComposingText("\u0302", 1, true);
         mInOrder.verify(mImeAdapter)
                 .sendCompositionToNative(
@@ -113,7 +124,7 @@ public class ThreadedInputConnectionTest {
     @Feature({"TextInput"})
     public void testRenderChangeUpdatesSelection() {
         // User moves the cursor.
-        mConnection.updateStateOnUiThread("hello", 4, 4, -1, -1, true, true);
+        mConnection.updateStateOnUiThread("hello", 4, 4, -1, -1, true, false);
         mInOrder.verify(mImeAdapter).updateSelection(4, 4, -1, -1);
         assertEquals(0, mConnection.getQueueForTest().size());
     }
@@ -128,7 +139,7 @@ public class ThreadedInputConnectionTest {
         mInOrder.verify(mImeAdapter).sendCompositionToNative("hello", 1, true, 0);
 
         // Renderer updates states asynchronously.
-        mConnection.updateStateOnUiThread("hello", 5, 5, -1, -1, true, true);
+        mConnection.updateStateOnUiThread("hello", 5, 5, -1, -1, true, false);
         mInOrder.verify(mImeAdapter, never()).updateSelection(5, 5, -1, -1);
         assertEquals(0, mConnection.getQueueForTest().size());
 
@@ -143,7 +154,7 @@ public class ThreadedInputConnectionTest {
         mInOrder.verify(mImeAdapter, never()).updateSelection(4, 4, -1, -1);
 
         // Prepare to call requestTextInputStateUpdate.
-        mConnection.updateStateOnUiThread("hello", 4, 4, -1, -1, true, false);
+        mConnection.updateStateOnUiThread("hello", 4, 4, -1, -1, true, true);
         assertEquals(1, mConnection.getQueueForTest().size());
         when(mImeAdapter.requestTextInputStateUpdate()).thenReturn(true);
 
@@ -156,6 +167,7 @@ public class ThreadedInputConnectionTest {
 
     @Test
     @Feature({"TextInput"})
+    @Ignore("crbug/632792")
     public void testFailToRequestToRenderer() {
         when(mImeAdapter.requestTextInputStateUpdate()).thenReturn(false);
         // Should not hang here. Return null to indicate failure.
@@ -164,6 +176,7 @@ public class ThreadedInputConnectionTest {
 
     @Test
     @Feature({"TextInput"})
+    @Ignore("crbug/632792")
     public void testRendererCannotUpdateState() {
         when(mImeAdapter.requestTextInputStateUpdate()).thenReturn(true);
         // We found that renderer cannot update state, e.g., due to a crash.
@@ -182,5 +195,32 @@ public class ThreadedInputConnectionTest {
         });
         // Should not hang here. Return null to indicate failure.
         assertEquals(null, mConnection.getTextBeforeCursor(10, 0));
+    }
+
+    // crbug.com/643477
+    @Test
+    @Feature({"TextInput"})
+    public void testUiThreadAccess() {
+        assertTrue(mConnection.commitText("hello", 1));
+        mRunningOnUiThread = true;
+        // Depending on the timing, the result may not be up-to-date.
+        assertNotEquals("hello",
+                ThreadUtils.runOnUiThreadBlockingNoException(new Callable<CharSequence>() {
+                    @Override
+                    public CharSequence call() {
+                        return mConnection.getTextBeforeCursor(10, 0);
+                    }
+                }));
+        // Or it could be.
+        mConnection.updateStateOnUiThread("hello", 5, 5, -1, -1, true, false);
+        assertEquals("hello",
+                ThreadUtils.runOnUiThreadBlockingNoException(new Callable<CharSequence>() {
+                    @Override
+                    public CharSequence call() {
+                        return mConnection.getTextBeforeCursor(10, 0);
+                    }
+                }));
+
+        mRunningOnUiThread = false;
     }
 }

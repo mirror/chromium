@@ -6,10 +6,12 @@ Polymer({
   is: 'history-toolbar',
   properties: {
     // Number of history items currently selected.
+    // TODO(calamity): bind this to
+    // listContainer.selectedItem.selectedPaths.length.
     count: {
       type: Number,
       value: 0,
-      observer: 'changeToolbarView_'
+      observer: 'changeToolbarView_',
     },
 
     // True if 1 or more history items are selected. When this value changes
@@ -17,42 +19,89 @@ Polymer({
     itemsSelected_: {
       type: Boolean,
       value: false,
-      reflectToAttribute: true
+      reflectToAttribute: true,
     },
 
     // The most recent term entered in the search field. Updated incrementally
     // as the user types.
     searchTerm: {
       type: String,
-      notify: true,
+      observer: 'searchTermChanged_',
     },
 
     // True if the backend is processing and a spinner should be shown in the
     // toolbar.
     spinnerActive: {
       type: Boolean,
-      value: false
+      value: false,
     },
 
-    // Whether domain-grouped history is enabled.
-    isGroupedMode: {
+    hasDrawer: {
       type: Boolean,
       reflectToAttribute: true,
     },
 
-    // The period to search over. Matches BrowsingHistoryHandler::Range.
-    groupedRange: {
-      type: Number,
-      value: 0,
-      reflectToAttribute: true,
-      notify: true
+    // Show an (i) button on the right of the toolbar to display a notice about
+    // synced history.
+    showSyncNotice: {
+      type: Boolean,
+      observer: 'showSyncNoticeChanged_',
     },
 
-    // The start time of the query range.
-    queryStartTime: String,
+    // Sync notice is currently visible.
+    syncNoticeVisible_: {
+      type: Boolean,
+      value: false,
+    },
 
-    // The end time of the query range.
-    queryEndTime: String,
+    hasMoreResults: Boolean,
+
+    querying: Boolean,
+
+    queryInfo: Object,
+
+    // Whether to show the menu promo (a tooltip that points at the menu button
+    // in narrow mode).
+    showMenuPromo: Boolean,
+  },
+
+  /**
+   * True if the document currently has listeners to dismiss the sync notice,
+   * which are added when the notice is first opened.
+   * @private{boolean}
+   */
+  hasDismissListeners_: false,
+
+  /** @private{?function(!Event)} */
+  boundOnDocumentClick_: null,
+
+  /** @private{?function(!Event)} */
+  boundOnDocumentKeydown_: null,
+
+  /** @override */
+  detached: function() {
+    if (this.hasDismissListeners_) {
+      document.removeEventListener('click', this.boundOnDocumentClick_);
+      document.removeEventListener('keydown', this.boundOnDocumentKeydown_);
+    }
+  },
+
+  /** @return {CrToolbarSearchFieldElement} */
+  get searchField() {
+    return /** @type {CrToolbarElement} */ (this.$['main-toolbar'])
+        .getSearchField();
+  },
+
+  showSearchField: function() {
+    this.searchField.showAndFocus();
+  },
+
+  deleteSelectedItems: function() {
+    this.fire('delete-selected');
+  },
+
+  clearSelectedItems: function() {
+    this.fire('unselect-all');
   },
 
   /**
@@ -67,17 +116,19 @@ Polymer({
   /**
    * When changing the search term externally, update the search field to
    * reflect the new search term.
-   * @param {string} search
+   * @private
    */
-  setSearchTerm: function(search) {
-    if (this.searchTerm == search)
-      return;
+  searchTermChanged_: function() {
+    if (this.searchField.getValue() != this.searchTerm) {
+      this.searchField.showAndFocus();
+      this.searchField.setValue(this.searchTerm);
+    }
+  },
 
-    this.searchTerm = search;
-    var searchField = /** @type {!CrToolbarElement} */(this.$['main-toolbar'])
-                          .getSearchField();
-    searchField.showAndFocus();
-    searchField.setValue(search);
+  /** @private */
+  showSyncNoticeChanged_: function() {
+    if (!this.showSyncNotice)
+      this.syncNoticeVisible_ = false;
   },
 
   /**
@@ -85,42 +136,48 @@ Polymer({
    * @private
    */
   onSearchChanged_: function(event) {
-    this.searchTerm = /** @type {string} */ (event.detail);
-  },
-
-  onClearSelectionTap_: function() {
-    this.fire('unselect-all');
-  },
-
-  onDeleteTap_: function() {
-    this.fire('delete-selected');
-  },
-
-  get searchBar() {
-    return this.$['main-toolbar'].getSearchField();
-  },
-
-  showSearchField: function() {
-    /** @type {!CrToolbarElement} */(this.$['main-toolbar'])
-        .getSearchField()
-        .showAndFocus();
+    this.fire('change-query', {search: event.detail});
   },
 
   /**
-   * If the user is a supervised user the delete button is not shown.
+   * @param {!MouseEvent} e
    * @private
    */
-  deletingAllowed_: function() {
-    return loadTimeData.getBoolean('allowDeletingHistory');
+  onInfoButtonTap_: function(e) {
+    this.syncNoticeVisible_ = !this.syncNoticeVisible_;
+    e.stopPropagation();
+
+    if (this.hasDismissListeners_)
+      return;
+
+    this.boundOnDocumentClick_ = this.onDocumentClick_.bind(this);
+    this.boundOnDocumentKeydown_ = this.onDocumentKeydown_.bind(this);
+    document.addEventListener('click', this.boundOnDocumentClick_);
+    document.addEventListener('keydown', this.boundOnDocumentKeydown_);
+
+    this.hasDismissListeners_ = true;
   },
 
+  /**
+   * @param {!Event} e
+   * @private
+   */
+  onDocumentClick_: function(e) {
+    if (e.path.indexOf(this.$['sync-notice']) == -1)
+      this.syncNoticeVisible_ = false;
+  },
+
+  /**
+   * @param {!Event} e
+   * @private
+   */
+  onDocumentKeydown_: function(e) {
+    if (e.key == 'Escape')
+      this.syncNoticeVisible_ = false;
+  },
+
+  /** @private */
   numberOfItemsSelected_: function(count) {
     return count > 0 ? loadTimeData.getStringF('itemsSelected', count) : '';
   },
-
-  getHistoryInterval_: function(queryStartTime, queryEndTime) {
-    // TODO(calamity): Fix the format of these dates.
-    return loadTimeData.getStringF(
-      'historyInterval', queryStartTime, queryEndTime);
-  }
 });

@@ -5,28 +5,32 @@
 #ifndef PaintSize_h
 #define PaintSize_h
 
+#include "bindings/core/v8/ScriptWrappable.h"
+#include "platform/geometry/IntSize.h"
+#include "platform/heap/Handle.h"
+
 namespace blink {
 
-class PaintSize : public GarbageCollectedFinalized<PaintSize>, public ScriptWrappable {
-    WTF_MAKE_NONCOPYABLE(PaintSize);
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static PaintSize* create(IntSize size)
-    {
-        return new PaintSize(size);
-    }
-    virtual ~PaintSize() {}
+class PaintSize : public GarbageCollectedFinalized<PaintSize>,
+                  public ScriptWrappable {
+  WTF_MAKE_NONCOPYABLE(PaintSize);
+  DEFINE_WRAPPERTYPEINFO();
 
-    int width() const { return m_size.width(); }
-    int height() const { return m_size.height(); }
+ public:
+  static PaintSize* Create(IntSize size) { return new PaintSize(size); }
+  virtual ~PaintSize() {}
 
-    DEFINE_INLINE_TRACE() { }
-private:
-    explicit PaintSize(IntSize size) : m_size(size) { }
+  int width() const { return size_.Width(); }
+  int height() const { return size_.Height(); }
 
-    IntSize m_size;
+  DEFINE_INLINE_TRACE() {}
+
+ private:
+  explicit PaintSize(IntSize size) : size_(size) {}
+
+  IntSize size_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PaintSize_h
+#endif  // PaintSize_h

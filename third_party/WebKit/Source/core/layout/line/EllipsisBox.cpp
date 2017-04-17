@@ -30,39 +30,51 @@
 
 namespace blink {
 
-void EllipsisBox::paint(const PaintInfo& paintInfo, const LayoutPoint& paintOffset, LayoutUnit lineTop, LayoutUnit lineBottom) const
-{
-    EllipsisBoxPainter(*this).paint(paintInfo, paintOffset, lineTop, lineBottom);
+void EllipsisBox::Paint(const PaintInfo& paint_info,
+                        const LayoutPoint& paint_offset,
+                        LayoutUnit line_top,
+                        LayoutUnit line_bottom) const {
+  EllipsisBoxPainter(*this).Paint(paint_info, paint_offset, line_top,
+                                  line_bottom);
 }
 
-IntRect EllipsisBox::selectionRect() const
-{
-    const ComputedStyle& style = getLineLayoutItem().styleRef(isFirstLineStyle());
-    const Font& font = style.font();
-    return enclosingIntRect(font.selectionRectForText(constructTextRun(font, m_str, style, TextRun::AllowTrailingExpansion), IntPoint(logicalLeft(), logicalTop() + root().selectionTop()), root().selectionHeight()));
+IntRect EllipsisBox::SelectionRect() const {
+  const ComputedStyle& style = GetLineLayoutItem().StyleRef(IsFirstLineStyle());
+  const Font& font = style.GetFont();
+  return EnclosingIntRect(font.SelectionRectForText(
+      ConstructTextRun(font, str_, style, TextRun::kAllowTrailingExpansion),
+      IntPoint(LogicalLeft().ToInt(),
+               (LogicalTop() + Root().SelectionTop()).ToInt()),
+      Root().SelectionHeight().ToInt()));
 }
 
-bool EllipsisBox::nodeAtPoint(HitTestResult& result, const HitTestLocation& locationInContainer, const LayoutPoint& accumulatedOffset, LayoutUnit lineTop, LayoutUnit lineBottom)
-{
-    // FIXME: the call to roundedLayoutPoint() below is temporary and should be removed once
-    // the transition to LayoutUnit-based types is complete (crbug.com/321237)
-    LayoutPoint adjustedLocation = accumulatedOffset + topLeft();
+bool EllipsisBox::NodeAtPoint(HitTestResult& result,
+                              const HitTestLocation& location_in_container,
+                              const LayoutPoint& accumulated_offset,
+                              LayoutUnit line_top,
+                              LayoutUnit line_bottom) {
+  LayoutPoint adjusted_location = accumulated_offset + Location();
 
-    LayoutPoint boxOrigin = locationIncludingFlipping();
-    boxOrigin.moveBy(accumulatedOffset);
-    LayoutRect boundsRect(boxOrigin, size());
-    if (visibleToHitTestRequest(result.hitTestRequest()) && boundsRect.intersects(LayoutRect(HitTestLocation::rectForPoint(locationInContainer.point(), 0, 0, 0, 0)))) {
-        getLineLayoutItem().updateHitTestResult(result, locationInContainer.point() - toLayoutSize(adjustedLocation));
-        if (result.addNodeToListBasedTestResult(getLineLayoutItem().node(), locationInContainer, boundsRect) == StopHitTesting)
-            return true;
-    }
+  LayoutPoint box_origin = PhysicalLocation();
+  box_origin.MoveBy(accumulated_offset);
+  LayoutRect bounds_rect(box_origin, Size());
+  if (VisibleToHitTestRequest(result.GetHitTestRequest()) &&
+      bounds_rect.Intersects(LayoutRect(HitTestLocation::RectForPoint(
+          location_in_container.Point(), 0, 0, 0, 0)))) {
+    GetLineLayoutItem().UpdateHitTestResult(
+        result,
+        location_in_container.Point() - ToLayoutSize(adjusted_location));
+    if (result.AddNodeToListBasedTestResult(GetLineLayoutItem().GetNode(),
+                                            location_in_container,
+                                            bounds_rect) == kStopHitTesting)
+      return true;
+  }
 
-    return false;
+  return false;
 }
 
-const char* EllipsisBox::boxName() const
-{
-    return "EllipsisBox";
+const char* EllipsisBox::BoxName() const {
+  return "EllipsisBox";
 }
 
-} // namespace blink
+}  // namespace blink

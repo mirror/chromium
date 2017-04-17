@@ -189,9 +189,9 @@ TEST_F(GLES2ImplementationTest, Clear) {
     cmds::Clear cmd;
   };
   Cmds expected;
-  expected.cmd.Init(1);
+  expected.cmd.Init(GL_COLOR_BUFFER_BIT);
 
-  gl_->Clear(1);
+  gl_->Clear(GL_COLOR_BUFFER_BIT);
   EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
 }
 
@@ -1135,6 +1135,42 @@ TEST_F(GLES2ImplementationTest, Hint) {
   expected.cmd.Init(GL_GENERATE_MIPMAP_HINT, GL_FASTEST);
 
   gl_->Hint(GL_GENERATE_MIPMAP_HINT, GL_FASTEST);
+  EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
+}
+
+TEST_F(GLES2ImplementationTest, InvalidateFramebuffer) {
+  GLenum data[2][1] = {{0}};
+  struct Cmds {
+    cmds::InvalidateFramebufferImmediate cmd;
+    GLenum data[2][1];
+  };
+
+  Cmds expected;
+  for (int ii = 0; ii < 2; ++ii) {
+    for (int jj = 0; jj < 1; ++jj) {
+      data[ii][jj] = static_cast<GLenum>(ii * 1 + jj);
+    }
+  }
+  expected.cmd.Init(GL_FRAMEBUFFER, 2, &data[0][0]);
+  gl_->InvalidateFramebuffer(GL_FRAMEBUFFER, 2, &data[0][0]);
+  EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
+}
+
+TEST_F(GLES2ImplementationTest, InvalidateSubFramebuffer) {
+  GLenum data[2][1] = {{0}};
+  struct Cmds {
+    cmds::InvalidateSubFramebufferImmediate cmd;
+    GLenum data[2][1];
+  };
+
+  Cmds expected;
+  for (int ii = 0; ii < 2; ++ii) {
+    for (int jj = 0; jj < 1; ++jj) {
+      data[ii][jj] = static_cast<GLenum>(ii * 1 + jj);
+    }
+  }
+  expected.cmd.Init(GL_FRAMEBUFFER, 2, &data[0][0], 4, 5, 6, 7);
+  gl_->InvalidateSubFramebuffer(GL_FRAMEBUFFER, 2, &data[0][0], 4, 5, 6, 7);
   EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
 }
 
@@ -2643,6 +2679,17 @@ TEST_F(GLES2ImplementationTest, IsVertexArrayOES) {
   EXPECT_TRUE(result);
 }
 
+TEST_F(GLES2ImplementationTest, FlushMappedBufferRange) {
+  struct Cmds {
+    cmds::FlushMappedBufferRange cmd;
+  };
+  Cmds expected;
+  expected.cmd.Init(GL_ARRAY_BUFFER, 2, 3);
+
+  gl_->FlushMappedBufferRange(GL_ARRAY_BUFFER, 2, 3);
+  EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
+}
+
 TEST_F(GLES2ImplementationTest, ResizeCHROMIUM) {
   struct Cmds {
     cmds::ResizeCHROMIUM cmd;
@@ -2670,9 +2717,11 @@ TEST_F(GLES2ImplementationTest, CopyTextureCHROMIUM) {
     cmds::CopyTextureCHROMIUM cmd;
   };
   Cmds expected;
-  expected.cmd.Init(1, 2, GL_ALPHA, GL_UNSIGNED_BYTE, true, true, true);
+  expected.cmd.Init(1, 2, 3, 4, 5, GL_ALPHA, GL_UNSIGNED_BYTE, true, true,
+                    true);
 
-  gl_->CopyTextureCHROMIUM(1, 2, GL_ALPHA, GL_UNSIGNED_BYTE, true, true, true);
+  gl_->CopyTextureCHROMIUM(1, 2, 3, 4, 5, GL_ALPHA, GL_UNSIGNED_BYTE, true,
+                           true, true);
   EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
 }
 
@@ -2681,9 +2730,10 @@ TEST_F(GLES2ImplementationTest, CopySubTextureCHROMIUM) {
     cmds::CopySubTextureCHROMIUM cmd;
   };
   Cmds expected;
-  expected.cmd.Init(1, 2, 3, 4, 5, 6, 7, 8, true, true, true);
+  expected.cmd.Init(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, true, true, true);
 
-  gl_->CopySubTextureCHROMIUM(1, 2, 3, 4, 5, 6, 7, 8, true, true, true);
+  gl_->CopySubTextureCHROMIUM(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, true, true,
+                              true);
   EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
 }
 
@@ -2742,6 +2792,24 @@ TEST_F(GLES2ImplementationTest, ReleaseTexImage2DCHROMIUM) {
   EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
 }
 
+TEST_F(GLES2ImplementationTest, DiscardFramebufferEXT) {
+  GLenum data[2][1] = {{0}};
+  struct Cmds {
+    cmds::DiscardFramebufferEXTImmediate cmd;
+    GLenum data[2][1];
+  };
+
+  Cmds expected;
+  for (int ii = 0; ii < 2; ++ii) {
+    for (int jj = 0; jj < 1; ++jj) {
+      data[ii][jj] = static_cast<GLenum>(ii * 1 + jj);
+    }
+  }
+  expected.cmd.Init(GL_FRAMEBUFFER, 2, &data[0][0]);
+  gl_->DiscardFramebufferEXT(GL_FRAMEBUFFER, 2, &data[0][0]);
+  EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
+}
+
 TEST_F(GLES2ImplementationTest, LoseContextCHROMIUM) {
   struct Cmds {
     cmds::LoseContextCHROMIUM cmd;
@@ -2751,6 +2819,24 @@ TEST_F(GLES2ImplementationTest, LoseContextCHROMIUM) {
 
   gl_->LoseContextCHROMIUM(GL_GUILTY_CONTEXT_RESET_ARB,
                            GL_GUILTY_CONTEXT_RESET_ARB);
+  EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
+}
+
+TEST_F(GLES2ImplementationTest, DrawBuffersEXT) {
+  GLenum data[1][1] = {{0}};
+  struct Cmds {
+    cmds::DrawBuffersEXTImmediate cmd;
+    GLenum data[1][1];
+  };
+
+  Cmds expected;
+  for (int ii = 0; ii < 1; ++ii) {
+    for (int jj = 0; jj < 1; ++jj) {
+      data[ii][jj] = static_cast<GLenum>(ii * 1 + jj);
+    }
+  }
+  expected.cmd.Init(1, &data[0][0]);
+  gl_->DrawBuffersEXT(1, &data[0][0]);
   EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
 }
 
@@ -2959,6 +3045,28 @@ TEST_F(GLES2ImplementationTest, CoverageModulationCHROMIUM) {
   expected.cmd.Init(GL_RGB);
 
   gl_->CoverageModulationCHROMIUM(GL_RGB);
+  EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
+}
+
+TEST_F(GLES2ImplementationTest, SetDrawRectangleCHROMIUM) {
+  struct Cmds {
+    cmds::SetDrawRectangleCHROMIUM cmd;
+  };
+  Cmds expected;
+  expected.cmd.Init(1, 2, 3, 4);
+
+  gl_->SetDrawRectangleCHROMIUM(1, 2, 3, 4);
+  EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
+}
+
+TEST_F(GLES2ImplementationTest, SetEnableDCLayersCHROMIUM) {
+  struct Cmds {
+    cmds::SetEnableDCLayersCHROMIUM cmd;
+  };
+  Cmds expected;
+  expected.cmd.Init(true);
+
+  gl_->SetEnableDCLayersCHROMIUM(true);
   EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
 }
 #endif  // GPU_COMMAND_BUFFER_CLIENT_GLES2_IMPLEMENTATION_UNITTEST_AUTOGEN_H_

@@ -11,14 +11,12 @@
 #include <utility>
 #include <vector>
 
-#include "ash/aura/wm_window_aura.h"
-#include "ash/common/wm/mru_window_tracker.h"
-#include "ash/common/wm/window_state.h"
-#include "ash/common/wm_shell.h"
-#include "ash/desktop_background/desktop_background_controller.h"
 #include "ash/shell.h"
+#include "ash/wm/mru_window_tracker.h"
+#include "ash/wm/window_state.h"
 #include "ash/wm/window_state_aura.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "base/files/file_enumerator.h"
 #include "base/files/file_util.h"
@@ -29,7 +27,9 @@
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/worker_pool.h"
+#include "base/values.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
@@ -40,20 +40,20 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/chromeos_switches.h"
-#include "components/browser_sync/browser/profile_sync_service.h"
+#include "components/browser_sync/profile_sync_service.h"
 #include "components/prefs/pref_service.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "components/wallpaper/wallpaper_layout.h"
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/event_router.h"
-#include "grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/webui/web_ui_util.h"
 #include "ui/strings/grit/app_locale_settings.h"
 #include "url/gurl.h"
 
-using base::BinaryValue;
+using base::Value;
 using content::BrowserThread;
 
 namespace wallpaper_base = extensions::api::wallpaper;
@@ -173,7 +173,7 @@ WindowStateManager* g_window_state_manager = NULL;
 // static
 void WindowStateManager::MinimizeInactiveWindows(
     const std::string& user_id_hash) {
-  if (chrome::IsRunningInMash()) {
+  if (ash_util::IsRunningInMash()) {
     NOTIMPLEMENTED();
     return;
   }
@@ -186,7 +186,7 @@ void WindowStateManager::MinimizeInactiveWindows(
 
 // static
 void WindowStateManager::RestoreWindows(const std::string& user_id_hash) {
-  if (chrome::IsRunningInMash()) {
+  if (ash_util::IsRunningInMash()) {
     NOTIMPLEMENTED();
     return;
   }
@@ -217,8 +217,8 @@ void WindowStateManager::BuildWindowListAndMinimizeInactiveForUser(
   std::set<aura::Window*>* results =
       &user_id_hash_window_list_map_[user_id_hash];
 
-  std::vector<aura::Window*> windows = ash::WmWindowAura::ToAuraWindows(
-      ash::WmShell::Get()->mru_window_tracker()->BuildWindowListIgnoreModal());
+  std::vector<aura::Window*> windows = ash::WmWindow::ToAuraWindows(
+      ash::Shell::Get()->mru_window_tracker()->BuildWindowListIgnoreModal());
 
   for (std::vector<aura::Window*>::iterator iter = windows.begin();
        iter != windows.end(); ++iter) {
@@ -306,7 +306,7 @@ user_manager::User::WallpaperType getWallpaperType(
 
 }  // namespace
 
-bool WallpaperPrivateGetStringsFunction::RunSync() {
+ExtensionFunction::ResponseAction WallpaperPrivateGetStringsFunction::Run() {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
 
 #define SET_STRING(id, idr) \
@@ -362,19 +362,18 @@ bool WallpaperPrivateGetStringsFunction::RunSync() {
   dict->SetString("canceledWallpaper",
                   wallpaper_api_util::kCancelWallpaperMessage);
 
-  SetResult(std::move(dict));
-  return true;
+  return RespondNow(OneArgument(std::move(dict)));
 }
 
-bool WallpaperPrivateGetSyncSettingFunction::RunSync() {
+ExtensionFunction::ResponseAction
+WallpaperPrivateGetSyncSettingFunction::Run() {
   Profile* profile =  Profile::FromBrowserContext(browser_context());
-  ProfileSyncService* sync =
+  browser_sync::ProfileSyncService* sync =
       ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile);
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
   dict->SetBoolean("syncThemes",
                    sync->GetActiveDataTypes().Has(syncer::THEMES));
-  SetResult(std::move(dict));
-  return true;
+  return RespondNow(OneArgument(std::move(dict)));
 }
 
 WallpaperPrivateSetWallpaperIfExistsFunction::
@@ -408,11 +407,11 @@ bool WallpaperPrivateSetWallpaperIfExistsFunction::RunAsync() {
   }
   wallpaper_path = wallpaper_path.Append(file_name);
 
-  sequence_token_ = BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-      wallpaper::kWallpaperSequenceTokenName);
   scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()->
-          GetSequencedTaskRunnerWithShutdownBehavior(sequence_token_,
+      BrowserThread::GetBlockingPool()
+          ->GetSequencedTaskRunnerWithShutdownBehavior(
+              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
+                  wallpaper::kWallpaperSequenceTokenName),
               base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
 
   task_runner->PostTask(FROM_HERE,
@@ -426,8 +425,7 @@ bool WallpaperPrivateSetWallpaperIfExistsFunction::RunAsync() {
 void WallpaperPrivateSetWallpaperIfExistsFunction::
     ReadFileAndInitiateStartDecode(const base::FilePath& file_path,
                                    const base::FilePath& fallback_path) {
-  DCHECK(BrowserThread::GetBlockingPool()->IsRunningSequenceOnCurrentThread(
-      sequence_token_));
+  wallpaper::AssertCalledOnWallpaperSequence();
   base::FilePath path = file_path;
 
   if (!base::PathExists(file_path))
@@ -473,7 +471,7 @@ void WallpaperPrivateSetWallpaperIfExistsFunction::OnWallpaperDecoded(
                                    user_manager::User::ONLINE,
                                    base::Time::Now().LocalMidnight()};
   wallpaper_manager->SetUserWallpaperInfo(account_id_, info, is_persistent);
-  SetResult(base::MakeUnique<base::FundamentalValue>(true));
+  SetResult(base::MakeUnique<base::Value>(true));
   Profile* profile = Profile::FromBrowserContext(browser_context());
   // This API is only available to the component wallpaper picker. We do not
   // need to show the app's name if it is the component wallpaper picker. So set
@@ -485,7 +483,7 @@ void WallpaperPrivateSetWallpaperIfExistsFunction::OnWallpaperDecoded(
 
 void WallpaperPrivateSetWallpaperIfExistsFunction::OnFileNotExists(
     const std::string& error) {
-  SetResult(base::MakeUnique<base::FundamentalValue>(false));
+  SetResult(base::MakeUnique<base::Value>(false));
   OnFailure(error);
 }
 
@@ -514,11 +512,11 @@ void WallpaperPrivateSetWallpaperFunction::OnWallpaperDecoded(
   // Set unsafe_wallpaper_decoder_ to null since the decoding already finished.
   unsafe_wallpaper_decoder_ = NULL;
 
-  sequence_token_ = BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-      wallpaper::kWallpaperSequenceTokenName);
   scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()->
-          GetSequencedTaskRunnerWithShutdownBehavior(sequence_token_,
+      BrowserThread::GetBlockingPool()
+          ->GetSequencedTaskRunnerWithShutdownBehavior(
+              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
+                  wallpaper::kWallpaperSequenceTokenName),
               base::SequencedWorkerPool::BLOCK_SHUTDOWN);
 
   task_runner->PostTask(FROM_HERE,
@@ -526,8 +524,7 @@ void WallpaperPrivateSetWallpaperFunction::OnWallpaperDecoded(
 }
 
 void WallpaperPrivateSetWallpaperFunction::SaveToFile() {
-  DCHECK(BrowserThread::GetBlockingPool()->IsRunningSequenceOnCurrentThread(
-      sequence_token_));
+  wallpaper::AssertCalledOnWallpaperSequence();
   std::string file_name = GURL(params->url).ExtractFileName();
   if (SaveData(chrome::DIR_CHROMEOS_WALLPAPERS, file_name, params->wallpaper)) {
     wallpaper_.EnsureRepsForSupportedScales();
@@ -599,22 +596,10 @@ WallpaperPrivateResetWallpaperFunction::
     ~WallpaperPrivateResetWallpaperFunction() {}
 
 bool WallpaperPrivateResetWallpaperFunction::RunAsync() {
-  chromeos::WallpaperManager* wallpaper_manager =
-      chromeos::WallpaperManager::Get();
-  user_manager::UserManager* user_manager = user_manager::UserManager::Get();
+  const AccountId& account_id =
+      user_manager::UserManager::Get()->GetActiveUser()->GetAccountId();
+  chromeos::WallpaperManager::Get()->SetDefaultWallpaper(account_id, true);
 
-  const AccountId& account_id = user_manager->GetActiveUser()->GetAccountId();
-  wallpaper_manager->RemoveUserWallpaperInfo(account_id);
-
-  wallpaper::WallpaperInfo info = {std::string(),
-                                   wallpaper::WALLPAPER_LAYOUT_CENTER,
-                                   user_manager::User::DEFAULT,
-                                   base::Time::Now().LocalMidnight()};
-  bool is_persistent =
-      !user_manager->IsCurrentUserNonCryptohomeDataEphemeral();
-  wallpaper_manager->SetUserWallpaperInfo(account_id, info, is_persistent);
-
-  wallpaper_manager->SetDefaultWallpaperNow(account_id);
   Profile* profile = Profile::FromBrowserContext(browser_context());
   // This API is only available to the component wallpaper picker. We do not
   // need to show the app's name if it is the component wallpaper picker. So set
@@ -654,11 +639,11 @@ void WallpaperPrivateSetCustomWallpaperFunction::OnWallpaperDecoded(
       wallpaper::kThumbnailWallpaperSubDir, wallpaper_files_id_,
       params->file_name);
 
-  sequence_token_ = BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-      wallpaper::kWallpaperSequenceTokenName);
   scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()->
-          GetSequencedTaskRunnerWithShutdownBehavior(sequence_token_,
+      BrowserThread::GetBlockingPool()
+          ->GetSequencedTaskRunnerWithShutdownBehavior(
+              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
+                  wallpaper::kWallpaperSequenceTokenName),
               base::SequencedWorkerPool::BLOCK_SHUTDOWN);
 
   wallpaper::WallpaperLayout layout = wallpaper_api_util::GetLayoutEnum(
@@ -696,8 +681,7 @@ void WallpaperPrivateSetCustomWallpaperFunction::OnWallpaperDecoded(
 void WallpaperPrivateSetCustomWallpaperFunction::GenerateThumbnail(
     const base::FilePath& thumbnail_path,
     std::unique_ptr<gfx::ImageSkia> image) {
-  DCHECK(BrowserThread::GetBlockingPool()->IsRunningSequenceOnCurrentThread(
-      sequence_token_));
+  wallpaper::AssertCalledOnWallpaperSequence();
   if (!base::PathExists(thumbnail_path.DirName()))
     base::CreateDirectory(thumbnail_path.DirName());
 
@@ -715,7 +699,7 @@ void WallpaperPrivateSetCustomWallpaperFunction::GenerateThumbnail(
 
 void WallpaperPrivateSetCustomWallpaperFunction::ThumbnailGenerated(
     base::RefCountedBytes* data) {
-  SetResult(BinaryValue::CreateWithCopiedBuffer(
+  SetResult(Value::CreateWithCopiedBuffer(
       reinterpret_cast<const char*>(data->front()), data->size()));
   SendResponse(true);
 }
@@ -814,11 +798,11 @@ bool WallpaperPrivateGetThumbnailFunction::RunAsync() {
         chromeos::switches::kDefaultWallpaperSmall);
   }
 
-  sequence_token_ = BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-      wallpaper::kWallpaperSequenceTokenName);
   scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()->
-          GetSequencedTaskRunnerWithShutdownBehavior(sequence_token_,
+      BrowserThread::GetBlockingPool()
+          ->GetSequencedTaskRunnerWithShutdownBehavior(
+              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
+                  wallpaper::kWallpaperSequenceTokenName),
               base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
 
   task_runner->PostTask(FROM_HERE,
@@ -840,13 +824,12 @@ void WallpaperPrivateGetThumbnailFunction::FileNotLoaded() {
 
 void WallpaperPrivateGetThumbnailFunction::FileLoaded(
     const std::string& data) {
-  SetResult(BinaryValue::CreateWithCopiedBuffer(data.c_str(), data.size()));
+  SetResult(Value::CreateWithCopiedBuffer(data.c_str(), data.size()));
   SendResponse(true);
 }
 
 void WallpaperPrivateGetThumbnailFunction::Get(const base::FilePath& path) {
-  DCHECK(BrowserThread::GetBlockingPool()->IsRunningSequenceOnCurrentThread(
-      sequence_token_));
+  wallpaper::AssertCalledOnWallpaperSequence();
   std::string data;
   if (GetData(path, &data)) {
     if (data.empty()) {
@@ -878,11 +861,11 @@ bool WallpaperPrivateSaveThumbnailFunction::RunAsync() {
       save_thumbnail::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params);
 
-  sequence_token_ = BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-      wallpaper::kWallpaperSequenceTokenName);
   scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()->
-          GetSequencedTaskRunnerWithShutdownBehavior(sequence_token_,
+      BrowserThread::GetBlockingPool()
+          ->GetSequencedTaskRunnerWithShutdownBehavior(
+              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
+                  wallpaper::kWallpaperSequenceTokenName),
               base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
 
   task_runner->PostTask(FROM_HERE,
@@ -904,8 +887,7 @@ void WallpaperPrivateSaveThumbnailFunction::Success() {
 
 void WallpaperPrivateSaveThumbnailFunction::Save(const std::vector<char>& data,
                                                  const std::string& file_name) {
-  DCHECK(BrowserThread::GetBlockingPool()->IsRunningSequenceOnCurrentThread(
-      sequence_token_));
+  wallpaper::AssertCalledOnWallpaperSequence();
   if (SaveData(chrome::DIR_CHROMEOS_WALLPAPER_THUMBNAILS, file_name, data)) {
     BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
@@ -927,11 +909,11 @@ WallpaperPrivateGetOfflineWallpaperListFunction::
 }
 
 bool WallpaperPrivateGetOfflineWallpaperListFunction::RunAsync() {
-  sequence_token_ = BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-      wallpaper::kWallpaperSequenceTokenName);
   scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()->
-          GetSequencedTaskRunnerWithShutdownBehavior(sequence_token_,
+      BrowserThread::GetBlockingPool()
+          ->GetSequencedTaskRunnerWithShutdownBehavior(
+              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
+                  wallpaper::kWallpaperSequenceTokenName),
               base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
 
   task_runner->PostTask(FROM_HERE,
@@ -941,8 +923,7 @@ bool WallpaperPrivateGetOfflineWallpaperListFunction::RunAsync() {
 }
 
 void WallpaperPrivateGetOfflineWallpaperListFunction::GetList() {
-  DCHECK(BrowserThread::GetBlockingPool()->IsRunningSequenceOnCurrentThread(
-      sequence_token_));
+  wallpaper::AssertCalledOnWallpaperSequence();
   std::vector<std::string> file_list;
   base::FilePath wallpaper_dir;
   CHECK(PathService::Get(chrome::DIR_CHROMEOS_WALLPAPERS, &wallpaper_dir));
@@ -972,7 +953,8 @@ void WallpaperPrivateGetOfflineWallpaperListFunction::OnComplete(
   SendResponse(true);
 }
 
-bool WallpaperPrivateRecordWallpaperUMAFunction::RunSync() {
+ExtensionFunction::ResponseAction
+WallpaperPrivateRecordWallpaperUMAFunction::Run() {
   std::unique_ptr<record_wallpaper_uma::Params> params(
       record_wallpaper_uma::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params);
@@ -980,5 +962,5 @@ bool WallpaperPrivateRecordWallpaperUMAFunction::RunSync() {
   user_manager::User::WallpaperType source = getWallpaperType(params->source);
   UMA_HISTOGRAM_ENUMERATION("Ash.Wallpaper.Source", source,
                             user_manager::User::WALLPAPER_TYPE_COUNT);
-  return true;
+  return RespondNow(NoArguments());
 }

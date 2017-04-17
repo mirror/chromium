@@ -32,7 +32,7 @@ class ValueStoreFrontendTest : public testing::Test {
     base::FilePath test_data_dir;
     ASSERT_TRUE(PathService::Get(extensions::DIR_TEST_DATA, &test_data_dir));
     base::FilePath src_db(test_data_dir.AppendASCII("value_store_db"));
-    db_path_ = temp_dir_.path().AppendASCII("temp_db");
+    db_path_ = temp_dir_.GetPath().AppendASCII("temp_db");
     base::CopyDirectory(src_db, db_path_, true);
 
     factory_ = new extensions::TestValueStoreFactory(db_path_);
@@ -95,10 +95,8 @@ TEST_F(ValueStoreFrontendTest, GetExistingData) {
 }
 
 TEST_F(ValueStoreFrontendTest, ChangesPersistAfterReload) {
-  storage_->Set("key0",
-                std::unique_ptr<base::Value>(new base::FundamentalValue(0)));
-  storage_->Set("key1",
-                std::unique_ptr<base::Value>(new base::StringValue("new1")));
+  storage_->Set("key0", std::unique_ptr<base::Value>(new base::Value(0)));
+  storage_->Set("key1", std::unique_ptr<base::Value>(new base::Value("new1")));
   storage_->Remove("key2");
 
   // Reload the DB and test our changes.

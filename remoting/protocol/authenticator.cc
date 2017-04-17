@@ -6,7 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "remoting/base/constants.h"
-#include "third_party/webrtc/libjingle/xmllite/xmlelement.h"
+#include "third_party/libjingle_xmpp/xmllite/xmlelement.h"
 
 namespace remoting {
 namespace protocol {
@@ -24,7 +24,7 @@ bool Authenticator::IsAuthenticatorMessage(const buzz::XmlElement* message) {
 // static
 std::unique_ptr<buzz::XmlElement>
 Authenticator::CreateEmptyAuthenticatorMessage() {
-  return base::WrapUnique(new buzz::XmlElement(kAuthenticationQName));
+  return base::MakeUnique<buzz::XmlElement>(kAuthenticationQName);
 }
 
 // static

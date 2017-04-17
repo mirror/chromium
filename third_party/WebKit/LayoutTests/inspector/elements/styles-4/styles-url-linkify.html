@@ -10,7 +10,7 @@ function test()
 {
     function completeURL(baseURL, href)
     {
-        InspectorTest.addResult(WebInspector.ParsedURL.completeURL(baseURL, href));
+        InspectorTest.addResult(Common.ParsedURL.completeURL(baseURL, href));
     }
 
     InspectorTest.addResult("URLs completed:");
@@ -37,7 +37,7 @@ function test()
     completeURL("https://example.com/foo", dataURL);
     completeURL("http://example.com/foo", "javascript:alert('foo');");
     completeURL("http://example.com/foo", blobURL);
-    InspectorTest.addResult(WebInspector.ParsedURL.completeURL(blobURL));
+    completeURL("", blobURL);
 
     function dumpHref(dumpLinkClass)
     {
@@ -56,10 +56,8 @@ function test()
 
         var styleClass = "";
         if (dumpLinkClass) {
-            if (hrefNode.classList.contains("webkit-html-resource-link"))
-                styleClass += "webkit-html-resource-link ";
-            if (hrefNode.classList.contains("webkit-html-external-link"))
-                styleClass += "webkit-html-external-link ";
+            if (hrefNode.classList.contains("devtools-link"))
+                styleClass += "devtools-link ";
         }
 
         var href = hrefNode.href;

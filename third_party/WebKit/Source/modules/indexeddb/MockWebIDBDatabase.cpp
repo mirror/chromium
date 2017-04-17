@@ -4,8 +4,8 @@
 
 #include "MockWebIDBDatabase.h"
 
-#include "wtf/PtrUtil.h"
 #include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -13,9 +13,8 @@ MockWebIDBDatabase::MockWebIDBDatabase() {}
 
 MockWebIDBDatabase::~MockWebIDBDatabase() {}
 
-std::unique_ptr<MockWebIDBDatabase> MockWebIDBDatabase::create()
-{
-    return wrapUnique(new MockWebIDBDatabase());
+std::unique_ptr<MockWebIDBDatabase> MockWebIDBDatabase::Create() {
+  return WTF::WrapUnique(new MockWebIDBDatabase());
 }
 
-} // namespace blink
+}  // namespace blink

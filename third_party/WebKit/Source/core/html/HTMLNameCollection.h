@@ -24,20 +24,20 @@
 #define HTMLNameCollection_h
 
 #include "core/html/HTMLCollection.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
 class HTMLNameCollection : public HTMLCollection {
-public:
-    ~HTMLNameCollection() override;
+ public:
+  ~HTMLNameCollection() override;
 
-protected:
-    HTMLNameCollection(ContainerNode&, CollectionType, const AtomicString& name);
+ protected:
+  HTMLNameCollection(ContainerNode&, CollectionType, const AtomicString& name);
 
-    AtomicString m_name;
+  AtomicString name_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -14,12 +14,11 @@
 #include <vector>
 
 #include "base/logging.h"
-#include "mojo/public/cpp/bindings/array.h"
+#include "mojo/public/cpp/bindings/array_data_view.h"
 #include "mojo/public/cpp/bindings/lib/array_internal.h"
 #include "mojo/public/cpp/bindings/lib/serialization_forward.h"
 #include "mojo/public/cpp/bindings/lib/template_util.h"
 #include "mojo/public/cpp/bindings/lib/validation_errors.h"
-#include "mojo/public/cpp/bindings/map.h"
 
 namespace mojo {
 namespace internal {
@@ -46,7 +45,7 @@ class ArrayIterator<Traits, MaybeConstUserType, true> {
   using GetNextResult =
       decltype(Traits::GetValue(std::declval<IteratorType&>()));
   GetNextResult GetNext() {
-    auto& value = Traits::GetValue(iter_);
+    GetNextResult value = Traits::GetValue(iter_);
     Traits::AdvanceIterator(iter_);
     return value;
   }
@@ -287,13 +286,19 @@ struct ArraySerializer<
   using Element = typename MojomType::Element;
   using Traits = ArrayTraits<UserType>;
 
-  static_assert(std::is_same<Element, typename Traits::Element>::value,
-                "Incorrect array serializer");
-
   static size_t GetSerializedSize(UserTypeIterator* input,
                                   SerializationContext* context) {
-    return sizeof(Data) +
-           Align(input->GetSize() * sizeof(typename Data::Element));
+    size_t element_count = input->GetSize();
+    if (BelongsTo<Element,
+                  MojomTypeCategory::ASSOCIATED_INTERFACE |
+                      MojomTypeCategory::ASSOCIATED_INTERFACE_REQUEST>::value) {
+      for (size_t i = 0; i < element_count; ++i) {
+        typename UserTypeIterator::GetNextResult next = input->GetNext();
+        size_t size = PrepareToSerialize<Element>(next, context);
+        DCHECK_EQ(size, 0u);
+      }
+    }
+    return sizeof(Data) + Align(element_count * sizeof(typename Data::Element));
   }
 
   static void SerializeElements(UserTypeIterator* input,
@@ -306,7 +311,8 @@ struct ArraySerializer<
 
     size_t size = input->GetSize();
     for (size_t i = 0; i < size; ++i) {
-      Serialize<Element>(input->GetNext(), &output->at(i), context);
+      typename UserTypeIterator::GetNextResult next = input->GetNext();
+      Serialize<Element>(next, &output->at(i), context);
 
       static const ValidationError kError =
           BelongsTo<Element,
@@ -361,8 +367,10 @@ struct ArraySerializer<MojomType,
                                   SerializationContext* context) {
     size_t element_count = input->GetSize();
     size_t size = sizeof(Data) + element_count * sizeof(typename Data::Element);
-    for (size_t i = 0; i < element_count; ++i)
-      size += PrepareToSerialize<Element>(input->GetNext(), context);
+    for (size_t i = 0; i < element_count; ++i) {
+      typename UserTypeIterator::GetNextResult next = input->GetNext();
+      size += PrepareToSerialize<Element>(next, context);
+    }
     return size;
   }
 
@@ -374,7 +382,8 @@ struct ArraySerializer<MojomType,
     size_t size = input->GetSize();
     for (size_t i = 0; i < size; ++i) {
       DataElementPtr data_ptr;
-      SerializeCaller<Element>::Run(input->GetNext(), buf, &data_ptr,
+      typename UserTypeIterator::GetNextResult next = input->GetNext();
+      SerializeCaller<Element>::Run(next, buf, &data_ptr,
                                     validate_params->element_validate_params,
                                     context);
       output->at(i).Set(data_ptr);
@@ -444,10 +453,6 @@ struct ArraySerializer<
   using Element = typename MojomType::Element;
   using Traits = ArrayTraits<UserType>;
 
-  static_assert(std::is_same<typename MojomType::Element,
-                             typename Traits::Element>::value,
-                "Incorrect array serializer");
-
   static size_t GetSerializedSize(UserTypeIterator* input,
                                   SerializationContext* context) {
     size_t element_count = input->GetSize();
@@ -455,7 +460,8 @@ struct ArraySerializer<
     for (size_t i = 0; i < element_count; ++i) {
       // Call with |inlined| set to false, so that it will account for both the
       // data in the union and the space in the array used to hold the union.
-      size += PrepareToSerialize<Element>(input->GetNext(), false, context);
+      typename UserTypeIterator::GetNextResult next = input->GetNext();
+      size += PrepareToSerialize<Element>(next, false, context);
     }
     return size;
   }
@@ -468,7 +474,8 @@ struct ArraySerializer<
     size_t size = input->GetSize();
     for (size_t i = 0; i < size; ++i) {
       typename Data::Element* result = output->storage() + i;
-      Serialize<Element>(input->GetNext(), buf, &result, true, context);
+      typename UserTypeIterator::GetNextResult next = input->GetNext();
+      Serialize<Element>(next, buf, &result, true, context);
       MOJO_INTERNAL_DLOG_SERIALIZATION_WARNING(
           !validate_params->element_is_nullable && output->at(i).is_null(),
           VALIDATION_ERROR_UNEXPECTED_NULL_POINTER,
@@ -492,13 +499,13 @@ struct ArraySerializer<
 };
 
 template <typename Element, typename MaybeConstUserType>
-struct Serializer<Array<Element>, MaybeConstUserType> {
+struct Serializer<ArrayDataView<Element>, MaybeConstUserType> {
   using UserType = typename std::remove_const<MaybeConstUserType>::type;
   using Traits = ArrayTraits<UserType>;
-  using Impl = ArraySerializer<Array<Element>,
+  using Impl = ArraySerializer<ArrayDataView<Element>,
                                MaybeConstUserType,
                                ArrayIterator<Traits, MaybeConstUserType>>;
-  using Data = typename MojomTypeTraits<Array<Element>>::Data;
+  using Data = typename MojomTypeTraits<ArrayDataView<Element>>::Data;
 
   static size_t PrepareToSerialize(MaybeConstUserType& input,
                                    SerializationContext* context) {

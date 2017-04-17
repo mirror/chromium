@@ -161,9 +161,9 @@ class ProcessSingletonTest : public base::MultiProcessTest {
   void TearDown() override {
     chrome::SetNotificationTimeoutForTesting(old_notification_timeout_);
 
-    if (browser_victim_.IsValid()) {
+    if (browser_victim_.process.IsValid()) {
       EXPECT_TRUE(::SetEvent(continue_event_.Get()));
-      EXPECT_TRUE(browser_victim_.WaitForExit(nullptr));
+      EXPECT_TRUE(browser_victim_.process.WaitForExit(nullptr));
     }
 
     base::MultiProcessTest::TearDown();
@@ -195,7 +195,7 @@ class ProcessSingletonTest : public base::MultiProcessTest {
         SpawnChildWithOptions("ProcessSingletonTestProcessMain", options);
 
     // Wait for the ready event (or process exit).
-    HANDLE handles[] = {ready_event.Get(), browser_victim_.Handle()};
+    HANDLE handles[] = {ready_event.Get(), browser_victim_.process.Handle()};
     // The wait should always return because either |ready_event| is signaled or
     // |browser_victim_| died unexpectedly or exited on error.
     DWORD result =
@@ -206,7 +206,7 @@ class ProcessSingletonTest : public base::MultiProcessTest {
   base::CommandLine MakeCmdLine(const std::string& procname) override {
     base::CommandLine cmd_line = base::MultiProcessTest::MakeCmdLine(procname);
 
-    cmd_line.AppendSwitchPath(switches::kUserDataDir, user_data_dir_.path());
+    cmd_line.AppendSwitchPath(switches::kUserDataDir, user_data_dir_.GetPath());
     cmd_line.AppendSwitchNative(kReadyEventNameFlag, ready_event_name_);
     cmd_line.AppendSwitchNative(kContinueEventNameFlag, continue_event_name_);
     if (window_option_ == WITH_WINDOW)
@@ -228,8 +228,10 @@ class ProcessSingletonTest : public base::MultiProcessTest {
                    base::Unretained(this), allow_kill));
   }
 
-  base::Process* browser_victim() { return &browser_victim_; }
-  const base::FilePath& user_data_dir() const { return user_data_dir_.path(); }
+  base::Process* browser_victim() { return &(browser_victim_.process); }
+  const base::FilePath& user_data_dir() const {
+    return user_data_dir_.GetPath();
+  }
   ProcessSingleton* test_singleton() const { return test_singleton_.get(); }
   bool should_kill_called() const { return should_kill_called_; }
 
@@ -244,7 +246,7 @@ class ProcessSingletonTest : public base::MultiProcessTest {
 
   WindowOption window_option_;
   base::ScopedTempDir user_data_dir_;
-  base::Process browser_victim_;
+  base::SpawnChildResult browser_victim_;
   base::win::ScopedHandle continue_event_;
 
   std::unique_ptr<ProcessSingleton> test_singleton_;
@@ -264,13 +266,16 @@ TEST_F(ProcessSingletonTest, KillsHungBrowserWithNoWindows) {
   // user interaction.
   ProcessSingleton::NotifyResult notify_result =
       test_singleton()->NotifyOtherProcessOrCreate();
-  ASSERT_EQ(ProcessSingleton::PROFILE_IN_USE, notify_result);
+
+  // The hung process was killed and the notification is equivalent to
+  // a non existent process.
+  ASSERT_EQ(ProcessSingleton::PROCESS_NONE, notify_result);
 
   // The should-kill callback should not have been called, as the "browser" does
   // not have visible window.
   EXPECT_FALSE(should_kill_called());
 
-  // Verify that the hung browser has beem terminated with the
+  // Verify that the hung browser has been terminated with the
   // RESULT_CODE_HUNG exit code.
   int exit_code = 0;
   EXPECT_TRUE(
@@ -304,13 +309,16 @@ TEST_F(ProcessSingletonTest, KillWithUserPermission) {
   // before killing the hung process.
   ProcessSingleton::NotifyResult notify_result =
       test_singleton()->NotifyOtherProcessOrCreate();
-  ASSERT_EQ(ProcessSingleton::PROFILE_IN_USE, notify_result);
+
+  // The hung process was killed and the notification is equivalent to
+  // a non existent process.
+  ASSERT_EQ(ProcessSingleton::PROCESS_NONE, notify_result);
 
   // The should-kill callback should have been called, as the "browser" has a
   // visible window.
   EXPECT_TRUE(should_kill_called());
 
-  // Verify that the hung browser has beem terminated with the
+  // Verify that the hung browser has been terminated with the
   // RESULT_CODE_HUNG exit code.
   int exit_code = 0;
   EXPECT_TRUE(

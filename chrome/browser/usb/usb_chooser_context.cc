@@ -13,7 +13,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "chrome/browser/profiles/profile.h"
-#include "device/core/device_client.h"
+#include "device/base/device_client.h"
 #include "device/usb/public/interfaces/device.mojom.h"
 #include "device/usb/usb_device.h"
 
@@ -54,7 +54,8 @@ bool CanStorePersistentEntry(const scoped_refptr<const UsbDevice>& device) {
 UsbChooserContext::UsbChooserContext(Profile* profile)
     : ChooserContextBase(profile, CONTENT_SETTINGS_TYPE_USB_CHOOSER_DATA),
       is_incognito_(profile->IsOffTheRecord()),
-      observer_(this) {
+      observer_(this),
+      weak_factory_(this) {
   usb_service_ = device::DeviceClient::Get()->GetUsbService();
   if (usb_service_)
     observer_.Add(usb_service_);
@@ -100,9 +101,9 @@ UsbChooserContext::GetAllGrantedObjects() {
       base::DictionaryValue object;
       object.SetString(kDeviceNameKey, device->product_string());
       object.SetString(kGuidKey, device->guid());
-      objects.push_back(base::WrapUnique(new ChooserContextBase::Object(
+      objects.push_back(base::MakeUnique<ChooserContextBase::Object>(
           requesting_origin, embedding_origin, &object, "preference",
-          is_incognito_)));
+          is_incognito_));
     }
   }
 
@@ -159,7 +160,7 @@ bool UsbChooserContext::HasDevicePermission(
   auto it = ephemeral_devices_.find(
       std::make_pair(requesting_origin, embedding_origin));
   if (it != ephemeral_devices_.end() &&
-      ContainsValue(it->second, device->guid())) {
+      base::ContainsValue(it->second, device->guid())) {
     return true;
   }
 
@@ -181,6 +182,10 @@ bool UsbChooserContext::HasDevicePermission(
   }
 
   return false;
+}
+
+base::WeakPtr<UsbChooserContext> UsbChooserContext::AsWeakPtr() {
+  return weak_factory_.GetWeakPtr();
 }
 
 bool UsbChooserContext::IsValidObject(const base::DictionaryValue& object) {

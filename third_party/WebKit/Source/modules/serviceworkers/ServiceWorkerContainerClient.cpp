@@ -4,57 +4,67 @@
 
 #include "modules/serviceworkers/ServiceWorkerContainerClient.h"
 
+#include <memory>
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalFrame.h"
-#include "core/loader/FrameLoaderClient.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
-#include <memory>
 
 namespace blink {
 
-ServiceWorkerContainerClient* ServiceWorkerContainerClient::create(std::unique_ptr<WebServiceWorkerProvider> provider)
-{
-    return new ServiceWorkerContainerClient(std::move(provider));
+ServiceWorkerContainerClient::ServiceWorkerContainerClient(
+    Document& document,
+    std::unique_ptr<WebServiceWorkerProvider> provider)
+    : Supplement<Document>(document), provider_(std::move(provider)) {}
+
+ServiceWorkerContainerClient::ServiceWorkerContainerClient(
+    WorkerClients& clients,
+    std::unique_ptr<WebServiceWorkerProvider> provider)
+    : Supplement<WorkerClients>(clients), provider_(std::move(provider)) {}
+
+ServiceWorkerContainerClient::~ServiceWorkerContainerClient() {}
+
+const char* ServiceWorkerContainerClient::SupplementName() {
+  return "ServiceWorkerContainerClient";
 }
 
-ServiceWorkerContainerClient::ServiceWorkerContainerClient(std::unique_ptr<WebServiceWorkerProvider> provider)
-    : m_provider(std::move(provider))
-{
-}
-
-ServiceWorkerContainerClient::~ServiceWorkerContainerClient()
-{
-}
-
-const char* ServiceWorkerContainerClient::supplementName()
-{
-    return "ServiceWorkerContainerClient";
-}
-
-ServiceWorkerContainerClient* ServiceWorkerContainerClient::from(ExecutionContext* context)
-{
-    if (context->isWorkerGlobalScope()) {
-        WorkerClients* clients = toWorkerGlobalScope(context)->clients();
-        ASSERT(clients);
-        return static_cast<ServiceWorkerContainerClient*>(Supplement<WorkerClients>::from(clients, supplementName()));
-    }
-    Document* document = toDocument(context);
-    if (!document->frame())
-        return nullptr;
-
-    ServiceWorkerContainerClient* client = static_cast<ServiceWorkerContainerClient*>(Supplement<Document>::from(document, supplementName()));
-    if (!client) {
-        client = new ServiceWorkerContainerClient(document->frame()->loader().client()->createServiceWorkerProvider());
-        Supplement<Document>::provideTo(*document, supplementName(), client);
-    }
+ServiceWorkerContainerClient* ServiceWorkerContainerClient::From(
+    ExecutionContext* context) {
+  if (!context)
+    return nullptr;
+  if (context->IsWorkerGlobalScope()) {
+    WorkerClients* worker_clients = ToWorkerGlobalScope(context)->Clients();
+    DCHECK(worker_clients);
+    ServiceWorkerContainerClient* client =
+        static_cast<ServiceWorkerContainerClient*>(
+            Supplement<WorkerClients>::From(worker_clients, SupplementName()));
+    DCHECK(client);
     return client;
+  }
+  Document* document = ToDocument(context);
+  if (!document->GetFrame())
+    return nullptr;
+
+  ServiceWorkerContainerClient* client =
+      static_cast<ServiceWorkerContainerClient*>(
+          Supplement<Document>::From(document, SupplementName()));
+  if (!client) {
+    client = new ServiceWorkerContainerClient(
+        *document,
+        document->GetFrame()->Loader().Client()->CreateServiceWorkerProvider());
+    Supplement<Document>::ProvideTo(*document, SupplementName(), client);
+  }
+  return client;
 }
 
-void provideServiceWorkerContainerClientToWorker(WorkerClients* clients, std::unique_ptr<WebServiceWorkerProvider> provider)
-{
-    clients->provideSupplement(ServiceWorkerContainerClient::supplementName(), ServiceWorkerContainerClient::create(std::move(provider)));
+void ProvideServiceWorkerContainerClientToWorker(
+    WorkerClients* clients,
+    std::unique_ptr<WebServiceWorkerProvider> provider) {
+  clients->ProvideSupplement(
+      ServiceWorkerContainerClient::SupplementName(),
+      new ServiceWorkerContainerClient(*clients, std::move(provider)));
 }
 
-} // namespace blink
+}  // namespace blink

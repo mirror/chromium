@@ -1,6 +1,7 @@
 /*
  * (C) 1999-2003 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2012 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2012 Apple Inc. All
+ * rights reserved.
  * Copyright (C) 2011 Research In Motion Limited. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -28,7 +29,6 @@
 #include "core/css/CSSKeyframesRule.h"
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/StylePropertySet.h"
-#include "core/css/parser/CSSVariableParser.h"
 #include "core/dom/Element.h"
 #include "core/dom/MutationObserverInterestGroup.h"
 #include "core/dom/MutationRecord.h"
@@ -36,365 +36,396 @@
 #include "core/dom/StyleEngine.h"
 #include "core/dom/custom/CustomElement.h"
 #include "core/dom/custom/CustomElementDefinition.h"
-#include "core/inspector/InspectorInstrumentation.h"
+#include "core/probe/CoreProbes.h"
 #include "platform/RuntimeEnabledFeatures.h"
 
 namespace blink {
 
 namespace {
 
-static CustomElementDefinition* definitionIfStyleChangedCallback(Element* element)
-{
-    CustomElementDefinition* definition = CustomElement::definitionForElement(element);
-    return definition && definition->hasStyleAttributeChangedCallback()
-        ? definition : nullptr;
+static CustomElementDefinition* DefinitionIfStyleChangedCallback(
+    Element* element) {
+  CustomElementDefinition* definition =
+      CustomElement::DefinitionForElement(element);
+  return definition && definition->HasStyleAttributeChangedCallback()
+             ? definition
+             : nullptr;
 }
 
 class StyleAttributeMutationScope {
-    WTF_MAKE_NONCOPYABLE(StyleAttributeMutationScope);
-    STACK_ALLOCATED();
-public:
-    StyleAttributeMutationScope(AbstractPropertySetCSSStyleDeclaration* decl)
-    {
-        ++s_scopeCount;
+  WTF_MAKE_NONCOPYABLE(StyleAttributeMutationScope);
+  STACK_ALLOCATED();
 
-        if (s_scopeCount != 1) {
-            ASSERT(s_currentDecl == decl);
-            return;
-        }
+ public:
+  DISABLE_CFI_PERF
+  StyleAttributeMutationScope(AbstractPropertySetCSSStyleDeclaration* decl) {
+    ++scope_count_;
 
-        ASSERT(!s_currentDecl);
-        s_currentDecl = decl;
-
-        if (!s_currentDecl->parentElement())
-            return;
-
-        m_mutationRecipients = MutationObserverInterestGroup::createForAttributesMutation(*s_currentDecl->parentElement(), HTMLNames::styleAttr);
-        bool shouldReadOldValue =
-            (m_mutationRecipients && m_mutationRecipients->isOldValueRequested())
-            || definitionIfStyleChangedCallback(s_currentDecl->parentElement());
-
-        if (shouldReadOldValue)
-            m_oldValue = s_currentDecl->parentElement()->getAttribute(HTMLNames::styleAttr);
-
-        if (m_mutationRecipients) {
-            AtomicString requestedOldValue = m_mutationRecipients->isOldValueRequested() ? m_oldValue : nullAtom;
-            m_mutation = MutationRecord::createAttributes(s_currentDecl->parentElement(), HTMLNames::styleAttr, requestedOldValue);
-        }
+    if (scope_count_ != 1) {
+      DCHECK_EQ(current_decl_, decl);
+      return;
     }
 
-    ~StyleAttributeMutationScope()
-    {
-        --s_scopeCount;
-        if (s_scopeCount)
-            return;
+    DCHECK(!current_decl_);
+    current_decl_ = decl;
 
-        if (s_shouldDeliver) {
-            if (m_mutation)
-                m_mutationRecipients->enqueueMutationRecord(m_mutation);
+    if (!current_decl_->ParentElement())
+      return;
 
-            Element* element = s_currentDecl->parentElement();
-            if (CustomElementDefinition* definition = definitionIfStyleChangedCallback(element)) {
-                definition->enqueueAttributeChangedCallback(element,
-                    HTMLNames::styleAttr, m_oldValue,
-                    element->getAttribute(HTMLNames::styleAttr));
-            }
+    mutation_recipients_ =
+        MutationObserverInterestGroup::CreateForAttributesMutation(
+            *current_decl_->ParentElement(), HTMLNames::styleAttr);
+    bool should_read_old_value =
+        (mutation_recipients_ && mutation_recipients_->IsOldValueRequested()) ||
+        DefinitionIfStyleChangedCallback(current_decl_->ParentElement());
 
-            s_shouldDeliver = false;
-        }
+    if (should_read_old_value)
+      old_value_ =
+          current_decl_->ParentElement()->getAttribute(HTMLNames::styleAttr);
 
-        // We have to clear internal state before calling Inspector's code.
-        AbstractPropertySetCSSStyleDeclaration* localCopyStyleDecl = s_currentDecl;
-        s_currentDecl = 0;
+    if (mutation_recipients_) {
+      AtomicString requested_old_value =
+          mutation_recipients_->IsOldValueRequested() ? old_value_
+                                                      : g_null_atom;
+      mutation_ = MutationRecord::CreateAttributes(
+          current_decl_->ParentElement(), HTMLNames::styleAttr,
+          requested_old_value);
+    }
+  }
 
-        if (!s_shouldNotifyInspector)
-            return;
+  DISABLE_CFI_PERF
+  ~StyleAttributeMutationScope() {
+    --scope_count_;
+    if (scope_count_)
+      return;
 
-        s_shouldNotifyInspector = false;
-        if (localCopyStyleDecl->parentElement())
-            InspectorInstrumentation::didInvalidateStyleAttr(localCopyStyleDecl->parentElement());
+    if (should_deliver_) {
+      if (mutation_)
+        mutation_recipients_->EnqueueMutationRecord(mutation_);
+
+      Element* element = current_decl_->ParentElement();
+      if (CustomElementDefinition* definition =
+              DefinitionIfStyleChangedCallback(element)) {
+        definition->EnqueueAttributeChangedCallback(
+            element, HTMLNames::styleAttr, old_value_,
+            element->getAttribute(HTMLNames::styleAttr));
+      }
+
+      should_deliver_ = false;
     }
 
-    void enqueueMutationRecord()
-    {
-        s_shouldDeliver = true;
-    }
+    // We have to clear internal state before calling Inspector's code.
+    AbstractPropertySetCSSStyleDeclaration* local_copy_style_decl =
+        current_decl_;
+    current_decl_ = 0;
 
-    void didInvalidateStyleAttr()
-    {
-        s_shouldNotifyInspector = true;
-    }
+    if (!should_notify_inspector_)
+      return;
 
-private:
-    static unsigned s_scopeCount;
-    static AbstractPropertySetCSSStyleDeclaration* s_currentDecl;
-    static bool s_shouldNotifyInspector;
-    static bool s_shouldDeliver;
+    should_notify_inspector_ = false;
+    if (local_copy_style_decl->ParentElement())
+      probe::didInvalidateStyleAttr(local_copy_style_decl->ParentElement());
+  }
 
-    Member<MutationObserverInterestGroup> m_mutationRecipients;
-    Member<MutationRecord> m_mutation;
-    AtomicString m_oldValue;
+  void EnqueueMutationRecord() { should_deliver_ = true; }
+
+  void DidInvalidateStyleAttr() { should_notify_inspector_ = true; }
+
+ private:
+  static unsigned scope_count_;
+  static AbstractPropertySetCSSStyleDeclaration* current_decl_;
+  static bool should_notify_inspector_;
+  static bool should_deliver_;
+
+  Member<MutationObserverInterestGroup> mutation_recipients_;
+  Member<MutationRecord> mutation_;
+  AtomicString old_value_;
 };
 
-unsigned StyleAttributeMutationScope::s_scopeCount = 0;
-AbstractPropertySetCSSStyleDeclaration* StyleAttributeMutationScope::s_currentDecl = 0;
-bool StyleAttributeMutationScope::s_shouldNotifyInspector = false;
-bool StyleAttributeMutationScope::s_shouldDeliver = false;
+unsigned StyleAttributeMutationScope::scope_count_ = 0;
+AbstractPropertySetCSSStyleDeclaration*
+    StyleAttributeMutationScope::current_decl_ = 0;
+bool StyleAttributeMutationScope::should_notify_inspector_ = false;
+bool StyleAttributeMutationScope::should_deliver_ = false;
 
-} // namespace
+}  // namespace
 
-DEFINE_TRACE(PropertySetCSSStyleDeclaration)
-{
-    visitor->trace(m_propertySet);
-    AbstractPropertySetCSSStyleDeclaration::trace(visitor);
+DEFINE_TRACE(PropertySetCSSStyleDeclaration) {
+  visitor->Trace(property_set_);
+  AbstractPropertySetCSSStyleDeclaration::Trace(visitor);
 }
 
-unsigned AbstractPropertySetCSSStyleDeclaration::length() const
-{
-    return propertySet().propertyCount();
+unsigned AbstractPropertySetCSSStyleDeclaration::length() const {
+  return PropertySet().PropertyCount();
 }
 
-String AbstractPropertySetCSSStyleDeclaration::item(unsigned i) const
-{
-    if (i >= propertySet().propertyCount())
-        return "";
-    StylePropertySet::PropertyReference property = propertySet().propertyAt(i);
-    if (RuntimeEnabledFeatures::cssVariablesEnabled() && property.id() == CSSPropertyVariable)
-        return toCSSCustomPropertyDeclaration(property.value()).name();
-    if (property.id() == CSSPropertyApplyAtRule)
-        return "@apply";
-    return getPropertyName(property.id());
+String AbstractPropertySetCSSStyleDeclaration::item(unsigned i) const {
+  if (i >= PropertySet().PropertyCount())
+    return "";
+  StylePropertySet::PropertyReference property = PropertySet().PropertyAt(i);
+  if (property.Id() == CSSPropertyVariable)
+    return ToCSSCustomPropertyDeclaration(property.Value()).GetName();
+  if (property.Id() == CSSPropertyApplyAtRule)
+    return "@apply";
+  return getPropertyName(property.Id());
 }
 
-String AbstractPropertySetCSSStyleDeclaration::cssText() const
-{
-    return propertySet().asText();
+String AbstractPropertySetCSSStyleDeclaration::cssText() const {
+  return PropertySet().AsText();
 }
 
-void AbstractPropertySetCSSStyleDeclaration::setCSSText(const String& text, ExceptionState&)
-{
-    StyleAttributeMutationScope mutationScope(this);
-    willMutate();
+void AbstractPropertySetCSSStyleDeclaration::setCSSText(const String& text,
+                                                        ExceptionState&) {
+  StyleAttributeMutationScope mutation_scope(this);
+  WillMutate();
 
-    propertySet().parseDeclarationList(text, contextStyleSheet());
+  PropertySet().ParseDeclarationList(text, ContextStyleSheet());
 
-    didMutate(PropertyChanged);
+  DidMutate(kPropertyChanged);
 
-    mutationScope.enqueueMutationRecord();
+  mutation_scope.EnqueueMutationRecord();
 }
 
-String AbstractPropertySetCSSStyleDeclaration::getPropertyValue(const String& propertyName)
-{
-    CSSPropertyID propertyID = cssPropertyID(propertyName);
-    if (!propertyID) {
-        if (!RuntimeEnabledFeatures::cssVariablesEnabled() || !CSSVariableParser::isValidVariableName(propertyName))
-            return String();
-        return propertySet().getPropertyValue(AtomicString(propertyName));
-    }
-    return propertySet().getPropertyValue(propertyID);
+String AbstractPropertySetCSSStyleDeclaration::getPropertyValue(
+    const String& property_name) {
+  CSSPropertyID property_id = cssPropertyID(property_name);
+  if (!property_id)
+    return String();
+  if (property_id == CSSPropertyVariable)
+    return PropertySet().GetPropertyValue(AtomicString(property_name));
+  return PropertySet().GetPropertyValue(property_id);
 }
 
-String AbstractPropertySetCSSStyleDeclaration::getPropertyPriority(const String& propertyName)
-{
-    bool important = false;
-    CSSPropertyID propertyID = cssPropertyID(propertyName);
-    if (!propertyID) {
-        if (!RuntimeEnabledFeatures::cssVariablesEnabled() || !CSSVariableParser::isValidVariableName(propertyName))
-            return String();
-        important = propertySet().propertyIsImportant(AtomicString(propertyName));
-    } else {
-        important = propertySet().propertyIsImportant(propertyID);
-    }
-    return important ? "important" : "";
+String AbstractPropertySetCSSStyleDeclaration::getPropertyPriority(
+    const String& property_name) {
+  CSSPropertyID property_id = cssPropertyID(property_name);
+  if (!property_id)
+    return String();
+
+  bool important = false;
+  if (property_id == CSSPropertyVariable)
+    important = PropertySet().PropertyIsImportant(AtomicString(property_name));
+  else
+    important = PropertySet().PropertyIsImportant(property_id);
+  return important ? "important" : "";
 }
 
-String AbstractPropertySetCSSStyleDeclaration::getPropertyShorthand(const String& propertyName)
-{
-    CSSPropertyID propertyID = cssPropertyID(propertyName);
+String AbstractPropertySetCSSStyleDeclaration::GetPropertyShorthand(
+    const String& property_name) {
+  CSSPropertyID property_id = cssPropertyID(property_name);
 
-    // Custom properties don't have shorthands, so we can ignore them here.
-    if (!propertyID)
-        return String();
-    if (isShorthandProperty(propertyID))
-        return String();
-    CSSPropertyID shorthandID = propertySet().getPropertyShorthand(propertyID);
-    if (!shorthandID)
-        return String();
-    return getPropertyNameString(shorthandID);
+  // Custom properties don't have shorthands, so we can ignore them here.
+  if (!property_id || property_id == CSSPropertyVariable)
+    return String();
+  if (isShorthandProperty(property_id))
+    return String();
+  CSSPropertyID shorthand_id = PropertySet().GetPropertyShorthand(property_id);
+  if (!shorthand_id)
+    return String();
+  return getPropertyNameString(shorthand_id);
 }
 
-bool AbstractPropertySetCSSStyleDeclaration::isPropertyImplicit(const String& propertyName)
-{
-    CSSPropertyID propertyID = cssPropertyID(propertyName);
+bool AbstractPropertySetCSSStyleDeclaration::IsPropertyImplicit(
+    const String& property_name) {
+  CSSPropertyID property_id = cssPropertyID(property_name);
 
-    // Custom properties don't have shorthands, so we can ignore them here.
-    if (!propertyID)
-        return false;
-    return propertySet().isPropertyImplicit(propertyID);
+  // Custom properties don't have shorthands, so we can ignore them here.
+  if (!property_id || property_id == CSSPropertyVariable)
+    return false;
+  return PropertySet().IsPropertyImplicit(property_id);
 }
 
-void AbstractPropertySetCSSStyleDeclaration::setProperty(const String& propertyName, const String& value, const String& priority, ExceptionState& exceptionState)
-{
-    CSSPropertyID propertyID = unresolvedCSSPropertyID(propertyName);
-    if (!propertyID) {
-        if (!RuntimeEnabledFeatures::cssVariablesEnabled() || !CSSVariableParser::isValidVariableName(propertyName))
-            return;
-        propertyID = CSSPropertyVariable;
-    }
+void AbstractPropertySetCSSStyleDeclaration::setProperty(
+    const String& property_name,
+    const String& value,
+    const String& priority,
+    ExceptionState& exception_state) {
+  CSSPropertyID property_id = unresolvedCSSPropertyID(property_name);
+  if (!property_id)
+    return;
 
-    bool important = equalIgnoringCase(priority, "important");
-    if (!important && !priority.isEmpty())
-        return;
+  bool important = DeprecatedEqualIgnoringCase(priority, "important");
+  if (!important && !priority.IsEmpty())
+    return;
 
-    setPropertyInternal(propertyID, propertyName, value, important, exceptionState);
+  SetPropertyInternal(property_id, property_name, value, important,
+                      exception_state);
 }
 
-String AbstractPropertySetCSSStyleDeclaration::removeProperty(const String& propertyName, ExceptionState& exceptionState)
-{
-    CSSPropertyID propertyID = cssPropertyID(propertyName);
-    if (!propertyID) {
-        if (!RuntimeEnabledFeatures::cssVariablesEnabled() || !CSSVariableParser::isValidVariableName(propertyName))
-            return String();
-        propertyID = CSSPropertyVariable;
-    }
+String AbstractPropertySetCSSStyleDeclaration::removeProperty(
+    const String& property_name,
+    ExceptionState& exception_state) {
+  CSSPropertyID property_id = cssPropertyID(property_name);
+  if (!property_id)
+    return String();
 
-    StyleAttributeMutationScope mutationScope(this);
-    willMutate();
+  StyleAttributeMutationScope mutation_scope(this);
+  WillMutate();
 
-    String result;
-    bool changed = false;
-    if (propertyID == CSSPropertyVariable)
-        changed = propertySet().removeProperty(AtomicString(propertyName), &result);
-    else
-        changed = propertySet().removeProperty(propertyID, &result);
+  String result;
+  bool changed = false;
+  if (property_id == CSSPropertyVariable)
+    changed =
+        PropertySet().RemoveProperty(AtomicString(property_name), &result);
+  else
+    changed = PropertySet().RemoveProperty(property_id, &result);
 
-    didMutate(changed ? PropertyChanged : NoChanges);
+  DidMutate(changed ? kPropertyChanged : kNoChanges);
 
-    if (changed)
-        mutationScope.enqueueMutationRecord();
-    return result;
+  if (changed)
+    mutation_scope.EnqueueMutationRecord();
+  return result;
 }
 
-const CSSValue* AbstractPropertySetCSSStyleDeclaration::getPropertyCSSValueInternal(CSSPropertyID propertyID)
-{
-    return propertySet().getPropertyCSSValue(propertyID);
+const CSSValue*
+AbstractPropertySetCSSStyleDeclaration::GetPropertyCSSValueInternal(
+    CSSPropertyID property_id) {
+  return PropertySet().GetPropertyCSSValue(property_id);
 }
 
-const CSSValue* AbstractPropertySetCSSStyleDeclaration::getPropertyCSSValueInternal(AtomicString customPropertyName)
-{
-    return propertySet().getPropertyCSSValue(customPropertyName);
+const CSSValue*
+AbstractPropertySetCSSStyleDeclaration::GetPropertyCSSValueInternal(
+    AtomicString custom_property_name) {
+  return PropertySet().GetPropertyCSSValue(custom_property_name);
 }
 
-String AbstractPropertySetCSSStyleDeclaration::getPropertyValueInternal(CSSPropertyID propertyID)
-{
-    return propertySet().getPropertyValue(propertyID);
+String AbstractPropertySetCSSStyleDeclaration::GetPropertyValueInternal(
+    CSSPropertyID property_id) {
+  return PropertySet().GetPropertyValue(property_id);
 }
 
-void AbstractPropertySetCSSStyleDeclaration::setPropertyInternal(CSSPropertyID unresolvedProperty, const String& customPropertyName, const String& value, bool important, ExceptionState&)
-{
-    StyleAttributeMutationScope mutationScope(this);
-    willMutate();
+DISABLE_CFI_PERF
+void AbstractPropertySetCSSStyleDeclaration::SetPropertyInternal(
+    CSSPropertyID unresolved_property,
+    const String& custom_property_name,
+    const String& value,
+    bool important,
+    ExceptionState&) {
+  StyleAttributeMutationScope mutation_scope(this);
+  WillMutate();
 
-    bool changed = false;
-    if (unresolvedProperty == CSSPropertyVariable)
-        changed = propertySet().setProperty(AtomicString(customPropertyName), value, important, contextStyleSheet());
-    else
-        changed = propertySet().setProperty(unresolvedProperty, value, important, contextStyleSheet());
+  bool did_change = false;
+  if (unresolved_property == CSSPropertyVariable) {
+    AtomicString atomic_name(custom_property_name);
 
-    didMutate(changed ? PropertyChanged : NoChanges);
+    bool is_animation_tainted = IsKeyframeStyle();
+    did_change =
+        PropertySet()
+            .SetProperty(atomic_name, GetPropertyRegistry(), value, important,
+                         ContextStyleSheet(), is_animation_tainted)
+            .did_change;
+  } else {
+    did_change = PropertySet()
+                     .SetProperty(unresolved_property, value, important,
+                                  ContextStyleSheet())
+                     .did_change;
+  }
 
-    if (!changed)
-        return;
+  DidMutate(did_change ? kPropertyChanged : kNoChanges);
 
-    Element* parent = parentElement();
-    if (parent)
-        parent->document().styleEngine().attributeChangedForElement(HTMLNames::styleAttr, *parent);
-    mutationScope.enqueueMutationRecord();
+  if (!did_change)
+    return;
+
+  Element* parent = ParentElement();
+  if (parent)
+    parent->GetDocument().GetStyleEngine().AttributeChangedForElement(
+        HTMLNames::styleAttr, *parent);
+  mutation_scope.EnqueueMutationRecord();
 }
 
-StyleSheetContents* AbstractPropertySetCSSStyleDeclaration::contextStyleSheet() const
-{
-    CSSStyleSheet* cssStyleSheet = parentStyleSheet();
-    return cssStyleSheet ? cssStyleSheet->contents() : nullptr;
+DISABLE_CFI_PERF
+StyleSheetContents* AbstractPropertySetCSSStyleDeclaration::ContextStyleSheet()
+    const {
+  CSSStyleSheet* css_style_sheet = ParentStyleSheet();
+  return css_style_sheet ? css_style_sheet->Contents() : nullptr;
 }
 
-bool AbstractPropertySetCSSStyleDeclaration::cssPropertyMatches(CSSPropertyID propertyID, const CSSValue* propertyValue) const
-{
-    return propertySet().propertyMatches(propertyID, *propertyValue);
+bool AbstractPropertySetCSSStyleDeclaration::CssPropertyMatches(
+    CSSPropertyID property_id,
+    const CSSValue* property_value) const {
+  return PropertySet().PropertyMatches(property_id, *property_value);
 }
 
-DEFINE_TRACE(AbstractPropertySetCSSStyleDeclaration)
-{
-    CSSStyleDeclaration::trace(visitor);
+DEFINE_TRACE(AbstractPropertySetCSSStyleDeclaration) {
+  CSSStyleDeclaration::Trace(visitor);
 }
 
-StyleRuleCSSStyleDeclaration::StyleRuleCSSStyleDeclaration(MutableStylePropertySet& propertySetArg, CSSRule* parentRule)
-    : PropertySetCSSStyleDeclaration(propertySetArg)
-    , m_parentRule(parentRule)
-{
+StyleRuleCSSStyleDeclaration::StyleRuleCSSStyleDeclaration(
+    MutableStylePropertySet& property_set_arg,
+    CSSRule* parent_rule)
+    : PropertySetCSSStyleDeclaration(property_set_arg),
+      parent_rule_(parent_rule) {}
+
+StyleRuleCSSStyleDeclaration::~StyleRuleCSSStyleDeclaration() {}
+
+void StyleRuleCSSStyleDeclaration::WillMutate() {
+  if (parent_rule_ && parent_rule_->parentStyleSheet())
+    parent_rule_->parentStyleSheet()->WillMutateRules();
 }
 
-StyleRuleCSSStyleDeclaration::~StyleRuleCSSStyleDeclaration()
-{
+void StyleRuleCSSStyleDeclaration::DidMutate(MutationType type) {
+  // Style sheet mutation needs to be signaled even if the change failed.
+  // willMutateRules/didMutateRules must pair.
+  if (parent_rule_ && parent_rule_->parentStyleSheet())
+    parent_rule_->parentStyleSheet()->DidMutateRules();
 }
 
-void StyleRuleCSSStyleDeclaration::willMutate()
-{
-    if (m_parentRule && m_parentRule->parentStyleSheet())
-        m_parentRule->parentStyleSheet()->willMutateRules();
+CSSStyleSheet* StyleRuleCSSStyleDeclaration::ParentStyleSheet() const {
+  return parent_rule_ ? parent_rule_->parentStyleSheet() : nullptr;
 }
 
-void StyleRuleCSSStyleDeclaration::didMutate(MutationType type)
-{
-    // Style sheet mutation needs to be signaled even if the change failed. willMutateRules/didMutateRules must pair.
-    if (m_parentRule && m_parentRule->parentStyleSheet())
-        m_parentRule->parentStyleSheet()->didMutateRules();
+void StyleRuleCSSStyleDeclaration::Reattach(
+    MutableStylePropertySet& property_set) {
+  property_set_ = &property_set;
 }
 
-CSSStyleSheet* StyleRuleCSSStyleDeclaration::parentStyleSheet() const
-{
-    return m_parentRule ? m_parentRule->parentStyleSheet() : nullptr;
+PropertyRegistry* StyleRuleCSSStyleDeclaration::GetPropertyRegistry() const {
+  CSSStyleSheet* sheet = parent_rule_->parentStyleSheet();
+  if (!sheet)
+    return nullptr;
+  Node* node = sheet->ownerNode();
+  if (!node)
+    return nullptr;
+  return node->GetDocument().GetPropertyRegistry();
 }
 
-void StyleRuleCSSStyleDeclaration::reattach(MutableStylePropertySet& propertySet)
-{
-    m_propertySet = &propertySet;
+DEFINE_TRACE(StyleRuleCSSStyleDeclaration) {
+  visitor->Trace(parent_rule_);
+  PropertySetCSSStyleDeclaration::Trace(visitor);
 }
 
-DEFINE_TRACE(StyleRuleCSSStyleDeclaration)
-{
-    visitor->trace(m_parentRule);
-    PropertySetCSSStyleDeclaration::trace(visitor);
+MutableStylePropertySet& InlineCSSStyleDeclaration::PropertySet() const {
+  return parent_element_->EnsureMutableInlineStyle();
 }
 
-MutableStylePropertySet& InlineCSSStyleDeclaration::propertySet() const
-{
-    return m_parentElement->ensureMutableInlineStyle();
+void InlineCSSStyleDeclaration::DidMutate(MutationType type) {
+  if (type == kNoChanges)
+    return;
+
+  if (!parent_element_)
+    return;
+
+  parent_element_->ClearMutableInlineStyleIfEmpty();
+  parent_element_->SetNeedsStyleRecalc(
+      kLocalStyleChange, StyleChangeReasonForTracing::Create(
+                             StyleChangeReason::kInlineCSSStyleMutated));
+  parent_element_->InvalidateStyleAttribute();
+  StyleAttributeMutationScope(this).DidInvalidateStyleAttr();
 }
 
-void InlineCSSStyleDeclaration::didMutate(MutationType type)
-{
-    if (type == NoChanges)
-        return;
-
-    if (!m_parentElement)
-        return;
-
-    m_parentElement->clearMutableInlineStyleIfEmpty();
-    m_parentElement->setNeedsStyleRecalc(LocalStyleChange, StyleChangeReasonForTracing::create(StyleChangeReason::InlineCSSStyleMutated));
-    m_parentElement->invalidateStyleAttribute();
-    StyleAttributeMutationScope(this).didInvalidateStyleAttr();
+CSSStyleSheet* InlineCSSStyleDeclaration::ParentStyleSheet() const {
+  return parent_element_ ? &parent_element_->GetDocument().ElementSheet()
+                         : nullptr;
 }
 
-CSSStyleSheet* InlineCSSStyleDeclaration::parentStyleSheet() const
-{
-    return m_parentElement ? &m_parentElement->document().elementSheet() : nullptr;
+PropertyRegistry* InlineCSSStyleDeclaration::GetPropertyRegistry() const {
+  return parent_element_ ? parent_element_->GetDocument().GetPropertyRegistry()
+                         : nullptr;
 }
 
-DEFINE_TRACE(InlineCSSStyleDeclaration)
-{
-    visitor->trace(m_parentElement);
-    AbstractPropertySetCSSStyleDeclaration::trace(visitor);
+DEFINE_TRACE(InlineCSSStyleDeclaration) {
+  visitor->Trace(parent_element_);
+  AbstractPropertySetCSSStyleDeclaration::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

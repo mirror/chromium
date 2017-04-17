@@ -7,10 +7,10 @@ package org.chromium.chrome.test.util;
 import android.annotation.TargetApi;
 import android.os.Build;
 
+import org.chromium.chrome.browser.ntp.ChromeHomeNewTabPage;
 import org.chromium.chrome.browser.ntp.IncognitoNewTabPage;
 import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.tab.Tab;
-import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 
@@ -25,20 +25,19 @@ public class NewTabPageTestUtils {
      * @param tab The tab to be monitored for NTP loading.
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void waitForNtpLoaded(final Tab tab) throws InterruptedException {
+    public static void waitForNtpLoaded(final Tab tab) {
         CriteriaHelper.pollUiThread(new Criteria("NTP never fully loaded") {
             @Override
             public boolean isSatisfied() {
                 if (!tab.isIncognito()) {
                     // TODO(tedchoc): Make MostVisitedPage also have a isLoaded() concept.
-                    if (FeatureUtilities.isDocumentMode(
-                            tab.getWindowAndroid().getApplicationContext())) {
-                        return tab.getView().isAttachedToWindow();
-                    }
-                    if (!(tab.getNativePage() instanceof NewTabPage)) {
+                    if (tab.getNativePage() instanceof ChromeHomeNewTabPage) {
+                        return true;
+                    } else if (tab.getNativePage() instanceof NewTabPage) {
+                        return ((NewTabPage) tab.getNativePage()).isLoadedForTests();
+                    } else {
                         return false;
                     }
-                    return ((NewTabPage) tab.getNativePage()).isLoadedForTests();
                 } else {
                     if (!(tab.getNativePage() instanceof IncognitoNewTabPage)) {
                         return false;

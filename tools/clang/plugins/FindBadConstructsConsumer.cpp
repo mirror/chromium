@@ -112,13 +112,14 @@ std::set<FunctionDecl*> GetLateParsedFunctionDecls(TranslationUnitDecl* decl) {
   return v.late_parsed_decls;
 }
 
-std::string GetAutoReplacementTypeAsString(QualType type) {
+std::string GetAutoReplacementTypeAsString(QualType type,
+                                           StorageClass storage_class) {
   QualType non_reference_type = type.getNonReferenceType();
   if (!non_reference_type->isPointerType())
-    return "auto";
+    return storage_class == SC_Static ? "static auto" : "auto";
 
-  std::string result =
-      GetAutoReplacementTypeAsString(non_reference_type->getPointeeType());
+  std::string result = GetAutoReplacementTypeAsString(
+      non_reference_type->getPointeeType(), storage_class);
   result += "*";
   if (non_reference_type.isLocalConstQualified())
     result += " const";
@@ -215,13 +216,12 @@ bool FindBadConstructsConsumer::VisitVarDecl(clang::VarDecl* var_decl) {
   return true;
 }
 
-void FindBadConstructsConsumer::CheckChromeClass(SourceLocation record_location,
+void FindBadConstructsConsumer::CheckChromeClass(LocationType location_type,
+                                                 SourceLocation record_location,
                                                  CXXRecordDecl* record) {
-  // By default, the clang checker doesn't check some types (templates, etc).
-  // That was only a mistake; once Chromium code passes these checks, we should
-  // remove the "check-templates" option and remove this code.
-  // See crbug.com/441916
-  if (!options_.check_templates && IsPodOrTemplateType(*record))
+  // TODO(dcheng): After emitWarning() is removed, move warning filtering into
+  // ReportIfSpellingLocNotIgnored.
+  if (location_type == LocationType::kBlink)
     return;
 
   bool implementation_file = InImplementationFile(record_location);
@@ -251,9 +251,13 @@ void FindBadConstructsConsumer::CheckChromeClass(SourceLocation record_location,
   CheckWeakPtrFactoryMembers(record_location, record);
 }
 
-void FindBadConstructsConsumer::CheckChromeEnum(SourceLocation enum_location,
+void FindBadConstructsConsumer::CheckChromeEnum(LocationType location_type,
+                                                SourceLocation enum_location,
                                                 EnumDecl* enum_decl) {
   if (!options_.check_enum_last_value)
+    return;
+
+  if (location_type == LocationType::kBlink)
     return;
 
   bool got_one = false;
@@ -368,7 +372,7 @@ void FindBadConstructsConsumer::CheckCtorDtorWeight(
         // The current check is buggy. An implicit copy constructor does not
         // have an inline body, so this check never fires for classes with a
         // user-declared out-of-line constructor.
-        if (it->hasInlineBody() && options_.check_implicit_copy_ctors) {
+        if (it->hasInlineBody()) {
           if (it->isCopyConstructor() &&
               !record->hasUserDeclaredCopyConstructor()) {
             // In general, implicit constructors are generated on demand.  But
@@ -457,9 +461,12 @@ SuppressibleDiagnosticBuilder
 FindBadConstructsConsumer::ReportIfSpellingLocNotIgnored(
     SourceLocation loc,
     unsigned diagnostic_id) {
-  return SuppressibleDiagnosticBuilder(
-      &diagnostic(), loc, diagnostic_id,
-      InBannedDirectory(instance().getSourceManager().getSpellingLoc(loc)));
+  LocationType type =
+      ClassifyLocation(instance().getSourceManager().getSpellingLoc(loc));
+  bool ignored =
+      type == LocationType::kThirdParty || type == LocationType::kBlink;
+  return SuppressibleDiagnosticBuilder(&diagnostic(), loc, diagnostic_id,
+                                       ignored);
 }
 
 // Checks that virtual methods are correctly annotated, and have no body in a
@@ -615,7 +622,8 @@ void FindBadConstructsConsumer::CheckVirtualBodies(
         bool emit = true;
         if (loc.isMacroID()) {
           SourceManager& manager = instance().getSourceManager();
-          if (InBannedDirectory(manager.getSpellingLoc(loc)))
+          LocationType type = ClassifyLocation(manager.getSpellingLoc(loc));
+          if (type == LocationType::kThirdParty || type == LocationType::kBlink)
             emit = false;
           else {
             StringRef name = Lexer::getImmediateMacroName(
@@ -660,7 +668,7 @@ void FindBadConstructsConsumer::CountType(const Type* type,
 
       // HACK: I'm at a loss about how to get the syntax checker to get
       // whether a template is externed or not. For the first pass here,
-      // just do retarded string comparisons.
+      // just do simple string comparisons.
       if (TemplateDecl* decl = name.getAsTemplateDecl()) {
         std::string base_name = decl->getNameAsString();
         if (base_name == "basic_string")
@@ -682,7 +690,15 @@ void FindBadConstructsConsumer::CountType(const Type* type,
     }
     case Type::Typedef: {
       while (const TypedefType* TT = dyn_cast<TypedefType>(type)) {
-        type = TT->getDecl()->getUnderlyingType().getTypePtr();
+        if (auto* decl = TT->getDecl()) {
+          const std::string name = decl->getNameAsString();
+          auto* context = decl->getDeclContext();
+          if (name == "atomic_int" && context->isStdNamespace()) {
+            (*trivial_member)++;
+            return;
+          }
+          type = decl->getUnderlyingType().getTypePtr();
+        }
       }
       CountType(type,
                 trivial_member,
@@ -974,15 +990,12 @@ void FindBadConstructsConsumer::ParseFunctionTemplates(
       continue;
 
     // Parse and build AST for yet-uninstantiated template functions.
-    clang::LateParsedTemplate* lpt = sema.LateParsedTemplateMap[fd];
+    clang::LateParsedTemplate* lpt = sema.LateParsedTemplateMap[fd].get();
     sema.LateTemplateParser(sema.OpaqueParser, *lpt);
   }
 }
 
 void FindBadConstructsConsumer::CheckVarDecl(clang::VarDecl* var_decl) {
-  if (!options_.check_auto_raw_pointer)
-    return;
-
   // Check whether auto deduces to a raw pointer.
   QualType non_reference_type = var_decl->getType().getNonReferenceType();
   // We might have a case where the type is written as auto*, but the actual
@@ -999,8 +1012,10 @@ void FindBadConstructsConsumer::CheckVarDecl(clang::VarDecl* var_decl) {
           // Check if we should even be considering this type (note that there
           // should be fewer auto types than banned namespace/directory types,
           // so check this last.
+          LocationType location_type =
+              ClassifyLocation(var_decl->getLocStart());
           if (!InBannedNamespace(var_decl) &&
-              !InBannedDirectory(var_decl->getLocStart())) {
+              location_type != LocationType::kThirdParty) {
             // The range starts from |var_decl|'s loc start, which is the
             // beginning of the full expression defining this |var_decl|. It
             // ends, however, where this |var_decl|'s type loc ends, since
@@ -1015,7 +1030,8 @@ void FindBadConstructsConsumer::CheckVarDecl(clang::VarDecl* var_decl) {
                                           diag_auto_deduced_to_a_pointer_type_)
                 << FixItHint::CreateReplacement(
                        range,
-                       GetAutoReplacementTypeAsString(var_decl->getType()));
+                       GetAutoReplacementTypeAsString(
+                           var_decl->getType(), var_decl->getStorageClass()));
           }
         }
       }

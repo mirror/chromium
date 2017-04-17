@@ -8,7 +8,7 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace safe_browsing {
@@ -19,7 +19,7 @@ std::unique_ptr<Incident> MakeIncident(const char* path) {
   std::unique_ptr<ClientIncidentReport_IncidentData_BlacklistLoadIncident>
       incident(new ClientIncidentReport_IncidentData_BlacklistLoadIncident);
   incident->set_path(path);
-  return base::WrapUnique(new BlacklistLoadIncident(std::move(incident)));
+  return base::MakeUnique<BlacklistLoadIncident>(std::move(incident));
 }
 
 }  // namespace

@@ -5,28 +5,18 @@
 #include "services/ui/ws/window_server_test_impl.h"
 
 #include "services/ui/public/interfaces/window_tree.mojom.h"
+#include "services/ui/ws/display.h"
+#include "services/ui/ws/display_manager.h"
 #include "services/ui/ws/server_window.h"
-#include "services/ui/ws/server_window_surface_manager.h"
+#include "services/ui/ws/server_window_compositor_frame_sink_manager.h"
 #include "services/ui/ws/window_server.h"
 #include "services/ui/ws/window_tree.h"
 
 namespace ui {
 namespace ws {
 
-namespace {
-
-bool WindowHasValidFrame(const ServerWindow* window) {
-  const ServerWindowSurfaceManager* manager = window->surface_manager();
-  return manager &&
-         !manager->GetDefaultSurface()->last_submitted_frame_size().IsEmpty();
-}
-
-}  // namespace
-
-WindowServerTestImpl::WindowServerTestImpl(
-    WindowServer* window_server,
-    mojo::InterfaceRequest<WindowServerTest> request)
-    : window_server_(window_server), binding_(this, std::move(request)) {}
+WindowServerTestImpl::WindowServerTestImpl(WindowServer* window_server)
+    : window_server_(window_server) {}
 
 WindowServerTestImpl::~WindowServerTestImpl() {}
 
@@ -37,20 +27,19 @@ void WindowServerTestImpl::OnWindowPaint(
   WindowTree* tree = window_server_->GetTreeWithClientName(name);
   if (!tree)
     return;
-  if (tree->HasRoot(window) && WindowHasValidFrame(window)) {
+  if (tree->HasRoot(window) && window->compositor_frame_sink_manager()) {
     cb.Run(true);
     window_server_->SetPaintCallback(base::Callback<void(ServerWindow*)>());
   }
 }
 
 void WindowServerTestImpl::EnsureClientHasDrawnWindow(
-    const mojo::String& client_name,
+    const std::string& client_name,
     const EnsureClientHasDrawnWindowCallback& callback) {
-  std::string name = client_name.To<std::string>();
-  WindowTree* tree = window_server_->GetTreeWithClientName(name);
+  WindowTree* tree = window_server_->GetTreeWithClientName(client_name);
   if (tree) {
     for (const ServerWindow* window : tree->roots()) {
-      if (WindowHasValidFrame(window)) {
+      if (window->compositor_frame_sink_manager()) {
         callback.Run(true);
         return;
       }
@@ -59,7 +48,30 @@ void WindowServerTestImpl::EnsureClientHasDrawnWindow(
 
   window_server_->SetPaintCallback(
       base::Bind(&WindowServerTestImpl::OnWindowPaint, base::Unretained(this),
-                 name, std::move(callback)));
+                 client_name, std::move(callback)));
+}
+
+void WindowServerTestImpl::DispatchEvent(int64_t display_id,
+                                         std::unique_ptr<ui::Event> event,
+                                         const DispatchEventCallback& cb) {
+  DisplayManager* manager = window_server_->display_manager();
+  if (!manager) {
+    DVLOG(1) << "No display manager in DispatchEvent.";
+    cb.Run(false);
+    return;
+  }
+
+  Display* display = manager->GetDisplayById(display_id);
+  if (!display) {
+    DVLOG(1) << "Invalid display_id in DispatchEvent.";
+    cb.Run(false);
+    return;
+  }
+
+  ignore_result(static_cast<PlatformDisplayDelegate*>(display)
+                    ->GetEventSink()
+                    ->OnEventFromSource(event.get()));
+  cb.Run(true);
 }
 
 }  // namespace ws

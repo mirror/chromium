@@ -15,7 +15,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_piece.h"
@@ -92,9 +92,14 @@ LevelDBSnapshot::LevelDBSnapshot(LevelDBDatabase* db)
 
 LevelDBSnapshot::~LevelDBSnapshot() { db_->ReleaseSnapshot(snapshot_); }
 
-LevelDBDatabase::LevelDBDatabase() {}
+LevelDBDatabase::LevelDBDatabase(size_t max_open_iterators)
+    : iterator_lru_(max_open_iterators) {
+  DCHECK(max_open_iterators);
+}
 
 LevelDBDatabase::~LevelDBDatabase() {
+  LOCAL_HISTOGRAM_COUNTS_10000("Storage.IndexedDB.LevelDB.MaxIterators",
+                               max_iterators_);
   base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
       this);
   // db_'s destructor uses comparator_adapter_; order of deletion is important.
@@ -116,7 +121,7 @@ static leveldb::Status OpenDB(
     leveldb::Comparator* comparator,
     leveldb::Env* env,
     const base::FilePath& path,
-    leveldb::DB** db,
+    std::unique_ptr<leveldb::DB>* db,
     std::unique_ptr<const leveldb::FilterPolicy>* filter_policy) {
   filter_policy->reset(leveldb::NewBloomFilterPolicy(10));
   leveldb::Options options;
@@ -126,6 +131,8 @@ static leveldb::Status OpenDB(
   options.filter_policy = filter_policy->get();
   options.reuse_logs = leveldb_env::kDefaultLogReuseOptionValue;
   options.compression = leveldb::kSnappyCompression;
+  options.write_buffer_size =
+      leveldb_env::WriteBufferSize(base::SysInfo::AmountOfTotalDiskSpace(path));
 
   // For info about the troubles we've run into with this parameter, see:
   // https://code.google.com/p/chromium/issues/detail?id=227313#c11
@@ -133,7 +140,9 @@ static leveldb::Status OpenDB(
   options.env = env;
 
   // ChromiumEnv assumes UTF8, converts back to FilePath before using.
-  leveldb::Status s = leveldb::DB::Open(options, path.AsUTF8Unsafe(), db);
+  leveldb::DB* db_ptr = nullptr;
+  leveldb::Status s = leveldb::DB::Open(options, path.AsUTF8Unsafe(), &db_ptr);
+  db->reset(db_ptr);
 
   return s;
 }
@@ -169,7 +178,7 @@ std::unique_ptr<LevelDBLock> LevelDBDatabase::LockForTesting(
   if (!status.ok())
     return std::unique_ptr<LevelDBLock>();
   DCHECK(lock);
-  return std::unique_ptr<LevelDBLock>(new LockImpl(env, lock));
+  return base::MakeUnique<LockImpl>(env, lock);
 }
 
 static int CheckFreeSpace(const char* const type,
@@ -283,15 +292,16 @@ static void HistogramLevelDBError(const std::string& histogram_name,
 
 leveldb::Status LevelDBDatabase::Open(const base::FilePath& file_name,
                                       const LevelDBComparator* comparator,
+                                      size_t max_open_cursors,
                                       std::unique_ptr<LevelDBDatabase>* result,
                                       bool* is_disk_full) {
   IDB_TRACE("LevelDBDatabase::Open");
   base::TimeTicks begin_time = base::TimeTicks::Now();
 
   std::unique_ptr<ComparatorAdapter> comparator_adapter(
-      new ComparatorAdapter(comparator));
+      base::MakeUnique<ComparatorAdapter>(comparator));
 
-  leveldb::DB* db;
+  std::unique_ptr<leveldb::DB> db;
   std::unique_ptr<const leveldb::FilterPolicy> filter_policy;
   const leveldb::Status s = OpenDB(comparator_adapter.get(), LevelDBEnv::Get(),
                                    file_name, &db, &filter_policy);
@@ -314,8 +324,8 @@ leveldb::Status LevelDBDatabase::Open(const base::FilePath& file_name,
 
   CheckFreeSpace("Success", file_name);
 
-  (*result).reset(new LevelDBDatabase);
-  (*result)->db_ = base::WrapUnique(db);
+  (*result) = base::WrapUnique(new LevelDBDatabase(max_open_cursors));
+  (*result)->db_ = std::move(db);
   (*result)->comparator_adapter_ = std::move(comparator_adapter);
   (*result)->comparator_ = comparator;
   (*result)->filter_policy_ = std::move(filter_policy);
@@ -327,11 +337,11 @@ leveldb::Status LevelDBDatabase::Open(const base::FilePath& file_name,
 std::unique_ptr<LevelDBDatabase> LevelDBDatabase::OpenInMemory(
     const LevelDBComparator* comparator) {
   std::unique_ptr<ComparatorAdapter> comparator_adapter(
-      new ComparatorAdapter(comparator));
+      base::MakeUnique<ComparatorAdapter>(comparator));
   std::unique_ptr<leveldb::Env> in_memory_env(
       leveldb::NewMemEnv(LevelDBEnv::Get()));
 
-  leveldb::DB* db;
+  std::unique_ptr<leveldb::DB> db;
   std::unique_ptr<const leveldb::FilterPolicy> filter_policy;
   const leveldb::Status s = OpenDB(comparator_adapter.get(),
                                    in_memory_env.get(),
@@ -344,9 +354,10 @@ std::unique_ptr<LevelDBDatabase> LevelDBDatabase::OpenInMemory(
     return std::unique_ptr<LevelDBDatabase>();
   }
 
-  std::unique_ptr<LevelDBDatabase> result(new LevelDBDatabase);
+  std::unique_ptr<LevelDBDatabase> result = base::WrapUnique(
+      new LevelDBDatabase(kDefaultMaxOpenIteratorsPerDatabase));
   result->env_ = std::move(in_memory_env);
-  result->db_ = base::WrapUnique(db);
+  result->db_ = std::move(db);
   result->comparator_adapter_ = std::move(comparator_adapter);
   result->comparator_ = comparator;
   result->filter_policy_ = std::move(filter_policy);
@@ -428,9 +439,14 @@ std::unique_ptr<LevelDBIterator> LevelDBDatabase::CreateIterator(
                                          // performance impact is too great.
   read_options.snapshot = snapshot ? snapshot->snapshot_ : 0;
 
+  num_iterators_++;
+  max_iterators_ = std::max(max_iterators_, num_iterators_);
+  // Iterator isn't added to lru cache until it is used, as memory isn't loaded
+  // for the iterator until it's first Seek call.
   std::unique_ptr<leveldb::Iterator> i(db_->NewIterator(read_options));
   return std::unique_ptr<LevelDBIterator>(
-      IndexedDBClassFactory::Get()->CreateIteratorImpl(std::move(i)));
+      IndexedDBClassFactory::Get()->CreateIteratorImpl(std::move(i), this,
+                                                       read_options.snapshot));
 }
 
 const LevelDBComparator* LevelDBDatabase::Comparator() const {
@@ -472,6 +488,36 @@ bool LevelDBDatabase::OnMemoryDump(
                         base::trace_event::MemoryDumpManager::GetInstance()
                             ->system_allocator_pool_name());
   return true;
+}
+
+std::unique_ptr<leveldb::Iterator> LevelDBDatabase::CreateLevelDBIterator(
+    const leveldb::Snapshot* snapshot) {
+  leveldb::ReadOptions read_options;
+  read_options.verify_checksums = true;
+  read_options.snapshot = snapshot;
+  return std::unique_ptr<leveldb::Iterator>(db_->NewIterator(read_options));
+}
+
+LevelDBDatabase::DetachIteratorOnDestruct::~DetachIteratorOnDestruct() {
+  if (it_)
+    it_->Detach();
+}
+
+void LevelDBDatabase::OnIteratorUsed(LevelDBIterator* iter) {
+  // This line updates the LRU if the item exists.
+  if (iterator_lru_.Get(iter) != iterator_lru_.end())
+    return;
+  DetachIteratorOnDestruct purger(iter);
+  iterator_lru_.Put(iter, std::move(purger));
+}
+
+void LevelDBDatabase::OnIteratorDestroyed(LevelDBIterator* iter) {
+  DCHECK_GT(num_iterators_, 0u);
+  --num_iterators_;
+  auto it = iterator_lru_.Peek(iter);
+  if (it == iterator_lru_.end())
+    return;
+  iterator_lru_.Erase(it);
 }
 
 }  // namespace content

@@ -10,16 +10,16 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #ifndef RTCStatsResponse_h
@@ -29,33 +29,35 @@
 #include "modules/peerconnection/RTCLegacyStatsReport.h"
 #include "platform/heap/Handle.h"
 #include "platform/peerconnection/RTCStatsResponseBase.h"
-#include "wtf/HashMap.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class RTCStatsResponse final : public RTCStatsResponseBase, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static RTCStatsResponse* create();
+class RTCStatsResponse final : public RTCStatsResponseBase,
+                               public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    const HeapVector<Member<RTCLegacyStatsReport>>& result() const { return m_result; }
+ public:
+  static RTCStatsResponse* Create();
 
-    RTCLegacyStatsReport* namedItem(const AtomicString& name);
+  const HeapVector<Member<RTCLegacyStatsReport>>& result() const {
+    return result_;
+  }
+  RTCLegacyStatsReport* namedItem(const AtomicString& name);
 
-    size_t addReport(const String& id, const String& type, double timestamp) override;
-    void addStatistic(size_t report, const String& name, const String& value) override;
+  void AddStats(const WebRTCLegacyStats&) override;
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    RTCStatsResponse();
+ private:
+  RTCStatsResponse();
 
-    HeapVector<Member<RTCLegacyStatsReport>> m_result;
-    HashMap<String, int> m_idmap;
+  HeapVector<Member<RTCLegacyStatsReport>> result_;
+  HashMap<String, int> idmap_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RTCStatsResponse_h
+#endif  // RTCStatsResponse_h

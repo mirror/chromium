@@ -5,55 +5,51 @@
 #ifndef UnderlyingValueOwner_h
 #define UnderlyingValueOwner_h
 
-#include "core/animation/TypedInterpolationValue.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
 #include <memory>
+#include "core/animation/TypedInterpolationValue.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 // Handles memory management of underlying InterpolationValues in applyStack()
-// Ensures we perform copy on write if we are not the owner of an underlying InterpolationValue.
-// This functions similar to a DataRef except on std::unique_ptr'd objects.
+// Ensures we perform copy on write if we are not the owner of an underlying
+// InterpolationValue. This functions similar to a DataRef except on
+// std::unique_ptr'd objects.
 class UnderlyingValueOwner {
-    WTF_MAKE_NONCOPYABLE(UnderlyingValueOwner);
-    STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(UnderlyingValueOwner);
+  STACK_ALLOCATED();
 
-public:
-    UnderlyingValueOwner()
-        : m_type(nullptr)
-        , m_valueOwner(nullptr)
-        , m_value(nullptr)
-    { }
+ public:
+  UnderlyingValueOwner()
+      : type_(nullptr), value_owner_(nullptr), value_(nullptr) {}
 
-    operator bool() const
-    {
-        ASSERT(static_cast<bool>(m_type) == static_cast<bool>(m_value));
-        return m_type;
-    }
+  operator bool() const {
+    DCHECK_EQ(static_cast<bool>(type_), static_cast<bool>(value_));
+    return type_;
+  }
 
-    const InterpolationType& type() const
-    {
-        ASSERT(m_type);
-        return *m_type;
-    }
+  const InterpolationType& GetType() const {
+    DCHECK(type_);
+    return *type_;
+  }
 
-    const InterpolationValue& value() const;
+  const InterpolationValue& Value() const;
 
-    void set(std::nullptr_t);
-    void set(const InterpolationType&, const InterpolationValue&);
-    void set(const InterpolationType&, InterpolationValue&&);
-    void set(std::unique_ptr<TypedInterpolationValue>);
-    void set(const TypedInterpolationValue*);
+  void Set(std::nullptr_t);
+  void Set(const InterpolationType&, const InterpolationValue&);
+  void Set(const InterpolationType&, InterpolationValue&&);
+  void Set(std::unique_ptr<TypedInterpolationValue>);
+  void Set(const TypedInterpolationValue*);
 
-    InterpolationValue& mutableValue();
+  InterpolationValue& MutableValue();
 
-private:
-    const InterpolationType* m_type;
-    InterpolationValue m_valueOwner;
-    const InterpolationValue* m_value;
+ private:
+  const InterpolationType* type_;
+  InterpolationValue value_owner_;
+  const InterpolationValue* value_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // UnderlyingValueOwner_h
+#endif  // UnderlyingValueOwner_h

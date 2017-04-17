@@ -35,39 +35,36 @@
 
 namespace blink {
 
-SubtreeLayoutScope::SubtreeLayoutScope(LayoutObject& root)
-    : m_root(root)
-{
-    RELEASE_ASSERT(m_root.document().view()->isInPerformLayout());
+SubtreeLayoutScope::SubtreeLayoutScope(LayoutObject& root) : root_(root) {
+  CHECK(root_.GetDocument().View()->IsInPerformLayout());
 }
 
-SubtreeLayoutScope::~SubtreeLayoutScope()
-{
-    RELEASE_ASSERT(!m_root.needsLayout());
+SubtreeLayoutScope::~SubtreeLayoutScope() {
+  CHECK(!root_.NeedsLayout());
 
-#if ENABLE(ASSERT)
-    for (auto* layoutObject : m_layoutObjectsToLayout)
-        layoutObject->assertLaidOut();
+#if DCHECK_IS_ON()
+  for (auto* layout_object : layout_objects_to_layout_)
+    layout_object->AssertLaidOut();
 #endif
 }
 
-void SubtreeLayoutScope::setNeedsLayout(LayoutObject* descendant, LayoutInvalidationReasonForTracing reason)
-{
-    ASSERT(descendant->isDescendantOf(&m_root));
-    descendant->setNeedsLayout(reason, MarkContainerChain, this);
+void SubtreeLayoutScope::SetNeedsLayout(
+    LayoutObject* descendant,
+    LayoutInvalidationReasonForTracing reason) {
+  DCHECK(descendant->IsDescendantOf(&root_));
+  descendant->SetNeedsLayout(reason, kMarkContainerChain, this);
 }
 
-void SubtreeLayoutScope::setChildNeedsLayout(LayoutObject* descendant)
-{
-    ASSERT(descendant->isDescendantOf(&m_root));
-    descendant->setChildNeedsLayout(MarkContainerChain, this);
+void SubtreeLayoutScope::SetChildNeedsLayout(LayoutObject* descendant) {
+  DCHECK(descendant->IsDescendantOf(&root_));
+  descendant->SetChildNeedsLayout(kMarkContainerChain, this);
 }
 
-void SubtreeLayoutScope::recordObjectMarkedForLayout(LayoutObject* layoutObject)
-{
-#if ENABLE(ASSERT)
-    m_layoutObjectsToLayout.add(layoutObject);
+void SubtreeLayoutScope::RecordObjectMarkedForLayout(
+    LayoutObject* layout_object) {
+#if DCHECK_IS_ON()
+  layout_objects_to_layout_.insert(layout_object);
 #endif
 }
 
-} // namespace blink
+}  // namespace blink

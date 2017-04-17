@@ -2,12 +2,38 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+cr.exportPath('settings');
+
+/**
+ * A data structure used by callers to combine the results of multiple search
+ * requests.
+ *
+ * @typedef {{
+ *   canceled: Boolean,
+ *   didFindMatches: Boolean,
+ *   wasClearSearch: Boolean,
+ * }}
+ */
+settings.SearchResult;
+
 cr.define('settings', function() {
   /** @const {string} */
   var WRAPPER_CSS_CLASS = 'search-highlight-wrapper';
 
   /** @const {string} */
+  var ORIGINAL_CONTENT_CSS_CLASS = 'search-highlight-original-content';
+
+  /** @const {string} */
   var HIT_CSS_CLASS = 'search-highlight-hit';
+
+  /** @const {string} */
+  var SEARCH_BUBBLE_CSS_CLASS = 'search-bubble';
+
+  /**
+   * A CSS attribute indicating that a node should be ignored during searching.
+   * @const {string}
+   */
+  var SKIP_SEARCH_CSS_ATTRIBUTE = 'no-search';
 
   /**
    * List of elements types that should not be searched at all.
@@ -18,15 +44,11 @@ cr.define('settings', function() {
   var IGNORED_ELEMENTS = new Set([
     'CONTENT',
     'CR-EVENTS',
+    'DIALOG',
     'IMG',
     'IRON-ICON',
     'IRON-LIST',
     'PAPER-ICON-BUTTON',
-    /* TODO(dpapad): paper-item is used for dynamically populated dropdown
-     * menus. Perhaps a better approach is to mark the entire dropdown menu such
-     * that search algorithm can skip it as a whole instead.
-     */
-    'PAPER-ITEM',
     'PAPER-RIPPLE',
     'PAPER-SLIDER',
     'PAPER-SPINNER',
@@ -36,7 +58,8 @@ cr.define('settings', function() {
 
   /**
    * Finds all previous highlighted nodes under |node| (both within self and
-   * children's Shadow DOM) and removes the highlight (yellow rectangle).
+   * children's Shadow DOM) and replaces the highlights (yellow rectangle and
+   * search bubbles) with the original text node.
    * TODO(dpapad): Consider making this a private method of TopLevelSearchTask.
    * @param {!Node} node
    * @private
@@ -44,23 +67,17 @@ cr.define('settings', function() {
   function findAndRemoveHighlights_(node) {
     var wrappers = node.querySelectorAll('* /deep/ .' + WRAPPER_CSS_CLASS);
 
-    for (var wrapper of wrappers) {
-      var hitElements = wrapper.querySelectorAll('.' + HIT_CSS_CLASS);
-      // For each hit element, remove the highlighting.
-      for (var hitElement of hitElements) {
-        wrapper.replaceChild(hitElement.firstChild, hitElement);
-      }
-
-      // Normalize so that adjacent text nodes will be combined.
-      wrapper.normalize();
-      // Restore the DOM structure as it was before the search occurred.
-      if (wrapper.previousSibling)
-        wrapper.textContent = ' ' + wrapper.textContent;
-      if (wrapper.nextSibling)
-        wrapper.textContent = wrapper.textContent + ' ';
-
-      wrapper.parentElement.replaceChild(wrapper.firstChild, wrapper);
+    for (var i = 0; i < wrappers.length; i++ ) {
+      var wrapper = wrappers[i];
+      var originalNode = wrapper.querySelector(
+          '.' + ORIGINAL_CONTENT_CSS_CLASS);
+      wrapper.parentElement.replaceChild(originalNode.firstChild, wrapper);
     }
+
+    var searchBubbles = node.querySelectorAll(
+        '* /deep/ .' + SEARCH_BUBBLE_CSS_CLASS);
+    for (var j = 0; j < searchBubbles.length; j++)
+      searchBubbles[j].remove();
   }
 
   /**
@@ -81,13 +98,22 @@ cr.define('settings', function() {
     // replacement content.
     node.parentNode.replaceChild(wrapper, node);
 
+    // Keep the existing node around for when the highlights are removed. The
+    // existing text node might be involved in data-binding and therefore should
+    // not be discarded.
+    var span = document.createElement('span');
+    span.classList.add(ORIGINAL_CONTENT_CSS_CLASS);
+    span.style.display = 'none';
+    span.appendChild(node);
+    wrapper.appendChild(span);
+
     for (var i = 0; i < tokens.length; ++i) {
       if (i % 2 == 0) {
         wrapper.appendChild(document.createTextNode(tokens[i]));
       } else {
         var span = document.createElement('span');
         span.classList.add(HIT_CSS_CLASS);
-        span.style.backgroundColor = 'yellow';
+        span.style.backgroundColor = '#ffeb3b'; // --var(--paper-yellow-500)
         span.textContent = tokens[i];
         wrapper.appendChild(span);
       }
@@ -100,22 +126,30 @@ cr.define('settings', function() {
    * ensures that <settings-section> instances become visible if any matches
    * occurred under their subtree.
    *
-   * @param {!SearchRequest} request
+   * @param {!settings.SearchRequest} request
    * @param {!Node} root The root of the sub-tree to be searched
    * @private
    */
   function findAndHighlightMatches_(request, root) {
     var foundMatches = false;
     function doSearch(node) {
-      if (node.nodeName == 'TEMPLATE' && node.hasAttribute('name') &&
-          !node.if) {
-        getSearchManager().queue_.addRenderTask(
-            new RenderTask(request, node));
+      if (node.nodeName == 'TEMPLATE' && node.hasAttribute('route-path') &&
+          !node.if && !node.hasAttribute(SKIP_SEARCH_CSS_ATTRIBUTE)) {
+        request.queue_.addRenderTask(new RenderTask(request, node));
         return;
       }
 
       if (IGNORED_ELEMENTS.has(node.nodeName))
         return;
+
+      if (node instanceof HTMLElement) {
+        var element = /** @type {HTMLElement} */(node);
+        if (element.hasAttribute(SKIP_SEARCH_CSS_ATTRIBUTE) ||
+            element.hasAttribute('hidden') ||
+            element.style.display == 'none') {
+          return;
+        }
+      }
 
       if (node.nodeType == Node.TEXT_NODE) {
         var textContent = node.nodeValue.trim();
@@ -124,8 +158,14 @@ cr.define('settings', function() {
 
         if (request.regExp.test(textContent)) {
           foundMatches = true;
-          revealParentSection_(node);
-          highlight_(node, textContent.split(request.regExp));
+          revealParentSection_(node, request.rawQuery_);
+
+          // Don't highlight <select> nodes, yellow rectangles can't be
+          // displayed within an <option>.
+          // TODO(dpapad): highlight <select> controls with a search bubble
+          // instead.
+          if (node.parentNode.nodeName != 'OPTION')
+            highlight_(node, textContent.split(request.regExp));
         }
         // Returning early since TEXT_NODE nodes never have children.
         return;
@@ -150,28 +190,84 @@ cr.define('settings', function() {
   }
 
   /**
+   * Highlights the HTML control that triggers a subpage, by displaying a search
+   * bubble.
+   * @param {!HTMLElement} element The element to be highlighted.
+   * @param {string} rawQuery The search query.
+   * @private
+   */
+  function highlightAssociatedControl_(element, rawQuery) {
+    var searchBubble = element.querySelector('.' + SEARCH_BUBBLE_CSS_CLASS);
+    // If the associated control has already been highlighted due to another
+    // match on the same subpage, there is no need to do anything.
+    if (searchBubble)
+      return;
+
+    searchBubble = document.createElement('div');
+    searchBubble.classList.add(SEARCH_BUBBLE_CSS_CLASS);
+    var innards = document.createElement('div');
+    innards.classList.add('search-bubble-innards');
+    innards.textContent = rawQuery;
+    searchBubble.appendChild(innards);
+    element.appendChild(searchBubble);
+
+    // Dynamically position the bubble at the edge the associated control
+    // element.
+    var updatePosition = function() {
+      if (innards.classList.contains('above')) {
+        searchBubble.style.top =
+            element.offsetTop - searchBubble.offsetHeight + 'px';
+      } else {
+        searchBubble.style.top =
+            element.offsetTop + element.offsetHeight + 'px';
+      }
+    };
+    updatePosition();
+
+    searchBubble.addEventListener('mouseover', function() {
+      innards.classList.toggle('above');
+      updatePosition();
+    });
+  }
+
+  /**
    * Finds and makes visible the <settings-section> parent of |node|.
    * @param {!Node} node
+   * @param {string} rawQuery
+   * @private
    */
-  function revealParentSection_(node) {
+  function revealParentSection_(node, rawQuery) {
+    var associatedControl = null;
     // Find corresponding SETTINGS-SECTION parent and make it visible.
     var parent = node;
     while (parent && parent.nodeName !== 'SETTINGS-SECTION') {
       parent = parent.nodeType == Node.DOCUMENT_FRAGMENT_NODE ?
           parent.host : parent.parentNode;
+      if (parent.nodeName == 'SETTINGS-SUBPAGE') {
+        // TODO(dpapad): Cast to SettingsSubpageElement here.
+        associatedControl = assert(
+            parent.associatedControl,
+            'An associated control was expected for SETTINGS-SUBPAGE ' +
+                parent.pageTitle + ', but was not found.');
+      }
     }
     if (parent)
-      parent.hidden = false;
+      parent.hiddenBySearch = false;
+
+    // Need to add the search bubble after the parent SETTINGS-SECTION has
+    // become visible, otherwise |offsetWidth| returns zero.
+    if (associatedControl)
+      highlightAssociatedControl_(associatedControl, rawQuery);
   }
 
   /**
    * @constructor
    *
-   * @param {!SearchRequest} request
+   * @param {!settings.SearchRequest} request
    * @param {!Node} node
    */
   function Task(request, node) {
-    /** @protected {!SearchRequest} */
+    /** @protected {!settings.SearchRequest} */
     this.request = request;
 
     /** @protected {!Node} */
@@ -193,7 +289,7 @@ cr.define('settings', function() {
    * @constructor
    * @extends {Task}
    *
-   * @param {!SearchRequest} request
+   * @param {!settings.SearchRequest} request
    * @param {!Node} node
    */
   function RenderTask(request, node) {
@@ -203,19 +299,21 @@ cr.define('settings', function() {
   RenderTask.prototype = {
     /** @override */
     exec: function() {
+      var routePath = this.node.getAttribute('route-path');
       var subpageTemplate =
           this.node['_content'].querySelector('settings-subpage');
-      subpageTemplate.id = subpageTemplate.id || this.node.getAttribute('name');
+      subpageTemplate.setAttribute('route-path', routePath);
       assert(!this.node.if);
       this.node.if = true;
 
       return new Promise(function(resolve, reject) {
         var parent = this.node.parentNode;
         parent.async(function() {
-          var renderedNode = parent.querySelector('#' + subpageTemplate.id);
+          var renderedNode =
+              parent.querySelector('[route-path="' + routePath + '"]');
           // Register a SearchAndHighlightTask for the part of the DOM that was
           // just rendered.
-          getSearchManager().queue_.addSearchAndHighlightTask(
+          this.request.queue_.addSearchAndHighlightTask(
               new SearchAndHighlightTask(this.request, assert(renderedNode)));
           resolve();
         }.bind(this));
@@ -227,7 +325,7 @@ cr.define('settings', function() {
    * @constructor
    * @extends {Task}
    *
-   * @param {!SearchRequest} request
+   * @param {!settings.SearchRequest} request
    * @param {!Node} node
    */
   function SearchAndHighlightTask(request, node) {
@@ -247,7 +345,7 @@ cr.define('settings', function() {
    * @constructor
    * @extends {Task}
    *
-   * @param {!SearchRequest} request
+   * @param {!settings.SearchRequest} request
    * @param {!Node} page
    */
   function TopLevelSearchTask(request, page) {
@@ -274,17 +372,21 @@ cr.define('settings', function() {
      * @private
      */
     setSectionsVisibility_: function(visible) {
-      var sections = Polymer.dom(
-          this.node.root).querySelectorAll('settings-section');
+      var sections = this.node.querySelectorAll('settings-section');
+
       for (var i = 0; i < sections.length; i++)
-        sections[i].hidden = !visible;
+        sections[i].hiddenBySearch = !visible;
     },
   };
 
   /**
    * @constructor
+   * @param {!settings.SearchRequest} request
    */
-  function TaskQueue() {
+  function TaskQueue(request) {
+    /** @private {!settings.SearchRequest} */
+    this.request_ = request;
+
     /**
      * @private {{
      *   high: !Array<!Task>,
@@ -363,18 +465,14 @@ cr.define('settings', function() {
 
         this.running_ = true;
         window.requestIdleCallback(function() {
-          function startNextTask() {
-            this.running_ = false;
-            this.consumePending_();
+          if (!this.request_.canceled) {
+            task.exec().then(function() {
+              this.running_ = false;
+              this.consumePending_();
+            }.bind(this));
           }
-          if (task.request.id ==
-              getSearchManager().activeRequest_.id) {
-            task.exec().then(startNextTask.bind(this));
-          } else {
-            // Dropping this task without ever executing it, since a new search
-            // has been issued since this task was queued.
-            startNextTask.call(this);
-          }
+          // Nothing to do otherwise. Since the request corresponding to this
+          // queue was canceled, the queue is disposed along with the request.
         }.bind(this));
         return;
       }
@@ -383,37 +481,51 @@ cr.define('settings', function() {
 
   /**
    * @constructor
+   *
+   * @param {string} rawQuery
+   * @param {!HTMLElement} root
    */
-  var SearchRequest = function(rawQuery) {
-    /** @type {number} */
-    this.id = SearchRequest.nextId_++;
-
+  var SearchRequest = function(rawQuery, root) {
     /** @private {string} */
     this.rawQuery_ = rawQuery;
+
+    /** @private {!HTMLElement} */
+    this.root_ = root;
 
     /** @type {?RegExp} */
     this.regExp = this.generateRegExp_();
 
     /**
-     * Whether this request was fully processed.
+     * Whether this request was canceled before completing.
      * @type {boolean}
      */
-    this.finished = false;
+    this.canceled = false;
 
     /** @private {boolean} */
     this.foundMatches_ = false;
 
     /** @type {!PromiseResolver} */
     this.resolver = new PromiseResolver();
-  };
 
-  /** @private {number} */
-  SearchRequest.nextId_ = 0;
+    /** @private {!TaskQueue} */
+    this.queue_ = new TaskQueue(this);
+    this.queue_.onEmpty(function() {
+      this.resolver.resolve(this);
+    }.bind(this));
+  };
 
   /** @private {!RegExp} */
   SearchRequest.SANITIZE_REGEX_ = /[-[\]{}()*+?.,\\^$|#\s]/g;
 
   SearchRequest.prototype = {
+    /**
+     * Fires this search request.
+     */
+    start: function() {
+      this.queue_.addTopLevelSearchTask(
+          new TopLevelSearchTask(this, this.root_));
+    },
+
     /**
      * @return {?RegExp}
      * @private
@@ -454,55 +566,73 @@ cr.define('settings', function() {
     },
   };
 
-  /**
-   * @constructor
-   */
-  var SearchManager = function() {
-    /** @private {?SearchRequest} */
-    this.activeRequest_ = null;
-
-    /** @private {!TaskQueue} */
-    this.queue_ = new TaskQueue();
-    this.queue_.onEmpty(function() {
-      this.activeRequest_.finished = true;
-      this.activeRequest_.resolver.resolve(this.activeRequest_);
-      this.activeRequest_ = null;
-    }.bind(this));
-  };
-  cr.addSingletonGetter(SearchManager);
+  /** @interface */
+  var SearchManager = function() {};
 
   SearchManager.prototype = {
     /**
      * @param {string} text The text to search for.
      * @param {!Node} page
-     * @return {!Promise<!SearchRequest>} A signal indicating that searching
-     *     finished.
+     * @return {!Promise<!settings.SearchRequest>} A signal indicating that
+     *     searching finished.
      */
-    search: function(text, page) {
-      // Creating a new request only if the |text| changed.
-      if (!this.activeRequest_ || !this.activeRequest_.isSame(text)) {
-        // Resolving previous search request without marking it as
-        // 'finisthed', if any, and droping all pending tasks.
-        this.queue_.reset();
-        if (this.activeRequest_)
-          this.activeRequest_.resolver.resolve(this.activeRequest_);
+    search: function(text, page) {}
+  };
 
-        this.activeRequest_ = new SearchRequest(text);
+  /**
+   * @constructor
+   * @implements {SearchManager}
+   */
+  var SearchManagerImpl = function() {
+    /** @private {!Set<!settings.SearchRequest>} */
+    this.activeRequests_ = new Set();
+
+    /** @private {?string} */
+    this.lastSearchedText_ = null;
+  };
+  cr.addSingletonGetter(SearchManagerImpl);
+
+  SearchManagerImpl.prototype = {
+    /** @override */
+    search: function(text, page) {
+      // Cancel any pending requests if a request with different text is
+      // submitted.
+      if (text != this.lastSearchedText_) {
+        this.activeRequests_.forEach(function(request) {
+          request.canceled = true;
+          request.resolver.resolve(request);
+        });
+        this.activeRequests_.clear();
       }
 
-      this.queue_.addTopLevelSearchTask(
-          new TopLevelSearchTask(this.activeRequest_, page));
-
-      return this.activeRequest_.resolver.promise;
+      this.lastSearchedText_ = text;
+      var request = new SearchRequest(text, page);
+      this.activeRequests_.add(request);
+      request.start();
+      return request.resolver.promise.then(function() {
+        // Stop tracking requests that finished.
+        this.activeRequests_.delete(request);
+        return request;
+      }.bind(this));
     },
   };
 
   /** @return {!SearchManager} */
   function getSearchManager() {
-    return SearchManager.getInstance();
+    return SearchManagerImpl.getInstance();
+  }
+
+  /**
+   * Sets the SearchManager singleton instance, useful for testing.
+   * @param {!SearchManager} searchManager
+   */
+  function setSearchManagerForTesting(searchManager) {
+    SearchManagerImpl.instance_ = searchManager;
   }
 
   return {
     getSearchManager: getSearchManager,
+    setSearchManagerForTesting: setSearchManagerForTesting,
+    SearchRequest: SearchRequest,
   };
 });

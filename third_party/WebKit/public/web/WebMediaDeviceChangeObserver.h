@@ -13,27 +13,29 @@ class MediaDevices;
 class WebSecurityOrigin;
 
 class WebMediaDeviceChangeObserver {
-public:
-    BLINK_EXPORT WebMediaDeviceChangeObserver();
-    BLINK_EXPORT explicit WebMediaDeviceChangeObserver(bool); // for testing only
-    BLINK_EXPORT WebMediaDeviceChangeObserver(const WebMediaDeviceChangeObserver&);
-    BLINK_EXPORT WebMediaDeviceChangeObserver& operator=(const WebMediaDeviceChangeObserver&);
-    BLINK_EXPORT ~WebMediaDeviceChangeObserver();
+ public:
+  BLINK_EXPORT WebMediaDeviceChangeObserver();
+  BLINK_EXPORT explicit WebMediaDeviceChangeObserver(bool);  // for testing only
+  BLINK_EXPORT WebMediaDeviceChangeObserver(
+      const WebMediaDeviceChangeObserver&);
+  BLINK_EXPORT WebMediaDeviceChangeObserver& operator=(
+      const WebMediaDeviceChangeObserver&);
+  BLINK_EXPORT ~WebMediaDeviceChangeObserver();
 
-    // Notify that the set of media devices has changed.
-    BLINK_EXPORT void didChangeMediaDevices();
-    BLINK_EXPORT bool isNull() const;
-    BLINK_EXPORT WebSecurityOrigin getSecurityOrigin() const;
+  // Notify that the set of media devices has changed.
+  BLINK_EXPORT void DidChangeMediaDevices();
+  BLINK_EXPORT bool IsNull() const;
+  BLINK_EXPORT WebSecurityOrigin GetSecurityOrigin() const;
 
 #if INSIDE_BLINK
-    explicit WebMediaDeviceChangeObserver(MediaDevices*);
+  explicit WebMediaDeviceChangeObserver(MediaDevices*);
 #endif
-private:
-    void assign(const WebMediaDeviceChangeObserver&);
-    void reset();
-    WebPrivatePtr<MediaDevices> m_private;
+ private:
+  void Assign(const WebMediaDeviceChangeObserver&);
+  void Reset();
+  WebPrivatePtr<MediaDevices> private_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

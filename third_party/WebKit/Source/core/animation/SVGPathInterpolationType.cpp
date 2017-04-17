@@ -10,32 +10,44 @@
 
 namespace blink {
 
-InterpolationValue SVGPathInterpolationType::maybeConvertSVGValue(const SVGPropertyBase& svgValue) const
-{
-    if (svgValue.type() != AnimatedPath)
-        return nullptr;
+InterpolationValue SVGPathInterpolationType::MaybeConvertSVGValue(
+    const SVGPropertyBase& svg_value) const {
+  if (svg_value.GetType() != kAnimatedPath)
+    return nullptr;
 
-    return PathInterpolationFunctions::convertValue(toSVGPath(svgValue).byteStream());
+  return PathInterpolationFunctions::ConvertValue(
+      ToSVGPath(svg_value).ByteStream());
 }
 
-InterpolationValue SVGPathInterpolationType::maybeConvertNeutral(const InterpolationValue& underlying, ConversionCheckers& conversionCheckers) const
-{
-    return PathInterpolationFunctions::maybeConvertNeutral(underlying, conversionCheckers);
+InterpolationValue SVGPathInterpolationType::MaybeConvertNeutral(
+    const InterpolationValue& underlying,
+    ConversionCheckers& conversion_checkers) const {
+  return PathInterpolationFunctions::MaybeConvertNeutral(underlying,
+                                                         conversion_checkers);
 }
 
-PairwiseInterpolationValue SVGPathInterpolationType::maybeMergeSingles(InterpolationValue&& start, InterpolationValue&& end) const
-{
-    return PathInterpolationFunctions::maybeMergeSingles(std::move(start), std::move(end));
+PairwiseInterpolationValue SVGPathInterpolationType::MaybeMergeSingles(
+    InterpolationValue&& start,
+    InterpolationValue&& end) const {
+  return PathInterpolationFunctions::MaybeMergeSingles(std::move(start),
+                                                       std::move(end));
 }
 
-void SVGPathInterpolationType::composite(UnderlyingValueOwner& underlyingValueOwner, double underlyingFraction, const InterpolationValue& value, double interpolationFraction) const
-{
-    PathInterpolationFunctions::composite(underlyingValueOwner, underlyingFraction, *this, value);
+void SVGPathInterpolationType::Composite(
+    UnderlyingValueOwner& underlying_value_owner,
+    double underlying_fraction,
+    const InterpolationValue& value,
+    double interpolation_fraction) const {
+  PathInterpolationFunctions::Composite(underlying_value_owner,
+                                        underlying_fraction, *this, value);
 }
 
-SVGPropertyBase* SVGPathInterpolationType::appliedSVGValue(const InterpolableValue& interpolableValue, const NonInterpolableValue* nonInterpolableValue) const
-{
-    return SVGPath::create(CSSPathValue::create(PathInterpolationFunctions::appliedValue(interpolableValue, nonInterpolableValue)));
+SVGPropertyBase* SVGPathInterpolationType::AppliedSVGValue(
+    const InterpolableValue& interpolable_value,
+    const NonInterpolableValue* non_interpolable_value) const {
+  return SVGPath::Create(
+      CSSPathValue::Create(PathInterpolationFunctions::AppliedValue(
+          interpolable_value, non_interpolable_value)));
 }
 
-} // namespace blink
+}  // namespace blink

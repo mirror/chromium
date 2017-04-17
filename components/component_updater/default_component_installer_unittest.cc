@@ -4,6 +4,7 @@
 
 #include <iterator>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/callback.h"
@@ -19,6 +20,7 @@
 #include "components/update_client/crx_update_item.h"
 #include "components/update_client/test_configurator.h"
 #include "components/update_client/update_client.h"
+#include "components/update_client/update_client_errors.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -48,17 +50,18 @@ class MockUpdateClient : public UpdateClient {
   MOCK_METHOD3(Install,
                void(const std::string& id,
                     const CrxDataCallback& crx_data_callback,
-                    const CompletionCallback& completion_callback));
+                    const Callback& callback));
   MOCK_METHOD3(Update,
                void(const std::vector<std::string>& ids,
                     const CrxDataCallback& crx_data_callback,
-                    const CompletionCallback& completion_callback));
+                    const Callback& callback));
   MOCK_CONST_METHOD2(GetCrxUpdateState,
                      bool(const std::string& id, CrxUpdateItem* update_item));
   MOCK_CONST_METHOD1(IsUpdating, bool(const std::string& id));
   MOCK_METHOD0(Stop, void());
-  MOCK_METHOD3(SendUninstallPing,
-               void(const std::string& id, const Version& version, int reason));
+  MOCK_METHOD3(
+      SendUninstallPing,
+      void(const std::string& id, const base::Version& version, int reason));
 
  private:
   ~MockUpdateClient() override {}
@@ -73,13 +76,16 @@ class FakeInstallerTraits : public ComponentInstallerTraits {
     return true;
   }
 
-  bool CanAutoUpdate() const override { return true; }
+  bool SupportsGroupPolicyEnabledComponentUpdates() const override {
+    return true;
+  }
 
   bool RequiresNetworkEncryption() const override { return true; }
 
-  bool OnCustomInstall(const base::DictionaryValue& manifest,
-                       const base::FilePath& install_dir) override {
-    return true;
+  update_client::CrxInstaller::Result OnCustomInstall(
+      const base::DictionaryValue& manifest,
+      const base::FilePath& install_dir) override {
+    return update_client::CrxInstaller::Result(0);
   }
 
   void ComponentReady(
@@ -100,6 +106,10 @@ class FakeInstallerTraits : public ComponentInstallerTraits {
     installer_attributes["ap"] = "fake-ap";
     installer_attributes["is-enterprise"] = "1";
     return installer_attributes;
+  }
+
+  std::vector<std::string> GetMimeTypes() const override {
+    return std::vector<std::string>();
   }
 
  private:
@@ -124,7 +134,7 @@ class DefaultComponentInstallerTest : public testing::Test {
   void RunThreads();
 
  private:
-  static const int kNumWorkerThreads_ = 1;
+  static const int kNumWorkerThreads_ = 2;
 
   base::MessageLoopForUI message_loop_;
   base::RunLoop runloop_;
@@ -174,8 +184,8 @@ TEST_F(DefaultComponentInstallerTest, RegisterComponent) {
 
     void OnUpdate(const std::vector<std::string>& ids,
                   const UpdateClient::CrxDataCallback& crx_data_callback,
-                  const UpdateClient::CompletionCallback& completion_callback) {
-      completion_callback.Run(0);
+                  const Callback& callback) {
+      callback.Run(update_client::Error::NONE);
       static int cnt = 0;
       ++cnt;
       if (cnt >= max_cnt_)
@@ -221,6 +231,7 @@ TEST_F(DefaultComponentInstallerTest, RegisterComponent) {
   EXPECT_STREQ("fake name", component.name.c_str());
   EXPECT_EQ(expected_attrs, component.installer_attributes);
   EXPECT_TRUE(component.requires_network_encryption);
+  EXPECT_TRUE(component.supports_group_policy_enable_component_updates);
 }
 
 }  // namespace component_updater

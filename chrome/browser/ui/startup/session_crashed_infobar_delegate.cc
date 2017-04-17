@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/startup/session_crashed_infobar_delegate.h"
 
 #include "build/build_config.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/search.h"
@@ -17,13 +18,10 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/infobars/core/infobar.h"
 #include "components/strings/grit/components_chromium_strings.h"
-#include "components/strings/grit/components_google_chrome_strings.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/dom_storage_context.h"
 #include "content/public/browser/storage_partition.h"
-#include "grit/theme_resources.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/gfx/vector_icons_public.h"
 
 // static
 void SessionCrashedInfoBarDelegate::Create(Browser* browser) {
@@ -64,16 +62,8 @@ SessionCrashedInfoBarDelegate::GetIdentifier() const {
   return SESSION_CRASHED_INFOBAR_DELEGATE;
 }
 
-int SessionCrashedInfoBarDelegate::GetIconId() const {
-  return IDR_INFOBAR_RESTORE_SESSION;
-}
-
-gfx::VectorIconId SessionCrashedInfoBarDelegate::GetVectorIconId() const {
-#if defined(OS_MACOSX)
-  return gfx::VectorIconId::VECTOR_ICON_NONE;
-#else
-  return gfx::VectorIconId::SAD_TAB;
-#endif
+const gfx::VectorIcon& SessionCrashedInfoBarDelegate::GetVectorIcon() const {
+  return kSadTabIcon;
 }
 
 base::string16 SessionCrashedInfoBarDelegate::GetMessageText() const {

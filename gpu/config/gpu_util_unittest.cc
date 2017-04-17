@@ -8,7 +8,6 @@
 
 #include "base/strings/string_split.h"
 #include "base/strings/stringprintf.h"
-#include "gpu/config/gpu_control_list_jsons.h"
 #include "gpu/config/gpu_driver_bug_list.h"
 #include "gpu/config/gpu_info.h"
 #include "gpu/config/gpu_info_collector.h"
@@ -17,46 +16,6 @@
 #include "ui/gl/gl_switches.h"
 
 namespace gpu {
-
-TEST(GpuUtilTest, MergeFeatureSets) {
-  {
-    // Merge two empty sets.
-    std::set<int> src;
-    std::set<int> dst;
-    EXPECT_TRUE(dst.empty());
-    MergeFeatureSets(&dst, src);
-    EXPECT_TRUE(dst.empty());
-  }
-  {
-    // Merge an empty set into a set with elements.
-    std::set<int> src;
-    std::set<int> dst;
-    dst.insert(1);
-    EXPECT_EQ(1u, dst.size());
-    MergeFeatureSets(&dst, src);
-    EXPECT_EQ(1u, dst.size());
-  }
-  {
-    // Merge two sets where the source elements are already in the target set.
-    std::set<int> src;
-    std::set<int> dst;
-    src.insert(1);
-    dst.insert(1);
-    EXPECT_EQ(1u, dst.size());
-    MergeFeatureSets(&dst, src);
-    EXPECT_EQ(1u, dst.size());
-  }
-  {
-    // Merge two sets with different elements.
-    std::set<int> src;
-    std::set<int> dst;
-    src.insert(1);
-    dst.insert(2);
-    EXPECT_EQ(1u, dst.size());
-    MergeFeatureSets(&dst, src);
-    EXPECT_EQ(2u, dst.size());
-  }
-}
 
 TEST(GpuUtilTest, StringToFeatureSet) {
   {
@@ -84,7 +43,6 @@ TEST(GpuUtilTest,
   GPUInfo gpu_info;
   CollectBasicGraphicsInfo(&gpu_info);
   std::unique_ptr<GpuDriverBugList> list(GpuDriverBugList::Create());
-  list->LoadList(kGpuDriverBugListJson, GpuControlList::kCurrentOsOnly);
   list->MakeDecision(GpuControlList::kOsAny, std::string(), gpu_info);
   std::vector<std::string> expected_disabled_extensions =
       list->GetDisabledExtensions();

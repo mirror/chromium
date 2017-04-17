@@ -37,41 +37,43 @@
 namespace blink {
 
 class SVGBoolean final : public SVGPropertyHelper<SVGBoolean> {
-public:
-    // SVGBoolean does not have a tear-off type.
-    typedef void TearOffType;
-    typedef bool PrimitiveType;
+ public:
+  // SVGBoolean does not have a tear-off type.
+  typedef void TearOffType;
+  typedef bool PrimitiveType;
 
-    static SVGBoolean* create(bool value = false)
-    {
-        return new SVGBoolean(value);
-    }
+  static SVGBoolean* Create(bool value = false) {
+    return new SVGBoolean(value);
+  }
 
-    SVGBoolean* clone() const { return create(m_value); }
+  SVGBoolean* Clone() const { return Create(value_); }
 
-    String valueAsString() const override;
-    SVGParsingError setValueAsString(const String&);
+  String ValueAsString() const override;
+  SVGParsingError SetValueAsString(const String&);
 
-    void add(SVGPropertyBase*, SVGElement*) override;
-    void calculateAnimatedValue(SVGAnimationElement*, float percentage, unsigned repeatCount, SVGPropertyBase* from, SVGPropertyBase* to, SVGPropertyBase* toAtEndOfDurationValue, SVGElement*) override;
-    float calculateDistance(SVGPropertyBase* to, SVGElement*) override;
+  void Add(SVGPropertyBase*, SVGElement*) override;
+  void CalculateAnimatedValue(SVGAnimationElement*,
+                              float percentage,
+                              unsigned repeat_count,
+                              SVGPropertyBase* from,
+                              SVGPropertyBase* to,
+                              SVGPropertyBase* to_at_end_of_duration_value,
+                              SVGElement*) override;
+  float CalculateDistance(SVGPropertyBase* to, SVGElement*) override;
 
-    bool value() const { return m_value; }
-    void setValue(bool value) { m_value = value; }
+  bool Value() const { return value_; }
+  void SetValue(bool value) { value_ = value; }
 
-    static AnimatedPropertyType classType() { return AnimatedBoolean; }
+  static AnimatedPropertyType ClassType() { return kAnimatedBoolean; }
 
-private:
-    SVGBoolean(bool value)
-        : m_value(value)
-    {
-    }
+ private:
+  SVGBoolean(bool value) : value_(value) {}
 
-    bool m_value;
+  bool value_;
 };
 
 DEFINE_SVG_PROPERTY_TYPE_CASTS(SVGBoolean);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGBoolean_h
+#endif  // SVGBoolean_h

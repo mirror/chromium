@@ -6,29 +6,31 @@
 #define SourceBufferTrackBaseSupplement_h
 
 #include "platform/Supplementable.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class TrackBase;
 class SourceBuffer;
 
-class SourceBufferTrackBaseSupplement : public GarbageCollected<SourceBufferTrackBaseSupplement>, public Supplement<TrackBase> {
-    USING_GARBAGE_COLLECTED_MIXIN(SourceBufferTrackBaseSupplement);
-public:
-    static SourceBuffer* sourceBuffer(TrackBase&);
-    static void setSourceBuffer(TrackBase&, SourceBuffer*);
+class SourceBufferTrackBaseSupplement
+    : public GarbageCollected<SourceBufferTrackBaseSupplement>,
+      public Supplement<TrackBase> {
+  USING_GARBAGE_COLLECTED_MIXIN(SourceBufferTrackBaseSupplement);
 
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  static SourceBuffer* sourceBuffer(TrackBase&);
+  static void SetSourceBuffer(TrackBase&, SourceBuffer*);
 
-private:
-    static SourceBufferTrackBaseSupplement& from(TrackBase&);
-    static SourceBufferTrackBaseSupplement* fromIfExists(TrackBase&);
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<SourceBuffer> m_sourceBuffer;
+ private:
+  static SourceBufferTrackBaseSupplement& From(TrackBase&);
+  static SourceBufferTrackBaseSupplement* FromIfExists(TrackBase&);
+
+  Member<SourceBuffer> source_buffer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif
-

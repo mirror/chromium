@@ -14,9 +14,9 @@
 #include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
-#include "base/memory/linked_ptr.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
+#include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/drive/drive_integration_service.h"
 #include "chrome/browser/chromeos/file_system_provider/observer.h"
 #include "chrome/browser/chromeos/file_system_provider/service.h"
@@ -39,7 +39,6 @@ class BrowserContext;
 
 namespace file_manager {
 
-class MountedDiskMonitor;
 class SnapshotManager;
 class VolumeManagerObserver;
 
@@ -52,6 +51,7 @@ enum VolumeType {
   VOLUME_TYPE_MOUNTED_ARCHIVE_FILE,
   VOLUME_TYPE_PROVIDED,  // File system provided by the FileSystemProvider API.
   VOLUME_TYPE_MTP,
+  VOLUME_TYPE_MEDIA_VIEW,
   // The enum values must be kept in sync with FileManagerVolumeType in
   // tools/metrics/histograms/histograms.xml. Since enums for histograms are
   // append-only (for keeping the number consistent across versions), new values
@@ -79,24 +79,29 @@ class Volume : public base::SupportsWeakPtr<Volume> {
   ~Volume();
 
   // Factory static methods for different volume types.
-  static Volume* CreateForDrive(Profile* profile);
-  static Volume* CreateForDownloads(const base::FilePath& downloads_path);
-  static Volume* CreateForRemovable(
+  static std::unique_ptr<Volume> CreateForDrive(Profile* profile);
+  static std::unique_ptr<Volume> CreateForDownloads(
+      const base::FilePath& downloads_path);
+  static std::unique_ptr<Volume> CreateForRemovable(
       const chromeos::disks::DiskMountManager::MountPointInfo& mount_point,
       const chromeos::disks::DiskMountManager::Disk* disk);
-  static Volume* CreateForProvidedFileSystem(
+  static std::unique_ptr<Volume> CreateForProvidedFileSystem(
       const chromeos::file_system_provider::ProvidedFileSystemInfo&
           file_system_info,
       MountContext mount_context);
-  static Volume* CreateForMTP(const base::FilePath& mount_path,
-                              const std::string& label,
-                              bool read_only);
-  static Volume* CreateForTesting(const base::FilePath& path,
-                                  VolumeType volume_type,
-                                  chromeos::DeviceType device_type,
-                                  bool read_only);
-  static Volume* CreateForTesting(const base::FilePath& device_path,
-                                  const base::FilePath& mount_path);
+  static std::unique_ptr<Volume> CreateForMTP(const base::FilePath& mount_path,
+                                              const std::string& label,
+                                              bool read_only);
+  static std::unique_ptr<Volume> CreateForMediaView(
+      const std::string& root_document_id);
+  static std::unique_ptr<Volume> CreateForTesting(
+      const base::FilePath& path,
+      VolumeType volume_type,
+      chromeos::DeviceType device_type,
+      bool read_only);
+  static std::unique_ptr<Volume> CreateForTesting(
+      const base::FilePath& device_path,
+      const base::FilePath& mount_path);
 
   // Getters for all members. See below for details.
   const std::string& volume_id() const { return volume_id_; }
@@ -116,7 +121,18 @@ class Volume : public base::SupportsWeakPtr<Volume> {
   }
   const std::string& volume_label() const { return volume_label_; }
   bool is_parent() const { return is_parent_; }
+  // Whether the applications can write to the volume. True if not writable.
+  // For example, when write access to external storage is restricted by the
+  // policy (ExternalStorageReadOnly), is_read_only() will be true even when
+  // is_read_only_removable_device() is false.
   bool is_read_only() const { return is_read_only_; }
+  // Whether the device is write-protected by hardware. This field is valid
+  // only when device_type is VOLUME_TYPE_REMOVABLE_DISK_PARTITION and
+  // source is SOURCE_DEVICE.
+  // When this value is true, is_read_only() is also true.
+  bool is_read_only_removable_device() const {
+    return is_read_only_removable_device_;
+  }
   bool has_media() const { return has_media_; }
   bool configurable() const { return configurable_; }
   bool watchable() const { return watchable_; }
@@ -175,8 +191,12 @@ class Volume : public base::SupportsWeakPtr<Volume> {
   // Is the device is a parent device (i.e. sdb rather than sdb1).
   bool is_parent_;
 
-  // True if the volume is read only.
+  // True if the volume is not writable by applications.
   bool is_read_only_;
+
+  // True if the volume is made read_only due to its hardware.
+  // This implies is_read_only_.
+  bool is_read_only_removable_device_;
 
   // True if the volume contains media.
   bool has_media_;
@@ -197,6 +217,7 @@ class Volume : public base::SupportsWeakPtr<Volume> {
 //   for a device).
 // - Mounted zip archives.
 class VolumeManager : public KeyedService,
+                      public arc::ArcSessionManager::Observer,
                       public drive::DriveIntegrationServiceObserver,
                       public chromeos::disks::DiskMountManager::Observer,
                       public chromeos::file_system_provider::Observer,
@@ -252,7 +273,7 @@ class VolumeManager : public KeyedService,
                            bool read_only);
 
   // For testing purpose, adds the volume info to the volume manager.
-  void AddVolumeForTesting(const linked_ptr<Volume>& volume);
+  void AddVolumeForTesting(std::unique_ptr<Volume> volume);
 
   // drive::DriveIntegrationServiceObserver overrides.
   void OnFileSystemMounted() override;
@@ -283,8 +304,14 @@ class VolumeManager : public KeyedService,
           file_system_info,
       base::File::Error error) override;
 
+  // arc::ArcSessionManager::Observer overrides.
+  void OnArcPlayStoreEnabledChanged(bool enabled) override;
+
   // Called on change to kExternalStorageDisabled pref.
   void OnExternalStorageDisabledChanged();
+
+  // Called on change to kExternalStorageReadOnly pref.
+  void OnExternalStorageReadOnlyChanged();
 
   // RemovableStorageObserver overrides.
   void OnRemovableStorageAttached(
@@ -298,9 +325,10 @@ class VolumeManager : public KeyedService,
   void OnDiskMountManagerRefreshed(bool success);
   void OnStorageMonitorInitialized();
   void DoMountEvent(chromeos::MountError error_code,
-                    const linked_ptr<Volume>& volume);
-  void DoUnmountEvent(chromeos::MountError error_code,
-                      const linked_ptr<Volume>& volume);
+                    std::unique_ptr<Volume> volume);
+  void DoUnmountEvent(chromeos::MountError error_code, const Volume& volume);
+  void OnExternalStorageDisabledChangedUnmountCallback(
+      chromeos::MountError error_code);
 
   Profile* profile_;
   drive::DriveIntegrationService* drive_integration_service_;  // Not owned.
@@ -310,8 +338,9 @@ class VolumeManager : public KeyedService,
   chromeos::file_system_provider::Service*
       file_system_provider_service_;  // Not owned by this class.
   GetMtpStorageInfoCallback get_mtp_storage_info_callback_;
-  std::map<std::string, linked_ptr<Volume>> mounted_volumes_;
+  std::map<std::string, std::unique_ptr<Volume>> mounted_volumes_;
   std::unique_ptr<SnapshotManager> snapshot_manager_;
+  bool arc_volumes_mounted_ = false;
 
   // Note: This should remain the last member so it'll be destroyed and
   // invalidate its weak pointers before any other members are destroyed.

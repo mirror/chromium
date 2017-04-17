@@ -6,10 +6,8 @@
 
 #include <stddef.h>
 
-#include "cc/output/renderer.h"
-#include "cc/test/fake_output_surface.h"
-#include "cc/test/fake_output_surface_client.h"
 #include "cc/test/fake_resource_provider.h"
+#include "cc/test/test_context_provider.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -17,18 +15,16 @@ namespace cc {
 namespace {
 
 TEST(ScopedResourceTest, NewScopedResource) {
-  FakeOutputSurfaceClient output_surface_client;
-  std::unique_ptr<OutputSurface> output_surface(
-      FakeOutputSurface::CreateDelegating3d());
-  CHECK(output_surface->BindToClient(&output_surface_client));
+  scoped_refptr<TestContextProvider> context_provider =
+      TestContextProvider::Create();
+  ASSERT_TRUE(context_provider->BindToCurrentThread());
 
   std::unique_ptr<SharedBitmapManager> shared_bitmap_manager(
       new TestSharedBitmapManager());
   std::unique_ptr<ResourceProvider> resource_provider =
-      FakeResourceProvider::Create(output_surface.get(),
+      FakeResourceProvider::Create(context_provider.get(),
                                    shared_bitmap_manager.get());
-  std::unique_ptr<ScopedResource> texture =
-      ScopedResource::Create(resource_provider.get());
+  auto texture = base::MakeUnique<ScopedResource>(resource_provider.get());
 
   // New scoped textures do not hold a texture yet.
   EXPECT_EQ(0u, texture->id());
@@ -40,20 +36,18 @@ TEST(ScopedResourceTest, NewScopedResource) {
 }
 
 TEST(ScopedResourceTest, CreateScopedResource) {
-  FakeOutputSurfaceClient output_surface_client;
-  std::unique_ptr<OutputSurface> output_surface(
-      FakeOutputSurface::CreateDelegating3d());
-  CHECK(output_surface->BindToClient(&output_surface_client));
+  scoped_refptr<TestContextProvider> context_provider =
+      TestContextProvider::Create();
+  ASSERT_TRUE(context_provider->BindToCurrentThread());
 
   std::unique_ptr<SharedBitmapManager> shared_bitmap_manager(
       new TestSharedBitmapManager());
   std::unique_ptr<ResourceProvider> resource_provider =
-      FakeResourceProvider::Create(output_surface.get(),
+      FakeResourceProvider::Create(context_provider.get(),
                                    shared_bitmap_manager.get());
-  std::unique_ptr<ScopedResource> texture =
-      ScopedResource::Create(resource_provider.get());
+  auto texture = base::MakeUnique<ScopedResource>(resource_provider.get());
   texture->Allocate(gfx::Size(30, 30), ResourceProvider::TEXTURE_HINT_IMMUTABLE,
-                    RGBA_8888);
+                    RGBA_8888, gfx::ColorSpace());
 
   // The texture has an allocated byte-size now.
   size_t expected_bytes = 30 * 30 * 4;
@@ -66,34 +60,33 @@ TEST(ScopedResourceTest, CreateScopedResource) {
 }
 
 TEST(ScopedResourceTest, ScopedResourceIsDeleted) {
-  FakeOutputSurfaceClient output_surface_client;
-  std::unique_ptr<OutputSurface> output_surface(
-      FakeOutputSurface::CreateDelegating3d());
-  CHECK(output_surface->BindToClient(&output_surface_client));
+  scoped_refptr<TestContextProvider> context_provider =
+      TestContextProvider::Create();
+  ASSERT_TRUE(context_provider->BindToCurrentThread());
 
   std::unique_ptr<SharedBitmapManager> shared_bitmap_manager(
       new TestSharedBitmapManager());
   std::unique_ptr<ResourceProvider> resource_provider =
-      FakeResourceProvider::Create(output_surface.get(),
+      FakeResourceProvider::Create(context_provider.get(),
                                    shared_bitmap_manager.get());
   {
-    std::unique_ptr<ScopedResource> texture =
-        ScopedResource::Create(resource_provider.get());
+    auto texture = base::MakeUnique<ScopedResource>(resource_provider.get());
 
     EXPECT_EQ(0u, resource_provider->num_resources());
     texture->Allocate(gfx::Size(30, 30),
-                      ResourceProvider::TEXTURE_HINT_IMMUTABLE, RGBA_8888);
+                      ResourceProvider::TEXTURE_HINT_IMMUTABLE, RGBA_8888,
+                      gfx::ColorSpace());
     EXPECT_LT(0u, texture->id());
     EXPECT_EQ(1u, resource_provider->num_resources());
   }
 
   EXPECT_EQ(0u, resource_provider->num_resources());
   {
-    std::unique_ptr<ScopedResource> texture =
-        ScopedResource::Create(resource_provider.get());
+    auto texture = base::MakeUnique<ScopedResource>(resource_provider.get());
     EXPECT_EQ(0u, resource_provider->num_resources());
     texture->Allocate(gfx::Size(30, 30),
-                      ResourceProvider::TEXTURE_HINT_IMMUTABLE, RGBA_8888);
+                      ResourceProvider::TEXTURE_HINT_IMMUTABLE, RGBA_8888,
+                      gfx::ColorSpace());
     EXPECT_LT(0u, texture->id());
     EXPECT_EQ(1u, resource_provider->num_resources());
     texture->Free();

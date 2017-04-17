@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// https://www.w3.org/TR/media-source/#idl-def-SourceBuffer
+// https://w3c.github.io/media-source/#idl-def-sourcebuffer
 
 enum AppendMode {
     "segments",
@@ -69,8 +69,6 @@ enum AppendMode {
     // Append segment data.
     [RaisesException] void appendBuffer(ArrayBuffer data);
     [RaisesException] void appendBuffer(ArrayBufferView data);
-
-    [RaisesException, RuntimeEnabled=ExperimentalStream] void appendStream(Stream stream, optional unsigned long long maxSize);
 
     // Abort the current segment append sequence.
     [RaisesException] void abort();

@@ -11,6 +11,7 @@
 #include "base/base64.h"
 #include "base/files/file_path.h"
 #include "base/json/json_reader.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/rand_util.h"
 #include "base/sha1.h"
@@ -31,7 +32,6 @@
 #include "net/cert/x509_cert_types.h"
 #include "net/cert/x509_certificate.h"
 #include "net/http/http_util.h"
-#include "net/log/net_log.h"
 #include "net/ssl/ssl_info.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/test_data_directory.h"
@@ -42,12 +42,22 @@ namespace net {
 
 namespace {
 
+namespace test1 {
+#include "net/http/transport_security_state_static_unittest1.h"
+}
+namespace test2 {
+#include "net/http/transport_security_state_static_unittest2.h"
+}
+namespace test3 {
+#include "net/http/transport_security_state_static_unittest3.h"
+}
+
 const char kHost[] = "example.test";
 const char kSubdomain[] = "foo.example.test";
 const uint16_t kPort = 443;
 const char kReportUri[] = "http://report-example.test/test";
 const char kExpectCTStaticHostname[] = "preloaded-expect-ct.badssl.com";
-const char kExpectCTStaticReportURI[] = "https://report.badssl.com/expect-ct";
+const char kExpectCTStaticReportURI[] = "https://clients3.google.com/ct_upload";
 const char kExpectStapleStaticHostname[] = "preloaded-expect-staple.badssl.com";
 const char kExpectStapleStaticReportURI[] =
     "https://report.badssl.com/expect-staple";
@@ -89,25 +99,31 @@ class MockCertificateReportSender
   MockCertificateReportSender() {}
   ~MockCertificateReportSender() override {}
 
-  void Send(const GURL& report_uri, const std::string& report) override {
+  void Send(
+      const GURL& report_uri,
+      base::StringPiece content_type,
+      base::StringPiece report,
+      const base::Callback<void()>& success_callback,
+      const base::Callback<void(const GURL&, int)>& error_callback) override {
     latest_report_uri_ = report_uri;
-    latest_report_ = report;
+    report.CopyToString(&latest_report_);
+    content_type.CopyToString(&latest_content_type_);
   }
-
-  void SetErrorCallback(
-      const base::Callback<void(const GURL&, int)>& error_callback) override {}
 
   void Clear() {
     latest_report_uri_ = GURL();
     latest_report_ = std::string();
+    latest_content_type_ = std::string();
   }
 
   const GURL& latest_report_uri() { return latest_report_uri_; }
   const std::string& latest_report() { return latest_report_; }
+  const std::string& latest_content_type() { return latest_content_type_; }
 
  private:
   GURL latest_report_uri_;
   std::string latest_report_;
+  std::string latest_content_type_;
 };
 
 // A mock ReportSenderInterface that simulates a net error on every report sent.
@@ -120,19 +136,18 @@ class MockFailingCertificateReportSender
   int net_error() { return net_error_; }
 
   // TransportSecurityState::ReportSenderInterface:
-  void Send(const GURL& report_uri, const std::string& report) override {
-    ASSERT_FALSE(error_callback_.is_null());
-    error_callback_.Run(report_uri, net_error_);
-  }
-
-  void SetErrorCallback(
+  void Send(
+      const GURL& report_uri,
+      base::StringPiece content_type,
+      base::StringPiece report,
+      const base::Callback<void()>& success_callback,
       const base::Callback<void(const GURL&, int)>& error_callback) override {
-    error_callback_ = error_callback;
+    ASSERT_FALSE(error_callback.is_null());
+    error_callback.Run(report_uri, net_error_);
   }
 
  private:
   const int net_error_;
-  base::Callback<void(const GURL&, int)> error_callback_;
 };
 
 // A mock ExpectCTReporter that remembers the latest violation that was
@@ -194,7 +209,7 @@ void CheckHPKPReport(
     const HashValueVector& known_pins) {
   std::unique_ptr<base::Value> value(base::JSONReader::Read(report));
   ASSERT_TRUE(value);
-  ASSERT_TRUE(value->IsType(base::Value::TYPE_DICTIONARY));
+  ASSERT_TRUE(value->IsType(base::Value::Type::DICTIONARY));
 
   base::DictionaryValue* report_dict;
   ASSERT_TRUE(value->GetAsDictionary(&report_dict));
@@ -250,8 +265,7 @@ void CheckHPKPReport(
 // 5. The "cert-status" field matches |cert_status|, and is not present when
 //    |cert_status| is empty.
 // 6. The "validated-chain" and "serverd-chain" fields match those in
-//    |ssl_info|, and are only present when |ssl_info.is_issued_by_known_root|
-//    is true.
+//    |ssl_info|.
 void CheckSerializedExpectStapleReport(const std::string& report,
                                        const HostPortPair& host_port_pair,
                                        const SSLInfo& ssl_info,
@@ -260,7 +274,7 @@ void CheckSerializedExpectStapleReport(const std::string& report,
                                        const std::string& cert_status) {
   std::unique_ptr<base::Value> value(base::JSONReader::Read(report));
   ASSERT_TRUE(value);
-  ASSERT_TRUE(value->IsType(base::Value::TYPE_DICTIONARY));
+  ASSERT_TRUE(value->IsType(base::Value::Type::DICTIONARY));
 
   base::DictionaryValue* report_dict;
   ASSERT_TRUE(value->GetAsDictionary(&report_dict));
@@ -310,18 +324,13 @@ void CheckSerializedExpectStapleReport(const std::string& report,
   bool has_validated_chain = report_dict->GetList(
       "validated-certificate-chain", &report_validated_certificate_chain);
 
-  if (ssl_info.is_issued_by_known_root) {
-    EXPECT_TRUE(has_served_chain);
-    EXPECT_NO_FATAL_FAILURE(CompareCertificateChainWithList(
-        ssl_info.unverified_cert, report_served_certificate_chain));
+  EXPECT_TRUE(has_served_chain);
+  EXPECT_NO_FATAL_FAILURE(CompareCertificateChainWithList(
+      ssl_info.unverified_cert, report_served_certificate_chain));
 
-    EXPECT_TRUE(has_validated_chain);
-    EXPECT_NO_FATAL_FAILURE(CompareCertificateChainWithList(
-        ssl_info.cert, report_validated_certificate_chain));
-  } else {
-    EXPECT_FALSE(has_served_chain);
-    EXPECT_FALSE(has_validated_chain);
-  }
+  EXPECT_TRUE(has_validated_chain);
+  EXPECT_NO_FATAL_FAILURE(CompareCertificateChainWithList(
+      ssl_info.cert, report_validated_certificate_chain));
 }
 
 // Set up |state| for ExpectStaple, call CheckExpectStaple(), and verify the
@@ -337,7 +346,13 @@ void CheckExpectStapleReport(TransportSecurityState* state,
   HostPortPair host_port(kExpectStapleStaticHostname, 443);
   state->SetReportSender(reporter);
   state->CheckExpectStaple(host_port, ssl_info, ocsp_response);
+  if (!ssl_info.is_issued_by_known_root) {
+    EXPECT_EQ(GURL(), reporter->latest_report_uri());
+    EXPECT_EQ(std::string(), reporter->latest_report());
+    return;
+  }
   EXPECT_EQ(GURL(kExpectStapleStaticReportURI), reporter->latest_report_uri());
+  EXPECT_EQ("application/json; charset=utf-8", reporter->latest_content_type());
   std::string serialized_report = reporter->latest_report();
   EXPECT_NO_FATAL_FAILURE(CheckSerializedExpectStapleReport(
       serialized_report, host_port, ssl_info, ocsp_response, response_status,
@@ -348,6 +363,10 @@ void CheckExpectStapleReport(TransportSecurityState* state,
 
 class TransportSecurityStateTest : public testing::Test {
  public:
+  ~TransportSecurityStateTest() override {
+    SetTransportSecurityStateSourceForTesting(nullptr);
+  }
+
   void SetUp() override {
     crypto::EnsureOpenSSLInit();
   }
@@ -375,6 +394,12 @@ class TransportSecurityStateTest : public testing::Test {
     memset(hash.data(), 0, hash.size());
     spki_hashes.push_back(hash);
     return spki_hashes;
+  }
+
+  static HashValue GetSampleSPKIHash(uint8_t value) {
+    HashValue hash(HASH_VALUE_SHA256);
+    memset(hash.data(), value, hash.size());
+    return hash;
   }
 
  protected:
@@ -479,29 +504,6 @@ TEST_F(TransportSecurityStateTest, MatchesCase1) {
   bool include_subdomains = false;
   state.AddHSTS("EXample.coM", expiry, include_subdomains);
   EXPECT_TRUE(state.ShouldUpgradeToSSL("example.com"));
-}
-
-TEST_F(TransportSecurityStateTest, Fuzz) {
-  TransportSecurityState state;
-  TransportSecurityState::STSState sts_state;
-  TransportSecurityState::PKPState pkp_state;
-
-  EnableStaticPins(&state);
-
-  for (size_t i = 0; i < 128; i++) {
-    std::string hostname;
-
-    for (;;) {
-      if (base::RandInt(0, 16) == 7) {
-        break;
-      }
-      if (i > 0 && base::RandInt(0, 7) == 7) {
-        hostname.append(1, '.');
-      }
-      hostname.append(1, 'a' + base::RandInt(0, 25));
-    }
-    state.GetStaticDomainState(hostname, &sts_state, &pkp_state);
-  }
 }
 
 TEST_F(TransportSecurityStateTest, MatchesCase2) {
@@ -1443,6 +1445,8 @@ TEST_F(TransportSecurityStateTest, HPKPReporting) {
   EXPECT_EQ(report_uri, mock_report_sender.latest_report_uri());
   std::string report = mock_report_sender.latest_report();
   ASSERT_FALSE(report.empty());
+  EXPECT_EQ("application/json; charset=utf-8",
+            mock_report_sender.latest_content_type());
   ASSERT_NO_FATAL_FAILURE(CheckHPKPReport(report, host_port_pair, true, kHost,
                                           cert1.get(), cert2.get(),
                                           good_hashes));
@@ -1458,6 +1462,8 @@ TEST_F(TransportSecurityStateTest, HPKPReporting) {
   EXPECT_EQ(report_uri, mock_report_sender.latest_report_uri());
   report = mock_report_sender.latest_report();
   ASSERT_FALSE(report.empty());
+  EXPECT_EQ("application/json; charset=utf-8",
+            mock_report_sender.latest_content_type());
   ASSERT_NO_FATAL_FAILURE(CheckHPKPReport(report, subdomain_host_port_pair,
                                           true, kHost, cert1.get(), cert2.get(),
                                           good_hashes));
@@ -1568,6 +1574,8 @@ TEST_F(TransportSecurityStateTest, HPKPReportOnly) {
   EXPECT_EQ(report_uri, mock_report_sender.latest_report_uri());
   std::string report = mock_report_sender.latest_report();
   ASSERT_FALSE(report.empty());
+  EXPECT_EQ("application/json; charset=utf-8",
+            mock_report_sender.latest_content_type());
   ASSERT_NO_FATAL_FAILURE(CheckHPKPReport(report, host_port_pair, true, kHost,
                                           cert1.get(), cert2.get(),
                                           ssl_info.public_key_hashes));
@@ -1694,6 +1702,8 @@ TEST_F(TransportSecurityStateTest, PreloadedPKPReportUri) {
 
   std::string report = mock_report_sender.latest_report();
   ASSERT_FALSE(report.empty());
+  EXPECT_EQ("application/json; charset=utf-8",
+            mock_report_sender.latest_content_type());
   ASSERT_NO_FATAL_FAILURE(CheckHPKPReport(
       report, host_port_pair, pkp_state.include_subdomains, pkp_state.domain,
       cert1.get(), cert2.get(), pkp_state.spki_hashes));
@@ -2008,6 +2018,271 @@ TEST_F(TransportSecurityStateTest, ExpectCTReporter) {
   EXPECT_EQ(GURL(kExpectCTStaticReportURI), reporter.report_uri());
 }
 
+// Simple test for the HSTS preload process. The trie (generated from
+// transport_security_state_static_unittest1.json) contains 1 entry. Test that
+// the lookup methods can find the entry and correctly decode the different
+// preloaded states (HSTS, HPKP, Expect-CT, and Expect-Staple).
+TEST_F(TransportSecurityStateTest, DecodePreloadedSingle) {
+  SetTransportSecurityStateSourceForTesting(&test1::kHSTSSource);
+
+  TransportSecurityState state;
+  TransportSecurityStateTest::EnableStaticPins(&state);
+  TransportSecurityStateTest::EnableStaticExpectCT(&state);
+  TransportSecurityStateTest::SetEnableStaticExpectStaple(&state, true);
+
+  TransportSecurityState::STSState sts_state;
+  TransportSecurityState::PKPState pkp_state;
+  EXPECT_TRUE(
+      GetStaticDomainState(&state, "hsts.example.com", &sts_state, &pkp_state));
+  EXPECT_TRUE(sts_state.include_subdomains);
+  EXPECT_EQ(TransportSecurityState::STSState::MODE_FORCE_HTTPS,
+            sts_state.upgrade_mode);
+  EXPECT_TRUE(pkp_state.include_subdomains);
+  EXPECT_EQ(GURL(), pkp_state.report_uri);
+  ASSERT_EQ(1u, pkp_state.spki_hashes.size());
+  EXPECT_EQ(pkp_state.spki_hashes[0], GetSampleSPKIHash(0x1));
+  ASSERT_EQ(1u, pkp_state.bad_spki_hashes.size());
+  EXPECT_EQ(pkp_state.bad_spki_hashes[0], GetSampleSPKIHash(0x2));
+
+  TransportSecurityState::ExpectCTState ct_state;
+  EXPECT_FALSE(GetExpectCTState(&state, "hsts.example.com", &ct_state));
+
+  TransportSecurityState::ExpectStapleState staple_state;
+  EXPECT_FALSE(GetExpectStapleState(&state, "hsts.example.com", &staple_state));
+}
+
+// More advanced test for the HSTS preload process where the trie (generated
+// from transport_security_state_static_unittest2.json) contains multiple
+// entries with a common prefix. Test that the lookup methods can find all
+// entries and correctly decode the different preloaded states (HSTS, HPKP,
+// Expect-CT, and Expect-Staple) for each entry.
+TEST_F(TransportSecurityStateTest, DecodePreloadedMultiplePrefix) {
+  SetTransportSecurityStateSourceForTesting(&test2::kHSTSSource);
+
+  TransportSecurityState state;
+  TransportSecurityStateTest::EnableStaticPins(&state);
+  TransportSecurityStateTest::EnableStaticExpectCT(&state);
+  TransportSecurityStateTest::SetEnableStaticExpectStaple(&state, true);
+
+  TransportSecurityState::STSState sts_state;
+  TransportSecurityState::PKPState pkp_state;
+  TransportSecurityState::ExpectCTState ct_state;
+  TransportSecurityState::ExpectStapleState staple_state;
+
+  EXPECT_TRUE(
+      GetStaticDomainState(&state, "hsts.example.com", &sts_state, &pkp_state));
+  EXPECT_FALSE(sts_state.include_subdomains);
+  EXPECT_EQ(TransportSecurityState::STSState::MODE_FORCE_HTTPS,
+            sts_state.upgrade_mode);
+  EXPECT_FALSE(pkp_state.include_subdomains);
+  EXPECT_EQ(GURL(), pkp_state.report_uri);
+  EXPECT_EQ(0U, pkp_state.spki_hashes.size());
+  EXPECT_EQ(0U, pkp_state.bad_spki_hashes.size());
+  EXPECT_FALSE(GetExpectCTState(&state, "hsts.example.com", &ct_state));
+  EXPECT_FALSE(GetExpectStapleState(&state, "hsts.example.com", &staple_state));
+
+  sts_state = TransportSecurityState::STSState();
+  pkp_state = TransportSecurityState::PKPState();
+  ct_state = TransportSecurityState::ExpectCTState();
+  staple_state = TransportSecurityState::ExpectStapleState();
+  EXPECT_TRUE(
+      GetStaticDomainState(&state, "hpkp.example.com", &sts_state, &pkp_state));
+  EXPECT_FALSE(sts_state.include_subdomains);
+  EXPECT_EQ(TransportSecurityState::STSState::MODE_DEFAULT,
+            sts_state.upgrade_mode);
+  EXPECT_TRUE(pkp_state.include_subdomains);
+  EXPECT_EQ(GURL("https://report.example.com/hpkp-upload"),
+            pkp_state.report_uri);
+  EXPECT_EQ(1U, pkp_state.spki_hashes.size());
+  EXPECT_EQ(pkp_state.spki_hashes[0], GetSampleSPKIHash(0x1));
+  EXPECT_EQ(0U, pkp_state.bad_spki_hashes.size());
+  EXPECT_FALSE(GetExpectCTState(&state, "hpkp.example.com", &ct_state));
+  EXPECT_FALSE(GetExpectStapleState(&state, "hpkp.example.com", &staple_state));
+
+  sts_state = TransportSecurityState::STSState();
+  pkp_state = TransportSecurityState::PKPState();
+  ct_state = TransportSecurityState::ExpectCTState();
+  staple_state = TransportSecurityState::ExpectStapleState();
+  EXPECT_TRUE(GetStaticDomainState(&state, "expect-ct.example.com", &sts_state,
+                                   &pkp_state));
+  EXPECT_FALSE(sts_state.include_subdomains);
+  EXPECT_EQ(TransportSecurityState::STSState::MODE_DEFAULT,
+            sts_state.upgrade_mode);
+  EXPECT_FALSE(pkp_state.include_subdomains);
+  EXPECT_EQ(GURL(), pkp_state.report_uri);
+  EXPECT_EQ(0U, pkp_state.spki_hashes.size());
+  EXPECT_EQ(0U, pkp_state.bad_spki_hashes.size());
+  EXPECT_TRUE(GetExpectCTState(&state, "expect-ct.example.com", &ct_state));
+  EXPECT_EQ(GURL("https://report.example.com/ct-upload"), ct_state.report_uri);
+  EXPECT_FALSE(
+      GetExpectStapleState(&state, "expect-ct.example.com", &staple_state));
+
+  sts_state = TransportSecurityState::STSState();
+  pkp_state = TransportSecurityState::PKPState();
+  ct_state = TransportSecurityState::ExpectCTState();
+  staple_state = TransportSecurityState::ExpectStapleState();
+  EXPECT_TRUE(GetStaticDomainState(&state, "expect-staple.example.com",
+                                   &sts_state, &pkp_state));
+  EXPECT_FALSE(sts_state.include_subdomains);
+  EXPECT_EQ(TransportSecurityState::STSState::MODE_DEFAULT,
+            sts_state.upgrade_mode);
+  EXPECT_FALSE(pkp_state.include_subdomains);
+  EXPECT_EQ(GURL(), pkp_state.report_uri);
+  EXPECT_EQ(0U, pkp_state.spki_hashes.size());
+  EXPECT_EQ(0U, pkp_state.bad_spki_hashes.size());
+  EXPECT_FALSE(
+      GetExpectCTState(&state, "expect-staple.example.com", &ct_state));
+  EXPECT_TRUE(
+      GetExpectStapleState(&state, "expect-staple.example.com", &staple_state));
+  EXPECT_FALSE(staple_state.include_subdomains);
+  EXPECT_EQ(GURL("https://report.example.com/staple-upload"),
+            staple_state.report_uri);
+
+  sts_state = TransportSecurityState::STSState();
+  pkp_state = TransportSecurityState::PKPState();
+  ct_state = TransportSecurityState::ExpectCTState();
+  staple_state = TransportSecurityState::ExpectStapleState();
+  EXPECT_TRUE(
+      GetStaticDomainState(&state, "mix.example.com", &sts_state, &pkp_state));
+  EXPECT_FALSE(sts_state.include_subdomains);
+  EXPECT_EQ(TransportSecurityState::STSState::MODE_FORCE_HTTPS,
+            sts_state.upgrade_mode);
+  EXPECT_TRUE(pkp_state.include_subdomains);
+  EXPECT_EQ(GURL(), pkp_state.report_uri);
+  EXPECT_EQ(1U, pkp_state.spki_hashes.size());
+  EXPECT_EQ(pkp_state.spki_hashes[0], GetSampleSPKIHash(0x2));
+  EXPECT_EQ(1U, pkp_state.bad_spki_hashes.size());
+  EXPECT_EQ(pkp_state.bad_spki_hashes[0], GetSampleSPKIHash(0x1));
+  EXPECT_TRUE(GetExpectCTState(&state, "mix.example.com", &ct_state));
+  EXPECT_EQ(GURL("https://report.example.com/ct-upload-alt"),
+            ct_state.report_uri);
+  EXPECT_TRUE(GetExpectStapleState(&state, "mix.example.com", &staple_state));
+  EXPECT_TRUE(staple_state.include_subdomains);
+  EXPECT_EQ(GURL("https://report.example.com/staple-upload-alt"),
+            staple_state.report_uri);
+}
+
+// More advanced test for the HSTS preload process where the trie (generated
+// from transport_security_state_static_unittest3.json) contains a mix of
+// entries. Some entries share a prefix with the prefix also having its own
+// preloaded state while others share no prefix. This results in a trie with
+// several different internal structures. Test that the lookup methods can find
+// all entries and correctly decode the different preloaded states (HSTS, HPKP,
+// Expect-CT, and Expect-Staple) for each entry.
+TEST_F(TransportSecurityStateTest, DecodePreloadedMultipleMix) {
+  SetTransportSecurityStateSourceForTesting(&test3::kHSTSSource);
+
+  TransportSecurityState state;
+  TransportSecurityStateTest::EnableStaticPins(&state);
+  TransportSecurityStateTest::EnableStaticExpectCT(&state);
+  TransportSecurityStateTest::SetEnableStaticExpectStaple(&state, true);
+
+  TransportSecurityState::STSState sts_state;
+  TransportSecurityState::PKPState pkp_state;
+  TransportSecurityState::ExpectCTState ct_state;
+  TransportSecurityState::ExpectStapleState staple_state;
+
+  EXPECT_TRUE(
+      GetStaticDomainState(&state, "example.com", &sts_state, &pkp_state));
+  EXPECT_TRUE(sts_state.include_subdomains);
+  EXPECT_EQ(TransportSecurityState::STSState::MODE_FORCE_HTTPS,
+            sts_state.upgrade_mode);
+  EXPECT_FALSE(pkp_state.include_subdomains);
+  EXPECT_EQ(GURL(), pkp_state.report_uri);
+  EXPECT_EQ(0U, pkp_state.spki_hashes.size());
+  EXPECT_EQ(0U, pkp_state.bad_spki_hashes.size());
+  EXPECT_FALSE(GetExpectCTState(&state, "example.com", &ct_state));
+  EXPECT_EQ(GURL(), ct_state.report_uri);
+  EXPECT_TRUE(GetExpectStapleState(&state, "example.com", &staple_state));
+  EXPECT_FALSE(staple_state.include_subdomains);
+  EXPECT_EQ(GURL("https://report.example.com/staple-upload"),
+            staple_state.report_uri);
+
+  sts_state = TransportSecurityState::STSState();
+  pkp_state = TransportSecurityState::PKPState();
+  ct_state = TransportSecurityState::ExpectCTState();
+  staple_state = TransportSecurityState::ExpectStapleState();
+  EXPECT_TRUE(
+      GetStaticDomainState(&state, "hpkp.example.com", &sts_state, &pkp_state));
+  EXPECT_FALSE(sts_state.include_subdomains);
+  EXPECT_EQ(TransportSecurityState::STSState::MODE_DEFAULT,
+            sts_state.upgrade_mode);
+  EXPECT_TRUE(pkp_state.include_subdomains);
+  EXPECT_EQ(GURL("https://report.example.com/hpkp-upload"),
+            pkp_state.report_uri);
+  EXPECT_EQ(1U, pkp_state.spki_hashes.size());
+  EXPECT_EQ(pkp_state.spki_hashes[0], GetSampleSPKIHash(0x1));
+  EXPECT_EQ(0U, pkp_state.bad_spki_hashes.size());
+  EXPECT_FALSE(GetExpectCTState(&state, "hpkp.example.com", &ct_state));
+  EXPECT_EQ(GURL(), ct_state.report_uri);
+  EXPECT_FALSE(GetExpectStapleState(&state, "hpkp.example.com", &staple_state));
+  EXPECT_FALSE(staple_state.include_subdomains);
+  EXPECT_EQ(GURL(), staple_state.report_uri);
+
+  sts_state = TransportSecurityState::STSState();
+  pkp_state = TransportSecurityState::PKPState();
+  ct_state = TransportSecurityState::ExpectCTState();
+  staple_state = TransportSecurityState::ExpectStapleState();
+  EXPECT_TRUE(
+      GetStaticDomainState(&state, "example.org", &sts_state, &pkp_state));
+  EXPECT_FALSE(sts_state.include_subdomains);
+  EXPECT_EQ(TransportSecurityState::STSState::MODE_FORCE_HTTPS,
+            sts_state.upgrade_mode);
+  EXPECT_FALSE(pkp_state.include_subdomains);
+  EXPECT_EQ(GURL(), pkp_state.report_uri);
+  EXPECT_EQ(0U, pkp_state.spki_hashes.size());
+  EXPECT_EQ(0U, pkp_state.bad_spki_hashes.size());
+  EXPECT_TRUE(GetExpectCTState(&state, "example.org", &ct_state));
+  EXPECT_EQ(GURL("https://report.example.org/ct-upload"), ct_state.report_uri);
+  EXPECT_FALSE(GetExpectStapleState(&state, "example.org", &staple_state));
+  EXPECT_FALSE(staple_state.include_subdomains);
+  EXPECT_EQ(GURL(), staple_state.report_uri);
+
+  sts_state = TransportSecurityState::STSState();
+  pkp_state = TransportSecurityState::PKPState();
+  ct_state = TransportSecurityState::ExpectCTState();
+  staple_state = TransportSecurityState::ExpectStapleState();
+  EXPECT_TRUE(
+      GetStaticDomainState(&state, "badssl.com", &sts_state, &pkp_state));
+  EXPECT_TRUE(sts_state.include_subdomains);
+  EXPECT_EQ(TransportSecurityState::STSState::MODE_DEFAULT,
+            sts_state.upgrade_mode);
+  EXPECT_TRUE(pkp_state.include_subdomains);
+  EXPECT_EQ(GURL("https://report.example.com/hpkp-upload"),
+            pkp_state.report_uri);
+  EXPECT_EQ(1U, pkp_state.spki_hashes.size());
+  EXPECT_EQ(pkp_state.spki_hashes[0], GetSampleSPKIHash(0x1));
+  EXPECT_EQ(0U, pkp_state.bad_spki_hashes.size());
+  EXPECT_FALSE(GetExpectCTState(&state, "badssl.com", &ct_state));
+  EXPECT_EQ(GURL(), ct_state.report_uri);
+  EXPECT_TRUE(GetExpectStapleState(&state, "badssl.com", &staple_state));
+  EXPECT_TRUE(staple_state.include_subdomains);
+  EXPECT_EQ(GURL("https://report.badssl.com/staple-upload"),
+            staple_state.report_uri);
+
+  sts_state = TransportSecurityState::STSState();
+  pkp_state = TransportSecurityState::PKPState();
+  ct_state = TransportSecurityState::ExpectCTState();
+  staple_state = TransportSecurityState::ExpectStapleState();
+  EXPECT_TRUE(
+      GetStaticDomainState(&state, "mix.badssl.com", &sts_state, &pkp_state));
+  EXPECT_FALSE(sts_state.include_subdomains);
+  EXPECT_EQ(TransportSecurityState::STSState::MODE_FORCE_HTTPS,
+            sts_state.upgrade_mode);
+  EXPECT_TRUE(pkp_state.include_subdomains);
+  EXPECT_EQ(GURL(), pkp_state.report_uri);
+  EXPECT_EQ(1U, pkp_state.spki_hashes.size());
+  EXPECT_EQ(pkp_state.spki_hashes[0], GetSampleSPKIHash(0x2));
+  EXPECT_EQ(1U, pkp_state.bad_spki_hashes.size());
+  EXPECT_EQ(pkp_state.bad_spki_hashes[0], GetSampleSPKIHash(0x1));
+  EXPECT_TRUE(GetExpectCTState(&state, "mix.badssl.com", &ct_state));
+  EXPECT_EQ(GURL("https://report.example.com/ct-upload"), ct_state.report_uri);
+  EXPECT_TRUE(GetExpectStapleState(&state, "mix.badssl.com", &staple_state));
+  EXPECT_TRUE(staple_state.include_subdomains);
+  EXPECT_EQ(GURL("https://report.badssl.com/staple-upload"),
+            staple_state.report_uri);
+}
+
 static const struct ExpectStapleErrorResponseData {
   OCSPVerifyResult::ResponseStatus response_status;
   std::string response_status_string;
@@ -2050,14 +2325,14 @@ TEST_P(ExpectStapleErrorResponseTest, CheckResponseStatusSerialization) {
   ssl_info.unverified_cert = cert2;
   ssl_info.ocsp_result.response_status = test.response_status;
 
-  // Certificate chains should only be included when |is_issued_by_known_root|
-  // is true.
+  // Reports should only be sent when |is_issued_by_known_root| is true.
   ssl_info.is_issued_by_known_root = true;
   ASSERT_NO_FATAL_FAILURE(
       CheckExpectStapleReport(&state, &reporter, ssl_info, ocsp_response,
                               test.response_status_string, std::string()));
+  reporter.Clear();
 
-  // No certificate chains should be included in the report.
+  // No report should be sent.
   ssl_info.is_issued_by_known_root = false;
   ASSERT_NO_FATAL_FAILURE(
       CheckExpectStapleReport(&state, &reporter, ssl_info, ocsp_response,
@@ -2105,14 +2380,13 @@ TEST_P(ExpectStapleErrorCertStatusTest, CheckCertStatusSerialization) {
   ssl_info.ocsp_result.response_status = OCSPVerifyResult::PROVIDED;
   ssl_info.ocsp_result.revocation_status = test.revocation_status;
 
-  // Certificate chains should only be included when |is_issued_by_known_root|
-  // is true.
+  // Reports should only be sent when |is_issued_by_known_root| is true.
   ssl_info.is_issued_by_known_root = true;
   ASSERT_NO_FATAL_FAILURE(CheckExpectStapleReport(&state, &reporter, ssl_info,
                                                   ocsp_response, "PROVIDED",
                                                   test.cert_status_string));
+  reporter.Clear();
 
-  // No certificate chains should be included in the report.
   ssl_info.is_issued_by_known_root = false;
   ASSERT_NO_FATAL_FAILURE(CheckExpectStapleReport(&state, &reporter, ssl_info,
                                                   ocsp_response, "PROVIDED",
@@ -2315,7 +2589,8 @@ TEST_F(TransportSecurityStateTest, RequireCTForSymantec) {
   // necessary.
   hashes.clear();
   hashes.push_back(HashValue(symantec_hash_value));
-  base::FieldTrialList field_trial_list(new base::MockEntropyProvider());
+  base::FieldTrialList field_trial_list(
+      base::MakeUnique<base::MockEntropyProvider>());
   base::FieldTrialList::CreateFieldTrial("EnforceCTForProblematicRoots",
                                          "disabled");
 

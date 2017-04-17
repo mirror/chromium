@@ -5,9 +5,8 @@
 package org.chromium.chrome.browser.ntp;
 
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
-
-import javax.annotation.Nullable;
 
 /**
  * Provides functions for working with link titles.
@@ -19,7 +18,7 @@ public final class TitleUtil {
      * Returns a title suitable for display for a link. If |title| is non-empty, this simply returns
      * it. Otherwise, returns a shortened form of the URL.
      */
-    static String getTitleForDisplay(@Nullable String title, @Nullable String url) {
+    public static String getTitleForDisplay(@Nullable String title, @Nullable String url) {
         if (!TextUtils.isEmpty(title) || TextUtils.isEmpty(url)) {
             return title;
         }

@@ -11,14 +11,17 @@
 #include "core/html/HTMLCanvasElement.h"
 #include "core/paint/FilterEffectBuilder.h"
 #include "core/style/ComputedStyle.h"
+#include "core/style/FilterOperation.h"
 #include "core/svg/SVGFilterElement.h"
 #include "modules/canvas2d/CanvasGradient.h"
 #include "modules/canvas2d/CanvasPattern.h"
 #include "modules/canvas2d/CanvasRenderingContext2D.h"
 #include "modules/canvas2d/CanvasStyle.h"
 #include "platform/graphics/DrawLooperBuilder.h"
-#include "platform/graphics/filters/FilterOperation.h"
+#include "platform/graphics/filters/FilterEffect.h"
 #include "platform/graphics/filters/SkiaImageFilterBuilder.h"
+#include "platform/graphics/paint/PaintCanvas.h"
+#include "platform/graphics/paint/PaintFlags.h"
 #include "platform/graphics/skia/SkiaUtils.h"
 #include "third_party/skia/include/effects/SkDashPathEffect.h"
 #include "third_party/skia/include/effects/SkDropShadowImageFilter.h"
@@ -30,542 +33,575 @@ static const char defaultFilter[] = "none";
 namespace blink {
 
 CanvasRenderingContext2DState::CanvasRenderingContext2DState()
-    : m_unrealizedSaveCount(0)
-    , m_strokeStyle(CanvasStyle::createFromRGBA(SK_ColorBLACK))
-    , m_fillStyle(CanvasStyle::createFromRGBA(SK_ColorBLACK))
-    , m_shadowBlur(0)
-    , m_shadowColor(Color::transparent)
-    , m_globalAlpha(1)
-    , m_lineDashOffset(0)
-    , m_unparsedFont(defaultFont)
-    , m_unparsedFilter(defaultFilter)
-    , m_textAlign(StartTextAlign)
-    , m_textBaseline(AlphabeticTextBaseline)
-    , m_direction(DirectionInherit)
-    , m_realizedFont(false)
-    , m_isTransformInvertible(true)
-    , m_hasClip(false)
-    , m_hasComplexClip(false)
-    , m_fillStyleDirty(true)
-    , m_strokeStyleDirty(true)
-    , m_lineDashDirty(false)
-    , m_imageSmoothingQuality(kLow_SkFilterQuality)
-{
-    m_fillPaint.setStyle(SkPaint::kFill_Style);
-    m_fillPaint.setAntiAlias(true);
-    m_imagePaint.setStyle(SkPaint::kFill_Style);
-    m_imagePaint.setAntiAlias(true);
-    m_strokePaint.setStyle(SkPaint::kStroke_Style);
-    m_strokePaint.setStrokeWidth(1);
-    m_strokePaint.setStrokeCap(SkPaint::kButt_Cap);
-    m_strokePaint.setStrokeMiter(10);
-    m_strokePaint.setStrokeJoin(SkPaint::kMiter_Join);
-    m_strokePaint.setAntiAlias(true);
-    setImageSmoothingEnabled(true);
+    : unrealized_save_count_(0),
+      stroke_style_(CanvasStyle::CreateFromRGBA(SK_ColorBLACK)),
+      fill_style_(CanvasStyle::CreateFromRGBA(SK_ColorBLACK)),
+      shadow_blur_(0),
+      shadow_color_(Color::kTransparent),
+      global_alpha_(1),
+      line_dash_offset_(0),
+      unparsed_font_(defaultFont),
+      unparsed_filter_(defaultFilter),
+      text_align_(kStartTextAlign),
+      text_baseline_(kAlphabeticTextBaseline),
+      direction_(kDirectionInherit),
+      realized_font_(false),
+      is_transform_invertible_(true),
+      has_clip_(false),
+      has_complex_clip_(false),
+      fill_style_dirty_(true),
+      stroke_style_dirty_(true),
+      line_dash_dirty_(false),
+      image_smoothing_quality_(kLow_SkFilterQuality) {
+  fill_flags_.setStyle(PaintFlags::kFill_Style);
+  fill_flags_.setAntiAlias(true);
+  image_flags_.setStyle(PaintFlags::kFill_Style);
+  image_flags_.setAntiAlias(true);
+  stroke_flags_.setStyle(PaintFlags::kStroke_Style);
+  stroke_flags_.setStrokeWidth(1);
+  stroke_flags_.setStrokeCap(PaintFlags::kButt_Cap);
+  stroke_flags_.setStrokeMiter(10);
+  stroke_flags_.setStrokeJoin(PaintFlags::kMiter_Join);
+  stroke_flags_.setAntiAlias(true);
+  SetImageSmoothingEnabled(true);
 }
 
-CanvasRenderingContext2DState::CanvasRenderingContext2DState(const CanvasRenderingContext2DState& other, ClipListCopyMode mode)
-    : CSSFontSelectorClient()
-    , m_unrealizedSaveCount(other.m_unrealizedSaveCount)
-    , m_unparsedStrokeColor(other.m_unparsedStrokeColor)
-    , m_unparsedFillColor(other.m_unparsedFillColor)
-    , m_strokeStyle(other.m_strokeStyle)
-    , m_fillStyle(other.m_fillStyle)
-    , m_strokePaint(other.m_strokePaint)
-    , m_fillPaint(other.m_fillPaint)
-    , m_imagePaint(other.m_imagePaint)
-    , m_shadowOffset(other.m_shadowOffset)
-    , m_shadowBlur(other.m_shadowBlur)
-    , m_shadowColor(other.m_shadowColor)
-    , m_emptyDrawLooper(other.m_emptyDrawLooper)
-    , m_shadowOnlyDrawLooper(other.m_shadowOnlyDrawLooper)
-    , m_shadowAndForegroundDrawLooper(other.m_shadowAndForegroundDrawLooper)
-    , m_shadowOnlyImageFilter(other.m_shadowOnlyImageFilter)
-    , m_shadowAndForegroundImageFilter(other.m_shadowAndForegroundImageFilter)
-    , m_globalAlpha(other.m_globalAlpha)
-    , m_transform(other.m_transform)
-    , m_lineDash(other.m_lineDash)
-    , m_lineDashOffset(other.m_lineDashOffset)
-    , m_unparsedFont(other.m_unparsedFont)
-    , m_font(other.m_font)
-    , m_fontForFilter(other.m_fontForFilter)
-    , m_unparsedFilter(other.m_unparsedFilter)
-    , m_filterValue(other.m_filterValue)
-    , m_resolvedFilter(other.m_resolvedFilter)
-    , m_textAlign(other.m_textAlign)
-    , m_textBaseline(other.m_textBaseline)
-    , m_direction(other.m_direction)
-    , m_realizedFont(other.m_realizedFont)
-    , m_isTransformInvertible(other.m_isTransformInvertible)
-    , m_hasClip(other.m_hasClip)
-    , m_hasComplexClip(other.m_hasComplexClip)
-    , m_fillStyleDirty(other.m_fillStyleDirty)
-    , m_strokeStyleDirty(other.m_strokeStyleDirty)
-    , m_lineDashDirty(other.m_lineDashDirty)
-    , m_imageSmoothingEnabled(other.m_imageSmoothingEnabled)
-    , m_imageSmoothingQuality(other.m_imageSmoothingQuality)
-{
-    if (mode == CopyClipList) {
-        m_clipList = other.m_clipList;
-    }
-    if (m_realizedFont)
-        static_cast<CSSFontSelector*>(m_font.getFontSelector())->registerForInvalidationCallbacks(this);
+CanvasRenderingContext2DState::CanvasRenderingContext2DState(
+    const CanvasRenderingContext2DState& other,
+    ClipListCopyMode mode)
+    : CSSFontSelectorClient(),
+      unrealized_save_count_(other.unrealized_save_count_),
+      unparsed_stroke_color_(other.unparsed_stroke_color_),
+      unparsed_fill_color_(other.unparsed_fill_color_),
+      stroke_style_(other.stroke_style_),
+      fill_style_(other.fill_style_),
+      stroke_flags_(other.stroke_flags_),
+      fill_flags_(other.fill_flags_),
+      image_flags_(other.image_flags_),
+      shadow_offset_(other.shadow_offset_),
+      shadow_blur_(other.shadow_blur_),
+      shadow_color_(other.shadow_color_),
+      empty_draw_looper_(other.empty_draw_looper_),
+      shadow_only_draw_looper_(other.shadow_only_draw_looper_),
+      shadow_and_foreground_draw_looper_(
+          other.shadow_and_foreground_draw_looper_),
+      shadow_only_image_filter_(other.shadow_only_image_filter_),
+      shadow_and_foreground_image_filter_(
+          other.shadow_and_foreground_image_filter_),
+      global_alpha_(other.global_alpha_),
+      transform_(other.transform_),
+      line_dash_(other.line_dash_),
+      line_dash_offset_(other.line_dash_offset_),
+      unparsed_font_(other.unparsed_font_),
+      font_(other.font_),
+      font_for_filter_(other.font_for_filter_),
+      unparsed_filter_(other.unparsed_filter_),
+      filter_value_(other.filter_value_),
+      resolved_filter_(other.resolved_filter_),
+      text_align_(other.text_align_),
+      text_baseline_(other.text_baseline_),
+      direction_(other.direction_),
+      realized_font_(other.realized_font_),
+      is_transform_invertible_(other.is_transform_invertible_),
+      has_clip_(other.has_clip_),
+      has_complex_clip_(other.has_complex_clip_),
+      fill_style_dirty_(other.fill_style_dirty_),
+      stroke_style_dirty_(other.stroke_style_dirty_),
+      line_dash_dirty_(other.line_dash_dirty_),
+      image_smoothing_enabled_(other.image_smoothing_enabled_),
+      image_smoothing_quality_(other.image_smoothing_quality_) {
+  if (mode == kCopyClipList) {
+    clip_list_ = other.clip_list_;
+  }
+  if (realized_font_)
+    static_cast<CSSFontSelector*>(font_.GetFontSelector())
+        ->RegisterForInvalidationCallbacks(this);
 }
 
-CanvasRenderingContext2DState::~CanvasRenderingContext2DState()
-{
+CanvasRenderingContext2DState::~CanvasRenderingContext2DState() {}
+
+void CanvasRenderingContext2DState::FontsNeedUpdate(
+    CSSFontSelector* font_selector) {
+  DCHECK_EQ(font_selector, font_.GetFontSelector());
+  DCHECK(realized_font_);
+
+  font_.Update(font_selector);
+  // FIXME: We only really need to invalidate the resolved filter if the font
+  // update above changed anything and the filter uses font-dependent units.
+  resolved_filter_.reset();
 }
 
-void CanvasRenderingContext2DState::fontsNeedUpdate(CSSFontSelector* fontSelector)
-{
-    DCHECK_EQ(fontSelector, m_font.getFontSelector());
-    ASSERT(m_realizedFont);
-
-    m_font.update(fontSelector);
-    // FIXME: We only really need to invalidate the resolved filter if the font
-    // update above changed anything and the filter uses font-dependent units.
-    m_resolvedFilter.reset();
+DEFINE_TRACE(CanvasRenderingContext2DState) {
+  visitor->Trace(stroke_style_);
+  visitor->Trace(fill_style_);
+  visitor->Trace(filter_value_);
+  CSSFontSelectorClient::Trace(visitor);
 }
 
-DEFINE_TRACE(CanvasRenderingContext2DState)
-{
-    visitor->trace(m_strokeStyle);
-    visitor->trace(m_fillStyle);
-    visitor->trace(m_filterValue);
-    CSSFontSelectorClient::trace(visitor);
+void CanvasRenderingContext2DState::SetLineDashOffset(double offset) {
+  line_dash_offset_ = offset;
+  line_dash_dirty_ = true;
 }
 
-void CanvasRenderingContext2DState::setLineDashOffset(double offset)
-{
-    m_lineDashOffset = offset;
-    m_lineDashDirty = true;
+void CanvasRenderingContext2DState::SetLineDash(const Vector<double>& dash) {
+  line_dash_ = dash;
+  // Spec requires the concatenation of two copies the dash list when the
+  // number of elements is odd
+  if (dash.size() % 2)
+    line_dash_.AppendVector(dash);
+
+  line_dash_dirty_ = true;
 }
 
-void CanvasRenderingContext2DState::setLineDash(const Vector<double>& dash)
-{
-    m_lineDash = dash;
-    // Spec requires the concatenation of two copies the dash list when the
-    // number of elements is odd
-    if (dash.size() % 2)
-        m_lineDash.appendVector(dash);
-
-    m_lineDashDirty = true;
+static bool HasANonZeroElement(const Vector<double>& line_dash) {
+  for (size_t i = 0; i < line_dash.size(); i++) {
+    if (line_dash[i] != 0.0)
+      return true;
+  }
+  return false;
 }
 
-static bool hasANonZeroElement(const Vector<double>& lineDash)
-{
-    for (size_t i = 0; i < lineDash.size(); i++) {
-        if (lineDash[i] != 0.0)
-            return true;
-    }
-    return false;
+void CanvasRenderingContext2DState::UpdateLineDash() const {
+  if (!line_dash_dirty_)
+    return;
+
+  if (!HasANonZeroElement(line_dash_)) {
+    stroke_flags_.setPathEffect(0);
+  } else {
+    Vector<float> line_dash(line_dash_.size());
+    std::copy(line_dash_.begin(), line_dash_.end(), line_dash.begin());
+    stroke_flags_.setPathEffect(SkDashPathEffect::Make(
+        line_dash.Data(), line_dash.size(), line_dash_offset_));
+  }
+
+  line_dash_dirty_ = false;
 }
 
-void CanvasRenderingContext2DState::updateLineDash() const
-{
-    if (!m_lineDashDirty)
-        return;
-
-    if (!hasANonZeroElement(m_lineDash)) {
-        m_strokePaint.setPathEffect(0);
-    } else {
-        Vector<float> lineDash(m_lineDash.size());
-        std::copy(m_lineDash.begin(), m_lineDash.end(), lineDash.begin());
-        m_strokePaint.setPathEffect(SkDashPathEffect::Make(lineDash.data(), lineDash.size(), m_lineDashOffset));
-    }
-
-    m_lineDashDirty = false;
+void CanvasRenderingContext2DState::SetStrokeStyle(CanvasStyle* style) {
+  stroke_style_ = style;
+  stroke_style_dirty_ = true;
 }
 
-void CanvasRenderingContext2DState::setStrokeStyle(CanvasStyle* style)
-{
-    m_strokeStyle = style;
-    m_strokeStyleDirty = true;
+void CanvasRenderingContext2DState::SetFillStyle(CanvasStyle* style) {
+  fill_style_ = style;
+  fill_style_dirty_ = true;
 }
 
-void CanvasRenderingContext2DState::setFillStyle(CanvasStyle* style)
-{
-    m_fillStyle = style;
-    m_fillStyleDirty = true;
+void CanvasRenderingContext2DState::UpdateStrokeStyle() const {
+  if (!stroke_style_dirty_)
+    return;
+
+  int clamped_alpha = ClampedAlphaForBlending(global_alpha_);
+  DCHECK(stroke_style_);
+  stroke_style_->ApplyToFlags(stroke_flags_);
+  stroke_flags_.setColor(
+      ScaleAlpha(stroke_style_->PaintColor(), clamped_alpha));
+  stroke_style_dirty_ = false;
 }
 
-void CanvasRenderingContext2DState::updateStrokeStyle() const
-{
-    if (!m_strokeStyleDirty)
-        return;
+void CanvasRenderingContext2DState::UpdateFillStyle() const {
+  if (!fill_style_dirty_)
+    return;
 
-    int clampedAlpha = clampedAlphaForBlending(m_globalAlpha);
-    ASSERT(m_strokeStyle);
-    m_strokeStyle->applyToPaint(m_strokePaint);
-    m_strokePaint.setColor(scaleAlpha(m_strokeStyle->paintColor(), clampedAlpha));
-    m_strokeStyleDirty = false;
+  int clamped_alpha = ClampedAlphaForBlending(global_alpha_);
+  DCHECK(fill_style_);
+  fill_style_->ApplyToFlags(fill_flags_);
+  fill_flags_.setColor(ScaleAlpha(fill_style_->PaintColor(), clamped_alpha));
+  fill_style_dirty_ = false;
 }
 
-void CanvasRenderingContext2DState::updateFillStyle() const
-{
-    if (!m_fillStyleDirty)
-        return;
-
-    int clampedAlpha = clampedAlphaForBlending(m_globalAlpha);
-    ASSERT(m_fillStyle);
-    m_fillStyle->applyToPaint(m_fillPaint);
-    m_fillPaint.setColor(scaleAlpha(m_fillStyle->paintColor(), clampedAlpha));
-    m_fillStyleDirty = false;
+CanvasStyle* CanvasRenderingContext2DState::Style(PaintType paint_type) const {
+  switch (paint_type) {
+    case kFillPaintType:
+      return FillStyle();
+    case kStrokePaintType:
+      return StrokeStyle();
+    case kImagePaintType:
+      return nullptr;
+  }
+  NOTREACHED();
+  return nullptr;
 }
 
-CanvasStyle* CanvasRenderingContext2DState::style(PaintType paintType) const
-{
-    switch (paintType) {
-    case FillPaintType:
-        return fillStyle();
-    case StrokePaintType:
-        return strokeStyle();
-    case ImagePaintType:
-        return nullptr;
-    }
-    ASSERT_NOT_REACHED();
+void CanvasRenderingContext2DState::SetShouldAntialias(bool should_antialias) {
+  fill_flags_.setAntiAlias(should_antialias);
+  stroke_flags_.setAntiAlias(should_antialias);
+  image_flags_.setAntiAlias(should_antialias);
+}
+
+bool CanvasRenderingContext2DState::ShouldAntialias() const {
+  DCHECK(fill_flags_.isAntiAlias() == stroke_flags_.isAntiAlias() &&
+         fill_flags_.isAntiAlias() == image_flags_.isAntiAlias());
+  return fill_flags_.isAntiAlias();
+}
+
+void CanvasRenderingContext2DState::SetGlobalAlpha(double alpha) {
+  global_alpha_ = alpha;
+  stroke_style_dirty_ = true;
+  fill_style_dirty_ = true;
+  int image_alpha = ClampedAlphaForBlending(alpha);
+  image_flags_.setAlpha(image_alpha > 255 ? 255 : image_alpha);
+}
+
+void CanvasRenderingContext2DState::ClipPath(
+    const SkPath& path,
+    AntiAliasingMode anti_aliasing_mode) {
+  clip_list_.ClipPath(path, anti_aliasing_mode,
+                      AffineTransformToSkMatrix(transform_));
+  has_clip_ = true;
+  if (!path.isRect(0))
+    has_complex_clip_ = true;
+}
+
+void CanvasRenderingContext2DState::SetFont(const Font& font,
+                                            CSSFontSelector* selector) {
+  font_ = font;
+  font_.Update(selector);
+  realized_font_ = true;
+  selector->RegisterForInvalidationCallbacks(this);
+}
+
+const Font& CanvasRenderingContext2DState::GetFont() const {
+  DCHECK(realized_font_);
+  return font_;
+}
+
+void CanvasRenderingContext2DState::SetTransform(
+    const AffineTransform& transform) {
+  is_transform_invertible_ = transform.IsInvertible();
+  transform_ = transform;
+}
+
+void CanvasRenderingContext2DState::ResetTransform() {
+  transform_.MakeIdentity();
+  is_transform_invertible_ = true;
+}
+
+sk_sp<SkImageFilter> CanvasRenderingContext2DState::GetFilterForOffscreenCanvas(
+    IntSize canvas_size) const {
+  if (!filter_value_)
     return nullptr;
+
+  if (resolved_filter_)
+    return resolved_filter_;
+
+  FilterOperations operations =
+      FilterOperationResolver::CreateOffscreenFilterOperations(*filter_value_);
+
+  // We can't reuse m_fillFlags and m_strokeFlags for the filter, since these
+  // incorporate the global alpha, which isn't applicable here.
+  PaintFlags fill_flags_for_filter;
+  fill_style_->ApplyToFlags(fill_flags_for_filter);
+  fill_flags_for_filter.setColor(fill_style_->PaintColor());
+  PaintFlags stroke_flags_for_filter;
+  stroke_style_->ApplyToFlags(stroke_flags_for_filter);
+  stroke_flags_for_filter.setColor(stroke_style_->PaintColor());
+
+  FilterEffectBuilder filter_effect_builder(
+      FloatRect((FloatPoint()), FloatSize(canvas_size)),
+      1.0f,  // Deliberately ignore zoom on the canvas element.
+      &fill_flags_for_filter, &stroke_flags_for_filter);
+
+  FilterEffect* last_effect =
+      filter_effect_builder.BuildFilterEffect(operations);
+  if (last_effect) {
+    resolved_filter_ =
+        SkiaImageFilterBuilder::Build(last_effect, kColorSpaceDeviceRGB);
+  }
+
+  return resolved_filter_;
 }
 
-void CanvasRenderingContext2DState::setShouldAntialias(bool shouldAntialias)
-{
-    m_fillPaint.setAntiAlias(shouldAntialias);
-    m_strokePaint.setAntiAlias(shouldAntialias);
-    m_imagePaint.setAntiAlias(shouldAntialias);
-}
+sk_sp<SkImageFilter> CanvasRenderingContext2DState::GetFilter(
+    Element* style_resolution_host,
+    IntSize canvas_size,
+    CanvasRenderingContext2D* context) const {
+  if (!filter_value_)
+    return nullptr;
 
-bool CanvasRenderingContext2DState::shouldAntialias() const
-{
-    ASSERT(m_fillPaint.isAntiAlias() == m_strokePaint.isAntiAlias() && m_fillPaint.isAntiAlias() == m_imagePaint.isAntiAlias());
-    return m_fillPaint.isAntiAlias();
-}
+  // StyleResolverState cannot be used in frame-less documents.
+  if (!style_resolution_host->GetDocument().GetFrame())
+    return nullptr;
 
-void CanvasRenderingContext2DState::setGlobalAlpha(double alpha)
-{
-    m_globalAlpha = alpha;
-    m_strokeStyleDirty = true;
-    m_fillStyleDirty = true;
-    int imageAlpha = clampedAlphaForBlending(alpha);
-    m_imagePaint.setAlpha(imageAlpha > 255 ? 255 : imageAlpha);
-}
+  if (!resolved_filter_) {
+    // Update the filter value to the proper base URL if needed.
+    if (filter_value_->MayContainUrl())
+      filter_value_->ReResolveUrl(style_resolution_host->GetDocument());
 
-void CanvasRenderingContext2DState::clipPath(const SkPath& path, AntiAliasingMode antiAliasingMode)
-{
-    m_clipList.clipPath(path, antiAliasingMode, affineTransformToSkMatrix(m_transform));
-    m_hasClip = true;
-    if (!path.isRect(0))
-        m_hasComplexClip = true;
-}
+    RefPtr<ComputedStyle> filter_style = ComputedStyle::Create();
+    // Must set font in case the filter uses any font-relative units (em, ex)
+    filter_style->SetFont(font_for_filter_);
 
-void CanvasRenderingContext2DState::setFont(const Font& font, CSSFontSelector* selector)
-{
-    m_font = font;
-    m_font.update(selector);
-    m_realizedFont = true;
-    selector->registerForInvalidationCallbacks(this);
-}
+    StyleResolverState resolver_state(style_resolution_host->GetDocument(),
+                                      style_resolution_host, filter_style.Get(),
+                                      filter_style.Get());
+    resolver_state.SetStyle(filter_style);
 
-const Font& CanvasRenderingContext2DState::font() const
-{
-    ASSERT(m_realizedFont);
-    return m_font;
-}
+    StyleBuilder::ApplyProperty(CSSPropertyFilter, resolver_state,
+                                *filter_value_);
+    resolver_state.LoadPendingResources();
 
-void CanvasRenderingContext2DState::setTransform(const AffineTransform& transform)
-{
-    m_isTransformInvertible = transform.isInvertible();
-    m_transform = transform;
-}
+    // We can't reuse m_fillFlags and m_strokeFlags for the filter, since these
+    // incorporate the global alpha, which isn't applicable here.
+    PaintFlags fill_flags_for_filter;
+    fill_style_->ApplyToFlags(fill_flags_for_filter);
+    fill_flags_for_filter.setColor(fill_style_->PaintColor());
+    PaintFlags stroke_flags_for_filter;
+    stroke_style_->ApplyToFlags(stroke_flags_for_filter);
+    stroke_flags_for_filter.setColor(stroke_style_->PaintColor());
 
-void CanvasRenderingContext2DState::resetTransform()
-{
-    m_transform.makeIdentity();
-    m_isTransformInvertible = true;
-}
+    FilterEffectBuilder filter_effect_builder(
+        style_resolution_host,
+        FloatRect((FloatPoint()), FloatSize(canvas_size)),
+        1.0f,  // Deliberately ignore zoom on the canvas element.
+        &fill_flags_for_filter, &stroke_flags_for_filter);
 
-static void updateFilterReferences(HTMLCanvasElement* canvasElement, CanvasRenderingContext2D* context, const FilterOperations& filters)
-{
-    context->clearFilterReferences();
-    context->addFilterReferences(filters, canvasElement->document());
-}
-
-SkImageFilter* CanvasRenderingContext2DState::getFilter(Element* styleResolutionHost, IntSize canvasSize, CanvasRenderingContext2D* context) const
-{
-    if (!m_filterValue)
-        return nullptr;
-
-    // StyleResolverState cannot be used in frame-less documents.
-    if (!styleResolutionHost->document().frame())
-        return nullptr;
-
-    if (!m_resolvedFilter) {
-        RefPtr<ComputedStyle> filterStyle = ComputedStyle::create();
-        // Must set font in case the filter uses any font-relative units (em, ex)
-        filterStyle->setFont(m_fontForFilter);
-
-        StyleResolverState resolverState(styleResolutionHost->document(), styleResolutionHost, filterStyle.get());
-        resolverState.setStyle(filterStyle);
-
-        StyleBuilder::applyProperty(CSSPropertyFilter, resolverState, *m_filterValue);
-        resolverState.loadPendingResources();
-        FilterEffectBuilder* filterEffectBuilder = FilterEffectBuilder::create();
-
-        // We can't reuse m_fillPaint and m_strokePaint for the filter, since these incorporate
-        // the global alpha, which isn't applicable here.
-        SkPaint fillPaintForFilter;
-        SkPaint strokePaintForFilter;
-        m_fillStyle->applyToPaint(fillPaintForFilter);
-        m_strokeStyle->applyToPaint(strokePaintForFilter);
-        fillPaintForFilter.setColor(m_fillStyle->paintColor());
-        strokePaintForFilter.setColor(m_strokeStyle->paintColor());
-        FloatSize floatCanvasSize(canvasSize);
-        const double effectiveZoom = 1.0; // Deliberately ignore zoom on the canvas element
-        filterEffectBuilder->build(styleResolutionHost, filterStyle->filter(), effectiveZoom, &floatCanvasSize, &fillPaintForFilter, &strokePaintForFilter);
-
-        FilterEffect* lastEffect = filterEffectBuilder->lastEffect();
-        if (lastEffect) {
-            lastEffect->determineFilterPrimitiveSubregion();
-        }
-        m_resolvedFilter = SkiaImageFilterBuilder::build(lastEffect, ColorSpaceDeviceRGB);
-        if (m_resolvedFilter) {
-            updateFilterReferences(toHTMLCanvasElement(styleResolutionHost), context, filterStyle->filter());
-            if (lastEffect->originTainted())
-                context->setOriginTainted();
-        }
+    if (FilterEffect* last_effect =
+            filter_effect_builder.BuildFilterEffect(filter_style->Filter())) {
+      resolved_filter_ =
+          SkiaImageFilterBuilder::Build(last_effect, kColorSpaceDeviceRGB);
+      if (resolved_filter_) {
+        context->UpdateFilterReferences(filter_style->Filter());
+        if (last_effect->OriginTainted())
+          context->SetOriginTainted();
+      }
     }
+  }
 
-    return m_resolvedFilter.get();
+  return resolved_filter_;
 }
 
-bool CanvasRenderingContext2DState::hasFilter(Element* styleResolutionHost, IntSize canvasSize, CanvasRenderingContext2D* context) const
-{
-    // Checking for a non-null m_filterValue isn't sufficient, since this value
-    // might refer to a non-existent filter.
-    return !!getFilter(styleResolutionHost, canvasSize, context);
+bool CanvasRenderingContext2DState::HasFilterForOffscreenCanvas(
+    IntSize canvas_size) const {
+  // Checking for a non-null m_filterValue isn't sufficient, since this value
+  // might refer to a non-existent filter.
+  return !!GetFilterForOffscreenCanvas(canvas_size);
 }
 
-void CanvasRenderingContext2DState::clearResolvedFilter() const
-{
-    m_resolvedFilter.reset();
+bool CanvasRenderingContext2DState::HasFilter(
+    Element* style_resolution_host,
+    IntSize canvas_size,
+    CanvasRenderingContext2D* context) const {
+  // Checking for a non-null m_filterValue isn't sufficient, since this value
+  // might refer to a non-existent filter.
+  return !!GetFilter(style_resolution_host, canvas_size, context);
 }
 
-SkDrawLooper* CanvasRenderingContext2DState::emptyDrawLooper() const
-{
-    if (!m_emptyDrawLooper) {
-        std::unique_ptr<DrawLooperBuilder> drawLooperBuilder = DrawLooperBuilder::create();
-        m_emptyDrawLooper = drawLooperBuilder->detachDrawLooper();
-    }
-    return m_emptyDrawLooper.get();
+void CanvasRenderingContext2DState::ClearResolvedFilter() const {
+  resolved_filter_.reset();
 }
 
-SkDrawLooper* CanvasRenderingContext2DState::shadowOnlyDrawLooper() const
-{
-    if (!m_shadowOnlyDrawLooper) {
-        std::unique_ptr<DrawLooperBuilder> drawLooperBuilder = DrawLooperBuilder::create();
-        drawLooperBuilder->addShadow(m_shadowOffset, m_shadowBlur, m_shadowColor, DrawLooperBuilder::ShadowIgnoresTransforms, DrawLooperBuilder::ShadowRespectsAlpha);
-        m_shadowOnlyDrawLooper = drawLooperBuilder->detachDrawLooper();
-    }
-    return m_shadowOnlyDrawLooper.get();
+SkDrawLooper* CanvasRenderingContext2DState::EmptyDrawLooper() const {
+  if (!empty_draw_looper_)
+    empty_draw_looper_ = DrawLooperBuilder().DetachDrawLooper();
+
+  return empty_draw_looper_.get();
 }
 
-SkDrawLooper* CanvasRenderingContext2DState::shadowAndForegroundDrawLooper() const
-{
-    if (!m_shadowAndForegroundDrawLooper) {
-        std::unique_ptr<DrawLooperBuilder> drawLooperBuilder = DrawLooperBuilder::create();
-        drawLooperBuilder->addShadow(m_shadowOffset, m_shadowBlur, m_shadowColor, DrawLooperBuilder::ShadowIgnoresTransforms, DrawLooperBuilder::ShadowRespectsAlpha);
-        drawLooperBuilder->addUnmodifiedContent();
-        m_shadowAndForegroundDrawLooper = drawLooperBuilder->detachDrawLooper();
-    }
-    return m_shadowAndForegroundDrawLooper.get();
+SkDrawLooper* CanvasRenderingContext2DState::ShadowOnlyDrawLooper() const {
+  if (!shadow_only_draw_looper_) {
+    DrawLooperBuilder draw_looper_builder;
+    draw_looper_builder.AddShadow(shadow_offset_, shadow_blur_, shadow_color_,
+                                  DrawLooperBuilder::kShadowIgnoresTransforms,
+                                  DrawLooperBuilder::kShadowRespectsAlpha);
+    shadow_only_draw_looper_ = draw_looper_builder.DetachDrawLooper();
+  }
+  return shadow_only_draw_looper_.get();
 }
 
-SkImageFilter* CanvasRenderingContext2DState::shadowOnlyImageFilter() const
-{
-    if (!m_shadowOnlyImageFilter) {
-        double sigma = skBlurRadiusToSigma(m_shadowBlur);
-        m_shadowOnlyImageFilter = SkDropShadowImageFilter::Make(m_shadowOffset.width(), m_shadowOffset.height(), sigma, sigma, m_shadowColor, SkDropShadowImageFilter::kDrawShadowOnly_ShadowMode, nullptr);
-    }
-    return m_shadowOnlyImageFilter.get();
+SkDrawLooper* CanvasRenderingContext2DState::ShadowAndForegroundDrawLooper()
+    const {
+  if (!shadow_and_foreground_draw_looper_) {
+    DrawLooperBuilder draw_looper_builder;
+    draw_looper_builder.AddShadow(shadow_offset_, shadow_blur_, shadow_color_,
+                                  DrawLooperBuilder::kShadowIgnoresTransforms,
+                                  DrawLooperBuilder::kShadowRespectsAlpha);
+    draw_looper_builder.AddUnmodifiedContent();
+    shadow_and_foreground_draw_looper_ = draw_looper_builder.DetachDrawLooper();
+  }
+  return shadow_and_foreground_draw_looper_.get();
 }
 
-SkImageFilter* CanvasRenderingContext2DState::shadowAndForegroundImageFilter() const
-{
-    if (!m_shadowAndForegroundImageFilter) {
-        double sigma = skBlurRadiusToSigma(m_shadowBlur);
-        m_shadowAndForegroundImageFilter = SkDropShadowImageFilter::Make(m_shadowOffset.width(), m_shadowOffset.height(), sigma, sigma, m_shadowColor, SkDropShadowImageFilter::kDrawShadowAndForeground_ShadowMode, nullptr);
-    }
-    return m_shadowAndForegroundImageFilter.get();
+sk_sp<SkImageFilter> CanvasRenderingContext2DState::ShadowOnlyImageFilter()
+    const {
+  if (!shadow_only_image_filter_) {
+    double sigma = SkBlurRadiusToSigma(shadow_blur_);
+    shadow_only_image_filter_ = SkDropShadowImageFilter::Make(
+        shadow_offset_.Width(), shadow_offset_.Height(), sigma, sigma,
+        shadow_color_, SkDropShadowImageFilter::kDrawShadowOnly_ShadowMode,
+        nullptr);
+  }
+  return shadow_only_image_filter_;
 }
 
-void CanvasRenderingContext2DState::shadowParameterChanged()
-{
-    m_shadowOnlyDrawLooper.clear();
-    m_shadowAndForegroundDrawLooper.clear();
-    m_shadowOnlyImageFilter.reset();
-    m_shadowAndForegroundImageFilter.reset();
+sk_sp<SkImageFilter>
+CanvasRenderingContext2DState::ShadowAndForegroundImageFilter() const {
+  if (!shadow_and_foreground_image_filter_) {
+    double sigma = SkBlurRadiusToSigma(shadow_blur_);
+    shadow_and_foreground_image_filter_ = SkDropShadowImageFilter::Make(
+        shadow_offset_.Width(), shadow_offset_.Height(), sigma, sigma,
+        shadow_color_,
+        SkDropShadowImageFilter::kDrawShadowAndForeground_ShadowMode, nullptr);
+  }
+  return shadow_and_foreground_image_filter_;
 }
 
-void CanvasRenderingContext2DState::setShadowOffsetX(double x)
-{
-    m_shadowOffset.setWidth(x);
-    shadowParameterChanged();
+void CanvasRenderingContext2DState::ShadowParameterChanged() {
+  shadow_only_draw_looper_.reset();
+  shadow_and_foreground_draw_looper_.reset();
+  shadow_only_image_filter_.reset();
+  shadow_and_foreground_image_filter_.reset();
 }
 
-void CanvasRenderingContext2DState::setShadowOffsetY(double y)
-{
-    m_shadowOffset.setHeight(y);
-    shadowParameterChanged();
+void CanvasRenderingContext2DState::SetShadowOffsetX(double x) {
+  shadow_offset_.SetWidth(x);
+  ShadowParameterChanged();
 }
 
-void CanvasRenderingContext2DState::setShadowBlur(double shadowBlur)
-{
-    m_shadowBlur = shadowBlur;
-    shadowParameterChanged();
+void CanvasRenderingContext2DState::SetShadowOffsetY(double y) {
+  shadow_offset_.SetHeight(y);
+  ShadowParameterChanged();
 }
 
-void CanvasRenderingContext2DState::setShadowColor(SkColor shadowColor)
-{
-    m_shadowColor = shadowColor;
-    shadowParameterChanged();
+void CanvasRenderingContext2DState::SetShadowBlur(double shadow_blur) {
+  shadow_blur_ = shadow_blur;
+  ShadowParameterChanged();
 }
 
-void CanvasRenderingContext2DState::setFilter(const CSSValue* filterValue)
-{
-    m_filterValue = filterValue;
-    m_resolvedFilter.reset();
+void CanvasRenderingContext2DState::SetShadowColor(SkColor shadow_color) {
+  shadow_color_ = shadow_color;
+  ShadowParameterChanged();
 }
 
-void CanvasRenderingContext2DState::setGlobalComposite(SkXfermode::Mode mode)
-{
-    m_strokePaint.setXfermodeMode(mode);
-    m_fillPaint.setXfermodeMode(mode);
-    m_imagePaint.setXfermodeMode(mode);
+void CanvasRenderingContext2DState::SetFilter(const CSSValue* filter_value) {
+  filter_value_ = filter_value;
+  resolved_filter_.reset();
 }
 
-SkXfermode::Mode CanvasRenderingContext2DState::globalComposite() const
-{
-    SkXfermode* xferMode = m_strokePaint.getXfermode();
-    SkXfermode::Mode mode;
-    if (!xferMode || !xferMode->asMode(&mode))
-        return SkXfermode::kSrcOver_Mode;
-    return mode;
+void CanvasRenderingContext2DState::SetGlobalComposite(SkBlendMode mode) {
+  stroke_flags_.setBlendMode(mode);
+  fill_flags_.setBlendMode(mode);
+  image_flags_.setBlendMode(mode);
 }
 
-void CanvasRenderingContext2DState::setImageSmoothingEnabled(bool enabled)
-{
-    m_imageSmoothingEnabled = enabled;
-    updateFilterQuality();
+SkBlendMode CanvasRenderingContext2DState::GlobalComposite() const {
+  return stroke_flags_.getBlendMode();
 }
 
-bool CanvasRenderingContext2DState::imageSmoothingEnabled() const
-{
-    return m_imageSmoothingEnabled;
+void CanvasRenderingContext2DState::SetImageSmoothingEnabled(bool enabled) {
+  image_smoothing_enabled_ = enabled;
+  UpdateFilterQuality();
 }
 
-void CanvasRenderingContext2DState::setImageSmoothingQuality(const String& qualityString)
-{
-    if (qualityString == "low") {
-        m_imageSmoothingQuality = kLow_SkFilterQuality;
-    } else if (qualityString == "medium") {
-        m_imageSmoothingQuality = kMedium_SkFilterQuality;
-    } else if (qualityString == "high") {
-        m_imageSmoothingQuality = kHigh_SkFilterQuality;
-    } else {
-        return;
-    }
-    updateFilterQuality();
+bool CanvasRenderingContext2DState::ImageSmoothingEnabled() const {
+  return image_smoothing_enabled_;
 }
 
-String CanvasRenderingContext2DState::imageSmoothingQuality() const
-{
-    switch (m_imageSmoothingQuality) {
+void CanvasRenderingContext2DState::SetImageSmoothingQuality(
+    const String& quality_string) {
+  if (quality_string == "low") {
+    image_smoothing_quality_ = kLow_SkFilterQuality;
+  } else if (quality_string == "medium") {
+    image_smoothing_quality_ = kMedium_SkFilterQuality;
+  } else if (quality_string == "high") {
+    image_smoothing_quality_ = kHigh_SkFilterQuality;
+  } else {
+    return;
+  }
+  UpdateFilterQuality();
+}
+
+String CanvasRenderingContext2DState::ImageSmoothingQuality() const {
+  switch (image_smoothing_quality_) {
     case kLow_SkFilterQuality:
-        return "low";
+      return "low";
     case kMedium_SkFilterQuality:
-        return "medium";
+      return "medium";
     case kHigh_SkFilterQuality:
-        return "high";
+      return "high";
     default:
-        ASSERT_NOT_REACHED();
-        return "low";
-    }
+      NOTREACHED();
+      return "low";
+  }
 }
 
-void CanvasRenderingContext2DState::updateFilterQuality() const
-{
-    if (!m_imageSmoothingEnabled) {
-        updateFilterQualityWithSkFilterQuality(kNone_SkFilterQuality);
-    } else {
-        updateFilterQualityWithSkFilterQuality(m_imageSmoothingQuality);
-    }
+void CanvasRenderingContext2DState::UpdateFilterQuality() const {
+  if (!image_smoothing_enabled_) {
+    UpdateFilterQualityWithSkFilterQuality(kNone_SkFilterQuality);
+  } else {
+    UpdateFilterQualityWithSkFilterQuality(image_smoothing_quality_);
+  }
 }
 
-void CanvasRenderingContext2DState::updateFilterQualityWithSkFilterQuality(const SkFilterQuality& filterQuality) const
-{
-    m_strokePaint.setFilterQuality(filterQuality);
-    m_fillPaint.setFilterQuality(filterQuality);
-    m_imagePaint.setFilterQuality(filterQuality);
+void CanvasRenderingContext2DState::UpdateFilterQualityWithSkFilterQuality(
+    const SkFilterQuality& filter_quality) const {
+  stroke_flags_.setFilterQuality(filter_quality);
+  fill_flags_.setFilterQuality(filter_quality);
+  image_flags_.setFilterQuality(filter_quality);
 }
 
-
-bool CanvasRenderingContext2DState::shouldDrawShadows() const
-{
-    return alphaChannel(m_shadowColor) && (m_shadowBlur || !m_shadowOffset.isZero());
+bool CanvasRenderingContext2DState::ShouldDrawShadows() const {
+  return AlphaChannel(shadow_color_) &&
+         (shadow_blur_ || !shadow_offset_.IsZero());
 }
 
-const SkPaint* CanvasRenderingContext2DState::getPaint(PaintType paintType, ShadowMode shadowMode, ImageType imageType) const
-{
-    SkPaint* paint;
-    switch (paintType) {
-    case StrokePaintType:
-        updateLineDash();
-        updateStrokeStyle();
-        paint = &m_strokePaint;
-        break;
+const PaintFlags* CanvasRenderingContext2DState::GetFlags(
+    PaintType paint_type,
+    ShadowMode shadow_mode,
+    ImageType image_type) const {
+  PaintFlags* flags;
+  switch (paint_type) {
+    case kStrokePaintType:
+      UpdateLineDash();
+      UpdateStrokeStyle();
+      flags = &stroke_flags_;
+      break;
     default:
-        ASSERT_NOT_REACHED();
-        // no break on purpose: paint needs to be assigned to avoid compiler warning about uninitialized variable
-    case FillPaintType:
-        updateFillStyle();
-        paint = &m_fillPaint;
-        break;
-    case ImagePaintType:
-        paint = &m_imagePaint;
-        break;
-    }
+      NOTREACHED();
+    // no break on purpose: flags needs to be assigned to avoid compiler warning
+    // about uninitialized variable.
+    case kFillPaintType:
+      UpdateFillStyle();
+      flags = &fill_flags_;
+      break;
+    case kImagePaintType:
+      flags = &image_flags_;
+      break;
+  }
 
-    if ((!shouldDrawShadows() && shadowMode == DrawShadowAndForeground) || shadowMode == DrawForegroundOnly) {
-        paint->setLooper(0);
-        paint->setImageFilter(0);
-        return paint;
-    }
+  if ((!ShouldDrawShadows() && shadow_mode == kDrawShadowAndForeground) ||
+      shadow_mode == kDrawForegroundOnly) {
+    flags->setLooper(0);
+    flags->setImageFilter(0);
+    return flags;
+  }
 
-    if (!shouldDrawShadows() && shadowMode == DrawShadowOnly) {
-        paint->setLooper(sk_ref_sp(emptyDrawLooper())); // draw nothing
-        paint->setImageFilter(0);
-        return paint;
-    }
+  if (!ShouldDrawShadows() && shadow_mode == kDrawShadowOnly) {
+    flags->setLooper(sk_ref_sp(EmptyDrawLooper()));  // draw nothing
+    flags->setImageFilter(0);
+    return flags;
+  }
 
-    if (shadowMode == DrawShadowOnly) {
-        if (imageType == NonOpaqueImage || m_filterValue) {
-            paint->setLooper(0);
-            paint->setImageFilter(shadowOnlyImageFilter());
-            return paint;
-        }
-        paint->setLooper(sk_ref_sp(shadowOnlyDrawLooper()));
-        paint->setImageFilter(0);
-        return paint;
+  if (shadow_mode == kDrawShadowOnly) {
+    if (image_type == kNonOpaqueImage || filter_value_) {
+      flags->setLooper(0);
+      flags->setImageFilter(ShadowOnlyImageFilter());
+      return flags;
     }
+    flags->setLooper(sk_ref_sp(ShadowOnlyDrawLooper()));
+    flags->setImageFilter(0);
+    return flags;
+  }
 
-    ASSERT(shadowMode == DrawShadowAndForeground);
-    if (imageType == NonOpaqueImage) {
-        paint->setLooper(0);
-        paint->setImageFilter(shadowAndForegroundImageFilter());
-        return paint;
-    }
-    paint->setLooper(sk_ref_sp(shadowAndForegroundDrawLooper()));
-    paint->setImageFilter(0);
-    return paint;
+  DCHECK(shadow_mode == kDrawShadowAndForeground);
+  if (image_type == kNonOpaqueImage) {
+    flags->setLooper(0);
+    flags->setImageFilter(ShadowAndForegroundImageFilter());
+    return flags;
+  }
+  flags->setLooper(sk_ref_sp(ShadowAndForegroundDrawLooper()));
+  flags->setImageFilter(0);
+  return flags;
 }
 
-} // namespace blink
+}  // namespace blink

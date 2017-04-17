@@ -23,104 +23,121 @@
 
 #include "core/layout/svg/LayoutSVGResourceFilter.h"
 
+#include "core/svg/SVGFilterElement.h"
 #include "core/svg/SVGFilterPrimitiveStandardAttributes.h"
+#include "core/svg/graphics/filters/SVGFilterBuilder.h"
 
 namespace blink {
 
-DEFINE_TRACE(FilterData)
-{
-    visitor->trace(filter);
-    visitor->trace(nodeMap);
+DEFINE_TRACE(FilterData) {
+  visitor->Trace(last_effect);
+  visitor->Trace(node_map);
 }
 
-void FilterData::dispose()
-{
-    nodeMap = nullptr;
-    filter = nullptr;
+void FilterData::Dispose() {
+  node_map = nullptr;
+  last_effect = nullptr;
 }
 
 LayoutSVGResourceFilter::LayoutSVGResourceFilter(SVGFilterElement* node)
-    : LayoutSVGResourceContainer(node)
-{
+    : LayoutSVGResourceContainer(node) {}
+
+LayoutSVGResourceFilter::~LayoutSVGResourceFilter() {}
+
+void LayoutSVGResourceFilter::DisposeFilterMap() {
+  for (auto& filter : filter_)
+    filter.value->Dispose();
+  filter_.Clear();
 }
 
-LayoutSVGResourceFilter::~LayoutSVGResourceFilter()
-{
+void LayoutSVGResourceFilter::WillBeDestroyed() {
+  DisposeFilterMap();
+  LayoutSVGResourceContainer::WillBeDestroyed();
 }
 
-void LayoutSVGResourceFilter::disposeFilterMap()
-{
-    for (auto& filter : m_filter)
-        filter.value->dispose();
-    m_filter.clear();
+bool LayoutSVGResourceFilter::IsChildAllowed(LayoutObject* child,
+                                             const ComputedStyle&) const {
+  return child->IsSVGResourceFilterPrimitive();
 }
 
-void LayoutSVGResourceFilter::willBeDestroyed()
-{
-    disposeFilterMap();
-    LayoutSVGResourceContainer::willBeDestroyed();
+void LayoutSVGResourceFilter::RemoveAllClientsFromCache(
+    bool mark_for_invalidation) {
+  // LayoutSVGResourceFilter::removeClientFromCache will be called for
+  // all clients through markAllClientsForInvalidation so no explicit
+  // display item invalidation is needed here.
+  DisposeFilterMap();
+  MarkAllClientsForInvalidation(mark_for_invalidation
+                                    ? kLayoutAndBoundariesInvalidation
+                                    : kParentOnlyInvalidation);
 }
 
-bool LayoutSVGResourceFilter::isChildAllowed(LayoutObject* child, const ComputedStyle&) const
-{
-    return child->isSVGResourceFilterPrimitive();
+void LayoutSVGResourceFilter::RemoveClientFromCache(
+    LayoutObject* client,
+    bool mark_for_invalidation) {
+  DCHECK(client);
+
+  bool filter_cached = filter_.Contains(client);
+  if (filter_cached)
+    filter_.erase(client);
+
+  // If the filter has a cached subtree, invalidate the associated display item.
+  if (mark_for_invalidation && filter_cached)
+    MarkClientForInvalidation(client, kPaintInvalidation);
+
+  MarkClientForInvalidation(client, mark_for_invalidation
+                                        ? kBoundariesInvalidation
+                                        : kParentOnlyInvalidation);
 }
 
-void LayoutSVGResourceFilter::removeAllClientsFromCache(bool markForInvalidation)
-{
-    // LayoutSVGResourceFilter::removeClientFromCache will be called for
-    // all clients through markAllClientsForInvalidation so no explicit
-    // display item invalidation is needed here.
-    disposeFilterMap();
-    markAllClientsForInvalidation(markForInvalidation ? LayoutAndBoundariesInvalidation : ParentOnlyInvalidation);
+FloatRect LayoutSVGResourceFilter::ResourceBoundingBox(
+    const LayoutObject* object) {
+  if (SVGFilterElement* element = toSVGFilterElement(this->GetElement()))
+    return SVGLengthContext::ResolveRectangle<SVGFilterElement>(
+        element, element->filterUnits()->CurrentValue()->EnumValue(),
+        object->ObjectBoundingBox());
+
+  return FloatRect();
 }
 
-void LayoutSVGResourceFilter::removeClientFromCache(LayoutObject* client, bool markForInvalidation)
-{
-    ASSERT(client);
-
-    bool filterCached = m_filter.contains(client);
-    if (filterCached)
-        m_filter.remove(client);
-
-    // If the filter has a cached subtree, invalidate the associated display item.
-    if (markForInvalidation && filterCached)
-        markClientForInvalidation(client, PaintInvalidation);
-
-    markClientForInvalidation(client, markForInvalidation ? BoundariesInvalidation : ParentOnlyInvalidation);
+SVGUnitTypes::SVGUnitType LayoutSVGResourceFilter::FilterUnits() const {
+  return toSVGFilterElement(GetElement())
+      ->filterUnits()
+      ->CurrentValue()
+      ->EnumValue();
 }
 
-FloatRect LayoutSVGResourceFilter::resourceBoundingBox(const LayoutObject* object)
-{
-    if (SVGFilterElement* element = toSVGFilterElement(this->element()))
-        return SVGLengthContext::resolveRectangle<SVGFilterElement>(element, element->filterUnits()->currentValue()->enumValue(), object->objectBoundingBox());
-
-    return FloatRect();
+SVGUnitTypes::SVGUnitType LayoutSVGResourceFilter::PrimitiveUnits() const {
+  return toSVGFilterElement(GetElement())
+      ->primitiveUnits()
+      ->CurrentValue()
+      ->EnumValue();
 }
 
-void LayoutSVGResourceFilter::primitiveAttributeChanged(LayoutObject* object, const QualifiedName& attribute)
-{
-    SVGFilterPrimitiveStandardAttributes* primitive = static_cast<SVGFilterPrimitiveStandardAttributes*>(object->node());
+void LayoutSVGResourceFilter::PrimitiveAttributeChanged(
+    LayoutObject* object,
+    const QualifiedName& attribute) {
+  SVGFilterPrimitiveStandardAttributes* primitive =
+      static_cast<SVGFilterPrimitiveStandardAttributes*>(object->GetNode());
 
-    for (auto& filter : m_filter) {
-        FilterData* filterData = filter.value.get();
-        if (filterData->m_state != FilterData::ReadyToPaint)
-            continue;
+  for (auto& filter : filter_) {
+    FilterData* filter_data = filter.value.Get();
+    if (filter_data->state_ != FilterData::kReadyToPaint)
+      continue;
 
-        SVGFilterGraphNodeMap* nodeMap = filterData->nodeMap.get();
-        FilterEffect* effect = nodeMap->effectByRenderer(object);
-        if (!effect)
-            continue;
-        // Since all effects shares the same attribute value, all
-        // or none of them will be changed.
-        if (!primitive->setFilterEffectAttribute(effect, attribute))
-            return;
-        nodeMap->invalidateDependentEffects(effect);
+    SVGFilterGraphNodeMap* node_map = filter_data->node_map.Get();
+    FilterEffect* effect = node_map->EffectByRenderer(object);
+    if (!effect)
+      continue;
+    // Since all effects shares the same attribute value, all
+    // or none of them will be changed.
+    if (!primitive->SetFilterEffectAttribute(effect, attribute))
+      return;
+    node_map->InvalidateDependentEffects(effect);
 
-        // Issue paint invalidations for the image on the screen.
-        markClientForInvalidation(filter.key, PaintInvalidation);
-    }
-    markAllResourceClientsForInvalidation();
+    // Issue paint invalidations for the image on the screen.
+    MarkClientForInvalidation(filter.key, kPaintInvalidation);
+  }
+  NotifyContentChanged();
 }
 
-} // namespace blink
+}  // namespace blink

@@ -4,77 +4,72 @@
 
 #include "core/animation/CSSImageSliceInterpolationType.h"
 
+#include <memory>
 #include "core/animation/CSSLengthInterpolationType.h"
 #include "core/animation/ImageSlicePropertyFunctions.h"
+#include "core/animation/SideIndex.h"
 #include "core/css/CSSBorderImageSliceValue.h"
 #include "core/css/resolver/StyleResolverState.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
 namespace {
 
-enum SideIndex {
-    SideTop,
-    SideRight,
-    SideBottom,
-    SideLeft,
-    SideIndexCount,
-};
-
 struct SliceTypes {
-    explicit SliceTypes(const ImageSlice& slice)
-    {
-        isNumber[SideTop] = slice.slices.top().isFixed();
-        isNumber[SideRight] = slice.slices.right().isFixed();
-        isNumber[SideBottom] = slice.slices.bottom().isFixed();
-        isNumber[SideLeft] = slice.slices.left().isFixed();
-        fill = slice.fill;
-    }
-    explicit SliceTypes(const CSSBorderImageSliceValue& slice)
-    {
-        isNumber[SideTop] = slice.slices().top()->isNumber();
-        isNumber[SideRight] = slice.slices().right()->isNumber();
-        isNumber[SideBottom] = slice.slices().bottom()->isNumber();
-        isNumber[SideLeft] = slice.slices().left()->isNumber();
-        fill = slice.fill();
-    }
+  explicit SliceTypes(const ImageSlice& slice) {
+    is_number[kSideTop] = slice.slices.Top().IsFixed();
+    is_number[kSideRight] = slice.slices.Right().IsFixed();
+    is_number[kSideBottom] = slice.slices.Bottom().IsFixed();
+    is_number[kSideLeft] = slice.slices.Left().IsFixed();
+    fill = slice.fill;
+  }
+  explicit SliceTypes(const CSSBorderImageSliceValue& slice) {
+    is_number[kSideTop] = slice.Slices().Top()->IsPrimitiveValue() &&
+                          ToCSSPrimitiveValue(slice.Slices().Top())->IsNumber();
+    is_number[kSideRight] =
+        slice.Slices().Right()->IsPrimitiveValue() &&
+        ToCSSPrimitiveValue(slice.Slices().Right())->IsNumber();
+    is_number[kSideBottom] =
+        slice.Slices().Bottom()->IsPrimitiveValue() &&
+        ToCSSPrimitiveValue(slice.Slices().Bottom())->IsNumber();
+    is_number[kSideLeft] =
+        slice.Slices().Left()->IsPrimitiveValue() &&
+        ToCSSPrimitiveValue(slice.Slices().Left())->IsNumber();
+    fill = slice.Fill();
+  }
 
-    bool operator==(const SliceTypes& other) const
-    {
-        for (size_t i = 0; i < SideIndexCount; i++) {
-            if (isNumber[i] != other.isNumber[i])
-                return false;
-        }
-        return fill == other.fill;
+  bool operator==(const SliceTypes& other) const {
+    for (size_t i = 0; i < kSideIndexCount; i++) {
+      if (is_number[i] != other.is_number[i])
+        return false;
     }
-    bool operator!=(const SliceTypes& other) const { return !(*this == other); }
+    return fill == other.fill;
+  }
+  bool operator!=(const SliceTypes& other) const { return !(*this == other); }
 
-    // If a side is not a number then it is a percentage.
-    bool isNumber[SideIndexCount];
-    bool fill;
+  // If a side is not a number then it is a percentage.
+  bool is_number[kSideIndexCount];
+  bool fill;
 };
 
-} // namespace
+}  // namespace
 
 class CSSImageSliceNonInterpolableValue : public NonInterpolableValue {
-public:
-    static PassRefPtr<CSSImageSliceNonInterpolableValue> create(const SliceTypes& types)
-    {
-        return adoptRef(new CSSImageSliceNonInterpolableValue(types));
-    }
+ public:
+  static PassRefPtr<CSSImageSliceNonInterpolableValue> Create(
+      const SliceTypes& types) {
+    return AdoptRef(new CSSImageSliceNonInterpolableValue(types));
+  }
 
-    const SliceTypes& types() const { return m_types; }
+  const SliceTypes& Types() const { return types_; }
 
-    DECLARE_NON_INTERPOLABLE_VALUE_TYPE();
+  DECLARE_NON_INTERPOLABLE_VALUE_TYPE();
 
-private:
-    CSSImageSliceNonInterpolableValue(const SliceTypes& types)
-        : m_types(types)
-    { }
+ private:
+  CSSImageSliceNonInterpolableValue(const SliceTypes& types) : types_(types) {}
 
-    const SliceTypes m_types;
+  const SliceTypes types_;
 };
 
 DEFINE_NON_INTERPOLABLE_VALUE_TYPE(CSSImageSliceNonInterpolableValue);
@@ -82,162 +77,205 @@ DEFINE_NON_INTERPOLABLE_VALUE_TYPE_CASTS(CSSImageSliceNonInterpolableValue);
 
 namespace {
 
-class UnderlyingSliceTypesChecker : public InterpolationType::ConversionChecker {
-public:
-    static std::unique_ptr<UnderlyingSliceTypesChecker> create(const SliceTypes& underlyingTypes)
-    {
-        return wrapUnique(new UnderlyingSliceTypesChecker(underlyingTypes));
-    }
+class UnderlyingSliceTypesChecker
+    : public InterpolationType::ConversionChecker {
+ public:
+  static std::unique_ptr<UnderlyingSliceTypesChecker> Create(
+      const SliceTypes& underlying_types) {
+    return WTF::WrapUnique(new UnderlyingSliceTypesChecker(underlying_types));
+  }
 
-    static SliceTypes getUnderlyingSliceTypes(const InterpolationValue& underlying)
-    {
-        return toCSSImageSliceNonInterpolableValue(*underlying.nonInterpolableValue).types();
-    }
+  static SliceTypes GetUnderlyingSliceTypes(
+      const InterpolationValue& underlying) {
+    return ToCSSImageSliceNonInterpolableValue(
+               *underlying.non_interpolable_value)
+        .Types();
+  }
 
-private:
-    UnderlyingSliceTypesChecker(const SliceTypes& underlyingTypes)
-        : m_underlyingTypes(underlyingTypes)
-    { }
+ private:
+  UnderlyingSliceTypesChecker(const SliceTypes& underlying_types)
+      : underlying_types_(underlying_types) {}
 
-    bool isValid(const InterpolationEnvironment&, const InterpolationValue& underlying) const final
-    {
-        return m_underlyingTypes == getUnderlyingSliceTypes(underlying);
-    }
+  bool IsValid(const InterpolationEnvironment&,
+               const InterpolationValue& underlying) const final {
+    return underlying_types_ == GetUnderlyingSliceTypes(underlying);
+  }
 
-    const SliceTypes m_underlyingTypes;
+  const SliceTypes underlying_types_;
 };
 
 class InheritedSliceTypesChecker : public InterpolationType::ConversionChecker {
-public:
-    static std::unique_ptr<InheritedSliceTypesChecker> create(CSSPropertyID property, const SliceTypes& inheritedTypes)
-    {
-        return wrapUnique(new InheritedSliceTypesChecker(property, inheritedTypes));
-    }
+ public:
+  static std::unique_ptr<InheritedSliceTypesChecker> Create(
+      CSSPropertyID property,
+      const SliceTypes& inherited_types) {
+    return WTF::WrapUnique(
+        new InheritedSliceTypesChecker(property, inherited_types));
+  }
 
-private:
-    InheritedSliceTypesChecker(CSSPropertyID property, const SliceTypes& inheritedTypes)
-        : m_property(property)
-        , m_inheritedTypes(inheritedTypes)
-    { }
+ private:
+  InheritedSliceTypesChecker(CSSPropertyID property,
+                             const SliceTypes& inherited_types)
+      : property_(property), inherited_types_(inherited_types) {}
 
-    bool isValid(const InterpolationEnvironment& environment, const InterpolationValue& underlying) const final
-    {
-        return m_inheritedTypes == SliceTypes(ImageSlicePropertyFunctions::getImageSlice(m_property, *environment.state().parentStyle()));
-    }
+  bool IsValid(const InterpolationEnvironment& environment,
+               const InterpolationValue& underlying) const final {
+    return inherited_types_ ==
+           SliceTypes(ImageSlicePropertyFunctions::GetImageSlice(
+               property_, *environment.GetState().ParentStyle()));
+  }
 
-    const CSSPropertyID m_property;
-    const SliceTypes m_inheritedTypes;
+  const CSSPropertyID property_;
+  const SliceTypes inherited_types_;
 };
 
-InterpolationValue convertImageSlice(const ImageSlice& slice, double zoom)
-{
-    std::unique_ptr<InterpolableList> list = InterpolableList::create(SideIndexCount);
-    const Length* sides[SideIndexCount] = {};
-    sides[SideTop] = &slice.slices.top();
-    sides[SideRight] = &slice.slices.right();
-    sides[SideBottom] = &slice.slices.bottom();
-    sides[SideLeft] = &slice.slices.left();
+InterpolationValue ConvertImageSlice(const ImageSlice& slice, double zoom) {
+  std::unique_ptr<InterpolableList> list =
+      InterpolableList::Create(kSideIndexCount);
+  const Length* sides[kSideIndexCount] = {};
+  sides[kSideTop] = &slice.slices.Top();
+  sides[kSideRight] = &slice.slices.Right();
+  sides[kSideBottom] = &slice.slices.Bottom();
+  sides[kSideLeft] = &slice.slices.Left();
 
-    for (size_t i = 0; i < SideIndexCount; i++) {
-        const Length& side = *sides[i];
-        list->set(i, InterpolableNumber::create(side.isFixed() ? side.pixels() / zoom : side.percent()));
-    }
+  for (size_t i = 0; i < kSideIndexCount; i++) {
+    const Length& side = *sides[i];
+    list->Set(i, InterpolableNumber::Create(
+                     side.IsFixed() ? side.Pixels() / zoom : side.Percent()));
+  }
 
-    return InterpolationValue(std::move(list), CSSImageSliceNonInterpolableValue::create(SliceTypes(slice)));
+  return InterpolationValue(
+      std::move(list),
+      CSSImageSliceNonInterpolableValue::Create(SliceTypes(slice)));
 }
 
-} // namespace
+}  // namespace
 
-InterpolationValue CSSImageSliceInterpolationType::maybeConvertNeutral(const InterpolationValue& underlying, ConversionCheckers& conversionCheckers) const
-{
-    SliceTypes underlyingTypes = UnderlyingSliceTypesChecker::getUnderlyingSliceTypes(underlying);
-    conversionCheckers.append(UnderlyingSliceTypesChecker::create(underlyingTypes));
-    LengthBox zeroBox(
-        Length(0, underlyingTypes.isNumber[SideTop] ? Fixed : Percent),
-        Length(0, underlyingTypes.isNumber[SideRight] ? Fixed : Percent),
-        Length(0, underlyingTypes.isNumber[SideBottom] ? Fixed : Percent),
-        Length(0, underlyingTypes.isNumber[SideLeft] ? Fixed : Percent));
-    return convertImageSlice(ImageSlice(zeroBox, underlyingTypes.fill), 1);
+InterpolationValue CSSImageSliceInterpolationType::MaybeConvertNeutral(
+    const InterpolationValue& underlying,
+    ConversionCheckers& conversion_checkers) const {
+  SliceTypes underlying_types =
+      UnderlyingSliceTypesChecker::GetUnderlyingSliceTypes(underlying);
+  conversion_checkers.push_back(
+      UnderlyingSliceTypesChecker::Create(underlying_types));
+  LengthBox zero_box(
+      Length(0, underlying_types.is_number[kSideTop] ? kFixed : kPercent),
+      Length(0, underlying_types.is_number[kSideRight] ? kFixed : kPercent),
+      Length(0, underlying_types.is_number[kSideBottom] ? kFixed : kPercent),
+      Length(0, underlying_types.is_number[kSideLeft] ? kFixed : kPercent));
+  return ConvertImageSlice(ImageSlice(zero_box, underlying_types.fill), 1);
 }
 
-InterpolationValue CSSImageSliceInterpolationType::maybeConvertInitial(const StyleResolverState&, ConversionCheckers& conversionCheckers) const
-{
-    return convertImageSlice(ImageSlicePropertyFunctions::getInitialImageSlice(cssProperty()), 1);
+InterpolationValue CSSImageSliceInterpolationType::MaybeConvertInitial(
+    const StyleResolverState&,
+    ConversionCheckers& conversion_checkers) const {
+  return ConvertImageSlice(
+      ImageSlicePropertyFunctions::GetInitialImageSlice(CssProperty()), 1);
 }
 
-InterpolationValue CSSImageSliceInterpolationType::maybeConvertInherit(const StyleResolverState& state, ConversionCheckers& conversionCheckers) const
-{
-    const ImageSlice& inheritedImageSlice = ImageSlicePropertyFunctions::getImageSlice(cssProperty(), *state.parentStyle());
-    conversionCheckers.append(InheritedSliceTypesChecker::create(cssProperty(), SliceTypes(inheritedImageSlice)));
-    return convertImageSlice(inheritedImageSlice, state.parentStyle()->effectiveZoom());
+InterpolationValue CSSImageSliceInterpolationType::MaybeConvertInherit(
+    const StyleResolverState& state,
+    ConversionCheckers& conversion_checkers) const {
+  const ImageSlice& inherited_image_slice =
+      ImageSlicePropertyFunctions::GetImageSlice(CssProperty(),
+                                                 *state.ParentStyle());
+  conversion_checkers.push_back(InheritedSliceTypesChecker::Create(
+      CssProperty(), SliceTypes(inherited_image_slice)));
+  return ConvertImageSlice(inherited_image_slice,
+                           state.ParentStyle()->EffectiveZoom());
 }
 
-InterpolationValue CSSImageSliceInterpolationType::maybeConvertValue(const CSSValue& value, const StyleResolverState&, ConversionCheckers&) const
-{
-    if (!value.isBorderImageSliceValue())
-        return nullptr;
+InterpolationValue CSSImageSliceInterpolationType::MaybeConvertValue(
+    const CSSValue& value,
+    const StyleResolverState*,
+    ConversionCheckers&) const {
+  if (!value.IsBorderImageSliceValue())
+    return nullptr;
 
-    const CSSBorderImageSliceValue& slice = toCSSBorderImageSliceValue(value);
-    std::unique_ptr<InterpolableList> list = InterpolableList::create(SideIndexCount);
-    const CSSPrimitiveValue* sides[SideIndexCount];
-    sides[SideTop] = slice.slices().top();
-    sides[SideRight] = slice.slices().right();
-    sides[SideBottom] = slice.slices().bottom();
-    sides[SideLeft] = slice.slices().left();
+  const CSSBorderImageSliceValue& slice = ToCSSBorderImageSliceValue(value);
+  std::unique_ptr<InterpolableList> list =
+      InterpolableList::Create(kSideIndexCount);
+  const CSSValue* sides[kSideIndexCount];
+  sides[kSideTop] = slice.Slices().Top();
+  sides[kSideRight] = slice.Slices().Right();
+  sides[kSideBottom] = slice.Slices().Bottom();
+  sides[kSideLeft] = slice.Slices().Left();
 
-    for (size_t i = 0; i < SideIndexCount; i++) {
-        const CSSPrimitiveValue& side = *sides[i];
-        ASSERT_UNUSED(side, side.isNumber() || side.isPercentage());
-        list->set(i, InterpolableNumber::create(sides[i]->getDoubleValue()));
-    }
+  for (size_t i = 0; i < kSideIndexCount; i++) {
+    const CSSPrimitiveValue& side = *ToCSSPrimitiveValue(sides[i]);
+    DCHECK(side.IsNumber() || side.IsPercentage());
+    list->Set(i, InterpolableNumber::Create(side.GetDoubleValue()));
+  }
 
-    return InterpolationValue(std::move(list), CSSImageSliceNonInterpolableValue::create(SliceTypes(slice)));
+  return InterpolationValue(
+      std::move(list),
+      CSSImageSliceNonInterpolableValue::Create(SliceTypes(slice)));
 }
 
-InterpolationValue CSSImageSliceInterpolationType::maybeConvertUnderlyingValue(const InterpolationEnvironment& environment) const
-{
-    const ComputedStyle& style = *environment.state().style();
-    return convertImageSlice(ImageSlicePropertyFunctions::getImageSlice(cssProperty(), style), style.effectiveZoom());
+InterpolationValue
+CSSImageSliceInterpolationType::MaybeConvertStandardPropertyUnderlyingValue(
+    const ComputedStyle& style) const {
+  return ConvertImageSlice(
+      ImageSlicePropertyFunctions::GetImageSlice(CssProperty(), style),
+      style.EffectiveZoom());
 }
 
-PairwiseInterpolationValue CSSImageSliceInterpolationType::maybeMergeSingles(InterpolationValue&& start, InterpolationValue&& end) const
-{
-    const SliceTypes& startSliceTypes = toCSSImageSliceNonInterpolableValue(*start.nonInterpolableValue).types();
-    const SliceTypes& endSliceTypes = toCSSImageSliceNonInterpolableValue(*end.nonInterpolableValue).types();
+PairwiseInterpolationValue CSSImageSliceInterpolationType::MaybeMergeSingles(
+    InterpolationValue&& start,
+    InterpolationValue&& end) const {
+  const SliceTypes& start_slice_types =
+      ToCSSImageSliceNonInterpolableValue(*start.non_interpolable_value)
+          .Types();
+  const SliceTypes& end_slice_types =
+      ToCSSImageSliceNonInterpolableValue(*end.non_interpolable_value).Types();
 
-    if (startSliceTypes != endSliceTypes)
-        return nullptr;
+  if (start_slice_types != end_slice_types)
+    return nullptr;
 
-    return PairwiseInterpolationValue(std::move(start.interpolableValue), std::move(end.interpolableValue), start.nonInterpolableValue.release());
+  return PairwiseInterpolationValue(std::move(start.interpolable_value),
+                                    std::move(end.interpolable_value),
+                                    std::move(start.non_interpolable_value));
 }
 
-void CSSImageSliceInterpolationType::composite(UnderlyingValueOwner& underlyingValueOwner, double underlyingFraction, const InterpolationValue& value, double interpolationFraction) const
-{
-    const SliceTypes& underlyingTypes = toCSSImageSliceNonInterpolableValue(*underlyingValueOwner.value().nonInterpolableValue).types();
-    const SliceTypes& types = toCSSImageSliceNonInterpolableValue(*value.nonInterpolableValue).types();
+void CSSImageSliceInterpolationType::Composite(
+    UnderlyingValueOwner& underlying_value_owner,
+    double underlying_fraction,
+    const InterpolationValue& value,
+    double interpolation_fraction) const {
+  const SliceTypes& underlying_types =
+      ToCSSImageSliceNonInterpolableValue(
+          *underlying_value_owner.Value().non_interpolable_value)
+          .Types();
+  const SliceTypes& types =
+      ToCSSImageSliceNonInterpolableValue(*value.non_interpolable_value)
+          .Types();
 
-    if (underlyingTypes == types)
-        underlyingValueOwner.mutableValue().interpolableValue->scaleAndAdd(underlyingFraction, *value.interpolableValue);
-    else
-        underlyingValueOwner.set(*this, value);
+  if (underlying_types == types)
+    underlying_value_owner.MutableValue().interpolable_value->ScaleAndAdd(
+        underlying_fraction, *value.interpolable_value);
+  else
+    underlying_value_owner.Set(*this, value);
 }
 
-void CSSImageSliceInterpolationType::apply(const InterpolableValue& interpolableValue, const NonInterpolableValue* nonInterpolableValue, InterpolationEnvironment& environment) const
-{
-    ComputedStyle& style = *environment.state().style();
-    const InterpolableList& list = toInterpolableList(interpolableValue);
-    const SliceTypes& types = toCSSImageSliceNonInterpolableValue(nonInterpolableValue)->types();
-    const auto& convertSide = [&types, &list, &style](size_t index)
-    {
-        float value = clampTo<float>(toInterpolableNumber(list.get(index))->value(), 0);
-        return types.isNumber[index] ? Length(value * style.effectiveZoom(), Fixed) : Length(value, Percent);
-    };
-    LengthBox box(
-        convertSide(SideTop),
-        convertSide(SideRight),
-        convertSide(SideBottom),
-        convertSide(SideLeft));
-    ImageSlicePropertyFunctions::setImageSlice(cssProperty(), style, ImageSlice(box, types.fill));
+void CSSImageSliceInterpolationType::ApplyStandardPropertyValue(
+    const InterpolableValue& interpolable_value,
+    const NonInterpolableValue* non_interpolable_value,
+    StyleResolverState& state) const {
+  ComputedStyle& style = *state.Style();
+  const InterpolableList& list = ToInterpolableList(interpolable_value);
+  const SliceTypes& types =
+      ToCSSImageSliceNonInterpolableValue(non_interpolable_value)->Types();
+  const auto& convert_side = [&types, &list, &style](size_t index) {
+    float value =
+        clampTo<float>(ToInterpolableNumber(list.Get(index))->Value(), 0);
+    return types.is_number[index]
+               ? Length(value * style.EffectiveZoom(), kFixed)
+               : Length(value, kPercent);
+  };
+  LengthBox box(convert_side(kSideTop), convert_side(kSideRight),
+                convert_side(kSideBottom), convert_side(kSideLeft));
+  ImageSlicePropertyFunctions::SetImageSlice(CssProperty(), style,
+                                             ImageSlice(box, types.fill));
 }
 
-} // namespace blink
+}  // namespace blink

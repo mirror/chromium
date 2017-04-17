@@ -30,36 +30,42 @@
 #define XMLErrors_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/text/StringBuilder.h"
-#include "wtf/text/TextPosition.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/TextPosition.h"
 
 namespace blink {
 
 class Document;
 
 class XMLErrors {
-    DISALLOW_NEW();
-public:
-    explicit XMLErrors(Document*);
-    DECLARE_TRACE();
+  DISALLOW_NEW();
 
-    // Exposed for callbacks:
-    enum ErrorType { ErrorTypeWarning, ErrorTypeNonFatal, ErrorTypeFatal };
-    void handleError(ErrorType, const char* message, int lineNumber, int columnNumber);
-    void handleError(ErrorType, const char* message, TextPosition);
+ public:
+  explicit XMLErrors(Document*);
+  DECLARE_TRACE();
 
-    void insertErrorMessageBlock();
+  // Exposed for callbacks:
+  enum ErrorType { kErrorTypeWarning, kErrorTypeNonFatal, kErrorTypeFatal };
+  void HandleError(ErrorType,
+                   const char* message,
+                   int line_number,
+                   int column_number);
+  void HandleError(ErrorType, const char* message, TextPosition);
 
-private:
-    void appendErrorMessage(const String& typeString, TextPosition, const char* message);
+  void InsertErrorMessageBlock();
 
-    Member<Document> m_document;
+ private:
+  void AppendErrorMessage(const String& type_string,
+                          TextPosition,
+                          const char* message);
 
-    int m_errorCount;
-    TextPosition m_lastErrorPosition;
-    StringBuilder m_errorMessages;
+  Member<Document> document_;
+
+  int error_count_;
+  TextPosition last_error_position_;
+  StringBuilder error_messages_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // XMLErrors_h
+#endif  // XMLErrors_h

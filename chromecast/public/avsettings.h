@@ -73,6 +73,8 @@ class AvSettings {
     // Initialize() was called.
     ACTIVE_STATE_CHANGED = 0,
 
+    // DEPRECATED - Prefer to implement volume control in the media shlib using
+    // the VolumeControl API (see chromecast/public/volume_control.h).
     // This event shall be fired whenever the system volume level or muted state
     // are changed including when user changed volume via a remote controller,
     // or after a call to SetAudioVolume() or SetAudioMuted().
@@ -88,9 +90,10 @@ class AvSettings {
 
     // This event shall be fired whenever the screen information of the device
     // (or HDMI sinks connected to the device) are changed including screen
-    // resolution.
-    // On this event, GetScreenResolution() will be called on the thread where
-    // Initialize() was called.
+    // resolution, HDCP version and supported EOTFs.
+    // On this event, GetScreenResolution(), GetHDCPVersion() and
+    // GetSupportedEotfs(), GetScreenWidthMm(), GetScreenHeightMm() will be
+    // called on the thread where Initialize() was called.
     SCREEN_INFO_CHANGED = 3,
 
     // This event should be fired whenever the active output restrictions on the
@@ -111,6 +114,11 @@ class AvSettings {
     // by the device is changed, for e.g. when connecting to an AVR setup
     // where step interval should be 1%.
     AUDIO_VOLUME_STEP_INTERVAL_CHANGED = 7,
+
+    // This event shall be fired whenever the HDR output type changes.
+    // On this event, GetHdrOutputType() will be called on the thread where
+    // Initialize() was called.
+    HDR_OUTPUT_TYPE_CHANGED = 8,
 
     // This event should be fired when the device is connected to HDMI sinks.
     HDMI_CONNECTED = 100,
@@ -197,19 +205,27 @@ class AvSettings {
   //  - UNKNOWN_VOLUME: 0.01 (1%)
   virtual bool GetAudioVolumeStepInterval(float* step_inteval) = 0;
 
+  // DEPRECATED - Prefer to implement volume control in the media shlib using
+  // the VolumeControl API (see chromecast/public/volume_control.h).
   // Returns the current volume level, which must be from 0.0 (inclusive) to
   // 1.0 (inclusive).
   virtual float GetAudioVolume() = 0;
 
+  // DEPRECATED - Prefer to implement volume control in the media shlib using
+  // the VolumeControl API (see chromecast/public/volume_control.h).
   // Sets new volume level of the device (or HDMI sinks). |level| is from 0.0
   // (inclusive) to 1.0 (inclusive).
   // If successful and the level has changed, it must return true and fire
   // AUDIO_VOLUME_CHANGED.
   virtual bool SetAudioVolume(float level) = 0;
 
+  // DEPRECATED - Prefer to implement volume control in the media shlib using
+  // the VolumeControl API (see chromecast/public/volume_control.h).
   // Whether or not the device (or HDMI sinks) is muted.
   virtual bool IsAudioMuted() = 0;
 
+  // DEPRECATED - Prefer to implement volume control in the media shlib using
+  // the VolumeControl API (see chromecast/public/volume_control.h).
   // Sets the device (or HDMI sinks) muted.
   // If successful and the muted state has changed, it must return true and fire
   // AUDIO_VOLUME_CHANGED.
@@ -225,6 +241,40 @@ class AvSettings {
   // Retrieves the resolution of screen of the device (or HDMI sinks).
   // Returns true if it gets resolution successfully.
   virtual bool GetScreenResolution(int* width, int* height) = 0;
+
+  // Returns the current HDCP version multiplied by ten (so, for example, for
+  // HDCP 2.2 the return value is 22). The return value should by 0 if HDCP is
+  // not supported. Or TV_PLATFORM_NO_HDCP for platforms like CastTV that
+  // support equivalent content protection without HDCP.
+  enum { TV_PLATFORM_NO_HDCP = 99 };
+  virtual int GetHDCPVersion() = 0;
+
+  // Supported Electro-Optical Transfer Function (EOTF) reported by the device.
+  // The values are according to Table 8 in CTA-861.3 (formerly CEA-861.3).
+  enum Eotf {
+    EOTF_SDR = 1 << 0,
+    EOTF_HDR = 1 << 1,
+    EOTF_SMPTE_ST_2084 = 1 << 2,
+    EOTF_HLG = 1 << 3,
+  };
+
+  // Returns a set of flags, defined in the Eotf enum above, indicating support
+  // of different EOTFs by the device or HDMI sink.
+  virtual int GetSupportedEotfs() = 0;
+
+  enum DolbyVisionCapFlags {
+    DOLBY_SUPPORTED = 1 << 0,
+    DOLBY_4K_P60_SUPPORTED = 1 << 1,
+    DOLBY_422_12BIT_SUPPORTED = 1 << 2,
+  };
+
+  // Returns a set of flags, defined in the DolbyVisionCapFlags enum above,
+  // indicating support for DolbyVision and various DV-related features.
+  virtual int GetDolbyVisionFlags() = 0;
+
+  // Returns physical screen size in millimeters.
+  virtual int GetScreenWidthMm() = 0;
+  virtual int GetScreenHeightMm() = 0;
 
   // If supported, retrieves the restrictions active on the device outputs (as
   // specified by the PlayReady CDM; see output_restrictions.h). If reporting
@@ -245,6 +295,46 @@ class AvSettings {
   // Enables/Disables Wake-On-Cast status.
   // Returns false if failed or not supported.
   virtual bool EnableWakeOnCast(bool enabled) = 0;
+
+  // Supported HDR output modes.
+  enum HdrOutputType {
+    HDR_OUTPUT_SDR,  // not HDR
+    HDR_OUTPUT_HDR,  // HDR with static metadata
+    HDR_OUTPUT_DOLBYVISION  // DolbyVision output
+  };
+
+  // Gets the current HDR output type.
+  virtual HdrOutputType GetHdrOutputType() = 0;
+
+  // Sets the HDMI video mode according to the given parameters:
+  // |allow_4k|: if false, the resolution set will not be a 4K resolution.
+  // |optimize_for_fps|: *Attempts* to pick a refresh rate optimal for the
+  // given content frame rate.  |optimize_for_fps| is expressed as framerate
+  // * 100. I.e. 24hz -> 2400, 23.98hz -> 2398, etc.  Values <= 0 are ignored.
+  // |output_type|: if set to HDR_OUTPUT_DOLBYVISION, the video mode set will
+  // be a DV supported resolution. If set to HDR_OUTPUT_HDR, the video mode set
+  // will be a 10-bit or greater video mode.
+  //
+  // Returns:
+  // - true if HDMI video mode change is beginning.  Caller should wait for
+  //   SCREEN_INFO_CHANGED event for mode change to complete.
+  // - false if no HDMI video mode change has begun.  This could be because
+  // HDMI is disconnected, or the current resolution is already good for the
+  // given parameters, or no valid resolution with the given parameters is
+  // found (ie. setting require_dolby_vision/require_hdr to true when the
+  // sink doesn't support those features).
+  //
+  // Non-HDMI devices should return false.
+  virtual bool SetHdmiVideoMode(bool allow_4k,
+                                int optimize_for_fps,
+                                HdrOutputType output_type) = 0;
+
+  // Returns true if the HDMI sink supports the specified HDR output type in
+  // the current HDMI mode.  Returns false otherwise.
+  //
+  // Non-HDMI devices should return false.
+  virtual bool IsHdrOutputSupportedByCurrentHdmiVideoMode(
+      HdrOutputType output_type) = 0;
 };
 
 }  // namespace chromecast

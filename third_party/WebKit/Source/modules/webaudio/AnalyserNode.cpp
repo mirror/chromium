@@ -10,196 +10,274 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #include "modules/webaudio/AnalyserNode.h"
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
+#include "modules/webaudio/AnalyserOptions.h"
 #include "modules/webaudio/AudioNodeInput.h"
 #include "modules/webaudio/AudioNodeOutput.h"
 
 namespace blink {
 
-AnalyserHandler::AnalyserHandler(AudioNode& node, float sampleRate)
-    : AudioBasicInspectorHandler(NodeTypeAnalyser, node, sampleRate, 2)
-{
-    initialize();
+AnalyserHandler::AnalyserHandler(AudioNode& node, float sample_rate)
+    : AudioBasicInspectorHandler(kNodeTypeAnalyser, node, sample_rate, 2) {
+  Initialize();
 }
 
-PassRefPtr<AnalyserHandler> AnalyserHandler::create(AudioNode& node, float sampleRate)
-{
-    return adoptRef(new AnalyserHandler(node, sampleRate));
+PassRefPtr<AnalyserHandler> AnalyserHandler::Create(AudioNode& node,
+                                                    float sample_rate) {
+  return AdoptRef(new AnalyserHandler(node, sample_rate));
 }
 
-AnalyserHandler::~AnalyserHandler()
-{
-    uninitialize();
+AnalyserHandler::~AnalyserHandler() {
+  Uninitialize();
 }
 
-void AnalyserHandler::process(size_t framesToProcess)
-{
-    AudioBus* outputBus = output(0).bus();
+void AnalyserHandler::Process(size_t frames_to_process) {
+  AudioBus* output_bus = Output(0).Bus();
 
-    if (!isInitialized() || !input(0).isConnected()) {
-        outputBus->zero();
-        return;
+  if (!IsInitialized()) {
+    output_bus->Zero();
+    return;
+  }
+
+  AudioBus* input_bus = Input(0).Bus();
+
+  // Give the analyser the audio which is passing through this
+  // AudioNode.  This must always be done so that the state of the
+  // Analyser reflects the current input.
+  analyser_.WriteInput(input_bus, frames_to_process);
+
+  if (!Input(0).IsConnected()) {
+    // No inputs, so clear the output, and propagate the silence hint.
+    output_bus->Zero();
+    return;
+  }
+
+  // For in-place processing, our override of pullInputs() will just pass the
+  // audio data through unchanged if the channel count matches from input to
+  // output (resulting in inputBus == outputBus). Otherwise, do an up-mix to
+  // stereo.
+  if (input_bus != output_bus)
+    output_bus->CopyFrom(*input_bus);
+}
+
+void AnalyserHandler::SetFftSize(unsigned size,
+                                 ExceptionState& exception_state) {
+  if (!analyser_.SetFftSize(size)) {
+    exception_state.ThrowDOMException(
+        kIndexSizeError,
+        (size < RealtimeAnalyser::kMinFFTSize ||
+         size > RealtimeAnalyser::kMaxFFTSize)
+            ? ExceptionMessages::IndexOutsideRange(
+                  "FFT size", size, RealtimeAnalyser::kMinFFTSize,
+                  ExceptionMessages::kInclusiveBound,
+                  RealtimeAnalyser::kMaxFFTSize,
+                  ExceptionMessages::kInclusiveBound)
+            : ("The value provided (" + String::Number(size) +
+               ") is not a power of two."));
+  }
+}
+
+void AnalyserHandler::SetMinDecibels(double k,
+                                     ExceptionState& exception_state) {
+  if (k < MaxDecibels()) {
+    analyser_.SetMinDecibels(k);
+  } else {
+    exception_state.ThrowDOMException(
+        kIndexSizeError, ExceptionMessages::IndexExceedsMaximumBound(
+                             "minDecibels", k, MaxDecibels()));
+  }
+}
+
+void AnalyserHandler::SetMaxDecibels(double k,
+                                     ExceptionState& exception_state) {
+  if (k > MinDecibels()) {
+    analyser_.SetMaxDecibels(k);
+  } else {
+    exception_state.ThrowDOMException(
+        kIndexSizeError, ExceptionMessages::IndexExceedsMinimumBound(
+                             "maxDecibels", k, MinDecibels()));
+  }
+}
+
+void AnalyserHandler::SetMinMaxDecibels(double min_decibels,
+                                        double max_decibels,
+                                        ExceptionState& exception_state) {
+  if (min_decibels >= max_decibels) {
+    exception_state.ThrowDOMException(
+        kIndexSizeError, "maxDecibels (" + String::Number(max_decibels) +
+                             ") must be greater than or equal to minDecibels " +
+                             "( " + String::Number(min_decibels) + ").");
+    return;
+  }
+  analyser_.SetMinDecibels(min_decibels);
+  analyser_.SetMaxDecibels(max_decibels);
+}
+
+void AnalyserHandler::SetSmoothingTimeConstant(
+    double k,
+    ExceptionState& exception_state) {
+  if (k >= 0 && k <= 1) {
+    analyser_.SetSmoothingTimeConstant(k);
+  } else {
+    exception_state.ThrowDOMException(
+        kIndexSizeError,
+        ExceptionMessages::IndexOutsideRange(
+            "smoothing value", k, 0.0, ExceptionMessages::kInclusiveBound, 1.0,
+            ExceptionMessages::kInclusiveBound));
+  }
+}
+
+void AnalyserHandler::UpdatePullStatus() {
+  DCHECK(Context()->IsGraphOwner());
+
+  if (Output(0).IsConnected()) {
+    // When an AudioBasicInspectorNode is connected to a downstream node, it
+    // will get pulled by the downstream node, thus remove it from the context's
+    // automatic pull list.
+    if (need_automatic_pull_) {
+      Context()->GetDeferredTaskHandler().RemoveAutomaticPullNode(this);
+      need_automatic_pull_ = false;
     }
-
-    AudioBus* inputBus = input(0).bus();
-
-    // Give the analyser the audio which is passing through this AudioNode.
-    m_analyser.writeInput(inputBus, framesToProcess);
-
-    // For in-place processing, our override of pullInputs() will just pass the audio data through unchanged if the channel count matches from input to output
-    // (resulting in inputBus == outputBus). Otherwise, do an up-mix to stereo.
-    if (inputBus != outputBus)
-        outputBus->copyFrom(*inputBus);
-}
-
-void AnalyserHandler::setFftSize(unsigned size, ExceptionState& exceptionState)
-{
-    if (!m_analyser.setFftSize(size)) {
-        exceptionState.throwDOMException(
-            IndexSizeError,
-            (size < RealtimeAnalyser::MinFFTSize || size > RealtimeAnalyser::MaxFFTSize) ?
-                ExceptionMessages::indexOutsideRange("FFT size", size, RealtimeAnalyser::MinFFTSize, ExceptionMessages::InclusiveBound, RealtimeAnalyser::MaxFFTSize, ExceptionMessages::InclusiveBound)
-                : ("The value provided (" + String::number(size) + ") is not a power of two."));
+  } else {
+    unsigned number_of_input_connections =
+        Input(0).NumberOfRenderingConnections();
+    // When an AnalyserNode is not connected to any downstream node
+    // while still connected from upstream node(s), add it to the context's
+    // automatic pull list.
+    //
+    // But don't remove the AnalyserNode if there are no inputs
+    // connected to the node.  The node needs to be pulled so that the
+    // internal state is updated with the correct input signal (of
+    // zeroes).
+    if (number_of_input_connections && !need_automatic_pull_) {
+      Context()->GetDeferredTaskHandler().AddAutomaticPullNode(this);
+      need_automatic_pull_ = true;
     }
+  }
 }
-
-void AnalyserHandler::setMinDecibels(double k, ExceptionState& exceptionState)
-{
-    if (k < maxDecibels()) {
-        m_analyser.setMinDecibels(k);
-    } else {
-        exceptionState.throwDOMException(
-            IndexSizeError,
-            ExceptionMessages::indexExceedsMaximumBound("minDecibels", k, maxDecibels()));
-    }
-}
-
-void AnalyserHandler::setMaxDecibels(double k, ExceptionState& exceptionState)
-{
-    if (k > minDecibels()) {
-        m_analyser.setMaxDecibels(k);
-    } else {
-        exceptionState.throwDOMException(
-            IndexSizeError,
-            ExceptionMessages::indexExceedsMinimumBound("maxDecibels", k, minDecibels()));
-    }
-}
-
-void AnalyserHandler::setSmoothingTimeConstant(double k, ExceptionState& exceptionState)
-{
-    if (k >= 0 && k <= 1) {
-        m_analyser.setSmoothingTimeConstant(k);
-    } else {
-        exceptionState.throwDOMException(
-            IndexSizeError,
-            ExceptionMessages::indexOutsideRange("smoothing value", k, 0.0, ExceptionMessages::InclusiveBound, 1.0, ExceptionMessages::InclusiveBound));
-    }
-}
-
 // ----------------------------------------------------------------
 
 AnalyserNode::AnalyserNode(BaseAudioContext& context)
-    : AudioBasicInspectorNode(context)
-{
-    setHandler(AnalyserHandler::create(*this, context.sampleRate()));
+    : AudioBasicInspectorNode(context) {
+  SetHandler(AnalyserHandler::Create(*this, context.sampleRate()));
 }
 
-AnalyserNode* AnalyserNode::create(BaseAudioContext& context, ExceptionState& exceptionState)
-{
-    DCHECK(isMainThread());
+AnalyserNode* AnalyserNode::Create(BaseAudioContext& context,
+                                   ExceptionState& exception_state) {
+  DCHECK(IsMainThread());
 
-    if (context.isContextClosed()) {
-        context.throwExceptionForClosedState(exceptionState);
-        return nullptr;
-    }
+  if (context.IsContextClosed()) {
+    context.ThrowExceptionForClosedState(exception_state);
+    return nullptr;
+  }
 
-    return new AnalyserNode(context);
+  return new AnalyserNode(context);
 }
 
-AnalyserHandler& AnalyserNode::analyserHandler() const
-{
-    return static_cast<AnalyserHandler&>(handler());
+AnalyserNode* AnalyserNode::Create(BaseAudioContext* context,
+                                   const AnalyserOptions& options,
+                                   ExceptionState& exception_state) {
+  DCHECK(IsMainThread());
+
+  AnalyserNode* node = Create(*context, exception_state);
+
+  if (!node)
+    return nullptr;
+
+  node->HandleChannelOptions(options, exception_state);
+
+  node->setFftSize(options.fftSize(), exception_state);
+  node->setSmoothingTimeConstant(options.smoothingTimeConstant(),
+                                 exception_state);
+
+  // minDecibels and maxDecibels have default values.  Set both of the values
+  // at once.
+  node->SetMinMaxDecibels(options.minDecibels(), options.maxDecibels(),
+                          exception_state);
+
+  return node;
 }
 
-unsigned AnalyserNode::fftSize() const
-{
-    return analyserHandler().fftSize();
+AnalyserHandler& AnalyserNode::GetAnalyserHandler() const {
+  return static_cast<AnalyserHandler&>(Handler());
 }
 
-void AnalyserNode::setFftSize(unsigned size, ExceptionState& exceptionState)
-{
-    return analyserHandler().setFftSize(size, exceptionState);
+unsigned AnalyserNode::fftSize() const {
+  return GetAnalyserHandler().FftSize();
 }
 
-unsigned AnalyserNode::frequencyBinCount() const
-{
-    return analyserHandler().frequencyBinCount();
+void AnalyserNode::setFftSize(unsigned size, ExceptionState& exception_state) {
+  return GetAnalyserHandler().SetFftSize(size, exception_state);
 }
 
-void AnalyserNode::setMinDecibels(double min, ExceptionState& exceptionState)
-{
-    analyserHandler().setMinDecibels(min, exceptionState);
+unsigned AnalyserNode::frequencyBinCount() const {
+  return GetAnalyserHandler().FrequencyBinCount();
 }
 
-double AnalyserNode::minDecibels() const
-{
-    return analyserHandler().minDecibels();
+void AnalyserNode::setMinDecibels(double min, ExceptionState& exception_state) {
+  GetAnalyserHandler().SetMinDecibels(min, exception_state);
 }
 
-void AnalyserNode::setMaxDecibels(double max, ExceptionState& exceptionState)
-{
-    analyserHandler().setMaxDecibels(max, exceptionState);
+double AnalyserNode::minDecibels() const {
+  return GetAnalyserHandler().MinDecibels();
 }
 
-double AnalyserNode::maxDecibels() const
-{
-    return analyserHandler().maxDecibels();
+void AnalyserNode::setMaxDecibels(double max, ExceptionState& exception_state) {
+  GetAnalyserHandler().SetMaxDecibels(max, exception_state);
 }
 
-void AnalyserNode::setSmoothingTimeConstant(double smoothingTime, ExceptionState& exceptionState)
-{
-    analyserHandler().setSmoothingTimeConstant(smoothingTime, exceptionState);
+void AnalyserNode::SetMinMaxDecibels(double min,
+                                     double max,
+                                     ExceptionState& exception_state) {
+  GetAnalyserHandler().SetMinMaxDecibels(min, max, exception_state);
 }
 
-double AnalyserNode::smoothingTimeConstant() const
-{
-    return analyserHandler().smoothingTimeConstant();
+double AnalyserNode::maxDecibels() const {
+  return GetAnalyserHandler().MaxDecibels();
 }
 
-void AnalyserNode::getFloatFrequencyData(DOMFloat32Array* array)
-{
-    analyserHandler().getFloatFrequencyData(array, context()->currentTime());
+void AnalyserNode::setSmoothingTimeConstant(double smoothing_time,
+                                            ExceptionState& exception_state) {
+  GetAnalyserHandler().SetSmoothingTimeConstant(smoothing_time,
+                                                exception_state);
 }
 
-void AnalyserNode::getByteFrequencyData(DOMUint8Array* array)
-{
-    analyserHandler().getByteFrequencyData(array, context()->currentTime());
+double AnalyserNode::smoothingTimeConstant() const {
+  return GetAnalyserHandler().SmoothingTimeConstant();
 }
 
-void AnalyserNode::getFloatTimeDomainData(DOMFloat32Array* array)
-{
-    analyserHandler().getFloatTimeDomainData(array);
+void AnalyserNode::getFloatFrequencyData(NotShared<DOMFloat32Array> array) {
+  GetAnalyserHandler().GetFloatFrequencyData(array.View(),
+                                             context()->currentTime());
 }
 
-void AnalyserNode::getByteTimeDomainData(DOMUint8Array* array)
-{
-    analyserHandler().getByteTimeDomainData(array);
+void AnalyserNode::getByteFrequencyData(NotShared<DOMUint8Array> array) {
+  GetAnalyserHandler().GetByteFrequencyData(array.View(),
+                                            context()->currentTime());
 }
 
-} // namespace blink
+void AnalyserNode::getFloatTimeDomainData(NotShared<DOMFloat32Array> array) {
+  GetAnalyserHandler().GetFloatTimeDomainData(array.View());
+}
 
+void AnalyserNode::getByteTimeDomainData(NotShared<DOMUint8Array> array) {
+  GetAnalyserHandler().GetByteTimeDomainData(array.View());
+}
+
+}  // namespace blink

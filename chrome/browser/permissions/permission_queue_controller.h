@@ -7,11 +7,11 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
+#include "chrome/browser/permissions/permission_util.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
-#include "content/public/browser/permission_type.h"
 
 class GURL;
 class PermissionRequestID;
@@ -31,7 +31,6 @@ class PermissionQueueController : public content::NotificationObserver {
   using PermissionDecidedCallback = base::Callback<void(ContentSetting)>;
 
   PermissionQueueController(Profile* profile,
-                            content::PermissionType permission_type,
                             ContentSettingsType content_settings_type);
   ~PermissionQueueController() override;
 
@@ -40,6 +39,7 @@ class PermissionQueueController : public content::NotificationObserver {
   void CreateInfoBarRequest(const PermissionRequestID& id,
                             const GURL& requesting_frame,
                             const GURL& embedder,
+                            bool user_gesture,
                             const PermissionDecidedCallback& callback);
 
   // Cancels a specific infobar request.
@@ -51,13 +51,15 @@ class PermissionQueueController : public content::NotificationObserver {
   void OnPermissionSet(const PermissionRequestID& id,
                        const GURL& requesting_frame,
                        const GURL& embedder,
+                       bool user_gesture,
                        bool update_content_setting,
-                       bool allowed);
+                       PermissionAction decision);
 
   // Performs the update to content settings for a particular request frame
   // context.
-  void UpdateContentSetting(
-      const GURL& requesting_frame, const GURL& embedder, bool allowed);
+  void UpdateContentSetting(const GURL& requesting_frame,
+                            const GURL& embedder,
+                            PermissionAction decision);
 
  protected:
   // content::NotificationObserver:
@@ -90,7 +92,6 @@ class PermissionQueueController : public content::NotificationObserver {
   content::NotificationRegistrar registrar_;
 
   Profile* const profile_;
-  content::PermissionType permission_type_;
   ContentSettingsType content_settings_type_;
   PendingInfobarRequests pending_infobar_requests_;
   bool in_shutdown_;

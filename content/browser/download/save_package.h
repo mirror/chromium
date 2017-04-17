@@ -10,6 +10,7 @@
 
 #include <deque>
 #include <map>
+#include <memory>
 #include <set>
 #include <string>
 #include <unordered_map>
@@ -134,10 +135,8 @@ class CONTENT_EXPORT SavePackage
   FRIEND_TEST_ALL_PREFIXES(SavePackageBrowserTest, ExplicitCancel);
 
   // Map from SaveItem::id() (aka save_item_id) into a SaveItem.
-  using SaveItemIdMap =
-      std::unordered_map<SaveItemId, SaveItem*, SaveItemId::Hasher>;
-
-  using SaveItemQueue = std::deque<SaveItem*>;
+  using SaveItemIdMap = std::
+      unordered_map<SaveItemId, std::unique_ptr<SaveItem>, SaveItemId::Hasher>;
 
   using FileNameSet = std::set<base::FilePath::StringType,
                                bool (*)(base::FilePath::StringPieceType,
@@ -303,9 +302,12 @@ class CONTENT_EXPORT SavePackage
   static GURL GetUrlToBeSaved(WebContents* web_contents);
 
   static base::FilePath CreateDirectoryOnFileThread(
+      const base::string16& title,
+      const GURL& page_url,
+      bool can_save_as_complete,
+      const std::string& mime_type,
       const base::FilePath& website_save_dir,
       const base::FilePath& download_save_dir,
-      const base::FilePath& suggested_filename,
       bool skip_dir_check);
   void ContinueGetSaveInfo(bool can_save_as_complete,
                            const base::FilePath& suggested_path);
@@ -335,7 +337,9 @@ class CONTENT_EXPORT SavePackage
 
   // Helper function for preparing suggested name for the SaveAs Dialog. The
   // suggested name is determined by the web document's title.
-  base::FilePath GetSuggestedNameForSaveAs(
+  static base::FilePath GetSuggestedNameForSaveAs(
+      const base::string16& title,
+      const GURL& page_url,
       bool can_save_as_complete,
       const std::string& contents_mime_type);
 
@@ -354,7 +358,7 @@ class CONTENT_EXPORT SavePackage
       const std::string& contents_mime_type);
 
   // A queue for items we are about to start saving.
-  SaveItemQueue waiting_item_queue_;
+  std::deque<std::unique_ptr<SaveItem>> waiting_item_queue_;
 
   // Map of all saving job in in-progress state.
   SaveItemIdMap in_progress_items_;

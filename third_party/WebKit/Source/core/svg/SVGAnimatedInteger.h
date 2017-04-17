@@ -41,35 +41,41 @@ namespace blink {
 class SVGAnimatedIntegerOptionalInteger;
 
 // SVG Spec: http://www.w3.org/TR/SVG11/types.html#InterfaceSVGAnimatedInteger
-class SVGAnimatedInteger : public SVGAnimatedProperty<SVGInteger>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SVGAnimatedInteger* create(SVGElement* contextElement, const QualifiedName& attributeName, SVGInteger* initialValue)
-    {
-        return new SVGAnimatedInteger(contextElement, attributeName, initialValue);
-    }
+class SVGAnimatedInteger : public SVGAnimatedProperty<SVGInteger>,
+                           public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    void synchronizeAttribute() override;
+ public:
+  static SVGAnimatedInteger* Create(SVGElement* context_element,
+                                    const QualifiedName& attribute_name,
+                                    SVGInteger* initial_value) {
+    return new SVGAnimatedInteger(context_element, attribute_name,
+                                  initial_value);
+  }
 
-    void setParentOptionalInteger(SVGAnimatedIntegerOptionalInteger* numberOptionalInteger)
-    {
-        m_parentIntegerOptionalInteger = numberOptionalInteger;
-    }
+  void SynchronizeAttribute() override;
 
-    DECLARE_VIRTUAL_TRACE();
+  void SetParentOptionalInteger(
+      SVGAnimatedIntegerOptionalInteger* number_optional_integer) {
+    parent_integer_optional_integer_ = number_optional_integer;
+  }
 
-    DECLARE_VIRTUAL_TRACE_WRAPPERS();
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    SVGAnimatedInteger(SVGElement* contextElement, const QualifiedName& attributeName, SVGInteger* initialValue)
-        : SVGAnimatedProperty<SVGInteger>(contextElement, attributeName, initialValue)
-        , m_parentIntegerOptionalInteger(nullptr)
-    {
-    }
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
-    Member<SVGAnimatedIntegerOptionalInteger> m_parentIntegerOptionalInteger;
+ protected:
+  SVGAnimatedInteger(SVGElement* context_element,
+                     const QualifiedName& attribute_name,
+                     SVGInteger* initial_value)
+      : SVGAnimatedProperty<SVGInteger>(context_element,
+                                        attribute_name,
+                                        initial_value),
+        parent_integer_optional_integer_(nullptr) {}
+
+  Member<SVGAnimatedIntegerOptionalInteger> parent_integer_optional_integer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGAnimatedInteger_h
+#endif  // SVGAnimatedInteger_h

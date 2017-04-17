@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ * All rights reserved.
  * Copyright (C) 2013 Google Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -23,239 +24,244 @@
 #include "core/css/resolver/ElementStyleResources.h"
 
 #include "core/CSSPropertyNames.h"
-#include "core/css/CSSCursorImageValue.h"
 #include "core/css/CSSGradientValue.h"
 #include "core/css/CSSImageValue.h"
 #include "core/css/CSSURIValue.h"
 #include "core/dom/Document.h"
-#include "core/fetch/ResourceFetcher.h"
-#include "core/layout/svg/ReferenceFilterBuilder.h"
 #include "core/style/ComputedStyle.h"
 #include "core/style/ContentData.h"
 #include "core/style/CursorData.h"
 #include "core/style/FillLayer.h"
+#include "core/style/FilterOperation.h"
 #include "core/style/StyleFetchedImage.h"
 #include "core/style/StyleFetchedImageSet.h"
 #include "core/style/StyleGeneratedImage.h"
 #include "core/style/StyleImage.h"
 #include "core/style/StyleInvalidImage.h"
 #include "core/style/StylePendingImage.h"
-#include "platform/graphics/filters/FilterOperation.h"
+#include "core/svg/SVGElementProxy.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
 
 namespace blink {
 
-ElementStyleResources::ElementStyleResources(Document& document, float deviceScaleFactor)
-    : m_document(&document)
-    , m_deviceScaleFactor(deviceScaleFactor)
-{
+ElementStyleResources::ElementStyleResources(Document& document,
+                                             float device_scale_factor)
+    : document_(&document), device_scale_factor_(device_scale_factor) {}
+
+StyleImage* ElementStyleResources::GetStyleImage(CSSPropertyID property,
+                                                 const CSSValue& value) {
+  if (value.IsImageValue())
+    return CachedOrPendingFromValue(property, ToCSSImageValue(value));
+
+  if (value.IsImageGeneratorValue())
+    return GeneratedOrPendingFromValue(property,
+                                       ToCSSImageGeneratorValue(value));
+
+  if (value.IsImageSetValue())
+    return SetOrPendingFromValue(property, ToCSSImageSetValue(value));
+
+  return nullptr;
 }
 
-StyleImage* ElementStyleResources::styleImage(CSSPropertyID property, const CSSValue& value)
-{
-    if (value.isImageValue())
-        return cachedOrPendingFromValue(property, toCSSImageValue(value));
-
-    if (value.isImageGeneratorValue())
-        return generatedOrPendingFromValue(property, toCSSImageGeneratorValue(value));
-
-    if (value.isImageSetValue())
-        return setOrPendingFromValue(property, toCSSImageSetValue(value));
-
-    if (value.isCursorImageValue())
-        return cursorOrPendingFromValue(property, toCSSCursorImageValue(value));
-
-    return nullptr;
+StyleImage* ElementStyleResources::GeneratedOrPendingFromValue(
+    CSSPropertyID property,
+    const CSSImageGeneratorValue& value) {
+  if (value.IsPending()) {
+    pending_image_properties_.insert(property);
+    return StylePendingImage::Create(value);
+  }
+  return StyleGeneratedImage::Create(value);
 }
 
-StyleImage* ElementStyleResources::generatedOrPendingFromValue(CSSPropertyID property, const CSSImageGeneratorValue& value)
-{
-    if (value.isPending()) {
-        m_pendingImageProperties.add(property);
-        return StylePendingImage::create(value);
-    }
-    return StyleGeneratedImage::create(value);
+StyleImage* ElementStyleResources::SetOrPendingFromValue(
+    CSSPropertyID property,
+    const CSSImageSetValue& value) {
+  if (value.IsCachePending(device_scale_factor_)) {
+    pending_image_properties_.insert(property);
+    return StylePendingImage::Create(value);
+  }
+  return value.CachedImage(device_scale_factor_);
 }
 
-StyleImage* ElementStyleResources::setOrPendingFromValue(CSSPropertyID property, const CSSImageSetValue& value)
-{
-    if (value.isCachePending(m_deviceScaleFactor)) {
-        m_pendingImageProperties.add(property);
-        return StylePendingImage::create(value);
-    }
-    return value.cachedImage(m_deviceScaleFactor);
+StyleImage* ElementStyleResources::CachedOrPendingFromValue(
+    CSSPropertyID property,
+    const CSSImageValue& value) {
+  if (value.IsCachePending()) {
+    pending_image_properties_.insert(property);
+    return StylePendingImage::Create(value);
+  }
+  value.RestoreCachedResourceIfNeeded(*document_);
+  return value.CachedImage();
 }
 
-StyleImage* ElementStyleResources::cachedOrPendingFromValue(CSSPropertyID property, const CSSImageValue& value)
-{
-    if (value.isCachePending()) {
-        m_pendingImageProperties.add(property);
-        return StylePendingImage::create(value);
-    }
-    value.restoreCachedResourceIfNeeded(*m_document);
-    return value.cachedImage();
+SVGElementProxy& ElementStyleResources::CachedOrPendingFromValue(
+    const CSSURIValue& value) {
+  return value.EnsureElementProxy(*document_);
 }
 
-StyleImage* ElementStyleResources::cursorOrPendingFromValue(CSSPropertyID property, const CSSCursorImageValue& value)
-{
-    if (value.isCachePending(m_deviceScaleFactor)) {
-        m_pendingImageProperties.add(property);
-        return StylePendingImage::create(value);
-    }
-    return value.cachedImage(m_deviceScaleFactor);
+void ElementStyleResources::LoadPendingSVGDocuments(
+    ComputedStyle* computed_style) {
+  if (!computed_style->HasFilter())
+    return;
+  FilterOperations::FilterOperationVector& filter_operations =
+      computed_style->MutableFilter().Operations();
+  for (auto& filter_operation : filter_operations) {
+    if (filter_operation->GetType() != FilterOperation::REFERENCE)
+      continue;
+    ReferenceFilterOperation& reference_operation =
+        ToReferenceFilterOperation(*filter_operation);
+    reference_operation.ElementProxy().Resolve(*document_);
+  }
 }
 
-void ElementStyleResources::addPendingSVGDocument(FilterOperation* filterOperation, const CSSURIValue* cssUriValue)
-{
-    m_pendingSVGDocuments.set(filterOperation, cssUriValue);
+StyleImage* ElementStyleResources::LoadPendingImage(
+    ComputedStyle* style,
+    StylePendingImage* pending_image,
+    CrossOriginAttributeValue cross_origin) {
+  if (CSSImageValue* image_value = pending_image->CssImageValue())
+    return image_value->CacheImage(*document_, cross_origin);
+
+  if (CSSPaintValue* paint_value = pending_image->CssPaintValue()) {
+    StyleGeneratedImage* image = StyleGeneratedImage::Create(*paint_value);
+    style->AddPaintImage(image);
+    return image;
+  }
+
+  if (CSSImageGeneratorValue* image_generator_value =
+          pending_image->CssImageGeneratorValue()) {
+    image_generator_value->LoadSubimages(*document_);
+    return StyleGeneratedImage::Create(*image_generator_value);
+  }
+
+  if (CSSImageSetValue* image_set_value = pending_image->CssImageSetValue())
+    return image_set_value->CacheImage(*document_, device_scale_factor_,
+                                       cross_origin);
+
+  NOTREACHED();
+  return nullptr;
 }
 
-void ElementStyleResources::loadPendingSVGDocuments(ComputedStyle* computedStyle)
-{
-    if (!computedStyle->hasFilter() || m_pendingSVGDocuments.isEmpty())
-        return;
+void ElementStyleResources::LoadPendingImages(ComputedStyle* style) {
+  // We must loop over the properties and then look at the style to see if
+  // a pending image exists, and only load that image. For example:
+  //
+  // <style>
+  //    div { background-image: url(a.png); }
+  //    div { background-image: url(b.png); }
+  //    div { background-image: none; }
+  // </style>
+  // <div></div>
+  //
+  // We call styleImage() for both a.png and b.png adding the
+  // CSSPropertyBackgroundImage property to the pending_image_properties_ set,
+  // then we null out the background image because of the "none".
+  //
+  // If we eagerly loaded the images we'd fetch a.png, even though it's not
+  // used. If we didn't null check below we'd crash since the none actually
+  // removed all background images.
 
-    FilterOperations::FilterOperationVector& filterOperations = computedStyle->mutableFilter().operations();
-    for (unsigned i = 0; i < filterOperations.size(); ++i) {
-        FilterOperation* filterOperation = filterOperations.at(i);
-        if (filterOperation->type() == FilterOperation::REFERENCE) {
-            ReferenceFilterOperation* referenceFilter = toReferenceFilterOperation(filterOperation);
-
-            const CSSURIValue* value = m_pendingSVGDocuments.get(referenceFilter);
-            if (!value)
-                continue;
-            DocumentResource* resource = value->load(*m_document);
-            if (!resource)
-                continue;
-
-            // Stash the DocumentResource on the reference filter.
-            ReferenceFilterBuilder::setDocumentResourceReference(referenceFilter, new DocumentResourceReference(resource));
+  for (CSSPropertyID property : pending_image_properties_) {
+    switch (property) {
+      case CSSPropertyBackgroundImage: {
+        for (FillLayer* background_layer = &style->AccessBackgroundLayers();
+             background_layer; background_layer = background_layer->Next()) {
+          if (background_layer->GetImage() &&
+              background_layer->GetImage()->IsPendingImage())
+            background_layer->SetImage(LoadPendingImage(
+                style, ToStylePendingImage(background_layer->GetImage())));
         }
-    }
-}
-
-StyleImage* ElementStyleResources::loadPendingImage(ComputedStyle* style, StylePendingImage* pendingImage, CrossOriginAttributeValue crossOrigin)
-{
-    if (CSSImageValue* imageValue = pendingImage->cssImageValue())
-        return imageValue->cacheImage(m_document, crossOrigin);
-
-    if (CSSPaintValue* paintValue = pendingImage->cssPaintValue()) {
-        StyleGeneratedImage* image = StyleGeneratedImage::create(*paintValue);
-        style->addPaintImage(image);
-        return image;
-    }
-
-    if (CSSImageGeneratorValue* imageGeneratorValue = pendingImage->cssImageGeneratorValue()) {
-        imageGeneratorValue->loadSubimages(m_document);
-        return StyleGeneratedImage::create(*imageGeneratorValue);
-    }
-
-    if (CSSCursorImageValue* cursorImageValue = pendingImage->cssCursorImageValue())
-        return cursorImageValue->cacheImage(m_document, m_deviceScaleFactor);
-
-    if (CSSImageSetValue* imageSetValue = pendingImage->cssImageSetValue())
-        return imageSetValue->cacheImage(m_document, m_deviceScaleFactor, crossOrigin);
-
-    ASSERT_NOT_REACHED();
-    return nullptr;
-}
-
-void ElementStyleResources::loadPendingImages(ComputedStyle* style)
-{
-    // We must loop over the properties and then look at the style to see if
-    // a pending image exists, and only load that image. For example:
-    //
-    // <style>
-    //    div { background-image: url(a.png); }
-    //    div { background-image: url(b.png); }
-    //    div { background-image: none; }
-    // </style>
-    // <div></div>
-    //
-    // We call styleImage() for both a.png and b.png adding the
-    // CSSPropertyBackgroundImage property to the m_pendingImageProperties set,
-    // then we null out the background image because of the "none".
-    //
-    // If we eagerly loaded the images we'd fetch a.png, even though it's not
-    // used. If we didn't null check below we'd crash since the none actually
-    // removed all background images.
-
-    for (CSSPropertyID property : m_pendingImageProperties) {
-        switch (property) {
-        case CSSPropertyBackgroundImage: {
-            for (FillLayer* backgroundLayer = &style->accessBackgroundLayers(); backgroundLayer; backgroundLayer = backgroundLayer->next()) {
-                if (backgroundLayer->image() && backgroundLayer->image()->isPendingImage())
-                    backgroundLayer->setImage(loadPendingImage(style, toStylePendingImage(backgroundLayer->image())));
+        break;
+      }
+      case CSSPropertyContent: {
+        for (ContentData* content_data =
+                 const_cast<ContentData*>(style->GetContentData());
+             content_data; content_data = content_data->Next()) {
+          if (content_data->IsImage()) {
+            StyleImage* image = ToImageContentData(content_data)->GetImage();
+            if (image->IsPendingImage())
+              ToImageContentData(content_data)
+                  ->SetImage(
+                      LoadPendingImage(style, ToStylePendingImage(image)));
+          }
+        }
+        break;
+      }
+      case CSSPropertyCursor: {
+        if (CursorList* cursor_list = style->Cursors()) {
+          for (size_t i = 0; i < cursor_list->size(); ++i) {
+            CursorData& current_cursor = cursor_list->at(i);
+            if (StyleImage* image = current_cursor.GetImage()) {
+              if (image->IsPendingImage())
+                current_cursor.SetImage(
+                    LoadPendingImage(style, ToStylePendingImage(image)));
             }
-            break;
+          }
         }
-        case CSSPropertyContent: {
-            for (ContentData* contentData = const_cast<ContentData*>(style->contentData()); contentData; contentData = contentData->next()) {
-                if (contentData->isImage()) {
-                    StyleImage* image = toImageContentData(contentData)->image();
-                    if (image->isPendingImage())
-                        toImageContentData(contentData)->setImage(loadPendingImage(style, toStylePendingImage(image)));
-                }
-            }
-            break;
+        break;
+      }
+      case CSSPropertyListStyleImage: {
+        if (style->ListStyleImage() &&
+            style->ListStyleImage()->IsPendingImage())
+          style->SetListStyleImage(LoadPendingImage(
+              style, ToStylePendingImage(style->ListStyleImage())));
+        break;
+      }
+      case CSSPropertyBorderImageSource: {
+        if (style->BorderImageSource() &&
+            style->BorderImageSource()->IsPendingImage())
+          style->SetBorderImageSource(LoadPendingImage(
+              style, ToStylePendingImage(style->BorderImageSource())));
+        break;
+      }
+      case CSSPropertyWebkitBoxReflect: {
+        if (StyleReflection* reflection = style->BoxReflect()) {
+          const NinePieceImage& mask_image = reflection->Mask();
+          if (mask_image.GetImage() &&
+              mask_image.GetImage()->IsPendingImage()) {
+            StyleImage* loaded_image = LoadPendingImage(
+                style, ToStylePendingImage(mask_image.GetImage()));
+            reflection->SetMask(NinePieceImage(
+                loaded_image, mask_image.ImageSlices(), mask_image.Fill(),
+                mask_image.BorderSlices(), mask_image.Outset(),
+                mask_image.HorizontalRule(), mask_image.VerticalRule()));
+          }
         }
-        case CSSPropertyCursor: {
-            if (CursorList* cursorList = style->cursors()) {
-                for (size_t i = 0; i < cursorList->size(); ++i) {
-                    CursorData& currentCursor = cursorList->at(i);
-                    if (StyleImage* image = currentCursor.image()) {
-                        if (image->isPendingImage())
-                            currentCursor.setImage(loadPendingImage(style, toStylePendingImage(image)));
-                    }
-                }
-            }
-            break;
+        break;
+      }
+      case CSSPropertyWebkitMaskBoxImageSource: {
+        if (style->MaskBoxImageSource() &&
+            style->MaskBoxImageSource()->IsPendingImage())
+          style->SetMaskBoxImageSource(LoadPendingImage(
+              style, ToStylePendingImage(style->MaskBoxImageSource())));
+        break;
+      }
+      case CSSPropertyWebkitMaskImage: {
+        for (FillLayer* mask_layer = &style->AccessMaskLayers(); mask_layer;
+             mask_layer = mask_layer->Next()) {
+          if (mask_layer->GetImage() &&
+              mask_layer->GetImage()->IsPendingImage())
+            mask_layer->SetImage(LoadPendingImage(
+                style, ToStylePendingImage(mask_layer->GetImage())));
         }
-        case CSSPropertyListStyleImage: {
-            if (style->listStyleImage() && style->listStyleImage()->isPendingImage())
-                style->setListStyleImage(loadPendingImage(style, toStylePendingImage(style->listStyleImage())));
-            break;
-        }
-        case CSSPropertyBorderImageSource: {
-            if (style->borderImageSource() && style->borderImageSource()->isPendingImage())
-                style->setBorderImageSource(loadPendingImage(style, toStylePendingImage(style->borderImageSource())));
-            break;
-        }
-        case CSSPropertyWebkitBoxReflect: {
-            if (StyleReflection* reflection = style->boxReflect()) {
-                const NinePieceImage& maskImage = reflection->mask();
-                if (maskImage.image() && maskImage.image()->isPendingImage()) {
-                    StyleImage* loadedImage = loadPendingImage(style, toStylePendingImage(maskImage.image()));
-                    reflection->setMask(NinePieceImage(loadedImage, maskImage.imageSlices(), maskImage.fill(), maskImage.borderSlices(), maskImage.outset(), maskImage.horizontalRule(), maskImage.verticalRule()));
-                }
-            }
-            break;
-        }
-        case CSSPropertyWebkitMaskBoxImageSource: {
-            if (style->maskBoxImageSource() && style->maskBoxImageSource()->isPendingImage())
-                style->setMaskBoxImageSource(loadPendingImage(style, toStylePendingImage(style->maskBoxImageSource())));
-            break;
-        }
-        case CSSPropertyWebkitMaskImage: {
-            for (FillLayer* maskLayer = &style->accessMaskLayers(); maskLayer; maskLayer = maskLayer->next()) {
-                if (maskLayer->image() && maskLayer->image()->isPendingImage())
-                    maskLayer->setImage(loadPendingImage(style, toStylePendingImage(maskLayer->image())));
-            }
-            break;
-        }
-        case CSSPropertyShapeOutside:
-            if (style->shapeOutside() && style->shapeOutside()->image() && style->shapeOutside()->image()->isPendingImage())
-                style->shapeOutside()->setImage(loadPendingImage(style, toStylePendingImage(style->shapeOutside()->image()), CrossOriginAttributeAnonymous));
-            break;
-        default:
-            ASSERT_NOT_REACHED();
-        }
+        break;
+      }
+      case CSSPropertyShapeOutside:
+        if (style->ShapeOutside() && style->ShapeOutside()->GetImage() &&
+            style->ShapeOutside()->GetImage()->IsPendingImage())
+          style->ShapeOutside()->SetImage(LoadPendingImage(
+              style, ToStylePendingImage(style->ShapeOutside()->GetImage()),
+              kCrossOriginAttributeAnonymous));
+        break;
+      default:
+        NOTREACHED();
     }
+  }
 }
 
-void ElementStyleResources::loadPendingResources(ComputedStyle* computedStyle)
-{
-    loadPendingImages(computedStyle);
-    loadPendingSVGDocuments(computedStyle);
+void ElementStyleResources::LoadPendingResources(
+    ComputedStyle* computed_style) {
+  LoadPendingImages(computed_style);
+  LoadPendingSVGDocuments(computed_style);
 }
 
-} // namespace blink
+}  // namespace blink

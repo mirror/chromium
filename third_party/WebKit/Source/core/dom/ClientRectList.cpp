@@ -28,33 +28,27 @@
 
 namespace blink {
 
-ClientRectList::ClientRectList()
-{
+ClientRectList::ClientRectList() {}
+
+ClientRectList::ClientRectList(const Vector<FloatQuad>& quads) {
+  list_.ReserveInitialCapacity(quads.size());
+  for (const auto& quad : quads)
+    list_.push_back(ClientRect::Create(quad.BoundingBox()));
 }
 
-ClientRectList::ClientRectList(const Vector<FloatQuad>& quads)
-{
-    m_list.reserveInitialCapacity(quads.size());
-    for (size_t i = 0; i < quads.size(); ++i)
-        m_list.append(ClientRect::create(quads[i].boundingBox()));
+unsigned ClientRectList::length() const {
+  return list_.size();
 }
 
-unsigned ClientRectList::length() const
-{
-    return m_list.size();
+ClientRect* ClientRectList::item(unsigned index) {
+  if (index >= list_.size())
+    return 0;
+
+  return list_[index].Get();
 }
 
-ClientRect* ClientRectList::item(unsigned index)
-{
-    if (index >= m_list.size())
-        return 0;
-
-    return m_list[index].get();
+DEFINE_TRACE(ClientRectList) {
+  visitor->Trace(list_);
 }
 
-DEFINE_TRACE(ClientRectList)
-{
-    visitor->trace(m_list);
-}
-
-} // namespace blink
+}  // namespace blink

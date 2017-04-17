@@ -4,19 +4,18 @@
 
 package org.chromium.net.urlconnection;
 
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
 
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestBase;
 import org.chromium.net.CronetTestFramework;
 import org.chromium.net.NativeTestServer;
-import org.chromium.net.UrlRequestException;
+import org.chromium.net.NetworkException;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpRetryException;
 import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URL;
 
 /**
@@ -68,6 +67,23 @@ public class CronetFixedModeOutputStreamTest extends CronetTestBase {
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
+    // Regression test for crbug.com/687600.
+    public void testZeroLengthWriteWithNoResponseBody() throws Exception {
+        URL url = new URL(NativeTestServer.getEchoBodyURL());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setDoOutput(true);
+        connection.setRequestMethod("POST");
+        connection.setFixedLengthStreamingMode(0);
+        OutputStream out = connection.getOutputStream();
+        out.write(new byte[] {});
+        assertEquals(200, connection.getResponseCode());
+        assertEquals("OK", connection.getResponseMessage());
+        connection.disconnect();
+    }
+
+    @SmallTest
+    @Feature({"Cronet"})
+    @CompareDefaultWithCronet
     public void testWriteAfterRequestFailed() throws Exception {
         URL url = new URL(NativeTestServer.getEchoBodyURL());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -85,9 +101,9 @@ public class CronetFixedModeOutputStreamTest extends CronetTestBase {
         } catch (IOException e) {
             // Expected.
             if (!testingSystemHttpURLConnection()) {
-                UrlRequestException requestException = (UrlRequestException) e;
-                assertEquals(UrlRequestException.ERROR_CONNECTION_REFUSED,
-                        requestException.getErrorCode());
+                NetworkException requestException = (NetworkException) e;
+                assertEquals(
+                        NetworkException.ERROR_CONNECTION_REFUSED, requestException.getErrorCode());
             }
         }
         // Restarting server to run the test for a second time.
@@ -109,12 +125,17 @@ public class CronetFixedModeOutputStreamTest extends CronetTestBase {
         try {
             OutputStream out = connection.getOutputStream();
             out.write(1);
-            fail();
+            // Forces OutputStream implementation to flush. crbug.com/653072
+            out.flush();
+            // System's implementation is flaky see crbug.com/653072.
+            if (!testingSystemHttpURLConnection()) {
+                fail();
+            }
         } catch (IOException e) {
             if (!testingSystemHttpURLConnection()) {
-                UrlRequestException requestException = (UrlRequestException) e;
-                assertEquals(UrlRequestException.ERROR_CONNECTION_REFUSED,
-                        requestException.getErrorCode());
+                NetworkException requestException = (NetworkException) e;
+                assertEquals(
+                        NetworkException.ERROR_CONNECTION_REFUSED, requestException.getErrorCode());
             }
         }
         // Make sure IOException is reported again when trying to read response
@@ -125,9 +146,9 @@ public class CronetFixedModeOutputStreamTest extends CronetTestBase {
         } catch (IOException e) {
             // Expected.
             if (!testingSystemHttpURLConnection()) {
-                UrlRequestException requestException = (UrlRequestException) e;
-                assertEquals(UrlRequestException.ERROR_CONNECTION_REFUSED,
-                        requestException.getErrorCode());
+                NetworkException requestException = (NetworkException) e;
+                assertEquals(
+                        NetworkException.ERROR_CONNECTION_REFUSED, requestException.getErrorCode());
             }
         }
         // Restarting server to run the test for a second time.
@@ -180,7 +201,7 @@ public class CronetFixedModeOutputStreamTest extends CronetTestBase {
         try {
             connection.getResponseCode();
             fail();
-        } catch (ProtocolException e) {
+        } catch (IOException e) {
             // Expected.
         }
         connection.disconnect();
@@ -204,7 +225,7 @@ public class CronetFixedModeOutputStreamTest extends CronetTestBase {
             // On Lollipop, default implementation only triggers the error when reading response.
             connection.getInputStream();
             fail();
-        } catch (ProtocolException e) {
+        } catch (IOException e) {
             // Expected.
             assertEquals("expected " + (TestUtil.UPLOAD_DATA.length - 1) + " bytes but received "
                             + TestUtil.UPLOAD_DATA.length,
@@ -235,7 +256,7 @@ public class CronetFixedModeOutputStreamTest extends CronetTestBase {
             // On Lollipop, default implementation only triggers the error when reading response.
             connection.getInputStream();
             fail();
-        } catch (ProtocolException e) {
+        } catch (IOException e) {
             // Expected.
             String expectedVariant = "expected 0 bytes but received 1";
             String expectedVariantOnLollipop = "expected " + (TestUtil.UPLOAD_DATA.length - 1)

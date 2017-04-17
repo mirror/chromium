@@ -35,25 +35,13 @@ class HandleImpl : public blink::WebServiceWorker::Handle {
       : worker_(worker) {}
   ~HandleImpl() override {}
 
-  blink::WebServiceWorker* serviceWorker() override { return worker_.get(); }
+  blink::WebServiceWorker* ServiceWorker() override { return worker_.get(); }
 
  private:
   scoped_refptr<WebServiceWorkerImpl> worker_;
 
   DISALLOW_COPY_AND_ASSIGN(HandleImpl);
 };
-
-void SendPostMessageToWorkerOnMainThread(
-    ThreadSafeSender* thread_safe_sender,
-    int handle_id,
-    int provider_id,
-    const base::string16& message,
-    const url::Origin& source_origin,
-    std::unique_ptr<WebMessagePortChannelArray> channels) {
-  thread_safe_sender->Send(new ServiceWorkerHostMsg_PostMessageToWorker(
-      handle_id, provider_id, message, source_origin,
-      WebMessagePortChannelImpl::ExtractMessagePortIDs(std::move(channels))));
-}
 
 }  // namespace
 
@@ -78,53 +66,38 @@ void WebServiceWorkerImpl::OnStateChanged(
   // TODO(nhiroki): This is a quick fix for http://crbug.com/507110
   DCHECK(proxy_);
   if (proxy_)
-    proxy_->dispatchStateChangeEvent();
+    proxy_->DispatchStateChangeEvent();
 }
 
-void WebServiceWorkerImpl::setProxy(blink::WebServiceWorkerProxy* proxy) {
+void WebServiceWorkerImpl::SetProxy(blink::WebServiceWorkerProxy* proxy) {
   proxy_ = proxy;
 }
 
-blink::WebServiceWorkerProxy* WebServiceWorkerImpl::proxy() {
+blink::WebServiceWorkerProxy* WebServiceWorkerImpl::Proxy() {
   return proxy_;
 }
 
-blink::WebURL WebServiceWorkerImpl::url() const {
+blink::WebURL WebServiceWorkerImpl::Url() const {
   return handle_ref_->url();
 }
 
-blink::WebServiceWorkerState WebServiceWorkerImpl::state() const {
+blink::WebServiceWorkerState WebServiceWorkerImpl::GetState() const {
   return state_;
 }
 
-void WebServiceWorkerImpl::postMessage(
+void WebServiceWorkerImpl::PostMessage(
     blink::WebServiceWorkerProvider* provider,
     const WebString& message,
     const WebSecurityOrigin& source_origin,
-    WebMessagePortChannelArray* channels) {
-  WebServiceWorkerProviderImpl* provider_impl =
-      static_cast<WebServiceWorkerProviderImpl*>(provider);
-  ServiceWorkerDispatcher* dispatcher =
-      ServiceWorkerDispatcher::GetThreadSpecificInstance();
-  DCHECK(dispatcher);
-
-  // This may send channels for MessagePorts, and all internal book-keeping
-  // messages for MessagePort (e.g. QueueMessages) are sent from main thread
-  // (with thread hopping), so we need to do the same thread hopping here not
-  // to overtake those messages.
-  dispatcher->main_thread_task_runner()->PostTask(
-      FROM_HERE,
-      base::Bind(&SendPostMessageToWorkerOnMainThread,
-                 base::RetainedRef(thread_safe_sender_),
-                 handle_ref_->handle_id(), provider_impl->provider_id(),
-                 // We cast WebString to string16 before crossing
-                 // threads for thread-safety.
-                 static_cast<base::string16>(message),
-                 url::Origin(source_origin),
-                 base::Passed(base::WrapUnique(channels))));
+    WebMessagePortChannelArray channels) {
+  thread_safe_sender_->Send(new ServiceWorkerHostMsg_PostMessageToWorker(
+      handle_ref_->handle_id(),
+      static_cast<WebServiceWorkerProviderImpl*>(provider)->provider_id(),
+      message.Utf16(), url::Origin(source_origin),
+      WebMessagePortChannelImpl::ExtractMessagePorts(std::move(channels))));
 }
 
-void WebServiceWorkerImpl::terminate() {
+void WebServiceWorkerImpl::Terminate() {
   thread_safe_sender_->Send(
       new ServiceWorkerHostMsg_TerminateWorker(handle_ref_->handle_id()));
 }
@@ -135,7 +108,7 @@ WebServiceWorkerImpl::CreateHandle(
     const scoped_refptr<WebServiceWorkerImpl>& worker) {
   if (!worker)
     return nullptr;
-  return base::WrapUnique(new HandleImpl(worker));
+  return base::MakeUnique<HandleImpl>(worker);
 }
 
 WebServiceWorkerImpl::~WebServiceWorkerImpl() {

@@ -21,8 +21,8 @@
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "webrtc/libjingle/xmpp/prexmppauth.h"
-#include "webrtc/libjingle/xmpp/xmppclientsettings.h"
+#include "third_party/libjingle_xmpp/xmpp/prexmppauth.h"
+#include "third_party/libjingle_xmpp/xmpp/xmppclientsettings.h"
 
 namespace buzz {
 class CaptchaChallenge;
@@ -30,7 +30,6 @@ class Jid;
 }  // namespace buzz
 
 namespace rtc {
-class CryptString;
 class SocketAddress;
 class Task;
 }  // namespace rtc
@@ -52,7 +51,7 @@ class MockPreXmppAuth : public buzz::PreXmppAuth {
   MOCK_METHOD5(StartPreXmppAuth,
                void(const buzz::Jid&,
                     const rtc::SocketAddress&,
-                    const rtc::CryptString&,
+                    const std::string&,
                     const std::string&,
                     const std::string&));
   MOCK_CONST_METHOD0(IsAuthDone, bool());

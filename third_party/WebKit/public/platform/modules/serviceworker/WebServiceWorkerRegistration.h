@@ -8,42 +8,69 @@
 #include "public/platform/WebCallbacks.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerError.h"
+#include <memory>
 
 namespace blink {
 
 class WebServiceWorkerProvider;
 class WebServiceWorkerRegistrationProxy;
+struct WebNavigationPreloadState;
 
 // The interface of the registration representation in the embedder. The
 // embedder implements this interface and passes its handle
 // (WebServiceWorkerRegistration::Handle) to Blink. Blink accesses the
 // implementation via the handle to update or unregister the registration.
 class WebServiceWorkerRegistration {
-public:
-    virtual ~WebServiceWorkerRegistration() { }
+ public:
+  virtual ~WebServiceWorkerRegistration() {}
 
-    using WebServiceWorkerUpdateCallbacks = WebCallbacks<void, const WebServiceWorkerError&>;
-    using WebServiceWorkerUnregistrationCallbacks = WebCallbacks<bool, const WebServiceWorkerError&>;
+  using WebServiceWorkerUpdateCallbacks =
+      WebCallbacks<void, const WebServiceWorkerError&>;
+  using WebServiceWorkerUnregistrationCallbacks =
+      WebCallbacks<bool, const WebServiceWorkerError&>;
+  using WebEnableNavigationPreloadCallbacks =
+      WebCallbacks<void, const WebServiceWorkerError&>;
+  using WebGetNavigationPreloadStateCallbacks =
+      WebCallbacks<const WebNavigationPreloadState&,
+                   const WebServiceWorkerError&>;
+  using WebSetNavigationPreloadHeaderCallbacks =
+      WebCallbacks<void, const WebServiceWorkerError&>;
 
-    // The handle interface that retains a reference to the implementation of
-    // WebServiceWorkerRegistration in the embedder and is owned by
-    // ServiceWorkerRegistration object in Blink. The embedder must keep the
-    // registration representation while Blink is owning this handle.
-    class Handle {
-    public:
-        virtual ~Handle() { }
-        virtual WebServiceWorkerRegistration* registration() { return nullptr; }
-    };
+  // The handle interface that retains a reference to the implementation of
+  // WebServiceWorkerRegistration in the embedder and is owned by
+  // ServiceWorkerRegistration object in Blink. The embedder must keep the
+  // registration representation while Blink is owning this handle.
+  class Handle {
+   public:
+    virtual ~Handle() {}
+    virtual WebServiceWorkerRegistration* Registration() { return nullptr; }
+  };
 
-    virtual void setProxy(WebServiceWorkerRegistrationProxy*) { }
-    virtual WebServiceWorkerRegistrationProxy* proxy() { return nullptr; }
-    virtual void proxyStopped() { }
+  virtual void SetProxy(WebServiceWorkerRegistrationProxy*) {}
+  virtual WebServiceWorkerRegistrationProxy* Proxy() { return nullptr; }
+  virtual void ProxyStopped() {}
 
-    virtual WebURL scope() const { return WebURL(); }
-    virtual void update(WebServiceWorkerProvider*, WebServiceWorkerUpdateCallbacks*) { }
-    virtual void unregister(WebServiceWorkerProvider*, WebServiceWorkerUnregistrationCallbacks*) { }
+  virtual WebURL Scope() const { return WebURL(); }
+  virtual int64_t RegistrationId() const = 0;
+  virtual void Update(WebServiceWorkerProvider*,
+                      std::unique_ptr<WebServiceWorkerUpdateCallbacks>) {}
+  virtual void Unregister(
+      WebServiceWorkerProvider*,
+      std::unique_ptr<WebServiceWorkerUnregistrationCallbacks>) {}
+
+  virtual void EnableNavigationPreload(
+      bool enable,
+      WebServiceWorkerProvider*,
+      std::unique_ptr<WebEnableNavigationPreloadCallbacks>) {}
+  virtual void GetNavigationPreloadState(
+      WebServiceWorkerProvider*,
+      std::unique_ptr<WebGetNavigationPreloadStateCallbacks>) {}
+  virtual void SetNavigationPreloadHeader(
+      const WebString& value,
+      WebServiceWorkerProvider*,
+      std::unique_ptr<WebSetNavigationPreloadHeaderCallbacks>) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebServiceWorkerRegistration_h
+#endif  // WebServiceWorkerRegistration_h

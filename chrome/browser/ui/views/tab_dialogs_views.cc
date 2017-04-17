@@ -40,8 +40,9 @@ void TabDialogsViews::ShowCollectedCookies() {
   new CollectedCookiesViews(web_contents_);
 }
 
-void TabDialogsViews::ShowHungRendererDialog() {
-  HungRendererDialogView::Show(web_contents_);
+void TabDialogsViews::ShowHungRendererDialog(
+    const content::WebContentsUnresponsiveState& unresponsive_state) {
+  HungRendererDialogView::Show(web_contents_, unresponsive_state);
 }
 
 void TabDialogsViews::HideHungRendererDialog() {
@@ -52,10 +53,10 @@ void TabDialogsViews::ShowProfileSigninConfirmation(
     Browser* browser,
     Profile* profile,
     const std::string& username,
-    ui::ProfileSigninConfirmationDelegate* delegate) {
+    std::unique_ptr<ui::ProfileSigninConfirmationDelegate> delegate) {
 #if !defined(OS_CHROMEOS)
-  ProfileSigninConfirmationDialogViews::ShowDialog(
-      browser, profile, username, delegate);
+  ProfileSigninConfirmationDialogViews::ShowDialog(browser, profile, username,
+                                                   std::move(delegate));
 #else
   NOTREACHED();
 #endif

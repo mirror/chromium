@@ -33,6 +33,10 @@ class CONTENT_EXPORT PlatformNotificationService {
  public:
   virtual ~PlatformNotificationService() {}
 
+  using DisplayedNotificationsCallback =
+      base::Callback<void(std::unique_ptr<std::set<std::string>>,
+                          bool /* supports synchronization */)>;
+
   // Checks if |origin| has permission to display Web Notifications.
   // This method must only be called on the UI thread.
   virtual blink::mojom::PermissionStatus CheckPermissionOnUIThread(
@@ -55,6 +59,7 @@ class CONTENT_EXPORT PlatformNotificationService {
   // |cancel_callback| argument. This method must be called on the UI thread.
   virtual void DisplayNotification(
       BrowserContext* browser_context,
+      const std::string& notification_id,
       const GURL& origin,
       const PlatformNotificationData& notification_data,
       const NotificationResources& notification_resources,
@@ -65,7 +70,7 @@ class CONTENT_EXPORT PlatformNotificationService {
   // the user. This method must be called on the UI thread.
   virtual void DisplayPersistentNotification(
       BrowserContext* browser_context,
-      int64_t persistent_notification_id,
+      const std::string& notification_id,
       const GURL& service_worker_origin,
       const GURL& origin,
       const PlatformNotificationData& notification_data,
@@ -75,14 +80,13 @@ class CONTENT_EXPORT PlatformNotificationService {
   // |persistent_notification_id|. This method must be called on the UI thread.
   virtual void ClosePersistentNotification(
       BrowserContext* browser_context,
-      int64_t persistent_notification_id) = 0;
+      const std::string& notification_id) = 0;
 
-  // Writes the ids of all currently displaying persistent notifications for the
-  // given |browser_context| to |displayed_notifications|. Returns whether the
-  // platform is able to provide such a set.
-  virtual bool GetDisplayedPersistentNotifications(
+  // Retrieves the ids of all currently displaying notifications and
+  // posts |callback| with the result.
+  virtual void GetDisplayedNotifications(
       BrowserContext* browser_context,
-      std::set<std::string>* displayed_notifications) = 0;
+      const DisplayedNotificationsCallback& callback) = 0;
 };
 
 }  // namespace content

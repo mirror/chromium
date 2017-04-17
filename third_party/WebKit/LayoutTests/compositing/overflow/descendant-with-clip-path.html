@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<script src="resources/composited-scroll.js"></script>
 <style>
 #scroller {
     overflow: scroll;
@@ -28,18 +29,6 @@
     </div>
 </div>
 <script>
-function isUsingCompositedScrolling(layer) {
-    if (layer.bounds[1] == 1000)
-        return true;
-    if (layer.children) {
-        for (var i = 0; i < layer.children.length; i++) {
-            if (isUsingCompositedScrolling(layer.children[i]))
-                return true;
-        }
-    }
-    return false;
-}
-
 if (window.internals)
     window.internals.settings.setPreferCompositingToLCDTextEnabled(true);
 

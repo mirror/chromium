@@ -6,7 +6,9 @@
 #define COMPONENTS_AUTOFILL_CORE_BROWSER_TEST_AUTOFILL_CLIENT_H_
 
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/i18n/rtl.h"
@@ -14,6 +16,7 @@
 #include "components/autofill/core/browser/autofill_client.h"
 #include "components/prefs/pref_service.h"
 #include "components/rappor/test_rappor_service.h"
+#include "components/ukm/test_ukm_service.h"
 #include "google_apis/gaia/fake_identity_provider.h"
 #include "google_apis/gaia/fake_oauth2_token_service.h"
 
@@ -29,9 +32,11 @@ class TestAutofillClient : public AutofillClient {
   PersonalDataManager* GetPersonalDataManager() override;
   scoped_refptr<AutofillWebDataService> GetDatabase() override;
   PrefService* GetPrefs() override;
-  sync_driver::SyncService* GetSyncService() override;
+  syncer::SyncService* GetSyncService() override;
   IdentityProvider* GetIdentityProvider() override;
-  rappor::RapporService* GetRapporService() override;
+  rappor::RapporServiceImpl* GetRapporServiceImpl() override;
+  ukm::UkmService* GetUkmService() override;
+  SaveCardBubbleController* GetSaveCardBubbleController() override;
   void ShowAutofillSettings() override;
   void ShowUnmaskPrompt(const CreditCard& card,
                         UnmaskCardReason reason,
@@ -42,7 +47,10 @@ class TestAutofillClient : public AutofillClient {
   void ConfirmSaveCreditCardToCloud(
       const CreditCard& card,
       std::unique_ptr<base::DictionaryValue> legal_message,
+      bool should_cvc_be_requested,
       const base::Closure& callback) override;
+  void ConfirmCreditCardFillAssist(const CreditCard& card,
+                                   const base::Closure& callback) override;
   void LoadRiskData(
       const base::Callback<void(const std::string&)>& callback) override;
   bool HasCreditCardScanFeature() override;
@@ -62,21 +70,26 @@ class TestAutofillClient : public AutofillClient {
       const std::vector<autofill::FormStructure*>& forms) override;
   void DidFillOrPreviewField(const base::string16& autofilled_value,
                              const base::string16& profile_full_name) override;
-  void OnFirstUserGestureObserved() override;
-  bool IsContextSecure(const GURL& form_origin) override;
+  // By default, TestAutofillClient will report that the context is
+  // secure. This can be adjusted by calling set_form_origin() with an
+  // http:// URL.
+  bool IsContextSecure() override;
   bool ShouldShowSigninPromo() override;
   void StartSigninFlow() override;
-
-  void set_is_context_secure(bool is_context_secure) {
-    is_context_secure_ = is_context_secure;
-  };
+  void ShowHttpNotSecureExplanation() override;
 
   void SetPrefs(std::unique_ptr<PrefService> prefs) {
     prefs_ = std::move(prefs);
   }
 
-  rappor::TestRapporService* test_rappor_service() {
+  rappor::TestRapporServiceImpl* test_rappor_service() {
     return rappor_service_.get();
+  }
+
+  void set_form_origin(const GURL& url) { form_origin_ = url; }
+
+  ukm::TestUkmService* GetTestUkmService() {
+    return ukm_service_test_harness_.test_ukm_service();
   }
 
  private:
@@ -84,9 +97,12 @@ class TestAutofillClient : public AutofillClient {
   std::unique_ptr<PrefService> prefs_;
   std::unique_ptr<FakeOAuth2TokenService> token_service_;
   std::unique_ptr<FakeIdentityProvider> identity_provider_;
-  std::unique_ptr<rappor::TestRapporService> rappor_service_;
-
-  bool is_context_secure_;
+  std::unique_ptr<rappor::TestRapporServiceImpl> rappor_service_;
+  ukm::UkmServiceTestingHarness ukm_service_test_harness_;
+#if !defined(OS_ANDROID)
+  std::unique_ptr<SaveCardBubbleController> save_card_bubble_controller_;
+#endif
+  GURL form_origin_;
 
   DISALLOW_COPY_AND_ASSIGN(TestAutofillClient);
 };

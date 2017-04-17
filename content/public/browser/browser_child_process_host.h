@@ -6,6 +6,7 @@
 #define CONTENT_PUBLIC_BROWSER_BROWSER_CHILD_PROCESS_HOST_H_
 
 #include "base/environment.h"
+#include "base/memory/shared_memory.h"
 #include "base/process/kill.h"
 #include "base/process/process_handle.h"
 #include "base/strings/string16.h"
@@ -20,12 +21,7 @@
 
 namespace base {
 class CommandLine;
-class FilePath;
-}
-
-namespace shell {
-class InterfaceProvider;
-class InterfaceRegistry;
+class SharedPersistentMemoryAllocator;
 }
 
 namespace content {
@@ -46,13 +42,13 @@ class CONTENT_EXPORT BrowserChildProcessHost : public IPC::Sender {
       content::ProcessType process_type,
       BrowserChildProcessHostDelegate* delegate);
 
-  // Used to create a child process host, with a unique token to identify the
-  // child process to Mojo. |mojo_child_token| should be a unique string
-  // generated using mojo::edk::GenerateRandomToken().
+  // Used to create a child process host, connecting the process to the
+  // Service Manager as a new service instance identified by |service_name| and
+  // (optional) |instance_id|.
   static BrowserChildProcessHost* Create(
       content::ProcessType process_type,
       BrowserChildProcessHostDelegate* delegate,
-      const std::string& mojo_child_token);
+      const std::string& service_name);
 
   // Returns the child process host with unique id |child_process_id|, or
   // nullptr if it doesn't exist. |child_process_id| is NOT the process ID, but
@@ -62,10 +58,9 @@ class CONTENT_EXPORT BrowserChildProcessHost : public IPC::Sender {
   ~BrowserChildProcessHost() override {}
 
   // Derived classes call this to launch the child process asynchronously.
-  // Takes ownership of |cmd_line| and |delegate|.
   virtual void Launch(
-      SandboxedProcessLauncherDelegate* delegate,
-      base::CommandLine* cmd_line,
+      std::unique_ptr<SandboxedProcessLauncherDelegate> delegate,
+      std::unique_ptr<base::CommandLine> cmd_line,
       bool terminate_on_shutdown) = 0;
 
   virtual const ChildProcessData& GetData() const = 0;
@@ -83,6 +78,10 @@ class CONTENT_EXPORT BrowserChildProcessHost : public IPC::Sender {
   virtual base::TerminationStatus GetTerminationStatus(
       bool known_dead, int* exit_code) = 0;
 
+  // Take ownership of a "shared" metrics allocator (if one exists).
+  virtual std::unique_ptr<base::SharedPersistentMemoryAllocator>
+  TakeMetricsAllocator() = 0;
+
   // Sets the user-visible name of the process.
   virtual void SetName(const base::string16& name) = 0;
 
@@ -93,13 +92,8 @@ class CONTENT_EXPORT BrowserChildProcessHost : public IPC::Sender {
   // this object.
   virtual void SetHandle(base::ProcessHandle handle) = 0;
 
-  // Returns the shell::InterfaceRegistry the browser process uses to expose
-  // interfaces to the child.
-  virtual shell::InterfaceRegistry* GetInterfaceRegistry() = 0;
-
-  // Returns the shell::InterfaceProvider the browser process can use to bind
-  // interfaces exposed to it from the child.
-  virtual shell::InterfaceProvider* GetRemoteInterfaces() = 0;
+  // Returns the child message pipe token for the service request.
+  virtual std::string GetServiceRequestChannelToken() = 0;
 
 #if defined(OS_MACOSX)
   // Returns a PortProvider used to get the task port for child processes.

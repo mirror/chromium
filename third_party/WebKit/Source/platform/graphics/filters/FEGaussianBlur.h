@@ -28,25 +28,26 @@
 namespace blink {
 
 class PLATFORM_EXPORT FEGaussianBlur final : public FilterEffect {
-public:
-    static FEGaussianBlur* create(Filter*, float, float);
+ public:
+  static FEGaussianBlur* Create(Filter*, float, float);
 
-    FloatRect mapRect(const FloatRect&, bool forward = true) const final;
-    FloatRect determineAbsolutePaintRect(const FloatRect& requestedRect) override;
-    static IntSize calculateKernelSize(const Filter*, const FloatPoint& std);
-    static IntSize calculateUnscaledKernelSize(const FloatPoint& std);
+  // Compute which destination area will be affected when applying a gaussian
+  // blur effect with |stdDeviation| to an area |rect|.
+  static FloatRect MapEffect(const FloatSize& std_deviation, const FloatRect&);
 
-    TextStream& externalRepresentation(TextStream&, int indention) const override;
+  TextStream& ExternalRepresentation(TextStream&, int indention) const override;
 
-private:
-    FEGaussianBlur(Filter*, float, float);
+ private:
+  FEGaussianBlur(Filter*, float, float);
 
-    sk_sp<SkImageFilter> createImageFilter() override;
+  FloatRect MapEffect(const FloatRect&) const override;
 
-    float m_stdX;
-    float m_stdY;
+  sk_sp<SkImageFilter> CreateImageFilter() override;
+
+  float std_x_;
+  float std_y_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FEGaussianBlur_h
+#endif  // FEGaussianBlur_h

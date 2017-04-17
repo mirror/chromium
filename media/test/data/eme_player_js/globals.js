@@ -20,7 +20,7 @@ var DEFAULT_MEDIA_FILE = 'http://shadi.kir/alcatraz/Chrome_44-enc_av.webm';
 var KEY_ID = '0123456789012345';
 
 // Unique strings to identify test result expectations.
-var FILE_IO_TEST_SUCCESS = 'FILE_IO_TEST_SUCCESS';
+var UNIT_TEST_SUCCESS = 'UNIT_TEST_SUCCESS';
 var NOTSUPPORTEDERROR = 'NOTSUPPORTEDERROR';
 var EME_GENERATEREQUEST_FAILED = 'EME_GENERATEREQUEST_FAILED';
 var EME_SESSION_NOT_FOUND = 'EME_SESSION_NOT_FOUND';
@@ -29,15 +29,24 @@ var EME_UPDATE_FAILED = 'EME_UPDATE_FAILED';
 var EME_ERROR_EVENT = 'EME_ERROR_EVENT';
 var EME_MESSAGE_UNEXPECTED_TYPE = 'EME_MESSAGE_UNEXPECTED_TYPE';
 var EME_RENEWAL_MISSING_HEADER = 'EME_RENEWAL_MISSING_HEADER';
+var EME_SESSION_CLOSED_AND_ERROR = 'EME_SESSION_CLOSED_AND_ERROR';
 
-// Headers used when testing file I/O.
-var FILE_IO_TEST_RESULT_HEADER = 'FILEIOTESTRESULT';
+// Headers used when running some specific unittests in the external CDM.
+var UNIT_TEST_RESULT_HEADER = 'UNIT_TEST_RESULT';
 
 // Available EME key systems to use.
+var WIDEVINE_KEYSYSTEM = 'com.widevine.alpha';
 var CLEARKEY = 'org.w3.clearkey';
 var EXTERNAL_CLEARKEY = 'org.chromium.externalclearkey';
-var WIDEVINE_KEYSYSTEM = 'com.widevine.alpha';
+var EXTERNAL_CLEARKEY_RENEWAL = 'org.chromium.externalclearkey.renewal';
 var FILE_IO_TEST_KEYSYSTEM = 'org.chromium.externalclearkey.fileiotest';
+var OUTPUT_PROTECTION_TEST_KEYSYSTEM =
+    'org.chromium.externalclearkey.outputprotectiontest';
+var PLATFORM_VERIFICATION_TEST_KEYSYSTEM =
+    'org.chromium.externalclearkey.platformverificationtest';
+var CRASH_TEST_KEYSYSTEM = 'org.chromium.externalclearkey.crash';
+var VERIFY_HOST_FILES_TEST_KEYSYSTEM =
+    'org.chromium.externalclearkey.verifycdmhosttest';
 
 // Key system name:value map to show on the document page.
 var KEY_SYSTEMS = {
@@ -46,12 +55,19 @@ var KEY_SYSTEMS = {
   'External Clearkey': EXTERNAL_CLEARKEY
 };
 
+var CONFIG_CHANGE_TYPE = {
+  CLEAR_TO_CLEAR : '0',
+  CLEAR_TO_ENCRYPTED : '1',
+  ENCRYPTED_TO_CLEAR : '2',
+  ENCRYPTED_TO_ENCRYPTED : '3'
+};
+
 // General WebM and MP4 name:content_type map to show on the document page.
 var MEDIA_TYPES = {
   'WebM - Audio Video': 'video/webm; codecs="vorbis, vp8"',
   'WebM - Video Only': 'video/webm; codecs="vp8"',
   'WebM - Audio Only': 'video/webm; codecs="vorbis"',
-  'MP4 - Video Only': 'video/mp4; codecs="avc1.4D4041"',
+  'MP4 - Video Only': 'video/mp4; codecs="avc1.4D000C"',
   'MP4 - Audio Only': 'audio/mp4; codecs="mp4a.40.2"'
 };
 

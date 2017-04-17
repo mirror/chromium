@@ -13,11 +13,10 @@
 #include "mojo/public/c/system/data_pipe.h"
 #include "mojo/public/c/system/functions.h"
 #include "mojo/public/c/system/macros.h"
-#include "mojo/public/c/system/main.h"
 #include "mojo/public/c/system/message_pipe.h"
 #include "mojo/public/c/system/platform_handle.h"
 #include "mojo/public/c/system/system_export.h"
 #include "mojo/public/c/system/types.h"
-#include "mojo/public/c/system/wait_set.h"
+#include "mojo/public/c/system/watcher.h"
 
 #endif  // MOJO_PUBLIC_C_SYSTEM_CORE_H_

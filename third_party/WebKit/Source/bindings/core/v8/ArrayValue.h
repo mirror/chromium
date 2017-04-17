@@ -26,45 +26,37 @@
 #ifndef ArrayValue_h
 #define ArrayValue_h
 
-#include "bindings/core/v8/ExceptionState.h"
 #include "core/CoreExport.h"
-#include "wtf/Assertions.h"
-#include <v8.h>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Assertions.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
 class Dictionary;
 
-class CORE_EXPORT ArrayValue {
-public:
-    ArrayValue() : m_isolate(0) { }
-    explicit ArrayValue(const v8::Local<v8::Array>& array, v8::Isolate* isolate)
-        : m_array(array)
-        , m_isolate(isolate)
-    {
-        ASSERT(m_isolate);
-    }
-    ~ArrayValue() { }
+class CORE_EXPORT ArrayValue final {
+  STACK_ALLOCATED();
 
-    ArrayValue& operator=(const ArrayValue&);
+ public:
+  ArrayValue() : isolate_(nullptr) {}
+  ArrayValue(const v8::Local<v8::Array>& array, v8::Isolate* isolate)
+      : array_(array), isolate_(isolate) {
+    DCHECK(isolate_);
+  }
 
-    bool isUndefinedOrNull() const;
+  ArrayValue& operator=(const ArrayValue&);
 
-    bool length(size_t&) const;
-    bool get(size_t index, Dictionary&) const;
+  bool IsUndefinedOrNull() const;
 
-private:
-    // This object can only be used safely when stack allocated because of v8::Local.
-    static void* operator new(size_t);
-    static void* operator new[](size_t);
-    static void operator delete(void *);
+  bool length(size_t&) const;
+  bool Get(size_t index, Dictionary&) const;
 
-    v8::Local<v8::Array> m_array;
-    v8::Isolate* m_isolate;
-    // FIXME: ArrayValue constructor should take an exception state.
-    mutable NonThrowableExceptionState m_exceptionState;
+ private:
+  v8::Local<v8::Array> array_;
+  v8::Isolate* isolate_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ArrayValue_h
+#endif  // ArrayValue_h

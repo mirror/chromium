@@ -37,25 +37,33 @@
 
 namespace blink {
 
-// SVG Spec: http://www.w3.org/TR/SVG11/types.html#InterfaceSVGAnimatedLengthList
-class SVGAnimatedLengthList final : public SVGAnimatedProperty<SVGLengthList>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SVGAnimatedLengthList* create(SVGElement* contextElement, const QualifiedName& attributeName, SVGLengthList* initialValue)
-    {
-        return new SVGAnimatedLengthList(contextElement, attributeName, initialValue);
-    }
+// SVG Spec:
+// http://www.w3.org/TR/SVG11/types.html#InterfaceSVGAnimatedLengthList
+class SVGAnimatedLengthList final : public SVGAnimatedProperty<SVGLengthList>,
+                                    public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS()
-    {
-        visitor->traceWrappers(contextElement());
-    }
+ public:
+  static SVGAnimatedLengthList* Create(SVGElement* context_element,
+                                       const QualifiedName& attribute_name,
+                                       SVGLengthList* initial_value) {
+    return new SVGAnimatedLengthList(context_element, attribute_name,
+                                     initial_value);
+  }
 
-protected:
-    SVGAnimatedLengthList(SVGElement* contextElement, const QualifiedName& attributeName, SVGLengthList* initialValue)
-        : SVGAnimatedProperty<SVGLengthList>(contextElement, attributeName, initialValue) { }
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
+    visitor->TraceWrappers(contextElement());
+  }
+
+ protected:
+  SVGAnimatedLengthList(SVGElement* context_element,
+                        const QualifiedName& attribute_name,
+                        SVGLengthList* initial_value)
+      : SVGAnimatedProperty<SVGLengthList>(context_element,
+                                           attribute_name,
+                                           initial_value) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

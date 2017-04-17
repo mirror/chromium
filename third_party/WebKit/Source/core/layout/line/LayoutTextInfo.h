@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2000 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All right reserved.
+ * Copyright (C) 2003, 2004, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ *               All right reserved.
  * Copyright (C) 2010 Google Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -24,26 +25,21 @@
 #define LayoutTextInfo_h
 
 #include "platform/text/TextBreakIterator.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class Font;
-class LayoutText;
 
 struct LayoutTextInfo {
-    STACK_ALLOCATED();
-    LayoutTextInfo()
-        : m_text(nullptr)
-        , m_font(nullptr)
-    {
-    }
+  STACK_ALLOCATED();
+  LayoutTextInfo() : text_(nullptr), font_(nullptr) {}
 
-    LineLayoutText m_text;
-    LazyLineBreakIterator m_lineBreakIterator;
-    const Font* m_font;
+  LineLayoutText text_;
+  LazyLineBreakIterator line_break_iterator_;
+  const Font* font_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutTextInfo_h
+#endif  // LayoutTextInfo_h

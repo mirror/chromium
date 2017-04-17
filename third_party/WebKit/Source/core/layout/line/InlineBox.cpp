@@ -27,7 +27,7 @@
 #include "core/paint/BlockPainter.h"
 #include "core/paint/PaintInfo.h"
 #include "platform/fonts/FontMetrics.h"
-#include "wtf/allocator/Partitions.h"
+#include "platform/wtf/allocator/Partitions.h"
 
 #ifndef NDEBUG
 #include <stdio.h>
@@ -38,391 +38,362 @@ namespace blink {
 class LayoutObject;
 
 struct SameSizeAsInlineBox : DisplayItemClient {
-    virtual ~SameSizeAsInlineBox() { }
-    uint32_t bitfields;
-    void* a[4];
-    LayoutPoint b;
-    LayoutUnit c;
-#if ENABLE(ASSERT)
-    bool f;
+  virtual ~SameSizeAsInlineBox() {}
+  uint32_t bitfields;
+  void* a[4];
+  LayoutPoint b;
+  LayoutUnit c;
+#if DCHECK_IS_ON()
+  bool f;
 #endif
 };
 
-static_assert(sizeof(InlineBox) == sizeof(SameSizeAsInlineBox), "InlineBox should stay small");
+static_assert(sizeof(InlineBox) == sizeof(SameSizeAsInlineBox),
+              "InlineBox should stay small");
 
-#if ENABLE(ASSERT)
-
-InlineBox::~InlineBox()
-{
-    if (!m_hasBadParent && m_parent)
-        m_parent->setHasBadChildList();
+#if DCHECK_IS_ON()
+InlineBox::~InlineBox() {
+  if (!has_bad_parent_ && parent_)
+    parent_->SetHasBadChildList();
 }
-
 #endif
 
-void InlineBox::destroy()
-{
-    // We do not need to issue invalidations if the page is being destroyed
-    // since these objects will never be repainted.
-    if (!m_lineLayoutItem.documentBeingDestroyed()) {
-        setLineLayoutItemShouldDoFullPaintInvalidationIfNeeded();
+DISABLE_CFI_PERF
+void InlineBox::Destroy() {
+  // We do not need to issue invalidations if the page is being destroyed
+  // since these objects will never be repainted.
+  if (!line_layout_item_.DocumentBeingDestroyed()) {
+    SetLineLayoutItemShouldDoFullPaintInvalidationIfNeeded();
 
-        // TODO(crbug.com/619630): Make this fast.
-        m_lineLayoutItem.slowSetPaintingLayerNeedsRepaint();
-    }
+    // TODO(crbug.com/619630): Make this fast.
+    line_layout_item_.SlowSetPaintingLayerNeedsRepaint();
+  }
 
-    delete this;
+  delete this;
 }
 
-void InlineBox::remove(MarkLineBoxes markLineBoxes)
-{
-    if (parent())
-        parent()->removeChild(this, markLineBoxes);
+void InlineBox::Remove(MarkLineBoxes mark_line_boxes) {
+  if (Parent())
+    Parent()->RemoveChild(this, mark_line_boxes);
 }
 
-void* InlineBox::operator new(size_t sz)
-{
-    return partitionAlloc(WTF::Partitions::layoutPartition(), sz, WTF_HEAP_PROFILER_TYPE_NAME(InlineBox));
+void* InlineBox::operator new(size_t sz) {
+  return PartitionAlloc(WTF::Partitions::LayoutPartition(), sz,
+                        WTF_HEAP_PROFILER_TYPE_NAME(InlineBox));
 }
 
-void InlineBox::operator delete(void* ptr)
-{
-    partitionFree(ptr);
+void InlineBox::operator delete(void* ptr) {
+  WTF::PartitionFree(ptr);
 }
 
-const char* InlineBox::boxName() const
-{
-    return "InlineBox";
+const char* InlineBox::BoxName() const {
+  return "InlineBox";
 }
 
-String InlineBox::debugName() const
-{
-    return boxName();
+String InlineBox::DebugName() const {
+  return BoxName();
 }
 
-LayoutRect InlineBox::visualRect() const
-{
-    // TODO(chrishtr): tighten these bounds.
-    return getLineLayoutItem().visualRect();
+LayoutRect InlineBox::VisualRect() const {
+  // TODO(chrishtr): tighten these bounds.
+  return GetLineLayoutItem().VisualRect();
 }
 
 #ifndef NDEBUG
-void InlineBox::showTreeForThis() const
-{
-    getLineLayoutItem().showTreeForThis();
+void InlineBox::ShowTreeForThis() const {
+  GetLineLayoutItem().ShowTreeForThis();
 }
 
-void InlineBox::showLineTreeForThis() const
-{
-    getLineLayoutItem().containingBlock().showLineTreeAndMark(this, "*");
+void InlineBox::ShowLineTreeForThis() const {
+  GetLineLayoutItem().ContainingBlock().ShowLineTreeAndMark(this, "*");
 }
 
-void InlineBox::showLineTreeAndMark(const InlineBox* markedBox1, const char* markedLabel1, const InlineBox* markedBox2, const char* markedLabel2, const LayoutObject* obj, int depth) const
-{
-    int printedCharacters = 0;
-    if (this == markedBox1)
-        printedCharacters += fprintf(stderr, "%s", markedLabel1);
-    if (this == markedBox2)
-        printedCharacters += fprintf(stderr, "%s", markedLabel2);
-    if (getLineLayoutItem().isEqual(obj))
-        printedCharacters += fprintf(stderr, "*");
-    for (; printedCharacters < depth * 2; printedCharacters++)
-        fputc(' ', stderr);
+void InlineBox::ShowLineTreeAndMark(const InlineBox* marked_box1,
+                                    const char* marked_label1,
+                                    const InlineBox* marked_box2,
+                                    const char* marked_label2,
+                                    const LayoutObject* obj,
+                                    int depth) const {
+  int printed_characters = 0;
+  if (this == marked_box1)
+    printed_characters += fprintf(stderr, "%s", marked_label1);
+  if (this == marked_box2)
+    printed_characters += fprintf(stderr, "%s", marked_label2);
+  if (GetLineLayoutItem().IsEqual(obj))
+    printed_characters += fprintf(stderr, "*");
+  for (; printed_characters < depth * 2; printed_characters++)
+    fputc(' ', stderr);
 
-    showBox(printedCharacters);
+  ShowBox(printed_characters);
 }
 
-void InlineBox::showBox(int printedCharacters) const
-{
-    printedCharacters += fprintf(stderr, "%s %p", boxName(), this);
-    for (; printedCharacters < showTreeCharacterOffset; printedCharacters++)
-        fputc(' ', stderr);
-    fprintf(stderr, "\t%s %p {pos=%g,%g size=%g,%g} baseline=%i/%i\n",
-        getLineLayoutItem().decoratedName().ascii().data(), getLineLayoutItem().debugPointer(),
-        x().toFloat(), y().toFloat(), width().toFloat(), height().toFloat(),
-        baselinePosition(AlphabeticBaseline), baselinePosition(IdeographicBaseline));
+void InlineBox::ShowBox(int printed_characters) const {
+  printed_characters += fprintf(stderr, "%s %p", BoxName(), this);
+  for (; printed_characters < kShowTreeCharacterOffset; printed_characters++)
+    fputc(' ', stderr);
+  fprintf(stderr, "\t%s %p {pos=%g,%g size=%g,%g} baseline=%i/%i\n",
+          GetLineLayoutItem().DecoratedName().Ascii().Data(),
+          GetLineLayoutItem().DebugPointer(), X().ToFloat(), Y().ToFloat(),
+          Width().ToFloat(), Height().ToFloat(),
+          BaselinePosition(kAlphabeticBaseline),
+          BaselinePosition(kIdeographicBaseline));
 }
 #endif
 
-LayoutUnit InlineBox::logicalHeight() const
-{
-    if (hasVirtualLogicalHeight())
-        return virtualLogicalHeight();
+LayoutUnit InlineBox::LogicalHeight() const {
+  if (HasVirtualLogicalHeight())
+    return VirtualLogicalHeight();
 
-    if (getLineLayoutItem().isText())
-        return m_bitfields.isText() ? LayoutUnit(getLineLayoutItem().style(isFirstLineStyle())->getFontMetrics().height()) : LayoutUnit();
-    if (getLineLayoutItem().isBox() && parent())
-        return isHorizontal() ? LineLayoutBox(getLineLayoutItem()).size().height() : LineLayoutBox(getLineLayoutItem()).size().width();
+  const SimpleFontData* font_data =
+      GetLineLayoutItem().Style(IsFirstLineStyle())->GetFont().PrimaryFont();
+  if (GetLineLayoutItem().IsText()) {
+    DCHECK(font_data);
+    return bitfields_.IsText() && font_data
+               ? LayoutUnit(font_data->GetFontMetrics().Height())
+               : LayoutUnit();
+  }
+  if (GetLineLayoutItem().IsBox() && Parent()) {
+    return IsHorizontal() ? LineLayoutBox(GetLineLayoutItem()).Size().Height()
+                          : LineLayoutBox(GetLineLayoutItem()).Size().Width();
+  }
 
-    ASSERT(isInlineFlowBox());
-    LineLayoutBoxModel flowObject = boxModelObject();
-    const FontMetrics& fontMetrics = getLineLayoutItem().style(isFirstLineStyle())->getFontMetrics();
-    LayoutUnit result(fontMetrics.height());
-    if (parent())
-        result += flowObject.borderAndPaddingLogicalHeight();
-    return result;
+  DCHECK(IsInlineFlowBox());
+  LineLayoutBoxModel flow_object = BoxModelObject();
+  DCHECK(font_data);
+  LayoutUnit result(font_data ? font_data->GetFontMetrics().Height() : 0);
+  if (Parent())
+    result += flow_object.BorderAndPaddingLogicalHeight();
+  return result;
 }
 
-int InlineBox::baselinePosition(FontBaseline baselineType) const
-{
-    return boxModelObject().baselinePosition(baselineType, m_bitfields.firstLine(), isHorizontal() ? HorizontalLine : VerticalLine, PositionOnContainingLine);
+int InlineBox::BaselinePosition(FontBaseline baseline_type) const {
+  return BoxModelObject().BaselinePosition(
+      baseline_type, bitfields_.FirstLine(),
+      IsHorizontal() ? kHorizontalLine : kVerticalLine,
+      kPositionOnContainingLine);
 }
 
-LayoutUnit InlineBox::lineHeight() const
-{
-    return boxModelObject().lineHeight(m_bitfields.firstLine(), isHorizontal() ? HorizontalLine : VerticalLine, PositionOnContainingLine);
+LayoutUnit InlineBox::LineHeight() const {
+  return BoxModelObject().LineHeight(
+      bitfields_.FirstLine(), IsHorizontal() ? kHorizontalLine : kVerticalLine,
+      kPositionOnContainingLine);
 }
 
-int InlineBox::caretMinOffset() const
-{
-    return getLineLayoutItem().caretMinOffset();
+int InlineBox::CaretMinOffset() const {
+  return GetLineLayoutItem().CaretMinOffset();
 }
 
-int InlineBox::caretMaxOffset() const
-{
-    return getLineLayoutItem().caretMaxOffset();
+int InlineBox::CaretMaxOffset() const {
+  return GetLineLayoutItem().CaretMaxOffset();
 }
 
-void InlineBox::dirtyLineBoxes()
-{
-    markDirty();
-    for (InlineFlowBox* curr = parent(); curr && !curr->isDirty(); curr = curr->parent())
-        curr->markDirty();
+void InlineBox::DirtyLineBoxes() {
+  MarkDirty();
+  for (InlineFlowBox* curr = Parent(); curr && !curr->IsDirty();
+       curr = curr->Parent())
+    curr->MarkDirty();
 }
 
-void InlineBox::deleteLine()
-{
-    if (!m_bitfields.extracted() && getLineLayoutItem().isBox())
-        LineLayoutBox(getLineLayoutItem()).setInlineBoxWrapper(nullptr);
-    destroy();
+void InlineBox::DeleteLine() {
+  if (!bitfields_.Extracted() && GetLineLayoutItem().IsBox())
+    LineLayoutBox(GetLineLayoutItem()).SetInlineBoxWrapper(nullptr);
+  Destroy();
 }
 
-void InlineBox::extractLine()
-{
-    m_bitfields.setExtracted(true);
-    if (getLineLayoutItem().isBox())
-        LineLayoutBox(getLineLayoutItem()).setInlineBoxWrapper(nullptr);
+void InlineBox::ExtractLine() {
+  bitfields_.SetExtracted(true);
+  if (GetLineLayoutItem().IsBox())
+    LineLayoutBox(GetLineLayoutItem()).SetInlineBoxWrapper(nullptr);
 }
 
-void InlineBox::attachLine()
-{
-    m_bitfields.setExtracted(false);
-    if (getLineLayoutItem().isBox())
-        LineLayoutBox(getLineLayoutItem()).setInlineBoxWrapper(this);
+void InlineBox::AttachLine() {
+  bitfields_.SetExtracted(false);
+  if (GetLineLayoutItem().IsBox())
+    LineLayoutBox(GetLineLayoutItem()).SetInlineBoxWrapper(this);
 }
 
-void InlineBox::move(const LayoutSize& delta)
-{
-    m_topLeft.move(delta);
+void InlineBox::Move(const LayoutSize& delta) {
+  location_.Move(delta);
 
-    if (getLineLayoutItem().isAtomicInlineLevel())
-        LineLayoutBox(getLineLayoutItem()).move(delta.width(), delta.height());
+  if (GetLineLayoutItem().IsAtomicInlineLevel())
+    LineLayoutBox(GetLineLayoutItem()).Move(delta.Width(), delta.Height());
 
-    setLineLayoutItemShouldDoFullPaintInvalidationIfNeeded();
+  SetLineLayoutItemShouldDoFullPaintInvalidationIfNeeded();
 }
 
-void InlineBox::paint(const PaintInfo& paintInfo, const LayoutPoint& paintOffset, LayoutUnit /* lineTop */, LayoutUnit /* lineBottom */) const
-{
-    BlockPainter::paintInlineBox(*this, paintInfo, paintOffset);
+void InlineBox::Paint(const PaintInfo& paint_info,
+                      const LayoutPoint& paint_offset,
+                      LayoutUnit /* lineTop */,
+                      LayoutUnit /* lineBottom */) const {
+  BlockPainter::PaintInlineBox(*this, paint_info, paint_offset);
 }
 
-bool InlineBox::nodeAtPoint(HitTestResult& result, const HitTestLocation& locationInContainer, const LayoutPoint& accumulatedOffset, LayoutUnit /* lineTop */, LayoutUnit /* lineBottom */)
-{
-    // Hit test all phases of replaced elements atomically, as though the replaced element established its
-    // own stacking context.  (See Appendix E.2, section 6.4 on inline block/table elements in the CSS2.1
-    // specification.)
-    LayoutPoint childPoint = accumulatedOffset;
-    if (parent()->getLineLayoutItem().hasFlippedBlocksWritingMode()) // Faster than calling containingBlock().
-        childPoint = getLineLayoutItem().containingBlock().flipForWritingModeForChild(LineLayoutBox(getLineLayoutItem()), childPoint);
+bool InlineBox::NodeAtPoint(HitTestResult& result,
+                            const HitTestLocation& location_in_container,
+                            const LayoutPoint& accumulated_offset,
+                            LayoutUnit /* lineTop */,
+                            LayoutUnit /* lineBottom */) {
+  // Hit test all phases of replaced elements atomically, as though the replaced
+  // element established its own stacking context. (See Appendix E.2, section
+  // 6.4 on inline block/table elements in the CSS2.1 specification.)
+  LayoutPoint child_point = accumulated_offset;
+  // Faster than calling containingBlock().
+  if (Parent()->GetLineLayoutItem().HasFlippedBlocksWritingMode())
+    child_point =
+        GetLineLayoutItem().ContainingBlock().FlipForWritingModeForChild(
+            LineLayoutBox(GetLineLayoutItem()), child_point);
 
-    return getLineLayoutItem().hitTest(result, locationInContainer, childPoint);
+  return GetLineLayoutItem().HitTest(result, location_in_container,
+                                     child_point);
 }
 
-const RootInlineBox& InlineBox::root() const
-{
-    if (m_parent)
-        return m_parent->root();
-    ASSERT(isRootInlineBox());
-    return static_cast<const RootInlineBox&>(*this);
+const RootInlineBox& InlineBox::Root() const {
+  if (parent_)
+    return parent_->Root();
+  DCHECK(IsRootInlineBox());
+  return static_cast<const RootInlineBox&>(*this);
 }
 
-RootInlineBox& InlineBox::root()
-{
-    if (m_parent)
-        return m_parent->root();
-    ASSERT(isRootInlineBox());
-    return static_cast<RootInlineBox&>(*this);
+RootInlineBox& InlineBox::Root() {
+  if (parent_)
+    return parent_->Root();
+  DCHECK(IsRootInlineBox());
+  return static_cast<RootInlineBox&>(*this);
 }
 
-bool InlineBox::nextOnLineExists() const
-{
-    if (!m_bitfields.determinedIfNextOnLineExists()) {
-        m_bitfields.setDeterminedIfNextOnLineExists(true);
-
-        if (!parent())
-            m_bitfields.setNextOnLineExists(false);
-        else if (nextOnLine())
-            m_bitfields.setNextOnLineExists(true);
-        else
-            m_bitfields.setNextOnLineExists(parent()->nextOnLineExists());
-    }
-    return m_bitfields.nextOnLineExists();
+InlineBox* InlineBox::NextLeafChild() const {
+  InlineBox* leaf = nullptr;
+  for (InlineBox* box = NextOnLine(); box && !leaf; box = box->NextOnLine())
+    leaf = box->IsLeaf() ? box : ToInlineFlowBox(box)->FirstLeafChild();
+  if (!leaf && Parent())
+    leaf = Parent()->NextLeafChild();
+  return leaf;
 }
 
-InlineBox* InlineBox::nextLeafChild() const
-{
-    InlineBox* leaf = nullptr;
-    for (InlineBox* box = nextOnLine(); box && !leaf; box = box->nextOnLine())
-        leaf = box->isLeaf() ? box : toInlineFlowBox(box)->firstLeafChild();
-    if (!leaf && parent())
-        leaf = parent()->nextLeafChild();
-    return leaf;
+InlineBox* InlineBox::PrevLeafChild() const {
+  InlineBox* leaf = nullptr;
+  for (InlineBox* box = PrevOnLine(); box && !leaf; box = box->PrevOnLine())
+    leaf = box->IsLeaf() ? box : ToInlineFlowBox(box)->LastLeafChild();
+  if (!leaf && Parent())
+    leaf = Parent()->PrevLeafChild();
+  return leaf;
 }
 
-InlineBox* InlineBox::prevLeafChild() const
-{
-    InlineBox* leaf = nullptr;
-    for (InlineBox* box = prevOnLine(); box && !leaf; box = box->prevOnLine())
-        leaf = box->isLeaf() ? box : toInlineFlowBox(box)->lastLeafChild();
-    if (!leaf && parent())
-        leaf = parent()->prevLeafChild();
-    return leaf;
+InlineBox* InlineBox::NextLeafChildIgnoringLineBreak() const {
+  InlineBox* leaf = NextLeafChild();
+  return (leaf && leaf->IsLineBreak()) ? nullptr : leaf;
 }
 
-InlineBox* InlineBox::nextLeafChildIgnoringLineBreak() const
-{
-    InlineBox* leaf = nextLeafChild();
-    return (leaf && leaf->isLineBreak()) ? nullptr : leaf;
+InlineBox* InlineBox::PrevLeafChildIgnoringLineBreak() const {
+  InlineBox* leaf = PrevLeafChild();
+  return (leaf && leaf->IsLineBreak()) ? nullptr : leaf;
 }
 
-InlineBox* InlineBox::prevLeafChildIgnoringLineBreak() const
-{
-    InlineBox* leaf = prevLeafChild();
-    return (leaf && leaf->isLineBreak()) ? nullptr : leaf;
+SelectionState InlineBox::GetSelectionState() const {
+  return GetLineLayoutItem().GetSelectionState();
 }
 
-SelectionState InlineBox::getSelectionState() const
-{
-    return getLineLayoutItem().getSelectionState();
+bool InlineBox::CanAccommodateEllipsis(bool ltr,
+                                       LayoutUnit block_edge,
+                                       LayoutUnit ellipsis_width) const {
+  // Non-atomic inline-level elements can always accommodate an ellipsis.
+  // Skip list markers and try the next box.
+  if (!GetLineLayoutItem().IsAtomicInlineLevel() ||
+      GetLineLayoutItem().IsListMarker())
+    return true;
+
+  LayoutRect box_rect(X(), LayoutUnit(), logical_width_, LayoutUnit(10));
+  LayoutRect ellipsis_rect(ltr ? block_edge - ellipsis_width : block_edge,
+                           LayoutUnit(), ellipsis_width, LayoutUnit(10));
+  return !(box_rect.Intersects(ellipsis_rect));
 }
 
-bool InlineBox::canAccommodateEllipsis(bool ltr, int blockEdge, int ellipsisWidth) const
-{
-    // Non-atomic inline-level elements can always accommodate an ellipsis.
-    if (!getLineLayoutItem().isAtomicInlineLevel())
-        return true;
-
-    IntRect boxRect(left(), 0, m_logicalWidth, 10);
-    IntRect ellipsisRect(ltr ? blockEdge - ellipsisWidth : blockEdge, 0, ellipsisWidth, 10);
-    return !(boxRect.intersects(ellipsisRect));
+LayoutUnit InlineBox::PlaceEllipsisBox(bool,
+                                       LayoutUnit,
+                                       LayoutUnit,
+                                       LayoutUnit,
+                                       LayoutUnit& truncated_width,
+                                       bool&,
+                                       LayoutUnit) {
+  // Use -1 to mean "we didn't set the position."
+  truncated_width += LogicalWidth();
+  return LayoutUnit(-1);
 }
 
-LayoutUnit InlineBox::placeEllipsisBox(bool, LayoutUnit, LayoutUnit, LayoutUnit, LayoutUnit& truncatedWidth, bool&)
-{
-    // Use -1 to mean "we didn't set the position."
-    truncatedWidth += logicalWidth();
-    return LayoutUnit(-1);
+void InlineBox::ClearKnownToHaveNoOverflow() {
+  bitfields_.SetKnownToHaveNoOverflow(false);
+  if (Parent() && Parent()->KnownToHaveNoOverflow())
+    Parent()->ClearKnownToHaveNoOverflow();
 }
 
-void InlineBox::clearKnownToHaveNoOverflow()
-{
-    m_bitfields.setKnownToHaveNoOverflow(false);
-    if (parent() && parent()->knownToHaveNoOverflow())
-        parent()->clearKnownToHaveNoOverflow();
+LayoutPoint InlineBox::PhysicalLocation() const {
+  LayoutRect rect(Location(), Size());
+  FlipForWritingMode(rect);
+  return rect.Location();
 }
 
-LayoutPoint InlineBox::locationIncludingFlipping() const
-{
-    return logicalPositionToPhysicalPoint(m_topLeft, size());
+void InlineBox::LogicalRectToPhysicalRect(LayoutRect& rect) const {
+  if (!IsHorizontal())
+    rect = rect.TransposedRect();
+  FlipForWritingMode(rect);
 }
 
-LayoutPoint InlineBox::logicalPositionToPhysicalPoint(const LayoutPoint& point, const LayoutSize& size) const
-{
-    if (!UNLIKELY(getLineLayoutItem().hasFlippedBlocksWritingMode()))
-        return LayoutPoint(point.x(), point.y());
-
-    LineLayoutBlockFlow block = root().block();
-    if (block.style()->isHorizontalWritingMode())
-        return LayoutPoint(point.x(), block.size().height() - size.height() - point.y());
-
-    return LayoutPoint(block.size().width() - size.width() - point.x(), point.y());
-}
-
-void InlineBox::logicalRectToPhysicalRect(LayoutRect& current) const
-{
-    if (isHorizontal() && !getLineLayoutItem().hasFlippedBlocksWritingMode())
-        return;
-
-    if (!isHorizontal()) {
-        current = current.transposedRect();
-    }
-    current.setLocation(logicalPositionToPhysicalPoint(current.location(), current.size()));
+void InlineBox::FlipForWritingMode(FloatRect& rect) const {
+  if (!UNLIKELY(GetLineLayoutItem().HasFlippedBlocksWritingMode()))
     return;
+  Root().Block().FlipForWritingMode(rect);
 }
 
-void InlineBox::flipForWritingMode(FloatRect& rect) const
-{
-    if (!UNLIKELY(getLineLayoutItem().hasFlippedBlocksWritingMode()))
-        return;
-    root().block().flipForWritingMode(rect);
+FloatPoint InlineBox::FlipForWritingMode(const FloatPoint& point) const {
+  if (!UNLIKELY(GetLineLayoutItem().HasFlippedBlocksWritingMode()))
+    return point;
+  return Root().Block().FlipForWritingMode(point);
 }
 
-FloatPoint InlineBox::flipForWritingMode(const FloatPoint& point) const
-{
-    if (!UNLIKELY(getLineLayoutItem().hasFlippedBlocksWritingMode()))
-        return point;
-    return root().block().flipForWritingMode(point);
+void InlineBox::FlipForWritingMode(LayoutRect& rect) const {
+  if (!UNLIKELY(GetLineLayoutItem().HasFlippedBlocksWritingMode()))
+    return;
+  Root().Block().FlipForWritingMode(rect);
 }
 
-void InlineBox::flipForWritingMode(LayoutRect& rect) const
-{
-    if (!UNLIKELY(getLineLayoutItem().hasFlippedBlocksWritingMode()))
-        return;
-    root().block().flipForWritingMode(rect);
+LayoutPoint InlineBox::FlipForWritingMode(const LayoutPoint& point) const {
+  if (!UNLIKELY(GetLineLayoutItem().HasFlippedBlocksWritingMode()))
+    return point;
+  return Root().Block().FlipForWritingMode(point);
 }
 
-LayoutPoint InlineBox::flipForWritingMode(const LayoutPoint& point) const
-{
-    if (!UNLIKELY(getLineLayoutItem().hasFlippedBlocksWritingMode()))
-        return point;
-    return root().block().flipForWritingMode(point);
+void InlineBox::SetShouldDoFullPaintInvalidationRecursively() {
+  GetLineLayoutItem().SetShouldDoFullPaintInvalidation();
+  if (!IsInlineFlowBox())
+    return;
+  for (InlineBox* child = ToInlineFlowBox(this)->FirstChild(); child;
+       child = child->NextOnLine())
+    child->SetShouldDoFullPaintInvalidationRecursively();
 }
 
-void InlineBox::setShouldDoFullPaintInvalidationRecursively()
-{
-    getLineLayoutItem().setShouldDoFullPaintInvalidation();
-    if (!isInlineFlowBox())
-        return;
-    for (InlineBox* child = toInlineFlowBox(this)->firstChild(); child; child = child->nextOnLine())
-        child->setShouldDoFullPaintInvalidationRecursively();
+void InlineBox::SetLineLayoutItemShouldDoFullPaintInvalidationIfNeeded() {
+  // For RootInlineBox, we only need to invalidate if it's using the first line
+  // style. Otherwise it paints nothing so we don't need to invalidate it.
+  if (!IsRootInlineBox() || IsFirstLineStyle())
+    line_layout_item_.SetShouldDoFullPaintInvalidation();
 }
 
-void InlineBox::setLineLayoutItemShouldDoFullPaintInvalidationIfNeeded()
-{
-    // For RootInlineBox, we only need to invalidate if it's using the first line style.
-    // otherwise it paints nothing so we don't need to invalidate it.
-    if (!isRootInlineBox() || isFirstLineStyle())
-        m_lineLayoutItem.setShouldDoFullPaintInvalidation();
-}
-
-} // namespace blink
+}  // namespace blink
 
 #ifndef NDEBUG
 
-void showTree(const blink::InlineBox* b)
-{
-    if (b)
-        b->showTreeForThis();
-    else
-        fprintf(stderr, "Cannot showTree for (nil) InlineBox.\n");
+void showTree(const blink::InlineBox* b) {
+  if (b)
+    b->ShowTreeForThis();
+  else
+    fprintf(stderr, "Cannot showTree for (nil) InlineBox.\n");
 }
 
-void showLineTree(const blink::InlineBox* b)
-{
-    if (b)
-        b->showLineTreeForThis();
-    else
-        fprintf(stderr, "Cannot showLineTree for (nil) InlineBox.\n");
+void showLineTree(const blink::InlineBox* b) {
+  if (b)
+    b->ShowLineTreeForThis();
+  else
+    fprintf(stderr, "Cannot showLineTree for (nil) InlineBox.\n");
 }
 
 #endif

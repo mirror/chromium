@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <openssl/ec.h>
-#include <openssl/ecdh.h>
-#include <openssl/evp.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -18,11 +15,13 @@
 #include "components/webcrypto/generate_key_result.h"
 #include "components/webcrypto/status.h"
 #include "crypto/openssl_util.h"
-#include "crypto/scoped_openssl_types.h"
 #include "crypto/secure_util.h"
 #include "third_party/WebKit/public/platform/WebCryptoAlgorithmParams.h"
 #include "third_party/WebKit/public/platform/WebCryptoKey.h"
 #include "third_party/WebKit/public/platform/WebCryptoKeyAlgorithm.h"
+#include "third_party/boringssl/src/include/openssl/ec.h"
+#include "third_party/boringssl/src/include/openssl/ecdh.h"
+#include "third_party/boringssl/src/include/openssl/evp.h"
 
 namespace webcrypto {
 
@@ -38,8 +37,8 @@ class EcdhImplementation : public EcAlgorithm {
  public:
   EcdhImplementation()
       : EcAlgorithm(0,
-                    blink::WebCryptoKeyUsageDeriveKey |
-                        blink::WebCryptoKeyUsageDeriveBits) {}
+                    blink::kWebCryptoKeyUsageDeriveKey |
+                        blink::kWebCryptoKeyUsageDeriveBits) {}
 
   const char* GetJwkAlgorithm(
       const blink::WebCryptoNamedCurve curve) const override {
@@ -52,47 +51,44 @@ class EcdhImplementation : public EcAlgorithm {
                     bool has_optional_length_bits,
                     unsigned int optional_length_bits,
                     std::vector<uint8_t>* derived_bytes) const override {
-    if (base_key.type() != blink::WebCryptoKeyTypePrivate)
+    if (base_key.GetType() != blink::kWebCryptoKeyTypePrivate)
       return Status::ErrorUnexpectedKeyType();
 
     // Verify the "publicKey" parameter. The only guarantee from Blink is that
     // it is a valid WebCryptoKey, but it could be any type.
     const blink::WebCryptoKey& public_key =
-        algorithm.ecdhKeyDeriveParams()->publicKey();
+        algorithm.EcdhKeyDeriveParams()->PublicKey();
 
-    if (public_key.type() != blink::WebCryptoKeyTypePublic)
+    if (public_key.GetType() != blink::kWebCryptoKeyTypePublic)
       return Status::ErrorEcdhPublicKeyWrongType();
 
     // Make sure it is an EC key.
-    if (!public_key.algorithm().ecParams())
+    if (!public_key.Algorithm().EcParams())
       return Status::ErrorEcdhPublicKeyWrongType();
 
     // TODO(eroman): This is not described by the spec:
     // https://www.w3.org/Bugs/Public/show_bug.cgi?id=27404
-    if (public_key.algorithm().id() != blink::WebCryptoAlgorithmIdEcdh)
+    if (public_key.Algorithm().Id() != blink::kWebCryptoAlgorithmIdEcdh)
       return Status::ErrorEcdhPublicKeyWrongAlgorithm();
 
     // The public and private keys come from different key pairs, however their
     // curves must match.
-    if (public_key.algorithm().ecParams()->namedCurve() !=
-        base_key.algorithm().ecParams()->namedCurve()) {
+    if (public_key.Algorithm().EcParams()->NamedCurve() !=
+        base_key.Algorithm().EcParams()->NamedCurve()) {
       return Status::ErrorEcdhCurveMismatch();
     }
 
-    crypto::ScopedEC_KEY public_key_ec(
-        EVP_PKEY_get1_EC_KEY(GetEVP_PKEY(public_key)));
+    EC_KEY* public_key_ec = EVP_PKEY_get0_EC_KEY(GetEVP_PKEY(public_key));
 
-    const EC_POINT* public_key_point =
-        EC_KEY_get0_public_key(public_key_ec.get());
+    const EC_POINT* public_key_point = EC_KEY_get0_public_key(public_key_ec);
 
-    crypto::ScopedEC_KEY private_key_ec(
-        EVP_PKEY_get1_EC_KEY(GetEVP_PKEY(base_key)));
+    EC_KEY* private_key_ec = EVP_PKEY_get0_EC_KEY(GetEVP_PKEY(base_key));
 
     // The size of the shared secret is the field size in bytes (rounded up).
     // Note that, if rounding was required, the most significant bits of the
     // secret are zero. So for P-521, the maximum length is 528 bits, not 521.
-    int field_size_bytes = NumBitsToBytes(
-        EC_GROUP_get_degree(EC_KEY_get0_group(private_key_ec.get())));
+    int field_size_bytes =
+        NumBitsToBytes(EC_GROUP_get_degree(EC_KEY_get0_group(private_key_ec)));
 
     // If a desired key length was not specified, default to the field size
     // (rounded up to nearest byte).
@@ -115,7 +111,7 @@ class EcdhImplementation : public EcAlgorithm {
     derived_bytes->resize(NumBitsToBytes(length_bits));
 
     int result = ECDH_compute_key(derived_bytes->data(), derived_bytes->size(),
-                                  public_key_point, private_key_ec.get(), 0);
+                                  public_key_point, private_key_ec, 0);
     if (result < 0 || static_cast<size_t>(result) != derived_bytes->size())
       return Status::OperationError();
 

@@ -31,189 +31,181 @@
 
 namespace blink {
 
-NodeIterator::NodePointer::NodePointer()
-{
-}
+NodeIterator::NodePointer::NodePointer() {}
 
 NodeIterator::NodePointer::NodePointer(Node* n, bool b)
-    : node(n)
-    , isPointerBeforeNode(b)
-{
+    : node(n), is_pointer_before_node(b) {}
+
+void NodeIterator::NodePointer::Clear() {
+  node.Clear();
 }
 
-void NodeIterator::NodePointer::clear()
-{
-    node.clear();
+bool NodeIterator::NodePointer::MoveToNext(Node* root) {
+  if (!node)
+    return false;
+  if (is_pointer_before_node) {
+    is_pointer_before_node = false;
+    return true;
+  }
+  node = NodeTraversal::Next(*node, root);
+  return node;
 }
 
-bool NodeIterator::NodePointer::moveToNext(Node* root)
-{
-    if (!node)
-        return false;
-    if (isPointerBeforeNode) {
-        isPointerBeforeNode = false;
-        return true;
+bool NodeIterator::NodePointer::MoveToPrevious(Node* root) {
+  if (!node)
+    return false;
+  if (!is_pointer_before_node) {
+    is_pointer_before_node = true;
+    return true;
+  }
+  node = NodeTraversal::Previous(*node, root);
+  return node;
+}
+
+NodeIterator::NodeIterator(Node* root_node,
+                           unsigned what_to_show,
+                           NodeFilter* filter)
+    : NodeIteratorBase(this, root_node, what_to_show, filter),
+      reference_node_(root(), true) {
+  // If NodeIterator target is Attr node, don't subscribe for nodeWillBeRemoved,
+  // as it would never have child nodes.
+  if (!root()->IsAttributeNode())
+    root()->GetDocument().AttachNodeIterator(this);
+}
+
+Node* NodeIterator::nextNode(ExceptionState& exception_state) {
+  Node* result = nullptr;
+
+  candidate_node_ = reference_node_;
+  while (candidate_node_.MoveToNext(root())) {
+    // NodeIterators treat the DOM tree as a flat list of nodes.
+    // In other words, kFilterReject does not pass over descendants
+    // of the rejected node. Hence, kFilterReject is the same as kFilterSkip.
+    Node* provisional_result = candidate_node_.node;
+    bool node_was_accepted = AcceptNode(provisional_result, exception_state) ==
+                             NodeFilter::kFilterAccept;
+    if (exception_state.HadException())
+      break;
+    if (node_was_accepted) {
+      reference_node_ = candidate_node_;
+      result = provisional_result;
+      break;
     }
-    node = NodeTraversal::next(*node, root);
-    return node;
+  }
+
+  candidate_node_.Clear();
+  return result;
 }
 
-bool NodeIterator::NodePointer::moveToPrevious(Node* root)
-{
-    if (!node)
-        return false;
-    if (!isPointerBeforeNode) {
-        isPointerBeforeNode = true;
-        return true;
+Node* NodeIterator::previousNode(ExceptionState& exception_state) {
+  Node* result = nullptr;
+
+  candidate_node_ = reference_node_;
+  while (candidate_node_.MoveToPrevious(root())) {
+    // NodeIterators treat the DOM tree as a flat list of nodes.
+    // In other words, kFilterReject does not pass over descendants
+    // of the rejected node. Hence, kFilterReject is the same as kFilterSkip.
+    Node* provisional_result = candidate_node_.node;
+    bool node_was_accepted = AcceptNode(provisional_result, exception_state) ==
+                             NodeFilter::kFilterAccept;
+    if (exception_state.HadException())
+      break;
+    if (node_was_accepted) {
+      reference_node_ = candidate_node_;
+      result = provisional_result;
+      break;
     }
-    node = NodeTraversal::previous(*node, root);
-    return node;
+  }
+
+  candidate_node_.Clear();
+  return result;
 }
 
-NodeIterator::NodeIterator(Node* rootNode, unsigned whatToShow, NodeFilter* filter)
-    : NodeIteratorBase(rootNode, whatToShow, filter)
-    , m_referenceNode(root(), true)
-{
-    // If NodeIterator target is Attr node, don't subscribe for nodeWillBeRemoved, as it would never have child nodes.
-    if (!root()->isAttributeNode())
-        root()->document().attachNodeIterator(this);
+void NodeIterator::detach() {
+  // This is now a no-op as per the DOM specification.
 }
 
-Node* NodeIterator::nextNode(ExceptionState& exceptionState)
-{
-    Node* result = nullptr;
-
-    m_candidateNode = m_referenceNode;
-    while (m_candidateNode.moveToNext(root())) {
-        // NodeIterators treat the DOM tree as a flat list of nodes.
-        // In other words, FILTER_REJECT does not pass over descendants
-        // of the rejected node. Hence, FILTER_REJECT is the same as FILTER_SKIP.
-        Node* provisionalResult = m_candidateNode.node;
-        bool nodeWasAccepted = acceptNode(provisionalResult, exceptionState) == NodeFilter::FILTER_ACCEPT;
-        if (exceptionState.hadException())
-            break;
-        if (nodeWasAccepted) {
-            m_referenceNode = m_candidateNode;
-            result = provisionalResult;
-            break;
-        }
-    }
-
-    m_candidateNode.clear();
-    return result;
+void NodeIterator::NodeWillBeRemoved(Node& removed_node) {
+  UpdateForNodeRemoval(removed_node, candidate_node_);
+  UpdateForNodeRemoval(removed_node, reference_node_);
 }
 
-Node* NodeIterator::previousNode(ExceptionState& exceptionState)
-{
-    Node* result = nullptr;
+void NodeIterator::UpdateForNodeRemoval(Node& removed_node,
+                                        NodePointer& reference_node) const {
+  DCHECK_EQ(root()->GetDocument(), removed_node.GetDocument());
 
-    m_candidateNode = m_referenceNode;
-    while (m_candidateNode.moveToPrevious(root())) {
-        // NodeIterators treat the DOM tree as a flat list of nodes.
-        // In other words, FILTER_REJECT does not pass over descendants
-        // of the rejected node. Hence, FILTER_REJECT is the same as FILTER_SKIP.
-        Node* provisionalResult = m_candidateNode.node;
-        bool nodeWasAccepted = acceptNode(provisionalResult, exceptionState) == NodeFilter::FILTER_ACCEPT;
-        if (exceptionState.hadException())
-            break;
-        if (nodeWasAccepted) {
-            m_referenceNode = m_candidateNode;
-            result = provisionalResult;
-            break;
-        }
-    }
+  // Iterator is not affected if the removed node is the reference node and is
+  // the root.  or if removed node is not the reference node, or the ancestor of
+  // the reference node.
+  if (!removed_node.IsDescendantOf(root()))
+    return;
+  bool will_remove_reference_node = removed_node == reference_node.node.Get();
+  bool will_remove_reference_node_ancestor =
+      reference_node.node && reference_node.node->IsDescendantOf(&removed_node);
+  if (!will_remove_reference_node && !will_remove_reference_node_ancestor)
+    return;
 
-    m_candidateNode.clear();
-    return result;
-}
-
-void NodeIterator::detach()
-{
-    // This is now a no-op as per the DOM specification.
-}
-
-void NodeIterator::nodeWillBeRemoved(Node& removedNode)
-{
-    updateForNodeRemoval(removedNode, m_candidateNode);
-    updateForNodeRemoval(removedNode, m_referenceNode);
-}
-
-void NodeIterator::updateForNodeRemoval(Node& removedNode, NodePointer& referenceNode) const
-{
-    DCHECK_EQ(root()->document(), removedNode.document());
-
-    // Iterator is not affected if the removed node is the reference node and is the root.
-    // or if removed node is not the reference node, or the ancestor of the reference node.
-    if (!removedNode.isDescendantOf(root()))
-        return;
-    bool willRemoveReferenceNode = removedNode == referenceNode.node.get();
-    bool willRemoveReferenceNodeAncestor = referenceNode.node && referenceNode.node->isDescendantOf(&removedNode);
-    if (!willRemoveReferenceNode && !willRemoveReferenceNodeAncestor)
-        return;
-
-    if (referenceNode.isPointerBeforeNode) {
-        Node* node = NodeTraversal::next(removedNode, root());
-        if (node) {
-            // Move out from under the node being removed if the new reference
-            // node is a descendant of the node being removed.
-            while (node && node->isDescendantOf(&removedNode))
-                node = NodeTraversal::next(*node, root());
-            if (node)
-                referenceNode.node = node;
-        } else {
-            node = NodeTraversal::previous(removedNode, root());
-            if (node) {
-                // Move out from under the node being removed if the reference node is
-                // a descendant of the node being removed.
-                if (willRemoveReferenceNodeAncestor) {
-                    while (node && node->isDescendantOf(&removedNode))
-                        node = NodeTraversal::previous(*node, root());
-                }
-                if (node) {
-                    // Removing last node.
-                    // Need to move the pointer after the node preceding the
-                    // new reference node.
-                    referenceNode.node = node;
-                    referenceNode.isPointerBeforeNode = false;
-                }
-            }
-        }
+  if (reference_node.is_pointer_before_node) {
+    Node* node = NodeTraversal::Next(removed_node, root());
+    if (node) {
+      // Move out from under the node being removed if the new reference
+      // node is a descendant of the node being removed.
+      while (node && node->IsDescendantOf(&removed_node))
+        node = NodeTraversal::Next(*node, root());
+      if (node)
+        reference_node.node = node;
     } else {
-        Node* node = NodeTraversal::previous(removedNode, root());
-        if (node) {
-            // Move out from under the node being removed if the reference node is
-            // a descendant of the node being removed.
-            if (willRemoveReferenceNodeAncestor) {
-                while (node && node->isDescendantOf(&removedNode))
-                    node = NodeTraversal::previous(*node, root());
-            }
-            if (node)
-                referenceNode.node = node;
-        } else {
-            // FIXME: This branch doesn't appear to have any LayoutTests.
-            node = NodeTraversal::next(removedNode, root());
-            // Move out from under the node being removed if the reference node is
-            // a descendant of the node being removed.
-            if (willRemoveReferenceNodeAncestor) {
-                while (node && node->isDescendantOf(&removedNode))
-                    node = NodeTraversal::previous(*node, root());
-            }
-            if (node)
-                referenceNode.node = node;
+      node = NodeTraversal::Previous(removed_node, root());
+      if (node) {
+        // Move out from under the node being removed if the reference node is
+        // a descendant of the node being removed.
+        if (will_remove_reference_node_ancestor) {
+          while (node && node->IsDescendantOf(&removed_node))
+            node = NodeTraversal::Previous(*node, root());
         }
+        if (node) {
+          // Removing last node.
+          // Need to move the pointer after the node preceding the
+          // new reference node.
+          reference_node.node = node;
+          reference_node.is_pointer_before_node = false;
+        }
+      }
     }
+  } else {
+    Node* node = NodeTraversal::Previous(removed_node, root());
+    if (node) {
+      // Move out from under the node being removed if the reference node is
+      // a descendant of the node being removed.
+      if (will_remove_reference_node_ancestor) {
+        while (node && node->IsDescendantOf(&removed_node))
+          node = NodeTraversal::Previous(*node, root());
+      }
+      if (node)
+        reference_node.node = node;
+    } else {
+      // FIXME: This branch doesn't appear to have any LayoutTests.
+      node = NodeTraversal::Next(removed_node, root());
+      // Move out from under the node being removed if the reference node is
+      // a descendant of the node being removed.
+      if (will_remove_reference_node_ancestor) {
+        while (node && node->IsDescendantOf(&removed_node))
+          node = NodeTraversal::Previous(*node, root());
+      }
+      if (node)
+        reference_node.node = node;
+    }
+  }
 }
 
-DEFINE_TRACE(NodeIterator)
-{
-    visitor->trace(m_referenceNode);
-    visitor->trace(m_candidateNode);
-    NodeIteratorBase::trace(visitor);
+DEFINE_TRACE(NodeIterator) {
+  visitor->Trace(reference_node_);
+  visitor->Trace(candidate_node_);
+  NodeIteratorBase::Trace(visitor);
 }
 
-DEFINE_TRACE_WRAPPERS(NodeIterator)
-{
-    NodeIteratorBase::traceWrappers(visitor);
+DEFINE_TRACE_WRAPPERS(NodeIterator) {
+  NodeIteratorBase::TraceWrappers(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

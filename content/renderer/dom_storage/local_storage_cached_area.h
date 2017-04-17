@@ -11,7 +11,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/nullable_string16.h"
 #include "content/common/leveldb_wrapper.mojom.h"
-#include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 #include "url/gurl.h"
 #include "url/origin.h"
 
@@ -65,24 +65,23 @@ class LocalStorageCachedArea : public mojom::LevelDBObserver,
   ~LocalStorageCachedArea() override;
 
   // LevelDBObserver:
-  void KeyAdded(mojo::Array<uint8_t> key,
-                mojo::Array<uint8_t> value,
-                const mojo::String& source) override;
-  void KeyChanged(mojo::Array<uint8_t> key,
-                  mojo::Array<uint8_t> new_value,
-                  mojo::Array<uint8_t> old_value,
-                  const mojo::String& source) override;
-  void KeyDeleted(mojo::Array<uint8_t> key,
-                  mojo::Array<uint8_t> old_value,
-                  const mojo::String& source) override;
-  void AllDeleted(const mojo::String& source) override;
-  void GetAllComplete(const mojo::String& source) override;
+  void KeyAdded(const std::vector<uint8_t>& key,
+                const std::vector<uint8_t>& value,
+                const std::string& source) override;
+  void KeyChanged(const std::vector<uint8_t>& key,
+                  const std::vector<uint8_t>& new_value,
+                  const std::vector<uint8_t>& old_value,
+                  const std::string& source) override;
+  void KeyDeleted(const std::vector<uint8_t>& key,
+                  const std::vector<uint8_t>& old_value,
+                  const std::string& source) override;
+  void AllDeleted(const std::string& source) override;
 
   // Common helper for KeyAdded() and KeyChanged()
-  void KeyAddedOrChanged(mojo::Array<uint8_t> key,
-                         mojo::Array<uint8_t> new_value,
+  void KeyAddedOrChanged(const std::vector<uint8_t>& key,
+                         const std::vector<uint8_t>& new_value,
                          const base::NullableString16& old_value,
-                         const mojo::String& source);
+                         const std::string& source);
 
   // Synchronously fetches the origin's local storage data if it hasn't been
   // fetched already.
@@ -91,6 +90,7 @@ class LocalStorageCachedArea : public mojom::LevelDBObserver,
   void OnSetItemComplete(const base::string16& key, bool success);
   void OnRemoveItemComplete(const base::string16& key, bool success);
   void OnClearComplete(bool success);
+  void OnGetAllComplete(bool success);
 
   // Resets the object back to its newly constructed state.
   void Reset();
@@ -99,9 +99,8 @@ class LocalStorageCachedArea : public mojom::LevelDBObserver,
   scoped_refptr<DOMStorageMap> map_;
   std::map<base::string16, int> ignore_key_mutations_;
   bool ignore_all_mutations_ = false;
-  std::string get_all_request_id_;
   mojom::LevelDBWrapperPtr leveldb_;
-  mojo::Binding<mojom::LevelDBObserver> binding_;
+  mojo::AssociatedBinding<mojom::LevelDBObserver> binding_;
   LocalStorageCachedAreas* cached_areas_;
   std::map<std::string, LocalStorageArea*> areas_;
   base::WeakPtrFactory<LocalStorageCachedArea> weak_factory_;

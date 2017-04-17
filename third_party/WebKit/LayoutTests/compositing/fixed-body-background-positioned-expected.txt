@@ -1,35 +1,51 @@
 {
-  "name": "Frame Overflow Controls Host Layer",
-  "bounds": [800, 600],
-  "children": [
+  "layers": [
+    {
+      "name": "Inner Viewport Container Layer",
+      "bounds": [800, 600]
+    },
+    {
+      "name": "Overscroll Elasticity Layer"
+    },
+    {
+      "name": "Page Scale Layer"
+    },
+    {
+      "name": "Inner Viewport Scroll Layer",
+      "bounds": [800, 600]
+    },
+    {
+      "name": "Frame Overflow Controls Host Layer",
+      "bounds": [800, 600]
+    },
     {
       "name": "Frame Clipping Layer",
+      "bounds": [785, 600]
+    },
+    {
+      "name": "LayoutView #document (background) Layer",
+      "transformOrigin": [0, 0],
       "bounds": [785, 600],
-      "children": [
-        {
-          "name": "LayoutView #document (background) Layer",
-          "transformOrigin": [0, 0],
-          "bounds": [785, 600],
-          "contentsOpaque": true,
-          "drawsContent": true
-        },
-        {
-          "name": "Frame Scrolling Layer",
-          "children": [
-            {
-              "name": "Content Root Layer",
-              "bounds": [785, 3700],
-              "children": [
-                {
-                  "name": "LayoutView #document",
-                  "bounds": [785, 3700],
-                  "drawsContent": true
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      "contentsOpaque": true,
+      "drawsContent": true
+    },
+    {
+      "name": "Frame Scrolling Layer"
+    },
+    {
+      "name": "Content Root Layer",
+      "bounds": [785, 3700]
+    },
+    {
+      "name": "LayoutView #document",
+      "bounds": [785, 3700],
+      "drawsContent": true
+    },
+    {
+      "name": "Frame Vertical Scrollbar Layer",
+      "position": [785, 0],
+      "bounds": [15, 600],
+      "contentsOpaque": true
     }
   ]
 }

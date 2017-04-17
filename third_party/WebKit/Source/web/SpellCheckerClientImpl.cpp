@@ -27,178 +27,102 @@
 #include "web/SpellCheckerClientImpl.h"
 
 #include "core/dom/Element.h"
-#include "core/editing/Editor.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/Settings.h"
 #include "core/page/Page.h"
 #include "public/web/WebSpellCheckClient.h"
-#include "public/web/WebTextCheckingResult.h"
-#include "web/WebTextCheckingCompletionImpl.h"
 #include "web/WebViewImpl.h"
 
 namespace blink {
 
 SpellCheckerClientImpl::SpellCheckerClientImpl(WebViewImpl* webview)
-    : m_webView(webview)
-    , m_spellCheckThisFieldStatus(SpellCheckAutomatic)
-{
-}
+    : web_view_(webview),
+      spell_check_this_field_status_(kSpellCheckAutomatic) {}
 
-SpellCheckerClientImpl::~SpellCheckerClientImpl()
-{
-}
+SpellCheckerClientImpl::~SpellCheckerClientImpl() {}
 
-bool SpellCheckerClientImpl::shouldSpellcheckByDefault()
-{
-    // Spellcheck should be enabled for all editable areas (such as textareas,
-    // contentEditable regions, designMode docs and inputs).
-    if (!m_webView->focusedCoreFrame()->isLocalFrame())
-        return false;
-    const LocalFrame* frame = toLocalFrame(m_webView->focusedCoreFrame());
-    if (!frame)
-        return false;
-    if (frame->spellChecker().isSpellCheckingEnabledInFocusedNode())
-        return true;
-    const Document* document = frame->document();
-    if (!document)
-        return false;
-    const Element* element = document->focusedElement();
-    // If |element| is null, we default to allowing spellchecking. This is done
-    // in order to mitigate the issue when the user clicks outside the textbox,
-    // as a result of which |element| becomes null, resulting in all the spell
-    // check markers being deleted. Also, the LocalFrame will decide not to do
-    // spellchecking if the user can't edit - so returning true here will not
-    // cause any problems to the LocalFrame's behavior.
-    if (!element)
-        return true;
-    const LayoutObject* layoutObject = element->layoutObject();
-    if (!layoutObject)
-        return false;
-
-    return true;
-}
-
-bool SpellCheckerClientImpl::isContinuousSpellCheckingEnabled()
-{
-    if (m_spellCheckThisFieldStatus == SpellCheckForcedOff)
-        return false;
-    if (m_spellCheckThisFieldStatus == SpellCheckForcedOn)
-        return true;
-    return shouldSpellcheckByDefault();
-}
-
-void SpellCheckerClientImpl::toggleContinuousSpellChecking()
-{
-    if (isContinuousSpellCheckingEnabled()) {
-        m_spellCheckThisFieldStatus = SpellCheckForcedOff;
-        if (Page* page = m_webView->page()) {
-            for (Frame* frame = page->mainFrame(); frame; frame = frame->tree().traverseNext()) {
-                if (!frame->isLocalFrame())
-                    continue;
-                toLocalFrame(frame)->document()->markers().removeMarkers(DocumentMarker::MisspellingMarkers());
-            }
-        }
-    } else {
-        m_spellCheckThisFieldStatus = SpellCheckForcedOn;
-        if (m_webView->focusedCoreFrame()->isLocalFrame()) {
-            if (LocalFrame* frame = toLocalFrame(m_webView->focusedCoreFrame())) {
-                VisibleSelection frameSelection = frame->selection().selection();
-                // If a selection is in an editable element spell check its content.
-                if (Element* rootEditableElement = frameSelection.rootEditableElement()) {
-                    frame->spellChecker().didBeginEditing(rootEditableElement);
-                }
-            }
-        }
-    }
-}
-
-void SpellCheckerClientImpl::checkSpellingOfString(const String& text, int* misspellingLocation, int* misspellingLength)
-{
-    // SpellCheckWord will write (0, 0) into the output vars, which is what our
-    // caller expects if the word is spelled correctly.
-    int spellLocation = -1;
-    int spellLength = 0;
-
-    // Check to see if the provided text is spelled correctly.
-    if (m_webView->spellCheckClient()) {
-        m_webView->spellCheckClient()->spellCheck(text, spellLocation, spellLength, nullptr);
-    } else {
-        spellLocation = 0;
-        spellLength = 0;
-    }
-
-    // Note: the Mac code checks if the pointers are null before writing to them,
-    // so we do too.
-    if (misspellingLocation)
-        *misspellingLocation = spellLocation;
-    if (misspellingLength)
-        *misspellingLength = spellLength;
-}
-
-void SpellCheckerClientImpl::requestCheckingOfString(TextCheckingRequest* request)
-{
-    if (!m_webView->spellCheckClient())
-        return;
-    const String& text = request->data().text();
-    const Vector<uint32_t>& markers = request->data().markers();
-    const Vector<unsigned>& markerOffsets = request->data().offsets();
-    m_webView->spellCheckClient()->requestCheckingOfText(text, markers, markerOffsets, new WebTextCheckingCompletionImpl(request));
-}
-
-void SpellCheckerClientImpl::checkGrammarOfString(const String& text, WTF::Vector<GrammarDetail>& details, int* badGrammarLocation, int* badGrammarLength)
-{
-    if (badGrammarLocation)
-        *badGrammarLocation = -1;
-    if (badGrammarLength)
-        *badGrammarLength = 0;
-
-    if (!m_webView->spellCheckClient())
-        return;
-    WebVector<WebTextCheckingResult> webResults;
-    m_webView->spellCheckClient()->checkTextOfParagraph(text, WebTextCheckingTypeGrammar, &webResults);
-    if (!webResults.size())
-        return;
-
-    // Convert a list of WebTextCheckingResults to a list of GrammarDetails. If
-    // the converted vector of GrammarDetails has grammar errors, we set
-    // badGrammarLocation and badGrammarLength to tell WebKit that the input
-    // text has grammar errors.
-    for (size_t i = 0; i < webResults.size(); ++i) {
-        if (webResults[i].decoration == WebTextDecorationTypeGrammar) {
-            GrammarDetail detail;
-            detail.location = webResults[i].location;
-            detail.length = webResults[i].length;
-            detail.userDescription = webResults[i].replacement;
-            details.append(detail);
-        }
-    }
-    if (!details.size())
-        return;
-    if (badGrammarLocation)
-        *badGrammarLocation = 0;
-    if (badGrammarLength)
-        *badGrammarLength = text.length();
-}
-
-void SpellCheckerClientImpl::updateSpellingUIWithMisspelledWord(const String& misspelledWord)
-{
-    if (m_webView->spellCheckClient())
-        m_webView->spellCheckClient()->updateSpellingUIWithMisspelledWord(WebString(misspelledWord));
-}
-
-void SpellCheckerClientImpl::showSpellingUI(bool show)
-{
-    if (m_webView->spellCheckClient())
-        m_webView->spellCheckClient()->showSpellingUI(show);
-}
-
-bool SpellCheckerClientImpl::spellingUIIsShowing()
-{
-    if (m_webView->spellCheckClient())
-        return m_webView->spellCheckClient()->isShowingSpellingUI();
+bool SpellCheckerClientImpl::ShouldSpellcheckByDefault() {
+  // Spellcheck should be enabled for all editable areas (such as textareas,
+  // contentEditable regions, designMode docs and inputs).
+  if (!web_view_->FocusedCoreFrame()->IsLocalFrame())
     return false;
+  const LocalFrame* frame = ToLocalFrame(web_view_->FocusedCoreFrame());
+  if (!frame)
+    return false;
+  if (frame->GetSpellChecker().IsSpellCheckingEnabledInFocusedNode())
+    return true;
+  const Document* document = frame->GetDocument();
+  if (!document)
+    return false;
+  const Element* element = document->FocusedElement();
+  // If |element| is null, we default to allowing spellchecking. This is done
+  // in order to mitigate the issue when the user clicks outside the textbox,
+  // as a result of which |element| becomes null, resulting in all the spell
+  // check markers being deleted. Also, the LocalFrame will decide not to do
+  // spellchecking if the user can't edit - so returning true here will not
+  // cause any problems to the LocalFrame's behavior.
+  if (!element)
+    return true;
+  const LayoutObject* layout_object = element->GetLayoutObject();
+  if (!layout_object)
+    return false;
+
+  return true;
 }
 
-} // namespace blink
+bool SpellCheckerClientImpl::IsSpellCheckingEnabled() {
+  if (spell_check_this_field_status_ == kSpellCheckForcedOff)
+    return false;
+  if (spell_check_this_field_status_ == kSpellCheckForcedOn)
+    return true;
+  return ShouldSpellcheckByDefault();
+}
+
+void SpellCheckerClientImpl::ToggleSpellCheckingEnabled() {
+  if (IsSpellCheckingEnabled()) {
+    spell_check_this_field_status_ = kSpellCheckForcedOff;
+    if (Page* page = web_view_->GetPage()) {
+      for (Frame* frame = page->MainFrame(); frame;
+           frame = frame->Tree().TraverseNext()) {
+        if (!frame->IsLocalFrame())
+          continue;
+        ToLocalFrame(frame)->GetDocument()->Markers().RemoveMarkers(
+            DocumentMarker::MisspellingMarkers());
+      }
+    }
+  } else {
+    spell_check_this_field_status_ = kSpellCheckForcedOn;
+    if (web_view_->FocusedCoreFrame()->IsLocalFrame()) {
+      if (LocalFrame* frame = ToLocalFrame(web_view_->FocusedCoreFrame())) {
+        VisibleSelection frame_selection =
+            frame->Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
+        // If a selection is in an editable element spell check its content.
+        if (Element* root_editable_element =
+                frame_selection.RootEditableElement()) {
+          frame->GetSpellChecker().DidBeginEditing(root_editable_element);
+        }
+      }
+    }
+  }
+}
+
+void SpellCheckerClientImpl::UpdateSpellingUIWithMisspelledWord(
+    const String& misspelled_word) {
+  if (web_view_->SpellCheckClient())
+    web_view_->SpellCheckClient()->UpdateSpellingUIWithMisspelledWord(
+        WebString(misspelled_word));
+}
+
+void SpellCheckerClientImpl::ShowSpellingUI(bool show) {
+  if (web_view_->SpellCheckClient())
+    web_view_->SpellCheckClient()->ShowSpellingUI(show);
+}
+
+bool SpellCheckerClientImpl::SpellingUIIsShowing() {
+  if (web_view_->SpellCheckClient())
+    return web_view_->SpellCheckClient()->IsShowingSpellingUI();
+  return false;
+}
+
+}  // namespace blink

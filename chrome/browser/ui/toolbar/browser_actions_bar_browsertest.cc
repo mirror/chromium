@@ -10,6 +10,7 @@
 #include "base/bind_helpers.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
+#include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/api/extension_action/extension_action_api.h"
 #include "chrome/browser/extensions/browser_action_test_util.h"
 #include "chrome/browser/extensions/extension_action.h"
@@ -70,14 +71,10 @@ void BrowserActionsBarBrowserTest::SetUpCommandLine(
     base::CommandLine* command_line) {
   ExtensionBrowserTest::SetUpCommandLine(command_line);
   ToolbarActionsBar::disable_animations_for_testing_ = true;
-  // We need to disable Media Router since having Media Router enabled will
-  // result in auto-enabling the redesign and breaking the test.
-  override_media_router_.reset(new extensions::FeatureSwitch::ScopedOverride(
-      extensions::FeatureSwitch::media_router(), false));
   // These tests are deliberately testing behavior without the redesign.
   // Forcefully disable it.
   override_redesign_.reset(new extensions::FeatureSwitch::ScopedOverride(
-      extensions::FeatureSwitch::extension_action_redesign(), false));
+      extensions::FeatureSwitch::extension_action_redesign(), true));
 }
 
 void BrowserActionsBarBrowserTest::SetUpOnMainThread() {
@@ -115,26 +112,26 @@ void BrowserActionsBarBrowserTest::LoadExtensions() {
   }
 }
 
-// BrowserActionsBarRedesignBrowserTest:
+// BrowserActionsBarLegacyBrowserTest:
 
-BrowserActionsBarRedesignBrowserTest::BrowserActionsBarRedesignBrowserTest() {
+BrowserActionsBarLegacyBrowserTest::BrowserActionsBarLegacyBrowserTest() {
 }
 
-BrowserActionsBarRedesignBrowserTest::~BrowserActionsBarRedesignBrowserTest() {
+BrowserActionsBarLegacyBrowserTest::~BrowserActionsBarLegacyBrowserTest() {
 }
 
-void BrowserActionsBarRedesignBrowserTest::SetUpCommandLine(
+void BrowserActionsBarLegacyBrowserTest::SetUpCommandLine(
     base::CommandLine* command_line) {
   BrowserActionsBarBrowserTest::SetUpCommandLine(command_line);
   // Override to force the redesign. Completely clear the previous override
   // first, since doing so resets the value of the switch.
   override_redesign_.reset();
   override_redesign_.reset(new extensions::FeatureSwitch::ScopedOverride(
-      extensions::FeatureSwitch::extension_action_redesign(), true));
+      extensions::FeatureSwitch::extension_action_redesign(), false));
 }
 
 // Test the basic functionality.
-IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest, Basic) {
+IN_PROC_BROWSER_TEST_F(BrowserActionsBarLegacyBrowserTest, Basic) {
   // Load an extension with no browser action.
   extension_service()->AddExtension(CreateExtension("alpha", false).get());
   // This extension should not be in the model (has no browser action).
@@ -185,7 +182,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest, MoveBrowserActions) {
 
 // Test that explicitly hiding an extension action results in it disappearing
 // from the browser actions bar.
-IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest, ForceHide) {
+IN_PROC_BROWSER_TEST_F(BrowserActionsBarLegacyBrowserTest, ForceHide) {
   LoadExtensions();
 
   EXPECT_EQ(3, browser_actions_bar()->VisibleBrowserActions());
@@ -295,7 +292,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest, Visibility) {
 
 // Test that, with the toolbar action redesign, actions that want to run have
 // the proper appearance.
-IN_PROC_BROWSER_TEST_F(BrowserActionsBarRedesignBrowserTest,
+IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest,
                        TestUiForActionsWantToRun) {
   LoadExtensions();
   EXPECT_EQ(3, browser_actions_bar()->VisibleBrowserActions());
@@ -412,7 +409,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest,
   }
 }
 
-IN_PROC_BROWSER_TEST_F(BrowserActionsBarRedesignBrowserTest,
+IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest,
                        OverflowedBrowserActionPopupTest) {
   std::unique_ptr<BrowserActionTestUtil> overflow_bar =
       browser_actions_bar()->CreateOverflowBar();
@@ -499,7 +496,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionsBarRedesignBrowserTest,
 
 // Test removing an extension that has an popup showing.
 // Regression test for crbug.com/599467.
-IN_PROC_BROWSER_TEST_F(BrowserActionsBarRedesignBrowserTest,
+IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest,
                        OverflowedBrowserActionPopupTestRemoval) {
   std::unique_ptr<BrowserActionTestUtil> overflow_bar =
       browser_actions_bar()->CreateOverflowBar();
@@ -539,7 +536,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionsBarRedesignBrowserTest,
 }
 
 // Test that page action popups work with the toolbar redesign.
-IN_PROC_BROWSER_TEST_F(BrowserActionsBarRedesignBrowserTest,
+IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest,
                        PageActionPopupsTest) {
   ExtensionTestMessageListener listener("ready", false);
   const extensions::Extension* page_action_extension =
@@ -560,8 +557,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionsBarRedesignBrowserTest,
 }
 
 // Test removing an action while it is popped out.
-IN_PROC_BROWSER_TEST_F(BrowserActionsBarRedesignBrowserTest,
-                       RemovePoppedOutAction) {
+IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest, RemovePoppedOutAction) {
   // First, load up three separate extensions and reduce the visible count to
   // one (so that two are in the overflow).
   scoped_refptr<const extensions::Extension> extension1 =
@@ -640,4 +636,45 @@ IN_PROC_BROWSER_TEST_F(BrowserActionsBarRedesignBrowserTest,
   EXPECT_EQ(1, browser_actions_bar()->VisibleBrowserActions());
   EXPECT_EQ(1, browser_actions_bar()->NumberOfBrowserActions());
   EXPECT_FALSE(toolbar_actions_bar->popped_out_action());
+}
+
+// A test that runs in incognito mode.
+class BrowserActionsBarIncognitoTest : public BrowserActionsBarBrowserTest {
+ public:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    BrowserActionsBarBrowserTest::SetUpCommandLine(command_line);
+    command_line->AppendSwitch("incognito");
+  }
+};
+
+// Tests that first loading an extension action in an incognito profile, then
+// removing the incognito profile and using the extension action in a normal
+// profile doesn't crash.
+// Regression test for crbug.com/663726.
+IN_PROC_BROWSER_TEST_F(BrowserActionsBarIncognitoTest, IncognitoMode) {
+  EXPECT_TRUE(browser()->profile()->IsOffTheRecord());
+  const extensions::Extension* extension = LoadExtensionIncognito(
+      test_data_dir_.AppendASCII("api_test/browser_action_with_icon"));
+  ASSERT_TRUE(extension);
+  Browser* second_browser =
+      new Browser(Browser::CreateParams(profile()->GetOriginalProfile(), true));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(second_browser->profile()->IsOffTheRecord());
+
+  content::WindowedNotificationObserver window_close_observer(
+      chrome::NOTIFICATION_BROWSER_CLOSED, content::Source<Browser>(browser()));
+  browser()->window()->Close();
+  window_close_observer.Wait();
+
+  std::vector<ToolbarActionViewController*> actions =
+      second_browser->window()->GetToolbarActionsBar()->GetActions();
+  ASSERT_EQ(1u, actions.size());
+  gfx::Image icon = actions[0]->GetIcon(
+      second_browser->tab_strip_model()->GetActiveWebContents(),
+      gfx::Size(ToolbarActionsBar::IconWidth(false),
+                ToolbarActionsBar::IconHeight()));
+  const gfx::ImageSkia* skia = icon.ToImageSkia();
+  ASSERT_TRUE(skia);
+  // Force the image to try and load a representation.
+  skia->GetRepresentation(2.0);
 }

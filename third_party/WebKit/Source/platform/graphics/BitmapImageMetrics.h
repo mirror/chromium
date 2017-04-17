@@ -7,43 +7,54 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/graphics/ImageOrientation.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
 #include "third_party/skia/include/core/SkColorSpace.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT BitmapImageMetrics {
-    STATIC_ONLY(BitmapImageMetrics);
-public:
-    // Values synced with 'DecodedImageType' in src/tools/metrics/histograms/histograms.xml
-    enum DecodedImageType {
-        ImageUnknown = 0,
-        ImageJPEG = 1,
-        ImagePNG = 2,
-        ImageGIF = 3,
-        ImageWebP = 4,
-        ImageICO = 5,
-        ImageBMP = 6,
-        DecodedImageTypeEnumEnd = ImageBMP + 1
-    };
+  STATIC_ONLY(BitmapImageMetrics);
 
-    enum Gamma {
-        // Values synced with 'Gamma' in src/tools/metrics/histograms/histograms.xml
-        GammaLinear = 0,
-        GammaSRGB = 1,
-        Gamma2Dot2 = 2,
-        GammaNonStandard = 3,
-        GammaNull = 4,
-        GammaFail = 5,
-        GammaEnd = GammaFail + 1,
-    };
+ public:
+  // Values synced with 'DecodedImageType' in
+  // src/tools/metrics/histograms/histograms.xml
+  enum DecodedImageType {
+    kImageUnknown = 0,
+    kImageJPEG = 1,
+    kImagePNG = 2,
+    kImageGIF = 3,
+    kImageWebP = 4,
+    kImageICO = 5,
+    kImageBMP = 6,
+    kDecodedImageTypeEnumEnd = kImageBMP + 1
+  };
 
-    static void countDecodedImageType(const String& type);
-    static void countImageOrientation(const ImageOrientationEnum);
-    static void countGamma(SkColorSpace*);
+  enum Gamma {
+    // Values synced with 'Gamma' in src/tools/metrics/histograms/histograms.xml
+    kGammaLinear = 0,
+    kGammaSRGB = 1,
+    kGamma2Dot2 = 2,
+    kGammaNonStandard = 3,
+    kGammaNull = 4,
+    kGammaFail = 5,
+    kGammaInvalid = 6,
+    kGammaExponent = 7,
+    kGammaTable = 8,
+    kGammaParametric = 9,
+    kGammaNamed = 10,
+    kGammaEnd = kGammaNamed + 1,
+  };
+
+  static void CountDecodedImageType(const String& type);
+  static void CountImageOrientation(const ImageOrientationEnum);
+  static void CountImageGammaAndGamut(SkColorSpace*);
+  static void CountOutputGammaAndGamut(SkColorSpace*);
+
+ private:
+  static Gamma GetColorSpaceGamma(SkColorSpace*);
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

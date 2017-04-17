@@ -17,6 +17,7 @@
 #include "chrome/browser/ui/views/frame/browser_window_property_manager_win.h"
 #include "chrome/browser/ui/views/frame/system_menu_insertion_delegate_win.h"
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
+#include "chrome/browser/win/titlebar_config.h"
 #include "chrome/common/chrome_constants.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/theme_provider.h"
@@ -83,12 +84,15 @@ int BrowserDesktopWindowTreeHostWin::GetInitialShowState() const {
 
 bool BrowserDesktopWindowTreeHostWin::GetClientAreaInsets(
     gfx::Insets* insets) const {
-  // Use the default client insets for an opaque frame or a glass popup/app
-  // frame.
-  if (!GetWidget()->ShouldUseNativeFrame() ||
-      !browser_view_->IsBrowserTypeNormal()) {
+  // Always use default insets for opaque frame.
+  if (!ShouldUseNativeFrame())
     return false;
-  }
+
+  // Use default insets for popups and apps, unless we are custom drawing the
+  // titlebar.
+  if (!ShouldCustomDrawSystemTitlebar() &&
+      !browser_view_->IsBrowserTypeNormal())
+    return false;
 
   if (GetWidget()->IsFullscreen()) {
     // In fullscreen mode there is no frame.
@@ -98,7 +102,8 @@ bool BrowserDesktopWindowTreeHostWin::GetClientAreaInsets(
         display::win::ScreenWin::GetSystemMetricsForHwnd(
             GetHWND(), SM_CXSIZEFRAME);
     // Reduce the Windows non-client border size because we extend the border
-    // into our client area in UpdateDWMFrame().
+    // into our client area in UpdateDWMFrame(). The top inset must be 0 or
+    // else Windows will draw a full native titlebar outside the client area.
     *insets = gfx::Insets(0, frame_thickness, frame_thickness,
                           frame_thickness) - GetClientEdgeThicknesses();
   }
@@ -170,10 +175,10 @@ void BrowserDesktopWindowTreeHostWin::PostHandleMSG(UINT message,
       // unless necessary to avoid flicker. This may be invoked during creation
       // on XP and before the non_client_view has been created.
       WINDOWPOS* window_pos = reinterpret_cast<WINDOWPOS*>(l_param);
-      if (window_pos->flags & SWP_SHOWWINDOW &&
-          GetWidget()->non_client_view()) {
-        GetWidget()->non_client_view()->Layout();
-        GetWidget()->non_client_view()->SchedulePaint();
+      views::NonClientView* non_client_view = GetWidget()->non_client_view();
+      if (window_pos->flags & SWP_SHOWWINDOW && non_client_view) {
+        non_client_view->Layout();
+        non_client_view->SchedulePaint();
       }
       break;
     }
@@ -196,23 +201,35 @@ void BrowserDesktopWindowTreeHostWin::PostHandleMSG(UINT message,
       }
       break;
     }
+    case WM_DWMCOLORIZATIONCOLORCHANGED: {
+      // The activation border may have changed color.
+      views::NonClientView* non_client_view = GetWidget()->non_client_view();
+      if (non_client_view)
+        non_client_view->SchedulePaint();
+      break;
+    }
   }
 }
 
 views::FrameMode BrowserDesktopWindowTreeHostWin::GetFrameMode() const {
+  const views::FrameMode system_frame_mode =
+      ShouldCustomDrawSystemTitlebar()
+          ? views::FrameMode::SYSTEM_DRAWN_NO_CONTROLS
+          : views::FrameMode::SYSTEM_DRAWN;
+
   // We don't theme popup or app windows, so regardless of whether or not a
   // theme is active for normal browser windows, we don't want to use the custom
   // frame for popups/apps.
   if (!browser_view_->IsBrowserTypeNormal() &&
       DesktopWindowTreeHostWin::GetFrameMode() ==
           views::FrameMode::SYSTEM_DRAWN) {
-    return views::FrameMode::SYSTEM_DRAWN;
+    return system_frame_mode;
   }
 
   // Otherwise, we use the native frame when we're told we should by the theme
   // provider (e.g. no custom theme is active).
   return GetWidget()->GetThemeProvider()->ShouldUseNativeFrame()
-             ? views::FrameMode::SYSTEM_DRAWN
+             ? system_frame_mode
              : views::FrameMode::CUSTOM_DRAWN;
 }
 
@@ -231,6 +248,12 @@ bool BrowserDesktopWindowTreeHostWin::ShouldUseNativeFrame() const {
   // Otherwise, we use the native frame when we're told we should by the theme
   // provider (e.g. no custom theme is active).
   return GetWidget()->GetThemeProvider()->ShouldUseNativeFrame();
+}
+
+bool BrowserDesktopWindowTreeHostWin::ShouldWindowContentsBeTransparent()
+    const {
+  return !ShouldCustomDrawSystemTitlebar() &&
+         views::DesktopWindowTreeHostWin::ShouldWindowContentsBeTransparent();
 }
 
 void BrowserDesktopWindowTreeHostWin::FrameTypeChanged() {
@@ -277,9 +300,9 @@ BrowserDesktopWindowTreeHostWin::GetClientEdgeThicknesses() const {
 }
 
 MARGINS BrowserDesktopWindowTreeHostWin::GetDWMFrameMargins() const {
-  // If we're using the opaque frame or we're fullscreen we don't extend the
-  // glass in at all because it won't be visible.
-  if (!GetWidget()->ShouldUseNativeFrame() || GetWidget()->IsFullscreen())
+  // Don't extend the glass in at all if it won't be visible.
+  if (!ShouldUseNativeFrame() || GetWidget()->IsFullscreen() ||
+      ShouldCustomDrawSystemTitlebar())
     return MARGINS{0};
 
   // The glass should extend to the bottom of the tabstrip.

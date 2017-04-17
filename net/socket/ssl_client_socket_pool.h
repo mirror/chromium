@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
+#include "net/base/net_export.h"
 #include "net/base/privacy_mode.h"
 #include "net/http/http_response_info.h"
 #include "net/socket/client_socket_pool.h"
@@ -150,6 +151,8 @@ class SSLConnectJob : public ConnectJob {
   // Otherwise, it returns a net error code.
   int ConnectInternal() override;
 
+  void ResetStateForRetry();
+
   scoped_refptr<SSLSocketParams> params_;
   TransportClientSocketPool* const transport_pool_;
   SOCKSClientSocketPool* const socks_pool_;
@@ -170,6 +173,12 @@ class SSLConnectJob : public ConnectJob {
   // and only if the connect job is connected *directly* to the server (not
   // through an HTTPS CONNECT request or a SOCKS proxy).
   IPEndPoint server_address_;
+
+  bool version_interference_probe_;
+
+  // The error which triggered a TLS 1.3 version interference probe, or OK if
+  // none was triggered.
+  int version_interference_error_;
 
   DISALLOW_COPY_AND_ASSIGN(SSLConnectJob);
 };
@@ -207,12 +216,16 @@ class NET_EXPORT_PRIVATE SSLClientSocketPool
                     RespectLimits respect_limits,
                     ClientSocketHandle* handle,
                     const CompletionCallback& callback,
-                    const BoundNetLog& net_log) override;
+                    const NetLogWithSource& net_log) override;
 
   void RequestSockets(const std::string& group_name,
                       const void* params,
                       int num_sockets,
-                      const BoundNetLog& net_log) override;
+                      const NetLogWithSource& net_log) override;
+
+  void SetPriority(const std::string& group_name,
+                   ClientSocketHandle* handle,
+                   RequestPriority priority) override;
 
   void CancelRequest(const std::string& group_name,
                      ClientSocketHandle* handle) override;
@@ -225,12 +238,19 @@ class NET_EXPORT_PRIVATE SSLClientSocketPool
 
   void CloseIdleSockets() override;
 
+  void CloseIdleSocketsInGroup(const std::string& group_name) override;
+
   int IdleSocketCount() const override;
 
   int IdleSocketCountInGroup(const std::string& group_name) const override;
 
   LoadState GetLoadState(const std::string& group_name,
                          const ClientSocketHandle* handle) const override;
+
+  // Dumps memory allocation stats. |parent_dump_absolute_name| is the name
+  // used by the parent MemoryAllocatorDump in the memory dump hierarchy.
+  void DumpMemoryStats(base::trace_event::ProcessMemoryDump* pmd,
+                       const std::string& parent_dump_absolute_name) const;
 
   std::unique_ptr<base::DictionaryValue> GetInfoAsValue(
       const std::string& name,

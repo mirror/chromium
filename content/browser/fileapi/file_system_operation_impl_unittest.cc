@@ -21,9 +21,6 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/fileapi/mock_file_change_observer.h"
 #include "content/browser/fileapi/mock_file_update_observer.h"
-#include "content/browser/quota/mock_quota_manager.h"
-#include "content/browser/quota/mock_quota_manager_proxy.h"
-#include "content/public/test/async_file_test_helper.h"
 #include "content/public/test/sandbox_file_system_test_helper.h"
 #include "storage/browser/blob/shareable_file_reference.h"
 #include "storage/browser/fileapi/file_system_context.h"
@@ -33,6 +30,9 @@
 #include "storage/browser/fileapi/sandbox_file_system_backend.h"
 #include "storage/browser/quota/quota_manager.h"
 #include "storage/browser/quota/quota_manager_proxy.h"
+#include "storage/browser/test/async_file_test_helper.h"
+#include "storage/browser/test/mock_quota_manager.h"
+#include "storage/browser/test/mock_quota_manager_proxy.h"
 #include "storage/common/fileapi/file_system_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -62,7 +62,7 @@ class FileSystemOperationImplTest
     update_observers_ =
         storage::MockFileUpdateObserver::CreateList(&update_observer_);
 
-    base::FilePath base_dir = base_.path().AppendASCII("filesystem");
+    base::FilePath base_dir = base_.GetPath().AppendASCII("filesystem");
     quota_manager_ =
         new MockQuotaManager(false /* is_incognito */, base_dir,
                              base::ThreadTaskRunnerHandle::Get().get(),

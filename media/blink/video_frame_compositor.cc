@@ -5,8 +5,10 @@
 #include "media/blink/video_frame_compositor.h"
 
 #include "base/bind.h"
+#include "base/callback_helpers.h"
 #include "base/message_loop/message_loop.h"
 #include "base/time/default_tick_clock.h"
+#include "base/trace_event/auto_open_close_event.h"
 #include "base/trace_event/trace_event.h"
 #include "media/base/video_frame.h"
 
@@ -51,6 +53,19 @@ void VideoFrameCompositor::OnRendererStateUpdate(bool new_state) {
   DCHECK(compositor_task_runner_->BelongsToCurrentThread());
   DCHECK_NE(rendering_, new_state);
   rendering_ = new_state;
+
+  if (!auto_open_close_) {
+    auto_open_close_.reset(new base::trace_event::AutoOpenCloseEvent(
+        base::trace_event::AutoOpenCloseEvent::Type::ASYNC, "media,rail",
+        "VideoPlayback"));
+  }
+
+  if (rendering_) {
+    auto_open_close_->Begin();
+  } else {
+    new_processed_frame_cb_.Reset();
+    auto_open_close_->End();
+  }
 
   if (rendering_) {
     // Always start playback in background rendering mode, if |client_| kicks
@@ -105,8 +120,6 @@ bool VideoFrameCompositor::HasCurrentFrame() {
 }
 
 void VideoFrameCompositor::Start(RenderCallback* callback) {
-  TRACE_EVENT0("media", "VideoFrameCompositor::Start");
-
   // Called from the media thread, so acquire the callback under lock before
   // returning in case a Stop() call comes in before the PostTask is processed.
   base::AutoLock lock(callback_lock_);
@@ -118,8 +131,6 @@ void VideoFrameCompositor::Start(RenderCallback* callback) {
 }
 
 void VideoFrameCompositor::Stop() {
-  TRACE_EVENT0("media", "VideoFrameCompositor::Stop");
-
   // Called from the media thread, so release the callback under lock before
   // returning to avoid a pending UpdateCurrentFrame() call occurring before
   // the PostTask is processed.
@@ -132,15 +143,17 @@ void VideoFrameCompositor::Stop() {
 }
 
 void VideoFrameCompositor::PaintSingleFrame(
-    const scoped_refptr<VideoFrame>& frame) {
+    const scoped_refptr<VideoFrame>& frame,
+    bool repaint_duplicate_frame) {
   if (!compositor_task_runner_->BelongsToCurrentThread()) {
     compositor_task_runner_->PostTask(
-        FROM_HERE, base::Bind(&VideoFrameCompositor::PaintSingleFrame,
-                              base::Unretained(this), frame));
+        FROM_HERE,
+        base::Bind(&VideoFrameCompositor::PaintSingleFrame,
+                   base::Unretained(this), frame, repaint_duplicate_frame));
     return;
   }
 
-  if (ProcessNewFrame(frame) && client_)
+  if (ProcessNewFrame(frame, repaint_duplicate_frame) && client_)
     client_->DidReceiveFrame();
 }
 
@@ -177,18 +190,31 @@ base::TimeDelta VideoFrameCompositor::GetCurrentFrameTimestamp() const {
   return current_frame_->timestamp();
 }
 
+void VideoFrameCompositor::SetOnNewProcessedFrameCallback(
+    const OnNewProcessedFrameCB& cb) {
+  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  new_processed_frame_cb_ = cb;
+}
+
 bool VideoFrameCompositor::ProcessNewFrame(
-    const scoped_refptr<VideoFrame>& frame) {
+    const scoped_refptr<VideoFrame>& frame,
+    bool repaint_duplicate_frame) {
   DCHECK(compositor_task_runner_->BelongsToCurrentThread());
 
-  if (frame == current_frame_)
+  if (frame && current_frame_ && !repaint_duplicate_frame &&
+      frame->unique_id() == current_frame_->unique_id()) {
     return false;
+  }
 
   // Set the flag indicating that the current frame is unrendered, if we get a
   // subsequent PutCurrentFrame() call it will mark it as rendered.
   rendered_last_frame_ = false;
 
   current_frame_ = frame;
+
+  if (!new_processed_frame_cb_.is_null())
+    base::ResetAndReturn(&new_processed_frame_cb_).Run(base::TimeTicks::Now());
+
   return true;
 }
 
@@ -223,7 +249,8 @@ bool VideoFrameCompositor::CallRender(base::TimeTicks deadline_min,
   }
 
   const bool new_frame = ProcessNewFrame(
-      callback_->Render(deadline_min, deadline_max, background_rendering));
+      callback_->Render(deadline_min, deadline_max, background_rendering),
+      false);
 
   // We may create a new frame here with background rendering, but the provider
   // has no way of knowing that a new frame had been processed, so keep track of

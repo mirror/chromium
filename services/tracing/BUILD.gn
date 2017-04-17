@@ -2,24 +2,18 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import("//services/shell/public/cpp/service.gni")
-import("//services/shell/public/service_manifest.gni")
+import("//services/service_manager/public/cpp/service.gni")
+import("//services/service_manager/public/service_manifest.gni")
 
 service("tracing") {
   sources = [
     "main.cc",
   ]
 
-  avoid_runner_cycle = true
-
   deps = [
     ":lib",
     "//mojo/public/cpp/system",
-    "//services/shell/public/cpp",
-  ]
-
-  data_deps = [
-    ":manifest",
+    "//services/service_manager/public/cpp",
   ]
 }
 
@@ -30,18 +24,18 @@ service_manifest("manifest") {
 
 source_set("lib") {
   sources = [
-    "trace_data_sink.cc",
-    "trace_data_sink.h",
-    "trace_recorder_impl.cc",
-    "trace_recorder_impl.h",
-    "tracing_app.cc",
-    "tracing_app.h",
+    "data_sink.cc",
+    "data_sink.h",
+    "recorder.cc",
+    "recorder.h",
+    "service.cc",
+    "service.h",
   ]
 
   deps = [
     "//base",
     "//mojo/common:common_base",
-    "//services/shell/public/cpp",
+    "//services/service_manager/public/cpp",
     "//services/tracing/public/interfaces",
   ]
 }

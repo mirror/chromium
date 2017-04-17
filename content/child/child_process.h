@@ -6,9 +6,12 @@
 #define CONTENT_CHILD_CHILD_PROCESS_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/task_scheduler/task_scheduler.h"
+#include "base/threading/platform_thread.h"
 #include "base/threading/thread.h"
 #include "content/common/content_export.h"
 
@@ -33,8 +36,15 @@ class CONTENT_EXPORT ChildProcess {
  public:
   // Child processes should have an object that derives from this class.
   // Normally you would immediately call set_main_thread after construction.
-  ChildProcess();
-  explicit ChildProcess(base::ThreadPriority io_thread_priority);
+  // |io_thread_priority| is the priority of the IO thread.
+  // |task_scheduler_name| and |task_scheduler_init_params| are used to
+  // initialize TaskScheduler. Default params are used if
+  // |task_scheduler_init_params| is nullptr.
+  ChildProcess(
+      base::ThreadPriority io_thread_priority = base::ThreadPriority::NORMAL,
+      const std::string& task_scheduler_name = "ContentChild",
+      std::unique_ptr<base::TaskScheduler::InitParams>
+          task_scheduler_init_params = nullptr);
   virtual ~ChildProcess();
 
   // May be NULL if the main thread hasn't been set explicitly.
@@ -69,11 +79,16 @@ class CONTENT_EXPORT ChildProcess {
   void AddRefProcess();
   void ReleaseProcess();
 
+#if defined(OS_LINUX)
+  void SetIOThreadPriority(base::ThreadPriority io_thread_priority);
+#endif
+
   // Getter for the one ChildProcess object for this process. Can only be called
   // on the main thread.
   static ChildProcess* current();
 
   static void WaitForDebugger(const std::string& label);
+
  private:
   int ref_count_;
 
@@ -87,6 +102,9 @@ class CONTENT_EXPORT ChildProcess {
   // it depends on it (indirectly through IPC::SyncChannel).  Same for
   // io_thread_.
   std::unique_ptr<ChildThreadImpl> main_thread_;
+
+  // Whether this ChildProcess initialized TaskScheduler.
+  bool initialized_task_scheduler_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ChildProcess);
 };

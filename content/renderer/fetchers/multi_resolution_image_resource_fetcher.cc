@@ -7,15 +7,15 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "content/child/image_decoder.h"
-#include "content/public/renderer/resource_fetcher.h"
+#include "content/public/renderer/associated_resource_fetcher.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
+#include "third_party/WebKit/public/web/WebAssociatedURLLoaderOptions.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
-#include "third_party/WebKit/public/web/WebURLLoaderOptions.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/gfx/geometry/size.h"
 
 using blink::WebFrame;
-using blink::WebURLLoaderOptions;
+using blink::WebAssociatedURLLoaderOptions;
 using blink::WebURLRequest;
 using blink::WebURLResponse;
 
@@ -32,27 +32,24 @@ MultiResolutionImageResourceFetcher::MultiResolutionImageResourceFetcher(
       id_(id),
       http_status_code_(0),
       image_url_(image_url) {
-  fetcher_.reset(ResourceFetcher::Create(image_url));
+  fetcher_.reset(AssociatedResourceFetcher::Create(image_url));
 
-  WebURLLoaderOptions options;
-  options.allowCredentials = true;
-  options.crossOriginRequestPolicy =
-      WebURLLoaderOptions::CrossOriginRequestPolicyAllow;
+  WebAssociatedURLLoaderOptions options;
+  options.allow_credentials = true;
+  options.cross_origin_request_policy =
+      WebAssociatedURLLoaderOptions::kCrossOriginRequestPolicyAllow;
   fetcher_->SetLoaderOptions(options);
 
   // To prevent cache tainting, the favicon requests have to by-pass the service
   // workers. This should ideally not happen or at least not all the time.
   // See https://crbug.com/448427
-  if (request_context == WebURLRequest::RequestContextFavicon)
-    fetcher_->SetSkipServiceWorker(WebURLRequest::SkipServiceWorker::All);
+  if (request_context == WebURLRequest::kRequestContextFavicon)
+    fetcher_->SetServiceWorkerMode(WebURLRequest::ServiceWorkerMode::kNone);
 
   fetcher_->SetCachePolicy(cache_policy);
 
   fetcher_->Start(
-      frame,
-      request_context,
-      WebURLRequest::FrameTypeNone,
-      ResourceFetcher::FRAME_ASSOCIATED_LOADER,
+      frame, request_context, WebURLRequest::kFrameTypeNone,
       base::Bind(&MultiResolutionImageResourceFetcher::OnURLFetchComplete,
                  base::Unretained(this)));
 }
@@ -64,9 +61,9 @@ void MultiResolutionImageResourceFetcher::OnURLFetchComplete(
     const WebURLResponse& response,
     const std::string& data) {
   std::vector<SkBitmap> bitmaps;
-  if (!response.isNull()) {
-    http_status_code_ = response.httpStatusCode();
-    GURL url(response.url());
+  if (!response.IsNull()) {
+    http_status_code_ = response.HttpStatusCode();
+    GURL url(response.Url());
     if (http_status_code_ == 200 || url.SchemeIsFile()) {
       // Request succeeded, try to convert it to an image.
       bitmaps = ImageDecoder::DecodeAll(
@@ -80,6 +77,13 @@ void MultiResolutionImageResourceFetcher::OnURLFetchComplete(
   // destruction.
   Callback callback = callback_;
   callback.Run(this, bitmaps);
+}
+
+void MultiResolutionImageResourceFetcher::OnRenderFrameDestruct() {
+  // Take a reference to the callback as running the callback may lead to our
+  // destruction.
+  Callback callback = callback_;
+  callback.Run(this, std::vector<SkBitmap>());
 }
 
 }  // namespace content

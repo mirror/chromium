@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_PROFILES_PROFILES_STATE_H_
 #define CHROME_BROWSER_PROFILES_PROFILES_STATE_H_
 
+#include <string>
 #include <vector>
 #include "base/strings/string16.h"
 #include "chrome/browser/profiles/avatar_menu.h"
@@ -73,8 +74,8 @@ bool IsProfileLocked(const base::FilePath& profile_path);
 // an update for the Gaia profile info.
 void UpdateIsProfileLockEnabledIfNeeded(Profile* profile);
 
-// If the --google-profile-info flag is turned on, starts an update for a new
-// version of the Gaia profile picture and other profile info.
+// Starts an update for a new version of the Gaia profile picture and other
+// profile info.
 void UpdateGaiaProfileInfoIfNeeded(Profile* profile);
 
 // Returns the sign-in error controller for the given profile.  Some profiles,
@@ -103,8 +104,12 @@ bool GetFastUserSwitchingTutorialDismissedState();
 // System Profile directory, which is an invalid last used profile.
 void SetLastUsedProfile(const std::string& profile_dir);
 
-// Returns true if all non-supervised and non-child profiles are locked.
-bool AreAllProfilesLocked();
+// Returns true if there exists at least one non-supervised or non-child profile
+// and they are all locked.
+bool AreAllNonChildNonSupervisedProfilesLocked();
+
+// Returns whether a public session is being run currently.
+bool IsPublicSession();
 
 }  // namespace profiles
 

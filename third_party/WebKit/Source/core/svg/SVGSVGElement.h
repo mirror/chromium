@@ -22,145 +22,151 @@
 #ifndef SVGSVGElement_h
 #define SVGSVGElement_h
 
-#include "core/svg/SVGAnimatedBoolean.h"
 #include "core/svg/SVGAnimatedLength.h"
 #include "core/svg/SVGFitToViewBox.h"
 #include "core/svg/SVGGraphicsElement.h"
-#include "core/svg/SVGLengthTearOff.h"
-#include "core/svg/SVGPointTearOff.h"
+#include "core/svg/SVGPoint.h"
 #include "core/svg/SVGZoomAndPan.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
-class SVGMatrixTearOff;
+class SMILTimeContainer;
 class SVGAngleTearOff;
+class SVGLengthTearOff;
+class SVGMatrixTearOff;
 class SVGNumberTearOff;
+class SVGPointTearOff;
 class SVGTransformTearOff;
 class SVGViewSpec;
-class SVGViewElement;
-class SMILTimeContainer;
 
 class SVGSVGElement final : public SVGGraphicsElement,
                             public SVGFitToViewBox,
                             public SVGZoomAndPan {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(SVGSVGElement);
-public:
-    DECLARE_NODE_FACTORY(SVGSVGElement);
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(SVGSVGElement);
 
-    // 'SVGSVGElement' functions
-    SVGRectTearOff* viewport() const;
+ public:
+  DECLARE_NODE_FACTORY(SVGSVGElement);
 
-    bool useCurrentView() const { return m_useCurrentView; }
-    SVGViewSpec* currentView();
+  float IntrinsicWidth() const;
+  float IntrinsicHeight() const;
+  FloatSize CurrentViewportSize() const;
+  FloatRect CurrentViewBoxRect() const;
+  SVGPreserveAspectRatio* CurrentPreserveAspectRatio() const;
 
-    float intrinsicWidth() const;
-    float intrinsicHeight() const;
-    FloatSize currentViewportSize() const;
-    FloatRect currentViewBoxRect() const;
+  float currentScale() const;
+  void setCurrentScale(float scale);
 
-    float currentScale() const;
-    void setCurrentScale(float scale);
+  FloatPoint CurrentTranslate() { return translation_->Value(); }
+  void SetCurrentTranslate(const FloatPoint&);
+  SVGPointTearOff* currentTranslateFromJavascript();
 
-    FloatPoint currentTranslate() { return m_translation->value(); }
-    void setCurrentTranslate(const FloatPoint&);
-    SVGPointTearOff* currentTranslateFromJavascript();
+  SMILTimeContainer* TimeContainer() const { return time_container_.Get(); }
 
-    SMILTimeContainer* timeContainer() const { return m_timeContainer.get(); }
+  void pauseAnimations();
+  void unpauseAnimations();
+  bool animationsPaused() const;
 
-    void pauseAnimations();
-    void unpauseAnimations();
-    bool animationsPaused() const;
+  float getCurrentTime() const;
+  void setCurrentTime(float seconds);
 
-    float getCurrentTime() const;
-    void setCurrentTime(float seconds);
+  // Stubs for the deprecated 'redraw' interface.
+  unsigned suspendRedraw(unsigned) { return 1; }
+  void unsuspendRedraw(unsigned) {}
+  void unsuspendRedrawAll() {}
+  void forceRedraw() {}
 
-    // Stubs for the deprecated 'redraw' interface.
-    unsigned suspendRedraw(unsigned) { return 1; }
-    void unsuspendRedraw(unsigned) { }
-    void unsuspendRedrawAll() { }
-    void forceRedraw() { }
+  StaticNodeList* getIntersectionList(SVGRectTearOff*,
+                                      SVGElement* reference_element) const;
+  StaticNodeList* getEnclosureList(SVGRectTearOff*,
+                                   SVGElement* reference_element) const;
+  bool checkIntersection(SVGElement*, SVGRectTearOff*) const;
+  bool checkEnclosure(SVGElement*, SVGRectTearOff*) const;
+  void deselectAll();
 
-    StaticNodeList* getIntersectionList(SVGRectTearOff*, SVGElement* referenceElement) const;
-    StaticNodeList* getEnclosureList(SVGRectTearOff*, SVGElement* referenceElement) const;
-    bool checkIntersection(SVGElement*, SVGRectTearOff*) const;
-    bool checkEnclosure(SVGElement*, SVGRectTearOff*) const;
-    void deselectAll();
+  static SVGNumberTearOff* createSVGNumber();
+  static SVGLengthTearOff* createSVGLength();
+  static SVGAngleTearOff* createSVGAngle();
+  static SVGPointTearOff* createSVGPoint();
+  static SVGMatrixTearOff* createSVGMatrix();
+  static SVGRectTearOff* createSVGRect();
+  static SVGTransformTearOff* createSVGTransform();
+  static SVGTransformTearOff* createSVGTransformFromMatrix(SVGMatrixTearOff*);
 
-    static SVGNumberTearOff* createSVGNumber();
-    static SVGLengthTearOff* createSVGLength();
-    static SVGAngleTearOff* createSVGAngle();
-    static SVGPointTearOff* createSVGPoint();
-    static SVGMatrixTearOff* createSVGMatrix();
-    static SVGRectTearOff* createSVGRect();
-    static SVGTransformTearOff* createSVGTransform();
-    static SVGTransformTearOff* createSVGTransformFromMatrix(SVGMatrixTearOff*);
+  AffineTransform ViewBoxToViewTransform(float view_width,
+                                         float view_height) const;
 
-    AffineTransform viewBoxToViewTransform(float viewWidth, float viewHeight) const;
+  void SetupInitialView(const String& fragment_identifier,
+                        Element* anchor_node);
+  bool ZoomAndPanEnabled() const;
 
-    void setupInitialView(const String& fragmentIdentifier, Element* anchorNode);
-    bool zoomAndPanEnabled() const;
+  bool HasIntrinsicWidth() const;
+  bool HasIntrinsicHeight() const;
 
-    bool hasIntrinsicWidth() const;
-    bool hasIntrinsicHeight() const;
+  SVGAnimatedLength* x() const { return x_.Get(); }
+  SVGAnimatedLength* y() const { return y_.Get(); }
+  SVGAnimatedLength* width() const { return width_.Get(); }
+  SVGAnimatedLength* height() const { return height_.Get(); }
 
-    SVGAnimatedLength* x() const { return m_x.get(); }
-    SVGAnimatedLength* y() const { return m_y.get(); }
-    SVGAnimatedLength* width() const { return m_width.get(); }
-    SVGAnimatedLength* height() const { return m_height.get(); }
+  DECLARE_VIRTUAL_TRACE();
 
-    DECLARE_VIRTUAL_TRACE();
+  SVGViewSpec* ViewSpec() const { return view_spec_; }
+  void SetViewSpec(SVGViewSpec*);
 
-private:
-    explicit SVGSVGElement(Document&);
-    ~SVGSVGElement() override;
+ private:
+  explicit SVGSVGElement(Document&);
+  ~SVGSVGElement() override;
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    bool isPresentationAttribute(const QualifiedName&) const override;
-    bool isPresentationAttributeWithSVGDOM(const QualifiedName&) const override;
-    void collectStyleForPresentationAttribute(const QualifiedName&, const AtomicString&, MutableStylePropertySet*) override;
+  SVGViewSpec& EnsureViewSpec();
 
-    bool layoutObjectIsNeeded(const ComputedStyle&) override;
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
+  void ParseAttribute(const AttributeModificationParams&) override;
+  bool IsPresentationAttribute(const QualifiedName&) const override;
+  bool IsPresentationAttributeWithSVGDOM(const QualifiedName&) const override;
+  void CollectStyleForPresentationAttribute(const QualifiedName&,
+                                            const AtomicString&,
+                                            MutableStylePropertySet*) override;
 
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void removedFrom(ContainerNode*) override;
+  bool LayoutObjectIsNeeded(const ComputedStyle&) override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
 
-    void svgAttributeChanged(const QualifiedName&) override;
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
 
-    bool selfHasRelativeLengths() const override;
+  void SvgAttributeChanged(const QualifiedName&) override;
 
-    void inheritViewAttributes(SVGViewElement*);
+  bool SelfHasRelativeLengths() const override;
 
-    void updateUserTransform();
+  bool ShouldSynthesizeViewBox() const;
+  void UpdateUserTransform();
 
-    void finishParsingChildren() override;
+  void FinishParsingChildren() override;
 
-    enum CheckIntersectionOrEnclosure {
-        CheckIntersection,
-        CheckEnclosure
-    };
+  enum GeometryMatchingMode { kCheckIntersection, kCheckEnclosure };
 
-    bool checkIntersectionOrEnclosure(const SVGElement&, const FloatRect&, CheckIntersectionOrEnclosure) const;
-    StaticNodeList* collectIntersectionOrEnclosureList(const FloatRect&, SVGElement*, CheckIntersectionOrEnclosure) const;
+  bool CheckIntersectionOrEnclosure(const SVGElement&,
+                                    const FloatRect&,
+                                    GeometryMatchingMode) const;
+  StaticNodeList* CollectIntersectionOrEnclosureList(
+      const FloatRect&,
+      SVGElement*,
+      GeometryMatchingMode) const;
 
-    Member<SVGAnimatedLength> m_x;
-    Member<SVGAnimatedLength> m_y;
-    Member<SVGAnimatedLength> m_width;
-    Member<SVGAnimatedLength> m_height;
+  Member<SVGAnimatedLength> x_;
+  Member<SVGAnimatedLength> y_;
+  Member<SVGAnimatedLength> width_;
+  Member<SVGAnimatedLength> height_;
 
-    AffineTransform localCoordinateSpaceTransform(SVGElement::CTMScope) const override;
+  AffineTransform LocalCoordinateSpaceTransform() const override;
 
-    bool m_useCurrentView;
-    Member<SMILTimeContainer> m_timeContainer;
-    Member<SVGPoint> m_translation;
-    Member<SVGViewSpec> m_viewSpec;
-    float m_currentScale;
+  Member<SMILTimeContainer> time_container_;
+  Member<SVGPoint> translation_;
+  Member<SVGViewSpec> view_spec_;
+  float current_scale_;
 
-    friend class SVGCurrentTranslateTearOff;
+  friend class SVGCurrentTranslateTearOff;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGSVGElement_h
+#endif  // SVGSVGElement_h

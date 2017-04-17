@@ -5,12 +5,13 @@
 #ifndef CHROME_BROWSER_PERMISSIONS_PERMISSION_REQUEST_H_
 #define CHROME_BROWSER_PERMISSIONS_PERMISSION_REQUEST_H_
 
+#include "base/macros.h"
 #include "base/strings/string16.h"
-#include "content/public/browser/permission_type.h"
+#include "components/content_settings/core/common/content_settings_types.h"
 #include "url/gurl.h"
 
 namespace gfx {
-enum class VectorIconId;
+struct VectorIcon;
 }
 
 // Used for UMA to record the types of permission prompts shown.
@@ -33,6 +34,7 @@ enum class PermissionRequestType {
   PERMISSION_NOTIFICATIONS,
   PERMISSION_PROTECTED_MEDIA_IDENTIFIER,
   PERMISSION_PUSH_MESSAGING,
+  PERMISSION_FLASH,
   // NUM must be the last value in the enum.
   NUM
 };
@@ -58,15 +60,19 @@ enum class PermissionRequestGestureType {
 // requests, or depending on the situation, not shown at all.
 class PermissionRequest {
  public:
+#if defined(OS_ANDROID)
+  // On Android, icons are represented with an IDR_ identifier.
+  typedef int IconId;
+#else
+  // On desktop, we use a vector icon.
+  typedef const gfx::VectorIcon& IconId;
+#endif
+
+  PermissionRequest();
   virtual ~PermissionRequest() {}
 
-  // Returns a vector icon id if the icon should be drawn as a vector
-  // resource. Otherwise, returns VECTOR_ICON_NONE.
-  virtual gfx::VectorIconId GetVectorIconId() const;
-
   // The icon to use next to the message text fragment in the permission bubble.
-  // Must be a valid icon of size 18x18.
-  virtual int GetIconId() const = 0;
+  virtual IconId GetIconId() const = 0;
 
   // Returns the shortened prompt text for this permission.  Must be phrased
   // as a heading, e.g. "Location", or "Camera". The permission bubble may
@@ -94,6 +100,9 @@ class PermissionRequest {
   // eventually be called on every request which is not unregistered.
   virtual void RequestFinished() = 0;
 
+  // True if a persistence toggle should be shown in the UI for this request.
+  virtual bool ShouldShowPersistenceToggle() const;
+
   // Used to record UMA metrics for permission requests.
   virtual PermissionRequestType GetPermissionRequestType() const;
 
@@ -101,6 +110,21 @@ class PermissionRequest {
   // To keep things simple this metric is only recorded for the most popular
   // request types.
   virtual PermissionRequestGestureType GetGestureType() const;
+
+  // Used on Android to determine what Android OS permissions are needed for
+  // this permission request.
+  virtual ContentSettingsType GetContentSettingsType() const;
+
+  void set_persist(bool persist) { persist_ = persist; }
+
+ protected:
+  bool persist() const { return persist_; }
+
+ private:
+  // Whether or not the response for this prompt should be persisted.
+  bool persist_;
+
+  DISALLOW_COPY_AND_ASSIGN(PermissionRequest);
 };
 
 #endif  // CHROME_BROWSER_PERMISSIONS_PERMISSION_REQUEST_H_

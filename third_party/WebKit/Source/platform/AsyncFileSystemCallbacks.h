@@ -31,69 +31,86 @@
 #ifndef AsyncFileSystemCallbacks_h
 #define AsyncFileSystemCallbacks_h
 
+#include <memory>
 #include "platform/FileMetadata.h"
 #include "platform/FileSystemType.h"
 #include "platform/blob/BlobData.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebFileWriter.h"
-#include "wtf/Allocator.h"
-#include "wtf/Assertions.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/text/WTFString.h"
-#include <memory>
 
 namespace blink {
 
 class PLATFORM_EXPORT AsyncFileSystemCallbacks {
-    USING_FAST_MALLOC(AsyncFileSystemCallbacks);
-    WTF_MAKE_NONCOPYABLE(AsyncFileSystemCallbacks);
-public:
-    AsyncFileSystemCallbacks() : m_blockUntilCompletion(false) { }
+  USING_FAST_MALLOC(AsyncFileSystemCallbacks);
+  WTF_MAKE_NONCOPYABLE(AsyncFileSystemCallbacks);
 
-    // Called when a requested operation is completed successfully.
-    virtual void didSucceed() { ASSERT_NOT_REACHED(); }
+ public:
+  AsyncFileSystemCallbacks() : block_until_completion_(false) {}
 
-    // Called when a requested file system is opened.
-    virtual void didOpenFileSystem(const String& name, const KURL& rootURL) { ASSERT_NOT_REACHED(); }
+  // Called when a requested operation is completed successfully.
+  virtual void DidSucceed() { ASSERT_NOT_REACHED(); }
 
-    // Called when a filesystem URL is resolved.
-    virtual void didResolveURL(const String& name, const KURL& rootURL, FileSystemType, const String& filePath, bool isDirectory) { ASSERT_NOT_REACHED(); }
+  // Called when a requested file system is opened.
+  virtual void DidOpenFileSystem(const String& name, const KURL& root_url) {
+    ASSERT_NOT_REACHED();
+  }
 
-    // Called when a file metadata is read successfully.
-    virtual void didReadMetadata(const FileMetadata&) { ASSERT_NOT_REACHED(); }
+  // Called when a filesystem URL is resolved.
+  virtual void DidResolveURL(const String& name,
+                             const KURL& root_url,
+                             FileSystemType,
+                             const String& file_path,
+                             bool is_directory) {
+    ASSERT_NOT_REACHED();
+  }
 
-    // Called when a snapshot file is created successfully.
-    virtual void didCreateSnapshotFile(const FileMetadata&, PassRefPtr<BlobDataHandle> snapshot) { ASSERT_NOT_REACHED(); }
+  // Called when a file metadata is read successfully.
+  virtual void DidReadMetadata(const FileMetadata&) { ASSERT_NOT_REACHED(); }
 
-    // Called when a directory entry is read.
-    virtual void didReadDirectoryEntry(const String& name, bool isDirectory) { ASSERT_NOT_REACHED(); }
+  // Called when a snapshot file is created successfully.
+  virtual void DidCreateSnapshotFile(const FileMetadata&,
+                                     PassRefPtr<BlobDataHandle> snapshot) {
+    ASSERT_NOT_REACHED();
+  }
 
-    // Called after a chunk of directory entries have been read (i.e. indicates it's good time to call back to the application). If hasMore is true there can be more chunks.
-    virtual void didReadDirectoryEntries(bool hasMore) { ASSERT_NOT_REACHED(); }
+  // Called when a directory entry is read.
+  virtual void DidReadDirectoryEntry(const String& name, bool is_directory) {
+    ASSERT_NOT_REACHED();
+  }
 
-    // Called when an AsyncFileWrter has been created successfully.
-    virtual void didCreateFileWriter(std::unique_ptr<WebFileWriter>, long long length) { ASSERT_NOT_REACHED(); }
+  // Called after a chunk of directory entries have been read (i.e. indicates
+  // it's good time to call back to the application). If hasMore is true there
+  // can be more chunks.
+  virtual void DidReadDirectoryEntries(bool has_more) { ASSERT_NOT_REACHED(); }
 
-    // Called when there was an error.
-    virtual void didFail(int code) = 0;
+  // Called when an AsyncFileWrter has been created successfully.
+  virtual void DidCreateFileWriter(std::unique_ptr<WebFileWriter>,
+                                   long long length) {
+    ASSERT_NOT_REACHED();
+  }
 
-    // Returns true if the caller expects that the calling thread blocks
-    // until completion.
-    virtual bool shouldBlockUntilCompletion() const
-    {
-        return m_blockUntilCompletion;
-    }
+  // Called when there was an error.
+  virtual void DidFail(int code) = 0;
 
-    void setShouldBlockUntilCompletion(bool flag)
-    {
-        m_blockUntilCompletion = flag;
-    }
+  // Returns true if the caller expects that the calling thread blocks
+  // until completion.
+  virtual bool ShouldBlockUntilCompletion() const {
+    return block_until_completion_;
+  }
 
-    virtual ~AsyncFileSystemCallbacks() { }
+  void SetShouldBlockUntilCompletion(bool flag) {
+    block_until_completion_ = flag;
+  }
 
-private:
-    bool m_blockUntilCompletion;
+  virtual ~AsyncFileSystemCallbacks() {}
+
+ private:
+  bool block_until_completion_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AsyncFileSystemCallbacks_h
+#endif  // AsyncFileSystemCallbacks_h

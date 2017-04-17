@@ -27,16 +27,17 @@
 #ifndef HTMLPreloadScanner_h
 #define HTMLPreloadScanner_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/css/MediaValuesCached.h"
 #include "core/dom/ViewportDescription.h"
 #include "core/html/parser/CSSPreloadScanner.h"
 #include "core/html/parser/CompactHTMLToken.h"
 #include "core/html/parser/HTMLToken.h"
+#include "core/html/parser/PreloadRequest.h"
 #include "platform/text/SegmentedString.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/Vector.h"
-#include <memory>
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -47,135 +48,160 @@ class HTMLTokenizer;
 class SegmentedString;
 
 struct ViewportDescriptionWrapper {
-    ViewportDescription description;
-    bool set;
-    ViewportDescriptionWrapper()
-        : set(false)
-    {
-    }
+  ViewportDescription description;
+  bool set;
+  ViewportDescriptionWrapper() : set(false) {}
 };
 
 struct CORE_EXPORT CachedDocumentParameters {
-    USING_FAST_MALLOC(CachedDocumentParameters);
-public:
-    static std::unique_ptr<CachedDocumentParameters> create(Document* document)
-    {
-        return wrapUnique(new CachedDocumentParameters(document));
-    }
+  USING_FAST_MALLOC(CachedDocumentParameters);
 
-    bool doHtmlPreloadScanning;
-    bool doDocumentWritePreloadScanning;
-    Length defaultViewportMinWidth;
-    bool viewportMetaZeroValuesQuirk;
-    bool viewportMetaEnabled;
-    ReferrerPolicy referrerPolicy;
+ public:
+  static std::unique_ptr<CachedDocumentParameters> Create(Document* document) {
+    return WTF::WrapUnique(new CachedDocumentParameters(document));
+  }
 
-private:
-    explicit CachedDocumentParameters(Document*);
+  static std::unique_ptr<CachedDocumentParameters> Create() {
+    return WTF::WrapUnique(new CachedDocumentParameters);
+  }
+
+  bool do_html_preload_scanning;
+  bool do_document_write_preload_scanning;
+  Length default_viewport_min_width;
+  bool viewport_meta_zero_values_quirk;
+  bool viewport_meta_enabled;
+  ReferrerPolicy referrer_policy;
+
+ private:
+  explicit CachedDocumentParameters(Document*);
+  CachedDocumentParameters() = default;
 };
 
 class TokenPreloadScanner {
-    WTF_MAKE_NONCOPYABLE(TokenPreloadScanner); USING_FAST_MALLOC(TokenPreloadScanner);
-public:
-    TokenPreloadScanner(const KURL& documentURL, std::unique_ptr<CachedDocumentParameters>, const MediaValuesCached::MediaValuesCachedData&);
-    ~TokenPreloadScanner();
+  WTF_MAKE_NONCOPYABLE(TokenPreloadScanner);
+  USING_FAST_MALLOC(TokenPreloadScanner);
 
-    void scan(const HTMLToken&, const SegmentedString&, PreloadRequestStream& requests, ViewportDescriptionWrapper*);
-    void scan(const CompactHTMLToken&, const SegmentedString&, PreloadRequestStream& requests, ViewportDescriptionWrapper*, bool* likelyDocumentWriteScript);
+ public:
+  TokenPreloadScanner(const KURL& document_url,
+                      std::unique_ptr<CachedDocumentParameters>,
+                      const MediaValuesCached::MediaValuesCachedData&);
+  ~TokenPreloadScanner();
 
-    void setPredictedBaseElementURL(const KURL& url) { m_predictedBaseElementURL = url; }
+  void Scan(const HTMLToken&,
+            const SegmentedString&,
+            PreloadRequestStream& requests,
+            ViewportDescriptionWrapper*,
+            bool* is_csp_meta_tag);
+  void Scan(const CompactHTMLToken&,
+            const SegmentedString&,
+            PreloadRequestStream& requests,
+            ViewportDescriptionWrapper*,
+            bool* is_csp_meta_tag,
+            bool* likely_document_write_script);
 
-    // A TokenPreloadScannerCheckpoint is valid until the next call to rewindTo,
-    // at which point all outstanding checkpoints are invalidated.
-    TokenPreloadScannerCheckpoint createCheckpoint();
-    void rewindTo(TokenPreloadScannerCheckpoint);
+  void SetPredictedBaseElementURL(const KURL& url) {
+    predicted_base_element_url_ = url;
+  }
 
-private:
-    class StartTagScanner;
+  // A TokenPreloadScannerCheckpoint is valid until the next call to rewindTo,
+  // at which point all outstanding checkpoints are invalidated.
+  TokenPreloadScannerCheckpoint CreateCheckpoint();
+  void RewindTo(TokenPreloadScannerCheckpoint);
 
-    bool shouldEvaluateForDocumentWrite(const String& source);
-    bool shouldEvaluateForDocumentWrite(const HTMLToken::DataVector& source) { return false; }
+ private:
+  class StartTagScanner;
 
-    template <typename Token>
-    inline void scanCommon(const Token&, const SegmentedString&, PreloadRequestStream& requests, ViewportDescriptionWrapper*, bool* likelyDocumentWriteScript);
+  bool ShouldEvaluateForDocumentWrite(const String& source);
+  bool ShouldEvaluateForDocumentWrite(const HTMLToken::DataVector& source) {
+    return false;
+  }
 
-    template<typename Token>
-    void updatePredictedBaseURL(const Token&);
+  template <typename Token>
+  inline void ScanCommon(const Token&,
+                         const SegmentedString&,
+                         PreloadRequestStream& requests,
+                         ViewportDescriptionWrapper*,
+                         bool* is_csp_meta_tag,
+                         bool* likely_document_write_script);
 
-    struct Checkpoint {
-        Checkpoint(const KURL& predictedBaseElementURL, bool inStyle, bool inScript, bool isAppCacheEnabled, bool isCSPEnabled, size_t templateCount)
-            : predictedBaseElementURL(predictedBaseElementURL)
-            , inStyle(inStyle)
-            , inScript(inScript)
-            , isAppCacheEnabled(isAppCacheEnabled)
-            , isCSPEnabled(isCSPEnabled)
-            , templateCount(templateCount)
-        {
-        }
+  template <typename Token>
+  void UpdatePredictedBaseURL(const Token&);
 
-        KURL predictedBaseElementURL;
-        bool inStyle;
-        bool inScript;
-        bool isAppCacheEnabled;
-        bool isCSPEnabled;
-        size_t templateCount;
-    };
+  struct Checkpoint {
+    Checkpoint(const KURL& predicted_base_element_url,
+               bool in_style,
+               bool in_script,
+               size_t template_count)
+        : predicted_base_element_url(predicted_base_element_url),
+          in_style(in_style),
+          in_script(in_script),
+          template_count(template_count) {}
 
-    struct PictureData {
-        PictureData()
-            : sourceSize(0.0)
-            , sourceSizeSet(false)
-            , picked(false)
-        {
-        }
-        String sourceURL;
-        float sourceSize;
-        bool sourceSizeSet;
-        bool picked;
-    };
+    KURL predicted_base_element_url;
+    bool in_style;
+    bool in_script;
+    size_t template_count;
+  };
 
-    CSSPreloadScanner m_cssScanner;
-    const KURL m_documentURL;
-    KURL m_predictedBaseElementURL;
-    bool m_inStyle;
-    bool m_inPicture;
-    bool m_inScript;
-    bool m_isAppCacheEnabled;
-    bool m_isCSPEnabled;
-    PictureData m_pictureData;
-    size_t m_templateCount;
-    std::unique_ptr<CachedDocumentParameters> m_documentParameters;
-    Persistent<MediaValuesCached> m_mediaValues;
-    ClientHintsPreferences m_clientHintsPreferences;
+  struct PictureData {
+    PictureData() : source_size(0.0), source_size_set(false), picked(false) {}
+    String source_url;
+    float source_size;
+    bool source_size_set;
+    bool picked;
+  };
 
-    bool m_didRewind = false;
+  CSSPreloadScanner css_scanner_;
+  const KURL document_url_;
+  KURL predicted_base_element_url_;
+  bool in_style_;
+  bool in_picture_;
+  bool in_script_;
+  PictureData picture_data_;
+  size_t template_count_;
+  std::unique_ptr<CachedDocumentParameters> document_parameters_;
+  Persistent<MediaValuesCached> media_values_;
+  ClientHintsPreferences client_hints_preferences_;
 
-    Vector<Checkpoint> m_checkpoints;
+  bool did_rewind_ = false;
+
+  Vector<Checkpoint> checkpoints_;
 };
 
 class CORE_EXPORT HTMLPreloadScanner {
-    WTF_MAKE_NONCOPYABLE(HTMLPreloadScanner); USING_FAST_MALLOC(HTMLPreloadScanner);
-public:
-    static std::unique_ptr<HTMLPreloadScanner> create(const HTMLParserOptions& options, const KURL& documentURL, std::unique_ptr<CachedDocumentParameters> documentParameters, const MediaValuesCached::MediaValuesCachedData& mediaValuesCachedData)
-    {
-        return wrapUnique(new HTMLPreloadScanner(options, documentURL, std::move(documentParameters), mediaValuesCachedData));
-    }
+  WTF_MAKE_NONCOPYABLE(HTMLPreloadScanner);
+  USING_FAST_MALLOC(HTMLPreloadScanner);
 
+ public:
+  static std::unique_ptr<HTMLPreloadScanner> Create(
+      const HTMLParserOptions& options,
+      const KURL& document_url,
+      std::unique_ptr<CachedDocumentParameters> document_parameters,
+      const MediaValuesCached::MediaValuesCachedData&
+          media_values_cached_data) {
+    return WTF::WrapUnique(new HTMLPreloadScanner(
+        options, document_url, std::move(document_parameters),
+        media_values_cached_data));
+  }
 
-    ~HTMLPreloadScanner();
+  ~HTMLPreloadScanner();
 
-    void appendToEnd(const SegmentedString&);
-    void scanAndPreload(ResourcePreloader*, const KURL& documentBaseElementURL, ViewportDescriptionWrapper*);
+  void AppendToEnd(const SegmentedString&);
+  PreloadRequestStream Scan(const KURL& document_base_element_url,
+                            ViewportDescriptionWrapper*);
 
-private:
-    HTMLPreloadScanner(const HTMLParserOptions&, const KURL& documentURL, std::unique_ptr<CachedDocumentParameters>, const MediaValuesCached::MediaValuesCachedData&);
+ private:
+  HTMLPreloadScanner(const HTMLParserOptions&,
+                     const KURL& document_url,
+                     std::unique_ptr<CachedDocumentParameters>,
+                     const MediaValuesCached::MediaValuesCachedData&);
 
-    TokenPreloadScanner m_scanner;
-    SegmentedString m_source;
-    HTMLToken m_token;
-    std::unique_ptr<HTMLTokenizer> m_tokenizer;
+  TokenPreloadScanner scanner_;
+  SegmentedString source_;
+  HTMLToken token_;
+  std::unique_ptr<HTMLTokenizer> tokenizer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

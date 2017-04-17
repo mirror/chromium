@@ -12,32 +12,65 @@ Polymer({
   behaviors: [
     I18nBehavior,
     WebUIListenerBehavior,
+    settings.RouteObserverBehavior,
   ],
 
   properties: {
-    /** The current active route. */
-    currentRoute: {
-      type: Object,
-      notify: true,
-      observers: 'currentRouteChanged_',
-    },
-
-    /** Preferences state. */
     prefs: {
       type: Object,
       notify: true,
     },
 
+    /**
+     * |hasMouse_| and |hasTouchpad_| start undefined so observers don't trigger
+     * until they have been populated.
+     * @private
+     */
+    hasMouse_: Boolean,
+
     /** @private */
-    hasMouse_: {
+    hasTouchpad_: Boolean,
+
+    /**
+     * |hasStylus_| is initialized to false so that dom-if behaves correctly.
+     * @private
+     */
+    hasStylus_: {
       type: Boolean,
       value: false,
     },
 
-    /** @private */
-    hasTouchpad_: {
+    /**
+     * Whether power status and settings should be fetched and displayed.
+     * @private
+     */
+    enablePowerSettings_: {
       type: Boolean,
-      value: false,
+      value: function() {
+        return loadTimeData.getBoolean('enablePowerSettings');
+      },
+      readOnly: true,
+    },
+
+    /** @private {!Map<string, string>} */
+    focusConfig_: {
+      type: Object,
+      value: function() {
+        var map = new Map();
+        map.set(
+            settings.Route.POINTERS.path, '#pointersRow .subpage-arrow');
+        map.set(
+            settings.Route.KEYBOARD.path, '#keyboardRow .subpage-arrow');
+        map.set(
+            settings.Route.STYLUS.path, '#stylusRow .subpage-arrow');
+        map.set(
+            settings.Route.DISPLAY.path, '#displayRow .subpage-arrow');
+        map.set(
+            settings.Route.STORAGE.path, '#storageRow .subpage-arrow');
+        map.set(
+            settings.Route.POWER.path, '#powerRow .subpage-arrow');
+        return map;
+      },
     },
   },
 
@@ -45,11 +78,17 @@ Polymer({
     'pointersChanged_(hasMouse_, hasTouchpad_)',
   ],
 
-  ready: function() {
-    cr.addWebUIListener('has-mouse-changed', this.set.bind(this, 'hasMouse_'));
-    cr.addWebUIListener(
+  /** @override */
+  attached: function() {
+    this.addWebUIListener(
+        'has-mouse-changed', this.set.bind(this, 'hasMouse_'));
+    this.addWebUIListener(
         'has-touchpad-changed', this.set.bind(this, 'hasTouchpad_'));
     settings.DevicePageBrowserProxyImpl.getInstance().initializePointers();
+
+    this.addWebUIListener(
+        'has-stylus-changed', this.set.bind(this, 'hasStylus_'));
+    settings.DevicePageBrowserProxyImpl.getInstance().initializeStylus();
   },
 
   /**
@@ -67,23 +106,11 @@ Polymer({
   },
 
   /**
-   * @return {string}
-   * @private
-   */
-  getPointersIcon_: function() {
-    if (this.hasMouse_)
-      return 'settings:mouse';
-    if (this.hasTouchpad_)
-      return 'settings:touch-app';
-    return '';
-  },
-
-  /**
    * Handler for tapping the mouse and touchpad settings menu item.
    * @private
    */
   onPointersTap_: function() {
-    this.$.pages.setSubpageChain(['pointers']);
+    settings.navigateTo(settings.Route.POINTERS);
   },
 
   /**
@@ -91,7 +118,15 @@ Polymer({
    * @private
    */
   onKeyboardTap_: function() {
-    this.$.pages.setSubpageChain(['keyboard']);
+    settings.navigateTo(settings.Route.KEYBOARD);
+  },
+
+  /**
+   * Handler for tapping the Keyboard settings menu item.
+   * @private
+   */
+  onStylusTap_: function() {
+    settings.navigateTo(settings.Route.STYLUS);
   },
 
   /**
@@ -99,11 +134,27 @@ Polymer({
    * @private
    */
   onDisplayTap_: function() {
-    this.$.pages.setSubpageChain(['display']);
+    settings.navigateTo(settings.Route.DISPLAY);
   },
 
-  /** @private */
-  currentRouteChanged_: function() {
+  /**
+   * Handler for tapping the Storage settings menu item.
+   * @private
+   */
+  onStorageTap_: function() {
+    settings.navigateTo(settings.Route.STORAGE);
+  },
+
+  /**
+   * Handler for tapping the Power settings menu item.
+   * @private
+   */
+  onPowerTap_: function() {
+    settings.navigateTo(settings.Route.POWER);
+  },
+
+  /** @protected */
+  currentRouteChanged: function() {
     this.checkPointerSubpage_();
   },
 
@@ -122,22 +173,10 @@ Polymer({
    * @private
    */
   checkPointerSubpage_: function() {
-    if (!this.hasMouse_ && !this.hasTouchpad_ &&
-        this.isCurrentRouteOnPointersPage_()) {
-      this.$.pages.fire('subpage-back');
+    // Check that the properties have explicitly been set to false.
+    if (this.hasMouse_ === false && this.hasTouchpad_ === false &&
+        settings.getCurrentRoute() == settings.Route.POINTERS) {
+      settings.navigateTo(settings.Route.DEVICE);
     }
-  },
-
-  /**
-   * TODO(michaelpg): create generic fn for this and isCurrentRouteOnSyncPage_.
-   * @return {boolean} Whether the current route shows the pointers page.
-   * @private
-   */
-  isCurrentRouteOnPointersPage_: function() {
-    return this.currentRoute &&
-        this.currentRoute.page == 'basic' &&
-        this.currentRoute.section == 'device' &&
-        this.currentRoute.subpage.length == 1 &&
-        this.currentRoute.subpage[0] == 'pointers';
   },
 });

@@ -11,7 +11,7 @@
 #include "base/bind.h"
 #include "base/format_macros.h"
 #include "base/macros.h"
-#include "base/stl_util.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/values.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -112,10 +112,6 @@ ShillPropertyHandler::ShillPropertyHandler(Listener* listener)
 
 ShillPropertyHandler::~ShillPropertyHandler() {
   // Delete network service observers.
-  STLDeleteContainerPairSecondPointers(observed_networks_.begin(),
-                                       observed_networks_.end());
-  STLDeleteContainerPairSecondPointers(observed_devices_.begin(),
-                                       observed_devices_.end());
   CHECK(shill_manager_ == DBusThreadManager::Get()->GetShillManagerClient());
   shill_manager_->RemovePropertyChangedObserver(this);
 }
@@ -206,7 +202,7 @@ void ShillPropertyHandler::SetProhibitedTechnologies(
   // Send updated prohibited technology list to shill.
   const std::string prohibited_list =
       base::JoinString(prohibited_technologies, ",");
-  base::StringValue value(prohibited_list);
+  base::Value value(prohibited_list);
   shill_manager_->SetProperty(
       "ProhibitedTechnologies", value, base::Bind(&base::DoNothing),
       base::Bind(&network_handler::ShillErrorCallbackFunction,
@@ -216,7 +212,7 @@ void ShillPropertyHandler::SetProhibitedTechnologies(
 
 void ShillPropertyHandler::SetCheckPortalList(
     const std::string& check_portal_list) {
-  base::StringValue value(check_portal_list);
+  base::Value value(check_portal_list);
   shill_manager_->SetProperty(
       shill::kCheckPortalListProperty, value, base::Bind(&base::DoNothing),
       base::Bind(&network_handler::ShillErrorCallbackFunction,
@@ -225,11 +221,23 @@ void ShillPropertyHandler::SetCheckPortalList(
 }
 
 void ShillPropertyHandler::SetWakeOnLanEnabled(bool enabled) {
-  base::FundamentalValue value(enabled);
+  base::Value value(enabled);
   shill_manager_->SetProperty(
       shill::kWakeOnLanEnabledProperty, value, base::Bind(&base::DoNothing),
       base::Bind(&network_handler::ShillErrorCallbackFunction,
                  "SetWakeOnLanEnabled Failed", "Manager",
+                 network_handler::ErrorCallback()));
+}
+
+void ShillPropertyHandler::SetNetworkThrottlingStatus(
+    bool throttling_enabled,
+    uint32_t upload_rate_kbits,
+    uint32_t download_rate_kbits) {
+  shill_manager_->SetNetworkThrottlingStatus(
+      throttling_enabled, upload_rate_kbits, download_rate_kbits,
+      base::Bind(&base::DoNothing),
+      base::Bind(&network_handler::ShillErrorCallbackFunction,
+                 "SetNetworkThrottlingStatus failed", "Manager",
                  network_handler::ErrorCallback()));
 }
 
@@ -357,7 +365,7 @@ void ShillPropertyHandler::UpdateProperties(ManagedState::ManagedType type,
   for (base::ListValue::const_iterator iter = entries.begin();
        iter != entries.end(); ++iter) {
     std::string path;
-    (*iter)->GetAsString(&path);
+    iter->GetAsString(&path);
     if (path.empty())
       continue;
 
@@ -381,32 +389,28 @@ void ShillPropertyHandler::UpdateObserved(ManagedState::ManagedType type,
   ShillPropertyObserverMap new_observed;
   for (const auto& entry : entries) {
     std::string path;
-    entry->GetAsString(&path);
+    entry.GetAsString(&path);
     if (path.empty())
       continue;
     auto iter = observer_map.find(path);
-    ShillPropertyObserver* observer;
+    std::unique_ptr<ShillPropertyObserver> observer;
     if (iter != observer_map.end()) {
-      observer = iter->second;
+      observer = std::move(iter->second);
     } else {
       // Create an observer for future updates.
-      observer = new ShillPropertyObserver(
+      observer = base::MakeUnique<ShillPropertyObserver>(
           type, path, base::Bind(&ShillPropertyHandler::PropertyChangedCallback,
                                  AsWeakPtr()));
     }
-    auto result = new_observed.insert(std::make_pair(path, observer));
+    auto result =
+        new_observed.insert(std::make_pair(path, std::move(observer)));
     if (!result.second) {
       LOG(ERROR) << path << " is duplicated in the list.";
-      delete observer;
     }
     observer_map.erase(path);
     // Limit the number of observed services.
     if (new_observed.size() >= kMaxObserved)
       break;
-  }
-  // Delete network service observers still in observer_map.
-  for (auto& observer : observer_map) {
-    delete observer.second;
   }
   observer_map.swap(new_observed);
 }
@@ -418,7 +422,7 @@ void ShillPropertyHandler::UpdateAvailableTechnologies(
   for (base::ListValue::const_iterator iter = technologies.begin();
        iter != technologies.end(); ++iter) {
     std::string technology;
-    (*iter)->GetAsString(&technology);
+    iter->GetAsString(&technology);
     DCHECK(!technology.empty());
     available_technologies_.insert(technology);
   }
@@ -432,7 +436,7 @@ void ShillPropertyHandler::UpdateEnabledTechnologies(
   for (base::ListValue::const_iterator iter = technologies.begin();
        iter != technologies.end(); ++iter) {
     std::string technology;
-    (*iter)->GetAsString(&technology);
+    iter->GetAsString(&technology);
     DCHECK(!technology.empty());
     enabled_technologies_.insert(technology);
     enabling_technologies_.erase(technology);
@@ -447,7 +451,7 @@ void ShillPropertyHandler::UpdateUninitializedTechnologies(
   for (base::ListValue::const_iterator iter = technologies.begin();
        iter != technologies.end(); ++iter) {
     std::string technology;
-    (*iter)->GetAsString(&technology);
+    iter->GetAsString(&technology);
     DCHECK(!technology.empty());
     uninitialized_technologies_.insert(technology);
   }
@@ -545,7 +549,7 @@ void ShillPropertyHandler::RequestIPConfigsList(
     return;
   for (base::ListValue::const_iterator iter = ip_configs->begin();
        iter != ip_configs->end(); ++iter) {
-    RequestIPConfig(type, path, **iter);
+    RequestIPConfig(type, path, *iter);
   }
 }
 

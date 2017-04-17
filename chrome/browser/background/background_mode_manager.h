@@ -6,13 +6,14 @@
 #define CHROME_BROWSER_BACKGROUND_BACKGROUND_MODE_MANAGER_H_
 
 #include <map>
+#include <memory>
 #include <set>
 #include <vector>
 
 #include "base/callback_forward.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
+#include "base/memory/linked_ptr.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/background/background_application_list_model.h"
 #include "chrome/browser/lifetime/scoped_keep_alive.h"
@@ -92,6 +93,9 @@ class BackgroundModeManager
 
   // Returns true if background mode is active.
   virtual bool IsBackgroundModeActive();
+
+  // Returns true if we are in pure background mode, without windows.
+  bool IsBackgroundWithoutWindows() const;
 
   // Suspends background mode until either ResumeBackgroundMode is called or
   // Chrome is restarted. This has the same effect as ending background mode
@@ -420,7 +424,7 @@ class BackgroundModeManager
   CommandIdHandlerVector command_id_handler_vector_;
 
   // Maintains submenu lifetime for the multiple profile context menu.
-  ScopedVector<StatusIconMenuModel> submenus;
+  std::vector<std::unique_ptr<StatusIconMenuModel>> submenus;
 
   // Reference to our status tray. If null, the platform doesn't support status
   // icons.

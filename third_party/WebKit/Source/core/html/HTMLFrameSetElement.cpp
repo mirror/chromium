@@ -31,195 +31,263 @@
 #include "core/events/Event.h"
 #include "core/events/MouseEvent.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/html/HTMLCollection.h"
 #include "core/html/HTMLFrameElement.h"
 #include "core/layout/LayoutFrameSet.h"
-#include "core/loader/FrameLoaderClient.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
 inline HTMLFrameSetElement::HTMLFrameSetElement(Document& document)
-    : HTMLElement(framesetTag, document)
-    , m_border(6)
-    , m_borderSet(false)
-    , m_borderColorSet(false)
-    , m_frameborder(true)
-    , m_frameborderSet(false)
-    , m_noresize(false)
-{
-    setHasCustomStyleCallbacks();
+    : HTMLElement(framesetTag, document),
+      border_(6),
+      border_set_(false),
+      border_color_set_(false),
+      frameborder_(true),
+      frameborder_set_(false),
+      noresize_(false) {
+  SetHasCustomStyleCallbacks();
 }
 
 DEFINE_NODE_FACTORY(HTMLFrameSetElement)
 
-bool HTMLFrameSetElement::isPresentationAttribute(const QualifiedName& name) const
-{
-    if (name == bordercolorAttr)
-        return true;
-    return HTMLElement::isPresentationAttribute(name);
+bool HTMLFrameSetElement::IsPresentationAttribute(
+    const QualifiedName& name) const {
+  if (name == bordercolorAttr)
+    return true;
+  return HTMLElement::IsPresentationAttribute(name);
 }
 
-void HTMLFrameSetElement::collectStyleForPresentationAttribute(const QualifiedName& name, const AtomicString& value, MutableStylePropertySet* style)
-{
-    if (name == bordercolorAttr)
-        addHTMLColorToStyle(style, CSSPropertyBorderColor, value);
-    else
-        HTMLElement::collectStyleForPresentationAttribute(name, value, style);
+void HTMLFrameSetElement::CollectStyleForPresentationAttribute(
+    const QualifiedName& name,
+    const AtomicString& value,
+    MutableStylePropertySet* style) {
+  if (name == bordercolorAttr)
+    AddHTMLColorToStyle(style, CSSPropertyBorderColor, value);
+  else
+    HTMLElement::CollectStyleForPresentationAttribute(name, value, style);
 }
 
-void HTMLFrameSetElement::parseAttribute(const QualifiedName& name, const AtomicString& oldValue, const AtomicString& value)
-{
-    if (name == rowsAttr) {
-        if (!value.isNull()) {
-            m_rowLengths = parseListOfDimensions(value.getString());
-            setNeedsStyleRecalc(SubtreeStyleChange, StyleChangeReasonForTracing::fromAttribute(name));
-        }
-    } else if (name == colsAttr) {
-        if (!value.isNull()) {
-            m_colLengths = parseListOfDimensions(value.getString());
-            setNeedsStyleRecalc(SubtreeStyleChange, StyleChangeReasonForTracing::fromAttribute(name));
-        }
-    } else if (name == frameborderAttr) {
-        if (!value.isNull()) {
-            if (equalIgnoringCase(value, "no") || equalIgnoringCase(value, "0")) {
-                m_frameborder = false;
-                m_frameborderSet = true;
-            } else if (equalIgnoringCase(value, "yes") || equalIgnoringCase(value, "1")) {
-                m_frameborderSet = true;
-            }
-        } else {
-            m_frameborder = false;
-            m_frameborderSet = false;
-        }
-    } else if (name == noresizeAttr) {
-        m_noresize = true;
-    } else if (name == borderAttr) {
-        if (!value.isNull()) {
-            m_border = value.toInt();
-            m_borderSet = true;
-        } else {
-            m_borderSet = false;
-        }
-    } else if (name == bordercolorAttr) {
-        m_borderColorSet = !value.isEmpty();
-    } else if (name == onloadAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::load, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onbeforeunloadAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::beforeunload, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onunloadAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::unload, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onpagehideAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::pagehide, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onpageshowAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::pageshow, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onblurAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::blur, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onerrorAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::error, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onfocusAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::focus, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onfocusinAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::focusin, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onfocusoutAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::focusout, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (RuntimeEnabledFeatures::orientationEventEnabled() && name == onorientationchangeAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::orientationchange, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onhashchangeAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::hashchange, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onmessageAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::message, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onresizeAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::resize, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onscrollAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::scroll, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onstorageAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::storage, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == ononlineAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::online, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onofflineAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::offline, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onpopstateAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::popstate, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
-    } else if (name == onlanguagechangeAttr) {
-        document().setWindowAttributeEventListener(EventTypeNames::languagechange, createAttributeEventListener(document().frame(), name, value, eventParameterName()));
+void HTMLFrameSetElement::ParseAttribute(
+    const AttributeModificationParams& params) {
+  const QualifiedName& name = params.name;
+  const AtomicString& value = params.new_value;
+  if (name == rowsAttr) {
+    if (!value.IsNull()) {
+      row_lengths_ = ParseListOfDimensions(value.GetString());
+      SetNeedsStyleRecalc(kSubtreeStyleChange,
+                          StyleChangeReasonForTracing::FromAttribute(name));
+    }
+  } else if (name == colsAttr) {
+    if (!value.IsNull()) {
+      col_lengths_ = ParseListOfDimensions(value.GetString());
+      SetNeedsStyleRecalc(kSubtreeStyleChange,
+                          StyleChangeReasonForTracing::FromAttribute(name));
+    }
+  } else if (name == frameborderAttr) {
+    if (!value.IsNull()) {
+      if (DeprecatedEqualIgnoringCase(value, "no") ||
+          DeprecatedEqualIgnoringCase(value, "0")) {
+        frameborder_ = false;
+        frameborder_set_ = true;
+      } else if (DeprecatedEqualIgnoringCase(value, "yes") ||
+                 DeprecatedEqualIgnoringCase(value, "1")) {
+        frameborder_set_ = true;
+      }
     } else {
-        HTMLElement::parseAttribute(name, oldValue, value);
+      frameborder_ = false;
+      frameborder_set_ = false;
     }
-}
-
-bool HTMLFrameSetElement::layoutObjectIsNeeded(const ComputedStyle& style)
-{
-    // For compatibility, frames layoutObject even when display: none is set.
-    // However, we delay creating a layoutObject until stylesheets have loaded.
-    return style.isStyleAvailable();
-}
-
-LayoutObject* HTMLFrameSetElement::createLayoutObject(const ComputedStyle& style)
-{
-    if (style.hasContent())
-        return LayoutObject::createObject(this, style);
-    return new LayoutFrameSet(this);
-}
-
-void HTMLFrameSetElement::attachLayoutTree(const AttachContext& context)
-{
-    // Inherit default settings from parent frameset
-    // FIXME: This is not dynamic.
-    if (HTMLFrameSetElement* frameset = Traversal<HTMLFrameSetElement>::firstAncestor(*this)) {
-        if (!m_frameborderSet)
-            m_frameborder = frameset->hasFrameBorder();
-        if (m_frameborder) {
-            if (!m_borderSet)
-                m_border = frameset->border();
-            if (!m_borderColorSet)
-                m_borderColorSet = frameset->hasBorderColor();
-        }
-        if (!m_noresize)
-            m_noresize = frameset->noResize();
+  } else if (name == noresizeAttr) {
+    noresize_ = true;
+  } else if (name == borderAttr) {
+    if (!value.IsNull()) {
+      border_ = value.ToInt();
+      border_set_ = true;
+    } else {
+      border_set_ = false;
     }
-
-    HTMLElement::attachLayoutTree(context);
+  } else if (name == bordercolorAttr) {
+    border_color_set_ = !value.IsEmpty();
+  } else if (name == onloadAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::load,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onbeforeunloadAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::beforeunload,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onunloadAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::unload,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onpagehideAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::pagehide,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onpageshowAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::pageshow,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onblurAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::blur,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onerrorAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::error,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onfocusAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::focus,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onfocusinAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::focusin,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onfocusoutAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::focusout,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (RuntimeEnabledFeatures::orientationEventEnabled() &&
+             name == onorientationchangeAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::orientationchange,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onhashchangeAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::hashchange,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onmessageAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::message,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onresizeAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::resize,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onscrollAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::scroll,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onstorageAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::storage,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == ononlineAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::online,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onofflineAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::offline,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onpopstateAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::popstate,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else if (name == onlanguagechangeAttr) {
+    GetDocument().SetWindowAttributeEventListener(
+        EventTypeNames::languagechange,
+        CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
+                                     EventParameterName()));
+  } else {
+    HTMLElement::ParseAttribute(params);
+  }
 }
 
-void HTMLFrameSetElement::defaultEventHandler(Event* evt)
-{
-    if (evt->isMouseEvent() && !m_noresize && layoutObject() && layoutObject()->isFrameSet()) {
-        if (toLayoutFrameSet(layoutObject())->userResize(toMouseEvent(evt))) {
-            evt->setDefaultHandled();
-            return;
-        }
+bool HTMLFrameSetElement::LayoutObjectIsNeeded(const ComputedStyle& style) {
+  // For compatibility, frames layoutObject even when display: none is set.
+  // However, we delay creating a layoutObject until stylesheets have loaded.
+  return style.IsStyleAvailable();
+}
+
+LayoutObject* HTMLFrameSetElement::CreateLayoutObject(
+    const ComputedStyle& style) {
+  if (style.HasContent())
+    return LayoutObject::CreateObject(this, style);
+  return new LayoutFrameSet(this);
+}
+
+void HTMLFrameSetElement::AttachLayoutTree(const AttachContext& context) {
+  // Inherit default settings from parent frameset
+  // FIXME: This is not dynamic.
+  if (HTMLFrameSetElement* frameset =
+          Traversal<HTMLFrameSetElement>::FirstAncestor(*this)) {
+    if (!frameborder_set_)
+      frameborder_ = frameset->HasFrameBorder();
+    if (frameborder_) {
+      if (!border_set_)
+        border_ = frameset->Border();
+      if (!border_color_set_)
+        border_color_set_ = frameset->HasBorderColor();
     }
-    HTMLElement::defaultEventHandler(evt);
+    if (!noresize_)
+      noresize_ = frameset->NoResize();
+  }
+
+  HTMLElement::AttachLayoutTree(context);
 }
 
-Node::InsertionNotificationRequest HTMLFrameSetElement::insertedInto(ContainerNode* insertionPoint)
-{
-    if (insertionPoint->isConnected() && document().frame()) {
-        // A document using <frameset> likely won't literally have a body, but as far as the client is concerned, the frameset is effectively the body.
-        document().willInsertBody();
+void HTMLFrameSetElement::DefaultEventHandler(Event* evt) {
+  if (evt->IsMouseEvent() && !noresize_ && GetLayoutObject() &&
+      GetLayoutObject()->IsFrameSet()) {
+    if (ToLayoutFrameSet(GetLayoutObject())->UserResize(ToMouseEvent(evt))) {
+      evt->SetDefaultHandled();
+      return;
     }
-    return HTMLElement::insertedInto(insertionPoint);
+  }
+  HTMLElement::DefaultEventHandler(evt);
 }
 
-void HTMLFrameSetElement::willRecalcStyle(StyleRecalcChange)
-{
-    if (needsStyleRecalc() && layoutObject()) {
-        layoutObject()->setNeedsLayoutAndFullPaintInvalidation(LayoutInvalidationReason::StyleChange);
-        clearNeedsStyleRecalc();
-    }
+Node::InsertionNotificationRequest HTMLFrameSetElement::InsertedInto(
+    ContainerNode* insertion_point) {
+  if (insertion_point->isConnected() && GetDocument().GetFrame()) {
+    // A document using <frameset> likely won't literally have a body, but as
+    // far as the client is concerned, the frameset is effectively the body.
+    GetDocument().WillInsertBody();
+  }
+  return HTMLElement::InsertedInto(insertion_point);
 }
 
-LocalDOMWindow* HTMLFrameSetElement::anonymousNamedGetter(const AtomicString& name)
-{
-    Element* frameElement = children()->namedItem(name);
-    if (!isHTMLFrameElement(frameElement))
-        return nullptr;
-    Document* document = toHTMLFrameElement(frameElement)->contentDocument();
-    if (!document || !document->frame())
-        return nullptr;
-    return document->domWindow();
+void HTMLFrameSetElement::WillRecalcStyle(StyleRecalcChange) {
+  if (NeedsStyleRecalc() && GetLayoutObject()) {
+    GetLayoutObject()->SetNeedsLayoutAndFullPaintInvalidation(
+        LayoutInvalidationReason::kStyleChange);
+    ClearNeedsStyleRecalc();
+  }
 }
 
-} // namespace blink
+LocalDOMWindow* HTMLFrameSetElement::AnonymousNamedGetter(
+    const AtomicString& name) {
+  Element* frame_element = Children()->namedItem(name);
+  if (!isHTMLFrameElement(frame_element))
+    return nullptr;
+  Document* document = toHTMLFrameElement(frame_element)->contentDocument();
+  if (!document || !document->GetFrame())
+    return nullptr;
+  return document->domWindow();
+}
+
+}  // namespace blink

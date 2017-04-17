@@ -27,7 +27,7 @@ namespace {
 class MockAppMenuModel;
 }  // namespace
 
-// Values should correspond to 'WretchMenuAction' enum in histograms.xml.
+// Values should correspond to 'WrenchMenuAction' enum in histograms.xml.
 enum AppMenuAction {
   MENU_ACTION_NEW_TAB = 0,
   MENU_ACTION_NEW_WINDOW = 1,
@@ -47,7 +47,6 @@ enum AppMenuAction {
   MENU_ACTION_COPY = 18,
   MENU_ACTION_PASTE = 19,
   MENU_ACTION_CREATE_HOSTED_APP = 20,
-  MENU_ACTION_CREATE_SHORTCUTS = 21,
   MENU_ACTION_MANAGE_EXTENSIONS = 22,
   MENU_ACTION_TASK_MANAGER = 23,
   MENU_ACTION_CLEAR_BROWSING_DATA = 24,
@@ -75,26 +74,6 @@ enum AppMenuAction {
   LIMIT_MENU_ACTION
 };
 
-// A menu model that builds the contents of an encoding menu.
-class EncodingMenuModel : public ui::SimpleMenuModel,
-                          public ui::SimpleMenuModel::Delegate {
- public:
-  explicit EncodingMenuModel(Browser* browser);
-  ~EncodingMenuModel() override;
-
-  // Overridden from ui::SimpleMenuModel::Delegate:
-  bool IsCommandIdChecked(int command_id) const override;
-  bool IsCommandIdEnabled(int command_id) const override;
-  void ExecuteCommand(int command_id, int event_flags) override;
-
- private:
-  void Build();
-
-  Browser* browser_;  // weak
-
-  DISALLOW_COPY_AND_ASSIGN(EncodingMenuModel);
-};
-
 // A menu model that builds the contents of the zoom menu.
 class ZoomMenuModel : public ui::SimpleMenuModel {
  public:
@@ -114,8 +93,6 @@ class ToolsMenuModel : public ui::SimpleMenuModel {
 
  private:
   void Build(Browser* browser);
-
-  std::unique_ptr<EncodingMenuModel> encoding_menu_model_;
 
   DISALLOW_COPY_AND_ASSIGN(ToolsMenuModel);
 };

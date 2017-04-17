@@ -14,13 +14,7 @@ const SkColor kSearchBoxBackground = SK_ColorWHITE;
 
 const SkColor kSearchTextColor = SkColorSetRGB(0x33, 0x33, 0x33);
 
-// In Windows, transparent background color will cause ugly text rendering,
-// therefore kContentsBackgroundColor should be used. See crbug.com/406989
-#if defined(OS_CHROMEOS)
 const SkColor kLabelBackgroundColor = SK_ColorTRANSPARENT;
-#else
-const SkColor kLabelBackgroundColor = kContentsBackgroundColor;
-#endif
 
 const SkColor kTopSeparatorColor = SkColorSetRGB(0xC0, 0xC0, 0xC0);
 const SkColor kBottomSeparatorColor = SkColorSetRGB(0xC0, 0xC0, 0xC0);
@@ -82,12 +76,8 @@ const gfx::Tween::Type kFolderFadeInTweenType = gfx::Tween::EASE_IN_2;
 const gfx::Tween::Type kFolderFadeOutTweenType = gfx::Tween::FAST_OUT_LINEAR_IN;
 
 // Preferred number of columns and rows in apps grid.
-const int kPreferredCols = 4;
-#if defined(OS_CHROMEOS)
+const int kPreferredCols = 6;
 const int kPreferredRows = 4;
-#else
-const int kPreferredRows = 3;
-#endif  // defined(OS_CHROMEOS)
 const int kGridIconDimension = 48;
 
 // Preferred search result icon sizes.
@@ -99,24 +89,20 @@ const int kTileIconSize = 48;
 
 const SkColor kIconColor = gfx::kChromeIconGrey;
 
-// Preferred number of columns and rows in the centered app list apps grid.
-const int kCenteredPreferredCols = 6;
-const int kCenteredPreferredRows = 3;
+// The number of apps shown in the start page app grid.
+const size_t kNumStartPageTiles = 9;
 
-// Preferred number of columns and rows in the experimental app list apps grid.
-const int kExperimentalPreferredCols = 6;
-const int kExperimentalPreferredRows = 4;
+// Maximum number of results to show in the launcher Search UI.
+const size_t kMaxSearchResults = 6;
 
 // Radius of the circle, in which if entered, show re-order preview.
 const int kReorderDroppingCircleRadius = 35;
 
-// The padding around the outside of the experimental app list apps grid
-// (sides).
-const int kExperimentalAppsGridPadding = 24;
+// The padding around the outside of the apps grid (sides).
+const int kAppsGridPadding = 24;
 
-// The padding around the outside of the experimental app list search box (top
-// and sides).
-const int kExperimentalSearchBoxPadding = 16;
+// The padding around the outside of the search box (top and sides).
+const int kSearchBoxPadding = 16;
 
 // Max items allowed in a folder.
 size_t kMaxFolderItems = 16;
@@ -148,41 +134,33 @@ const char kSearchQueryLength[] = "Apps.AppListSearchQueryLength";
 const char kSearchResultDistanceFromOrigin[] =
     "Apps.AppListSearchResultDistanceFromOrigin";
 
-#if defined(OS_LINUX)
-#if defined(GOOGLE_CHROME_BUILD)
-const char kAppListWMClass[] = "chrome_app_list";
-#else  // CHROMIUM_BUILD
-const char kAppListWMClass[] = "chromium_app_list";
-#endif
-#endif
-
 gfx::ShadowValue GetShadowForZHeight(int z_height) {
   if (z_height <= 0)
     return gfx::ShadowValue();
 
   switch (z_height) {
     case 1:
-      return gfx::ShadowValue(gfx::Vector2d(0, 1), 2,
+      return gfx::ShadowValue(gfx::Vector2d(0, 1), 4,
                               SkColorSetARGB(0x4C, 0, 0, 0));
     case 2:
-      return gfx::ShadowValue(gfx::Vector2d(0, 2), 4,
+      return gfx::ShadowValue(gfx::Vector2d(0, 2), 8,
                               SkColorSetARGB(0x33, 0, 0, 0));
     default:
-      return gfx::ShadowValue(gfx::Vector2d(0, 8), 12,
+      return gfx::ShadowValue(gfx::Vector2d(0, 8), 24,
                               SkColorSetARGB(0x3F, 0, 0, 0));
   }
 }
 
 const gfx::ShadowValues& IconStartShadows() {
   CR_DEFINE_STATIC_LOCAL(const gfx::ShadowValues, icon_shadows,
-                         (1, gfx::ShadowValue(gfx::Vector2d(0, 1), 2,
+                         (1, gfx::ShadowValue(gfx::Vector2d(0, 1), 4,
                                               SkColorSetARGB(0x33, 0, 0, 0))));
   return icon_shadows;
 }
 
 const gfx::ShadowValues& IconEndShadows() {
   CR_DEFINE_STATIC_LOCAL(const gfx::ShadowValues, icon_shadows,
-                         (1, gfx::ShadowValue(gfx::Vector2d(0, 4), 4,
+                         (1, gfx::ShadowValue(gfx::Vector2d(0, 4), 8,
                                               SkColorSetARGB(0x50, 0, 0, 0))));
   return icon_shadows;
 }

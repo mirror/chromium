@@ -11,23 +11,30 @@
 
 namespace blink {
 
-InterpolationValue SVGInterpolationType::maybeConvertSingle(const PropertySpecificKeyframe& keyframe, const InterpolationEnvironment& environment, const InterpolationValue& underlying, ConversionCheckers& conversionCheckers) const
-{
-    if (keyframe.isNeutral())
-        return maybeConvertNeutral(underlying, conversionCheckers);
+InterpolationValue SVGInterpolationType::MaybeConvertSingle(
+    const PropertySpecificKeyframe& keyframe,
+    const InterpolationEnvironment& environment,
+    const InterpolationValue& underlying,
+    ConversionCheckers& conversion_checkers) const {
+  if (keyframe.IsNeutral())
+    return MaybeConvertNeutral(underlying, conversion_checkers);
 
-    SVGPropertyBase* svgValue = environment.svgBaseValue().cloneForAnimation(toSVGPropertySpecificKeyframe(keyframe).value());
-    return maybeConvertSVGValue(*svgValue);
+  SVGPropertyBase* svg_value = environment.SvgBaseValue().CloneForAnimation(
+      ToSVGPropertySpecificKeyframe(keyframe).Value());
+  return MaybeConvertSVGValue(*svg_value);
 }
 
-InterpolationValue SVGInterpolationType::maybeConvertUnderlyingValue(const InterpolationEnvironment& environment) const
-{
-    return maybeConvertSVGValue(environment.svgBaseValue());
+InterpolationValue SVGInterpolationType::MaybeConvertUnderlyingValue(
+    const InterpolationEnvironment& environment) const {
+  return MaybeConvertSVGValue(environment.SvgBaseValue());
 }
 
-void SVGInterpolationType::apply(const InterpolableValue& interpolableValue, const NonInterpolableValue* nonInterpolableValue, InterpolationEnvironment& environment) const
-{
-    environment.svgElement().setWebAnimatedAttribute(attribute(), appliedSVGValue(interpolableValue, nonInterpolableValue));
+void SVGInterpolationType::Apply(
+    const InterpolableValue& interpolable_value,
+    const NonInterpolableValue* non_interpolable_value,
+    InterpolationEnvironment& environment) const {
+  environment.SvgElement().SetWebAnimatedAttribute(
+      Attribute(), AppliedSVGValue(interpolable_value, non_interpolable_value));
 }
 
-} // namespace blink
+}  // namespace blink

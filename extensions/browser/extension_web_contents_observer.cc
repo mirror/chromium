@@ -5,7 +5,7 @@
 #include "extensions/browser/extension_web_contents_observer.h"
 
 #include "content/public/browser/child_process_security_policy.h"
-#include "content/public/browser/navigation_details.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
@@ -24,6 +24,7 @@
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/view_type.h"
+#include "url/origin.h"
 
 namespace extensions {
 
@@ -62,6 +63,13 @@ void ExtensionWebContentsObserver::InitializeRenderFrame(
   // frames that are not in an extension process.
   if (!frame_extension)
     return;
+
+  // |render_frame_host->GetProcess()| is an extension process. Grant permission
+  // to commit pages from chrome-extension:// origins.
+  content::ChildProcessSecurityPolicy* security_policy =
+      content::ChildProcessSecurityPolicy::GetInstance();
+  int process_id = render_frame_host->GetProcess()->GetID();
+  security_policy->GrantScheme(process_id, extensions::kExtensionScheme);
 
   // Notify the render frame of the view type.
   render_frame_host->Send(new ExtensionMsg_NotifyRenderViewType(
@@ -107,8 +115,7 @@ void ExtensionWebContentsObserver::RenderViewCreated(
   // Plus, we can delete the concept of activating an extension once site
   // isolation is turned on.
   RendererStartupHelperFactory::GetForBrowserContext(browser_context_)
-      ->ActivateExtensionInProcess(extension->id(),
-                                   render_view_host->GetProcess());
+      ->ActivateExtensionInProcess(*extension, render_view_host->GetProcess());
 }
 
 void ExtensionWebContentsObserver::RenderFrameCreated(
@@ -128,44 +135,27 @@ void ExtensionWebContentsObserver::RenderFrameDeleted(
   ExtensionApiFrameIdMap::Get()->RemoveFrameData(render_frame_host);
 }
 
-void ExtensionWebContentsObserver::DidCommitProvisionalLoadForFrame(
-    content::RenderFrameHost* render_frame_host,
-    const GURL& url,
-    ui::PageTransition transition_type) {
-  ProcessManager* pm = ProcessManager::Get(browser_context_);
-
-  if (pm->IsRenderFrameHostRegistered(render_frame_host)) {
-    const Extension* frame_extension =
-        GetExtensionFromFrame(render_frame_host, true);
-
-    if (!frame_extension)
-      pm->UnregisterRenderFrameHost(render_frame_host);
-  }
-}
-
-void ExtensionWebContentsObserver::DidNavigateAnyFrame(
-    content::RenderFrameHost* render_frame_host,
-    const content::LoadCommittedDetails& details,
-    const content::FrameNavigateParams& params) {
-  if (details.is_in_page)
+void ExtensionWebContentsObserver::DidFinishNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->HasCommitted())
     return;
 
+  ProcessManager* pm = ProcessManager::Get(browser_context_);
+
+  content::RenderFrameHost* render_frame_host =
+      navigation_handle->GetRenderFrameHost();
   const Extension* frame_extension =
       GetExtensionFromFrame(render_frame_host, true);
-  ProcessManager* pm = ProcessManager::Get(browser_context_);
-
-  if (!frame_extension) {
-    // Should have been unregistered by DidCommitProvisionalLoadForFrame.
-    DCHECK(!pm->IsRenderFrameHostRegistered(render_frame_host));
-    return;
-  }
-
   if (pm->IsRenderFrameHostRegistered(render_frame_host)) {
-    // Notify ProcessManager, because some clients do not just want to know
-    // whether the frame is in an extension process, but also whether the frame
-    // was navigated.
-    pm->DidNavigateRenderFrameHost(render_frame_host);
-  } else {
+    if (frame_extension && !navigation_handle->IsSameDocument()) {
+      // Notify ProcessManager, because some clients do not just want to know
+      // whether the frame is in an extension process, but also whether the
+      // frame was navigated.
+      pm->DidNavigateRenderFrameHost(render_frame_host);
+    } else if (!frame_extension) {
+      pm->UnregisterRenderFrameHost(render_frame_host);
+    }
+  } else if (frame_extension) {
     pm->RegisterRenderFrameHost(web_contents(), render_frame_host,
                                 frame_extension);
   }
@@ -237,8 +227,8 @@ const Extension* ExtensionWebContentsObserver::GetExtensionFromFrame(
     // schemes. With site isolation, this is still needed to exclude sandboxed
     // extension frames with a unique origin.
     if (origin.unique() ||
-        site_url != content::SiteInstance::GetSiteForURL(
-                        browser_context, GURL(origin.Serialize())))
+        site_url != content::SiteInstance::GetSiteForURL(browser_context,
+                                                         origin.GetURL()))
       return nullptr;
   }
 

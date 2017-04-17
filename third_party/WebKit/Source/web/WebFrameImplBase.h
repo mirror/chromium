@@ -6,14 +6,14 @@
 #define WebFrameImplBase_h
 
 #include "platform/heap/Handle.h"
+#include "platform/wtf/text/AtomicString.h"
 #include "web/WebExport.h"
-#include "wtf/text/AtomicString.h"
 
 namespace blink {
 
 class Frame;
-class FrameHost;
 class FrameOwner;
+class Page;
 
 // WebFrameImplBase exists to avoid the diamond inheritance problem:
 // - The public interfaces WebLocalFrame/WebRemoteFrame extend WebFrame.
@@ -28,17 +28,21 @@ class FrameOwner;
 // implementation as an instance of the base class, but has no inheritance
 // relationship with it. The cost is a virtual indirection, but this is nicer
 // than the previous manual dispatch emulating real virtual dispatch.
-class WEB_EXPORT WebFrameImplBase : public GarbageCollectedFinalized<WebFrameImplBase> {
-public:
-    virtual ~WebFrameImplBase();
+class WEB_EXPORT WebFrameImplBase
+    : public GarbageCollectedFinalized<WebFrameImplBase> {
+ public:
+  virtual ~WebFrameImplBase();
 
-    virtual void initializeCoreFrame(FrameHost*, FrameOwner*, const AtomicString& name, const AtomicString& uniqueName) = 0;
-    // TODO(dcheng): Rename this to coreFrame()? This probably also shouldn't be const...
-    virtual Frame* frame() const = 0;
+  virtual void InitializeCoreFrame(Page&,
+                                   FrameOwner*,
+                                   const AtomicString& name) = 0;
+  // TODO(dcheng): Rename this to coreFrame()? This probably also shouldn't be
+  // const...
+  virtual Frame* GetFrame() const = 0;
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebFrameImplBase_h
+#endif  // WebFrameImplBase_h

@@ -6,6 +6,7 @@
 #define WebGLQuery_h
 
 #include "modules/webgl/WebGLSharedPlatform3DObject.h"
+#include "platform/WebTaskRunner.h"
 
 namespace gpu {
 namespace gles2 {
@@ -16,47 +17,47 @@ class GLES2Interface;
 namespace blink {
 
 class WebGL2RenderingContextBase;
+class WebTaskRunner;
 
-class WebGLQuery : public WebGLSharedPlatform3DObject, public WebThread::TaskObserver {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~WebGLQuery() override;
+class WebGLQuery : public WebGLSharedPlatform3DObject {
+  DEFINE_WRAPPERTYPEINFO();
 
-    static WebGLQuery* create(WebGL2RenderingContextBase*);
+ public:
+  ~WebGLQuery() override;
 
-    void setTarget(GLenum);
-    bool hasTarget() const { return m_target != 0; }
-    GLenum getTarget() const { return m_target; }
+  static WebGLQuery* Create(WebGL2RenderingContextBase*);
 
-    void resetCachedResult();
-    void updateCachedResult(gpu::gles2::GLES2Interface*);
+  void SetTarget(GLenum);
+  bool HasTarget() const { return target_ != 0; }
+  GLenum GetTarget() const { return target_; }
 
-    bool isQueryResultAvailable();
-    GLuint getQueryResult();
+  void ResetCachedResult();
+  void UpdateCachedResult(gpu::gles2::GLES2Interface*);
 
-protected:
-    explicit WebGLQuery(WebGL2RenderingContextBase*);
+  bool IsQueryResultAvailable();
+  GLuint GetQueryResult();
 
-    void deleteObjectImpl(gpu::gles2::GLES2Interface*) override;
+ protected:
+  explicit WebGLQuery(WebGL2RenderingContextBase*);
 
-private:
-    bool isQuery() const override { return true; }
+  void DeleteObjectImpl(gpu::gles2::GLES2Interface*) override;
 
-    void registerTaskObserver();
-    void unregisterTaskObserver();
+ private:
+  bool IsQuery() const override { return true; }
 
-    // TaskObserver implementation.
-    void didProcessTask() override;
-    void willProcessTask() override { }
+  void ScheduleAllowAvailabilityUpdate();
+  void AllowAvailabilityUpdate();
 
-    GLenum m_target;
+  GLenum target_;
 
-    bool m_taskObserverRegistered;
-    bool m_canUpdateAvailability;
-    bool m_queryResultAvailable;
-    GLuint m_queryResult;
+  bool can_update_availability_;
+  bool query_result_available_;
+  GLuint query_result_;
+
+  RefPtr<WebTaskRunner> task_runner_;
+  TaskHandle task_handle_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebGLQuery_h
+#endif  // WebGLQuery_h

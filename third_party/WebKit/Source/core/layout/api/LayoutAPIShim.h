@@ -11,20 +11,19 @@ namespace blink {
 
 class LayoutObject;
 
-// TODO(pilgrim): Remove this kludge once clients have a real API and no longer need access to the underlying LayoutObject.
+// TODO(pilgrim): Remove this kludge once clients have a real API and no longer
+// need access to the underlying LayoutObject.
 class LayoutAPIShim {
-public:
-    static LayoutObject* layoutObjectFrom(LayoutItem item)
-    {
-        return item.layoutObject();
-    }
+ public:
+  static LayoutObject* LayoutObjectFrom(LayoutItem item) {
+    return item.GetLayoutObject();
+  }
 
-    static const LayoutObject* constLayoutObjectFrom(LayoutItem item)
-    {
-        return item.layoutObject();
-    }
+  static const LayoutObject* ConstLayoutObjectFrom(LayoutItem item) {
+    return item.GetLayoutObject();
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutAPIShim_h
+#endif  // LayoutAPIShim_h

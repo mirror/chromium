@@ -15,19 +15,12 @@
 #include "ui/views/focus/external_focus_tracker.h"
 #include "ui/views/view_targeter_delegate.h"
 
-namespace ui {
-class MenuModel;
-}
-
 namespace views {
 class ImageButton;
 class ImageView;
 class Label;
-class LabelButton;
 class Link;
 class LinkListener;
-class MdTextButton;
-class MenuButton;
 class MenuRunner;
 }  // namespace views
 
@@ -40,15 +33,9 @@ class InfoBarView : public infobars::InfoBar,
   explicit InfoBarView(std::unique_ptr<infobars::InfoBarDelegate> delegate);
 
   const infobars::InfoBarContainer::Delegate* container_delegate() const;
-  const SkPath& fill_path() const { return fill_path_; }
-  const SkPath& stroke_path() const { return stroke_path_; }
 
  protected:
   typedef std::vector<views::Label*> Labels;
-
-  static const int kButtonButtonSpacing;
-  static const int kEndOfLabelSpacing;
-  static const SkColor kTextColor;
 
   ~InfoBarView() override;
 
@@ -59,12 +46,6 @@ class InfoBarView : public infobars::InfoBar,
   // NOTE: Subclasses must ignore link clicks if we're unowned.
   views::Link* CreateLink(const base::string16& text,
                           views::LinkListener* listener) const;
-
-  // Creates a focusable button for use on an infobar. The appearance is
-  // customized for infobars. Used for pre-MD only.
-  // NOTE: Subclasses must ignore button presses if we're unowned.
-  static views::LabelButton* CreateTextButton(views::ButtonListener* listener,
-                                              const base::string16& text);
 
   // Given |labels| and the total |available_width| to display them in, sets
   // each label's size so that the longest label shrinks until it reaches the
@@ -97,13 +78,6 @@ class InfoBarView : public infobars::InfoBar,
   // animate open and closed.
   int OffsetY(views::View* view) const;
 
-  // Shows a menu at the specified position.
-  // NOTE: This must not be called if we're unowned.  (Subclasses should ignore
-  // calls to RunMenu() in this case.)
-  void RunMenuAt(ui::MenuModel* menu_model,
-                 views::MenuButton* button,
-                 views::MenuAnchorPosition anchor);
-
  protected:
   // Adds |view| to the content area, i.e. |child_container_|. The |view| won't
   // automatically get any layout, so should still be laid out manually.
@@ -120,7 +94,7 @@ class InfoBarView : public infobars::InfoBar,
   void PlatformSpecificOnHeightsRecalculated() override;
 
   // views::View:
-  void GetAccessibleState(ui::AXViewState* state) override;
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   gfx::Size GetPreferredSize() const override;
 
   // views::ExternalFocusTracker:
@@ -139,11 +113,6 @@ class InfoBarView : public infobars::InfoBar,
 
   // The close button at the right edge of the InfoBar.
   views::ImageButton* close_button_;
-
-  // The paths for the InfoBarBackground to draw, sized according to the heights
-  // above. TODO(estade): remove these when MD is default.
-  SkPath fill_path_;
-  SkPath stroke_path_;
 
   // Used to run the menu.
   std::unique_ptr<views::MenuRunner> menu_runner_;

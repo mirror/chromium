@@ -32,69 +32,74 @@
 #define OriginAccessEntry_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class SecurityOrigin;
 
 class PLATFORM_EXPORT OriginAccessEntry {
-    USING_FAST_MALLOC(OriginAccessEntry);
-public:
-    enum SubdomainSetting {
-        // 'www.example.com' matches an OriginAccessEntry for 'example.com'
-        AllowSubdomains,
+  USING_FAST_MALLOC(OriginAccessEntry);
 
-        // 'www.example.com' matches an OriginAccessEntry for 'not-www.example.com'
-        AllowRegisterableDomains,
+ public:
+  enum SubdomainSetting {
+    // 'www.example.com' matches an OriginAccessEntry for 'example.com'
+    kAllowSubdomains,
 
-        // 'www.example.com' does not match an OriginAccessEntry for 'example.com'
-        DisallowSubdomains
-    };
+    // 'www.example.com' matches an OriginAccessEntry for 'not-www.example.com'
+    kAllowRegisterableDomains,
 
-    enum MatchResult {
-        MatchesOrigin,
-        MatchesOriginButIsPublicSuffix,
-        DoesNotMatchOrigin
-    };
+    // 'www.example.com' does not match an OriginAccessEntry for 'example.com'
+    kDisallowSubdomains
+  };
 
-    // If host is empty string and SubdomainSetting is not DisallowSubdomains, the entry will match all domains in the specified protocol.
-    // IPv6 addresses must include brackets (e.g. '[2001:db8:85a3::8a2e:370:7334]', not '2001:db8:85a3::8a2e:370:7334').
-    OriginAccessEntry(const String& protocol, const String& host, SubdomainSetting);
+  enum MatchResult {
+    kMatchesOrigin,
+    kMatchesOriginButIsPublicSuffix,
+    kDoesNotMatchOrigin
+  };
 
-    // 'matchesOrigin' requires a protocol match (e.g. 'http' != 'https'). 'matchesDomain'
-    // relaxes this constraint.
-    MatchResult matchesOrigin(const SecurityOrigin&) const;
-    MatchResult matchesDomain(const SecurityOrigin&) const;
+  // If host is empty string and SubdomainSetting is not DisallowSubdomains, the
+  // entry will match all domains in the specified protocol.
+  // IPv6 addresses must include brackets (e.g.
+  // '[2001:db8:85a3::8a2e:370:7334]', not '2001:db8:85a3::8a2e:370:7334').
+  OriginAccessEntry(const String& protocol,
+                    const String& host,
+                    SubdomainSetting);
 
-    const String& protocol() const { return m_protocol; }
-    const String& host() const { return m_host; }
-    SubdomainSetting subdomainSettings() const { return m_subdomainSettings; }
-    bool hostIsIPAddress() const { return m_hostIsIPAddress; }
-    const String& registerable() const { return m_registerableDomain; }
+  // 'matchesOrigin' requires a protocol match (e.g. 'http' != 'https').
+  // 'matchesDomain' relaxes this constraint.
+  MatchResult MatchesOrigin(const SecurityOrigin&) const;
+  MatchResult MatchesDomain(const SecurityOrigin&) const;
 
-private:
-    String m_protocol;
-    String m_host;
-    String m_registerableDomain;
-    SubdomainSetting m_subdomainSettings;
-    bool m_hostIsIPAddress;
-    bool m_hostIsPublicSuffix;
+  const String& Protocol() const { return protocol_; }
+  const String& Host() const { return host_; }
+  SubdomainSetting SubdomainSettings() const { return subdomain_settings_; }
+  bool HostIsIPAddress() const { return host_is_ip_address_; }
+  const String& Registerable() const { return registerable_domain_; }
+
+ private:
+  String protocol_;
+  String host_;
+  String registerable_domain_;
+  SubdomainSetting subdomain_settings_;
+  bool host_is_ip_address_;
+  bool host_is_public_suffix_;
 };
 
-PLATFORM_EXPORT inline bool operator==(const OriginAccessEntry& a, const OriginAccessEntry& b)
-{
-    return equalIgnoringCase(a.protocol(), b.protocol())
-        && equalIgnoringCase(a.host(), b.host())
-        && a.subdomainSettings() == b.subdomainSettings();
+PLATFORM_EXPORT inline bool operator==(const OriginAccessEntry& a,
+                                       const OriginAccessEntry& b) {
+  return EqualIgnoringASCIICase(a.Protocol(), b.Protocol()) &&
+         EqualIgnoringASCIICase(a.Host(), b.Host()) &&
+         a.SubdomainSettings() == b.SubdomainSettings();
 }
 
-PLATFORM_EXPORT inline bool operator!=(const OriginAccessEntry& a, const OriginAccessEntry& b)
-{
-    return !(a == b);
+PLATFORM_EXPORT inline bool operator!=(const OriginAccessEntry& a,
+                                       const OriginAccessEntry& b) {
+  return !(a == b);
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // OriginAccessEntry_h
+#endif  // OriginAccessEntry_h

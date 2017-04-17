@@ -16,9 +16,9 @@
 #include "chrome/browser/ui/cocoa/bookmarks/bookmark_menu_bridge.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_menu_cocoa_controller.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/managed/managed_bookmark_service.h"
-#include "grit/theme_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image.h"
@@ -70,6 +70,7 @@ void BookmarkMenuBridge::UpdateMenuInternal(NSMenu* bookmark_menu,
     ResourceBundle& rb = ResourceBundle::GetSharedInstance();
     folder_image_.reset(
         rb.GetNativeImageNamed(IDR_BOOKMARK_BAR_FOLDER).CopyNSImage());
+    [folder_image_ setTemplate:YES];
   }
 
   ClearBookmarkMenu(bookmark_menu);
@@ -202,7 +203,7 @@ void BookmarkMenuBridge::ObserveBookmarkModel() {
 BookmarkModel* BookmarkMenuBridge::GetBookmarkModel() {
   if (!profile_)
     return NULL;
-  return BookmarkModelFactory::GetForProfile(profile_);
+  return BookmarkModelFactory::GetForBrowserContext(profile_);
 }
 
 Profile* BookmarkMenuBridge::GetProfile() {
@@ -355,6 +356,7 @@ void BookmarkMenuBridge::ConfigureMenuItem(const BookmarkNode* node,
   if (!favicon) {
     ResourceBundle& rb = ResourceBundle::GetSharedInstance();
     favicon = rb.GetNativeImageNamed(IDR_DEFAULT_FAVICON).ToNSImage();
+    [favicon setTemplate:YES];
   }
   [item setImage:favicon];
 }

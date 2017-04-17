@@ -28,49 +28,63 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "bindings/core/v8/V8Binding.h"
-#include "core/frame/DOMWindowProperty.h"
+#include "core/dom/ContextLifecycleObserver.h"
 #include "modules/storage/StorageArea.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
 class ExceptionState;
 class LocalFrame;
 
-class Storage final : public GarbageCollected<Storage>, public ScriptWrappable, public DOMWindowProperty {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(Storage);
-public:
-    static Storage* create(LocalFrame*, StorageArea*);
-    unsigned length(ExceptionState& ec) const { return m_storageArea->length(ec, m_frame); }
-    String key(unsigned index, ExceptionState& ec) const { return m_storageArea->key(index, ec, m_frame); }
-    String getItem(const String& key, ExceptionState& ec) const { return m_storageArea->getItem(key, ec, m_frame); }
-    void setItem(const String& key, const String& value, ExceptionState& ec) { m_storageArea->setItem(key, value, ec, m_frame); }
-    void removeItem(const String& key, ExceptionState& ec) { m_storageArea->removeItem(key, ec, m_frame); }
-    void clear(ExceptionState& ec) { m_storageArea->clear(ec, m_frame); }
-    bool contains(const String& key, ExceptionState& ec) const { return m_storageArea->contains(key, ec, m_frame); }
+class Storage final : public GarbageCollected<Storage>,
+                      public ScriptWrappable,
+                      public ContextClient {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(Storage);
 
-    StorageArea* area() const { return m_storageArea.get(); }
+ public:
+  static Storage* Create(LocalFrame*, StorageArea*);
+  unsigned length(ExceptionState& ec) const {
+    return storage_area_->length(ec, GetFrame());
+  }
+  String key(unsigned index, ExceptionState& ec) const {
+    return storage_area_->Key(index, ec, GetFrame());
+  }
+  String getItem(const String& key, ExceptionState& ec) const {
+    return storage_area_->GetItem(key, ec, GetFrame());
+  }
+  void setItem(const String& key, const String& value, ExceptionState& ec) {
+    storage_area_->SetItem(key, value, ec, GetFrame());
+  }
+  void removeItem(const String& key, ExceptionState& ec) {
+    storage_area_->RemoveItem(key, ec, GetFrame());
+  }
+  void clear(ExceptionState& ec) { storage_area_->Clear(ec, GetFrame()); }
+  bool Contains(const String& key, ExceptionState& ec) const {
+    return storage_area_->Contains(key, ec, GetFrame());
+  }
 
-    String anonymousIndexedGetter(unsigned, ExceptionState&);
-    String anonymousNamedGetter(const AtomicString&, ExceptionState&);
-    bool anonymousNamedSetter(const AtomicString& name, const AtomicString& value, ExceptionState&);
-    bool anonymousIndexedSetter(unsigned, const AtomicString&, ExceptionState&);
-    DeleteResult anonymousNamedDeleter(const AtomicString&, ExceptionState&);
-    DeleteResult anonymousIndexedDeleter(unsigned, ExceptionState&);
-    void namedPropertyEnumerator(Vector<String>&, ExceptionState&);
-    bool namedPropertyQuery(const AtomicString&, ExceptionState&);
+  StorageArea* Area() const { return storage_area_.Get(); }
 
-    DECLARE_VIRTUAL_TRACE();
+  String AnonymousNamedGetter(const AtomicString&, ExceptionState&);
+  bool AnonymousNamedSetter(const AtomicString& name,
+                            const AtomicString& value,
+                            ExceptionState&);
+  DeleteResult AnonymousNamedDeleter(const AtomicString&, ExceptionState&);
+  void NamedPropertyEnumerator(Vector<String>&, ExceptionState&);
+  bool NamedPropertyQuery(const AtomicString&, ExceptionState&);
 
-private:
-    Storage(LocalFrame*, StorageArea*);
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<StorageArea> m_storageArea;
+ private:
+  Storage(LocalFrame*, StorageArea*);
+
+  Member<StorageArea> storage_area_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Storage_h
+#endif  // Storage_h

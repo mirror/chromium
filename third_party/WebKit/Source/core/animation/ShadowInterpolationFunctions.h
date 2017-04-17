@@ -16,16 +16,25 @@ class CSSValue;
 class StyleResolverState;
 
 class ShadowInterpolationFunctions {
-public:
-    static InterpolationValue convertShadowData(const ShadowData&, double zoom);
-    static InterpolationValue maybeConvertCSSValue(const CSSValue&);
-    static std::unique_ptr<InterpolableValue> createNeutralInterpolableValue();
-    static bool nonInterpolableValuesAreCompatible(const NonInterpolableValue*, const NonInterpolableValue*);
-    static PairwiseInterpolationValue maybeMergeSingles(InterpolationValue&& start, InterpolationValue&& end);
-    static void composite(std::unique_ptr<InterpolableValue>&, RefPtr<NonInterpolableValue>&, double underlyingFraction, const InterpolableValue&, const NonInterpolableValue*);
-    static ShadowData createShadowData(const InterpolableValue&, const NonInterpolableValue*, const StyleResolverState&);
+ public:
+  static InterpolationValue ConvertShadowData(const ShadowData&, double zoom);
+  static InterpolationValue MaybeConvertCSSValue(const CSSValue&);
+  static std::unique_ptr<InterpolableValue> CreateNeutralInterpolableValue();
+  static bool NonInterpolableValuesAreCompatible(const NonInterpolableValue*,
+                                                 const NonInterpolableValue*);
+  static PairwiseInterpolationValue MaybeMergeSingles(
+      InterpolationValue&& start,
+      InterpolationValue&& end);
+  static void Composite(std::unique_ptr<InterpolableValue>&,
+                        RefPtr<NonInterpolableValue>&,
+                        double underlying_fraction,
+                        const InterpolableValue&,
+                        const NonInterpolableValue*);
+  static ShadowData CreateShadowData(const InterpolableValue&,
+                                     const NonInterpolableValue*,
+                                     const StyleResolverState&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ShadowInterpolationFunctions_h
+#endif  // ShadowInterpolationFunctions_h

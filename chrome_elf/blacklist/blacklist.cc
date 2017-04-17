@@ -12,7 +12,7 @@
 #include "chrome/install_static/install_util.h"
 #include "chrome_elf/blacklist/blacklist_interceptions.h"
 #include "chrome_elf/chrome_elf_constants.h"
-#include "chrome_elf/hook_util/thunk_getter.h"
+#include "chrome_elf/hook_util/hook_util.h"
 #include "chrome_elf/nt_registry/nt_registry.h"
 #include "sandbox/win/src/interception_internal.h"
 #include "sandbox/win/src/internal_types.h"
@@ -103,7 +103,10 @@ __declspec(allocate(".oldntmap"))
 bool LeaveSetupBeacon() {
   HANDLE key_handle = INVALID_HANDLE_VALUE;
 
-  if (!nt::CreateRegKey(nt::HKCU, kRegistryBeaconPath,
+  if (!nt::CreateRegKey(nt::HKCU,
+                        install_static::GetRegistryPath()
+                            .append(kRegistryBeaconKeyName)
+                            .c_str(),
                         KEY_QUERY_VALUE | KEY_SET_VALUE, &key_handle))
     return false;
 
@@ -152,7 +155,10 @@ bool LeaveSetupBeacon() {
 bool ResetBeacon() {
   HANDLE key_handle = INVALID_HANDLE_VALUE;
 
-  if (!nt::CreateRegKey(nt::HKCU, kRegistryBeaconPath,
+  if (!nt::CreateRegKey(nt::HKCU,
+                        install_static::GetRegistryPath()
+                            .append(kRegistryBeaconKeyName)
+                            .c_str(),
                         KEY_QUERY_VALUE | KEY_SET_VALUE, &key_handle))
     return false;
 
@@ -291,7 +297,7 @@ bool Initialize(bool force) {
   const bool kRelaxed = false;
 
   // Create a thunk via the appropriate ServiceResolver instance.
-  sandbox::ServiceResolverThunk* thunk = GetThunk(kRelaxed);
+  sandbox::ServiceResolverThunk* thunk = elf_hook::HookSystemService(kRelaxed);
 
   // Don't try blacklisting on unsupported OS versions.
   if (!thunk)
@@ -347,25 +353,7 @@ bool Initialize(bool force) {
                     VirtualProtect(&g_thunk_storage, sizeof(g_thunk_storage),
                                    PAGE_EXECUTE_READ, &old_protect);
 
-  AddDllsFromRegistryToBlacklist();
-
   return NT_SUCCESS(ret) && page_executable;
-}
-
-void AddDllsFromRegistryToBlacklist() {
-  std::vector<std::wstring> dlls;
-
-  if (!nt::QueryRegValueMULTISZ(nt::HKCU, kRegistryFinchListPath,
-                                kRegistryFinchListValueName, &dlls) ||
-      dlls.empty())
-    return;
-
-  // Add each DLL to the BL in memory
-  for (auto name : dlls) {
-    AddDllToBlacklist(name.c_str());
-  }
-
-  return;
 }
 
 }  // namespace blacklist

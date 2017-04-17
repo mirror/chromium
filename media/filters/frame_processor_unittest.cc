@@ -33,7 +33,6 @@ using ::testing::Values;
 namespace media {
 
 typedef StreamParser::BufferQueue BufferQueue;
-typedef StreamParser::TextBufferQueueMap TextBufferQueueMap;
 typedef StreamParser::TrackId TrackId;
 
 // Used for setting expectations on callbacks. Using a StrictMock also lets us
@@ -69,8 +68,8 @@ class FrameProcessorTest : public testing::TestWithParam<bool> {
             new MediaLog())),
         append_window_end_(kInfiniteDuration),
         frame_duration_(base::TimeDelta::FromMilliseconds(10)),
-        audio_id_(FrameProcessor::kAudioTrackId),
-        video_id_(FrameProcessor::kVideoTrackId) {}
+        audio_id_(1),
+        video_id_(2) {}
 
   enum StreamFlags {
     HAS_AUDIO = 1 << 0,
@@ -152,10 +151,17 @@ class FrameProcessorTest : public testing::TestWithParam<bool> {
 
   void ProcessFrames(const std::string& audio_timestamps,
                      const std::string& video_timestamps) {
+    StreamParser::BufferQueueMap buffer_queue_map;
+    const auto& audio_buffers =
+        StringToBufferQueue(audio_timestamps, audio_id_, DemuxerStream::AUDIO);
+    if (!audio_buffers.empty())
+      buffer_queue_map.insert(std::make_pair(audio_id_, audio_buffers));
+    const auto& video_buffers =
+        StringToBufferQueue(video_timestamps, video_id_, DemuxerStream::VIDEO);
+    if (!video_buffers.empty())
+      buffer_queue_map.insert(std::make_pair(video_id_, video_buffers));
     ASSERT_TRUE(frame_processor_->ProcessFrames(
-        StringToBufferQueue(audio_timestamps, audio_id_, DemuxerStream::AUDIO),
-        StringToBufferQueue(video_timestamps, video_id_, DemuxerStream::VIDEO),
-        empty_text_buffers_, append_window_start_, append_window_end_,
+        buffer_queue_map, append_window_start_, append_window_end_,
         &timestamp_offset_));
   }
 
@@ -270,7 +276,6 @@ class FrameProcessorTest : public testing::TestWithParam<bool> {
   const TrackId audio_id_;
   const TrackId video_id_;
   const BufferQueue empty_queue_;
-  const TextBufferQueueMap empty_text_buffers_;
 
   // StoreStatusAndBuffer's most recent result.
   DemuxerStream::Status last_read_status_;
@@ -281,10 +286,10 @@ class FrameProcessorTest : public testing::TestWithParam<bool> {
   void StoreStatusAndBuffer(DemuxerStream::Status status,
                             const scoped_refptr<DecoderBuffer>& buffer) {
     if (status == DemuxerStream::kOk && buffer.get()) {
-      DVLOG(3) << __FUNCTION__ << "status: " << status << " ts: "
-               << buffer->timestamp().InSecondsF();
+      DVLOG(3) << __func__ << "status: " << status
+               << " ts: " << buffer->timestamp().InSecondsF();
     } else {
-      DVLOG(3) << __FUNCTION__ << "status: " << status << " ts: n/a";
+      DVLOG(3) << __func__ << "status: " << status << " ts: n/a";
     }
 
     read_callback_called_ = true;
@@ -297,7 +302,7 @@ class FrameProcessorTest : public testing::TestWithParam<bool> {
     switch (type) {
       case DemuxerStream::AUDIO: {
         ASSERT_FALSE(audio_);
-        audio_.reset(new ChunkDemuxerStream(DemuxerStream::AUDIO, true, "1"));
+        audio_.reset(new ChunkDemuxerStream(DemuxerStream::AUDIO, "1"));
         AudioDecoderConfig decoder_config(kCodecVorbis, kSampleFormatPlanarF32,
                                           CHANNEL_LAYOUT_STEREO, 1000,
                                           EmptyExtraData(), Unencrypted());
@@ -307,15 +312,14 @@ class FrameProcessorTest : public testing::TestWithParam<bool> {
       }
       case DemuxerStream::VIDEO: {
         ASSERT_FALSE(video_);
-        video_.reset(new ChunkDemuxerStream(DemuxerStream::VIDEO, true, "2"));
+        video_.reset(new ChunkDemuxerStream(DemuxerStream::VIDEO, "2"));
         ASSERT_TRUE(video_->UpdateVideoConfig(TestVideoConfig::Normal(),
                                               new MediaLog()));
         break;
       }
       // TODO(wolenetz): Test text coded frame processing.
       case DemuxerStream::TEXT:
-      case DemuxerStream::UNKNOWN:
-      case DemuxerStream::NUM_TYPES: {
+      case DemuxerStream::UNKNOWN: {
         ASSERT_FALSE(true);
       }
     }
@@ -328,10 +332,13 @@ TEST_F(FrameProcessorTest, WrongTypeInAppendedBuffer) {
   AddTestTracks(HAS_AUDIO);
   EXPECT_FALSE(in_coded_frame_group());
 
-  ASSERT_FALSE(frame_processor_->ProcessFrames(
-      StringToBufferQueue("0K", audio_id_, DemuxerStream::VIDEO), empty_queue_,
-      empty_text_buffers_, append_window_start_, append_window_end_,
-      &timestamp_offset_));
+  StreamParser::BufferQueueMap buffer_queue_map;
+  const auto& audio_buffers =
+      StringToBufferQueue("0K", audio_id_, DemuxerStream::VIDEO);
+  buffer_queue_map.insert(std::make_pair(audio_id_, audio_buffers));
+  ASSERT_FALSE(
+      frame_processor_->ProcessFrames(buffer_queue_map, append_window_start_,
+                                      append_window_end_, &timestamp_offset_));
   EXPECT_FALSE(in_coded_frame_group());
   EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
   CheckExpectedRangesByTimestamp(audio_.get(), "{ }");
@@ -341,10 +348,13 @@ TEST_F(FrameProcessorTest, WrongTypeInAppendedBuffer) {
 TEST_F(FrameProcessorTest, NonMonotonicallyIncreasingTimestampInOneCall) {
   AddTestTracks(HAS_AUDIO);
 
-  ASSERT_FALSE(frame_processor_->ProcessFrames(
-      StringToBufferQueue("10K 0K", audio_id_, DemuxerStream::AUDIO),
-      empty_queue_, empty_text_buffers_, append_window_start_,
-      append_window_end_, &timestamp_offset_));
+  StreamParser::BufferQueueMap buffer_queue_map;
+  const auto& audio_buffers =
+      StringToBufferQueue("10K 0K", audio_id_, DemuxerStream::AUDIO);
+  buffer_queue_map.insert(std::make_pair(audio_id_, audio_buffers));
+  ASSERT_FALSE(
+      frame_processor_->ProcessFrames(buffer_queue_map, append_window_start_,
+                                      append_window_end_, &timestamp_offset_));
   EXPECT_FALSE(in_coded_frame_group());
   EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
   CheckExpectedRangesByTimestamp(audio_.get(), "{ }");

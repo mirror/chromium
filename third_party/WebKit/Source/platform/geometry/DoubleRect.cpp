@@ -7,59 +7,49 @@
 #include "platform/geometry/FloatRect.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/geometry/LayoutRect.h"
-
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-DoubleRect::DoubleRect(const IntRect& r) : m_location(r.location()), m_size(r.size())
-{
+DoubleRect::DoubleRect(const IntRect& r)
+    : location_(r.Location()), size_(r.Size()) {}
+
+DoubleRect::DoubleRect(const FloatRect& r)
+    : location_(r.Location()), size_(r.Size()) {}
+
+DoubleRect::DoubleRect(const LayoutRect& r)
+    : location_(r.Location()), size_(r.Size()) {}
+
+IntRect EnclosingIntRect(const DoubleRect& rect) {
+  IntPoint location = FlooredIntPoint(rect.MinXMinYCorner());
+  IntPoint max_point = CeiledIntPoint(rect.MaxXMaxYCorner());
+
+  return IntRect(location, max_point - location);
 }
 
-DoubleRect::DoubleRect(const FloatRect& r) : m_location(r.location()), m_size(r.size())
-{
+IntRect EnclosedIntRect(const DoubleRect& rect) {
+  IntPoint location = CeiledIntPoint(rect.MinXMinYCorner());
+  IntPoint max_point = FlooredIntPoint(rect.MaxXMaxYCorner());
+  IntSize size = max_point - location;
+  size.ClampNegativeToZero();
+
+  return IntRect(location, size);
 }
 
-DoubleRect::DoubleRect(const LayoutRect& r) : m_location(r.location()), m_size(r.size())
-{
+IntRect RoundedIntRect(const DoubleRect& rect) {
+  return IntRect(RoundedIntPoint(rect.Location()), RoundedIntSize(rect.Size()));
 }
 
-IntRect enclosingIntRect(const DoubleRect& rect)
-{
-    IntPoint location = flooredIntPoint(rect.minXMinYCorner());
-    IntPoint maxPoint = ceiledIntPoint(rect.maxXMaxYCorner());
-
-    return IntRect(location, maxPoint - location);
+void DoubleRect::Scale(float sx, float sy) {
+  location_.SetX(X() * sx);
+  location_.SetY(Y() * sy);
+  size_.SetWidth(Width() * sx);
+  size_.SetHeight(Height() * sy);
 }
 
-IntRect enclosedIntRect(const DoubleRect& rect)
-{
-    IntPoint location = ceiledIntPoint(rect.minXMinYCorner());
-    IntPoint maxPoint = flooredIntPoint(rect.maxXMaxYCorner());
-    IntSize size = maxPoint - location;
-    size.clampNegativeToZero();
-
-    return IntRect(location, size);
+String DoubleRect::ToString() const {
+  return String::Format("%s %s", Location().ToString().Ascii().Data(),
+                        Size().ToString().Ascii().Data());
 }
 
-IntRect roundedIntRect(const DoubleRect& rect)
-{
-    return IntRect(roundedIntPoint(rect.location()), roundedIntSize(rect.size()));
-}
-
-void DoubleRect::scale(float sx, float sy)
-{
-    m_location.setX(x() * sx);
-    m_location.setY(y() * sy);
-    m_size.setWidth(width() * sx);
-    m_size.setHeight(height() * sy);
-}
-
-#ifndef NDEBUG
-String DoubleRect::toString() const
-{
-    return String::format("%s %s", location().toString().ascii().data(), size().toString().ascii().data());
-}
-#endif
-
-} // namespace blink
+}  // namespace blink

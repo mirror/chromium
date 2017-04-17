@@ -54,6 +54,19 @@ var newWin2 = window.open(
 var newWindow2Success = testFrame(newWin2);
 
 function getResult() {
+  if (!frame1Success)
+    console.log("frame1Success is false!");
+  if (!frame2Success)
+    console.log("frame2Success is false!");
+  if (!frame3Success)
+    console.log("frame3Success is false!");
+  if (!frame4Success)
+    console.log("frame4Success is false!");
+  if (!newWindow1Success)
+    console.log("newWindow1Success is false!");
+  if (!newWindow2Success)
+    console.log("newWindow2Success is false!");
+
   window.domAutomationController.send(
       frame1Success && frame2Success && frame3Success &&
       frame4Success && newWindow1Success && newWindow2Success);

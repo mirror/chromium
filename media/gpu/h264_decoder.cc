@@ -10,6 +10,7 @@
 #include "base/callback_helpers.h"
 #include "base/macros.h"
 #include "base/numerics/safe_conversions.h"
+#include "base/optional.h"
 #include "base/stl_util.h"
 #include "media/gpu/h264_decoder.h"
 
@@ -1086,33 +1087,20 @@ bool H264Decoder::ProcessSPS(int sps_id, bool* need_new_buffers) {
     return false;
   }
 
-  // Calculate picture height/width in macroblocks and pixels
-  // (spec 7.4.2.1.1, 7.4.3).
-  int width_mb = sps->pic_width_in_mbs_minus1 + 1;
-  int height_mb = (2 - sps->frame_mbs_only_flag) *
-                  (sps->pic_height_in_map_units_minus1 + 1);
-
-  if (width_mb > std::numeric_limits<int>::max() / 16 ||
-      height_mb > std::numeric_limits<int>::max() / 16) {
-    DVLOG(1) << "Picture size is too big: width_mb=" << width_mb
-             << " height_mb=" << height_mb;
-    return false;
-  }
-
-  gfx::Size new_pic_size(16 * width_mb, 16 * height_mb);
+  gfx::Size new_pic_size = sps->GetCodedSize().value_or(gfx::Size());
   if (new_pic_size.IsEmpty()) {
-    DVLOG(1) << "Invalid picture size: " << new_pic_size.ToString();
+    DVLOG(1) << "Invalid picture size";
     return false;
   }
 
-  if (!pic_size_.IsEmpty() && new_pic_size == pic_size_) {
-    // Already have surfaces and this SPS keeps the same resolution,
-    // no need to request a new set.
-    return true;
-  }
+  int width_mb = new_pic_size.width() / 16;
+  int height_mb = new_pic_size.height() / 16;
 
-  pic_size_ = new_pic_size;
-  DVLOG(1) << "New picture size: " << pic_size_.ToString();
+  // Verify that the values are not too large before multiplying.
+  if (std::numeric_limits<int>::max() / width_mb < height_mb) {
+    DVLOG(1) << "Picture size is too big: " << new_pic_size.ToString();
+    return false;
+  }
 
   int level = sps->level_idc;
   int max_dpb_mbs = LevelToMaxDpbMbs(level);
@@ -1121,19 +1109,25 @@ bool H264Decoder::ProcessSPS(int sps_id, bool* need_new_buffers) {
 
   size_t max_dpb_size = std::min(max_dpb_mbs / (width_mb * height_mb),
                                  static_cast<int>(H264DPB::kDPBMaxSize));
-  DVLOG(1) << "Codec level: " << level << ", DPB size: " << max_dpb_size;
   if (max_dpb_size == 0) {
     DVLOG(1) << "Invalid DPB Size";
     return false;
   }
 
-  dpb_.set_max_num_pics(max_dpb_size);
+  if ((pic_size_ != new_pic_size) || (dpb_.max_num_pics() != max_dpb_size)) {
+    if (!Flush())
+      return false;
+    DVLOG(1) << "Codec level: " << level << ", DPB size: " << max_dpb_size
+             << ", Picture size: " << new_pic_size.ToString();
+    *need_new_buffers = true;
+    pic_size_ = new_pic_size;
+    dpb_.set_max_num_pics(max_dpb_size);
+  }
 
   if (!UpdateMaxNumReorderFrames(sps))
     return false;
   DVLOG(1) << "max_num_reorder_frames: " << max_num_reorder_frames_;
 
-  *need_new_buffers = true;
   return true;
 }
 
@@ -1386,9 +1380,6 @@ H264Decoder::DecodeResult H264Decoder::Decode() {
           state_ = kAfterReset;
 
         if (need_new_buffers) {
-          if (!Flush())
-            return kDecodeError;
-
           curr_pic_ = nullptr;
           curr_nalu_ = nullptr;
           ref_pic_list_p0_.clear();

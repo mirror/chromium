@@ -8,53 +8,66 @@
 #import <Foundation/Foundation.h>
 #include <vector>
 
+#import "ios/web/navigation/navigation_item_impl_list.h"
+#import "ios/web/public/navigation_manager.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
-@class CRWSessionEntry;
-@class CRWSessionCertificatePolicyManager;
-@class XCallbackParameters;
-
 namespace web {
+class BrowserState;
+class NavigationItemImpl;
 class NavigationManagerImpl;
+enum class NavigationInitiationType;
 struct Referrer;
-struct SSLStatus;
 }
 
 // A CRWSessionController is similar to a NavigationController object in desktop
 // Chrome. It maintains information needed to save/restore a tab with its
 // complete session history. There is one of these for each tab.
-// TODO(stuartmorgan): Move under NavigationManager, and consider merging into
-// NavigationManager.
-@interface CRWSessionController : NSObject<NSCoding, NSCopying>
+// DEPRECATED, do not use this class and do not add any methods to it.
+// Use web::NavigationManager instead.
+// TODO(crbug.com/454984): Remove this class.
+@interface CRWSessionController : NSObject
 
-@property(nonatomic, readonly, retain) NSString* tabId;
-@property(nonatomic, readonly, assign) NSInteger currentNavigationIndex;
-@property(nonatomic, readonly, assign) NSInteger previousNavigationIndex;
-@property(nonatomic, readonly, retain) NSArray* entries;
-@property(nonatomic, copy) NSString* windowName;
-// Indicates whether the page was opened by DOM (e.g. with |window.open|
-// JavaScript call or by clicking a link with |_blank| target).
-@property(nonatomic, readonly, getter=isOpenedByDOM) BOOL openedByDOM;
-@property(nonatomic, readonly, retain)
-    CRWSessionCertificatePolicyManager* sessionCertificatePolicyManager;
-// Returns the current entry in the session list, or the pending entry if there
-// is a navigation in progress.
-@property(nonatomic, readonly) CRWSessionEntry* currentEntry;
-// Returns the entry that should be displayed to users (e.g., in the omnibox).
-@property(nonatomic, readonly) CRWSessionEntry* visibleEntry;
-// Returns the pending entry, if any.
-@property(nonatomic, readonly) CRWSessionEntry* pendingEntry;
-// Returns the transient entry, if any.
-@property(nonatomic, readonly) CRWSessionEntry* transientEntry;
-// Returns the last committed entry.
-@property(nonatomic, readonly) CRWSessionEntry* lastCommittedEntry;
-// Returns the previous entry in the session list, or nil if there isn't any.
-@property(nonatomic, readonly) CRWSessionEntry* previousEntry;
-@property(nonatomic, assign) NSTimeInterval lastVisitedTimestamp;
-@property(nonatomic, readonly, copy) NSString* openerId;
-@property(nonatomic, readonly, assign) NSInteger openerNavigationIndex;
-@property(nonatomic, retain) XCallbackParameters* xCallbackParameters;
+@property(nonatomic, readonly, assign) NSInteger lastCommittedItemIndex;
+@property(nonatomic, readonly, assign) NSInteger previousItemIndex;
+// The index of the pending item if it is in |items|, or -1 if |pendingItem|
+// corresponds with a new navigation (created by addPendingItem:).
+@property(nonatomic, readwrite, assign) NSInteger pendingItemIndex;
+
+// Whether the CRWSessionController can prune all but the last committed item.
+// This is true when all the following conditions are met:
+// - There is a last committed NavigationItem
+// - There is not currently a pending history navigation
+// - There is no transient NavigationItem.
+@property(nonatomic, readonly) BOOL canPruneAllButLastCommittedItem;
+
+// The ScopedNavigationItemImplList used to store the NavigationItemImpls for
+// this session.
+@property(nonatomic, readonly) const web::ScopedNavigationItemImplList& items;
+// The current NavigationItem.  During a pending navigation, returns the
+// NavigationItem for that navigation.  If a transient NavigationItem exists,
+// this NavigationItem will be returned.
+@property(nonatomic, readonly) web::NavigationItemImpl* currentItem;
+// Returns the NavigationItem whose URL should be displayed to the user.
+@property(nonatomic, readonly) web::NavigationItemImpl* visibleItem;
+// Returns the NavigationItem corresponding to a load for which no data has yet
+// been received.
+@property(nonatomic, readonly) web::NavigationItemImpl* pendingItem;
+// Returns the transient NavigationItem, if any.  The transient item will be
+// discarded on any navigation, and is used to represent interstitials in the
+// session history.
+@property(nonatomic, readonly) web::NavigationItemImpl* transientItem;
+// Returns the NavigationItem corresponding with the last committed load.
+@property(nonatomic, readonly) web::NavigationItemImpl* lastCommittedItem;
+// Returns the NavigationItem corresponding with the previously loaded page.
+@property(nonatomic, readonly) web::NavigationItemImpl* previousItem;
+// Returns a list of all non-redirected NavigationItems whose index precedes
+// |lastCommittedItemIndex|.
+@property(nonatomic, readonly) web::NavigationItemList backwardItems;
+// Returns a list of all non-redirected NavigationItems whose index follow
+// |lastCommittedItemIndex|.
+@property(nonatomic, readonly) web::NavigationItemList forwardItems;
 
 // CRWSessionController doesn't have public constructors. New
 // CRWSessionControllers are created by deserialization, or via a
@@ -62,97 +75,82 @@ struct SSLStatus;
 
 // Sets the corresponding NavigationManager.
 - (void)setNavigationManager:(web::NavigationManagerImpl*)navigationManager;
+// Sets the corresponding BrowserState.
+- (void)setBrowserState:(web::BrowserState*)browserState;
 
-// Add a new entry with the given url, referrer, and navigation type, making it
-// the current entry. If |url| is the same as the current entry's url, this
-// does nothing. |referrer| may be nil if there isn't one. The entry starts
-// out as pending, and will be lost unless |-commitPendingEntry| is called.
-- (void)addPendingEntry:(const GURL&)url
-               referrer:(const web::Referrer&)referrer
-             transition:(ui::PageTransition)type
-      rendererInitiated:(BOOL)rendererInitiated;
+// Add a new item with the given url, referrer, navigation type and user agent
+// override option, making it the current item. If pending item is the same as
+// current item, this does nothing. |referrer| may be nil if there isn't one.
+// The item starts out as pending, and will be lost unless |-commitPendingItem|
+// is called.
+- (void)addPendingItem:(const GURL&)url
+                   referrer:(const web::Referrer&)referrer
+                 transition:(ui::PageTransition)type
+             initiationType:(web::NavigationInitiationType)initiationType
+    userAgentOverrideOption:(web::NavigationManager::UserAgentOverrideOption)
+                                userAgentOverrideOption;
 
-// Updates the URL of the yet to be committed pending entry. Useful for page
-// redirects. Does nothing if there is no pending entry.
-- (void)updatePendingEntry:(const GURL&)url;
+// Updates the URL of the yet to be committed pending item. Useful for page
+// redirects. Does nothing if there is no pending item.
+- (void)updatePendingItem:(const GURL&)url;
 
-// Commits the current pending entry. No changes are made to the entry during
+// Commits the current pending item. No changes are made to the item during
 // this process, it is just moved from pending to committed.
 // TODO(pinkerton): Desktop Chrome broadcasts a notification here, should we?
-- (void)commitPendingEntry;
+- (void)commitPendingItem;
 
-// Adds a transient entry with the given URL. A transient entry will be
+// Adds a transient item with the given URL. A transient item will be
 // discarded on any navigation.
-// TODO(stuartmorgan): Make this work more like upstream, where the entry can
+// TODO(stuartmorgan): Make this work more like upstream, where the item can
 // be made from outside and then handed in.
-- (void)addTransientEntryWithURL:(const GURL&)URL;
+- (void)addTransientItemWithURL:(const GURL&)URL;
 
-// Creates a new CRWSessionEntry with the given URL and state object. A state
+// Creates a new NavigationItem with the given URL and state object. A state
 // object is a serialized generic JavaScript object that contains details of the
-// UI's state for a given CRWSessionEntry/URL. The current entry's URL is the
-// new entry's referrer.
-- (void)pushNewEntryWithURL:(const GURL&)URL
-                stateObject:(NSString*)stateObject
-                 transition:(ui::PageTransition)transition;
+// UI's state for a given NavigationItem/URL. The current item's URL is the
+// new item's referrer.
+- (void)pushNewItemWithURL:(const GURL&)URL
+               stateObject:(NSString*)stateObject
+                transition:(ui::PageTransition)transition;
 
-// Updates the URL and state object for the current entry.
-- (void)updateCurrentEntryWithURL:(const GURL&)url
-                      stateObject:(NSString*)stateObject;
+// Updates the URL and state object for the current item.
+- (void)updateCurrentItemWithURL:(const GURL&)url
+                     stateObject:(NSString*)stateObject;
 
-- (void)discardNonCommittedEntries;
+// Removes the pending and transient NavigationItems.
+- (void)discardNonCommittedItems;
 
-// Returns YES if there is a pending entry.
-- (BOOL)hasPendingEntry;
+// Removes all items from this except the last committed item, and inserts
+// copies of all items from |source| at the beginning of the session history.
+//
+// For example:
+// source: A B *C* D
+// this:   E F *G*
+// result: A B C *G*
+//
+// If there is a pending item after *G* in |this|, it is also preserved.
+// This ignores any pending or transient entries in |source|.  No-op if
+// |canPruneAllButLastCommittedItem| is false.
+- (void)copyStateFromSessionControllerAndPrune:(CRWSessionController*)source;
 
-// Copies history state from the given CRWSessionController and adds it to this
-// controller. If |replaceState|, replaces the state of this controller with
-// the state of |otherSession|, instead of appending.
-- (void)copyStateFromAndPrune:(CRWSessionController*)otherSession
-                 replaceState:(BOOL)replaceState;
+// Sets |lastCommittedItemIndex| to the |index| if it's in the entries bounds.
+- (void)goToItemAtIndex:(NSInteger)index;
 
-// Returns YES if there are entries to go back or forward to, given the
-// current entry.
-- (BOOL)canGoBack;
-- (BOOL)canGoForward;
-// Adjusts the current entry to reflect the navigation in the corresponding
-// direction in history.
-- (void)goBack;
-- (void)goForward;
-// Calls goBack or goForward the appropriate number of times to adjust
-// currentNavigationIndex_ by delta.
-- (void)goDelta:(int)delta;
-// Sets |currentNavigationIndex_| to the index of |entry| if |entries_| contains
-// |entry|.
-- (void)goToEntry:(CRWSessionEntry*)entry;
+// Removes the item at |index| after discarding any noncomitted entries.
+// |index| must not be the index of the last committed item, or a noncomitted
+// item.
+- (void)removeItemAtIndex:(NSInteger)index;
 
-// Removes the entry at |index| after discarding any noncomitted entries.
-// |index| must not be the index of the last committed entry, or a noncomitted
-// entry.
-- (void)removeEntryAtIndex:(NSInteger)index;
+// Determines whether a navigation between |firstEntry| and |secondEntry| is a
+// same-document navigation.  Entries can be passed in any order.
+- (BOOL)isSameDocumentNavigationBetweenItem:(web::NavigationItem*)firstItem
+                                    andItem:(web::NavigationItem*)secondItem;
 
-// Returns an array containing all of the non-redirected CRWSessionEntry objects
-// whose index in |entries_| is less than |currentNavigationIndex_|.
-- (NSArray*)backwardEntries;
+// Returns the index of |item| in |items|.
+- (NSInteger)indexOfItem:(const web::NavigationItem*)item;
 
-// Returns an array containing all of the non-redirected CRWSessionEntry objects
-// whose index in |entries_| is greater than |currentNavigationIndex_|.
-- (NSArray*)forwardEntries;
-
-// Returns the URLs in the entries that are redirected to the current entry.
-- (std::vector<GURL>)currentRedirectedUrls;
-
-// Determines if navigation between the two given entries is a push state
-// navigation. Entries can be passed in in any order.
-- (BOOL)isPushStateNavigationBetweenEntry:(CRWSessionEntry*)firstEntry
-                                 andEntry:(CRWSessionEntry*)secondEntry;
-
-// Find the most recent session entry that is not a redirect. Returns nil if
-// |entries_| is empty.
-- (CRWSessionEntry*)lastUserEntry;
-
-// Set |useDesktopUserAgentForNextPendingEntry_| to YES if there is no pending
-// entry, otherwise set |useDesktopUserAgent| in the pending entry.
-- (void)useDesktopUserAgentForNextPendingEntry;
+// Returns the item at |index| in |items|.
+- (web::NavigationItemImpl*)itemAtIndex:(NSInteger)index;
 
 @end
 

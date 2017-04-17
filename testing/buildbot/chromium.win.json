@@ -11,25 +11,7 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "app_list_presenter_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
-        "test": "app_list_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
         "test": "app_shell_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
-        "test": "ash_unittests"
       },
       {
         "swarming": {
@@ -238,16 +220,16 @@
         "test": "jingle_unittests"
       },
       {
-        "test": "keyboard_unittests"
-      },
-      {
-        "args": [
-          "--override-use-gl-with-osmesa-for-tests"
-        ],
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "mash_unittests"
+        "test": "keyboard_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "libjingle_xmpp_unittests"
       },
       {
         "swarming": {
@@ -301,21 +283,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "mojo_runner_host_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
-        "test": "mojo_shell_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
         "test": "mojo_system_unittests"
       },
       {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "mus_gpu_unittests"
       },
       {
@@ -325,6 +298,9 @@
         "test": "mus_public_unittests"
       },
       {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "mus_ws_unittests"
       },
       {
@@ -337,6 +313,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "native_theme_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "navigation_unittests"
       },
       {
@@ -344,6 +326,12 @@
           "can_use_on_swarming_builders": true
         },
         "test": "net_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "pdf_unittests"
       },
       {
         "swarming": {
@@ -385,6 +373,18 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "service_manager_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "service_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "setup_unittests"
       },
       {
@@ -403,19 +403,25 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "storage_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "sync_integration_tests"
       },
       {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "sync_unit_tests"
+        "test": "ui_base_unittests"
       },
       {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "ui_base_unittests"
+        "test": "ui_struct_traits_unittests"
       },
       {
         "swarming": {
@@ -478,7 +484,8 @@
           "telemetry_unittests_run"
         ],
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "shards": 2
         }
       }
     ],
@@ -511,25 +518,7 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "app_list_presenter_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
-        "test": "app_list_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
         "test": "app_shell_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
-        "test": "ash_unittests"
       },
       {
         "swarming": {
@@ -550,6 +539,17 @@
         "test": "battor_agent_unittests"
       },
       {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "shards": 10
+        },
+        "test": "browser_tests"
+      },
+      {
+        "args": [
+          "--enable-browser-side-navigation"
+        ],
+        "name": "browser_side_navigation_browser_tests",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "shards": 10
@@ -605,6 +605,26 @@
         "test": "components_browsertests"
       },
       {
+        "args": [
+          "--enable-browser-side-navigation"
+        ],
+        "name": "browser_side_navigation_components_browsertests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "components_browsertests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "components_unittests"
+      },
+      {
+        "args": [
+          "--enable-browser-side-navigation"
+        ],
+        "name": "browser_side_navigation_components_unittests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -623,6 +643,26 @@
         "test": "content_browsertests"
       },
       {
+        "args": [
+          "--enable-browser-side-navigation"
+        ],
+        "name": "browser_side_navigation_content_browsertests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "content_browsertests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "content_unittests"
+      },
+      {
+        "args": [
+          "--enable-browser-side-navigation"
+        ],
+        "name": "browser_side_navigation_content_unittests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -659,6 +699,16 @@
         "test": "events_unittests"
       },
       {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "extensions_browsertests"
+      },
+      {
+        "args": [
+          "--enable-browser-side-navigation"
+        ],
+        "name": "browser_side_navigation_extensions_browsertests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -731,7 +781,16 @@
         "test": "jingle_unittests"
       },
       {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "keyboard_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "libjingle_xmpp_unittests"
       },
       {
         "swarming": {
@@ -791,7 +850,19 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "native_theme_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "net_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "pdf_unittests"
       },
       {
         "swarming": {
@@ -833,6 +904,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "service_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "setup_unittests"
       },
       {
@@ -851,13 +928,13 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "sync_integration_tests"
+        "test": "storage_unittests"
       },
       {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "sync_unit_tests"
+        "test": "sync_integration_tests"
       },
       {
         "swarming": {
@@ -872,6 +949,16 @@
         "test": "ui_touch_selection_unittests"
       },
       {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "unit_tests"
+      },
+      {
+        "args": [
+          "--enable-browser-side-navigation"
+        ],
+        "name": "browser_side_navigation_unit_tests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -956,25 +1043,7 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "app_list_presenter_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
-        "test": "app_list_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
         "test": "app_shell_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
-        "test": "ash_unittests"
       },
       {
         "swarming": {
@@ -1189,16 +1258,16 @@
         "test": "jingle_unittests"
       },
       {
-        "test": "keyboard_unittests"
-      },
-      {
-        "args": [
-          "--override-use-gl-with-osmesa-for-tests"
-        ],
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "mash_unittests"
+        "test": "keyboard_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "libjingle_xmpp_unittests"
       },
       {
         "swarming": {
@@ -1252,18 +1321,6 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "mojo_runner_host_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
-        "test": "mojo_shell_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
         "test": "mojo_system_unittests"
       },
       {
@@ -1276,7 +1333,19 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "native_theme_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "net_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "pdf_unittests"
       },
       {
         "swarming": {
@@ -1318,6 +1387,18 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "service_manager_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "service_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "setup_unittests"
       },
       {
@@ -1336,19 +1417,25 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "storage_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "sync_integration_tests"
       },
       {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "sync_unit_tests"
+        "test": "ui_base_unittests"
       },
       {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
-        "test": "ui_base_unittests"
+        "test": "ui_struct_traits_unittests"
       },
       {
         "swarming": {
@@ -1383,6 +1470,13 @@
     ],
     "isolated_scripts": [
       {
+        "isolate_name": "content_shell_crash_test",
+        "name": "content_shell_crash_test",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        }
+      },
+      {
         "isolate_name": "telemetry_gpu_unittests",
         "name": "telemetry_gpu_unittests",
         "override_compile_targets": [
@@ -1411,7 +1505,8 @@
           "telemetry_unittests_run"
         ],
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "shards": 2
         }
       }
     ],
@@ -1435,12 +1530,6 @@
           "can_use_on_swarming_builders": true
         },
         "test": "app_shell_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
-        "test": "ash_unittests"
       },
       {
         "swarming": {
@@ -1623,6 +1712,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "libjingle_xmpp_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "media_blink_unittests"
       },
       {
@@ -1671,7 +1766,19 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "native_theme_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "net_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "pdf_unittests"
       },
       {
         "swarming": {
@@ -1713,6 +1820,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "service_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "setup_unittests"
       },
       {
@@ -1729,16 +1842,16 @@
       },
       {
         "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "storage_unittests"
+      },
+      {
+        "swarming": {
           "can_use_on_swarming_builders": true,
           "shards": 2
         },
         "test": "sync_integration_tests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
-        "test": "sync_unit_tests"
       },
       {
         "swarming": {
@@ -1795,7 +1908,8 @@
           "telemetry_unittests_run"
         ],
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "shards": 2
         }
       }
     ]

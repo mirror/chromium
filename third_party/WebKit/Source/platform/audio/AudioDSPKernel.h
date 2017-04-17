@@ -32,49 +32,52 @@
 #define AudioDSPKernel_h
 
 #include "platform/audio/AudioDSPKernelProcessor.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
-// AudioDSPKernel does the processing for one channel of an AudioDSPKernelProcessor.
+// AudioDSPKernel does the processing for one channel of an
+// AudioDSPKernelProcessor.
 
 class PLATFORM_EXPORT AudioDSPKernel {
-    USING_FAST_MALLOC(AudioDSPKernel);
-public:
-    AudioDSPKernel(AudioDSPKernelProcessor* kernelProcessor)
-        : m_kernelProcessor(kernelProcessor)
-        , m_sampleRate(kernelProcessor->sampleRate())
-    {
-    }
+  USING_FAST_MALLOC(AudioDSPKernel);
 
-    AudioDSPKernel(float sampleRate)
-        : m_kernelProcessor(nullptr)
-        , m_sampleRate(sampleRate)
-    {
-    }
+ public:
+  AudioDSPKernel(AudioDSPKernelProcessor* kernel_processor)
+      : kernel_processor_(kernel_processor),
+        sample_rate_(kernel_processor->SampleRate()) {}
 
-    virtual ~AudioDSPKernel();
+  AudioDSPKernel(float sample_rate)
+      : kernel_processor_(nullptr), sample_rate_(sample_rate) {}
 
-    // Subclasses must override process() to do the processing and reset() to reset DSP state.
-    virtual void process(const float* source, float* destination, size_t framesToProcess) = 0;
-    virtual void reset() = 0;
+  virtual ~AudioDSPKernel();
 
-    float sampleRate() const { return m_sampleRate; }
-    double nyquist() const { return 0.5 * sampleRate(); }
+  // Subclasses must override process() to do the processing and reset() to
+  // reset DSP state.
+  virtual void Process(const float* source,
+                       float* destination,
+                       size_t frames_to_process) = 0;
+  // Subclasses that have AudioParams must override this to process the
+  // AudioParams.
+  virtual void ProcessOnlyAudioParams(size_t frames_to_process){};
+  virtual void Reset() = 0;
 
-    AudioDSPKernelProcessor* processor() { return m_kernelProcessor; }
-    const AudioDSPKernelProcessor* processor() const { return m_kernelProcessor; }
+  float SampleRate() const { return sample_rate_; }
+  double Nyquist() const { return 0.5 * SampleRate(); }
 
-    virtual double tailTime() const = 0;
-    virtual double latencyTime() const = 0;
+  AudioDSPKernelProcessor* Processor() { return kernel_processor_; }
+  const AudioDSPKernelProcessor* Processor() const { return kernel_processor_; }
 
-protected:
-    // This raw pointer is safe because the AudioDSPKernelProcessor object is
-    // guaranteed to be kept alive while the AudioDSPKernel object is alive.
-    AudioDSPKernelProcessor* m_kernelProcessor;
-    float m_sampleRate;
+  virtual double TailTime() const = 0;
+  virtual double LatencyTime() const = 0;
+
+ protected:
+  // This raw pointer is safe because the AudioDSPKernelProcessor object is
+  // guaranteed to be kept alive while the AudioDSPKernel object is alive.
+  AudioDSPKernelProcessor* kernel_processor_;
+  float sample_rate_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AudioDSPKernel_h
+#endif  // AudioDSPKernel_h

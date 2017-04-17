@@ -33,44 +33,52 @@
 
 #include "core/frame/PlatformEventDispatcher.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/RefPtr.h"
 #include "public/platform/WebPlatformEventType.h"
 #include "public/platform/modules/device_orientation/WebDeviceOrientationListener.h"
-#include "wtf/RefPtr.h"
+
+namespace device {
+class OrientationData;
+}
 
 namespace blink {
 
 class DeviceOrientationData;
-class WebDeviceOrientationData;
 
-// This class listens to device orientation data and notifies all registered controllers.
-class DeviceOrientationDispatcher final : public GarbageCollectedFinalized<DeviceOrientationDispatcher>, public PlatformEventDispatcher, public WebDeviceOrientationListener {
-    USING_GARBAGE_COLLECTED_MIXIN(DeviceOrientationDispatcher);
-public:
-    static DeviceOrientationDispatcher& instance(bool absolute);
-    ~DeviceOrientationDispatcher() override;
+// This class listens to device orientation data and notifies all registered
+// controllers.
+class DeviceOrientationDispatcher final
+    : public GarbageCollectedFinalized<DeviceOrientationDispatcher>,
+      public PlatformEventDispatcher,
+      public WebDeviceOrientationListener {
+  USING_GARBAGE_COLLECTED_MIXIN(DeviceOrientationDispatcher);
 
-    // Note that the returned object is owned by this class.
-    // FIXME: make the return value const, see crbug.com/233174.
-    DeviceOrientationData* latestDeviceOrientationData();
+ public:
+  static DeviceOrientationDispatcher& Instance(bool absolute);
+  ~DeviceOrientationDispatcher() override;
 
-    // Inherited from WebDeviceOrientationListener.
-    void didChangeDeviceOrientation(const WebDeviceOrientationData&) override;
+  // Note that the returned object is owned by this class.
+  // FIXME: make the return value const, see crbug.com/233174.
+  DeviceOrientationData* LatestDeviceOrientationData();
 
-    DECLARE_VIRTUAL_TRACE();
+  // Inherited from WebDeviceOrientationListener.
+  void DidChangeDeviceOrientation(const device::OrientationData&) override;
 
-private:
-    explicit DeviceOrientationDispatcher(bool absolute);
+  DECLARE_VIRTUAL_TRACE();
 
-    // Inherited from PlatformEventDispatcher.
-    void startListening() override;
-    void stopListening() override;
+ private:
+  explicit DeviceOrientationDispatcher(bool absolute);
 
-    WebPlatformEventType getWebPlatformEventType() const;
+  // Inherited from PlatformEventDispatcher.
+  void StartListening() override;
+  void StopListening() override;
 
-    const bool m_absolute;
-    Member<DeviceOrientationData> m_lastDeviceOrientationData;
+  WebPlatformEventType GetWebPlatformEventType() const;
+
+  const bool absolute_;
+  Member<DeviceOrientationData> last_device_orientation_data_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DeviceOrientationDispatcher_h
+#endif  // DeviceOrientationDispatcher_h

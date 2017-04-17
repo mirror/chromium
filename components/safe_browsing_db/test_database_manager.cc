@@ -13,20 +13,8 @@
 
 namespace safe_browsing {
 
-bool TestSafeBrowsingDatabaseManager::IsSupported() const {
+void TestSafeBrowsingDatabaseManager::CancelCheck(Client* client) {
   NOTIMPLEMENTED();
-  return false;
-}
-
-safe_browsing::ThreatSource TestSafeBrowsingDatabaseManager::GetThreatSource()
-    const {
-  NOTIMPLEMENTED();
-  return safe_browsing::ThreatSource::UNKNOWN;
-}
-
-bool TestSafeBrowsingDatabaseManager::ChecksAreAlwaysAsync() const {
-  NOTIMPLEMENTED();
-  return false;
 }
 
 bool TestSafeBrowsingDatabaseManager::CanCheckResourceType(
@@ -40,7 +28,7 @@ bool TestSafeBrowsingDatabaseManager::CanCheckUrl(const GURL& url) const {
   return false;
 }
 
-bool TestSafeBrowsingDatabaseManager::IsDownloadProtectionEnabled() const {
+bool TestSafeBrowsingDatabaseManager::ChecksAreAlwaysAsync() const {
   NOTIMPLEMENTED();
   return false;
 }
@@ -71,19 +59,14 @@ bool TestSafeBrowsingDatabaseManager::CheckResourceUrl(const GURL& url,
   return true;
 }
 
+bool TestSafeBrowsingDatabaseManager::CheckUrlForSubresourceFilter(
+    const GURL& url,
+    Client* client) {
+  NOTIMPLEMENTED();
+  return true;
+}
+
 bool TestSafeBrowsingDatabaseManager::MatchCsdWhitelistUrl(const GURL& url) {
-  NOTIMPLEMENTED();
-  return true;
-}
-
-bool TestSafeBrowsingDatabaseManager::MatchMalwareIP(
-    const std::string& ip_address) {
-  NOTIMPLEMENTED();
-  return true;
-}
-
-bool TestSafeBrowsingDatabaseManager::MatchDownloadWhitelistUrl(
-    const GURL& url) {
   NOTIMPLEMENTED();
   return true;
 }
@@ -94,15 +77,28 @@ bool TestSafeBrowsingDatabaseManager::MatchDownloadWhitelistString(
   return true;
 }
 
+bool TestSafeBrowsingDatabaseManager::MatchDownloadWhitelistUrl(
+    const GURL& url) {
+  NOTIMPLEMENTED();
+  return true;
+}
+
+bool TestSafeBrowsingDatabaseManager::MatchMalwareIP(
+    const std::string& ip_address) {
+  NOTIMPLEMENTED();
+  return true;
+}
+
 bool TestSafeBrowsingDatabaseManager::MatchModuleWhitelistString(
     const std::string& str) {
   NOTIMPLEMENTED();
   return true;
 }
 
-bool TestSafeBrowsingDatabaseManager::IsMalwareKillSwitchOn() {
+safe_browsing::ThreatSource TestSafeBrowsingDatabaseManager::GetThreatSource()
+    const {
   NOTIMPLEMENTED();
-  return false;
+  return safe_browsing::ThreatSource::UNKNOWN;
 }
 
 bool TestSafeBrowsingDatabaseManager::IsCsdWhitelistKillSwitchOn() {
@@ -110,8 +106,31 @@ bool TestSafeBrowsingDatabaseManager::IsCsdWhitelistKillSwitchOn() {
   return false;
 }
 
-void TestSafeBrowsingDatabaseManager::CancelCheck(Client* client) {
+bool TestSafeBrowsingDatabaseManager::IsDownloadProtectionEnabled() const {
   NOTIMPLEMENTED();
+  return false;
+}
+
+bool TestSafeBrowsingDatabaseManager::IsMalwareKillSwitchOn() {
+  NOTIMPLEMENTED();
+  return false;
+}
+
+bool TestSafeBrowsingDatabaseManager::IsSupported() const {
+  NOTIMPLEMENTED();
+  return false;
+}
+
+void TestSafeBrowsingDatabaseManager::StartOnIOThread(
+    net::URLRequestContextGetter* request_context_getter,
+    const V4ProtocolConfig& config) {
+  SafeBrowsingDatabaseManager::StartOnIOThread(request_context_getter, config);
+  enabled_ = true;
+}
+
+void TestSafeBrowsingDatabaseManager::StopOnIOThread(bool shutdown) {
+  enabled_ = false;
+  SafeBrowsingDatabaseManager::StopOnIOThread(shutdown);
 }
 
 }  // namespace safe_browsing

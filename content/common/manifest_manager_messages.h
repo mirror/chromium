@@ -8,16 +8,29 @@
 #include "content/common/content_export.h"
 #include "content/public/common/manifest.h"
 #include "ipc/ipc_message_macros.h"
+#include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationLockType.h"
 
 #undef IPC_MESSAGE_EXPORT
 #define IPC_MESSAGE_EXPORT CONTENT_EXPORT
 
 #define IPC_MESSAGE_START ManifestManagerMsgStart
 
+IPC_ENUM_TRAITS_MIN_MAX_VALUE(blink::WebScreenOrientationLockType,
+                              blink::kWebScreenOrientationLockDefault,
+                              blink::kWebScreenOrientationLockNatural)
+IPC_ENUM_TRAITS_MAX_VALUE(
+    content::Manifest::Icon::IconPurpose,
+    content::Manifest::Icon::IconPurpose::ICON_PURPOSE_LAST)
+
 IPC_STRUCT_TRAITS_BEGIN(content::Manifest::Icon)
   IPC_STRUCT_TRAITS_MEMBER(src)
   IPC_STRUCT_TRAITS_MEMBER(type)
   IPC_STRUCT_TRAITS_MEMBER(sizes)
+  IPC_STRUCT_TRAITS_MEMBER(purpose)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(content::Manifest::ShareTarget)
+  IPC_STRUCT_TRAITS_MEMBER(url_template)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::Manifest::RelatedApplication)
@@ -34,6 +47,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::Manifest)
   IPC_STRUCT_TRAITS_MEMBER(display)
   IPC_STRUCT_TRAITS_MEMBER(orientation)
   IPC_STRUCT_TRAITS_MEMBER(icons)
+  IPC_STRUCT_TRAITS_MEMBER(share_target)
   IPC_STRUCT_TRAITS_MEMBER(related_applications)
   IPC_STRUCT_TRAITS_MEMBER(prefer_related_applications)
   IPC_STRUCT_TRAITS_MEMBER(theme_color)

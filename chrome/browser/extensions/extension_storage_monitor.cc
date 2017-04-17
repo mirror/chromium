@@ -7,7 +7,7 @@
 #include <map>
 #include <utility>
 
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -84,17 +84,16 @@ const Extension* GetExtensionById(content::BrowserContext* context,
       extension_id, ExtensionRegistry::EVERYTHING);
 }
 
-void LogTemporaryStorageUsage(int64_t usage,
-                              storage::QuotaStatusCode status,
-                              int64_t global_quota) {
-  if (status == storage::kQuotaStatusOk) {
-    int64_t per_app_quota =
-        global_quota / storage::QuotaManager::kPerHostTemporaryPortion;
+void LogTemporaryStorageUsage(
+    scoped_refptr<storage::QuotaManager> quota_manager,
+    int64_t usage) {
+  const storage::QuotaSettings& settings = quota_manager->settings();
+  if (settings.per_host_quota > 0) {
     // Note we use COUNTS_100 (instead of PERCENT) because this can potentially
     // exceed 100%.
     UMA_HISTOGRAM_COUNTS_100(
         "Extensions.HostedAppUnlimitedStorageTemporaryStorageUsage",
-        100.0 * usage / per_app_quota);
+        100.0 * usage / settings.per_host_quota);
   }
 }
 
@@ -235,12 +234,9 @@ class StorageEventObserver
       } else {
         // We can't use the quota in the event because it assumes unlimited
         // storage.
-        BrowserThread::PostTask(
-            BrowserThread::IO,
-            FROM_HERE,
-            base::Bind(&storage::QuotaManager::GetTemporaryGlobalQuota,
-                       state.quota_manager,
-                       base::Bind(&LogTemporaryStorageUsage, event.usage)));
+        BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                                base::Bind(&LogTemporaryStorageUsage,
+                                           state.quota_manager, event.usage));
       }
     }
 
@@ -611,11 +607,10 @@ void ExtensionStorageMonitor::SetNextStorageThreshold(
     const std::string& extension_id,
     int64_t next_threshold) {
   extension_prefs_->UpdateExtensionPref(
-      extension_id,
-      kPrefNextStorageThreshold,
+      extension_id, kPrefNextStorageThreshold,
       next_threshold > 0
-          ? new base::StringValue(base::Int64ToString(next_threshold))
-          : NULL);
+          ? base::MakeUnique<base::Value>(base::Int64ToString(next_threshold))
+          : nullptr);
 }
 
 int64_t ExtensionStorageMonitor::GetNextStorageThresholdFromPrefs(
@@ -649,9 +644,8 @@ void ExtensionStorageMonitor::SetStorageNotificationEnabled(
     const std::string& extension_id,
     bool enable_notifications) {
   extension_prefs_->UpdateExtensionPref(
-      extension_id,
-      kPrefDisableStorageNotifications,
-      enable_notifications ? NULL : new base::FundamentalValue(true));
+      extension_id, kPrefDisableStorageNotifications,
+      enable_notifications ? nullptr : base::MakeUnique<base::Value>(true));
 }
 
 }  // namespace extensions

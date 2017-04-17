@@ -5,12 +5,17 @@
 #include "chrome/browser/ui/webui/chromeos/network_ui.h"
 
 #include <string>
+#include <utility>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/values.h"
+#include "chrome/browser/chromeos/options/network_config_view.h"
 #include "chrome/browser/extensions/tab_helper.h"
+#include "chrome/browser/ui/webui/chromeos/network_element_localized_strings_provider.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/grit/browser_resources.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/network/device_state.h"
 #include "chromeos/network/network_configuration_handler.h"
@@ -21,7 +26,6 @@
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "content/public/browser/web_ui_message_handler.h"
-#include "grit/browser_resources.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/chromeos/strings/grit/ui_chromeos_strings.h"
@@ -57,13 +61,13 @@ void SetDeviceProperties(base::DictionaryValue* dictionary) {
     std::unique_ptr<base::ListValue> ip_configs(new base::ListValue);
     for (base::DictionaryValue::Iterator iter(device_state->ip_configs());
          !iter.IsAtEnd(); iter.Advance()) {
-      ip_configs->Append(iter.value().DeepCopy());
+      ip_configs->Append(iter.value().CreateDeepCopy());
     }
     device_dictionary->SetWithoutPathExpansion(shill::kIPConfigsProperty,
                                                ip_configs.release());
   }
   if (!device_dictionary->empty())
-    dictionary->Set(shill::kDeviceProperty, device_dictionary.release());
+    dictionary->Set(shill::kDeviceProperty, std::move(device_dictionary));
 }
 
 class NetworkConfigMessageHandler : public content::WebUIMessageHandler {
@@ -76,6 +80,10 @@ class NetworkConfigMessageHandler : public content::WebUIMessageHandler {
     web_ui()->RegisterMessageCallback(
         "getShillProperties",
         base::Bind(&NetworkConfigMessageHandler::GetShillProperties,
+                   base::Unretained(this)));
+    web_ui()->RegisterMessageCallback(
+        "addNetwork",
+        base::Bind(&NetworkConfigMessageHandler::AddNetwork,
                    base::Unretained(this)));
   }
 
@@ -112,7 +120,7 @@ class NetworkConfigMessageHandler : public content::WebUIMessageHandler {
     SetDeviceProperties(dictionary_copy.get());
 
     base::ListValue return_arg_list;
-    return_arg_list.Append(dictionary_copy.release());
+    return_arg_list.Append(std::move(dictionary_copy));
     web_ui()->CallJavascriptFunctionUnsafe("NetworkUI.getShillPropertiesResult",
                                            return_arg_list);
   }
@@ -126,9 +134,19 @@ class NetworkConfigMessageHandler : public content::WebUIMessageHandler {
     std::unique_ptr<base::DictionaryValue> dictionary;
     dictionary->SetStringWithoutPathExpansion(shill::kGuidProperty, guid);
     dictionary->SetStringWithoutPathExpansion("ShillError", error_name);
-    return_arg_list.Append(dictionary.release());
+    return_arg_list.Append(std::move(dictionary));
     web_ui()->CallJavascriptFunctionUnsafe("NetworkUI.getShillPropertiesResult",
                                            return_arg_list);
+  }
+
+  void AddNetwork(const base::ListValue* args) {
+    std::string onc_type;
+    args->GetString(0, &onc_type);
+    std::string shill_type = (onc_type == ::onc::network_type::kVPN)
+                                 ? shill::kTypeVPN
+                                 : shill::kTypeWifi;
+    NetworkConfigView::ShowForType(
+        shill_type, web_ui()->GetWebContents()->GetTopLevelNativeWindow());
   }
 
   base::WeakPtrFactory<NetworkConfigMessageHandler> weak_ptr_factory_;
@@ -172,43 +190,19 @@ void NetworkUI::GetLocalizedStrings(base::DictionaryValue* localized_strings) {
       l10n_util::GetStringUTF16(IDS_NETWORK_UI_FORMAT_SHILL));
 
   localized_strings->SetString(
+      "globalPolicyLabel",
+      l10n_util::GetStringUTF16(IDS_NETWORK_UI_GLOBAL_POLICY));
+  localized_strings->SetString(
       "visibleNetworksLabel",
       l10n_util::GetStringUTF16(IDS_NETWORK_UI_VISIBLE_NETWORKS));
   localized_strings->SetString(
       "favoriteNetworksLabel",
       l10n_util::GetStringUTF16(IDS_NETWORK_UI_FAVORITE_NETWORKS));
-
-  localized_strings->SetString(
-      "networkConnected",
-      l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_NETWORK_CONNECTED));
-  localized_strings->SetString(
-      "networkConnecting",
-      l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_NETWORK_CONNECTING));
-  localized_strings->SetString(
-      "networkDisabled",
-      l10n_util::GetStringUTF16(IDS_OPTIONS_SETTINGS_NETWORK_DISABLED));
-  localized_strings->SetString(
-      "networkNotConnected",
-      l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_NETWORK_NOT_CONNECTED));
-  localized_strings->SetString(
-      "OncTypeCellular", l10n_util::GetStringUTF16(IDS_NETWORK_TYPE_CELLULAR));
-  localized_strings->SetString(
-      "OncTypeEthernet", l10n_util::GetStringUTF16(IDS_NETWORK_TYPE_ETHERNET));
-  localized_strings->SetString("OncTypeVPN",
-                               l10n_util::GetStringUTF16(IDS_NETWORK_TYPE_VPN));
-  localized_strings->SetString(
-      "OncTypeWiFi", l10n_util::GetStringUTF16(IDS_NETWORK_TYPE_WIFI));
-  localized_strings->SetString(
-      "OncTypeWimax", l10n_util::GetStringUTF16(IDS_NETWORK_TYPE_WIMAX));
-  localized_strings->SetString(
-      "vpnNameTemplate",
-      l10n_util::GetStringUTF16(
-          IDS_OPTIONS_SETTINGS_SECTION_THIRD_PARTY_VPN_NAME_TEMPLATE));
 }
 
 NetworkUI::NetworkUI(content::WebUI* web_ui)
     : content::WebUIController(web_ui) {
-  web_ui->AddMessageHandler(new NetworkConfigMessageHandler());
+  web_ui->AddMessageHandler(base::MakeUnique<NetworkConfigMessageHandler>());
 
   // Enable extension API calls in the WebUI.
   extensions::TabHelper::CreateForWebContents(web_ui->GetWebContents());
@@ -219,6 +213,8 @@ NetworkUI::NetworkUI(content::WebUI* web_ui)
   content::WebUIDataSource* html =
       content::WebUIDataSource::Create(chrome::kChromeUINetworkHost);
   html->AddLocalizedStrings(localized_strings);
+
+  network_element::AddLocalizedStrings(html);
 
   html->SetJsonPath("strings.js");
   html->AddResourcePath("network_ui.css", IDR_NETWORK_UI_CSS);

@@ -7,11 +7,11 @@
  * TODO(hirono): Rename thumbnailUrl with externalThumbnailUrl.
  *
  * @constructor
- * @extends {NewMetadataProvider}
+ * @extends {MetadataProvider}
  * @struct
  */
 function ExternalMetadataProvider() {
-  NewMetadataProvider.call(this, ExternalMetadataProvider.PROPERTY_NAMES);
+  MetadataProvider.call(this, ExternalMetadataProvider.PROPERTY_NAMES);
 }
 
 /**
@@ -38,7 +38,7 @@ ExternalMetadataProvider.PROPERTY_NAMES = [
   'thumbnailUrl'
 ];
 
-ExternalMetadataProvider.prototype.__proto__ = NewMetadataProvider.prototype;
+ExternalMetadataProvider.prototype.__proto__ = MetadataProvider.prototype;
 
 /**
  * @override
@@ -50,7 +50,7 @@ ExternalMetadataProvider.prototype.get = function(requests) {
     var entries = requests.map(function(request) {
       return request.entry;
     });
-    var nameMap = [];
+    var nameMap = {};
     for (var i = 0; i < requests.length; i++) {
       for (var j = 0; j < requests[i].names.length; j++) {
         nameMap[requests[i].names[j]] = true;

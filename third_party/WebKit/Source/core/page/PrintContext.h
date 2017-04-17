@@ -23,10 +23,10 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/HashMap.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -38,61 +38,88 @@ class GraphicsContext;
 class IntRect;
 class Node;
 
-class CORE_EXPORT PrintContext : public GarbageCollectedFinalized<PrintContext> {
-public:
-    explicit PrintContext(LocalFrame*);
-    virtual ~PrintContext();
+class CORE_EXPORT PrintContext
+    : public GarbageCollectedFinalized<PrintContext> {
+ public:
+  explicit PrintContext(LocalFrame*);
+  virtual ~PrintContext();
 
-    LocalFrame* frame() const { return m_frame; }
+  LocalFrame* GetFrame() const { return frame_; }
 
-    // Break up a page into rects without relayout.
-    // FIXME: This means that CSS page breaks won't be on page boundary if the size is different than what was passed to begin(). That's probably not always desirable.
-    // FIXME: Header and footer height should be applied before layout, not after.
-    // FIXME: The printRect argument is only used to determine page aspect ratio, it would be better to pass a FloatSize with page dimensions instead.
-    virtual void computePageRects(const FloatRect& printRect, float headerHeight, float footerHeight, float userScaleFactor, float& outPageHeight);
+  // Break up a page into rects without relayout.
+  // FIXME: This means that CSS page breaks won't be on page boundary if the
+  // size is different than what was passed to begin(). That's probably not
+  // always desirable.
+  // FIXME: Header and footer height should be applied before layout, not after.
+  // FIXME: The printRect argument is only used to determine page aspect ratio,
+  // it would be better to pass a FloatSize with page dimensions instead.
+  virtual void ComputePageRects(const FloatRect& print_rect,
+                                float header_height,
+                                float footer_height,
+                                float user_scale_factor,
+                                float& out_page_height);
 
-    // Deprecated. Page size computation is already in this class, clients shouldn't be copying it.
-    // FIXME: Everyone passes |false| for the second paramer. We should remove the second parameter.
-    virtual void computePageRectsWithPageSize(const FloatSize& pageSizeInPixels);
+  // Deprecated. Page size computation is already in this class, clients
+  // shouldn't be copying it.
+  // FIXME: Everyone passes |false| for the second paramer. We should remove the
+  // second parameter.
+  virtual void ComputePageRectsWithPageSize(
+      const FloatSize& page_size_in_pixels);
 
-    // These are only valid after page rects are computed.
-    size_t pageCount() const { return m_pageRects.size(); }
-    const IntRect& pageRect(size_t pageNumber) const { return m_pageRects[pageNumber]; }
-    const Vector<IntRect>& pageRects() const { return m_pageRects; }
+  // These are only valid after page rects are computed.
+  size_t PageCount() const { return page_rects_.size(); }
+  const IntRect& PageRect(size_t page_number) const {
+    return page_rects_[page_number];
+  }
+  const Vector<IntRect>& PageRects() const { return page_rects_; }
 
-    // Enter print mode, updating layout for new page size.
-    // This function can be called multiple times to apply new print options without going back to screen mode.
-    virtual void begin(float width, float height = 0);
+  // Enter print mode, updating layout for new page size.
+  // This function can be called multiple times to apply new print options
+  // without going back to screen mode.
+  virtual void begin(float width, float height = 0);
 
-    // Return to screen mode.
-    virtual void end();
+  // Return to screen mode.
+  virtual void end();
 
-    // Used by layout tests.
-    static int pageNumberForElement(Element*, const FloatSize& pageSizeInPixels); // Returns -1 if page isn't found.
-    static String pageProperty(LocalFrame*, const char* propertyName, int pageNumber);
-    static bool isPageBoxVisible(LocalFrame*, int pageNumber);
-    static String pageSizeAndMarginsInPixels(LocalFrame*, int pageNumber, int width, int height, int marginTop, int marginRight, int marginBottom, int marginLeft);
-    static int numberOfPages(LocalFrame*, const FloatSize& pageSizeInPixels);
+  // Used by layout tests.
+  static int PageNumberForElement(
+      Element*,
+      const FloatSize& page_size_in_pixels);  // Returns -1 if page isn't found.
+  static String PageProperty(LocalFrame*,
+                             const char* property_name,
+                             int page_number);
+  static bool IsPageBoxVisible(LocalFrame*, int page_number);
+  static String PageSizeAndMarginsInPixels(LocalFrame*,
+                                           int page_number,
+                                           int width,
+                                           int height,
+                                           int margin_top,
+                                           int margin_right,
+                                           int margin_bottom,
+                                           int margin_left);
+  static int NumberOfPages(LocalFrame*, const FloatSize& page_size_in_pixels);
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    void outputLinkedDestinations(GraphicsContext&, const IntRect& pageRect);
+ protected:
+  void OutputLinkedDestinations(GraphicsContext&, const IntRect& page_rect);
 
-    Member<LocalFrame> m_frame;
-    Vector<IntRect> m_pageRects;
+  Member<LocalFrame> frame_;
+  Vector<IntRect> page_rects_;
 
-private:
-    void computePageRectsWithPageSizeInternal(const FloatSize& pageSizeInPixels);
-    void collectLinkedDestinations(Node*);
+ private:
+  void ComputePageRectsWithPageSizeInternal(
+      const FloatSize& page_size_in_pixels);
+  void CollectLinkedDestinations(Node*);
 
-    // Used to prevent misuses of begin() and end() (e.g., call end without begin).
-    bool m_isPrinting;
+  // Used to prevent misuses of begin() and end() (e.g., call end without
+  // begin).
+  bool is_printing_;
 
-    HeapHashMap<String, Member<Element>> m_linkedDestinations;
-    bool m_linkedDestinationsValid;
+  HeapHashMap<String, Member<Element>> linked_destinations_;
+  bool linked_destinations_valid_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -8,12 +8,15 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/memory_coordinator_client_registry.h"
+#include "base/memory/memory_coordinator_proxy.h"
 #include "base/memory/memory_pressure_listener.h"
 #include "base/memory/memory_pressure_monitor.h"
 #include "base/memory/shared_memory.h"
 #include "base/sys_info.h"
 #include "build/build_config.h"
-#include "content/common/host_shared_bitmap_manager.h"
+#include "components/display_compositor/host_shared_bitmap_manager.h"
+#include "content/public/common/content_features.h"
 
 namespace content {
 namespace {
@@ -72,38 +75,55 @@ void RendererFrameManager::UnlockFrame(RendererFrameManagerClient* frame) {
 }
 
 size_t RendererFrameManager::GetMaxNumberOfSavedFrames() const {
-  base::MemoryPressureMonitor* monitor = base::MemoryPressureMonitor::Get();
-
-  if (!monitor)
-    return max_number_of_saved_frames_;
-
-  // Until we have a global OnMemoryPressureChanged event we need to query the
-  // value from our specific pressure monitor.
   int percentage = 100;
-  switch (monitor->GetCurrentPressureLevel()) {
-    case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_NONE:
-      percentage = 100;
-      break;
-    case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE:
-      percentage = kModeratePressurePercentage;
-      break;
-    case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL:
-      percentage = kCriticalPressurePercentage;
-      break;
+  if (base::FeatureList::IsEnabled(features::kMemoryCoordinator)) {
+    switch (base::MemoryCoordinatorProxy::GetInstance()->
+            GetCurrentMemoryState()) {
+      case base::MemoryState::NORMAL:
+        percentage = 100;
+        break;
+      case base::MemoryState::THROTTLED:
+        percentage = kCriticalPressurePercentage;
+        break;
+      case base::MemoryState::SUSPENDED:
+      case base::MemoryState::UNKNOWN:
+        NOTREACHED();
+        break;
+    }
+  } else {
+    base::MemoryPressureMonitor* monitor = base::MemoryPressureMonitor::Get();
+
+    if (!monitor)
+      return max_number_of_saved_frames_;
+
+    // Until we have a global OnMemoryPressureChanged event we need to query the
+    // value from our specific pressure monitor.
+    switch (monitor->GetCurrentPressureLevel()) {
+      case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_NONE:
+        percentage = 100;
+        break;
+      case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE:
+        percentage = kModeratePressurePercentage;
+        break;
+      case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL:
+        percentage = kCriticalPressurePercentage;
+        break;
+    }
   }
   size_t frames = (max_number_of_saved_frames_ * percentage) / 100;
   return std::max(static_cast<size_t>(1), frames);
 }
 
 RendererFrameManager::RendererFrameManager()
-    : memory_pressure_listener_(
+  : memory_pressure_listener_(new base::MemoryPressureListener(
         base::Bind(&RendererFrameManager::OnMemoryPressure,
-                   base::Unretained(this))) {
-  // Note: With the destruction of this class the |memory_pressure_listener_|
-  // gets destroyed and the observer will remove itself.
+                   base::Unretained(this)))) {
+  base::MemoryCoordinatorClientRegistry::GetInstance()->Register(this);
   max_number_of_saved_frames_ =
 #if defined(OS_ANDROID)
-      1;
+      // If the amount of memory on the device is >= 3.5 GB, save up to 5
+      // frames.
+      base::SysInfo::AmountOfPhysicalMemoryMB() < 1024 * 3.5f ? 1 : 5;
 #else
       std::min(5, 2 + (base::SysInfo::AmountOfPhysicalMemoryMB() / 256));
 #endif
@@ -115,8 +135,9 @@ RendererFrameManager::~RendererFrameManager() {}
 void RendererFrameManager::CullUnlockedFrames(size_t saved_frame_limit) {
   if (unlocked_frames_.size() + locked_frames_.size() > 0) {
     float handles_per_frame =
-        HostSharedBitmapManager::current()->AllocatedBitmapCount() * 1.0f /
-        (unlocked_frames_.size() + locked_frames_.size());
+        display_compositor::HostSharedBitmapManager::current()
+            ->AllocatedBitmapCount() *
+        1.0f / (unlocked_frames_.size() + locked_frames_.size());
 
     saved_frame_limit = std::max(
         1,
@@ -134,21 +155,27 @@ void RendererFrameManager::CullUnlockedFrames(size_t saved_frame_limit) {
 
 void RendererFrameManager::OnMemoryPressure(
     base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level) {
-  int saved_frame_limit = max_number_of_saved_frames_;
-  if (saved_frame_limit <= 1)
-    return;
-  int percentage = 100;
   switch (memory_pressure_level) {
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE:
-      percentage = kModeratePressurePercentage;
+      PurgeMemory(kModeratePressurePercentage);
       break;
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL:
-      percentage = kCriticalPressurePercentage;
+      PurgeMemory(kCriticalPressurePercentage);
       break;
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_NONE:
       // No need to change anything when there is no pressure.
       return;
   }
+}
+
+void RendererFrameManager::OnPurgeMemory() {
+  PurgeMemory(kCriticalPressurePercentage);
+}
+
+void RendererFrameManager::PurgeMemory(int percentage) {
+  int saved_frame_limit = max_number_of_saved_frames_;
+  if (saved_frame_limit <= 1)
+    return;
   CullUnlockedFrames(std::max(1, (saved_frame_limit * percentage) / 100));
 }
 

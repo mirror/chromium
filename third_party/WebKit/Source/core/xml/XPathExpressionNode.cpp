@@ -26,35 +26,28 @@
 
 #include "core/xml/XPathExpressionNode.h"
 
-#include "wtf/StdLibExtras.h"
+#include "platform/wtf/StdLibExtras.h"
 
 namespace blink {
 namespace XPath {
 
-EvaluationContext::EvaluationContext(Node& contextNode)
-    : node(contextNode)
-    , size(1)
-    , position(1)
-    , hadTypeConversionError(false)
-{
-}
+EvaluationContext::EvaluationContext(Node& context_node)
+    : node(context_node),
+      size(1),
+      position(1),
+      had_type_conversion_error(false) {}
 
 Expression::Expression()
-    : m_isContextNodeSensitive(false)
-    , m_isContextPositionSensitive(false)
-    , m_isContextSizeSensitive(false)
-{
+    : is_context_node_sensitive_(false),
+      is_context_position_sensitive_(false),
+      is_context_size_sensitive_(false) {}
+
+Expression::~Expression() {}
+
+DEFINE_TRACE(Expression) {
+  visitor->Trace(sub_expressions_);
+  ParseNode::Trace(visitor);
 }
 
-Expression::~Expression()
-{
-}
-
-DEFINE_TRACE(Expression)
-{
-    visitor->trace(m_subExpressions);
-    ParseNode::trace(visitor);
-}
-
-} // namespace XPath
-} // namespace blink
+}  // namespace XPath
+}  // namespace blink

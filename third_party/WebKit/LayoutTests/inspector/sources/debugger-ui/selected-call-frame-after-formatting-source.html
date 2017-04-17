@@ -19,19 +19,19 @@ function testFunction2()
 var test = function()
 {
     InspectorTest.startDebuggerTest(step1);
-    var panel = WebInspector.panels.sources;
+    var panel = UI.panels.sources;
     var sourceFrame;
 
     function step1()
     {
-        var testName = InspectorTest.resourceTreeModel.inspectedPageURL();
+        var testName = InspectorTest.mainTarget.inspectedURL();
         testName = testName.substring(testName.lastIndexOf('/') + 1);
         InspectorTest.showScriptSource(testName, step2);
     }
 
     function step2(frame)
     {
-        sourceFrame = frame; 
+        sourceFrame = frame;
         InspectorTest.runTestFunctionAndWaitUntilPaused(step3);
     }
 
@@ -44,7 +44,7 @@ var test = function()
 
     function step4()
     {
-        InspectorTest.assertEquals("testFunction", InspectorTest.debuggerModel.selectedCallFrame().functionName);
+        InspectorTest.assertEquals("testFunction", UI.context.flavor(SDK.DebuggerModel.CallFrame).functionName);
         sourceFrame._toggleFormatSource(step5);
     }
 

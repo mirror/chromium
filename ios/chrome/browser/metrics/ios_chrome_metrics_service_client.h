@@ -8,24 +8,27 @@
 #include <stdint.h>
 
 #include <memory>
+#include <set>
 #include <string>
 
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
+#include "components/metrics/metrics_log_uploader.h"
 #include "components/metrics/metrics_service_client.h"
 #include "components/metrics/profiler/tracking_synchronizer_observer.h"
 #include "components/omnibox/browser/omnibox_event_global_tracker.h"
+#include "components/ukm/observers/history_delete_observer.h"
+#include "components/ukm/observers/sync_disable_observer.h"
 #include "ios/web/public/web_state/global_web_state_observer.h"
 
 class IOSChromeStabilityMetricsProvider;
 class PrefRegistrySimple;
-class PrefService;
 
-namespace base {
-class FilePath;
-}  // namespace base
+namespace ios {
+class ChromeBrowserState;
+}
 
 namespace metrics {
 class DriveMetricsProvider;
@@ -34,42 +37,56 @@ class MetricsStateManager;
 class ProfilerMetricsProvider;
 }  // namespace metrics
 
+namespace ukm {
+class UkmService;
+}
+
 // IOSChromeMetricsServiceClient provides an implementation of
 // MetricsServiceClient that depends on //ios/chrome/.
 class IOSChromeMetricsServiceClient
     : public metrics::MetricsServiceClient,
       public metrics::TrackingSynchronizerObserver,
+      public ukm::HistoryDeleteObserver,
+      public ukm::SyncDisableObserver,
       public web::GlobalWebStateObserver {
  public:
   ~IOSChromeMetricsServiceClient() override;
 
   // Factory function.
   static std::unique_ptr<IOSChromeMetricsServiceClient> Create(
-      metrics::MetricsStateManager* state_manager,
-      PrefService* local_state);
+      metrics::MetricsStateManager* state_manager);
 
   // Registers local state prefs used by this class.
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
   // metrics::MetricsServiceClient:
   metrics::MetricsService* GetMetricsService() override;
+  ukm::UkmService* GetUkmService() override;
   void SetMetricsClientId(const std::string& client_id) override;
-  void OnRecordingDisabled() override;
-  bool IsOffTheRecordSessionActive() override;
   int32_t GetProduct() override;
   std::string GetApplicationLocale() override;
   bool GetBrand(std::string* brand_code) override;
   metrics::SystemProfileProto::Channel GetChannel() override;
   std::string GetVersionString() override;
-  void OnLogUploadComplete() override;
   void InitializeSystemProfileMetrics(
       const base::Closure& done_callback) override;
   void CollectFinalMetricsForLog(const base::Closure& done_callback) override;
   std::unique_ptr<metrics::MetricsLogUploader> CreateUploader(
-      const base::Callback<void(int)>& on_upload_complete) override;
+      base::StringPiece server_url,
+      base::StringPiece mime_type,
+      metrics::MetricsLogUploader::MetricServiceType service_type,
+      const metrics::MetricsLogUploader::UploadCallback& on_upload_complete)
+      override;
   base::TimeDelta GetStandardUploadInterval() override;
   base::string16 GetRegistryBackupKey() override;
   void OnRendererProcessCrash() override;
+  bool IsHistorySyncEnabledOnAllProfiles() override;
+
+  // ukm::HistoryDeleteObserver:
+  void OnHistoryDeleted() override;
+
+  // ukm::SyncDisableObserver:
+  void OnSyncPrefsChanged(bool must_purge) override;
 
   // web::GlobalWebStateObserver:
   void WebStateDidStartLoading(web::WebState* web_state) override;
@@ -110,6 +127,9 @@ class IOSChromeMetricsServiceClient
   // there was recent activity.
   void RegisterForNotifications();
 
+  // Register to observe events on a browser state's services.
+  void RegisterForBrowserStateEvents(ios::ChromeBrowserState* browser_state);
+
   // Called when a tab is parented.
   void OnTabParented(web::WebState* web_state);
 
@@ -123,6 +143,9 @@ class IOSChromeMetricsServiceClient
 
   // The MetricsService that |this| is a client of.
   std::unique_ptr<metrics::MetricsService> metrics_service_;
+
+  // The UkmService that |this| is a client of.
+  std::unique_ptr<ukm::UkmService> ukm_service_;
 
   // The IOSChromeStabilityMetricsProvider instance that was registered with
   // MetricsService. Has the same lifetime as |metrics_service_|.

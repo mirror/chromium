@@ -12,6 +12,7 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/strings/string_piece.h"
@@ -64,13 +65,17 @@ void DictionaryValueCallback(const std::string& expected_id,
   EXPECT_EQ(expected_id, service_path);
 }
 
-void ErrorCallback(bool error_expected,
-                   const std::string& expected_id,
-                   const std::string& error_name,
+void ErrorCallback(const std::string& error_name,
                    std::unique_ptr<base::DictionaryValue> error_data) {
-  EXPECT_TRUE(error_expected) << "Unexpected error: " << error_name
-                              << " with associated data: \n"
-                              << PrettyJson(*error_data);
+  ADD_FAILURE() << "Unexpected error: " << error_name
+                << " with associated data: \n"
+                << PrettyJson(*error_data);
+}
+
+void RecordError(std::string* error_name_ptr,
+                 const std::string& error_name,
+                 std::unique_ptr<base::DictionaryValue> error_data) {
+  *error_name_ptr = error_name;
 }
 
 void ServiceResultCallback(const std::string& expected_result,
@@ -99,8 +104,6 @@ class TestNetworkConfigurationObserver : public NetworkConfigurationObserver {
  public:
   TestNetworkConfigurationObserver() {}
   ~TestNetworkConfigurationObserver() override {
-    STLDeleteContainerPairSecondPointers(configurations_.begin(),
-                                         configurations_.end());
   }
 
   // NetworkConfigurationObserver
@@ -110,7 +113,7 @@ class TestNetworkConfigurationObserver : public NetworkConfigurationObserver {
       const base::DictionaryValue& properties,
       NetworkConfigurationObserver::Source source) override {
     ASSERT_EQ(0u, configurations_.count(service_path));
-    configurations_[service_path] = properties.DeepCopy();
+    configurations_[service_path] = properties.CreateDeepCopy();
     profiles_[profile_path].insert(service_path);
   }
 
@@ -119,7 +122,6 @@ class TestNetworkConfigurationObserver : public NetworkConfigurationObserver {
       const std::string& guid,
       NetworkConfigurationObserver::Source source) override {
     ASSERT_EQ(1u, configurations_.count(service_path));
-    delete configurations_[service_path];
     configurations_.erase(service_path);
     for (auto& p : profiles_) {
       p.second.erase(service_path);
@@ -165,7 +167,7 @@ class TestNetworkConfigurationObserver : public NetworkConfigurationObserver {
   }
 
  private:
-  std::map<std::string, base::DictionaryValue*> configurations_;
+  std::map<std::string, std::unique_ptr<base::DictionaryValue>> configurations_;
   std::map<std::string, std::set<std::string>> profiles_;
 
   DISALLOW_COPY_AND_ASSIGN(TestNetworkConfigurationObserver);
@@ -196,23 +198,40 @@ class NetworkConfigurationHandlerTest : public testing::Test {
         std::unique_ptr<ShillServiceClient>(mock_service_client_));
 
     EXPECT_CALL(*mock_service_client_, GetProperties(_, _)).Times(AnyNumber());
+    EXPECT_CALL(*mock_service_client_, AddPropertyChangedObserver(_, _))
+        .Times(AnyNumber());
+    EXPECT_CALL(*mock_service_client_, RemovePropertyChangedObserver(_, _))
+        .Times(AnyNumber());
     EXPECT_CALL(*mock_manager_client_, GetProperties(_)).Times(AnyNumber());
     EXPECT_CALL(*mock_manager_client_, AddPropertyChangedObserver(_))
-        .Times(AnyNumber());
+        .WillRepeatedly(Invoke(
+            this,
+            &NetworkConfigurationHandlerTest::AddPropertyChangedObserver));
     EXPECT_CALL(*mock_manager_client_, RemovePropertyChangedObserver(_))
-        .Times(AnyNumber());
+        .WillRepeatedly(Invoke(
+            this,
+            &NetworkConfigurationHandlerTest::RemovePropertyChangedObserver));
 
-    network_state_handler_.reset(NetworkStateHandler::InitializeForTest());
+    network_state_handler_ = NetworkStateHandler::InitializeForTest();
     network_configuration_handler_.reset(new NetworkConfigurationHandler());
     network_configuration_handler_->Init(network_state_handler_.get(),
                                          NULL /* network_device_handler */);
-    message_loop_.RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
   }
 
   void TearDown() override {
+    network_state_handler_->Shutdown();
     network_configuration_handler_.reset();
     network_state_handler_.reset();
     DBusThreadManager::Shutdown();
+  }
+
+  void AddPropertyChangedObserver(ShillPropertyChangedObserver* observer) {
+    property_changed_observers_.AddObserver(observer);
+  }
+
+  void RemovePropertyChangedObserver(ShillPropertyChangedObserver* observer) {
+    property_changed_observers_.RemoveObserver(observer);
   }
 
   // Handles responses for GetProperties method calls.
@@ -259,6 +278,15 @@ class NetworkConfigurationHandlerTest : public testing::Test {
       const ObjectPathCallback& callback,
       const ShillClientHelper::ErrorCallback& error_callback) {
     callback.Run(dbus::ObjectPath("/service/2"));
+
+    // Notify property changed observer that service list was changed - the
+    // goal is to have network state handler update it's network state list.
+    base::ListValue value;
+    value.AppendString("/service/1");
+    value.AppendString("/service/2");
+    for (auto& observer : property_changed_observers_) {
+      observer.OnPropertyChanged("ServiceCompleteList", value);
+    }
   }
 
   void OnGetLoadableProfileEntries(
@@ -288,7 +316,7 @@ class NetworkConfigurationHandlerTest : public testing::Test {
     network_configuration_handler_->CreateShillConfiguration(
         properties, NetworkConfigurationObserver::SOURCE_USER_ACTION,
         base::Bind(&ServiceResultCallback, service_path),
-        base::Bind(&ErrorCallback, false, std::string()));
+        base::Bind(&ErrorCallback));
   }
 
  protected:
@@ -299,6 +327,9 @@ class NetworkConfigurationHandlerTest : public testing::Test {
   std::unique_ptr<NetworkConfigurationHandler> network_configuration_handler_;
   base::MessageLoopForUI message_loop_;
   base::DictionaryValue* dictionary_value_result_;
+
+  base::ObserverList<ShillPropertyChangedObserver, true>
+      property_changed_observers_;
 };
 
 TEST_F(NetworkConfigurationHandlerTest, GetProperties) {
@@ -306,11 +337,10 @@ TEST_F(NetworkConfigurationHandlerTest, GetProperties) {
   std::string expected_json = "{\n   \"SSID\": \"MyNetwork\"\n}\n";
   std::string networkName = "MyNetwork";
   std::string key = "SSID";
-  std::unique_ptr<base::StringValue> networkNameValue(
-      new base::StringValue(networkName));
+  std::unique_ptr<base::Value> networkNameValue(new base::Value(networkName));
 
   base::DictionaryValue value;
-  value.Set(key, new base::StringValue(networkName));
+  value.Set(key, new base::Value(networkName));
   dictionary_value_result_ = &value;
   EXPECT_CALL(*mock_service_client_,
               SetProperty(dbus::ObjectPath(service_path), key,
@@ -318,7 +348,7 @@ TEST_F(NetworkConfigurationHandlerTest, GetProperties) {
   mock_service_client_->SetProperty(
       dbus::ObjectPath(service_path), key, *networkNameValue,
       base::Bind(&base::DoNothing), base::Bind(&DBusErrorCallback));
-  message_loop_.RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   ShillServiceClient::DictionaryValueCallback get_properties_callback;
   EXPECT_CALL(*mock_service_client_, GetProperties(_, _))
@@ -327,49 +357,45 @@ TEST_F(NetworkConfigurationHandlerTest, GetProperties) {
   network_configuration_handler_->GetShillProperties(
       service_path,
       base::Bind(&DictionaryValueCallback, service_path, expected_json),
-      base::Bind(&ErrorCallback, false, service_path));
-  message_loop_.RunUntilIdle();
+      base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(NetworkConfigurationHandlerTest, SetProperties) {
   std::string service_path = "/service/1";
   std::string networkName = "MyNetwork";
   std::string key = "SSID";
-  std::unique_ptr<base::StringValue> networkNameValue(
-      new base::StringValue(networkName));
+  std::unique_ptr<base::Value> networkNameValue(new base::Value(networkName));
 
   base::DictionaryValue value;
-  value.Set(key, new base::StringValue(networkName));
+  value.Set(key, new base::Value(networkName));
   dictionary_value_result_ = &value;
   EXPECT_CALL(*mock_service_client_, SetProperties(_, _, _, _))
       .WillOnce(
           Invoke(this, &NetworkConfigurationHandlerTest::OnSetProperties));
   network_configuration_handler_->SetShillProperties(
       service_path, value, NetworkConfigurationObserver::SOURCE_USER_ACTION,
-      base::Bind(&base::DoNothing),
-      base::Bind(&ErrorCallback, false, service_path));
-  message_loop_.RunUntilIdle();
+      base::Bind(&base::DoNothing), base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(NetworkConfigurationHandlerTest, ClearProperties) {
   std::string service_path = "/service/1";
   std::string networkName = "MyNetwork";
   std::string key = "SSID";
-  std::unique_ptr<base::StringValue> networkNameValue(
-      new base::StringValue(networkName));
+  std::unique_ptr<base::Value> networkNameValue(new base::Value(networkName));
 
   // First set up a value to clear.
   base::DictionaryValue value;
-  value.Set(key, new base::StringValue(networkName));
+  value.Set(key, new base::Value(networkName));
   dictionary_value_result_ = &value;
   EXPECT_CALL(*mock_service_client_, SetProperties(_, _, _, _))
       .WillOnce(
           Invoke(this, &NetworkConfigurationHandlerTest::OnSetProperties));
   network_configuration_handler_->SetShillProperties(
       service_path, value, NetworkConfigurationObserver::SOURCE_USER_ACTION,
-      base::Bind(&base::DoNothing),
-      base::Bind(&ErrorCallback, false, service_path));
-  message_loop_.RunUntilIdle();
+      base::Bind(&base::DoNothing), base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
 
   // Now clear it.
   std::vector<std::string> values_to_clear;
@@ -379,29 +405,27 @@ TEST_F(NetworkConfigurationHandlerTest, ClearProperties) {
           Invoke(this, &NetworkConfigurationHandlerTest::OnClearProperties));
   network_configuration_handler_->ClearShillProperties(
       service_path, values_to_clear, base::Bind(&base::DoNothing),
-      base::Bind(&ErrorCallback, false, service_path));
-  message_loop_.RunUntilIdle();
+      base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(NetworkConfigurationHandlerTest, ClearPropertiesError) {
   std::string service_path = "/service/1";
   std::string networkName = "MyNetwork";
   std::string key = "SSID";
-  std::unique_ptr<base::StringValue> networkNameValue(
-      new base::StringValue(networkName));
+  std::unique_ptr<base::Value> networkNameValue(new base::Value(networkName));
 
   // First set up a value to clear.
   base::DictionaryValue value;
-  value.Set(key, new base::StringValue(networkName));
+  value.Set(key, new base::Value(networkName));
   dictionary_value_result_ = &value;
   EXPECT_CALL(*mock_service_client_, SetProperties(_, _, _, _))
       .WillOnce(
           Invoke(this, &NetworkConfigurationHandlerTest::OnSetProperties));
   network_configuration_handler_->SetShillProperties(
       service_path, value, NetworkConfigurationObserver::SOURCE_USER_ACTION,
-      base::Bind(&base::DoNothing),
-      base::Bind(&ErrorCallback, false, service_path));
-  message_loop_.RunUntilIdle();
+      base::Bind(&base::DoNothing), base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
 
   // Now clear it.
   std::vector<std::string> values_to_clear;
@@ -409,10 +433,12 @@ TEST_F(NetworkConfigurationHandlerTest, ClearPropertiesError) {
   EXPECT_CALL(*mock_service_client_, ClearProperties(_, _, _, _))
       .WillOnce(Invoke(
           this, &NetworkConfigurationHandlerTest::OnClearPropertiesError));
+
+  std::string error;
   network_configuration_handler_->ClearShillProperties(
       service_path, values_to_clear, base::Bind(&base::DoNothing),
-      base::Bind(&ErrorCallback, true, service_path));
-  message_loop_.RunUntilIdle();
+      base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(NetworkConfigurationHandlerTest, CreateConfiguration) {
@@ -422,37 +448,148 @@ TEST_F(NetworkConfigurationHandlerTest, CreateConfiguration) {
   std::string profile = "profile path";
   base::DictionaryValue value;
   shill_property_util::SetSSID(networkName, &value);
-  value.SetWithoutPathExpansion(shill::kTypeProperty,
-                                new base::StringValue(type));
+  value.SetWithoutPathExpansion(shill::kTypeProperty, new base::Value(type));
   value.SetWithoutPathExpansion(shill::kProfileProperty,
-                                new base::StringValue(profile));
+                                new base::Value(profile));
 
   EXPECT_CALL(*mock_manager_client_,
               ConfigureServiceForProfile(dbus::ObjectPath(profile), _, _, _))
       .WillOnce(
           Invoke(this, &NetworkConfigurationHandlerTest::OnConfigureService));
   CreateConfiguration("/service/2", value);
-  message_loop_.RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(NetworkConfigurationHandlerTest, RemoveConfiguration) {
-  std::string service_path = "/service/1";
+  std::string service_path = "/service/2";
 
-  TestCallback test_callback;
-  EXPECT_CALL(*mock_service_client_, GetLoadableProfileEntries(_, _))
+  // Set up network configuration so the associated network service has the
+  // profile path set to |profile|.
+  std::string key = "SSID";
+  std::string type = "wifi";
+  base::DictionaryValue value;
+  shill_property_util::SetSSID("Service", &value);
+  value.SetWithoutPathExpansion(shill::kTypeProperty, new base::Value(type));
+  value.SetWithoutPathExpansion(shill::kProfileProperty,
+                                new base::Value("profile2"));
+  EXPECT_CALL(*mock_manager_client_,
+              ConfigureServiceForProfile(dbus::ObjectPath("profile2"), _, _, _))
+      .WillOnce(
+          Invoke(this, &NetworkConfigurationHandlerTest::OnConfigureService));
+
+  dictionary_value_result_ = &value;
+  EXPECT_CALL(*mock_service_client_, GetProperties(_, _))
+      .WillRepeatedly(
+          Invoke(this, &NetworkConfigurationHandlerTest::OnGetProperties));
+
+  CreateConfiguration(service_path, value);
+  base::RunLoop().RunUntilIdle();
+
+  // Set Up mock flor GetLoadableProfileEntries - it returns
+  // [(profile1, entry1), (profile2, entry2)] profile-entry pairs.
+  EXPECT_CALL(*mock_service_client_,
+              GetLoadableProfileEntries(dbus::ObjectPath(service_path), _))
       .WillOnce(Invoke(
           this, &NetworkConfigurationHandlerTest::OnGetLoadableProfileEntries));
-  EXPECT_CALL(*mock_profile_client_, DeleteEntry(_, _, _, _))
-      .WillRepeatedly(
-          Invoke(this, &NetworkConfigurationHandlerTest::OnDeleteEntry));
 
+  // Expectations for entries deleted during the test.
+  EXPECT_CALL(*mock_profile_client_,
+              DeleteEntry(dbus::ObjectPath("profile1"), "entry1", _, _))
+      .WillOnce(Invoke(this, &NetworkConfigurationHandlerTest::OnDeleteEntry));
+  EXPECT_CALL(*mock_profile_client_,
+              DeleteEntry(dbus::ObjectPath("profile2"), "entry2", _, _))
+      .WillOnce(Invoke(this, &NetworkConfigurationHandlerTest::OnDeleteEntry));
+
+  TestCallback test_callback;
   network_configuration_handler_->RemoveConfiguration(
       service_path, NetworkConfigurationObserver::SOURCE_USER_ACTION,
       base::Bind(&TestCallback::Run, base::Unretained(&test_callback)),
-      base::Bind(&ErrorCallback, false, service_path));
-  message_loop_.RunUntilIdle();
+      base::Bind(&ErrorCallback));
+
+  base::RunLoop().RunUntilIdle();
   EXPECT_EQ(1, test_callback.run_count());
   EXPECT_FALSE(PendingProfileEntryDeleterForTest(service_path));
+}
+
+TEST_F(NetworkConfigurationHandlerTest, RemoveConfigurationFromCurrentProfile) {
+  std::string service_path = "/service/2";
+
+  // Set up network configuration so the associated network service has the
+  // profile path set to |profile|.
+  std::string key = "SSID";
+  std::string type = "wifi";
+  base::DictionaryValue value;
+  shill_property_util::SetSSID("Service", &value);
+  value.SetWithoutPathExpansion(shill::kTypeProperty, new base::Value(type));
+  value.SetWithoutPathExpansion(shill::kProfileProperty,
+                                new base::Value("profile2"));
+  EXPECT_CALL(*mock_manager_client_,
+              ConfigureServiceForProfile(dbus::ObjectPath("profile2"), _, _, _))
+      .WillOnce(
+          Invoke(this, &NetworkConfigurationHandlerTest::OnConfigureService));
+
+  dictionary_value_result_ = &value;
+  EXPECT_CALL(*mock_service_client_, GetProperties(_, _))
+      .WillRepeatedly(
+          Invoke(this, &NetworkConfigurationHandlerTest::OnGetProperties));
+
+  CreateConfiguration(service_path, value);
+  base::RunLoop().RunUntilIdle();
+
+  // Set Up mock flor GetLoadableProfileEntries - it returns
+  // [(profile1, entry1), (profile2, entry2)] profile-entry pairs.
+  EXPECT_CALL(*mock_service_client_,
+              GetLoadableProfileEntries(dbus::ObjectPath(service_path), _))
+      .WillOnce(Invoke(
+          this, &NetworkConfigurationHandlerTest::OnGetLoadableProfileEntries));
+
+  // Expectations for entries deleted during the test.
+  EXPECT_CALL(*mock_profile_client_,
+              DeleteEntry(dbus::ObjectPath("profile2"), "entry2", _, _))
+      .WillOnce(Invoke(this, &NetworkConfigurationHandlerTest::OnDeleteEntry));
+  EXPECT_CALL(*mock_profile_client_,
+              DeleteEntry(dbus::ObjectPath("profile1"), "entry1", _, _))
+      .Times(0);
+
+  TestCallback test_callback;
+  network_configuration_handler_->RemoveConfigurationFromCurrentProfile(
+      service_path, NetworkConfigurationObserver::SOURCE_USER_ACTION,
+      base::Bind(&TestCallback::Run, base::Unretained(&test_callback)),
+      base::Bind(&ErrorCallback));
+
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1, test_callback.run_count());
+  EXPECT_FALSE(PendingProfileEntryDeleterForTest(service_path));
+}
+
+TEST_F(NetworkConfigurationHandlerTest,
+       RemoveNonExistentConfigurationFromCurrentProfile) {
+  // Set Up mock flor GetLoadableProfileEntries - it returns
+  // [(profile1, entry1), (profile2, entry2)] profile-entry pairs.
+  EXPECT_CALL(*mock_service_client_,
+              GetLoadableProfileEntries(dbus::ObjectPath("/service/3"), _))
+      .WillRepeatedly(Invoke(
+          this, &NetworkConfigurationHandlerTest::OnGetLoadableProfileEntries));
+
+  // Expectations for entries deleted during the test.
+  EXPECT_CALL(*mock_profile_client_,
+              DeleteEntry(dbus::ObjectPath("profile2"), "entry2", _, _))
+      .Times(0);
+  EXPECT_CALL(*mock_profile_client_,
+              DeleteEntry(dbus::ObjectPath("profile1"), "entry1", _, _))
+      .Times(0);
+
+  TestCallback test_callback;
+  std::string error;
+  network_configuration_handler_->RemoveConfigurationFromCurrentProfile(
+      "/service/3", NetworkConfigurationObserver::SOURCE_USER_ACTION,
+      base::Bind(&TestCallback::Run, base::Unretained(&test_callback)),
+      base::Bind(&RecordError, base::Unretained(&error)));
+  EXPECT_EQ("NetworkNotConfigured", error);
+
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(0, test_callback.run_count());
+  EXPECT_FALSE(PendingProfileEntryDeleterForTest("/service/3"));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -497,7 +634,7 @@ class NetworkConfigurationHandlerStubTest : public testing::Test {
   void SetUp() override {
     DBusThreadManager::Initialize();
 
-    network_state_handler_.reset(NetworkStateHandler::InitializeForTest());
+    network_state_handler_ = NetworkStateHandler::InitializeForTest();
     test_observer_.reset(new TestObserver());
     network_state_handler_->AddObserver(test_observer_.get(), FROM_HERE);
 
@@ -505,11 +642,12 @@ class NetworkConfigurationHandlerStubTest : public testing::Test {
     network_configuration_handler_->Init(network_state_handler_.get(),
                                          NULL /* network_device_handler */);
 
-    message_loop_.RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
     test_observer_->ClearPropertyUpdates();
   }
 
   void TearDown() override {
+    network_state_handler_->Shutdown();
     network_configuration_handler_.reset();
     network_state_handler_->RemoveObserver(test_observer_.get(), FROM_HERE);
     network_state_handler_.reset();
@@ -523,7 +661,7 @@ class NetworkConfigurationHandlerStubTest : public testing::Test {
   void GetPropertiesCallback(const std::string& service_path,
                              const base::DictionaryValue& dictionary) {
     get_properties_path_ = service_path;
-    get_properties_.reset(dictionary.DeepCopy());
+    get_properties_ = dictionary.CreateDeepCopy();
   }
 
   void CreateConfigurationCallback(const std::string& service_path,
@@ -550,8 +688,8 @@ class NetworkConfigurationHandlerStubTest : public testing::Test {
         base::Bind(
             &NetworkConfigurationHandlerStubTest::CreateConfigurationCallback,
             base::Unretained(this)),
-        base::Bind(&ErrorCallback, false, service_path));
-    message_loop_.RunUntilIdle();
+        base::Bind(&ErrorCallback));
+    base::RunLoop().RunUntilIdle();
   }
 
  protected:
@@ -605,8 +743,8 @@ TEST_F(NetworkConfigurationHandlerStubTest, StubSetAndClearProperties) {
       NetworkConfigurationObserver::SOURCE_USER_ACTION,
       base::Bind(&NetworkConfigurationHandlerStubTest::SuccessCallback,
                  base::Unretained(this), "SetProperties"),
-      base::Bind(&ErrorCallback, false, service_path));
-  message_loop_.RunUntilIdle();
+      base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ("SetProperties", success_callback_name_);
   std::string identity, passphrase;
@@ -626,8 +764,8 @@ TEST_F(NetworkConfigurationHandlerStubTest, StubSetAndClearProperties) {
       service_path, properties_to_clear,
       base::Bind(&NetworkConfigurationHandlerStubTest::SuccessCallback,
                  base::Unretained(this), "ClearProperties"),
-      base::Bind(&ErrorCallback, false, service_path));
-  message_loop_.RunUntilIdle();
+      base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ("ClearProperties", success_callback_name_);
   EXPECT_FALSE(GetServiceStringProperty(service_path, shill::kIdentityProperty,
@@ -650,9 +788,8 @@ TEST_F(NetworkConfigurationHandlerStubTest, StubGetNameFromWifiHex) {
   network_configuration_handler_->SetShillProperties(
       service_path, properties_to_set,
       NetworkConfigurationObserver::SOURCE_USER_ACTION,
-      base::Bind(&base::DoNothing),
-      base::Bind(&ErrorCallback, false, service_path));
-  message_loop_.RunUntilIdle();
+      base::Bind(&base::DoNothing), base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
   std::string wifi_hex_result;
   EXPECT_TRUE(GetServiceStringProperty(service_path, shill::kWifiHexSsid,
                                        &wifi_hex_result));
@@ -663,8 +800,8 @@ TEST_F(NetworkConfigurationHandlerStubTest, StubGetNameFromWifiHex) {
       service_path,
       base::Bind(&NetworkConfigurationHandlerStubTest::GetPropertiesCallback,
                  base::Unretained(this)),
-      base::Bind(&ErrorCallback, false, service_path));
-  message_loop_.RunUntilIdle();
+      base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(service_path, get_properties_path_);
   std::string name_result;
@@ -711,9 +848,8 @@ TEST_F(NetworkConfigurationHandlerStubTest, NetworkConfigurationObserver) {
   network_configuration_handler_->SetShillProperties(
       service_path, properties_to_set,
       NetworkConfigurationObserver::SOURCE_USER_ACTION,
-      base::Bind(&base::DoNothing),
-      base::Bind(&ErrorCallback, false, service_path));
-  message_loop_.RunUntilIdle();
+      base::Bind(&base::DoNothing), base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
   EXPECT_EQ(test_passphrase, test_observer->GetStringProperty(
                                  service_path, shill::kPassphraseProperty));
 
@@ -727,9 +863,8 @@ TEST_F(NetworkConfigurationHandlerStubTest, NetworkConfigurationObserver) {
   network_configuration_handler_->SetNetworkProfile(
       service_path, user_profile,
       NetworkConfigurationObserver::SOURCE_USER_ACTION,
-      base::Bind(&base::DoNothing),
-      base::Bind(&ErrorCallback, false, service_path));
-  message_loop_.RunUntilIdle();
+      base::Bind(&base::DoNothing), base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(test_observer->HasConfiguration(service_path));
   EXPECT_FALSE(test_observer->HasConfigurationInProfile(
       service_path, NetworkProfileHandler::GetSharedProfilePath()));
@@ -738,9 +873,8 @@ TEST_F(NetworkConfigurationHandlerStubTest, NetworkConfigurationObserver) {
 
   network_configuration_handler_->RemoveConfiguration(
       service_path, NetworkConfigurationObserver::SOURCE_USER_ACTION,
-      base::Bind(&base::DoNothing),
-      base::Bind(&ErrorCallback, false, service_path));
-  message_loop_.RunUntilIdle();
+      base::Bind(&base::DoNothing), base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
 
   EXPECT_FALSE(test_observer->HasConfiguration(service_path));
   EXPECT_FALSE(test_observer->HasConfigurationInProfile(

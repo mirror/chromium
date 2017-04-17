@@ -35,25 +35,25 @@ namespace blink {
 class SpeechGrammar;
 
 class WebSpeechGrammar {
-public:
-    WebSpeechGrammar() { }
-    WebSpeechGrammar(const WebSpeechGrammar& grammar) { assign(grammar); }
-    ~WebSpeechGrammar() { reset(); }
+ public:
+  WebSpeechGrammar() {}
+  WebSpeechGrammar(const WebSpeechGrammar& grammar) { Assign(grammar); }
+  ~WebSpeechGrammar() { Reset(); }
 
-    BLINK_EXPORT WebURL src() const;
-    BLINK_EXPORT float weight() const;
+  BLINK_EXPORT WebURL Src() const;
+  BLINK_EXPORT float Weight() const;
 
-    BLINK_EXPORT void reset();
-    BLINK_EXPORT void assign(const WebSpeechGrammar&);
+  BLINK_EXPORT void Reset();
+  BLINK_EXPORT void Assign(const WebSpeechGrammar&);
 
 #if BLINK_IMPLEMENTATION
-    WebSpeechGrammar& operator=(SpeechGrammar*);
+  WebSpeechGrammar& operator=(SpeechGrammar*);
 #endif
 
-private:
-    WebPrivatePtr<SpeechGrammar> m_private;
+ private:
+  WebPrivatePtr<SpeechGrammar> private_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebSpeechGrammar_h
+#endif  // WebSpeechGrammar_h

@@ -3,47 +3,24 @@
 // found in the LICENSE file.
 
 #include "cc/output/vulkan_renderer.h"
+#include "cc/output/output_surface_frame.h"
 
 namespace cc {
 
-std::unique_ptr<VulkanRenderer> VulkanRenderer::Create(
-    RendererClient* client,
-    const RendererSettings* settings,
-    OutputSurface* output_surface,
-    ResourceProvider* resource_provider,
-    TextureMailboxDeleter* texture_mailbox_deleter,
-    int highp_threshold_min) {
-  return std::unique_ptr<VulkanRenderer>(
-      new VulkanRenderer(client, settings, output_surface, resource_provider,
-                         texture_mailbox_deleter, highp_threshold_min));
-}
-
 VulkanRenderer::~VulkanRenderer() {}
 
-const RendererCapabilitiesImpl& VulkanRenderer::Capabilities() const {
-  return capabilities_;
+void VulkanRenderer::SwapBuffers(std::vector<ui::LatencyInfo> latency_info) {
+  OutputSurfaceFrame output_frame;
+  output_frame.latency_info = std::move(latency_info);
+  output_surface_->SwapBuffers(std::move(output_frame));
 }
 
-void VulkanRenderer::Finish() {
-  NOTIMPLEMENTED();
-}
-
-void VulkanRenderer::SwapBuffers(const CompositorFrameMetadata& metadata) {
-  CompositorFrame* compositor_frame = nullptr;
-  output_surface_->SwapBuffers(compositor_frame);
-}
-
-void VulkanRenderer::ReceiveSwapBuffersAck(const CompositorFrameAck& ack) {
-  NOTIMPLEMENTED();
-}
-
-VulkanRenderer::VulkanRenderer(RendererClient* client,
-                               const RendererSettings* settings,
+VulkanRenderer::VulkanRenderer(const RendererSettings* settings,
                                OutputSurface* output_surface,
                                ResourceProvider* resource_provider,
                                TextureMailboxDeleter* texture_mailbox_deleter,
                                int highp_threshold_min)
-    : DirectRenderer(client, settings, output_surface, resource_provider) {}
+    : DirectRenderer(settings, output_surface, resource_provider) {}
 
 void VulkanRenderer::DidChangeVisibility() {
   NOTIMPLEMENTED();
@@ -101,18 +78,15 @@ void VulkanRenderer::EnsureScissorTestDisabled() {
   NOTIMPLEMENTED();
 }
 
-void VulkanRenderer::DiscardBackbuffer() {
-  NOTIMPLEMENTED();
-}
-
-void VulkanRenderer::EnsureBackbuffer() {
-  NOTIMPLEMENTED();
-}
-
 void VulkanRenderer::CopyCurrentRenderPassToBitmap(
     DrawingFrame* frame,
     std::unique_ptr<CopyOutputRequest> request) {
   NOTIMPLEMENTED();
+}
+
+bool VulkanRenderer::CanPartialSwap() {
+  NOTIMPLEMENTED();
+  return false;
 }
 
 }  // namespace cc

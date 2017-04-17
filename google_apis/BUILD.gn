@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//extensions/features/features.gni")
 import("//testing/test.gni")
 
 declare_args() {
@@ -137,7 +138,6 @@ template("google_apis_tmpl") {
       "//base",
       "//base/third_party/dynamic_annotations",
       "//crypto",
-      "//third_party/libxml",
     ]
 
     if (defined(invoker.deps)) {
@@ -161,6 +161,8 @@ template("google_apis_tmpl") {
         "drive/drive_api_url_generator.cc",
         "drive/drive_api_url_generator.h",
         "drive/drive_common_callbacks.h",
+        "drive/drive_switches.cc",
+        "drive/drive_switches.h",
         "drive/files_list_request_runner.cc",
         "drive/files_list_request_runner.h",
         "drive/request_sender.cc",
@@ -172,6 +174,17 @@ template("google_apis_tmpl") {
         "drive/time_util.cc",
         "drive/time_util.h",
       ]
+    }
+
+    if (is_mac || is_ios) {
+      set_sources_assignment_filter([])
+      sources += [
+        "google_api_keys_mac.h",
+        "google_api_keys_mac.mm",
+      ]
+      set_sources_assignment_filter(sources_assignment_filter)
+
+      libs = [ "Foundation.framework" ]
     }
   }
 }
@@ -230,6 +243,7 @@ test("google_apis_unittests") {
     "gaia/oauth_request_signer_unittest.cc",
     "gaia/ubertoken_fetcher_unittest.cc",
     "google_api_keys_unittest.cc",
+    "google_api_keys_unittest.h",
   ]
 
   data = [
@@ -259,5 +273,13 @@ test("google_apis_unittests") {
       "drive/request_util_unittest.cc",
       "drive/time_util_unittest.cc",
     ]
+  }
+
+  if (is_mac || is_ios) {
+    set_sources_assignment_filter([])
+    sources += [ "google_api_keys_mac_unittest.mm" ]
+    set_sources_assignment_filter(sources_assignment_filter)
+
+    deps += [ "//third_party/ocmock" ]
   }
 }

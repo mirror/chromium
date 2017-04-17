@@ -4,400 +4,324 @@
 
 #include "modules/fetch/FetchDataLoader.h"
 
-#include "core/html/parser/TextResourceDecoder.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/text/StringBuilder.h"
-#include "wtf/text/WTFString.h"
-#include "wtf/typed_arrays/ArrayBufferBuilder.h"
 #include <memory>
+#include "core/html/parser/TextResourceDecoder.h"
+#include "modules/fetch/BytesConsumer.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/WTFString.h"
+#include "platform/wtf/typed_arrays/ArrayBufferBuilder.h"
 
 namespace blink {
 
 namespace {
 
-class FetchDataLoaderAsBlobHandle
-    : public FetchDataLoader
-    , public WebDataConsumerHandle::Client {
-public:
-    explicit FetchDataLoaderAsBlobHandle(const String& mimeType)
-        : m_client(nullptr)
-        , m_mimeType(mimeType) { }
+class FetchDataLoaderAsBlobHandle final : public FetchDataLoader,
+                                          public BytesConsumer::Client {
+  USING_GARBAGE_COLLECTED_MIXIN(FetchDataLoaderAsBlobHandle);
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        FetchDataLoader::trace(visitor);
-        visitor->trace(m_client);
+ public:
+  explicit FetchDataLoaderAsBlobHandle(const String& mime_type)
+      : mime_type_(mime_type) {}
+
+  void Start(BytesConsumer* consumer,
+             FetchDataLoader::Client* client) override {
+    DCHECK(!client_);
+    DCHECK(!consumer_);
+
+    client_ = client;
+    consumer_ = consumer;
+
+    RefPtr<BlobDataHandle> blob_handle = consumer_->DrainAsBlobDataHandle();
+    if (blob_handle) {
+      DCHECK_NE(UINT64_MAX, blob_handle->size());
+      if (blob_handle->GetType() != mime_type_) {
+        // A new BlobDataHandle is created to override the Blob's type.
+        client_->DidFetchDataLoadedBlobHandle(BlobDataHandle::Create(
+            blob_handle->Uuid(), mime_type_, blob_handle->size()));
+      } else {
+        client_->DidFetchDataLoadedBlobHandle(std::move(blob_handle));
+      }
+      return;
     }
 
-private:
-    void start(FetchDataConsumerHandle* handle, FetchDataLoader::Client* client) override
-    {
-        ASSERT(!m_client);
-        ASSERT(!m_reader);
+    blob_data_ = BlobData::Create();
+    blob_data_->SetContentType(mime_type_);
+    consumer_->SetClient(this);
+    OnStateChange();
+  }
 
-        m_client = client;
-        // Passing |this| here is safe because |this| owns |m_reader|.
-        m_reader = handle->obtainFetchDataReader(this);
-        RefPtr<BlobDataHandle> blobHandle = m_reader->drainAsBlobDataHandle();
-        if (blobHandle) {
-            ASSERT(blobHandle->size() != UINT64_MAX);
-            m_reader.reset();
-            if (blobHandle->type() != m_mimeType) {
-                // A new BlobDataHandle is created to override the Blob's type.
-                m_client->didFetchDataLoadedBlobHandle(BlobDataHandle::create(blobHandle->uuid(), m_mimeType, blobHandle->size()));
-            } else {
-                m_client->didFetchDataLoadedBlobHandle(blobHandle);
-            }
-            m_client.clear();
+  void Cancel() override { consumer_->Cancel(); }
+
+  void OnStateChange() override {
+    while (true) {
+      const char* buffer;
+      size_t available;
+      auto result = consumer_->BeginRead(&buffer, &available);
+      if (result == BytesConsumer::Result::kShouldWait)
+        return;
+      if (result == BytesConsumer::Result::kOk) {
+        blob_data_->AppendBytes(buffer, available);
+        result = consumer_->EndRead(available);
+      }
+      switch (result) {
+        case BytesConsumer::Result::kOk:
+          break;
+        case BytesConsumer::Result::kShouldWait:
+          NOTREACHED();
+          return;
+        case BytesConsumer::Result::kDone: {
+          auto size = blob_data_->length();
+          client_->DidFetchDataLoadedBlobHandle(
+              BlobDataHandle::Create(std::move(blob_data_), size));
+          return;
+        }
+        case BytesConsumer::Result::kError:
+          client_->DidFetchDataLoadFailed();
+          return;
+      }
+    }
+  }
+
+  DEFINE_INLINE_TRACE() {
+    visitor->Trace(consumer_);
+    visitor->Trace(client_);
+    FetchDataLoader::Trace(visitor);
+    BytesConsumer::Client::Trace(visitor);
+  }
+
+ private:
+  Member<BytesConsumer> consumer_;
+  Member<FetchDataLoader::Client> client_;
+
+  String mime_type_;
+  std::unique_ptr<BlobData> blob_data_;
+};
+
+class FetchDataLoaderAsArrayBuffer final : public FetchDataLoader,
+                                           public BytesConsumer::Client {
+  USING_GARBAGE_COLLECTED_MIXIN(FetchDataLoaderAsArrayBuffer)
+ public:
+  void Start(BytesConsumer* consumer,
+             FetchDataLoader::Client* client) override {
+    DCHECK(!client_);
+    DCHECK(!raw_data_);
+    DCHECK(!consumer_);
+    client_ = client;
+    raw_data_ = WTF::MakeUnique<ArrayBufferBuilder>();
+    consumer_ = consumer;
+    consumer_->SetClient(this);
+    OnStateChange();
+  }
+
+  void Cancel() override { consumer_->Cancel(); }
+
+  void OnStateChange() override {
+    while (true) {
+      const char* buffer;
+      size_t available;
+      auto result = consumer_->BeginRead(&buffer, &available);
+      if (result == BytesConsumer::Result::kShouldWait)
+        return;
+      if (result == BytesConsumer::Result::kOk) {
+        if (available > 0) {
+          unsigned bytes_appended = raw_data_->Append(buffer, available);
+          if (!bytes_appended) {
+            auto unused = consumer_->EndRead(0);
+            ALLOW_UNUSED_LOCAL(unused);
+            consumer_->Cancel();
+            client_->DidFetchDataLoadFailed();
             return;
+          }
+          DCHECK_EQ(bytes_appended, available);
         }
-
-        // We read data from |m_reader| and create a new blob.
-        m_blobData = BlobData::create();
-        m_blobData->setContentType(m_mimeType);
+        result = consumer_->EndRead(available);
+      }
+      switch (result) {
+        case BytesConsumer::Result::kOk:
+          break;
+        case BytesConsumer::Result::kShouldWait:
+          NOTREACHED();
+          return;
+        case BytesConsumer::Result::kDone:
+          client_->DidFetchDataLoadedArrayBuffer(
+              DOMArrayBuffer::Create(raw_data_->ToArrayBuffer()));
+          return;
+        case BytesConsumer::Result::kError:
+          client_->DidFetchDataLoadFailed();
+          return;
+      }
     }
+  }
 
-    void didGetReadable() override
-    {
-        ASSERT(m_client);
-        ASSERT(m_reader);
+  DEFINE_INLINE_TRACE() {
+    visitor->Trace(consumer_);
+    visitor->Trace(client_);
+    FetchDataLoader::Trace(visitor);
+    BytesConsumer::Client::Trace(visitor);
+  }
 
-        while (true) {
-            const void* buffer;
-            size_t available;
-            WebDataConsumerHandle::Result result = m_reader->beginRead(&buffer, WebDataConsumerHandle::FlagNone, &available);
+ private:
+  Member<BytesConsumer> consumer_;
+  Member<FetchDataLoader::Client> client_;
 
-            switch (result) {
-            case WebDataConsumerHandle::Ok:
-                m_blobData->appendBytes(buffer, available);
-                m_reader->endRead(available);
-                break;
-
-            case WebDataConsumerHandle::Done: {
-                m_reader.reset();
-                long long size = m_blobData->length();
-                m_client->didFetchDataLoadedBlobHandle(BlobDataHandle::create(std::move(m_blobData), size));
-                m_client.clear();
-                return;
-            }
-
-            case WebDataConsumerHandle::ShouldWait:
-                return;
-
-            case WebDataConsumerHandle::Busy:
-            case WebDataConsumerHandle::ResourceExhausted:
-            case WebDataConsumerHandle::UnexpectedError:
-                m_reader.reset();
-                m_blobData.reset();
-                m_client->didFetchDataLoadFailed();
-                m_client.clear();
-                return;
-            }
-        }
-    }
-
-    void cancel() override
-    {
-        m_reader.reset();
-        m_blobData.reset();
-        m_client.clear();
-    }
-
-    std::unique_ptr<FetchDataConsumerHandle::Reader> m_reader;
-    Member<FetchDataLoader::Client> m_client;
-
-    String m_mimeType;
-    std::unique_ptr<BlobData> m_blobData;
+  std::unique_ptr<ArrayBufferBuilder> raw_data_;
 };
 
-class FetchDataLoaderAsArrayBuffer
-    : public FetchDataLoader
-    , public WebDataConsumerHandle::Client {
-public:
-    FetchDataLoaderAsArrayBuffer()
-        : m_client(nullptr) { }
+class FetchDataLoaderAsString final : public FetchDataLoader,
+                                      public BytesConsumer::Client {
+  USING_GARBAGE_COLLECTED_MIXIN(FetchDataLoaderAsString);
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        FetchDataLoader::trace(visitor);
-        visitor->trace(m_client);
+ public:
+  void Start(BytesConsumer* consumer,
+             FetchDataLoader::Client* client) override {
+    DCHECK(!client_);
+    DCHECK(!decoder_);
+    DCHECK(!consumer_);
+    client_ = client;
+    decoder_ = TextResourceDecoder::CreateAlwaysUseUTF8ForText();
+    consumer_ = consumer;
+    consumer_->SetClient(this);
+    OnStateChange();
+  }
+
+  void OnStateChange() override {
+    while (true) {
+      const char* buffer;
+      size_t available;
+      auto result = consumer_->BeginRead(&buffer, &available);
+      if (result == BytesConsumer::Result::kShouldWait)
+        return;
+      if (result == BytesConsumer::Result::kOk) {
+        if (available > 0)
+          builder_.Append(decoder_->Decode(buffer, available));
+        result = consumer_->EndRead(available);
+      }
+      switch (result) {
+        case BytesConsumer::Result::kOk:
+          break;
+        case BytesConsumer::Result::kShouldWait:
+          NOTREACHED();
+          return;
+        case BytesConsumer::Result::kDone:
+          builder_.Append(decoder_->Flush());
+          client_->DidFetchDataLoadedString(builder_.ToString());
+          return;
+        case BytesConsumer::Result::kError:
+          client_->DidFetchDataLoadFailed();
+          return;
+      }
     }
+  }
 
-protected:
-    void start(FetchDataConsumerHandle* handle, FetchDataLoader::Client* client) override
-    {
-        ASSERT(!m_client);
-        ASSERT(!m_rawData);
-        ASSERT(!m_reader);
-        m_client = client;
-        m_rawData = wrapUnique(new ArrayBufferBuilder());
-        m_reader = handle->obtainFetchDataReader(this);
-    }
+  void Cancel() override { consumer_->Cancel(); }
 
-    void didGetReadable() override
-    {
-        ASSERT(m_client);
-        ASSERT(m_rawData);
-        ASSERT(m_reader);
+  DEFINE_INLINE_TRACE() {
+    visitor->Trace(consumer_);
+    visitor->Trace(client_);
+    FetchDataLoader::Trace(visitor);
+    BytesConsumer::Client::Trace(visitor);
+  }
 
-        while (true) {
-            const void* buffer;
-            size_t available;
-            WebDataConsumerHandle::Result result = m_reader->beginRead(&buffer, WebDataConsumerHandle::FlagNone, &available);
+ private:
+  Member<BytesConsumer> consumer_;
+  Member<FetchDataLoader::Client> client_;
 
-            switch (result) {
-            case WebDataConsumerHandle::Ok:
-                if (available > 0) {
-                    unsigned bytesAppended = m_rawData->append(static_cast<const char*>(buffer), available);
-                    if (!bytesAppended) {
-                        m_reader->endRead(0);
-                        error();
-                        return;
-                    }
-                    ASSERT(bytesAppended == available);
-                }
-                m_reader->endRead(available);
-                break;
-
-            case WebDataConsumerHandle::Done:
-                m_reader.reset();
-                m_client->didFetchDataLoadedArrayBuffer(DOMArrayBuffer::create(m_rawData->toArrayBuffer()));
-                m_rawData.reset();
-                m_client.clear();
-                return;
-
-            case WebDataConsumerHandle::ShouldWait:
-                return;
-
-            case WebDataConsumerHandle::Busy:
-            case WebDataConsumerHandle::ResourceExhausted:
-            case WebDataConsumerHandle::UnexpectedError:
-                error();
-                return;
-            }
-        }
-    }
-
-    void error()
-    {
-        m_reader.reset();
-        m_rawData.reset();
-        m_client->didFetchDataLoadFailed();
-        m_client.clear();
-    }
-
-    void cancel() override
-    {
-        m_reader.reset();
-        m_rawData.reset();
-        m_client.clear();
-    }
-
-    std::unique_ptr<FetchDataConsumerHandle::Reader> m_reader;
-    Member<FetchDataLoader::Client> m_client;
-
-    std::unique_ptr<ArrayBufferBuilder> m_rawData;
+  std::unique_ptr<TextResourceDecoder> decoder_;
+  StringBuilder builder_;
 };
 
-class FetchDataLoaderAsString
-    : public FetchDataLoader
-    , public WebDataConsumerHandle::Client {
-public:
-    FetchDataLoaderAsString()
-        : m_client(nullptr) { }
+class FetchDataLoaderAsStream final : public FetchDataLoader,
+                                      public BytesConsumer::Client {
+  USING_GARBAGE_COLLECTED_MIXIN(FetchDataLoaderAsStream);
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        FetchDataLoader::trace(visitor);
-        visitor->trace(m_client);
+ public:
+  explicit FetchDataLoaderAsStream(Stream* out_stream)
+      : out_stream_(out_stream) {}
+
+  void Start(BytesConsumer* consumer,
+             FetchDataLoader::Client* client) override {
+    DCHECK(!client_);
+    DCHECK(!consumer_);
+    client_ = client;
+    consumer_ = consumer;
+    consumer_->SetClient(this);
+    OnStateChange();
+  }
+
+  void OnStateChange() override {
+    bool need_to_flush = false;
+    while (true) {
+      const char* buffer;
+      size_t available;
+      auto result = consumer_->BeginRead(&buffer, &available);
+      if (result == BytesConsumer::Result::kShouldWait) {
+        if (need_to_flush)
+          out_stream_->Flush();
+        return;
+      }
+      if (result == BytesConsumer::Result::kOk) {
+        out_stream_->AddData(buffer, available);
+        need_to_flush = true;
+        result = consumer_->EndRead(available);
+      }
+      switch (result) {
+        case BytesConsumer::Result::kOk:
+          break;
+        case BytesConsumer::Result::kShouldWait:
+          NOTREACHED();
+          return;
+        case BytesConsumer::Result::kDone:
+          if (need_to_flush)
+            out_stream_->Flush();
+          out_stream_->Finalize();
+          client_->DidFetchDataLoadedStream();
+          return;
+        case BytesConsumer::Result::kError:
+          // If the stream is aborted soon after the stream is registered
+          // to the StreamRegistry, ServiceWorkerURLRequestJob may not
+          // notice the error and continue waiting forever.
+          // TODO(yhirano): Add new message to report the error to the
+          // browser process.
+          out_stream_->Abort();
+          client_->DidFetchDataLoadFailed();
+          return;
+      }
     }
+  }
 
-protected:
-    void start(FetchDataConsumerHandle* handle, FetchDataLoader::Client* client) override
-    {
-        ASSERT(!m_client);
-        ASSERT(!m_decoder);
-        ASSERT(!m_reader);
-        m_client = client;
-        m_decoder = TextResourceDecoder::createAlwaysUseUTF8ForText();
-        m_reader = handle->obtainFetchDataReader(this);
-    }
+  void Cancel() override { consumer_->Cancel(); }
 
-    void didGetReadable() override
-    {
-        ASSERT(m_client);
-        ASSERT(m_decoder);
-        ASSERT(m_reader);
+  DEFINE_INLINE_TRACE() {
+    visitor->Trace(consumer_);
+    visitor->Trace(client_);
+    visitor->Trace(out_stream_);
+    FetchDataLoader::Trace(visitor);
+    BytesConsumer::Client::Trace(visitor);
+  }
 
-        while (true) {
-            const void* buffer;
-            size_t available;
-            WebDataConsumerHandle::Result result = m_reader->beginRead(&buffer, WebDataConsumerHandle::FlagNone, &available);
-
-            switch (result) {
-            case WebDataConsumerHandle::Ok:
-                if (available > 0)
-                    m_builder.append(m_decoder->decode(static_cast<const char*>(buffer), available));
-                m_reader->endRead(available);
-                break;
-
-            case WebDataConsumerHandle::Done:
-                m_reader.reset();
-                m_builder.append(m_decoder->flush());
-                m_client->didFetchDataLoadedString(m_builder.toString());
-                m_builder.clear();
-                m_decoder.reset();
-                m_client.clear();
-                return;
-
-            case WebDataConsumerHandle::ShouldWait:
-                return;
-
-            case WebDataConsumerHandle::Busy:
-            case WebDataConsumerHandle::ResourceExhausted:
-            case WebDataConsumerHandle::UnexpectedError:
-                error();
-                return;
-            }
-        }
-    }
-
-    void error()
-    {
-        m_reader.reset();
-        m_builder.clear();
-        m_decoder.reset();
-        m_client->didFetchDataLoadFailed();
-        m_client.clear();
-    }
-
-    void cancel() override
-    {
-        m_reader.reset();
-        m_builder.clear();
-        m_decoder.reset();
-        m_client.clear();
-    }
-
-    std::unique_ptr<FetchDataConsumerHandle::Reader> m_reader;
-    Member<FetchDataLoader::Client> m_client;
-
-    std::unique_ptr<TextResourceDecoder> m_decoder;
-    StringBuilder m_builder;
+  Member<BytesConsumer> consumer_;
+  Member<FetchDataLoader::Client> client_;
+  Member<Stream> out_stream_;
 };
 
-class FetchDataLoaderAsStream
-    : public FetchDataLoader
-    , public WebDataConsumerHandle::Client {
-public:
-    explicit FetchDataLoaderAsStream(Stream* outStream)
-        : m_client(nullptr)
-        , m_outStream(outStream) { }
+}  // namespace
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        FetchDataLoader::trace(visitor);
-        visitor->trace(m_client);
-        visitor->trace(m_outStream);
-    }
-
-protected:
-    void start(FetchDataConsumerHandle* handle, FetchDataLoader::Client* client) override
-    {
-        ASSERT(!m_client);
-        ASSERT(!m_reader);
-        m_client = client;
-        m_reader = handle->obtainFetchDataReader(this);
-    }
-
-    void didGetReadable() override
-    {
-        ASSERT(m_client);
-        ASSERT(m_reader);
-
-        bool needToFlush = false;
-        while (true) {
-            const void* buffer;
-            size_t available;
-            WebDataConsumerHandle::Result result = m_reader->beginRead(&buffer, WebDataConsumerHandle::FlagNone, &available);
-
-            switch (result) {
-            case WebDataConsumerHandle::Ok:
-                m_outStream->addData(static_cast<const char*>(buffer), available);
-                m_reader->endRead(available);
-                needToFlush = true;
-                break;
-
-            case WebDataConsumerHandle::Done:
-                m_reader.reset();
-                if (needToFlush)
-                    m_outStream->flush();
-                m_outStream->finalize();
-                m_client->didFetchDataLoadedStream();
-                cleanup();
-                return;
-
-            case WebDataConsumerHandle::ShouldWait:
-                if (needToFlush)
-                    m_outStream->flush();
-                return;
-
-            case WebDataConsumerHandle::Busy:
-            case WebDataConsumerHandle::ResourceExhausted:
-            case WebDataConsumerHandle::UnexpectedError:
-                // If the stream is aborted soon after the stream is registered
-                // to the StreamRegistry, ServiceWorkerURLRequestJob may not
-                // notice the error and continue waiting forever.
-                // FIXME: Add new message to report the error to the browser
-                // process.
-                m_reader.reset();
-                m_outStream->abort();
-                m_client->didFetchDataLoadFailed();
-                cleanup();
-                return;
-            }
-        }
-    }
-
-    void cancel() override
-    {
-        cleanup();
-    }
-
-    void cleanup()
-    {
-        m_reader.reset();
-        m_client.clear();
-        m_outStream.clear();
-    }
-
-    std::unique_ptr<FetchDataConsumerHandle::Reader> m_reader;
-    Member<FetchDataLoader::Client> m_client;
-
-    Member<Stream> m_outStream;
-};
-
-
-} // namespace
-
-FetchDataLoader* FetchDataLoader::createLoaderAsBlobHandle(const String& mimeType)
-{
-    return new FetchDataLoaderAsBlobHandle(mimeType);
+FetchDataLoader* FetchDataLoader::CreateLoaderAsBlobHandle(
+    const String& mime_type) {
+  return new FetchDataLoaderAsBlobHandle(mime_type);
 }
 
-FetchDataLoader* FetchDataLoader::createLoaderAsArrayBuffer()
-{
-    return new FetchDataLoaderAsArrayBuffer();
+FetchDataLoader* FetchDataLoader::CreateLoaderAsArrayBuffer() {
+  return new FetchDataLoaderAsArrayBuffer();
 }
 
-FetchDataLoader* FetchDataLoader::createLoaderAsString()
-{
-    return new FetchDataLoaderAsString();
+FetchDataLoader* FetchDataLoader::CreateLoaderAsString() {
+  return new FetchDataLoaderAsString();
 }
 
-FetchDataLoader* FetchDataLoader::createLoaderAsStream(Stream* outStream)
-{
-    return new FetchDataLoaderAsStream(outStream);
+FetchDataLoader* FetchDataLoader::CreateLoaderAsStream(Stream* out_stream) {
+  return new FetchDataLoaderAsStream(out_stream);
 }
 
-} // namespace blink
+}  // namespace blink

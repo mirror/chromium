@@ -14,47 +14,34 @@ namespace blink {
 class ComputedStyle;
 
 class LayoutTextItem : public LayoutItem {
-public:
-    explicit LayoutTextItem(LayoutText* layoutText)
-        : LayoutItem(layoutText)
-    {
-    }
+ public:
+  explicit LayoutTextItem(LayoutText* layout_text) : LayoutItem(layout_text) {}
 
-    explicit LayoutTextItem(const LayoutItem& item)
-        : LayoutItem(item)
-    {
-        ASSERT_WITH_SECURITY_IMPLICATION(!item || item.isText());
-    }
+  explicit LayoutTextItem(const LayoutItem& item) : LayoutItem(item) {
+    SECURITY_DCHECK(!item || item.IsText());
+  }
 
-    explicit LayoutTextItem(std::nullptr_t) : LayoutItem(nullptr) { }
+  explicit LayoutTextItem(std::nullptr_t) : LayoutItem(nullptr) {}
 
-    LayoutTextItem() { }
+  LayoutTextItem() {}
 
-    void setStyle(PassRefPtr<ComputedStyle> style)
-    {
-        toText()->setStyle(style);
-    }
+  void SetStyle(PassRefPtr<ComputedStyle> style) {
+    ToText()->SetStyle(std::move(style));
+  }
 
-    void setText(PassRefPtr<StringImpl> text, bool force = false)
-    {
-        toText()->setText(text, force);
-    }
+  void SetText(PassRefPtr<StringImpl> text, bool force = false) {
+    ToText()->SetText(std::move(text), force);
+  }
 
-    bool isTextFragment() const
-    {
-        return toText()->isTextFragment();
-    }
+  bool IsTextFragment() const { return ToText()->IsTextFragment(); }
 
-    void dirtyLineBoxes()
-    {
-        toText()->dirtyLineBoxes();
-    }
+  void DirtyLineBoxes() { ToText()->DirtyLineBoxes(); }
 
-private:
-    LayoutText* toText() { return toLayoutText(layoutObject()); }
-    const LayoutText* toText() const { return toLayoutText(layoutObject()); }
+ private:
+  LayoutText* ToText() { return ToLayoutText(GetLayoutObject()); }
+  const LayoutText* ToText() const { return ToLayoutText(GetLayoutObject()); }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutTextItem_h
+#endif  // LayoutTextItem_h

@@ -9,7 +9,8 @@ package org.chromium.chrome.browser.contextualsearch;
  * Handles logging of results seen and activation.
  */
 public class RecentScrollTapSuppression extends ContextualSearchHeuristic {
-    private final int mExperiementThresholdMs;
+    private static final int DEFAULT_RECENT_SCROLL_SUPPRESSION_DURATION_MS = 300;
+
     private final int mDurationSinceRecentScrollMs;
     private final boolean mIsConditionSatisfied;
 
@@ -28,34 +29,24 @@ public class RecentScrollTapSuppression extends ContextualSearchHeuristic {
         } else {
             mDurationSinceRecentScrollMs = 0;
         }
-        mExperiementThresholdMs = ContextualSearchFieldTrial.getRecentScrollSuppressionDurationMs();
-        // If the configured threshold is 0, then suppression is not enabled.
-        if (mExperiementThresholdMs > 0) {
-            mIsConditionSatisfied = mDurationSinceRecentScrollMs > 0
-                    && mDurationSinceRecentScrollMs < mExperiementThresholdMs;
-        } else {
-            mIsConditionSatisfied = false;
-        }
+
+        mIsConditionSatisfied = mDurationSinceRecentScrollMs > 0
+                && mDurationSinceRecentScrollMs < DEFAULT_RECENT_SCROLL_SUPPRESSION_DURATION_MS;
     }
 
     @Override
-    protected boolean isConditionSatisfied() {
+    protected boolean isConditionSatisfiedAndEnabled() {
         return mIsConditionSatisfied;
     }
 
     @Override
     protected void logConditionState() {
-        if (mExperiementThresholdMs > 0) {
-            ContextualSearchUma.logRecentScrollSuppression(mIsConditionSatisfied);
-        }
+        ContextualSearchUma.logRecentScrollSuppression(mIsConditionSatisfied);
     }
 
     @Override
-    protected void logResultsSeen(boolean wasSearchContentViewSeen, boolean wasActivatedByTap) {
-        if (wasActivatedByTap && mDurationSinceRecentScrollMs > 0
-                && ContextualSearchFieldTrial.isRecentScrollCollectionEnabled()) {
-            ContextualSearchUma.logRecentScrollDuration(
-                    mDurationSinceRecentScrollMs, wasSearchContentViewSeen);
-        }
+    protected void logRankerTapSuppression(ContextualSearchRankerLogger logger) {
+        logger.log(ContextualSearchRankerLogger.Feature.DURATION_AFTER_SCROLL_MS,
+                mDurationSinceRecentScrollMs);
     }
 }

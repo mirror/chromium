@@ -9,50 +9,40 @@
 
 namespace blink {
 
-VideoTrackList* VideoTrackList::create(HTMLMediaElement& mediaElement)
-{
-    return new VideoTrackList(mediaElement);
+VideoTrackList* VideoTrackList::Create(HTMLMediaElement& media_element) {
+  return new VideoTrackList(media_element);
 }
 
-VideoTrackList::~VideoTrackList()
-{
+VideoTrackList::~VideoTrackList() {}
+
+VideoTrackList::VideoTrackList(HTMLMediaElement& media_element)
+    : TrackListBase<VideoTrack>(&media_element) {}
+
+const AtomicString& VideoTrackList::InterfaceName() const {
+  return EventTargetNames::VideoTrackList;
 }
 
-VideoTrackList::VideoTrackList(HTMLMediaElement& mediaElement)
-    : TrackListBase<VideoTrack>(&mediaElement)
-{
+int VideoTrackList::selectedIndex() const {
+  for (unsigned i = 0; i < length(); ++i) {
+    VideoTrack* track = AnonymousIndexedGetter(i);
+
+    if (track->selected())
+      return i;
+  }
+
+  return -1;
 }
 
-const AtomicString& VideoTrackList::interfaceName() const
-{
-    return EventTargetNames::VideoTrackList;
+void VideoTrackList::TrackSelected(WebMediaPlayer::TrackId selected_track_id) {
+  // Clear the selected flag on the previously selected track, if any.
+  for (unsigned i = 0; i < length(); ++i) {
+    VideoTrack* track = AnonymousIndexedGetter(i);
+
+    if (track->id() != selected_track_id)
+      track->ClearSelected();
+    else
+      DCHECK(track->selected());
+  }
 }
 
-int VideoTrackList::selectedIndex() const
-{
-    for (unsigned i = 0; i < length(); ++i) {
-        VideoTrack* track = anonymousIndexedGetter(i);
-
-        if (track->selected())
-            return i;
-    }
-
-    return -1;
-}
-
-void VideoTrackList::trackSelected(WebMediaPlayer::TrackId selectedTrackId)
-{
-    // Clear the selected flag on the previously selected track, if any.
-    for (unsigned i = 0; i < length(); ++i) {
-        VideoTrack* track = anonymousIndexedGetter(i);
-
-        if (track->id() != selectedTrackId)
-            track->clearSelected();
-        else
-            DCHECK(track->selected());
-    }
-
-    scheduleChangeEvent();
-}
-
-} // namespace blink
+}  // namespace blink

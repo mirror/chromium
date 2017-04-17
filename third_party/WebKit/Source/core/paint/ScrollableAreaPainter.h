@@ -16,24 +16,32 @@ class IntRect;
 class PaintLayerScrollableArea;
 
 class ScrollableAreaPainter {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(ScrollableAreaPainter);
-public:
-    explicit ScrollableAreaPainter(PaintLayerScrollableArea& paintLayerScrollableArea) : m_scrollableArea(&paintLayerScrollableArea) { }
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(ScrollableAreaPainter);
 
-    void paintResizer(GraphicsContext&, const IntPoint& paintOffset, const CullRect&);
-    void paintOverflowControls(GraphicsContext&, const IntPoint& paintOffset, const CullRect&, bool paintingOverlayControls);
-    void paintScrollCorner(GraphicsContext&, const IntPoint&, const CullRect&);
+ public:
+  explicit ScrollableAreaPainter(
+      PaintLayerScrollableArea& paint_layer_scrollable_area)
+      : scrollable_area_(&paint_layer_scrollable_area) {}
 
-private:
-    void drawPlatformResizerImage(GraphicsContext&, IntRect resizerCornerRect);
-    bool overflowControlsIntersectRect(const CullRect&) const;
+  void PaintResizer(GraphicsContext&,
+                    const IntPoint& paint_offset,
+                    const CullRect&);
+  void PaintOverflowControls(GraphicsContext&,
+                             const IntPoint& paint_offset,
+                             const CullRect&,
+                             bool painting_overlay_controls);
+  void PaintScrollCorner(GraphicsContext&, const IntPoint&, const CullRect&);
 
-    PaintLayerScrollableArea& getScrollableArea() const;
+ private:
+  void DrawPlatformResizerImage(GraphicsContext&, IntRect resizer_corner_rect);
+  bool OverflowControlsIntersectRect(const CullRect&) const;
 
-    Member<PaintLayerScrollableArea> m_scrollableArea;
+  PaintLayerScrollableArea& GetScrollableArea() const;
+
+  Member<PaintLayerScrollableArea> scrollable_area_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScrollableAreaPainter_h
+#endif  // ScrollableAreaPainter_h

@@ -15,6 +15,7 @@
 #include "content/public/browser/background_tracing_config.h"
 #include "content/public/browser/background_tracing_manager.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(tracing::NavigationTracingObserver);
@@ -67,6 +68,7 @@ void SetupNavigationTracing() {
         new base::DictionaryValue());
     rules_dict->SetString("rule", "TRACE_ON_NAVIGATION_UNTIL_TRIGGER_OR_FULL");
     rules_dict->SetString("trigger_name", kNavigationTracingConfig);
+    rules_dict->SetBoolean("stop_tracing_on_repeated_reactive", true);
     rules_dict->SetString("category", "BENCHMARK_DEEP");
     rules_list->Append(std::move(rules_dict));
   }
@@ -100,8 +102,8 @@ bool NavigationTracingObserver::IsEnabled() {
 NavigationTracingObserver::NavigationTracingObserver(
     content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents) {
-  if (navigation_handle == -1) {
-    navigation_handle =
+  if (navigation_trigger_handle_ == -1) {
+    navigation_trigger_handle_ =
         content::BackgroundTracingManager::GetInstance()->RegisterTriggerType(
             kNavigationTracingConfig);
   }
@@ -110,19 +112,16 @@ NavigationTracingObserver::NavigationTracingObserver(
 NavigationTracingObserver::~NavigationTracingObserver() {
 }
 
-void NavigationTracingObserver::DidStartProvisionalLoadForFrame(
-    content::RenderFrameHost* render_frame_host,
-    const GURL& validated_url,
-    bool is_error_page,
-    bool is_iframe_srcdoc) {
-  if (!render_frame_host->GetParent() && !is_error_page) {
+void NavigationTracingObserver::DidStartNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (navigation_handle->IsInMainFrame()) {
     content::BackgroundTracingManager::GetInstance()->TriggerNamedEvent(
-        navigation_handle,
+        navigation_trigger_handle_,
         content::BackgroundTracingManager::StartedFinalizingCallback());
   }
 }
 
 content::BackgroundTracingManager::TriggerHandle
-    NavigationTracingObserver::navigation_handle = -1;
+    NavigationTracingObserver::navigation_trigger_handle_ = -1;
 
 }  // namespace tracing

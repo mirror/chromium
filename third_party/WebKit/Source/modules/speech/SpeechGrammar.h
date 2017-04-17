@@ -30,35 +30,39 @@
 #include "modules/ModulesExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class ExecutionContext;
+class ScriptState;
 
-class MODULES_EXPORT SpeechGrammar final : public GarbageCollectedFinalized<SpeechGrammar>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SpeechGrammar* create(); // FIXME: The spec is not clear on what the constructor should look like.
-    static SpeechGrammar* create(const KURL& src, double weight);
+class MODULES_EXPORT SpeechGrammar final
+    : public GarbageCollectedFinalized<SpeechGrammar>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    const KURL& src(ExecutionContext*) const { return m_src; }
-    const KURL& src() const { return m_src; }
-    void setSrc(ExecutionContext*, const String& src);
+ public:
+  static SpeechGrammar* Create();  // FIXME: The spec is not clear on what the
+                                   // constructor should look like.
+  static SpeechGrammar* Create(const KURL& src, double weight);
 
-    double weight() const { return m_weight; }
-    void setWeight(double weight) { m_weight = weight; }
+  const KURL& src(ScriptState*) const { return src_; }
+  const KURL& src() const { return src_; }
+  void setSrc(ScriptState*, const String& src);
 
-    DEFINE_INLINE_TRACE() { }
+  double weight() const { return weight_; }
+  void setWeight(double weight) { weight_ = weight; }
 
-private:
-    SpeechGrammar();
-    SpeechGrammar(const KURL& src, double weight);
+  DEFINE_INLINE_TRACE() {}
 
-    KURL m_src;
-    double m_weight;
+ private:
+  SpeechGrammar();
+  SpeechGrammar(const KURL& src, double weight);
+
+  KURL src_;
+  double weight_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SpeechGrammar_h
+#endif  // SpeechGrammar_h

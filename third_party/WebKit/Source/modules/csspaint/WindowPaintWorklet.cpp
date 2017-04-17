@@ -11,44 +11,37 @@
 namespace blink {
 
 WindowPaintWorklet::WindowPaintWorklet(LocalDOMWindow& window)
-    : DOMWindowProperty(window.frame())
-{
-}
+    : Supplement<LocalDOMWindow>(window) {}
 
-const char* WindowPaintWorklet::supplementName()
-{
-    return "WindowPaintWorklet";
+const char* WindowPaintWorklet::SupplementName() {
+  return "WindowPaintWorklet";
 }
 
 // static
-WindowPaintWorklet& WindowPaintWorklet::from(LocalDOMWindow& window)
-{
-    WindowPaintWorklet* supplement = static_cast<WindowPaintWorklet*>(Supplement<LocalDOMWindow>::from(window, supplementName()));
-    if (!supplement) {
-        supplement = new WindowPaintWorklet(window);
-        provideTo(window, supplementName(), supplement);
-    }
-    return *supplement;
+WindowPaintWorklet& WindowPaintWorklet::From(LocalDOMWindow& window) {
+  WindowPaintWorklet* supplement = static_cast<WindowPaintWorklet*>(
+      Supplement<LocalDOMWindow>::From(window, SupplementName()));
+  if (!supplement) {
+    supplement = new WindowPaintWorklet(window);
+    ProvideTo(window, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
 // static
-Worklet* WindowPaintWorklet::paintWorklet(ExecutionContext* executionContext, DOMWindow& window)
-{
-    return from(toLocalDOMWindow(window)).paintWorklet(executionContext);
+Worklet* WindowPaintWorklet::paintWorklet(LocalDOMWindow& window) {
+  return From(window).paintWorklet();
 }
 
-PaintWorklet* WindowPaintWorklet::paintWorklet(ExecutionContext* executionContext) const
-{
-    if (!m_paintWorklet && frame())
-        m_paintWorklet = PaintWorklet::create(frame(), executionContext);
-    return m_paintWorklet.get();
+PaintWorklet* WindowPaintWorklet::paintWorklet() {
+  if (!paint_worklet_ && GetSupplementable()->GetFrame())
+    paint_worklet_ = PaintWorklet::Create(GetSupplementable()->GetFrame());
+  return paint_worklet_.Get();
 }
 
-DEFINE_TRACE(WindowPaintWorklet)
-{
-    visitor->trace(m_paintWorklet);
-    Supplement<LocalDOMWindow>::trace(visitor);
-    DOMWindowProperty::trace(visitor);
+DEFINE_TRACE(WindowPaintWorklet) {
+  visitor->Trace(paint_worklet_);
+  Supplement<LocalDOMWindow>::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

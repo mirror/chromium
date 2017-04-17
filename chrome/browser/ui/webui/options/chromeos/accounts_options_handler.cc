@@ -12,6 +12,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/json/json_reader.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
@@ -22,10 +23,10 @@
 #include "chrome/browser/profiles/profile_metrics.h"
 #include "chrome/browser/ui/webui/chromeos/ui_account_tweaks.h"
 #include "chrome/grit/generated_resources.h"
-#include "chromeos/login/user_names.h"
 #include "chromeos/settings/cros_settings_names.h"
 #include "components/prefs/pref_service.h"
 #include "components/user_manager/user_manager.h"
+#include "components/user_manager/user_names.h"
 #include "content/public/browser/web_ui.h"
 #include "google_apis/gaia/gaia_auth_util.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -41,7 +42,7 @@ bool WhitelistUser(OwnerSettingsServiceChromeOS* service,
   if (CrosSettings::Get()->FindEmailInList(kAccountsPrefUsers, username, NULL))
     return false;
   if (service) {
-    base::StringValue username_value(username);
+    base::Value username_value(username);
     service->AppendToList(kAccountsPrefUsers, username_value);
   }
   return true;
@@ -126,7 +127,7 @@ void AccountsOptionsHandler::HandleUnwhitelistUser(
 
   ProfileMetrics::LogProfileDeleteUser(ProfileMetrics::DELETE_PROFILE_SETTINGS);
 
-  base::StringValue canonical_email(gaia::CanonicalizeEmail(email));
+  base::Value canonical_email(gaia::CanonicalizeEmail(email));
   if (OwnerSettingsServiceChromeOS* service =
           OwnerSettingsServiceChromeOS::FromWebUI(web_ui())) {
     service->RemoveFromList(kAccountsPrefUsers, canonical_email);
@@ -158,7 +159,7 @@ void AccountsOptionsHandler::HandleUpdateWhitelist(
     std::string whitelisted_user;
     new_list->GetString(i, &whitelisted_user);
     if (gaia::ExtractDomainName(whitelisted_user) ==
-        chromeos::login::kSupervisedUserDomain) {
+        user_manager::kSupervisedUserDomain) {
       new_list->Remove(i, NULL);
       --i;
     }
@@ -166,10 +167,10 @@ void AccountsOptionsHandler::HandleUpdateWhitelist(
 
   const user_manager::UserList& users =
       user_manager::UserManager::Get()->GetUsers();
-  for (user_manager::UserList::const_iterator it = users.begin();
-       it < users.end();
-       ++it)
-    new_list->AppendIfNotPresent(new base::StringValue((*it)->email()));
+  for (const auto* user : users) {
+    new_list->AppendIfNotPresent(
+        base::MakeUnique<base::Value>(user->GetAccountId().GetUserEmail()));
+  }
 
   if (OwnerSettingsServiceChromeOS* service =
           OwnerSettingsServiceChromeOS::FromWebUI(web_ui())) {

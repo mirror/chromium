@@ -27,23 +27,22 @@ login.createScreen('EulaScreen', 'eula', function() {
           'click', function(event) {
             $('popup-overlay').hidden = true;
           });
-      // Do not allow focus leaving the overlay.
-      $('popup-overlay').addEventListener('focusout', function(event) {
-        // WebKit does not allow immediate focus return.
-        window.setTimeout(function() {
-          // TODO(ivankr): focus cycling.
-          $('installation-settings-ok-button').focus();
-        }, 0);
-        event.preventDefault();
-      });
 
       var self = this;
       $('usage-stats').addEventListener('click', function(event) {
-        self.context.set(CONTEXT_KEY_USAGE_STATS_ENABLED,
-                         $('usage-stats').checked);
-        self.commitContextChanges();
+        self.onUsageStatsClicked_($('usage-stats').checked);
         event.stopPropagation();
       });
+      $('oobe-eula-md').screen = this;
+    },
+
+    /**
+     * Event handler for $('usage-stats') click event.
+     * @param {boolean} value $('usage-stats').checked value.
+     */
+    onUsageStatsClicked_: function(value) {
+      this.context.set(CONTEXT_KEY_USAGE_STATS_ENABLED, value);
+      this.commitContextChanges();
     },
 
     /**
@@ -65,6 +64,7 @@ login.createScreen('EulaScreen', 'eula', function() {
      * @param {object} data Screen init payload.
      */
     onBeforeShow: function() {
+      this.setMDMode_();
       $('eula').classList.add('eula-loading');
       $('cros-eula-frame').onload = this.onFrameLoad;
       $('accept-button').disabled = true;
@@ -108,6 +108,9 @@ login.createScreen('EulaScreen', 'eula', function() {
      * Returns a control which should receive an initial focus.
      */
     get defaultControl() {
+      if (loadTimeData.getString('newOobeUI') == 'on')
+        return $('oobe-eula-md');
+
       return $('accept-button').disabled ? $('back-button') :
                                            $('accept-button');
     },
@@ -126,9 +129,23 @@ login.createScreen('EulaScreen', 'eula', function() {
     },
 
     /**
+     * This method takes care of switching to material-design OOBE.
+     * @private
+     */
+    setMDMode_: function() {
+      var useMDOobe = (loadTimeData.getString('newOobeUI') == 'on');
+      $('oobe-eula-md').hidden = !useMDOobe;
+      $('oobe-eula').hidden = useMDOobe;
+    },
+
+    /**
      * Updates localized content of the screen that is not updated via template.
      */
     updateLocalizedContent: function() {
+      this.setMDMode_();
+
+      $('oobe-eula-md').updateLocalizedContent();
+
       // Force iframes to refresh. It's only available method because we have
       // no access to iframe.contentWindow.
       if ($('cros-eula-frame').src) {
@@ -137,7 +154,7 @@ login.createScreen('EulaScreen', 'eula', function() {
       if ($('oem-eula-frame').src) {
         $('oem-eula-frame').src = $('oem-eula-frame').src;
       }
-    }
+    },
   };
 });
 

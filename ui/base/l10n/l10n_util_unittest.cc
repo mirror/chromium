@@ -4,15 +4,19 @@
 
 #include <stddef.h>
 
+#include <memory>
+
 #include "base/environment.h"
 #include "base/files/file_util.h"
 #include "base/i18n/case_conversion.h"
 #include "base/i18n/rtl.h"
+#include "base/i18n/time_formatting.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
-#include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/icu_test_util.h"
 #include "base/test/scoped_path_override.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -111,19 +115,8 @@ TEST_F(L10nUtilTest, GetAppLocale) {
   ASSERT_TRUE(PathService::Get(ui::DIR_LOCALES, &new_locale_dir));
   // Make fake locale files.
   std::string filenames[] = {
-    "en-US",
-    "en-GB",
-    "fr",
-    "es-419",
-    "es",
-    "zh-TW",
-    "zh-CN",
-    "he",
-    "fil",
-    "nb",
-    "am",
-    "ca",
-    "ca@valencia",
+      "am", "ca", "ca@valencia", "en-GB", "en-US", "es",    "es-419", "fil",
+      "fr", "he", "nb",          "pt-BR", "pt-PT", "zh-CN", "zh-TW",
   };
 
   for (size_t i = 0; i < arraysize(filenames); ++i) {
@@ -265,6 +258,22 @@ TEST_F(L10nUtilTest, GetAppLocale) {
     EXPECT_EQ("es", l10n_util::GetApplicationLocale(std::string()));
     EXPECT_STREQ("es", icu::Locale::getDefault().getLanguage());
 
+    SetDefaultLocaleForTest("pt-PT", env.get());
+    EXPECT_EQ("pt-PT", l10n_util::GetApplicationLocale(std::string()));
+    EXPECT_STREQ("pt", icu::Locale::getDefault().getLanguage());
+
+    SetDefaultLocaleForTest("pt-BR", env.get());
+    EXPECT_EQ("pt-BR", l10n_util::GetApplicationLocale(std::string()));
+    EXPECT_STREQ("pt", icu::Locale::getDefault().getLanguage());
+
+    SetDefaultLocaleForTest("pt-AO", env.get());
+    EXPECT_EQ("pt-PT", l10n_util::GetApplicationLocale(std::string()));
+    EXPECT_STREQ("pt", icu::Locale::getDefault().getLanguage());
+
+    SetDefaultLocaleForTest("pt", env.get());
+    EXPECT_EQ("pt-BR", l10n_util::GetApplicationLocale(std::string()));
+    EXPECT_STREQ("pt", icu::Locale::getDefault().getLanguage());
+
     SetDefaultLocaleForTest("zh-HK", env.get());
     EXPECT_EQ("zh-TW", l10n_util::GetApplicationLocale(std::string()));
     EXPECT_STREQ("zh", icu::Locale::getDefault().getLanguage());
@@ -274,6 +283,10 @@ TEST_F(L10nUtilTest, GetAppLocale) {
     EXPECT_STREQ("zh", icu::Locale::getDefault().getLanguage());
 
     SetDefaultLocaleForTest("zh-SG", env.get());
+    EXPECT_EQ("zh-CN", l10n_util::GetApplicationLocale(std::string()));
+    EXPECT_STREQ("zh", icu::Locale::getDefault().getLanguage());
+
+    SetDefaultLocaleForTest("zh", env.get());
     EXPECT_EQ("zh-CN", l10n_util::GetApplicationLocale(std::string()));
     EXPECT_STREQ("zh", icu::Locale::getDefault().getLanguage());
 
@@ -387,11 +400,11 @@ TEST_F(L10nUtilTest, GetAppLocale) {
 #endif  // !defined(OS_MACOSX)
 
 TEST_F(L10nUtilTest, SortStringsUsingFunction) {
-  std::vector<StringWrapper*> strings;
-  strings.push_back(new StringWrapper(UTF8ToUTF16("C")));
-  strings.push_back(new StringWrapper(UTF8ToUTF16("d")));
-  strings.push_back(new StringWrapper(UTF8ToUTF16("b")));
-  strings.push_back(new StringWrapper(UTF8ToUTF16("a")));
+  std::vector<std::unique_ptr<StringWrapper>> strings;
+  strings.push_back(base::MakeUnique<StringWrapper>(UTF8ToUTF16("C")));
+  strings.push_back(base::MakeUnique<StringWrapper>(UTF8ToUTF16("d")));
+  strings.push_back(base::MakeUnique<StringWrapper>(UTF8ToUTF16("b")));
+  strings.push_back(base::MakeUnique<StringWrapper>(UTF8ToUTF16("a")));
   l10n_util::SortStringsUsingMethod("en-US",
                                     &strings,
                                     &StringWrapper::string);
@@ -399,7 +412,6 @@ TEST_F(L10nUtilTest, SortStringsUsingFunction) {
   ASSERT_TRUE(UTF8ToUTF16("b") == strings[1]->string());
   ASSERT_TRUE(UTF8ToUTF16("C") == strings[2]->string());
   ASSERT_TRUE(UTF8ToUTF16("d") == strings[3]->string());
-  STLDeleteElements(&strings);
 }
 
 /**
@@ -573,4 +585,21 @@ TEST_F(L10nUtilTest, IsValidLocaleSyntax) {
   EXPECT_FALSE(l10n_util::IsValidLocaleSyntax("en-US@x"));
   EXPECT_FALSE(l10n_util::IsValidLocaleSyntax("en-US@x="));
   EXPECT_FALSE(l10n_util::IsValidLocaleSyntax("en-US@=y"));
+}
+
+TEST_F(L10nUtilTest, TimeDurationFormatAllLocales) {
+  base::test::ScopedRestoreICUDefaultLocale restore_locale;
+
+  // Verify that base::TimeDurationFormat() works for all available locales:
+  // http://crbug.com/707515
+  base::TimeDelta kDelta = base::TimeDelta::FromMinutes(15 * 60 + 42);
+  for (const std::string& locale : l10n_util::GetAvailableLocales()) {
+    base::i18n::SetICUDefaultLocale(locale);
+    base::string16 str;
+    const bool result =
+        base::TimeDurationFormat(kDelta, base::DURATION_WIDTH_NUMERIC, &str);
+    EXPECT_TRUE(result) << "Failed to format duration for " << locale;
+    if (result)
+      EXPECT_FALSE(str.empty()) << "Got empty string for " << locale;
+  }
 }

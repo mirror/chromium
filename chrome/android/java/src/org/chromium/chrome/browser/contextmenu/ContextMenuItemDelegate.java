@@ -18,6 +18,11 @@ public interface ContextMenuItemDelegate {
     public static final int CLIPBOARD_TYPE_IMAGE_URL = 2;
 
     /**
+     * Called when this ContextMenuItemDelegate is about to be destroyed.
+     */
+    void onDestroy();
+
+    /**
      * @return Whether or not this context menu is being shown for an incognito
      *     {@link ContentViewCore}.
      */
@@ -81,14 +86,15 @@ public interface ContextMenuItemDelegate {
     void onOpenImageInNewTab(String url, Referrer referrer);
 
     /**
-     *  Reloads all the Lo-Fi images in a Tab.
-     */
-    void onReloadLoFiImages();
-
-    /**
      * Called when the original image should be loaded.
      */
     void onLoadOriginalImage();
+
+    /**
+     * Returns whether the load image has been requested on a Lo-Fi image for the current page load.
+     * @return true if load image has been requested for the current page load.
+     */
+    boolean wasLoadOriginalImageRequestedForPageLoad();
 
     /**
      * Called when the {@code text} should be saved to the clipboard.
@@ -96,6 +102,51 @@ public interface ContextMenuItemDelegate {
      * @param clipboardType The type of data in {@code text}.
      */
     void onSaveToClipboard(String text, int clipboardType);
+
+    /**
+     * @return whether an activity is available to handle an intent to call a phone number.
+     */
+    public boolean supportsCall();
+
+    /**
+     * Called when the {@code url} should be parsed to call a phone number.
+     * @param url The URL to be parsed to call a phone number.
+     */
+    void onCall(String url);
+
+    /**
+     * @return whether an activity is available to handle an intent to send an email.
+     */
+    public boolean supportsSendEmailMessage();
+
+    /**
+     * Called when the {@code url} should be parsed to send an email.
+     * @param url The URL to be parsed to send an email.
+     */
+    void onSendEmailMessage(String url);
+
+    /**
+     * @return whether an activity is available to handle an intent to send a text message.
+     */
+    public boolean supportsSendTextMessage();
+
+    /**
+     * Called when the {@code url} should be parsed to send a text message.
+     * @param url The URL to be parsed to send a text message.
+     */
+    void onSendTextMessage(String url);
+
+    /**
+     * Returns whether or not an activity is available to handle intent to add contacts.
+     * @return true if an activity is available to handle intent to add contacts.
+     */
+    public boolean supportsAddToContacts();
+
+    /**
+     * Called when the {@code url} should be parsed to add to contacts.
+     * @param url The URL to be parsed to add to contacts.
+     */
+    void onAddToContacts(String url);
 
    /**
     * @return page url.
@@ -110,7 +161,20 @@ public interface ContextMenuItemDelegate {
     void onOpenInChrome(String linkUrl, String pageUrl);
 
     /**
-     * Called to queue a task to sometime later make an offline page for this url.
+     * Called when the {@code url} should be opened in a new Chrome tab from CCT.
+     * @param url The URL to open.
+     * @param isIncognito true if the {@code url} should be opened in a new incognito tab.
      */
-    void onSavePageLater(String linkUrl);
+    void onOpenInNewChromeTabFromCCT(String linkUrl, boolean isIncognito);
+
+    /**
+     * @return title of the context menu to open a page in external apps.
+     */
+    String getTitleForOpenTabInExternalApp();
+
+    /**
+     * Called when the current Chrome app is not the default to handle a View Intent.
+     * @param url The URL to open.
+     */
+    void onOpenInDefaultBrowser(String url);
 }

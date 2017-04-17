@@ -5,7 +5,7 @@
 #include "google_apis/gcm/engine/instance_id_delete_token_request_handler.h"
 
 #include "base/macros.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "google_apis/gcm/base/gcm_util.h"
 #include "net/url_request/url_fetcher.h"
@@ -19,14 +19,11 @@ namespace {
 const char kGMSVersionKey[] = "gmsv";
 const char kInstanceIDKey[] = "appid";
 const char kSenderKey[] = "sender";
-const char kSubtypeKey[] = "X-subtype";
 const char kScopeKey[] = "scope";
 const char kExtraScopeKey[] = "X-scope";
 
 // Response constants.
 const char kTokenPrefix[] = "token=";
-const char kErrorPrefix[] = "Error=";
-const char kInvalidParameters[] = "INVALID_PARAMETERS";
 
 }  // namespace
 
@@ -52,28 +49,11 @@ void InstanceIDDeleteTokenRequestHandler::BuildRequestBody(std::string* body){
   BuildFormEncoding(kScopeKey, scope_, body);
   BuildFormEncoding(kExtraScopeKey, scope_, body);
   BuildFormEncoding(kGMSVersionKey, base::IntToString(gcm_version_), body);
-  // TODO(jianli): To work around server bug. To be removed when the server fix
-  // is deployed.
-  BuildFormEncoding(kSubtypeKey, authorized_entity_, body);
 }
 
 UnregistrationRequest::Status
 InstanceIDDeleteTokenRequestHandler::ParseResponse(
-    const net::URLFetcher* source) {
-  std::string response;
-  if (!source->GetResponseAsString(&response)) {
-    DVLOG(1) << "Failed to get response body.";
-    return UnregistrationRequest::NO_RESPONSE_BODY;
-  }
-
-  if (response.find(kErrorPrefix) != std::string::npos) {
-    std::string error = response.substr(
-        response.find(kErrorPrefix) + arraysize(kErrorPrefix) - 1);
-    return error == kInvalidParameters ?
-        UnregistrationRequest::INVALID_PARAMETERS :
-        UnregistrationRequest::UNKNOWN_ERROR;
-  }
-
+    const std::string& response) {
   if (response.find(kTokenPrefix) == std::string::npos)
     return UnregistrationRequest::RESPONSE_PARSING_FAILED;
 

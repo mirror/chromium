@@ -10,6 +10,9 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/strings/string_util.h"
+#include "base/threading/thread_task_runner_handle.h"
+#include "ui/ozone/platform/wayland/wayland_object.h"
 #include "ui/ozone/platform/wayland/wayland_window.h"
 
 static_assert(XDG_SHELL_VERSION_CURRENT == 5, "Unsupported xdg-shell version");
@@ -22,7 +25,7 @@ const uint32_t kMaxShmVersion = 1;
 const uint32_t kMaxXdgShellVersion = 1;
 }  // namespace
 
-WaylandConnection::WaylandConnection() {}
+WaylandConnection::WaylandConnection() : controller_(FROM_HERE) {}
 
 WaylandConnection::~WaylandConnection() {}
 
@@ -86,7 +89,8 @@ bool WaylandConnection::StartProcessingEvents() {
 void WaylandConnection::ScheduleFlush() {
   if (scheduled_flush_ || !watching_)
     return;
-  base::MessageLoopForUI::current()->task_runner()->PostTask(
+  DCHECK(base::MessageLoopForUI::IsCurrent());
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(&WaylandConnection::Flush, base::Unretained(this)));
   scheduled_flush_ = true;
 }
@@ -103,6 +107,12 @@ void WaylandConnection::AddWindow(gfx::AcceleratedWidget widget,
 
 void WaylandConnection::RemoveWindow(gfx::AcceleratedWidget widget) {
   window_map_.erase(widget);
+}
+
+WaylandOutput* WaylandConnection::PrimaryOutput() const {
+  if (!output_list_.size())
+    return nullptr;
+  return output_list_.front().get();
 }
 
 void WaylandConnection::OnDispatcherListChanged() {
@@ -125,6 +135,11 @@ void WaylandConnection::OnFileCanReadWithoutBlocking(int fd) {
 }
 
 void WaylandConnection::OnFileCanWriteWithoutBlocking(int fd) {}
+
+const std::vector<std::unique_ptr<WaylandOutput>>&
+WaylandConnection::GetOutputList() const {
+  return output_list_;
+}
 
 // static
 void WaylandConnection::Global(void* data,
@@ -169,6 +184,18 @@ void WaylandConnection::Global(void* data,
                            connection);
     xdg_shell_use_unstable_version(connection->shell_.get(),
                                    XDG_SHELL_VERSION_CURRENT);
+  } else if (base::EqualsCaseInsensitiveASCII(interface, "wl_output")) {
+    wl::Object<wl_output> output = wl::Bind<wl_output>(registry, name, 1);
+    if (!output) {
+      LOG(ERROR) << "Failed to bind to wl_output global";
+      return;
+    }
+
+    if (!connection->output_list_.empty())
+      NOTIMPLEMENTED() << "Multiple screens support is not implemented";
+
+    connection->output_list_.push_back(
+        base::WrapUnique(new WaylandOutput(output.release())));
   }
 
   connection->ScheduleFlush();
@@ -193,12 +220,26 @@ void WaylandConnection::Capabilities(void* data,
         LOG(ERROR) << "Failed to get wl_pointer from seat";
         return;
       }
-      connection->pointer_ = base::WrapUnique(new WaylandPointer(
+      connection->pointer_ = base::MakeUnique<WaylandPointer>(
           pointer, base::Bind(&WaylandConnection::DispatchUiEvent,
-                              base::Unretained(connection))));
+                              base::Unretained(connection)));
     }
   } else if (connection->pointer_) {
     connection->pointer_.reset();
+  }
+  if (capabilities & WL_SEAT_CAPABILITY_KEYBOARD) {
+    if (!connection->keyboard_) {
+      wl_keyboard* keyboard = wl_seat_get_keyboard(connection->seat_.get());
+      if (!keyboard) {
+        LOG(ERROR) << "Failed to get wl_keyboard from seat";
+        return;
+      }
+      connection->keyboard_ = base::MakeUnique<WaylandKeyboard>(
+          keyboard, base::Bind(&WaylandConnection::DispatchUiEvent,
+                               base::Unretained(connection)));
+    }
+  } else if (connection->keyboard_) {
+    connection->keyboard_.reset();
   }
   connection->ScheduleFlush();
 }

@@ -32,81 +32,82 @@
 
 #include "core/css/cssom/InlineStylePropertyMap.h"
 #include "core/dom/CompositorProxiedPropertySet.h"
-#include "core/observer/ResizeObservation.h"
-#include "core/observer/ResizeObserver.h"
+#include "core/dom/ResizeObservation.h"
+#include "core/dom/ResizeObserver.h"
 #include "core/style/ComputedStyle.h"
 
 namespace blink {
 
 struct SameSizeAsElementRareData : NodeRareData {
-    short indices[1];
-    LayoutSize sizeForResizing;
-    IntSize scrollOffset;
-    void* pointers[10];
-    Member<void*> persistentMember[4];
+  LayoutSize size_for_resizing;
+  IntSize scroll_offset;
+  void* pointers[2];
+  Member<void*> members[14];
 };
 
-CSSStyleDeclaration& ElementRareData::ensureInlineCSSStyleDeclaration(Element* ownerElement)
-{
-    if (!m_cssomWrapper)
-        m_cssomWrapper = new InlineCSSStyleDeclaration(ownerElement);
-    return *m_cssomWrapper;
+CSSStyleDeclaration& ElementRareData::EnsureInlineCSSStyleDeclaration(
+    Element* owner_element) {
+  if (!cssom_wrapper_)
+    cssom_wrapper_ = new InlineCSSStyleDeclaration(owner_element);
+  return *cssom_wrapper_;
 }
 
-InlineStylePropertyMap& ElementRareData::ensureInlineStylePropertyMap(Element* ownerElement)
-{
-    if (!m_cssomMapWrapper) {
-        m_cssomMapWrapper = new InlineStylePropertyMap(ownerElement);
+InlineStylePropertyMap& ElementRareData::EnsureInlineStylePropertyMap(
+    Element* owner_element) {
+  if (!cssom_map_wrapper_) {
+    cssom_map_wrapper_ = new InlineStylePropertyMap(owner_element);
+  }
+  return *cssom_map_wrapper_;
+}
+
+AttrNodeList& ElementRareData::EnsureAttrNodeList() {
+  if (!attr_node_list_)
+    attr_node_list_ = new AttrNodeList;
+  return *attr_node_list_;
+}
+
+ElementRareData::ResizeObserverDataMap&
+ElementRareData::EnsureResizeObserverData() {
+  if (!resize_observer_data_)
+    resize_observer_data_ =
+        new HeapHashMap<Member<ResizeObserver>, Member<ResizeObservation>>();
+  return *resize_observer_data_;
+}
+
+DEFINE_TRACE_AFTER_DISPATCH(ElementRareData) {
+  visitor->Trace(dataset_);
+  visitor->Trace(class_list_);
+  visitor->Trace(shadow_);
+  visitor->Trace(attribute_map_);
+  visitor->Trace(attr_node_list_);
+  visitor->Trace(element_animations_);
+  visitor->Trace(cssom_wrapper_);
+  visitor->Trace(cssom_map_wrapper_);
+  visitor->Trace(pseudo_element_data_);
+  visitor->Trace(accessible_node_);
+  visitor->Trace(v0_custom_element_definition_);
+  visitor->Trace(custom_element_definition_);
+  visitor->Trace(intersection_observer_data_);
+  visitor->Trace(resize_observer_data_);
+  NodeRareData::TraceAfterDispatch(visitor);
+}
+
+DEFINE_TRACE_WRAPPERS_AFTER_DISPATCH(ElementRareData) {
+  if (attr_node_list_.Get()) {
+    for (auto& attr : *attr_node_list_) {
+      visitor->TraceWrappersWithManualWriteBarrier(attr);
     }
-    return *m_cssomMapWrapper;
+  }
+  visitor->TraceWrappersWithManualWriteBarrier(shadow_);
+  visitor->TraceWrappersWithManualWriteBarrier(attribute_map_);
+  visitor->TraceWrappersWithManualWriteBarrier(dataset_);
+  visitor->TraceWrappersWithManualWriteBarrier(class_list_);
+  visitor->TraceWrappersWithManualWriteBarrier(accessible_node_);
+  visitor->TraceWrappersWithManualWriteBarrier(intersection_observer_data_);
+  NodeRareData::TraceWrappersAfterDispatch(visitor);
 }
 
-AttrNodeList& ElementRareData::ensureAttrNodeList()
-{
-    if (!m_attrNodeList)
-        m_attrNodeList = new AttrNodeList;
-    return *m_attrNodeList;
-}
+static_assert(sizeof(ElementRareData) == sizeof(SameSizeAsElementRareData),
+              "ElementRareData should stay small");
 
-ElementRareData::ResizeObserverDataMap& ElementRareData::ensureResizeObserverData()
-{
-    if (!m_resizeObserverData)
-        m_resizeObserverData = new HeapHashMap<Member<ResizeObserver>, Member<ResizeObservation>>();
-    return *m_resizeObserverData;
-}
-
-DEFINE_TRACE_AFTER_DISPATCH(ElementRareData)
-{
-    visitor->trace(m_dataset);
-    visitor->trace(m_classList);
-    visitor->trace(m_shadow);
-    visitor->trace(m_attributeMap);
-    visitor->trace(m_attrNodeList);
-    visitor->trace(m_elementAnimations);
-    visitor->trace(m_cssomWrapper);
-    visitor->trace(m_cssomMapWrapper);
-    visitor->trace(m_pseudoElementData);
-    visitor->trace(m_customElementDefinition);
-    visitor->trace(m_intersectionObserverData);
-    visitor->trace(m_resizeObserverData);
-    NodeRareData::traceAfterDispatch(visitor);
-}
-
-DEFINE_TRACE_WRAPPERS_AFTER_DISPATCH(ElementRareData)
-{
-    if (m_attrNodeList.get()) {
-        for (auto& attr : *m_attrNodeList) {
-            visitor->traceWrappers(attr);
-        }
-    }
-    visitor->traceWrappers(m_shadow);
-    visitor->traceWrappers(m_attributeMap);
-    visitor->traceWrappers(m_dataset);
-    visitor->traceWrappers(m_classList);
-    visitor->traceWrappers(m_intersectionObserverData);
-    NodeRareData::traceWrappersAfterDispatch(visitor);
-}
-
-static_assert(sizeof(ElementRareData) == sizeof(SameSizeAsElementRareData), "ElementRareData should stay small");
-
-} // namespace blink
+}  // namespace blink

@@ -20,6 +20,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Manages oom bindings used to bound child services.
@@ -158,8 +159,8 @@ class BindingManagerImpl implements BindingManager {
         }
     }
 
-    private final Object mModerateBindingPoolLock = new Object();
-    private ModerateBindingPool mModerateBindingPool;
+    private final AtomicReference<ModerateBindingPool> mModerateBindingPool =
+            new AtomicReference<>();
 
     /**
      * Wraps ChildProcessConnection keeping track of additional information needed to manage the
@@ -168,7 +169,8 @@ class BindingManagerImpl implements BindingManager {
      * for the same pid).
      */
     private class ManagedConnection {
-        // Set in constructor, cleared in clearConnection().
+        // Set in constructor, cleared in clearConnection() (on a separate thread).
+        // Need to keep a local reference to avoid it being cleared while using it.
         private ChildProcessConnection mConnection;
 
         // True iff there is a strong binding kept on the service because it is working in
@@ -187,9 +189,10 @@ class BindingManagerImpl implements BindingManager {
          * @return true if the binding was removed.
          */
         private boolean removeInitialBinding() {
-            if (mConnection == null || !mConnection.isInitialBindingBound()) return false;
+            ChildProcessConnection connection = mConnection;
+            if (connection == null || !connection.isInitialBindingBound()) return false;
 
-            mConnection.removeInitialBinding();
+            connection.removeInitialBinding();
             return true;
         }
 
@@ -199,10 +202,7 @@ class BindingManagerImpl implements BindingManager {
             if (connection == null) return;
 
             connection.addStrongBinding();
-            ModerateBindingPool moderateBindingPool;
-            synchronized (mModerateBindingPoolLock) {
-                moderateBindingPool = mModerateBindingPool;
-            }
+            ModerateBindingPool moderateBindingPool = mModerateBindingPool.get();
             if (moderateBindingPool != null) moderateBindingPool.removeConnection(this);
         }
 
@@ -240,10 +240,7 @@ class BindingManagerImpl implements BindingManager {
          * @param connection The ChildProcessConnection to add to the moderate binding pool.
          */
         private void addConnectionToModerateBindingPool(ChildProcessConnection connection) {
-            ModerateBindingPool moderateBindingPool;
-            synchronized (mModerateBindingPoolLock) {
-                moderateBindingPool = mModerateBindingPool;
-            }
+            ModerateBindingPool moderateBindingPool = mModerateBindingPool.get();
             if (moderateBindingPool != null && !connection.isStrongBindingBound()) {
                 moderateBindingPool.addConnection(ManagedConnection.this);
             }
@@ -251,8 +248,10 @@ class BindingManagerImpl implements BindingManager {
 
         /** Removes the moderate service binding. */
         private void removeModerateBinding() {
-            if (mConnection == null || !mConnection.isModerateBindingBound()) return;
-            mConnection.removeModerateBinding();
+            ChildProcessConnection connection = mConnection;
+            if (connection == null || !connection.isModerateBindingBound()) return;
+
+            connection.removeModerateBinding();
         }
 
         /** Adds the moderate service binding. */
@@ -297,10 +296,9 @@ class BindingManagerImpl implements BindingManager {
          */
         void determinedVisibility() {
             if (!removeInitialBinding()) return;
-
-            if (mModerateBindingTillBackgrounded) {
-                addConnectionToModerateBindingPool(mConnection);
-            }
+            // Decrease the likelihood of a recently created background tab getting evicted by
+            // immediately adding moderate binding.
+            addConnectionToModerateBindingPool(mConnection);
         }
 
         /**
@@ -321,16 +319,14 @@ class BindingManagerImpl implements BindingManager {
             // When a process crashes, we can be queried about its oom status before or after the
             // connection is cleared. For the latter case, the oom status is stashed in
             // mWasOomProtected.
-            return mConnection != null
-                    ? mConnection.isOomProtectedOrWasWhenDied() : mWasOomProtected;
+            ChildProcessConnection connection = mConnection;
+            return connection != null
+                    ? connection.isOomProtectedOrWasWhenDied() : mWasOomProtected;
         }
 
         void clearConnection() {
             mWasOomProtected = mConnection.isOomProtectedOrWasWhenDied();
-            ModerateBindingPool moderateBindingPool;
-            synchronized (mModerateBindingPoolLock) {
-                moderateBindingPool = mModerateBindingPool;
-            }
+            ModerateBindingPool moderateBindingPool = mModerateBindingPool.get();
             if (moderateBindingPool != null) moderateBindingPool.removeConnection(this);
             mConnection = null;
         }
@@ -341,10 +337,6 @@ class BindingManagerImpl implements BindingManager {
             return mConnection == null;
         }
     }
-
-    // Whether a moderate binding should be added to a render process on process creation and
-    // removed when Chrome is sent to the background.
-    private boolean mModerateBindingTillBackgrounded;
 
     // This can be manipulated on different threads, synchronize access on mManagedConnections.
     private final SparseArray<ManagedConnection> mManagedConnections =
@@ -447,10 +439,7 @@ class BindingManagerImpl implements BindingManager {
                 mBoundForBackgroundPeriod = mLastInForeground;
             }
         }
-        ModerateBindingPool moderateBindingPool;
-        synchronized (mModerateBindingPoolLock) {
-            moderateBindingPool = mModerateBindingPool;
-        }
+        ModerateBindingPool moderateBindingPool = mModerateBindingPool.get();
         if (moderateBindingPool != null) moderateBindingPool.onSentToBackground(mOnTesting);
     }
 
@@ -460,10 +449,7 @@ class BindingManagerImpl implements BindingManager {
             mBoundForBackgroundPeriod.setBoundForBackgroundPeriod(false);
             mBoundForBackgroundPeriod = null;
         }
-        ModerateBindingPool moderateBindingPool;
-        synchronized (mModerateBindingPoolLock) {
-            moderateBindingPool = mModerateBindingPool;
-        }
+        ModerateBindingPool moderateBindingPool = mModerateBindingPool.get();
         if (moderateBindingPool != null) moderateBindingPool.onBroughtToForeground();
     }
 
@@ -497,25 +483,18 @@ class BindingManagerImpl implements BindingManager {
     }
 
     @Override
-    public void startModerateBindingManagement(
-            Context context, int maxSize, boolean moderateBindingTillBackgrounded) {
-        synchronized (mModerateBindingPoolLock) {
-            if (mIsLowMemoryDevice || mModerateBindingPool != null) return;
-
-            mModerateBindingTillBackgrounded = moderateBindingTillBackgrounded;
-
+    public void startModerateBindingManagement(Context context, int maxSize) {
+        if (mIsLowMemoryDevice) return;
+        ModerateBindingPool pool = new ModerateBindingPool(maxSize);
+        if (mModerateBindingPool.compareAndSet(null, pool)) {
             Log.i(TAG, "Moderate binding enabled: maxSize=%d", maxSize);
-            mModerateBindingPool = new ModerateBindingPool(maxSize);
-            if (context != null) context.registerComponentCallbacks(mModerateBindingPool);
+            if (context != null) context.registerComponentCallbacks(pool);
         }
     }
 
     @Override
     public void releaseAllModerateBindings() {
-        ModerateBindingPool moderateBindingPool;
-        synchronized (mModerateBindingPoolLock) {
-            moderateBindingPool = mModerateBindingPool;
-        }
+        ModerateBindingPool moderateBindingPool = mModerateBindingPool.get();
         if (moderateBindingPool != null) {
             Log.i(TAG, "Release all moderate bindings: %d", moderateBindingPool.size());
             moderateBindingPool.evictAll();

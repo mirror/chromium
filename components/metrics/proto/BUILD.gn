@@ -4,12 +4,12 @@
 
 import("//third_party/protobuf/proto_library.gni")
 
-# GYP version: components/
 proto_library("proto") {
   sources = [
     "call_stack_profile.proto",
     "cast_logs.proto",
     "chrome_user_metrics_extension.proto",
+    "execution_context.proto",
     "histogram_event.proto",
     "memory_leak_report.proto",
     "omnibox_event.proto",
@@ -19,6 +19,11 @@ proto_library("proto") {
     "profiler_event.proto",
     "sampled_profile.proto",
     "system_profile.proto",
+    "translate_event.proto",
+    "ukm/entry.proto",
+    "ukm/report.proto",
+    "ukm/source.proto",
     "user_action_event.proto",
   ]
+  proto_in_dir = "."
 }

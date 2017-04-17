@@ -39,25 +39,22 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
  public:
   static GpuDataManagerImplPrivate* Create(GpuDataManagerImpl* owner);
 
-  void InitializeForTesting(
-      const std::string& gpu_blacklist_json,
-      const gpu::GPUInfo& gpu_info);
+  void InitializeForTesting(const gpu::GpuControlListData& gpu_blacklist_data,
+                            const gpu::GPUInfo& gpu_info);
   bool IsFeatureBlacklisted(int feature) const;
+  bool IsFeatureEnabled(int feature) const;
+  bool IsWebGLEnabled() const;
   bool IsDriverBugWorkaroundActive(int feature) const;
   gpu::GPUInfo GetGPUInfo() const;
-  void GetGpuProcessHandles(
-      const GpuDataManager::GetGpuProcessHandlesCallback& callback) const;
   bool GpuAccessAllowed(std::string* reason) const;
   void RequestCompleteGpuInfoIfNeeded();
   bool IsEssentialGpuInfoAvailable() const;
   bool IsCompleteGpuInfoAvailable() const;
   void RequestVideoMemoryUsageStatsUpdate() const;
   bool ShouldUseSwiftShader() const;
-  void RegisterSwiftShaderPath(const base::FilePath& path);
   void AddObserver(GpuDataManagerObserver* observer);
   void RemoveObserver(GpuDataManagerObserver* observer);
   void UnblockDomainFrom3DAPIs(const GURL& url);
-  void DisableGpuWatchdog();
   void SetGLStrings(const std::string& gl_vendor,
                     const std::string& gl_renderer,
                     const std::string& gl_version);
@@ -65,10 +62,12 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
                     std::string* gl_renderer,
                     std::string* gl_version);
   void DisableHardwareAcceleration();
+  void SetGpuInfo(const gpu::GPUInfo& gpu_info);
 
   void Initialize();
 
   void UpdateGpuInfo(const gpu::GPUInfo& gpu_info);
+  void UpdateGpuFeatureInfo(const gpu::GpuFeatureInfo& gpu_feature_info);
 
   void UpdateVideoMemoryUsageStats(
       const gpu::VideoMemoryUsageStats& video_memory_usage_stats);
@@ -191,8 +190,8 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
 
   explicit GpuDataManagerImplPrivate(GpuDataManagerImpl* owner);
 
-  void InitializeImpl(const std::string& gpu_blacklist_json,
-                      const std::string& gpu_driver_bug_list_json,
+  void InitializeImpl(const gpu::GpuControlListData& gpu_blacklist_data,
+                      const gpu::GpuControlListData& gpu_driver_bug_list_data,
                       const gpu::GPUInfo& gpu_info);
 
   void RunPostInitTasks();
@@ -231,6 +230,10 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
 
   std::set<int> blacklisted_features_;
   std::set<int> preliminary_blacklisted_features_;
+  bool preliminary_blacklisted_features_initialized_;
+
+  // Eventually |blacklisted_features_| should be folded in to this.
+  gpu::GpuFeatureInfo gpu_feature_info_;
 
   std::set<int> gpu_driver_bugs_;
 
@@ -244,8 +247,6 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
   std::vector<LogMessage> log_messages_;
 
   bool use_swiftshader_;
-
-  base::FilePath swiftshader_path_;
 
   // Current card force-blacklisted due to GPU crashes, or disabled through
   // the --disable-gpu commandline switch.
@@ -268,6 +269,9 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
 
   // True if all future Initialize calls should be ignored.
   bool finalized_;
+
+  // True if --single-process or --in-process-gpu is passed in.
+  bool in_process_gpu_;
 
   std::string disabled_extensions_;
 

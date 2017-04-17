@@ -3,9 +3,11 @@
 // found in the LICENSE file.
 
 #include "base/macros.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_task_scheduler.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
 #include "chrome/browser/ui/toolbar/test_toolbar_action_view_controller.h"
 #include "chrome/browser/ui/toolbar/toolbar_action_view_controller.h"
@@ -13,7 +15,7 @@
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/test/test_browser_thread.h"
 #include "content/public/test/test_web_contents_factory.h"
-#include "ui/accessibility/ax_view_state.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/views/test/views_test_base.h"
 
@@ -98,7 +100,8 @@ class ToolbarActionViewUnitTest : public views::ViewsTestBase {
  public:
   ToolbarActionViewUnitTest()
       : widget_(nullptr),
-        ui_thread_(content::BrowserThread::UI, message_loop()) {}
+        ui_thread_(content::BrowserThread::UI, message_loop()),
+        scoped_task_scheduler_(base::MessageLoop::current()) {}
   ~ToolbarActionViewUnitTest() override {}
 
   void SetUp() override {
@@ -122,8 +125,9 @@ class ToolbarActionViewUnitTest : public views::ViewsTestBase {
   // The widget managed by this test.
   views::Widget* widget_;
 
-  // Web contents need a fake ui thread.
+  // Web contents need a UI thread and a TaskScheduler.
   content::TestBrowserThread ui_thread_;
+  base::test::ScopedTaskScheduler scoped_task_scheduler_;
 
   DISALLOW_COPY_AND_ASSIGN(ToolbarActionViewUnitTest);
 };
@@ -218,9 +222,9 @@ TEST_F(ToolbarActionViewUnitTest, BasicToolbarActionViewTest) {
   base::string16 tooltip_test;
   EXPECT_TRUE(view.GetTooltipText(gfx::Point(), &tooltip_test));
   EXPECT_EQ(tooltip, tooltip_test);
-  ui::AXViewState ax_state;
-  view.GetAccessibleState(&ax_state);
-  EXPECT_EQ(name, ax_state.name);
+  ui::AXNodeData ax_node_data;
+  view.GetAccessibleNodeData(&ax_node_data);
+  EXPECT_EQ(name, ax_node_data.GetString16Attribute(ui::AX_ATTR_NAME));
 
   // The button should start in normal state, with no actions executed.
   EXPECT_EQ(views::Button::STATE_NORMAL, view.state());

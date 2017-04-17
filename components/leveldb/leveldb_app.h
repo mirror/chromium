@@ -7,32 +7,40 @@
 
 #include <memory>
 
+#include "base/threading/thread.h"
 #include "components/leveldb/public/interfaces/leveldb.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
-#include "services/shell/public/cpp/interface_factory.h"
-#include "services/shell/public/cpp/service.h"
-#include "services/tracing/public/cpp/tracing_impl.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/cpp/interface_factory.h"
+#include "services/service_manager/public/cpp/service.h"
+#include "services/tracing/public/cpp/provider.h"
 
 namespace leveldb {
 
-class LevelDBApp : public shell::Service,
-                   public shell::InterfaceFactory<mojom::LevelDBService> {
+class LevelDBApp
+    : public service_manager::Service,
+      public service_manager::InterfaceFactory<mojom::LevelDBService> {
  public:
   LevelDBApp();
   ~LevelDBApp() override;
 
  private:
   // |Service| override:
-  void OnStart(const shell::Identity& identity) override;
-  bool OnConnect(shell::Connection* connection) override;
+  void OnStart() override;
+  void OnBindInterface(const service_manager::ServiceInfo& source_info,
+                       const std::string& interface_name,
+                       mojo::ScopedMessagePipeHandle interface_pipe) override;
 
   // |InterfaceFactory<mojom::LevelDBService>| implementation:
-  void Create(const shell::Identity& remote_identity,
+  void Create(const service_manager::Identity& remote_identity,
               leveldb::mojom::LevelDBServiceRequest request) override;
 
-  mojo::TracingImpl tracing_;
+  tracing::Provider tracing_;
   std::unique_ptr<mojom::LevelDBService> service_;
+  service_manager::BinderRegistry registry_;
   mojo::BindingSet<mojom::LevelDBService> bindings_;
+
+  base::Thread file_thread_;
 
   DISALLOW_COPY_AND_ASSIGN(LevelDBApp);
 };

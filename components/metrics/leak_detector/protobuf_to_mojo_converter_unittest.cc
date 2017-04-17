@@ -45,21 +45,23 @@ TEST(protobuf_to_mojo_converterTest, ConvertReport) {
   report.add_call_stack(0xc001d00d);
   report.add_call_stack(0x900df00d);
   report.set_size_bytes(24);
+  report.set_num_rising_intervals(5);
+  report.set_num_allocs_increase(42);
 
-  auto entry1 = report.add_alloc_breakdown_history();
+  auto* entry1 = report.add_alloc_breakdown_history();
   entry1->add_counts_by_size(1);
   entry1->add_counts_by_size(2);
   entry1->add_counts_by_size(3);
   entry1->set_count_for_call_stack(4);
 
-  auto entry2 = report.add_alloc_breakdown_history();
+  auto* entry2 = report.add_alloc_breakdown_history();
   entry2->add_counts_by_size(11);
   entry2->add_counts_by_size(12);
   entry2->add_counts_by_size(13);
   entry2->add_counts_by_size(14);
   entry2->set_count_for_call_stack(15);
 
-  auto entry3 = report.add_alloc_breakdown_history();
+  auto* entry3 = report.add_alloc_breakdown_history();
   entry3->add_counts_by_size(21);
   entry3->add_counts_by_size(22);
   entry3->add_counts_by_size(23);
@@ -77,6 +79,8 @@ TEST(protobuf_to_mojo_converterTest, ConvertReport) {
   EXPECT_EQ(0xc001d00d, mojo_report->call_stack[1]);
   EXPECT_EQ(0x900df00d, mojo_report->call_stack[2]);
   EXPECT_EQ(24U, mojo_report->size_bytes);
+  EXPECT_EQ(5U, mojo_report->num_rising_intervals);
+  EXPECT_EQ(42U, mojo_report->num_allocs_increase);
 
   ASSERT_EQ(3U, mojo_report->alloc_breakdown_history.size());
 
@@ -110,6 +114,8 @@ TEST(protobuf_to_mojo_converterTest, ConvertReport) {
   EXPECT_EQ(0xc001d00d, new_report.call_stack(1));
   EXPECT_EQ(0x900df00d, new_report.call_stack(2));
   EXPECT_EQ(24U, new_report.size_bytes());
+  EXPECT_EQ(5U, new_report.num_rising_intervals());
+  EXPECT_EQ(42U, new_report.num_allocs_increase());
 
   ASSERT_EQ(3, new_report.alloc_breakdown_history().size());
 

@@ -31,17 +31,18 @@
 #ifndef RetainedObjectInfo_h
 #define RetainedObjectInfo_h
 
-#include "wtf/Allocator.h"
-#include <v8-profiler.h>
+#include "platform/wtf/Allocator.h"
+#include "v8/include/v8-profiler.h"
 
 namespace blink {
 
 class RetainedObjectInfo : public v8::RetainedObjectInfo {
-    USING_FAST_MALLOC(RetainedObjectInfo);
-public:
-    virtual intptr_t GetEquivalenceClass() = 0;
+  USING_FAST_MALLOC(RetainedObjectInfo);
+
+ public:
+  virtual intptr_t GetEquivalenceClass() = 0;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RetainedObjectInfo_h
+#endif  // RetainedObjectInfo_h

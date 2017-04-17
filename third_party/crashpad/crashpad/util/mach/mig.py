@@ -15,6 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import argparse
+import os
 import re
 import subprocess
 import sys
@@ -106,18 +108,32 @@ extern "C" {
   file.close()
 
 def main(args):
-  assert len(args) == 5
-  (defs_file, user_c, server_c, user_h, server_h) = args
-  subprocess.check_call(['mig',
-                         '-user', user_c,
-                         '-server', server_c,
-                         '-header', user_h,
-                         '-sheader', server_h,
-                         defs_file])
-  FixUserImplementation(user_c)
-  server_declarations = FixServerImplementation(server_c)
-  FixHeader(user_h)
-  FixHeader(server_h, server_declarations)
+  parser = argparse.ArgumentParser()
+  parser.add_argument('--developer-dir', help='Path to Xcode')
+  parser.add_argument('--sdk', help='Path to SDK')
+  parser.add_argument('defs')
+  parser.add_argument('user_c')
+  parser.add_argument('server_c')
+  parser.add_argument('user_h')
+  parser.add_argument('server_h')
+  parsed = parser.parse_args(args)
+
+  command = ['mig',
+             '-user', parsed.user_c,
+             '-server', parsed.server_c,
+             '-header', parsed.user_h,
+             '-sheader', parsed.server_h,
+            ]
+  if parsed.sdk is not None:
+    command.extend(['-isysroot', parsed.sdk])
+  if parsed.developer_dir is not None:
+    os.environ['DEVELOPER_DIR'] = parsed.developer_dir
+  command.append(parsed.defs)
+  subprocess.check_call(command)
+  FixUserImplementation(parsed.user_c)
+  server_declarations = FixServerImplementation(parsed.server_c)
+  FixHeader(parsed.user_h)
+  FixHeader(parsed.server_h, server_declarations)
 
 if __name__ == '__main__':
   sys.exit(main(sys.argv[1:]))

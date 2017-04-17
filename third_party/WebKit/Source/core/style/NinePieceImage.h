@@ -2,7 +2,8 @@
  * Copyright (C) 2000 Lars Knoll (knoll@kde.org)
  *           (C) 2000 Antti Koivisto (koivisto@kde.org)
  *           (C) 2000 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2003, 2005, 2006, 2007, 2008, 2013 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2005, 2006, 2007, 2008, 2013 Apple Inc. All rights
+ * reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -30,108 +31,136 @@
 #include "core/style/StyleImage.h"
 #include "platform/LayoutUnit.h"
 #include "platform/LengthBox.h"
-#include "wtf/Allocator.h"
-#include "wtf/RefCounted.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/RefCounted.h"
 
 namespace blink {
 
 enum ENinePieceImageRule {
-    StretchImageRule, RoundImageRule, SpaceImageRule, RepeatImageRule
+  kStretchImageRule,
+  kRoundImageRule,
+  kSpaceImageRule,
+  kRepeatImageRule
 };
 
 class CORE_EXPORT NinePieceImageData : public RefCounted<NinePieceImageData> {
-public:
-    static PassRefPtr<NinePieceImageData> create() { return adoptRef(new NinePieceImageData); }
-    PassRefPtr<NinePieceImageData> copy() const { return adoptRef(new NinePieceImageData(*this)); }
+ public:
+  static PassRefPtr<NinePieceImageData> Create() {
+    return AdoptRef(new NinePieceImageData);
+  }
+  PassRefPtr<NinePieceImageData> Copy() const {
+    return AdoptRef(new NinePieceImageData(*this));
+  }
 
-    bool operator==(const NinePieceImageData&) const;
-    bool operator!=(const NinePieceImageData& o) const { return !(*this == o); }
+  bool operator==(const NinePieceImageData&) const;
+  bool operator!=(const NinePieceImageData& o) const { return !(*this == o); }
 
-    unsigned fill : 1;
-    unsigned horizontalRule : 2; // ENinePieceImageRule
-    unsigned verticalRule : 2; // ENinePieceImageRule
-    Persistent<StyleImage> image;
-    LengthBox imageSlices;
-    BorderImageLengthBox borderSlices;
-    BorderImageLengthBox outset;
+  unsigned fill : 1;
+  unsigned horizontal_rule : 2;  // ENinePieceImageRule
+  unsigned vertical_rule : 2;    // ENinePieceImageRule
+  Persistent<StyleImage> image;
+  LengthBox image_slices;
+  BorderImageLengthBox border_slices;
+  BorderImageLengthBox outset;
 
-private:
-    NinePieceImageData();
-    NinePieceImageData(const NinePieceImageData&);
+ private:
+  NinePieceImageData();
+  NinePieceImageData(const NinePieceImageData&);
 };
 
 class CORE_EXPORT NinePieceImage {
-    DISALLOW_NEW();
-public:
-    NinePieceImage();
-    NinePieceImage(StyleImage*, LengthBox imageSlices, bool fill, const BorderImageLengthBox& borderSlices,
-        const BorderImageLengthBox& outset, ENinePieceImageRule horizontalRule, ENinePieceImageRule verticalRule);
+  DISALLOW_NEW();
 
-    bool operator==(const NinePieceImage& other) const { return m_data == other.m_data; }
-    bool operator!=(const NinePieceImage& other) const { return m_data != other.m_data; }
+ public:
+  NinePieceImage();
+  NinePieceImage(StyleImage*,
+                 LengthBox image_slices,
+                 bool fill,
+                 const BorderImageLengthBox& border_slices,
+                 const BorderImageLengthBox& outset,
+                 ENinePieceImageRule horizontal_rule,
+                 ENinePieceImageRule vertical_rule);
 
-    bool hasImage() const { return m_data->image; }
-    StyleImage* image() const { return m_data->image.get(); }
-    void setImage(StyleImage* image) { m_data.access()->image = image; }
+  bool operator==(const NinePieceImage& other) const {
+    return data_ == other.data_;
+  }
+  bool operator!=(const NinePieceImage& other) const {
+    return data_ != other.data_;
+  }
 
-    const LengthBox& imageSlices() const { return m_data->imageSlices; }
-    void setImageSlices(const LengthBox& slices) { m_data.access()->imageSlices = slices; }
+  bool HasImage() const { return data_->image; }
+  StyleImage* GetImage() const { return data_->image.Get(); }
+  void SetImage(StyleImage* image) { data_.Access()->image = image; }
 
-    bool fill() const { return m_data->fill; }
-    void setFill(bool fill) { m_data.access()->fill = fill; }
+  const LengthBox& ImageSlices() const { return data_->image_slices; }
+  void SetImageSlices(const LengthBox& slices) {
+    data_.Access()->image_slices = slices;
+  }
 
-    const BorderImageLengthBox& borderSlices() const { return m_data->borderSlices; }
-    void setBorderSlices(const BorderImageLengthBox& slices) { m_data.access()->borderSlices = slices; }
+  bool Fill() const { return data_->fill; }
+  void SetFill(bool fill) { data_.Access()->fill = fill; }
 
-    const BorderImageLengthBox& outset() const { return m_data->outset; }
-    void setOutset(const BorderImageLengthBox& outset) { m_data.access()->outset = outset; }
+  const BorderImageLengthBox& BorderSlices() const {
+    return data_->border_slices;
+  }
+  void SetBorderSlices(const BorderImageLengthBox& slices) {
+    data_.Access()->border_slices = slices;
+  }
 
-    ENinePieceImageRule horizontalRule() const { return static_cast<ENinePieceImageRule>(m_data->horizontalRule); }
-    void setHorizontalRule(ENinePieceImageRule rule) { m_data.access()->horizontalRule = rule; }
+  const BorderImageLengthBox& Outset() const { return data_->outset; }
+  void SetOutset(const BorderImageLengthBox& outset) {
+    data_.Access()->outset = outset;
+  }
 
-    ENinePieceImageRule verticalRule() const { return static_cast<ENinePieceImageRule>(m_data->verticalRule); }
-    void setVerticalRule(ENinePieceImageRule rule) { m_data.access()->verticalRule = rule; }
+  ENinePieceImageRule HorizontalRule() const {
+    return static_cast<ENinePieceImageRule>(data_->horizontal_rule);
+  }
+  void SetHorizontalRule(ENinePieceImageRule rule) {
+    data_.Access()->horizontal_rule = rule;
+  }
 
-    void copyImageSlicesFrom(const NinePieceImage& other)
-    {
-        m_data.access()->imageSlices = other.m_data->imageSlices;
-        m_data.access()->fill = other.m_data->fill;
-    }
+  ENinePieceImageRule VerticalRule() const {
+    return static_cast<ENinePieceImageRule>(data_->vertical_rule);
+  }
+  void SetVerticalRule(ENinePieceImageRule rule) {
+    data_.Access()->vertical_rule = rule;
+  }
 
-    void copyBorderSlicesFrom(const NinePieceImage& other)
-    {
-        m_data.access()->borderSlices = other.m_data->borderSlices;
-    }
+  void CopyImageSlicesFrom(const NinePieceImage& other) {
+    data_.Access()->image_slices = other.data_->image_slices;
+    data_.Access()->fill = other.data_->fill;
+  }
 
-    void copyOutsetFrom(const NinePieceImage& other)
-    {
-        m_data.access()->outset = other.m_data->outset;
-    }
+  void CopyBorderSlicesFrom(const NinePieceImage& other) {
+    data_.Access()->border_slices = other.data_->border_slices;
+  }
 
-    void copyRepeatFrom(const NinePieceImage& other)
-    {
-        m_data.access()->horizontalRule = other.m_data->horizontalRule;
-        m_data.access()->verticalRule = other.m_data->verticalRule;
-    }
+  void CopyOutsetFrom(const NinePieceImage& other) {
+    data_.Access()->outset = other.data_->outset;
+  }
 
-    void setMaskDefaults()
-    {
-        m_data.access()->imageSlices = LengthBox(0);
-        m_data.access()->fill = true;
-        m_data.access()->borderSlices = BorderImageLengthBox(Length(Auto));
-    }
+  void CopyRepeatFrom(const NinePieceImage& other) {
+    data_.Access()->horizontal_rule = other.data_->horizontal_rule;
+    data_.Access()->vertical_rule = other.data_->vertical_rule;
+  }
 
-    static LayoutUnit computeOutset(const BorderImageLength& outsetSide, int borderSide)
-    {
-        if (outsetSide.isNumber())
-            return LayoutUnit(outsetSide.number() * borderSide);
-        return LayoutUnit(outsetSide.length().value());
-    }
+  void SetMaskDefaults() {
+    data_.Access()->image_slices = LengthBox(0);
+    data_.Access()->fill = true;
+    data_.Access()->border_slices = BorderImageLengthBox(Length(kAuto));
+  }
 
-private:
-    DataRef<NinePieceImageData> m_data;
+  static LayoutUnit ComputeOutset(const BorderImageLength& outset_side,
+                                  int border_side) {
+    if (outset_side.IsNumber())
+      return LayoutUnit(outset_side.Number() * border_side);
+    return LayoutUnit(outset_side.length().Value());
+  }
+
+ private:
+  DataRef<NinePieceImageData> data_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NinePieceImage_h
+#endif  // NinePieceImage_h

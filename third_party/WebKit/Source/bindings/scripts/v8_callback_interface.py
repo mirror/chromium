@@ -39,7 +39,6 @@ import v8_types
 import v8_utilities
 
 CALLBACK_INTERFACE_H_INCLUDES = frozenset([
-    'bindings/core/v8/ActiveDOMCallback.h',
     'bindings/core/v8/DOMWrapperWorld.h',
     'bindings/core/v8/ScopedPersistent.h',
 ])
@@ -47,9 +46,9 @@ CALLBACK_INTERFACE_CPP_INCLUDES = frozenset([
     'bindings/core/v8/ScriptController.h',
     'bindings/core/v8/V8Binding.h',
     'core/dom/ExecutionContext.h',
-    'wtf/Assertions.h',
-    'wtf/GetPtr.h',
-    'wtf/RefPtr.h',
+    'platform/wtf/Assertions.h',
+    'platform/wtf/GetPtr.h',
+    'platform/wtf/RefPtr.h',
 ])
 
 
@@ -71,7 +70,7 @@ def cpp_type(idl_type):
 IdlTypeBase.callback_cpp_type = property(cpp_type)
 
 
-def callback_interface_context(callback_interface):
+def callback_interface_context(callback_interface, _):
     includes.clear()
     includes.update(CALLBACK_INTERFACE_CPP_INCLUDES)
     return {
@@ -117,8 +116,8 @@ def arguments_context(arguments, call_with_this_handle):
         return {
             'handle': '%sHandle' % argument.name,
             'cpp_value_to_v8_value': argument.idl_type.cpp_value_to_v8_value(
-                argument.name, isolate='m_scriptState->isolate()',
-                creation_context='m_scriptState->context()->Global()'),
+                argument.name, isolate='m_scriptState->GetIsolate()',
+                creation_context='m_scriptState->GetContext()->Global()'),
         }
 
     argument_declarations = ['ScriptValue thisValue'] if call_with_this_handle else []

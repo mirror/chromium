@@ -9,30 +9,34 @@
 #include "core/dom/DOMTypedArray.h"
 #include "device/vr/vr_service.mojom-blink.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class VRStageParameters final : public GarbageCollected<VRStageParameters>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    VRStageParameters();
+class VRStageParameters final : public GarbageCollected<VRStageParameters>,
+                                public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    DOMFloat32Array* sittingToStandingTransform() const { return m_standingTransform; }
+ public:
+  VRStageParameters();
 
-    float sizeX() const { return m_sizeX; }
-    float sizeZ() const { return m_sizeZ; }
+  DOMFloat32Array* sittingToStandingTransform() const {
+    return standing_transform_;
+  }
 
-    void update(const device::blink::VRStageParametersPtr&);
+  float sizeX() const { return size_x_; }
+  float sizeZ() const { return size_z_; }
 
-    DECLARE_VIRTUAL_TRACE()
+  void Update(const device::mojom::blink::VRStageParametersPtr&);
 
-private:
-    Member<DOMFloat32Array> m_standingTransform;
-    float m_sizeX;
-    float m_sizeZ;
+  DECLARE_VIRTUAL_TRACE()
+
+ private:
+  Member<DOMFloat32Array> standing_transform_;
+  float size_x_;
+  float size_z_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // VRStageParameters_h
+#endif  // VRStageParameters_h

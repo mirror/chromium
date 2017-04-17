@@ -9,6 +9,8 @@ chrome.send('getForeignSessions');
 
 /** @type {Promise} */
 var upgradePromise = null;
+/** @type {boolean} */
+var resultsRendered = false;
 
 /**
  * @return {!Promise} Resolves once the history-app has been fully upgraded.
@@ -36,12 +38,14 @@ function waitForAppUpgrade() {
  */
 function historyResult(info, results) {
   waitForAppUpgrade().then(function() {
-    /** @type {HistoryAppElement} */($('history-app'))
-        .historyResult(info, results);
-    // TODO(tsergeant): Showing everything as soon as the list is ready is not
-    // ideal, as the sidebar can still pop in after. Fix this to show everything
-    // at once.
+    var app = /** @type {HistoryAppElement} */ ($('history-app'));
+    app.historyResult(info, results);
     document.body.classList.remove('loading');
+
+    if (!resultsRendered) {
+      resultsRendered = true;
+      app.onFirstRender();
+    }
   });
 }
 
@@ -54,30 +58,24 @@ function historyResult(info, results) {
  */
 function showNotification(
     hasSyncedResults, includeOtherFormsOfBrowsingHistory) {
-  // TODO(msramek): |hasSyncedResults| was used in the old WebUI to show
-  // the message about other signed-in devices. This message does not exist
-  // in the MD history anymore, so the parameter is not needed. Remove it
-  // when WebUI is removed and this becomes the only client of
-  // BrowsingHistoryHandler.
   waitForAppUpgrade().then(function() {
-    /** @type {HistoryAppElement} */($('history-app'))
-        .getSideBar().showFooter = includeOtherFormsOfBrowsingHistory;
+    var app = /** @type {HistoryAppElement} */ ($('history-app'));
+    app.showSidebarFooter = includeOtherFormsOfBrowsingHistory;
+    app.hasSyncedResults = hasSyncedResults;
   });
 }
 
 /**
  * Receives the synced history data. An empty list means that either there are
  * no foreign sessions, or tab sync is disabled for this profile.
- * |isTabSyncEnabled| makes it possible to distinguish between the cases.
  *
  * @param {!Array<!ForeignSession>} sessionList Array of objects describing the
  *     sessions from other devices.
- * @param {boolean} isTabSyncEnabled Is tab sync enabled for this profile?
  */
-function setForeignSessions(sessionList, isTabSyncEnabled) {
+function setForeignSessions(sessionList) {
   waitForAppUpgrade().then(function() {
-    /** @type {HistoryAppElement} */($('history-app'))
-        .setForeignSessions(sessionList, isTabSyncEnabled);
+    /** @type {HistoryAppElement} */ ($('history-app'))
+        .setForeignSessions(sessionList);
   });
 }
 
@@ -85,6 +83,9 @@ function setForeignSessions(sessionList, isTabSyncEnabled) {
  * Called when the history is deleted by someone else.
  */
 function historyDeleted() {
+  waitForAppUpgrade().then(function() {
+    /** @type {HistoryAppElement} */ ($('history-app')).historyDeleted();
+  });
 }
 
 /**
@@ -93,7 +94,9 @@ function historyDeleted() {
  */
 function updateSignInState(isUserSignedIn) {
   waitForAppUpgrade().then(function() {
-    /** @type {HistoryAppElement} */($('history-app'))
-        .updateSignInState(isUserSignedIn);
+    if ($('history-app')) {
+      /** @type {HistoryAppElement} */ ($('history-app'))
+          .updateSignInState(isUserSignedIn);
+    }
   });
 }

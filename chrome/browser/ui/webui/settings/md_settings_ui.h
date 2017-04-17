@@ -14,6 +14,10 @@
 
 class GURL;
 
+namespace user_prefs {
+class PrefRegistrySyncable;
+}
+
 namespace settings {
 
 class SettingsPageUIHandler;
@@ -22,21 +26,20 @@ class SettingsPageUIHandler;
 class MdSettingsUI : public content::WebUIController,
                      public content::WebContentsObserver {
  public:
+  static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
+
   MdSettingsUI(content::WebUI* web_ui, const GURL& url);
   ~MdSettingsUI() override;
 
   // content::WebContentsObserver:
-  void DidStartProvisionalLoadForFrame(
-      content::RenderFrameHost* render_frame_host,
-      const GURL& validated_url,
-      bool is_error_page,
-      bool is_iframe_srcdoc) override;
+  void DidStartNavigation(
+      content::NavigationHandle* navigation_handle) override;
   void DocumentLoadedInFrame(
       content::RenderFrameHost *render_frame_host) override;
   void DocumentOnLoadCompletedInMainFrame() override;
 
  private:
-  void AddSettingsPageUIHandler(SettingsPageUIHandler* handler);
+  void AddSettingsPageUIHandler(std::unique_ptr<SettingsPageUIHandler> handler);
 
   // Weak references; all |handlers_| are owned by |web_ui()|.
   std::unordered_set<SettingsPageUIHandler*> handlers_;

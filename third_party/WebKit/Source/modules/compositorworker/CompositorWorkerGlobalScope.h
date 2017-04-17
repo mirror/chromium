@@ -5,7 +5,6 @@
 #ifndef CompositorWorkerGlobalScope_h
 #define CompositorWorkerGlobalScope_h
 
-#include "core/dom/CompositorProxyClient.h"
 #include "core/dom/FrameRequestCallbackCollection.h"
 #include "core/dom/MessagePort.h"
 #include "core/workers/WorkerGlobalScope.h"
@@ -15,37 +14,55 @@
 namespace blink {
 
 class CompositorWorkerThread;
+class InProcessWorkerObjectProxy;
 class WorkerThreadStartupData;
 
-class MODULES_EXPORT CompositorWorkerGlobalScope final : public WorkerGlobalScope {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static CompositorWorkerGlobalScope* create(CompositorWorkerThread*, std::unique_ptr<WorkerThreadStartupData>, double timeOrigin);
-    ~CompositorWorkerGlobalScope() override;
+class MODULES_EXPORT CompositorWorkerGlobalScope final
+    : public WorkerGlobalScope {
+  DEFINE_WRAPPERTYPEINFO();
 
-    // EventTarget
-    const AtomicString& interfaceName() const override;
+ public:
+  static CompositorWorkerGlobalScope* Create(
+      CompositorWorkerThread*,
+      std::unique_ptr<WorkerThreadStartupData>,
+      double time_origin);
+  ~CompositorWorkerGlobalScope() override;
 
-    void postMessage(ExecutionContext*, PassRefPtr<SerializedScriptValue>, const MessagePortArray&, ExceptionState&);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
+  void Dispose() override;
 
-    int requestAnimationFrame(FrameRequestCallback*);
-    void cancelAnimationFrame(int id);
-    bool executeAnimationFrameCallbacks(double highResTimeMs);
+  // EventTarget
+  const AtomicString& InterfaceName() const override;
 
-    // ExecutionContext:
-    bool isCompositorWorkerGlobalScope() const override { return true; }
+  void postMessage(ScriptState*,
+                   PassRefPtr<SerializedScriptValue>,
+                   const MessagePortArray&,
+                   ExceptionState&);
+  static bool CanTransferArrayBuffersAndImageBitmaps() { return true; }
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
 
-    DECLARE_VIRTUAL_TRACE();
+  int requestAnimationFrame(FrameRequestCallback*);
+  void cancelAnimationFrame(int id);
+  bool ExecuteAnimationFrameCallbacks(double high_res_time_ms);
 
-private:
-    CompositorWorkerGlobalScope(const KURL&, const String& userAgent, CompositorWorkerThread*, double timeOrigin, std::unique_ptr<SecurityOrigin::PrivilegeData>, WorkerClients*);
-    CompositorWorkerThread* thread() const;
+  // ExecutionContext:
+  bool IsCompositorWorkerGlobalScope() const override { return true; }
 
-    bool m_executingAnimationFrameCallbacks;
-    FrameRequestCallbackCollection m_callbackCollection;
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  CompositorWorkerGlobalScope(const KURL&,
+                              const String& user_agent,
+                              CompositorWorkerThread*,
+                              double time_origin,
+                              std::unique_ptr<SecurityOrigin::PrivilegeData>,
+                              WorkerClients*);
+
+  InProcessWorkerObjectProxy& WorkerObjectProxy() const;
+
+  bool executing_animation_frame_callbacks_;
+  FrameRequestCallbackCollection callback_collection_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CompositorWorkerGlobalScope_h
+#endif  // CompositorWorkerGlobalScope_h

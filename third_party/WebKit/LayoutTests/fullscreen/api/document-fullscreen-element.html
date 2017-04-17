@@ -2,7 +2,7 @@
 <title>Document.fullscreenElement</title>
 <script src="../../resources/testharness.js"></script>
 <script src="../../resources/testharnessreport.js"></script>
-<script src="../trusted-event.js"></script>
+<script src="../trusted-click.js"></script>
 <div id="log"></div>
 <script>
 async_test(function(t)
@@ -13,7 +13,8 @@ async_test(function(t)
     {
         assert_equals(document.fullscreenElement, div, "fullscreenElement before exitFullscreen()");
         document.exitFullscreen();
-        // FIXME: per spec fullscreenElement should still be div
+        // TODO(foolip): fullscreenElement should still be div.
+        // https://crbug.com/402421
         assert_equals(document.fullscreenElement, null, "fullscreenElement after exitFullscreen()");
 
         document.onfullscreenchange = t.step_func(function()
@@ -23,11 +24,12 @@ async_test(function(t)
         });
     });
 
-    trusted_event(t.step_func(function()
+    trusted_click(t.step_func(function()
     {
         assert_equals(document.fullscreenElement, null, "fullscreenElement before requestFullscreen()");
         div.requestFullscreen();
-        // FIXME: per spec fullscreenElement should still be null
+        // TODO(foolip): fullscreenElement should still be null.
+        // https://crbug.com/402421
         assert_equals(document.fullscreenElement, div, "fullscreenElement after requestFullscreen()");
     }), document.body);
 });

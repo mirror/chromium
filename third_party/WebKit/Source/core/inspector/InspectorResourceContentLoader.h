@@ -6,57 +6,58 @@
 #define InspectorResourceContentLoader_h
 
 #include "core/CoreExport.h"
-#include "core/fetch/Resource.h"
-#include "wtf/Functional.h"
-#include "wtf/HashMap.h"
-#include "wtf/HashSet.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/Vector.h"
+#include "platform/loader/fetch/Resource.h"
+#include "platform/wtf/Functional.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class LocalFrame;
 class Resource;
 
-class CORE_EXPORT InspectorResourceContentLoader final : public GarbageCollectedFinalized<InspectorResourceContentLoader> {
-    WTF_MAKE_NONCOPYABLE(InspectorResourceContentLoader);
-public:
-    static InspectorResourceContentLoader* create(LocalFrame* inspectedFrame)
-    {
-        return new InspectorResourceContentLoader(inspectedFrame);
-    }
-    ~InspectorResourceContentLoader();
-    void dispose();
-    DECLARE_TRACE();
+class CORE_EXPORT InspectorResourceContentLoader final
+    : public GarbageCollectedFinalized<InspectorResourceContentLoader> {
+  WTF_MAKE_NONCOPYABLE(InspectorResourceContentLoader);
 
-    int createClientId();
-    void ensureResourcesContentLoaded(int clientId, std::unique_ptr<WTF::Closure> callback);
-    void cancel(int clientId);
-    void didCommitLoadForLocalFrame(LocalFrame*);
+ public:
+  static InspectorResourceContentLoader* Create(LocalFrame* inspected_frame) {
+    return new InspectorResourceContentLoader(inspected_frame);
+  }
+  ~InspectorResourceContentLoader();
+  void Dispose();
+  DECLARE_TRACE();
 
-private:
-    class ResourceClient;
+  int CreateClientId();
+  void EnsureResourcesContentLoaded(int client_id,
+                                    std::unique_ptr<WTF::Closure> callback);
+  void Cancel(int client_id);
+  void DidCommitLoadForLocalFrame(LocalFrame*);
 
-    explicit InspectorResourceContentLoader(LocalFrame*);
-    void resourceFinished(ResourceClient*);
-    void checkDone();
-    void start();
-    void stop();
-    bool hasFinished();
+ private:
+  class ResourceClient;
 
-    using Callbacks = Vector<std::unique_ptr<WTF::Closure>>;
-    HashMap<int, Callbacks> m_callbacks;
-    bool m_allRequestsStarted;
-    bool m_started;
-    Member<LocalFrame> m_inspectedFrame;
-    HeapHashSet<Member<ResourceClient>> m_pendingResourceClients;
-    HeapVector<Member<Resource>> m_resources;
-    int m_lastClientId;
+  explicit InspectorResourceContentLoader(LocalFrame*);
+  void ResourceFinished(ResourceClient*);
+  void CheckDone();
+  void Start();
+  void Stop();
+  bool HasFinished();
 
-    friend class ResourceClient;
+  using Callbacks = Vector<std::unique_ptr<WTF::Closure>>;
+  HashMap<int, Callbacks> callbacks_;
+  bool all_requests_started_;
+  bool started_;
+  Member<LocalFrame> inspected_frame_;
+  HeapHashSet<Member<ResourceClient>> pending_resource_clients_;
+  HeapVector<Member<Resource>> resources_;
+  int last_client_id_;
+
+  friend class ResourceClient;
 };
 
-} // namespace blink
+}  // namespace blink
 
-
-#endif // !defined(InspectorResourceContentLoader_h)
+#endif  // !defined(InspectorResourceContentLoader_h)

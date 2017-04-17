@@ -37,35 +37,31 @@
 #include "core/frame/UseCounter.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "modules/mediastream/MediaTrackConstraints.h"
-#include "platform/Logging.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "wtf/Assertions.h"
-#include "wtf/HashMap.h"
-#include "wtf/Vector.h"
-#include "wtf/text/StringHash.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/StringHash.h"
 
 namespace blink {
 
-
 namespace MediaConstraintsImpl {
+
+// A naked value is treated as an "ideal" value in the basic constraints,
+// but as an exact value in "advanced" constraints.
+// https://w3c.github.io/mediacapture-main/#constrainable-interface
+enum class NakedValueDisposition { kTreatAsIdeal, kTreatAsExact };
 
 // Old type/value form of constraint. Used in parsing old-style constraints.
 struct NameValueStringConstraint {
-    NameValueStringConstraint()
-    {
-    }
+  NameValueStringConstraint() {}
 
-    NameValueStringConstraint(WebString name, WebString value)
-        : m_name(name)
-        , m_value(value)
-    {
-    }
+  NameValueStringConstraint(WebString name, WebString value)
+      : name_(name), value_(value) {}
 
-    WebString m_name;
-    WebString m_value;
+  WebString name_;
+  WebString value_;
 };
-
-
 
 // Legal constraint names.
 // Temporary Note: Comments about source are where they are copied from.
@@ -84,14 +80,17 @@ const char kMaxFrameRate[] = "maxFrameRate";
 const char kMinFrameRate[] = "minFrameRate";
 // From content/common/media/media_stream_options.cc
 const char kMediaStreamSource[] = "chromeMediaSource";
-const char kMediaStreamSourceId[] = "chromeMediaSourceId"; // mapped to deviceId
-const char kMediaStreamSourceInfoId[] = "sourceId"; // mapped to deviceId
-const char kMediaStreamRenderToAssociatedSink[] = "chromeRenderToAssociatedSink";
+const char kMediaStreamSourceId[] =
+    "chromeMediaSourceId";                           // mapped to deviceId
+const char kMediaStreamSourceInfoId[] = "sourceId";  // mapped to deviceId
+const char kMediaStreamRenderToAssociatedSink[] =
+    "chromeRenderToAssociatedSink";
 // RenderToAssociatedSink will be going away in M50-M60 some time.
 const char kMediaStreamAudioHotword[] = "googHotword";
 // TODO(hta): googHotword should go away. https://crbug.com/577627
 // From content/renderer/media/media_stream_audio_processor_options.cc
 const char kEchoCancellation[] = "echoCancellation";
+const char kDisableLocalEcho[] = "disableLocalEcho";
 const char kGoogEchoCancellation[] = "googEchoCancellation";
 const char kGoogExperimentalEchoCancellation[] = "googEchoCancellation2";
 const char kGoogAutoGainControl[] = "googAutoGainControl";
@@ -104,15 +103,11 @@ const char kGoogHighpassFilter[] = "googHighpassFilter";
 const char kGoogTypingNoiseDetection[] = "googTypingNoiseDetection";
 const char kGoogAudioMirroring[] = "googAudioMirroring";
 
-// From third_party/libjingle/source/talk/app/webrtc/mediaconstraintsinterface.cc
+// From
+// third_party/libjingle/source/talk/app/webrtc/mediaconstraintsinterface.cc
+
 // Audio constraints.
-// const char kExtendedFilterEchoCancellation[] = "googEchoCancellation2"; // duplicate k-name
 const char kDAEchoCancellation[] = "googDAEchoCancellation";
-// const char kNoiseSuppression[] = "googNoiseSuppression"; // duplicate k-name
-// const char kExperimentalNoiseSuppression[] = "googNoiseSuppression2"; // duplicate k-name
-// const char kHighpassFilter[] = "googHighpassFilter"; // duplicate k-name
-// const char kTypingNoiseDetection[] = "googTypingNoiseDetection"; // duplicate k-name
-// const char kAudioMirroring[] = "googAudioMirroring"; // duplicate k-name
 
 // Google-specific constraint keys for a local video source (getUserMedia).
 const char kNoiseReduction[] = "googNoiseReduction";
@@ -128,6 +123,7 @@ const char kUseRtpMux[] = "googUseRtpMUX";
 const char kEnableDtlsSrtp[] = "DtlsSrtpKeyAgreement";
 const char kEnableRtpDataChannels[] = "RtpDataChannels";
 // Google-specific constraint keys.
+// TODO(hta): These need to be made standard or deleted. crbug.com/605673
 const char kEnableDscp[] = "googDscp";
 const char kEnableIPv6[] = "googIPv6";
 const char kEnableVideoSuspendBelowMinBitrate[] = "googSuspendBelowMinBitrate";
@@ -137,7 +133,8 @@ const char kScreencastMinBitrate[] = "googScreencastMinBitrate";
 const char kCpuOveruseDetection[] = "googCpuOveruseDetection";
 const char kCpuUnderuseThreshold[] = "googCpuUnderuseThreshold";
 const char kCpuOveruseThreshold[] = "googCpuOveruseThreshold";
-const char kCpuUnderuseEncodeRsdThreshold[] = "googCpuUnderuseEncodeRsdThreshold";
+const char kCpuUnderuseEncodeRsdThreshold[] =
+    "googCpuUnderuseEncodeRsdThreshold";
 const char kCpuOveruseEncodeRsdThreshold[] = "googCpuOveruseEncodeRsdThreshold";
 const char kCpuOveruseEncodeUsage[] = "googCpuOveruseEncodeUsage";
 const char kHighStartBitrate[] = "googHighStartBitrate";
@@ -152,624 +149,810 @@ const char kAudioLatency[] = "latencyMs";
 // https://crbug.com/579729
 const char kGoogLeakyBucket[] = "googLeakyBucket";
 const char kPowerLineFrequency[] = "googPowerLineFrequency";
+// mediacapture-depth: videoKind key and VideoKindEnum values.
+const char kVideoKind[] = "videoKind";
+const char kVideoKindColor[] = "color";
+const char kVideoKindDepth[] = "depth";
 // Names used for testing.
 const char kTestConstraint1[] = "valid_and_supported_1";
 const char kTestConstraint2[] = "valid_and_supported_2";
 
-static bool parseMandatoryConstraintsDictionary(const Dictionary& mandatoryConstraintsDictionary, Vector<NameValueStringConstraint>& mandatory)
-{
-    HashMap<String, String> mandatoryConstraintsHashMap;
-    bool ok = mandatoryConstraintsDictionary.getOwnPropertiesAsStringHashMap(mandatoryConstraintsHashMap);
-    if (!ok)
-        return false;
+static bool ParseMandatoryConstraintsDictionary(
+    const Dictionary& mandatory_constraints_dictionary,
+    Vector<NameValueStringConstraint>& mandatory) {
+  DummyExceptionStateForTesting exception_state;
+  const HashMap<String, String>& mandatory_constraints_hash_map =
+      mandatory_constraints_dictionary.GetOwnPropertiesAsStringHashMap(
+          exception_state);
+  if (exception_state.HadException())
+    return false;
 
-    for (const auto& iter : mandatoryConstraintsHashMap)
-        mandatory.append(NameValueStringConstraint(iter.key, iter.value));
-    return true;
+  for (const auto& iter : mandatory_constraints_hash_map)
+    mandatory.push_back(NameValueStringConstraint(iter.key, iter.value));
+  return true;
 }
 
-static bool parseOptionalConstraintsVectorElement(const Dictionary& constraint, Vector<NameValueStringConstraint>& optionalConstraintsVector)
-{
-    Vector<String> localNames;
-    bool ok = constraint.getPropertyNames(localNames);
-    if (!ok)
-        return false;
-    if (localNames.size() != 1)
-        return false;
-    const String& key = localNames[0];
-    String value;
-    ok = DictionaryHelper::get(constraint, key, value);
-    if (!ok)
-        return false;
-    optionalConstraintsVector.append(NameValueStringConstraint(key, value));
-    return true;
+static bool ParseOptionalConstraintsVectorElement(
+    const Dictionary& constraint,
+    Vector<NameValueStringConstraint>& optional_constraints_vector) {
+  DummyExceptionStateForTesting exception_state;
+  const Vector<String>& local_names =
+      constraint.GetPropertyNames(exception_state);
+  if (exception_state.HadException())
+    return false;
+  if (local_names.size() != 1)
+    return false;
+  const String& key = local_names[0];
+  String value;
+  bool ok = DictionaryHelper::Get(constraint, key, value);
+  if (!ok)
+    return false;
+  optional_constraints_vector.push_back(NameValueStringConstraint(key, value));
+  return true;
 }
 
 // Old style parser. Deprecated.
-static bool parse(const Dictionary& constraintsDictionary, Vector<NameValueStringConstraint>& optional, Vector<NameValueStringConstraint>& mandatory)
-{
-    if (constraintsDictionary.isUndefinedOrNull())
-        return true;
+static bool Parse(const Dictionary& constraints_dictionary,
+                  Vector<NameValueStringConstraint>& optional,
+                  Vector<NameValueStringConstraint>& mandatory) {
+  if (constraints_dictionary.IsUndefinedOrNull())
+    return true;
 
-    Vector<String> names;
-    bool ok = constraintsDictionary.getPropertyNames(names);
+  DummyExceptionStateForTesting exception_state;
+  const Vector<String>& names =
+      constraints_dictionary.GetPropertyNames(exception_state);
+  if (exception_state.HadException())
+    return false;
+
+  String mandatory_name("mandatory");
+  String optional_name("optional");
+
+  for (const auto& name : names) {
+    if (name != mandatory_name && name != optional_name)
+      return false;
+  }
+
+  if (names.Contains(mandatory_name)) {
+    Dictionary mandatory_constraints_dictionary;
+    bool ok = constraints_dictionary.Get(mandatory_name,
+                                         mandatory_constraints_dictionary);
+    if (!ok || mandatory_constraints_dictionary.IsUndefinedOrNull())
+      return false;
+    ok = ParseMandatoryConstraintsDictionary(mandatory_constraints_dictionary,
+                                             mandatory);
     if (!ok)
+      return false;
+  }
+
+  if (names.Contains(optional_name)) {
+    ArrayValue optional_constraints;
+    bool ok = DictionaryHelper::Get(constraints_dictionary, optional_name,
+                                    optional_constraints);
+    if (!ok || optional_constraints.IsUndefinedOrNull())
+      return false;
+
+    size_t number_of_constraints;
+    ok = optional_constraints.length(number_of_constraints);
+    if (!ok)
+      return false;
+
+    for (size_t i = 0; i < number_of_constraints; ++i) {
+      Dictionary constraint;
+      ok = optional_constraints.Get(i, constraint);
+      if (!ok || constraint.IsUndefinedOrNull())
         return false;
-
-    String mandatoryName("mandatory");
-    String optionalName("optional");
-
-    for (Vector<String>::iterator it = names.begin(); it != names.end(); ++it) {
-        if (*it != mandatoryName && *it != optionalName)
-            return false;
+      ok = ParseOptionalConstraintsVectorElement(constraint, optional);
+      if (!ok)
+        return false;
     }
+  }
 
-    if (names.contains(mandatoryName)) {
-        Dictionary mandatoryConstraintsDictionary;
-        bool ok = constraintsDictionary.get(mandatoryName, mandatoryConstraintsDictionary);
-        if (!ok || mandatoryConstraintsDictionary.isUndefinedOrNull())
-            return false;
-        ok = parseMandatoryConstraintsDictionary(mandatoryConstraintsDictionary, mandatory);
-        if (!ok)
-            return false;
-    }
-
-    if (names.contains(optionalName)) {
-        ArrayValue optionalConstraints;
-        bool ok = DictionaryHelper::get(constraintsDictionary, optionalName, optionalConstraints);
-        if (!ok || optionalConstraints.isUndefinedOrNull())
-            return false;
-
-        size_t numberOfConstraints;
-        ok = optionalConstraints.length(numberOfConstraints);
-        if (!ok)
-            return false;
-
-        for (size_t i = 0; i < numberOfConstraints; ++i) {
-            Dictionary constraint;
-            ok = optionalConstraints.get(i, constraint);
-            if (!ok || constraint.isUndefinedOrNull())
-                return false;
-            ok = parseOptionalConstraintsVectorElement(constraint, optional);
-            if (!ok)
-                return false;
-        }
-    }
-
-    return true;
+  return true;
 }
 
-static bool parse(const MediaTrackConstraints& constraintsIn, Vector<NameValueStringConstraint>& optional, Vector<NameValueStringConstraint>& mandatory)
-{
-    Vector<NameValueStringConstraint> mandatoryConstraintsVector;
-    if (constraintsIn.hasMandatory()) {
-        bool ok = parseMandatoryConstraintsDictionary(constraintsIn.mandatory(), mandatory);
-        if (!ok)
-            return false;
-    }
+static bool Parse(const MediaTrackConstraints& constraints_in,
+                  Vector<NameValueStringConstraint>& optional,
+                  Vector<NameValueStringConstraint>& mandatory) {
+  Vector<NameValueStringConstraint> mandatory_constraints_vector;
+  if (constraints_in.hasMandatory()) {
+    bool ok = ParseMandatoryConstraintsDictionary(constraints_in.mandatory(),
+                                                  mandatory);
+    if (!ok)
+      return false;
+  }
 
-    if (constraintsIn.hasOptional()) {
-        const Vector<Dictionary>& optionalConstraints = constraintsIn.optional();
+  if (constraints_in.hasOptional()) {
+    const Vector<Dictionary>& optional_constraints = constraints_in.optional();
 
-        for (const auto& constraint : optionalConstraints) {
-            if (constraint.isUndefinedOrNull())
-                return false;
-            bool ok = parseOptionalConstraintsVectorElement(constraint, optional);
-            if (!ok)
-                return false;
-        }
+    for (const auto& constraint : optional_constraints) {
+      if (constraint.IsUndefinedOrNull())
+        return false;
+      bool ok = ParseOptionalConstraintsVectorElement(constraint, optional);
+      if (!ok)
+        return false;
     }
-    return true;
+  }
+  return true;
 }
 
-static bool toBoolean(const WebString& asWebString)
-{
-    return asWebString.equals("true");
-    // TODO(hta): Check against "false" and return error if it's neither.
-    // https://crbug.com/576582
+static bool ToBoolean(const WebString& as_web_string) {
+  return as_web_string.Equals("true");
+  // TODO(hta): Check against "false" and return error if it's neither.
+  // https://crbug.com/576582
 }
 
-static void parseOldStyleNames(ExecutionContext* context, const Vector<NameValueStringConstraint>& oldNames, bool reportUnknownNames, WebMediaTrackConstraintSet& result, MediaErrorState& errorState)
-{
-    for (const NameValueStringConstraint& constraint : oldNames) {
-        if (constraint.m_name.equals(kMinAspectRatio)) {
-            result.aspectRatio.setMin(atof(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kMaxAspectRatio)) {
-            result.aspectRatio.setMax(atof(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kMaxWidth)) {
-            result.width.setMax(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kMinWidth)) {
-            result.width.setMin(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kMaxHeight)) {
-            result.height.setMax(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kMinHeight)) {
-            result.height.setMin(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kMinFrameRate)) {
-            result.frameRate.setMin(atof(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kMaxFrameRate)) {
-            result.frameRate.setMax(atof(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kEchoCancellation)) {
-            result.echoCancellation.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kMediaStreamSource)) {
-            // TODO(hta): This has only a few legal values. Should be
-            // represented as an enum, and cause type errors.
-            // https://crbug.com/576582
-            result.mediaStreamSource.setExact(constraint.m_value);
-        } else if (constraint.m_name.equals(kMediaStreamSourceId)
-            || constraint.m_name.equals(kMediaStreamSourceInfoId)) {
-            result.deviceId.setExact(constraint.m_value);
-        } else if (constraint.m_name.equals(kMediaStreamRenderToAssociatedSink)) {
-            // TODO(hta): This is a boolean represented as string.
-            // Should give TypeError when it's not parseable.
-            // https://crbug.com/576582
-            result.renderToAssociatedSink.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kMediaStreamAudioHotword)) {
-            result.hotwordEnabled.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kGoogEchoCancellation)) {
-            result.googEchoCancellation.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kGoogExperimentalEchoCancellation)) {
-            result.googExperimentalEchoCancellation.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kGoogAutoGainControl)) {
-            result.googAutoGainControl.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kGoogExperimentalAutoGainControl)) {
-            result.googExperimentalAutoGainControl.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kGoogNoiseSuppression)) {
-            result.googNoiseSuppression.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kGoogExperimentalNoiseSuppression)) {
-            result.googExperimentalNoiseSuppression.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kGoogBeamforming)) {
-            result.googBeamforming.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kGoogArrayGeometry)) {
-            result.googArrayGeometry.setExact(constraint.m_value);
-        } else if (constraint.m_name.equals(kGoogHighpassFilter)) {
-            result.googHighpassFilter.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kGoogTypingNoiseDetection)) {
-            result.googTypingNoiseDetection.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kGoogAudioMirroring)) {
-            result.googAudioMirroring.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kDAEchoCancellation)) {
-            result.googDAEchoCancellation.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kNoiseReduction)) {
-            result.googNoiseReduction.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kOfferToReceiveAudio)) {
-            // This constraint has formerly been defined both as a boolean
-            // and as an integer. Allow both forms.
-            if (constraint.m_value.equals("true"))
-                result.offerToReceiveAudio.setExact(1);
-            else if (constraint.m_value.equals("false"))
-                result.offerToReceiveAudio.setExact(0);
-            else
-                result.offerToReceiveAudio.setExact(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kOfferToReceiveVideo)) {
-            // This constraint has formerly been defined both as a boolean
-            // and as an integer. Allow both forms.
-            if (constraint.m_value.equals("true"))
-                result.offerToReceiveVideo.setExact(1);
-            else if (constraint.m_value.equals("false"))
-                result.offerToReceiveVideo.setExact(0);
-            else
-                result.offerToReceiveVideo.setExact(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kVoiceActivityDetection)) {
-            result.voiceActivityDetection.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kIceRestart)) {
-            result.iceRestart.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kUseRtpMux)) {
-            result.googUseRtpMux.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kEnableDtlsSrtp)) {
-            result.enableDtlsSrtp.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kEnableRtpDataChannels)) {
-            result.enableRtpDataChannels.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kEnableDscp)) {
-            result.enableDscp.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kEnableIPv6)) {
-            result.enableIPv6.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kEnableVideoSuspendBelowMinBitrate)) {
-            result.googEnableVideoSuspendBelowMinBitrate.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kNumUnsignalledRecvStreams)) {
-            result.googNumUnsignalledRecvStreams.setExact(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kCombinedAudioVideoBwe)) {
-            result.googCombinedAudioVideoBwe.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kScreencastMinBitrate)) {
-            result.googScreencastMinBitrate.setExact(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kCpuOveruseDetection)) {
-            result.googCpuOveruseDetection.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kCpuUnderuseThreshold)) {
-            result.googCpuUnderuseThreshold.setExact(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kCpuOveruseThreshold)) {
-            result.googCpuOveruseThreshold.setExact(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kCpuUnderuseEncodeRsdThreshold)) {
-            result.googCpuUnderuseEncodeRsdThreshold.setExact(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kCpuOveruseEncodeRsdThreshold)) {
-            result.googCpuOveruseEncodeRsdThreshold.setExact(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kCpuOveruseEncodeUsage)) {
-            result.googCpuOveruseEncodeUsage.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kHighStartBitrate)) {
-            result.googHighStartBitrate.setExact(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kPayloadPadding)) {
-            result.googPayloadPadding.setExact(toBoolean(constraint.m_value));
-        } else if (constraint.m_name.equals(kAudioLatency)) {
-            result.googLatencyMs.setExact(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kPowerLineFrequency)) {
-            result.googPowerLineFrequency.setExact(atoi(constraint.m_value.utf8().c_str()));
-        } else if (constraint.m_name.equals(kGoogLeakyBucket)) {
-            context->addConsoleMessage(ConsoleMessage::create(DeprecationMessageSource, WarningMessageLevel,
-                "Obsolete constraint named " + String(constraint.m_name)
-                + " is ignored. Please stop using it."));
-        } else if (constraint.m_name.equals(kTestConstraint1)
-            || constraint.m_name.equals(kTestConstraint2)) {
-            // These constraints are only for testing parsing.
-            // Values 0 and 1 are legal, all others are a ConstraintError.
-            if (!constraint.m_value.equals("0") && !constraint.m_value.equals("1")) {
-                errorState.throwConstraintError("Illegal value for constraint", constraint.m_name);
-            }
-        } else {
-            if (reportUnknownNames) {
-                // TODO(hta): UMA stats for unknown constraints passed.
-                // https://crbug.com/576613
-                context->addConsoleMessage(
-                    ConsoleMessage::create(
-                        DeprecationMessageSource,
-                        WarningMessageLevel,
-                        "Unknown constraint named "
-                        + String(constraint.m_name) + " rejected"));
-                errorState.throwConstraintError("Unknown name of constraint detected", constraint.m_name);
-            }
-        }
+static void ParseOldStyleNames(
+    ExecutionContext* context,
+    const Vector<NameValueStringConstraint>& old_names,
+    bool report_unknown_names,
+    WebMediaTrackConstraintSet& result,
+    MediaErrorState& error_state) {
+  for (const NameValueStringConstraint& constraint : old_names) {
+    if (constraint.name_.Equals(kMinAspectRatio)) {
+      result.aspect_ratio.SetMin(atof(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kMaxAspectRatio)) {
+      result.aspect_ratio.SetMax(atof(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kMaxWidth)) {
+      result.width.SetMax(atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kMinWidth)) {
+      result.width.SetMin(atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kMaxHeight)) {
+      result.height.SetMax(atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kMinHeight)) {
+      result.height.SetMin(atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kMinFrameRate)) {
+      result.frame_rate.SetMin(atof(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kMaxFrameRate)) {
+      result.frame_rate.SetMax(atof(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kEchoCancellation)) {
+      result.echo_cancellation.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kMediaStreamSource)) {
+      // TODO(hta): This has only a few legal values. Should be
+      // represented as an enum, and cause type errors.
+      // https://crbug.com/576582
+      result.media_stream_source.SetExact(constraint.value_);
+    } else if (constraint.name_.Equals(kDisableLocalEcho) &&
+               RuntimeEnabledFeatures::
+                   desktopCaptureDisableLocalEchoControlEnabled()) {
+      result.disable_local_echo.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kMediaStreamSourceId) ||
+               constraint.name_.Equals(kMediaStreamSourceInfoId)) {
+      result.device_id.SetExact(constraint.value_);
+    } else if (constraint.name_.Equals(kMediaStreamRenderToAssociatedSink)) {
+      // TODO(hta): This is a boolean represented as string.
+      // Should give TypeError when it's not parseable.
+      // https://crbug.com/576582
+      result.render_to_associated_sink.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kMediaStreamAudioHotword)) {
+      result.hotword_enabled.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kGoogEchoCancellation)) {
+      result.goog_echo_cancellation.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kGoogExperimentalEchoCancellation)) {
+      result.goog_experimental_echo_cancellation.SetExact(
+          ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kGoogAutoGainControl)) {
+      result.goog_auto_gain_control.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kGoogExperimentalAutoGainControl)) {
+      result.goog_experimental_auto_gain_control.SetExact(
+          ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kGoogNoiseSuppression)) {
+      result.goog_noise_suppression.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kGoogExperimentalNoiseSuppression)) {
+      result.goog_experimental_noise_suppression.SetExact(
+          ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kGoogBeamforming)) {
+      result.goog_beamforming.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kGoogArrayGeometry)) {
+      result.goog_array_geometry.SetExact(constraint.value_);
+    } else if (constraint.name_.Equals(kGoogHighpassFilter)) {
+      result.goog_highpass_filter.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kGoogTypingNoiseDetection)) {
+      result.goog_typing_noise_detection.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kGoogAudioMirroring)) {
+      result.goog_audio_mirroring.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kDAEchoCancellation)) {
+      result.goog_da_echo_cancellation.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kNoiseReduction)) {
+      result.goog_noise_reduction.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kOfferToReceiveAudio)) {
+      // This constraint has formerly been defined both as a boolean
+      // and as an integer. Allow both forms.
+      if (constraint.value_.Equals("true"))
+        result.offer_to_receive_audio.SetExact(1);
+      else if (constraint.value_.Equals("false"))
+        result.offer_to_receive_audio.SetExact(0);
+      else
+        result.offer_to_receive_audio.SetExact(
+            atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kOfferToReceiveVideo)) {
+      // This constraint has formerly been defined both as a boolean
+      // and as an integer. Allow both forms.
+      if (constraint.value_.Equals("true"))
+        result.offer_to_receive_video.SetExact(1);
+      else if (constraint.value_.Equals("false"))
+        result.offer_to_receive_video.SetExact(0);
+      else
+        result.offer_to_receive_video.SetExact(
+            atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kVoiceActivityDetection)) {
+      result.voice_activity_detection.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kIceRestart)) {
+      result.ice_restart.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kUseRtpMux)) {
+      result.goog_use_rtp_mux.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kEnableDtlsSrtp)) {
+      result.enable_dtls_srtp.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kEnableRtpDataChannels)) {
+      result.enable_rtp_data_channels.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kEnableDscp)) {
+      result.enable_dscp.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kEnableIPv6)) {
+      result.enable_i_pv6.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kEnableVideoSuspendBelowMinBitrate)) {
+      result.goog_enable_video_suspend_below_min_bitrate.SetExact(
+          ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kNumUnsignalledRecvStreams)) {
+      result.goog_num_unsignalled_recv_streams.SetExact(
+          atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kCombinedAudioVideoBwe)) {
+      result.goog_combined_audio_video_bwe.SetExact(
+          ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kScreencastMinBitrate)) {
+      result.goog_screencast_min_bitrate.SetExact(
+          atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kCpuOveruseDetection)) {
+      result.goog_cpu_overuse_detection.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kCpuUnderuseThreshold)) {
+      result.goog_cpu_underuse_threshold.SetExact(
+          atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kCpuOveruseThreshold)) {
+      result.goog_cpu_overuse_threshold.SetExact(
+          atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kCpuUnderuseEncodeRsdThreshold)) {
+      result.goog_cpu_underuse_encode_rsd_threshold.SetExact(
+          atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kCpuOveruseEncodeRsdThreshold)) {
+      result.goog_cpu_overuse_encode_rsd_threshold.SetExact(
+          atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kCpuOveruseEncodeUsage)) {
+      result.goog_cpu_overuse_encode_usage.SetExact(
+          ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kHighStartBitrate)) {
+      result.goog_high_start_bitrate.SetExact(
+          atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kPayloadPadding)) {
+      result.goog_payload_padding.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kAudioLatency)) {
+      result.goog_latency_ms.SetExact(atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kPowerLineFrequency)) {
+      result.goog_power_line_frequency.SetExact(
+          atoi(constraint.value_.Utf8().c_str()));
+    } else if (constraint.name_.Equals(kGoogLeakyBucket)) {
+      context->AddConsoleMessage(ConsoleMessage::Create(
+          kDeprecationMessageSource, kWarningMessageLevel,
+          "Obsolete constraint named " + String(constraint.name_) +
+              " is ignored. Please stop using it."));
+    } else if (constraint.name_.Equals(kVideoKind)) {
+      if (!constraint.value_.Equals(kVideoKindColor) &&
+          !constraint.value_.Equals(kVideoKindDepth)) {
+        error_state.ThrowConstraintError("Illegal value for constraint",
+                                         constraint.name_);
+      } else {
+        result.video_kind.SetExact(constraint.value_);
+      }
+    } else if (constraint.name_.Equals(kTestConstraint1) ||
+               constraint.name_.Equals(kTestConstraint2)) {
+      // These constraints are only for testing parsing.
+      // Values 0 and 1 are legal, all others are a ConstraintError.
+      if (!constraint.value_.Equals("0") && !constraint.value_.Equals("1")) {
+        error_state.ThrowConstraintError("Illegal value for constraint",
+                                         constraint.name_);
+      }
+    } else {
+      if (report_unknown_names) {
+        // TODO(hta): UMA stats for unknown constraints passed.
+        // https://crbug.com/576613
+        context->AddConsoleMessage(ConsoleMessage::Create(
+            kDeprecationMessageSource, kWarningMessageLevel,
+            "Unknown constraint named " + String(constraint.name_) +
+                " rejected"));
+        error_state.ThrowConstraintError("Unknown name of constraint detected",
+                                         constraint.name_);
+      }
     }
+  }
 }
 
-static WebMediaConstraints createFromNamedConstraints(ExecutionContext* context, Vector<NameValueStringConstraint>& mandatory, const Vector<NameValueStringConstraint>& optional, MediaErrorState& errorState)
-{
-    WebMediaTrackConstraintSet basic;
-    WebMediaTrackConstraintSet advanced;
-    WebMediaConstraints constraints;
-    parseOldStyleNames(context, mandatory, true, basic, errorState);
-    if (errorState.hadException())
-        return constraints;
-    // We ignore unknow names and syntax errors in optional constraints.
-    MediaErrorState ignoredErrorState;
-    Vector<WebMediaTrackConstraintSet> advancedVector;
-    for (const auto& optionalConstraint : optional) {
-        WebMediaTrackConstraintSet advancedElement;
-        Vector<NameValueStringConstraint> elementAsList(1, optionalConstraint);
-        parseOldStyleNames(context, elementAsList, false, advancedElement, ignoredErrorState);
-        if (!advancedElement.isEmpty())
-            advancedVector.append(advancedElement);
-    }
-    constraints.initialize(basic, advancedVector);
+static WebMediaConstraints CreateFromNamedConstraints(
+    ExecutionContext* context,
+    Vector<NameValueStringConstraint>& mandatory,
+    const Vector<NameValueStringConstraint>& optional,
+    MediaErrorState& error_state) {
+  WebMediaTrackConstraintSet basic;
+  WebMediaTrackConstraintSet advanced;
+  WebMediaConstraints constraints;
+  ParseOldStyleNames(context, mandatory, true, basic, error_state);
+  if (error_state.HadException())
     return constraints;
+  // We ignore unknow names and syntax errors in optional constraints.
+  MediaErrorState ignored_error_state;
+  Vector<WebMediaTrackConstraintSet> advanced_vector;
+  for (const auto& optional_constraint : optional) {
+    WebMediaTrackConstraintSet advanced_element;
+    Vector<NameValueStringConstraint> element_as_list(1, optional_constraint);
+    ParseOldStyleNames(context, element_as_list, false, advanced_element,
+                       ignored_error_state);
+    if (!advanced_element.IsEmpty())
+      advanced_vector.push_back(advanced_element);
+  }
+  constraints.Initialize(basic, advanced_vector);
+  return constraints;
 }
 
 // Deprecated.
-WebMediaConstraints create(ExecutionContext* context, const Dictionary& constraintsDictionary, MediaErrorState& errorState)
-{
+WebMediaConstraints Create(ExecutionContext* context,
+                           const Dictionary& constraints_dictionary,
+                           MediaErrorState& error_state) {
+  Vector<NameValueStringConstraint> optional;
+  Vector<NameValueStringConstraint> mandatory;
+  if (!Parse(constraints_dictionary, optional, mandatory)) {
+    error_state.ThrowTypeError("Malformed constraints object.");
+    return WebMediaConstraints();
+  }
+  UseCounter::Count(context, UseCounter::kMediaStreamConstraintsFromDictionary);
+  return CreateFromNamedConstraints(context, mandatory, optional, error_state);
+}
+
+void CopyLongConstraint(const LongOrConstrainLongRange& blink_union_form,
+                        NakedValueDisposition naked_treatment,
+                        LongConstraint& web_form) {
+  if (blink_union_form.isLong()) {
+    switch (naked_treatment) {
+      case NakedValueDisposition::kTreatAsIdeal:
+        web_form.SetIdeal(blink_union_form.getAsLong());
+        break;
+      case NakedValueDisposition::kTreatAsExact:
+        web_form.SetExact(blink_union_form.getAsLong());
+        break;
+    }
+    return;
+  }
+  const auto& blink_form = blink_union_form.getAsConstrainLongRange();
+  if (blink_form.hasMin()) {
+    web_form.SetMin(blink_form.min());
+  }
+  if (blink_form.hasMax()) {
+    web_form.SetMax(blink_form.max());
+  }
+  if (blink_form.hasIdeal()) {
+    web_form.SetIdeal(blink_form.ideal());
+  }
+  if (blink_form.hasExact()) {
+    web_form.SetExact(blink_form.exact());
+  }
+}
+
+void CopyDoubleConstraint(const DoubleOrConstrainDoubleRange& blink_union_form,
+                          NakedValueDisposition naked_treatment,
+                          DoubleConstraint& web_form) {
+  if (blink_union_form.isDouble()) {
+    switch (naked_treatment) {
+      case NakedValueDisposition::kTreatAsIdeal:
+        web_form.SetIdeal(blink_union_form.getAsDouble());
+        break;
+      case NakedValueDisposition::kTreatAsExact:
+        web_form.SetExact(blink_union_form.getAsDouble());
+        break;
+    }
+    return;
+  }
+  const auto& blink_form = blink_union_form.getAsConstrainDoubleRange();
+  if (blink_form.hasMin()) {
+    web_form.SetMin(blink_form.min());
+  }
+  if (blink_form.hasMax()) {
+    web_form.SetMax(blink_form.max());
+  }
+  if (blink_form.hasIdeal()) {
+    web_form.SetIdeal(blink_form.ideal());
+  }
+  if (blink_form.hasExact()) {
+    web_form.SetExact(blink_form.exact());
+  }
+}
+
+void CopyStringConstraint(
+    const StringOrStringSequenceOrConstrainDOMStringParameters&
+        blink_union_form,
+    NakedValueDisposition naked_treatment,
+    StringConstraint& web_form) {
+  if (blink_union_form.isString()) {
+    switch (naked_treatment) {
+      case NakedValueDisposition::kTreatAsIdeal:
+        web_form.SetIdeal(Vector<String>(1, blink_union_form.getAsString()));
+        break;
+      case NakedValueDisposition::kTreatAsExact:
+        web_form.SetExact(Vector<String>(1, blink_union_form.getAsString()));
+
+        break;
+    }
+    return;
+  }
+  if (blink_union_form.isStringSequence()) {
+    switch (naked_treatment) {
+      case NakedValueDisposition::kTreatAsIdeal:
+        web_form.SetIdeal(blink_union_form.getAsStringSequence());
+        break;
+      case NakedValueDisposition::kTreatAsExact:
+        web_form.SetExact(blink_union_form.getAsStringSequence());
+        break;
+    }
+    return;
+  }
+  const auto& blink_form = blink_union_form.getAsConstrainDOMStringParameters();
+  if (blink_form.hasIdeal()) {
+    if (blink_form.ideal().isStringSequence()) {
+      web_form.SetIdeal(blink_form.ideal().getAsStringSequence());
+    } else if (blink_form.ideal().isString()) {
+      web_form.SetIdeal(Vector<String>(1, blink_form.ideal().getAsString()));
+    }
+  }
+  if (blink_form.hasExact()) {
+    if (blink_form.exact().isStringSequence()) {
+      web_form.SetExact(blink_form.exact().getAsStringSequence());
+    } else if (blink_form.exact().isString()) {
+      web_form.SetExact(Vector<String>(1, blink_form.exact().getAsString()));
+    }
+  }
+}
+
+void CopyBooleanConstraint(
+    const BooleanOrConstrainBooleanParameters& blink_union_form,
+    NakedValueDisposition naked_treatment,
+    BooleanConstraint& web_form) {
+  if (blink_union_form.isBoolean()) {
+    switch (naked_treatment) {
+      case NakedValueDisposition::kTreatAsIdeal:
+        web_form.SetIdeal(blink_union_form.getAsBoolean());
+        break;
+      case NakedValueDisposition::kTreatAsExact:
+        web_form.SetExact(blink_union_form.getAsBoolean());
+        break;
+    }
+    return;
+  }
+  const auto& blink_form = blink_union_form.getAsConstrainBooleanParameters();
+  if (blink_form.hasIdeal()) {
+    web_form.SetIdeal(blink_form.ideal());
+  }
+  if (blink_form.hasExact()) {
+    web_form.SetExact(blink_form.exact());
+  }
+}
+
+void CopyConstraintSet(const MediaTrackConstraintSet& constraints_in,
+                       NakedValueDisposition naked_treatment,
+                       WebMediaTrackConstraintSet& constraint_buffer) {
+  if (constraints_in.hasWidth()) {
+    CopyLongConstraint(constraints_in.width(), naked_treatment,
+                       constraint_buffer.width);
+  }
+  if (constraints_in.hasHeight()) {
+    CopyLongConstraint(constraints_in.height(), naked_treatment,
+                       constraint_buffer.height);
+  }
+  if (constraints_in.hasAspectRatio()) {
+    CopyDoubleConstraint(constraints_in.aspectRatio(), naked_treatment,
+                         constraint_buffer.aspect_ratio);
+  }
+  if (constraints_in.hasFrameRate()) {
+    CopyDoubleConstraint(constraints_in.frameRate(), naked_treatment,
+                         constraint_buffer.frame_rate);
+  }
+  if (constraints_in.hasFacingMode()) {
+    CopyStringConstraint(constraints_in.facingMode(), naked_treatment,
+                         constraint_buffer.facing_mode);
+  }
+  if (constraints_in.hasVolume()) {
+    CopyDoubleConstraint(constraints_in.volume(), naked_treatment,
+                         constraint_buffer.volume);
+  }
+  if (constraints_in.hasSampleRate()) {
+    CopyLongConstraint(constraints_in.sampleRate(), naked_treatment,
+                       constraint_buffer.sample_rate);
+  }
+  if (constraints_in.hasSampleSize()) {
+    CopyLongConstraint(constraints_in.sampleSize(), naked_treatment,
+                       constraint_buffer.sample_size);
+  }
+  if (constraints_in.hasEchoCancellation()) {
+    CopyBooleanConstraint(constraints_in.echoCancellation(), naked_treatment,
+                          constraint_buffer.echo_cancellation);
+  }
+  if (constraints_in.hasLatency()) {
+    CopyDoubleConstraint(constraints_in.latency(), naked_treatment,
+                         constraint_buffer.latency);
+  }
+  if (constraints_in.hasChannelCount()) {
+    CopyLongConstraint(constraints_in.channelCount(), naked_treatment,
+                       constraint_buffer.channel_count);
+  }
+  if (constraints_in.hasDeviceId()) {
+    CopyStringConstraint(constraints_in.deviceId(), naked_treatment,
+                         constraint_buffer.device_id);
+  }
+  if (constraints_in.hasGroupId()) {
+    CopyStringConstraint(constraints_in.groupId(), naked_treatment,
+                         constraint_buffer.group_id);
+  }
+  if (constraints_in.hasVideoKind()) {
+    CopyStringConstraint(constraints_in.videoKind(), naked_treatment,
+                         constraint_buffer.video_kind);
+  }
+  if (constraints_in.hasDepthNear()) {
+    CopyDoubleConstraint(constraints_in.depthNear(), naked_treatment,
+                         constraint_buffer.depth_near);
+  }
+  if (constraints_in.hasDepthFar()) {
+    CopyDoubleConstraint(constraints_in.depthFar(), naked_treatment,
+                         constraint_buffer.depth_far);
+  }
+  if (constraints_in.hasFocalLengthX()) {
+    CopyDoubleConstraint(constraints_in.focalLengthX(), naked_treatment,
+                         constraint_buffer.focal_length_x);
+  }
+  if (constraints_in.hasFocalLengthY()) {
+    CopyDoubleConstraint(constraints_in.focalLengthY(), naked_treatment,
+                         constraint_buffer.focal_length_y);
+  }
+}
+
+WebMediaConstraints ConvertConstraintsToWeb(
+    const MediaTrackConstraints& constraints_in) {
+  WebMediaConstraints constraints;
+  WebMediaTrackConstraintSet constraint_buffer;
+  Vector<WebMediaTrackConstraintSet> advanced_buffer;
+  CopyConstraintSet(constraints_in, NakedValueDisposition::kTreatAsIdeal,
+                    constraint_buffer);
+  if (constraints_in.hasAdvanced()) {
+    for (const auto& element : constraints_in.advanced()) {
+      WebMediaTrackConstraintSet advanced_element;
+      CopyConstraintSet(element, NakedValueDisposition::kTreatAsExact,
+                        advanced_element);
+      advanced_buffer.push_back(advanced_element);
+    }
+  }
+  constraints.Initialize(constraint_buffer, advanced_buffer);
+  return constraints;
+}
+
+WebMediaConstraints Create(ExecutionContext* context,
+                           const MediaTrackConstraints& constraints_in,
+                           MediaErrorState& error_state) {
+  WebMediaConstraints standard_form = ConvertConstraintsToWeb(constraints_in);
+  if (constraints_in.hasOptional() || constraints_in.hasMandatory()) {
+    if (!standard_form.IsEmpty()) {
+      UseCounter::Count(context, UseCounter::kMediaStreamConstraintsOldAndNew);
+      error_state.ThrowTypeError(
+          "Malformed constraint: Cannot use both optional/mandatory and "
+          "specific or advanced constraints.");
+      return WebMediaConstraints();
+    }
     Vector<NameValueStringConstraint> optional;
     Vector<NameValueStringConstraint> mandatory;
-    if (!parse(constraintsDictionary, optional, mandatory)) {
-        errorState.throwTypeError("Malformed constraints object.");
-        return WebMediaConstraints();
+    if (!Parse(constraints_in, optional, mandatory)) {
+      error_state.ThrowTypeError("Malformed constraints object.");
+      return WebMediaConstraints();
     }
-    UseCounter::count(context, UseCounter::MediaStreamConstraintsFromDictionary);
-    return createFromNamedConstraints(context, mandatory, optional, errorState);
+    UseCounter::Count(context, UseCounter::kMediaStreamConstraintsNameValue);
+    return CreateFromNamedConstraints(context, mandatory, optional,
+                                      error_state);
+  }
+  UseCounter::Count(context, UseCounter::kMediaStreamConstraintsConformant);
+  return standard_form;
 }
 
-void copyLongConstraint(const LongOrConstrainLongRange& blinkUnionForm, LongConstraint& webForm)
-{
-    if (blinkUnionForm.isLong()) {
-        webForm.setIdeal(blinkUnionForm.getAsLong());
-        return;
-    }
-    const auto& blinkForm = blinkUnionForm.getAsConstrainLongRange();
-    if (blinkForm.hasMin()) {
-        webForm.setMin(blinkForm.min());
-    }
-    if (blinkForm.hasMax()) {
-        webForm.setMax(blinkForm.max());
-    }
-    if (blinkForm.hasIdeal()) {
-        webForm.setIdeal(blinkForm.ideal());
-    }
-    if (blinkForm.hasExact()) {
-        webForm.setExact(blinkForm.exact());
-    }
+WebMediaConstraints Create() {
+  WebMediaConstraints constraints;
+  constraints.Initialize();
+  return constraints;
 }
 
-void copyDoubleConstraint(const DoubleOrConstrainDoubleRange& blinkUnionForm, DoubleConstraint& webForm)
-{
-    if (blinkUnionForm.isDouble()) {
-        webForm.setIdeal(blinkUnionForm.getAsDouble());
-        return;
-    }
-    const auto& blinkForm = blinkUnionForm.getAsConstrainDoubleRange();
-    if (blinkForm.hasMin()) {
-        webForm.setMin(blinkForm.min());
-    }
-    if (blinkForm.hasMax()) {
-        webForm.setMax(blinkForm.max());
-    }
-    if (blinkForm.hasIdeal()) {
-        webForm.setIdeal(blinkForm.ideal());
-    }
-    if (blinkForm.hasExact()) {
-        webForm.setExact(blinkForm.exact());
-    }
+template <class T>
+bool UseNakedNumeric(T input, NakedValueDisposition which) {
+  switch (which) {
+    case NakedValueDisposition::kTreatAsIdeal:
+      return input.HasIdeal() &&
+             !(input.HasExact() || input.HasMin() || input.HasMax());
+      break;
+    case NakedValueDisposition::kTreatAsExact:
+      return input.HasExact() &&
+             !(input.HasIdeal() || input.HasMin() || input.HasMax());
+      break;
+  }
+  NOTREACHED();
+  return false;
+};
+
+template <class T>
+bool UseNakedNonNumeric(T input, NakedValueDisposition which) {
+  switch (which) {
+    case NakedValueDisposition::kTreatAsIdeal:
+      return input.HasIdeal() && !input.HasExact();
+      break;
+    case NakedValueDisposition::kTreatAsExact:
+      return input.HasExact() && !input.HasIdeal();
+      break;
+  }
+  NOTREACHED();
+  return false;
+};
+
+template <typename U, class T>
+U GetNakedValue(T input, NakedValueDisposition which) {
+  switch (which) {
+    case NakedValueDisposition::kTreatAsIdeal:
+      return input.Ideal();
+      break;
+    case NakedValueDisposition::kTreatAsExact:
+      return input.Exact();
+      break;
+  }
+  NOTREACHED();
+  return input.Exact();
+};
+
+LongOrConstrainLongRange ConvertLong(const LongConstraint& input,
+                                     NakedValueDisposition naked_treatment) {
+  LongOrConstrainLongRange output_union;
+  if (UseNakedNumeric(input, naked_treatment)) {
+    output_union.setLong(GetNakedValue<long>(input, naked_treatment));
+  } else if (!input.IsEmpty()) {
+    ConstrainLongRange output;
+    if (input.HasExact())
+      output.setExact(input.Exact());
+    if (input.HasMin())
+      output.setMin(input.Min());
+    if (input.HasMax())
+      output.setMax(input.Max());
+    if (input.HasIdeal())
+      output.setIdeal(input.Ideal());
+    output_union.setConstrainLongRange(output);
+  }
+  return output_union;
 }
 
-void copyStringConstraint(const StringOrStringSequenceOrConstrainDOMStringParameters& blinkUnionForm, StringConstraint& webForm)
-{
-    if (blinkUnionForm.isString()) {
-        webForm.setIdeal(Vector<String>(1, blinkUnionForm.getAsString()));
-        return;
-    }
-    if (blinkUnionForm.isStringSequence()) {
-        webForm.setIdeal(blinkUnionForm.getAsStringSequence());
-        return;
-    }
-    const auto& blinkForm = blinkUnionForm.getAsConstrainDOMStringParameters();
-    if (blinkForm.hasIdeal()) {
-        if (blinkForm.ideal().isStringSequence()) {
-            webForm.setIdeal(blinkForm.ideal().getAsStringSequence());
-        } else if (blinkForm.ideal().isString()) {
-            webForm.setIdeal(Vector<String>(1, blinkForm.ideal().getAsString()));
-        }
-    }
-    if (blinkForm.hasExact()) {
-        if (blinkForm.exact().isStringSequence()) {
-            webForm.setExact(blinkForm.exact().getAsStringSequence());
-        } else if (blinkForm.exact().isString()) {
-            webForm.setExact(Vector<String>(1, blinkForm.exact().getAsString()));
-        }
-    }
+DoubleOrConstrainDoubleRange ConvertDouble(
+    const DoubleConstraint& input,
+    NakedValueDisposition naked_treatment) {
+  DoubleOrConstrainDoubleRange output_union;
+  if (UseNakedNumeric(input, naked_treatment)) {
+    output_union.setDouble(GetNakedValue<double>(input, naked_treatment));
+  } else if (!input.IsEmpty()) {
+    ConstrainDoubleRange output;
+    if (input.HasExact())
+      output.setExact(input.Exact());
+    if (input.HasIdeal())
+      output.setIdeal(input.Ideal());
+    if (input.HasMin())
+      output.setMin(input.Min());
+    if (input.HasMax())
+      output.setMax(input.Max());
+    output_union.setConstrainDoubleRange(output);
+  }
+  return output_union;
 }
 
-void copyBooleanConstraint(const BooleanOrConstrainBooleanParameters& blinkUnionForm, BooleanConstraint& webForm)
-{
-    if (blinkUnionForm.isBoolean()) {
-        webForm.setIdeal(blinkUnionForm.getAsBoolean());
-        return;
-    }
-    const auto& blinkForm = blinkUnionForm.getAsConstrainBooleanParameters();
-    if (blinkForm.hasIdeal()) {
-        webForm.setIdeal(blinkForm.ideal());
-    }
-    if (blinkForm.hasExact()) {
-        webForm.setExact(blinkForm.exact());
-    }
+StringOrStringSequence ConvertStringSequence(
+    const WebVector<WebString>& input) {
+  StringOrStringSequence the_strings;
+  if (input.size() > 1) {
+    Vector<String> buffer;
+    for (const auto& scanner : input)
+      buffer.push_back(scanner);
+    the_strings.setStringSequence(buffer);
+  } else if (input.size() > 0) {
+    the_strings.setString(input[0]);
+  }
+  return the_strings;
 }
 
-void copyConstraintSet(const MediaTrackConstraintSet& constraintsIn, WebMediaTrackConstraintSet& constraintBuffer)
-{
-    if (constraintsIn.hasWidth()) {
-        copyLongConstraint(constraintsIn.width(), constraintBuffer.width);
+StringOrStringSequenceOrConstrainDOMStringParameters ConvertString(
+    const StringConstraint& input,
+    NakedValueDisposition naked_treatment) {
+  StringOrStringSequenceOrConstrainDOMStringParameters output_union;
+  if (UseNakedNonNumeric(input, naked_treatment)) {
+    WebVector<WebString> input_buffer(
+        GetNakedValue<WebVector<WebString>>(input, naked_treatment));
+    if (input_buffer.size() > 1) {
+      Vector<String> buffer;
+      for (const auto& scanner : input_buffer)
+        buffer.push_back(scanner);
+      output_union.setStringSequence(buffer);
+    } else if (input_buffer.size() > 0) {
+      output_union.setString(input_buffer[0]);
     }
-    if (constraintsIn.hasHeight()) {
-        copyLongConstraint(constraintsIn.height(), constraintBuffer.height);
-    }
-    if (constraintsIn.hasAspectRatio()) {
-        copyDoubleConstraint(constraintsIn.aspectRatio(), constraintBuffer.aspectRatio);
-    }
-    if (constraintsIn.hasFrameRate()) {
-        copyDoubleConstraint(constraintsIn.frameRate(), constraintBuffer.frameRate);
-    }
-    if (constraintsIn.hasFacingMode()) {
-        copyStringConstraint(constraintsIn.facingMode(), constraintBuffer.facingMode);
-    }
-    if (constraintsIn.hasVolume()) {
-        copyDoubleConstraint(constraintsIn.volume(), constraintBuffer.volume);
-    }
-    if (constraintsIn.hasSampleRate()) {
-        copyLongConstraint(constraintsIn.sampleRate(), constraintBuffer.sampleRate);
-    }
-    if (constraintsIn.hasSampleSize()) {
-        copyLongConstraint(constraintsIn.sampleSize(), constraintBuffer.sampleSize);
-    }
-    if (constraintsIn.hasEchoCancellation()) {
-        copyBooleanConstraint(constraintsIn.echoCancellation(), constraintBuffer.echoCancellation);
-    }
-    if (constraintsIn.hasLatency()) {
-        copyDoubleConstraint(constraintsIn.latency(), constraintBuffer.latency);
-    }
-    if (constraintsIn.hasChannelCount()) {
-        copyLongConstraint(constraintsIn.channelCount(), constraintBuffer.channelCount);
-    }
-    if (constraintsIn.hasDeviceId()) {
-        copyStringConstraint(constraintsIn.deviceId(), constraintBuffer.deviceId);
-    }
-    if (constraintsIn.hasGroupId()) {
-        copyStringConstraint(constraintsIn.groupId(), constraintBuffer.groupId);
-    }
+  } else if (!input.IsEmpty()) {
+    ConstrainDOMStringParameters output;
+    if (input.HasExact())
+      output.setExact(ConvertStringSequence(input.Exact()));
+    if (input.HasIdeal())
+      output.setIdeal(ConvertStringSequence(input.Ideal()));
+    output_union.setConstrainDOMStringParameters(output);
+  }
+  return output_union;
 }
 
-WebMediaConstraints convertConstraintsToWeb(const MediaTrackConstraints& constraintsIn)
-{
-    WebMediaConstraints constraints;
-    WebMediaTrackConstraintSet constraintBuffer;
-    Vector<WebMediaTrackConstraintSet> advancedBuffer;
-    copyConstraintSet(constraintsIn, constraintBuffer);
-    if (constraintsIn.hasAdvanced()) {
-        for (const auto& element : constraintsIn.advanced()) {
-            WebMediaTrackConstraintSet advancedElement;
-            copyConstraintSet(element, advancedElement);
-            advancedBuffer.append(advancedElement);
-        }
-    }
-    constraints.initialize(constraintBuffer, advancedBuffer);
-    return constraints;
+BooleanOrConstrainBooleanParameters ConvertBoolean(
+    const BooleanConstraint& input,
+    NakedValueDisposition naked_treatment) {
+  BooleanOrConstrainBooleanParameters output_union;
+  if (UseNakedNonNumeric(input, naked_treatment)) {
+    output_union.setBoolean(GetNakedValue<bool>(input, naked_treatment));
+  } else if (!input.IsEmpty()) {
+    ConstrainBooleanParameters output;
+    if (input.HasExact())
+      output.setExact(input.Exact());
+    if (input.HasIdeal())
+      output.setIdeal(input.Ideal());
+    output_union.setConstrainBooleanParameters(output);
+  }
+  return output_union;
 }
 
-WebMediaConstraints create(ExecutionContext* context, const MediaTrackConstraints& constraintsIn, MediaErrorState& errorState)
-{
-    WebMediaConstraints standardForm = convertConstraintsToWeb(constraintsIn);
-    if (constraintsIn.hasOptional() || constraintsIn.hasMandatory()) {
-        if (!standardForm.isEmpty()) {
-            UseCounter::count(context, UseCounter::MediaStreamConstraintsOldAndNew);
-            errorState.throwTypeError("Malformed constraint: Cannot use both optional/mandatory and specific or advanced constraints.");
-            return WebMediaConstraints();
-        }
-        Vector<NameValueStringConstraint> optional;
-        Vector<NameValueStringConstraint> mandatory;
-        if (!parse(constraintsIn, optional, mandatory)) {
-            errorState.throwTypeError("Malformed constraints object.");
-            return WebMediaConstraints();
-        }
-        UseCounter::count(context, UseCounter::MediaStreamConstraintsNameValue);
-        return createFromNamedConstraints(context, mandatory, optional, errorState);
-    }
-    UseCounter::count(context, UseCounter::MediaStreamConstraintsConformant);
-    return standardForm;
+void ConvertConstraintSet(const WebMediaTrackConstraintSet& input,
+                          NakedValueDisposition naked_treatment,
+                          MediaTrackConstraintSet& output) {
+  if (!input.width.IsEmpty())
+    output.setWidth(ConvertLong(input.width, naked_treatment));
+  if (!input.height.IsEmpty())
+    output.setHeight(ConvertLong(input.height, naked_treatment));
+  if (!input.aspect_ratio.IsEmpty())
+    output.setAspectRatio(ConvertDouble(input.aspect_ratio, naked_treatment));
+  if (!input.frame_rate.IsEmpty())
+    output.setFrameRate(ConvertDouble(input.frame_rate, naked_treatment));
+  if (!input.facing_mode.IsEmpty())
+    output.setFacingMode(ConvertString(input.facing_mode, naked_treatment));
+  if (!input.volume.IsEmpty())
+    output.setVolume(ConvertDouble(input.volume, naked_treatment));
+  if (!input.sample_rate.IsEmpty())
+    output.setSampleRate(ConvertLong(input.sample_rate, naked_treatment));
+  if (!input.sample_size.IsEmpty())
+    output.setSampleSize(ConvertLong(input.sample_size, naked_treatment));
+  if (!input.echo_cancellation.IsEmpty()) {
+    output.setEchoCancellation(
+        ConvertBoolean(input.echo_cancellation, naked_treatment));
+  }
+  if (!input.latency.IsEmpty())
+    output.setLatency(ConvertDouble(input.latency, naked_treatment));
+  if (!input.channel_count.IsEmpty())
+    output.setChannelCount(ConvertLong(input.channel_count, naked_treatment));
+  if (!input.device_id.IsEmpty())
+    output.setDeviceId(ConvertString(input.device_id, naked_treatment));
+  if (!input.group_id.IsEmpty())
+    output.setGroupId(ConvertString(input.group_id, naked_treatment));
+  if (!input.video_kind.IsEmpty())
+    output.setVideoKind(ConvertString(input.video_kind, naked_treatment));
+  // TODO(hta): Decide the future of the nonstandard constraints.
+  // If they go forward, they need to be added here.
+  // https://crbug.com/605673
 }
 
-WebMediaConstraints create()
-{
-    WebMediaConstraints constraints;
-    constraints.initialize();
-    return constraints;
+void ConvertConstraints(const WebMediaConstraints& input,
+                        MediaTrackConstraints& output) {
+  if (input.IsNull())
+    return;
+  ConvertConstraintSet(input.Basic(), NakedValueDisposition::kTreatAsIdeal,
+                       output);
+  HeapVector<MediaTrackConstraintSet> advanced_vector;
+  for (const auto& it : input.Advanced()) {
+    MediaTrackConstraintSet element;
+    ConvertConstraintSet(it, NakedValueDisposition::kTreatAsExact, element);
+    advanced_vector.push_back(element);
+  }
+  if (!advanced_vector.IsEmpty())
+    output.setAdvanced(advanced_vector);
 }
 
-LongOrConstrainLongRange convertLong(const LongConstraint& input)
-{
-    LongOrConstrainLongRange outputUnion;
-    if (input.hasExact() || input.hasMin() || input.hasMax()) {
-        ConstrainLongRange output;
-        if (input.hasExact())
-            output.setExact(input.exact());
-        if (input.hasMin())
-            output.setMin(input.min());
-        if (input.hasMax())
-            output.setMax(input.max());
-        if (input.hasIdeal())
-            output.setIdeal(input.ideal());
-        outputUnion.setConstrainLongRange(output);
-    } else {
-        if (input.hasIdeal()) {
-            outputUnion.setLong(input.ideal());
-        }
-    }
-    return outputUnion;
-}
-
-DoubleOrConstrainDoubleRange convertDouble(const DoubleConstraint& input)
-{
-    DoubleOrConstrainDoubleRange outputUnion;
-    if (input.hasExact() || input.hasMin() || input.hasMax()) {
-        ConstrainDoubleRange output;
-        if (input.hasExact())
-            output.setExact(input.exact());
-        if (input.hasIdeal())
-            output.setIdeal(input.ideal());
-        if (input.hasMin())
-            output.setMin(input.min());
-        if (input.hasMax())
-            output.setMax(input.max());
-        outputUnion.setConstrainDoubleRange(output);
-    } else {
-        if (input.hasIdeal()) {
-            outputUnion.setDouble(input.ideal());
-        }
-    }
-    return outputUnion;
-}
-
-StringOrStringSequence convertStringSequence(const WebVector<WebString>& input)
-{
-    StringOrStringSequence theStrings;
-    if (input.size() > 1) {
-        Vector<String> buffer;
-        for (const auto& scanner : input)
-            buffer.append(scanner);
-        theStrings.setStringSequence(buffer);
-    } else if (input.size() > 0) {
-        theStrings.setString(input[0]);
-    }
-    return theStrings;
-}
-
-StringOrStringSequenceOrConstrainDOMStringParameters convertString(const StringConstraint& input)
-{
-    StringOrStringSequenceOrConstrainDOMStringParameters outputUnion;
-    if (input.hasExact()) {
-        ConstrainDOMStringParameters output;
-        output.setExact(convertStringSequence(input.exact()));
-        if (input.hasIdeal()) {
-            output.setIdeal(convertStringSequence(input.ideal()));
-        }
-        outputUnion.setConstrainDOMStringParameters(output);
-    } else if (input.hasIdeal()) {
-        if (input.ideal().size() > 1) {
-            Vector<String> buffer;
-            for (const auto& scanner : input.ideal())
-                buffer.append(scanner);
-            outputUnion.setStringSequence(buffer);
-        } else if (input.ideal().size() == 1) {
-            outputUnion.setString(input.ideal()[0]);
-        }
-    }
-    return outputUnion;
-}
-
-BooleanOrConstrainBooleanParameters convertBoolean(const BooleanConstraint& input)
-{
-    BooleanOrConstrainBooleanParameters outputUnion;
-    if (input.hasExact()) {
-        ConstrainBooleanParameters output;
-        if (input.hasExact())
-            output.setExact(input.exact());
-        if (input.hasIdeal())
-            output.setIdeal(input.ideal());
-        outputUnion.setConstrainBooleanParameters(output);
-    } else if (input.hasIdeal()) {
-        outputUnion.setBoolean(input.ideal());
-    }
-    return outputUnion;
-}
-
-void convertConstraintSet(const WebMediaTrackConstraintSet& input, MediaTrackConstraintSet& output)
-{
-    if (!input.width.isEmpty())
-        output.setWidth(convertLong(input.width));
-    if (!input.height.isEmpty())
-        output.setHeight(convertLong(input.height));
-    if (!input.aspectRatio.isEmpty())
-        output.setAspectRatio(convertDouble(input.aspectRatio));
-    if (!input.frameRate.isEmpty())
-        output.setFrameRate(convertDouble(input.frameRate));
-    if (!input.facingMode.isEmpty())
-        output.setFacingMode(convertString(input.facingMode));
-    if (!input.volume.isEmpty())
-        output.setVolume(convertDouble(input.volume));
-    if (!input.sampleRate.isEmpty())
-        output.setSampleRate(convertLong(input.sampleRate));
-    if (!input.sampleSize.isEmpty())
-        output.setSampleSize(convertLong(input.sampleSize));
-    if (!input.echoCancellation.isEmpty())
-        output.setEchoCancellation(convertBoolean(input.echoCancellation));
-    if (!input.latency.isEmpty())
-        output.setLatency(convertDouble(input.latency));
-    if (!input.channelCount.isEmpty())
-        output.setChannelCount(convertLong(input.channelCount));
-    if (!input.deviceId.isEmpty())
-        output.setDeviceId(convertString(input.deviceId));
-    if (!input.groupId.isEmpty())
-        output.setGroupId(convertString(input.groupId));
-    // TODO(hta): Decide the future of the nonstandard constraints.
-    // If they go forward, they need to be added here.
-    // https://crbug.com/605673
-}
-
-void convertConstraints(const WebMediaConstraints& input, MediaTrackConstraints& output)
-{
-    if (input.isNull())
-        return;
-    convertConstraintSet(input.basic(), output);
-    HeapVector<MediaTrackConstraintSet> advancedVector;
-    for (const auto& it : input.advanced()) {
-        MediaTrackConstraintSet element;
-        convertConstraintSet(it, element);
-        advancedVector.append(element);
-    }
-    if (!advancedVector.isEmpty())
-        output.setAdvanced(advancedVector);
-}
-
-} // namespace MediaConstraintsImpl
-} // namespace blink
+}  // namespace MediaConstraintsImpl
+}  // namespace blink

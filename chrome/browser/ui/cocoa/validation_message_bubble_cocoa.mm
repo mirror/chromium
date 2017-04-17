@@ -12,11 +12,11 @@
 #import "chrome/browser/ui/cocoa/info_bubble_window.h"
 #import "chrome/browser/ui/cocoa/validation_message_bubble_controller.h"
 #include "chrome/browser/ui/validation_message_bubble.h"
+#include "chrome/grit/theme_resources.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
-#include "grit/theme_resources.h"
 #import "third_party/google_toolbox_for_mac/src/AppKit/GTMUILocalizerAndLayoutTweaker.h"
 #import "ui/base/cocoa/base_view.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
@@ -47,7 +47,7 @@ anchoredAt:(NSPoint)anchorPoint
   if ((self = [super initWithWindow:window.get()
                        parentWindow:parentWindow
                          anchoredAt:anchorPoint])) {
-    [[self bubble] setArrowLocation:info_bubble::kTopLeft];
+    [[self bubble] setArrowLocation:info_bubble::kTopLeading];
     self.shouldOpenAsKeyWindow = NO;
 
     NSView* contentView = [ValidationMessageBubbleController

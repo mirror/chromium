@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/power_monitor/power_monitor.h"
 #include "base/run_loop.h"
@@ -19,6 +20,7 @@
 #include "media/base/cdm_context.h"
 #include "media/base/decoder_buffer.h"
 #include "media/base/media.h"
+#include "media/base/media_log.h"
 #include "media/base/media_switches.h"
 #include "media/base/media_util.h"
 #include "media/cast/common/rtp_time.h"
@@ -30,6 +32,7 @@
 #include "media/ffmpeg/ffmpeg_common.h"
 #include "media/filters/ffmpeg_glue.h"
 #include "media/filters/ffmpeg_video_decoder.h"
+#include "media/media_features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -127,7 +130,8 @@ class EndToEndFrameChecker
     : public base::RefCountedThreadSafe<EndToEndFrameChecker> {
  public:
   explicit EndToEndFrameChecker(const VideoDecoderConfig& config)
-      : decoder_(), count_frames_checked_(0) {
+      : decoder_(make_scoped_refptr(new media::MediaLog())),
+        count_frames_checked_(0) {
     bool decoder_init_result;
     decoder_.Initialize(
         config, false, nullptr,
@@ -177,7 +181,7 @@ void CreateFrameAndMemsetPlane(VideoFrameFactory* const video_frame_factory) {
       video_frame_factory->MaybeCreateFrame(
           gfx::Size(kVideoWidth, kVideoHeight), base::TimeDelta());
   ASSERT_TRUE(video_frame.get());
-  auto* cv_pixel_buffer = video_frame->cv_pixel_buffer();
+  auto* cv_pixel_buffer = video_frame->CvPixelBuffer();
   ASSERT_TRUE(cv_pixel_buffer);
   CVPixelBufferLockBaseAddress(cv_pixel_buffer, 0);
   auto* ptr = CVPixelBufferGetBaseAddressOfPlane(cv_pixel_buffer, 0);
@@ -210,8 +214,6 @@ class H264VideoToolboxEncoderTest : public ::testing::Test {
   H264VideoToolboxEncoderTest() = default;
 
   void SetUp() final {
-    CHECK(VideoToolboxGlue::Get())
-        << "VideoToolbox is not available. Requires OS X 10.8 or iOS 8.0.";
     clock_ = new base::SimpleTestTickClock();
     clock_->Advance(base::TimeTicks::Now() - base::TimeTicks());
 
@@ -301,7 +303,7 @@ TEST_F(H264VideoToolboxEncoderTest, DISABLED_CheckFrameMetadataSequence) {
   EXPECT_EQ(10, metadata_recorder->count_frames_delivered());
 }
 
-#if defined(USE_PROPRIETARY_CODECS)
+#if BUILDFLAG(USE_PROPRIETARY_CODECS)
 // Failed on mac_chromium_rel_ng trybot. http://crbug.com/627260
 TEST_F(H264VideoToolboxEncoderTest, DISABLED_CheckFramesAreDecodable) {
   VideoDecoderConfig config(kCodecH264, H264PROFILE_MAIN, frame_->format(),

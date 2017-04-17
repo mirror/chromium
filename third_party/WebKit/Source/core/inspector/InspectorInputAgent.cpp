@@ -35,37 +35,34 @@
 #include "core/inspector/InspectedFrames.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
-#include "platform/PlatformEvent.h"
-#include "platform/PlatformTouchEvent.h"
-#include "platform/PlatformTouchPoint.h"
 #include "platform/geometry/FloatSize.h"
 #include "platform/geometry/IntPoint.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/geometry/IntSize.h"
-#include "platform/inspector_protocol/Values.h"
-#include "wtf/CurrentTime.h"
+#include "platform/wtf/CurrentTime.h"
+#include "platform/wtf/Time.h"
+#include "public/platform/WebTouchEvent.h"
 
 namespace {
 
 enum Modifiers {
-    AltKey = 1 << 0,
-    CtrlKey = 1 << 1,
-    MetaKey = 1 << 2,
-    ShiftKey = 1 << 3
+  AltKey = 1 << 0,
+  CtrlKey = 1 << 1,
+  MetaKey = 1 << 2,
+  ShiftKey = 1 << 3
 };
 
-unsigned GetEventModifiers(int modifiers)
-{
-    unsigned platformModifiers = 0;
-    if (modifiers & AltKey)
-        platformModifiers |= blink::PlatformEvent::AltKey;
-    if (modifiers & CtrlKey)
-        platformModifiers |= blink::PlatformEvent::CtrlKey;
-    if (modifiers & MetaKey)
-        platformModifiers |= blink::PlatformEvent::MetaKey;
-    if (modifiers & ShiftKey)
-        platformModifiers |= blink::PlatformEvent::ShiftKey;
-    return platformModifiers;
+unsigned GetEventModifiers(int modifiers) {
+  unsigned platformModifiers = 0;
+  if (modifiers & AltKey)
+    platformModifiers |= blink::WebInputEvent::kAltKey;
+  if (modifiers & CtrlKey)
+    platformModifiers |= blink::WebInputEvent::kControlKey;
+  if (modifiers & MetaKey)
+    platformModifiers |= blink::WebInputEvent::kMetaKey;
+  if (modifiers & ShiftKey)
+    platformModifiers |= blink::WebInputEvent::kShiftKey;
+  return platformModifiers;
 }
 
 // Convert given protocol timestamp which is in seconds since unix epoch to a
@@ -73,138 +70,170 @@ unsigned GetEventModifiers(int modifiers)
 // is an estimate because these two clocks respond differently to user setting
 // time and NTP adjustments. If timestamp is empty then returns current
 // monotonic timestamp.
-double GetEventTimeStamp(const blink::protocol::Maybe<double>& timestamp)
-{
-    // Take a snapshot of difference between two clocks on first run and use it
-    // for the duration of the application.
-    static double epochToMonotonicTimeDelta = currentTime() - monotonicallyIncreasingTime();
-    if (timestamp.isJust())
-        return timestamp.fromJust() - epochToMonotonicTimeDelta;
-
-    return monotonicallyIncreasingTime();
+TimeTicks GetEventTimeStamp(const blink::protocol::Maybe<double>& timestamp) {
+  // Take a snapshot of difference between two clocks on first run and use it
+  // for the duration of the application.
+  static double epochToMonotonicTimeDelta =
+      CurrentTime() - MonotonicallyIncreasingTime();
+  if (timestamp.isJust()) {
+    double ticksInSeconds = timestamp.fromJust() - epochToMonotonicTimeDelta;
+    return TimeTicks::FromSeconds(ticksInSeconds);
+  }
+  return TimeTicks::Now();
 }
 
-class SyntheticInspectorTouchPoint : public blink::PlatformTouchPoint {
-public:
-    SyntheticInspectorTouchPoint(int id, TouchState state, const blink::IntPoint& screenPos, const blink::IntPoint& pos, int radiusX, int radiusY, double rotationAngle, double force)
-    {
-        m_pointerProperties.id = id;
-        m_screenPos = screenPos;
-        m_pos = pos;
-        m_state = state;
-        m_radius = blink::FloatSize(radiusX, radiusY);
-        m_rotationAngle = rotationAngle;
-        m_pointerProperties.force = force;
-    }
+class SyntheticInspectorTouchPoint : public blink::WebTouchPoint {
+ public:
+  SyntheticInspectorTouchPoint(int idParam,
+                               State stateParam,
+                               const blink::IntPoint& screenPos,
+                               const blink::IntPoint& pos,
+                               int radiusXParam,
+                               int radiusYParam,
+                               double rotationAngleParam,
+                               double forceParam) {
+    id = idParam;
+    screen_position = screenPos;
+    position = pos;
+    state = stateParam;
+    radius_x = radiusXParam;
+    radius_y = radiusYParam;
+    rotation_angle = rotationAngleParam;
+    force = forceParam;
+  }
 };
 
-class SyntheticInspectorTouchEvent : public blink::PlatformTouchEvent {
-public:
-    SyntheticInspectorTouchEvent(const blink::PlatformEvent::EventType type, unsigned modifiers, double timestamp)
-    {
-        m_type = type;
-        m_modifiers = modifiers;
-        m_timestamp = timestamp;
-    }
+class SyntheticInspectorTouchEvent : public blink::WebTouchEvent {
+ public:
+  SyntheticInspectorTouchEvent(const blink::WebInputEvent::Type type,
+                               unsigned modifiers,
+                               TimeTicks timestamp) {
+    type_ = type;
+    modifiers_ = modifiers;
+    time_stamp_seconds_ = timestamp.InSeconds();
+    moved_beyond_slop_region = true;
+  }
 
-    void append(const blink::PlatformTouchPoint& point)
-    {
-        m_touchPoints.append(point);
+  void append(const blink::WebTouchPoint& point) {
+    if (touches_length < kTouchesLengthCap) {
+      touches[touches_length] = point;
+      touches_length++;
     }
+  }
 };
 
-void ConvertInspectorPoint(blink::LocalFrame* frame, const blink::IntPoint& pointInFrame, blink::IntPoint* convertedPoint, blink::IntPoint* globalPoint)
-{
-    *convertedPoint = frame->view()->convertToRootFrame(pointInFrame);
-    *globalPoint = frame->page()->chromeClient().viewportToScreen(blink::IntRect(pointInFrame, blink::IntSize(0, 0)), frame->view()).location();
+void ConvertInspectorPoint(blink::LocalFrame* frame,
+                           const blink::IntPoint& pointInFrame,
+                           blink::IntPoint* convertedPoint,
+                           blink::IntPoint* globalPoint) {
+  *convertedPoint = frame->View()->ConvertToRootFrame(pointInFrame);
+  *globalPoint =
+      frame->GetPage()
+          ->GetChromeClient()
+          .ViewportToScreen(blink::IntRect(pointInFrame, blink::IntSize(0, 0)),
+                            frame->View())
+          .Location();
 }
 
-} // namespace
+}  // namespace
 
 namespace blink {
 
-InspectorInputAgent::InspectorInputAgent(InspectedFrames* inspectedFrames)
-    : m_inspectedFrames(inspectedFrames)
-{
-}
+using protocol::Response;
 
-InspectorInputAgent::~InspectorInputAgent()
-{
-}
+InspectorInputAgent::InspectorInputAgent(InspectedFrames* inspected_frames)
+    : inspected_frames_(inspected_frames) {}
 
-void InspectorInputAgent::dispatchTouchEvent(ErrorString* error, const String& type, std::unique_ptr<protocol::Array<protocol::Input::TouchPoint>> touchPoints, const protocol::Maybe<int>& modifiers, const protocol::Maybe<double>& timestamp)
-{
-    PlatformEvent::EventType convertedType;
-    if (type == "touchStart") {
-        convertedType = PlatformEvent::TouchStart;
-    } else if (type == "touchEnd") {
-        convertedType = PlatformEvent::TouchEnd;
-    } else if (type == "touchMove") {
-        convertedType = PlatformEvent::TouchMove;
+InspectorInputAgent::~InspectorInputAgent() {}
+
+Response InspectorInputAgent::dispatchTouchEvent(
+    const String& type,
+    std::unique_ptr<protocol::Array<protocol::Input::TouchPoint>> touch_points,
+    protocol::Maybe<int> modifiers,
+    protocol::Maybe<double> timestamp) {
+  WebInputEvent::Type converted_type;
+  if (type == "touchStart")
+    converted_type = WebInputEvent::kTouchStart;
+  else if (type == "touchEnd")
+    converted_type = WebInputEvent::kTouchEnd;
+  else if (type == "touchMove")
+    converted_type = WebInputEvent::kTouchMove;
+  else
+    return Response::Error(String("Unrecognized type: " + type));
+
+  unsigned converted_modifiers = GetEventModifiers(modifiers.fromMaybe(0));
+
+  SyntheticInspectorTouchEvent event(converted_type, converted_modifiers,
+                                     GetEventTimeStamp(timestamp));
+
+  int auto_id = 0;
+  for (size_t i = 0; i < touch_points->length(); ++i) {
+    protocol::Input::TouchPoint* point = touch_points->get(i);
+    int radius_x = point->getRadiusX(1);
+    int radius_y = point->getRadiusY(1);
+    double rotation_angle = point->getRotationAngle(0.0);
+    double force = point->getForce(1.0);
+    int id;
+    if (point->hasId()) {
+      if (auto_id > 0)
+        id = -1;
+      else
+        id = point->getId(0);
+      auto_id = -1;
     } else {
-        *error = String("Unrecognized type: " + type);
-        return;
+      id = auto_id++;
+    }
+    if (id < 0) {
+      return Response::Error(
+          "All or none of the provided TouchPoints must supply positive "
+          "integer ids.");
     }
 
-    unsigned convertedModifiers = GetEventModifiers(modifiers.fromMaybe(0));
+    WebTouchPoint::State converted_state;
+    String state = point->getState();
+    if (state == "touchPressed")
+      converted_state = WebTouchPoint::kStatePressed;
+    else if (state == "touchReleased")
+      converted_state = WebTouchPoint::kStateReleased;
+    else if (state == "touchMoved")
+      converted_state = WebTouchPoint::kStateMoved;
+    else if (state == "touchStationary")
+      converted_state = WebTouchPoint::kStateStationary;
+    else if (state == "touchCancelled")
+      converted_state = WebTouchPoint::kStateCancelled;
+    else
+      return Response::Error(String("Unrecognized state: " + state));
 
-    SyntheticInspectorTouchEvent event(convertedType, convertedModifiers, GetEventTimeStamp(timestamp));
+    // Some platforms may have flipped coordinate systems, but the given
+    // coordinates assume the origin is in the top-left of the window. Convert.
+    IntPoint converted_point, global_point;
+    ConvertInspectorPoint(inspected_frames_->Root(),
+                          IntPoint(point->getX(), point->getY()),
+                          &converted_point, &global_point);
 
-    int autoId = 0;
-    for (size_t i = 0; i < touchPoints->length(); ++i) {
-        protocol::Input::TouchPoint* point = touchPoints->get(i);
-        int radiusX = point->getRadiusX(1);
-        int radiusY = point->getRadiusY(1);
-        double rotationAngle = point->getRotationAngle(0.0);
-        double force = point->getForce(1.0);
-        int id;
-        if (point->hasId()) {
-            if (autoId > 0)
-                id = -1;
-            else
-                id = point->getId(0);
-            autoId = -1;
-        } else {
-            id = autoId++;
-        }
-        if (id < 0) {
-            *error = "All or none of the provided TouchPoints must supply positive integer ids.";
-            return;
-        }
+    SyntheticInspectorTouchPoint touch_point(
+        id++, converted_state, global_point, converted_point, radius_x,
+        radius_y, rotation_angle, force);
+    event.append(touch_point);
+  }
 
-        PlatformTouchPoint::TouchState convertedState;
-        String state = point->getState();
-        if (state == "touchPressed") {
-            convertedState = PlatformTouchPoint::TouchPressed;
-        } else if (state == "touchReleased") {
-            convertedState = PlatformTouchPoint::TouchReleased;
-        } else if (state == "touchMoved") {
-            convertedState = PlatformTouchPoint::TouchMoved;
-        } else if (state == "touchStationary") {
-            convertedState = PlatformTouchPoint::TouchStationary;
-        } else if (state == "touchCancelled") {
-            convertedState = PlatformTouchPoint::TouchCancelled;
-        } else {
-            *error = String("Unrecognized state: " + state);
-            return;
-        }
+  // The generated touchpoints are in root frame co-ordinates
+  // so set the scale to 1 and the the translation to zero.
+  event.SetFrameScale(1);
+  event.SetFrameTranslate(WebFloatPoint());
 
-        // Some platforms may have flipped coordinate systems, but the given coordinates
-        // assume the origin is in the top-left of the window. Convert.
-        IntPoint convertedPoint, globalPoint;
-        ConvertInspectorPoint(m_inspectedFrames->root(), IntPoint(point->getX(), point->getY()), &convertedPoint, &globalPoint);
+  // TODO: We need to add the support for generating coalesced events in
+  // the devtools.
+  Vector<WebTouchEvent> coalesced_events;
 
-        SyntheticInspectorTouchPoint touchPoint(id++, convertedState, globalPoint, convertedPoint, radiusX, radiusY, rotationAngle, force);
-        event.append(touchPoint);
-    }
-
-    m_inspectedFrames->root()->eventHandler().handleTouchEvent(event);
+  inspected_frames_->Root()->GetEventHandler().HandleTouchEvent(
+      event, coalesced_events);
+  return Response::OK();
 }
 
-DEFINE_TRACE(InspectorInputAgent)
-{
-    visitor->trace(m_inspectedFrames);
-    InspectorBaseAgent::trace(visitor);
+DEFINE_TRACE(InspectorInputAgent) {
+  visitor->Trace(inspected_frames_);
+  InspectorBaseAgent::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

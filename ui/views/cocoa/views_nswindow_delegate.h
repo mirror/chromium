@@ -42,22 +42,13 @@ VIEWS_EXPORT
 // a notification such as NSApplicationDidHideNotification.
 - (void)onWindowOrderChanged:(NSNotification*)notification;
 
+// Notify that the system control tint changed.
+- (void)onSystemControlTintChanged:(NSNotification*)notification;
+
 // Called on the delegate of a modal sheet when its modal session ends.
 - (void)sheetDidEnd:(NSWindow*)sheet
          returnCode:(NSInteger)returnCode
         contextInfo:(void*)contextInfo;
-
-// Redeclare methods defined in the protocol NSWindowDelegate which are only
-// available on OSX 10.7+.
-- (void)windowDidFailToEnterFullScreen:(NSWindow*)window;
-- (void)windowDidFailToExitFullScreen:(NSWindow*)window;
-
-// Called when the application receives a mouse-down, but before the event
-// is processed by NSWindows. Returns NO if the event should be processed as-is,
-// or YES if the event should be reposted to handle window dragging. Events are
-// reposted at the CGSessionEventTap level because window dragging happens there
-// before the application receives the event.
-- (BOOL)shouldRepostPendingLeftMouseDown:(NSPoint)locationInWindow;
 
 @end
 

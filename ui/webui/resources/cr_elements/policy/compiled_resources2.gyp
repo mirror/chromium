@@ -4,16 +4,24 @@
 {
   'targets': [
     {
+      'target_name': 'cr_policy_indicator',
+      'dependencies': [
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:assert',
+        'cr_policy_indicator_behavior',
+      ],
+      'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
       'target_name': 'cr_policy_indicator_behavior',
       'dependencies': [
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:assert',
-        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
       'target_name': 'cr_policy_pref_behavior',
       'dependencies': [
+        '<(EXTERNS_GYP):settings_private',
         'cr_policy_indicator_behavior',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
@@ -23,12 +31,15 @@
       'dependencies': [
         '<(EXTERNS_GYP):settings_private',
         'cr_policy_indicator_behavior',
-        'cr_policy_pref_behavior',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
       'target_name': 'cr_policy_network_behavior',
+      'dependencies': [
+        '../network/compiled_resources2.gyp:cr_onc_types',
+        'cr_policy_indicator_behavior',
+      ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {

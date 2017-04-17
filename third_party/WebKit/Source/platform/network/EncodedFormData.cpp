@@ -23,185 +23,181 @@
 
 #include "platform/FileMetadata.h"
 #include "platform/network/FormDataEncoder.h"
-#include "wtf/text/CString.h"
-#include "wtf/text/TextEncoding.h"
+#include "platform/wtf/text/CString.h"
+#include "platform/wtf/text/TextEncoding.h"
 
 namespace blink {
 
-bool FormDataElement::isSafeToSendToAnotherThread() const
-{
-    return m_filename.isSafeToSendToAnotherThread()
-        && m_blobUUID.isSafeToSendToAnotherThread()
-        && m_fileSystemURL.isSafeToSendToAnotherThread();
+bool FormDataElement::IsSafeToSendToAnotherThread() const {
+  return filename_.IsSafeToSendToAnotherThread() &&
+         blob_uuid_.IsSafeToSendToAnotherThread() &&
+         file_system_url_.IsSafeToSendToAnotherThread();
 }
 
 inline EncodedFormData::EncodedFormData()
-    : m_identifier(0)
-    , m_containsPasswordData(false)
-{
-}
+    : identifier_(0), contains_password_data_(false) {}
 
 inline EncodedFormData::EncodedFormData(const EncodedFormData& data)
-    : RefCounted<EncodedFormData>()
-    , m_elements(data.m_elements)
-    , m_identifier(data.m_identifier)
-    , m_containsPasswordData(data.m_containsPasswordData)
-{
+    : RefCounted<EncodedFormData>(),
+      elements_(data.elements_),
+      identifier_(data.identifier_),
+      contains_password_data_(data.contains_password_data_) {}
+
+EncodedFormData::~EncodedFormData() {}
+
+PassRefPtr<EncodedFormData> EncodedFormData::Create() {
+  return AdoptRef(new EncodedFormData);
 }
 
-EncodedFormData::~EncodedFormData()
-{
+PassRefPtr<EncodedFormData> EncodedFormData::Create(const void* data,
+                                                    size_t size) {
+  RefPtr<EncodedFormData> result = Create();
+  result->AppendData(data, size);
+  return result.Release();
 }
 
-PassRefPtr<EncodedFormData> EncodedFormData::create()
-{
-    return adoptRef(new EncodedFormData);
+PassRefPtr<EncodedFormData> EncodedFormData::Create(const CString& string) {
+  RefPtr<EncodedFormData> result = Create();
+  result->AppendData(string.Data(), string.length());
+  return result.Release();
 }
 
-PassRefPtr<EncodedFormData> EncodedFormData::create(const void* data, size_t size)
-{
-    RefPtr<EncodedFormData> result = create();
-    result->appendData(data, size);
-    return result.release();
+PassRefPtr<EncodedFormData> EncodedFormData::Create(
+    const Vector<char>& vector) {
+  RefPtr<EncodedFormData> result = Create();
+  result->AppendData(vector.Data(), vector.size());
+  return result.Release();
 }
 
-PassRefPtr<EncodedFormData> EncodedFormData::create(const CString& string)
-{
-    RefPtr<EncodedFormData> result = create();
-    result->appendData(string.data(), string.length());
-    return result.release();
+PassRefPtr<EncodedFormData> EncodedFormData::Copy() const {
+  return AdoptRef(new EncodedFormData(*this));
 }
 
-PassRefPtr<EncodedFormData> EncodedFormData::create(const Vector<char>& vector)
-{
-    RefPtr<EncodedFormData> result = create();
-    result->appendData(vector.data(), vector.size());
-    return result.release();
-}
+PassRefPtr<EncodedFormData> EncodedFormData::DeepCopy() const {
+  RefPtr<EncodedFormData> form_data(Create());
 
-PassRefPtr<EncodedFormData> EncodedFormData::copy() const
-{
-    return adoptRef(new EncodedFormData(*this));
-}
+  form_data->identifier_ = identifier_;
+  form_data->boundary_ = boundary_;
+  form_data->contains_password_data_ = contains_password_data_;
 
-PassRefPtr<EncodedFormData> EncodedFormData::deepCopy() const
-{
-    RefPtr<EncodedFormData> formData(create());
-
-    formData->m_identifier = m_identifier;
-    formData->m_boundary = m_boundary;
-    formData->m_containsPasswordData = m_containsPasswordData;
-
-    size_t n = m_elements.size();
-    formData->m_elements.reserveInitialCapacity(n);
-    for (size_t i = 0; i < n; ++i) {
-        const FormDataElement& e = m_elements[i];
-        switch (e.m_type) {
-        case FormDataElement::data:
-            formData->m_elements.uncheckedAppend(FormDataElement(e.m_data));
-            break;
-        case FormDataElement::encodedFile:
-            formData->m_elements.uncheckedAppend(FormDataElement(e.m_filename.isolatedCopy(), e.m_fileStart, e.m_fileLength, e.m_expectedFileModificationTime));
-            break;
-        case FormDataElement::encodedBlob:
-            formData->m_elements.uncheckedAppend(FormDataElement(e.m_blobUUID.isolatedCopy(), e.m_optionalBlobDataHandle));
-            break;
-        case FormDataElement::encodedFileSystemURL:
-            formData->m_elements.uncheckedAppend(FormDataElement(e.m_fileSystemURL.copy(), e.m_fileStart, e.m_fileLength, e.m_expectedFileModificationTime));
-            break;
-        }
+  size_t n = elements_.size();
+  form_data->elements_.ReserveInitialCapacity(n);
+  for (size_t i = 0; i < n; ++i) {
+    const FormDataElement& e = elements_[i];
+    switch (e.type_) {
+      case FormDataElement::kData:
+        form_data->elements_.UncheckedAppend(FormDataElement(e.data_));
+        break;
+      case FormDataElement::kEncodedFile:
+        form_data->elements_.UncheckedAppend(FormDataElement(
+            e.filename_.IsolatedCopy(), e.file_start_, e.file_length_,
+            e.expected_file_modification_time_));
+        break;
+      case FormDataElement::kEncodedBlob:
+        form_data->elements_.UncheckedAppend(FormDataElement(
+            e.blob_uuid_.IsolatedCopy(), e.optional_blob_data_handle_));
+        break;
+      case FormDataElement::kEncodedFileSystemURL:
+        form_data->elements_.UncheckedAppend(FormDataElement(
+            e.file_system_url_.Copy(), e.file_start_, e.file_length_,
+            e.expected_file_modification_time_));
+        break;
     }
-    return formData.release();
+  }
+  return form_data.Release();
 }
 
-void EncodedFormData::appendData(const void* data, size_t size)
-{
-    if (m_elements.isEmpty() || m_elements.last().m_type != FormDataElement::data)
-        m_elements.append(FormDataElement());
-    FormDataElement& e = m_elements.last();
-    size_t oldSize = e.m_data.size();
-    e.m_data.grow(oldSize + size);
-    memcpy(e.m_data.data() + oldSize, data, size);
+void EncodedFormData::AppendData(const void* data, size_t size) {
+  if (elements_.IsEmpty() || elements_.back().type_ != FormDataElement::kData)
+    elements_.push_back(FormDataElement());
+  FormDataElement& e = elements_.back();
+  size_t old_size = e.data_.size();
+  e.data_.Grow(old_size + size);
+  memcpy(e.data_.Data() + old_size, data, size);
 }
 
-void EncodedFormData::appendFile(const String& filename)
-{
-    m_elements.append(FormDataElement(filename, 0, BlobDataItem::toEndOfFile, invalidFileTime()));
+void EncodedFormData::AppendFile(const String& filename) {
+  elements_.push_back(FormDataElement(filename, 0, BlobDataItem::kToEndOfFile,
+                                      InvalidFileTime()));
 }
 
-void EncodedFormData::appendFileRange(const String& filename, long long start, long long length, double expectedModificationTime)
-{
-    m_elements.append(FormDataElement(filename, start, length, expectedModificationTime));
+void EncodedFormData::AppendFileRange(const String& filename,
+                                      long long start,
+                                      long long length,
+                                      double expected_modification_time) {
+  elements_.push_back(
+      FormDataElement(filename, start, length, expected_modification_time));
 }
 
-void EncodedFormData::appendBlob(const String& uuid, PassRefPtr<BlobDataHandle> optionalHandle)
-{
-    m_elements.append(FormDataElement(uuid, optionalHandle));
+void EncodedFormData::AppendBlob(const String& uuid,
+                                 PassRefPtr<BlobDataHandle> optional_handle) {
+  elements_.push_back(FormDataElement(uuid, std::move(optional_handle)));
 }
 
-void EncodedFormData::appendFileSystemURL(const KURL& url)
-{
-    m_elements.append(FormDataElement(url, 0, BlobDataItem::toEndOfFile, invalidFileTime()));
+void EncodedFormData::AppendFileSystemURL(const KURL& url) {
+  elements_.push_back(
+      FormDataElement(url, 0, BlobDataItem::kToEndOfFile, InvalidFileTime()));
 }
 
-void EncodedFormData::appendFileSystemURLRange(const KURL& url, long long start, long long length, double expectedModificationTime)
-{
-    m_elements.append(FormDataElement(url, start, length, expectedModificationTime));
+void EncodedFormData::AppendFileSystemURLRange(
+    const KURL& url,
+    long long start,
+    long long length,
+    double expected_modification_time) {
+  elements_.push_back(
+      FormDataElement(url, start, length, expected_modification_time));
 }
 
-void EncodedFormData::flatten(Vector<char>& data) const
-{
-    // Concatenate all the byte arrays, but omit any files.
-    data.clear();
-    size_t n = m_elements.size();
-    for (size_t i = 0; i < n; ++i) {
-        const FormDataElement& e = m_elements[i];
-        if (e.m_type == FormDataElement::data)
-            data.append(e.m_data.data(), static_cast<size_t>(e.m_data.size()));
+void EncodedFormData::Flatten(Vector<char>& data) const {
+  // Concatenate all the byte arrays, but omit any files.
+  data.Clear();
+  size_t n = elements_.size();
+  for (size_t i = 0; i < n; ++i) {
+    const FormDataElement& e = elements_[i];
+    if (e.type_ == FormDataElement::kData)
+      data.Append(e.data_.Data(), static_cast<size_t>(e.data_.size()));
+  }
+}
+
+String EncodedFormData::FlattenToString() const {
+  Vector<char> bytes;
+  Flatten(bytes);
+  return Latin1Encoding().Decode(reinterpret_cast<const char*>(bytes.Data()),
+                                 bytes.size());
+}
+
+unsigned long long EncodedFormData::SizeInBytes() const {
+  unsigned size = 0;
+  size_t n = elements_.size();
+  for (size_t i = 0; i < n; ++i) {
+    const FormDataElement& e = elements_[i];
+    switch (e.type_) {
+      case FormDataElement::kData:
+        size += e.data_.size();
+        break;
+      case FormDataElement::kEncodedFile:
+        size += e.file_length_ - e.file_start_;
+        break;
+      case FormDataElement::kEncodedBlob:
+        if (e.optional_blob_data_handle_)
+          size += e.optional_blob_data_handle_->size();
+        break;
+      case FormDataElement::kEncodedFileSystemURL:
+        size += e.file_length_ - e.file_start_;
+        break;
     }
+  }
+  return size;
 }
 
-String EncodedFormData::flattenToString() const
-{
-    Vector<char> bytes;
-    flatten(bytes);
-    return Latin1Encoding().decode(reinterpret_cast<const char*>(bytes.data()), bytes.size());
+bool EncodedFormData::IsSafeToSendToAnotherThread() const {
+  if (!HasOneRef())
+    return false;
+  for (auto& element : elements_) {
+    if (!element.IsSafeToSendToAnotherThread())
+      return false;
+  }
+  return true;
 }
 
-unsigned long long EncodedFormData::sizeInBytes() const
-{
-    unsigned size = 0;
-    size_t n = m_elements.size();
-    for (size_t i = 0; i < n; ++i) {
-        const FormDataElement& e = m_elements[i];
-        switch (e.m_type) {
-        case FormDataElement::data:
-            size += e.m_data.size();
-            break;
-        case FormDataElement::encodedFile:
-            size += e.m_fileLength - e.m_fileStart;
-            break;
-        case FormDataElement::encodedBlob:
-            if (e.m_optionalBlobDataHandle)
-                size += e.m_optionalBlobDataHandle->size();
-            break;
-        case FormDataElement::encodedFileSystemURL:
-            size += e.m_fileLength - e.m_fileStart;
-            break;
-        }
-    }
-    return size;
-}
-
-bool EncodedFormData::isSafeToSendToAnotherThread() const
-{
-    if (!hasOneRef())
-        return false;
-    for (auto& element : m_elements) {
-        if (!element.isSafeToSendToAnotherThread())
-            return false;
-    }
-    return true;
-}
-
-} // namespace blink
+}  // namespace blink

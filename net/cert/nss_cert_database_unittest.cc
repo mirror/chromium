@@ -22,7 +22,6 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "crypto/scoped_nss_types.h"
 #include "crypto/scoped_test_nss_db.h"
-#include "net/base/crypto_module.h"
 #include "net/base/hash_value.h"
 #include "net/base/net_errors.h"
 #include "net/cert/cert_status_flags.h"
@@ -68,7 +67,7 @@ class CertDatabaseNSSTest : public testing::Test {
             PK11_ReferenceSlot(test_nssdb_.slot())) /* public slot */,
         crypto::ScopedPK11Slot(
             PK11_ReferenceSlot(test_nssdb_.slot())) /* private slot */));
-    public_module_ = cert_db_->GetPublicModule();
+    public_slot_ = cert_db_->GetPublicSlot();
 
     // Test db should be empty at start of test.
     EXPECT_EQ(0U, ListCerts().size());
@@ -82,7 +81,7 @@ class CertDatabaseNSSTest : public testing::Test {
   }
 
  protected:
-  CryptoModule* GetPublicModule() { return public_module_.get(); }
+  PK11SlotInfo* GetPublicSlot() { return public_slot_.get(); }
 
   static std::string ReadTestFile(const std::string& name) {
     std::string result;
@@ -108,8 +107,13 @@ class CertDatabaseNSSTest : public testing::Test {
     for (CERTCertListNode* node = CERT_LIST_HEAD(cert_list);
          !CERT_LIST_END(node, cert_list);
          node = CERT_LIST_NEXT(node)) {
-      result.push_back(X509Certificate::CreateFromHandle(
-          node->cert, X509Certificate::OSCertHandles()));
+      scoped_refptr<X509Certificate> cert = X509Certificate::CreateFromHandle(
+          node->cert, X509Certificate::OSCertHandles());
+      if (!cert) {
+        ADD_FAILURE() << "X509Certificate::CreateFromHandle failed";
+        continue;
+      }
+      result.push_back(cert);
     }
     CERT_DestroyCertList(cert_list);
 
@@ -128,7 +132,7 @@ class CertDatabaseNSSTest : public testing::Test {
   std::unique_ptr<NSSCertDatabase> cert_db_;
   const CertificateList empty_cert_list_;
   crypto::ScopedTestNSSDB test_nssdb_;
-  scoped_refptr<CryptoModule> public_module_;
+  crypto::ScopedPK11Slot public_slot_;
 };
 
 TEST_F(CertDatabaseNSSTest, ListCertsSync) {
@@ -160,7 +164,7 @@ TEST_F(CertDatabaseNSSTest, ImportFromPKCS12WrongPassword) {
   std::string pkcs12_data = ReadTestFile("client.p12");
 
   EXPECT_EQ(ERR_PKCS12_IMPORT_BAD_PASSWORD,
-            cert_db_->ImportFromPKCS12(GetPublicModule(),
+            cert_db_->ImportFromPKCS12(GetPublicSlot(),
                                        pkcs12_data,
                                        base::string16(),
                                        true,  // is_extractable
@@ -174,7 +178,7 @@ TEST_F(CertDatabaseNSSTest, ImportFromPKCS12AsExtractableAndExportAgain) {
   std::string pkcs12_data = ReadTestFile("client.p12");
 
   EXPECT_EQ(OK,
-            cert_db_->ImportFromPKCS12(GetPublicModule(),
+            cert_db_->ImportFromPKCS12(GetPublicSlot(),
                                        pkcs12_data,
                                        ASCIIToUTF16("12345"),
                                        true,  // is_extractable
@@ -199,7 +203,7 @@ TEST_F(CertDatabaseNSSTest, ImportFromPKCS12Twice) {
   std::string pkcs12_data = ReadTestFile("client.p12");
 
   EXPECT_EQ(OK,
-            cert_db_->ImportFromPKCS12(GetPublicModule(),
+            cert_db_->ImportFromPKCS12(GetPublicSlot(),
                                        pkcs12_data,
                                        ASCIIToUTF16("12345"),
                                        true,  // is_extractable
@@ -209,7 +213,7 @@ TEST_F(CertDatabaseNSSTest, ImportFromPKCS12Twice) {
   // NSS has a SEC_ERROR_PKCS12_DUPLICATE_DATA error, but it doesn't look like
   // it's ever used.  This test verifies that.
   EXPECT_EQ(OK,
-            cert_db_->ImportFromPKCS12(GetPublicModule(),
+            cert_db_->ImportFromPKCS12(GetPublicSlot(),
                                        pkcs12_data,
                                        ASCIIToUTF16("12345"),
                                        true,  // is_extractable
@@ -221,7 +225,7 @@ TEST_F(CertDatabaseNSSTest, ImportFromPKCS12AsUnextractableAndExportAgain) {
   std::string pkcs12_data = ReadTestFile("client.p12");
 
   EXPECT_EQ(OK,
-            cert_db_->ImportFromPKCS12(GetPublicModule(),
+            cert_db_->ImportFromPKCS12(GetPublicSlot(),
                                        pkcs12_data,
                                        ASCIIToUTF16("12345"),
                                        false,  // is_extractable
@@ -244,7 +248,7 @@ TEST_F(CertDatabaseNSSTest, ImportFromPKCS12AsUnextractableAndExportAgain) {
 TEST_F(CertDatabaseNSSTest, ImportFromPKCS12OnlyMarkIncludedKey) {
   std::string pkcs12_data = ReadTestFile("client.p12");
   EXPECT_EQ(OK,
-            cert_db_->ImportFromPKCS12(GetPublicModule(),
+            cert_db_->ImportFromPKCS12(GetPublicSlot(),
                                        pkcs12_data,
                                        ASCIIToUTF16("12345"),
                                        true,  // is_extractable
@@ -256,7 +260,7 @@ TEST_F(CertDatabaseNSSTest, ImportFromPKCS12OnlyMarkIncludedKey) {
   // Now import a PKCS#12 file with just a certificate but no private key.
   pkcs12_data = ReadTestFile("client-nokey.p12");
   EXPECT_EQ(OK,
-            cert_db_->ImportFromPKCS12(GetPublicModule(),
+            cert_db_->ImportFromPKCS12(GetPublicSlot(),
                                        pkcs12_data,
                                        ASCIIToUTF16("12345"),
                                        false,  // is_extractable
@@ -276,7 +280,7 @@ TEST_F(CertDatabaseNSSTest, ImportFromPKCS12InvalidFile) {
   std::string pkcs12_data = "Foobarbaz";
 
   EXPECT_EQ(ERR_PKCS12_IMPORT_INVALID_FILE,
-            cert_db_->ImportFromPKCS12(GetPublicModule(),
+            cert_db_->ImportFromPKCS12(GetPublicSlot(),
                                        pkcs12_data,
                                        base::string16(),
                                        true,  // is_extractable
@@ -284,6 +288,30 @@ TEST_F(CertDatabaseNSSTest, ImportFromPKCS12InvalidFile) {
 
   // Test db should still be empty.
   EXPECT_EQ(0U, ListCerts().size());
+}
+
+TEST_F(CertDatabaseNSSTest, ImportFromPKCS12EmptyPassword) {
+  std::string pkcs12_data = ReadTestFile("client-empty-password.p12");
+
+  EXPECT_EQ(OK,
+            cert_db_->ImportFromPKCS12(GetPublicSlot(),
+                                       pkcs12_data,
+                                       base::string16(),
+                                       true,  // is_extractable
+                                       NULL));
+  EXPECT_EQ(1U, ListCerts().size());
+}
+
+TEST_F(CertDatabaseNSSTest, ImportFromPKCS12NullPassword) {
+  std::string pkcs12_data = ReadTestFile("client-null-password.p12");
+
+  EXPECT_EQ(OK,
+            cert_db_->ImportFromPKCS12(GetPublicSlot(),
+                                       pkcs12_data,
+                                       base::string16(),
+                                       true,  // is_extractable
+                                       NULL));
+  EXPECT_EQ(1U, ListCerts().size());
 }
 
 TEST_F(CertDatabaseNSSTest, ImportCACert_SSLTrust) {

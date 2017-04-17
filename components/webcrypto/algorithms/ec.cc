@@ -4,9 +4,6 @@
 
 #include "components/webcrypto/algorithms/ec.h"
 
-#include <openssl/ec.h>
-#include <openssl/ec_key.h>
-#include <openssl/evp.h>
 #include <stddef.h>
 #include <utility>
 
@@ -20,9 +17,14 @@
 #include "components/webcrypto/jwk.h"
 #include "components/webcrypto/status.h"
 #include "crypto/openssl_util.h"
-#include "crypto/scoped_openssl_types.h"
 #include "third_party/WebKit/public/platform/WebCryptoAlgorithmParams.h"
 #include "third_party/WebKit/public/platform/WebCryptoKeyAlgorithm.h"
+#include "third_party/boringssl/src/include/openssl/bn.h"
+#include "third_party/boringssl/src/include/openssl/bytestring.h"
+#include "third_party/boringssl/src/include/openssl/ec.h"
+#include "third_party/boringssl/src/include/openssl/ec_key.h"
+#include "third_party/boringssl/src/include/openssl/evp.h"
+#include "third_party/boringssl/src/include/openssl/mem.h"
 
 namespace webcrypto {
 
@@ -32,13 +34,13 @@ namespace {
 // BoringSSL.
 Status WebCryptoCurveToNid(blink::WebCryptoNamedCurve named_curve, int* nid) {
   switch (named_curve) {
-    case blink::WebCryptoNamedCurveP256:
+    case blink::kWebCryptoNamedCurveP256:
       *nid = NID_X9_62_prime256v1;
       return Status::Success();
-    case blink::WebCryptoNamedCurveP384:
+    case blink::kWebCryptoNamedCurveP384:
       *nid = NID_secp384r1;
       return Status::Success();
-    case blink::WebCryptoNamedCurveP521:
+    case blink::kWebCryptoNamedCurveP521:
       *nid = NID_secp521r1;
       return Status::Success();
   }
@@ -49,13 +51,13 @@ Status WebCryptoCurveToNid(blink::WebCryptoNamedCurve named_curve, int* nid) {
 Status NidToWebCryptoCurve(int nid, blink::WebCryptoNamedCurve* named_curve) {
   switch (nid) {
     case NID_X9_62_prime256v1:
-      *named_curve = blink::WebCryptoNamedCurveP256;
+      *named_curve = blink::kWebCryptoNamedCurveP256;
       return Status::Success();
     case NID_secp384r1:
-      *named_curve = blink::WebCryptoNamedCurveP384;
+      *named_curve = blink::kWebCryptoNamedCurveP384;
       return Status::Success();
     case NID_secp521r1:
-      *named_curve = blink::WebCryptoNamedCurveP521;
+      *named_curve = blink::kWebCryptoNamedCurveP521;
       return Status::Success();
   }
   return Status::ErrorImportedEcKeyIncorrectCurve();
@@ -67,9 +69,9 @@ struct JwkCrvMapping {
 };
 
 const JwkCrvMapping kJwkCrvMappings[] = {
-    {"P-256", blink::WebCryptoNamedCurveP256},
-    {"P-384", blink::WebCryptoNamedCurveP384},
-    {"P-521", blink::WebCryptoNamedCurveP521},
+    {"P-256", blink::kWebCryptoNamedCurveP256},
+    {"P-384", blink::kWebCryptoNamedCurveP384},
+    {"P-521", blink::kWebCryptoNamedCurveP521},
 };
 
 // Gets the "crv" parameter from a JWK and converts it to a WebCryptoNamedCurve.
@@ -110,24 +112,24 @@ Status VerifyEcKeyAfterSpkiOrPkcs8Import(
     blink::WebCryptoNamedCurve expected_named_curve) {
   crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
 
-  crypto::ScopedEC_KEY ec(EVP_PKEY_get1_EC_KEY(pkey));
-  if (!ec.get())
+  EC_KEY* ec = EVP_PKEY_get0_EC_KEY(pkey);
+  if (!ec)
     return Status::ErrorUnexpected();
 
   // When importing an ECPrivateKey, the public key is optional. If it was
   // omitted then the public key will be calculated by BoringSSL and added into
   // the EC_KEY. However an encoding flag is set such that when exporting to
   // PKCS8 format the public key is once again omitted. Remove this flag.
-  unsigned int enc_flags = EC_KEY_get_enc_flags(ec.get());
+  unsigned int enc_flags = EC_KEY_get_enc_flags(ec);
   enc_flags &= ~EC_PKEY_NO_PUBKEY;
-  EC_KEY_set_enc_flags(ec.get(), enc_flags);
+  EC_KEY_set_enc_flags(ec, enc_flags);
 
-  if (!EC_KEY_check_key(ec.get()))
+  if (!EC_KEY_check_key(ec))
     return Status::ErrorEcKeyInvalid();
 
   // Make sure the curve matches the expected curve name.
-  int curve_nid = EC_GROUP_get_curve_name(EC_KEY_get0_group(ec.get()));
-  blink::WebCryptoNamedCurve named_curve = blink::WebCryptoNamedCurveP256;
+  int curve_nid = EC_GROUP_get_curve_name(EC_KEY_get0_group(ec));
+  blink::WebCryptoNamedCurve named_curve = blink::kWebCryptoNamedCurveP256;
   Status status = NidToWebCryptoCurve(curve_nid, &named_curve);
   if (status.IsError())
     return status;
@@ -140,7 +142,7 @@ Status VerifyEcKeyAfterSpkiOrPkcs8Import(
 
 // Creates an EC_KEY for the given WebCryptoNamedCurve.
 Status CreateEC_KEY(blink::WebCryptoNamedCurve named_curve,
-                    crypto::ScopedEC_KEY* ec) {
+                    bssl::UniquePtr<EC_KEY>* ec) {
   int curve_nid = 0;
   Status status = WebCryptoCurveToNid(named_curve, &curve_nid);
   if (status.IsError())
@@ -170,7 +172,7 @@ Status WritePaddedBIGNUM(const std::string& member_name,
 Status ReadPaddedBIGNUM(const JwkReader& jwk,
                         const std::string& member_name,
                         size_t expected_length,
-                        crypto::ScopedBIGNUM* out) {
+                        bssl::UniquePtr<BIGNUM>* out) {
   std::string bytes;
   Status status = jwk.GetBytes(member_name, &bytes);
   if (status.IsError())
@@ -192,8 +194,8 @@ int GetGroupDegreeInBytes(EC_KEY* ec) {
 
 // Extracts the public key as affine coordinates (x,y).
 Status GetPublicKey(EC_KEY* ec,
-                    crypto::ScopedBIGNUM* x,
-                    crypto::ScopedBIGNUM* y) {
+                    bssl::UniquePtr<BIGNUM>* x,
+                    bssl::UniquePtr<BIGNUM>* y) {
   const EC_GROUP* group = EC_KEY_get0_group(ec);
   const EC_POINT* point = EC_KEY_get0_public_key(ec);
 
@@ -212,9 +214,9 @@ Status GetPublicKey(EC_KEY* ec,
 // deserialization can re-use the ImportKey*() methods.
 blink::WebCryptoAlgorithm SynthesizeImportAlgorithmForClone(
     const blink::WebCryptoKeyAlgorithm& algorithm) {
-  return blink::WebCryptoAlgorithm::adoptParamsAndCreate(
-      algorithm.id(), new blink::WebCryptoEcKeyImportParams(
-                          algorithm.ecParams()->namedCurve()));
+  return blink::WebCryptoAlgorithm::AdoptParamsAndCreate(
+      algorithm.Id(), new blink::WebCryptoEcKeyImportParams(
+                          algorithm.EcParams()->NamedCurve()));
 }
 
 }  // namespace
@@ -232,13 +234,13 @@ Status EcAlgorithm::GenerateKey(const blink::WebCryptoAlgorithm& algorithm,
   if (status.IsError())
     return status;
 
-  const blink::WebCryptoEcKeyGenParams* params = algorithm.ecKeyGenParams();
+  const blink::WebCryptoEcKeyGenParams* params = algorithm.EcKeyGenParams();
 
   crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
 
   // Generate an EC key pair.
-  crypto::ScopedEC_KEY ec_private_key;
-  status = CreateEC_KEY(params->namedCurve(), &ec_private_key);
+  bssl::UniquePtr<EC_KEY> ec_private_key;
+  status = CreateEC_KEY(params->NamedCurve(), &ec_private_key);
   if (status.IsError())
     return status;
 
@@ -246,16 +248,16 @@ Status EcAlgorithm::GenerateKey(const blink::WebCryptoAlgorithm& algorithm,
     return Status::OperationError();
 
   // Construct an EVP_PKEY for the private key.
-  crypto::ScopedEVP_PKEY private_pkey(EVP_PKEY_new());
+  bssl::UniquePtr<EVP_PKEY> private_pkey(EVP_PKEY_new());
   if (!private_pkey ||
       !EVP_PKEY_set1_EC_KEY(private_pkey.get(), ec_private_key.get())) {
     return Status::OperationError();
   }
 
   // Construct an EVP_PKEY for just the public key.
-  crypto::ScopedEC_KEY ec_public_key;
-  crypto::ScopedEVP_PKEY public_pkey(EVP_PKEY_new());
-  status = CreateEC_KEY(params->namedCurve(), &ec_public_key);
+  bssl::UniquePtr<EC_KEY> ec_public_key;
+  bssl::UniquePtr<EVP_PKEY> public_pkey(EVP_PKEY_new());
+  status = CreateEC_KEY(params->NamedCurve(), &ec_public_key);
   if (status.IsError())
     return status;
   if (!EC_KEY_set_public_key(ec_public_key.get(),
@@ -271,8 +273,8 @@ Status EcAlgorithm::GenerateKey(const blink::WebCryptoAlgorithm& algorithm,
   blink::WebCryptoKey private_key;
 
   blink::WebCryptoKeyAlgorithm key_algorithm =
-      blink::WebCryptoKeyAlgorithm::createEc(algorithm.id(),
-                                             params->namedCurve());
+      blink::WebCryptoKeyAlgorithm::CreateEc(algorithm.Id(),
+                                             params->NamedCurve());
 
   // Note that extractable is unconditionally set to true. This is because per
   // the WebCrypto spec generated public keys are always extractable.
@@ -290,11 +292,93 @@ Status EcAlgorithm::GenerateKey(const blink::WebCryptoAlgorithm& algorithm,
   return Status::Success();
 }
 
-Status EcAlgorithm::VerifyKeyUsagesBeforeImportKey(
-    blink::WebCryptoKeyFormat format,
-    blink::WebCryptoKeyUsageMask usages) const {
-  return VerifyUsagesBeforeImportAsymmetricKey(format, all_public_key_usages_,
-                                               all_private_key_usages_, usages);
+Status EcAlgorithm::ImportKey(blink::WebCryptoKeyFormat format,
+                              const CryptoData& key_data,
+                              const blink::WebCryptoAlgorithm& algorithm,
+                              bool extractable,
+                              blink::WebCryptoKeyUsageMask usages,
+                              blink::WebCryptoKey* key) const {
+  switch (format) {
+    case blink::kWebCryptoKeyFormatRaw:
+      return ImportKeyRaw(key_data, algorithm, extractable, usages, key);
+    case blink::kWebCryptoKeyFormatPkcs8:
+      return ImportKeyPkcs8(key_data, algorithm, extractable, usages, key);
+    case blink::kWebCryptoKeyFormatSpki:
+      return ImportKeySpki(key_data, algorithm, extractable, usages, key);
+    case blink::kWebCryptoKeyFormatJwk:
+      return ImportKeyJwk(key_data, algorithm, extractable, usages, key);
+    default:
+      return Status::ErrorUnsupportedImportKeyFormat();
+  }
+}
+
+Status EcAlgorithm::ExportKey(blink::WebCryptoKeyFormat format,
+                              const blink::WebCryptoKey& key,
+                              std::vector<uint8_t>* buffer) const {
+  switch (format) {
+    case blink::kWebCryptoKeyFormatRaw:
+      return ExportKeyRaw(key, buffer);
+    case blink::kWebCryptoKeyFormatPkcs8:
+      return ExportKeyPkcs8(key, buffer);
+    case blink::kWebCryptoKeyFormatSpki:
+      return ExportKeySpki(key, buffer);
+    case blink::kWebCryptoKeyFormatJwk:
+      return ExportKeyJwk(key, buffer);
+    default:
+      return Status::ErrorUnsupportedExportKeyFormat();
+  }
+}
+
+Status EcAlgorithm::ImportKeyRaw(const CryptoData& key_data,
+                                 const blink::WebCryptoAlgorithm& algorithm,
+                                 bool extractable,
+                                 blink::WebCryptoKeyUsageMask usages,
+                                 blink::WebCryptoKey* key) const {
+  crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
+
+  Status status = CheckKeyCreationUsages(all_public_key_usages_, usages);
+  if (status.IsError())
+    return status;
+
+  const blink::WebCryptoEcKeyImportParams* params =
+      algorithm.EcKeyImportParams();
+
+  // Create an EC_KEY.
+  bssl::UniquePtr<EC_KEY> ec;
+  status = CreateEC_KEY(params->NamedCurve(), &ec);
+  if (status.IsError())
+    return status;
+
+  bssl::UniquePtr<EC_POINT> point(EC_POINT_new(EC_KEY_get0_group(ec.get())));
+  if (!point.get())
+    return Status::OperationError();
+
+  // Convert the "raw" input from X9.62 format to an EC_POINT.
+  if (!EC_POINT_oct2point(EC_KEY_get0_group(ec.get()), point.get(),
+                          key_data.bytes(), key_data.byte_length(), nullptr)) {
+    return Status::DataError();
+  }
+
+  // Copy the point (public key) into the EC_KEY.
+  if (!EC_KEY_set_public_key(ec.get(), point.get()))
+    return Status::OperationError();
+
+  // Verify the key.
+  if (!EC_KEY_check_key(ec.get()))
+    return Status::ErrorEcKeyInvalid();
+
+  // Wrap the EC_KEY into an EVP_PKEY.
+  bssl::UniquePtr<EVP_PKEY> pkey(EVP_PKEY_new());
+  if (!pkey || !EVP_PKEY_set1_EC_KEY(pkey.get(), ec.get()))
+    return Status::OperationError();
+
+  blink::WebCryptoKeyAlgorithm key_algorithm =
+      blink::WebCryptoKeyAlgorithm::CreateEc(algorithm.Id(),
+                                             params->NamedCurve());
+
+  // Wrap the EVP_PKEY into a WebCryptoKey
+  return CreateWebCryptoPublicKey(std::move(pkey), key_algorithm, extractable,
+                                  usages, key);
 }
 
 Status EcAlgorithm::ImportKeyPkcs8(const CryptoData& key_data,
@@ -302,23 +386,26 @@ Status EcAlgorithm::ImportKeyPkcs8(const CryptoData& key_data,
                                    bool extractable,
                                    blink::WebCryptoKeyUsageMask usages,
                                    blink::WebCryptoKey* key) const {
-  crypto::ScopedEVP_PKEY private_key;
-  Status status =
-      ImportUnverifiedPkeyFromPkcs8(key_data, EVP_PKEY_EC, &private_key);
+  Status status = CheckKeyCreationUsages(all_private_key_usages_, usages);
+  if (status.IsError())
+    return status;
+
+  bssl::UniquePtr<EVP_PKEY> private_key;
+  status = ImportUnverifiedPkeyFromPkcs8(key_data, EVP_PKEY_EC, &private_key);
   if (status.IsError())
     return status;
 
   const blink::WebCryptoEcKeyImportParams* params =
-      algorithm.ecKeyImportParams();
+      algorithm.EcKeyImportParams();
 
   status = VerifyEcKeyAfterSpkiOrPkcs8Import(private_key.get(),
-                                             params->namedCurve());
+                                             params->NamedCurve());
   if (status.IsError())
     return status;
 
   return CreateWebCryptoPrivateKey(std::move(private_key),
-                                   blink::WebCryptoKeyAlgorithm::createEc(
-                                       algorithm.id(), params->namedCurve()),
+                                   blink::WebCryptoKeyAlgorithm::CreateEc(
+                                       algorithm.Id(), params->NamedCurve()),
                                    extractable, usages, key);
 }
 
@@ -327,23 +414,26 @@ Status EcAlgorithm::ImportKeySpki(const CryptoData& key_data,
                                   bool extractable,
                                   blink::WebCryptoKeyUsageMask usages,
                                   blink::WebCryptoKey* key) const {
-  crypto::ScopedEVP_PKEY public_key;
-  Status status =
-      ImportUnverifiedPkeyFromSpki(key_data, EVP_PKEY_EC, &public_key);
+  Status status = CheckKeyCreationUsages(all_public_key_usages_, usages);
+  if (status.IsError())
+    return status;
+
+  bssl::UniquePtr<EVP_PKEY> public_key;
+  status = ImportUnverifiedPkeyFromSpki(key_data, EVP_PKEY_EC, &public_key);
   if (status.IsError())
     return status;
 
   const blink::WebCryptoEcKeyImportParams* params =
-      algorithm.ecKeyImportParams();
+      algorithm.EcKeyImportParams();
 
   status =
-      VerifyEcKeyAfterSpkiOrPkcs8Import(public_key.get(), params->namedCurve());
+      VerifyEcKeyAfterSpkiOrPkcs8Import(public_key.get(), params->NamedCurve());
   if (status.IsError())
     return status;
 
   return CreateWebCryptoPublicKey(std::move(public_key),
-                                  blink::WebCryptoKeyAlgorithm::createEc(
-                                      algorithm.id(), params->namedCurve()),
+                                  blink::WebCryptoKeyAlgorithm::CreateEc(
+                                      algorithm.Id(), params->NamedCurve()),
                                   extractable, usages, key);
 }
 
@@ -357,7 +447,7 @@ Status EcAlgorithm::ImportKeyJwk(const CryptoData& key_data,
   crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
 
   const blink::WebCryptoEcKeyImportParams* params =
-      algorithm.ecKeyImportParams();
+      algorithm.EcKeyImportParams();
 
   // When importing EC keys from JWK there may be up to *three* separate curve
   // names:
@@ -370,16 +460,16 @@ Status EcAlgorithm::ImportKeyJwk(const CryptoData& key_data,
 
   JwkReader jwk;
   Status status = jwk.Init(key_data, extractable, usages, "EC",
-                           GetJwkAlgorithm(params->namedCurve()));
+                           GetJwkAlgorithm(params->NamedCurve()));
   if (status.IsError())
     return status;
 
   // Verify that "crv" matches expected curve.
-  blink::WebCryptoNamedCurve jwk_crv = blink::WebCryptoNamedCurveP256;
+  blink::WebCryptoNamedCurve jwk_crv = blink::kWebCryptoNamedCurveP256;
   status = ReadJwkCrv(jwk, &jwk_crv);
   if (status.IsError())
     return status;
-  if (jwk_crv != params->namedCurve())
+  if (jwk_crv != params->NamedCurve())
     return Status::ErrorJwkIncorrectCrv();
 
   // Only private keys have a "d" parameter. The key may still be invalid, but
@@ -388,17 +478,17 @@ Status EcAlgorithm::ImportKeyJwk(const CryptoData& key_data,
 
   // Now that the key type is known, verify the usages.
   if (is_private_key) {
-    status = CheckPrivateKeyCreationUsages(all_private_key_usages_, usages);
+    status = CheckKeyCreationUsages(all_private_key_usages_, usages);
   } else {
-    status = CheckPublicKeyCreationUsages(all_public_key_usages_, usages);
+    status = CheckKeyCreationUsages(all_public_key_usages_, usages);
   }
 
   if (status.IsError())
     return status;
 
   // Create an EC_KEY.
-  crypto::ScopedEC_KEY ec;
-  status = CreateEC_KEY(params->namedCurve(), &ec);
+  bssl::UniquePtr<EC_KEY> ec;
+  status = CreateEC_KEY(params->NamedCurve(), &ec);
   if (status.IsError())
     return status;
 
@@ -406,12 +496,12 @@ Status EcAlgorithm::ImportKeyJwk(const CryptoData& key_data,
   int degree_bytes = GetGroupDegreeInBytes(ec.get());
 
   // Read the public key's uncompressed affine coordinates.
-  crypto::ScopedBIGNUM x;
+  bssl::UniquePtr<BIGNUM> x;
   status = ReadPaddedBIGNUM(jwk, "x", degree_bytes, &x);
   if (status.IsError())
     return status;
 
-  crypto::ScopedBIGNUM y;
+  bssl::UniquePtr<BIGNUM> y;
   status = ReadPaddedBIGNUM(jwk, "y", degree_bytes, &y);
   if (status.IsError())
     return status;
@@ -424,7 +514,7 @@ Status EcAlgorithm::ImportKeyJwk(const CryptoData& key_data,
 
   // Extract the "d" parameters.
   if (is_private_key) {
-    crypto::ScopedBIGNUM d;
+    bssl::UniquePtr<BIGNUM> d;
     status = ReadPaddedBIGNUM(jwk, "d", degree_bytes, &d);
     if (status.IsError())
       return status;
@@ -438,13 +528,13 @@ Status EcAlgorithm::ImportKeyJwk(const CryptoData& key_data,
     return Status::ErrorEcKeyInvalid();
 
   // Wrap the EC_KEY into an EVP_PKEY.
-  crypto::ScopedEVP_PKEY pkey(EVP_PKEY_new());
+  bssl::UniquePtr<EVP_PKEY> pkey(EVP_PKEY_new());
   if (!pkey || !EVP_PKEY_set1_EC_KEY(pkey.get(), ec.get()))
     return Status::OperationError();
 
   blink::WebCryptoKeyAlgorithm key_algorithm =
-      blink::WebCryptoKeyAlgorithm::createEc(algorithm.id(),
-                                             params->namedCurve());
+      blink::WebCryptoKeyAlgorithm::CreateEc(algorithm.Id(),
+                                             params->NamedCurve());
 
   // Wrap the EVP_PKEY into a WebCryptoKey
   if (is_private_key) {
@@ -455,9 +545,39 @@ Status EcAlgorithm::ImportKeyJwk(const CryptoData& key_data,
                                   usages, key);
 }
 
+Status EcAlgorithm::ExportKeyRaw(const blink::WebCryptoKey& key,
+                                 std::vector<uint8_t>* buffer) const {
+  crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
+
+  if (key.GetType() != blink::kWebCryptoKeyTypePublic)
+    return Status::ErrorUnexpectedKeyType();
+
+  EVP_PKEY* pkey = GetEVP_PKEY(key);
+
+  EC_KEY* ec = EVP_PKEY_get0_EC_KEY(pkey);
+  if (!ec)
+    return Status::ErrorUnexpected();
+
+  // Serialize the public key as an uncompressed point in X9.62 form.
+  uint8_t* raw;
+  size_t raw_len;
+  bssl::ScopedCBB cbb;
+  if (!CBB_init(cbb.get(), 0) ||
+      !EC_POINT_point2cbb(cbb.get(), EC_KEY_get0_group(ec),
+                          EC_KEY_get0_public_key(ec),
+                          POINT_CONVERSION_UNCOMPRESSED, nullptr) ||
+      !CBB_finish(cbb.get(), &raw, &raw_len)) {
+    return Status::OperationError();
+  }
+  buffer->assign(raw, raw + raw_len);
+  OPENSSL_free(raw);
+
+  return Status::Success();
+}
+
 Status EcAlgorithm::ExportKeyPkcs8(const blink::WebCryptoKey& key,
                                    std::vector<uint8_t>* buffer) const {
-  if (key.type() != blink::WebCryptoKeyTypePrivate)
+  if (key.GetType() != blink::kWebCryptoKeyTypePrivate)
     return Status::ErrorUnexpectedKeyType();
   // This relies on the fact that PKCS8 formatted data was already
   // associated with the key during its creation (used by
@@ -468,7 +588,7 @@ Status EcAlgorithm::ExportKeyPkcs8(const blink::WebCryptoKey& key,
 
 Status EcAlgorithm::ExportKeySpki(const blink::WebCryptoKey& key,
                                   std::vector<uint8_t>* buffer) const {
-  if (key.type() != blink::WebCryptoKeyTypePublic)
+  if (key.GetType() != blink::kWebCryptoKeyTypePublic)
     return Status::ErrorUnexpectedKeyType();
   // This relies on the fact that SPKI formatted data was already
   // associated with the key during its creation (used by
@@ -485,27 +605,27 @@ Status EcAlgorithm::ExportKeyJwk(const blink::WebCryptoKey& key,
 
   EVP_PKEY* pkey = GetEVP_PKEY(key);
 
-  crypto::ScopedEC_KEY ec(EVP_PKEY_get1_EC_KEY(pkey));
-  if (!ec.get())
+  EC_KEY* ec = EVP_PKEY_get0_EC_KEY(pkey);
+  if (!ec)
     return Status::ErrorUnexpected();
 
   // No "alg" is set for EC keys.
-  JwkWriter jwk(std::string(), key.extractable(), key.usages(), "EC");
+  JwkWriter jwk(std::string(), key.Extractable(), key.Usages(), "EC");
 
   // Set the crv
   std::string crv;
   Status status =
-      WebCryptoCurveToJwkCrv(key.algorithm().ecParams()->namedCurve(), &crv);
+      WebCryptoCurveToJwkCrv(key.Algorithm().EcParams()->NamedCurve(), &crv);
   if (status.IsError())
     return status;
 
-  int degree_bytes = GetGroupDegreeInBytes(ec.get());
+  int degree_bytes = GetGroupDegreeInBytes(ec);
 
   jwk.SetString("crv", crv);
 
-  crypto::ScopedBIGNUM x;
-  crypto::ScopedBIGNUM y;
-  status = GetPublicKey(ec.get(), &x, &y);
+  bssl::UniquePtr<BIGNUM> x;
+  bssl::UniquePtr<BIGNUM> y;
+  status = GetPublicKey(ec, &x, &y);
   if (status.IsError())
     return status;
 
@@ -517,8 +637,8 @@ Status EcAlgorithm::ExportKeyJwk(const blink::WebCryptoKey& key,
   if (status.IsError())
     return status;
 
-  if (key.type() == blink::WebCryptoKeyTypePrivate) {
-    const BIGNUM* d = EC_KEY_get0_private_key(ec.get());
+  if (key.GetType() == blink::kWebCryptoKeyTypePrivate) {
+    const BIGNUM* d = EC_KEY_get0_private_key(ec);
     status = WritePaddedBIGNUM("d", d, degree_bytes, &jwk);
     if (status.IsError())
       return status;
@@ -536,6 +656,9 @@ Status EcAlgorithm::DeserializeKeyForClone(
     blink::WebCryptoKeyUsageMask usages,
     const CryptoData& key_data,
     blink::WebCryptoKey* key) const {
+  if (algorithm.ParamsType() != blink::kWebCryptoKeyAlgorithmParamsTypeEc)
+    return Status::ErrorUnexpected();
+
   blink::WebCryptoAlgorithm import_algorithm =
       SynthesizeImportAlgorithmForClone(algorithm);
 
@@ -543,11 +666,11 @@ Status EcAlgorithm::DeserializeKeyForClone(
 
   // The serialized data will be either SPKI or PKCS8 formatted.
   switch (type) {
-    case blink::WebCryptoKeyTypePublic:
+    case blink::kWebCryptoKeyTypePublic:
       status =
           ImportKeySpki(key_data, import_algorithm, extractable, usages, key);
       break;
-    case blink::WebCryptoKeyTypePrivate:
+    case blink::kWebCryptoKeyTypePrivate:
       status =
           ImportKeyPkcs8(key_data, import_algorithm, extractable, usages, key);
       break;
@@ -560,14 +683,14 @@ Status EcAlgorithm::DeserializeKeyForClone(
   // key data). Use this extra information to further validate what was
   // deserialized from the key data.
 
-  if (algorithm.id() != key->algorithm().id())
+  if (algorithm.Id() != key->Algorithm().Id())
     return Status::ErrorUnexpected();
 
-  if (type != key->type())
+  if (type != key->GetType())
     return Status::ErrorUnexpected();
 
-  if (algorithm.ecParams()->namedCurve() !=
-      key->algorithm().ecParams()->namedCurve()) {
+  if (algorithm.EcParams()->NamedCurve() !=
+      key->Algorithm().EcParams()->NamedCurve()) {
     return Status::ErrorUnexpected();
   }
 

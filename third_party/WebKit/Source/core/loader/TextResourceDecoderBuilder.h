@@ -31,11 +31,11 @@
 #ifndef TextResourceDecoderBuilder_h
 #define TextResourceDecoderBuilder_h
 
-#include "core/html/parser/TextResourceDecoder.h"
-#include "wtf/Allocator.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/text/WTFString.h"
 #include <memory>
+#include "core/html/parser/TextResourceDecoder.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -43,26 +43,28 @@ class Document;
 class TextResourceDecoder;
 
 class CORE_EXPORT TextResourceDecoderBuilder {
-    DISALLOW_NEW();
-public:
-    TextResourceDecoderBuilder(const AtomicString& mimeType, const AtomicString& encoding);
-    ~TextResourceDecoderBuilder();
+  DISALLOW_NEW();
 
-    std::unique_ptr<TextResourceDecoder> buildFor(Document*);
+ public:
+  TextResourceDecoderBuilder(const AtomicString& mime_type,
+                             const AtomicString& encoding);
+  ~TextResourceDecoderBuilder();
 
-    const AtomicString& mimeType() const { return m_mimeType; }
-    const AtomicString& encoding() const { return m_encoding; }
+  std::unique_ptr<TextResourceDecoder> BuildFor(Document*);
 
-    void clear();
+  const AtomicString& MimeType() const { return mime_type_; }
+  const AtomicString& Encoding() const { return encoding_; }
 
-private:
-    std::unique_ptr<TextResourceDecoder> createDecoderInstance(Document*);
-    void setupEncoding(TextResourceDecoder*, Document*);
+  void Clear();
 
-    AtomicString m_mimeType;
-    AtomicString m_encoding;
+ private:
+  std::unique_ptr<TextResourceDecoder> CreateDecoderInstance(Document*);
+  void SetupEncoding(TextResourceDecoder*, Document*);
+
+  AtomicString mime_type_;
+  AtomicString encoding_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TextResourceDecoderBuilder_h
+#endif  // TextResourceDecoderBuilder_h

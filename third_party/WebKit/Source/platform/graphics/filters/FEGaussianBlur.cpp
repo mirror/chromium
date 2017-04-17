@@ -31,99 +31,73 @@
 
 #include "SkBlurImageFilter.h"
 
-static inline float gaussianKernelFactor()
-{
-    return 3 / 4.f * sqrtf(twoPiFloat);
-}
-
 namespace blink {
 
+namespace {
+
+inline unsigned ApproximateBoxWidth(float s) {
+  return static_cast<unsigned>(
+      floorf(s * (3 / 4.f * sqrtf(twoPiFloat)) + 0.5f));
+}
+
+IntSize CalculateKernelSize(const FloatSize& std) {
+  DCHECK(std.Width() >= 0 && std.Height() >= 0);
+  IntSize kernel_size;
+  if (std.Width()) {
+    int size = std::max<unsigned>(2, ApproximateBoxWidth(std.Width()));
+    kernel_size.SetWidth(size);
+  }
+  if (std.Height()) {
+    int size = std::max<unsigned>(2, ApproximateBoxWidth(std.Height()));
+    kernel_size.SetHeight(size);
+  }
+  return kernel_size;
+}
+
+}
+
 FEGaussianBlur::FEGaussianBlur(Filter* filter, float x, float y)
-    : FilterEffect(filter)
-    , m_stdX(x)
-    , m_stdY(y)
-{
+    : FilterEffect(filter), std_x_(x), std_y_(y) {}
+
+FEGaussianBlur* FEGaussianBlur::Create(Filter* filter, float x, float y) {
+  return new FEGaussianBlur(filter, x, y);
 }
 
-FEGaussianBlur* FEGaussianBlur::create(Filter* filter, float x, float y)
-{
-    return new FEGaussianBlur(filter, x, y);
+FloatRect FEGaussianBlur::MapEffect(const FloatSize& std_deviation,
+                                    const FloatRect& rect) {
+  IntSize kernel_size = CalculateKernelSize(std_deviation);
+  // We take the half kernel size and multiply it by three, because we run box
+  // blur three times.
+  FloatRect result = rect;
+  result.InflateX(3.0f * kernel_size.Width() * 0.5f);
+  result.InflateY(3.0f * kernel_size.Height() * 0.5f);
+  return result;
 }
 
-IntSize FEGaussianBlur::calculateUnscaledKernelSize(const FloatPoint& std)
-{
-    ASSERT(std.x() >= 0 && std.y() >= 0);
-
-    IntSize kernelSize;
-    // Limit the kernel size to 1000. A bigger radius won't make a big difference for the result image but
-    // inflates the absolute paint rect to much. This is compatible with Firefox' behavior.
-    if (std.x()) {
-        int size = std::max<unsigned>(2, static_cast<unsigned>(floorf(std.x() * gaussianKernelFactor() + 0.5f)));
-        kernelSize.setWidth(size);
-    }
-
-    if (std.y()) {
-        int size = std::max<unsigned>(2, static_cast<unsigned>(floorf(std.y() * gaussianKernelFactor() + 0.5f)));
-        kernelSize.setHeight(size);
-    }
-
-    return kernelSize;
+FloatRect FEGaussianBlur::MapEffect(const FloatRect& rect) const {
+  FloatSize std_error(GetFilter()->ApplyHorizontalScale(std_x_),
+                      GetFilter()->ApplyVerticalScale(std_y_));
+  return MapEffect(std_error, rect);
 }
 
-IntSize FEGaussianBlur::calculateKernelSize(const Filter* filter, const FloatPoint& std)
-{
-    FloatPoint stdError(filter->applyHorizontalScale(std.x()), filter->applyVerticalScale(std.y()));
-    return calculateUnscaledKernelSize(stdError);
+sk_sp<SkImageFilter> FEGaussianBlur::CreateImageFilter() {
+  sk_sp<SkImageFilter> input(
+      SkiaImageFilterBuilder::Build(InputEffect(0), OperatingColorSpace()));
+  float std_x = GetFilter()->ApplyHorizontalScale(std_x_);
+  float std_y = GetFilter()->ApplyVerticalScale(std_y_);
+  SkImageFilter::CropRect rect = GetCropRect();
+  return SkBlurImageFilter::Make(SkFloatToScalar(std_x), SkFloatToScalar(std_y),
+                                 std::move(input), &rect);
 }
 
-FloatRect FEGaussianBlur::mapRect(const FloatRect& rect, bool) const
-{
-    FloatRect result = rect;
-    IntSize kernelSize = calculateKernelSize(getFilter(), FloatPoint(m_stdX, m_stdY));
-
-    // We take the half kernel size and multiply it with three, because we run box blur three times.
-    result.inflateX(3 * kernelSize.width() * 0.5f);
-    result.inflateY(3 * kernelSize.height() * 0.5f);
-    return result;
+TextStream& FEGaussianBlur::ExternalRepresentation(TextStream& ts,
+                                                   int indent) const {
+  WriteIndent(ts, indent);
+  ts << "[feGaussianBlur";
+  FilterEffect::ExternalRepresentation(ts);
+  ts << " stdDeviation=\"" << std_x_ << ", " << std_y_ << "\"]\n";
+  InputEffect(0)->ExternalRepresentation(ts, indent + 1);
+  return ts;
 }
 
-FloatRect FEGaussianBlur::determineAbsolutePaintRect(const FloatRect& originalRequestedRect)
-{
-    FloatRect requestedRect = originalRequestedRect;
-    if (clipsToBounds())
-        requestedRect.intersect(maxEffectRect());
-
-    FilterEffect* input = inputEffect(0);
-    FloatRect inputRect = input->determineAbsolutePaintRect(mapRect(requestedRect, false));
-    FloatRect outputRect = mapRect(inputRect, true);
-    outputRect.intersect(requestedRect);
-    addAbsolutePaintRect(outputRect);
-
-    // Blur needs space for both input and output pixels in the paint area.
-    // Input is also clipped to subregion.
-    if (clipsToBounds())
-        inputRect.intersect(maxEffectRect());
-    addAbsolutePaintRect(inputRect);
-    return outputRect;
-}
-
-sk_sp<SkImageFilter> FEGaussianBlur::createImageFilter()
-{
-    sk_sp<SkImageFilter> input(SkiaImageFilterBuilder::build(inputEffect(0), operatingColorSpace()));
-    float stdX = getFilter()->applyHorizontalScale(m_stdX);
-    float stdY = getFilter()->applyVerticalScale(m_stdY);
-    SkImageFilter::CropRect rect = getCropRect();
-    return SkBlurImageFilter::Make(SkFloatToScalar(stdX), SkFloatToScalar(stdY), std::move(input), &rect);
-}
-
-TextStream& FEGaussianBlur::externalRepresentation(TextStream& ts, int indent) const
-{
-    writeIndent(ts, indent);
-    ts << "[feGaussianBlur";
-    FilterEffect::externalRepresentation(ts);
-    ts << " stdDeviation=\"" << m_stdX << ", " << m_stdY << "\"]\n";
-    inputEffect(0)->externalRepresentation(ts, indent + 1);
-    return ts;
-}
-
-} // namespace blink
+}  // namespace blink

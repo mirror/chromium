@@ -6,8 +6,6 @@
 
 #include <stddef.h>
 
-#include "ash/common/wm_shell.h"
-#include "ash/display/display_manager.h"
 #include "ash/shell.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -17,12 +15,13 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chromeos/settings/cros_settings_names.h"
+#include "ui/display/manager/display_manager.h"
 
 namespace policy {
 
 DisplayRotationDefaultHandler::DisplayRotationDefaultHandler() {
-  ash::Shell::GetInstance()->window_tree_host_manager()->AddObserver(this);
-  ash::WmShell::Get()->AddShellObserver(this);
+  ash::Shell::Get()->window_tree_host_manager()->AddObserver(this);
+  ash::Shell::Get()->AddShellObserver(this);
   settings_observer_ = chromeos::CrosSettings::Get()->AddSettingsObserver(
       chromeos::kDisplayRotationDefault,
       base::Bind(&DisplayRotationDefaultHandler::OnCrosSettingsChanged,
@@ -42,8 +41,8 @@ void DisplayRotationDefaultHandler::OnDisplayConfigurationChanged() {
 }
 
 void DisplayRotationDefaultHandler::OnWindowTreeHostManagerShutdown() {
-  ash::Shell::GetInstance()->window_tree_host_manager()->RemoveObserver(this);
-  ash::WmShell::Get()->RemoveShellObserver(this);
+  ash::Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
+  ash::Shell::Get()->RemoveShellObserver(this);
   settings_observer_.reset();
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
 }
@@ -64,8 +63,8 @@ void DisplayRotationDefaultHandler::RotateDisplays() {
   // being called by rotations here.
   rotation_in_progress_ = true;
 
-  ash::DisplayManager* const display_manager =
-      ash::Shell::GetInstance()->display_manager();
+  display::DisplayManager* const display_manager =
+      ash::Shell::Get()->display_manager();
   const size_t num_displays = display_manager->GetNumDisplays();
   for (size_t i = 0; i < num_displays; ++i) {
     const display::Display& display = display_manager->GetDisplayAt(i);

@@ -5,6 +5,10 @@
 
 <script>
 description('Checks that clicking on scrollbar works when tickmarks are added.');
+if (window.internals) {
+    window.internals.settings.setOverlayScrollbarsEnabled(true);
+}
+
 onload = function()
 {
     if (window.testRunner)
@@ -13,12 +17,12 @@ onload = function()
     var elt = document.getElementById('elt');
     range.selectNodeContents(elt);
     if (window.internals) {
-        window.internals.settings.setOverlayScrollbarsEnabled(true);
-        window.internals.addTextMatchMarker(range, true);
+        window.internals.addTextMatchMarker(range, 'kActive');
     }
     if (window.eventSender) {
-        eventSender.mouseMoveTo(window.innerWidth - 1, window.innerHeight - 1);
+        eventSender.mouseMoveTo(window.innerWidth - 1, 10);
         eventSender.mouseDown();
+        eventSender.mouseMoveTo(window.innerWidth - 1, 100);
         eventSender.mouseUp();
     }
 }

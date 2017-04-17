@@ -18,6 +18,7 @@ import mimetypes
 
 from grit import lazy_re
 from grit import util
+from grit.format import minifier
 
 # There is a python bug that makes mimetypes crash if the Windows
 # registry contains non-Latin keys ( http://bugs.python.org/issue9291
@@ -31,22 +32,39 @@ DIST_DEFAULT = 'chromium'
 DIST_ENV_VAR = 'CHROMIUM_BUILD'
 DIST_SUBSTR = '%DISTRIBUTION%'
 
-# Matches beginning of an "if" block with trailing spaces.
+# Matches beginning of an "if" block.
 _BEGIN_IF_BLOCK = lazy_re.compile(
-    '<if [^>]*?expr="(?P<expression>[^"]*)"[^>]*?>\s*')
+    '<if [^>]*?expr=("(?P<expr1>[^">]*)"|\'(?P<expr2>[^\'>]*)\')[^>]*?>')
 
-# Matches ending of an "if" block with preceding spaces.
-_END_IF_BLOCK = lazy_re.compile('\s*</if>')
+# Matches ending of an "if" block.
+_END_IF_BLOCK = lazy_re.compile('</if>')
 
 # Used by DoInline to replace various links with inline content.
 _STYLESHEET_RE = lazy_re.compile(
     '<link rel="stylesheet"[^>]+?href="(?P<filename>[^"]*)".*?>(\s*</link>)?',
     re.DOTALL)
 _INCLUDE_RE = lazy_re.compile(
-    '<include[^>]+?src="(?P<filename>[^"\']*)".*?>(\s*</include>)?',
+    '<include[^>]+?src=("(?P<file1>[^">]*)"|\'(?P<file2>[^\'>]*)\').*?>' +
+    '(\s*</include>)?',
     re.DOTALL)
 _SRC_RE = lazy_re.compile(
-    r'<(?!script)(?:[^>]+?\s)src=(?P<quote>")(?!\[\[|{{)(?P<filename>[^"\']*)\1',
+    r'<(?!script)(?:[^>]+?\s)src="(?!\[\[|{{)(?P<filename>[^"\']*)"',
+    re.MULTILINE)
+# This re matches '<img srcset="..."'
+_SRCSET_RE = lazy_re.compile(
+    r'<img\b(?:[^>]*?\s)srcset="(?!\[\[|{{)(?P<srcset>[^"\']*)"',
+    re.MULTILINE)
+# This re is for splitting srcset value string into "image candidate strings".
+# Notes:
+# - HTML 5.2 states that URL cannot start with comma.
+# - the "descriptor" is either "width descriptor" or "pixel density descriptor".
+#   The first one consists of "valid non-negative integer + letter 'x'",
+#   the second one is formed of "positive valid floating-point number +
+#   letter 'w'". As a reasonable compromise, we match a list of characters
+#   that form both of them.
+# Matches for example "img2.png 2x" or "img9.png 11E-2w".
+_SRCSET_ENTRY_RE = lazy_re.compile(
+    r'\s*(?P<url>[^,]\S+)\s+(?P<descriptor>[\deE.-]+[wx])\s*',
     re.MULTILINE)
 _ICON_RE = lazy_re.compile(
     r'<link rel="icon"\s(?:[^>]+?\s)?'
@@ -67,20 +85,17 @@ def GetDistribution():
       distribution = distribution[1:].lower()
   return distribution
 
+def ConvertFileToDataURL(filename, base_path, distribution, inlined_files,
+    names_only):
+  """Convert filename to inlined data URI.
 
-def SrcInlineAsDataURL(
-    src_match, base_path, distribution, inlined_files, names_only=False,
-    filename_expansion_function=None):
-  """regex replace function.
-
-  Takes a regex match for src="filename", attempts to read the file
-  at 'filename' and returns the src attribute with the file inlined
-  as a data URI. If it finds DIST_SUBSTR string in file name, replaces
-  it with distribution.
+  Takes a filename from ether "src" or "srcset", and attempts to read the file
+  at 'filename'. Returns data URI as string with given file inlined.
+  If it finds DIST_SUBSTR string in file name, replaces it with distribution.
+  If filename contains ':', it is considered URL and not translated.
 
   Args:
-    src_match: regex match object with 'filename' and 'quote' named capturing
-               groups
+    filename: filename string from ether src or srcset attributes.
     base_path: path that to look for files in
     distribution: string that should replace DIST_SUBSTR
     inlined_files: The name of the opened file is appended to this list.
@@ -90,14 +105,9 @@ def SrcInlineAsDataURL(
   Returns:
     string
   """
-  filename = src_match.group('filename')
-  if filename_expansion_function:
-    filename = filename_expansion_function(filename)
-  quote = src_match.group('quote')
-
   if filename.find(':') != -1:
     # filename is probably a URL, which we don't want to bother inlining
-    return src_match.group(0)
+    return filename
 
   filename = filename.replace(DIST_SUBSTR , distribution)
   filepath = os.path.normpath(os.path.join(base_path, filename))
@@ -111,11 +121,122 @@ def SrcInlineAsDataURL(
     raise Exception('%s is of an an unknown type and '
                     'cannot be stored in a data url.' % filename)
   inline_data = base64.standard_b64encode(util.ReadFile(filepath, util.BINARY))
+  return 'data:%s;base64,%s' % (mimetype, inline_data)
+
+
+def SrcInlineAsDataURL(
+    src_match, base_path, distribution, inlined_files, names_only=False,
+    filename_expansion_function=None):
+  """regex replace function.
+
+  Takes a regex match for src="filename", attempts to read the file
+  at 'filename' and returns the src attribute with the file inlined
+  as a data URI. If it finds DIST_SUBSTR string in file name, replaces
+  it with distribution.
+
+  Args:
+    src_match: regex match object with 'filename' named capturing group
+    base_path: path that to look for files in
+    distribution: string that should replace DIST_SUBSTR
+    inlined_files: The name of the opened file is appended to this list.
+    names_only: If true, the function will not read the file but just return "".
+                It will still add the filename to |inlined_files|.
+
+  Returns:
+    string
+  """
+  filename = src_match.group('filename')
+  if filename_expansion_function:
+    filename = filename_expansion_function(filename)
+
+  data_url = ConvertFileToDataURL(filename, base_path, distribution,
+                                  inlined_files, names_only)
+
+  if not data_url:
+    return data_url
 
   prefix = src_match.string[src_match.start():src_match.start('filename')]
   suffix = src_match.string[src_match.end('filename'):src_match.end()]
-  return '%sdata:%s;base64,%s%s' % (prefix, mimetype, inline_data, suffix)
+  return prefix + data_url + suffix
 
+def SrcsetInlineAsDataURL(
+    srcset_match, base_path, distribution, inlined_files, names_only=False,
+    filename_expansion_function=None):
+  """regex replace function to inline files in srcset="..." attributes
+
+  Takes a regex match for srcset="filename 1x, filename 2x, ...", attempts to
+  read the files referenced by filenames and returns the srcset attribute with
+  the files inlined as a data URI. If it finds DIST_SUBSTR string in file name,
+  replaces it with distribution.
+
+  Args:
+    srcset_match: regex match object with 'srcset' named capturing group
+    base_path: path that to look for files in
+    distribution: string that should replace DIST_SUBSTR
+    inlined_files: The name of the opened file is appended to this list.
+    names_only: If true, the function will not read the file but just return "".
+                It will still add the filename to |inlined_files|.
+
+  Returns:
+    string
+  """
+  srcset = srcset_match.group('srcset')
+
+  if not srcset:
+    return srcset_match.group(0)
+
+  # HTML 5.2 defines srcset as a list of "image candidate strings".
+  # Each of them consists of URL and descriptor.
+  # _SRCSET_ENTRY_RE splits srcset into a list of URLs, descriptors and
+  # commas.
+  parts = _SRCSET_ENTRY_RE.split(srcset)
+
+  if not parts:
+    return srcset_match.group(0)
+
+  # List of image candidate strings that will form new srcset="..."
+  new_candidates = []
+
+  # When iterating over split srcset we fill this parts of a single image
+  # candidate string: [url, descriptor]
+  candidate = [];
+
+  for part in parts:
+    if not part:
+      continue
+
+    if part == ',':
+      # There must be no URL without a descriptor.
+      assert not candidate, "Bad srcset format in '%s'" % srcset_match.group(0)
+      continue
+
+    if candidate:
+      # descriptor found
+      if candidate[0]:
+        # This is not "names_only" mode.
+        candidate.append(part)
+        new_candidates.append(" ".join(candidate))
+
+      candidate = []
+      continue
+
+    if filename_expansion_function:
+      filename = filename_expansion_function(part)
+    else:
+      filename = part
+
+    data_url = ConvertFileToDataURL(filename, base_path, distribution,
+                                    inlined_files, names_only)
+
+    candidate.append(data_url)
+
+  # There must be no URL without a descriptor
+  assert not candidate, "Bad srcset ending in '%s' " % srcset_match.group(0)
+
+  prefix = srcset_match.string[srcset_match.start():
+      srcset_match.start('srcset')]
+  suffix = srcset_match.string[srcset_match.end('srcset'):srcset_match.end()]
+  return prefix + ','.join(new_candidates) + suffix
 
 class InlinedData:
   """Helper class holding the results from DoInline().
@@ -129,8 +250,8 @@ class InlinedData:
 
 def DoInline(
     input_filename, grd_node, allow_external_script=False,
-    preprocess_only=False, names_only=False, rewrite_function=None,
-    filename_expansion_function=None):
+    preprocess_only=False, names_only=False, strip_whitespace=False,
+    rewrite_function=None, filename_expansion_function=None):
   """Helper function that inlines the resources in a specified file.
 
   Reads input_filename, finds all the src attributes and attempts to
@@ -142,6 +263,7 @@ def DoInline(
     grd_node: html node from the grd file for this include tag
     preprocess_only: Skip all HTML processing, only handle <if> and <include>.
     names_only: |nil| will be returned for the inlined contents (faster).
+    strip_whitespace: remove whitespace and comments in the input files.
     rewrite_function: function(filepath, text, distribution) which will be
         called to rewrite html content before inlining images.
     filename_expansion_function: function(filename) which will be called to
@@ -165,8 +287,19 @@ def DoInline(
         src_match, filepath, distribution, inlined_files, names_only=names_only,
         filename_expansion_function=filename_expansion_function)
 
+  def SrcsetReplace(srcset_match, filepath=input_filepath,
+                 inlined_files=inlined_files):
+    """Helper function to provide SrcsetInlineAsDataURL with the base file
+    path.
+    """
+    return SrcsetInlineAsDataURL(
+        srcset_match, filepath, distribution, inlined_files,
+        names_only=names_only,
+        filename_expansion_function=filename_expansion_function)
+
   def GetFilepath(src_match, base_path = input_filepath):
-    filename = src_match.group('filename')
+    matches = src_match.groupdict().iteritems()
+    filename = [v for k, v in matches if k.startswith('file') and v][0]
 
     if filename.find(':') != -1:
       # filename is probably a URL, which we don't want to bother inlining
@@ -178,8 +311,9 @@ def DoInline(
     return os.path.normpath(os.path.join(base_path, filename))
 
   def IsConditionSatisfied(src_match):
-    expression = src_match.group('expression')
-    return grd_node is None or grd_node.EvaluateCondition(expression)
+    expr1 = src_match.group('expr1') or ''
+    expr2 = src_match.group('expr2') or ''
+    return grd_node is None or grd_node.EvaluateCondition(expr1 + expr2)
 
   def CheckConditionalElements(str):
     """Helper function to conditionally inline inner elements"""
@@ -220,7 +354,10 @@ def DoInline(
       else:
         str = leading + trailing
 
-  def InlineFileContents(src_match, pattern, inlined_files=inlined_files):
+  def InlineFileContents(src_match,
+                         pattern,
+                         inlined_files=inlined_files,
+                         strip_whitespace=False):
     """Helper function to inline external files of various types"""
     filepath = GetFilepath(src_match)
     if filepath is None:
@@ -234,10 +371,17 @@ def DoInline(
           rewrite_function,
           filename_expansion_function=filename_expansion_function))
       return ""
-
-    return pattern % InlineToString(
-        filepath, grd_node, allow_external_script=allow_external_script,
+    # To recursively save inlined files, we need InlinedData instance returned
+    # by DoInline.
+    inlined_data_inst=DoInline(filepath, grd_node,
+        allow_external_script=allow_external_script,
+        strip_whitespace=strip_whitespace,
         filename_expansion_function=filename_expansion_function)
+
+    inlined_files.update(inlined_data_inst.inlined_files)
+
+    return pattern % inlined_data_inst.inlined_data;
+
 
   def InlineIncludeFiles(src_match):
     """Helper function to directly inline generic external files (without
@@ -249,8 +393,9 @@ def DoInline(
     """Helper function to inline external script files"""
     attrs = (match.group('attrs1') + match.group('attrs2')).strip()
     if attrs:
-       attrs = ' ' + attrs
-    return InlineFileContents(match, '<script' + attrs + '>%s</script>')
+      attrs = ' ' + attrs
+    return InlineFileContents(match, '<script' + attrs + '>%s</script>',
+                              strip_whitespace=True)
 
   def InlineCSSText(text, css_filepath):
     """Helper function that inlines external resources in CSS text"""
@@ -279,10 +424,15 @@ def DoInline(
     # Even if names_only is set, the CSS file needs to be opened, because it
     # can link to images that need to be added to the file set.
     inlined_files.add(filepath)
+
+    # Inline stylesheets included in this css file.
+    text = _INCLUDE_RE.sub(InlineIncludeFiles,
+                           util.ReadFile(filepath, util.BINARY))
     # When resolving CSS files we need to pass in the path so that relative URLs
     # can be resolved.
-    return pattern % InlineCSSText(util.ReadFile(filepath, util.BINARY),
-                                   filepath)
+
+    return pattern % InlineCSSText(text, filepath)
+
 
   def InlineCSSImages(text, filepath=input_filepath):
     """Helper function that inlines external images in CSS backgrounds."""
@@ -321,7 +471,12 @@ def DoInline(
   # going to throw out anyway.
   flat_text = CheckConditionalElements(flat_text)
 
+  flat_text = _INCLUDE_RE.sub(InlineIncludeFiles, flat_text)
+
   if not preprocess_only:
+    if strip_whitespace:
+      flat_text = minifier.Minify(flat_text, input_filename)
+
     if not allow_external_script:
       # We need to inline css and js before we inline images so that image
       # references gets inlined in the css and js
@@ -334,8 +489,6 @@ def DoInline(
         lambda m: InlineCSSFile(m, '<style>%s</style>'),
         flat_text)
 
-  flat_text = _INCLUDE_RE.sub(InlineIncludeFiles, flat_text)
-
   # Check conditional elements, second pass. This catches conditionals in any
   # of the text we just inlined.
   flat_text = CheckConditionalElements(flat_text)
@@ -345,6 +498,7 @@ def DoInline(
     if rewrite_function:
       flat_text = rewrite_function(input_filepath, flat_text, distribution)
     flat_text = _SRC_RE.sub(SrcReplace, flat_text)
+    flat_text = _SRCSET_RE.sub(SrcsetReplace, flat_text)
 
     # TODO(arv): Only do this inside <style> tags.
     flat_text = InlineCSSImages(flat_text)
@@ -357,8 +511,8 @@ def DoInline(
 
 
 def InlineToString(input_filename, grd_node, preprocess_only = False,
-                   allow_external_script=False, rewrite_function=None,
-                   filename_expansion_function=None):
+                   allow_external_script=False, strip_whitespace=False,
+                   rewrite_function=None, filename_expansion_function=None):
   """Inlines the resources in a specified file and returns it as a string.
 
   Args:
@@ -373,6 +527,7 @@ def InlineToString(input_filename, grd_node, preprocess_only = False,
         grd_node,
         preprocess_only=preprocess_only,
         allow_external_script=allow_external_script,
+        strip_whitespace=strip_whitespace,
         rewrite_function=rewrite_function,
         filename_expansion_function=filename_expansion_function).inlined_data
   except IOError, e:
@@ -411,6 +566,7 @@ def GetResourceFilenames(filename,
         names_only=True,
         preprocess_only=False,
         allow_external_script=allow_external_script,
+        strip_whitespace=False,
         rewrite_function=rewrite_function,
         filename_expansion_function=filename_expansion_function).inlined_files
   except IOError, e:

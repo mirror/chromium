@@ -11,10 +11,10 @@
 #include "base/strings/sys_string_conversions.h"
 #import "ios/web/public/test/http_server.h"
 #include "ios/web/public/test/http_server_util.h"
-#include "ios/web/shell/test/app/navigation_test_util.h"
 #include "ios/web/shell/test/app/web_view_interaction_test_util.h"
-#import "ios/web/shell/test/earl_grey/shell_base_test_case.h"
+#import "ios/web/shell/test/earl_grey/shell_earl_grey.h"
 #import "ios/web/shell/test/earl_grey/shell_matchers.h"
+#import "ios/web/shell/test/earl_grey/web_shell_test_case.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -22,10 +22,10 @@
 
 // Navigation test cases for the web shell. These are Earl Grey integration
 // tests, which are based on XCTest.
-@interface NavigationTest : ShellBaseTestCase
+@interface NavigationTestCase : WebShellTestCase
 @end
 
-@implementation NavigationTest
+@implementation NavigationTestCase
 
 // Tests clicking a link to about:blank.
 - (void)testNavigationLinkToAboutBlank {
@@ -33,14 +33,14 @@
       "http://ios/web/shell/test/http_server_files/basic_navigation_test.html");
   web::test::SetUpFileBasedHttpServer();
 
-  web::shell_test_util::LoadUrl(URL);
-  [[EarlGrey selectElementWithMatcher:web::addressFieldText(URL.spec())]
+  [ShellEarlGrey loadURL:URL];
+  [[EarlGrey selectElementWithMatcher:web::AddressFieldText(URL.spec())]
       assertWithMatcher:grey_notNil()];
 
   web::shell_test_util::TapWebViewElementWithId(
       "basic-link-navigation-to-about-blank");
 
-  [[EarlGrey selectElementWithMatcher:web::addressFieldText("about:blank")]
+  [[EarlGrey selectElementWithMatcher:web::AddressFieldText("about:blank")]
       assertWithMatcher:grey_notNil()];
 }
 
@@ -58,30 +58,30 @@
 
   web::test::SetUpSimpleHttpServer(responses);
 
-  web::shell_test_util::LoadUrl(URL1);
-  [[EarlGrey selectElementWithMatcher:web::addressFieldText(URL1.spec())]
+  [ShellEarlGrey loadURL:URL1];
+  [[EarlGrey selectElementWithMatcher:web::AddressFieldText(URL1.spec())]
       assertWithMatcher:grey_notNil()];
-  [[EarlGrey selectElementWithMatcher:web::webViewContainingText(response1)]
-      assertWithMatcher:grey_notNil()];
-
-  web::shell_test_util::LoadUrl(URL2);
-  [[EarlGrey selectElementWithMatcher:web::addressFieldText(URL2.spec())]
-      assertWithMatcher:grey_notNil()];
-  [[EarlGrey selectElementWithMatcher:web::webViewContainingText(response2)]
+  [[EarlGrey selectElementWithMatcher:web::WebViewContainingText(response1)]
       assertWithMatcher:grey_notNil()];
 
-  [[EarlGrey selectElementWithMatcher:web::backButton()]
+  [ShellEarlGrey loadURL:URL2];
+  [[EarlGrey selectElementWithMatcher:web::AddressFieldText(URL2.spec())]
+      assertWithMatcher:grey_notNil()];
+  [[EarlGrey selectElementWithMatcher:web::WebViewContainingText(response2)]
+      assertWithMatcher:grey_notNil()];
+
+  [[EarlGrey selectElementWithMatcher:web::BackButton()]
       performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:web::addressFieldText(URL1.spec())]
+  [[EarlGrey selectElementWithMatcher:web::AddressFieldText(URL1.spec())]
       assertWithMatcher:grey_notNil()];
-  [[EarlGrey selectElementWithMatcher:web::webViewContainingText(response1)]
+  [[EarlGrey selectElementWithMatcher:web::WebViewContainingText(response1)]
       assertWithMatcher:grey_notNil()];
 
-  [[EarlGrey selectElementWithMatcher:web::forwardButton()]
+  [[EarlGrey selectElementWithMatcher:web::ForwardButton()]
       performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:web::addressFieldText(URL2.spec())]
+  [[EarlGrey selectElementWithMatcher:web::AddressFieldText(URL2.spec())]
       assertWithMatcher:grey_notNil()];
-  [[EarlGrey selectElementWithMatcher:web::webViewContainingText(response2)]
+  [[EarlGrey selectElementWithMatcher:web::WebViewContainingText(response2)]
       assertWithMatcher:grey_notNil()];
 }
 
@@ -97,22 +97,22 @@
 
   web::test::SetUpSimpleHttpServer(responses);
 
-  web::shell_test_util::LoadUrl(URL1);
-  [[EarlGrey selectElementWithMatcher:web::addressFieldText(URL1.spec())]
+  [ShellEarlGrey loadURL:URL1];
+  [[EarlGrey selectElementWithMatcher:web::AddressFieldText(URL1.spec())]
       assertWithMatcher:grey_notNil()];
 
   web::shell_test_util::TapWebViewElementWithId("link");
-  [[EarlGrey selectElementWithMatcher:web::addressFieldText(URL2.spec())]
+  [[EarlGrey selectElementWithMatcher:web::AddressFieldText(URL2.spec())]
       assertWithMatcher:grey_notNil()];
 
-  [[EarlGrey selectElementWithMatcher:web::backButton()]
+  [[EarlGrey selectElementWithMatcher:web::BackButton()]
       performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:web::addressFieldText(URL1.spec())]
+  [[EarlGrey selectElementWithMatcher:web::AddressFieldText(URL1.spec())]
       assertWithMatcher:grey_notNil()];
 
-  [[EarlGrey selectElementWithMatcher:web::forwardButton()]
+  [[EarlGrey selectElementWithMatcher:web::ForwardButton()]
       performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:web::addressFieldText(URL2.spec())]
+  [[EarlGrey selectElementWithMatcher:web::AddressFieldText(URL2.spec())]
       assertWithMatcher:grey_notNil()];
 }
 
@@ -135,16 +135,16 @@
 
   web::test::SetUpSimpleHttpServer(responses);
 
-  web::shell_test_util::LoadUrl(URL);
-  [[EarlGrey selectElementWithMatcher:web::addressFieldText(URL.spec())]
+  [ShellEarlGrey loadURL:URL];
+  [[EarlGrey selectElementWithMatcher:web::AddressFieldText(URL.spec())]
       assertWithMatcher:grey_notNil()];
 
   web::shell_test_util::TapWebViewElementWithId("overrides-href");
 
-  [[EarlGrey selectElementWithMatcher:web::addressFieldText(URL.spec())]
+  [[EarlGrey selectElementWithMatcher:web::AddressFieldText(URL.spec())]
       assertWithMatcher:grey_notNil()];
   [[EarlGrey
-      selectElementWithMatcher:web::webViewContainingText("Default prevented!")]
+      selectElementWithMatcher:web::WebViewContainingText("Default prevented!")]
       assertWithMatcher:grey_notNil()];
 }
 
@@ -167,16 +167,16 @@
 
   web::test::SetUpSimpleHttpServer(responses);
 
-  web::shell_test_util::LoadUrl(URL);
-  [[EarlGrey selectElementWithMatcher:web::addressFieldText(URL.spec())]
+  [ShellEarlGrey loadURL:URL];
+  [[EarlGrey selectElementWithMatcher:web::AddressFieldText(URL.spec())]
       assertWithMatcher:grey_notNil()];
 
   web::shell_test_util::TapWebViewElementWithId("link");
 
-  [[EarlGrey selectElementWithMatcher:web::addressFieldText(URL.spec())]
+  [[EarlGrey selectElementWithMatcher:web::AddressFieldText(URL.spec())]
       assertWithMatcher:grey_notNil()];
   [[EarlGrey
-      selectElementWithMatcher:web::webViewContainingText("No navigation!")]
+      selectElementWithMatcher:web::WebViewContainingText("No navigation!")]
       assertWithMatcher:grey_notNil()];
 }
 

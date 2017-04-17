@@ -4,11 +4,14 @@
 
 #include "chrome/browser/speech/chrome_speech_recognition_manager_delegate.h"
 
+#include <memory>
 #include <set>
 #include <string>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_restrictions.h"
@@ -30,13 +33,14 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/speech_recognition_error.h"
 #include "content/public/common/speech_recognition_result.h"
+#include "extensions/features/features.h"
 #include "net/url_request/url_request_context_getter.h"
 
 #if defined(OS_WIN)
 #include "chrome/installer/util/wmi.h"
 #endif
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/browser/extensions/extension_service.h"
 #include "extensions/browser/view_type_utils.h"
 #endif
@@ -104,16 +108,16 @@ class ChromeSpeechRecognitionManagerDelegate::TabWatcher
     if (FindWebContents(web_contents) != registered_web_contents_.end())
       return;
 
-    registered_web_contents_.push_back(new WebContentsTracker(
-        web_contents, base::Bind(&TabWatcher::OnTabClosed,
-                                 // |this| outlives WebContentsTracker.
-                                 base::Unretained(this), web_contents),
+    registered_web_contents_.push_back(base::MakeUnique<WebContentsTracker>(
+        web_contents,
+        base::Bind(&TabWatcher::OnTabClosed,
+                   // |this| outlives WebContentsTracker.
+                   base::Unretained(this), web_contents),
         render_process_id, render_view_id));
   }
 
   void OnTabClosed(content::WebContents* web_contents) {
-    ScopedVector<WebContentsTracker>::iterator iter =
-        FindWebContents(web_contents);
+    auto iter = FindWebContents(web_contents);
     DCHECK(iter != registered_web_contents_.end());
     int render_process_id = (*iter)->render_process_id();
     int render_view_id = (*iter)->render_view_id();
@@ -177,10 +181,9 @@ class ChromeSpeechRecognitionManagerDelegate::TabWatcher
 
   // Helper function to find the iterator in |registered_web_contents_| which
   // contains |web_contents|.
-  ScopedVector<WebContentsTracker>::iterator FindWebContents(
+  std::vector<std::unique_ptr<WebContentsTracker>>::iterator FindWebContents(
       content::WebContents* web_contents) {
-    for (ScopedVector<WebContentsTracker>::iterator i(
-             registered_web_contents_.begin());
+    for (auto i = registered_web_contents_.begin();
          i != registered_web_contents_.end(); ++i) {
       if ((*i)->GetWebContents() == web_contents)
         return i;
@@ -193,7 +196,7 @@ class ChromeSpeechRecognitionManagerDelegate::TabWatcher
   // double registrations on WebContentsObserver and to pass the correct render
   // process id and render view id to |tab_closed_callback_| after the process
   // has gone away.
-  ScopedVector<WebContentsTracker> registered_web_contents_;
+  std::vector<std::unique_ptr<WebContentsTracker>> registered_web_contents_;
 
   // Callback used to notify, on the thread specified by |callback_thread_| the
   // closure of a registered tab.
@@ -333,7 +336,7 @@ void ChromeSpeechRecognitionManagerDelegate::CheckRenderViewType(
     return;
   }
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   WebContents* web_contents = WebContents::FromRenderViewHost(render_view_host);
   extensions::ViewType view_type = extensions::GetViewType(web_contents);
 

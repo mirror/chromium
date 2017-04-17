@@ -23,6 +23,9 @@ class SequencedTaskRunner;
 }
 
 namespace chromeos {
+
+class InstallAttributes;
+
 namespace attestation {
 class AttestationPolicyObserver;
 }
@@ -34,12 +37,13 @@ class PrefService;
 namespace policy {
 
 class DeviceCloudPolicyStoreChromeOS;
-class EnterpriseInstallAttributes;
+class ForwardingSchemaRegistry;
 class HeartbeatScheduler;
+class SchemaRegistry;
 class StatusUploader;
 class SystemLogUploader;
 
-enum class ZeroTouchEnrollmentMode { DISABLED, ENABLED, FORCED };
+enum class ZeroTouchEnrollmentMode { DISABLED, ENABLED, FORCED, HANDS_OFF };
 
 // CloudPolicyManager specialization for device policy on Chrome OS.
 class DeviceCloudPolicyManagerChromeOS : public CloudPolicyManager {
@@ -85,12 +89,6 @@ class DeviceCloudPolicyManagerChromeOS : public CloudPolicyManager {
   // Pref registration helper.
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
-  // Returns the device serial number, or an empty string if not available.
-  static std::string GetMachineID();
-
-  // Returns the machine model, or an empty string if not available.
-  static std::string GetMachineModel();
-
   // Returns the mode for using zero-touch enrollment.
   static ZeroTouchEnrollmentMode GetZeroTouchEnrollmentMode();
 
@@ -101,7 +99,7 @@ class DeviceCloudPolicyManagerChromeOS : public CloudPolicyManager {
 
   // Starts the connection via |client_to_connect|.
   void StartConnection(std::unique_ptr<CloudPolicyClient> client_to_connect,
-                       EnterpriseInstallAttributes* install_attributes);
+                       chromeos::InstallAttributes* install_attributes);
 
   // Sends the unregister request. |callback| is invoked with a boolean
   // parameter indicating the result when done.
@@ -118,14 +116,33 @@ class DeviceCloudPolicyManagerChromeOS : public CloudPolicyManager {
   // policy server.
   StatusUploader* GetStatusUploader() const { return status_uploader_.get(); }
 
+  // Return the SystemLogUploader used to upload device logs to the policy
+  // server.
+  SystemLogUploader* GetSystemLogUploader() const {
+    return syslog_uploader_.get();
+  }
+
+  // Passes the pointer to the schema registry that corresponds to the signin
+  // profile.
+  //
+  // After this method is called, the component cloud policy manager becomes
+  // associated with this schema registry.
+  void SetSigninProfileSchemaRegistry(SchemaRegistry* schema_registry);
+
+  // Sets whether the component cloud policy should be disabled (by skipping
+  // the component cloud policy service creation).
+  void set_component_policy_disabled_for_testing(
+      bool component_policy_disabled_for_testing) {
+    component_policy_disabled_for_testing_ =
+        component_policy_disabled_for_testing;
+  }
+
  private:
   // Saves the state keys received from |session_manager_client_|.
   void OnStateKeysUpdated();
 
   // Initializes requisition settings at OOBE with values from VPD.
   void InitializeRequisition();
-  // Initializes enrollment settings at OOBE with values from flags.
-  void InitializeEnrollment();
 
   void NotifyConnected();
   void NotifyDisconnected();
@@ -159,6 +176,15 @@ class DeviceCloudPolicyManagerChromeOS : public CloudPolicyManager {
 
   std::unique_ptr<chromeos::attestation::AttestationPolicyObserver>
       attestation_policy_observer_;
+
+  // Wrapper schema registry that will track the signin profile schema registry
+  // once it is passed to this class.
+  std::unique_ptr<ForwardingSchemaRegistry>
+      signin_profile_forwarding_schema_registry_;
+
+  // Whether the component cloud policy should be disabled (by skipping the
+  // component cloud policy service creation).
+  bool component_policy_disabled_for_testing_ = false;
 
   base::ObserverList<Observer, true> observers_;
 

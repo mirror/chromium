@@ -1,0 +1,54 @@
+<html>
+<head>
+<script src="../../http/tests/inspector/inspector-test.js"></script>
+<script>
+function test()
+{
+    Help.releaseNoteText = [
+        {version: 3},
+        {version: 4},
+        {version: 5},
+    ];
+
+    function testMaybeShowInDrawer(lastSeenVersion) {
+        InspectorTest.addResult(`Last seen version: ${lastSeenVersion}`);
+        InspectorTest.addSniffer(UI.viewManager, "showView", onShowView);
+        var showedReleaseNote = false;
+
+        Help._showReleaseNoteIfNeeded(lastSeenVersion, Help.latestReleaseNote().version);
+
+        function onShowView() {
+            showedReleaseNote = true;
+        }
+        if (showedReleaseNote)
+            InspectorTest.addResult(`Showed release note in drawer - version: ${Help.latestReleaseNote().version}`);
+        else
+            InspectorTest.addResult('Did not show release note drawer');
+    }
+
+    InspectorTest.runTestSuite([
+        function getLatestReleaseNote(next) {
+            var lastSeenVersion = 4;
+            testMaybeShowInDrawer(lastSeenVersion);
+            next();
+        },
+        function getReleaseNoteTwoVersionsAhead(next) {
+            var lastSeenVersion = 3;
+            testMaybeShowInDrawer(lastSeenVersion);
+            next();
+        },
+        function alreadySeenReleaseNote(next) {
+            var lastSeenVersion = 5;
+            testMaybeShowInDrawer(lastSeenVersion);
+            next();
+        },
+    ]);
+}
+</script>
+</head>
+<body onload="runTest()">
+<p>
+    Unit test for release note
+</p>
+</body>
+</html>

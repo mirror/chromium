@@ -2,8 +2,10 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import("//services/shell/public/cpp/service.gni")
-import("//services/shell/public/service_manifest.gni")
+import("//services/catalog/public/tools/catalog.gni")
+import("//services/service_manager/public/cpp/service.gni")
+import("//services/service_manager/public/service_manifest.gni")
+import("//services/service_manager/public/tools/test/service_test.gni")
 import("//testing/test.gni")
 
 source_set("lib") {
@@ -16,7 +18,7 @@ source_set("lib") {
     "//base",
     "//mojo/common",
     "//mojo/public/cpp/bindings",
-    "//services/shell/public/cpp",
+    "//services/service_manager/public/cpp",
     "//services/tracing/public/cpp",
     "//services/ui/public/interfaces",
   ]
@@ -29,29 +31,33 @@ group("tests") {
   ]
 }
 
-test("mus_clipboard_unittests") {
+service_test("mus_clipboard_unittests") {
   sources = [
     "clipboard_unittest.cc",
   ]
 
+  catalog = ":mus_clipboard_unittests_catalog"
+
   deps = [
     "//base",
     "//mojo/common",
-    "//services/shell/public/cpp:service_test_support",
-    "//services/shell/public/cpp:sources",
-    "//services/shell/public/cpp/test:run_all_shelltests",
+    "//services/service_manager/public/cpp:service_test_support",
+    "//services/service_manager/public/cpp:sources",
     "//services/ui/public/interfaces",
   ]
 
   data_deps = [
-    ":test_manifest",
     ":lib",
     "//services/ui",
   ]
 }
 
 service_manifest("test_manifest") {
-  type = "exe"
   name = "mus_clipboard_unittests"
   source = "test_manifest.json"
+}
+
+catalog("mus_clipboard_unittests_catalog") {
+  embedded_services = [ ":test_manifest" ]
+  standalone_services = [ "//services/ui:manifest" ]
 }

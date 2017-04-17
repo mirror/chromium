@@ -4,82 +4,61 @@
 
 #include "ash/mus/accelerators/accelerator_controller_delegate_mus.h"
 
+#include "ash/mus/window_manager.h"
 #include "base/logging.h"
+#include "mash/public/interfaces/launchable.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/ui/public/interfaces/constants.mojom.h"
+#include "services/ui/public/interfaces/display/display_controller.mojom.h"
+#include "services/ui/public/interfaces/display/test_display_controller.mojom.h"
+#include "ui/display/screen.h"
 
 namespace ash {
 namespace mus {
 
-AcceleratorControllerDelegateMus::AcceleratorControllerDelegateMus() {}
+AcceleratorControllerDelegateMus::AcceleratorControllerDelegateMus(
+    WindowManager* window_manager)
+    : window_manager_(window_manager) {}
 
 AcceleratorControllerDelegateMus::~AcceleratorControllerDelegateMus() {}
 
 bool AcceleratorControllerDelegateMus::HandlesAction(AcceleratorAction action) {
-  // This is the list of actions that are not ported from aura. The actions are
-  // replicated here to make sure we don't forget any. This list should
-  // eventually be empty. If there are any actions that don't make sense for
-  // mus, then they should be removed from AcceleratorAction.
+  // Accelerators that return true need to work differently in mash. These
+  // should have implementations in CanPerformAction() and PerformAction().
+  // Accelerators that return false have not been ported to work with mash yet.
+  // If the behavior between cash and mash can be unified then the accelerator
+  // should be moved to accelerator_controller.cc/h. See
   // http://crbug.com/612331.
   switch (action) {
-    case DEBUG_TOGGLE_DESKTOP_BACKGROUND_MODE:
-    case DEBUG_TOGGLE_DEVICE_SCALE_FACTOR:
-    case DEBUG_TOGGLE_ROOT_WINDOW_FULL_SCREEN:
-    case DEBUG_TOGGLE_SHOW_DEBUG_BORDERS:
-    case DEBUG_TOGGLE_SHOW_FPS_COUNTER:
-    case DEBUG_TOGGLE_SHOW_PAINT_RECTS:
-    case FOCUS_SHELF:
-    case LAUNCH_APP_0:
-    case LAUNCH_APP_1:
-    case LAUNCH_APP_2:
-    case LAUNCH_APP_3:
-    case LAUNCH_APP_4:
-    case LAUNCH_APP_5:
-    case LAUNCH_APP_6:
-    case LAUNCH_APP_7:
-    case LAUNCH_LAST_APP:
-    case MAGNIFY_SCREEN_ZOOM_IN:
-    case MAGNIFY_SCREEN_ZOOM_OUT:
-    case NEW_INCOGNITO_WINDOW:
-    case NEW_TAB:
-    case NEW_WINDOW:
-    case OPEN_FEEDBACK_PAGE:
-    case RESTORE_TAB:
+    case DEV_ADD_REMOVE_DISPLAY:
+    case DEV_TOGGLE_UNIFIED_DESKTOP:
     case ROTATE_SCREEN:
-    case ROTATE_WINDOW:
     case SCALE_UI_DOWN:
     case SCALE_UI_RESET:
     case SCALE_UI_UP:
-    case SHOW_KEYBOARD_OVERLAY:
-    case SHOW_MESSAGE_CENTER_BUBBLE:
-    case SHOW_SYSTEM_TRAY_BUBBLE:
-    case SHOW_TASK_MANAGER:
+    case SWAP_PRIMARY_DISPLAY:
+    case TOGGLE_MIRROR_MODE:
+    case TOUCH_HUD_PROJECTION_TOGGLE:
+      return true;
+    case DEBUG_TOGGLE_DEVICE_SCALE_FACTOR:
+    case DEBUG_TOGGLE_SHOW_DEBUG_BORDERS:
+    case DEBUG_TOGGLE_SHOW_FPS_COUNTER:
+    case DEBUG_TOGGLE_SHOW_PAINT_RECTS:
+    case DEV_TOGGLE_ROOT_WINDOW_FULL_SCREEN:
+    case LOCK_PRESSED:
+    case LOCK_RELEASED:
+    case MAGNIFY_SCREEN_ZOOM_IN:
+    case MAGNIFY_SCREEN_ZOOM_OUT:
+    case POWER_PRESSED:
+    case POWER_RELEASED:
     case TAKE_PARTIAL_SCREENSHOT:
     case TAKE_SCREENSHOT:
     case TAKE_WINDOW_SCREENSHOT:
-    case TOGGLE_APP_LIST:
+    case TOUCH_HUD_CLEAR:
+    case TOUCH_HUD_MODE_CHANGE:
     case UNPIN:
       NOTIMPLEMENTED();
       return false;
-
-#if defined(OS_CHROMEOS)
-    case DEBUG_ADD_REMOVE_DISPLAY:
-    case DEBUG_TOGGLE_UNIFIED_DESKTOP:
-    case DISABLE_GPU_WATCHDOG:
-    case LOCK_PRESSED:
-    case LOCK_RELEASED:
-    case OPEN_CROSH:
-    case OPEN_FILE_MANAGER:
-    case OPEN_GET_HELP:
-    case POWER_PRESSED:
-    case POWER_RELEASED:
-    case SWAP_PRIMARY_DISPLAY:
-    case TOGGLE_MIRROR_MODE:
-    case TOUCH_HUD_CLEAR:
-    case TOUCH_HUD_MODE_CHANGE:
-    case TOUCH_HUD_PROJECTION_TOGGLE:
-      NOTIMPLEMENTED();
-      return false;
-#endif
-
     default:
       break;
   }
@@ -90,23 +69,79 @@ bool AcceleratorControllerDelegateMus::CanPerformAction(
     AcceleratorAction action,
     const ui::Accelerator& accelerator,
     const ui::Accelerator& previous_accelerator) {
+  switch (action) {
+    case DEV_ADD_REMOVE_DISPLAY:
+    case DEV_TOGGLE_UNIFIED_DESKTOP:
+    case ROTATE_SCREEN:
+    case SCALE_UI_DOWN:
+    case SCALE_UI_RESET:
+    case SCALE_UI_UP:
+      return true;
+    case SWAP_PRIMARY_DISPLAY:
+      return display::Screen::GetScreen()->GetNumDisplays() > 1;
+    case TOGGLE_MIRROR_MODE:
+    case TOUCH_HUD_PROJECTION_TOGGLE:
+      return true;
+    default:
+      break;
+  }
   return false;
 }
 
 void AcceleratorControllerDelegateMus::PerformAction(
     AcceleratorAction action,
     const ui::Accelerator& accelerator) {
-  // Should never be hit as HandlesAction() unconditionally returns false.
-  NOTREACHED();
-}
-
-void AcceleratorControllerDelegateMus::ShowDeprecatedAcceleratorNotification(
-    const char* const notification_id,
-    int message_id,
-    int old_shortcut_id,
-    int new_shortcut_id) {
-  // TODO: http://crbug.com/630316.
-  NOTIMPLEMENTED();
+  switch (action) {
+    case DEV_ADD_REMOVE_DISPLAY: {
+      display::mojom::TestDisplayControllerPtr test_display_controller;
+      window_manager_->connector()->BindInterface(ui::mojom::kServiceName,
+                                                  &test_display_controller);
+      test_display_controller->ToggleAddRemoveDisplay();
+      break;
+    }
+    case DEV_TOGGLE_UNIFIED_DESKTOP: {
+      // TODO(crbug.com/657816): This is hack. I'm just stealing the shortcut
+      // key to toggle display size in mus. This should be removed by launch.
+      display::mojom::TestDisplayControllerPtr test_display_controller;
+      window_manager_->connector()->BindInterface(ui::mojom::kServiceName,
+                                                  &test_display_controller);
+      test_display_controller->ToggleDisplayResolution();
+      break;
+    }
+    case ROTATE_SCREEN: {
+      window_manager_->GetDisplayController()->RotateCurrentDisplayCW();
+      break;
+    }
+    case SCALE_UI_DOWN: {
+      window_manager_->GetDisplayController()->DecreaseInternalDisplayZoom();
+      break;
+    }
+    case SCALE_UI_RESET: {
+      window_manager_->GetDisplayController()->ResetInternalDisplayZoom();
+      break;
+    }
+    case SCALE_UI_UP: {
+      window_manager_->GetDisplayController()->IncreaseInternalDisplayZoom();
+      break;
+    }
+    case SWAP_PRIMARY_DISPLAY: {
+      window_manager_->GetDisplayController()->SwapPrimaryDisplay();
+      break;
+    }
+    case TOGGLE_MIRROR_MODE: {
+      window_manager_->GetDisplayController()->ToggleMirrorMode();
+      break;
+    }
+    case TOUCH_HUD_PROJECTION_TOGGLE: {
+      mash::mojom::LaunchablePtr launchable;
+      window_manager_->connector()->BindInterface("touch_hud", &launchable);
+      launchable->Launch(mash::mojom::kWindow,
+                         mash::mojom::LaunchMode::DEFAULT);
+      break;
+    }
+    default:
+      NOTREACHED();
+  }
 }
 
 }  // namespace mus

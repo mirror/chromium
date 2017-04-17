@@ -15,6 +15,12 @@ struct Feature;
 
 namespace flags_ui {
 
+// Generic experiment choice option names.
+extern const char kGenericExperimentChoiceDefault[];
+extern const char kGenericExperimentChoiceEnabled[];
+extern const char kGenericExperimentChoiceDisabled[];
+extern const char kGenericExperimentChoiceAutomatic[];
+
 // FeatureEntry is used to describe an experimental feature.
 //
 // Note that features should eventually be either turned on by default with no
@@ -22,12 +28,16 @@ namespace flags_ui {
 // for a few milestones, until their full launch.
 struct FeatureEntry {
   enum Type {
-    // A feature with a single flag value. This is typically what you want.
+    // A feature with a single flag value.
+    //
+    // For new entries, it is recommended to instead use FEATURE_VALUE macro
+    // that is backed by a base::Feature struct. See base/feature_list.h.
     SINGLE_VALUE,
 
-    // A default enabled feature with a single flag value to disable it. Please
-    // consider whether you really need a flag to disable the feature, and even
-    // if so remove the disable flag as soon as it is no longer needed.
+    // A default enabled feature with a single flag value to disable it.
+    //
+    // For new entries, it is recommended to instead use FEATURE_VALUE macro
+    // that is backed by a base::Feature struct. See base/feature_list.h.
     SINGLE_DISABLE_VALUE,
 
     // The feature has multiple values only one of which is ever enabled.
@@ -38,25 +48,31 @@ struct FeatureEntry {
     MULTI_VALUE,
 
     // The feature has three possible values: Default, Enabled and Disabled.
-    // This should be used for features that may have their own logic to decide
-    // if the feature should be on when not explicitly specified via about
-    // flags - for example via FieldTrials.
+    // This allows the Default group to have its own logic to determine if the
+    // feature is on.
+    //
+    // For new entries, it is recommended to instead use FEATURE_VALUE macro
+    // that is backed by a base::Feature struct. See base/feature_list.h.
     ENABLE_DISABLE_VALUE,
 
     // Corresponds to a base::Feature, per base/feature_list.h. The entry will
     // have three states: Default, Enabled, Disabled. When not specified or set
     // to Default, the normal default value of the feature is used.
+    //
+    // This is recommended for all new entries, since it provides a uniform way
+    // to specify features in the codebase along with their default state, as
+    // well as the ability enable/disable via run server-side experiments.
     FEATURE_VALUE,
 
     // Corresponds to a base::Feature and additional options [O_1, ..., O_n]
-    // that specify variation parameters. Each of the options can specify a set
-    // of variation parameters. The entry will have n+3 states: Default,
-    // Enabled, Enabled V_1, ..., Enabled: V_n, Disabled. When set to Default,
-    // the normal default values of the feature and of the parameters are used
-    // (possibly passed from the server in a trial config). When set to Enabled,
-    // the feature is overriden to be enabled and empty set of parameters is
-    // used boiling down to the default behavior in the code.
-    FEATURE_WITH_VARIATIONS_VALUE,
+    // that specify field trial params. Each of the options can specify a set
+    // of field trial params. The entry will have n+3 states: Default, Enabled,
+    // Enabled V_1, ..., Enabled: V_n, Disabled. When set to Default, the normal
+    // default values of the feature and of the parameters are used (possibly
+    // passed from the server in a trial config). When set to Enabled, the
+    // feature is overriden to be enabled and empty set of parameters is used
+    // boiling down to the default behavior in the code.
+    FEATURE_WITH_PARAMS_VALUE,
   };
 
   // Describes state of a feature.
@@ -72,8 +88,8 @@ struct FeatureEntry {
   // Used for MULTI_VALUE types to describe one of the possible values the user
   // can select.
   struct Choice {
-    // ID of the message containing the choice name.
-    int description_id;
+    // The message containing the choice name.
+    const char* description;
 
     // Command line switch and value to enabled for this choice.
     const char* command_line_switch;
@@ -99,6 +115,10 @@ struct FeatureEntry {
     const char* description_text;
     const FeatureParam* params;
     int num_params;
+    // A variation id number in the format of
+    // VariationsHttpHeaderProvider::SetDefaultVariationIds or nullptr
+    // if you do not need to set any variation_id for this feature variation.
+    const char* variation_id;
   };
 
   // The internal name of the feature entry. This is never shown to the user.
@@ -106,11 +126,11 @@ struct FeatureEntry {
   // name of existing flags.
   const char* internal_name;
 
-  // String id of the message containing the feature's name.
-  int visible_name_id;
+  // The feature's name.
+  const char* visible_name;
 
-  // String id of the message containing the feature's description.
-  int visible_description_id;
+  // The feature's description.
+  const char* visible_description;
 
   // The platforms the feature is available on.
   // Needs to be more than a compile-time #ifdef because of profile sync.
@@ -133,7 +153,9 @@ struct FeatureEntry {
   const char* disable_command_line_switch;
   const char* disable_command_line_value;
 
-  // For FEATURE_VALUE, the base::Feature this entry corresponds to.
+  // For FEATURE_VALUE or FEATURE_WITH_VARIATIONS_VALUE, the base::Feature this
+  // entry corresponds to. The same feature must not be used in multiple
+  // FeatureEntries.
   const base::Feature* feature;
 
   // Number of options to choose from. This is used if type is MULTI_VALUE,

@@ -27,28 +27,28 @@
 #define LayoutVTTCue_h
 
 #include "core/layout/LayoutBlockFlow.h"
-#include "platform/heap/Handle.h"
 
 namespace blink {
 
-class VTTCueBox;
+class IntRect;
 
 class LayoutVTTCue final : public LayoutBlockFlow {
-public:
-    LayoutVTTCue(ContainerNode*, float snapToLinesPosition);
+ public:
+  LayoutVTTCue(ContainerNode*, float snap_to_lines_position);
 
-    // The computed line position for snap-to-lines layout, and NaN for
-    // non-snap-to-lines layout where no adjustment should take place.
-    float snapToLinesPosition() { return m_snapToLinesPosition; }
+  // The computed line position for snap-to-lines layout, and NaN for
+  // non-snap-to-lines layout where no adjustment should take place.
+  float SnapToLinesPosition() { return snap_to_lines_position_; }
 
-private:
-    void layout() override;
+ private:
+  void UpdateLayout() override;
 
-    void repositionCueSnapToLinesNotSet();
+  IntRect ComputeControlsRect() const;
+  void RepositionCueSnapToLinesNotSet();
 
-    float m_snapToLinesPosition;
+  float snap_to_lines_position_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutVTTCue_h
+#endif  // LayoutVTTCue_h

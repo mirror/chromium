@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_UI_COCOA_AUTOCOMPLETE_TEXT_FIELD_UNITTEST_HELPER_H_
-#define CHROME_BROWSER_UI_COCOA_AUTOCOMPLETE_TEXT_FIELD_UNITTEST_HELPER_H_
+#ifndef CHROME_BROWSER_UI_COCOA_LOCATION_BAR_AUTOCOMPLETE_TEXT_FIELD_UNITTEST_HELPER_H_
+#define CHROME_BROWSER_UI_COCOA_LOCATION_BAR_AUTOCOMPLETE_TEXT_FIELD_UNITTEST_HELPER_H_
 
 #import <Cocoa/Cocoa.h>
 
@@ -39,8 +39,6 @@ class MockAutocompleteTextFieldObserver : public AutocompleteTextFieldObserver {
   MOCK_METHOD0(CanCopy, bool());
   MOCK_METHOD0(CreatePasteboardItem, base::scoped_nsobject<NSPasteboardItem>());
   MOCK_METHOD1(CopyToPasteboard, void(NSPasteboard* pboard));
-  MOCK_METHOD0(ShouldEnableShowURL, bool());
-  MOCK_METHOD0(ShowURL, void());
   MOCK_METHOD0(OnPaste, void());
   MOCK_METHOD0(CanPasteAndGo, bool());
   MOCK_METHOD0(GetPasteActionStringId, int());
@@ -52,12 +50,12 @@ class MockAutocompleteTextFieldObserver : public AutocompleteTextFieldObserver {
   MOCK_METHOD0(OnDidChange, void());
   MOCK_METHOD0(OnDidEndEditing, void());
   MOCK_METHOD0(OnInsertText, void());
+  MOCK_METHOD0(OnBeforeDrawRect, void());
   MOCK_METHOD0(OnDidDrawRect, void());
   MOCK_METHOD1(OnDoCommandBySelector, bool(SEL cmd));
   MOCK_METHOD1(OnSetFocus, void(bool control_down));
   MOCK_METHOD0(OnKillFocus, void());
   MOCK_METHOD1(OnMouseDown, void(NSInteger button_number));
-  MOCK_METHOD0(ShouldSelectAllOnMouseDown, bool());
 };
 
-#endif  // CHROME_BROWSER_UI_COCOA_AUTOCOMPLETE_TEXT_FIELD_UNITTEST_HELPER_H_
+#endif  // CHROME_BROWSER_UI_COCOA_LOCATION_BAR_AUTOCOMPLETE_TEXT_FIELD_UNITTEST_HELPER_H_

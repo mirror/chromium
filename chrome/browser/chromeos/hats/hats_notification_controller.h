@@ -11,9 +11,19 @@
 #include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_delegate.h"
 #include "chromeos/network/portal_detector/network_portal_detector.h"
+#include "ui/gfx/image/image_skia.h"
 
 class Profile;
 class NetworkState;
+
+namespace gfx {
+class Image;
+}
+
+namespace image_fetcher {
+class ImageFetcher;
+struct RequestMetadata;
+}
 
 namespace chromeos {
 
@@ -22,16 +32,16 @@ namespace chromeos {
 class HatsNotificationController : public NotificationDelegate,
                                    public NetworkPortalDetector::Observer {
  public:
-  // Minimum amount of time before the notification is displayed again after a
-  // user has interacted with it.
-  static const int kHatsThresholdDays;
-  // Minimum amount of time after initial login or oobe after which we can show
-  // the HaTS notification.
-  static const int kHatsNewDeviceThresholdDays;
   static const char kDelegateId[];
   static const char kNotificationId[];
+  static const char kImageFetcher1xId[];
+  static const char kImageFetcher2xId[];
+  static const char kGoogleIcon1xUrl[];
+  static const char kGoogleIcon2xUrl[];
 
-  explicit HatsNotificationController(Profile* profile);
+  explicit HatsNotificationController(
+      Profile* profile,
+      image_fetcher::ImageFetcher* image_fetcher = nullptr);
 
   // Returns true if the survey needs to be displayed for the given |profile|.
   static bool ShouldShowSurveyToProfile(Profile* profile);
@@ -55,7 +65,12 @@ class HatsNotificationController : public NotificationDelegate,
   void Initialize(bool is_new_device);
   void ButtonClick(int button_index) override;
   void Close(bool by_user) override;
+  void Click() override;
   std::string id() const override;
+
+  void OnImageFetched(const std::string& id,
+                      const gfx::Image& image,
+                      const image_fetcher::RequestMetadata& metadata);
 
   // NetworkPortalDetector::Observer override:
   void OnPortalDetectionCompleted(
@@ -66,6 +81,11 @@ class HatsNotificationController : public NotificationDelegate,
   void UpdateLastInteractionTime();
 
   Profile* profile_;
+  // A count of requests that have been completed so far. This includes requests
+  // that may have failed as well.
+  int completed_requests_;
+  std::unique_ptr<image_fetcher::ImageFetcher> image_fetcher_;
+  gfx::ImageSkia icon_;
   base::WeakPtrFactory<HatsNotificationController> weak_pointer_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(HatsNotificationController);

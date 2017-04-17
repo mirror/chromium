@@ -5,6 +5,7 @@
 #include "content/browser/web_contents/web_contents_view_child_frame.h"
 
 #include "build/build_config.h"
+#include "content/browser/frame_host/render_frame_proxy_host.h"
 #include "content/browser/frame_host/render_widget_host_view_child_frame.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/web_contents_view_delegate.h"
@@ -35,6 +36,13 @@ const WebContentsView* WebContentsViewChildFrame::GetOuterView() const {
   return web_contents_->GetOuterWebContents()->GetView();
 }
 
+RenderViewHostDelegateView* WebContentsViewChildFrame::GetOuterDelegateView() {
+  RenderViewHostImpl* outer_rvh = static_cast<RenderViewHostImpl*>(
+      web_contents_->GetOuterWebContents()->GetRenderViewHost());
+  CHECK(outer_rvh);
+  return outer_rvh->GetDelegate()->GetDelegateView();
+}
+
 gfx::NativeView WebContentsViewChildFrame::GetNativeView() const {
   return GetOuterView()->GetNativeView();
 }
@@ -45,6 +53,17 @@ gfx::NativeView WebContentsViewChildFrame::GetContentNativeView() const {
 
 gfx::NativeWindow WebContentsViewChildFrame::GetTopLevelNativeWindow() const {
   return GetOuterView()->GetTopLevelNativeWindow();
+}
+
+void WebContentsViewChildFrame::GetScreenInfo(ScreenInfo* screen_info) const {
+  // TODO(wjmaclean): falling back to the default screen info is not what used
+  // to happen in RenderWidgetHostViewChildFrame, but it seems like the right
+  // thing to do. We should keep an eye on this in case the else-clause below
+  // causes problems.
+  if (web_contents_->GetOuterWebContents())
+    GetOuterView()->GetScreenInfo(screen_info);
+  else
+    WebContentsView::GetDefaultScreenInfo(screen_info);
 }
 
 void WebContentsViewChildFrame::GetContainerBounds(gfx::Rect* out) const {
@@ -76,7 +95,7 @@ void WebContentsViewChildFrame::CreateView(const gfx::Size& initial_size,
 RenderWidgetHostViewBase* WebContentsViewChildFrame::CreateViewForWidget(
     RenderWidgetHost* render_widget_host,
     bool is_guest_view_hack) {
-  return new RenderWidgetHostViewChildFrame(render_widget_host);
+  return RenderWidgetHostViewChildFrame::Create(render_widget_host);
 }
 
 RenderWidgetHostViewBase* WebContentsViewChildFrame::CreateViewForPopupWidget(
@@ -133,7 +152,8 @@ DropData* WebContentsViewChildFrame::GetDropData() const {
 }
 
 void WebContentsViewChildFrame::UpdateDragCursor(WebDragOperation operation) {
-  NOTREACHED();
+  if (auto* view = GetOuterDelegateView())
+    view->UpdateDragCursor(operation);
 }
 
 void WebContentsViewChildFrame::GotFocus() {
@@ -141,7 +161,18 @@ void WebContentsViewChildFrame::GotFocus() {
 }
 
 void WebContentsViewChildFrame::TakeFocus(bool reverse) {
-  NOTREACHED();
+  RenderFrameProxyHost* rfp = web_contents_->GetMainFrame()
+                                  ->frame_tree_node()
+                                  ->render_manager()
+                                  ->GetProxyToOuterDelegate();
+  FrameTreeNode* outer_node = FrameTreeNode::GloballyFindByID(
+      web_contents_->GetOuterDelegateFrameTreeNodeId());
+  RenderFrameHostImpl* rfhi =
+      outer_node->parent()->render_manager()->current_frame_host();
+
+  rfhi->AdvanceFocus(
+      reverse ? blink::kWebFocusTypeBackward : blink::kWebFocusTypeForward,
+      rfp);
 }
 
 void WebContentsViewChildFrame::ShowContextMenu(
@@ -155,8 +186,14 @@ void WebContentsViewChildFrame::StartDragging(
     WebDragOperationsMask ops,
     const gfx::ImageSkia& image,
     const gfx::Vector2d& image_offset,
-    const DragEventSourceInfo& event_info) {
-  NOTREACHED();
+    const DragEventSourceInfo& event_info,
+    RenderWidgetHostImpl* source_rwh) {
+  if (auto* view = GetOuterDelegateView()) {
+    view->StartDragging(
+        drop_data, ops, image, image_offset, event_info, source_rwh);
+  } else {
+    web_contents_->GetOuterWebContents()->SystemDragEnded(source_rwh);
+  }
 }
 
 }  // namespace content

@@ -9,6 +9,7 @@
 #include <sys/resource.h>
 #include <sys/wait.h>
 
+#include "base/debug/activity_tracker.h"
 #include "base/files/scoped_file.h"
 #include "base/logging.h"
 #include "base/posix/eintr_wrapper.h"
@@ -224,7 +225,6 @@ Process::Process(Process&& other) : process_(other.process_) {
 }
 
 Process& Process::operator=(Process&& other) {
-  DCHECK_NE(this, &other);
   process_ = other.process_;
   other.Close();
   return *this;
@@ -256,12 +256,17 @@ Process Process::DeprecatedGetProcessFromHandle(ProcessHandle handle) {
   return Process(handle);
 }
 
-#if !defined(OS_LINUX)
+#if !defined(OS_LINUX) && !defined(OS_MACOSX)
 // static
 bool Process::CanBackgroundProcesses() {
   return false;
 }
-#endif  // !defined(OS_LINUX)
+#endif  // !defined(OS_LINUX) && !defined(OS_MACOSX)
+
+// static
+void Process::TerminateCurrentProcessImmediately(int exit_code) {
+  _exit(exit_code);
+}
 
 bool Process::IsValid() const {
   return process_ != kNullProcessHandle;
@@ -349,15 +354,18 @@ bool Process::Terminate(int exit_code, bool wait) const {
 }
 #endif  // !defined(OS_NACL_NONSFI)
 
-bool Process::WaitForExit(int* exit_code) {
+bool Process::WaitForExit(int* exit_code) const {
   return WaitForExitWithTimeout(TimeDelta::Max(), exit_code);
 }
 
-bool Process::WaitForExitWithTimeout(TimeDelta timeout, int* exit_code) {
+bool Process::WaitForExitWithTimeout(TimeDelta timeout, int* exit_code) const {
+  // Record the event that this thread is blocking upon (for hang diagnosis).
+  base::debug::ScopedProcessWaitActivity process_activity(this);
+
   return WaitForExitWithTimeoutImpl(Handle(), exit_code, timeout);
 }
 
-#if !defined(OS_LINUX)
+#if !defined(OS_LINUX) && !defined(OS_MACOSX)
 bool Process::IsProcessBackgrounded() const {
   // See SetProcessBackgrounded().
   DCHECK(IsValid());
@@ -365,13 +373,13 @@ bool Process::IsProcessBackgrounded() const {
 }
 
 bool Process::SetProcessBackgrounded(bool value) {
-  // Not implemented for POSIX systems other than Linux. With POSIX, if we were
-  // to lower the process priority we wouldn't be able to raise it back to its
-  // initial priority.
+  // Not implemented for POSIX systems other than Linux and Mac. With POSIX, if
+  // we were to lower the process priority we wouldn't be able to raise it back
+  // to its initial priority.
   NOTIMPLEMENTED();
   return false;
 }
-#endif  // !defined(OS_LINUX)
+#endif  // !defined(OS_LINUX) && !defined(OS_MACOSX)
 
 int Process::GetPriority() const {
   DCHECK(IsValid());

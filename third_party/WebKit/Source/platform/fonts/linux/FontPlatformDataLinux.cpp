@@ -35,15 +35,22 @@
 
 namespace blink {
 
-void FontPlatformData::setupPaint(SkPaint* paint, float deviceScaleFactor, const Font*) const
-{
-    m_style.applyToPaint(*paint, deviceScaleFactor);
+void FontPlatformData::SetupPaint(SkPaint* paint,
+                                  float device_scale_factor,
+                                  const Font*) const {
+  style_.ApplyToPaint(*paint, device_scale_factor);
 
-    const float ts = m_textSize >= 0 ? m_textSize : 12;
-    paint->setTextSize(SkFloatToScalar(ts));
-    paint->setTypeface(toSkSp(m_typeface));
-    paint->setFakeBoldText(m_syntheticBold);
-    paint->setTextSkewX(m_syntheticItalic ? -SK_Scalar1 / 4 : 0);
+  const float ts = text_size_ >= 0 ? text_size_ : 12;
+  paint->setTextSize(SkFloatToScalar(ts));
+  paint->setTypeface(typeface_);
+  paint->setFakeBoldText(synthetic_bold_);
+  paint->setTextSkewX(synthetic_italic_ ? -SK_Scalar1 / 4 : 0);
+
+  // TODO(drott): Due to Skia bug 5917
+  // https://bugs.chromium.org/p/skia/issues/detail?id=5917 correct advance
+  // width scaling with FreeType for font sizes under 257px currently only works
+  // with:
+  // paint->setHinting(SkPaint::kNo_Hinting);
 }
 
-} // namespace blink
+}  // namespace blink

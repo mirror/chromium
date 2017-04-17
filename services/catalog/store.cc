@@ -7,24 +7,29 @@
 namespace catalog {
 
 // static
-const char Store::kManifestVersionKey[] = "manifest_version";
-// static
 const char Store::kNameKey[] = "name";
-// static
-const char Store::kQualifierKey[] = "process-group";
 // static
 const char Store::kDisplayNameKey[] = "display_name";
 // static
-const char Store::kCapabilitiesKey[] = "capabilities";
+const char Store::kInterfaceProviderSpecsKey[] = "interface_provider_specs";
 // static
-const char Store::kCapabilities_ProvidedKey[] = "provided";
+const char Store::kInterfaceProviderSpecs_ProvidesKey[] = "provides";
 // static
-const char Store::kCapabilities_RequiredKey[] = "required";
-// static
-const char Store::kCapabilities_ClassesKey[] = "classes";
-// static
-const char Store::kCapabilities_InterfacesKey[] = "interfaces";
+const char Store::kInterfaceProviderSpecs_RequiresKey[] = "requires";
 // static
 const char Store::kServicesKey[] = "services";
-
+// static
+const char Store::kRequiredFilesKey[] = "required_files";
+// static
+const char Store::kRequiredFilesKey_PathKey[] = "path";
+// static
+const char Store::kRequiredFilesKey_PlatformKey[] = "platform";
+// static
+const char Store::kRequiredFilesKey_PlatformValue_Windows[] = "windows";
+// static
+const char Store::kRequiredFilesKey_PlatformValue_Linux[] = "linux";
+// static
+const char Store::kRequiredFilesKey_PlatformValue_MacOSX[] = "macosx";
+// static
+const char Store::kRequiredFilesKey_PlatformValue_Android[] = "android";
 }  // namespace catalog

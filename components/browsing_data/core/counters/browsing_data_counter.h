@@ -6,10 +6,14 @@
 #define COMPONENTS_BROWSING_DATA_CORE_COUNTERS_BROWSING_DATA_COUNTER_H_
 
 #include <stdint.h>
+
+#include <memory>
 #include <string>
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/timer/timer.h"
+#include "components/browsing_data/core/clear_browsing_data_tab.h"
 #include "components/prefs/pref_member.h"
 
 class PrefService;
@@ -58,23 +62,45 @@ class BrowsingDataCounter {
 
   typedef base::Callback<void(std::unique_ptr<Result>)> Callback;
 
+  // Every calculation progresses through a state machine. At initialization,
+  // the counter is IDLE. If a result is calculated within a given time
+  // interval, it is immediately reported and the counter is again IDLE.
+  // Otherwise, the counter instructs the UI to show a "Calculating..."
+  // message and transitions to the SHOW_CALCULATING state. The counter stays
+  // in this state for a given amount of time. If a result is calculated at
+  // this time, it is stored, but not immediately reported. After the timer
+  // elapses, we check if a result has been reported in the meantime. If yes,
+  // we transition to REPORT_STAGED_RESULT, report the result, and then return
+  // to IDLE. If not, we transition to READY_TO_REPORT_RESULT. In this
+  // state, we wait for the calculation to finish. When that happens, we show
+  // the result, and  return to the IDLE state.
+  enum class State {
+    IDLE,
+    RESTARTED,
+    SHOW_CALCULATING,
+    REPORT_STAGED_RESULT,
+    READY_TO_REPORT_RESULT,
+  };
+
   BrowsingDataCounter();
   virtual ~BrowsingDataCounter();
 
   // Should be called once to initialize this class.
-  void Init(PrefService* pref_service, const Callback& callback);
+  void Init(PrefService* pref_service,
+            ClearBrowsingDataTab clear_browsing_data_tab,
+            const Callback& callback);
 
   // Name of the preference associated with this counter.
   virtual const char* GetPrefName() const = 0;
-
-  // PrefService that manages the preferences for the user profile
-  // associated with this counter.
-  PrefService* GetPrefs() const;
 
   // Restarts the counter. Will be called automatically if the counting needs
   // to be restarted, e.g. when the deletion preference changes state or when
   // we are notified of data changes.
   void Restart();
+
+  // Returns the state transition of this counter since past restart.
+  // Used only for testing.
+  const std::vector<State>& GetStateTransitionsForTesting();
 
  protected:
   // Should be called from |Count| by any overriding class to indicate that
@@ -85,8 +111,18 @@ class BrowsingDataCounter {
   // provide a custom |result|.
   void ReportResult(std::unique_ptr<Result> result);
 
+  // A synchronous implementation of ReportResult(). Called immediately in the
+  // RESTARTED and READY_TO_REPORT_RESULT states, called later if the counter is
+  // in the SHOW_CALCULATING stage. This method is made virtual to be overriden
+  // in tests.
+  virtual void DoReportResult(std::unique_ptr<Result> result);
+
   // Calculates the beginning of the counting period as |period_| before now.
   base::Time GetPeriodStart();
+
+  // Returns if this counter belongs to a preference on the default, basic or
+  // advanced CBD tab.
+  ClearBrowsingDataTab GetTab() const;
 
  private:
   // Called after the class is initialized by calling |Init|.
@@ -95,9 +131,12 @@ class BrowsingDataCounter {
   // Count the data.
   virtual void Count() = 0;
 
-  // Pointer to the PrefService that manages the preferences for the user
-  // profile associated with this counter.
-  PrefService* pref_service_;
+  // State transition methods.
+  void TransitionToShowCalculating();
+  void TransitionToReadyToReportResult();
+
+  // Indicates if this counter belongs to a preference on the basic CBD tab.
+  ClearBrowsingDataTab clear_browsing_data_tab_;
 
   // The callback that will be called when the UI should be updated with a new
   // counter value.
@@ -112,7 +151,20 @@ class BrowsingDataCounter {
   IntegerPrefMember period_;
 
   // Whether this class was properly initialized by calling |Init|.
-  bool initialized_ = false;
+  bool initialized_;
+
+  // State of the counter.
+  State state_;
+
+  // State transitions since the last restart.
+  std::vector<State> state_transitions_;
+
+  // A result is staged if it arrives during the SHOW_CALCULATING state.
+  std::unique_ptr<Result> staged_result_;
+
+  // A timer to time the RESTARTED->SHOW_CALCULATION and
+  // SHOW_CALCULATION->READY_TO_REPORT_RESULT state transitions.
+  base::OneShotTimer timer_;
 };
 
 }  // namespace browsing_data

@@ -442,7 +442,8 @@ cvox.AbstractTts.CHARACTER_DICTIONARY = {
   '\t': 'tab',
   '\r': 'return',
   '\n': 'new_line',
-  '\\': 'backslash'
+  '\\': 'backslash',
+  '\u2022': 'bullet'
 };
 
 
@@ -550,7 +551,7 @@ cvox.AbstractTts.substitutionDictionaryRegexp_;
  * @private
  */
 cvox.AbstractTts.repetitionRegexp_ =
-    /([-\/\\|!@#$%^&*\(\)=_+\[\]\{\}.?;'":<>])\1{2,}/g;
+    /([-\/\\|!@#$%^&*\(\)=_+\[\]\{\}.?;'":<>\u2022])\1{1,}/g;
 
 
 /**
@@ -573,4 +574,10 @@ cvox.AbstractTts.repetitionReplace_ = function(match) {
  */
 cvox.AbstractTts.prototype.getDefaultProperty = function(property) {
   return this.propertyDefault[property];
+};
+
+
+/** @override */
+cvox.AbstractTts.prototype.toggleSpeechOnOrOff = function() {
+  return true;
 };

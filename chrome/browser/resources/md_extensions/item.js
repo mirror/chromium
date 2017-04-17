@@ -2,15 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Closure compiler won't let this be declared inside cr.define().
-/** @enum {string} */
-var SourceType = {
-  WEBSTORE: 'webstore',
-  POLICY: 'policy',
-  SIDELOADED: 'sideloaded',
-  UNPACKED: 'unpacked',
-};
-
 cr.define('extensions', function() {
   /** @interface */
   var ItemDelegate = function() {};
@@ -50,13 +41,19 @@ cr.define('extensions', function() {
     setItemCollectsErrors: assertNotReached,
 
     /**
-     * @param {string} id,
+     * @param {string} id
      * @param {chrome.developerPrivate.ExtensionView} view
      */
     inspectItemView: assertNotReached,
 
     /** @param {string} id */
+    reloadItem: assertNotReached,
+
+    /** @param {string} id */
     repairItem: assertNotReached,
+
+    /** @param {string} id */
+    showItemOptionsPage: assertNotReached,
   };
 
   var Item = Polymer({
@@ -106,6 +103,15 @@ cr.define('extensions', function() {
       this.fire('extension-item-size-changed', {item: this.data});
     },
 
+    /**
+     * @return {boolean}
+     * @private
+     */
+    computeErrorsHidden_: function() {
+      return !this.data.manifestErrors.length &&
+             !this.data.runtimeErrors.length;
+    },
+
     /** @private */
     onRemoveTap_: function() {
       this.delegate.deleteItem(this.data.id);
@@ -118,8 +124,13 @@ cr.define('extensions', function() {
     },
 
     /** @private */
+    onErrorsTap_: function() {
+      this.fire('extension-item-show-errors', {data: this.data});
+    },
+
+    /** @private */
     onDetailsTap_: function() {
-      this.fire('extension-item-show-details', {element: this});
+      this.fire('extension-item-show-details', {data: this.data});
     },
 
     /**
@@ -127,7 +138,17 @@ cr.define('extensions', function() {
      * @private
      */
     onInspectTap_: function(e) {
-      this.delegate.inspectItemView(this.data.id, e.model.item);
+      this.delegate.inspectItemView(this.data.id, this.data.views[0]);
+    },
+
+    /** @private */
+    onExtraInspectTap_: function() {
+      this.fire('extension-item-show-details', {data: this.data});
+    },
+
+    /** @private */
+    onReloadTap_: function() {
+      this.delegate.reloadItem(this.data.id);
     },
 
     /** @private */
@@ -136,44 +157,47 @@ cr.define('extensions', function() {
     },
 
     /**
-     * Returns true if the extension is enabled, including terminated
-     * extensions.
      * @return {boolean}
      * @private
      */
-    isEnabled_: function() {
-      switch (this.data.state) {
-        case chrome.developerPrivate.ExtensionState.ENABLED:
-        case chrome.developerPrivate.ExtensionState.TERMINATED:
-          return true;
-        case chrome.developerPrivate.ExtensionState.DISABLED:
-          return false;
-      }
-      assertNotReached();  // FileNotFound.
-    },
+    isEnabled_: function() { return extensions.isEnabled(this.data.state); },
 
-    /** @private */
-    computeClasses_: function() {
-      return this.isEnabled_() ? 'enabled' : 'disabled';
+    /**
+     * @return {boolean}
+     * @private
+     */
+    isEnableToggleEnabled_: function() {
+      return extensions.userCanChangeEnablement(this.data);
     },
 
     /**
-     * @return {SourceType}
+     * Returns true if the enable toggle should be shown.
+     * @return {boolean}
      * @private
      */
-    computeSource_: function() {
-      if (this.data.controlledInfo &&
-          this.data.controlledInfo.type ==
-              chrome.developerPrivate.ControllerType.POLICY) {
-        return SourceType.POLICY;
-      } else if (this.data.location ==
-                     chrome.developerPrivate.Location.THIRD_PARTY) {
-        return SourceType.SIDELOADED;
-      } else if (this.data.location ==
-                     chrome.developerPrivate.Location.UNPACKED) {
-        return SourceType.UNPACKED;
-      }
-      return SourceType.WEBSTORE;
+    showEnableToggle_: function() {
+      return !this.isTerminated_() && !this.data.disableReasons.corruptInstall;
+    },
+
+    /**
+     * Returns true if the extension is in the terminated state.
+     * @return {boolean}
+     * @private
+     */
+    isTerminated_: function() {
+      return this.data.state ==
+          chrome.developerPrivate.ExtensionState.TERMINATED;
+    },
+
+    /**
+     * return {string}
+     * @private
+     */
+    computeClasses_: function() {
+      var classes = this.isEnabled_() ? 'enabled' : 'disabled';
+      if (this.inDevMode)
+        classes += ' dev-mode';
+      return classes;
     },
 
     /**
@@ -181,7 +205,7 @@ cr.define('extensions', function() {
      * @private
      */
     computeSourceIndicatorIcon_: function() {
-      switch (this.computeSource_()) {
+      switch (extensions.getItemSource(this.data)) {
         case SourceType.POLICY:
           return 'communication:business';
         case SourceType.SIDELOADED:
@@ -199,37 +223,66 @@ cr.define('extensions', function() {
      * @private
      */
     computeSourceIndicatorText_: function() {
-      switch (this.computeSource_()) {
-        case SourceType.POLICY:
-          return loadTimeData.getString('itemSourcePolicy');
-        case SourceType.SIDELOADED:
-          return loadTimeData.getString('itemSourceSideloaded');
-        case SourceType.UNPACKED:
-          return loadTimeData.getString('itemSourceUnpacked');
-        case SourceType.WEBSTORE:
-          return '';
-      }
-      assertNotReached();
+      var sourceType = extensions.getItemSource(this.data);
+      return sourceType == SourceType.WEBSTORE ? '' :
+             extensions.getItemSourceString(sourceType);
     },
 
     /**
-     * @param {chrome.developerPrivate.ExtensionView} view
+     * @return {boolean}
      * @private
      */
-    computeInspectLabel_: function(view) {
-      // Trim the "chrome-extension://<id>/".
-      var url = new URL(view.url);
-      var label = view.url;
-      if (url.protocol == 'chrome-extension:')
-        label = url.pathname.substring(1);
-      if (label == '_generated_background_page.html')
-        label = this.i18n('viewBackgroundPage');
-      // Add any qualifiers.
-      label += (view.incognito ? ' ' + this.i18n('viewIncognito') : '') +
-               (view.renderProcessId == -1 ?
-                    ' ' + this.i18n('viewInactive') : '') +
-               (view.isIframe ? ' ' + this.i18n('viewIframe') : '');
+    computeInspectViewsHidden_: function() {
+      return !this.data.views || this.data.views.length == 0;
+    },
+
+    /**
+     * @return {string}
+     * @private
+     */
+    computeFirstInspectLabel_: function() {
+      // Note: theoretically, this wouldn't be called without any inspectable
+      // views (because it's in a dom-if="!computeInspectViewsHidden_()").
+      // However, due to the recycling behavior of iron list, it seems that
+      // sometimes it can. Even when it is, the UI behaves properly, but we
+      // need to handle the case gracefully.
+      if (this.data.views.length == 0)
+        return '';
+      var label = extensions.computeInspectableViewLabel(this.data.views[0]);
+      if (this.data.views.length > 1)
+        label += ',';
       return label;
+    },
+
+    /**
+     * @return {boolean}
+     * @private
+     */
+    computeExtraViewsHidden_: function() {
+      return this.data.views.length <= 1;
+    },
+
+    /**
+     * @return {boolean}
+     * @private
+     */
+    computeDevReloadButtonHidden_: function() {
+      // Only display the reload spinner if the extension is unpacked and
+      // not terminated (since if it's terminated, we'll show a crashed reload
+      // buton).
+      var showIcon =
+          this.data.location == chrome.developerPrivate.Location.UNPACKED &&
+          this.data.state != chrome.developerPrivate.ExtensionState.TERMINATED;
+      return !showIcon;
+    },
+
+    /**
+     * @return {string}
+     * @private
+     */
+    computeExtraInspectLabel_: function() {
+      return loadTimeData.getStringF('itemInspectViewsExtra',
+                                     this.data.views.length - 1);
     },
 
     /**

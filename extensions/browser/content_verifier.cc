@@ -6,16 +6,20 @@
 
 #include <algorithm>
 #include <utility>
+#include <vector>
 
 #include "base/files/file_path.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/storage_partition.h"
 #include "extensions/browser/content_hash_fetcher.h"
 #include "extensions/browser/content_hash_reader.h"
 #include "extensions/browser/content_verifier_delegate.h"
 #include "extensions/browser/content_verifier_io_data.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/browser/management_policy.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension_l10n_util.h"
 
@@ -53,22 +57,31 @@ base::FilePath NormalizeRelativePath(const base::FilePath& path) {
 }  // namespace
 
 // static
+bool ContentVerifier::ShouldRepairIfCorrupted(
+    const ManagementPolicy* management_policy,
+    const Extension* extension) {
+  return management_policy->MustRemainEnabled(extension, nullptr) ||
+         management_policy->MustRemainInstalled(extension, nullptr);
+}
+
+// static
 void ContentVerifier::SetObserverForTests(TestObserver* observer) {
   g_test_observer = observer;
 }
 
-ContentVerifier::ContentVerifier(content::BrowserContext* context,
-                                 ContentVerifierDelegate* delegate)
+ContentVerifier::ContentVerifier(
+    content::BrowserContext* context,
+    std::unique_ptr<ContentVerifierDelegate> delegate)
     : shutdown_(false),
       context_(context),
-      delegate_(delegate),
+      delegate_(std::move(delegate)),
       fetcher_(new ContentHashFetcher(
-          context,
-          delegate,
+          content::BrowserContext::GetDefaultStoragePartition(context)
+              ->GetURLRequestContext(),
+          delegate_.get(),
           base::Bind(&ContentVerifier::OnFetchComplete, this))),
       observer_(this),
-      io_data_(new ContentVerifierIOData) {
-}
+      io_data_(new ContentVerifierIOData) {}
 
 ContentVerifier::~ContentVerifier() {
 }
@@ -80,6 +93,7 @@ void ContentVerifier::Start() {
 
 void ContentVerifier::Shutdown() {
   shutdown_ = true;
+  delegate_->Shutdown();
   content::BrowserThread::PostTask(
       content::BrowserThread::IO,
       FROM_HERE,
@@ -261,7 +275,7 @@ bool ContentVerifier::ShouldVerifyAnyPaths(
     if (relative_path == base::FilePath(kManifestFilename))
       continue;
 
-    if (ContainsKey(browser_images, relative_path))
+    if (base::ContainsKey(browser_images, relative_path))
       continue;
 
     base::FilePath full_path = extension_root.Append(relative_path);

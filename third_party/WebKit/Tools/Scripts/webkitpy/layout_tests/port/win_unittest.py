@@ -26,12 +26,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from webkitpy.common.system import outputcapture
+import optparse
+
+from webkitpy.common.system import output_capture
 from webkitpy.common.system.executive_mock import MockExecutive
-from webkitpy.common.system.filesystem_mock import MockFileSystem
 from webkitpy.layout_tests.port import port_testcase
 from webkitpy.layout_tests.port import win
-from webkitpy.tool.mock_tool import MockOptions
 
 
 class WinPortTest(port_testcase.PortTestCase):
@@ -44,23 +44,10 @@ class WinPortTest(port_testcase.PortTestCase):
     def test_setup_environ_for_server(self):
         port = self.make_port()
         port._executive = MockExecutive(should_log=True)
-        output = outputcapture.OutputCapture()
+        output = output_capture.OutputCapture()
         orig_environ = port.host.environ.copy()
         env = output.assert_outputs(self, port.setup_environ_for_server)
-        self.assertEqual(orig_environ["PATH"], port.host.environ.get("PATH"))
-        self.assertNotEqual(env["PATH"], port.host.environ.get("PATH"))
-
-    def test_setup_environ_for_server_cygpath(self):
-        port = self.make_port()
-        env = port.setup_environ_for_server()
-        self.assertEqual(env['CYGWIN_PATH'], '/mock-checkout/third_party/cygwin/bin')
-
-    def test_setup_environ_for_server_register_cygwin(self):
-        port = self.make_port(options=MockOptions(register_cygwin=True, results_directory='/'))
-        port._executive = MockExecutive(should_log=True)
-        expected_logs = "MOCK run_command: ['/mock-checkout/third_party/cygwin/setup_mount.bat'], cwd=None\n"
-        output = outputcapture.OutputCapture()
-        output.assert_outputs(self, port.setup_environ_for_server, expected_logs=expected_logs)
+        self.assertEqual(orig_environ['PATH'], port.host.environ.get('PATH'))
 
     def assert_name(self, port_name, os_version_string, expected):
         port = self.make_port(port_name=port_name, os_version=os_version_string)
@@ -101,7 +88,9 @@ class WinPortTest(port_testcase.PortTestCase):
 
     def assert_baseline_paths(self, port_name, *expected_paths):
         port = self.make_port(port_name=port_name)
-        self.assertEqual(port.baseline_path(), port._webkit_baseline_path(expected_paths[0]))
+        self.assertEqual(
+            port.baseline_version_dir(),
+            port._absolute_baseline_path(expected_paths[0]))  # pylint: disable=protected-access
         self.assertEqual(len(port.baseline_search_path()), len(expected_paths))
         for i, path in enumerate(expected_paths):
             self.assertTrue(port.baseline_search_path()[i].endswith(path))
@@ -112,19 +101,19 @@ class WinPortTest(port_testcase.PortTestCase):
 
     def test_build_path(self):
         # Test that optional paths are used regardless of whether they exist.
-        options = MockOptions(configuration='Release', build_directory='/foo')
+        options = optparse.Values({'configuration': 'Release', 'build_directory': '/foo'})
         self.assert_build_path(options, ['/mock-checkout/out/Release'], '/foo/Release')
 
         # Test that optional relative paths are returned unmodified.
-        options = MockOptions(configuration='Release', build_directory='foo')
+        options = optparse.Values({'configuration': 'Release', 'build_directory': 'foo'})
         self.assert_build_path(options, ['/mock-checkout/out/Release'], 'foo/Release')
 
         # Test that we prefer the legacy dir over the new dir.
-        options = MockOptions(configuration='Release', build_directory=None)
+        options = optparse.Values({'configuration': 'Release', 'build_directory': None})
         self.assert_build_path(options, ['/mock-checkout/build/Release', '/mock-checkout/out'], '/mock-checkout/build/Release')
 
     def test_build_path_timestamps(self):
-        options = MockOptions(configuration='Release', build_directory=None)
+        options = optparse.Values({'configuration': 'Release', 'build_directory': None})
         port = self.make_port(options=options)
         port.host.filesystem.maybe_make_directory('/mock-checkout/out/Release')
         port.host.filesystem.maybe_make_directory('/mock-checkout/build/Release')
@@ -140,8 +129,13 @@ class WinPortTest(port_testcase.PortTestCase):
 
     def test_driver_name_option(self):
         self.assertTrue(self.make_port()._path_to_driver().endswith('content_shell.exe'))
-        self.assertTrue(self.make_port(options=MockOptions(driver_name='OtherDriver')
-                                       )._path_to_driver().endswith('OtherDriver.exe'))
+        self.assertTrue(
+            self.make_port(options=optparse.Values({'driver_name': 'OtherDriver'}))._path_to_driver().endswith('OtherDriver.exe'))
 
     def test_path_to_image_diff(self):
         self.assertEqual(self.make_port()._path_to_image_diff(), '/mock-checkout/out/Release/image_diff.exe')
+
+    def test_path_to_apache_config_file(self):
+        self.assertEqual(
+            self.make_port().path_to_apache_config_file(),
+            '/mock-checkout/third_party/WebKit/Tools/Scripts/apache_config/win-httpd.conf')

@@ -9,13 +9,15 @@
 
 namespace ntp_snippets {
 
-// Name of the variation parameters study to configure NTP snippets.
-extern const char kStudyName[];
-
 // Name of the folder where the snippets database should be stored. This is only
 // the name of the folder, not a full path - it must be appended to e.g. the
 // profile path.
 extern const base::FilePath::CharType kDatabaseFolder[];
+
+// Server endpoints for fetching snippets.
+extern const char kContentSuggestionsServer[];         // used on stable/beta
+extern const char kContentSuggestionsStagingServer[];  // used on dev/canary
+extern const char kContentSuggestionsAlphaServer[];    // for testing
 
 }  // namespace ntp_snippets
 

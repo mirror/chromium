@@ -31,37 +31,35 @@
 #include "platform/clipboard/ClipboardUtilities.h"
 
 #include "platform/weborigin/KURL.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-void replaceNBSPWithSpace(String& str)
-{
-    static const UChar NonBreakingSpaceCharacter = 0xA0;
-    static const UChar SpaceCharacter = ' ';
-    str.replace(NonBreakingSpaceCharacter, SpaceCharacter);
+void ReplaceNBSPWithSpace(String& str) {
+  static const UChar kNonBreakingSpaceCharacter = 0xA0;
+  static const UChar kSpaceCharacter = ' ';
+  str.Replace(kNonBreakingSpaceCharacter, kSpaceCharacter);
 }
 
-String convertURIListToURL(const String& uriList)
-{
-    Vector<String> items;
-    // Line separator is \r\n per RFC 2483 - however, for compatibility
-    // reasons we allow just \n here.
-    uriList.split('\n', items);
-    // Process the input and return the first valid URL. In case no URLs can
-    // be found, return an empty string. This is in line with the HTML5 spec.
-    for (size_t i = 0; i < items.size(); ++i) {
-        String& line = items[i];
-        line = line.stripWhiteSpace();
-        if (line.isEmpty())
-            continue;
-        if (line[0] == '#')
-            continue;
-        KURL url = KURL(ParsedURLString, line);
-        if (url.isValid())
-            return url;
-    }
-    return String();
+String ConvertURIListToURL(const String& uri_list) {
+  Vector<String> items;
+  // Line separator is \r\n per RFC 2483 - however, for compatibility
+  // reasons we allow just \n here.
+  uri_list.Split('\n', items);
+  // Process the input and return the first valid URL. In case no URLs can
+  // be found, return an empty string. This is in line with the HTML5 spec.
+  for (size_t i = 0; i < items.size(); ++i) {
+    String& line = items[i];
+    line = line.StripWhiteSpace();
+    if (line.IsEmpty())
+      continue;
+    if (line[0] == '#')
+      continue;
+    KURL url = KURL(kParsedURLString, line);
+    if (url.IsValid())
+      return url;
+  }
+  return String();
 }
 
-} // namespace blink
+}  // namespace blink

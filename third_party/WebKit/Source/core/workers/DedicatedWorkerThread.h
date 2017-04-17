@@ -38,27 +38,37 @@ namespace blink {
 class InProcessWorkerObjectProxy;
 class WorkerThreadStartupData;
 
-class DedicatedWorkerThread final : public WorkerThread {
-public:
-    static std::unique_ptr<DedicatedWorkerThread> create(PassRefPtr<WorkerLoaderProxy>, InProcessWorkerObjectProxy&, double timeOrigin);
-    ~DedicatedWorkerThread() override;
+class CORE_EXPORT DedicatedWorkerThread : public WorkerThread {
+ public:
+  static std::unique_ptr<DedicatedWorkerThread> Create(
+      PassRefPtr<WorkerLoaderProxy>,
+      InProcessWorkerObjectProxy&,
+      double time_origin);
+  ~DedicatedWorkerThread() override;
 
-    WorkerBackingThread& workerBackingThread() override { return *m_workerBackingThread; }
-    ConsoleMessageStorage* consoleMessageStorage() final;
-    InProcessWorkerObjectProxy& workerObjectProxy() const { return m_workerObjectProxy; }
+  WorkerBackingThread& GetWorkerBackingThread() override {
+    return *worker_backing_thread_;
+  }
+  void ClearWorkerBackingThread() override;
+  InProcessWorkerObjectProxy& WorkerObjectProxy() const {
+    return worker_object_proxy_;
+  }
 
-protected:
-    WorkerOrWorkletGlobalScope* createWorkerGlobalScope(std::unique_ptr<WorkerThreadStartupData>) override;
-    void postInitialize() override;
+ protected:
+  DedicatedWorkerThread(PassRefPtr<WorkerLoaderProxy>,
+                        InProcessWorkerObjectProxy&,
+                        double time_origin);
+  WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
+      std::unique_ptr<WorkerThreadStartupData>) override;
 
-private:
-    DedicatedWorkerThread(PassRefPtr<WorkerLoaderProxy>, InProcessWorkerObjectProxy&, double timeOrigin);
+ private:
+  friend class DedicatedWorkerThreadForTest;
 
-    std::unique_ptr<WorkerBackingThread> m_workerBackingThread;
-    InProcessWorkerObjectProxy& m_workerObjectProxy;
-    double m_timeOrigin;
+  std::unique_ptr<WorkerBackingThread> worker_backing_thread_;
+  InProcessWorkerObjectProxy& worker_object_proxy_;
+  double time_origin_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DedicatedWorkerThread_h
+#endif  // DedicatedWorkerThread_h

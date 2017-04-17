@@ -116,13 +116,20 @@ bool ProcessReader::Initialize(task_t task) {
     return false;
   }
 
-  is_64_bit_ = process_info_.Is64Bit();
+  if (!process_info_.Is64Bit(&is_64_bit_)) {
+    return false;
+  }
 
   task_memory_.reset(new TaskMemory(task));
   task_ = task;
 
   INITIALIZATION_STATE_SET_VALID(initialized_);
   return true;
+}
+
+void ProcessReader::StartTime(timeval* start_time) const {
+  bool rv = process_info_.StartTime(start_time);
+  DCHECK(rv);
 }
 
 bool ProcessReader::CPUTimes(timeval* user_time, timeval* system_time) const {
@@ -444,6 +451,9 @@ void ProcessReader::InitializeModules() {
     if (all_image_infos.version >= 2 && all_image_infos.dyldImageLoadAddress &&
         image_info.imageLoadAddress == all_image_infos.dyldImageLoadAddress) {
       found_dyld = true;
+      LOG(WARNING) << base::StringPrintf(
+            "found dylinker (%s) in dyld_all_image_infos::infoArray",
+            module.name.c_str());
 
       LOG_IF(WARNING, file_type != MH_DYLINKER)
           << base::StringPrintf("dylinker (%s) has unexpected Mach-O type %d",

@@ -15,18 +15,17 @@
 #include "base/supports_user_data.h"
 #include "content/browser/appcache/appcache_entry.h"
 #include "content/browser/appcache/appcache_host.h"
+#include "content/browser/appcache/appcache_service_impl.h"
 #include "content/common/content_export.h"
 #include "content/public/common/resource_type.h"
 
 namespace net {
 class NetworkDelegate;
 class URLRequest;
-class URLRequestJob;
 }  // namespace net
 
 namespace content {
 class AppCacheRequestHandlerTest;
-class AppCacheService;
 class AppCacheURLRequestJob;
 
 // An instance is created for each net::URLRequest. The instance survives all
@@ -37,7 +36,8 @@ class AppCacheURLRequestJob;
 class CONTENT_EXPORT AppCacheRequestHandler
     : public base::SupportsUserData::Data,
       public AppCacheHost::Observer,
-      public AppCacheStorage::Delegate  {
+      public AppCacheServiceImpl::Observer,
+      public AppCacheStorage::Delegate {
  public:
   ~AppCacheRequestHandler() override;
 
@@ -80,6 +80,9 @@ class CONTENT_EXPORT AppCacheRequestHandler
 
   // AppCacheHost::Observer override
   void OnDestructionImminent(AppCacheHost* host) override;
+
+  // AppCacheServiceImpl::Observer override
+  void OnServiceDestructionImminent(AppCacheServiceImpl* service) override;
 
   // Helpers to instruct a waiting job with what response to
   // deliver for the request we're handling.
@@ -189,6 +192,9 @@ class CONTENT_EXPORT AppCacheRequestHandler
   // AppCache, if there is one.
   int cache_id_;
   GURL manifest_url_;
+
+  // Backptr to the central service object.
+  AppCacheServiceImpl* service_;
 
   friend class content::AppCacheRequestHandlerTest;
   DISALLOW_COPY_AND_ASSIGN(AppCacheRequestHandler);

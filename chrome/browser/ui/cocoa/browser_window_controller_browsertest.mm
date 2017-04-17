@@ -33,7 +33,7 @@
 #import "chrome/browser/ui/cocoa/infobars/infobar_container_controller.h"
 #import "chrome/browser/ui/cocoa/infobars/infobar_controller.h"
 #import "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
-#import "chrome/browser/ui/cocoa/fullscreen_toolbar_controller.h"
+#import "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h"
 #import "chrome/browser/ui/cocoa/profiles/avatar_base_controller.h"
 #import "chrome/browser/ui/cocoa/tab_contents/overlayable_contents_controller.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_view.h"
@@ -57,7 +57,6 @@
 #import "third_party/ocmock/OCMock/OCMock.h"
 #import "ui/base/cocoa/nsview_additions.h"
 #include "ui/gfx/animation/slide_animation.h"
-#include "ui/gfx/vector_icons_public.h"
 
 namespace {
 
@@ -192,18 +191,11 @@ class ViewExposedChecker {
 // True if revealToolbarForTabStripChanges was called.
 @property(nonatomic, assign) BOOL isRevealingToolbarForTabstrip;
 
-// Initializer.
-- (id)initWithBrowserController:(BrowserWindowController*)controller;
-
 // Sets isRevealingToolbarForTabstrip back to false.
 - (void)resetToolbarFlag;
 
 // Overridden to set isRevealingToolbarForTabstrip to true when it's called.
 - (void)revealToolbarForTabStripChanges;
-
-// Overridden so that we don't have to deal with the DCHECKs when the
-// BWC exits fullscreen.
-- (void)exitFullscreenMode;
 
 @end
 
@@ -211,24 +203,12 @@ class ViewExposedChecker {
 
 @synthesize isRevealingToolbarForTabstrip = isRevealingToolbarForTabstrip_;
 
-- (id)initWithBrowserController:(BrowserWindowController*)controller {
-  if ((self = [super
-           initWithBrowserController:controller
-                               style:fullscreen_mac::OMNIBOX_TABS_HIDDEN])) {
-  }
-
-  return self;
-}
-
 - (void)resetToolbarFlag {
   isRevealingToolbarForTabstrip_ = NO;
 }
 
 - (void)revealToolbarForTabStripChanges {
   isRevealingToolbarForTabstrip_ = YES;
-}
-
-- (void)exitFullscreenMode {
 }
 
 @end
@@ -269,8 +249,8 @@ class BrowserWindowControllerTest : public InProcessBrowserTest {
     SimpleAlertInfoBarDelegate::Create(
         InfoBarService::FromWebContents(
             browser->tab_strip_model()->GetActiveWebContents()),
-        infobars::InfoBarDelegate::TEST_INFOBAR,
-        0, gfx::VectorIconId::VECTOR_ICON_NONE, base::string16(), false);
+        infobars::InfoBarDelegate::TEST_INFOBAR, nullptr, base::string16(),
+        false);
   }
 
   NSView* GetViewWithID(ViewID view_id) const {
@@ -313,7 +293,7 @@ class BrowserWindowControllerTest : public InProcessBrowserTest {
 
     // Views not in |view_list| must either be nil or not parented.
     for (size_t i = 0; i < VIEW_ID_COUNT; ++i) {
-      if (!ContainsValue(view_list, i)) {
+      if (!base::ContainsValue(view_list, i)) {
         NSView* view = GetViewWithID(static_cast<ViewID>(i));
         EXPECT_TRUE(!view || ![view superview]);
       }
@@ -369,17 +349,6 @@ class BrowserWindowControllerTest : public InProcessBrowserTest {
                    [controller() bookmarkBarController],
                    runner->QuitClosure()));
     runner->Run();
-  }
-
-  void VerifyFullscreenToolbarVisibility(fullscreen_mac::SlidingStyle style) {
-    EXPECT_EQ([[controller() fullscreenToolbarController] slidingStyle], style);
-
-    NSRect toolbarFrame = [[[controller() toolbarController] view] frame];
-    NSRect screenFrame = [[[controller() window] screen] frame];
-    if (style == fullscreen_mac::OMNIBOX_TABS_PRESENT)
-      EXPECT_LE(NSMaxY(toolbarFrame), NSMaxY(screenFrame));
-    else
-      EXPECT_GE(NSMinY(toolbarFrame), NSMaxY(screenFrame));
   }
 
   NSInteger GetExpectedTopInfoBarTipHeight() {
@@ -446,7 +415,7 @@ class BrowserWindowControllerTest : public InProcessBrowserTest {
   void AddTabAtBackground(int index, GURL url) {
     chrome::NavigateParams params(browser(), url, ui::PAGE_TRANSITION_LINK);
     params.tabstrip_index = index;
-    params.disposition = NEW_BACKGROUND_TAB;
+    params.disposition = WindowOpenDisposition::NEW_BACKGROUND_TAB;
     chrome::Navigate(&params);
     content::WaitForLoadStopWithoutSuccessCheck(params.target_contents);
   }
@@ -748,31 +717,35 @@ IN_PROC_BROWSER_TEST_F(BrowserWindowControllerTest, FullscreenResizeFlags) {
 // Tests that the omnibox and tabs are hidden/visible in fullscreen mode.
 // Ensure that when the user toggles this setting, the omnibox, tabs and
 // preferences are updated correctly.
-// Flakily times out. http://crbug.com/599119
 IN_PROC_BROWSER_TEST_F(BrowserWindowControllerTest,
-                       DISABLED_FullscreenToolbarIsVisibleAccordingToPrefs) {
+                       FullscreenToolbarIsVisibleAccordingToPrefs) {
   // Tests that the preference is set to true by default.
   PrefService* prefs = browser()->profile()->GetPrefs();
   EXPECT_TRUE(prefs->GetBoolean(prefs::kShowFullscreenToolbar));
 
+  [[controller() fullscreenToolbarController] setMenubarTracker:nil];
+
   // Toggle fullscreen and check if the toolbar is shown.
   ToggleFullscreenAndWaitForNotification();
-  VerifyFullscreenToolbarVisibility(fullscreen_mac::OMNIBOX_TABS_PRESENT);
+  EXPECT_EQ(
+      FullscreenToolbarStyle::TOOLBAR_PRESENT,
+      [[controller() fullscreenToolbarController] computeLayout].toolbarStyle);
 
   // Toggle the visibility of the fullscreen toolbar. Verify that the toolbar
   // is hidden and the preference is correctly updated.
-  [[controller() fullscreenToolbarController] setToolbarFraction:0.0];
-  [[controller() fullscreenToolbarController] setMenuBarRevealProgress:0.0];
   chrome::ExecuteCommand(browser(), IDC_TOGGLE_FULLSCREEN_TOOLBAR);
   EXPECT_FALSE(prefs->GetBoolean(prefs::kShowFullscreenToolbar));
-  VerifyFullscreenToolbarVisibility(fullscreen_mac::OMNIBOX_TABS_HIDDEN);
+  EXPECT_EQ(
+      FullscreenToolbarStyle::TOOLBAR_HIDDEN,
+      [[controller() fullscreenToolbarController] computeLayout].toolbarStyle);
 
   // Toggle out and back into fullscreen and verify that the toolbar is still
   // hidden.
   ToggleFullscreenAndWaitForNotification();
   ToggleFullscreenAndWaitForNotification();
-  [[controller() fullscreenToolbarController] setMenuBarRevealProgress:0.0];
-  VerifyFullscreenToolbarVisibility(fullscreen_mac::OMNIBOX_TABS_HIDDEN);
+  EXPECT_EQ(
+      FullscreenToolbarStyle::TOOLBAR_HIDDEN,
+      [[controller() fullscreenToolbarController] computeLayout].toolbarStyle);
 
   chrome::ExecuteCommand(browser(), IDC_TOGGLE_FULLSCREEN_TOOLBAR);
   EXPECT_TRUE(prefs->GetBoolean(prefs::kShowFullscreenToolbar));
@@ -805,14 +778,12 @@ IN_PROC_BROWSER_TEST_F(BrowserWindowControllerTest,
   // Insert a NTP new tab in the foreground.
   AddTabAtIndex(0, GURL("about:blank"), ui::PAGE_TRANSITION_LINK);
   ASSERT_TRUE([[controller() toolbarController] isLocationBarFocused]);
-  EXPECT_FALSE([fullscreenToolbarController isRevealingToolbarForTabstrip]);
+  EXPECT_TRUE([fullscreenToolbarController isRevealingToolbarForTabstrip]);
   [fullscreenToolbarController resetToolbarFlag];
 
-  // Insert a new tab in the background. The animation should not be triggered
-  // since the location bar should still be focused.
   AddTabAtBackground(1, GURL("http://google.com"));
   ASSERT_TRUE([[controller() toolbarController] isLocationBarFocused]);
-  EXPECT_FALSE([fullscreenToolbarController isRevealingToolbarForTabstrip]);
+  EXPECT_TRUE([fullscreenToolbarController isRevealingToolbarForTabstrip]);
   [fullscreenToolbarController resetToolbarFlag];
 
   // Switch to a non-NTP tab.

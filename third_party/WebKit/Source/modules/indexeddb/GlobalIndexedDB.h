@@ -5,21 +5,22 @@
 #ifndef GlobalIndexedDB_h
 #define GlobalIndexedDB_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class IDBFactory;
-class DOMWindow;
+class LocalDOMWindow;
 class WorkerGlobalScope;
 
 class GlobalIndexedDB {
-    STATIC_ONLY(GlobalIndexedDB);
-public:
-    static IDBFactory* indexedDB(DOMWindow&);
-    static IDBFactory* indexedDB(WorkerGlobalScope&);
+  STATIC_ONLY(GlobalIndexedDB);
+
+ public:
+  static IDBFactory* indexedDB(LocalDOMWindow&);
+  static IDBFactory* indexedDB(WorkerGlobalScope&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // GlobalIndexedDB_h
+#endif  // GlobalIndexedDB_h

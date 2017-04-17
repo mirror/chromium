@@ -24,7 +24,6 @@
 #include "build/build_config.h"
 #include "components/error_page/common/error_page_params.h"
 #include "components/error_page/common/net_error_info.h"
-#include "components/test_runner/test_common.h"
 #include "content/public/common/url_constants.h"
 #include "net/base/net_errors.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -57,8 +56,8 @@ struct NavigationCorrection {
   bool is_porn;
   bool is_soft_porn;
 
-  base::Value* ToValue() const {
-    base::DictionaryValue* dict = new base::DictionaryValue();
+  std::unique_ptr<base::DictionaryValue> ToValue() const {
+    std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
     dict->SetString("correctionType", correction_type);
     dict->SetString("urlCorrection", url_correction);
     dict->SetString("clickType", click_type);
@@ -115,23 +114,23 @@ testing::AssertionResult StringValueEquals(
 // error page for that error.
 std::string ErrorToString(const WebURLError& error, bool is_failed_post) {
   return base::StringPrintf("(%s, %s, %i, %s)",
-                            error.unreachableURL.string().utf8().c_str(),
-                            error.domain.utf8().c_str(), error.reason,
+                            error.unreachable_url.GetString().Utf8().c_str(),
+                            error.domain.Utf8().c_str(), error.reason,
                             is_failed_post ? "POST" : "NOT POST");
 }
 
 WebURLError ProbeError(DnsProbeStatus status) {
   WebURLError error;
-  error.unreachableURL = GURL(kFailedUrl);
-  error.domain = blink::WebString::fromUTF8(kDnsProbeErrorDomain);
+  error.unreachable_url = GURL(kFailedUrl);
+  error.domain = blink::WebString::FromUTF8(kDnsProbeErrorDomain);
   error.reason = status;
   return error;
 }
 
 WebURLError NetErrorForURL(net::Error net_error, const GURL& url) {
   WebURLError error;
-  error.unreachableURL = url;
-  error.domain = blink::WebString::fromUTF8(net::kErrorDomain);
+  error.unreachable_url = url;
+  error.domain = blink::WebString::FromUTF8(net::kErrorDomain);
   error.reason = net_error;
   return error;
 }
@@ -165,13 +164,12 @@ class NetErrorHelperCoreTest : public testing::Test,
         reload_bypassing_cache_count_(0),
         show_saved_copy_count_(0),
         diagnose_error_count_(0),
-        show_offline_pages_count_(0),
+        download_count_(0),
         enable_page_helper_functions_count_(0),
         default_url_(GURL(kFailedUrl)),
         error_url_(GURL(content::kUnreachableWebDataURL)),
         tracking_request_count_(0) {
     SetUpCore(false, false, true);
-    test_runner::EnsureBlinkInitialized();
   }
 
   ~NetErrorHelperCoreTest() override {
@@ -223,7 +221,7 @@ class NetErrorHelperCoreTest : public testing::Test,
     return diagnose_error_url_;
   }
 
-  int show_offline_pages_count() const { return show_offline_pages_count_; }
+  int download_count() const { return download_count_; }
 
   const GURL& default_url() const {
     return default_url_;
@@ -245,10 +243,6 @@ class NetErrorHelperCoreTest : public testing::Test,
 
   bool last_can_show_network_diagnostics_dialog() const {
     return last_can_show_network_diagnostics_dialog_;
-  }
-
-  bool last_has_offline_pages() const {
-    return last_has_offline_pages_;
   }
 
   const ErrorPageParams* last_error_page_params() const {
@@ -356,21 +350,19 @@ class NetErrorHelperCoreTest : public testing::Test,
   void GenerateLocalizedErrorPage(const WebURLError& error,
                                   bool is_failed_post,
                                   bool can_show_network_diagnostics_dialog,
-                                  bool has_offline_pages,
                                   std::unique_ptr<ErrorPageParams> params,
                                   bool* reload_button_shown,
                                   bool* show_saved_copy_button_shown,
                                   bool* show_cached_copy_button_shown,
-                                  bool* show_offline_pages_button_shown,
+                                  bool* download_button_shown,
                                   std::string* html) const override {
     last_can_show_network_diagnostics_dialog_ =
         can_show_network_diagnostics_dialog;
-    last_has_offline_pages_ = has_offline_pages;
-    last_error_page_params_.reset(params.release());
+    last_error_page_params_ = std::move(params);
     *reload_button_shown = false;
     *show_saved_copy_button_shown = false;
     *show_cached_copy_button_shown = false;
-    *show_offline_pages_button_shown = false;
+    *download_button_shown = false;
     *html = ErrorToString(error, is_failed_post);
   }
 
@@ -385,12 +377,10 @@ class NetErrorHelperCoreTest : public testing::Test,
 
   void UpdateErrorPage(const WebURLError& error,
                        bool is_failed_post,
-                       bool can_show_network_diagnostics_dialog,
-                       bool has_offline_pages) override {
+                       bool can_show_network_diagnostics_dialog) override {
     update_count_++;
     last_can_show_network_diagnostics_dialog_ =
         can_show_network_diagnostics_dialog;
-    last_has_offline_pages_ = has_offline_pages;
     last_error_page_params_.reset(nullptr);
     last_error_html_ = ErrorToString(error, is_failed_post);
   }
@@ -441,7 +431,11 @@ class NetErrorHelperCoreTest : public testing::Test,
     diagnose_error_url_ = page_url;
   }
 
-  void ShowOfflinePages() override { show_offline_pages_count_++; }
+  void DownloadPageLater() override {
+    download_count_++;
+  }
+
+  void SetIsShowingDownloadButton(bool show) override {}
 
   void SendTrackingRequest(const GURL& tracking_url,
                            const std::string& tracking_request_body) override {
@@ -486,7 +480,6 @@ class NetErrorHelperCoreTest : public testing::Test,
   // Values passed in to the last call of GenerateLocalizedErrorPage or
   // UpdateErrorPage.  Mutable because GenerateLocalizedErrorPage is const.
   mutable bool last_can_show_network_diagnostics_dialog_;
-  mutable bool last_has_offline_pages_;
   mutable std::unique_ptr<ErrorPageParams> last_error_page_params_;
 
   int reload_count_;
@@ -495,7 +488,7 @@ class NetErrorHelperCoreTest : public testing::Test,
   GURL show_saved_copy_url_;
   int diagnose_error_count_;
   GURL diagnose_error_url_;
-  int show_offline_pages_count_;
+  int download_count_;
 
   int enable_page_helper_functions_count_;
 
@@ -1183,13 +1176,13 @@ TEST_F(NetErrorHelperCoreTest, NoCorrectionsForHttps) {
   // The HTTPS page fails to load.
   std::string html;
   blink::WebURLError error = NetError(net::ERR_NAME_NOT_RESOLVED);
-  error.unreachableURL = GURL(kFailedHttpsUrl);
+  error.unreachable_url = GURL(kFailedHttpsUrl);
   core()->GetErrorHTML(NetErrorHelperCore::MAIN_FRAME, error,
                        false /* is_failed_post */,
                        false /* is_ignoring_cache */, &html);
 
   blink::WebURLError probe_error = ProbeError(DNS_PROBE_POSSIBLE);
-  probe_error.unreachableURL = GURL(kFailedHttpsUrl);
+  probe_error.unreachable_url = GURL(kFailedHttpsUrl);
   EXPECT_EQ(ErrorToString(probe_error, false), html);
   EXPECT_FALSE(is_url_being_fetched());
   EXPECT_FALSE(last_error_page_params());
@@ -1210,7 +1203,7 @@ TEST_F(NetErrorHelperCoreTest, NoCorrectionsForHttps) {
   EXPECT_FALSE(last_error_page_params());
   blink::WebURLError final_probe_error =
       ProbeError(DNS_PROBE_FINISHED_NXDOMAIN);
-  final_probe_error.unreachableURL = GURL(kFailedHttpsUrl);
+  final_probe_error.unreachable_url = GURL(kFailedHttpsUrl);
   EXPECT_EQ(ErrorToString(final_probe_error, false), last_error_html());
 }
 
@@ -2578,13 +2571,11 @@ TEST_F(NetErrorHelperCoreTest, CanShowNetworkDiagnostics) {
 }
 
 #if defined(OS_ANDROID)
-TEST_F(NetErrorHelperCoreTest, ShowOfflinePages) {
-  core()->OnSetHasOfflinePages(true);
+TEST_F(NetErrorHelperCoreTest, Download) {
   DoErrorLoad(net::ERR_INTERNET_DISCONNECTED);
-  EXPECT_TRUE(last_has_offline_pages());
-  EXPECT_EQ(0, show_offline_pages_count());
-  core()->ExecuteButtonPress(NetErrorHelperCore::SHOW_OFFLINE_PAGES_BUTTON);
-  EXPECT_EQ(1, show_offline_pages_count());
+  EXPECT_EQ(0, download_count());
+  core()->ExecuteButtonPress(NetErrorHelperCore::DOWNLOAD_BUTTON);
+  EXPECT_EQ(1, download_count());
 }
 #endif  // defined(OS_ANDROID)
 

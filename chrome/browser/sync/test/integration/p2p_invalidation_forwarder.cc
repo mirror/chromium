@@ -4,16 +4,15 @@
 
 #include "chrome/browser/sync/test/integration/p2p_invalidation_forwarder.h"
 
-#include "components/browser_sync/browser/profile_sync_service.h"
+#include "components/browser_sync/profile_sync_service.h"
 #include "components/invalidation/impl/p2p_invalidation_service.h"
-#include "components/sync_driver/invalidation_helper.h"
-#include "sync/internal_api/public/sessions/sync_session_snapshot.h"
+#include "components/sync/base/invalidation_helper.h"
+#include "components/sync/engine/cycle/sync_cycle_snapshot.h"
 
 P2PInvalidationForwarder::P2PInvalidationForwarder(
-    ProfileSyncService* sync_service,
+    browser_sync::ProfileSyncService* sync_service,
     invalidation::P2PInvalidationService* invalidation_service)
-  : sync_service_(sync_service),
-    invalidation_service_(invalidation_service) {
+    : sync_service_(sync_service), invalidation_service_(invalidation_service) {
   sync_service_->AddObserver(this);
 }
 
@@ -21,11 +20,8 @@ P2PInvalidationForwarder::~P2PInvalidationForwarder() {
   sync_service_->RemoveObserver(this);
 }
 
-void P2PInvalidationForwarder::OnStateChanged() {}
-
-void P2PInvalidationForwarder::OnSyncCycleCompleted() {
-  const syncer::sessions::SyncSessionSnapshot& snap =
-      sync_service_->GetLastSessionSnapshot();
+void P2PInvalidationForwarder::OnSyncCycleCompleted(syncer::SyncService* sync) {
+  const syncer::SyncCycleSnapshot& snap = sync_service_->GetLastCycleSnapshot();
   bool is_notifiable_commit =
       (snap.model_neutral_state().num_successful_commits > 0);
   if (is_notifiable_commit && invalidation_service_) {

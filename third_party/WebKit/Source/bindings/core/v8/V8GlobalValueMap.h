@@ -5,11 +5,11 @@
 #ifndef V8GlobalValueMap_h
 #define V8GlobalValueMap_h
 
-#include "wtf/Allocator.h"
-#include "wtf/HashMap.h"
-#include "wtf/text/StringHash.h"
-#include <v8-util.h>
-#include <v8.h>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/text/StringHash.h"
+#include "v8-util.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -21,89 +21,98 @@ namespace blink {
  * If so, entries will be removed from the map as the weak references are
  * collected.
  */
-template <class KeyType, class ValueType, v8::PersistentContainerCallbackType type>
+template <class KeyType,
+          class ValueType,
+          v8::PersistentContainerCallbackType type>
 class V8GlobalValueMapTraits {
-    STATIC_ONLY(V8GlobalValueMapTraits);
-public:
-    // Map traits:
-    typedef HashMap<KeyType, v8::PersistentContainerValue> Impl;
-    typedef typename Impl::iterator Iterator;
-    static size_t Size(const Impl* impl) { return impl->size(); }
-    static bool Empty(Impl* impl) { return impl->isEmpty(); }
-    static void Swap(Impl& impl, Impl& other) { impl.swap(other); }
-    static Iterator Begin(Impl* impl) { return impl->begin(); }
-    static Iterator End(Impl* impl) { return impl->end(); }
-    static v8::PersistentContainerValue Value(Iterator& iter)
-    {
-        return iter->value;
-    }
-    static KeyType Key(Iterator& iter) { return iter->key; }
-    static v8::PersistentContainerValue Set(
-        Impl* impl, KeyType key, v8::PersistentContainerValue value)
-    {
-        v8::PersistentContainerValue oldValue = Get(impl, key);
-        impl->set(key, value);
-        return oldValue;
-    }
-    static v8::PersistentContainerValue Get(const Impl* impl, KeyType key)
-    {
-        return impl->get(key);
-    }
+  STATIC_ONLY(V8GlobalValueMapTraits);
 
-    static v8::PersistentContainerValue Remove(Impl* impl, KeyType key)
-    {
-        return impl->take(key);
-    }
+ public:
+  // Map traits:
+  typedef HashMap<KeyType, v8::PersistentContainerValue> Impl;
+  typedef typename Impl::iterator Iterator;
+  static size_t Size(const Impl* impl) { return impl->size(); }
+  static bool Empty(Impl* impl) { return impl->IsEmpty(); }
+  static void Swap(Impl& impl, Impl& other) { impl.Swap(other); }
+  static Iterator Begin(Impl* impl) { return impl->begin(); }
+  static Iterator End(Impl* impl) { return impl->end(); }
+  static v8::PersistentContainerValue Value(Iterator& iter) {
+    return iter->value;
+  }
+  static KeyType Key(Iterator& iter) { return iter->key; }
+  static v8::PersistentContainerValue Set(Impl* impl,
+                                          KeyType key,
+                                          v8::PersistentContainerValue value) {
+    v8::PersistentContainerValue old_value = Get(impl, key);
+    impl->Set(key, value);
+    return old_value;
+  }
+  static v8::PersistentContainerValue Get(const Impl* impl, KeyType key) {
+    return impl->at(key);
+  }
 
-    // Weak traits:
-    static const v8::PersistentContainerCallbackType kCallbackType = type;
-    typedef v8::GlobalValueMap<KeyType, ValueType, V8GlobalValueMapTraits<KeyType, ValueType, type>> MapType;
+  static v8::PersistentContainerValue Remove(Impl* impl, KeyType key) {
+    return impl->Take(key);
+  }
 
-    typedef void WeakCallbackDataType;
+  // Weak traits:
+  static const v8::PersistentContainerCallbackType kCallbackType = type;
+  typedef v8::GlobalValueMap<KeyType,
+                             ValueType,
+                             V8GlobalValueMapTraits<KeyType, ValueType, type>>
+      MapType;
 
-    static WeakCallbackDataType* WeakCallbackParameter(MapType* map, KeyType key, const v8::Local<ValueType>& value)
-    {
-        return 0;
-    }
+  typedef void WeakCallbackDataType;
 
-    static void DisposeCallbackData(WeakCallbackDataType* callbackData)
-    {
-    }
+  static WeakCallbackDataType* WeakCallbackParameter(
+      MapType* map,
+      KeyType key,
+      const v8::Local<ValueType>& value) {
+    return 0;
+  }
 
-    static MapType* MapFromWeakCallbackInfo(
-        const v8::WeakCallbackInfo<WeakCallbackDataType>& data)
-    {
-        return 0;
-    }
+  static void DisposeCallbackData(WeakCallbackDataType* callback_data) {}
 
-    static KeyType KeyFromWeakCallbackInfo(
-        const v8::WeakCallbackInfo<WeakCallbackDataType>& data)
-    {
-        return KeyType();
-    }
+  static MapType* MapFromWeakCallbackInfo(
+      const v8::WeakCallbackInfo<WeakCallbackDataType>& data) {
+    return 0;
+  }
 
-    static void OnWeakCallback(const v8::WeakCallbackInfo<WeakCallbackDataType>& data) {}
+  static KeyType KeyFromWeakCallbackInfo(
+      const v8::WeakCallbackInfo<WeakCallbackDataType>& data) {
+    return KeyType();
+  }
 
-    // Dispose traits:
-    static void Dispose(v8::Isolate* isolate, v8::Global<ValueType> value, KeyType key) { }
-    static void DisposeWeak(const v8::WeakCallbackInfo<WeakCallbackDataType>& data) { }
+  static void OnWeakCallback(
+      const v8::WeakCallbackInfo<WeakCallbackDataType>& data) {}
+
+  // Dispose traits:
+  static void Dispose(v8::Isolate* isolate,
+                      v8::Global<ValueType> value,
+                      KeyType key) {}
+  static void DisposeWeak(
+      const v8::WeakCallbackInfo<WeakCallbackDataType>& data) {}
 };
 
 /**
  * A map for safely storing persistent V8 values, based on
  * v8::GlobalValueMap.
  */
-template <class KeyType, class ValueType, v8::PersistentContainerCallbackType type>
-class V8GlobalValueMap : public v8::GlobalValueMap<KeyType, ValueType, V8GlobalValueMapTraits<KeyType, ValueType, type>> {
-    DISALLOW_NEW();
-public:
-    typedef V8GlobalValueMapTraits<KeyType, ValueType, type> Traits;
-    explicit V8GlobalValueMap(v8::Isolate* isolate)
-        : v8::GlobalValueMap<KeyType, ValueType, Traits>(isolate)
-    {
-    }
+template <class KeyType,
+          class ValueType,
+          v8::PersistentContainerCallbackType type>
+class V8GlobalValueMap : public v8::GlobalValueMap<
+                             KeyType,
+                             ValueType,
+                             V8GlobalValueMapTraits<KeyType, ValueType, type>> {
+  DISALLOW_NEW();
+
+ public:
+  typedef V8GlobalValueMapTraits<KeyType, ValueType, type> Traits;
+  explicit V8GlobalValueMap(v8::Isolate* isolate)
+      : v8::GlobalValueMap<KeyType, ValueType, Traits>(isolate) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V8GlobalValueMap_h
+#endif  // V8GlobalValueMap_h

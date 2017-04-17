@@ -7,25 +7,26 @@
 
 #include "platform/graphics/Path.h"
 #include "platform/graphics/paint/DisplayItemClient.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class GraphicsContext;
 
 class PLATFORM_EXPORT ClipPathRecorder {
-    USING_FAST_MALLOC(ClipPathRecorder);
-    WTF_MAKE_NONCOPYABLE(ClipPathRecorder);
-public:
-    ClipPathRecorder(GraphicsContext&, const DisplayItemClient&, const Path&);
-    ~ClipPathRecorder();
+  USING_FAST_MALLOC(ClipPathRecorder);
+  WTF_MAKE_NONCOPYABLE(ClipPathRecorder);
 
-private:
-    GraphicsContext& m_context;
-    const DisplayItemClient& m_client;
+ public:
+  ClipPathRecorder(GraphicsContext&, const DisplayItemClient&, const Path&);
+  ~ClipPathRecorder();
+
+ private:
+  GraphicsContext& context_;
+  const DisplayItemClient& client_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ClipPathRecorder_h
+#endif  // ClipPathRecorder_h

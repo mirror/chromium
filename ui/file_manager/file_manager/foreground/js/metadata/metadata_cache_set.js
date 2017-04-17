@@ -59,7 +59,7 @@ MetadataCacheSet.prototype.startRequests = function(requestId, requests) {
 };
 
 /**
- * Stores results from NewMetadataProvider with the request Id.
+ * Stores results from MetadataProvider with the request Id.
  * @param {number} requestId Request ID. If a newer operation has already been
  *     done, the results must be ingored.
  * @param {!Array<!Entry>} entries
@@ -307,23 +307,3 @@ MetadataCacheSetStorageForLRUCache.prototype.remove = function(url) {
 MetadataCacheSetStorageForLRUCache.prototype.removeAll = function() {
   assertNotReached('Not implemented.');
 };
-
-/**
- * @param {!Entry} entry Entry
- * @param {!Array<string>} names Property name list to be requested.
- * @constructor
- * @struct
- */
-function MetadataRequest(entry, names) {
-  /**
-   * @public {!Entry}
-   * @const
-   */
-  this.entry = entry;
-
-  /**
-   * @public {!Array<string>}
-   * @const
-   */
-  this.names = names;
-}

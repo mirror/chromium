@@ -13,12 +13,13 @@
 #include "base/memory/weak_ptr.h"
 #include "content/public/common/child_process_host_delegate.h"
 #include "ipc/ipc_platform_file.h"
+#include "mojo/edk/embedder/pending_process_connection.h"
 
 namespace base {
 class CommandLine;
 class File;
 class FilePath;
-class ScopedTempDir;
+class SingleThreadTaskRunner;
 }  // namespace base
 
 namespace content {
@@ -26,9 +27,7 @@ class ChildProcessHost;
 }
 
 namespace printing {
-class MetafilePlayer;
-class PdfRenderSettings;
-struct PageRange;
+struct PdfRenderSettings;
 struct PrinterCapsAndDefaults;
 struct PrinterSemanticCapsAndDefaults;
 }  // namespace printing
@@ -48,9 +47,9 @@ class ServiceUtilityProcessHost : public content::ChildProcessHostDelegate {
     // Called when the child process died before a reply was receieved.
     virtual void OnChildDied() {}
 
-    virtual void OnRenderPDFPagesToMetafilePageDone(
-        float scale_factor,
-        const printing::MetafilePlayer& emf) {}
+    virtual bool OnRenderPDFPagesToMetafilePageDone(
+        const std::vector<char>& emf_data,
+        float scale_factor);
 
     // Called when at all pages in the PDF has been rendered.
     virtual void OnRenderPDFPagesToMetafileDone(bool success) {}
@@ -116,6 +115,8 @@ class ServiceUtilityProcessHost : public content::ChildProcessHostDelegate {
   void OnChildDisconnected() override;
   bool OnMessageReceived(const IPC::Message& message) override;
   const base::Process& GetProcess() const override;
+  void BindInterface(const std::string& interface_name,
+                     mojo::ScopedMessagePipeHandle interface_pipe) override;
 
  private:
   // Starts a process.  Returns true iff it succeeded.
@@ -148,10 +149,7 @@ class ServiceUtilityProcessHost : public content::ChildProcessHostDelegate {
   scoped_refptr<Client> client_;
   scoped_refptr<base::SingleThreadTaskRunner> client_task_runner_;
   bool waiting_for_reply_;
-  const std::string mojo_child_token_;
-
-  // Start time of operation.
-  base::Time start_time_;
+  mojo::edk::PendingProcessConnection process_connection_;
 
   class PdfToEmfState;
   std::unique_ptr<PdfToEmfState> pdf_to_emf_state_;

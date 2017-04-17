@@ -5,7 +5,7 @@
 #ifndef SensorErrorEvent_h
 #define SensorErrorEvent_h
 
-#include "core/events/ErrorEvent.h"
+#include "core/dom/DOMException.h"
 #include "modules/EventModules.h"
 #include "modules/sensor/SensorErrorEventInit.h"
 #include "platform/heap/Handle.h"
@@ -13,38 +13,41 @@
 namespace blink {
 
 class SensorErrorEvent : public Event {
-    DEFINE_WRAPPERTYPEINFO();
+  DEFINE_WRAPPERTYPEINFO();
 
-public:
-    static SensorErrorEvent* create()
-    {
-        return new SensorErrorEvent;
-    }
+ public:
+  static SensorErrorEvent* Create(const AtomicString& event_type,
+                                  DOMException* error) {
+    return new SensorErrorEvent(event_type, error);
+  }
 
-    static SensorErrorEvent* create(const AtomicString& eventType)
-    {
-        return new SensorErrorEvent(eventType);
-    }
+  static SensorErrorEvent* Create(const AtomicString& event_type,
+                                  const SensorErrorEventInit& initializer) {
+    return new SensorErrorEvent(event_type, initializer);
+  }
 
-    static SensorErrorEvent* create(const AtomicString& eventType, const SensorErrorEventInit& initializer)
-    {
-        return new SensorErrorEvent(eventType, initializer);
-    }
+  ~SensorErrorEvent() override;
 
-    ~SensorErrorEvent() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    DECLARE_VIRTUAL_TRACE();
+  const AtomicString& InterfaceName() const override;
 
-    const AtomicString& interfaceName() const override;
+  DOMException* error() { return error_; }
 
-    SensorErrorEvent();
-    explicit SensorErrorEvent(const AtomicString& eventType);
-    SensorErrorEvent(const AtomicString& eventType, const SensorErrorEventInit& initializer);
+ private:
+  SensorErrorEvent(const AtomicString& event_type, DOMException* error);
+  SensorErrorEvent(const AtomicString& event_type,
+                   const SensorErrorEventInit& initializer);
 
+  Member<DOMException> error_;
 };
 
-DEFINE_TYPE_CASTS(SensorErrorEvent, Event, event, event->interfaceName() == EventNames::SensorErrorEvent, event.interfaceName() == EventNames::SensorErrorEvent);
+DEFINE_TYPE_CASTS(SensorErrorEvent,
+                  Event,
+                  event,
+                  event->InterfaceName() == EventNames::SensorErrorEvent,
+                  event.InterfaceName() == EventNames::SensorErrorEvent);
 
-} // namepsace blink
+}  // namepsace blink
 
-#endif // SensorErrorEvent_h
+#endif  // SensorErrorEvent_h

@@ -16,20 +16,21 @@ BrowserSyncedWindowDelegatesGetter::BrowserSyncedWindowDelegatesGetter(
     : profile_(profile) {}
 BrowserSyncedWindowDelegatesGetter::~BrowserSyncedWindowDelegatesGetter() {}
 
-std::set<const SyncedWindowDelegate*>
+BrowserSyncedWindowDelegatesGetter::SyncedWindowDelegateMap
 BrowserSyncedWindowDelegatesGetter::GetSyncedWindowDelegates() {
-  std::set<const SyncedWindowDelegate*> synced_window_delegates;
+  SyncedWindowDelegateMap synced_window_delegates;
   // Add all the browser windows.
   for (auto* browser : *BrowserList::GetInstance()) {
     if (browser->profile() != profile_)
       continue;
-    synced_window_delegates.insert(browser->synced_window_delegate());
+    synced_window_delegates[browser->synced_window_delegate()->GetSessionId()] =
+        browser->synced_window_delegate();
   }
   return synced_window_delegates;
 }
 
-const SyncedWindowDelegate* BrowserSyncedWindowDelegatesGetter::FindById(
-    SessionID::id_type id) {
+const sync_sessions::SyncedWindowDelegate*
+BrowserSyncedWindowDelegatesGetter::FindById(SessionID::id_type id) {
   Browser* browser = chrome::FindBrowserWithID(id);
   return (browser != nullptr) ? browser->synced_window_delegate() : nullptr;
 }

@@ -9,6 +9,7 @@
 #import "base/mac/sdk_forward_declarations.h"
 #include "chrome/browser/themes/theme_service.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
+#include "chrome/browser/ui/cocoa/l10n_util.h"
 #import "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_cell.h"
 #import "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_editor.h"
 #import "chrome/browser/ui/cocoa/location_bar/location_bar_decoration.h"
@@ -46,13 +47,16 @@ const CGFloat kAnimationDuration = 0.2;
   resizeAnimation_.reset([[NSViewAnimation alloc] init]);
   [resizeAnimation_ setDuration:kAnimationDuration];
   [resizeAnimation_ setAnimationBlockingMode:NSAnimationNonblocking];
+  [self setAlignment:cocoa_l10n_util::ShouldDoExperimentalRTLLayout()
+                         ? NSRightTextAlignment
+                         : NSLeftTextAlignment];
 
   // Disable Force Touch in the Omnibox. Note that this API is defined in
   // 10.10.3 and higher so have to check more than just isYosmiteOrLater().
   // Also, because NSPressureConfiguration is not in the original 10.10 SDK,
   // use NSClassFromString() to instantiate it (otherwise there's a
   // linker error).
-  if (base::mac::IsOSYosemiteOrLater() &&
+  if (base::mac::IsAtLeastOS10_10() &&
       [self respondsToSelector:@selector(setPressureConfiguration:)]) {
     NSPressureConfiguration* pressureConfiguration =
         [[[NSClassFromString(@"NSPressureConfiguration") alloc]
@@ -159,8 +163,7 @@ const CGFloat kAnimationDuration = 0.2;
     if (editor) {
       NSEvent* currentEvent = [NSApp currentEvent];
       if ([currentEvent type] == NSLeftMouseUp &&
-          ![editor selectedRange].length &&
-          (!observer_ || observer_->ShouldSelectAllOnMouseDown())) {
+          ![editor selectedRange].length) {
         [editor selectAll:nil];
       }
     }
@@ -195,6 +198,12 @@ const CGFloat kAnimationDuration = 0.2;
   }
 
   [editor mouseDown:theEvent];
+}
+
+- (void)mouseUp:(NSEvent*)theEvent {
+  const NSRect bounds([self bounds]);
+  AutocompleteTextFieldCell* cell = [self cell];
+  [cell mouseUp:theEvent inRect:bounds ofView:self];
 }
 
 - (void)rightMouseDown:(NSEvent*)event {
@@ -278,25 +287,24 @@ const CGFloat kAnimationDuration = 0.2;
   [self addToolTipRect:aRect owner:tooltip userData:nil];
 }
 
-- (void)setGrayTextAutocompletion:(NSString*)suggestText
-                        textColor:(NSColor*)suggestColor {
-  [self setNeedsDisplay:YES];
-  suggestText_.reset([suggestText retain]);
-  suggestColor_.reset([suggestColor retain]);
-}
-
-- (NSString*)suggestText {
-  return suggestText_;
-}
-
-- (NSColor*)suggestColor {
-  return suggestColor_;
-}
-
 - (NSPoint)bubblePointForDecoration:(LocationBarDecoration*)decoration {
-  const NSRect frame =
-      [[self cell] frameForDecoration:decoration inFrame:[self bounds]];
-  const NSPoint point = decoration->GetBubblePointInFrame(frame);
+  NSPoint point;
+  if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+    // Under MD, dialogs have no arrow and anchor to corner of the decoration
+    // frame, not a specific point within it. See http://crbug.com/566115.
+    BOOL isLeftDecoration;
+    const NSRect frame =
+        [[self cell] backgroundFrameForDecoration:decoration
+                                          inFrame:[self bounds]
+                                 isLeftDecoration:&isLeftDecoration];
+    point.y = NSMaxY(frame);
+    point.x = isLeftDecoration ? NSMinX(frame) : NSMaxX(frame);
+  } else {
+    const NSRect frame =
+        [[self cell] frameForDecoration:decoration inFrame:[self bounds]];
+    point = decoration->GetBubblePointInFrame(frame);
+  }
+
   return [self convertPoint:point toView:nil];
 }
 
@@ -317,7 +325,7 @@ const CGFloat kAnimationDuration = 0.2;
 
   // Reload the decoration tooltips.
   [currentToolTips_ removeAllObjects];
-  [[self cell] updateToolTipsInRect:[self bounds] ofView:self];
+  [[self cell] updateMouseTrackingAndToolTipsInRect:[self bounds] ofView:self];
 }
 
 // NOTE(shess): http://crbug.com/19116 describes a weird bug which
@@ -401,13 +409,11 @@ const CGFloat kAnimationDuration = 0.2;
 
   // Allow the ToolbarController to take action upon the
   // AutocompleteTextField being added to the window.
-  if (ui::MaterialDesignController::IsModeMaterial()) {
-    BrowserWindowController* browserWindowController =
-        [BrowserWindowController browserWindowControllerForView:self];
-    [[browserWindowController toolbarController] locationBarWasAddedToWindow];
+  BrowserWindowController* browserWindowController =
+      [BrowserWindowController browserWindowControllerForView:self];
+  [[browserWindowController toolbarController] locationBarWasAddedToWindow];
 
-    [self updateColorsToMatchTheme];
-  }
+  [self updateColorsToMatchTheme];
 
   NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
   [nc addObserver:self
@@ -466,7 +472,8 @@ const CGFloat kAnimationDuration = 0.2;
   BOOL doAccept = [super becomeFirstResponder];
   if (doAccept) {
     [[BrowserWindowController browserWindowControllerForView:self]
-        lockBarVisibilityForOwner:self withAnimation:YES delay:NO];
+        lockToolbarVisibilityForOwner:self
+                        withAnimation:YES];
 
     // Tells the observer that we get the focus.
     // But we can't call observer_->OnKillFocus() in resignFirstResponder:,
@@ -483,19 +490,10 @@ const CGFloat kAnimationDuration = 0.2;
   BOOL doResign = [super resignFirstResponder];
   if (doResign) {
     [[BrowserWindowController browserWindowControllerForView:self]
-        releaseBarVisibilityForOwner:self withAnimation:YES delay:YES];
+        releaseToolbarVisibilityForOwner:self
+                           withAnimation:YES];
   }
   return doResign;
-}
-
-- (void)drawRect:(NSRect)rect {
-  [super drawRect:rect];
-  autocomplete_text_field::DrawGrayTextAutocompletion(
-      [self attributedStringValue],
-      suggestText_,
-      suggestColor_,
-      self,
-      [[self cell] drawingRectForBounds:[self bounds]]);
 }
 
 // (URLDropTarget protocol)
@@ -507,17 +505,20 @@ const CGFloat kAnimationDuration = 0.2;
 
 // (URLDropTarget protocol)
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {
-  // Make ourself the first responder, which will select the text to indicate
-  // that our contents would be replaced by a drop.
-  // TODO(viettrungluu): crbug.com/30809 -- this is a hack since it steals focus
-  // and doesn't return it.
-  [[self window] makeFirstResponder:self];
-  return [dropHandler_ draggingEntered:sender];
+  bool canDropAtLocation =
+      [[self cell] canDropAtLocationInWindow:[sender draggingLocation]
+                                      ofView:self];
+  return canDropAtLocation ? [dropHandler_ draggingEntered:sender]
+                           : NSDragOperationNone;
 }
 
 // (URLDropTarget protocol)
 - (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender {
-  return [dropHandler_ draggingUpdated:sender];
+  bool canDropAtLocation =
+      [[self cell] canDropAtLocationInWindow:[sender draggingLocation]
+                                      ofView:self];
+  return canDropAtLocation ? [dropHandler_ draggingUpdated:sender]
+                           : NSDragOperationNone;
 }
 
 // (URLDropTarget protocol)
@@ -542,10 +543,6 @@ const CGFloat kAnimationDuration = 0.2;
 // ThemedWindowDrawing implementation.
 
 - (void)windowDidChangeTheme {
-  if (!ui::MaterialDesignController::IsModeMaterial()) {
-    return;
-  }
-
   [self updateColorsToMatchTheme];
 }
 
@@ -553,42 +550,3 @@ const CGFloat kAnimationDuration = 0.2;
 }
 
 @end
-
-namespace autocomplete_text_field {
-
-void DrawGrayTextAutocompletion(NSAttributedString* mainText,
-                                NSString* suggestText,
-                                NSColor* suggestColor,
-                                NSView* controlView,
-                                NSRect frame) {
-  if (![suggestText length])
-    return;
-
-  base::scoped_nsobject<NSTextFieldCell> cell(
-      [[NSTextFieldCell alloc] initTextCell:@""]);
-  [cell setBordered:NO];
-  [cell setDrawsBackground:NO];
-  [cell setEditable:NO];
-
-  base::scoped_nsobject<NSMutableAttributedString> combinedText(
-      [[NSMutableAttributedString alloc] initWithAttributedString:mainText]);
-  NSRange range = NSMakeRange([combinedText length], 0);
-  [combinedText replaceCharactersInRange:range withString:suggestText];
-  [combinedText addAttribute:NSForegroundColorAttributeName
-                       value:suggestColor
-                       range:NSMakeRange(range.location, [suggestText length])];
-  [cell setAttributedStringValue:combinedText];
-
-  CGFloat mainTextWidth = [mainText size].width;
-  CGFloat suggestWidth = NSWidth(frame) - mainTextWidth;
-  NSRect suggestRect = NSMakeRect(NSMinX(frame) + mainTextWidth,
-                                  NSMinY(frame),
-                                  suggestWidth,
-                                  NSHeight(frame));
-
-  gfx::ScopedNSGraphicsContextSaveGState saveGState;
-  NSRectClip(suggestRect);
-  [cell drawInteriorWithFrame:frame inView:controlView];
-}
-
-}  // namespace autocomplete_text_field

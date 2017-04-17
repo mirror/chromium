@@ -25,124 +25,120 @@
 
 #include "modules/accessibility/AXSpinButton.h"
 
-#include "core/layout/LayoutObject.h"
+#include "SkMatrix44.h"
 #include "modules/accessibility/AXObjectCacheImpl.h"
 
 namespace blink {
 
-AXSpinButton* AXSpinButton::create(AXObjectCacheImpl& axObjectCache)
-{
-    return new AXSpinButton(axObjectCache);
+AXSpinButton* AXSpinButton::Create(AXObjectCacheImpl& ax_object_cache) {
+  return new AXSpinButton(ax_object_cache);
 }
 
-AXSpinButton::AXSpinButton(AXObjectCacheImpl& axObjectCache)
-    : AXMockObject(axObjectCache)
-    , m_spinButtonElement(nullptr)
-{
+AXSpinButton::AXSpinButton(AXObjectCacheImpl& ax_object_cache)
+    : AXMockObject(ax_object_cache), spin_button_element_(nullptr) {}
+
+AXSpinButton::~AXSpinButton() {
+  DCHECK(!spin_button_element_);
 }
 
-AXSpinButton::~AXSpinButton()
-{
-    ASSERT(!m_spinButtonElement);
+DEFINE_TRACE(AXSpinButton) {
+  visitor->Trace(spin_button_element_);
+  AXMockObject::Trace(visitor);
 }
 
-DEFINE_TRACE(AXSpinButton)
-{
-    visitor->trace(m_spinButtonElement);
-    AXMockObject::trace(visitor);
+LayoutObject* AXSpinButton::LayoutObjectForRelativeBounds() const {
+  if (!spin_button_element_ || !spin_button_element_->GetLayoutObject())
+    return nullptr;
+
+  return spin_button_element_->GetLayoutObject();
 }
 
-LayoutRect AXSpinButton::elementRect() const
-{
-    if (!m_spinButtonElement || !m_spinButtonElement->layoutObject())
-        return LayoutRect();
-
-    return LayoutRect(m_spinButtonElement->layoutObject()->absoluteElementBoundingBoxRect());
+void AXSpinButton::Detach() {
+  AXObject::Detach();
+  spin_button_element_ = nullptr;
 }
 
-void AXSpinButton::detach()
-{
-    AXObject::detach();
-    m_spinButtonElement = nullptr;
+void AXSpinButton::DetachFromParent() {
+  AXObject::DetachFromParent();
+  spin_button_element_ = nullptr;
 }
 
-void AXSpinButton::detachFromParent()
-{
-    AXObject::detachFromParent();
-    m_spinButtonElement = nullptr;
+AccessibilityRole AXSpinButton::RoleValue() const {
+  return spin_button_element_ ? kSpinButtonRole : kUnknownRole;
 }
 
-AccessibilityRole AXSpinButton::roleValue() const
-{
-    return m_spinButtonElement ? SpinButtonRole : UnknownRole;
+void AXSpinButton::AddChildren() {
+  DCHECK(!IsDetached());
+  have_children_ = true;
+
+  AXSpinButtonPart* incrementor =
+      ToAXSpinButtonPart(AxObjectCache().GetOrCreate(kSpinButtonPartRole));
+  incrementor->SetIsIncrementor(true);
+  incrementor->SetParent(this);
+  children_.push_back(incrementor);
+
+  AXSpinButtonPart* decrementor =
+      ToAXSpinButtonPart(AxObjectCache().GetOrCreate(kSpinButtonPartRole));
+  decrementor->SetIsIncrementor(false);
+  decrementor->SetParent(this);
+  children_.push_back(decrementor);
 }
 
-void AXSpinButton::addChildren()
-{
-    ASSERT(!isDetached());
-    m_haveChildren = true;
+void AXSpinButton::Step(int amount) {
+  DCHECK(spin_button_element_);
+  if (!spin_button_element_)
+    return;
 
-    AXSpinButtonPart* incrementor = toAXSpinButtonPart(axObjectCache().getOrCreate(SpinButtonPartRole));
-    incrementor->setIsIncrementor(true);
-    incrementor->setParent(this);
-    m_children.append(incrementor);
-
-    AXSpinButtonPart* decrementor = toAXSpinButtonPart(axObjectCache().getOrCreate(SpinButtonPartRole));
-    decrementor->setIsIncrementor(false);
-    decrementor->setParent(this);
-    m_children.append(decrementor);
-}
-
-void AXSpinButton::step(int amount)
-{
-    ASSERT(m_spinButtonElement);
-    if (!m_spinButtonElement)
-        return;
-
-    m_spinButtonElement->step(amount);
+  spin_button_element_->Step(amount);
 }
 
 // AXSpinButtonPart
 
-AXSpinButtonPart::AXSpinButtonPart(AXObjectCacheImpl& axObjectCache)
-    : AXMockObject(axObjectCache)
-    , m_isIncrementor(false)
-{
+AXSpinButtonPart::AXSpinButtonPart(AXObjectCacheImpl& ax_object_cache)
+    : AXMockObject(ax_object_cache), is_incrementor_(false) {}
+
+AXSpinButtonPart* AXSpinButtonPart::Create(AXObjectCacheImpl& ax_object_cache) {
+  return new AXSpinButtonPart(ax_object_cache);
 }
 
-AXSpinButtonPart* AXSpinButtonPart::create(AXObjectCacheImpl& axObjectCache)
-{
-    return new AXSpinButtonPart(axObjectCache);
+void AXSpinButtonPart::GetRelativeBounds(
+    AXObject** out_container,
+    FloatRect& out_bounds_in_container,
+    SkMatrix44& out_container_transform) const {
+  *out_container = nullptr;
+  out_bounds_in_container = FloatRect();
+  out_container_transform.setIdentity();
+
+  if (!ParentObject())
+    return;
+
+  // FIXME: This logic should exist in the layout tree or elsewhere, but there
+  // is no relationship that exists that can be queried.
+  ParentObject()->GetRelativeBounds(out_container, out_bounds_in_container,
+                                    out_container_transform);
+  out_bounds_in_container = FloatRect(0, 0, out_bounds_in_container.Width(),
+                                      out_bounds_in_container.Height());
+  if (is_incrementor_) {
+    out_bounds_in_container.SetHeight(out_bounds_in_container.Height() / 2);
+  } else {
+    out_bounds_in_container.SetY(out_bounds_in_container.Y() +
+                                 out_bounds_in_container.Height() / 2);
+    out_bounds_in_container.SetHeight(out_bounds_in_container.Height() / 2);
+  }
+  *out_container = ParentObject();
 }
 
-LayoutRect AXSpinButtonPart::elementRect() const
-{
-    // FIXME: This logic should exist in the layout tree or elsewhere, but there is no
-    // relationship that exists that can be queried.
+bool AXSpinButtonPart::Press() {
+  if (!parent_ || !parent_->IsSpinButton())
+    return false;
 
-    LayoutRect parentRect = parentObject()->elementRect();
-    if (m_isIncrementor) {
-        parentRect.setHeight(parentRect.height() / 2);
-    } else {
-        parentRect.setY(parentRect.y() + parentRect.height() / 2);
-        parentRect.setHeight(parentRect.height() / 2);
-    }
+  AXSpinButton* spin_button = ToAXSpinButton(ParentObject());
+  if (is_incrementor_)
+    spin_button->Step(1);
+  else
+    spin_button->Step(-1);
 
-    return parentRect;
+  return true;
 }
 
-bool AXSpinButtonPart::press() const
-{
-    if (!m_parent || !m_parent->isSpinButton())
-        return false;
-
-    AXSpinButton* spinButton = toAXSpinButton(parentObject());
-    if (m_isIncrementor)
-        spinButton->step(1);
-    else
-        spinButton->step(-1);
-
-    return true;
-}
-
-} // namespace blink
+}  // namespace blink

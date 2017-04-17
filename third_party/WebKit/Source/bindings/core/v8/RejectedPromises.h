@@ -5,13 +5,13 @@
 #ifndef RejectedPromises_h
 #define RejectedPromises_h
 
-#include "bindings/core/v8/SourceLocation.h"
-#include "core/fetch/AccessControlStatus.h"
-#include "wtf/Deque.h"
-#include "wtf/Forward.h"
-#include "wtf/RefCounted.h"
-#include "wtf/Vector.h"
 #include <memory>
+#include "bindings/core/v8/SourceLocation.h"
+#include "platform/loader/fetch/AccessControlStatus.h"
+#include "platform/wtf/Deque.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/Vector.h"
 
 namespace v8 {
 class PromiseRejectMessage;
@@ -22,36 +22,40 @@ namespace blink {
 class ScriptState;
 
 class RejectedPromises final : public RefCounted<RejectedPromises> {
-    USING_FAST_MALLOC(RejectedPromises);
-public:
-    static PassRefPtr<RejectedPromises> create()
-    {
-        return adoptRef(new RejectedPromises());
-    }
+  USING_FAST_MALLOC(RejectedPromises);
 
-    ~RejectedPromises();
-    void dispose();
+ public:
+  static PassRefPtr<RejectedPromises> Create() {
+    return AdoptRef(new RejectedPromises());
+  }
 
-    void rejectedWithNoHandler(ScriptState*, v8::PromiseRejectMessage, const String& errorMessage, std::unique_ptr<SourceLocation>, AccessControlStatus);
-    void handlerAdded(v8::PromiseRejectMessage);
+  ~RejectedPromises();
+  void Dispose();
 
-    void processQueue();
+  void RejectedWithNoHandler(ScriptState*,
+                             v8::PromiseRejectMessage,
+                             const String& error_message,
+                             std::unique_ptr<SourceLocation>,
+                             AccessControlStatus);
+  void HandlerAdded(v8::PromiseRejectMessage);
 
-private:
-    class Message;
+  void ProcessQueue();
 
-    RejectedPromises();
+ private:
+  class Message;
 
-    using MessageQueue = Deque<std::unique_ptr<Message>>;
-    std::unique_ptr<MessageQueue> createMessageQueue();
+  RejectedPromises();
 
-    void processQueueNow(std::unique_ptr<MessageQueue>);
-    void revokeNow(std::unique_ptr<Message>);
+  using MessageQueue = Deque<std::unique_ptr<Message>>;
+  std::unique_ptr<MessageQueue> CreateMessageQueue();
 
-    MessageQueue m_queue;
-    Vector<std::unique_ptr<Message>> m_reportedAsErrors;
+  void ProcessQueueNow(std::unique_ptr<MessageQueue>);
+  void RevokeNow(std::unique_ptr<Message>);
+
+  MessageQueue queue_;
+  Vector<std::unique_ptr<Message>> reported_as_errors_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RejectedPromises_h
+#endif  // RejectedPromises_h

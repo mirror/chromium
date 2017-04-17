@@ -32,9 +32,9 @@ base::TimeTicks EventTimeFromNative(const base::NativeEvent& native_event) {
   return base::TimeTicks();
 }
 
-gfx::Point EventLocationFromNative(const base::NativeEvent& native_event) {
+gfx::PointF EventLocationFromNative(const base::NativeEvent& native_event) {
   NOTIMPLEMENTED();
-  return gfx::Point();
+  return gfx::PointF();
 }
 
 gfx::Point EventSystemLocationFromNative(
@@ -103,7 +103,8 @@ bool GetScrollOffsets(const base::NativeEvent& native_event,
                       float* y_offset,
                       float* x_offset_ordinal,
                       float* y_offset_ordinal,
-                      int* finger_count) {
+                      int* finger_count,
+                      EventMomentumPhase* momentum_phase) {
   NOTIMPLEMENTED();
   return false;
 }

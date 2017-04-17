@@ -12,8 +12,8 @@
 // Iterators should be stable in the face of mutations, except for an
 // iterator pointing to an element that was just deleted.
 
-#ifndef UTIL_GTL_LINKED_HASH_MAP_H_
-#define UTIL_GTL_LINKED_HASH_MAP_H_
+#ifndef NET_BASE_LINKED_HASH_MAP_H_
+#define NET_BASE_LINKED_HASH_MAP_H_
 
 #include <stddef.h>
 
@@ -23,6 +23,8 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
+
+namespace net {
 
 // This holds a list of pair<Key, Value> items.  This list is what gets
 // traversed, and it's iterators from this list that we return from
@@ -45,8 +47,11 @@ class linked_hash_map {
   typedef typename ListType::value_type value_type;
   typedef typename ListType::size_type size_type;
 
-  linked_hash_map() : map_(), list_() {
-  }
+  linked_hash_map() = default;
+  explicit linked_hash_map(size_type bucket_count) : map_(bucket_count) {}
+
+  linked_hash_map(linked_hash_map&& other) = default;
+  linked_hash_map& operator=(linked_hash_map&& other) = default;
 
   // Returns an iterator to the first (insertion-ordered) element.  Like a map,
   // this can be dereferenced to a pair<Key, Value>.
@@ -114,6 +119,9 @@ class linked_hash_map {
   bool empty() const {
     return list_.empty();
   }
+
+  // Removes the first element from the list.
+  void pop_front() { erase(begin()); }
 
   // Erases values with the provided key.  Returns the number of elements
   // erased.  In this implementation, this will be 0 or 1.
@@ -254,4 +262,6 @@ class linked_hash_map {
   DISALLOW_COPY_AND_ASSIGN(linked_hash_map);
 };
 
-#endif  // UTIL_GTL_LINKED_HASH_MAP_H_
+}  // namespace net
+
+#endif  // NET_BASE_LINKED_HASH_MAP_H_

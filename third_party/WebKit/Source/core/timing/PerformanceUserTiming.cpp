@@ -31,9 +31,9 @@
 #include "core/timing/PerformanceMark.h"
 #include "core/timing/PerformanceMeasure.h"
 #include "platform/Histogram.h"
-#include "platform/TraceEvent.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
+#include "platform/wtf/text/StringHash.h"
 #include "public/platform/Platform.h"
-#include "wtf/text/StringHash.h"
 
 namespace blink {
 
@@ -41,198 +41,216 @@ namespace {
 
 using RestrictedKeyMap = HashMap<String, NavigationTimingFunction>;
 
-RestrictedKeyMap* createRestrictedKeyMap()
-{
-    RestrictedKeyMap* map = new RestrictedKeyMap();
-    map->add("navigationStart", &PerformanceTiming::navigationStart);
-    map->add("unloadEventStart", &PerformanceTiming::unloadEventStart);
-    map->add("unloadEventEnd", &PerformanceTiming::unloadEventEnd);
-    map->add("redirectStart", &PerformanceTiming::redirectStart);
-    map->add("redirectEnd", &PerformanceTiming::redirectEnd);
-    map->add("fetchStart", &PerformanceTiming::fetchStart);
-    map->add("domainLookupStart", &PerformanceTiming::domainLookupStart);
-    map->add("domainLookupEnd", &PerformanceTiming::domainLookupEnd);
-    map->add("connectStart", &PerformanceTiming::connectStart);
-    map->add("connectEnd", &PerformanceTiming::connectEnd);
-    map->add("secureConnectionStart", &PerformanceTiming::secureConnectionStart);
-    map->add("requestStart", &PerformanceTiming::requestStart);
-    map->add("responseStart", &PerformanceTiming::responseStart);
-    map->add("responseEnd", &PerformanceTiming::responseEnd);
-    map->add("domLoading", &PerformanceTiming::domLoading);
-    map->add("domInteractive", &PerformanceTiming::domInteractive);
-    map->add("domContentLoadedEventStart", &PerformanceTiming::domContentLoadedEventStart);
-    map->add("domContentLoadedEventEnd", &PerformanceTiming::domContentLoadedEventEnd);
-    map->add("domComplete", &PerformanceTiming::domComplete);
-    map->add("loadEventStart", &PerformanceTiming::loadEventStart);
-    map->add("loadEventEnd", &PerformanceTiming::loadEventEnd);
-    return map;
+RestrictedKeyMap* CreateRestrictedKeyMap() {
+  RestrictedKeyMap* map = new RestrictedKeyMap();
+  map->insert("navigationStart", &PerformanceTiming::navigationStart);
+  map->insert("unloadEventStart", &PerformanceTiming::unloadEventStart);
+  map->insert("unloadEventEnd", &PerformanceTiming::unloadEventEnd);
+  map->insert("redirectStart", &PerformanceTiming::redirectStart);
+  map->insert("redirectEnd", &PerformanceTiming::redirectEnd);
+  map->insert("fetchStart", &PerformanceTiming::fetchStart);
+  map->insert("domainLookupStart", &PerformanceTiming::domainLookupStart);
+  map->insert("domainLookupEnd", &PerformanceTiming::domainLookupEnd);
+  map->insert("connectStart", &PerformanceTiming::connectStart);
+  map->insert("connectEnd", &PerformanceTiming::connectEnd);
+  map->insert("secureConnectionStart",
+              &PerformanceTiming::secureConnectionStart);
+  map->insert("requestStart", &PerformanceTiming::requestStart);
+  map->insert("responseStart", &PerformanceTiming::responseStart);
+  map->insert("responseEnd", &PerformanceTiming::responseEnd);
+  map->insert("domLoading", &PerformanceTiming::domLoading);
+  map->insert("domInteractive", &PerformanceTiming::domInteractive);
+  map->insert("domContentLoadedEventStart",
+              &PerformanceTiming::domContentLoadedEventStart);
+  map->insert("domContentLoadedEventEnd",
+              &PerformanceTiming::domContentLoadedEventEnd);
+  map->insert("domComplete", &PerformanceTiming::domComplete);
+  map->insert("loadEventStart", &PerformanceTiming::loadEventStart);
+  map->insert("loadEventEnd", &PerformanceTiming::loadEventEnd);
+  return map;
 }
 
-const RestrictedKeyMap& restrictedKeyMap()
-{
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(RestrictedKeyMap, map, createRestrictedKeyMap());
-    return map;
+const RestrictedKeyMap& GetRestrictedKeyMap() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(RestrictedKeyMap, map,
+                                  CreateRestrictedKeyMap());
+  return map;
 }
 
-} // namespace
+}  // namespace
 
 UserTiming::UserTiming(PerformanceBase& performance)
-    : m_performance(&performance)
-{
+    : performance_(&performance) {}
+
+static void InsertPerformanceEntry(PerformanceEntryMap& performance_entry_map,
+                                   PerformanceEntry& entry) {
+  PerformanceEntryMap::iterator it = performance_entry_map.Find(entry.name());
+  if (it != performance_entry_map.end()) {
+    it->value.push_back(&entry);
+  } else {
+    PerformanceEntryVector vector(1);
+    vector[0] = Member<PerformanceEntry>(entry);
+    performance_entry_map.Set(entry.name(), vector);
+  }
 }
 
-static void insertPerformanceEntry(PerformanceEntryMap& performanceEntryMap, PerformanceEntry& entry)
-{
-    PerformanceEntryMap::iterator it = performanceEntryMap.find(entry.name());
-    if (it != performanceEntryMap.end()) {
-        it->value.append(&entry);
-    } else {
-        PerformanceEntryVector vector(1);
-        vector[0] = Member<PerformanceEntry>(entry);
-        performanceEntryMap.set(entry.name(), vector);
+static void ClearPeformanceEntries(PerformanceEntryMap& performance_entry_map,
+                                   const String& name) {
+  if (name.IsNull()) {
+    performance_entry_map.Clear();
+    return;
+  }
+
+  if (performance_entry_map.Contains(name))
+    performance_entry_map.erase(name);
+}
+
+PerformanceEntry* UserTiming::Mark(const String& mark_name,
+                                   ExceptionState& exception_state) {
+  if (GetRestrictedKeyMap().Contains(mark_name)) {
+    exception_state.ThrowDOMException(
+        kSyntaxError, "'" + mark_name +
+                          "' is part of the PerformanceTiming interface, and "
+                          "cannot be used as a mark name.");
+    return nullptr;
+  }
+
+  TRACE_EVENT_COPY_MARK("blink.user_timing", mark_name.Utf8().Data());
+  double start_time = performance_->now();
+  PerformanceEntry* entry = PerformanceMark::Create(mark_name, start_time);
+  InsertPerformanceEntry(marks_map_, *entry);
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      CustomCountHistogram, user_timing_mark_histogram,
+      new CustomCountHistogram("PLT.UserTiming_Mark", 0, 600000, 100));
+  user_timing_mark_histogram.Count(static_cast<int>(start_time));
+  return entry;
+}
+
+void UserTiming::ClearMarks(const String& mark_name) {
+  ClearPeformanceEntries(marks_map_, mark_name);
+}
+
+double UserTiming::FindExistingMarkStartTime(const String& mark_name,
+                                             ExceptionState& exception_state) {
+  if (marks_map_.Contains(mark_name))
+    return marks_map_.at(mark_name).back()->startTime();
+
+  if (GetRestrictedKeyMap().Contains(mark_name) && performance_->timing()) {
+    double value = static_cast<double>(
+        (performance_->timing()->*(GetRestrictedKeyMap().at(mark_name)))());
+    if (!value) {
+      exception_state.ThrowDOMException(
+          kInvalidAccessError, "'" + mark_name +
+                                   "' is empty: either the event hasn't "
+                                   "happened yet, or it would provide "
+                                   "cross-origin timing information.");
+      return 0.0;
     }
+    return value - performance_->timing()->navigationStart();
+  }
+
+  exception_state.ThrowDOMException(
+      kSyntaxError, "The mark '" + mark_name + "' does not exist.");
+  return 0.0;
 }
 
-static void clearPeformanceEntries(PerformanceEntryMap& performanceEntryMap, const String& name)
-{
-    if (name.isNull()) {
-        performanceEntryMap.clear();
-        return;
-    }
+PerformanceEntry* UserTiming::Measure(const String& measure_name,
+                                      const String& start_mark,
+                                      const String& end_mark,
+                                      ExceptionState& exception_state) {
+  double start_time = 0.0;
+  double end_time = 0.0;
 
-    if (performanceEntryMap.contains(name))
-        performanceEntryMap.remove(name);
+  if (start_mark.IsNull()) {
+    end_time = performance_->now();
+  } else if (end_mark.IsNull()) {
+    end_time = performance_->now();
+    start_time = FindExistingMarkStartTime(start_mark, exception_state);
+    if (exception_state.HadException())
+      return nullptr;
+  } else {
+    end_time = FindExistingMarkStartTime(end_mark, exception_state);
+    if (exception_state.HadException())
+      return nullptr;
+    start_time = FindExistingMarkStartTime(start_mark, exception_state);
+    if (exception_state.HadException())
+      return nullptr;
+  }
+
+  // User timing events are stored as integer milliseconds from the start of
+  // navigation, whereas trace events accept double seconds based off of
+  // CurrentTime::monotonicallyIncreasingTime().
+  double start_time_monotonic =
+      performance_->TimeOrigin() + start_time / 1000.0;
+  double end_time_monotonic = performance_->TimeOrigin() + end_time / 1000.0;
+
+  TRACE_EVENT_COPY_NESTABLE_ASYNC_BEGIN_WITH_TIMESTAMP0(
+      "blink.user_timing", measure_name.Utf8().Data(),
+      WTF::StringHash::GetHash(measure_name),
+      TraceEvent::ToTraceTimestamp(start_time_monotonic));
+  TRACE_EVENT_COPY_NESTABLE_ASYNC_END_WITH_TIMESTAMP0(
+      "blink.user_timing", measure_name.Utf8().Data(),
+      WTF::StringHash::GetHash(measure_name),
+      TraceEvent::ToTraceTimestamp(end_time_monotonic));
+
+  PerformanceEntry* entry =
+      PerformanceMeasure::Create(measure_name, start_time, end_time);
+  InsertPerformanceEntry(measures_map_, *entry);
+  if (end_time >= start_time) {
+    DEFINE_THREAD_SAFE_STATIC_LOCAL(
+        CustomCountHistogram, measure_duration_histogram,
+        new CustomCountHistogram("PLT.UserTiming_MeasureDuration", 0, 600000,
+                                 100));
+    measure_duration_histogram.Count(static_cast<int>(end_time - start_time));
+  }
+  return entry;
 }
 
-PerformanceEntry* UserTiming::mark(const String& markName, ExceptionState& exceptionState)
-{
-    if (restrictedKeyMap().contains(markName)) {
-        exceptionState.throwDOMException(SyntaxError, "'" + markName + "' is part of the PerformanceTiming interface, and cannot be used as a mark name.");
-        return nullptr;
-    }
-
-    TRACE_EVENT_COPY_MARK("blink.user_timing", markName.utf8().data());
-    double startTime = m_performance->now();
-    PerformanceEntry* entry = PerformanceMark::create(markName, startTime);
-    insertPerformanceEntry(m_marksMap, *entry);
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(CustomCountHistogram, userTimingMarkHistogram, new CustomCountHistogram("PLT.UserTiming_Mark", 0, 600000, 100));
-    userTimingMarkHistogram.count(static_cast<int>(startTime));
-    return entry;
+void UserTiming::ClearMeasures(const String& measure_name) {
+  ClearPeformanceEntries(measures_map_, measure_name);
 }
 
-void UserTiming::clearMarks(const String& markName)
-{
-    clearPeformanceEntries(m_marksMap, markName);
+static PerformanceEntryVector ConvertToEntrySequence(
+    const PerformanceEntryMap& performance_entry_map) {
+  PerformanceEntryVector entries;
+
+  for (const auto& entry : performance_entry_map)
+    entries.AppendVector(entry.value);
+
+  return entries;
 }
 
-double UserTiming::findExistingMarkStartTime(const String& markName, ExceptionState& exceptionState)
-{
-    if (m_marksMap.contains(markName))
-        return m_marksMap.get(markName).last()->startTime();
+static PerformanceEntryVector GetEntrySequenceByName(
+    const PerformanceEntryMap& performance_entry_map,
+    const String& name) {
+  PerformanceEntryVector entries;
 
-    if (restrictedKeyMap().contains(markName) && m_performance->timing()) {
-        double value = static_cast<double>((m_performance->timing()->*(restrictedKeyMap().get(markName)))());
-        if (!value) {
-            exceptionState.throwDOMException(InvalidAccessError, "'" + markName + "' is empty: either the event hasn't happened yet, or it would provide cross-origin timing information.");
-            return 0.0;
-        }
-        return value - m_performance->timing()->navigationStart();
-    }
+  PerformanceEntryMap::const_iterator it = performance_entry_map.Find(name);
+  if (it != performance_entry_map.end())
+    entries.AppendVector(it->value);
 
-    exceptionState.throwDOMException(SyntaxError, "The mark '" + markName + "' does not exist.");
-    return 0.0;
+  return entries;
 }
 
-PerformanceEntry* UserTiming::measure(const String& measureName, const String& startMark, const String& endMark, ExceptionState& exceptionState)
-{
-    double startTime = 0.0;
-    double endTime = 0.0;
-
-    if (startMark.isNull()) {
-        endTime = m_performance->now();
-    } else if (endMark.isNull()) {
-        endTime = m_performance->now();
-        startTime = findExistingMarkStartTime(startMark, exceptionState);
-        if (exceptionState.hadException())
-            return nullptr;
-    } else {
-        endTime = findExistingMarkStartTime(endMark, exceptionState);
-        if (exceptionState.hadException())
-            return nullptr;
-        startTime = findExistingMarkStartTime(startMark, exceptionState);
-        if (exceptionState.hadException())
-            return nullptr;
-    }
-
-    // User timing events are stored as integer milliseconds from the start of
-    // navigation, whereas trace events accept double seconds based off of
-    // CurrentTime::monotonicallyIncreasingTime().
-    double startTimeMonotonic = m_performance->timeOrigin() + startTime / 1000.0;
-    double endTimeMonotonic = m_performance->timeOrigin() + endTime / 1000.0;
-
-    TRACE_EVENT_COPY_NESTABLE_ASYNC_BEGIN_WITH_TIMESTAMP0("blink.user_timing", measureName.utf8().data(), WTF::StringHash::hash(measureName), startTimeMonotonic);
-    TRACE_EVENT_COPY_NESTABLE_ASYNC_END_WITH_TIMESTAMP0("blink.user_timing", measureName.utf8().data(), WTF::StringHash::hash(measureName), endTimeMonotonic);
-
-    PerformanceEntry* entry = PerformanceMeasure::create(measureName, startTime, endTime);
-    insertPerformanceEntry(m_measuresMap, *entry);
-    if (endTime >= startTime) {
-        DEFINE_THREAD_SAFE_STATIC_LOCAL(CustomCountHistogram, measureDurationHistogram, new CustomCountHistogram("PLT.UserTiming_MeasureDuration", 0, 600000, 100));
-        measureDurationHistogram.count(static_cast<int>(endTime - startTime));
-    }
-    return entry;
+PerformanceEntryVector UserTiming::GetMarks() const {
+  return ConvertToEntrySequence(marks_map_);
 }
 
-void UserTiming::clearMeasures(const String& measureName)
-{
-    clearPeformanceEntries(m_measuresMap, measureName);
+PerformanceEntryVector UserTiming::GetMarks(const String& name) const {
+  return GetEntrySequenceByName(marks_map_, name);
 }
 
-static PerformanceEntryVector convertToEntrySequence(const PerformanceEntryMap& performanceEntryMap)
-{
-    PerformanceEntryVector entries;
-
-    for (const auto& entry : performanceEntryMap)
-        entries.appendVector(entry.value);
-
-    return entries;
+PerformanceEntryVector UserTiming::GetMeasures() const {
+  return ConvertToEntrySequence(measures_map_);
 }
 
-static PerformanceEntryVector getEntrySequenceByName(const PerformanceEntryMap& performanceEntryMap, const String& name)
-{
-    PerformanceEntryVector entries;
-
-    PerformanceEntryMap::const_iterator it = performanceEntryMap.find(name);
-    if (it != performanceEntryMap.end())
-        entries.appendVector(it->value);
-
-    return entries;
+PerformanceEntryVector UserTiming::GetMeasures(const String& name) const {
+  return GetEntrySequenceByName(measures_map_, name);
 }
 
-PerformanceEntryVector UserTiming::getMarks() const
-{
-    return convertToEntrySequence(m_marksMap);
+DEFINE_TRACE(UserTiming) {
+  visitor->Trace(performance_);
+  visitor->Trace(marks_map_);
+  visitor->Trace(measures_map_);
 }
 
-PerformanceEntryVector UserTiming::getMarks(const String& name) const
-{
-    return getEntrySequenceByName(m_marksMap, name);
-}
-
-PerformanceEntryVector UserTiming::getMeasures() const
-{
-    return convertToEntrySequence(m_measuresMap);
-}
-
-PerformanceEntryVector UserTiming::getMeasures(const String& name) const
-{
-    return getEntrySequenceByName(m_measuresMap, name);
-}
-
-DEFINE_TRACE(UserTiming)
-{
-    visitor->trace(m_performance);
-    visitor->trace(m_marksMap);
-    visitor->trace(m_measuresMap);
-}
-
-} // namespace blink
+}  // namespace blink

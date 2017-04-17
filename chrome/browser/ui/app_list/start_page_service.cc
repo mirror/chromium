@@ -10,6 +10,7 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/json/json_reader.h"
 #include "base/json/json_string_value_serializer.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
@@ -18,7 +19,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
-#include "chrome/browser/media/media_stream_devices_controller.h"
+#include "chrome/browser/media/webrtc/media_stream_devices_controller.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/hotword_service.h"
 #include "chrome/browser/search/hotword_service_factory.h"
@@ -39,6 +40,7 @@
 #include "components/search_engines/template_url_service.h"
 #include "components/zoom/zoom_controller.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
@@ -58,10 +60,7 @@
 #include "net/base/network_change_notifier.h"
 #include "net/url_request/url_fetcher.h"
 #include "ui/app_list/app_list_switches.h"
-
-#if defined(OS_CHROMEOS)
 #include "chromeos/audio/cras_audio_handler.h"
-#endif
 
 using base::RecordAction;
 using base::UserMetricsAction;
@@ -157,22 +156,6 @@ class StartPageService::StartPageWebContentsDelegate
   explicit StartPageWebContentsDelegate(Profile* profile) : profile_(profile) {}
   ~StartPageWebContentsDelegate() override {}
 
-  void RequestMediaAccessPermission(
-      content::WebContents* web_contents,
-      const content::MediaStreamRequest& request,
-      const content::MediaResponseCallback& callback) override {
-    MediaStreamDevicesController controller(web_contents, request, callback);
-    if (controller.IsAskingForVideo() || controller.IsAskingForAudio())
-      NOTREACHED() << "Media stream not allowed for WebUI";
-  }
-
-  bool CheckMediaAccessPermission(content::WebContents* web_contents,
-                                  const GURL& security_origin,
-                                  content::MediaStreamType type) override {
-    return MediaCaptureDevicesDispatcher::GetInstance()
-        ->CheckMediaAccessPermission(web_contents, security_origin, type);
-  }
-
   void AddNewContents(content::WebContents* source,
                       content::WebContents* new_contents,
                       WindowOpenDisposition disposition,
@@ -182,15 +165,11 @@ class StartPageService::StartPageWebContentsDelegate
     chrome::ScopedTabbedBrowserDisplayer displayer(profile_);
     // Force all links to open in a new tab, even if they were trying to open a
     // new window.
-    disposition =
-        disposition == NEW_BACKGROUND_TAB ? disposition : NEW_FOREGROUND_TAB;
-    chrome::AddWebContents(displayer.browser(),
-                           nullptr,
-                           new_contents,
-                           disposition,
-                           initial_pos,
-                           user_gesture,
-                           was_blocked);
+    disposition = disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB
+                      ? disposition
+                      : WindowOpenDisposition::NEW_FOREGROUND_TAB;
+    chrome::AddWebContents(displayer.browser(), nullptr, new_contents,
+                           disposition, initial_pos, user_gesture, was_blocked);
   }
 
   content::WebContents* OpenURLFromTab(
@@ -200,10 +179,10 @@ class StartPageService::StartPageWebContentsDelegate
     // window.
     chrome::NavigateParams new_tab_params(
         static_cast<Browser*>(nullptr), params.url, params.transition);
-    if (params.disposition == NEW_BACKGROUND_TAB) {
-      new_tab_params.disposition = NEW_BACKGROUND_TAB;
+    if (params.disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB) {
+      new_tab_params.disposition = WindowOpenDisposition::NEW_BACKGROUND_TAB;
     } else {
-      new_tab_params.disposition = NEW_FOREGROUND_TAB;
+      new_tab_params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
       new_tab_params.window_action = chrome::NavigateParams::SHOW_WINDOW;
     }
 
@@ -216,9 +195,9 @@ class StartPageService::StartPageWebContentsDelegate
   bool PreHandleGestureEvent(content::WebContents* /*source*/,
                              const blink::WebGestureEvent& event) override {
     // Disable pinch zooming on the start page web contents.
-    return event.type == blink::WebGestureEvent::GesturePinchBegin ||
-           event.type == blink::WebGestureEvent::GesturePinchUpdate ||
-           event.type == blink::WebGestureEvent::GesturePinchEnd;
+    return event.GetType() == blink::WebGestureEvent::kGesturePinchBegin ||
+           event.GetType() == blink::WebGestureEvent::kGesturePinchUpdate ||
+           event.GetType() == blink::WebGestureEvent::kGesturePinchEnd;
   }
 
 
@@ -228,7 +207,6 @@ class StartPageService::StartPageWebContentsDelegate
   DISALLOW_COPY_AND_ASSIGN(StartPageWebContentsDelegate);
 };
 
-#if defined(OS_CHROMEOS)
 
 class StartPageService::AudioStatus
     : public chromeos::CrasAudioHandler::AudioObserver {
@@ -266,8 +244,6 @@ class StartPageService::AudioStatus
 
   DISALLOW_COPY_AND_ASSIGN(AudioStatus);
 };
-
-#endif  // OS_CHROMEOS
 
 class StartPageService::NetworkChangeObserver
     : public net::NetworkChangeNotifier::NetworkChangeObserver {
@@ -332,16 +308,13 @@ StartPageService::StartPageService(Profile* profile)
       search_engine_is_google_(false),
       backoff_entry_(&kDoodleBackoffPolicy),
       weak_factory_(this) {
-  if (switches::IsExperimentalAppListEnabled()) {
-    TemplateURLService* template_url_service =
-        TemplateURLServiceFactory::GetForProfile(profile_);
-    const TemplateURL* default_provider =
-        template_url_service->GetDefaultSearchProvider();
-    search_engine_is_google_ =
-        default_provider->GetEngineType(
-            template_url_service->search_terms_data()) ==
-        SEARCH_ENGINE_GOOGLE;
-  }
+  TemplateURLService* template_url_service =
+      TemplateURLServiceFactory::GetForProfile(profile_);
+  const TemplateURL* default_provider =
+      template_url_service->GetDefaultSearchProvider();
+  search_engine_is_google_ =
+      default_provider->GetEngineType(
+          template_url_service->search_terms_data()) == SEARCH_ENGINE_GOOGLE;
 
   network_change_observer_.reset(new NetworkChangeObserver(this));
 }
@@ -381,15 +354,14 @@ void StartPageService::UpdateRecognitionState() {
 void StartPageService::Init() {
   // Do not load the start page web contents in tests because many tests assume
   // no WebContents exist except the ones they make.
-  if (switches::IsExperimentalAppListEnabled() &&
-      !base::CommandLine::ForCurrentProcess()->HasSwitch(
-          ::switches::kTestType)) {
-    content::BrowserThread::PostDelayedTask(
-        content::BrowserThread::UI, FROM_HERE,
-        base::Bind(&StartPageService::LoadContentsIfNeeded,
-                   weak_factory_.GetWeakPtr()),
-        base::TimeDelta::FromSeconds(kLoadContentsDelaySeconds));
-  }
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(::switches::kTestType))
+    return;
+
+  content::BrowserThread::PostDelayedTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::Bind(&StartPageService::LoadContentsIfNeeded,
+                 weak_factory_.GetWeakPtr()),
+      base::TimeDelta::FromSeconds(kLoadContentsDelaySeconds));
 }
 
 void StartPageService::LoadContentsIfNeeded() {
@@ -411,22 +383,15 @@ void StartPageService::AppListShown() {
         "appList.startPage.onAppListShown");
   }
 
-#if defined(OS_CHROMEOS)
   audio_status_.reset(new AudioStatus(this));
-#endif
 }
 
 void StartPageService::AppListHidden() {
-  if (!app_list::switches::IsExperimentalAppListEnabled())
-    UnloadContents();
-
   if (speech_recognizer_) {
     StopSpeechRecognition();
   }
 
-#if defined(OS_CHROMEOS)
   audio_status_.reset();
-#endif
 }
 
 void StartPageService::StartSpeechRecognition(
@@ -436,10 +401,8 @@ void StartPageService::StartSpeechRecognition(
 
   if (!speech_recognizer_) {
     std::string profile_locale;
-#if defined(OS_CHROMEOS)
     profile_locale = profile_->GetPrefs()->GetString(
         prefs::kApplicationLocale);
-#endif
     if (profile_locale.empty())
       profile_locale = g_browser_process->GetApplicationLocale();
 
@@ -464,22 +427,15 @@ void StartPageService::StopSpeechRecognition() {
 }
 
 bool StartPageService::HotwordEnabled() {
-// Voice input for the launcher is unsupported on non-ChromeOS platforms.
-// TODO(amistry): Make speech input, and hotwording, work on non-ChromeOS.
-#if defined(OS_CHROMEOS)
   HotwordService* service = HotwordServiceFactory::GetForProfile(profile_);
   return state_ != SPEECH_RECOGNITION_OFF &&
       service &&
       (service->IsSometimesOnEnabled() || service->IsAlwaysOnEnabled()) &&
       service->IsServiceAvailable();
-#else
-  return false;
-#endif
 }
 
 content::WebContents* StartPageService::GetStartPageContents() {
-  return app_list::switches::IsExperimentalAppListEnabled() ? contents_.get()
-                                                            : NULL;
+  return contents_.get();
 }
 
 content::WebContents* StartPageService::GetSpeechRecognitionContents() {
@@ -497,24 +453,20 @@ void StartPageService::OnSpeechResult(
     speech_result_obtained_ = true;
     RecordAction(UserMetricsAction("AppList_SearchedBySpeech"));
   }
-  FOR_EACH_OBSERVER(StartPageObserver,
-                    observers_,
-                    OnSpeechResult(query, is_final));
+  for (auto& observer : observers_)
+    observer.OnSpeechResult(query, is_final);
 }
 
 void StartPageService::OnSpeechSoundLevelChanged(int16_t level) {
-  FOR_EACH_OBSERVER(StartPageObserver,
-                    observers_,
-                    OnSpeechSoundLevelChanged(level));
+  for (auto& observer : observers_)
+    observer.OnSpeechSoundLevelChanged(level);
 }
 
 void StartPageService::OnSpeechRecognitionStateChanged(
     SpeechRecognitionState new_state) {
-#if defined(OS_CHROMEOS)
   // Sometimes this can be called even though there are no audio input devices.
   if (audio_status_ && !audio_status_->CanListen())
     new_state = SPEECH_RECOGNITION_OFF;
-#endif
   if (!microphone_available_)
     new_state = SPEECH_RECOGNITION_OFF;
   if (!network_available_)
@@ -544,9 +496,8 @@ void StartPageService::OnSpeechRecognitionStateChanged(
   speech_button_toggled_manually_ = false;
   speech_result_obtained_ = false;
   state_ = new_state;
-  FOR_EACH_OBSERVER(StartPageObserver,
-                    observers_,
-                    OnSpeechRecognitionStateChanged(new_state));
+  for (auto& observer : observers_)
+    observer.OnSpeechRecognitionStateChanged(new_state);
 }
 
 void StartPageService::GetSpeechAuthParameters(std::string* auth_scope,
@@ -563,20 +514,29 @@ void StartPageService::GetSpeechAuthParameters(std::string* auth_scope,
 
 void StartPageService::Shutdown() {
   UnloadContents();
-#if defined(OS_CHROMEOS)
   audio_status_.reset();
-#endif
-
   speech_auth_helper_.reset();
   network_change_observer_.reset();
 }
 
-void StartPageService::DidNavigateMainFrame(
-    const content::LoadCommittedDetails& /*details*/,
-    const content::FrameNavigateParams& /*params*/) {
-  // Set the zoom level in DidNavigateMainFrame, as this is the earliest point
+void StartPageService::DidFinishNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->IsInMainFrame() || !navigation_handle->HasCommitted())
+    return;
+
+  if (navigation_handle->IsErrorPage()) {
+    // This avoids displaying a "Webpage Blocked" error or similar (which can
+    // happen if the URL is blacklisted by enterprise policy).
+    content::BrowserThread::PostTask(
+        content::BrowserThread::UI, FROM_HERE,
+        base::Bind(&StartPageService::UnloadContents,
+                   weak_factory_.GetWeakPtr()));
+    return;
+  }
+
+  // Set the zoom level in DidFinishNavigation, as this is the earliest point
   // at which it can be done and not be affected by the ZoomController's
-  // DidNavigateMainFrame handler.
+  // DidFinishNavigation handler.
   //
   // Use a temporary zoom level for this web contents (aka isolated zoom
   // mode) so changes to its zoom aren't reflected in any preferences.
@@ -585,19 +545,6 @@ void StartPageService::DidNavigateMainFrame(
   // Set to have a zoom level of 0, which corresponds to 100%, so the
   // contents aren't affected by the browser's default zoom level.
   zoom::ZoomController::FromWebContents(contents_.get())->SetZoomLevel(0);
-}
-
-void StartPageService::DidFailProvisionalLoad(
-    content::RenderFrameHost* render_frame_host,
-    const GURL& validated_url,
-    int error_code,
-    const base::string16& error_description,
-    bool was_ignored_by_handler) {
-  // This avoids displaying a "Webpage Blocked" error or similar (which can
-  // happen if the URL is blacklisted by enterprise policy).
-  content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
-                                   base::Bind(&StartPageService::UnloadContents,
-                                              weak_factory_.GetWeakPtr()));
 }
 
 void StartPageService::WebUILoaded() {
@@ -671,8 +618,8 @@ void StartPageService::OnURLFetchComplete(const net::URLFetcher* source) {
   if (json_start_index != std::string::npos)
     json_data_substr.remove_prefix(json_start_index);
 
-  JSONStringValueDeserializer deserializer(json_data_substr);
-  deserializer.set_allow_trailing_comma(true);
+  JSONStringValueDeserializer deserializer(json_data_substr,
+                                           base::JSON_ALLOW_TRAILING_COMMAS);
   int error_code = 0;
   std::unique_ptr<base::Value> doodle_json =
       deserializer.Deserialize(&error_code, nullptr);
@@ -691,8 +638,7 @@ void StartPageService::OnURLFetchComplete(const net::URLFetcher* source) {
     if (contents_ && contents_->GetWebUI()) {
       contents_->GetWebUI()->CallJavascriptFunctionUnsafe(
           "appList.startPage.onAppListDoodleUpdated", *doodle_json,
-          base::StringValue(
-              UIThreadSearchTermsData(profile_).GoogleBaseURLValue()));
+          base::Value(UIThreadSearchTermsData(profile_).GoogleBaseURLValue()));
     }
   }
 

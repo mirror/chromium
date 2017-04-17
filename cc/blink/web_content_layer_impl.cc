@@ -11,7 +11,6 @@
 #include "cc/base/switches.h"
 #include "cc/blink/web_display_item_list_impl.h"
 #include "cc/layers/picture_layer.h"
-#include "cc/playback/display_item_list_settings.h"
 #include "third_party/WebKit/public/platform/WebContentLayerClient.h"
 #include "third_party/WebKit/public/platform/WebFloatPoint.h"
 #include "third_party/WebKit/public/platform/WebFloatRect.h"
@@ -23,36 +22,32 @@ using cc::PictureLayer;
 
 namespace cc_blink {
 
-static bool UseCachedPictureRaster() {
-  static bool use = !base::CommandLine::ForCurrentProcess()->HasSwitch(
-      cc::switches::kDisableCachedPictureRaster);
-  return use;
-}
-
 static blink::WebContentLayerClient::PaintingControlSetting
 PaintingControlToWeb(
     cc::ContentLayerClient::PaintingControlSetting painting_control) {
   switch (painting_control) {
     case cc::ContentLayerClient::PAINTING_BEHAVIOR_NORMAL:
-      return blink::WebContentLayerClient::PaintDefaultBehavior;
+      return blink::WebContentLayerClient::kPaintDefaultBehavior;
     case cc::ContentLayerClient::PAINTING_BEHAVIOR_NORMAL_FOR_TEST:
-      return blink::WebContentLayerClient::PaintDefaultBehaviorForTest;
+      return blink::WebContentLayerClient::kPaintDefaultBehaviorForTest;
     case cc::ContentLayerClient::DISPLAY_LIST_CONSTRUCTION_DISABLED:
-      return blink::WebContentLayerClient::DisplayListConstructionDisabled;
+      return blink::WebContentLayerClient::kDisplayListConstructionDisabled;
     case cc::ContentLayerClient::DISPLAY_LIST_CACHING_DISABLED:
-      return blink::WebContentLayerClient::DisplayListCachingDisabled;
+      return blink::WebContentLayerClient::kDisplayListCachingDisabled;
     case cc::ContentLayerClient::DISPLAY_LIST_PAINTING_DISABLED:
-      return blink::WebContentLayerClient::DisplayListPaintingDisabled;
+      return blink::WebContentLayerClient::kDisplayListPaintingDisabled;
     case cc::ContentLayerClient::SUBSEQUENCE_CACHING_DISABLED:
-      return blink::WebContentLayerClient::SubsequenceCachingDisabled;
+      return blink::WebContentLayerClient::kSubsequenceCachingDisabled;
+    case cc::ContentLayerClient::PARTIAL_INVALIDATION:
+      return blink::WebContentLayerClient::kPartialInvalidation;
   }
   NOTREACHED();
-  return blink::WebContentLayerClient::PaintDefaultBehavior;
+  return blink::WebContentLayerClient::kPaintDefaultBehavior;
 }
 
 WebContentLayerImpl::WebContentLayerImpl(blink::WebContentLayerClient* client)
     : client_(client) {
-  layer_ = base::WrapUnique(new WebLayerImpl(PictureLayer::Create(this)));
+  layer_ = base::MakeUnique<WebLayerImpl>(PictureLayer::Create(this));
   layer_->layer()->SetIsDrawable(true);
 }
 
@@ -60,25 +55,26 @@ WebContentLayerImpl::~WebContentLayerImpl() {
   static_cast<PictureLayer*>(layer_->layer())->ClearClient();
 }
 
-blink::WebLayer* WebContentLayerImpl::layer() {
+blink::WebLayer* WebContentLayerImpl::Layer() {
   return layer_.get();
 }
 
+void WebContentLayerImpl::SetAllowTransformedRasterization(bool allowed) {
+  static_cast<PictureLayer*>(layer_->layer())
+      ->SetAllowTransformedRasterization(allowed);
+}
+
 gfx::Rect WebContentLayerImpl::PaintableRegion() {
-  return client_->paintableRegion();
+  return client_->PaintableRegion();
 }
 
 scoped_refptr<cc::DisplayItemList>
 WebContentLayerImpl::PaintContentsToDisplayList(
     cc::ContentLayerClient::PaintingControlSetting painting_control) {
-  cc::DisplayItemListSettings settings;
-  settings.use_cached_picture = UseCachedPictureRaster();
-
-  scoped_refptr<cc::DisplayItemList> display_list =
-      cc::DisplayItemList::Create(PaintableRegion(), settings);
+  auto display_list = make_scoped_refptr(new cc::DisplayItemList);
   if (client_) {
     WebDisplayItemListImpl list(display_list.get());
-    client_->paintContents(&list, PaintingControlToWeb(painting_control));
+    client_->PaintContents(&list, PaintingControlToWeb(painting_control));
   }
   display_list->Finalize();
   return display_list;
@@ -89,7 +85,7 @@ bool WebContentLayerImpl::FillsBoundsCompletely() const {
 }
 
 size_t WebContentLayerImpl::GetApproximateUnsharedMemoryUsage() const {
-  return client_->approximateUnsharedMemoryUsage();
+  return client_->ApproximateUnsharedMemoryUsage();
 }
 
 }  // namespace cc_blink

@@ -32,8 +32,8 @@ ContentCapabilitiesInfo::ContentCapabilitiesInfo() {
 ContentCapabilitiesInfo::~ContentCapabilitiesInfo() {
 }
 
-static base::LazyInstance<ContentCapabilitiesInfo>
-g_empty_content_capabilities_info = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<ContentCapabilitiesInfo>::DestructorAtExit
+    g_empty_content_capabilities_info = LAZY_INSTANCE_INITIALIZER;
 
 // static
 const ContentCapabilitiesInfo& ContentCapabilitiesInfo::Get(
@@ -106,7 +106,7 @@ bool ContentCapabilitiesHandler::Parse(Extension* extension,
     }
   }
 
-  extension->SetManifestData(keys::kContentCapabilities, info.release());
+  extension->SetManifestData(keys::kContentCapabilities, std::move(info));
   return true;
 }
 

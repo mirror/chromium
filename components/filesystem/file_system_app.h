@@ -10,18 +10,16 @@
 #include "components/filesystem/file_system_impl.h"
 #include "components/filesystem/lock_table.h"
 #include "components/filesystem/public/interfaces/file_system.mojom.h"
-#include "services/shell/public/cpp/interface_factory.h"
-#include "services/shell/public/cpp/service.h"
-#include "services/tracing/public/cpp/tracing_impl.h"
-
-namespace mojo {
-class Connector;
-}
+#include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/cpp/interface_factory.h"
+#include "services/service_manager/public/cpp/service.h"
+#include "services/tracing/public/cpp/provider.h"
 
 namespace filesystem {
 
-class FileSystemApp : public shell::Service,
-                      public shell::InterfaceFactory<mojom::FileSystem> {
+class FileSystemApp
+    : public service_manager::Service,
+      public service_manager::InterfaceFactory<mojom::FileSystem> {
  public:
   FileSystemApp();
   ~FileSystemApp() override;
@@ -30,15 +28,19 @@ class FileSystemApp : public shell::Service,
   // Gets the system specific toplevel profile directory.
   static base::FilePath GetUserDataDir();
 
-  // |shell::Service| override:
-  void OnStart(const shell::Identity& identity) override;
-  bool OnConnect(shell::Connection* connection) override;
+  // |service_manager::Service| override:
+  void OnStart() override;
+  void OnBindInterface(const service_manager::ServiceInfo& source_info,
+                       const std::string& interface_name,
+                       mojo::ScopedMessagePipeHandle interface_pipe) override;
 
   // |InterfaceFactory<Files>| implementation:
-  void Create(const shell::Identity& remote_identity,
+  void Create(const service_manager::Identity& remote_identity,
               mojo::InterfaceRequest<mojom::FileSystem> request) override;
 
-  mojo::TracingImpl tracing_;
+  tracing::Provider tracing_;
+
+  service_manager::BinderRegistry registry_;
 
   scoped_refptr<LockTable> lock_table_;
 

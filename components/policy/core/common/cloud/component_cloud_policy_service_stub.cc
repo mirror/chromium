@@ -12,6 +12,7 @@ namespace policy {
 ComponentCloudPolicyService::Delegate::~Delegate() {}
 
 ComponentCloudPolicyService::ComponentCloudPolicyService(
+    const std::string& policy_type,
     Delegate* delegate,
     SchemaRegistry* schema_registry,
     CloudPolicyCore* core,
@@ -19,10 +20,7 @@ ComponentCloudPolicyService::ComponentCloudPolicyService(
     scoped_refptr<net::URLRequestContextGetter> request_context,
     scoped_refptr<base::SequencedTaskRunner> backend_task_runner,
     scoped_refptr<base::SequencedTaskRunner> io_task_runner)
-    : started_loading_initial_policy_(false),
-      loaded_initial_policy_(true),
-      is_registered_for_cloud_policy_(false),
-      weak_ptr_factory_(this) {}
+    : policy_installed_(true), weak_ptr_factory_(this) {}
 
 ComponentCloudPolicyService::~ComponentCloudPolicyService() {}
 

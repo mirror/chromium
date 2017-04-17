@@ -5,50 +5,45 @@
 #ifndef DataEquivalency_h
 #define DataEquivalency_h
 
-#include "wtf/RefPtr.h"
 #include <memory>
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
-template<typename T>
+template <typename T>
 class Persistent;
-template<typename T>
+template <typename T>
 class Member;
 
 template <typename T>
-bool dataEquivalent(const T* a, const T* b)
-{
-    if (a == b)
-        return true;
-    if (!a || !b)
-        return false;
-    return *a == *b;
+bool DataEquivalent(const T* a, const T* b) {
+  if (a == b)
+    return true;
+  if (!a || !b)
+    return false;
+  return *a == *b;
 }
 
 template <typename T>
-bool dataEquivalent(const RefPtr<T>& a, const RefPtr<T>& b)
-{
-    return dataEquivalent(a.get(), b.get());
+bool DataEquivalent(const RefPtr<T>& a, const RefPtr<T>& b) {
+  return DataEquivalent(a.Get(), b.Get());
 }
 
 template <typename T>
-bool dataEquivalent(const Persistent<T>& a, const Persistent<T>& b)
-{
-    return dataEquivalent(a.get(), b.get());
+bool DataEquivalent(const Persistent<T>& a, const Persistent<T>& b) {
+  return DataEquivalent(a.Get(), b.Get());
 }
 
 template <typename T>
-bool dataEquivalent(const Member<T>& a, const Member<T>& b)
-{
-    return dataEquivalent(a.get(), b.get());
+bool DataEquivalent(const Member<T>& a, const Member<T>& b) {
+  return DataEquivalent(a.Get(), b.Get());
 }
 
 template <typename T>
-bool dataEquivalent(const std::unique_ptr<T>& a, const std::unique_ptr<T>& b)
-{
-    return dataEquivalent(a.get(), b.get());
+bool DataEquivalent(const std::unique_ptr<T>& a, const std::unique_ptr<T>& b) {
+  return DataEquivalent(a.get(), b.get());
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DataEquivalency_h
+#endif  // DataEquivalency_h

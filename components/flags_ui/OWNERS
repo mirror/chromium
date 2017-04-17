@@ -1,7 +1,5 @@
-achuith@chromium.org
+file://ui/webui/OWNERS
+
 asvitkine@chromium.org
-bauerb@chromium.org
-dbeam@chromium.org
-estade@chromium.org
-pam@chromium.org
-xiyuan@chromium.org
+
+# COMPONENT: UI>Browser>WebUI

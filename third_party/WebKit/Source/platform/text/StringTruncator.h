@@ -30,21 +30,22 @@
 #define StringTruncator_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class Font;
 
 class PLATFORM_EXPORT StringTruncator {
-    STATIC_ONLY(StringTruncator);
-public:
-    static String centerTruncate(const String&, float maxWidth, const Font&);
-    static String rightTruncate(const String&, float maxWidth, const Font&);
-    static float width(const String&, const Font&);
+  STATIC_ONLY(StringTruncator);
+
+ public:
+  static String CenterTruncate(const String&, float max_width, const Font&);
+  static String RightTruncate(const String&, float max_width, const Font&);
+  static float Width(const String&, const Font&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // !defined(StringTruncator_h)
+#endif  // !defined(StringTruncator_h)

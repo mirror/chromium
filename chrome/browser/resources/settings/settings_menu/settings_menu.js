@@ -9,18 +9,12 @@
 Polymer({
   is: 'settings-menu',
 
-  properties: {
-    /** @private */
-    advancedOpened_: Boolean,
+  behaviors: [settings.RouteObserverBehavior],
 
-    /**
-     * The current active route.
-     * @type {!SettingsRoute}
-     */
-    currentRoute: {
-      type: Object,
+  properties: {
+    advancedOpened: {
+      type: Boolean,
       notify: true,
-      observer: 'currentRouteChanged_',
     },
 
     /**
@@ -32,74 +26,59 @@ Polymer({
     },
   },
 
-  attached: function() {
-    document.addEventListener('toggle-advanced-page', function(e) {
-      if (e.detail)
-        this.$.advancedPage.open();
-      else
-        this.$.advancedPage.close();
-    }.bind(this));
-
-    this.$.advancedPage.addEventListener('paper-submenu-open', function() {
-      this.fire('toggle-advanced-page', true);
-    }.bind(this));
-
-    this.$.advancedPage.addEventListener('paper-submenu-close', function() {
-      this.fire('toggle-advanced-page', false);
-    }.bind(this));
-
-    this.fire('toggle-advanced-page', this.currentRoute.page == 'advanced');
+  listeners: {
+    'topMenu.tap': 'onLinkTap_',
+    'subMenu.tap': 'onLinkTap_',
   },
 
-  /**
-   * @param {!SettingsRoute} newRoute
-   * @private
-   */
-  currentRouteChanged_: function(newRoute) {
-    // Sync URL changes to the side nav menu.
+  /** @param {!settings.Route} newRoute */
+  currentRouteChanged: function(newRoute) {
+    var currentPath = newRoute.path;
 
-    if (newRoute.page == 'advanced') {
-      assert(!this.pageVisibility ||
-             this.pageVisibility.advancedSettings !== false);
-      this.$.advancedMenu.selected = this.currentRoute.section;
-      this.$.basicMenu.selected = null;
-    } else if (newRoute.page == 'basic') {
-      this.$.advancedMenu.selected = null;
-      this.$.basicMenu.selected = this.currentRoute.section;
-    } else {
-      this.$.advancedMenu.selected = null;
-      this.$.basicMenu.selected = null;
+    // Focus the initially selected path.
+    var anchors = this.root.querySelectorAll('a');
+    for (var i = 0; i < anchors.length; ++i) {
+      if (anchors[i].getAttribute('href') == currentPath) {
+        this.setSelectedUrl_(anchors[i].href);
+        return;
+      }
     }
+
+    this.setSelectedUrl_('');  // Nothing is selected.
   },
 
   /**
-   * @param {!Node} target
+   * Prevent clicks on sidebar items from navigating. These are only links for
+   * accessibility purposes, taps are handled separately by <iron-selector>.
+   * @param {!Event} event
    * @private
    */
-  ripple_: function(target) {
-    var ripple = document.createElement('paper-ripple');
-    ripple.addEventListener('transitionend', function() {
-      ripple.remove();
-    });
-    target.appendChild(ripple);
-    ripple.downAction();
-    ripple.upAction();
+  onLinkTap_: function(event) {
+    if (event.target.hasAttribute('href'))
+      event.preventDefault();
+  },
+
+  /**
+   * Keeps both menus in sync. |url| needs to come from |element.href| because
+   * |iron-list| uses the entire url. Using |getAttribute| will not work.
+   * @param {string} url
+   */
+  setSelectedUrl_: function(url) {
+    this.$.topMenu.selected = this.$.subMenu.selected = url;
   },
 
   /**
    * @param {!Event} event
    * @private
    */
-  openPage_: function(event) {
-    this.ripple_(/** @type {!Node} */(event.currentTarget));
-    var submenuRoute = event.currentTarget.parentNode.dataset.page;
-    if (submenuRoute) {
-      this.currentRoute = {
-        page: submenuRoute,
-        section: event.currentTarget.dataset.section,
-        subpage: [],
-      };
-    }
+  onSelectorActivate_: function(event) {
+    this.setSelectedUrl_(event.detail.selected);
+
+    var path = new URL(event.detail.selected).pathname;
+    var route = settings.getRouteForPath(path);
+    assert(route, 'settings-menu has an entry with an invalid route.');
+    settings.navigateTo(
+        route, /* dynamicParams */ null, /* removeSearch */ true);
   },
 
   /**
@@ -108,6 +87,6 @@ Polymer({
    * @private
    * */
   arrowState_: function(opened) {
-    return opened ? 'settings:arrow-drop-up' : 'cr:arrow-drop-down';
+    return opened ? 'cr:arrow-drop-up' : 'cr:arrow-drop-down';
   },
 });

@@ -8,6 +8,7 @@
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -28,7 +29,6 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host_view.h"
-#include "content/public/browser/user_metrics.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/common/extension.h"
 
@@ -53,7 +53,6 @@ FullscreenController::FullscreenController(ExclusiveAccessManager* manager)
       state_prior_to_tab_fullscreen_(STATE_INVALID),
       tab_fullscreen_(false),
       toggled_into_fullscreen_(false),
-      reentrant_window_state_change_call_check_(false),
       is_privileged_fullscreen_for_testing_(false),
       ptr_factory_(this) {
 }
@@ -186,11 +185,6 @@ void FullscreenController::ExitFullscreenModeForTab(WebContents* web_contents) {
     exclusive_access_context->UpdateUIForTabFullscreen(
         ExclusiveAccessContext::STATE_EXIT_TAB_FULLSCREEN);
 
-#if defined(OS_MACOSX)
-  // Clear the bubble URL, which forces the Mac UI to redraw.
-  exclusive_access_manager()->UpdateExclusiveAccessExitBubbleContent();
-#endif  // defined(OS_MACOSX)
-
   // If currently there is a tab in "tab fullscreen" mode and fullscreen
   // was not caused by it (i.e., previously it was in "browser fullscreen"
   // mode), we need to switch back to "browser fullscreen" mode. In this
@@ -232,7 +226,7 @@ void FullscreenController::OnTabDetachedFromView(WebContents* old_contents) {
       old_contents->GetFullscreenRenderWidgetHostView();
   if (current_fs_view)
     current_fs_view->SetSize(old_contents->GetPreferredSize());
-  ResizeWebContents(old_contents, old_contents->GetPreferredSize());
+  ResizeWebContents(old_contents, gfx::Rect(old_contents->GetPreferredSize()));
 }
 
 void FullscreenController::OnTabClosing(WebContents* web_contents) {
@@ -243,8 +237,17 @@ void FullscreenController::OnTabClosing(WebContents* web_contents) {
     ExclusiveAccessControllerBase::OnTabClosing(web_contents);
 }
 
+void FullscreenController::WindowFullscreenStateWillChange() {
+  ExclusiveAccessContext* exclusive_access_context =
+      exclusive_access_manager()->context();
+  if (exclusive_access_context->IsFullscreen()) {
+    exclusive_access_context->HideDownloadShelf();
+  } else {
+    exclusive_access_context->UnhideDownloadShelf();
+  }
+}
+
 void FullscreenController::WindowFullscreenStateChanged() {
-  reentrant_window_state_change_call_check_ = true;
   ExclusiveAccessContext* const exclusive_access_context =
       exclusive_access_manager()->context();
   bool exiting_fullscreen = !exclusive_access_context->IsFullscreen();
@@ -254,9 +257,6 @@ void FullscreenController::WindowFullscreenStateChanged() {
     toggled_into_fullscreen_ = false;
     extension_caused_fullscreen_ = GURL();
     NotifyTabExclusiveAccessLost();
-    exclusive_access_context->UnhideDownloadShelf();
-  } else {
-    exclusive_access_context->HideDownloadShelf();
   }
 }
 
@@ -369,7 +369,7 @@ void FullscreenController::EnterFullscreenModeInternal(
   }
 
   if (option == BROWSER)
-    content::RecordAction(UserMetricsAction("ToggleFullscreen"));
+    base::RecordAction(UserMetricsAction("ToggleFullscreen"));
   // TODO(scheib): Record metrics for WITH_TOOLBAR, without counting transitions
   // from tab fullscreen out to browser with toolbar.
 

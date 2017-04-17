@@ -6,11 +6,11 @@
 #define ASH_WM_RESIZE_SHADOW_CONTROLLER_H_
 
 #include <map>
+#include <memory>
 
 #include "ash/ash_export.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "base/memory/linked_ptr.h"
 #include "ui/aura/window_observer.h"
 
 namespace aura {
@@ -36,14 +36,9 @@ class ASH_EXPORT ResizeShadowController : public aura::WindowObserver {
   ResizeShadow* GetShadowForWindowForTest(aura::Window* window);
 
   // aura::WindowObserver overrides:
-  void OnWindowBoundsChanged(aura::Window* window,
-                             const gfx::Rect& old_bounds,
-                             const gfx::Rect& new_bounds) override;
-  void OnWindowDestroyed(aura::Window* window) override;
+  void OnWindowDestroying(aura::Window* window) override;
 
  private:
-  typedef std::map<aura::Window*, linked_ptr<ResizeShadow>> WindowShadowMap;
-
   // Creates a shadow for a given window and returns it.  |window_shadows_|
   // owns the memory.
   ResizeShadow* CreateShadow(aura::Window* window);
@@ -51,7 +46,7 @@ class ASH_EXPORT ResizeShadowController : public aura::WindowObserver {
   // Returns the resize shadow for |window| or NULL if no shadow exists.
   ResizeShadow* GetShadowForWindow(aura::Window* window);
 
-  WindowShadowMap window_shadows_;
+  std::map<aura::Window*, std::unique_ptr<ResizeShadow>> window_shadows_;
 
   DISALLOW_COPY_AND_ASSIGN(ResizeShadowController);
 };

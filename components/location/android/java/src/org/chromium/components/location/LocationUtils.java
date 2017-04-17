@@ -13,9 +13,13 @@ import android.os.Process;
 import android.provider.Settings;
 import android.text.TextUtils;
 
+import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.Callback;
+import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.SuppressFBWarnings;
+import org.chromium.ui.base.WindowAndroid;
 
 /**
  * Provides methods for querying Chrome's ability to use Android's location services.
@@ -46,8 +50,10 @@ public class LocationUtils {
         return sInstance;
     }
 
-    private boolean hasPermission(Context context, String name) {
-        return context.checkPermission(name, Process.myPid(), Process.myUid())
+    private boolean hasPermission(String name) {
+        Context context = ContextUtils.getApplicationContext();
+        return ApiCompatibilityUtils.checkPermission(
+                context, name, Process.myPid(), Process.myUid())
                 == PackageManager.PERMISSION_GRANTED;
     }
 
@@ -57,16 +63,18 @@ public class LocationUtils {
      * Check both hasAndroidLocationPermission() and isSystemLocationSettingEnabled() to determine
      * if Chromium's location requests will return results.
      */
-    public boolean hasAndroidLocationPermission(Context context) {
-        return hasPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
-                || hasPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
+    public boolean hasAndroidLocationPermission() {
+        return hasPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+                || hasPermission(Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
     /**
      * Returns whether location services are enabled system-wide, i.e. whether any application is
      * able to access location.
      */
-    public boolean isSystemLocationSettingEnabled(Context context) {
+    @SuppressWarnings("deprecation")
+    public boolean isSystemLocationSettingEnabled() {
+        Context context = ContextUtils.getApplicationContext();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             return Settings.Secure.getInt(context.getContentResolver(),
                            Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_OFF)
@@ -75,6 +83,31 @@ public class LocationUtils {
             return !TextUtils.isEmpty(Settings.Secure.getString(
                     context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED));
         }
+    }
+
+    /**
+     * Returns true iff a prompt can be triggered to ask the user to turn on the system location
+     * setting on their device.
+     *
+     * <p>In particular, returns false if the system location setting is already enabled or if some
+     * of the features required to trigger a system location setting prompt are not available.
+     */
+    public boolean canPromptToEnableSystemLocationSetting() {
+        return false;
+    }
+
+    /**
+     * Triggers a prompt to ask the user to turn on the system location setting on their device.
+     *
+     * <p>The prompt will be triggered within the specified window.
+     *
+     * <p>The callback is guaranteed to be called unless the user never replies to the prompt
+     * dialog, which in practice happens very infrequently since the dialog is modal.
+     */
+    public void promptToEnableSystemLocationSetting(
+            @LocationSettingsDialogContext int promptContext, WindowAndroid window,
+            @LocationSettingsDialogOutcome Callback<Integer> callback) {
+        callback.onResult(LocationSettingsDialogOutcome.NO_PROMPT);
     }
 
     /**

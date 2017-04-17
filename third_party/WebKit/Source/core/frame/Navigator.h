@@ -21,55 +21,52 @@
 #define Navigator_h
 
 #include "bindings/core/v8/ScriptWrappable.h"
-#include "core/frame/DOMWindowProperty.h"
-#include "core/frame/NavigatorCPU.h"
+#include "core/CoreExport.h"
+#include "core/dom/ContextLifecycleObserver.h"
+#include "core/frame/NavigatorConcurrentHardware.h"
 #include "core/frame/NavigatorID.h"
 #include "core/frame/NavigatorLanguage.h"
 #include "core/frame/NavigatorOnLine.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class LocalFrame;
 
-typedef int ExceptionCode;
+class CORE_EXPORT Navigator final : public GarbageCollected<Navigator>,
+                                    public NavigatorConcurrentHardware,
+                                    public NavigatorID,
+                                    public NavigatorLanguage,
+                                    public NavigatorOnLine,
+                                    public ScriptWrappable,
+                                    public DOMWindowClient,
+                                    public Supplementable<Navigator> {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(Navigator);
 
-class Navigator final
-    : public GarbageCollected<Navigator>
-    , public NavigatorCPU
-    , public NavigatorID
-    , public NavigatorLanguage
-    , public NavigatorOnLine
-    , public ScriptWrappable
-    , public DOMWindowProperty
-    , public Supplementable<Navigator> {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(Navigator);
-public:
-    static Navigator* create(LocalFrame* frame)
-    {
-        return new Navigator(frame);
-    }
+ public:
+  static Navigator* Create(LocalFrame* frame) { return new Navigator(frame); }
 
-    bool cookieEnabled() const;
+  // NavigatorCookies
+  bool cookieEnabled() const;
 
-    String productSub() const;
-    String vendor() const;
-    String vendorSub() const;
+  String productSub() const;
+  String vendor() const;
+  String vendorSub() const;
 
-    String userAgent() const override;
+  String userAgent() const override;
 
-    // NavigatorLanguage
-    Vector<String> languages() override;
+  // NavigatorLanguage
+  Vector<String> languages() override;
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    explicit Navigator(LocalFrame*);
+ private:
+  explicit Navigator(LocalFrame*);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Navigator_h
+#endif  // Navigator_h

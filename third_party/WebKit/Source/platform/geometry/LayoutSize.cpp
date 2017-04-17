@@ -4,15 +4,13 @@
 
 #include "platform/geometry/LayoutSize.h"
 
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-#ifndef NDEBUG
-String LayoutSize::toString() const
-{
-    return String::format("%fx%f", width().toDouble(), height().toDouble());
+String LayoutSize::ToString() const {
+  return String::Format("%sx%s", Width().ToString().Ascii().Data(),
+                        Height().ToString().Ascii().Data());
 }
-#endif
 
-} // namespace blink
+}  // namespace blink

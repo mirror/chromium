@@ -63,12 +63,12 @@ std::unique_ptr<base::DictionaryValue> ReadValue(const base::win::RegKey& key,
     return nullptr;
   }
 
-  if (!value->IsType(base::Value::TYPE_DICTIONARY)) {
+  if (!value->IsType(base::Value::Type::DICTIONARY)) {
     LOG(ERROR) << "Failed to parse '" << value_name << "': not a dictionary.";
     return nullptr;
   }
 
-  return base::WrapUnique(static_cast<base::DictionaryValue*>(value.release()));
+  return base::DictionaryValue::From(std::move(value));
 }
 
 // Serializes |value| into a JSON string and writes it as value |value_name|
@@ -139,7 +139,7 @@ std::unique_ptr<base::ListValue> PairingRegistryDelegateWin::LoadAll() {
 
     PairingRegistry::Pairing pairing = Load(base::WideToUTF8(value_name));
     if (pairing.is_valid())
-      pairings->Append(pairing.ToValue().release());
+      pairings->Append(pairing.ToValue());
   }
 
   return pairings;
@@ -221,7 +221,7 @@ bool PairingRegistryDelegateWin::Save(const PairingRegistry::Pairing& pairing) {
   CHECK(pairing_json->Remove(PairingRegistry::kSharedSecretKey, &secret_key));
   std::unique_ptr<base::DictionaryValue> secret_json(
       new base::DictionaryValue());
-  secret_json->Set(PairingRegistry::kSharedSecretKey, secret_key.release());
+  secret_json->Set(PairingRegistry::kSharedSecretKey, std::move(secret_key));
 
   // presubmit: allow wstring
   std::wstring value_name = base::UTF8ToWide(pairing.client_id());
@@ -266,7 +266,7 @@ bool PairingRegistryDelegateWin::Delete(const std::string& client_id) {
 }
 
 std::unique_ptr<PairingRegistry::Delegate> CreatePairingRegistryDelegate() {
-  return base::WrapUnique(new PairingRegistryDelegateWin());
+  return base::MakeUnique<PairingRegistryDelegateWin>();
 }
 
 }  // namespace remoting

@@ -29,8 +29,8 @@
 
 #include "core/CoreExport.h"
 #include "core/events/TreeScopeEventContext.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
@@ -39,32 +39,45 @@ class Node;
 class TouchEventContext;
 
 class CORE_EXPORT NodeEventContext {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    // FIXME: Use ContainerNode instead of Node.
-    NodeEventContext(Node*, EventTarget* currentTarget);
-    DECLARE_TRACE();
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    Node* node() const { return m_node.get(); }
+ public:
+  // FIXME: Use ContainerNode instead of Node.
+  NodeEventContext(Node*, EventTarget* current_target);
+  DECLARE_TRACE();
 
-    void setTreeScopeEventContext(TreeScopeEventContext* treeScopeEventContext) { m_treeScopeEventContext = treeScopeEventContext; }
-    TreeScopeEventContext& treeScopeEventContext() { ASSERT(m_treeScopeEventContext); return *m_treeScopeEventContext; }
+  Node* GetNode() const { return node_.Get(); }
 
-    EventTarget* target() const { return m_treeScopeEventContext->target(); }
-    EventTarget* relatedTarget() const { return m_treeScopeEventContext->relatedTarget(); }
-    TouchEventContext* touchEventContext() const { return m_treeScopeEventContext->touchEventContext(); }
+  void SetTreeScopeEventContext(
+      TreeScopeEventContext* tree_scope_event_context) {
+    tree_scope_event_context_ = tree_scope_event_context;
+  }
+  TreeScopeEventContext& GetTreeScopeEventContext() {
+    DCHECK(tree_scope_event_context_);
+    return *tree_scope_event_context_;
+  }
 
-    bool currentTargetSameAsTarget() const { return m_currentTarget.get() == target(); }
-    void handleLocalEvents(Event&) const;
+  EventTarget* Target() const { return tree_scope_event_context_->Target(); }
+  EventTarget* RelatedTarget() const {
+    return tree_scope_event_context_->RelatedTarget();
+  }
+  TouchEventContext* GetTouchEventContext() const {
+    return tree_scope_event_context_->GetTouchEventContext();
+  }
 
-private:
-    Member<Node> m_node;
-    Member<EventTarget> m_currentTarget;
-    Member<TreeScopeEventContext> m_treeScopeEventContext;
+  bool CurrentTargetSameAsTarget() const {
+    return current_target_.Get() == Target();
+  }
+  void HandleLocalEvents(Event&) const;
+
+ private:
+  Member<Node> node_;
+  Member<EventTarget> current_target_;
+  Member<TreeScopeEventContext> tree_scope_event_context_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 WTF_ALLOW_MOVE_INIT_AND_COMPARE_WITH_MEM_FUNCTIONS(blink::NodeEventContext);
 
-#endif // NodeEventContext_h
+#endif  // NodeEventContext_h

@@ -23,109 +23,180 @@
 
 #include "core/CoreExport.h"
 #include "core/dom/PendingScript.h"
-#include "core/fetch/FetchRequest.h"
-#include "core/fetch/ResourceClient.h"
-#include "core/fetch/ScriptResource.h"
-#include "wtf/text/TextPosition.h"
-#include "wtf/text/WTFString.h"
+#include "core/dom/ScriptRunner.h"
+#include "core/loader/resource/ScriptResource.h"
+#include "platform/loader/fetch/FetchParameters.h"
+#include "platform/loader/fetch/ResourceClient.h"
+#include "platform/wtf/text/TextPosition.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class Element;
-class ScriptLoaderClient;
-class ScriptSourceCode;
-class LocalFrame;
+class ScriptElementBase;
+class Script;
 
-class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>, public ScriptResourceClient {
-    USING_GARBAGE_COLLECTED_MIXIN(ScriptLoader);
-public:
-    static ScriptLoader* create(Element* element, bool createdByParser, bool isEvaluated, bool createdDuringDocumentWrite = false)
-    {
-        return new ScriptLoader(element, createdByParser, isEvaluated, createdDuringDocumentWrite);
-    }
+class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
+                                 public PendingScriptClient {
+  USING_GARBAGE_COLLECTED_MIXIN(ScriptLoader);
 
-    ~ScriptLoader() override;
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  static ScriptLoader* Create(ScriptElementBase* element,
+                              bool created_by_parser,
+                              bool is_evaluated,
+                              bool created_during_document_write = false) {
+    return new ScriptLoader(element, created_by_parser, is_evaluated,
+                            created_during_document_write);
+  }
 
-    Element* element() const { return m_element; }
+  ~ScriptLoader() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    enum LegacyTypeSupport { DisallowLegacyTypeInTypeAttribute, AllowLegacyTypeInTypeAttribute };
-    bool prepareScript(const TextPosition& scriptStartPosition = TextPosition::minimumPosition(), LegacyTypeSupport = DisallowLegacyTypeInTypeAttribute);
+  enum LegacyTypeSupport {
+    kDisallowLegacyTypeInTypeAttribute,
+    kAllowLegacyTypeInTypeAttribute
+  };
+  static bool IsValidScriptTypeAndLanguage(
+      const String& type_attribute_value,
+      const String& language_attribute_value,
+      LegacyTypeSupport support_legacy_types);
 
-    String scriptCharset() const { return m_characterEncoding; }
-    String scriptContent() const;
-    // Returns false if and only if execution was blocked.
-    bool executeScript(const ScriptSourceCode&);
-    virtual void execute();
+  // https://html.spec.whatwg.org/#prepare-a-script
+  bool PrepareScript(const TextPosition& script_start_position =
+                         TextPosition::MinimumPosition(),
+                     LegacyTypeSupport = kDisallowLegacyTypeInTypeAttribute);
 
-    // XML parser calls these
-    void dispatchLoadEvent();
-    void dispatchErrorEvent();
-    bool isScriptTypeSupported(LegacyTypeSupport) const;
+  String ScriptContent() const;
 
-    bool haveFiredLoadEvent() const { return m_haveFiredLoad; }
-    bool willBeParserExecuted() const { return m_willBeParserExecuted; }
-    bool readyToBeParserExecuted() const { return m_readyToBeParserExecuted; }
-    bool willExecuteWhenDocumentFinishedParsing() const { return m_willExecuteWhenDocumentFinishedParsing; }
-    ScriptResource* resource() { return m_resource.get(); }
+  // Creates a PendingScript for external script whose fetch is started in
+  // fetchScript().
+  PendingScript* CreatePendingScript();
 
-    void setHaveFiredLoadEvent(bool haveFiredLoad) { m_haveFiredLoad = haveFiredLoad; }
-    bool isParserInserted() const { return m_parserInserted; }
-    bool alreadyStarted() const { return m_alreadyStarted; }
-    bool forceAsync() const { return m_forceAsync; }
+  // Returns false if and only if execution was blocked.
+  bool ExecuteScript(const Script*);
+  virtual void Execute();
 
-    // Helper functions used by our parent classes.
-    void didNotifySubtreeInsertionsToDocument();
-    void childrenChanged();
-    void handleSourceAttribute(const String& sourceUrl);
-    void handleAsyncAttribute();
+  // XML parser calls these
+  void DispatchLoadEvent();
+  void DispatchErrorEvent();
+  bool IsScriptTypeSupported(LegacyTypeSupport) const;
 
-    virtual bool isReady() const { return m_pendingScript && m_pendingScript->isReady(); }
-    bool errorOccurred() const { return m_pendingScript && m_pendingScript->errorOccurred(); }
+  bool HaveFiredLoadEvent() const { return have_fired_load_; }
+  bool WillBeParserExecuted() const { return will_be_parser_executed_; }
+  bool ReadyToBeParserExecuted() const { return ready_to_be_parser_executed_; }
+  bool WillExecuteWhenDocumentFinishedParsing() const {
+    return will_execute_when_document_finished_parsing_;
+  }
+  ScriptResource* GetResource() { return resource_.Get(); }
 
-    // Clears the connection to the PendingScript (and Element and Resource).
-    void detach();
+  void SetHaveFiredLoadEvent(bool have_fired_load) {
+    have_fired_load_ = have_fired_load;
+  }
+  bool IsParserInserted() const { return parser_inserted_; }
+  bool AlreadyStarted() const { return already_started_; }
+  bool IsNonBlocking() const { return non_blocking_; }
 
-    bool wasCreatedDuringDocumentWrite() { return m_createdDuringDocumentWrite; }
+  // Helper functions used by our parent classes.
+  void DidNotifySubtreeInsertionsToDocument();
+  void ChildrenChanged();
+  void HandleSourceAttribute(const String& source_url);
+  void HandleAsyncAttribute();
 
-protected:
-    ScriptLoader(Element*, bool createdByParser, bool isEvaluated, bool createdDuringDocumentWrite);
+  virtual bool IsReady() const {
+    return pending_script_ && pending_script_->IsReady();
+  }
+  bool ErrorOccurred() const {
+    return pending_script_ && pending_script_->ErrorOccurred();
+  }
 
-private:
-    bool ignoresLoadRequest() const;
-    bool isScriptForEventSupported() const;
-    void logScriptMimetype(ScriptResource*, LocalFrame*, String);
+  bool WasCreatedDuringDocumentWrite() {
+    return created_during_document_write_;
+  }
 
-    bool fetchScript(const String& sourceUrl, FetchRequest::DeferOption);
+  bool DisallowedFetchForDocWrittenScript() {
+    return document_write_intervention_ ==
+           DocumentWriteIntervention::kDoNotFetchDocWrittenScript;
+  }
+  void SetFetchDocWrittenScriptDeferIdle();
 
-    ScriptLoaderClient* client() const;
+ protected:
+  ScriptLoader(ScriptElementBase*,
+               bool created_by_parser,
+               bool is_evaluated,
+               bool created_during_document_write);
 
-    // ResourceClient
-    void notifyFinished(Resource*) override;
-    String debugName() const override { return "ScriptLoader"; }
+ private:
+  bool IgnoresLoadRequest() const;
+  bool IsScriptForEventSupported() const;
 
-    Member<Element> m_element;
-    Member<ScriptResource> m_resource;
-    WTF::OrdinalNumber m_startLineNumber;
-    String m_characterEncoding;
-    String m_fallbackCharacterEncoding;
+  bool FetchScript(const String& source_url,
+                   const String& encoding,
+                   FetchParameters::DeferOption);
+  bool DoExecuteScript(const Script*);
 
-    bool m_parserInserted : 1;
-    bool m_isExternalScript : 1;
-    bool m_alreadyStarted : 1;
-    bool m_haveFiredLoad : 1;
-    bool m_willBeParserExecuted : 1; // Same as "The parser will handle executing the script."
-    bool m_readyToBeParserExecuted : 1;
-    bool m_willExecuteInOrder : 1;
-    bool m_willExecuteWhenDocumentFinishedParsing : 1;
-    bool m_forceAsync : 1;
-    const bool m_createdDuringDocumentWrite : 1;
+  // Clears the connection to the PendingScript.
+  void DetachPendingScript();
 
-    Member<PendingScript> m_pendingScript;
+  // PendingScriptClient
+  void PendingScriptFinished(PendingScript*) override;
+
+  Member<ScriptElementBase> element_;
+  Member<ScriptResource> resource_;
+  WTF::OrdinalNumber start_line_number_;
+
+  // https://html.spec.whatwg.org/#script-processing-model
+  // "A script element has several associated pieces of state.":
+
+  // https://html.spec.whatwg.org/#already-started
+  // "Initially, script elements must have this flag unset"
+  bool already_started_ = false;
+
+  // https://html.spec.whatwg.org/#parser-inserted
+  // "Initially, script elements must have this flag unset."
+  bool parser_inserted_ = false;
+
+  // https://html.spec.whatwg.org/#non-blocking
+  // "Initially, script elements must have this flag set."
+  bool non_blocking_ = true;
+
+  // https://html.spec.whatwg.org/#ready-to-be-parser-executed
+  // "Initially, script elements must have this flag unset"
+  bool ready_to_be_parser_executed_ = false;
+
+  // https://html.spec.whatwg.org/#concept-script-type
+  // TODO(hiroshige): Implement "script's type".
+
+  // https://html.spec.whatwg.org/#concept-script-external
+  // "It is determined when the script is prepared"
+  bool is_external_script_ = false;
+
+  bool have_fired_load_;
+
+  // Same as "The parser will handle executing the script."
+  bool will_be_parser_executed_;
+
+  bool will_execute_when_document_finished_parsing_;
+
+  const bool created_during_document_write_;
+
+  ScriptRunner::AsyncExecutionType async_exec_type_;
+  enum DocumentWriteIntervention {
+    kDocumentWriteInterventionNone = 0,
+    // Based on what shouldDisallowFetchForMainFrameScript() returns.
+    // This script will be blocked if not present in http cache.
+    kDoNotFetchDocWrittenScript,
+    // If a parser blocking doc.written script was not fetched and was not
+    // present in the http cache, send a GET for it with an interventions
+    // header to allow the server to know of the intervention. This fetch
+    // will be using DeferOption::IdleLoad to keep it out of the critical
+    // path.
+    kFetchDocWrittenScriptDeferIdle,
+  };
+
+  DocumentWriteIntervention document_write_intervention_;
+
+  Member<PendingScript> pending_script_;
 };
 
-ScriptLoader* toScriptLoaderIfPossible(Element*);
+}  // namespace blink
 
-} // namespace blink
-
-#endif // ScriptLoader_h
+#endif  // ScriptLoader_h

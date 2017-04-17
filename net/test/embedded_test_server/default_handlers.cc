@@ -17,6 +17,7 @@
 #include "base/format_macros.h"
 #include "base/macros.h"
 #include "base/md5.h"
+#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -69,7 +70,7 @@ std::unique_ptr<HttpResponse> HandleCacheTime(const HttpRequest& request) {
   return std::move(http_response);
 }
 
-// /echoheader | /echoheadercache
+// /echoheader?HEADERS | /echoheadercache?HEADERS
 // Responds with the headers echoed in the message body.
 // echoheader does not cache the results, while echoheadercache does.
 std::unique_ptr<HttpResponse> HandleEchoHeader(const std::string& url,
@@ -81,15 +82,24 @@ std::unique_ptr<HttpResponse> HandleEchoHeader(const std::string& url,
   std::unique_ptr<BasicHttpResponse> http_response(new BasicHttpResponse);
 
   GURL request_url = request.GetURL();
-  if (request_url.has_query()) {
-    std::string header_name = request_url.query();
-    http_response->AddCustomHeader("Vary", header_name);
+  std::string vary;
+  std::string content;
+  RequestQuery headers = ParseQuery(request_url);
+  for (const auto& header : headers) {
+    std::string header_name = header.first;
+    std::string header_value = "None";
     if (request.headers.find(header_name) != request.headers.end())
-      http_response->set_content(request.headers.at(header_name));
-    else
-      http_response->set_content("None");
+      header_value = request.headers.at(header_name);
+    if (!vary.empty())
+      vary += ",";
+    vary += header_name;
+    if (!content.empty())
+      content += "\n";
+    content += header_value;
   }
 
+  http_response->AddCustomHeader("Vary", vary);
+  http_response->set_content(content);
   http_response->set_content_type("text/plain");
   http_response->AddCustomHeader("Cache-Control", cache_control);
   return std::move(http_response);
@@ -157,6 +167,12 @@ std::unique_ptr<HttpResponse> HandleEchoAll(const HttpRequest& request) {
   http_response->set_content_type("text/html");
   http_response->set_content(body);
   return std::move(http_response);
+}
+
+// /echo-raw
+// Returns the query string as the raw response (no HTTP headers).
+std::unique_ptr<HttpResponse> HandleEchoRaw(const HttpRequest& request) {
+  return base::MakeUnique<RawHttpResponse>("", request.GetURL().query());
 }
 
 // /set-cookie?COOKIES
@@ -601,6 +617,7 @@ void RegisterDefaultHandlers(EmbeddedTestServer* server) {
   server->RegisterDefaultHandler(
       PREFIXED_HANDLER("/echotitle", &HandleEchoTitle));
   server->RegisterDefaultHandler(PREFIXED_HANDLER("/echoall", &HandleEchoAll));
+  server->RegisterDefaultHandler(PREFIXED_HANDLER("/echo-raw", &HandleEchoRaw));
   server->RegisterDefaultHandler(
       PREFIXED_HANDLER("/set-cookie", &HandleSetCookie));
   server->RegisterDefaultHandler(

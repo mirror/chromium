@@ -8,7 +8,7 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread.h"
@@ -16,7 +16,6 @@
 #include "build/build_config.h"
 #include "content/browser/bad_message.h"
 #include "content/common/database_messages.h"
-#include "content/public/browser/user_metrics.h"
 #include "content/public/common/origin_util.h"
 #include "content/public/common/result_codes.h"
 #include "storage/browser/database/database_util.h"
@@ -279,7 +278,7 @@ void DatabaseMessageFilter::OnDatabaseGetSpaceAvailable(
   TRACE_EVENT0("io", "DatabaseMessageFilter::OnDatabaseGetSpaceAvailable");
 
   quota_manager->GetUsageAndQuota(
-      GURL(origin.Serialize()), storage::kStorageTypeTemporary,
+      origin.GetURL(), storage::kStorageTypeTemporary,
       base::Bind(&DatabaseMessageFilter::OnDatabaseGetUsageAndQuota, this,
                  reply_msg));
 }
@@ -345,7 +344,7 @@ void DatabaseMessageFilter::OnDatabaseModified(
   }
 
   std::string origin_identifier(
-      storage::GetIdentifierFromOrigin(GURL(origin.Serialize())));
+      storage::GetIdentifierFromOrigin(origin.GetURL()));
   if (!database_connections_.IsDatabaseOpened(origin_identifier,
                                               database_name)) {
     bad_message::ReceivedBadMessage(this,
@@ -368,7 +367,7 @@ void DatabaseMessageFilter::OnDatabaseClosed(
   }
 
   std::string origin_identifier(
-      storage::GetIdentifierFromOrigin(GURL(origin.Serialize())));
+      storage::GetIdentifierFromOrigin(origin.GetURL()));
   if (!database_connections_.IsDatabaseOpened(
           origin_identifier, database_name)) {
     bad_message::ReceivedBadMessage(this,
@@ -391,8 +390,7 @@ void DatabaseMessageFilter::OnHandleSqliteError(
     return;
   }
   db_tracker_->HandleSqliteError(
-      storage::GetIdentifierFromOrigin(GURL(origin.Serialize())), database_name,
-      error);
+      storage::GetIdentifierFromOrigin(origin.GetURL()), database_name, error);
 }
 
 void DatabaseMessageFilter::OnDatabaseSizeChanged(

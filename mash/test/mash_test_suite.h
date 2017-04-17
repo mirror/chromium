@@ -15,6 +15,10 @@ namespace aura {
 class Env;
 }
 
+namespace ui {
+class FakeContextFactory;
+}
+
 namespace mash {
 namespace test {
 
@@ -31,6 +35,7 @@ class MashTestSuite : public base::TestSuite {
  private:
   base::TestDiscardableMemoryAllocator discardable_memory_allocator_;
   std::unique_ptr<aura::Env> env_;
+  std::unique_ptr<ui::FakeContextFactory> context_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MashTestSuite);
 };

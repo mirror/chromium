@@ -2,8 +2,7 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  *
- * This is the stylesheet used by the network drop-down control.
- */
+ * This is the stylesheet used by the network drop-down control. */
 
 .dropdown-title {
   -webkit-appearance: none;
@@ -65,9 +64,9 @@ html[dir=rtl] .dropdown-title {
 }
 
 .dropdown-title:focus {
-  -webkit-transition: border-color 200ms;
   border-color: rgb(77, 144, 254);
   outline: none;
+  transition: border-color 200ms;
 }
 
 html[highlight=strong] .dropdown-title:focus {

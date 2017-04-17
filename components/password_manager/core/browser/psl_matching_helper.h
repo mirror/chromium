@@ -5,8 +5,10 @@
 #ifndef COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_PSL_MATCHING_HELPER_H_
 #define COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_PSL_MATCHING_HELPER_H_
 
+#include <iosfwd>
 #include <string>
 
+#include "components/password_manager/core/browser/password_store.h"
 
 class GURL;
 
@@ -19,8 +21,36 @@ enum PSLDomainMatchMetric {
   PSL_DOMAIN_MATCH_NOT_USED = 0,
   PSL_DOMAIN_MATCH_NONE,
   PSL_DOMAIN_MATCH_FOUND,
+  PSL_DOMAIN_MATCH_FOUND_FEDERATED,
   PSL_DOMAIN_MATCH_COUNT
 };
+
+enum class MatchResult {
+  NO_MATCH,
+  EXACT_MATCH,
+  PSL_MATCH,
+  FEDERATED_MATCH,
+  FEDERATED_PSL_MATCH,
+};
+
+#if defined(UNIT_TEST)
+std::ostream& operator<<(std::ostream& out, MatchResult result);
+
+// Returns true iff |form_signon_realm| designates a federated credential for
+// |origin|. It doesn't check the port because |form_signon_realm| doesn't have
+// it.
+bool IsFederatedRealm(const std::string& form_signon_realm, const GURL& origin);
+
+// Returns true iff |form_signon_realm| and |form_origin| designate a federated
+// PSL matching credential for the |origin|.
+bool IsFederatedPSLMatch(const std::string& form_signon_realm,
+                         const GURL& form_origin,
+                         const GURL& origin);
+#endif
+
+// Returns what type of match applies to |form| and |form_digest|.
+MatchResult GetMatchResult(const autofill::PasswordForm& form,
+                           const PasswordStore::FormDigest& form_digest);
 
 // Using the public suffix list for matching the origin is only needed for
 // websites that do not have a single hostname for entering credentials. It
@@ -43,10 +73,6 @@ bool IsPublicSuffixDomainMatch(const std::string& url1,
 // Two hosts are considered to belong to the same website when they share the
 // registry-controlled domain part.
 std::string GetRegistryControlledDomain(const GURL& signon_realm);
-
-// Returns true iff |signon_realm| designates a federated credential for the
-// |origin|.
-bool IsFederatedMatch(const std::string& signon_realm, const GURL& origin);
 
 }  // namespace password_manager
 

@@ -8,30 +8,33 @@
 #include <stdint.h>
 
 #include "base/macros.h"
-#include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
+#include "base/threading/thread_checker.h"
 #include "content/common/content_export.h"
+#include "content/common/indexed_db/indexed_db.mojom.h"
+#include "content/public/browser/browser_thread.h"
 
 namespace content {
+class IndexedDBContextImpl;
 class IndexedDBDatabaseError;
-class IndexedDBDispatcherHost;
-class IndexedDBObserverChanges;
+class IndexedDBTransaction;
 
+// Expected to be constructed on IO thread and called/deleted from IDB thread.
 class CONTENT_EXPORT IndexedDBDatabaseCallbacks
     : public base::RefCounted<IndexedDBDatabaseCallbacks> {
  public:
-  IndexedDBDatabaseCallbacks(IndexedDBDispatcherHost* dispatcher_host,
-                             int ipc_thread_id,
-                             int ipc_database_callbacks_id);
+  IndexedDBDatabaseCallbacks(
+      scoped_refptr<IndexedDBContextImpl> context,
+      ::indexed_db::mojom::DatabaseCallbacksAssociatedPtrInfo callbacks_info);
 
   virtual void OnForcedClose();
   virtual void OnVersionChange(int64_t old_version, int64_t new_version);
 
-  virtual void OnAbort(int64_t host_transaction_id,
+  virtual void OnAbort(const IndexedDBTransaction& transaction,
                        const IndexedDBDatabaseError& error);
-  virtual void OnComplete(int64_t host_transaction_id);
+  virtual void OnComplete(const IndexedDBTransaction& transaction);
   virtual void OnDatabaseChange(
-      int32_t ipc_database_id,
-      std::unique_ptr<IndexedDBObserverChanges> changes);
+      ::indexed_db::mojom::ObserverChangesPtr changes);
 
  protected:
   virtual ~IndexedDBDatabaseCallbacks();
@@ -39,9 +42,12 @@ class CONTENT_EXPORT IndexedDBDatabaseCallbacks
  private:
   friend class base::RefCounted<IndexedDBDatabaseCallbacks>;
 
-  scoped_refptr<IndexedDBDispatcherHost> dispatcher_host_;
-  int ipc_thread_id_;
-  int ipc_database_callbacks_id_;
+  class IOThreadHelper;
+
+  bool complete_ = false;
+  scoped_refptr<IndexedDBContextImpl> indexed_db_context_;
+  std::unique_ptr<IOThreadHelper, BrowserThread::DeleteOnIOThread> io_helper_;
+  base::ThreadChecker thread_checker_;
 
   DISALLOW_COPY_AND_ASSIGN(IndexedDBDatabaseCallbacks);
 };

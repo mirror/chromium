@@ -25,90 +25,84 @@
 #ifndef CounterDirectives_h
 #define CounterDirectives_h
 
-#include "wtf/Allocator.h"
-#include "wtf/HashMap.h"
-#include "wtf/MathExtras.h"
-#include "wtf/RefPtr.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/AtomicStringHash.h"
 #include <memory>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/MathExtras.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicStringHash.h"
 
 namespace blink {
 
 class CounterDirectives {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    CounterDirectives()
-        : m_isResetSet(false)
-        , m_isIncrementSet(false)
-        , m_resetValue(0)
-        , m_incrementValue(0)
-    {
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    // FIXME: The code duplication here could possibly be replaced by using two
-    // maps, or by using a container that held two generic Directive objects.
+ public:
+  CounterDirectives()
+      : is_reset_set_(false),
+        is_increment_set_(false),
+        reset_value_(0),
+        increment_value_(0) {}
 
-    bool isReset() const { return m_isResetSet; }
-    int resetValue() const { return m_resetValue; }
-    void setResetValue(int value)
-    {
-        m_resetValue = value;
-        m_isResetSet = true;
-    }
-    void clearReset()
-    {
-        m_resetValue = 0;
-        m_isResetSet = false;
-    }
-    void inheritReset(const CounterDirectives& parent)
-    {
-        m_resetValue = parent.m_resetValue;
-        m_isResetSet = parent.m_isResetSet;
-    }
+  // FIXME: The code duplication here could possibly be replaced by using two
+  // maps, or by using a container that held two generic Directive objects.
 
-    bool isIncrement() const { return m_isIncrementSet; }
-    int incrementValue() const { return m_incrementValue; }
-    void addIncrementValue(int value)
-    {
-        m_incrementValue = clampTo<int>((double)m_incrementValue + value);
-        m_isIncrementSet = true;
-    }
-    void clearIncrement()
-    {
-        m_incrementValue = 0;
-        m_isIncrementSet = false;
-    }
-    void inheritIncrement(const CounterDirectives& parent)
-    {
-        m_incrementValue = parent.m_incrementValue;
-        m_isIncrementSet = parent.m_isIncrementSet;
-    }
+  bool IsReset() const { return is_reset_set_; }
+  int ResetValue() const { return reset_value_; }
+  void SetResetValue(int value) {
+    reset_value_ = value;
+    is_reset_set_ = true;
+  }
+  void ClearReset() {
+    reset_value_ = 0;
+    is_reset_set_ = false;
+  }
+  void InheritReset(const CounterDirectives& parent) {
+    reset_value_ = parent.reset_value_;
+    is_reset_set_ = parent.is_reset_set_;
+  }
 
-    bool isDefined() const { return isReset() || isIncrement(); }
+  bool IsIncrement() const { return is_increment_set_; }
+  int IncrementValue() const { return increment_value_; }
+  void AddIncrementValue(int value) {
+    increment_value_ = clampTo<int>((double)increment_value_ + value);
+    is_increment_set_ = true;
+  }
+  void ClearIncrement() {
+    increment_value_ = 0;
+    is_increment_set_ = false;
+  }
+  void InheritIncrement(const CounterDirectives& parent) {
+    increment_value_ = parent.increment_value_;
+    is_increment_set_ = parent.is_increment_set_;
+  }
 
-    int combinedValue() const
-    {
-        ASSERT(m_isResetSet || !m_resetValue);
-        ASSERT(m_isIncrementSet || !m_incrementValue);
-        // FIXME: Shouldn't allow overflow here.
-        return m_resetValue + m_incrementValue;
-    }
+  bool IsDefined() const { return IsReset() || IsIncrement(); }
 
-private:
-    bool m_isResetSet;
-    bool m_isIncrementSet;
-    int m_resetValue;
-    int m_incrementValue;
+  int CombinedValue() const {
+    DCHECK(is_reset_set_ || !reset_value_);
+    DCHECK(is_increment_set_ || !increment_value_);
+    // FIXME: Shouldn't allow overflow here.
+    return reset_value_ + increment_value_;
+  }
+
+ private:
+  bool is_reset_set_;
+  bool is_increment_set_;
+  int reset_value_;
+  int increment_value_;
 };
 
 bool operator==(const CounterDirectives&, const CounterDirectives&);
-inline bool operator!=(const CounterDirectives& a, const CounterDirectives& b) { return !(a == b); }
+inline bool operator!=(const CounterDirectives& a, const CounterDirectives& b) {
+  return !(a == b);
+}
 
 typedef HashMap<AtomicString, CounterDirectives> CounterDirectiveMap;
 
-std::unique_ptr<CounterDirectiveMap> clone(const CounterDirectiveMap&);
+std::unique_ptr<CounterDirectiveMap> Clone(const CounterDirectiveMap&);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CounterDirectives_h
+#endif  // CounterDirectives_h

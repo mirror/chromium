@@ -28,59 +28,71 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "modules/gamepad/GamepadButton.h"
+#include "modules/gamepad/GamepadPose.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebGamepad.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
-class Gamepad final : public GarbageCollectedFinalized<Gamepad>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static Gamepad* create()
-    {
-        return new Gamepad;
-    }
-    ~Gamepad();
+class Gamepad final : public GarbageCollectedFinalized<Gamepad>,
+                      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    typedef Vector<double> DoubleVector;
+ public:
+  static Gamepad* Create() { return new Gamepad; }
+  ~Gamepad();
 
-    const String& id() const { return m_id; }
-    void setId(const String& id) { m_id = id; }
+  typedef Vector<double> DoubleVector;
 
-    unsigned index() const { return m_index; }
-    void setIndex(unsigned val) { m_index = val; }
+  const String& id() const { return id_; }
+  void SetId(const String& id) { id_ = id; }
 
-    bool connected() const { return m_connected; }
-    void setConnected(bool val) { m_connected = val; }
+  unsigned index() const { return index_; }
+  void SetIndex(unsigned val) { index_ = val; }
 
-    unsigned long long timestamp() const { return m_timestamp; }
-    void setTimestamp(unsigned long long val) { m_timestamp = val; }
+  bool connected() const { return connected_; }
+  void SetConnected(bool val) { connected_ = val; }
 
-    const String& mapping() const { return m_mapping; }
-    void setMapping(const String& val) { m_mapping = val; }
+  unsigned long long timestamp() const { return timestamp_; }
+  void SetTimestamp(unsigned long long val) { timestamp_ = val; }
 
-    const DoubleVector& axes() const { return m_axes; }
-    void setAxes(unsigned count, const double* data);
+  const String& mapping() const { return mapping_; }
+  void SetMapping(const String& val) { mapping_ = val; }
 
-    const GamepadButtonVector& buttons() const { return m_buttons; }
-    void setButtons(unsigned count, const WebGamepadButton* data);
+  const DoubleVector& axes() const { return axes_; }
+  void SetAxes(unsigned count, const double* data);
 
-    DECLARE_TRACE();
+  const GamepadButtonVector& buttons() const { return buttons_; }
+  void SetButtons(unsigned count, const WebGamepadButton* data);
 
-private:
-    Gamepad();
+  GamepadPose* pose() const { return pose_; }
+  void SetPose(const WebGamepadPose&);
 
-    String m_id;
-    unsigned m_index;
-    bool m_connected;
-    unsigned long long m_timestamp;
-    String m_mapping;
-    DoubleVector m_axes;
-    GamepadButtonVector m_buttons;
+  const String& hand() const { return hand_; }
+  void SetHand(const WebGamepadHand&);
+
+  unsigned displayId() const { return display_id_; }
+  void SetDisplayId(unsigned val) { display_id_ = val; }
+
+  DECLARE_TRACE();
+
+ private:
+  Gamepad();
+
+  String id_;
+  unsigned index_;
+  bool connected_;
+  unsigned long long timestamp_;
+  String mapping_;
+  DoubleVector axes_;
+  GamepadButtonVector buttons_;
+  Member<GamepadPose> pose_;
+  String hand_;
+  unsigned display_id_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Gamepad_h
+#endif  // Gamepad_h

@@ -8,7 +8,9 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/time/time.h"
+#include "third_party/skia/include/core/SkColor.h"
 #include "ui/compositor/compositor_animation_observer.h"
 #include "ui/compositor/layer_delegate.h"
 #include "ui/gfx/geometry/rect.h"
@@ -52,6 +54,10 @@ class FocusRingLayer : public ui::LayerDelegate,
   // Set the layer's opacity.
   void SetOpacity(float opacity);
 
+  // Set a custom color, or reset to the default.
+  void SetColor(SkColor color);
+  void ResetColor();
+
   ui::Layer* layer() { return layer_.get(); }
   aura::Window* root_window() { return root_window_; }
 
@@ -63,12 +69,14 @@ class FocusRingLayer : public ui::LayerDelegate,
                            const char* layer_name,
                            const gfx::Rect& bounds);
 
+  bool has_custom_color() { return custom_color_.has_value(); }
+  SkColor custom_color() { return *custom_color_; }
+
  private:
   // ui::LayerDelegate overrides:
   void OnPaintLayer(const ui::PaintContext& context) override;
   void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override;
   void OnDeviceScaleFactorChanged(float device_scale_factor) override;
-  base::Closure PrepareForLayerBoundsChange() override;
 
   // CompositorAnimationObserver overrides:
   void OnAnimationStep(base::TimeTicks timestamp) override;
@@ -78,7 +86,7 @@ class FocusRingLayer : public ui::LayerDelegate,
   FocusRingLayerDelegate* delegate_;
 
   // The current root window containing the focused object.
-  aura::Window* root_window_;
+  aura::Window* root_window_ = nullptr;
 
   // The current layer.
   std::unique_ptr<ui::Layer> layer_;
@@ -87,8 +95,10 @@ class FocusRingLayer : public ui::LayerDelegate,
   // coordinates.
   gfx::Rect focus_ring_;
 
+  base::Optional<SkColor> custom_color_;
+
   // The compositor associated with this layer.
-  ui::Compositor* compositor_;
+  ui::Compositor* compositor_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(FocusRingLayer);
 };

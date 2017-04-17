@@ -24,6 +24,7 @@
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chrome/test/base/testing_profile_manager.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/ime/chromeos/extension_ime_util.h"
@@ -36,6 +37,7 @@
 #include "ui/chromeos/ime/input_method_menu_item.h"
 #include "ui/chromeos/ime/input_method_menu_manager.h"
 #include "ui/events/keycodes/keyboard_codes.h"
+#include "ui/keyboard/content/keyboard_content_util.h"
 
 namespace chromeos {
 
@@ -1407,6 +1409,142 @@ TEST_F(InputMethodManagerImplTest, MigrateInputMethodTest) {
   EXPECT_EQ(ImeIdFromEngineId("xkb:fr::fra"), input_method_ids[1]);
   EXPECT_EQ("_comp_ime_asdf_pinyin", input_method_ids[2]);
   EXPECT_EQ(ImeIdFromEngineId("zh-t-i0-pinyin"), input_method_ids[3]);
+}
+
+TEST_F(InputMethodManagerImplTest, OverrideKeyboardUrlRefWithKeyset) {
+  const GURL inputview_url(
+      "chrome-extension://"
+      "inputview.html#id=us.compact.qwerty&language=en-US&passwordLayout=us."
+      "compact.qwerty&name=keyboard_us");
+  keyboard::SetOverrideContentUrl(inputview_url);
+  EXPECT_EQ(inputview_url, keyboard::GetOverrideContentUrl());
+
+  // Override the keyboard url ref with 'emoji'.
+  const GURL overridden_url_emoji(
+      "chrome-extension://"
+      "inputview.html#id=us.compact.qwerty.emoji&language=en-US&passwordLayout="
+      "us.compact.qwerty&name=keyboard_us");
+  manager_->OverrideKeyboardUrlRef("emoji");
+  EXPECT_EQ(overridden_url_emoji, keyboard::GetOverrideContentUrl());
+
+  // Override the keyboard url ref with 'hwt'.
+  keyboard::SetOverrideContentUrl(inputview_url);
+  const GURL overridden_url_hwt(
+      "chrome-extension://"
+      "inputview.html#id=us.compact.qwerty.hwt&language=en-US&passwordLayout="
+      "us.compact.qwerty&name=keyboard_us");
+  manager_->OverrideKeyboardUrlRef("hwt");
+  EXPECT_EQ(overridden_url_hwt, keyboard::GetOverrideContentUrl());
+
+  // Override the keyboard url ref with 'voice'.
+  keyboard::SetOverrideContentUrl(inputview_url);
+  const GURL overridden_url_voice(
+      "chrome-extension://"
+      "inputview.html#id=us.compact.qwerty.voice&language=en-US"
+      "&passwordLayout=us.compact.qwerty&name=keyboard_us");
+  manager_->OverrideKeyboardUrlRef("voice");
+  EXPECT_EQ(overridden_url_voice, keyboard::GetOverrideContentUrl());
+}
+
+TEST_F(InputMethodManagerImplTest, OverrideDefaultKeyboardUrlRef) {
+  const GURL default_url("chrome://inputview.html");
+  keyboard::SetOverrideContentUrl(default_url);
+
+  EXPECT_EQ(default_url, keyboard::GetOverrideContentUrl());
+
+  manager_->OverrideKeyboardUrlRef("emoji");
+  EXPECT_EQ(default_url, keyboard::GetOverrideContentUrl());
+}
+
+TEST_F(InputMethodManagerImplTest, AllowedKeyboardLayoutsValid) {
+  InitComponentExtension();
+
+  // First, setup xkb:fr::fra input method
+  std::string original_input_method(ImeIdFromEngineId("xkb:fr::fra"));
+  ASSERT_TRUE(
+      manager_->GetActiveIMEState()->EnableInputMethod(original_input_method));
+  manager_->GetActiveIMEState()->ChangeInputMethod(original_input_method,
+                                                   false);
+  EXPECT_THAT(manager_->GetActiveIMEState()->GetCurrentInputMethod().id(),
+              original_input_method);
+
+  // Only allow xkb:us::eng
+  std::vector<std::string> allowed = {"xkb:us::eng"};
+  EXPECT_TRUE(manager_->GetActiveIMEState()->SetAllowedInputMethods(allowed));
+  EXPECT_THAT(manager_->GetActiveIMEState()->GetActiveInputMethodIds(),
+              testing::ElementsAre(ImeIdFromEngineId("xkb:us::eng")));
+  EXPECT_THAT(manager_->GetActiveIMEState()->GetCurrentInputMethod().id(),
+              ImeIdFromEngineId("xkb:us::eng"));
+  EXPECT_THAT(manager_->GetActiveIMEState()->GetAllowedInputMethods(),
+              testing::ElementsAre(ImeIdFromEngineId("xkb:us::eng")));
+}
+
+TEST_F(InputMethodManagerImplTest, AllowedKeyboardLayoutsInvalid) {
+  InitComponentExtension();
+
+  // First, setup xkb:fr::fra input method
+  std::string original_input_method(ImeIdFromEngineId("xkb:fr::fra"));
+  ASSERT_TRUE(
+      manager_->GetActiveIMEState()->EnableInputMethod(original_input_method));
+  manager_->GetActiveIMEState()->ChangeInputMethod(original_input_method,
+                                                   false);
+  EXPECT_THAT(manager_->GetActiveIMEState()->GetCurrentInputMethod().id(),
+              original_input_method);
+
+  // Only allow xkb:us::eng
+  std::vector<std::string> allowed = {"invalid_input_method"};
+  EXPECT_FALSE(manager_->GetActiveIMEState()->SetAllowedInputMethods(allowed));
+  EXPECT_THAT(manager_->GetActiveIMEState()->GetCurrentInputMethod().id(),
+              original_input_method);
+  EXPECT_THAT(manager_->GetActiveIMEState()->GetAllowedInputMethods(),
+              testing::IsEmpty());
+}
+
+TEST_F(InputMethodManagerImplTest, AllowedKeyboardLayoutsValidAndInvalid) {
+  InitComponentExtension();
+
+  // First, enable xkb:fr::fra and xkb:de::ger
+  std::string original_input_method_1(ImeIdFromEngineId("xkb:fr::fra"));
+  std::string original_input_method_2(ImeIdFromEngineId("xkb:de::ger"));
+  ASSERT_TRUE(manager_->GetActiveIMEState()->EnableInputMethod(
+      original_input_method_1));
+  ASSERT_TRUE(manager_->GetActiveIMEState()->EnableInputMethod(
+      original_input_method_2));
+  manager_->GetActiveIMEState()->ChangeInputMethod(original_input_method_1,
+                                                   false);
+
+  // Allow xkb:fr::fra and an invalid input method id. The invalid id should be
+  // ignored.
+  std::vector<std::string> allowed = {original_input_method_1,
+                                      "invalid_input_method"};
+  EXPECT_TRUE(manager_->GetActiveIMEState()->SetAllowedInputMethods(allowed));
+  EXPECT_THAT(manager_->GetActiveIMEState()->GetCurrentInputMethod().id(),
+              original_input_method_1);
+  EXPECT_THAT(manager_->GetActiveIMEState()->GetAllowedInputMethods(),
+              testing::ElementsAre(original_input_method_1));
+
+  // Try to re-enable xkb:de::ger
+  EXPECT_FALSE(manager_->GetActiveIMEState()->EnableInputMethod(
+      original_input_method_2));
+}
+
+TEST_F(InputMethodManagerImplTest, AllowedKeyboardLayoutsAndExtensions) {
+  InitComponentExtension();
+
+  EXPECT_TRUE(manager_->GetActiveIMEState()->EnableInputMethod(
+      ImeIdFromEngineId(kNaclMozcJpId)));
+  EXPECT_TRUE(manager_->GetActiveIMEState()->EnableInputMethod(
+      ImeIdFromEngineId("xkb:fr::fra")));
+
+  std::vector<std::string> allowed = {"xkb:us::eng"};
+  EXPECT_TRUE(manager_->GetActiveIMEState()->SetAllowedInputMethods(allowed));
+
+  EXPECT_TRUE(manager_->GetActiveIMEState()->EnableInputMethod(
+      ImeIdFromEngineId(kNaclMozcUsId)));
+  EXPECT_THAT(manager_->GetActiveIMEState()->GetActiveInputMethodIds(),
+              testing::ElementsAre(ImeIdFromEngineId("xkb:us::eng"),
+                                   ImeIdFromEngineId(kNaclMozcJpId),
+                                   ImeIdFromEngineId(kNaclMozcUsId)));
 }
 
 }  // namespace input_method

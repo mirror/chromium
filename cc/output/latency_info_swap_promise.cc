@@ -35,17 +35,21 @@ LatencyInfoSwapPromise::LatencyInfoSwapPromise(const ui::LatencyInfo& latency)
 LatencyInfoSwapPromise::~LatencyInfoSwapPromise() {
 }
 
-void LatencyInfoSwapPromise::DidSwap(CompositorFrameMetadata* metadata) {
+void LatencyInfoSwapPromise::WillSwap(CompositorFrameMetadata* metadata) {
   DCHECK(!latency_.terminated());
   metadata->latency_info.push_back(latency_);
 }
 
-void LatencyInfoSwapPromise::DidNotSwap(DidNotSwapReason reason) {
+void LatencyInfoSwapPromise::DidSwap() {}
+
+SwapPromise::DidNotSwapAction LatencyInfoSwapPromise::DidNotSwap(
+    DidNotSwapReason reason) {
   latency_.AddLatencyNumber(DidNotSwapReasonToLatencyComponentType(reason), 0,
                             0);
   // TODO(miletus): Turn this back on once per-event LatencyInfo tracking
   // is enabled in GPU side.
   // DCHECK(latency_.terminated);
+  return DidNotSwapAction::BREAK_PROMISE;
 }
 
 int64_t LatencyInfoSwapPromise::TraceId() const {

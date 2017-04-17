@@ -34,22 +34,20 @@
 namespace blink {
 
 struct WebPluginAction {
-    enum Type {
-        Unknown,
-        Rotate90Clockwise,
-        Rotate90Counterclockwise,
-        TypeLast = Rotate90Counterclockwise
-    };
+  enum Type {
+    kUnknown,
+    kRotate90Clockwise,
+    kRotate90Counterclockwise,
+    kTypeLast = kRotate90Counterclockwise
+  };
 
-    Type type;
-    bool enable;
+  Type type;
+  bool enable;
 
-    WebPluginAction()
-        : type(Unknown), enable(false) { }
-    WebPluginAction(Type type, bool enable)
-        : type(type), enable(enable) { }
+  WebPluginAction() : type(kUnknown), enable(false) {}
+  WebPluginAction(Type type, bool enable) : type(type), enable(enable) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -80,7 +80,7 @@ function addProvidedVolume(volumeManager, extensionId, volumeId) {
   var fileSystem = new MockFileSystem(volumeId, 'filesystem:' + volumeId);
   fileSystem.entries['/'] = new MockDirectoryEntry(fileSystem, '');
 
-  var volumeInfo = new VolumeInfo(
+  var volumeInfo = new VolumeInfoImpl(
       VolumeManagerCommon.VolumeType.PROVIDED,
       volumeId,
       fileSystem,
@@ -88,6 +88,7 @@ function addProvidedVolume(volumeManager, extensionId, volumeId) {
       '',           // deviceType
       '',           // devicePath
       false,        // isReadonly
+      false,        // isReadonlyRemovableDevice
       {isCurrentProfile: true, displayName: ''},  // profile
       '',           // label
       extensionId,  // extensionId

@@ -6,22 +6,24 @@
 #define CHROME_BROWSER_CHROMEOS_LOGIN_SCREENS_EULA_VIEW_H_
 
 #include <string>
+#include "chrome/browser/chromeos/login/oobe_screen.h"
 
 namespace chromeos {
 
-class EulaModel;
+class EulaScreen;
 
 // Interface between eula screen and its representation, either WebUI
 // or Views one. Note, do not forget to call OnViewDestroyed in the
 // dtor.
 class EulaView {
  public:
+  constexpr static OobeScreen kScreenId = OobeScreen::SCREEN_OOBE_EULA;
+
   virtual ~EulaView() {}
 
-  virtual void PrepareToShow() = 0;
   virtual void Show() = 0;
   virtual void Hide() = 0;
-  virtual void Bind(EulaModel& model) = 0;
+  virtual void Bind(EulaScreen* screen) = 0;
   virtual void Unbind() = 0;
   virtual void OnPasswordFetched(const std::string& tpm_password) = 0;
 };

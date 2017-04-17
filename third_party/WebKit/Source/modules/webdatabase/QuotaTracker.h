@@ -32,39 +32,43 @@
 #define QuotaTracker_h
 
 #include "modules/ModulesExport.h"
-#include "wtf/HashMap.h"
-#include "wtf/ThreadingPrimitives.h"
-#include "wtf/text/StringHash.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/ThreadingPrimitives.h"
+#include "platform/wtf/text/StringHash.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class SecurityOrigin;
 
 class MODULES_EXPORT QuotaTracker {
-    USING_FAST_MALLOC(QuotaTracker);
-    WTF_MAKE_NONCOPYABLE(QuotaTracker);
-public:
-    static QuotaTracker& instance();
+  USING_FAST_MALLOC(QuotaTracker);
+  WTF_MAKE_NONCOPYABLE(QuotaTracker);
 
-    void getDatabaseSizeAndSpaceAvailableToOrigin(
-        SecurityOrigin*, const String& databaseName,
-        unsigned long long* databaseSize, unsigned long long* spaceAvailable);
-    void updateDatabaseSize(
-        SecurityOrigin*, const String& databaseName,
-        unsigned long long databaseSize);
-    void updateSpaceAvailableToOrigin(SecurityOrigin*, unsigned long long spaceAvailable);
-    void resetSpaceAvailableToOrigin(SecurityOrigin*);
+ public:
+  static QuotaTracker& Instance();
 
-private:
-    QuotaTracker() { }
+  void GetDatabaseSizeAndSpaceAvailableToOrigin(
+      SecurityOrigin*,
+      const String& database_name,
+      unsigned long long* database_size,
+      unsigned long long* space_available);
+  void UpdateDatabaseSize(SecurityOrigin*,
+                          const String& database_name,
+                          unsigned long long database_size);
+  void UpdateSpaceAvailableToOrigin(SecurityOrigin*,
+                                    unsigned long long space_available);
+  void ResetSpaceAvailableToOrigin(SecurityOrigin*);
 
-    typedef HashMap<String, unsigned long long> SizeMap;
-    SizeMap m_spaceAvailableToOrigins;
-    HashMap<String, SizeMap> m_databaseSizes;
-    Mutex m_dataGuard;
+ private:
+  QuotaTracker() {}
+
+  typedef HashMap<String, unsigned long long> SizeMap;
+  SizeMap space_available_to_origins_;
+  HashMap<String, SizeMap> database_sizes_;
+  Mutex data_guard_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // QuotaTracker_h
+#endif  // QuotaTracker_h

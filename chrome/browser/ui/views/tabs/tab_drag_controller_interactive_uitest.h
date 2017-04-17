@@ -20,14 +20,6 @@ namespace content {
 class WebContents;
 }
 
-namespace gfx {
-class Point;
-}
-
-namespace views {
-class View;
-}
-
 // TabDragControllerTest is the basis for the two tests that exercise
 // TabDragController.
 class TabDragControllerTest : public InProcessBrowserTest {
@@ -50,6 +42,10 @@ class TabDragControllerTest : public InProcessBrowserTest {
                                   std::unique_ptr<WindowFinder> window_finder);
 
   const BrowserList* browser_list;
+
+ protected:
+  // InProcessBrowserTest:
+  void SetUpCommandLine(base::CommandLine* command_line) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TabDragControllerTest);

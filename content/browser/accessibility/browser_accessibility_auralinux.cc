@@ -7,9 +7,11 @@
 #include <stdint.h>
 #include <string.h>
 
+#include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "content/browser/accessibility/browser_accessibility_manager_auralinux.h"
 #include "content/common/accessibility_messages.h"
+#include "ui/accessibility/ax_text_utils.h"
 
 namespace content {
 
@@ -91,9 +93,14 @@ static const gchar* browser_accessibility_get_name(AtkAction* atk_action,
   BrowserAccessibilityAuraLinux* obj =
       ToBrowserAccessibilityAuraLinux(atk_action);
   if (!obj)
-    return 0;
+    return nullptr;
 
-  return obj->GetStringAttribute(ui::AX_ATTR_ACTION).c_str();
+  int action;
+  if (!obj->GetIntAttribute(ui::AX_ATTR_ACTION, &action))
+    return nullptr;
+  base::string16 action_verb =
+      ui::ActionToUnlocalizedString(static_cast<ui::AXSupportedAction>(action));
+  return base::UTF16ToUTF8(action_verb).c_str();
 }
 
 static const gchar* browser_accessibility_get_keybinding(AtkAction* atk_action,
@@ -144,10 +151,7 @@ static AtkObject* browser_accessibility_accessible_at_point(
     return NULL;
 
   gfx::Point point(x, y);
-  if (!obj->GetGlobalBoundsRect().Contains(point))
-    return NULL;
-
-  BrowserAccessibility* result = obj->BrowserAccessibilityForPoint(point);
+  BrowserAccessibility* result = obj->manager()->CachingAsyncHitTest(point);
   if (!result)
     return NULL;
 
@@ -170,7 +174,7 @@ static void browser_accessibility_get_extents(AtkComponent* atk_component,
   if (!obj)
     return;
 
-  gfx::Rect bounds = obj->GetGlobalBoundsRect();
+  gfx::Rect bounds = obj->GetScreenBoundsRect();
   if (x)
     *x = bounds.x();
   if (y)
@@ -300,7 +304,7 @@ void GetImagePositionSize(BrowserAccessibilityAuraLinux* obj,
                           gint* y,
                           gint* width,
                           gint* height) {
-  gfx::Rect img_pos_size = obj->GetGlobalBoundsRect();
+  gfx::Rect img_pos_size = obj->GetScreenBoundsRect();
 
   if (x)
     *x = img_pos_size.x();
@@ -485,8 +489,9 @@ static AtkObject* browser_accessibility_get_parent(AtkObject* atk_object) {
       ToBrowserAccessibilityAuraLinux(atk_object);
   if (!obj)
     return NULL;
-  if (obj->GetParent())
-    return ToBrowserAccessibilityAuraLinux(obj->GetParent())->GetAtkObject();
+  if (obj->PlatformGetParent())
+    return ToBrowserAccessibilityAuraLinux(obj->PlatformGetParent())
+        ->GetAtkObject();
 
   BrowserAccessibilityManagerAuraLinux* manager =
       static_cast<BrowserAccessibilityManagerAuraLinux*>(obj->manager());
@@ -780,10 +785,10 @@ void BrowserAccessibilityAuraLinux::OnDataChanged() {
   if (!atk_object_) {
     interface_mask_ = GetInterfaceMaskFromObject(this);
     atk_object_ = ATK_OBJECT(browser_accessibility_new(this));
-    if (this->GetParent()) {
-      atk_object_set_parent(
-          atk_object_,
-          ToBrowserAccessibilityAuraLinux(this->GetParent())->GetAtkObject());
+    if (this->PlatformGetParent()) {
+      atk_object_set_parent(atk_object_, ToBrowserAccessibilityAuraLinux(
+                                             this->PlatformGetParent())
+                                             ->GetAtkObject());
     }
   }
 }
@@ -808,6 +813,17 @@ void BrowserAccessibilityAuraLinux::InitRoleAndState() {
       break;
     case ui::AX_ROLE_BUTTON:
       atk_role_ = ATK_ROLE_PUSH_BUTTON;
+      break;
+    case ui::AX_ROLE_AUDIO:
+#if defined(ATK_CHECK_VERSION)
+#if ATK_CHECK_VERSION(2, 12, 0)
+      atk_role_ = ATK_ROLE_AUDIO;
+#else
+      atk_role_ = ATK_ROLE_SECTION;
+#endif
+#else
+      atk_role_ = ATK_ROLE_SECTION;
+#endif
       break;
     case ui::AX_ROLE_CANVAS:
       atk_role_ = ATK_ROLE_CANVAS;
@@ -933,6 +949,17 @@ void BrowserAccessibilityAuraLinux::InitRoleAndState() {
       break;
     case ui::AX_ROLE_TREE_ITEM:
       atk_role_ = ATK_ROLE_TREE_ITEM;
+      break;
+    case ui::AX_ROLE_VIDEO:
+#if defined(ATK_CHECK_VERSION)
+#if ATK_CHECK_VERSION(2, 12, 0)
+      atk_role_ = ATK_ROLE_VIDEO;
+#else
+      atk_role_ = ATK_ROLE_SECTION;
+#endif
+#else
+      atk_role_ = ATK_ROLE_SECTION;
+#endif
       break;
     default:
       atk_role_ = ATK_ROLE_UNKNOWN;

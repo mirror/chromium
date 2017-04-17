@@ -9,6 +9,7 @@
 #include "base/lazy_instance.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/chromeos/login/helper.h"
+#include "chrome/browser/ui/ash/system_tray_client.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "content/public/browser/browser_context.h"
@@ -32,8 +33,8 @@ const double kDefaultHeightRatio = 0.6;
 const double kMinimumWidthRatio = 0.25;
 const double kMinimumHeightRatio = 0.25;
 
-base::LazyInstance<std::deque<WebContents*>> g_web_contents_stack =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<std::deque<WebContents*>>::DestructorAtExit
+    g_web_contents_stack = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
@@ -62,7 +63,12 @@ LoginWebDialog::LoginWebDialog(content::BrowserContext* browser_context,
 LoginWebDialog::~LoginWebDialog() {}
 
 void LoginWebDialog::Show() {
-  chrome::ShowWebDialog(parent_window_, browser_context_, this);
+  if (parent_window_) {
+    chrome::ShowWebDialog(parent_window_, browser_context_, this);
+  } else {
+    chrome::ShowWebDialogInContainer(
+        SystemTrayClient::GetDialogParentContainerId(), browser_context_, this);
+  }
   is_open_ = true;
 }
 

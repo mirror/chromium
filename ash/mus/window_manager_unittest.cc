@@ -2,158 +2,121 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <stdint.h>
-
+#include <map>
 #include <memory>
-#include <utility>
+#include <vector>
 
-#include "ash/public/interfaces/user_window_controller.mojom.h"
+#include "ash/public/interfaces/constants.mojom.h"
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
-#include "services/shell/public/cpp/service_test.h"
-#include "services/ui/public/cpp/window.h"
-#include "services/ui/public/cpp/window_tree_client.h"
-#include "services/ui/public/cpp/window_tree_client_delegate.h"
+#include "services/service_manager/public/cpp/service_test.h"
+#include "services/ui/public/cpp/property_type_converters.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
+#include "ui/aura/env.h"
+#include "ui/aura/mus/property_converter.h"
+#include "ui/aura/mus/window_tree_client.h"
+#include "ui/aura/mus/window_tree_client_delegate.h"
+#include "ui/aura/mus/window_tree_host_mus.h"
+#include "ui/aura/test/env_test_helper.h"
+#include "ui/aura/window.h"
+#include "ui/display/display.h"
+#include "ui/display/display_list.h"
+#include "ui/display/screen_base.h"
+#include "ui/wm/core/capture_controller.h"
+#include "ui/wm/core/wm_state.h"
 
 namespace ash {
 namespace mus {
 
-class WindowTreeClientDelegate : public ::ui::WindowTreeClientDelegate {
+class WindowTreeClientDelegate : public aura::WindowTreeClientDelegate {
  public:
   WindowTreeClientDelegate() {}
   ~WindowTreeClientDelegate() override {}
 
+  void WaitForEmbed() { run_loop_.Run(); }
+
+  void DestroyWindowTreeHost() { window_tree_host_.reset(); }
+
  private:
-  // ui::WindowTreeClientDelegate:
-  void OnEmbed(::ui::Window* root) override {}
-  void OnDidDestroyClient(::ui::WindowTreeClient* client) override {}
-  void OnEventObserved(const ui::Event& event, ::ui::Window* target) override {}
+  // aura::WindowTreeClientDelegate:
+  void OnEmbed(
+      std::unique_ptr<aura::WindowTreeHostMus> window_tree_host) override {
+    window_tree_host_ = std::move(window_tree_host);
+    run_loop_.Quit();
+  }
+  void OnEmbedRootDestroyed(
+      aura::WindowTreeHostMus* window_tree_host) override {}
+  void OnLostConnection(aura::WindowTreeClient* client) override {}
+  void OnPointerEventObserved(const ui::PointerEvent& event,
+                              aura::Window* target) override {}
+  aura::PropertyConverter* GetPropertyConverter() override {
+    return &property_converter_;
+  }
+
+  base::RunLoop run_loop_;
+  wm::WMState wm_state_;
+  aura::PropertyConverter property_converter_;
+  std::unique_ptr<aura::WindowTreeHostMus> window_tree_host_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowTreeClientDelegate);
 };
 
-class WindowManagerTest : public shell::test::ServiceTest {
+// NOTE: this isn't named WindowManagerTest because gtest complains about tests
+// with the same name (there is already a WindowManagerTest in ash).
+class MusWindowManagerTest : public service_manager::test::ServiceTest {
  public:
-  WindowManagerTest() : shell::test::ServiceTest("exe:mash_unittests") {}
-  ~WindowManagerTest() override {}
+  MusWindowManagerTest()
+      : service_manager::test::ServiceTest("mash_unittests") {}
+  ~MusWindowManagerTest() override {}
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(WindowManagerTest);
+  DISALLOW_COPY_AND_ASSIGN(MusWindowManagerTest);
 };
 
 void OnEmbed(bool success) {
   ASSERT_TRUE(success);
 }
 
-class TestUserWindowObserver : public mojom::UserWindowObserver {
- public:
-  explicit TestUserWindowObserver(shell::Connector* connector)
-      : binding_(this), window_count_(0u), expected_window_count_(0u) {
-    connector->ConnectToInterface("mojo:ash", &user_window_controller_);
-    user_window_controller_->AddUserWindowObserver(
-        binding_.CreateInterfacePtrAndBind());
-  }
+TEST_F(MusWindowManagerTest, OpenWindow) {
+  display::ScreenBase screen;
+  screen.display_list().AddDisplay(
+      display::Display(1, gfx::Rect(0, 0, 200, 200)),
+      display::DisplayList::Type::PRIMARY);
+  display::Screen::SetScreenInstance(&screen);
 
-  ~TestUserWindowObserver() override {}
-
-  bool WaitUntilWindowCountReaches(size_t expected) {
-    DCHECK(quit_callback_.is_null());
-    if (window_count_ != expected) {
-      base::RunLoop loop;
-      quit_callback_ = loop.QuitClosure();
-      expected_window_count_ = expected;
-      loop.Run();
-      quit_callback_ = base::Closure();
-    }
-    return window_count_ == expected;
-  }
-
- private:
-  void QuitIfNecessary() {
-    if (window_count_ == expected_window_count_ && !quit_callback_.is_null())
-      quit_callback_.Run();
-  }
-
-  // mojom::UserWindowObserver:
-  void OnUserWindowObserverAdded(
-      mojo::Array<mojom::UserWindowPtr> user_windows) override {
-    window_count_ = user_windows.size();
-    QuitIfNecessary();
-  }
-
-  void OnUserWindowAdded(mojom::UserWindowPtr user_window) override {
-    ++window_count_;
-    QuitIfNecessary();
-  }
-
-  void OnUserWindowRemoved(uint32_t window_id) override {
-    ASSERT_TRUE(window_count_);
-    --window_count_;
-    QuitIfNecessary();
-  }
-
-  void OnUserWindowTitleChanged(uint32_t window_id,
-                                const mojo::String& window_title) override {}
-  void OnUserWindowFocusChanged(uint32_t window_id, bool has_focus) override {}
-  void OnUserWindowAppIconChanged(uint32_t window_id,
-                                  mojo::Array<uint8_t> app_icon) override {}
-
-  mojom::UserWindowControllerPtr user_window_controller_;
-  mojo::Binding<mojom::UserWindowObserver> binding_;
-
-  size_t window_count_;
-  size_t expected_window_count_;
-  base::Closure quit_callback_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestUserWindowObserver);
-};
-
-TEST_F(WindowManagerTest, OpenWindow) {
   WindowTreeClientDelegate window_tree_delegate;
 
-  connector()->Connect("mojo:ash");
+  connector()->StartService(mojom::kServiceName);
 
   // Connect to mus and create a new top level window. The request goes to
   // |ash|, but is async.
-  std::unique_ptr<::ui::WindowTreeClient> client(
-      new ::ui::WindowTreeClient(&window_tree_delegate, nullptr, nullptr));
-  client->ConnectViaWindowTreeFactory(connector());
-  ::ui::Window* top_level_window = client->NewTopLevelWindow(nullptr);
-  ASSERT_TRUE(top_level_window);
-  ::ui::Window* child_window = client->NewWindow();
-  ASSERT_TRUE(child_window);
-  top_level_window->AddChild(child_window);
+  aura::WindowTreeClient client(connector(), &window_tree_delegate, nullptr,
+                                nullptr, nullptr, false);
+  client.ConnectViaWindowTreeFactory();
+  aura::test::EnvTestHelper().SetWindowTreeClient(&client);
+  std::map<std::string, std::vector<uint8_t>> properties;
+  properties[ui::mojom::WindowManager::kWindowType_InitProperty] =
+      mojo::ConvertTo<std::vector<uint8_t>>(
+          static_cast<int32_t>(ui::mojom::WindowType::WINDOW));
+  aura::WindowTreeHostMus window_tree_host_mus(&client, cc::FrameSinkId(),
+                                               &properties);
+  window_tree_host_mus.InitHost();
+  aura::Window* child_window = new aura::Window(nullptr);
+  child_window->Init(ui::LAYER_NOT_DRAWN);
+  window_tree_host_mus.window()->AddChild(child_window);
 
   // Create another WindowTreeClient by way of embedding in
   // |child_window|. This blocks until it succeeds.
-  ::ui::mojom::WindowTreeClientPtr tree_client;
-  auto tree_client_request = GetProxy(&tree_client);
-  child_window->Embed(std::move(tree_client), base::Bind(&OnEmbed));
-  std::unique_ptr<::ui::WindowTreeClient> child_client(
-      new ::ui::WindowTreeClient(&window_tree_delegate, nullptr,
-                                 std::move(tree_client_request)));
-  child_client->WaitForEmbed();
-  ASSERT_TRUE(!child_client->GetRoots().empty());
-}
-
-TEST_F(WindowManagerTest, OpenWindowAndClose) {
-  connector()->Connect("mojo:ash");
-
-  TestUserWindowObserver observer(connector());
-
-  // Connect to mus and create a new top level window.
-  WindowTreeClientDelegate window_tree_delegate;
-  std::unique_ptr<::ui::WindowTreeClient> client(
-      new ::ui::WindowTreeClient(&window_tree_delegate, nullptr, nullptr));
-  client->ConnectViaWindowTreeFactory(connector());
-  ::ui::Window* top_level_window = client->NewTopLevelWindow(nullptr);
-  ASSERT_TRUE(top_level_window);
-
-  observer.WaitUntilWindowCountReaches(1u);
-  client.reset();
-  observer.WaitUntilWindowCountReaches(0u);
+  ui::mojom::WindowTreeClientPtr tree_client;
+  auto tree_client_request = MakeRequest(&tree_client);
+  client.Embed(child_window, std::move(tree_client), 0u, base::Bind(&OnEmbed));
+  aura::WindowTreeClient child_client(connector(), &window_tree_delegate,
+                                      nullptr, std::move(tree_client_request),
+                                      nullptr, false);
+  window_tree_delegate.WaitForEmbed();
+  ASSERT_TRUE(!child_client.GetRoots().empty());
+  window_tree_delegate.DestroyWindowTreeHost();
 }
 
 }  // namespace mus

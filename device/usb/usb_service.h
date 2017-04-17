@@ -8,17 +8,17 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include "base/bind_helpers.h"
+#include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/observer_list.h"
+#include "base/sequenced_task_runner.h"
+#include "base/single_thread_task_runner.h"
 #include "base/threading/non_thread_safe.h"
-
-namespace base {
-class SequencedTaskRunner;
-}
 
 namespace device {
 
@@ -58,24 +58,34 @@ class UsbService : public base::NonThreadSafe {
 
   scoped_refptr<UsbDevice> GetDevice(const std::string& guid);
 
+  // Shuts down the UsbService. Must be called before destroying the UsbService
+  // when tasks can still be posted to the |blocking_task_runner| provided to
+  // Create().
+  virtual void Shutdown();
+
   // Enumerates available devices.
   virtual void GetDevices(const GetDevicesCallback& callback);
 
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
+  // Methods to add and remove devices for testing purposes. Only a device added
+  // by this method can be removed by RemoveDeviceForTesting().
+  void AddDeviceForTesting(scoped_refptr<UsbDevice> device);
+  void RemoveDeviceForTesting(const std::string& device_guid);
+  void GetTestDevices(std::vector<scoped_refptr<UsbDevice>>* devices);
+
  protected:
-  UsbService(scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-             scoped_refptr<base::SequencedTaskRunner> blocking_task_runner);
+  UsbService(scoped_refptr<base::SequencedTaskRunner> blocking_task_runner);
 
   void NotifyDeviceAdded(scoped_refptr<UsbDevice> device);
   void NotifyDeviceRemoved(scoped_refptr<UsbDevice> device);
 
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner() {
+  const scoped_refptr<base::SingleThreadTaskRunner>& task_runner() const {
     return task_runner_;
   }
 
-  scoped_refptr<base::SequencedTaskRunner> blocking_task_runner() {
+  const scoped_refptr<base::SequencedTaskRunner>& blocking_task_runner() const {
     return blocking_task_runner_;
   }
 
@@ -84,12 +94,15 @@ class UsbService : public base::NonThreadSafe {
   }
 
  private:
-  friend void base::DeletePointer<UsbService>(UsbService* service);
-
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   scoped_refptr<base::SequencedTaskRunner> blocking_task_runner_;
   std::unordered_map<std::string, scoped_refptr<UsbDevice>> devices_;
+  std::unordered_set<std::string> testing_devices_;
   base::ObserverList<Observer, true> observer_list_;
+
+#if DCHECK_IS_ON()
+  bool did_shutdown_ = false;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(UsbService);
 };

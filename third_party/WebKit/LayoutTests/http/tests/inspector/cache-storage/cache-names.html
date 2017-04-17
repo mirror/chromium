@@ -5,7 +5,7 @@
 <script>
 function test()
 {
-    var cacheStorageModel = WebInspector.ServiceWorkerCacheModel.fromTarget(WebInspector.targetManager.mainTarget());
+    var cacheStorageModel = InspectorTest.mainTarget.model(SDK.ServiceWorkerCacheModel);
     cacheStorageModel.enable();
 
     function errorAndExit(error)

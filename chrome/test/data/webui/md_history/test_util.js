@@ -2,17 +2,37 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/*
- * Waits for queued up tasks to finish before proceeding. Inspired by:
- * https://github.com/Polymer/web-component-tester/blob/master/browser/environment/helpers.js#L97
+/**
+ * Replace the current primary element of the test with a new element. Useful
+ * as an alternative to PolymerTest.clearBody() which preserves styling.
+ * @param {Element} element
  */
-function flush() {
+function replaceBody(element) {
+  var body = document.body;
+  var app = body.querySelector('history-app');
+
+  var currentBody = app || body.querySelector('.test-body');
+  body.removeChild(currentBody);
+
+  // Clear any query in the URL.
+  window.history.replaceState({}, '', '/');
+
+  element.classList.add('test-body');
+  body.appendChild(element);
+}
+
+/**
+ * Replace the document body with a new instance of <history-app>.
+ * @return {HistoryAppElement} The app which was created.
+ */
+function replaceApp() {
+  var app = document.createElement('history-app');
+  app.id = 'history-app';
+  // Disable querying for tests by default.
+  app.queryState_.queryingDisabled = true;
+  replaceBody(app);
   Polymer.dom.flush();
-  // Promises have microtask timing, so we use setTimeout to explicity force a
-  // new task.
-  return new Promise(function(resolve, reject) {
-    window.setTimeout(resolve, 0);
-  });
+  return app;
 }
 
 /**
@@ -70,8 +90,110 @@ function createHistoryInfo(searchTerm) {
   return {
     finished: true,
     hasSyncedResults: false,
-    queryEndTime: 'Monday',
-    queryStartTime: 'Tuesday',
+    queryInterval: 'Monday - Tuesday',
+    queryMonth: 'June',
     term: searchTerm || ''
+  };
+}
+
+/**
+ * @param {Element} element
+ * @param {string} selector
+ * @return {Element}
+ */
+function polymerSelectAll(element, selector) {
+  return Polymer.dom(element.root).querySelectorAll(selector);
+}
+
+/**
+ * Returns a promise which is resolved when |eventName| is fired on |element|
+ * and |predicate| is true.
+ * @param {HTMLElement} element
+ * @param {string} eventName
+ * @param {function(Event): boolean} predicate
+ * @return {Promise}
+ */
+function waitForEvent(element, eventName, predicate) {
+  if (!predicate)
+    predicate = function() { return true; };
+
+  return new Promise(function(resolve) {
+    var listener = function(e) {
+      if (!predicate(e))
+        return;
+
+      resolve();
+      element.removeEventListener(eventName, listener);
+    }
+
+    element.addEventListener(eventName, listener);
+  });
+}
+
+/**
+ * Sends a shift click event to |element|.
+ * @param {HTMLElement} element
+ */
+function shiftClick(element) {
+  var xy = MockInteractions.middleOfNode(element);
+  var props = {
+    bubbles: true,
+    cancelable: true,
+    clientX: xy.x,
+    clientY: xy.y,
+    buttons: 1,
+    shiftKey: true,
+  };
+
+  element.dispatchEvent(new MouseEvent('mousedown', props));
+  element.dispatchEvent(new MouseEvent('mouseup', props));
+  element.dispatchEvent(new MouseEvent('click', props));
+}
+
+function disableLinkClicks() {
+  document.addEventListener('click', function(e) {
+    if (e.defaultPrevented)
+      return;
+
+    var eventPath = e.path;
+    var anchor = null;
+    if (eventPath) {
+      for (var i = 0; i < eventPath.length; i++) {
+        var element = eventPath[i];
+        if (element.tagName === 'A' && element.href) {
+          anchor = element;
+          break;
+        }
+      }
+    }
+
+    if (!anchor)
+      return;
+
+    e.preventDefault();
+  });
+}
+
+function createSession(name, windows) {
+  return {
+    collapsed: false,
+    deviceType: '',
+    name: name,
+    modifiedTime: '2 seconds ago',
+    tag: name,
+    timestamp: 0,
+    windows: windows
+  };
+}
+
+function createWindow(tabUrls) {
+  var tabs = tabUrls.map(function(tabUrl) {
+    return {sessionId: 456, timestamp: 0, title: tabUrl, url: tabUrl};
+  });
+
+  return {
+    tabs: tabs,
+    sessionId: '123',
+    userVisibleTimestamp: "A while ago"
   };
 }

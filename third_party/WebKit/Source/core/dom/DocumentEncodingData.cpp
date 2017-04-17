@@ -35,22 +35,18 @@
 namespace blink {
 
 DocumentEncodingData::DocumentEncodingData()
-    : m_encoding(UTF8Encoding())
-    , m_wasDetectedHeuristically(false)
-    , m_sawDecodingError(false)
-{
+    : encoding_(UTF8Encoding()),
+      was_detected_heuristically_(false),
+      saw_decoding_error_(false) {}
+
+DocumentEncodingData::DocumentEncodingData(const TextResourceDecoder& decoder) {
+  encoding_ = decoder.Encoding();
+  was_detected_heuristically_ = decoder.EncodingWasDetectedHeuristically();
+  saw_decoding_error_ = decoder.SawError();
 }
 
-DocumentEncodingData::DocumentEncodingData(const TextResourceDecoder& decoder)
-{
-    m_encoding = decoder.encoding();
-    m_wasDetectedHeuristically = decoder.encodingWasDetectedHeuristically();
-    m_sawDecodingError = decoder.sawError();
+void DocumentEncodingData::SetEncoding(const WTF::TextEncoding& encoding) {
+  encoding_ = encoding;
 }
 
-void DocumentEncodingData::setEncoding(const WTF::TextEncoding& encoding)
-{
-    m_encoding = encoding;
-}
-
-} // namespace blink
+}  // namespace blink

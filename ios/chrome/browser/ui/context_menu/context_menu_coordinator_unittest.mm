@@ -7,36 +7,45 @@
 #import <UIKit/UIKit.h>
 
 #import "base/mac/foundation_util.h"
-#import "base/mac/scoped_nsobject.h"
 #import "ios/web/public/web_state/context_menu_params.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 // Fixture to test ContextMenuCoordinator.
 class ContextMenuCoordinatorTest : public PlatformTest {
  public:
   ContextMenuCoordinatorTest() {
-    window_.reset(
-        [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]);
+    // Save the current key window and restore it after the test.
+    previous_key_window_ = [[UIApplication sharedApplication] keyWindow];
+    window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [window_ makeKeyAndVisible];
-    view_controller_.reset([[UIViewController alloc] init]);
+    view_controller_ = [[UIViewController alloc] init];
     [window_ setRootViewController:view_controller_];
   }
 
+  ~ContextMenuCoordinatorTest() override {
+    [previous_key_window_ makeKeyAndVisible];
+  }
+
  protected:
-  base::scoped_nsobject<ContextMenuCoordinator> menu_coordinator_;
-  base::scoped_nsobject<UIWindow> window_;
-  base::scoped_nsobject<UIViewController> view_controller_;
+  UIWindow* previous_key_window_;
+  ContextMenuCoordinator* menu_coordinator_;
+  UIWindow* window_;
+  UIViewController* view_controller_;
 };
 
 // Tests the context menu reports as visible after presenting.
 TEST_F(ContextMenuCoordinatorTest, ValidateIsVisible) {
   web::ContextMenuParams params;
   params.location = CGPointZero;
-  params.view.reset([[view_controller_ view] retain]);
-  menu_coordinator_.reset([[ContextMenuCoordinator alloc]
-      initWithViewController:view_controller_
-                      params:params]);
+  params.view.reset([view_controller_ view]);
+  menu_coordinator_ = [[ContextMenuCoordinator alloc]
+      initWithBaseViewController:view_controller_
+                          params:params];
   [menu_coordinator_ start];
 
   EXPECT_TRUE([menu_coordinator_ isVisible]);
@@ -46,28 +55,13 @@ TEST_F(ContextMenuCoordinatorTest, ValidateIsVisible) {
 TEST_F(ContextMenuCoordinatorTest, ValidateDismissalOnStop) {
   web::ContextMenuParams params;
   params.location = CGPointZero;
-  params.view.reset([[view_controller_ view] retain]);
-  menu_coordinator_.reset([[ContextMenuCoordinator alloc]
-      initWithViewController:view_controller_
-                      params:params]);
+  params.view.reset([view_controller_ view]);
+  menu_coordinator_ = [[ContextMenuCoordinator alloc]
+      initWithBaseViewController:view_controller_
+                          params:params];
   [menu_coordinator_ start];
 
   [menu_coordinator_ stop];
-
-  EXPECT_FALSE([menu_coordinator_ isVisible]);
-}
-
-// Tests the context menu dismissal.
-TEST_F(ContextMenuCoordinatorTest, ValidateDismissalOnDestroy) {
-  web::ContextMenuParams params;
-  params.location = CGPointZero;
-  params.view.reset([[view_controller_ view] retain]);
-  menu_coordinator_.reset([[ContextMenuCoordinator alloc]
-      initWithViewController:view_controller_
-                      params:params]);
-  [menu_coordinator_ start];
-
-  menu_coordinator_.reset();
 
   EXPECT_FALSE([menu_coordinator_ isVisible]);
 }
@@ -76,10 +70,10 @@ TEST_F(ContextMenuCoordinatorTest, ValidateDismissalOnDestroy) {
 TEST_F(ContextMenuCoordinatorTest, ValidateActions) {
   web::ContextMenuParams params;
   params.location = CGPointZero;
-  params.view.reset([[view_controller_ view] retain]);
-  menu_coordinator_.reset([[ContextMenuCoordinator alloc]
-      initWithViewController:view_controller_
-                      params:params]);
+  params.view.reset([view_controller_ view]);
+  menu_coordinator_ = [[ContextMenuCoordinator alloc]
+      initWithBaseViewController:view_controller_
+                          params:params];
 
   NSArray* menu_titles = @[ @"foo", @"bar" ];
   for (NSString* title in menu_titles) {
@@ -96,8 +90,7 @@ TEST_F(ContextMenuCoordinatorTest, ValidateActions) {
       base::mac::ObjCCastStrict<UIAlertController>(
           [view_controller_ presentedViewController]);
 
-  base::scoped_nsobject<NSMutableArray> remaining_titles(
-      [menu_titles mutableCopy]);
+  NSMutableArray* remaining_titles = [menu_titles mutableCopy];
   for (UIAlertAction* action in alert_controller.actions) {
     if (action.style != UIAlertActionStyleCancel) {
       EXPECT_TRUE([remaining_titles containsObject:action.title]);
@@ -112,10 +105,10 @@ TEST_F(ContextMenuCoordinatorTest, ValidateActions) {
 TEST_F(ContextMenuCoordinatorTest, CancelButtonExists) {
   web::ContextMenuParams params;
   params.location = CGPointZero;
-  params.view.reset([[view_controller_ view] retain]);
-  menu_coordinator_.reset([[ContextMenuCoordinator alloc]
-      initWithViewController:view_controller_
-                      params:params]);
+  params.view.reset([view_controller_ view]);
+  menu_coordinator_ = [[ContextMenuCoordinator alloc]
+      initWithBaseViewController:view_controller_
+                          params:params];
 
   [menu_coordinator_ start];
 
@@ -138,10 +131,10 @@ TEST_F(ContextMenuCoordinatorTest, ValidateContextMenuParams) {
   web::ContextMenuParams params;
   params.location = location;
   params.menu_title.reset(title);
-  params.view.reset([[view_controller_ view] retain]);
-  menu_coordinator_.reset([[ContextMenuCoordinator alloc]
-      initWithViewController:view_controller_
-                      params:params]);
+  params.view.reset([view_controller_ view]);
+  menu_coordinator_ = [[ContextMenuCoordinator alloc]
+      initWithBaseViewController:view_controller_
+                          params:params];
   [menu_coordinator_ start];
 
   EXPECT_TRUE([[view_controller_ presentedViewController]

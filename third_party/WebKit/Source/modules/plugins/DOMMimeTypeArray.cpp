@@ -14,7 +14,8 @@
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ *  MA 02110-1301 USA
  */
 
 #include "modules/plugins/DOMMimeTypeArray.h"
@@ -22,58 +23,50 @@
 #include "core/frame/LocalFrame.h"
 #include "core/page/Page.h"
 #include "platform/plugins/PluginData.h"
-#include "wtf/Vector.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
-DOMMimeTypeArray::DOMMimeTypeArray(LocalFrame* frame)
-    : DOMWindowProperty(frame)
-{
+DOMMimeTypeArray::DOMMimeTypeArray(LocalFrame* frame) : ContextClient(frame) {}
+
+DEFINE_TRACE(DOMMimeTypeArray) {
+  ContextClient::Trace(visitor);
 }
 
-DEFINE_TRACE(DOMMimeTypeArray)
-{
-    DOMWindowProperty::trace(visitor);
+unsigned DOMMimeTypeArray::length() const {
+  PluginData* data = GetPluginData();
+  if (!data)
+    return 0;
+  return data->Mimes().size();
 }
 
-unsigned DOMMimeTypeArray::length() const
-{
-    PluginData* data = getPluginData();
-    if (!data)
-        return 0;
-    return data->mimes().size();
-}
-
-DOMMimeType* DOMMimeTypeArray::item(unsigned index)
-{
-    PluginData* data = getPluginData();
-    if (!data)
-        return nullptr;
-    const Vector<MimeClassInfo>& mimes = data->mimes();
-    if (index >= mimes.size())
-        return nullptr;
-    return DOMMimeType::create(data, m_frame, index);
-}
-
-DOMMimeType* DOMMimeTypeArray::namedItem(const AtomicString& propertyName)
-{
-    PluginData* data = getPluginData();
-    if (!data)
-        return nullptr;
-    const Vector<MimeClassInfo>& mimes = data->mimes();
-    for (unsigned i = 0; i < mimes.size(); ++i) {
-        if (mimes[i].type == propertyName)
-            return DOMMimeType::create(data, m_frame, i);
-    }
+DOMMimeType* DOMMimeTypeArray::item(unsigned index) {
+  PluginData* data = GetPluginData();
+  if (!data)
     return nullptr;
+  const Vector<MimeClassInfo>& mimes = data->Mimes();
+  if (index >= mimes.size())
+    return nullptr;
+  return DOMMimeType::Create(data, GetFrame(), index);
 }
 
-PluginData* DOMMimeTypeArray::getPluginData() const
-{
-    if (!m_frame)
-        return nullptr;
-    return m_frame->pluginData();
+DOMMimeType* DOMMimeTypeArray::namedItem(const AtomicString& property_name) {
+  PluginData* data = GetPluginData();
+  if (!data)
+    return nullptr;
+  const Vector<MimeClassInfo>& mimes = data->Mimes();
+  for (unsigned i = 0; i < mimes.size(); ++i) {
+    if (mimes[i].type == property_name)
+      return DOMMimeType::Create(data, GetFrame(), i);
+  }
+  return nullptr;
 }
 
-} // namespace blink
+PluginData* DOMMimeTypeArray::GetPluginData() const {
+  if (!GetFrame())
+    return nullptr;
+  return GetFrame()->GetPluginData();
+}
+
+}  // namespace blink

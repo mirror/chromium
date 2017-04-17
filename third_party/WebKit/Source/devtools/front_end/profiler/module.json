@@ -1,24 +1,38 @@
 {
     "extensions": [
         {
-            "type": "@WebInspector.PanelFactory",
-            "name": "profiles",
-            "title": "Profiles",
+            "type": "view",
+            "location": "panel",
+            "id": "heap_profiler",
+            "title": "Memory",
             "order": 60,
-            "className": "WebInspector.ProfilesPanelFactory"
+            "className": "Profiler.HeapProfilerPanel"
         },
         {
-            "type": "@WebInspector.ContextMenu.Provider",
-            "contextTypes": ["WebInspector.RemoteObject"],
-            "className": "WebInspector.ProfilesPanel.ContextMenuProvider"
+            "type": "view",
+            "location": "panel",
+            "id": "js_profiler",
+            "title": "Profiler",
+            "order": 65,
+            "className": "Profiler.JSProfilerPanel",
+            "condition": "v8only"
         },
         {
-            "type": "setting",
-            "category": "Profiler",
-            "title": "Show advanced heap snapshot properties",
-            "settingName": "showAdvancedHeapSnapshotProperties",
-            "settingType": "boolean",
-            "defaultValue": false
+            "type": "view",
+            "location": "panel",
+            "id": "js_profiler",
+            "title": "JavaScript Profiler",
+            "persistence": "closeable",
+            "order": 65,
+            "className": "Profiler.JSProfilerPanel",
+            "condition": "!v8only"
+        },
+        {
+            "type": "@UI.ContextMenu.Provider",
+            "contextTypes": [
+                "SDK.RemoteObject"
+            ],
+            "className": "Profiler.HeapProfilerPanel"
         },
         {
             "type": "setting",
@@ -42,14 +56,39 @@
             "title": "Show native functions in JS Profile",
             "settingName": "showNativeFunctionsInJSProfile",
             "settingType": "boolean",
-            "defaultValue": false
+            "defaultValue": true
         },
         {
-            "type": "@WebInspector.ActionDelegate",
-            "actionId": "profiler.toggle-recording",
-            "iconClass": "record-toolbar-item",
-            "contextTypes": ["WebInspector.ProfilesPanel"],
-            "className": "WebInspector.ProfilesPanel.RecordActionDelegate",
+            "type": "@UI.ActionDelegate",
+            "actionId": "profiler.heap-toggle-recording",
+            "iconClass": "largeicon-start-recording",
+            "toggledIconClass": "largeicon-stop-recording",
+            "toggleWithRedColor": true,
+            "contextTypes": [
+                "Profiler.HeapProfilerPanel"
+            ],
+            "className": "Profiler.HeapProfilerPanel",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+E"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Meta+E"
+                }
+            ]
+        },
+        {
+            "type": "@UI.ActionDelegate",
+            "actionId": "profiler.js-toggle-recording",
+            "iconClass": "largeicon-start-recording",
+            "toggledIconClass": "largeicon-stop-recording",
+            "toggleWithRedColor": true,
+            "contextTypes": [
+                "Profiler.JSProfilerPanel"
+            ],
+            "className": "Profiler.JSProfilerPanel",
             "bindings": [
                 {
                     "platform": "windows,linux",
@@ -64,10 +103,14 @@
     ],
     "dependencies": [
         "components",
-        "components_lazy",
-        "ui_lazy"
+        "perf_ui",
+        "data_grid",
+        "heap_snapshot_model",
+        "object_ui"
     ],
     "scripts": [
+        "ProfileType.js",
+        "ProfileHeader.js",
         "ProfilesPanel.js",
         "ProfileView.js",
         "ProfileDataGrid.js",
@@ -76,17 +119,18 @@
         "CPUProfileFlameChart.js",
         "CPUProfileView.js",
         "HeapProfileView.js",
-        "HeapSnapshotCommon.js",
         "HeapSnapshotProxy.js",
         "HeapSnapshotDataGrids.js",
         "HeapSnapshotGridNodes.js",
         "HeapSnapshotView.js",
+        "HeapProfilerPanel.js",
         "ProfileLauncherView.js",
         "ProfileTypeRegistry.js",
         "TargetsComboBoxController.js"
     ],
     "resources": [
         "heapProfiler.css",
-        "profilesPanel.css"
+        "profilesPanel.css",
+        "profilesSidebarTree.css"
     ]
 }

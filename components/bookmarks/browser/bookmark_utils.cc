@@ -13,6 +13,7 @@
 #include "base/i18n/case_conversion.h"
 #include "base/i18n/string_search.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -205,6 +206,21 @@ void GetBookmarksMatchingPropertiesImpl(
       return;
   }
 }
+
+#if defined(OS_ANDROID)
+// Returns whether or not a bookmark model contains any bookmarks aside of the
+// permanent nodes.
+bool HasUserCreatedBookmarks(BookmarkModel* model) {
+  const BookmarkNode* root_node = model->root_node();
+
+  for (int i = 0; i < root_node->child_count(); ++i) {
+    const BookmarkNode* node = root_node->GetChild(i);
+    if (node->child_count() > 0)
+      return true;
+  }
+  return false;
+}
+#endif
 
 }  // namespace
 
@@ -446,7 +462,7 @@ void RegisterManagedBookmarksPrefs(PrefRegistrySimple* registry) {
   // want to sync the expanded state of folders, it should be part of
   // bookmark sync itself (i.e., a property of the sync folder nodes).
   registry->RegisterListPref(prefs::kBookmarkEditorExpandedNodes,
-                             new base::ListValue);
+                             base::MakeUnique<base::ListValue>());
   registry->RegisterListPref(prefs::kManagedBookmarks);
   registry->RegisterStringPref(
       prefs::kManagedBookmarksFolderName, std::string());
@@ -498,7 +514,7 @@ void AddIfNotBookmarked(BookmarkModel* model,
   if (IsBookmarkedByUser(model, url))
     return;  // Nothing to do, a user bookmark with that url already exists.
   model->client()->RecordAction(base::UserMetricsAction("BookmarkAdded"));
-  const BookmarkNode* parent = model->GetParentForNewNodes();
+  const BookmarkNode* parent = GetParentForNewNodes(model);
   model->AddURL(parent, parent->child_count(), title, url);
 }
 
@@ -567,6 +583,17 @@ bool HasDescendantsOf(const std::vector<const BookmarkNode*>& list,
       return true;
   }
   return false;
+}
+
+const BookmarkNode* GetParentForNewNodes(BookmarkModel* model) {
+#if defined(OS_ANDROID)
+  if (!HasUserCreatedBookmarks(model))
+    return model->mobile_node();
+#endif
+  std::vector<const BookmarkNode*> nodes =
+      GetMostRecentlyModifiedUserFolders(model, 1);
+  DCHECK(!nodes.empty());  // This list is always padded with default folders.
+  return nodes[0];
 }
 
 }  // namespace bookmarks

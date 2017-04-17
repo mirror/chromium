@@ -14,9 +14,8 @@
 #include "build/build_config.h"
 #include "content/common/content_export.h"
 #include "ui/base/layout.h"
+#include "url/gurl.h"
 #include "url/url_util.h"
-
-class GURL;
 
 namespace base {
 class RefCountedMemory;
@@ -35,11 +34,7 @@ struct GPUInfo;
 }
 
 namespace media {
-class MediaClientAndroid;
-}
-
-namespace sandbox {
-class TargetPolicy;
+class MediaDrmBridgeClient;
 }
 
 namespace content {
@@ -50,6 +45,7 @@ class ContentGpuClient;
 class ContentRendererClient;
 class ContentUtilityClient;
 class OriginTrialPolicy;
+struct CdmHostFilePath;
 struct CdmInfo;
 struct PepperPluginInfo;
 
@@ -92,17 +88,46 @@ class CONTENT_EXPORT ContentClient {
   virtual void AddPepperPlugins(
       std::vector<content::PepperPluginInfo>* plugins) {}
 
-  // Gives the embedder a chance to register the content decryption
-  // modules it supports.
+  // Gives the embedder a chance to register the Content Decryption Modules
+  // (CDM) it supports, as well as the CDM host file paths to verify CDM host.
+  // |cdms| or |cdm_host_file_paths| can be null which means that specific list
+  // is not needed.
   virtual void AddContentDecryptionModules(
-      std::vector<content::CdmInfo>* cdms) {}
+      std::vector<content::CdmInfo>* cdms,
+      std::vector<content::CdmHostFilePath>* cdm_host_file_paths) {}
 
-  // Gives the embedder a chance to register its own standard, referrer and
-  // saveable url schemes early on in the startup sequence.
-  virtual void AddAdditionalSchemes(
-      std::vector<url::SchemeWithType>* standard_schemes,
-      std::vector<url::SchemeWithType>* referrer_schemes,
-      std::vector<std::string>* savable_schemes) {}
+  // Gives the embedder a chance to register its own schemes early in the
+  // startup sequence.
+  struct CONTENT_EXPORT Schemes {
+    Schemes();
+    ~Schemes();
+    std::vector<std::string> standard_schemes;
+    std::vector<std::string> referrer_schemes;
+    std::vector<std::string> savable_schemes;
+    // Additional schemes that should be allowed to register service workers.
+    // Only secure and trustworthy schemes should be added.
+    std::vector<std::string> service_worker_schemes;
+    // Registers a URL scheme to be treated as a local scheme (i.e., with the
+    // same security rules as those applied to "file" URLs). This means that
+    // normal pages cannot link to or access URLs of this scheme.
+    std::vector<std::string> local_schemes;
+    // Registers a URL scheme to be treated as a noAccess scheme. This means
+    // that pages loaded with this URL scheme always have an opaque origin.
+    std::vector<std::string> no_access_schemes;
+    // Registers a non-HTTP URL scheme which can be sent CORS requests.
+    std::vector<std::string> cors_enabled_schemes;
+    // Registers a URL scheme whose resources can be loaded regardless of a
+    // page's Content Security Policy.
+    std::vector<std::string> csp_bypassing_schemes;
+    // See https://www.w3.org/TR/powerful-features/#is-origin-trustworthy.
+    std::vector<std::string> secure_schemes;
+    std::vector<GURL> secure_origins;
+    // Registers a URL scheme as strictly empty documents, allowing them to
+    // commit synchronously.
+    std::vector<std::string> empty_document_schemes;
+  };
+
+  virtual void AddAdditionalSchemes(Schemes* schemes) {}
 
   // Returns whether the given message should be sent in a swapped out renderer.
   virtual bool CanSendWhileSwappedOut(const IPC::Message* message);
@@ -147,17 +172,6 @@ class CONTENT_EXPORT ContentClient {
       int* sandbox_profile_resource_id) const;
 #endif
 
-  // Gives the embedder a chance to register additional schemes and origins
-  // that need to be considered trustworthy.
-  // See https://www.w3.org/TR/powerful-features/#is-origin-trustworthy.
-  virtual void AddSecureSchemesAndOrigins(std::set<std::string>* schemes,
-                                          std::set<GURL>* origins) {}
-
-  // Gives the embedder a chance to register additional schemes that
-  // should be allowed to register service workers. Only secure and
-  // trustworthy schemes should be added.
-  virtual void AddServiceWorkerSchemes(std::set<std::string>* schemes) {}
-
   // Returns whether or not V8 script extensions should be allowed for a
   // service worker.
   virtual bool AllowScriptExtensionForServiceWorker(const GURL& script_url);
@@ -179,8 +193,8 @@ class CONTENT_EXPORT ContentClient {
   // the browser UI thread.
   virtual bool UsingSynchronousCompositing();
 
-  // Returns the MediaClientAndroid to be used by media code on Android.
-  virtual media::MediaClientAndroid* GetMediaClientAndroid();
+  // Returns the MediaDrmBridgeClient to be used by media code on Android.
+  virtual media::MediaDrmBridgeClient* GetMediaDrmBridgeClient();
 #endif  // OS_ANDROID
 
  private:

@@ -20,9 +20,6 @@
 #ifndef SVGMPathElement_h
 #define SVGMPathElement_h
 
-#include "core/SVGNames.h"
-#include "core/svg/SVGAnimatedBoolean.h"
-#include "core/svg/SVGAnimatedString.h"
 #include "core/svg/SVGElement.h"
 #include "core/svg/SVGURIReference.h"
 
@@ -30,36 +27,37 @@ namespace blink {
 
 class SVGPathElement;
 
-class SVGMPathElement final : public SVGElement,
-                              public SVGURIReference {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(SVGMPathElement);
-public:
-    DECLARE_NODE_FACTORY(SVGMPathElement);
+class SVGMPathElement final : public SVGElement, public SVGURIReference {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(SVGMPathElement);
 
-    ~SVGMPathElement() override;
+ public:
+  DECLARE_NODE_FACTORY(SVGMPathElement);
 
-    SVGPathElement* pathElement();
+  ~SVGMPathElement() override;
 
-    void targetPathChanged();
+  SVGPathElement* PathElement();
 
-    DECLARE_VIRTUAL_TRACE();
+  void TargetPathChanged();
 
-private:
-    explicit SVGMPathElement(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    void buildPendingResource() override;
-    void clearResourceReferences();
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void removedFrom(ContainerNode*) override;
+ private:
+  explicit SVGMPathElement(Document&);
 
-    void svgAttributeChanged(const QualifiedName&) override;
+  void BuildPendingResource() override;
+  void ClearResourceReferences();
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
 
-    bool layoutObjectIsNeeded(const ComputedStyle&) override { return false; }
-    void notifyParentOfPathChange(ContainerNode*);
+  void SvgAttributeChanged(const QualifiedName&) override;
 
+  bool LayoutObjectIsNeeded(const ComputedStyle&) override { return false; }
+  void NotifyParentOfPathChange(ContainerNode*);
+
+  Member<IdTargetObserver> target_id_observer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGMPathElement_h
+#endif  // SVGMPathElement_h

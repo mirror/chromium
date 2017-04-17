@@ -90,6 +90,7 @@ class SavePasswordProgressLogger {
     STRING_FORM_BLACKLISTED,
     STRING_INVALID_FORM,
     STRING_SYNC_CREDENTIAL,
+    STRING_BLOCK_PASSWORD_SAME_ORIGIN_INSECURE_SCHEME,
     STRING_PROVISIONALLY_SAVED_FORM,
     STRING_IGNORE_POSSIBLE_USERNAMES,
     STRING_ON_PASSWORD_FORMS_RENDERED_METHOD,
@@ -112,11 +113,11 @@ class SavePasswordProgressLogger {
     STRING_WAS_LAST_NAVIGATION_HTTP_ERROR_METHOD,
     STRING_HTTP_STATUS_CODE,
     STRING_PROVISIONALLY_SAVED_FORM_IS_NOT_HTML,
-    STRING_ON_REQUEST_DONE_METHOD,
+    STRING_PROCESS_MATCHES_METHOD,
     STRING_BEST_SCORE,
     STRING_ON_GET_STORE_RESULTS_METHOD,
     STRING_NUMBER_RESULTS,
-    STRING_FETCH_LOGINS_METHOD,
+    STRING_FETCH_METHOD,
     STRING_NO_STORE,
     STRING_CREATE_LOGIN_MANAGERS_METHOD,
     STRING_OLD_NUMBER_LOGIN_MANAGERS,
@@ -129,7 +130,7 @@ class SavePasswordProgressLogger {
     STRING_PROCESS_FRAME_METHOD,
     STRING_FORM_SIGNATURE,
     STRING_ADDING_SIGNATURE,
-    STRING_FORM_MANAGER_STATE,
+    STRING_FORM_FETCHER_STATE,
     STRING_UNOWNED_INPUTS_VISIBLE,
     STRING_ON_FILL_PASSWORD_FORM_METHOD,
     STRING_ON_SHOW_INITIAL_PASSWORD_ACCOUNT_SUGGESTIONS,
@@ -144,6 +145,27 @@ class SavePasswordProgressLogger {
     STRING_MATCH_IN_ADDITIONAL,
     STRING_USERNAME_FILLED,
     STRING_PASSWORD_FILLED,
+    STRING_FORM_NAME,
+    STRING_FIELDS,
+    STRING_SERVER_PREDICTIONS,
+    STRING_FORM_VOTES,
+    STRING_REUSE_FOUND,
+    STRING_GENERATION_DISABLED_SAVING_DISABLED,
+    STRING_GENERATION_DISABLED_NO_SYNC,
+    STRING_GENERATION_DISABLED_CUSTOM_PASSPHRASE,
+    STRING_GENERATION_RENDERER_ENABLED,
+    STRING_GENERATION_RENDERER_INVALID_PASSWORD_FORM,
+    STRING_GENERATION_RENDERER_POSSIBLE_ACCOUNT_CREATION_FORMS,
+    STRING_GENERATION_RENDERER_NO_PASSWORD_MANAGER_ACCESS,
+    STRING_GENERATION_RENDERER_FORM_ALREADY_FOUND,
+    STRING_GENERATION_RENDERER_NO_POSSIBLE_CREATION_FORMS,
+    STRING_GENERATION_RENDERER_NOT_BLACKLISTED,
+    STRING_GENERATION_RENDERER_AUTOCOMPLETE_ATTRIBUTE,
+    STRING_GENERATION_RENDERER_NO_SERVER_SIGNAL,
+    STRING_GENERATION_RENDERER_ELIGIBLE_FORM_FOUND,
+    STRING_GENERATION_RENDERER_NO_FIELD_FOUND,
+    STRING_GENERATION_RENDERER_SHOW_GENERATION_POPUP,
+    STRING_GENERATION_RENDERER_GENERATED_PASSWORD_ACCEPTED,
     STRING_INVALID,  // Represents a string returned in a case of an error.
     STRING_MAX = STRING_INVALID
   };
@@ -163,6 +185,10 @@ class SavePasswordProgressLogger {
   void LogNumber(StringID label, size_t unsigned_number);
   void LogMessage(StringID message);
 
+  // Removes privacy sensitive parts of |url| (currently all but host and
+  // scheme).
+  static std::string ScrubURL(const GURL& url);
+
  protected:
   // Sends |log| immediately for display.
   virtual void SendLog(const std::string& log) = 0;
@@ -170,12 +196,15 @@ class SavePasswordProgressLogger {
   // Converts |log| and its |label| to a string and calls SendLog on the result.
   void LogValue(StringID label, const base::Value& log);
 
-  // Replaces all characters satisfying IsUnwantedInElementID with a ' ', and
-  // lowercases all characters. This damages some valid HTML element IDs
-  // or names, but it is likely that it will be still possible to match the
-  // scrubbed string to the original ID or name in the HTML doc. That's good
-  // enough for the logging purposes, and provides some security benefits.
+  // Replaces all characters satisfying IsUnwantedInElementID with a ' '.
+  // This damages some valid HTML element IDs or names, but it is likely that it
+  // will be still possible to match the scrubbed string to the original ID or
+  // name in the HTML doc. That's good enough for the logging purposes, and
+  // provides some security benefits.
   static std::string ScrubElementID(const base::string16& element_id);
+
+  // The UTF-8 version of the function above.
+  static std::string ScrubElementID(std::string element_id);
 
   // Translates the StringID values into the corresponding strings.
   static std::string GetStringFromID(SavePasswordProgressLogger::StringID id);

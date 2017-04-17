@@ -37,54 +37,71 @@ class ExecutionContext;
 class ScriptState;
 class ScriptValue;
 
-class MODULES_EXPORT IDBKeyRange final : public GarbageCollected<IDBKeyRange>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    enum LowerBoundType {
-        LowerBoundOpen,
-        LowerBoundClosed
-    };
-    enum UpperBoundType {
-        UpperBoundOpen,
-        UpperBoundClosed
-    };
+class MODULES_EXPORT IDBKeyRange final : public GarbageCollected<IDBKeyRange>,
+                                         public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    static IDBKeyRange* create(IDBKey* lower, IDBKey* upper, LowerBoundType lowerType, UpperBoundType upperType)
-    {
-        return new IDBKeyRange(lower, upper, lowerType, upperType);
-    }
-    // Null if the script value is null or undefined, the range if it is one, otherwise tries to convert to a key and throws if it fails.
-    static IDBKeyRange* fromScriptValue(ExecutionContext*, const ScriptValue&, ExceptionState&);
+ public:
+  enum LowerBoundType { kLowerBoundOpen, kLowerBoundClosed };
+  enum UpperBoundType { kUpperBoundOpen, kUpperBoundClosed };
 
-    DECLARE_TRACE();
+  static IDBKeyRange* Create(IDBKey* lower,
+                             IDBKey* upper,
+                             LowerBoundType lower_type,
+                             UpperBoundType upper_type) {
+    return new IDBKeyRange(lower, upper, lower_type, upper_type);
+  }
+  // Null if the script value is null or undefined, the range if it is one,
+  // otherwise tries to convert to a key and throws if it fails.
+  static IDBKeyRange* FromScriptValue(ExecutionContext*,
+                                      const ScriptValue&,
+                                      ExceptionState&);
 
-    // Implement the IDBKeyRange IDL
-    IDBKey* lower() const { return m_lower.get(); }
-    IDBKey* upper() const { return m_upper.get(); }
+  DECLARE_TRACE();
 
-    ScriptValue lowerValue(ScriptState*) const;
-    ScriptValue upperValue(ScriptState*) const;
-    bool lowerOpen() const { return m_lowerType == LowerBoundOpen; }
-    bool upperOpen() const { return m_upperType == UpperBoundOpen; }
+  // Implement the IDBKeyRange IDL
+  IDBKey* Lower() const { return lower_.Get(); }
+  IDBKey* Upper() const { return upper_.Get(); }
 
-    static IDBKeyRange* only(ExecutionContext*, const ScriptValue& key, ExceptionState&);
-    static IDBKeyRange* lowerBound(ExecutionContext*, const ScriptValue& bound, bool open, ExceptionState&);
-    static IDBKeyRange* upperBound(ExecutionContext*, const ScriptValue& bound, bool open, ExceptionState&);
-    static IDBKeyRange* bound(ExecutionContext*, const ScriptValue& lower, const ScriptValue& upper, bool lowerOpen, bool upperOpen, ExceptionState&);
+  ScriptValue lowerValue(ScriptState*) const;
+  ScriptValue upperValue(ScriptState*) const;
+  bool lowerOpen() const { return lower_type_ == kLowerBoundOpen; }
+  bool upperOpen() const { return upper_type_ == kUpperBoundOpen; }
 
-    static IDBKeyRange* only(IDBKey* value, ExceptionState&);
+  static IDBKeyRange* only(ScriptState*,
+                           const ScriptValue& key,
+                           ExceptionState&);
+  static IDBKeyRange* lowerBound(ScriptState*,
+                                 const ScriptValue& bound,
+                                 bool open,
+                                 ExceptionState&);
+  static IDBKeyRange* upperBound(ScriptState*,
+                                 const ScriptValue& bound,
+                                 bool open,
+                                 ExceptionState&);
+  static IDBKeyRange* bound(ScriptState*,
+                            const ScriptValue& lower,
+                            const ScriptValue& upper,
+                            bool lower_open,
+                            bool upper_open,
+                            ExceptionState&);
 
-    bool includes(ExecutionContext*, const ScriptValue& key, ExceptionState&);
+  static IDBKeyRange* only(IDBKey* value, ExceptionState&);
 
-private:
-    IDBKeyRange(IDBKey* lower, IDBKey* upper, LowerBoundType lowerType, UpperBoundType upperType);
+  bool includes(ScriptState*, const ScriptValue& key, ExceptionState&);
 
-    Member<IDBKey> m_lower;
-    Member<IDBKey> m_upper;
-    const LowerBoundType m_lowerType;
-    const UpperBoundType m_upperType;
+ private:
+  IDBKeyRange(IDBKey* lower,
+              IDBKey* upper,
+              LowerBoundType lower_type,
+              UpperBoundType upper_type);
+
+  Member<IDBKey> lower_;
+  Member<IDBKey> upper_;
+  const LowerBoundType lower_type_;
+  const UpperBoundType upper_type_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // IDBKeyRange_h
+#endif  // IDBKeyRange_h

@@ -9,8 +9,8 @@
 
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/gcm/gcm_profile_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/services/gcm/gcm_profile_service_factory.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
@@ -33,7 +33,6 @@
 #include "net/url_request/url_request_context_getter.h"
 
 #if defined(OS_ANDROID)
-#include "base/android/context_utils.h"
 #include "components/invalidation/impl/invalidation_service_android.h"
 #endif  // defined(OS_ANDROID)
 
@@ -101,8 +100,8 @@ KeyedService* ProfileInvalidationProviderFactory::BuildServiceInstanceFor(
     return testing_factory_(context).release();
 
 #if defined(OS_ANDROID)
-  return new ProfileInvalidationProvider(std::unique_ptr<InvalidationService>(
-      new InvalidationServiceAndroid(base::android::GetApplicationContext())));
+  return new ProfileInvalidationProvider(
+      std::unique_ptr<InvalidationService>(new InvalidationServiceAndroid()));
 #else
 
   std::unique_ptr<IdentityProvider> identity_provider;

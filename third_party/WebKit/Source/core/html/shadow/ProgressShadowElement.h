@@ -33,22 +33,22 @@
 #define ProgressShadowElement_h
 
 #include "core/html/HTMLDivElement.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class HTMLProgressElement;
 
 class ProgressShadowElement : public HTMLDivElement {
-public:
-    DECLARE_NODE_FACTORY(ProgressShadowElement);
+ public:
+  DECLARE_NODE_FACTORY(ProgressShadowElement);
 
-private:
-    explicit ProgressShadowElement(Document&);
-    HTMLProgressElement* progressElement() const;
-    bool layoutObjectIsNeeded(const ComputedStyle&) override;
+ private:
+  explicit ProgressShadowElement(Document&);
+  HTMLProgressElement* ProgressElement() const;
+  bool LayoutObjectIsNeeded(const ComputedStyle&) override;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ProgressShadowElement_h
+#endif  // ProgressShadowElement_h

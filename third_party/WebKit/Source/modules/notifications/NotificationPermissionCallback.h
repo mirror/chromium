@@ -27,17 +27,18 @@
 #define NotificationPermissionCallback_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class NotificationPermissionCallback : public GarbageCollectedFinalized<NotificationPermissionCallback> {
-public:
-    virtual ~NotificationPermissionCallback() { }
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
-    virtual void handleEvent(const String& permission) = 0;
+class NotificationPermissionCallback
+    : public GarbageCollectedFinalized<NotificationPermissionCallback> {
+ public:
+  virtual ~NotificationPermissionCallback() {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
+  virtual void handleEvent(const String& permission) = 0;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NotificationPermissionCallback_h
+#endif  // NotificationPermissionCallback_h

@@ -13,37 +13,36 @@ namespace blink {
 namespace {
 
 class NullEventQueue final : public EventQueue {
-public:
-    NullEventQueue() { }
-    ~NullEventQueue() override { }
-    bool enqueueEvent(Event*) override { return true; }
-    bool cancelEvent(Event*) override { return true; }
-    void close() override { }
+ public:
+  NullEventQueue() {}
+  ~NullEventQueue() override {}
+  bool EnqueueEvent(Event*) override { return true; }
+  bool CancelEvent(Event*) override { return true; }
+  void Close() override {}
 };
 
-} // namespace
+}  // namespace
 
 NullExecutionContext::NullExecutionContext()
-    : m_tasksNeedSuspension(false)
-    , m_isSecureContext(true)
-    , m_queue(new NullEventQueue())
-{
+    : tasks_need_suspension_(false),
+      is_secure_context_(true),
+      queue_(new NullEventQueue()) {}
+
+void NullExecutionContext::PostTask(TaskType,
+                                    const WebTraceLocation&,
+                                    std::unique_ptr<ExecutionContextTask>,
+                                    const String&) {}
+
+void NullExecutionContext::SetIsSecureContext(bool is_secure_context) {
+  is_secure_context_ = is_secure_context;
 }
 
-void NullExecutionContext::postTask(const WebTraceLocation&, std::unique_ptr<ExecutionContextTask>, const String&)
-{
+bool NullExecutionContext::IsSecureContext(
+    String& error_message,
+    const SecureContextCheck privilege_context_check) const {
+  if (!is_secure_context_)
+    error_message = "A secure context is required";
+  return is_secure_context_;
 }
 
-void NullExecutionContext::setIsSecureContext(bool isSecureContext)
-{
-    m_isSecureContext = isSecureContext;
-}
-
-bool NullExecutionContext::isSecureContext(String& errorMessage, const SecureContextCheck privilegeContextCheck) const
-{
-    if (!m_isSecureContext)
-        errorMessage = "A secure context is required";
-    return m_isSecureContext;
-}
-
-} // namespace blink
+}  // namespace blink

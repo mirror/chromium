@@ -30,10 +30,10 @@
 
 #include "platform/Decimal.h"
 
-#include "wtf/Allocator.h"
-#include "wtf/MathExtras.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/MathExtras.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 #include <algorithm>
 #include <float.h>
@@ -42,1000 +42,969 @@ namespace blink {
 
 namespace DecimalPrivate {
 
-static int const ExponentMax = 1023;
-static int const ExponentMin = -1023;
-static int const Precision = 18;
+static int const kExponentMax = 1023;
+static int const kExponentMin = -1023;
+static int const kPrecision = 18;
 
-static const uint64_t MaxCoefficient = UINT64_C(0xDE0B6B3A763FFFF); // 999999999999999999 == 18 9's
+static const uint64_t kMaxCoefficient =
+    UINT64_C(0xDE0B6B3A763FFFF);  // 999999999999999999 == 18 9's
 
 // This class handles Decimal special values.
 class SpecialValueHandler {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(SpecialValueHandler);
-public:
-    enum HandleResult {
-        BothFinite,
-        BothInfinity,
-        EitherNaN,
-        LHSIsInfinity,
-        RHSIsInfinity,
-    };
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(SpecialValueHandler);
 
-    SpecialValueHandler(const Decimal& lhs, const Decimal& rhs);
-    HandleResult handle();
-    Decimal value() const;
+ public:
+  enum HandleResult {
+    kBothFinite,
+    kBothInfinity,
+    kEitherNaN,
+    kLHSIsInfinity,
+    kRHSIsInfinity,
+  };
 
-private:
-    enum Result {
-        ResultIsLHS,
-        ResultIsRHS,
-        ResultIsUnknown,
-    };
+  SpecialValueHandler(const Decimal& lhs, const Decimal& rhs);
+  HandleResult Handle();
+  Decimal Value() const;
 
-    const Decimal& m_lhs;
-    const Decimal& m_rhs;
-    Result m_result;
+ private:
+  enum Result {
+    kResultIsLHS,
+    kResultIsRHS,
+    kResultIsUnknown,
+  };
+
+  const Decimal& lhs_;
+  const Decimal& rhs_;
+  Result result_;
 };
 
 SpecialValueHandler::SpecialValueHandler(const Decimal& lhs, const Decimal& rhs)
-    : m_lhs(lhs), m_rhs(rhs), m_result(ResultIsUnknown)
-{
+    : lhs_(lhs), rhs_(rhs), result_(kResultIsUnknown) {}
+
+SpecialValueHandler::HandleResult SpecialValueHandler::Handle() {
+  if (lhs_.IsFinite() && rhs_.IsFinite())
+    return kBothFinite;
+
+  const Decimal::EncodedData::FormatClass lhs_class =
+      lhs_.Value().GetFormatClass();
+  const Decimal::EncodedData::FormatClass rhs_class =
+      rhs_.Value().GetFormatClass();
+  if (lhs_class == Decimal::EncodedData::kClassNaN) {
+    result_ = kResultIsLHS;
+    return kEitherNaN;
+  }
+
+  if (rhs_class == Decimal::EncodedData::kClassNaN) {
+    result_ = kResultIsRHS;
+    return kEitherNaN;
+  }
+
+  if (lhs_class == Decimal::EncodedData::kClassInfinity)
+    return rhs_class == Decimal::EncodedData::kClassInfinity ? kBothInfinity
+                                                             : kLHSIsInfinity;
+
+  if (rhs_class == Decimal::EncodedData::kClassInfinity)
+    return kRHSIsInfinity;
+
+  ASSERT_NOT_REACHED();
+  return kBothFinite;
 }
 
-SpecialValueHandler::HandleResult SpecialValueHandler::handle()
-{
-    if (m_lhs.isFinite() && m_rhs.isFinite())
-        return BothFinite;
-
-    const Decimal::EncodedData::FormatClass lhsClass = m_lhs.value().getFormatClass();
-    const Decimal::EncodedData::FormatClass rhsClass = m_rhs.value().getFormatClass();
-    if (lhsClass == Decimal::EncodedData::ClassNaN) {
-        m_result = ResultIsLHS;
-        return EitherNaN;
-    }
-
-    if (rhsClass == Decimal::EncodedData::ClassNaN) {
-        m_result = ResultIsRHS;
-        return EitherNaN;
-    }
-
-    if (lhsClass == Decimal::EncodedData::ClassInfinity)
-        return rhsClass == Decimal::EncodedData::ClassInfinity ? BothInfinity : LHSIsInfinity;
-
-    if (rhsClass == Decimal::EncodedData::ClassInfinity)
-        return RHSIsInfinity;
-
-    ASSERT_NOT_REACHED();
-    return BothFinite;
-}
-
-Decimal SpecialValueHandler::value() const
-{
-    switch (m_result) {
-    case ResultIsLHS:
-        return m_lhs;
-    case ResultIsRHS:
-        return m_rhs;
-    case ResultIsUnknown:
+Decimal SpecialValueHandler::Value() const {
+  switch (result_) {
+    case kResultIsLHS:
+      return lhs_;
+    case kResultIsRHS:
+      return rhs_;
+    case kResultIsUnknown:
     default:
-        ASSERT_NOT_REACHED();
-        return m_lhs;
-    }
+      ASSERT_NOT_REACHED();
+      return lhs_;
+  }
 }
 
 // This class is used for 128 bit unsigned integer arithmetic.
 class UInt128 {
-public:
-    UInt128(uint64_t low, uint64_t high)
-        : m_high(high), m_low(low)
-    {
-    }
+ public:
+  UInt128(uint64_t low, uint64_t high) : high_(high), low_(low) {}
 
-    UInt128& operator/=(uint32_t);
+  UInt128& operator/=(uint32_t);
 
-    uint64_t high() const { return m_high; }
-    uint64_t low() const { return m_low; }
+  uint64_t High() const { return high_; }
+  uint64_t Low() const { return low_; }
 
-    static UInt128 multiply(uint64_t u, uint64_t v) { return UInt128(u * v, multiplyHigh(u, v)); }
+  static UInt128 Multiply(uint64_t u, uint64_t v) {
+    return UInt128(u * v, MultiplyHigh(u, v));
+  }
 
-private:
-    static uint32_t highUInt32(uint64_t x) { return static_cast<uint32_t>(x >> 32); }
-    static uint32_t lowUInt32(uint64_t x) { return static_cast<uint32_t>(x & ((static_cast<uint64_t>(1) << 32) - 1)); }
-    static uint64_t makeUInt64(uint32_t low, uint32_t high) { return low | (static_cast<uint64_t>(high) << 32); }
+ private:
+  static uint32_t HighUInt32(uint64_t x) {
+    return static_cast<uint32_t>(x >> 32);
+  }
+  static uint32_t LowUInt32(uint64_t x) {
+    return static_cast<uint32_t>(x & ((static_cast<uint64_t>(1) << 32) - 1));
+  }
+  static uint64_t MakeUInt64(uint32_t low, uint32_t high) {
+    return low | (static_cast<uint64_t>(high) << 32);
+  }
 
-    static uint64_t multiplyHigh(uint64_t, uint64_t);
+  static uint64_t MultiplyHigh(uint64_t, uint64_t);
 
-    uint64_t m_high;
-    uint64_t m_low;
+  uint64_t high_;
+  uint64_t low_;
 };
 
-UInt128& UInt128::operator/=(const uint32_t divisor)
-{
-    ASSERT(divisor);
+UInt128& UInt128::operator/=(const uint32_t divisor) {
+  ASSERT(divisor);
 
-    if (!m_high) {
-        m_low /= divisor;
-        return *this;
-    }
-
-    uint32_t dividend[4];
-    dividend[0] = lowUInt32(m_low);
-    dividend[1] = highUInt32(m_low);
-    dividend[2] = lowUInt32(m_high);
-    dividend[3] = highUInt32(m_high);
-
-    uint32_t quotient[4];
-    uint32_t remainder = 0;
-    for (int i = 3; i >= 0; --i) {
-        const uint64_t work = makeUInt64(dividend[i], remainder);
-        remainder = static_cast<uint32_t>(work % divisor);
-        quotient[i] = static_cast<uint32_t>(work / divisor);
-    }
-    m_low = makeUInt64(quotient[0], quotient[1]);
-    m_high = makeUInt64(quotient[2], quotient[3]);
+  if (!high_) {
+    low_ /= divisor;
     return *this;
+  }
+
+  uint32_t dividend[4];
+  dividend[0] = LowUInt32(low_);
+  dividend[1] = HighUInt32(low_);
+  dividend[2] = LowUInt32(high_);
+  dividend[3] = HighUInt32(high_);
+
+  uint32_t quotient[4];
+  uint32_t remainder = 0;
+  for (int i = 3; i >= 0; --i) {
+    const uint64_t work = MakeUInt64(dividend[i], remainder);
+    remainder = static_cast<uint32_t>(work % divisor);
+    quotient[i] = static_cast<uint32_t>(work / divisor);
+  }
+  low_ = MakeUInt64(quotient[0], quotient[1]);
+  high_ = MakeUInt64(quotient[2], quotient[3]);
+  return *this;
 }
 
 // Returns high 64bit of 128bit product.
-uint64_t UInt128::multiplyHigh(uint64_t u, uint64_t v)
-{
-    const uint64_t uLow = lowUInt32(u);
-    const uint64_t uHigh = highUInt32(u);
-    const uint64_t vLow = lowUInt32(v);
-    const uint64_t vHigh = highUInt32(v);
-    const uint64_t partialProduct = uHigh * vLow + highUInt32(uLow * vLow);
-    return uHigh * vHigh + highUInt32(partialProduct) + highUInt32(uLow * vHigh + lowUInt32(partialProduct));
+uint64_t UInt128::MultiplyHigh(uint64_t u, uint64_t v) {
+  const uint64_t u_low = LowUInt32(u);
+  const uint64_t u_high = HighUInt32(u);
+  const uint64_t v_low = LowUInt32(v);
+  const uint64_t v_high = HighUInt32(v);
+  const uint64_t partial_product = u_high * v_low + HighUInt32(u_low * v_low);
+  return u_high * v_high + HighUInt32(partial_product) +
+         HighUInt32(u_low * v_high + LowUInt32(partial_product));
 }
 
-static int countDigits(uint64_t x)
-{
-    int numberOfDigits = 0;
-    for (uint64_t powerOfTen = 1; x >= powerOfTen; powerOfTen *= 10) {
-        ++numberOfDigits;
-        if (powerOfTen >= std::numeric_limits<uint64_t>::max() / 10)
-            break;
-    }
-    return numberOfDigits;
+static int CountDigits(uint64_t x) {
+  int number_of_digits = 0;
+  for (uint64_t power_of_ten = 1; x >= power_of_ten; power_of_ten *= 10) {
+    ++number_of_digits;
+    if (power_of_ten >= std::numeric_limits<uint64_t>::max() / 10)
+      break;
+  }
+  return number_of_digits;
 }
 
-static uint64_t scaleDown(uint64_t x, int n)
-{
-    ASSERT(n >= 0);
-    while (n > 0 && x) {
-        x /= 10;
-        --n;
-    }
-    return x;
+static uint64_t ScaleDown(uint64_t x, int n) {
+  ASSERT(n >= 0);
+  while (n > 0 && x) {
+    x /= 10;
+    --n;
+  }
+  return x;
 }
 
-static uint64_t scaleUp(uint64_t x, int n)
-{
-    ASSERT(n >= 0);
-    ASSERT(n <= Precision);
+static uint64_t ScaleUp(uint64_t x, int n) {
+  ASSERT(n >= 0);
+  ASSERT(n <= kPrecision);
 
-    uint64_t y = 1;
-    uint64_t z = 10;
-    for (;;) {
-        if (n & 1)
-            y = y * z;
+  uint64_t y = 1;
+  uint64_t z = 10;
+  for (;;) {
+    if (n & 1)
+      y = y * z;
 
-        n >>= 1;
-        if (!n)
-            return x * y;
+    n >>= 1;
+    if (!n)
+      return x * y;
 
-        z = z * z;
-    }
+    z = z * z;
+  }
 }
 
-} // namespace DecimalPrivate
+}  // namespace DecimalPrivate
 
 using namespace DecimalPrivate;
 
-Decimal::EncodedData::EncodedData(Sign sign, FormatClass formatClass)
-    : m_coefficient(0)
-    , m_exponent(0)
-    , m_formatClass(formatClass)
-    , m_sign(sign)
-{
-}
+Decimal::EncodedData::EncodedData(Sign sign, FormatClass format_class)
+    : coefficient_(0), exponent_(0), format_class_(format_class), sign_(sign) {}
 
 Decimal::EncodedData::EncodedData(Sign sign, int exponent, uint64_t coefficient)
-    : m_formatClass(coefficient ? ClassNormal : ClassZero)
-    , m_sign(sign)
-{
-    if (exponent >= ExponentMin && exponent <= ExponentMax) {
-        while (coefficient > MaxCoefficient) {
-            coefficient /= 10;
-            ++exponent;
-        }
+    : format_class_(coefficient ? kClassNormal : kClassZero), sign_(sign) {
+  if (exponent >= kExponentMin && exponent <= kExponentMax) {
+    while (coefficient > kMaxCoefficient) {
+      coefficient /= 10;
+      ++exponent;
     }
+  }
 
-    if (exponent > ExponentMax) {
-        m_coefficient = 0;
-        m_exponent = 0;
-        m_formatClass = ClassInfinity;
-        return;
-    }
+  if (exponent > kExponentMax) {
+    coefficient_ = 0;
+    exponent_ = 0;
+    format_class_ = kClassInfinity;
+    return;
+  }
 
-    if (exponent < ExponentMin) {
-        m_coefficient = 0;
-        m_exponent = 0;
-        m_formatClass = ClassZero;
-        return;
-    }
+  if (exponent < kExponentMin) {
+    coefficient_ = 0;
+    exponent_ = 0;
+    format_class_ = kClassZero;
+    return;
+  }
 
-    m_coefficient = coefficient;
-    m_exponent = static_cast<int16_t>(exponent);
+  coefficient_ = coefficient;
+  exponent_ = static_cast<int16_t>(exponent);
 }
 
-bool Decimal::EncodedData::operator==(const EncodedData& another) const
-{
-    return m_sign == another.m_sign
-        && m_formatClass == another.m_formatClass
-        && m_exponent == another.m_exponent
-        && m_coefficient == another.m_coefficient;
+bool Decimal::EncodedData::operator==(const EncodedData& another) const {
+  return sign_ == another.sign_ && format_class_ == another.format_class_ &&
+         exponent_ == another.exponent_ && coefficient_ == another.coefficient_;
 }
 
 Decimal::Decimal(int32_t i32)
-    : m_data(i32 < 0 ? Negative : Positive, 0, i32 < 0 ? static_cast<uint64_t>(-static_cast<int64_t>(i32)) : static_cast<uint64_t>(i32))
-{
-}
+    : data_(i32 < 0 ? kNegative : kPositive,
+            0,
+            i32 < 0 ? static_cast<uint64_t>(-static_cast<int64_t>(i32))
+                    : static_cast<uint64_t>(i32)) {}
 
 Decimal::Decimal(Sign sign, int exponent, uint64_t coefficient)
-    : m_data(sign, exponent, coefficient)
-{
+    : data_(sign, exponent, coefficient) {}
+
+Decimal::Decimal(const EncodedData& data) : data_(data) {}
+
+Decimal::Decimal(const Decimal& other) : data_(other.data_) {}
+
+Decimal& Decimal::operator=(const Decimal& other) {
+  data_ = other.data_;
+  return *this;
 }
 
-Decimal::Decimal(const EncodedData& data)
-    : m_data(data)
-{
+Decimal& Decimal::operator+=(const Decimal& other) {
+  data_ = (*this + other).data_;
+  return *this;
 }
 
-Decimal::Decimal(const Decimal& other)
-    : m_data(other.m_data)
-{
+Decimal& Decimal::operator-=(const Decimal& other) {
+  data_ = (*this - other).data_;
+  return *this;
 }
 
-Decimal& Decimal::operator=(const Decimal& other)
-{
-    m_data = other.m_data;
+Decimal& Decimal::operator*=(const Decimal& other) {
+  data_ = (*this * other).data_;
+  return *this;
+}
+
+Decimal& Decimal::operator/=(const Decimal& other) {
+  data_ = (*this / other).data_;
+  return *this;
+}
+
+Decimal Decimal::operator-() const {
+  if (IsNaN())
     return *this;
+
+  Decimal result(*this);
+  result.data_.SetSign(InvertSign(data_.GetSign()));
+  return result;
 }
 
-Decimal& Decimal::operator+=(const Decimal& other)
-{
-    m_data = (*this + other).m_data;
-    return *this;
+Decimal Decimal::operator+(const Decimal& rhs) const {
+  const Decimal& lhs = *this;
+  const Sign lhs_sign = lhs.GetSign();
+  const Sign rhs_sign = rhs.GetSign();
+
+  SpecialValueHandler handler(lhs, rhs);
+  switch (handler.Handle()) {
+    case SpecialValueHandler::kBothFinite:
+      break;
+
+    case SpecialValueHandler::kBothInfinity:
+      return lhs_sign == rhs_sign ? lhs : Nan();
+
+    case SpecialValueHandler::kEitherNaN:
+      return handler.Value();
+
+    case SpecialValueHandler::kLHSIsInfinity:
+      return lhs;
+
+    case SpecialValueHandler::kRHSIsInfinity:
+      return rhs;
+  }
+
+  const AlignedOperands aligned_operands = AlignOperands(lhs, rhs);
+
+  const uint64_t result =
+      lhs_sign == rhs_sign
+          ? aligned_operands.lhs_coefficient + aligned_operands.rhs_coefficient
+          : aligned_operands.lhs_coefficient - aligned_operands.rhs_coefficient;
+
+  if (lhs_sign == kNegative && rhs_sign == kPositive && !result)
+    return Decimal(kPositive, aligned_operands.exponent, 0);
+
+  return static_cast<int64_t>(result) >= 0
+             ? Decimal(lhs_sign, aligned_operands.exponent, result)
+             : Decimal(InvertSign(lhs_sign), aligned_operands.exponent,
+                       -static_cast<int64_t>(result));
 }
 
-Decimal& Decimal::operator-=(const Decimal& other)
-{
-    m_data = (*this - other).m_data;
-    return *this;
+Decimal Decimal::operator-(const Decimal& rhs) const {
+  const Decimal& lhs = *this;
+  const Sign lhs_sign = lhs.GetSign();
+  const Sign rhs_sign = rhs.GetSign();
+
+  SpecialValueHandler handler(lhs, rhs);
+  switch (handler.Handle()) {
+    case SpecialValueHandler::kBothFinite:
+      break;
+
+    case SpecialValueHandler::kBothInfinity:
+      return lhs_sign == rhs_sign ? Nan() : lhs;
+
+    case SpecialValueHandler::kEitherNaN:
+      return handler.Value();
+
+    case SpecialValueHandler::kLHSIsInfinity:
+      return lhs;
+
+    case SpecialValueHandler::kRHSIsInfinity:
+      return Infinity(InvertSign(rhs_sign));
+  }
+
+  const AlignedOperands aligned_operands = AlignOperands(lhs, rhs);
+
+  const uint64_t result =
+      lhs_sign == rhs_sign
+          ? aligned_operands.lhs_coefficient - aligned_operands.rhs_coefficient
+          : aligned_operands.lhs_coefficient + aligned_operands.rhs_coefficient;
+
+  if (lhs_sign == kNegative && rhs_sign == kNegative && !result)
+    return Decimal(kPositive, aligned_operands.exponent, 0);
+
+  return static_cast<int64_t>(result) >= 0
+             ? Decimal(lhs_sign, aligned_operands.exponent, result)
+             : Decimal(InvertSign(lhs_sign), aligned_operands.exponent,
+                       -static_cast<int64_t>(result));
 }
 
-Decimal& Decimal::operator*=(const Decimal& other)
-{
-    m_data = (*this * other).m_data;
-    return *this;
-}
+Decimal Decimal::operator*(const Decimal& rhs) const {
+  const Decimal& lhs = *this;
+  const Sign lhs_sign = lhs.GetSign();
+  const Sign rhs_sign = rhs.GetSign();
+  const Sign result_sign = lhs_sign == rhs_sign ? kPositive : kNegative;
 
-Decimal& Decimal::operator/=(const Decimal& other)
-{
-    m_data = (*this / other).m_data;
-    return *this;
-}
-
-Decimal Decimal::operator-() const
-{
-    if (isNaN())
-        return *this;
-
-    Decimal result(*this);
-    result.m_data.setSign(invertSign(m_data.getSign()));
-    return result;
-}
-
-Decimal Decimal::operator+(const Decimal& rhs) const
-{
-    const Decimal& lhs = *this;
-    const Sign lhsSign = lhs.getSign();
-    const Sign rhsSign = rhs.getSign();
-
-    SpecialValueHandler handler(lhs, rhs);
-    switch (handler.handle()) {
-    case SpecialValueHandler::BothFinite:
-        break;
-
-    case SpecialValueHandler::BothInfinity:
-        return lhsSign == rhsSign ? lhs : nan();
-
-    case SpecialValueHandler::EitherNaN:
-        return handler.value();
-
-    case SpecialValueHandler::LHSIsInfinity:
-        return lhs;
-
-    case SpecialValueHandler::RHSIsInfinity:
-        return rhs;
+  SpecialValueHandler handler(lhs, rhs);
+  switch (handler.Handle()) {
+    case SpecialValueHandler::kBothFinite: {
+      const uint64_t lhs_coefficient = lhs.data_.Coefficient();
+      const uint64_t rhs_coefficient = rhs.data_.Coefficient();
+      int result_exponent = lhs.Exponent() + rhs.Exponent();
+      UInt128 work(UInt128::Multiply(lhs_coefficient, rhs_coefficient));
+      while (work.High()) {
+        work /= 10;
+        ++result_exponent;
+      }
+      return Decimal(result_sign, result_exponent, work.Low());
     }
 
-    const AlignedOperands alignedOperands = alignOperands(lhs, rhs);
+    case SpecialValueHandler::kBothInfinity:
+      return Infinity(result_sign);
 
-    const uint64_t result = lhsSign == rhsSign
-        ? alignedOperands.lhsCoefficient + alignedOperands.rhsCoefficient
-        : alignedOperands.lhsCoefficient - alignedOperands.rhsCoefficient;
+    case SpecialValueHandler::kEitherNaN:
+      return handler.Value();
 
-    if (lhsSign == Negative && rhsSign == Positive && !result)
-        return Decimal(Positive, alignedOperands.exponent, 0);
+    case SpecialValueHandler::kLHSIsInfinity:
+      return rhs.IsZero() ? Nan() : Infinity(result_sign);
 
-    return static_cast<int64_t>(result) >= 0
-        ? Decimal(lhsSign, alignedOperands.exponent, result)
-        : Decimal(invertSign(lhsSign), alignedOperands.exponent, -static_cast<int64_t>(result));
+    case SpecialValueHandler::kRHSIsInfinity:
+      return lhs.IsZero() ? Nan() : Infinity(result_sign);
+  }
+
+  ASSERT_NOT_REACHED();
+  return Nan();
 }
 
-Decimal Decimal::operator-(const Decimal& rhs) const
-{
-    const Decimal& lhs = *this;
-    const Sign lhsSign = lhs.getSign();
-    const Sign rhsSign = rhs.getSign();
+Decimal Decimal::operator/(const Decimal& rhs) const {
+  const Decimal& lhs = *this;
+  const Sign lhs_sign = lhs.GetSign();
+  const Sign rhs_sign = rhs.GetSign();
+  const Sign result_sign = lhs_sign == rhs_sign ? kPositive : kNegative;
 
-    SpecialValueHandler handler(lhs, rhs);
-    switch (handler.handle()) {
-    case SpecialValueHandler::BothFinite:
-        break;
+  SpecialValueHandler handler(lhs, rhs);
+  switch (handler.Handle()) {
+    case SpecialValueHandler::kBothFinite:
+      break;
 
-    case SpecialValueHandler::BothInfinity:
-        return lhsSign == rhsSign ? nan() : lhs;
+    case SpecialValueHandler::kBothInfinity:
+      return Nan();
 
-    case SpecialValueHandler::EitherNaN:
-        return handler.value();
+    case SpecialValueHandler::kEitherNaN:
+      return handler.Value();
 
-    case SpecialValueHandler::LHSIsInfinity:
-        return lhs;
+    case SpecialValueHandler::kLHSIsInfinity:
+      return Infinity(result_sign);
 
-    case SpecialValueHandler::RHSIsInfinity:
-        return infinity(invertSign(rhsSign));
+    case SpecialValueHandler::kRHSIsInfinity:
+      return Zero(result_sign);
+  }
+
+  ASSERT(lhs.IsFinite());
+  ASSERT(rhs.IsFinite());
+
+  if (rhs.IsZero())
+    return lhs.IsZero() ? Nan() : Infinity(result_sign);
+
+  int result_exponent = lhs.Exponent() - rhs.Exponent();
+
+  if (lhs.IsZero())
+    return Decimal(result_sign, result_exponent, 0);
+
+  uint64_t remainder = lhs.data_.Coefficient();
+  const uint64_t divisor = rhs.data_.Coefficient();
+  uint64_t result = 0;
+  for (;;) {
+    while (remainder < divisor && result < kMaxCoefficient / 10) {
+      remainder *= 10;
+      result *= 10;
+      --result_exponent;
+    }
+    if (remainder < divisor)
+      break;
+    uint64_t quotient = remainder / divisor;
+    if (result > kMaxCoefficient - quotient)
+      break;
+    result += quotient;
+    remainder %= divisor;
+    if (!remainder)
+      break;
+  }
+
+  if (remainder > divisor / 2)
+    ++result;
+
+  return Decimal(result_sign, result_exponent, result);
+}
+
+bool Decimal::operator==(const Decimal& rhs) const {
+  return data_ == rhs.data_ || CompareTo(rhs).IsZero();
+}
+
+bool Decimal::operator!=(const Decimal& rhs) const {
+  if (data_ == rhs.data_)
+    return false;
+  const Decimal result = CompareTo(rhs);
+  if (result.IsNaN())
+    return false;
+  return !result.IsZero();
+}
+
+bool Decimal::operator<(const Decimal& rhs) const {
+  const Decimal result = CompareTo(rhs);
+  if (result.IsNaN())
+    return false;
+  return !result.IsZero() && result.IsNegative();
+}
+
+bool Decimal::operator<=(const Decimal& rhs) const {
+  if (data_ == rhs.data_)
+    return true;
+  const Decimal result = CompareTo(rhs);
+  if (result.IsNaN())
+    return false;
+  return result.IsZero() || result.IsNegative();
+}
+
+bool Decimal::operator>(const Decimal& rhs) const {
+  const Decimal result = CompareTo(rhs);
+  if (result.IsNaN())
+    return false;
+  return !result.IsZero() && result.IsPositive();
+}
+
+bool Decimal::operator>=(const Decimal& rhs) const {
+  if (data_ == rhs.data_)
+    return true;
+  const Decimal result = CompareTo(rhs);
+  if (result.IsNaN())
+    return false;
+  return result.IsZero() || !result.IsNegative();
+}
+
+Decimal Decimal::Abs() const {
+  Decimal result(*this);
+  result.data_.SetSign(kPositive);
+  return result;
+}
+
+Decimal::AlignedOperands Decimal::AlignOperands(const Decimal& lhs,
+                                                const Decimal& rhs) {
+  ASSERT(lhs.IsFinite());
+  ASSERT(rhs.IsFinite());
+
+  const int lhs_exponent = lhs.Exponent();
+  const int rhs_exponent = rhs.Exponent();
+  int exponent = std::min(lhs_exponent, rhs_exponent);
+  uint64_t lhs_coefficient = lhs.data_.Coefficient();
+  uint64_t rhs_coefficient = rhs.data_.Coefficient();
+
+  if (lhs_exponent > rhs_exponent) {
+    const int number_of_lhs_digits = CountDigits(lhs_coefficient);
+    if (number_of_lhs_digits) {
+      const int lhs_shift_amount = lhs_exponent - rhs_exponent;
+      const int overflow = number_of_lhs_digits + lhs_shift_amount - kPrecision;
+      if (overflow <= 0) {
+        lhs_coefficient = ScaleUp(lhs_coefficient, lhs_shift_amount);
+      } else {
+        lhs_coefficient = ScaleUp(lhs_coefficient, lhs_shift_amount - overflow);
+        rhs_coefficient = ScaleDown(rhs_coefficient, overflow);
+        exponent += overflow;
+      }
     }
 
-    const AlignedOperands alignedOperands = alignOperands(lhs, rhs);
-
-    const uint64_t result = lhsSign == rhsSign
-        ? alignedOperands.lhsCoefficient - alignedOperands.rhsCoefficient
-        : alignedOperands.lhsCoefficient + alignedOperands.rhsCoefficient;
-
-    if (lhsSign == Negative && rhsSign == Negative && !result)
-        return Decimal(Positive, alignedOperands.exponent, 0);
-
-    return static_cast<int64_t>(result) >= 0
-        ? Decimal(lhsSign, alignedOperands.exponent, result)
-        : Decimal(invertSign(lhsSign), alignedOperands.exponent, -static_cast<int64_t>(result));
-}
-
-Decimal Decimal::operator*(const Decimal& rhs) const
-{
-    const Decimal& lhs = *this;
-    const Sign lhsSign = lhs.getSign();
-    const Sign rhsSign = rhs.getSign();
-    const Sign resultSign = lhsSign == rhsSign ? Positive : Negative;
-
-    SpecialValueHandler handler(lhs, rhs);
-    switch (handler.handle()) {
-    case SpecialValueHandler::BothFinite: {
-        const uint64_t lhsCoefficient = lhs.m_data.coefficient();
-        const uint64_t rhsCoefficient = rhs.m_data.coefficient();
-        int resultExponent = lhs.exponent() + rhs.exponent();
-        UInt128 work(UInt128::multiply(lhsCoefficient, rhsCoefficient));
-        while (work.high()) {
-            work /= 10;
-            ++resultExponent;
-        }
-        return Decimal(resultSign, resultExponent, work.low());
+  } else if (lhs_exponent < rhs_exponent) {
+    const int number_of_rhs_digits = CountDigits(rhs_coefficient);
+    if (number_of_rhs_digits) {
+      const int rhs_shift_amount = rhs_exponent - lhs_exponent;
+      const int overflow = number_of_rhs_digits + rhs_shift_amount - kPrecision;
+      if (overflow <= 0) {
+        rhs_coefficient = ScaleUp(rhs_coefficient, rhs_shift_amount);
+      } else {
+        rhs_coefficient = ScaleUp(rhs_coefficient, rhs_shift_amount - overflow);
+        lhs_coefficient = ScaleDown(lhs_coefficient, overflow);
+        exponent += overflow;
+      }
     }
+  }
 
-    case SpecialValueHandler::BothInfinity:
-        return infinity(resultSign);
-
-    case SpecialValueHandler::EitherNaN:
-        return handler.value();
-
-    case SpecialValueHandler::LHSIsInfinity:
-        return rhs.isZero() ? nan() : infinity(resultSign);
-
-    case SpecialValueHandler::RHSIsInfinity:
-        return lhs.isZero() ? nan() : infinity(resultSign);
-    }
-
-    ASSERT_NOT_REACHED();
-    return nan();
+  AlignedOperands aligned_operands;
+  aligned_operands.exponent = exponent;
+  aligned_operands.lhs_coefficient = lhs_coefficient;
+  aligned_operands.rhs_coefficient = rhs_coefficient;
+  return aligned_operands;
 }
 
-Decimal Decimal::operator/(const Decimal& rhs) const
-{
-    const Decimal& lhs = *this;
-    const Sign lhsSign = lhs.getSign();
-    const Sign rhsSign = rhs.getSign();
-    const Sign resultSign = lhsSign == rhsSign ? Positive : Negative;
-
-    SpecialValueHandler handler(lhs, rhs);
-    switch (handler.handle()) {
-    case SpecialValueHandler::BothFinite:
-        break;
-
-    case SpecialValueHandler::BothInfinity:
-        return nan();
-
-    case SpecialValueHandler::EitherNaN:
-        return handler.value();
-
-    case SpecialValueHandler::LHSIsInfinity:
-        return infinity(resultSign);
-
-    case SpecialValueHandler::RHSIsInfinity:
-        return zero(resultSign);
-    }
-
-    ASSERT(lhs.isFinite());
-    ASSERT(rhs.isFinite());
-
-    if (rhs.isZero())
-        return lhs.isZero() ? nan() : infinity(resultSign);
-
-    int resultExponent = lhs.exponent() - rhs.exponent();
-
-    if (lhs.isZero())
-        return Decimal(resultSign, resultExponent, 0);
-
-    uint64_t remainder = lhs.m_data.coefficient();
-    const uint64_t divisor = rhs.m_data.coefficient();
-    uint64_t result = 0;
-    for (;;) {
-        while (remainder < divisor && result < MaxCoefficient / 10) {
-            remainder *= 10;
-            result *= 10;
-            --resultExponent;
-        }
-        if (remainder < divisor)
-            break;
-        uint64_t quotient = remainder / divisor;
-        if (result > MaxCoefficient - quotient)
-            break;
-        result += quotient;
-        remainder %= divisor;
-        if (!remainder)
-            break;
-    }
-
-    if (remainder > divisor / 2)
-        ++result;
-
-    return Decimal(resultSign, resultExponent, result);
-}
-
-bool Decimal::operator==(const Decimal& rhs) const
-{
-    return m_data == rhs.m_data || compareTo(rhs).isZero();
-}
-
-bool Decimal::operator!=(const Decimal& rhs) const
-{
-    if (m_data == rhs.m_data)
-        return false;
-    const Decimal result = compareTo(rhs);
-    if (result.isNaN())
-        return false;
-    return !result.isZero();
-}
-
-bool Decimal::operator<(const Decimal& rhs) const
-{
-    const Decimal result = compareTo(rhs);
-    if (result.isNaN())
-        return false;
-    return !result.isZero() && result.isNegative();
-}
-
-bool Decimal::operator<=(const Decimal& rhs) const
-{
-    if (m_data == rhs.m_data)
-        return true;
-    const Decimal result = compareTo(rhs);
-    if (result.isNaN())
-        return false;
-    return result.isZero() || result.isNegative();
-}
-
-bool Decimal::operator>(const Decimal& rhs) const
-{
-    const Decimal result = compareTo(rhs);
-    if (result.isNaN())
-        return false;
-    return !result.isZero() && result.isPositive();
-}
-
-bool Decimal::operator>=(const Decimal& rhs) const
-{
-    if (m_data == rhs.m_data)
-        return true;
-    const Decimal result = compareTo(rhs);
-    if (result.isNaN())
-        return false;
-    return result.isZero() || !result.isNegative();
-}
-
-Decimal Decimal::abs() const
-{
-    Decimal result(*this);
-    result.m_data.setSign(Positive);
-    return result;
-}
-
-Decimal::AlignedOperands Decimal::alignOperands(const Decimal& lhs, const Decimal& rhs)
-{
-    ASSERT(lhs.isFinite());
-    ASSERT(rhs.isFinite());
-
-    const int lhsExponent = lhs.exponent();
-    const int rhsExponent = rhs.exponent();
-    int exponent = std::min(lhsExponent, rhsExponent);
-    uint64_t lhsCoefficient = lhs.m_data.coefficient();
-    uint64_t rhsCoefficient = rhs.m_data.coefficient();
-
-    if (lhsExponent > rhsExponent) {
-        const int numberOfLHSDigits = countDigits(lhsCoefficient);
-        if (numberOfLHSDigits) {
-            const int lhsShiftAmount = lhsExponent - rhsExponent;
-            const int overflow = numberOfLHSDigits + lhsShiftAmount - Precision;
-            if (overflow <= 0) {
-                lhsCoefficient = scaleUp(lhsCoefficient, lhsShiftAmount);
-            } else {
-                lhsCoefficient = scaleUp(lhsCoefficient, lhsShiftAmount - overflow);
-                rhsCoefficient = scaleDown(rhsCoefficient, overflow);
-                exponent += overflow;
-            }
-        }
-
-    } else if (lhsExponent < rhsExponent) {
-        const int numberOfRHSDigits = countDigits(rhsCoefficient);
-        if (numberOfRHSDigits) {
-            const int rhsShiftAmount = rhsExponent - lhsExponent;
-            const int overflow = numberOfRHSDigits + rhsShiftAmount - Precision;
-            if (overflow <= 0) {
-                rhsCoefficient = scaleUp(rhsCoefficient, rhsShiftAmount);
-            } else {
-                rhsCoefficient = scaleUp(rhsCoefficient, rhsShiftAmount - overflow);
-                lhsCoefficient = scaleDown(lhsCoefficient, overflow);
-                exponent += overflow;
-            }
-        }
-    }
-
-    AlignedOperands alignedOperands;
-    alignedOperands.exponent = exponent;
-    alignedOperands.lhsCoefficient = lhsCoefficient;
-    alignedOperands.rhsCoefficient = rhsCoefficient;
-    return alignedOperands;
-}
-
-static bool isMultiplePowersOfTen(uint64_t coefficient, int n)
-{
-    return !coefficient || !(coefficient % scaleUp(1, n));
+static bool IsMultiplePowersOfTen(uint64_t coefficient, int n) {
+  return !coefficient || !(coefficient % ScaleUp(1, n));
 }
 
 // Round toward positive infinity.
-Decimal Decimal::ceil() const
-{
-    if (isSpecial())
-        return *this;
+Decimal Decimal::Ceil() const {
+  if (IsSpecial())
+    return *this;
 
-    if (exponent() >= 0)
-        return *this;
+  if (Exponent() >= 0)
+    return *this;
 
-    uint64_t result = m_data.coefficient();
-    const int numberOfDigits = countDigits(result);
-    const int numberOfDropDigits = -exponent();
-    if (numberOfDigits <= numberOfDropDigits)
-        return isPositive() ? Decimal(1) : zero(Positive);
+  uint64_t result = data_.Coefficient();
+  const int number_of_digits = CountDigits(result);
+  const int number_of_drop_digits = -Exponent();
+  if (number_of_digits <= number_of_drop_digits)
+    return IsPositive() ? Decimal(1) : Zero(kPositive);
 
-    result = scaleDown(result, numberOfDropDigits);
-    if (isPositive() && !isMultiplePowersOfTen(m_data.coefficient(), numberOfDropDigits))
-        ++result;
-    return Decimal(getSign(), 0, result);
+  result = ScaleDown(result, number_of_drop_digits);
+  if (IsPositive() &&
+      !IsMultiplePowersOfTen(data_.Coefficient(), number_of_drop_digits))
+    ++result;
+  return Decimal(GetSign(), 0, result);
 }
 
-Decimal Decimal::compareTo(const Decimal& rhs) const
-{
-    const Decimal result(*this - rhs);
-    switch (result.m_data.getFormatClass()) {
-    case EncodedData::ClassInfinity:
-        return result.isNegative() ? Decimal(-1) : Decimal(1);
+Decimal Decimal::CompareTo(const Decimal& rhs) const {
+  const Decimal result(*this - rhs);
+  switch (result.data_.GetFormatClass()) {
+    case EncodedData::kClassInfinity:
+      return result.IsNegative() ? Decimal(-1) : Decimal(1);
 
-    case EncodedData::ClassNaN:
-    case EncodedData::ClassNormal:
-        return result;
+    case EncodedData::kClassNaN:
+    case EncodedData::kClassNormal:
+      return result;
 
-    case EncodedData::ClassZero:
-        return zero(Positive);
+    case EncodedData::kClassZero:
+      return Zero(kPositive);
 
     default:
-        ASSERT_NOT_REACHED();
-        return nan();
-    }
+      ASSERT_NOT_REACHED();
+      return Nan();
+  }
 }
 
 // Round toward negative infinity.
-Decimal Decimal::floor() const
-{
-    if (isSpecial())
-        return *this;
+Decimal Decimal::Floor() const {
+  if (IsSpecial())
+    return *this;
 
-    if (exponent() >= 0)
-        return *this;
+  if (Exponent() >= 0)
+    return *this;
 
-    uint64_t result = m_data.coefficient();
-    const int numberOfDigits = countDigits(result);
-    const int numberOfDropDigits = -exponent();
-    if (numberOfDigits < numberOfDropDigits)
-        return isPositive() ? zero(Positive) : Decimal(-1);
+  uint64_t result = data_.Coefficient();
+  const int number_of_digits = CountDigits(result);
+  const int number_of_drop_digits = -Exponent();
+  if (number_of_digits < number_of_drop_digits)
+    return IsPositive() ? Zero(kPositive) : Decimal(-1);
 
-    result = scaleDown(result, numberOfDropDigits);
-    if (isNegative() && !isMultiplePowersOfTen(m_data.coefficient(), numberOfDropDigits))
-        ++result;
-    return Decimal(getSign(), 0, result);
+  result = ScaleDown(result, number_of_drop_digits);
+  if (IsNegative() &&
+      !IsMultiplePowersOfTen(data_.Coefficient(), number_of_drop_digits))
+    ++result;
+  return Decimal(GetSign(), 0, result);
 }
 
-Decimal Decimal::fromDouble(double doubleValue)
-{
-    if (std::isfinite(doubleValue))
-        return fromString(String::numberToStringECMAScript(doubleValue));
+Decimal Decimal::FromDouble(double double_value) {
+  if (std::isfinite(double_value))
+    return FromString(String::NumberToStringECMAScript(double_value));
 
-    if (std::isinf(doubleValue))
-        return infinity(doubleValue < 0 ? Negative : Positive);
+  if (std::isinf(double_value))
+    return Infinity(double_value < 0 ? kNegative : kPositive);
 
-    return nan();
+  return Nan();
 }
 
-Decimal Decimal::fromString(const String& str)
-{
-    int exponent = 0;
-    Sign exponentSign = Positive;
-    int numberOfDigits = 0;
-    int numberOfDigitsAfterDot = 0;
-    int numberOfExtraDigits = 0;
-    Sign sign = Positive;
+Decimal Decimal::FromString(const String& str) {
+  int exponent = 0;
+  Sign exponent_sign = kPositive;
+  int number_of_digits = 0;
+  int number_of_digits_after_dot = 0;
+  int number_of_extra_digits = 0;
+  Sign sign = kPositive;
 
-    enum {
-        StateDigit,
-        StateDot,
-        StateDotDigit,
-        StateE,
-        StateEDigit,
-        StateESign,
-        StateSign,
-        StateStart,
-        StateZero,
-    } state = StateStart;
+  enum {
+    kStateDigit,
+    kStateDot,
+    kStateDotDigit,
+    kStateE,
+    kStateEDigit,
+    kStateESign,
+    kStateSign,
+    kStateStart,
+    kStateZero,
+  } state = kStateStart;
 
 #define HandleCharAndBreak(expected, nextState) \
-    if (ch == expected) { \
-        state = nextState; \
-        break; \
-    }
+  if (ch == expected) {                         \
+    state = nextState;                          \
+    break;                                      \
+  }
 
 #define HandleTwoCharsAndBreak(expected1, expected2, nextState) \
-    if (ch == expected1 || ch == expected2) { \
-        state = nextState; \
-        break; \
-    }
+  if (ch == expected1 || ch == expected2) {                     \
+    state = nextState;                                          \
+    break;                                                      \
+  }
 
-    uint64_t accumulator = 0;
-    for (unsigned index = 0; index < str.length(); ++index) {
-        const int ch = str[index];
-        switch (state) {
-        case StateDigit:
-            if (ch >= '0' && ch <= '9') {
-                if (numberOfDigits < Precision) {
-                    ++numberOfDigits;
-                    accumulator *= 10;
-                    accumulator += ch - '0';
-                } else {
-                    ++numberOfExtraDigits;
-                }
-                break;
-            }
-
-            HandleCharAndBreak('.', StateDot);
-            HandleTwoCharsAndBreak('E', 'e', StateE);
-            return nan();
-
-        case StateDot:
-        case StateDotDigit:
-            if (ch >= '0' && ch <= '9') {
-                if (numberOfDigits < Precision) {
-                    ++numberOfDigits;
-                    ++numberOfDigitsAfterDot;
-                    accumulator *= 10;
-                    accumulator += ch - '0';
-                }
-                state = StateDotDigit;
-                break;
-            }
-
-            HandleTwoCharsAndBreak('E', 'e', StateE);
-            return nan();
-
-        case StateE:
-            if (ch == '+') {
-                exponentSign = Positive;
-                state = StateESign;
-                break;
-            }
-
-            if (ch == '-') {
-                exponentSign = Negative;
-                state = StateESign;
-                break;
-            }
-
-            if (ch >= '0' && ch <= '9') {
-                exponent = ch - '0';
-                state = StateEDigit;
-                break;
-            }
-
-            return nan();
-
-        case StateEDigit:
-            if (ch >= '0' && ch <= '9') {
-                exponent *= 10;
-                exponent += ch - '0';
-                if (exponent > ExponentMax + Precision) {
-                    if (accumulator)
-                        return exponentSign == Negative ? zero(Positive) : infinity(sign);
-                    return zero(sign);
-                }
-                state = StateEDigit;
-                break;
-            }
-
-            return nan();
-
-        case StateESign:
-            if (ch >= '0' && ch <= '9') {
-                exponent = ch - '0';
-                state = StateEDigit;
-                break;
-            }
-
-            return nan();
-
-        case StateSign:
-            if (ch >= '1' && ch <= '9') {
-                accumulator = ch - '0';
-                numberOfDigits = 1;
-                state = StateDigit;
-                break;
-            }
-
-            HandleCharAndBreak('0', StateZero);
-            return nan();
-
-        case StateStart:
-            if (ch >= '1' && ch <= '9') {
-                accumulator = ch - '0';
-                numberOfDigits = 1;
-                state = StateDigit;
-                break;
-            }
-
-            if (ch == '-') {
-                sign = Negative;
-                state = StateSign;
-                break;
-            }
-
-            if (ch == '+') {
-                sign = Positive;
-                state = StateSign;
-                break;
-            }
-
-            HandleCharAndBreak('0', StateZero);
-            HandleCharAndBreak('.', StateDot);
-            return nan();
-
-        case StateZero:
-            if (ch == '0')
-                break;
-
-            if (ch >= '1' && ch <= '9') {
-                accumulator = ch - '0';
-                numberOfDigits = 1;
-                state = StateDigit;
-                break;
-            }
-
-            HandleCharAndBreak('.', StateDot);
-            HandleTwoCharsAndBreak('E', 'e', StateE);
-            return nan();
-
-        default:
-            ASSERT_NOT_REACHED();
-            return nan();
-        }
-    }
-
-    if (state == StateZero)
-        return zero(sign);
-
-    if (state == StateDigit || state == StateEDigit || state == StateDotDigit) {
-        int resultExponent = exponent * (exponentSign == Negative ? -1 : 1) - numberOfDigitsAfterDot + numberOfExtraDigits;
-        if (resultExponent < ExponentMin)
-            return zero(Positive);
-
-        const int overflow = resultExponent - ExponentMax + 1;
-        if (overflow > 0) {
-            if (overflow + numberOfDigits - numberOfDigitsAfterDot > Precision)
-                return infinity(sign);
-            accumulator = scaleUp(accumulator, overflow);
-            resultExponent -= overflow;
+  uint64_t accumulator = 0;
+  for (unsigned index = 0; index < str.length(); ++index) {
+    const int ch = str[index];
+    switch (state) {
+      case kStateDigit:
+        if (ch >= '0' && ch <= '9') {
+          if (number_of_digits < kPrecision) {
+            ++number_of_digits;
+            accumulator *= 10;
+            accumulator += ch - '0';
+          } else {
+            ++number_of_extra_digits;
+          }
+          break;
         }
 
-        return Decimal(sign, resultExponent, accumulator);
+        HandleCharAndBreak('.', kStateDot);
+        HandleTwoCharsAndBreak('E', 'e', kStateE);
+        return Nan();
+
+      case kStateDot:
+      case kStateDotDigit:
+        if (ch >= '0' && ch <= '9') {
+          if (number_of_digits < kPrecision) {
+            ++number_of_digits;
+            ++number_of_digits_after_dot;
+            accumulator *= 10;
+            accumulator += ch - '0';
+          }
+          state = kStateDotDigit;
+          break;
+        }
+
+        HandleTwoCharsAndBreak('E', 'e', kStateE);
+        return Nan();
+
+      case kStateE:
+        if (ch == '+') {
+          exponent_sign = kPositive;
+          state = kStateESign;
+          break;
+        }
+
+        if (ch == '-') {
+          exponent_sign = kNegative;
+          state = kStateESign;
+          break;
+        }
+
+        if (ch >= '0' && ch <= '9') {
+          exponent = ch - '0';
+          state = kStateEDigit;
+          break;
+        }
+
+        return Nan();
+
+      case kStateEDigit:
+        if (ch >= '0' && ch <= '9') {
+          exponent *= 10;
+          exponent += ch - '0';
+          if (exponent > kExponentMax + kPrecision) {
+            if (accumulator)
+              return exponent_sign == kNegative ? Zero(kPositive)
+                                                : Infinity(sign);
+            return Zero(sign);
+          }
+          state = kStateEDigit;
+          break;
+        }
+
+        return Nan();
+
+      case kStateESign:
+        if (ch >= '0' && ch <= '9') {
+          exponent = ch - '0';
+          state = kStateEDigit;
+          break;
+        }
+
+        return Nan();
+
+      case kStateSign:
+        if (ch >= '1' && ch <= '9') {
+          accumulator = ch - '0';
+          number_of_digits = 1;
+          state = kStateDigit;
+          break;
+        }
+
+        HandleCharAndBreak('0', kStateZero);
+        return Nan();
+
+      case kStateStart:
+        if (ch >= '1' && ch <= '9') {
+          accumulator = ch - '0';
+          number_of_digits = 1;
+          state = kStateDigit;
+          break;
+        }
+
+        if (ch == '-') {
+          sign = kNegative;
+          state = kStateSign;
+          break;
+        }
+
+        if (ch == '+') {
+          sign = kPositive;
+          state = kStateSign;
+          break;
+        }
+
+        HandleCharAndBreak('0', kStateZero);
+        HandleCharAndBreak('.', kStateDot);
+        return Nan();
+
+      case kStateZero:
+        if (ch == '0')
+          break;
+
+        if (ch >= '1' && ch <= '9') {
+          accumulator = ch - '0';
+          number_of_digits = 1;
+          state = kStateDigit;
+          break;
+        }
+
+        HandleCharAndBreak('.', kStateDot);
+        HandleTwoCharsAndBreak('E', 'e', kStateE);
+        return Nan();
+
+      default:
+        ASSERT_NOT_REACHED();
+        return Nan();
+    }
+  }
+
+  if (state == kStateZero)
+    return Zero(sign);
+
+  if (state == kStateDigit || state == kStateEDigit ||
+      state == kStateDotDigit) {
+    int result_exponent = exponent * (exponent_sign == kNegative ? -1 : 1) -
+                          number_of_digits_after_dot + number_of_extra_digits;
+    if (result_exponent < kExponentMin)
+      return Zero(kPositive);
+
+    const int overflow = result_exponent - kExponentMax + 1;
+    if (overflow > 0) {
+      if (overflow + number_of_digits - number_of_digits_after_dot > kPrecision)
+        return Infinity(sign);
+      accumulator = ScaleUp(accumulator, overflow);
+      result_exponent -= overflow;
     }
 
-    return nan();
+    return Decimal(sign, result_exponent, accumulator);
+  }
+
+  return Nan();
 }
 
-Decimal Decimal::infinity(const Sign sign)
-{
-    return Decimal(EncodedData(sign, EncodedData::ClassInfinity));
+Decimal Decimal::Infinity(const Sign sign) {
+  return Decimal(EncodedData(sign, EncodedData::kClassInfinity));
 }
 
-Decimal Decimal::nan()
-{
-    return Decimal(EncodedData(Positive, EncodedData::ClassNaN));
+Decimal Decimal::Nan() {
+  return Decimal(EncodedData(kPositive, EncodedData::kClassNaN));
 }
 
-Decimal Decimal::remainder(const Decimal& rhs) const
-{
-    const Decimal quotient = *this / rhs;
-    return quotient.isSpecial() ? quotient : *this - (quotient.isNegative() ? quotient.ceil() : quotient.floor()) * rhs;
+Decimal Decimal::Remainder(const Decimal& rhs) const {
+  const Decimal quotient = *this / rhs;
+  return quotient.IsSpecial()
+             ? quotient
+             : *this - (quotient.IsNegative() ? quotient.Ceil()
+                                              : quotient.Floor()) *
+                           rhs;
 }
 
-Decimal Decimal::round() const
-{
-    if (isSpecial())
-        return *this;
+Decimal Decimal::Round() const {
+  if (IsSpecial())
+    return *this;
 
-    if (exponent() >= 0)
-        return *this;
+  if (Exponent() >= 0)
+    return *this;
 
-    uint64_t result = m_data.coefficient();
-    const int numberOfDigits = countDigits(result);
-    const int numberOfDropDigits = -exponent();
-    if (numberOfDigits < numberOfDropDigits)
-        return zero(Positive);
+  uint64_t result = data_.Coefficient();
+  const int number_of_digits = CountDigits(result);
+  const int number_of_drop_digits = -Exponent();
+  if (number_of_digits < number_of_drop_digits)
+    return Zero(kPositive);
 
-    result = scaleDown(result, numberOfDropDigits - 1);
-    if (result % 10 >= 5)
-        result += 10;
-    result /= 10;
-    return Decimal(getSign(), 0, result);
+  result = ScaleDown(result, number_of_drop_digits - 1);
+  if (result % 10 >= 5)
+    result += 10;
+  result /= 10;
+  return Decimal(GetSign(), 0, result);
 }
 
-double Decimal::toDouble() const
-{
-    if (isFinite()) {
-        bool valid;
-        const double doubleValue = toString().toDouble(&valid);
-        return valid ? doubleValue : std::numeric_limits<double>::quiet_NaN();
-    }
+double Decimal::ToDouble() const {
+  if (IsFinite()) {
+    bool valid;
+    const double double_value = ToString().ToDouble(&valid);
+    return valid ? double_value : std::numeric_limits<double>::quiet_NaN();
+  }
 
-    if (isInfinity())
-        return isNegative() ? -std::numeric_limits<double>::infinity() : std::numeric_limits<double>::infinity();
+  if (IsInfinity())
+    return IsNegative() ? -std::numeric_limits<double>::infinity()
+                        : std::numeric_limits<double>::infinity();
 
-    return std::numeric_limits<double>::quiet_NaN();
+  return std::numeric_limits<double>::quiet_NaN();
 }
 
-String Decimal::toString() const
-{
-    switch (m_data.getFormatClass()) {
-    case EncodedData::ClassInfinity:
-        return getSign() ? "-Infinity" : "Infinity";
+String Decimal::ToString() const {
+  switch (data_.GetFormatClass()) {
+    case EncodedData::kClassInfinity:
+      return GetSign() ? "-Infinity" : "Infinity";
 
-    case EncodedData::ClassNaN:
-        return "NaN";
+    case EncodedData::kClassNaN:
+      return "NaN";
 
-    case EncodedData::ClassNormal:
-    case EncodedData::ClassZero:
-        break;
+    case EncodedData::kClassNormal:
+    case EncodedData::kClassZero:
+      break;
 
     default:
-        ASSERT_NOT_REACHED();
-        return "";
+      ASSERT_NOT_REACHED();
+      return "";
+  }
+
+  StringBuilder builder;
+  if (GetSign())
+    builder.Append('-');
+
+  int original_exponent = Exponent();
+  uint64_t coefficient = data_.Coefficient();
+
+  if (original_exponent < 0) {
+    const int kMaxDigits = DBL_DIG;
+    uint64_t last_digit = 0;
+    while (CountDigits(coefficient) > kMaxDigits) {
+      last_digit = coefficient % 10;
+      coefficient /= 10;
+      ++original_exponent;
     }
 
-    StringBuilder builder;
-    if (getSign())
-        builder.append('-');
+    if (last_digit >= 5)
+      ++coefficient;
 
-    int originalExponent = exponent();
-    uint64_t coefficient = m_data.coefficient();
+    while (original_exponent < 0 && coefficient && !(coefficient % 10)) {
+      coefficient /= 10;
+      ++original_exponent;
+    }
+  }
 
-    if (originalExponent < 0) {
-        const int maxDigits = DBL_DIG;
-        uint64_t lastDigit = 0;
-        while (countDigits(coefficient) > maxDigits) {
-            lastDigit = coefficient % 10;
-            coefficient /= 10;
-            ++originalExponent;
-        }
-
-        if (lastDigit >= 5)
-            ++coefficient;
-
-        while (originalExponent < 0 && coefficient && !(coefficient % 10)) {
-            coefficient /= 10;
-            ++originalExponent;
-        }
+  const String digits = String::Number(coefficient);
+  int coefficient_length = static_cast<int>(digits.length());
+  const int adjusted_exponent = original_exponent + coefficient_length - 1;
+  if (original_exponent <= 0 && adjusted_exponent >= -6) {
+    if (!original_exponent) {
+      builder.Append(digits);
+      return builder.ToString();
     }
 
-    const String digits = String::number(coefficient);
-    int coefficientLength = static_cast<int>(digits.length());
-    const int adjustedExponent = originalExponent + coefficientLength - 1;
-    if (originalExponent <= 0 && adjustedExponent >= -6) {
-        if (!originalExponent) {
-            builder.append(digits);
-            return builder.toString();
-        }
-
-        if (adjustedExponent >= 0) {
-            for (int i = 0; i < coefficientLength; ++i) {
-                builder.append(digits[i]);
-                if (i == adjustedExponent)
-                    builder.append('.');
-            }
-            return builder.toString();
-        }
-
-        builder.append("0.");
-        for (int i = adjustedExponent + 1; i < 0; ++i)
-            builder.append('0');
-
-        builder.append(digits);
-
-    } else {
-        builder.append(digits[0]);
-        while (coefficientLength >= 2 && digits[coefficientLength - 1] == '0')
-            --coefficientLength;
-        if (coefficientLength >= 2) {
-            builder.append('.');
-            for (int i = 1; i < coefficientLength; ++i)
-                builder.append(digits[i]);
-        }
-
-        if (adjustedExponent) {
-            builder.append(adjustedExponent < 0 ? "e" : "e+");
-            builder.appendNumber(adjustedExponent);
-        }
+    if (adjusted_exponent >= 0) {
+      for (int i = 0; i < coefficient_length; ++i) {
+        builder.Append(digits[i]);
+        if (i == adjusted_exponent)
+          builder.Append('.');
+      }
+      return builder.ToString();
     }
-    return builder.toString();
+
+    builder.Append("0.");
+    for (int i = adjusted_exponent + 1; i < 0; ++i)
+      builder.Append('0');
+
+    builder.Append(digits);
+
+  } else {
+    builder.Append(digits[0]);
+    while (coefficient_length >= 2 && digits[coefficient_length - 1] == '0')
+      --coefficient_length;
+    if (coefficient_length >= 2) {
+      builder.Append('.');
+      for (int i = 1; i < coefficient_length; ++i)
+        builder.Append(digits[i]);
+    }
+
+    if (adjusted_exponent) {
+      builder.Append(adjusted_exponent < 0 ? "e" : "e+");
+      builder.AppendNumber(adjusted_exponent);
+    }
+  }
+  return builder.ToString();
 }
 
-Decimal Decimal::zero(Sign sign)
-{
-    return Decimal(EncodedData(sign, EncodedData::ClassZero));
+Decimal Decimal::Zero(Sign sign) {
+  return Decimal(EncodedData(sign, EncodedData::kClassZero));
 }
 
-std::ostream& operator<<(std::ostream& ostream, const Decimal& decimal)
-{
-    Decimal::EncodedData data = decimal.value();
-    return ostream
-        << "encode(" << String::number(data.coefficient()).ascii().data()
-        << ", " << String::number(data.exponent()).ascii().data()
-        << ", " << (data.getSign() == Decimal::Negative ? "Negative" : "Positive")
-        << ")=" << decimal.toString().ascii().data();
+std::ostream& operator<<(std::ostream& ostream, const Decimal& decimal) {
+  Decimal::EncodedData data = decimal.Value();
+  return ostream << "encode("
+                 << String::Number(data.Coefficient()).Ascii().Data() << ", "
+                 << String::Number(data.Exponent()).Ascii().Data() << ", "
+                 << (data.GetSign() == Decimal::kNegative ? "Negative"
+                                                          : "Positive")
+                 << ")=" << decimal.ToString().Ascii().Data();
 }
 
-} // namespace blink
+}  // namespace blink

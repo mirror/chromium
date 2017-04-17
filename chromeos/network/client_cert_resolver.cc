@@ -15,8 +15,7 @@
 #include "base/logging.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
-#include "base/task_runner.h"
-#include "base/threading/worker_pool.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/clock.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/shill_service_client.h"
@@ -311,11 +310,6 @@ void ClientCertResolver::Init(
   CertLoader::Get()->AddObserver(this);
 }
 
-void ClientCertResolver::SetSlowTaskRunnerForTest(
-    const scoped_refptr<base::TaskRunner>& task_runner) {
-  slow_task_runner_for_test_ = task_runner;
-}
-
 void ClientCertResolver::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);
 }
@@ -387,7 +381,7 @@ void ClientCertResolver::NetworkListChanged() {
   for (NetworkStateHandler::NetworkStateList::const_iterator it =
            networks.begin(); it != networks.end(); ++it) {
     const std::string& service_path = (*it)->path();
-    if (ContainsKey(old_resolved_networks, service_path)) {
+    if (base::ContainsKey(old_resolved_networks, service_path)) {
       resolved_networks_.insert(service_path);
       continue;
     }
@@ -498,15 +492,13 @@ void ClientCertResolver::ResolveNetworks(
   }
 
   VLOG(2) << "Start task for resolving client cert patterns.";
-  base::TaskRunner* task_runner = slow_task_runner_for_test_.get();
-  if (!task_runner)
-    task_runner =
-        base::WorkerPool::GetTaskRunner(true /* task is slow */).get();
-
   resolve_task_running_ = true;
   NetworkCertMatches* matches = new NetworkCertMatches;
-  task_runner->PostTaskAndReply(
-      FROM_HERE,
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE, base::TaskTraits()
+                     .WithShutdownBehavior(
+                         base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN)
+                     .MayBlock(),
       base::Bind(&FindCertificateMatches, CertLoader::Get()->cert_list(),
                  base::Owned(networks_to_resolve.release()), Now(), matches),
       base::Bind(&ClientCertResolver::ConfigureCertificates,
@@ -569,7 +561,8 @@ void ClientCertResolver::NotifyResolveRequestCompleted() {
   resolve_task_running_ = false;
   const bool changed = network_properties_changed_;
   network_properties_changed_ = false;
-  FOR_EACH_OBSERVER(Observer, observers_, ResolveRequestCompleted(changed));
+  for (auto& observer : observers_)
+    observer.ResolveRequestCompleted(changed);
 }
 
 base::Time ClientCertResolver::Now() const {

@@ -17,6 +17,7 @@
 #include "base/message_loop/timer_slack.h"
 #include "base/sequence_checker.h"
 #include "base/single_thread_task_runner.h"
+#include "base/synchronization/atomic_flag.h"
 #include "base/synchronization/lock.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/platform_thread.h"
@@ -43,7 +44,15 @@ class RunLoop;
 //
 // This API is not thread-safe: unless indicated otherwise its methods are only
 // valid from the owning sequence (which is the one from which Start() is
-// invoked, should it differ from the one on which it was constructed).
+// invoked -- should it differ from the one on which it was constructed).
+//
+// Sometimes it's useful to kick things off on the initial sequence (e.g.
+// construction, Start(), task_runner()), but to then hand the Thread over to a
+// pool of users for the last one of them to destroy it when done. For that use
+// case, Thread::DetachFromSequence() allows the owning sequence to give up
+// ownership. The caller is then responsible to ensure a happens-after
+// relationship between the DetachFromSequence() call and the next use of that
+// Thread object (including ~Thread()).
 class BASE_EXPORT Thread : PlatformThread::Delegate {
  public:
   struct BASE_EXPORT Options {
@@ -74,6 +83,14 @@ class BASE_EXPORT Thread : PlatformThread::Delegate {
 
     // Specifies the initial thread priority.
     ThreadPriority priority = ThreadPriority::NORMAL;
+
+    // If false, the thread will not be joined on destruction. This is intended
+    // for threads that want TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN
+    // semantics. Non-joinable threads can't be joined (must be leaked and
+    // can't be destroyed or Stop()'ed).
+    // TODO(gab): allow non-joinable instances to be deleted without causing
+    // user-after-frees (proposal @ https://crbug.com/629139#c14)
+    bool joinable = true;
   };
 
   // Constructor.
@@ -131,12 +148,19 @@ class BASE_EXPORT Thread : PlatformThread::Delegate {
   // carefully for production code.
   bool WaitUntilThreadStarted() const;
 
-  // Signals the thread to exit and returns once the thread has exited.  After
-  // this method returns, the Thread object is completely reset and may be used
-  // as if it were newly constructed (i.e., Start may be called again).
+  // Blocks until all tasks previously posted to this thread have been executed.
+  void FlushForTesting();
+
+  // Signals the thread to exit and returns once the thread has exited. The
+  // Thread object is completely reset and may be used as if it were newly
+  // constructed (i.e., Start may be called again). Can only be called if
+  // |joinable_|.
   //
   // Stop may be called multiple times and is simply ignored if the thread is
-  // already stopped.
+  // already stopped or currently stopping.
+  //
+  // Start/Stop are not thread-safe and callers that desire to invoke them from
+  // different threads must ensure mutual exclusion.
   //
   // NOTE: If you are a consumer of Thread, it is not necessary to call this
   // before deleting your Thread objects, as the destructor will do it.
@@ -151,10 +175,16 @@ class BASE_EXPORT Thread : PlatformThread::Delegate {
   // deadlock on Windows with printer worker thread. In any other case, Stop()
   // should be used.
   //
-  // StopSoon should not be called multiple times as it is risky to do so. It
-  // could cause a timing issue in message_loop() access. Call Stop() to reset
-  // the thread object once it is known that the thread has quit.
+  // Call Stop() to reset the thread object once it is known that the thread has
+  // quit.
   void StopSoon();
+
+  // Detaches the owning sequence, indicating that the next call to this API
+  // (including ~Thread()) can happen from a different sequence (to which it
+  // will be rebound). This call itself must happen on the current owning
+  // sequence and the caller must ensure the next API call has a happens-after
+  // relationship with this one.
+  void DetachFromSequence();
 
   // Returns the message loop for this thread.  Use the MessageLoop's
   // PostTask methods to execute code on the thread.  This only returns
@@ -178,9 +208,9 @@ class BASE_EXPORT Thread : PlatformThread::Delegate {
     // external synchronization catches the unsynchronized effects of Start().
     // TODO(gab): Despite all of the above this test has to be disabled for now
     // per crbug.com/629139#c6.
-    // DCHECK(owning_sequence_checker_.CalledOnValidSequencedThread() ||
-    //        id_ == PlatformThread::CurrentId() || message_loop_)
-    //     << id_ << " vs " << PlatformThread::CurrentId();
+    // DCHECK(owning_sequence_checker_.CalledOnValidSequence() ||
+    //        (id_event_.IsSignaled() && id_ == PlatformThread::CurrentId()) ||
+    //        message_loop_);
     return message_loop_;
   }
 
@@ -194,9 +224,9 @@ class BASE_EXPORT Thread : PlatformThread::Delegate {
   // called from the underlying thread itself.
   scoped_refptr<SingleThreadTaskRunner> task_runner() const {
     // Refer to the DCHECK and comment inside |message_loop()|.
-    DCHECK(owning_sequence_checker_.CalledOnValidSequencedThread() ||
-           id_ == PlatformThread::CurrentId() || message_loop_)
-        << id_ << " vs " << PlatformThread::CurrentId();
+    DCHECK(owning_sequence_checker_.CalledOnValidSequence() ||
+           (id_event_.IsSignaled() && id_ == PlatformThread::CurrentId()) ||
+           message_loop_);
     return message_loop_ ? message_loop_->task_runner() : nullptr;
   }
 
@@ -228,9 +258,11 @@ class BASE_EXPORT Thread : PlatformThread::Delegate {
   static void SetThreadWasQuitProperly(bool flag);
   static bool GetThreadWasQuitProperly();
 
-  void set_message_loop(MessageLoop* message_loop) {
-    DCHECK(owning_sequence_checker_.CalledOnValidSequencedThread());
-    message_loop_ = message_loop;
+  // Bind this Thread to an existing MessageLoop instead of starting a new one.
+  void SetMessageLoop(MessageLoop* message_loop);
+
+  bool using_external_message_loop() const {
+    return using_external_message_loop_;
   }
 
  private:
@@ -252,6 +284,10 @@ class BASE_EXPORT Thread : PlatformThread::Delegate {
   ComStatus com_status_ = NONE;
 #endif
 
+  // Mirrors the Options::joinable field used to start this thread. Verified
+  // on Stop() -- non-joinable threads can't be joined (must be leaked).
+  bool joinable_ = true;
+
   // If true, we're in the middle of stopping, and shouldn't access
   // |message_loop_|. It may non-nullptr and invalid.
   // Should be written on the thread that created this thread. Also read data
@@ -268,12 +304,20 @@ class BASE_EXPORT Thread : PlatformThread::Delegate {
 
   // The thread's id once it has started.
   PlatformThreadId id_ = kInvalidThreadId;
-  mutable WaitableEvent id_event_;  // Protects |id_|.
+  // Protects |id_| which must only be read while it's signaled.
+  mutable WaitableEvent id_event_;
 
   // The thread's MessageLoop and RunLoop. Valid only while the thread is alive.
   // Set by the created thread.
   MessageLoop* message_loop_ = nullptr;
   RunLoop* run_loop_ = nullptr;
+
+  // True only if |message_loop_| was externally provided by |SetMessageLoop()|
+  // in which case this Thread has no underlying |thread_| and should merely
+  // drop |message_loop_| on Stop(). In that event, this remains true after
+  // Stop() was invoked so that subclasses can use this state to build their own
+  // cleanup logic as required.
+  bool using_external_message_loop_ = false;
 
   // Stores Options::timer_slack_ until the message loop has been bound to
   // a thread.

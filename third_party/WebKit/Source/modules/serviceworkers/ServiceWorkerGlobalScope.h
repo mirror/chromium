@@ -30,19 +30,18 @@
 #ifndef ServiceWorkerGlobalScope_h
 #define ServiceWorkerGlobalScope_h
 
+#include <memory>
 #include "bindings/modules/v8/RequestOrUSVString.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "modules/ModulesExport.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/Forward.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
-#include "wtf/Assertions.h"
-#include "wtf/Forward.h"
-#include <memory>
 
 namespace blink {
 
 class Dictionary;
-class Request;
 class ScriptPromise;
 class ScriptState;
 class ServiceWorkerClients;
@@ -54,63 +53,83 @@ class WorkerThreadStartupData;
 typedef RequestOrUSVString RequestInfo;
 
 class MODULES_EXPORT ServiceWorkerGlobalScope final : public WorkerGlobalScope {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static ServiceWorkerGlobalScope* create(ServiceWorkerThread*, std::unique_ptr<WorkerThreadStartupData>);
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~ServiceWorkerGlobalScope() override;
-    bool isServiceWorkerGlobalScope() const override { return true; }
+ public:
+  static ServiceWorkerGlobalScope* Create(
+      ServiceWorkerThread*,
+      std::unique_ptr<WorkerThreadStartupData>);
 
-    // WorkerGlobalScope
-    void didEvaluateWorkerScript() override;
+  ~ServiceWorkerGlobalScope() override;
+  bool IsServiceWorkerGlobalScope() const override { return true; }
 
-    // ServiceWorkerGlobalScope.idl
-    ServiceWorkerClients* clients();
-    ServiceWorkerRegistration* registration();
+  // Counts an evaluated script and its size. Called for each of the main
+  // worker script and imported scripts.
+  void CountScript(size_t script_size, size_t cached_metadata_size);
 
-    ScriptPromise fetch(ScriptState*, const RequestInfo&, const Dictionary&, ExceptionState&);
+  // Called when the main worker script is evaluated.
+  void DidEvaluateWorkerScript();
 
-    ScriptPromise skipWaiting(ScriptState*);
+  // ServiceWorkerGlobalScope.idl
+  ServiceWorkerClients* clients();
+  ServiceWorkerRegistration* registration();
 
-    void setRegistration(std::unique_ptr<WebServiceWorkerRegistration::Handle>);
+  ScriptPromise fetch(ScriptState*,
+                      const RequestInfo&,
+                      const Dictionary&,
+                      ExceptionState&);
 
-    // EventTarget
-    const AtomicString& interfaceName() const override;
+  ScriptPromise skipWaiting(ScriptState*);
 
-    void dispatchExtendableEvent(Event*, WaitUntilObserver*);
+  void SetRegistration(std::unique_ptr<WebServiceWorkerRegistration::Handle>);
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(install);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(activate);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(fetch);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(foreignfetch);
+  // EventTarget
+  const AtomicString& InterfaceName() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  void DispatchExtendableEvent(Event*, WaitUntilObserver*);
 
-protected:
-    // EventTarget
-    DispatchEventResult dispatchEventInternal(Event*) override;
-    bool addEventListenerInternal(const AtomicString& eventType, EventListener*, const AddEventListenerOptionsResolved&) override;
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(install);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(activate);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(fetch);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(foreignfetch);
 
-private:
-    ServiceWorkerGlobalScope(const KURL&, const String& userAgent, ServiceWorkerThread*, double timeOrigin, std::unique_ptr<SecurityOrigin::PrivilegeData>, WorkerClients*);
-    void importScripts(const Vector<String>& urls, ExceptionState&) override;
-    CachedMetadataHandler* createWorkerScriptCachedMetadataHandler(const KURL& scriptURL, const Vector<char>* metaData) override;
-    void exceptionThrown(const String& errorMessage, std::unique_ptr<SourceLocation>) override;
-    void scriptLoaded(size_t scriptSize, size_t cachedMetadataSize) override;
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<ServiceWorkerClients> m_clients;
-    Member<ServiceWorkerRegistration> m_registration;
-    bool m_didEvaluateScript;
-    bool m_hadErrorInTopLevelEventHandler;
-    unsigned m_eventNestingLevel;
-    size_t m_scriptCount;
-    size_t m_scriptTotalSize;
-    size_t m_scriptCachedMetadataTotalSize;
+ protected:
+  // EventTarget
+  bool AddEventListenerInternal(
+      const AtomicString& event_type,
+      EventListener*,
+      const AddEventListenerOptionsResolved&) override;
+
+ private:
+  ServiceWorkerGlobalScope(const KURL&,
+                           const String& user_agent,
+                           ServiceWorkerThread*,
+                           double time_origin,
+                           std::unique_ptr<SecurityOrigin::PrivilegeData>,
+                           WorkerClients*);
+  void importScripts(const Vector<String>& urls, ExceptionState&) override;
+  CachedMetadataHandler* CreateWorkerScriptCachedMetadataHandler(
+      const KURL& script_url,
+      const Vector<char>* meta_data) override;
+  void ExceptionThrown(ErrorEvent*) override;
+
+  Member<ServiceWorkerClients> clients_;
+  Member<ServiceWorkerRegistration> registration_;
+  bool did_evaluate_script_;
+  size_t script_count_;
+  size_t script_total_size_;
+  size_t script_cached_metadata_total_size_;
 };
 
-DEFINE_TYPE_CASTS(ServiceWorkerGlobalScope, ExecutionContext, context, context->isServiceWorkerGlobalScope(), context.isServiceWorkerGlobalScope());
+DEFINE_TYPE_CASTS(ServiceWorkerGlobalScope,
+                  ExecutionContext,
+                  context,
+                  context->IsServiceWorkerGlobalScope(),
+                  context.IsServiceWorkerGlobalScope());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ServiceWorkerGlobalScope_h
+#endif  // ServiceWorkerGlobalScope_h

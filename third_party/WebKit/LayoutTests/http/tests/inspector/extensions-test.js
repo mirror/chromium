@@ -11,30 +11,25 @@ function extensionFunctions()
 
 var initialize_ExtensionsTest = function()
 {
+Extensions.extensionServer._registerHandler("evaluateForTestInFrontEnd", onEvaluate);
 
-WebInspector.extensionServer._overridePlatformExtensionAPIForTest = function(extensionInfo, inspectedTabId, themeName)
+Extensions.extensionServer._extensionAPITestHook = function(extensionServerClient, coreAPI)
 {
-    WebInspector.extensionServer._registerHandler("evaluateForTestInFrontEnd", onEvaluate);
-
-    function platformExtensionAPI(coreAPI)
-    {
-        window.webInspector = coreAPI;
-        window._extensionServerForTests = extensionServer;
-        coreAPI.panels.themeName = "themeNameForTest";
-    }
-    return platformExtensionAPI.toString();
+    window.webInspector = coreAPI;
+    window._extensionServerForTests = extensionServerClient;
+    coreAPI.panels.themeName = "themeNameForTest";
 }
 
 InspectorTest._replyToExtension = function(requestId, port)
 {
-    WebInspector.extensionServer._dispatchCallback(requestId, port);
+    Extensions.extensionServer._dispatchCallback(requestId, port);
 }
 
 function onEvaluate(message, port)
 {
     function reply(param)
     {
-        WebInspector.extensionServer._dispatchCallback(message.requestId, port, param);
+        Extensions.extensionServer._dispatchCallback(message.requestId, port, param);
     }
 
     try {
@@ -48,8 +43,8 @@ function onEvaluate(message, port)
 InspectorTest.showPanel = function(panelId)
 {
     if (panelId === "extension")
-        panelId = WebInspector.inspectorView._tabbedPane._tabs[WebInspector.inspectorView._tabbedPane._tabs.length - 1].id;
-    return WebInspector.inspectorView.showPanel(panelId);
+        panelId = UI.inspectorView._tabbedPane._tabs[UI.inspectorView._tabbedPane._tabs.length - 1].id;
+    return UI.inspectorView.showPanel(panelId);
 }
 
 InspectorTest.runExtensionTests = function()
@@ -63,7 +58,7 @@ InspectorTest.runExtensionTests = function()
             pageURL.replace(/\/inspector\/extensions\/[^/]*$/, "/http/tests")) +
             "/inspector/resources/extension-main.html";
         InspectorFrontendAPI.addExtensions([{ startPage: extensionURL, name: "test extension", exposeWebInspectorNamespace: true }]);
-        WebInspector.extensionServer.initializeExtensions();
+        Extensions.extensionServer.initializeExtensions();
     });
 }
 
@@ -76,5 +71,6 @@ function extension_showPanel(panelId, callback)
 
 var test = function()
 {
+    Common.moduleSetting("shortcutPanelSwitch").set(true);
     InspectorTest.runExtensionTests();
 }

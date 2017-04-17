@@ -12,12 +12,7 @@
 #include "base/callback.h"
 #include "base/callback_list.h"
 #include "base/macros.h"
-#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-
-namespace base {
-class TaskRunner;
-}
 
 namespace chromeos {
 class SessionManagerClient;
@@ -36,8 +31,7 @@ class ServerBackedStateKeysBroker {
       StateKeysCallback;
 
   ServerBackedStateKeysBroker(
-      chromeos::SessionManagerClient* session_manager_client,
-      scoped_refptr<base::TaskRunner> delayed_task_runner);
+      chromeos::SessionManagerClient* session_manager_client);
   ~ServerBackedStateKeysBroker();
 
   // Registers a callback to be invoked whenever the state keys get updated.
@@ -46,11 +40,15 @@ class ServerBackedStateKeysBroker {
   // requested yet, calling this will also trigger their initial fetch.
   Subscription RegisterUpdateCallback(const base::Closure& callback);
 
-  // Requests state keys asynchronously. Invokes the passed callback exactly
-  // once (unless |this| gets destroyed before the callback happens), with the
-  // current state keys passed as a parameter to the callback. If there's a
-  // problem determining the state keys, the passed vector will be empty.
+  // Requests state keys asynchronously. Invokes the passed callback at most
+  // once, with the current state keys passed as a parameter to the callback. If
+  // there's a problem determining the state keys, the passed vector will be
+  // empty. If |this| gets destroyed before the callback happens or if the time
+  // sync fails / the network is not established, then the |callback| is never
+  // invoked. See http://crbug.com/649422 for more context.
   void RequestStateKeys(const StateKeysCallback& callback);
+
+  static base::TimeDelta GetPollIntervalForTesting();
 
   // Get the set of current state keys. Empty if state keys are unavailable
   // or pending retrieval.
@@ -76,8 +74,6 @@ class ServerBackedStateKeysBroker {
   void StoreStateKeys(const std::vector<std::string>& state_keys);
 
   chromeos::SessionManagerClient* session_manager_client_;
-
-  scoped_refptr<base::TaskRunner> delayed_task_runner_;
 
   // The current set of state keys.
   std::vector<std::string> state_keys_;

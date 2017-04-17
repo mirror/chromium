@@ -12,23 +12,17 @@
 
 namespace blink {
 
-void V8PromiseRejectionEvent::promiseAttributeGetterCustom(const v8::FunctionCallbackInfo<v8::Value>& info)
-{
-    v8::Isolate* isolate = info.GetIsolate();
-    PromiseRejectionEvent* event = V8PromiseRejectionEvent::toImpl(info.Holder());
-    ScriptPromise promise = event->promise(ScriptState::current(isolate));
-    if (promise.isEmpty()) {
-        v8SetReturnValue(info, v8::Null(isolate));
-        return;
-    }
+void V8PromiseRejectionEvent::promiseAttributeGetterCustom(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
+  v8::Isolate* isolate = info.GetIsolate();
+  PromiseRejectionEvent* event = V8PromiseRejectionEvent::toImpl(info.Holder());
+  ScriptPromise promise = event->promise(ScriptState::Current(isolate));
+  if (promise.IsEmpty()) {
+    V8SetReturnValue(info, v8::Null(isolate));
+    return;
+  }
 
-    v8SetReturnValue(info, promise.v8Value());
+  V8SetReturnValue(info, promise.V8Value());
 }
 
-void V8PromiseRejectionEvent::visitDOMWrapper(v8::Isolate* isolate, ScriptWrappable* scriptWrappable, const v8::Persistent<v8::Object>& wrapper)
-{
-    PromiseRejectionEvent* event = scriptWrappable->toImpl<PromiseRejectionEvent>();
-    event->setWrapperReference(isolate, wrapper);
-}
-
-} // namespace blink
+}  // namespace blink

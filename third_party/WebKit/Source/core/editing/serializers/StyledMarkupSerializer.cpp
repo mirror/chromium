@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights
+ * reserved.
  * Copyright (C) 2008, 2009, 2010, 2011 Google Inc. All rights reserved.
  * Copyright (C) 2011 Igalia S.L.
  * Copyright (C) 2011 Motorola Mobility. All rights reserved.
@@ -34,450 +35,522 @@
 #include "core/dom/Text.h"
 #include "core/dom/shadow/ElementShadow.h"
 #include "core/editing/EditingStyle.h"
+#include "core/editing/EditingStyleUtilities.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/VisibleSelection.h"
 #include "core/editing/VisibleUnits.h"
-#include "core/editing/iterators/TextIterator.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/html/HTMLBodyElement.h"
 #include "core/html/HTMLElement.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
 namespace {
 
-template<typename Strategy>
-TextOffset toTextOffset(const PositionTemplate<Strategy>& position)
-{
-    if (position.isNull())
-        return TextOffset();
+template <typename Strategy>
+TextOffset ToTextOffset(const PositionTemplate<Strategy>& position) {
+  if (position.IsNull())
+    return TextOffset();
 
-    if (!position.computeContainerNode()->isTextNode())
-        return TextOffset();
+  if (!position.ComputeContainerNode()->IsTextNode())
+    return TextOffset();
 
-    return TextOffset(toText(position.computeContainerNode()), position.offsetInContainerNode());
+  return TextOffset(ToText(position.ComputeContainerNode()),
+                    position.OffsetInContainerNode());
 }
 
-template<typename EditingStrategy>
-static bool handleSelectionBoundary(const Node&);
+template <typename EditingStrategy>
+static bool HandleSelectionBoundary(const Node&);
 
-template<>
-bool handleSelectionBoundary<EditingStrategy>(const Node&)
-{
+template <>
+bool HandleSelectionBoundary<EditingStrategy>(const Node&) {
+  return false;
+}
+
+template <>
+bool HandleSelectionBoundary<EditingInFlatTreeStrategy>(const Node& node) {
+  if (!node.IsElementNode())
     return false;
+  ElementShadow* shadow = ToElement(node).Shadow();
+  if (!shadow)
+    return false;
+  return shadow->YoungestShadowRoot().GetType() == ShadowRootType::kUserAgent;
 }
 
-template<>
-bool handleSelectionBoundary<EditingInFlatTreeStrategy>(const Node& node)
-{
-    if (!node.isElementNode())
-        return false;
-    ElementShadow* shadow = toElement(node).shadow();
-    if (!shadow)
-        return false;
-    return shadow->youngestShadowRoot().type() == ShadowRootType::UserAgent;
-}
-
-} // namespace
+}  // namespace
 
 using namespace HTMLNames;
 
-template<typename Strategy>
+template <typename Strategy>
 class StyledMarkupTraverser {
-    WTF_MAKE_NONCOPYABLE(StyledMarkupTraverser);
-    STACK_ALLOCATED();
-public:
-    StyledMarkupTraverser();
-    StyledMarkupTraverser(StyledMarkupAccumulator*, Node*);
+  WTF_MAKE_NONCOPYABLE(StyledMarkupTraverser);
+  STACK_ALLOCATED();
 
-    Node* traverse(Node*, Node*);
-    void wrapWithNode(ContainerNode&, EditingStyle*);
-    EditingStyle* createInlineStyleIfNeeded(Node&);
+ public:
+  StyledMarkupTraverser();
+  StyledMarkupTraverser(StyledMarkupAccumulator*, Node*);
 
-private:
-    bool shouldAnnotate() const;
-    bool convertBlocksToInlines() const;
-    void appendStartMarkup(Node&);
-    void appendEndMarkup(Node&);
-    EditingStyle* createInlineStyle(Element&);
-    bool needsInlineStyle(const Element&);
-    bool shouldApplyWrappingStyle(const Node&) const;
+  Node* Traverse(Node*, Node*);
+  void WrapWithNode(ContainerNode&, EditingStyle*);
+  EditingStyle* CreateInlineStyleIfNeeded(Node&);
 
-    StyledMarkupAccumulator* m_accumulator;
-    Member<Node> m_lastClosed;
-    Member<EditingStyle> m_wrappingStyle;
+ private:
+  bool ShouldAnnotate() const;
+  bool ShouldConvertBlocksToInlines() const;
+  void AppendStartMarkup(Node&);
+  void AppendEndMarkup(Node&);
+  EditingStyle* CreateInlineStyle(Element&);
+  bool NeedsInlineStyle(const Element&);
+  bool ShouldApplyWrappingStyle(const Node&) const;
+
+  StyledMarkupAccumulator* accumulator_;
+  Member<Node> last_closed_;
+  Member<EditingStyle> wrapping_style_;
 };
 
-template<typename Strategy>
-bool StyledMarkupTraverser<Strategy>::shouldAnnotate() const
-{
-    return m_accumulator->shouldAnnotate();
-}
-
-template<typename Strategy>
-bool StyledMarkupTraverser<Strategy>::convertBlocksToInlines() const
-{
-    return m_accumulator->convertBlocksToInlines();
-}
-
-template<typename Strategy>
-StyledMarkupSerializer<Strategy>::StyledMarkupSerializer(EAbsoluteURLs shouldResolveURLs, EAnnotateForInterchange shouldAnnotate, const PositionTemplate<Strategy>& start, const PositionTemplate<Strategy>& end, Node* highestNodeToBeSerialized, ConvertBlocksToInlines convertBlocksToInlines)
-    : m_start(start)
-    , m_end(end)
-    , m_shouldResolveURLs(shouldResolveURLs)
-    , m_shouldAnnotate(shouldAnnotate)
-    , m_highestNodeToBeSerialized(highestNodeToBeSerialized)
-    , m_convertBlocksToInlines(convertBlocksToInlines)
-    , m_lastClosed(highestNodeToBeSerialized)
-{
+template <typename Strategy>
+bool StyledMarkupTraverser<Strategy>::ShouldAnnotate() const {
+  return accumulator_->ShouldAnnotate();
 }
 
 template <typename Strategy>
-static bool needInterchangeNewlineAfter(const VisiblePositionTemplate<Strategy>& v)
-{
-    const VisiblePositionTemplate<Strategy> next = nextPositionOf(v);
-    Node* upstreamNode = mostBackwardCaretPosition(next.deepEquivalent()).anchorNode();
-    Node* downstreamNode = mostForwardCaretPosition(v.deepEquivalent()).anchorNode();
-    // Add an interchange newline if a paragraph break is selected and a br won't already be added to the markup to represent it.
-    return isEndOfParagraph(v) && isStartOfParagraph(next) && !(isHTMLBRElement(*upstreamNode) && upstreamNode == downstreamNode);
+bool StyledMarkupTraverser<Strategy>::ShouldConvertBlocksToInlines() const {
+  return accumulator_->ShouldConvertBlocksToInlines();
 }
 
 template <typename Strategy>
-static bool needInterchangeNewlineAt(const VisiblePositionTemplate<Strategy>& v)
-{
-    return needInterchangeNewlineAfter(previousPositionOf(v));
+StyledMarkupSerializer<Strategy>::StyledMarkupSerializer(
+    EAbsoluteURLs should_resolve_urls,
+    EAnnotateForInterchange should_annotate,
+    const PositionTemplate<Strategy>& start,
+    const PositionTemplate<Strategy>& end,
+    Node* highest_node_to_be_serialized,
+    ConvertBlocksToInlines convert_blocks_to_inlines)
+    : start_(start),
+      end_(end),
+      should_resolve_urls_(should_resolve_urls),
+      should_annotate_(should_annotate),
+      highest_node_to_be_serialized_(highest_node_to_be_serialized),
+      convert_blocks_to_inlines_(convert_blocks_to_inlines),
+      last_closed_(highest_node_to_be_serialized) {}
+
+template <typename Strategy>
+static bool NeedInterchangeNewlineAfter(
+    const VisiblePositionTemplate<Strategy>& v) {
+  const VisiblePositionTemplate<Strategy> next = NextPositionOf(v);
+  Node* upstream_node =
+      MostBackwardCaretPosition(next.DeepEquivalent()).AnchorNode();
+  Node* downstream_node =
+      MostForwardCaretPosition(v.DeepEquivalent()).AnchorNode();
+  // Add an interchange newline if a paragraph break is selected and a br won't
+  // already be added to the markup to represent it.
+  return IsEndOfParagraph(v) && IsStartOfParagraph(next) &&
+         !(isHTMLBRElement(*upstream_node) && upstream_node == downstream_node);
 }
 
-template<typename Strategy>
-static bool areSameRanges(Node* node, const PositionTemplate<Strategy>& startPosition, const PositionTemplate<Strategy>& endPosition)
-{
-    DCHECK(node);
-    const EphemeralRange range = VisibleSelection::selectionFromContentsOfNode(node).toNormalizedEphemeralRange();
-    return toPositionInDOMTree(startPosition) == range.startPosition() && toPositionInDOMTree(endPosition) == range.endPosition();
+template <typename Strategy>
+static bool NeedInterchangeNewlineAt(
+    const VisiblePositionTemplate<Strategy>& v) {
+  return NeedInterchangeNewlineAfter(PreviousPositionOf(v));
 }
 
-static EditingStyle* styleFromMatchedRulesAndInlineDecl(const HTMLElement* element)
-{
-    EditingStyle* style = EditingStyle::create(element->inlineStyle());
-    // FIXME: Having to const_cast here is ugly, but it is quite a bit of work to untangle
-    // the non-const-ness of styleFromMatchedRulesForElement.
-    style->mergeStyleFromRules(const_cast<HTMLElement*>(element));
-    return style;
+template <typename Strategy>
+static bool AreSameRanges(Node* node,
+                          const PositionTemplate<Strategy>& start_position,
+                          const PositionTemplate<Strategy>& end_position) {
+  DCHECK(node);
+  const EphemeralRange range =
+      CreateVisibleSelection(
+          SelectionInDOMTree::Builder().SelectAllChildren(*node).Build())
+          .ToNormalizedEphemeralRange();
+  return ToPositionInDOMTree(start_position) == range.StartPosition() &&
+         ToPositionInDOMTree(end_position) == range.EndPosition();
 }
 
-template<typename Strategy>
-String StyledMarkupSerializer<Strategy>::createMarkup()
-{
-    StyledMarkupAccumulator markupAccumulator(m_shouldResolveURLs, toTextOffset(m_start.parentAnchoredEquivalent()), toTextOffset(m_end.parentAnchoredEquivalent()), m_start.document(), m_shouldAnnotate, m_convertBlocksToInlines);
+static EditingStyle* StyleFromMatchedRulesAndInlineDecl(
+    const HTMLElement* element) {
+  EditingStyle* style = EditingStyle::Create(element->InlineStyle());
+  // FIXME: Having to const_cast here is ugly, but it is quite a bit of work to
+  // untangle the non-const-ness of styleFromMatchedRulesForElement.
+  style->MergeStyleFromRules(const_cast<HTMLElement*>(element));
+  return style;
+}
 
-    Node* pastEnd = m_end.nodeAsRangePastLastNode();
+template <typename Strategy>
+String StyledMarkupSerializer<Strategy>::CreateMarkup() {
+  StyledMarkupAccumulator markup_accumulator(
+      should_resolve_urls_, ToTextOffset(start_.ParentAnchoredEquivalent()),
+      ToTextOffset(end_.ParentAnchoredEquivalent()), start_.GetDocument(),
+      should_annotate_, convert_blocks_to_inlines_);
 
-    Node* firstNode = m_start.nodeAsRangeFirstNode();
-    const VisiblePositionTemplate<Strategy> visibleStart = createVisiblePosition(m_start);
-    const VisiblePositionTemplate<Strategy> visibleEnd = createVisiblePosition(m_end);
-    if (shouldAnnotate() && needInterchangeNewlineAfter(visibleStart)) {
-        markupAccumulator.appendInterchangeNewline();
-        if (visibleStart.deepEquivalent() == previousPositionOf(visibleEnd).deepEquivalent())
-            return markupAccumulator.takeResults();
+  Node* past_end = end_.NodeAsRangePastLastNode();
 
-        firstNode = nextPositionOf(visibleStart).deepEquivalent().anchorNode();
+  Node* first_node = start_.NodeAsRangeFirstNode();
+  const VisiblePositionTemplate<Strategy> visible_start =
+      CreateVisiblePosition(start_);
+  const VisiblePositionTemplate<Strategy> visible_end =
+      CreateVisiblePosition(end_);
+  if (ShouldAnnotate() && NeedInterchangeNewlineAfter(visible_start)) {
+    markup_accumulator.AppendInterchangeNewline();
+    if (visible_start.DeepEquivalent() ==
+        PreviousPositionOf(visible_end).DeepEquivalent())
+      return markup_accumulator.TakeResults();
 
-        if (pastEnd && PositionTemplate<Strategy>::beforeNode(firstNode).compareTo(PositionTemplate<Strategy>::beforeNode(pastEnd)) >= 0) {
-            // This condition hits in editing/pasteboard/copy-display-none.html.
-            return markupAccumulator.takeResults();
-        }
+    first_node = NextPositionOf(visible_start).DeepEquivalent().AnchorNode();
+
+    if (past_end && PositionTemplate<Strategy>::BeforeNode(first_node)
+                            .CompareTo(PositionTemplate<Strategy>::BeforeNode(
+                                past_end)) >= 0) {
+      // This condition hits in editing/pasteboard/copy-display-none.html.
+      return markup_accumulator.TakeResults();
     }
+  }
 
-    if (!m_lastClosed)
-        m_lastClosed = StyledMarkupTraverser<Strategy>().traverse(firstNode, pastEnd);
-    StyledMarkupTraverser<Strategy> traverser(&markupAccumulator, m_lastClosed);
-    Node* lastClosed = traverser.traverse(firstNode, pastEnd);
-
-    if (m_highestNodeToBeSerialized && lastClosed) {
-        // TODO(hajimehoshi): This is calculated at createMarkupInternal too.
-        Node* commonAncestor = Strategy::commonAncestor(*m_start.computeContainerNode(), *m_end.computeContainerNode());
-        DCHECK(commonAncestor);
-        HTMLBodyElement* body = toHTMLBodyElement(enclosingElementWithTag(Position::firstPositionInNode(commonAncestor), bodyTag));
-        HTMLBodyElement* fullySelectedRoot = nullptr;
-        // FIXME: Do this for all fully selected blocks, not just the body.
-        if (body && areSameRanges(body, m_start, m_end))
-            fullySelectedRoot = body;
-
-        // Also include all of the ancestors of lastClosed up to this special ancestor.
-        // FIXME: What is ancestor?
-        for (ContainerNode* ancestor = Strategy::parent(*lastClosed); ancestor; ancestor = Strategy::parent(*ancestor)) {
-            if (ancestor == fullySelectedRoot && !markupAccumulator.convertBlocksToInlines()) {
-                EditingStyle* fullySelectedRootStyle = styleFromMatchedRulesAndInlineDecl(fullySelectedRoot);
-
-                // Bring the background attribute over, but not as an attribute because a background attribute on a div
-                // appears to have no effect.
-                if ((!fullySelectedRootStyle || !fullySelectedRootStyle->style() || !fullySelectedRootStyle->style()->getPropertyCSSValue(CSSPropertyBackgroundImage))
-                    && fullySelectedRoot->hasAttribute(backgroundAttr))
-                    fullySelectedRootStyle->style()->setProperty(CSSPropertyBackgroundImage, "url('" + fullySelectedRoot->getAttribute(backgroundAttr) + "')");
-
-                if (fullySelectedRootStyle->style()) {
-                    // Reset the CSS properties to avoid an assertion error in addStyleMarkup().
-                    // This assertion is caused at least when we select all text of a <body> element whose
-                    // 'text-decoration' property is "inherit", and copy it.
-                    if (!propertyMissingOrEqualToNone(fullySelectedRootStyle->style(), CSSPropertyTextDecoration))
-                        fullySelectedRootStyle->style()->setProperty(CSSPropertyTextDecoration, CSSValueNone);
-                    if (!propertyMissingOrEqualToNone(fullySelectedRootStyle->style(), CSSPropertyWebkitTextDecorationsInEffect))
-                        fullySelectedRootStyle->style()->setProperty(CSSPropertyWebkitTextDecorationsInEffect, CSSValueNone);
-                    markupAccumulator.wrapWithStyleNode(fullySelectedRootStyle->style());
-                }
-            } else {
-                EditingStyle* style = traverser.createInlineStyleIfNeeded(*ancestor);
-                // Since this node and all the other ancestors are not in the selection we want
-                // styles that affect the exterior of the node not to be not included.
-                // If the node is not fully selected by the range, then we don't want to keep styles that affect its relationship to the nodes around it
-                // only the ones that affect it and the nodes within it.
-                if (style && style->style())
-                    style->style()->removeProperty(CSSPropertyFloat);
-                traverser.wrapWithNode(*ancestor, style);
-            }
-
-            if (ancestor == m_highestNodeToBeSerialized)
-                break;
-        }
+  // If there is no the highest node in the selected nodes, |m_lastClosed| can
+  // be #text when its parent is a formatting tag. In this case, #text is
+  // wrapped by <span> tag, but this text should be wrapped by the formatting
+  // tag. See http://crbug.com/634482
+  bool should_append_parent_tag = false;
+  if (!last_closed_) {
+    last_closed_ =
+        StyledMarkupTraverser<Strategy>().Traverse(first_node, past_end);
+    if (last_closed_ && last_closed_->IsTextNode() &&
+        IsPresentationalHTMLElement(last_closed_->parentNode())) {
+      last_closed_ = last_closed_->parentElement();
+      should_append_parent_tag = true;
     }
+  }
 
-    // FIXME: The interchange newline should be placed in the block that it's in, not after all of the content, unconditionally.
-    if (shouldAnnotate() && needInterchangeNewlineAt(visibleEnd))
-        markupAccumulator.appendInterchangeNewline();
+  StyledMarkupTraverser<Strategy> traverser(&markup_accumulator, last_closed_);
+  Node* last_closed = traverser.Traverse(first_node, past_end);
 
-    return markupAccumulator.takeResults();
+  if (highest_node_to_be_serialized_ && last_closed) {
+    // TODO(hajimehoshi): This is calculated at createMarkupInternal too.
+    Node* common_ancestor = Strategy::CommonAncestor(
+        *start_.ComputeContainerNode(), *end_.ComputeContainerNode());
+    DCHECK(common_ancestor);
+    HTMLBodyElement* body = toHTMLBodyElement(EnclosingElementWithTag(
+        Position::FirstPositionInNode(common_ancestor), bodyTag));
+    HTMLBodyElement* fully_selected_root = nullptr;
+    // FIXME: Do this for all fully selected blocks, not just the body.
+    if (body && AreSameRanges(body, start_, end_))
+      fully_selected_root = body;
+
+    // Also include all of the ancestors of lastClosed up to this special
+    // ancestor.
+    // FIXME: What is ancestor?
+    for (ContainerNode* ancestor = Strategy::Parent(*last_closed); ancestor;
+         ancestor = Strategy::Parent(*ancestor)) {
+      if (ancestor == fully_selected_root &&
+          !markup_accumulator.ShouldConvertBlocksToInlines()) {
+        EditingStyle* fully_selected_root_style =
+            StyleFromMatchedRulesAndInlineDecl(fully_selected_root);
+
+        // Bring the background attribute over, but not as an attribute because
+        // a background attribute on a div appears to have no effect.
+        if ((!fully_selected_root_style ||
+             !fully_selected_root_style->Style() ||
+             !fully_selected_root_style->Style()->GetPropertyCSSValue(
+                 CSSPropertyBackgroundImage)) &&
+            fully_selected_root->hasAttribute(backgroundAttr))
+          fully_selected_root_style->Style()->SetProperty(
+              CSSPropertyBackgroundImage,
+              "url('" + fully_selected_root->getAttribute(backgroundAttr) +
+                  "')");
+
+        if (fully_selected_root_style->Style()) {
+          // Reset the CSS properties to avoid an assertion error in
+          // addStyleMarkup(). This assertion is caused at least when we select
+          // all text of a <body> element whose 'text-decoration' property is
+          // "inherit", and copy it.
+          if (!PropertyMissingOrEqualToNone(fully_selected_root_style->Style(),
+                                            CSSPropertyTextDecoration))
+            fully_selected_root_style->Style()->SetProperty(
+                CSSPropertyTextDecoration, CSSValueNone);
+          if (!PropertyMissingOrEqualToNone(
+                  fully_selected_root_style->Style(),
+                  CSSPropertyWebkitTextDecorationsInEffect))
+            fully_selected_root_style->Style()->SetProperty(
+                CSSPropertyWebkitTextDecorationsInEffect, CSSValueNone);
+          markup_accumulator.WrapWithStyleNode(
+              fully_selected_root_style->Style());
+        }
+      } else {
+        EditingStyle* style = traverser.CreateInlineStyleIfNeeded(*ancestor);
+        // Since this node and all the other ancestors are not in the selection
+        // we want styles that affect the exterior of the node not to be not
+        // included.  If the node is not fully selected by the range, then we
+        // don't want to keep styles that affect its relationship to the nodes
+        // around it only the ones that affect it and the nodes within it.
+        if (style && style->Style())
+          style->Style()->RemoveProperty(CSSPropertyFloat);
+        traverser.WrapWithNode(*ancestor, style);
+      }
+
+      if (ancestor == highest_node_to_be_serialized_)
+        break;
+    }
+  } else if (should_append_parent_tag) {
+    EditingStyle* style = traverser.CreateInlineStyleIfNeeded(*last_closed_);
+    traverser.WrapWithNode(*ToContainerNode(last_closed_), style);
+  }
+
+  // FIXME: The interchange newline should be placed in the block that it's in,
+  // not after all of the content, unconditionally.
+  if (ShouldAnnotate() && NeedInterchangeNewlineAt(visible_end))
+    markup_accumulator.AppendInterchangeNewline();
+
+  return markup_accumulator.TakeResults();
 }
 
-template<typename Strategy>
+template <typename Strategy>
 StyledMarkupTraverser<Strategy>::StyledMarkupTraverser()
-    : StyledMarkupTraverser(nullptr, nullptr)
-{
+    : StyledMarkupTraverser(nullptr, nullptr) {}
+
+template <typename Strategy>
+StyledMarkupTraverser<Strategy>::StyledMarkupTraverser(
+    StyledMarkupAccumulator* accumulator,
+    Node* last_closed)
+    : accumulator_(accumulator),
+      last_closed_(last_closed),
+      wrapping_style_(nullptr) {
+  if (!accumulator_) {
+    DCHECK_EQ(last_closed_, static_cast<decltype(last_closed_)>(nullptr));
+    return;
+  }
+  if (!last_closed_)
+    return;
+  ContainerNode* parent = Strategy::Parent(*last_closed_);
+  if (!parent)
+    return;
+  if (ShouldAnnotate()) {
+    wrapping_style_ =
+        EditingStyleUtilities::CreateWrappingStyleForAnnotatedSerialization(
+            parent);
+    return;
+  }
+  wrapping_style_ =
+      EditingStyleUtilities::CreateWrappingStyleForSerialization(parent);
 }
 
-template<typename Strategy>
-StyledMarkupTraverser<Strategy>::StyledMarkupTraverser(StyledMarkupAccumulator* accumulator, Node* lastClosed)
-    : m_accumulator(accumulator)
-    , m_lastClosed(lastClosed)
-    , m_wrappingStyle(nullptr)
-{
-    if (!m_accumulator) {
-        DCHECK_EQ(m_lastClosed, static_cast<decltype(m_lastClosed)>(nullptr));
-        return;
-    }
-    if (!m_lastClosed)
-        return;
-    ContainerNode* parent = Strategy::parent(*m_lastClosed);
-    if (!parent)
-        return;
-    if (shouldAnnotate()) {
-        m_wrappingStyle = EditingStyle::wrappingStyleForAnnotatedSerialization(parent);
-        return;
-    }
-    m_wrappingStyle = EditingStyle::wrappingStyleForSerialization(parent);
-}
+template <typename Strategy>
+Node* StyledMarkupTraverser<Strategy>::Traverse(Node* start_node,
+                                                Node* past_end) {
+  HeapVector<Member<ContainerNode>> ancestors_to_close;
+  Node* next;
+  Node* last_closed = nullptr;
+  for (Node* n = start_node; n && n != past_end; n = next) {
+    // If |n| is a selection boundary such as <input>, traverse the child
+    // nodes in the DOM tree instead of the flat tree.
+    if (HandleSelectionBoundary<Strategy>(*n)) {
+      last_closed = StyledMarkupTraverser<EditingStrategy>(accumulator_,
+                                                           last_closed_.Get())
+                        .Traverse(n, EditingStrategy::NextSkippingChildren(*n));
+      next = EditingInFlatTreeStrategy::NextSkippingChildren(*n);
+    } else {
+      next = Strategy::Next(*n);
+      if (IsEnclosingBlock(n) && CanHaveChildrenForEditing(n) &&
+          next == past_end) {
+        // Don't write out empty block containers that aren't fully selected.
+        continue;
+      }
 
-template<typename Strategy>
-Node* StyledMarkupTraverser<Strategy>::traverse(Node* startNode, Node* pastEnd)
-{
-    HeapVector<Member<ContainerNode>> ancestorsToClose;
-    Node* next;
-    Node* lastClosed = nullptr;
-    for (Node* n = startNode; n && n != pastEnd; n = next) {
-        // If |n| is a selection boundary such as <input>, traverse the child
-        // nodes in the DOM tree instead of the flat tree.
-        if (handleSelectionBoundary<Strategy>(*n)) {
-            lastClosed = StyledMarkupTraverser<EditingStrategy>(m_accumulator, m_lastClosed.get()).traverse(n, EditingStrategy::nextSkippingChildren(*n));
-            next = EditingInFlatTreeStrategy::nextSkippingChildren(*n);
-        } else {
-            next = Strategy::next(*n);
-            if (isEnclosingBlock(n) && canHaveChildrenForEditing(n) && next == pastEnd) {
-                // Don't write out empty block containers that aren't fully selected.
-                continue;
-            }
+      if (!n->GetLayoutObject() &&
+          !EnclosingElementWithTag(FirstPositionInOrBeforeNode(n), selectTag)) {
+        next = Strategy::NextSkippingChildren(*n);
+        // Don't skip over pastEnd.
+        if (past_end && Strategy::IsDescendantOf(*past_end, *n))
+          next = past_end;
+      } else {
+        // Add the node to the markup if we're not skipping the descendants
+        AppendStartMarkup(*n);
 
-            if (!n->layoutObject() && !enclosingElementWithTag(firstPositionInOrBeforeNode(n), selectTag)) {
-                next = Strategy::nextSkippingChildren(*n);
-                // Don't skip over pastEnd.
-                if (pastEnd && Strategy::isDescendantOf(*pastEnd, *n))
-                    next = pastEnd;
-            } else {
-                // Add the node to the markup if we're not skipping the descendants
-                appendStartMarkup(*n);
-
-                // If node has no children, close the tag now.
-                if (Strategy::hasChildren(*n)) {
-                    ancestorsToClose.append(toContainerNode(n));
-                    continue;
-                }
-                appendEndMarkup(*n);
-                lastClosed = n;
-            }
+        // If node has no children, close the tag now.
+        if (Strategy::HasChildren(*n)) {
+          ancestors_to_close.push_back(ToContainerNode(n));
+          continue;
         }
-
-        // If we didn't insert open tag and there's no more siblings or we're at the end of the traversal, take care of ancestors.
-        // FIXME: What happens if we just inserted open tag and reached the end?
-        if (Strategy::nextSibling(*n) && next != pastEnd)
-            continue;
-
-        // Close up the ancestors.
-        while (!ancestorsToClose.isEmpty()) {
-            ContainerNode* ancestor = ancestorsToClose.last();
-            DCHECK(ancestor);
-            if (next && next != pastEnd && Strategy::isDescendantOf(*next, *ancestor))
-                break;
-            // Not at the end of the range, close ancestors up to sibling of next node.
-            appendEndMarkup(*ancestor);
-            lastClosed = ancestor;
-            ancestorsToClose.removeLast();
-        }
-
-        // Surround the currently accumulated markup with markup for ancestors we never opened as we leave the subtree(s) rooted at those ancestors.
-        ContainerNode* nextParent = next ? Strategy::parent(*next) : nullptr;
-        if (next == pastEnd || n == nextParent)
-            continue;
-
-        DCHECK(n);
-        Node* lastAncestorClosedOrSelf = (lastClosed && Strategy::isDescendantOf(*n, *lastClosed)) ? lastClosed : n;
-        for (ContainerNode* parent = Strategy::parent(*lastAncestorClosedOrSelf); parent && parent != nextParent; parent = Strategy::parent(*parent)) {
-            // All ancestors that aren't in the ancestorsToClose list should either be a) unrendered:
-            if (!parent->layoutObject())
-                continue;
-            // or b) ancestors that we never encountered during a pre-order traversal starting at startNode:
-            DCHECK(startNode);
-            DCHECK(Strategy::isDescendantOf(*startNode, *parent));
-            EditingStyle* style = createInlineStyleIfNeeded(*parent);
-            wrapWithNode(*parent, style);
-            lastClosed = parent;
-        }
+        AppendEndMarkup(*n);
+        last_closed = n;
+      }
     }
 
-    return lastClosed;
-}
+    // If we didn't insert open tag and there's no more siblings or we're at the
+    // end of the traversal, take care of ancestors.
+    // FIXME: What happens if we just inserted open tag and reached the end?
+    if (Strategy::NextSibling(*n) && next != past_end)
+      continue;
 
-template<typename Strategy>
-bool StyledMarkupTraverser<Strategy>::needsInlineStyle(const Element& element)
-{
-    if (!element.isHTMLElement())
-        return false;
-    if (shouldAnnotate())
-        return true;
-    return convertBlocksToInlines() && isEnclosingBlock(&element);
-}
-
-template<typename Strategy>
-void StyledMarkupTraverser<Strategy>::wrapWithNode(ContainerNode& node, EditingStyle* style)
-{
-    if (!m_accumulator)
-        return;
-    StringBuilder markup;
-    if (node.isDocumentNode()) {
-        MarkupFormatter::appendXMLDeclaration(markup, toDocument(node));
-        m_accumulator->pushMarkup(markup.toString());
-        return;
-    }
-    if (!node.isElementNode())
-        return;
-    Element& element = toElement(node);
-    if (shouldApplyWrappingStyle(element) || needsInlineStyle(element))
-        m_accumulator->appendElementWithInlineStyle(markup, element, style);
-    else
-        m_accumulator->appendElement(markup, element);
-    m_accumulator->pushMarkup(markup.toString());
-    m_accumulator->appendEndTag(toElement(node));
-}
-
-template<typename Strategy>
-EditingStyle* StyledMarkupTraverser<Strategy>::createInlineStyleIfNeeded(Node& node)
-{
-    if (!m_accumulator)
-        return nullptr;
-    if (!node.isElementNode())
-        return nullptr;
-    EditingStyle* inlineStyle = createInlineStyle(toElement(node));
-    if (convertBlocksToInlines() && isEnclosingBlock(&node))
-        inlineStyle->forceInline();
-    return inlineStyle;
-}
-
-template<typename Strategy>
-void StyledMarkupTraverser<Strategy>::appendStartMarkup(Node& node)
-{
-    if (!m_accumulator)
-        return;
-    switch (node.getNodeType()) {
-    case Node::TEXT_NODE: {
-        Text& text = toText(node);
-        if (text.parentElement() && isHTMLTextAreaElement(text.parentElement())) {
-            m_accumulator->appendText(text);
-            break;
-        }
-        EditingStyle* inlineStyle = nullptr;
-        if (shouldApplyWrappingStyle(text)) {
-            inlineStyle = m_wrappingStyle->copy();
-            // FIXME: <rdar://problem/5371536> Style rules that match pasted content can change it's appearance
-            // Make sure spans are inline style in paste side e.g. span { display: block }.
-            inlineStyle->forceInline();
-            // FIXME: Should this be included in forceInline?
-            inlineStyle->style()->setProperty(CSSPropertyFloat, CSSValueNone);
-        }
-        m_accumulator->appendTextWithInlineStyle(text, inlineStyle);
+    // Close up the ancestors.
+    while (!ancestors_to_close.IsEmpty()) {
+      ContainerNode* ancestor = ancestors_to_close.back();
+      DCHECK(ancestor);
+      if (next && next != past_end &&
+          Strategy::IsDescendantOf(*next, *ancestor))
         break;
+      // Not at the end of the range, close ancestors up to sibling of next
+      // node.
+      AppendEndMarkup(*ancestor);
+      last_closed = ancestor;
+      ancestors_to_close.pop_back();
     }
-    case Node::ELEMENT_NODE: {
-        Element& element = toElement(node);
-        if ((element.isHTMLElement() && shouldAnnotate()) || shouldApplyWrappingStyle(element)) {
-            EditingStyle* inlineStyle = createInlineStyle(element);
-            m_accumulator->appendElementWithInlineStyle(element, inlineStyle);
-            break;
-        }
-        m_accumulator->appendElement(element);
+
+    // Surround the currently accumulated markup with markup for ancestors we
+    // never opened as we leave the subtree(s) rooted at those ancestors.
+    ContainerNode* next_parent = next ? Strategy::Parent(*next) : nullptr;
+    if (next == past_end || n == next_parent)
+      continue;
+
+    DCHECK(n);
+    Node* last_ancestor_closed_or_self =
+        (last_closed && Strategy::IsDescendantOf(*n, *last_closed))
+            ? last_closed
+            : n;
+    for (ContainerNode* parent =
+             Strategy::Parent(*last_ancestor_closed_or_self);
+         parent && parent != next_parent; parent = Strategy::Parent(*parent)) {
+      // All ancestors that aren't in the ancestorsToClose list should either be
+      // a) unrendered:
+      if (!parent->GetLayoutObject())
+        continue;
+      // or b) ancestors that we never encountered during a pre-order traversal
+      // starting at startNode:
+      DCHECK(start_node);
+      DCHECK(Strategy::IsDescendantOf(*start_node, *parent));
+      EditingStyle* style = CreateInlineStyleIfNeeded(*parent);
+      WrapWithNode(*parent, style);
+      last_closed = parent;
+    }
+  }
+
+  return last_closed;
+}
+
+template <typename Strategy>
+bool StyledMarkupTraverser<Strategy>::NeedsInlineStyle(const Element& element) {
+  if (!element.IsHTMLElement())
+    return false;
+  if (ShouldAnnotate())
+    return true;
+  return ShouldConvertBlocksToInlines() && IsEnclosingBlock(&element);
+}
+
+template <typename Strategy>
+void StyledMarkupTraverser<Strategy>::WrapWithNode(ContainerNode& node,
+                                                   EditingStyle* style) {
+  if (!accumulator_)
+    return;
+  StringBuilder markup;
+  if (node.IsDocumentNode()) {
+    MarkupFormatter::AppendXMLDeclaration(markup, ToDocument(node));
+    accumulator_->PushMarkup(markup.ToString());
+    return;
+  }
+  if (!node.IsElementNode())
+    return;
+  Element& element = ToElement(node);
+  if (ShouldApplyWrappingStyle(element) || NeedsInlineStyle(element))
+    accumulator_->AppendElementWithInlineStyle(markup, element, style);
+  else
+    accumulator_->AppendElement(markup, element);
+  accumulator_->PushMarkup(markup.ToString());
+  accumulator_->AppendEndTag(ToElement(node));
+}
+
+template <typename Strategy>
+EditingStyle* StyledMarkupTraverser<Strategy>::CreateInlineStyleIfNeeded(
+    Node& node) {
+  if (!accumulator_)
+    return nullptr;
+  if (!node.IsElementNode())
+    return nullptr;
+  EditingStyle* inline_style = CreateInlineStyle(ToElement(node));
+  if (ShouldConvertBlocksToInlines() && IsEnclosingBlock(&node))
+    inline_style->ForceInline();
+  return inline_style;
+}
+
+template <typename Strategy>
+void StyledMarkupTraverser<Strategy>::AppendStartMarkup(Node& node) {
+  if (!accumulator_)
+    return;
+  switch (node.getNodeType()) {
+    case Node::kTextNode: {
+      Text& text = ToText(node);
+      if (text.parentElement() && isHTMLTextAreaElement(text.parentElement())) {
+        accumulator_->AppendText(text);
         break;
+      }
+      EditingStyle* inline_style = nullptr;
+      if (ShouldApplyWrappingStyle(text)) {
+        inline_style = wrapping_style_->Copy();
+        // FIXME: <rdar://problem/5371536> Style rules that match pasted content
+        // can change its appearance.
+        // Make sure spans are inline style in paste side e.g. span { display:
+        // block }.
+        inline_style->ForceInline();
+        // FIXME: Should this be included in forceInline?
+        inline_style->Style()->SetProperty(CSSPropertyFloat, CSSValueNone);
+      }
+      accumulator_->AppendTextWithInlineStyle(text, inline_style);
+      break;
+    }
+    case Node::kElementNode: {
+      Element& element = ToElement(node);
+      if ((element.IsHTMLElement() && ShouldAnnotate()) ||
+          ShouldApplyWrappingStyle(element)) {
+        EditingStyle* inline_style = CreateInlineStyle(element);
+        accumulator_->AppendElementWithInlineStyle(element, inline_style);
+        break;
+      }
+      accumulator_->AppendElement(element);
+      break;
     }
     default:
-        m_accumulator->appendStartMarkup(node);
-        break;
-    }
+      accumulator_->AppendStartMarkup(node);
+      break;
+  }
 }
 
-template<typename Strategy>
-void StyledMarkupTraverser<Strategy>::appendEndMarkup(Node& node)
-{
-    if (!m_accumulator || !node.isElementNode())
-        return;
-    m_accumulator->appendEndTag(toElement(node));
+template <typename Strategy>
+void StyledMarkupTraverser<Strategy>::AppendEndMarkup(Node& node) {
+  if (!accumulator_ || !node.IsElementNode())
+    return;
+  accumulator_->AppendEndTag(ToElement(node));
 }
 
-template<typename Strategy>
-bool StyledMarkupTraverser<Strategy>::shouldApplyWrappingStyle(const Node& node) const
-{
-    return m_lastClosed && Strategy::parent(*m_lastClosed) == Strategy::parent(node)
-        && m_wrappingStyle && m_wrappingStyle->style();
+template <typename Strategy>
+bool StyledMarkupTraverser<Strategy>::ShouldApplyWrappingStyle(
+    const Node& node) const {
+  return last_closed_ &&
+         Strategy::Parent(*last_closed_) == Strategy::Parent(node) &&
+         wrapping_style_ && wrapping_style_->Style();
 }
 
-template<typename Strategy>
-EditingStyle* StyledMarkupTraverser<Strategy>::createInlineStyle(Element& element)
-{
-    EditingStyle* inlineStyle = nullptr;
+template <typename Strategy>
+EditingStyle* StyledMarkupTraverser<Strategy>::CreateInlineStyle(
+    Element& element) {
+  EditingStyle* inline_style = nullptr;
 
-    if (shouldApplyWrappingStyle(element)) {
-        inlineStyle = m_wrappingStyle->copy();
-        inlineStyle->removePropertiesInElementDefaultStyle(&element);
-        inlineStyle->removeStyleConflictingWithStyleOfElement(&element);
-    } else {
-        inlineStyle = EditingStyle::create();
-    }
+  if (ShouldApplyWrappingStyle(element)) {
+    inline_style = wrapping_style_->Copy();
+    inline_style->RemovePropertiesInElementDefaultStyle(&element);
+    inline_style->RemoveStyleConflictingWithStyleOfElement(&element);
+  } else {
+    inline_style = EditingStyle::Create();
+  }
 
-    if (element.isStyledElement() && element.inlineStyle())
-        inlineStyle->overrideWithStyle(element.inlineStyle());
+  if (element.IsStyledElement() && element.InlineStyle())
+    inline_style->OverrideWithStyle(element.InlineStyle());
 
-    if (element.isHTMLElement() && shouldAnnotate())
-        inlineStyle->mergeStyleFromRulesForSerialization(&toHTMLElement(element));
+  if (element.IsHTMLElement() && ShouldAnnotate())
+    inline_style->MergeStyleFromRulesForSerialization(&ToHTMLElement(element));
 
-    return inlineStyle;
+  return inline_style;
 }
 
 template class StyledMarkupSerializer<EditingStrategy>;
 template class StyledMarkupSerializer<EditingInFlatTreeStrategy>;
 
-} // namespace blink
+}  // namespace blink

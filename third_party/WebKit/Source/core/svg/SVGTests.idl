@@ -24,12 +24,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// http://www.w3.org/TR/SVG2/types.html#InterfaceSVGTests
+// https://svgwg.org/svg2-draft/types.html#InterfaceSVGTests
 
 [
     NoInterfaceObject, // Always used on target of 'implements'
 ] interface SVGTests {
-    [MeasureAs=SVG1DOMSVGTests] readonly attribute SVGStringList requiredFeatures;
     [MeasureAs=SVG1DOMSVGTests] readonly attribute SVGStringList requiredExtensions;
     [MeasureAs=SVG1DOMSVGTests] readonly attribute SVGStringList systemLanguage;
 };

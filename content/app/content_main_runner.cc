@@ -11,9 +11,11 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "base/allocator/allocator_check.h"
 #include "base/allocator/allocator_extension.h"
+#include "base/allocator/features.h"
 #include "base/at_exit.h"
 #include "base/base_switches.h"
 #include "base/command_line.h"
@@ -25,13 +27,13 @@
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_base.h"
 #include "base/metrics/statistics_recorder.h"
 #include "base/path_service.h"
 #include "base/process/launch.h"
 #include "base/process/memory.h"
+#include "base/process/process.h"
 #include "base/process/process_handle.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/strings/string_number_conversions.h"
@@ -39,39 +41,27 @@
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
-#include "components/tracing/browser/trace_config_file.h"
-#include "components/tracing/common/trace_to_console.h"
-#include "components/tracing/common/tracing_switches.h"
+#include "components/tracing/common/trace_startup.h"
 #include "content/app/mojo/mojo_init.h"
-#include "content/browser/browser_main.h"
-#include "content/browser/gpu/gpu_process_host.h"
-#include "content/browser/renderer_host/render_process_host_impl.h"
-#include "content/browser/utility_process_host_impl.h"
-#include "content/common/set_process_title.h"
 #include "content/common/url_schemes.h"
-#include "content/gpu/in_process_gpu_thread.h"
 #include "content/public/app/content_main.h"
 #include "content/public/app/content_main_delegate.h"
-#include "content/public/browser/content_browser_client.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_constants.h"
+#include "content/public/common/content_descriptor_keys.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_paths.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
 #include "content/public/common/sandbox_init.h"
-#include "content/public/gpu/content_gpu_client.h"
-#include "content/public/renderer/content_renderer_client.h"
-#include "content/public/utility/content_utility_client.h"
-#include "content/renderer/in_process_renderer_thread.h"
-#include "content/utility/in_process_utility_thread.h"
 #include "ipc/ipc_descriptors.h"
-#include "ipc/ipc_switches.h"
 #include "media/base/media.h"
-#include "sandbox/win/src/sandbox_types.h"
+#include "ppapi/features/features.h"
 #include "ui/base/ui_base_paths.h"
 #include "ui/base/ui_base_switches.h"
 
-#ifdef V8_USE_EXTERNAL_STARTUP_DATA
+#if defined(V8_USE_EXTERNAL_STARTUP_DATA) && \
+    !defined(CHROME_MULTIPLE_DLL_BROWSER)
 #include "gin/v8_initializer.h"
 #endif
 
@@ -80,13 +70,11 @@
 #include <cstring>
 
 #include "base/trace_event/trace_event_etw_export_win.h"
-#include "base/win/process_startup_helper.h"
-#include "ui/base/win/atl_module.h"
+#include "sandbox/win/src/sandbox_types.h"
 #include "ui/display/win/dpi.h"
 #elif defined(OS_MACOSX)
 #include "base/mac/scoped_nsautorelease_pool.h"
 #include "base/power_monitor/power_monitor_device_source.h"
-#include "content/app/mac/mac_init.h"
 #include "content/browser/mach_broker_mac.h"
 #include "content/common/sandbox_init_mac.h"
 #endif  // OS_WIN
@@ -94,6 +82,7 @@
 #if defined(OS_POSIX)
 #include <signal.h>
 
+#include "base/file_descriptor_store.h"
 #include "base/posix/global_descriptors.h"
 #include "content/public/common/content_descriptors.h"
 
@@ -110,9 +99,33 @@
 #include "crypto/nss_util.h"
 #endif
 
+#if !defined(CHROME_MULTIPLE_DLL_BROWSER)
+#include "content/public/gpu/content_gpu_client.h"
+#include "content/public/renderer/content_renderer_client.h"
+#include "content/public/utility/content_utility_client.h"
+#endif
+
+#if !defined(CHROME_MULTIPLE_DLL_CHILD)
+#include "content/browser/browser_main.h"
+#include "content/public/browser/content_browser_client.h"
+#endif
+
+#if !defined(CHROME_MULTIPLE_DLL_BROWSER) && !defined(CHROME_MULTIPLE_DLL_CHILD)
+#include "content/browser/gpu/gpu_main_thread_factory.h"
+#include "content/browser/renderer_host/render_process_host_impl.h"
+#include "content/browser/utility_process_host_impl.h"
+#include "content/gpu/in_process_gpu_thread.h"
+#include "content/renderer/in_process_renderer_thread.h"
+#include "content/utility/in_process_utility_thread.h"
+#endif
+
+#if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
+#include "content/common/media/cdm_host_files.h"
+#endif
+
 namespace content {
 extern int GpuMain(const content::MainFunctionParams&);
-#if defined(ENABLE_PLUGINS)
+#if BUILDFLAG(ENABLE_PLUGINS)
 #if !defined(OS_LINUX)
 extern int PluginMain(const content::MainFunctionParams&);
 #endif
@@ -121,14 +134,19 @@ extern int PpapiBrokerMain(const MainFunctionParams&);
 #endif
 extern int RendererMain(const content::MainFunctionParams&);
 extern int UtilityMain(const MainFunctionParams&);
-#if defined(OS_ANDROID)
-extern int DownloadMain(const MainFunctionParams&);
-#endif
 }  // namespace content
 
 namespace content {
 
 namespace {
+
+#if defined(V8_USE_EXTERNAL_STARTUP_DATA) && defined(OS_ANDROID)
+#if defined __LP64__
+#define kV8SnapshotDataDescriptor kV8Snapshot64DataDescriptor
+#else
+#define kV8SnapshotDataDescriptor kV8Snapshot32DataDescriptor
+#endif
+#endif
 
 // This sets up two singletons responsible for managing field trials. The
 // |field_trial_list| singleton lives on the stack and must outlive the Run()
@@ -146,71 +164,76 @@ void InitializeFieldTrialAndFeatureList(
 
   // Ensure any field trials in browser are reflected into the child
   // process.
-  if (command_line.HasSwitch(switches::kForceFieldTrials)) {
-    bool result = base::FieldTrialList::CreateTrialsFromString(
-        command_line.GetSwitchValueASCII(switches::kForceFieldTrials),
-        std::set<std::string>());
-    DCHECK(result);
-  }
+#if defined(OS_POSIX)
+  // On POSIX systems that use the zygote, we get the trials from a shared
+  // memory segment backed by an fd instead of the command line.
+  base::FieldTrialList::CreateTrialsFromCommandLine(
+      command_line, switches::kFieldTrialHandle, kFieldTrialDescriptor);
+#else
+  base::FieldTrialList::CreateTrialsFromCommandLine(
+      command_line, switches::kFieldTrialHandle, -1);
+#endif
 
   std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
-  feature_list->InitializeFromCommandLine(
-      command_line.GetSwitchValueASCII(switches::kEnableFeatures),
-      command_line.GetSwitchValueASCII(switches::kDisableFeatures));
+  base::FieldTrialList::CreateFeaturesFromCommandLine(
+      command_line, switches::kEnableFeatures, switches::kDisableFeatures,
+      feature_list.get());
   base::FeatureList::SetInstance(std::move(feature_list));
+}
+
+void InitializeV8IfNeeded(
+    const base::CommandLine& command_line,
+    const std::string& process_type) {
+  if (process_type == switches::kGpuProcess)
+    return;
+
+#if defined(V8_USE_EXTERNAL_STARTUP_DATA)
+#if defined(OS_POSIX) && !defined(OS_MACOSX)
+  base::FileDescriptorStore& file_descriptor_store =
+      base::FileDescriptorStore::GetInstance();
+  base::MemoryMappedFile::Region region;
+  base::ScopedFD v8_snapshot_fd =
+      file_descriptor_store.MaybeTakeFD(kV8SnapshotDataDescriptor, &region);
+  if (v8_snapshot_fd.is_valid()) {
+    gin::V8Initializer::LoadV8SnapshotFromFD(v8_snapshot_fd.get(),
+                                             region.offset, region.size);
+    } else {
+      gin::V8Initializer::LoadV8Snapshot();
+    }
+    base::ScopedFD v8_natives_fd =
+        file_descriptor_store.MaybeTakeFD(kV8NativesDataDescriptor, &region);
+    if (v8_natives_fd.is_valid()) {
+      gin::V8Initializer::LoadV8NativesFromFD(v8_natives_fd.get(),
+                                              region.offset, region.size);
+    } else {
+      gin::V8Initializer::LoadV8Natives();
+    }
+#else
+#if !defined(CHROME_MULTIPLE_DLL_BROWSER)
+    gin::V8Initializer::LoadV8Snapshot();
+    gin::V8Initializer::LoadV8Natives();
+#endif  // !CHROME_MULTIPLE_DLL_BROWSER
+#endif  // OS_POSIX && !OS_MACOSX
+#endif  // V8_USE_EXTERNAL_STARTUP_DATA
 }
 
 }  // namespace
 
 #if !defined(CHROME_MULTIPLE_DLL_CHILD)
-base::LazyInstance<ContentBrowserClient>
+base::LazyInstance<ContentBrowserClient>::DestructorAtExit
     g_empty_content_browser_client = LAZY_INSTANCE_INITIALIZER;
 #endif  //  !CHROME_MULTIPLE_DLL_CHILD
 
 #if !defined(CHROME_MULTIPLE_DLL_BROWSER)
-base::LazyInstance<ContentGpuClient>
+base::LazyInstance<ContentGpuClient>::DestructorAtExit
     g_empty_content_gpu_client = LAZY_INSTANCE_INITIALIZER;
-base::LazyInstance<ContentRendererClient>
+base::LazyInstance<ContentRendererClient>::DestructorAtExit
     g_empty_content_renderer_client = LAZY_INSTANCE_INITIALIZER;
-base::LazyInstance<ContentUtilityClient>
+base::LazyInstance<ContentUtilityClient>::DestructorAtExit
     g_empty_content_utility_client = LAZY_INSTANCE_INITIALIZER;
 #endif  // !CHROME_MULTIPLE_DLL_BROWSER
 
-#if defined(V8_USE_EXTERNAL_STARTUP_DATA) && defined(OS_ANDROID)
-#if defined __LP64__
-#define kV8SnapshotDataDescriptor kV8SnapshotDataDescriptor64
-#else
-#define kV8SnapshotDataDescriptor kV8SnapshotDataDescriptor32
-#endif
-#endif
-
-#if defined(OS_POSIX)
-
-// Setup signal-handling state: resanitize most signals, ignore SIGPIPE.
-void SetupSignalHandlers() {
-  // Sanitise our signal handling state. Signals that were ignored by our
-  // parent will also be ignored by us. We also inherit our parent's sigmask.
-  sigset_t empty_signal_set;
-  CHECK_EQ(0, sigemptyset(&empty_signal_set));
-  CHECK_EQ(0, sigprocmask(SIG_SETMASK, &empty_signal_set, NULL));
-
-  struct sigaction sigact;
-  memset(&sigact, 0, sizeof(sigact));
-  sigact.sa_handler = SIG_DFL;
-  static const int signals_to_reset[] =
-      {SIGHUP, SIGINT, SIGQUIT, SIGILL, SIGABRT, SIGFPE, SIGSEGV,
-       SIGALRM, SIGTERM, SIGCHLD, SIGBUS, SIGTRAP};  // SIGPIPE is set below.
-  for (unsigned i = 0; i < arraysize(signals_to_reset); i++) {
-    CHECK_EQ(0, sigaction(signals_to_reset[i], &sigact, NULL));
-  }
-
-  // Always ignore SIGPIPE.  We check the return value of write().
-  CHECK_NE(SIG_ERR, signal(SIGPIPE, SIG_IGN));
-}
-
-#endif  // OS_POSIX
-
-void CommonSubprocessInit(const std::string& process_type) {
+void CommonSubprocessInit() {
 #if defined(OS_WIN)
   // HACK: Let Windows know that we have started.  This is needed to suppress
   // the IDC_APPSTARTING cursor from being displayed for a prolonged period
@@ -231,17 +254,9 @@ void CommonSubprocessInit(const std::string& process_type) {
   setlocale(LC_NUMERIC, "C");
 #endif
 
-#if !defined(OFFICIAL_BUILD)
-  // Print stack traces to stderr when crashes occur. This opens up security
-  // holes so it should never be enabled for official builds.
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableInProcessStackTraces)) {
-    base::debug::EnableInProcessStackDumping();
-  }
-#if defined(OS_WIN)
+#if !defined(OFFICIAL_BUILD) && defined(OS_WIN)
   base::RouteStdioToConsole(false);
   LoadLibraryA("dbghelp.dll");
-#endif
 #endif
 }
 
@@ -306,13 +321,13 @@ int RunZygote(const MainFunctionParams& main_function_params,
               ContentMainDelegate* delegate) {
   static const MainFunction kMainFunctions[] = {
     { switches::kRendererProcess,    RendererMain },
-#if defined(ENABLE_PLUGINS)
+#if BUILDFLAG(ENABLE_PLUGINS)
     { switches::kPpapiPluginProcess, PpapiPluginMain },
 #endif
     { switches::kUtilityProcess,     UtilityMain },
   };
 
-  ScopedVector<ZygoteForkDelegate> zygote_fork_delegates;
+  std::vector<std::unique_ptr<ZygoteForkDelegate>> zygote_fork_delegates;
   if (delegate) {
     delegate->ZygoteStarting(&zygote_fork_delegates);
     media::InitializeMediaLibrary();
@@ -331,6 +346,15 @@ int RunZygote(const MainFunctionParams& main_function_params,
   std::string process_type =
       command_line.GetSwitchValueASCII(switches::kProcessType);
   ContentClientInitializer::Set(process_type, delegate);
+
+#if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
+  if (process_type != switches::kPpapiPluginProcess) {
+    DVLOG(1) << "Closing CDM files for non-ppapi process.";
+    CdmHostFiles::TakeGlobalInstance().reset();
+  } else {
+    DVLOG(1) << "Not closing CDM files for ppapi process.";
+  }
+#endif
 
   MainFunctionParams main_params(command_line);
   main_params.zygote_child = true;
@@ -357,8 +381,7 @@ static void RegisterMainThreadFactories() {
       CreateInProcessUtilityThread);
   RenderProcessHostImpl::RegisterRendererMainThreadFactory(
       CreateInProcessRendererThread);
-  GpuProcessHost::RegisterGpuMainThreadFactory(
-      CreateInProcessGpuThread);
+  content::RegisterGpuMainThreadFactory(CreateInProcessGpuThread);
 #else
   base::CommandLine& command_line = *base::CommandLine::ForCurrentProcess();
   if (command_line.HasSwitch(switches::kSingleProcess)) {
@@ -384,16 +407,13 @@ int RunNamedProcessTypeMain(
     { "",                            BrowserMain },
 #endif
 #if !defined(CHROME_MULTIPLE_DLL_BROWSER)
-#if defined(ENABLE_PLUGINS)
+#if BUILDFLAG(ENABLE_PLUGINS)
     { switches::kPpapiPluginProcess, PpapiPluginMain },
     { switches::kPpapiBrokerProcess, PpapiBrokerMain },
 #endif  // ENABLE_PLUGINS
     { switches::kUtilityProcess,     UtilityMain },
     { switches::kRendererProcess,    RendererMain },
     { switches::kGpuProcess,         GpuMain },
-#if defined(OS_ANDROID)
-    { switches::kDownloadProcess,    DownloadMain},
-#endif
 #endif  // !CHROME_MULTIPLE_DLL_BROWSER
   };
 
@@ -455,46 +475,42 @@ class ContentMainRunnerImpl : public ContentMainRunner {
   int Initialize(const ContentMainParams& params) override {
     ui_task_ = params.ui_task;
 
-    base::EnableTerminationOnOutOfMemory();
-#if defined(OS_WIN)
-    base::win::RegisterInvalidParamHandler();
-    ui::win::CreateATLModuleIfNeeded();
+#if defined(USE_AURA)
+    env_mode_ = params.env_mode;
+#endif
 
+#if defined(OS_WIN)
     sandbox_info_ = *params.sandbox_info;
 #else  // !OS_WIN
+
+#if defined(OS_MACOSX)
+    autorelease_pool_ = params.autorelease_pool;
+#endif  // defined(OS_MACOSX)
 
 #if defined(OS_ANDROID)
     // See note at the initialization of ExitManager, below; basically,
     // only Android builds have the ctor/dtor handlers set up to use
     // TRACE_EVENT right away.
-    TRACE_EVENT0("startup,benchmark", "ContentMainRunnerImpl::Initialize");
+    TRACE_EVENT0("startup,benchmark,rail", "ContentMainRunnerImpl::Initialize");
 #endif  // OS_ANDROID
 
     base::GlobalDescriptors* g_fds = base::GlobalDescriptors::GetInstance();
+    ALLOW_UNUSED_LOCAL(g_fds);
 
-    // On Android,
-    // - setlocale() is not supported.
-    // - We do not override the signal handlers so that we can get
-    //   stack trace when crashing.
-    // - The ipc_fd is passed through the Java service.
-    // Thus, these are all disabled.
+// On Android, the ipc_fd is passed through the Java service.
 #if !defined(OS_ANDROID)
-    // Set C library locale to make sure CommandLine can parse argument values
-    // in correct encoding.
-    setlocale(LC_ALL, "");
-
-    SetupSignalHandlers();
-    g_fds->Set(kPrimaryIPCChannel,
-               kPrimaryIPCChannel + base::GlobalDescriptors::kBaseDescriptor);
     g_fds->Set(kMojoIPCChannel,
                kMojoIPCChannel + base::GlobalDescriptors::kBaseDescriptor);
+
+    g_fds->Set(
+        kFieldTrialDescriptor,
+        kFieldTrialDescriptor + base::GlobalDescriptors::kBaseDescriptor);
 #endif  // !OS_ANDROID
 
 #if defined(OS_LINUX) || defined(OS_OPENBSD)
     g_fds->Set(kCrashDumpSignal,
                kCrashDumpSignal + base::GlobalDescriptors::kBaseDescriptor);
 #endif  // OS_LINUX || OS_OPENBSD
-
 
 #endif  // !OS_WIN
 
@@ -514,39 +530,9 @@ class ContentMainRunnerImpl : public ContentMainRunner {
     }
 #endif  // !OS_ANDROID
 
-#if defined(OS_MACOSX)
-    // We need this pool for all the objects created before we get to the
-    // event loop, but we don't want to leave them hanging around until the
-    // app quits. Each "main" needs to flush this pool right before it goes into
-    // its main event loop to get rid of the cruft.
-    autorelease_pool_.reset(new base::mac::ScopedNSAutoreleasePool());
-    InitializeMac();
-#endif
-
-    // On Android, the command line is initialized when library is loaded and
-    // we have already started our TRACE_EVENT0.
 #if !defined(OS_ANDROID)
-    // argc/argv are ignored on Windows and Android; see command_line.h for
-    // details.
-    int argc = 0;
-    const char** argv = NULL;
-
-#if !defined(OS_WIN)
-    argc = params.argc;
-    argv = params.argv;
-#endif
-
-    base::CommandLine::Init(argc, argv);
-
-    base::EnableTerminationOnHeapCorruption();
-
-    // TODO(yiyaoliu, vadimt): Remove this once crbug.com/453640 is fixed.
-    // Enable profiler recording right after command line is initialized so that
-    // browser startup can be instrumented.
     if (delegate_ && delegate_->ShouldEnableProfilerRecording())
       tracked_objects::ScopedTracker::Enable();
-
-    SetProcessTitleFromCommandLine(argv);
 #endif  // !OS_ANDROID
 
     int exit_code = 0;
@@ -559,9 +545,6 @@ class ContentMainRunnerImpl : public ContentMainRunner {
         *base::CommandLine::ForCurrentProcess();
     std::string process_type =
         command_line.GetSwitchValueASCII(switches::kProcessType);
-
-    // Initialize mojo here so that services can be registered.
-    InitializeMojo();
 
 #if defined(OS_WIN)
     if (command_line.HasSwitch(switches::kDeviceScaleFactor)) {
@@ -587,31 +570,12 @@ class ContentMainRunnerImpl : public ContentMainRunner {
     // Enable startup tracing asap to avoid early TRACE_EVENT calls being
     // ignored. For Android, startup tracing is enabled in an even earlier place
     // content/app/android/library_loader_hooks.cc.
-    if (command_line.HasSwitch(switches::kTraceStartup)) {
-      base::trace_event::TraceConfig trace_config(
-          command_line.GetSwitchValueASCII(switches::kTraceStartup),
-          base::trace_event::RECORD_UNTIL_FULL);
-      base::trace_event::TraceLog::GetInstance()->SetEnabled(
-          trace_config,
-          base::trace_event::TraceLog::RECORDING_MODE);
-    } else if (command_line.HasSwitch(switches::kTraceToConsole)) {
-      base::trace_event::TraceConfig trace_config =
-          tracing::GetConfigForTraceToConsole();
-      LOG(ERROR) << "Start " << switches::kTraceToConsole
-                 << " with CategoryFilter '"
-                 << trace_config.ToCategoryFilterString() << "'.";
-      base::trace_event::TraceLog::GetInstance()->SetEnabled(
-          trace_config,
-          base::trace_event::TraceLog::RECORDING_MODE);
-    } else if (process_type != switches::kZygoteProcess &&
-               process_type != switches::kRendererProcess) {
-      if (tracing::TraceConfigFile::GetInstance()->IsEnabled()) {
-        // This checks kTraceConfigFile switch.
-        base::trace_event::TraceLog::GetInstance()->SetEnabled(
-            tracing::TraceConfigFile::GetInstance()->GetTraceConfig(),
-            base::trace_event::TraceLog::RECORDING_MODE);
-      }
-    }
+    // Zygote process does not have file thread and renderer process on Win10
+    // cannot access the file system.
+    // TODO(ssid): Check if other processes can enable startup tracing here.
+    bool can_access_file_system = (process_type != switches::kZygoteProcess &&
+                                   process_type != switches::kRendererProcess);
+    tracing::EnableStartupTracingIfNeeded(can_access_file_system);
 #endif  // !OS_ANDROID
 
 #if defined(OS_WIN)
@@ -624,7 +588,7 @@ class ContentMainRunnerImpl : public ContentMainRunner {
     // Android tracing started at the beginning of the method.
     // Other OSes have to wait till we get here in order for all the memory
     // management setup to be completed.
-    TRACE_EVENT0("startup,benchmark", "ContentMainRunnerImpl::Initialize");
+    TRACE_EVENT0("startup,benchmark,rail", "ContentMainRunnerImpl::Initialize");
 #endif  // !OS_ANDROID
 
 #if defined(OS_MACOSX)
@@ -642,8 +606,6 @@ class ContentMainRunnerImpl : public ContentMainRunner {
         (!delegate_ || delegate_->ShouldSendMachPort(process_type))) {
       MachBroker::ChildSendTaskPortToParent();
     }
-#elif defined(OS_WIN)
-    base::win::SetupCRT(command_line);
 #endif
 
     // If we are on a platform where the default allocator is overridden (shim
@@ -678,7 +640,7 @@ class ContentMainRunnerImpl : public ContentMainRunner {
     RegisterPathProvider();
     RegisterContentSchemes(true);
 
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) && (ICU_UTIL_DATA_IMPL == ICU_UTIL_DATA_FILE)
     int icudata_fd = g_fds->MaybeGet(kAndroidICUDataDescriptor);
     if (icudata_fd != -1) {
       auto icudata_region = g_fds->GetRegion(kAndroidICUDataDescriptor);
@@ -689,54 +651,34 @@ class ContentMainRunnerImpl : public ContentMainRunner {
     }
 #else
     CHECK(base::i18n::InitializeICU());
-#endif  // OS_ANDROID
+#endif  // OS_ANDROID && (ICU_UTIL_DATA_IMPL == ICU_UTIL_DATA_FILE)
 
     base::StatisticsRecorder::Initialize();
 
-#if defined(V8_USE_EXTERNAL_STARTUP_DATA)
-#if defined(OS_POSIX) && !defined(OS_MACOSX)
-#if !defined(OS_ANDROID)
-    // kV8NativesDataDescriptor and kV8SnapshotDataDescriptor could be shared
-    // with child processes via file descriptors. On Android they are set in
-    // ChildProcessService::InternalInitChildProcess, otherwise set them here.
-    if (command_line.HasSwitch(switches::kV8NativesPassedByFD)) {
-      g_fds->Set(
-          kV8NativesDataDescriptor,
-          kV8NativesDataDescriptor + base::GlobalDescriptors::kBaseDescriptor);
-    }
-    if (command_line.HasSwitch(switches::kV8SnapshotPassedByFD)) {
-      g_fds->Set(
-          kV8SnapshotDataDescriptor,
-          kV8SnapshotDataDescriptor + base::GlobalDescriptors::kBaseDescriptor);
-    }
-#endif  // !OS_ANDROID
-    int v8_natives_fd = g_fds->MaybeGet(kV8NativesDataDescriptor);
-    int v8_snapshot_fd = g_fds->MaybeGet(kV8SnapshotDataDescriptor);
-    if (v8_snapshot_fd != -1) {
-      auto v8_snapshot_region = g_fds->GetRegion(kV8SnapshotDataDescriptor);
-      gin::V8Initializer::LoadV8SnapshotFromFD(
-          v8_snapshot_fd, v8_snapshot_region.offset, v8_snapshot_region.size);
-    } else {
-      gin::V8Initializer::LoadV8Snapshot();
-    }
-    if (v8_natives_fd != -1) {
-      auto v8_natives_region = g_fds->GetRegion(kV8NativesDataDescriptor);
-      gin::V8Initializer::LoadV8NativesFromFD(
-          v8_natives_fd, v8_natives_region.offset, v8_natives_region.size);
-    } else {
-      gin::V8Initializer::LoadV8Natives();
-    }
+    InitializeV8IfNeeded(command_line, process_type);
+
+#if !defined(OFFICIAL_BUILD)
+#if defined(OS_WIN)
+    bool should_enable_stack_dump = !process_type.empty();
 #else
-    gin::V8Initializer::LoadV8Snapshot();
-    gin::V8Initializer::LoadV8Natives();
-#endif  // OS_POSIX && !OS_MACOSX
-#endif  // V8_USE_EXTERNAL_STARTUP_DATA
+    bool should_enable_stack_dump = true;
+#endif
+    // Print stack traces to stderr when crashes occur. This opens up security
+    // holes so it should never be enabled for official builds. This needs to
+    // happen before crash reporting is initialized (which for chrome happens in
+    // the call to PreSandboxStartup() on the delegate below), because otherwise
+    // this would interfere with signal handlers used by crash reporting.
+    if (should_enable_stack_dump && !command_line.HasSwitch(
+            switches::kDisableInProcessStackTraces)) {
+      base::debug::EnableInProcessStackDumping();
+    }
+#endif  // !defined(OFFICIAL_BUILD)
 
     if (delegate_)
       delegate_->PreSandboxStartup();
 
     if (!process_type.empty())
-      CommonSubprocessInit(process_type);
+      CommonSubprocessInit();
 
 #if defined(OS_WIN)
     CHECK(InitializeSandbox(params.sandbox_info));
@@ -766,6 +708,16 @@ class ContentMainRunnerImpl : public ContentMainRunner {
     std::string process_type =
         command_line.GetSwitchValueASCII(switches::kProcessType);
 
+    // --enable-network-service requires both --enable-browser-side-navigation
+    // (PlzNavigate) and the LoadingWithMojo feature.
+    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kEnableNetworkService)) {
+      base::CommandLine::ForCurrentProcess()->AppendSwitch(
+          switches::kEnableBrowserSideNavigation);
+      base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+          switches::kEnableFeatures, features::kLoadingWithMojo.name);
+    }
+
     // Run this logic on all child processes. Zygotes will run this at a later
     // point in time when the command line has been updated.
     std::unique_ptr<base::FieldTrialList> field_trial_list;
@@ -779,7 +731,10 @@ class ContentMainRunnerImpl : public ContentMainRunner {
 #if defined(OS_WIN)
     main_params.sandbox_info = &sandbox_info_;
 #elif defined(OS_MACOSX)
-    main_params.autorelease_pool = autorelease_pool_.get();
+    main_params.autorelease_pool = autorelease_pool_;
+#endif
+#if defined(USE_AURA)
+    main_params.env_mode = env_mode_;
 #endif
 
     return RunNamedProcessTypeMain(process_type, main_params, delegate_);
@@ -803,10 +758,6 @@ class ContentMainRunnerImpl : public ContentMainRunner {
     _CrtDumpMemoryLeaks();
 #endif  // _CRTDBG_MAP_ALLOC
 #endif  // OS_WIN
-
-#if defined(OS_MACOSX)
-    autorelease_pool_.reset(NULL);
-#endif
 
     exit_manager_.reset(NULL);
 
@@ -834,10 +785,14 @@ class ContentMainRunnerImpl : public ContentMainRunner {
 #if defined(OS_WIN)
   sandbox::SandboxInterfaceInfo sandbox_info_;
 #elif defined(OS_MACOSX)
-  std::unique_ptr<base::mac::ScopedNSAutoreleasePool> autorelease_pool_;
+  base::mac::ScopedNSAutoreleasePool* autorelease_pool_ = nullptr;
 #endif
 
   base::Closure* ui_task_;
+
+#if defined(USE_AURA)
+  aura::Env::Mode env_mode_ = aura::Env::Mode::LOCAL;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(ContentMainRunnerImpl);
 };

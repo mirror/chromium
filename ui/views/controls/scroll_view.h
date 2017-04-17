@@ -12,7 +12,14 @@
 #include "base/macros.h"
 #include "ui/views/controls/scrollbar/scroll_bar.h"
 
+namespace gfx {
+class ScrollOffset;
+}
+
 namespace views {
+namespace test {
+class ScrollViewTestApi;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -39,6 +46,10 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
   // Creates a ScrollView with a theme specific border.
   static ScrollView* CreateScrollViewWithBorder();
 
+  // Returns the ScrollView for which |contents| is its contents, or null if
+  // |contents| is not in a ScrollView.
+  static ScrollView* GetScrollViewForContents(View* contents);
+
   // Set the contents. Any previous contents will be deleted. The contents
   // is the view that needs to scroll.
   void SetContents(View* a_view);
@@ -47,6 +58,11 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
 
   // Sets the header, deleting the previous header.
   void SetHeader(View* header);
+
+  // Sets the background color. The default is white when scrolling with layers,
+  // otherwise transparent. An opaque color when scrolling with layers ensures
+  // fonts can be drawn with subpixel antialiasing.
+  void SetBackgroundColor(SkColor color);
 
   // Returns the visible region of the content View.
   gfx::Rect GetVisibleRect() const;
@@ -62,10 +78,10 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
   // Returns whether or not the ScrollView is bounded (as set by ClipHeightTo).
   bool is_bounded() const { return max_height_ >= 0 && min_height_ >= 0; }
 
-  // Retrieves the width/height of scrollbars. These return 0 if the scrollbar
-  // has not yet been created.
-  int GetScrollBarWidth() const;
-  int GetScrollBarHeight() const;
+  // Retrieves the width/height reserved for scrollbars. These return 0 if the
+  // scrollbar has not yet been created or in the case of overlay scrollbars.
+  int GetScrollBarLayoutWidth() const;
+  int GetScrollBarLayoutHeight() const;
 
   // Returns the horizontal/vertical scrollbar. This may return NULL.
   const ScrollBar* horizontal_scroll_bar() const { return horiz_sb_; }
@@ -76,16 +92,19 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
   void SetHorizontalScrollBar(ScrollBar* horiz_sb);
   void SetVerticalScrollBar(ScrollBar* vert_sb);
 
+  // Sets whether this ScrollView has a focus indicator or not.
+  void SetHasFocusIndicator(bool has_focus_indicator);
+
   // View overrides:
   gfx::Size GetPreferredSize() const override;
   int GetHeightForWidth(int width) const override;
   void Layout() override;
   bool OnKeyPressed(const ui::KeyEvent& event) override;
   bool OnMouseWheel(const ui::MouseWheelEvent& e) override;
-  void OnMouseEntered(const ui::MouseEvent& event) override;
-  void OnMouseExited(const ui::MouseEvent& event) override;
+  void OnScrollEvent(ui::ScrollEvent* event) override;
   void OnGestureEvent(ui::GestureEvent* event) override;
   const char* GetClassName() const override;
+  void OnNativeThemeChanged(const ui::NativeTheme* theme) override;
 
   // ScrollBarController overrides:
   void ScrollToPosition(ScrollBar* source, int position) override;
@@ -93,8 +112,13 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
                          bool is_page,
                          bool is_positive) override;
 
+  // TODO(djacobo): Remove this method when http://crbug.com/656198  is closed.
+  // Force |contents_viewport_| to enable a Layer().
+  void EnableViewPortLayer();
+
  private:
-  FRIEND_TEST_ALL_PREFIXES(ScrollViewTest, CornerViewVisibility);
+  friend class test::ScrollViewTestApi;
+
   class Viewport;
 
   // Used internally by SetHeader() and SetContents() to reset the view.  Sets
@@ -121,6 +145,23 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
   // Update the scrollbars positions given viewport and content sizes.
   void UpdateScrollBarPositions();
 
+  // Helpers to get and set the current scroll offset (either from the ui::Layer
+  // or from the |contents_| origin offset).
+  gfx::ScrollOffset CurrentOffset() const;
+  void ScrollToOffset(const gfx::ScrollOffset& offset);
+
+  // Whether the ScrollView scrolls using ui::Layer APIs.
+  bool ScrollsWithLayers() const;
+
+  // Callback entrypoint when hosted Layers are scrolled by the Compositor.
+  void OnLayerScrolled(const gfx::ScrollOffset& offset);
+
+  // Horizontally scrolls the header (if any) to match the contents.
+  void ScrollHeader();
+
+  void AddBorder();
+  void UpdateBorder();
+
   // The current contents and its viewport. |contents_| is contained in
   // |contents_viewport_|.
   View* contents_;
@@ -145,9 +186,23 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
   int min_height_;
   int max_height_;
 
+  // The background color given to the viewport (for overscroll), and to the
+  // contents when scrolling with layers.
+  SkColor background_color_;
+
   // If true, never show the horizontal scrollbar (even if the contents is wider
   // than the viewport).
   bool hide_horizontal_scrollbar_;
+
+  // In Harmony, the indicator is a focus ring. Pre-Harmony, the indicator is a
+  // different border painter.
+  bool draw_focus_indicator_ = false;
+
+  // Only needed for pre-Harmony. Remove when Harmony is default.
+  bool draw_border_ = false;
+
+  // Focus ring, if one is installed.
+  View* focus_ring_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(ScrollView);
 };

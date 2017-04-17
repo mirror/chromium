@@ -7,8 +7,8 @@
 
 #include <stddef.h>
 
-#include "cc/base/cc_export.h"
-#include "cc/playback/display_item_list.h"
+#include "cc/cc_export.h"
+#include "cc/paint/display_item_list.h"
 
 namespace gfx {
 class Rect;
@@ -25,6 +25,7 @@ class CC_EXPORT ContentLayerClient {
     DISPLAY_LIST_CACHING_DISABLED,
     DISPLAY_LIST_PAINTING_DISABLED,
     SUBSEQUENCE_CACHING_DISABLED,
+    PARTIAL_INVALIDATION,
   };
 
   // The paintable region is the rectangular region, within the bounds of the

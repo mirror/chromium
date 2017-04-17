@@ -12,7 +12,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "policy/proto/device_management_backend.pb.h"
+#include "components/policy/proto/device_management_backend.pb.h"
 
 namespace base {
 class FilePath;
@@ -59,6 +59,10 @@ class TestRequestInterceptor {
 
   // Returns a JobCallback that will fail with HTTP 400 Bad Request.
   static JobCallback BadRequestJob();
+
+  // Returns a JobCallback that will fail with the specified HTTP error (e.g.
+  // "404 Not Found").
+  static JobCallback HttpErrorJob(std::string error);
 
   // Returns a JobCallback that will process a policy register request that
   // should succeed. The request parameters are validated, and an appropriate

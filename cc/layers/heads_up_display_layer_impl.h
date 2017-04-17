@@ -12,11 +12,11 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
-#include "cc/base/cc_export.h"
-#include "cc/debug/debug_rect_history.h"
+#include "cc/cc_export.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/resources/memory_history.h"
 #include "cc/resources/scoped_resource.h"
+#include "cc/trees/debug_rect_history.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
 class SkCanvas;
@@ -27,7 +27,6 @@ struct SkRect;
 namespace cc {
 
 class FrameRateCounter;
-class PaintTimeCounter;
 
 class CC_EXPORT HeadsUpDisplayLayerImpl : public LayerImpl {
  public:

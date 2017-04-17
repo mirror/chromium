@@ -6,20 +6,28 @@
 #define COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_PASSWORD_STORE_H_
 
 #include <memory>
+#include <ostream>
 #include <string>
 #include <vector>
 
 #include "base/callback.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/observer_list_threadsafe.h"
 #include "base/single_thread_task_runner.h"
 #include "base/time/time.h"
 #include "components/keyed_service/core/refcounted_keyed_service.h"
 #include "components/password_manager/core/browser/password_store_change.h"
 #include "components/password_manager/core/browser/password_store_sync.h"
-#include "sync/api/syncable_service.h"
+#include "components/sync/model/syncable_service.h"
+
+// TODO(crbug.com/706392): Fix password reuse detection for Android.
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+#include "components/password_manager/core/browser/password_reuse_detector.h"
+#include "components/password_manager/core/browser/password_reuse_detector_consumer.h"
+#endif
+
+class PasswordStoreProxyMac;
 
 namespace autofill {
 struct PasswordForm;
@@ -28,8 +36,6 @@ struct PasswordForm;
 namespace syncer {
 class SyncableService;
 }
-
-class PasswordStoreProxyMac;
 
 namespace password_manager {
 
@@ -71,6 +77,10 @@ class PasswordStore : protected PasswordStoreSync,
                const std::string& signon_realm,
                const GURL& origin);
     explicit FormDigest(const autofill::PasswordForm& form);
+    FormDigest(const FormDigest& other);
+    FormDigest(FormDigest&& other);
+    FormDigest& operator=(const FormDigest& other);
+    FormDigest& operator=(FormDigest&& other);
     bool operator==(const FormDigest& other) const;
 
     autofill::PasswordForm::Scheme scheme;
@@ -142,13 +152,16 @@ class PasswordStore : protected PasswordStoreSync,
   void RemoveLoginsSyncedBetween(base::Time delete_begin,
                                  base::Time delete_end);
 
-  // Removes all the stats created in the given date range. If |completion| is
-  // not null, it will be posted to the |main_thread_runner_| after deletions
-  // have been completed.
+  // Removes all the stats created in the given date range.
+  // If |origin_filter| is not null, only statistics for matching origins are
+  // removed. If |completion| is not null, it will be posted to the
+  // |main_thread_runner_| after deletions have been completed.
   // Should be called on the UI thread.
-  void RemoveStatisticsCreatedBetween(base::Time delete_begin,
-                                      base::Time delete_end,
-                                      const base::Closure& completion);
+  void RemoveStatisticsByOriginAndTime(
+      const base::Callback<bool(const GURL&)>& origin_filter,
+      base::Time delete_begin,
+      base::Time delete_end,
+      const base::Closure& completion);
 
   // Sets the 'skip_zero_click' flag for all logins in the database that match
   // |origin_filter| to 'true'. |completion| will be posted to
@@ -164,9 +177,6 @@ class PasswordStore : protected PasswordStoreSync,
 
   // Searches for a matching PasswordForm, and notifies |consumer| on
   // completion. The request will be cancelled if the consumer is destroyed.
-  // TODO(engedy): Currently, this will not return federated logins saved from
-  // Android applications that are affiliated with the realm of |form|. Need to
-  // decide if this is the desired behavior. See: https://crbug.com/539844.
   virtual void GetLogins(const FormDigest& form,
                          PasswordStoreConsumer* consumer);
 
@@ -202,6 +212,10 @@ class PasswordStore : protected PasswordStoreSync,
   // Removes the statistics for |origin_domain|.
   void RemoveSiteStats(const GURL& origin_domain);
 
+  // Retrieves the statistics for all sites and notifies |consumer| on
+  // completion. The request will be cancelled if the consumer is destroyed.
+  void GetAllSiteStats(PasswordStoreConsumer* consumer);
+
   // Retrieves the statistics for |origin_domain| and notifies |consumer| on
   // completion. The request will be cancelled if the consumer is destroyed.
   void GetSiteStats(const GURL& origin_domain, PasswordStoreConsumer* consumer);
@@ -216,6 +230,18 @@ class PasswordStore : protected PasswordStoreSync,
   bool ScheduleTask(const base::Closure& task);
 
   base::WeakPtr<syncer::SyncableService> GetPasswordSyncableService();
+
+// TODO(crbug.com/706392): Fix password reuse detection for Android.
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  // Checks that some suffix of |input| equals to a password saved on another
+  // registry controlled domain than |domain|.
+  // If such suffix is found, |consumer|->OnReuseFound() is called on the same
+  // thread on which this method is called.
+  // |consumer| must not be null.
+  virtual void CheckReuse(const base::string16& input,
+                          const std::string& domain,
+                          PasswordReuseDetectorConsumer* consumer);
+#endif
 
  protected:
   friend class base::RefCountedThreadSafe<PasswordStore>;
@@ -234,10 +260,9 @@ class PasswordStore : protected PasswordStoreSync,
     // Note that if this method is not called before destruction, the consumer
     // will not be notified.
     void NotifyConsumerWithResults(
-        ScopedVector<autofill::PasswordForm> results);
+        std::vector<std::unique_ptr<autofill::PasswordForm>> results);
 
-    void NotifyWithSiteStatistics(
-        std::vector<std::unique_ptr<InteractionsStats>> stats);
+    void NotifyWithSiteStatistics(std::vector<InteractionsStats> stats);
 
     void set_ignore_logins_cutoff(base::Time cutoff) {
       ignore_logins_cutoff_ = cutoff;
@@ -252,6 +277,31 @@ class PasswordStore : protected PasswordStoreSync,
 
     DISALLOW_COPY_AND_ASSIGN(GetLoginsRequest);
   };
+
+// TODO(crbug.com/706392): Fix password reuse detection for Android.
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  // Represents a single CheckReuse() request. Implements functionality to
+  // listen to reuse events and propagate them to |consumer| on the thread on
+  // which CheckReuseRequest is created.
+  class CheckReuseRequest : public PasswordReuseDetectorConsumer {
+   public:
+    // |consumer| must not be null.
+    explicit CheckReuseRequest(PasswordReuseDetectorConsumer* consumer);
+    ~CheckReuseRequest() override;
+
+    // PasswordReuseDetectorConsumer
+    void OnReuseFound(const base::string16& password,
+                      const std::string& saved_domain,
+                      int saved_passwords,
+                      int number_matches) override;
+
+   private:
+    const scoped_refptr<base::SingleThreadTaskRunner> origin_task_runner_;
+    const base::WeakPtr<PasswordReuseDetectorConsumer> consumer_weak_;
+
+    DISALLOW_COPY_AND_ASSIGN(CheckReuseRequest);
+  };
+#endif
 
   ~PasswordStore() override;
 
@@ -282,8 +332,10 @@ class PasswordStore : protected PasswordStoreSync,
       base::Time delete_end) = 0;
 
   // Synchronous implementation to remove the statistics.
-  virtual bool RemoveStatisticsCreatedBetweenImpl(base::Time delete_begin,
-                                                  base::Time delete_end) = 0;
+  virtual bool RemoveStatisticsByOriginAndTimeImpl(
+      const base::Callback<bool(const GURL&)>& origin_filter,
+      base::Time delete_begin,
+      base::Time delete_end) = 0;
 
   // Synchronous implementation to disable auto sign-in.
   virtual PasswordStoreChangeList DisableAutoSignInForOriginsImpl(
@@ -314,13 +366,14 @@ class PasswordStore : protected PasswordStoreSync,
 
   // Finds and returns all PasswordForms with the same signon_realm as |form|,
   // or with a signon_realm that is a PSL-match to that of |form|.
-  virtual ScopedVector<autofill::PasswordForm> FillMatchingLogins(
-      const FormDigest& form) = 0;
+  virtual std::vector<std::unique_ptr<autofill::PasswordForm>>
+  FillMatchingLogins(const FormDigest& form) = 0;
 
   // Synchronous implementation for manipulating with statistics.
   virtual void AddSiteStatsImpl(const InteractionsStats& stats) = 0;
   virtual void RemoveSiteStatsImpl(const GURL& origin_domain) = 0;
-  virtual std::vector<std::unique_ptr<InteractionsStats>> GetSiteStatsImpl(
+  virtual std::vector<InteractionsStats> GetAllSiteStatsImpl() = 0;
+  virtual std::vector<InteractionsStats> GetSiteStatsImpl(
       const GURL& origin_domain) = 0;
 
   // Log UMA stats for number of bulk deletions.
@@ -342,6 +395,14 @@ class PasswordStore : protected PasswordStoreSync,
   // operation has been performed. Notifies observers that password store data
   // may have been changed.
   void NotifyLoginsChanged(const PasswordStoreChangeList& changes) override;
+
+// TODO(crbug.com/706392): Fix password reuse detection for Android.
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  // Synchronous implementation of CheckReuse().
+  void CheckReuseImpl(std::unique_ptr<CheckReuseRequest> request,
+                      const base::string16& input,
+                      const std::string& domain);
+#endif
 
   // TaskRunner for tasks that run on the main thread (usually the UI thread).
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_runner_;
@@ -386,9 +447,11 @@ class PasswordStore : protected PasswordStoreSync,
                                           const base::Closure& completion);
   void RemoveLoginsSyncedBetweenInternal(base::Time delete_begin,
                                          base::Time delete_end);
-  void RemoveStatisticsCreatedBetweenInternal(base::Time delete_begin,
-                                              base::Time delete_end,
-                                              const base::Closure& completion);
+  void RemoveStatisticsByOriginAndTimeInternal(
+      const base::Callback<bool(const GURL&)>& origin_filter,
+      base::Time delete_begin,
+      base::Time delete_end,
+      const base::Closure& completion);
   void DisableAutoSignInForOriginsInternal(
       const base::Callback<bool(const GURL&)>& origin_filter,
       const base::Closure& completion);
@@ -409,6 +472,9 @@ class PasswordStore : protected PasswordStoreSync,
   void GetBlacklistLoginsWithAffiliatedRealmsImpl(
       std::unique_ptr<GetLoginsRequest> request);
 
+  // Notifies |request| about the stats for all sites.
+  void NotifyAllSiteStats(std::unique_ptr<GetLoginsRequest> request);
+
   // Notifies |request| about the stats for |origin_domain|.
   void NotifySiteStats(const GURL& origin_domain,
                        std::unique_ptr<GetLoginsRequest> request);
@@ -417,7 +483,7 @@ class PasswordStore : protected PasswordStoreSync,
   // realms for Android credentials.
   void NotifyLoginsWithAffiliatedRealms(
       std::unique_ptr<GetLoginsRequest> request,
-      ScopedVector<autofill::PasswordForm> obtained_forms);
+      std::vector<std::unique_ptr<autofill::PasswordForm>> obtained_forms);
 
   // Extended version of GetLoginsImpl that also returns credentials stored for
   // the specified affiliated Android applications. That is, it finds all
@@ -433,8 +499,9 @@ class PasswordStore : protected PasswordStoreSync,
 
   // Retrieves and fills in |affiliated_web_realm| values for Android
   // credentials in |forms|. Called on the main thread.
-  void InjectAffiliatedWebRealms(ScopedVector<autofill::PasswordForm> forms,
-                                 std::unique_ptr<GetLoginsRequest> request);
+  void InjectAffiliatedWebRealms(
+      std::vector<std::unique_ptr<autofill::PasswordForm>> forms,
+      std::unique_ptr<GetLoginsRequest> request);
 
   // Schedules GetLoginsWithAffiliationsImpl() to be run on the DB thread.
   void ScheduleGetLoginsWithAffiliations(
@@ -474,24 +541,33 @@ class PasswordStore : protected PasswordStoreSync,
       const autofill::PasswordForm& updated_android_form,
       const std::vector<std::string>& affiliated_web_realms);
 
-  // Creates PasswordSyncableService instance on the background thread.
-  void InitSyncableService(
+  // Creates PasswordSyncableService and PasswordReuseDetector instances on the
+  // background thread.
+  void InitOnBackgroundThread(
       const syncer::SyncableService::StartSyncFlare& flare);
 
-  // Deletes PasswordSyncableService instance on the background thread.
-  void DestroySyncableService();
+  // Deletes objest that should be destroyed on the background thread.
+  void DestroyOnBackgroundThread();
 
   // The observers.
   scoped_refptr<base::ObserverListThreadSafe<Observer>> observers_;
 
   std::unique_ptr<PasswordSyncableService> syncable_service_;
   std::unique_ptr<AffiliatedMatchHelper> affiliated_match_helper_;
+// TODO(crbug.com/706392): Fix password reuse detection for Android.
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  std::unique_ptr<PasswordReuseDetector> reuse_detector_;
+#endif
   bool is_propagating_password_changes_to_web_credentials_enabled_;
 
   bool shutdown_called_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordStore);
 };
+
+// For logging only.
+std::ostream& operator<<(std::ostream& os,
+                         const PasswordStore::FormDigest& digest);
 
 }  // namespace password_manager
 

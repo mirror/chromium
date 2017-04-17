@@ -19,6 +19,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "mojo/edk/embedder/embedder.h"
 #include "remoting/base/breakpad.h"
 #include "remoting/host/host_exit_codes.h"
 #include "remoting/host/logging.h"
@@ -151,9 +152,10 @@ int HostMain(int argc, char** argv) {
   // be initialized first, so that the preference for crash-reporting can be
   // looked up in the config file.
 #if defined(REMOTING_ENABLE_BREAKPAD)
-  if (IsUsageStatsAllowed()) {
-    InitializeCrashReporting();
-  }
+  // TODO(nicholss): Commenting out Breakpad. See crbug.com/637884
+  // if (IsUsageStatsAllowed()) {
+  //   InitializeCrashReporting();
+  // }
 #endif  // defined(REMOTING_ENABLE_BREAKPAD)
 
   // This object instance is required by Chrome code (for example,
@@ -209,6 +211,10 @@ int HostMain(int argc, char** argv) {
   base::i18n::InitializeICU();
 
   remoting::LoadResources("");
+
+#if defined(REMOTING_MULTI_PROCESS)
+  mojo::edk::Init();
+#endif
 
   // Invoke the entry point.
   int exit_code = main_routine();

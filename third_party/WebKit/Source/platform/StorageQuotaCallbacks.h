@@ -33,24 +33,32 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/Noncopyable.h"
 #include "public/platform/WebStorageQuotaError.h"
-#include "wtf/Assertions.h"
-#include "wtf/Noncopyable.h"
 
 namespace blink {
 
-class PLATFORM_EXPORT StorageQuotaCallbacks : public GarbageCollectedFinalized<StorageQuotaCallbacks> {
-    WTF_MAKE_NONCOPYABLE(StorageQuotaCallbacks);
-public:
-    StorageQuotaCallbacks() { }
-    virtual ~StorageQuotaCallbacks() { }
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+class PLATFORM_EXPORT StorageQuotaCallbacks
+    : public GarbageCollectedFinalized<StorageQuotaCallbacks> {
+  WTF_MAKE_NONCOPYABLE(StorageQuotaCallbacks);
 
-    virtual void didQueryStorageUsageAndQuota(unsigned long long usageInBytes, unsigned long long quotaInBytes) { ASSERT_NOT_REACHED(); }
-    virtual void didGrantStorageQuota(unsigned long long usageInBytes, unsigned long long grantedQuotaInBytes) { ASSERT_NOT_REACHED(); }
-    virtual void didFail(WebStorageQuotaError) { ASSERT_NOT_REACHED(); }
+ public:
+  StorageQuotaCallbacks() {}
+  virtual ~StorageQuotaCallbacks() {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
+
+  virtual void DidQueryStorageUsageAndQuota(unsigned long long usage_in_bytes,
+                                            unsigned long long quota_in_bytes) {
+    ASSERT_NOT_REACHED();
+  }
+  virtual void DidGrantStorageQuota(unsigned long long usage_in_bytes,
+                                    unsigned long long granted_quota_in_bytes) {
+    ASSERT_NOT_REACHED();
+  }
+  virtual void DidFail(WebStorageQuotaError) { ASSERT_NOT_REACHED(); }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StorageQuotaCallbacks_h
+#endif  // StorageQuotaCallbacks_h

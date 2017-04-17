@@ -31,98 +31,86 @@
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/URLSearchParams.h"
-#include "core/fetch/MemoryCache.h"
-#include "core/fileapi/Blob.h"
 #include "core/html/PublicURLManager.h"
-#include "platform/blob/BlobURL.h"
-#include "platform/weborigin/SecurityOrigin.h"
-#include "wtf/AutoReset.h"
+#include "platform/loader/fetch/MemoryCache.h"
+#include "platform/wtf/AutoReset.h"
 
 namespace blink {
 
-DOMURL::DOMURL(const String& url, const KURL& base, ExceptionState& exceptionState)
-{
-    if (!base.isValid()) {
-        exceptionState.throwTypeError("Invalid base URL");
-        return;
-    }
+DOMURL::DOMURL(const String& url,
+               const KURL& base,
+               ExceptionState& exception_state) {
+  if (!base.IsValid()) {
+    exception_state.ThrowTypeError("Invalid base URL");
+    return;
+  }
 
-    m_url = KURL(base, url);
-    if (!m_url.isValid())
-        exceptionState.throwTypeError("Invalid URL");
+  url_ = KURL(base, url);
+  if (!url_.IsValid())
+    exception_state.ThrowTypeError("Invalid URL");
 }
 
-DOMURL::~DOMURL()
-{
+DOMURL::~DOMURL() {}
+
+DEFINE_TRACE(DOMURL) {
+  visitor->Trace(search_params_);
 }
 
-DEFINE_TRACE(DOMURL)
-{
-    visitor->trace(m_searchParams);
+void DOMURL::SetInput(const String& value) {
+  KURL url(BlankURL(), value);
+  if (url.IsValid()) {
+    url_ = url;
+    input_ = String();
+  } else {
+    url_ = KURL();
+    input_ = value;
+  }
+  Update();
 }
 
-void DOMURL::setInput(const String& value)
-{
-    KURL url(blankURL(), value);
-    if (url.isValid()) {
-        m_url = url;
-        m_input = String();
-    } else {
-        m_url = KURL();
-        m_input = value;
-    }
-    update();
+void DOMURL::setSearch(const String& value) {
+  DOMURLUtils::setSearch(value);
+  if (!value.IsEmpty() && value[0] == '?')
+    UpdateSearchParams(value.Substring(1));
+  else
+    UpdateSearchParams(value);
 }
 
-void DOMURL::setSearch(const String& value)
-{
-    DOMURLUtils::setSearch(value);
-    if (!value.isEmpty() && value[0] == '?')
-        updateSearchParams(value.substring(1));
-    else
-        updateSearchParams(value);
+String DOMURL::CreatePublicURL(ExecutionContext* execution_context,
+                               URLRegistrable* registrable,
+                               const String& uuid) {
+  return execution_context->GetPublicURLManager().RegisterURL(
+      execution_context, registrable, uuid);
 }
 
-String DOMURL::createPublicURL(ExecutionContext* executionContext, URLRegistrable* registrable, const String& uuid)
-{
-    KURL publicURL = BlobURL::createPublicURL(executionContext->getSecurityOrigin());
-    if (publicURL.isEmpty())
-        return String();
+void DOMURL::RevokeObjectUUID(ExecutionContext* execution_context,
+                              const String& uuid) {
+  if (!execution_context)
+    return;
 
-    executionContext->publicURLManager().registerURL(executionContext->getSecurityOrigin(), publicURL, registrable, uuid);
-
-    return publicURL.getString();
+  execution_context->GetPublicURLManager().Revoke(uuid);
 }
 
-void DOMURL::revokeObjectUUID(ExecutionContext* executionContext, const String& uuid)
-{
-    if (!executionContext)
-        return;
+URLSearchParams* DOMURL::searchParams() {
+  if (!search_params_)
+    search_params_ = URLSearchParams::Create(Url().Query(), this);
 
-    executionContext->publicURLManager().revoke(uuid);
+  return search_params_;
 }
 
-URLSearchParams* DOMURL::searchParams()
-{
-    if (!m_searchParams)
-        m_searchParams = URLSearchParams::create(url().query(), this);
-
-    return m_searchParams;
+void DOMURL::Update() {
+  UpdateSearchParams(Url().Query());
 }
 
-void DOMURL::update()
-{
-    updateSearchParams(url().query());
+void DOMURL::UpdateSearchParams(const String& query_string) {
+  if (!search_params_)
+    return;
+
+  AutoReset<bool> scope(&is_in_update_, true);
+#if DCHECK_IS_ON()
+  DCHECK_EQ(search_params_->UrlObject(), this);
+#endif
+  search_params_->SetInput(query_string);
 }
 
-void DOMURL::updateSearchParams(const String& queryString)
-{
-    if (!m_searchParams)
-        return;
-
-    AutoReset<bool> scope(&m_isInUpdate, true);
-    ASSERT(m_searchParams->urlObject() == this);
-    m_searchParams->setInput(queryString);
-}
-
-} // namespace blink
+}  // namespace blink

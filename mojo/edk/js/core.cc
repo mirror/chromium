@@ -21,6 +21,7 @@
 #include "gin/wrappable.h"
 #include "mojo/edk/js/drain_data.h"
 #include "mojo/edk/js/handle.h"
+#include "mojo/public/cpp/system/wait.h"
 
 namespace mojo {
 namespace edk {
@@ -35,19 +36,31 @@ MojoResult CloseHandle(gin::Handle<HandleWrapper> handle) {
   return MOJO_RESULT_OK;
 }
 
+gin::Dictionary QueryHandleSignalsState(const gin::Arguments& args,
+                                        mojo::Handle handle) {
+  gin::Dictionary dictionary = gin::Dictionary::CreateEmpty(args.isolate());
+  if (!handle.is_valid()) {
+    dictionary.Set("result", MOJO_RESULT_INVALID_ARGUMENT);
+  } else {
+    HandleSignalsState state = handle.QuerySignalsState();
+    dictionary.Set("result", MOJO_RESULT_OK);
+    dictionary.Set("satisfiedSignals", state.satisfied_signals);
+    dictionary.Set("satisfiableSignals", state.satisfiable_signals);
+  }
+  return dictionary;
+}
+
 gin::Dictionary WaitHandle(const gin::Arguments& args,
                            mojo::Handle handle,
-                           MojoHandleSignals signals,
-                           MojoDeadline deadline) {
+                           MojoHandleSignals signals) {
   v8::Isolate* isolate = args.isolate();
   gin::Dictionary dictionary = gin::Dictionary::CreateEmpty(isolate);
 
   MojoHandleSignalsState signals_state;
-  MojoResult result = mojo::Wait(handle, signals, deadline, &signals_state);
+  MojoResult result = Wait(handle, signals, &signals_state);
   dictionary.Set("result", result);
 
-  mojo::WaitManyResult wmv(result, 0);
-  if (!wmv.AreSignalsStatesValid()) {
+  if (result != MOJO_RESULT_OK && result != MOJO_RESULT_FAILED_PRECONDITION) {
     dictionary.Set("signalsState", v8::Null(isolate).As<v8::Value>());
   } else {
     gin::Dictionary signalsStateDict = gin::Dictionary::CreateEmpty(isolate);
@@ -55,40 +68,6 @@ gin::Dictionary WaitHandle(const gin::Arguments& args,
     signalsStateDict.Set("satisfiableSignals",
                          signals_state.satisfiable_signals);
     dictionary.Set("signalsState", signalsStateDict);
-  }
-
-  return dictionary;
-}
-
-gin::Dictionary WaitMany(const gin::Arguments& args,
-                         const std::vector<mojo::Handle>& handles,
-                         const std::vector<MojoHandleSignals>& signals,
-                         MojoDeadline deadline) {
-  v8::Isolate* isolate = args.isolate();
-  gin::Dictionary dictionary = gin::Dictionary::CreateEmpty(isolate);
-
-  std::vector<MojoHandleSignalsState> signals_states(signals.size());
-  mojo::WaitManyResult wmv =
-      mojo::WaitMany(handles, signals, deadline, &signals_states);
-  dictionary.Set("result", wmv.result);
-  if (wmv.IsIndexValid()) {
-    dictionary.Set("index", wmv.index);
-  } else {
-    dictionary.Set("index", v8::Null(isolate).As<v8::Value>());
-  }
-  if (wmv.AreSignalsStatesValid()) {
-    std::vector<gin::Dictionary> vec;
-    for (size_t i = 0; i < handles.size(); ++i) {
-      gin::Dictionary signalsStateDict = gin::Dictionary::CreateEmpty(isolate);
-      signalsStateDict.Set("satisfiedSignals",
-                           signals_states[i].satisfied_signals);
-      signalsStateDict.Set("satisfiableSignals",
-                           signals_states[i].satisfiable_signals);
-      vec.push_back(signalsStateDict);
-    }
-    dictionary.Set("signalsState", vec);
-  } else {
-    dictionary.Set("signalsState", v8::Null(isolate).As<v8::Value>());
   }
 
   return dictionary;
@@ -102,7 +81,7 @@ gin::Dictionary CreateMessagePipe(const gin::Arguments& args) {
   MojoHandle handle1 = MOJO_HANDLE_INVALID;
   MojoResult result = MOJO_RESULT_OK;
 
-  v8::Handle<v8::Value> options_value = args.PeekNext();
+  v8::Local<v8::Value> options_value = args.PeekNext();
   if (options_value.IsEmpty() || options_value->IsNull() ||
       options_value->IsUndefined()) {
     result = MojoCreateMessagePipe(NULL, &handle0, &handle1);
@@ -165,7 +144,7 @@ gin::Dictionary ReadMessage(const gin::Arguments& args,
     return dictionary;
   }
 
-  v8::Handle<v8::ArrayBuffer> array_buffer =
+  v8::Local<v8::ArrayBuffer> array_buffer =
       v8::ArrayBuffer::New(args.isolate(), num_bytes);
   std::vector<mojo::Handle> handles(num_handles);
 
@@ -199,7 +178,7 @@ gin::Dictionary CreateDataPipe(const gin::Arguments& args) {
   MojoHandle consumer_handle = MOJO_HANDLE_INVALID;
   MojoResult result = MOJO_RESULT_OK;
 
-  v8::Handle<v8::Value> options_value = args.PeekNext();
+  v8::Local<v8::Value> options_value = args.PeekNext();
   if (options_value.IsEmpty() || options_value->IsNull() ||
       options_value->IsUndefined()) {
     result = MojoCreateDataPipe(NULL, &producer_handle, &consumer_handle);
@@ -255,7 +234,7 @@ gin::Dictionary ReadData(const gin::Arguments& args,
     return dictionary;
   }
 
-  v8::Handle<v8::ArrayBuffer> array_buffer =
+  v8::Local<v8::ArrayBuffer> array_buffer =
       v8::ArrayBuffer::New(args.isolate(), num_bytes);
   gin::ArrayBuffer buffer;
   ConvertFromV8(args.isolate(), array_buffer, &buffer);
@@ -278,17 +257,98 @@ gin::Dictionary ReadData(const gin::Arguments& args,
 // and the buffer will contain whatever was read before the error occurred.
 // The drainData data pipe handle argument is closed automatically.
 
-v8::Handle<v8::Value> DoDrainData(gin::Arguments* args,
-                                  gin::Handle<HandleWrapper> handle) {
+v8::Local<v8::Value> DoDrainData(gin::Arguments* args,
+                                 gin::Handle<HandleWrapper> handle) {
   return (new DrainData(args->isolate(), handle->release()))->GetPromise();
 }
 
-bool IsHandle(gin::Arguments* args, v8::Handle<v8::Value> val) {
+bool IsHandle(gin::Arguments* args, v8::Local<v8::Value> val) {
   gin::Handle<mojo::edk::js::HandleWrapper> ignore_handle;
   return gin::Converter<gin::Handle<mojo::edk::js::HandleWrapper>>::FromV8(
       args->isolate(), val, &ignore_handle);
 }
 
+gin::Dictionary CreateSharedBuffer(const gin::Arguments& args,
+                                   uint64_t num_bytes,
+                                   MojoCreateSharedBufferOptionsFlags flags) {
+  gin::Dictionary dictionary = gin::Dictionary::CreateEmpty(args.isolate());
+  MojoHandle handle = MOJO_HANDLE_INVALID;
+  MojoCreateSharedBufferOptions options;
+  // The |flags| is mandatory parameter for CreateSharedBuffer, and it will
+  // be always initialized in MojoCreateSharedBufferOptions struct. For
+  // forward compatibility, set struct_size to be 8 bytes (struct_size + flags),
+  // so that validator will only check the field that is set.
+  options.struct_size = 8;
+  options.flags = flags;
+  MojoResult result = MojoCreateSharedBuffer(&options, num_bytes, &handle);
+  if (result != MOJO_RESULT_OK) {
+    dictionary.Set("result", result);
+    return dictionary;
+  }
+
+  dictionary.Set("result", result);
+  dictionary.Set("handle", mojo::Handle(handle));
+
+  return dictionary;
+}
+
+gin::Dictionary DuplicateBufferHandle(
+    const gin::Arguments& args,
+    mojo::Handle handle,
+    MojoDuplicateBufferHandleOptionsFlags flags) {
+  gin::Dictionary dictionary = gin::Dictionary::CreateEmpty(args.isolate());
+  MojoHandle duped = MOJO_HANDLE_INVALID;
+  MojoDuplicateBufferHandleOptions options;
+  // The |flags| is mandatory parameter for DuplicateBufferHandle, and it will
+  // be always initialized in MojoDuplicateBufferHandleOptions struct. For
+  // forward compatibility, set struct_size to be 8 bytes (struct_size + flags),
+  // so that validator will only check the field that is set.
+  options.struct_size = 8;
+  options.flags = flags;
+  MojoResult result =
+      MojoDuplicateBufferHandle(handle.value(), &options, &duped);
+  if (result != MOJO_RESULT_OK) {
+    dictionary.Set("result", result);
+    return dictionary;
+  }
+
+  dictionary.Set("result", result);
+  dictionary.Set("handle", mojo::Handle(duped));
+
+  return dictionary;
+}
+
+gin::Dictionary MapBuffer(const gin::Arguments& args,
+                          mojo::Handle handle,
+                          uint64_t offset,
+                          uint64_t num_bytes,
+                          MojoMapBufferFlags flags) {
+  gin::Dictionary dictionary = gin::Dictionary::CreateEmpty(args.isolate());
+  void* data = nullptr;
+  MojoResult result =
+      MojoMapBuffer(handle.value(), offset, num_bytes, &data, flags);
+  if (result != MOJO_RESULT_OK) {
+    dictionary.Set("result", result);
+    return dictionary;
+  }
+
+  v8::Local<v8::ArrayBuffer> array_buffer =
+      v8::ArrayBuffer::New(args.isolate(), data, num_bytes);
+
+  dictionary.Set("result", result);
+  dictionary.Set("buffer", array_buffer);
+
+  return dictionary;
+}
+
+MojoResult UnmapBuffer(const gin::Arguments& args,
+                       const v8::Local<v8::ArrayBuffer>& buffer) {
+  // Buffer must be external, created by MapBuffer
+  if (!buffer->IsExternal())
+    return MOJO_RESULT_INVALID_ARGUMENT;
+
+  return MojoUnmapBuffer(buffer->GetContents().Data());
+}
 
 gin::WrapperInfo g_wrapper_info = { gin::kEmbedderNativeGin };
 
@@ -307,8 +367,8 @@ v8::Local<v8::Value> Core::GetModule(v8::Isolate* isolate) {
             // TODO(mpcomplete): Should these just be methods on the JS Handle
             // object?
             .SetMethod("close", CloseHandle)
+            .SetMethod("queryHandleSignalsState", QueryHandleSignalsState)
             .SetMethod("wait", WaitHandle)
-            .SetMethod("waitMany", WaitMany)
             .SetMethod("createMessagePipe", CreateMessagePipe)
             .SetMethod("writeMessage", WriteMessage)
             .SetMethod("readMessage", ReadMessage)
@@ -317,6 +377,10 @@ v8::Local<v8::Value> Core::GetModule(v8::Isolate* isolate) {
             .SetMethod("readData", ReadData)
             .SetMethod("drainData", DoDrainData)
             .SetMethod("isHandle", IsHandle)
+            .SetMethod("createSharedBuffer", CreateSharedBuffer)
+            .SetMethod("duplicateBufferHandle", DuplicateBufferHandle)
+            .SetMethod("mapBuffer", MapBuffer)
+            .SetMethod("unmapBuffer", UnmapBuffer)
 
             .SetValue("RESULT_OK", MOJO_RESULT_OK)
             .SetValue("RESULT_CANCELLED", MOJO_RESULT_CANCELLED)
@@ -338,8 +402,6 @@ v8::Local<v8::Value> Core::GetModule(v8::Isolate* isolate) {
             .SetValue("RESULT_DATA_LOSS", MOJO_RESULT_DATA_LOSS)
             .SetValue("RESULT_BUSY", MOJO_RESULT_BUSY)
             .SetValue("RESULT_SHOULD_WAIT", MOJO_RESULT_SHOULD_WAIT)
-
-            .SetValue("DEADLINE_INDEFINITE", MOJO_DEADLINE_INDEFINITE)
 
             .SetValue("HANDLE_SIGNAL_NONE", MOJO_HANDLE_SIGNAL_NONE)
             .SetValue("HANDLE_SIGNAL_READABLE", MOJO_HANDLE_SIGNAL_READABLE)
@@ -369,6 +431,16 @@ v8::Local<v8::Value> Core::GetModule(v8::Isolate* isolate) {
             .SetValue("READ_DATA_FLAG_DISCARD", MOJO_READ_DATA_FLAG_DISCARD)
             .SetValue("READ_DATA_FLAG_QUERY", MOJO_READ_DATA_FLAG_QUERY)
             .SetValue("READ_DATA_FLAG_PEEK", MOJO_READ_DATA_FLAG_PEEK)
+            .SetValue("CREATE_SHARED_BUFFER_OPTIONS_FLAG_NONE",
+                      MOJO_CREATE_SHARED_BUFFER_OPTIONS_FLAG_NONE)
+
+            .SetValue("DUPLICATE_BUFFER_HANDLE_OPTIONS_FLAG_NONE",
+                      MOJO_DUPLICATE_BUFFER_HANDLE_OPTIONS_FLAG_NONE)
+
+            .SetValue("DUPLICATE_BUFFER_HANDLE_OPTIONS_FLAG_READ_ONLY",
+                      MOJO_DUPLICATE_BUFFER_HANDLE_OPTIONS_FLAG_READ_ONLY)
+
+            .SetValue("MAP_BUFFER_FLAG_NONE", MOJO_MAP_BUFFER_FLAG_NONE)
             .Build();
 
     data->SetObjectTemplate(&g_wrapper_info, templ);

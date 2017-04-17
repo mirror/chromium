@@ -4,6 +4,8 @@
 
 #include "device/bluetooth/dbus/bluetooth_adapter_client.h"
 
+#include <string>
+
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/logging.h"
@@ -23,6 +25,37 @@ namespace bluez {
 
 namespace {
 
+// TODO(rkc) Find better way to do this.
+void WriteNumberAttribute(dbus::MessageWriter* writer,
+                          const BluetoothServiceAttributeValueBlueZ& attribute,
+                          bool is_signed) {
+  int value;
+  attribute.value().GetAsInteger(&value);
+
+  switch (attribute.size()) {
+    case 1:
+      if (is_signed)
+        writer->AppendVariantOfByte(static_cast<int8_t>(value));
+      else
+        writer->AppendVariantOfByte(static_cast<uint8_t>(value));
+      break;
+    case 2:
+      if (is_signed)
+        writer->AppendVariantOfInt16(static_cast<int16_t>(value));
+      else
+        writer->AppendVariantOfUint16(static_cast<uint16_t>(value));
+      break;
+    case 4:
+      if (is_signed)
+        writer->AppendVariantOfInt32(static_cast<int32_t>(value));
+      else
+        writer->AppendVariantOfUint32(static_cast<uint32_t>(value));
+      break;
+    default:
+      NOTREACHED();
+  }
+}
+
 void WriteAttribute(dbus::MessageWriter* writer,
                     const BluetoothServiceAttributeValueBlueZ& attribute) {
   dbus::MessageWriter struct_writer(nullptr);
@@ -30,18 +63,39 @@ void WriteAttribute(dbus::MessageWriter* writer,
   struct_writer.AppendByte(attribute.type());
   struct_writer.AppendUint32(attribute.size());
 
-  if (attribute.type() != BluetoothServiceAttributeValueBlueZ::SEQUENCE) {
-    dbus::AppendValueDataAsVariant(&struct_writer, attribute.value());
-  } else {
-    dbus::MessageWriter array_writer(nullptr);
-    struct_writer.OpenArray("v", &array_writer);
-    for (const auto& v : attribute.sequence())
-      WriteAttribute(&array_writer, v);
-    struct_writer.CloseContainer(&array_writer);
+  switch (attribute.type()) {
+    case bluez::BluetoothServiceAttributeValueBlueZ::UINT:
+      WriteNumberAttribute(&struct_writer, attribute, false);
+      break;
+    case bluez::BluetoothServiceAttributeValueBlueZ::INT:
+      WriteNumberAttribute(&struct_writer, attribute, true);
+      break;
+    case bluez::BluetoothServiceAttributeValueBlueZ::BOOL:
+    case bluez::BluetoothServiceAttributeValueBlueZ::UUID:
+    case bluez::BluetoothServiceAttributeValueBlueZ::STRING:
+    case bluez::BluetoothServiceAttributeValueBlueZ::URL:
+      dbus::AppendValueDataAsVariant(&struct_writer, attribute.value());
+      break;
+    case BluetoothServiceAttributeValueBlueZ::SEQUENCE: {
+      dbus::MessageWriter variant_writer(nullptr);
+      dbus::MessageWriter array_writer(nullptr);
+      struct_writer.OpenVariant("a(yuv)", &variant_writer);
+      variant_writer.OpenArray("(yuv)", &array_writer);
+
+      for (const auto& v : attribute.sequence())
+        WriteAttribute(&array_writer, v);
+      variant_writer.CloseContainer(&array_writer);
+      struct_writer.CloseContainer(&variant_writer);
+      break;
+    }
+    case bluez::BluetoothServiceAttributeValueBlueZ::NULLTYPE:
+    default:
+      NOTREACHED();
   }
   writer->CloseContainer(&struct_writer);
 }
-}
+
+}  // namespace
 
 BluetoothAdapterClient::DiscoveryFilter::DiscoveryFilter() {}
 
@@ -304,14 +358,18 @@ class BluetoothAdapterClientImpl : public BluetoothAdapterClient,
                                  bluetooth_adapter::kCreateServiceRecord);
 
     dbus::MessageWriter writer(&method_call);
+    dbus::MessageWriter array_writer(&method_call);
     dbus::MessageWriter dict_entry_writer(nullptr);
+    writer.OpenArray("{q(yuv)}", &array_writer);
     for (auto attribute_id : record.GetAttributeIds()) {
-      writer.OpenDictEntry(&dict_entry_writer);
+      array_writer.OpenDictEntry(&dict_entry_writer);
       dict_entry_writer.AppendUint16(attribute_id);
       const BluetoothServiceAttributeValueBlueZ& attribute_value =
           record.GetAttributeValue(attribute_id);
       WriteAttribute(&dict_entry_writer, attribute_value);
+      array_writer.CloseContainer(&dict_entry_writer);
     }
+    writer.CloseContainer(&array_writer);
 
     dbus::ObjectProxy* object_proxy =
         object_manager_->GetObjectProxy(object_path);
@@ -368,16 +426,16 @@ class BluetoothAdapterClientImpl : public BluetoothAdapterClient,
   // is created. Informs observers.
   void ObjectAdded(const dbus::ObjectPath& object_path,
                    const std::string& interface_name) override {
-    FOR_EACH_OBSERVER(BluetoothAdapterClient::Observer, observers_,
-                      AdapterAdded(object_path));
+    for (auto& observer : observers_)
+      observer.AdapterAdded(object_path);
   }
 
   // Called by dbus::ObjectManager when an object with the adapter interface
   // is removed. Informs observers.
   void ObjectRemoved(const dbus::ObjectPath& object_path,
                      const std::string& interface_name) override {
-    FOR_EACH_OBSERVER(BluetoothAdapterClient::Observer, observers_,
-                      AdapterRemoved(object_path));
+    for (auto& observer : observers_)
+      observer.AdapterRemoved(object_path);
   }
 
   // Called by dbus::PropertySet when a property value is changed,
@@ -385,8 +443,8 @@ class BluetoothAdapterClientImpl : public BluetoothAdapterClient,
   // call. Informs observers.
   void OnPropertyChanged(const dbus::ObjectPath& object_path,
                          const std::string& property_name) {
-    FOR_EACH_OBSERVER(BluetoothAdapterClient::Observer, observers_,
-                      AdapterPropertyChanged(object_path, property_name));
+    for (auto& observer : observers_)
+      observer.AdapterPropertyChanged(object_path, property_name);
   }
 
   // Called when a response for successful method call is received.

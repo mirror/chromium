@@ -13,8 +13,8 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
-#include "net/cert/internal/cert_issuer_source_static.h"
 #include "components/cast_certificate/cast_crl.h"
+#include "net/cert/internal/cert_issuer_source_static.h"
 #include "net/cert/internal/certificate_policies.h"
 #include "net/cert/internal/extended_key_usage.h"
 #include "net/cert/internal/parse_certificate.h"
@@ -23,8 +23,9 @@
 #include "net/cert/internal/path_builder.h"
 #include "net/cert/internal/signature_algorithm.h"
 #include "net/cert/internal/signature_policy.h"
-#include "net/cert/internal/trust_store.h"
+#include "net/cert/internal/trust_store_in_memory.h"
 #include "net/cert/internal/verify_signed_data.h"
+#include "net/cert/x509_util.h"
 #include "net/der/encode_values.h"
 #include "net/der/input.h"
 
@@ -67,30 +68,20 @@ class CastTrustStore {
   // storage.
   template <size_t N>
   void AddAnchor(const uint8_t (&data)[N]) {
-    scoped_refptr<net::ParsedCertificate> root =
-        net::ParsedCertificate::CreateFromCertificateData(
-            data, N, net::ParsedCertificate::DataSource::EXTERNAL_REFERENCE,
-            {});
-    CHECK(root);
-    store_.AddTrustedCertificate(std::move(root));
+    net::CertErrors errors;
+    scoped_refptr<net::ParsedCertificate> cert =
+        net::ParsedCertificate::CreateWithoutCopyingUnsafe(data, N, {},
+                                                           &errors);
+    CHECK(cert) << errors.ToDebugString();
+    // Enforce pathlen constraints and policies defined on the root certificate.
+    scoped_refptr<net::TrustAnchor> anchor =
+        net::TrustAnchor::CreateFromCertificateWithConstraints(std::move(cert));
+    store_.AddTrustAnchor(std::move(anchor));
   }
 
-  net::TrustStore store_;
+  net::TrustStoreInMemory store_;
   DISALLOW_COPY_AND_ASSIGN(CastTrustStore);
 };
-
-using ExtensionsMap = std::map<net::der::Input, net::ParsedExtension>;
-
-// Helper that looks up an extension by OID given a map of extensions.
-bool GetExtensionValue(const ExtensionsMap& extensions,
-                       const net::der::Input& oid,
-                       net::der::Input* value) {
-  auto it = extensions.find(oid);
-  if (it == extensions.end())
-    return false;
-  *value = it->second.value;
-  return true;
-}
 
 // Returns the OID for the Audio-Only Cast policy
 // (1.3.6.1.4.1.11129.2.5.2) in DER form.
@@ -113,7 +104,7 @@ net::der::Input AudioOnlyPolicyOid() {
 //   * Hashes: All SHA hashes including SHA-1 (despite being known weak).
 //   * RSA keys must have a modulus at least 2048-bits long.
 std::unique_ptr<net::SignaturePolicy> CreateCastSignaturePolicy() {
-  return base::WrapUnique(new net::SimpleSignaturePolicy(2048));
+  return base::MakeUnique<net::SimpleSignaturePolicy>(2048);
 }
 
 class CertVerificationContextImpl : public CertVerificationContext {
@@ -136,10 +127,11 @@ class CertVerificationContextImpl : public CertVerificationContext {
     // least 2048-bits long.
     auto signature_policy = CreateCastSignaturePolicy();
 
+    net::CertErrors errors;
     return net::VerifySignedData(
         *signature_algorithm, net::der::Input(data),
         net::der::BitString(net::der::Input(signature), 0),
-        net::der::Input(&spki_), signature_policy.get());
+        net::der::Input(&spki_), signature_policy.get(), &errors);
   }
 
   std::string GetCommonName() const override { return common_name_; }
@@ -150,9 +142,8 @@ class CertVerificationContextImpl : public CertVerificationContext {
 };
 
 // Helper that extracts the Common Name from a certificate's subject field. On
-// success |common_name| contains the text for the attribute (unescaped, so
-// will depend on the encoding used, but for Cast device certs it should
-// be ASCII).
+// success |common_name| contains the text for the attribute (UTF-8, but for
+// Cast device certs it should be ASCII).
 bool GetCommonNameFromSubject(const net::der::Input& subject_tlv,
                               std::string* common_name) {
   net::RDNSequence rdn_sequence;
@@ -162,18 +153,9 @@ bool GetCommonNameFromSubject(const net::der::Input& subject_tlv,
   for (const net::RelativeDistinguishedName& rdn : rdn_sequence) {
     for (const auto& atv : rdn) {
       if (atv.type == net::TypeCommonNameOid()) {
-        return atv.ValueAsStringUnsafe(common_name);
+        return atv.ValueAsString(common_name);
       }
     }
-  }
-  return false;
-}
-
-// Returns true if the extended key usage list |ekus| contains client auth.
-bool HasClientAuth(const std::vector<net::der::Input>& ekus) {
-  for (const auto& oid : ekus) {
-    if (oid == net::ClientAuth())
-      return true;
   }
   return false;
 }
@@ -181,7 +163,6 @@ bool HasClientAuth(const std::vector<net::der::Input>& ekus) {
 // Checks properties on the target certificate.
 //
 //   * The Key Usage must include Digital Signature
-//   * The Extended Key Usage must include TLS Client Auth
 //   * May have the policy 1.3.6.1.4.1.11129.2.5.2 to indicate it
 //     is an audio-only device.
 WARN_UNUSED_RESULT bool CheckTargetCertificate(
@@ -196,28 +177,10 @@ WARN_UNUSED_RESULT bool CheckTargetCertificate(
   if (!cert->key_usage().AssertsBit(net::KEY_USAGE_BIT_DIGITAL_SIGNATURE))
     return false;
 
-  // Get the Extended Key Usage extension.
-  net::der::Input extension_value;
-  if (!GetExtensionValue(cert->unparsed_extensions(), net::ExtKeyUsageOid(),
-                         &extension_value)) {
-    return false;
-  }
-  std::vector<net::der::Input> ekus;
-  if (!net::ParseEKUExtension(extension_value, &ekus))
-    return false;
-
-  // Ensure Extended Key Usage contains client auth.
-  if (!HasClientAuth(ekus))
-    return false;
-
   // Check for an optional audio-only policy extension.
   *policy = CastDeviceCertPolicy::NONE;
-  if (GetExtensionValue(cert->unparsed_extensions(),
-                        net::CertificatePoliciesOid(), &extension_value)) {
-    std::vector<net::der::Input> policies;
-    if (!net::ParseCertificatePoliciesExtension(extension_value, &policies))
-      return false;
-
+  if (cert->has_policy_oids()) {
+    const std::vector<net::der::Input>& policies = cert->policy_oids();
     // Look for an audio-only policy. Disregard any other policy found.
     if (std::find(policies.begin(), policies.end(), AudioOnlyPolicyOid()) !=
         policies.end()) {
@@ -259,19 +222,32 @@ bool VerifyDeviceCert(const std::vector<std::string>& certs,
                       CastDeviceCertPolicy* policy,
                       const CastCRL* crl,
                       CRLPolicy crl_policy) {
+  return VerifyDeviceCertUsingCustomTrustStore(
+      certs, time, context, policy, crl, crl_policy, &CastTrustStore::Get());
+}
+
+bool VerifyDeviceCertUsingCustomTrustStore(
+    const std::vector<std::string>& certs,
+    const base::Time& time,
+    std::unique_ptr<CertVerificationContext>* context,
+    CastDeviceCertPolicy* policy,
+    const CastCRL* crl,
+    CRLPolicy crl_policy,
+    net::TrustStore* trust_store) {
+  if (!trust_store)
+    return VerifyDeviceCert(certs, time, context, policy, crl, crl_policy);
+
   if (certs.empty())
     return false;
 
-  // No reference to these ParsedCertificates is kept past the end of this
-  // function, so using EXTERNAL_REFERENCE here is safe.
+  net::CertErrors errors;
   scoped_refptr<net::ParsedCertificate> target_cert;
   net::CertIssuerSourceStatic intermediate_cert_issuer_source;
   for (size_t i = 0; i < certs.size(); ++i) {
-    scoped_refptr<net::ParsedCertificate> cert(
-        net::ParsedCertificate::CreateFromCertificateData(
-            reinterpret_cast<const uint8_t*>(certs[i].data()), certs[i].size(),
-            net::ParsedCertificate::DataSource::EXTERNAL_REFERENCE,
-            GetCertParsingOptions()));
+    scoped_refptr<net::ParsedCertificate> cert(net::ParsedCertificate::Create(
+        net::x509_util::CreateCryptoBuffer(certs[i]), GetCertParsingOptions(),
+        &errors));
+    // TODO(eroman): Propagate/log these parsing errors.
     if (!cert)
       return false;
 
@@ -290,14 +266,15 @@ bool VerifyDeviceCert(const std::vector<std::string>& certs,
   if (!net::der::EncodeTimeAsGeneralizedTime(time, &verification_time))
     return false;
   net::CertPathBuilder::Result result;
-  net::CertPathBuilder path_builder(target_cert.get(), &CastTrustStore::Get(),
+  net::CertPathBuilder path_builder(target_cert.get(), trust_store,
                                     signature_policy.get(), verification_time,
-                                    &result);
+                                    net::KeyPurpose::CLIENT_AUTH, &result);
   path_builder.AddCertIssuerSource(&intermediate_cert_issuer_source);
-  net::CompletionStatus rv = path_builder.Run(base::Closure());
-  DCHECK_EQ(rv, net::CompletionStatus::SYNC);
-  if (!result.is_success())
+  path_builder.Run();
+  if (!result.HasValidPath()) {
+    // TODO(crbug.com/634443): Log error information.
     return false;
+  }
 
   // Check properties of the leaf certificate (key usage, policy), and construct
   // a CertVerificationContext that uses its public key.
@@ -310,12 +287,7 @@ bool VerifyDeviceCert(const std::vector<std::string>& certs,
       return false;
     }
   } else {
-    if (result.paths.empty() ||
-        !result.paths[result.best_result_index]->is_success())
-      return false;
-
-    if (!crl->CheckRevocation(result.paths[result.best_result_index]->path,
-                              time)) {
+    if (!crl->CheckRevocation(result.GetBestValidPath()->path, time)) {
       return false;
     }
   }
@@ -326,19 +298,8 @@ std::unique_ptr<CertVerificationContext> CertVerificationContextImplForTest(
     const base::StringPiece& spki) {
   // Use a bogus CommonName, since this is just exposed for testing signature
   // verification by unittests.
-  return base::WrapUnique(
-      new CertVerificationContextImpl(net::der::Input(spki), "CommonName"));
-}
-
-bool SetTrustAnchorForTest(const std::string& cert) {
-  scoped_refptr<net::ParsedCertificate> anchor(
-      net::ParsedCertificate::CreateFromCertificateCopy(
-          cert, GetCertParsingOptions()));
-  if (!anchor)
-    return false;
-  CastTrustStore::Get().Clear();
-  CastTrustStore::Get().AddTrustedCertificate(std::move(anchor));
-  return true;
+  return base::MakeUnique<CertVerificationContextImpl>(net::der::Input(spki),
+                                                       "CommonName");
 }
 
 }  // namespace cast_certificate

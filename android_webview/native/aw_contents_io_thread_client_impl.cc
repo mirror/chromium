@@ -8,6 +8,7 @@
 #include <memory>
 #include <utility>
 
+#include "android_webview/browser/net/aw_web_resource_request.h"
 #include "android_webview/common/devtools_instrumentation.h"
 #include "android_webview/native/aw_contents_background_thread_client.h"
 #include "android_webview/native/aw_web_resource_response_impl.h"
@@ -24,11 +25,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "jni/AwContentsIoThreadClient_jni.h"
-#include "net/base/net_errors.h"
-#include "net/http/http_request_headers.h"
-#include "net/http/http_response_headers.h"
 #include "net/url_request/url_request.h"
-#include "url/gurl.h"
 
 using base::android::AttachCurrentThread;
 using base::android::ConvertUTF8ToJavaString;
@@ -43,7 +40,6 @@ using content::WebContents;
 using std::map;
 using std::pair;
 using std::string;
-using std::vector;
 
 namespace android_webview {
 
@@ -61,6 +57,11 @@ IoThreadClientData::IoThreadClientData() : pending_association(false) {}
 typedef map<pair<int, int>, IoThreadClientData>
     RenderFrameHostToIoThreadClientType;
 
+// When browser side navigation is enabled, RenderFrameIDs do not have
+// valid render process host and render frame ids for frame navigations.
+// We need to identify these by using Frame Tree Node ids.
+typedef map<int, IoThreadClientData> FrameTreeNodeToIoThreadClientType;
+
 static pair<int, int> GetRenderFrameHostIdPair(RenderFrameHost* rfh) {
   return pair<int, int>(rfh->GetProcess()->GetID(), rfh->GetRoutingID());
 }
@@ -73,18 +74,22 @@ class RfhToIoThreadClientMap {
   bool Get(pair<int, int> rfh_id, IoThreadClientData* client);
   void Erase(pair<int, int> rfh_id);
 
+  void Set(int frame_tree_node_id, const IoThreadClientData& client);
+  bool Get(int frame_tree_node_id, IoThreadClientData* client);
+  void Erase(int frame_tree_node_id);
+
  private:
-  static LazyInstance<RfhToIoThreadClientMap> g_instance_;
   base::Lock map_lock_;
   RenderFrameHostToIoThreadClientType rfh_to_io_thread_client_;
+  FrameTreeNodeToIoThreadClientType frame_tree_node_to_io_thread_client_;
 };
 
 // static
-LazyInstance<RfhToIoThreadClientMap> RfhToIoThreadClientMap::g_instance_ =
+LazyInstance<RfhToIoThreadClientMap>::DestructorAtExit g_instance_ =
     LAZY_INSTANCE_INITIALIZER;
 
 // static
-LazyInstance<JavaObjectWeakGlobalRef> g_sw_instance_ =
+LazyInstance<JavaObjectWeakGlobalRef>::DestructorAtExit g_sw_instance_ =
     LAZY_INSTANCE_INITIALIZER;
 
 // static
@@ -113,6 +118,29 @@ bool RfhToIoThreadClientMap::Get(
 void RfhToIoThreadClientMap::Erase(pair<int, int> rfh_id) {
   base::AutoLock lock(map_lock_);
   rfh_to_io_thread_client_.erase(rfh_id);
+}
+
+void RfhToIoThreadClientMap::Set(int frame_tree_node_id,
+                                 const IoThreadClientData& client) {
+  base::AutoLock lock(map_lock_);
+  frame_tree_node_to_io_thread_client_[frame_tree_node_id] = client;
+}
+
+bool RfhToIoThreadClientMap::Get(int frame_tree_node_id,
+                                 IoThreadClientData* client) {
+  base::AutoLock lock(map_lock_);
+  FrameTreeNodeToIoThreadClientType::iterator iterator =
+      frame_tree_node_to_io_thread_client_.find(frame_tree_node_id);
+  if (iterator == frame_tree_node_to_io_thread_client_.end())
+    return false;
+
+  *client = iterator->second;
+  return true;
+}
+
+void RfhToIoThreadClientMap::Erase(int frame_tree_node_id) {
+  base::AutoLock lock(map_lock_);
+  frame_tree_node_to_io_thread_client_.erase(frame_tree_node_id);
 }
 
 // ClientMapEntryUpdater ------------------------------------------------------
@@ -146,62 +174,20 @@ void ClientMapEntryUpdater::RenderFrameCreated(RenderFrameHost* rfh) {
   IoThreadClientData client_data;
   client_data.io_thread_client = jdelegate_;
   client_data.pending_association = false;
-  RfhToIoThreadClientMap::GetInstance()->Set(
-      GetRenderFrameHostIdPair(rfh), client_data);
+  RfhToIoThreadClientMap::GetInstance()->Set(GetRenderFrameHostIdPair(rfh),
+                                             client_data);
+  RfhToIoThreadClientMap::GetInstance()->Set(rfh->GetFrameTreeNodeId(),
+                                             client_data);
 }
 
 void ClientMapEntryUpdater::RenderFrameDeleted(RenderFrameHost* rfh) {
   RfhToIoThreadClientMap::GetInstance()->Erase(GetRenderFrameHostIdPair(rfh));
+  RfhToIoThreadClientMap::GetInstance()->Erase(rfh->GetFrameTreeNodeId());
 }
 
 void ClientMapEntryUpdater::WebContentsDestroyed() {
   delete this;
 }
-
-struct WebResourceRequest {
-  std::string url;
-  std::string method;
-  bool is_main_frame;
-  bool has_user_gesture;
-  vector<string> header_names;
-  vector<string> header_values;
-
-  ScopedJavaLocalRef<jstring> jstring_url;
-  ScopedJavaLocalRef<jstring> jstring_method;
-  ScopedJavaLocalRef<jobjectArray> jstringArray_header_names;
-  ScopedJavaLocalRef<jobjectArray> jstringArray_header_values;
-
-  WebResourceRequest(const net::URLRequest* request)
-      : url(request->url().spec()),
-        method(request->method()) {
-    const content::ResourceRequestInfo* info =
-        content::ResourceRequestInfo::ForRequest(request);
-    is_main_frame =
-        info && info->GetResourceType() == content::RESOURCE_TYPE_MAIN_FRAME;
-    has_user_gesture = info && info->HasUserGesture();
-
-    net::HttpRequestHeaders headers;
-    if (!request->GetFullRequestHeaders(&headers))
-      headers = request->extra_request_headers();
-    net::HttpRequestHeaders::Iterator headers_iterator(headers);
-    while (headers_iterator.GetNext()) {
-      header_names.push_back(headers_iterator.name());
-      header_values.push_back(headers_iterator.value());
-    }
-  }
-
-  WebResourceRequest(JNIEnv* env, const net::URLRequest* request)
-      : WebResourceRequest(request) {
-    ConvertToJava(env);
-  }
-
-  void ConvertToJava(JNIEnv* env) {
-    jstring_url = ConvertUTF8ToJavaString(env, url);
-    jstring_method = ConvertUTF8ToJavaString(env, method);
-    jstringArray_header_names = ToJavaArrayOfStrings(env, header_names);
-    jstringArray_header_values = ToJavaArrayOfStrings(env, header_values);
-  }
-};
 
 } // namespace
 
@@ -214,6 +200,22 @@ std::unique_ptr<AwContentsIoThreadClient> AwContentsIoThreadClient::FromID(
   pair<int, int> rfh_id(render_process_id, render_frame_id);
   IoThreadClientData client_data;
   if (!RfhToIoThreadClientMap::GetInstance()->Get(rfh_id, &client_data))
+    return std::unique_ptr<AwContentsIoThreadClient>();
+
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> java_delegate =
+      client_data.io_thread_client.get(env);
+  DCHECK(!client_data.pending_association || java_delegate.is_null());
+  return std::unique_ptr<AwContentsIoThreadClient>(
+      new AwContentsIoThreadClientImpl(client_data.pending_association,
+                                       java_delegate));
+}
+
+std::unique_ptr<AwContentsIoThreadClient> AwContentsIoThreadClient::FromID(
+    int frame_tree_node_id) {
+  IoThreadClientData client_data;
+  if (!RfhToIoThreadClientMap::GetInstance()->Get(frame_tree_node_id,
+                                                  &client_data))
     return std::unique_ptr<AwContentsIoThreadClient>();
 
   JNIEnv* env = AttachCurrentThread();
@@ -273,13 +275,12 @@ void AwContentsIoThreadClientImpl::SetServiceWorkerIoThreadClient(
 // static
 std::unique_ptr<AwContentsIoThreadClient>
 AwContentsIoThreadClient::GetServiceWorkerIoThreadClient() {
-  if (g_sw_instance_.Get().is_empty())
-    return std::unique_ptr<AwContentsIoThreadClient>();
-
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jobject> java_delegate = g_sw_instance_.Get().get(env);
 
-  DCHECK(!java_delegate.is_null());
+  if (java_delegate.is_null())
+    return std::unique_ptr<AwContentsIoThreadClient>();
+
   return std::unique_ptr<AwContentsIoThreadClient>(
       new AwContentsIoThreadClientImpl(false, java_delegate));
 }
@@ -307,15 +308,14 @@ AwContentsIoThreadClientImpl::GetCacheMode() const {
 
   JNIEnv* env = AttachCurrentThread();
   return static_cast<AwContentsIoThreadClient::CacheMode>(
-      Java_AwContentsIoThreadClient_getCacheMode(
-          env, java_object_.obj()));
+      Java_AwContentsIoThreadClient_getCacheMode(env, java_object_));
 }
 
 
 namespace {
 
 std::unique_ptr<AwWebResourceResponse> RunShouldInterceptRequest(
-    WebResourceRequest web_request,
+    const AwWebResourceRequest& request,
     JavaObjectWeakGlobalRef ref) {
   DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   JNIEnv* env = AttachCurrentThread();
@@ -323,20 +323,17 @@ std::unique_ptr<AwWebResourceResponse> RunShouldInterceptRequest(
   if (obj.is_null())
     return nullptr;
 
-  web_request.ConvertToJava(env);
+  AwWebResourceRequest::AwJavaWebResourceRequest java_web_resource_request;
+  AwWebResourceRequest::ConvertToJava(env, request, &java_web_resource_request);
 
   devtools_instrumentation::ScopedEmbedderCallbackTask embedder_callback(
       "shouldInterceptRequest");
   ScopedJavaLocalRef<jobject> ret =
       AwContentsBackgroundThreadClient::shouldInterceptRequest(
-          env,
-          obj.obj(),
-          web_request.jstring_url.obj(),
-          web_request.is_main_frame,
-          web_request.has_user_gesture,
-          web_request.jstring_method.obj(),
-          web_request.jstringArray_header_names.obj(),
-          web_request.jstringArray_header_values.obj());
+          env, obj, java_web_resource_request.jurl, request.is_main_frame,
+          request.has_user_gesture, java_web_resource_request.jmethod,
+          java_web_resource_request.jheader_names,
+          java_web_resource_request.jheader_values);
   return std::unique_ptr<AwWebResourceResponse>(
       ret.is_null() ? nullptr : new AwWebResourceResponseImpl(ret));
 }
@@ -356,12 +353,12 @@ void AwContentsIoThreadClientImpl::ShouldInterceptRequestAsync(
   JNIEnv* env = AttachCurrentThread();
   if (bg_thread_client_object_.is_null() && !java_object_.is_null()) {
     bg_thread_client_object_.Reset(
-        Java_AwContentsIoThreadClient_getBackgroundThreadClient(
-            env, java_object_.obj()));
+        Java_AwContentsIoThreadClient_getBackgroundThreadClient(env,
+                                                                java_object_));
   }
   if (!bg_thread_client_object_.is_null()) {
     get_response = base::Bind(
-        &RunShouldInterceptRequest, WebResourceRequest(request),
+        &RunShouldInterceptRequest, AwWebResourceRequest(*request),
         JavaObjectWeakGlobalRef(env, bg_thread_client_object_.obj()));
   }
   BrowserThread::PostTaskAndReplyWithResult(BrowserThread::FILE, FROM_HERE,
@@ -374,8 +371,8 @@ bool AwContentsIoThreadClientImpl::ShouldBlockContentUrls() const {
     return false;
 
   JNIEnv* env = AttachCurrentThread();
-  return Java_AwContentsIoThreadClient_shouldBlockContentUrls(
-      env, java_object_.obj());
+  return Java_AwContentsIoThreadClient_shouldBlockContentUrls(env,
+                                                              java_object_);
 }
 
 bool AwContentsIoThreadClientImpl::ShouldBlockFileUrls() const {
@@ -384,8 +381,7 @@ bool AwContentsIoThreadClientImpl::ShouldBlockFileUrls() const {
     return false;
 
   JNIEnv* env = AttachCurrentThread();
-  return Java_AwContentsIoThreadClient_shouldBlockFileUrls(
-      env, java_object_.obj());
+  return Java_AwContentsIoThreadClient_shouldBlockFileUrls(env, java_object_);
 }
 
 bool AwContentsIoThreadClientImpl::ShouldAcceptThirdPartyCookies() const {
@@ -395,7 +391,17 @@ bool AwContentsIoThreadClientImpl::ShouldAcceptThirdPartyCookies() const {
 
   JNIEnv* env = AttachCurrentThread();
   return Java_AwContentsIoThreadClient_shouldAcceptThirdPartyCookies(
-      env, java_object_.obj());
+      env, java_object_);
+}
+
+bool AwContentsIoThreadClientImpl::GetSafeBrowsingEnabled() const {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (java_object_.is_null())
+    return false;
+
+  JNIEnv* env = AttachCurrentThread();
+  return Java_AwContentsIoThreadClient_getSafeBrowsingEnabled(env,
+                                                              java_object_);
 }
 
 bool AwContentsIoThreadClientImpl::ShouldBlockNetworkLoads() const {
@@ -404,140 +410,8 @@ bool AwContentsIoThreadClientImpl::ShouldBlockNetworkLoads() const {
     return false;
 
   JNIEnv* env = AttachCurrentThread();
-  return Java_AwContentsIoThreadClient_shouldBlockNetworkLoads(
-      env, java_object_.obj());
-}
-
-void AwContentsIoThreadClientImpl::NewDownload(
-    const GURL& url,
-    const string& user_agent,
-    const string& content_disposition,
-    const string& mime_type,
-    int64_t content_length) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (java_object_.is_null())
-    return;
-
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jstring> jstring_url =
-      ConvertUTF8ToJavaString(env, url.spec());
-  ScopedJavaLocalRef<jstring> jstring_user_agent =
-      ConvertUTF8ToJavaString(env, user_agent);
-  ScopedJavaLocalRef<jstring> jstring_content_disposition =
-      ConvertUTF8ToJavaString(env, content_disposition);
-  ScopedJavaLocalRef<jstring> jstring_mime_type =
-      ConvertUTF8ToJavaString(env, mime_type);
-
-  Java_AwContentsIoThreadClient_onDownloadStart(
-      env,
-      java_object_.obj(),
-      jstring_url.obj(),
-      jstring_user_agent.obj(),
-      jstring_content_disposition.obj(),
-      jstring_mime_type.obj(),
-      content_length);
-}
-
-void AwContentsIoThreadClientImpl::NewLoginRequest(const string& realm,
-                                                   const string& account,
-                                                   const string& args) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (java_object_.is_null())
-    return;
-
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jstring> jrealm = ConvertUTF8ToJavaString(env, realm);
-  ScopedJavaLocalRef<jstring> jargs = ConvertUTF8ToJavaString(env, args);
-
-  ScopedJavaLocalRef<jstring> jaccount;
-  if (!account.empty())
-    jaccount = ConvertUTF8ToJavaString(env, account);
-
-  Java_AwContentsIoThreadClient_newLoginRequest(
-      env, java_object_.obj(), jrealm.obj(), jaccount.obj(), jargs.obj());
-}
-
-void AwContentsIoThreadClientImpl::OnReceivedError(
-    const net::URLRequest* request) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (java_object_.is_null())
-    return;
-
-  JNIEnv* env = AttachCurrentThread();
-  WebResourceRequest web_request(env, request);
-
-  int error_code = request->status().error();
-  ScopedJavaLocalRef<jstring> jstring_description = ConvertUTF8ToJavaString(
-      env, net::ErrorToString(request->status().error()));
-
-  Java_AwContentsIoThreadClient_onReceivedError(
-      env,
-      java_object_.obj(),
-      web_request.jstring_url.obj(),
-      web_request.is_main_frame,
-      web_request.has_user_gesture,
-      web_request.jstring_method.obj(),
-      web_request.jstringArray_header_names.obj(),
-      web_request.jstringArray_header_values.obj(),
-      error_code,
-      jstring_description.obj());
-}
-
-void AwContentsIoThreadClientImpl::OnReceivedHttpError(
-    const net::URLRequest* request,
-    const net::HttpResponseHeaders* response_headers) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (java_object_.is_null())
-    return;
-
-  JNIEnv* env = AttachCurrentThread();
-  WebResourceRequest web_request(env, request);
-
-  vector<string> response_header_names;
-  vector<string> response_header_values;
-  {
-    size_t headers_iterator = 0;
-    string header_name, header_value;
-    while (response_headers->EnumerateHeaderLines(
-        &headers_iterator, &header_name, &header_value)) {
-      response_header_names.push_back(header_name);
-      response_header_values.push_back(header_value);
-    }
-  }
-
-  string mime_type, encoding;
-  response_headers->GetMimeTypeAndCharset(&mime_type, &encoding);
-  ScopedJavaLocalRef<jstring> jstring_mime_type =
-      ConvertUTF8ToJavaString(env, mime_type);
-  ScopedJavaLocalRef<jstring> jstring_encoding =
-      ConvertUTF8ToJavaString(env, encoding);
-  int status_code = response_headers->response_code();
-  ScopedJavaLocalRef<jstring> jstring_reason =
-      ConvertUTF8ToJavaString(env, response_headers->GetStatusText());
-  ScopedJavaLocalRef<jobjectArray> jstringArray_response_header_names =
-      ToJavaArrayOfStrings(env, response_header_names);
-  ScopedJavaLocalRef<jobjectArray> jstringArray_response_header_values =
-      ToJavaArrayOfStrings(env, response_header_values);
-
-  Java_AwContentsIoThreadClient_onReceivedHttpError(
-      env,
-      java_object_.obj(),
-      web_request.jstring_url.obj(),
-      web_request.is_main_frame,
-      web_request.has_user_gesture,
-      web_request.jstring_method.obj(),
-      web_request.jstringArray_header_names.obj(),
-      web_request.jstringArray_header_values.obj(),
-      jstring_mime_type.obj(),
-      jstring_encoding.obj(),
-      status_code,
-      jstring_reason.obj(),
-      jstringArray_response_header_names.obj(),
-      jstringArray_response_header_values.obj());
-}
-
-bool RegisterAwContentsIoThreadClientImpl(JNIEnv* env) {
-  return RegisterNativesImpl(env);
+  return Java_AwContentsIoThreadClient_shouldBlockNetworkLoads(env,
+                                                               java_object_);
 }
 
 } // namespace android_webview

@@ -4,8 +4,10 @@
 
 #include "net/spdy/spdy_test_utils.h"
 
+#include <algorithm>
 #include <cstring>
 #include <memory>
+#include <utility>
 #include <vector>
 
 #include "base/base64.h"
@@ -20,12 +22,10 @@
 namespace net {
 namespace test {
 
-using std::string;
-
-string HexDumpWithMarks(const unsigned char* data,
-                        int length,
-                        const bool* marks,
-                        int mark_length) {
+SpdyString HexDumpWithMarks(const unsigned char* data,
+                            int length,
+                            const bool* marks,
+                            int mark_length) {
   static const char kHexChars[] = "0123456789abcdef";
   static const int kColumns = 4;
 
@@ -36,7 +36,7 @@ string HexDumpWithMarks(const unsigned char* data,
     mark_length = std::min(mark_length, kSizeLimit);
   }
 
-  string hex;
+  SpdyString hex;
   for (const unsigned char* row = data; length > 0;
        row += kColumns, length -= kColumns) {
     for (const unsigned char *p = row; p < row + 4; ++p) {
@@ -62,7 +62,7 @@ string HexDumpWithMarks(const unsigned char* data,
   return hex;
 }
 
-void CompareCharArraysWithHexError(const string& description,
+void CompareCharArraysWithHexError(const SpdyString& description,
                                    const unsigned char* actual,
                                    const int actual_len,
                                    const unsigned char* expected,
@@ -92,49 +92,21 @@ void CompareCharArraysWithHexError(const string& description,
       << HexDumpWithMarks(actual, actual_len, marks.get(), max_len);
 }
 
-void SetFrameFlags(SpdySerializedFrame* frame,
-                   uint8_t flags,
-                   SpdyMajorVersion spdy_version) {
-  switch (spdy_version) {
-    case SPDY3:
-    case HTTP2:
-      frame->data()[4] = flags;
-      break;
-    default:
-      LOG(FATAL) << "Unsupported SPDY version.";
+void SetFrameFlags(SpdySerializedFrame* frame, uint8_t flags) {
+  frame->data()[4] = flags;
+}
+
+void SetFrameLength(SpdySerializedFrame* frame, size_t length) {
+  CHECK_GT(1u << 14, length);
+  {
+    int32_t wire_length = base::HostToNet32(length);
+    memcpy(frame->data(), reinterpret_cast<char*>(&wire_length) + 1, 3);
   }
 }
 
-void SetFrameLength(SpdySerializedFrame* frame,
-                    size_t length,
-                    SpdyMajorVersion spdy_version) {
-  switch (spdy_version) {
-    case SPDY3:
-      CHECK_EQ(0u, length & ~kLengthMask);
-      {
-        int32_t wire_length = base::HostToNet32(length);
-        // The length field in SPDY 3 is a 24-bit (3B) integer starting at
-        // offset 5.
-        memcpy(frame->data() + 5, reinterpret_cast<char*>(&wire_length) + 1, 3);
-      }
-      break;
-    case HTTP2:
-      CHECK_GT(1u<<14, length);
-      {
-        int32_t wire_length = base::HostToNet32(length);
-        memcpy(frame->data(),
-               reinterpret_cast<char*>(&wire_length) + 1,
-               3);
-      }
-      break;
-    default:
-      LOG(FATAL) << "Unsupported SPDY version.";
-  }
-}
-
-string a2b_hex(const char* hex_data) {
+SpdyString a2b_hex(const char* hex_data) {
   std::vector<uint8_t> output;
-  string result;
+  SpdyString result;
   if (base::HexStringToBytes(hex_data, &output))
     result.assign(reinterpret_cast<const char*>(&output[0]), output.size());
   return result;
@@ -146,22 +118,23 @@ HashValue GetTestHashValue(uint8_t label) {
   return hash_value;
 }
 
-string GetTestPin(uint8_t label) {
+SpdyString GetTestPin(uint8_t label) {
   HashValue hash_value = GetTestHashValue(label);
-  string base64;
-  base::Base64Encode(base::StringPiece(
-      reinterpret_cast<char*>(hash_value.data()), hash_value.size()), &base64);
+  SpdyString base64;
+  base::Base64Encode(SpdyStringPiece(reinterpret_cast<char*>(hash_value.data()),
+                                     hash_value.size()),
+                     &base64);
 
-  return string("pin-sha256=\"") + base64 + "\"";
+  return SpdyString("pin-sha256=\"") + base64 + "\"";
 }
 
 void AddPin(TransportSecurityState* state,
-            const string& host,
+            const SpdyString& host,
             uint8_t primary_label,
             uint8_t backup_label) {
-  string primary_pin = GetTestPin(primary_label);
-  string backup_pin = GetTestPin(backup_label);
-  string header = "max-age = 10000; " + primary_pin + "; " + backup_pin;
+  SpdyString primary_pin = GetTestPin(primary_label);
+  SpdyString backup_pin = GetTestPin(backup_label);
+  SpdyString header = "max-age = 10000; " + primary_pin + "; " + backup_pin;
 
   // Construct a fake SSLInfo that will pass AddHPKPHeader's checks.
   SSLInfo ssl_info;
@@ -174,25 +147,36 @@ void TestHeadersHandler::OnHeaderBlockStart() {
   block_.clear();
 }
 
-void TestHeadersHandler::OnHeader(base::StringPiece name,
-                                  base::StringPiece value) {
-  if (FLAGS_chromium_http2_flag_use_new_spdy_header_block_header_joining) {
-    block_.AppendValueOrAddHeader(name, value);
-  } else {
-    auto it = block_.find(name);
-    if (it == block_.end()) {
-      block_[name] = value;
-    } else {
-      string new_value = it->second.as_string();
-      new_value.append((name == "cookie") ? "; " : string(1, '\0'));
-      value.AppendToString(&new_value);
-      block_.ReplaceOrAppendHeader(name, new_value);
-    }
-  }
+void TestHeadersHandler::OnHeader(SpdyStringPiece name, SpdyStringPiece value) {
+  block_.AppendValueOrAddHeader(name, value);
 }
 
 void TestHeadersHandler::OnHeaderBlockEnd(size_t header_bytes_parsed) {
   header_bytes_parsed_ = header_bytes_parsed;
+}
+
+void TestHeadersHandler::OnHeaderBlockEnd(
+    size_t header_bytes_parsed,
+    size_t /* compressed_header_bytes_parsed */) {
+  header_bytes_parsed_ = header_bytes_parsed;
+}
+
+TestServerPushDelegate::TestServerPushDelegate() {}
+
+TestServerPushDelegate::~TestServerPushDelegate() {}
+
+void TestServerPushDelegate::OnPush(
+    std::unique_ptr<ServerPushHelper> push_helper,
+    const NetLogWithSource& session_net_log) {
+  push_helpers[push_helper->GetURL()] = std::move(push_helper);
+}
+
+bool TestServerPushDelegate::CancelPush(GURL url) {
+  auto itr = push_helpers.find(url);
+  DCHECK(itr != push_helpers.end());
+  itr->second->Cancel();
+  push_helpers.erase(itr);
+  return true;
 }
 
 }  // namespace test

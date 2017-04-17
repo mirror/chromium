@@ -55,7 +55,7 @@ struct Settings::Data {
   uint32_t version;
   uint32_t options;
   uint32_t padding_0;
-  uint64_t last_upload_attempt_time;  // time_t
+  int64_t last_upload_attempt_time;  // time_t
   UUID client_id;
 };
 
@@ -136,7 +136,7 @@ bool Settings::SetLastUploadAttemptTime(time_t time) {
   if (!handle.is_valid())
     return false;
 
-  settings.last_upload_attempt_time = InRangeCast<uint64_t>(time, 0);
+  settings.last_upload_attempt_time = InRangeCast<int64_t>(time, 0);
 
   return WriteSettings(handle.get(), settings);
 }
@@ -246,13 +246,10 @@ bool Settings::ReadSettings(FileHandle handle,
   if (LoggingSeekFile(handle, 0, SEEK_SET) != 0)
     return false;
 
-  bool read_result;
-  if (log_read_error) {
-    read_result = LoggingReadFile(handle, out_data, sizeof(*out_data));
-  } else {
-    read_result =
-        ReadFile(handle, out_data, sizeof(*out_data)) == sizeof(*out_data);
-  }
+  bool read_result =
+      log_read_error
+          ? LoggingReadFileExactly(handle, out_data, sizeof(*out_data))
+          : ReadFileExactly(handle, out_data, sizeof(*out_data));
 
   if (!read_result)
     return false;

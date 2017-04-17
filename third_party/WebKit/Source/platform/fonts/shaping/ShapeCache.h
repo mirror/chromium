@@ -29,221 +29,229 @@
 
 #include "platform/fonts/shaping/ShapeResult.h"
 #include "platform/text/TextRun.h"
-#include "wtf/Forward.h"
-#include "wtf/HashFunctions.h"
-#include "wtf/HashSet.h"
-#include "wtf/HashTableDeletedValueType.h"
-#include "wtf/StringHasher.h"
-#include "wtf/WeakPtr.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/HashFunctions.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/HashTableDeletedValueType.h"
+#include "platform/wtf/StringHasher.h"
+#include "platform/wtf/WeakPtr.h"
 
 namespace blink {
 
-class Font;
-class GlyphBuffer;
-class SimpleFontData;
-
 struct ShapeCacheEntry {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    ShapeCacheEntry()
-    {
-        m_shapeResult = nullptr;
-    }
-    RefPtr<const ShapeResult> m_shapeResult;
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  ShapeCacheEntry() { shape_result_ = nullptr; }
+  RefPtr<const ShapeResult> shape_result_;
 };
 
 class ShapeCache {
-    USING_FAST_MALLOC(ShapeCache);
-    WTF_MAKE_NONCOPYABLE(ShapeCache);
-private:
-    // Used to optimize small strings as hash table keys. Avoids malloc'ing an out-of-line StringImpl.
-    class SmallStringKey {
-        DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    public:
-        static unsigned capacity() { return s_capacity; }
+  USING_FAST_MALLOC(ShapeCache);
+  WTF_MAKE_NONCOPYABLE(ShapeCache);
 
-        SmallStringKey()
-            : m_length(s_emptyValueLength), m_direction(LTR)
-        {
-        }
+ private:
+  // Used to optimize small strings as hash table keys. Avoids malloc'ing an
+  // out-of-line StringImpl.
+  class SmallStringKey {
+    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-        SmallStringKey(WTF::HashTableDeletedValueType)
-            : m_length(s_deletedValueLength), m_direction(LTR)
-        {
-        }
+   public:
+    static unsigned Capacity() { return kCapacity; }
 
-        template<typename CharacterType> SmallStringKey(CharacterType* characters, unsigned short length, TextDirection direction)
-            : m_length(length), m_direction(direction)
-        {
-            ASSERT(length <= s_capacity);
+    SmallStringKey()
+        : length_(kEmptyValueLength),
+          direction_(static_cast<unsigned>(TextDirection::kLtr)) {}
 
-            StringHasher hasher;
+    SmallStringKey(WTF::HashTableDeletedValueType)
+        : length_(kDeletedValueLength),
+          direction_(static_cast<unsigned>(TextDirection::kLtr)) {}
 
-            bool remainder = length & 1;
-            length >>= 1;
+    template <typename CharacterType>
+    SmallStringKey(CharacterType* characters,
+                   unsigned short length,
+                   TextDirection direction)
+        : length_(length), direction_(static_cast<unsigned>(direction)) {
+      DCHECK(length <= kCapacity);
 
-            unsigned i = 0;
-            while (length--) {
-                m_characters[i] = characters[i];
-                m_characters[i + 1] = characters[i + 1];
-                hasher.addCharactersAssumingAligned(characters[i], characters[i + 1]);
-                i += 2;
-            }
+      StringHasher hasher;
 
-            if (remainder) {
-                m_characters[i] = characters[i];
-                hasher.addCharacter(characters[i]);
-            }
+      bool remainder = length & 1;
+      length >>= 1;
 
-            m_hash = hasher.hash();
-        }
+      unsigned i = 0;
+      while (length--) {
+        characters_[i] = characters[i];
+        characters_[i + 1] = characters[i + 1];
+        hasher.AddCharactersAssumingAligned(characters[i], characters[i + 1]);
+        i += 2;
+      }
 
-        const UChar* characters() const { return m_characters; }
-        unsigned short length() const { return m_length; }
-        TextDirection direction() const { return static_cast<TextDirection>(m_direction); }
-        unsigned hash() const { return m_hash; }
+      if (remainder) {
+        characters_[i] = characters[i];
+        hasher.AddCharacter(characters[i]);
+      }
 
-        bool isHashTableDeletedValue() const { return m_length == s_deletedValueLength; }
-        bool isHashTableEmptyValue() const { return m_length == s_emptyValueLength; }
-
-    private:
-        static const unsigned s_capacity = 15;
-        static const unsigned s_emptyValueLength = s_capacity + 1;
-        static const unsigned s_deletedValueLength = s_capacity + 2;
-
-        unsigned m_hash;
-        unsigned m_length : 15;
-        unsigned m_direction : 1;
-        UChar m_characters[s_capacity];
-    };
-
-    struct SmallStringKeyHash {
-        STATIC_ONLY(SmallStringKeyHash);
-        static unsigned hash(const SmallStringKey& key) { return key.hash(); }
-        static bool equal(const SmallStringKey& a, const SmallStringKey& b) { return a == b; }
-        static const bool safeToCompareToEmptyOrDeleted = true; // Empty and deleted values have lengths that are not equal to any valid length.
-    };
-
-    struct SmallStringKeyHashTraits : WTF::SimpleClassHashTraits<SmallStringKey> {
-        STATIC_ONLY(SmallStringKeyHashTraits);
-        static const bool hasIsEmptyValueFunction = true;
-        static bool isEmptyValue(const SmallStringKey& key) { return key.isHashTableEmptyValue(); }
-        static const unsigned minimumTableSize = 16;
-    };
-
-    friend bool operator==(const SmallStringKey&, const SmallStringKey&);
-
-public:
-    ShapeCache(): m_weakFactory(this), m_version(0) { }
-
-    ShapeCacheEntry* add(const TextRun& run, ShapeCacheEntry entry)
-    {
-        if (run.length() > SmallStringKey::capacity())
-            return 0;
-
-        return addSlowCase(run, entry);
+      hash_ = hasher.GetHash();
     }
 
-    void clearIfVersionChanged(unsigned version)
-    {
-        if (version != m_version) {
-            clear();
-            m_version = version;
-        }
+    const UChar* Characters() const { return characters_; }
+    unsigned short length() const { return length_; }
+    TextDirection Direction() const {
+      return static_cast<TextDirection>(direction_);
+    }
+    unsigned GetHash() const { return hash_; }
+
+    bool IsHashTableDeletedValue() const {
+      return length_ == kDeletedValueLength;
+    }
+    bool IsHashTableEmptyValue() const { return length_ == kEmptyValueLength; }
+
+   private:
+    static const unsigned kCapacity = 15;
+    static const unsigned kEmptyValueLength = kCapacity + 1;
+    static const unsigned kDeletedValueLength = kCapacity + 2;
+
+    unsigned hash_;
+    unsigned length_ : 15;
+    unsigned direction_ : 1;
+    UChar characters_[kCapacity];
+  };
+
+  struct SmallStringKeyHash {
+    STATIC_ONLY(SmallStringKeyHash);
+    static unsigned GetHash(const SmallStringKey& key) { return key.GetHash(); }
+    static bool Equal(const SmallStringKey& a, const SmallStringKey& b) {
+      return a == b;
+    }
+    // Empty and deleted values have lengths that are not equal to any valid
+    // length.
+    static const bool safe_to_compare_to_empty_or_deleted = true;
+  };
+
+  struct SmallStringKeyHashTraits : WTF::SimpleClassHashTraits<SmallStringKey> {
+    STATIC_ONLY(SmallStringKeyHashTraits);
+    static const bool kHasIsEmptyValueFunction = true;
+    static bool IsEmptyValue(const SmallStringKey& key) {
+      return key.IsHashTableEmptyValue();
+    }
+    static const unsigned kMinimumTableSize = 16;
+  };
+
+  friend bool operator==(const SmallStringKey&, const SmallStringKey&);
+
+ public:
+  ShapeCache() : weak_factory_(this), version_(0) {}
+
+  ShapeCacheEntry* Add(const TextRun& run, ShapeCacheEntry entry) {
+    if (run.length() > SmallStringKey::Capacity())
+      return 0;
+
+    return AddSlowCase(run, entry);
+  }
+
+  void ClearIfVersionChanged(unsigned version) {
+    if (version != version_) {
+      Clear();
+      version_ = version;
+    }
+  }
+
+  void Clear() {
+    single_char_map_.Clear();
+    short_string_map_.Clear();
+  }
+
+  unsigned size() const {
+    return single_char_map_.size() + short_string_map_.size();
+  }
+
+  size_t ByteSize() const {
+    size_t self_byte_size = 0;
+    for (auto cache_entry : single_char_map_) {
+      self_byte_size += cache_entry.value.shape_result_->ByteSize();
+    }
+    for (auto cache_entry : short_string_map_) {
+      self_byte_size += cache_entry.value.shape_result_->ByteSize();
+    }
+    return self_byte_size;
+  }
+
+  WeakPtr<ShapeCache> GetWeakPtr() { return weak_factory_.CreateWeakPtr(); }
+
+ private:
+  ShapeCacheEntry* AddSlowCase(const TextRun& run, ShapeCacheEntry entry) {
+    unsigned length = run.length();
+    bool is_new_entry;
+    ShapeCacheEntry* value;
+    if (length == 1) {
+      uint32_t key = run[0];
+      // All current codepointsin UTF-32 are bewteen 0x0 and 0x10FFFF,
+      // as such use bit 32 to indicate direction.
+      if (run.Direction() == TextDirection::kRtl)
+        key |= (1u << 31);
+      SingleCharMap::AddResult add_result = single_char_map_.insert(key, entry);
+      is_new_entry = add_result.is_new_entry;
+      value = &add_result.stored_value->value;
+    } else {
+      SmallStringKey small_string_key;
+      if (run.Is8Bit())
+        small_string_key =
+            SmallStringKey(run.Characters8(), length, run.Direction());
+      else
+        small_string_key =
+            SmallStringKey(run.Characters16(), length, run.Direction());
+
+      SmallStringMap::AddResult add_result =
+          short_string_map_.insert(small_string_key, entry);
+      is_new_entry = add_result.is_new_entry;
+      value = &add_result.stored_value->value;
     }
 
-    void clear()
-    {
-        m_singleCharMap.clear();
-        m_shortStringMap.clear();
-    }
+    if (!is_new_entry)
+      return value;
 
-    unsigned size() const
-    {
-        return m_singleCharMap.size() + m_shortStringMap.size();
-    }
+    if (size() < kMaxSize)
+      return value;
 
-    size_t byteSize() const
-    {
-        size_t selfByteSize = 0;
-        for (auto cacheEntry : m_singleCharMap) {
-            selfByteSize += cacheEntry.value.m_shapeResult->byteSize();
-        }
-        for (auto cacheEntry : m_shortStringMap) {
-            selfByteSize += cacheEntry.value.m_shapeResult->byteSize();
-        }
-        return selfByteSize;
-    }
+    // No need to be fancy: we're just trying to avoid pathological growth.
+    single_char_map_.Clear();
+    short_string_map_.Clear();
 
-    WeakPtr<ShapeCache> weakPtr()
-    {
-        return m_weakFactory.createWeakPtr();
-    }
+    return 0;
+  }
 
-private:
-    ShapeCacheEntry* addSlowCase(const TextRun& run, ShapeCacheEntry entry)
-    {
-        unsigned length = run.length();
-        bool isNewEntry;
-        ShapeCacheEntry *value;
-        if (length == 1) {
-            uint32_t key = run[0];
-            // All current codepointsin UTF-32 are bewteen 0x0 and 0x10FFFF,
-            // as such use bit 32 to indicate direction.
-            if (run.direction() == RTL)
-                key |= (1u << 31);
-            SingleCharMap::AddResult addResult = m_singleCharMap.add(key, entry);
-            isNewEntry = addResult.isNewEntry;
-            value = &addResult.storedValue->value;
-        } else {
-            SmallStringKey smallStringKey;
-            if (run.is8Bit())
-                smallStringKey = SmallStringKey(run.characters8(), length, run.direction());
-            else
-                smallStringKey = SmallStringKey(run.characters16(), length, run.direction());
+  typedef HashMap<SmallStringKey,
+                  ShapeCacheEntry,
+                  SmallStringKeyHash,
+                  SmallStringKeyHashTraits>
+      SmallStringMap;
+  typedef HashMap<uint32_t,
+                  ShapeCacheEntry,
+                  DefaultHash<uint32_t>::Hash,
+                  WTF::UnsignedWithZeroKeyHashTraits<uint32_t>>
+      SingleCharMap;
 
-            SmallStringMap::AddResult addResult = m_shortStringMap.add(smallStringKey, entry);
-            isNewEntry = addResult.isNewEntry;
-            value = &addResult.storedValue->value;
-        }
+  // Hard limit to guard against pathological growth. The expected number of
+  // cache entries is a lot lower given the average word count for a web page
+  // is well below 1,000 and even full length books rarely have over 10,000
+  // unique words [1]. 1: http://www.mine-control.com/zack/guttenberg/
+  // Our definition of a word is somewhat different from the norm in that we
+  // only segment on space. Thus "foo", "foo-", and "foo)" would count as
+  // three separate words. Given that 10,000 seems like a reasonable maximum.
+  static const unsigned kMaxSize = 10000;
 
-        if (!isNewEntry)
-            return value;
-
-        if (size() < s_maxSize)
-            return value;
-
-        // No need to be fancy: we're just trying to avoid pathological growth.
-        m_singleCharMap.clear();
-        m_shortStringMap.clear();
-
-        return 0;
-    }
-
-    typedef HashMap<SmallStringKey, ShapeCacheEntry, SmallStringKeyHash, SmallStringKeyHashTraits> SmallStringMap;
-    typedef HashMap<uint32_t, ShapeCacheEntry, DefaultHash<uint32_t>::Hash, WTF::UnsignedWithZeroKeyHashTraits<uint32_t>> SingleCharMap;
-
-    // Hard limit to guard against pathological growth. The expected number of
-    // cache entries is a lot lower given the average word count for a web page
-    // is well below 1,000 and even full length books rarely have over 10,000
-    // unique words [1]. 1: http://www.mine-control.com/zack/guttenberg/
-    // Our definition of a word is somewhat different from the norm in that we
-    // only segment on space. Thus "foo", "foo-", and "foo)" would count as
-    // three separate words. Given that 10,000 seems like a reasonable maximum.
-    static const unsigned s_maxSize = 10000;
-
-    SingleCharMap m_singleCharMap;
-    SmallStringMap m_shortStringMap;
-    WeakPtrFactory<ShapeCache> m_weakFactory;
-    unsigned m_version;
+  SingleCharMap single_char_map_;
+  SmallStringMap short_string_map_;
+  WeakPtrFactory<ShapeCache> weak_factory_;
+  unsigned version_;
 };
 
-inline bool operator==(const ShapeCache::SmallStringKey& a, const ShapeCache::SmallStringKey& b)
-{
-    if (a.length() != b.length() || a.direction() != b.direction())
-        return false;
-    return WTF::equal(a.characters(), b.characters(), a.length());
+inline bool operator==(const ShapeCache::SmallStringKey& a,
+                       const ShapeCache::SmallStringKey& b) {
+  if (a.length() != b.length() || a.Direction() != b.Direction())
+    return false;
+  return WTF::Equal(a.Characters(), b.Characters(), a.length());
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ShapeCache_h
+#endif  // ShapeCache_h

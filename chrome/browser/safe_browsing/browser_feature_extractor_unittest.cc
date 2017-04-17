@@ -20,11 +20,11 @@
 #include "chrome/browser/safe_browsing/client_side_detection_host.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/safe_browsing/ui_manager.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/history/core/browser/history_backend.h"
 #include "components/history/core/browser/history_service.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "components/safe_browsing_db/database_manager.h"
 #include "components/safe_browsing_db/test_database_manager.h"
 #include "content/public/browser/navigation_controller.h"
@@ -39,7 +39,6 @@
 #include "url/gurl.h"
 
 using content::BrowserThread;
-using content::ResourceType;
 using content::WebContentsTester;
 
 using testing::DoAll;
@@ -98,7 +97,6 @@ class BrowserFeatureExtractorTest : public ChromeRenderViewHostTestHarness {
     extractor_.reset();
     host_.reset();
     db_manager_ = NULL;
-    profile()->DestroyHistoryService();
     ChromeRenderViewHostTestHarness::TearDown();
     ASSERT_EQ(0, num_pending_);
   }
@@ -131,21 +129,22 @@ class BrowserFeatureExtractorTest : public ChromeRenderViewHostTestHarness {
                          const GURL& referrer,
                          ui::PageTransition type) {
     web_contents()->GetController().LoadURL(
-        url, content::Referrer(referrer, blink::WebReferrerPolicyDefault),
+        url, content::Referrer(referrer, blink::kWebReferrerPolicyDefault),
         type, std::string());
     int pending_id =
         web_contents()->GetController().GetPendingEntry()->GetUniqueID();
 
-    static int page_id = 0;
     content::RenderFrameHost* rfh =
         WebContentsTester::For(web_contents())->GetPendingMainFrame();
     if (!rfh) {
       rfh = web_contents()->GetMainFrame();
     }
     WebContentsTester::For(web_contents())->ProceedWithCrossSiteNavigation();
-    WebContentsTester::For(web_contents())->TestDidNavigateWithReferrer(
-        rfh, ++page_id, pending_id, true, url,
-        content::Referrer(referrer, blink::WebReferrerPolicyDefault), type);
+    WebContentsTester::For(web_contents())
+        ->TestDidNavigateWithReferrer(
+            rfh, pending_id, true, url,
+            content::Referrer(referrer, blink::kWebReferrerPolicyDefault),
+            type);
   }
 
   bool ExtractFeatures(ClientPhishingRequest* request) {
@@ -179,7 +178,8 @@ class BrowserFeatureExtractorTest : public ChromeRenderViewHostTestHarness {
     // Feature extraction takes ownership of the request object
     // and passes it along to the done callback in the end.
     StartExtractMalwareFeatures(request);
-    base::MessageLoopForUI::current()->Run();
+    ASSERT_TRUE(base::MessageLoopForUI::IsCurrent());
+    base::RunLoop().Run();
     EXPECT_EQ(1U, success_.count(request));
     EXPECT_TRUE(success_[request]);
   }
@@ -576,7 +576,7 @@ TEST_F(BrowserFeatureExtractorTest, SafeBrowsingFeatures) {
   request.set_client_score(0.5);
 
   browse_info_->unsafe_resource.reset(
-      new SafeBrowsingUIManager::UnsafeResource);
+      new security_interstitials::UnsafeResource);
   browse_info_->unsafe_resource->url = GURL("http://www.malware.com/");
   browse_info_->unsafe_resource->original_url = GURL("http://www.good.com/");
   browse_info_->unsafe_resource->is_subresource = true;
@@ -594,7 +594,7 @@ TEST_F(BrowserFeatureExtractorTest, SafeBrowsingFeatures) {
        features::kSafeBrowsingOriginalUrl,
         "http://www.good.com/")));
   EXPECT_DOUBLE_EQ(1.0, features[features::kSafeBrowsingIsSubresource]);
-  EXPECT_DOUBLE_EQ(2.0, features[features::kSafeBrowsingThreatType]);
+  EXPECT_DOUBLE_EQ(3.0, features[features::kSafeBrowsingThreatType]);
 }
 
 TEST_F(BrowserFeatureExtractorTest, MalwareFeatures) {

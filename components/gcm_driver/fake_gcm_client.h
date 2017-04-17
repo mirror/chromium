@@ -53,6 +53,9 @@ class FakeGCMClient : public GCMClient {
   void Start(StartMode start_mode) override;
   void Stop() override;
   void Register(const linked_ptr<RegistrationInfo>& registration_info) override;
+  bool ValidateRegistration(
+      const linked_ptr<RegistrationInfo>& registration_info,
+      const std::string& registration_id) override;
   void Unregister(
       const linked_ptr<RegistrationInfo>& registration_info) override;
   void Send(const std::string& app_id,
@@ -113,6 +116,7 @@ class FakeGCMClient : public GCMClient {
                            const std::string& message_id);
 
   Delegate* delegate_;
+  std::string product_category_for_subtypes_;
   bool started_;
   StartMode start_mode_;
   StartModeOverridding start_mode_overridding_;

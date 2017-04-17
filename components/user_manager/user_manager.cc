@@ -9,13 +9,19 @@
 
 namespace user_manager {
 
-UserManager* UserManager::instance = NULL;
+UserManager* UserManager::instance = nullptr;
 
-UserManager::Observer::~Observer() {
-}
+UserManager::Observer::~Observer() = default;
 
-void UserManager::Observer::LocalStateChanged(UserManager* user_manager) {
-}
+void UserManager::Observer::LocalStateChanged(UserManager* user_manager) {}
+
+void UserManager::Observer::OnUserImageChanged(const User& user) {}
+
+void UserManager::Observer::OnUserProfileImageUpdateFailed(const User& user) {}
+
+void UserManager::Observer::OnUserProfileImageUpdated(
+    const User& user,
+    const gfx::ImageSkia& profile_image) {}
 
 void UserManager::UserSessionStateObserver::ActiveUserChanged(
     const User* active_user) {
@@ -57,7 +63,7 @@ bool UserManager::IsInitialized() {
 
 void UserManager::Destroy() {
   DCHECK(UserManager::instance == this);
-  UserManager::SetInstance(NULL);
+  UserManager::SetInstance(nullptr);
 }
 
 // static
@@ -84,6 +90,18 @@ UserManager* UserManager::SetForTesting(UserManager* user_manager) {
   UserManager* previous_instance = UserManager::instance;
   UserManager::instance = user_manager;
   return previous_instance;
+}
+
+ScopedUserSessionStateObserver::ScopedUserSessionStateObserver(
+    UserManager::UserSessionStateObserver* observer)
+    : observer_(observer) {
+  if (UserManager::IsInitialized())
+    UserManager::Get()->AddSessionStateObserver(observer_);
+}
+
+ScopedUserSessionStateObserver::~ScopedUserSessionStateObserver() {
+  if (UserManager::IsInitialized())
+    UserManager::Get()->RemoveSessionStateObserver(observer_);
 }
 
 }  // namespace user_manager

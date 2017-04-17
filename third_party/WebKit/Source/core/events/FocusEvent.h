@@ -33,52 +33,67 @@
 namespace blink {
 
 class FocusEvent final : public UIEvent {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static FocusEvent* create()
-    {
-        return new FocusEvent;
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    static FocusEvent* create(const AtomicString& type, bool canBubble, bool cancelable, AbstractView* view, int detail, EventTarget* relatedTarget, InputDeviceCapabilities* sourceCapabilities)
-    {
-        return new FocusEvent(type, canBubble, cancelable, view, detail, relatedTarget, sourceCapabilities);
-    }
+ public:
+  static FocusEvent* Create() { return new FocusEvent; }
 
-    static FocusEvent* create(const AtomicString& type, const FocusEventInit& initializer)
-    {
-        return new FocusEvent(type, initializer);
-    }
+  static FocusEvent* Create(const AtomicString& type,
+                            bool can_bubble,
+                            bool cancelable,
+                            AbstractView* view,
+                            int detail,
+                            EventTarget* related_target,
+                            InputDeviceCapabilities* source_capabilities) {
+    return new FocusEvent(type, can_bubble, cancelable, view, detail,
+                          related_target, source_capabilities);
+  }
 
-    EventTarget* relatedTarget() const { return m_relatedTarget.get(); }
-    void setRelatedTarget(EventTarget* relatedTarget) { m_relatedTarget = relatedTarget; }
+  static FocusEvent* Create(const AtomicString& type,
+                            const FocusEventInit& initializer) {
+    return new FocusEvent(type, initializer);
+  }
 
-    const AtomicString& interfaceName() const override;
-    bool isFocusEvent() const override;
+  EventTarget* relatedTarget() const { return related_target_.Get(); }
+  void SetRelatedTarget(EventTarget* related_target) {
+    related_target_ = related_target;
+  }
 
-    EventDispatchMediator* createMediator() override;
+  const AtomicString& InterfaceName() const override;
+  bool IsFocusEvent() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  EventDispatchMediator* CreateMediator() override;
 
-private:
-    FocusEvent();
-    FocusEvent(const AtomicString& type, bool canBubble, bool cancelable, AbstractView*, int, EventTarget*, InputDeviceCapabilities*);
-    FocusEvent(const AtomicString& type, const FocusEventInit&);
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<EventTarget> m_relatedTarget;
+ private:
+  FocusEvent();
+  FocusEvent(const AtomicString& type,
+             bool can_bubble,
+             bool cancelable,
+             AbstractView*,
+             int,
+             EventTarget*,
+             InputDeviceCapabilities*);
+  FocusEvent(const AtomicString& type, const FocusEventInit&);
+
+  Member<EventTarget> related_target_;
 };
 
 DEFINE_EVENT_TYPE_CASTS(FocusEvent);
 
 class FocusEventDispatchMediator final : public EventDispatchMediator {
-public:
-    static FocusEventDispatchMediator* create(FocusEvent*);
-private:
-    explicit FocusEventDispatchMediator(FocusEvent*);
-    FocusEvent& event() const { return static_cast<FocusEvent&>(EventDispatchMediator::event()); }
-    DispatchEventResult dispatchEvent(EventDispatcher&) const override;
+ public:
+  static FocusEventDispatchMediator* Create(FocusEvent*);
+
+ private:
+  explicit FocusEventDispatchMediator(FocusEvent*);
+  FocusEvent& Event() const {
+    return static_cast<FocusEvent&>(EventDispatchMediator::GetEvent());
+  }
+  DispatchEventResult DispatchEvent(EventDispatcher&) const override;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FocusEvent_h
+#endif  // FocusEvent_h

@@ -7,19 +7,21 @@
 
 #include <vector>
 
-#include "base/compiler_specific.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/strings/string16.h"
 #include "base/time/time.h"
 #include "chrome/browser/search/instant_service_observer.h"
 #include "chrome/browser/ui/search/search_ipc_router.h"
 #include "chrome/browser/ui/search/search_model.h"
 #include "chrome/common/search/instant_types.h"
 #include "chrome/common/search/ntp_logging_events.h"
+#include "components/ntp_tiles/tile_source.h"
+#include "components/ntp_tiles/tile_visual_type.h"
 #include "components/omnibox/common/omnibox_focus_state.h"
+#include "content/public/browser/reload_type.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
-#include "ui/base/window_open_disposition.h"
 
 namespace content {
 class WebContents;
@@ -32,7 +34,6 @@ class InstantTabTest;
 class OmniboxView;
 class Profile;
 class SearchIPCRouterTest;
-class SearchTabHelperDelegate;
 
 // Per-tab search "helper".  Acts as the owner and controller of the tab's
 // search UI model.
@@ -67,10 +68,6 @@ class SearchTabHelper : public content::WebContentsObserver,
   // the notification system and shouldn't call this method.
   void NavigationEntryUpdated();
 
-  // Returns true if the page supports instant. If the instant support state is
-  // not determined or if the page does not support instant returns false.
-  bool SupportsInstant() const;
-
   // Sends the current SearchProvider suggestion to the Instant page if any.
   void SetSuggestionToPrefetch(const InstantSuggestion& suggestion);
 
@@ -84,17 +81,12 @@ class SearchTabHelper : public content::WebContentsObserver,
   // Called when the tab corresponding to |this| instance is deactivated.
   void OnTabDeactivated();
 
-  // Returns true if the underlying page is a search results page.
-  bool IsSearchResultsPage();
-
-  void set_delegate(SearchTabHelperDelegate* delegate) { delegate_ = delegate; }
+  SearchIPCRouter& ipc_router_for_testing() { return ipc_router_; }
 
  private:
   friend class content::WebContentsUserData<SearchTabHelper>;
-  friend class InstantTabTest;
   friend class SearchIPCRouterPolicyTest;
   friend class SearchIPCRouterTest;
-  friend class SearchTabHelperPrerenderTest;
 
   FRIEND_TEST_ALL_PREFIXES(SearchTabHelperTest,
                            DetermineIfPageSupportsInstant_Local);
@@ -110,19 +102,11 @@ class SearchTabHelper : public content::WebContentsObserver,
                            OnChromeIdentityCheckMatchSlightlyDifferentGmail2);
   FRIEND_TEST_ALL_PREFIXES(SearchTabHelperTest, OnChromeIdentityCheckMismatch);
   FRIEND_TEST_ALL_PREFIXES(SearchTabHelperTest,
-                           OnChromeIdentityCheckSignedOutMatch);
-  FRIEND_TEST_ALL_PREFIXES(SearchTabHelperTest,
                            OnChromeIdentityCheckSignedOutMismatch);
-  FRIEND_TEST_ALL_PREFIXES(SearchTabHelperTest,
-                           OnHistorySyncCheckSyncInactive);
   FRIEND_TEST_ALL_PREFIXES(SearchTabHelperTest,
                            OnHistorySyncCheckSyncing);
   FRIEND_TEST_ALL_PREFIXES(SearchTabHelperTest,
                            OnHistorySyncCheckNotSyncing);
-  FRIEND_TEST_ALL_PREFIXES(SearchTabHelperTest,
-                           OnMostVisitedItemsChangedFromServer);
-  FRIEND_TEST_ALL_PREFIXES(SearchTabHelperTest,
-                           OnMostVisitedItemsChangedFromClient);
   FRIEND_TEST_ALL_PREFIXES(SearchIPCRouterTest,
                            IgnoreMessageIfThePageIsNotActive);
   FRIEND_TEST_ALL_PREFIXES(SearchIPCRouterTest, HandleTabChangedEvents);
@@ -139,10 +123,11 @@ class SearchTabHelper : public content::WebContentsObserver,
   // Overridden from contents::WebContentsObserver:
   void DidStartNavigationToPendingEntry(
       const GURL& url,
-      content::NavigationController::ReloadType reload_type) override;
-  void DidNavigateMainFrame(
-      const content::LoadCommittedDetails& details,
-      const content::FrameNavigateParams& params) override;
+      content::ReloadType reload_type) override;
+  void DidStartNavigation(
+      content::NavigationHandle* navigation_handle) override;
+  void DidFinishNavigation(
+      content::NavigationHandle* navigation_handle) override;
   void DidFinishLoad(content::RenderFrameHost* render_frame_host,
                      const GURL& validated_url) override;
   void NavigationEntryCommitted(
@@ -156,9 +141,11 @@ class SearchTabHelper : public content::WebContentsObserver,
   void OnUndoAllMostVisitedDeletions() override;
   void OnLogEvent(NTPLoggingEventType event, base::TimeDelta time) override;
   void OnLogMostVisitedImpression(int position,
-                                  NTPLoggingTileSource tile_source) override;
+                                  ntp_tiles::TileSource tile_source,
+                                  ntp_tiles::TileVisualType tile_type) override;
   void OnLogMostVisitedNavigation(int position,
-                                  NTPLoggingTileSource tile_source) override;
+                                  ntp_tiles::TileSource tile_source,
+                                  ntp_tiles::TileVisualType tile_type) override;
   void PasteIntoOmnibox(const base::string16& text) override;
   void OnChromeIdentityCheck(const base::string16& identity) override;
   void OnHistorySyncCheck() override;
@@ -181,23 +168,14 @@ class SearchTabHelper : public content::WebContentsObserver,
   // received.
   void DetermineIfPageSupportsInstant();
 
-  // Used by unit tests.
-  SearchIPCRouter& ipc_router() { return ipc_router_; }
+  OmniboxView* GetOmniboxView();
+  const OmniboxView* GetOmniboxView() const;
 
   Profile* profile() const;
 
   // Returns whether input is in progress, i.e. if the omnibox has focus and the
   // active tab is in mode SEARCH_SUGGESTIONS.
   bool IsInputInProgress() const;
-
-  // Returns the OmniboxView for |web_contents_| or NULL if not available.
-  OmniboxView* GetOmniboxView() const;
-
-  typedef bool (*OmniboxHasFocusFn)(OmniboxView*);
-
-  void set_omnibox_has_focus_fn(OmniboxHasFocusFn fn) {
-    omnibox_has_focus_fn_ = fn;
-  }
 
   const bool is_search_enabled_;
 
@@ -209,15 +187,6 @@ class SearchTabHelper : public content::WebContentsObserver,
   SearchIPCRouter ipc_router_;
 
   InstantService* instant_service_;
-
-  // Delegate for notifying our owner about the SearchTabHelper state. Not owned
-  // by us.
-  // NULL on iOS and Android because they don't use the Instant framework.
-  SearchTabHelperDelegate* delegate_;
-
-  // Function to check if the omnibox has focus. Tests use this to modify the
-  // default behavior.
-  OmniboxHasFocusFn omnibox_has_focus_fn_;
 
   DISALLOW_COPY_AND_ASSIGN(SearchTabHelper);
 };

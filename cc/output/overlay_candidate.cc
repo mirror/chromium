@@ -22,6 +22,11 @@ namespace {
 // Tolerance for considering axis vector elements to be zero.
 const SkMScalar kEpsilon = std::numeric_limits<float>::epsilon();
 
+const gfx::BufferFormat kOverlayFormats[] = {
+    gfx::BufferFormat::RGBX_8888, gfx::BufferFormat::RGBA_8888,
+    gfx::BufferFormat::BGRX_8888, gfx::BufferFormat::BGRA_8888,
+    gfx::BufferFormat::BGR_565,   gfx::BufferFormat::YUV_420_BIPLANAR};
+
 enum Axis { NONE, AXIS_POS_X, AXIS_NEG_X, AXIS_POS_Y, AXIS_NEG_Y };
 
 Axis VectorToAxis(const gfx::Vector3dF& vec) {
@@ -168,14 +173,19 @@ gfx::OverlayTransform ComposeTransforms(gfx::OverlayTransform delta,
 
 OverlayCandidate::OverlayCandidate()
     : transform(gfx::OVERLAY_TRANSFORM_NONE),
-      format(RGBA_8888),
+      format(gfx::BufferFormat::RGBA_8888),
       uv_rect(0.f, 0.f, 1.f, 1.f),
       is_clipped(false),
       use_output_surface_for_resource(false),
       resource_id(0),
+#if defined(OS_ANDROID)
+      is_backed_by_surface_texture(false),
+      is_promotable_hint(false),
+#endif
       plane_z_order(0),
       is_unoccluded(false),
-      overlay_handled(false) {}
+      overlay_handled(false) {
+}
 
 OverlayCandidate::OverlayCandidate(const OverlayCandidate& other) = default;
 
@@ -185,9 +195,12 @@ OverlayCandidate::~OverlayCandidate() {}
 bool OverlayCandidate::FromDrawQuad(ResourceProvider* resource_provider,
                                     const DrawQuad* quad,
                                     OverlayCandidate* candidate) {
-  if (quad->ShouldDrawWithBlending() ||
-      quad->shared_quad_state->opacity != 1.f ||
-      quad->shared_quad_state->blend_mode != SkXfermode::kSrcOver_Mode)
+  // We don't support an opacity value different than one for an overlay plane.
+  if (quad->shared_quad_state->opacity != 1.f)
+    return false;
+  // We support only kSrc (no blending) and kSrcOver (blending with premul).
+  if (!(quad->shared_quad_state->blend_mode == SkBlendMode::kSrc ||
+        quad->shared_quad_state->blend_mode == SkBlendMode::kSrcOver))
     return false;
 
   auto& transform = quad->shared_quad_state->quad_to_target_transform;
@@ -196,7 +209,6 @@ bool OverlayCandidate::FromDrawQuad(ResourceProvider* resource_provider,
   candidate->quad_rect_in_target_space =
       MathUtil::MapEnclosingClippedRect(transform, quad->rect);
 
-  candidate->format = RGBA_8888;
   candidate->clip_rect = quad->shared_quad_state->clip_rect;
   candidate->is_clipped = quad->shared_quad_state->is_clipped;
 
@@ -252,6 +264,10 @@ bool OverlayCandidate::FromTextureQuad(ResourceProvider* resource_provider,
                                        OverlayCandidate* candidate) {
   if (!resource_provider->IsOverlayCandidate(quad->resource_id()))
     return false;
+  candidate->format = resource_provider->GetBufferFormat(quad->resource_id());
+  if (std::find(std::begin(kOverlayFormats), std::end(kOverlayFormats),
+                candidate->format) == std::end(kOverlayFormats))
+    return false;
   gfx::OverlayTransform overlay_transform = GetOverlayTransform(
       quad->shared_quad_state->quad_to_target_transform, quad->y_flipped);
   if (quad->background_color != SK_ColorTRANSPARENT ||
@@ -282,6 +298,10 @@ bool OverlayCandidate::FromStreamVideoQuad(ResourceProvider* resource_provider,
   candidate->resource_id = quad->resource_id();
   candidate->resource_size_in_pixels = quad->resource_size_in_pixels();
   candidate->transform = overlay_transform;
+#if defined(OS_ANDROID)
+  candidate->is_backed_by_surface_texture =
+      resource_provider->IsBackedBySurfaceTexture(quad->resource_id());
+#endif
 
   gfx::Point3F uv0 = gfx::Point3F(0, 0, 0);
   gfx::Point3F uv1 = gfx::Point3F(1, 1, 0);
@@ -308,6 +328,27 @@ bool OverlayCandidate::FromStreamVideoQuad(ResourceProvider* resource_provider,
     candidate->uv_rect = gfx::RectF(uv0.x(), uv0.y(), delta.x(), delta.y());
   }
   return true;
+}
+
+OverlayCandidateList::OverlayCandidateList() {}
+
+OverlayCandidateList::OverlayCandidateList(const OverlayCandidateList& other) =
+    default;
+
+OverlayCandidateList::OverlayCandidateList(OverlayCandidateList&& other) =
+    default;
+
+OverlayCandidateList::~OverlayCandidateList() {}
+
+OverlayCandidateList& OverlayCandidateList::operator=(
+    const OverlayCandidateList& other) = default;
+
+OverlayCandidateList& OverlayCandidateList::operator=(
+    OverlayCandidateList&& other) = default;
+
+void OverlayCandidateList::AddPromotionHint(const OverlayCandidate& candidate) {
+  promotion_hint_info_map_[candidate.resource_id] =
+      candidate.display_rect.origin();
 }
 
 }  // namespace cc

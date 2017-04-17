@@ -6,11 +6,12 @@
 
 #include "base/command_line.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/render_messages.h"
-#include "components/content_settings/content/common/content_settings_messages.h"
 #include "components/infobars/core/infobar.h"
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/base/page_transition_types.h"
@@ -48,6 +49,11 @@ InfoBarService::InfoBarService(content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents),
       ignore_next_reload_(false) {
   DCHECK(web_contents);
+  // Infobar animations cause viewport resizes. Disable them for automated
+  // tests, since they could lead to flakiness.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableAutomation))
+    set_animations_enabled(false);
 }
 
 InfoBarService::~InfoBarService() {
@@ -89,9 +95,13 @@ void InfoBarService::RenderProcessGone(base::TerminationStatus status) {
   RemoveAllInfoBars(true);
 }
 
-void InfoBarService::DidStartNavigationToPendingEntry(
-    const GURL& url,
-    content::NavigationController::ReloadType reload_type) {
+void InfoBarService::DidStartNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->IsInMainFrame() ||
+      navigation_handle->IsSameDocument()) {
+    return;
+  }
+
   ignore_next_reload_ = false;
 }
 
@@ -119,8 +129,10 @@ void InfoBarService::OpenURL(const GURL& url,
   // A normal user click on an infobar URL will result in a CURRENT_TAB
   // disposition; turn that into a NEW_FOREGROUND_TAB so that we don't end up
   // smashing the page the user is looking at.
-  web_contents()->OpenURL(content::OpenURLParams(
-      url, content::Referrer(),
-      (disposition == CURRENT_TAB) ? NEW_FOREGROUND_TAB : disposition,
-      ui::PAGE_TRANSITION_LINK, false));
+  web_contents()->OpenURL(
+      content::OpenURLParams(url, content::Referrer(),
+                             (disposition == WindowOpenDisposition::CURRENT_TAB)
+                                 ? WindowOpenDisposition::NEW_FOREGROUND_TAB
+                                 : disposition,
+                             ui::PAGE_TRANSITION_LINK, false));
 }

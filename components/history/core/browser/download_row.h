@@ -12,6 +12,7 @@
 
 #include "base/files/file_path.h"
 #include "base/time/time.h"
+#include "components/history/core/browser/download_slice_info.h"
 #include "components/history/core/browser/download_types.h"
 #include "url/gurl.h"
 
@@ -32,8 +33,8 @@ struct DownloadRow {
               const std::string& http_method,
               const std::string& mime_type,
               const std::string& original_mime_type,
-              const base::Time& start,
-              const base::Time& end,
+              base::Time start,
+              base::Time end,
               const std::string& etag,
               const std::string& last_modified,
               int64_t received,
@@ -45,8 +46,11 @@ struct DownloadRow {
               DownloadId id,
               const std::string& guid,
               bool download_opened,
+              base::Time last_access,
+              bool transient,
               const std::string& ext_id,
-              const std::string& ext_name);
+              const std::string& ext_name,
+              const std::vector<DownloadSliceInfo>& download_slice_info);
   DownloadRow(const DownloadRow& other);
   ~DownloadRow();
 
@@ -132,9 +136,20 @@ struct DownloadRow {
   // Whether this download has ever been opened from the browser.
   bool opened;
 
+  // The time when the download was last accessed.
+  base::Time last_access_time;
+
+  // Whether this download is transient. Transient items are cleaned up after
+  // completion and not shown in the UI.
+  bool transient;
+
   // The id and name of the extension that created this download.
   std::string by_ext_id;
   std::string by_ext_name;
+
+  // Data slices that have been downloaded so far. The slices must be ordered
+  // by their offset.
+  std::vector<DownloadSliceInfo> download_slice_info;
 };
 
 }  // namespace history

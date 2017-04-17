@@ -7,7 +7,6 @@
 #import <Foundation/Foundation.h>
 #import <WebKit/WebKit.h>
 
-#include "base/ios/ios_util.h"
 #import "base/ios/weak_nsobject.h"
 #include "base/logging.h"
 #include "ios/web/public/browser_state.h"
@@ -22,9 +21,9 @@ const char kWKWebViewConfigProviderKeyName[] = "wk_web_view_config_provider";
 
 // Returns an autoreleased instance of WKUserScript to be added to
 // configuration's userContentController.
-WKUserScript* InternalGetEarlyPageScript() {
+WKUserScript* InternalGetEarlyPageScript(BrowserState* browser_state) {
   return [[[WKUserScript alloc]
-        initWithSource:GetEarlyPageScript()
+        initWithSource:GetEarlyPageScript(browser_state)
          injectionTime:WKUserScriptInjectionTimeAtDocumentStart
       forMainFrameOnly:YES] autorelease];
 }
@@ -37,18 +36,17 @@ WKWebViewConfigurationProvider::FromBrowserState(BrowserState* browser_state) {
   DCHECK([NSThread isMainThread]);
   DCHECK(browser_state);
   if (!browser_state->GetUserData(kWKWebViewConfigProviderKeyName)) {
-    bool is_off_the_record = browser_state->IsOffTheRecord();
     browser_state->SetUserData(
         kWKWebViewConfigProviderKeyName,
-        new WKWebViewConfigurationProvider(is_off_the_record));
+        new WKWebViewConfigurationProvider(browser_state));
   }
   return *(static_cast<WKWebViewConfigurationProvider*>(
       browser_state->GetUserData(kWKWebViewConfigProviderKeyName)));
 }
 
 WKWebViewConfigurationProvider::WKWebViewConfigurationProvider(
-    bool is_off_the_record)
-    : is_off_the_record_(is_off_the_record) {}
+    BrowserState* browser_state)
+    : browser_state_(browser_state) {}
 
 WKWebViewConfigurationProvider::~WKWebViewConfigurationProvider() {
 }
@@ -58,21 +56,17 @@ WKWebViewConfigurationProvider::GetWebViewConfiguration() {
   DCHECK([NSThread isMainThread]);
   if (!configuration_) {
     configuration_.reset([[WKWebViewConfiguration alloc] init]);
-    if (is_off_the_record_ && base::ios::IsRunningOnIOS9OrLater()) {
-      // WKWebsiteDataStore is iOS9 only.
+    if (browser_state_->IsOffTheRecord()) {
       [configuration_
           setWebsiteDataStore:[WKWebsiteDataStore nonPersistentDataStore]];
     }
-// TODO(crbug.com/620878) Remove these guards after moving to iOS10 SDK.
-#if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
-    if (base::ios::IsRunningOnIOS10OrLater()) {
-      [configuration_ setDataDetectorTypes:WKDataDetectorTypePhoneNumber];
-    }
-#endif
+    // API available on iOS 9, although doesn't appear to enable inline playback
+    // Works as intended on iOS 10+
+    [configuration_ setAllowsInlineMediaPlayback:YES];
     // setJavaScriptCanOpenWindowsAutomatically is required to support popups.
     [[configuration_ preferences] setJavaScriptCanOpenWindowsAutomatically:YES];
     [[configuration_ userContentController]
-        addUserScript:InternalGetEarlyPageScript()];
+        addUserScript:InternalGetEarlyPageScript(browser_state_)];
   }
   // Prevent callers from changing the internals of configuration.
   return [[configuration_ copy] autorelease];

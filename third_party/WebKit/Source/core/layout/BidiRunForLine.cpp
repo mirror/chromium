@@ -29,155 +29,167 @@ namespace blink {
 
 using namespace WTF::Unicode;
 
-static LineLayoutItem firstLayoutObjectForDirectionalityDetermination(
-    LineLayoutItem root, LineLayoutItem current = nullptr)
-{
-    LineLayoutItem next = current;
-    while (current) {
-        if (treatAsIsolated(current.styleRef())
-            && (current.isLayoutInline() || current.isLayoutBlock())) {
-            if (current != root)
-                current = nullptr;
-            else
-                current = next;
-            break;
-        }
-        current = current.parent();
-    }
-
-    if (!current)
-        current = root.slowFirstChild();
-
-    while (current) {
-        next = nullptr;
-        if (isIteratorTarget(current) && !(current.isText()
-            && LineLayoutText(current).isAllCollapsibleWhitespace()))
-            break;
-
-        if (!isIteratorTarget(LineLayoutItem(current))
-            && !treatAsIsolated(current.styleRef()))
-            next = current.slowFirstChild();
-
-        if (!next) {
-            while (current && current != root) {
-                next = current.nextSibling();
-                if (next)
-                    break;
-                current = current.parent();
-            }
-        }
-
-        if (!next)
-            break;
-
+static LineLayoutItem FirstLayoutObjectForDirectionalityDetermination(
+    LineLayoutItem root,
+    LineLayoutItem current = nullptr) {
+  LineLayoutItem next = current;
+  while (current) {
+    if (TreatAsIsolated(current.StyleRef()) &&
+        (current.IsLayoutInline() || current.IsLayoutBlock())) {
+      if (current != root)
+        current = nullptr;
+      else
         current = next;
+      break;
+    }
+    current = current.Parent();
+  }
+
+  if (!current)
+    current = root.SlowFirstChild();
+
+  while (current) {
+    next = nullptr;
+    if (IsIteratorTarget(current) &&
+        !(current.IsText() &&
+          LineLayoutText(current).IsAllCollapsibleWhitespace()))
+      break;
+
+    if (!IsIteratorTarget(LineLayoutItem(current)) &&
+        !TreatAsIsolated(current.StyleRef()))
+      next = current.SlowFirstChild();
+
+    if (!next) {
+      while (current && current != root) {
+        next = current.NextSibling();
+        if (next)
+          break;
+        current = current.Parent();
+      }
     }
 
-    return current;
+    if (!next)
+      break;
+
+    current = next;
+  }
+
+  return current;
 }
 
-TextDirection determinePlaintextDirectionality(LineLayoutItem root, LineLayoutItem current, unsigned pos)
-{
-    LineLayoutItem firstLayoutObject = firstLayoutObjectForDirectionalityDetermination(root, current);
-    InlineIterator iter(LineLayoutItem(root), firstLayoutObject, firstLayoutObject == current ? pos : 0);
-    InlineBidiResolver observer;
-    observer.setStatus(BidiStatus(root.style()->direction(),
-        isOverride(root.style()->unicodeBidi())));
-    observer.setPositionIgnoringNestedIsolates(iter);
-    return observer.determineParagraphDirectionality();
+TextDirection DeterminePlaintextDirectionality(LineLayoutItem root,
+                                               LineLayoutItem current,
+                                               unsigned pos) {
+  LineLayoutItem first_layout_object =
+      FirstLayoutObjectForDirectionalityDetermination(root, current);
+  InlineIterator iter(LineLayoutItem(root), first_layout_object,
+                      first_layout_object == current ? pos : 0);
+  InlineBidiResolver observer;
+  observer.SetStatus(BidiStatus(root.Style()->Direction(),
+                                IsOverride(root.Style()->GetUnicodeBidi())));
+  observer.SetPositionIgnoringNestedIsolates(iter);
+  return observer.DetermineParagraphDirectionality();
 }
 
-static inline void setupResolverToResumeInIsolate(InlineBidiResolver& resolver,
-    LineLayoutItem root, LineLayoutItem startObject)
-{
-    if (root != startObject) {
-        LineLayoutItem parent = startObject.parent();
-        setupResolverToResumeInIsolate(resolver, root, parent);
-        notifyObserverEnteredObject(&resolver, LineLayoutItem(startObject));
+static inline void SetupResolverToResumeInIsolate(InlineBidiResolver& resolver,
+                                                  LineLayoutItem root,
+                                                  LineLayoutItem start_object) {
+  if (root != start_object) {
+    LineLayoutItem parent = start_object.Parent();
+    SetupResolverToResumeInIsolate(resolver, root, parent);
+    NotifyObserverEnteredObject(&resolver, LineLayoutItem(start_object));
+  }
+}
+
+void ConstructBidiRunsForLine(InlineBidiResolver& top_resolver,
+                              BidiRunList<BidiRun>& bidi_runs,
+                              const InlineIterator& end_of_line,
+                              VisualDirectionOverride override,
+                              bool previous_line_broke_cleanly,
+                              bool is_new_uba_paragraph) {
+  // FIXME: We should pass a BidiRunList into createBidiRunsForLine instead
+  // of the resolver owning the runs.
+  DCHECK_EQ(&top_resolver.Runs(), &bidi_runs);
+  DCHECK(top_resolver.GetPosition() != end_of_line);
+  LineLayoutItem current_root = top_resolver.GetPosition().Root();
+  top_resolver.CreateBidiRunsForLine(end_of_line, override,
+                                     previous_line_broke_cleanly);
+
+  while (!top_resolver.IsolatedRuns().IsEmpty()) {
+    // It does not matter which order we resolve the runs as long as we
+    // resolve them all.
+    BidiIsolatedRun isolated_run = top_resolver.IsolatedRuns().back();
+    top_resolver.IsolatedRuns().pop_back();
+    current_root = isolated_run.root;
+
+    LineLayoutItem start_obj = isolated_run.object;
+
+    // Only inlines make sense with unicode-bidi: isolate (blocks are
+    // already isolated).
+    // FIXME: Because enterIsolate is not passed a LayoutObject, we have to
+    // crawl up the tree to see which parent inline is the isolate. We could
+    // change enterIsolate to take a LayoutObject and do this logic there,
+    // but that would be a layering violation for BidiResolver (which knows
+    // nothing about LayoutObject).
+    LineLayoutItem isolated_inline =
+        HighestContainingIsolateWithinRoot(start_obj, current_root);
+    DCHECK(isolated_inline);
+
+    InlineBidiResolver isolated_resolver;
+    LineMidpointState& isolated_line_midpoint_state =
+        isolated_resolver.GetMidpointState();
+    isolated_line_midpoint_state =
+        top_resolver.MidpointStateForIsolatedRun(isolated_run.run_to_replace);
+    UnicodeBidi unicode_bidi = isolated_inline.Style()->GetUnicodeBidi();
+    TextDirection direction;
+    if (unicode_bidi == UnicodeBidi::kPlaintext) {
+      direction = DeterminePlaintextDirectionality(
+          isolated_inline, is_new_uba_paragraph ? start_obj : 0);
+    } else {
+      DCHECK(unicode_bidi == UnicodeBidi::kIsolate ||
+             unicode_bidi == UnicodeBidi::kIsolateOverride);
+      direction = isolated_inline.Style()->Direction();
     }
-}
+    isolated_resolver.SetStatus(BidiStatus::CreateForIsolate(
+        direction, IsOverride(unicode_bidi), isolated_run.level));
 
-void constructBidiRunsForLine(InlineBidiResolver& topResolver,
-    BidiRunList<BidiRun>& bidiRuns, const InlineIterator& endOfLine,
-    VisualDirectionOverride override, bool previousLineBrokeCleanly,
-    bool isNewUBAParagraph)
-{
-    // FIXME: We should pass a BidiRunList into createBidiRunsForLine instead
-    // of the resolver owning the runs.
-    ASSERT(&topResolver.runs() == &bidiRuns);
-    ASSERT(topResolver.position() != endOfLine);
-    LineLayoutItem currentRoot = topResolver.position().root();
-    topResolver.createBidiRunsForLine(endOfLine, override,
-        previousLineBrokeCleanly);
+    SetupResolverToResumeInIsolate(isolated_resolver, isolated_inline,
+                                   start_obj);
 
-    while (!topResolver.isolatedRuns().isEmpty()) {
-        // It does not matter which order we resolve the runs as long as we
-        // resolve them all.
-        BidiIsolatedRun isolatedRun = topResolver.isolatedRuns().last();
-        topResolver.isolatedRuns().removeLast();
-        currentRoot = isolatedRun.root;
+    // The starting position is the beginning of the first run within the
+    // isolate that was identified during the earlier call to
+    // createBidiRunsForLine. This can be but is not necessarily the first
+    // run within the isolate.
+    InlineIterator iter =
+        InlineIterator(LineLayoutItem(isolated_inline),
+                       LineLayoutItem(start_obj), isolated_run.position);
+    isolated_resolver.SetPositionIgnoringNestedIsolates(iter);
+    // We stop at the next end of line; we may re-enter this isolate in the
+    // next call to constructBidiRuns().
+    // FIXME: What should end and previousLineBrokeCleanly be?
+    // rniwa says previousLineBrokeCleanly is just a WinIE hack and could
+    // always be false here?
+    isolated_resolver.CreateBidiRunsForLine(end_of_line, kNoVisualOverride,
+                                            previous_line_broke_cleanly);
 
-        LineLayoutItem startObj = isolatedRun.object;
+    DCHECK(isolated_resolver.Runs().RunCount());
+    if (isolated_resolver.Runs().RunCount())
+      bidi_runs.ReplaceRunWithRuns(&isolated_run.run_to_replace,
+                                   isolated_resolver.Runs());
 
-        // Only inlines make sense with unicode-bidi: isolate (blocks are
-        // already isolated).
-        // FIXME: Because enterIsolate is not passed a LayoutObject, we have to
-        // crawl up the tree to see which parent inline is the isolate. We could
-        // change enterIsolate to take a LayoutObject and do this logic there,
-        // but that would be a layering violation for BidiResolver (which knows
-        // nothing about LayoutObject).
-        LineLayoutItem isolatedInline = highestContainingIsolateWithinRoot(startObj, currentRoot);
-        ASSERT(isolatedInline);
-
-        InlineBidiResolver isolatedResolver;
-        LineMidpointState& isolatedLineMidpointState =
-            isolatedResolver.midpointState();
-        isolatedLineMidpointState = topResolver.midpointStateForIsolatedRun(
-            isolatedRun.runToReplace);
-        EUnicodeBidi unicodeBidi = isolatedInline.style()->unicodeBidi();
-        TextDirection direction;
-        if (unicodeBidi == Plaintext) {
-            direction = determinePlaintextDirectionality(isolatedInline,
-                isNewUBAParagraph ? startObj : 0);
-        } else {
-            ASSERT(unicodeBidi == Isolate || unicodeBidi == IsolateOverride);
-            direction = isolatedInline.style()->direction();
-        }
-        isolatedResolver.setStatus(BidiStatus::createForIsolate(direction,
-            isOverride(unicodeBidi), isolatedRun.level));
-
-        setupResolverToResumeInIsolate(isolatedResolver, isolatedInline,
-            startObj);
-
-        // The starting position is the beginning of the first run within the
-        // isolate that was identified during the earlier call to
-        // createBidiRunsForLine. This can be but is not necessarily the first
-        // run within the isolate.
-        InlineIterator iter = InlineIterator(LineLayoutItem(isolatedInline), LineLayoutItem(startObj),
-            isolatedRun.position);
-        isolatedResolver.setPositionIgnoringNestedIsolates(iter);
-        // We stop at the next end of line; we may re-enter this isolate in the
-        // next call to constructBidiRuns().
-        // FIXME: What should end and previousLineBrokeCleanly be?
-        // rniwa says previousLineBrokeCleanly is just a WinIE hack and could
-        // always be false here?
-        isolatedResolver.createBidiRunsForLine(endOfLine, NoVisualOverride,
-            previousLineBrokeCleanly);
-
-        ASSERT(isolatedResolver.runs().runCount());
-        if (isolatedResolver.runs().runCount())
-            bidiRuns.replaceRunWithRuns(&isolatedRun.runToReplace, isolatedResolver.runs());
-
-        // If we encountered any nested isolate runs, save them for later
-        // processing.
-        while (!isolatedResolver.isolatedRuns().isEmpty()) {
-            BidiIsolatedRun runWithContext = isolatedResolver.isolatedRuns().last();
-            isolatedResolver.isolatedRuns().removeLast();
-            topResolver.setMidpointStateForIsolatedRun(runWithContext.runToReplace,
-                isolatedResolver.midpointStateForIsolatedRun(runWithContext.runToReplace));
-            topResolver.isolatedRuns().append(runWithContext);
-        }
+    // If we encountered any nested isolate runs, save them for later
+    // processing.
+    while (!isolated_resolver.IsolatedRuns().IsEmpty()) {
+      BidiIsolatedRun run_with_context =
+          isolated_resolver.IsolatedRuns().back();
+      isolated_resolver.IsolatedRuns().pop_back();
+      top_resolver.SetMidpointStateForIsolatedRun(
+          run_with_context.run_to_replace,
+          isolated_resolver.MidpointStateForIsolatedRun(
+              run_with_context.run_to_replace));
+      top_resolver.IsolatedRuns().push_back(run_with_context);
     }
+  }
 }
 
-} // namespace blink
+}  // namespace blink

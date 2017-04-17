@@ -4,7 +4,9 @@
 
 #include "chrome/browser/ui/ash/launcher/multi_profile_browser_status_monitor.h"
 
-#include "ash/shelf/shelf_util.h"
+#include "ash/public/cpp/shelf_item.h"
+#include "ash/public/cpp/window_properties.h"
+#include "ash/wm_window.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
@@ -15,10 +17,7 @@
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/settings_window_manager.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
-#include "components/strings/grit/components_strings.h"
-#include "grit/ash_resources.h"
-#include "grit/generated_resources.h"
-#include "ui/base/l10n/l10n_util.h"
+#include "ui/aura/window.h"
 
 MultiProfileBrowserStatusMonitor::MultiProfileBrowserStatusMonitor(
     ChromeLauncherController* launcher_controller)
@@ -45,9 +44,7 @@ void MultiProfileBrowserStatusMonitor::ActiveUserChanged(
   BrowserList* browser_list = BrowserList::GetInstance();
 
   // Remove old (tabbed V1) applications.
-  for (BrowserList::const_iterator it = browser_list->begin();
-       it != browser_list->end(); ++it) {
-    Browser* browser = *it;
+  for (Browser* browser : *browser_list) {
     if (!browser->is_app() &&
         browser->is_type_tabbed() &&
         !multi_user_util::IsProfileFromActiveUser(browser->profile())) {
@@ -60,9 +57,7 @@ void MultiProfileBrowserStatusMonitor::ActiveUserChanged(
   }
 
   // Handle apps in browser tabs: Add new (tabbed V1) applications.
-  for (BrowserList::const_iterator it = browser_list->begin();
-       it != browser_list->end(); ++it) {
-    Browser* browser = *it;
+  for (Browser* browser : *browser_list) {
     if (!browser->is_app() &&
         browser->is_type_tabbed() &&
         multi_user_util::IsProfileFromActiveUser(browser->profile())) {
@@ -77,22 +72,18 @@ void MultiProfileBrowserStatusMonitor::ActiveUserChanged(
     }
   }
 
-  // Remove settings window icons not associated with this profile and create
-  // icons for windows associated with the current profile.
-  for (BrowserList::const_iterator it = browser_list->begin();
-       it != browser_list->end(); ++it) {
-    Browser* browser = *it;
-    if (!chrome::SettingsWindowManager::GetInstance()->IsSettingsBrowser(
+  // Hide settings window shelf items not associated with this profile and
+  // restore items for windows associated with the current profile.
+  for (Browser* browser : *browser_list) {
+    if (chrome::SettingsWindowManager::GetInstance()->IsSettingsBrowser(
             browser)) {
-      continue;
-    }
-    if (multi_user_util::IsProfileFromActiveUser(browser->profile())) {
-      ash::SetShelfItemDetailsForDialogWindow(
-      browser->window()->GetNativeWindow(),
-        IDR_ASH_SHELF_ICON_SETTINGS,
-        l10n_util::GetStringUTF16(IDS_SETTINGS_TITLE));
-    } else {
-      ash::ClearShelfItemDetailsForWindow(browser->window()->GetNativeWindow());
+      aura::Window* aura_window = browser->window()->GetNativeWindow();
+      aura_window->SetProperty(
+          ash::kShelfItemTypeKey,
+          static_cast<int32_t>(
+              multi_user_util::IsProfileFromActiveUser(browser->profile())
+                  ? ash::TYPE_DIALOG
+                  : ash::TYPE_UNDEFINED));
     }
   }
 

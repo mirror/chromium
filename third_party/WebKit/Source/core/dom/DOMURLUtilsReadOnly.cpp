@@ -31,50 +31,44 @@
 
 namespace blink {
 
-String DOMURLUtilsReadOnly::href()
-{
-    const KURL& kurl = url();
-    if (kurl.isNull())
-        return input();
-    return kurl.getString();
+String DOMURLUtilsReadOnly::href() {
+  const KURL& kurl = Url();
+  if (kurl.IsNull())
+    return Input();
+  return kurl.GetString();
 }
 
-String DOMURLUtilsReadOnly::origin(const KURL& kurl)
-{
-    if (kurl.isNull())
-        return "";
-    return SecurityOrigin::create(kurl)->toString();
+String DOMURLUtilsReadOnly::origin(const KURL& kurl) {
+  if (kurl.IsNull())
+    return "";
+  return SecurityOrigin::Create(kurl)->ToString();
 }
 
-String DOMURLUtilsReadOnly::host(const KURL& kurl)
-{
-    if (kurl.hostEnd() == kurl.pathStart())
-        return kurl.host();
-    if (isDefaultPortForProtocol(kurl.port(), kurl.protocol()))
-        return kurl.host();
-    return kurl.host() + ":" + String::number(kurl.port());
+String DOMURLUtilsReadOnly::host(const KURL& kurl) {
+  if (kurl.HostEnd() == kurl.PathStart())
+    return kurl.Host();
+  if (IsDefaultPortForProtocol(kurl.Port(), kurl.Protocol()))
+    return kurl.Host();
+  return kurl.Host() + ":" + String::Number(kurl.Port());
 }
 
-String DOMURLUtilsReadOnly::port(const KURL& kurl)
-{
-    if (kurl.hasPort())
-        return String::number(kurl.port());
+String DOMURLUtilsReadOnly::port(const KURL& kurl) {
+  if (kurl.HasPort())
+    return String::Number(kurl.Port());
 
-    return emptyString();
+  return g_empty_string;
 }
 
-String DOMURLUtilsReadOnly::search(const KURL& kurl)
-{
-    String query = kurl.query();
-    return query.isEmpty() ? emptyString() : "?" + query;
+String DOMURLUtilsReadOnly::search(const KURL& kurl) {
+  String query = kurl.Query();
+  return query.IsEmpty() ? g_empty_string : "?" + query;
 }
 
-String DOMURLUtilsReadOnly::hash(const KURL& kurl)
-{
-    String fragmentIdentifier = kurl.fragmentIdentifier();
-    if (fragmentIdentifier.isEmpty())
-        return emptyString();
-    return AtomicString(String("#" + fragmentIdentifier));
+String DOMURLUtilsReadOnly::hash(const KURL& kurl) {
+  String fragment_identifier = kurl.FragmentIdentifier();
+  if (fragment_identifier.IsEmpty())
+    return g_empty_string;
+  return AtomicString(String("#" + fragment_identifier));
 }
 
-} // namespace blink
+}  // namespace blink

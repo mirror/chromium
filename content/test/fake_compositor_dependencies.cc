@@ -9,7 +9,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "cc/test/fake_external_begin_frame_source.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "ui/gfx/buffer_types.h"
 
@@ -22,10 +21,6 @@ FakeCompositorDependencies::~FakeCompositorDependencies() {
 }
 
 bool FakeCompositorDependencies::IsGpuRasterizationForced() {
-  return false;
-}
-
-bool FakeCompositorDependencies::IsGpuRasterizationEnabled() {
   return false;
 }
 
@@ -76,31 +71,9 @@ FakeCompositorDependencies::GetCompositorImplThreadTaskRunner() {
   return nullptr;  // Currently never threaded compositing in unit tests.
 }
 
-cc::SharedBitmapManager* FakeCompositorDependencies::GetSharedBitmapManager() {
-  return &shared_bitmap_manager_;
-}
-
-gpu::GpuMemoryBufferManager*
-FakeCompositorDependencies::GetGpuMemoryBufferManager() {
-  return &gpu_memory_buffer_manager_;
-}
-
-scheduler::RendererScheduler*
+blink::scheduler::RendererScheduler*
 FakeCompositorDependencies::GetRendererScheduler() {
   return &renderer_scheduler_;
-}
-
-std::unique_ptr<cc::BeginFrameSource>
-FakeCompositorDependencies::CreateExternalBeginFrameSource(int routing_id) {
-  double refresh_rate = 200.0;
-  bool tick_automatically = true;
-  return base::MakeUnique<cc::FakeExternalBeginFrameSource>(refresh_rate,
-                                                            tick_automatically);
-}
-
-cc::ImageSerializationProcessor*
-FakeCompositorDependencies::GetImageSerializationProcessor() {
-  return nullptr;
 }
 
 cc::TaskGraphRunner* FakeCompositorDependencies::GetTaskGraphRunner() {
@@ -113,6 +86,14 @@ bool FakeCompositorDependencies::AreImageDecodeTasksEnabled() {
 
 bool FakeCompositorDependencies::IsThreadedAnimationEnabled() {
   return true;
+}
+
+bool FakeCompositorDependencies::IsScrollAnimatorEnabled() {
+  return false;
+}
+
+bool FakeCompositorDependencies::IsSurfaceSynchronizationEnabled() {
+  return false;
 }
 
 }  // namespace content

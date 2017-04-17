@@ -55,8 +55,8 @@ cr.define('cr.ui', function() {
      * @override
      */
     handleSplitterDragMove: function(deltaX) {
-      this.table_.columnModel.setWidth(this.columnIndex,
-                                       this.columnWidth_ + deltaX);
+      this.table_.columnModel.setWidth(
+          this.columnIndex, this.columnWidth_ + deltaX);
     },
 
     /**
@@ -77,11 +77,9 @@ cr.define('cr.ui', function() {
 
   /**
    * The table associated with the splitter.
-   * @type {cr.ui.Table}
+   * @type {Element}
    */
   cr.defineProperty(TableSplitter, 'table');
 
-  return {
-    TableSplitter: TableSplitter
-  };
+  return {TableSplitter: TableSplitter};
 });

@@ -6,6 +6,7 @@
 #define IOS_CHROME_BROWSER_UI_AUTOFILL_AUTOFILL_CLIENT_IOS_H_
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "base/compiler_specific.h"
@@ -28,8 +29,12 @@ namespace password_manager {
 class PasswordGenerationManager;
 }
 
-namespace sync_driver {
+namespace syncer {
 class SyncService;
+}
+
+namespace web {
+class WebState;
 }
 
 namespace autofill {
@@ -37,12 +42,11 @@ namespace autofill {
 class PersonalDataManager;
 
 // iOS implementation of AutofillClient.
-// TODO(dconnelly): Split this up, as it collects functionality that doesn't
-// necessarily fit together on iOS. http://crbug.com/432487.
 class AutofillClientIOS : public AutofillClient {
  public:
   AutofillClientIOS(
       ios::ChromeBrowserState* browser_state,
+      web::WebState* web_state,
       infobars::InfoBarManager* infobar_manager,
       id<AutofillClientIOSBridge> bridge,
       password_manager::PasswordGenerationManager* password_generation_manager,
@@ -52,9 +56,11 @@ class AutofillClientIOS : public AutofillClient {
   // AutofillClient implementation.
   PersonalDataManager* GetPersonalDataManager() override;
   PrefService* GetPrefs() override;
-  sync_driver::SyncService* GetSyncService() override;
+  syncer::SyncService* GetSyncService() override;
   IdentityProvider* GetIdentityProvider() override;
-  rappor::RapporService* GetRapporService() override;
+  rappor::RapporServiceImpl* GetRapporServiceImpl() override;
+  ukm::UkmService* GetUkmService() override;
+  SaveCardBubbleController* GetSaveCardBubbleController() override;
   void ShowAutofillSettings() override;
   void ShowUnmaskPrompt(const CreditCard& card,
                         UnmaskCardReason reason,
@@ -65,7 +71,10 @@ class AutofillClientIOS : public AutofillClient {
   void ConfirmSaveCreditCardToCloud(
       const CreditCard& card,
       std::unique_ptr<base::DictionaryValue> legal_message,
+      bool should_cvc_be_requested,
       const base::Closure& callback) override;
+  void ConfirmCreditCardFillAssist(const CreditCard& card,
+                                   const base::Closure& callback) override;
   void LoadRiskData(
       const base::Callback<void(const std::string&)>& callback) override;
   bool HasCreditCardScanFeature() override;
@@ -85,16 +94,17 @@ class AutofillClientIOS : public AutofillClient {
       const std::vector<FormStructure*>& forms) override;
   void DidFillOrPreviewField(const base::string16& autofilled_value,
                              const base::string16& profile_full_name) override;
-  void OnFirstUserGestureObserved() override;
   scoped_refptr<AutofillWebDataService> GetDatabase() override;
-  bool IsContextSecure(const GURL& form_origin) override;
+  bool IsContextSecure() override;
   bool ShouldShowSigninPromo() override;
   void StartSigninFlow() override;
+  void ShowHttpNotSecureExplanation() override;
 
  private:
   ios::ChromeBrowserState* browser_state_;
+  web::WebState* web_state_;
   infobars::InfoBarManager* infobar_manager_;
-  id<AutofillClientIOSBridge> bridge_;  // Weak
+  __weak id<AutofillClientIOSBridge> bridge_;
   password_manager::PasswordGenerationManager* password_generation_manager_;
   std::unique_ptr<IdentityProvider> identity_provider_;
   CardUnmaskPromptControllerImpl unmask_controller_;

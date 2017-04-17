@@ -5,10 +5,11 @@
 #include "chrome/browser/metrics/metrics_reporting_state.h"
 
 #include "base/callback.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
+#include "chrome/common/crash_keys.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/installer/util/google_update_settings.h"
 #include "components/metrics/metrics_pref_names.h"
@@ -17,11 +18,6 @@
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
-
-#if defined(OS_CHROMEOS)
-#include "chrome/browser/chromeos/settings/cros_settings.h"
-#include "chromeos/settings/cros_settings_names.h"
-#endif  // defined(OS_CHROMEOS)
 
 namespace {
 
@@ -60,21 +56,13 @@ bool SetGoogleUpdateSettings(bool enabled) {
 void SetMetricsReporting(bool to_update_pref,
                          const OnMetricsReportingCallbackType& callback_fn,
                          bool updated_pref) {
-  metrics::MetricsService* metrics = g_browser_process->metrics_service();
-
-#if !defined(OS_ANDROID)
   g_browser_process->local_state()->SetBoolean(
       metrics::prefs::kMetricsReportingEnabled, updated_pref);
-#endif  // !defined(OS_ANDROID)
 
-  // Uses the current state of whether reporting is enabled to enabled services.
+  UpdateMetricsPrefsOnPermissionChange(updated_pref);
+
+  // Uses the current state of whether reporting is enabled to enable services.
   g_browser_process->GetMetricsServicesManager()->UpdateUploadPermissions(true);
-
-  // When a user opts in to the metrics reporting service, the previously
-  // collected data should be cleared to ensure that nothing is reported before
-  // a user opts in and all reported data is accurate.
-  if (updated_pref && metrics)
-    metrics->ClearSavedStabilityMetrics();
 
   if (to_update_pref == updated_pref) {
     RecordMetricsReportingHistogramValue(updated_pref ?
@@ -86,23 +74,16 @@ void SetMetricsReporting(bool to_update_pref,
     callback_fn.Run(updated_pref);
 }
 
-#if defined(OS_CHROMEOS)
-// Callback function for Chrome OS device settings change, so that the update is
-// applied to metrics reporting state.
-void OnDeviceSettingChange() {
-  bool enable_metrics = false;
-  chromeos::CrosSettings::Get()->GetBoolean(chromeos::kStatsReportingPref,
-                                            &enable_metrics);
-  InitiateMetricsReportingChange(enable_metrics,
-                                 OnMetricsReportingCallbackType());
-}
-#endif
+}  // namespace
 
-} // namespace
+void ChangeMetricsReportingState(bool enabled) {
+  ChangeMetricsReportingStateWithReply(enabled,
+                                       OnMetricsReportingCallbackType());
+}
 
 // TODO(gayane): Instead of checking policy before setting the metrics pref set
 // the pref and register for notifications for the rest of the changes.
-void InitiateMetricsReportingChange(
+void ChangeMetricsReportingStateWithReply(
     bool enabled,
     const OnMetricsReportingCallbackType& callback_fn) {
 #if !defined(OS_ANDROID)
@@ -122,21 +103,27 @@ void InitiateMetricsReportingChange(
       base::Bind(&SetMetricsReporting, enabled, callback_fn));
 }
 
+void UpdateMetricsPrefsOnPermissionChange(bool metrics_enabled) {
+  if (metrics_enabled) {
+    // When a user opts in to the metrics reporting service, the previously
+    // collected data should be cleared to ensure that nothing is reported
+    // before a user opts in and all reported data is accurate.
+    g_browser_process->metrics_service()->ClearSavedStabilityMetrics();
+  } else {
+    // Clear the client id pref when opting out.
+    // Note: Clearing client id will not affect the running state (e.g. field
+    // trial randomization), as the pref is only read on startup.
+    g_browser_process->local_state()->ClearPref(
+        metrics::prefs::kMetricsClientID);
+    g_browser_process->local_state()->ClearPref(
+        metrics::prefs::kMetricsReportingEnabledTimestamp);
+    crash_keys::ClearMetricsClientId();
+  }
+}
+
 bool IsMetricsReportingPolicyManaged() {
   const PrefService* pref_service = g_browser_process->local_state();
   const PrefService::Preference* pref =
       pref_service->FindPreference(metrics::prefs::kMetricsReportingEnabled);
   return pref && pref->IsManaged();
-}
-
-// TODO(gayane): Add unittest which will check that observer on device settings
-// will trigger this function and kMetricsReportinEnabled as well as metrics
-// service state will be updated accordingly.
-void SetupMetricsStateForChromeOS() {
-#if defined(OS_CHROMEOS)
-  chromeos::CrosSettings::Get()->AddSettingsObserver(
-      chromeos::kStatsReportingPref, base::Bind(&OnDeviceSettingChange));
-
-  OnDeviceSettingChange();
-#endif // defined(OS_CHROMEOS)
 }

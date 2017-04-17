@@ -4,19 +4,15 @@
 
 #include "chrome/browser/ui/views/frame/native_browser_frame_factory.h"
 
+#include "chrome/browser/chromeos/ash_config.h"
 #include "chrome/browser/ui/views/frame/browser_frame_ash.h"
-
-#if defined(MOJO_SHELL_CLIENT)
 #include "chrome/browser/ui/views/frame/browser_frame_mus.h"
-#include "services/shell/runner/common/client_util.h"
-#endif
+#include "services/service_manager/runner/common/client_util.h"
 
 NativeBrowserFrame* NativeBrowserFrameFactory::Create(
     BrowserFrame* browser_frame,
     BrowserView* browser_view) {
-#if defined(MOJO_SHELL_CLIENT)
-  if (shell::ShellIsRemote())
+  if (chromeos::GetAshConfig() == ash::Config::MASH)
     return new BrowserFrameMus(browser_frame, browser_view);
-#endif
   return new BrowserFrameAsh(browser_frame, browser_view);
 }

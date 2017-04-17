@@ -47,18 +47,21 @@ class RendererStartupHelper : public KeyedService,
                const content::NotificationDetails& details) override;
 
   // Sends a message to the specified |process| activating the given extension
-  // once the process is initialized.
-  void ActivateExtensionInProcess(const ExtensionId& id,
+  // once the process is initialized. OnExtensionLoaded should have already been
+  // called for the extension.
+  void ActivateExtensionInProcess(const Extension& extension,
                                   content::RenderProcessHost* process);
 
   // Sends a message to all initialized processes to [un]load the given
   // extension. We have explicit calls for these (rather than using an
   // ExtensionRegistryObserver) because this needs to happen before other
   // initialization which might rely on the renderers being notified.
-  void OnExtensionUnloaded(const ExtensionId& id);
+  void OnExtensionUnloaded(const Extension& extension);
   void OnExtensionLoaded(const Extension& extension);
 
  private:
+  friend class RendererStartupHelperTest;
+
   // Initializes the specified process, informing it of system state and loaded
   // extensions.
   void InitializeProcess(content::RenderProcessHost* process);
@@ -67,6 +70,10 @@ class RendererStartupHelper : public KeyedService,
   void UntrackProcess(content::RenderProcessHost* process);
 
   content::BrowserContext* browser_context_;  // Not owned.
+
+  // Tracks the set of loaded extensions and the processes they are loaded in.
+  std::map<ExtensionId, std::set<content::RenderProcessHost*>>
+      extension_process_map_;
 
   // The set of render processes that have had the initial batch of IPC messages
   // sent, including the set of loaded extensions. Further messages that

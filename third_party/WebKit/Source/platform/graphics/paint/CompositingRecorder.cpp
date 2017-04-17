@@ -7,30 +7,30 @@
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/paint/CompositingDisplayItem.h"
+#include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/graphics/paint/PaintController.h"
 
 namespace blink {
 
-CompositingRecorder::CompositingRecorder(GraphicsContext& graphicsContext, const DisplayItemClient& client, const SkXfermode::Mode xferMode, const float opacity, const FloatRect* bounds, ColorFilter colorFilter)
-    : m_client(client)
-    , m_graphicsContext(graphicsContext)
-{
-    beginCompositing(graphicsContext, m_client, xferMode, opacity, bounds, colorFilter);
+CompositingRecorder::CompositingRecorder(GraphicsContext& graphics_context,
+                                         const DisplayItemClient& client,
+                                         const SkBlendMode xfer_mode,
+                                         const float opacity,
+                                         const FloatRect* bounds,
+                                         ColorFilter color_filter)
+    : client_(client), graphics_context_(graphics_context) {
+  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled())
+    return;
+  graphics_context.GetPaintController()
+      .CreateAndAppend<BeginCompositingDisplayItem>(client_, xfer_mode, opacity,
+                                                    bounds, color_filter);
 }
 
-CompositingRecorder::~CompositingRecorder()
-{
-    endCompositing(m_graphicsContext, m_client);
+CompositingRecorder::~CompositingRecorder() {
+  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled())
+    return;
+  graphics_context_.GetPaintController().EndItem<EndCompositingDisplayItem>(
+      client_);
 }
 
-void CompositingRecorder::beginCompositing(GraphicsContext& graphicsContext, const DisplayItemClient& client, const SkXfermode::Mode xferMode, const float opacity, const FloatRect* bounds, ColorFilter colorFilter)
-{
-    graphicsContext.getPaintController().createAndAppend<BeginCompositingDisplayItem>(client, xferMode, opacity, bounds, colorFilter);
-}
-
-void CompositingRecorder::endCompositing(GraphicsContext& graphicsContext, const DisplayItemClient& client)
-{
-    graphicsContext.getPaintController().endItem<EndCompositingDisplayItem>(client);
-}
-
-} // namespace blink
+}  // namespace blink

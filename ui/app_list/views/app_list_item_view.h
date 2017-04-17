@@ -14,24 +14,21 @@
 #include "base/timer/timer.h"
 #include "ui/app_list/app_list_export.h"
 #include "ui/app_list/app_list_item_observer.h"
-#include "ui/app_list/views/cached_label.h"
 #include "ui/app_list/views/image_shadow_animator.h"
 #include "ui/views/context_menu_controller.h"
 #include "ui/views/controls/button/custom_button.h"
-
-class SkBitmap;
 
 namespace views {
 class ImageView;
 class Label;
 class MenuRunner;
+class ProgressBar;
 }
 
 namespace app_list {
 
 class AppListItem;
 class AppsGridView;
-class ProgressBarView;
 
 class APP_LIST_EXPORT AppListItemView : public views::CustomButton,
                                         public views::ContextMenuController,
@@ -53,8 +50,6 @@ class APP_LIST_EXPORT AppListItemView : public views::CustomButton,
   bool is_highlighted() { return is_highlighted_; }  // for unit test
   void SetItemIsHighlighted(bool is_highlighted);
   void SetItemPercentDownloaded(int percent_downloaded);
-
-  void Prerender();
 
   void CancelContextMenu();
 
@@ -130,14 +125,13 @@ class APP_LIST_EXPORT AppListItemView : public views::CustomButton,
                               ui::MenuSourceType source_type) override;
 
   // views::CustomButton overrides:
-  void StateChanged() override;
+  void StateChanged(ButtonState old_state) override;
   bool ShouldEnterPushedState(const ui::Event& event) override;
 
   // views::View overrides:
   bool OnKeyPressed(const ui::KeyEvent& event) override;
   bool OnMousePressed(const ui::MouseEvent& event) override;
   void OnMouseReleased(const ui::MouseEvent& event) override;
-  void OnMouseCaptureLost() override;
   bool OnMouseDragged(const ui::MouseEvent& event) override;
 
   // AppListItemObserver overrides:
@@ -154,8 +148,8 @@ class APP_LIST_EXPORT AppListItemView : public views::CustomButton,
 
   AppsGridView* apps_grid_view_;   // Parent view, owns this.
   views::ImageView* icon_;         // Strongly typed child view.
-  CachedLabel* title_;             // Strongly typed child view.
-  ProgressBarView* progress_bar_;  // Strongly typed child view.
+  views::Label* title_;            // Strongly typed child view.
+  views::ProgressBar* progress_bar_;  // Strongly typed child view.
 
   std::unique_ptr<views::MenuRunner> context_menu_runner_;
 

@@ -8,42 +8,46 @@
 #include <memory>
 
 #include "ash/ash_export.h"
-#include "ash/common/shelf/shelf_types.h"
-#include "ash/common/wm/background_animator.h"
+#include "ash/public/cpp/shelf_types.h"
+#include "ash/shelf/shelf_background_animator.h"
+#include "ash/shelf/shelf_background_animator_observer.h"
 #include "ash/shelf/shelf_layout_manager_observer.h"
 #include "base/macros.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_observer.h"
 
-namespace ash {
-class FocusCycler;
-class Shelf;
-class ShelfLayoutManager;
-class StatusAreaWidget;
-class WmShelfAura;
-class WmWindow;
-class WorkspaceController;
+namespace app_list {
+class ApplicationDragAndDropHost;
+}
 
+namespace ash {
+enum class AnimationChangeType;
+class AppListButton;
+class FocusCycler;
+class ShelfLayoutManager;
+class ShelfView;
+class StatusAreaWidget;
+class WmShelf;
+class WmWindow;
+
+// The ShelfWidget manages the shelf view (which contains the shelf icons) and
+// the status area widget. There is one ShelfWidget per display. It is created
+// early during RootWindowController initialization.
 class ASH_EXPORT ShelfWidget : public views::Widget,
                                public views::WidgetObserver,
+                               public ShelfBackgroundAnimatorObserver,
                                public ShelfLayoutManagerObserver {
  public:
-  ShelfWidget(WmWindow* wm_shelf_container,
-              WmWindow* wm_status_container,
-              WmShelfAura* wm_shelf_aura,
-              WorkspaceController* workspace_controller);
+  ShelfWidget(WmWindow* shelf_container, WmShelf* wm_shelf);
   ~ShelfWidget() override;
 
-  // Returns if shelf alignment option is enabled, and the user is able to
-  // adjust the alignment (guest and supervised mode users cannot for example).
-  static bool ShelfAlignmentAllowed();
+  void CreateStatusAreaWidget(WmWindow* status_container);
 
   void OnShelfAlignmentChanged();
-  ShelfAlignment GetAlignment() const;
 
   // Sets the shelf's background type.
   void SetPaintsBackground(ShelfBackgroundType background_type,
-                           BackgroundAnimatorChangeType change_type);
+                           AnimationChangeType change_type);
   ShelfBackgroundType GetBackgroundType() const;
 
   // Hide the shelf behind a black bar during e.g. a user transition when |hide|
@@ -51,20 +55,19 @@ class ASH_EXPORT ShelfWidget : public views::Widget,
   void HideShelfBehindBlackBar(bool hide, int animation_time_ms);
   bool IsShelfHiddenBehindBlackBar() const;
 
-  // Causes shelf items to be slightly dimmed (e.g. when a window is maximized).
-  void SetDimsShelf(bool dimming);
-  bool GetDimsShelf() const;
-
   ShelfLayoutManager* shelf_layout_manager() { return shelf_layout_manager_; }
-  Shelf* shelf() const { return shelf_.get(); }
   StatusAreaWidget* status_area_widget() const { return status_area_widget_; }
 
-  void CreateShelf(WmShelfAura* wm_shelf_aura);
+  // Creates the shelf view and populates it with icons. Called after the user
+  // session is active (and hence the user profile is available).
+  ShelfView* CreateShelfView();
   void PostCreateShelf();
 
-  // Set visibility of the shelf.
-  void SetShelfVisibility(bool visible);
   bool IsShelfVisible() const;
+
+  bool IsShowingAppList() const;
+  bool IsShowingContextMenu() const;
+  bool IsShowingOverflowBubble() const;
 
   // Sets the focus cycler.  Also adds the shelf to the cycle.
   void SetFocusCycler(FocusCycler* focus_cycler);
@@ -77,42 +80,46 @@ class ASH_EXPORT ShelfWidget : public views::Widget,
   // Clean up prior to deletion.
   void Shutdown();
 
-  // Force the shelf to be presented in an undimmed state.
-  void ForceUndimming(bool force);
+  // See WmShelf::UpdateIconPositionForPanel().
+  void UpdateIconPositionForPanel(WmWindow* panel);
+
+  // See WmShelf::GetScreenBoundsOfItemIconForWindow().
+  gfx::Rect GetScreenBoundsOfItemIconForWindow(WmWindow* window);
+
+  // Returns the button that opens the app launcher.
+  AppListButton* GetAppListButton() const;
+
+  // Returns the ApplicationDragAndDropHost for this shelf.
+  app_list::ApplicationDragAndDropHost* GetDragAndDropHostForAppList();
 
   // Overridden from views::WidgetObserver:
   void OnWidgetActivationChanged(views::Widget* widget, bool active) override;
 
-  // A function to test the current alpha used by the dimming bar. If there is
-  // no dimmer active, the function will return -1.
-  int GetDimmingAlphaForTest();
-
-  // A function to test the bounds of the dimming bar. Returns gfx::Rect() if
-  // the dimmer is inactive.
-  gfx::Rect GetDimmerBoundsForTest();
-
-  // Disable dimming animations for running tests.
-  void DisableDimmingAnimationsForTest();
+  // ShelfBackgroundAnimatorObserver overrides:
+  void UpdateShelfItemBackground(SkColor color) override;
 
   // ShelfLayoutManagerObserver overrides:
   void WillDeleteShelfLayoutManager() override;
 
  private:
   class DelegateView;
+  friend class DelegateView;
 
-  // views::Widget:
-  void OnMouseEvent(ui::MouseEvent* event) override;
-  void OnGestureEvent(ui::GestureEvent* event) override;
+  WmShelf* wm_shelf_;
 
-  // Owned by the shelf container's aura::Window.
+  // Owned by the shelf container's window.
   ShelfLayoutManager* shelf_layout_manager_;
-  std::unique_ptr<Shelf> shelf_;
+
+  // Owned by the native widget.
   StatusAreaWidget* status_area_widget_;
 
   // |delegate_view_| is the contents view of this widget and is cleaned up
   // during CloseChildWindows of the associated RootWindowController.
   DelegateView* delegate_view_;
-  BackgroundAnimator background_animator_;
+  // View containing the shelf items. Owned by the views hierarchy. Null when
+  // at the login screen.
+  ShelfView* shelf_view_;
+  ShelfBackgroundAnimator background_animator_;
   bool activating_as_fallback_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfWidget);

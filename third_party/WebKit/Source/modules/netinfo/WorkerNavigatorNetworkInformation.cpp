@@ -4,52 +4,61 @@
 
 #include "modules/netinfo/WorkerNavigatorNetworkInformation.h"
 
+#include "bindings/core/v8/ScriptState.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/workers/WorkerNavigator.h"
 #include "modules/netinfo/NetworkInformation.h"
 
 namespace blink {
 
-WorkerNavigatorNetworkInformation::WorkerNavigatorNetworkInformation(WorkerNavigator& navigator, ExecutionContext* context)
-{
+WorkerNavigatorNetworkInformation::WorkerNavigatorNetworkInformation(
+    WorkerNavigator& navigator,
+    ExecutionContext* context)
+    : Supplement<WorkerNavigator>(navigator) {}
+
+WorkerNavigatorNetworkInformation& WorkerNavigatorNetworkInformation::From(
+    WorkerNavigator& navigator,
+    ExecutionContext* context) {
+  WorkerNavigatorNetworkInformation* supplement =
+      ToWorkerNavigatorNetworkInformation(navigator, context);
+  if (!supplement) {
+    supplement = new WorkerNavigatorNetworkInformation(navigator, context);
+    ProvideTo(navigator, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
-WorkerNavigatorNetworkInformation& WorkerNavigatorNetworkInformation::from(WorkerNavigator& navigator, ExecutionContext* context)
-{
-    WorkerNavigatorNetworkInformation* supplement = toWorkerNavigatorNetworkInformation(navigator, context);
-    if (!supplement) {
-        supplement = new WorkerNavigatorNetworkInformation(navigator, context);
-        provideTo(navigator, supplementName(), supplement);
-    }
-    return *supplement;
+WorkerNavigatorNetworkInformation*
+WorkerNavigatorNetworkInformation::ToWorkerNavigatorNetworkInformation(
+    WorkerNavigator& navigator,
+    ExecutionContext* context) {
+  return static_cast<WorkerNavigatorNetworkInformation*>(
+      Supplement<WorkerNavigator>::From(navigator, SupplementName()));
 }
 
-WorkerNavigatorNetworkInformation* WorkerNavigatorNetworkInformation::toWorkerNavigatorNetworkInformation(WorkerNavigator& navigator, ExecutionContext* context)
-{
-    return static_cast<WorkerNavigatorNetworkInformation*>(Supplement<WorkerNavigator>::from(navigator, supplementName()));
+const char* WorkerNavigatorNetworkInformation::SupplementName() {
+  return "WorkerNavigatorNetworkInformation";
 }
 
-const char* WorkerNavigatorNetworkInformation::supplementName()
-{
-    return "WorkerNavigatorNetworkInformation";
+NetworkInformation* WorkerNavigatorNetworkInformation::connection(
+    ScriptState* script_state,
+    WorkerNavigator& navigator) {
+  ExecutionContext* context = ExecutionContext::From(script_state);
+  return WorkerNavigatorNetworkInformation::From(navigator, context)
+      .connection(context);
 }
 
-NetworkInformation* WorkerNavigatorNetworkInformation::connection(ExecutionContext* context, WorkerNavigator& navigator)
-{
-    return WorkerNavigatorNetworkInformation::from(navigator, context).connection(context);
+DEFINE_TRACE(WorkerNavigatorNetworkInformation) {
+  visitor->Trace(connection_);
+  Supplement<WorkerNavigator>::Trace(visitor);
 }
 
-DEFINE_TRACE(WorkerNavigatorNetworkInformation)
-{
-    visitor->trace(m_connection);
-    Supplement<WorkerNavigator>::trace(visitor);
+NetworkInformation* WorkerNavigatorNetworkInformation::connection(
+    ExecutionContext* context) {
+  ASSERT(context);
+  if (!connection_)
+    connection_ = NetworkInformation::Create(context);
+  return connection_.Get();
 }
 
-NetworkInformation* WorkerNavigatorNetworkInformation::connection(ExecutionContext* context)
-{
-    ASSERT(context);
-    if (!m_connection)
-        m_connection = NetworkInformation::create(context);
-    return m_connection.get();
-}
-
-} // namespace blink
+}  // namespace blink

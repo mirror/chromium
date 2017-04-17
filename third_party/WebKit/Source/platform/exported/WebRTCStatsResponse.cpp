@@ -10,56 +10,43 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "public/platform/WebRTCStatsResponse.h"
 
 #include "platform/peerconnection/RTCStatsResponseBase.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 WebRTCStatsResponse::WebRTCStatsResponse(RTCStatsResponseBase* request)
-    : m_private(request)
-{
+    : private_(request) {}
+
+void WebRTCStatsResponse::Assign(const WebRTCStatsResponse& other) {
+  private_ = other.private_;
 }
 
-void WebRTCStatsResponse::assign(const WebRTCStatsResponse& other)
-{
-    m_private = other.m_private;
+void WebRTCStatsResponse::Reset() {
+  private_.Reset();
 }
 
-void WebRTCStatsResponse::reset()
-{
-    m_private.reset();
+WebRTCStatsResponse::operator RTCStatsResponseBase*() const {
+  return private_.Get();
 }
 
-WebRTCStatsResponse::operator RTCStatsResponseBase*() const
-{
-    return m_private.get();
+void WebRTCStatsResponse::AddStats(const WebRTCLegacyStats& stats) {
+  DCHECK(!private_.IsNull());
+  private_->AddStats(stats);
 }
 
-size_t WebRTCStatsResponse::addReport(const WebString& id, const WebString& type, double timestamp)
-{
-    ASSERT(!m_private.isNull());
-    return m_private->addReport(id, type, timestamp);
-}
-
-void WebRTCStatsResponse::addStatistic(size_t report, const WebString& name, const WebString& value)
-{
-    ASSERT(!m_private.isNull());
-    m_private->addStatistic(report, name, value);
-}
-
-} // namespace blink
-
+}  // namespace blink

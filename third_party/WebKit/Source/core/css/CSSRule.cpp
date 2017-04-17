@@ -21,35 +21,49 @@
 
 #include "core/css/CSSRule.h"
 
+#include "bindings/core/v8/ScriptWrappableVisitor.h"
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/StyleRule.h"
 #include "core/css/StyleSheetContents.h"
 
 namespace blink {
 
-struct SameSizeAsCSSRule : public GarbageCollectedFinalized<SameSizeAsCSSRule>, public ScriptWrappable {
-    virtual ~SameSizeAsCSSRule();
-    unsigned char bitfields;
-    void* pointerUnion;
+struct SameSizeAsCSSRule : public GarbageCollectedFinalized<SameSizeAsCSSRule>,
+                           public ScriptWrappable {
+  virtual ~SameSizeAsCSSRule();
+  unsigned char bitfields;
+  void* pointer_union;
 };
 
-static_assert(sizeof(CSSRule) == sizeof(SameSizeAsCSSRule), "CSSRule should stay small");
+static_assert(sizeof(CSSRule) == sizeof(SameSizeAsCSSRule),
+              "CSSRule should stay small");
 
-const CSSParserContext& CSSRule::parserContext() const
-{
-    CSSStyleSheet* styleSheet = parentStyleSheet();
-    return styleSheet ? styleSheet->contents()->parserContext() : strictCSSParserContext();
+const CSSParserContext* CSSRule::ParserContext() const {
+  CSSStyleSheet* style_sheet = parentStyleSheet();
+  return style_sheet ? style_sheet->Contents()->ParserContext()
+                     : StrictCSSParserContext();
 }
 
-DEFINE_TRACE(CSSRule)
-{
-    // This makes the parent link strong, which is different from the
-    // pre-oilpan world, where the parent link is mysteriously zeroed under
-    // some circumstances.
-    if (m_parentIsRule)
-        visitor->trace(m_parentRule);
-    else
-        visitor->trace(m_parentStyleSheet);
+void CSSRule::SetParentStyleSheet(CSSStyleSheet* style_sheet) {
+  parent_is_rule_ = false;
+  parent_style_sheet_ = style_sheet;
+  ScriptWrappableVisitor::WriteBarrier(this, parent_style_sheet_);
 }
 
-} // namespace blink
+void CSSRule::SetParentRule(CSSRule* rule) {
+  parent_is_rule_ = true;
+  parent_rule_ = rule;
+  ScriptWrappableVisitor::WriteBarrier(this, parent_rule_);
+}
+
+DEFINE_TRACE(CSSRule) {
+  // This makes the parent link strong, which is different from the
+  // pre-oilpan world, where the parent link is mysteriously zeroed under
+  // some circumstances.
+  if (parent_is_rule_)
+    visitor->Trace(parent_rule_);
+  else
+    visitor->Trace(parent_style_sheet_);
+}
+
+}  // namespace blink

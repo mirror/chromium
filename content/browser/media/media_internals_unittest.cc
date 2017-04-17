@@ -12,10 +12,16 @@
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/histogram_tester.h"
+#include "base/test/test_message_loop.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "media/base/audio_parameters.h"
 #include "media/base/channel_layout.h"
+#include "media/base/media_log.h"
+#include "media/blink/watch_time_reporter.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -29,8 +35,7 @@ const char kTestDeviceID[] = "test-device-id";
 class MediaInternalsTestBase {
  public:
   MediaInternalsTestBase()
-    : media_internals_(content::MediaInternals::GetInstance()) {
-  }
+      : media_internals_(content::MediaInternals::GetInstance()) {}
   virtual ~MediaInternalsTestBase() {}
 
  protected:
@@ -112,33 +117,33 @@ class MediaInternalsVideoCaptureDeviceTest : public testing::Test,
   MediaInternals::UpdateCallback update_cb_;
 };
 
+// TODO(chfremer): Consider removing this. This test seem be
+// a duplicate implementation of the functionality under test.
+// https://crbug.com/630694
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX) || \
     defined(OS_ANDROID)
 TEST_F(MediaInternalsVideoCaptureDeviceTest,
        AllCaptureApiTypesHaveProperStringRepresentation) {
-  typedef media::VideoCaptureDevice::Name VideoCaptureDeviceName;
-  typedef std::map<VideoCaptureDeviceName::CaptureApiType, std::string>
-      CaptureApiTypeStringMap;
-  CaptureApiTypeStringMap m;
-#if defined(OS_LINUX)
-  m[VideoCaptureDeviceName::V4L2_SINGLE_PLANE] = "V4L2 SPLANE";
-#elif defined(OS_WIN)
-  m[VideoCaptureDeviceName::MEDIA_FOUNDATION] = "Media Foundation";
-  m[VideoCaptureDeviceName::DIRECT_SHOW] = "Direct Show";
-#elif defined(OS_MACOSX)
-  m[VideoCaptureDeviceName::AVFOUNDATION] = "AV Foundation";
-  m[VideoCaptureDeviceName::DECKLINK] = "DeckLink";
-#elif defined(OS_ANDROID)
-  m[VideoCaptureDeviceName::API1] = "Camera API1";
-  m[VideoCaptureDeviceName::API2_LEGACY] = "Camera API2 Legacy";
-  m[VideoCaptureDeviceName::API2_FULL] = "Camera API2 Full";
-  m[VideoCaptureDeviceName::API2_LIMITED] = "Camera API2 Limited";
-  m[VideoCaptureDeviceName::TANGO] = "Tango API";
-#endif
-  EXPECT_EQ(media::VideoCaptureDevice::Name::API_TYPE_UNKNOWN, m.size());
-  for (CaptureApiTypeStringMap::iterator it = m.begin(); it != m.end(); ++it) {
-    const VideoCaptureDeviceName device_name("dummy", "dummy", it->first);
-    EXPECT_EQ(it->second, device_name.GetCaptureApiTypeString());
+  using VideoCaptureApi = media::VideoCaptureApi;
+  std::map<VideoCaptureApi, std::string> api_to_string_map;
+  api_to_string_map[VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE] = "V4L2 SPLANE";
+  api_to_string_map[VideoCaptureApi::WIN_MEDIA_FOUNDATION] = "Media Foundation";
+  api_to_string_map[VideoCaptureApi::WIN_DIRECT_SHOW] = "Direct Show";
+  api_to_string_map[VideoCaptureApi::MACOSX_AVFOUNDATION] = "AV Foundation";
+  api_to_string_map[VideoCaptureApi::MACOSX_DECKLINK] = "DeckLink";
+  api_to_string_map[VideoCaptureApi::ANDROID_API1] = "Camera API1";
+  api_to_string_map[VideoCaptureApi::ANDROID_API2_LEGACY] =
+      "Camera API2 Legacy";
+  api_to_string_map[VideoCaptureApi::ANDROID_API2_FULL] = "Camera API2 Full";
+  api_to_string_map[VideoCaptureApi::ANDROID_API2_LIMITED] =
+      "Camera API2 Limited";
+  api_to_string_map[VideoCaptureApi::ANDROID_TANGO] = "Tango API";
+  EXPECT_EQ(static_cast<size_t>(VideoCaptureApi::UNKNOWN),
+            api_to_string_map.size());
+  for (const auto& map_entry : api_to_string_map) {
+    media::VideoCaptureDeviceDescriptor descriptor;
+    descriptor.capture_api = map_entry.first;
+    EXPECT_EQ(map_entry.second, descriptor.GetCaptureApiTypeString());
   }
 }
 #endif
@@ -177,32 +182,30 @@ TEST_F(MediaInternalsVideoCaptureDeviceTest,
       kFrameRate, kPixelFormat);
   media::VideoCaptureFormats formats{};
   formats.push_back(format_hd);
-  const media::VideoCaptureDeviceInfo device_info(
+  media::VideoCaptureDeviceDescriptor descriptor;
+  descriptor.device_id = "dummy";
+  descriptor.display_name = "dummy";
 #if defined(OS_MACOSX)
-      media::VideoCaptureDevice::Name(
-          "dummy", "dummy", media::VideoCaptureDevice::Name::AVFOUNDATION),
+  descriptor.capture_api = media::VideoCaptureApi::MACOSX_AVFOUNDATION;
 #elif defined(OS_WIN)
-      media::VideoCaptureDevice::Name("dummy", "dummy",
-          media::VideoCaptureDevice::Name::DIRECT_SHOW),
+  descriptor.capture_api = media::VideoCaptureApi::WIN_DIRECT_SHOW;
 #elif defined(OS_LINUX)
-      media::VideoCaptureDevice::Name(
-          "dummy", "/dev/dummy",
-          media::VideoCaptureDevice::Name::V4L2_SINGLE_PLANE),
+  descriptor.device_id = "/dev/dummy";
+  descriptor.capture_api = media::VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE;
 #elif defined(OS_ANDROID)
-      media::VideoCaptureDevice::Name("dummy", "dummy",
-          media::VideoCaptureDevice::Name::API2_LEGACY),
-#else
-      media::VideoCaptureDevice::Name("dummy", "dummy"),
+  descriptor.capture_api = media::VideoCaptureApi::ANDROID_API2_LEGACY;
 #endif
-      formats);
-  media::VideoCaptureDeviceInfos device_infos{};
-  device_infos.push_back(device_info);
+  std::vector<std::tuple<media::VideoCaptureDeviceDescriptor,
+                         media::VideoCaptureFormats>>
+      descriptors_and_formats{};
+  descriptors_and_formats.push_back(std::make_tuple(descriptor, formats));
 
   // When updating video capture capabilities, the update will serialize
   // a JSON array of objects to string. So here, the |UpdateCallbackImpl| will
   // deserialize the first object in the array. This means we have to have
-  // exactly one device_info in the |device_infos|.
-  media_internals_->UpdateVideoCaptureDeviceCapabilities(device_infos);
+  // exactly one device_info in the |descriptors_and_formats|.
+  media_internals_->UpdateVideoCaptureDeviceCapabilities(
+      descriptors_and_formats);
 
 #if defined(OS_LINUX)
   ExpectString("id", "/dev/dummy");
@@ -307,9 +310,278 @@ TEST_P(MediaInternalsAudioLogTest, AudioLogCreateClose) {
 }
 
 INSTANTIATE_TEST_CASE_P(
-    MediaInternalsAudioLogTest, MediaInternalsAudioLogTest, testing::Values(
-        media::AudioLogFactory::AUDIO_INPUT_CONTROLLER,
-        media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER,
-        media::AudioLogFactory::AUDIO_OUTPUT_STREAM));
+    MediaInternalsAudioLogTest,
+    MediaInternalsAudioLogTest,
+    testing::Values(media::AudioLogFactory::AUDIO_INPUT_CONTROLLER,
+                    media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER,
+                    media::AudioLogFactory::AUDIO_OUTPUT_STREAM));
+
+class DirectMediaLog : public media::MediaLog {
+ public:
+  explicit DirectMediaLog(int render_process_id)
+      : render_process_id_(render_process_id),
+        internals_(content::MediaInternals::GetInstance()) {}
+
+  void AddEvent(std::unique_ptr<media::MediaLogEvent> event) override {
+    std::vector<media::MediaLogEvent> events(1, *event);
+    internals_->OnMediaEvents(render_process_id_, events);
+  }
+
+ private:
+  ~DirectMediaLog() override {}
+
+  const int render_process_id_;
+  MediaInternals* const internals_;
+
+  DISALLOW_COPY_AND_ASSIGN(DirectMediaLog);
+};
+
+class MediaInternalsWatchTimeTest : public testing::Test,
+                                    public MediaInternalsTestBase {
+ public:
+  MediaInternalsWatchTimeTest()
+      : render_process_id_(0),
+        internals_(content::MediaInternals::GetInstance()),
+        media_log_(new DirectMediaLog(render_process_id_)),
+        histogram_tester_(new base::HistogramTester()),
+        watch_time_keys_(media::MediaLog::GetWatchTimeKeys()),
+        watch_time_power_keys_(media::MediaLog::GetWatchTimePowerKeys()) {}
+
+  void Initialize(bool has_audio,
+                  bool has_video,
+                  bool is_mse,
+                  bool is_encrypted) {
+    wtr_.reset(new media::WatchTimeReporter(
+        has_audio, has_video, is_mse, is_encrypted, true, media_log_,
+        gfx::Size(800, 600),
+        base::Bind(&MediaInternalsWatchTimeTest::GetCurrentMediaTime,
+                   base::Unretained(this))));
+    wtr_->set_reporting_interval_for_testing();
+  }
+
+  void CycleWatchTimeReporter() {
+    base::RunLoop run_loop;
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  run_loop.QuitClosure());
+    run_loop.Run();
+  }
+
+  void ExpectWatchTime(const std::vector<base::StringPiece>& keys,
+                       base::TimeDelta value) {
+    for (auto key : watch_time_keys_) {
+      auto it = std::find(keys.begin(), keys.end(), key);
+      if (it == keys.end()) {
+        histogram_tester_->ExpectTotalCount(key.as_string(), 0);
+      } else {
+        histogram_tester_->ExpectUniqueSample(key.as_string(),
+                                              value.InMilliseconds(), 1);
+      }
+    }
+  }
+
+  void ResetHistogramTester() {
+    histogram_tester_.reset(new base::HistogramTester());
+  }
+
+  MOCK_METHOD0(GetCurrentMediaTime, base::TimeDelta());
+
+ protected:
+  const int render_process_id_;
+  MediaInternals* const internals_;
+  scoped_refptr<DirectMediaLog> media_log_;
+  std::unique_ptr<base::HistogramTester> histogram_tester_;
+  std::unique_ptr<media::WatchTimeReporter> wtr_;
+  const base::flat_set<base::StringPiece> watch_time_keys_;
+  const base::flat_set<base::StringPiece> watch_time_power_keys_;
+
+  DISALLOW_COPY_AND_ASSIGN(MediaInternalsWatchTimeTest);
+};
+
+TEST_F(MediaInternalsWatchTimeTest, BasicAudio) {
+  constexpr base::TimeDelta kWatchTimeEarly = base::TimeDelta::FromSeconds(5);
+  constexpr base::TimeDelta kWatchTimeLate = base::TimeDelta::FromSeconds(10);
+  EXPECT_CALL(*this, GetCurrentMediaTime())
+      .WillOnce(testing::Return(base::TimeDelta()))
+      .WillOnce(testing::Return(kWatchTimeEarly))
+      .WillRepeatedly(testing::Return(kWatchTimeLate));
+  Initialize(true, false, true, true);
+  wtr_->OnPlaying();
+
+  // No log should have been generated yet since the message loop has not had
+  // any chance to pump.
+  CycleWatchTimeReporter();
+  ExpectWatchTime(std::vector<base::StringPiece>(), base::TimeDelta());
+
+  CycleWatchTimeReporter();
+  wtr_.reset();
+
+  ExpectWatchTime(
+      {media::MediaLog::kWatchTimeAudioAll, media::MediaLog::kWatchTimeAudioMse,
+       media::MediaLog::kWatchTimeAudioEme, media::MediaLog::kWatchTimeAudioAc,
+       media::MediaLog::kWatchTimeAudioEmbeddedExperience},
+      kWatchTimeLate);
+}
+
+TEST_F(MediaInternalsWatchTimeTest, BasicVideo) {
+  constexpr base::TimeDelta kWatchTimeEarly = base::TimeDelta::FromSeconds(5);
+  constexpr base::TimeDelta kWatchTimeLate = base::TimeDelta::FromSeconds(10);
+  EXPECT_CALL(*this, GetCurrentMediaTime())
+      .WillOnce(testing::Return(base::TimeDelta()))
+      .WillOnce(testing::Return(kWatchTimeEarly))
+      .WillRepeatedly(testing::Return(kWatchTimeLate));
+  Initialize(true, true, false, true);
+  wtr_->OnPlaying();
+
+  // No log should have been generated yet since the message loop has not had
+  // any chance to pump.
+  CycleWatchTimeReporter();
+  ExpectWatchTime(std::vector<base::StringPiece>(), base::TimeDelta());
+
+  CycleWatchTimeReporter();
+  wtr_.reset();
+
+  ExpectWatchTime({media::MediaLog::kWatchTimeAudioVideoAll,
+                   media::MediaLog::kWatchTimeAudioVideoSrc,
+                   media::MediaLog::kWatchTimeAudioVideoEme,
+                   media::MediaLog::kWatchTimeAudioVideoAc,
+                   media::MediaLog::kWatchTimeAudioVideoEmbeddedExperience},
+                  kWatchTimeLate);
+}
+
+TEST_F(MediaInternalsWatchTimeTest, BasicPower) {
+  constexpr base::TimeDelta kWatchTime1 = base::TimeDelta::FromSeconds(5);
+  constexpr base::TimeDelta kWatchTime2 = base::TimeDelta::FromSeconds(10);
+  constexpr base::TimeDelta kWatchTime3 = base::TimeDelta::FromSeconds(30);
+  EXPECT_CALL(*this, GetCurrentMediaTime())
+      .WillOnce(testing::Return(base::TimeDelta()))
+      .WillOnce(testing::Return(kWatchTime1))
+      .WillOnce(testing::Return(kWatchTime2))
+      .WillOnce(testing::Return(kWatchTime2))
+      .WillRepeatedly(testing::Return(kWatchTime3));
+
+  Initialize(true, true, false, true);
+  wtr_->OnPlaying();
+  wtr_->set_is_on_battery_power_for_testing(true);
+
+  // No log should have been generated yet since the message loop has not had
+  // any chance to pump.
+  CycleWatchTimeReporter();
+  ExpectWatchTime(std::vector<base::StringPiece>(), base::TimeDelta());
+
+  CycleWatchTimeReporter();
+
+  // Transition back to AC power, this should generate AC watch time as well.
+  wtr_->OnPowerStateChangeForTesting(false);
+  CycleWatchTimeReporter();
+
+  // This should finalize the power watch time on battery.
+  ExpectWatchTime({media::MediaLog::kWatchTimeAudioVideoBattery}, kWatchTime2);
+  ResetHistogramTester();
+  wtr_.reset();
+
+  std::vector<base::StringPiece> normal_keys = {
+      media::MediaLog::kWatchTimeAudioVideoAll,
+      media::MediaLog::kWatchTimeAudioVideoSrc,
+      media::MediaLog::kWatchTimeAudioVideoEme,
+      media::MediaLog::kWatchTimeAudioVideoEmbeddedExperience};
+
+  for (auto key : watch_time_keys_) {
+    if (key == media::MediaLog::kWatchTimeAudioVideoAc) {
+      histogram_tester_->ExpectUniqueSample(
+          key.as_string(), (kWatchTime3 - kWatchTime2).InMilliseconds(), 1);
+      continue;
+    }
+
+    auto it = std::find(normal_keys.begin(), normal_keys.end(), key);
+    if (it == normal_keys.end()) {
+      histogram_tester_->ExpectTotalCount(key.as_string(), 0);
+    } else {
+      histogram_tester_->ExpectUniqueSample(key.as_string(),
+                                            kWatchTime3.InMilliseconds(), 1);
+    }
+  }
+}
+
+TEST_F(MediaInternalsWatchTimeTest, BasicHidden) {
+  constexpr base::TimeDelta kWatchTimeEarly = base::TimeDelta::FromSeconds(5);
+  constexpr base::TimeDelta kWatchTimeLate = base::TimeDelta::FromSeconds(10);
+  EXPECT_CALL(*this, GetCurrentMediaTime())
+      .WillOnce(testing::Return(base::TimeDelta()))
+      .WillOnce(testing::Return(kWatchTimeEarly))
+      .WillRepeatedly(testing::Return(kWatchTimeLate));
+  Initialize(true, true, false, true);
+  wtr_->OnHidden();
+  wtr_->OnPlaying();
+
+  // No log should have been generated yet since the message loop has not had
+  // any chance to pump.
+  CycleWatchTimeReporter();
+  ExpectWatchTime(std::vector<base::StringPiece>(), base::TimeDelta());
+
+  CycleWatchTimeReporter();
+  wtr_.reset();
+
+  ExpectWatchTime(
+      {media::MediaLog::kWatchTimeAudioVideoBackgroundAll,
+       media::MediaLog::kWatchTimeAudioVideoBackgroundSrc,
+       media::MediaLog::kWatchTimeAudioVideoBackgroundEme,
+       media::MediaLog::kWatchTimeAudioVideoBackgroundAc,
+       media::MediaLog::kWatchTimeAudioVideoBackgroundEmbeddedExperience},
+      kWatchTimeLate);
+}
+
+TEST_F(MediaInternalsWatchTimeTest, PlayerDestructionFinalizes) {
+  constexpr base::TimeDelta kWatchTimeEarly = base::TimeDelta::FromSeconds(5);
+  constexpr base::TimeDelta kWatchTimeLate = base::TimeDelta::FromSeconds(10);
+  EXPECT_CALL(*this, GetCurrentMediaTime())
+      .WillOnce(testing::Return(base::TimeDelta()))
+      .WillOnce(testing::Return(kWatchTimeEarly))
+      .WillRepeatedly(testing::Return(kWatchTimeLate));
+  Initialize(true, true, false, true);
+  wtr_->OnPlaying();
+
+  // No log should have been generated yet since the message loop has not had
+  // any chance to pump.
+  CycleWatchTimeReporter();
+  ExpectWatchTime(std::vector<base::StringPiece>(), base::TimeDelta());
+
+  CycleWatchTimeReporter();
+
+  media_log_->AddEvent(
+      media_log_->CreateEvent(media::MediaLogEvent::WEBMEDIAPLAYER_DESTROYED));
+
+  ExpectWatchTime({media::MediaLog::kWatchTimeAudioVideoAll,
+                   media::MediaLog::kWatchTimeAudioVideoSrc,
+                   media::MediaLog::kWatchTimeAudioVideoEme,
+                   media::MediaLog::kWatchTimeAudioVideoAc,
+                   media::MediaLog::kWatchTimeAudioVideoEmbeddedExperience},
+                  kWatchTimeLate);
+}
+
+TEST_F(MediaInternalsWatchTimeTest, ProcessDestructionFinalizes) {
+  constexpr base::TimeDelta kWatchTimeEarly = base::TimeDelta::FromSeconds(5);
+  constexpr base::TimeDelta kWatchTimeLate = base::TimeDelta::FromSeconds(10);
+  EXPECT_CALL(*this, GetCurrentMediaTime())
+      .WillOnce(testing::Return(base::TimeDelta()))
+      .WillOnce(testing::Return(kWatchTimeEarly))
+      .WillRepeatedly(testing::Return(kWatchTimeLate));
+  Initialize(true, true, false, true);
+  wtr_->OnPlaying();
+
+  // No log should have been generated yet since the message loop has not had
+  // any chance to pump.
+  CycleWatchTimeReporter();
+  ExpectWatchTime(std::vector<base::StringPiece>(), base::TimeDelta());
+
+  CycleWatchTimeReporter();
+
+  internals_->OnProcessTerminatedForTesting(render_process_id_);
+  ExpectWatchTime({media::MediaLog::kWatchTimeAudioVideoAll,
+                   media::MediaLog::kWatchTimeAudioVideoSrc,
+                   media::MediaLog::kWatchTimeAudioVideoEme,
+                   media::MediaLog::kWatchTimeAudioVideoAc,
+                   media::MediaLog::kWatchTimeAudioVideoEmbeddedExperience},
+                  kWatchTimeLate);
+}
 
 }  // namespace content

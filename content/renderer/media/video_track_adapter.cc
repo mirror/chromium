@@ -6,14 +6,17 @@
 
 #include <algorithm>
 #include <limits>
+#include <memory>
+#include <string>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/macros.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "content/public/common/content_switches.h"
 #include "media/base/bind_to_current_loop.h"
@@ -59,10 +62,7 @@ class VideoTrackAdapter::VideoFrameResolutionAdapter
   // will be done.
   VideoFrameResolutionAdapter(
       scoped_refptr<base::SingleThreadTaskRunner> render_message_loop,
-      const gfx::Size& max_size,
-      double min_aspect_ratio,
-      double max_aspect_ratio,
-      double max_frame_rate);
+      const VideoTrackAdapterSettings& settings);
 
   // Add |callback| to receive video frames on the IO-thread.
   // |callback| will however be released on the main render thread.
@@ -78,10 +78,7 @@ class VideoTrackAdapter::VideoFrameResolutionAdapter
                     const base::TimeTicks& estimated_capture_time);
 
   // Returns true if all arguments match with the output of this adapter.
-  bool ConstraintsMatch(const gfx::Size& max_size,
-                        double min_aspect_ratio,
-                        double max_aspect_ratio,
-                        double max_frame_rate) const;
+  bool SettingsMatch(const VideoTrackAdapterSettings& settings) const;
 
   bool IsEmpty() const;
 
@@ -120,20 +117,16 @@ class VideoTrackAdapter::VideoFrameResolutionAdapter
   DISALLOW_COPY_AND_ASSIGN(VideoFrameResolutionAdapter);
 };
 
-VideoTrackAdapter::
-VideoFrameResolutionAdapter::VideoFrameResolutionAdapter(
+VideoTrackAdapter::VideoFrameResolutionAdapter::VideoFrameResolutionAdapter(
     scoped_refptr<base::SingleThreadTaskRunner> render_message_loop,
-    const gfx::Size& max_size,
-    double min_aspect_ratio,
-    double max_aspect_ratio,
-    double max_frame_rate)
+    const VideoTrackAdapterSettings& settings)
     : renderer_task_runner_(render_message_loop),
-      max_frame_size_(max_size),
-      min_aspect_ratio_(min_aspect_ratio),
-      max_aspect_ratio_(max_aspect_ratio),
+      max_frame_size_(settings.max_width, settings.max_height),
+      min_aspect_ratio_(settings.min_aspect_ratio),
+      max_aspect_ratio_(settings.max_aspect_ratio),
       frame_rate_(MediaStreamVideoSource::kDefaultFrameRate),
       last_time_stamp_(base::TimeDelta::Max()),
-      max_frame_rate_(max_frame_rate),
+      max_frame_rate_(settings.max_frame_rate),
       keep_frame_counter_(0.0) {
   DCHECK(renderer_task_runner_.get());
   DCHECK(io_thread_checker_.CalledOnValidThread());
@@ -146,8 +139,8 @@ VideoFrameResolutionAdapter::VideoFrameResolutionAdapter(
   if (!max_fps_str.empty()) {
     double value;
     if (base::StringToDouble(max_fps_str, &value) && value >= 0.0) {
-      DVLOG(1) << "Overriding max frame rate.  Was=" << max_frame_rate
-              << ", Now=" << value;
+      DVLOG(1) << "Overriding max frame rate.  Was=" << max_frame_rate_
+               << ", Now=" << value;
       max_frame_rate_ = value;
     } else {
       DLOG(ERROR) << "Unable to set max fps to " << max_fps_str;
@@ -155,11 +148,11 @@ VideoFrameResolutionAdapter::VideoFrameResolutionAdapter(
   }
 
   DVLOG(3) << "VideoFrameResolutionAdapter("
-          << "{ max_width =" << max_frame_size_.width() << "}, "
-          << "{ max_height =" << max_frame_size_.height() << "}, "
-          << "{ min_aspect_ratio =" << min_aspect_ratio << "}, "
-          << "{ max_aspect_ratio_ =" << max_aspect_ratio_ << "}"
-          << "{ max_frame_rate_ =" << max_frame_rate_ << "}) ";
+           << "{ max_width =" << max_frame_size_.width() << "}, "
+           << "{ max_height =" << max_frame_size_.height() << "}, "
+           << "{ min_aspect_ratio =" << min_aspect_ratio_ << "}, "
+           << "{ max_aspect_ratio_ =" << max_aspect_ratio_ << "}"
+           << "{ max_frame_rate_ =" << max_frame_rate_ << "}) ";
 }
 
 VideoTrackAdapter::
@@ -217,48 +210,16 @@ void VideoTrackAdapter::VideoFrameResolutionAdapter::DeliverFrame(
 
   // TODO(perkj): Allow cropping / scaling of textures once
   // http://crbug/362521 is fixed.
-  if (frame->HasTextures() ||
-      frame->storage_type() == media::VideoFrame::STORAGE_GPU_MEMORY_BUFFERS) {
+  if (frame->HasTextures()) {
     DoDeliverFrame(frame, estimated_capture_time);
     return;
   }
   scoped_refptr<media::VideoFrame> video_frame(frame);
-  const double input_ratio =
-      static_cast<double>(frame->natural_size().width()) /
-      frame->natural_size().height();
 
-  // If |frame| has larger width or height than requested, or the aspect ratio
-  // does not match the requested, we want to create a wrapped version of this
-  // frame with a size that fulfills the constraints.
-  if (frame->natural_size().width() > max_frame_size_.width() ||
-      frame->natural_size().height() > max_frame_size_.height() ||
-      input_ratio > max_aspect_ratio_ ||
-      input_ratio < min_aspect_ratio_) {
-    int desired_width = std::min(max_frame_size_.width(),
-                                 frame->natural_size().width());
-    int desired_height = std::min(max_frame_size_.height(),
-                                  frame->natural_size().height());
-
-    const double resulting_ratio =
-        static_cast<double>(desired_width) / desired_height;
-    // Make sure |min_aspect_ratio_| < |requested_ratio| < |max_aspect_ratio_|.
-    const double requested_ratio = std::max(
-        std::min(resulting_ratio, max_aspect_ratio_), min_aspect_ratio_);
-
-    if (resulting_ratio < requested_ratio) {
-      desired_height = static_cast<int>((desired_height * resulting_ratio) /
-                                        requested_ratio);
-      // Make sure we scale to an even height to avoid rounding errors
-      desired_height = (desired_height + 1) & ~1;
-    } else if (resulting_ratio > requested_ratio) {
-      desired_width = static_cast<int>((desired_width * requested_ratio) /
-                                       resulting_ratio);
-      // Make sure we scale to an even width to avoid rounding errors.
-      desired_width = (desired_width + 1) & ~1;
-    }
-
-    const gfx::Size desired_size(desired_width, desired_height);
-
+  gfx::Size desired_size;
+  CalculateTargetSize(frame->natural_size(), max_frame_size_, min_aspect_ratio_,
+                      max_aspect_ratio_, &desired_size);
+  if (desired_size != frame->natural_size()) {
     // Get the largest centered rectangle with the same aspect ratio of
     // |desired_size| that fits entirely inside of |frame->visible_rect()|.
     // This will be the rect we need to crop the original frame to.
@@ -282,16 +243,14 @@ void VideoTrackAdapter::VideoFrameResolutionAdapter::DeliverFrame(
   DoDeliverFrame(video_frame, estimated_capture_time);
 }
 
-bool VideoTrackAdapter::VideoFrameResolutionAdapter::ConstraintsMatch(
-    const gfx::Size& max_size,
-    double min_aspect_ratio,
-    double max_aspect_ratio,
-    double max_frame_rate) const {
+bool VideoTrackAdapter::VideoFrameResolutionAdapter::SettingsMatch(
+    const VideoTrackAdapterSettings& settings) const {
   DCHECK(io_thread_checker_.CalledOnValidThread());
-  return max_frame_size_ == max_size &&
-      min_aspect_ratio_ == min_aspect_ratio &&
-      max_aspect_ratio_ == max_aspect_ratio &&
-      max_frame_rate_ == max_frame_rate;
+  return max_frame_size_.width() == settings.max_width &&
+         max_frame_size_.height() == settings.max_height &&
+         min_aspect_ratio_ == settings.min_aspect_ratio &&
+         max_aspect_ratio_ == settings.max_aspect_ratio &&
+         max_frame_rate_ == settings.max_frame_rate;
 }
 
 bool VideoTrackAdapter::VideoFrameResolutionAdapter::IsEmpty() const {
@@ -365,6 +324,30 @@ bool VideoTrackAdapter::VideoFrameResolutionAdapter::MaybeDropFrame(
   return true;
 }
 
+VideoTrackAdapterSettings::VideoTrackAdapterSettings()
+    : VideoTrackAdapterSettings(std::numeric_limits<int>::max(),
+                                std::numeric_limits<int>::max(),
+                                0.0,
+                                std::numeric_limits<double>::max(),
+                                0.0) {}
+
+VideoTrackAdapterSettings::VideoTrackAdapterSettings(int max_width,
+                                                     int max_height,
+                                                     double min_aspect_ratio,
+                                                     double max_aspect_ratio,
+                                                     double max_frame_rate)
+    : max_width(max_width),
+      max_height(max_height),
+      min_aspect_ratio(min_aspect_ratio),
+      max_aspect_ratio(max_aspect_ratio),
+      max_frame_rate(max_frame_rate) {
+  DCHECK_GE(max_width, 1);
+  DCHECK_GE(max_height, 1);
+  DCHECK_GE(min_aspect_ratio, 0.0);
+  DCHECK_GE(max_aspect_ratio, min_aspect_ratio);
+  DCHECK_GE(max_frame_rate, 0.0);
+}
+
 VideoTrackAdapter::VideoTrackAdapter(
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
     : io_task_runner_(io_task_runner),
@@ -382,41 +365,28 @@ VideoTrackAdapter::~VideoTrackAdapter() {
 
 void VideoTrackAdapter::AddTrack(const MediaStreamVideoTrack* track,
                                  VideoCaptureDeliverFrameCB frame_callback,
-                                 int max_width,
-                                 int max_height,
-                                 double min_aspect_ratio,
-                                 double max_aspect_ratio,
-                                 double max_frame_rate) {
+                                 const VideoTrackAdapterSettings& settings) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   io_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&VideoTrackAdapter::AddTrackOnIO, this, track, frame_callback,
-                 gfx::Size(max_width, max_height), min_aspect_ratio,
-                 max_aspect_ratio, max_frame_rate));
+      FROM_HERE, base::Bind(&VideoTrackAdapter::AddTrackOnIO, this, track,
+                            frame_callback, settings));
 }
 
-void VideoTrackAdapter::AddTrackOnIO(const MediaStreamVideoTrack* track,
-                                     VideoCaptureDeliverFrameCB frame_callback,
-                                     const gfx::Size& max_frame_size,
-                                     double min_aspect_ratio,
-                                     double max_aspect_ratio,
-                                     double max_frame_rate) {
+void VideoTrackAdapter::AddTrackOnIO(
+    const MediaStreamVideoTrack* track,
+    VideoCaptureDeliverFrameCB frame_callback,
+    const VideoTrackAdapterSettings& settings) {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
   scoped_refptr<VideoFrameResolutionAdapter> adapter;
   for (const auto& frame_adapter : adapters_) {
-    if (frame_adapter->ConstraintsMatch(max_frame_size, min_aspect_ratio,
-                                        max_aspect_ratio, max_frame_rate)) {
+    if (frame_adapter->SettingsMatch(settings)) {
       adapter = frame_adapter.get();
       break;
     }
   }
   if (!adapter.get()) {
-    adapter = new VideoFrameResolutionAdapter(renderer_task_runner_,
-                                              max_frame_size,
-                                              min_aspect_ratio,
-                                              max_aspect_ratio,
-                                              max_frame_rate);
+    adapter = new VideoFrameResolutionAdapter(renderer_task_runner_, settings);
     adapters_.push_back(adapter);
   }
 
@@ -446,6 +416,48 @@ void VideoTrackAdapter::StopFrameMonitoring() {
   DCHECK(thread_checker_.CalledOnValidThread());
   io_task_runner_->PostTask(
       FROM_HERE, base::Bind(&VideoTrackAdapter::StopFrameMonitoringOnIO, this));
+}
+
+// static
+void VideoTrackAdapter::CalculateTargetSize(const gfx::Size& input_size,
+                                            const gfx::Size& max_frame_size,
+                                            double min_aspect_ratio,
+                                            double max_aspect_ratio,
+                                            gfx::Size* desired_size) {
+  // If |frame| has larger width or height than requested, or the aspect ratio
+  // does not match the requested, we want to create a wrapped version of this
+  // frame with a size that fulfills the constraints.
+  const double input_ratio =
+      static_cast<double>(input_size.width()) / input_size.height();
+
+  if (input_size.width() > max_frame_size.width() ||
+      input_size.height() > max_frame_size.height() ||
+      input_ratio > max_aspect_ratio || input_ratio < min_aspect_ratio) {
+    int desired_width = std::min(max_frame_size.width(), input_size.width());
+    int desired_height = std::min(max_frame_size.height(), input_size.height());
+
+    const double resulting_ratio =
+        static_cast<double>(desired_width) / desired_height;
+    // Make sure |min_aspect_ratio| < |requested_ratio| < |max_aspect_ratio|.
+    const double requested_ratio =
+        std::max(std::min(resulting_ratio, max_aspect_ratio), min_aspect_ratio);
+
+    if (resulting_ratio < requested_ratio) {
+      desired_height = static_cast<int>((desired_height * resulting_ratio) /
+                                        requested_ratio);
+      // Make sure we scale to an even height to avoid rounding errors
+      desired_height = (desired_height + 1) & ~1;
+    } else if (resulting_ratio > requested_ratio) {
+      desired_width =
+          static_cast<int>((desired_width * requested_ratio) / resulting_ratio);
+      // Make sure we scale to an even width to avoid rounding errors.
+      desired_width = (desired_width + 1) & ~1;
+    }
+
+    *desired_size = gfx::Size(desired_width, desired_height);
+  } else {
+    *desired_size = input_size;
+  }
 }
 
 void VideoTrackAdapter::StartFrameMonitoringOnIO(

@@ -12,17 +12,17 @@
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/user_metrics.h"
 #include "base/strings/string_util.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "chrome/browser/supervised_user/supervised_user_url_filter.h"
 #include "chrome/common/chrome_constants.h"
 #include "components/prefs/json_pref_store.h"
 #include "components/prefs/pref_filter.h"
+#include "components/sync/model/sync_change.h"
+#include "components/sync/model/sync_error_factory.h"
+#include "components/sync/protocol/sync.pb.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/user_metrics.h"
-#include "sync/api/sync_change.h"
-#include "sync/api/sync_error_factory.h"
-#include "sync/protocol/sync.pb.h"
 
 using base::DictionaryValue;
 using base::JSONReader;
@@ -148,7 +148,7 @@ void SupervisedUserSettingsService::PushItemToSync(
   std::string key_suffix = key;
   base::DictionaryValue* dict = nullptr;
   if (sync_processor_) {
-    content::RecordAction(UserMetricsAction("ManagedUsers_UploadItem_Syncing"));
+    base::RecordAction(UserMetricsAction("ManagedUsers_UploadItem_Syncing"));
     dict = GetDictionaryAndSplitKey(&key_suffix);
     DCHECK(GetQueuedItems()->empty());
     SyncChangeList change_list;
@@ -163,7 +163,7 @@ void SupervisedUserSettingsService::PushItemToSync(
   } else {
     // Queue the item up to be uploaded when we start syncing
     // (in MergeDataAndStartSyncing()).
-    content::RecordAction(UserMetricsAction("ManagedUsers_UploadItem_Queued"));
+    base::RecordAction(UserMetricsAction("ManagedUsers_UploadItem_Queued"));
     dict = GetQueuedItems();
   }
   dict->SetWithoutPathExpansion(key_suffix, std::move(value));
@@ -241,6 +241,14 @@ SyncMergeResult SupervisedUserSettingsService::MergeDataAndStartSyncing(
         sync_data.GetSpecifics().managed_user_setting();
     std::unique_ptr<base::Value> value =
         JSONReader::Read(supervised_user_setting.value());
+    // Wrongly formatted input will cause null values.
+    // SetWithoutPathExpansion below requires non-null values.
+    if (!value) {
+      DLOG(ERROR) << "Invalid managed user setting value: "
+                  << supervised_user_setting.value()
+                  << ". Values must be JSON values.";
+      continue;
+    }
     std::string name_suffix = supervised_user_setting.name();
     std::string name_key = name_suffix;
     base::DictionaryValue* dict = GetDictionaryAndSplitKey(&name_suffix);

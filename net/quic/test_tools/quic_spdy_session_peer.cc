@@ -4,7 +4,7 @@
 
 #include "net/quic/test_tools/quic_spdy_session_peer.h"
 
-#include "net/quic/quic_spdy_session.h"
+#include "net/quic/core/quic_spdy_session.h"
 
 namespace net {
 namespace test {
@@ -26,6 +26,42 @@ void QuicSpdySessionPeer::SetHeadersStream(QuicSpdySession* session,
 void QuicSpdySessionPeer::SetForceHolBlocking(QuicSpdySession* session,
                                               bool value) {
   session->force_hol_blocking_ = value;
+}
+
+// static
+const SpdyFramer& QuicSpdySessionPeer::GetSpdyFramer(
+    QuicSpdySession* session) {
+  return session->spdy_framer_;
+}
+
+void QuicSpdySessionPeer::SetHpackEncoderDebugVisitor(
+    QuicSpdySession* session,
+    std::unique_ptr<QuicHpackDebugVisitor> visitor) {
+  session->SetHpackEncoderDebugVisitor(std::move(visitor));
+}
+
+void QuicSpdySessionPeer::SetHpackDecoderDebugVisitor(
+    QuicSpdySession* session,
+    std::unique_ptr<QuicHpackDebugVisitor> visitor) {
+  session->SetHpackDecoderDebugVisitor(std::move(visitor));
+}
+
+void QuicSpdySessionPeer::SetMaxUncompressedHeaderBytes(
+    QuicSpdySession* session,
+    size_t set_max_uncompressed_header_bytes) {
+  session->set_max_uncompressed_header_bytes(set_max_uncompressed_header_bytes);
+}
+
+// static
+size_t QuicSpdySessionPeer::WriteHeadersImpl(
+    QuicSpdySession* session,
+    QuicStreamId id,
+    SpdyHeaderBlock headers,
+    bool fin,
+    SpdyPriority priority,
+    QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
+  return session->WriteHeadersImpl(id, std::move(headers), fin, priority,
+                                   std::move(ack_listener));
 }
 
 }  // namespace test

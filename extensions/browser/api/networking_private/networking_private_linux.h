@@ -11,7 +11,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/memory/linked_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/threading/thread.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -29,13 +28,12 @@ namespace extensions {
 // Linux NetworkingPrivateDelegate implementation.
 class NetworkingPrivateLinux : public NetworkingPrivateDelegate {
  public:
-  typedef std::map<base::string16, linked_ptr<base::DictionaryValue>>
-      NetworkMap;
+  using NetworkMap =
+      std::map<base::string16, std::unique_ptr<base::DictionaryValue>>;
 
   typedef std::vector<std::string> GuidList;
 
-  explicit NetworkingPrivateLinux(
-      std::unique_ptr<VerifyDelegate> verify_delegate);
+  NetworkingPrivateLinux();
 
   // NetworkingPrivateDelegate
   void GetProperties(const std::string& guid,
@@ -49,6 +47,7 @@ class NetworkingPrivateLinux : public NetworkingPrivateDelegate {
                 const FailureCallback& failure_callback) override;
   void SetProperties(const std::string& guid,
                      std::unique_ptr<base::DictionaryValue> properties,
+                     bool allow_set_shared_config,
                      const VoidCallback& success_callback,
                      const FailureCallback& failure_callback) override;
   void CreateNetwork(bool shared,
@@ -56,6 +55,7 @@ class NetworkingPrivateLinux : public NetworkingPrivateDelegate {
                      const StringCallback& success_callback,
                      const FailureCallback& failure_callback) override;
   void ForgetNetwork(const std::string& guid,
+                     bool allow_forget_shared_config,
                      const VoidCallback& success_callback,
                      const FailureCallback& failure_callback) override;
   void GetNetworks(const std::string& network_type,
@@ -92,9 +92,9 @@ class NetworkingPrivateLinux : public NetworkingPrivateDelegate {
                            const std::string& new_pin,
                            const VoidCallback& success_callback,
                            const FailureCallback& failure_callback) override;
-
   std::unique_ptr<base::ListValue> GetEnabledNetworkTypes() override;
   std::unique_ptr<DeviceStateList> GetDeviceStateList() override;
+  std::unique_ptr<base::DictionaryValue> GetGlobalPolicy() override;
   bool EnableNetworkType(const std::string& type) override;
   bool DisableNetworkType(const std::string& type) override;
   bool RequestScan() override;

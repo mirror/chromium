@@ -4,44 +4,42 @@
 <script src="../../../http/tests/inspector/timeline-test.js"></script>
 <script>
 
-function performActions(callback)
+function performActions()
 {
-    function onRequestFinished()
-    {
-        if (!--requestsPending)
-            callback();
-    }
-
-    var requestsPending = 2;
     var image = new Image();
-    image.onload = onRequestFinished;
+    var imagePromise = new Promise((fulfill) => image.onload = fulfill);
     image.src = "../resources/anImage.png";
 
     var script = document.createElement("script");
-    script.src = "timeline-network-resource.js";
+    script.src = "../../../http/tests/inspector/tracing/resources/timeline-network-resource.js";
     document.body.appendChild(script);
-    window.timelineNetworkResourceEvaluated = onRequestFinished;
+    var scriptPromise = new Promise((fulfill) => window.timelineNetworkResourceEvaluated = fulfill);
+
+    return Promise.all([imagePromise, scriptPromise]);
 }
 
 function test()
 {
-    var model = WebInspector.panels.timeline._model;
-
     InspectorTest.invokeAsyncWithTimeline("performActions", finish);
 
     function finish()
     {
-        var linkifier = new WebInspector.Linkifier();
+        var model = InspectorTest.timelineModel();
+        var linkifier = new Components.Linkifier();
         function printRequestDetails(request)
         {
-            return WebInspector.TimelineUIUtils.buildNetworkRequestDetails(request, model, linkifier).then(printElement);
+            return Timeline.TimelineUIUtils.buildNetworkRequestDetails(request, model, linkifier).then(printElement);
         }
         function printElement(element)
         {
             var rows = element.querySelectorAll(".timeline-details-view-row");
             for (var i = 0; i < rows.length; ++i) {
                 var title = rows[i].firstChild.firstChild.textContent;
-                var value = rows[i].lastChild.firstChild.textContent;
+                var value = rows[i].lastChild.firstChild;
+                if (value.children && value.children.length)
+                  value = Array.from(value.children, element => element.textContent).slice(1).join('');
+                else
+                  value = value.textContent;
                 if (title === "Duration" || title === "Mime Type")
                     value = typeof value;
                 if (/^file:\/\//.test(value))

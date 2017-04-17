@@ -33,15 +33,14 @@ static std::string GetStringDstBlendFactor(uint32_t value);
 static std::string GetStringEquation(uint32_t value);
 static std::string GetStringFaceMode(uint32_t value);
 static std::string GetStringFaceType(uint32_t value);
-static std::string GetStringFrameBufferParameter(uint32_t value);
-static std::string GetStringFrameBufferTarget(uint32_t value);
+static std::string GetStringFramebufferParameter(uint32_t value);
+static std::string GetStringFramebufferTarget(uint32_t value);
 static std::string GetStringGLState(uint32_t value);
 static std::string GetStringGetMaxIndexType(uint32_t value);
 static std::string GetStringGetTexParamTarget(uint32_t value);
 static std::string GetStringHintMode(uint32_t value);
 static std::string GetStringHintTarget(uint32_t value);
 static std::string GetStringImageInternalFormat(uint32_t value);
-static std::string GetStringImageUsage(uint32_t value);
 static std::string GetStringIndexType(uint32_t value);
 static std::string GetStringIndexedBufferTarget(uint32_t value);
 static std::string GetStringIndexedGLState(uint32_t value);
@@ -96,6 +95,7 @@ static std::string GetStringTextureSizedColorRenderableInternalFormat(
     uint32_t value);
 static std::string GetStringTextureSizedTextureFilterableInternalFormat(
     uint32_t value);
+static std::string GetStringTextureSrgbDecodeExt(uint32_t value);
 static std::string GetStringTextureStencilRenderableInternalFormat(
     uint32_t value);
 static std::string GetStringTextureSwizzle(uint32_t value);

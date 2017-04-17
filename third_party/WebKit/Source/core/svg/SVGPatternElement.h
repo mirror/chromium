@@ -40,50 +40,70 @@ class SVGPatternElement final : public SVGElement,
                                 public SVGURIReference,
                                 public SVGTests,
                                 public SVGFitToViewBox {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(SVGPatternElement);
-public:
-    DECLARE_NODE_FACTORY(SVGPatternElement);
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(SVGPatternElement);
 
-    void collectPatternAttributes(PatternAttributes&) const;
+ public:
+  DECLARE_NODE_FACTORY(SVGPatternElement);
 
-    AffineTransform localCoordinateSpaceTransform(SVGElement::CTMScope) const override;
+  void CollectPatternAttributes(PatternAttributes&) const;
 
-    SVGAnimatedLength* x() const { return m_x.get(); }
-    SVGAnimatedLength* y() const { return m_y.get(); }
-    SVGAnimatedLength* width() const { return m_width.get(); }
-    SVGAnimatedLength* height() const { return m_height.get(); }
-    SVGAnimatedTransformList* patternTransform() { return m_patternTransform.get(); }
-    const SVGAnimatedTransformList* patternTransform() const { return m_patternTransform.get(); }
-    SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>* patternUnits() { return m_patternUnits.get(); }
-    SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>* patternContentUnits() { return m_patternContentUnits.get(); }
-    const SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>* patternUnits() const { return m_patternUnits.get(); }
-    const SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>* patternContentUnits() const { return m_patternContentUnits.get(); }
+  AffineTransform LocalCoordinateSpaceTransform() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  SVGAnimatedLength* x() const { return x_.Get(); }
+  SVGAnimatedLength* y() const { return y_.Get(); }
+  SVGAnimatedLength* width() const { return width_.Get(); }
+  SVGAnimatedLength* height() const { return height_.Get(); }
+  SVGAnimatedTransformList* patternTransform() {
+    return pattern_transform_.Get();
+  }
+  const SVGAnimatedTransformList* patternTransform() const {
+    return pattern_transform_.Get();
+  }
+  SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>* patternUnits() {
+    return pattern_units_.Get();
+  }
+  SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>* patternContentUnits() {
+    return pattern_content_units_.Get();
+  }
+  const SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>* patternUnits()
+      const {
+    return pattern_units_.Get();
+  }
+  const SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>* patternContentUnits()
+      const {
+    return pattern_content_units_.Get();
+  }
 
-private:
-    explicit SVGPatternElement(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    bool isValid() const override { return SVGTests::isValid(); }
-    bool needsPendingResourceHandling() const override { return false; }
+ private:
+  explicit SVGPatternElement(Document&);
 
-    void svgAttributeChanged(const QualifiedName&) override;
-    void childrenChanged(const ChildrenChange&) override;
+  bool IsValid() const override { return SVGTests::IsValid(); }
+  bool NeedsPendingResourceHandling() const override { return false; }
 
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
+  void CollectStyleForPresentationAttribute(const QualifiedName&,
+                                            const AtomicString&,
+                                            MutableStylePropertySet*) override;
 
-    bool selfHasRelativeLengths() const override;
+  void SvgAttributeChanged(const QualifiedName&) override;
+  void ChildrenChanged(const ChildrenChange&) override;
 
-    Member<SVGAnimatedLength> m_x;
-    Member<SVGAnimatedLength> m_y;
-    Member<SVGAnimatedLength> m_width;
-    Member<SVGAnimatedLength> m_height;
-    Member<SVGAnimatedTransformList> m_patternTransform;
-    Member<SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>> m_patternUnits;
-    Member<SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>> m_patternContentUnits;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
+
+  bool SelfHasRelativeLengths() const override;
+
+  Member<SVGAnimatedLength> x_;
+  Member<SVGAnimatedLength> y_;
+  Member<SVGAnimatedLength> width_;
+  Member<SVGAnimatedLength> height_;
+  Member<SVGAnimatedTransformList> pattern_transform_;
+  Member<SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>> pattern_units_;
+  Member<SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>>
+      pattern_content_units_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGPatternElement_h
+#endif  // SVGPatternElement_h

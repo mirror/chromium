@@ -15,11 +15,6 @@
 #include "ui/gl/gl_bindings.h"
 
 namespace gpu {
-namespace {
-
-void Noop() {}
-
-}  // namespace
 
 GpuMemoryBufferImplSharedMemory::GpuMemoryBufferImplSharedMemory(
     gfx::GpuMemoryBufferId id,
@@ -59,11 +54,10 @@ GpuMemoryBufferImplSharedMemory::Create(gfx::GpuMemoryBufferId id,
 
 // static
 gfx::GpuMemoryBufferHandle
-GpuMemoryBufferImplSharedMemory::AllocateForChildProcess(
+GpuMemoryBufferImplSharedMemory::CreateGpuMemoryBuffer(
     gfx::GpuMemoryBufferId id,
     const gfx::Size& size,
-    gfx::BufferFormat format,
-    base::ProcessHandle child_process) {
+    gfx::BufferFormat format) {
   size_t buffer_size = 0u;
   if (!gfx::BufferSizeForBufferFormatChecked(size, format, &buffer_size))
     return gfx::GpuMemoryBufferHandle();
@@ -78,7 +72,7 @@ GpuMemoryBufferImplSharedMemory::AllocateForChildProcess(
   handle.offset = 0;
   handle.stride = static_cast<int32_t>(
       gfx::RowSizeForBufferFormat(size.width(), format, 0));
-  shared_memory.GiveToProcess(child_process, &handle.handle);
+  handle.handle = shared_memory.TakeHandle();
   return handle;
 }
 
@@ -94,8 +88,8 @@ GpuMemoryBufferImplSharedMemory::CreateFromHandle(
 
   return base::WrapUnique(new GpuMemoryBufferImplSharedMemory(
       handle.id, size, format, callback,
-      base::WrapUnique(new base::SharedMemory(handle.handle, false)),
-      handle.offset, handle.stride));
+      base::MakeUnique<base::SharedMemory>(handle.handle, false), handle.offset,
+      handle.stride));
 }
 
 // static
@@ -104,6 +98,7 @@ bool GpuMemoryBufferImplSharedMemory::IsUsageSupported(gfx::BufferUsage usage) {
     case gfx::BufferUsage::GPU_READ:
     case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE:
     case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT:
+    case gfx::BufferUsage::SCANOUT_CPU_READ_WRITE:
       return true;
     case gfx::BufferUsage::SCANOUT:
       return false;
@@ -133,12 +128,14 @@ bool GpuMemoryBufferImplSharedMemory::IsSizeValidForFormat(
       // by the block size.
       return size.width() % 4 == 0 && size.height() % 4 == 0;
     case gfx::BufferFormat::R_8:
+    case gfx::BufferFormat::RG_88:
     case gfx::BufferFormat::BGR_565:
     case gfx::BufferFormat::RGBA_4444:
     case gfx::BufferFormat::RGBA_8888:
     case gfx::BufferFormat::RGBX_8888:
     case gfx::BufferFormat::BGRA_8888:
     case gfx::BufferFormat::BGRX_8888:
+    case gfx::BufferFormat::RGBA_F16:
       return true;
     case gfx::BufferFormat::YVU_420:
     case gfx::BufferFormat::YUV_420_BIPLANAR: {
@@ -164,16 +161,8 @@ base::Closure GpuMemoryBufferImplSharedMemory::AllocateForTesting(
     gfx::BufferFormat format,
     gfx::BufferUsage usage,
     gfx::GpuMemoryBufferHandle* handle) {
-  base::SharedMemory shared_memory;
-  bool rv = shared_memory.CreateAnonymous(
-      gfx::BufferSizeForBufferFormat(size, format));
-  DCHECK(rv);
-  handle->type = gfx::SHARED_MEMORY_BUFFER;
-  handle->offset = 0;
-  handle->stride = static_cast<int32_t>(
-      gfx::RowSizeForBufferFormat(size.width(), format, 0));
-  handle->handle = base::SharedMemory::DuplicateHandle(shared_memory.handle());
-  return base::Bind(&Noop);
+  *handle = CreateGpuMemoryBuffer(handle->id, size, format);
+  return base::Bind(&base::DoNothing);
 }
 
 bool GpuMemoryBufferImplSharedMemory::Map() {

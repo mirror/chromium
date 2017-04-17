@@ -18,87 +18,92 @@
 namespace blink {
 
 DeviceMotionController::DeviceMotionController(Document& document)
-    : DeviceSingleWindowEventController(document)
-{
+    : DeviceSingleWindowEventController(document),
+      Supplement<Document>(document) {}
+
+DeviceMotionController::~DeviceMotionController() {}
+
+const char* DeviceMotionController::SupplementName() {
+  return "DeviceMotionController";
 }
 
-DeviceMotionController::~DeviceMotionController()
-{
+DeviceMotionController& DeviceMotionController::From(Document& document) {
+  DeviceMotionController* controller = static_cast<DeviceMotionController*>(
+      Supplement<Document>::From(document, SupplementName()));
+  if (!controller) {
+    controller = new DeviceMotionController(document);
+    Supplement<Document>::ProvideTo(document, SupplementName(), controller);
+  }
+  return *controller;
 }
 
-const char* DeviceMotionController::supplementName()
-{
-    return "DeviceMotionController";
-}
+void DeviceMotionController::DidAddEventListener(
+    LocalDOMWindow* window,
+    const AtomicString& event_type) {
+  if (event_type != EventTypeName())
+    return;
 
-DeviceMotionController& DeviceMotionController::from(Document& document)
-{
-    DeviceMotionController* controller = static_cast<DeviceMotionController*>(Supplement<Document>::from(document, supplementName()));
-    if (!controller) {
-        controller = new DeviceMotionController(document);
-        Supplement<Document>::provideTo(document, supplementName(), controller);
-    }
-    return *controller;
-}
-
-void DeviceMotionController::didAddEventListener(LocalDOMWindow* window, const AtomicString& eventType)
-{
-    if (eventType != eventTypeName())
+  if (GetDocument().GetFrame()) {
+    if (GetDocument().IsSecureContext()) {
+      UseCounter::Count(GetDocument().GetFrame(),
+                        UseCounter::kDeviceMotionSecureOrigin);
+    } else {
+      Deprecation::CountDeprecation(GetDocument().GetFrame(),
+                                    UseCounter::kDeviceMotionInsecureOrigin);
+      HostsUsingFeatures::CountAnyWorld(
+          GetDocument(),
+          HostsUsingFeatures::Feature::kDeviceMotionInsecureHost);
+      if (GetDocument()
+              .GetFrame()
+              ->GetSettings()
+              ->GetStrictPowerfulFeatureRestrictions())
         return;
-
-    if (document().frame()) {
-        String errorMessage;
-        if (document().isSecureContext(errorMessage)) {
-            UseCounter::count(document().frame(), UseCounter::DeviceMotionSecureOrigin);
-        } else {
-            Deprecation::countDeprecation(document().frame(), UseCounter::DeviceMotionInsecureOrigin);
-            HostsUsingFeatures::countAnyWorld(document(), HostsUsingFeatures::Feature::DeviceMotionInsecureHost);
-            if (document().frame()->settings()->strictPowerfulFeatureRestrictions())
-                return;
-        }
     }
+  }
 
-    if (!m_hasEventListener)
-        Platform::current()->recordRapporURL("DeviceSensors.DeviceMotion", WebURL(document().url()));
+  if (!has_event_listener_) {
+    Platform::Current()->RecordRapporURL("DeviceSensors.DeviceMotion",
+                                         WebURL(GetDocument().Url()));
 
-    DeviceSingleWindowEventController::didAddEventListener(window, eventType);
+    if (!IsSameSecurityOriginAsMainFrame()) {
+      Platform::Current()->RecordRapporURL(
+          "DeviceSensors.DeviceMotionCrossOrigin", WebURL(GetDocument().Url()));
+    }
+  }
+
+  DeviceSingleWindowEventController::DidAddEventListener(window, event_type);
 }
 
-bool DeviceMotionController::hasLastData()
-{
-    return DeviceMotionDispatcher::instance().latestDeviceMotionData();
+bool DeviceMotionController::HasLastData() {
+  return DeviceMotionDispatcher::Instance().LatestDeviceMotionData();
 }
 
-void DeviceMotionController::registerWithDispatcher()
-{
-    DeviceMotionDispatcher::instance().addController(this);
+void DeviceMotionController::RegisterWithDispatcher() {
+  DeviceMotionDispatcher::Instance().AddController(this);
 }
 
-void DeviceMotionController::unregisterWithDispatcher()
-{
-    DeviceMotionDispatcher::instance().removeController(this);
+void DeviceMotionController::UnregisterWithDispatcher() {
+  DeviceMotionDispatcher::Instance().RemoveController(this);
 }
 
-Event* DeviceMotionController::lastEvent() const
-{
-    return DeviceMotionEvent::create(EventTypeNames::devicemotion, DeviceMotionDispatcher::instance().latestDeviceMotionData());
+Event* DeviceMotionController::LastEvent() const {
+  return DeviceMotionEvent::Create(
+      EventTypeNames::devicemotion,
+      DeviceMotionDispatcher::Instance().LatestDeviceMotionData());
 }
 
-bool DeviceMotionController::isNullEvent(Event* event) const
-{
-    DeviceMotionEvent* motionEvent = toDeviceMotionEvent(event);
-    return !motionEvent->getDeviceMotionData()->canProvideEventData();
+bool DeviceMotionController::IsNullEvent(Event* event) const {
+  DeviceMotionEvent* motion_event = ToDeviceMotionEvent(event);
+  return !motion_event->GetDeviceMotionData()->CanProvideEventData();
 }
 
-const AtomicString& DeviceMotionController::eventTypeName() const
-{
-    return EventTypeNames::devicemotion;
+const AtomicString& DeviceMotionController::EventTypeName() const {
+  return EventTypeNames::devicemotion;
 }
 
-DEFINE_TRACE(DeviceMotionController)
-{
-    DeviceSingleWindowEventController::trace(visitor);
-    Supplement<Document>::trace(visitor);
+DEFINE_TRACE(DeviceMotionController) {
+  DeviceSingleWindowEventController::Trace(visitor);
+  Supplement<Document>::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

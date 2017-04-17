@@ -12,7 +12,7 @@ function test()
     var rule;
     var matchedStyleResult;
 
-    InspectorTest.cssModel.addEventListener(WebInspector.CSSModel.Events.StyleSheetChanged, onStyleSheetChanged, this);
+    InspectorTest.cssModel.addEventListener(SDK.CSSModel.Events.StyleSheetChanged, onStyleSheetChanged, this);
 
     function onStyleSheetChanged(event)
     {
@@ -112,7 +112,7 @@ function test()
     {
        if (!style)
            return;
-       var allProperties = style.allProperties;
+       var allProperties = style.allProperties();
        for (var i = 0; i < allProperties.length; ++i)
            InspectorTest.addResult(allProperties[i].text);
     }

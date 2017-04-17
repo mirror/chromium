@@ -7,82 +7,93 @@
 #include "core/animation/CustomCompositorAnimationManager.h"
 #include "core/dom/CompositorProxy.h"
 #include "platform/CrossThreadFunctional.h"
-#include "platform/TraceEvent.h"
 #include "platform/WaitableEvent.h"
 #include "platform/graphics/CompositorMutationsTarget.h"
 #include "platform/graphics/CompositorMutatorClient.h"
 #include "platform/heap/Handle.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
-#include "web/CompositorProxyClientImpl.h"
-#include "wtf/PtrUtil.h"
+#include "web/CompositorAnimator.h"
 
 namespace blink {
 
 namespace {
 
-void createCompositorMutatorClient(std::unique_ptr<CompositorMutatorClient>* ptr, WaitableEvent* doneEvent)
-{
-    CompositorMutatorImpl* mutator = CompositorMutatorImpl::create();
-    ptr->reset(new CompositorMutatorClient(mutator, mutator->animationManager()));
-    mutator->setClient(ptr->get());
-    doneEvent->signal();
+void CreateCompositorMutatorClient(
+    std::unique_ptr<CompositorMutatorClient>* ptr,
+    WaitableEvent* done_event) {
+  CompositorMutatorImpl* mutator = CompositorMutatorImpl::Create();
+  ptr->reset(new CompositorMutatorClient(mutator, mutator->AnimationManager()));
+  mutator->SetClient(ptr->get());
+  done_event->Signal();
 }
 
-} // namespace
+}  // namespace
 
 CompositorMutatorImpl::CompositorMutatorImpl()
-    : m_animationManager(wrapUnique(new CustomCompositorAnimationManager))
-    , m_client(nullptr)
-{
+    : animation_manager_(WTF::WrapUnique(new CustomCompositorAnimationManager)),
+      client_(nullptr) {}
+
+std::unique_ptr<CompositorMutatorClient> CompositorMutatorImpl::CreateClient() {
+  std::unique_ptr<CompositorMutatorClient> mutator_client;
+  WaitableEvent done_event;
+  if (WebThread* compositor_thread = Platform::Current()->CompositorThread()) {
+    compositor_thread->GetWebTaskRunner()->PostTask(
+        BLINK_FROM_HERE, CrossThreadBind(&CreateCompositorMutatorClient,
+                                         CrossThreadUnretained(&mutator_client),
+                                         CrossThreadUnretained(&done_event)));
+  } else {
+    CreateCompositorMutatorClient(&mutator_client, &done_event);
+  }
+  // TODO(flackr): Instead of waiting for this event, we may be able to just set
+  // the mutator on the CompositorWorkerProxyClient directly from the compositor
+  // thread before it gets used there. We still need to make sure we only
+  // create one mutator though.
+  done_event.Wait();
+  return mutator_client;
 }
 
-std::unique_ptr<CompositorMutatorClient> CompositorMutatorImpl::createClient()
-{
-    std::unique_ptr<CompositorMutatorClient> mutatorClient;
-    WaitableEvent doneEvent;
-    if (WebThread* compositorThread = Platform::current()->compositorThread()) {
-        compositorThread->getWebTaskRunner()->postTask(BLINK_FROM_HERE, crossThreadBind(&createCompositorMutatorClient, crossThreadUnretained(&mutatorClient), crossThreadUnretained(&doneEvent)));
-    } else {
-        createCompositorMutatorClient(&mutatorClient, &doneEvent);
-    }
-    // TODO(flackr): Instead of waiting for this event, we may be able to just set the
-    // mutator on the CompositorProxyClient directly from the compositor thread before
-    // it gets used there. We still need to make sure we only create one mutator though.
-    doneEvent.wait();
-    return mutatorClient;
+CompositorMutatorImpl* CompositorMutatorImpl::Create() {
+  return new CompositorMutatorImpl();
 }
 
-CompositorMutatorImpl* CompositorMutatorImpl::create()
-{
-    return new CompositorMutatorImpl();
+bool CompositorMutatorImpl::Mutate(
+    double monotonic_time_now,
+    CompositorMutableStateProvider* state_provider) {
+  TRACE_EVENT0("compositor-worker", "CompositorMutatorImpl::mutate");
+  bool need_to_reinvoke = false;
+  // TODO(vollick): we should avoid executing the animation frame
+  // callbacks if none of the proxies in the global scope are affected by
+  // m_mutations.
+  for (CompositorAnimator* animator : animators_) {
+    if (animator->Mutate(monotonic_time_now, state_provider))
+      need_to_reinvoke = true;
+  }
+
+  return need_to_reinvoke;
 }
 
-bool CompositorMutatorImpl::mutate(double monotonicTimeNow, CompositorMutableStateProvider* stateProvider)
-{
-    TRACE_EVENT0("compositor-worker", "CompositorMutatorImpl::mutate");
-    bool needToReinvoke = false;
-    // TODO(vollick): we should avoid executing the animation frame
-    // callbacks if none of the proxies in the global scope are affected by
-    // m_mutations.
-    for (CompositorProxyClientImpl* client : m_proxyClients) {
-        if (client->mutate(monotonicTimeNow, stateProvider))
-            needToReinvoke = true;
-    }
-
-    return needToReinvoke;
+void CompositorMutatorImpl::RegisterCompositorAnimator(
+    CompositorAnimator* animator) {
+  DCHECK(!IsMainThread());
+  TRACE_EVENT0("compositor-worker",
+               "CompositorMutatorImpl::registerCompositorAnimator");
+  DCHECK(!animators_.Contains(animator));
+  animators_.insert(animator);
+  SetNeedsMutate();
 }
 
-void CompositorMutatorImpl::registerProxyClient(CompositorProxyClientImpl* client)
-{
-    TRACE_EVENT0("compositor-worker", "CompositorMutatorImpl::registerClient");
-    m_proxyClients.add(client);
-    setNeedsMutate();
+void CompositorMutatorImpl::UnregisterCompositorAnimator(
+    CompositorAnimator* animator) {
+  DCHECK(animators_.Contains(animator));
+  animators_.erase(animator);
 }
 
-void CompositorMutatorImpl::setNeedsMutate()
-{
-    TRACE_EVENT0("compositor-worker", "CompositorMutatorImpl::setNeedsMutate");
-    m_client->setNeedsMutate();
+void CompositorMutatorImpl::SetNeedsMutate() {
+  DCHECK(!IsMainThread());
+  TRACE_EVENT0("compositor-worker", "CompositorMutatorImpl::setNeedsMutate");
+  client_->SetNeedsMutate();
 }
 
-} // namespace blink
+}  // namespace blink

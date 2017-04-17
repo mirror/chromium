@@ -7,27 +7,28 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class DataObject;
 
 class CORE_EXPORT DraggedIsolatedFileSystem {
-    WTF_MAKE_NONCOPYABLE(DraggedIsolatedFileSystem);
-public:
-    DraggedIsolatedFileSystem() { }
-    virtual ~DraggedIsolatedFileSystem() { }
+  WTF_MAKE_NONCOPYABLE(DraggedIsolatedFileSystem);
 
-    using FileSystemIdPreparationCallback = void(*)(DataObject*, const String&);
-    static void init(FileSystemIdPreparationCallback);
+ public:
+  DraggedIsolatedFileSystem() {}
+  virtual ~DraggedIsolatedFileSystem() {}
 
-    static void prepareForDataObject(DataObject*, const String& filesystemId);
+  using FileSystemIdPreparationCallback = void (*)(DataObject*);
+  static void Init(FileSystemIdPreparationCallback);
 
-private:
-    static FileSystemIdPreparationCallback s_prepareCallback;
+  static void PrepareForDataObject(DataObject*);
+
+ private:
+  static FileSystemIdPreparationCallback prepare_callback_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DraggedIsolatedFileSystem_h
+#endif  // DraggedIsolatedFileSystem_h

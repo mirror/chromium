@@ -31,19 +31,19 @@
 namespace blink {
 
 class OESElementIndexUint final : public WebGLExtension {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static OESElementIndexUint* create(WebGLRenderingContextBase*);
-    static bool supported(WebGLRenderingContextBase*);
-    static const char* extensionName();
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~OESElementIndexUint() override;
-    WebGLExtensionName name() const override;
+ public:
+  static OESElementIndexUint* Create(WebGLRenderingContextBase*);
+  static bool Supported(WebGLRenderingContextBase*);
+  static const char* ExtensionName();
 
-private:
-    explicit OESElementIndexUint(WebGLRenderingContextBase*);
+  WebGLExtensionName GetName() const override;
+
+ private:
+  explicit OESElementIndexUint(WebGLRenderingContextBase*);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // OESElementIndexUint_h
+#endif  // OESElementIndexUint_h

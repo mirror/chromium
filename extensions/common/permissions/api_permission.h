@@ -14,10 +14,6 @@
 #include "base/pickle.h"
 #include "base/values.h"
 
-namespace IPC {
-class Message;
-}
-
 namespace extensions {
 
 class PermissionIDSet;
@@ -122,7 +118,7 @@ class APIPermission {
     kFirstRunPrivate,
     kFontSettings,
     kFullscreen,
-    kGcdPrivate,
+    kDeleted_GcdPrivate,
     kGcm,
     kGeolocation,
     kHid,
@@ -152,7 +148,7 @@ class APIPermission {
     kNativeMessaging,
     kNetworkingConfig,
     kNetworkingPrivate,
-    kNotificationProvider,
+    kDeleted_NotificationProvider,
     kNotifications,
     kOverrideEscFullscreen,
     kPageCapture,
@@ -245,6 +241,9 @@ class APIPermission {
     kResourcesPrivate,
     kDisplaySource,
     kClipboard,
+    kNetworkingOnc,
+    kVirtualKeyboard,
+    kNetworkingCastPrivate,
     // Last entry: Add new entries above and ensure to update the
     // "ExtensionPermission3" enum in tools/metrics/histograms/histograms.xml
     // (by running update_extension_permission.py).

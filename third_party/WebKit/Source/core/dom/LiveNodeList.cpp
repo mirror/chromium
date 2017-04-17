@@ -27,68 +27,64 @@ namespace blink {
 namespace {
 
 class IsMatch {
-    STACK_ALLOCATED();
-public:
-    IsMatch(const LiveNodeList& list)
-        : m_list(&list)
-    { }
+  STACK_ALLOCATED();
 
-    bool operator() (const Element& element) const
-    {
-        return m_list->elementMatches(element);
-    }
+ public:
+  IsMatch(const LiveNodeList& list) : list_(&list) {}
 
-private:
-    Member<const LiveNodeList> m_list;
+  bool operator()(const Element& element) const {
+    return list_->ElementMatches(element);
+  }
+
+ private:
+  Member<const LiveNodeList> list_;
 };
 
-} // namespace
+}  // namespace
 
-Node* LiveNodeList::virtualOwnerNode() const
-{
-    return &ownerNode();
+Node* LiveNodeList::VirtualOwnerNode() const {
+  return &ownerNode();
 }
 
-void LiveNodeList::invalidateCache(Document*) const
-{
-    m_collectionItemsCache.invalidate();
+void LiveNodeList::InvalidateCache(Document*) const {
+  collection_items_cache_.Invalidate();
 }
 
-unsigned LiveNodeList::length() const
-{
-    return m_collectionItemsCache.nodeCount(*this);
+unsigned LiveNodeList::length() const {
+  return collection_items_cache_.NodeCount(*this);
 }
 
-Element* LiveNodeList::item(unsigned offset) const
-{
-    return m_collectionItemsCache.nodeAt(*this, offset);
+Element* LiveNodeList::item(unsigned offset) const {
+  return collection_items_cache_.NodeAt(*this, offset);
 }
 
-Element* LiveNodeList::traverseToFirst() const
-{
-    return ElementTraversal::firstWithin(rootNode(), IsMatch(*this));
+Element* LiveNodeList::TraverseToFirst() const {
+  return ElementTraversal::FirstWithin(RootNode(), IsMatch(*this));
 }
 
-Element* LiveNodeList::traverseToLast() const
-{
-    return ElementTraversal::lastWithin(rootNode(), IsMatch(*this));
+Element* LiveNodeList::TraverseToLast() const {
+  return ElementTraversal::LastWithin(RootNode(), IsMatch(*this));
 }
 
-Element* LiveNodeList::traverseForwardToOffset(unsigned offset, Element& currentElement, unsigned& currentOffset) const
-{
-    return traverseMatchingElementsForwardToOffset(currentElement, &rootNode(), offset, currentOffset, IsMatch(*this));
+Element* LiveNodeList::TraverseForwardToOffset(unsigned offset,
+                                               Element& current_element,
+                                               unsigned& current_offset) const {
+  return TraverseMatchingElementsForwardToOffset(
+      current_element, &RootNode(), offset, current_offset, IsMatch(*this));
 }
 
-Element* LiveNodeList::traverseBackwardToOffset(unsigned offset, Element& currentElement, unsigned& currentOffset) const
-{
-    return traverseMatchingElementsBackwardToOffset(currentElement, &rootNode(), offset, currentOffset, IsMatch(*this));
+Element* LiveNodeList::TraverseBackwardToOffset(
+    unsigned offset,
+    Element& current_element,
+    unsigned& current_offset) const {
+  return TraverseMatchingElementsBackwardToOffset(
+      current_element, &RootNode(), offset, current_offset, IsMatch(*this));
 }
 
-DEFINE_TRACE(LiveNodeList)
-{
-    visitor->trace(m_collectionItemsCache);
-    LiveNodeListBase::trace(visitor);
-    NodeList::trace(visitor);
+DEFINE_TRACE(LiveNodeList) {
+  visitor->Trace(collection_items_cache_);
+  LiveNodeListBase::Trace(visitor);
+  NodeList::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

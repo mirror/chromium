@@ -13,10 +13,6 @@
 #include "chrome/browser/profiles/profile_attributes_storage.h"
 #include "chrome/browser/ui/webui/settings/settings_page_ui_handler.h"
 
-namespace base {
-class StringValue;
-}
-
 class Profile;
 
 namespace settings {
@@ -38,7 +34,10 @@ class ManageProfileHandler : public settings::SettingsPageUIHandler,
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ManageProfileHandlerTest,
-                           HandleSetProfileIconAndName);
+                           HandleSetProfileIconToGaiaAvatar);
+  FRIEND_TEST_ALL_PREFIXES(ManageProfileHandlerTest,
+                           HandleSetProfileIconToDefaultAvatar);
+  FRIEND_TEST_ALL_PREFIXES(ManageProfileHandlerTest, HandleSetProfileName);
   FRIEND_TEST_ALL_PREFIXES(ManageProfileHandlerTest, HandleGetAvailableIcons);
 
   // Callback for the "getAvailableIcons" message.
@@ -48,23 +47,24 @@ class ManageProfileHandler : public settings::SettingsPageUIHandler,
   // Get all the available profile icons to choose from.
   std::unique_ptr<base::ListValue> GetAvailableIcons();
 
-  // Callback for the "setProfileIconAndName" message. Sets the name and icon
-  // of a given profile.
-  // |args| is of the form: [
-  //   /*string*/ newProfileIconURL
-  //   /*string*/ newProfileName,
-  // ]
-  void HandleSetProfileIconAndName(const base::ListValue* args);
+  // Callback for the "setProfileIconToGaiaAvatar" message.
+  void HandleSetProfileIconToGaiaAvatar(const base::ListValue* args);
 
-  // Callback for the "requestHasProfileShortcuts" message, which is called
+  // Callback for the "setProfileIconToDefaultAvatar" message.
+  void HandleSetProfileIconToDefaultAvatar(const base::ListValue* args);
+
+  // Callback for the "setProfileName" message.
+  void HandleSetProfileName(const base::ListValue* args);
+
+  // Callback for the "requestProfileShortcutStatus" message, which is called
   // when editing an existing profile. Asks the profile shortcut manager whether
   // the profile has shortcuts and gets the result in |OnHasProfileShortcuts()|.
-  // |args| is of the form: [ {string} profileFilePath ]
-  void HandleRequestHasProfileShortcuts(const base::ListValue* args);
+  void HandleRequestProfileShortcutStatus(const base::ListValue* args);
 
   // Callback invoked from the profile manager indicating whether the profile
   // being edited has any desktop shortcuts.
-  void OnHasProfileShortcuts(bool has_shortcuts);
+  void OnHasProfileShortcuts(const std::string& callback_id,
+                             bool has_shortcuts);
 
   // Callback for the "addProfileShortcut" message, which is called when editing
   // an existing profile and the user clicks the "Add desktop shortcut" button.
@@ -78,9 +78,6 @@ class ManageProfileHandler : public settings::SettingsPageUIHandler,
 
   // Non-owning pointer to the associated profile.
   Profile* profile_;
-
-  // URL for the current profile's GAIA picture.
-  std::string gaia_picture_url_;
 
   // Used to observe profile avatar updates.
   ScopedObserver<ProfileAttributesStorage, ManageProfileHandler> observer_;

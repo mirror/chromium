@@ -20,6 +20,27 @@ config("bluetooth_config") {
   }
 }
 
+source_set("mojo") {
+  sources = [
+    "//device/bluetooth/public/interfaces/connect_result_type_converter.h",
+    "//device/bluetooth/public/interfaces/gatt_result_type_converter.h",
+    "adapter.cc",
+    "adapter.h",
+    "adapter_factory.cc",
+    "adapter_factory.h",
+    "device.cc",
+    "device.h",
+    "discovery_session.cc",
+    "discovery_session.h",
+  ]
+
+  public_deps = [
+    ":bluetooth",
+    "//device/bluetooth/public/interfaces:experimental_interfaces",
+    "//mojo/public/cpp/bindings",
+  ]
+}
+
 component("bluetooth") {
   sources = [
     "android/bluetooth_jni_registrar.cc",
@@ -40,8 +61,6 @@ component("bluetooth") {
     "bluetooth_adapter_win.h",
     "bluetooth_advertisement.cc",
     "bluetooth_advertisement.h",
-    "bluetooth_audio_sink.cc",
-    "bluetooth_audio_sink.h",
     "bluetooth_channel_mac.h",
     "bluetooth_channel_mac.mm",
     "bluetooth_classic_device_mac.h",
@@ -64,6 +83,7 @@ component("bluetooth") {
     "bluetooth_discovery_session.cc",
     "bluetooth_discovery_session.h",
     "bluetooth_discovery_session_outcome.h",
+    "bluetooth_export.h",
     "bluetooth_gatt_characteristic.cc",
     "bluetooth_gatt_characteristic.h",
     "bluetooth_gatt_connection.cc",
@@ -72,12 +92,6 @@ component("bluetooth") {
     "bluetooth_gatt_descriptor.h",
     "bluetooth_gatt_notify_session.cc",
     "bluetooth_gatt_notify_session.h",
-    "bluetooth_gatt_notify_session_android.cc",
-    "bluetooth_gatt_notify_session_android.h",
-    "bluetooth_gatt_notify_session_mac.h",
-    "bluetooth_gatt_notify_session_mac.mm",
-    "bluetooth_gatt_notify_session_win.cc",
-    "bluetooth_gatt_notify_session_win.h",
     "bluetooth_gatt_service.cc",
     "bluetooth_gatt_service.h",
     "bluetooth_init_win.cc",
@@ -114,6 +128,8 @@ component("bluetooth") {
     "bluetooth_remote_gatt_descriptor.h",
     "bluetooth_remote_gatt_descriptor_android.cc",
     "bluetooth_remote_gatt_descriptor_android.h",
+    "bluetooth_remote_gatt_descriptor_mac.h",
+    "bluetooth_remote_gatt_descriptor_mac.mm",
     "bluetooth_remote_gatt_descriptor_win.cc",
     "bluetooth_remote_gatt_descriptor_win.h",
     "bluetooth_remote_gatt_service.cc",
@@ -142,6 +158,8 @@ component("bluetooth") {
     "bluetooth_task_manager_win.h",
     "bluetooth_uuid.cc",
     "bluetooth_uuid.h",
+    "string_util_icu.cc",
+    "string_util_icu.h",
   ]
 
   defines = [ "DEVICE_BLUETOOTH_IMPLEMENTATION" ]
@@ -150,6 +168,7 @@ component("bluetooth") {
 
   deps = [
     "//base",
+    "//components/device_event_log",
     "//crypto",
     "//device/bluetooth/strings",
     "//device/bluetooth/uribeacon",
@@ -192,8 +211,6 @@ component("bluetooth") {
         "bluez/bluetooth_adapter_profile_bluez.h",
         "bluez/bluetooth_advertisement_bluez.cc",
         "bluez/bluetooth_advertisement_bluez.h",
-        "bluez/bluetooth_audio_sink_bluez.cc",
-        "bluez/bluetooth_audio_sink_bluez.h",
         "bluez/bluetooth_device_bluez.cc",
         "bluez/bluetooth_device_bluez.h",
         "bluez/bluetooth_gatt_characteristic_bluez.cc",
@@ -202,8 +219,6 @@ component("bluetooth") {
         "bluez/bluetooth_gatt_connection_bluez.h",
         "bluez/bluetooth_gatt_descriptor_bluez.cc",
         "bluez/bluetooth_gatt_descriptor_bluez.h",
-        "bluez/bluetooth_gatt_notify_session_bluez.cc",
-        "bluez/bluetooth_gatt_notify_session_bluez.h",
         "bluez/bluetooth_gatt_service_bluez.cc",
         "bluez/bluetooth_gatt_service_bluez.h",
         "bluez/bluetooth_local_gatt_characteristic_bluez.cc",

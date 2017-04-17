@@ -28,37 +28,46 @@
 
 namespace blink {
 
-template<> const SVGEnumerationStringEntries& getStaticStringEntries<ChannelSelectorType>();
+template <>
+const SVGEnumerationStringEntries&
+GetStaticStringEntries<ChannelSelectorType>();
 
-class SVGFEDisplacementMapElement final : public SVGFilterPrimitiveStandardAttributes {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(SVGFEDisplacementMapElement);
+class SVGFEDisplacementMapElement final
+    : public SVGFilterPrimitiveStandardAttributes {
+  DEFINE_WRAPPERTYPEINFO();
 
-    static ChannelSelectorType stringToChannel(const String&);
+ public:
+  DECLARE_NODE_FACTORY(SVGFEDisplacementMapElement);
 
-    SVGAnimatedNumber* scale() { return m_scale.get(); }
-    SVGAnimatedString* in1() { return m_in1.get(); }
-    SVGAnimatedString* in2() { return m_in2.get(); }
-    SVGAnimatedEnumeration<ChannelSelectorType>* xChannelSelector() { return m_xChannelSelector.get(); }
-    SVGAnimatedEnumeration<ChannelSelectorType>* yChannelSelector() { return m_yChannelSelector.get(); }
+  static ChannelSelectorType StringToChannel(const String&);
 
-    DECLARE_VIRTUAL_TRACE();
+  SVGAnimatedNumber* scale() { return scale_.Get(); }
+  SVGAnimatedString* in1() { return in1_.Get(); }
+  SVGAnimatedString* in2() { return in2_.Get(); }
+  SVGAnimatedEnumeration<ChannelSelectorType>* xChannelSelector() {
+    return x_channel_selector_.Get();
+  }
+  SVGAnimatedEnumeration<ChannelSelectorType>* yChannelSelector() {
+    return y_channel_selector_.Get();
+  }
 
-private:
-    explicit SVGFEDisplacementMapElement(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    bool setFilterEffectAttribute(FilterEffect*, const QualifiedName& attrName) override;
-    void svgAttributeChanged(const QualifiedName&) override;
-    FilterEffect* build(SVGFilterBuilder*, Filter*) override;
+ private:
+  explicit SVGFEDisplacementMapElement(Document&);
 
-    Member<SVGAnimatedNumber> m_scale;
-    Member<SVGAnimatedString> m_in1;
-    Member<SVGAnimatedString> m_in2;
-    Member<SVGAnimatedEnumeration<ChannelSelectorType>> m_xChannelSelector;
-    Member<SVGAnimatedEnumeration<ChannelSelectorType>> m_yChannelSelector;
+  bool SetFilterEffectAttribute(FilterEffect*,
+                                const QualifiedName& attr_name) override;
+  void SvgAttributeChanged(const QualifiedName&) override;
+  FilterEffect* Build(SVGFilterBuilder*, Filter*) override;
+
+  Member<SVGAnimatedNumber> scale_;
+  Member<SVGAnimatedString> in1_;
+  Member<SVGAnimatedString> in2_;
+  Member<SVGAnimatedEnumeration<ChannelSelectorType>> x_channel_selector_;
+  Member<SVGAnimatedEnumeration<ChannelSelectorType>> y_channel_selector_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGFEDisplacementMapElement_h
+#endif  // SVGFEDisplacementMapElement_h

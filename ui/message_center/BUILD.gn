@@ -5,6 +5,18 @@
 import("//build/config/features.gni")
 import("//build/config/ui.gni")
 import("//testing/test.gni")
+import("//ui/vector_icons/vector_icons.gni")
+
+aggregate_vector_icons("message_center_vector_icons") {
+  icon_directory = "vector_icons"
+
+  icons = [
+    "notification_settings_button.1x.icon",
+    "notification_settings_button.icon",
+    "notification_close_button.1x.icon",
+    "notification_close_button.icon",
+  ]
+}
 
 # TODO(msw|mukai|dewittj): Move ash-specific files: crbug.com/585175
 component("message_center") {
@@ -16,8 +28,9 @@ component("message_center") {
 
   defines = [ "MESSAGE_CENTER_IMPLEMENTATION" ]
 
-  if (enable_notifications && !is_android) {
+  if (!is_ios && !is_android) {
     deps += [
+      ":message_center_vector_icons",
       "//base:i18n",
       "//base/third_party/dynamic_annotations",
       "//components/url_formatter",
@@ -79,6 +92,8 @@ component("message_center") {
       "popup_timers_controller.h",
     ]
 
+    sources += get_target_outputs(":message_center_vector_icons")
+
     if (is_win) {
       deps += [ "//ui/aura" ]
     }
@@ -98,6 +113,8 @@ component("message_center") {
         "views/bounded_label.cc",
         "views/bounded_label.h",
         "views/constants.h",
+        "views/custom_notification_content_view_delegate.cc",
+        "views/custom_notification_content_view_delegate.h",
         "views/custom_notification_view.cc",
         "views/custom_notification_view.h",
         "views/desktop_popup_alignment_delegate.cc",
@@ -123,8 +140,6 @@ component("message_center") {
         "views/message_view_factory.h",
         "views/notification_button.cc",
         "views/notification_button.h",
-        "views/notification_progress_bar.cc",
-        "views/notification_progress_bar.h",
         "views/notification_view.cc",
         "views/notification_view.h",
         "views/notifier_settings_view.cc",
@@ -169,14 +184,12 @@ component("message_center") {
 static_library("test_support") {
   testonly = true
 
-  if (enable_notifications && !is_android) {
+  if (!is_ios && !is_android) {
     sources = [
       "fake_message_center.cc",
       "fake_message_center.h",
       "fake_message_center_tray_delegate.cc",
       "fake_message_center_tray_delegate.h",
-      "fake_notifier_settings_provider.cc",
-      "fake_notifier_settings_provider.h",
     ]
     deps = [
       "//base",
@@ -203,8 +216,10 @@ test("message_center_unittests") {
     "//base",
     "//base/test:test_support",
     "//skia",
+    "//testing/gmock",
     "//testing/gtest",
     "//ui/base",
+    "//ui/base:test_support",
     "//ui/events",
     "//ui/gfx",
     "//ui/gfx/geometry",
@@ -220,7 +235,7 @@ test("message_center_unittests") {
     "//ui/resources:ui_test_pak_data",
   ]
 
-  if (enable_notifications && !is_android) {
+  if (!is_ios && !is_android) {
     sources += [
       "cocoa/notification_controller_unittest.mm",
       "cocoa/popup_collection_unittest.mm",
@@ -240,6 +255,7 @@ test("message_center_unittests") {
         "views/bounded_label_unittest.cc",
         "views/custom_notification_view_unittest.cc",
         "views/message_center_view_unittest.cc",
+        "views/message_list_view_unittest.cc",
         "views/message_popup_collection_unittest.cc",
         "views/notification_view_unittest.cc",
         "views/notifier_settings_view_unittest.cc",
@@ -253,5 +269,14 @@ test("message_center_unittests") {
         "//ui/views:test_support",
       ]
     }
-  }  # enable_notifications && !is_android
+
+    if (!is_ios) {
+      sources += [ "mojo/struct_traits_unittest.cc" ]
+      deps += [
+        "//mojo/edk/system",
+        "//ui/gfx:test_support",
+        "//ui/message_center/mojo:test_interfaces",
+      ]
+    }
+  }  # !is_ios && !is_android
 }

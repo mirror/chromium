@@ -6,12 +6,14 @@
 
 #include <stddef.h>
 
+#include <tuple>
 #include <utility>
 
 #include "base/command_line.h"
 #include "base/hash.h"
 #include "base/i18n/time_formatting.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -26,6 +28,7 @@
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/common/profile_management_switches.h"
 #include "components/signin/core/common/signin_switches.h"
+#include "google_apis/gaia/oauth2_token_service_delegate.h"
 #include "net/base/backoff_entry.h"
 
 using base::Time;
@@ -81,6 +84,30 @@ std::string SigninStatusFieldToLabel(UntimedSigninStatusField field) {
     case UNTIMED_FIELDS_END:
       NOTREACHED();
       return std::string();
+  }
+  NOTREACHED();
+  return std::string();
+}
+
+std::string TokenServiceLoadCredentialsStateToLabel(
+    OAuth2TokenServiceDelegate::LoadCredentialsState state) {
+  switch (state) {
+    case OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_UNKNOWN:
+      return "Unknown";
+    case OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_NOT_STARTED:
+      return "Load credentials not started";
+    case OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_IN_PROGRESS:
+      return "Load credentials in progress";
+    case OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_FINISHED_WITH_SUCCESS:
+      return "Load credentials finished with success";
+    case OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_FINISHED_WITH_DB_ERRORS:
+      return "Load credentials failed with database errors";
+    case OAuth2TokenServiceDelegate::
+        LOAD_CREDENTIALS_FINISHED_WITH_DECRYPT_ERRORS:
+      return "Load credentials failed with decrypt errors";
+    case OAuth2TokenServiceDelegate::
+        LOAD_CREDENTIALS_FINISHED_WITH_UNKNOWN_ERRORS:
+      return "Load credentials failed with unknown errors";
   }
   NOTREACHED();
   return std::string();
@@ -161,7 +188,7 @@ void AboutSigninInternals::RegisterPrefs(
   for (int i = UNTIMED_FIELDS_BEGIN; i < UNTIMED_FIELDS_END; ++i) {
     const std::string pref_path =
         SigninStatusFieldToString(static_cast<UntimedSigninStatusField>(i));
-    user_prefs->RegisterStringPref(pref_path.c_str(), std::string());
+    user_prefs->RegisterStringPref(pref_path, std::string());
   }
 
   for (int i = TIMED_FIELDS_BEGIN; i < TIMED_FIELDS_END; ++i) {
@@ -171,8 +198,8 @@ void AboutSigninInternals::RegisterPrefs(
     const std::string time =
         SigninStatusFieldToString(static_cast<TimedSigninStatusField>(i)) +
         ".time";
-    user_prefs->RegisterStringPref(value.c_str(), std::string());
-    user_prefs->RegisterStringPref(time.c_str(), std::string());
+    user_prefs->RegisterStringPref(value, std::string());
+    user_prefs->RegisterStringPref(time, std::string());
   }
 }
 
@@ -282,9 +309,8 @@ void AboutSigninInternals::NotifyObservers() {
       FROM_HERE_WITH_EXPLICIT_FUNCTION(
           "422460 AboutSigninInternals::NotifyObservers1"));
 
-  FOR_EACH_OBSERVER(AboutSigninInternals::Observer,
-                    signin_observers_,
-                    OnSigninStateChanged(signin_status_value.get()));
+  for (auto& observer : signin_observers_)
+    observer.OnSigninStateChanged(signin_status_value.get());
 }
 
 std::unique_ptr<base::DictionaryValue> AboutSigninInternals::GetSigninStatus() {
@@ -307,8 +333,8 @@ void AboutSigninInternals::OnAccessTokenRequested(
   if (token) {
     *token = TokenInfo(consumer_id, scopes);
   } else {
-    token = new TokenInfo(consumer_id, scopes);
-    signin_status_.token_info_map[account_id].push_back(token);
+    signin_status_.token_info_map[account_id].push_back(
+        base::MakeUnique<TokenInfo>(consumer_id, scopes));
   }
 
   NotifyObservers();
@@ -333,12 +359,15 @@ void AboutSigninInternals::OnFetchAccessTokenComplete(
   NotifyObservers();
 }
 
+void AboutSigninInternals::OnRefreshTokensLoaded() {
+  NotifyObservers();
+}
+
 void AboutSigninInternals::OnTokenRemoved(
     const std::string& account_id,
     const OAuth2TokenService::ScopeSet& scopes) {
-  for (size_t i = 0; i < signin_status_.token_info_map[account_id].size();
-       ++i) {
-    TokenInfo* token = signin_status_.token_info_map[account_id][i];
+  for (const std::unique_ptr<TokenInfo>& token :
+       signin_status_.token_info_map[account_id]) {
     if (token->scopes == scopes)
       token->Invalidate();
   }
@@ -400,9 +429,8 @@ void AboutSigninInternals::OnGaiaAccountsInCookieUpdated(
   }
 
   // Update the observers that the cookie's accounts are updated.
-  FOR_EACH_OBSERVER(AboutSigninInternals::Observer,
-                    signin_observers_,
-                    OnCookieAccountsFetched(&cookie_status));
+  for (auto& observer : signin_observers_)
+    observer.OnCookieAccountsFetched(&cookie_status);
 }
 
 AboutSigninInternals::TokenInfo::TokenInfo(
@@ -416,20 +444,17 @@ AboutSigninInternals::TokenInfo::TokenInfo(
 
 AboutSigninInternals::TokenInfo::~TokenInfo() {}
 
-bool AboutSigninInternals::TokenInfo::LessThan(const TokenInfo* a,
-                                               const TokenInfo* b) {
-  if (a->request_time == b->request_time) {
-    if (a->consumer_id == b->consumer_id) {
-      return a->scopes < b->scopes;
-    }
-    return a->consumer_id < b->consumer_id;
-  }
-  return a->request_time < b->request_time;
+bool AboutSigninInternals::TokenInfo::LessThan(
+    const std::unique_ptr<TokenInfo>& a,
+    const std::unique_ptr<TokenInfo>& b) {
+  return std::tie(a->request_time, a->consumer_id, a->scopes) <
+         std::tie(b->request_time, b->consumer_id, b->scopes);
 }
 
 void AboutSigninInternals::TokenInfo::Invalidate() { removed_ = true; }
 
-base::DictionaryValue* AboutSigninInternals::TokenInfo::ToValue() const {
+std::unique_ptr<base::DictionaryValue>
+AboutSigninInternals::TokenInfo::ToValue() const {
   std::unique_ptr<base::DictionaryValue> token_info(
       new base::DictionaryValue());
   token_info->SetString("service", consumer_id);
@@ -441,7 +466,7 @@ base::DictionaryValue* AboutSigninInternals::TokenInfo::ToValue() const {
     scopes_str += *it + "<br/>";
   }
   token_info->SetString("scopes", scopes_str);
-  token_info->SetString("request_time", GetTimeStr(request_time).c_str());
+  token_info->SetString("request_time", GetTimeStr(request_time));
 
   if (removed_) {
     token_info->SetString("status", "Token was revoked.");
@@ -471,30 +496,23 @@ base::DictionaryValue* AboutSigninInternals::TokenInfo::ToValue() const {
     token_info->SetString("status", "Waiting for response");
   }
 
-  return token_info.release();
+  return token_info;
 }
 
 AboutSigninInternals::SigninStatus::SigninStatus()
     : timed_signin_fields(TIMED_FIELDS_COUNT) {}
 
-AboutSigninInternals::SigninStatus::~SigninStatus() {
-  for (TokenInfoMap::iterator it = token_info_map.begin();
-       it != token_info_map.end();
-       ++it) {
-    STLDeleteElements(&it->second);
-  }
-}
+AboutSigninInternals::SigninStatus::~SigninStatus() {}
 
 AboutSigninInternals::TokenInfo* AboutSigninInternals::SigninStatus::FindToken(
     const std::string& account_id,
     const std::string& consumer_id,
     const OAuth2TokenService::ScopeSet& scopes) {
-  for (size_t i = 0; i < token_info_map[account_id].size(); ++i) {
-    TokenInfo* tmp = token_info_map[account_id][i];
-    if (tmp->consumer_id == consumer_id && tmp->scopes == scopes)
-      return tmp;
+  for (const std::unique_ptr<TokenInfo>& token : token_info_map[account_id]) {
+    if (token->consumer_id == consumer_id && token->scopes == scopes)
+      return token.get();
   }
-  return NULL;
+  return nullptr;
 }
 
 std::unique_ptr<base::DictionaryValue>
@@ -519,12 +537,14 @@ AboutSigninInternals::SigninStatus::ToValue(
   // A summary of signin related info first.
   base::ListValue* basic_info = AddSection(signin_info, "Basic Information");
   AddSectionEntry(basic_info, "Chrome Version", product_version);
-  AddSectionEntry(basic_info, "New Profile Management?",
-      switches::IsNewProfileManagement() == true ? "On" : "Off");
   AddSectionEntry(basic_info, "Account Consistency?",
       switches::IsEnableAccountConsistency() == true ? "On" : "Off");
   AddSectionEntry(basic_info, "Signin Status",
       signin_manager->IsAuthenticated() ? "Signed In" : "Not Signed In");
+  OAuth2TokenServiceDelegate::LoadCredentialsState load_tokens_state =
+      token_service->GetDelegate()->GetLoadCredentialsState();
+  AddSectionEntry(basic_info, "TokenService Status",
+                  TokenServiceLoadCredentialsStateToLabel(load_tokens_state));
 
   // TODO(robliao): Remove ScopedTracker below once https://crbug.com/422460 is
   // fixed.
@@ -626,9 +646,7 @@ AboutSigninInternals::SigninStatus::ToValue(
   // Token information for all services.
   base::ListValue* token_info = new base::ListValue();
   signin_status->Set("token_info", token_info);
-  for (TokenInfoMap::iterator it = token_info_map.begin();
-       it != token_info_map.end();
-       ++it) {
+  for (auto it = token_info_map.begin(); it != token_info_map.end(); ++it) {
     // TODO(robliao): Remove ScopedTracker below once https://crbug.com/422460
     // is fixed.
     tracked_objects::ScopedTracker tracking_profile41(
@@ -644,7 +662,7 @@ AboutSigninInternals::SigninStatus::ToValue(
             "422460 AboutSigninInternals::SigninStatus::ToValue42"));
 
     std::sort(it->second.begin(), it->second.end(), TokenInfo::LessThan);
-    const std::vector<TokenInfo*>& tokens = it->second;
+    const auto& tokens = it->second;
 
     // TODO(robliao): Remove ScopedTracker below once https://crbug.com/422460
     // is fixed.
@@ -652,9 +670,8 @@ AboutSigninInternals::SigninStatus::ToValue(
         FROM_HERE_WITH_EXPLICIT_FUNCTION(
             "422460 AboutSigninInternals::SigninStatus::ToValue43"));
 
-    for (size_t i = 0; i < tokens.size(); ++i) {
-      base::DictionaryValue* token_info = tokens[i]->ToValue();
-      token_details->Append(token_info);
+    for (const std::unique_ptr<TokenInfo>& token : tokens) {
+      token_details->Append(token->ToValue());
     }
   }
 

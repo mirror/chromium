@@ -40,27 +40,19 @@ pin-keyboard {
   z-index: 0;
 }
 
-#account_picker.flying-pods .pod {
+.account-picker.flying-pods .pod {
   transition: all 180ms;
 }
 
-.pod.flying-pin-pod {
-  transition: height 180ms ease-in-out,
-              top 180ms ease-in-out,
-              width 180ms ease-in-out;
-}
-
 .pod.pin-enabled {
-  height: 594px;
-  top: -200px !important;
-  width: 270px;
+  height: 417px;
+  top: -87px !important;
 }
 
 .pod .pin-container {
-  height: 344px;
+  height: 204px;
   position: absolute;
-  top: 250px;
-  width: 270px;
+  top: 170px;
 }
 
 .pod.faded {
@@ -97,21 +89,9 @@ podrow[ncolumns='6'] .pod {
   z-index: 3;
 }
 
-.user-image-pane.pin-enabled {
-  height: 230px;
-  left: 20px;
-  top: 20px;
-  width: 230px;
-}
-
 html[dir=rtl] .user-image-pane {
   left: auto;
   right: 10px;
-}
-
-html[dir=rtl] .user-image-pane.pin-enabled {
-  left: auto;
-  right: 20px;
 }
 
 .user-image-container {
@@ -133,14 +113,6 @@ html:not([screen=login-add-user]) .pod .user-image {
   max-width: 160px;
   opacity: 0.7;
   position: absolute;
-  transition: max-height 180ms ease-in-out,
-              max-width 180ms ease-in-out,
-              top 180ms ease-in-out;
-}
-
-html:not([screen=login-add-user]) .pod .user-image.pin-enabled {
-  max-height: 230px;
-  max-width: 230px;
 }
 
 html:not([screen=login-add-user]) .pod.focused .user-image {
@@ -163,16 +135,7 @@ html:not([screen=login-add-user]) .pod.focused .user-image {
   position: absolute;
   text-align: center;
   top: 0;
-  transition: left 180ms ease-in-out,
-              top 180ms ease-in-out,
-              width 180ms ease-in-out;
   width: 100%;
-}
-
-.pod.signed-in .signed-in-indicator.pin-enabled {
-  left: 20px;
-  top: 20px;
-  width: 230px;
 }
 
 .main-pane {
@@ -193,26 +156,35 @@ html[dir=rtl] .main-pane {
   display: flex;
   position: absolute;
   top: 160px;
+/* On chromeos we extend the width to cover the padding on the user pods. This
+ is so the submit button on chromeos can extend onto the padding as shown on
+ mocks. */
+<if expr="not chromeos">
   width: 160px;
+</if>
+<if expr="chromeos">
+  width: 170px;
+</if>
 }
 
-.pod.focused:not(.multiprofiles-policy-applied) .auth-container {
-  background-color: white;
-  position: absolute;
-  top: 160px;
-  width: 160px;
+.auth-container .submit-button[disabled] {
+  color: #000;
+  opacity: 0.26;
 }
 
-.auth-container.pin-disabled {
-  opacity: 1;
-  transition: opacity 200ms ease-in-out 180ms;
-  visibility: visible;
+.auth-container .submit-button {
+  box-sizing: border-box;
+  color: var(--google-blue-500);
+  height: 43px;
+  min-height: 43px;
+  min-width: 43px;
+  padding: 11.5px 10px;
+  position: relative;
+  width: 43px;
 }
 
-.auth-container.pin-enabled {
-  opacity: 0;
-  transition: none;
-  visibility: hidden;
+.auth-container .submit-button.error-shown {
+  color: #CD2A00;
 }
 
 .name-container {
@@ -248,6 +220,10 @@ html[dir=rtl] .main-pane {
   display: none;
 }
 
+.pod[is-active-directory] .reauth-warning {
+  display: none;
+}
+
 .pod[auth-type='offlinePassword'].focused .password-entry-container,
 .pod[auth-type='forceOfflinePassword'].focused .password-entry-container {
   display: flex;
@@ -271,16 +247,22 @@ html[dir=rtl] .main-pane {
   display: none;
 }
 
+<if expr="chromeos">
 .capslock-on .capslock-hint-container {
   display: block;
   flex: none;
+  height: 43px;
+  position: relative;
+  width: 20px;
 }
+</if>
 
 .capslock-hint {
   -webkit-margin-end: 6px;
   -webkit-margin-start: -2px;
+  margin: auto;
   position: relative;
-  top: 11px;
+  top: 15px;
 }
 
 .password-label,
@@ -307,12 +289,12 @@ html[dir=rtl] .main-pane {
   background-repeat: no-repeat;
   flex: none;
   height: 27px;
+  margin: 8px 0;
   width: 27px;
 }
 
 .custom-icon.faded {
-  -webkit-transition: opacity 200ms ease-in-out,
-                      visibility 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out, visibility 200ms ease-in-out;
 }
 
 .custom-icon-hardlocked {
@@ -407,11 +389,11 @@ html[dir=rtl] .main-pane {
 }
 
 .custom-icon-spinner {
-  -webkit-animation: easy-unlock-spinner-animation 2s steps(45) infinite;
+  animation: easy-unlock-spinner-animation 2s steps(45) infinite;
   background-image: url(chrome://theme/IDR_EASY_UNLOCK_SPINNER);
 }
 
-@-webkit-keyframes easy-unlock-spinner-animation {
+@keyframes easy-unlock-spinner-animation {
   from { background-position: 0 }
   to { background-position: -1215px }
 }
@@ -420,13 +402,17 @@ html[dir=rtl] .main-pane {
   cursor: pointer;
 }
 
+.pod[auth-type='onlineSignIn'] .custom-icon-container {
+  display: none;
+}
+
+.fingerprint-icon-container,
 .custom-icon-container {
   display: flex;
   flex: none;
   flex-direction: column;
-  height: 40px;
-  justify-content: center;
-  width: 40px;
+  height: 43px;
+  width: 27px;
 }
 
 .launch-app-button-container {
@@ -445,9 +431,9 @@ html[dir=rtl] .main-pane {
 
 .pod[auth-type='onlineSignIn'] .reauth-hint-container {
   display: flex;
+  justify-content: center;
   margin-top: 8px;
   width: 100%;
-  justify-content: center;
 }
 
 .reauth-hint-container .reauth-warning {
@@ -560,6 +546,42 @@ html[dir=rtl] .user-type-icon-area {
   background-image: url(chrome://theme/IDR_KIOSK_APP_USER_POD_ICON);
 }
 
+.fingerprint-icon-container.hidden {
+  display: none;
+}
+
+.fingerprint-icon-container.default .fingerprint-icon-image {
+  background-image: url(../../webui/resources/images/fingerprint_default.svg);
+}
+
+.fingerprint-icon-container.default:hover .fingerprint-icon-image {
+  background-image: url(../../webui/resources/images/fingerprint_signin.svg);
+}
+
+.fingerprint-icon-container.signin .fingerprint-icon-image {
+  background-image: url(../../webui/resources/images/fingerprint_signin.svg);
+}
+
+.fingerprint-icon-container.failed .fingerprint-icon-image {
+  background-image: url(../../webui/resources/images/fingerprint_failed.svg);
+}
+
+.pod input[type='password'].hidden::-webkit-input-placeholder {
+  color: grey;
+}
+
+.pod input[type='password'].default::-webkit-input-placeholder {
+  color: grey;
+}
+
+.pod input[type='password'].signin::-webkit-input-placeholder {
+  color: var(--google-blue-500);
+}
+
+.pod input[type='password'].failed::-webkit-input-placeholder {
+  color: var(--google-red-500);
+}
+
 .action-box-menu {
   display: none;
   z-index: 6;
@@ -670,6 +692,7 @@ html[dir=rtl] .action-box-area.active ~ .action-box-menu {
    in use are included here. */
 .pod.legacy-supervised .non-sync,
 .pod.legacy-supervised .action-box-remove-user-warning-text,
+.pod.legacy-supervised .action-box-remove-non-owner-user-warning-text,
 .pod:not(.legacy-supervised)
     .action-box-remove-legacy-supervised-user-warning-text,
 .pod.synced .non-sync,
@@ -711,10 +734,12 @@ html[dir=rtl] .user-type-bubble {
 /**** Public account user pod rules *******************************************/
 
 .pod.public-account.expanded {
+  height: 230px;
   width: 500px;
 }
 
 .pod.public-account.expanded.advanced {
+  height: 280px;
   width: 610px;
 }
 
@@ -723,7 +748,7 @@ html[dir=rtl] .user-type-bubble {
 }
 
 .pod.public-account.expanded .name-container {
-  transform: translateY(-34px);
+  display: none;
 }
 
 .pod.public-account .learn-more-container {
@@ -732,7 +757,7 @@ html[dir=rtl] .user-type-bubble {
 }
 
 .pod.public-account .learn-more {
-  top: 15px;
+  top: 22px;
 }
 
 .expanded-pane {
@@ -752,7 +777,7 @@ html[dir=rtl] .user-type-bubble {
   display: flex;
   flex-direction: column;
   float: right;
-  height: 193px;
+  height: 213px;
   width: 490px;
 }
 
@@ -761,6 +786,7 @@ html[dir=rtl] .user-type-bubble {
 }
 
 .pod.public-account.expanded.advanced .expanded-pane-contents {
+  height: 263px;
   width: 600px;
 }
 
@@ -782,8 +808,12 @@ html[dir=rtl] .expanded-pane-contents {
   white-space: nowrap;
 }
 
+.expanded-pane-container {
+  color: grey;
+}
+
 .reminder {
-  font-weight: bold;
+  margin-top: 20px;
 }
 
 .language-and-input-section {
@@ -826,10 +856,14 @@ html[dir=rtl] .expanded-pane-contents {
 }
 
 .bottom-container {
-  -webkit-margin-start: 10px;
+  -webkit-margin-start: 20px;
+  align-items: center;
   display: flex;
+  flex-direction: row-reverse;
   flex: none;
   font-size: 13px;
+  justify-content: space-between;
+  margin-bottom: 4px;
 }
 
 .expanded-pane-learn-more-container,
@@ -842,6 +876,7 @@ html[dir=rtl] .expanded-pane-contents {
   background-image: url(../../webui/resources/images/business.svg);
   background-size: 18px;
   height: 18px;
+  margin-top: -10px;
   position: relative;
   width: 18px;
 }
@@ -852,10 +887,72 @@ html[dir=rtl] .expanded-pane-contents {
 
 .info {
   flex: auto;
-  margin: 5px 10px;
+  margin: -10px 25px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.monitoring-container {
+  margin-top: 35px;
+}
+
+.monitoring-learn-more {
+  color: rgb(49, 106, 197);
+  text-decoration: none;
+}
+
+.monitoring-dialog-container .cr-dialog-shield {
+  background: black;
+  opacity: 0.5;
+}
+
+.monitoring-dialog-container .cr-dialog-buttons {
+  display: none;
+}
+
+.monitoring-dialog-container .cr-dialog-frame {
+  height: 170px;
+  left: -46px;
+  padding: 0px;
+  position: relative;
+  top: -24px;
+  width: 430px;
+}
+
+.monitoring-dialog-container.advanced .cr-dialog-frame {
+  left: -110px;
+  top: 0px;
+}
+
+.monitoring-dialog-container .cr-dialog-close {
+  color: grey;
+  height: 34px;
+  position: absolute;
+  top: 0px;
+  width: 34px;
+}
+
+.monitoring-dialog-container .cr-dialog-title {
+  font-size: 16px;
+  font-weight: bold;
+  left: 20px;
+  position: absolute;
+  top: 15px;
+}
+
+.monitoring-dialog-container .cr-dialog-text {
+  color: grey;
+  font-size: 13px;
+  overflow: visible;
+  position: absolute;
+  top: 20px;
+}
+
+.monitoring-dialog-container .cr-dialog-item {
+  -webkit-margin-start: 42px;
+  display: list-item;
+  margin-bottom: -6px;
 }
 
 .language-and-input-container {
@@ -865,9 +962,7 @@ html[dir=rtl] .expanded-pane-contents {
 
 .language-and-input {
   color: rgb(49, 106, 197);
-  position: relative;
   text-decoration: none;
-  top: 4px;
 }
 
 .pod.public-account.expanded.advanced .language-and-input-container {
@@ -875,15 +970,28 @@ html[dir=rtl] .expanded-pane-contents {
 }
 
 .enter-button {
-  font-size: 14px;
+  background-color: rgb(66, 133, 244);
+  color: white;
+  font-size: 12px;
+  text-transform: none;
+}
+
+.enter-button.keyboard-focus {
+  font-weight: normal;
+}
+
+.horizontal-line {
+  border-bottom: 1px double #cccccc;
+  bottom: 8px;
+  position: relative;
 }
 
 /* Animations for the animated ellipsis: */
 .animated-ellipsis-component0 {
-  -webkit-animation: ellipsis-component0 1.5s infinite;
+  animation: ellipsis-component0 1.5s infinite;
 }
 
-@-webkit-keyframes ellipsis-component0 {
+@keyframes ellipsis-component0 {
   0% { opacity: 0; }
   25% { opacity: 1; }
   50% { opacity: 1; }
@@ -892,10 +1000,10 @@ html[dir=rtl] .expanded-pane-contents {
 }
 
 .animated-ellipsis-component1 {
-  -webkit-animation: ellipsis-component1 1.5s infinite;
+  animation: ellipsis-component1 1.5s infinite;
 }
 
-@-webkit-keyframes ellipsis-component1 {
+@keyframes ellipsis-component1 {
   0% { opacity: 0; }
   25% { opacity: 0; }
   50% { opacity: 1; }
@@ -904,10 +1012,10 @@ html[dir=rtl] .expanded-pane-contents {
 }
 
 .animated-ellipsis-component2 {
-  -webkit-animation: ellipsis-component2 1.5s infinite;
+  animation: ellipsis-component2 1.5s infinite;
 }
 
-@-webkit-keyframes ellipsis-component2 {
+@keyframes ellipsis-component2 {
   0% { opacity: 0; }
   25% { opacity: 0; }
   50% { opacity: 0; }

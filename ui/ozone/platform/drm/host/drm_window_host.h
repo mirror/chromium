@@ -21,11 +21,11 @@ namespace ui {
 
 class DrmDisplayHostManager;
 class DrmCursor;
-class DrmGpuWindow;
 class DrmOverlayManager;
 class DrmWindowHostManager;
 class EventFactoryEvdev;
 class GpuThreadAdapter;
+class PlatformWindowDelegate;
 
 // Implementation of the platform window. This object and its handle |widget_|
 // uniquely identify a window. Since the DRI/GBM platform is split into 2
@@ -61,6 +61,7 @@ class DrmWindowHost : public PlatformWindow,
   void Show() override;
   void Hide() override;
   void Close() override;
+  void PrepareForShutdown() override;
   void SetBounds(const gfx::Rect& bounds) override;
   gfx::Rect GetBounds() override;
   void SetTitle(const base::string16& title) override;
@@ -80,6 +81,7 @@ class DrmWindowHost : public PlatformWindow,
   uint32_t DispatchEvent(const PlatformEvent& event) override;
 
   // GpuThreadObserver:
+  void OnGpuProcessLaunched() override;
   void OnGpuThreadReady() override;
   void OnGpuThreadRetired() override;
 

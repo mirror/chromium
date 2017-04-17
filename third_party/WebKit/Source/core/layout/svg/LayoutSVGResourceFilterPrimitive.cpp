@@ -29,29 +29,37 @@
 
 namespace blink {
 
-void LayoutSVGResourceFilterPrimitive::styleDidChange(StyleDifference diff, const ComputedStyle* oldStyle)
-{
-    LayoutSVGHiddenContainer::styleDidChange(diff, oldStyle);
+void LayoutSVGResourceFilterPrimitive::StyleDidChange(
+    StyleDifference diff,
+    const ComputedStyle* old_style) {
+  LayoutSVGHiddenContainer::StyleDidChange(diff, old_style);
 
-    LayoutObject* filter = parent();
-    if (!filter)
-        return;
-    DCHECK(filter->isSVGResourceFilter());
-    if (!oldStyle)
-        return;
-    const SVGComputedStyle& newStyle = this->styleRef().svgStyle();
-    DCHECK(element());
-    if (isSVGFEFloodElement(*element()) || isSVGFEDropShadowElement(*element())) {
-        if (newStyle.floodColor() != oldStyle->svgStyle().floodColor())
-            toLayoutSVGResourceFilter(filter)->primitiveAttributeChanged(this, SVGNames::flood_colorAttr);
-        if (newStyle.floodOpacity() != oldStyle->svgStyle().floodOpacity())
-            toLayoutSVGResourceFilter(filter)->primitiveAttributeChanged(this, SVGNames::flood_opacityAttr);
-    } else if (isSVGFEDiffuseLightingElement(*element()) || isSVGFESpecularLightingElement(*element())) {
-        if (newStyle.lightingColor() != oldStyle->svgStyle().lightingColor())
-            toLayoutSVGResourceFilter(filter)->primitiveAttributeChanged(this, SVGNames::lighting_colorAttr);
-    }
-    if (newStyle.colorInterpolationFilters() != oldStyle->svgStyle().colorInterpolationFilters())
-        toLayoutSVGResourceFilter(filter)->primitiveAttributeChanged(this, SVGNames::color_interpolation_filtersAttr);
+  LayoutObject* filter = Parent();
+  if (!filter)
+    return;
+  DCHECK(filter->IsSVGResourceFilter());
+  if (!old_style)
+    return;
+  const SVGComputedStyle& new_style = this->StyleRef().SvgStyle();
+  DCHECK(GetElement());
+  if (isSVGFEFloodElement(*GetElement()) ||
+      isSVGFEDropShadowElement(*GetElement())) {
+    if (new_style.FloodColor() != old_style->SvgStyle().FloodColor())
+      ToLayoutSVGResourceFilter(filter)->PrimitiveAttributeChanged(
+          this, SVGNames::flood_colorAttr);
+    if (new_style.FloodOpacity() != old_style->SvgStyle().FloodOpacity())
+      ToLayoutSVGResourceFilter(filter)->PrimitiveAttributeChanged(
+          this, SVGNames::flood_opacityAttr);
+  } else if (isSVGFEDiffuseLightingElement(*GetElement()) ||
+             isSVGFESpecularLightingElement(*GetElement())) {
+    if (new_style.LightingColor() != old_style->SvgStyle().LightingColor())
+      ToLayoutSVGResourceFilter(filter)->PrimitiveAttributeChanged(
+          this, SVGNames::lighting_colorAttr);
+  }
+  if (new_style.ColorInterpolationFilters() !=
+      old_style->SvgStyle().ColorInterpolationFilters())
+    ToLayoutSVGResourceFilter(filter)->PrimitiveAttributeChanged(
+        this, SVGNames::color_interpolation_filtersAttr);
 }
 
-} // namespace blink
+}  // namespace blink

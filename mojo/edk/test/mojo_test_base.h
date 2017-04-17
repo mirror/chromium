@@ -29,18 +29,20 @@ class MojoTestBase : public testing::Test {
   MojoTestBase();
   ~MojoTestBase() override;
 
- protected:
+  using LaunchType = MultiprocessTestHelper::LaunchType;
   using HandlerCallback = base::Callback<void(ScopedMessagePipeHandle)>;
 
   class ClientController {
    public:
     ClientController(const std::string& client_name,
                      MojoTestBase* test,
-                     const ProcessErrorCallback& process_error_callback_);
+                     const ProcessErrorCallback& process_error_callback,
+                     LaunchType launch_type);
     ~ClientController();
 
     MojoHandle pipe() const { return pipe_.get().value(); }
 
+    void ClosePeerConnection();
     int WaitForShutdown();
 
    private:
@@ -148,12 +150,24 @@ class MojoTestBase : public testing::Test {
   // Reads data from a data pipe.
   static std::string ReadData(MojoHandle consumer, size_t size);
 
+  // Queries the signals state of |handle|.
+  static MojoHandleSignalsState GetSignalsState(MojoHandle handle);
+
+  // Helper to block the calling thread waiting for signals to be raised.
+  static MojoResult WaitForSignals(MojoHandle handle,
+                                   MojoHandleSignals signals,
+                                   MojoHandleSignalsState* state = nullptr);
+
+  void set_launch_type(LaunchType launch_type) { launch_type_ = launch_type; }
+
  private:
   friend class ClientController;
 
   std::vector<std::unique_ptr<ClientController>> clients_;
 
   ProcessErrorCallback process_error_callback_;
+
+  LaunchType launch_type_ = LaunchType::CHILD;
 
   DISALLOW_COPY_AND_ASSIGN(MojoTestBase);
 };

@@ -29,57 +29,58 @@
 namespace blink {
 
 class HTMLButtonElement final : public HTMLFormControlElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static HTMLButtonElement* create(Document&, HTMLFormElement*);
+  DEFINE_WRAPPERTYPEINFO();
 
-    void setType(const AtomicString&);
+ public:
+  static HTMLButtonElement* Create(Document&);
 
-    const AtomicString& value() const;
+  void setType(const AtomicString&);
 
-    bool willRespondToMouseClickEvents() override;
+  const AtomicString& Value() const;
 
-private:
-    HTMLButtonElement(Document&, HTMLFormElement*);
+  bool WillRespondToMouseClickEvents() override;
 
-    enum Type { SUBMIT, RESET, BUTTON };
+ private:
+  explicit HTMLButtonElement(Document&);
 
-    const AtomicString& formControlType() const override;
+  enum Type { SUBMIT, RESET, BUTTON };
 
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
+  const AtomicString& FormControlType() const override;
 
-    // HTMLFormControlElement always creates one, but buttons don't need it.
-    bool alwaysCreateUserAgentShadowRoot() const override { return false; }
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
 
-    Node::InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    bool isPresentationAttribute(const QualifiedName&) const override;
-    void defaultEventHandler(Event*) override;
+  // HTMLFormControlElement always creates one, but buttons don't need it.
+  bool AlwaysCreateUserAgentShadowRoot() const override { return false; }
 
-    void appendToFormData(FormData&) override;
+  Node::InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void ParseAttribute(const AttributeModificationParams&) override;
+  bool IsPresentationAttribute(const QualifiedName&) const override;
+  void DefaultEventHandler(Event*) override;
 
-    bool isEnumeratable() const override { return true; }
-    bool supportLabels() const override { return true; }
-    bool isInteractiveContent() const override;
-    bool supportsAutofocus() const override;
-    bool matchesDefaultPseudoClass() const override;
+  void AppendToFormData(FormData&) override;
 
-    bool canBeSuccessfulSubmitButton() const override;
-    bool isActivatedSubmit() const override;
-    void setActivatedSubmit(bool flag) override;
+  bool IsEnumeratable() const override { return true; }
+  bool SupportLabels() const override { return true; }
+  bool IsInteractiveContent() const override;
+  bool SupportsAutofocus() const override;
+  bool MatchesDefaultPseudoClass() const override;
 
-    void accessKeyAction(bool sendMouseEvents) override;
-    bool isURLAttribute(const Attribute&) const override;
+  bool CanBeSuccessfulSubmitButton() const override;
+  bool IsActivatedSubmit() const override;
+  void SetActivatedSubmit(bool flag) override;
 
-    bool canStartSelection() const override { return false; }
+  void AccessKeyAction(bool send_mouse_events) override;
+  bool IsURLAttribute(const Attribute&) const override;
 
-    bool isOptionalFormControl() const override { return true; }
-    bool recalcWillValidate() const override;
+  bool CanStartSelection() const override { return false; }
 
-    Type m_type;
-    bool m_isActivatedSubmit;
+  bool IsOptionalFormControl() const override { return true; }
+  bool RecalcWillValidate() const override;
+
+  Type type_;
+  bool is_activated_submit_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLButtonElement_h
+#endif  // HTMLButtonElement_h

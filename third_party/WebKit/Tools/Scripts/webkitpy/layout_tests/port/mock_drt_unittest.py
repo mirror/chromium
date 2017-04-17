@@ -29,28 +29,22 @@
 """Unit tests for MockDRT."""
 
 import io
+import optparse
 import unittest
 
-from webkitpy.common.system.systemhost_mock import MockSystemHost
+from webkitpy.common.system.system_host_mock import MockSystemHost
 from webkitpy.layout_tests.port import mock_drt
 from webkitpy.layout_tests.port import port_testcase
 from webkitpy.layout_tests.port import test
 from webkitpy.layout_tests.port.factory import PortFactory
-from webkitpy.tool.mock_tool import MockOptions
-
-
-mock_options = MockOptions(configuration='Release')
 
 
 class MockDRTPortTest(port_testcase.PortTestCase):
 
-    def make_port(self, host=None, options=mock_options):
+    def make_port(self, host=None, options=optparse.Values({'configuration': 'Release'})):
         host = host or MockSystemHost()
         test.add_unit_tests_to_mock_filesystem(host.filesystem)
         return mock_drt.MockDRTPort(host, port_name='mock-mac', options=options)
-
-    def make_wdiff_available(self, port):
-        port._make_wdiff_available()
 
     def test_port_name_in_constructor(self):
         self.assertTrue(mock_drt.MockDRTPort(MockSystemHost(), port_name='mock-test'))
@@ -77,6 +71,9 @@ class MockDRTPortTest(port_testcase.PortTestCase):
         pass
 
     def test_virtual_test_suites(self):
+        pass
+
+    def test_path_to_apache_config_file(self):
         pass
 
 
@@ -126,8 +123,8 @@ class MockDRTTest(unittest.TestCase):
         host = host or MockSystemHost()
         test.add_unit_tests_to_mock_filesystem(host.filesystem)
         port = PortFactory(host).get(port_name)
-        drt_input, drt_output = self.make_input_output(port, test_name,
-                                                       pixel_tests, expected_checksum, drt_output, drt_input=None, expected_text=expected_text)
+        drt_input, drt_output = self.make_input_output(
+            port, test_name, pixel_tests, expected_checksum, drt_output, drt_input=None, expected_text=expected_text)
 
         args = ['--run-layout-test', '--platform', port_name, '-']
         stdin = io.BytesIO(drt_input)
@@ -180,12 +177,6 @@ class MockDRTTest(unittest.TestCase):
 
     def test_checksum_in_png(self):
         self.assertTest('passes/checksum_in_image.html', True)
-
-    def test_missing_image(self):
-        self.assertTest('failures/expected/missing_image.html', True)
-
-    def test_missing_text(self):
-        self.assertTest('failures/expected/missing_text.html', True)
 
     def test_reftest_match(self):
         self.assertTest('passes/reftest.html', True, expected_checksum='mock-checksum', expected_text='reference text\n')

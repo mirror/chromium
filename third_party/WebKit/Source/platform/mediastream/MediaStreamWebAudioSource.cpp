@@ -35,34 +35,30 @@
 
 namespace blink {
 
-MediaStreamWebAudioSource::MediaStreamWebAudioSource(std::unique_ptr<WebAudioSourceProvider> provider)
-    : m_webAudioSourceProvider(std::move(provider))
-{
+MediaStreamWebAudioSource::MediaStreamWebAudioSource(
+    std::unique_ptr<WebAudioSourceProvider> provider)
+    : web_audio_source_provider_(std::move(provider)) {}
+
+MediaStreamWebAudioSource::~MediaStreamWebAudioSource() {}
+
+void MediaStreamWebAudioSource::ProvideInput(AudioBus* bus,
+                                             size_t frames_to_process) {
+  ASSERT(bus);
+  if (!bus)
+    return;
+
+  if (!web_audio_source_provider_) {
+    bus->Zero();
+    return;
+  }
+
+  // Wrap the AudioBus channel data using WebVector.
+  size_t n = bus->NumberOfChannels();
+  WebVector<float*> web_audio_data(n);
+  for (size_t i = 0; i < n; ++i)
+    web_audio_data[i] = bus->Channel(i)->MutableData();
+
+  web_audio_source_provider_->ProvideInput(web_audio_data, frames_to_process);
 }
 
-MediaStreamWebAudioSource::~MediaStreamWebAudioSource()
-{
-}
-
-void MediaStreamWebAudioSource::provideInput(AudioBus* bus, size_t framesToProcess)
-{
-    ASSERT(bus);
-    if (!bus)
-        return;
-
-    if (!m_webAudioSourceProvider) {
-        bus->zero();
-        return;
-    }
-
-    // Wrap the AudioBus channel data using WebVector.
-    size_t n = bus->numberOfChannels();
-    WebVector<float*> webAudioData(n);
-    for (size_t i = 0; i < n; ++i)
-        webAudioData[i] = bus->channel(i)->mutableData();
-
-    m_webAudioSourceProvider->provideInput(webAudioData, framesToProcess);
-}
-
-} // namespace blink
-
+}  // namespace blink

@@ -10,14 +10,18 @@
 
 #include "base/logging.h"
 #include "base/mac/bundle_locations.h"
-#import "base/mac/scoped_nsobject.h"
+#import "ios/web/public/web_state/js/crw_js_injection_receiver.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 @implementation JsTranslateManager {
-  base::scoped_nsobject<NSString> _translationScript;
+  NSString* _translationScript;
 }
 
 - (NSString*)script {
-  return _translationScript.get();
+  return _translationScript;
 }
 
 - (void)setScript:(NSString*)script {
@@ -43,31 +47,31 @@
                                                    error:&error];
   DCHECK(!error && [content length]);
   script = [script stringByAppendingString:content];
-  _translationScript.reset([script copy]);
+  _translationScript = [script copy];
 }
 
 - (void)injectWaitUntilTranslateReadyScript {
-  [self.receiver evaluateJavaScript:@"__gCrWeb.translate.checkTranslateReady()"
-                stringResultHandler:nil];
+  [self.receiver executeJavaScript:@"__gCrWeb.translate.checkTranslateReady()"
+                 completionHandler:nil];
 }
 
 - (void)injectTranslateStatusScript {
-  [self.receiver evaluateJavaScript:@"__gCrWeb.translate.checkTranslateStatus()"
-                stringResultHandler:nil];
+  [self.receiver executeJavaScript:@"__gCrWeb.translate.checkTranslateStatus()"
+                 completionHandler:nil];
 }
 
 - (void)startTranslationFrom:(const std::string&)source
                           to:(const std::string&)target {
-  NSString* js =
+  NSString* script =
       [NSString stringWithFormat:@"cr.googleTranslate.translate('%s','%s')",
                                  source.c_str(), target.c_str()];
-  [self.receiver evaluateJavaScript:js stringResultHandler:nil];
+  [self.receiver executeJavaScript:script completionHandler:nil];
 }
 
 - (void)revertTranslation {
   DCHECK([self hasBeenInjected]);
-  [self.receiver evaluateJavaScript:@"cr.googleTranslate.revert()"
-                stringResultHandler:nil];
+  [self.receiver executeJavaScript:@"cr.googleTranslate.revert()"
+                 completionHandler:nil];
 }
 
 #pragma mark -
@@ -75,11 +79,9 @@
 
 - (NSString*)injectionContent {
   DCHECK(_translationScript);
-  return _translationScript.autorelease();
-}
-
-- (NSString*)presenceBeacon {
-  return @"cr.googleTranslate";
+  NSString* translationScript = _translationScript;
+  _translationScript = nil;
+  return translationScript;
 }
 
 @end

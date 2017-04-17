@@ -2,22 +2,29 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/buildflag_header.gni")
+import("//build/config/chrome_build.gni")
 import("//build/config/linux/pkg_config.gni")
 import("//build/config/ui.gni")
+import("//ui/ozone/ozone.gni")
 import("//testing/test.gni")
 
+declare_args() {
+  enable_swiftshader = (is_win || (is_linux && !is_chromeos && use_x11)) &&
+                       (target_cpu == "x86" || target_cpu == "x64")
+}
+
 use_egl = is_win || is_android || is_linux
-use_glx = use_x11
+use_glx = use_x11 || ozone_platform_x11
 
 if (is_android) {
   import("//build/config/android/config.gni")
   import("//build/config/android/rules.gni")
 }
 
-if (target_os == "chromeos") {
-  pkg_config("libdrm") {
-    packages = [ "libdrm" ]
-  }
+buildflag_header("gl_features") {
+  header = "gl_features.h"
+  flags = [ "ENABLE_SWIFTSHADER=$enable_swiftshader" ]
 }
 
 config("gl_config") {
@@ -47,6 +54,8 @@ component("gl") {
     "android/surface_texture_listener.h",
     "ca_renderer_layer_params.cc",
     "ca_renderer_layer_params.h",
+    "dc_renderer_layer_params.cc",
+    "dc_renderer_layer_params.h",
     "gl_bindings.cc",
     "gl_bindings.h",
     "gl_bindings_autogen_gl.cc",
@@ -59,8 +68,6 @@ component("gl") {
     "gl_context_osmesa.h",
     "gl_context_stub.cc",
     "gl_context_stub.h",
-    "gl_context_stub_with_extensions.cc",
-    "gl_context_stub_with_extensions.h",
     "gl_enums.cc",
     "gl_enums.h",
     "gl_enums_implementation_autogen.h",
@@ -87,9 +94,6 @@ component("gl") {
     "gl_image_stub.h",
     "gl_implementation.cc",
     "gl_implementation.h",
-    "gl_implementation_android.cc",
-    "gl_implementation_mac.cc",
-    "gl_implementation_win.cc",
     "gl_osmesa_api_implementation.cc",
     "gl_osmesa_api_implementation.h",
     "gl_share_group.cc",
@@ -103,6 +107,8 @@ component("gl") {
     "gl_stub_autogen_gl.h",
     "gl_surface.cc",
     "gl_surface.h",
+    "gl_surface_format.cc",
+    "gl_surface_format.h",
     "gl_surface_osmesa.cc",
     "gl_surface_osmesa.h",
     "gl_surface_overlay.cc",
@@ -117,8 +123,6 @@ component("gl") {
     "gpu_switching_manager.h",
     "gpu_timing.cc",
     "gpu_timing.h",
-    "scoped_api.cc",
-    "scoped_api.h",
     "scoped_binders.cc",
     "scoped_binders.h",
     "scoped_make_current.cc",
@@ -151,6 +155,8 @@ component("gl") {
 
   if (use_egl) {
     sources += [
+      "angle_platform_impl.cc",
+      "angle_platform_impl.h",
       "egl_util.cc",
       "egl_util.h",
       "gl_bindings_autogen_egl.cc",
@@ -166,6 +172,13 @@ component("gl") {
       "gl_surface_egl.cc",
       "gl_surface_egl.h",
     ]
+
+    if (is_linux) {
+      sources += [
+        "gl_image_native_pixmap.cc",
+        "gl_image_native_pixmap.h",
+      ]
+    }
   }
   if (is_android || is_linux) {
     sources += [
@@ -175,20 +188,20 @@ component("gl") {
   }
   if (use_x11) {
     sources += [
-      "gl_implementation_x11.cc",
       "gl_surface_egl_x11.cc",
       "gl_surface_egl_x11.h",
+      "gl_surface_glx_x11.cc",
+      "gl_surface_glx_x11.h",
       "gl_surface_osmesa_x11.cc",
       "gl_surface_osmesa_x11.h",
     ]
+
+    deps += [ "//ui/base/x" ]
 
     data_deps = [
       "//third_party/angle:libEGL",
       "//third_party/angle:libGLESv2",
     ]
-  }
-  if (use_ozone) {
-    sources += [ "gl_implementation_ozone.cc" ]
   }
   if (use_glx) {
     sources += [
@@ -202,6 +215,8 @@ component("gl") {
       "gl_image_glx.h",
       "gl_surface_glx.cc",
       "gl_surface_glx.h",
+      "gl_visual_picker_glx.cc",
+      "gl_visual_picker_glx.h",
     ]
 
     configs += [
@@ -214,12 +229,14 @@ component("gl") {
   }
   if (is_win) {
     sources += [
-      "angle_platform_impl.cc",
-      "angle_platform_impl.h",
+      "gl_angle_util_win.cc",
+      "gl_angle_util_win.h",
       "gl_bindings_autogen_wgl.cc",
       "gl_bindings_autogen_wgl.h",
       "gl_context_wgl.cc",
       "gl_context_wgl.h",
+      "gl_image_dxgi.cc",
+      "gl_image_dxgi.h",
       "gl_surface_osmesa_win.cc",
       "gl_surface_osmesa_win.h",
       "gl_surface_wgl.cc",
@@ -238,6 +255,8 @@ component("gl") {
       "//third_party/angle:libGLESv2",
       "//third_party/mesa:osmesa",
     ]
+
+    deps += [ "//third_party/angle:includes" ]
   }
   if (is_mac) {
     sources += [
@@ -273,10 +292,7 @@ component("gl") {
 
     libs = [ "android" ]
 
-    deps += [
-      ":gl_jni_headers",
-      "//ui/android:ui_java",
-    ]
+    deps += [ ":gl_jni_headers" ]
   }
 }
 
@@ -320,12 +336,38 @@ static_library("test_support") {
     "//ui/gl/init",
   ]
   deps = [
+    "//base/test:test_support",
     "//testing/gtest",
+    "//ui/base",
   ]
 
   if (use_x11) {
     configs += [ "//build/config/linux:x11" ]
     deps += [ "//ui/platform_window/x11" ]
+  }
+
+  if (use_ozone) {
+    deps += [ "//ui/ozone" ]
+  }
+}
+
+source_set("run_all_unittests") {
+  testonly = true
+
+  sources = [
+    "test/run_all_unittests.cc",
+  ]
+
+  deps = [
+    "//base",
+  ]
+
+  public_deps = [
+    "//base/test:test_support",
+  ]
+
+  if (use_ozone) {
+    deps += [ "//ui/ozone" ]
   }
 }
 
@@ -334,10 +376,14 @@ test("gl_unittests") {
     "gl_api_unittest.cc",
     "gl_image_ref_counted_memory_unittest.cc",
     "gl_image_shared_memory_unittest.cc",
+    "gl_surface_format_unittest.cc",
     "gl_version_info_unittest.cc",
     "gpu_timing_unittest.cc",
-    "test/run_all_unittests.cc",
   ]
+
+  if (use_egl && !use_ozone) {
+    sources += [ "gl_surface_egl_unittest.cc" ]
+  }
 
   if (use_egl) {
     sources += [
@@ -348,13 +394,6 @@ test("gl_unittests") {
 
   if (use_glx) {
     sources += [ "glx_api_unittest.cc" ]
-  }
-
-  if (use_ozone) {
-    sources += [ "gl_image_ozone_native_pixmap_unittest.cc" ]
-    if (target_os == "chromeos" && target_cpu != "arm") {
-      sources += [ "gl_image_ozone_native_pixmap_drm_unittest.cc" ]
-    }
   }
 
   if (is_mac) {
@@ -371,9 +410,9 @@ test("gl_unittests") {
   deps = [
     ":gl",
     ":gl_unittest_utils",
+    ":run_all_unittests",
     ":test_support",
     "//base",
-    "//base/test:test_support",
     "//testing/gmock",
     "//testing/gtest",
     "//ui/gfx",
@@ -381,17 +420,26 @@ test("gl_unittests") {
     "//ui/gl/init",
   ]
 
-  if (target_os == "chromeos") {
-    configs += [ ":libdrm" ]
-  }
-
   data_deps = [
     "//third_party/mesa:osmesa",
   ]
+}
 
-  if (use_ozone) {
-    deps += [ "//ui/ozone" ]
-  }
+# We can't run this test on real Chrome OS hardware for Ozone, so new target.
+group("gl_unittests_ozone") {
+  testonly = true
+  data_deps = [
+    ":gl_unittests",
+  ]
+}
+
+# TODO(GYP_GONE): Delete this after we've converted everything to GN.
+# The _run targets exist only for compatibility w/ GYP.
+group("gl_unittests_ozone_run") {
+  testonly = true
+  deps = [
+    ":gl_unittests_ozone",
+  ]
 }
 
 if (is_android) {

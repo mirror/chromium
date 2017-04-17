@@ -11,6 +11,7 @@
 #include "base/bind.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
+#include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/chromeos/drive/file_system_util.h"
 #include "chrome/browser/chromeos/file_manager/app_id.h"
@@ -18,10 +19,10 @@
 #include "chrome/browser/chromeos/file_manager/fileapi_util.h"
 #include "chrome/browser/chromeos/file_manager/path_util.h"
 #include "chrome/browser/chromeos/file_manager/url_util.h"
-#include "chrome/browser/extensions/api/file_handlers/directory_util.h"
-#include "chrome/browser/extensions/api/file_handlers/mime_util.h"
+#include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/user_metrics.h"
+#include "extensions/browser/api/file_handlers/directory_util.h"
+#include "extensions/browser/api/file_handlers/mime_util.h"
 #include "extensions/browser/entry_info.h"
 #include "storage/browser/fileapi/file_system_backend.h"
 #include "storage/browser/fileapi/file_system_context.h"
@@ -37,6 +38,9 @@ namespace {
 
 bool shell_operations_allowed = true;
 
+void IgnoreFileTaskExecuteResult(
+    extensions::api::file_manager_private::TaskResult result) {}
+
 // Executes the |task| for the file specified by |url|.
 void ExecuteFileTaskForUrl(Profile* profile,
                            const file_tasks::TaskDescriptor& task,
@@ -48,9 +52,10 @@ void ExecuteFileTaskForUrl(Profile* profile,
 
   file_tasks::ExecuteFileTask(
       profile,
-      GetFileManagerMainPageUrl(),  // Executing task on behalf of Files.app.
+      GetFileManagerMainPageUrl(),  // Executing task on behalf of the Files
+                                    // app.
       task, std::vector<FileSystemURL>(1, file_system_context->CrackURL(url)),
-      file_tasks::FileTaskFinishedCallback());
+      base::Bind(&IgnoreFileTaskExecuteResult));
 }
 
 // Opens the file manager for the specified |url|. Used to implement
@@ -65,7 +70,7 @@ void OpenFileManagerWithInternalActionId(Profile* profile,
   DCHECK(action_id == "open" || action_id == "select");
   if (!shell_operations_allowed)
     return;
-  content::RecordAction(base::UserMetricsAction("ShowFileBrowserFullTab"));
+  base::RecordAction(base::UserMetricsAction("ShowFileBrowserFullTab"));
 
   file_tasks::TaskDescriptor task(kFileManagerAppId,
                                   file_tasks::TASK_TYPE_FILE_BROWSER_HANDLER,
@@ -79,13 +84,16 @@ void OpenFileMimeTypeAfterTasksListed(
     const platform_util::OpenOperationCallback& callback,
     std::unique_ptr<std::vector<file_tasks::FullTaskDescriptor>> tasks) {
   // Select a default handler. If a default handler is not available, select
-  // a non-generic file handler.
+  // the first non-generic file handler.
   const file_tasks::FullTaskDescriptor* chosen_task = nullptr;
   for (const auto& task : *tasks) {
     if (!task.is_generic_file_handler()) {
-      chosen_task = &task;
-      if (task.is_default())
+      if (task.is_default()) {
+        chosen_task = &task;
         break;
+      }
+      if (!chosen_task)
+        chosen_task = &task;
     }
   }
 

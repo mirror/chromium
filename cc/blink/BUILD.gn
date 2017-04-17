@@ -2,10 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import("//testing/test.gni")
+import("//cc/cc.gni")
 
-# GYP version: //cc/blink/cc_blink.gyp:cc_blink
-component("blink") {
+cc_component("blink") {
   output_name = "cc_blink"
 
   sources = [
@@ -18,8 +17,6 @@ component("blink") {
     "web_content_layer_impl.h",
     "web_display_item_list_impl.cc",
     "web_display_item_list_impl.h",
-    "web_external_bitmap_impl.cc",
-    "web_external_bitmap_impl.h",
     "web_external_texture_layer_impl.cc",
     "web_external_texture_layer_impl.h",
     "web_image_layer_impl.cc",
@@ -42,6 +39,7 @@ component("blink") {
     "//base",
     "//base/third_party/dynamic_annotations",
     "//cc",
+    "//cc/paint",
     "//gpu",
     "//third_party/WebKit/public:blink",
     "//ui/gfx",
@@ -49,13 +47,13 @@ component("blink") {
   ]
 }
 
-# GYP version: //cc/blink/cc_blink_tests.gyp:cc_blink_unittests
-test("cc_blink_unittests") {
+cc_test("cc_blink_unittests") {
   sources = [
     "web_layer_impl_fixed_bounds_unittest.cc",
 
     # Setup.
     "test/cc_blink_test_suite.cc",
+    "test/cc_blink_test_suite.h",
     "test/run_all_unittests.cc",
   ]
 

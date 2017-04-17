@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/files/scoped_file.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/process/process_handle.h"
@@ -33,13 +34,33 @@ class TRACING_EXPORT ProcessMetricsMemoryDumpProvider
   // MemoryDumpProvider implementation.
   bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
                     base::trace_event::ProcessMemoryDump* pmd) override;
+  void PollFastMemoryTotal(uint64_t* memory_total) override;
+  void SuspendFastMemoryPolling() override;
+
+ protected:
+  ProcessMetricsMemoryDumpProvider(base::ProcessId process);
 
  private:
+  using FactoryFunction =
+      std::unique_ptr<ProcessMetricsMemoryDumpProvider> (*)(base::ProcessId);
+
   FRIEND_TEST_ALL_PREFIXES(ProcessMetricsMemoryDumpProviderTest,
                            ParseProcSmaps);
   FRIEND_TEST_ALL_PREFIXES(ProcessMetricsMemoryDumpProviderTest, DumpRSS);
-
-  ProcessMetricsMemoryDumpProvider(base::ProcessId process);
+  FRIEND_TEST_ALL_PREFIXES(ProcessMetricsMemoryDumpProviderTest,
+                           TestPollFastMemoryTotal);
+#if defined(OS_MACOSX)
+  FRIEND_TEST_ALL_PREFIXES(ProcessMetricsMemoryDumpProviderTest,
+                           TestMachOReading);
+  FRIEND_TEST_ALL_PREFIXES(ProcessMetricsMemoryDumpProviderTest,
+                           NoDuplicateRegions);
+#elif defined(OS_WIN)
+  FRIEND_TEST_ALL_PREFIXES(ProcessMetricsMemoryDumpProviderTest,
+                           TestWinModuleReading);
+#elif defined(OS_LINUX) || defined(OS_ANDROID)
+  FRIEND_TEST_ALL_PREFIXES(ProcessMetricsMemoryDumpProviderTest,
+                           DoubleRegister);
+#endif
 
   bool DumpProcessTotals(const base::trace_event::MemoryDumpArgs& args,
                          base::trace_event::ProcessMemoryDump* pmd);
@@ -47,9 +68,13 @@ class TRACING_EXPORT ProcessMetricsMemoryDumpProvider
                              base::trace_event::ProcessMemoryDump* pmd);
 
   static uint64_t rss_bytes_for_testing;
+  static FactoryFunction factory_for_testing;
 
 #if defined(OS_LINUX) || defined(OS_ANDROID)
   static FILE* proc_smaps_for_testing;
+  static int fast_polling_statm_fd_for_testing;
+
+  base::ScopedFD fast_polling_statm_fd_;
 #endif
 
   base::ProcessId process_;

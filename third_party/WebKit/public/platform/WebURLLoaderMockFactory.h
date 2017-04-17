@@ -15,44 +15,57 @@
 namespace blink {
 
 class WebURL;
+class WebURLLoader;
 class WebURLResponse;
 struct WebURLError;
 
 class WebURLLoaderMockFactory {
-public:
-    static std::unique_ptr<WebURLLoaderMockFactory> create();
+ public:
+  static std::unique_ptr<WebURLLoaderMockFactory> Create();
 
-    virtual ~WebURLLoaderMockFactory() {}
+  virtual ~WebURLLoaderMockFactory() {}
 
-    // Create a WebURLLoader that takes care of mocked requests.
-    // Non-mocked request are forwarded to given loader which should not
-    // be nullptr.
-    virtual WebURLLoader* createURLLoader(WebURLLoader*) = 0;
+  // Create a WebURLLoader that takes care of mocked requests.
+  // Non-mocked request are forwarded to given loader which should not
+  // be nullptr.
+  virtual WebURLLoader* CreateURLLoader(WebURLLoader*) = 0;
 
-    // Registers a response and the file to be served when the specified URL
-    // is loaded. If no file is specified then the response content will be empty.
-    virtual void registerURL(const WebURL&, const WebURLResponse&, const WebString& filePath) = 0;
+  // Registers a response and the file to be served when the specified URL
+  // is loaded. If no file is specified then the response content will be empty.
+  // unregisterURL() should be called for each test entry before registering
+  // another response for the same URL from another test.
+  virtual void RegisterURL(const WebURL&,
+                           const WebURLResponse&,
+                           const WebString& file_path) = 0;
 
-    // Registers an error to be served when the specified URL is requested.
-    virtual void registerErrorURL(const WebURL&, const WebURLResponse&, const WebURLError&) = 0;
+  // Registers an error to be served when the specified URL is requested.
+  // unregisterURL() should be called for each test entry before registering
+  // another response for the same URL from another test.
+  virtual void RegisterErrorURL(const WebURL&,
+                                const WebURLResponse&,
+                                const WebURLError&) = 0;
 
-    // Unregisters URLs so they are no longer mocked.
-    virtual void unregisterURL(const WebURL&) = 0;
-    virtual void unregisterAllURLs() = 0;
+  // Unregisters the given URL so it is no longer mocked.
+  virtual void UnregisterURL(const WebURL&) = 0;
 
-    // Causes all pending asynchronous requests to be served. When this method
-    // returns all the pending requests have been processed.
-    // Note: this may not work as expected if more requests could be made
-    // asynchronously from different threads (e.g. when HTML parser thread
-    // is being involved).
-    // DO NOT USE THIS for Frame loading; always use methods defined in
-    // FrameTestHelpers instead.
-    virtual void serveAsynchronousRequests() = 0;
+  // Unregisters URLs so they are no longer mocked. This also clears the
+  // MemoryCache.
+  virtual void UnregisterAllURLsAndClearMemoryCache() = 0;
 
-    // Set a delegate that allows callbacks for all WebURLLoaderClients to be intercepted.
-    virtual void setLoaderDelegate(WebURLLoaderTestDelegate*) = 0;
+  // Causes all pending asynchronous requests to be served. When this method
+  // returns all the pending requests have been processed.
+  // Note: this may not work as expected if more requests could be made
+  // asynchronously from different threads (e.g. when HTML parser thread
+  // is being involved).
+  // DO NOT USE THIS for Frame loading; always use methods defined in
+  // FrameTestHelpers instead.
+  virtual void ServeAsynchronousRequests() = 0;
+
+  // Set a delegate that allows callbacks for all WebURLLoaderClients to be
+  // intercepted.
+  virtual void SetLoaderDelegate(WebURLLoaderTestDelegate*) = 0;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebURLLoaderMockFactory_h
+#endif  // WebURLLoaderMockFactory_h

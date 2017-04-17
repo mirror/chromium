@@ -1,10 +1,11 @@
 include_rules = [
     "+bindings",
     "+core",
-    "+heap",
     "+modules",
     "+platform",
     "+public/platform",
-    "+skia/ext",
     "-web",
+
+    # Use platform/wtf/ now (see crbug.com/691465).
+    "-wtf/",
 ]

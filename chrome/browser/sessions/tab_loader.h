@@ -11,7 +11,9 @@
 #include <memory>
 #include <set>
 
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/memory/memory_coordinator_client.h"
 #include "base/memory/memory_pressure_listener.h"
 #include "base/timer/timer.h"
 #include "chrome/browser/sessions/session_restore_delegate.h"
@@ -25,6 +27,7 @@ class RenderWidgetHost;
 }
 
 class SessionRestoreStatsCollector;
+class TabLoaderTest;
 
 // TabLoader is responsible for loading tabs after session restore has finished
 // creating all the tabs. Tabs are loaded after a previously tab finishes
@@ -40,7 +43,8 @@ class SessionRestoreStatsCollector;
 // of SessionRestoreImpl doesn't have timing problems.
 class TabLoader : public content::NotificationObserver,
                   public base::RefCounted<TabLoader>,
-                  public TabLoaderCallback {
+                  public TabLoaderCallback,
+                  public base::MemoryCoordinatorClient {
  public:
   using RestoredTab = SessionRestoreDelegate::RestoredTab;
 
@@ -54,10 +58,14 @@ class TabLoader : public content::NotificationObserver,
   void SetTabLoadingEnabled(bool enable_tab_loading) override;
 
   // Called to start restoring tabs.
-  static void RestoreTabs(const std::vector<RestoredTab>& tabs_,
+  static void RestoreTabs(const std::vector<RestoredTab>& tabs,
                           const base::TimeTicks& restore_started);
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(TabLoaderTest, OnMemoryStateChange);
+  FRIEND_TEST_ALL_PREFIXES(TabRestoreTest,
+                           TabsFromRestoredWindowsAreLoadedGradually);
+
   friend class base::RefCounted<TabLoader>;
 
   using TabsLoading = std::set<content::NavigationController*>;
@@ -103,13 +111,24 @@ class TabLoader : public content::NotificationObserver,
   // Called when a tab goes away or a load completes.
   void HandleTabClosedOrLoaded(content::NavigationController* controller);
 
-  // Convenience function returning the current memory pressure level.
-  base::MemoryPressureListener::MemoryPressureLevel
-      CurrentMemoryPressureLevel();
+  // Returns true when this is under memory pressure and required to purge
+  // memory by stopping loading tabs.
+  bool ShouldStopLoadingTabs() const;
 
   // React to memory pressure by stopping to load any more tabs.
   void OnMemoryPressure(
       base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level);
+
+  // base::MemoryCoordinatorClient implementation:
+  void OnMemoryStateChange(base::MemoryState state) override;
+
+  // Stops loading tabs to purge memory by stopping to load any more tabs.
+  void StopLoadingTabs();
+
+  // Limit the number of loaded tabs.
+  // Value of 0 restores default behavior. In test mode command line flags and
+  // free memory size are not taken into account.
+  static void SetMaxLoadedTabCountForTest(size_t value);
 
   std::unique_ptr<TabLoaderDelegate> delegate_;
 
@@ -131,6 +150,10 @@ class TabLoader : public content::NotificationObserver,
 
   // The tabs we need to load.
   TabsToLoad tabs_to_load_;
+
+  // The number of tabs started to load.
+  // (This value never decreases.)
+  size_t started_to_load_count_;
 
   base::OneShotTimer force_load_timer_;
 

@@ -34,12 +34,12 @@ class Smoothness(legacy_page_test.LegacyPageTest):
     super(Smoothness, self).__init__(needs_browser_restart_after_each_page)
     self._results_wrapper = _CustomResultsWrapper()
     self._tbm = None
+    self._results = None
 
   @classmethod
   def CustomizeBrowserOptions(cls, options):
     options.AppendExtraBrowserArgs('--enable-gpu-benchmarking')
     options.AppendExtraBrowserArgs('--touch-events=enabled')
-    options.AppendExtraBrowserArgs('--running-performance-benchmark')
 
   def WillNavigateToPage(self, page, tab):
     # FIXME: Remove webkit.console when blink.console lands in chromium and
@@ -59,19 +59,18 @@ class Smoothness(legacy_page_test.LegacyPageTest):
     self._tbm.WillRunStory(tab.browser.platform)
 
   def ValidateAndMeasurePage(self, _, tab, results):
+    self._results = results
     self._tbm.Measure(tab.browser.platform, results)
 
   def DidRunPage(self, platform):
     if self._tbm:
-      self._tbm.DidRunStory(platform)
+      self._tbm.DidRunStory(platform, self._results)
 
 
 class Repaint(Smoothness):
 
   def CustomizeBrowserOptions(self, options):
     options.AppendExtraBrowserArgs([
-        '--enable-impl-side-painting',
-        '--enable-threaded-compositing',
         '--enable-gpu-benchmarking'
     ])
 

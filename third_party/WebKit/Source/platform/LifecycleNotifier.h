@@ -28,113 +28,138 @@
 #define LifecycleNotifier_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/AutoReset.h"
-#include "wtf/HashSet.h"
+#include "platform/wtf/AutoReset.h"
+#include "platform/wtf/HashSet.h"
 
 namespace blink {
 
-template<typename T, typename Observer>
+template <typename T, typename Observer>
 class LifecycleNotifier : public virtual GarbageCollectedMixin {
-public:
-    virtual ~LifecycleNotifier();
+ public:
+  virtual ~LifecycleNotifier();
 
-    void addObserver(Observer*);
-    void removeObserver(Observer*);
+  void AddObserver(Observer*);
+  void RemoveObserver(Observer*);
 
-    // notifyContextDestroyed() should be explicitly dispatched from an
-    // observed context to notify observers that contextDestroyed().
-    //
-    // When contextDestroyed() is called, the observer's lifecycleContext()
-    // is still valid and safe to use during the notification.
-    virtual void notifyContextDestroyed();
+  // notifyContextDestroyed() should be explicitly dispatched from an
+  // observed context to detach its observers, and if the observer kind
+  // requires it, notify each observer by invoking contextDestroyed().
+  //
+  // When contextDestroyed() is called, it is supplied the context as
+  // an argument, but the observer's lifecycleContext() is still valid
+  // and safe to use while handling the notification.
+  virtual void NotifyContextDestroyed();
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        visitor->trace(m_observers);
-    }
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(observers_); }
 
-    bool isIteratingOverObservers() const { return m_iterationState != NotIterating; }
+  bool IsIteratingOverObservers() const {
+    return iteration_state_ != kNotIterating;
+  }
 
-protected:
-    LifecycleNotifier()
-        : m_iterationState(NotIterating)
-    {
-    }
+ protected:
+  LifecycleNotifier() : iteration_state_(kNotIterating) {}
 
-#if DCHECK_IS_ON()
-    T* context() { return static_cast<T*>(this); }
-#endif
+  T* Context() { return static_cast<T*>(this); }
 
-    using ObserverSet = HeapHashSet<WeakMember<Observer>>;
+  using ObserverSet = HeapHashSet<WeakMember<Observer>>;
 
-    void removePending(ObserverSet&);
+  enum IterationState {
+    kAllowingNone = 0,
+    kAllowingAddition = 1,
+    kAllowingRemoval = 2,
+    kNotIterating = kAllowingAddition | kAllowingRemoval,
+    kAllowPendingRemoval = 4,
+  };
 
-    enum IterationState {
-        AllowingNone        = 0,
-        AllowingAddition    = 1,
-        AllowingRemoval     = 2,
-        NotIterating        = AllowingAddition | AllowingRemoval,
-        AllowPendingRemoval = 4,
-    };
-
-    // Iteration state is recorded while iterating the observer set,
-    // optionally barring add or remove mutations.
-    IterationState m_iterationState;
-    ObserverSet m_observers;
+  // Iteration state is recorded while iterating the observer set,
+  // optionally barring add or remove mutations.
+  IterationState iteration_state_;
+  ObserverSet observers_;
 };
 
-template<typename T, typename Observer>
-inline LifecycleNotifier<T, Observer>::~LifecycleNotifier()
-{
-    // FIXME: Enable the following ASSERT. Also see a FIXME in Document::detachLayoutTree().
-    // ASSERT(!m_observers.size());
+template <typename T, typename Observer>
+inline LifecycleNotifier<T, Observer>::~LifecycleNotifier() {
+  // FIXME: Enable the following ASSERT. Also see a FIXME in
+  // Document::detachLayoutTree().
+  // ASSERT(!m_observers.size());
 }
 
-template<typename T, typename Observer>
-inline void LifecycleNotifier<T, Observer>::notifyContextDestroyed()
-{
-    // Observer unregistration is allowed, but effectively a no-op.
-    AutoReset<IterationState> scope(&m_iterationState, AllowingRemoval);
-    ObserverSet observers;
-    m_observers.swap(observers);
-    for (Observer* observer : observers) {
-        ASSERT(observer->lifecycleContext() == context());
-        observer->contextDestroyed();
-    }
+// Determine if |contextDestroyed(Observer*) is a public method on
+// class type |Observer|, or any of the class types it derives from.
+template <typename Observer, typename T>
+class HasContextDestroyed {
+  using YesType = char;
+  using NoType = int;
+
+  template <typename V>
+  static YesType CheckHasContextDestroyedMethod(
+      V* observer,
+      T* context = nullptr,
+      typename std::enable_if<
+          std::is_same<decltype(observer->ContextDestroyed(context)),
+                       void>::value>::type* g = nullptr);
+  template <typename V>
+  static NoType CheckHasContextDestroyedMethod(...);
+
+ public:
+  static_assert(sizeof(Observer), "Observer's class declaration not in scope");
+  static const bool value =
+      sizeof(YesType) ==
+      sizeof(CheckHasContextDestroyedMethod<Observer>(nullptr));
+};
+
+// If |Observer::contextDestroyed()| is present, invoke it.
+template <typename Observer,
+          typename T,
+          bool = HasContextDestroyed<Observer, T>::value>
+class ContextDestroyedNotifier {
+  STATIC_ONLY(ContextDestroyedNotifier);
+
+ public:
+  static void Call(Observer* observer, T* context) {
+    observer->ContextDestroyed(context);
+  }
+};
+
+template <typename Observer, typename T>
+class ContextDestroyedNotifier<Observer, T, false> {
+  STATIC_ONLY(ContextDestroyedNotifier);
+
+ public:
+  static void Call(Observer*, T*) {}
+};
+
+template <typename T, typename Observer>
+inline void LifecycleNotifier<T, Observer>::NotifyContextDestroyed() {
+  // Observer unregistration is allowed, but effectively a no-op.
+  AutoReset<IterationState> scope(&iteration_state_, kAllowingRemoval);
+  ObserverSet observers;
+  observers_.Swap(observers);
+  for (Observer* observer : observers) {
+    DCHECK(observer->LifecycleContext() == Context());
+    ContextDestroyedNotifier<Observer, T>::Call(observer, Context());
+    observer->ClearContext();
+  }
 }
 
-template<typename T, typename Observer>
-inline void LifecycleNotifier<T, Observer>::addObserver(Observer* observer)
-{
-    RELEASE_ASSERT(m_iterationState & AllowingAddition);
-    m_observers.add(observer);
+template <typename T, typename Observer>
+inline void LifecycleNotifier<T, Observer>::AddObserver(Observer* observer) {
+  RELEASE_ASSERT(iteration_state_ & kAllowingAddition);
+  observers_.insert(observer);
 }
 
-template<typename T, typename Observer>
-inline void LifecycleNotifier<T, Observer>::removeObserver(Observer* observer)
-{
-    // If immediate removal isn't currently allowed,
-    // |observer| is recorded for pending removal.
-    if (m_iterationState & AllowPendingRemoval) {
-        m_observers.add(observer);
-        return;
-    }
-    RELEASE_ASSERT(m_iterationState & AllowingRemoval);
-    m_observers.remove(observer);
+template <typename T, typename Observer>
+inline void LifecycleNotifier<T, Observer>::RemoveObserver(Observer* observer) {
+  // If immediate removal isn't currently allowed,
+  // |observer| is recorded for pending removal.
+  if (iteration_state_ & kAllowPendingRemoval) {
+    observers_.insert(observer);
+    return;
+  }
+  RELEASE_ASSERT(iteration_state_ & kAllowingRemoval);
+  observers_.erase(observer);
 }
 
-template<typename T, typename Observer>
-inline void LifecycleNotifier<T, Observer>::removePending(ObserverSet& observers)
-{
-    if (m_observers.size()) {
-        // Prevent allocation (==shrinking) while removing;
-        // the table is likely to become garbage soon.
-        ThreadState::NoAllocationScope scope(ThreadState::current());
-        observers.removeAll(m_observers);
-    }
-    m_observers.swap(observers);
-}
+}  // namespace blink
 
-} // namespace blink
-
-#endif // LifecycleNotifier_h
+#endif  // LifecycleNotifier_h

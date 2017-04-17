@@ -41,12 +41,6 @@ var RESULT_BUSY;
 var RESULT_SHOULD_WAIT;
 
 /**
- * MojoDeadline {number}: Used to specify deadlines (timeouts), in microseconds.
- * See core.h for more information.
- */
-var DEADLINE_INDEFINITE;
-
-/**
  * MojoHandleSignals: Used to specify signals that can be waited on for a handle
  *(and which can be triggered), e.g., the ability to read or write to
  * the handle.
@@ -114,6 +108,27 @@ var READ_DATA_FLAG_QUERY;
 var READ_DATA_FLAG_PEEK;
 
 /**
+ * MojoCreateSharedBufferOptionsFlags: Used to specify options to
+ *   |createSharedBuffer()|.
+ * See core.h for more information.
+ */
+var CREATE_SHARED_BUFFER_OPTIONS_FLAG_NONE;
+
+/**
+ * MojoDuplicateBufferHandleOptionsFlags: Used to specify options to
+ *   |duplicateBufferHandle()|.
+ * See core.h for more information.
+ */
+var DUPLICATE_BUFFER_HANDLE_OPTIONS_FLAG_NONE;
+var DUPLICATE_BUFFER_HANDLE_OPTIONS_FLAG_READ_ONLY;
+
+/**
+ * MojoMapBufferFlags: Used to specify options to |mapBuffer()|.
+ * See core.h for more information.
+ */
+var MAP_BUFFER_FLAG_NONE;
+
+/**
  * Closes the given |handle|. See MojoClose for more info.
  * @param {MojoHandle} Handle to close.
  * @return {MojoResult} Result code.
@@ -121,29 +136,26 @@ var READ_DATA_FLAG_PEEK;
 function close(handle) { [native code] }
 
 /**
+ * Queries the last known signaling state of |handle|.
+ *
+ * @param {MojoHandle} handle Handle to query.
+ * @return {object} An object of the form {
+ *     result,              // MOJO_RESULT_OK or MOJO_RESULT_INVALID_ARGUMENT
+ *     satisfiedSignals,    // MojoHandleSignals (see above)
+ *     satisfiableSignals,  // MojoHandleSignals
+ * }
+ */
+function queryHandleSignalsState(handle) { [native code] }
+
+/**
  * Waits on the given handle until a signal indicated by |signals| is
- * satisfied or until |deadline| is passed. See MojoWait for more information.
+ * satisfied or an error occurs.
  *
  * @param {MojoHandle} handle Handle to wait on.
  * @param {MojoHandleSignals} signals Specifies the condition to wait for.
- * @param {MojoDeadline} deadline Stops waiting if this is reached.
  * @return {MojoResult} Result code.
  */
-function wait(handle, signals, deadline) { [native code] }
-
-/**
- * Waits on |handles[0]|, ..., |handles[handles.length-1]| for at least one of
- * them to satisfy the state indicated by |flags[0]|, ...,
- * |flags[handles.length-1]|, respectively, or until |deadline| has passed.
- * See MojoWaitMany for more information.
- *
- * @param {Array.MojoHandle} handles Handles to wait on.
- * @param {Array.MojoHandleSignals} signals Specifies the condition to wait for,
- *   for each corresponding handle. Must be the same length as |handles|.
- * @param {MojoDeadline} deadline Stops waiting if this is reached.
- * @return {MojoResult} Result code.
- */
-function waitMany(handles, signals, deadline) { [native code] }
+function wait(handle, signals) { [native code] }
 
 /**
  * Creates a message pipe. This function always succeeds.
@@ -236,3 +248,57 @@ function readData(handle, flags) { [native code] }
  * @return true or false
  */
 function isHandle(value) { [native code] }
+
+/**
+ * Creates shared buffer of specified size |num_bytes|.
+ * See MojoCreateSharedBuffer for more information including error codes.
+ *
+ * @param {number} num_bytes Size of the memory to be allocated for shared
+ * @param {MojoCreateSharedBufferOptionsFlags} flags Flags.
+ *   buffer.
+ * @return {object} An object of the form {
+ *     result,  // |RESULT_OK| on success, error code otherwise.
+ *     handle,  // An MojoHandle for shared buffer (only on success).
+ *   }
+ */
+function createSharedBuffer(num_bytes, flags) { [native code] }
+
+/**
+ * Duplicates the |buffer_handle| to a shared buffer. Duplicated handle can be
+ * sent to another process over message pipe. See MojoDuplicateBufferHandle for
+ * more information including error codes.
+ *
+ * @param {MojoHandle} buffer_handle MojoHandle.
+ * @param {MojoCreateSharedBufferOptionsFlags} flags Flags.
+ * @return {object} An object of the form {
+ *     result,  // |RESULT_OK| on success, error code otherwise.
+ *     handle,  // A duplicated MojoHandle for shared buffer (only on success).
+ *   }
+ */
+function duplicateBufferHandle(buffer_handle, flags) { [native code] }
+
+/**
+ * Maps the part (at offset |offset| of length |num_bytes|) of the buffer given
+ * by |buffer_handle| into ArrayBuffer memory |buffer|, with options specified
+ * by |flags|. See MojoMapBuffer for more information including error codes.
+ *
+ * @param {MojoHandle} buffer_handle A sharedBufferHandle returned by
+ *   createSharedBuffer.
+ * @param {number} offset Offset.
+ * @param {number} num_bytes Size of the memory to be mapped.
+ * @param {MojoMapBufferFlags} flags Flags.
+ * @return {object} An object of the form {
+ *     result,  // |RESULT_OK| on success, error code otherwise.
+ *     buffer,  // An ArrayBuffer (only on success).
+ *   }
+ */
+function mapBuffer(buffer_handle, offset, num_bytes, flags) { [native code] }
+
+/**
+ * Unmaps buffer that was mapped using mapBuffer.
+ * See MojoUnmapBuffer for more information including error codes.
+ *
+ * @param {ArrayBuffer} buffer ArrayBuffer.
+ * @return {MojoResult} Result code.
+ */
+function unmapBuffer(buffer) { [native code] }

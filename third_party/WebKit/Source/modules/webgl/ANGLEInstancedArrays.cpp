@@ -35,60 +35,60 @@
 namespace blink {
 
 ANGLEInstancedArrays::ANGLEInstancedArrays(WebGLRenderingContextBase* context)
-    : WebGLExtension(context)
-{
-    context->extensionsUtil()->ensureExtensionEnabled("GL_ANGLE_instanced_arrays");
+    : WebGLExtension(context) {
+  context->ExtensionsUtil()->EnsureExtensionEnabled(
+      "GL_ANGLE_instanced_arrays");
 }
 
-ANGLEInstancedArrays::~ANGLEInstancedArrays()
-{
+WebGLExtensionName ANGLEInstancedArrays::GetName() const {
+  return kANGLEInstancedArraysName;
 }
 
-WebGLExtensionName ANGLEInstancedArrays::name() const
-{
-    return ANGLEInstancedArraysName;
+ANGLEInstancedArrays* ANGLEInstancedArrays::Create(
+    WebGLRenderingContextBase* context) {
+  return new ANGLEInstancedArrays(context);
 }
 
-ANGLEInstancedArrays* ANGLEInstancedArrays::create(WebGLRenderingContextBase* context)
-{
-    return new ANGLEInstancedArrays(context);
+bool ANGLEInstancedArrays::Supported(WebGLRenderingContextBase* context) {
+  return context->ExtensionsUtil()->SupportsExtension(
+      "GL_ANGLE_instanced_arrays");
 }
 
-bool ANGLEInstancedArrays::supported(WebGLRenderingContextBase* context)
-{
-    return context->extensionsUtil()->supportsExtension("GL_ANGLE_instanced_arrays");
+const char* ANGLEInstancedArrays::ExtensionName() {
+  return "ANGLE_instanced_arrays";
 }
 
-const char* ANGLEInstancedArrays::extensionName()
-{
-    return "ANGLE_instanced_arrays";
+void ANGLEInstancedArrays::drawArraysInstancedANGLE(GLenum mode,
+                                                    GLint first,
+                                                    GLsizei count,
+                                                    GLsizei primcount) {
+  WebGLExtensionScopedContext scoped(this);
+  if (scoped.IsLost())
+    return;
+
+  scoped.Context()->DrawArraysInstancedANGLE(mode, first, count, primcount);
 }
 
-void ANGLEInstancedArrays::drawArraysInstancedANGLE(GLenum mode, GLint first, GLsizei count, GLsizei primcount)
-{
-    WebGLExtensionScopedContext scoped(this);
-    if (scoped.isLost())
-        return;
+void ANGLEInstancedArrays::drawElementsInstancedANGLE(GLenum mode,
+                                                      GLsizei count,
+                                                      GLenum type,
+                                                      long long offset,
+                                                      GLsizei primcount) {
+  WebGLExtensionScopedContext scoped(this);
+  if (scoped.IsLost())
+    return;
 
-    scoped.context()->drawArraysInstancedANGLE(mode, first, count, primcount);
+  scoped.Context()->DrawElementsInstancedANGLE(mode, count, type, offset,
+                                               primcount);
 }
 
-void ANGLEInstancedArrays::drawElementsInstancedANGLE(GLenum mode, GLsizei count, GLenum type, long long offset, GLsizei primcount)
-{
-    WebGLExtensionScopedContext scoped(this);
-    if (scoped.isLost())
-        return;
+void ANGLEInstancedArrays::vertexAttribDivisorANGLE(GLuint index,
+                                                    GLuint divisor) {
+  WebGLExtensionScopedContext scoped(this);
+  if (scoped.IsLost())
+    return;
 
-    scoped.context()->drawElementsInstancedANGLE(mode, count, type, offset, primcount);
+  scoped.Context()->VertexAttribDivisorANGLE(index, divisor);
 }
 
-void ANGLEInstancedArrays::vertexAttribDivisorANGLE(GLuint index, GLuint divisor)
-{
-    WebGLExtensionScopedContext scoped(this);
-    if (scoped.isLost())
-        return;
-
-    scoped.context()->vertexAttribDivisorANGLE(index, divisor);
-}
-
-} // namespace blink
+}  // namespace blink

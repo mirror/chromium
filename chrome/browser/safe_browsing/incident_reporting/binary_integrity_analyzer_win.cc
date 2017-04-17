@@ -18,7 +18,7 @@
 #include "chrome/browser/safe_browsing/incident_reporting/incident_receiver.h"
 #include "chrome/common/chrome_version.h"
 #include "chrome/common/safe_browsing/binary_feature_extractor.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
+#include "components/safe_browsing/csd.pb.h"
 
 namespace safe_browsing {
 
@@ -83,7 +83,7 @@ void VerifyBinaryIntegrity(
 
       // Send the report.
       incident_receiver->AddIncidentForProcess(
-          base::WrapUnique(new BinaryIntegrityIncident(std::move(incident))));
+          base::MakeUnique<BinaryIntegrityIncident>(std::move(incident)));
     } else {
       // The binary is integral, remove previous report so that next incidents
       // for the binary will be reported.

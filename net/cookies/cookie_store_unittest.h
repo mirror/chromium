@@ -65,9 +65,6 @@ const char kValidCookieLine[] = "A=B; path=/";
 //   // Time to wait between two cookie insertions to ensure that cookies have
 //   // different creation times.
 //   static const int creation_time_granularity_in_ms;
-//
-//   // The cookie store enforces secure flag requires a secure scheme.
-//   static const bool enforce_strict_secure;
 // };
 
 template <class CookieStoreTestTraits>
@@ -177,8 +174,7 @@ class CookieStoreTest : public testing::Test {
     ResultSavingCookieCallback<bool> callback;
     cs->SetCookieWithDetailsAsync(
         url, name, value, domain, path, creation_time, expiration_time,
-        last_access_time, secure, http_only, same_site,
-        false /* enforces strict secure cookies */, priority,
+        last_access_time, secure, http_only, same_site, priority,
         base::Bind(&ResultSavingCookieCallback<bool>::Run,
                    base::Unretained(&callback)));
     callback.WaitUntilDone();
@@ -202,8 +198,6 @@ class CookieStoreTest : public testing::Test {
     CookieOptions options;
     if (!CookieStoreTestTraits::supports_http_only)
       options.set_include_httponly();
-    if (CookieStoreTestTraits::enforce_strict_secure)
-      options.set_enforce_strict_secure();
     return SetCookieWithOptions(cs, url, cookie_line, options);
   }
 
@@ -355,8 +349,14 @@ TYPED_TEST_P(CookieStoreTest, SetCookieWithDetailsAsync) {
       cs, this->www_google_bar_.url(), "C", "D", this->www_google_bar_.domain(),
       "/bar", two_hours_ago, base::Time(), one_hour_ago, false, true,
       CookieSameSite::DEFAULT_MODE, COOKIE_PRIORITY_DEFAULT));
-  EXPECT_TRUE(this->SetCookieWithDetails(
+  // Because of strict secure cookies, a cookie made by an HTTP URL should fail
+  // to create a cookie with a the secure attribute.
+  EXPECT_FALSE(this->SetCookieWithDetails(
       cs, this->http_www_google_.url(), "E", "F", std::string(), std::string(),
+      base::Time(), base::Time(), base::Time(), true, false,
+      CookieSameSite::DEFAULT_MODE, COOKIE_PRIORITY_DEFAULT));
+  EXPECT_TRUE(this->SetCookieWithDetails(
+      cs, this->https_www_google_.url(), "E", "F", std::string(), std::string(),
       base::Time(), base::Time(), base::Time(), true, false,
       CookieSameSite::DEFAULT_MODE, COOKIE_PRIORITY_DEFAULT));
 
@@ -465,6 +465,46 @@ TYPED_TEST_P(CookieStoreTest, SetCookieWithDetailsAsync) {
   EXPECT_TRUE(++it == cookies.end());
 }
 
+// The iOS networking stack uses the iOS cookie parser, which we do not
+// control. While it is spec-compliant, that does not match the practical
+// behavior of most UAs in some cases, which we try to replicate. See
+// https://crbug.com/638389 for more information.
+TYPED_TEST_P(CookieStoreTest, EmptyKeyTest) {
+#if !defined(OS_IOS)
+  CookieStore* cs = this->GetCookieStore();
+
+  GURL url1("http://foo1.bar.com");
+  EXPECT_TRUE(this->SetCookie(cs, url1, "foo"));
+  EXPECT_EQ("foo", this->GetCookies(cs, url1));
+
+  // Regression tests for https://crbug.com/601786
+  GURL url2("http://foo2.bar.com");
+  EXPECT_TRUE(this->SetCookie(cs, url2, "foo"));
+  EXPECT_TRUE(this->SetCookie(cs, url2, "\t"));
+  EXPECT_EQ("", this->GetCookies(cs, url2));
+
+  GURL url3("http://foo3.bar.com");
+  EXPECT_TRUE(this->SetCookie(cs, url3, "foo"));
+  EXPECT_TRUE(this->SetCookie(cs, url3, "="));
+  EXPECT_EQ("", this->GetCookies(cs, url3));
+
+  GURL url4("http://foo4.bar.com");
+  EXPECT_TRUE(this->SetCookie(cs, url4, "foo"));
+  EXPECT_TRUE(this->SetCookie(cs, url4, ""));
+  EXPECT_EQ("", this->GetCookies(cs, url4));
+
+  GURL url5("http://foo5.bar.com");
+  EXPECT_TRUE(this->SetCookie(cs, url5, "foo"));
+  EXPECT_TRUE(this->SetCookie(cs, url5, "; bar"));
+  EXPECT_EQ("", this->GetCookies(cs, url5));
+
+  GURL url6("http://foo6.bar.com");
+  EXPECT_TRUE(this->SetCookie(cs, url6, "foo"));
+  EXPECT_TRUE(this->SetCookie(cs, url6, " "));
+  EXPECT_EQ("", this->GetCookies(cs, url6));
+#endif
+}
+
 TYPED_TEST_P(CookieStoreTest, DomainTest) {
   CookieStore* cs = this->GetCookieStore();
   EXPECT_TRUE(this->SetCookie(cs, this->http_www_google_.url(), "A=B"));
@@ -562,6 +602,15 @@ TYPED_TEST_P(CookieStoreTest, InvalidDomainTest) {
 
   // More specific sub-domain than allowed.
   EXPECT_FALSE(this->SetCookie(cs, url_foobar, "a=1; domain=.yo.foo.bar.com"));
+
+// The iOS networking stack uses the iOS cookie parser, which we do not
+// control. Its handling of multiple domain= values in cookie string varies
+// depending on iOS version. See https://crbug.com/639167
+#if !defined(OS_IOS)
+  // Regression test for https://crbug.com/601786
+  EXPECT_FALSE(
+      this->SetCookie(cs, url_foobar, "a=1; domain=.yo.foo.bar.com; domain="));
+#endif  // !defined(OS_IOS)
 
   EXPECT_FALSE(this->SetCookie(cs, url_foobar, "b=2; domain=.foo.com"));
   EXPECT_FALSE(this->SetCookie(cs, url_foobar, "c=3; domain=.bar.foo.com"));
@@ -1374,6 +1423,7 @@ TYPED_TEST_P(CookieStoreTest, DeleteSessionCookie) {
 
 REGISTER_TYPED_TEST_CASE_P(CookieStoreTest,
                            SetCookieWithDetailsAsync,
+                           EmptyKeyTest,
                            DomainTest,
                            DomainWithTrailingDotTest,
                            ValidSubdomainTest,

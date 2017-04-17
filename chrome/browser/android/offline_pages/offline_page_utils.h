@@ -8,8 +8,8 @@
 #include <stdint.h>
 
 #include "base/callback.h"
-
-class GURL;
+#include "components/offline_pages/core/offline_page_model.h"
+#include "url/gurl.h"
 
 namespace content {
 class BrowserContext;
@@ -17,43 +17,49 @@ class WebContents;
 }
 
 namespace offline_pages {
+struct OfflinePageHeader;
 struct OfflinePageItem;
 
 class OfflinePageUtils {
  public:
-  // Returns true if |url| might point to an offline page.
-  static bool MightBeOfflineURL(const GURL& url);
+  // The result of checking duplicate page or request.
+  enum class DuplicateCheckResult {
+    // Page with same URL is found.
+    DUPLICATE_PAGE_FOUND,
+    // Request with same URL is found.
+    DUPLICATE_REQUEST_FOUND,
+    // No page or request with same URL is found.
+    NOT_FOUND
+  };
 
-  // Gets an offline URL of an offline page with |online_url| if one exists.
-  static void GetOfflineURLForOnlineURL(
+  // Controls the UI action that could be triggered during download.
+  // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser.offlinepages
+  // GENERATED_JAVA_CLASS_NAME_OVERRIDE: DownloadUiActionFlags
+  enum class DownloadUIActionFlags {
+    NONE = 0x0,
+    // Shows an infobar to prompt the user for re-download when the duplicate
+    // page or request is found.
+    PROMPT_DUPLICATE = 0x1,
+    // Shows a toast when the new download starts.
+    SHOW_TOAST_ON_NEW_DOWNLOAD = 0x2,
+    // All actions.
+    ALL = 0xFFFF
+  };
+
+  // Callback to inform the duplicate checking result.
+  using DuplicateCheckCallback = base::Callback<void(DuplicateCheckResult)>;
+
+  // Returns via callback an offline page related to |url|, if any. The
+  // page is chosen based on creation date; a more recently created offline
+  // page will be preferred over an older one. The offline page captured from
+  // last visit in the tab will not be considered if its tab id does not match
+  // the provided |tab_id|.
+  static void SelectPageForURL(
       content::BrowserContext* browser_context,
-      const GURL& online_url,
-      const base::Callback<void(const GURL&)>& callback);
-
-  // Gets an online URL of an offline page with |offline_url| if one exists.
-  // Deprecated.  Use |GetOnlineURLForOfflineURL|.
-  static GURL MaybeGetOnlineURLForOfflineURL(
-      content::BrowserContext* browser_context,
-      const GURL& offline_url);
-
-  static void GetOnlineURLForOfflineURL(
-      content::BrowserContext* browser_context,
-      const GURL& offline_url,
-      const base::Callback<void(const GURL&)>& callback);
-
-  // Checks whether |offline_url| points to an offline page.
-  // Deprecated.  Use something else.
-  static bool IsOfflinePage(content::BrowserContext* browser_context,
-                            const GURL& offline_url);
-
-  // Checks whether offline page for |online_url| exists.
-  static bool HasOfflinePageForOnlineURL(
-      content::BrowserContext* browser_context,
-      const GURL& online_url);
-
-  // Marks that the offline page related to the |offline_url| has been accessed.
-  static void MarkPageAccessed(content::BrowserContext* browser_context,
-                               const GURL& offline_url);
+      const GURL& url,
+      OfflinePageModel::URLSearchMode url_search_mode,
+      int tab_id,
+      const base::Callback<void(const OfflinePageItem*)>& callback);
 
   // Gets the offline page corresponding to the given web contents.  The
   // returned pointer is owned by the web_contents and may be deleted by user
@@ -61,10 +67,48 @@ class OfflinePageUtils {
   static const OfflinePageItem* GetOfflinePageFromWebContents(
       content::WebContents* web_contents);
 
+  // Gets the offline header provided when loading the offline page for the
+  // given web contents.
+  static const OfflinePageHeader* GetOfflineHeaderFromWebContents(
+      content::WebContents* web_contents);
+
+  // Returns true if the offline page is shown for previewing purpose.
+  static bool IsShowingOfflinePreview(content::WebContents* web_contents);
+
+  // Returns true if download button is shown in the error page.
+  static bool IsShowingDownloadButtonInErrorPage(
+      content::WebContents* web_contents);
+
   // Gets an Android Tab ID from a tab containing |web_contents|. Returns false,
   // when tab is not available. Returns true otherwise and sets |tab_id| to the
   // ID of the tab.
   static bool GetTabId(content::WebContents* web_contents, int* tab_id);
+
+  // Returns true if the |web_contents| is currently being presented inside a
+  // custom tab.
+  static bool CurrentlyShownInCustomTab(content::WebContents* web_contents);
+
+  static bool EqualsIgnoringFragment(const GURL& lhs, const GURL& rhs);
+
+  // Returns original URL of the given web contents. Empty URL is returned if
+  // no redirect occurred.
+  static GURL GetOriginalURLFromWebContents(content::WebContents* web_contents);
+
+  // Checks for duplicates in all finished or ongoing downloads. Only pages and
+  // requests that could result in showing in Download UI are searched for
+  // |url| match. Result is returned in |callback|. See DuplicateCheckCallback
+  // for more details.
+  static void CheckDuplicateDownloads(content::BrowserContext* browser_context,
+                                      const GURL& url,
+                                      const DuplicateCheckCallback& callback);
+
+  // Schedules to download a page from |url| and categorize under |name_space|.
+  // The duplicate pages or requests will be checked. Note that |url| can be
+  // different from the one rendered in |web_contents|.
+  static void ScheduleDownload(content::WebContents* web_contents,
+                               const std::string& name_space,
+                               const GURL& url,
+                               DownloadUIActionFlags ui_action);
 };
 
 }  // namespace offline_pages

@@ -8,26 +8,24 @@
 #include "build/build_config.h"
 #include "content/gpu/gpu_child_thread.h"
 #include "content/gpu/gpu_process.h"
-#include "gpu/ipc/common/gpu_memory_buffer_support.h"
-#include "gpu/ipc/service/gpu_memory_buffer_factory.h"
+#include "gpu/config/gpu_info_collector.h"
+#include "gpu/config/gpu_util.h"
+#include "ui/gl/init/gl_factory.h"
 
 #if defined(OS_ANDROID)
 #include "base/android/jni_android.h"
 #endif
 
+#if defined(USE_OZONE)
+#include "ui/ozone/public/ozone_platform.h"
+#endif
+
 namespace content {
 
-InProcessGpuThread::InProcessGpuThread(
-    const InProcessChildThreadParams& params,
-    const gpu::GpuPreferences& gpu_preferences)
+InProcessGpuThread::InProcessGpuThread(const InProcessChildThreadParams& params)
     : base::Thread("Chrome_InProcGpuThread"),
       params_(params),
-      gpu_process_(NULL),
-      gpu_preferences_(gpu_preferences),
-      gpu_memory_buffer_factory_(
-          gpu::GetNativeGpuMemoryBufferType() != gfx::EMPTY_BUFFER
-          ? gpu::GpuMemoryBufferFactory::CreateNativeType()
-          : nullptr) {}
+      gpu_process_(NULL) {}
 
 InProcessGpuThread::~InProcessGpuThread() {
   Stop();
@@ -48,10 +46,25 @@ void InProcessGpuThread::Init() {
 
   gpu_process_ = new GpuProcess(io_thread_priority);
 
+#if defined(USE_OZONE)
+  ui::OzonePlatform::InitParams params;
+  params.single_process = true;
+  ui::OzonePlatform::InitializeForGPU(params);
+#endif
+
+  gpu::GPUInfo gpu_info;
+  if (!gl::init::InitializeGLOneOff())
+    VLOG(1) << "gl::init::InitializeGLOneOff failed";
+  else
+    gpu::CollectContextGraphicsInfo(&gpu_info);
+
+  gpu::GpuFeatureInfo gpu_feature_info =
+      gpu::GetGpuFeatureInfo(gpu_info, *base::CommandLine::ForCurrentProcess());
+
   // The process object takes ownership of the thread object, so do not
   // save and delete the pointer.
-  GpuChildThread* child_thread = new GpuChildThread(
-      gpu_preferences_, params_, gpu_memory_buffer_factory_.get());
+  GpuChildThread* child_thread =
+      new GpuChildThread(params_, gpu_info, gpu_feature_info);
 
   // Since we are in the browser process, use the thread start time as the
   // process start time.
@@ -66,9 +79,8 @@ void InProcessGpuThread::CleanUp() {
 }
 
 base::Thread* CreateInProcessGpuThread(
-    const InProcessChildThreadParams& params,
-    const gpu::GpuPreferences& gpu_preferences) {
-  return new InProcessGpuThread(params, gpu_preferences);
+    const InProcessChildThreadParams& params) {
+  return new InProcessGpuThread(params);
 }
 
 }  // namespace content

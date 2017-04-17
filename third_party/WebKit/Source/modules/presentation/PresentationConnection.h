@@ -5,119 +5,144 @@
 #ifndef PresentationConnection_h
 #define PresentationConnection_h
 
+#include <memory>
+#include "core/dom/ContextLifecycleObserver.h"
+#include "core/dom/NotShared.h"
 #include "core/events/EventTarget.h"
 #include "core/fileapi/Blob.h"
 #include "core/fileapi/FileError.h"
-#include "core/frame/DOMWindowProperty.h"
 #include "platform/heap/Handle.h"
-#include "public/platform/modules/presentation/WebPresentationConnectionClient.h"
-#include "wtf/text/WTFString.h"
-#include <memory>
+#include "platform/weborigin/KURL.h"
+#include "platform/wtf/text/WTFString.h"
+#include "public/platform/modules/presentation/WebPresentationConnection.h"
+#include "public/platform/modules/presentation/WebPresentationConnectionProxy.h"
+#include "public/platform/modules/presentation/WebPresentationController.h"
+#include "public/platform/modules/presentation/WebPresentationInfo.h"
 
 namespace WTF {
 class AtomicString;
-} // namespace WTF
+}  // namespace WTF
 
 namespace blink {
 
 class DOMArrayBuffer;
 class DOMArrayBufferView;
 class PresentationController;
+class PresentationReceiver;
 class PresentationRequest;
 
-class PresentationConnection final
-    : public EventTargetWithInlineData
-    , public DOMWindowProperty {
-    USING_GARBAGE_COLLECTED_MIXIN(PresentationConnection);
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    // For CallbackPromiseAdapter.
-    using WebType = std::unique_ptr<WebPresentationConnectionClient>;
+class PresentationConnection final : public EventTargetWithInlineData,
+                                     public ContextClient,
+                                     public WebPresentationConnection {
+  USING_GARBAGE_COLLECTED_MIXIN(PresentationConnection);
+  DEFINE_WRAPPERTYPEINFO();
 
-    static PresentationConnection* take(ScriptPromiseResolver*, std::unique_ptr<WebPresentationConnectionClient>, PresentationRequest*);
-    static PresentationConnection* take(PresentationController*, std::unique_ptr<WebPresentationConnectionClient>, PresentationRequest*);
-    ~PresentationConnection() override;
+ public:
+  // For CallbackPromiseAdapter.
+  static PresentationConnection* Take(ScriptPromiseResolver*,
+                                      const WebPresentationInfo&,
+                                      PresentationRequest*);
+  static PresentationConnection* Take(PresentationController*,
+                                      const WebPresentationInfo&,
+                                      PresentationRequest*);
+  static PresentationConnection* Take(PresentationReceiver*,
+                                      const WebPresentationInfo&);
+  ~PresentationConnection() override;
 
-    // EventTarget implementation.
-    const AtomicString& interfaceName() const override;
-    ExecutionContext* getExecutionContext() const override;
+  // EventTarget implementation.
+  const AtomicString& InterfaceName() const override;
+  ExecutionContext* GetExecutionContext() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-    const String& id() const { return m_id; }
-    const WTF::AtomicString& state() const;
+  const String& id() const { return id_; }
+  const String& url() const { return url_; }
+  const WTF::AtomicString& state() const;
 
-    void send(const String& message, ExceptionState&);
-    void send(DOMArrayBuffer*, ExceptionState&);
-    void send(DOMArrayBufferView*, ExceptionState&);
-    void send(Blob*, ExceptionState&);
-    void close();
-    void terminate();
+  void send(const String& message, ExceptionState&);
+  void send(DOMArrayBuffer*, ExceptionState&);
+  void send(NotShared<DOMArrayBufferView>, ExceptionState&);
+  void send(Blob*, ExceptionState&);
+  void close();
+  void terminate();
 
-    String binaryType() const;
-    void setBinaryType(const String&);
+  String binaryType() const;
+  void setBinaryType(const String&);
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(connect);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(close);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(terminate);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(connect);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(close);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(terminate);
 
-    // Returns true if and only if the WebPresentationConnectionClient represents this connection.
-    bool matches(WebPresentationConnectionClient*) const;
+  // Returns true if and only if the the presentation info matches this
+  // connection.
+  bool Matches(const WebPresentationInfo&) const;
 
-    // Notifies the connection about its state change.
-    void didChangeState(WebPresentationConnectionState);
+  // Returns true if this connection's id equals to |id| and its url equals to
+  // |url|.
+  bool Matches(const String& id, const KURL&) const;
 
-    // Notifies the connection about its state change to 'closed'.
-    void didClose(WebPresentationConnectionCloseReason, const String& message);
+  // Notifies the connection about its state change to 'closed'.
+  void DidClose(WebPresentationConnectionCloseReason, const String& message);
 
-    // Notifies the presentation about new message.
-    void didReceiveTextMessage(const String& message);
-    void didReceiveBinaryMessage(const uint8_t* data, size_t length);
+  // WebPresentationConnection implementation.
+  void BindProxy(std::unique_ptr<WebPresentationConnectionProxy>) override;
+  void DidReceiveTextMessage(const WebString& message) override;
+  void DidReceiveBinaryMessage(const uint8_t* data, size_t length) override;
+  void DidChangeState(WebPresentationConnectionState) override;
+  void DidClose() override;
 
-protected:
-    // EventTarget implementation.
-    void addedEventListener(const AtomicString& eventType, RegisteredEventListener&) override;
+  WebPresentationConnectionState GetState();
+  void DidChangeState(WebPresentationConnectionState,
+                      bool should_dispatch_event);
 
-private:
-    class BlobLoader;
+ protected:
+  // EventTarget implementation.
+  void AddedEventListener(const AtomicString& event_type,
+                          RegisteredEventListener&) override;
 
-    enum MessageType {
-        MessageTypeText,
-        MessageTypeArrayBuffer,
-        MessageTypeBlob,
-    };
+ private:
+  class BlobLoader;
 
-    enum BinaryType {
-        BinaryTypeBlob,
-        BinaryTypeArrayBuffer
-    };
+  enum MessageType {
+    kMessageTypeText,
+    kMessageTypeArrayBuffer,
+    kMessageTypeBlob,
+  };
 
-    class Message;
+  enum BinaryType { kBinaryTypeBlob, kBinaryTypeArrayBuffer };
 
-    PresentationConnection(LocalFrame*, const String& id, const String& url);
+  class Message;
 
-    bool canSendMessage(ExceptionState&);
-    void handleMessageQueue();
+  PresentationConnection(LocalFrame*, const String& id, const KURL&);
 
-    // Callbacks invoked from BlobLoader.
-    void didFinishLoadingBlob(DOMArrayBuffer*);
-    void didFailLoadingBlob(FileError::ErrorCode);
+  bool CanSendMessage(ExceptionState&);
+  void HandleMessageQueue();
 
-    // Cancel loads and pending messages when the connection is closed.
-    void tearDown();
+  // Callbacks invoked from BlobLoader.
+  void DidFinishLoadingBlob(DOMArrayBuffer*);
+  void DidFailLoadingBlob(FileError::ErrorCode);
 
-    String m_id;
-    String m_url;
-    WebPresentationConnectionState m_state;
+  // Internal helper function to dispatch state change events asynchronously.
+  void DispatchStateChangeEvent(Event*);
+  static void DispatchEventAsync(EventTarget*, Event*);
 
-    // For Blob data handling.
-    Member<BlobLoader> m_blobLoader;
-    HeapDeque<Member<Message>> m_messages;
+  // Cancel loads and pending messages when the connection is closed.
+  void TearDown();
 
-    BinaryType m_binaryType;
+  String id_;
+  KURL url_;
+  WebPresentationConnectionState state_;
+
+  // For Blob data handling.
+  Member<BlobLoader> blob_loader_;
+  HeapDeque<Member<Message>> messages_;
+
+  BinaryType binary_type_;
+
+  std::unique_ptr<WebPresentationConnectionProxy> proxy_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PresentationConnection_h
+#endif  // PresentationConnection_h

@@ -10,61 +10,68 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "modules/ModulesExport.h"
 #include "modules/fetch/FetchHeaderList.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class Dictionary;
+class ByteStringSequenceSequenceOrByteStringByteStringRecordOrHeaders;
 class ExceptionState;
-class Iterator;
 
 // http://fetch.spec.whatwg.org/#headers-class
-class MODULES_EXPORT Headers final : public GarbageCollected<Headers>, public ScriptWrappable, public PairIterable<String, String> {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    enum Guard { ImmutableGuard, RequestGuard, RequestNoCORSGuard, ResponseGuard, NoneGuard };
+class MODULES_EXPORT Headers final : public GarbageCollected<Headers>,
+                                     public ScriptWrappable,
+                                     public PairIterable<String, String> {
+  DEFINE_WRAPPERTYPEINFO();
 
-    static Headers* create();
-    static Headers* create(ExceptionState&);
-    static Headers* create(const Headers*, ExceptionState&);
-    static Headers* create(const Vector<Vector<String>>&, ExceptionState&);
-    static Headers* create(const Dictionary&, ExceptionState&);
+ public:
+  enum Guard {
+    kImmutableGuard,
+    kRequestGuard,
+    kRequestNoCORSGuard,
+    kResponseGuard,
+    kNoneGuard
+  };
 
-    // Shares the FetchHeaderList. Called when creating a Request or Response.
-    static Headers* create(FetchHeaderList*);
+  static Headers* Create(ExceptionState&);
+  static Headers* Create(
+      const ByteStringSequenceSequenceOrByteStringByteStringRecordOrHeaders&,
+      ExceptionState&);
 
-    Headers* clone() const;
+  // Shares the FetchHeaderList. Called when creating a Request or Response.
+  static Headers* Create(FetchHeaderList*);
 
-    // Headers.idl implementation.
-    void append(const String& name, const String& value, ExceptionState&);
-    void remove(const String& key, ExceptionState&);
-    String get(const String& key, ExceptionState&);
-    Vector<String> getAll(const String& key, ExceptionState&);
-    bool has(const String& key, ExceptionState&);
-    void set(const String& key, const String& value, ExceptionState&);
+  Headers* Clone() const;
 
-    void setGuard(Guard guard) { m_guard = guard; }
-    Guard getGuard() const { return m_guard; }
+  // Headers.idl implementation.
+  void append(const String& name, const String& value, ExceptionState&);
+  void remove(const String& key, ExceptionState&);
+  String get(const String& key, ExceptionState&);
+  Vector<String> getAll(const String& key, ExceptionState&);
+  bool has(const String& key, ExceptionState&);
+  void set(const String& key, const String& value, ExceptionState&);
 
-    // These methods should only be called when size() would return 0.
-    void fillWith(const Headers*, ExceptionState&);
-    void fillWith(const Vector<Vector<String>>&, ExceptionState&);
-    void fillWith(const Dictionary&, ExceptionState&);
+  void SetGuard(Guard guard) { guard_ = guard; }
+  Guard GetGuard() const { return guard_; }
 
-    FetchHeaderList* headerList() const { return m_headerList; }
-    DECLARE_TRACE();
+  // These methods should only be called when size() would return 0.
+  void FillWith(const Headers*, ExceptionState&);
+  void FillWith(const Vector<Vector<String>>&, ExceptionState&);
+  void FillWith(const Vector<std::pair<String, String>>&, ExceptionState&);
 
-private:
-    Headers();
-    // Shares the FetchHeaderList. Called when creating a Request or Response.
-    explicit Headers(FetchHeaderList*);
+  FetchHeaderList* HeaderList() const { return header_list_; }
+  DECLARE_TRACE();
 
-    Member<FetchHeaderList> m_headerList;
-    Guard m_guard;
+ private:
+  Headers();
+  // Shares the FetchHeaderList. Called when creating a Request or Response.
+  explicit Headers(FetchHeaderList*);
 
-    IterationSource* startIteration(ScriptState*, ExceptionState&) override;
+  Member<FetchHeaderList> header_list_;
+  Guard guard_;
+
+  IterationSource* StartIteration(ScriptState*, ExceptionState&) override;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Headers_h
+#endif  // Headers_h

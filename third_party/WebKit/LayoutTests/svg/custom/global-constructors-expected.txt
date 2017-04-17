@@ -25,7 +25,6 @@ FAIL SVGStylable.toString() should be function SVGStylable() { [native code] }. 
 FAIL SVGLocatable.toString() should be function SVGLocatable() { [native code] }. Threw exception ReferenceError: SVGLocatable is not defined
 FAIL SVGTransformable.toString() should be function SVGTransformable() { [native code] }. Threw exception ReferenceError: SVGTransformable is not defined
 FAIL SVGTests.toString() should be function SVGTests() { [native code] }. Threw exception ReferenceError: SVGTests is not defined
-PASS SVGViewSpec.toString() is 'function SVGViewSpec() { [native code] }'
 FAIL SVGURIReference.toString() should be function SVGURIReference() { [native code] }. Threw exception ReferenceError: SVGURIReference is not defined
 FAIL SVGCSSRule.toString() should be function SVGCSSRule() { [native code] }. Threw exception ReferenceError: SVGCSSRule is not defined
 PASS SVGSVGElement.toString() is 'function SVGSVGElement() { [native code] }'
@@ -97,7 +96,7 @@ PASS SVGFEOffsetElement.toString() is 'function SVGFEOffsetElement() { [native c
 PASS SVGFESpecularLightingElement.toString() is 'function SVGFESpecularLightingElement() { [native code] }'
 PASS SVGFETileElement.toString() is 'function SVGFETileElement() { [native code] }'
 PASS SVGFETurbulenceElement.toString() is 'function SVGFETurbulenceElement() { [native code] }'
-PASS SVGCursorElement.toString() is 'function SVGCursorElement() { [native code] }'
+FAIL SVGCursorElement.toString() should be function SVGCursorElement() { [native code] }. Threw exception ReferenceError: SVGCursorElement is not defined
 PASS SVGAElement.toString() is 'function SVGAElement() { [native code] }'
 PASS SVGViewElement.toString() is 'function SVGViewElement() { [native code] }'
 PASS SVGScriptElement.toString() is 'function SVGScriptElement() { [native code] }'

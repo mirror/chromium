@@ -26,130 +26,131 @@
 
 #include "base/gtest_prod_util.h"
 #include "core/CoreExport.h"
-#include "core/html/HTMLTextFormControlElement.h"
+#include "core/html/TextControlElement.h"
 
 namespace blink {
 
 class BeforeTextInsertedEvent;
-class ExceptionState;
 
-class CORE_EXPORT HTMLTextAreaElement final : public HTMLTextFormControlElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static HTMLTextAreaElement* create(Document&, HTMLFormElement*);
+class CORE_EXPORT HTMLTextAreaElement final : public TextControlElement {
+  DEFINE_WRAPPERTYPEINFO();
 
-    unsigned cols() const { return m_cols; }
-    unsigned rows() const { return m_rows; }
+ public:
+  static HTMLTextAreaElement* Create(Document&);
 
-    bool shouldWrapText() const { return m_wrap != NoWrap; }
+  unsigned cols() const { return cols_; }
+  unsigned rows() const { return rows_; }
 
-    String value() const override;
-    void setValue(const String&, TextFieldEventBehavior = DispatchNoEvent) override;
-    String defaultValue() const;
-    void setDefaultValue(const String&);
-    int textLength() const { return value().length(); }
-    int maxLength() const;
-    int minLength() const;
-    void setMaxLength(int, ExceptionState&);
-    void setMinLength(int, ExceptionState&);
+  bool ShouldWrapText() const { return wrap_ != kNoWrap; }
 
-    String suggestedValue() const;
-    void setSuggestedValue(const String&);
+  String value() const override;
+  void setValue(const String&,
+                TextFieldEventBehavior = kDispatchNoEvent,
+                TextControlSetValueSelection =
+                    TextControlSetValueSelection::kSetSelectionToEnd) override;
+  String defaultValue() const;
+  void setDefaultValue(const String&);
+  int textLength() const { return value().length(); }
 
-    // For ValidityState
-    String validationMessage() const override;
-    bool valueMissing() const override;
-    bool tooLong() const override;
-    bool tooShort() const override;
-    bool isValidValue(const String&) const;
+  String SuggestedValue() const;
+  void SetSuggestedValue(const String&);
 
-    void setCols(unsigned);
-    void setRows(unsigned);
+  // For ValidityState
+  String validationMessage() const override;
+  bool ValueMissing() const override;
+  bool TooLong() const override;
+  bool TooShort() const override;
+  bool IsValidValue(const String&) const;
 
-private:
-    FRIEND_TEST_ALL_PREFIXES(HTMLTextAreaElementTest, SanitizeUserInputValue);
-    HTMLTextAreaElement(Document&, HTMLFormElement*);
+  void setCols(unsigned);
+  void setRows(unsigned);
 
-    enum WrapMethod { NoWrap, SoftWrap, HardWrap };
-    enum SetValueCommonOption {
-        NotSetSelection,
-        SetSeletion
-    };
+ private:
+  FRIEND_TEST_ALL_PREFIXES(HTMLTextAreaElementTest, SanitizeUserInputValue);
+  explicit HTMLTextAreaElement(Document&);
 
-    void didAddUserAgentShadowRoot(ShadowRoot&) override;
-    // FIXME: Author shadows should be allowed
-    // https://bugs.webkit.org/show_bug.cgi?id=92608
-    bool areAuthorShadowsAllowed() const override { return false; }
+  enum WrapMethod { kNoWrap, kSoftWrap, kHardWrap };
 
-    void handleBeforeTextInsertedEvent(BeforeTextInsertedEvent*) const;
-    static String sanitizeUserInputValue(const String&, unsigned maxLength);
-    void updateValue() const;
-    void setInnerEditorValue(const String&) override;
-    void setNonDirtyValue(const String&);
-    void setValueCommon(const String&, TextFieldEventBehavior, SetValueCommonOption = NotSetSelection);
+  void DidAddUserAgentShadowRoot(ShadowRoot&) override;
+  // FIXME: Author shadows should be allowed
+  // https://bugs.webkit.org/show_bug.cgi?id=92608
+  bool AreAuthorShadowsAllowed() const override { return false; }
 
-    bool isPlaceholderVisible() const override { return m_isPlaceholderVisible; }
-    void setPlaceholderVisibility(bool) override;
-    bool supportsPlaceholder() const override { return true; }
-    void updatePlaceholderText() override;
-    bool isEmptyValue() const override { return value().isEmpty(); }
-    bool isEmptySuggestedValue() const final { return suggestedValue().isEmpty(); }
-    bool supportsAutocapitalize() const override { return true; }
-    const AtomicString& defaultAutocapitalize() const override;
+  void HandleBeforeTextInsertedEvent(BeforeTextInsertedEvent*) const;
+  static String SanitizeUserInputValue(const String&, unsigned max_length);
+  void UpdateValue();
+  void SetNonDirtyValue(const String&);
+  void SetValueCommon(const String&,
+                      TextFieldEventBehavior,
+                      TextControlSetValueSelection);
 
-    bool isOptionalFormControl() const override { return !isRequiredFormControl(); }
-    bool isRequiredFormControl() const override { return isRequired(); }
+  bool IsPlaceholderVisible() const override { return is_placeholder_visible_; }
+  void SetPlaceholderVisibility(bool) override;
+  bool SupportsPlaceholder() const override { return true; }
+  void UpdatePlaceholderText() override;
+  bool IsEmptyValue() const override { return value().IsEmpty(); }
+  bool IsEmptySuggestedValue() const final {
+    return SuggestedValue().IsEmpty();
+  }
+  bool SupportsAutocapitalize() const override { return true; }
+  const AtomicString& DefaultAutocapitalize() const override;
 
-    void defaultEventHandler(Event*) override;
-    void handleFocusEvent(Element* oldFocusedNode, WebFocusType) override;
+  bool IsOptionalFormControl() const override {
+    return !IsRequiredFormControl();
+  }
+  bool IsRequiredFormControl() const override { return IsRequired(); }
 
-    void subtreeHasChanged() override;
+  void DefaultEventHandler(Event*) override;
+  void HandleFocusEvent(Element* old_focused_node, WebFocusType) override;
 
-    bool isEnumeratable() const override { return true; }
-    bool isInteractiveContent() const override;
-    bool supportsAutofocus() const override;
-    bool supportLabels() const override { return true; }
+  void SubtreeHasChanged() override;
 
-    const AtomicString& formControlType() const override;
+  bool IsEnumeratable() const override { return true; }
+  bool IsInteractiveContent() const override;
+  bool SupportsAutofocus() const override;
+  bool SupportLabels() const override { return true; }
 
-    FormControlState saveFormControlState() const override;
-    void restoreFormControlState(const FormControlState&) override;
+  const AtomicString& FormControlType() const override;
 
-    bool isTextFormControl() const override { return true; }
+  FormControlState SaveFormControlState() const override;
+  void RestoreFormControlState(const FormControlState&) override;
 
-    void childrenChanged(const ChildrenChange&) override;
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    bool isPresentationAttribute(const QualifiedName&) const override;
-    void collectStyleForPresentationAttribute(const QualifiedName&, const AtomicString&, MutableStylePropertySet*) override;
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
-    void appendToFormData(FormData&) override;
-    void resetImpl() override;
-    bool hasCustomFocusLogic() const override;
-    bool shouldShowFocusRingOnMouseFocus() const override;
-    bool isKeyboardFocusable() const override;
-    void updateFocusAppearance(SelectionBehaviorOnFocus) override;
+  bool IsTextControl() const override { return true; }
 
-    void accessKeyAction(bool sendMouseEvents) override;
+  void ChildrenChanged(const ChildrenChange&) override;
+  void ParseAttribute(const AttributeModificationParams&) override;
+  bool IsPresentationAttribute(const QualifiedName&) const override;
+  void CollectStyleForPresentationAttribute(const QualifiedName&,
+                                            const AtomicString&,
+                                            MutableStylePropertySet*) override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
+  void AppendToFormData(FormData&) override;
+  void ResetImpl() override;
+  bool HasCustomFocusLogic() const override;
+  bool ShouldShowFocusRingOnMouseFocus() const override;
+  bool IsKeyboardFocusable() const override;
+  void UpdateFocusAppearance(SelectionBehaviorOnFocus) override;
 
-    bool matchesReadOnlyPseudoClass() const override;
-    bool matchesReadWritePseudoClass() const override;
-    void copyNonAttributePropertiesFromElement(const Element&) final;
+  void AccessKeyAction(bool send_mouse_events) override;
 
-    // If the String* argument is 0, apply this->value().
-    bool valueMissing(const String*) const;
-    bool tooLong(const String*, NeedsToCheckDirtyFlag) const;
-    bool tooShort(const String*, NeedsToCheckDirtyFlag) const;
+  bool MatchesReadOnlyPseudoClass() const override;
+  bool MatchesReadWritePseudoClass() const override;
+  void CopyNonAttributePropertiesFromElement(const Element&) final;
 
-    unsigned m_rows;
-    unsigned m_cols;
-    WrapMethod m_wrap;
-    mutable String m_value;
-    mutable bool m_isDirty;
-    bool m_valueIsUpToDate;
-    unsigned m_isPlaceholderVisible : 1;
-    String m_suggestedValue;
+  // If the String* argument is 0, apply this->value().
+  bool ValueMissing(const String*) const;
+  bool TooLong(const String*, NeedsToCheckDirtyFlag) const;
+  bool TooShort(const String*, NeedsToCheckDirtyFlag) const;
+
+  unsigned rows_;
+  unsigned cols_;
+  WrapMethod wrap_;
+  mutable String value_;
+  mutable bool is_dirty_;
+  unsigned is_placeholder_visible_ : 1;
+  String suggested_value_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLTextAreaElement_h
+#endif  // HTMLTextAreaElement_h

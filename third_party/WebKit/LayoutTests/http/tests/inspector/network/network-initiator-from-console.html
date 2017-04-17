@@ -9,18 +9,18 @@ var test = function()
 
     function step1()
     {
-        InspectorTest.networkManager.addEventListener(WebInspector.NetworkManager.EventTypes.RequestStarted, onRequest);
+        InspectorTest.networkManager.addEventListener(SDK.NetworkManager.Events.RequestStarted, onRequest);
         var str = "";
         str += "var s = document.createElement(\"script\");";
         str += "s.src = \"resources/silent_script.js\";";
         str += "document.head.appendChild(s);";
-        WebInspector.context.flavor(WebInspector.ExecutionContext).evaluate(str, "console", true, undefined, undefined, undefined, undefined, function(){});
+        UI.context.flavor(SDK.ExecutionContext).evaluate(str, "console", true, undefined, undefined, undefined, undefined, function(){});
     }
 
     function onRequest(event)
     {
         var request = event.data;
-        if (/silent_script.js/.test(request.url))
+        if (/silent_script.js/.test(request.url()))
             step2();
     }
 

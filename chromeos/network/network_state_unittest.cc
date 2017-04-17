@@ -21,38 +21,6 @@ namespace chromeos {
 
 namespace {
 
-// StringValue that skips the DCHECK in the constructor for valid UTF8.
-class TestStringValue : public base::Value {
- public:
-  explicit TestStringValue(const std::string& in_value)
-      : base::Value(TYPE_STRING),
-        value_(in_value) {
-  }
-
-  ~TestStringValue() override {}
-
-  // Overridden from Value:
-  bool GetAsString(std::string* out_value) const override {
-    if (out_value)
-      *out_value = value_;
-    return true;
-  }
-
-  TestStringValue* DeepCopy() const override {
-    return new TestStringValue(value_);
-  }
-
-  bool Equals(const base::Value* other) const override {
-    if (other->GetType() != GetType())
-      return false;
-    std::string lhs, rhs;
-    return GetAsString(&lhs) && other->GetAsString(&rhs) && lhs == rhs;
-  }
-
- private:
-  std::string value_;
-};
-
 class NetworkStateTest : public testing::Test {
  public:
   NetworkStateTest() : network_state_("test_path") {
@@ -66,7 +34,7 @@ class NetworkStateTest : public testing::Test {
   }
 
   bool SetStringProperty(const std::string& key, const std::string& value) {
-    return SetProperty(key, base::WrapUnique(new TestStringValue(value)));
+    return SetProperty(key, base::MakeUnique<base::Value>(value));
   }
 
   bool SignalInitialPropertiesReceived() {
@@ -104,7 +72,9 @@ TEST_F(NetworkStateTest, NameAsciiWithNull) {
   EXPECT_EQ(network_state_.name(), network_setname_result);
 }
 
-// Truncates invalid UTF-8
+// Truncates invalid UTF-8. base::Value has a DCHECK against invalid UTF-8
+// strings, which is why this is a release mode only test.
+#if defined(NDEBUG) && !defined(DCHECK_ALWAYS_ON)
 TEST_F(NetworkStateTest, NameTruncateInvalid) {
   EXPECT_TRUE(SetStringProperty(shill::kTypeProperty, shill::kTypeVPN));
 
@@ -114,6 +84,7 @@ TEST_F(NetworkStateTest, NameTruncateInvalid) {
   EXPECT_TRUE(SignalInitialPropertiesReceived());
   EXPECT_EQ(network_state_.name(), network_setname_result);
 }
+#endif
 
 // If HexSSID doesn't exist, fallback to NameProperty.
 TEST_F(NetworkStateTest, SsidFromName) {
@@ -130,10 +101,10 @@ TEST_F(NetworkStateTest, SsidFromName) {
 TEST_F(NetworkStateTest, SsidLatin) {
   EXPECT_TRUE(SetStringProperty(shill::kTypeProperty, shill::kTypeWifi));
 
-  std::string wifi_latin1 = "latin-1 \xc0\xcb\xcc\xd6\xfb";
+  std::string wifi_latin1 = "latin-1 \x54\xe9\x6c\xe9\x63\x6f\x6d";  // Télécom
   std::string wifi_latin1_hex =
       base::HexEncode(wifi_latin1.c_str(), wifi_latin1.length());
-  std::string wifi_latin1_result = "latin-1 \u00c0\u00cb\u00cc\u00d6\u00fb";
+  std::string wifi_latin1_result = "latin-1 T\xc3\xa9\x6c\xc3\xa9\x63om";
   EXPECT_TRUE(SetStringProperty(shill::kWifiHexSsid, wifi_latin1_hex));
   EXPECT_TRUE(SignalInitialPropertiesReceived());
   EXPECT_EQ(network_state_.name(), wifi_latin1_result);
@@ -236,6 +207,54 @@ TEST_F(NetworkStateTest, VPNThirdPartyProvider) {
   EXPECT_EQ(network_state_.vpn_provider_type(), shill::kProviderThirdPartyVpn);
   EXPECT_EQ(network_state_.third_party_vpn_provider_extension_id(),
             "third-party-vpn-provider-extension-id");
+}
+
+TEST_F(NetworkStateTest, Visible) {
+  EXPECT_FALSE(network_state_.visible());
+
+  network_state_.set_visible(true);
+  EXPECT_TRUE(network_state_.visible());
+
+  network_state_.set_visible(false);
+  EXPECT_FALSE(network_state_.visible());
+}
+
+TEST_F(NetworkStateTest, ConnectionState) {
+  network_state_.set_visible(true);
+
+  network_state_.set_connection_state(shill::kStateConfiguration);
+  EXPECT_EQ(network_state_.connection_state(), shill::kStateConfiguration);
+  EXPECT_TRUE(network_state_.IsConnectingState());
+  EXPECT_FALSE(network_state_.IsReconnecting());
+
+  network_state_.set_connection_state(shill::kStateOnline);
+  EXPECT_EQ(network_state_.connection_state(), shill::kStateOnline);
+  EXPECT_TRUE(network_state_.IsConnectedState());
+  EXPECT_FALSE(network_state_.IsReconnecting());
+
+  network_state_.set_connection_state(shill::kStateConfiguration);
+  EXPECT_EQ(network_state_.connection_state(), shill::kStateConfiguration);
+  EXPECT_TRUE(network_state_.IsConnectingState());
+  EXPECT_TRUE(network_state_.IsReconnecting());
+}
+
+TEST_F(NetworkStateTest, ConnectionStateNotVisible) {
+  network_state_.set_visible(false);
+
+  network_state_.set_connection_state(shill::kStateConfiguration);
+  EXPECT_EQ(network_state_.connection_state(), shill::kStateDisconnect);
+  EXPECT_FALSE(network_state_.IsConnectingState());
+  EXPECT_FALSE(network_state_.IsReconnecting());
+
+  network_state_.set_connection_state(shill::kStateOnline);
+  EXPECT_EQ(network_state_.connection_state(), shill::kStateDisconnect);
+  EXPECT_FALSE(network_state_.IsConnectedState());
+  EXPECT_FALSE(network_state_.IsReconnecting());
+
+  network_state_.set_connection_state(shill::kStateConfiguration);
+  EXPECT_EQ(network_state_.connection_state(), shill::kStateDisconnect);
+  EXPECT_FALSE(network_state_.IsConnectingState());
+  EXPECT_FALSE(network_state_.IsReconnecting());
 }
 
 }  // namespace chromeos

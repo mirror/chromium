@@ -14,6 +14,7 @@
 #define CONTENT_BROWSER_RENDERER_HOST_MEDIA_AUDIO_INPUT_DEVICE_MANAGER_H_
 
 #include <map>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -23,14 +24,14 @@
 #include "content/common/content_export.h"
 #include "content/common/media/media_stream_options.h"
 #include "content/public/common/media_stream_request.h"
-#include "media/audio/audio_device_name.h"
 
 namespace media {
-class AudioManager;
+class AudioSystem;
 }
 
 namespace content {
 
+// Should be used on IO thread only.
 class CONTENT_EXPORT AudioInputDeviceManager : public MediaStreamProvider {
  public:
   // Calling Start() with this kFakeOpenSessionId will open the default device,
@@ -39,24 +40,17 @@ class CONTENT_EXPORT AudioInputDeviceManager : public MediaStreamProvider {
   // TODO(xians): Remove it when the webrtc unittest does not need it any more.
   static const int kFakeOpenSessionId;
 
-  explicit AudioInputDeviceManager(media::AudioManager* audio_manager);
+  explicit AudioInputDeviceManager(media::AudioSystem* audio_system);
 
   // Gets the opened device info by |session_id|. Returns NULL if the device
   // is not opened, otherwise the opened device. Called on IO thread.
   const StreamDeviceInfo* GetOpenedDeviceInfoById(int session_id);
 
-  void Unregister();
-
-  // MediaStreamProvider implementation, called on IO thread.
-  void Register(MediaStreamProviderListener* listener,
-                const scoped_refptr<base::SingleThreadTaskRunner>&
-                    device_task_runner) override;
-  void EnumerateDevices(MediaStreamType stream_type) override;
-  int Open(const StreamDeviceInfo& device) override;
+  // MediaStreamProvider implementation.
+  void RegisterListener(MediaStreamProviderListener* listener) override;
+  void UnregisterListener(MediaStreamProviderListener* listener) override;
+  int Open(const MediaStreamDevice& device) override;
   void Close(int session_id) override;
-
-  void UseFakeDevice();
-  bool ShouldUseFakeDevice() const;
 
 #if defined(OS_CHROMEOS)
   // Registers and unregisters that a stream using keyboard mic has been opened
@@ -64,38 +58,25 @@ class CONTENT_EXPORT AudioInputDeviceManager : public MediaStreamProvider {
   // inactivates the keyboard mic accordingly. The (in)activation is done on the
   // UI thread and for the register case a callback must therefor be provided
   // which is called when activated.
-  // Called on the IO thread.
   void RegisterKeyboardMicStream(const base::Closure& callback);
   void UnregisterKeyboardMicStream();
 #endif
 
  private:
-  // Used by the unittests to get a list of fake devices.
-  friend class MediaStreamDispatcherHostTest;
-  void GetFakeDeviceNames(media::AudioDeviceNames* device_names);
-
   typedef std::vector<StreamDeviceInfo> StreamDeviceList;
   ~AudioInputDeviceManager() override;
 
-  // Enumerates audio input devices on media stream device thread.
-  void EnumerateOnDeviceThread(MediaStreamType stream_type);
-  // Opens the device on media stream device thread.
-  void OpenOnDeviceThread(int session_id, const StreamDeviceInfo& info);
+  // Callback called on IO thread when device is opened.
+  void OpenedOnIOThread(int session_id,
+                        const MediaStreamDevice& device,
+                        base::TimeTicks start_time,
+                        const media::AudioParameters& input_params,
+                        const media::AudioParameters& matched_output_params,
+                        const std::string& matched_output_device_id);
 
-  // Callback used by EnumerateOnDeviceThread(), called with a list of
-  // enumerated devices on IO thread.
-  void DevicesEnumeratedOnIOThread(
-      MediaStreamType stream_type,
-      std::unique_ptr<StreamDeviceInfoArray> devices);
-  // Callback used by OpenOnDeviceThread(), called with the session_id
-  // referencing the opened device on IO thread.
-  void OpenedOnIOThread(int session_id, const StreamDeviceInfo& info);
-  // Callback used by CloseOnDeviceThread(), called with the session_id
-  // referencing the closed device on IO thread.
+  // Callback called on IO thread with the session_id referencing the closed
+  // device.
   void ClosedOnIOThread(MediaStreamType type, int session_id);
-
-  // Verifies that the calling thread is media stream device thread.
-  bool IsOnDeviceThread() const;
 
   // Helper to return iterator to the device referenced by |session_id|. If no
   // device is found, it will return devices_.end().
@@ -107,9 +88,8 @@ class CONTENT_EXPORT AudioInputDeviceManager : public MediaStreamProvider {
 #endif
 
   // Only accessed on Browser::IO thread.
-  MediaStreamProviderListener* listener_;
+  base::ObserverList<MediaStreamProviderListener> listeners_;
   int next_capture_session_id_;
-  bool use_fake_device_;
   StreamDeviceList devices_;
 
 #if defined(OS_CHROMEOS)
@@ -117,10 +97,7 @@ class CONTENT_EXPORT AudioInputDeviceManager : public MediaStreamProvider {
   int keyboard_mic_streams_count_;
 #endif
 
-  media::AudioManager* const audio_manager_;  // Weak.
-
-  // The message loop of media stream device thread that this object runs on.
-  scoped_refptr<base::SingleThreadTaskRunner> device_task_runner_;
+  media::AudioSystem* const audio_system_;
 
   DISALLOW_COPY_AND_ASSIGN(AudioInputDeviceManager);
 };

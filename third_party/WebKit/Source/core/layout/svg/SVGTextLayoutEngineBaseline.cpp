@@ -25,123 +25,142 @@
 
 namespace blink {
 
-SVGTextLayoutEngineBaseline::SVGTextLayoutEngineBaseline(const Font& font, float effectiveZoom)
-    : m_font(font)
-    , m_effectiveZoom(effectiveZoom)
-{
-    ASSERT(m_effectiveZoom);
+SVGTextLayoutEngineBaseline::SVGTextLayoutEngineBaseline(const Font& font,
+                                                         float effective_zoom)
+    : font_(font), effective_zoom_(effective_zoom) {
+  DCHECK(effective_zoom_);
 }
 
-float SVGTextLayoutEngineBaseline::calculateBaselineShift(const ComputedStyle& style) const
-{
-    const SVGComputedStyle& svgStyle = style.svgStyle();
+float SVGTextLayoutEngineBaseline::CalculateBaselineShift(
+    const ComputedStyle& style) const {
+  const SVGComputedStyle& svg_style = style.SvgStyle();
+  const SimpleFontData* font_data = font_.PrimaryFont();
+  DCHECK(font_data);
+  if (!font_data)
+    return 0;
 
-    switch (svgStyle.baselineShift()) {
+  DCHECK(effective_zoom_);
+  switch (svg_style.BaselineShift()) {
     case BS_LENGTH:
-        return SVGLengthContext::valueForLength(svgStyle.baselineShiftValue(), style, m_font.getFontDescription().computedPixelSize() / m_effectiveZoom);
+      return SVGLengthContext::ValueForLength(
+          svg_style.BaselineShiftValue(), style,
+          font_.GetFontDescription().ComputedPixelSize() / effective_zoom_);
     case BS_SUB:
-        return -m_font.getFontMetrics().floatHeight() / 2 / m_effectiveZoom;
+      return -font_data->GetFontMetrics().FloatHeight() / 2 / effective_zoom_;
     case BS_SUPER:
-        return m_font.getFontMetrics().floatHeight() / 2 / m_effectiveZoom;
+      return font_data->GetFontMetrics().FloatHeight() / 2 / effective_zoom_;
     default:
-        ASSERT_NOT_REACHED();
-        return 0;
-    }
+      NOTREACHED();
+      return 0;
+  }
 }
 
-EAlignmentBaseline SVGTextLayoutEngineBaseline::dominantBaselineToAlignmentBaseline(bool isVerticalText, LineLayoutItem textLineLayout) const
-{
-    ASSERT(textLineLayout);
-    ASSERT(textLineLayout.style());
+EAlignmentBaseline
+SVGTextLayoutEngineBaseline::DominantBaselineToAlignmentBaseline(
+    bool is_vertical_text,
+    LineLayoutItem text_line_layout) const {
+  DCHECK(text_line_layout);
+  DCHECK(text_line_layout.Style());
 
-    const SVGComputedStyle& style = textLineLayout.style()->svgStyle();
+  const SVGComputedStyle& style = text_line_layout.Style()->SvgStyle();
 
-    EDominantBaseline baseline = style.dominantBaseline();
-    if (baseline == DB_AUTO) {
-        if (isVerticalText)
-            baseline = DB_CENTRAL;
-        else
-            baseline = DB_ALPHABETIC;
-    }
+  EDominantBaseline baseline = style.DominantBaseline();
+  if (baseline == DB_AUTO) {
+    if (is_vertical_text)
+      baseline = DB_CENTRAL;
+    else
+      baseline = DB_ALPHABETIC;
+  }
 
-    switch (baseline) {
+  switch (baseline) {
     case DB_USE_SCRIPT:
-        // TODO(fs): The dominant-baseline and the baseline-table components
-        // are set by determining the predominant script of the character data
-        // content.
-        return AB_ALPHABETIC;
+      // TODO(fs): The dominant-baseline and the baseline-table components
+      // are set by determining the predominant script of the character data
+      // content.
+      return AB_ALPHABETIC;
     case DB_NO_CHANGE:
-        ASSERT(textLineLayout.parent());
-        return dominantBaselineToAlignmentBaseline(isVerticalText, textLineLayout.parent());
+      DCHECK(text_line_layout.Parent());
+      return DominantBaselineToAlignmentBaseline(is_vertical_text,
+                                                 text_line_layout.Parent());
     case DB_RESET_SIZE:
-        ASSERT(textLineLayout.parent());
-        return dominantBaselineToAlignmentBaseline(isVerticalText, textLineLayout.parent());
+      DCHECK(text_line_layout.Parent());
+      return DominantBaselineToAlignmentBaseline(is_vertical_text,
+                                                 text_line_layout.Parent());
     case DB_IDEOGRAPHIC:
-        return AB_IDEOGRAPHIC;
+      return AB_IDEOGRAPHIC;
     case DB_ALPHABETIC:
-        return AB_ALPHABETIC;
+      return AB_ALPHABETIC;
     case DB_HANGING:
-        return AB_HANGING;
+      return AB_HANGING;
     case DB_MATHEMATICAL:
-        return AB_MATHEMATICAL;
+      return AB_MATHEMATICAL;
     case DB_CENTRAL:
-        return AB_CENTRAL;
+      return AB_CENTRAL;
     case DB_MIDDLE:
-        return AB_MIDDLE;
+      return AB_MIDDLE;
     case DB_TEXT_AFTER_EDGE:
-        return AB_TEXT_AFTER_EDGE;
+      return AB_TEXT_AFTER_EDGE;
     case DB_TEXT_BEFORE_EDGE:
-        return AB_TEXT_BEFORE_EDGE;
+      return AB_TEXT_BEFORE_EDGE;
     default:
-        ASSERT_NOT_REACHED();
-        return AB_AUTO;
-    }
+      NOTREACHED();
+      return AB_AUTO;
+  }
 }
 
-float SVGTextLayoutEngineBaseline::calculateAlignmentBaselineShift(bool isVerticalText, LineLayoutItem textLineLayout) const
-{
-    ASSERT(textLineLayout);
-    ASSERT(textLineLayout.style());
-    ASSERT(textLineLayout.parent());
+float SVGTextLayoutEngineBaseline::CalculateAlignmentBaselineShift(
+    bool is_vertical_text,
+    LineLayoutItem text_line_layout) const {
+  DCHECK(text_line_layout);
+  DCHECK(text_line_layout.Style());
+  DCHECK(text_line_layout.Parent());
 
-    LineLayoutItem textLineLayoutParent = textLineLayout.parent();
-    ASSERT(textLineLayoutParent);
+  LineLayoutItem text_line_layout_parent = text_line_layout.Parent();
+  DCHECK(text_line_layout_parent);
 
-    EAlignmentBaseline baseline = textLineLayout.style()->svgStyle().alignmentBaseline();
-    if (baseline == AB_AUTO || baseline == AB_BASELINE) {
-        baseline = dominantBaselineToAlignmentBaseline(isVerticalText, textLineLayoutParent);
-        ASSERT(baseline != AB_AUTO && baseline != AB_BASELINE);
-    }
+  EAlignmentBaseline baseline =
+      text_line_layout.Style()->SvgStyle().AlignmentBaseline();
+  if (baseline == AB_AUTO || baseline == AB_BASELINE) {
+    baseline = DominantBaselineToAlignmentBaseline(is_vertical_text,
+                                                   text_line_layout_parent);
+    DCHECK_NE(baseline, AB_AUTO);
+    DCHECK_NE(baseline, AB_BASELINE);
+  }
 
-    const FontMetrics& fontMetrics = m_font.getFontMetrics();
-    float ascent = fontMetrics.floatAscent() / m_effectiveZoom;
-    float descent = fontMetrics.floatDescent() / m_effectiveZoom;
-    float xheight = fontMetrics.xHeight() / m_effectiveZoom;
+  const SimpleFontData* font_data = font_.PrimaryFont();
+  DCHECK(font_data);
+  if (!font_data)
+    return 0;
 
-    // Note: http://wiki.apache.org/xmlgraphics-fop/LineLayout/AlignmentHandling
-    switch (baseline) {
+  const FontMetrics& font_metrics = font_data->GetFontMetrics();
+  float ascent = font_metrics.FloatAscent() / effective_zoom_;
+  float descent = font_metrics.FloatDescent() / effective_zoom_;
+  float xheight = font_metrics.XHeight() / effective_zoom_;
+
+  // Note: http://wiki.apache.org/xmlgraphics-fop/LineLayout/AlignmentHandling
+  switch (baseline) {
     case AB_BEFORE_EDGE:
     case AB_TEXT_BEFORE_EDGE:
-        return ascent;
+      return ascent;
     case AB_MIDDLE:
-        return xheight / 2;
+      return xheight / 2;
     case AB_CENTRAL:
-        return (ascent - descent) / 2;
+      return (ascent - descent) / 2;
     case AB_AFTER_EDGE:
     case AB_TEXT_AFTER_EDGE:
     case AB_IDEOGRAPHIC:
-        return -descent;
+      return -descent;
     case AB_ALPHABETIC:
-        return 0;
+      return 0;
     case AB_HANGING:
-        return ascent * 8 / 10.f;
+      return ascent * 8 / 10.f;
     case AB_MATHEMATICAL:
-        return ascent / 2;
+      return ascent / 2;
     case AB_BASELINE:
     default:
-        ASSERT_NOT_REACHED();
-        return 0;
-    }
+      NOTREACHED();
+      return 0;
+  }
 }
 
-} // namespace blink
+}  // namespace blink

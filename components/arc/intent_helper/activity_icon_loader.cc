@@ -9,48 +9,27 @@
 #include <tuple>
 #include <utility>
 
+#include "base/base64.h"
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/ref_counted.h"
 #include "base/task_runner_util.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_service_manager.h"
+#include "components/arc/arc_util.h"
 #include "ui/base/layout.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/image/image_skia_operations.h"
 
 namespace arc {
+namespace internal {
 
 namespace {
 
-const size_t kSmallIconSizeInDip = 16;
-const size_t kLargeIconSizeInDip = 20;
-const size_t kMaxIconSizeInPx = 200;
-
-const int kMinInstanceVersion = 3;  // see intent_helper.mojom
-
-mojom::IntentHelperInstance* GetIntentHelperInstance(
-    ActivityIconLoader::GetResult* out_error_code) {
-  DCHECK(out_error_code);
-  ArcBridgeService* bridge_service = arc::ArcBridgeService::Get();
-  if (!bridge_service) {
-    VLOG(2) << "ARC bridge is not ready.";
-    *out_error_code = ActivityIconLoader::GetResult::FAILED_ARC_NOT_SUPPORTED;
-    return nullptr;
-  }
-  mojom::IntentHelperInstance* intent_helper_instance =
-      bridge_service->intent_helper()->instance();
-  if (!intent_helper_instance) {
-    VLOG(2) << "ARC intent helper instance is not ready.";
-    *out_error_code = ActivityIconLoader::GetResult::FAILED_ARC_NOT_READY;
-    return nullptr;
-  }
-  if (bridge_service->intent_helper()->version() < kMinInstanceVersion) {
-    VLOG(1) << "ARC intent helper instance is too old.";
-    *out_error_code = ActivityIconLoader::GetResult::FAILED_ARC_NOT_SUPPORTED;
-    return nullptr;
-  }
-  return intent_helper_instance;
-}
+constexpr size_t kSmallIconSizeInDip = 16;
+constexpr size_t kLargeIconSizeInDip = 20;
+constexpr size_t kMaxIconSizeInPx = 200;
+constexpr char kPngDataUrlPrefix[] = "data:image/png;base64,";
 
 ui::ScaleFactor GetSupportedScaleFactor() {
   std::vector<ui::ScaleFactor> scale_factors = ui::GetSupportedScaleFactors();
@@ -58,11 +37,112 @@ ui::ScaleFactor GetSupportedScaleFactor() {
   return scale_factors.back();
 }
 
+// Returns an instance for calling RequestActivityIcons().
+mojom::IntentHelperInstance* GetInstanceForRequestActivityIcons(
+    ActivityIconLoader::GetResult* out_error_code) {
+  auto* arc_service_manager = ArcServiceManager::Get();
+  if (!arc_service_manager) {
+    // TODO(hidehiko): IsArcAvailable() looks not the condition to be checked
+    // here, because ArcServiceManager instance is created regardless of ARC
+    // availability. This happens only before MessageLoop starts or after
+    // MessageLoop stops, practically.
+    // Also, returning FAILED_ARC_NOT_READY looks problematic at the moment,
+    // because ArcProcessTask::StartIconLoading accesses to
+    // ArcServiceManager::Get() return value, which can be nullptr.
+    if (!IsArcAvailable()) {
+      VLOG(2) << "ARC bridge is not supported.";
+      if (out_error_code) {
+        *out_error_code =
+            ActivityIconLoader::GetResult::FAILED_ARC_NOT_SUPPORTED;
+      }
+    } else {
+      VLOG(2) << "ARC bridge is not ready.";
+      if (out_error_code)
+        *out_error_code = ActivityIconLoader::GetResult::FAILED_ARC_NOT_READY;
+    }
+    return nullptr;
+  }
+
+  auto* intent_helper_holder =
+      arc_service_manager->arc_bridge_service()->intent_helper();
+  if (!intent_helper_holder->has_instance()) {
+    VLOG(2) << "ARC intent helper instance is not ready.";
+    if (out_error_code)
+      *out_error_code = ActivityIconLoader::GetResult::FAILED_ARC_NOT_READY;
+    return nullptr;
+  }
+
+  auto* instance = ARC_GET_INSTANCE_FOR_METHOD(intent_helper_holder,
+                                               RequestActivityIcons);
+  if (!instance && out_error_code)
+    *out_error_code = ActivityIconLoader::GetResult::FAILED_ARC_NOT_SUPPORTED;
+  return instance;
+}
+
+std::unique_ptr<ActivityIconLoader::ActivityToIconsMap> ResizeAndEncodeIcons(
+    std::vector<mojom::ActivityIconPtr> icons) {
+  auto result = base::MakeUnique<ActivityIconLoader::ActivityToIconsMap>();
+  for (size_t i = 0; i < icons.size(); ++i) {
+    static const size_t kBytesPerPixel = 4;
+    const mojom::ActivityIconPtr& icon = icons.at(i);
+    if (icon->width > kMaxIconSizeInPx || icon->height > kMaxIconSizeInPx ||
+        icon->width == 0 || icon->height == 0 ||
+        icon->icon.size() != (icon->width * icon->height * kBytesPerPixel)) {
+      continue;
+    }
+
+    SkBitmap bitmap;
+    bitmap.allocPixels(SkImageInfo::MakeN32Premul(icon->width, icon->height));
+    if (!bitmap.getPixels())
+      continue;
+    DCHECK_GE(bitmap.getSafeSize(), icon->icon.size());
+    memcpy(bitmap.getPixels(), &icon->icon.front(), icon->icon.size());
+
+    gfx::ImageSkia original(gfx::ImageSkia::CreateFrom1xBitmap(bitmap));
+
+    // Resize the original icon to the sizes intent_helper needs.
+    gfx::ImageSkia icon_large(gfx::ImageSkiaOperations::CreateResizedImage(
+        original, skia::ImageOperations::RESIZE_BEST,
+        gfx::Size(kLargeIconSizeInDip, kLargeIconSizeInDip)));
+    gfx::ImageSkia icon_small(gfx::ImageSkiaOperations::CreateResizedImage(
+        original, skia::ImageOperations::RESIZE_BEST,
+        gfx::Size(kSmallIconSizeInDip, kSmallIconSizeInDip)));
+    gfx::Image icon16(icon_small);
+    gfx::Image icon20(icon_large);
+
+    // Encode the icon as PNG data, and then as data: URL.
+    scoped_refptr<base::RefCountedMemory> img = icon16.As1xPNGBytes();
+    if (!img)
+      continue;
+    std::string encoded;
+    base::Base64Encode(base::StringPiece(img->front_as<char>(), img->size()),
+                       &encoded);
+    scoped_refptr<base::RefCountedData<GURL>> dataurl(
+        new base::RefCountedData<GURL>(GURL(kPngDataUrlPrefix + encoded)));
+
+    const std::string activity_name = icon->activity->activity_name.has_value()
+                                          ? (*icon->activity->activity_name)
+                                          : std::string();
+    result->insert(
+        std::make_pair(ActivityIconLoader::ActivityName(
+                           icon->activity->package_name, activity_name),
+                       ActivityIconLoader::Icons(icon16, icon20, dataurl)));
+  }
+
+  return result;
+}
+
 }  // namespace
 
-ActivityIconLoader::Icons::Icons(const gfx::Image& icon16,
-                                 const gfx::Image& icon20)
-    : icon16(icon16), icon20(icon20) {}
+ActivityIconLoader::Icons::Icons(
+    const gfx::Image& icon16,
+    const gfx::Image& icon20,
+    const scoped_refptr<base::RefCountedData<GURL>>& icon16_dataurl)
+    : icon16(icon16), icon20(icon20), icon16_dataurl(icon16_dataurl) {}
+
+ActivityIconLoader::Icons::Icons(const Icons& other) = default;
+
+ActivityIconLoader::Icons::~Icons() = default;
 
 ActivityIconLoader::ActivityName::ActivityName(const std::string& package_name,
                                                const std::string& activity_name)
@@ -75,11 +155,12 @@ bool ActivityIconLoader::ActivityName::operator<(
 }
 
 ActivityIconLoader::ActivityIconLoader()
-    : scale_factor_(GetSupportedScaleFactor()) {}
+    : scale_factor_(GetSupportedScaleFactor()), weak_ptr_factory_(this) {}
 
-ActivityIconLoader::~ActivityIconLoader() {}
+ActivityIconLoader::~ActivityIconLoader() = default;
 
 void ActivityIconLoader::InvalidateIcons(const std::string& package_name) {
+  DCHECK(thread_checker_.CalledOnValidThread());
   for (auto it = cached_icons_.begin(); it != cached_icons_.end();) {
     if (it->first.package_name == package_name)
       it = cached_icons_.erase(it);
@@ -91,8 +172,9 @@ void ActivityIconLoader::InvalidateIcons(const std::string& package_name) {
 ActivityIconLoader::GetResult ActivityIconLoader::GetActivityIcons(
     const std::vector<ActivityName>& activities,
     const OnIconsReadyCallback& cb) {
+  DCHECK(thread_checker_.CalledOnValidThread());
   std::unique_ptr<ActivityToIconsMap> result(new ActivityToIconsMap);
-  mojo::Array<mojom::ActivityNamePtr> activities_to_fetch;
+  std::vector<mojom::ActivityNamePtr> activities_to_fetch;
 
   for (const auto& activity : activities) {
     const auto& it = cached_icons_.find(activity);
@@ -112,8 +194,8 @@ ActivityIconLoader::GetResult ActivityIconLoader::GetActivityIcons(
     return GetResult::SUCCEEDED_SYNC;
   }
 
-  GetResult error_code = GetResult::FAILED_ARC_NOT_SUPPORTED;
-  mojom::IntentHelperInstance* instance = GetIntentHelperInstance(&error_code);
+  GetResult error_code;
+  auto* instance = GetInstanceForRequestActivityIcons(&error_code);
   if (!instance) {
     // The mojo channel is not yet ready (or not supported at all). Run the
     // callback with |result| that could be empty.
@@ -124,8 +206,8 @@ ActivityIconLoader::GetResult ActivityIconLoader::GetActivityIcons(
   // Fetch icons from ARC.
   instance->RequestActivityIcons(
       std::move(activities_to_fetch), mojom::ScaleFactor(scale_factor_),
-      base::Bind(&ActivityIconLoader::OnIconsReady, this, base::Passed(&result),
-                 cb));
+      base::Bind(&ActivityIconLoader::OnIconsReady,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&result), cb));
   return GetResult::SUCCEEDED_ASYNC;
 }
 
@@ -135,9 +217,9 @@ void ActivityIconLoader::OnIconsResizedForTesting(
   OnIconsResized(base::MakeUnique<ActivityToIconsMap>(), cb, std::move(result));
 }
 
-void ActivityIconLoader::AddIconToCacheForTesting(const ActivityName& activity,
-                                                  const gfx::Image& image) {
-  cached_icons_.insert(std::make_pair(activity, Icons(image, image)));
+void ActivityIconLoader::AddCacheEntryForTesting(const ActivityName& activity) {
+  cached_icons_.insert(
+      std::make_pair(activity, Icons(gfx::Image(), gfx::Image(), nullptr)));
 }
 
 // static
@@ -156,59 +238,22 @@ bool ActivityIconLoader::HasIconsReadyCallbackRun(GetResult result) {
 void ActivityIconLoader::OnIconsReady(
     std::unique_ptr<ActivityToIconsMap> cached_result,
     const OnIconsReadyCallback& cb,
-    mojo::Array<mojom::ActivityIconPtr> icons) {
+    std::vector<mojom::ActivityIconPtr> icons) {
+  DCHECK(thread_checker_.CalledOnValidThread());
   ArcServiceManager* manager = ArcServiceManager::Get();
   base::PostTaskAndReplyWithResult(
       manager->blocking_task_runner().get(), FROM_HERE,
-      base::Bind(&ActivityIconLoader::ResizeIcons, this, base::Passed(&icons)),
-      base::Bind(&ActivityIconLoader::OnIconsResized, this,
-                 base::Passed(&cached_result), cb));
-}
-
-std::unique_ptr<ActivityIconLoader::ActivityToIconsMap>
-ActivityIconLoader::ResizeIcons(mojo::Array<mojom::ActivityIconPtr> icons) {
-  // Runs only on the blocking pool.
-  DCHECK(thread_checker_.CalledOnValidThread());
-  std::unique_ptr<ActivityToIconsMap> result(new ActivityToIconsMap);
-
-  for (size_t i = 0; i < icons.size(); ++i) {
-    static const size_t kBytesPerPixel = 4;
-    const mojom::ActivityIconPtr& icon = icons.at(i);
-    if (icon->width > kMaxIconSizeInPx || icon->height > kMaxIconSizeInPx ||
-        icon->width == 0 || icon->height == 0 ||
-        icon->icon.size() != (icon->width * icon->height * kBytesPerPixel)) {
-      continue;
-    }
-
-    SkBitmap bitmap;
-    bitmap.allocPixels(SkImageInfo::MakeN32Premul(icon->width, icon->height));
-    if (!bitmap.getPixels())
-      continue;
-    DCHECK_GE(bitmap.getSafeSize(), icon->icon.size());
-    memcpy(bitmap.getPixels(), &icon->icon.front(), icon->icon.size());
-
-    gfx::ImageSkia original(gfx::ImageSkia::CreateFrom1xBitmap(bitmap));
-    // Resize the original icon to the sizes intent_helper needs.
-    gfx::ImageSkia icon_large(gfx::ImageSkiaOperations::CreateResizedImage(
-        original, skia::ImageOperations::RESIZE_BEST,
-        gfx::Size(kLargeIconSizeInDip, kLargeIconSizeInDip)));
-    gfx::ImageSkia icon_small(gfx::ImageSkiaOperations::CreateResizedImage(
-        original, skia::ImageOperations::RESIZE_BEST,
-        gfx::Size(kSmallIconSizeInDip, kSmallIconSizeInDip)));
-
-    result->insert(
-        std::make_pair(ActivityName(icon->activity->package_name,
-                                    icon->activity->activity_name),
-                       Icons(gfx::Image(icon_small), gfx::Image(icon_large))));
-  }
-
-  return result;
+      base::Bind(&ResizeAndEncodeIcons, base::Passed(&icons)),
+      base::Bind(&ActivityIconLoader::OnIconsResized,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&cached_result),
+                 cb));
 }
 
 void ActivityIconLoader::OnIconsResized(
     std::unique_ptr<ActivityToIconsMap> cached_result,
     const OnIconsReadyCallback& cb,
     std::unique_ptr<ActivityToIconsMap> result) {
+  DCHECK(thread_checker_.CalledOnValidThread());
   // Update |cached_icons_|.
   for (const auto& kv : *result) {
     cached_icons_.erase(kv.first);
@@ -220,4 +265,5 @@ void ActivityIconLoader::OnIconsResized(
   cb.Run(std::move(result));
 }
 
+}  // namespace internal
 }  // namespace arc

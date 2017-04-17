@@ -7,7 +7,9 @@
 #include <stddef.h>
 
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
@@ -19,7 +21,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "device/geolocation/fake_access_token_store.h"
-#include "device/geolocation/location_arbitrator_impl.h"
+#include "device/geolocation/location_arbitrator.h"
 #include "device/geolocation/wifi_data_provider.h"
 #include "net/base/net_errors.h"
 #include "net/url_request/test_url_fetcher_factory.h"
@@ -145,7 +147,7 @@ class GeolocationNetworkProviderTest : public testing::Test {
   // next test step.
   net::TestURLFetcher* get_url_fetcher_and_advance_id() {
     net::TestURLFetcher* fetcher = url_fetcher_factory_.GetFetcherByID(
-            NetworkLocationRequest::url_fetcher_id_for_tests);
+        NetworkLocationRequest::url_fetcher_id_for_tests);
     if (fetcher)
       ++NetworkLocationRequest::url_fetcher_id_for_tests;
     return fetcher;
@@ -171,7 +173,9 @@ class GeolocationNetworkProviderTest : public testing::Test {
   }
 
   static void CreateReferenceWifiScanDataJson(
-      int ap_count, int start_index, base::ListValue* wifi_access_point_list) {
+      int ap_count,
+      int start_index,
+      base::ListValue* wifi_access_point_list) {
     std::vector<std::string> wifi_data;
     for (int i = 0; i < ap_count; ++i) {
       std::unique_ptr<base::DictionaryValue> ap(new base::DictionaryValue());
@@ -217,17 +221,18 @@ class GeolocationNetworkProviderTest : public testing::Test {
     const base::Value* expected_value;
     const base::Value* actual_value;
     if (!expected.Get(field, &expected_value))
-      return testing::AssertionFailure()
-          << "Expected dictionary " << PrettyJson(expected)
-          << " is missing field " << field;
+      return testing::AssertionFailure() << "Expected dictionary "
+                                         << PrettyJson(expected)
+                                         << " is missing field " << field;
     if (!expected.Get(field, &actual_value))
-      return testing::AssertionFailure()
-          << "Actual dictionary " << PrettyJson(actual)
-          << " is missing field " << field;
+      return testing::AssertionFailure() << "Actual dictionary "
+                                         << PrettyJson(actual)
+                                         << " is missing field " << field;
     if (!expected_value->Equals(actual_value))
       return testing::AssertionFailure()
-          << "Field " << field << " mismatch: " << PrettyJson(*expected_value)
-          << " != " << PrettyJson(*actual_value);
+             << "Field " << field
+             << " mismatch: " << PrettyJson(*expected_value)
+             << " != " << PrettyJson(*actual_value);
     return testing::AssertionSuccess();
   }
 
@@ -256,8 +261,9 @@ class GeolocationNetworkProviderTest : public testing::Test {
 
     // Check to see that the api key is being appended for the default
     // network provider url.
-    bool is_default_url = UrlWithoutQuery(request_url) ==
-        UrlWithoutQuery(LocationArbitratorImpl::DefaultNetworkProviderURL());
+    bool is_default_url =
+        UrlWithoutQuery(request_url) ==
+        UrlWithoutQuery(LocationArbitrator::DefaultNetworkProviderURL());
     EXPECT_EQ(is_default_url, !request_url.query().empty());
 
     const std::string& upload_data = request.upload_data();
@@ -273,9 +279,9 @@ class GeolocationNetworkProviderTest : public testing::Test {
     ASSERT_TRUE(parsed_json->GetAsDictionary(&request_json));
 
     if (!is_default_url) {
-      if (expected_access_token.empty())
+      if (expected_access_token.empty()) {
         ASSERT_FALSE(request_json->HasKey(kAccessTokenString));
-      else {
+      } else {
         std::string access_token;
         EXPECT_TRUE(request_json->GetString(kAccessTokenString, &access_token));
         EXPECT_EQ(expected_access_token, access_token);
@@ -284,24 +290,22 @@ class GeolocationNetworkProviderTest : public testing::Test {
 
     if (expected_wifi_aps) {
       base::ListValue expected_wifi_aps_json;
-      CreateReferenceWifiScanDataJson(
-          expected_wifi_aps,
-          wifi_start_index,
-          &expected_wifi_aps_json);
+      CreateReferenceWifiScanDataJson(expected_wifi_aps, wifi_start_index,
+                                      &expected_wifi_aps_json);
       EXPECT_EQ(size_t(expected_wifi_aps), expected_wifi_aps_json.GetSize());
 
       const base::ListValue* wifi_aps_json;
-      ASSERT_TRUE(JsonGetList("wifiAccessPoints", *request_json,
-                              &wifi_aps_json));
-      for (size_t i = 0; i < expected_wifi_aps_json.GetSize(); ++i ) {
+      ASSERT_TRUE(
+          JsonGetList("wifiAccessPoints", *request_json, &wifi_aps_json));
+      for (size_t i = 0; i < expected_wifi_aps_json.GetSize(); ++i) {
         const base::DictionaryValue* expected_json;
         ASSERT_TRUE(expected_wifi_aps_json.GetDictionary(i, &expected_json));
         const base::DictionaryValue* actual_json;
         ASSERT_TRUE(wifi_aps_json->GetDictionary(i, &actual_json));
-        ASSERT_TRUE(JsonFieldEquals("macAddress", *expected_json,
-                                    *actual_json));
-        ASSERT_TRUE(JsonFieldEquals("signalStrength", *expected_json,
-                                    *actual_json));
+        ASSERT_TRUE(
+            JsonFieldEquals("macAddress", *expected_json, *actual_json));
+        ASSERT_TRUE(
+            JsonFieldEquals("signalStrength", *expected_json, *actual_json));
         ASSERT_TRUE(JsonFieldEquals("channel", *expected_json, *actual_json));
         ASSERT_TRUE(JsonFieldEquals("signalToNoiseRatio", *expected_json,
                                     *actual_json));
@@ -337,7 +341,7 @@ TEST_F(GeolocationNetworkProviderTest, StartProvider) {
 }
 
 TEST_F(GeolocationNetworkProviderTest, StartProviderDefaultUrl) {
-  test_server_url_ = LocationArbitratorImpl::DefaultNetworkProviderURL();
+  test_server_url_ = LocationArbitrator::DefaultNetworkProviderURL();
   std::unique_ptr<LocationProvider> provider(CreateProvider(true));
   EXPECT_TRUE(provider->StartProvider(false));
   net::TestURLFetcher* fetcher = get_url_fetcher_and_advance_id();
@@ -379,8 +383,7 @@ TEST_F(GeolocationNetworkProviderTest, MultipleWifiScansComplete) {
   fetcher->SetResponseString(kNoFixNetworkResponse);
   fetcher->delegate()->OnURLFetchComplete(fetcher);
 
-  Geoposition position;
-  provider->GetPosition(&position);
+  Geoposition position = provider->GetPosition();
   EXPECT_FALSE(position.Validate());
 
   // Now wifi data arrives -- SetData will notify listeners.
@@ -395,7 +398,8 @@ TEST_F(GeolocationNetworkProviderTest, MultipleWifiScansComplete) {
   // Send a reply with good position fix.
   const char* kReferenceNetworkResponse =
       "{"
-      "  \"accessToken\": \"" REFERENCE_ACCESS_TOKEN "\","
+      "  \"accessToken\": \"" REFERENCE_ACCESS_TOKEN
+      "\","
       "  \"accuracy\": 1200.4,"
       "  \"location\": {"
       "    \"lat\": 51.0,"
@@ -408,7 +412,7 @@ TEST_F(GeolocationNetworkProviderTest, MultipleWifiScansComplete) {
   fetcher->SetResponseString(kReferenceNetworkResponse);
   fetcher->delegate()->OnURLFetchComplete(fetcher);
 
-  provider->GetPosition(&position);
+  position = provider->GetPosition();
   EXPECT_EQ(51.0, position.latitude);
   EXPECT_EQ(-0.1, position.longitude);
   EXPECT_EQ(1200.4, position.accuracy);
@@ -427,7 +431,7 @@ TEST_F(GeolocationNetworkProviderTest, MultipleWifiScansComplete) {
   fetcher = get_url_fetcher_and_advance_id();
   EXPECT_FALSE(fetcher);
 
-  provider->GetPosition(&position);
+  position = provider->GetPosition();
   EXPECT_EQ(51.0, position.latitude);
   EXPECT_EQ(-0.1, position.longitude);
   EXPECT_TRUE(position.Validate());
@@ -448,7 +452,7 @@ TEST_F(GeolocationNetworkProviderTest, MultipleWifiScansComplete) {
   fetcher->delegate()->OnURLFetchComplete(fetcher);
 
   // Error means we now no longer have a fix.
-  provider->GetPosition(&position);
+  position = provider->GetPosition();
   EXPECT_FALSE(position.Validate());
 
   // Wifi scan returns to original set: should be serviced from cache.
@@ -456,7 +460,7 @@ TEST_F(GeolocationNetworkProviderTest, MultipleWifiScansComplete) {
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(get_url_fetcher_and_advance_id());  // No new request created.
 
-  provider->GetPosition(&position);
+  position = provider->GetPosition();
   EXPECT_EQ(51.0, position.latitude);
   EXPECT_EQ(-0.1, position.longitude);
   EXPECT_TRUE(position.Validate());
@@ -539,12 +543,12 @@ TEST_F(GeolocationNetworkProviderTest, NetworkPositionCache) {
   for (int i = 1; i < kCacheSize * 2 + 1; ++i) {
     Geoposition pos = CreateReferencePosition(i);
     bool ret = cache.CachePosition(CreateReferenceWifiScanData(i), pos);
-    EXPECT_TRUE(ret)  << i;
+    EXPECT_TRUE(ret) << i;
     const Geoposition* item =
         cache.FindPosition(CreateReferenceWifiScanData(i));
     ASSERT_TRUE(item) << i;
-    EXPECT_EQ(pos.latitude, item->latitude)  << i;
-    EXPECT_EQ(pos.longitude, item->longitude)  << i;
+    EXPECT_EQ(pos.latitude, item->latitude) << i;
+    EXPECT_EQ(pos.longitude, item->longitude) << i;
     if (i <= kCacheSize) {
       // Nothing should have spilled yet; check oldest item is still there.
       EXPECT_TRUE(cache.FindPosition(CreateReferenceWifiScanData(1)));

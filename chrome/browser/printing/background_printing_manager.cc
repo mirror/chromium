@@ -5,6 +5,7 @@
 #include "chrome/browser/printing/background_printing_manager.h"
 
 #include "base/location.h"
+#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -14,11 +15,11 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_source.h"
-#include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/browser/web_contents_observer.h"
 
+using content::BrowserContext;
 using content::BrowserThread;
 using content::WebContents;
 
@@ -61,7 +62,6 @@ BackgroundPrintingManager::~BackgroundPrintingManager() {
   // preview WebContents trying to print). In such a case it will fail to print,
   // but we should at least clean up the observers.
   // TODO(thestig): Handle this case better.
-  STLDeleteValues(&printing_contents_map_);
 }
 
 void BackgroundPrintingManager::OwnPrintPreviewDialog(
@@ -70,7 +70,8 @@ void BackgroundPrintingManager::OwnPrintPreviewDialog(
   DCHECK(PrintPreviewDialogController::IsPrintPreviewDialog(preview_dialog));
   CHECK(!HasPrintPreviewDialog(preview_dialog));
 
-  printing_contents_map_[preview_dialog] = new Observer(this, preview_dialog);
+  printing_contents_map_[preview_dialog] =
+      base::MakeUnique<Observer>(this, preview_dialog);
 
   // Watch for print jobs finishing. Everything else is watched for by the
   // Observer. TODO(avi, cait): finish the job of removing this last
@@ -97,10 +98,24 @@ void BackgroundPrintingManager::Observe(
   DeletePreviewContents(content::Source<WebContents>(source).ptr());
 }
 
+void BackgroundPrintingManager::DeletePreviewContentsForBrowserContext(
+    BrowserContext* browser_context) {
+  std::vector<WebContents*> preview_contents_to_delete;
+  for (const auto& iter : printing_contents_map_) {
+    WebContents* preview_contents = iter.first;
+    if (preview_contents->GetBrowserContext() == browser_context) {
+      preview_contents_to_delete.push_back(preview_contents);
+    }
+  }
+
+  for (size_t i = 0; i < preview_contents_to_delete.size(); i++) {
+    DeletePreviewContents(preview_contents_to_delete[i]);
+  }
+}
+
 void BackgroundPrintingManager::DeletePreviewContents(
     WebContents* preview_contents) {
-  WebContentsObserverMap::iterator i =
-      printing_contents_map_.find(preview_contents);
+  auto i = printing_contents_map_.find(preview_contents);
   if (i == printing_contents_map_.end()) {
     // Everyone is racing to be the first to delete the |preview_contents|. If
     // this case is hit, someone else won the race, so there is no need to
@@ -111,27 +126,25 @@ void BackgroundPrintingManager::DeletePreviewContents(
   // Stop all observation ...
   registrar_.Remove(this, chrome::NOTIFICATION_PRINT_JOB_RELEASED,
                     content::Source<WebContents>(preview_contents));
-  Observer* observer = i->second;
   printing_contents_map_.erase(i);
-  delete observer;
 
-  // ... and mortally wound the contents. (Deletion immediately is not a good
-  // idea in case this was called from RenderViewGone.)
+  // ... and mortally wound the contents. Deletion immediately is not a good
+  // idea in case this was triggered by |preview_contents| far up the
+  // callstack. (Trace where the NOTIFICATION_PRINT_JOB_RELEASED comes from.)
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, preview_contents);
 }
 
 std::set<content::WebContents*> BackgroundPrintingManager::CurrentContentSet() {
   std::set<content::WebContents*> result;
-  for (WebContentsObserverMap::iterator i = printing_contents_map_.begin();
-       i != printing_contents_map_.end(); ++i) {
-    result.insert(i->first);
-  }
+  for (const auto& entry : printing_contents_map_)
+    result.insert(entry.first);
+
   return result;
 }
 
 bool BackgroundPrintingManager::HasPrintPreviewDialog(
     WebContents* preview_dialog) {
-  return ContainsKey(printing_contents_map_, preview_dialog);
+  return base::ContainsKey(printing_contents_map_, preview_dialog);
 }
 
 }  // namespace printing

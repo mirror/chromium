@@ -13,15 +13,15 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "net/base/completion_callback.h"
-#include "net/http/http_stream.h"
-#include "net/log/net_log.h"
+#include "net/base/net_export.h"
+#include "net/log/net_log_source.h"
+#include "net/spdy/multiplexed_http_stream.h"
 #include "net/spdy/spdy_read_queue.h"
 #include "net/spdy/spdy_session.h"
 #include "net/spdy/spdy_stream.h"
 
 namespace net {
 
-class DrainableIOBuffer;
 struct HttpRequestInfo;
 class HttpResponseInfo;
 class IOBuffer;
@@ -30,14 +30,16 @@ class UploadDataStream;
 
 // The SpdyHttpStream is a HTTP-specific type of stream known to a SpdySession.
 class NET_EXPORT_PRIVATE SpdyHttpStream : public SpdyStream::Delegate,
-                                          public HttpStream {
+                                          public MultiplexedHttpStream {
  public:
   static const size_t kRequestBodyBufferSize;
   // |spdy_session| must not be NULL.
-  SpdyHttpStream(const base::WeakPtr<SpdySession>& spdy_session, bool direct);
+  SpdyHttpStream(const base::WeakPtr<SpdySession>& spdy_session,
+                 bool direct,
+                 NetLogSource source_dependency);
   ~SpdyHttpStream() override;
 
-  SpdyStream* stream() { return stream_.get(); }
+  SpdyStream* stream() { return stream_; }
 
   // Cancels any callbacks from being invoked and deletes the stream.
   void Cancel();
@@ -46,27 +48,23 @@ class NET_EXPORT_PRIVATE SpdyHttpStream : public SpdyStream::Delegate,
 
   int InitializeStream(const HttpRequestInfo* request_info,
                        RequestPriority priority,
-                       const BoundNetLog& net_log,
+                       const NetLogWithSource& net_log,
                        const CompletionCallback& callback) override;
 
   int SendRequest(const HttpRequestHeaders& headers,
                   HttpResponseInfo* response,
                   const CompletionCallback& callback) override;
-  UploadProgress GetUploadProgress() const override;
   int ReadResponseHeaders(const CompletionCallback& callback) override;
   int ReadResponseBody(IOBuffer* buf,
                        int buf_len,
                        const CompletionCallback& callback) override;
   void Close(bool not_reusable) override;
-  HttpStream* RenewStreamForAuth() override;
   bool IsResponseBodyComplete() const override;
 
   // Must not be called if a NULL SpdySession was pssed into the
   // constructor.
   bool IsConnectionReused() const override;
 
-  void SetConnectionReused() override;
-  bool CanReuseConnection() const override;
   // Total number of bytes received over the network of SPDY data, headers, and
   // push_promise frames associated with this stream, including the size of
   // frame headers, after SSL decryption and not including proxy overhead.
@@ -76,26 +74,27 @@ class NET_EXPORT_PRIVATE SpdyHttpStream : public SpdyStream::Delegate,
   // not including proxy overhead. Note that some SPDY frames such as pings are
   // not associated with any stream, and are not included in this value.
   int64_t GetTotalSentBytes() const override;
+  bool GetAlternativeService(
+      AlternativeService* alternative_service) const override;
   bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const override;
-  void GetSSLInfo(SSLInfo* ssl_info) override;
-  void GetSSLCertRequestInfo(SSLCertRequestInfo* cert_request_info) override;
   bool GetRemoteEndpoint(IPEndPoint* endpoint) override;
-  Error GetSignedEKMForTokenBinding(crypto::ECPrivateKey* key,
-                                    std::vector<uint8_t>* out) override;
-  void Drain(HttpNetworkSession* session) override;
   void PopulateNetErrorDetails(NetErrorDetails* details) override;
   void SetPriority(RequestPriority priority) override;
 
   // SpdyStream::Delegate implementation.
-  void OnRequestHeadersSent() override;
-  SpdyResponseHeadersStatus OnResponseHeadersUpdated(
-      const SpdyHeaderBlock& response_headers) override;
+  void OnHeadersSent() override;
+  void OnHeadersReceived(const SpdyHeaderBlock& response_headers) override;
   void OnDataReceived(std::unique_ptr<SpdyBuffer> buffer) override;
   void OnDataSent() override;
   void OnTrailers(const SpdyHeaderBlock& trailers) override;
   void OnClose(int status) override;
+  NetLogSource source_dependency() const override;
 
  private:
+  // Helper function used to initialize private members and to set delegate on
+  // stream when stream is created.
+  void InitializeStreamHelper();
+
   // Helper function used for resetting stream from inside the stream.
   void ResetStreamInternal();
 
@@ -135,8 +134,16 @@ class NET_EXPORT_PRIVATE SpdyHttpStream : public SpdyStream::Delegate,
   const base::WeakPtr<SpdySession> spdy_session_;
   bool is_reused_;
   SpdyStreamRequest stream_request_;
-  base::WeakPtr<SpdyStream> stream_;
+  const NetLogSource source_dependency_;
 
+  // |stream_| is owned by SpdySession.
+  // Before InitializeStream() is called, stream_ == nullptr.
+  // After InitializeStream() is called but before OnClose() is called,
+  //   |*stream_| is guaranteed to be valid.
+  // After OnClose() is called, stream_ == nullptr.
+  SpdyStream* stream_;
+
+  // False before OnClose() is called, true after.
   bool stream_closed_;
 
   // Set only when |stream_closed_| is true.
@@ -152,6 +159,9 @@ class NET_EXPORT_PRIVATE SpdyHttpStream : public SpdyStream::Delegate,
   int64_t closed_stream_sent_bytes_;
 
   // The request to send.
+  // Set to null when response body is starting to be read. This is to allow
+  // the stream to be shared for reading and to possibly outlive request_info_'s
+  // owner.
   const HttpRequestInfo* request_info_;
 
   // |response_info_| is the HTTP response data object which is filled in
@@ -161,9 +171,7 @@ class NET_EXPORT_PRIVATE SpdyHttpStream : public SpdyStream::Delegate,
 
   std::unique_ptr<HttpResponseInfo> push_response_info_;
 
-  // We don't use SpdyStream's |response_header_status_| as we
-  // sometimes call back into our delegate before it is updated.
-  SpdyResponseHeadersStatus response_headers_status_;
+  bool response_headers_complete_;
 
   // We buffer the response body as it arrives asynchronously from the stream.
   SpdyReadQueue response_body_queue_;
@@ -188,9 +196,7 @@ class NET_EXPORT_PRIVATE SpdyHttpStream : public SpdyStream::Delegate,
   // Is this spdy stream direct to the origin server (or to a proxy).
   bool direct_;
 
-  SSLInfo ssl_info_;
-  bool was_npn_negotiated_;
-  NextProto protocol_negotiated_;
+  bool was_alpn_negotiated_;
 
   base::WeakPtrFactory<SpdyHttpStream> weak_factory_;
 

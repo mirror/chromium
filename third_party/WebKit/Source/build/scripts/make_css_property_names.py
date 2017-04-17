@@ -4,7 +4,7 @@ import subprocess
 import sys
 
 import css_properties
-import in_generator
+import json5_generator
 import license
 
 
@@ -37,6 +37,7 @@ const int firstCSSProperty = %(first_property_id)s;
 const int numCSSProperties = %(properties_count)s;
 const int lastCSSProperty = %(last_property_id)d;
 const int lastUnresolvedCSSProperty = %(last_unresolved_property_id)d;
+const int numCSSPropertyIDs = lastUnresolvedCSSProperty + 1;
 const size_t maxCSSPropertyNameLength = %(max_name_length)d;
 
 const char* getPropertyName(CSSPropertyID);
@@ -44,9 +45,19 @@ const WTF::AtomicString& getPropertyNameAtomicString(CSSPropertyID);
 WTF::String getPropertyNameString(CSSPropertyID);
 WTF::String getJSPropertyName(CSSPropertyID);
 
+inline bool isCSSPropertyIDWithName(int id)
+{
+    return id >= firstCSSProperty && id <= lastUnresolvedCSSProperty;
+}
+
+inline bool isValidCSSPropertyID(CSSPropertyID id)
+{
+    return id != CSSPropertyInvalid;
+}
+
 inline CSSPropertyID convertToCSSPropertyID(int value)
 {
-    ASSERT(value >= CSSPropertyInvalid && value <= lastCSSProperty);
+    DCHECK(value >= CSSPropertyInvalid && value <= lastCSSProperty);
     return static_cast<CSSPropertyID>(value);
 }
 
@@ -85,6 +96,12 @@ GPERF_TEMPLATE = """
 #pragma warning(disable : 4302 4311)
 #endif
 
+#if defined(__clang__)
+#pragma clang diagnostic push
+// TODO(thakis): Remove once we use a gperf that no longer produces "register".
+#pragma clang diagnostic ignored "-Wdeprecated-register"
+#endif
+
 namespace blink {
 static const char propertyNameStringsPool[] = {
 %(property_name_strings)s
@@ -105,61 +122,65 @@ struct Property;
 %%define class-name %(class_name)sHash
 %%define lookup-function-name findPropertyImpl
 %%define hash-function-name property_hash_function
-%%define slot-name nameOffset
+%%define slot-name name_offset
 %%define word-array-name property_word_list
 %%enum
 %%%%
 %(property_to_enum_map)s
 %%%%
-const Property* findProperty(register const char* str, register unsigned int len)
-{
-    return %(class_name)sHash::findPropertyImpl(str, len);
+
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#endif
+
+const Property* FindProperty(const char* str, unsigned int len) {
+  return %(class_name)sHash::findPropertyImpl(str, len);
 }
 
-const char* getPropertyName(CSSPropertyID id)
-{
-    ASSERT(id >= firstCSSProperty && id <= lastUnresolvedCSSProperty);
-    int index = id - firstCSSProperty;
-    return propertyNameStringsPool + propertyNameStringsOffsets[index];
+const char* getPropertyName(CSSPropertyID id) {
+  DCHECK(isCSSPropertyIDWithName(id));
+  int index = id - firstCSSProperty;
+  return propertyNameStringsPool + propertyNameStringsOffsets[index];
 }
 
-const AtomicString& getPropertyNameAtomicString(CSSPropertyID id)
-{
-    ASSERT(id >= firstCSSProperty && id <= lastUnresolvedCSSProperty);
-    int index = id - firstCSSProperty;
-    static AtomicString* propertyStrings = new AtomicString[lastUnresolvedCSSProperty]; // Intentionally never destroyed.
-    AtomicString& propertyString = propertyStrings[index];
-    if (propertyString.isNull())
-        propertyString = AtomicString(propertyNameStringsPool + propertyNameStringsOffsets[index]);
-    return propertyString;
+const AtomicString& getPropertyNameAtomicString(CSSPropertyID id) {
+  DCHECK(isCSSPropertyIDWithName(id));
+  int index = id - firstCSSProperty;
+  static AtomicString* propertyStrings =
+      new AtomicString[lastUnresolvedCSSProperty]; // Leaked.
+  AtomicString& propertyString = propertyStrings[index];
+  if (propertyString.IsNull()) {
+    propertyString = AtomicString(propertyNameStringsPool +
+                     propertyNameStringsOffsets[index]);
+  }
+  return propertyString;
 }
 
-String getPropertyNameString(CSSPropertyID id)
-{
-    // We share the StringImpl with the AtomicStrings.
-    return getPropertyNameAtomicString(id).getString();
+String getPropertyNameString(CSSPropertyID id) {
+  // We share the StringImpl with the AtomicStrings.
+  return getPropertyNameAtomicString(id).GetString();
 }
 
-String getJSPropertyName(CSSPropertyID id)
-{
-    char result[maxCSSPropertyNameLength + 1];
-    const char* cssPropertyName = getPropertyName(id);
-    const char* propertyNamePointer = cssPropertyName;
-    if (!propertyNamePointer)
-        return emptyString();
+String getJSPropertyName(CSSPropertyID id) {
+  char result[maxCSSPropertyNameLength + 1];
+  const char* cssPropertyName = getPropertyName(id);
+  const char* propertyNamePointer = cssPropertyName;
+  if (!propertyNamePointer)
+    return g_empty_string;
 
-    char* resultPointer = result;
-    while (char character = *propertyNamePointer++) {
-        if (character == '-') {
-            char nextCharacter = *propertyNamePointer++;
-            if (!nextCharacter)
-                break;
-            character = (propertyNamePointer - 2 != cssPropertyName) ? toASCIIUpper(nextCharacter) : nextCharacter;
-        }
-        *resultPointer++ = character;
+  char* resultPointer = result;
+  while (char character = *propertyNamePointer++) {
+    if (character == '-') {
+      char nextCharacter = *propertyNamePointer++;
+      if (!nextCharacter)
+        break;
+      character = (propertyNamePointer - 2 != cssPropertyName)
+                      ? ToASCIIUpper(nextCharacter) : nextCharacter;
     }
-    *resultPointer = '\\0';
-    return String(result);
+    *resultPointer++ = character;
+  }
+  *resultPointer = '\\0';
+  return String(result);
 }
 
 CSSPropertyID cssPropertyID(const String& string)
@@ -174,8 +195,8 @@ CSSPropertyID cssPropertyID(const String& string)
 class CSSPropertyNamesWriter(css_properties.CSSProperties):
     class_name = "CSSPropertyNames"
 
-    def __init__(self, in_file_path):
-        super(CSSPropertyNamesWriter, self).__init__(in_file_path)
+    def __init__(self, json5_file_path):
+        super(CSSPropertyNamesWriter, self).__init__(json5_file_path)
         self._outputs = {(self.class_name + ".h"): self.generate_header,
                          (self.class_name + ".cpp"): self.generate_implementation,
                         }
@@ -191,7 +212,7 @@ class CSSPropertyNamesWriter(css_properties.CSSProperties):
             'first_property_id': self._first_enum_value,
             'properties_count': len(self._properties),
             'last_property_id': self._first_enum_value + len(self._properties) - 1,
-            'last_unresolved_property_id': max(property["enum_value"] for property in self._properties_including_aliases),
+            'last_unresolved_property_id': self.last_unresolved_property_id,
             'max_name_length': max(map(len, self._properties)),
         }
 
@@ -220,9 +241,17 @@ class CSSPropertyNamesWriter(css_properties.CSSProperties):
         gperf_args = [self.gperf_path, '--key-positions=*', '-P', '-n']
         gperf_args.extend(['-m', '50'])  # Pick best of 50 attempts.
         gperf_args.append('-D')  # Allow duplicate hashes -> More compact code.
-        gperf = subprocess.Popen(gperf_args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True)
-        return gperf.communicate(gperf_input)[0]
+
+        # If gperf isn't in the path we get an OSError. We don't want to use
+        # the normal solution of shell=True (as this has to run on many
+        # platforms), so instead we catch the error and raise a
+        # CalledProcessError like subprocess would do when shell=True is set.
+        try:
+            gperf = subprocess.Popen(gperf_args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True)
+            return gperf.communicate(gperf_input)[0]
+        except OSError:
+            raise subprocess.CalledProcessError(127, gperf_args, output='Command not found.')
 
 
 if __name__ == "__main__":
-    in_generator.Maker(CSSPropertyNamesWriter).main(sys.argv)
+    json5_generator.Maker(CSSPropertyNamesWriter).main()

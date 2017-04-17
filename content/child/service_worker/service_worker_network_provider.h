@@ -14,15 +14,16 @@
 #include "base/memory/ref_counted.h"
 #include "base/supports_user_data.h"
 #include "content/common/content_export.h"
-#include "content/common/service_worker/service_worker_types.h"
+#include "content/common/service_worker/service_worker.mojom.h"
 
 namespace blink {
-class WebDataSource;
 class WebLocalFrame;
+class WebServiceWorkerNetworkProvider;
 }  // namespace blink
 
 namespace content {
 
+struct RequestNavigationParams;
 class ServiceWorkerProviderContext;
 
 // A unique provider_id is generated for each instance.
@@ -35,27 +36,33 @@ class ServiceWorkerProviderContext;
 //
 // Basically, it's a scoped integer that sends an ipc upon construction
 // and destruction.
-class CONTENT_EXPORT ServiceWorkerNetworkProvider
-    : public base::SupportsUserData::Data {
+class CONTENT_EXPORT ServiceWorkerNetworkProvider {
  public:
-  // Ownership is transferred to the DocumentState.
-  static void AttachToDocumentState(
-      base::SupportsUserData* document_state,
-      std::unique_ptr<ServiceWorkerNetworkProvider> network_provider);
+  // Creates a ServiceWorkerNetworkProvider for navigation and wraps it
+  // with WebServiceWorkerNetworkProvider to be owned by Blink.
+  static std::unique_ptr<blink::WebServiceWorkerNetworkProvider>
+  CreateForNavigation(int route_id,
+                      const RequestNavigationParams& request_params,
+                      blink::WebLocalFrame* frame,
+                      bool content_initiated);
 
-  static ServiceWorkerNetworkProvider* FromDocumentState(
-      base::SupportsUserData* document_state);
+  // Valid only for WebServiceWorkerNetworkProvider created by
+  // CreateForNavigation.
+  static ServiceWorkerNetworkProvider* FromWebServiceWorkerNetworkProvider(
+      blink::WebServiceWorkerNetworkProvider*);
 
-  static std::unique_ptr<ServiceWorkerNetworkProvider> CreateForNavigation(
-      int route_id,
-      blink::WebLocalFrame* frame,
-      bool content_initiated);
-
+  // PlzNavigate
+  // The |browser_provider_id| is initialized by the browser for navigations.
+  ServiceWorkerNetworkProvider(int route_id,
+                               ServiceWorkerProviderType type,
+                               int browser_provider_id,
+                               bool is_parent_frame_secure);
   ServiceWorkerNetworkProvider(int route_id,
                                ServiceWorkerProviderType type,
                                bool is_parent_frame_secure);
+
   ServiceWorkerNetworkProvider();
-  ~ServiceWorkerNetworkProvider() override;
+  ~ServiceWorkerNetworkProvider();
 
   int provider_id() const { return provider_id_; }
   ServiceWorkerProviderContext* context() const { return context_.get(); }
@@ -70,6 +77,7 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider
  private:
   const int provider_id_;
   scoped_refptr<ServiceWorkerProviderContext> context_;
+  mojom::ServiceWorkerDispatcherHostAssociatedPtr dispatcher_host_;
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerNetworkProvider);
 };
 

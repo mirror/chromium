@@ -16,9 +16,11 @@
 // Field Type Constants
 using autofill::ADDRESS_HOME_CITY;
 using autofill::ADDRESS_HOME_COUNTRY;
+using autofill::ADDRESS_HOME_DEPENDENT_LOCALITY;
 using autofill::ADDRESS_HOME_LINE1;
 using autofill::ADDRESS_HOME_LINE2;
 using autofill::ADDRESS_HOME_LINE3;
+using autofill::ADDRESS_HOME_SORTING_CODE;
 using autofill::ADDRESS_HOME_STATE;
 using autofill::ADDRESS_HOME_STREET_ADDRESS;
 using autofill::ADDRESS_HOME_ZIP;
@@ -77,6 +79,18 @@ class AutofillProfileComparatorTest : public ::testing::Test {
 
   AutofillProfileComparatorTest() {
     autofill::CountryNames::SetLocaleString(kLocale);
+  }
+
+  NameInfo CreateNameInfo(const char* first,
+                          const char* middle,
+                          const char* last,
+                          const char* full) {
+    NameInfo name;
+    name.SetRawInfo(NAME_FIRST, base::UTF8ToUTF16(first));
+    name.SetRawInfo(NAME_MIDDLE, base::UTF8ToUTF16(middle));
+    name.SetRawInfo(NAME_LAST, base::UTF8ToUTF16(last));
+    name.SetRawInfo(NAME_FULL, base::UTF8ToUTF16(full));
+    return name;
   }
 
   AutofillProfile CreateProfileWithName(const char* first,
@@ -227,6 +241,13 @@ class AutofillProfileComparatorTest : public ::testing::Test {
     EXPECT_EQ(
         expected.GetInfo(AutofillType(ADDRESS_HOME_STREET_ADDRESS), kLocale),
         actual.GetInfo(AutofillType(ADDRESS_HOME_STREET_ADDRESS), kLocale));
+    EXPECT_EQ(
+        expected.GetInfo(AutofillType(ADDRESS_HOME_DEPENDENT_LOCALITY),
+                         kLocale),
+        actual.GetInfo(AutofillType(ADDRESS_HOME_DEPENDENT_LOCALITY), kLocale));
+    EXPECT_EQ(
+        expected.GetInfo(AutofillType(ADDRESS_HOME_SORTING_CODE), kLocale),
+        actual.GetInfo(AutofillType(ADDRESS_HOME_SORTING_CODE), kLocale));
     EXPECT_EQ(expected.GetInfo(AutofillType(ADDRESS_HOME_CITY), kLocale),
               actual.GetInfo(AutofillType(ADDRESS_HOME_CITY), kLocale));
     EXPECT_EQ(expected.GetInfo(AutofillType(ADDRESS_HOME_STATE), kLocale),
@@ -311,6 +332,16 @@ TEST_F(AutofillProfileComparatorTest, NormalizeForComparison) {
   // Diacritics removed.
   EXPECT_EQ(UTF8ToUTF16("まeoa정"),
             comparator_.NormalizeForComparison(UTF8ToUTF16("まéÖä정")));
+
+  // Spaces removed.
+  EXPECT_EQ(UTF8ToUTF16("유재석"), comparator_.NormalizeForComparison(
+      UTF8ToUTF16("유 재석"),
+      AutofillProfileComparator::DISCARD_WHITESPACE));
+
+  // Punctuation removed, Japanese kana normalized.
+  EXPECT_EQ(UTF8ToUTF16("ヒルケイツ"), comparator_.NormalizeForComparison(
+      UTF8ToUTF16("ビル・ゲイツ"),
+      AutofillProfileComparator::DISCARD_WHITESPACE));
 }
 
 TEST_F(AutofillProfileComparatorTest, GetNamePartVariants) {
@@ -496,10 +527,14 @@ TEST_F(AutofillProfileComparatorTest, HaveMergeableAddresses) {
   AutofillProfile empty = CreateProfileWithAddress("", "", "", "", "", "");
   AutofillProfile p1 = CreateProfileWithAddress(
       "1 Some Street", "Unit 3", "Carver", "CA - California", "90210", "US");
+  p1.SetRawInfo(ADDRESS_HOME_DEPENDENT_LOCALITY, UTF8ToUTF16("Some String"));
+  p1.SetRawInfo(ADDRESS_HOME_SORTING_CODE, UTF8ToUTF16("64205 Biarritz CEDEX"));
+
   AutofillProfile p2 = CreateProfileWithAddress(
       "Unit 3", "1 Some Street", "Suburb", "california", "90 210-3214", "");
   AutofillProfile p3 = CreateProfileWithAddress("1 Some Street #3", "",
                                                 "Carver City", "ca", "", "us");
+
   AutofillProfile differentCountry =
       CopyAndModify(p1, {{ADDRESS_HOME_COUNTRY, "CA"}});
   AutofillProfile differentZip =
@@ -511,6 +546,10 @@ TEST_F(AutofillProfileComparatorTest, HaveMergeableAddresses) {
   AutofillProfile differentAddress =
       CopyAndModify(p1, {{ADDRESS_HOME_LINE1, "17 Park Lane"},
                          {ADDRESS_HOME_LINE2, "Suite 150"}});
+  AutofillProfile differentLocality =
+      CopyAndModify(p1, {{ADDRESS_HOME_DEPENDENT_LOCALITY, "Funky Chicken"}});
+  AutofillProfile differentSortingCode =
+      CopyAndModify(p1, {{ADDRESS_HOME_SORTING_CODE, "98000 Monaco"}});
 
   EXPECT_TRUE(comparator_.HaveMergeableAddresses(p1, empty));
   EXPECT_TRUE(comparator_.HaveMergeableAddresses(empty, p2));
@@ -531,6 +570,8 @@ TEST_F(AutofillProfileComparatorTest, HaveMergeableAddresses) {
   EXPECT_FALSE(comparator_.HaveMergeableAddresses(p1, differentState));
   EXPECT_FALSE(comparator_.HaveMergeableAddresses(p1, differentCity));
   EXPECT_FALSE(comparator_.HaveMergeableAddresses(p1, differentAddress));
+  EXPECT_FALSE(comparator_.HaveMergeableAddresses(p1, differentLocality));
+  EXPECT_FALSE(comparator_.HaveMergeableAddresses(p1, differentSortingCode));
 }
 
 TEST_F(AutofillProfileComparatorTest, AreMergeable) {
@@ -638,6 +679,62 @@ TEST_F(AutofillProfileComparatorTest, MergeNames) {
   MergeNamesAndExpect(p5, p3, synthesized);
   MergeNamesAndExpect(p5, p4, name1);
   MergeNamesAndExpect(p5, p5, synthesized);  // We flesh out missing data.
+}
+
+TEST_F(AutofillProfileComparatorTest, MergeCJKNames) {
+  // Korean names that are all mergeable, but constructed differently.
+  NameInfo name1 = CreateNameInfo("호", "", "이영", "이영 호");
+  NameInfo name2 = CreateNameInfo("이영호", "", "", "이영호");
+  NameInfo name3 = CreateNameInfo("영호", "", "이", "이영호");
+  NameInfo name4 = CreateNameInfo("영호", "", "이", "");
+  NameInfo name5 = CreateNameInfo("영호", "", "이", "이 영호");
+
+
+  // Mergeable foreign name in Japanese with a 'KATAKANA MIDDLE DOT'.
+  NameInfo name6 = CreateNameInfo("", "", "", "ゲイツ・ビル");
+  NameInfo name7 = CreateNameInfo("ビル", "", "ゲイツ", "");
+
+  // Set the use dates for the profiles, because |MergeCJKNames()| tries to use
+  // the most recent profile if there is a conflict. The ordering is
+  // p1 > p2 > p3 > p4 > p5, with p1 being the most recent.
+  AutofillProfile p1 = CreateProfileWithName(name1);
+  p1.set_use_date(base::Time::Now());
+  AutofillProfile p2 = CreateProfileWithName(name2);
+  p2.set_use_date(base::Time::Now() - base::TimeDelta::FromHours(1));
+  AutofillProfile p3 = CreateProfileWithName(name3);
+  p3.set_use_date(base::Time::Now() - base::TimeDelta::FromHours(2));
+  AutofillProfile p4 = CreateProfileWithName(name4);
+  p4.set_use_date(base::Time::Now() - base::TimeDelta::FromHours(3));
+  AutofillProfile p5 = CreateProfileWithName(name5);
+  p5.set_use_date(base::Time::Now() - base::TimeDelta::FromHours(4));
+
+  AutofillProfile p6 = CreateProfileWithName(name6);
+  AutofillProfile p7 = CreateProfileWithName(name7);
+
+  // Because |p1| is the most recent, it always wins over others.
+  MergeNamesAndExpect(p1, p2, CreateNameInfo("호", "", "이영", "이영 호"));
+  MergeNamesAndExpect(p1, p3, CreateNameInfo("호", "", "이영", "이영 호"));
+  MergeNamesAndExpect(p1, p4, CreateNameInfo("호", "", "이영", "이영 호"));
+  MergeNamesAndExpect(p1, p5, CreateNameInfo("호", "", "이영", "이영 호"));
+
+  // |p2| is more recent than |p3|, |p4|, and |p5|. However, it does not have a
+  // surname entry (it was probably parsed with the old logic), so the other
+  // profiles are used as the source for given/surname.
+  MergeNamesAndExpect(p2, p3, CreateNameInfo("영호", "", "이", "이영호"));
+  MergeNamesAndExpect(p2, p4, CreateNameInfo("영호", "", "이", "이영호"));
+  MergeNamesAndExpect(p2, p5, CreateNameInfo("영호", "", "이", "이영호"));
+
+  // |p3| is more recent than |p4| and |p5|.
+  MergeNamesAndExpect(p3, p4, CreateNameInfo("영호", "", "이", "이영호"));
+  MergeNamesAndExpect(p3, p5, CreateNameInfo("영호", "", "이", "이영호"));
+
+  // |p4| is more recent than |p5|. However, it does not have an explicit full
+  // name, so use the one from |p5|.
+  MergeNamesAndExpect(p4, p5, CreateNameInfo("영호", "", "이", "이 영호"));
+
+  // There is no conflict between |p6| and |p7|, so use the parts from both.
+  MergeNamesAndExpect(p6, p7,
+                      CreateNameInfo("ビル", "", "ゲイツ", "ゲイツ・ビル"));
 }
 
 TEST_F(AutofillProfileComparatorTest, MergeEmailAddresses) {
@@ -824,7 +921,6 @@ TEST_F(AutofillProfileComparatorTest, MergePhoneNumbers_Intl) {
 }
 
 TEST_F(AutofillProfileComparatorTest, MergeAddresses) {
-  AutofillProfile empty;
   AutofillProfile p1 = CreateProfileWithAddress(
       "1 Some Street", "Unit 3", "Carver", "CA - California", "90210", "US");
   AutofillProfile p2 = CreateProfileWithAddress(
@@ -841,8 +937,25 @@ TEST_F(AutofillProfileComparatorTest, MergeAddresses) {
   MergeAddressesAndExpect(p1, p2, expected);
 }
 
+TEST_F(AutofillProfileComparatorTest, MergeAddressesMostUniqueTokens) {
+  AutofillProfile p1 = CreateProfileWithAddress(
+      "1 Some Street", "Unit 3", "Carver", "CA - California", "90210", "US");
+  AutofillProfile p2 = CreateProfileWithAddress(
+      "1 Some Other Street", "Unit 3", "Carver City", "ca", "90210-1234", "us");
+
+  Address expected;
+  expected.SetRawInfo(ADDRESS_HOME_LINE1, UTF8ToUTF16("1 Some Other Street"));
+  expected.SetRawInfo(ADDRESS_HOME_LINE2, UTF8ToUTF16("Unit 3"));
+  expected.SetRawInfo(ADDRESS_HOME_CITY, UTF8ToUTF16("Carver City"));
+  expected.SetRawInfo(ADDRESS_HOME_STATE, UTF8ToUTF16("ca"));
+  expected.SetRawInfo(ADDRESS_HOME_ZIP, UTF8ToUTF16("90210-1234"));
+  expected.SetRawInfo(ADDRESS_HOME_COUNTRY, UTF8ToUTF16("US"));
+
+  MergeAddressesAndExpect(p1, p2, expected);
+  MergeAddressesAndExpect(p2, p1, expected);
+}
+
 TEST_F(AutofillProfileComparatorTest, MergeAddressesWithRewrite) {
-  AutofillProfile empty;
   AutofillProfile p1 = CreateProfileWithAddress(
       "6543 CH BACON", "APP 3", "MONTRÉAL", "QUÉBEC", "HHH999", "ca");
   AutofillProfile p2 = CreateProfileWithAddress(
@@ -858,4 +971,34 @@ TEST_F(AutofillProfileComparatorTest, MergeAddressesWithRewrite) {
   expected.SetRawInfo(ADDRESS_HOME_COUNTRY, UTF8ToUTF16("CA"));
 
   MergeAddressesAndExpect(p1, p2, expected);
+  MergeAddressesAndExpect(p2, p1, expected);
+}
+
+TEST_F(AutofillProfileComparatorTest,
+       MergeAddressesDependendLocalityAndSortingCode) {
+  AutofillProfile p1 = CreateProfileWithAddress(
+      "6543 CH BACON", "APP 3", "MONTRÉAL", "QUÉBEC", "HHH999", "ca");
+  p1.SetRawInfo(ADDRESS_HOME_DEPENDENT_LOCALITY, UTF8ToUTF16("Some String"));
+  p1.SetRawInfo(ADDRESS_HOME_SORTING_CODE, UTF8ToUTF16("64205 Biarritz CEDEX"));
+  AutofillProfile p2 = CreateProfileWithAddress(
+      "6543, Bacon Rd", "", "Montreal", "QC", "hhh 999", "CA");
+  p2.SetRawInfo(ADDRESS_HOME_DEPENDENT_LOCALITY,
+                UTF8ToUTF16("Some Other String"));
+  p2.SetRawInfo(ADDRESS_HOME_SORTING_CODE, UTF8ToUTF16("64205 Biarritz"));
+  p2.set_use_date(p1.use_date() + base::TimeDelta::FromMinutes(1));
+
+  Address expected;
+  expected.SetRawInfo(ADDRESS_HOME_LINE1, UTF8ToUTF16("6543 CH BACON"));
+  expected.SetRawInfo(ADDRESS_HOME_LINE2, UTF8ToUTF16("APP 3"));
+  expected.SetRawInfo(ADDRESS_HOME_CITY, UTF8ToUTF16("Montreal"));
+  expected.SetRawInfo(ADDRESS_HOME_STATE, UTF8ToUTF16("QC"));
+  expected.SetRawInfo(ADDRESS_HOME_ZIP, UTF8ToUTF16("hhh 999"));
+  expected.SetRawInfo(ADDRESS_HOME_COUNTRY, UTF8ToUTF16("CA"));
+  expected.SetRawInfo(ADDRESS_HOME_DEPENDENT_LOCALITY,
+                      UTF8ToUTF16("Some Other String"));
+  expected.SetRawInfo(ADDRESS_HOME_SORTING_CODE,
+                      UTF8ToUTF16("64205 Biarritz"));  // Preferred by use date.
+
+  MergeAddressesAndExpect(p1, p2, expected);
+  MergeAddressesAndExpect(p2, p1, expected);
 }

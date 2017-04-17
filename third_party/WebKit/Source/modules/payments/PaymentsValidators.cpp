@@ -5,84 +5,139 @@
 #include "modules/payments/PaymentsValidators.h"
 
 #include "bindings/core/v8/ScriptRegexp.h"
-#include "wtf/text/StringImpl.h"
+#include "platform/weborigin/KURL.h"
+#include "platform/wtf/text/StringImpl.h"
 
 namespace blink {
 
-bool PaymentsValidators::isValidCurrencyCodeFormat(const String& code, String* optionalErrorMessage)
-{
-    if (ScriptRegexp("^[A-Z]{3}$", TextCaseSensitive).match(code) == 0)
-        return true;
+// We limit the maximum length of string to 2048 bytes for security reasons.
+static const int kMaxiumStringLength = 2048;
 
-    if (optionalErrorMessage)
-        *optionalErrorMessage = "'" + code + "' is not a valid ISO 4217 currency code, should be 3 upper case letters [A-Z]";
+bool PaymentsValidators::IsValidCurrencyCodeFormat(
+    const String& code,
+    const String& system,
+    String* optional_error_message) {
+  if (system == "urn:iso:std:iso:4217") {
+    if (ScriptRegexp("^[A-Z]{3}$", kTextCaseSensitive).Match(code) == 0)
+      return true;
 
-    return false;
-}
-
-bool PaymentsValidators::isValidAmountFormat(const String& amount, String* optionalErrorMessage)
-{
-    if (ScriptRegexp("^-?[0-9]+(\\.[0-9]+)?$", TextCaseSensitive).match(amount) == 0)
-        return true;
-
-    if (optionalErrorMessage)
-        *optionalErrorMessage = "'" + amount + "' is not a valid ISO 20022 CurrencyAnd30Amount";
+    if (optional_error_message)
+      *optional_error_message =
+          "'" + code +
+          "' is not a valid ISO 4217 currency code, should "
+          "be 3 upper case letters [A-Z]";
 
     return false;
-}
+  }
 
-bool PaymentsValidators::isValidCountryCodeFormat(const String& code, String* optionalErrorMessage)
-{
-    if (ScriptRegexp("^[A-Z]{2}$", TextCaseSensitive).match(code) == 0)
-        return true;
-
-    if (optionalErrorMessage)
-        *optionalErrorMessage = "'" + code + "' is not a valid ISO 3166 country code, should be 2 upper case letters [A-Z]";
+  if (!KURL(KURL(), system).IsValid()) {
+    if (optional_error_message)
+      *optional_error_message = "The currency system is not a valid URL";
 
     return false;
-}
+  }
 
-bool PaymentsValidators::isValidLanguageCodeFormat(const String& code, String* optionalErrorMessage)
-{
-    if (ScriptRegexp("^([a-z]{2,3})?$", TextCaseSensitive).match(code) == 0)
-        return true;
-
-    if (optionalErrorMessage)
-        *optionalErrorMessage = "'" + code + "' is not a valid ISO 639 language code, should be 2-3 lower case letters [a-z]";
-
-    return false;
-}
-
-bool PaymentsValidators::isValidScriptCodeFormat(const String& code, String* optionalErrorMessage)
-{
-    if (ScriptRegexp("^([A-Z][a-z]{3})?$", TextCaseSensitive).match(code) == 0)
-        return true;
-
-    if (optionalErrorMessage)
-        *optionalErrorMessage = "'" + code + "' is not a valid ISO 15924 script code, should be an upper case letter [A-Z] followed by 3 lower case letters [a-z]";
-
-    return false;
-}
-
-bool PaymentsValidators::isValidShippingAddress(const mojom::blink::PaymentAddressPtr& address, String* optionalErrorMessage)
-{
-    if (!isValidCountryCodeFormat(address->country, optionalErrorMessage))
-        return false;
-
-    if (!isValidLanguageCodeFormat(address->language_code, optionalErrorMessage))
-        return false;
-
-    if (!isValidScriptCodeFormat(address->script_code, optionalErrorMessage))
-        return false;
-
-    if (address->language_code.isEmpty() && !address->script_code.isEmpty()) {
-        if (optionalErrorMessage)
-            *optionalErrorMessage = "If language code is empty, then script code should also be empty";
-
-        return false;
-    }
-
+  if (code.length() <= kMaxiumStringLength)
     return true;
+
+  if (optional_error_message)
+    *optional_error_message =
+        "The currency code should be at most 2048 characters long";
+
+  return false;
 }
 
-} // namespace blink
+bool PaymentsValidators::IsValidAmountFormat(const String& amount,
+                                             String* optional_error_message) {
+  if (ScriptRegexp("^-?[0-9]+(\\.[0-9]+)?$", kTextCaseSensitive)
+          .Match(amount) == 0)
+    return true;
+
+  if (optional_error_message)
+    *optional_error_message = "'" + amount + "' is not a valid amount format";
+
+  return false;
+}
+
+bool PaymentsValidators::IsValidCountryCodeFormat(
+    const String& code,
+    String* optional_error_message) {
+  if (ScriptRegexp("^[A-Z]{2}$", kTextCaseSensitive).Match(code) == 0)
+    return true;
+
+  if (optional_error_message)
+    *optional_error_message = "'" + code +
+                              "' is not a valid CLDR country code, should be 2 "
+                              "upper case letters [A-Z]";
+
+  return false;
+}
+
+bool PaymentsValidators::IsValidLanguageCodeFormat(
+    const String& code,
+    String* optional_error_message) {
+  if (ScriptRegexp("^([a-z]{2,3})?$", kTextCaseSensitive).Match(code) == 0)
+    return true;
+
+  if (optional_error_message)
+    *optional_error_message =
+        "'" + code +
+        "' is not a valid BCP-47 language code, should be "
+        "2-3 lower case letters [a-z]";
+
+  return false;
+}
+
+bool PaymentsValidators::IsValidScriptCodeFormat(
+    const String& code,
+    String* optional_error_message) {
+  if (ScriptRegexp("^([A-Z][a-z]{3})?$", kTextCaseSensitive).Match(code) == 0)
+    return true;
+
+  if (optional_error_message)
+    *optional_error_message =
+        "'" + code +
+        "' is not a valid ISO 15924 script code, should be "
+        "an upper case letter [A-Z] followed by 3 lower "
+        "case letters [a-z]";
+
+  return false;
+}
+
+bool PaymentsValidators::IsValidShippingAddress(
+    const payments::mojom::blink::PaymentAddressPtr& address,
+    String* optional_error_message) {
+  if (!IsValidCountryCodeFormat(address->country, optional_error_message))
+    return false;
+
+  if (!IsValidLanguageCodeFormat(address->language_code,
+                                 optional_error_message))
+    return false;
+
+  if (!IsValidScriptCodeFormat(address->script_code, optional_error_message))
+    return false;
+
+  if (address->language_code.IsEmpty() && !address->script_code.IsEmpty()) {
+    if (optional_error_message)
+      *optional_error_message =
+          "If language code is empty, then script code should also be empty";
+
+    return false;
+  }
+
+  return true;
+}
+
+bool PaymentsValidators::IsValidErrorMsgFormat(const String& error,
+                                               String* optional_error_message) {
+  if (error.length() <= kMaxiumStringLength)
+    return true;
+
+  if (optional_error_message)
+    *optional_error_message =
+        "Error message should be at most 2048 characters long";
+
+  return false;
+}
+
+}  // namespace blink

@@ -5,24 +5,26 @@
 package org.chromium.chrome.browser;
 
 import android.graphics.Bitmap;
-import android.test.suitebuilder.annotation.MediumTest;
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.MediumTest;
+import android.support.test.filters.SmallTest;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.Feature;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.base.test.util.UrlUtils;
-import org.chromium.chrome.browser.navigation.NavigationHandler;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.test.ChromeActivityTestCaseBase;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.NavigationEntry;
 import org.chromium.content_public.browser.NavigationHistory;
 
 /**
  * Tests for the navigation popup.
  */
+@RetryOnFailure
 public class NavigationPopupTest extends ChromeActivityTestCaseBase<ChromeActivity> {
 
     private static final int INVALID_NAVIGATION_INDEX = -1;
@@ -65,11 +67,11 @@ public class NavigationPopupTest extends ChromeActivityTestCaseBase<ChromeActivi
         }
     }
 
-    private static class TestNavigationHandler implements NavigationHandler {
+    private static class TestNavigationController implements NavigationController {
         private final TestNavigationHistory mHistory;
         private int mNavigatedIndex = INVALID_NAVIGATION_INDEX;
 
-        public TestNavigationHandler() {
+        public TestNavigationController() {
             mHistory = new TestNavigationHistory();
             mHistory.addEntry(new TestNavigationEntry(
                     1, "about:blank", null, null, "About Blank", null, 0));
@@ -122,15 +124,7 @@ public class NavigationPopupTest extends ChromeActivityTestCaseBase<ChromeActivi
         }
 
         @Override
-        public void reloadToRefreshContent(boolean checkForRepost) {
-        }
-
-        @Override
         public void reloadBypassingCache(boolean checkForRepost) {
-        }
-
-        @Override
-        public void reloadDisableLoFi(boolean checkForRepost) {
         }
 
         @Override
@@ -143,6 +137,15 @@ public class NavigationPopupTest extends ChromeActivityTestCaseBase<ChromeActivi
 
         @Override
         public void loadUrl(LoadUrlParams params) {
+        }
+
+        @Override
+        public void clearHistory() {
+        }
+
+        @Override
+        public NavigationHistory getNavigationHistory() {
+            return null;
         }
 
         @Override
@@ -169,6 +172,11 @@ public class NavigationPopupTest extends ChromeActivityTestCaseBase<ChromeActivi
         }
 
         @Override
+        public NavigationEntry getPendingEntry() {
+            return null;
+        }
+
+        @Override
         public NavigationHistory getDirectedNavigationHistory(boolean isForward, int itemLimit) {
             return mHistory;
         }
@@ -187,12 +195,38 @@ public class NavigationPopupTest extends ChromeActivityTestCaseBase<ChromeActivi
         public boolean removeEntryAtIndex(int index) {
             return false;
         }
+
+        @Override
+        public boolean canCopyStateOver() {
+            return false;
+        }
+
+        @Override
+        public boolean canPruneAllButLastCommitted() {
+            return false;
+        }
+
+        @Override
+        public void copyStateFrom(NavigationController source) {
+        }
+
+        @Override
+        public void copyStateFromAndPrune(NavigationController source, boolean replaceEntry) {
+        }
+
+        @Override
+        public String getEntryExtraData(int index, String key) {
+            return null;
+        }
+
+        @Override
+        public void setEntryExtraData(int index, String key, String value) {}
     }
 
     @MediumTest
     @Feature({"Navigation"})
-    public void testFaviconFetching() throws InterruptedException {
-        final TestNavigationHandler controller = new TestNavigationHandler();
+    public void testFaviconFetching() {
+        final TestNavigationController controller = new TestNavigationController();
         final NavigationPopup popup = new NavigationPopup(
                 mProfile, getActivity(), controller, true);
         popup.setWidth(300);
@@ -229,7 +263,7 @@ public class NavigationPopupTest extends ChromeActivityTestCaseBase<ChromeActivi
     @SmallTest
     @Feature({"Navigation"})
     public void testItemSelection() {
-        final TestNavigationHandler controller = new TestNavigationHandler();
+        final TestNavigationController controller = new TestNavigationController();
         final NavigationPopup popup =
                 new NavigationPopup(mProfile, getActivity(), controller, true);
         popup.setWidth(300);

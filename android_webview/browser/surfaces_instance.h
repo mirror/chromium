@@ -9,14 +9,17 @@
 #include <vector>
 
 #include "base/memory/ref_counted.h"
+#include "cc/surfaces/compositor_frame_sink_support_client.h"
 #include "cc/surfaces/display_client.h"
-#include "cc/surfaces/surface_factory_client.h"
+#include "cc/surfaces/frame_sink_id.h"
+#include "cc/surfaces/frame_sink_id_allocator.h"
 #include "cc/surfaces/surface_id.h"
 
 namespace cc {
+class BeginFrameSource;
+class CompositorFrameSinkSupport;
 class Display;
-class SurfaceIdAllocator;
-class SurfaceFactory;
+class LocalSurfaceIdAllocator;
 class SurfaceManager;
 }
 
@@ -28,26 +31,22 @@ class Transform;
 
 namespace android_webview {
 
-class AwGLSurface;
 class ParentOutputSurface;
-class ScopedAppGLStateRestore;
 
 class SurfacesInstance : public base::RefCounted<SurfacesInstance>,
                          public cc::DisplayClient,
-                         public cc::SurfaceFactoryClient {
+                         public cc::CompositorFrameSinkSupportClient {
  public:
   static scoped_refptr<SurfacesInstance> GetOrCreateInstance();
 
-  uint32_t AllocateSurfaceClientId();
+  cc::FrameSinkId AllocateFrameSinkId();
   cc::SurfaceManager* GetSurfaceManager();
-  void SetBackingFrameBufferObject(int framebuffer_binding_ext);
 
   void DrawAndSwap(const gfx::Size& viewport,
                    const gfx::Rect& clip,
                    const gfx::Transform& transform,
                    const gfx::Size& frame_size,
-                   const cc::SurfaceId& child_id,
-                   const ScopedAppGLStateRestore& gl_state);
+                   const cc::SurfaceId& child_id);
 
   void AddChildId(const cc::SurfaceId& child_id);
   void RemoveChildId(const cc::SurfaceId& child_id);
@@ -59,24 +58,33 @@ class SurfacesInstance : public base::RefCounted<SurfacesInstance>,
   ~SurfacesInstance() override;
 
   // cc::DisplayClient overrides.
-  void DisplayOutputSurfaceLost() override {}
-  void DisplaySetMemoryPolicy(const cc::ManagedMemoryPolicy& policy) override {}
+  void DisplayOutputSurfaceLost() override;
+  void DisplayWillDrawAndSwap(
+      bool will_draw_and_swap,
+      const cc::RenderPassList& render_passes) override {}
+  void DisplayDidDrawAndSwap() override {}
 
-  // cc::SurfaceFactoryClient implementation.
-  void ReturnResources(const cc::ReturnedResourceArray& resources) override;
-  void SetBeginFrameSource(cc::BeginFrameSource* begin_frame_source) override;
+  // cc::CompositorFrameSinkSupportClient implementation.
+  void DidReceiveCompositorFrameAck(
+      const cc::ReturnedResourceArray& resources) override;
+  void OnBeginFrame(const cc::BeginFrameArgs& args) override;
+  void WillDrawSurface(const cc::LocalSurfaceId& local_surface_id,
+                       const gfx::Rect& damage_rect) override;
+  void ReclaimResources(const cc::ReturnedResourceArray& resources) override;
 
   void SetEmptyRootFrame();
 
-  uint32_t next_surface_client_id_;
+  cc::FrameSinkIdAllocator frame_sink_id_allocator_;
 
-  scoped_refptr<AwGLSurface> gl_surface_;
+  cc::FrameSinkId frame_sink_id_;
+
   std::unique_ptr<cc::SurfaceManager> surface_manager_;
+  std::unique_ptr<cc::BeginFrameSource> begin_frame_source_;
   std::unique_ptr<cc::Display> display_;
-  std::unique_ptr<cc::SurfaceIdAllocator> surface_id_allocator_;
-  std::unique_ptr<cc::SurfaceFactory> surface_factory_;
+  std::unique_ptr<cc::LocalSurfaceIdAllocator> local_surface_id_allocator_;
+  std::unique_ptr<cc::CompositorFrameSinkSupport> support_;
 
-  cc::SurfaceId root_id_;
+  cc::LocalSurfaceId root_id_;
   std::vector<cc::SurfaceId> child_ids_;
 
   // This is owned by |display_|.

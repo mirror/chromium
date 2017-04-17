@@ -4,8 +4,10 @@
 
 #include "chrome/browser/ui/ash/launcher/launcher_extension_app_updater.h"
 
+#include "chrome/browser/chromeos/extensions/gfx_utils.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "extensions/browser/extension_registry.h"
 
 LauncherExtensionAppUpdater::LauncherExtensionAppUpdater(
@@ -14,18 +16,17 @@ LauncherExtensionAppUpdater::LauncherExtensionAppUpdater(
     : LauncherAppUpdater(delegate, browser_context) {
   StartObservingExtensionRegistry();
 
-  arc::ArcAuthService* arc_auth_service = arc::ArcAuthService::Get();
-  // ArcAuthService may not be available for some unit tests.
-  if (arc_auth_service)
-    arc_auth_service->AddObserver(this);
+  ArcAppListPrefs* prefs = ArcAppListPrefs::Get(browser_context);
+  if (prefs)
+    prefs->AddObserver(this);
 }
 
 LauncherExtensionAppUpdater::~LauncherExtensionAppUpdater() {
   StopObservingExtensionRegistry();
 
-  arc::ArcAuthService* arc_auth_service = arc::ArcAuthService::Get();
-  if (arc_auth_service)
-    arc_auth_service->RemoveObserver(this);
+  ArcAppListPrefs* prefs = ArcAppListPrefs::Get(browser_context());
+  if (prefs)
+    prefs->RemoveObserver(this);
 }
 
 void LauncherExtensionAppUpdater::OnExtensionLoaded(
@@ -57,13 +58,14 @@ void LauncherExtensionAppUpdater::OnShutdown(
   StopObservingExtensionRegistry();
 }
 
-void LauncherExtensionAppUpdater::OnOptInChanged(
-    arc::ArcAuthService::State state) {
-  if (!chromeos::ProfileHelper::IsPrimaryProfile(
-          Profile::FromBrowserContext(browser_context()))) {
-    return;
-  }
-  UpdateHostedApps();
+void LauncherExtensionAppUpdater::OnPackageInstalled(
+    const arc::mojom::ArcPackageInfo& package_info) {
+  UpdateEquivalentHostedApp(package_info.package_name);
+}
+
+void LauncherExtensionAppUpdater::OnPackageRemoved(
+    const std::string& package_name) {
+  UpdateEquivalentHostedApp(package_name);
 }
 
 void LauncherExtensionAppUpdater::StartObservingExtensionRegistry() {
@@ -100,4 +102,13 @@ void LauncherExtensionAppUpdater::UpdateHostedApps(
 
 void LauncherExtensionAppUpdater::UpdateHostedApp(const std::string& app_id) {
   delegate()->OnAppUpdated(browser_context(), app_id);
+}
+
+void LauncherExtensionAppUpdater::UpdateEquivalentHostedApp(
+    const std::string& arc_package_name) {
+  const std::vector<std::string> extension_ids =
+      extensions::util::GetEquivalentInstalledExtensions(browser_context(),
+                                                         arc_package_name);
+  for (const auto& iter : extension_ids)
+    UpdateHostedApp(iter);
 }

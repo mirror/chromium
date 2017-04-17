@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<script src=../../resources/testharness.js></script>
+<script src=../../resources/testharnessreport.js></script>
+<script>
+
+// This test verifies *Detector.detect() returns an empty list when fed with
+// an empty HTMLImageElement.
+var createTestForEmptyInput = function(createDetector) {
+  async_test(function(t) {
+    var image = new Image();
+    var detector = createDetector();
+    var tryDetection = function() {
+      detector.detect(image)
+          .then(detectionResult => {
+            assert_equals(detectionResult.length, 0);
+            t.done();
+          })
+          .catch(error => {
+            assert_unreached("detect() rejected with error: " + error)
+          });
+    };
+    image.onload = tryDetection;
+    image.onerror = tryDetection;
+    image.src = "";
+  }, "Detectors should resolve empty images with empty results.");
+};
+
+generate_tests(createTestForEmptyInput, [
+  [ "Face", () => { return new FaceDetector(); } ],
+  [ "Barcode", () => { return new BarcodeDetector(); } ],
+  [ "Text", () => { return new TextDetector(); } ]
+]);
+
+</script>

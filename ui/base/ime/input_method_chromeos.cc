@@ -16,8 +16,8 @@
 #include "base/logging.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/sys_info.h"
 #include "base/third_party/icu/icu_utf.h"
+#include "chromeos/system/devicemode.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/base/ime/composition_text.h"
@@ -57,14 +57,63 @@ InputMethodChromeOS::~InputMethodChromeOS() {
     ui::IMEBridge::Get()->SetInputContextHandler(NULL);
 }
 
+void InputMethodChromeOS::DispatchKeyEvent(
+    ui::KeyEvent* event,
+    std::unique_ptr<AckCallback> ack_callback) {
+  DCHECK(event->IsKeyEvent());
+  DCHECK(!(event->flags() & ui::EF_IS_SYNTHESIZED));
+
+  // The Caps Lock toggling has been removed from here, because now it is
+  // handled in accelerator controller.
+  // (see https://bugs.chromium.org/p/chromium/issues/detail?id=700705).
+
+  // If |context_| is not usable, then we can only dispatch the key event as is.
+  // We only dispatch the key event to input method when the |context_| is an
+  // normal input field (not a password field).
+  // Note: We need to send the key event to ibus even if the |context_| is not
+  // enabled, so that ibus can have a chance to enable the |context_|.
+  if (!IsNonPasswordInputFieldFocused() || !GetEngine()) {
+    if (event->type() == ET_KEY_PRESSED) {
+      if (ExecuteCharacterComposer(*event)) {
+        // Treating as PostIME event if character composer handles key event and
+        // generates some IME event,
+        ProcessKeyEventPostIME(event, true);
+        if (ack_callback)
+          ack_callback->Run(true);
+        return;
+      }
+      ProcessUnfilteredKeyPressEvent(event);
+    } else {
+      ignore_result(DispatchKeyEventPostIME(event));
+    }
+    if (ack_callback)
+      ack_callback->Run(false);
+    return;
+  }
+
+  handling_key_event_ = true;
+  if (GetEngine()->IsInterestedInKeyEvent()) {
+    ui::IMEEngineHandlerInterface::KeyEventDoneCallback callback = base::Bind(
+        &InputMethodChromeOS::ProcessKeyEventDone,
+        weak_ptr_factory_.GetWeakPtr(),
+        // Pass the ownership of the new copied event.
+        base::Owned(new ui::KeyEvent(*event)), Passed(&ack_callback));
+    GetEngine()->ProcessKeyEvent(*event, callback);
+  } else {
+    ProcessKeyEventDone(event, std::move(ack_callback), false);
+  }
+}
+
 bool InputMethodChromeOS::OnUntranslatedIMEMessage(
     const base::NativeEvent& event,
     NativeEventResult* result) {
   return false;
 }
 
-void InputMethodChromeOS::ProcessKeyEventDone(ui::KeyEvent* event,
-                                              bool is_handled) {
+void InputMethodChromeOS::ProcessKeyEventDone(
+    ui::KeyEvent* event,
+    std::unique_ptr<AckCallback> ack_callback,
+    bool is_handled) {
   DCHECK(event);
   if (event->type() == ET_KEY_PRESSED) {
     if (is_handled) {
@@ -78,6 +127,9 @@ void InputMethodChromeOS::ProcessKeyEventDone(ui::KeyEvent* event,
     }
   }
 
+  if (ack_callback)
+    ack_callback->Run(is_handled);
+
   if (event->type() == ET_KEY_PRESSED || event->type() == ET_KEY_RELEASED)
     ProcessKeyEventPostIME(event, is_handled);
 
@@ -85,55 +137,7 @@ void InputMethodChromeOS::ProcessKeyEventDone(ui::KeyEvent* event,
 }
 
 void InputMethodChromeOS::DispatchKeyEvent(ui::KeyEvent* event) {
-  DCHECK(event->IsKeyEvent());
-  DCHECK(!(event->flags() & ui::EF_IS_SYNTHESIZED));
-
-  // For linux_chromeos, the ime keyboard cannot track the caps lock state by
-  // itself, so need to call SetCapsLockEnabled() method to reflect the caps
-  // lock state by the key event.
-  if (!base::SysInfo::IsRunningOnChromeOS()) {
-    chromeos::input_method::InputMethodManager* manager =
-        chromeos::input_method::InputMethodManager::Get();
-    if (manager) {
-      chromeos::input_method::ImeKeyboard* keyboard = manager->GetImeKeyboard();
-      if (keyboard && event->type() == ui::ET_KEY_PRESSED) {
-        keyboard->SetCapsLockEnabled((event->key_code() == ui::VKEY_CAPITAL) ?
-            !keyboard->CapsLockIsEnabled() : event->IsCapsLockOn());
-      }
-    }
-  }
-
-  // If |context_| is not usable, then we can only dispatch the key event as is.
-  // We only dispatch the key event to input method when the |context_| is an
-  // normal input field (not a password field).
-  // Note: We need to send the key event to ibus even if the |context_| is not
-  // enabled, so that ibus can have a chance to enable the |context_|.
-  if (!IsNonPasswordInputFieldFocused() || !GetEngine()) {
-    if (event->type() == ET_KEY_PRESSED) {
-      if (ExecuteCharacterComposer(*event)) {
-        // Treating as PostIME event if character composer handles key event and
-        // generates some IME event,
-        ProcessKeyEventPostIME(event, true);
-        return;
-      }
-      ProcessUnfilteredKeyPressEvent(event);
-    } else {
-      ignore_result(DispatchKeyEventPostIME(event));
-    }
-    return;
-  }
-
-  handling_key_event_ = true;
-  if (GetEngine()->IsInterestedInKeyEvent()) {
-    ui::IMEEngineHandlerInterface::KeyEventDoneCallback callback =
-        base::Bind(&InputMethodChromeOS::ProcessKeyEventDone,
-                   weak_ptr_factory_.GetWeakPtr(),
-                   // Pass the ownership of the new copied event.
-                   base::Owned(new ui::KeyEvent(*event)));
-    GetEngine()->ProcessKeyEvent(*event, callback);
-  } else {
-    ProcessKeyEventDone(event, false);
-  }
+  DispatchKeyEvent(event, nullptr);
 }
 
 void InputMethodChromeOS::OnTextInputTypeChanged(
@@ -229,15 +233,6 @@ void InputMethodChromeOS::OnCaretBoundsChanged(const TextInputClient* client) {
 void InputMethodChromeOS::CancelComposition(const TextInputClient* client) {
   if (IsNonPasswordInputFieldFocused() && IsTextInputClientFocused(client))
     ResetContext();
-}
-
-void InputMethodChromeOS::OnInputLocaleChanged() {
-  // Not supported.
-}
-
-std::string InputMethodChromeOS::GetInputLocale() {
-  // Not supported.
-  return "";
 }
 
 bool InputMethodChromeOS::IsCandidatePopupOpen() const {
@@ -456,6 +451,11 @@ void InputMethodChromeOS::CommitText(const std::string& text) {
   const base::string16 utf16_text = base::UTF8ToUTF16(text);
   if (utf16_text.empty())
     return;
+
+  if (!CanComposeInline()) {
+    // Hides the candidate window for preedit text.
+    UpdateCompositionText(CompositionText(), 0, false);
+  }
 
   // Append the text to the buffer, because commit signal might be fired
   // multiple times when processing a key event.

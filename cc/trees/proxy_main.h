@@ -6,36 +6,27 @@
 #define CC_TREES_PROXY_MAIN_H_
 
 #include "base/macros.h"
-#include "cc/base/cc_export.h"
-#include "cc/input/top_controls_state.h"
-#include "cc/output/output_surface.h"
-#include "cc/output/renderer_capabilities.h"
-#include "cc/trees/channel_main.h"
+#include "cc/cc_export.h"
+#include "cc/input/browser_controls_state.h"
 #include "cc/trees/proxy.h"
 #include "cc/trees/proxy_common.h"
-#include "cc/trees/remote_proto_channel.h"
 
 namespace cc {
 
-class AnimationEvents;
-class BeginFrameSource;
-class ChannelMain;
+class MutatorEvents;
+class CompletionEvent;
+class CompositorFrameSink;
 class LayerTreeHost;
 class LayerTreeMutator;
+class ProxyImpl;
 
 // This class aggregates all interactions that the impl side of the compositor
 // needs to have with the main side.
 // The class is created and lives on the main thread.
 class CC_EXPORT ProxyMain : public Proxy {
  public:
-  static std::unique_ptr<ProxyMain> CreateThreaded(
-      LayerTreeHost* layer_tree_host,
-      TaskRunnerProvider* task_runner_provider);
-
-  static std::unique_ptr<ProxyMain> CreateRemote(
-      RemoteProtoChannel* remote_proto_channel,
-      LayerTreeHost* layer_tree_host,
-      TaskRunnerProvider* task_runner_provider);
+  ProxyMain(LayerTreeHost* layer_tree_host,
+            TaskRunnerProvider* task_runner_provider);
 
   ~ProxyMain() override;
 
@@ -49,20 +40,17 @@ class CC_EXPORT ProxyMain : public Proxy {
     COMMIT_PIPELINE_STAGE,
   };
 
-  void DidCompleteSwapBuffers();
-  void SetRendererCapabilities(const RendererCapabilities& capabilities);
+  void DidReceiveCompositorFrameAck();
   void BeginMainFrameNotExpectedSoon();
   void DidCommitAndDrawFrame();
-  void SetAnimationEvents(std::unique_ptr<AnimationEvents> events);
-  void DidLoseOutputSurface();
-  void RequestNewOutputSurface();
-  void DidInitializeOutputSurface(bool success,
-                                  const RendererCapabilities& capabilities);
+  void SetAnimationEvents(std::unique_ptr<MutatorEvents> events);
+  void DidLoseCompositorFrameSink();
+  void RequestNewCompositorFrameSink();
+  void DidInitializeCompositorFrameSink(bool success);
   void DidCompletePageScaleAnimation();
   void BeginMainFrame(
       std::unique_ptr<BeginMainFrameAndCommitState> begin_main_frame_state);
 
-  ChannelMain* channel_main() const { return channel_main_.get(); }
   CommitPipelineStage max_requested_pipeline_stage() const {
     return max_requested_pipeline_stage_;
   }
@@ -73,20 +61,13 @@ class CC_EXPORT ProxyMain : public Proxy {
     return final_pipeline_stage_;
   }
 
- protected:
-  ProxyMain(LayerTreeHost* layer_tree_host,
-            TaskRunnerProvider* task_runner_provider);
-
  private:
-  friend class ProxyMainForTest;
-
   // Proxy implementation.
-  void FinishAllRendering() override;
   bool IsStarted() const override;
   bool CommitToActiveTree() const override;
-  void SetOutputSurface(OutputSurface* output_surface) override;
+  void SetCompositorFrameSink(
+      CompositorFrameSink* compositor_frame_sink) override;
   void SetVisible(bool visible) override;
-  const RendererCapabilities& GetRendererCapabilities() const override;
   void SetNeedsAnimate() override;
   void SetNeedsUpdateLayers() override;
   void SetNeedsCommit() override;
@@ -95,27 +76,27 @@ class CC_EXPORT ProxyMain : public Proxy {
   void NotifyInputThrottledUntilCommit() override;
   void SetDeferCommits(bool defer_commits) override;
   bool CommitRequested() const override;
-  bool BeginMainFrameRequested() const override;
   void MainThreadHasStoppedFlinging() override;
-  void Start(
-      std::unique_ptr<BeginFrameSource> external_begin_frame_source) override;
+  void Start() override;
   void Stop() override;
   bool SupportsImplScrolling() const override;
   void SetMutator(std::unique_ptr<LayerTreeMutator> mutator) override;
   bool MainFrameWillHappenForTesting() override;
-  void ReleaseOutputSurface() override;
-  void UpdateTopControlsState(TopControlsState constraints,
-                              TopControlsState current,
-                              bool animate) override;
-
-  // This sets the channel used by ProxyMain to communicate with ProxyImpl.
-  void SetChannel(std::unique_ptr<ChannelMain> channel_main);
+  void ReleaseCompositorFrameSink() override;
+  void UpdateBrowserControlsState(BrowserControlsState constraints,
+                                  BrowserControlsState current,
+                                  bool animate) override;
 
   // Returns |true| if the request was actually sent, |false| if one was
   // already outstanding.
   bool SendCommitRequestToImplThreadIfNeeded(
       CommitPipelineStage required_stage);
   bool IsMainThread() const;
+  bool IsImplThread() const;
+  base::SingleThreadTaskRunner* ImplThreadTaskRunner();
+
+  void InitializeOnImplThread(CompletionEvent* completion_event);
+  void DestroyProxyImplOnImplThread(CompletionEvent* completion_event);
 
   LayerTreeHost* layer_tree_host_;
 
@@ -141,9 +122,14 @@ class CC_EXPORT ProxyMain : public Proxy {
 
   bool defer_commits_;
 
-  RendererCapabilities renderer_capabilities_;
+  // ProxyImpl is created and destroyed on the impl thread, and should only be
+  // accessed on the impl thread.
+  // It is safe to use base::Unretained to post tasks to ProxyImpl on the impl
+  // thread, since we control its lifetime. Any tasks posted to it are bound to
+  // run before we destroy it on the impl thread.
+  std::unique_ptr<ProxyImpl> proxy_impl_;
 
-  std::unique_ptr<ChannelMain> channel_main_;
+  base::WeakPtrFactory<ProxyMain> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ProxyMain);
 };

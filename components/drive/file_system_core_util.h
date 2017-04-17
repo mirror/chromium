@@ -14,10 +14,6 @@
 
 namespace drive {
 
-class DriveAppRegistry;
-class DriveServiceInterface;
-class FileSystemInterface;
-
 namespace util {
 
 // "drive" diretory's local ID is fixed to this value.
@@ -25,6 +21,9 @@ const char kDriveGrandRootLocalId[] = "<drive>";
 
 // "drive/other" diretory's local ID is fixed to this value.
 const char kDriveOtherDirLocalId[] = "<other>";
+
+// "drive/team_drives" diretory's local ID is fixed to this value.
+const char kDriveTeamDrivesDirLocalId[] = "<team_drives>";
 
 // "drive/trash" diretory's local ID is fixed to this value.
 const char kDriveTrashDirLocalId[] = "<trash>";
@@ -34,6 +33,7 @@ const char kDriveTrashDirLocalId[] = "<trash>";
 const char kDriveGrandRootDirName[] = "drive";
 const char kDriveMyDriveRootDirName[] = "root";
 const char kDriveOtherDirName[] = "other";
+const char kDriveTeamDrivesDirName[] = "team_drives";
 const char kDriveTrashDirName[] = "trash";
 
 // Returns the path of the top root of the pseudo tree.
@@ -41,6 +41,9 @@ const base::FilePath& GetDriveGrandRootPath();
 
 // Returns the path of the directory representing "My Drive".
 const base::FilePath& GetDriveMyDriveRootPath();
+
+// Returns the path of the directory representing "Team Drives".
+const base::FilePath& GetDriveTeamDrivesRootPath();
 
 // Escapes a file name in Drive cache.
 // Replaces percent ('%'), period ('.') and slash ('/') with %XX (hex)

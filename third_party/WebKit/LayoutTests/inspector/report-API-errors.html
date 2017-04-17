@@ -11,15 +11,15 @@ function test()
         InspectorTest.addResult(String.sprintf.apply(this, arguments));
     }
 
-    InspectorTest.NetworkAgent.setMonitoringXHREnabled(1);
-    InspectorTest.NetworkAgent.setMonitoringXHREnabled();
-    InspectorTest.NetworkAgent.setMonitoringXHREnabled(false, "not a function");
-    InspectorTest.NetworkAgent.setMonitoringXHREnabled(false, undefined);
+    InspectorTest.NetworkAgent.setUserAgentOverride(1);
+    InspectorTest.NetworkAgent.setUserAgentOverride();
+    InspectorTest.NetworkAgent.setUserAgentOverride("123", "not a function");
+    InspectorTest.NetworkAgent.setUserAgentOverride("123", undefined);
     InspectorTest.RuntimeAgent.evaluate("true", "test");
     InspectorTest.RuntimeAgent.evaluate("true", "test", function(){});
     InspectorTest.RuntimeAgent.evaluate("true", "test", undefined, function(){});
-    InspectorTest.connection.dispatch('{"method": "wrongDomain.something-strange", "params": {}}');
-    InspectorTest.connection.dispatch('{"method": "Inspector.something-strange", "params": {}}');
+    InspectorTest.mainTarget._onMessage('{"method": "wrongDomain.something-strange", "params": {}}');
+    InspectorTest.mainTarget._onMessage('{"method": "Inspector.something-strange", "params": {}}');
 
     InspectorTest.completeTest();
 }

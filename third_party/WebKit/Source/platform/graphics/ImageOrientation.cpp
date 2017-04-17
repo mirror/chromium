@@ -30,34 +30,34 @@
 
 namespace blink {
 
-AffineTransform ImageOrientation::transformFromDefault(const FloatSize& drawnSize) const
-{
-    float w = drawnSize.width();
-    float h = drawnSize.height();
+AffineTransform ImageOrientation::TransformFromDefault(
+    const FloatSize& drawn_size) const {
+  float w = drawn_size.Width();
+  float h = drawn_size.Height();
 
-    switch (m_orientation) {
-    case OriginTopLeft:
-        return AffineTransform();
-    case OriginTopRight:
-        return AffineTransform(-1,  0,  0,  1,  w, 0);
-    case OriginBottomRight:
-        return AffineTransform(-1,  0,  0, -1,  w, h);
-    case OriginBottomLeft:
-        return AffineTransform( 1,  0,  0, -1,  0, h);
-    case OriginLeftTop:
-        return AffineTransform( 0,  1,  1,  0,  0, 0);
-    case OriginRightTop:
-        return AffineTransform( 0,  1, -1,  0,  w, 0);
-    case OriginRightBottom:
-        return AffineTransform( 0, -1, -1,  0,  w, h);
-    case OriginLeftBottom:
-        return AffineTransform( 0, -1,  1,  0,  0, h);
+  switch (orientation_) {
+    case kOriginTopLeft:
+      return AffineTransform();
+    case kOriginTopRight:
+      return AffineTransform(-1, 0, 0, 1, w, 0);
+    case kOriginBottomRight:
+      return AffineTransform(-1, 0, 0, -1, w, h);
+    case kOriginBottomLeft:
+      return AffineTransform(1, 0, 0, -1, 0, h);
+    case kOriginLeftTop:
+      return AffineTransform(0, 1, 1, 0, 0, 0);
+    case kOriginRightTop:
+      return AffineTransform(0, 1, -1, 0, w, 0);
+    case kOriginRightBottom:
+      return AffineTransform(0, -1, -1, 0, w, h);
+    case kOriginLeftBottom:
+      return AffineTransform(0, -1, 1, 0, 0, h);
     default:
-        ASSERT_NOT_REACHED();
-    }
+      NOTREACHED();
+  }
 
-    ASSERT_NOT_REACHED();
-    return AffineTransform();
+  NOTREACHED();
+  return AffineTransform();
 }
 
-} // namespace blink
+}  // namespace blink

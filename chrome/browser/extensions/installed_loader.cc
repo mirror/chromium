@@ -5,11 +5,13 @@
 #include "chrome/browser/extensions/installed_loader.h"
 
 #include <stddef.h>
+#include <memory>
+#include <string>
+#include <vector>
 
 #include "base/files/file_path.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
-#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/trace_event/trace_event.h"
@@ -23,7 +25,6 @@
 #include "chrome/common/extensions/chrome_manifest_url_handlers.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
-#include "content/public/browser/user_metrics.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
@@ -40,7 +41,6 @@
 #include "extensions/common/manifest_handlers/background_info.h"
 #include "extensions/common/manifest_url_handlers.h"
 
-using base::UserMetricsAction;
 using content::BrowserThread;
 
 namespace extensions {
@@ -132,8 +132,8 @@ void RecordCreationFlags(const Extension* extension) {
   for (int i = 0; i < Extension::kInitFromValueFlagBits; ++i) {
     int flag = 1 << i;
     if (extension->creation_flags() & flag) {
-      UMA_HISTOGRAM_ENUMERATION(
-          "Extensions.LoadCreationFlags", i, Extension::kInitFromValueFlagBits);
+      UMA_HISTOGRAM_EXACT_LINEAR("Extensions.LoadCreationFlags", i,
+                                 Extension::kInitFromValueFlagBits);
     }
   }
 }
@@ -205,16 +205,28 @@ void InstalledLoader::Load(const ExtensionInfo& info, bool write_to_prefs) {
   if (extension.get()) {
     Extension::DisableReason disable_reason = Extension::DISABLE_NONE;
     bool force_disabled = false;
-    if (!policy->UserMayLoad(extension.get(), NULL)) {
+    if (!policy->UserMayLoad(extension.get(), nullptr)) {
       // The error message from UserMayInstall() often contains the extension ID
       // and is therefore not well suited to this UI.
       error = errors::kDisabledByPolicy;
       extension = NULL;
     } else if (!extension_prefs_->IsExtensionDisabled(extension->id()) &&
-               policy->MustRemainDisabled(
-                   extension.get(), &disable_reason, NULL)) {
+               policy->MustRemainDisabled(extension.get(), &disable_reason,
+                                          nullptr)) {
       extension_prefs_->SetExtensionDisabled(extension->id(), disable_reason);
       force_disabled = true;
+    } else if (extension_prefs_->IsExtensionDisabled(extension->id()) &&
+               policy->MustRemainEnabled(extension.get(), nullptr) &&
+               extension_prefs_->HasDisableReason(
+                   extension->id(), Extension::DISABLE_CORRUPTED)) {
+      // This extension must have been disabled due to corruption on a previous
+      // run of chrome, and for some reason we weren't successful in
+      // auto-reinstalling it. So we want to notify the PendingExtensionManager
+      // that we'd still like to keep attempt to re-download and reinstall it
+      // whenever the ExtensionService checks for external updates.
+      PendingExtensionManager* pending_manager =
+          extension_service_->pending_extension_manager();
+      pending_manager->ExpectPolicyReinstallForCorruption(extension->id());
     }
     UMA_HISTOGRAM_BOOLEAN("ExtensionInstalledLoader.ForceDisabled",
                           force_disabled);
@@ -341,6 +353,7 @@ void InstalledLoader::RecordExtensionsMetrics() {
   int file_access_allowed_count = 0;
   int file_access_not_allowed_count = 0;
   int eventless_event_pages_count = 0;
+  int off_store_item_count = 0;
 
   const ExtensionSet& extensions = extension_registry_->enabled_extensions();
   for (ExtensionSet::const_iterator iter = extensions.begin();
@@ -513,6 +526,9 @@ void InstalledLoader::RecordExtensionsMetrics() {
           ++file_access_not_allowed_count;
       }
     }
+
+    if (!ManifestURL::UpdatesFromGallery(extension))
+      ++off_store_item_count;
   }
 
   const ExtensionSet& disabled_extensions =
@@ -601,6 +617,8 @@ void InstalledLoader::RecordExtensionsMetrics() {
                            extension_prefs_->GetCorruptedDisableCount());
   UMA_HISTOGRAM_COUNTS_100("Extensions.EventlessEventPages",
                            eventless_event_pages_count);
+  UMA_HISTOGRAM_COUNTS_100("Extensions.LoadOffStoreItems",
+                           off_store_item_count);
 }
 
 int InstalledLoader::GetCreationFlags(const ExtensionInfo* info) {

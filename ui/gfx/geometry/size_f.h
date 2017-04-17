@@ -9,17 +9,22 @@
 #include <string>
 
 #include "base/compiler_specific.h"
+#include "base/gtest_prod_util.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/gfx_export.h"
 
 namespace gfx {
+
+FORWARD_DECLARE_TEST(SizeTest, TrivialDimensionTests);
+FORWARD_DECLARE_TEST(SizeTest, ClampsToZero);
+FORWARD_DECLARE_TEST(SizeTest, ConsistentClamping);
 
 // A floating version of gfx::Size.
 class GFX_EXPORT SizeF {
  public:
   constexpr SizeF() : width_(0.f), height_(0.f) {}
   constexpr SizeF(float width, float height)
-      : width_(width >= 0 ? width : 0), height_(height >= 0 ? height : 0) {}
+      : width_(clamp(width)), height_(clamp(height)) {}
 
   constexpr explicit SizeF(const Size& size)
       : SizeF(static_cast<float>(size.width()),
@@ -28,8 +33,8 @@ class GFX_EXPORT SizeF {
   constexpr float width() const { return width_; }
   constexpr float height() const { return height_; }
 
-  void set_width(float width) { width_ = fmaxf(0, width); }
-  void set_height(float height) { height_ = fmaxf(0, height); }
+  void set_width(float width) { width_ = clamp(width); }
+  void set_height(float height) { height_ = clamp(height); }
 
   float GetArea() const;
 
@@ -56,6 +61,14 @@ class GFX_EXPORT SizeF {
   std::string ToString() const;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(SizeTest, TrivialDimensionTests);
+  FRIEND_TEST_ALL_PREFIXES(SizeTest, ClampsToZero);
+  FRIEND_TEST_ALL_PREFIXES(SizeTest, ConsistentClamping);
+
+  static constexpr float kTrivial = 8.f * std::numeric_limits<float>::epsilon();
+
+  static constexpr float clamp(float f) { return f > kTrivial ? f : 0.f; }
+
   float width_;
   float height_;
 };
@@ -75,8 +88,8 @@ inline SizeF ScaleSize(const SizeF& p, float scale) {
 }
 
 // This is declared here for use in gtest-based unit tests but is defined in
-// the gfx_test_support target. Depend on that to use this in your unit test.
-// This should not be used in production code - call ToString() instead.
+// the //ui/gfx:test_support target. Depend on that to use this in your unit
+// test. This should not be used in production code - call ToString() instead.
 void PrintTo(const SizeF& size, ::std::ostream* os);
 
 }  // namespace gfx

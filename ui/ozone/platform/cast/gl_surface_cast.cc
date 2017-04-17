@@ -4,17 +4,36 @@
 
 #include "ui/ozone/platform/cast/gl_surface_cast.h"
 
+#include "base/memory/ptr_util.h"
+#include "ui/gfx/vsync_provider.h"
 #include "ui/ozone/common/egl_util.h"
-#include "ui/ozone/platform/cast/surface_factory_cast.h"
+#include "ui/ozone/platform/cast/gl_ozone_egl_cast.h"
+
+namespace {
+// Target fixed 30fps.
+// TODO(halliwell): We might need to customize this value on various devices
+// or make it dynamic that throttles framerate if device is overheating.
+const base::TimeDelta kVSyncInterval = base::TimeDelta::FromSeconds(2) / 59.9;
+}  // namespace
 
 namespace ui {
 
 GLSurfaceCast::GLSurfaceCast(gfx::AcceleratedWidget widget,
-                             SurfaceFactoryCast* parent)
-    : NativeViewGLSurfaceEGL(parent->GetNativeWindow()),
+                             GLOzoneEglCast* parent)
+    : NativeViewGLSurfaceEGL(
+          parent->GetNativeWindow(),
+          base::MakeUnique<gfx::FixedVSyncProvider>(base::TimeTicks(),
+                                                    kVSyncInterval)),
       widget_(widget),
-      parent_(parent) {
+      parent_(parent),
+      supports_swap_buffer_with_bounds_(
+          base::CommandLine::ForCurrentProcess()->HasSwitch(
+              switches::kEnableSwapBuffersWithBounds)) {
   DCHECK(parent_);
+}
+
+bool GLSurfaceCast::SupportsSwapBuffersWithBounds() {
+  return supports_swap_buffer_with_bounds_;
 }
 
 gfx::SwapResult GLSurfaceCast::SwapBuffers() {
@@ -22,6 +41,26 @@ gfx::SwapResult GLSurfaceCast::SwapBuffers() {
   if (result == gfx::SwapResult::SWAP_ACK)
     parent_->OnSwapBuffers();
 
+  return result;
+}
+
+gfx::SwapResult GLSurfaceCast::SwapBuffersWithBounds(
+    const std::vector<gfx::Rect>& rects) {
+  DCHECK(supports_swap_buffer_with_bounds_);
+
+  // TODO(halliwell): Request new EGL extension so we're not abusing
+  // SwapBuffersWithDamage here.
+  std::vector<int> rects_data(rects.size() * 4);
+  for (size_t i = 0; i != rects.size(); ++i) {
+    rects_data[i * 4 + 0] = rects[i].x();
+    rects_data[i * 4 + 1] = rects[i].y();
+    rects_data[i * 4 + 2] = rects[i].width();
+    rects_data[i * 4 + 3] = rects[i].height();
+  }
+  gfx::SwapResult result =
+      NativeViewGLSurfaceEGL::SwapBuffersWithDamage(rects_data);
+  if (result == gfx::SwapResult::SWAP_ACK)
+    parent_->OnSwapBuffers();
   return result;
 }
 

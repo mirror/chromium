@@ -9,7 +9,6 @@
 #include "base/command_line.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "components/autofill/content/browser/content_autofill_driver_factory.h"
-#include "components/autofill/content/common/autofill_messages.h"
 #include "components/autofill/core/browser/autofill_client.h"
 #include "components/autofill/core/browser/autofill_external_delegate.h"
 #include "components/autofill/core/browser/autofill_manager.h"
@@ -18,15 +17,15 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
-#include "content/public/browser/navigation_details.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_view_host.h"
+#include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
-#include "mojo/common/common_type_converters.h"
-#include "services/shell/public/cpp/interface_provider.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "ui/gfx/geometry/size_f.h"
 
 namespace autofill {
@@ -37,12 +36,12 @@ ContentAutofillDriver::ContentAutofillDriver(
     const std::string& app_locale,
     AutofillManager::AutofillDownloadManagerState enable_download_manager)
     : render_frame_host_(render_frame_host),
-      client_(client),
       autofill_manager_(new AutofillManager(this,
                                             client,
                                             app_locale,
                                             enable_download_manager)),
       autofill_external_delegate_(autofill_manager_.get(), this),
+      key_press_handler_manager_(this),
       binding_(this) {
   autofill_manager_->SetExternalDelegate(&autofill_external_delegate_);
 }
@@ -62,7 +61,7 @@ void ContentAutofillDriver::BindRequest(mojom::AutofillDriverRequest request) {
   binding_.Bind(std::move(request));
 }
 
-bool ContentAutofillDriver::IsOffTheRecord() const {
+bool ContentAutofillDriver::IsIncognito() const {
   return render_frame_host_->GetSiteInstance()
       ->GetBrowserContext()
       ->IsOffTheRecord();
@@ -116,15 +115,14 @@ void ContentAutofillDriver::SendAutofillTypePredictionsToRenderer(
 
   std::vector<FormDataPredictions> type_predictions =
       FormStructure::GetFieldTypePredictions(forms);
-  GetAutofillAgent()->FieldTypePredictionsAvailable(
-      std::move(type_predictions));
+  GetAutofillAgent()->FieldTypePredictionsAvailable(type_predictions);
 }
 
 void ContentAutofillDriver::RendererShouldAcceptDataListSuggestion(
     const base::string16& value) {
   if (!RendererIsAvailable())
     return;
-  GetAutofillAgent()->AcceptDataListSuggestion(mojo::String::From(value));
+  GetAutofillAgent()->AcceptDataListSuggestion(value);
 }
 
 void ContentAutofillDriver::RendererShouldClearFilledForm() {
@@ -143,14 +141,14 @@ void ContentAutofillDriver::RendererShouldFillFieldWithValue(
     const base::string16& value) {
   if (!RendererIsAvailable())
     return;
-  GetAutofillAgent()->FillFieldWithValue(mojo::String::From(value));
+  GetAutofillAgent()->FillFieldWithValue(value);
 }
 
 void ContentAutofillDriver::RendererShouldPreviewFieldWithValue(
     const base::string16& value) {
   if (!RendererIsAvailable())
     return;
-  GetAutofillAgent()->PreviewFieldWithValue(mojo::String::From(value));
+  GetAutofillAgent()->PreviewFieldWithValue(value);
 }
 
 void ContentAutofillDriver::PopupHidden() {
@@ -162,25 +160,29 @@ void ContentAutofillDriver::PopupHidden() {
 
 gfx::RectF ContentAutofillDriver::TransformBoundingBoxToViewportCoordinates(
     const gfx::RectF& bounding_box) {
+  content::RenderWidgetHostView* view = render_frame_host_->GetView();
+  if (!view)
+    return bounding_box;
+
   gfx::Point orig_point(bounding_box.x(), bounding_box.y());
-  gfx::Point transformed_point;
-  transformed_point =
-      render_frame_host_->GetView()->TransformPointToRootCoordSpace(orig_point);
-
-  gfx::RectF new_box;
-  new_box.SetRect(transformed_point.x(), transformed_point.y(),
-                  bounding_box.width(), bounding_box.height());
-  return new_box;
+  gfx::Point transformed_point =
+      view->TransformPointToRootCoordSpace(orig_point);
+  return gfx::RectF(transformed_point.x(), transformed_point.y(),
+                    bounding_box.width(), bounding_box.height());
 }
 
-// mojom::AutofillDriver:
-void ContentAutofillDriver::FirstUserGestureObserved() {
-  client_->OnFirstUserGestureObserved();
+void ContentAutofillDriver::DidInteractWithCreditCardForm() {
+  // Notify the WebContents about credit card inputs on HTTP pages.
+  content::WebContents* contents =
+      content::WebContents::FromRenderFrameHost(render_frame_host_);
+  if (contents->GetVisibleURL().SchemeIsCryptographic())
+    return;
+  contents->OnCreditCardInputShownOnHttp();
 }
 
-void ContentAutofillDriver::FormsSeen(mojo::Array<FormData> forms,
+void ContentAutofillDriver::FormsSeen(const std::vector<FormData>& forms,
                                       base::TimeTicks timestamp) {
-  autofill_manager_->OnFormsSeen(forms.storage(), timestamp);
+  autofill_manager_->OnFormsSeen(forms, timestamp);
 }
 
 void ContentAutofillDriver::WillSubmitForm(const FormData& form,
@@ -210,10 +212,6 @@ void ContentAutofillDriver::HidePopup() {
   autofill_manager_->OnHidePopup();
 }
 
-void ContentAutofillDriver::PingAck() {
-  autofill_external_delegate_.OnPingAck();
-}
-
 void ContentAutofillDriver::FocusNoLongerOnForm() {
   autofill_manager_->OnFocusNoLongerOnForm();
 }
@@ -231,17 +229,18 @@ void ContentAutofillDriver::DidEndTextFieldEditing() {
   autofill_manager_->OnDidEndTextFieldEditing();
 }
 
-void ContentAutofillDriver::SetDataList(mojo::Array<mojo::String> values,
-                                        mojo::Array<mojo::String> labels) {
-  autofill_manager_->OnSetDataList(values.To<std::vector<base::string16>>(),
-                                   labels.To<std::vector<base::string16>>());
+void ContentAutofillDriver::SetDataList(
+    const std::vector<base::string16>& values,
+    const std::vector<base::string16>& labels) {
+  autofill_manager_->OnSetDataList(values, labels);
 }
 
 void ContentAutofillDriver::DidNavigateFrame(
-    const content::LoadCommittedDetails& details,
-    const content::FrameNavigateParams& params) {
-  if (details.is_navigation_to_different_page())
+    content::NavigationHandle* navigation_handle) {
+  if (navigation_handle->IsInMainFrame() &&
+      !navigation_handle->IsSameDocument()) {
     autofill_manager_->Reset();
+  }
 }
 
 void ContentAutofillDriver::SetAutofillManager(
@@ -250,18 +249,39 @@ void ContentAutofillDriver::SetAutofillManager(
   autofill_manager_->SetExternalDelegate(&autofill_external_delegate_);
 }
 
-void ContentAutofillDriver::NotifyFirstUserGestureObservedInTab() {
-  GetAutofillAgent()->FirstUserGestureObservedInTab();
-}
-
 const mojom::AutofillAgentPtr& ContentAutofillDriver::GetAutofillAgent() {
   // Here is a lazy binding, and will not reconnect after connection error.
-  if (!mojo_autofill_agent_) {
+  if (!autofill_agent_) {
     render_frame_host_->GetRemoteInterfaces()->GetInterface(
-        mojo::GetProxy(&mojo_autofill_agent_));
+        mojo::MakeRequest(&autofill_agent_));
   }
 
-  return mojo_autofill_agent_;
+  return autofill_agent_;
+}
+
+void ContentAutofillDriver::RegisterKeyPressHandler(
+    const content::RenderWidgetHost::KeyPressEventCallback& handler) {
+  key_press_handler_manager_.RegisterKeyPressHandler(handler);
+}
+
+void ContentAutofillDriver::RemoveKeyPressHandler() {
+  key_press_handler_manager_.RemoveKeyPressHandler();
+}
+
+void ContentAutofillDriver::AddHandler(
+    const content::RenderWidgetHost::KeyPressEventCallback& handler) {
+  content::RenderWidgetHostView* view = render_frame_host_->GetView();
+  if (!view)
+    return;
+  view->GetRenderWidgetHost()->AddKeyPressEventCallback(handler);
+}
+
+void ContentAutofillDriver::RemoveHandler(
+    const content::RenderWidgetHost::KeyPressEventCallback& handler) {
+  content::RenderWidgetHostView* view = render_frame_host_->GetView();
+  if (!view)
+    return;
+  view->GetRenderWidgetHost()->RemoveKeyPressEventCallback(handler);
 }
 
 }  // namespace autofill

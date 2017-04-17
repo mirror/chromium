@@ -63,6 +63,9 @@ class VIEWS_EXPORT MessageBoxView : public View {
   // Returns user entered data in the prompt field.
   base::string16 GetInputText();
 
+  // Returns true if this message box has a visible checkbox, false otherwise.
+  bool HasCheckBox() const { return !!checkbox_; }
+
   // Returns true if a checkbox is selected, false otherwise. (And false if
   // the message box has no checkbox.)
   bool IsCheckBoxSelected();
@@ -80,7 +83,7 @@ class VIEWS_EXPORT MessageBoxView : public View {
   void SetLink(const base::string16& text, LinkListener* listener);
 
   // View:
-  void GetAccessibleState(ui::AXViewState* state) override;
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
 
  protected:
   // View:

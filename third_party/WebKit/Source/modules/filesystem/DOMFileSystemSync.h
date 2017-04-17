@@ -43,32 +43,39 @@ class FileEntrySync;
 class FileWriterSync;
 class ExceptionState;
 
-class DOMFileSystemSync final : public DOMFileSystemBase, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static DOMFileSystemSync* create(ExecutionContext* context, const String& name, FileSystemType type, const KURL& rootURL)
-    {
-        return new DOMFileSystemSync(context, name, type, rootURL);
-    }
+class DOMFileSystemSync final : public DOMFileSystemBase,
+                                public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    static DOMFileSystemSync* create(DOMFileSystemBase*);
+ public:
+  static DOMFileSystemSync* Create(ExecutionContext* context,
+                                   const String& name,
+                                   FileSystemType type,
+                                   const KURL& root_url) {
+    return new DOMFileSystemSync(context, name, type, root_url);
+  }
 
-    ~DOMFileSystemSync() override;
+  static DOMFileSystemSync* Create(DOMFileSystemBase*);
 
-    void reportError(ErrorCallbackBase*, FileError::ErrorCode) override;
+  ~DOMFileSystemSync() override;
 
-    DirectoryEntrySync* root();
+  void ReportError(ErrorCallbackBase*, FileError::ErrorCode) override;
 
-    File* createFile(const FileEntrySync*, ExceptionState&);
-    FileWriterSync* createWriter(const FileEntrySync*, ExceptionState&);
+  DirectoryEntrySync* root();
 
-    DECLARE_VIRTUAL_TRACE();
+  File* CreateFile(const FileEntrySync*, ExceptionState&);
+  FileWriterSync* CreateWriter(const FileEntrySync*, ExceptionState&);
 
-private:
-    DOMFileSystemSync(ExecutionContext*, const String& name, FileSystemType, const KURL& rootURL);
-    Member<DirectoryEntrySync> m_rootEntry;
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  DOMFileSystemSync(ExecutionContext*,
+                    const String& name,
+                    FileSystemType,
+                    const KURL& root_url);
+  Member<DirectoryEntrySync> root_entry_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMFileSystemSync_h
+#endif  // DOMFileSystemSync_h

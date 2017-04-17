@@ -16,7 +16,7 @@
 #include "base/observer_list.h"
 #include "base/time/time.h"
 #include "cc/animation/animation_delegate.h"
-#include "cc/animation/target_property.h"
+#include "cc/trees/target_property.h"
 #include "ui/compositor/compositor_export.h"
 #include "ui/compositor/layer_animation_element.h"
 #include "ui/compositor/layer_threaded_animation_delegate.h"
@@ -26,7 +26,6 @@ namespace cc {
 class Animation;
 class AnimationPlayer;
 class AnimationTimeline;
-class ElementAnimations;
 class Layer;
 }
 
@@ -117,12 +116,10 @@ class COMPOSITOR_EXPORT LayerAnimator
   void SwitchToLayer(scoped_refptr<cc::Layer> new_layer);
 
   // Attach AnimationPlayer to Layer and AnimationTimeline
-  void SetCompositor(Compositor* compositor);
+  void AttachLayerAndTimeline(Compositor* compositor);
   // Detach AnimationPlayer from Layer and AnimationTimeline
-  void ResetCompositor(Compositor* compositor);
+  void DetachLayerAndTimeline(Compositor* compositor);
 
-  // Whether this animator has animations waiting to get sent to cc::LAC.
-  bool HasPendingThreadedAnimationsForTesting() const;
   cc::AnimationPlayer* GetAnimationPlayerForTesting() const;
 
   // Sets the animation preemption strategy. This determines the behaviour if
@@ -365,6 +362,10 @@ class COMPOSITOR_EXPORT LayerAnimator
   void AttachLayerToAnimationPlayer(int layer_id);
   void DetachLayerFromAnimationPlayer();
 
+  void set_animation_metrics_reporter(AnimationMetricsReporter* reporter) {
+    animation_metrics_reporter_ = reporter;
+  }
+
   // This is the queue of animations to run.
   AnimationQueue animation_queue_;
 
@@ -404,14 +405,12 @@ class COMPOSITOR_EXPORT LayerAnimator
   // with preemption strategies that discard previous animations.
   bool adding_animations_;
 
+  // Helper to output UMA performance metrics.
+  AnimationMetricsReporter* animation_metrics_reporter_;
+
   // Observers are notified when layer animations end, are scheduled or are
   // aborted.
   base::ObserverList<LayerAnimationObserver> observers_;
-
-  // We store a state of ElementAnimations here to save it in
-  // ResetCompositor/SetCompositor scope.
-  // TODO(loyso): Remove it. crbug.com/592873.
-  scoped_refptr<cc::ElementAnimations> element_animations_state_;
 
   DISALLOW_COPY_AND_ASSIGN(LayerAnimator);
 };

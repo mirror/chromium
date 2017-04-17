@@ -6,9 +6,9 @@
 #define NET_QUIC_TEST_TOOLS_QUIC_FRAMER_PEER_H_
 
 #include "base/macros.h"
-#include "net/quic/crypto/quic_encrypter.h"
-#include "net/quic/quic_framer.h"
-#include "net/quic/quic_protocol.h"
+#include "net/quic/core/crypto/quic_encrypter.h"
+#include "net/quic/core/quic_framer.h"
+#include "net/quic/core/quic_packets.h"
 
 namespace net {
 
@@ -25,6 +25,8 @@ class QuicFramerPeer {
                                             QuicConnectionId connection_id);
   static void SetLastPacketNumber(QuicFramer* framer,
                                   QuicPacketNumber packet_number);
+  static void SetLargestPacketNumber(QuicFramer* framer,
+                                     QuicPacketNumber packet_number);
   static void SetPerspective(QuicFramer* framer, Perspective perspective);
 
   // SwapCrypters exchanges the state of the crypters of |framer1| with
@@ -34,10 +36,6 @@ class QuicFramerPeer {
   static QuicEncrypter* GetEncrypter(QuicFramer* framer, EncryptionLevel level);
 
   static QuicPacketNumber GetLastPacketNumber(QuicFramer* framer);
-
-  static QuicPathId GetLastPathId(QuicFramer* framer);
-
-  static bool IsPathClosed(QuicFramer* framer, QuicPathId path_id);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(QuicFramerPeer);

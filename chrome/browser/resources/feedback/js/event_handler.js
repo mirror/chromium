@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// <include src="data.js">
+
 /**
  * @type {number}
  * @const
@@ -11,7 +13,7 @@ var FEEDBACK_WIDTH = 500;
  * @type {number}
  * @const
  */
-var FEEDBACK_HEIGHT = 585;
+var FEEDBACK_HEIGHT = 610;
 
 /**
  * @type {string}
@@ -19,7 +21,7 @@ var FEEDBACK_HEIGHT = 585;
  */
 var FEEDBACK_DEFAULT_WINDOW_ID = 'default_window';
 
-// To generate a hashed extension ID, use a sha-256 hash, all in lower case.
+// To generate a hashed extension ID, use a sha-1 hash, all in lower case.
 // Example:
 //   echo -n 'abcdefghijklmnopqrstuvwxyzabcdef' | sha1sum | \
 //       awk '{print toupper($1)}'
@@ -56,10 +58,6 @@ var whitelistedExtensionIds = [
   '0F42756099D914A026DADFA182871C015735DD95', // Hangouts Extension
   '1B7734733E207CCE5C33BFAA544CA89634BF881F', // GLS nightly
   'E2ACA3D943A3C96310523BCDFD8C3AF68387E6B7', // GLS stable
-  '11B478CEC461C766A2DC1E5BEEB7970AE06DC9C2', // http://crbug.com/463552
-  '0EFB879311E9EFBB7C45251F89EC655711B1F6ED', // http://crbug.com/463552
-  '9193D3A51E2FE33B496CDA53EA330423166E7F02', // http://crbug.com/463552
-  'F9119B8B18C7C82B51E7BC6FF816B694F2EC3E89', // http://crbug.com/463552
   'BA007D8D52CC0E2632EFCA03ACD003B0F613FD71', // http://crbug.com/470411
   '5260FA31DE2007A837B7F7B0EB4A47CE477018C8', // http://crbug.com/470411
   '4F4A25F31413D9B9F80E61D096DEB09082515267', // http://crbug.com/470411
@@ -70,6 +68,7 @@ var whitelistedExtensionIds = [
   'E9CE07C7EDEFE70B9857B312E88F94EC49FCC30F', // http://crbug.com/473845
   'A4577D8C2AF4CF26F40CBCA83FFA4251D6F6C8F8', // http://crbug.com/478929
   'A8208CCC87F8261AFAEB6B85D5E8D47372DDEA6B', // http://crbug.com/478929
+  // TODO (ntang) Remove the following 2 hashes by 12/31/2017.
   'B620CF4203315F9F2E046EDED22C7571A935958D', // http://crbug.com/510270
   'B206D8716769728278D2D300349C6CB7D7DE2EF9', // http://crbug.com/510270
   'EFCF5358672FEE04789FD2EC3638A67ADEDB6C8C', // http://crbug.com/514696
@@ -77,6 +76,8 @@ var whitelistedExtensionIds = [
   'F33B037DEDA65F226B7409C2ADB0CF3F8565AB03', // http://crbug.com/541769
   '969C788BCBC82FBBE04A17360CA165C23A419257', // http://crbug.com/541769
   '3BC3740BFC58F06088B300274B4CFBEA20136342', // http://crbug.com/541769
+  '2B6C6A4A5940017146F3E58B7F90116206E84685', // http://crbug.com/642141
+  '96FF2FFA5C9173C76D47184B3E86D267B37781DE', // http://crbug.com/642141
 ];
 
 /**
@@ -175,9 +176,17 @@ class FeedbackRequest {
     }
 
     /** @const */ var ID = this.id_;
+    /** @const */ var FLOW = this.feedbackInfo_.flow;
     chrome.feedbackPrivate.sendFeedback(this.feedbackInfo_,
         function(result) {
-          console.log('Feedback: Report sent for request with ID ' + ID);
+          if (result == ReportStatus.SUCCESS) {
+            console.log('Feedback: Report sent for request with ID ' + ID);
+            if (FLOW != FeedbackFlow.LOGIN)
+              window.open(FEEDBACK_LANDING_PAGE, '_blank');
+          } else {
+            console.log('Feedback: Report for request with ID ' + ID +
+                ' will be sent later.');
+          }
         });
   }
 
@@ -250,10 +259,12 @@ function startFeedbackUI(feedbackInfo) {
     return;
   }
   chrome.app.window.create('html/default.html', {
-      frame: 'none',
+      frame: feedbackInfo.useSystemWindowFrame ? 'chrome' : 'none',
       id: FEEDBACK_DEFAULT_WINDOW_ID,
-      width: FEEDBACK_WIDTH,
-      height: FEEDBACK_HEIGHT,
+      innerBounds: {
+        minWidth: FEEDBACK_WIDTH,
+        minHeight: FEEDBACK_HEIGHT,
+      },
       hidden: true,
       resizable: false },
       function(appWindow) {

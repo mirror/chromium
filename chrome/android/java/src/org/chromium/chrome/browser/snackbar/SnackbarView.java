@@ -12,12 +12,8 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.CoordinatorLayout.Behavior;
-import android.support.design.widget.CoordinatorLayout.LayoutParams;
-import android.view.Gravity;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,7 +21,6 @@ import android.view.View.OnLayoutChangeListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,6 +47,7 @@ class SnackbarView {
     private ViewGroup mOriginalParent;
     private ViewGroup mParent;
     private Snackbar mSnackbar;
+    private boolean mAnimateOverWebContent;
 
     // Variables used to calculate the virtual keyboard's height.
     private Rect mCurrentVisibleRect = new Rect();
@@ -66,39 +62,26 @@ class SnackbarView {
     };
 
     /**
-     * Behavior that intercepts touch event from the CompositorViewHoder.
-     */
-    private final Behavior<View> mBehavior = new Behavior<View>() {
-        @Override
-        public boolean onInterceptTouchEvent(CoordinatorLayout parent, View child, MotionEvent ev) {
-            return isInBounds(ev, child);
-        }
-
-        @Override
-        public boolean onTouchEvent(CoordinatorLayout parent, View child, MotionEvent ev) {
-            if (!isInBounds(ev, child)) return false;
-            ev.offsetLocation(-child.getX(), -child.getY());
-            child.dispatchTouchEvent(ev);
-            return true;
-        }
-
-        private boolean isInBounds(MotionEvent ev, View view) {
-            return ev.getX() > view.getX() && ev.getX() - view.getX() < view.getWidth()
-                    && ev.getY() > view.getY() && ev.getY() - view.getY() < view.getHeight();
-        }
-    };
-
-    /**
      * Creates an instance of the {@link SnackbarView}.
      * @param activity The activity that displays the snackbar.
      * @param listener An {@link OnClickListener} that will be called when the action button is
      *                 clicked.
      * @param snackbar The snackbar to be displayed.
+     * @param parentView The ViewGroup used to display this snackbar. If this is null, this class
+     *                   will determine where to attach the snackbar.
      */
-    SnackbarView(Activity activity, OnClickListener listener, Snackbar snackbar) {
+    SnackbarView(Activity activity, OnClickListener listener, Snackbar snackbar,
+            @Nullable ViewGroup parentView) {
         mActivity = activity;
         mIsTablet = DeviceFormFactor.isTablet(activity);
-        mOriginalParent = findParentView(activity);
+
+        if (parentView == null) {
+            mOriginalParent = findParentView(activity);
+            if (activity instanceof ChromeActivity) mAnimateOverWebContent = true;
+        } else {
+            mOriginalParent = parentView;
+        }
+
         mParent = mOriginalParent;
         mView = (ViewGroup) LayoutInflater.from(activity).inflate(
                 R.layout.snackbar, mParent, false);
@@ -150,6 +133,9 @@ class SnackbarView {
         startAnimatorOnSurfaceView(animatorSet);
     }
 
+    /**
+     * Adjusts the position of the snackbar on top of the soft keyboard, if any.
+     */
     void adjustViewPosition() {
         mParent.getWindowVisibleDisplayFrame(mCurrentVisibleRect);
         // Only update if the visible frame has changed, otherwise there will be a layout loop.
@@ -194,7 +180,7 @@ class SnackbarView {
      * the mMessageView content description is read aloud if accessibility is enabled.
      */
     void announceforAccessibility() {
-        mMessageView.announceForAccessibility(mMessageView.getContentDescription()
+        mMessageView.announceForAccessibility(mMessageView.getContentDescription() + " "
                 + mView.getResources().getString(R.string.bottom_bar_screen_position));
     }
 
@@ -209,20 +195,7 @@ class SnackbarView {
     }
 
     private void addToParent() {
-        // LayoutParams in CoordinatorLayout and FrameLayout cannot be used interchangeably. Thus
-        // we create new LayoutParams every time.
-        if (mParent instanceof CoordinatorLayout) {
-            CoordinatorLayout.LayoutParams lp = new LayoutParams(getLayoutParams());
-            lp.gravity = Gravity.BOTTOM | Gravity.START;
-            lp.setBehavior(mBehavior);
-            mParent.addView(mView, lp);
-        } else if (mParent instanceof FrameLayout) {
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(getLayoutParams());
-            lp.gravity = Gravity.BOTTOM | Gravity.START;
-            mParent.addView(mView, lp);
-        } else {
-            assert false : "Only FrameLayout and CoordinatorLayout are supported to show snackbars";
-        }
+        mParent.addView(mView);
 
         // Why setting listener on parent? It turns out that if we force a relayout in the layout
         // change listener of the view itself, the force layout flag will be reset to 0 when
@@ -275,7 +248,7 @@ class SnackbarView {
      */
     private ViewGroup findParentView(Activity activity) {
         if (activity instanceof ChromeActivity) {
-            return ((ChromeActivity) activity).getCompositorViewHolder();
+            return (ViewGroup) activity.findViewById(R.id.bottom_container);
         } else {
             return (ViewGroup) activity.findViewById(android.R.id.content);
         }
@@ -287,7 +260,7 @@ class SnackbarView {
      * in the normal way.
      */
     private void startAnimatorOnSurfaceView(Animator animator) {
-        if (mActivity instanceof ChromeActivity) {
+        if (mAnimateOverWebContent) {
             ((ChromeActivity) mActivity).getWindowAndroid().startAnimationOverContent(animator);
         } else {
             animator.start();

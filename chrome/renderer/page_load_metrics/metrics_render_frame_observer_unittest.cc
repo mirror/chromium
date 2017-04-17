@@ -41,26 +41,40 @@ class TestMetricsRenderFrameObserver : public MetricsRenderFrameObserver {
     mock_timer_ = std::move(timer);
   }
 
+  void set_is_main_frame(bool is_main_frame) { is_main_frame_ = is_main_frame; }
+
+  bool WasFakeTimingConsumed() const { return fake_timing_.IsEmpty(); }
+
   void ExpectPageLoadTiming(const PageLoadTiming& timing) {
+    SetFakePageLoadTiming(timing);
     fake_timing_ipc_sender_.ExpectPageLoadTiming(timing);
   }
 
+  void SetFakePageLoadTiming(const PageLoadTiming& timing) {
+    EXPECT_TRUE(fake_timing_.IsEmpty());
+    fake_timing_ = timing;
+  }
+
   PageLoadTiming GetTiming() const override {
-    return fake_timing_ipc_sender_.expected_timings().empty()
-               ? PageLoadTiming()
-               : fake_timing_ipc_sender_.expected_timings().back();
+    PageLoadTiming tmp = fake_timing_;
+    fake_timing_ = PageLoadTiming();
+    return tmp;
   }
 
   void VerifyExpectedTimings() const {
+    EXPECT_TRUE(fake_timing_.IsEmpty());
     fake_timing_ipc_sender_.VerifyExpectedTimings();
   }
 
   bool ShouldSendMetrics() const override { return true; }
   bool HasNoRenderFrame() const override { return false; }
+  bool IsMainFrame() const override { return is_main_frame_; }
 
  private:
   FakePageTimingMetricsIPCSender fake_timing_ipc_sender_;
+  mutable PageLoadTiming fake_timing_;
   mutable std::unique_ptr<base::Timer> mock_timer_;
+  bool is_main_frame_ = true;
 };
 
 typedef testing::Test MetricsRenderFrameObserverTest;
@@ -88,7 +102,7 @@ TEST_F(MetricsRenderFrameObserverTest, SingleMetric) {
   observer.DidCommitProvisionalLoad(true, false);
   mock_timer->Fire();
 
-  timing.first_layout = first_layout;
+  timing.document_timing.first_layout = first_layout;
   observer.ExpectPageLoadTiming(timing);
 
   observer.DidChangePerformanceTiming();
@@ -111,8 +125,8 @@ TEST_F(MetricsRenderFrameObserverTest, MultipleMetrics) {
   observer.DidCommitProvisionalLoad(true, false);
   mock_timer->Fire();
 
-  timing.first_layout = first_layout;
-  timing.dom_content_loaded_event_start = dom_event;
+  timing.document_timing.first_layout = first_layout;
+  timing.document_timing.dom_content_loaded_event_start = dom_event;
   observer.ExpectPageLoadTiming(timing);
 
   observer.DidChangePerformanceTiming();
@@ -123,7 +137,7 @@ TEST_F(MetricsRenderFrameObserverTest, MultipleMetrics) {
   // part of the test.
   observer.VerifyExpectedTimings();
 
-  timing.load_event_start = load_event;
+  timing.document_timing.load_event_start = load_event;
   observer.ExpectPageLoadTiming(timing);
 
   observer.DidChangePerformanceTiming();
@@ -157,9 +171,9 @@ TEST_F(MetricsRenderFrameObserverTest, MultipleNavigations) {
   observer.DidCommitProvisionalLoad(true, false);
   mock_timer->Fire();
 
-  timing.first_layout = first_layout;
-  timing.dom_content_loaded_event_start = dom_event;
-  timing.load_event_start = load_event;
+  timing.document_timing.first_layout = first_layout;
+  timing.document_timing.dom_content_loaded_event_start = dom_event;
+  timing.document_timing.load_event_start = load_event;
   observer.ExpectPageLoadTiming(timing);
   observer.DidChangePerformanceTiming();
   mock_timer->Fire();
@@ -183,13 +197,33 @@ TEST_F(MetricsRenderFrameObserverTest, MultipleNavigations) {
   observer.DidCommitProvisionalLoad(true, false);
   mock_timer2->Fire();
 
-  timing_2.first_layout = first_layout_2;
-  timing_2.dom_content_loaded_event_start = dom_event_2;
-  timing_2.load_event_start = load_event_2;
+  timing_2.document_timing.first_layout = first_layout_2;
+  timing_2.document_timing.dom_content_loaded_event_start = dom_event_2;
+  timing_2.document_timing.load_event_start = load_event_2;
   observer.ExpectPageLoadTiming(timing_2);
 
   observer.DidChangePerformanceTiming();
   mock_timer2->Fire();
+}
+
+TEST_F(MetricsRenderFrameObserverTest, NoUpdatesFromChildFrames) {
+  base::Time nav_start = base::Time::FromDoubleT(10);
+
+  TestMetricsRenderFrameObserver observer;
+  base::MockTimer* mock_timer = new base::MockTimer(false, false);
+  observer.set_mock_timer(base::WrapUnique(mock_timer));
+  observer.set_is_main_frame(false);
+
+  PageLoadTiming timing;
+  timing.navigation_start = nav_start;
+  observer.SetFakePageLoadTiming(timing);
+  observer.DidCommitProvisionalLoad(true, false);
+  ASSERT_FALSE(observer.WasFakeTimingConsumed());
+  ASSERT_FALSE(mock_timer->IsRunning());
+
+  observer.DidChangePerformanceTiming();
+  ASSERT_FALSE(observer.WasFakeTimingConsumed());
+  ASSERT_FALSE(mock_timer->IsRunning());
 }
 
 }  // namespace page_load_metrics

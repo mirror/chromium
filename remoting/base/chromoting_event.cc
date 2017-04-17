@@ -4,15 +4,34 @@
 
 #include "remoting/base/chromoting_event.h"
 
+#include "base/strings/string_util.h"
+#include "base/strings/stringize_macros.h"
 #include "base/sys_info.h"
+#include "remoting/base/name_value_map.h"
 
 namespace remoting {
+
+namespace {
+
+const NameMapElement<ChromotingEvent::Os> kOsNames[] = {
+    {ChromotingEvent::Os::CHROMOTING_LINUX, "linux"},
+    {ChromotingEvent::Os::CHROMOTING_CHROMEOS, "chromeos"},
+    {ChromotingEvent::Os::CHROMOTING_MAC, "mac"},
+    {ChromotingEvent::Os::CHROMOTING_WINDOWS, "windows"},
+    {ChromotingEvent::Os::CHROMOTING_ANDROID, "android"},
+    {ChromotingEvent::Os::CHROMOTING_IOS, "ios"},
+};
+
+}  // namespace
 
 const char ChromotingEvent::kCaptureLatencyKey[] = "capture_latency";
 const char ChromotingEvent::kConnectionErrorKey[] = "connection_error";
 const char ChromotingEvent::kCpuKey[] = "cpu";
 const char ChromotingEvent::kDecodeLatencyKey[] = "decode_latency";
 const char ChromotingEvent::kEncodeLatencyKey[] = "encode_latency";
+const char ChromotingEvent::kHostOsKey[] = "host_os";
+const char ChromotingEvent::kHostOsVersionKey[] = "host_os_version";
+const char ChromotingEvent::kHostVersionKey[] = "host_version";
 const char ChromotingEvent::kMaxCaptureLatencyKey[] = "max_capture_latency";
 const char ChromotingEvent::kMaxDecodeLatencyKey[] = "max_decode_latency";
 const char ChromotingEvent::kMaxEncodeLatencyKey[] = "max_encode_latency";
@@ -29,6 +48,7 @@ const char ChromotingEvent::kSessionIdKey[] = "session_id";
 const char ChromotingEvent::kSessionStateKey[] = "session_state";
 const char ChromotingEvent::kTypeKey[] = "type";
 const char ChromotingEvent::kVideoBandwidthKey[] = "video_bandwidth";
+const char ChromotingEvent::kWebAppVersionKey[] = "webapp_version";
 
 ChromotingEvent::ChromotingEvent() : values_map_(new base::DictionaryValue()) {}
 
@@ -82,7 +102,7 @@ void ChromotingEvent::SetDouble(const std::string& key, double value) {
 void ChromotingEvent::AddSystemInfo() {
   SetString(kCpuKey, base::SysInfo::OperatingSystemArchitecture());
   SetString(kOsVersionKey, base::SysInfo::OperatingSystemVersion());
-  std::string osName = base::SysInfo::OperatingSystemName();
+  SetString(kWebAppVersionKey, STRINGIZE(VERSION));
 #if defined(OS_LINUX)
   Os os = Os::CHROMOTING_LINUX;
 #elif defined(OS_CHROMEOS)
@@ -116,6 +136,16 @@ bool ChromotingEvent::IsEndOfSession(SessionState state) {
          state == SessionState::CONNECTION_DROPPED ||
          state == SessionState::CONNECTION_FAILED ||
          state == SessionState::CONNECTION_CANCELED;
+}
+
+// static
+ChromotingEvent::Os ChromotingEvent::ParseOsFromString(const std::string& os) {
+  ChromotingEvent::Os result;
+  if (!NameToValue(kOsNames, base::ToLowerASCII(os), &result)) {
+    return Os::OTHER;
+  }
+
+  return result;
 }
 
 }  // namespace remoting

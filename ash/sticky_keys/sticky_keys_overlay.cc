@@ -4,12 +4,12 @@
 
 #include "ash/sticky_keys/sticky_keys_overlay.h"
 
-#include "ash/common/shell_window_ids.h"
+#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
 #include "ash/sticky_keys/sticky_keys_controller.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "grit/ash_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -157,10 +157,10 @@ StickyKeysOverlayView::StickyKeysOverlayView() {
 StickyKeysOverlayView::~StickyKeysOverlayView() {}
 
 void StickyKeysOverlayView::OnPaint(gfx::Canvas* canvas) {
-  SkPaint paint;
-  paint.setStyle(SkPaint::kFill_Style);
-  paint.setColor(SkColorSetARGB(0xB3, 0x55, 0x55, 0x55));
-  canvas->DrawRoundRect(GetLocalBounds(), 2, paint);
+  cc::PaintFlags flags;
+  flags.setStyle(cc::PaintFlags::kFill_Style);
+  flags.setColor(SkColorSetARGB(0xB3, 0x55, 0x55, 0x55));
+  canvas->DrawRoundRect(GetLocalBounds(), 2, flags);
   views::View::OnPaint(canvas);
 }
 
@@ -214,7 +214,7 @@ StickyKeysOverlay::StickyKeysOverlay()
   params.keep_on_top = true;
   params.remove_standard_frame = true;
   params.bounds = CalculateOverlayBounds();
-  params.parent = Shell::GetContainer(Shell::GetTargetRootWindow(),
+  params.parent = Shell::GetContainer(Shell::GetRootWindowForNewWindows(),
                                       kShellWindowId_OverlayContainer);
   overlay_widget_.reset(new views::Widget);
   overlay_widget_->Init(params);

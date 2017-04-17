@@ -31,37 +31,50 @@
 #ifndef SVGGeometryElement_h
 #define SVGGeometryElement_h
 
+#include "core/svg/SVGAnimatedNumber.h"
 #include "core/svg/SVGGraphicsElement.h"
 
 namespace blink {
 
+class Path;
 class SVGPointTearOff;
 
 class SVGGeometryElement : public SVGGraphicsElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    virtual Path asPath() const = 0;
-    bool isPointInFill(SVGPointTearOff*) const;
-    bool isPointInStroke(SVGPointTearOff*) const;
+  DEFINE_WRAPPERTYPEINFO();
 
-    void toClipPath(Path&) const;
+ public:
+  virtual Path AsPath() const = 0;
+  bool isPointInFill(SVGPointTearOff*) const;
+  bool isPointInStroke(SVGPointTearOff*) const;
 
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
+  void ToClipPath(Path&) const;
 
-protected:
-    SVGGeometryElement(const QualifiedName&, Document&, ConstructionType = CreateSVGElement);
+  SVGAnimatedNumber* pathLength() const { return path_length_.Get(); }
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
+  virtual float getTotalLength();
+  virtual SVGPointTearOff* getPointAtLength(float distance);
+  float PathLengthScaleFactor() const;
+  virtual float ComputePathLength() const;
 
-private:
-    bool isSVGGeometryElement() const final { return true; }
+  DECLARE_VIRTUAL_TRACE();
+
+ protected:
+  SVGGeometryElement(const QualifiedName&,
+                     Document&,
+                     ConstructionType = kCreateSVGElement);
+
+ private:
+  bool IsSVGGeometryElement() const final { return true; }
+
+  Member<SVGAnimatedNumber> path_length_;
 };
 
-inline bool isSVGGeometryElement(const SVGElement& element)
-{
-    return element.isSVGGeometryElement();
+inline bool IsSVGGeometryElement(const SVGElement& element) {
+  return element.IsSVGGeometryElement();
 }
 
 DEFINE_SVGELEMENT_TYPE_CASTS_WITH_FUNCTION(SVGGeometryElement);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGGeometryElement_h
+#endif  // SVGGeometryElement_h

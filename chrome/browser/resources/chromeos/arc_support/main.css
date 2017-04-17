@@ -1,8 +1,6 @@
-/**
- * Copyright 2016 The Chromium Authors. All rights reserved.
+/* Copyright 2016 The Chromium Authors. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
- */
+ * found in the LICENSE file. */
 
 html,
 body,
@@ -40,13 +38,14 @@ webview,
   width: 640px;
 }
 
-.button-separator {
-  width: 1px;
+.bubble-button > div {
+  height: 12px;
+  top: -8px;
+  width: 12px;
 }
 
-.checkbox-container {
-  margin: 0;
-  padding: 0 8px 0 0;
+.button-separator {
+  width: 1px;
 }
 
 .checkbox-option {
@@ -72,11 +71,50 @@ webview,
   padding: 0;
 }
 
+.controlled-setting-indicator {
+  -webkit-margin-end: 3px;
+  -webkit-margin-start: 2px;
+}
+
+.controlled-setting-indicator[controlled-by] > div {
+  background-size: 16px;
+}
+
 .image-header {
   display: block;
   height: 300px;
   padding: 0;
   width: 960px;
+}
+
+.overlay-text .page {
+  width: 480px;
+}
+
+.overlay-text webview {
+  display: none;
+}
+
+.overlay-url .page {
+  width: 640px;
+}
+
+.overlay-url span {
+  display: none;
+}
+
+.overlay-url webview {
+  display: block;
+  height: 300px;
+  margin: 24px 8px 8px 8px;
+  padding: 0;
+  width: 100%;
+}
+
+.page {
+  font-family: 'Roboto';
+  font-size: 13px;
+  text-align: left;
 }
 
 .scrollable {
@@ -108,6 +146,11 @@ webview,
   padding: 8px 0 0 0;
   text-align: left;
   width: 640px;
+}
+
+.section-checkbox-container > input[type='checkbox'] {
+  flex-shrink: 0;
+  margin: 0 8px 0 0;
 }
 
 .section-terms {

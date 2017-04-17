@@ -34,19 +34,16 @@
 
 namespace blink {
 
-InputType* TelephoneInputType::create(HTMLInputElement& element)
-{
-    return new TelephoneInputType(element);
+InputType* TelephoneInputType::Create(HTMLInputElement& element) {
+  return new TelephoneInputType(element);
 }
 
-void TelephoneInputType::countUsage()
-{
-    countUsageIfVisible(UseCounter::InputTypeTel);
+void TelephoneInputType::CountUsage() {
+  CountUsageIfVisible(UseCounter::kInputTypeTel);
 }
 
-const AtomicString& TelephoneInputType::formControlType() const
-{
-    return InputTypeNames::tel;
+const AtomicString& TelephoneInputType::FormControlType() const {
+  return InputTypeNames::tel;
 }
 
-} // namespace blink
+}  // namespace blink

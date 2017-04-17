@@ -422,7 +422,7 @@ bool HostZoomMapImpl::PageScaleFactorIsOneForWebContents(
   base::AutoLock auto_lock(lock_);
   auto found = view_page_scale_factors_are_one_.find(
       RenderViewKey(web_contents_impl.GetRenderProcessHost()->GetID(),
-                    web_contents_impl.GetRoutingID()));
+                    web_contents_impl.GetRenderViewHost()->GetRoutingID()));
   if (found == view_page_scale_factors_are_one_.end())
     return true;
   return found->second;
@@ -440,14 +440,14 @@ bool HostZoomMapImpl::UsesTemporaryZoomLevel(int render_process_id,
   RenderViewKey key(render_process_id, render_view_id);
 
   base::AutoLock auto_lock(lock_);
-  return ContainsKey(temporary_zoom_levels_, key);
+  return base::ContainsKey(temporary_zoom_levels_, key);
 }
 
 double HostZoomMapImpl::GetTemporaryZoomLevel(int render_process_id,
                                               int render_view_id) const {
   base::AutoLock auto_lock(lock_);
   RenderViewKey key(render_process_id, render_view_id);
-  if (!ContainsKey(temporary_zoom_levels_, key))
+  if (!base::ContainsKey(temporary_zoom_levels_, key))
     return 0;
 
   return temporary_zoom_levels_.find(key)->second;
@@ -483,7 +483,7 @@ double HostZoomMapImpl::GetZoomLevelForView(const GURL& url,
   RenderViewKey key(render_process_id, render_view_id);
   base::AutoLock auto_lock(lock_);
 
-  if (ContainsKey(temporary_zoom_levels_, key))
+  if (base::ContainsKey(temporary_zoom_levels_, key))
     return temporary_zoom_levels_.find(key)->second;
 
   return GetZoomLevelForHostAndSchemeInternal(url.scheme(),

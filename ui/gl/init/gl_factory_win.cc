@@ -11,6 +11,7 @@
 #include "ui/gl/gl_context_osmesa.h"
 #include "ui/gl/gl_context_stub.h"
 #include "ui/gl/gl_context_wgl.h"
+#include "ui/gl/gl_egl_api_implementation.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_share_group.h"
 #include "ui/gl/gl_surface.h"
@@ -19,27 +20,55 @@
 #include "ui/gl/gl_surface_osmesa_win.h"
 #include "ui/gl/gl_surface_stub.h"
 #include "ui/gl/gl_surface_wgl.h"
+#include "ui/gl/gl_wgl_api_implementation.h"
 #include "ui/gl/vsync_provider_win.h"
 
 namespace gl {
 namespace init {
 
+std::vector<GLImplementation> GetAllowedGLImplementations() {
+  std::vector<GLImplementation> impls;
+  impls.push_back(kGLImplementationEGLGLES2);
+  impls.push_back(kGLImplementationDesktopGL);
+  impls.push_back(kGLImplementationOSMesaGL);
+  impls.push_back(kGLImplementationSwiftShaderGL);
+  return impls;
+}
+
+bool GetGLWindowSystemBindingInfo(GLWindowSystemBindingInfo* info) {
+  switch (GetGLImplementation()) {
+    case kGLImplementationDesktopGL:
+      return GetGLWindowSystemBindingInfoWGL(info);
+    case kGLImplementationEGLGLES2:
+      return GetGLWindowSystemBindingInfoEGL(info);
+    default:
+      return false;
+  }
+}
+
 scoped_refptr<GLContext> CreateGLContext(GLShareGroup* share_group,
                                          GLSurface* compatible_surface,
-                                         GpuPreference gpu_preference) {
+                                         const GLContextAttribs& attribs) {
   TRACE_EVENT0("gpu", "gl::init::CreateGLContext");
   switch (GetGLImplementation()) {
     case kGLImplementationOSMesaGL:
       return InitializeGLContext(new GLContextOSMesa(share_group),
-                                 compatible_surface, gpu_preference);
+                                 compatible_surface, attribs);
+    case kGLImplementationSwiftShaderGL:
     case kGLImplementationEGLGLES2:
       return InitializeGLContext(new GLContextEGL(share_group),
-                                 compatible_surface, gpu_preference);
+                                 compatible_surface, attribs);
     case kGLImplementationDesktopGL:
       return InitializeGLContext(new GLContextWGL(share_group),
-                                 compatible_surface, gpu_preference);
+                                 compatible_surface, attribs);
     case kGLImplementationMockGL:
       return new GLContextStub(share_group);
+    case kGLImplementationStubGL: {
+      scoped_refptr<GLContextStub> stub_context =
+          new GLContextStub(share_group);
+      stub_context->SetUseStubApi(true);
+      return stub_context;
+    }
     default:
       NOTREACHED();
       return nullptr;
@@ -51,20 +80,16 @@ scoped_refptr<GLSurface> CreateViewGLSurface(gfx::AcceleratedWidget window) {
   switch (GetGLImplementation()) {
     case kGLImplementationOSMesaGL:
       return InitializeGLSurface(new GLSurfaceOSMesaWin(window));
+    case kGLImplementationSwiftShaderGL:
     case kGLImplementationEGLGLES2: {
-      DCHECK(window != gfx::kNullAcceleratedWidget);
-      scoped_refptr<NativeViewGLSurfaceEGL> surface(
-          new NativeViewGLSurfaceEGL(window));
-      std::unique_ptr<gfx::VSyncProvider> sync_provider;
-      sync_provider.reset(new VSyncProviderWin(window));
-      if (!surface->Initialize(std::move(sync_provider)))
-        return nullptr;
-
-      return surface;
+      std::unique_ptr<gfx::VSyncProvider> sync_provider(
+          new VSyncProviderWin(window));
+      return CreateNativeViewGLSurfaceEGL(window, std::move(sync_provider));
     }
     case kGLImplementationDesktopGL:
       return InitializeGLSurface(new NativeViewGLSurfaceWGL(window));
     case kGLImplementationMockGL:
+    case kGLImplementationStubGL:
       return new GLSurfaceStub;
     default:
       NOTREACHED();
@@ -72,17 +97,33 @@ scoped_refptr<GLSurface> CreateViewGLSurface(gfx::AcceleratedWidget window) {
   }
 }
 
-scoped_refptr<GLSurface> CreateOffscreenGLSurface(const gfx::Size& size) {
+scoped_refptr<GLSurface> CreateNativeViewGLSurfaceEGL(
+    gfx::AcceleratedWidget window,
+    std::unique_ptr<gfx::VSyncProvider> sync_provider) {
+  DCHECK_EQ(kGLImplementationEGLGLES2, GetGLImplementation());
+  DCHECK(window != gfx::kNullAcceleratedWidget);
+
+  return InitializeGLSurface(
+      new NativeViewGLSurfaceEGL(window, std::move(sync_provider)));
+}
+
+scoped_refptr<GLSurface> CreateOffscreenGLSurfaceWithFormat(
+    const gfx::Size& size, GLSurfaceFormat format) {
   TRACE_EVENT0("gpu", "gl::init::CreateOffscreenGLSurface");
   switch (GetGLImplementation()) {
     case kGLImplementationOSMesaGL:
-      return InitializeGLSurface(
-          new GLSurfaceOSMesa(GLSurface::SURFACE_OSMESA_RGBA, size));
+      format.SetDefaultPixelLayout(GLSurfaceFormat::PIXEL_LAYOUT_RGBA);
+      return InitializeGLSurfaceWithFormat(
+          new GLSurfaceOSMesa(format, size), format);
+    case kGLImplementationSwiftShaderGL:
     case kGLImplementationEGLGLES2:
-      return InitializeGLSurface(new PbufferGLSurfaceEGL(size));
+      return InitializeGLSurfaceWithFormat(
+          new PbufferGLSurfaceEGL(size), format);
     case kGLImplementationDesktopGL:
-      return InitializeGLSurface(new PbufferGLSurfaceWGL(size));
+      return InitializeGLSurfaceWithFormat(
+          new PbufferGLSurfaceWGL(size), format);
     case kGLImplementationMockGL:
+    case kGLImplementationStubGL:
       return new GLSurfaceStub;
     default:
       NOTREACHED();

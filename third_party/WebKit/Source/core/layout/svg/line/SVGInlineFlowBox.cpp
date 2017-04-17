@@ -27,20 +27,11 @@
 
 namespace blink {
 
-void SVGInlineFlowBox::paint(const PaintInfo& paintInfo, const LayoutPoint& paintOffset, LayoutUnit, LayoutUnit) const
-{
-    SVGInlineFlowBoxPainter(*this).paint(paintInfo, paintOffset);
+void SVGInlineFlowBox::Paint(const PaintInfo& paint_info,
+                             const LayoutPoint& paint_offset,
+                             LayoutUnit,
+                             LayoutUnit) const {
+  SVGInlineFlowBoxPainter(*this).Paint(paint_info, paint_offset);
 }
 
-LayoutRect SVGInlineFlowBox::calculateBoundaries() const
-{
-    LayoutRect childRect;
-    for (InlineBox* child = firstChild(); child; child = child->nextOnLine()) {
-        if (!child->isSVGInlineTextBox() && !child->isSVGInlineFlowBox())
-            continue;
-        childRect.unite(child->calculateBoundaries());
-    }
-    return childRect;
-}
-
-} // namespace blink
+}  // namespace blink

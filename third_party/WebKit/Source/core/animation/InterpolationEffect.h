@@ -13,56 +13,72 @@
 
 namespace blink {
 
-// Stores all adjacent pairs of keyframes (represented by Interpolations) in a KeyframeEffectModel
-// with keyframe offset data preprocessed for more efficient active keyframe pair sampling.
+// Stores all adjacent pairs of keyframes (represented by Interpolations) in a
+// KeyframeEffectModel with keyframe offset data preprocessed for more efficient
+// active keyframe pair sampling.
 class CORE_EXPORT InterpolationEffect {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    InterpolationEffect()
-        : m_isPopulated(false)
-    { }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    bool isPopulated() const { return m_isPopulated; }
-    void setPopulated() { m_isPopulated = true; }
+ public:
+  InterpolationEffect() : is_populated_(false) {}
 
-    void clear()
-    {
-        m_isPopulated = false;
-        m_interpolations.clear();
-    }
+  bool IsPopulated() const { return is_populated_; }
+  void SetPopulated() { is_populated_ = true; }
 
-    void getActiveInterpolations(double fraction, double iterationDuration, Vector<RefPtr<Interpolation>>&) const;
+  void Clear() {
+    is_populated_ = false;
+    interpolations_.Clear();
+  }
 
-    void addInterpolation(PassRefPtr<Interpolation> interpolation, PassRefPtr<TimingFunction> easing, double start, double end, double applyFrom, double applyTo)
-    {
-        m_interpolations.append(InterpolationRecord(interpolation, easing, start, end, applyFrom, applyTo));
-    }
+  void GetActiveInterpolations(double fraction,
+                               double iteration_duration,
+                               Vector<RefPtr<Interpolation>>&) const;
 
-    void addInterpolationsFromKeyframes(PropertyHandle, const Keyframe::PropertySpecificKeyframe& keyframeA, const Keyframe::PropertySpecificKeyframe& keyframeB, double applyFrom, double applyTo);
+  void AddInterpolation(PassRefPtr<Interpolation> interpolation,
+                        PassRefPtr<TimingFunction> easing,
+                        double start,
+                        double end,
+                        double apply_from,
+                        double apply_to) {
+    interpolations_.push_back(InterpolationRecord(std::move(interpolation),
+                                                  std::move(easing), start, end,
+                                                  apply_from, apply_to));
+  }
 
-private:
-    struct InterpolationRecord {
-        InterpolationRecord(PassRefPtr<Interpolation> interpolation, PassRefPtr<TimingFunction> easing, double start, double end, double applyFrom, double applyTo)
-            : m_interpolation(interpolation)
-            , m_easing(easing)
-            , m_start(start)
-            , m_end(end)
-            , m_applyFrom(applyFrom)
-            , m_applyTo(applyTo)
-        { }
+  void AddInterpolationsFromKeyframes(
+      const PropertyHandle&,
+      const Keyframe::PropertySpecificKeyframe& keyframe_a,
+      const Keyframe::PropertySpecificKeyframe& keyframe_b,
+      double apply_from,
+      double apply_to);
 
-        RefPtr<Interpolation> m_interpolation;
-        RefPtr<TimingFunction> m_easing;
-        double m_start;
-        double m_end;
-        double m_applyFrom;
-        double m_applyTo;
-    };
+ private:
+  struct InterpolationRecord {
+    InterpolationRecord(PassRefPtr<Interpolation> interpolation,
+                        PassRefPtr<TimingFunction> easing,
+                        double start,
+                        double end,
+                        double apply_from,
+                        double apply_to)
+        : interpolation_(std::move(interpolation)),
+          easing_(std::move(easing)),
+          start_(start),
+          end_(end),
+          apply_from_(apply_from),
+          apply_to_(apply_to) {}
 
-    bool m_isPopulated;
-    Vector<InterpolationRecord> m_interpolations;
+    RefPtr<Interpolation> interpolation_;
+    RefPtr<TimingFunction> easing_;
+    double start_;
+    double end_;
+    double apply_from_;
+    double apply_to_;
+  };
+
+  bool is_populated_;
+  Vector<InterpolationRecord> interpolations_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // InterpolationEffect_h
+#endif  // InterpolationEffect_h

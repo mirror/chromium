@@ -31,15 +31,17 @@
 #ifndef CrossThreadCopier_h
 #define CrossThreadCopier_h
 
-#include "platform/PlatformExport.h"
-#include "wtf/Assertions.h"
-#include "wtf/Forward.h"
-#include "wtf/Functional.h" // FunctionThreadAffinity
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
-#include "wtf/ThreadSafeRefCounted.h"
-#include "wtf/TypeTraits.h"
 #include <memory>
+#include "platform/PlatformExport.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Functional.h"  // FunctionThreadAffinity
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/ThreadSafeRefCounted.h"
+#include "platform/wtf/TypeTraits.h"
+#include "platform/wtf/WeakPtr.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
 
 class SkRefCnt;
 
@@ -47,7 +49,6 @@ namespace WTF {
 
 template <typename T>
 class PassedWrapper;
-
 }
 
 namespace blink {
@@ -60,17 +61,16 @@ class ResourceRequest;
 class ResourceResponse;
 struct CrossThreadResourceResponseData;
 struct CrossThreadResourceRequestData;
-template<typename T>class CrossThreadPersistent;
-template<typename T>class CrossThreadWeakPersistent;
+template <typename T>
+class CrossThreadPersistent;
+template <typename T>
+class CrossThreadWeakPersistent;
 
 template <typename T>
 struct CrossThreadCopierPassThrough {
-    STATIC_ONLY(CrossThreadCopierPassThrough);
-    typedef T Type;
-    static Type copy(const T& parameter)
-    {
-        return parameter;
-    }
+  STATIC_ONLY(CrossThreadCopierPassThrough);
+  typedef T Type;
+  static Type Copy(const T& parameter) { return parameter; }
 };
 
 template <typename T, bool isArithmeticOrEnum>
@@ -79,116 +79,157 @@ struct CrossThreadCopierBase;
 // Arithmetic values (integers or floats) and enums can be safely copied.
 template <typename T>
 struct CrossThreadCopierBase<T, true> : public CrossThreadCopierPassThrough<T> {
-    STATIC_ONLY(CrossThreadCopierBase);
+  STATIC_ONLY(CrossThreadCopierBase);
 };
 
 template <typename T>
-struct CrossThreadCopier : public CrossThreadCopierBase<T, std::is_arithmetic<T>::value || std::is_enum<T>::value> {
-    STATIC_ONLY(CrossThreadCopier);
+struct CrossThreadCopier
+    : public CrossThreadCopierBase<T,
+                                   std::is_arithmetic<T>::value ||
+                                       std::is_enum<T>::value> {
+  STATIC_ONLY(CrossThreadCopier);
 };
 
 // CrossThreadCopier specializations follow.
 template <typename T>
-struct CrossThreadCopier<PassRefPtr<T>> : public CrossThreadCopierPassThrough<PassRefPtr<T>> {
-    STATIC_ONLY(CrossThreadCopier);
-    static_assert(WTF::IsSubclassOfTemplate<T, ThreadSafeRefCounted>::value || std::is_base_of<SkRefCnt, T>::value, "PassRefPtr<T> can be passed across threads only if T is ThreadSafeRefCounted or SkRefCnt.");
+struct CrossThreadCopier<PassRefPtr<T>> {
+  STATIC_ONLY(CrossThreadCopier);
+  typedef PassRefPtr<T> Type;
+  static_assert(WTF::IsSubclassOfTemplate<T, ThreadSafeRefCounted>::value,
+                "PassRefPtr<T> can be passed across threads only if T is "
+                "ThreadSafeRefCounted.");
+  static PassRefPtr<T> Copy(PassRefPtr<T>&& pointer) {
+    return std::move(pointer);
+  }
 };
 template <typename T>
-struct CrossThreadCopier<RefPtr<T>> : public CrossThreadCopierPassThrough<RefPtr<T>> {
-    STATIC_ONLY(CrossThreadCopier);
-    static_assert(WTF::IsSubclassOfTemplate<T, ThreadSafeRefCounted>::value || std::is_base_of<SkRefCnt, T>::value, "RefPtr<T> can be passed across threads only if T is ThreadSafeRefCounted or SkRefCnt.");
+struct CrossThreadCopier<RefPtr<T>>
+    : public CrossThreadCopierPassThrough<RefPtr<T>> {
+  STATIC_ONLY(CrossThreadCopier);
+  static_assert(WTF::IsSubclassOfTemplate<T, ThreadSafeRefCounted>::value,
+                "RefPtr<T> can be passed across threads only if T is "
+                "ThreadSafeRefCounted.");
+};
+template <typename T>
+struct CrossThreadCopier<sk_sp<T>>
+    : public CrossThreadCopierPassThrough<sk_sp<T>> {
+  STATIC_ONLY(CrossThreadCopier);
+  static_assert(std::is_base_of<SkRefCnt, T>::value,
+                "sk_sp<T> can be passed across threads only if T is SkRefCnt.");
 };
 
 // nullptr_t can be passed through without any changes.
 template <>
-struct CrossThreadCopier<std::nullptr_t> : public CrossThreadCopierPassThrough<std::nullptr_t> {
-    STATIC_ONLY(CrossThreadCopier);
+struct CrossThreadCopier<std::nullptr_t>
+    : public CrossThreadCopierPassThrough<std::nullptr_t> {
+  STATIC_ONLY(CrossThreadCopier);
 };
 
-// To allow a type to be passed across threads using its copy constructor, add a forward declaration of the type and
-// provide a specialization of CrossThreadCopier<T> in this file, like IntRect below.
+// To allow a type to be passed across threads using its copy constructor, add a
+// forward declaration of the type and provide a specialization of
+// CrossThreadCopier<T> in this file, like IntRect below.
 template <>
-struct CrossThreadCopier<IntRect> : public CrossThreadCopierPassThrough<IntRect> {
-    STATIC_ONLY(CrossThreadCopier);
+struct CrossThreadCopier<IntRect>
+    : public CrossThreadCopierPassThrough<IntRect> {
+  STATIC_ONLY(CrossThreadCopier);
 };
 
 template <>
-struct CrossThreadCopier<IntSize> : public CrossThreadCopierPassThrough<IntSize> {
-    STATIC_ONLY(CrossThreadCopier);
+struct CrossThreadCopier<IntSize>
+    : public CrossThreadCopierPassThrough<IntSize> {
+  STATIC_ONLY(CrossThreadCopier);
 };
 
 template <typename T, typename Deleter>
 struct CrossThreadCopier<std::unique_ptr<T, Deleter>> {
-    STATIC_ONLY(CrossThreadCopier);
-    using Type = std::unique_ptr<T, Deleter>;
-    static std::unique_ptr<T, Deleter> copy(std::unique_ptr<T, Deleter> pointer)
-    {
-        return pointer; // This is in fact a move.
-    }
+  STATIC_ONLY(CrossThreadCopier);
+  using Type = std::unique_ptr<T, Deleter>;
+  static std::unique_ptr<T, Deleter> Copy(std::unique_ptr<T, Deleter> pointer) {
+    return pointer;  // This is in fact a move.
+  }
 };
 
-template<typename T>
-struct CrossThreadCopier<CrossThreadPersistent<T>> : public CrossThreadCopierPassThrough<CrossThreadPersistent<T>> {
-    STATIC_ONLY(CrossThreadCopier);
+template <typename T, size_t inlineCapacity, typename Allocator>
+struct CrossThreadCopier<
+    Vector<std::unique_ptr<T>, inlineCapacity, Allocator>> {
+  STATIC_ONLY(CrossThreadCopier);
+  using Type = Vector<std::unique_ptr<T>, inlineCapacity, Allocator>;
+  static Type Copy(Type pointer) {
+    return pointer;  // This is in fact a move.
+  }
 };
 
-template<typename T>
-struct CrossThreadCopier<CrossThreadWeakPersistent<T>> : public CrossThreadCopierPassThrough<CrossThreadWeakPersistent<T>> {
-    STATIC_ONLY(CrossThreadCopier);
+template <typename T>
+struct CrossThreadCopier<CrossThreadPersistent<T>>
+    : public CrossThreadCopierPassThrough<CrossThreadPersistent<T>> {
+  STATIC_ONLY(CrossThreadCopier);
 };
 
-template<typename T>
-struct CrossThreadCopier<WTF::UnretainedWrapper<T, WTF::CrossThreadAffinity>> : public CrossThreadCopierPassThrough<WTF::UnretainedWrapper<T, WTF::CrossThreadAffinity>> {
-    STATIC_ONLY(CrossThreadCopier);
+template <typename T>
+struct CrossThreadCopier<CrossThreadWeakPersistent<T>>
+    : public CrossThreadCopierPassThrough<CrossThreadWeakPersistent<T>> {
+  STATIC_ONLY(CrossThreadCopier);
 };
 
-template<typename T>
-struct CrossThreadCopier<WeakPtr<T>> : public CrossThreadCopierPassThrough<WeakPtr<T>> {
-    STATIC_ONLY(CrossThreadCopier);
+template <typename T>
+struct CrossThreadCopier<WTF::UnretainedWrapper<T, WTF::kCrossThreadAffinity>>
+    : public CrossThreadCopierPassThrough<
+          WTF::UnretainedWrapper<T, WTF::kCrossThreadAffinity>> {
+  STATIC_ONLY(CrossThreadCopier);
+};
+
+template <typename T>
+struct CrossThreadCopier<WeakPtr<T>>
+    : public CrossThreadCopierPassThrough<WeakPtr<T>> {
+  STATIC_ONLY(CrossThreadCopier);
 };
 
 template <typename T>
 struct CrossThreadCopier<WTF::PassedWrapper<T>> {
-    STATIC_ONLY(CrossThreadCopier);
-    using Type = WTF::PassedWrapper<typename CrossThreadCopier<T>::Type>;
-    static Type copy(WTF::PassedWrapper<T>&& value) { return passed(CrossThreadCopier<T>::copy(value.moveOut())); }
+  STATIC_ONLY(CrossThreadCopier);
+  using Type = WTF::PassedWrapper<typename CrossThreadCopier<T>::Type>;
+  static Type Copy(WTF::PassedWrapper<T>&& value) {
+    return WTF::Passed(CrossThreadCopier<T>::Copy(value.MoveOut()));
+  }
 };
 
 template <>
 struct CrossThreadCopier<KURL> {
-    STATIC_ONLY(CrossThreadCopier);
-    typedef KURL Type;
-    PLATFORM_EXPORT static Type copy(const KURL&);
+  STATIC_ONLY(CrossThreadCopier);
+  typedef KURL Type;
+  PLATFORM_EXPORT static Type Copy(const KURL&);
 };
 
 template <>
 struct CrossThreadCopier<String> {
-    STATIC_ONLY(CrossThreadCopier);
-    typedef String Type;
-    PLATFORM_EXPORT static Type copy(const String&);
+  STATIC_ONLY(CrossThreadCopier);
+  typedef String Type;
+  PLATFORM_EXPORT static Type Copy(const String&);
 };
 
 template <>
 struct CrossThreadCopier<ResourceError> {
-    STATIC_ONLY(CrossThreadCopier);
-    typedef ResourceError Type;
-    PLATFORM_EXPORT static Type copy(const ResourceError&);
+  STATIC_ONLY(CrossThreadCopier);
+  typedef ResourceError Type;
+  PLATFORM_EXPORT static Type Copy(const ResourceError&);
 };
 
 template <>
 struct CrossThreadCopier<ResourceRequest> {
-    STATIC_ONLY(CrossThreadCopier);
-    typedef WTF::PassedWrapper<std::unique_ptr<CrossThreadResourceRequestData>> Type;
-    PLATFORM_EXPORT static Type copy(const ResourceRequest&);
+  STATIC_ONLY(CrossThreadCopier);
+  typedef WTF::PassedWrapper<std::unique_ptr<CrossThreadResourceRequestData>>
+      Type;
+  PLATFORM_EXPORT static Type Copy(const ResourceRequest&);
 };
 
 template <>
 struct CrossThreadCopier<ResourceResponse> {
-    STATIC_ONLY(CrossThreadCopier);
-    typedef WTF::PassedWrapper<std::unique_ptr<CrossThreadResourceResponseData>> Type;
-    PLATFORM_EXPORT static Type copy(const ResourceResponse&);
+  STATIC_ONLY(CrossThreadCopier);
+  typedef WTF::PassedWrapper<std::unique_ptr<CrossThreadResourceResponseData>>
+      Type;
+  PLATFORM_EXPORT static Type Copy(const ResourceResponse&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CrossThreadCopier_h
+#endif  // CrossThreadCopier_h

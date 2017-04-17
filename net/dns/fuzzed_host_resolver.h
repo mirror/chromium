@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef NET_DNS_FUZZED_HOST_RESOLVER_
-#define NET_DNS_FUZZED_HOST_RESOLVER_
+#ifndef NET_DNS_FUZZED_HOST_RESOLVER_H_
+#define NET_DNS_FUZZED_HOST_RESOLVER_H_
 
 #include <stdint.h>
 
@@ -16,13 +16,15 @@
 #include "net/dns/host_resolver_impl.h"
 #include "net/socket/fuzzed_socket_factory.h"
 
+namespace base {
+class FuzzedDataProvider;
+}
+
 namespace net {
 
 class AddressList;
-class ClientSocketFactory;
 class DnsClient;
 class NetLog;
-class ScopedDefaultHostResolverProc;
 
 // HostResolver that uses a fuzzer to determine what results to return. It
 // inherits from HostResolverImpl, unlike MockHostResolver, so more closely
@@ -46,7 +48,7 @@ class FuzzedHostResolver : public HostResolverImpl {
   // |data_provider| and |net_log| must outlive the FuzzedHostResolver.
   FuzzedHostResolver(const Options& options,
                      NetLog* net_log,
-                     FuzzedDataProvider* data_provider);
+                     base::FuzzedDataProvider* data_provider);
   ~FuzzedHostResolver() override;
 
   // Enable / disable the async resolver. When enabled, installs a
@@ -56,10 +58,11 @@ class FuzzedHostResolver : public HostResolverImpl {
 
  private:
   // HostResolverImpl implementation:
-  bool IsIPv6Reachable(const BoundNetLog& net_log) override;
+  bool IsGloballyReachable(const IPAddress& dest,
+                           const NetLogWithSource& net_log) override;
   void RunLoopbackProbeJob() override;
 
-  FuzzedDataProvider* data_provider_;
+  base::FuzzedDataProvider* data_provider_;
 
   // Used for UDP and TCP sockets if the async resolver is enabled.
   FuzzedSocketFactory socket_factory_;
@@ -69,11 +72,11 @@ class FuzzedHostResolver : public HostResolverImpl {
 
   NetLog* net_log_;
 
-  base::WeakPtrFactory<FuzzedDataProvider> data_provider_weak_factory_;
+  base::WeakPtrFactory<base::FuzzedDataProvider> data_provider_weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(FuzzedHostResolver);
 };
 
 }  // namespace net
 
-#endif  // NET_DNS_FUZZED_HOST_RESOLVER_
+#endif  // NET_DNS_FUZZED_HOST_RESOLVER_H_

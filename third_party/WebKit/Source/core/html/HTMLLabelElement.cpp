@@ -33,8 +33,8 @@
 #include "core/events/MouseEvent.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
-#include "core/html/FormAssociatedElement.h"
 #include "core/html/HTMLFormControlElement.h"
+#include "core/html/ListedElement.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutObject.h"
 
@@ -43,206 +43,197 @@ namespace blink {
 using namespace HTMLNames;
 
 inline HTMLLabelElement::HTMLLabelElement(Document& document)
-    : HTMLElement(labelTag, document)
-    , m_processingClick(false)
-{
+    : HTMLElement(labelTag, document), processing_click_(false) {}
+
+HTMLLabelElement* HTMLLabelElement::Create(Document& document) {
+  return new HTMLLabelElement(document);
 }
 
-HTMLLabelElement* HTMLLabelElement::create(Document& document)
-{
-    return new HTMLLabelElement(document);
-}
-
-LabelableElement* HTMLLabelElement::control() const
-{
-    const AtomicString& controlId = getAttribute(forAttr);
-    if (controlId.isNull()) {
-        // Search the children and descendants of the label element for a form element.
-        // per http://dev.w3.org/html5/spec/Overview.html#the-label-element
-        // the form element must be "labelable form-associated element".
-        for (LabelableElement& element : Traversal<LabelableElement>::descendantsOf(*this)) {
-            if (element.supportLabels()) {
-                if (!element.isFormControlElement())
-                    UseCounter::count(document(), UseCounter::HTMLLabelElementControlForNonFormAssociatedElement);
-                return &element;
-            }
-        }
-        return nullptr;
+LabelableElement* HTMLLabelElement::control() const {
+  const AtomicString& control_id = getAttribute(forAttr);
+  if (control_id.IsNull()) {
+    // Search the children and descendants of the label element for a form
+    // element.
+    // per http://dev.w3.org/html5/spec/Overview.html#the-label-element
+    // the form element must be "labelable form-associated element".
+    for (LabelableElement& element :
+         Traversal<LabelableElement>::DescendantsOf(*this)) {
+      if (element.SupportLabels()) {
+        if (!element.IsFormControlElement())
+          UseCounter::Count(
+              GetDocument(),
+              UseCounter::kHTMLLabelElementControlForNonFormAssociatedElement);
+        return &element;
+      }
     }
-
-    if (Element* element = treeScope().getElementById(controlId)) {
-        if (isLabelableElement(*element) && toLabelableElement(*element).supportLabels()) {
-            if (!element->isFormControlElement())
-                UseCounter::count(document(), UseCounter::HTMLLabelElementControlForNonFormAssociatedElement);
-            return toLabelableElement(element);
-        }
-    }
-
     return nullptr;
-}
+  }
 
-HTMLFormElement* HTMLLabelElement::form() const
-{
-    if (LabelableElement* control = this->control())
-        return control->isFormControlElement() ? toHTMLFormControlElement(control)->form() : nullptr;
+  if (!IsInTreeScope())
     return nullptr;
-}
 
-void HTMLLabelElement::setActive(bool down)
-{
-    if (down != active()) {
-        // Update our status first.
-        HTMLElement::setActive(down);
+  if (Element* element = GetTreeScope().GetElementById(control_id)) {
+    if (IsLabelableElement(*element) &&
+        ToLabelableElement(*element).SupportLabels()) {
+      if (!element->IsFormControlElement())
+        UseCounter::Count(
+            GetDocument(),
+            UseCounter::kHTMLLabelElementControlForNonFormAssociatedElement);
+      return ToLabelableElement(element);
     }
+  }
 
-    // Also update our corresponding control.
-    HTMLElement* controlElement = control();
-    if (controlElement && controlElement->active() != active())
-        controlElement->setActive(active());
+  return nullptr;
 }
 
-void HTMLLabelElement::setHovered(bool over)
-{
-    if (over != hovered()) {
-        // Update our status first.
-        HTMLElement::setHovered(over);
-    }
-
-    // Also update our corresponding control.
-    HTMLElement* element = control();
-    if (element && element->hovered() != hovered())
-        element->setHovered(hovered());
+HTMLFormElement* HTMLLabelElement::form() const {
+  if (LabelableElement* control = this->control())
+    return control->IsFormControlElement()
+               ? ToHTMLFormControlElement(control)->Form()
+               : nullptr;
+  return nullptr;
 }
 
-bool HTMLLabelElement::isInteractiveContent() const
-{
-    return true;
+void HTMLLabelElement::SetActive(bool down) {
+  if (down != IsActive()) {
+    // Update our status first.
+    HTMLElement::SetActive(down);
+  }
+
+  // Also update our corresponding control.
+  HTMLElement* control_element = control();
+  if (control_element && control_element->IsActive() != IsActive())
+    control_element->SetActive(IsActive());
 }
 
-bool HTMLLabelElement::isInInteractiveContent(Node* node) const
-{
-    if (!isShadowIncludingInclusiveAncestorOf(node))
-        return false;
-    while (node && this != node) {
-        if (node->isHTMLElement() && toHTMLElement(node)->isInteractiveContent())
-            return true;
-        node = node->parentOrShadowHostNode();
-    }
+void HTMLLabelElement::SetHovered(bool over) {
+  if (over != IsHovered()) {
+    // Update our status first.
+    HTMLElement::SetHovered(over);
+  }
+
+  // Also update our corresponding control.
+  HTMLElement* element = control();
+  if (element && element->IsHovered() != IsHovered())
+    element->SetHovered(IsHovered());
+}
+
+bool HTMLLabelElement::IsInteractiveContent() const {
+  return true;
+}
+
+bool HTMLLabelElement::IsInInteractiveContent(Node* node) const {
+  if (!IsShadowIncludingInclusiveAncestorOf(node))
     return false;
+  while (node && this != node) {
+    if (node->IsHTMLElement() && ToHTMLElement(node)->IsInteractiveContent())
+      return true;
+    node = node->ParentOrShadowHostNode();
+  }
+  return false;
 }
 
-void HTMLLabelElement::defaultEventHandler(Event* evt)
-{
-    if (evt->type() == EventTypeNames::click && !m_processingClick) {
-        HTMLElement* element = control();
+void HTMLLabelElement::DefaultEventHandler(Event* evt) {
+  if (evt->type() == EventTypeNames::click && !processing_click_) {
+    HTMLElement* element = control();
 
-        // If we can't find a control or if the control received the click
-        // event, then there's no need for us to do anything.
-        if (!element || (evt->target() && element->isShadowIncludingInclusiveAncestorOf(evt->target()->toNode())))
-            return;
+    // If we can't find a control or if the control received the click
+    // event, then there's no need for us to do anything.
+    if (!element ||
+        (evt->target() && element->IsShadowIncludingInclusiveAncestorOf(
+                              evt->target()->ToNode())))
+      return;
 
-        if (evt->target() && isInInteractiveContent(evt->target()->toNode()))
-            return;
+    if (evt->target() && IsInInteractiveContent(evt->target()->ToNode()))
+      return;
 
-        //   Behaviour of label element is as follows:
-        //     - If there is double click, two clicks will be passed to control
-        //       element. Control element will *not* be focused.
-        //     - If there is selection of label element by dragging, no click
-        //       event is passed. Also, no focus on control element.
-        //     - If there is already a selection on label element and then label
-        //       is clicked, then click event is passed to control element and
-        //       control element is focused.
+    //   Behaviour of label element is as follows:
+    //     - If there is double click, two clicks will be passed to control
+    //       element. Control element will *not* be focused.
+    //     - If there is selection of label element by dragging, no click
+    //       event is passed. Also, no focus on control element.
+    //     - If there is already a selection on label element and then label
+    //       is clicked, then click event is passed to control element and
+    //       control element is focused.
 
-        bool isLabelTextSelected = false;
+    bool is_label_text_selected = false;
 
-        // If the click is not simulated and the text of the label element
-        // is selected by dragging over it, then return without passing the
-        // click event to control element.
-        // Note: check if it is a MouseEvent because a click event may
-        // not be an instance of a MouseEvent if created by document.createEvent().
-        if (evt->isMouseEvent() && toMouseEvent(evt)->hasPosition()) {
-            if (LocalFrame* frame = document().frame()) {
-                // Check if there is a selection and click is not on the
-                // selection.
-                if (layoutObject() && layoutObject()->isSelectable() && frame->selection().isRange() && !frame->eventHandler().selectionController().mouseDownWasSingleClickInSelection())
-                    isLabelTextSelected = true;
-                // If selection is there and is single click i.e. text is
-                // selected by dragging over label text, then return.
-                // Click count >=2, meaning double click or triple click,
-                // should pass click event to control element.
-                // Only in case of drag, *neither* we pass the click event,
-                // *nor* we focus the control element.
-                if (isLabelTextSelected && frame->eventHandler().clickCount() == 1)
-                    return;
-            }
-        }
-
-        m_processingClick = true;
-
-        document().updateStyleAndLayoutIgnorePendingStylesheets();
-        if (element->isMouseFocusable()) {
-            // If the label is *not* selected, or if the click happened on
-            // selection of label, only then focus the control element.
-            // In case of double click or triple click, selection will be there,
-            // so do not focus the control element.
-            if (!isLabelTextSelected)
-                element->focus(FocusParams(SelectionBehaviorOnFocus::Restore, WebFocusTypeMouse, nullptr));
-        }
-
-        // Click the corresponding control.
-        element->dispatchSimulatedClick(evt);
-
-        m_processingClick = false;
-
-        evt->setDefaultHandled();
+    // If the click is not simulated and the text of the label element
+    // is selected by dragging over it, then return without passing the
+    // click event to control element.
+    // Note: check if it is a MouseEvent because a click event may
+    // not be an instance of a MouseEvent if created by document.createEvent().
+    if (evt->IsMouseEvent() && ToMouseEvent(evt)->HasPosition()) {
+      if (LocalFrame* frame = GetDocument().GetFrame()) {
+        // Check if there is a selection and click is not on the
+        // selection.
+        if (GetLayoutObject() && GetLayoutObject()->IsSelectable() &&
+            frame->Selection()
+                .ComputeVisibleSelectionInDOMTreeDeprecated()
+                .IsRange() &&
+            !frame->GetEventHandler()
+                 .GetSelectionController()
+                 .MouseDownWasSingleClickInSelection())
+          is_label_text_selected = true;
+        // If selection is there and is single click i.e. text is
+        // selected by dragging over label text, then return.
+        // Click count >=2, meaning double click or triple click,
+        // should pass click event to control element.
+        // Only in case of drag, *neither* we pass the click event,
+        // *nor* we focus the control element.
+        if (is_label_text_selected && ToMouseEvent(evt)->ClickCount() == 1)
+          return;
+      }
     }
 
-    HTMLElement::defaultEventHandler(evt);
-}
+    processing_click_ = true;
 
-bool HTMLLabelElement::willRespondToMouseClickEvents()
-{
-    if (control() && control()->willRespondToMouseClickEvents())
-        return true;
-
-    return HTMLElement::willRespondToMouseClickEvents();
-}
-
-void HTMLLabelElement::focus(const FocusParams& params)
-{
-    document().updateStyleAndLayoutTreeForNode(this);
-    if (isFocusable()) {
-        HTMLElement::focus(params);
-        return;
+    GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+    if (element->IsMouseFocusable()) {
+      // If the label is *not* selected, or if the click happened on
+      // selection of label, only then focus the control element.
+      // In case of double click or triple click, selection will be there,
+      // so do not focus the control element.
+      if (!is_label_text_selected)
+        element->focus(FocusParams(SelectionBehaviorOnFocus::kRestore,
+                                   kWebFocusTypeMouse, nullptr));
     }
-    // To match other browsers, always restore previous selection.
-    if (HTMLElement* element = control())
-        element->focus(FocusParams(SelectionBehaviorOnFocus::Restore, params.type, params.sourceCapabilities));
+
+    // Click the corresponding control.
+    element->DispatchSimulatedClick(evt);
+
+    processing_click_ = false;
+
+    evt->SetDefaultHandled();
+  }
+
+  HTMLElement::DefaultEventHandler(evt);
 }
 
-void HTMLLabelElement::accessKeyAction(bool sendMouseEvents)
-{
-    if (HTMLElement* element = control())
-        element->accessKeyAction(sendMouseEvents);
-    else
-        HTMLElement::accessKeyAction(sendMouseEvents);
+bool HTMLLabelElement::WillRespondToMouseClickEvents() {
+  if (control() && control()->WillRespondToMouseClickEvents())
+    return true;
+
+  return HTMLElement::WillRespondToMouseClickEvents();
 }
 
-Node::InsertionNotificationRequest HTMLLabelElement::insertedInto(ContainerNode* insertionPoint)
-{
-    InsertionNotificationRequest result = HTMLElement::insertedInto(insertionPoint);
-
-    // Trigger for elements outside of forms.
-    if (!formOwner() && insertionPoint->isConnected())
-        document().didAssociateFormControl(this);
-
-    return result;
+void HTMLLabelElement::focus(const FocusParams& params) {
+  GetDocument().UpdateStyleAndLayoutTreeForNode(this);
+  if (IsFocusable()) {
+    HTMLElement::focus(params);
+    return;
+  }
+  // To match other browsers, always restore previous selection.
+  if (HTMLElement* element = control())
+    element->focus(FocusParams(SelectionBehaviorOnFocus::kRestore, params.type,
+                               params.source_capabilities));
 }
 
-void HTMLLabelElement::removedFrom(ContainerNode* insertionPoint)
-{
-    HTMLElement::removedFrom(insertionPoint);
-    document().removeFormAssociation(this);
+void HTMLLabelElement::AccessKeyAction(bool send_mouse_events) {
+  if (HTMLElement* element = control())
+    element->AccessKeyAction(send_mouse_events);
+  else
+    HTMLElement::AccessKeyAction(send_mouse_events);
 }
 
-} // namespace blink
+}  // namespace blink

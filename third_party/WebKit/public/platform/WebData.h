@@ -34,6 +34,10 @@
 #include "WebCommon.h"
 #include "WebPrivatePtr.h"
 
+#if INSIDE_BLINK
+#include "platform/wtf/PassRefPtr.h"
+#endif
+
 namespace blink {
 
 class SharedBuffer;
@@ -43,63 +47,56 @@ class SharedBuffer;
 // WARNING: It is not safe to pass a WebData across threads!!!
 //
 class BLINK_PLATFORM_EXPORT WebData {
-public:
-    ~WebData() { reset(); }
+ public:
+  ~WebData() { Reset(); }
 
-    WebData() { }
+  WebData() {}
 
-    WebData(const char* data, size_t size)
-    {
-        assign(data, size);
-    }
+  WebData(const char* data, size_t size) { Assign(data, size); }
 
-    template <int N>
-    WebData(const char (&data)[N])
-    {
-        assign(data, N - 1);
-    }
+  template <int N>
+  WebData(const char (&data)[N]) {
+    Assign(data, N - 1);
+  }
 
-    WebData(const WebData& d) { assign(d); }
+  WebData(const WebData& d) { Assign(d); }
 
-    WebData& operator=(const WebData& d)
-    {
-        assign(d);
-        return *this;
-    }
+  WebData& operator=(const WebData& d) {
+    Assign(d);
+    return *this;
+  }
 
-    void reset();
-    void assign(const WebData&);
-    void assign(const char* data, size_t size);
+  void Reset();
+  void Assign(const WebData&);
+  void Assign(const char* data, size_t size);
 
-    size_t size() const;
-    const char* data() const;
+  size_t size() const;
+  const char* Data() const;
 
-    bool isEmpty() const { return !size(); }
-    bool isNull() const { return m_private.isNull(); }
+  bool IsEmpty() const { return !size(); }
+  bool IsNull() const { return private_.IsNull(); }
 
 #if INSIDE_BLINK
-    WebData(const PassRefPtr<SharedBuffer>&);
-    WebData& operator=(const PassRefPtr<SharedBuffer>&);
-    operator PassRefPtr<SharedBuffer>() const;
+  WebData(PassRefPtr<SharedBuffer>);
+  WebData& operator=(PassRefPtr<SharedBuffer>);
+  operator PassRefPtr<SharedBuffer>() const;
 #else
-    template <class C>
-    WebData(const C& c)
-    {
-        assign(c.data(), c.size());
-    }
+  template <class C>
+  WebData(const C& c) {
+    Assign(c.data(), c.size());
+  }
 
-    template <class C>
-    WebData& operator=(const C& c)
-    {
-        assign(c.data(), c.size());
-        return *this;
-    }
+  template <class C>
+  WebData& operator=(const C& c) {
+    Assign(c.data(), c.size());
+    return *this;
+  }
 #endif
 
-private:
-    WebPrivatePtr<SharedBuffer> m_private;
+ private:
+  WebPrivatePtr<SharedBuffer> private_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

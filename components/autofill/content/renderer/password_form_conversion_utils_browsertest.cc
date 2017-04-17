@@ -5,6 +5,7 @@
 #include <stddef.h>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -102,9 +103,6 @@ class PasswordFormBuilder {
   // Append a text field with "display: none".
   void AddNonDisplayedTextField(const char* name_and_id,
                                 const char* value) {
-    // TODO(crbug.com/570628): Add tests with style="visibility: hidden;" too
-    // when IsWebNodeVisible in form_autofill_util.cc has changed according to
-    // esprehn's TODO in the function. Now tests with visibility attribute fail.
     base::StringAppendF(
             &html_,
             "<INPUT type=\"text\" name=\"%s\" id=\"%s\" value=\"%s\""
@@ -120,6 +118,24 @@ class PasswordFormBuilder {
             "<INPUT type=\"password\" name=\"%s\" id=\"%s\" value=\"%s\""
             "style=\"display: none;\"/>",
             name_and_id, name_and_id, value);
+  }
+
+  // Append a text field with "visibility: hidden".
+  void AddNonVisibleTextField(const char* name_and_id, const char* value) {
+    base::StringAppendF(
+        &html_,
+        "<INPUT type=\"text\" name=\"%s\" id=\"%s\" value=\"%s\""
+        "style=\"visibility: hidden;\"/>",
+        name_and_id, name_and_id, value);
+  }
+
+  // Append a password field with "visibility: hidden".
+  void AddNonVisiblePasswordField(const char* name_and_id, const char* value) {
+    base::StringAppendF(
+        &html_,
+        "<INPUT type=\"password\" name=\"%s\" id=\"%s\" value=\"%s\""
+        "style=\"visibility: hidden;\"/>",
+        name_and_id, name_and_id, value);
   }
 
   // Appends a new submit-type field at the end of the form with the specified
@@ -178,14 +194,17 @@ class MAYBE_PasswordFormConversionUtilsTest : public content::RenderViewTest {
     LoadWebFormFromHTML(html, &form);
 
     WebVector<WebFormControlElement> control_elements;
-    form.getFormControlElements(control_elements);
-    ModifiedValues user_input;
+    form.GetFormControlElements(control_elements);
+    FieldValueAndPropertiesMaskMap user_input;
     for (size_t i = 0; i < control_elements.size(); ++i) {
-      WebInputElement* input_element = toWebInputElement(&control_elements[i]);
-      if (input_element->hasAttribute("set-activated-submit"))
-        input_element->setActivatedSubmit(true);
-      if (with_user_input)
-        user_input[*input_element] = input_element->value();
+      WebInputElement* input_element = ToWebInputElement(&control_elements[i]);
+      if (input_element->HasAttribute("set-activated-submit"))
+        input_element->SetActivatedSubmit(true);
+      if (with_user_input) {
+        const base::string16 element_value = input_element->Value().Utf16();
+        user_input[control_elements[i]] =
+            std::make_pair(base::MakeUnique<base::string16>(element_value), 0U);
+      }
     }
 
     return CreatePasswordFormFromWebForm(
@@ -203,15 +222,14 @@ class MAYBE_PasswordFormConversionUtilsTest : public content::RenderViewTest {
 
     FormData form_data;
     ASSERT_TRUE(form_util::WebFormElementToFormData(
-        form, WebFormControlElement(), form_util::EXTRACT_NONE, &form_data,
-        nullptr));
+        form, WebFormControlElement(), nullptr, form_util::EXTRACT_NONE,
+        &form_data, nullptr));
 
     FormStructure form_structure(form_data);
 
     int field_index = 0;
-    for (std::vector<AutofillField *>::const_iterator
-             field = form_structure.begin();
-         field != form_structure.end(); ++field, ++field_index) {
+    for (auto field = form_structure.begin(); field != form_structure.end();
+         ++field, ++field_index) {
       if (predictions_positions.find(field_index) !=
           predictions_positions.end()) {
         (*predictions)[form_data][*(*field)] =
@@ -228,7 +246,7 @@ class MAYBE_PasswordFormConversionUtilsTest : public content::RenderViewTest {
     ASSERT_NE(nullptr, frame);
 
     WebVector<WebFormElement> forms;
-    frame->document().forms(forms);
+    frame->GetDocument().Forms(forms);
     ASSERT_EQ(1U, forms.size());
 
     *form = forms[0];
@@ -295,7 +313,10 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, IdentifyingUsernameFields) {
       // When no elements are marked with autocomplete='username', the text-type
       // input field before the first password element should get selected as
       // the username, and the rest should be marked as alternatives.
-      {{nullptr, nullptr, nullptr}, "username2", "William", "John+Smith"},
+      {{nullptr, nullptr, nullptr},
+       "username2",
+       "William",
+       "John+username1, Smith+username3"},
       // When a sole element is marked with autocomplete='username', it should
       // be treated as the username for sure, with no other_possible_usernames.
       {{"username", nullptr, nullptr}, "username1", "John", ""},
@@ -303,21 +324,36 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, IdentifyingUsernameFields) {
       {{nullptr, nullptr, "username"}, "username3", "Smith", ""},
       // When >=2 elements have the attribute, the first should be selected as
       // the username, and the rest should go to other_possible_usernames.
-      {{"username", "username", nullptr}, "username1", "John", "William"},
-      {{nullptr, "username", "username"}, "username2", "William", "Smith"},
-      {{"username", nullptr, "username"}, "username1", "John", "Smith"},
+      {{"username", "username", nullptr},
+       "username1",
+       "John",
+       "William+username2"},
+      {{nullptr, "username", "username"},
+       "username2",
+       "William",
+       "Smith+username3"},
+      {{"username", nullptr, "username"},
+       "username1",
+       "John",
+       "Smith+username3"},
       {{"username", "username", "username"},
        "username1",
        "John",
-       "William+Smith"},
+       "William+username2, Smith+username3"},
       // When there is an empty autocomplete attribute (i.e. autocomplete=""),
       // it should have the same effect as having no attribute whatsoever.
-      {{"", "", ""}, "username2", "William", "John+Smith"},
+      {{"", "", ""}, "username2", "William", "John+username1, Smith+username3"},
       {{"", "", "username"}, "username3", "Smith", ""},
-      {{"username", "", "username"}, "username1", "John", "Smith"},
+      {{"username", "", "username"}, "username1", "John", "Smith+username3"},
       // It should not matter if attribute values are upper or mixed case.
-      {{"USERNAME", nullptr, "uSeRNaMe"}, "username1", "John", "Smith"},
-      {{"uSeRNaMe", nullptr, "USERNAME"}, "username1", "John", "Smith"}};
+      {{"USERNAME", nullptr, "uSeRNaMe"},
+       "username1",
+       "John",
+       "Smith+username3"},
+      {{"uSeRNaMe", nullptr, "USERNAME"},
+       "username1",
+       "John",
+       "Smith+username3"}};
 
   for (size_t i = 0; i < arraysize(cases); ++i) {
     for (size_t nonempty_username_fields = 0; nonempty_username_fields < 2;
@@ -357,8 +393,8 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, IdentifyingUsernameFields) {
         EXPECT_EQ(base::UTF8ToUTF16(cases[i].expected_username_value),
                   password_form->username_value);
         EXPECT_EQ(base::UTF8ToUTF16(cases[i].expected_other_possible_usernames),
-                  base::JoinString(password_form->other_possible_usernames,
-                                   base::ASCIIToUTF16("+")));
+                  OtherPossibleUsernamesToString(
+                      password_form->other_possible_usernames));
       } else {
         EXPECT_TRUE(password_form->username_value.empty());
         EXPECT_TRUE(password_form->other_possible_usernames.empty());
@@ -380,19 +416,20 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, IdentifyingTwoPasswordFields) {
     const char* expected_password_value;
     const char* expected_new_password_element;
     const char* expected_new_password_value;
+    const char* expected_confirmation_element;
   } cases[] = {
       // Two non-empty fields with the same value should be treated as a new
       // password field plus a confirmation field for the new password.
-      {{"alpha", "alpha"}, "", "", "password1", "alpha"},
+      {{"alpha", "alpha"}, "", "", "password1", "alpha", "password2"},
       // The same goes if the fields are yet empty: we speculate that we will
       // identify them as new password fields once they are filled out, and we
       // want to keep our abstract interpretation of the form less flaky.
-      {{"", ""}, "password1", "", "password2", ""},
+      {{"", ""}, "password1", "", "password2", "", ""},
       // Two different values should be treated as a password change form, one
       // that also asks for the current password, but only once for the new.
-      {{"alpha", ""}, "password1", "alpha", "password2", ""},
-      {{"", "beta"}, "password1", "", "password2", "beta"},
-      {{"alpha", "beta"}, "password1", "alpha", "password2", "beta"}};
+      {{"alpha", ""}, "password1", "alpha", "password2", "", ""},
+      {{"", "beta"}, "password1", "", "password2", "beta", ""},
+      {{"alpha", "beta"}, "password1", "alpha", "password2", "beta", ""}};
 
   for (size_t i = 0; i < arraysize(cases); ++i) {
     SCOPED_TRACE(testing::Message() << "Iteration " << i);
@@ -417,12 +454,16 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, IdentifyingTwoPasswordFields) {
               password_form->new_password_element);
     EXPECT_EQ(base::UTF8ToUTF16(cases[i].expected_new_password_value),
               password_form->new_password_value);
+    EXPECT_EQ(base::UTF8ToUTF16(cases[i].expected_confirmation_element),
+              password_form->confirmation_password_element);
 
     // Do a basic sanity check that we are still selecting the right username.
     EXPECT_EQ(base::UTF8ToUTF16("username1"), password_form->username_element);
     EXPECT_EQ(base::UTF8ToUTF16("William"), password_form->username_value);
-    EXPECT_THAT(password_form->other_possible_usernames,
-                testing::ElementsAre(base::UTF8ToUTF16("Smith")));
+    EXPECT_THAT(
+        password_form->other_possible_usernames,
+        testing::ElementsAre(PossibleUsernamePair(
+            base::UTF8ToUTF16("Smith"), base::UTF8ToUTF16("username2"))));
   }
 }
 
@@ -435,24 +476,30 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, IdentifyingThreePasswordFields) {
     const char* expected_password_value;
     const char* expected_new_password_element;
     const char* expected_new_password_value;
+    const char* expected_confirmation_element;
   } cases[] = {
       // Two fields with the same value, and one different: we should treat this
       // as a password change form with confirmation for the new password. Note
       // that we only recognize (current + new + new) and (new + new + current)
       // without autocomplete attributes.
-      {{"alpha", "", ""}, "password1", "alpha", "password2", ""},
-      {{"", "beta", "beta"}, "password1", "", "password2", "beta"},
-      {{"alpha", "beta", "beta"}, "password1", "alpha", "password2", "beta"},
+      {{"alpha", "", ""}, "password1", "alpha", "password2", "", "password3"},
+      {{"", "beta", "beta"}, "password1", "", "password2", "beta", "password3"},
+      {{"alpha", "beta", "beta"},
+       "password1",
+       "alpha",
+       "password2",
+       "beta",
+       "password3"},
       // If confirmed password comes first, assume that the third password
       // field is related to security question, SSN, or credit card and ignore
       // it.
-      {{"beta", "beta", "alpha"}, "", "", "password1", "beta"},
+      {{"beta", "beta", "alpha"}, "", "", "password1", "beta", "password2"},
       // If the fields are yet empty, we speculate that we will identify them as
       // (current + new + new) once they are filled out, so we should classify
       // them the same for now to keep our abstract interpretation less flaky.
-      {{"", "", ""}, "password1", "", "password2", ""}};
-      // Note: In all other cases, we give up and consider the form invalid.
-      // This is tested in InvalidFormDueToConfusingPasswordFields.
+      {{"", "", ""}, "password1", "", "password2", "", "password3"}};
+  // Note: In all other cases, we give up and consider the form invalid.
+  // This is tested in InvalidFormDueToConfusingPasswordFields.
 
   for (size_t i = 0; i < arraysize(cases); ++i) {
     SCOPED_TRACE(testing::Message() << "Iteration " << i);
@@ -478,12 +525,16 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, IdentifyingThreePasswordFields) {
               password_form->new_password_element);
     EXPECT_EQ(base::UTF8ToUTF16(cases[i].expected_new_password_value),
               password_form->new_password_value);
+    EXPECT_EQ(base::UTF8ToUTF16(cases[i].expected_confirmation_element),
+              password_form->confirmation_password_element);
 
     // Do a basic sanity check that we are still selecting the right username.
     EXPECT_EQ(base::UTF8ToUTF16("username1"), password_form->username_element);
     EXPECT_EQ(base::UTF8ToUTF16("William"), password_form->username_value);
-    EXPECT_THAT(password_form->other_possible_usernames,
-                testing::ElementsAre(base::UTF8ToUTF16("Smith")));
+    EXPECT_THAT(
+        password_form->other_possible_usernames,
+        testing::ElementsAre(PossibleUsernamePair(
+            base::UTF8ToUTF16("Smith"), base::UTF8ToUTF16("username2"))));
   }
 }
 
@@ -834,11 +885,15 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
     EXPECT_EQ(base::UTF8ToUTF16(cases[i].expected_username_value),
               password_form->username_value);
     if (strcmp(cases[i].expected_username_value, "William") == 0) {
-      EXPECT_THAT(password_form->other_possible_usernames,
-                  testing::ElementsAre(base::UTF8ToUTF16("Smith")));
+      EXPECT_THAT(
+          password_form->other_possible_usernames,
+          testing::ElementsAre(PossibleUsernamePair(
+              base::UTF8ToUTF16("Smith"), base::UTF8ToUTF16("username2"))));
     } else {
-      EXPECT_THAT(password_form->other_possible_usernames,
-                  testing::ElementsAre(base::UTF8ToUTF16("William")));
+      EXPECT_THAT(
+          password_form->other_possible_usernames,
+          testing::ElementsAre(PossibleUsernamePair(
+              base::UTF8ToUTF16("William"), base::UTF8ToUTF16("username1"))));
     }
     EXPECT_EQ(base::UTF8ToUTF16(cases[i].expected_password_element),
               password_form->password_element);
@@ -853,12 +908,14 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
   }
 }
 
-TEST_F(MAYBE_PasswordFormConversionUtilsTest, IgnoreNonDisplayedTextFields) {
+TEST_F(MAYBE_PasswordFormConversionUtilsTest, IgnoreInvisibledTextFields) {
   PasswordFormBuilder builder(kTestFormActionURL);
 
   builder.AddNonDisplayedTextField("nondisplayed1", "nodispalyed_value1");
+  builder.AddNonVisibleTextField("nonvisible1", "nonvisible_value1");
   builder.AddTextField("username", "johnsmith", nullptr);
   builder.AddNonDisplayedTextField("nondisplayed2", "nodispalyed_value2");
+  builder.AddNonVisiblePasswordField("nonvisible2", "nonvisible_value2");
   builder.AddPasswordField("password", "secret", nullptr);
   builder.AddPasswordField("password", "secret", nullptr);
   builder.AddSubmitButton("submit");
@@ -874,12 +931,16 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, IgnoreNonDisplayedTextFields) {
   EXPECT_EQ(base::UTF8ToUTF16("secret"), password_form->new_password_value);
 }
 
-TEST_F(MAYBE_PasswordFormConversionUtilsTest, IgnoreNonDisplayedLoginPairs) {
+TEST_F(MAYBE_PasswordFormConversionUtilsTest, IgnoreInvisiblLoginPairs) {
   PasswordFormBuilder builder(kTestFormActionURL);
 
   builder.AddNonDisplayedTextField("nondisplayed1", "nodispalyed_value1");
   builder.AddNonDisplayedPasswordField("nondisplayed2", "nodispalyed_value2");
+  builder.AddNonVisibleTextField("nonvisible1", "nonvisible_value1");
+  builder.AddNonVisiblePasswordField("nonvisible2", "nonvisible_value2");
   builder.AddTextField("username", "johnsmith", nullptr);
+  builder.AddNonVisibleTextField("nonvisible3", "nonvisible_value3");
+  builder.AddNonVisiblePasswordField("nonvisible4", "nonvisible_value4");
   builder.AddNonDisplayedTextField("nondisplayed3", "nodispalyed_value3");
   builder.AddNonDisplayedPasswordField("nondisplayed4", "nodispalyed_value4");
   builder.AddPasswordField("password", "secret", nullptr);
@@ -916,6 +977,23 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, OnlyNonDisplayedLoginPair) {
             password_form->password_element);
   EXPECT_EQ(base::UTF8ToUTF16("secret"),
             password_form->password_value);
+}
+
+TEST_F(MAYBE_PasswordFormConversionUtilsTest, OnlyNonVisibleLoginPair) {
+  PasswordFormBuilder builder(kTestFormActionURL);
+
+  builder.AddNonVisibleTextField("username", "William");
+  builder.AddNonVisiblePasswordField("password", "secret");
+  builder.AddSubmitButton("submit");
+  std::string html = builder.ProduceHTML();
+
+  std::unique_ptr<PasswordForm> password_form =
+      LoadHTMLAndConvertForm(html, nullptr, false);
+  ASSERT_TRUE(password_form);
+  EXPECT_EQ(base::UTF8ToUTF16("username"), password_form->username_element);
+  EXPECT_EQ(base::UTF8ToUTF16("William"), password_form->username_value);
+  EXPECT_EQ(base::UTF8ToUTF16("password"), password_form->password_element);
+  EXPECT_EQ(base::UTF8ToUTF16("secret"), password_form->password_value);
 }
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest,
@@ -1316,7 +1394,7 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, IsGaiaReauthFormIgnored) {
     LoadWebFormFromHTML(html, &form);
     std::vector<WebFormControlElement> control_elements;
     WebVector<blink::WebFormControlElement> web_control_elements;
-    form.getFormControlElements(web_control_elements);
+    form.GetFormControlElements(web_control_elements);
     control_elements.assign(web_control_elements.begin(),
                             web_control_elements.end());
     EXPECT_EQ(test_case.expected_form_is_reauth,
@@ -1454,6 +1532,48 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
       LoadHTMLAndConvertForm(html, nullptr, true);
   ASSERT_TRUE(password_form);
   EXPECT_FALSE(password_form->does_look_like_signup_form);
+}
+
+TEST_F(MAYBE_PasswordFormConversionUtilsTest, TooManyFieldsToParseForm) {
+  PasswordFormBuilder builder(kTestFormActionURL);
+  for (size_t i = 0; i < form_util::kMaxParseableFields + 1; ++i)
+    builder.AddTextField("id", "value", "autocomplete");
+  std::unique_ptr<PasswordForm> password_form =
+      LoadHTMLAndConvertForm(builder.ProduceHTML(), nullptr, false);
+  EXPECT_FALSE(password_form);
+}
+
+TEST_F(MAYBE_PasswordFormConversionUtilsTest, OnlyCreditCardFields) {
+  PasswordFormBuilder builder(kTestFormActionURL);
+  builder.AddTextField("ccname", "johnsmith", "cc-name");
+  builder.AddPasswordField("cc_security_code", "0123456789", "cc-csc");
+  builder.AddSubmitButton("submit");
+  std::string html = builder.ProduceHTML();
+
+  std::unique_ptr<PasswordForm> password_form =
+      LoadHTMLAndConvertForm(html, nullptr, false);
+  EXPECT_FALSE(password_form);
+}
+
+TEST_F(MAYBE_PasswordFormConversionUtilsTest,
+       FieldsWithAndWithoutCreditCardAttributes) {
+  PasswordFormBuilder builder(kTestFormActionURL);
+  builder.AddTextField("username", "johnsmith", nullptr);
+  builder.AddTextField("ccname", "john_smith", "cc-name");
+  builder.AddPasswordField("cc_security_code", "0123456789", "random cc-csc");
+  builder.AddPasswordField("password", "secret", nullptr);
+  builder.AddSubmitButton("submit");
+  std::string html = builder.ProduceHTML();
+
+  std::unique_ptr<PasswordForm> password_form =
+      LoadHTMLAndConvertForm(html, nullptr, false);
+
+  ASSERT_TRUE(password_form);
+
+  EXPECT_EQ(base::UTF8ToUTF16("username"), password_form->username_element);
+  EXPECT_EQ(base::UTF8ToUTF16("johnsmith"), password_form->username_value);
+  EXPECT_EQ(base::UTF8ToUTF16("password"), password_form->password_element);
+  EXPECT_EQ(base::UTF8ToUTF16("secret"), password_form->password_value);
 }
 
 }  // namespace autofill

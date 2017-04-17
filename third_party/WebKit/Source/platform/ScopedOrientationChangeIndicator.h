@@ -6,31 +6,32 @@
 #define ScopedOrientationChangeIndicator_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT ScopedOrientationChangeIndicator final {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(ScopedOrientationChangeIndicator);
-public:
-    static bool processingOrientationChange();
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(ScopedOrientationChangeIndicator);
 
-    explicit ScopedOrientationChangeIndicator();
-    ~ScopedOrientationChangeIndicator();
+ public:
+  static bool ProcessingOrientationChange();
 
-private:
-    enum class State {
-        Processing,
-        NotProcessing,
-    };
+  explicit ScopedOrientationChangeIndicator();
+  ~ScopedOrientationChangeIndicator();
 
-    static State s_state;
+ private:
+  enum class State {
+    kProcessing,
+    kNotProcessing,
+  };
 
-    State m_previousState = State::NotProcessing;
+  static State state_;
+
+  State previous_state_ = State::kNotProcessing;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

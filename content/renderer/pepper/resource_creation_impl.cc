@@ -73,6 +73,10 @@ PP_Resource ResourceCreationImpl::CreateAudioInput(PP_Instance instance) {
   return 0;  // Not supported in-process.
 }
 
+PP_Resource ResourceCreationImpl::CreateAudioOutput(PP_Instance instance) {
+  return 0;  // Not supported in-process.
+}
+
 PP_Resource ResourceCreationImpl::CreateCompositor(PP_Instance instance) {
   return 0;  // Not supported in-process.
 }
@@ -151,7 +155,7 @@ PP_Resource ResourceCreationImpl::CreateImageData(PP_Instance instance,
   // TODO(ananta)
   // Look into whether this causes a loss of functionality. From cursory
   // testing things seem to work well.
-  if (IsWin32kRendererLockdownEnabled())
+  if (IsWin32kLockdownEnabled())
     return CreateImageDataSimple(instance, format, size, init_to_zero);
 #endif
   return PPB_ImageData_Impl::Create(instance,

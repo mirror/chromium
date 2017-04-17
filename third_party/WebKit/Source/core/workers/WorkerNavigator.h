@@ -27,35 +27,42 @@
 #define WorkerNavigator_h
 
 #include "bindings/core/v8/ScriptWrappable.h"
-#include "core/frame/NavigatorCPU.h"
+#include "core/CoreExport.h"
+#include "core/frame/NavigatorConcurrentHardware.h"
 #include "core/frame/NavigatorID.h"
 #include "core/frame/NavigatorOnLine.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class WorkerNavigator final : public GarbageCollectedFinalized<WorkerNavigator>, public ScriptWrappable, public NavigatorCPU, public NavigatorID, public NavigatorOnLine, public Supplementable<WorkerNavigator> {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(WorkerNavigator);
-public:
-    static WorkerNavigator* create(const String& userAgent)
-    {
-        return new WorkerNavigator(userAgent);
-    }
-    virtual ~WorkerNavigator();
+class CORE_EXPORT WorkerNavigator final
+    : public GarbageCollectedFinalized<WorkerNavigator>,
+      public ScriptWrappable,
+      public NavigatorConcurrentHardware,
+      public NavigatorID,
+      public NavigatorOnLine,
+      public Supplementable<WorkerNavigator> {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(WorkerNavigator);
 
-    String userAgent() const override;
+ public:
+  static WorkerNavigator* Create(const String& user_agent) {
+    return new WorkerNavigator(user_agent);
+  }
+  virtual ~WorkerNavigator();
 
-    DECLARE_TRACE();
+  String userAgent() const override;
 
-private:
-    explicit WorkerNavigator(const String&);
+  DECLARE_TRACE();
 
-    String m_userAgent;
+ private:
+  explicit WorkerNavigator(const String&);
+
+  String user_agent_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WorkerNavigator_h
+#endif  // WorkerNavigator_h

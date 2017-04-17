@@ -130,8 +130,7 @@ std::string FileIconSource::GetSource() const {
 
 void FileIconSource::StartDataRequest(
     const std::string& url_path,
-    int render_process_id,
-    int render_frame_id,
+    const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
     const content::URLDataSource::GotDataCallback& callback) {
   std::string query;
   base::FilePath file_path;
@@ -145,6 +144,10 @@ void FileIconSource::StartDataRequest(
 std::string FileIconSource::GetMimeType(const std::string&) const {
   // Rely on image decoder inferring the correct type.
   return std::string();
+}
+
+bool FileIconSource::AllowCaching() const {
+  return false;
 }
 
 void FileIconSource::OnFileIconDataAvailable(const IconRequestDetails& details,

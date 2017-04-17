@@ -29,8 +29,8 @@
 
 #include "platform/Timer.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
@@ -48,81 +48,88 @@ class XMLHttpRequest;
 // - "progress" event means an event named "progress"
 // - ProgressEvent means an event using the ProgressEvent interface defined in
 //   the spec.
-class XMLHttpRequestProgressEventThrottle final : public GarbageCollectedFinalized<XMLHttpRequestProgressEventThrottle>, public TimerBase {
-public:
-    static XMLHttpRequestProgressEventThrottle* create(XMLHttpRequest* eventTarget)
-    {
-        return new XMLHttpRequestProgressEventThrottle(eventTarget);
-    }
-    ~XMLHttpRequestProgressEventThrottle() override;
+class XMLHttpRequestProgressEventThrottle final
+    : public GarbageCollectedFinalized<XMLHttpRequestProgressEventThrottle>,
+      public TimerBase {
+ public:
+  static XMLHttpRequestProgressEventThrottle* Create(
+      XMLHttpRequest* event_target) {
+    return new XMLHttpRequestProgressEventThrottle(event_target);
+  }
+  ~XMLHttpRequestProgressEventThrottle() override;
 
-    enum DeferredEventAction {
-        Ignore,
-        Clear,
-        Flush,
-    };
+  enum DeferredEventAction {
+    kIgnore,
+    kClear,
+    kFlush,
+  };
 
-    // Dispatches a ProgressEvent.
-    //
-    // Special treatment for events named "progress" is implemented to dispatch
-    // them at the required frequency. If this object is suspended, the given
-    // ProgressEvent overwrites the existing. I.e. only the latest one gets
-    // queued. If the timer is running, this method just updates
-    // m_lengthComputable, m_loaded and m_total. They'll be used on next
-    // fired() call.
-    // For an event named "progress", a readyStateChange will be dispatched
-    // as well.
-    void dispatchProgressEvent(const AtomicString&, bool lengthComputable, unsigned long long loaded, unsigned long long total);
-    // Dispatches the given event after operation about the "progress" event
-    // depending on the value of the ProgressEventAction argument.
-    void dispatchReadyStateChangeEvent(Event*, DeferredEventAction);
+  // Dispatches a ProgressEvent.
+  //
+  // Special treatment for events named "progress" is implemented to dispatch
+  // them at the required frequency. If this object is suspended, the given
+  // ProgressEvent overwrites the existing. I.e. only the latest one gets
+  // queued. If the timer is running, this method just updates
+  // m_lengthComputable, m_loaded and m_total. They'll be used on next
+  // fired() call.
+  // For an event named "progress", a readyStateChange will be dispatched
+  // as well.
+  void DispatchProgressEvent(const AtomicString&,
+                             bool length_computable,
+                             unsigned long long loaded,
+                             unsigned long long total);
+  // Dispatches the given event after operation about the "progress" event
+  // depending on the value of the ProgressEventAction argument.
+  void DispatchReadyStateChangeEvent(Event*, DeferredEventAction);
 
-    void suspend();
-    void resume();
+  void Suspend();
+  void Resume();
 
-    // Need to promptly stop this timer when it is deemed finalizable.
-    EAGERLY_FINALIZE();
-    DECLARE_TRACE();
+  // Need to promptly stop this timer when it is deemed finalizable.
+  EAGERLY_FINALIZE();
+  DECLARE_TRACE();
 
-private:
-    explicit XMLHttpRequestProgressEventThrottle(XMLHttpRequest*);
+ private:
+  explicit XMLHttpRequestProgressEventThrottle(XMLHttpRequest*);
 
-    // Dispatches a "progress" progress event and usually a readyStateChange
-    // event as well.
-    void dispatchProgressProgressEvent(Event*);
+  // Dispatches a "progress" progress event and usually a readyStateChange
+  // event as well.
+  void DispatchProgressProgressEvent(Event*);
 
-    // The main purpose of this class is to throttle the "progress"
-    // ProgressEvent dispatching. This class represents such a deferred
-    // "progress" ProgressEvent.
-    class DeferredEvent {
-    public:
-        DeferredEvent();
-        void set(bool lengthComputable, unsigned long long loaded, unsigned long long total);
-        void clear();
-        bool isSet() const { return m_isSet; }
-        Event* take();
+  // The main purpose of this class is to throttle the "progress"
+  // ProgressEvent dispatching. This class represents such a deferred
+  // "progress" ProgressEvent.
+  class DeferredEvent {
+   public:
+    DeferredEvent();
+    void Set(bool length_computable,
+             unsigned long long loaded,
+             unsigned long long total);
+    void Clear();
+    bool IsSet() const { return is_set_; }
+    Event* Take();
 
-    private:
-        unsigned long long m_loaded;
-        unsigned long long m_total;
-        bool m_lengthComputable;
+   private:
+    unsigned long long loaded_;
+    unsigned long long total_;
+    bool length_computable_;
 
-        bool m_isSet;
-    };
+    bool is_set_;
+  };
 
-    void fired() override;
+  void Fired() override;
 
-    Member<XMLHttpRequest> m_target;
+  Member<XMLHttpRequest> target_;
 
-    // A slot for the deferred "progress" ProgressEvent. When multiple events
-    // arrive, only the last one is stored and others are discarded.
-    DeferredEvent m_deferred;
+  // A slot for the deferred "progress" ProgressEvent. When multiple events
+  // arrive, only the last one is stored and others are discarded.
+  DeferredEvent deferred_;
 
-    // True if any "progress" progress event has been dispatched since
-    // |m_target|'s readyState changed.
-    bool m_hasDispatchedProgressProgressEvent;
+  // True if any "progress" progress event has been dispatched since
+  // |m_target|'s readyState changed.
+  bool has_dispatched_progress_progress_event_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // XMLHttpRequestProgressEventThrottle_h
+#endif  // XMLHttpRequestProgressEventThrottle_h

@@ -31,50 +31,56 @@
 
 namespace blink {
 
-DocumentXPathEvaluator::DocumentXPathEvaluator()
-{
+DocumentXPathEvaluator::DocumentXPathEvaluator(Document& document)
+    : Supplement<Document>(document) {}
+
+DocumentXPathEvaluator& DocumentXPathEvaluator::From(Document& document) {
+  DocumentXPathEvaluator* cache = static_cast<DocumentXPathEvaluator*>(
+      Supplement<Document>::From(document, SupplementName()));
+  if (!cache) {
+    cache = new DocumentXPathEvaluator(document);
+    Supplement<Document>::ProvideTo(document, SupplementName(), cache);
+  }
+  return *cache;
 }
 
-DocumentXPathEvaluator& DocumentXPathEvaluator::from(Supplementable<Document>& document)
-{
-    DocumentXPathEvaluator* cache = static_cast<DocumentXPathEvaluator*>(Supplement<Document>::from(document, supplementName()));
-    if (!cache) {
-        cache = new DocumentXPathEvaluator;
-        Supplement<Document>::provideTo(document, supplementName(), cache);
-    }
-    return *cache;
+XPathExpression* DocumentXPathEvaluator::createExpression(
+    Document& document,
+    const String& expression,
+    XPathNSResolver* resolver,
+    ExceptionState& exception_state) {
+  DocumentXPathEvaluator& suplement = From(document);
+  if (!suplement.xpath_evaluator_)
+    suplement.xpath_evaluator_ = XPathEvaluator::Create();
+  return suplement.xpath_evaluator_->createExpression(expression, resolver,
+                                                      exception_state);
 }
 
-XPathExpression* DocumentXPathEvaluator::createExpression(Supplementable<Document>& document, const String& expression, XPathNSResolver* resolver, ExceptionState& exceptionState)
-{
-    DocumentXPathEvaluator& suplement = from(document);
-    if (!suplement.m_xpathEvaluator)
-        suplement.m_xpathEvaluator = XPathEvaluator::create();
-    return suplement.m_xpathEvaluator->createExpression(expression, resolver, exceptionState);
+XPathNSResolver* DocumentXPathEvaluator::createNSResolver(Document& document,
+                                                          Node* node_resolver) {
+  DocumentXPathEvaluator& suplement = From(document);
+  if (!suplement.xpath_evaluator_)
+    suplement.xpath_evaluator_ = XPathEvaluator::Create();
+  return suplement.xpath_evaluator_->createNSResolver(node_resolver);
 }
 
-XPathNSResolver* DocumentXPathEvaluator::createNSResolver(Supplementable<Document>& document, Node* nodeResolver)
-{
-    DocumentXPathEvaluator& suplement = from(document);
-    if (!suplement.m_xpathEvaluator)
-        suplement.m_xpathEvaluator = XPathEvaluator::create();
-    return suplement.m_xpathEvaluator->createNSResolver(nodeResolver);
+XPathResult* DocumentXPathEvaluator::evaluate(Document& document,
+                                              const String& expression,
+                                              Node* context_node,
+                                              XPathNSResolver* resolver,
+                                              unsigned short type,
+                                              const ScriptValue&,
+                                              ExceptionState& exception_state) {
+  DocumentXPathEvaluator& suplement = From(document);
+  if (!suplement.xpath_evaluator_)
+    suplement.xpath_evaluator_ = XPathEvaluator::Create();
+  return suplement.xpath_evaluator_->evaluate(
+      expression, context_node, resolver, type, ScriptValue(), exception_state);
 }
 
-XPathResult* DocumentXPathEvaluator::evaluate(Supplementable<Document>& document, const String& expression,
-    Node* contextNode, XPathNSResolver* resolver, unsigned short type,
-    const ScriptValue&, ExceptionState& exceptionState)
-{
-    DocumentXPathEvaluator& suplement = from(document);
-    if (!suplement.m_xpathEvaluator)
-        suplement.m_xpathEvaluator = XPathEvaluator::create();
-    return suplement.m_xpathEvaluator->evaluate(expression, contextNode, resolver, type, ScriptValue(), exceptionState);
+DEFINE_TRACE(DocumentXPathEvaluator) {
+  visitor->Trace(xpath_evaluator_);
+  Supplement<Document>::Trace(visitor);
 }
 
-DEFINE_TRACE(DocumentXPathEvaluator)
-{
-    visitor->trace(m_xpathEvaluator);
-    Supplement<Document>::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

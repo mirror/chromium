@@ -4,53 +4,74 @@
 
 #include "chrome/browser/ui/ash/launcher/arc_app_window_launcher_item_controller.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
+#include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h"
-#include "chrome/browser/ui/ash/launcher/chrome_launcher_app_menu_item_v2app.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
-#include "chrome/browser/ui/ash/launcher/launcher_application_menu_item_model.h"
+#include "chrome/browser/ui/ash/launcher/launcher_controller_helper.h"
+#include "ui/aura/window.h"
+#include "ui/base/base_window.h"
 
 ArcAppWindowLauncherItemController::ArcAppWindowLauncherItemController(
-    const std::string& arc_app_id,
-    ChromeLauncherController* controller)
-    : AppWindowLauncherItemController(TYPE_APP,
-                                      arc_app_id,
-                                      arc_app_id,
-                                      controller) {}
+    const std::string& arc_app_id)
+    : AppWindowLauncherItemController(ash::AppLaunchId(arc_app_id)) {}
 
 ArcAppWindowLauncherItemController::~ArcAppWindowLauncherItemController() {}
 
-base::string16 ArcAppWindowLauncherItemController::GetTitle() {
-  ArcAppListPrefs* arc_prefs =
-      ArcAppListPrefs::Get(launcher_controller()->GetProfile());
-  DCHECK(arc_prefs);
-  std::unique_ptr<ArcAppListPrefs::AppInfo> app_info = arc_prefs->GetApp(
-      ArcAppWindowLauncherController::GetArcAppIdFromShelfAppId(app_id()));
-  if (!app_info) {
-    NOTREACHED();
-    return base::string16();
+void ArcAppWindowLauncherItemController::AddTaskId(int task_id) {
+  task_ids_.insert(task_id);
+}
+
+void ArcAppWindowLauncherItemController::RemoveTaskId(int task_id) {
+  task_ids_.erase(task_id);
+}
+
+bool ArcAppWindowLauncherItemController::HasAnyTasks() const {
+  return !task_ids_.empty();
+}
+
+void ArcAppWindowLauncherItemController::ItemSelected(
+    std::unique_ptr<ui::Event> event,
+    int64_t display_id,
+    ash::ShelfLaunchSource source,
+    const ItemSelectedCallback& callback) {
+  if (window_count()) {
+    AppWindowLauncherItemController::ItemSelected(std::move(event), display_id,
+                                                  source, callback);
+    return;
   }
 
-  return base::UTF8ToUTF16(app_info->name);
+  if (task_ids_.empty()) {
+    NOTREACHED();
+    callback.Run(ash::SHELF_ACTION_NONE, base::nullopt);
+    return;
+  }
+  arc::SetTaskActive(*task_ids_.begin());
+  callback.Run(ash::SHELF_ACTION_NEW_WINDOW_CREATED, base::nullopt);
 }
 
-ash::ShelfMenuModel* ArcAppWindowLauncherItemController::CreateApplicationMenu(
+void ArcAppWindowLauncherItemController::ExecuteCommand(uint32_t command_id,
+                                                        int32_t event_flags) {
+  ActivateIndexedApp(command_id);
+}
+
+ash::MenuItemList ArcAppWindowLauncherItemController::GetAppMenuItems(
     int event_flags) {
-  return new LauncherApplicationMenuItemModel(GetApplicationList(event_flags));
-}
-
-ChromeLauncherAppMenuItems
-ArcAppWindowLauncherItemController::GetApplicationList(int event_flags) {
-  ChromeLauncherAppMenuItems items =
-      AppWindowLauncherItemController::GetApplicationList(event_flags);
-  for (size_t i = 0; i < windows().size(); ++i) {
+  ash::MenuItemList items;
+  base::string16 app_title = LauncherControllerHelper::GetAppTitle(
+      ChromeLauncherController::instance()->profile(), app_id());
+  for (auto it = windows().begin(); it != windows().end(); ++it) {
     // TODO(khmel): resolve correct icon here.
-    gfx::Image image;
-    items.push_back(new ChromeLauncherAppMenuItemV2App(
-        GetTitle(), &image, app_id(), launcher_controller(), i,
-        i == 0 /* has_leading_separator */));
+    size_t i = std::distance(windows().begin(), it);
+    aura::Window* window = (*it)->GetNativeWindow();
+    ash::mojom::MenuItemPtr item = ash::mojom::MenuItem::New();
+    item->command_id = base::checked_cast<uint32_t>(i);
+    item->label = (window && !window->GetTitle().empty()) ? window->GetTitle()
+                                                          : app_title;
+    items.push_back(std::move(item));
   }
   return items;
 }

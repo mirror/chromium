@@ -4,6 +4,8 @@
 
 #include "device/geolocation/network_location_provider.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
@@ -72,9 +74,8 @@ const Geoposition* NetworkLocationProvider::PositionCache::FindPosition(
 // Returns true if a good key was generated, false otherwise.
 //
 // static
-bool NetworkLocationProvider::PositionCache::MakeKey(
-    const WifiData& wifi_data,
-    base::string16* key) {
+bool NetworkLocationProvider::PositionCache::MakeKey(const WifiData& wifi_data,
+                                                     base::string16* key) {
   // Currently we use only WiFi data and base the key only on the MAC addresses.
   DCHECK(key);
   key->clear();
@@ -92,13 +93,13 @@ bool NetworkLocationProvider::PositionCache::MakeKey(
 }
 
 // NetworkLocationProvider factory function
-LocationProviderBase* NewNetworkLocationProvider(
+LocationProvider* NewNetworkLocationProvider(
     const scoped_refptr<AccessTokenStore>& access_token_store,
     const scoped_refptr<net::URLRequestContextGetter>& context,
     const GURL& url,
     const base::string16& access_token) {
-  return new NetworkLocationProvider(
-      access_token_store, context, url, access_token);
+  return new NetworkLocationProvider(access_token_store, context, url,
+                                     access_token);
 }
 
 // NetworkLocationProvider
@@ -119,8 +120,7 @@ NetworkLocationProvider::NetworkLocationProvider(
       position_cache_(new PositionCache),
       weak_factory_(this) {
   request_.reset(new NetworkLocationRequest(
-      url_context_getter,
-      url,
+      url_context_getter, url,
       base::Bind(&NetworkLocationProvider::OnLocationResponse,
                  base::Unretained(this))));
 }
@@ -130,26 +130,20 @@ NetworkLocationProvider::~NetworkLocationProvider() {
 }
 
 // LocationProvider implementation
-void NetworkLocationProvider::GetPosition(Geoposition* position) {
-  DCHECK(position);
-  *position = position_;
+const Geoposition& NetworkLocationProvider::GetPosition() {
+  return position_;
 }
 
-void NetworkLocationProvider::RequestRefresh() {
-  // TODO(joth): When called via the public (base class) interface, this should
-  // poke each data provider to get them to expedite their next scan.
-  // Whilst in the delayed start, only send request if all data is ready.
-  // TODO(mcasas): consider not using HasWeakPtrs() https://crbug.com/629158.
-  if (!weak_factory_.HasWeakPtrs() || is_wifi_data_complete_) {
-    RequestPosition();
-  }
+void NetworkLocationProvider::SetUpdateCallback(
+    const LocationProvider::LocationProviderUpdateCallback& callback) {
+  location_provider_update_callback_ = callback;
 }
 
 void NetworkLocationProvider::OnPermissionGranted() {
   const bool was_permission_granted = is_permission_granted_;
   is_permission_granted_ = true;
   if (!was_permission_granted && IsStarted()) {
-    RequestRefresh();
+    RequestPosition();
   }
 }
 
@@ -178,7 +172,8 @@ void NetworkLocationProvider::OnLocationResponse(
   }
 
   // Let listeners know that we now have a position available.
-  NotifyCallback(position_);
+  if (!location_provider_update_callback_.is_null())
+    location_provider_update_callback_.Run(this, position_);
 }
 
 bool NetworkLocationProvider::StartProvider(bool high_accuracy) {
@@ -214,7 +209,7 @@ void NetworkLocationProvider::OnWifiDataUpdated() {
   wifi_timestamp_ = base::Time::Now();
 
   is_new_data_available_ = is_wifi_data_complete_;
-  RequestRefresh();
+  RequestPosition();
 }
 
 void NetworkLocationProvider::StopProvider() {
@@ -229,6 +224,10 @@ void NetworkLocationProvider::StopProvider() {
 // Other methods
 void NetworkLocationProvider::RequestPosition() {
   DCHECK(CalledOnValidThread());
+
+  // TODO(mcasas): consider not using HasWeakPtrs() https://crbug.com/629158.
+  if (weak_factory_.HasWeakPtrs() && !is_wifi_data_complete_)
+    return;
   if (!is_new_data_available_)
     return;
 
@@ -240,13 +239,16 @@ void NetworkLocationProvider::RequestPosition() {
     DCHECK(cached_position->Validate());
     // Record the position and update its timestamp.
     position_ = *cached_position;
+
     // The timestamp of a position fix is determined by the timestamp
     // of the source data update. (The value of position_.timestamp from
     // the cache could be from weeks ago!)
     position_.timestamp = wifi_timestamp_;
     is_new_data_available_ = false;
+
     // Let listeners know that we now have a position available.
-    NotifyCallback(position_);
+    if (!location_provider_update_callback_.is_null())
+      location_provider_update_callback_.Run(this, position_);
     return;
   }
   // Don't send network requests until authorized. http://crbug.com/39171

@@ -10,6 +10,7 @@
 #include "base/callback.h"
 #include "base/json/json_writer.h"
 #include "base/location.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/sequenced_task_runner.h"
@@ -92,7 +93,8 @@ void AttachProperties(const Properties& properties,
 
   base::ListValue* const properties_value = new base::ListValue;
   for (const auto& property : properties) {
-    base::DictionaryValue* const property_value = new base::DictionaryValue;
+    std::unique_ptr<base::DictionaryValue> property_value(
+        new base::DictionaryValue);
     std::string visibility_as_string;
     switch (property.visibility()) {
       case Property::VISIBILITY_PRIVATE:
@@ -105,7 +107,7 @@ void AttachProperties(const Properties& properties,
     property_value->SetString("visibility", visibility_as_string);
     property_value->SetString("key", property.key());
     property_value->SetString("value", property.value());
-    properties_value->Append(property_value);
+    properties_value->Append(std::move(property_value));
   }
   request_body->Set("properties", properties_value);
 }
@@ -533,6 +535,24 @@ bool FilesCopyRequest::GetContentData(std::string* upload_content_type,
   DVLOG(1) << "FilesCopy data: " << *upload_content_type << ", ["
            << *upload_content << "]";
   return true;
+}
+
+//========================= TeamDriveListRequest =============================
+
+TeamDriveListRequest::TeamDriveListRequest(
+    RequestSender* sender,
+    const DriveApiUrlGenerator& url_generator,
+    const TeamDriveListCallback& callback)
+    : DriveApiDataRequest<TeamDriveList>(sender, callback),
+      url_generator_(url_generator),
+      max_results_(30) {
+  DCHECK(!callback.is_null());
+}
+
+TeamDriveListRequest::~TeamDriveListRequest() {}
+
+GURL TeamDriveListRequest::GetURLInternal() const {
+  return url_generator_.GetTeamDriveListUrl(max_results_, page_token_);
 }
 
 //============================= FilesListRequest =============================
@@ -1140,11 +1160,10 @@ bool PermissionsInsertRequest::GetContentData(std::string* upload_content_type,
 
 SingleBatchableDelegateRequest::SingleBatchableDelegateRequest(
     RequestSender* sender,
-    BatchableDelegate* delegate)
+    std::unique_ptr<BatchableDelegate> delegate)
     : UrlFetchRequestBase(sender),
-      delegate_(delegate),
-      weak_ptr_factory_(this) {
-}
+      delegate_(std::move(delegate)),
+      weak_ptr_factory_(this) {}
 
 SingleBatchableDelegateRequest::~SingleBatchableDelegateRequest() {
 }
@@ -1226,7 +1245,7 @@ void BatchUploadRequest::AddRequest(BatchableDelegate* request) {
   DCHECK(request);
   DCHECK(GetChildEntry(request) == child_requests_.end());
   DCHECK(!committed_);
-  child_requests_.push_back(new BatchUploadChildEntry(request));
+  child_requests_.push_back(base::MakeUnique<BatchUploadChildEntry>(request));
   request->Prepare(base::Bind(&BatchUploadRequest::OnChildRequestPrepared,
                               weak_ptr_factory_.GetWeakPtr(), request));
 }
@@ -1270,8 +1289,8 @@ void BatchUploadRequest::Cancel() {
 
 // Obtains corresponding child entry of |request_id|. Returns NULL if the
 // entry is not found.
-ScopedVector<BatchUploadChildEntry>::iterator BatchUploadRequest::GetChildEntry(
-    RequestID request_id) {
+std::vector<std::unique_ptr<BatchUploadChildEntry>>::iterator
+BatchUploadRequest::GetChildEntry(RequestID request_id) {
   for (auto it = child_requests_.begin(); it != child_requests_.end(); ++it) {
     if ((*it)->request.get() == request_id)
       return it;
@@ -1290,7 +1309,7 @@ void BatchUploadRequest::MayCompletePrepare() {
   // Build multipart body here.
   int64_t total_size = 0;
   std::vector<ContentTypeAndData> parts;
-  for (auto& child : child_requests_) {
+  for (const auto& child : child_requests_) {
     std::string type;
     std::string data;
     const bool result = child->request->GetContentData(&type, &data);
@@ -1363,11 +1382,18 @@ std::vector<std::string> BatchUploadRequest::GetExtraRequestHeaders() const {
 
 void BatchUploadRequest::ProcessURLFetchResults(const net::URLFetcher* source) {
   // Return the detailed raw HTTP code if the error code is abstracted
-  // DRIVE_OTHER_ERROR.
-  UMA_HISTOGRAM_SPARSE_SLOWLY(kUMADriveBatchUploadResponseCode,
-                              GetErrorCode() != DRIVE_OTHER_ERROR
-                                  ? GetErrorCode()
-                                  : source->GetResponseCode());
+  // DRIVE_OTHER_ERROR. If HTTP connection is failed and the status code is -1,
+  // return network status error.
+  int histogram_error = 0;
+  if (GetErrorCode() != DRIVE_OTHER_ERROR) {
+    histogram_error = GetErrorCode();
+  } else if (source->GetResponseCode() != -1) {
+    histogram_error = source->GetResponseCode();
+  } else {
+    histogram_error = source->GetStatus().error();
+  }
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
+      kUMADriveBatchUploadResponseCode, histogram_error);
 
   if (!IsSuccessfulDriveApiErrorCode(GetErrorCode())) {
     RunCallbackOnPrematureFailure(GetErrorCode());
@@ -1402,7 +1428,7 @@ void BatchUploadRequest::ProcessURLFetchResults(const net::URLFetcher* source) {
 }
 
 void BatchUploadRequest::RunCallbackOnPrematureFailure(DriveApiErrorCode code) {
-  for (auto& child : child_requests_)
+  for (const auto& child : child_requests_)
     child->request->NotifyError(code);
   child_requests_.clear();
 }
@@ -1410,7 +1436,7 @@ void BatchUploadRequest::RunCallbackOnPrematureFailure(DriveApiErrorCode code) {
 void BatchUploadRequest::OnURLFetchUploadProgress(const net::URLFetcher* source,
                                                   int64_t current,
                                                   int64_t total) {
-  for (auto& child : child_requests_) {
+  for (const auto& child : child_requests_) {
     if (child->data_offset <= current &&
         current <= child->data_offset + child->data_size) {
       child->request->NotifyUploadProgress(source, current - child->data_offset,

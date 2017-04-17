@@ -32,66 +32,52 @@
 namespace blink {
 
 FEOffset::FEOffset(Filter* filter, float dx, float dy)
-    : FilterEffect(filter)
-    , m_dx(dx)
-    , m_dy(dy)
-{
+    : FilterEffect(filter), dx_(dx), dy_(dy) {}
+
+FEOffset* FEOffset::Create(Filter* filter, float dx, float dy) {
+  return new FEOffset(filter, dx, dy);
 }
 
-FEOffset* FEOffset::create(Filter* filter, float dx, float dy)
-{
-    return new FEOffset(filter, dx, dy);
+float FEOffset::Dx() const {
+  return dx_;
 }
 
-float FEOffset::dx() const
-{
-    return m_dx;
+void FEOffset::SetDx(float dx) {
+  dx_ = dx;
 }
 
-void FEOffset::setDx(float dx)
-{
-    m_dx = dx;
+float FEOffset::Dy() const {
+  return dy_;
 }
 
-float FEOffset::dy() const
-{
-    return m_dy;
+void FEOffset::SetDy(float dy) {
+  dy_ = dy;
 }
 
-void FEOffset::setDy(float dy)
-{
-    m_dy = dy;
+FloatRect FEOffset::MapEffect(const FloatRect& rect) const {
+  FloatRect result = rect;
+  result.Move(GetFilter()->ApplyHorizontalScale(dx_),
+              GetFilter()->ApplyVerticalScale(dy_));
+  return result;
 }
 
-FloatRect FEOffset::mapRect(const FloatRect& rect, bool forward) const
-{
-    FloatRect result = rect;
-    if (forward)
-        result.move(getFilter()->applyHorizontalScale(m_dx), getFilter()->applyVerticalScale(m_dy));
-    else
-        result.move(-getFilter()->applyHorizontalScale(m_dx), -getFilter()->applyVerticalScale(m_dy));
-    return result;
+sk_sp<SkImageFilter> FEOffset::CreateImageFilter() {
+  Filter* filter = this->GetFilter();
+  SkImageFilter::CropRect crop_rect = GetCropRect();
+  return SkOffsetImageFilter::Make(
+      SkFloatToScalar(filter->ApplyHorizontalScale(dx_)),
+      SkFloatToScalar(filter->ApplyVerticalScale(dy_)),
+      SkiaImageFilterBuilder::Build(InputEffect(0), OperatingColorSpace()),
+      &crop_rect);
 }
 
-sk_sp<SkImageFilter> FEOffset::createImageFilter()
-{
-    Filter* filter = this->getFilter();
-    SkImageFilter::CropRect cropRect = getCropRect();
-    return SkOffsetImageFilter::Make(
-        SkFloatToScalar(filter->applyHorizontalScale(m_dx)),
-        SkFloatToScalar(filter->applyVerticalScale(m_dy)),
-        SkiaImageFilterBuilder::build(inputEffect(0), operatingColorSpace()),
-        &cropRect);
+TextStream& FEOffset::ExternalRepresentation(TextStream& ts, int indent) const {
+  WriteIndent(ts, indent);
+  ts << "[feOffset";
+  FilterEffect::ExternalRepresentation(ts);
+  ts << " dx=\"" << Dx() << "\" dy=\"" << Dy() << "\"]\n";
+  InputEffect(0)->ExternalRepresentation(ts, indent + 1);
+  return ts;
 }
 
-TextStream& FEOffset::externalRepresentation(TextStream& ts, int indent) const
-{
-    writeIndent(ts, indent);
-    ts << "[feOffset";
-    FilterEffect::externalRepresentation(ts);
-    ts << " dx=\"" << dx() << "\" dy=\"" << dy() << "\"]\n";
-    inputEffect(0)->externalRepresentation(ts, indent + 1);
-    return ts;
-}
-
-} // namespace blink
+}  // namespace blink

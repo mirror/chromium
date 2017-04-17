@@ -9,26 +9,28 @@
 #include "core/dom/QualifiedName.h"
 #include "core/dom/custom/CustomElementReaction.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class CORE_EXPORT CustomElementAttributeChangedCallbackReaction final
     : public CustomElementReaction {
-    WTF_MAKE_NONCOPYABLE(CustomElementAttributeChangedCallbackReaction);
-public:
-    CustomElementAttributeChangedCallbackReaction(CustomElementDefinition*,
-        const QualifiedName&,
-        const AtomicString& oldValue, const AtomicString& newValue);
+  WTF_MAKE_NONCOPYABLE(CustomElementAttributeChangedCallbackReaction);
 
-private:
-    void invoke(Element*) override;
+ public:
+  CustomElementAttributeChangedCallbackReaction(CustomElementDefinition*,
+                                                const QualifiedName&,
+                                                const AtomicString& old_value,
+                                                const AtomicString& new_value);
 
-    QualifiedName m_name;
-    AtomicString m_oldValue;
-    AtomicString m_newValue;
+ private:
+  void Invoke(Element*) override;
+
+  QualifiedName name_;
+  AtomicString old_value_;
+  AtomicString new_value_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CustomElementAttributeChangedCallbackReaction_h
+#endif  // CustomElementAttributeChangedCallbackReaction_h

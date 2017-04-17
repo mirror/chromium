@@ -6,11 +6,14 @@
 
 #include "third_party/khronos/GLES2/gl2.h"
 #include "third_party/khronos/GLES2/gl2ext.h"
+#include "ui/gfx/gpu_memory_buffer.h"
 
 namespace cc {
 
 int BitsPerPixel(ResourceFormat format) {
   switch (format) {
+    case RGBA_F16:
+      return 64;
     case BGRA_8888:
     case RGBA_8888:
       return 32;
@@ -41,6 +44,7 @@ GLenum GLDataType(ResourceFormat format) {
       GL_UNSIGNED_BYTE,           // ETC1
       GL_UNSIGNED_BYTE,           // RED_8
       GL_HALF_FLOAT_OES,          // LUMINANCE_F16
+      GL_HALF_FLOAT_OES,          // RGBA_F16
   };
   static_assert(arraysize(format_gl_data_type) == (RESOURCE_FORMAT_MAX + 1),
                 "format_gl_data_type does not handle all cases.");
@@ -60,6 +64,7 @@ GLenum GLDataFormat(ResourceFormat format) {
       GL_ETC1_RGB8_OES,  // ETC1
       GL_RED_EXT,        // RED_8
       GL_LUMINANCE,      // LUMINANCE_F16
+      GL_RGBA,           // RGBA_F16
   };
   static_assert(arraysize(format_gl_data_format) == (RESOURCE_FORMAT_MAX + 1),
                 "format_gl_data_format does not handle all cases.");
@@ -90,6 +95,7 @@ GLenum GLCopyTextureInternalFormat(ResourceFormat format) {
       GL_RGB,        // ETC1
       GL_LUMINANCE,  // RED_8
       GL_LUMINANCE,  // LUMINANCE_F16
+      GL_RGBA,       // RGBA_F16
   };
   static_assert(arraysize(format_gl_data_format) == (RESOURCE_FORMAT_MAX + 1),
                 "format_gl_data_format does not handle all cases.");
@@ -108,6 +114,8 @@ gfx::BufferFormat BufferFormat(ResourceFormat format) {
       return gfx::BufferFormat::RGBA_8888;
     case ETC1:
       return gfx::BufferFormat::ETC1;
+    case RGBA_F16:
+      return gfx::BufferFormat::RGBA_F16;
     case ALPHA_8:
     case LUMINANCE_8:
     case RGB_565:
@@ -128,6 +136,7 @@ bool DoesResourceFormatSupportAlpha(ResourceFormat format) {
     case RGBA_8888:
     case BGRA_8888:
     case ALPHA_8:
+    case RGBA_F16:
       return true;
     case LUMINANCE_8:
     case RGB_565:

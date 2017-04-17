@@ -11,79 +11,84 @@ namespace blink {
 
 namespace {
 
-bool isNumberValue(const CSSValue& value)
-{
-    return value.isPrimitiveValue() && toCSSPrimitiveValue(value).isNumber();
+bool IsNumberValue(const CSSValue& value) {
+  return value.IsPrimitiveValue() && ToCSSPrimitiveValue(value).IsNumber();
 }
 
-CSSRotation* fromCSSRotate(const CSSFunctionValue& value)
-{
-    DCHECK_EQ(value.length(), 1UL);
-    return CSSRotation::create(toCSSPrimitiveValue(value.item(0)).computeDegrees());
+CSSRotation* FromCSSRotate(const CSSFunctionValue& value) {
+  DCHECK_EQ(value.length(), 1UL);
+  const CSSPrimitiveValue& primitive_value = ToCSSPrimitiveValue(value.Item(0));
+  if (primitive_value.IsCalculated() || !primitive_value.IsAngle())
+    return nullptr;
+  return CSSRotation::Create(CSSAngleValue::FromCSSValue(primitive_value));
 }
 
-CSSRotation* fromCSSRotate3d(const CSSFunctionValue& value)
-{
-    DCHECK_EQ(value.length(), 4UL);
-    DCHECK(isNumberValue(value.item(0)));
-    DCHECK(isNumberValue(value.item(1)));
-    DCHECK(isNumberValue(value.item(2)));
-    // computeDegrees asserts that value.item(3) is an angle.
+CSSRotation* FromCSSRotate3d(const CSSFunctionValue& value) {
+  DCHECK_EQ(value.length(), 4UL);
+  DCHECK(IsNumberValue(value.Item(0)));
+  DCHECK(IsNumberValue(value.Item(1)));
+  DCHECK(IsNumberValue(value.Item(2)));
+  const CSSPrimitiveValue& angle = ToCSSPrimitiveValue(value.Item(3));
+  if (angle.IsCalculated() || !angle.IsAngle())
+    return nullptr;
 
-    double x = toCSSPrimitiveValue(value.item(0)).getDoubleValue();
-    double y = toCSSPrimitiveValue(value.item(1)).getDoubleValue();
-    double z = toCSSPrimitiveValue(value.item(2)).getDoubleValue();
-    double angle = toCSSPrimitiveValue(value.item(3)).computeDegrees();
-    return CSSRotation::create(x, y, z, angle);
+  double x = ToCSSPrimitiveValue(value.Item(0)).GetDoubleValue();
+  double y = ToCSSPrimitiveValue(value.Item(1)).GetDoubleValue();
+  double z = ToCSSPrimitiveValue(value.Item(2)).GetDoubleValue();
+
+  return CSSRotation::Create(x, y, z, CSSAngleValue::FromCSSValue(angle));
 }
 
-CSSRotation* fromCSSRotateXYZ(const CSSFunctionValue& value)
-{
-    DCHECK_EQ(value.length(), 1UL);
-    double angle = toCSSPrimitiveValue(value.item(0)).computeDegrees();
-
-    switch (value.functionType()) {
+CSSRotation* FromCSSRotateXYZ(const CSSFunctionValue& value) {
+  DCHECK_EQ(value.length(), 1UL);
+  const CSSPrimitiveValue& primitive_value = ToCSSPrimitiveValue(value.Item(0));
+  if (primitive_value.IsCalculated())
+    return nullptr;
+  CSSAngleValue* angle = CSSAngleValue::FromCSSValue(primitive_value);
+  switch (value.FunctionType()) {
     case CSSValueRotateX:
-        return CSSRotation::create(1, 0, 0, angle);
+      return CSSRotation::Create(1, 0, 0, angle);
     case CSSValueRotateY:
-        return CSSRotation::create(0, 1, 0, angle);
+      return CSSRotation::Create(0, 1, 0, angle);
     case CSSValueRotateZ:
-        return CSSRotation::create(0, 0, 1, angle);
+      return CSSRotation::Create(0, 0, 1, angle);
     default:
-        NOTREACHED();
-        return nullptr;
-    }
+      NOTREACHED();
+      return nullptr;
+  }
 }
 
-} // namespace
+}  // namespace
 
-CSSRotation* CSSRotation::fromCSSValue(const CSSFunctionValue& value)
-{
-    switch (value.functionType()) {
+CSSRotation* CSSRotation::FromCSSValue(const CSSFunctionValue& value) {
+  switch (value.FunctionType()) {
     case CSSValueRotate:
-        return fromCSSRotate(value);
+      return FromCSSRotate(value);
     case CSSValueRotate3d:
-        return fromCSSRotate3d(value);
+      return FromCSSRotate3d(value);
     case CSSValueRotateX:
     case CSSValueRotateY:
     case CSSValueRotateZ:
-        return fromCSSRotateXYZ(value);
+      return FromCSSRotateXYZ(value);
     default:
-        NOTREACHED();
-        return nullptr;
-    }
+      NOTREACHED();
+      return nullptr;
+  }
 }
 
-CSSFunctionValue* CSSRotation::toCSSValue() const
-{
-    CSSFunctionValue* result = CSSFunctionValue::create(m_is2D ? CSSValueRotate : CSSValueRotate3d);
-    if (!m_is2D) {
-        result->append(*CSSPrimitiveValue::create(m_x, CSSPrimitiveValue::UnitType::Number));
-        result->append(*CSSPrimitiveValue::create(m_y, CSSPrimitiveValue::UnitType::Number));
-        result->append(*CSSPrimitiveValue::create(m_z, CSSPrimitiveValue::UnitType::Number));
-    }
-    result->append(*CSSPrimitiveValue::create(m_angle, CSSPrimitiveValue::UnitType::Degrees));
-    return result;
+CSSFunctionValue* CSSRotation::ToCSSValue() const {
+  CSSFunctionValue* result =
+      CSSFunctionValue::Create(is2d_ ? CSSValueRotate : CSSValueRotate3d);
+  if (!is2d_) {
+    result->Append(
+        *CSSPrimitiveValue::Create(x_, CSSPrimitiveValue::UnitType::kNumber));
+    result->Append(
+        *CSSPrimitiveValue::Create(y_, CSSPrimitiveValue::UnitType::kNumber));
+    result->Append(
+        *CSSPrimitiveValue::Create(z_, CSSPrimitiveValue::UnitType::kNumber));
+  }
+  result->Append(*CSSPrimitiveValue::Create(angle_->Value(), angle_->Unit()));
+  return result;
 }
 
-} // namespace blink
+}  // namespace blink

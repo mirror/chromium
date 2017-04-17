@@ -25,64 +25,52 @@
 
 namespace blink {
 
-String ValidityState::validationMessage() const
-{
-    return m_control->validationMessage();
+String ValidityState::ValidationMessage() const {
+  return control_->validationMessage();
 }
 
-bool ValidityState::valueMissing() const
-{
-    return m_control->valueMissing();
+bool ValidityState::valueMissing() const {
+  return control_->ValueMissing();
 }
 
-bool ValidityState::typeMismatch() const
-{
-    return m_control->typeMismatch();
+bool ValidityState::typeMismatch() const {
+  return control_->TypeMismatch();
 }
 
-bool ValidityState::patternMismatch() const
-{
-    return m_control->patternMismatch();
+bool ValidityState::patternMismatch() const {
+  return control_->PatternMismatch();
 }
 
-bool ValidityState::tooLong() const
-{
-    return m_control->tooLong();
+bool ValidityState::tooLong() const {
+  return control_->TooLong();
 }
 
-bool ValidityState::tooShort() const
-{
-    return m_control->tooShort();
+bool ValidityState::tooShort() const {
+  return control_->TooShort();
 }
 
-bool ValidityState::rangeUnderflow() const
-{
-    return m_control->rangeUnderflow();
+bool ValidityState::rangeUnderflow() const {
+  return control_->RangeUnderflow();
 }
 
-bool ValidityState::rangeOverflow() const
-{
-    return m_control->rangeOverflow();
+bool ValidityState::rangeOverflow() const {
+  return control_->RangeOverflow();
 }
 
-bool ValidityState::stepMismatch() const
-{
-    return m_control->stepMismatch();
+bool ValidityState::stepMismatch() const {
+  return control_->StepMismatch();
 }
 
-bool ValidityState::badInput() const
-{
-    return m_control->hasBadInput();
+bool ValidityState::badInput() const {
+  return control_->HasBadInput();
 }
 
-bool ValidityState::customError() const
-{
-    return m_control->customError();
+bool ValidityState::customError() const {
+  return control_->CustomError();
 }
 
-bool ValidityState::valid() const
-{
-    return m_control->valid();
+bool ValidityState::valid() const {
+  return control_->Valid();
 }
 
-} // namespace blink
+}  // namespace blink

@@ -158,7 +158,7 @@ const uint8_t kCanonicalToSymbol[] = {
 };
 // clang-format on
 
-#if !defined(NDEBUG) || defined(DCHECK_ALWAYS_ON)
+#if DCHECK_IS_ON()
 
 // Only used in DLOG.
 bool IsEOSPrefix(HuffmanWord bits, HuffmanCodeLength bits_available) {
@@ -171,7 +171,7 @@ bool IsEOSPrefix(HuffmanWord bits, HuffmanCodeLength bits_available) {
   return bits == expected;
 }
 
-#endif  // NDEBUG && !defined(DCHECK_ALWAYS_ON)
+#endif  // DCHECK_IS_ON()
 
 }  // namespace
 
@@ -298,12 +298,12 @@ char HpackHuffmanDecoder::CanonicalToSource(HuffmanWord canonical) {
 }
 
 // TODO(jamessynge): Maybe further refactorings, including just passing in a
-// StringPiece instead of an HpackInputStream, thus avoiding the PeekBits calls,
-// and also allowing us to separate the code into portions dealing with long
-// strings, and a later portion dealing with the last few bytes of strings.
+// SpdyStringPiece instead of an HpackInputStream, thus avoiding the PeekBits
+// calls, and also allowing us to separate the code into portions dealing with
+// long strings, and a later portion dealing with the last few bytes of strings.
 // TODO(jamessynge): Determine if that is worth it by adding some counters to
 // measure the distribution of string sizes seen in practice.
-bool HpackHuffmanDecoder::DecodeString(HpackInputStream* in, std::string* out) {
+bool HpackHuffmanDecoder::DecodeString(HpackInputStream* in, SpdyString* out) {
   out->clear();
 
   // Load |bits| with the leading bits of the input stream, left justified
@@ -334,7 +334,7 @@ bool HpackHuffmanDecoder::DecodeString(HpackInputStream* in, std::string* out) {
     const HuffmanCodeLength code_length = CodeLengthOfPrefix(bits);
     DCHECK_LE(kMinCodeLength, code_length);
     DCHECK_LE(code_length, kMaxCodeLength);
-    DVLOG(1) << "bits: 0b" << std::bitset<32>(bits)
+    DVLOG(2) << "bits: 0b" << std::bitset<32>(bits)
              << " (avail=" << bits_available << ")"
              << "    prefix length: " << code_length
              << (code_length > bits_available ? "      *****" : "");
@@ -392,7 +392,7 @@ bool HpackHuffmanDecoder::DecodeString(HpackInputStream* in, std::string* out) {
       // if we got any bits.
       peeked_success = in->PeekBits(&bits_available, &bits);
     }
-    DLOG_IF(WARNING, (VLOG_IS_ON(1) && bits_available < 32 && !peeked_success))
+    DLOG_IF(WARNING, (VLOG_IS_ON(2) && bits_available < 32 && !peeked_success))
         << "no more peeking possible";
   }
 }

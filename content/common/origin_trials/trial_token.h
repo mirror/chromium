@@ -13,20 +13,21 @@
 #include "content/common/content_export.h"
 #include "url/origin.h"
 
+extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size);
+
 namespace blink {
 enum class WebOriginTrialTokenStatus;
 }
 
 namespace content {
 
-// The Experimental Framework (EF) provides limited access to experimental
-// features, on a per-origin basis (origin trials). This class defines the trial
-// token data structure, used to securely provide access to an experimental
-// feature.
+// The Origin Trials Framework (OT) provides limited access to experimental
+// features, on a per-origin basis. This class defines the trial token data
+// structure, used to securely provide access to an experimental feature.
 //
-// Features are defined by string names, provided by the implementers. The EF
+// Features are defined by string names, provided by the implementers. The OT
 // code does not maintain an enum or constant list for feature names. Instead,
-// the EF validates the name provided by the feature implementation against any
+// it validates the name provided by the feature implementation against any
 // provided tokens.
 //
 // More documentation on the token format can be found at
@@ -56,20 +57,29 @@ class CONTENT_EXPORT TrialToken {
                                            const base::Time& now) const;
 
   url::Origin origin() { return origin_; }
+  bool match_subdomains() const { return match_subdomains_; }
   std::string feature_name() { return feature_name_; }
   base::Time expiry_time() { return expiry_time_; }
+  std::string signature() { return signature_; }
 
  protected:
+  // Tests can access the Parse method directly to validate it, and so are
+  // declared as friends here. All other access to Parse should be made through
+  // TrialToken::From, which will always also ensure that there is a valid
+  // signature attached to the token.
   friend class TrialTokenTest;
+  friend int ::LLVMFuzzerTestOneInput(const uint8_t*, size_t);
 
-  // If the string represents a properly signed and well-formed token, the token
-  // payload is returned in the |out_token_payload| parameter and success is
-  // returned. Otherwise,the return code indicates what was wrong with the
-  // string, and |out_token_payload| is unchanged.
+  // If the string represents a properly signed and well-formed token, success
+  // is returned, with the token payload and signature returned in the
+  // |out_token_payload| and |out_token_signature| parameters, respectively.
+  // Otherwise,the return code indicates what was wrong with the string, and
+  // |out_token_payload| and |out_token_signature| are unchanged.
   static blink::WebOriginTrialTokenStatus Extract(
       const std::string& token_text,
       base::StringPiece public_key,
-      std::string* out_token_payload);
+      std::string* out_token_payload,
+      std::string* out_token_signature);
 
   // Returns a token object if the string represents a well-formed JSON token
   // payload, or nullptr otherwise.
@@ -85,17 +95,24 @@ class CONTENT_EXPORT TrialToken {
 
  private:
   TrialToken(const url::Origin& origin,
+             bool match_subdomains,
              const std::string& feature_name,
              uint64_t expiry_timestamp);
 
   // The origin for which this token is valid. Must be a secure origin.
   url::Origin origin_;
 
+  // Indicates if the token should match all subdomains of the origin.
+  bool match_subdomains_;
+
   // The name of the experimental feature which this token enables.
   std::string feature_name_;
 
   // The time until which this token should be considered valid.
   base::Time expiry_time_;
+
+  // The signature identifying the fully signed contents of the token.
+  std::string signature_;
 };
 
 }  // namespace content

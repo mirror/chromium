@@ -26,38 +26,39 @@
 #ifndef DecodedDataDocumentParser_h
 #define DecodedDataDocumentParser_h
 
+#include "core/CoreExport.h"
 #include "core/dom/DocumentParser.h"
 #include <memory>
 
 namespace blink {
 class TextResourceDecoder;
 
-class DecodedDataDocumentParser : public DocumentParser {
-public:
-    // Only used by the XMLDocumentParser to communicate back to
-    // XMLHttpRequest if the responseXML was well formed.
-    virtual bool wellFormed() const { return true; }
+class CORE_EXPORT DecodedDataDocumentParser : public DocumentParser {
+ public:
+  // Only used by the XMLDocumentParser to communicate back to
+  // XMLHttpRequest if the responseXML was well formed.
+  virtual bool WellFormed() const { return true; }
 
-    // The below functions are used by DocumentWriter (the loader).
-    void appendBytes(const char* bytes, size_t length) override;
-    virtual void flush();
-    bool needsDecoder() const final { return m_needsDecoder; }
-    void setDecoder(std::unique_ptr<TextResourceDecoder>) override;
-    TextResourceDecoder* decoder() final;
+  // The below functions are used by DocumentWriter (the loader).
+  void AppendBytes(const char* bytes, size_t length) override;
+  virtual void Flush();
+  bool NeedsDecoder() const final { return needs_decoder_; }
+  void SetDecoder(std::unique_ptr<TextResourceDecoder>) override;
+  TextResourceDecoder* Decoder() final;
 
-    std::unique_ptr<TextResourceDecoder> takeDecoder();
+  std::unique_ptr<TextResourceDecoder> TakeDecoder();
 
-protected:
-    explicit DecodedDataDocumentParser(Document&);
-    ~DecodedDataDocumentParser() override;
+ protected:
+  explicit DecodedDataDocumentParser(Document&);
+  ~DecodedDataDocumentParser() override;
 
-private:
-    void updateDocument(String& decodedData);
+ private:
+  void UpdateDocument(String& decoded_data);
 
-    bool m_needsDecoder;
-    std::unique_ptr<TextResourceDecoder> m_decoder;
+  bool needs_decoder_;
+  std::unique_ptr<TextResourceDecoder> decoder_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DecodedDataDocumentParser_h
+#endif  // DecodedDataDocumentParser_h

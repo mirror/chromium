@@ -9,21 +9,12 @@
 #include <string>
 
 #include "base/memory/linked_ptr.h"
-#include "base/memory/scoped_vector.h"
 #include "net/url_request/url_request_job_factory.h"
-
-namespace net {
-class URLRequestInterceptor;
-}
 
 // A mapping from the scheme name to the protocol handler that services its
 // content.
-typedef std::map<std::string,
-                 linked_ptr<net::URLRequestJobFactory::ProtocolHandler>>
-    ProtocolHandlerMap;
-
-// A scoped vector of protocol interceptors.
-typedef ScopedVector<net::URLRequestInterceptor>
-    URLRequestInterceptorScopedVector;
+using ProtocolHandlerMap =
+    std::map<std::string,
+             linked_ptr<net::URLRequestJobFactory::ProtocolHandler>>;
 
 #endif  // IOS_CHROME_BROWSER_NET_NET_TYPES_H_

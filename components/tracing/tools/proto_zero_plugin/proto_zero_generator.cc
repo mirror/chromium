@@ -6,6 +6,7 @@
 
 #include <map>
 #include <memory>
+#include <set>
 #include <string>
 
 #include "third_party/protobuf/src/google/protobuf/descriptor.h"
@@ -33,14 +34,17 @@ using google::protobuf::UpperString;
 
 namespace {
 
+inline std::string ProtoStubName(const FileDescriptor* proto) {
+  return StripSuffixString(proto->name(), ".proto") + ".pbzero";
+}
+
 class GeneratorJob {
  public:
   GeneratorJob(const FileDescriptor *file,
                Printer* stub_h_printer,
                Printer* stub_cc_printer)
-    : source_(file),
-      stub_h_(stub_h_printer),
-      stub_cc_(stub_cc_printer) {}
+      : source_(file), stub_h_(stub_h_printer), stub_cc_(stub_cc_printer) {
+  }
 
   bool GenerateStubs() {
     Preprocess();
@@ -51,6 +55,14 @@ class GeneratorJob {
       GenerateMessageDescriptor(message);
     GenerateEpilogue();
     return error_.empty();
+  }
+
+  void SetOption(const std::string& name, const std::string& value) {
+    if (name == "wrapper_namespace") {
+      wrapper_namespace_ = value;
+    } else {
+      Abort(std::string() + "Unknown plugin option '" + name + "'.");
+    }
   }
 
   // If generator fails to produce stubs for a particular proto definitions
@@ -88,6 +100,18 @@ class GeneratorJob {
     return name;
   }
 
+  inline std::string GetFieldNumberConstant(const FieldDescriptor* field) {
+    std::string name = field->camelcase_name();
+    if (!name.empty()) {
+      name.at(0) = toupper(name.at(0));
+      name = "k" + name + "FieldNumber";
+    } else {
+      // Protoc allows fields like 'bool _ = 1'.
+      Abort("Empty field name in camel case notation.");
+    }
+    return name;
+  }
+
   // Small enums can be written faster without involving VarInt encoder.
   inline bool IsTinyEnumField(const FieldDescriptor* field) {
     if (field->type() != FieldDescriptor::TYPE_ENUM)
@@ -102,14 +126,7 @@ class GeneratorJob {
     return true;
   }
 
-  void Preprocess() {
-    // Package name maps to a series of namespaces.
-    package_ = source_->package();
-    namespaces_ = Split(package_, ".");
-    full_namespace_prefix_ = "::";
-    for (const std::string& ns : namespaces_)
-      full_namespace_prefix_ += ns + "::";
-
+  void CollectDescriptors() {
     // Collect message descriptors in DFS order.
     std::vector<const Descriptor*> stack;
     for (int i = 0; i < source_->message_type_count(); ++i)
@@ -135,6 +152,78 @@ class GeneratorJob {
     }
   }
 
+  void CollectDependencies() {
+    // Public import basically means that callers only need to import this
+    // proto in order to use the stuff publicly imported by this proto.
+    for (int i = 0; i < source_->public_dependency_count(); ++i)
+      public_imports_.insert(source_->public_dependency(i));
+
+    if (source_->weak_dependency_count() > 0)
+      Abort("Weak imports are not supported.");
+
+    // Sanity check. Collect public imports (of collected imports) in DFS order.
+    // Visibilty for current proto:
+    // - all imports listed in current proto,
+    // - public imports of everything imported (recursive).
+    std::vector<const FileDescriptor*> stack;
+    for (int i = 0; i < source_->dependency_count(); ++i) {
+      const FileDescriptor* import = source_->dependency(i);
+      stack.push_back(import);
+      if (public_imports_.count(import) == 0) {
+        private_imports_.insert(import);
+      }
+    }
+
+    while (!stack.empty()) {
+      const FileDescriptor* import = stack.back();
+      stack.pop_back();
+      // Having imports under different packages leads to unnecessary
+      // complexity with namespaces.
+      if (import->package() != package_)
+        Abort("Imported proto must be in the same package.");
+
+      for (int i = 0; i < import->public_dependency_count(); ++i) {
+        stack.push_back(import->public_dependency(i));
+      }
+    }
+
+    // Collect descriptors of messages and enums used in current proto.
+    // It will be used to generate necessary forward declarations and performed
+    // sanity check guarantees that everything lays in the same namespace.
+    for (const Descriptor* message : messages_) {
+      for (int i = 0; i < message->field_count(); ++i) {
+        const FieldDescriptor* field = message->field(i);
+
+        if (field->type() == FieldDescriptor::TYPE_MESSAGE) {
+          if (public_imports_.count(field->message_type()->file()) == 0) {
+            // Avoid multiple forward declarations since
+            // public imports have been already included.
+            referenced_messages_.insert(field->message_type());
+          }
+        } else if (field->type() == FieldDescriptor::TYPE_ENUM) {
+          if (public_imports_.count(field->enum_type()->file()) == 0) {
+            referenced_enums_.insert(field->enum_type());
+          }
+        }
+      }
+    }
+  }
+
+  void Preprocess() {
+    // Package name maps to a series of namespaces.
+    package_ = source_->package();
+    namespaces_ = Split(package_, ".");
+    if (!wrapper_namespace_.empty())
+      namespaces_.insert(namespaces_.begin(), wrapper_namespace_);
+
+    full_namespace_prefix_ = "::";
+    for (const std::string& ns : namespaces_)
+      full_namespace_prefix_ += ns + "::";
+
+    CollectDescriptors();
+    CollectDependencies();
+  }
+
   // Print top header, namespaces and forward declarations.
   void GeneratePrologue() {
     std::string greeting =
@@ -143,7 +232,7 @@ class GeneratorJob {
         "// //components/tracing/tools/proto_zero_plugin.\n";
     std::string guard = package_ + "_" + source_->name() + "_H_";
     UpperString(&guard);
-    StripString(&guard, ".-", '_');
+    StripString(&guard, ".-/\\", '_');
 
     stub_h_->Print(
         "$greeting$\n"
@@ -151,30 +240,75 @@ class GeneratorJob {
         "#define $guard$\n\n"
         "#include <stddef.h>\n"
         "#include <stdint.h>\n\n"
-        "#include \"components/tracing/core/proto_zero_message.h\"\n\n",
+        "#include \"components/tracing/core/proto_zero_message.h\"\n",
         "greeting", greeting,
         "guard", guard);
     stub_cc_->Print(
         "$greeting$\n"
-        "// This file intentionally left blank.\n",
-        "greeting", greeting);
+        "#include \"$name$.h\"\n",
+        "greeting", greeting,
+        "name", ProtoStubName(source_));
+
+    // Print includes for public imports.
+    for (const FileDescriptor* dependency : public_imports_) {
+      // Dependency name could contatin slashes but importing from upper-level
+      // directories is not possible anyway since build system process each
+      // proto file individually. Hence proto lookup path always equal to the
+      // directory where particular proto file is located and protoc does not
+      // allow reference to upper directory (aka ..) in import path.
+      //
+      // Laconically said:
+      // - source_->name() may never have slashes,
+      // - dependency->name() may have slashes but always reffers to inner path.
+      stub_h_->Print(
+          "#include \"$name$.h\"\n",
+          "name", ProtoStubName(dependency));
+    }
+    stub_h_->Print("\n");
+
+    // Print includes for private imports to .cc file.
+    for (const FileDescriptor* dependency : private_imports_) {
+      stub_cc_->Print(
+         "#include \"$name$.h\"\n",
+         "name", ProtoStubName(dependency));
+    }
+    stub_cc_->Print("\n");
+
+    if (messages_.size() > 0) {
+      stub_cc_->Print(
+          "namespace {\n"
+          "  static const ::tracing::v2::proto::ProtoFieldDescriptor "
+          "kInvalidField = {\"\", "
+          "::tracing::v2::proto::ProtoFieldDescriptor::Type::TYPE_INVALID, "
+          "0, false};\n"
+          "}\n\n");
+    }
 
     // Print namespaces.
-    for (const std::string& ns : namespaces_)
+    for (const std::string& ns : namespaces_) {
       stub_h_->Print("namespace $ns$ {\n", "ns", ns);
+      stub_cc_->Print("namespace $ns$ {\n", "ns", ns);
+    }
     stub_h_->Print("\n");
+    stub_cc_->Print("\n");
+
     // Print forward declarations.
-    for (const Descriptor* message : messages_) {
+    for (const Descriptor* message : referenced_messages_) {
       stub_h_->Print(
           "class $class$;\n",
           "class", GetCppClassName(message));
+    }
+    for (const EnumDescriptor* enumeration : referenced_enums_) {
+      stub_h_->Print(
+          "enum $class$ : int32_t;\n",
+          "class", GetCppClassName(enumeration));
     }
     stub_h_->Print("\n");
   }
 
   void GenerateEnumDescriptor(const EnumDescriptor* enumeration) {
     stub_h_->Print(
-        "enum $class$ {\n",
+        "enum $class$ : int32_t {\n",
         "class", GetCppClassName(enumeration));
     stub_h_->Indent();
 
@@ -205,72 +339,72 @@ class GeneratorJob {
 
     switch (field->type()) {
       case FieldDescriptor::TYPE_BOOL: {
-        appender = "AppendBool";
+        appender = "AppendTinyVarInt";
         cpp_type = "bool";
         break;
       }
       case FieldDescriptor::TYPE_INT32: {
-        appender = "AppendInt32";
+        appender = "AppendVarInt";
         cpp_type = "int32_t";
         break;
       }
       case FieldDescriptor::TYPE_INT64: {
-        appender = "AppendInt64";
+        appender = "AppendVarInt";
         cpp_type = "int64_t";
         break;
       }
       case FieldDescriptor::TYPE_UINT32: {
-        appender = "AppendUint32";
+        appender = "AppendVarInt";
         cpp_type = "uint32_t";
         break;
       }
       case FieldDescriptor::TYPE_UINT64: {
-        appender = "AppendUint64";
+        appender = "AppendVarInt";
         cpp_type = "uint64_t";
         break;
       }
       case FieldDescriptor::TYPE_SINT32: {
-        appender = "AppendSint32";
+        appender = "AppendSignedVarInt";
         cpp_type = "int32_t";
         break;
       }
       case FieldDescriptor::TYPE_SINT64: {
-        appender = "AppendSint64";
+        appender = "AppendSignedVarInt";
         cpp_type = "int64_t";
         break;
       }
       case FieldDescriptor::TYPE_FIXED32: {
-        appender = "AppendFixed32";
+        appender = "AppendFixed";
         cpp_type = "uint32_t";
         break;
       }
       case FieldDescriptor::TYPE_FIXED64: {
-        appender = "AppendFixed64";
+        appender = "AppendFixed";
         cpp_type = "uint64_t";
         break;
       }
       case FieldDescriptor::TYPE_SFIXED32: {
-        appender = "AppendSfixed32";
+        appender = "AppendFixed";
         cpp_type = "int32_t";
         break;
       }
       case FieldDescriptor::TYPE_SFIXED64: {
-        appender = "AppendSfixed64";
+        appender = "AppendFixed";
         cpp_type = "int64_t";
         break;
       }
       case FieldDescriptor::TYPE_FLOAT: {
-        appender = "AppendFloat";
+        appender = "AppendFixed";
         cpp_type = "float";
         break;
       }
       case FieldDescriptor::TYPE_DOUBLE: {
-        appender = "AppendDouble";
+        appender = "AppendFixed";
         cpp_type = "double";
         break;
       }
       case FieldDescriptor::TYPE_ENUM: {
-        appender = IsTinyEnumField(field) ? "AppendTinyNumber" : "AppendInt32";
+        appender = IsTinyEnumField(field) ? "AppendTinyVarInt" : "AppendVarInt";
         cpp_type = GetCppClassName(field->enum_type(), true);
         break;
       }
@@ -283,7 +417,7 @@ class GeneratorJob {
         stub_h_->Print(
             setter,
             "void $action$_$name$(const uint8_t* data, size_t size) {\n"
-            "  // AppendBytes($id$, data, size);\n"
+            "  AppendBytes($id$, data, size);\n"
             "}\n");
         return;
       }
@@ -297,19 +431,107 @@ class GeneratorJob {
     stub_h_->Print(
         setter,
         "void $action$_$name$($cpp_type$ value) {\n"
-        "  // $appender$($id$, value);\n"
+        "  $appender$($id$, value);\n"
         "}\n");
   }
 
   void GenerateNestedMessageFieldDescriptor(const FieldDescriptor* field) {
+    std::string action = field->is_repeated() ? "add" : "set";
+    std::string inner_class = GetCppClassName(field->message_type());
+    std::string outer_class = GetCppClassName(field->containing_type());
+
     stub_h_->Print(
-        "$class$* $action$_$name$() {\n"
-        "  return BeginNestedMessage<$class$>($id$);\n"
-        "}\n",
+        "$inner_class$* $action$_$name$();\n",
+        "name", field->name(),
+        "action", action,
+        "inner_class", inner_class);
+    stub_cc_->Print(
+        "$inner_class$* $outer_class$::$action$_$name$() {\n"
+        "  return BeginNestedMessage<$inner_class$>($id$);\n"
+        "}\n\n",
         "id", std::to_string(field->number()),
         "name", field->name(),
-        "action", field->is_repeated() ? "add" : "set",
-        "class", GetCppClassName(field->message_type()));
+        "action", action,
+        "inner_class", inner_class,
+        "outer_class", outer_class);
+  }
+
+  void GenerateReflectionForMessageFields(const Descriptor* message) {
+    const bool has_fields = (message->field_count() > 0);
+
+    // Field number constants.
+    if (has_fields) {
+      stub_h_->Print("enum : int32_t {\n");
+      stub_h_->Indent();
+
+      for (int i = 0; i < message->field_count(); ++i) {
+        const FieldDescriptor* field = message->field(i);
+        stub_h_->Print(
+            "$name$ = $id$,\n",
+            "name", GetFieldNumberConstant(field),
+            "id", std::to_string(field->number()));
+      }
+      stub_h_->Outdent();
+      stub_h_->Print("};\n");
+    }
+
+    // Fields reflection table.
+    stub_h_->Print(
+        "static const ::tracing::v2::proto::ProtoFieldDescriptor* "
+        "GetFieldDescriptor(uint32_t field_id);\n");
+
+    std::string class_name = GetCppClassName(message);
+    if (has_fields) {
+      stub_cc_->Print(
+          "static const ::tracing::v2::proto::ProtoFieldDescriptor "
+          "kFields_$class$[] = {\n",
+          "class", class_name);
+      stub_cc_->Indent();
+      for (int i = 0; i < message->field_count(); ++i) {
+        const FieldDescriptor* field = message->field(i);
+        std::string type_const =
+            std::string("TYPE_") + FieldDescriptor::TypeName(field->type());
+        UpperString(&type_const);
+        stub_cc_->Print(
+            "{\"$name$\", "
+            "::tracing::v2::proto::ProtoFieldDescriptor::Type::$type$, "
+            "$number$, $is_repeated$},\n",
+            "name", field->name(),
+            "type", type_const,
+            "number", std::to_string(field->number()),
+            "is_repeated", std::to_string(field->is_repeated()));
+      }
+      stub_cc_->Outdent();
+      stub_cc_->Print("};\n\n");
+    }
+
+    // Fields reflection getter.
+    stub_cc_->Print(
+        "const ::tracing::v2::proto::ProtoFieldDescriptor* "
+        "$class$::GetFieldDescriptor(uint32_t field_id) {\n",
+        "class", class_name);
+    stub_cc_->Indent();
+    if (has_fields) {
+      stub_cc_->Print("switch (field_id) {\n");
+      stub_cc_->Indent();
+      for (int i = 0; i < message->field_count(); ++i) {
+        stub_cc_->Print(
+            "case $field$:\n"
+            "  return &kFields_$class$[$id$];\n",
+            "class", class_name,
+            "field", GetFieldNumberConstant(message->field(i)),
+            "id", std::to_string(i));
+      }
+      stub_cc_->Print(
+          "default:\n"
+          "  return &kInvalidField;\n");
+      stub_cc_->Outdent();
+      stub_cc_->Print("}\n");
+    } else {
+      stub_cc_->Print("return &kInvalidField;\n");
+    }
+    stub_cc_->Outdent();
+    stub_cc_->Print("}\n\n");
   }
 
   void GenerateMessageDescriptor(const Descriptor* message) {
@@ -318,6 +540,8 @@ class GeneratorJob {
         " public:\n",
         "name", GetCppClassName(message));
     stub_h_->Indent();
+
+    GenerateReflectionForMessageFields(message);
 
     // Using statements for nested messages.
     for (int i = 0; i < message->nested_type_count(); ++i) {
@@ -352,7 +576,7 @@ class GeneratorJob {
       }
     }
 
-    // Fields descriptors.
+    // Field descriptors.
     for (int i = 0; i < message->field_count(); ++i) {
       const FieldDescriptor* field = message->field(i);
       if (field->is_packed()) {
@@ -373,6 +597,7 @@ class GeneratorJob {
   void GenerateEpilogue() {
     for (unsigned i = 0; i < namespaces_.size(); ++i) {
       stub_h_->Print("} // Namespace.\n");
+      stub_cc_->Print("} // Namespace.\n");
     }
     stub_h_->Print("#endif  // Include guard.\n");
   }
@@ -383,10 +608,16 @@ class GeneratorJob {
   std::string error_;
 
   std::string package_;
+  std::string wrapper_namespace_;
   std::vector<std::string> namespaces_;
   std::string full_namespace_prefix_;
   std::vector<const Descriptor*> messages_;
   std::vector<const EnumDescriptor*> enums_;
+
+  std::set<const FileDescriptor*> public_imports_;
+  std::set<const FileDescriptor*> private_imports_;
+  std::set<const Descriptor*> referenced_messages_;
+  std::set<const EnumDescriptor*> referenced_enums_;
 };
 
 }  // namespace
@@ -402,19 +633,22 @@ bool ProtoZeroGenerator::Generate(const FileDescriptor* file,
                                   GeneratorContext* context,
                                   std::string* error) const {
 
-  const std::string proto_stubs_name =
-      StripSuffixString(file->name(), ".proto") + ".pbzero";
-
   const std::unique_ptr<ZeroCopyOutputStream> stub_h_file_stream(
-      context->Open(proto_stubs_name + ".h"));
+      context->Open(ProtoStubName(file) + ".h"));
   const std::unique_ptr<ZeroCopyOutputStream> stub_cc_file_stream(
-      context->Open(proto_stubs_name + ".cc"));
+      context->Open(ProtoStubName(file) + ".cc"));
 
   // Variables are delimited by $.
   Printer stub_h_printer(stub_h_file_stream.get(), '$');
   Printer stub_cc_printer(stub_cc_file_stream.get(), '$');
-
   GeneratorJob job(file, &stub_h_printer, &stub_cc_printer);
+
+  // Parse additional options.
+  for (const std::string& option : Split(options, ",")) {
+    std::vector<std::string> option_pair = Split(option, "=");
+    job.SetOption(option_pair[0], option_pair[1]);
+  }
+
   if (!job.GenerateStubs()) {
     *error = job.GetFirstError();
     return false;

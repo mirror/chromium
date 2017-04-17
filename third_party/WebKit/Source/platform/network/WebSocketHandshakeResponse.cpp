@@ -31,48 +31,39 @@
 #include "platform/network/WebSocketHandshakeResponse.h"
 
 #include "platform/network/WebSocketHandshakeRequest.h"
-#include "wtf/Assertions.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
-WebSocketHandshakeResponse::WebSocketHandshakeResponse()
-{
+WebSocketHandshakeResponse::WebSocketHandshakeResponse() {}
+
+WebSocketHandshakeResponse::~WebSocketHandshakeResponse() {}
+
+int WebSocketHandshakeResponse::StatusCode() const {
+  return status_code_;
 }
 
-WebSocketHandshakeResponse::~WebSocketHandshakeResponse()
-{
+void WebSocketHandshakeResponse::SetStatusCode(int status_code) {
+  ASSERT(status_code >= 100 && status_code < 600);
+  status_code_ = status_code;
 }
 
-int WebSocketHandshakeResponse::statusCode() const
-{
-    return m_statusCode;
+const String& WebSocketHandshakeResponse::StatusText() const {
+  return status_text_;
 }
 
-void WebSocketHandshakeResponse::setStatusCode(int statusCode)
-{
-    ASSERT(statusCode >= 100 && statusCode < 600);
-    m_statusCode = statusCode;
+void WebSocketHandshakeResponse::SetStatusText(const String& status_text) {
+  status_text_ = status_text;
 }
 
-const String& WebSocketHandshakeResponse::statusText() const
-{
-    return m_statusText;
+const HTTPHeaderMap& WebSocketHandshakeResponse::HeaderFields() const {
+  return header_fields_;
 }
 
-void WebSocketHandshakeResponse::setStatusText(const String& statusText)
-{
-    m_statusText = statusText;
+void WebSocketHandshakeResponse::AddHeaderField(const AtomicString& name,
+                                                const AtomicString& value) {
+  WebSocketHandshakeRequest::AddAndMergeHeader(&header_fields_, name, value);
 }
 
-const HTTPHeaderMap& WebSocketHandshakeResponse::headerFields() const
-{
-    return m_headerFields;
-}
-
-void WebSocketHandshakeResponse::addHeaderField(const AtomicString& name, const AtomicString& value)
-{
-    WebSocketHandshakeRequest::addAndMergeHeader(&m_headerFields, name, value);
-}
-
-} // namespace blink
+}  // namespace blink

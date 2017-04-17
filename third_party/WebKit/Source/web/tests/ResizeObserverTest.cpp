@@ -2,46 +2,49 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/observer/ResizeObserver.h"
+#include "core/dom/ResizeObserver.h"
 
-#include "core/observer/ResizeObservation.h"
-#include "core/observer/ResizeObserverCallback.h"
+#include "bindings/core/v8/ScriptController.h"
+#include "bindings/core/v8/ScriptSourceCode.h"
+#include "bindings/core/v8/V8GCController.h"
+#include "core/dom/ResizeObservation.h"
+#include "core/dom/ResizeObserverCallback.h"
+#include "core/dom/ResizeObserverController.h"
 #include "platform/testing/UnitTestHelpers.h"
+#include "platform/wtf/CurrentTime.h"
+#include "public/web/WebHeap.h"
 #include "web/WebViewImpl.h"
 #include "web/tests/sim/SimCompositor.h"
 #include "web/tests/sim/SimDisplayItemList.h"
 #include "web/tests/sim/SimRequest.h"
 #include "web/tests/sim/SimTest.h"
-#include "wtf/CurrentTime.h"
 
 namespace blink {
 
 namespace {
 
 class TestResizeObserverCallback : public ResizeObserverCallback {
-public:
-    TestResizeObserverCallback(Document& document)
-        : m_document(document)
-        , m_callCount(0)
-    { }
-    void handleEvent(const HeapVector<Member<ResizeObserverEntry>>& entries, ResizeObserver*) override
-    {
-        m_callCount++;
-    }
-    ExecutionContext* getExecutionContext() const { return m_document; }
-    int callCount() const { return m_callCount; }
+ public:
+  TestResizeObserverCallback(Document& document)
+      : document_(document), call_count_(0) {}
+  void handleEvent(const HeapVector<Member<ResizeObserverEntry>>& entries,
+                   ResizeObserver*) override {
+    call_count_++;
+  }
+  ExecutionContext* GetExecutionContext() const { return document_; }
+  int CallCount() const { return call_count_; }
 
-    DEFINE_INLINE_TRACE() {
-        ResizeObserverCallback::trace(visitor);
-        visitor->trace(m_document);
-    }
+  DEFINE_INLINE_TRACE() {
+    ResizeObserverCallback::Trace(visitor);
+    visitor->Trace(document_);
+  }
 
-private:
-    Member<Document> m_document;
-    int m_callCount;
+ private:
+  Member<Document> document_;
+  int call_count_;
 };
 
-} // namespace
+}  // namespace
 
 /* Testing:
  * getTargetSize
@@ -50,49 +53,97 @@ private:
  * modify target size
  * oubservationSizeOutOfSync == true
  */
-class ResizeObservationUnitTest : public SimTest { };
+class ResizeObserverUnitTest : public SimTest {};
 
-TEST_F(ResizeObservationUnitTest, ObserveSchedulesFrame)
-{
-    SimRequest mainResource("https://example.com/", "text/html");
-    loadURL("https://example.com/");
+TEST_F(ResizeObserverUnitTest, ResizeObservationSize) {
+  SimRequest main_resource("https://example.com/", "text/html");
+  LoadURL("https://example.com/");
 
-    mainResource.start();
-    mainResource.write(
-        "<div id='domTarget' style='width:100px;height:100px'>yo</div>"
-        "<svg height='200' width='200'>"
-            "<circle id='svgTarget' cx='100' cy='100' r='100'/>"
-        "</svg>"
-    );
-    mainResource.finish();
+  main_resource.Start();
+  main_resource.Write(
+      "<div id='domTarget' style='width:100px;height:100px'>yo</div>"
+      "<svg height='200' width='200'>"
+      "<circle id='svgTarget' cx='100' cy='100' r='100'/>"
+      "</svg>");
+  main_resource.Finish();
 
-    ResizeObserverCallback* callback = new TestResizeObserverCallback(document());
-    ResizeObserver* observer = ResizeObserver::create(document(), callback);
-    Element* domTarget = document().getElementById("domTarget");
-    Element* svgTarget = document().getElementById("svgTarget");
-    ResizeObservation* domObservation = new ResizeObservation(domTarget, observer);
-    ResizeObservation* svgObservation = new ResizeObservation(svgTarget, observer);
+  ResizeObserverCallback* callback =
+      new TestResizeObserverCallback(GetDocument());
+  ResizeObserver* observer = ResizeObserver::Create(GetDocument(), callback);
+  Element* dom_target = GetDocument().GetElementById("domTarget");
+  Element* svg_target = GetDocument().GetElementById("svgTarget");
+  ResizeObservation* dom_observation =
+      new ResizeObservation(dom_target, observer);
+  ResizeObservation* svg_observation =
+      new ResizeObservation(svg_target, observer);
 
-    // Initial observation is out of sync
-    ASSERT_TRUE(domObservation->observationSizeOutOfSync());
-    ASSERT_TRUE(svgObservation->observationSizeOutOfSync());
+  // Initial observation is out of sync
+  ASSERT_TRUE(dom_observation->ObservationSizeOutOfSync());
+  ASSERT_TRUE(svg_observation->ObservationSizeOutOfSync());
 
-    // Target size is correct
-    LayoutSize size = ResizeObservation::getTargetSize(domTarget);
-    ASSERT_EQ(size.width(), 100);
-    ASSERT_EQ(size.height(), 100);
-    domObservation->setObservationSize(size);
+  // Target size is correct
+  LayoutSize size = dom_observation->ComputeTargetSize();
+  ASSERT_EQ(size.Width(), 100);
+  ASSERT_EQ(size.Height(), 100);
+  dom_observation->SetObservationSize(size);
 
-    size = ResizeObservation::getTargetSize(svgTarget);
-    ASSERT_EQ(size.width(), 200);
-    ASSERT_EQ(size.height(), 200);
-    svgObservation->setObservationSize(size);
+  size = svg_observation->ComputeTargetSize();
+  ASSERT_EQ(size.Width(), 200);
+  ASSERT_EQ(size.Height(), 200);
+  svg_observation->SetObservationSize(size);
 
-    // Target size is in sync
-    ASSERT_FALSE(domObservation->observationSizeOutOfSync());
+  // Target size is in sync
+  ASSERT_FALSE(dom_observation->ObservationSizeOutOfSync());
 
-    // Target depths
-    ASSERT_EQ(svgObservation->targetDepth() - domObservation->targetDepth(), (size_t)1);
+  // Target depths
+  ASSERT_EQ(svg_observation->TargetDepth() - dom_observation->TargetDepth(),
+            (size_t)1);
 }
 
-} // namespace blink
+TEST_F(ResizeObserverUnitTest, TestMemoryLeaks) {
+  ResizeObserverController& controller =
+      GetDocument().EnsureResizeObserverController();
+  const HeapHashSet<WeakMember<ResizeObserver>>& observers =
+      controller.Observers();
+  ASSERT_EQ(observers.size(), 0U);
+  v8::HandleScope scope(v8::Isolate::GetCurrent());
+
+  ScriptController& script_controller =
+      GetDocument().ExecutingFrame()->GetScriptController();
+
+  //
+  // Test whether ResizeObserver is kept alive by direct JS reference
+  //
+  script_controller.ExecuteScriptInMainWorldAndReturnValue(
+      ScriptSourceCode("var ro = new ResizeObserver( entries => {});"),
+      ScriptController::kExecuteScriptWhenScriptsDisabled);
+  ASSERT_EQ(observers.size(), 1U);
+  script_controller.ExecuteScriptInMainWorldAndReturnValue(
+      ScriptSourceCode("ro = undefined;"),
+      ScriptController::kExecuteScriptWhenScriptsDisabled);
+  V8GCController::CollectAllGarbageForTesting(v8::Isolate::GetCurrent());
+  WebHeap::CollectAllGarbageForTesting();
+  ASSERT_EQ(observers.IsEmpty(), true);
+
+  //
+  // Test whether ResizeObserver is kept alive by an Element
+  //
+  script_controller.ExecuteScriptInMainWorldAndReturnValue(
+      ScriptSourceCode("var ro = new ResizeObserver( () => {});"
+                       "var el = document.createElement('div');"
+                       "ro.observe(el);"
+                       "ro = undefined;"),
+      ScriptController::kExecuteScriptWhenScriptsDisabled);
+  ASSERT_EQ(observers.size(), 1U);
+  V8GCController::CollectAllGarbageForTesting(v8::Isolate::GetCurrent());
+  WebHeap::CollectAllGarbageForTesting();
+  ASSERT_EQ(observers.size(), 1U);
+  script_controller.ExecuteScriptInMainWorldAndReturnValue(
+      ScriptSourceCode("el = undefined;"),
+      ScriptController::kExecuteScriptWhenScriptsDisabled);
+  V8GCController::CollectAllGarbageForTesting(v8::Isolate::GetCurrent());
+  WebHeap::CollectAllGarbageForTesting();
+  ASSERT_EQ(observers.IsEmpty(), true);
+}
+
+}  // namespace blink

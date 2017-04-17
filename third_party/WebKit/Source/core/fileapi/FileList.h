@@ -30,34 +30,33 @@
 #include "core/CoreExport.h"
 #include "core/fileapi/File.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-class CORE_EXPORT FileList final : public GarbageCollected<FileList>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static FileList* create()
-    {
-        return new FileList;
-    }
+class CORE_EXPORT FileList final : public GarbageCollected<FileList>,
+                                   public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    unsigned length() const { return m_files.size(); }
-    File* item(unsigned index) const;
+ public:
+  static FileList* Create() { return new FileList; }
 
-    bool isEmpty() const { return m_files.isEmpty(); }
-    void clear() { m_files.clear(); }
-    void append(File* file) { m_files.append(file); }
-    Vector<String> pathsForUserVisibleFiles() const;
+  unsigned length() const { return files_.size(); }
+  File* item(unsigned index) const;
 
-    DECLARE_TRACE();
+  bool IsEmpty() const { return files_.IsEmpty(); }
+  void Clear() { files_.Clear(); }
+  void Append(File* file) { files_.push_back(file); }
+  Vector<String> PathsForUserVisibleFiles() const;
 
-private:
-    FileList();
+  DECLARE_TRACE();
 
-    HeapVector<Member<File>> m_files;
+ private:
+  FileList();
+
+  HeapVector<Member<File>> files_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FileList_h
+#endif  // FileList_h

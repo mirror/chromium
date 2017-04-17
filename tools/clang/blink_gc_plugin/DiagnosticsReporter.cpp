@@ -127,9 +127,9 @@ const char kFieldRequiresFinalizationNote[] =
 const char kManualDispatchMethodNote[] =
     "[blink-gc] Manual dispatch %0 declared here:";
 
-const char kDerivesNonStackAllocated[] =
+const char kStackAllocatedDerivesGarbageCollected[] =
     "[blink-gc] Stack-allocated class %0 derives class %1"
-    " which is not stack allocated.";
+    " which is garbage collected.";
 
 const char kClassOverridesNew[] =
     "[blink-gc] Garbage collected class %0"
@@ -146,6 +146,13 @@ const char kLeftMostBaseMustBePolymorphic[] =
 const char kBaseClassMustDeclareVirtualTrace[] =
     "[blink-gc] Left-most base class %0 of derived class %1"
     " must define a virtual trace method.";
+
+const char kIteratorToGCManagedCollectionNote[] =
+    "[blink-gc] Iterator field %0 to a GC managed collection declared here:";
+
+const char kTraceMethodOfStackAllocatedParentNote[] =
+    "[blink-gc] The stack allocated class %0 provides an unnecessary "
+    "trace method:";
 
 } // namespace
 
@@ -197,8 +204,8 @@ DiagnosticsReporter::DiagnosticsReporter(
       diagnostic_.getCustomDiagID(getErrorLevel(), kMissingTraceDispatch);
   diag_missing_finalize_dispatch_ =
       diagnostic_.getCustomDiagID(getErrorLevel(), kMissingFinalizeDispatch);
-  diag_derives_non_stack_allocated_ =
-      diagnostic_.getCustomDiagID(getErrorLevel(), kDerivesNonStackAllocated);
+  diag_stack_allocated_derives_gc_ = diagnostic_.getCustomDiagID(
+      getErrorLevel(), kStackAllocatedDerivesGarbageCollected);
   diag_class_overrides_new_ =
       diagnostic_.getCustomDiagID(getErrorLevel(), kClassOverridesNew);
   diag_class_declares_pure_virtual_trace_ = diagnostic_.getCustomDiagID(
@@ -207,6 +214,10 @@ DiagnosticsReporter::DiagnosticsReporter(
       getErrorLevel(), kLeftMostBaseMustBePolymorphic);
   diag_base_class_must_declare_virtual_trace_ = diagnostic_.getCustomDiagID(
       getErrorLevel(), kBaseClassMustDeclareVirtualTrace);
+  diag_iterator_to_gc_managed_collection_note_ = diagnostic_.getCustomDiagID(
+      getErrorLevel(), kIteratorToGCManagedCollectionNote);
+  diag_trace_method_of_stack_allocated_parent_ = diagnostic_.getCustomDiagID(
+      getErrorLevel(), kTraceMethodOfStackAllocatedParentNote);
 
   // Register note messages.
   diag_base_requires_tracing_note_ = diagnostic_.getCustomDiagID(
@@ -343,6 +354,8 @@ void DiagnosticsReporter::ClassContainsInvalidFields(
       note = diag_stack_allocated_field_note_;
     } else if (error.second == CheckFieldsVisitor::kGCDerivedPartObject) {
       note = diag_part_object_to_gc_derived_class_note_;
+    } else if (error.second == CheckFieldsVisitor::kIteratorToGCManaged) {
+      note = diag_iterator_to_gc_managed_collection_note_;
     } else {
       assert(false && "Unknown field error");
     }
@@ -453,11 +466,11 @@ void DiagnosticsReporter::ReportMissingDispatch(
   ReportDiagnostic(dispatch->getLocStart(), error) << receiver->record();
 }
 
-void DiagnosticsReporter::DerivesNonStackAllocated(
+void DiagnosticsReporter::StackAllocatedDerivesGarbageCollected(
     RecordInfo* info,
     BasePoint* base) {
   ReportDiagnostic(base->spec().getLocStart(),
-                   diag_derives_non_stack_allocated_)
+                   diag_stack_allocated_derives_gc_)
       << info->record() << base->info()->record();
 }
 
@@ -490,6 +503,14 @@ void DiagnosticsReporter::BaseClassMustDeclareVirtualTrace(
   ReportDiagnostic(base->getLocStart(),
                    diag_base_class_must_declare_virtual_trace_)
       << base << derived->record();
+}
+
+void DiagnosticsReporter::TraceMethodForStackAllocatedClass(
+    RecordInfo* info,
+    CXXMethodDecl* trace) {
+  ReportDiagnostic(trace->getLocStart(),
+                   diag_trace_method_of_stack_allocated_parent_)
+      << info->record();
 }
 
 void DiagnosticsReporter::NoteManualDispatchMethod(CXXMethodDecl* dispatch) {

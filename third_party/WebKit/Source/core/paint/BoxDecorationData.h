@@ -10,25 +10,25 @@
 
 namespace blink {
 
-class GraphicsContext;
 class LayoutBox;
 
 // Information extracted from ComputedStyle for box painting.
 struct BoxDecorationData {
-    STACK_ALLOCATED();
-public:
-    BoxDecorationData(const LayoutBox&);
+  STACK_ALLOCATED();
 
-    Color backgroundColor;
-    BackgroundBleedAvoidance bleedAvoidance;
-    bool hasBackground;
-    bool hasBorderDecoration;
-    bool hasAppearance;
+ public:
+  BoxDecorationData(const LayoutBox&);
 
-private:
-    BackgroundBleedAvoidance determineBackgroundBleedAvoidance(const LayoutBox&);
+  Color background_color;
+  BackgroundBleedAvoidance bleed_avoidance;
+  bool has_background;
+  bool has_border_decoration;
+  bool has_appearance;
+
+ private:
+  BackgroundBleedAvoidance DetermineBackgroundBleedAvoidance(const LayoutBox&);
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

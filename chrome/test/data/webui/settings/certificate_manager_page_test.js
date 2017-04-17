@@ -113,8 +113,8 @@ cr.define('certificate_manager_page', function() {
     },
 
     /** @override */
-    importPersonalCertificate: function() {
-      this.methodCalled('importPersonalCertificate');
+    importPersonalCertificate: function(useHardwareBacked) {
+      this.methodCalled('importPersonalCertificate', useHardwareBacked);
       return Promise.resolve(true);
     },
 
@@ -182,18 +182,6 @@ cr.define('certificate_manager_page', function() {
     MockInteractions.keyEventOn(element, 'input', kSpaceBar);
   }
 
-  /**
-   * Converts an event occurrence to a promise.
-   * @param {string} eventType
-   * @param {!HTMLElement} target
-   * @return {!Promise} A promise firing once the event occurs.
-   */
-  function eventToPromise(eventType, target) {
-    return new Promise(function(resolve, reject) {
-      target.addEventListener(eventType, resolve);
-    });
-  }
-
   function registerCaTrustEditDialogTests() {
     /** @type {?SettingsCaTrustEditDialogElement} */
     var dialog = null;
@@ -244,7 +232,7 @@ cr.define('certificate_manager_page', function() {
               assertEquals(caTrustInfo.email, !args.email);
               assertEquals(caTrustInfo.objSign, !args.objSign);
               // Check that the dialog is closed.
-              assertFalse(dialog.$.dialog.opened);
+              assertFalse(dialog.$.dialog.open);
             });
       });
 
@@ -274,7 +262,8 @@ cr.define('certificate_manager_page', function() {
         document.body.appendChild(dialog);
         browserProxy.forceCertificatesError();
 
-        var whenErrorEventFired = eventToPromise('certificates-error', dialog);
+        var whenErrorEventFired =
+            test_util.eventToPromise('certificates-error', dialog);
 
         return browserProxy.whenCalled('getCaCertificateTrust').then(
             function() {
@@ -313,7 +302,7 @@ cr.define('certificate_manager_page', function() {
       teardown(function() { dialog.remove(); });
 
       test('DeleteSuccess', function() {
-        assertTrue(dialog.$.dialog.opened);
+        assertTrue(dialog.$.dialog.open);
         // Check that the dialog title includes the certificate name.
         var titleEl = Polymer.dom(dialog.$.dialog).querySelector('.title');
         assertTrue(titleEl.textContent.includes(model.name));
@@ -325,13 +314,14 @@ cr.define('certificate_manager_page', function() {
             function(id) {
               assertEquals(model.id, id);
               // Check that the dialog is closed.
-              assertFalse(dialog.$.dialog.opened);
+              assertFalse(dialog.$.dialog.open);
             });
       });
 
       test('DeleteError', function() {
         browserProxy.forceCertificatesError();
-        var whenErrorEventFired = eventToPromise('certificates-error', dialog);
+        var whenErrorEventFired =
+            test_util.eventToPromise('certificates-error', dialog);
 
         // Simulate clicking 'OK'.
         MockInteractions.tap(dialog.$.ok);
@@ -376,7 +366,7 @@ cr.define('certificate_manager_page', function() {
         var passwordInputElement = passwordInputElements[0];
         var confirmPasswordInputElement = passwordInputElements[1];
 
-        assertTrue(dialog.$.dialog.opened);
+        assertTrue(dialog.$.dialog.open);
         assertTrue(dialog.$.ok.disabled);
 
         // Test that the 'OK' button is disabled when the password fields are
@@ -399,7 +389,7 @@ cr.define('certificate_manager_page', function() {
         return browserProxy.whenCalled(methodName).then(function(password) {
           assertEquals(passwordInputElement.value, password);
           // Check that the dialog is closed.
-          assertFalse(dialog.$.dialog.opened);
+          assertFalse(dialog.$.dialog.open);
         });
       });
 
@@ -414,7 +404,8 @@ cr.define('certificate_manager_page', function() {
         confirmPasswordInputElement.value = passwordInputElement.value;
         triggerInputEvent(passwordInputElement);
 
-        var whenErrorEventFired = eventToPromise('certificates-error', dialog);
+        var whenErrorEventFired =
+            test_util.eventToPromise('certificates-error', dialog);
         MockInteractions.tap(dialog.$.ok);
 
         return browserProxy.whenCalled(methodName).then(function() {
@@ -448,7 +439,7 @@ cr.define('certificate_manager_page', function() {
       test('DecryptSuccess', function() {
         var passwordInputElement =
             Polymer.dom(dialog.$.dialog).querySelector('paper-input');
-        assertTrue(dialog.$.dialog.opened);
+        assertTrue(dialog.$.dialog.open);
         assertTrue(dialog.$.ok.disabled);
 
         // Test that the 'OK' button is disabled when the password field is
@@ -465,7 +456,7 @@ cr.define('certificate_manager_page', function() {
         return browserProxy.whenCalled(methodName).then(function(password) {
           assertEquals(passwordInputElement.value, password);
           // Check that the dialog is closed.
-          assertFalse(dialog.$.dialog.opened);
+          assertFalse(dialog.$.dialog.open);
         });
       });
 
@@ -477,7 +468,8 @@ cr.define('certificate_manager_page', function() {
         passwordInputElement.value = 'foopassword';
         triggerInputEvent(passwordInputElement);
 
-        var whenErrorEventFired = eventToPromise('certificates-error', dialog);
+        var whenErrorEventFired =
+            test_util.eventToPromise('certificates-error', dialog);
         MockInteractions.tap(dialog.$.ok);
         return browserProxy.whenCalled(methodName).then(function() {
           return whenErrorEventFired;
@@ -497,10 +489,11 @@ cr.define('certificate_manager_page', function() {
      *     |settings.CertificateActionEvent| fires.
      */
     var actionEventToPromise = function() {
-      return eventToPromise(settings.CertificateActionEvent, subentry);
+      return test_util.eventToPromise(
+          settings.CertificateActionEvent, subentry);
     };
 
-    suite('CertificateManagerPageTests', function() {
+    suite('CertificateSubentryTests', function() {
       setup(function() {
         browserProxy = new TestCertificatesBrowserProxy();
         settings.CertificatesBrowserProxyImpl.instance_ = browserProxy;
@@ -713,16 +706,23 @@ cr.define('certificate_manager_page', function() {
        * settings.CertificateActionEvent.
        * @param {string} dialogTagName The type of dialog to test.
        * @param {CertificateActionEventDetail} eventDetail
+       * @return {!Promise}
        */
       function testDialogOpensOnAction(dialogTagName, eventDetail)  {
         assertFalse(!!page.shadowRoot.querySelector(dialogTagName));
         page.fire(settings.CertificateActionEvent, eventDetail);
         Polymer.dom.flush();
-        assertTrue(!!page.shadowRoot.querySelector(dialogTagName));
+        var dialog = page.shadowRoot.querySelector(dialogTagName);
+        assertTrue(!!dialog);
+
+        // Some dialogs are opened after some async operation to fetch initial
+        // data. Ensure that the underlying cr-dialog is actually opened before
+        // returning.
+        return test_util.whenAttributeIs(dialog.$.dialog, 'open', true);
       }
 
       test('OpensDialog_DeleteConfirmation', function() {
-        testDialogOpensOnAction(
+        return testDialogOpensOnAction(
             'settings-certificate-delete-confirmation-dialog',
             /** @type {!CertificateActionEventDetail} */ ({
               action: CertificateAction.DELETE,
@@ -732,7 +732,7 @@ cr.define('certificate_manager_page', function() {
       });
 
       test('OpensDialog_PasswordEncryption', function() {
-        testDialogOpensOnAction(
+        return testDialogOpensOnAction(
             'settings-certificate-password-encryption-dialog',
             /** @type {!CertificateActionEventDetail} */ ({
               action: CertificateAction.EXPORT_PERSONAL,
@@ -742,7 +742,7 @@ cr.define('certificate_manager_page', function() {
       });
 
       test('OpensDialog_PasswordDecryption', function() {
-        testDialogOpensOnAction(
+        return testDialogOpensOnAction(
             'settings-certificate-password-decryption-dialog',
             /** @type {!CertificateActionEventDetail} */ ({
               action: CertificateAction.IMPORT,
@@ -752,7 +752,7 @@ cr.define('certificate_manager_page', function() {
       });
 
       test('OpensDialog_CaTrustEdit', function() {
-        testDialogOpensOnAction(
+        return testDialogOpensOnAction(
             'settings-ca-trust-edit-dialog',
             /** @type {!CertificateActionEventDetail} */ ({
               action: CertificateAction.EDIT,
@@ -762,7 +762,7 @@ cr.define('certificate_manager_page', function() {
       });
 
       test('OpensDialog_CaTrustImport', function() {
-        testDialogOpensOnAction(
+        return testDialogOpensOnAction(
             'settings-ca-trust-edit-dialog',
             /** @type {!CertificateActionEventDetail} */ ({
               action: CertificateAction.IMPORT,
@@ -799,46 +799,59 @@ cr.define('certificate_manager_page', function() {
        * @param {boolean} actionEventExpected Whether a
        *     settings.CertificateActionEvent is expected to fire as a result
        *     tapping the Import button.
+       * @param {boolean} bindBtn Whether to click on the import and bind btn.
        */
       function testImportForCertificateType(
-          certificateType, proxyMethodName, actionEventExpected) {
-        element.certificateType = certificateType
+          certificateType, proxyMethodName, actionEventExpected, bindBtn) {
+        element.certificateType = certificateType;
         Polymer.dom.flush();
 
-        var importButton = element.$$('paper-button');
+        var importButton =
+            bindBtn ? element.$$('#importAndBind') : element.$$('#import');
         assertTrue(!!importButton);
 
         var waitForActionEvent = actionEventExpected ?
-            eventToPromise(settings.CertificateActionEvent, element) :
+            test_util.eventToPromise(settings.CertificateActionEvent, element) :
             Promise.resolve(null);
 
         MockInteractions.tap(importButton);
-        return browserProxy.whenCalled(proxyMethodName).then(function() {
-          return waitForActionEvent;
-        }).then(function(event) {
-          if (actionEventExpected) {
-            assertEquals(
-                CertificateAction.IMPORT, event.detail.action);
-            assertEquals(certificateType, event.detail.certificateType);
-          }
-        });
+        return browserProxy.whenCalled(proxyMethodName)
+            .then(function(arg) {
+              if (proxyMethodName == 'importPersonalCertificate') {
+                assertNotEquals(arg, undefined);
+                assertEquals(arg, bindBtn);
+              }
+              return waitForActionEvent;
+            })
+            .then(function(event) {
+              if (actionEventExpected) {
+                assertEquals(CertificateAction.IMPORT, event.detail.action);
+                assertEquals(certificateType, event.detail.certificateType);
+              }
+            });
       }
 
       test('ImportButton_Personal', function() {
         return testImportForCertificateType(
-            CertificateType.PERSONAL,
-            'importPersonalCertificate', true);
+            CertificateType.PERSONAL, 'importPersonalCertificate', true, false);
       });
+
+      if (cr.isChromeOS) {
+        test('ImportAndBindButton_Personal', function() {
+          return testImportForCertificateType(
+              CertificateType.PERSONAL, 'importPersonalCertificate', true,
+              true);
+        });
+      }
 
       test('ImportButton_Server', function() {
         return testImportForCertificateType(
-            CertificateType.SERVER, 'importServerCertificate',
-            false);
+            CertificateType.SERVER, 'importServerCertificate', false, false);
       });
 
       test('ImportButton_CA', function() {
         return testImportForCertificateType(
-            CertificateType.CA, 'importCaCertificate', true);
+            CertificateType.CA, 'importCaCertificate', true, false);
       });
     });
   }

@@ -19,23 +19,22 @@ class DictionaryValue;
 
 namespace chromeos {
 
-class CoreOobeActor;
+class CoreOobeView;
 class HelpAppLauncher;
 
-// WebUI implementation of EulaScreenActor. It is used to interact
+// WebUI implementation of EulaScreenView. It is used to interact
 // with the eula part of the JS page.
 class EulaScreenHandler : public EulaView,
                           public BaseScreenHandler,
                           public TpmPasswordFetcherDelegate {
  public:
-  explicit EulaScreenHandler(CoreOobeActor* core_oobe_actor);
+  explicit EulaScreenHandler(CoreOobeView* core_oobe_view);
   ~EulaScreenHandler() override;
 
   // EulaView implementation:
-  void PrepareToShow() override;
   void Show() override;
   void Hide() override;
-  void Bind(EulaModel& model) override;
+  void Bind(EulaScreen* screen) override;
   void Unbind() override;
   void OnPasswordFetched(const std::string& tpm_password) override;
 
@@ -53,14 +52,14 @@ class EulaScreenHandler : public EulaView,
   void HandleOnChromeOSCredits();
   void HandleOnInstallationSettingsPopupOpened();
 
-  EulaModel* model_;
-  CoreOobeActor* core_oobe_actor_;
+  EulaScreen* screen_ = nullptr;
+  CoreOobeView* core_oobe_view_ = nullptr;
 
   // Help application used for help dialogs.
   scoped_refptr<HelpAppLauncher> help_app_;
 
   // Keeps whether screen should be shown right after initialization.
-  bool show_on_init_;
+  bool show_on_init_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(EulaScreenHandler);
 };

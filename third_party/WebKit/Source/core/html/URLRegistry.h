@@ -32,7 +32,7 @@
 #define URLRegistry_h
 
 #include "core/CoreExport.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -41,23 +41,30 @@ class SecurityOrigin;
 class URLRegistry;
 
 class CORE_EXPORT URLRegistrable {
-public:
-    virtual ~URLRegistrable() { }
-    virtual URLRegistry& registry() const = 0;
+ public:
+  virtual ~URLRegistrable() {}
+  virtual URLRegistry& Registry() const = 0;
 };
 
 class CORE_EXPORT URLRegistry {
-    USING_FAST_MALLOC(URLRegistry);
-public:
-    virtual ~URLRegistry() { }
-    virtual void registerURL(SecurityOrigin*, const KURL&, URLRegistrable*) = 0;
-    virtual void unregisterURL(const KURL&) = 0;
+  USING_FAST_MALLOC(URLRegistry);
 
-    // These are optional APIs
-    virtual URLRegistrable* lookup(const String&) { ASSERT_NOT_REACHED(); return nullptr; }
-    virtual bool contains(const String&) { ASSERT_NOT_REACHED(); return false; }
+ public:
+  virtual ~URLRegistry() {}
+  virtual void RegisterURL(SecurityOrigin*, const KURL&, URLRegistrable*) = 0;
+  virtual void UnregisterURL(const KURL&) = 0;
+
+  // These are optional APIs
+  virtual URLRegistrable* Lookup(const String&) {
+    NOTREACHED();
+    return nullptr;
+  }
+  virtual bool Contains(const String&) {
+    NOTREACHED();
+    return false;
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // URLRegistry_h
+#endif  // URLRegistry_h

@@ -13,8 +13,8 @@ function handleLoad()
 
 function test()
 {
-    var heapProfileType =  WebInspector.ProfileTypeRegistry.instance.heapSnapshotProfileType;
-    heapProfileType.addEventListener(WebInspector.HeapSnapshotProfileType.SnapshotReceived, finishHeapSnapshot);
+    var heapProfileType =  Profiler.ProfileTypeRegistry.instance.heapSnapshotProfileType;
+    heapProfileType.addEventListener(Profiler.HeapSnapshotProfileType.SnapshotReceived, finishHeapSnapshot);
     InspectorTest.addSniffer(heapProfileType, "_snapshotReceived", snapshotReceived);
     heapProfileType._takeHeapSnapshot(function() {});
 
@@ -30,7 +30,7 @@ function test()
             return clear("FAILED: wrong number of recorded profiles was found. profiles.length = " + profiles.length);
 
         var profile = profiles[profiles.length - 1];
-        WebInspector.panels.profiles.showProfile(profile);
+        UI.panels.heap_profiler.showProfile(profile);
     }
 
     function snapshotReceived(profile)
@@ -69,7 +69,7 @@ function test()
             InspectorTest.addResult("PASS: got at least one HTMLBodyElement wrapper");
 
             for (var i = 0; i < remoteObjects.length; i++)
-                remoteObjects[i].getOwnProperties(didGetOwnProperties);
+                remoteObjects[i].getOwnProperties(false, didGetOwnProperties);
         }
 
         var didGetOwnPropertiesCount = 0;
@@ -88,7 +88,7 @@ function test()
         if (errorMessage)
             InspectorTest.addResult(errorMessage);
         setTimeout(done, 0);
-        WebInspector.panels.profiles._reset();
+        UI.panels.heap_profiler._reset();
         return !errorMessage;
     }
 
@@ -104,7 +104,7 @@ function test()
 
 <body onload="handleLoad()">
 <p>
-Test that resolving heap snaphot object to a JS object will not crash on DOM wrapper boilerplate. Test passes if it doesn't crash.
+Test that resolving heap snapshot object to a JS object will not crash on DOM wrapper boilerplate. Test passes if it doesn't crash.
 </p>
 
 </body>

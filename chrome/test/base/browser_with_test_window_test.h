@@ -16,10 +16,16 @@
 #include "content/public/test/test_renderer_host.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+#if defined(TOOLKIT_VIEWS)
 #if defined(OS_CHROMEOS)
+#include "ash/test/ash_test_helper.h"
+#include "ash/test/ash_test_views_delegate.h"
 #include "chrome/browser/chromeos/login/users/scoped_test_user_manager.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
+#else
+#include "ui/views/test/scoped_views_test_helper.h"
+#endif
 #endif
 
 #if defined(OS_WIN)
@@ -28,21 +34,21 @@
 
 class GURL;
 
+#if defined(TOOLKIT_VIEWS)
+namespace views {
+class TestViewsDelegate;
+}
 #if defined(OS_CHROMEOS)
 namespace ash {
 namespace test {
-class AshTestHelper;
+class AshTestEnvironment;
 }
 }
-#elif defined(TOOLKIT_VIEWS)
-namespace views {
-class ScopedViewsTestHelper;
-}
+#endif
 #endif
 
 namespace content {
 class NavigationController;
-class WebContents;
 }
 
 // Base class for browser based unit tests. BrowserWithTestWindowTest creates a
@@ -61,7 +67,7 @@ class WebContents;
 //
 //   // This is equivalent to the above, and lets you test pending navigations.
 //   browser()->OpenURL(OpenURLParams(
-//       GURL("http://foo/2"), GURL(), CURRENT_TAB,
+//       GURL("http://foo/2"), GURL(), WindowOpenDisposition::CURRENT_TAB,
 //       ui::PAGE_TRANSITION_TYPED, false));
 //   CommitPendingLoad(controller);
 //
@@ -127,10 +133,6 @@ class BrowserWithTestWindowTest : public testing::Test {
                                            const GURL& url,
                                            const base::string16& title);
 
-  // Destroys the browser, window, and profile created by this class. This is
-  // invoked from the destructor.
-  void DestroyBrowserAndProfile();
-
   // Creates the profile used by this test. The caller owns the return value.
   virtual TestingProfile* CreateProfile();
 
@@ -147,6 +149,16 @@ class BrowserWithTestWindowTest : public testing::Test {
                                  Browser::Type browser_type,
                                  bool hosted_app,
                                  BrowserWindow* browser_window);
+
+#if defined(TOOLKIT_VIEWS)
+  views::TestViewsDelegate* test_views_delegate() {
+#if defined(OS_CHROMEOS)
+    return ash_test_helper_->test_views_delegate();
+#else
+    return views_test_helper_->test_views_delegate();
+#endif
+  }
+#endif
 
  private:
   // We need to create a MessageLoop, otherwise a bunch of things fails.
@@ -171,6 +183,7 @@ class BrowserWithTestWindowTest : public testing::Test {
   content::RenderViewHostTestEnabler rvh_test_enabler_;
 
 #if defined(OS_CHROMEOS)
+  std::unique_ptr<ash::test::AshTestEnvironment> ash_test_environment_;
   std::unique_ptr<ash::test::AshTestHelper> ash_test_helper_;
 #elif defined(TOOLKIT_VIEWS)
   std::unique_ptr<views::ScopedViewsTestHelper> views_test_helper_;

@@ -1,26 +1,70 @@
 /* Copyright 2016 The Chromium Authors. All rights reserved.
-   Use of this source code is governed by a BSD-style license that can be
-   found in the LICENSE file. */
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
 
-:host {
-  display: flex;
-  flex-direction: column;
-  font-size: 18px;
-  overflow: hidden;
-  position: relative;
+:root {
+  --oobe-dialog-list-item-border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-#oobe-welcome-md .buttonbox {
-  font-size: 32px;
-  padding: 15px 24px 24px;
-  width: 100px;
+/************* Language Screen **************/
+#languageScreen .language-selection-entry {
+  border-top: var(--oobe-dialog-list-item-border);
+  height: 44px;
+  padding: 0 10px;
 }
 
-#oobe-welcome-md .welcome-next {
-  padding: 15px 24px 24px;
+#languageScreen .language-selection-entry:last-of-type {
+  border-bottom: var(--oobe-dialog-list-item-border);
 }
 
-#oobe-welcome-md .bottom-button {
-    --iron-icon-height: 32px;
-    --iron-icon-width: 32px;
+#languageScreen .language-selection-title {
+  color: rgba(0, 0, 0, 0.87);
+  font: 13px Roboto, sans-serif;
+}
+
+#languageScreen .bottom-buttons {
+  padding: 0 24px;
+}
+
+/************* Accessibility Screen **************/
+#accessibilityScreen oobe-a11y-option {
+  border-top: var(--oobe-dialog-list-item-border);
+  min-height: 56px;
+}
+
+#accessibilityScreen oobe-a11y-option:last-of-type {
+  border-bottom: var(--oobe-dialog-list-item-border);
+}
+
+#accessibilityScreen .bottom-buttons {
+  padding: 0 24px;
+}
+
+/************* Network Selection Screen **************/
+#networkSelectionScreen .footer {
+  max-height: 313px;
+}
+
+#networkSelectionScreen .bottom-buttons {
+  padding: 0 6px; /* = 8px - 2px back button border */
+}
+
+/************* Timezone Screen **************/
+#timezoneScreen .timezone-selection-entry {
+  border-top: var(--oobe-dialog-list-item-border);
+  height: 44px;
+  padding: 0 20px;
+}
+
+#timezoneScreen .timezone-selection-entry:last-of-type {
+  border-bottom: var(--oobe-dialog-list-item-border);
+}
+
+#timezoneScreen .timezone-selection-title {
+  color: rgba(0, 0, 0, 0.87);
+  font: 13px Roboto, sans-serif;
+}
+
+#timezoneScreen .bottom-buttons {
+  padding: 0 24px;
 }

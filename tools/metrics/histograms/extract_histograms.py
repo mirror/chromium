@@ -54,6 +54,7 @@ XML below will generate the following five histograms:
 
 """
 
+import bisect
 import copy
 import logging
 import xml.dom.minidom
@@ -62,6 +63,9 @@ OWNER_FIELD_PLACEHOLDER = (
     'Please list the metric\'s owners. Add more owner tags as needed.')
 
 MAX_HISTOGRAM_SUFFIX_DEPENDENCY_DEPTH = 5
+
+DEFAULT_BASE_HISTOGRAM_OBSOLETE_REASON = (
+    'Base histogram. Use suffixes of this histogram instead.')
 
 
 class Error(Exception):
@@ -139,6 +143,12 @@ def _ExpandHistogramNameWithSuffixes(suffix_name, histogram_name,
     ordering = histogram_suffixes_node.getAttribute('ordering')
   else:
     ordering = 'suffix'
+  parts = ordering.split(',')
+  ordering = parts[0]
+  if len(parts) > 1:
+    placement = int(parts[1])
+  else:
+    placement = 1
   if ordering not in ['prefix', 'suffix']:
     logging.error('ordering needs to be prefix or suffix, value is %s',
                   ordering)
@@ -153,15 +163,16 @@ def _ExpandHistogramNameWithSuffixes(suffix_name, histogram_name,
   # For prefixes, the suffix_name is inserted between the "cluster" and the
   # "remainder", e.g. Foo.BarHist expanded with gamma becomes Foo.gamma_BarHist.
   sections = histogram_name.split('.')
-  if len(sections) <= 1:
+  if len(sections) <= placement:
     logging.error(
-        'Prefix Field Trial expansions require histogram names which include a '
-        'dot separator. Histogram name is %s, and Field Trial is %s',
-        histogram_name, histogram_suffixes_node.getAttribute('name'))
+        'Prefix histogram_suffixes expansions require histogram names which '
+        'include a dot separator. Histogram name is %s, histogram_suffixes is '
+        '%s, and placment is %d',
+        histogram_name, histogram_suffixes_node.getAttribute('name'), placement)
     raise Error()
 
-  cluster = sections[0] + '.'
-  remainder = '.'.join(sections[1:])
+  cluster = '.'.join(sections[0:placement]) + '.'
+  remainder = '.'.join(sections[placement:])
   return cluster + suffix_name + separator + remainder
 
 
@@ -190,7 +201,6 @@ def _ExtractEnumsFromXmlTree(tree):
       have_errors = True
       continue
 
-    last_int_value = None
     enum_dict = {}
     enum_dict['name'] = name
     enum_dict['values'] = {}
@@ -198,11 +208,6 @@ def _ExtractEnumsFromXmlTree(tree):
     for int_tag in enum.getElementsByTagName('int'):
       value_dict = {}
       int_value = int(int_tag.getAttribute('value'))
-      if last_int_value is not None and int_value < last_int_value:
-        logging.error('Enum %s int values %d and %d are not in numerical order',
-                      name, last_int_value, int_value)
-        have_errors = True
-      last_int_value = int_value
       if int_value in enum_dict['values']:
         logging.error('Duplicate enum value %d for enum %s', int_value, name)
         have_errors = True
@@ -210,6 +215,26 @@ def _ExtractEnumsFromXmlTree(tree):
       value_dict['label'] = int_tag.getAttribute('label')
       value_dict['summary'] = _JoinChildNodes(int_tag)
       enum_dict['values'][int_value] = value_dict
+
+    enum_int_values = sorted(enum_dict['values'].keys())
+
+    last_int_value = None
+    for int_tag in enum.getElementsByTagName('int'):
+      int_value = int(int_tag.getAttribute('value'))
+      if last_int_value is not None and int_value < last_int_value:
+        logging.error('Enum %s int values %d and %d are not in numerical order',
+                      name, last_int_value, int_value)
+        have_errors = True
+        left_item_index = bisect.bisect_left(enum_int_values, int_value)
+        if left_item_index == 0:
+          logging.warning('Insert value %d at the beginning', int_value)
+        else:
+          left_int_value = enum_int_values[left_item_index - 1]
+          left_label = enum_dict['values'][left_int_value]['label']
+          logging.warning('Insert value %d after %d ("%s")',
+                          int_value, left_int_value, left_label)
+      else:
+        last_int_value = int_value
 
     summary_nodes = enum.getElementsByTagName('summary')
     if summary_nodes:
@@ -228,6 +253,14 @@ def _ExtractOwners(xml_node):
     if OWNER_FIELD_PLACEHOLDER not in owner_entry:
       owners.append(owner_entry)
   return owners
+
+
+def _ProcessBaseHistogramAttribute(node, histogram_entry):
+  if node.hasAttribute('base'):
+    is_base = node.getAttribute('base').lower() == 'true'
+    histogram_entry['base'] = is_base
+    if is_base and 'obsolete' not in histogram_entry:
+      histogram_entry['obsolete'] = DEFAULT_BASE_HISTOGRAM_OBSOLETE_REASON
 
 
 def _ExtractHistogramsFromXmlTree(tree, enums):
@@ -287,6 +320,8 @@ def _ExtractHistogramsFromXmlTree(tree, enums):
         have_errors = True
       else:
         histogram_entry['enum'] = enums[enum_name]
+
+    _ProcessBaseHistogramAttribute(histogram, histogram_entry)
 
   return histograms, have_errors
 
@@ -398,8 +433,17 @@ def _UpdateHistogramsWithSuffixes(tree, histograms):
           new_histogram_name = _ExpandHistogramNameWithSuffixes(
               suffix_name, histogram_name, histogram_suffixes)
           if new_histogram_name != histogram_name:
-            histograms[new_histogram_name] = copy.deepcopy(
-                histograms[histogram_name])
+            new_histogram = copy.deepcopy(histograms[histogram_name])
+            # Do not copy forward base histogram state to suffixed
+            # histograms. Any suffixed histograms that wish to remain base
+            # histograms must explicitly re-declare themselves as base
+            # histograms.
+            if new_histogram.get('base', False):
+              del new_histogram['base']
+              if (new_histogram.get('obsolete', '') ==
+                  DEFAULT_BASE_HISTOGRAM_OBSOLETE_REASON):
+                del new_histogram['obsolete']
+            histograms[new_histogram_name] = new_histogram
 
           suffix_label = suffix_labels.get(suffix_name, '')
 
@@ -435,6 +479,8 @@ def _UpdateHistogramsWithSuffixes(tree, histograms):
           # inherit it.
           if obsolete_reason:
             histograms[new_histogram_name]['obsolete'] = obsolete_reason
+
+          _ProcessBaseHistogramAttribute(suffix, histograms[new_histogram_name])
 
         except Error:
           have_errors = True

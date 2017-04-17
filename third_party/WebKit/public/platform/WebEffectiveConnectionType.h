@@ -34,15 +34,14 @@
 namespace blink {
 
 enum class WebEffectiveConnectionType {
-    TypeUnknown,
-    TypeOffline,
-    TypeSlow2G,
-    Type2G,
-    Type3G,
-    Type4G,
-    TypeBroadband
+  kTypeUnknown,
+  kTypeOffline,
+  kTypeSlow2G,
+  kType2G,
+  kType3G,
+  kType4G
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebEffectiveConnectionType_h
+#endif  // WebEffectiveConnectionType_h

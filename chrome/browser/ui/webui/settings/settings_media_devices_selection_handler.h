@@ -7,7 +7,7 @@
 
 #include "base/macros.h"
 #include "base/scoped_observer.h"
-#include "chrome/browser/media/media_capture_devices_dispatcher.h"
+#include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/ui/webui/settings/settings_page_ui_handler.h"
 #include "content/public/browser/web_contents.h"
 
@@ -50,6 +50,10 @@ class MediaDevicesSelectionHandler
   void UpdateDevicesMenuForType(DeviceType type);
   void UpdateDevicesMenu(DeviceType type,
                          const content::MediaStreamDevices& devices);
+
+  // Gets the human readable name of the device.
+  std::string GetDeviceDisplayName(
+      const content::MediaStreamDevice& device) const;
 
   Profile* profile_;  // Weak pointer.
 

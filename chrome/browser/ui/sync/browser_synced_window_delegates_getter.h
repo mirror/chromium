@@ -15,17 +15,17 @@ class Profile;
 
 namespace browser_sync {
 
-class SyncedWindowDelegate;
-
 // This class defines how to access SyncedWindowDelegates on desktop.
-class BrowserSyncedWindowDelegatesGetter : public SyncedWindowDelegatesGetter {
+class BrowserSyncedWindowDelegatesGetter
+    : public sync_sessions::SyncedWindowDelegatesGetter {
  public:
   explicit BrowserSyncedWindowDelegatesGetter(Profile* profile);
   ~BrowserSyncedWindowDelegatesGetter() override;
 
   // SyncedWindowDelegatesGetter implementation
-  std::set<const SyncedWindowDelegate*> GetSyncedWindowDelegates() override;
-  const SyncedWindowDelegate* FindById(SessionID::id_type id) override;
+  SyncedWindowDelegateMap GetSyncedWindowDelegates() override;
+  const sync_sessions::SyncedWindowDelegate* FindById(
+      SessionID::id_type id) override;
 
  private:
   Profile* const profile_;

@@ -32,35 +32,38 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "modules/webdatabase/sqlite/SQLValue.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 class ScriptValue;
 class ScriptState;
 class ExceptionState;
 
-class SQLResultSetRowList final : public GarbageCollectedFinalized<SQLResultSetRowList>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SQLResultSetRowList* create() { return new SQLResultSetRowList; }
-    DEFINE_INLINE_TRACE() { }
+class SQLResultSetRowList final
+    : public GarbageCollectedFinalized<SQLResultSetRowList>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    const Vector<String>& columnNames() const { return m_columns; }
-    const Vector<SQLValue>& values() const { return m_result; }
+ public:
+  static SQLResultSetRowList* Create() { return new SQLResultSetRowList; }
+  DEFINE_INLINE_TRACE() {}
 
-    void addColumn(const String& name) { m_columns.append(name); }
-    void addResult(const SQLValue& result) { m_result.append(result); }
+  const Vector<String>& ColumnNames() const { return columns_; }
+  const Vector<SQLValue>& Values() const { return result_; }
 
-    unsigned length() const;
-    ScriptValue item(ScriptState*, unsigned index, ExceptionState&);
+  void AddColumn(const String& name) { columns_.push_back(name); }
+  void AddResult(const SQLValue& result) { result_.push_back(result); }
 
-private:
-    SQLResultSetRowList() { }
+  unsigned length() const;
+  ScriptValue item(ScriptState*, unsigned index, ExceptionState&);
 
-    Vector<String> m_columns;
-    Vector<SQLValue> m_result;
+ private:
+  SQLResultSetRowList() {}
+
+  Vector<String> columns_;
+  Vector<SQLValue> result_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SQLResultSetRowList_h
+#endif  // SQLResultSetRowList_h

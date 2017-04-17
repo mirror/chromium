@@ -6,12 +6,12 @@
 
 #include <utility>
 
-#include "apps/app_load_service.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_util.h"
@@ -19,6 +19,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/values.h"
+#include "chrome/browser/apps/app_load_service.h"
 #include "chrome/browser/background/background_contents_service_factory.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -50,17 +51,15 @@
 #include "extensions/common/extension_set.h"
 #include "extensions/common/manifest_handlers/background_info.h"
 #include "extensions/common/manifest_handlers/icons_handler.h"
+#include "extensions/common/one_shot_event.h"
 #include "extensions/grit/extensions_browser_resources.h"
 #include "ipc/ipc_message.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image.h"
-
-#if defined(ENABLE_NOTIFICATIONS)
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/notifier_settings.h"
-#endif
 
 using content::SiteInstance;
 using content::WebContents;
@@ -79,12 +78,10 @@ void CloseBalloon(const std::string& balloon_id, ProfileID profile_id) {
       g_browser_process->notification_ui_manager();
   bool cancelled = notification_ui_manager->CancelById(balloon_id, profile_id);
   if (cancelled) {
-#if defined(ENABLE_NOTIFICATIONS)
     // TODO(dewittj): Add this functionality to the notification UI manager's
     // API.
     g_browser_process->message_center()->SetVisibility(
         message_center::VISIBILITY_TRANSIENT);
-#endif
   }
 }
 
@@ -157,7 +154,6 @@ class CrashNotificationDelegate : public NotificationDelegate {
   DISALLOW_COPY_AND_ASSIGN(CrashNotificationDelegate);
 };
 
-#if defined(ENABLE_NOTIFICATIONS)
 void NotificationImageReady(
     const std::string extension_name,
     const base::string16 message,
@@ -191,12 +187,10 @@ void NotificationImageReady(
 
   g_browser_process->notification_ui_manager()->Add(notification, profile);
 }
-#endif
 
 // Show a popup notification balloon with a crash message for a given app/
 // extension.
 void ShowBalloon(const Extension* extension, Profile* profile) {
-#if defined(ENABLE_NOTIFICATIONS)
   const base::string16 message = l10n_util::GetStringFUTF16(
       extension->is_app() ? IDS_BACKGROUND_CRASHED_APP_BALLOON_MESSAGE :
                             IDS_BACKGROUND_CRASHED_EXTENSION_BALLOON_MESSAGE,
@@ -219,7 +213,6 @@ void ShowBalloon(const Extension* extension, Profile* profile) {
           message,
           make_scoped_refptr(new CrashNotificationDelegate(profile, extension)),
           profile));
-#endif
 }
 
 void ReloadExtension(const std::string& extension_id, Profile* profile) {
@@ -263,12 +256,26 @@ void ReloadExtension(const std::string& extension_id, Profile* profile) {
 const char kUrlKey[] = "url";
 const char kFrameNameKey[] = "name";
 
+// Defines the backoff policy used for attempting to reload extensions.
+const net::BackoffEntry::Policy kExtensionReloadBackoffPolicy = {
+  0,                // Initial errors to ignore before applying backoff.
+  3000,             // Initial delay: 3 seconds.
+  2,                // Multiply factor.
+  0.1,              // Fuzzing percentage.
+  -1,               // Maximum backoff time: -1 for no maximum.
+  -1,               // Entry lifetime: -1 to never discard.
+  false,            // Whether to always use initial delay. No-op as there are
+                    // no initial errors to ignore.
+};
+
 int BackgroundContentsService::restart_delay_in_ms_ = 3000;  // 3 seconds.
 
 BackgroundContentsService::BackgroundContentsService(
     Profile* profile,
     const base::CommandLine* command_line)
-    : prefs_(NULL), extension_registry_observer_(this) {
+    : prefs_(nullptr),
+      extension_registry_observer_(this),
+      weak_ptr_factory_(this) {
   // Don't load/store preferences if the parent profile is incognito.
   if (!profile->IsOffTheRecord())
     prefs_ = profile->GetPrefs();
@@ -323,9 +330,9 @@ BackgroundContentsService::GetBackgroundContents() const
 
 void BackgroundContentsService::StartObserving(Profile* profile) {
   // On startup, load our background pages after extension-apps have loaded.
-  registrar_.Add(this,
-                 extensions::NOTIFICATION_EXTENSIONS_READY_DEPRECATED,
-                 content::Source<Profile>(profile));
+  extensions::ExtensionSystem::Get(profile)->ready().Post(
+      FROM_HERE, base::Bind(&BackgroundContentsService::OnExtensionSystemReady,
+                            weak_ptr_factory_.GetWeakPtr(), profile));
 
   // Track the lifecycle of all BackgroundContents in the system to allow us
   // to store an up-to-date list of the urls. Start tracking contents when they
@@ -356,21 +363,19 @@ void BackgroundContentsService::StartObserving(Profile* profile) {
   extension_registry_observer_.Add(extensions::ExtensionRegistry::Get(profile));
 }
 
+void BackgroundContentsService::OnExtensionSystemReady(Profile* profile) {
+  SCOPED_UMA_HISTOGRAM_TIMER("Extensions.BackgroundContentsServiceStartupTime");
+  LoadBackgroundContentsFromManifests(profile);
+  LoadBackgroundContentsFromPrefs(profile);
+  SendChangeNotification(profile);
+}
+
 void BackgroundContentsService::Observe(
     int type,
     const content::NotificationSource& source,
     const content::NotificationDetails& details) {
   TRACE_EVENT0("browser,startup", "BackgroundContentsService::Observe");
   switch (type) {
-    case extensions::NOTIFICATION_EXTENSIONS_READY_DEPRECATED: {
-      SCOPED_UMA_HISTOGRAM_TIMER(
-          "Extensions.BackgroundContentsServiceStartupTime");
-      Profile* profile = content::Source<Profile>(source).ptr();
-      LoadBackgroundContentsFromManifests(profile);
-      LoadBackgroundContentsFromPrefs(profile);
-      SendChangeNotification(profile);
-      break;
-    }
     case chrome::NOTIFICATION_BACKGROUND_CONTENTS_DELETED:
       BackgroundContentsShutdown(
           content::Details<BackgroundContents>(details).ptr());
@@ -466,6 +471,23 @@ void BackgroundContentsService::OnExtensionLoaded(
     }
   }
 
+  // If there is an existing BackoffEntry for the extension, clear it if
+  // the component extension stays loaded for 60 seconds. This avoids the
+  // situation of effectively disabling an extension for the entire browser
+  // session if there was a periodic crash (sometimes caused by another source).
+  if (extensions::Manifest::IsComponentLocation(extension->location())) {
+    ComponentExtensionBackoffEntryMap::const_iterator it =
+        component_backoff_map_.find(extension->id());
+    if (it != component_backoff_map_.end()) {
+      net::BackoffEntry* entry = component_backoff_map_[extension->id()].get();
+      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(FROM_HERE,
+          base::Bind(&BackgroundContentsService::MaybeClearBackoffEntry,
+              weak_ptr_factory_.GetWeakPtr(), extension->id(),
+              entry->failure_count()),
+          base::TimeDelta::FromSeconds(60));
+    }
+  }
+
   // Close the crash notification balloon for the app/extension, if any.
   ScheduleCloseBalloon(extension->id(), profile);
   SendChangeNotification(profile);
@@ -523,9 +545,33 @@ void BackgroundContentsService::OnExtensionUninstalled(
 void BackgroundContentsService::RestartForceInstalledExtensionOnCrash(
     const Extension* extension,
     Profile* profile) {
+  int restart_delay = restart_delay_in_ms_;
+
+  // If the extension was a component extension, use exponential backoff when
+  // attempting to reload.
+  if (extensions::Manifest::IsComponentLocation(extension->location())) {
+    ComponentExtensionBackoffEntryMap::const_iterator it =
+        component_backoff_map_.find(extension->id());
+
+    // Create a BackoffEntry if this is the first time we try to reload this
+    // particular extension.
+    if (it == component_backoff_map_.end()) {
+      std::unique_ptr<net::BackoffEntry> backoff_entry(
+          new net::BackoffEntry(&kExtensionReloadBackoffPolicy));
+      component_backoff_map_.insert(
+          std::pair<extensions::ExtensionId,
+                    std::unique_ptr<net::BackoffEntry>>(
+              extension->id(), std::move(backoff_entry)));
+    }
+
+    net::BackoffEntry* entry = component_backoff_map_[extension->id()].get();
+    entry->InformOfRequest(false);
+    restart_delay = entry->GetTimeUntilRelease().InMilliseconds();
+  }
+
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, base::Bind(&ReloadExtension, extension->id(), profile),
-      base::TimeDelta::FromMilliseconds(restart_delay_in_ms_));
+      base::TimeDelta::FromMilliseconds(restart_delay));
 }
 
 // Loads all background contents whose urls have been stored in prefs.
@@ -566,6 +612,22 @@ void BackgroundContentsService::SendChangeNotification(Profile* profile) {
       chrome::NOTIFICATION_BACKGROUND_CONTENTS_SERVICE_CHANGED,
       content::Source<Profile>(profile),
       content::Details<BackgroundContentsService>(this));
+}
+
+void BackgroundContentsService::MaybeClearBackoffEntry(
+    const std::string extension_id,
+    int expected_failure_count) {
+  ComponentExtensionBackoffEntryMap::const_iterator it =
+      component_backoff_map_.find(extension_id);
+  if (it == component_backoff_map_.end())
+    return;
+
+  net::BackoffEntry* entry = component_backoff_map_[extension_id].get();
+
+  // Only remove the BackoffEntry if there has has been no failure for
+  // |extension_id| since loading.
+  if (entry->failure_count() == expected_failure_count)
+    component_backoff_map_.erase(it);
 }
 
 void BackgroundContentsService::LoadBackgroundContentsForExtension(
@@ -702,10 +764,10 @@ void BackgroundContentsService::RegisterBackgroundContents(
   }
 
   // No entry for this application yet, so add one.
-  base::DictionaryValue* dict = new base::DictionaryValue();
+  auto dict = base::MakeUnique<base::DictionaryValue>();
   dict->SetString(kUrlKey, background_contents->GetURL().spec());
   dict->SetString(kFrameNameKey, contents_map_[appid].frame_name);
-  pref->SetWithoutPathExpansion(base::UTF16ToUTF8(appid), dict);
+  pref->SetWithoutPathExpansion(base::UTF16ToUTF8(appid), std::move(dict));
 }
 
 bool BackgroundContentsService::HasRegisteredBackgroundContents(

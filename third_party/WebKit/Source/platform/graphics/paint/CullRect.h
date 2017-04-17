@@ -7,52 +7,63 @@
 
 #include "platform/geometry/IntRect.h"
 #include "platform/transforms/AffineTransform.h"
-#include "wtf/Allocator.h"
-#include "wtf/HashMap.h"
-#include "wtf/ListHashSet.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/ListHashSet.h"
+#include "platform/wtf/text/WTFString.h"
 
 #include <limits>
 
 namespace blink {
 
 class FloatRect;
-class LayoutBoxModelObject;
-class LayoutInline;
-class LayoutObject;
 class LayoutRect;
 class LayoutUnit;
-class PaintInvalidationState;
 
 class PLATFORM_EXPORT CullRect {
-    DISALLOW_NEW();
-public:
-    explicit CullRect(const IntRect& rect) : m_rect(rect) { }
-    CullRect(const CullRect&, const IntPoint& offset);
-    CullRect(const CullRect&, const IntSize& offset);
+  DISALLOW_NEW();
 
-    bool intersectsCullRect(const AffineTransform&, const FloatRect& boundingBox) const;
-    void updateCullRect(const AffineTransform& localToParentTransform);
-    bool intersectsCullRect(const IntRect&) const;
-    bool intersectsCullRect(const LayoutRect&) const;
-    bool intersectsHorizontalRange(LayoutUnit lo, LayoutUnit hi) const;
-    bool intersectsVerticalRange(LayoutUnit lo, LayoutUnit hi) const;
+ public:
+  CullRect() {}
+  explicit CullRect(const IntRect& rect) : rect_(rect) {}
+  CullRect(const CullRect&, const IntPoint& offset);
+  CullRect(const CullRect&, const IntSize& offset);
 
-private:
-    IntRect m_rect;
+  bool IntersectsCullRect(const AffineTransform&,
+                          const FloatRect& bounding_box) const;
+  void UpdateCullRect(const AffineTransform& local_to_parent_transform);
+  bool IntersectsCullRect(const IntRect&) const;
+  bool IntersectsCullRect(const LayoutRect&) const;
+  bool IntersectsHorizontalRange(LayoutUnit lo, LayoutUnit hi) const;
+  bool IntersectsVerticalRange(LayoutUnit lo, LayoutUnit hi) const;
 
-    // TODO(chrishtr): temporary while we implement CullRect everywhere.
-    friend class FramePainter;
-    friend class GridPainter;
-    friend class SVGInlineTextBoxPainter;
-    friend class ReplicaPainter;
-    friend class SVGPaintContext;
-    friend class SVGRootInlineBoxPainter;
-    friend class SVGShapePainter;
-    friend class TableSectionPainter;
-    friend class ThemePainterMac;
-    friend class WebPluginContainerImpl;
+  String ToString() const { return rect_.ToString(); }
+
+ private:
+  IntRect rect_;
+
+  friend bool operator==(const CullRect&, const CullRect&);
+
+  // TODO(chrishtr): temporary while we implement CullRect everywhere.
+  friend class FramePainter;
+  friend class GridPainter;
+  friend class SVGInlineTextBoxPainter;
+  friend class SVGPaintContext;
+  friend class SVGRootInlineBoxPainter;
+  friend class SVGShapePainter;
+  friend class TableRowPainter;
+  friend class TableSectionPainter;
+  friend class ThemePainterMac;
+  friend class WebPluginContainerImpl;
 };
 
-} // namespace blink
+inline bool operator==(const CullRect& a, const CullRect& b) {
+  return a.rect_ == b.rect_;
+}
+inline bool operator!=(const CullRect& a, const CullRect& b) {
+  return !(a == b);
+}
 
-#endif // CullRect_h
+}  // namespace blink
+
+#endif  // CullRect_h

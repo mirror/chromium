@@ -5,38 +5,31 @@
 #include "modules/sensor/SensorErrorEvent.h"
 
 #include "bindings/core/v8/V8Binding.h"
-#include <v8.h>
+#include "v8/include/v8.h"
 
 namespace blink {
 
-SensorErrorEvent::~SensorErrorEvent()
-{
+SensorErrorEvent::~SensorErrorEvent() {}
+
+SensorErrorEvent::SensorErrorEvent(const AtomicString& event_type,
+                                   DOMException* error)
+    : Event(event_type, false, false)  // does not bubble, is not cancelable.
+      ,
+      error_(error) {
+  DCHECK(error_);
 }
 
-SensorErrorEvent::SensorErrorEvent()
-    : Event(EventTypeNames::error, false, true)
-{
+SensorErrorEvent::SensorErrorEvent(const AtomicString& event_type,
+                                   const SensorErrorEventInit& initializer)
+    : Event(event_type, initializer) {}
+
+const AtomicString& SensorErrorEvent::InterfaceName() const {
+  return EventNames::SensorErrorEvent;
 }
 
-SensorErrorEvent::SensorErrorEvent(const AtomicString& eventType)
-    : Event(eventType, true, false) // let default be bubbles but is not cancelable.
-{
+DEFINE_TRACE(SensorErrorEvent) {
+  visitor->Trace(error_);
+  Event::Trace(visitor);
 }
 
-SensorErrorEvent::SensorErrorEvent(const AtomicString& eventType, const SensorErrorEventInit& initializer)
-    : Event(eventType, initializer)
-{
-    setCanBubble(true);
-}
-
-const AtomicString& SensorErrorEvent::interfaceName() const
-{
-    return EventNames::SensorErrorEvent;
-}
-
-DEFINE_TRACE(SensorErrorEvent)
-{
-    Event::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -28,68 +28,78 @@
 
 #include "public/platform/WebCanvas.h"
 #include "public/platform/WebPrivatePtr.h"
+#include "public/platform/WebRect.h"
+#include "public/platform/WebSize.h"
 
 namespace blink {
 
 class ScrollbarTheme;
 class Scrollbar;
 class WebScrollbar;
-struct WebRect;
 
 class WebScrollbarThemePainter {
-public:
-    WebScrollbarThemePainter() : m_theme(0), m_deviceScaleFactor(1.0) { }
-    WebScrollbarThemePainter(const WebScrollbarThemePainter& painter) { assign(painter); }
-    virtual ~WebScrollbarThemePainter()
-    {
-        reset();
-    }
-    WebScrollbarThemePainter& operator=(const WebScrollbarThemePainter& painter)
-    {
-        assign(painter);
-        return *this;
-    }
+ public:
+  WebScrollbarThemePainter() : theme_(0), device_scale_factor_(1.0) {}
+  WebScrollbarThemePainter(const WebScrollbarThemePainter& painter) {
+    Assign(painter);
+  }
+  virtual ~WebScrollbarThemePainter() { Reset(); }
+  WebScrollbarThemePainter& operator=(const WebScrollbarThemePainter& painter) {
+    Assign(painter);
+    return *this;
+  }
 
-    BLINK_PLATFORM_EXPORT void assign(const WebScrollbarThemePainter&);
-    BLINK_PLATFORM_EXPORT void reset();
+  BLINK_PLATFORM_EXPORT void Assign(const WebScrollbarThemePainter&);
+  BLINK_PLATFORM_EXPORT void Reset();
 
-    BLINK_PLATFORM_EXPORT void paintScrollbarBackground(WebCanvas*, const WebRect&);
-    BLINK_PLATFORM_EXPORT void paintTrackBackground(WebCanvas*, const WebRect&);
-    BLINK_PLATFORM_EXPORT void paintBackTrackPart(WebCanvas*, const WebRect&);
-    BLINK_PLATFORM_EXPORT void paintForwardTrackPart(WebCanvas*, const WebRect&);
-    BLINK_PLATFORM_EXPORT void paintBackButtonStart(WebCanvas*, const WebRect&);
-    BLINK_PLATFORM_EXPORT void paintBackButtonEnd(WebCanvas*, const WebRect&);
-    BLINK_PLATFORM_EXPORT void paintForwardButtonStart(WebCanvas*, const WebRect&);
-    BLINK_PLATFORM_EXPORT void paintForwardButtonEnd(WebCanvas*, const WebRect&);
-    BLINK_PLATFORM_EXPORT void paintTickmarks(WebCanvas*, const WebRect&);
-    BLINK_PLATFORM_EXPORT void paintThumb(WebCanvas*, const WebRect&);
+  BLINK_PLATFORM_EXPORT void PaintScrollbarBackground(WebCanvas*,
+                                                      const WebRect&);
+  BLINK_PLATFORM_EXPORT void PaintTrackBackground(WebCanvas*, const WebRect&);
+  BLINK_PLATFORM_EXPORT void PaintBackTrackPart(WebCanvas*, const WebRect&);
+  BLINK_PLATFORM_EXPORT void PaintForwardTrackPart(WebCanvas*, const WebRect&);
+  BLINK_PLATFORM_EXPORT void PaintBackButtonStart(WebCanvas*, const WebRect&);
+  BLINK_PLATFORM_EXPORT void PaintBackButtonEnd(WebCanvas*, const WebRect&);
+  BLINK_PLATFORM_EXPORT void PaintForwardButtonStart(WebCanvas*,
+                                                     const WebRect&);
+  BLINK_PLATFORM_EXPORT void PaintForwardButtonEnd(WebCanvas*, const WebRect&);
+  BLINK_PLATFORM_EXPORT void PaintTickmarks(WebCanvas*, const WebRect&);
+  BLINK_PLATFORM_EXPORT void PaintThumb(WebCanvas*, const WebRect&);
 
-    // This opacity is applied on top of the content that is painted for the thumb.
-    BLINK_PLATFORM_EXPORT float thumbOpacity() const;
+  // This opacity is applied on top of the content that is painted for the
+  // thumb.
+  BLINK_PLATFORM_EXPORT float ThumbOpacity() const;
 
-    BLINK_PLATFORM_EXPORT bool trackNeedsRepaint() const;
-    BLINK_PLATFORM_EXPORT bool thumbNeedsRepaint() const;
+  BLINK_PLATFORM_EXPORT bool TrackNeedsRepaint() const;
+  BLINK_PLATFORM_EXPORT bool ThumbNeedsRepaint() const;
+
+  BLINK_PLATFORM_EXPORT bool UsesNinePatchThumbResource() const;
 
 #if INSIDE_BLINK
-    BLINK_PLATFORM_EXPORT WebScrollbarThemePainter(ScrollbarTheme&, Scrollbar&, float deviceScaleFactor);
+  BLINK_PLATFORM_EXPORT WebScrollbarThemePainter(ScrollbarTheme&,
+                                                 Scrollbar&,
+                                                 float device_scale_factor);
 #endif
 
-private:
-    // The theme is not owned by this class. It is assumed that the theme is a
-    // static pointer and its lifetime is essentially infinite. The functions
-    // called from the painter may not be thread-safe, so all calls must be made
-    // from the same thread that it is created on.
-    ScrollbarTheme* m_theme;
+  BLINK_PLATFORM_EXPORT float DeviceScaleFactor() const {
+    return device_scale_factor_;
+  }
 
-    // It is assumed that the constructor of this paint object is responsible
-    // for the lifetime of this scrollbar. The painter has to use the real
-    // scrollbar (and not a WebScrollbar wrapper) due to static_casts for
-    // LayoutScrollbar and pointer-based HashMap lookups for Lion scrollbars.
-    WebPrivatePtr<Scrollbar> m_scrollbar;
+ private:
+  // The theme is not owned by this class. It is assumed that the theme is a
+  // static pointer and its lifetime is essentially infinite. The functions
+  // called from the painter may not be thread-safe, so all calls must be made
+  // from the same thread that it is created on.
+  ScrollbarTheme* theme_;
 
-    float m_deviceScaleFactor;
+  // It is assumed that the constructor of this paint object is responsible
+  // for the lifetime of this scrollbar. The painter has to use the real
+  // scrollbar (and not a WebScrollbar wrapper) due to static_casts for
+  // LayoutScrollbar and pointer-based HashMap lookups for Lion scrollbars.
+  WebPrivatePtr<Scrollbar> scrollbar_;
+
+  float device_scale_factor_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

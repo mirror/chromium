@@ -7,32 +7,34 @@
 
 #include "base/macros.h"
 #include "content/browser/devtools/devtools_agent_host_impl.h"
+#include "content/common/content_export.h"
 #include "ipc/ipc_listener.h"
 
 namespace content {
 
 class BrowserContext;
-class DevToolsProtocolHandler;
-class SharedWorkerInstance;
 
-class WorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
-                                public IPC::Listener {
+class CONTENT_EXPORT WorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
+                                               public IPC::Listener {
  public:
   typedef std::pair<int, int> WorkerId;
 
   // DevToolsAgentHost override.
   BrowserContext* GetBrowserContext() override;
-  bool DispatchProtocolMessage(const std::string& message) override;
 
   // DevToolsAgentHostImpl overrides.
-  void Attach() override;
-  void Detach() override;
+  void AttachSession(DevToolsSession* session) override;
+  void DetachSession(int session_id) override;
+  bool DispatchProtocolMessage(
+      DevToolsSession* session,
+      const std::string& message) override;
 
   // IPC::Listener implementation.
   bool OnMessageReceived(const IPC::Message& msg) override;
 
   void PauseForDebugOnStart();
   bool IsPausedForDebugOnStart();
+  bool IsReadyForInspection();
 
   void WorkerReadyForInspection();
   void WorkerRestarted(WorkerId worker_id);
@@ -48,14 +50,12 @@ class WorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
     WORKER_INSPECTED,
     WORKER_TERMINATED,
     WORKER_PAUSED_FOR_DEBUG_ON_START,
+    WORKER_READY_FOR_DEBUG_ON_START,
     WORKER_PAUSED_FOR_REATTACH,
   };
 
   virtual void OnAttachedStateChanged(bool attached);
   const WorkerId& worker_id() const { return worker_id_; }
-  DevToolsProtocolHandler* protocol_handler() {
-    return protocol_handler_.get();
-  }
 
  private:
   friend class SharedWorkerDevToolsManagerTest;
@@ -65,7 +65,6 @@ class WorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
   void WorkerCreated();
   void OnDispatchOnInspectorFrontend(const DevToolsMessageChunk& message);
 
-  std::unique_ptr<DevToolsProtocolHandler> protocol_handler_;
   DevToolsMessageChunkProcessor chunk_processor_;
   WorkerState state_;
   WorkerId worker_id_;

@@ -17,25 +17,26 @@
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/gfx/geometry/point.h"
 
+namespace base {
+class ListValue;
+}
+
 namespace chromeos {
 
-class CoreOobeActor;
-class IdleDetector;
-class InputEventsBlocker;
+class CoreOobeView;
 
-// WebUI implementation of NetworkScreenActor. It is used to interact with
+// WebUI implementation of NetworkScreenView. It is used to interact with
 // the welcome screen (part of the page) of the OOBE.
 class NetworkScreenHandler : public NetworkView, public BaseScreenHandler {
  public:
-  explicit NetworkScreenHandler(CoreOobeActor* core_oobe_actor);
+  explicit NetworkScreenHandler(CoreOobeView* core_oobe_view);
   ~NetworkScreenHandler() override;
 
  private:
   // NetworkView implementation:
-  void PrepareToShow() override;
   void Show() override;
   void Hide() override;
-  void Bind(NetworkModel& model) override;
+  void Bind(NetworkScreen* screen) override;
   void Unbind() override;
   void ShowError(const base::string16& message) override;
   void ClearErrors() override;
@@ -50,15 +51,14 @@ class NetworkScreenHandler : public NetworkView, public BaseScreenHandler {
   void GetAdditionalParameters(base::DictionaryValue* dict) override;
   void Initialize() override;
 
- private:
   // Returns available timezones. Caller gets the ownership.
-  static base::ListValue* GetTimezoneList();
+  static std::unique_ptr<base::ListValue> GetTimezoneList();
 
-  CoreOobeActor* core_oobe_actor_;
-  NetworkModel* model_;
+  CoreOobeView* core_oobe_view_ = nullptr;
+  NetworkScreen* screen_ = nullptr;
 
   // Keeps whether screen should be shown right after initialization.
-  bool show_on_init_;
+  bool show_on_init_ = false;
 
   // Position of the network control.
   gfx::Point network_control_pos_;

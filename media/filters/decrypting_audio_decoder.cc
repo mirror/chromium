@@ -13,6 +13,7 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/single_thread_task_runner.h"
+#include "base/strings/string_number_conversions.h"
 #include "media/base/audio_buffer.h"
 #include "media/base/audio_decoder_config.h"
 #include "media/base/audio_timestamp_helper.h"
@@ -57,21 +58,15 @@ void DecryptingAudioDecoder::Initialize(const AudioDecoderConfig& config,
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(decode_cb_.is_null());
   DCHECK(reset_cb_.is_null());
+  DCHECK(cdm_context);
 
   weak_this_ = weak_factory_.GetWeakPtr();
   init_cb_ = BindToCurrentLoop(init_cb);
   output_cb_ = BindToCurrentLoop(output_cb);
 
-  // TODO(xhwang): We should be able to DCHECK config.IsValidConfig() and
-  // config.is_encrypted().
+  // TODO(xhwang): We should be able to DCHECK config.IsValidConfig().
   if (!config.IsValidConfig()) {
     DLOG(ERROR) << "Invalid audio stream config.";
-    base::ResetAndReturn(&init_cb_).Run(false);
-    return;
-  }
-
-  // DecryptingAudioDecoder only accepts potentially encrypted stream.
-  if (!config.is_encrypted()) {
     base::ResetAndReturn(&init_cb_).Run(false);
     return;
   }
@@ -79,7 +74,6 @@ void DecryptingAudioDecoder::Initialize(const AudioDecoderConfig& config,
   config_ = config;
 
   if (state_ == kUninitialized) {
-    DCHECK(cdm_context);
     if (!cdm_context->GetDecryptor()) {
       MEDIA_LOG(DEBUG, media_log_) << GetDisplayName() << ": no decryptor";
       base::ResetAndReturn(&init_cb_).Run(false);
@@ -88,7 +82,8 @@ void DecryptingAudioDecoder::Initialize(const AudioDecoderConfig& config,
 
     decryptor_ = cdm_context->GetDecryptor();
   } else {
-    // Reinitialization (i.e. upon a config change)
+    // Reinitialization (i.e. upon a config change). The new config can be
+    // encrypted or clear.
     decryptor_->DeinitializeDecoder(Decryptor::kAudio);
   }
 
@@ -264,8 +259,12 @@ void DecryptingAudioDecoder::DeliverFrame(
   }
 
   if (status == Decryptor::kNoKey) {
-    DVLOG(2) << "DeliverFrame() - kNoKey";
-    MEDIA_LOG(DEBUG, media_log_) << GetDisplayName() << ": no key";
+    std::string key_id =
+        scoped_pending_buffer_to_decode->decrypt_config()->key_id();
+    std::string missing_key_id = base::HexEncode(key_id.data(), key_id.size());
+    DVLOG(1) << "DeliverFrame() - no key for key ID " << missing_key_id;
+    MEDIA_LOG(DEBUG, media_log_) << GetDisplayName() << ": no key for key ID "
+                                 << missing_key_id;
 
     // Set |pending_buffer_to_decode_| back as we need to try decoding the
     // pending buffer again when new key is added to the decryptor.
@@ -273,6 +272,8 @@ void DecryptingAudioDecoder::DeliverFrame(
 
     if (need_to_try_again_if_nokey_is_returned) {
       // The |state_| is still kPendingDecode.
+      MEDIA_LOG(INFO, media_log_) << GetDisplayName()
+                                  << ": key was added, resuming decode";
       DecodePendingBuffer();
       return;
     }
@@ -315,6 +316,8 @@ void DecryptingAudioDecoder::OnKeyAdded() {
   }
 
   if (state_ == kWaitingForKey) {
+    MEDIA_LOG(INFO, media_log_) << GetDisplayName()
+                                << ": key added, resuming decode";
     state_ = kPendingDecode;
     DecodePendingBuffer();
   }

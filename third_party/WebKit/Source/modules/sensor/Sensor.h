@@ -7,66 +7,116 @@
 
 #include "bindings/core/v8/ActiveScriptWrappable.h"
 #include "bindings/core/v8/ScriptWrappable.h"
-#include "core/dom/ActiveDOMObject.h"
 #include "core/dom/ContextLifecycleObserver.h"
+#include "core/dom/DOMHighResTimeStamp.h"
+#include "core/dom/DOMTimeStamp.h"
+#include "core/dom/SuspendableObject.h"
 #include "core/frame/PlatformEventController.h"
 #include "modules/EventTargetModules.h"
-#include "modules/ModulesExport.h"
 #include "modules/sensor/SensorOptions.h"
-#include "modules/sensor/SensorState.h"
+#include "modules/sensor/SensorProxy.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
+class DOMException;
 class ExceptionState;
-class ScriptState;
+class ExecutionContext;
 class SensorReading;
 
-class MODULES_EXPORT Sensor
-    : public EventTargetWithInlineData
-    , public ActiveScriptWrappable
-    , public ActiveDOMObject
-    , public PlatformEventController {
-    USING_GARBAGE_COLLECTED_MIXIN(Sensor);
-    DEFINE_WRAPPERTYPEINFO();
+class Sensor : public EventTargetWithInlineData,
+               public ActiveScriptWrappable<Sensor>,
+               public ContextLifecycleObserver,
+               public SensorProxy::Observer {
+  USING_GARBAGE_COLLECTED_MIXIN(Sensor);
+  DEFINE_WRAPPERTYPEINFO();
 
-public:
-    ~Sensor() override;
+ public:
+  enum class SensorState { kIdle, kActivating, kActivated };
 
-    void start(ScriptState*, ExceptionState&);
-    void stop(ScriptState*, ExceptionState&);
-    void updateState(SensorState);
+  ~Sensor() override;
 
-    // EventTarget implementation.
-    const AtomicString& interfaceName() const override { return EventTargetNames::Sensor; }
-    ExecutionContext* getExecutionContext() const override { return ContextLifecycleObserver::getExecutionContext(); }
+  void start();
+  void stop();
 
-    // Getters
-    String state() const;
-    // TODO(riju): crbug.com/614797 .
-    SensorReading* reading() const;
+  // EventTarget overrides.
+  const AtomicString& InterfaceName() const override {
+    return EventTargetNames::Sensor;
+  }
+  ExecutionContext* GetExecutionContext() const override {
+    return ContextLifecycleObserver::GetExecutionContext();
+  }
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(error);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(change);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(statechange);
+  // Getters
+  bool activated() const;
+  DOMHighResTimeStamp timestamp(ScriptState*, bool& is_null) const;
 
-    // ActiveDOMObject implementation.
-    void suspend() override;
-    void resume() override;
-    void stop() override;
-    bool hasPendingActivity() const override;
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(error);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(change);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(activate);
 
-    DECLARE_VIRTUAL_TRACE();
+  // ActiveScriptWrappable overrides.
+  bool HasPendingActivity() const override;
 
-protected:
-    Sensor(ExecutionContext*, const SensorOptions&);
-    void notifyStateChange();
+  DECLARE_VIRTUAL_TRACE();
 
-    SensorState m_sensorState;
-    Member<SensorReading> m_sensorReading;
-    SensorOptions m_sensorOptions;
+ protected:
+  Sensor(ExecutionContext*,
+         const SensorOptions&,
+         ExceptionState&,
+         device::mojom::blink::SensorType);
+
+  using SensorConfigurationPtr = device::mojom::blink::SensorConfigurationPtr;
+  using SensorConfiguration = device::mojom::blink::SensorConfiguration;
+
+  // The default implementation will init frequency configuration parameter,
+  // concrete sensor implementations can override this method to handle other
+  // parameters if needed.
+  virtual SensorConfigurationPtr CreateSensorConfig();
+
+  double ReadingValue(int index, bool& is_null) const;
+  double ReadingValueUnchecked(int index) const;
+  bool CanReturnReadings() const;
+  bool IsActivated() const { return state_ == SensorState::kActivated; }
+
+ private:
+  void InitSensorProxyIfNeeded();
+
+  // ContextLifecycleObserver overrides.
+  void ContextDestroyed(ExecutionContext*) override;
+
+  // SensorProxy::Observer overrides.
+  void OnSensorInitialized() override;
+  void NotifySensorChanged(double timestamp) override;
+  void OnSensorError(ExceptionCode,
+                     const String& sanitized_message,
+                     const String& unsanitized_message) override;
+
+  void OnStartRequestCompleted(bool);
+  void OnStopRequestCompleted(bool);
+
+  void StartListening();
+  void StopListening();
+
+  void UpdateState(SensorState new_state);
+  void ReportError(ExceptionCode = kUnknownError,
+                   const String& sanitized_message = String(),
+                   const String& unsanitized_message = String());
+
+  void NotifySensorReadingChanged();
+  void NotifyOnActivate();
+  void NotifyError(DOMException* error);
+
+ private:
+  SensorOptions sensor_options_;
+  device::mojom::blink::SensorType type_;
+  SensorState state_;
+  Member<SensorProxy> sensor_proxy_;
+  device::SensorReading stored_data_;
+  SensorConfigurationPtr configuration_;
+  double last_update_timestamp_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Sensor_h
+#endif  // Sensor_h

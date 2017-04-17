@@ -1,95 +1,69 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
-<link rel="import" href="chrome://resources/polymer/v1_0/paper-button/paper-button.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-icon-button/paper-icon-button-light.html">
+<link rel="import" href="../i18n_setup.html">
+<link rel="import" href="../settings_shared_css.html">
+
 <if expr="chromeos">
-<link rel="import" href="/controls/settings_checkbox.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/neon-animation/neon-animatable.html">
+<link rel="import" href="manage_a11y_page.html">
+<link rel="import" href="../controls/settings_toggle_button.html">
+<link rel="import" href="../settings_page/settings_animated_pages.html">
+<link rel="import" href="../settings_page/settings_subpage.html">
 </if>
-<link rel="import" href="/settings_shared_css.html">
-<link rel="import" href="/i18n_setup.html">
 
 <dom-module id="settings-a11y-page">
   <template>
     <style include="settings-shared"></style>
 <if expr="chromeos">
-    <div class="settings-box row first">
-      <span>
-        $i18n{a11yExplanation}
-        <a href="$i18nRaw{a11yLearnMoreUrl}" target="_blank">
-          $i18n{learnMore}
-        </a>
-      </span>
-    </div>
+    <settings-animated-pages id="pages" current-route="{{currentRoute}}"
+        section="a11y" focus-config="[[focusConfig_]]">
+      <neon-animatable route-path="default">
+        <div class="settings-box">
+          <settings-toggle-button id="optionsInMenuToggle" class="start"
+              label="$i18n{optionsInMenuLabel}"
+              pref="{{prefs.settings.a11y.enable_menu}}">
+          </settings-toggle-button>
+        </div>
+        <div id="subpage-trigger" class="settings-box two-line"
+            on-tap="onManageAccessibilityFeaturesTap_" actionable>
+          <div class="start">
+            $i18n{manageAccessibilityFeatures}
+            <div class="secondary" id="themesSecondary">
+              $i18n{moreFeaturesLinkDescription}
+            </div>
+          </div>
+          <button class="subpage-arrow" is="paper-icon-button-light"
+              aria-label="$i18n{manageAccessibilityFeatures}"
+              aria-describedby="themesSecondary"></button>
+        </div>
+      </neon-animatable>
 
-    <div class="settings-box block">
-      <settings-checkbox label="$i18n{optionsInMenuLabel}"
-          pref="{{prefs.settings.a11y.enable_menu}}">
-      </settings-checkbox>
-      <settings-checkbox label="$i18n{largeMouseCursorLabel}"
-          pref="{{prefs.settings.a11y.large_cursor_enabled}}">
-      </settings-checkbox>
-      <settings-checkbox label="$i18n{highContrastLabel}"
-          pref="{{prefs.settings.a11y.high_contrast_enabled}}">
-      </settings-checkbox>
-      <settings-checkbox
-          pref="{{prefs.settings.a11y.sticky_keys_enabled}}"
-          label="$i18n{stickyKeysLabel}">
-      </settings-checkbox>
-      <settings-checkbox pref="{{prefs.settings.accessibility}}"
-          label="$i18n{chromeVoxLabel}">
-      </settings-checkbox>
-      <settings-checkbox label="$i18n{screenMagnifierLabel}"
-          pref="{{prefs.settings.a11y.screen_magnifier}}">
-      </settings-checkbox>
-      <settings-checkbox label="$i18n{tapDraggingLabel}"
-          pref="{{prefs.settings.touchpad.enable_tap_dragging}}">
-      </settings-checkbox>
-      <settings-checkbox label="$i18n{clickOnStopLabel}"
-          pref="{{prefs.settings.a11y.autoclick}}">
-      </settings-checkbox>
-
-      <div class="list-item settings-checkbox-spacer">
-        <div>$i18n{delayBeforeClickLabel}</div>
-        <settings-dropdown-menu
-            pref="{{prefs.settings.a11y.autoclick_delay_ms}}"
-            menu-options="[[autoClickDelayOptions_]]" no-label-float>
-        </settings-dropdown-menu>
-      </div>
-
-      <settings-checkbox pref="{{prefs.settings.a11y.virtual_keyboard}}"
-          label="$i18n{onScreenKeyboardLabel}">
-      </settings-checkbox>
-      <settings-checkbox pref="{{prefs.settings.a11y.mono_audio}}"
-          label="$i18n{monoAudioLabel}">
-      </settings-checkbox>
-      <settings-checkbox pref="{{prefs.settings.a11y.caret_highlight}}"
-          label="$i18n{caretHighlightLabel}">
-      </settings-checkbox>
-      <settings-checkbox pref="{{prefs.settings.a11y.cursor_highlight}}"
-          label="$i18n{cursorHighlightLabel}">
-      </settings-checkbox>
-      <settings-checkbox pref="{{prefs.settings.a11y.focus_highlight}}"
-          label="$i18n{focusHighlightLabel}">
-      </settings-checkbox>
-      <template is="dom-if" if="[[showExperimentalFeatures_]]">
-        <settings-checkbox pref="{{prefs.settings.a11y.select_to_speak}}"
-            label="$i18n{selectToSpeakLabel}">
-        </settings-checkbox>
-        <settings-checkbox pref="{{prefs.settings.a11y.switch_access}}"
-            label="$i18n{switchAccessLabel}">
-        </settings-checkbox>
+      <template is="dom-if" route-path="/manageAccessibility">
+        <settings-subpage
+            associated-control="[[$$('#subpage-trigger')]]"
+            page-title="$i18n{manageAccessibilityFeatures}">
+          <settings-manage-a11y-page prefs="{{prefs}}">
+          </settings-manage-a11y-page>
+        </settings-subpage>
       </template>
+    </settings-animated-pages>
+</if>
+
+<if expr="not chromeos">
+    <div class="settings-box first two-line" on-tap="onMoreFeaturesTap_"
+        actionable>
+      <div class="start">
+        $i18n{moreFeaturesLink}
+        <div class="secondary" id="moreFeaturesSecondary">
+          $i18n{a11yWebStore}
+        </div>
+      </div>
+      <button class="icon-external" is="paper-icon-button-light"
+          aria-label="$i18n{moreFeaturesLink}"
+          aria-describedby="moreFeaturesSecondary"></button>
     </div>
 </if>
 
-<if expr="chromeos">
-    <div class="settings-box">
-</if>
-<if expr="not chromeos">
-    <div class="settings-box first">
-</if>
-      <paper-button class="primary-button" on-tap="onMoreFeaturesTap_">
-        $i18n{moreFeaturesLink}
-      </paper-button>
-    </div>
   </template>
   <script src="a11y_page.js"></script>
 </dom-module>

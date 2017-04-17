@@ -39,648 +39,789 @@
 #include "core/css/MediaList.h"
 #include "core/css/MediaQuery.h"
 #include "core/css/MediaValuesDynamic.h"
+#include "core/css/MediaValuesInitialViewport.h"
 #include "core/css/resolver/MediaQueryResult.h"
 #include "core/dom/NodeComputedStyle.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
-#include "core/inspector/InspectorInstrumentation.h"
+#include "core/probe/CoreProbes.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/geometry/FloatRect.h"
+#include "platform/graphics/ColorSpace.h"
+#include "platform/wtf/HashMap.h"
 #include "public/platform/PointerProperties.h"
+#include "public/platform/ShapeProperties.h"
 #include "public/platform/WebDisplayMode.h"
-#include "wtf/HashMap.h"
 
 namespace blink {
 
 using namespace MediaFeatureNames;
 
-enum MediaFeaturePrefix { MinPrefix, MaxPrefix, NoPrefix };
+enum MediaFeaturePrefix { kMinPrefix, kMaxPrefix, kNoPrefix };
 
-using EvalFunc = bool (*)(const MediaQueryExpValue&, MediaFeaturePrefix, const MediaValues&);
+using EvalFunc = bool (*)(const MediaQueryExpValue&,
+                          MediaFeaturePrefix,
+                          const MediaValues&);
 using FunctionMap = HashMap<StringImpl*, EvalFunc>;
-static FunctionMap* gFunctionMap;
+static FunctionMap* g_function_map;
 
-MediaQueryEvaluator::MediaQueryEvaluator(bool mediaFeatureResult)
-    : m_expectedResult(mediaFeatureResult)
-{
-}
-
-MediaQueryEvaluator::MediaQueryEvaluator(const char* acceptedMediaType, bool mediaFeatureResult)
-    : m_mediaType(acceptedMediaType)
-    , m_expectedResult(mediaFeatureResult)
-{
-}
+MediaQueryEvaluator::MediaQueryEvaluator(const char* accepted_media_type)
+    : media_type_(accepted_media_type) {}
 
 MediaQueryEvaluator::MediaQueryEvaluator(LocalFrame* frame)
-    : m_expectedResult(false) // Doesn't matter when we have m_frame and m_style.
-    , m_mediaValues(MediaValues::createDynamicIfFrameExists(frame))
-{
+    : media_values_(MediaValues::CreateDynamicIfFrameExists(frame)) {}
+
+MediaQueryEvaluator::MediaQueryEvaluator(const MediaValues& media_values)
+    : media_values_(media_values.Copy()) {}
+
+MediaQueryEvaluator::MediaQueryEvaluator(
+    MediaValuesInitialViewport* media_values)
+    : media_values_(media_values) {
+  DCHECK(media_values);
 }
 
-MediaQueryEvaluator::MediaQueryEvaluator(const MediaValues& mediaValues)
-    : m_expectedResult(false) // Doesn't matter when we have mediaValues.
-    , m_mediaValues(mediaValues.copy())
-{
+MediaQueryEvaluator::~MediaQueryEvaluator() {}
+
+DEFINE_TRACE(MediaQueryEvaluator) {
+  visitor->Trace(media_values_);
 }
 
-MediaQueryEvaluator::~MediaQueryEvaluator()
-{
+const String MediaQueryEvaluator::MediaType() const {
+  // If a static mediaType was given by the constructor, we use it here.
+  if (!media_type_.IsEmpty())
+    return media_type_;
+  // Otherwise, we get one from mediaValues (which may be dynamic or cached).
+  if (media_values_)
+    return media_values_->MediaType();
+  return g_null_atom;
 }
 
-DEFINE_TRACE(MediaQueryEvaluator)
-{
-    visitor->trace(m_mediaValues);
+bool MediaQueryEvaluator::MediaTypeMatch(
+    const String& media_type_to_match) const {
+  return media_type_to_match.IsEmpty() ||
+         DeprecatedEqualIgnoringCase(media_type_to_match,
+                                     MediaTypeNames::all) ||
+         DeprecatedEqualIgnoringCase(media_type_to_match, MediaType());
 }
 
-const String MediaQueryEvaluator::mediaType() const
-{
-    // If a static mediaType was given by the constructor, we use it here.
-    if (!m_mediaType.isEmpty())
-        return m_mediaType;
-    // Otherwise, we get one from mediaValues (which may be dynamic or cached).
-    if (m_mediaValues)
-        return m_mediaValues->mediaType();
-    return nullAtom;
+static bool ApplyRestrictor(MediaQuery::RestrictorType r, bool value) {
+  return r == MediaQuery::kNot ? !value : value;
 }
 
-bool MediaQueryEvaluator::mediaTypeMatch(const String& mediaTypeToMatch) const
-{
-    return mediaTypeToMatch.isEmpty()
-        || equalIgnoringCase(mediaTypeToMatch, MediaTypeNames::all)
-        || equalIgnoringCase(mediaTypeToMatch, mediaType());
+bool MediaQueryEvaluator::Eval(
+    const MediaQuery* query,
+    MediaQueryResultList* viewport_dependent_media_query_results,
+    MediaQueryResultList* device_dependent_media_query_results) const {
+  if (!MediaTypeMatch(query->MediaType()))
+    return ApplyRestrictor(query->Restrictor(), false);
+
+  const ExpressionHeapVector& expressions = query->Expressions();
+  // Iterate through expressions, stop if any of them eval to false (AND
+  // semantics).
+  size_t i = 0;
+  for (; i < expressions.size(); ++i) {
+    bool expr_result = Eval(expressions.at(i).Get());
+    if (viewport_dependent_media_query_results &&
+        expressions.at(i)->IsViewportDependent())
+      viewport_dependent_media_query_results->push_back(
+          new MediaQueryResult(*expressions.at(i), expr_result));
+    if (device_dependent_media_query_results &&
+        expressions.at(i)->IsDeviceDependent())
+      device_dependent_media_query_results->push_back(
+          new MediaQueryResult(*expressions.at(i), expr_result));
+    if (!expr_result)
+      break;
+  }
+
+  // Assume true if we are at the end of the list, otherwise assume false.
+  return ApplyRestrictor(query->Restrictor(), expressions.size() == i);
 }
 
-static bool applyRestrictor(MediaQuery::RestrictorType r, bool value)
-{
-    return r == MediaQuery::Not ? !value : value;
+bool MediaQueryEvaluator::Eval(
+    const MediaQuerySet* query_set,
+    MediaQueryResultList* viewport_dependent_media_query_results,
+    MediaQueryResultList* device_dependent_media_query_results) const {
+  if (!query_set)
+    return true;
+
+  const HeapVector<Member<MediaQuery>>& queries = query_set->QueryVector();
+  if (!queries.size())
+    return true;  // Empty query list evaluates to true.
+
+  // Iterate over queries, stop if any of them eval to true (OR semantics).
+  bool result = false;
+  for (size_t i = 0; i < queries.size() && !result; ++i) {
+    // TODO(sof): CHECK() added for crbug.com/699269 diagnosis, remove sooner.
+    CHECK_EQ(queries.Data(), query_set->QueryVector().Data());
+    result = Eval(queries[i].Get(), viewport_dependent_media_query_results,
+                  device_dependent_media_query_results);
+  }
+
+  return result;
 }
 
-bool MediaQueryEvaluator::eval(const MediaQuery* query, MediaQueryResultList* viewportDependentMediaQueryResults, MediaQueryResultList* deviceDependentMediaQueryResults) const
-{
-    if (!mediaTypeMatch(query->mediaType()))
-        return applyRestrictor(query->restrictor(), false);
-
-    const ExpressionHeapVector& expressions = query->expressions();
-    // Iterate through expressions, stop if any of them eval to false (AND semantics).
-    size_t i = 0;
-    for (; i < expressions.size(); ++i) {
-        bool exprResult = eval(expressions.at(i).get());
-        if (viewportDependentMediaQueryResults && expressions.at(i)->isViewportDependent())
-            viewportDependentMediaQueryResults->append(new MediaQueryResult(*expressions.at(i), exprResult));
-        if (deviceDependentMediaQueryResults && expressions.at(i)->isDeviceDependent())
-            deviceDependentMediaQueryResults->append(new MediaQueryResult(*expressions.at(i), exprResult));
-        if (!exprResult)
-            break;
-    }
-
-    // Assume true if we are at the end of the list, otherwise assume false.
-    return applyRestrictor(query->restrictor(), expressions.size() == i);
+template <typename T>
+bool CompareValue(T a, T b, MediaFeaturePrefix op) {
+  switch (op) {
+    case kMinPrefix:
+      return a >= b;
+    case kMaxPrefix:
+      return a <= b;
+    case kNoPrefix:
+      return a == b;
+  }
+  return false;
 }
 
-bool MediaQueryEvaluator::eval(const MediaQuerySet* querySet, MediaQueryResultList* viewportDependentMediaQueryResults, MediaQueryResultList* deviceDependentMediaQueryResults) const
-{
-    if (!querySet)
-        return true;
-
-    const HeapVector<Member<MediaQuery>>& queries = querySet->queryVector();
-    if (!queries.size())
-        return true; // Empty query list evaluates to true.
-
-    // Iterate over queries, stop if any of them eval to true (OR semantics).
-    bool result = false;
-    for (size_t i = 0; i < queries.size() && !result; ++i)
-        result = eval(queries[i].get(), viewportDependentMediaQueryResults, deviceDependentMediaQueryResults);
-
-    return result;
+bool CompareDoubleValue(double a, double b, MediaFeaturePrefix op) {
+  const double precision = std::numeric_limits<double>::epsilon();
+  switch (op) {
+    case kMinPrefix:
+      return a >= (b - precision);
+    case kMaxPrefix:
+      return a <= (b + precision);
+    case kNoPrefix:
+      return std::abs(a - b) <= precision;
+  }
+  return false;
 }
 
-template<typename T>
-bool compareValue(T a, T b, MediaFeaturePrefix op)
-{
-    switch (op) {
-    case MinPrefix:
-        return a >= b;
-    case MaxPrefix:
-        return a <= b;
-    case NoPrefix:
-        return a == b;
+static bool CompareAspectRatioValue(const MediaQueryExpValue& value,
+                                    int width,
+                                    int height,
+                                    MediaFeaturePrefix op) {
+  if (value.is_ratio)
+    return CompareValue(width * static_cast<int>(value.denominator),
+                        height * static_cast<int>(value.numerator), op);
+
+  return false;
+}
+
+static bool NumberValue(const MediaQueryExpValue& value, float& result) {
+  if (value.is_value && value.unit == CSSPrimitiveValue::UnitType::kNumber) {
+    result = value.value;
+    return true;
+  }
+  return false;
+}
+
+static bool ColorMediaFeatureEval(const MediaQueryExpValue& value,
+                                  MediaFeaturePrefix op,
+                                  const MediaValues& media_values) {
+  float number;
+  int bits_per_component = media_values.ColorBitsPerComponent();
+  if (value.IsValid())
+    return NumberValue(value, number) &&
+           CompareValue(bits_per_component, static_cast<int>(number), op);
+
+  return bits_per_component != 0;
+}
+
+static bool ColorIndexMediaFeatureEval(const MediaQueryExpValue& value,
+                                       MediaFeaturePrefix op,
+                                       const MediaValues&) {
+  // FIXME: We currently assume that we do not support indexed displays, as it
+  // is unknown how to retrieve the information if the display mode is indexed.
+  // This matches Firefox.
+  if (!value.IsValid())
+    return false;
+
+  // Acording to spec, if the device does not use a color lookup table, the
+  // value is zero.
+  float number;
+  return NumberValue(value, number) &&
+         CompareValue(0, static_cast<int>(number), op);
+}
+
+static bool MonochromeMediaFeatureEval(const MediaQueryExpValue& value,
+                                       MediaFeaturePrefix op,
+                                       const MediaValues& media_values) {
+  if (!media_values.MonochromeBitsPerComponent()) {
+    if (value.IsValid()) {
+      float number;
+      return NumberValue(value, number) &&
+             CompareValue(0, static_cast<int>(number), op);
     }
     return false;
+  }
+
+  return ColorMediaFeatureEval(value, op, media_values);
 }
 
-bool compareDoubleValue(double a, double b, MediaFeaturePrefix op)
-{
-    const double precision = std::numeric_limits<double>::epsilon();
-    switch (op) {
-    case MinPrefix:
-        return a >= (b - precision);
-    case MaxPrefix:
-        return a <= (b + precision);
-    case NoPrefix:
-        return std::abs(a - b) <= precision;
-    }
+static bool DisplayModeMediaFeatureEval(const MediaQueryExpValue& value,
+                                        MediaFeaturePrefix,
+                                        const MediaValues& media_values) {
+  // isValid() is false if there is no parameter. Without parameter we should
+  // return true to indicate that displayModeMediaFeature is enabled in the
+  // browser.
+  if (!value.IsValid())
+    return true;
+
+  if (!value.is_id)
     return false;
-}
 
-static bool compareAspectRatioValue(const MediaQueryExpValue& value, int width, int height, MediaFeaturePrefix op)
-{
-    if (value.isRatio)
-        return compareValue(width * static_cast<int>(value.denominator), height * static_cast<int>(value.numerator), op);
-
-    return false;
-}
-
-static bool numberValue(const MediaQueryExpValue& value, float& result)
-{
-    if (value.isValue && value.unit == CSSPrimitiveValue::UnitType::Number) {
-        result = value.value;
-        return true;
-    }
-    return false;
-}
-
-static bool colorMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& mediaValues)
-{
-    float number;
-    int bitsPerComponent = mediaValues.colorBitsPerComponent();
-    if (value.isValid())
-        return numberValue(value, number) && compareValue(bitsPerComponent, static_cast<int>(number), op);
-
-    return bitsPerComponent != 0;
-}
-
-static bool colorIndexMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues&)
-{
-    // FIXME: We currently assume that we do not support indexed displays, as it is unknown
-    // how to retrieve the information if the display mode is indexed. This matches Firefox.
-    if (!value.isValid())
-        return false;
-
-    // Acording to spec, if the device does not use a color lookup table, the value is zero.
-    float number;
-    return numberValue(value, number) && compareValue(0, static_cast<int>(number), op);
-}
-
-static bool monochromeMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& mediaValues)
-{
-    if (!mediaValues.monochromeBitsPerComponent()) {
-        if (value.isValid()) {
-            float number;
-            return numberValue(value, number) && compareValue(0, static_cast<int>(number), op);
-        }
-        return false;
-    }
-
-    return colorMediaFeatureEval(value, op, mediaValues);
-}
-
-static bool displayModeMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    // isValid() is false if there is no parameter. Without parameter we should return true to indicate that
-    // displayModeMediaFeature is enabled in the browser.
-    if (!value.isValid())
-        return true;
-
-    if (!value.isID)
-        return false;
-
-    WebDisplayMode mode = mediaValues.displayMode();
-    switch (value.id) {
+  WebDisplayMode mode = media_values.DisplayMode();
+  switch (value.id) {
     case CSSValueFullscreen:
-        return mode == WebDisplayModeFullscreen;
+      return mode == kWebDisplayModeFullscreen;
     case CSSValueStandalone:
-        return mode == WebDisplayModeStandalone;
+      return mode == kWebDisplayModeStandalone;
     case CSSValueMinimalUi:
-        return mode == WebDisplayModeMinimalUi;
+      return mode == kWebDisplayModeMinimalUi;
     case CSSValueBrowser:
-        return mode == WebDisplayModeBrowser;
+      return mode == kWebDisplayModeBrowser;
     default:
-        ASSERT_NOT_REACHED();
-        return false;
-    }
+      NOTREACHED();
+      return false;
+  }
 }
 
-static bool orientationMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    int width = mediaValues.viewportWidth();
-    int height = mediaValues.viewportHeight();
+static bool OrientationMediaFeatureEval(const MediaQueryExpValue& value,
+                                        MediaFeaturePrefix,
+                                        const MediaValues& media_values) {
+  int width = media_values.ViewportWidth();
+  int height = media_values.ViewportHeight();
 
-    if (value.isID) {
-        if (width > height) // Square viewport is portrait.
-            return CSSValueLandscape == value.id;
-        return CSSValuePortrait == value.id;
-    }
+  if (value.is_id) {
+    if (width > height)  // Square viewport is portrait.
+      return CSSValueLandscape == value.id;
+    return CSSValuePortrait == value.id;
+  }
 
-    // Expression (orientation) evaluates to true if width and height >= 0.
-    return height >= 0 && width >= 0;
+  // Expression (orientation) evaluates to true if width and height >= 0.
+  return height >= 0 && width >= 0;
 }
 
-static bool aspectRatioMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& mediaValues)
-{
-    if (value.isValid())
-        return compareAspectRatioValue(value, mediaValues.viewportWidth(), mediaValues.viewportHeight(), op);
+static bool AspectRatioMediaFeatureEval(const MediaQueryExpValue& value,
+                                        MediaFeaturePrefix op,
+                                        const MediaValues& media_values) {
+  if (value.IsValid())
+    return CompareAspectRatioValue(value, media_values.ViewportWidth(),
+                                   media_values.ViewportHeight(), op);
 
-    // ({,min-,max-}aspect-ratio)
-    // assume if we have a device, its aspect ratio is non-zero.
-    return true;
+  // ({,min-,max-}aspect-ratio)
+  // assume if we have a device, its aspect ratio is non-zero.
+  return true;
 }
 
-static bool deviceAspectRatioMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& mediaValues)
-{
-    if (value.isValid())
-        return compareAspectRatioValue(value, mediaValues.deviceWidth(), mediaValues.deviceHeight(), op);
+static bool DeviceAspectRatioMediaFeatureEval(const MediaQueryExpValue& value,
+                                              MediaFeaturePrefix op,
+                                              const MediaValues& media_values) {
+  if (value.IsValid())
+    return CompareAspectRatioValue(value, media_values.DeviceWidth(),
+                                   media_values.DeviceHeight(), op);
 
-    // ({,min-,max-}device-aspect-ratio)
-    // assume if we have a device, its aspect ratio is non-zero.
-    return true;
+  // ({,min-,max-}device-aspect-ratio)
+  // assume if we have a device, its aspect ratio is non-zero.
+  return true;
 }
 
-static bool evalResolution(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& mediaValues)
-{
-    // According to MQ4, only 'screen', 'print' and 'speech' may match.
-    // FIXME: What should speech match? https://www.w3.org/Style/CSS/Tracker/issues/348
-    float actualResolution = 0;
+static bool EvalResolution(const MediaQueryExpValue& value,
+                           MediaFeaturePrefix op,
+                           const MediaValues& media_values) {
+  // According to MQ4, only 'screen', 'print' and 'speech' may match.
+  // FIXME: What should speech match?
+  // https://www.w3.org/Style/CSS/Tracker/issues/348
+  float actual_resolution = 0;
 
-    // This checks the actual media type applied to the document, and we know
-    // this method only got called if this media type matches the one defined
-    // in the query. Thus, if if the document's media type is "print", the
-    // media type of the query will either be "print" or "all".
-    if (equalIgnoringCase(mediaValues.mediaType(), MediaTypeNames::screen)) {
-        actualResolution = clampTo<float>(mediaValues.devicePixelRatio());
-    } else if (equalIgnoringCase(mediaValues.mediaType(), MediaTypeNames::print)) {
-        // The resolution of images while printing should not depend on the DPI
-        // of the screen. Until we support proper ways of querying this info
-        // we use 300px which is considered minimum for current printers.
-        actualResolution = 300 / cssPixelsPerInch;
-    }
+  // This checks the actual media type applied to the document, and we know
+  // this method only got called if this media type matches the one defined
+  // in the query. Thus, if if the document's media type is "print", the
+  // media type of the query will either be "print" or "all".
+  if (DeprecatedEqualIgnoringCase(media_values.MediaType(),
+                                  MediaTypeNames::screen)) {
+    actual_resolution = clampTo<float>(media_values.DevicePixelRatio());
+  } else if (DeprecatedEqualIgnoringCase(media_values.MediaType(),
+                                         MediaTypeNames::print)) {
+    // The resolution of images while printing should not depend on the DPI
+    // of the screen. Until we support proper ways of querying this info
+    // we use 300px which is considered minimum for current printers.
+    actual_resolution = 300 / kCssPixelsPerInch;
+  }
 
-    if (!value.isValid())
-        return !!actualResolution;
+  if (!value.IsValid())
+    return !!actual_resolution;
 
-    if (!value.isValue)
-        return false;
+  if (!value.is_value)
+    return false;
 
-    if (value.unit == CSSPrimitiveValue::UnitType::Number)
-        return compareValue(actualResolution, clampTo<float>(value.value), op);
+  if (value.unit == CSSPrimitiveValue::UnitType::kNumber)
+    return CompareValue(actual_resolution, clampTo<float>(value.value), op);
 
-    if (!CSSPrimitiveValue::isResolution(value.unit))
-        return false;
+  if (!CSSPrimitiveValue::IsResolution(value.unit))
+    return false;
 
-    double canonicalFactor = CSSPrimitiveValue::conversionToCanonicalUnitsScaleFactor(value.unit);
-    double dppxFactor = CSSPrimitiveValue::conversionToCanonicalUnitsScaleFactor(CSSPrimitiveValue::UnitType::DotsPerPixel);
-    float valueInDppx = clampTo<float>(value.value * (canonicalFactor / dppxFactor));
-    if (value.unit == CSSPrimitiveValue::UnitType::DotsPerCentimeter) {
-        // To match DPCM to DPPX values, we limit to 2 decimal points.
-        // The http://dev.w3.org/csswg/css3-values/#absolute-lengths recommends
-        // "that the pixel unit refer to the whole number of device pixels that best
-        // approximates the reference pixel". With that in mind, allowing 2 decimal
-        // point precision seems appropriate.
-        return compareValue(
-            floorf(0.5 + 100 * actualResolution) / 100,
-            floorf(0.5 + 100 * valueInDppx) / 100, op);
-    }
+  double canonical_factor =
+      CSSPrimitiveValue::ConversionToCanonicalUnitsScaleFactor(value.unit);
+  double dppx_factor = CSSPrimitiveValue::ConversionToCanonicalUnitsScaleFactor(
+      CSSPrimitiveValue::UnitType::kDotsPerPixel);
+  float value_in_dppx =
+      clampTo<float>(value.value * (canonical_factor / dppx_factor));
+  if (value.unit == CSSPrimitiveValue::UnitType::kDotsPerCentimeter) {
+    // To match DPCM to DPPX values, we limit to 2 decimal points.
+    // The http://dev.w3.org/csswg/css3-values/#absolute-lengths recommends
+    // "that the pixel unit refer to the whole number of device pixels that best
+    // approximates the reference pixel". With that in mind, allowing 2 decimal
+    // point precision seems appropriate.
+    return CompareValue(floorf(0.5 + 100 * actual_resolution) / 100,
+                        floorf(0.5 + 100 * value_in_dppx) / 100, op);
+  }
 
-    return compareValue(actualResolution, valueInDppx, op);
+  return CompareValue(actual_resolution, value_in_dppx, op);
 }
 
-static bool devicePixelRatioMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& mediaValues)
-{
-    UseCounter::count(mediaValues.document(), UseCounter::PrefixedDevicePixelRatioMediaFeature);
+static bool DevicePixelRatioMediaFeatureEval(const MediaQueryExpValue& value,
+                                             MediaFeaturePrefix op,
+                                             const MediaValues& media_values) {
+  UseCounter::Count(media_values.GetDocument(),
+                    UseCounter::kPrefixedDevicePixelRatioMediaFeature);
 
-    return (!value.isValid() || value.unit == CSSPrimitiveValue::UnitType::Number) && evalResolution(value, op, mediaValues);
+  return (!value.IsValid() ||
+          value.unit == CSSPrimitiveValue::UnitType::kNumber) &&
+         EvalResolution(value, op, media_values);
 }
 
-static bool resolutionMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& MediaValues)
-{
-    return (!value.isValid() || CSSPrimitiveValue::isResolution(value.unit)) && evalResolution(value, op, MediaValues);
+static bool ResolutionMediaFeatureEval(const MediaQueryExpValue& value,
+                                       MediaFeaturePrefix op,
+                                       const MediaValues& media_values) {
+  return (!value.IsValid() || CSSPrimitiveValue::IsResolution(value.unit)) &&
+         EvalResolution(value, op, media_values);
 }
 
-static bool gridMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues&)
-{
-    // if output device is bitmap, grid: 0 == true
-    // assume we have bitmap device
+static bool GridMediaFeatureEval(const MediaQueryExpValue& value,
+                                 MediaFeaturePrefix op,
+                                 const MediaValues&) {
+  // if output device is bitmap, grid: 0 == true
+  // assume we have bitmap device
+  float number;
+  if (value.IsValid() && NumberValue(value, number))
+    return CompareValue(static_cast<int>(number), 0, op);
+  return false;
+}
+
+static bool ComputeLength(const MediaQueryExpValue& value,
+                          const MediaValues& media_values,
+                          double& result) {
+  if (!value.is_value)
+    return false;
+
+  if (value.unit == CSSPrimitiveValue::UnitType::kNumber) {
+    result = clampTo<int>(value.value);
+    return !media_values.StrictMode() || !result;
+  }
+
+  if (CSSPrimitiveValue::IsLength(value.unit))
+    return media_values.ComputeLength(value.value, value.unit, result);
+  return false;
+}
+
+static bool ComputeLengthAndCompare(const MediaQueryExpValue& value,
+                                    MediaFeaturePrefix op,
+                                    const MediaValues& media_values,
+                                    double compare_to_value) {
+  double length;
+  return ComputeLength(value, media_values, length) &&
+         CompareDoubleValue(compare_to_value, length, op);
+}
+
+static bool DeviceHeightMediaFeatureEval(const MediaQueryExpValue& value,
+                                         MediaFeaturePrefix op,
+                                         const MediaValues& media_values) {
+  if (value.IsValid())
+    return ComputeLengthAndCompare(value, op, media_values,
+                                   media_values.DeviceHeight());
+
+  // ({,min-,max-}device-height)
+  // assume if we have a device, assume non-zero
+  return true;
+}
+
+static bool DeviceWidthMediaFeatureEval(const MediaQueryExpValue& value,
+                                        MediaFeaturePrefix op,
+                                        const MediaValues& media_values) {
+  if (value.IsValid())
+    return ComputeLengthAndCompare(value, op, media_values,
+                                   media_values.DeviceWidth());
+
+  // ({,min-,max-}device-width)
+  // assume if we have a device, assume non-zero
+  return true;
+}
+
+static bool HeightMediaFeatureEval(const MediaQueryExpValue& value,
+                                   MediaFeaturePrefix op,
+                                   const MediaValues& media_values) {
+  double height = media_values.ViewportHeight();
+  if (value.IsValid())
+    return ComputeLengthAndCompare(value, op, media_values, height);
+
+  return height;
+}
+
+static bool WidthMediaFeatureEval(const MediaQueryExpValue& value,
+                                  MediaFeaturePrefix op,
+                                  const MediaValues& media_values) {
+  double width = media_values.ViewportWidth();
+  if (value.IsValid())
+    return ComputeLengthAndCompare(value, op, media_values, width);
+
+  return width;
+}
+
+// Rest of the functions are trampolines which set the prefix according to the
+// media feature expression used.
+
+static bool MinColorMediaFeatureEval(const MediaQueryExpValue& value,
+                                     MediaFeaturePrefix,
+                                     const MediaValues& media_values) {
+  return ColorMediaFeatureEval(value, kMinPrefix, media_values);
+}
+
+static bool MaxColorMediaFeatureEval(const MediaQueryExpValue& value,
+                                     MediaFeaturePrefix,
+                                     const MediaValues& media_values) {
+  return ColorMediaFeatureEval(value, kMaxPrefix, media_values);
+}
+
+static bool MinColorIndexMediaFeatureEval(const MediaQueryExpValue& value,
+                                          MediaFeaturePrefix,
+                                          const MediaValues& media_values) {
+  return ColorIndexMediaFeatureEval(value, kMinPrefix, media_values);
+}
+
+static bool MaxColorIndexMediaFeatureEval(const MediaQueryExpValue& value,
+                                          MediaFeaturePrefix,
+                                          const MediaValues& media_values) {
+  return ColorIndexMediaFeatureEval(value, kMaxPrefix, media_values);
+}
+
+static bool MinMonochromeMediaFeatureEval(const MediaQueryExpValue& value,
+                                          MediaFeaturePrefix,
+                                          const MediaValues& media_values) {
+  return MonochromeMediaFeatureEval(value, kMinPrefix, media_values);
+}
+
+static bool MaxMonochromeMediaFeatureEval(const MediaQueryExpValue& value,
+                                          MediaFeaturePrefix,
+                                          const MediaValues& media_values) {
+  return MonochromeMediaFeatureEval(value, kMaxPrefix, media_values);
+}
+
+static bool MinAspectRatioMediaFeatureEval(const MediaQueryExpValue& value,
+                                           MediaFeaturePrefix,
+                                           const MediaValues& media_values) {
+  return AspectRatioMediaFeatureEval(value, kMinPrefix, media_values);
+}
+
+static bool MaxAspectRatioMediaFeatureEval(const MediaQueryExpValue& value,
+                                           MediaFeaturePrefix,
+                                           const MediaValues& media_values) {
+  return AspectRatioMediaFeatureEval(value, kMaxPrefix, media_values);
+}
+
+static bool MinDeviceAspectRatioMediaFeatureEval(
+    const MediaQueryExpValue& value,
+    MediaFeaturePrefix,
+    const MediaValues& media_values) {
+  return DeviceAspectRatioMediaFeatureEval(value, kMinPrefix, media_values);
+}
+
+static bool MaxDeviceAspectRatioMediaFeatureEval(
+    const MediaQueryExpValue& value,
+    MediaFeaturePrefix,
+    const MediaValues& media_values) {
+  return DeviceAspectRatioMediaFeatureEval(value, kMaxPrefix, media_values);
+}
+
+static bool MinDevicePixelRatioMediaFeatureEval(
+    const MediaQueryExpValue& value,
+    MediaFeaturePrefix,
+    const MediaValues& media_values) {
+  UseCounter::Count(media_values.GetDocument(),
+                    UseCounter::kPrefixedMinDevicePixelRatioMediaFeature);
+
+  return DevicePixelRatioMediaFeatureEval(value, kMinPrefix, media_values);
+}
+
+static bool MaxDevicePixelRatioMediaFeatureEval(
+    const MediaQueryExpValue& value,
+    MediaFeaturePrefix,
+    const MediaValues& media_values) {
+  UseCounter::Count(media_values.GetDocument(),
+                    UseCounter::kPrefixedMaxDevicePixelRatioMediaFeature);
+
+  return DevicePixelRatioMediaFeatureEval(value, kMaxPrefix, media_values);
+}
+
+static bool MinHeightMediaFeatureEval(const MediaQueryExpValue& value,
+                                      MediaFeaturePrefix,
+                                      const MediaValues& media_values) {
+  return HeightMediaFeatureEval(value, kMinPrefix, media_values);
+}
+
+static bool MaxHeightMediaFeatureEval(const MediaQueryExpValue& value,
+                                      MediaFeaturePrefix,
+                                      const MediaValues& media_values) {
+  return HeightMediaFeatureEval(value, kMaxPrefix, media_values);
+}
+
+static bool MinWidthMediaFeatureEval(const MediaQueryExpValue& value,
+                                     MediaFeaturePrefix,
+                                     const MediaValues& media_values) {
+  return WidthMediaFeatureEval(value, kMinPrefix, media_values);
+}
+
+static bool MaxWidthMediaFeatureEval(const MediaQueryExpValue& value,
+                                     MediaFeaturePrefix,
+                                     const MediaValues& media_values) {
+  return WidthMediaFeatureEval(value, kMaxPrefix, media_values);
+}
+
+static bool MinDeviceHeightMediaFeatureEval(const MediaQueryExpValue& value,
+                                            MediaFeaturePrefix,
+                                            const MediaValues& media_values) {
+  return DeviceHeightMediaFeatureEval(value, kMinPrefix, media_values);
+}
+
+static bool MaxDeviceHeightMediaFeatureEval(const MediaQueryExpValue& value,
+                                            MediaFeaturePrefix,
+                                            const MediaValues& media_values) {
+  return DeviceHeightMediaFeatureEval(value, kMaxPrefix, media_values);
+}
+
+static bool MinDeviceWidthMediaFeatureEval(const MediaQueryExpValue& value,
+                                           MediaFeaturePrefix,
+                                           const MediaValues& media_values) {
+  return DeviceWidthMediaFeatureEval(value, kMinPrefix, media_values);
+}
+
+static bool MaxDeviceWidthMediaFeatureEval(const MediaQueryExpValue& value,
+                                           MediaFeaturePrefix,
+                                           const MediaValues& media_values) {
+  return DeviceWidthMediaFeatureEval(value, kMaxPrefix, media_values);
+}
+
+static bool MinResolutionMediaFeatureEval(const MediaQueryExpValue& value,
+                                          MediaFeaturePrefix,
+                                          const MediaValues& media_values) {
+  return ResolutionMediaFeatureEval(value, kMinPrefix, media_values);
+}
+
+static bool MaxResolutionMediaFeatureEval(const MediaQueryExpValue& value,
+                                          MediaFeaturePrefix,
+                                          const MediaValues& media_values) {
+  return ResolutionMediaFeatureEval(value, kMaxPrefix, media_values);
+}
+
+static bool Transform3dMediaFeatureEval(const MediaQueryExpValue& value,
+                                        MediaFeaturePrefix op,
+                                        const MediaValues& media_values) {
+  UseCounter::Count(media_values.GetDocument(),
+                    UseCounter::kPrefixedTransform3dMediaFeature);
+
+  bool return_value_if_no_parameter;
+  int have3d_rendering;
+
+  bool three_d_enabled = media_values.ThreeDEnabled();
+
+  return_value_if_no_parameter = three_d_enabled;
+  have3d_rendering = three_d_enabled ? 1 : 0;
+
+  if (value.IsValid()) {
     float number;
-    if (value.isValid() && numberValue(value, number))
-        return compareValue(static_cast<int>(number), 0, op);
+    return NumberValue(value, number) &&
+           CompareValue(have3d_rendering, static_cast<int>(number), op);
+  }
+  return return_value_if_no_parameter;
+}
+
+static bool HoverMediaFeatureEval(const MediaQueryExpValue& value,
+                                  MediaFeaturePrefix,
+                                  const MediaValues& media_values) {
+  HoverType hover = media_values.PrimaryHoverType();
+
+  if (!value.IsValid())
+    return hover != kHoverTypeNone;
+
+  if (!value.is_id)
     return false;
+
+  return (hover == kHoverTypeNone && value.id == CSSValueNone) ||
+         (hover == kHoverTypeHover && value.id == CSSValueHover);
 }
 
-static bool computeLength(const MediaQueryExpValue& value, const MediaValues& mediaValues, double& result)
-{
-    if (!value.isValue)
-        return false;
+static bool AnyHoverMediaFeatureEval(const MediaQueryExpValue& value,
+                                     MediaFeaturePrefix,
+                                     const MediaValues& media_values) {
+  int available_hover_types = media_values.AvailableHoverTypes();
 
-    if (value.unit == CSSPrimitiveValue::UnitType::Number) {
-        result = clampTo<int>(value.value);
-        return !mediaValues.strictMode() || !result;
-    }
+  if (!value.IsValid())
+    return available_hover_types & ~kHoverTypeNone;
 
-    if (CSSPrimitiveValue::isLength(value.unit))
-        return mediaValues.computeLength(value.value, value.unit, result);
+  if (!value.is_id)
     return false;
-}
 
-static bool computeLengthAndCompare(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& mediaValues, double compareToValue)
-{
-    double length;
-    return computeLength(value, mediaValues, length) && compareDoubleValue(compareToValue, length, op);
-}
-
-static bool deviceHeightMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& mediaValues)
-{
-    if (value.isValid())
-        return computeLengthAndCompare(value, op, mediaValues, mediaValues.deviceHeight());
-
-    // ({,min-,max-}device-height)
-    // assume if we have a device, assume non-zero
-    return true;
-}
-
-static bool deviceWidthMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& mediaValues)
-{
-    if (value.isValid())
-        return computeLengthAndCompare(value, op, mediaValues, mediaValues.deviceWidth());
-
-    // ({,min-,max-}device-width)
-    // assume if we have a device, assume non-zero
-    return true;
-}
-
-static bool heightMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& mediaValues)
-{
-    double height = mediaValues.viewportHeight();
-    if (value.isValid())
-        return computeLengthAndCompare(value, op, mediaValues, height);
-
-    return height;
-}
-
-static bool widthMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& mediaValues)
-{
-    double width = mediaValues.viewportWidth();
-    if (value.isValid())
-        return computeLengthAndCompare(value, op, mediaValues, width);
-
-    return width;
-}
-
-// Rest of the functions are trampolines which set the prefix according to the media feature expression used.
-
-static bool minColorMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return colorMediaFeatureEval(value, MinPrefix, mediaValues);
-}
-
-static bool maxColorMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return colorMediaFeatureEval(value, MaxPrefix, mediaValues);
-}
-
-static bool minColorIndexMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return colorIndexMediaFeatureEval(value, MinPrefix, mediaValues);
-}
-
-static bool maxColorIndexMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return colorIndexMediaFeatureEval(value, MaxPrefix, mediaValues);
-}
-
-static bool minMonochromeMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return monochromeMediaFeatureEval(value, MinPrefix, mediaValues);
-}
-
-static bool maxMonochromeMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return monochromeMediaFeatureEval(value, MaxPrefix, mediaValues);
-}
-
-static bool minAspectRatioMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return aspectRatioMediaFeatureEval(value, MinPrefix, mediaValues);
-}
-
-static bool maxAspectRatioMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return aspectRatioMediaFeatureEval(value, MaxPrefix, mediaValues);
-}
-
-static bool minDeviceAspectRatioMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return deviceAspectRatioMediaFeatureEval(value, MinPrefix, mediaValues);
-}
-
-static bool maxDeviceAspectRatioMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return deviceAspectRatioMediaFeatureEval(value, MaxPrefix, mediaValues);
-}
-
-static bool minDevicePixelRatioMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    UseCounter::count(mediaValues.document(), UseCounter::PrefixedMinDevicePixelRatioMediaFeature);
-
-    return devicePixelRatioMediaFeatureEval(value, MinPrefix, mediaValues);
-}
-
-static bool maxDevicePixelRatioMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    UseCounter::count(mediaValues.document(), UseCounter::PrefixedMaxDevicePixelRatioMediaFeature);
-
-    return devicePixelRatioMediaFeatureEval(value, MaxPrefix, mediaValues);
-}
-
-static bool minHeightMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return heightMediaFeatureEval(value, MinPrefix, mediaValues);
-}
-
-static bool maxHeightMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return heightMediaFeatureEval(value, MaxPrefix, mediaValues);
-}
-
-static bool minWidthMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return widthMediaFeatureEval(value, MinPrefix, mediaValues);
-}
-
-static bool maxWidthMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return widthMediaFeatureEval(value, MaxPrefix, mediaValues);
-}
-
-static bool minDeviceHeightMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return deviceHeightMediaFeatureEval(value, MinPrefix, mediaValues);
-}
-
-static bool maxDeviceHeightMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return deviceHeightMediaFeatureEval(value, MaxPrefix, mediaValues);
-}
-
-static bool minDeviceWidthMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return deviceWidthMediaFeatureEval(value, MinPrefix, mediaValues);
-}
-
-static bool maxDeviceWidthMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return deviceWidthMediaFeatureEval(value, MaxPrefix, mediaValues);
-}
-
-static bool minResolutionMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return resolutionMediaFeatureEval(value, MinPrefix, mediaValues);
-}
-
-static bool maxResolutionMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    return resolutionMediaFeatureEval(value, MaxPrefix, mediaValues);
-}
-
-static bool transform3dMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& mediaValues)
-{
-    UseCounter::count(mediaValues.document(), UseCounter::PrefixedTransform3dMediaFeature);
-
-    bool returnValueIfNoParameter;
-    int have3dRendering;
-
-    bool threeDEnabled = mediaValues.threeDEnabled();
-
-    returnValueIfNoParameter = threeDEnabled;
-    have3dRendering = threeDEnabled ? 1 : 0;
-
-    if (value.isValid()) {
-        float number;
-        return numberValue(value, number) && compareValue(have3dRendering, static_cast<int>(number), op);
-    }
-    return returnValueIfNoParameter;
-}
-
-static bool hoverMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    HoverType hover = mediaValues.primaryHoverType();
-
-    if (!value.isValid())
-        return hover != HoverTypeNone;
-
-    if (!value.isID)
-        return false;
-
-    return (hover == HoverTypeNone && value.id == CSSValueNone)
-        || (hover == HoverTypeOnDemand && value.id == CSSValueOnDemand)
-        || (hover == HoverTypeHover && value.id == CSSValueHover);
-}
-
-static bool anyHoverMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    int availableHoverTypes = mediaValues.availableHoverTypes();
-
-    if (!value.isValid())
-        return availableHoverTypes & ~HoverTypeNone;
-
-    if (!value.isID)
-        return false;
-
-    switch (value.id) {
+  switch (value.id) {
     case CSSValueNone:
-        return availableHoverTypes & HoverTypeNone;
-    case CSSValueOnDemand:
-        return availableHoverTypes & HoverTypeOnDemand;
+      return available_hover_types & kHoverTypeNone;
     case CSSValueHover:
-        return availableHoverTypes & HoverTypeHover;
+      return available_hover_types & kHoverTypeHover;
     default:
-        ASSERT_NOT_REACHED();
-        return false;
-    }
+      NOTREACHED();
+      return false;
+  }
 }
 
-static bool pointerMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    PointerType pointer = mediaValues.primaryPointerType();
+static bool PointerMediaFeatureEval(const MediaQueryExpValue& value,
+                                    MediaFeaturePrefix,
+                                    const MediaValues& media_values) {
+  PointerType pointer = media_values.PrimaryPointerType();
 
-    if (!value.isValid())
-        return pointer != PointerTypeNone;
+  if (!value.IsValid())
+    return pointer != kPointerTypeNone;
 
-    if (!value.isID)
-        return false;
+  if (!value.is_id)
+    return false;
 
-    return (pointer == PointerTypeNone && value.id == CSSValueNone)
-        || (pointer == PointerTypeCoarse && value.id == CSSValueCoarse)
-        || (pointer == PointerTypeFine && value.id == CSSValueFine);
+  return (pointer == kPointerTypeNone && value.id == CSSValueNone) ||
+         (pointer == kPointerTypeCoarse && value.id == CSSValueCoarse) ||
+         (pointer == kPointerTypeFine && value.id == CSSValueFine);
 }
 
-static bool anyPointerMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    int availablePointers = mediaValues.availablePointerTypes();
+static bool ShapeMediaFeatureEval(const MediaQueryExpValue& value,
+                                  MediaFeaturePrefix,
+                                  const MediaValues& media_values) {
+  if (!value.IsValid())
+    return true;
 
-    if (!value.isValid())
-        return availablePointers & ~PointerTypeNone;
+  if (!value.is_id)
+    return false;
 
-    if (!value.isID)
-        return false;
+  DisplayShape shape = media_values.GetDisplayShape();
 
-    switch (value.id) {
+  switch (value.id) {
+    case CSSValueRect:
+      return shape == kDisplayShapeRect;
+    case CSSValueRound:
+      return shape == kDisplayShapeRound;
+    default:
+      NOTREACHED();
+      return false;
+  }
+}
+
+static bool AnyPointerMediaFeatureEval(const MediaQueryExpValue& value,
+                                       MediaFeaturePrefix,
+                                       const MediaValues& media_values) {
+  int available_pointers = media_values.AvailablePointerTypes();
+
+  if (!value.IsValid())
+    return available_pointers & ~kPointerTypeNone;
+
+  if (!value.is_id)
+    return false;
+
+  switch (value.id) {
     case CSSValueCoarse:
-        return availablePointers & PointerTypeCoarse;
+      return available_pointers & kPointerTypeCoarse;
     case CSSValueFine:
-        return availablePointers & PointerTypeFine;
+      return available_pointers & kPointerTypeFine;
     case CSSValueNone:
-        return availablePointers & PointerTypeNone;
+      return available_pointers & kPointerTypeNone;
     default:
-        ASSERT_NOT_REACHED();
-        return false;
-    }
+      NOTREACHED();
+      return false;
+  }
 }
 
-static bool scanMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
-{
-    // Scan only applies to 'tv' media.
-    if (!equalIgnoringCase(mediaValues.mediaType(), MediaTypeNames::tv))
-        return false;
+static bool ScanMediaFeatureEval(const MediaQueryExpValue& value,
+                                 MediaFeaturePrefix,
+                                 const MediaValues& media_values) {
+  // Scan only applies to 'tv' media.
+  if (!DeprecatedEqualIgnoringCase(media_values.MediaType(),
+                                   MediaTypeNames::tv))
+    return false;
 
-    if (!value.isValid())
-        return true;
+  if (!value.IsValid())
+    return true;
 
-    if (!value.isID)
-        return false;
+  if (!value.is_id)
+    return false;
 
-    // If a platform interface supplies progressive/interlace info for TVs in the
-    // future, it needs to be handled here. For now, assume a modern TV with
-    // progressive display.
-    return (value.id == CSSValueProgressive);
+  // If a platform interface supplies progressive/interlace info for TVs in the
+  // future, it needs to be handled here. For now, assume a modern TV with
+  // progressive display.
+  return (value.id == CSSValueProgressive);
 }
 
-void MediaQueryEvaluator::init()
-{
-    // Create the table.
-    gFunctionMap = new FunctionMap;
-#define ADD_TO_FUNCTIONMAP(name)  \
-    gFunctionMap->set(name##MediaFeature.impl(), name##MediaFeatureEval);
-    CSS_MEDIAQUERY_NAMES_FOR_EACH_MEDIAFEATURE(ADD_TO_FUNCTIONMAP);
+static bool ColorGamutMediaFeatureEval(const MediaQueryExpValue& value,
+                                       MediaFeaturePrefix,
+                                       const MediaValues& media_values) {
+  // isValid() is false if there is no parameter. Without parameter we should
+  // return true to indicate that colorGamutMediaFeature is enabled in the
+  // browser.
+  if (!value.IsValid())
+    return true;
+
+  if (!value.is_id)
+    return false;
+
+  DCHECK(value.id == CSSValueSRGB || value.id == CSSValueP3 ||
+         value.id == CSSValueRec2020);
+
+  ColorSpaceGamut gamut = media_values.ColorGamut();
+  switch (gamut) {
+    case ColorSpaceGamut::kUnknown:
+    case ColorSpaceGamut::kLessThanNTSC:
+    case ColorSpaceGamut::NTSC:
+    case ColorSpaceGamut::SRGB:
+      return value.id == CSSValueSRGB;
+    case ColorSpaceGamut::kAlmostP3:
+    case ColorSpaceGamut::P3:
+    case ColorSpaceGamut::kAdobeRGB:
+    case ColorSpaceGamut::kWide:
+      return value.id == CSSValueSRGB || value.id == CSSValueP3;
+    case ColorSpaceGamut::BT2020:
+    case ColorSpaceGamut::kProPhoto:
+    case ColorSpaceGamut::kUltraWide:
+      return value.id == CSSValueSRGB || value.id == CSSValueP3 ||
+             value.id == CSSValueRec2020;
+    case ColorSpaceGamut::kEnd:
+      NOTREACHED();
+      return false;
+  }
+
+  // This is for some compilers that do not understand that it can't be reached.
+  NOTREACHED();
+  return false;
+}
+
+void MediaQueryEvaluator::Init() {
+  // Create the table.
+  g_function_map = new FunctionMap;
+#define ADD_TO_FUNCTIONMAP(constantPrefix, methodPrefix)   \
+  g_function_map->Set(constantPrefix##MediaFeature.Impl(), \
+                      methodPrefix##MediaFeatureEval);
+  CSS_MEDIAQUERY_NAMES_FOR_EACH_MEDIAFEATURE(ADD_TO_FUNCTIONMAP);
 #undef ADD_TO_FUNCTIONMAP
 }
 
-bool MediaQueryEvaluator::eval(const MediaQueryExp* expr) const
-{
-    if (!m_mediaValues || !m_mediaValues->hasValues())
-        return m_expectedResult;
+bool MediaQueryEvaluator::Eval(const MediaQueryExp* expr) const {
+  if (!media_values_ || !media_values_->HasValues())
+    return true;
 
-    DCHECK(gFunctionMap);
+  DCHECK(g_function_map);
 
-    // Call the media feature evaluation function. Assume no prefix and let
-    // trampoline functions override the prefix if prefix is used.
-    EvalFunc func = gFunctionMap->get(expr->mediaFeature().impl());
-    if (func)
-        return func(expr->expValue(), NoPrefix, *m_mediaValues);
+  // Call the media feature evaluation function. Assume no prefix and let
+  // trampoline functions override the prefix if prefix is used.
+  EvalFunc func = g_function_map->at(expr->MediaFeature().Impl());
+  if (func)
+    return func(expr->ExpValue(), kNoPrefix, *media_values_);
 
-    return false;
+  return false;
 }
 
-} // namespace blink
+}  // namespace blink

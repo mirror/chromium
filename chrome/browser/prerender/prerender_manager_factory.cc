@@ -4,7 +4,6 @@
 
 #include "chrome/browser/prerender/prerender_manager_factory.h"
 
-#include "base/sys_info.h"
 #include "base/trace_event/trace_event.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/predictors/predictor_database_factory.h"
@@ -13,8 +12,9 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
+#include "extensions/features/features.h"
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "extensions/browser/extension_system_provider.h"
 #include "extensions/browser/extensions_browser_client.h"
 #endif
@@ -22,13 +22,13 @@
 namespace prerender {
 
 // static
-PrerenderManager* PrerenderManagerFactory::GetForProfile(
-    Profile* profile) {
+PrerenderManager* PrerenderManagerFactory::GetForBrowserContext(
+    content::BrowserContext* context) {
   TRACE_EVENT0("browser", "PrerenderManagerFactory::GetForProfile")
-  if (!PrerenderManager::IsPrerenderingPossible())
+  if (!PrerenderManager::IsAnyPrerenderingPossible())
     return NULL;
   return static_cast<PrerenderManager*>(
-      GetInstance()->GetServiceForBrowserContext(profile, true));
+      GetInstance()->GetServiceForBrowserContext(context, true));
 }
 
 // static
@@ -40,7 +40,7 @@ PrerenderManagerFactory::PrerenderManagerFactory()
     : BrowserContextKeyedServiceFactory(
         "PrerenderManager",
         BrowserContextDependencyManager::GetInstance()) {
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   DependsOn(
       extensions::ExtensionsBrowserClient::Get()->GetExtensionSystemFactory());
 #endif
@@ -55,11 +55,7 @@ PrerenderManagerFactory::~PrerenderManagerFactory() {
 
 KeyedService* PrerenderManagerFactory::BuildServiceInstanceFor(
     content::BrowserContext* browser_context) const {
-  Profile* profile = Profile::FromBrowserContext(browser_context);
-  if (base::SysInfo::IsLowEndDevice())
-    return NULL;
-
-  return new PrerenderManager(profile);
+  return new PrerenderManager(Profile::FromBrowserContext(browser_context));
 }
 
 content::BrowserContext* PrerenderManagerFactory::GetBrowserContextToUse(

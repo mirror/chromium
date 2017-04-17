@@ -5,8 +5,10 @@
 #include "chrome/browser/android/bookmarks/partner_bookmarks_shim.h"
 
 #include <tuple>
+#include <utility>
 
 #include "base/lazy_instance.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/pref_names.h"
@@ -35,8 +37,8 @@ struct PartnerModelKeeper {
     : loaded(false) {}
 };
 
-base::LazyInstance<PartnerModelKeeper> g_partner_model_keeper =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<PartnerModelKeeper>::DestructorAtExit
+    g_partner_model_keeper = LAZY_INSTANCE_INITIALIZER;
 
 const void* const kPartnerBookmarksShimUserDataKey =
     &kPartnerBookmarksShimUserDataKey;
@@ -123,8 +125,8 @@ void PartnerBookmarksShim::RenameBookmark(const BookmarkNode* node,
   const NodeRenamingMapKey key(node->url(), node->GetTitle());
   node_rename_remove_map_[key] = title;
   SaveNodeMapping();
-  FOR_EACH_OBSERVER(PartnerBookmarksShim::Observer, observers_,
-                    PartnerShimChanged(this));
+  for (PartnerBookmarksShim::Observer& observer : observers_)
+    observer.PartnerShimChanged(this);
 }
 
 void PartnerBookmarksShim::AddObserver(
@@ -175,12 +177,13 @@ const BookmarkNode* PartnerBookmarksShim::GetPartnerBookmarksRoot() const {
   return g_partner_model_keeper.Get().partner_bookmarks_root.get();
 }
 
-void PartnerBookmarksShim::SetPartnerBookmarksRoot(BookmarkNode* root_node) {
+void PartnerBookmarksShim::SetPartnerBookmarksRoot(
+    std::unique_ptr<bookmarks::BookmarkNode> root_node) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  g_partner_model_keeper.Get().partner_bookmarks_root.reset(root_node);
+  g_partner_model_keeper.Get().partner_bookmarks_root = std::move(root_node);
   g_partner_model_keeper.Get().loaded = true;
-  FOR_EACH_OBSERVER(PartnerBookmarksShim::Observer, observers_,
-                    PartnerShimLoaded(this));
+  for (PartnerBookmarksShim::Observer& observer : observers_)
+    observer.PartnerShimLoaded(this);
 }
 
 PartnerBookmarksShim::NodeRenamingMapKey::NodeRenamingMapKey(
@@ -220,8 +223,8 @@ PartnerBookmarksShim::PartnerBookmarksShim(PrefService* prefs)
 }
 
 PartnerBookmarksShim::~PartnerBookmarksShim() {
-  FOR_EACH_OBSERVER(PartnerBookmarksShim::Observer, observers_,
-                    ShimBeingDeleted(this));
+  for (PartnerBookmarksShim::Observer& observer : observers_)
+    observer.ShimBeingDeleted(this);
 }
 
 const BookmarkNode* PartnerBookmarksShim::GetNodeByID(
@@ -252,7 +255,7 @@ void PartnerBookmarksShim::ReloadNodeMapping() {
   for (base::ListValue::const_iterator it = list->begin();
        it != list->end(); ++it) {
     const base::DictionaryValue* dict = NULL;
-    if (!*it || !(*it)->GetAsDictionary(&dict)) {
+    if (!it->GetAsDictionary(&dict)) {
       NOTREACHED();
       continue;
     }
@@ -281,11 +284,11 @@ void PartnerBookmarksShim::SaveNodeMapping() {
   for (NodeRenamingMap::const_iterator i = node_rename_remove_map_.begin();
        i != node_rename_remove_map_.end();
        ++i) {
-    base::DictionaryValue* dict = new base::DictionaryValue();
+    auto dict = base::MakeUnique<base::DictionaryValue>();
     dict->SetString(kMappingUrl, i->first.url().spec());
     dict->SetString(kMappingProviderTitle, i->first.provider_title());
     dict->SetString(kMappingTitle, i->second);
-    list.Append(dict);
+    list.Append(std::move(dict));
   }
   prefs_->Set(prefs::kPartnerBookmarkMappings, list);
 }

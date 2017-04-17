@@ -19,23 +19,27 @@
 #include "content/public/common/main_function_params.h"
 #include "content/public/common/page_state.h"
 #include "content/public/test/mock_render_thread.h"
-#include "mojo/edk/test/scoped_ipc_support.h"
+#include "mojo/edk/embedder/scoped_ipc_support.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
 #include "third_party/WebKit/public/web/WebLeakDetector.h"
 
+namespace base {
+class FieldTrialList;
+}
+
 namespace blink {
+namespace scheduler {
+class RendererScheduler;
+}
 class WebInputElement;
+class WebMouseEvent;
 class WebWidget;
 }
 
 namespace gfx {
 class Rect;
-}
-
-namespace scheduler {
-class RendererScheduler;
 }
 
 namespace content {
@@ -62,7 +66,7 @@ class RenderViewTest : public testing::Test, blink::WebLeakDetectorClient {
     void Shutdown();
 
    private:
-    std::unique_ptr<scheduler::RendererScheduler> renderer_scheduler_;
+    std::unique_ptr<blink::scheduler::RendererScheduler> renderer_scheduler_;
     std::unique_ptr<RendererBlinkPlatformImplTestOverrideImpl>
         blink_platform_impl_;
   };
@@ -149,9 +153,7 @@ class RenderViewTest : public testing::Test, blink::WebLeakDetectorClient {
   uint32_t GetNavigationIPCType();
 
   // Resize the view.
-  void Resize(gfx::Size new_size,
-              gfx::Rect resizer_rect,
-              bool is_fullscreen);
+  void Resize(gfx::Size new_size, bool is_fullscreen);
 
   // Simulates typing the |ascii_character| into this render view. Also accepts
   // ui::VKEY_BACK for backspace. Will flush the message loop if
@@ -167,9 +169,9 @@ class RenderViewTest : public testing::Test, blink::WebLeakDetectorClient {
 
   // These are all methods from RenderViewImpl that we expose to testing code.
   bool OnMessageReceived(const IPC::Message& msg);
-  void DidNavigateWithinPage(blink::WebLocalFrame* frame,
-                             bool is_new_navigation,
-                             bool content_initiated);
+  void OnSameDocumentNavigation(blink::WebLocalFrame* frame,
+                                bool is_new_navigation,
+                                bool content_initiated);
   blink::WebWidget* GetWebWidget();
 
   // Allows a subclass to override the various content client implementations.
@@ -186,7 +188,7 @@ class RenderViewTest : public testing::Test, blink::WebLeakDetectorClient {
   void TearDown() override;
 
   // blink::WebLeakDetectorClient implementation.
-  void onLeakDetectionComplete(const Result& result) override;
+  void OnLeakDetectionComplete(const Result& result) override;
 
   base::MessageLoop msg_loop_;
   std::unique_ptr<FakeCompositorDependencies> compositor_deps_;
@@ -204,10 +206,11 @@ class RenderViewTest : public testing::Test, blink::WebLeakDetectorClient {
   std::unique_ptr<RendererMainPlatformDelegate> platform_;
   std::unique_ptr<MainFunctionParams> params_;
   std::unique_ptr<base::CommandLine> command_line_;
+  std::unique_ptr<base::FieldTrialList> field_trial_list_;
 
   // For Mojo.
   std::unique_ptr<base::TestIOThread> test_io_thread_;
-  std::unique_ptr<mojo::edk::test::ScopedIPCSupport> ipc_support_;
+  std::unique_ptr<mojo::edk::ScopedIPCSupport> ipc_support_;
 
 #if defined(OS_MACOSX)
   std::unique_ptr<base::mac::ScopedNSAutoreleasePool> autorelease_pool_;

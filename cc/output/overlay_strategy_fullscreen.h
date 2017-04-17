@@ -16,14 +16,18 @@ class OverlayCandidateValidator;
 // should be possible to use it as such.
 class CC_EXPORT OverlayStrategyFullscreen : public OverlayProcessor::Strategy {
  public:
-  OverlayStrategyFullscreen();
+  explicit OverlayStrategyFullscreen(
+      OverlayCandidateValidator* capability_checker);
   ~OverlayStrategyFullscreen() override;
 
   bool Attempt(ResourceProvider* resource_provider,
                RenderPass* render_pass,
-               OverlayCandidateList* candidate_list) override;
+               OverlayCandidateList* candidate_list,
+               std::vector<gfx::Rect>* content_bounds) override;
 
  private:
+  OverlayCandidateValidator* capability_checker_;  // Weak.
+
   DISALLOW_COPY_AND_ASSIGN(OverlayStrategyFullscreen);
 };
 

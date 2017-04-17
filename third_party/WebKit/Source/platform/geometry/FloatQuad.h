@@ -29,12 +29,12 @@
 #ifndef FloatQuad_h
 #define FloatQuad_h
 
+#include <iosfwd>
 #include "platform/geometry/FloatPoint.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/geometry/LayoutSize.h"
-#include "wtf/Allocator.h"
-#include <iosfwd>
+#include "platform/wtf/Allocator.h"
 
 struct SkPoint;
 
@@ -44,159 +44,140 @@ namespace blink {
 // mapping a rectangle through transforms. When initialized from a rect, the
 // points are in clockwise order from top left.
 class PLATFORM_EXPORT FloatQuad {
-    USING_FAST_MALLOC(FloatQuad);
-public:
-    FloatQuad()
-    {
-    }
+  USING_FAST_MALLOC(FloatQuad);
 
-    FloatQuad(const FloatPoint& p1, const FloatPoint& p2, const FloatPoint& p3, const FloatPoint& p4)
-        : m_p1(p1)
-        , m_p2(p2)
-        , m_p3(p3)
-        , m_p4(p4)
-    {
-    }
+ public:
+  FloatQuad() {}
 
-    FloatQuad(const FloatRect& inRect)
-        : m_p1(inRect.location())
-        , m_p2(inRect.maxX(), inRect.y())
-        , m_p3(inRect.maxX(), inRect.maxY())
-        , m_p4(inRect.x(), inRect.maxY())
-    {
-    }
+  FloatQuad(const FloatPoint& p1,
+            const FloatPoint& p2,
+            const FloatPoint& p3,
+            const FloatPoint& p4)
+      : p1_(p1), p2_(p2), p3_(p3), p4_(p4) {}
 
-    // Converts from an array of four SkPoints, as from SkMatrix::mapRectToQuad.
-    explicit FloatQuad(const SkPoint(&)[4]);
+  FloatQuad(const FloatRect& in_rect)
+      : p1_(in_rect.Location()),
+        p2_(in_rect.MaxX(), in_rect.Y()),
+        p3_(in_rect.MaxX(), in_rect.MaxY()),
+        p4_(in_rect.X(), in_rect.MaxY()) {}
 
-    FloatPoint p1() const { return m_p1; }
-    FloatPoint p2() const { return m_p2; }
-    FloatPoint p3() const { return m_p3; }
-    FloatPoint p4() const { return m_p4; }
+  // Converts from an array of four SkPoints, as from SkMatrix::mapRectToQuad.
+  explicit FloatQuad(const SkPoint (&)[4]);
 
-    void setP1(const FloatPoint& p) { m_p1 = p; }
-    void setP2(const FloatPoint& p) { m_p2 = p; }
-    void setP3(const FloatPoint& p) { m_p3 = p; }
-    void setP4(const FloatPoint& p) { m_p4 = p; }
+  FloatPoint P1() const { return p1_; }
+  FloatPoint P2() const { return p2_; }
+  FloatPoint P3() const { return p3_; }
+  FloatPoint P4() const { return p4_; }
 
-    // isEmpty tests that the bounding box is empty. This will not identify
-    // "slanted" empty quads.
-    bool isEmpty() const { return boundingBox().isEmpty(); }
+  void SetP1(const FloatPoint& p) { p1_ = p; }
+  void SetP2(const FloatPoint& p) { p2_ = p; }
+  void SetP3(const FloatPoint& p) { p3_ = p; }
+  void SetP4(const FloatPoint& p) { p4_ = p; }
 
-    // Tests whether this quad can be losslessly represented by a FloatRect,
-    // that is, if two edges are parallel to the x-axis and the other two
-    // are parallel to the y-axis. If this method returns true, the
-    // corresponding FloatRect can be retrieved with boundingBox().
-    bool isRectilinear() const;
+  // isEmpty tests that the bounding box is empty. This will not identify
+  // "slanted" empty quads.
+  bool IsEmpty() const { return BoundingBox().IsEmpty(); }
 
-    // Tests whether the given point is inside, or on an edge or corner of this quad.
-    bool containsPoint(const FloatPoint&) const;
+  // Tests whether this quad can be losslessly represented by a FloatRect,
+  // that is, if two edges are parallel to the x-axis and the other two
+  // are parallel to the y-axis. If this method returns true, the
+  // corresponding FloatRect can be retrieved with boundingBox().
+  bool IsRectilinear() const;
 
-    // Tests whether the four corners of other are inside, or coincident with the sides of this quad.
-    // Note that this only works for convex quads, but that includes all quads that originate
-    // from transformed rects.
-    bool containsQuad(const FloatQuad&) const;
+  // Tests whether the given point is inside, or on an edge or corner of this
+  // quad.
+  bool ContainsPoint(const FloatPoint&) const;
 
-    // Tests whether any part of the rectangle intersects with this quad.
-    // This only works for convex quads.
-    bool intersectsRect(const FloatRect&) const;
+  // Tests whether the four corners of other are inside, or coincident with the
+  // sides of this quad.  Note that this only works for convex quads, but that
+  // includes all quads that originate
+  // from transformed rects.
+  bool ContainsQuad(const FloatQuad&) const;
 
-    // Test whether any part of the circle/ellipse intersects with this quad.
-    // Note that these two functions only work for convex quads.
-    bool intersectsCircle(const FloatPoint& center, float radius) const;
-    bool intersectsEllipse(const FloatPoint& center, const FloatSize& radii) const;
+  // Tests whether any part of the rectangle intersects with this quad.
+  // This only works for convex quads.
+  bool IntersectsRect(const FloatRect&) const;
 
-    // The center of the quad. If the quad is the result of a affine-transformed rectangle this is the same as the original center transformed.
-    FloatPoint center() const
-    {
-        return FloatPoint((m_p1.x() + m_p2.x() + m_p3.x() + m_p4.x()) / 4.0,
-                          (m_p1.y() + m_p2.y() + m_p3.y() + m_p4.y()) / 4.0);
-    }
+  // Test whether any part of the circle/ellipse intersects with this quad.
+  // Note that these two functions only work for convex quads.
+  bool IntersectsCircle(const FloatPoint& center, float radius) const;
+  bool IntersectsEllipse(const FloatPoint& center,
+                         const FloatSize& radii) const;
 
-    FloatRect boundingBox() const;
-    IntRect enclosingBoundingBox() const
-    {
-        return enclosingIntRect(boundingBox());
-    }
+  // The center of the quad. If the quad is the result of a affine-transformed
+  // rectangle this is the same as the original center transformed.
+  FloatPoint Center() const {
+    return FloatPoint((p1_.X() + p2_.X() + p3_.X() + p4_.X()) / 4.0,
+                      (p1_.Y() + p2_.Y() + p3_.Y() + p4_.Y()) / 4.0);
+  }
 
-    void move(const FloatSize& offset)
-    {
-        m_p1 += offset;
-        m_p2 += offset;
-        m_p3 += offset;
-        m_p4 += offset;
-    }
+  FloatRect BoundingBox() const;
+  IntRect EnclosingBoundingBox() const {
+    return EnclosingIntRect(BoundingBox());
+  }
 
-    void move(const LayoutSize& offset)
-    {
-        move(offset.width().toFloat(), offset.height().toFloat());
-    }
+  void Move(const FloatSize& offset) {
+    p1_ += offset;
+    p2_ += offset;
+    p3_ += offset;
+    p4_ += offset;
+  }
 
-    void move(float dx, float dy)
-    {
-        m_p1.move(dx, dy);
-        m_p2.move(dx, dy);
-        m_p3.move(dx, dy);
-        m_p4.move(dx, dy);
-    }
+  void Move(const LayoutSize& offset) {
+    Move(offset.Width().ToFloat(), offset.Height().ToFloat());
+  }
 
-    void scale(float dx, float dy)
-    {
-        m_p1.scale(dx, dy);
-        m_p2.scale(dx, dy);
-        m_p3.scale(dx, dy);
-        m_p4.scale(dx, dy);
-    }
+  void Move(float dx, float dy) {
+    p1_.Move(dx, dy);
+    p2_.Move(dx, dy);
+    p3_.Move(dx, dy);
+    p4_.Move(dx, dy);
+  }
 
-    // Tests whether points are in clock-wise, or counter clock-wise order.
-    // Note that output is undefined when all points are colinear.
-    bool isCounterclockwise() const;
+  void Scale(float dx, float dy) {
+    p1_.Scale(dx, dy);
+    p2_.Scale(dx, dy);
+    p3_.Scale(dx, dy);
+    p4_.Scale(dx, dy);
+  }
 
-#ifndef NDEBUG
-    // Prints debugging information for this object.
-    void show() const;
-#endif
+  // Tests whether points are in clock-wise, or counter clock-wise order.
+  // Note that output is undefined when all points are colinear.
+  bool IsCounterclockwise() const;
 
-private:
-    FloatPoint m_p1;
-    FloatPoint m_p2;
-    FloatPoint m_p3;
-    FloatPoint m_p4;
+  String ToString() const;
+
+ private:
+  FloatPoint p1_;
+  FloatPoint p2_;
+  FloatPoint p3_;
+  FloatPoint p4_;
 };
 
-inline FloatQuad& operator+=(FloatQuad& a, const FloatSize& b)
-{
-    a.move(b);
-    return a;
+inline FloatQuad& operator+=(FloatQuad& a, const FloatSize& b) {
+  a.Move(b);
+  return a;
 }
 
-inline FloatQuad& operator-=(FloatQuad& a, const FloatSize& b)
-{
-    a.move(-b.width(), -b.height());
-    return a;
+inline FloatQuad& operator-=(FloatQuad& a, const FloatSize& b) {
+  a.Move(-b.Width(), -b.Height());
+  return a;
 }
 
-inline bool operator==(const FloatQuad& a, const FloatQuad& b)
-{
-    return a.p1() == b.p1() &&
-           a.p2() == b.p2() &&
-           a.p3() == b.p3() &&
-           a.p4() == b.p4();
+inline bool operator==(const FloatQuad& a, const FloatQuad& b) {
+  return a.P1() == b.P1() && a.P2() == b.P2() && a.P3() == b.P3() &&
+         a.P4() == b.P4();
 }
 
-inline bool operator!=(const FloatQuad& a, const FloatQuad& b)
-{
-    return a.p1() != b.p1() ||
-           a.p2() != b.p2() ||
-           a.p3() != b.p3() ||
-           a.p4() != b.p4();
+inline bool operator!=(const FloatQuad& a, const FloatQuad& b) {
+  return a.P1() != b.P1() || a.P2() != b.P2() || a.P3() != b.P3() ||
+         a.P4() != b.P4();
 }
-
 
 // Redeclared here to avoid ODR issues.
 // See platform/testing/GeometryPrinters.h.
 void PrintTo(const FloatQuad&, std::ostream*);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FloatQuad_h
+#endif  // FloatQuad_h

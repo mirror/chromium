@@ -25,161 +25,171 @@
 
 #include "modules/peerconnection/RTCDTMFSender.h"
 
+#include <memory>
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "modules/mediastream/MediaStreamTrack.h"
 #include "modules/peerconnection/RTCDTMFToneChangeEvent.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebMediaStreamTrack.h"
 #include "public/platform/WebRTCDTMFSenderHandler.h"
 #include "public/platform/WebRTCPeerConnectionHandler.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
 
 namespace blink {
 
-static const int minToneDurationMs = 70;
-static const int defaultToneDurationMs = 100;
-static const int maxToneDurationMs = 6000;
-static const int minInterToneGapMs = 50;
-static const int defaultInterToneGapMs = 50;
+static const int kMinToneDurationMs = 70;
+static const int kDefaultToneDurationMs = 100;
+static const int kMaxToneDurationMs = 6000;
+static const int kMinInterToneGapMs = 50;
+static const int kDefaultInterToneGapMs = 50;
 
-RTCDTMFSender* RTCDTMFSender::create(ExecutionContext* context, WebRTCPeerConnectionHandler* peerConnectionHandler, MediaStreamTrack* track, ExceptionState& exceptionState)
-{
-    std::unique_ptr<WebRTCDTMFSenderHandler> handler = wrapUnique(peerConnectionHandler->createDTMFSender(track->component()));
-    if (!handler) {
-        exceptionState.throwDOMException(NotSupportedError, "The MediaStreamTrack provided is not an element of a MediaStream that's currently in the local streams set.");
-        return nullptr;
-    }
+RTCDTMFSender* RTCDTMFSender::Create(
+    ExecutionContext* context,
+    WebRTCPeerConnectionHandler* peer_connection_handler,
+    MediaStreamTrack* track,
+    ExceptionState& exception_state) {
+  std::unique_ptr<WebRTCDTMFSenderHandler> handler = WTF::WrapUnique(
+      peer_connection_handler->CreateDTMFSender(track->Component()));
+  if (!handler) {
+    exception_state.ThrowDOMException(kNotSupportedError,
+                                      "The MediaStreamTrack provided is not an "
+                                      "element of a MediaStream that's "
+                                      "currently in the local streams set.");
+    return nullptr;
+  }
 
-    RTCDTMFSender* dtmfSender = new RTCDTMFSender(context, track, std::move(handler));
-    dtmfSender->suspendIfNeeded();
-    return dtmfSender;
+  return new RTCDTMFSender(context, track, std::move(handler));
 }
 
-RTCDTMFSender::RTCDTMFSender(ExecutionContext* context, MediaStreamTrack* track, std::unique_ptr<WebRTCDTMFSenderHandler> handler)
-    : ActiveDOMObject(context)
-    , m_track(track)
-    , m_duration(defaultToneDurationMs)
-    , m_interToneGap(defaultInterToneGapMs)
-    , m_handler(std::move(handler))
-    , m_stopped(false)
-    , m_scheduledEventTimer(this, &RTCDTMFSender::scheduledEventTimerFired)
-{
-    ThreadState::current()->registerPreFinalizer(this);
-    m_handler->setClient(this);
+RTCDTMFSender::RTCDTMFSender(ExecutionContext* context,
+                             MediaStreamTrack* track,
+                             std::unique_ptr<WebRTCDTMFSenderHandler> handler)
+    : ContextLifecycleObserver(context),
+      track_(track),
+      duration_(kDefaultToneDurationMs),
+      inter_tone_gap_(kDefaultInterToneGapMs),
+      handler_(std::move(handler)),
+      stopped_(false),
+      scheduled_event_timer_(
+          TaskRunnerHelper::Get(TaskType::kNetworking, context),
+          this,
+          &RTCDTMFSender::ScheduledEventTimerFired) {
+  handler_->SetClient(this);
 }
 
-RTCDTMFSender::~RTCDTMFSender()
-{
+RTCDTMFSender::~RTCDTMFSender() {}
+
+void RTCDTMFSender::Dispose() {
+  // Promptly clears a raw reference from content/ to an on-heap object
+  // so that content/ doesn't access it in a lazy sweeping phase.
+  handler_->SetClient(nullptr);
+  handler_.reset();
 }
 
-void RTCDTMFSender::dispose()
-{
-    // Promptly clears a raw reference from content/ to an on-heap object
-    // so that content/ doesn't access it in a lazy sweeping phase.
-    m_handler->setClient(nullptr);
-    m_handler.reset();
+bool RTCDTMFSender::canInsertDTMF() const {
+  return handler_->CanInsertDTMF();
 }
 
-bool RTCDTMFSender::canInsertDTMF() const
-{
-    return m_handler->canInsertDTMF();
+MediaStreamTrack* RTCDTMFSender::track() const {
+  return track_.Get();
 }
 
-MediaStreamTrack* RTCDTMFSender::track() const
-{
-    return m_track.get();
+String RTCDTMFSender::toneBuffer() const {
+  return handler_->CurrentToneBuffer();
 }
 
-String RTCDTMFSender::toneBuffer() const
-{
-    return m_handler->currentToneBuffer();
+void RTCDTMFSender::insertDTMF(const String& tones,
+                               ExceptionState& exception_state) {
+  insertDTMF(tones, kDefaultToneDurationMs, kDefaultInterToneGapMs,
+             exception_state);
 }
 
-void RTCDTMFSender::insertDTMF(const String& tones, ExceptionState& exceptionState)
-{
-    insertDTMF(tones, defaultToneDurationMs, defaultInterToneGapMs, exceptionState);
+void RTCDTMFSender::insertDTMF(const String& tones,
+                               int duration,
+                               ExceptionState& exception_state) {
+  insertDTMF(tones, duration, kDefaultInterToneGapMs, exception_state);
 }
 
-void RTCDTMFSender::insertDTMF(const String& tones, int duration, ExceptionState& exceptionState)
-{
-    insertDTMF(tones, duration, defaultInterToneGapMs, exceptionState);
+void RTCDTMFSender::insertDTMF(const String& tones,
+                               int duration,
+                               int inter_tone_gap,
+                               ExceptionState& exception_state) {
+  if (!canInsertDTMF()) {
+    exception_state.ThrowDOMException(kNotSupportedError,
+                                      "The 'canInsertDTMF' attribute is false: "
+                                      "this sender cannot send DTMF.");
+    return;
+  }
+
+  if (duration > kMaxToneDurationMs || duration < kMinToneDurationMs) {
+    exception_state.ThrowDOMException(
+        kSyntaxError,
+        ExceptionMessages::IndexOutsideRange(
+            "duration", duration, kMinToneDurationMs,
+            ExceptionMessages::kExclusiveBound, kMaxToneDurationMs,
+            ExceptionMessages::kExclusiveBound));
+    return;
+  }
+
+  if (inter_tone_gap < kMinInterToneGapMs) {
+    exception_state.ThrowDOMException(
+        kSyntaxError, ExceptionMessages::IndexExceedsMinimumBound(
+                          "intertone gap", inter_tone_gap, kMinInterToneGapMs));
+    return;
+  }
+
+  duration_ = duration;
+  inter_tone_gap_ = inter_tone_gap;
+
+  if (!handler_->InsertDTMF(tones, duration_, inter_tone_gap_))
+    exception_state.ThrowDOMException(
+        kSyntaxError, "Could not send provided tones, '" + tones + "'.");
 }
 
-void RTCDTMFSender::insertDTMF(const String& tones, int duration, int interToneGap, ExceptionState& exceptionState)
-{
-    if (!canInsertDTMF()) {
-        exceptionState.throwDOMException(NotSupportedError, "The 'canInsertDTMF' attribute is false: this sender cannot send DTMF.");
-        return;
-    }
-
-    if (duration > maxToneDurationMs || duration < minToneDurationMs) {
-        exceptionState.throwDOMException(SyntaxError, ExceptionMessages::indexOutsideRange("duration", duration, minToneDurationMs, ExceptionMessages::ExclusiveBound, maxToneDurationMs, ExceptionMessages::ExclusiveBound));
-        return;
-    }
-
-    if (interToneGap < minInterToneGapMs) {
-        exceptionState.throwDOMException(SyntaxError, ExceptionMessages::indexExceedsMinimumBound("intertone gap", interToneGap, minInterToneGapMs));
-        return;
-    }
-
-    m_duration = duration;
-    m_interToneGap = interToneGap;
-
-    if (!m_handler->insertDTMF(tones, m_duration, m_interToneGap))
-        exceptionState.throwDOMException(SyntaxError, "Could not send provided tones, '" + tones + "'.");
+void RTCDTMFSender::DidPlayTone(const WebString& tone) {
+  ScheduleDispatchEvent(RTCDTMFToneChangeEvent::Create(tone));
 }
 
-void RTCDTMFSender::didPlayTone(const WebString& tone)
-{
-    scheduleDispatchEvent(RTCDTMFToneChangeEvent::create(tone));
+const AtomicString& RTCDTMFSender::InterfaceName() const {
+  return EventTargetNames::RTCDTMFSender;
 }
 
-const AtomicString& RTCDTMFSender::interfaceName() const
-{
-    return EventTargetNames::RTCDTMFSender;
+ExecutionContext* RTCDTMFSender::GetExecutionContext() const {
+  return ContextLifecycleObserver::GetExecutionContext();
 }
 
-ExecutionContext* RTCDTMFSender::getExecutionContext() const
-{
-    return ActiveDOMObject::getExecutionContext();
+void RTCDTMFSender::ContextDestroyed(ExecutionContext*) {
+  stopped_ = true;
+  handler_->SetClient(nullptr);
 }
 
-void RTCDTMFSender::stop()
-{
-    m_stopped = true;
-    m_handler->setClient(nullptr);
+void RTCDTMFSender::ScheduleDispatchEvent(Event* event) {
+  scheduled_events_.push_back(event);
+
+  if (!scheduled_event_timer_.IsActive())
+    scheduled_event_timer_.StartOneShot(0, BLINK_FROM_HERE);
 }
 
-void RTCDTMFSender::scheduleDispatchEvent(Event* event)
-{
-    m_scheduledEvents.append(event);
+void RTCDTMFSender::ScheduledEventTimerFired(TimerBase*) {
+  if (stopped_)
+    return;
 
-    if (!m_scheduledEventTimer.isActive())
-        m_scheduledEventTimer.startOneShot(0, BLINK_FROM_HERE);
+  HeapVector<Member<Event>> events;
+  events.Swap(scheduled_events_);
+
+  HeapVector<Member<Event>>::iterator it = events.begin();
+  for (; it != events.end(); ++it)
+    DispatchEvent((*it).Release());
 }
 
-void RTCDTMFSender::scheduledEventTimerFired(Timer<RTCDTMFSender>*)
-{
-    if (m_stopped)
-        return;
-
-    HeapVector<Member<Event>> events;
-    events.swap(m_scheduledEvents);
-
-    HeapVector<Member<Event>>::iterator it = events.begin();
-    for (; it != events.end(); ++it)
-        dispatchEvent((*it).release());
+DEFINE_TRACE(RTCDTMFSender) {
+  visitor->Trace(track_);
+  visitor->Trace(scheduled_events_);
+  EventTargetWithInlineData::Trace(visitor);
+  ContextLifecycleObserver::Trace(visitor);
 }
 
-DEFINE_TRACE(RTCDTMFSender)
-{
-    visitor->trace(m_track);
-    visitor->trace(m_scheduledEvents);
-    EventTargetWithInlineData::trace(visitor);
-    ActiveDOMObject::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

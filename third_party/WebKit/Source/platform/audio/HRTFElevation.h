@@ -29,77 +29,105 @@
 #ifndef HRTFElevation_h
 #define HRTFElevation_h
 
-#include "platform/audio/HRTFKernel.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
-#include "wtf/text/CString.h"
-#include "wtf/text/WTFString.h"
 #include <memory>
+#include "platform/audio/HRTFKernel.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/text/CString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-// HRTFElevation contains all of the HRTFKernels (one left ear and one right ear per azimuth angle) for a particular elevation.
+// HRTFElevation contains all of the HRTFKernels (one left ear and one right ear
+// per azimuth angle) for a particular elevation.
 
 class PLATFORM_EXPORT HRTFElevation {
-    USING_FAST_MALLOC(HRTFElevation);
-    WTF_MAKE_NONCOPYABLE(HRTFElevation);
-public:
-    // Loads and returns an HRTFElevation with the given HRTF database subject name and elevation from browser (or WebKit.framework) resources.
-    // Normally, there will only be a single HRTF database set, but this API supports the possibility of multiple ones with different names.
-    // Interpolated azimuths will be generated based on InterpolationFactor.
-    // Valid values for elevation are -45 -> +90 in 15 degree increments.
-    static std::unique_ptr<HRTFElevation> createForSubject(const String& subjectName, int elevation, float sampleRate);
+  USING_FAST_MALLOC(HRTFElevation);
+  WTF_MAKE_NONCOPYABLE(HRTFElevation);
 
-    // Given two HRTFElevations, and an interpolation factor x: 0 -> 1, returns an interpolated HRTFElevation.
-    static std::unique_ptr<HRTFElevation> createByInterpolatingSlices(HRTFElevation* hrtfElevation1, HRTFElevation* hrtfElevation2, float x, float sampleRate);
+ public:
+  // Loads and returns an HRTFElevation with the given HRTF database subject
+  // name and elevation from browser (or WebKit.framework) resources.
+  // Normally, there will only be a single HRTF database set, but this API
+  // supports the possibility of multiple ones with different names.
+  // Interpolated azimuths will be generated based on InterpolationFactor.
+  // Valid values for elevation are -45 -> +90 in 15 degree increments.
+  static std::unique_ptr<HRTFElevation> CreateForSubject(
+      const String& subject_name,
+      int elevation,
+      float sample_rate);
 
-    // Returns the list of left or right ear HRTFKernels for all the azimuths going from 0 to 360 degrees.
-    HRTFKernelList* kernelListL() { return m_kernelListL.get(); }
-    HRTFKernelList* kernelListR() { return m_kernelListR.get(); }
+  // Given two HRTFElevations, and an interpolation factor x: 0 -> 1, returns an
+  // interpolated HRTFElevation.
+  static std::unique_ptr<HRTFElevation> CreateByInterpolatingSlices(
+      HRTFElevation* hrtf_elevation1,
+      HRTFElevation* hrtf_elevation2,
+      float x,
+      float sample_rate);
 
-    double elevationAngle() const { return m_elevationAngle; }
-    unsigned numberOfAzimuths() const { return NumberOfTotalAzimuths; }
-    float sampleRate() const { return m_sampleRate; }
+  // Returns the list of left or right ear HRTFKernels for all the azimuths
+  // going from 0 to 360 degrees.
+  HRTFKernelList* KernelListL() { return kernel_list_l_.get(); }
+  HRTFKernelList* KernelListR() { return kernel_list_r_.get(); }
 
-    // Returns the left and right kernels for the given azimuth index.
-    // The interpolated delays based on azimuthBlend: 0 -> 1 are returned in frameDelayL and frameDelayR.
-    void getKernelsFromAzimuth(double azimuthBlend, unsigned azimuthIndex, HRTFKernel* &kernelL, HRTFKernel* &kernelR, double& frameDelayL, double& frameDelayR);
+  double ElevationAngle() const { return elevation_angle_; }
+  unsigned NumberOfAzimuths() const { return kNumberOfTotalAzimuths; }
+  float SampleRate() const { return sample_rate_; }
 
-    // Spacing, in degrees, between every azimuth loaded from resource.
-    static const unsigned AzimuthSpacing;
+  // Returns the left and right kernels for the given azimuth index.
+  // The interpolated delays based on azimuthBlend: 0 -> 1 are returned in
+  // frameDelayL and frameDelayR.
+  void GetKernelsFromAzimuth(double azimuth_blend,
+                             unsigned azimuth_index,
+                             HRTFKernel*& kernel_l,
+                             HRTFKernel*& kernel_r,
+                             double& frame_delay_l,
+                             double& frame_delay_r);
 
-    // Number of azimuths loaded from resource.
-    static const unsigned NumberOfRawAzimuths;
+  // Spacing, in degrees, between every azimuth loaded from resource.
+  static const unsigned kAzimuthSpacing;
 
-    // Interpolates by this factor to get the total number of azimuths from every azimuth loaded from resource.
-    static const unsigned InterpolationFactor;
+  // Number of azimuths loaded from resource.
+  static const unsigned kNumberOfRawAzimuths;
 
-    // Total number of azimuths after interpolation.
-    static const unsigned NumberOfTotalAzimuths;
+  // Interpolates by this factor to get the total number of azimuths from every
+  // azimuth loaded from resource.
+  static const unsigned kInterpolationFactor;
 
-    // Given a specific azimuth and elevation angle, returns the left and right HRTFKernel.
-    // Valid values for azimuth are 0 -> 345 in 15 degree increments.
-    // Valid values for elevation are -45 -> +90 in 15 degree increments.
-    // Returns true on success.
-    static bool calculateKernelsForAzimuthElevation(int azimuth, int elevation, float sampleRate, const String& subjectName, std::unique_ptr<HRTFKernel>& kernelL, std::unique_ptr<HRTFKernel>& kernelR);
+  // Total number of azimuths after interpolation.
+  static const unsigned kNumberOfTotalAzimuths;
 
-private:
-    HRTFElevation(std::unique_ptr<HRTFKernelList> kernelListL, std::unique_ptr<HRTFKernelList> kernelListR, int elevation, float sampleRate)
-        : m_kernelListL(std::move(kernelListL))
-        , m_kernelListR(std::move(kernelListR))
-        , m_elevationAngle(elevation)
-        , m_sampleRate(sampleRate)
-    {
-    }
+  // Given a specific azimuth and elevation angle, returns the left and right
+  // HRTFKernel.
+  // Valid values for azimuth are 0 -> 345 in 15 degree increments.
+  // Valid values for elevation are -45 -> +90 in 15 degree increments.
+  // Returns true on success.
+  static bool CalculateKernelsForAzimuthElevation(
+      int azimuth,
+      int elevation,
+      float sample_rate,
+      const String& subject_name,
+      std::unique_ptr<HRTFKernel>& kernel_l,
+      std::unique_ptr<HRTFKernel>& kernel_r);
 
-    std::unique_ptr<HRTFKernelList> m_kernelListL;
-    std::unique_ptr<HRTFKernelList> m_kernelListR;
-    double m_elevationAngle;
-    float m_sampleRate;
+ private:
+  HRTFElevation(std::unique_ptr<HRTFKernelList> kernel_list_l,
+                std::unique_ptr<HRTFKernelList> kernel_list_r,
+                int elevation,
+                float sample_rate)
+      : kernel_list_l_(std::move(kernel_list_l)),
+        kernel_list_r_(std::move(kernel_list_r)),
+        elevation_angle_(elevation),
+        sample_rate_(sample_rate) {}
+
+  std::unique_ptr<HRTFKernelList> kernel_list_l_;
+  std::unique_ptr<HRTFKernelList> kernel_list_r_;
+  double elevation_angle_;
+  float sample_rate_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HRTFElevation_h
+#endif  // HRTFElevation_h

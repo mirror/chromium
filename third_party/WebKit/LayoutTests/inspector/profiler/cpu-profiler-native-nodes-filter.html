@@ -128,7 +128,8 @@ function test()
         "endTime":   100000 + 111.110 + 22.220 + 1.000,
         "samples": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
     };
-    var model = new WebInspector.CPUProfileDataModel(profile);
+    Common.settingForTest("showNativeFunctionsInJSProfile").set(false);
+    var model = new SDK.CPUProfileDataModel(profile);
     printTree("", model.profileHead);
     function printTree(padding, node)
     {
@@ -143,7 +144,8 @@ function test()
 </head>
 <body onload="runTest()">
 <p>
-Tests filtering of native nodes.
+Tests filtering of native nodes.<br/>
+Also tests loading of a legacy nodes format, where nodes were represented as a tree.
 </p>
 </body>
 </html>

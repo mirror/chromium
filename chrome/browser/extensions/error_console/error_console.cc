@@ -75,7 +75,8 @@ ErrorConsole::ErrorConsole(Profile* profile)
 }
 
 ErrorConsole::~ErrorConsole() {
-  FOR_EACH_OBSERVER(Observer, observers_, OnErrorConsoleDestroyed());
+  for (auto& observer : observers_)
+    observer.OnErrorConsoleDestroyed();
 }
 
 // static
@@ -100,9 +101,8 @@ void ErrorConsole::SetReportingForExtension(const std::string& extension_id,
   else
     mask &= ~(1 << type);
 
-  prefs_->UpdateExtensionPref(extension_id,
-                              kStoreExtensionErrorsPref,
-                              new base::FundamentalValue(mask));
+  prefs_->UpdateExtensionPref(extension_id, kStoreExtensionErrorsPref,
+                              base::MakeUnique<base::Value>(mask));
 }
 
 void ErrorConsole::SetReportingAllForExtension(
@@ -113,9 +113,8 @@ void ErrorConsole::SetReportingAllForExtension(
 
   int mask = enabled ? (1 << ExtensionError::NUM_ERROR_TYPES) - 1 : 0;
 
-  prefs_->UpdateExtensionPref(extension_id,
-                              kStoreExtensionErrorsPref,
-                              new base::FundamentalValue(mask));
+  prefs_->UpdateExtensionPref(extension_id, kStoreExtensionErrorsPref,
+                              base::MakeUnique<base::Value>(mask));
 }
 
 bool ErrorConsole::IsReportingEnabledForExtension(
@@ -133,7 +132,7 @@ void ErrorConsole::UseDefaultReportingForExtension(
   if (!enabled_ || !crx_file::id_util::IdIsValid(extension_id))
     return;
 
-  prefs_->UpdateExtensionPref(extension_id, kStoreExtensionErrorsPref, NULL);
+  prefs_->UpdateExtensionPref(extension_id, kStoreExtensionErrorsPref, nullptr);
 }
 
 void ErrorConsole::ReportError(std::unique_ptr<ExtensionError> error) {
@@ -146,13 +145,15 @@ void ErrorConsole::ReportError(std::unique_ptr<ExtensionError> error) {
     return;
 
   const ExtensionError* weak_error = errors_.AddError(std::move(error));
-  FOR_EACH_OBSERVER(Observer, observers_, OnErrorAdded(weak_error));
+  for (auto& observer : observers_)
+    observer.OnErrorAdded(weak_error);
 }
 
 void ErrorConsole::RemoveErrors(const ErrorMap::Filter& filter) {
   std::set<std::string> affected_ids;
   errors_.RemoveErrors(filter, &affected_ids);
-  FOR_EACH_OBSERVER(Observer, observers_, OnErrorsRemoved(affected_ids));
+  for (auto& observer : observers_)
+    observer.OnErrorsRemoved(affected_ids);
 }
 
 const ErrorList& ErrorConsole::GetErrorsForExtension(

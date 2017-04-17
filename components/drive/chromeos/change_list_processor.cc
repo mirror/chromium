@@ -5,9 +5,12 @@
 #include "components/drive/chromeos/change_list_processor.h"
 
 #include <stddef.h>
-#include <utility>
 
-#include "base/metrics/histogram.h"
+#include <memory>
+#include <utility>
+#include <vector>
+
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/synchronization/cancellation_flag.h"
 #include "components/drive/chromeos/resource_metadata.h"
@@ -68,17 +71,27 @@ std::string DirectoryFetchInfo::ToString() const {
 
 ChangeList::ChangeList() {}
 
+ChangeList::ChangeList(const google_apis::TeamDriveList& team_drive_list) {
+  const std::vector<std::unique_ptr<google_apis::TeamDriveResource>>& items =
+      team_drive_list.items();
+  entries_.resize(items.size());
+  parent_resource_ids_.resize(items.size(), "");
+  for (size_t i = 0; i < items.size(); ++i) {
+    ConvertTeamDriveResourceToResourceEntry(*items[i], &entries_[i]);
+  }
+}
+
 ChangeList::ChangeList(const google_apis::ChangeList& change_list)
     : next_url_(change_list.next_link()),
       largest_changestamp_(change_list.largest_change_id()) {
-  const ScopedVector<google_apis::ChangeResource>& items = change_list.items();
+  const std::vector<std::unique_ptr<google_apis::ChangeResource>>& items =
+      change_list.items();
   entries_.resize(items.size());
   parent_resource_ids_.resize(items.size());
   size_t entries_index = 0;
   for (size_t i = 0; i < items.size(); ++i) {
     if (ConvertChangeResourceToResourceEntry(
-            *items[i],
-            &entries_[entries_index],
+            *items[i], &entries_[entries_index],
             &parent_resource_ids_[entries_index])) {
       ++entries_index;
     }
@@ -90,7 +103,8 @@ ChangeList::ChangeList(const google_apis::ChangeList& change_list)
 ChangeList::ChangeList(const google_apis::FileList& file_list)
     : next_url_(file_list.next_link()),
       largest_changestamp_(0) {
-  const ScopedVector<google_apis::FileResource>& items = file_list.items();
+  const std::vector<std::unique_ptr<google_apis::FileResource>>& items =
+      file_list.items();
   entries_.resize(items.size());
   parent_resource_ids_.resize(items.size());
   size_t entries_index = 0;
@@ -120,7 +134,7 @@ ChangeListProcessor::~ChangeListProcessor() {
 
 FileError ChangeListProcessor::Apply(
     std::unique_ptr<google_apis::AboutResource> about_resource,
-    ScopedVector<ChangeList> change_lists,
+    std::vector<std::unique_ptr<ChangeList>> change_lists,
     bool is_delta_update) {
   DCHECK(about_resource);
 
@@ -142,7 +156,7 @@ FileError ChangeListProcessor::Apply(
   // Convert ChangeList to map.
   ChangeListToEntryMapUMAStats uma_stats;
   for (size_t i = 0; i < change_lists.size(); ++i) {
-    ChangeList* change_list = change_lists[i];
+    ChangeList* change_list = change_lists[i].get();
 
     std::vector<ResourceEntry>* entries = change_list->mutable_entries();
     for (size_t i = 0; i < entries->size(); ++i) {
@@ -343,6 +357,7 @@ FileError ChangeListProcessor::ApplyEntryMap(
 
 FileError ChangeListProcessor::ApplyEntry(const ResourceEntry& entry) {
   DCHECK(!entry.deleted());
+  DCHECK(!entry.resource_id().empty());
   DCHECK(parent_resource_id_map_.count(entry.resource_id()));
   const std::string& parent_resource_id =
       parent_resource_id_map_[entry.resource_id()];
@@ -460,6 +475,11 @@ FileError ChangeListProcessor::SetParentLocalIdOfEntry(
     ResourceMetadata* resource_metadata,
     ResourceEntry* entry,
     const std::string& parent_resource_id) {
+  if (entry->parent_local_id() == util::kDriveTeamDrivesDirLocalId) {
+    // When |entry| is a root directory of a Team Drive, the parent directory
+    // of it is "/team_drives", which doesn't have resource ID.
+    return FILE_ERROR_OK;
+  }
   std::string parent_local_id;
   if (parent_resource_id.empty()) {
     // Entries without parents should go under "other" directory.

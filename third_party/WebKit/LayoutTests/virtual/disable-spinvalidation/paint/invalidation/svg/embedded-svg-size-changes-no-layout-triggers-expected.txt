@@ -1,0 +1,69 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [800, 600],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow BODY",
+          "rect": [0, 0, 800, 600],
+          "reason": "forced by layout"
+        },
+        {
+          "object": "LayoutEmbeddedObject OBJECT",
+          "rect": [0, 0, 402, 202],
+          "reason": "style change"
+        },
+        {
+          "object": "LayoutSVGRect rect",
+          "rect": [211, 11, 180, 180],
+          "reason": "bounds change"
+        },
+        {
+          "object": "LayoutSVGRect rect",
+          "rect": [210, 10, 180, 180],
+          "reason": "bounds change"
+        },
+        {
+          "object": "LayoutSVGRect rect",
+          "rect": [11, 11, 180, 180],
+          "reason": "bounds change"
+        },
+        {
+          "object": "LayoutSVGRect rect",
+          "rect": [10, 10, 180, 180],
+          "reason": "bounds change"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutBlockFlow BODY",
+      "reason": "forced by layout"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "forced by layout"
+    },
+    {
+      "object": "LayoutEmbeddedObject OBJECT",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutSVGRoot svg",
+      "reason": "location change"
+    },
+    {
+      "object": "LayoutSVGRect rect",
+      "reason": "bounds change"
+    },
+    {
+      "object": "LayoutSVGRect rect",
+      "reason": "bounds change"
+    }
+  ]
+}
+

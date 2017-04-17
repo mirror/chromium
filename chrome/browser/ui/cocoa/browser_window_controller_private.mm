@@ -13,7 +13,7 @@
 #include "base/mac/mac_util.h"
 #import "base/mac/scoped_nsobject.h"
 #import "base/mac/sdk_forward_declarations.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/permissions/permission_request_manager.h"
@@ -32,11 +32,13 @@
 #import "chrome/browser/ui/cocoa/find_bar/find_bar_cocoa_controller.h"
 #import "chrome/browser/ui/cocoa/floating_bar_backing_view.h"
 #import "chrome/browser/ui/cocoa/framed_browser_window.h"
+#import "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h"
 #include "chrome/browser/ui/cocoa/fullscreen_low_power_coordinator.h"
-#import "chrome/browser/ui/cocoa/fullscreen_toolbar_controller.h"
 #import "chrome/browser/ui/cocoa/fullscreen_window.h"
 #import "chrome/browser/ui/cocoa/infobars/infobar_container_controller.h"
 #include "chrome/browser/ui/cocoa/last_active_browser_cocoa.h"
+#include "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
+#import "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_cocoa.h"
 #import "chrome/browser/ui/cocoa/profiles/avatar_button_controller.h"
 #import "chrome/browser/ui/cocoa/profiles/avatar_icon_controller.h"
 #import "chrome/browser/ui/cocoa/status_bubble_mac.h"
@@ -44,7 +46,6 @@
 #import "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_view.h"
 #import "chrome/browser/ui/cocoa/toolbar/toolbar_controller.h"
-#import "chrome/browser/ui/cocoa/website_settings/permission_bubble_cocoa.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_switches.h"
@@ -52,6 +53,7 @@
 #include "components/prefs/scoped_user_pref_update.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
+#include "ui/base/cocoa/appkit_utils.h"
 #import "ui/base/cocoa/focus_tracker.h"
 #import "ui/base/cocoa/nsview_additions.h"
 #include "ui/base/ui_base_types.h"
@@ -130,7 +132,7 @@ void RecordFullscreenStyle(FullscreenStyle style) {
   // This ensures the fullscreen button is appropriately positioned. It must
   // be done before calling layoutSubviews because the new avatar button's
   // position depends on the fullscreen button's position, as well as
-  // TabStripController's rightIndentForControls.
+  // TabStripController's trailingIndentForControls.
   // The fullscreen button's position may depend on the old avatar button's
   // width, but that does not require calling layoutSubviews first.
   NSWindow* window = [self window];
@@ -269,9 +271,7 @@ willPositionSheet:(NSWindow*)sheet
 
   // Will update the location of the permission bubble when showing/hiding the
   // top level toolbar in fullscreen.
-  PermissionRequestManager* manager = [self permissionRequestManager];
-  if (manager)
-    manager->UpdateAnchorPosition();
+  [self updatePermissionBubbleAnchor];
 
   browser_->GetBubbleManager()->UpdateAllBubbleAnchors();
 }
@@ -294,15 +294,16 @@ willPositionSheet:(NSWindow*)sheet
   BOOL requiresRelayout =
       !NSEqualRects([[self tabStripView] frame], layout.frame);
 
-  // Check if the left indent has changed.
-  if (layout.leftIndent != [tabStripController_ leftIndentForControls]) {
-    [tabStripController_ setLeftIndentForControls:layout.leftIndent];
+  // Check if the leading indent has changed.
+  if (layout.leadingIndent != [tabStripController_ leadingIndentForControls]) {
+    [tabStripController_ setLeadingIndentForControls:layout.leadingIndent];
     requiresRelayout = YES;
   }
 
-  // Check if the right indent has changed.
-  if (layout.rightIndent != [tabStripController_ rightIndentForControls]) {
-    [tabStripController_ setRightIndentForControls:layout.rightIndent];
+  // Check if the trailing indent has changed.
+  if (layout.trailingIndent !=
+      [tabStripController_ trailingIndentForControls]) {
+    [tabStripController_ setTrailingIndentForControls:layout.trailingIndent];
     requiresRelayout = YES;
   }
 
@@ -368,9 +369,6 @@ willPositionSheet:(NSWindow*)sheet
   base::scoped_nsobject<FocusTracker> focusTracker(
       [[FocusTracker alloc] initWithWindow:sourceWindow]);
 
-  // While we move views (and focus) around, disable any bar visibility changes.
-  [self disableBarVisibilityUpdates];
-
   // Retain the tab strip view while we remove it from its superview.
   base::scoped_nsobject<NSView> tabStripView;
   if ([self hasTabStrip]) {
@@ -421,10 +419,7 @@ willPositionSheet:(NSWindow*)sheet
   if (statusBubble_)
     statusBubble_->SwitchParentWindow(destWindow);
 
-  // Updates the bubble position.
-  PermissionRequestManager* manager = [self permissionRequestManager];
-  if (manager)
-    manager->UpdateAnchorPosition();
+  [self updatePermissionBubbleAnchor];
 
   // Move the title over.
   [destWindow setTitle:[sourceWindow title]];
@@ -447,86 +442,12 @@ willPositionSheet:(NSWindow*)sheet
     [self focusTabContents];
   }
   [sourceWindow orderOut:self];
-
-  // We're done moving focus, so re-enable bar visibility changes.
-  [self enableBarVisibilityUpdates];
 }
 
-- (void)permissionBubbleWindowWillClose:(NSNotification*)notification {
-  NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-  [center removeObserver:self
-                    name:NSWindowWillCloseNotification
-                  object:[notification object]];
-  [self releaseBarVisibilityForOwner:[notification object]
-                       withAnimation:YES
-                               delay:YES];
-}
-
-- (void)configureFullscreenToolbarController {
-  BOOL fullscreenForTab = [self isFullscreenForTabContentOrExtension];
-  BOOL kioskMode =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kKioskMode);
-  BOOL showDropdown =
-      !fullscreenForTab && !kioskMode && ([self floatingBarHasFocus]);
-
+- (void)updatePermissionBubbleAnchor {
   PermissionRequestManager* manager = [self permissionRequestManager];
-  if (manager && manager->IsBubbleVisible()) {
-    NSWindow* bubbleWindow = manager->GetBubbleWindow();
-    DCHECK(bubbleWindow);
-    // A visible permission bubble will force the dropdown to remain
-    // visible.
-    [self lockBarVisibilityForOwner:bubbleWindow withAnimation:NO delay:NO];
-    showDropdown = YES;
-    // Register to be notified when the permission bubble is closed, to
-    // allow fullscreen to hide the dropdown.
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self
-               selector:@selector(permissionBubbleWindowWillClose:)
-                   name:NSWindowWillCloseNotification
-                 object:bubbleWindow];
-  }
-
-  NSView* contentView = [[self window] contentView];
-  [fullscreenToolbarController_
-      setupFullscreenToolbarForContentView:contentView
-                              showDropdown:showDropdown];
-}
-
-- (void)adjustUIForExitingFullscreenAndStopOmniboxSliding {
-  [fullscreenToolbarController_ exitFullscreenMode];
-  fullscreenToolbarController_.reset();
-
-  // Force the bookmark bar z-order to update.
-  [[bookmarkBarController_ view] removeFromSuperview];
-  [self layoutSubviews];
-}
-
-- (void)adjustUIForSlidingFullscreenStyle:(fullscreen_mac::SlidingStyle)style {
-  if (!fullscreenToolbarController_) {
-    fullscreenToolbarController_.reset(
-        [self newFullscreenToolbarControllerWithStyle:style]);
-    [self configureFullscreenToolbarController];
-  } else {
-    fullscreenToolbarController_.get().slidingStyle = style;
-  }
-
-  if (!floatingBarBackingView_.get() &&
-      ([self hasTabStrip] || [self hasToolbar] || [self hasLocationBar])) {
-    floatingBarBackingView_.reset(
-        [[FloatingBarBackingView alloc] initWithFrame:NSZeroRect]);
-    [floatingBarBackingView_
-        setAutoresizingMask:(NSViewWidthSizable | NSViewMinYMargin)];
-  }
-
-  // Force the bookmark bar z-order to update.
-  [[bookmarkBarController_ view] removeFromSuperview];
-  [self layoutSubviews];
-}
-
-- (FullscreenToolbarController*)newFullscreenToolbarControllerWithStyle:
-    (fullscreen_mac::SlidingStyle)style {
-  return [[FullscreenToolbarController alloc] initWithBrowserController:self
-                                                                  style:style];
+  if (manager)
+    manager->UpdateAnchorPosition();
 }
 
 - (void)enterImmersiveFullscreen {
@@ -555,9 +476,7 @@ willPositionSheet:(NSWindow*)sheet
   [self moveViewsForImmersiveFullscreen:YES
                           regularWindow:[self window]
                        fullscreenWindow:fullscreenWindow_.get()];
-
-  fullscreen_mac::SlidingStyle style = fullscreen_mac::OMNIBOX_TABS_HIDDEN;
-  [self adjustUIForSlidingFullscreenStyle:style];
+  [self adjustUIForEnteringFullscreen];
 
   [fullscreenWindow_ display];
 
@@ -636,8 +555,6 @@ willPositionSheet:(NSWindow*)sheet
   if (enteringAppKitFullscreen_)
     return;
 
-  [self hideOverlayIfPossibleWithAnimation:NO delay:NO];
-
   switch (exclusiveAccessController_->bubble_type()) {
     case EXCLUSIVE_ACCESS_BUBBLE_TYPE_NONE:
     case EXCLUSIVE_ACCESS_BUBBLE_TYPE_BROWSER_FULLSCREEN_EXIT_INSTRUCTION:
@@ -674,13 +591,6 @@ willPositionSheet:(NSWindow*)sheet
   return proposedSize;
 }
 
-- (NSApplicationPresentationOptions)window:(NSWindow*)window
-    willUseFullScreenPresentationOptions:(NSApplicationPresentationOptions)opt {
-  return (opt |
-          NSApplicationPresentationAutoHideDock |
-          NSApplicationPresentationAutoHideMenuBar);
-}
-
 - (void)windowWillEnterFullScreen:(NSNotification*)notification {
   RecordFullscreenWindowLocation([self window]);
   RecordFullscreenStyle(CANONICAL_FULLSCREEN);
@@ -700,6 +610,7 @@ willPositionSheet:(NSWindow*)sheet
 
   [self setSheetHiddenForFullscreenTransition:YES];
   [self adjustUIForEnteringFullscreen];
+  browser_->WindowFullscreenStateWillChange();
 }
 
 - (void)windowDidEnterFullScreen:(NSNotification*)notification {
@@ -709,7 +620,7 @@ willPositionSheet:(NSWindow*)sheet
   // full-screen mode. We do not want either to show. Search for the window that
   // contains the views, and hide it. There is no need to ever unhide the view.
   // http://crbug.com/380235
-  if (base::mac::IsOSYosemiteOrLater()) {
+  if (base::mac::IsAtLeastOS10_10()) {
     for (NSWindow* window in [[NSApplication sharedApplication] windows]) {
       if ([window
               isKindOfClass:NSClassFromString(@"NSToolbarFullScreenWindow")]) {
@@ -790,6 +701,7 @@ willPositionSheet:(NSWindow*)sheet
   } else {
     [self adjustUIForExitingFullscreen];
   }
+  browser_->WindowFullscreenStateWillChange();
 }
 
 - (void)windowDidExitFullScreen:(NSNotification*)notification {
@@ -830,7 +742,7 @@ willPositionSheet:(NSWindow*)sheet
 - (void)windowDidFailToEnterFullScreen:(NSWindow*)window {
   [self deregisterForContentViewResizeNotifications];
   [self resetCustomAppKitFullscreenVariables];
-  [self adjustUIForExitingFullscreenAndStopOmniboxSliding];
+  [self adjustUIForExitingFullscreen];
   fullscreenLowPowerCoordinator_.reset();
 }
 
@@ -857,49 +769,34 @@ willPositionSheet:(NSWindow*)sheet
 
 - (void)adjustUIForExitingFullscreen {
   exclusiveAccessController_->Destroy();
-  [self adjustUIForExitingFullscreenAndStopOmniboxSliding];
+  [fullscreenToolbarController_ exitFullscreenMode];
+  fullscreenToolbarController_.reset();
+
+  // Force the bookmark bar z-order to update.
+  [[bookmarkBarController_ view] removeFromSuperview];
+  [self layoutSubviews];
 }
 
 - (void)adjustUIForEnteringFullscreen {
-  fullscreen_mac::SlidingStyle style;
-  if ([self isFullscreenForTabContentOrExtension]) {
-    style = fullscreen_mac::OMNIBOX_TABS_NONE;
-  } else if (!shouldShowFullscreenToolbar_) {
-    style = fullscreen_mac::OMNIBOX_TABS_HIDDEN;
-  } else {
-    style = fullscreen_mac::OMNIBOX_TABS_PRESENT;
+  DCHECK([self isInAnyFullscreenMode]);
+  if (!fullscreenToolbarController_) {
+    fullscreenToolbarController_.reset(
+        [[FullscreenToolbarController alloc] initWithBrowserController:self]);
   }
 
-  [self adjustUIForSlidingFullscreenStyle:style];
-}
+  [fullscreenToolbarController_ enterFullscreenMode];
 
-- (void)enableBarVisibilityUpdates {
-  // Early escape if there's nothing to do.
-  if (barVisibilityUpdatesEnabled_)
-    return;
+  if (!floatingBarBackingView_.get() &&
+      ([self hasTabStrip] || [self hasToolbar] || [self hasLocationBar])) {
+    floatingBarBackingView_.reset(
+        [[FloatingBarBackingView alloc] initWithFrame:NSZeroRect]);
+    [floatingBarBackingView_
+        setAutoresizingMask:(NSViewWidthSizable | NSViewMinYMargin)];
+  }
 
-  barVisibilityUpdatesEnabled_ = YES;
-
-  if ([barVisibilityLocks_ count])
-    [fullscreenToolbarController_ ensureOverlayShownWithAnimation:NO delay:NO];
-  else
-    [fullscreenToolbarController_ ensureOverlayHiddenWithAnimation:NO delay:NO];
-}
-
-- (void)disableBarVisibilityUpdates {
-  // Early escape if there's nothing to do.
-  if (!barVisibilityUpdatesEnabled_)
-    return;
-
-  barVisibilityUpdatesEnabled_ = NO;
-  [fullscreenToolbarController_ cancelAnimationAndTimers];
-}
-
-- (void)hideOverlayIfPossibleWithAnimation:(BOOL)animation delay:(BOOL)delay {
-  if (!barVisibilityUpdatesEnabled_ || [barVisibilityLocks_ count])
-    return;
-  [fullscreenToolbarController_ ensureOverlayHiddenWithAnimation:animation
-                                                           delay:delay];
+  // Force the bookmark bar z-order to update.
+  [[bookmarkBarController_ view] removeFromSuperview];
+  [self layoutSubviews];
 }
 
 - (CGFloat)toolbarDividerOpacity {
@@ -969,12 +866,12 @@ willPositionSheet:(NSWindow*)sheet
   [layout setWindowSize:windowSize];
 
   [layout setInAnyFullscreen:[self isInAnyFullscreenMode]];
-  [layout setFullscreenSlidingStyle:fullscreenToolbarController_.get()
-                                        .slidingStyle];
-  [layout
-      setFullscreenMenubarOffset:[fullscreenToolbarController_ menubarOffset]];
-  [layout setFullscreenToolbarFraction:[fullscreenToolbarController_
-                                           toolbarFraction]];
+
+  FullscreenToolbarLayout fullscreenToolbarLayout =
+      [fullscreenToolbarController_ computeLayout];
+  [layout setFullscreenToolbarStyle:fullscreenToolbarLayout.toolbarStyle];
+  [layout setFullscreenMenubarOffset:fullscreenToolbarLayout.menubarOffset];
+  [layout setFullscreenToolbarFraction:fullscreenToolbarLayout.toolbarFraction];
 
   [layout setHasTabStrip:[self hasTabStrip]];
   [layout setFullscreenButtonFrame:[self fullscreenButtonFrame]];
@@ -1014,16 +911,8 @@ willPositionSheet:(NSWindow*)sheet
   if (!NSIsEmptyRect(output.toolbarFrame))
     [[toolbarController_ view] setFrame:output.toolbarFrame];
 
-  if (!NSIsEmptyRect(output.bookmarkFrame)) {
-    NSView* bookmarkBarView = [bookmarkBarController_ view];
-    [bookmarkBarView setFrame:output.bookmarkFrame];
-
-    // Pin the bookmark bar to the top of the window and make the width
-    // flexible.
-    [bookmarkBarView setAutoresizingMask:NSViewWidthSizable | NSViewMinYMargin];
-
-    [bookmarkBarController_ layoutSubviews];
-  }
+  if (!NSIsEmptyRect(output.bookmarkFrame))
+    [bookmarkBarController_ layoutToFrame:output.bookmarkFrame];
 
   // The info bar is never hidden. Sometimes it has zero effective height.
   [[infoBarContainerController_ view] setFrame:output.infoBarFrame];
@@ -1032,22 +921,19 @@ willPositionSheet:(NSWindow*)sheet
   [infoBarContainerController_
       setInfobarArrowX:[self locationBarBridge]->GetPageInfoBubblePoint().x];
 
-  if (!NSIsEmptyRect(output.downloadShelfFrame))
-    [[downloadShelfController_ view] setFrame:output.downloadShelfFrame];
+  [[downloadShelfController_ view] setFrame:output.downloadShelfFrame];
 
   [self layoutTabContentArea:output.contentAreaFrame];
 
   if (!NSIsEmptyRect(output.fullscreenBackingBarFrame)) {
     [floatingBarBackingView_ setFrame:output.fullscreenBackingBarFrame];
     [fullscreenToolbarController_
-        overlayFrameChanged:output.fullscreenBackingBarFrame];
+        updateToolbarFrame:output.fullscreenBackingBarFrame];
   }
 
   [findBarCocoaController_
       positionFindBarViewAtMaxY:output.findBarMaxY
                        maxWidth:NSWidth(output.contentAreaFrame)];
-
-  exclusiveAccessController_->Layout(output.fullscreenExitButtonMaxY);
 
   if (fullscreenLowPowerCoordinator_) {
     fullscreenLowPowerCoordinator_->SetLayoutParameters(
@@ -1083,10 +969,12 @@ willPositionSheet:(NSWindow*)sheet
 
 - (void)updateSubviewZOrderFullscreen {
   base::scoped_nsobject<NSMutableArray> subviews([[NSMutableArray alloc] init]);
+
   if ([downloadShelfController_ view])
     [subviews addObject:[downloadShelfController_ view]];
   if ([self tabContentArea])
     [subviews addObject:[self tabContentArea]];
+
   if ([self placeBookmarkBarBelowInfoBar]) {
     if ([bookmarkBarController_ view])
       [subviews addObject:[bookmarkBarController_ view]];
@@ -1098,10 +986,13 @@ willPositionSheet:(NSWindow*)sheet
     if ([bookmarkBarController_ view])
       [subviews addObject:[bookmarkBarController_ view]];
   }
+
   if ([toolbarController_ view])
     [subviews addObject:[toolbarController_ view]];
+
   if ([infoBarContainerController_ view])
     [subviews addObject:[infoBarContainerController_ view]];
+
   if ([findBarCocoaController_ view])
     [subviews addObject:[findBarCocoaController_ view]];
 
@@ -1145,7 +1036,7 @@ willPositionSheet:(NSWindow*)sheet
 }
 
 + (BOOL)systemSettingsRequireMavericksAppKitFullscreenHack {
-  if (!base::mac::IsOSMavericks())
+  if (!base::mac::IsOS10_9())
     return NO;
   return [NSScreen respondsToSelector:@selector(screensHaveSeparateSpaces)] &&
          [NSScreen screensHaveSeparateSpaces];
@@ -1164,7 +1055,7 @@ willPositionSheet:(NSWindow*)sheet
 
 - (BOOL)shouldUseCustomAppKitFullscreenTransition:(BOOL)enterFullScreen {
   // Disable the custom exit animation in OSX 10.9: http://crbug.com/526327#c3.
-  if (base::mac::IsOSMavericks() && !enterFullScreen)
+  if (base::mac::IsOS10_9() && !enterFullScreen)
     return NO;
 
   NSView* root = [[self.window contentView] superview];
@@ -1281,11 +1172,9 @@ willPositionSheet:(NSWindow*)sheet
   return nil;
 }
 
-- (BOOL)isFullscreenForTabContentOrExtension {
-  FullscreenController* controller =
-      browser_->exclusive_access_manager()->fullscreen_controller();
-  return controller->IsWindowFullscreenForTabOrPending() ||
-         controller->IsExtensionFullscreenOrPending();
+- (FullscreenToolbarVisibilityLockController*)
+    fullscreenToolbarVisibilityLockController {
+  return [fullscreenToolbarController_ visibilityLockController];
 }
 
 - (void)windowWillBeginSheet:(NSNotification*)notification {

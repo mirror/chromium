@@ -7,7 +7,7 @@
 #include "base/base64.h"
 #include "base/json/json_file_value_serializer.h"
 #include "base/macros.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/threading/sequenced_worker_pool.h"
@@ -178,11 +178,11 @@ void SupervisedUserAuthentication::StorePasswordData(
   owner_->GetPasswordInformation(user_id, &holder);
   const base::Value* value;
   if (password_data.GetWithoutPathExpansion(kSchemaVersion, &value))
-      holder.SetWithoutPathExpansion(kSchemaVersion, value->DeepCopy());
+    holder.SetWithoutPathExpansion(kSchemaVersion, value->CreateDeepCopy());
   if (password_data.GetWithoutPathExpansion(kSalt, &value))
-      holder.SetWithoutPathExpansion(kSalt, value->DeepCopy());
+    holder.SetWithoutPathExpansion(kSalt, value->CreateDeepCopy());
   if (password_data.GetWithoutPathExpansion(kPasswordRevision, &value))
-      holder.SetWithoutPathExpansion(kPasswordRevision, value->DeepCopy());
+    holder.SetWithoutPathExpansion(kPasswordRevision, value->CreateDeepCopy());
   owner_->SetPasswordInformation(user_id, &holder);
 }
 

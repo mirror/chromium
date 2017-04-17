@@ -12,46 +12,46 @@
 
 namespace blink {
 
-// Represents a (non-strict) subset of a PropertySpecificKeyframe's value broken down into interpolable and non-interpolable parts.
-// InterpolationValues can be composed together to represent a whole PropertySpecificKeyframe value.
+// Represents a (non-strict) subset of a PropertySpecificKeyframe's value broken
+// down into interpolable and non-interpolable parts. InterpolationValues can be
+// composed together to represent a whole PropertySpecificKeyframe value.
 struct InterpolationValue {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    explicit InterpolationValue(std::unique_ptr<InterpolableValue> interpolableValue, PassRefPtr<NonInterpolableValue> nonInterpolableValue = nullptr)
-        : interpolableValue(std::move(interpolableValue))
-        , nonInterpolableValue(nonInterpolableValue)
-    { }
+  explicit InterpolationValue(
+      std::unique_ptr<InterpolableValue> interpolable_value,
+      PassRefPtr<NonInterpolableValue> non_interpolable_value = nullptr)
+      : interpolable_value(std::move(interpolable_value)),
+        non_interpolable_value(std::move(non_interpolable_value)) {}
 
-    InterpolationValue(std::nullptr_t) { }
+  InterpolationValue(std::nullptr_t) {}
 
-    InterpolationValue(InterpolationValue&& other)
-        : interpolableValue(std::move(other.interpolableValue))
-        , nonInterpolableValue(other.nonInterpolableValue.release())
-    { }
+  InterpolationValue(InterpolationValue&& other)
+      : interpolable_value(std::move(other.interpolable_value)),
+        non_interpolable_value(std::move(other.non_interpolable_value)) {}
 
-    void operator=(InterpolationValue&& other)
-    {
-        interpolableValue = std::move(other.interpolableValue);
-        nonInterpolableValue = other.nonInterpolableValue.release();
-    }
+  void operator=(InterpolationValue&& other) {
+    interpolable_value = std::move(other.interpolable_value);
+    non_interpolable_value = std::move(other.non_interpolable_value);
+  }
 
-    operator bool() const { return interpolableValue.get(); }
+  operator bool() const { return interpolable_value.get(); }
 
-    InterpolationValue clone() const
-    {
-        return InterpolationValue(interpolableValue ? interpolableValue->clone() : nullptr, nonInterpolableValue);
-    }
+  InterpolationValue Clone() const {
+    return InterpolationValue(
+        interpolable_value ? interpolable_value->Clone() : nullptr,
+        non_interpolable_value);
+  }
 
-    void clear()
-    {
-        interpolableValue.reset();
-        nonInterpolableValue.clear();
-    }
+  void Clear() {
+    interpolable_value.reset();
+    non_interpolable_value.Clear();
+  }
 
-    std::unique_ptr<InterpolableValue> interpolableValue;
-    RefPtr<NonInterpolableValue> nonInterpolableValue;
+  std::unique_ptr<InterpolableValue> interpolable_value;
+  RefPtr<NonInterpolableValue> non_interpolable_value;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // InterpolationValue_h
+#endif  // InterpolationValue_h

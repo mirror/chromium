@@ -5,13 +5,13 @@
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.h"
 
 #include "base/logging.h"
+#include "base/metrics/user_metrics.h"
 #include "base/strings/sys_string_conversions.h"
 #include "chrome/browser/ui/cocoa/bookmarks/bookmark_bar_constants.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_button.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_context_menu_cocoa_controller.h"
 #include "chrome/grit/generated_resources.h"
 #import "components/bookmarks/browser/bookmark_model.h"
-#include "content/public/browser/user_metrics.h"
 #import "ui/base/cocoa/nsview_additions.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/base/material_design/material_design_controller.h"
@@ -27,19 +27,25 @@ namespace {
 const int kHierarchyButtonRightPadding = 4;
 
 // Padding on the left side of the arrow icon.
-int HierarchyButtonLeftPadding() {
-  return ui::MaterialDesignController::IsModeMaterial() ? 11 : 2;
-}
+const int kHierarchyButtonLeftPadding = 11;
 
 const int kIconTextSpacer = 4;
-const int kTextRightPadding = 1;
-const int kIconLeftPadding = 1;
+const int kTextRightPadding = 4;
+const int kIconLeftPadding = 4;
 
 const int kDefaultFontSize = 12;
 
+// Kerning value for the title text.
+const CGFloat kKernAmount = 0.2;
+
 };  // namespace
 
+// TODO(lgrey): Bake setting the chevron image into this
+// class instead of setting it externally.
 @interface OffTheSideButtonCell : BookmarkButtonCell
+
+- (NSString*)accessibilityTitle;
+
 @end
 @implementation OffTheSideButtonCell
 
@@ -47,9 +53,22 @@ const int kDefaultFontSize = 12;
   return YES;
 }
 
+- (NSString*)accessibilityTitle {
+  return l10n_util::GetNSString(IDS_ACCNAME_BOOKMARKS_CHEVRON);
+}
+
+- (NSRect)imageRectForBounds:(NSRect)theRect {
+  NSRect imageRect = [super imageRectForBounds:theRect];
+  // Make sure the chevron icon stays centered. Normally a bookmark bar item
+  // with no label has its icon placed at a fixed x-position.
+  CGFloat totalWidth = NSMaxX(theRect);
+  imageRect.origin.x = (totalWidth - [self image].size.width) / 2;
+  return imageRect;
+}
+
 @end
 
-@interface BookmarkButtonCell(Private)
+@interface BookmarkButtonCell (Private)
 // Returns YES if the cell is the offTheSide button cell.
 - (BOOL)isOffTheSideButtonCell;
 - (void)configureBookmarkButtonCell;
@@ -92,6 +111,28 @@ const int kDefaultFontSize = 12;
   return buttonCell;
 }
 
++ (id)offTheSideButtonCell {
+  return [[[OffTheSideButtonCell alloc] init] autorelease];
+}
+
++ (CGFloat)cellWidthForNode:(const bookmarks::BookmarkNode*)node
+                      image:(NSImage*)image {
+  NSString* title =
+      [self cleanTitle:base::SysUTF16ToNSString(node->GetTitle())];
+  CGFloat width = kIconLeftPadding + [image size].width;
+  if ([title length] > 0) {
+    CGSize titleSize = [title sizeWithAttributes:@{
+      NSParagraphStyleAttributeName : [self paragraphStyleForBookmarkBarCell],
+      NSKernAttributeName : @(kKernAmount),
+      NSFontAttributeName : [self fontForBookmarkBarCell],
+    }];
+    width += kIconTextSpacer + std::ceil(titleSize.width) + kTextRightPadding;
+  } else {
+    width += kIconLeftPadding;
+  }
+  return width;
+}
+
 - (id)initForNode:(const BookmarkNode*)node
              text:(NSString*)text
             image:(NSImage*)image
@@ -100,7 +141,7 @@ const int kDefaultFontSize = 12;
     menuController_ = menuController;
     [self configureBookmarkButtonCell];
     [self setTextColor:[NSColor blackColor]];
-    [self setBookmarkNode:node];
+    [self setBookmarkNode:node image:image];
     // When opening a bookmark folder, the default behavior is that the
     // favicon is greyed when menu item is hovered with the mouse cursor.
     // When using NSNoCellMask, the favicon won't be greyed when menu item
@@ -110,15 +151,6 @@ const int kDefaultFontSize = 12;
     // It makes the behavior of the bookmark folder consistent with hovering
     // on the bookmark bar.
     [self setHighlightsBy:NSNoCellMask];
-
-    if (node) {
-      NSString* title = base::SysUTF16ToNSString(node->GetTitle());
-      [self setBookmarkCellText:title image:image];
-    } else {
-      [self setEmpty:YES];
-      [self setBookmarkCellText:l10n_util::GetNSString(IDS_MENU_EMPTY_SUBMENU)
-                          image:nil];
-    }
   }
 
   return self;
@@ -165,14 +197,9 @@ const int kDefaultFontSize = 12;
   [self setShowsBorderOnlyWhileMouseInside:YES];
   [self setControlSize:NSSmallControlSize];
   [self setAlignment:NSLeftTextAlignment];
-  if (!ui::MaterialDesignController::IsModeMaterial()) {
-    [self setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
-    [self setBezelStyle:NSShadowlessSquareBezelStyle];
-  } else {
-    [self setFont:[NSFont systemFontOfSize:kDefaultFontSize]];
-    [self setBordered:NO];
-    [self setBezeled:NO];
-  }
+  [self setFont:[[self class] fontForBookmarkBarCell]];
+  [self setBordered:NO];
+  [self setBezeled:NO];
   [self setWraps:NO];
   // NSLineBreakByTruncatingMiddle seems more common on OSX but let's
   // try to match Windows for a bit to see what happens.
@@ -196,29 +223,17 @@ const int kDefaultFontSize = 12;
 }
 
 - (NSSize)cellSizeForBounds:(NSRect)aRect {
-  // There's no bezel or border in Material Design so return cellSize.
-  if (ui::MaterialDesignController::IsModeMaterial()) {
-    NSSize size = [self cellSize];
-    size.width = std::min(aRect.size.width, size.width);
-    size.height = std::min(aRect.size.height, size.height);
-    return size;
-  }
-  NSSize size = [super cellSizeForBounds:aRect];
-  // Cocoa seems to slightly underestimate how much space we need, so we
-  // compensate here to avoid a clipped rendering.
-  size.width += 2;
-  size.height += 4;
+  // There's no bezel or border so return cellSize.
+  NSSize size = [self cellSize];
+  size.width = std::min(aRect.size.width, size.width);
+  size.height = std::min(aRect.size.height, size.height);
   return size;
 }
 
 - (void)setBookmarkCellText:(NSString*)title
                       image:(NSImage*)image {
-  title = [title stringByReplacingOccurrencesOfString:@"\n"
-                                           withString:@" "];
-  title = [title stringByReplacingOccurrencesOfString:@"\r"
-                                           withString:@" "];
-
-  if ([title length]) {
+  title = [[self class] cleanTitle:title];
+  if ([title length] && ![self isOffTheSideButtonCell]) {
     [self setImagePosition:NSImageLeft];
     [self setTitle:title];
   } else if ([self isFolderButtonCell]) {
@@ -238,7 +253,19 @@ const int kDefaultFontSize = 12;
 }
 
 - (void)setBookmarkNode:(const BookmarkNode*)node {
+  [self setBookmarkNode:node image:nil];
+}
+
+- (void)setBookmarkNode:(const BookmarkNode*)node image:(NSImage*)image {
   [self setRepresentedObject:[NSValue valueWithPointer:node]];
+  if (node) {
+    NSString* title = base::SysUTF16ToNSString(node->GetTitle());
+    [self setBookmarkCellText:title image:image];
+  } else {
+    [self setEmpty:YES];
+    [self setBookmarkCellText:l10n_util::GetNSString(IDS_MENU_EMPTY_SUBMENU)
+                        image:nil];
+  }
 }
 
 - (const BookmarkNode*)bookmarkNode {
@@ -253,9 +280,9 @@ const int kDefaultFontSize = 12;
 
   if (node && node->parent() &&
       node->parent()->type() == BookmarkNode::FOLDER) {
-    content::RecordAction(UserMetricsAction("BookmarkBarFolder_CtxMenu"));
+    base::RecordAction(UserMetricsAction("BookmarkBarFolder_CtxMenu"));
   } else {
-    content::RecordAction(UserMetricsAction("BookmarkBar_CtxMenu"));
+    base::RecordAction(UserMetricsAction("BookmarkBar_CtxMenu"));
   }
   return [menuController_ menuForBookmarkNode:node];
 }
@@ -308,10 +335,7 @@ const int kDefaultFontSize = 12;
 }
 
 - (NSDictionary*)titleTextAttributes {
-  base::scoped_nsobject<NSMutableParagraphStyle> style(
-      [NSMutableParagraphStyle new]);
-  [style setAlignment:NSNaturalTextAlignment];
-  [style setLineBreakMode:NSLineBreakByTruncatingTail];
+  NSParagraphStyle* style = [[self class] paragraphStyleForBookmarkBarCell];
   NSColor* textColor = textColor_.get();
   if (!textColor) {
     textColor = [NSColor blackColor];
@@ -321,14 +345,14 @@ const int kDefaultFontSize = 12;
   }
   NSFont* theFont = [self font];
   if (!theFont) {
-    theFont = [NSFont systemFontOfSize:kDefaultFontSize];
+    theFont = [[self class] fontForBookmarkBarCell];
   }
 
   return @{
-     NSFontAttributeName : theFont,
-     NSForegroundColorAttributeName : textColor,
-     NSParagraphStyleAttributeName : style.get(),
-     NSKernAttributeName : [NSNumber numberWithFloat:0.2]
+    NSFontAttributeName : theFont,
+    NSForegroundColorAttributeName : textColor,
+    NSParagraphStyleAttributeName : style,
+    NSKernAttributeName : @(kKernAmount),
   };
 }
 
@@ -340,28 +364,24 @@ const int kDefaultFontSize = 12;
 // Does not sanity check to be sure this is actually a folder node.
 - (NSSize)cellSize {
   NSSize cellSize = NSZeroSize;
-  if (!ui::MaterialDesignController::IsModeMaterial()) {
-    cellSize = [super cellSize];
+  // Return the space needed to display the image and title, with a little
+  // distance between them.
+  cellSize = NSMakeSize(kIconLeftPadding + [[self image] size].width,
+                        bookmarks::kBookmarkButtonHeight);
+  NSString* title = [self visibleTitle];
+  if ([title length] > 0) {
+    CGFloat textWidth =
+        [title sizeWithAttributes:[self titleTextAttributes]].width;
+    cellSize.width +=
+        kIconTextSpacer + std::ceil(textWidth) + kTextRightPadding;
   } else {
-    // Return the space needed to display the image and title, with a little
-    // distance between them.
-    cellSize = NSMakeSize(kIconLeftPadding + [[self image] size].width,
-                          bookmarks::kBookmarkButtonHeight);
-    NSString* title = [self visibleTitle];
-    if ([title length] > 0) {
-      CGFloat textWidth =
-          [title sizeWithAttributes:[self titleTextAttributes]].width;
-      cellSize.width +=
-          kIconTextSpacer + std::ceil(textWidth) + kTextRightPadding;
-    } else {
-      // Make buttons without visible titles 20pts wide (18 plus padding).
-      cellSize.width = 18;
-    }
+    // Make buttons without visible titles 20pts wide (18 plus padding).
+    cellSize.width += kIconLeftPadding;
   }
 
   if (drawFolderArrow_) {
     cellSize.width += [arrowImage_ size].width +
-                      HierarchyButtonLeftPadding() +
+                      kHierarchyButtonLeftPadding +
                       kHierarchyButtonRightPadding;
   }
   return cellSize;
@@ -369,37 +389,28 @@ const int kDefaultFontSize = 12;
 
 - (NSRect)imageRectForBounds:(NSRect)theRect {
   NSRect imageRect = [super imageRectForBounds:theRect];
-  // In Material Design, add a little space between the image and the button's
-  // left edge, but only if there's a visible title.
-  if (ui::MaterialDesignController::IsModeMaterial()) {
-    imageRect.origin.y -= 1;
-    if ([[self visibleTitle] length] > 0) {
-      imageRect.origin.x += kIconLeftPadding;
-    }
-  }
+  // Add a little space between the image and the button's left edge, but only
+  // if there's a visible title.
+  imageRect.origin.y -= 1;
+  imageRect.origin.x = kIconLeftPadding;
   return imageRect;
 }
 
 - (CGFloat)textStartXOffset {
-  if (!ui::MaterialDesignController::IsModeMaterial()) {
-    return [super textStartXOffset];
-  }
   return kIconLeftPadding + [[self image] size].width + kIconTextSpacer;
 }
 
 - (void)drawFocusRingMaskWithFrame:(NSRect)cellFrame
                             inView:(NSView*)controlView {
-  if (ui::MaterialDesignController::IsModeMaterial()) {
-    // In Material Design we have to move the focus ring over by 2 pts to get it
-    // to line up with the image.
-    if ([self visibleTitle].length > 0) {
-      cellFrame.origin.x += 2;
-    }
-
-    // We also have to nudge the chevron button's focus ring up 2pts.
-    if ([self isOffTheSideButtonCell]) {
-      cellFrame.origin.y -= 2;
-    }
+  // We have to adjust the focus ring slightly for the chevron and regular
+  // bookmark icons.
+  if ([self isOffTheSideButtonCell]) {
+    cellFrame.origin.y -= 2;
+  } else if ([self visibleTitle].length > 0) {
+    cellFrame.origin.x += 4;
+  }
+  if ([controlView cr_lineWidth] < 1) {
+    cellFrame.origin.y -= 0.5;
   }
   [super drawFocusRingMaskWithFrame:cellFrame inView:controlView];
 }
@@ -433,9 +444,6 @@ const int kDefaultFontSize = 12;
 }
 
 - (int)verticalTextOffset {
-  if (!ui::MaterialDesignController::IsModeMaterial()) {
-    return 0;
-  }
   return -1;
 }
 
@@ -443,12 +451,30 @@ const int kDefaultFontSize = 12;
   // In Material Design on Retina, and not in a folder menu, nudge the hover
   // background by 1px.
   const CGFloat kLineWidth = [controlView cr_lineWidth];
-  if ([self tag] == kMaterialStandardButtonTypeWithLimitedClickFeedback &&
-      ![self isFolderButtonCell] && kLineWidth < 1) {
+  if ([self isMaterialDesignButtonType] && ![self isFolderButtonCell] &&
+      kLineWidth < 1) {
     return -kLineWidth;
   }
   return 0.0;
 }
 
++ (NSFont*)fontForBookmarkBarCell {
+  return [NSFont systemFontOfSize:kDefaultFontSize];
+}
+
++ (NSParagraphStyle*)paragraphStyleForBookmarkBarCell {
+  NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
+  [style setAlignment:NSNaturalTextAlignment];
+  [style setLineBreakMode:NSLineBreakByTruncatingTail];
+  return [style autorelease];
+}
+
+// Returns |title| with newlines and line feeds replaced with
+// spaces.
++ (NSString*)cleanTitle:(NSString*)title {
+  title = [title stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+  title = [title stringByReplacingOccurrencesOfString:@"\r" withString:@" "];
+  return title;
+}
 
 @end

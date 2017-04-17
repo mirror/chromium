@@ -33,96 +33,95 @@ namespace blink {
 using namespace HTMLNames;
 
 BaseTextInputType::BaseTextInputType(HTMLInputElement& element)
-    : TextFieldInputType(element)
-{
+    : TextFieldInputType(element) {}
+
+BaseTextInputType::~BaseTextInputType() {}
+
+int BaseTextInputType::MaxLength() const {
+  return GetElement().maxLength();
 }
 
-BaseTextInputType::~BaseTextInputType()
-{
+int BaseTextInputType::MinLength() const {
+  return GetElement().minLength();
 }
 
-int BaseTextInputType::maxLength() const
-{
-    return element().maxLength();
+bool BaseTextInputType::TooLong(
+    const String& value,
+    TextControlElement::NeedsToCheckDirtyFlag check) const {
+  int max = GetElement().maxLength();
+  if (max < 0)
+    return false;
+  if (check == TextControlElement::kCheckDirtyFlag) {
+    // Return false for the default value or a value set by a script even if
+    // it is longer than maxLength.
+    if (!GetElement().HasDirtyValue() || !GetElement().LastChangeWasUserEdit())
+      return false;
+  }
+  return value.length() > static_cast<unsigned>(max);
 }
 
-int BaseTextInputType::minLength() const
-{
-    return element().minLength();
+bool BaseTextInputType::TooShort(
+    const String& value,
+    TextControlElement::NeedsToCheckDirtyFlag check) const {
+  int min = GetElement().minLength();
+  if (min <= 0)
+    return false;
+  if (check == TextControlElement::kCheckDirtyFlag) {
+    // Return false for the default value or a value set by a script even if
+    // it is shorter than minLength.
+    if (!GetElement().HasDirtyValue() || !GetElement().LastChangeWasUserEdit())
+      return false;
+  }
+  // An empty string is excluded from minlength check.
+  unsigned len = value.length();
+  return len > 0 && len < static_cast<unsigned>(min);
 }
 
-bool BaseTextInputType::tooLong(const String& value, HTMLTextFormControlElement::NeedsToCheckDirtyFlag check) const
-{
-    int max = element().maxLength();
-    if (max < 0)
-        return false;
-    if (check == HTMLTextFormControlElement::CheckDirtyFlag) {
-        // Return false for the default value or a value set by a script even if
-        // it is longer than maxLength.
-        if (!element().hasDirtyValue() || !element().lastChangeWasUserEdit())
-            return false;
+bool BaseTextInputType::PatternMismatch(const String& value) const {
+  const AtomicString& raw_pattern = GetElement().FastGetAttribute(patternAttr);
+  // Empty values can't be mismatched
+  if (raw_pattern.IsNull() || value.IsEmpty())
+    return false;
+  if (!regexp_ || pattern_for_regexp_ != raw_pattern) {
+    std::unique_ptr<ScriptRegexp> raw_regexp(
+        new ScriptRegexp(raw_pattern, kTextCaseSensitive, kMultilineDisabled,
+                         ScriptRegexp::UTF16));
+    if (!raw_regexp->IsValid()) {
+      GetElement().GetDocument().AddConsoleMessage(ConsoleMessage::Create(
+          kRenderingMessageSource, kErrorMessageLevel,
+          String::Format("Pattern attribute value %s is not a valid regular "
+                         "expression: %s",
+                         raw_pattern.Utf8().Data(),
+                         raw_regexp->ExceptionMessage().Utf8().Data())));
+      regexp_.reset(raw_regexp.release());
+      pattern_for_regexp_ = raw_pattern;
+      return false;
     }
-    return value.length() > static_cast<unsigned>(max);
+    String pattern = "^(?:" + raw_pattern + ")$";
+    regexp_.reset(new ScriptRegexp(pattern, kTextCaseSensitive,
+                                   kMultilineDisabled, ScriptRegexp::UTF16));
+    pattern_for_regexp_ = raw_pattern;
+  } else if (!regexp_->IsValid()) {
+    return false;
+  }
+
+  int match_length = 0;
+  int value_length = value.length();
+  int match_offset = regexp_->Match(value, 0, &match_length);
+  bool mismatched = match_offset != 0 || match_length != value_length;
+  return mismatched;
 }
 
-bool BaseTextInputType::tooShort(const String& value, HTMLTextFormControlElement::NeedsToCheckDirtyFlag check) const
-{
-    int min = element().minLength();
-    if (min <= 0)
-        return false;
-    if (check == HTMLTextFormControlElement::CheckDirtyFlag) {
-        // Return false for the default value or a value set by a script even if
-        // it is shorter than minLength.
-        if (!element().hasDirtyValue() || !element().lastChangeWasUserEdit())
-            return false;
-    }
-    // An empty string is excluded from minlength check.
-    unsigned len = value.length();
-    return len > 0 && len < static_cast<unsigned>(min);
+bool BaseTextInputType::SupportsPlaceholder() const {
+  return true;
 }
 
-bool BaseTextInputType::patternMismatch(const String& value) const
-{
-    const AtomicString& rawPattern = element().fastGetAttribute(patternAttr);
-    // Empty values can't be mismatched
-    if (rawPattern.isNull() || value.isEmpty())
-        return false;
-    if (!m_regexp || m_patternForRegexp != rawPattern) {
-        std::unique_ptr<ScriptRegexp> rawRegexp(new ScriptRegexp(rawPattern, TextCaseSensitive, MultilineDisabled, ScriptRegexp::UTF16));
-        if (!rawRegexp->isValid()) {
-            element().document().addConsoleMessage(ConsoleMessage::create(RenderingMessageSource, ErrorMessageLevel,
-                String::format("Pattern attribute value %s is not a valid regular expression: %s",
-                    rawPattern.utf8().data(),
-                    rawRegexp->exceptionMessage().utf8().data())));
-            m_regexp.reset(rawRegexp.release());
-            m_patternForRegexp = rawPattern;
-            return false;
-        }
-        String pattern = "^(?:" + rawPattern + ")$";
-        m_regexp.reset(new ScriptRegexp(pattern, TextCaseSensitive, MultilineDisabled, ScriptRegexp::UTF16));
-        m_patternForRegexp = rawPattern;
-    }
-
-    int matchLength = 0;
-    int valueLength = value.length();
-    int matchOffset = m_regexp->match(value, 0, &matchLength);
-    bool mismatched = matchOffset != 0 || matchLength != valueLength;
-    return mismatched;
+bool BaseTextInputType::SupportsSelectionAPI() const {
+  return true;
 }
 
-bool BaseTextInputType::supportsPlaceholder() const
-{
-    return true;
+bool BaseTextInputType::SupportsAutocapitalize() const {
+  return true;
 }
 
-bool BaseTextInputType::supportsSelectionAPI() const
-{
-    return true;
-}
-
-bool BaseTextInputType::supportsAutocapitalize() const
-{
-    return true;
-}
-
-} // namespace blink
+}  // namespace blink

@@ -18,10 +18,10 @@
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/indexed_db/indexed_db_context_impl.h"
 #include "content/browser/indexed_db/indexed_db_quota_client.h"
-#include "content/browser/quota/mock_quota_manager.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "storage/browser/test/mock_quota_manager.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 // Declared to shorten the line lengths.
@@ -66,7 +66,7 @@ class IndexedDBQuotaClientTest : public testing::Test {
   void setup_temp_dir() {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
     base::FilePath indexeddb_dir =
-        temp_dir_.path().Append(IndexedDBContextImpl::kIndexedDBDirectory);
+        temp_dir_.GetPath().Append(IndexedDBContextImpl::kIndexedDBDirectory);
     ASSERT_TRUE(base::CreateDirectory(indexeddb_dir));
     idb_context()->set_data_path_for_testing(indexeddb_dir);
   }

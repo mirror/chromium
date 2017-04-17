@@ -71,7 +71,7 @@ TEST_F(ContentSettingsRegistryTest, Properties) {
   // Check the other properties are populated correctly.
   EXPECT_TRUE(info->IsSettingValid(CONTENT_SETTING_SESSION_ONLY));
   EXPECT_FALSE(info->IsSettingValid(CONTENT_SETTING_ASK));
-  EXPECT_EQ(ContentSettingsInfo::INHERIT_IN_INCOGNITO,
+  EXPECT_EQ(ContentSettingsInfo::INHERIT_IF_LESS_PERMISSIVE,
             info->incognito_behavior());
 
   // Check the WebsiteSettingsInfo is populated correctly.
@@ -86,7 +86,7 @@ TEST_F(ContentSettingsRegistryTest, Properties) {
   ASSERT_TRUE(
       website_settings_info->initial_default_value()->GetAsInteger(&setting));
   EXPECT_EQ(CONTENT_SETTING_ALLOW, setting);
-#if defined(OS_IOS)
+#if defined(OS_ANDROID) || defined(OS_IOS)
   EXPECT_EQ(PrefRegistry::NO_REGISTRATION_FLAGS,
             website_settings_info->GetPrefRegistrationFlags());
 #else

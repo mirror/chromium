@@ -9,7 +9,6 @@ for more details about the presubmit API built into depot_tools.
 """
 
 import os
-import re
 import sys
 
 
@@ -19,6 +18,7 @@ def _CommonChecks(input_api, output_api):
 
   results.extend(_CheckWprShaFiles(input_api, output_api))
   results.extend(_CheckJson(input_api, output_api))
+  results.extend(_CheckPerfJsonUpToDate(input_api, output_api))
   results.extend(input_api.RunTests(input_api.canned_checks.GetPylint(
       input_api, output_api, extra_paths_list=_GetPathsToPrepend(input_api),
       pylintrc='pylintrc')))
@@ -32,11 +32,34 @@ def _GetPathsToPrepend(input_api):
       chromium_src_dir, 'third_party', 'catapult', 'telemetry')
   experimental_dir = input_api.os_path.join(
       chromium_src_dir, 'third_party', 'catapult', 'experimental')
+  tracing_dir = input_api.os_path.join(
+      chromium_src_dir, 'third_party', 'catapult', 'tracing')
   return [
       telemetry_dir,
       input_api.os_path.join(telemetry_dir, 'third_party', 'mock'),
       experimental_dir,
+      tracing_dir,
   ]
+
+
+def _RunArgs(args, input_api):
+  p = input_api.subprocess.Popen(args, stdout=input_api.subprocess.PIPE,
+                                 stderr=input_api.subprocess.STDOUT)
+  out, _ = p.communicate()
+  return (out, p.returncode)
+
+
+def _CheckPerfJsonUpToDate(input_api, output_api):
+  results = []
+  perf_dir = input_api.PresubmitLocalPath()
+  out, return_code = _RunArgs([
+      input_api.python_executable,
+      input_api.os_path.join(perf_dir, 'generate_perf_data'),
+      '--validate-only'], input_api)
+  if return_code:
+      results.append(output_api.PresubmitError(
+          'Validating Perf JSON configs failed.', long_text=out))
+  return results
 
 
 def _CheckWprShaFiles(input_api, output_api):
@@ -44,10 +67,10 @@ def _CheckWprShaFiles(input_api, output_api):
   old_sys_path = sys.path
   try:
     perf_dir = input_api.PresubmitLocalPath()
-    catapult_path = os.path.abspath(os.path.join(
-        perf_dir, '..', '..', 'third_party', 'catapult', 'catapult_base'))
-    sys.path.insert(1, catapult_path)
-    from catapult_base import cloud_storage  # pylint: disable=import-error
+    py_utils_path = os.path.abspath(os.path.join(
+        perf_dir, '..', '..', 'third_party', 'catapult', 'common', 'py_utils'))
+    sys.path.insert(1, py_utils_path)
+    from py_utils import cloud_storage  # pylint: disable=import-error
   finally:
     sys.path = old_sys_path
 
@@ -96,51 +119,3 @@ def CheckChangeOnCommit(input_api, output_api):
   report = []
   report.extend(_CommonChecks(input_api, output_api))
   return report
-
-
-def _AreBenchmarksModified(change):
-  """Checks whether CL contains any modification to Telemetry benchmarks."""
-  for affected_file in change.AffectedFiles():
-    file_path = affected_file.LocalPath()
-    # Changes to unittest files should not count.
-    if file_path.endswith('test.py'):
-        continue
-    if (os.path.join('tools', 'perf', 'benchmarks') in file_path or
-        os.path.join('tools', 'perf', 'measurements') in file_path):
-      return True
-  return False
-
-
-def PostUploadHook(cl, change, output_api):
-  """git cl upload will call this hook after the issue is created/modified.
-
-  This hook adds extra try bots list to the CL description in order to run
-  Telemetry benchmarks on Perf trybots in addition to CQ trybots if the CL
-  contains any changes to Telemetry benchmarks.
-  """
-  benchmarks_modified = _AreBenchmarksModified(change)
-  rietveld_obj = cl.RpcServer()
-  issue = cl.issue
-  original_description = rietveld_obj.get_description(issue)
-  if not benchmarks_modified or re.search(
-      r'^CQ_INCLUDE_TRYBOTS=.*', original_description, re.M | re.I):
-    return []
-
-  results = []
-  bots = [
-    'android_s5_perf_cq',
-    'linux_perf_cq',
-    'mac_retina_perf_cq',
-    'winx64_10_perf_cq'
-  ]
-  bots = ['master.tryserver.chromium.perf:%s' % s for s in bots]
-  bots_string = ';'.join(bots)
-  description = original_description
-  description += '\nCQ_INCLUDE_TRYBOTS=%s' % bots_string
-  results.append(output_api.PresubmitNotifyResult(
-      'Automatically added Perf trybots to run Telemetry benchmarks on CQ.'))
-
-  if description != original_description:
-    rietveld_obj.update_description(issue, description)
-
-  return results

@@ -34,10 +34,6 @@
 #include "core/css/MediaList.h"
 #include "core/css/MediaQueryEvaluator.h"
 #include "core/dom/Document.h"
-#include "core/fetch/FetchInitiatorTypeNames.h"
-#include "core/fetch/FetchRequest.h"
-#include "core/fetch/LinkFetchResource.h"
-#include "core/fetch/ResourceFetcher.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/CrossOriginAttribute.h"
@@ -46,363 +42,466 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/NetworkHintsInterface.h"
-#include "core/loader/PrerenderHandle.h"
-#include "platform/MIMETypeRegistry.h"
+#include "core/loader/private/PrerenderHandle.h"
+#include "core/loader/resource/LinkFetchResource.h"
 #include "platform/Prerender.h"
-#include "platform/RuntimeEnabledFeatures.h"
-#include "platform/network/LinkHeader.h"
-#include "platform/network/NetworkHints.h"
+#include "platform/Timer.h"
+#include "platform/loader/LinkHeader.h"
+#include "platform/loader/fetch/FetchInitiatorTypeNames.h"
+#include "platform/loader/fetch/FetchParameters.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/network/mime/MIMETypeRegistry.h"
 #include "public/platform/WebPrerender.h"
 
 namespace blink {
 
-static unsigned prerenderRelTypesFromRelAttribute(const LinkRelAttribute& relAttribute, Document& document)
-{
-    unsigned result = 0;
-    if (relAttribute.isLinkPrerender()) {
-        result |= PrerenderRelTypePrerender;
-        UseCounter::count(document, UseCounter::LinkRelPrerender);
-    }
-    if (relAttribute.isLinkNext()) {
-        result |= PrerenderRelTypeNext;
-        UseCounter::count(document, UseCounter::LinkRelNext);
-    }
+static unsigned PrerenderRelTypesFromRelAttribute(
+    const LinkRelAttribute& rel_attribute,
+    Document& document) {
+  unsigned result = 0;
+  if (rel_attribute.IsLinkPrerender()) {
+    result |= kPrerenderRelTypePrerender;
+    UseCounter::Count(document, UseCounter::kLinkRelPrerender);
+  }
+  if (rel_attribute.IsLinkNext()) {
+    result |= kPrerenderRelTypeNext;
+    UseCounter::Count(document, UseCounter::kLinkRelNext);
+  }
 
-    return result;
+  return result;
 }
 
-LinkLoader::LinkLoader(LinkLoaderClient* client)
-    : m_client(client)
-    , m_linkLoadTimer(this, &LinkLoader::linkLoadTimerFired)
-    , m_linkLoadingErrorTimer(this, &LinkLoader::linkLoadingErrorTimerFired)
-{
+LinkLoader::LinkLoader(LinkLoaderClient* client,
+                       RefPtr<WebTaskRunner> task_runner)
+    : client_(client),
+      link_load_timer_(task_runner, this, &LinkLoader::LinkLoadTimerFired),
+      link_loading_error_timer_(task_runner,
+                                this,
+                                &LinkLoader::LinkLoadingErrorTimerFired) {
+  DCHECK(client_);
 }
 
-LinkLoader::~LinkLoader()
-{
+LinkLoader::~LinkLoader() {}
+
+void LinkLoader::LinkLoadTimerFired(TimerBase* timer) {
+  DCHECK_EQ(timer, &link_load_timer_);
+  client_->LinkLoaded();
 }
 
-void LinkLoader::linkLoadTimerFired(Timer<LinkLoader>* timer)
-{
-    ASSERT_UNUSED(timer, timer == &m_linkLoadTimer);
-    m_client->linkLoaded();
+void LinkLoader::LinkLoadingErrorTimerFired(TimerBase* timer) {
+  DCHECK_EQ(timer, &link_loading_error_timer_);
+  client_->LinkLoadingErrored();
 }
 
-void LinkLoader::linkLoadingErrorTimerFired(Timer<LinkLoader>* timer)
-{
-    ASSERT_UNUSED(timer, timer == &m_linkLoadingErrorTimer);
-    m_client->linkLoadingErrored();
+void LinkLoader::TriggerEvents(const Resource* resource) {
+  if (resource->ErrorOccurred())
+    link_loading_error_timer_.StartOneShot(0, BLINK_FROM_HERE);
+  else
+    link_load_timer_.StartOneShot(0, BLINK_FROM_HERE);
 }
 
-void LinkLoader::triggerEvents(const Resource* resource)
-{
-    if (resource->errorOccurred())
-        m_linkLoadingErrorTimer.startOneShot(0, BLINK_FROM_HERE);
-    else
-        m_linkLoadTimer.startOneShot(0, BLINK_FROM_HERE);
+void LinkLoader::NotifyFinished(Resource* resource) {
+  DCHECK_EQ(this->GetResource(), resource);
+
+  TriggerEvents(resource);
+  ClearResource();
 }
 
-void LinkLoader::notifyFinished(Resource* resource)
-{
-    ASSERT(this->resource() == resource);
-
-    triggerEvents(resource);
-    clearResource();
+void LinkLoader::DidStartPrerender() {
+  client_->DidStartLinkPrerender();
 }
 
-void LinkLoader::didStartPrerender()
-{
-    m_client->didStartLinkPrerender();
+void LinkLoader::DidStopPrerender() {
+  client_->DidStopLinkPrerender();
 }
 
-void LinkLoader::didStopPrerender()
-{
-    m_client->didStopLinkPrerender();
+void LinkLoader::DidSendLoadForPrerender() {
+  client_->DidSendLoadForLinkPrerender();
 }
 
-void LinkLoader::didSendLoadForPrerender()
-{
-    m_client->didSendLoadForLinkPrerender();
-}
-
-void LinkLoader::didSendDOMContentLoadedForPrerender()
-{
-    m_client->didSendDOMContentLoadedForLinkPrerender();
+void LinkLoader::DidSendDOMContentLoadedForPrerender() {
+  client_->DidSendDOMContentLoadedForLinkPrerender();
 }
 
 enum LinkCaller {
-    LinkCalledFromHeader,
-    LinkCalledFromMarkup,
+  kLinkCalledFromHeader,
+  kLinkCalledFromMarkup,
 };
 
-
-static void dnsPrefetchIfNeeded(const LinkRelAttribute& relAttribute, const KURL& href, Document& document, const NetworkHintsInterface& networkHintsInterface, LinkCaller caller)
-{
-    if (relAttribute.isDNSPrefetch()) {
-        UseCounter::count(document, UseCounter::LinkRelDnsPrefetch);
-        if (caller == LinkCalledFromHeader)
-            UseCounter::count(document, UseCounter::LinkHeaderDnsPrefetch);
-        Settings* settings = document.settings();
-        // FIXME: The href attribute of the link element can be in "//hostname" form, and we shouldn't attempt
-        // to complete that as URL <https://bugs.webkit.org/show_bug.cgi?id=48857>.
-        if (settings && settings->dnsPrefetchingEnabled() && href.isValid() && !href.isEmpty()) {
-            if (settings->logDnsPrefetchAndPreconnect())
-                document.addConsoleMessage(ConsoleMessage::create(OtherMessageSource, DebugMessageLevel, String("DNS prefetch triggered for " + href.host())));
-            networkHintsInterface.dnsPrefetchHost(href.host());
-        }
+static void DnsPrefetchIfNeeded(
+    const LinkRelAttribute& rel_attribute,
+    const KURL& href,
+    Document& document,
+    const NetworkHintsInterface& network_hints_interface,
+    LinkCaller caller) {
+  if (rel_attribute.IsDNSPrefetch()) {
+    UseCounter::Count(document, UseCounter::kLinkRelDnsPrefetch);
+    if (caller == kLinkCalledFromHeader)
+      UseCounter::Count(document, UseCounter::kLinkHeaderDnsPrefetch);
+    Settings* settings = document.GetSettings();
+    // FIXME: The href attribute of the link element can be in "//hostname"
+    // form, and we shouldn't attempt to complete that as URL
+    // <https://bugs.webkit.org/show_bug.cgi?id=48857>.
+    if (settings && settings->GetDNSPrefetchingEnabled() && href.IsValid() &&
+        !href.IsEmpty()) {
+      if (settings->GetLogDnsPrefetchAndPreconnect()) {
+        document.AddConsoleMessage(ConsoleMessage::Create(
+            kOtherMessageSource, kVerboseMessageLevel,
+            String("DNS prefetch triggered for " + href.Host())));
+      }
+      network_hints_interface.DnsPrefetchHost(href.Host());
     }
+  }
 }
 
-static void preconnectIfNeeded(const LinkRelAttribute& relAttribute, const KURL& href, Document& document, const CrossOriginAttributeValue crossOrigin, const NetworkHintsInterface& networkHintsInterface, LinkCaller caller)
-{
-    if (relAttribute.isPreconnect() && href.isValid() && href.protocolIsInHTTPFamily()) {
-        UseCounter::count(document, UseCounter::LinkRelPreconnect);
-        if (caller == LinkCalledFromHeader)
-            UseCounter::count(document, UseCounter::LinkHeaderPreconnect);
-        Settings* settings = document.settings();
-        if (settings && settings->logDnsPrefetchAndPreconnect()) {
-            document.addConsoleMessage(ConsoleMessage::create(OtherMessageSource, DebugMessageLevel, String("Preconnect triggered for ") + href.getString()));
-            if (crossOrigin != CrossOriginAttributeNotSet) {
-                document.addConsoleMessage(ConsoleMessage::create(OtherMessageSource, DebugMessageLevel,
-                    String("Preconnect CORS setting is ") + String((crossOrigin == CrossOriginAttributeAnonymous) ? "anonymous" : "use-credentials")));
-            }
-        }
-        networkHintsInterface.preconnectHost(href, crossOrigin);
+static void PreconnectIfNeeded(
+    const LinkRelAttribute& rel_attribute,
+    const KURL& href,
+    Document& document,
+    const CrossOriginAttributeValue cross_origin,
+    const NetworkHintsInterface& network_hints_interface,
+    LinkCaller caller) {
+  if (rel_attribute.IsPreconnect() && href.IsValid() &&
+      href.ProtocolIsInHTTPFamily()) {
+    UseCounter::Count(document, UseCounter::kLinkRelPreconnect);
+    if (caller == kLinkCalledFromHeader)
+      UseCounter::Count(document, UseCounter::kLinkHeaderPreconnect);
+    Settings* settings = document.GetSettings();
+    if (settings && settings->GetLogDnsPrefetchAndPreconnect()) {
+      document.AddConsoleMessage(ConsoleMessage::Create(
+          kOtherMessageSource, kVerboseMessageLevel,
+          String("Preconnect triggered for ") + href.GetString()));
+      if (cross_origin != kCrossOriginAttributeNotSet) {
+        document.AddConsoleMessage(ConsoleMessage::Create(
+            kOtherMessageSource, kVerboseMessageLevel,
+            String("Preconnect CORS setting is ") +
+                String((cross_origin == kCrossOriginAttributeAnonymous)
+                           ? "anonymous"
+                           : "use-credentials")));
+      }
     }
+    network_hints_interface.PreconnectHost(href, cross_origin);
+  }
 }
 
-bool LinkLoader::getResourceTypeFromAsAttribute(const String& as, Resource::Type& type)
-{
-    ASSERT(as.lower() == as);
-    if (as == "image") {
-        type = Resource::Image;
-    } else if (as == "script") {
-        type = Resource::Script;
-    } else if (as == "style") {
-        type = Resource::CSSStyleSheet;
-    } else if (as == "media") {
-        type = Resource::Media;
-    } else if (as == "font") {
-        type = Resource::Font;
-    } else if (as == "track") {
-        type = Resource::TextTrack;
-    } else {
-        type = Resource::LinkPreload;
-        if (!as.isEmpty())
-            return false;
-    }
+WTF::Optional<Resource::Type> LinkLoader::GetResourceTypeFromAsAttribute(
+    const String& as) {
+  DCHECK_EQ(as.DeprecatedLower(), as);
+  if (as == "image") {
+    return Resource::kImage;
+  } else if (as == "script") {
+    return Resource::kScript;
+  } else if (as == "style") {
+    return Resource::kCSSStyleSheet;
+  } else if (as == "video") {
+    return Resource::kMedia;
+  } else if (as == "audio") {
+    return Resource::kMedia;
+  } else if (as == "track") {
+    return Resource::kTextTrack;
+  } else if (as == "font") {
+    return Resource::kFont;
+  } else if (as.IsEmpty()) {
+    return Resource::kRaw;
+  }
+  return WTF::kNullopt;
+}
+
+Resource* LinkLoader::LinkPreloadedResourceForTesting() {
+  return link_preload_resource_client_
+             ? link_preload_resource_client_->GetResource()
+             : nullptr;
+}
+
+void LinkLoader::CreateLinkPreloadResourceClient(Resource* resource) {
+  if (!resource)
+    return;
+  switch (resource->GetType()) {
+    case Resource::kImage:
+      link_preload_resource_client_ = LinkPreloadImageResourceClient::Create(
+          this, ToImageResource(resource));
+      break;
+    case Resource::kScript:
+      link_preload_resource_client_ = LinkPreloadScriptResourceClient::Create(
+          this, ToScriptResource(resource));
+      break;
+    case Resource::kCSSStyleSheet:
+      link_preload_resource_client_ = LinkPreloadStyleResourceClient::Create(
+          this, ToCSSStyleSheetResource(resource));
+      break;
+    case Resource::kFont:
+      link_preload_resource_client_ =
+          LinkPreloadFontResourceClient::Create(this, ToFontResource(resource));
+      break;
+    case Resource::kMedia:
+    case Resource::kTextTrack:
+    case Resource::kRaw:
+      link_preload_resource_client_ =
+          LinkPreloadRawResourceClient::Create(this, ToRawResource(resource));
+      break;
+    default:
+      NOTREACHED();
+  }
+}
+
+static bool IsSupportedType(Resource::Type resource_type,
+                            const String& mime_type) {
+  if (mime_type.IsEmpty())
     return true;
+  switch (resource_type) {
+    case Resource::kImage:
+      return MIMETypeRegistry::IsSupportedImagePrefixedMIMEType(mime_type);
+    case Resource::kScript:
+      return MIMETypeRegistry::IsSupportedJavaScriptMIMEType(mime_type);
+    case Resource::kCSSStyleSheet:
+      return MIMETypeRegistry::IsSupportedStyleSheetMIMEType(mime_type);
+    case Resource::kFont:
+      return MIMETypeRegistry::IsSupportedFontMIMEType(mime_type);
+    case Resource::kMedia:
+      return MIMETypeRegistry::IsSupportedMediaMIMEType(mime_type, String());
+    case Resource::kTextTrack:
+      return MIMETypeRegistry::IsSupportedTextTrackMIMEType(mime_type);
+    case Resource::kRaw:
+      return true;
+    default:
+      NOTREACHED();
+  }
+  return false;
 }
 
-void LinkLoader::createLinkPreloadResourceClient(Resource* resource)
-{
-    if (!resource)
-        return;
-    switch (resource->getType()) {
-    case Resource::Image:
-        m_linkPreloadResourceClient = LinkPreloadImageResourceClient::create(this, toImageResource(resource));
-        break;
-    case Resource::Script:
-        m_linkPreloadResourceClient = LinkPreloadScriptResourceClient::create(this, toScriptResource(resource));
-        break;
-    case Resource::CSSStyleSheet:
-        m_linkPreloadResourceClient = LinkPreloadStyleResourceClient::create(this, toCSSStyleSheetResource(resource));
-        break;
-    case Resource::Font:
-        m_linkPreloadResourceClient = LinkPreloadFontResourceClient::create(this, toFontResource(resource));
-        break;
-    case Resource::Media:
-    case Resource::TextTrack:
-    case Resource::Raw:
-    case Resource::LinkPreload:
-        m_linkPreloadResourceClient = LinkPreloadRawResourceClient::create(this, toRawResource(resource));
-        break;
-    default:
-        ASSERT_NOT_REACHED();
+static Resource* PreloadIfNeeded(const LinkRelAttribute& rel_attribute,
+                                 const KURL& href,
+                                 Document& document,
+                                 const String& as,
+                                 const String& mime_type,
+                                 const String& media,
+                                 CrossOriginAttributeValue cross_origin,
+                                 LinkCaller caller,
+                                 bool& error_occurred,
+                                 ViewportDescription* viewport_description,
+                                 ReferrerPolicy referrer_policy) {
+  if (!document.Loader() || !rel_attribute.IsLinkPreload())
+    return nullptr;
+
+  UseCounter::Count(document, UseCounter::kLinkRelPreload);
+  if (!href.IsValid() || href.IsEmpty()) {
+    document.AddConsoleMessage(ConsoleMessage::Create(
+        kOtherMessageSource, kWarningMessageLevel,
+        String("<link rel=preload> has an invalid `href` value")));
+    return nullptr;
+  }
+
+  if (!media.IsEmpty()) {
+    MediaValues* media_values =
+        MediaValues::CreateDynamicIfFrameExists(document.GetFrame());
+    if (viewport_description) {
+      media_values->OverrideViewportDimensions(
+          viewport_description->max_width.GetFloatValue(),
+          viewport_description->max_height.GetFloatValue());
     }
+
+    // Preload only if media matches
+    MediaQuerySet* media_queries = MediaQuerySet::Create(media);
+    MediaQueryEvaluator evaluator(*media_values);
+    if (!evaluator.Eval(media_queries))
+      return nullptr;
+  }
+  if (caller == kLinkCalledFromHeader)
+    UseCounter::Count(document, UseCounter::kLinkHeaderPreload);
+  Optional<Resource::Type> resource_type =
+      LinkLoader::GetResourceTypeFromAsAttribute(as);
+  if (resource_type == WTF::kNullopt) {
+    document.AddConsoleMessage(ConsoleMessage::Create(
+        kOtherMessageSource, kWarningMessageLevel,
+        String("<link rel=preload> must have a valid `as` value")));
+    error_occurred = true;
+    return nullptr;
+  }
+
+  if (!IsSupportedType(resource_type.value(), mime_type)) {
+    document.AddConsoleMessage(ConsoleMessage::Create(
+        kOtherMessageSource, kWarningMessageLevel,
+        String("<link rel=preload> has an unsupported `type` value")));
+    return nullptr;
+  }
+  ResourceRequest resource_request(document.CompleteURL(href));
+  resource_request.SetRequestContext(
+      ResourceFetcher::DetermineRequestContext(resource_type.value(), false));
+
+  if (referrer_policy != kReferrerPolicyDefault) {
+    resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
+        referrer_policy, href, document.OutgoingReferrer()));
+  }
+
+  FetchParameters link_fetch_params(
+      resource_request, FetchInitiatorTypeNames::link, document.EncodingName());
+
+  if (cross_origin != kCrossOriginAttributeNotSet) {
+    link_fetch_params.SetCrossOriginAccessControl(document.GetSecurityOrigin(),
+                                                  cross_origin);
+  }
+  Settings* settings = document.GetSettings();
+  if (settings && settings->GetLogPreload()) {
+    document.AddConsoleMessage(ConsoleMessage::Create(
+        kOtherMessageSource, kVerboseMessageLevel,
+        String("Preload triggered for " + href.Host() + href.GetPath())));
+  }
+  link_fetch_params.SetLinkPreload(true);
+  return document.Loader()->StartPreload(resource_type.value(),
+                                         link_fetch_params);
 }
 
-static bool isSupportedType(Resource::Type resourceType, const String& mimeType)
-{
-    if (mimeType.isEmpty())
-        return true;
-    switch (resourceType) {
-    case Resource::Image:
-        return MIMETypeRegistry::isSupportedImagePrefixedMIMEType(mimeType);
-    case Resource::Script:
-        return MIMETypeRegistry::isSupportedJavaScriptMIMEType(mimeType);
-    case Resource::CSSStyleSheet:
-        return MIMETypeRegistry::isSupportedStyleSheetMIMEType(mimeType);
-    case Resource::Font:
-        return MIMETypeRegistry::isSupportedFontMIMEType(mimeType);
-    case Resource::Media:
-        return MIMETypeRegistry::isSupportedMediaSourceMIMEType(mimeType, String());
-    case Resource::TextTrack:
-        return MIMETypeRegistry::isSupportedTextTrackMIMEType(mimeType);
-    case Resource::Raw:
-    case Resource::LinkPreload:
-        return true;
-    default:
-        ASSERT_NOT_REACHED();
+static Resource* PrefetchIfNeeded(Document& document,
+                                  const KURL& href,
+                                  const LinkRelAttribute& rel_attribute,
+                                  CrossOriginAttributeValue cross_origin,
+                                  ReferrerPolicy referrer_policy) {
+  if (rel_attribute.IsLinkPrefetch() && href.IsValid() && document.GetFrame()) {
+    UseCounter::Count(document, UseCounter::kLinkRelPrefetch);
+
+    ResourceRequest resource_request(document.CompleteURL(href));
+    if (referrer_policy != kReferrerPolicyDefault) {
+      resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
+          referrer_policy, href, document.OutgoingReferrer()));
     }
+
+    FetchParameters link_fetch_params(resource_request,
+                                      FetchInitiatorTypeNames::link);
+    if (cross_origin != kCrossOriginAttributeNotSet) {
+      link_fetch_params.SetCrossOriginAccessControl(
+          document.GetSecurityOrigin(), cross_origin);
+    }
+    return LinkFetchResource::Fetch(Resource::kLinkPrefetch, link_fetch_params,
+                                    document.Fetcher());
+  }
+  return nullptr;
+}
+
+void LinkLoader::LoadLinksFromHeader(
+    const String& header_value,
+    const KURL& base_url,
+    Document* document,
+    const NetworkHintsInterface& network_hints_interface,
+    CanLoadResources can_load_resources,
+    MediaPreloadPolicy media_policy,
+    ViewportDescriptionWrapper* viewport_description_wrapper) {
+  if (!document || header_value.IsEmpty())
+    return;
+  LinkHeaderSet header_set(header_value);
+  for (auto& header : header_set) {
+    if (!header.Valid() || header.Url().IsEmpty() || header.Rel().IsEmpty())
+      continue;
+
+    if (media_policy == kOnlyLoadMedia && header.Media().IsEmpty())
+      continue;
+    if (media_policy == kOnlyLoadNonMedia && !header.Media().IsEmpty())
+      continue;
+
+    LinkRelAttribute rel_attribute(header.Rel());
+    KURL url(base_url, header.Url());
+    // Sanity check to avoid re-entrancy here.
+    if (url == base_url)
+      continue;
+    if (can_load_resources != kOnlyLoadResources) {
+      DnsPrefetchIfNeeded(rel_attribute, url, *document,
+                          network_hints_interface, kLinkCalledFromHeader);
+
+      PreconnectIfNeeded(rel_attribute, url, *document,
+                         GetCrossOriginAttributeValue(header.CrossOrigin()),
+                         network_hints_interface, kLinkCalledFromHeader);
+    }
+    if (can_load_resources != kDoNotLoadResources) {
+      bool error_occurred = false;
+      ViewportDescription* viewport_description =
+          (viewport_description_wrapper && viewport_description_wrapper->set)
+              ? &(viewport_description_wrapper->description)
+              : nullptr;
+
+      CrossOriginAttributeValue cross_origin =
+          GetCrossOriginAttributeValue(header.CrossOrigin());
+      PreloadIfNeeded(rel_attribute, url, *document, header.As(),
+                      header.MimeType(), header.Media(), cross_origin,
+                      kLinkCalledFromHeader, error_occurred,
+                      viewport_description, kReferrerPolicyDefault);
+      PrefetchIfNeeded(*document, url, rel_attribute, cross_origin,
+                       kReferrerPolicyDefault);
+    }
+    if (rel_attribute.IsServiceWorker()) {
+      UseCounter::Count(*document, UseCounter::kLinkHeaderServiceWorker);
+    }
+    // TODO(yoav): Add more supported headers as needed.
+  }
+}
+
+bool LinkLoader::LoadLink(
+    const LinkRelAttribute& rel_attribute,
+    CrossOriginAttributeValue cross_origin,
+    const String& type,
+    const String& as,
+    const String& media,
+    ReferrerPolicy referrer_policy,
+    const KURL& href,
+    Document& document,
+    const NetworkHintsInterface& network_hints_interface) {
+  if (!client_->ShouldLoadLink())
     return false;
+
+  DnsPrefetchIfNeeded(rel_attribute, href, document, network_hints_interface,
+                      kLinkCalledFromMarkup);
+
+  PreconnectIfNeeded(rel_attribute, href, document, cross_origin,
+                     network_hints_interface, kLinkCalledFromMarkup);
+
+  bool error_occurred = false;
+  CreateLinkPreloadResourceClient(PreloadIfNeeded(
+      rel_attribute, href, document, as, type, media, cross_origin,
+      kLinkCalledFromMarkup, error_occurred, nullptr, referrer_policy));
+  if (error_occurred)
+    link_loading_error_timer_.StartOneShot(0, BLINK_FROM_HERE);
+
+  if (href.IsEmpty() || !href.IsValid())
+    Released();
+
+  Resource* resource = PrefetchIfNeeded(document, href, rel_attribute,
+                                        cross_origin, referrer_policy);
+  if (resource)
+    SetResource(resource);
+
+  if (const unsigned prerender_rel_types =
+          PrerenderRelTypesFromRelAttribute(rel_attribute, document)) {
+    if (!prerender_) {
+      prerender_ =
+          PrerenderHandle::Create(document, this, href, prerender_rel_types);
+    } else if (prerender_->Url() != href) {
+      prerender_->Cancel();
+      prerender_ =
+          PrerenderHandle::Create(document, this, href, prerender_rel_types);
+    }
+    // TODO(gavinp): Handle changes to rel types of existing prerenders.
+  } else if (prerender_) {
+    prerender_->Cancel();
+    prerender_.Clear();
+  }
+  return true;
 }
 
-static Resource* preloadIfNeeded(const LinkRelAttribute& relAttribute, const KURL& href, Document& document, const String& as, const String& mimeType,
-    const String& media, CrossOriginAttributeValue crossOrigin, LinkCaller caller, bool& errorOccurred, ViewportDescription* viewportDescription)
-{
-    if (!document.loader() || !relAttribute.isLinkPreload())
-        return nullptr;
-
-    UseCounter::count(document, UseCounter::LinkRelPreload);
-    ASSERT(RuntimeEnabledFeatures::linkPreloadEnabled());
-    if (!href.isValid() || href.isEmpty()) {
-        document.addConsoleMessage(ConsoleMessage::create(OtherMessageSource, WarningMessageLevel, String("<link rel=preload> has an invalid `href` value")));
-        return nullptr;
-    }
-
-    if (!media.isEmpty()) {
-        MediaValues* mediaValues = MediaValues::createDynamicIfFrameExists(document.frame());
-        if (viewportDescription)
-            mediaValues->overrideViewportDimensions(viewportDescription->maxWidth.getFloatValue(), viewportDescription->maxHeight.getFloatValue());
-
-        // Preload only if media matches
-        MediaQuerySet* mediaQueries = MediaQuerySet::create(media);
-        MediaQueryEvaluator evaluator(*mediaValues);
-        if (!evaluator.eval(mediaQueries))
-            return nullptr;
-    }
-    if (caller == LinkCalledFromHeader)
-        UseCounter::count(document, UseCounter::LinkHeaderPreload);
-    Resource::Type resourceType;
-    if (!LinkLoader::getResourceTypeFromAsAttribute(as, resourceType)) {
-        document.addConsoleMessage(ConsoleMessage::create(OtherMessageSource, WarningMessageLevel, String("<link rel=preload> must have a valid `as` value")));
-        errorOccurred = true;
-        return nullptr;
-    }
-
-    if (!isSupportedType(resourceType, mimeType)) {
-        document.addConsoleMessage(ConsoleMessage::create(OtherMessageSource, WarningMessageLevel, String("<link rel=preload> has an unsupported `type` value")));
-        return nullptr;
-    }
-    ResourceRequest resourceRequest(document.completeURL(href));
-    ResourceFetcher::determineRequestContext(resourceRequest, resourceType, false);
-    FetchRequest linkRequest(resourceRequest, FetchInitiatorTypeNames::link, document.encodingName());
-
-    if (crossOrigin != CrossOriginAttributeNotSet)
-        linkRequest.setCrossOriginAccessControl(document.getSecurityOrigin(), crossOrigin);
-    Settings* settings = document.settings();
-    if (settings && settings->logPreload())
-        document.addConsoleMessage(ConsoleMessage::create(OtherMessageSource, DebugMessageLevel, String("Preload triggered for " + href.host() + href.path())));
-    linkRequest.setForPreload(true, monotonicallyIncreasingTime());
-    linkRequest.setLinkPreload(true);
-    linkRequest.setPriority(document.fetcher()->loadPriority(resourceType, linkRequest));
-    return document.loader()->startPreload(resourceType, linkRequest);
+void LinkLoader::Released() {
+  // Only prerenders need treatment here; other links either use the Resource
+  // interface, or are notionally atomic (dns prefetch).
+  if (prerender_) {
+    prerender_->Cancel();
+    prerender_.Clear();
+  }
+  if (link_preload_resource_client_)
+    link_preload_resource_client_->Clear();
 }
 
-void LinkLoader::loadLinksFromHeader(const String& headerValue, const KURL& baseURL, Document* document, const NetworkHintsInterface& networkHintsInterface,
-    CanLoadResources canLoadResources, MediaPreloadPolicy mediaPolicy, ViewportDescriptionWrapper* viewportDescriptionWrapper)
-{
-    if (!document || headerValue.isEmpty())
-        return;
-    LinkHeaderSet headerSet(headerValue);
-    for (auto& header : headerSet) {
-        if (!header.valid() || header.url().isEmpty() || header.rel().isEmpty())
-            continue;
-
-        if (mediaPolicy == OnlyLoadMedia && header.media().isEmpty())
-            continue;
-        if (mediaPolicy == OnlyLoadNonMedia && !header.media().isEmpty())
-            continue;
-
-        LinkRelAttribute relAttribute(header.rel());
-        KURL url(baseURL, header.url());
-        // Sanity check to avoid re-entrancy here.
-        if (url == baseURL)
-            continue;
-        if (canLoadResources != OnlyLoadResources) {
-            if (RuntimeEnabledFeatures::linkHeaderEnabled())
-                dnsPrefetchIfNeeded(relAttribute, url, *document, networkHintsInterface, LinkCalledFromHeader);
-
-            preconnectIfNeeded(relAttribute, url, *document, crossOriginAttributeValue(header.crossOrigin()), networkHintsInterface, LinkCalledFromHeader);
-        }
-        if (canLoadResources != DoNotLoadResources) {
-            bool errorOccurred = false;
-            if (RuntimeEnabledFeatures::linkPreloadEnabled()) {
-                ViewportDescription* viewportDescription = (viewportDescriptionWrapper && viewportDescriptionWrapper->set) ? &(viewportDescriptionWrapper->description) : nullptr;
-                preloadIfNeeded(relAttribute, url, *document, header.as(), header.mimeType(), header.media(), crossOriginAttributeValue(header.crossOrigin()), LinkCalledFromHeader, errorOccurred, viewportDescription);
-            }
-        }
-        // TODO(yoav): Add more supported headers as needed.
-    }
+DEFINE_TRACE(LinkLoader) {
+  visitor->Trace(client_);
+  visitor->Trace(prerender_);
+  visitor->Trace(link_preload_resource_client_);
+  ResourceOwner<Resource, ResourceClient>::Trace(visitor);
+  PrerenderClient::Trace(visitor);
 }
 
-bool LinkLoader::loadLink(const LinkRelAttribute& relAttribute, CrossOriginAttributeValue crossOrigin, const String& type,
-    const String& as, const String& media, const KURL& href, Document& document, const NetworkHintsInterface& networkHintsInterface)
-{
-    // TODO(yoav): Do all links need to load only after they're in document???
-
-    // TODO(yoav): Convert all uses of the CrossOriginAttribute to CrossOriginAttributeValue. crbug.com/486689
-    // FIXME(crbug.com/463266): We're ignoring type here, for everything but preload. Maybe we shouldn't.
-    dnsPrefetchIfNeeded(relAttribute, href, document, networkHintsInterface, LinkCalledFromMarkup);
-
-    preconnectIfNeeded(relAttribute, href, document, crossOrigin, networkHintsInterface, LinkCalledFromMarkup);
-
-    bool errorOccurred = false;
-    if (m_client->shouldLoadLink())
-        createLinkPreloadResourceClient(preloadIfNeeded(relAttribute, href, document, as, type, media, crossOrigin, LinkCalledFromMarkup, errorOccurred, nullptr));
-    if (errorOccurred)
-        m_linkLoadingErrorTimer.startOneShot(0, BLINK_FROM_HERE);
-
-    if (href.isEmpty() || !href.isValid())
-        released();
-
-    // FIXME(crbug.com/323096): Should take care of import.
-    if (relAttribute.isLinkPrefetch() && href.isValid() && document.frame()) {
-        if (!m_client->shouldLoadLink())
-            return false;
-        UseCounter::count(document, UseCounter::LinkRelPrefetch);
-
-        FetchRequest linkRequest(ResourceRequest(document.completeURL(href)), FetchInitiatorTypeNames::link);
-        if (crossOrigin != CrossOriginAttributeNotSet)
-            linkRequest.setCrossOriginAccessControl(document.getSecurityOrigin(), crossOrigin);
-        setResource(LinkFetchResource::fetch(Resource::LinkPrefetch, linkRequest, document.fetcher()));
-    }
-
-    if (const unsigned prerenderRelTypes = prerenderRelTypesFromRelAttribute(relAttribute, document)) {
-        if (!m_prerender) {
-            m_prerender = PrerenderHandle::create(document, this, href, prerenderRelTypes);
-        } else if (m_prerender->url() != href) {
-            m_prerender->cancel();
-            m_prerender = PrerenderHandle::create(document, this, href, prerenderRelTypes);
-        }
-        // TODO(gavinp): Handle changes to rel types of existing prerenders.
-    } else if (m_prerender) {
-        m_prerender->cancel();
-        m_prerender.clear();
-    }
-    return true;
-}
-
-void LinkLoader::released()
-{
-    // Only prerenders need treatment here; other links either use the Resource interface, or are notionally
-    // atomic (dns prefetch).
-    if (m_prerender) {
-        m_prerender->cancel();
-        m_prerender.clear();
-    }
-    if (m_linkPreloadResourceClient)
-        m_linkPreloadResourceClient->clear();
-}
-
-DEFINE_TRACE(LinkLoader)
-{
-    visitor->trace(m_client);
-    visitor->trace(m_prerender);
-    visitor->trace(m_linkPreloadResourceClient);
-    ResourceOwner<Resource, ResourceClient>::trace(visitor);
-    PrerenderClient::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

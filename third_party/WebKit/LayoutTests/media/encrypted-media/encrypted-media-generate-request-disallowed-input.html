@@ -7,11 +7,10 @@
         <script src="../../resources/testharnessreport.js"></script>
     </head>
     <body>
-        <div id="log"></div>
         <script>
             // Create a session and call generateRequest() with |initDataType|
             // and |initData|. generateRequest() should fail with an
-            // InvalidAccessError. Returns a promise that resolves successfully
+            // TypeError. Returns a promise that resolves successfully
             // if the error happened, rejects otherwise.
             function test_session(initDataType, initData)
             {
@@ -28,7 +27,7 @@
                     }).then(function() {
                         assert_unreached('generateRequest() succeeded');
                     }, function(error) {
-                        assert_equals(error.name, 'InvalidAccessError');
+                        assert_equals(error.name, 'TypeError');
                         return Promise.resolve('success');
                     });
                 })
@@ -66,13 +65,13 @@
                     0x00, 0x00, 0x00, 0x00                           // datasize
                 ]);
                 return test_session('cenc', initData);
-            }, 'generateRequest() with invalid pssh data.');
+            }, 'generateRequest() with invalid pssh box size.');
 
             promise_test(function()
             {
                 // Invalid data as type = 'psss'.
                 var initData = new Uint8Array([
-                    0x00, 0x00, 0x00, 0x00,                          // size = 0
+                    0x00, 0x00, 0x00, 0x20,                          // size = 32
                     0x70, 0x73, 0x73, 0x73,                          // 'psss'
                     0x00,                                            // version = 0
                     0x00, 0x00, 0x00,                                // flags

@@ -25,22 +25,18 @@ class MockDownloadController : public DownloadControllerBase {
   ~MockDownloadController() override;
 
   // DownloadControllerBase implementation.
-  void CreateGETDownload(int render_process_id, int render_view_id,
-                         bool mustDownload,
-                         const DownloadInfo& info) override;
   void OnDownloadStarted(content::DownloadItem* download_item) override;
   void StartContextMenuDownload(
       const content::ContextMenuParams& params,
       content::WebContents* web_contents,
       bool is_link, const std::string& extra_headers) override;
-  void DangerousDownloadValidated(content::WebContents* web_contents,
-                                  const std::string& download_guid,
-                                  bool accept) override;
   void AcquireFileAccessPermission(
       content::WebContents* web_contents,
       const AcquireFileAccessPermissionCallback& callback) override;
   void SetApproveFileAccessRequestForTesting(bool approve) override;
-
+  void CreateAndroidDownload(
+      const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
+      const DownloadInfo& info) override;
  private:
   bool approve_file_access_request_;
   DISALLOW_COPY_AND_ASSIGN(MockDownloadController);

@@ -143,7 +143,7 @@ void BlinkGCPluginConsumer::ParseFunctionTemplates(TranslationUnitDecl* decl) {
 
     // Force parsing and AST building of the yet-uninstantiated function
     // template trace method bodies.
-    clang::LateParsedTemplate* lpt = sema.LateParsedTemplateMap[fd];
+    clang::LateParsedTemplate* lpt = sema.LateParsedTemplateMap[fd].get();
     sema.LateTemplateParser(sema.OpaqueParser, *lpt);
   }
 }
@@ -177,14 +177,9 @@ void BlinkGCPluginConsumer::CheckClass(RecordInfo* info) {
   if (!info)
     return;
 
-  // Check consistency of stack-allocated hierarchies.
-  if (info->IsStackAllocated()) {
-    for (auto& base : info->GetBases())
-      if (!base.second.info()->IsStackAllocated())
-        reporter_.DerivesNonStackAllocated(info, &base.second);
-  }
-
   if (CXXMethodDecl* trace = info->GetTraceMethod()) {
+    if (info->IsStackAllocated())
+      reporter_.TraceMethodForStackAllocatedClass(info, trace);
     if (trace->isPure())
       reporter_.ClassDeclaresPureVirtualTrace(info, trace);
   } else if (info->RequiresTraceMethod()) {
@@ -206,6 +201,17 @@ void BlinkGCPluginConsumer::CheckClass(RecordInfo* info) {
   }
 
   if (info->IsGCDerived()) {
+    // It is illegal for a class to be both stack allocated and garbage
+    // collected.
+    if (info->IsStackAllocated()) {
+      for (auto& base : info->GetBases()) {
+        RecordInfo* base_info = base.second.info();
+        if (Config::IsGCBase(base_info->name()) || base_info->IsGCDerived()) {
+          reporter_.StackAllocatedDerivesGarbageCollected(info, &base.second);
+        }
+      }
+    }
+
     if (!info->IsGCMixin()) {
       CheckLeftMostDerived(info);
       CheckDispatch(info);
@@ -521,7 +527,6 @@ void BlinkGCPluginConsumer::CheckTraceOrDispatchMethod(
     CXXMethodDecl* method) {
   Config::TraceMethodType trace_type = Config::GetTraceMethodType(method);
   if (trace_type == Config::TRACE_AFTER_DISPATCH_METHOD ||
-      trace_type == Config::TRACE_AFTER_DISPATCH_IMPL_METHOD ||
       !parent->GetTraceDispatchMethod()) {
     CheckTraceMethod(parent, method, trace_type);
   }
@@ -541,12 +546,6 @@ void BlinkGCPluginConsumer::CheckTraceMethod(
 
   CheckTraceVisitor visitor(trace, parent, &cache_);
   visitor.TraverseCXXMethodDecl(trace);
-
-  // Skip reporting if this trace method is a just delegate to
-  // traceImpl (or traceAfterDispatchImpl) method. We will report on
-  // CheckTraceMethod on traceImpl method.
-  if (visitor.delegates_to_traceimpl())
-    return;
 
   for (auto& base : parent->GetBases())
     if (!base.second.IsProperlyTraced())

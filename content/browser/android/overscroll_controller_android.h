@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "content/common/input/input_event_ack_state.h"
@@ -25,20 +26,20 @@ class Layer;
 
 namespace ui {
 class WindowAndroidCompositor;
+struct DidOverscrollParams;
 }
 
 namespace content {
-
-class ContentViewCoreImpl;
-struct DidOverscrollParams;
 
 // Glue class for handling all inputs into Android-specific overscroll effects,
 // both the passive overscroll glow and the active overscroll pull-to-refresh.
 // Note that all input coordinates (both for events and overscroll) are in DIPs.
 class OverscrollControllerAndroid : public ui::OverscrollGlowClient {
  public:
-  explicit OverscrollControllerAndroid(ContentViewCoreImpl* content_view_core,
-                                       float dpi_scale);
+  OverscrollControllerAndroid(
+      ui::OverscrollRefreshHandler* overscroll_refresh_handler,
+      ui::WindowAndroidCompositor* compositor,
+      float dpi_scale);
   ~OverscrollControllerAndroid() override;
 
   // Returns true if |event| is consumed by an overscroll effect, in which
@@ -50,7 +51,7 @@ class OverscrollControllerAndroid : public ui::OverscrollGlowClient {
                          InputEventAckState ack_result);
 
   // To be called upon receipt of an overscroll event.
-  void OnOverscrolled(const DidOverscrollParams& overscroll_params);
+  void OnOverscrolled(const ui::DidOverscrollParams& overscroll_params);
 
   // Returns true if the effect still needs animation ticks.
   // Note: The effect will detach itself when no further animation is required.

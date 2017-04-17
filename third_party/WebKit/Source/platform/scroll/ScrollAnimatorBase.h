@@ -32,13 +32,10 @@
 #define ScrollAnimatorBase_h
 
 #include "platform/PlatformExport.h"
-#include "platform/PlatformWheelEvent.h"
-#include "platform/geometry/FloatPoint.h"
-#include "platform/geometry/FloatSize.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollAnimatorCompositorCoordinator.h"
 #include "platform/scroll/ScrollTypes.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -46,83 +43,79 @@ class CompositorAnimationTimeline;
 class ScrollableArea;
 class Scrollbar;
 
-class PLATFORM_EXPORT ScrollAnimatorBase : public ScrollAnimatorCompositorCoordinator {
-public:
-    static ScrollAnimatorBase* create(ScrollableArea*);
+class PLATFORM_EXPORT ScrollAnimatorBase
+    : public ScrollAnimatorCompositorCoordinator {
+ public:
+  static ScrollAnimatorBase* Create(ScrollableArea*);
 
-    virtual ~ScrollAnimatorBase();
+  virtual ~ScrollAnimatorBase();
 
-    virtual void dispose() { }
+  virtual void Dispose() {}
 
-    // A possibly animated scroll. The base class implementation always scrolls
-    // immediately, never animates. If the scroll is animated and currently the
-    // animator has an in-progress animation, the ScrollResult will always return
-    // no unusedDelta and didScroll=true, i.e. fully consuming the scroll request.
-    // This makes animations latch to a single scroller. Note, the semantics are
-    // currently somewhat different on Mac - see ScrollAnimatorMac.mm.
-    virtual ScrollResult userScroll(ScrollGranularity, const FloatSize& delta);
+  // A possibly animated scroll. The base class implementation always scrolls
+  // immediately, never animates. If the scroll is animated and currently the
+  // animator has an in-progress animation, the ScrollResult will always return
+  // no unusedDelta and didScroll=true, i.e. fully consuming the scroll request.
+  // This makes animations latch to a single scroller. Note, the semantics are
+  // currently somewhat different on Mac - see ScrollAnimatorMac.mm.
+  virtual ScrollResult UserScroll(ScrollGranularity, const ScrollOffset& delta);
 
-    virtual void scrollToOffsetWithoutAnimation(const FloatPoint&);
+  virtual void ScrollToOffsetWithoutAnimation(const ScrollOffset&);
 
-#if OS(MACOSX)
-    virtual void handleWheelEventPhase(PlatformWheelEventPhase) { }
-#endif
+  void SetCurrentOffset(const ScrollOffset&);
+  ScrollOffset CurrentOffset() const;
+  virtual ScrollOffset DesiredTargetOffset() const { return CurrentOffset(); }
 
-    void setCurrentPosition(const FloatPoint&);
-    FloatPoint currentPosition() const;
-    virtual FloatPoint desiredTargetPosition() const { return currentPosition(); }
+  // Returns how much of pixelDelta will be used by the underlying scrollable
+  // area.
+  virtual ScrollOffset ComputeDeltaToConsume(const ScrollOffset& delta) const;
 
-    // Returns how much of pixelDelta will be used by the underlying scrollable
-    // area.
-    virtual FloatSize computeDeltaToConsume(const FloatSize& delta) const;
+  // ScrollAnimatorCompositorCoordinator implementation.
+  ScrollableArea* GetScrollableArea() const override {
+    return scrollable_area_;
+  }
+  void TickAnimation(double monotonic_time) override{};
+  void CancelAnimation() override {}
+  void TakeOverCompositorAnimation() override {}
+  void UpdateCompositorAnimations() override{};
+  void NotifyCompositorAnimationFinished(int group_id) override{};
+  void NotifyCompositorAnimationAborted(int group_id) override{};
+  void LayerForCompositedScrollingDidChange(
+      CompositorAnimationTimeline*) override{};
 
+  virtual void ContentAreaWillPaint() const {}
+  virtual void MouseEnteredContentArea() const {}
+  virtual void MouseExitedContentArea() const {}
+  virtual void MouseMovedInContentArea() const {}
+  virtual void MouseEnteredScrollbar(Scrollbar&) const {}
+  virtual void MouseExitedScrollbar(Scrollbar&) const {}
+  virtual void ContentsResized() const {}
+  virtual void ContentAreaDidShow() const {}
+  virtual void ContentAreaDidHide() const {}
 
-    // ScrollAnimatorCompositorCoordinator implementation.
-    ScrollableArea* getScrollableArea() const override { return m_scrollableArea; }
-    void tickAnimation(double monotonicTime) override { };
-    void cancelAnimation() override { }
-    void takeOverCompositorAnimation() override { }
-    void updateCompositorAnimations() override { };
-    void notifyCompositorAnimationFinished(int groupId) override { };
-    void notifyCompositorAnimationAborted(int groupId) override { };
-    void layerForCompositedScrollingDidChange(CompositorAnimationTimeline*) override { };
+  virtual void FinishCurrentScrollAnimations() {}
 
-    virtual void contentAreaWillPaint() const { }
-    virtual void mouseEnteredContentArea() const { }
-    virtual void mouseExitedContentArea() const { }
-    virtual void mouseMovedInContentArea() const { }
-    virtual void mouseEnteredScrollbar(Scrollbar&) const { }
-    virtual void mouseExitedScrollbar(Scrollbar&) const { }
-    virtual void updateAfterLayout() { }
-    virtual void contentsResized() const { }
-    virtual void contentAreaDidShow() const { }
-    virtual void contentAreaDidHide() const { }
+  virtual void DidAddVerticalScrollbar(Scrollbar&) {}
+  virtual void WillRemoveVerticalScrollbar(Scrollbar&) {}
+  virtual void DidAddHorizontalScrollbar(Scrollbar&) {}
+  virtual void WillRemoveHorizontalScrollbar(Scrollbar&) {}
 
-    virtual void finishCurrentScrollAnimations() { }
+  virtual void NotifyContentAreaScrolled(const ScrollOffset&) {}
 
-    virtual void didAddVerticalScrollbar(Scrollbar&) { }
-    virtual void willRemoveVerticalScrollbar(Scrollbar&) { }
-    virtual void didAddHorizontalScrollbar(Scrollbar&) { }
-    virtual void willRemoveHorizontalScrollbar(Scrollbar&) { }
+  virtual bool SetScrollbarsVisibleForTesting(bool) { return false; }
 
-    virtual bool shouldScrollbarParticipateInHitTesting(Scrollbar&) { return true; }
+  DECLARE_VIRTUAL_TRACE();
 
-    virtual void notifyContentAreaScrolled(const FloatSize&) { }
+ protected:
+  explicit ScrollAnimatorBase(ScrollableArea*);
 
-    virtual bool setScrollbarsVisibleForTesting(bool) { return false; }
+  virtual void NotifyOffsetChanged();
 
-    DECLARE_VIRTUAL_TRACE();
+  Member<ScrollableArea> scrollable_area_;
 
-protected:
-    explicit ScrollAnimatorBase(ScrollableArea*);
-
-    virtual void notifyPositionChanged();
-
-    Member<ScrollableArea> m_scrollableArea;
-
-    FloatPoint m_currentPos;
+  ScrollOffset current_offset_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScrollAnimatorBase_h
+#endif  // ScrollAnimatorBase_h

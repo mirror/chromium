@@ -12,16 +12,12 @@
 #include <string>
 
 #include "base/macros.h"
+#include "components/sync/model/string_ordinal.h"
 #include "extensions/browser/app_sorting.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/common/extension.h"
-#include "sync/api/string_ordinal.h"
-
-class PrefService;
 
 namespace extensions {
-
-class ExtensionScopedPrefs;
 
 class ChromeAppSorting : public AppSorting {
  public:
@@ -33,6 +29,9 @@ class ChromeAppSorting : public AppSorting {
   void EnsureValidOrdinals(
       const std::string& extension_id,
       const syncer::StringOrdinal& suggested_page) override;
+  bool GetDefaultOrdinals(const std::string& extension_id,
+                          syncer::StringOrdinal* page_ordinal,
+                          syncer::StringOrdinal* app_launch_ordinal) override;
   void OnExtensionMoved(const std::string& moved_extension_id,
                         const std::string& predecessor_extension_id,
                         const std::string& successor_extension_id) override;
@@ -135,13 +134,6 @@ class ChromeAppSorting : public AppSorting {
 
   // Creates the default ordinals.
   void CreateDefaultOrdinals();
-
-  // Gets the default ordinals for |extension_id|. Returns false if no default
-  // ordinals for |extension_id| is defined. Otherwise, returns true and
-  // ordinals is updated with corresponding ordinals.
-  bool GetDefaultOrdinals(const std::string& extension_id,
-                          syncer::StringOrdinal* page_ordinal,
-                          syncer::StringOrdinal* app_launch_ordinal);
 
   // Returns |app_launch_ordinal| if it has no collision in the page specified
   // by |page_ordinal|. Otherwise, returns an ordinal after |app_launch_ordinal|

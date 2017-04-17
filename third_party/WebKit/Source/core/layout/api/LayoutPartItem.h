@@ -11,39 +11,26 @@
 namespace blink {
 
 class LayoutPartItem : public LayoutBoxItem {
-public:
-    explicit LayoutPartItem(LayoutPart* layoutPart)
-        : LayoutBoxItem(layoutPart)
-    {
-    }
+ public:
+  explicit LayoutPartItem(LayoutPart* layout_part)
+      : LayoutBoxItem(layout_part) {}
 
-    explicit LayoutPartItem(const LayoutItem& item)
-        : LayoutBoxItem(item)
-    {
-        ASSERT_WITH_SECURITY_IMPLICATION(!item || item.isLayoutPart());
-    }
+  explicit LayoutPartItem(const LayoutItem& item) : LayoutBoxItem(item) {
+    SECURITY_DCHECK(!item || item.IsLayoutPart());
+  }
 
-    explicit LayoutPartItem(std::nullptr_t) : LayoutBoxItem(nullptr) { }
+  explicit LayoutPartItem(std::nullptr_t) : LayoutBoxItem(nullptr) {}
 
-    LayoutPartItem() { }
+  LayoutPartItem() {}
 
-    void updateOnWidgetChange()
-    {
-        toPart()->updateOnWidgetChange();
-    }
+  void UpdateOnWidgetChange() { ToPart()->UpdateOnWidgetChange(); }
 
-private:
-    LayoutPart* toPart()
-    {
-        return toLayoutPart(layoutObject());
-    }
+ private:
+  LayoutPart* ToPart() { return ToLayoutPart(GetLayoutObject()); }
 
-    const LayoutPart* toPart() const
-    {
-        return toLayoutPart(layoutObject());
-    }
+  const LayoutPart* ToPart() const { return ToLayoutPart(GetLayoutObject()); }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutPartItem_h
+#endif  // LayoutPartItem_h

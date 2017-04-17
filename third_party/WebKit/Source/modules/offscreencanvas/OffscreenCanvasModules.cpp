@@ -4,22 +4,33 @@
 
 #include "modules/offscreencanvas/OffscreenCanvasModules.h"
 
+#include "core/dom/ExecutionContext.h"
 #include "core/html/canvas/CanvasContextCreationAttributes.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
 #include "modules/offscreencanvas2d/OffscreenCanvasRenderingContext2D.h"
 
 namespace blink {
 
-void OffscreenCanvasModules::getContext(ScriptState* scriptState, OffscreenCanvas& offscreenCanvas, const String& id, const CanvasContextCreationAttributes& attributes, ExceptionState& exceptionState, OffscreenRenderingContext& result)
-{
-    if (offscreenCanvas.isNeutered()) {
-        exceptionState.throwDOMException(InvalidStateError, "OffscreenCanvas object is detached");
-        return;
-    }
+void OffscreenCanvasModules::getContext(
+    ScriptState* script_state,
+    OffscreenCanvas& offscreen_canvas,
+    const String& id,
+    const CanvasContextCreationAttributes& attributes,
+    ExceptionState& exception_state,
+    OffscreenRenderingContext& result) {
+  if (offscreen_canvas.IsNeutered()) {
+    exception_state.ThrowDOMException(kInvalidStateError,
+                                      "OffscreenCanvas object is detached");
+    return;
+  }
 
-    CanvasRenderingContext* context = offscreenCanvas.getCanvasRenderingContext(scriptState, id, attributes);
-    if (context)
-        context->setOffscreenCanvasGetContextResult(result);
+  // OffscreenCanvas cannot be transferred after getContext, so this execution
+  // context will always be the right one from here on.
+  offscreen_canvas.SetExecutionContext(ExecutionContext::From(script_state));
+  CanvasRenderingContext* context =
+      offscreen_canvas.GetCanvasRenderingContext(script_state, id, attributes);
+  if (context)
+    context->SetOffscreenCanvasGetContextResult(result);
 }
 
-} // namespace blink
+}  // namespace blink

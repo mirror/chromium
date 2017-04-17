@@ -33,7 +33,7 @@
 
 #include "modules/filesystem/EntrySync.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -42,26 +42,31 @@ class File;
 class FileWriterSync;
 
 class FileEntrySync final : public EntrySync {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static FileEntrySync* create(DOMFileSystemBase* fileSystem, const String& fullPath)
-    {
-        return new FileEntrySync(fileSystem, fullPath);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    bool isFile() const override { return true; }
+ public:
+  static FileEntrySync* Create(DOMFileSystemBase* file_system,
+                               const String& full_path) {
+    return new FileEntrySync(file_system, full_path);
+  }
 
-    File* file(ExceptionState&);
-    FileWriterSync* createWriter(ExceptionState&);
+  bool isFile() const override { return true; }
 
-    DECLARE_VIRTUAL_TRACE();
+  File* file(ExceptionState&);
+  FileWriterSync* createWriter(ExceptionState&);
 
-private:
-    FileEntrySync(DOMFileSystemBase*, const String& fullPath);
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  FileEntrySync(DOMFileSystemBase*, const String& full_path);
 };
 
-DEFINE_TYPE_CASTS(FileEntrySync, EntrySync, entry, entry->isFile(), entry.isFile());
+DEFINE_TYPE_CASTS(FileEntrySync,
+                  EntrySync,
+                  entry,
+                  entry->isFile(),
+                  entry.isFile());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FileEntrySync_h
+#endif  // FileEntrySync_h

@@ -4,8 +4,11 @@
 
 #include <vector>
 
+#include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/histogram_tester.h"
+#include "chrome/browser/content_settings/chrome_content_settings_utils.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_content_setting_bubble_model_delegate.h"
@@ -15,8 +18,12 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/content_settings/core/common/content_settings_types.h"
+#include "components/rappor/test_rappor_service.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/test/test_navigation_observer.h"
+#include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "net/test/embedded_test_server/request_handler_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 const base::FilePath::CharType kDocRoot[] =
@@ -67,6 +74,75 @@ IN_PROC_BROWSER_TEST_F(ContentSettingBubbleModelMixedScriptTest, MainFrame) {
 
   EXPECT_FALSE(GetActiveTabSpecificContentSettings()->IsContentBlocked(
       CONTENT_SETTINGS_TYPE_MIXEDSCRIPT));
+}
+
+class ContentSettingsMixedScriptIgnoreCertErrorsTest
+    : public ContentSettingBubbleModelMixedScriptTest {
+ protected:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitch(switches::kIgnoreCertificateErrors);
+  }
+};
+
+// Tests that a MIXEDSCRIPT type ContentSettingBubbleModel records UMA
+// and Rappor metrics when the content is allowed to run.
+//
+// This test fixture sets up the browser to ignore certificate errors,
+// so that a non-matching, non-local hostname can be used for the
+// test. This is because Rappor treats local hostnames as slightly
+// special, so it's a little nicer to test with a non-local hostname.
+IN_PROC_BROWSER_TEST_F(ContentSettingsMixedScriptIgnoreCertErrorsTest,
+                       MainFrameMetrics) {
+  GURL url(https_server_->GetURL("/content_setting_bubble/mixed_script.html"));
+
+  // Rappor treats local hostnames a little bit special (e.g. records
+  // "127.0.0.1" as "localhost"), so use a non-local hostname for
+  // convenience.
+  host_resolver()->AddRule("*", "127.0.0.1");
+  GURL::Replacements replace_host;
+  replace_host.SetHostStr("example.test");
+  url = url.ReplaceComponents(replace_host);
+
+  rappor::TestRapporServiceImpl rappor_service;
+  EXPECT_EQ(0, rappor_service.GetReportsCount());
+  base::HistogramTester histograms;
+  histograms.ExpectTotalCount("ContentSettings.MixedScript", 0);
+
+  // Load a page with mixed content and do quick verification by looking at
+  // the title string.
+  ui_test_utils::NavigateToURL(browser(), url);
+
+  EXPECT_TRUE(GetActiveTabSpecificContentSettings()->IsContentBlocked(
+      CONTENT_SETTINGS_TYPE_MIXEDSCRIPT));
+
+  // Emulate link clicking on the mixed script bubble.
+  std::unique_ptr<ContentSettingBubbleModel> model(
+      ContentSettingBubbleModel::CreateContentSettingBubbleModel(
+          browser()->content_setting_bubble_model_delegate(),
+          browser()->tab_strip_model()->GetActiveWebContents(),
+          browser()->profile(), CONTENT_SETTINGS_TYPE_MIXEDSCRIPT));
+  model->SetRapporServiceImplForTesting(&rappor_service);
+  model->OnCustomLinkClicked();
+
+  // Wait for reload
+  content::TestNavigationObserver observer(
+      browser()->tab_strip_model()->GetActiveWebContents());
+  observer.Wait();
+
+  EXPECT_FALSE(GetActiveTabSpecificContentSettings()->IsContentBlocked(
+      CONTENT_SETTINGS_TYPE_MIXEDSCRIPT));
+
+  // Check that the UMA and Rappor counts are as expected.
+  histograms.ExpectBucketCount(
+      "ContentSettings.MixedScript",
+      content_settings::MIXED_SCRIPT_ACTION_CLICKED_ALLOW, 1);
+  EXPECT_EQ(1, rappor_service.GetReportsCount());
+  std::string sample;
+  rappor::RapporType type;
+  EXPECT_TRUE(rappor_service.GetRecordedSampleForMetric(
+      "ContentSettings.MixedScript.UserClickedAllow", &sample, &type));
+  EXPECT_EQ(url.host(), sample);
+  EXPECT_EQ(rappor::ETLD_PLUS_ONE_RAPPOR_TYPE, type);
 }
 
 // Tests that a MIXEDSCRIPT type ContentSettingBubbleModel does not work
@@ -124,7 +200,10 @@ class ContentSettingBubbleModelMediaStreamTest : public InProcessBrowserTest {
 
 // Tests that clicking on the management link in the media bubble opens
 // the correct section of the settings UI.
-IN_PROC_BROWSER_TEST_F(ContentSettingBubbleModelMediaStreamTest, ManageLink) {
+// This test sometimes leaks memory, detected by linux_chromium_asan_rel_ng. See
+// http://crbug/668693 for more info.
+IN_PROC_BROWSER_TEST_F(ContentSettingBubbleModelMediaStreamTest,
+                       DISABLED_ManageLink) {
   // For each of the three options, we click the management link and check if
   // the active tab loads the correct internal url.
 
@@ -148,4 +227,58 @@ IN_PROC_BROWSER_TEST_F(ContentSettingBubbleModelMediaStreamTest, ManageLink) {
   ManageMediaStreamSettings(TabSpecificContentSettings::CAMERA_ACCESSED);
   EXPECT_EQ(GURL("chrome://settings/contentExceptions#media-stream-camera"),
             GetActiveTab()->GetLastCommittedURL());
+}
+
+class ContentSettingBubbleModelPopupTest : public InProcessBrowserTest {
+ protected:
+  void SetUpInProcessBrowserTestFixture() override {
+    https_server_.reset(
+        new net::EmbeddedTestServer(net::EmbeddedTestServer::TYPE_HTTPS));
+    https_server_->ServeFilesFromSourceDirectory(base::FilePath(kDocRoot));
+    ASSERT_TRUE(https_server_->Start());
+  }
+  std::unique_ptr<net::EmbeddedTestServer> https_server_;
+};
+
+// Tests that each popup action is counted in the right bucket.
+IN_PROC_BROWSER_TEST_F(ContentSettingBubbleModelPopupTest,
+                       PopupsActionsCount){
+  GURL url(https_server_->GetURL("/popup_blocker/popup-many.html"));
+  base::HistogramTester histograms;
+  histograms.ExpectTotalCount("ContentSettings.Popups", 0);
+
+  ui_test_utils::NavigateToURL(browser(), url);
+
+  histograms.ExpectBucketCount(
+        "ContentSettings.Popups",
+        content_settings::POPUPS_ACTION_DISPLAYED_BLOCKED_ICON_IN_OMNIBOX, 1);
+
+  // Creates the ContentSettingPopupBubbleModel in order to emulate clicks.
+  std::unique_ptr<ContentSettingBubbleModel> model(
+      ContentSettingBubbleModel::CreateContentSettingBubbleModel(
+          browser()->content_setting_bubble_model_delegate(),
+          browser()->tab_strip_model()->GetActiveWebContents(),
+          browser()->profile(), CONTENT_SETTINGS_TYPE_POPUPS));
+
+  histograms.ExpectBucketCount(
+        "ContentSettings.Popups",
+        content_settings::POPUPS_ACTION_DISPLAYED_BUBBLE, 1);
+
+  model->OnListItemClicked(0);
+  histograms.ExpectBucketCount(
+        "ContentSettings.Popups",
+        content_settings::POPUPS_ACTION_CLICKED_LIST_ITEM_CLICKED, 1);
+
+  model->OnManageLinkClicked();
+  histograms.ExpectBucketCount(
+        "ContentSettings.Popups",
+        content_settings::POPUPS_ACTION_CLICKED_MANAGE_POPUPS_BLOCKING, 1);
+
+  model->OnRadioClicked(model->kAllowButtonIndex);
+  delete model.release();
+  histograms.ExpectBucketCount(
+        "ContentSettings.Popups",
+        content_settings::POPUPS_ACTION_SELECTED_ALWAYS_ALLOW_POPUPS_FROM, 1);
+
+  histograms.ExpectTotalCount("ContentSettings.Popups", 5);
 }

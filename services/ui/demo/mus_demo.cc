@@ -4,178 +4,107 @@
 
 #include "services/ui/demo/mus_demo.h"
 
-#include "base/time/time.h"
-#include "services/shell/public/cpp/connector.h"
-#include "services/ui/common/gpu_service.h"
-#include "services/ui/public/cpp/bitmap_uploader.h"
-#include "services/ui/public/cpp/window.h"
-#include "services/ui/public/cpp/window_tree_client.h"
-#include "third_party/skia/include/core/SkCanvas.h"
-#include "third_party/skia/include/core/SkColor.h"
-#include "third_party/skia/include/core/SkImageInfo.h"
-#include "third_party/skia/include/core/SkPaint.h"
-#include "third_party/skia/include/core/SkRect.h"
+#include "base/memory/ptr_util.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/ui/demo/window_tree_data.h"
+#include "services/ui/public/cpp/gpu/gpu.h"
+#include "ui/aura/client/default_capture_client.h"
+#include "ui/aura/env.h"
+#include "ui/aura/mus/property_converter.h"
+#include "ui/aura/mus/window_tree_client.h"
+#include "ui/aura/mus/window_tree_host_mus.h"
+#include "ui/aura/window.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/wm/core/wm_state.h"
 
 namespace ui {
 namespace demo {
 
-namespace {
-
-// Milliseconds between frames.
-const int64_t kFrameDelay = 33;
-
-// Size of square in pixels to draw.
-const int kSquareSize = 300;
-
-const SkColor kBgColor = SK_ColorRED;
-const SkColor kFgColor = SK_ColorYELLOW;
-
-void DrawSquare(const gfx::Rect& bounds, double angle, SkCanvas* canvas) {
-  // Create SkRect to draw centered inside the bounds.
-  gfx::Point top_left = bounds.CenterPoint();
-  top_left.Offset(-kSquareSize / 2, -kSquareSize / 2);
-  SkRect rect =
-      SkRect::MakeXYWH(top_left.x(), top_left.y(), kSquareSize, kSquareSize);
-
-  // Set SkPaint to fill solid color.
-  SkPaint paint;
-  paint.setStyle(SkPaint::kFill_Style);
-  paint.setColor(kFgColor);
-
-  // Rotate the canvas.
-  const gfx::Size canvas_size = bounds.size();
-  if (angle != 0.0) {
-    canvas->translate(SkFloatToScalar(canvas_size.width() * 0.5f),
-                      SkFloatToScalar(canvas_size.height() * 0.5f));
-    canvas->rotate(angle);
-    canvas->translate(-SkFloatToScalar(canvas_size.width() * 0.5f),
-                      -SkFloatToScalar(canvas_size.height() * 0.5f));
-  }
-
-  canvas->drawRect(rect, paint);
-}
-
-}  // namespace
-
 MusDemo::MusDemo() {}
 
 MusDemo::~MusDemo() {
-  delete window_tree_client_;
+  display::Screen::SetScreenInstance(nullptr);
+  // Destruction order is important here:
+  // 1) Windows must be destroyed before WindowTreeClient's destructor is
+  // called.
+  // 2) WindowTreeClient must be destroyed before Env and WMState.
+  window_tree_data_list_.clear();
+  window_tree_client_.reset();
+  env_.reset();
+  wm_state_.reset();
 }
 
-void MusDemo::OnStart(const shell::Identity& identity) {
-  GpuService::Initialize(connector());
-  window_tree_client_ = new WindowTreeClient(this, this, nullptr);
-  window_tree_client_->ConnectAsWindowManager(connector());
+void MusDemo::AddPrimaryDisplay(const display::Display& display) {
+  screen_->display_list().AddDisplay(display,
+                                     display::DisplayList::Type::PRIMARY);
 }
 
-bool MusDemo::OnConnect(shell::Connection* connection) {
-  return true;
+bool MusDemo::HasPendingWindowTreeData() const {
+  return !window_tree_data_list_.empty() &&
+         !window_tree_data_list_.back()->IsInitialized();
 }
 
-void MusDemo::OnEmbed(Window* window) {
-  // Not called for the WindowManager.
+void MusDemo::AppendWindowTreeData(
+    std::unique_ptr<WindowTreeData> window_tree_data) {
+  DCHECK(!HasPendingWindowTreeData());
+  window_tree_data_list_.push_back(std::move(window_tree_data));
+}
+
+void MusDemo::InitWindowTreeData(
+    std::unique_ptr<aura::WindowTreeHostMus> window_tree_host) {
+  DCHECK(HasPendingWindowTreeData());
+  window_tree_data_list_.back()->Init(std::move(window_tree_host));
+}
+
+void MusDemo::RemoveWindowTreeData(aura::WindowTreeHostMus* window_tree_host) {
+  DCHECK(window_tree_host);
+  auto it =
+      std::find_if(window_tree_data_list_.begin(), window_tree_data_list_.end(),
+                   [window_tree_host](std::unique_ptr<WindowTreeData>& data) {
+                     return data->WindowTreeHost() == window_tree_host;
+                   });
+  DCHECK(it != window_tree_data_list_.end());
+  window_tree_data_list_.erase(it);
+}
+
+void MusDemo::OnStart() {
+  screen_ = base::MakeUnique<display::ScreenBase>();
+  display::Screen::SetScreenInstance(screen_.get());
+
+  env_ = aura::Env::CreateInstance(aura::Env::Mode::MUS);
+  capture_client_ = base::MakeUnique<aura::client::DefaultCaptureClient>();
+  property_converter_ = base::MakeUnique<aura::PropertyConverter>();
+  wm_state_ = base::MakeUnique<::wm::WMState>();
+
+  window_tree_client_ = CreateWindowTreeClient();
+  OnStartImpl();
+
+  env_->SetWindowTreeClient(window_tree_client_.get());
+}
+
+void MusDemo::OnEmbed(
+    std::unique_ptr<aura::WindowTreeHostMus> window_tree_host) {
   NOTREACHED();
 }
 
-void MusDemo::OnDidDestroyClient(WindowTreeClient* client) {
-  window_tree_client_ = nullptr;
-  timer_.Stop();
+void MusDemo::OnUnembed(aura::Window* root) {
+  NOTREACHED();
 }
 
-void MusDemo::OnEventObserved(const Event& event, Window* target) {}
-
-void MusDemo::SetWindowManagerClient(WindowManagerClient* client) {}
-
-bool MusDemo::OnWmSetBounds(Window* window, gfx::Rect* bounds) {
-  return true;
+void MusDemo::OnEmbedRootDestroyed(aura::WindowTreeHostMus* window_tree_host) {
+  NOTREACHED();
 }
 
-bool MusDemo::OnWmSetProperty(Window* window,
-                              const std::string& name,
-                              std::unique_ptr<std::vector<uint8_t>>* new_data) {
-  return true;
+void MusDemo::OnLostConnection(aura::WindowTreeClient* client) {
+  window_tree_client_.reset();
+  window_tree_data_list_.clear();
 }
 
-Window* MusDemo::OnWmCreateTopLevelWindow(
-    std::map<std::string, std::vector<uint8_t>>* properties) {
-  return nullptr;
-}
+void MusDemo::OnPointerEventObserved(const PointerEvent& event,
+                                     aura::Window* target) {}
 
-void MusDemo::OnWmClientJankinessChanged(
-    const std::set<Window*>& client_windows,
-    bool janky) {
-  // Don't care
-}
-
-void MusDemo::OnWmNewDisplay(Window* window, const display::Display& display) {
-  DCHECK(!window_);  // Only support one display.
-  window_ = window;
-
-  // Initialize bitmap uploader for sending frames to MUS.
-  uploader_.reset(new ui::BitmapUploader(window_));
-  uploader_->Init(connector());
-
-  // Draw initial frame and start the timer to regularly draw frames.
-  DrawFrame();
-  timer_.Start(FROM_HERE, base::TimeDelta::FromMilliseconds(kFrameDelay),
-               base::Bind(&MusDemo::DrawFrame, base::Unretained(this)));
-}
-
-void MusDemo::OnWmPerformMoveLoop(Window* window,
-                                  mojom::MoveLoopSource source,
-                                  const gfx::Point& cursor_location,
-                                  const base::Callback<void(bool)>& on_done) {
-  // Don't care
-}
-
-void MusDemo::OnWmCancelMoveLoop(Window* window) {}
-
-void MusDemo::AllocBitmap() {
-  const gfx::Rect bounds = window_->GetBoundsInRoot();
-
-  // Allocate bitmap the same size as the window for drawing.
-  bitmap_.reset();
-  SkImageInfo image_info = SkImageInfo::MakeN32(bounds.width(), bounds.height(),
-                                                kPremul_SkAlphaType);
-  bitmap_.allocPixels(image_info);
-}
-
-void MusDemo::DrawFrame() {
-  angle_ += 2.0;
-  if (angle_ >= 360.0)
-    angle_ = 0.0;
-
-  const gfx::Rect bounds = window_->GetBoundsInRoot();
-
-  // Check that bitmap and window sizes match, otherwise reallocate bitmap.
-  const SkImageInfo info = bitmap_.info();
-  if (info.width() != bounds.width() || info.height() != bounds.height()) {
-    AllocBitmap();
-  }
-
-  // Draw the rotated square on background in bitmap.
-  SkCanvas canvas(bitmap_);
-  canvas.clear(kBgColor);
-  // TODO(kylechar): Add GL drawing instead of software rasterization in future.
-  DrawSquare(bounds, angle_, &canvas);
-  canvas.flush();
-
-  // Copy pixels data into vector that will be passed to BitmapUploader.
-  // TODO(rjkroege): Make a 1/0-copy bitmap uploader for the contents of a
-  // SkBitmap.
-  bitmap_.lockPixels();
-  const unsigned char* addr =
-      static_cast<const unsigned char*>(bitmap_.getPixels());
-  const int bytes = bounds.width() * bounds.height() * 4;
-  std::unique_ptr<std::vector<unsigned char>> data(
-      new std::vector<unsigned char>(addr, addr + bytes));
-  bitmap_.unlockPixels();
-
-  // Send frame to MUS via BitmapUploader.
-  uploader_->SetBitmap(bounds.width(), bounds.height(), std::move(data),
-                       ui::BitmapUploader::BGRA);
+aura::PropertyConverter* MusDemo::GetPropertyConverter() {
+  return property_converter_.get();
 }
 
 }  // namespace demo

@@ -4,10 +4,13 @@
 
 package org.chromium.chrome.browser.payments;
 
-import org.json.JSONObject;
+import org.chromium.payments.mojom.PaymentMethodData;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import javax.annotation.Nullable;
 
 /**
  * The interface that a payment app implements. A payment app can get its data from Chrome autofill,
@@ -32,20 +35,38 @@ public interface PaymentApp {
      * cards for the current profile. Can return null or empty list, e.g., if user has no locally
      * stored credit cards.
      *
-     * @param details  The payment-method specific data, e.g., whether the app should be invoked in
-     *                 test or production mode, merchant identifier, or a public key.
-     * @param callback The object that will receive the list of instruments.
+     * @param methodDataMap    The map from methods to method specific data. The data contains such
+     *                         information as whether the app should be invoked in test or
+     *                         production mode, merchant identifier, or a public key.
+     * @param origin           The origin of this merchant.
+     * @param iframeOrigin     The origin of the iframe that invoked PaymentRequest. Same as origin
+     *                         if PaymentRequest was not invoked from inside an iframe.
+     * @param certificateChain The site certificate chain of the merchant. Null for localhost and
+     *                         file on disk, which are secure origins without SSL.
+     * @param callback         The object that will receive the list of instruments.
      */
-    void getInstruments(JSONObject details, InstrumentsCallback callback);
+    void getInstruments(Map<String, PaymentMethodData> methodDataMap, String origin,
+            String iframeOrigin, @Nullable byte[][] certificateChain, InstrumentsCallback callback);
 
     /**
      * Returns a list of all payment method names that this app supports. For example, ["visa",
-     * "mastercard"] in basic card payments. Should return a list of at least one method name.
-     * https://w3c.github.io/browser-payment-api/specs/basic-card-payment.html#method-id
+     * "mastercard", "basic-card"] in basic card payments. Should return a list of at least one
+     * method name. https://w3c.github.io/webpayments-methods-card/#method-id
      *
      * @return The list of all payment method names that this app supports.
      */
-    Set<String> getSupportedMethodNames();
+    Set<String> getAppMethodNames();
+
+    /**
+     * Checks whether the app can support the payment methods when the method-specific data is taken
+     * into account.
+     *
+     * @param methodDataMap A mapping from the payment methods supported by this app to the
+     *                      corresponding method-specific data. Should not be null.
+     * @return True if the given methods are supported when the method-specific data is taken into
+     *         account.
+     */
+    boolean supportsMethodsAndData(Map<String, PaymentMethodData> methodDataMap);
 
     /**
      * Returns the identifier for this payment app to be saved in user preferences. For example,
@@ -53,5 +74,5 @@ public interface PaymentApp {
      *
      * @return The identifier for this payment app.
      */
-    String getIdentifier();
+    String getAppIdentifier();
 }

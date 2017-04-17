@@ -9,54 +9,45 @@
 #include "core/css/MediaValues.h"
 #include "core/css/parser/CSSParserToken.h"
 #include "core/css/parser/CSSParserTokenRange.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 struct SizesCalcValue {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    double value;
-    bool isLength;
-    UChar operation;
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  double value;
+  bool is_length;
+  UChar operation;
 
-    SizesCalcValue()
-        : value(0)
-        , isLength(false)
-        , operation(0)
-    {
-    }
+  SizesCalcValue() : value(0), is_length(false), operation(0) {}
 
-    SizesCalcValue(double numericValue, bool length)
-        : value(numericValue)
-        , isLength(length)
-        , operation(0)
-    {
-    }
+  SizesCalcValue(double numeric_value, bool length)
+      : value(numeric_value), is_length(length), operation(0) {}
 };
 
 class CORE_EXPORT SizesCalcParser {
-    STACK_ALLOCATED();
-public:
-    SizesCalcParser(CSSParserTokenRange, MediaValues*);
+  STACK_ALLOCATED();
 
-    float result() const;
-    bool isValid() const { return m_isValid; }
+ public:
+  SizesCalcParser(CSSParserTokenRange, MediaValues*);
 
-private:
-    bool calcToReversePolishNotation(CSSParserTokenRange);
-    bool calculate();
-    void appendNumber(const CSSParserToken&);
-    bool appendLength(const CSSParserToken&);
-    bool handleOperator(Vector<CSSParserToken>& stack, const CSSParserToken&);
-    void appendOperator(const CSSParserToken&);
+  float Result() const;
+  bool IsValid() const { return is_valid_; }
 
-    Vector<SizesCalcValue> m_valueList;
-    Member<MediaValues> m_mediaValues;
-    bool m_isValid;
-    float m_result;
+ private:
+  bool CalcToReversePolishNotation(CSSParserTokenRange);
+  bool Calculate();
+  void AppendNumber(const CSSParserToken&);
+  bool AppendLength(const CSSParserToken&);
+  bool HandleOperator(Vector<CSSParserToken>& stack, const CSSParserToken&);
+  void AppendOperator(const CSSParserToken&);
+
+  Vector<SizesCalcValue> value_list_;
+  Member<MediaValues> media_values_;
+  bool is_valid_;
+  float result_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SizesCalcParser_h
-
+#endif  // SizesCalcParser_h

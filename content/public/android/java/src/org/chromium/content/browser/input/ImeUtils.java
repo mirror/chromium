@@ -15,6 +15,7 @@ import android.view.inputmethod.EditorInfo;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.blink_public.web.WebTextInputFlags;
+import org.chromium.blink_public.web.WebTextInputMode;
 import org.chromium.ui.base.ime.TextInputType;
 
 import java.util.Locale;
@@ -29,69 +30,113 @@ public class ImeUtils {
      *
      * @param inputType Type defined in {@link TextInputType}.
      * @param inputFlags Flags defined in {@link WebTextInputFlags}.
+     * @param inputMode Flags defined in {@link WebTextInputMode}.
      * @param initialSelStart The initial selection start position.
      * @param initialSelEnd The initial selection end position.
      * @param outAttrs An instance of {@link EditorInfo} that we are going to change.
      */
-    public static void computeEditorInfo(int inputType, int inputFlags, int initialSelStart,
-            int initialSelEnd, EditorInfo outAttrs) {
+    public static void computeEditorInfo(int inputType, int inputFlags, int inputMode,
+            int initialSelStart, int initialSelEnd, EditorInfo outAttrs) {
         outAttrs.imeOptions = EditorInfo.IME_FLAG_NO_FULLSCREEN | EditorInfo.IME_FLAG_NO_EXTRACT_UI;
         outAttrs.inputType =
                 EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT;
 
-        if ((inputFlags & WebTextInputFlags.AutocompleteOff) != 0) {
+        if ((inputFlags & WebTextInputFlags.AUTOCOMPLETE_OFF) != 0) {
             outAttrs.inputType |= EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
         }
 
-        if (inputType == TextInputType.TEXT) {
-            // Normal text field
-            outAttrs.imeOptions |= EditorInfo.IME_ACTION_GO;
-            if ((inputFlags & WebTextInputFlags.AutocorrectOff) == 0) {
-                outAttrs.inputType |= EditorInfo.TYPE_TEXT_FLAG_AUTO_CORRECT;
+        int imeAction = 0;
+        if (inputMode == WebTextInputMode.DEFAULT) {
+            if (inputType == TextInputType.TEXT) {
+                // Normal text field
+                imeAction = EditorInfo.IME_ACTION_GO;
+                if ((inputFlags & WebTextInputFlags.AUTOCORRECT_OFF) == 0) {
+                    outAttrs.inputType |= EditorInfo.TYPE_TEXT_FLAG_AUTO_CORRECT;
+                }
+            } else if (inputType == TextInputType.TEXT_AREA
+                    || inputType == TextInputType.CONTENT_EDITABLE) {
+                outAttrs.inputType |= EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE;
+                if ((inputFlags & WebTextInputFlags.AUTOCORRECT_OFF) == 0) {
+                    outAttrs.inputType |= EditorInfo.TYPE_TEXT_FLAG_AUTO_CORRECT;
+                }
+                imeAction = EditorInfo.IME_ACTION_NONE;
+            } else if (inputType == TextInputType.PASSWORD) {
+                outAttrs.inputType =
+                        InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD;
+                imeAction = EditorInfo.IME_ACTION_GO;
+            } else if (inputType == TextInputType.SEARCH) {
+                imeAction = EditorInfo.IME_ACTION_SEARCH;
+            } else if (inputType == TextInputType.URL) {
+                outAttrs.inputType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI;
+                imeAction = EditorInfo.IME_ACTION_GO;
+            } else if (inputType == TextInputType.EMAIL) {
+                // Email
+                outAttrs.inputType =
+                        InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS;
+                imeAction = EditorInfo.IME_ACTION_GO;
+            } else if (inputType == TextInputType.TELEPHONE) {
+                // Telephone
+                // Number and telephone do not have both a Tab key and an
+                // action in default OSK, so set the action to NEXT
+                outAttrs.inputType = InputType.TYPE_CLASS_PHONE;
+                imeAction = EditorInfo.IME_ACTION_NEXT;
+            } else if (inputType == TextInputType.NUMBER) {
+                // Number
+                outAttrs.inputType = InputType.TYPE_CLASS_NUMBER
+                        | InputType.TYPE_NUMBER_VARIATION_NORMAL
+                        | InputType.TYPE_NUMBER_FLAG_DECIMAL;
+                imeAction = EditorInfo.IME_ACTION_NEXT;
             }
-        } else if (inputType == TextInputType.TEXT_AREA
-                || inputType == TextInputType.CONTENT_EDITABLE) {
-            outAttrs.inputType |= EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE;
-            if ((inputFlags & WebTextInputFlags.AutocorrectOff) == 0) {
-                outAttrs.inputType |= EditorInfo.TYPE_TEXT_FLAG_AUTO_CORRECT;
+        } else {
+            switch (inputMode) {
+                default:
+                case WebTextInputMode.DEFAULT:
+                case WebTextInputMode.VERBATIM:
+                case WebTextInputMode.LATIN:
+                case WebTextInputMode.LATIN_NAME:
+                case WebTextInputMode.LATIN_PROSE:
+                case WebTextInputMode.FULL_WIDTH_LATIN:
+                case WebTextInputMode.KANA:
+                case WebTextInputMode.KANA_NAME:
+                case WebTextInputMode.KATA_KANA:
+                    outAttrs.inputType |= EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE;
+                    if ((inputFlags & WebTextInputFlags.AUTOCORRECT_OFF) == 0) {
+                        outAttrs.inputType |= EditorInfo.TYPE_TEXT_FLAG_AUTO_CORRECT;
+                    }
+                    imeAction = EditorInfo.IME_ACTION_NONE;
+                    break;
+                case WebTextInputMode.NUMERIC:
+                    outAttrs.inputType =
+                            InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL;
+                    imeAction = EditorInfo.IME_ACTION_NEXT;
+                    break;
+                case WebTextInputMode.TEL:
+                    outAttrs.inputType = InputType.TYPE_CLASS_PHONE;
+                    imeAction = EditorInfo.IME_ACTION_NEXT;
+                    break;
+                case WebTextInputMode.EMAIL:
+                    outAttrs.inputType = InputType.TYPE_CLASS_TEXT
+                            | InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS;
+                    imeAction = EditorInfo.IME_ACTION_GO;
+                    break;
+                case WebTextInputMode.URL:
+                    outAttrs.inputType =
+                            InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI;
+                    imeAction = EditorInfo.IME_ACTION_NEXT;
+                    break;
             }
-            outAttrs.imeOptions |= EditorInfo.IME_ACTION_NONE;
-        } else if (inputType == TextInputType.PASSWORD) {
-            outAttrs.inputType =
-                    InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD;
-            outAttrs.imeOptions |= EditorInfo.IME_ACTION_GO;
-        } else if (inputType == TextInputType.SEARCH) {
-            outAttrs.imeOptions |= EditorInfo.IME_ACTION_SEARCH;
-        } else if (inputType == TextInputType.URL) {
-            outAttrs.inputType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI;
-            outAttrs.imeOptions |= EditorInfo.IME_ACTION_GO;
-        } else if (inputType == TextInputType.EMAIL) {
-            // Email
-            outAttrs.inputType =
-                    InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS;
-            outAttrs.imeOptions |= EditorInfo.IME_ACTION_GO;
-        } else if (inputType == TextInputType.TELEPHONE) {
-            // Telephone
-            // Number and telephone do not have both a Tab key and an
-            // action in default OSK, so set the action to NEXT
-            outAttrs.inputType = InputType.TYPE_CLASS_PHONE;
-            outAttrs.imeOptions |= EditorInfo.IME_ACTION_NEXT;
-        } else if (inputType == TextInputType.NUMBER) {
-            // Number
-            outAttrs.inputType = InputType.TYPE_CLASS_NUMBER
-                    | InputType.TYPE_NUMBER_VARIATION_NORMAL | InputType.TYPE_NUMBER_FLAG_DECIMAL;
-            outAttrs.imeOptions |= EditorInfo.IME_ACTION_NEXT;
         }
 
+        outAttrs.imeOptions |= imeAction;
         // Handling of autocapitalize. Blink will send the flag taking into account the element's
         // type. This is not using AutocapitalizeNone because Android does not autocapitalize by
         // default and there is no way to express no capitalization.
         // Autocapitalize is meant as a hint to the virtual keyboard.
-        if ((inputFlags & WebTextInputFlags.AutocapitalizeCharacters) != 0) {
+        if ((inputFlags & WebTextInputFlags.AUTOCAPITALIZE_CHARACTERS) != 0) {
             outAttrs.inputType |= InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
-        } else if ((inputFlags & WebTextInputFlags.AutocapitalizeWords) != 0) {
+        } else if ((inputFlags & WebTextInputFlags.AUTOCAPITALIZE_WORDS) != 0) {
             outAttrs.inputType |= InputType.TYPE_TEXT_FLAG_CAP_WORDS;
-        } else if ((inputFlags & WebTextInputFlags.AutocapitalizeSentences) != 0) {
+        } else if ((inputFlags & WebTextInputFlags.AUTOCAPITALIZE_SENTENCES) != 0) {
             outAttrs.inputType |= InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
         }
         // Content editable doesn't use autocapitalize so we need to set it manually.

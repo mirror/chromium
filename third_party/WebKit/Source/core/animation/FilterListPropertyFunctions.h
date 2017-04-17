@@ -7,47 +7,48 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/style/ComputedStyle.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class FilterListPropertyFunctions {
-    STATIC_ONLY(FilterListPropertyFunctions);
-public:
-    static const FilterOperations& getInitialFilterList(CSSPropertyID property)
-    {
-        return getFilterList(property, ComputedStyle::initialStyle());
-    }
+  STATIC_ONLY(FilterListPropertyFunctions);
 
-    static const FilterOperations& getFilterList(CSSPropertyID property, const ComputedStyle& style)
-    {
-        switch (property) {
-        default:
-            NOTREACHED();
-            // Fall through.
-        case CSSPropertyBackdropFilter:
-            return style.backdropFilter();
-        case CSSPropertyFilter:
-            return style.filter();
-        }
-    }
+ public:
+  static const FilterOperations& GetInitialFilterList(CSSPropertyID property) {
+    return GetFilterList(property, ComputedStyle::InitialStyle());
+  }
 
-    static void setFilterList(CSSPropertyID property, ComputedStyle& style, const FilterOperations& filterOperations)
-    {
-        switch (property) {
-        case CSSPropertyBackdropFilter:
-            style.setBackdropFilter(filterOperations);
-            break;
-        case CSSPropertyFilter:
-            style.setFilter(filterOperations);
-            break;
-        default:
-            NOTREACHED();
-            break;
-        }
+  static const FilterOperations& GetFilterList(CSSPropertyID property,
+                                               const ComputedStyle& style) {
+    switch (property) {
+      default:
+        NOTREACHED();
+      // Fall through.
+      case CSSPropertyBackdropFilter:
+        return style.BackdropFilter();
+      case CSSPropertyFilter:
+        return style.Filter();
     }
+  }
+
+  static void SetFilterList(CSSPropertyID property,
+                            ComputedStyle& style,
+                            const FilterOperations& filter_operations) {
+    switch (property) {
+      case CSSPropertyBackdropFilter:
+        style.SetBackdropFilter(filter_operations);
+        break;
+      case CSSPropertyFilter:
+        style.SetFilter(filter_operations);
+        break;
+      default:
+        NOTREACHED();
+        break;
+    }
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FilterListPropertyFunctions_h
+#endif  // FilterListPropertyFunctions_h

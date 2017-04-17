@@ -31,34 +31,50 @@
 #ifndef WebDOMActivityLogger_h
 #define WebDOMActivityLogger_h
 
-#include "../platform/WebCommon.h"
-#include "../platform/WebString.h"
-#include "../platform/WebURL.h"
-#include <v8.h>
+#include "public/platform/WebCommon.h"
+#include "public/platform/WebString.h"
+#include "public/platform/WebURL.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
 class WebDOMActivityLogger {
-public:
-    virtual ~WebDOMActivityLogger() { }
+ public:
+  virtual ~WebDOMActivityLogger() {}
 
-    virtual void logGetter(const WebString& apiName, const WebURL& url, const WebString& title) { }
-    virtual void logSetter(const WebString& apiName, const v8::Local<v8::Value>& newValue, const WebURL& url, const WebString& title) { }
-    virtual void logMethod(const WebString& apiName, int argc, const v8::Local<v8::Value>* argv, const WebURL& url, const WebString& title) { }
-    virtual void logEvent(const WebString& eventName, int argc, const WebString* argv, const WebURL& url, const WebString& title) { }
+  virtual void LogGetter(const WebString& api_name,
+                         const WebURL& url,
+                         const WebString& title) {}
+  virtual void LogSetter(const WebString& api_name,
+                         const v8::Local<v8::Value>& new_value,
+                         const WebURL& url,
+                         const WebString& title) {}
+  virtual void LogMethod(const WebString& api_name,
+                         int argc,
+                         const v8::Local<v8::Value>* argv,
+                         const WebURL& url,
+                         const WebString& title) {}
+  virtual void LogEvent(const WebString& event_name,
+                        int argc,
+                        const WebString* argv,
+                        const WebURL& url,
+                        const WebString& title) {}
 };
 
 // Checks if a logger already exists for the world identified by worldId and
 // extensionID (worldId may be 0 identifying the main world). Extension ID is
 // used only in the case of main world and ignored otherwise.
-BLINK_EXPORT bool hasDOMActivityLogger(int worldId, const WebString& extensionId);
+BLINK_EXPORT bool HasDOMActivityLogger(int world_id,
+                                       const WebString& extension_id);
 
 // Checks if the provided logger is non-null and if so associates it with the
 // world identified by worldId and extension ID (worldId may be 0 identifying
 // the main world). The extension ID is ignored for other worlds than the main
 // one.
-BLINK_EXPORT void setDOMActivityLogger(int worldId, const WebString& extensionId, WebDOMActivityLogger*);
+BLINK_EXPORT void SetDOMActivityLogger(int world_id,
+                                       const WebString& extension_id,
+                                       WebDOMActivityLogger*);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

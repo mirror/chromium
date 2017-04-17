@@ -27,7 +27,16 @@ struct EVENTS_OZONE_EVDEV_EXPORT InProgressTouchEvdev {
 
   // Whether the touch was cancelled. Touch events should be ignored till a
   // new touch is initiated.
+  bool was_cancelled = false;
+
+  // Whether the touch is going to be canceled.
   bool cancelled = false;
+
+  // Whether the touch is delayed at first appearance. Will not be reported yet.
+  bool delayed = false;
+
+  // Whether the touch was delayed before.
+  bool was_delayed = false;
 
   bool was_touching = false;
   bool touching = false;
@@ -39,6 +48,18 @@ struct EVENTS_OZONE_EVDEV_EXPORT InProgressTouchEvdev {
   float radius_y = 0;
   float pressure = 0;
   int tool_code = 0;
+  float tilt_x = 0;
+  float tilt_y = 0;
+  ui::EventPointerType reported_tool_type =
+      ui::EventPointerType::POINTER_TYPE_TOUCH;
+
+  struct ButtonState {
+    bool down = false;
+    bool changed = false;
+  };
+  ButtonState btn_left;
+  ButtonState btn_right;
+  ButtonState btn_middle;
 };
 
 }  // namespace ui

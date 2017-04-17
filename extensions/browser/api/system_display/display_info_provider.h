@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
 
 namespace display {
@@ -20,10 +21,12 @@ namespace extensions {
 
 namespace api {
 namespace system_display {
+struct Bounds;
 struct DisplayLayout;
 struct DisplayProperties;
 struct DisplayUnitInfo;
 struct Insets;
+struct TouchCalibrationPairQuad;
 }
 }
 
@@ -31,6 +34,7 @@ class DisplayInfoProvider {
  public:
   using DisplayUnitInfoList = std::vector<api::system_display::DisplayUnitInfo>;
   using DisplayLayoutList = std::vector<api::system_display::DisplayLayout>;
+  using TouchCalibrationCallback = base::Callback<void(bool)>;
 
   virtual ~DisplayInfoProvider();
 
@@ -56,8 +60,10 @@ class DisplayInfoProvider {
   // Enables the unified desktop feature.
   virtual void EnableUnifiedDesktop(bool enable);
 
-  // Gets display information.
-  virtual DisplayUnitInfoList GetAllDisplaysInfo();
+  // Returns a list of information for all displays. If |single_unified| is
+  // true, when in unified mode a single display will be returned representing
+  // the single unified desktop.
+  virtual DisplayUnitInfoList GetAllDisplaysInfo(bool single_unified);
 
   // Gets display layout information.
   virtual DisplayLayoutList GetDisplayLayout();
@@ -70,6 +76,22 @@ class DisplayInfoProvider {
       const api::system_display::Insets& delta);
   virtual bool OverscanCalibrationReset(const std::string& id);
   virtual bool OverscanCalibrationComplete(const std::string& id);
+
+  // Implements touch calibration methods. See system_display.idl. This returns
+  // false in case any error occurs. In such cases the |error| string will also
+  // be set.
+  virtual bool ShowNativeTouchCalibration(
+      const std::string& id,
+      std::string* error,
+      const TouchCalibrationCallback& callback);
+  virtual bool StartCustomTouchCalibration(const std::string& id,
+                                           std::string* error);
+  virtual bool CompleteCustomTouchCalibration(
+      const api::system_display::TouchCalibrationPairQuad& pairs,
+      const api::system_display::Bounds& bounds,
+      std::string* error);
+  virtual bool ClearTouchCalibration(const std::string& id, std::string* error);
+  virtual bool IsNativeTouchCalibrationActive(std::string* error);
 
  protected:
   DisplayInfoProvider();

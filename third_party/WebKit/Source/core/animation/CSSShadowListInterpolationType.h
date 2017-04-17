@@ -12,26 +12,38 @@ namespace blink {
 class ShadowList;
 
 class CSSShadowListInterpolationType : public CSSInterpolationType {
-public:
-    CSSShadowListInterpolationType(CSSPropertyID property)
-        : CSSInterpolationType(property)
-    { }
+ public:
+  CSSShadowListInterpolationType(PropertyHandle property)
+      : CSSInterpolationType(property) {}
 
-    InterpolationValue maybeConvertUnderlyingValue(const InterpolationEnvironment&) const final;
-    void composite(UnderlyingValueOwner&, double underlyingFraction, const InterpolationValue&, double interpolationFraction) const final;
-    void apply(const InterpolableValue&, const NonInterpolableValue*, InterpolationEnvironment&) const final;
+  InterpolationValue MaybeConvertStandardPropertyUnderlyingValue(
+      const ComputedStyle&) const final;
+  void Composite(UnderlyingValueOwner&,
+                 double underlying_fraction,
+                 const InterpolationValue&,
+                 double interpolation_fraction) const final;
+  void ApplyStandardPropertyValue(const InterpolableValue&,
+                                  const NonInterpolableValue*,
+                                  StyleResolverState&) const final;
 
-private:
-    InterpolationValue convertShadowList(const ShadowList*, double zoom) const;
-    InterpolationValue createNeutralValue() const;
+ private:
+  InterpolationValue ConvertShadowList(const ShadowList*, double zoom) const;
+  InterpolationValue CreateNeutralValue() const;
 
-    InterpolationValue maybeConvertNeutral(const InterpolationValue& underlying, ConversionCheckers&) const final;
-    InterpolationValue maybeConvertInitial(const StyleResolverState&, ConversionCheckers&) const final;
-    InterpolationValue maybeConvertInherit(const StyleResolverState&, ConversionCheckers&) const final;
-    InterpolationValue maybeConvertValue(const CSSValue&, const StyleResolverState&, ConversionCheckers&) const final;
-    PairwiseInterpolationValue maybeMergeSingles(InterpolationValue&& start, InterpolationValue&& end) const final;
+  InterpolationValue MaybeConvertNeutral(const InterpolationValue& underlying,
+                                         ConversionCheckers&) const final;
+  InterpolationValue MaybeConvertInitial(const StyleResolverState&,
+                                         ConversionCheckers&) const final;
+  InterpolationValue MaybeConvertInherit(const StyleResolverState&,
+                                         ConversionCheckers&) const final;
+  InterpolationValue MaybeConvertValue(const CSSValue&,
+                                       const StyleResolverState*,
+                                       ConversionCheckers&) const final;
+  PairwiseInterpolationValue MaybeMergeSingles(
+      InterpolationValue&& start,
+      InterpolationValue&& end) const final;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSShadowListInterpolationType_h
+#endif  // CSSShadowListInterpolationType_h

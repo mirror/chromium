@@ -12,10 +12,10 @@ let define = (function(){
   return function(name, deps, factory) {
     let promise = moduleCache.get(name);
     if (promise === undefined) {
-      // This promise must be cached as mojo.define will only call the factory
+      // This promise must be cached as gin.define will only call the factory
       // function the first time the module is defined.
       promise = new Promise(resolve => {
-        mojo.define(name, deps, (...modules) => {
+        gin.define(name, deps, (...modules) => {
           let result = factory(...modules);
           resolve(result);
           return result;
@@ -27,29 +27,40 @@ let define = (function(){
   }
 })();
 
-define('Mojo Helpers', [
-    'mojo/public/js/core',
-    'mojo/public/js/router',
-    'mojo/public/js/support',
-    'content/public/renderer/frame_service_registry',
-    'content/public/renderer/service_registry',
-], (core, router, support, frameServiceRegistry, serviceRegistry) => {
-  let tearDown = () => {
-    frameServiceRegistry.clearServiceOverridesForTesting();
-    serviceRegistry.clearServiceOverridesForTesting();
-  };
-  addEventListener('unload', tearDown);
-  if (window.add_completion_callback)
-    add_completion_callback(tearDown);
+define(
+    'Mojo Helpers',
+    [
+      'mojo/public/js/core',
+      'mojo/public/js/router',
+      'mojo/public/js/support',
+      'content/public/renderer/connector',
+      'content/public/renderer/frame_interfaces',
+      'content/public/renderer/interfaces',
+      'content/shell/renderer/layout_test/frame_interface_registry',
+      'content/shell/renderer/layout_test/interface_registry',
+    ],
+    (core, router, support, connector, frameInterfaces, interfaces,
+     frameInterfaceRegistry, interfaceRegistry) => {
+      let tearDown = () => {
+        connector.clearInterfaceOverridesForTesting();
+        frameInterfaces.clearInterfaceOverridesForTesting();
+        interfaces.clearInterfaceOverridesForTesting();
+      };
+      addEventListener('unload', tearDown);
+      if (window.add_completion_callback)
+        add_completion_callback(tearDown);
 
-  return {
-    core,
-    router,
-    support,
-    frameServiceRegistry,
-    serviceRegistry,
-  };
-});
+      return {
+          core,
+          router,
+          support,
+          connector,
+          frameInterfaces,
+          frameInterfaceRegistry,
+          interfaces,
+          interfaceRegistry,
+      };
+    });
 
 // Returns a promise to an object that exposes common Mojo module interfaces.
 // Additional modules to load can be specified in the |modules| parameter. The

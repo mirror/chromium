@@ -5,14 +5,15 @@
 #ifndef TestPaintArtifact_h
 #define TestPaintArtifact_h
 
+#include <memory>
 #include "base/memory/ref_counted.h"
 #include "platform/graphics/Color.h"
 #include "platform/graphics/paint/DisplayItemList.h"
 #include "platform/graphics/paint/PaintArtifact.h"
-#include "wtf/Allocator.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/Vector.h"
-#include <memory>
+#include "platform/graphics/paint/ScrollPaintPropertyNode.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/Vector.h"
 
 namespace cc {
 class Layer;
@@ -39,34 +40,39 @@ class TransformPaintPropertyNode;
 //       .rectDrawing(bounds3, color3);
 //   doSomethingWithArtifact(artifact);
 class TestPaintArtifact {
-    STACK_ALLOCATED();
-public:
-    TestPaintArtifact();
-    ~TestPaintArtifact();
+  STACK_ALLOCATED();
 
-    // Add to the artifact.
-    TestPaintArtifact& chunk(PassRefPtr<TransformPaintPropertyNode>, PassRefPtr<ClipPaintPropertyNode>, PassRefPtr<EffectPaintPropertyNode>);
-    TestPaintArtifact& chunk(const PaintChunkProperties&);
-    TestPaintArtifact& rectDrawing(const FloatRect& bounds, Color);
-    TestPaintArtifact& foreignLayer(const FloatPoint&, const IntSize&, scoped_refptr<cc::Layer>);
+ public:
+  TestPaintArtifact();
+  ~TestPaintArtifact();
 
-    // Can't add more things once this is called.
-    const PaintArtifact& build();
+  // Add to the artifact.
+  TestPaintArtifact& Chunk(PassRefPtr<const TransformPaintPropertyNode>,
+                           PassRefPtr<const ClipPaintPropertyNode>,
+                           PassRefPtr<const EffectPaintPropertyNode>);
+  TestPaintArtifact& Chunk(const PaintChunkProperties&);
+  TestPaintArtifact& RectDrawing(const FloatRect& bounds, Color);
+  TestPaintArtifact& ForeignLayer(const FloatPoint&,
+                                  const IntSize&,
+                                  scoped_refptr<cc::Layer>);
 
-private:
-    class DummyRectClient;
-    Vector<std::unique_ptr<DummyRectClient>> m_dummyClients;
+  // Can't add more things once this is called.
+  const PaintArtifact& Build();
 
-    // Exists if m_built is false.
-    DisplayItemList m_displayItemList;
-    Vector<PaintChunk> m_paintChunks;
+ private:
+  class DummyRectClient;
+  Vector<std::unique_ptr<DummyRectClient>> dummy_clients_;
 
-    // Exists if m_built is true.
-    PaintArtifact m_paintArtifact;
+  // Exists if m_built is false.
+  DisplayItemList display_item_list_;
+  Vector<PaintChunk> paint_chunks_;
 
-    bool m_built;
+  // Exists if m_built is true.
+  PaintArtifact paint_artifact_;
+
+  bool built_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TestPaintArtifact_h
+#endif  // TestPaintArtifact_h

@@ -39,48 +39,52 @@
 namespace blink {
 
 class SVGPath final : public SVGPropertyBase {
-public:
-    typedef void TearOffType;
+ public:
+  typedef void TearOffType;
 
-    static SVGPath* create()
-    {
-        return new SVGPath();
-    }
-    static SVGPath* create(CSSPathValue* pathValue)
-    {
-        return new SVGPath(pathValue);
-    }
+  static SVGPath* Create() { return new SVGPath(); }
+  static SVGPath* Create(CSSPathValue* path_value) {
+    return new SVGPath(path_value);
+  }
 
-    ~SVGPath() override;
+  ~SVGPath() override;
 
-    const SVGPathByteStream& byteStream() const { return m_pathValue->byteStream(); }
-    StylePath* stylePath() const { return m_pathValue->stylePath(); }
-    CSSPathValue* pathValue() const { return m_pathValue.get(); }
+  const SVGPathByteStream& ByteStream() const {
+    return path_value_->ByteStream();
+  }
+  StylePath* GetStylePath() const { return path_value_->GetStylePath(); }
+  CSSPathValue* PathValue() const { return path_value_.Get(); }
 
-    // SVGPropertyBase:
-    SVGPath* clone() const;
-    SVGPropertyBase* cloneForAnimation(const String&) const override;
-    String valueAsString() const override;
-    SVGParsingError setValueAsString(const String&);
+  // SVGPropertyBase:
+  SVGPath* Clone() const;
+  SVGPropertyBase* CloneForAnimation(const String&) const override;
+  String ValueAsString() const override;
+  SVGParsingError SetValueAsString(const String&);
 
-    void add(SVGPropertyBase*, SVGElement*) override;
-    void calculateAnimatedValue(SVGAnimationElement*, float percentage, unsigned repeatCount, SVGPropertyBase* fromValue, SVGPropertyBase* toValue, SVGPropertyBase* toAtEndOfDurationValue, SVGElement*) override;
-    float calculateDistance(SVGPropertyBase* to, SVGElement*) override;
+  void Add(SVGPropertyBase*, SVGElement*) override;
+  void CalculateAnimatedValue(SVGAnimationElement*,
+                              float percentage,
+                              unsigned repeat_count,
+                              SVGPropertyBase* from_value,
+                              SVGPropertyBase* to_value,
+                              SVGPropertyBase* to_at_end_of_duration_value,
+                              SVGElement*) override;
+  float CalculateDistance(SVGPropertyBase* to, SVGElement*) override;
 
-    static AnimatedPropertyType classType() { return AnimatedPath; }
-    AnimatedPropertyType type() const override { return classType(); }
+  static AnimatedPropertyType ClassType() { return kAnimatedPath; }
+  AnimatedPropertyType GetType() const override { return ClassType(); }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    SVGPath();
-    explicit SVGPath(CSSPathValue*);
+ private:
+  SVGPath();
+  explicit SVGPath(CSSPathValue*);
 
-    Member<CSSPathValue> m_pathValue;
+  Member<CSSPathValue> path_value_;
 };
 
 DEFINE_SVG_PROPERTY_TYPE_CASTS(SVGPath);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

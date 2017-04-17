@@ -10,7 +10,7 @@
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -56,6 +56,7 @@
 #include "extensions/browser/extensions_browser_client.h"
 #include "extensions/common/extension.h"
 #include "google_apis/drive/drive_api_url_generator.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "storage/browser/blob/scoped_file.h"
 #include "storage/common/fileapi/file_system_util.h"
@@ -65,6 +66,29 @@ namespace sync_file_system {
 class RemoteChangeProcessor;
 
 namespace drive_backend {
+
+constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("sync_file_system", R"(
+        semantics {
+          sender: "Sync FileSystem Chrome API"
+          description:
+            "Sync FileSystem API provides an isolated FileSystem to Chrome "
+            "Apps. The contents of the FileSystem are automatically synced "
+            "among application instances through a hidden folder on Google "
+            "Drive. This service uploades or downloads these files for "
+            "synchronization."
+          trigger:
+            "When a Chrome App uses Sync FileSystem API, or when a file on "
+            "Google Drive is modified."
+          data:
+            "Files created by Chrome Apps via Sync FileSystem API."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: false
+          setting: "This feature cannot be disabled in settings."
+          policy_exception_justification: "Not implemented."
+        })");
 
 std::unique_ptr<drive::DriveServiceInterface>
 SyncEngine::DriveServiceFactory::CreateDriveService(
@@ -76,7 +100,8 @@ SyncEngine::DriveServiceFactory::CreateDriveService(
       oauth2_token_service, url_request_context_getter, blocking_task_runner,
       GURL(google_apis::DriveApiUrlGenerator::kBaseUrlForProduction),
       GURL(google_apis::DriveApiUrlGenerator::kBaseThumbnailUrlForProduction),
-      std::string() /* custom_user_agent */));
+      std::string(), /* custom_user_agent */
+      kTrafficAnnotation));
 }
 
 class SyncEngine::WorkerObserver : public SyncWorkerInterface::Observer {
@@ -89,7 +114,7 @@ class SyncEngine::WorkerObserver : public SyncWorkerInterface::Observer {
   }
 
   ~WorkerObserver() override {
-    DCHECK(sequence_checker_.CalledOnValidSequencedThread());
+    DCHECK(sequence_checker_.CalledOnValidSequence());
   }
 
   void OnPendingFileListUpdated(int item_count) override {
@@ -99,7 +124,7 @@ class SyncEngine::WorkerObserver : public SyncWorkerInterface::Observer {
       return;
     }
 
-    DCHECK(sequence_checker_.CalledOnValidSequencedThread());
+    DCHECK(sequence_checker_.CalledOnValidSequence());
     ui_task_runner_->PostTask(
         FROM_HERE,
         base::Bind(&SyncEngine::OnPendingFileListUpdated,
@@ -119,7 +144,7 @@ class SyncEngine::WorkerObserver : public SyncWorkerInterface::Observer {
       return;
     }
 
-    DCHECK(sequence_checker_.CalledOnValidSequencedThread());
+    DCHECK(sequence_checker_.CalledOnValidSequence());
     ui_task_runner_->PostTask(
         FROM_HERE,
         base::Bind(&SyncEngine::OnFileStatusChanged,
@@ -135,7 +160,7 @@ class SyncEngine::WorkerObserver : public SyncWorkerInterface::Observer {
       return;
     }
 
-    DCHECK(sequence_checker_.CalledOnValidSequencedThread());
+    DCHECK(sequence_checker_.CalledOnValidSequence());
     ui_task_runner_->PostTask(
         FROM_HERE,
         base::Bind(&SyncEngine::UpdateServiceState,
@@ -201,7 +226,7 @@ std::unique_ptr<SyncEngine> SyncEngine::CreateForBrowserContext(
       ui_task_runner.get(), worker_task_runner.get(), drive_task_runner.get(),
       worker_pool.get(), GetSyncFileSystemDir(context->GetPath()), task_logger,
       notification_manager, extension_service, signin_manager, token_service,
-      request_context.get(), base::WrapUnique(new DriveServiceFactory()),
+      request_context.get(), base::MakeUnique<DriveServiceFactory>(),
       nullptr /* env_override */));
 
   sync_engine->Initialize();
@@ -748,10 +773,8 @@ SyncEngine::SyncEngine(
 }
 
 void SyncEngine::OnPendingFileListUpdated(int item_count) {
-  FOR_EACH_OBSERVER(
-      SyncServiceObserver,
-      service_observers_,
-      OnRemoteChangeQueueUpdated(item_count));
+  for (auto& observer : service_observers_)
+    observer.OnRemoteChangeQueueUpdated(item_count);
 }
 
 void SyncEngine::OnFileStatusChanged(const storage::FileSystemURL& url,
@@ -759,19 +782,18 @@ void SyncEngine::OnFileStatusChanged(const storage::FileSystemURL& url,
                                      SyncFileStatus file_status,
                                      SyncAction sync_action,
                                      SyncDirection direction) {
-  FOR_EACH_OBSERVER(FileStatusObserver,
-                    file_status_observers_,
-                    OnFileStatusChanged(
-                        url, file_type, file_status, sync_action, direction));
+  for (auto& observer : file_status_observers_) {
+    observer.OnFileStatusChanged(url, file_type, file_status, sync_action,
+                                 direction);
+  }
 }
 
 void SyncEngine::UpdateServiceState(RemoteServiceState state,
                                     const std::string& description) {
   service_state_ = state;
 
-  FOR_EACH_OBSERVER(
-      SyncServiceObserver, service_observers_,
-      OnRemoteServiceStateUpdated(GetCurrentState(), description));
+  for (auto& observer : service_observers_)
+    observer.OnRemoteServiceStateUpdated(GetCurrentState(), description);
 }
 
 SyncStatusCallback SyncEngine::TrackCallback(

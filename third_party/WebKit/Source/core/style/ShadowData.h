@@ -2,7 +2,8 @@
  * Copyright (C) 2000 Lars Knoll (knoll@kde.org)
  *           (C) 2000 Antti Koivisto (koivisto@kde.org)
  *           (C) 2000 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2003, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights
+ * reserved.
  * Copyright (C) 2006 Graham Dennis (graham.dennis@gmail.com)
  *
  * This library is free software; you can redistribute it and/or
@@ -28,57 +29,66 @@
 #include "core/css/StyleColor.h"
 #include "platform/geometry/FloatPoint.h"
 #include "platform/geometry/FloatRectOutsets.h"
+#include "platform/graphics/skia/SkiaUtils.h"
 
 namespace blink {
 
-enum ShadowStyle { Normal, Inset };
+enum ShadowStyle { kNormal, kInset };
 
-// This class holds information about shadows for the text-shadow and box-shadow properties.
+// This class holds information about shadows for the text-shadow and box-shadow
+// properties, as well as the drop-shadow(...) filter operation.
 class ShadowData {
-    USING_FAST_MALLOC(ShadowData);
-public:
-    ShadowData(const FloatPoint& location, float blur, float spread, ShadowStyle style, StyleColor color)
-        : m_location(location)
-        , m_blur(blur)
-        , m_spread(spread)
-        , m_color(color)
-        , m_style(style)
-    {
-    }
+  USING_FAST_MALLOC(ShadowData);
 
-    bool operator==(const ShadowData&) const;
-    bool operator!=(const ShadowData& o) const { return !(*this == o); }
+ public:
+  ShadowData(const FloatPoint& location,
+             float blur,
+             float spread,
+             ShadowStyle style,
+             StyleColor color)
+      : location_(location),
+        blur_(blur),
+        spread_(spread),
+        color_(color),
+        style_(style) {}
 
-    ShadowData blend(const ShadowData& from, double progress, const Color& currentColor) const;
+  bool operator==(const ShadowData&) const;
+  bool operator!=(const ShadowData& o) const { return !(*this == o); }
 
-    float x() const { return m_location.x(); }
-    float y() const { return m_location.y(); }
-    FloatPoint location() const { return m_location; }
-    float blur() const { return m_blur; }
-    float spread() const { return m_spread; }
-    ShadowStyle style() const { return m_style; }
-    StyleColor color() const { return m_color; }
+  ShadowData Blend(const ShadowData& from,
+                   double progress,
+                   const Color& current_color) const;
+  static ShadowData NeutralValue();
 
-    // Outsets needed to adjust a source rectangle to the one cast by this
-    // shadow.
-    FloatRectOutsets rectOutsets() const
-    {
-        float blurAndSpread = blur() + spread();
-        return FloatRectOutsets(
-            blurAndSpread - y() /* top */,
-            blurAndSpread + x() /* right */,
-            blurAndSpread + y() /* bottom */,
-            blurAndSpread - x() /* left */);
-    }
+  float X() const { return location_.X(); }
+  float Y() const { return location_.Y(); }
+  FloatPoint Location() const { return location_; }
+  float Blur() const { return blur_; }
+  float Spread() const { return spread_; }
+  ShadowStyle Style() const { return style_; }
+  StyleColor GetColor() const { return color_; }
 
-private:
-    FloatPoint m_location;
-    float m_blur;
-    float m_spread;
-    StyleColor m_color;
-    ShadowStyle m_style;
+  void OverrideColor(Color color) { color_ = StyleColor(color); }
+
+  // Outsets needed to adjust a source rectangle to the one cast by this
+  // shadow.
+  FloatRectOutsets RectOutsets() const {
+    // 3 * skBlurRadiusToSigma(blur()) is how Skia implements the radius of a
+    // blur. See also https://crbug.com/624175.
+    float blur_and_spread = ceil(3 * SkBlurRadiusToSigma(Blur())) + Spread();
+    return FloatRectOutsets(
+        blur_and_spread - Y() /* top */, blur_and_spread + X() /* right */,
+        blur_and_spread + Y() /* bottom */, blur_and_spread - X() /* left */);
+  }
+
+ private:
+  FloatPoint location_;
+  float blur_;
+  float spread_;
+  StyleColor color_;
+  ShadowStyle style_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ShadowData_h
+#endif  // ShadowData_h

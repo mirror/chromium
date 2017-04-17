@@ -6,20 +6,29 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/sessions/session_tab_helper.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/common/chrome_switches.h"
+#include "chrome/common/extensions/extension_process_policy.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "content/public/browser/notification_service.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/test/browser_test_utils.h"
+#include "content/public/test/test_navigation_observer.h"
 #include "extensions/browser/extension_host.h"
 #include "extensions/browser/process_manager.h"
+#include "extensions/browser/process_map.h"
 #include "extensions/common/switches.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
@@ -37,6 +46,29 @@ class ProcessManagementTest : public ExtensionBrowserTest {
     command_line->AppendSwitch(
         extensions::switches::kEnableExperimentalExtensionApis);
   }
+};
+
+class ChromeWebStoreProcessTest : public ExtensionBrowserTest {
+ public:
+  const GURL& gallery_url() { return gallery_url_; }
+
+ private:
+  // Overrides location of Chrome Web Store gallery to a test controlled URL.
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    ExtensionBrowserTest::SetUpCommandLine(command_line);
+
+    ASSERT_TRUE(embedded_test_server()->Start());
+    gallery_url_ =
+        embedded_test_server()->GetURL("chrome.webstore.test.com", "/");
+    command_line->AppendSwitchASCII(switches::kAppsGalleryURL,
+                                    gallery_url_.spec());
+  }
+
+  void SetUpOnMainThread() override {
+    host_resolver()->AddRule("*", "127.0.0.1");
+  }
+
+  GURL gallery_url_;
 };
 
 }  // namespace
@@ -84,31 +116,39 @@ IN_PROC_BROWSER_TEST_F(ProcessManagementTest, MAYBE_ProcessOverflow) {
       browser(), base_url.Resolve("isolated_apps/app1/main.html"));
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), GURL(chrome::kChromeUINewTabURL),
-      NEW_FOREGROUND_TAB, ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), base_url.Resolve("hosted_app/main.html"),
-      NEW_FOREGROUND_TAB, ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), base_url.Resolve("test_file.html"),
-      NEW_FOREGROUND_TAB, ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
 
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), base_url.Resolve("isolated_apps/app2/main.html"),
-      NEW_FOREGROUND_TAB, ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), GURL(chrome::kChromeUINewTabURL),
-      NEW_FOREGROUND_TAB, ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), base_url.Resolve("api_test/app_process/path1/empty.html"),
-      NEW_FOREGROUND_TAB, ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), base_url.Resolve("test_file_with_body.html"),
-      NEW_FOREGROUND_TAB, ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
 
   // Load another copy of isolated app 1.
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), base_url.Resolve("isolated_apps/app1/main.html"),
-      NEW_FOREGROUND_TAB, ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
 
   // Load another extension.
   const extensions::Extension* extension2 = LoadExtension(
@@ -239,4 +279,182 @@ IN_PROC_BROWSER_TEST_F(ProcessManagementTest, MAYBE_ExtensionProcessBalancing) {
 
   EXPECT_GE((size_t) 6, process_map->size());
   EXPECT_EQ((size_t) 2, process_ids.size());
+}
+
+IN_PROC_BROWSER_TEST_F(ProcessManagementTest,
+                       NavigateExtensionTabToWebViaPost) {
+  host_resolver()->AddRule("*", "127.0.0.1");
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // Load an extension.
+  const extensions::Extension* extension = LoadExtension(
+      test_data_dir_.AppendASCII("api_test/browser_action/popup_with_form"));
+  ASSERT_TRUE(extension);
+
+  // Navigate a tab to an extension page.
+  GURL extension_url = extension->GetResourceURL("popup.html");
+  ui_test_utils::NavigateToURL(browser(), extension_url);
+  WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  EXPECT_EQ(extension_url, web_contents->GetLastCommittedURL());
+  content::RenderProcessHost* old_process_host =
+      web_contents->GetMainFrame()->GetProcess();
+
+  // Note that the |setTimeout| call below is needed to make sure
+  // ExecuteScriptAndExtractBool returns *after* a scheduled navigation has
+  // already started.
+  GURL web_url(embedded_test_server()->GetURL("foo.com", "/title1.html"));
+  std::string navigation_starting_script =
+      "var form = document.getElementById('form');\n"
+      "form.action = '" + web_url.spec() + "';\n"
+      "form.submit();\n"
+      "setTimeout(\n"
+      "    function() { window.domAutomationController.send(true); },\n"
+      "    0);\n";
+
+  // Try to trigger navigation to a webpage from within the tab.
+  bool ignored_script_result = false;
+  content::TestNavigationObserver nav_observer(web_contents, 1);
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      web_contents, navigation_starting_script, &ignored_script_result));
+
+  // Verify that the navigation succeeded.
+  nav_observer.Wait();
+  EXPECT_EQ(web_url, web_contents->GetLastCommittedURL());
+
+  // Verify that the navigation transferred the contents to another renderer
+  // process.
+  if (extensions::IsIsolateExtensionsEnabled()) {
+    content::RenderProcessHost* new_process_host =
+        web_contents->GetMainFrame()->GetProcess();
+    EXPECT_NE(old_process_host, new_process_host);
+  }
+}
+
+IN_PROC_BROWSER_TEST_F(ChromeWebStoreProcessTest,
+                       NavigateWebTabToChromeWebStoreViaPost) {
+  // Navigate a tab to a web page with a form.
+  GURL web_url = embedded_test_server()->GetURL("foo.com", "/form.html");
+  ui_test_utils::NavigateToURL(browser(), web_url);
+  WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  EXPECT_EQ(web_url, web_contents->GetLastCommittedURL());
+  content::RenderProcessHost* old_process_host =
+      web_contents->GetMainFrame()->GetProcess();
+
+  // Calculate an URL that is 1) relative to the fake (i.e. test-controlled)
+  // Chrome Web Store gallery URL and 2) resolves to something that
+  // embedded_test_server can actually serve (e.g. title1.html test file).
+  GURL::Replacements replace_path;
+  replace_path.SetPathStr("/title1.html");
+  GURL cws_web_url = gallery_url().ReplaceComponents(replace_path);
+
+  // Note that the |setTimeout| call below is needed to make sure
+  // ExecuteScriptAndExtractBool returns *after* a scheduled navigation has
+  // already started.
+  std::string navigation_starting_script =
+      "var form = document.getElementById('form');\n"
+      "form.action = '" + cws_web_url.spec() + "';\n"
+      "form.submit();\n"
+      "setTimeout(\n"
+      "    function() { window.domAutomationController.send(true); },\n"
+      "    0);\n";
+
+  // Trigger a renderer-initiated POST navigation (via the form) to a Chrome Web
+  // Store gallery URL (which will commit into a chrome-extension://cws-app-id).
+  bool ignored_script_result = false;
+  content::TestNavigationObserver nav_observer(web_contents, 1);
+  content::RenderProcessHostWatcher crash_observer(
+      web_contents->GetMainFrame()->GetProcess(),
+      content::RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
+
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      web_contents, navigation_starting_script, &ignored_script_result));
+
+  // When --isolate-extensions is enabled, the expectation is that the store
+  // will be properly put in its own process, otherwise the renderer process
+  // is going to be terminated.
+  if (!extensions::IsIsolateExtensionsEnabled()) {
+    crash_observer.Wait();
+    return;
+  }
+
+  // Verify that the navigation succeeded.
+  nav_observer.Wait();
+  EXPECT_EQ(cws_web_url, web_contents->GetLastCommittedURL());
+
+  // Verify that we really have the Chrome Web Store app loaded in the Web
+  // Contents.
+  content::RenderProcessHost* new_process_host =
+      web_contents->GetMainFrame()->GetProcess();
+  EXPECT_TRUE(extensions::ProcessMap::Get(profile())->Contains(
+      extensions::kWebStoreAppId, new_process_host->GetID()));
+
+  // Verify that Chrome Web Store is isolated in a separate renderer process.
+  EXPECT_NE(old_process_host, new_process_host);
+}
+
+// This test verifies that blocked navigations to extensions pages do not
+// overwrite process-per-site map inside content/.
+IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
+                       NavigateToBlockedExtensionPageInNewTab) {
+  host_resolver()->AddRule("*", "127.0.0.1");
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // Load an extension, which will block a request for a specific page in it.
+  const extensions::Extension* extension = LoadExtension(
+      test_data_dir_.AppendASCII("web_request_site_process_registration"));
+  ASSERT_TRUE(extension);
+
+  WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  GURL blocked_url(extension->GetResourceURL("/blocked.html"));
+
+  // Navigating to the blocked extension URL should be done through a redirect,
+  // otherwise it will result in an OpenURL IPC from the renderer process, which
+  // will initiate a navigation through the browser process.
+  GURL redirect_url(
+      embedded_test_server()->GetURL("/server-redirect?" + blocked_url.spec()));
+
+  // Navigate the current tab to the test page in the extension, which will
+  // create the extension process and register the webRequest blocking listener.
+  ui_test_utils::NavigateToURL(browser(),
+                               extension->GetResourceURL("/test.html"));
+
+  // Open a new tab to about:blank, which will result in a new SiteInstance
+  // without an explicit site URL set.
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), GURL(url::kAboutBlankURL),
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+  WebContents* new_web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+
+  // Navigate the new tab to an extension URL that will be blocked by
+  // webRequest. It must be a renderer-initiated navigation. It also uses a
+  // redirect, otherwise the regular renderer process will send an OpenURL
+  // IPC to the browser due to the chrome-extension:// URL.
+  std::string script =
+      base::StringPrintf("location.href = '%s';", redirect_url.spec().c_str());
+  content::TestNavigationObserver observer(new_web_contents);
+  EXPECT_TRUE(content::ExecuteScript(new_web_contents, script));
+  observer.Wait();
+
+  EXPECT_EQ(observer.last_navigation_url(), blocked_url);
+  EXPECT_FALSE(observer.last_navigation_succeeded());
+
+  // Very subtle check for content/ internal functionality :(.
+  // When a navigation is blocked, it still commits an error page. Since
+  // extensions use the process-per-site model, each extension URL is registered
+  // in a map from URL to a process. Creating a brand new SiteInstance for the
+  // extension URL should always result in a SiteInstance that has a process and
+  // the process is the same for all SiteInstances. This allows us to verify
+  // that the site-to-process map for the extension hasn't been overwritten by
+  // the process of the |blocked_url|.
+  scoped_refptr<content::SiteInstance> new_site_instance =
+      content::SiteInstance::CreateForURL(web_contents->GetBrowserContext(),
+                                          extension->GetResourceURL(""));
+  EXPECT_TRUE(new_site_instance->HasProcess());
+  EXPECT_EQ(new_site_instance->GetProcess(),
+            web_contents->GetSiteInstance()->GetProcess());
 }

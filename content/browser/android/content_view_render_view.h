@@ -14,10 +14,6 @@
 #include "content/public/browser/android/compositor_client.h"
 #include "ui/gfx/native_widget_types.h"
 
-namespace cc {
-class Layer;
-}
-
 namespace content {
 class Compositor;
 
@@ -32,10 +28,10 @@ class ContentViewRenderView : public CompositorClient {
 
   // Methods called from Java via JNI -----------------------------------------
   void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
-  void SetCurrentContentViewCore(
+  void SetCurrentWebContents(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
-      jlong native_content_view_core);
+      const base::android::JavaParamRef<jobject>& jweb_contents);
   void SurfaceCreated(JNIEnv* env,
                       const base::android::JavaParamRef<jobject>& obj);
   void SurfaceDestroyed(JNIEnv* env,
@@ -52,7 +48,7 @@ class ContentViewRenderView : public CompositorClient {
 
   // CompositorClient implementation
   void UpdateLayerTreeHost() override;
-  void OnSwapBuffersCompleted(int pending_swap_buffers) override;
+  void DidSwapFrame(int pending_frames) override;
 
  private:
   ~ContentViewRenderView() override;

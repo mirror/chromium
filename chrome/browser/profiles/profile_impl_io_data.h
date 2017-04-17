@@ -15,31 +15,17 @@
 #include "components/prefs/pref_store.h"
 #include "content/public/browser/cookie_store_factory.h"
 
-class JsonPrefStore;
-
 namespace chrome_browser_net {
 class Predictor;
 }  // namespace chrome_browser_net
-
-namespace data_reduction_proxy {
-class DataReductionProxyNetworkDelegate;
-}  // namespace data_reduction_proxy
 
 namespace domain_reliability {
 class DomainReliabilityMonitor;
 }  // namespace domain_reliability
 
 namespace net {
-class CookieCryptoDelegate;
 class CookieStore;
-class FtpTransactionFactory;
-class HttpNetworkSession;
-class HttpServerProperties;
 class HttpServerPropertiesManager;
-class HttpTransactionFactory;
-class ProxyConfig;
-class SdchManager;
-class SdchOwner;
 }  // namespace net
 
 namespace storage {
@@ -161,6 +147,10 @@ class ProfileImplIOData : public ProfileIOData {
     base::FilePath extensions_cookie_path;
     content::CookieStoreConfig::SessionCookieMode session_cookie_mode;
     scoped_refptr<storage::SpecialStoragePolicy> special_storage_policy;
+    std::unique_ptr<net::HttpServerPropertiesManager>
+        http_server_properties_manager;
+    std::unique_ptr<domain_reliability::DomainReliabilityMonitor>
+        domain_reliability_monitor;
   };
 
   ProfileImplIOData();
@@ -184,7 +174,8 @@ class ProfileImplIOData : public ProfileIOData {
       const override;
   net::URLRequestContext* InitializeMediaRequestContext(
       net::URLRequestContext* original_context,
-      const StoragePartitionDescriptor& partition_descriptor) const override;
+      const StoragePartitionDescriptor& partition_descriptor,
+      const char* name) const override;
   net::URLRequestContext* AcquireMediaRequestContext() const override;
   net::URLRequestContext* AcquireIsolatedAppRequestContext(
       net::URLRequestContext* main_context,
@@ -206,38 +197,24 @@ class ProfileImplIOData : public ProfileIOData {
   void ClearNetworkingHistorySinceOnIOThread(base::Time time,
                                              const base::Closure& completion);
 
-  mutable std::unique_ptr<
-      data_reduction_proxy::DataReductionProxyNetworkDelegate>
-      network_delegate_;
-
   // Lazy initialization params.
   mutable std::unique_ptr<LazyParams> lazy_params_;
 
-  mutable scoped_refptr<JsonPrefStore> network_json_store_;
+  // Owned by URLRequestContextStorage, reference here to can be shut down on
+  // the UI thread.
+  net::HttpServerPropertiesManager* http_server_properties_manager_;
 
-  mutable std::unique_ptr<net::HttpNetworkSession> http_network_session_;
-  mutable std::unique_ptr<net::HttpTransactionFactory> main_http_factory_;
-  mutable std::unique_ptr<net::FtpTransactionFactory> ftp_factory_;
-
-  // Same as |ProfileIOData::http_server_properties_|, owned there to maintain
-  // destruction ordering.
-  mutable net::HttpServerPropertiesManager* http_server_properties_manager_;
-
-  mutable std::unique_ptr<net::CookieStore> main_cookie_store_;
   mutable std::unique_ptr<net::CookieStore> extensions_cookie_store_;
 
   mutable std::unique_ptr<chrome_browser_net::Predictor> predictor_;
 
   mutable std::unique_ptr<net::URLRequestContext> media_request_context_;
 
-  mutable std::unique_ptr<net::URLRequestJobFactory> main_job_factory_;
   mutable std::unique_ptr<net::URLRequestJobFactory> extensions_job_factory_;
 
-  mutable std::unique_ptr<domain_reliability::DomainReliabilityMonitor>
+  // Owned by ChromeNetworkDelegate (which is owned by |network_delegate_|).
+  mutable domain_reliability::DomainReliabilityMonitor*
       domain_reliability_monitor_;
-
-  mutable std::unique_ptr<net::SdchManager> sdch_manager_;
-  mutable std::unique_ptr<net::SdchOwner> sdch_policy_;
 
   // Parameters needed for isolated apps.
   base::FilePath profile_path_;

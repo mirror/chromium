@@ -30,43 +30,44 @@
 
 namespace blink {
 
-ArrayValue& ArrayValue::operator=(const ArrayValue& other)
-{
-    m_array = other.m_array;
-    m_isolate = other.m_isolate;
-    return *this;
+ArrayValue& ArrayValue::operator=(const ArrayValue& other) {
+  array_ = other.array_;
+  isolate_ = other.isolate_;
+  return *this;
 }
 
-bool ArrayValue::isUndefinedOrNull() const
-{
-    return m_array.IsEmpty() || blink::isUndefinedOrNull(m_array);
+bool ArrayValue::IsUndefinedOrNull() const {
+  return blink::IsUndefinedOrNull(array_);
 }
 
-bool ArrayValue::length(size_t& length) const
-{
-    if (isUndefinedOrNull())
-        return false;
+bool ArrayValue::length(size_t& length) const {
+  if (IsUndefinedOrNull())
+    return false;
 
-    length = m_array->Length();
-    return true;
+  length = array_->Length();
+  return true;
 }
 
-bool ArrayValue::get(size_t index, Dictionary& value) const
-{
-    if (isUndefinedOrNull())
-        return false;
+bool ArrayValue::Get(size_t index, Dictionary& value) const {
+  if (IsUndefinedOrNull())
+    return false;
 
-    if (index >= m_array->Length())
-        return false;
+  if (index >= array_->Length())
+    return false;
 
-    ASSERT(m_isolate);
-    ASSERT(m_isolate == v8::Isolate::GetCurrent());
-    v8::Local<v8::Value> indexedValue;
-    if (!m_array->Get(m_isolate->GetCurrentContext(), index).ToLocal(&indexedValue) || !indexedValue->IsObject())
-        return false;
+  DCHECK(isolate_);
+  DCHECK_EQ(isolate_, v8::Isolate::GetCurrent());
+  v8::Local<v8::Value> indexed_value;
+  if (!array_->Get(isolate_->GetCurrentContext(), index)
+           .ToLocal(&indexed_value) ||
+      !indexed_value->IsObject())
+    return false;
 
-    value = Dictionary(indexedValue, m_isolate, m_exceptionState);
-    return true;
+  // TODO(bashi,yukishiino): Should rethrow the exception.
+  // http://crbug.com/666661
+  DummyExceptionStateForTesting exception_state;
+  value = Dictionary(isolate_, indexed_value, exception_state);
+  return true;
 }
 
-} // namespace blink
+}  // namespace blink

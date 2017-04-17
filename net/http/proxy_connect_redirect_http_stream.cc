@@ -23,7 +23,7 @@ ProxyConnectRedirectHttpStream::~ProxyConnectRedirectHttpStream() {}
 int ProxyConnectRedirectHttpStream::InitializeStream(
     const HttpRequestInfo* request_info,
     RequestPriority priority,
-    const BoundNetLog& net_log,
+    const NetLogWithSource& net_log,
     const CompletionCallback& callback) {
   NOTREACHED();
   return OK;
@@ -79,6 +79,11 @@ int64_t ProxyConnectRedirectHttpStream::GetTotalSentBytes() const {
   return 0;
 }
 
+bool ProxyConnectRedirectHttpStream::GetAlternativeService(
+    AlternativeService* alternative_service) const {
+  return false;
+}
+
 bool ProxyConnectRedirectHttpStream::GetLoadTimingInfo(
     LoadTimingInfo* load_timing_info) const {
   if (!has_load_timing_info_)
@@ -102,8 +107,9 @@ bool ProxyConnectRedirectHttpStream::GetRemoteEndpoint(IPEndPoint* endpoint) {
   return false;
 }
 
-Error ProxyConnectRedirectHttpStream::GetSignedEKMForTokenBinding(
+Error ProxyConnectRedirectHttpStream::GetTokenBindingSignature(
     crypto::ECPrivateKey* key,
+    TokenBindingType tb_type,
     std::vector<uint8_t>* out) {
   NOTREACHED();
   return ERR_NOT_IMPLEMENTED;
@@ -120,10 +126,6 @@ void ProxyConnectRedirectHttpStream::PopulateNetErrorDetails(
 
 void ProxyConnectRedirectHttpStream::SetPriority(RequestPriority priority) {
   // Nothing to do.
-}
-
-UploadProgress ProxyConnectRedirectHttpStream::GetUploadProgress() const {
-  return UploadProgress();
 }
 
 HttpStream* ProxyConnectRedirectHttpStream::RenewStreamForAuth() {

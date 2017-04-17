@@ -14,61 +14,65 @@ namespace blink {
 using StyleImageList = PersistentHeapVector<Member<StyleImage>, 1>;
 
 class ImageListPropertyFunctions {
-public:
-    static void getInitialImageList(CSSPropertyID, StyleImageList& result) { result.clear(); }
+ public:
+  static void GetInitialImageList(CSSPropertyID, StyleImageList& result) {
+    result.Clear();
+  }
 
-    static void getImageList(CSSPropertyID property, const ComputedStyle& style, StyleImageList& result)
-    {
-        const FillLayer* fillLayer = nullptr;
-        switch (property) {
-        case CSSPropertyBackgroundImage:
-            fillLayer = &style.backgroundLayers();
-            break;
-        case CSSPropertyWebkitMaskImage:
-            fillLayer = &style.maskLayers();
-            break;
-        default:
-            NOTREACHED();
-            return;
-        }
-
-        result.clear();
-        while (fillLayer && fillLayer->image()) {
-            result.append(fillLayer->image());
-            fillLayer = fillLayer->next();
-        }
+  static void GetImageList(CSSPropertyID property,
+                           const ComputedStyle& style,
+                           StyleImageList& result) {
+    const FillLayer* fill_layer = nullptr;
+    switch (property) {
+      case CSSPropertyBackgroundImage:
+        fill_layer = &style.BackgroundLayers();
+        break;
+      case CSSPropertyWebkitMaskImage:
+        fill_layer = &style.MaskLayers();
+        break;
+      default:
+        NOTREACHED();
+        return;
     }
 
-    static void setImageList(CSSPropertyID property, ComputedStyle& style, const StyleImageList& imageList)
-    {
-        FillLayer* fillLayer = nullptr;
-        switch (property) {
-        case CSSPropertyBackgroundImage:
-            fillLayer = &style.accessBackgroundLayers();
-            break;
-        case CSSPropertyWebkitMaskImage:
-            fillLayer = &style.accessMaskLayers();
-            break;
-        default:
-            NOTREACHED();
-            return;
-        }
-
-        FillLayer* prev = nullptr;
-        for (size_t i = 0; i < imageList.size(); i++) {
-            if (!fillLayer)
-                fillLayer = prev->ensureNext();
-            fillLayer->setImage(imageList[i]);
-            prev = fillLayer;
-            fillLayer = fillLayer->next();
-        }
-        while (fillLayer) {
-            fillLayer->clearImage();
-            fillLayer = fillLayer->next();
-        }
+    result.Clear();
+    while (fill_layer) {
+      result.push_back(fill_layer->GetImage());
+      fill_layer = fill_layer->Next();
     }
+  }
+
+  static void SetImageList(CSSPropertyID property,
+                           ComputedStyle& style,
+                           const StyleImageList& image_list) {
+    FillLayer* fill_layer = nullptr;
+    switch (property) {
+      case CSSPropertyBackgroundImage:
+        fill_layer = &style.AccessBackgroundLayers();
+        break;
+      case CSSPropertyWebkitMaskImage:
+        fill_layer = &style.AccessMaskLayers();
+        break;
+      default:
+        NOTREACHED();
+        return;
+    }
+
+    FillLayer* prev = nullptr;
+    for (size_t i = 0; i < image_list.size(); i++) {
+      if (!fill_layer)
+        fill_layer = prev->EnsureNext();
+      fill_layer->SetImage(image_list[i]);
+      prev = fill_layer;
+      fill_layer = fill_layer->Next();
+    }
+    while (fill_layer) {
+      fill_layer->ClearImage();
+      fill_layer = fill_layer->Next();
+    }
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ImageListPropertyFunctions_h
+#endif  // ImageListPropertyFunctions_h

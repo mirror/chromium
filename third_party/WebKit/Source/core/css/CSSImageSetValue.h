@@ -29,7 +29,7 @@
 #include "core/css/CSSValueList.h"
 #include "platform/CrossOriginAttributeValue.h"
 #include "platform/weborigin/Referrer.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -37,50 +37,52 @@ class Document;
 class StyleImage;
 
 class CSSImageSetValue : public CSSValueList {
-public:
+ public:
+  static CSSImageSetValue* Create() { return new CSSImageSetValue(); }
+  ~CSSImageSetValue();
 
-    static CSSImageSetValue* create()
-    {
-        return new CSSImageSetValue();
-    }
-    ~CSSImageSetValue();
+  bool IsCachePending(float device_scale_factor) const;
+  StyleImage* CachedImage(float device_scale_factor) const;
+  StyleImage* CacheImage(
+      const Document&,
+      float device_scale_factor,
+      CrossOriginAttributeValue = kCrossOriginAttributeNotSet);
 
-    bool isCachePending(float deviceScaleFactor) const;
-    StyleImage* cachedImage(float deviceScaleFactor) const;
-    StyleImage* cacheImage(Document*, float deviceScaleFactor, CrossOriginAttributeValue = CrossOriginAttributeNotSet);
+  String CustomCSSText() const;
 
-    String customCSSText() const;
+  struct ImageWithScale {
+    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+    String image_url;
+    Referrer referrer;
+    float scale_factor;
+  };
 
-    struct ImageWithScale {
-        DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-        String imageURL;
-        Referrer referrer;
-        float scaleFactor;
-    };
+  CSSImageSetValue* ValueWithURLsMadeAbsolute();
 
-    CSSImageSetValue* valueWithURLsMadeAbsolute();
+  bool HasFailedOrCanceledSubresources() const;
 
-    bool hasFailedOrCanceledSubresources() const;
+  DECLARE_TRACE_AFTER_DISPATCH();
 
-    DECLARE_TRACE_AFTER_DISPATCH();
+ protected:
+  ImageWithScale BestImageForScaleFactor(float scale_factor);
 
-protected:
-    ImageWithScale bestImageForScaleFactor(float scaleFactor);
+ private:
+  CSSImageSetValue();
 
-private:
-    CSSImageSetValue();
+  void FillImageSet();
+  static inline bool CompareByScaleFactor(ImageWithScale first,
+                                          ImageWithScale second) {
+    return first.scale_factor < second.scale_factor;
+  }
 
-    void fillImageSet();
-    static inline bool compareByScaleFactor(ImageWithScale first, ImageWithScale second) { return first.scaleFactor < second.scaleFactor; }
+  float cached_scale_factor_;
+  Member<StyleImage> cached_image_;
 
-    float m_cachedScaleFactor;
-    Member<StyleImage> m_cachedImage;
-
-    Vector<ImageWithScale> m_imagesInSet;
+  Vector<ImageWithScale> images_in_set_;
 };
 
-DEFINE_CSS_VALUE_TYPE_CASTS(CSSImageSetValue, isImageSetValue());
+DEFINE_CSS_VALUE_TYPE_CASTS(CSSImageSetValue, IsImageSetValue());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSImageSetValue_h
+#endif  // CSSImageSetValue_h

@@ -22,15 +22,14 @@
 #include "components/infobars/core/simple_alert_infobar_delegate.h"
 #include "components/invalidation/impl/invalidation_switches.h"
 #include "components/nacl/common/nacl_switches.h"
-#include "components/network_session_configurator/switches.h"
 #include "components/startup_metric_utils/browser/startup_metric_utils.h"
 #include "components/translate/core/common/translate_switches.h"
 #include "content/public/common/content_switches.h"
 #include "extensions/common/switches.h"
 #include "google_apis/gaia/gaia_switches.h"
+#include "media/media_features.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
-#include "ui/gfx/vector_icons_public.h"
 
 namespace chrome {
 
@@ -58,7 +57,7 @@ void ShowBadFlagsPrompt(Browser* browser) {
     translate::switches::kTranslateSecurityOrigin,
 
     // These flags undermine HTTPS / connection security.
-#if defined(ENABLE_WEBRTC)
+#if BUILDFLAG(ENABLE_WEBRTC)
     switches::kDisableWebRtcEncryption,
 #endif
     switches::kIgnoreCertificateErrors,
@@ -87,17 +86,9 @@ void ShowBadFlagsPrompt(Browser* browser) {
     // if they are not.
     switches::kUnsafelyTreatInsecureOriginAsSecure,
 
-    // This flag enables Web Bluetooth. Since the UI for Web Bluetooth is
-    // not yet implemented, websites could take control over paired devices
-    // without the users knowledge, so we need to show a warning for when
-    // the flag is enabled.
-    switches::kEnableWebBluetooth,
-
-    // This flag disables WebUSB's CORS-like checks for origin to device
-    // communication, allowing any origin to ask the user for permission to
-    // connect to a device. It is intended for manufacturers testing their
-    // existing devices until https://crbug.com/598766 is implemented.
-    switches::kDisableWebUsbSecurity,
+    // This flag allows sites to access the camera and microphone without
+    // getting the user's permission.
+    switches::kUseFakeUIForMediaStream,
 
     NULL
   };
@@ -106,9 +97,7 @@ void ShowBadFlagsPrompt(Browser* browser) {
     if (base::CommandLine::ForCurrentProcess()->HasSwitch(*flag)) {
       SimpleAlertInfoBarDelegate::Create(
           InfoBarService::FromWebContents(web_contents),
-          infobars::InfoBarDelegate::BAD_FLAGS_PROMPT,
-          infobars::InfoBarDelegate::kNoIconID,
-          gfx::VectorIconId::VECTOR_ICON_NONE,
+          infobars::InfoBarDelegate::BAD_FLAGS_PROMPT, nullptr,
           l10n_util::GetStringFUTF16(
               IDS_BAD_FLAGS_WARNING_MESSAGE,
               base::UTF8ToUTF16(std::string("--") + *flag)),

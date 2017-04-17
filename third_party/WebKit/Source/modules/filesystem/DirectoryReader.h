@@ -36,45 +36,48 @@
 #include "modules/filesystem/DirectoryReaderBase.h"
 #include "modules/filesystem/EntriesCallback.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class ErrorCallback;
 
 class DirectoryReader : public DirectoryReaderBase, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static DirectoryReader* create(DOMFileSystemBase* fileSystem, const String& fullPath)
-    {
-        return new DirectoryReader(fileSystem, fullPath);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~DirectoryReader() override;
+ public:
+  static DirectoryReader* Create(DOMFileSystemBase* file_system,
+                                 const String& full_path) {
+    return new DirectoryReader(file_system, full_path);
+  }
 
-    void readEntries(EntriesCallback*, ErrorCallback* = nullptr);
+  ~DirectoryReader() override;
 
-    DOMFileSystem* filesystem() const { return static_cast<DOMFileSystem*>(m_fileSystem.get()); }
+  void readEntries(EntriesCallback*, ErrorCallback* = nullptr);
 
-    DECLARE_VIRTUAL_TRACE();
+  DOMFileSystem* Filesystem() const {
+    return static_cast<DOMFileSystem*>(file_system_.Get());
+  }
 
-private:
-    class EntriesCallbackHelper;
-    class ErrorCallbackHelper;
+  DECLARE_VIRTUAL_TRACE();
 
-    DirectoryReader(DOMFileSystemBase*, const String& fullPath);
+ private:
+  class EntriesCallbackHelper;
+  class ErrorCallbackHelper;
 
-    void addEntries(const EntryHeapVector& entries);
+  DirectoryReader(DOMFileSystemBase*, const String& full_path);
 
-    void onError(FileError::ErrorCode);
+  void AddEntries(const EntryHeapVector& entries);
 
-    bool m_isReading;
-    EntryHeapVector m_entries;
-    FileError::ErrorCode m_error = FileError::ErrorCode::OK;
-    Member<EntriesCallback> m_entriesCallback;
-    Member<ErrorCallback> m_errorCallback;
+  void OnError(FileError::ErrorCode);
+
+  bool is_reading_;
+  EntryHeapVector entries_;
+  FileError::ErrorCode error_ = FileError::ErrorCode::kOK;
+  Member<EntriesCallback> entries_callback_;
+  Member<ErrorCallback> error_callback_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DirectoryReader_h
+#endif  // DirectoryReader_h

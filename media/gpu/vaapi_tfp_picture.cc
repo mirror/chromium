@@ -1,7 +1,7 @@
 // Copyright 2014 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-#
+
 #include "media/gpu/vaapi_tfp_picture.h"
 
 #include <X11/Xlib.h>
@@ -36,7 +36,6 @@ VaapiTFPPicture::VaapiTFPPicture(
 VaapiTFPPicture::~VaapiTFPPicture() {
   if (glx_image_.get() && make_context_current_cb_.Run()) {
     glx_image_->ReleaseTexImage(GL_TEXTURE_2D);
-    glx_image_->Destroy(true);
     DCHECK_EQ(glGetError(), static_cast<GLenum>(GL_NO_ERROR));
   }
 

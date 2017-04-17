@@ -13,8 +13,8 @@
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "net/base/host_port_pair.h"
+#include "net/base/net_export.h"
 #include "net/dns/host_resolver.h"
-#include "net/dns/single_request_host_resolver.h"
 #include "net/socket/client_socket_pool.h"
 #include "net/socket/client_socket_pool_base.h"
 #include "net/socket/connection_attempts.h"
@@ -23,9 +23,11 @@ namespace net {
 
 class ClientSocketFactory;
 class SocketPerformanceWatcherFactory;
+class NetLog;
+class NetLogWithSource;
 
-typedef base::Callback<int(const AddressList&, const BoundNetLog& net_log)>
-OnHostResolutionCallback;
+typedef base::Callback<int(const AddressList&, const NetLogWithSource& net_log)>
+    OnHostResolutionCallback;
 
 class NET_EXPORT_PRIVATE TransportSocketParams
     : public base::RefCounted<TransportSocketParams> {
@@ -125,7 +127,7 @@ class NET_EXPORT_PRIVATE TransportConnectJob : public ConnectJob {
 
   // Record the histograms Net.DNS_Resolution_And_TCP_Connection_Latency2 and
   // Net.TCP_Connection_Latency and return the connect duration.
-  static base::TimeDelta HistogramDuration(
+  static void HistogramDuration(
       const LoadTimingInfo::ConnectTiming& connect_timing,
       RaceResult race_result);
 
@@ -136,12 +138,6 @@ class NET_EXPORT_PRIVATE TransportConnectJob : public ConnectJob {
     STATE_TRANSPORT_CONNECT,
     STATE_TRANSPORT_CONNECT_COMPLETE,
     STATE_NONE,
-  };
-
-  enum ConnectInterval {
-    CONNECT_INTERVAL_LE_10MS,
-    CONNECT_INTERVAL_LE_20MS,
-    CONNECT_INTERVAL_GT_20MS,
   };
 
   void OnIOComplete(int result);
@@ -164,7 +160,8 @@ class NET_EXPORT_PRIVATE TransportConnectJob : public ConnectJob {
   void CopyConnectionAttemptsFromSockets();
 
   scoped_refptr<TransportSocketParams> params_;
-  SingleRequestHostResolver resolver_;
+  HostResolver* resolver_;
+  std::unique_ptr<HostResolver::Request> request_;
   ClientSocketFactory* const client_socket_factory_;
 
   State next_state_;
@@ -177,9 +174,6 @@ class NET_EXPORT_PRIVATE TransportConnectJob : public ConnectJob {
   base::TimeTicks fallback_connect_start_time_;
   base::OneShotTimer fallback_timer_;
   SocketPerformanceWatcherFactory* socket_performance_watcher_factory_;
-
-  // Track the interval between this connect and previous connect.
-  ConnectInterval interval_between_connects_;
 
   int resolve_result_;
 
@@ -215,11 +209,15 @@ class NET_EXPORT_PRIVATE TransportClientSocketPool : public ClientSocketPool {
                     RespectLimits respect_limits,
                     ClientSocketHandle* handle,
                     const CompletionCallback& callback,
-                    const BoundNetLog& net_log) override;
+                    const NetLogWithSource& net_log) override;
   void RequestSockets(const std::string& group_name,
                       const void* params,
                       int num_sockets,
-                      const BoundNetLog& net_log) override;
+                      const NetLogWithSource& net_log) override;
+  void SetPriority(const std::string& group_name,
+                   ClientSocketHandle* handle,
+                   RequestPriority priority) override;
+
   void CancelRequest(const std::string& group_name,
                      ClientSocketHandle* handle) override;
   void ReleaseSocket(const std::string& group_name,
@@ -227,6 +225,7 @@ class NET_EXPORT_PRIVATE TransportClientSocketPool : public ClientSocketPool {
                      int id) override;
   void FlushWithError(int error) override;
   void CloseIdleSockets() override;
+  void CloseIdleSocketsInGroup(const std::string& group_name) override;
   int IdleSocketCount() const override;
   int IdleSocketCountInGroup(const std::string& group_name) const override;
   LoadState GetLoadState(const std::string& group_name,
@@ -245,7 +244,7 @@ class NET_EXPORT_PRIVATE TransportClientSocketPool : public ClientSocketPool {
  protected:
   // Methods shared with WebSocketTransportClientSocketPool
   void NetLogTcpClientSocketPoolRequestedSocket(
-      const BoundNetLog& net_log,
+      const NetLogWithSource& net_log,
       const scoped_refptr<TransportSocketParams>* casted_params);
 
  private:

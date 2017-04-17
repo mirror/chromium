@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 // Test for [OriginTrialEnabled] extended attribute applied to a partial
-// interface. This is separate from TestInterfacePartial, as the 
+// interface. This is separate from TestInterfacePartial, as the
 // [OriginTrialEnabled] attribute cannot be applied with [RuntimeEnabled].
 
 [
@@ -14,7 +14,6 @@
     attribute long partial4LongAttribute;
     static attribute long partial4StaticLongAttribute;
 
-    // TODO(chasej): Uncomment when methods are supported for origin trials (crbug.com/621641)
     void partial4VoidMethod();
     static void partial4StaticVoidMethod();
 };

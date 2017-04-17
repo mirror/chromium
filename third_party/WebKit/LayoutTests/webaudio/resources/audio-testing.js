@@ -1,267 +1,48 @@
-function writeString(s, a, offset) {
-    for (var i = 0; i < s.length; ++i) {
-        a[offset + i] = s.charCodeAt(i);
-    }
-}
+/* global self */
 
-function writeInt16(n, a, offset) {
-    n = Math.floor(n);
+// testharness.js has the higher priority.
+var TESTHARNESS = true;
+var JSTEST = false;
 
-    var b1 = n & 255;
-    var b2 = (n >> 8) & 255;
+(function () {
+    // Selected properies from testharness.js
+    var testharnessProperties = [
+        'test', 'async_test', 'promise_test', 'promise_rejects',
+        'generate_tests', 'setup', 'done', 'assert_true', 'assert_false'
+    ];
 
-    a[offset + 0] = b1;
-    a[offset + 1] = b2;
-}
+    // Selected properties from js-test.js
+    var jsTestProperties = [
+        'isJsTest', 'testPassed', 'testFailed', 'gc', 'finishJSTest'
+    ];
 
-function writeInt32(n, a, offset) {
-    n = Math.floor(n);
-    var b1 = n & 255;
-    var b2 = (n >> 8) & 255;
-    var b3 = (n >> 16) & 255;
-    var b4 = (n >> 24) & 255;
-
-    a[offset + 0] = b1;
-    a[offset + 1] = b2;
-    a[offset + 2] = b3;
-    a[offset + 3] = b4;
-}
-
-function writeAudioBuffer(audioBuffer, a, offset) {
-    var n = audioBuffer.length;
-    var channels = audioBuffer.numberOfChannels;
-
-    for (var i = 0; i < n; ++i) {
-        for (var k = 0; k < channels; ++k) {
-            var buffer = audioBuffer.getChannelData(k);
-            var sample = buffer[i] * 32768.0;
-
-            // Clip samples to the limitations of 16-bit.
-            // If we don't do this then we'll get nasty wrap-around distortion.
-            if (sample < -32768)
-                sample = -32768;
-            if (sample > 32767)
-                sample = 32767;
-
-            writeInt16(sample, a, offset);
-            offset += 2;
+    // Check if testharness.js is properly loaded and set up a flag for it.
+    for (var name in testharnessProperties) {
+        if (!self.hasOwnProperty(testharnessProperties[name])) {
+            TESTHARNESS = false;
+            break;
         }
     }
-}
 
-function createWaveFileData(audioBuffer) {
-    var frameLength = audioBuffer.length;
-    var numberOfChannels = audioBuffer.numberOfChannels;
-    var sampleRate = audioBuffer.sampleRate;
-    var bitsPerSample = 16;
-    var byteRate = sampleRate * numberOfChannels * bitsPerSample/8;
-    var blockAlign = numberOfChannels * bitsPerSample/8;
-    var wavDataByteLength = frameLength * numberOfChannels * 2; // 16-bit audio
-    var headerByteLength = 44;
-    var totalLength = headerByteLength + wavDataByteLength;
+    // Immediately return here because testharness.js is ready.
+    if (TESTHARNESS)
+        return;
 
-    var waveFileData = new Uint8Array(totalLength);
-
-    var subChunk1Size = 16; // for linear PCM
-    var subChunk2Size = wavDataByteLength;
-    var chunkSize = 4 + (8 + subChunk1Size) + (8 + subChunk2Size);
-
-    writeString("RIFF", waveFileData, 0);
-    writeInt32(chunkSize, waveFileData, 4);
-    writeString("WAVE", waveFileData, 8);
-    writeString("fmt ", waveFileData, 12);
-
-    writeInt32(subChunk1Size, waveFileData, 16);      // SubChunk1Size (4)
-    writeInt16(1, waveFileData, 20);                  // AudioFormat (2)
-    writeInt16(numberOfChannels, waveFileData, 22);   // NumChannels (2)
-    writeInt32(sampleRate, waveFileData, 24);         // SampleRate (4)
-    writeInt32(byteRate, waveFileData, 28);           // ByteRate (4)
-    writeInt16(blockAlign, waveFileData, 32);         // BlockAlign (2)
-    writeInt32(bitsPerSample, waveFileData, 34);      // BitsPerSample (4)
-
-    writeString("data", waveFileData, 36);
-    writeInt32(subChunk2Size, waveFileData, 40);      // SubChunk2Size (4)
-
-    // Write actual audio data starting at offset 44.
-    writeAudioBuffer(audioBuffer, waveFileData, 44);
-
-    return waveFileData;
-}
-
-function createAudioData(audioBuffer) {
-    return createWaveFileData(audioBuffer);
-}
-
-function finishAudioTest(event) {
-    var audioData = createAudioData(event.renderedBuffer);
-    testRunner.setAudioData(audioData);
-    testRunner.notifyDone();
-}
-
-// Compare two arrays (commonly extracted from buffer.getChannelData()) with
-// constraints:
-//   options.thresholdSNR: Minimum allowed SNR between the actual and expected
-//     signal. The default value is 10000.
-//   options.thresholdDiffULP: Maximum allowed difference between the actual
-//     and expected signal in ULP(Unit in the last place). The default is 0.
-//   options.thresholdDiffCount: Maximum allowed number of sample differences
-//     which exceeds the threshold. The default is 0.
-//   options.bitDepth: The expected result is assumed to come from an audio
-//     file with this number of bits of precision. The default is 16.
-function compareBuffersWithConstraints(actual, expected, options) {
-    if (!options)
-        options = {};
-
-    if (actual.length !== expected.length)
-        testFailed('Buffer length mismatches.');
-
-    var maxError = -1;
-    var diffCount = 0;
-    var errorPosition = -1;
-    var thresholdSNR = (options.thresholdSNR || 10000);
-
-    var thresholdDiffULP = (options.thresholdDiffULP || 0);
-    var thresholdDiffCount = (options.thresholdDiffCount || 0);
-
-    // By default, the bit depth is 16.
-    var bitDepth = (options.bitDepth || 16);
-    var scaleFactor = Math.pow(2, bitDepth - 1);
-
-    var noisePower = 0, signalPower = 0;
-
-    for (var i = 0; i < actual.length; i++) {
-        var diff = actual[i] - expected[i];
-        noisePower += diff * diff;
-        signalPower += expected[i] * expected[i];
-
-        if (Math.abs(diff) > maxError) {
-            maxError = Math.abs(diff);
-            errorPosition = i;
+    // Because testharness.js is not loaded, let us assume that js-test.js might
+    // be in use. Check if js-test.js is properly loaded and set up a flag for
+    // it.
+    JSTEST = true;
+    for (var name in jsTestProperties) {
+        if (!self.hasOwnProperty(jsTestProperties[name])) {
+            JSTEST = false;
+            break;
         }
-
-        // The reference file is a 16-bit WAV file, so we will almost never get
-        // an exact match between it and the actual floating-point result.
-        if (Math.abs(diff) > scaleFactor)
-            diffCount++;
     }
 
-    var snr = 10 * Math.log10(signalPower / noisePower);
-    var maxErrorULP = maxError * scaleFactor;
-
-    if (snr >= thresholdSNR) {
-        testPassed('Exceeded SNR threshold of ' + thresholdSNR + ' dB.');
-    } else {
-        testFailed('Expected SNR of ' + thresholdSNR + ' dB, but actual SNR is ' +
-        snr + ' dB.');
-    }
-
-    if (maxErrorULP <= thresholdDiffULP) {
-        testPassed('Maximum difference below threshold of ' +
-            thresholdDiffULP + ' ulp (' + bitDepth + '-bits).');
-    } else {
-        testFailed('Maximum difference of ' + maxErrorULP +
-            ' at the index ' + errorPosition + ' exceeded threshold of ' +
-            thresholdDiffULP + ' ulp (' + bitDepth + '-bits).');
-    }
-
-    if (diffCount <= thresholdDiffCount) {
-        testPassed('Number of differences between results is ' +
-            diffCount + ' out of ' + actual.length + '.');
-    } else {
-        testFailed(diffCount + ' differences found but expected no more than ' +
-            diffCount + ' out of ' + actual.length + '.');
-    }
-}
-
-// Create an impulse in a buffer of length sampleFrameLength
-function createImpulseBuffer(context, sampleFrameLength) {
-    var audioBuffer = context.createBuffer(1, sampleFrameLength, context.sampleRate);
-    var n = audioBuffer.length;
-    var dataL = audioBuffer.getChannelData(0);
-
-    for (var k = 0; k < n; ++k) {
-        dataL[k] = 0;
-    }
-    dataL[0] = 1;
-
-    return audioBuffer;
-}
-
-// Create a buffer of the given length with a linear ramp having values 0 <= x < 1.
-function createLinearRampBuffer(context, sampleFrameLength) {
-    var audioBuffer = context.createBuffer(1, sampleFrameLength, context.sampleRate);
-    var n = audioBuffer.length;
-    var dataL = audioBuffer.getChannelData(0);
-
-    for (var i = 0; i < n; ++i)
-        dataL[i] = i / n;
-
-    return audioBuffer;
-}
-
-// Create an AudioBuffer of length |sampleFrameLength| having a constant value |constantValue|. If
-// |constantValue| is a number, the buffer has one channel filled with that value. If
-// |constantValue| is an array, the buffer is created wit a number of channels equal to the length
-// of the array, and channel k is filled with the k'th element of the |constantValue| array.
-function createConstantBuffer(context, sampleFrameLength, constantValue) {
-    var channels;
-    var values;
-
-    if (typeof constantValue === "number") {
-        channels = 1;
-        values = [constantValue];
-    } else {
-        channels = constantValue.length;
-        values = constantValue;
-    }
-
-    var audioBuffer = context.createBuffer(channels, sampleFrameLength, context.sampleRate);
-    var n = audioBuffer.length;
-
-    for (var c = 0; c < channels; ++c) {
-        var data = audioBuffer.getChannelData(c);
-        for (var i = 0; i < n; ++i)
-            data[i] = values[c];
-    }
-
-    return audioBuffer;
-}
-
-// Create a stereo impulse in a buffer of length sampleFrameLength
-function createStereoImpulseBuffer(context, sampleFrameLength) {
-    var audioBuffer = context.createBuffer(2, sampleFrameLength, context.sampleRate);
-    var n = audioBuffer.length;
-    var dataL = audioBuffer.getChannelData(0);
-    var dataR = audioBuffer.getChannelData(1);
-
-    for (var k = 0; k < n; ++k) {
-        dataL[k] = 0;
-        dataR[k] = 0;
-    }
-    dataL[0] = 1;
-    dataR[0] = 1;
-
-    return audioBuffer;
-}
-
-// Convert time (in seconds) to sample frames.
-function timeToSampleFrame(time, sampleRate) {
-    return Math.floor(0.5 + time * sampleRate);
-}
-
-// Compute the number of sample frames consumed by noteGrainOn with
-// the specified |grainOffset|, |duration|, and |sampleRate|.
-function grainLengthInSampleFrames(grainOffset, duration, sampleRate) {
-    var startFrame = timeToSampleFrame(grainOffset, sampleRate);
-    var endFrame = timeToSampleFrame(grainOffset + duration, sampleRate);
-
-    return endFrame - startFrame;
-}
-
-// True if the number is not an infinity or NaN
-function isValidNumber(x) {
-    return !isNaN(x) && (x != Infinity) && (x != -Infinity);
-}
+    // If both are not loaded at all, throw here.
+    if (!JSTEST)
+        throw new Error('Cannot proceed. No test infrastructure is loaded.');
+})();
 
 
 // |Audit| is a task runner for web audio test. It makes asynchronous web audio
@@ -301,6 +82,24 @@ function isValidNumber(x) {
         this.currentTask = 0;
     }
 
+    // This is to prime the task runner for the testharness.js async operation.
+    Tasks.prototype._initialize = function () {
+        if (TESTHARNESS) {
+            setup(new Function(), {
+                explicit_done: true
+            });
+        }
+    };
+
+    // Finalize the task runner by notifying testharness and testRunner that
+    // all the task is completed.
+    Tasks.prototype._finalize = function () {
+        if (TESTHARNESS) {
+            // From testharness.js
+            done();
+        }
+    };
+
     Tasks.prototype.defineTask = function (taskName, taskFunc) {
         // Check if there is a task defined with the same name.  If found, do
         // not add the task to the roster.
@@ -319,6 +118,8 @@ function isValidNumber(x) {
     // undefined or duplicate task in the requested task arguments.  If there
     // is no argument, run all the defined tasks.
     Tasks.prototype.runTasks = function () {
+
+        this._initialize();
 
         if (arguments.length > 0) {
 
@@ -341,21 +142,23 @@ function isValidNumber(x) {
             return;
         }
 
-        // done() callback from each task.  Increase the task index and call the
-        // next task.  Note that explicit signaling by done() in each task
-        // is needed because some of tests run asynchronously.
-        var done = function () {
+        // taskDone() callback from each task.  Increase the task index and call
+        // the next task.  Note that explicit signaling by taskDone() in each
+        // task is needed because some of tests run asynchronously.
+        var taskDone = function () {
             if (this.currentTask !== this.queue.length - 1) {
                 ++this.currentTask;
                 // debug('>> Audit.runTasks: ' + this.queue[this.currentTask]);
-                this.tasks[this.queue[this.currentTask]](done);
+                this.tasks[this.queue[this.currentTask]](taskDone);
+            } else {
+                this._finalize();
             }
             return;
         }.bind(this);
 
         // Start the first task.
         // debug('>> Audit.runTasks: ' + this.queue[this.currentTask]);
-        this.tasks[this.queue[this.currentTask]](done);
+        this.tasks[this.queue[this.currentTask]](taskDone);
     };
 
     return {
@@ -366,24 +169,6 @@ function isValidNumber(x) {
 
 })();
 
-
-// Compute the (linear) signal-to-noise ratio between |actual| and |expected|.  The result is NOT in
-// dB!  If the |actual| and |expected| have different lengths, the shorter length is used.
-function computeSNR(actual, expected)
-{
-    var signalPower = 0;
-    var noisePower = 0;
-
-    var length = Math.min(actual.length, expected.length);
-
-    for (var k = 0; k < length; ++k) {
-        var diff = actual[k] - expected[k];
-        signalPower += expected[k] * expected[k];
-        noisePower += diff * diff;
-    }
-
-    return signalPower / noisePower;
-}
 
 // |Should| JS layout test utility.
 // Dependency: ../resources/js-test.js
@@ -399,12 +184,6 @@ var Should = (function () {
 
         // Check if the target contains any NaN value.
         this._checkNaN(this.target, 'ACTUAL');
-        // if (resultNaNCheck.length > 0) {
-        //     var failureMessage = 'NaN found while testing the target (' + label + ')';
-        //     testFailed(failureMessage + ': "' + this.desc + '" \n' +
-        //         resultNaNCheck);
-        //     throw failureMessage;
-        // }
 
         // |_testPassed| and |_testFailed| set this appropriately.
         this._success = false;
@@ -427,14 +206,31 @@ var Should = (function () {
     }
 
     // Internal methods starting with a underscore.
-    ShouldModel.prototype._testPassed = function (msg) {
-        testPassed(this.desc + ' ' + msg + '.');
+    ShouldModel.prototype._testPassed = function (msg, addNewline) {
         this._success = true;
+        var newLine = addNewline ? '\n' : '';
+        if (TESTHARNESS) {
+            // Using testharness.js
+            test(function () {
+                assert_true(true);
+                }, this.desc + ' ' + msg + '.' + newLine);
+        } else {
+            // Using js-test.js
+            testPassed(this.desc + ' ' + msg + '.' + newLine);
+        }
     };
 
-    ShouldModel.prototype._testFailed = function (msg) {
-        testFailed(this.desc + ' ' + msg + '.');
+    ShouldModel.prototype._testFailed = function (msg, addNewline) {
         this._success = false;
+        var that = this;
+        var newLine = addNewline ? '\n' : '';
+        if (TESTHARNESS) {
+            test(function () {
+                assert_true(false, that.desc + ' ' + msg + '.' + newLine);
+                }, this.desc);
+        } else {
+            testFailed(this.desc + ' ' + msg + '.' + newLine);
+        }
     };
 
     ShouldModel.prototype._isArray = function (arg) {
@@ -451,7 +247,15 @@ var Should = (function () {
         var failureMessage = 'Assertion failed: ' + reason + ' ' + this.desc +'.';
         if (arguments.length >= 3)
             failureMessage += ": " + value;
-        testFailed(failureMessage);
+
+        if (TESTHARNESS) {
+            test(function () {
+                assert_true(false, reason + ' (' + value + ')');
+            }, this.desc)
+        } else {
+            testFailed(failureMessage);
+        }
+
         throw failureMessage;
     };
 
@@ -464,7 +268,14 @@ var Should = (function () {
 
         // Checking a single variable first.
         if (Number.isNaN(value)) {
-            testFailed(failureMessage);
+            if (TESTHARNESS) {
+                test(function () {
+                    assert_true(false, failureMessage);
+                }, this.desc)
+            } else {
+                testFailed(failureMessage);
+            }
+
             throw failureMessage;
         }
 
@@ -492,8 +303,31 @@ var Should = (function () {
             }
         }
 
-        testFailed(failureMessage + failureDetail);
+        if (TESTHARNESS) {
+            test(function () {
+                assert_true(false, failureMessage + failureDetail);
+            }, this.desc)
+        } else {
+            testFailed(failureMessage + failureDetail);
+        }
+
         throw failureMessage;
+    };
+
+    // Check if |target| exists.
+    //
+    // Example:
+    // Should('Object', {}).exist();
+    // Result:
+    // "PASS Object exists."
+    ShouldModel.prototype.exist = function () {
+        if (this.target !== null && this.target !== undefined) {
+            this._testPassed('exists');
+        } else {
+            this._testFailed('does not exist');
+        }
+
+        return this._success;
     };
 
     // Check if |target| is equal to |value|.
@@ -503,9 +337,11 @@ var Should = (function () {
     // Result:
     // "PASS Zero is equal to 0."
     ShouldModel.prototype.beEqualTo = function (value) {
-        var type = typeof value;
-        this._assert(type === 'number' || type === 'string',
-            'value should be number or string for', value);
+        if (value != null) {
+            var type = typeof value;
+            this._assert(type === 'number' || type === 'string' || type === 'boolean',
+                         'value should be number, string, or boolean for', value);
+        }
 
         this._checkNaN(value, 'EXPECTED');
 
@@ -532,8 +368,8 @@ var Should = (function () {
     // "PASS One is not equal to 0."
     ShouldModel.prototype.notBeEqualTo = function (value) {
         var type = typeof value;
-        this._assert(type === 'number' || type === 'string',
-            'value should be number or string for', value);
+        this._assert(type === 'number' || type === 'string' || type === "boolean",
+            'value should be number, string, or boolean for', value);
 
         this._checkNaN(value, 'EXPECTED');
 
@@ -1036,6 +872,24 @@ var Should = (function () {
             this._testPassed('rejected correctly (with ' + err + ')');
         }.bind(this));
     };
+
+    // A summary message
+    //
+    // Example:
+    // Should("Summary1", true).summarize("passed1", "failed1");
+    // Should("Summary2", false).summarize("passed2", "failed2");
+    // Result:
+    // "PASS Summary1: passed1."
+    // "FAIL Summary2: failed2."
+    ShouldModel.prototype.summarize = function (pass, fail) {
+        // It's really nice to have blank lines after the summary, but
+        // testharness thinks the whole testsuite fails if we do that.
+        if (this.target)
+            this._testPassed(pass, false);
+        else
+            this._testFailed(fail, false);
+        return this._success;
+    }
 
     // Should() method.
     //

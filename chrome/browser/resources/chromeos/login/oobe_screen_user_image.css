@@ -1,7 +1,6 @@
 /* Copyright 2013 The Chromium Authors. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
- */
+ * found in the LICENSE file. */
 
 #user-image {
   min-height: 443px;
@@ -55,16 +54,14 @@
   padding: 2px;
 }
 
-/**
- * #user-image-preview can have the following classes:
+/* #user-image-preview can have the following classes:
  * .default-image: one of the default images is selected (including the grey
  *                 silhouette);
  * .profile-image: profile image is selected;
  * .profile-image-loading: profile image is being loaded;
  * .online: camera is streaming video;
  * .camera: camera (live or photo) is selected;
- * .live: camera is in live mode (no photo taken yet/last photo removed).
- */
+ * .live: camera is in live mode (no photo taken yet/last photo removed). */
 #user-image-preview {
   float: right;
   margin: 4px;
@@ -97,10 +94,6 @@
   top: 14px;
 }
 
-.image-loading.user-image #step-logo {
-  display: none;
-}
-
 html[dir=rtl] #user-image-preview {
   float: left;
 }
@@ -112,7 +105,7 @@ html[dir=rtl] #user-image-preview {
 }
 
 #user-image-preview-img.animated-transform {
-  -webkit-transition: -webkit-transform 200ms linear;
+  transition: transform 200ms linear;
 }
 
 .camera.live #user-image-preview-img {
@@ -120,7 +113,7 @@ html[dir=rtl] #user-image-preview {
 }
 
 .camera.flip-x #user-image-preview-img {
-  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
 .default-image #user-image-preview-img {
@@ -141,15 +134,15 @@ html[dir=rtl] #user-image-preview {
 }
 
 #user-image-stream-crop {
-  -webkit-transition: -webkit-transform 200ms linear;
   height: 220px;
   overflow: hidden;
   position: relative;
+  transition: transform 200ms linear;
   width: 220px;
 }
 
 .flip-x #user-image-stream-crop {
-  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
 /* TODO(ivankr): specify dimensions from real capture size. */
@@ -177,7 +170,6 @@ html[dir=rtl] #user-image-preview {
 }
 
 #flip-photo {
-  -webkit-transition: opacity 75ms linear;
   background: url(chrome://theme/IDR_MIRROR_FLIP) no-repeat;
   border: none;
   bottom: 44px;  /* 8px + image bottom. */
@@ -186,13 +178,14 @@ html[dir=rtl] #user-image-preview {
   opacity: 0;
   position: absolute;
   right: 8px;
+  transition: opacity 75ms linear;
   width: 32px;
   z-index: 1;
 }
 
 /* TODO(merkulova): remove when webkit crbug.com/126479 is fixed. */
 .flip-trick {
-  -webkit-transform: translateZ(1px);
+  transform: translateZ(1px);
 }
 
 html[dir=rtl] #flip-photo {
@@ -228,10 +221,10 @@ html[dir=rtl] #flip-photo {
 }
 
 #user-image-preview .perspective-box {
-  -webkit-perspective: 600px;
   border: solid 1px #cacaca;
   border-radius: 4px;
   padding: 2px;
+  perspective: 600px;
   width: 220px;
 }
 

@@ -28,6 +28,7 @@
 namespace blink {
 
 class CounterNode;
+class PseudoElement;
 
 // LayoutCounter is used to represent the text of a counter.
 // See http://www.w3.org/TR/CSS21/generate.html#counters
@@ -48,48 +49,54 @@ class CounterNode;
 // Keeping the map up to date is the reason why LayoutObjects need to call into
 // LayoutCounter during their lifetime (see the static functions below).
 class LayoutCounter final : public LayoutText {
-public:
-    LayoutCounter(Document*, const CounterContent&);
-    ~LayoutCounter() override;
+ public:
+  LayoutCounter(PseudoElement&, const CounterContent&);
+  ~LayoutCounter() override;
 
-    // These functions are static so that any LayoutObject can call them.
-    // The reason is that any LayoutObject in the tree can have a CounterNode
-    // without a LayoutCounter (e.g. by specifying 'counter-increment' without
-    // a "content: counter(a)" directive)).
-    static void destroyCounterNodes(LayoutObject&);
-    static void destroyCounterNode(LayoutObject&, const AtomicString& identifier);
-    static void layoutObjectSubtreeAttached(LayoutObject*);
-    static void layoutObjectSubtreeWillBeDetached(LayoutObject*);
-    static void layoutObjectStyleChanged(LayoutObject&, const ComputedStyle* oldStyle, const ComputedStyle& newStyle);
+  // These functions are static so that any LayoutObject can call them.
+  // The reason is that any LayoutObject in the tree can have a CounterNode
+  // without a LayoutCounter (e.g. by specifying 'counter-increment' without
+  // a "content: counter(a)" directive)).
+  static void DestroyCounterNodes(LayoutObject&);
+  static void DestroyCounterNode(LayoutObject&, const AtomicString& identifier);
+  static void LayoutObjectSubtreeAttached(LayoutObject*);
+  static void LayoutObjectSubtreeWillBeDetached(LayoutObject*);
+  static void LayoutObjectStyleChanged(LayoutObject&,
+                                       const ComputedStyle* old_style,
+                                       const ComputedStyle& new_style);
 
-    void updateCounter();
+  void UpdateCounter();
 
-    const char* name() const override { return "LayoutCounter"; }
+  const char* GetName() const override { return "LayoutCounter"; }
 
-protected:
-    void willBeDestroyed() override;
+ protected:
+  void WillBeDestroyed() override;
 
-private:
-    bool isOfType(LayoutObjectType type) const override { return type == LayoutObjectCounter || LayoutText::isOfType(type); }
-    PassRefPtr<StringImpl> originalText() const override;
+ private:
+  bool IsOfType(LayoutObjectType type) const override {
+    return type == kLayoutObjectCounter || LayoutText::IsOfType(type);
+  }
+  PassRefPtr<StringImpl> OriginalText() const override;
 
-    // Removes the reference to the CounterNode associated with this layoutObject.
-    // This is used to cause a counter display update when the CounterNode tree changes.
-    void invalidate();
+  // Removes the reference to the CounterNode associated with this layoutObject.
+  // This is used to cause a counter display update when the CounterNode tree
+  // changes.
+  void Invalidate();
 
-    CounterContent m_counter;
-    CounterNode* m_counterNode;
-    LayoutCounter* m_nextForSameCounter;
-    friend class CounterNode;
+  CounterContent counter_;
+  CounterNode* counter_node_;
+  LayoutCounter* next_for_same_counter_;
+  friend class CounterNode;
 };
 
-DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutCounter, isCounter());
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutCounter, IsCounter());
 
-} // namespace blink
+}  // namespace blink
 
 #ifndef NDEBUG
 // Outside the WebCore namespace for ease of invocation from gdb.
-void showCounterLayoutTree(const blink::LayoutObject*, const char* counterName = nullptr);
+void showCounterLayoutTree(const blink::LayoutObject*,
+                           const char* counterName = nullptr);
 #endif
 
-#endif // LayoutCounter_h
+#endif  // LayoutCounter_h

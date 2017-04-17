@@ -15,6 +15,7 @@
 #include "content/public/test/test_utils.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
+#include "extensions/browser/extension_util.h"
 #include "extensions/browser/notification_types.h"
 #include "extensions/browser/test_extension_registry_observer.h"
 
@@ -24,7 +25,6 @@ class ExtensionFunctionalTest : public ExtensionBrowserTest {
  public:
   void InstallExtensionSilently(ExtensionService* service,
                                 const char* filename) {
-    service->set_show_extensions_prompts(false);
     ExtensionRegistry* registry = ExtensionRegistry::Get(profile());
     size_t num_before = registry->enabled_extensions().size();
 
@@ -75,7 +75,13 @@ IN_PROC_BROWSER_TEST_F(ExtensionFunctionalTest,
   EXPECT_FALSE(util::IsIncognitoEnabled(last_loaded_extension_id(), profile()));
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionFunctionalTest, TestSetExtensionsState) {
+// Failing on Linux: http://crbug.com/654945
+#if defined(OS_LINUX)
+#define MAYBE_TestSetExtensionsState DISABLED_TestSetExtensionsState
+#else
+#define MAYBE_TestSetExtensionsState TestSetExtensionsState
+#endif
+IN_PROC_BROWSER_TEST_F(ExtensionFunctionalTest, MAYBE_TestSetExtensionsState) {
   InstallExtensionSilently(extension_service(), "google_talk.crx");
 
   // Disable the extension and verify.

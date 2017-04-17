@@ -10,10 +10,10 @@
 #include "base/strings/string16.h"
 #include "base/strings/sys_string_conversions.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
-#include "chrome/browser/ui/cocoa/cocoa_test_helper.h"
 #include "chrome/browser/ui/cocoa/passwords/base_passwords_controller_test.h"
 #import "chrome/browser/ui/cocoa/passwords/password_item_views.h"
 #import "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.h"
+#include "chrome/browser/ui/cocoa/test/cocoa_test_helper.h"
 #include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
 #include "chrome/browser/ui/passwords/manage_passwords_ui_controller_mock.h"
 #include "components/password_manager/core/browser/mock_password_store.h"
@@ -35,18 +35,21 @@ class PasswordsListViewControllerTest : public ManagePasswordsControllerTest {
  public:
   PasswordsListViewControllerTest() = default;
 
-  void SetUpManageState(const VectorConstFormPtr& forms) {
-    ManagePasswordsControllerTest::SetUpManageState(forms);
+  void SetUpManageState(const PasswordFormsVector* forms) {
+    VectorConstFormPtr unique_ptr_forms(forms->size());
+    for (size_t i = 0; i < forms->size(); ++i)
+      unique_ptr_forms[i].reset(new autofill::PasswordForm(forms->at(i)));
+    ManagePasswordsControllerTest::SetUpManageState(unique_ptr_forms);
     controller_.reset([[PasswordsListViewController alloc]
-        initWithModel:GetModelAndCreateIfNull()
-                forms:forms]);
+        initWithModelAndForms:GetModelAndCreateIfNull()
+                        forms:forms]);
   }
 
   void SetUpPendingState(const autofill::PasswordForm* form) {
     ManagePasswordsControllerTest::SetUpSavePendingState(false);
     controller_.reset([[PasswordsListViewController alloc]
-        initWithModel:GetModelAndCreateIfNull()
-                forms:std::vector<const autofill::PasswordForm*>(1, form)]);
+        initWithModelAndForm:GetModelAndCreateIfNull()
+                        form:form]);
   }
 
   ManagePasswordItemViewController* GetControllerAt(unsigned i) {
@@ -88,10 +91,10 @@ class PasswordsListViewControllerTest : public ManagePasswordsControllerTest {
 };
 
 TEST_F(PasswordsListViewControllerTest, ManageStateShouldHaveManageView) {
-  ScopedVector<const autofill::PasswordForm> forms;
-  forms.push_back(new autofill::PasswordForm(local_credential()));
-  forms.push_back(new autofill::PasswordForm(federated_credential()));
-  SetUpManageState(forms.get());
+  std::vector<autofill::PasswordForm> forms;
+  forms.push_back(local_credential());
+  forms.push_back(federated_credential());
+  SetUpManageState(&forms);
 
   EXPECT_EQ(MANAGE_PASSWORD_ITEM_STATE_MANAGE, [GetControllerAt(0) state]);
   EXPECT_EQ(MANAGE_PASSWORD_ITEM_STATE_MANAGE, [GetControllerAt(1) state]);
@@ -103,9 +106,9 @@ TEST_F(PasswordsListViewControllerTest, ManageStateShouldHaveManageView) {
 
 TEST_F(PasswordsListViewControllerTest,
        ClickingDeleteShouldShowUndoViewAndDeletePassword) {
-  ScopedVector<const autofill::PasswordForm> forms;
-  forms.push_back(new autofill::PasswordForm(local_credential()));
-  SetUpManageState(forms.get());
+  std::vector<autofill::PasswordForm> forms;
+  forms.push_back(local_credential());
+  SetUpManageState(&forms);
 
   ManagePasswordItemView* manageView =
       base::mac::ObjCCast<ManagePasswordItemView>(
@@ -119,9 +122,9 @@ TEST_F(PasswordsListViewControllerTest,
 
 TEST_F(PasswordsListViewControllerTest,
        ClickingUndoShouldShowManageViewAndAddPassword) {
-  ScopedVector<const autofill::PasswordForm> forms;
-  forms.push_back(new autofill::PasswordForm(local_credential()));
-  SetUpManageState(forms.get());
+  std::vector<autofill::PasswordForm> forms;
+  forms.push_back(local_credential());
+  SetUpManageState(&forms);
 
   ManagePasswordItemView* manageView =
       base::mac::ObjCCast<ManagePasswordItemView>(
@@ -140,10 +143,10 @@ TEST_F(PasswordsListViewControllerTest,
 
 TEST_F(PasswordsListViewControllerTest,
        ManageViewShouldHaveCorrectUsernameAndObscuredPassword) {
-  ScopedVector<const autofill::PasswordForm> forms;
-  forms.push_back(new autofill::PasswordForm(local_credential()));
-  forms.push_back(new autofill::PasswordForm(federated_credential()));
-  SetUpManageState(forms.get());
+  std::vector<autofill::PasswordForm> forms;
+  forms.push_back(local_credential());
+  forms.push_back(federated_credential());
+  SetUpManageState(&forms);
   ManagePasswordItemView* manageView =
       base::mac::ObjCCast<ManagePasswordItemView>(
           [GetControllerAt(0) contentView]);

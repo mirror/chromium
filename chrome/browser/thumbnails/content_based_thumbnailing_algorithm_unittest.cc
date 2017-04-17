@@ -4,10 +4,12 @@
 
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
 #include "chrome/browser/thumbnails/content_based_thumbnailing_algorithm.h"
 #include "chrome/browser/thumbnails/simple_thumbnail_crop.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/test/test_browser_thread.h"
+#include "skia/ext/platform_canvas.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/gfx/canvas.h"
@@ -138,7 +140,7 @@ TEST_F(ContentBasedThumbnailingAlgorithmTest, CreateRetargetedThumbnail) {
 
   // The image consists of vertical non-overlapping stripes 150 pixels wide.
   canvas.FillRect(gfx::Rect(200, 200, 800, 400), SkColorSetRGB(255, 255, 255));
-  SkBitmap source = skia::ReadPixels(canvas.sk_canvas());
+  SkBitmap source = canvas.GetBitmap();
 
   ConsumerCallbackCatcher catcher;
   const gfx::Size thumbnail_size(432, 284);
@@ -156,7 +158,7 @@ TEST_F(ContentBasedThumbnailingAlgorithmTest, CreateRetargetedThumbnail) {
       context,
       base::Bind(&ConsumerCallbackCatcher::UiThreadCallback,
                  base::Unretained(&catcher)));
-  message_loop.RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
   ASSERT_TRUE(catcher.called_back());
   EXPECT_TRUE(catcher.score().good_clipping);
   EXPECT_FALSE(catcher.captured_bitmap().empty());

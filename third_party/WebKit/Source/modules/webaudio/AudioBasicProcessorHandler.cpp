@@ -10,16 +10,17 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #include "modules/webaudio/AudioBasicProcessorHandler.h"
@@ -31,120 +32,131 @@
 
 namespace blink {
 
-AudioBasicProcessorHandler::AudioBasicProcessorHandler(NodeType nodeType, AudioNode& node, float sampleRate, std::unique_ptr<AudioProcessor> processor)
-    : AudioHandler(nodeType, node, sampleRate)
-    , m_processor(std::move(processor))
-{
-    addInput();
-    addOutput(1);
+AudioBasicProcessorHandler::AudioBasicProcessorHandler(
+    NodeType node_type,
+    AudioNode& node,
+    float sample_rate,
+    std::unique_ptr<AudioProcessor> processor)
+    : AudioHandler(node_type, node, sample_rate),
+      processor_(std::move(processor)) {
+  AddInput();
+  AddOutput(1);
 }
 
-PassRefPtr<AudioBasicProcessorHandler> AudioBasicProcessorHandler::create(NodeType nodeType, AudioNode& node, float sampleRate, std::unique_ptr<AudioProcessor> processor)
-{
-    return adoptRef(new AudioBasicProcessorHandler(nodeType, node, sampleRate, std::move(processor)));
+PassRefPtr<AudioBasicProcessorHandler> AudioBasicProcessorHandler::Create(
+    NodeType node_type,
+    AudioNode& node,
+    float sample_rate,
+    std::unique_ptr<AudioProcessor> processor) {
+  return AdoptRef(new AudioBasicProcessorHandler(node_type, node, sample_rate,
+                                                 std::move(processor)));
 }
 
-AudioBasicProcessorHandler::~AudioBasicProcessorHandler()
-{
-    // Safe to call the uninitialize() because it's final.
-    uninitialize();
+AudioBasicProcessorHandler::~AudioBasicProcessorHandler() {
+  // Safe to call the uninitialize() because it's final.
+  Uninitialize();
 }
 
-void AudioBasicProcessorHandler::initialize()
-{
-    if (isInitialized())
-        return;
+void AudioBasicProcessorHandler::Initialize() {
+  if (IsInitialized())
+    return;
 
-    ASSERT(processor());
-    processor()->initialize();
+  DCHECK(Processor());
+  Processor()->Initialize();
 
-    AudioHandler::initialize();
+  AudioHandler::Initialize();
 }
 
-void AudioBasicProcessorHandler::uninitialize()
-{
-    if (!isInitialized())
-        return;
+void AudioBasicProcessorHandler::Uninitialize() {
+  if (!IsInitialized())
+    return;
 
-    ASSERT(processor());
-    processor()->uninitialize();
+  DCHECK(Processor());
+  Processor()->Uninitialize();
 
-    AudioHandler::uninitialize();
+  AudioHandler::Uninitialize();
 }
 
-void AudioBasicProcessorHandler::process(size_t framesToProcess)
-{
-    AudioBus* destinationBus = output(0).bus();
+void AudioBasicProcessorHandler::Process(size_t frames_to_process) {
+  AudioBus* destination_bus = Output(0).Bus();
 
-    if (!isInitialized() || !processor() || processor()->numberOfChannels() != numberOfChannels()) {
-        destinationBus->zero();
-    } else {
-        AudioBus* sourceBus = input(0).bus();
+  if (!IsInitialized() || !Processor() ||
+      Processor()->NumberOfChannels() != NumberOfChannels()) {
+    destination_bus->Zero();
+  } else {
+    AudioBus* source_bus = Input(0).Bus();
 
-        // FIXME: if we take "tail time" into account, then we can avoid calling processor()->process() once the tail dies down.
-        if (!input(0).isConnected())
-            sourceBus->zero();
+    // FIXME: if we take "tail time" into account, then we can avoid calling
+    // processor()->process() once the tail dies down.
+    if (!Input(0).IsConnected())
+      source_bus->Zero();
 
-        processor()->process(sourceBus, destinationBus, framesToProcess);
-    }
+    Processor()->Process(source_bus, destination_bus, frames_to_process);
+  }
+}
+
+void AudioBasicProcessorHandler::ProcessOnlyAudioParams(
+    size_t frames_to_process) {
+  if (!IsInitialized() || !Processor())
+    return;
+
+  Processor()->ProcessOnlyAudioParams(frames_to_process);
 }
 
 // Nice optimization in the very common case allowing for "in-place" processing
-void AudioBasicProcessorHandler::pullInputs(size_t framesToProcess)
-{
-    // Render input stream - suggest to the input to render directly into output bus for in-place processing in process() if possible.
-    input(0).pull(output(0).bus(), framesToProcess);
+void AudioBasicProcessorHandler::PullInputs(size_t frames_to_process) {
+  // Render input stream - suggest to the input to render directly into output
+  // bus for in-place processing in process() if possible.
+  Input(0).Pull(Output(0).Bus(), frames_to_process);
 }
 
 // As soon as we know the channel count of our input, we can lazily initialize.
-// Sometimes this may be called more than once with different channel counts, in which case we must safely
-// uninitialize and then re-initialize with the new channel count.
-void AudioBasicProcessorHandler::checkNumberOfChannelsForInput(AudioNodeInput* input)
-{
-    ASSERT(context()->isAudioThread());
-    ASSERT(context()->isGraphOwner());
+// Sometimes this may be called more than once with different channel counts, in
+// which case we must safely uninitialize and then re-initialize with the new
+// channel count.
+void AudioBasicProcessorHandler::CheckNumberOfChannelsForInput(
+    AudioNodeInput* input) {
+  DCHECK(Context()->IsAudioThread());
+  DCHECK(Context()->IsGraphOwner());
 
-    ASSERT(input == &this->input(0));
-    if (input != &this->input(0))
-        return;
+  DCHECK_EQ(input, &this->Input(0));
+  if (input != &this->Input(0))
+    return;
 
-    ASSERT(processor());
-    if (!processor())
-        return;
+  DCHECK(Processor());
+  if (!Processor())
+    return;
 
-    unsigned numberOfChannels = input->numberOfChannels();
+  unsigned number_of_channels = input->NumberOfChannels();
 
-    if (isInitialized() && numberOfChannels != output(0).numberOfChannels()) {
-        // We're already initialized but the channel count has changed.
-        uninitialize();
-    }
+  if (IsInitialized() && number_of_channels != Output(0).NumberOfChannels()) {
+    // We're already initialized but the channel count has changed.
+    Uninitialize();
+  }
 
-    if (!isInitialized()) {
-        // This will propagate the channel count to any nodes connected further down the chain...
-        output(0).setNumberOfChannels(numberOfChannels);
+  if (!IsInitialized()) {
+    // This will propagate the channel count to any nodes connected further down
+    // the chain...
+    Output(0).SetNumberOfChannels(number_of_channels);
 
-        // Re-initialize the processor with the new channel count.
-        processor()->setNumberOfChannels(numberOfChannels);
-        initialize();
-    }
+    // Re-initialize the processor with the new channel count.
+    Processor()->SetNumberOfChannels(number_of_channels);
+    Initialize();
+  }
 
-    AudioHandler::checkNumberOfChannelsForInput(input);
+  AudioHandler::CheckNumberOfChannelsForInput(input);
 }
 
-unsigned AudioBasicProcessorHandler::numberOfChannels()
-{
-    return output(0).numberOfChannels();
+unsigned AudioBasicProcessorHandler::NumberOfChannels() {
+  return Output(0).NumberOfChannels();
 }
 
-double AudioBasicProcessorHandler::tailTime() const
-{
-    return m_processor->tailTime();
+double AudioBasicProcessorHandler::TailTime() const {
+  return processor_->TailTime();
 }
 
-double AudioBasicProcessorHandler::latencyTime() const
-{
-    return m_processor->latencyTime();
+double AudioBasicProcessorHandler::LatencyTime() const {
+  return processor_->LatencyTime();
 }
 
-} // namespace blink
-
+}  // namespace blink

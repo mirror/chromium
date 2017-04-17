@@ -11,13 +11,11 @@
 #include "services/ui/common/types.h"
 #include "services/ui/common/util.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
-#include "services/ui/surfaces/surfaces_state.h"
 #include "services/ui/ws/display_manager.h"
 #include "services/ui/ws/ids.h"
 #include "services/ui/ws/platform_display.h"
 #include "services/ui/ws/platform_display_factory.h"
 #include "services/ui/ws/server_window.h"
-#include "services/ui/ws/server_window_surface_manager_test_api.h"
 #include "services/ui/ws/test_utils.h"
 #include "services/ui/ws/window_manager_display_root.h"
 #include "services/ui/ws/window_manager_state.h"
@@ -37,30 +35,29 @@ const UserId kTestId1 = "20";
 
 class CursorTest : public testing::Test {
  public:
-  CursorTest() : cursor_id_(-1), platform_display_factory_(&cursor_id_) {}
+  CursorTest() {}
   ~CursorTest() override {}
+
+  WindowServer* window_server() { return ws_test_helper_.window_server(); }
+  TestWindowServerDelegate* window_server_delegate() {
+    return ws_test_helper_.window_server_delegate();
+  }
+  mojom::CursorType cursor() const { return ws_test_helper_.cursor(); }
 
  protected:
   // testing::Test:
   void SetUp() override {
-    PlatformDisplay::set_factory_for_testing(&platform_display_factory_);
-    window_server_.reset(
-        new WindowServer(&window_server_delegate_,
-                         scoped_refptr<SurfacesState>(new SurfacesState)));
-    window_server_delegate_.set_window_server(window_server_.get());
-
-    window_server_delegate_.set_num_displays_to_create(1);
+    screen_manager_.Init(window_server()->display_manager());
+    screen_manager_.AddDisplay();
 
     // As a side effect, this allocates Displays.
-    WindowManagerWindowTreeFactorySetTestApi(
-        window_server_->window_manager_window_tree_factory_set())
-        .Add(kTestId1);
-    window_server_->user_id_tracker()->AddUserId(kTestId1);
-    window_server_->user_id_tracker()->SetActiveUserId(kTestId1);
+    AddWindowManager(window_server(), kTestId1);
+    window_server()->user_id_tracker()->AddUserId(kTestId1);
+    window_server()->user_id_tracker()->SetActiveUserId(kTestId1);
   }
 
   ServerWindow* GetRoot() {
-    DisplayManager* display_manager = window_server_->display_manager();
+    DisplayManager* display_manager = window_server()->display_manager();
     //    ASSERT_EQ(1u, display_manager->displays().size());
     Display* display = *display_manager->displays().begin();
     return display->GetWindowManagerDisplayRootForUser(kTestId1)->root();
@@ -68,7 +65,7 @@ class CursorTest : public testing::Test {
 
   // Create a 30x30 window where the outer 10 pixels is non-client.
   ServerWindow* BuildServerWindow() {
-    DisplayManager* display_manager = window_server_->display_manager();
+    DisplayManager* display_manager = window_server()->display_manager();
     Display* display = *display_manager->displays().begin();
     WindowManagerDisplayRoot* active_display_root =
         display->GetActiveWindowManagerDisplayRoot();
@@ -83,114 +80,108 @@ class CursorTest : public testing::Test {
     w->SetClientArea(gfx::Insets(10, 10), std::vector<gfx::Rect>());
     w->SetVisible(true);
 
-    ServerWindowSurfaceManagerTestApi test_api(w->GetOrCreateSurfaceManager());
-    test_api.CreateEmptyDefaultSurface();
-
     return w;
   }
 
   void MoveCursorTo(const gfx::Point& p) {
-    DisplayManager* display_manager = window_server_->display_manager();
+    DisplayManager* display_manager = window_server()->display_manager();
     ASSERT_EQ(1u, display_manager->displays().size());
     Display* display = *display_manager->displays().begin();
     WindowManagerDisplayRoot* active_display_root =
         display->GetActiveWindowManagerDisplayRoot();
     ASSERT_TRUE(active_display_root);
-    static_cast<PlatformDisplayDelegate*>(display)->OnEvent(ui::PointerEvent(
-        ui::MouseEvent(ui::ET_MOUSE_MOVED, p, p, base::TimeTicks(), 0, 0)));
+    PointerEvent event(
+        MouseEvent(ET_MOUSE_MOVED, p, p, base::TimeTicks(), 0, 0));
+    ignore_result(static_cast<PlatformDisplayDelegate*>(display)
+                      ->GetEventSink()
+                      ->OnEventFromSource(&event));
     WindowManagerState* wms = active_display_root->window_manager_state();
     wms->OnEventAck(wms->window_tree(), mojom::EventResult::HANDLED);
   }
 
- protected:
-  int32_t cursor_id_;
-  TestPlatformDisplayFactory platform_display_factory_;
-  TestWindowServerDelegate window_server_delegate_;
-  std::unique_ptr<WindowServer> window_server_;
-  base::MessageLoop message_loop_;
-
  private:
+  WindowServerTestHelper ws_test_helper_;
+  TestScreenManager screen_manager_;
   DISALLOW_COPY_AND_ASSIGN(CursorTest);
 };
 
 TEST_F(CursorTest, ChangeByMouseMove) {
   ServerWindow* win = BuildServerWindow();
-  win->SetPredefinedCursor(mojom::Cursor::IBEAM);
-  EXPECT_EQ(mojom::Cursor::IBEAM, mojom::Cursor(win->cursor()));
-  win->SetNonClientCursor(mojom::Cursor::EAST_RESIZE);
-  EXPECT_EQ(mojom::Cursor::EAST_RESIZE,
-            mojom::Cursor(win->non_client_cursor()));
+  win->SetPredefinedCursor(mojom::CursorType::IBEAM);
+  win->parent()->SetPredefinedCursor(mojom::CursorType::CELL);
+  EXPECT_EQ(mojom::CursorType::IBEAM, win->cursor());
+  win->SetNonClientCursor(mojom::CursorType::EAST_RESIZE);
+  EXPECT_EQ(mojom::CursorType::EAST_RESIZE, win->non_client_cursor());
 
   // Non client area
   MoveCursorTo(gfx::Point(15, 15));
-  EXPECT_EQ(mojom::Cursor::EAST_RESIZE, mojom::Cursor(cursor_id_));
+  EXPECT_EQ(mojom::CursorType::EAST_RESIZE, cursor());
 
-  // Client area
+  // Client area, which comes from win->parent().
   MoveCursorTo(gfx::Point(25, 25));
-  EXPECT_EQ(mojom::Cursor::IBEAM, mojom::Cursor(cursor_id_));
+  EXPECT_EQ(mojom::CursorType::CELL, cursor());
 }
 
 TEST_F(CursorTest, ChangeByClientAreaChange) {
   ServerWindow* win = BuildServerWindow();
-  win->SetPredefinedCursor(mojom::Cursor::IBEAM);
-  EXPECT_EQ(mojom::Cursor::IBEAM, mojom::Cursor(win->cursor()));
-  win->SetNonClientCursor(mojom::Cursor::EAST_RESIZE);
-  EXPECT_EQ(mojom::Cursor::EAST_RESIZE,
-            mojom::Cursor(win->non_client_cursor()));
+  win->parent()->SetPredefinedCursor(mojom::CursorType::CROSS);
+  win->SetPredefinedCursor(mojom::CursorType::IBEAM);
+  EXPECT_EQ(mojom::CursorType::IBEAM, mojom::CursorType(win->cursor()));
+  win->SetNonClientCursor(mojom::CursorType::EAST_RESIZE);
+  EXPECT_EQ(mojom::CursorType::EAST_RESIZE, win->non_client_cursor());
 
   // Non client area before we move.
   MoveCursorTo(gfx::Point(15, 15));
-  EXPECT_EQ(mojom::Cursor::EAST_RESIZE, mojom::Cursor(cursor_id_));
+  EXPECT_EQ(mojom::CursorType::EAST_RESIZE, cursor());
 
-  // Changing the client area should cause a change.
+  // Changing the client area should cause a change. The cursor for the client
+  // area comes from root ancestor, which is win->parent().
   win->SetClientArea(gfx::Insets(1, 1), std::vector<gfx::Rect>());
-  EXPECT_EQ(mojom::Cursor::IBEAM, mojom::Cursor(cursor_id_));
+  EXPECT_EQ(mojom::CursorType::CROSS, cursor());
 }
 
 TEST_F(CursorTest, NonClientCursorChange) {
   ServerWindow* win = BuildServerWindow();
-  win->SetPredefinedCursor(mojom::Cursor::IBEAM);
-  EXPECT_EQ(mojom::Cursor::IBEAM, mojom::Cursor(win->cursor()));
-  win->SetNonClientCursor(mojom::Cursor::EAST_RESIZE);
-  EXPECT_EQ(mojom::Cursor::EAST_RESIZE,
-            mojom::Cursor(win->non_client_cursor()));
+  win->SetPredefinedCursor(mojom::CursorType::IBEAM);
+  EXPECT_EQ(mojom::CursorType::IBEAM, win->cursor());
+  win->SetNonClientCursor(mojom::CursorType::EAST_RESIZE);
+  EXPECT_EQ(mojom::CursorType::EAST_RESIZE, win->non_client_cursor());
 
   MoveCursorTo(gfx::Point(15, 15));
-  EXPECT_EQ(mojom::Cursor::EAST_RESIZE, mojom::Cursor(cursor_id_));
+  EXPECT_EQ(mojom::CursorType::EAST_RESIZE, cursor());
 
-  win->SetNonClientCursor(mojom::Cursor::WEST_RESIZE);
-  EXPECT_EQ(mojom::Cursor::WEST_RESIZE, mojom::Cursor(cursor_id_));
+  win->SetNonClientCursor(mojom::CursorType::WEST_RESIZE);
+  EXPECT_EQ(mojom::CursorType::WEST_RESIZE, cursor());
 }
 
 TEST_F(CursorTest, IgnoreClientCursorChangeInNonClientArea) {
   ServerWindow* win = BuildServerWindow();
-  win->SetPredefinedCursor(mojom::Cursor::IBEAM);
-  EXPECT_EQ(mojom::Cursor::IBEAM, mojom::Cursor(win->cursor()));
-  win->SetNonClientCursor(mojom::Cursor::EAST_RESIZE);
-  EXPECT_EQ(mojom::Cursor::EAST_RESIZE,
-            mojom::Cursor(win->non_client_cursor()));
+  win->SetPredefinedCursor(mojom::CursorType::IBEAM);
+  EXPECT_EQ(mojom::CursorType::IBEAM, win->cursor());
+  win->SetNonClientCursor(mojom::CursorType::EAST_RESIZE);
+  EXPECT_EQ(mojom::CursorType::EAST_RESIZE, win->non_client_cursor());
 
   MoveCursorTo(gfx::Point(15, 15));
-  EXPECT_EQ(mojom::Cursor::EAST_RESIZE, mojom::Cursor(cursor_id_));
+  EXPECT_EQ(mojom::CursorType::EAST_RESIZE, cursor());
 
-  win->SetPredefinedCursor(mojom::Cursor::HELP);
-  EXPECT_EQ(mojom::Cursor::EAST_RESIZE, mojom::Cursor(cursor_id_));
+  win->SetPredefinedCursor(mojom::CursorType::HELP);
+  EXPECT_EQ(mojom::CursorType::EAST_RESIZE, cursor());
 }
 
 TEST_F(CursorTest, NonClientToClientByBoundsChange) {
   ServerWindow* win = BuildServerWindow();
-  win->SetPredefinedCursor(mojom::Cursor::IBEAM);
-  EXPECT_EQ(mojom::Cursor::IBEAM, mojom::Cursor(win->cursor()));
-  win->SetNonClientCursor(mojom::Cursor::EAST_RESIZE);
-  EXPECT_EQ(mojom::Cursor::EAST_RESIZE,
-            mojom::Cursor(win->non_client_cursor()));
+  win->parent()->SetPredefinedCursor(mojom::CursorType::COPY);
+  win->SetPredefinedCursor(mojom::CursorType::IBEAM);
+  EXPECT_EQ(mojom::CursorType::IBEAM, win->cursor());
+  win->SetNonClientCursor(mojom::CursorType::EAST_RESIZE);
+  EXPECT_EQ(mojom::CursorType::EAST_RESIZE, win->non_client_cursor());
 
   // Non client area before we move.
   MoveCursorTo(gfx::Point(15, 15));
-  EXPECT_EQ(mojom::Cursor::EAST_RESIZE, mojom::Cursor(cursor_id_));
+  EXPECT_EQ(mojom::CursorType::EAST_RESIZE, cursor());
 
   win->SetBounds(gfx::Rect(0, 0, 30, 30));
-  EXPECT_EQ(mojom::Cursor::IBEAM, mojom::Cursor(cursor_id_));
+  EXPECT_EQ(mojom::CursorType::COPY, cursor());
 }
 
 }  // namespace test

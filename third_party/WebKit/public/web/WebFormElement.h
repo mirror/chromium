@@ -42,35 +42,35 @@ class WebFormControlElement;
 // A container for passing around a reference to a form element. Provides some
 // information about the form.
 class WebFormElement final : public WebElement {
-public:
-    ~WebFormElement() { reset(); }
+ public:
+  ~WebFormElement() { Reset(); }
 
-    WebFormElement() : WebElement() { }
-    WebFormElement(const WebFormElement& element) : WebElement(element) { }
+  WebFormElement() : WebElement() {}
+  WebFormElement(const WebFormElement& element) : WebElement(element) {}
 
-    WebFormElement& operator=(const WebFormElement& element)
-    {
-        WebElement::assign(element);
-        return *this;
-    }
-    void assign(const WebFormElement& element) { WebElement::assign(element); }
+  WebFormElement& operator=(const WebFormElement& element) {
+    WebElement::Assign(element);
+    return *this;
+  }
+  void Assign(const WebFormElement& element) { WebElement::Assign(element); }
 
-    BLINK_EXPORT bool autoComplete() const;
-    BLINK_EXPORT WebString action() const;
-    BLINK_EXPORT WebString name() const;
-    BLINK_EXPORT WebString method() const;
+  BLINK_EXPORT bool AutoComplete() const;
+  BLINK_EXPORT WebString Action() const;
+  BLINK_EXPORT WebString GetName() const;
+  BLINK_EXPORT WebString Method() const;
 
-    BLINK_EXPORT void getFormControlElements(WebVector<WebFormControlElement>&) const;
+  BLINK_EXPORT void GetFormControlElements(
+      WebVector<WebFormControlElement>&) const;
 
 #if BLINK_IMPLEMENTATION
-    WebFormElement(HTMLFormElement*);
-    WebFormElement& operator=(HTMLFormElement*);
-    operator HTMLFormElement*() const;
+  WebFormElement(HTMLFormElement*);
+  WebFormElement& operator=(HTMLFormElement*);
+  operator HTMLFormElement*() const;
 #endif
 };
 
 DECLARE_WEB_NODE_TYPE_CASTS(WebFormElement);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

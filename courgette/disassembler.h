@@ -5,14 +5,15 @@
 #ifndef COURGETTE_DISASSEMBLER_H_
 #define COURGETTE_DISASSEMBLER_H_
 
-#include <stddef.h>
 #include <stdint.h>
 
+#include <memory>
 #include <vector>
 
 #include "base/macros.h"
 #include "courgette/courgette.h"
 #include "courgette/image_utils.h"
+#include "courgette/instruction_utils.h"
 
 namespace courgette {
 
@@ -55,13 +56,23 @@ class Disassembler : public AddressTranslator {
   virtual ~Disassembler();
 
   // AddressTranslator interfaces.
-  virtual RVA FileOffsetToRVA(FileOffset file_offset) const override = 0;
-  virtual FileOffset RVAToFileOffset(RVA rva) const override = 0;
+  RVA FileOffsetToRVA(FileOffset file_offset) const override = 0;
+  FileOffset RVAToFileOffset(RVA rva) const override = 0;
   const uint8_t* FileOffsetToPointer(FileOffset file_offset) const override;
   const uint8_t* RVAToPointer(RVA rva) const override;
-  RVA PointerToTargetRVA(const uint8_t* p) const = 0;
+  RVA PointerToTargetRVA(const uint8_t* p) const override = 0;
 
   virtual ExecutableType kind() const = 0;
+
+  // Returns the preferred image base address. Using uint64_t to accommodate the
+  // general case of 64-bit architectures.
+  virtual uint64_t image_base() const = 0;
+
+  // Extracts and stores locations of abs32 references from the image file.
+  virtual bool ExtractAbs32Locations() = 0;
+
+  // Extracts and stores locations of rel32 references from the image file.
+  virtual bool ExtractRel32Locations() = 0;
 
   // Returns a caller-owned new RvaVisitor to iterate through abs32 target RVAs.
   virtual RvaVisitor* CreateAbs32TargetRvaVisitor() = 0;
@@ -71,16 +82,18 @@ class Disassembler : public AddressTranslator {
 
   // Removes unused rel32 locations (architecture-specific). This is needed
   // because we may remove rel32 Labels along the way. As a result the matching
-  // matching rel32 addresses become unused. Removing them saves space.
+  // rel32 addresses become unused. Removing them saves space.
   virtual void RemoveUnusedRel32Locations(AssemblyProgram* program) = 0;
 
-  // Returns true if the buffer appears to be a valid executable of the expected
-  // type, and false otherwise. This needs not be called before Disassemble().
+  // Extracts structural data from the main image. Returns true if the image
+  // appears to be a valid executable of the expected type, or false otherwise.
+  // This needs to be called before Disassemble().
   virtual bool ParseHeader() = 0;
 
-  // Disassembles the item passed to the factory method into the output
-  // parameter 'program'.
-  virtual bool Disassemble(AssemblyProgram* program) = 0;
+  // Extracts and stores references from the main image. Returns a new
+  // AssemblyProgram initialized using data parsed from the main image and
+  // |annotate_labels|, or null on failure.
+  std::unique_ptr<AssemblyProgram> Disassemble(bool annotate_labels);
 
   // ok() may always be called but returns true only after ParseHeader()
   // succeeds.
@@ -108,6 +121,11 @@ class Disassembler : public AddressTranslator {
   // Reduce the length of the image in memory. Does not actually free
   // (or realloc) any memory. Usually only called via ParseHeader().
   void ReduceLength(size_t reduced_length);
+
+  // Returns a generator that emits instructions to a given receptor. |program|
+  // is required as helper.
+  virtual InstructionGenerator GetInstructionGenerator(
+      AssemblyProgram* program) = 0;
 
  private:
   const char* failure_reason_;

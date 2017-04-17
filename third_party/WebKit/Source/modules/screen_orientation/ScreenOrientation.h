@@ -6,12 +6,12 @@
 #define ScreenOrientation_h
 
 #include "bindings/core/v8/ScriptWrappable.h"
+#include "core/dom/ContextLifecycleObserver.h"
 #include "core/events/EventTarget.h"
-#include "core/frame/DOMWindowProperty.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/modules/screen_orientation/WebScreenOrientationType.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -19,47 +19,47 @@ class ExecutionContext;
 class LocalFrame;
 class ScriptPromise;
 class ScriptState;
-class ScreenOrientationController;
+class ScreenOrientationControllerImpl;
 
-class ScreenOrientation final
-    : public EventTargetWithInlineData
-    , public DOMWindowProperty {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(ScreenOrientation);
-public:
-    static ScreenOrientation* create(LocalFrame*);
+class ScreenOrientation final : public EventTargetWithInlineData,
+                                public ContextClient {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(ScreenOrientation);
 
-    ~ScreenOrientation() override;
+ public:
+  static ScreenOrientation* Create(LocalFrame*);
 
-    // EventTarget implementation.
-    const WTF::AtomicString& interfaceName() const override;
-    ExecutionContext* getExecutionContext() const override;
+  ~ScreenOrientation() override;
 
-    String type() const;
-    unsigned short angle() const;
+  // EventTarget implementation.
+  const WTF::AtomicString& InterfaceName() const override;
+  ExecutionContext* GetExecutionContext() const override;
 
-    void setType(WebScreenOrientationType);
-    void setAngle(unsigned short);
+  String type() const;
+  unsigned short angle() const;
 
-    ScriptPromise lock(ScriptState*, const AtomicString& orientation);
-    void unlock();
+  void SetType(WebScreenOrientationType);
+  void SetAngle(unsigned short);
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(change);
+  ScriptPromise lock(ScriptState*, const AtomicString& orientation);
+  void unlock();
 
-    // Helper being used by this class and LockOrientationCallback.
-    static const AtomicString& orientationTypeToString(WebScreenOrientationType);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(change);
 
-    DECLARE_VIRTUAL_TRACE();
+  // Helper being used by this class and LockOrientationCallback.
+  static const AtomicString& OrientationTypeToString(WebScreenOrientationType);
 
-private:
-    explicit ScreenOrientation(LocalFrame*);
+  DECLARE_VIRTUAL_TRACE();
 
-    ScreenOrientationController* controller();
+ private:
+  explicit ScreenOrientation(LocalFrame*);
 
-    WebScreenOrientationType m_type;
-    unsigned short m_angle;
+  ScreenOrientationControllerImpl* Controller();
+
+  WebScreenOrientationType type_;
+  unsigned short angle_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScreenOrientation_h
+#endif  // ScreenOrientation_h

@@ -16,6 +16,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "gpu/command_buffer/common/sync_token.h"
 #include "media/base/pipeline_status.h"
 #include "media/base/surface_manager.h"
 #include "media/base/video_decoder.h"
@@ -25,7 +26,6 @@ template <class T> class scoped_refptr;
 
 namespace base {
 class SharedMemory;
-class SingleThreadTaskRunner;
 }
 
 namespace gpu {
@@ -57,7 +57,6 @@ class MEDIA_EXPORT GpuVideoDecoder
                   CdmContext* cdm_context,
                   const InitCB& init_cb,
                   const OutputCB& output_cb) override;
-  void CompleteInitialization(int cdm_id, int surface_id);
   void Decode(const scoped_refptr<DecoderBuffer>& buffer,
               const DecodeCB& decode_cb) override;
   void Reset(const base::Closure& closure) override;
@@ -155,6 +154,16 @@ class MEDIA_EXPORT GpuVideoDecoder
   // Assert the contract that this class is operated on the right thread.
   void DCheckGpuVideoAcceleratorFactoriesTaskRunnerIsCurrent() const;
 
+  // Provided to the |request_surface_cb_| callback given during construction;
+  // sets or changes the output surface.
+  void OnSurfaceAvailable(int surface_id);
+
+  // If the VDA supports external surfaces, we must wait for the surface before
+  // completing initialization. This will be called by OnSurfaceAvailable() once
+  // the surface is known or immediately by Initialize() if external surfaces
+  // are unsupported.
+  void CompleteInitialization(int surface_id);
+
   bool needs_bitstream_conversion_;
 
   GpuVideoAcceleratorFactories* factories_;
@@ -168,6 +177,10 @@ class MEDIA_EXPORT GpuVideoDecoder
   // Populated during Initialize() (on success) and unchanged until an error
   // occurs.
   std::unique_ptr<VideoDecodeAccelerator> vda_;
+
+  // Whether |vda_->Initialize()| has been called. This is used to avoid
+  // calling Initialize() again while a deferred initialization is in progress.
+  bool vda_initialized_;
 
   InitCB init_cb_;
   OutputCB output_cb_;
@@ -185,6 +198,10 @@ class MEDIA_EXPORT GpuVideoDecoder
   // round-trip to the browser process, we keep allocation out of the
   // steady-state of the decoder.
   std::vector<SHMBuffer*> available_shm_segments_;
+
+  // Placeholder sync token that was created and validated after the most
+  // recent picture buffers were created.
+  gpu::SyncToken sync_token_;
 
   std::map<int32_t, PendingDecoderBuffer> bitstream_buffers_in_decoder_;
   PictureBufferMap assigned_picture_buffers_;
@@ -237,6 +254,10 @@ class MEDIA_EXPORT GpuVideoDecoder
 
   // This flag translates to COPY_REQUIRED flag for each frame.
   bool requires_texture_copy_;
+
+  // Set during Initialize(); given to the VDA for purposes for handling
+  // encrypted content.
+  int cdm_id_;
 
   // Bound to factories_->GetMessageLoop().
   // NOTE: Weak pointers must be invalidated before all other member variables.

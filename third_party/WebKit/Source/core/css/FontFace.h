@@ -37,10 +37,10 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSValue.h"
-#include "core/dom/ActiveDOMObject.h"
+#include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/DOMException.h"
 #include "platform/fonts/FontTraits.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -54,103 +54,135 @@ class FontFaceDescriptors;
 class StringOrArrayBufferOrArrayBufferView;
 class StylePropertySet;
 class StyleRuleFontFace;
+class WebTaskRunner;
 
-class FontFace : public GarbageCollectedFinalized<FontFace>, public ScriptWrappable, public ActiveScriptWrappable, public ActiveDOMObject {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(FontFace);
-    WTF_MAKE_NONCOPYABLE(FontFace);
-public:
-    enum LoadStatusType { Unloaded, Loading, Loaded, Error };
+class CORE_EXPORT FontFace : public GarbageCollectedFinalized<FontFace>,
+                             public ScriptWrappable,
+                             public ActiveScriptWrappable<FontFace>,
+                             public ContextClient {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(FontFace);
+  WTF_MAKE_NONCOPYABLE(FontFace);
 
-    static FontFace* create(ExecutionContext*, const AtomicString& family, StringOrArrayBufferOrArrayBufferView&, const FontFaceDescriptors&);
-    static FontFace* create(Document*, const StyleRuleFontFace*);
+ public:
+  enum LoadStatusType { kUnloaded, kLoading, kLoaded, kError };
 
-    ~FontFace();
+  static FontFace* Create(ExecutionContext*,
+                          const AtomicString& family,
+                          StringOrArrayBufferOrArrayBufferView&,
+                          const FontFaceDescriptors&);
+  static FontFace* Create(Document*, const StyleRuleFontFace*);
 
-    const AtomicString& family() const { return m_family; }
-    String style() const;
-    String weight() const;
-    String stretch() const;
-    String unicodeRange() const;
-    String variant() const;
-    String featureSettings() const;
+  virtual ~FontFace();
 
-    // FIXME: Changing these attributes should affect font matching.
-    void setFamily(ExecutionContext*, const AtomicString& s, ExceptionState&) { m_family = s; }
-    void setStyle(ExecutionContext*, const String&, ExceptionState&);
-    void setWeight(ExecutionContext*, const String&, ExceptionState&);
-    void setStretch(ExecutionContext*, const String&, ExceptionState&);
-    void setUnicodeRange(ExecutionContext*, const String&, ExceptionState&);
-    void setVariant(ExecutionContext*, const String&, ExceptionState&);
-    void setFeatureSettings(ExecutionContext*, const String&, ExceptionState&);
+  const AtomicString& family() const { return family_; }
+  String style() const;
+  String weight() const;
+  String stretch() const;
+  String unicodeRange() const;
+  String variant() const;
+  String featureSettings() const;
+  String display() const;
 
-    String status() const;
-    ScriptPromise loaded(ScriptState* scriptState) { return fontStatusPromise(scriptState); }
+  // FIXME: Changing these attributes should affect font matching.
+  void setFamily(ExecutionContext*, const AtomicString& s, ExceptionState&) {
+    family_ = s;
+  }
+  void setStyle(ExecutionContext*, const String&, ExceptionState&);
+  void setWeight(ExecutionContext*, const String&, ExceptionState&);
+  void setStretch(ExecutionContext*, const String&, ExceptionState&);
+  void setUnicodeRange(ExecutionContext*, const String&, ExceptionState&);
+  void setVariant(ExecutionContext*, const String&, ExceptionState&);
+  void setFeatureSettings(ExecutionContext*, const String&, ExceptionState&);
+  void setDisplay(ExecutionContext*, const String&, ExceptionState&);
 
-    ScriptPromise load(ScriptState*);
+  String status() const;
+  ScriptPromise loaded(ScriptState* script_state) {
+    return FontStatusPromise(script_state);
+  }
 
-    LoadStatusType loadStatus() const { return m_status; }
-    void setLoadStatus(LoadStatusType);
-    void setError(DOMException* = nullptr);
-    DOMException* error() const { return m_error; }
-    FontTraits traits() const;
-    CSSFontFace* cssFontFace() { return m_cssFontFace.get(); }
-    size_t approximateBlankCharacterCount() const;
+  ScriptPromise load(ScriptState*);
 
-    DECLARE_VIRTUAL_TRACE();
+  LoadStatusType LoadStatus() const { return status_; }
+  void SetLoadStatus(LoadStatusType);
+  void SetError(DOMException* = nullptr);
+  DOMException* GetError() const { return error_; }
+  FontTraits Traits() const;
+  CSSFontFace* CssFontFace() { return css_font_face_.Get(); }
+  size_t ApproximateBlankCharacterCount() const;
 
-    bool hadBlankText() const;
+  DECLARE_VIRTUAL_TRACE();
 
-    class LoadFontCallback : public GarbageCollectedFinalized<LoadFontCallback> {
-    public:
-        virtual ~LoadFontCallback() { }
-        virtual void notifyLoaded(FontFace*) = 0;
-        virtual void notifyError(FontFace*) = 0;
-        DEFINE_INLINE_VIRTUAL_TRACE() { }
-    };
-    void loadWithCallback(LoadFontCallback*, ExecutionContext*);
+  bool HadBlankText() const;
 
-    // ActiveScriptWrappable.
-    bool hasPendingActivity() const final;
+  class CORE_EXPORT LoadFontCallback : public GarbageCollectedMixin {
+   public:
+    virtual ~LoadFontCallback() {}
+    virtual void NotifyLoaded(FontFace*) = 0;
+    virtual void NotifyError(FontFace*) = 0;
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
+  };
+  void LoadWithCallback(LoadFontCallback*);
+  void AddCallback(LoadFontCallback*);
 
-private:
-    static FontFace* create(ExecutionContext*, const AtomicString& family, DOMArrayBuffer* source, const FontFaceDescriptors&);
-    static FontFace* create(ExecutionContext*, const AtomicString& family, DOMArrayBufferView*, const FontFaceDescriptors&);
-    static FontFace* create(ExecutionContext*, const AtomicString& family, const String& source, const FontFaceDescriptors&);
+  // ScriptWrappable:
+  bool HasPendingActivity() const final;
 
-    explicit FontFace(ExecutionContext*);
-    FontFace(ExecutionContext*, const AtomicString& family, const FontFaceDescriptors&);
+ private:
+  static FontFace* Create(ExecutionContext*,
+                          const AtomicString& family,
+                          DOMArrayBuffer* source,
+                          const FontFaceDescriptors&);
+  static FontFace* Create(ExecutionContext*,
+                          const AtomicString& family,
+                          DOMArrayBufferView*,
+                          const FontFaceDescriptors&);
+  static FontFace* Create(ExecutionContext*,
+                          const AtomicString& family,
+                          const String& source,
+                          const FontFaceDescriptors&);
 
-    void initCSSFontFace(Document*, const CSSValue* src);
-    void initCSSFontFace(const unsigned char* data, size_t);
-    void setPropertyFromString(const Document*, const String&, CSSPropertyID, ExceptionState* = 0);
-    bool setPropertyFromStyle(const StylePropertySet&, CSSPropertyID);
-    bool setPropertyValue(const CSSValue*, CSSPropertyID);
-    bool setFamilyValue(const CSSValue&);
-    void loadInternal(ExecutionContext*);
-    ScriptPromise fontStatusPromise(ScriptState*);
+  explicit FontFace(ExecutionContext*);
+  FontFace(ExecutionContext*,
+           const AtomicString& family,
+           const FontFaceDescriptors&);
 
-    using LoadedProperty = ScriptPromiseProperty<Member<FontFace>, Member<FontFace>, Member<DOMException>>;
+  void InitCSSFontFace(Document*, const CSSValue* src);
+  void InitCSSFontFace(const unsigned char* data, size_t);
+  void SetPropertyFromString(const Document*,
+                             const String&,
+                             CSSPropertyID,
+                             ExceptionState* = 0);
+  bool SetPropertyFromStyle(const StylePropertySet&, CSSPropertyID);
+  bool SetPropertyValue(const CSSValue*, CSSPropertyID);
+  bool SetFamilyValue(const CSSValue&);
+  ScriptPromise FontStatusPromise(ScriptState*);
+  WebTaskRunner* GetTaskRunner();
+  void RunCallbacks();
 
-    AtomicString m_family;
-    String m_otsParseMessage;
-    Member<const CSSValue> m_style;
-    Member<const CSSValue> m_weight;
-    Member<const CSSValue> m_stretch;
-    Member<const CSSValue> m_unicodeRange;
-    Member<const CSSValue> m_variant;
-    Member<const CSSValue> m_featureSettings;
-    Member<const CSSValue> m_display;
-    LoadStatusType m_status;
-    Member<DOMException> m_error;
+  using LoadedProperty = ScriptPromiseProperty<Member<FontFace>,
+                                               Member<FontFace>,
+                                               Member<DOMException>>;
 
-    Member<LoadedProperty> m_loadedProperty;
-    Member<CSSFontFace> m_cssFontFace;
-    HeapVector<Member<LoadFontCallback>> m_callbacks;
+  AtomicString family_;
+  String ots_parse_message_;
+  Member<const CSSValue> style_;
+  Member<const CSSValue> weight_;
+  Member<const CSSValue> stretch_;
+  Member<const CSSValue> unicode_range_;
+  Member<const CSSValue> variant_;
+  Member<const CSSValue> feature_settings_;
+  Member<const CSSValue> display_;
+  LoadStatusType status_;
+  Member<DOMException> error_;
+
+  Member<LoadedProperty> loaded_property_;
+  Member<CSSFontFace> css_font_face_;
+  HeapVector<Member<LoadFontCallback>> callbacks_;
 };
 
 using FontFaceArray = HeapVector<Member<FontFace>>;
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FontFace_h
+#endif  // FontFace_h

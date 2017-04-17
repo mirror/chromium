@@ -9,6 +9,8 @@
 
 #include "base/macros.h"
 #include "cc/base/rolling_time_delta_history.h"
+#include "cc/cc_export.h"
+#include "cc/output/begin_frame_args.h"
 
 namespace base {
 namespace trace_event {
@@ -50,10 +52,13 @@ class CC_EXPORT CompositorTimingHistory {
 
   // State that affects when events should be expected/recorded/reported.
   void SetRecordingEnabled(bool enabled);
-  void DidCreateAndInitializeOutputSurface();
+  void DidCreateAndInitializeCompositorFrameSink();
 
   // Events to be timed.
-  void WillBeginImplFrame(bool new_active_tree_is_likely);
+  void WillBeginImplFrame(bool new_active_tree_is_likely,
+                          base::TimeTicks frame_time,
+                          BeginFrameArgs::BeginFrameArgsType frame_type,
+                          base::TimeTicks now);
   void WillFinishImplFrame(bool needs_redraw);
   void BeginImplFrameNotExpectedSoon();
   void WillBeginMainFrame(bool on_critical_path,
@@ -71,8 +76,8 @@ class CC_EXPORT CompositorTimingHistory {
   void DidDraw(bool used_new_active_tree,
                bool main_thread_missed_last_deadline,
                base::TimeTicks impl_frame_time);
-  void DidSwapBuffers();
-  void DidSwapBuffersComplete();
+  void DidSubmitCompositorFrame();
+  void DidReceiveCompositorFrameAck();
 
  protected:
   void DidBeginMainFrame();
@@ -115,7 +120,10 @@ class CC_EXPORT CompositorTimingHistory {
   base::TimeTicks activate_start_time_;
   base::TimeTicks active_tree_main_frame_time_;
   base::TimeTicks draw_start_time_;
-  base::TimeTicks swap_start_time_;
+  base::TimeTicks submit_start_time_;
+
+  // Watchdog timers.
+  bool submit_ack_watchdog_enabled_;
 
   std::unique_ptr<UMAReporter> uma_reporter_;
   RenderingStatsInstrumentation* rendering_stats_instrumentation_;

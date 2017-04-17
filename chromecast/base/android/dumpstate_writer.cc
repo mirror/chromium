@@ -11,18 +11,12 @@
 namespace chromecast {
 
 // static
-bool DumpstateWriter::RegisterJni(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
-// static
 void DumpstateWriter::AddDumpValue(const std::string& name,
                                    const std::string& value) {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_DumpstateWriter_addDumpValue(
-      env,
-      base::android::ConvertUTF8ToJavaString(env, name).obj(),
-      base::android::ConvertUTF8ToJavaString(env, value).obj());
+      env, base::android::ConvertUTF8ToJavaString(env, name),
+      base::android::ConvertUTF8ToJavaString(env, value));
 }
 
 }  // namespace chromecast

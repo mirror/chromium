@@ -2,18 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/common/wm/workspace/multi_window_resize_controller.h"
+#include "ash/wm/workspace/multi_window_resize_controller.h"
 
-#include "ash/aura/wm_window_aura.h"
-#include "ash/common/ash_constants.h"
+#include "ash/ash_constants.h"
 #include "ash/frame/custom_frame_view_ash.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/shell_test_api.h"
+#include "ash/test/workspace_event_handler_test_helper.h"
 #include "ash/wm/window_util.h"
-#include "ash/wm/workspace/workspace_event_handler_test_helper.h"
 #include "ash/wm/workspace_controller.h"
 #include "ash/wm/workspace_controller_test_helper.h"
+#include "ash/wm_window.h"
 #include "base/stl_util.h"
 #include "ui/aura/test/test_window_delegate.h"
 #include "ui/aura/window.h"
@@ -55,7 +55,7 @@ class MultiWindowResizeControllerTest : public test::AshTestBase {
   void SetUp() override {
     test::AshTestBase::SetUp();
     WorkspaceController* wc =
-        test::ShellTestApi(Shell::GetInstance()).workspace_controller();
+        test::ShellTestApi(Shell::Get()).workspace_controller();
     WorkspaceEventHandler* event_handler =
         WorkspaceControllerTestHelper(wc).GetEventHandler();
     resize_controller_ =
@@ -85,11 +85,12 @@ class MultiWindowResizeControllerTest : public test::AshTestBase {
   bool HasTarget(aura::Window* window) {
     if (!resize_controller_->windows_.is_valid())
       return false;
-    WmWindow* wm_window = WmWindowAura::Get(window);
+    WmWindow* wm_window = WmWindow::Get(window);
     if ((resize_controller_->windows_.window1 == wm_window ||
          resize_controller_->windows_.window2 == wm_window))
       return true;
-    return ContainsValue(resize_controller_->windows_.other_windows, wm_window);
+    return base::ContainsValue(resize_controller_->windows_.other_windows,
+                               wm_window);
   }
 
   bool IsOverWindows(const gfx::Point& loc) {

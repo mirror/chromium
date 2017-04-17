@@ -6,7 +6,7 @@
 
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/UseCounter.h"
-#include "core/inspector/InspectorInstrumentation.h"
+#include "core/probe/CoreProbes.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "modules/fetch/FetchManager.h"
 #include "modules/fetch/Request.h"
@@ -18,92 +18,103 @@ namespace blink {
 namespace {
 
 template <typename T>
-class GlobalFetchImpl final : public GarbageCollectedFinalized<GlobalFetchImpl<T>>, public GlobalFetch::ScopedFetcher, public Supplement<T> {
-    USING_GARBAGE_COLLECTED_MIXIN(GlobalFetchImpl);
-public:
-    static ScopedFetcher* from(T& supplementable, ExecutionContext* executionContext)
-    {
-        GlobalFetchImpl* supplement = static_cast<GlobalFetchImpl*>(Supplement<T>::from(supplementable, supplementName()));
-        if (!supplement) {
-            supplement = new GlobalFetchImpl(executionContext);
-            Supplement<T>::provideTo(supplementable, supplementName(), supplement);
-        }
-        return supplement;
+class GlobalFetchImpl final
+    : public GarbageCollectedFinalized<GlobalFetchImpl<T>>,
+      public GlobalFetch::ScopedFetcher,
+      public Supplement<T> {
+  USING_GARBAGE_COLLECTED_MIXIN(GlobalFetchImpl);
+
+ public:
+  static ScopedFetcher* From(T& supplementable,
+                             ExecutionContext* execution_context) {
+    GlobalFetchImpl* supplement = static_cast<GlobalFetchImpl*>(
+        Supplement<T>::From(supplementable, SupplementName()));
+    if (!supplement) {
+      supplement = new GlobalFetchImpl(execution_context);
+      Supplement<T>::ProvideTo(supplementable, SupplementName(), supplement);
+    }
+    return supplement;
+  }
+
+  ScriptPromise Fetch(ScriptState* script_state,
+                      const RequestInfo& input,
+                      const Dictionary& init,
+                      ExceptionState& exception_state) override {
+    ExecutionContext* execution_context = fetch_manager_->GetExecutionContext();
+    if (!script_state->ContextIsValid() || !execution_context) {
+      // TODO(yhirano): Should this be moved to bindings?
+      exception_state.ThrowTypeError("The global scope is shutting down.");
+      return ScriptPromise();
     }
 
-    ScriptPromise fetch(ScriptState* scriptState, const RequestInfo& input, const Dictionary& init, ExceptionState& exceptionState) override
-    {
-        if (!scriptState->contextIsValid()) {
-            // TODO(yhirano): Should this be moved to bindings?
-            exceptionState.throwTypeError("The global scope is shutting down.");
-            return ScriptPromise();
-        }
-        if (m_fetchManager->isStopped()) {
-            exceptionState.throwTypeError("The global scope is shutting down.");
-            return ScriptPromise();
-        }
+    // "Let |r| be the associated request of the result of invoking the
+    // initial value of Request as constructor with |input| and |init| as
+    // arguments. If this throws an exception, reject |p| with it."
+    Request* r = Request::Create(script_state, input, init, exception_state);
+    if (exception_state.HadException())
+      return ScriptPromise();
 
-        // "Let |r| be the associated request of the result of invoking the
-        // initial value of Request as constructor with |input| and |init| as
-        // arguments. If this throws an exception, reject |p| with it."
-        Request* r = Request::create(scriptState, input, init, exceptionState);
-        if (exceptionState.hadException())
-            return ScriptPromise();
+    probe::willSendXMLHttpOrFetchNetworkRequest(execution_context, r->url());
+    return fetch_manager_->Fetch(script_state,
+                                 r->PassRequestData(script_state));
+  }
 
-        if (ExecutionContext* executionContext = m_fetchManager->getExecutionContext())
-            InspectorInstrumentation::willSendXMLHttpOrFetchNetworkRequest(executionContext, r->url());
-        return m_fetchManager->fetch(scriptState, r->passRequestData(scriptState));
-    }
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(fetch_manager_);
+    ScopedFetcher::Trace(visitor);
+    Supplement<T>::Trace(visitor);
+  }
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        visitor->trace(m_fetchManager);
-        ScopedFetcher::trace(visitor);
-        Supplement<T>::trace(visitor);
-    }
+ private:
+  explicit GlobalFetchImpl(ExecutionContext* execution_context)
+      : fetch_manager_(FetchManager::Create(execution_context)) {}
 
-private:
-    explicit GlobalFetchImpl(ExecutionContext* executionContext)
-        : m_fetchManager(FetchManager::create(executionContext))
-    {
-    }
+  static const char* SupplementName() { return "GlobalFetch"; }
 
-    static const char* supplementName() { return "GlobalFetch"; }
-
-    Member<FetchManager> m_fetchManager;
+  Member<FetchManager> fetch_manager_;
 };
 
-} // namespace
+}  // namespace
 
-GlobalFetch::ScopedFetcher::~ScopedFetcher()
-{
+GlobalFetch::ScopedFetcher::~ScopedFetcher() {}
+
+GlobalFetch::ScopedFetcher* GlobalFetch::ScopedFetcher::From(
+    LocalDOMWindow& window) {
+  return GlobalFetchImpl<LocalDOMWindow>::From(window,
+                                               window.GetExecutionContext());
 }
 
-GlobalFetch::ScopedFetcher* GlobalFetch::ScopedFetcher::from(DOMWindow& window)
-{
-    return GlobalFetchImpl<LocalDOMWindow>::from(toLocalDOMWindow(window), window.getExecutionContext());
+GlobalFetch::ScopedFetcher* GlobalFetch::ScopedFetcher::From(
+    WorkerGlobalScope& worker) {
+  return GlobalFetchImpl<WorkerGlobalScope>::From(worker,
+                                                  worker.GetExecutionContext());
 }
 
-GlobalFetch::ScopedFetcher* GlobalFetch::ScopedFetcher::from(WorkerGlobalScope& worker)
-{
-    return GlobalFetchImpl<WorkerGlobalScope>::from(worker, worker.getExecutionContext());
+DEFINE_TRACE(GlobalFetch::ScopedFetcher) {}
+
+ScriptPromise GlobalFetch::fetch(ScriptState* script_state,
+                                 LocalDOMWindow& window,
+                                 const RequestInfo& input,
+                                 const Dictionary& init,
+                                 ExceptionState& exception_state) {
+  UseCounter::Count(window.GetExecutionContext(), UseCounter::kFetch);
+  if (!window.GetFrame()) {
+    exception_state.ThrowTypeError("The global scope is shutting down.");
+    return ScriptPromise();
+  }
+  return ScopedFetcher::From(window)->Fetch(script_state, input, init,
+                                            exception_state);
 }
 
-DEFINE_TRACE(GlobalFetch::ScopedFetcher)
-{
+ScriptPromise GlobalFetch::fetch(ScriptState* script_state,
+                                 WorkerGlobalScope& worker,
+                                 const RequestInfo& input,
+                                 const Dictionary& init,
+                                 ExceptionState& exception_state) {
+  // Note that UseCounter doesn't work with SharedWorker or ServiceWorker.
+  UseCounter::Count(worker.GetExecutionContext(), UseCounter::kFetch);
+  return ScopedFetcher::From(worker)->Fetch(script_state, input, init,
+                                            exception_state);
 }
 
-ScriptPromise GlobalFetch::fetch(ScriptState* scriptState, DOMWindow& window, const RequestInfo& input, const Dictionary& init, ExceptionState& exceptionState)
-{
-    UseCounter::count(window.getExecutionContext(), UseCounter::Fetch);
-    return ScopedFetcher::from(window)->fetch(scriptState, input, init, exceptionState);
-}
-
-ScriptPromise GlobalFetch::fetch(ScriptState* scriptState, WorkerGlobalScope& worker, const RequestInfo& input, const Dictionary& init, ExceptionState& exceptionState)
-{
-    // Note that UseCounter doesn't work with SharedWorker or ServiceWorker.
-    UseCounter::count(worker.getExecutionContext(), UseCounter::Fetch);
-    return ScopedFetcher::from(worker)->fetch(scriptState, input, init, exceptionState);
-}
-
-} // namespace blink
+}  // namespace blink

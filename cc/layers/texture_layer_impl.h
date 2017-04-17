@@ -10,7 +10,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
 #include "cc/layers/layer_impl.h"
 
 namespace cc {
@@ -27,6 +27,7 @@ class CC_EXPORT TextureLayerImpl : public LayerImpl {
 
   std::unique_ptr<LayerImpl> CreateLayerImpl(
       LayerTreeImpl* layer_tree_impl) override;
+  bool IsSnapped() override;
   void PushPropertiesTo(LayerImpl* layer) override;
 
   bool WillDraw(DrawMode draw_mode,

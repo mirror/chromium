@@ -10,138 +10,160 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "public/platform/WebMediaStream.h"
 
+#include <memory>
 #include "platform/UUID.h"
 #include "platform/mediastream/MediaStreamComponent.h"
 #include "platform/mediastream/MediaStreamDescriptor.h"
 #include "platform/mediastream/MediaStreamSource.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebMediaStreamSource.h"
 #include "public/platform/WebMediaStreamTrack.h"
 #include "public/platform/WebString.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/Vector.h"
-#include <memory>
 
 namespace blink {
 
 namespace {
 
 class ExtraDataContainer : public MediaStreamDescriptor::ExtraData {
-public:
-    ExtraDataContainer(std::unique_ptr<WebMediaStream::ExtraData> extraData) : m_extraData(std::move(extraData)) { }
+ public:
+  ExtraDataContainer(std::unique_ptr<WebMediaStream::ExtraData> extra_data)
+      : extra_data_(std::move(extra_data)) {}
 
-    WebMediaStream::ExtraData* getExtraData() { return m_extraData.get(); }
+  WebMediaStream::ExtraData* GetExtraData() { return extra_data_.get(); }
 
-private:
-    std::unique_ptr<WebMediaStream::ExtraData> m_extraData;
+ private:
+  std::unique_ptr<WebMediaStream::ExtraData> extra_data_;
 };
 
-} // namespace
+}  // namespace
 
-WebMediaStream::WebMediaStream(MediaStreamDescriptor* mediaStreamDescriptor)
-    : m_private(mediaStreamDescriptor)
-{
+WebMediaStream::WebMediaStream(MediaStreamDescriptor* media_stream_descriptor)
+    : private_(media_stream_descriptor) {}
+
+void WebMediaStream::Reset() {
+  private_.Reset();
 }
 
-void WebMediaStream::reset()
-{
-    m_private.reset();
+WebString WebMediaStream::Id() const {
+  return private_->Id();
 }
 
-WebString WebMediaStream::id() const
-{
-    return m_private->id();
+WebMediaStream::ExtraData* WebMediaStream::GetExtraData() const {
+  MediaStreamDescriptor::ExtraData* data = private_->GetExtraData();
+  if (!data)
+    return 0;
+  return static_cast<ExtraDataContainer*>(data)->GetExtraData();
 }
 
-WebMediaStream::ExtraData* WebMediaStream::getExtraData() const
-{
-    MediaStreamDescriptor::ExtraData* data = m_private->getExtraData();
-    if (!data)
-        return 0;
-    return static_cast<ExtraDataContainer*>(data)->getExtraData();
+void WebMediaStream::SetExtraData(ExtraData* extra_data) {
+  private_->SetExtraData(
+      WTF::WrapUnique(new ExtraDataContainer(WTF::WrapUnique(extra_data))));
 }
 
-void WebMediaStream::setExtraData(ExtraData* extraData)
-{
-    m_private->setExtraData(wrapUnique(new ExtraDataContainer(wrapUnique(extraData))));
+void WebMediaStream::AudioTracks(
+    WebVector<WebMediaStreamTrack>& web_tracks) const {
+  size_t number_of_tracks = private_->NumberOfAudioComponents();
+  WebVector<WebMediaStreamTrack> result(number_of_tracks);
+  for (size_t i = 0; i < number_of_tracks; ++i)
+    result[i] = private_->AudioComponent(i);
+  web_tracks.Swap(result);
 }
 
-void WebMediaStream::audioTracks(WebVector<WebMediaStreamTrack>& webTracks) const
-{
-    size_t numberOfTracks = m_private->numberOfAudioComponents();
-    WebVector<WebMediaStreamTrack> result(numberOfTracks);
-    for (size_t i = 0; i < numberOfTracks; ++i)
-        result[i] = m_private->audioComponent(i);
-    webTracks.swap(result);
+void WebMediaStream::VideoTracks(
+    WebVector<WebMediaStreamTrack>& web_tracks) const {
+  size_t number_of_tracks = private_->NumberOfVideoComponents();
+  WebVector<WebMediaStreamTrack> result(number_of_tracks);
+  for (size_t i = 0; i < number_of_tracks; ++i)
+    result[i] = private_->VideoComponent(i);
+  web_tracks.Swap(result);
 }
 
-void WebMediaStream::videoTracks(WebVector<WebMediaStreamTrack>& webTracks) const
-{
-    size_t numberOfTracks = m_private->numberOfVideoComponents();
-    WebVector<WebMediaStreamTrack> result(numberOfTracks);
-    for (size_t i = 0; i < numberOfTracks; ++i)
-        result[i] = m_private->videoComponent(i);
-    webTracks.swap(result);
+WebMediaStreamTrack WebMediaStream::GetAudioTrack(
+    const WebString& track_id) const {
+  size_t number_of_tracks = private_->NumberOfAudioComponents();
+  String id = track_id;
+  for (size_t i = 0; i < number_of_tracks; ++i) {
+    MediaStreamComponent* audio_component = private_->AudioComponent(i);
+    DCHECK(audio_component);
+    if (audio_component->Id() == id)
+      return private_->AudioComponent(i);
+  }
+  return nullptr;
 }
 
-void WebMediaStream::addTrack(const WebMediaStreamTrack& track)
-{
-    ASSERT(!isNull());
-    m_private->addRemoteTrack(track);
+WebMediaStreamTrack WebMediaStream::GetVideoTrack(
+    const WebString& track_id) const {
+  size_t number_of_tracks = private_->NumberOfVideoComponents();
+  String id = track_id;
+  for (size_t i = 0; i < number_of_tracks; ++i) {
+    MediaStreamComponent* video_component = private_->VideoComponent(i);
+    DCHECK(video_component);
+    if (video_component->Id() == id)
+      return private_->VideoComponent(i);
+  }
+  return nullptr;
 }
 
-void WebMediaStream::removeTrack(const WebMediaStreamTrack& track)
-{
-    ASSERT(!isNull());
-    m_private->removeRemoteTrack(track);
+void WebMediaStream::AddTrack(const WebMediaStreamTrack& track) {
+  DCHECK(!IsNull());
+  private_->AddRemoteTrack(track);
 }
 
-WebMediaStream& WebMediaStream::operator=(MediaStreamDescriptor* mediaStreamDescriptor)
-{
-    m_private = mediaStreamDescriptor;
-    return *this;
+void WebMediaStream::RemoveTrack(const WebMediaStreamTrack& track) {
+  DCHECK(!IsNull());
+  private_->RemoveRemoteTrack(track);
 }
 
-WebMediaStream::operator MediaStreamDescriptor*() const
-{
-    return m_private.get();
+WebMediaStream& WebMediaStream::operator=(
+    MediaStreamDescriptor* media_stream_descriptor) {
+  private_ = media_stream_descriptor;
+  return *this;
 }
 
-void WebMediaStream::initialize(const WebVector<WebMediaStreamTrack>& audioTracks, const WebVector<WebMediaStreamTrack>& videoTracks)
-{
-    initialize(createCanonicalUUIDString(), audioTracks, videoTracks);
+WebMediaStream::operator MediaStreamDescriptor*() const {
+  return private_.Get();
 }
 
-void WebMediaStream::initialize(const WebString& label, const WebVector<WebMediaStreamTrack>& audioTracks, const WebVector<WebMediaStreamTrack>& videoTracks)
-{
-    MediaStreamComponentVector audio, video;
-    for (size_t i = 0; i < audioTracks.size(); ++i) {
-        MediaStreamComponent* component = audioTracks[i];
-        audio.append(component);
-    }
-    for (size_t i = 0; i < videoTracks.size(); ++i) {
-        MediaStreamComponent* component = videoTracks[i];
-        video.append(component);
-    }
-    m_private = MediaStreamDescriptor::create(label, audio, video);
+void WebMediaStream::Initialize(
+    const WebVector<WebMediaStreamTrack>& audio_tracks,
+    const WebVector<WebMediaStreamTrack>& video_tracks) {
+  Initialize(CreateCanonicalUUIDString(), audio_tracks, video_tracks);
 }
 
-void WebMediaStream::assign(const WebMediaStream& other)
-{
-    m_private = other.m_private;
+void WebMediaStream::Initialize(
+    const WebString& label,
+    const WebVector<WebMediaStreamTrack>& audio_tracks,
+    const WebVector<WebMediaStreamTrack>& video_tracks) {
+  MediaStreamComponentVector audio, video;
+  for (size_t i = 0; i < audio_tracks.size(); ++i) {
+    MediaStreamComponent* component = audio_tracks[i];
+    audio.push_back(component);
+  }
+  for (size_t i = 0; i < video_tracks.size(); ++i) {
+    MediaStreamComponent* component = video_tracks[i];
+    video.push_back(component);
+  }
+  private_ = MediaStreamDescriptor::Create(label, audio, video);
 }
 
-} // namespace blink
+void WebMediaStream::Assign(const WebMediaStream& other) {
+  private_ = other.private_;
+}
+
+}  // namespace blink

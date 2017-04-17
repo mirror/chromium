@@ -34,34 +34,38 @@
 #include "core/CoreExport.h"
 #include "core/inspector/InspectorBaseAgent.h"
 #include "core/inspector/protocol/Input.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 class InspectedFrames;
-class PlatformKeyboardEvent;
-class PlatformMouseEvent;
 
-class CORE_EXPORT InspectorInputAgent final : public InspectorBaseAgent<protocol::Input::Metainfo> {
-    WTF_MAKE_NONCOPYABLE(InspectorInputAgent);
-public:
-    static InspectorInputAgent* create(InspectedFrames* inspectedFrames)
-    {
-        return new InspectorInputAgent(inspectedFrames);
-    }
+class CORE_EXPORT InspectorInputAgent final
+    : public InspectorBaseAgent<protocol::Input::Metainfo> {
+  WTF_MAKE_NONCOPYABLE(InspectorInputAgent);
 
-    ~InspectorInputAgent() override;
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  static InspectorInputAgent* Create(InspectedFrames* inspected_frames) {
+    return new InspectorInputAgent(inspected_frames);
+  }
 
-    // Methods called from the frontend for simulating input.
-    void dispatchTouchEvent(ErrorString*, const String& type, std::unique_ptr<protocol::Array<protocol::Input::TouchPoint>> touchPoints, const Maybe<int>& modifiers, const Maybe<double>& timestamp) override;
-private:
-    explicit InspectorInputAgent(InspectedFrames*);
+  ~InspectorInputAgent() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<InspectedFrames> m_inspectedFrames;
+  // Methods called from the frontend for simulating input.
+  protocol::Response dispatchTouchEvent(
+      const String& type,
+      std::unique_ptr<protocol::Array<protocol::Input::TouchPoint>>
+          touch_points,
+      protocol::Maybe<int> modifiers,
+      protocol::Maybe<double> timestamp) override;
+
+ private:
+  explicit InspectorInputAgent(InspectedFrames*);
+
+  Member<InspectedFrames> inspected_frames_;
 };
 
+}  // namespace blink
 
-} // namespace blink
-
-#endif // !defined(InspectorInputAgent_h)
+#endif  // !defined(InspectorInputAgent_h)

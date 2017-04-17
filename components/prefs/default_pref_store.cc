@@ -17,6 +17,10 @@ bool DefaultPrefStore::GetValue(const std::string& key,
   return prefs_.GetValue(key, result);
 }
 
+std::unique_ptr<base::DictionaryValue> DefaultPrefStore::GetValues() const {
+  return prefs_.AsDictionaryValue();
+}
+
 void DefaultPrefStore::AddObserver(PrefStore::Observer* observer) {
   observers_.AddObserver(observer);
 }
@@ -41,8 +45,10 @@ void DefaultPrefStore::ReplaceDefaultValue(const std::string& key,
   GetValue(key, &old_value);
   bool notify = !old_value->Equals(value.get());
   prefs_.SetValue(key, std::move(value));
-  if (notify)
-    FOR_EACH_OBSERVER(Observer, observers_, OnPrefValueChanged(key));
+  if (notify) {
+    for (Observer& observer : observers_)
+      observer.OnPrefValueChanged(key);
+  }
 }
 
 DefaultPrefStore::const_iterator DefaultPrefStore::begin() const {

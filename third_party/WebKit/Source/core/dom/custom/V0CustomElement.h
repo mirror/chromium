@@ -33,10 +33,10 @@
 
 #include "core/CoreExport.h"
 #include "core/dom/custom/V0CustomElementDefinition.h"
-#include "wtf/Allocator.h"
-#include "wtf/HashMap.h"
-#include "wtf/Vector.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
@@ -45,34 +45,39 @@ class Document;
 class HTMLImportChild;
 
 class CORE_EXPORT V0CustomElement {
-    STATIC_ONLY(V0CustomElement);
-public:
-    enum NameSet {
-        EmbedderNames = 1 << 0,
-        StandardNames = 1 << 1,
-        AllNames = EmbedderNames | StandardNames
-    };
-    static bool isValidName(const AtomicString& name, NameSet validNames = AllNames);
-    static void addEmbedderCustomElementName(const AtomicString& name);
+  STATIC_ONLY(V0CustomElement);
 
-    // API to notify of document-level changes
-    static V0CustomElementMicrotaskImportStep* didCreateImport(HTMLImportChild*);
-    static void didFinishLoadingImport(Document& master);
+ public:
+  enum NameSet {
+    kEmbedderNames = 1 << 0,
+    kStandardNames = 1 << 1,
+    kAllNames = kEmbedderNames | kStandardNames
+  };
+  static bool IsValidName(const AtomicString& name,
+                          NameSet valid_names = kAllNames);
+  static void AddEmbedderCustomElementName(const AtomicString& name);
 
-    // API for registration contexts
-    static void define(Element*, V0CustomElementDefinition*);
+  // API to notify of document-level changes
+  static V0CustomElementMicrotaskImportStep* DidCreateImport(HTMLImportChild*);
+  static void DidFinishLoadingImport(Document& master);
 
-    // API for Element to kick off changes
+  // API for registration contexts
+  static void Define(Element*, V0CustomElementDefinition*);
 
-    static void attributeDidChange(Element*, const AtomicString& name, const AtomicString& oldValue, const AtomicString& newValue);
-    static void didAttach(Element*, const Document&);
-    static void didDetach(Element*, const Document&);
-    static void wasDestroyed(Element*);
+  // API for Element to kick off changes
 
-private:
-    static Vector<AtomicString>& embedderCustomElementNames();
+  static void AttributeDidChange(Element*,
+                                 const AtomicString& name,
+                                 const AtomicString& old_value,
+                                 const AtomicString& new_value);
+  static void DidAttach(Element*, const Document&);
+  static void DidDetach(Element*, const Document&);
+  static void WasDestroyed(Element*);
+
+ private:
+  static Vector<AtomicString>& EmbedderCustomElementNames();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V0CustomElement_h
+#endif  // V0CustomElement_h

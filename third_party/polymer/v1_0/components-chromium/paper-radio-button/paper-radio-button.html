@@ -38,8 +38,10 @@ Custom property | Description | Default
 `--paper-radio-button-checked-color` | Radio button color when the input is checked | `--primary-color`
 `--paper-radio-button-checked-ink-color` | Selected/focus ripple color when the input is checked | `--primary-color`
 `--paper-radio-button-size` | Size of the radio button | `16px`
+`--paper-radio-button-ink-size` | Size of the ripple | `48px`
 `--paper-radio-button-label-color` | Label color | `--primary-text-color`
 `--paper-radio-button-label-spacing` | Spacing between the label and the button | `10px`
+`--paper-radio-button-radio-container` | A mixin applied to the internal radio container | `{}`
 
 This element applies the mixin `--paper-font-common-base` but does not import `paper-styles/typography.html`.
 In order to apply the `Roboto` font to this element, make sure you've imported `paper-styles/typography.html`.
@@ -60,6 +62,8 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
         cursor: pointer;
         @apply(--paper-font-common-base);
         --calculated-paper-radio-button-size: var(--paper-radio-button-size, 16px);
+        /* -1px is a sentinel for the default and is replace in `attached`. */
+        --calculated-paper-radio-button-ink-size: var(--paper-radio-button-ink-size, -1px);
       }
 
       :host(:focus) {
@@ -73,6 +77,8 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
         width: var(--calculated-paper-radio-button-size);
         height: var(--calculated-paper-radio-button-size);
         vertical-align: middle;
+        
+        @apply(--paper-radio-button-radio-container);
       }
 
       #ink {
@@ -80,8 +86,8 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
         top: 50%;
         left: 50%;
         right: auto;
-        width: calc(3 * var(--calculated-paper-radio-button-size));
-        height: calc(3 * var(--calculated-paper-radio-button-size));
+        width: var(--calculated-paper-radio-button-ink-size);
+        height: var(--calculated-paper-radio-button-ink-size);
         color: var(--paper-radio-button-unchecked-ink-color, --primary-text-color);
         opacity: 0.6;
         pointer-events: none;

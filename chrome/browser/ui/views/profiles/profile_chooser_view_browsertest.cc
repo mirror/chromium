@@ -121,12 +121,10 @@ class ProfileChooserViewExtensionsTest : public ExtensionBrowserTest {
  protected:
   void SetUp() override {
     ExtensionBrowserTest::SetUp();
-    DCHECK(switches::IsNewProfileManagement());
   }
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ExtensionBrowserTest::SetUpCommandLine(command_line);
-    switches::EnableNewProfileManagementForTesting(command_line);
   }
 
   void OpenProfileChooserView(Browser* browser) {
@@ -212,7 +210,7 @@ IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest,
   browser->window()->ShowAvatarBubbleFromAvatarButton(
       BrowserWindow::AVATAR_BUBBLE_MODE_CONFIRM_SIGNIN,
       signin::ManageAccountsParams(),
-      signin_metrics::AccessPoint::ACCESS_POINT_AVATAR_BUBBLE_SIGN_IN);
+      signin_metrics::AccessPoint::ACCESS_POINT_AVATAR_BUBBLE_SIGN_IN, false);
   ASSERT_FALSE(ProfileChooserView::IsShowing());
   CloseBrowserSynchronously(browser);
 }
@@ -250,9 +248,6 @@ IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest, ViewProfileUMA) {
   profile->GetPrefs()->SetInteger(prefs::kProfileAvatarTutorialShown, 0);
 
   ASSERT_NO_FATAL_FAILURE(OpenProfileChooserView(browser()));
-
-  histograms.ExpectUniqueSample("Profile.NewAvatarMenu.Upgrade",
-      ProfileMetrics::PROFILE_AVATAR_MENU_UPGRADE_VIEW, 1);
 }
 
 IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest, LockProfile) {

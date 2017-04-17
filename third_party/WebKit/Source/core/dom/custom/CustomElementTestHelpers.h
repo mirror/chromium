@@ -8,71 +8,135 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
+#include "core/dom/ElementDefinitionOptions.h"
 #include "core/dom/QualifiedName.h"
+#include "core/dom/custom/CEReactionsScope.h"
+#include "core/dom/custom/CustomElementDefinition.h"
+#include "core/dom/custom/CustomElementDefinitionBuilder.h"
 #include "core/html/HTMLDocument.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicString.h"
 
 #include <utility>
 #include <vector>
 
 namespace blink {
 
-class CreateElement {
-    STACK_ALLOCATED()
-public:
-    CreateElement(const AtomicString& localName)
-        : m_namespaceURI(HTMLNames::xhtmlNamespaceURI)
-        , m_localName(localName)
-    {
-    }
+class CustomElementDescriptor;
 
-    CreateElement& inDocument(Document* document)
-    {
-        m_document = document;
-        return *this;
-    }
+class TestCustomElementDefinitionBuilder
+    : public CustomElementDefinitionBuilder {
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(TestCustomElementDefinitionBuilder);
 
-    CreateElement& inNamespace(const AtomicString& uri)
-    {
-        m_namespaceURI = uri;
-        return *this;
-    }
-
-    CreateElement& withId(const AtomicString& id)
-    {
-        m_attributes.push_back(std::make_pair(HTMLNames::idAttr, id));
-        return *this;
-    }
-
-    CreateElement& withIsAttribute(const AtomicString& value)
-    {
-        m_attributes.push_back(std::make_pair(HTMLNames::isAttr, value));
-        return *this;
-    }
-
-    operator Element*() const
-    {
-        Document* document = m_document.get();
-        if (!document)
-            document = HTMLDocument::create();
-        NonThrowableExceptionState noExceptions;
-        Element* element = document->createElementNS(
-            m_namespaceURI,
-            m_localName,
-            noExceptions);
-        for (const auto& attribute : m_attributes)
-            element->setAttribute(attribute.first, attribute.second);
-        return element;
-    }
-
-private:
-    Member<Document> m_document;
-    AtomicString m_namespaceURI;
-    AtomicString m_localName;
-    std::vector<std::pair<QualifiedName, AtomicString>> m_attributes;
+ public:
+  TestCustomElementDefinitionBuilder() {}
+  bool CheckConstructorIntrinsics() override { return true; }
+  bool CheckConstructorNotRegistered() override { return true; }
+  bool CheckPrototype() override { return true; }
+  bool RememberOriginalProperties() override { return true; }
+  CustomElementDefinition* Build(const CustomElementDescriptor&) override;
 };
 
-} // namespace blink
+class TestCustomElementDefinition : public CustomElementDefinition {
+  WTF_MAKE_NONCOPYABLE(TestCustomElementDefinition);
 
-#endif // CustomElementTestHelpers_h
+ public:
+  TestCustomElementDefinition(const CustomElementDescriptor& descriptor)
+      : CustomElementDefinition(descriptor) {}
+
+  TestCustomElementDefinition(const CustomElementDescriptor& descriptor,
+                              const HashSet<AtomicString>& observed_attributes)
+      : CustomElementDefinition(descriptor, observed_attributes) {}
+
+  ~TestCustomElementDefinition() override = default;
+
+  ScriptValue GetConstructorForScript() override { return ScriptValue(); }
+
+  bool RunConstructor(Element* element) override {
+    if (GetConstructionStack().IsEmpty() ||
+        GetConstructionStack().back() != element)
+      return false;
+    GetConstructionStack().back().Clear();
+    return true;
+  }
+
+  HTMLElement* CreateElementSync(Document& document,
+                                 const QualifiedName&) override {
+    return CreateElementForConstructor(document);
+  }
+
+  bool HasConnectedCallback() const override { return false; }
+  bool HasDisconnectedCallback() const override { return false; }
+  bool HasAdoptedCallback() const override { return false; }
+
+  void RunConnectedCallback(Element*) override {
+    NOTREACHED() << "definition does not have connected callback";
+  }
+
+  void RunDisconnectedCallback(Element*) override {
+    NOTREACHED() << "definition does not have disconnected callback";
+  }
+
+  void RunAdoptedCallback(Element*,
+                          Document* old_owner,
+                          Document* new_owner) override {
+    NOTREACHED() << "definition does not have adopted callback";
+  }
+
+  void RunAttributeChangedCallback(Element*,
+                                   const QualifiedName&,
+                                   const AtomicString& old_value,
+                                   const AtomicString& new_value) override {
+    NOTREACHED() << "definition does not have attribute changed callback";
+  }
+};
+
+class CreateElement {
+  STACK_ALLOCATED()
+ public:
+  CreateElement(const AtomicString& local_name)
+      : namespace_uri_(HTMLNames::xhtmlNamespaceURI), local_name_(local_name) {}
+
+  CreateElement& InDocument(Document* document) {
+    document_ = document;
+    return *this;
+  }
+
+  CreateElement& InNamespace(const AtomicString& uri) {
+    namespace_uri_ = uri;
+    return *this;
+  }
+
+  CreateElement& WithId(const AtomicString& id) {
+    attributes_.push_back(std::make_pair(HTMLNames::idAttr, id));
+    return *this;
+  }
+
+  CreateElement& WithIsAttribute(const AtomicString& value) {
+    attributes_.push_back(std::make_pair(HTMLNames::isAttr, value));
+    return *this;
+  }
+
+  operator Element*() const {
+    Document* document = document_.Get();
+    if (!document)
+      document = HTMLDocument::Create();
+    NonThrowableExceptionState no_exceptions;
+    Element* element =
+        document->createElementNS(namespace_uri_, local_name_, no_exceptions);
+    for (const auto& attribute : attributes_)
+      element->setAttribute(attribute.first, attribute.second);
+    return element;
+  }
+
+ private:
+  Member<Document> document_;
+  AtomicString namespace_uri_;
+  AtomicString local_name_;
+  std::vector<std::pair<QualifiedName, AtomicString>> attributes_;
+};
+
+}  // namespace blink
+
+#endif  // CustomElementTestHelpers_h

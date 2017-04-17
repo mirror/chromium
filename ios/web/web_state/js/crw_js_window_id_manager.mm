@@ -4,12 +4,15 @@
 
 #import "ios/web/web_state/js/crw_js_window_id_manager.h"
 
-#import "base/ios/weak_nsobject.h"
 #import "base/mac/scoped_nsobject.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/sys_string_conversions.h"
 #include "crypto/random.h"
 #import "ios/web/web_state/js/page_script_util.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 namespace {
 // Number of random bytes in unique key for window ID. The length of the
@@ -37,7 +40,7 @@ const size_t kUniqueKeyLength = 16;
 
 - (instancetype)initWithWebView:(WKWebView*)webView {
   if ((self = [super init])) {
-    _webView.reset([webView retain]);
+    _webView.reset(webView);
     _windowID.reset([[self class] newUniqueKey]);
   }
   return self;
@@ -48,15 +51,27 @@ const size_t kUniqueKeyLength = 16;
   NSString* script = [web::GetPageScript(@"window_id")
       stringByReplacingOccurrencesOfString:@"$(WINDOW_ID)"
                                 withString:_windowID];
+  // WKUserScript may not be injected yet. Make windowID script return boolean
+  // indicating whether the injection was successfull.
+  NSString* scriptWithResult = [NSString
+      stringWithFormat:@"if (!window.__gCrWeb) {false; } else { %@; true; }",
+                       script];
 
-  base::WeakNSObject<CRWJSWindowIDManager> weakSelf(self);
-  [_webView evaluateJavaScript:script
+  __weak CRWJSWindowIDManager* weakSelf = self;
+  [_webView evaluateJavaScript:scriptWithResult
              completionHandler:^(id result, NSError* error) {
-               // TODO(crbug.com/628832): Refactor retry logic.
-               if (error.code == WKErrorJavaScriptExceptionOccurred) {
-                 // This can happen if WKUserScript has not been injected yet.
-                 // Retry if that's the case, because windowID injection is
-                 // critical for the system to function.
+               if (error) {
+                 DCHECK(error.code == WKErrorWebViewInvalidated ||
+                        error.code == WKErrorWebContentProcessTerminated);
+                 return;
+               }
+
+               DCHECK_EQ(CFBooleanGetTypeID(),
+                         CFGetTypeID((__bridge CFTypeRef)result));
+               if (![result boolValue]) {
+                 // WKUserScript has not been injected yet. Retry window id
+                 // injection, because it is critical for the system to
+                 // function.
                  [weakSelf inject];
                }
              }];
@@ -68,7 +83,7 @@ const size_t kUniqueKeyLength = 16;
   char randomBytes[kUniqueKeyLength];
   crypto::RandBytes(randomBytes, kUniqueKeyLength);
   std::string result = base::HexEncode(randomBytes, kUniqueKeyLength);
-  return [base::SysUTF8ToNSString(result) retain];
+  return base::SysUTF8ToNSString(result);
 }
 
 @end

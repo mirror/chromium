@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2010 Julien Chaffraix <jchaffraix@webkit.org>  All right reserved.
+ * Copyright (C) 2010 Julien Chaffraix <jchaffraix@webkit.org>  All right
+ * reserved.
  * Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies)
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,153 +29,166 @@
 
 #include "core/EventTypeNames.h"
 #include "core/events/ProgressEvent.h"
-#include "core/inspector/InspectorInstrumentation.h"
 #include "core/inspector/InspectorTraceEvents.h"
+#include "core/probe/CoreProbes.h"
 #include "core/xmlhttprequest/XMLHttpRequest.h"
-#include "wtf/Assertions.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "public/platform/Platform.h"
+#include "public/platform/WebScheduler.h"
+#include "public/platform/WebThread.h"
 
 namespace blink {
 
-static const double kMinimumProgressEventDispatchingIntervalInSeconds = .05; // 50 ms per specification.
+static const double kMinimumProgressEventDispatchingIntervalInSeconds =
+    .05;  // 50 ms per specification.
 
-XMLHttpRequestProgressEventThrottle::DeferredEvent::DeferredEvent()
-{
-    clear();
+XMLHttpRequestProgressEventThrottle::DeferredEvent::DeferredEvent() {
+  Clear();
 }
 
-void XMLHttpRequestProgressEventThrottle::DeferredEvent::set(bool lengthComputable, unsigned long long loaded, unsigned long long total)
-{
-    m_isSet = true;
+void XMLHttpRequestProgressEventThrottle::DeferredEvent::Set(
+    bool length_computable,
+    unsigned long long loaded,
+    unsigned long long total) {
+  is_set_ = true;
 
-    m_lengthComputable = lengthComputable;
-    m_loaded = loaded;
-    m_total = total;
+  length_computable_ = length_computable;
+  loaded_ = loaded;
+  total_ = total;
 }
 
-void XMLHttpRequestProgressEventThrottle::DeferredEvent::clear()
-{
-    m_isSet = false;
+void XMLHttpRequestProgressEventThrottle::DeferredEvent::Clear() {
+  is_set_ = false;
 
-    m_lengthComputable = false;
-    m_loaded = 0;
-    m_total = 0;
+  length_computable_ = false;
+  loaded_ = 0;
+  total_ = 0;
 }
 
-Event* XMLHttpRequestProgressEventThrottle::DeferredEvent::take()
-{
-    ASSERT(m_isSet);
+Event* XMLHttpRequestProgressEventThrottle::DeferredEvent::Take() {
+  DCHECK(is_set_);
 
-    Event* event = ProgressEvent::create(EventTypeNames::progress, m_lengthComputable, m_loaded, m_total);
-    clear();
-    return event;
+  Event* event = ProgressEvent::Create(EventTypeNames::progress,
+                                       length_computable_, loaded_, total_);
+  Clear();
+  return event;
 }
 
-XMLHttpRequestProgressEventThrottle::XMLHttpRequestProgressEventThrottle(XMLHttpRequest* target)
-    : m_target(target)
-    , m_hasDispatchedProgressProgressEvent(false)
-{
-    ASSERT(target);
+XMLHttpRequestProgressEventThrottle::XMLHttpRequestProgressEventThrottle(
+    XMLHttpRequest* target)
+    : TimerBase(
+          Platform::Current()->CurrentThread()->Scheduler()->TimerTaskRunner()),
+      target_(target),
+      has_dispatched_progress_progress_event_(false) {
+  DCHECK(target);
 }
 
-XMLHttpRequestProgressEventThrottle::~XMLHttpRequestProgressEventThrottle()
-{
+XMLHttpRequestProgressEventThrottle::~XMLHttpRequestProgressEventThrottle() {}
+
+void XMLHttpRequestProgressEventThrottle::DispatchProgressEvent(
+    const AtomicString& type,
+    bool length_computable,
+    unsigned long long loaded,
+    unsigned long long total) {
+  // Given that ResourceDispatcher doesn't deliver an event when suspended,
+  // we don't have to worry about event dispatching while suspended.
+  if (type != EventTypeNames::progress) {
+    target_->DispatchEvent(
+        ProgressEvent::Create(type, length_computable, loaded, total));
+    return;
+  }
+
+  if (IsActive()) {
+    deferred_.Set(length_computable, loaded, total);
+  } else {
+    DispatchProgressProgressEvent(ProgressEvent::Create(
+        EventTypeNames::progress, length_computable, loaded, total));
+    StartOneShot(kMinimumProgressEventDispatchingIntervalInSeconds,
+                 BLINK_FROM_HERE);
+  }
 }
 
-void XMLHttpRequestProgressEventThrottle::dispatchProgressEvent(const AtomicString& type, bool lengthComputable, unsigned long long loaded, unsigned long long total)
-{
-    // Given that ResourceDispatcher doesn't deliver an event when suspended,
-    // we don't have to worry about event dispatching while suspended.
-    if (type != EventTypeNames::progress) {
-        m_target->dispatchEvent(ProgressEvent::create(type, lengthComputable, loaded, total));
-        return;
-    }
+void XMLHttpRequestProgressEventThrottle::DispatchReadyStateChangeEvent(
+    Event* event,
+    DeferredEventAction action) {
+  XMLHttpRequest::State state = target_->readyState();
+  // Given that ResourceDispatcher doesn't deliver an event when suspended,
+  // we don't have to worry about event dispatching while suspended.
+  if (action == kFlush) {
+    if (deferred_.IsSet())
+      DispatchProgressProgressEvent(deferred_.Take());
 
-    if (isActive()) {
-        m_deferred.set(lengthComputable, loaded, total);
-    } else {
-        dispatchProgressProgressEvent(ProgressEvent::create(EventTypeNames::progress, lengthComputable, loaded, total));
-        startOneShot(kMinimumProgressEventDispatchingIntervalInSeconds, BLINK_FROM_HERE);
-    }
+    Stop();
+  } else if (action == kClear) {
+    deferred_.Clear();
+    Stop();
+  }
+
+  has_dispatched_progress_progress_event_ = false;
+  if (state == target_->readyState()) {
+    // We don't dispatch the event when an event handler associated with
+    // the previously dispatched event changes the readyState (e.g. when
+    // the event handler calls xhr.abort()). In such cases a
+    // readystatechange should have been already dispatched if necessary.
+    probe::AsyncTask async_task(target_->GetExecutionContext(), target_,
+                                "progress", target_->IsAsync());
+    target_->DispatchEvent(event);
+  }
 }
 
-void XMLHttpRequestProgressEventThrottle::dispatchReadyStateChangeEvent(Event* event, DeferredEventAction action)
-{
-    XMLHttpRequest::State state = m_target->readyState();
-    // Given that ResourceDispatcher doesn't deliver an event when suspended,
-    // we don't have to worry about event dispatching while suspended.
-    if (action == Flush) {
-        if (m_deferred.isSet())
-            dispatchProgressProgressEvent(m_deferred.take());
+void XMLHttpRequestProgressEventThrottle::DispatchProgressProgressEvent(
+    Event* progress_event) {
+  XMLHttpRequest::State state = target_->readyState();
+  if (target_->readyState() == XMLHttpRequest::kLoading &&
+      has_dispatched_progress_progress_event_) {
+    TRACE_EVENT1("devtools.timeline", "XHRReadyStateChange", "data",
+                 InspectorXhrReadyStateChangeEvent::Data(
+                     target_->GetExecutionContext(), target_));
+    probe::AsyncTask async_task(target_->GetExecutionContext(), target_,
+                                "progress", target_->IsAsync());
+    target_->DispatchEvent(Event::Create(EventTypeNames::readystatechange));
+  }
 
-        stop();
-    } else if (action == Clear) {
-        m_deferred.clear();
-        stop();
-    }
+  if (target_->readyState() != state)
+    return;
 
-    m_hasDispatchedProgressProgressEvent = false;
-    if (state == m_target->readyState()) {
-        // We don't dispatch the event when an event handler associated with
-        // the previously dispatched event changes the readyState (e.g. when
-        // the event handler calls xhr.abort()). In such cases a
-        // readystatechange should have been already dispatched if necessary.
-        InspectorInstrumentation::AsyncTask asyncTask(m_target->getExecutionContext(), m_target, m_target->isAsync());
-        m_target->dispatchEvent(event);
-    }
+  has_dispatched_progress_progress_event_ = true;
+  probe::AsyncTask async_task(target_->GetExecutionContext(), target_,
+                              "progress", target_->IsAsync());
+  target_->DispatchEvent(progress_event);
 }
 
-void XMLHttpRequestProgressEventThrottle::dispatchProgressProgressEvent(Event* progressEvent)
-{
-    XMLHttpRequest::State state = m_target->readyState();
-    if (m_target->readyState() == XMLHttpRequest::LOADING && m_hasDispatchedProgressProgressEvent) {
-        TRACE_EVENT1("devtools.timeline", "XHRReadyStateChange", "data", InspectorXhrReadyStateChangeEvent::data(m_target->getExecutionContext(), m_target));
-        InspectorInstrumentation::AsyncTask asyncTask(m_target->getExecutionContext(), m_target, m_target->isAsync());
-        m_target->dispatchEvent(Event::create(EventTypeNames::readystatechange));
-        TRACE_EVENT_INSTANT1(TRACE_DISABLED_BY_DEFAULT("devtools.timeline"), "UpdateCounters", TRACE_EVENT_SCOPE_THREAD, "data", InspectorUpdateCountersEvent::data());
-    }
+void XMLHttpRequestProgressEventThrottle::Fired() {
+  if (!deferred_.IsSet()) {
+    // No "progress" event was queued since the previous dispatch, we can
+    // safely stop the timer.
+    return;
+  }
 
-    if (m_target->readyState() != state)
-        return;
+  DispatchProgressProgressEvent(deferred_.Take());
 
-    m_hasDispatchedProgressProgressEvent = true;
-    InspectorInstrumentation::AsyncTask asyncTask(m_target->getExecutionContext(), m_target, m_target->isAsync());
-    m_target->dispatchEvent(progressEvent);
+  // Watch if another "progress" ProgressEvent arrives in the next 50ms.
+  StartOneShot(kMinimumProgressEventDispatchingIntervalInSeconds,
+               BLINK_FROM_HERE);
 }
 
-void XMLHttpRequestProgressEventThrottle::fired()
-{
-    if (!m_deferred.isSet()) {
-        // No "progress" event was queued since the previous dispatch, we can
-        // safely stop the timer.
-        return;
-    }
-
-    dispatchProgressProgressEvent(m_deferred.take());
-
-    // Watch if another "progress" ProgressEvent arrives in the next 50ms.
-    startOneShot(kMinimumProgressEventDispatchingIntervalInSeconds, BLINK_FROM_HERE);
+void XMLHttpRequestProgressEventThrottle::Suspend() {
+  Stop();
 }
 
-void XMLHttpRequestProgressEventThrottle::suspend()
-{
-    stop();
+void XMLHttpRequestProgressEventThrottle::Resume() {
+  if (!deferred_.IsSet())
+    return;
+
+  // Do not dispatch events inline here, since ExecutionContext is iterating
+  // over the list of SuspendableObjects to resume them, and any activated JS
+  // event-handler could insert new SuspendableObjects to the list.
+  StartOneShot(0, BLINK_FROM_HERE);
 }
 
-void XMLHttpRequestProgressEventThrottle::resume()
-{
-    if (!m_deferred.isSet())
-        return;
-
-    // Do not dispatch events inline here, since ExecutionContext is iterating
-    // over the list of active DOM objects to resume them, and any activated JS
-    // event-handler could insert new active DOM objects to the list.
-    startOneShot(0, BLINK_FROM_HERE);
+DEFINE_TRACE(XMLHttpRequestProgressEventThrottle) {
+  visitor->Trace(target_);
 }
 
-DEFINE_TRACE(XMLHttpRequestProgressEventThrottle)
-{
-    visitor->trace(m_target);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -5,8 +5,10 @@
 #ifndef CHROME_BROWSER_SYNC_TEST_INTEGRATION_TYPED_URLS_HELPER_H_
 #define CHROME_BROWSER_SYNC_TEST_INTEGRATION_TYPED_URLS_HELPER_H_
 
+#include <string>
 #include <vector>
 
+#include "chrome/browser/sync/test/integration/multi_client_status_change_checker.h"
 #include "components/history/core/browser/history_types.h"
 #include "ui/base/page_transition_types.h"
 
@@ -67,8 +69,8 @@ void SetPageTitle(int index, const GURL& url, const std::string& title);
 // Returns true if all clients have the same URLs.
 bool CheckAllProfilesHaveSameURLs();
 
-// Returns true if all clients have the same URLs before the timeout.
-bool AwaitCheckAllProfilesHaveSameURLs();
+// Return ture if a specific sync directory has the typed url.
+bool CheckSyncDirectoryHasURL(int index, const GURL& url);
 
 // Checks that the two vectors contain the same set of URLRows (possibly in
 // a different order).
@@ -94,5 +96,15 @@ bool AreVisitsUnique(const history::VisitVector& visits);
 base::Time GetTimestamp();
 
 }  // namespace typed_urls_helper
+
+// Checker that blocks until all clients have the same URLs.
+class ProfilesHaveSameURLsChecker : public MultiClientStatusChangeChecker {
+ public:
+  ProfilesHaveSameURLsChecker();
+
+  // Implementation of StatusChangeChecker.
+  bool IsExitConditionSatisfied() override;
+  std::string GetDebugMessage() const override;
+};
 
 #endif  // CHROME_BROWSER_SYNC_TEST_INTEGRATION_TYPED_URLS_HELPER_H_

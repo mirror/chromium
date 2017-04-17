@@ -36,31 +36,30 @@
 
 namespace blink {
 
-LayerRectList::LayerRectList()
-{
+LayerRectList::LayerRectList() {}
+
+unsigned LayerRectList::length() const {
+  return list_.size();
 }
 
-unsigned LayerRectList::length() const
-{
-    return m_list.size();
+LayerRect* LayerRectList::item(unsigned index) {
+  if (index >= list_.size())
+    return 0;
+
+  return list_[index].Get();
 }
 
-LayerRect* LayerRectList::item(unsigned index)
-{
-    if (index >= m_list.size())
-        return 0;
-
-    return m_list[index].get();
+void LayerRectList::Append(Node* layer_root_node,
+                           const String& layer_type,
+                           int layer_offset_x,
+                           int layer_offset_y,
+                           ClientRect* layer_relative_rect) {
+  list_.push_back(LayerRect::Create(layer_root_node, layer_type, layer_offset_x,
+                                    layer_offset_y, layer_relative_rect));
 }
 
-void LayerRectList::append(Node* layerRootNode, const String& layerType, int layerOffsetX, int layerOffsetY, ClientRect* layerRelativeRect)
-{
-    m_list.append(LayerRect::create(layerRootNode, layerType, layerOffsetX, layerOffsetY, layerRelativeRect));
+DEFINE_TRACE(LayerRectList) {
+  visitor->Trace(list_);
 }
 
-DEFINE_TRACE(LayerRectList)
-{
-    visitor->trace(m_list);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -1,3 +1,4 @@
+CONSOLE ERROR: line 26: Uncaught SyntaxError: Unexpected identifier
 Tests getEventListeners() method of console command line API.
 
  
@@ -5,15 +6,15 @@ Tests getEventListeners() method of console command line API.
 [page] keydown: {
 [page]     0: {
 [page]         listener: function listener1() { }
+[page]         once: false
 [page]         passive: false
-[page]         remove: function remove() { [Command Line API] }
 [page]         type: "keydown"
 [page]         useCapture: false
 [page]     }
 [page]     1: {
 [page]         listener: function listener2() { }
+[page]         once: false
 [page]         passive: false
-[page]         remove: function remove() { [Command Line API] }
 [page]         type: "keydown"
 [page]         useCapture: true
 [page]     }
@@ -21,8 +22,8 @@ Tests getEventListeners() method of console command line API.
 [page] wheel: {
 [page]     0: {
 [page]         listener: function listener2() { }
+[page]         once: false
 [page]         passive: true
-[page]         remove: function remove() { [Command Line API] }
 [page]         type: "wheel"
 [page]         useCapture: false
 [page]     }
@@ -31,8 +32,8 @@ Tests getEventListeners() method of console command line API.
 [page] keydown: {
 [page]     0: {
 [page]         listener: function listener2() { }
+[page]         once: false
 [page]         passive: false
-[page]         remove: function remove() { [Command Line API] }
 [page]         type: "keydown"
 [page]         useCapture: true
 [page]     }
@@ -41,17 +42,26 @@ Tests getEventListeners() method of console command line API.
 [page] keydown: {
 [page]     0: {
 [page]         listener: function listener2() { }
+[page]         once: false
 [page]         passive: false
-[page]         remove: function remove() { [Command Line API] }
 [page]         type: "keydown"
 [page]         useCapture: true
+[page]     }
+[page] }
+[page] keyup: {
+[page]     0: {
+[page]         listener: function listener2() { }
+[page]         once: true
+[page]         passive: false
+[page]         type: "keyup"
+[page]         useCapture: false
 [page]     }
 [page] }
 [page] mousedown: {
 [page]     0: {
 [page]         listener: function listener2() { }
+[page]         once: false
 [page]         passive: false
-[page]         remove: function remove() { [Command Line API] }
 [page]         type: "mousedown"
 [page]         useCapture: true
 [page]     }
@@ -59,8 +69,8 @@ Tests getEventListeners() method of console command line API.
 [page] mousemove: {
 [page]     0: {
 [page]         listener: function listener1() { }
+[page]         once: false
 [page]         passive: false
-[page]         remove: function remove() { [Command Line API] }
 [page]         type: "mousemove"
 [page]         useCapture: false
 [page]     }
@@ -69,8 +79,8 @@ Tests getEventListeners() method of console command line API.
 [page] click: {
 [page]     0: {
 [page]         listener: function onclick(event) { alert(1) }
+[page]         once: false
 [page]         passive: false
-[page]         remove: function remove() { [Command Line API] }
 [page]         type: "click"
 [page]         useCapture: false
 [page]     }
@@ -78,8 +88,8 @@ Tests getEventListeners() method of console command line API.
 [page] mouseover: {
 [page]     0: {
 [page]         listener: function onmouseover(event) { listener2() }
+[page]         once: false
 [page]         passive: false
-[page]         remove: function remove() { [Command Line API] }
 [page]         type: "mouseover"
 [page]         useCapture: false
 [page]     }
@@ -88,8 +98,8 @@ Tests getEventListeners() method of console command line API.
 [page] load: {
 [page]     0: {
 [page]         listener: function onload(event) { runTest() }
+[page]         once: false
 [page]         passive: false
-[page]         remove: function remove() { [Command Line API] }
 [page]         type: "load"
 [page]         useCapture: false
 [page]     }
@@ -97,8 +107,8 @@ Tests getEventListeners() method of console command line API.
 [page] popstate: {
 [page]     0: {
 [page]         listener: function listener1() { }
+[page]         once: false
 [page]         passive: false
-[page]         remove: function remove() { [Command Line API] }
 [page]         type: "popstate"
 [page]         useCapture: false
 [page]     }

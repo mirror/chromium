@@ -4,52 +4,66 @@
 
 #include "core/css/cssom/CSSSimpleLength.h"
 
+#include "bindings/core/v8/ExceptionState.h"
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/css/cssom/CSSCalcLength.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-CSSValue* CSSSimpleLength::toCSSValue() const
-{
-    return CSSPrimitiveValue::create(m_value, m_unit);
+CSSSimpleLength* CSSSimpleLength::Create(double value,
+                                         const String& type,
+                                         ExceptionState& exception_state) {
+  CSSPrimitiveValue::UnitType unit = CSSLengthValue::UnitFromName(type);
+  if (!CSSLengthValue::IsSupportedLengthUnit(unit)) {
+    exception_state.ThrowTypeError("Invalid unit for CSSSimpleLength: " + type);
+    return nullptr;
+  }
+  return new CSSSimpleLength(value, unit);
 }
 
-bool CSSSimpleLength::containsPercent() const
-{
-    return lengthUnit() == CSSPrimitiveValue::UnitType::Percentage;
+CSSSimpleLength* CSSSimpleLength::FromCSSValue(const CSSPrimitiveValue& value) {
+  DCHECK(value.IsLength() || value.IsPercentage());
+  if (value.IsPercentage())
+    return new CSSSimpleLength(value.GetDoubleValue(),
+                               CSSPrimitiveValue::UnitType::kPercentage);
+  return new CSSSimpleLength(value.GetDoubleValue(),
+                             value.TypeWithCalcResolved());
 }
 
-CSSLengthValue* CSSSimpleLength::addInternal(const CSSLengthValue* other, ExceptionState& exceptionState)
-{
-    const CSSSimpleLength* o = toCSSSimpleLength(other);
-    if (m_unit == o->m_unit)
-        return create(m_value + o->value(), m_unit);
-
-    // Different units resolve to a calc.
-    CSSCalcLength* result = CSSCalcLength::create(this, exceptionState);
-    return result->add(other, exceptionState);
+bool CSSSimpleLength::ContainsPercent() const {
+  return LengthUnit() == CSSPrimitiveValue::UnitType::kPercentage;
 }
 
-CSSLengthValue* CSSSimpleLength::subtractInternal(const CSSLengthValue* other, ExceptionState& exceptionState)
-{
-    const CSSSimpleLength* o = toCSSSimpleLength(other);
-    if (m_unit == o->m_unit)
-        return create(m_value - o->value(), m_unit);
-
-    // Different units resolve to a calc.
-    CSSCalcLength* result = CSSCalcLength::create(this, exceptionState);
-    return result->subtract(other, exceptionState);
+String CSSSimpleLength::unit() const {
+  if (LengthUnit() == CSSPrimitiveValue::UnitType::kPercentage)
+    return "percent";
+  return CSSPrimitiveValue::UnitTypeToString(unit_);
 }
 
-CSSLengthValue* CSSSimpleLength::multiplyInternal(double x, ExceptionState& exceptionState)
-{
-    return create(m_value * x, m_unit);
+CSSLengthValue* CSSSimpleLength::AddInternal(const CSSLengthValue* other) {
+  const CSSSimpleLength* o = ToCSSSimpleLength(other);
+  DCHECK_EQ(unit_, o->unit_);
+  return Create(value_ + o->value(), unit_);
 }
 
-CSSLengthValue* CSSSimpleLength::divideInternal(double x, ExceptionState& exceptionState)
-{
-    return create(m_value / x, m_unit);
+CSSLengthValue* CSSSimpleLength::SubtractInternal(const CSSLengthValue* other) {
+  const CSSSimpleLength* o = ToCSSSimpleLength(other);
+  DCHECK_EQ(unit_, o->unit_);
+  return Create(value_ - o->value(), unit_);
 }
 
-} // namespace blink
+CSSLengthValue* CSSSimpleLength::MultiplyInternal(double x) {
+  return Create(value_ * x, unit_);
+}
+
+CSSLengthValue* CSSSimpleLength::DivideInternal(double x) {
+  DCHECK_NE(x, 0);
+  return Create(value_ / x, unit_);
+}
+
+CSSValue* CSSSimpleLength::ToCSSValue() const {
+  return CSSPrimitiveValue::Create(value_, unit_);
+}
+
+}  // namespace blink

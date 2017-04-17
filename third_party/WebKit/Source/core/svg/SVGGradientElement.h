@@ -32,49 +32,68 @@
 
 namespace blink {
 
+struct GradientAttributes;
+
 enum SVGSpreadMethodType {
-    SVGSpreadMethodUnknown = 0,
-    SVGSpreadMethodPad,
-    SVGSpreadMethodReflect,
-    SVGSpreadMethodRepeat
+  kSVGSpreadMethodUnknown = 0,
+  kSVGSpreadMethodPad,
+  kSVGSpreadMethodReflect,
+  kSVGSpreadMethodRepeat
 };
-template<> const SVGEnumerationStringEntries& getStaticStringEntries<SVGSpreadMethodType>();
+template <>
+const SVGEnumerationStringEntries&
+GetStaticStringEntries<SVGSpreadMethodType>();
 
-class SVGGradientElement : public SVGElement,
-                           public SVGURIReference {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(SVGGradientElement);
-public:
-    Vector<Gradient::ColorStop> buildStops();
+class SVGGradientElement : public SVGElement, public SVGURIReference {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(SVGGradientElement);
 
-    SVGAnimatedTransformList* gradientTransform() { return m_gradientTransform.get(); }
-    SVGAnimatedEnumeration<SVGSpreadMethodType>* spreadMethod() { return m_spreadMethod.get(); }
-    SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>* gradientUnits() { return m_gradientUnits.get(); }
+ public:
+  SVGAnimatedTransformList* gradientTransform() const {
+    return gradient_transform_.Get();
+  }
+  SVGAnimatedEnumeration<SVGSpreadMethodType>* spreadMethod() const {
+    return spread_method_.Get();
+  }
+  SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>* gradientUnits() const {
+    return gradient_units_.Get();
+  }
 
-    DECLARE_VIRTUAL_TRACE();
+  const SVGGradientElement* ReferencedElement() const;
+  void CollectCommonAttributes(GradientAttributes&) const;
 
-protected:
-    SVGGradientElement(const QualifiedName&, Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    void svgAttributeChanged(const QualifiedName&) override;
+ protected:
+  SVGGradientElement(const QualifiedName&, Document&);
 
-private:
-    bool needsPendingResourceHandling() const final { return false; }
+  using VisitedSet = HeapHashSet<Member<const SVGGradientElement>>;
 
-    void childrenChanged(const ChildrenChange&) final;
+  void SvgAttributeChanged(const QualifiedName&) override;
 
-    Member<SVGAnimatedTransformList> m_gradientTransform;
-    Member<SVGAnimatedEnumeration<SVGSpreadMethodType>> m_spreadMethod;
-    Member<SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>> m_gradientUnits;
+ private:
+  bool NeedsPendingResourceHandling() const final { return false; }
+
+  void CollectStyleForPresentationAttribute(const QualifiedName&,
+                                            const AtomicString&,
+                                            MutableStylePropertySet*) override;
+
+  void ChildrenChanged(const ChildrenChange&) final;
+
+  Vector<Gradient::ColorStop> BuildStops() const;
+
+  Member<SVGAnimatedTransformList> gradient_transform_;
+  Member<SVGAnimatedEnumeration<SVGSpreadMethodType>> spread_method_;
+  Member<SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>> gradient_units_;
 };
 
-inline bool isSVGGradientElement(const SVGElement& element)
-{
-    return element.hasTagName(SVGNames::radialGradientTag) || element.hasTagName(SVGNames::linearGradientTag);
+inline bool IsSVGGradientElement(const SVGElement& element) {
+  return element.HasTagName(SVGNames::radialGradientTag) ||
+         element.HasTagName(SVGNames::linearGradientTag);
 }
 
 DEFINE_SVGELEMENT_TYPE_CASTS_WITH_FUNCTION(SVGGradientElement);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGGradientElement_h
+#endif  // SVGGradientElement_h

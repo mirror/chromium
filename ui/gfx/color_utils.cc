@@ -11,6 +11,8 @@
 
 #include "base/logging.h"
 #include "base/numerics/safe_conversions.h"
+#include "base/strings/string_number_conversions.h"
+#include "base/strings/stringprintf.h"
 #include "build/build_config.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/gfx/color_palette.h"
@@ -48,7 +50,10 @@ int calcHue(double temp1, double temp2, double hue) {
 // Assumes sRGB.
 double Linearize(double eight_bit_component) {
   const double component = eight_bit_component / 255.0;
-  return (component <= 0.03928) ?
+  // The W3C link in the header uses 0.03928 here.  See
+  // https://en.wikipedia.org/wiki/SRGB#Theory_of_the_transformation for
+  // discussion of why we use this value rather than that one.
+  return (component <= 0.04045) ?
       (component / 12.92) : pow((component + 0.055) / 1.055, 2.4);
 }
 
@@ -281,6 +286,11 @@ SkColor AlphaBlend(SkColor foreground, SkColor background, SkAlpha alpha) {
                         static_cast<int>(std::round(b)));
 }
 
+SkColor GetResultingPaintColor(SkColor foreground, SkColor background) {
+  return AlphaBlend(SkColorSetA(foreground, SK_AlphaOPAQUE), background,
+                    SkColorGetA(foreground));
+}
+
 bool IsDark(SkColor color) {
   return GetLuma(color) < 128;
 }
@@ -337,6 +347,19 @@ SkColor DeriveDefaultIconColor(SkColor text_color) {
   // For a light color, just reduce opacity.
   return SkColorSetA(text_color,
                      static_cast<int>(0.8f * SkColorGetA(text_color)));
+}
+
+std::string SkColorToRgbaString(SkColor color) {
+  // We convert the alpha using DoubleToString because StringPrintf will use
+  // locale specific formatters (e.g., use , instead of . in German).
+  return base::StringPrintf(
+      "rgba(%s,%s)", SkColorToRgbString(color).c_str(),
+      base::DoubleToString(SkColorGetA(color) / 255.0).c_str());
+}
+
+std::string SkColorToRgbString(SkColor color) {
+  return base::StringPrintf("%d,%d,%d", SkColorGetR(color), SkColorGetG(color),
+                            SkColorGetB(color));
 }
 
 }  // namespace color_utils

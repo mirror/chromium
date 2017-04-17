@@ -10,22 +10,21 @@
 namespace blink {
 
 class VisualViewportResizeEvent final : public Event {
-public:
-    ~VisualViewportResizeEvent() override;
+ public:
+  ~VisualViewportResizeEvent() override;
 
-    static VisualViewportResizeEvent* create()
-    {
-        return new VisualViewportResizeEvent();
-    }
+  static VisualViewportResizeEvent* Create() {
+    return new VisualViewportResizeEvent();
+  }
 
-    void doneDispatchingEventAtCurrentTarget() override;
+  void DoneDispatchingEventAtCurrentTarget() override;
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { Event::trace(visitor); }
+  DEFINE_INLINE_VIRTUAL_TRACE() { Event::Trace(visitor); }
 
-private:
-    VisualViewportResizeEvent();
+ private:
+  VisualViewportResizeEvent();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // VisualViewportResizeEvent_h
+#endif  // VisualViewportResizeEvent_h

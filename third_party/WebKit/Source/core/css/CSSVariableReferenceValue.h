@@ -7,38 +7,35 @@
 
 #include "core/css/CSSValue.h"
 #include "core/css/CSSVariableData.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
 class CSSVariableReferenceValue : public CSSValue {
-public:
-    static CSSVariableReferenceValue* create(PassRefPtr<CSSVariableData> data)
-    {
-        return new CSSVariableReferenceValue(data);
-    }
+ public:
+  static CSSVariableReferenceValue* Create(PassRefPtr<CSSVariableData> data) {
+    return new CSSVariableReferenceValue(std::move(data));
+  }
 
-    CSSVariableData* variableDataValue() const
-    {
-        return m_data.get();
-    }
+  CSSVariableData* VariableDataValue() const { return data_.Get(); }
 
-    bool equals(const CSSVariableReferenceValue& other) const { return m_data == other.m_data; }
-    String customCSSText() const;
+  bool Equals(const CSSVariableReferenceValue& other) const {
+    return data_ == other.data_;
+  }
+  String CustomCSSText() const;
 
-    DECLARE_TRACE_AFTER_DISPATCH();
-private:
-    CSSVariableReferenceValue(PassRefPtr<CSSVariableData> data)
-        : CSSValue(VariableReferenceClass)
-        , m_data(data)
-    {
-    }
+  DECLARE_TRACE_AFTER_DISPATCH();
 
-    RefPtr<CSSVariableData> m_data;
+ private:
+  CSSVariableReferenceValue(PassRefPtr<CSSVariableData> data)
+      : CSSValue(kVariableReferenceClass), data_(std::move(data)) {}
+
+  RefPtr<CSSVariableData> data_;
 };
 
-DEFINE_CSS_VALUE_TYPE_CASTS(CSSVariableReferenceValue, isVariableReferenceValue());
+DEFINE_CSS_VALUE_TYPE_CASTS(CSSVariableReferenceValue,
+                            IsVariableReferenceValue());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSVariableReferenceValue_h
+#endif  // CSSVariableReferenceValue_h

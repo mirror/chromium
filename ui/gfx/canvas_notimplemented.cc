@@ -18,22 +18,11 @@ void Canvas::SizeStringFloat(const base::string16& text,
   NOTIMPLEMENTED();
 }
 
-void Canvas::DrawStringRectWithHalo(const base::string16& text,
-                                    const FontList& font_list,
-                                    SkColor text_color,
-                                    SkColor halo_color_in,
-                                    const Rect& display_rect,
-                                    int flags) {
-  NOTIMPLEMENTED();
-}
-
-void Canvas::DrawStringRectWithShadows(const base::string16& text,
-                                       const FontList& font_list,
-                                       SkColor color,
-                                       const Rect& text_bounds,
-                                       int line_height,
-                                       int flags,
-                                       const ShadowValues& shadows) {
+void Canvas::DrawStringRectWithFlags(const base::string16& text,
+                                     const FontList& font_list,
+                                     SkColor color,
+                                     const Rect& text_bounds,
+                                     int flags) {
   NOTIMPLEMENTED();
 }
 

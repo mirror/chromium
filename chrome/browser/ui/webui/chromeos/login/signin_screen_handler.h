@@ -10,20 +10,20 @@
 #include <set>
 #include <string>
 
+#include "ash/public/interfaces/touch_view.mojom.h"
 #include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/containers/hash_tables.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "chrome/browser/chromeos/login/screens/network_error_model.h"
+#include "chrome/browser/chromeos/login/screens/error_screen.h"
 #include "chrome/browser/chromeos/login/signin_specifics.h"
 #include "chrome/browser/chromeos/login/ui/login_display.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
-#include "chrome/browser/ui/webui/chromeos/login/base_screen_handler.h"
+#include "chrome/browser/ui/webui/chromeos/login/base_webui_handler.h"
 #include "chrome/browser/ui/webui/chromeos/login/network_state_informer.h"
 #include "chrome/browser/ui/webui/chromeos/login/oobe_ui.h"
-#include "chrome/browser/ui/webui/chromeos/touch_view_controller_delegate.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "chromeos/network/portal_detector/network_portal_detector.h"
 #include "components/proximity_auth/screenlock_bridge.h"
@@ -31,13 +31,13 @@
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/web_ui.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "net/base/net_errors.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/events/event_handler.h"
 
 class AccountId;
-class EasyUnlockService;
 
 namespace base {
 class DictionaryValue;
@@ -46,8 +46,7 @@ class ListValue;
 
 namespace chromeos {
 
-class CaptivePortalWindowProxy;
-class CoreOobeActor;
+class CoreOobeView;
 class ErrorScreensHistogramHelper;
 class GaiaScreenHandler;
 class LoginFeedback;
@@ -140,6 +139,9 @@ class SigninScreenHandlerDelegate {
   // Notify the delegate when the sign-in UI is finished loading.
   virtual void OnSigninScreenReady() = 0;
 
+  // Notify the delegate when the GAIA UI is finished loading.
+  virtual void OnGaiaScreenReady() = 0;
+
   // Shows Enterprise Enrollment screen.
   virtual void ShowEnterpriseEnrollmentScreen() = 0;
 
@@ -158,6 +160,12 @@ class SigninScreenHandlerDelegate {
   // Sets the displayed email for the next login attempt. If it succeeds,
   // user's displayed email value will be updated to |email|.
   virtual void SetDisplayEmail(const std::string& email) = 0;
+
+  // Sets the displayed name and given name for the next login attempt. If it
+  // succeeds, user's displayed name and give name values will be updated to
+  // |display_name| and |given_name|.
+  virtual void SetDisplayAndGivenName(const std::string& display_name,
+                                      const std::string& given_name) = 0;
 
   // --------------- Rest of the methods.
   // Cancels user adding.
@@ -210,26 +218,27 @@ class SigninScreenHandlerDelegate {
 // A class that handles the WebUI hooks in sign-in screen in OobeUI and
 // LoginDisplay.
 class SigninScreenHandler
-    : public BaseScreenHandler,
+    : public BaseWebUIHandler,
       public LoginDisplayWebUIHandler,
       public content::NotificationObserver,
       public NetworkStateInformer::NetworkStateInformerObserver,
       public PowerManagerClient::Observer,
       public input_method::ImeKeyboard::Observer,
-      public TouchViewControllerDelegate::Observer,
+      public ash::mojom::TouchViewObserver,
       public OobeUI::Observer {
  public:
   SigninScreenHandler(
       const scoped_refptr<NetworkStateInformer>& network_state_informer,
-      NetworkErrorModel* network_error_model,
-      CoreOobeActor* core_oobe_actor,
-      GaiaScreenHandler* gaia_screen_handler);
+      ErrorScreen* error_screen,
+      CoreOobeView* core_oobe_view,
+      GaiaScreenHandler* gaia_screen_handler,
+      JSCallsContainer* js_calls_container);
   ~SigninScreenHandler() override;
 
-  static std::string GetUserLRUInputMethod(const std::string& username);
+  static std::string GetUserLastInputMethod(const std::string& username);
 
   // Update current input method (namely keyboard layout) in the given IME state
-  // to LRU by this user.
+  // to last input method used by this user.
   static void SetUserInputMethod(
       const std::string& username,
       input_method::InputMethodManager::State* ime_state);
@@ -261,6 +270,10 @@ class SigninScreenHandler
   // This method reduces the threshold to zero, allowing the offline message to
   // show instantaneously in tests.
   void ZeroOfflineTimeoutForTesting();
+
+  // Gets the keyboard remapped pref value for |pref_name| key. Returns true if
+  // successful, otherwise returns false.
+  bool GetKeyboardRemappedPrefValue(const std::string& pref_name, int* value);
 
  private:
   enum UIState {
@@ -326,22 +339,22 @@ class SigninScreenHandler
   // PowerManagerClient::Observer implementation:
   void SuspendDone(const base::TimeDelta& sleep_duration) override;
 
-  // TouchViewControllerDelegate::Observer implementation:
-  void OnMaximizeModeStarted() override;
-  void OnMaximizeModeEnded() override;
+  // ash::mojom::TouchView:
+  void OnTouchViewToggled(bool enabled) override;
 
   void UpdateAddButtonStatus();
 
   // Restore input focus to current user pod.
   void RefocusCurrentPod();
 
-  // Hides the PIN keyboard if it is no longer available.
-  void HidePinKeyboardIfNeeded(const AccountId& account_id);
+  // Enable or disable the pin keyboard for the given account.
+  void UpdatePinKeyboardState(const AccountId& account_id);
 
   // WebUI message handlers.
   void HandleGetUsers();
   void HandleAuthenticateUser(const AccountId& account_id,
-                              const std::string& password);
+                              const std::string& password,
+                              bool authenticated_by_pin);
   void HandleAttemptUnlock(const std::string& username);
   void HandleLaunchIncognito();
   void HandleLaunchPublicSession(const AccountId& account_id,
@@ -354,6 +367,7 @@ class SigninScreenHandler
   void HandleRemoveUser(const AccountId& account_id);
   void HandleShowAddUser(const base::ListValue* args);
   void HandleToggleEnrollmentScreen();
+  void HandleToggleEnrollmentAd();
   void HandleToggleEnableDebuggingScreen();
   void HandleToggleKioskEnableScreen();
   void HandleToggleResetScreen();
@@ -373,9 +387,11 @@ class SigninScreenHandler
   void HandleShowLoadingTimeoutError();
   void HandleShowSupervisedUserCreationScreen();
   void HandleFocusPod(const AccountId& account_id);
+  void HandleNoPodFocused();
   void HandleHardlockPod(const std::string& user_id);
   void HandleLaunchKioskApp(const AccountId& app_account_id,
                             bool diagnostic_mode);
+  void HandleLaunchArcKioskApp(const AccountId& app_account_id);
   void HandleGetPublicSessionKeyboardLayouts(const AccountId& account_id,
                                              const std::string& locale);
   void HandleGetTouchViewState();
@@ -414,9 +430,6 @@ class SigninScreenHandler
   // Returns true if guest signin is allowed.
   bool IsGuestSigninAllowed() const;
 
-  // Returns true if offline login is allowed.
-  bool IsOfflineLoginAllowed() const;
-
   bool ShouldLoadGaia() const;
 
   // Shows signin.
@@ -427,11 +440,14 @@ class SigninScreenHandler
   // input_method::ImeKeyboard::Observer implementation:
   void OnCapsLockChanged(bool enabled) override;
 
-  // Returns OobeUI object of NULL.
-  OobeUI* GetOobeUI() const;
-
   // Callback invoked after the feedback is finished.
   void OnFeedbackFinished();
+
+  // Called when the cros property controlling allowed input methods changes.
+  void OnAllowedInputMethodsChanged();
+
+  // Update the keyboard settings for |account_id|.
+  void SetKeyboardSettings(const AccountId& account_id);
 
   // Current UI state of the signin screen.
   UIState ui_state_ = UI_STATE_UNKNOWN;
@@ -458,8 +474,8 @@ class SigninScreenHandler
   bool webui_visible_ = false;
   bool preferences_changed_delayed_ = false;
 
-  NetworkErrorModel* network_error_model_;
-  CoreOobeActor* core_oobe_actor_;
+  ErrorScreen* error_screen_ = nullptr;
+  CoreOobeView* core_oobe_view_ = nullptr;
 
   NetworkStateInformer::State last_network_state_ =
       NetworkStateInformer::UNKNOWN;
@@ -468,6 +484,9 @@ class SigninScreenHandler
   base::CancelableClosure connecting_closure_;
 
   content::NotificationRegistrar registrar_;
+
+  std::unique_ptr<CrosSettings::ObserverSubscription>
+      allowed_input_methods_subscription_;
 
   // Whether there is an auth UI pending. This flag is set on receiving
   // NOTIFICATION_AUTH_NEEDED and reset on either NOTIFICATION_AUTH_SUPPLIED or
@@ -494,8 +513,9 @@ class SigninScreenHandler
   // TODO(antrim@): remove this dependency.
   GaiaScreenHandler* gaia_screen_handler_ = nullptr;
 
-  // Maximized mode controller delegate.
-  std::unique_ptr<TouchViewControllerDelegate> max_mode_delegate_;
+  mojo::Binding<ash::mojom::TouchViewObserver> touch_view_binding_;
+  ash::mojom::TouchViewManagerPtr touch_view_manager_ptr_;
+  bool touch_view_enabled_ = false;
 
   // Input Method Engine state used at signin screen.
   scoped_refptr<input_method::InputMethodManager::State> ime_state_;
@@ -511,6 +531,8 @@ class SigninScreenHandler
   std::unique_ptr<ErrorScreensHistogramHelper> histogram_helper_;
 
   std::unique_ptr<LoginFeedback> login_feedback_;
+
+  std::unique_ptr<AccountId> focused_pod_account_id_;
 
   base::WeakPtrFactory<SigninScreenHandler> weak_factory_;
 

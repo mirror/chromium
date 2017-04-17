@@ -10,6 +10,24 @@
 
 using namespace clang;
 
+const char kNewOperatorName[] = "operator new";
+const char kCreateName[] = "Create";
+const char kTraceName[] = "Trace";
+const char kFinalizeName[] = "FinalizeGarbageCollectedObject";
+const char kTraceAfterDispatchName[] = "TraceAfterDispatch";
+const char kRegisterWeakMembersName[] = "RegisterWeakMembers";
+const char kHeapAllocatorName[] = "HeapAllocator";
+const char kTraceIfNeededName[] = "TraceIfNeeded";
+const char kVisitorDispatcherName[] = "VisitorDispatcher";
+const char kVisitorVarName[] = "visitor";
+const char kAdjustAndMarkName[] = "AdjustAndMark";
+const char kIsHeapObjectAliveName[] = "IsHeapObjectAlive";
+const char kIsEagerlyFinalizedName[] = "IsEagerlyFinalizedMarker";
+const char kConstIteratorName[] = "const_iterator";
+const char kIteratorName[] = "iterator";
+const char kConstReverseIteratorName[] = "const_reverse_iterator";
+const char kReverseIteratorName[] = "reverse_iterator";
+
 bool Config::IsTemplateInstantiation(CXXRecordDecl* record) {
   ClassTemplateSpecializationDecl* spec =
       dyn_cast<clang::ClassTemplateSpecializationDecl>(record);

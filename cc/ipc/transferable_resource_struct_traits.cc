@@ -11,7 +11,8 @@
 namespace mojo {
 
 // static
-bool StructTraits<cc::mojom::TransferableResource, cc::TransferableResource>::
+bool StructTraits<cc::mojom::TransferableResourceDataView,
+                  cc::TransferableResource>::
     Read(cc::mojom::TransferableResourceDataView data,
          cc::TransferableResource* out) {
   if (!data.ReadSize(&out->size) ||
@@ -19,10 +20,15 @@ bool StructTraits<cc::mojom::TransferableResource, cc::TransferableResource>::
     return false;
   out->id = data.id();
   out->format = static_cast<cc::ResourceFormat>(data.format());
+  out->buffer_format = static_cast<gfx::BufferFormat>(data.buffer_format());
   out->filter = data.filter();
   out->read_lock_fences_enabled = data.read_lock_fences_enabled();
   out->is_software = data.is_software();
   out->is_overlay_candidate = data.is_overlay_candidate();
+#if defined(OS_ANDROID)
+  out->is_backed_by_surface_texture = data.is_backed_by_surface_texture();
+  out->wants_promotion_hint = data.wants_promotion_hint();
+#endif
   return true;
 }
 

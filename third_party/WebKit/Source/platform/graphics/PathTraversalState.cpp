@@ -19,206 +19,205 @@
 
 #include "platform/graphics/PathTraversalState.h"
 
-#include "wtf/MathExtras.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/MathExtras.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-static inline FloatPoint midPoint(const FloatPoint& first, const FloatPoint& second)
-{
-    return FloatPoint((first.x() + second.x()) / 2.0f, (first.y() + second.y()) / 2.0f);
+static inline FloatPoint MidPoint(const FloatPoint& first,
+                                  const FloatPoint& second) {
+  return FloatPoint((first.X() + second.X()) / 2.0f,
+                    (first.Y() + second.Y()) / 2.0f);
 }
 
-static inline float distanceLine(const FloatPoint& start, const FloatPoint& end)
-{
-    return sqrtf((end.x() - start.x()) * (end.x() - start.x()) + (end.y() - start.y()) * (end.y() - start.y()));
+static inline float DistanceLine(const FloatPoint& start,
+                                 const FloatPoint& end) {
+  return sqrtf((end.X() - start.X()) * (end.X() - start.X()) +
+               (end.Y() - start.Y()) * (end.Y() - start.Y()));
 }
 
 struct QuadraticBezier {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    QuadraticBezier() { }
-    QuadraticBezier(const FloatPoint& s, const FloatPoint& c, const FloatPoint& e)
-        : start(s)
-        , control(c)
-        , end(e)
-        , splitDepth(0)
-    {
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  QuadraticBezier() {}
+  QuadraticBezier(const FloatPoint& s, const FloatPoint& c, const FloatPoint& e)
+      : start(s), control(c), end(e), split_depth(0) {}
 
-    double magnitudeSquared() const
-    {
-        return ((double)(start.dot(start)) + (double)(control.dot(control)) + (double)(end.dot(end))) / 9.0;
-    }
+  double MagnitudeSquared() const {
+    return ((double)(start.Dot(start)) + (double)(control.Dot(control)) +
+            (double)(end.Dot(end))) /
+           9.0;
+  }
 
-    float approximateDistance() const
-    {
-        return distanceLine(start, control) + distanceLine(control, end);
-    }
+  float ApproximateDistance() const {
+    return DistanceLine(start, control) + DistanceLine(control, end);
+  }
 
-    void split(QuadraticBezier& left, QuadraticBezier& right) const
-    {
-        left.control = midPoint(start, control);
-        right.control = midPoint(control, end);
+  void Split(QuadraticBezier& left, QuadraticBezier& right) const {
+    left.control = MidPoint(start, control);
+    right.control = MidPoint(control, end);
 
-        FloatPoint leftControlToRightControl = midPoint(left.control, right.control);
-        left.end = leftControlToRightControl;
-        right.start = leftControlToRightControl;
+    FloatPoint left_control_to_right_control =
+        MidPoint(left.control, right.control);
+    left.end = left_control_to_right_control;
+    right.start = left_control_to_right_control;
 
-        left.start = start;
-        right.end = end;
+    left.start = start;
+    right.end = end;
 
-        left.splitDepth = right.splitDepth = splitDepth + 1;
-    }
+    left.split_depth = right.split_depth = split_depth + 1;
+  }
 
-    FloatPoint start;
-    FloatPoint control;
-    FloatPoint end;
-    unsigned short splitDepth;
+  FloatPoint start;
+  FloatPoint control;
+  FloatPoint end;
+  unsigned short split_depth;
 };
 
 struct CubicBezier {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    CubicBezier() { }
-    CubicBezier(const FloatPoint& s, const FloatPoint& c1, const FloatPoint& c2, const FloatPoint& e)
-        : start(s)
-        , control1(c1)
-        , control2(c2)
-        , end(e)
-        , splitDepth(0)
-    {
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  CubicBezier() {}
+  CubicBezier(const FloatPoint& s,
+              const FloatPoint& c1,
+              const FloatPoint& c2,
+              const FloatPoint& e)
+      : start(s), control1(c1), control2(c2), end(e), split_depth(0) {}
 
-    double magnitudeSquared() const
-    {
-        return ((double)(start.dot(start)) + (double)(control1.dot(control1)) + (double)(control2.dot(control2)) + (double)(end.dot(end))) / 16.0;
-    }
+  double MagnitudeSquared() const {
+    return ((double)(start.Dot(start)) + (double)(control1.Dot(control1)) +
+            (double)(control2.Dot(control2)) + (double)(end.Dot(end))) /
+           16.0;
+  }
 
-    float approximateDistance() const
-    {
-        return distanceLine(start, control1) + distanceLine(control1, control2) + distanceLine(control2, end);
-    }
+  float ApproximateDistance() const {
+    return DistanceLine(start, control1) + DistanceLine(control1, control2) +
+           DistanceLine(control2, end);
+  }
 
-    void split(CubicBezier& left, CubicBezier& right) const
-    {
-        FloatPoint startToControl1 = midPoint(control1, control2);
+  void Split(CubicBezier& left, CubicBezier& right) const {
+    FloatPoint start_to_control1 = MidPoint(control1, control2);
 
-        left.start = start;
-        left.control1 = midPoint(start, control1);
-        left.control2 = midPoint(left.control1, startToControl1);
+    left.start = start;
+    left.control1 = MidPoint(start, control1);
+    left.control2 = MidPoint(left.control1, start_to_control1);
 
-        right.control2 = midPoint(control2, end);
-        right.control1 = midPoint(right.control2, startToControl1);
-        right.end = end;
+    right.control2 = MidPoint(control2, end);
+    right.control1 = MidPoint(right.control2, start_to_control1);
+    right.end = end;
 
-        FloatPoint leftControl2ToRightControl1 = midPoint(left.control2, right.control1);
-        left.end = leftControl2ToRightControl1;
-        right.start = leftControl2ToRightControl1;
+    FloatPoint left_control2_to_right_control1 =
+        MidPoint(left.control2, right.control1);
+    left.end = left_control2_to_right_control1;
+    right.start = left_control2_to_right_control1;
 
-        left.splitDepth = right.splitDepth = splitDepth + 1;
-    }
+    left.split_depth = right.split_depth = split_depth + 1;
+  }
 
-    FloatPoint start;
-    FloatPoint control1;
-    FloatPoint control2;
-    FloatPoint end;
-    unsigned short splitDepth;
+  FloatPoint start;
+  FloatPoint control1;
+  FloatPoint control2;
+  FloatPoint end;
+  unsigned short split_depth;
 };
 
-template<class CurveType>
-static float curveLength(PathTraversalState& traversalState, CurveType curve)
-{
-    static const unsigned short curveSplitDepthLimit = 20;
-    static const double pathSegmentLengthToleranceSquared = 1.e-16;
+template <class CurveType>
+static float CurveLength(PathTraversalState& traversal_state, CurveType curve) {
+  static const unsigned short kCurveSplitDepthLimit = 20;
+  static const double kPathSegmentLengthToleranceSquared = 1.e-16;
 
-    double curveScaleForToleranceSquared = curve.magnitudeSquared();
-    if (curveScaleForToleranceSquared < pathSegmentLengthToleranceSquared)
-        return 0;
+  double curve_scale_for_tolerance_squared = curve.MagnitudeSquared();
+  if (curve_scale_for_tolerance_squared < kPathSegmentLengthToleranceSquared)
+    return 0;
 
-    Vector<CurveType> curveStack;
-    curveStack.append(curve);
+  Vector<CurveType> curve_stack;
+  curve_stack.push_back(curve);
 
-    float totalLength = 0;
-    do {
-        float length = curve.approximateDistance();
-        double lengthDiscrepancy = length - distanceLine(curve.start, curve.end);
-        if ((lengthDiscrepancy * lengthDiscrepancy) / curveScaleForToleranceSquared > pathSegmentLengthToleranceSquared && curve.splitDepth < curveSplitDepthLimit) {
-            CurveType leftCurve;
-            CurveType rightCurve;
-            curve.split(leftCurve, rightCurve);
-            curve = leftCurve;
-            curveStack.append(rightCurve);
-        } else {
-            totalLength += length;
-            if (traversalState.m_action == PathTraversalState::TraversalPointAtLength || traversalState.m_action == PathTraversalState::TraversalNormalAngleAtLength) {
-                traversalState.m_previous = curve.start;
-                traversalState.m_current = curve.end;
-                if (traversalState.m_totalLength + totalLength > traversalState.m_desiredLength)
-                    return totalLength;
-            }
-            curve = curveStack.last();
-            curveStack.removeLast();
-        }
-    } while (!curveStack.isEmpty());
+  float total_length = 0;
+  do {
+    float length = curve.ApproximateDistance();
+    double length_discrepancy = length - DistanceLine(curve.start, curve.end);
+    if ((length_discrepancy * length_discrepancy) /
+                curve_scale_for_tolerance_squared >
+            kPathSegmentLengthToleranceSquared &&
+        curve.split_depth < kCurveSplitDepthLimit) {
+      CurveType left_curve;
+      CurveType right_curve;
+      curve.Split(left_curve, right_curve);
+      curve = left_curve;
+      curve_stack.push_back(right_curve);
+    } else {
+      total_length += length;
+      if (traversal_state.action_ ==
+              PathTraversalState::kTraversalPointAtLength ||
+          traversal_state.action_ ==
+              PathTraversalState::kTraversalNormalAngleAtLength) {
+        traversal_state.previous_ = curve.start;
+        traversal_state.current_ = curve.end;
+        if (traversal_state.total_length_ + total_length >
+            traversal_state.desired_length_)
+          return total_length;
+      }
+      curve = curve_stack.back();
+      curve_stack.pop_back();
+    }
+  } while (!curve_stack.IsEmpty());
 
-    return totalLength;
+  return total_length;
 }
 
 PathTraversalState::PathTraversalState(PathTraversalAction action)
-    : m_action(action)
-    , m_success(false)
-    , m_totalLength(0)
-    , m_desiredLength(0)
-    , m_normalAngle(0)
-{
+    : action_(action),
+      success_(false),
+      total_length_(0),
+      desired_length_(0),
+      normal_angle_(0) {}
+
+float PathTraversalState::CloseSubpath() {
+  float distance = DistanceLine(current_, start_);
+  current_ = start_;
+  return distance;
 }
 
-float PathTraversalState::closeSubpath()
-{
-    float distance = distanceLine(m_current, m_start);
-    m_current = m_start;
-    return distance;
+float PathTraversalState::MoveTo(const FloatPoint& point) {
+  current_ = start_ = point;
+  return 0;
 }
 
-float PathTraversalState::moveTo(const FloatPoint& point)
-{
-    m_current = m_start = point;
-    return 0;
+float PathTraversalState::LineTo(const FloatPoint& point) {
+  float distance = DistanceLine(current_, point);
+  current_ = point;
+  return distance;
 }
 
-float PathTraversalState::lineTo(const FloatPoint& point)
-{
-    float distance = distanceLine(m_current, point);
-    m_current = point;
-    return distance;
+float PathTraversalState::CubicBezierTo(const FloatPoint& new_control1,
+                                        const FloatPoint& new_control2,
+                                        const FloatPoint& new_end) {
+  float distance = CurveLength<CubicBezier>(
+      *this, CubicBezier(current_, new_control1, new_control2, new_end));
+
+  if (action_ != kTraversalPointAtLength &&
+      action_ != kTraversalNormalAngleAtLength)
+    current_ = new_end;
+
+  return distance;
 }
 
-float PathTraversalState::cubicBezierTo(const FloatPoint& newControl1, const FloatPoint& newControl2, const FloatPoint& newEnd)
-{
-    float distance = curveLength<CubicBezier>(*this, CubicBezier(m_current, newControl1, newControl2, newEnd));
+void PathTraversalState::ProcessSegment() {
+  if (action_ == kTraversalSegmentAtLength && total_length_ >= desired_length_)
+    success_ = true;
 
-    if (m_action != TraversalPointAtLength && m_action != TraversalNormalAngleAtLength)
-        m_current = newEnd;
-
-    return distance;
-}
-
-void PathTraversalState::processSegment()
-{
-    if (m_action == TraversalSegmentAtLength && m_totalLength >= m_desiredLength)
-        m_success = true;
-
-    if ((m_action == TraversalPointAtLength || m_action == TraversalNormalAngleAtLength) && m_totalLength >= m_desiredLength) {
-        float slope = FloatPoint(m_current - m_previous).slopeAngleRadians();
-        if (m_action == TraversalPointAtLength) {
-            float offset = m_desiredLength - m_totalLength;
-            m_current.move(offset * cosf(slope), offset * sinf(slope));
-        } else {
-            m_normalAngle = rad2deg(slope);
-        }
-        m_success = true;
+  if ((action_ == kTraversalPointAtLength ||
+       action_ == kTraversalNormalAngleAtLength) &&
+      total_length_ >= desired_length_) {
+    float slope = FloatPoint(current_ - previous_).SlopeAngleRadians();
+    if (action_ == kTraversalPointAtLength) {
+      float offset = desired_length_ - total_length_;
+      current_.Move(offset * cosf(slope), offset * sinf(slope));
+    } else {
+      normal_angle_ = rad2deg(slope);
     }
-    m_previous = m_current;
+    success_ = true;
+  }
+  previous_ = current_;
 }
 
-} // namespace blink
-
+}  // namespace blink

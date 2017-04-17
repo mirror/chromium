@@ -64,9 +64,9 @@ const char kIosBookmarkFolderDefault[] = "ios.bookmark.default_folder";
 // the bookmark promo dialog.
 const char kIosBookmarkPromoAlreadySeen[] = "ios.bookmark.promo_already_seen";
 
-// Whether Chrome should attempt to hand off the current URL to other Apple
-// devices that share an iCloud account.
-const char kIosHandoffToOtherDevices[] = "ios.handoff_to_other_devices";
+// Whether the user has enabled the Physical Web feature to surface URLs
+// broadcast by nearby devices.
+const char kIosPhysicalWebEnabled[] = "ios.physical_web_enabled";
 
 // True if the previous session exited cleanly.
 // This can be different from kStabilityExitedCleanly, because the last run of
@@ -75,10 +75,6 @@ const char kIosHandoffToOtherDevices[] = "ios.handoff_to_other_devices";
 // session.
 const char kLastSessionExitedCleanly[] =
     "ios.user_experience_metrics.last_session_exited_cleanly";
-
-// True if the previous session was selected into the WKWebView control group.
-const char kLastSessionUsedWKWebViewControlGroup[] =
-    "ios.wkwebview_trial.was_control";
 
 // Preference that hold a boolean indicating whether metrics reporting should
 // be limited to wifi (when enabled).
@@ -109,12 +105,6 @@ const char kNtpShownBookmarksFolder[] = "ntp.shown_bookmarks_folder";
 
 // True if the memory debugging tools should be visible.
 const char kShowMemoryDebuggingTools[] = "ios.memory.show_debugging_tools";
-
-// User preferred speech input language for voice search.
-const char kVoiceSearchLocale[] = "ios.speechinput.voicesearch_locale";
-
-// Boolean which indicates if TTS after voice search is enabled.
-const char kVoiceSearchTTS[] = "ios.speechinput.voicesearch_tts";
 
 // List which contains the last known list of accounts.
 const char kSigninLastAccounts[] = "ios.signin.last_accounts";
@@ -149,9 +139,33 @@ const char kOmniboxGeolocationLastAuthorizationAlertVersion[] =
 const char kRateThisAppDialogLastShownTime[] =
     "ios.ratethisapp.dialog_last_shown_time";
 
-// TODO(vasilii): drop the pref in M54.
-// True if the safe browsing cookie store was deleted on the disk.
-extern const char kDroppedSafeBrowsingCookies[] =
-    "safebrowsing.cookie_store_deleted";
+// Index of the entry point that initiated sending the SMS to the user for the
+// "desktop to iOS" promotion (see DesktopIOSPromotion.IOSSigninReason histogram
+// for details).
+const char kDesktopIOSPromotionSMSEntryPoint[] =
+    "ios.desktop_ios_promo_sms_entrypoint";
+
+// Indexes of the entry points presented to the user for "desktop to iOS"
+// promotion
+const char kDesktopIOSPromotionShownEntryPoints[] =
+    "ios.desktop_ios_promo_shown_entrypoints";
+
+// Timestamp of the last "desktop to iOS" promotion SMS dispatch or of the last
+// impression (if no SMS was sent).
+const char kDesktopIOSPromotionLastImpression[] =
+    "ios.desktop_ios_promo_last_impression";
+
+// True if the "desktop to iOS" promotion was successful, i.e. user installed
+// the application and signed in after seeing the promotion and receiving the
+// SMS.
+const char kDesktopIOSPromotionDone[] = "ios.desktop_ios_promo_done";
+
+// True if the user is eligible to recieve "desktop to iOS" promotion.
+const char kDesktopIOSPromotionEligible[] = "ios.desktoptomobileeligible";
+
+// Integer that represents which variation of title and text of the
+// "desktop to iOS" promotion was presented to the user on desktop.
+const char kDesktopIOSPromotionVariationId[] =
+    "ios.desktop_ios_promo_variation_id";
 
 }  // namespace prefs

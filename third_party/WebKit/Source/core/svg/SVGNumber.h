@@ -39,37 +39,41 @@ namespace blink {
 class SVGNumberTearOff;
 
 class SVGNumber : public SVGPropertyHelper<SVGNumber> {
-public:
-    // SVGNumber has a tear-off type, but SVGAnimatedNumber uses primitive type.
-    typedef SVGNumberTearOff TearOffType;
-    typedef float PrimitiveType;
+ public:
+  // SVGNumber has a tear-off type, but SVGAnimatedNumber uses primitive type.
+  typedef SVGNumberTearOff TearOffType;
+  typedef float PrimitiveType;
 
-    static SVGNumber* create(float value = 0.0f)
-    {
-        return new SVGNumber(value);
-    }
+  static SVGNumber* Create(float value = 0.0f) { return new SVGNumber(value); }
 
-    virtual SVGNumber* clone() const;
+  virtual SVGNumber* Clone() const;
 
-    float value() const { return m_value; }
-    void setValue(float value) { m_value = value; }
+  float Value() const { return value_; }
+  void SetValue(float value) { value_ = value; }
 
-    String valueAsString() const override;
-    virtual SVGParsingError setValueAsString(const String&);
+  String ValueAsString() const override;
+  virtual SVGParsingError SetValueAsString(const String&);
 
-    void add(SVGPropertyBase*, SVGElement*) override;
-    void calculateAnimatedValue(SVGAnimationElement*, float percentage, unsigned repeatCount, SVGPropertyBase* from, SVGPropertyBase* to, SVGPropertyBase* toAtEndOfDurationValue, SVGElement* contextElement) override;
-    float calculateDistance(SVGPropertyBase* to, SVGElement* contextElement) override;
+  void Add(SVGPropertyBase*, SVGElement*) override;
+  void CalculateAnimatedValue(SVGAnimationElement*,
+                              float percentage,
+                              unsigned repeat_count,
+                              SVGPropertyBase* from,
+                              SVGPropertyBase* to,
+                              SVGPropertyBase* to_at_end_of_duration_value,
+                              SVGElement* context_element) override;
+  float CalculateDistance(SVGPropertyBase* to,
+                          SVGElement* context_element) override;
 
-    static AnimatedPropertyType classType() { return AnimatedNumber; }
+  static AnimatedPropertyType ClassType() { return kAnimatedNumber; }
 
-protected:
-    explicit SVGNumber(float);
+ protected:
+  explicit SVGNumber(float);
 
-    template<typename CharType>
-    SVGParsingError parse(const CharType*& ptr, const CharType* end);
+  template <typename CharType>
+  SVGParsingError Parse(const CharType*& ptr, const CharType* end);
 
-    float m_value;
+  float value_;
 };
 
 DEFINE_SVG_PROPERTY_TYPE_CASTS(SVGNumber);
@@ -79,19 +83,18 @@ DEFINE_SVG_PROPERTY_TYPE_CASTS(SVGNumber);
 // Spec: http://www.w3.org/TR/SVG11/pservers.html#GradientStops
 //   offset = "<number> | <percentage>"
 class SVGNumberAcceptPercentage final : public SVGNumber {
-public:
-    static SVGNumberAcceptPercentage* create(float value = 0)
-    {
-        return new SVGNumberAcceptPercentage(value);
-    }
+ public:
+  static SVGNumberAcceptPercentage* Create(float value = 0) {
+    return new SVGNumberAcceptPercentage(value);
+  }
 
-    SVGNumber* clone() const override;
-    SVGParsingError setValueAsString(const String&) override;
+  SVGNumber* Clone() const override;
+  SVGParsingError SetValueAsString(const String&) override;
 
-private:
-    explicit SVGNumberAcceptPercentage(float);
+ private:
+  explicit SVGNumberAcceptPercentage(float);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGNumber_h
+#endif  // SVGNumber_h

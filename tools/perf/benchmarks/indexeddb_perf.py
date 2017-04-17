@@ -20,13 +20,10 @@ Cursors:
 """
 
 import json
-import os
 
-from core import path_util
 from core import perf_benchmark
 
-from telemetry import page as page_module
-from telemetry import story
+from telemetry import benchmark
 from telemetry.page import legacy_page_test
 from telemetry.value import scalar
 
@@ -64,7 +61,7 @@ class _IndexedDbMeasurement(legacy_page_test.LegacyPageTest):
 
   def ValidateAndMeasurePage(self, page, tab, results):
     tab.WaitForDocumentReadyStateToBeComplete()
-    tab.WaitForJavaScriptExpression('window.done', 600)
+    tab.WaitForJavaScriptCondition('window.done', timeout=600)
 
     self._power_metric.Stop(page, tab)
     self._memory_metric.Stop(page, tab)
@@ -72,8 +69,8 @@ class _IndexedDbMeasurement(legacy_page_test.LegacyPageTest):
     self._memory_metric.AddResults(tab, results)
     self._power_metric.AddResults(tab, results)
 
-    js_get_results = 'JSON.stringify(automation.getResults());'
-    result_dict = json.loads(tab.EvaluateJavaScript(js_get_results))
+    result_dict = json.loads(tab.EvaluateJavaScript(
+        'JSON.stringify(automation.getResults());'))
     total = 0.0
     for key in result_dict:
       if key == 'OverallTestDuration':
@@ -91,22 +88,8 @@ class _IndexedDbMeasurement(legacy_page_test.LegacyPageTest):
     power.PowerMetric.CustomizeBrowserOptions(options)
 
 
-class IndexedDbOriginal(perf_benchmark.PerfBenchmark):
-  """Chromium's IndexedDB Performance tests."""
-  test = _IndexedDbMeasurement
-
-  @classmethod
-  def Name(cls):
-    return 'indexeddb_perf'
-
-  def CreateStorySet(self, options):
-    indexeddb_dir = os.path.join(path_util.GetChromiumSrcDir(), 'chrome',
-                                 'test', 'data', 'indexeddb')
-    ps = story.StorySet(base_dir=indexeddb_dir)
-    ps.AddStory(page_module.Page('file://perf_test.html', ps, ps.base_dir))
-    return ps
-
-
+@benchmark.Disabled('linux') # crbug.com/677972
+@benchmark.Owner(emails=['cmumford@chromium.org'])
 class IndexedDbOriginalSectioned(perf_benchmark.PerfBenchmark):
   """Chromium's IndexedDB Performance tests."""
   test = _IndexedDbMeasurement
@@ -117,6 +100,8 @@ class IndexedDbOriginalSectioned(perf_benchmark.PerfBenchmark):
     return 'storage.indexeddb_endure'
 
 
+@benchmark.Disabled('linux') # crbug.com/677972
+@benchmark.Owner(emails=['cmumford@chromium.org'])
 class IndexedDbTracing(perf_benchmark.PerfBenchmark):
   """IndexedDB Performance tests that use tracing."""
   page_set = page_sets.IndexedDBEndurePageSet

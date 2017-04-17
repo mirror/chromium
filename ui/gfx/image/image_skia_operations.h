@@ -6,6 +6,9 @@
 #define UI_GFX_IMAGE_IMAGE_SKIA_OPERATIONS_H_
 
 #include "skia/ext/image_operations.h"
+#include "third_party/skia/include/core/SkDrawLooper.h"
+#include "third_party/skia/include/core/SkPaint.h"
+#include "third_party/skia/include/core/SkRRect.h"
 #include "ui/gfx/color_utils.h"
 #include "ui/gfx/gfx_export.h"
 #include "ui/gfx/shadow_value.h"
@@ -87,11 +90,24 @@ class GFX_EXPORT ImageSkiaOperations {
   static ImageSkia CreateImageWithDropShadow(const ImageSkia& source,
                                              const ShadowValues& shadows);
 
+  // Creates an image that is 1dp wide, suitable for tiling horizontally to
+  // create a drop shadow effect. The purpose of tiling a static image is to
+  // avoid repeatedly asking Skia to draw a shadow.
+  static ImageSkia CreateHorizontalShadow(
+      const std::vector<ShadowValue>& shadows,
+      bool fades_down);
+
   // Creates an image which is a rotation of the |source|. |rotation| is the
   // amount of clockwise rotation in degrees.
   static ImageSkia CreateRotatedImage(
       const ImageSkia& source,
       SkBitmapOperations::RotationAmount rotation);
+
+  // Creates an icon by painting the second icon as a badge to the first one.
+  // The second icon is in the right corner of the first icon. If the icon
+  // is valid and the badge is not, the icon will be returned.
+  static ImageSkia CreateIconWithBadge(const ImageSkia& icon,
+                                       const ImageSkia& badge);
 
  private:
   ImageSkiaOperations();  // Class for scoping only.

@@ -33,10 +33,6 @@ extern const char kPrivetErrorInvalidXPrivetToken[];
 extern const char kPrivetErrorTimeout[];
 extern const char kPrivetErrorCancel[];
 
-extern const char kPrivetV3ErrorDeviceBusy[];
-extern const char kPrivetV3ErrorInvalidParams[];
-extern const char kPrivetV3ErrorSetupUnavailable[];
-
 extern const char kPrivetActionStart[];
 extern const char kPrivetActionGetClaimToken[];
 extern const char kPrivetActionComplete[];
@@ -46,30 +42,19 @@ extern const char kPrivetDefaultDeviceType[];
 
 extern const char kPrivetTypePrinter[];
 
-const double kPrivetMaximumTimeScaling = 1.2;
-
 extern const char kPrivetTxtKeyName[];
 extern const char kPrivetTxtKeyDescription[];
-extern const char kPrivetTxtKeyURL[];
 extern const char kPrivetTxtKeyVersion[];
 extern const char kPrivetTxtKeyType[];
 extern const char kPrivetTxtKeyID[];
-extern const char kPrivetTxtKeyConnectionState[];
 extern const char kPrivetTxtKeyGcdID[];
 extern const char kPrivetTxtKeyDevicesClass[];
-
-extern const char kPrivetConnectionStatusOnline[];
-extern const char kPrivetConnectionStatusOffline[];
-extern const char kPrivetConnectionStatusConnecting[];
-extern const char kPrivetConnectionStatusNotConfigured[];
 
 const int kPrivetDefaultTimeout = 15;
 
 const double kPrivetMaximumTimeRandomAddition = 0.2;
 
 const int kPrivetMinimumTimeout = 2;
-
-const int kAccountIndexUseOAuth2 = -1;
 
 }  // namespace cloud_print
 

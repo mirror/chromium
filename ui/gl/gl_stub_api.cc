@@ -15,6 +15,10 @@ void GenHelper(GLsizei count, GLuint* objects) {
 
 }  // anonymous namespace
 
+GLStubApi::GLStubApi() {}
+
+GLStubApi::~GLStubApi() = default;
+
 GLenum GLStubApi::glCheckFramebufferStatusEXTFn(GLenum target) {
   return GL_FRAMEBUFFER_COMPLETE;
 }
@@ -114,6 +118,7 @@ void GLStubApi::glGetIntegervFn(GLenum pname, GLint* params) {
       *params = 8;
       break;
     case GL_MAX_TEXTURE_SIZE:
+    case GL_MAX_RECTANGLE_TEXTURE_SIZE_ARB:
       *params = 2048;
       break;
     case GL_MAX_CUBE_MAP_TEXTURE_SIZE:
@@ -189,6 +194,50 @@ void GLStubApi::glGetProgramivFn(GLuint program, GLenum pname, GLint* params) {
   }
 }
 
+void GLStubApi::glGetQueryObjecti64vFn(GLuint id,
+                                       GLenum pname,
+                                       GLint64* params) {
+  switch (pname) {
+    case GL_QUERY_RESULT_AVAILABLE:
+      *params = GL_TRUE;
+      break;
+    default:
+      break;
+  }
+}
+
+void GLStubApi::glGetQueryObjectivFn(GLuint id, GLenum pname, GLint* params) {
+  switch (pname) {
+    case GL_QUERY_RESULT_AVAILABLE:
+      *params = GL_TRUE;
+      break;
+    default:
+      break;
+  }
+}
+
+void GLStubApi::glGetQueryObjectui64vFn(GLuint id,
+                                        GLenum pname,
+                                        GLuint64* params) {
+  switch (pname) {
+    case GL_QUERY_RESULT_AVAILABLE:
+      *params = GL_TRUE;
+      break;
+    default:
+      break;
+  }
+}
+
+void GLStubApi::glGetQueryObjectuivFn(GLuint id, GLenum pname, GLuint* params) {
+  switch (pname) {
+    case GL_QUERY_RESULT_AVAILABLE:
+      *params = GL_TRUE;
+      break;
+    default:
+      break;
+  }
+}
+
 void GLStubApi::glGetShaderivFn(GLuint shader, GLenum pname, GLint* params) {
   switch (pname) {
     case GL_COMPILE_STATUS:
@@ -205,9 +254,9 @@ const GLubyte* GLStubApi::glGetStringFn(GLenum name) {
     default:
       return reinterpret_cast<const GLubyte*>("");
     case GL_VERSION:
-      return reinterpret_cast<const GLubyte*>("OpenGL ES 3.0");
+      return reinterpret_cast<const GLubyte*>(version_.c_str());
     case GL_EXTENSIONS:
-      return reinterpret_cast<const GLubyte*>("GL_EXT_framebuffer_object");
+      return reinterpret_cast<const GLubyte*>(extensions_.c_str());
   }
 }
 

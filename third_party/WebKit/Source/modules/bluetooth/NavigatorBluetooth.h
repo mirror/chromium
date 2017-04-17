@@ -5,6 +5,7 @@
 #ifndef NavigatorBluetooth_h
 #define NavigatorBluetooth_h
 
+#include "core/frame/Navigator.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
 
@@ -13,25 +14,29 @@ namespace blink {
 class Bluetooth;
 class Navigator;
 
-class NavigatorBluetooth final : public GarbageCollected<NavigatorBluetooth>, public Supplement<Navigator> {
-    USING_GARBAGE_COLLECTED_MIXIN(NavigatorBluetooth);
-public:
-    // Gets, or creates, NavigatorBluetooth supplement on Navigator.
-    // See platform/Supplementable.h
-    static NavigatorBluetooth& from(Navigator&);
+class NavigatorBluetooth final : public GarbageCollected<NavigatorBluetooth>,
+                                 public Supplement<Navigator> {
+  USING_GARBAGE_COLLECTED_MIXIN(NavigatorBluetooth);
 
-    static Bluetooth* bluetooth(Navigator&);
-    Bluetooth* bluetooth();
+ public:
+  // Gets, or creates, NavigatorBluetooth supplement on Navigator.
+  // See platform/Supplementable.h
+  static NavigatorBluetooth& From(Navigator&);
 
-    DECLARE_TRACE();
+  static Bluetooth* bluetooth(Navigator&);
 
-private:
-    NavigatorBluetooth();
-    static const char* supplementName();
+  // IDL exposed interface:
+  Bluetooth* bluetooth();
 
-    Member<Bluetooth> m_bluetooth;
+  DECLARE_TRACE();
+
+ private:
+  explicit NavigatorBluetooth(Navigator&);
+  static const char* SupplementName();
+
+  Member<Bluetooth> bluetooth_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NavigatorBluetooth_h
+#endif  // NavigatorBluetooth_h

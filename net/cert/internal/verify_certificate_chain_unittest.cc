@@ -12,33 +12,29 @@ namespace net {
 
 namespace {
 
-class VerifyCertificateChainAssumingTrustedRootDelegate {
+class VerifyCertificateChainDelegate {
  public:
-  static void Verify(const ParsedCertificateList& chain,
-                     const ParsedCertificateList& roots,
-                     const der::GeneralizedTime& time,
-                     bool expected_result) {
-    TrustStore trust_store;
-    ASSERT_EQ(1U, roots.size());
-    trust_store.AddTrustedCertificate(roots[0]);
-
-    ParsedCertificateList full_chain(chain);
-    full_chain.push_back(roots[0]);
+  static void Verify(const VerifyCertChainTest& test,
+                     const std::string& test_file_path) {
+    ASSERT_TRUE(test.trust_anchor);
 
     SimpleSignaturePolicy signature_policy(1024);
 
-    bool result = VerifyCertificateChainAssumingTrustedRoot(
-        full_chain, trust_store, &signature_policy, time);
-
-    ASSERT_EQ(expected_result, result);
+    CertPathErrors errors;
+    bool result = VerifyCertificateChain(test.chain, test.trust_anchor.get(),
+                                         &signature_policy, test.time,
+                                         test.key_purpose, &errors);
+    EXPECT_EQ(test.expected_result, result);
+    EXPECT_EQ(test.expected_errors, errors.ToDebugString(test.chain))
+        << "Test file: " << test_file_path;
+    EXPECT_EQ(result, !errors.ContainsHighSeverityErrors());
   }
 };
 
 }  // namespace
 
-INSTANTIATE_TYPED_TEST_CASE_P(
-    VerifyCertificateChainAssumingTrustedRoot,
-    VerifyCertificateChainSingleRootTest,
-    VerifyCertificateChainAssumingTrustedRootDelegate);
+INSTANTIATE_TYPED_TEST_CASE_P(VerifyCertificateChain,
+                              VerifyCertificateChainSingleRootTest,
+                              VerifyCertificateChainDelegate);
 
 }  // namespace net

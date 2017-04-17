@@ -11,7 +11,10 @@ import android.os.IBinder;
 import android.support.customtabs.CustomTabsService;
 import android.support.customtabs.CustomTabsSessionToken;
 
+import org.chromium.chrome.browser.IntentHandler;
+import org.chromium.chrome.browser.IntentHandler.ExternalAppId;
 import org.chromium.chrome.browser.firstrun.FirstRunFlowSequencer;
+import org.chromium.chrome.browser.init.ProcessInitializationHandler;
 
 import java.util.List;
 
@@ -21,6 +24,12 @@ import java.util.List;
 public class CustomTabsConnectionService extends CustomTabsService {
     private CustomTabsConnection mConnection;
     private Intent mBindIntent;
+
+    @Override
+    public void onCreate() {
+        ProcessInitializationHandler.getInstance().initializePreNative();
+        super.onCreate();
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -67,6 +76,19 @@ public class CustomTabsConnectionService extends CustomTabsService {
     }
 
     @Override
+    protected boolean requestPostMessageChannel(CustomTabsSessionToken sessionToken,
+            Uri postMessageOrigin) {
+        return mConnection.requestPostMessageChannel(sessionToken, postMessageOrigin);
+    }
+
+    @Override
+    protected int postMessage(CustomTabsSessionToken sessionToken, String message,
+            Bundle extras) {
+        if (!isFirstRunDone()) return CustomTabsService.RESULT_FAILURE_DISALLOWED;
+        return mConnection.postMessage(sessionToken, message, extras);
+    }
+
+    @Override
     protected boolean cleanUpSession(CustomTabsSessionToken sessionToken) {
         mConnection.cleanUpSession(sessionToken);
         return super.cleanUpSession(sessionToken);
@@ -74,8 +96,13 @@ public class CustomTabsConnectionService extends CustomTabsService {
 
     private boolean isFirstRunDone() {
         if (mBindIntent == null) return true;
-        boolean firstRunNecessary = FirstRunFlowSequencer
-                .checkIfFirstRunIsNecessary(getApplicationContext(), mBindIntent) != null;
+        boolean showLightweightFre =
+                IntentHandler.determineExternalIntentSource(this.getPackageName(), mBindIntent)
+                != ExternalAppId.GSA;
+        boolean firstRunNecessary =
+                FirstRunFlowSequencer.checkIfFirstRunIsNecessary(
+                        getApplicationContext(), mBindIntent, showLightweightFre)
+                != null;
         if (!firstRunNecessary) {
             mBindIntent = null;
             return true;

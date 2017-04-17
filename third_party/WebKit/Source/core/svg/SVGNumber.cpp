@@ -35,118 +35,115 @@
 
 namespace blink {
 
-SVGNumber::SVGNumber(float value)
-    : m_value(value)
-{
+SVGNumber::SVGNumber(float value) : value_(value) {}
+
+SVGNumber* SVGNumber::Clone() const {
+  return Create(value_);
 }
 
-SVGNumber* SVGNumber::clone() const
-{
-    return create(m_value);
+String SVGNumber::ValueAsString() const {
+  return String::Number(value_);
 }
 
-String SVGNumber::valueAsString() const
-{
-    return String::number(m_value);
+template <typename CharType>
+SVGParsingError SVGNumber::Parse(const CharType*& ptr, const CharType* end) {
+  float value = 0;
+  const CharType* start = ptr;
+  if (!ParseNumber(ptr, end, value, kAllowLeadingAndTrailingWhitespace))
+    return SVGParsingError(SVGParseStatus::kExpectedNumber, ptr - start);
+  if (ptr != end)
+    return SVGParsingError(SVGParseStatus::kTrailingGarbage, ptr - start);
+  value_ = value;
+  return SVGParseStatus::kNoError;
 }
 
-template<typename CharType>
-SVGParsingError SVGNumber::parse(const CharType*& ptr, const CharType* end)
-{
-    float value = 0;
-    const CharType* start = ptr;
-    if (!parseNumber(ptr, end, value, AllowLeadingAndTrailingWhitespace))
-        return SVGParsingError(SVGParseStatus::ExpectedNumber, ptr - start);
-    if (ptr != end)
-        return SVGParsingError(SVGParseStatus::TrailingGarbage, ptr - start);
-    m_value = value;
-    return SVGParseStatus::NoError;
+SVGParsingError SVGNumber::SetValueAsString(const String& string) {
+  value_ = 0;
+
+  if (string.IsEmpty())
+    return SVGParseStatus::kNoError;
+
+  if (string.Is8Bit()) {
+    const LChar* ptr = string.Characters8();
+    const LChar* end = ptr + string.length();
+    return Parse(ptr, end);
+  }
+  const UChar* ptr = string.Characters16();
+  const UChar* end = ptr + string.length();
+  return Parse(ptr, end);
 }
 
-SVGParsingError SVGNumber::setValueAsString(const String& string)
-{
-    m_value = 0;
+void SVGNumber::Add(SVGPropertyBase* other, SVGElement*) {
+  SetValue(value_ + ToSVGNumber(other)->Value());
+}
 
-    if (string.isEmpty())
-        return SVGParseStatus::NoError;
+void SVGNumber::CalculateAnimatedValue(SVGAnimationElement* animation_element,
+                                       float percentage,
+                                       unsigned repeat_count,
+                                       SVGPropertyBase* from,
+                                       SVGPropertyBase* to,
+                                       SVGPropertyBase* to_at_end_of_duration,
+                                       SVGElement*) {
+  DCHECK(animation_element);
 
-    if (string.is8Bit()) {
-        const LChar* ptr = string.characters8();
-        const LChar* end = ptr + string.length();
-        return parse(ptr, end);
-    }
-    const UChar* ptr = string.characters16();
+  SVGNumber* from_number = ToSVGNumber(from);
+  SVGNumber* to_number = ToSVGNumber(to);
+  SVGNumber* to_at_end_of_duration_number = ToSVGNumber(to_at_end_of_duration);
+
+  animation_element->AnimateAdditiveNumber(
+      percentage, repeat_count, from_number->Value(), to_number->Value(),
+      to_at_end_of_duration_number->Value(), value_);
+}
+
+float SVGNumber::CalculateDistance(SVGPropertyBase* other, SVGElement*) {
+  return fabsf(value_ - ToSVGNumber(other)->Value());
+}
+
+SVGNumber* SVGNumberAcceptPercentage::Clone() const {
+  return Create(value_);
+}
+
+template <typename CharType>
+static SVGParsingError ParseNumberOrPercentage(const CharType*& ptr,
+                                               const CharType* end,
+                                               float& number) {
+  const CharType* start = ptr;
+  if (!ParseNumber(ptr, end, number, kAllowLeadingWhitespace))
+    return SVGParsingError(SVGParseStatus::kExpectedNumberOrPercentage,
+                           ptr - start);
+  if (ptr < end && *ptr == '%') {
+    number /= 100;
+    ptr++;
+  }
+  if (SkipOptionalSVGSpaces(ptr, end))
+    return SVGParsingError(SVGParseStatus::kTrailingGarbage, ptr - start);
+  return SVGParseStatus::kNoError;
+}
+
+SVGParsingError SVGNumberAcceptPercentage::SetValueAsString(
+    const String& string) {
+  value_ = 0;
+
+  if (string.IsEmpty())
+    return SVGParseStatus::kExpectedNumberOrPercentage;
+
+  float number = 0;
+  SVGParsingError error;
+  if (string.Is8Bit()) {
+    const LChar* ptr = string.Characters8();
+    const LChar* end = ptr + string.length();
+    error = ParseNumberOrPercentage(ptr, end, number);
+  } else {
+    const UChar* ptr = string.Characters16();
     const UChar* end = ptr + string.length();
-    return parse(ptr, end);
-}
-
-void SVGNumber::add(SVGPropertyBase* other, SVGElement*)
-{
-    setValue(m_value + toSVGNumber(other)->value());
-}
-
-void SVGNumber::calculateAnimatedValue(SVGAnimationElement* animationElement, float percentage, unsigned repeatCount, SVGPropertyBase* from, SVGPropertyBase* to, SVGPropertyBase* toAtEndOfDuration, SVGElement*)
-{
-    ASSERT(animationElement);
-
-    SVGNumber* fromNumber = toSVGNumber(from);
-    SVGNumber* toNumber = toSVGNumber(to);
-    SVGNumber* toAtEndOfDurationNumber = toSVGNumber(toAtEndOfDuration);
-
-    animationElement->animateAdditiveNumber(percentage, repeatCount, fromNumber->value(), toNumber->value(), toAtEndOfDurationNumber->value(), m_value);
-}
-
-float SVGNumber::calculateDistance(SVGPropertyBase* other, SVGElement*)
-{
-    return fabsf(m_value - toSVGNumber(other)->value());
-}
-
-SVGNumber* SVGNumberAcceptPercentage::clone() const
-{
-    return create(m_value);
-}
-
-template<typename CharType>
-static SVGParsingError parseNumberOrPercentage(const CharType*& ptr, const CharType* end, float& number)
-{
-    const CharType* start = ptr;
-    if (!parseNumber(ptr, end, number, AllowLeadingWhitespace))
-        return SVGParsingError(SVGParseStatus::ExpectedNumberOrPercentage, ptr - start);
-    if (ptr < end && *ptr == '%') {
-        number /= 100;
-        ptr++;
-    }
-    if (skipOptionalSVGSpaces(ptr, end))
-        return SVGParsingError(SVGParseStatus::TrailingGarbage, ptr - start);
-    return SVGParseStatus::NoError;
-}
-
-SVGParsingError SVGNumberAcceptPercentage::setValueAsString(const String& string)
-{
-    m_value = 0;
-
-    if (string.isEmpty())
-        return SVGParseStatus::ExpectedNumberOrPercentage;
-
-    float number = 0;
-    SVGParsingError error;
-    if (string.is8Bit()) {
-        const LChar* ptr = string.characters8();
-        const LChar* end = ptr + string.length();
-        error = parseNumberOrPercentage(ptr, end, number);
-    } else {
-        const UChar* ptr = string.characters16();
-        const UChar* end = ptr + string.length();
-        error = parseNumberOrPercentage(ptr, end, number);
-    }
-    if (error == SVGParseStatus::NoError)
-        m_value = number;
-    return error;
+    error = ParseNumberOrPercentage(ptr, end, number);
+  }
+  if (error == SVGParseStatus::kNoError)
+    value_ = number;
+  return error;
 }
 
 SVGNumberAcceptPercentage::SVGNumberAcceptPercentage(float value)
-    : SVGNumber(value)
-{
-}
+    : SVGNumber(value) {}
 
-} // namespace blink
+}  // namespace blink

@@ -34,38 +34,7 @@ import time
 from webkitpy.layout_tests.models import test_expectations
 from webkitpy.layout_tests.models import test_failures
 
-
 _log = logging.getLogger(__name__)
-
-OK_EXIT_STATUS = 0
-
-# This matches what the shell does on POSIX.
-INTERRUPTED_EXIT_STATUS = signal.SIGINT + 128
-
-# POSIX limits status codes to 0-255. Normally run-webkit-tests returns the number
-# of tests that failed. These indicate exceptional conditions triggered by the
-# script itself, so we count backwards from 255 (aka -1) to enumerate them.
-#
-# FIXME: crbug.com/357866. We really shouldn't return the number of failures
-# in the exit code at all.
-EARLY_EXIT_STATUS = 251
-SYS_DEPS_EXIT_STATUS = 252
-NO_TESTS_EXIT_STATUS = 253
-NO_DEVICES_EXIT_STATUS = 254
-UNEXPECTED_ERROR_EXIT_STATUS = 255
-
-ERROR_CODES = (
-    INTERRUPTED_EXIT_STATUS,
-    EARLY_EXIT_STATUS,
-    SYS_DEPS_EXIT_STATUS,
-    NO_TESTS_EXIT_STATUS,
-    NO_DEVICES_EXIT_STATUS,
-    UNEXPECTED_ERROR_EXIT_STATUS,
-)
-
-# In order to avoid colliding with the above codes, we put a ceiling on
-# the value returned by num_regressions
-MAX_FAILURES_EXIT_STATUS = 101
 
 
 class TestRunException(Exception):
@@ -160,7 +129,10 @@ def _interpret_test_failures(failures):
     if test_failures.FailureMissingResult in failure_types:
         test_dict['is_missing_text'] = True
 
-    if test_failures.FailureMissingImage in failure_types or test_failures.FailureMissingImageHash in failure_types:
+    if (test_failures.FailureMissingImage in failure_types or
+            test_failures.FailureMissingImageHash in failure_types or
+            test_failures.FailureReftestNoImageGenerated in failure_types or
+            test_failures.FailureReftestNoReferenceImageGenerated in failure_types):
         test_dict['is_missing_image'] = True
 
     if test_failures.FailureTestHarnessAssertion in failure_types:
@@ -276,7 +248,7 @@ def summarize_results(port_obj, expectations, initial_results,
             test_dict.update(reftest_type=list(result.reftest_type))
 
         test_dict['expected'] = expected
-        test_dict['actual'] = " ".join(actual)
+        test_dict['actual'] = ' '.join(actual)
 
         def is_expected(actual_result):
             return expectations.matches_an_expected_result(test_name, actual_result,
@@ -328,24 +300,25 @@ def summarize_results(port_obj, expectations, initial_results,
     # checking total number of results vs. total number of tests?)
     results['interrupted'] = initial_results.interrupted
     results['layout_tests_dir'] = port_obj.layout_tests_dir()
-    results['has_wdiff'] = port_obj.wdiff_available()
-    results['has_pretty_patch'] = port_obj.pretty_patch_available()
     results['pixel_tests_enabled'] = port_obj.get_option('pixel_tests')
     results['seconds_since_epoch'] = int(time.time())
     results['build_number'] = port_obj.get_option('build_number')
     results['builder_name'] = port_obj.get_option('builder_name')
+    if port_obj.get_option('order') == 'random':
+        results['random_order_seed'] = port_obj.get_option('seed')
+    results['path_delimiter'] = '/'
 
     # Don't do this by default since it takes >100ms.
     # It's only used for rebaselining and uploading data to the flakiness dashboard.
     results['chromium_revision'] = ''
     if port_obj.get_option('builder_name'):
         path = port_obj.repository_path()
-        scm = port_obj.host.scm_for_path(path)
-        if scm:
-            results['chromium_revision'] = str(scm.commit_position(path))
+        git = port_obj.host.git(path=path)
+        if git:
+            results['chromium_revision'] = str(git.commit_position(path))
         else:
-            _log.warn('Failed to determine chromium commit position for %s, '
-                      'leaving "chromium_revision" key blank in full_results.json.'
-                      % path)
+            _log.warning('Failed to determine chromium commit position for %s, '
+                         'leaving "chromium_revision" key blank in full_results.json.',
+                         path)
 
     return results

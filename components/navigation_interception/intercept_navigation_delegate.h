@@ -11,8 +11,6 @@
 #include "base/macros.h"
 #include "base/supports_user_data.h"
 
-class GURL;
-
 namespace content {
 class NavigationHandle;
 class NavigationThrottle;
@@ -74,8 +72,6 @@ class InterceptNavigationDelegate : public base::SupportsUserData::Data {
 
   DISALLOW_COPY_AND_ASSIGN(InterceptNavigationDelegate);
 };
-
-bool RegisterInterceptNavigationDelegate(JNIEnv* env);
 
 }  // namespace navigation_interception
 

@@ -2,7 +2,8 @@
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Dirk Mueller ( mueller@kde.org )
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights
+ * reserved.
  * Copyright (C) 2006 Andrew Wellington (proton@wiretapped.net)
  *
  * This library is free software; you can redistribute it and/or
@@ -32,161 +33,152 @@ using namespace WTF;
 namespace blink {
 
 class CalculationValueHandleMap {
-    USING_FAST_MALLOC(CalculationValueHandleMap);
-    WTF_MAKE_NONCOPYABLE(CalculationValueHandleMap);
-public:
-    CalculationValueHandleMap()
-        : m_index(1)
-    {
+  USING_FAST_MALLOC(CalculationValueHandleMap);
+  WTF_MAKE_NONCOPYABLE(CalculationValueHandleMap);
+
+ public:
+  CalculationValueHandleMap() : index_(1) {}
+
+  int insert(PassRefPtr<CalculationValue> calc_value) {
+    ASSERT(index_);
+    // FIXME calc(): https://bugs.webkit.org/show_bug.cgi?id=80489
+    // This monotonically increasing handle generation scheme is potentially
+    // wasteful of the handle space. Consider reusing empty handles.
+    while (map_.Contains(index_))
+      index_++;
+
+    map_.Set(index_, std::move(calc_value));
+
+    return index_;
+  }
+
+  void Remove(int index) {
+    ASSERT(map_.Contains(index));
+    map_.erase(index);
+  }
+
+  CalculationValue& Get(int index) {
+    ASSERT(map_.Contains(index));
+    return *map_.at(index);
+  }
+
+  void DecrementRef(int index) {
+    ASSERT(map_.Contains(index));
+    CalculationValue* value = map_.at(index);
+    if (value->HasOneRef()) {
+      // Force the CalculationValue destructor early to avoid a potential
+      // recursive call inside HashMap remove().
+      map_.Set(index, nullptr);
+      map_.erase(index);
+    } else {
+      value->Deref();
     }
+  }
 
-    int insert(PassRefPtr<CalculationValue> calcValue)
-    {
-        ASSERT(m_index);
-        // FIXME calc(): https://bugs.webkit.org/show_bug.cgi?id=80489
-        // This monotonically increasing handle generation scheme is potentially wasteful
-        // of the handle space. Consider reusing empty handles.
-        while (m_map.contains(m_index))
-            m_index++;
-
-        m_map.set(m_index, calcValue);
-
-        return m_index;
-    }
-
-    void remove(int index)
-    {
-        ASSERT(m_map.contains(index));
-        m_map.remove(index);
-    }
-
-    CalculationValue& get(int index)
-    {
-        ASSERT(m_map.contains(index));
-        return *m_map.get(index);
-    }
-
-    void decrementRef(int index)
-    {
-        ASSERT(m_map.contains(index));
-        CalculationValue* value = m_map.get(index);
-        if (value->hasOneRef()) {
-            // Force the CalculationValue destructor early to avoid a potential recursive call inside HashMap remove().
-            m_map.set(index, nullptr);
-            m_map.remove(index);
-        } else {
-            value->deref();
-        }
-    }
-
-private:
-    int m_index;
-    HashMap<int, RefPtr<CalculationValue>> m_map;
+ private:
+  int index_;
+  HashMap<int, RefPtr<CalculationValue>> map_;
 };
 
-static CalculationValueHandleMap& calcHandles()
-{
-    DEFINE_STATIC_LOCAL(CalculationValueHandleMap, handleMap, ());
-    return handleMap;
+static CalculationValueHandleMap& CalcHandles() {
+  DEFINE_STATIC_LOCAL(CalculationValueHandleMap, handle_map, ());
+  return handle_map;
 }
 
 Length::Length(PassRefPtr<CalculationValue> calc)
-    : m_quirk(false)
-    , m_type(Calculated)
-    , m_isFloat(false)
-{
-    m_intValue = calcHandles().insert(calc);
+    : quirk_(false), type_(kCalculated), is_float_(false) {
+  int_value_ = CalcHandles().insert(std::move(calc));
 }
 
-Length Length::blendMixedTypes(const Length& from, double progress, ValueRange range) const
-{
-    ASSERT(from.isSpecified());
-    ASSERT(isSpecified());
-    PixelsAndPercent fromPixelsAndPercent = from.getPixelsAndPercent();
-    PixelsAndPercent toPixelsAndPercent = getPixelsAndPercent();
-    const float pixels = blink::blend(fromPixelsAndPercent.pixels, toPixelsAndPercent.pixels, progress);
-    const float percent = blink::blend(fromPixelsAndPercent.percent, toPixelsAndPercent.percent, progress);
-    return Length(CalculationValue::create(PixelsAndPercent(pixels, percent), range));
+Length Length::BlendMixedTypes(const Length& from,
+                               double progress,
+                               ValueRange range) const {
+  ASSERT(from.IsSpecified());
+  ASSERT(IsSpecified());
+  PixelsAndPercent from_pixels_and_percent = from.GetPixelsAndPercent();
+  PixelsAndPercent to_pixels_and_percent = GetPixelsAndPercent();
+  const float pixels = blink::Blend(from_pixels_and_percent.pixels,
+                                    to_pixels_and_percent.pixels, progress);
+  const float percent = blink::Blend(from_pixels_and_percent.percent,
+                                     to_pixels_and_percent.percent, progress);
+  return Length(
+      CalculationValue::Create(PixelsAndPercent(pixels, percent), range));
 }
 
-PixelsAndPercent Length::getPixelsAndPercent() const
-{
-    switch (type()) {
-    case Fixed:
-        return PixelsAndPercent(value(), 0);
-    case Percent:
-        return PixelsAndPercent(0, value());
-    case Calculated:
-        return getCalculationValue().getPixelsAndPercent();
+PixelsAndPercent Length::GetPixelsAndPercent() const {
+  switch (GetType()) {
+    case kFixed:
+      return PixelsAndPercent(Value(), 0);
+    case kPercent:
+      return PixelsAndPercent(0, Value());
+    case kCalculated:
+      return GetCalculationValue().GetPixelsAndPercent();
     default:
-        ASSERT_NOT_REACHED();
-        return PixelsAndPercent(0, 0);
-    }
+      ASSERT_NOT_REACHED();
+      return PixelsAndPercent(0, 0);
+  }
 }
 
-Length Length::subtractFromOneHundredPercent() const
-{
-    PixelsAndPercent result = getPixelsAndPercent();
-    result.pixels = -result.pixels;
-    result.percent = 100 - result.percent;
-    if (result.pixels && result.percent)
-        return Length(CalculationValue::create(result, ValueRangeAll));
-    if (result.percent)
-        return Length(result.percent, Percent);
-    return Length(result.pixels, Fixed);
+Length Length::SubtractFromOneHundredPercent() const {
+  PixelsAndPercent result = GetPixelsAndPercent();
+  result.pixels = -result.pixels;
+  result.percent = 100 - result.percent;
+  if (result.pixels && result.percent)
+    return Length(CalculationValue::Create(result, kValueRangeAll));
+  if (result.percent)
+    return Length(result.percent, kPercent);
+  return Length(result.pixels, kFixed);
 }
 
-Length Length::zoom(double factor) const
-{
-    switch (type()) {
-    case Fixed:
-        return Length(getFloatValue() * factor, Fixed);
-    case Calculated: {
-        PixelsAndPercent result = getPixelsAndPercent();
-        result.pixels *= factor;
-        return Length(CalculationValue::create(result, getCalculationValue().getValueRange()));
+Length Length::Zoom(double factor) const {
+  switch (GetType()) {
+    case kFixed:
+      return Length(GetFloatValue() * factor, kFixed);
+    case kCalculated: {
+      PixelsAndPercent result = GetPixelsAndPercent();
+      result.pixels *= factor;
+      return Length(CalculationValue::Create(
+          result, GetCalculationValue().GetValueRange()));
     }
     default:
-        return *this;
-    }
+      return *this;
+  }
 }
 
-CalculationValue& Length::getCalculationValue() const
-{
-    ASSERT(isCalculated());
-    return calcHandles().get(calculationHandle());
+CalculationValue& Length::GetCalculationValue() const {
+  ASSERT(IsCalculated());
+  return CalcHandles().Get(CalculationHandle());
 }
 
-void Length::incrementCalculatedRef() const
-{
-    ASSERT(isCalculated());
-    getCalculationValue().ref();
+void Length::IncrementCalculatedRef() const {
+  ASSERT(IsCalculated());
+  GetCalculationValue().Ref();
 }
 
-void Length::decrementCalculatedRef() const
-{
-    ASSERT(isCalculated());
-    calcHandles().decrementRef(calculationHandle());
+void Length::DecrementCalculatedRef() const {
+  ASSERT(IsCalculated());
+  CalcHandles().DecrementRef(CalculationHandle());
 }
 
-float Length::nonNanCalculatedValue(LayoutUnit maxValue) const
-{
-    ASSERT(isCalculated());
-    float result = getCalculationValue().evaluate(maxValue.toFloat());
-    if (std::isnan(result))
-        return 0;
-    return result;
+float Length::NonNanCalculatedValue(LayoutUnit max_value) const {
+  ASSERT(IsCalculated());
+  float result = GetCalculationValue().Evaluate(max_value.ToFloat());
+  if (std::isnan(result))
+    return 0;
+  return result;
 }
 
-bool Length::isCalculatedEqual(const Length& o) const
-{
-    return isCalculated() && (&getCalculationValue() == &o.getCalculationValue() || getCalculationValue() == o.getCalculationValue());
+bool Length::IsCalculatedEqual(const Length& o) const {
+  return IsCalculated() &&
+         (&GetCalculationValue() == &o.GetCalculationValue() ||
+          GetCalculationValue() == o.GetCalculationValue());
 }
 
 struct SameSizeAsLength {
-    int32_t value;
-    int32_t metaData;
+  int32_t value;
+  int32_t meta_data;
 };
-static_assert(sizeof(Length) == sizeof(SameSizeAsLength), "length should stay small");
+static_assert(sizeof(Length) == sizeof(SameSizeAsLength),
+              "length should stay small");
 
-} // namespace blink
+}  // namespace blink

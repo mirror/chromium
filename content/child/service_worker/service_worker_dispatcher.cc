@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/lazy_instance.h"
+#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/threading/thread_local.h"
@@ -24,6 +25,7 @@
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/common/content_constants.h"
 #include "third_party/WebKit/public/platform/WebString.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/WebNavigationPreloadState.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProviderClient.h"
 #include "url/url_constants.h"
 
@@ -79,6 +81,12 @@ void ServiceWorkerDispatcher::OnMessageReceived(const IPC::Message& msg) {
                         OnDidGetRegistrations)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_DidGetRegistrationForReady,
                         OnDidGetRegistrationForReady)
+    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_DidEnableNavigationPreload,
+                        OnDidEnableNavigationPreload)
+    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_DidGetNavigationPreloadState,
+                        OnDidGetNavigationPreloadState)
+    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_DidSetNavigationPreloadHeader,
+                        OnDidSetNavigationPreloadHeader)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_ServiceWorkerRegistrationError,
                         OnRegistrationError)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_ServiceWorkerUpdateError,
@@ -89,6 +97,12 @@ void ServiceWorkerDispatcher::OnMessageReceived(const IPC::Message& msg) {
                         OnGetRegistrationError)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_ServiceWorkerGetRegistrationsError,
                         OnGetRegistrationsError)
+    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_EnableNavigationPreloadError,
+                        OnEnableNavigationPreloadError)
+    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_GetNavigationPreloadStateError,
+                        OnGetNavigationPreloadStateError)
+    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_SetNavigationPreloadHeaderError,
+                        OnSetNavigationPreloadHeaderError)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_ServiceWorkerStateChanged,
                         OnServiceWorkerStateChanged)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_SetVersionAttributes,
@@ -99,6 +113,7 @@ void ServiceWorkerDispatcher::OnMessageReceived(const IPC::Message& msg) {
                         OnSetControllerServiceWorker)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_MessageToDocument,
                         OnPostMessage)
+    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_CountFeature, OnCountFeature)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   DCHECK(handled) << "Unhandled message:" << msg.type();
@@ -108,22 +123,20 @@ void ServiceWorkerDispatcher::RegisterServiceWorker(
     int provider_id,
     const GURL& pattern,
     const GURL& script_url,
-    WebServiceWorkerRegistrationCallbacks* callbacks) {
+    std::unique_ptr<WebServiceWorkerRegistrationCallbacks> callbacks) {
   DCHECK(callbacks);
 
   if (pattern.possibly_invalid_spec().size() > url::kMaxURLChars ||
       script_url.possibly_invalid_spec().size() > url::kMaxURLChars) {
-    std::unique_ptr<WebServiceWorkerRegistrationCallbacks> owned_callbacks(
-        callbacks);
     std::string error_message(kServiceWorkerRegisterErrorPrefix);
     error_message += "The provided scriptURL or scope is too long.";
-    callbacks->onError(
-        WebServiceWorkerError(WebServiceWorkerError::ErrorTypeSecurity,
-                              blink::WebString::fromUTF8(error_message)));
+    callbacks->OnError(
+        WebServiceWorkerError(WebServiceWorkerError::kErrorTypeSecurity,
+                              blink::WebString::FromASCII(error_message)));
     return;
   }
 
-  int request_id = pending_registration_callbacks_.Add(callbacks);
+  int request_id = pending_registration_callbacks_.Add(std::move(callbacks));
   TRACE_EVENT_ASYNC_BEGIN2("ServiceWorker",
                            "ServiceWorkerDispatcher::RegisterServiceWorker",
                            request_id,
@@ -136,9 +149,9 @@ void ServiceWorkerDispatcher::RegisterServiceWorker(
 void ServiceWorkerDispatcher::UpdateServiceWorker(
     int provider_id,
     int64_t registration_id,
-    WebServiceWorkerUpdateCallbacks* callbacks) {
+    std::unique_ptr<WebServiceWorkerUpdateCallbacks> callbacks) {
   DCHECK(callbacks);
-  int request_id = pending_update_callbacks_.Add(callbacks);
+  int request_id = pending_update_callbacks_.Add(std::move(callbacks));
   thread_safe_sender_->Send(new ServiceWorkerHostMsg_UpdateServiceWorker(
       CurrentWorkerId(), request_id, provider_id, registration_id));
 }
@@ -146,9 +159,9 @@ void ServiceWorkerDispatcher::UpdateServiceWorker(
 void ServiceWorkerDispatcher::UnregisterServiceWorker(
     int provider_id,
     int64_t registration_id,
-    WebServiceWorkerUnregistrationCallbacks* callbacks) {
+    std::unique_ptr<WebServiceWorkerUnregistrationCallbacks> callbacks) {
   DCHECK(callbacks);
-  int request_id = pending_unregistration_callbacks_.Add(callbacks);
+  int request_id = pending_unregistration_callbacks_.Add(std::move(callbacks));
   TRACE_EVENT_ASYNC_BEGIN1("ServiceWorker",
                            "ServiceWorkerDispatcher::UnregisterServiceWorker",
                            request_id, "Registration ID", registration_id);
@@ -159,21 +172,20 @@ void ServiceWorkerDispatcher::UnregisterServiceWorker(
 void ServiceWorkerDispatcher::GetRegistration(
     int provider_id,
     const GURL& document_url,
-    WebServiceWorkerGetRegistrationCallbacks* callbacks) {
+    std::unique_ptr<WebServiceWorkerGetRegistrationCallbacks> callbacks) {
   DCHECK(callbacks);
 
   if (document_url.possibly_invalid_spec().size() > url::kMaxURLChars) {
-    std::unique_ptr<WebServiceWorkerGetRegistrationCallbacks> owned_callbacks(
-        callbacks);
     std::string error_message(kServiceWorkerGetRegistrationErrorPrefix);
     error_message += "The provided documentURL is too long.";
-    callbacks->onError(
-        WebServiceWorkerError(WebServiceWorkerError::ErrorTypeSecurity,
-                              blink::WebString::fromUTF8(error_message)));
+    callbacks->OnError(
+        WebServiceWorkerError(WebServiceWorkerError::kErrorTypeSecurity,
+                              blink::WebString::FromASCII(error_message)));
     return;
   }
 
-  int request_id = pending_get_registration_callbacks_.Add(callbacks);
+  int request_id =
+      pending_get_registration_callbacks_.Add(std::move(callbacks));
   TRACE_EVENT_ASYNC_BEGIN1("ServiceWorker",
                            "ServiceWorkerDispatcher::GetRegistration",
                            request_id,
@@ -184,10 +196,12 @@ void ServiceWorkerDispatcher::GetRegistration(
 
 void ServiceWorkerDispatcher::GetRegistrations(
     int provider_id,
-    WebServiceWorkerGetRegistrationsCallbacks* callbacks) {
+    std::unique_ptr<WebServiceWorkerGetRegistrationsCallbacks> callbacks) {
   DCHECK(callbacks);
 
-  int request_id = pending_get_registrations_callbacks_.Add(callbacks);
+  int request_id =
+      pending_get_registrations_callbacks_.Add(std::move(callbacks));
+
   TRACE_EVENT_ASYNC_BEGIN0("ServiceWorker",
                            "ServiceWorkerDispatcher::GetRegistrations",
                            request_id);
@@ -197,8 +211,9 @@ void ServiceWorkerDispatcher::GetRegistrations(
 
 void ServiceWorkerDispatcher::GetRegistrationForReady(
     int provider_id,
-    WebServiceWorkerGetRegistrationForReadyCallbacks* callbacks) {
-  int request_id = get_for_ready_callbacks_.Add(callbacks);
+    std::unique_ptr<WebServiceWorkerGetRegistrationForReadyCallbacks>
+        callbacks) {
+  int request_id = get_for_ready_callbacks_.Add(std::move(callbacks));
   TRACE_EVENT_ASYNC_BEGIN0("ServiceWorker",
                            "ServiceWorkerDispatcher::GetRegistrationForReady",
                            request_id);
@@ -206,18 +221,54 @@ void ServiceWorkerDispatcher::GetRegistrationForReady(
       CurrentWorkerId(), request_id, provider_id));
 }
 
+void ServiceWorkerDispatcher::EnableNavigationPreload(
+    int provider_id,
+    int64_t registration_id,
+    bool enable,
+    std::unique_ptr<WebEnableNavigationPreloadCallbacks> callbacks) {
+  DCHECK(callbacks);
+  int request_id =
+      enable_navigation_preload_callbacks_.Add(std::move(callbacks));
+  thread_safe_sender_->Send(new ServiceWorkerHostMsg_EnableNavigationPreload(
+      CurrentWorkerId(), request_id, provider_id, registration_id, enable));
+}
+
+void ServiceWorkerDispatcher::GetNavigationPreloadState(
+    int provider_id,
+    int64_t registration_id,
+    std::unique_ptr<WebGetNavigationPreloadStateCallbacks> callbacks) {
+  DCHECK(callbacks);
+  int request_id =
+      get_navigation_preload_state_callbacks_.Add(std::move(callbacks));
+  thread_safe_sender_->Send(new ServiceWorkerHostMsg_GetNavigationPreloadState(
+      CurrentWorkerId(), request_id, provider_id, registration_id));
+}
+
+void ServiceWorkerDispatcher::SetNavigationPreloadHeader(
+    int provider_id,
+    int64_t registration_id,
+    const std::string& value,
+    std::unique_ptr<WebSetNavigationPreloadHeaderCallbacks> callbacks) {
+  DCHECK(callbacks);
+  int request_id =
+      set_navigation_preload_header_callbacks_.Add(std::move(callbacks));
+  thread_safe_sender_->Send(new ServiceWorkerHostMsg_SetNavigationPreloadHeader(
+      CurrentWorkerId(), request_id, provider_id, registration_id, value));
+}
+
 void ServiceWorkerDispatcher::AddProviderContext(
     ServiceWorkerProviderContext* provider_context) {
   DCHECK(provider_context);
   int provider_id = provider_context->provider_id();
-  DCHECK(!ContainsKey(provider_contexts_, provider_id));
+  DCHECK(!base::ContainsKey(provider_contexts_, provider_id));
   provider_contexts_[provider_id] = provider_context;
 }
 
 void ServiceWorkerDispatcher::RemoveProviderContext(
     ServiceWorkerProviderContext* provider_context) {
   DCHECK(provider_context);
-  DCHECK(ContainsKey(provider_contexts_, provider_context->provider_id()));
+  DCHECK(
+      base::ContainsKey(provider_contexts_, provider_context->provider_id()));
   provider_contexts_.erase(provider_context->provider_id());
 }
 
@@ -225,13 +276,13 @@ void ServiceWorkerDispatcher::AddProviderClient(
     int provider_id,
     blink::WebServiceWorkerProviderClient* client) {
   DCHECK(client);
-  DCHECK(!ContainsKey(provider_clients_, provider_id));
+  DCHECK(!base::ContainsKey(provider_clients_, provider_id));
   provider_clients_[provider_id] = client;
 }
 
 void ServiceWorkerDispatcher::RemoveProviderClient(int provider_id) {
   // This could be possibly called multiple times to ensure termination.
-  if (ContainsKey(provider_clients_, provider_id))
+  if (base::ContainsKey(provider_clients_, provider_id))
     provider_clients_.erase(provider_id);
 }
 
@@ -384,7 +435,7 @@ void ServiceWorkerDispatcher::OnRegistered(
   if (!callbacks)
     return;
 
-  callbacks->onSuccess(WebServiceWorkerRegistrationImpl::CreateHandle(
+  callbacks->OnSuccess(WebServiceWorkerRegistrationImpl::CreateHandle(
       GetOrAdoptRegistration(info, attrs)));
   pending_registration_callbacks_.Remove(request_id);
 }
@@ -402,7 +453,7 @@ void ServiceWorkerDispatcher::OnUpdated(int thread_id, int request_id) {
   if (!callbacks)
     return;
 
-  callbacks->onSuccess();
+  callbacks->OnSuccess();
   pending_update_callbacks_.Remove(request_id);
 }
 
@@ -422,7 +473,7 @@ void ServiceWorkerDispatcher::OnUnregistered(int thread_id,
   DCHECK(callbacks);
   if (!callbacks)
     return;
-  callbacks->onSuccess(is_success);
+  callbacks->OnSuccess(is_success);
   pending_unregistration_callbacks_.Remove(request_id);
 }
 
@@ -449,7 +500,7 @@ void ServiceWorkerDispatcher::OnDidGetRegistration(
   if (info.handle_id != kInvalidServiceWorkerRegistrationHandleId)
     registration = GetOrAdoptRegistration(info, attrs);
 
-  callbacks->onSuccess(
+  callbacks->OnSuccess(
       WebServiceWorkerRegistrationImpl::CreateHandle(registration));
   pending_get_registration_callbacks_.Remove(request_id);
 }
@@ -474,24 +525,18 @@ void ServiceWorkerDispatcher::OnDidGetRegistrations(
   if (!callbacks)
     return;
 
-  typedef blink::WebVector<blink::WebServiceWorkerRegistration::Handle*>
-      WebServiceWorkerRegistrationArray;
-  std::unique_ptr<WebServiceWorkerRegistrationArray> registrations(
-      new WebServiceWorkerRegistrationArray(infos.size()));
+  using WebServiceWorkerRegistrationHandles =
+      WebServiceWorkerProvider::WebServiceWorkerRegistrationHandles;
+  std::unique_ptr<WebServiceWorkerRegistrationHandles> registrations =
+      base::MakeUnique<WebServiceWorkerRegistrationHandles>(infos.size());
   for (size_t i = 0; i < infos.size(); ++i) {
-    if (infos[i].handle_id != kInvalidServiceWorkerHandleId) {
-      ServiceWorkerRegistrationObjectInfo info(infos[i]);
-      ServiceWorkerVersionAttributes attr(attrs[i]);
-
-      // WebServiceWorkerGetRegistrationsCallbacks cannot receive an array of
-      // std::unique_ptr<WebServiceWorkerRegistration::Handle>, so create leaky
-      // handles instead.
-      (*registrations)[i] = WebServiceWorkerRegistrationImpl::CreateLeakyHandle(
-          GetOrAdoptRegistration(info, attr));
-    }
+    if (infos[i].handle_id == kInvalidServiceWorkerHandleId)
+      continue;
+    (*registrations)[i] = WebServiceWorkerRegistrationImpl::CreateHandle(
+        GetOrAdoptRegistration(infos[i], attrs[i]));
   }
 
-  callbacks->onSuccess(std::move(registrations));
+  callbacks->OnSuccess(std::move(registrations));
   pending_get_registrations_callbacks_.Remove(request_id);
 }
 
@@ -514,9 +559,45 @@ void ServiceWorkerDispatcher::OnDidGetRegistrationForReady(
   if (!callbacks)
     return;
 
-  callbacks->onSuccess(WebServiceWorkerRegistrationImpl::CreateHandle(
+  callbacks->OnSuccess(WebServiceWorkerRegistrationImpl::CreateHandle(
       GetOrAdoptRegistration(info, attrs)));
   get_for_ready_callbacks_.Remove(request_id);
+}
+
+void ServiceWorkerDispatcher::OnDidEnableNavigationPreload(int thread_id,
+                                                           int request_id) {
+  WebEnableNavigationPreloadCallbacks* callbacks =
+      enable_navigation_preload_callbacks_.Lookup(request_id);
+  DCHECK(callbacks);
+  if (!callbacks)
+    return;
+  callbacks->OnSuccess();
+  enable_navigation_preload_callbacks_.Remove(request_id);
+}
+
+void ServiceWorkerDispatcher::OnDidGetNavigationPreloadState(
+    int thread_id,
+    int request_id,
+    const NavigationPreloadState& state) {
+  WebGetNavigationPreloadStateCallbacks* callbacks =
+      get_navigation_preload_state_callbacks_.Lookup(request_id);
+  DCHECK(callbacks);
+  if (!callbacks)
+    return;
+  callbacks->OnSuccess(blink::WebNavigationPreloadState(
+      state.enabled, blink::WebString::FromUTF8(state.header)));
+  get_navigation_preload_state_callbacks_.Remove(request_id);
+}
+
+void ServiceWorkerDispatcher::OnDidSetNavigationPreloadHeader(int thread_id,
+                                                              int request_id) {
+  WebSetNavigationPreloadHeaderCallbacks* callbacks =
+      set_navigation_preload_header_callbacks_.Lookup(request_id);
+  DCHECK(callbacks);
+  if (!callbacks)
+    return;
+  callbacks->OnSuccess();
+  set_navigation_preload_header_callbacks_.Remove(request_id);
 }
 
 void ServiceWorkerDispatcher::OnRegistrationError(
@@ -537,7 +618,8 @@ void ServiceWorkerDispatcher::OnRegistrationError(
   if (!callbacks)
     return;
 
-  callbacks->onError(WebServiceWorkerError(error_type, message));
+  callbacks->OnError(
+      WebServiceWorkerError(error_type, blink::WebString::FromUTF16(message)));
   pending_registration_callbacks_.Remove(request_id);
 }
 
@@ -558,7 +640,8 @@ void ServiceWorkerDispatcher::OnUpdateError(
   if (!callbacks)
     return;
 
-  callbacks->onError(WebServiceWorkerError(error_type, message));
+  callbacks->OnError(
+      WebServiceWorkerError(error_type, blink::WebString::FromUTF16(message)));
   pending_update_callbacks_.Remove(request_id);
 }
 
@@ -581,7 +664,8 @@ void ServiceWorkerDispatcher::OnUnregistrationError(
   if (!callbacks)
     return;
 
-  callbacks->onError(WebServiceWorkerError(error_type, message));
+  callbacks->OnError(
+      WebServiceWorkerError(error_type, blink::WebString::FromUTF16(message)));
   pending_unregistration_callbacks_.Remove(request_id);
 }
 
@@ -604,7 +688,8 @@ void ServiceWorkerDispatcher::OnGetRegistrationError(
   if (!callbacks)
     return;
 
-  callbacks->onError(WebServiceWorkerError(error_type, message));
+  callbacks->OnError(
+      WebServiceWorkerError(error_type, blink::WebString::FromUTF16(message)));
   pending_get_registration_callbacks_.Remove(request_id);
 }
 
@@ -627,8 +712,54 @@ void ServiceWorkerDispatcher::OnGetRegistrationsError(
   if (!callbacks)
     return;
 
-  callbacks->onError(WebServiceWorkerError(error_type, message));
+  callbacks->OnError(
+      WebServiceWorkerError(error_type, blink::WebString::FromUTF16(message)));
   pending_get_registrations_callbacks_.Remove(request_id);
+}
+
+void ServiceWorkerDispatcher::OnEnableNavigationPreloadError(
+    int thread_id,
+    int request_id,
+    WebServiceWorkerError::ErrorType error_type,
+    const std::string& message) {
+  WebEnableNavigationPreloadCallbacks* callbacks =
+      enable_navigation_preload_callbacks_.Lookup(request_id);
+  DCHECK(callbacks);
+  if (!callbacks)
+    return;
+  callbacks->OnError(
+      WebServiceWorkerError(error_type, blink::WebString::FromUTF8(message)));
+  enable_navigation_preload_callbacks_.Remove(request_id);
+}
+
+void ServiceWorkerDispatcher::OnGetNavigationPreloadStateError(
+    int thread_id,
+    int request_id,
+    WebServiceWorkerError::ErrorType error_type,
+    const std::string& message) {
+  WebGetNavigationPreloadStateCallbacks* callbacks =
+      get_navigation_preload_state_callbacks_.Lookup(request_id);
+  DCHECK(callbacks);
+  if (!callbacks)
+    return;
+  callbacks->OnError(
+      WebServiceWorkerError(error_type, blink::WebString::FromUTF8(message)));
+  get_navigation_preload_state_callbacks_.Remove(request_id);
+}
+
+void ServiceWorkerDispatcher::OnSetNavigationPreloadHeaderError(
+    int thread_id,
+    int request_id,
+    WebServiceWorkerError::ErrorType error_type,
+    const std::string& message) {
+  WebSetNavigationPreloadHeaderCallbacks* callbacks =
+      set_navigation_preload_header_callbacks_.Lookup(request_id);
+  DCHECK(callbacks);
+  if (!callbacks)
+    return;
+  callbacks->OnError(
+      WebServiceWorkerError(error_type, blink::WebString::FromUTF8(message)));
+  set_navigation_preload_header_callbacks_.Remove(request_id);
 }
 
 void ServiceWorkerDispatcher::OnServiceWorkerStateChanged(
@@ -690,7 +821,8 @@ void ServiceWorkerDispatcher::OnSetControllerServiceWorker(
     int thread_id,
     int provider_id,
     const ServiceWorkerObjectInfo& info,
-    bool should_notify_controllerchange) {
+    bool should_notify_controllerchange,
+    const std::set<uint32_t>& used_features) {
   TRACE_EVENT2("ServiceWorker",
                "ServiceWorkerDispatcher::OnSetControllerServiceWorker",
                "Thread ID", thread_id,
@@ -700,17 +832,26 @@ void ServiceWorkerDispatcher::OnSetControllerServiceWorker(
   // provider context if it exists.
   std::unique_ptr<ServiceWorkerHandleReference> handle_ref = Adopt(info);
   ProviderContextMap::iterator provider = provider_contexts_.find(provider_id);
-  if (provider != provider_contexts_.end())
-    provider->second->OnSetControllerServiceWorker(std::move(handle_ref));
+  if (provider != provider_contexts_.end()) {
+    provider->second->OnSetControllerServiceWorker(std::move(handle_ref),
+                                                   used_features);
+  }
 
   ProviderClientMap::iterator found = provider_clients_.find(provider_id);
   if (found != provider_clients_.end()) {
+    // Sync the controllee's use counter with the service worker's one.
+    for (uint32_t feature : used_features)
+      found->second->CountFeature(feature);
+
     // Get the existing worker object or create a new one with a new reference
     // to populate the .controller field.
     scoped_refptr<WebServiceWorkerImpl> worker = GetOrCreateServiceWorker(
         ServiceWorkerHandleReference::Create(info, thread_safe_sender_.get()));
-    found->second->setController(WebServiceWorkerImpl::CreateHandle(worker),
+    found->second->SetController(WebServiceWorkerImpl::CreateHandle(worker),
                                  should_notify_controllerchange);
+    // You must not access |found| after setController() because it may fire the
+    // controllerchange event that may remove the provider client, for example,
+    // by detaching an iframe.
   }
 }
 
@@ -736,35 +877,42 @@ void ServiceWorkerDispatcher::OnPostMessage(
   }
 
   blink::WebMessagePortChannelArray ports =
-      WebMessagePortChannelImpl::CreatePorts(
-          params.message_ports, params.new_routing_ids,
-          base::ThreadTaskRunnerHandle::Get());
+      WebMessagePortChannelImpl::CreateFromMessagePorts(params.message_ports);
 
-  found->second->dispatchMessageEvent(
-      WebServiceWorkerImpl::CreateHandle(worker), params.message, ports);
+  found->second->DispatchMessageEvent(
+      WebServiceWorkerImpl::CreateHandle(worker),
+      blink::WebString::FromUTF16(params.message), std::move(ports));
+}
+
+void ServiceWorkerDispatcher::OnCountFeature(int thread_id,
+                                             int provider_id,
+                                             uint32_t feature) {
+  ProviderClientMap::iterator found = provider_clients_.find(provider_id);
+  if (found != provider_clients_.end())
+    found->second->CountFeature(feature);
 }
 
 void ServiceWorkerDispatcher::AddServiceWorker(
     int handle_id, WebServiceWorkerImpl* worker) {
-  DCHECK(!ContainsKey(service_workers_, handle_id));
+  DCHECK(!base::ContainsKey(service_workers_, handle_id));
   service_workers_[handle_id] = worker;
 }
 
 void ServiceWorkerDispatcher::RemoveServiceWorker(int handle_id) {
-  DCHECK(ContainsKey(service_workers_, handle_id));
+  DCHECK(base::ContainsKey(service_workers_, handle_id));
   service_workers_.erase(handle_id);
 }
 
 void ServiceWorkerDispatcher::AddServiceWorkerRegistration(
     int registration_handle_id,
     WebServiceWorkerRegistrationImpl* registration) {
-  DCHECK(!ContainsKey(registrations_, registration_handle_id));
+  DCHECK(!base::ContainsKey(registrations_, registration_handle_id));
   registrations_[registration_handle_id] = registration;
 }
 
 void ServiceWorkerDispatcher::RemoveServiceWorkerRegistration(
     int registration_handle_id) {
-  DCHECK(ContainsKey(registrations_, registration_handle_id));
+  DCHECK(base::ContainsKey(registrations_, registration_handle_id));
   registrations_.erase(registration_handle_id);
 }
 

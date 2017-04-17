@@ -20,6 +20,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/thread_test_helper.h"
+#include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/indexed_db/indexed_db_class_factory.h"
@@ -121,27 +122,25 @@ class IndexedDBBrowserTest : public ContentBrowserTest,
     return static_cast<IndexedDBContextImpl*>(partition->GetIndexedDBContext());
   }
 
-  void SetQuota(int quota_kilobytes) {
-    const int kTemporaryStorageQuotaSize =
-        quota_kilobytes * 1024 * QuotaManager::kPerHostTemporaryPortion;
-    SetTempQuota(kTemporaryStorageQuotaSize,
-        BrowserContext::GetDefaultStoragePartition(
-            shell()->web_contents()->GetBrowserContext())->GetQuotaManager());
+  void SetQuota(int per_host_quota_kilobytes) {
+    SetTempQuota(per_host_quota_kilobytes,
+                 BrowserContext::GetDefaultStoragePartition(
+                     shell()->web_contents()->GetBrowserContext())
+                     ->GetQuotaManager());
   }
 
-  static void SetTempQuota(int64_t bytes, scoped_refptr<QuotaManager> qm) {
+  static void SetTempQuota(int per_host_quota_kilobytes,
+                           scoped_refptr<QuotaManager> qm) {
     if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
-      BrowserThread::PostTask(
-          BrowserThread::IO, FROM_HERE,
-          base::Bind(&IndexedDBBrowserTest::SetTempQuota, bytes, qm));
+      BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                              base::Bind(&IndexedDBBrowserTest::SetTempQuota,
+                                         per_host_quota_kilobytes, qm));
       return;
     }
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
-    qm->SetTemporaryGlobalOverrideQuota(bytes, storage::QuotaCallback());
-    // Don't return until the quota has been set.
-    scoped_refptr<base::ThreadTestHelper> helper(new base::ThreadTestHelper(
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::DB)));
-    ASSERT_TRUE(helper->Run());
+    const int KB = 1024;
+    qm->SetQuotaSettings(
+        storage::GetHardCodedSettings(per_host_quota_kilobytes * KB));
   }
 
   virtual int64_t RequestDiskUsage() {
@@ -151,7 +150,8 @@ class IndexedDBBrowserTest : public ContentBrowserTest,
         base::Bind(&IndexedDBContext::GetOriginDiskUsage,
                    GetContext(),
                    GURL("file:///")),
-        base::Bind(&IndexedDBBrowserTest::DidGetDiskUsage, this));
+        base::Bind(&IndexedDBBrowserTest::DidGetDiskUsage,
+                   base::Unretained(this)));
     scoped_refptr<base::ThreadTestHelper> helper(new base::ThreadTestHelper(
         BrowserMainLoop::GetInstance()->indexed_db_thread()->task_runner()));
     EXPECT_TRUE(helper->Run());
@@ -165,7 +165,8 @@ class IndexedDBBrowserTest : public ContentBrowserTest,
         GetContext()->TaskRunner(), FROM_HERE,
         base::Bind(&IndexedDBContextImpl::GetOriginBlobFileCount, GetContext(),
                    Origin(GURL("file:///"))),
-        base::Bind(&IndexedDBBrowserTest::DidGetBlobFileCount, this));
+        base::Bind(&IndexedDBBrowserTest::DidGetBlobFileCount,
+                   base::Unretained(this)));
     scoped_refptr<base::ThreadTestHelper> helper(new base::ThreadTestHelper(
         BrowserMainLoop::GetInstance()->indexed_db_thread()->task_runner()));
     EXPECT_TRUE(helper->Run());
@@ -204,13 +205,7 @@ IN_PROC_BROWSER_TEST_F(IndexedDBBrowserTest, CursorTestIncognito) {
              true /* incognito */);
 }
 
-// crbug.com/513787
-#if defined(ANDROID)
-#define MAYBE_CursorPrefetch DISABLED_CursorPrefetch
-#else
-#define MAYBE_CursorPrefetch CursorPrefetch
-#endif
-IN_PROC_BROWSER_TEST_F(IndexedDBBrowserTest, MAYBE_CursorPrefetch) {
+IN_PROC_BROWSER_TEST_F(IndexedDBBrowserTest, CursorPrefetch) {
   SimpleTest(GetTestUrl("indexeddb", "cursor_prefetch.html"));
 }
 
@@ -425,9 +420,12 @@ IN_PROC_BROWSER_TEST_F(IndexedDBBrowserTest, LevelDBLogFileTest) {
   base::FilePath log_file(FILE_PATH_LITERAL("LOG"));
   base::FilePath log_file_path =
       GetContext()->data_path().Append(leveldb_dir).Append(log_file);
-  int64_t size;
-  EXPECT_TRUE(base::GetFileSize(log_file_path, &size));
-  EXPECT_GT(size, 0);
+  {
+    base::ThreadRestrictions::ScopedAllowIO allow_io_for_test_verification;
+    int64_t size;
+    EXPECT_TRUE(base::GetFileSize(log_file_path, &size));
+    EXPECT_GT(size, 0);
+  }
 }
 
 IN_PROC_BROWSER_TEST_F(IndexedDBBrowserTest, CanDeleteWhenOverQuotaTest) {
@@ -708,11 +706,12 @@ static std::unique_ptr<net::test_server::HttpResponse> CorruptDBRequestHandler(
 
 IN_PROC_BROWSER_TEST_P(IndexedDBBrowserTest, OperationOnCorruptedOpenDatabase) {
   ASSERT_TRUE(embedded_test_server()->Started() ||
-              embedded_test_server()->Start());
+              embedded_test_server()->InitializeAndListen());
   const Origin origin(embedded_test_server()->base_url());
   embedded_test_server()->RegisterRequestHandler(
       base::Bind(&CorruptDBRequestHandler, base::Unretained(GetContext()),
                  origin, s_corrupt_db_test_prefix, this));
+  embedded_test_server()->StartAcceptingConnections();
 
   std::string test_file = s_corrupt_db_test_prefix +
                           "corrupted_open_db_detection.html#" + GetParam();

@@ -31,8 +31,8 @@ device::PowerSaveBlocker::PowerSaveBlockerType LevelToPowerSaveBlockerType(
   return device::PowerSaveBlocker::kPowerSaveBlockPreventDisplaySleep;
 }
 
-base::LazyInstance<BrowserContextKeyedAPIFactory<PowerAPI>> g_factory =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<BrowserContextKeyedAPIFactory<PowerAPI>>::DestructorAtExit
+    g_factory = LAZY_INSTANCE_INITIALIZER;
 
 std::unique_ptr<device::PowerSaveBlocker> CreatePowerSaveBlocker(
     device::PowerSaveBlocker::PowerSaveBlockerType type,
@@ -46,18 +46,17 @@ std::unique_ptr<device::PowerSaveBlocker> CreatePowerSaveBlocker(
 
 }  // namespace
 
-bool PowerRequestKeepAwakeFunction::RunSync() {
+ExtensionFunction::ResponseAction PowerRequestKeepAwakeFunction::Run() {
   std::unique_ptr<api::power::RequestKeepAwake::Params> params(
       api::power::RequestKeepAwake::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params);
-  EXTENSION_FUNCTION_VALIDATE(params->level != api::power::LEVEL_NONE);
   PowerAPI::Get(browser_context())->AddRequest(extension_id(), params->level);
-  return true;
+  return RespondNow(NoArguments());
 }
 
-bool PowerReleaseKeepAwakeFunction::RunSync() {
+ExtensionFunction::ResponseAction PowerReleaseKeepAwakeFunction::Run() {
   PowerAPI::Get(browser_context())->RemoveRequest(extension_id());
-  return true;
+  return RespondNow(NoArguments());
 }
 
 // static

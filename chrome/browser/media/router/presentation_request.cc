@@ -10,11 +10,13 @@ namespace media_router {
 
 PresentationRequest::PresentationRequest(
     const RenderFrameHostId& render_frame_host_id,
-    const std::string& presentation_url,
-    const GURL& frame_url)
+    const std::vector<GURL>& presentation_urls,
+    const url::Origin& frame_origin)
     : render_frame_host_id_(render_frame_host_id),
-      presentation_url_(presentation_url),
-      frame_url_(frame_url) {}
+      presentation_urls_(presentation_urls),
+      frame_origin_(frame_origin) {
+  DCHECK(!presentation_urls_.empty());
+}
 
 PresentationRequest::PresentationRequest(const PresentationRequest& other) =
     default;
@@ -23,12 +25,16 @@ PresentationRequest::~PresentationRequest() = default;
 
 bool PresentationRequest::Equals(const PresentationRequest& other) const {
   return render_frame_host_id_ == other.render_frame_host_id_ &&
-         presentation_url_ == other.presentation_url_ &&
-         frame_url_ == other.frame_url_;
+         presentation_urls_ == other.presentation_urls_ &&
+         ((frame_origin_.unique() && other.frame_origin_.unique()) ||
+          (frame_origin_ == other.frame_origin_));
 }
 
-MediaSource PresentationRequest::GetMediaSource() const {
-  return MediaSourceForPresentationUrl(presentation_url_);
+std::vector<MediaSource> PresentationRequest::GetMediaSources() const {
+  std::vector<MediaSource> sources;
+  for (const auto& presentation_url : presentation_urls_)
+    sources.push_back(MediaSourceForPresentationUrl(presentation_url));
+  return sources;
 }
 
 }  // namespace media_router

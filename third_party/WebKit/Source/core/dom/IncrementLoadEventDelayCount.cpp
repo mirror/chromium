@@ -4,32 +4,36 @@
 
 #include "core/dom/IncrementLoadEventDelayCount.h"
 
-#include "core/dom/Document.h"
-#include "wtf/PtrUtil.h"
 #include <memory>
+#include "core/dom/Document.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-std::unique_ptr<IncrementLoadEventDelayCount> IncrementLoadEventDelayCount::create(Document& document)
-{
-    return wrapUnique(new IncrementLoadEventDelayCount(document));
+std::unique_ptr<IncrementLoadEventDelayCount>
+IncrementLoadEventDelayCount::Create(Document& document) {
+  return WTF::WrapUnique(new IncrementLoadEventDelayCount(document));
 }
 
 IncrementLoadEventDelayCount::IncrementLoadEventDelayCount(Document& document)
-    : m_document(&document)
-{
-    document.incrementLoadEventDelayCount();
+    : document_(&document) {
+  document.IncrementLoadEventDelayCount();
 }
 
-IncrementLoadEventDelayCount::~IncrementLoadEventDelayCount()
-{
-    m_document->decrementLoadEventDelayCount();
+IncrementLoadEventDelayCount::~IncrementLoadEventDelayCount() {
+  if (document_)
+    document_->DecrementLoadEventDelayCount();
 }
 
-void IncrementLoadEventDelayCount::documentChanged(Document& newDocument)
-{
-    newDocument.incrementLoadEventDelayCount();
-    m_document->decrementLoadEventDelayCount();
-    m_document = &newDocument;
+void IncrementLoadEventDelayCount::ClearAndCheckLoadEvent() {
+  document_->DecrementLoadEventDelayCountAndCheckLoadEvent();
+  document_ = nullptr;
 }
-} // namespace blink
+
+void IncrementLoadEventDelayCount::DocumentChanged(Document& new_document) {
+  new_document.IncrementLoadEventDelayCount();
+  if (document_)
+    document_->DecrementLoadEventDelayCount();
+  document_ = &new_document;
+}
+}  // namespace blink

@@ -6,47 +6,73 @@
 
 #include "core/animation/InterpolationEnvironment.h"
 #include "core/animation/StringKeyframe.h"
+#include "core/css/CSSInheritedValue.h"
+#include "core/css/CSSInitialValue.h"
 #include "core/css/resolver/StyleBuilder.h"
 
 namespace blink {
 
 class CSSValueNonInterpolableValue : public NonInterpolableValue {
-public:
-    ~CSSValueNonInterpolableValue() final { }
+ public:
+  ~CSSValueNonInterpolableValue() final {}
 
-    static PassRefPtr<CSSValueNonInterpolableValue> create(const CSSValue* cssValue)
-    {
-        return adoptRef(new CSSValueNonInterpolableValue(cssValue));
-    }
+  static PassRefPtr<CSSValueNonInterpolableValue> Create(
+      const CSSValue* css_value) {
+    return AdoptRef(new CSSValueNonInterpolableValue(css_value));
+  }
 
-    const CSSValue& cssValue() const { return *m_cssValue; }
+  const CSSValue* CssValue() const { return css_value_.Get(); }
 
-    DECLARE_NON_INTERPOLABLE_VALUE_TYPE();
+  DECLARE_NON_INTERPOLABLE_VALUE_TYPE();
 
-private:
-    CSSValueNonInterpolableValue(const CSSValue* cssValue)
-        : m_cssValue(cssValue)
-    {
-        ASSERT(m_cssValue);
-    }
+ private:
+  CSSValueNonInterpolableValue(const CSSValue* css_value)
+      : css_value_(css_value) {
+    DCHECK(css_value_);
+  }
 
-    Persistent<const CSSValue> m_cssValue;
+  Persistent<const CSSValue> css_value_;
 };
 
 DEFINE_NON_INTERPOLABLE_VALUE_TYPE(CSSValueNonInterpolableValue);
 DEFINE_NON_INTERPOLABLE_VALUE_TYPE_CASTS(CSSValueNonInterpolableValue);
 
-InterpolationValue CSSValueInterpolationType::maybeConvertSingle(const PropertySpecificKeyframe& keyframe, const InterpolationEnvironment&, const InterpolationValue&, ConversionCheckers&) const
-{
-    if (keyframe.isNeutral())
-        return nullptr;
-
-    return InterpolationValue(InterpolableList::create(0), CSSValueNonInterpolableValue::create(toCSSPropertySpecificKeyframe(keyframe).value()));
+InterpolationValue CSSValueInterpolationType::MaybeConvertInitial(
+    const StyleResolverState& state,
+    ConversionCheckers& conversion_checkers) const {
+  return MaybeConvertValue(*CSSInitialValue::Create(), &state,
+                           conversion_checkers);
 }
 
-void CSSValueInterpolationType::apply(const InterpolableValue&, const NonInterpolableValue* nonInterpolableValue, InterpolationEnvironment& environment) const
-{
-    StyleBuilder::applyProperty(cssProperty(), environment.state(), toCSSValueNonInterpolableValue(nonInterpolableValue)->cssValue());
+InterpolationValue CSSValueInterpolationType::MaybeConvertInherit(
+    const StyleResolverState& state,
+    ConversionCheckers& conversion_checkers) const {
+  return MaybeConvertValue(*CSSInheritedValue::Create(), &state,
+                           conversion_checkers);
 }
 
-} // namespace blink
+InterpolationValue CSSValueInterpolationType::MaybeConvertValue(
+    const CSSValue& value,
+    const StyleResolverState*,
+    ConversionCheckers& conversion_checkers) const {
+  return InterpolationValue(InterpolableList::Create(0),
+                            CSSValueNonInterpolableValue::Create(&value));
+}
+
+void CSSValueInterpolationType::ApplyStandardPropertyValue(
+    const InterpolableValue& interpolable_value,
+    const NonInterpolableValue* non_interpolable_value,
+    StyleResolverState& state) const {
+  StyleBuilder::ApplyProperty(
+      CssProperty(), state,
+      *CreateCSSValue(interpolable_value, non_interpolable_value, state));
+}
+
+const CSSValue* CSSValueInterpolationType::CreateCSSValue(
+    const InterpolableValue&,
+    const NonInterpolableValue* non_interpolable_value,
+    const StyleResolverState&) const {
+  return ToCSSValueNonInterpolableValue(non_interpolable_value)->CssValue();
+}
+
+}  // namespace blink

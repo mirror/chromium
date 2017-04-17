@@ -32,23 +32,23 @@
 #define RTCVoidRequest_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class RTCVoidRequest : public GarbageCollectedFinalized<RTCVoidRequest> {
-public:
-    virtual ~RTCVoidRequest() { }
+ public:
+  virtual ~RTCVoidRequest() {}
 
-    virtual void requestSucceeded() = 0;
-    virtual void requestFailed(const String& error) = 0;
+  virtual void RequestSucceeded() = 0;
+  virtual void RequestFailed(const String& error) = 0;
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
-protected:
-    RTCVoidRequest() { }
+ protected:
+  RTCVoidRequest() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RTCVoidRequest_h
+#endif  // RTCVoidRequest_h

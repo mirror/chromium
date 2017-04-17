@@ -8,7 +8,6 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
-#include "base/metrics/user_metrics.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/test_simple_task_runner.h"
 #include "components/metrics/metrics_pref_names.h"
@@ -19,6 +18,10 @@
 #include "components/prefs/testing_pref_service.h"
 #include "testing/gtest/include/gtest/gtest-param-test.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 // An MobileSessionShutdownMetricsProvider that returns fake values for the last
 // session environment query methods.
@@ -65,9 +68,7 @@ class MobileSessionShutdownMetricsProviderForTesting
 class MobileSessionShutdownMetricsProviderTest
     : public testing::TestWithParam<int> {
  public:
-  MobileSessionShutdownMetricsProviderTest()
-      : task_runner_(new base::TestSimpleTaskRunner) {
-    base::SetRecordActionTaskRunner(task_runner_);
+  MobileSessionShutdownMetricsProviderTest() {
     metrics::MetricsService::RegisterPrefs(local_state_.registry());
   }
 
@@ -78,7 +79,6 @@ class MobileSessionShutdownMetricsProviderTest
   std::unique_ptr<metrics::MetricsService> metrics_service_;
   std::unique_ptr<MobileSessionShutdownMetricsProviderForTesting>
       metrics_provider_;
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MobileSessionShutdownMetricsProviderTest);

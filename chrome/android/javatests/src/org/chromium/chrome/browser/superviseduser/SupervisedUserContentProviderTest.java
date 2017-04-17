@@ -10,15 +10,16 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.childaccounts.ChildAccountService;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.test.ChromeActivityTestCaseBase;
 import org.chromium.chrome.test.util.browser.signin.SigninTestUtil;
-import org.chromium.components.webrestrictions.WebRestrictionsContentProvider;
+import org.chromium.components.webrestrictions.browser.WebRestrictionsContentProvider;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -26,6 +27,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * Instrumentation test for SupervisedUserContentProvider.
  */
+@RetryOnFailure
 public class SupervisedUserContentProviderTest extends ChromeActivityTestCaseBase<ChromeActivity> {
     private static final String DEFAULT_ACCOUNT = "test@gmail.com";
     private static final String AUTHORITY_SUFFIX = ".SupervisedUserProvider";
@@ -40,7 +42,7 @@ public class SupervisedUserContentProviderTest extends ChromeActivityTestCaseBas
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        mResolver = getInstrumentation().getContext().getContentResolver();
+        mResolver = getInstrumentation().getTargetContext().getContentResolver();
         assertNotNull(mResolver);
         mAuthority = getInstrumentation().getTargetContext().getPackageName() + AUTHORITY_SUFFIX;
         mUri = new Uri.Builder()
@@ -91,10 +93,10 @@ public class SupervisedUserContentProviderTest extends ChromeActivityTestCaseBas
         SupervisedUserContentProvider.enableContentProviderForTesting();
         Cursor cursor = client.query(mUri, null, "url = 'http://google.com'", null, null);
         assertNotNull(cursor);
-        assertEquals(WebRestrictionsContentProvider.PROCEED, cursor.getInt(0));
+        assertEquals(WebRestrictionsContentProvider.BLOCKED, cursor.getInt(0));
         cursor = client.query(mUri, null, "url = 'http://www.notgoogle.com'", null, null);
         assertNotNull(cursor);
-        assertEquals(WebRestrictionsContentProvider.PROCEED, cursor.getInt(0));
+        assertEquals(WebRestrictionsContentProvider.BLOCKED, cursor.getInt(0));
     }
 
     @SmallTest

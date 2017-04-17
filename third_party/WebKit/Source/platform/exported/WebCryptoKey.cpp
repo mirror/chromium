@@ -30,94 +30,91 @@
 
 #include "public/platform/WebCryptoKey.h"
 
+#include <memory>
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/ThreadSafeRefCounted.h"
 #include "public/platform/WebCryptoAlgorithm.h"
 #include "public/platform/WebCryptoAlgorithmParams.h"
 #include "public/platform/WebCryptoKeyAlgorithm.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/ThreadSafeRefCounted.h"
-#include <memory>
 
 namespace blink {
 
 class WebCryptoKeyPrivate : public ThreadSafeRefCounted<WebCryptoKeyPrivate> {
-public:
-    WebCryptoKeyPrivate(std::unique_ptr<WebCryptoKeyHandle> handle, WebCryptoKeyType type, bool extractable, const WebCryptoKeyAlgorithm& algorithm, WebCryptoKeyUsageMask usages)
-        : handle(std::move(handle))
-        , type(type)
-        , extractable(extractable)
-        , algorithm(algorithm)
-        , usages(usages)
-    {
-        ASSERT(!algorithm.isNull());
-    }
+ public:
+  WebCryptoKeyPrivate(std::unique_ptr<WebCryptoKeyHandle> handle,
+                      WebCryptoKeyType type,
+                      bool extractable,
+                      const WebCryptoKeyAlgorithm& algorithm,
+                      WebCryptoKeyUsageMask usages)
+      : handle(std::move(handle)),
+        type(type),
+        extractable(extractable),
+        algorithm(algorithm),
+        usages(usages) {
+    DCHECK(!algorithm.IsNull());
+  }
 
-    const std::unique_ptr<WebCryptoKeyHandle> handle;
-    const WebCryptoKeyType type;
-    const bool extractable;
-    const WebCryptoKeyAlgorithm algorithm;
-    const WebCryptoKeyUsageMask usages;
+  const std::unique_ptr<WebCryptoKeyHandle> handle;
+  const WebCryptoKeyType type;
+  const bool extractable;
+  const WebCryptoKeyAlgorithm algorithm;
+  const WebCryptoKeyUsageMask usages;
 };
 
-WebCryptoKey WebCryptoKey::create(WebCryptoKeyHandle* handle, WebCryptoKeyType type, bool extractable, const WebCryptoKeyAlgorithm& algorithm, WebCryptoKeyUsageMask usages)
-{
-    WebCryptoKey key;
-    key.m_private = adoptRef(new WebCryptoKeyPrivate(wrapUnique(handle), type, extractable, algorithm, usages));
-    return key;
+WebCryptoKey WebCryptoKey::Create(WebCryptoKeyHandle* handle,
+                                  WebCryptoKeyType type,
+                                  bool extractable,
+                                  const WebCryptoKeyAlgorithm& algorithm,
+                                  WebCryptoKeyUsageMask usages) {
+  WebCryptoKey key;
+  key.private_ = AdoptRef(new WebCryptoKeyPrivate(
+      WTF::WrapUnique(handle), type, extractable, algorithm, usages));
+  return key;
 }
 
-WebCryptoKey WebCryptoKey::createNull()
-{
-    return WebCryptoKey();
+WebCryptoKey WebCryptoKey::CreateNull() {
+  return WebCryptoKey();
 }
 
-WebCryptoKeyHandle* WebCryptoKey::handle() const
-{
-    ASSERT(!isNull());
-    return m_private->handle.get();
+WebCryptoKeyHandle* WebCryptoKey::Handle() const {
+  DCHECK(!IsNull());
+  return private_->handle.get();
 }
 
-WebCryptoKeyType WebCryptoKey::type() const
-{
-    ASSERT(!isNull());
-    return m_private->type;
+WebCryptoKeyType WebCryptoKey::GetType() const {
+  DCHECK(!IsNull());
+  return private_->type;
 }
 
-bool WebCryptoKey::extractable() const
-{
-    ASSERT(!isNull());
-    return m_private->extractable;
+bool WebCryptoKey::Extractable() const {
+  DCHECK(!IsNull());
+  return private_->extractable;
 }
 
-const WebCryptoKeyAlgorithm& WebCryptoKey::algorithm() const
-{
-    ASSERT(!isNull());
-    return m_private->algorithm;
+const WebCryptoKeyAlgorithm& WebCryptoKey::Algorithm() const {
+  DCHECK(!IsNull());
+  return private_->algorithm;
 }
 
-WebCryptoKeyUsageMask WebCryptoKey::usages() const
-{
-    ASSERT(!isNull());
-    return m_private->usages;
+WebCryptoKeyUsageMask WebCryptoKey::Usages() const {
+  DCHECK(!IsNull());
+  return private_->usages;
 }
 
-bool WebCryptoKey::isNull() const
-{
-    return m_private.isNull();
+bool WebCryptoKey::IsNull() const {
+  return private_.IsNull();
 }
 
-bool WebCryptoKey::keyUsageAllows(const blink::WebCryptoKeyUsage usage) const
-{
-    return ((m_private->usages & usage) != 0);
+bool WebCryptoKey::KeyUsageAllows(const blink::WebCryptoKeyUsage usage) const {
+  return ((private_->usages & usage) != 0);
 }
 
-void WebCryptoKey::assign(const WebCryptoKey& other)
-{
-    m_private = other.m_private;
+void WebCryptoKey::Assign(const WebCryptoKey& other) {
+  private_ = other.private_;
 }
 
-void WebCryptoKey::reset()
-{
-    m_private.reset();
+void WebCryptoKey::Reset() {
+  private_.Reset();
 }
 
-} // namespace blink
+}  // namespace blink

@@ -28,62 +28,53 @@
 #include "core/style/ComputedStyle.h"
 #include "platform/LayoutTestSupport.h"
 #include "platform/PlatformResourceLoader.h"
-#include "platform/RuntimeEnabledFeatures.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThemeEngine.h"
 
 namespace blink {
 
-PassRefPtr<LayoutTheme> LayoutThemeMobile::create()
-{
-    return adoptRef(new LayoutThemeMobile());
+PassRefPtr<LayoutTheme> LayoutThemeMobile::Create() {
+  return AdoptRef(new LayoutThemeMobile());
 }
 
-LayoutThemeMobile::~LayoutThemeMobile()
-{
+LayoutThemeMobile::~LayoutThemeMobile() {}
+
+String LayoutThemeMobile::ExtraDefaultStyleSheet() {
+  return LayoutThemeDefault::ExtraDefaultStyleSheet() +
+         LoadResourceAsASCIIString("themeChromiumLinux.css") +
+         LoadResourceAsASCIIString("themeChromiumAndroid.css");
 }
 
-String LayoutThemeMobile::extraDefaultStyleSheet()
-{
-    return LayoutThemeDefault::extraDefaultStyleSheet() +
-        loadResourceAsASCIIString("themeChromiumLinux.css") +
-        loadResourceAsASCIIString("themeChromiumAndroid.css");
-
+String LayoutThemeMobile::ExtraMediaControlsStyleSheet() {
+  return LoadResourceAsASCIIString("mediaControlsAndroid.css");
 }
 
-String LayoutThemeMobile::extraMediaControlsStyleSheet()
-{
-    return loadResourceAsASCIIString(
-        RuntimeEnabledFeatures::newMediaPlaybackUiEnabled() ?
-        "mediaControlsAndroidNew.css" : "mediaControlsAndroid.css");
+String LayoutThemeMobile::ExtraFullscreenStyleSheet() {
+  return LoadResourceAsASCIIString("fullscreenAndroid.css");
 }
 
-String LayoutThemeMobile::extraFullscreenStyleSheet()
-{
-    return loadResourceAsASCIIString("fullscreenAndroid.css");
+void LayoutThemeMobile::AdjustInnerSpinButtonStyle(ComputedStyle& style) const {
+  if (LayoutTestSupport::IsRunningLayoutTest()) {
+    // Match Linux spin button style in layout tests.
+    // FIXME: Consider removing the conditional if a future Android theme
+    // matches this.
+    IntSize size = Platform::Current()->ThemeEngine()->GetSize(
+        WebThemeEngine::kPartInnerSpinButton);
+
+    style.SetWidth(Length(size.Width(), kFixed));
+    style.SetMinWidth(Length(size.Width(), kFixed));
+  }
 }
 
-void LayoutThemeMobile::adjustInnerSpinButtonStyle(ComputedStyle& style) const
-{
-    if (LayoutTestSupport::isRunningLayoutTest()) {
-        // Match Linux spin button style in layout tests.
-        // FIXME: Consider removing the conditional if a future Android theme matches this.
-        IntSize size = Platform::current()->themeEngine()->getSize(WebThemeEngine::PartInnerSpinButton);
-
-        style.setWidth(Length(size.width(), Fixed));
-        style.setMinWidth(Length(size.width(), Fixed));
-    }
-}
-
-bool LayoutThemeMobile::shouldUseFallbackTheme(const ComputedStyle& style) const
-{
+bool LayoutThemeMobile::ShouldUseFallbackTheme(
+    const ComputedStyle& style) const {
 #if OS(MACOSX)
-    // Mac WebThemeEngine cannot handle these controls.
-    ControlPart part = style.appearance();
-    if (part == CheckboxPart || part == RadioPart)
-        return true;
+  // Mac WebThemeEngine cannot handle these controls.
+  ControlPart part = style.Appearance();
+  if (part == kCheckboxPart || part == kRadioPart)
+    return true;
 #endif
-    return LayoutThemeDefault::shouldUseFallbackTheme(style);
+  return LayoutThemeDefault::ShouldUseFallbackTheme(style);
 }
 
-} // namespace blink
+}  // namespace blink

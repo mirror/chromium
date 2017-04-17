@@ -15,9 +15,9 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/attestation/attestation_ca_client.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
-#include "chrome/browser/chromeos/policy/enterprise_install_attributes.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
+#include "chrome/browser/chromeos/settings/install_attributes.h"
 #include "chrome/browser/extensions/chrome_extension_function_details.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
@@ -98,7 +98,7 @@ EPKPChallengeKeyBase::EPKPChallengeKeyBase(
     chromeos::CryptohomeClient* cryptohome_client,
     cryptohome::AsyncMethodCaller* async_caller,
     chromeos::attestation::AttestationFlow* attestation_flow,
-    policy::EnterpriseInstallAttributes* install_attributes) :
+    chromeos::InstallAttributes* install_attributes) :
     cryptohome_client_(cryptohome_client),
     async_caller_(async_caller),
     attestation_flow_(attestation_flow),
@@ -136,13 +136,13 @@ void EPKPChallengeKeyBase::GetDeviceAttestationEnabled(
 }
 
 bool EPKPChallengeKeyBase::IsEnterpriseDevice() const {
-  return install_attributes_->IsEnterpriseDevice();
+  return install_attributes_->IsEnterpriseManaged();
 }
 
 bool EPKPChallengeKeyBase::IsExtensionWhitelisted() const {
   const base::ListValue* list =
       profile_->GetPrefs()->GetList(prefs::kAttestationExtensionWhitelist);
-  base::StringValue value(extension_id_);
+  base::Value value(extension_id_);
   return list->Find(value) != list->end();
 }
 
@@ -158,7 +158,7 @@ AccountId EPKPChallengeKeyBase::GetAccountId() const {
   return user->GetAccountId();
 }
 
-bool EPKPChallengeKeyBase::IsUserManaged() const {
+bool EPKPChallengeKeyBase::IsUserAffiliated() const {
   const user_manager::User* const user =
       user_manager::UserManager::Get()->FindUser(GetAccountId());
 
@@ -287,6 +287,8 @@ void EPKPChallengeKeyBase::GetCertificateCallback(
 
 const char EPKPChallengeMachineKey::kGetCertificateFailedError[] =
     "Failed to get Enterprise machine certificate. Error code = %d";
+const char EPKPChallengeMachineKey::kKeyRegistrationFailedError[] =
+    "Machine key registration failed.";
 const char EPKPChallengeMachineKey::kNonEnterpriseDeviceError[] =
     "The device is not enterprise enrolled.";
 
@@ -299,7 +301,7 @@ EPKPChallengeMachineKey::EPKPChallengeMachineKey(
     chromeos::CryptohomeClient* cryptohome_client,
     cryptohome::AsyncMethodCaller* async_caller,
     chromeos::attestation::AttestationFlow* attestation_flow,
-    policy::EnterpriseInstallAttributes* install_attributes) :
+    chromeos::InstallAttributes* install_attributes) :
     EPKPChallengeKeyBase(cryptohome_client,
                          async_caller,
                          attestation_flow,
@@ -312,7 +314,8 @@ EPKPChallengeMachineKey::~EPKPChallengeMachineKey() {
 void EPKPChallengeMachineKey::Run(
     scoped_refptr<UIThreadExtensionFunction> caller,
     const ChallengeKeyCallback& callback,
-    const std::string& challenge) {
+    const std::string& challenge,
+    bool register_key) {
   callback_ = callback;
   profile_ = ChromeExtensionFunctionDetails(caller.get()).GetProfile();
   extension_id_ = caller->extension_id();
@@ -329,8 +332,7 @@ void EPKPChallengeMachineKey::Run(
     return;
   }
 
-  // Check if the user domain is the same as the enrolled enterprise domain.
-  if (!IsUserManaged()) {
+  if (!IsUserAffiliated()) {
     callback_.Run(false, kUserNotManaged);
     return;
   }
@@ -338,23 +340,26 @@ void EPKPChallengeMachineKey::Run(
   // Check if RA is enabled in the device policy.
   GetDeviceAttestationEnabled(
       base::Bind(&EPKPChallengeMachineKey::GetDeviceAttestationEnabledCallback,
-                 base::Unretained(this), challenge));
+                 base::Unretained(this), challenge, register_key));
 }
 
 void EPKPChallengeMachineKey::DecodeAndRun(
     scoped_refptr<UIThreadExtensionFunction> caller,
     const ChallengeKeyCallback& callback,
-    const std::string& encoded_challenge) {
+    const std::string& encoded_challenge,
+    bool register_key) {
   std::string challenge;
   if (!base::Base64Decode(encoded_challenge, &challenge)) {
     callback.Run(false, kChallengeBadBase64Error);
     return;
   }
-  Run(caller, callback, challenge);
+  Run(caller, callback, challenge, register_key);
 }
 
 void EPKPChallengeMachineKey::GetDeviceAttestationEnabledCallback(
-    const std::string& challenge, bool enabled) {
+    const std::string& challenge,
+    bool register_key,
+    bool enabled) {
   if (!enabled) {
     callback_.Run(false, kDevicePolicyDisabledError);
     return;
@@ -366,11 +371,12 @@ void EPKPChallengeMachineKey::GetDeviceAttestationEnabledCallback(
              chromeos::attestation::PROFILE_ENTERPRISE_MACHINE_CERTIFICATE,
              false,  // user consent is not required.
              base::Bind(&EPKPChallengeMachineKey::PrepareKeyCallback,
-                        base::Unretained(this), challenge));
+                        base::Unretained(this), challenge, register_key));
 }
 
-void EPKPChallengeMachineKey::PrepareKeyCallback(
-    const std::string& challenge, PrepareKeyResult result) {
+void EPKPChallengeMachineKey::PrepareKeyCallback(const std::string& challenge,
+                                                 bool register_key,
+                                                 PrepareKeyResult result) {
   if (result != PREPARE_KEY_OK) {
     callback_.Run(false,
                   base::StringPrintf(kGetCertificateFailedError, result));
@@ -382,15 +388,39 @@ void EPKPChallengeMachineKey::PrepareKeyCallback(
       chromeos::attestation::KEY_DEVICE,
       cryptohome::Identification(),  // Not used.
       kKeyName, GetEnterpriseDomain(), GetDeviceId(),
-      chromeos::attestation::CHALLENGE_OPTION_NONE, challenge,
+      register_key ? chromeos::attestation::CHALLENGE_INCLUDE_SIGNED_PUBLIC_KEY
+                   : chromeos::attestation::CHALLENGE_OPTION_NONE,
+      challenge,
       base::Bind(&EPKPChallengeMachineKey::SignChallengeCallback,
-                 base::Unretained(this)));
+                 base::Unretained(this), register_key));
 }
 
 void EPKPChallengeMachineKey::SignChallengeCallback(
-    bool success, const std::string& response) {
+    bool register_key,
+    bool success,
+    const std::string& response) {
   if (!success) {
     callback_.Run(false, kSignChallengeFailedError);
+    return;
+  }
+  if (register_key) {
+    async_caller_->TpmAttestationRegisterKey(
+        chromeos::attestation::KEY_DEVICE,
+        cryptohome::Identification(),  // Not used.
+        kKeyName,
+        base::Bind(&EPKPChallengeMachineKey::RegisterKeyCallback,
+                   base::Unretained(this), response));
+  } else {
+    RegisterKeyCallback(response, true, cryptohome::MOUNT_ERROR_NONE);
+  }
+}
+
+void EPKPChallengeMachineKey::RegisterKeyCallback(
+    const std::string& response,
+    bool success,
+    cryptohome::MountError return_code) {
+  if (!success || return_code != cryptohome::MOUNT_ERROR_NONE) {
+    callback_.Run(false, kKeyRegistrationFailedError);
     return;
   }
   callback_.Run(true, response);
@@ -414,7 +444,7 @@ EPKPChallengeUserKey::EPKPChallengeUserKey(
     chromeos::CryptohomeClient* cryptohome_client,
     cryptohome::AsyncMethodCaller* async_caller,
     chromeos::attestation::AttestationFlow* attestation_flow,
-    policy::EnterpriseInstallAttributes* install_attributes) :
+    chromeos::InstallAttributes* install_attributes) :
     EPKPChallengeKeyBase(cryptohome_client,
                          async_caller,
                          attestation_flow,
@@ -451,8 +481,7 @@ void EPKPChallengeUserKey::Run(scoped_refptr<UIThreadExtensionFunction> caller,
   }
 
   if (IsEnterpriseDevice()) {
-    // Check if the user domain is the same as the enrolled enterprise domain.
-    if (!IsUserManaged()) {
+    if (!IsUserAffiliated()) {
       callback_.Run(false, kUserNotManaged);
       return;
     }
@@ -581,7 +610,7 @@ EnterprisePlatformKeysPrivateChallengeMachineKeyFunction::Run() {
   base::Closure task = base::Bind(
       &EPKPChallengeMachineKey::DecodeAndRun, base::Unretained(impl_),
       scoped_refptr<UIThreadExtensionFunction>(AsUIThreadExtensionFunction()),
-      callback, params->challenge);
+      callback, params->challenge, false);
   content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE, task);
   return RespondLater();
 }

@@ -11,7 +11,6 @@
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/gpu_preference.h"
 #include "ui/gl/gpu_timing.h"
-#include "ui/gl/scoped_api.h"
 
 namespace gpu {
 
@@ -23,7 +22,7 @@ GLContextVirtual::GLContextVirtual(gl::GLShareGroup* share_group,
       decoder_(decoder) {}
 
 bool GLContextVirtual::Initialize(gl::GLSurface* compatible_surface,
-                                  gl::GpuPreference gpu_preference) {
+                                  const gl::GLContextAttribs& attribs) {
   SetGLStateRestorer(new GLStateRestorerImpl(decoder_));
   return shared_context_->MakeVirtuallyCurrent(this, compatible_surface);
 }
@@ -68,6 +67,14 @@ scoped_refptr<gl::GPUTimingClient> GLContextVirtual::CreateGPUTimingClient() {
 
 void GLContextVirtual::OnSetSwapInterval(int interval) {
   shared_context_->SetSwapInterval(interval);
+}
+
+std::string GLContextVirtual::GetGLVersion() {
+  return shared_context_->GetGLVersion();
+}
+
+std::string GLContextVirtual::GetGLRenderer() {
+  return shared_context_->GetGLRenderer();
 }
 
 std::string GLContextVirtual::GetExtensions() {

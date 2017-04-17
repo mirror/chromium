@@ -22,104 +22,106 @@
 
 #include "platform/graphics/filters/FESpecularLighting.h"
 
+#include <algorithm>
 #include "platform/graphics/filters/LightSource.h"
 #include "platform/text/TextStream.h"
-#include "wtf/MathExtras.h"
-#include <algorithm>
+#include "platform/wtf/MathExtras.h"
 
 namespace blink {
 
-FESpecularLighting::FESpecularLighting(Filter* filter, const Color& lightingColor, float surfaceScale,
-    float specularConstant, float specularExponent, PassRefPtr<LightSource> lightSource)
-    : FELighting(filter, SpecularLighting, lightingColor, surfaceScale, 0, specularConstant, specularExponent, lightSource)
-{
+FESpecularLighting::FESpecularLighting(Filter* filter,
+                                       const Color& lighting_color,
+                                       float surface_scale,
+                                       float specular_constant,
+                                       float specular_exponent,
+                                       PassRefPtr<LightSource> light_source)
+    : FELighting(filter,
+                 kSpecularLighting,
+                 lighting_color,
+                 surface_scale,
+                 0,
+                 specular_constant,
+                 specular_exponent,
+                 std::move(light_source)) {}
+
+FESpecularLighting* FESpecularLighting::Create(
+    Filter* filter,
+    const Color& lighting_color,
+    float surface_scale,
+    float specular_constant,
+    float specular_exponent,
+    PassRefPtr<LightSource> light_source) {
+  return new FESpecularLighting(filter, lighting_color, surface_scale,
+                                specular_constant, specular_exponent,
+                                std::move(light_source));
 }
 
-FESpecularLighting* FESpecularLighting::create(Filter* filter, const Color& lightingColor,
-    float surfaceScale, float specularConstant, float specularExponent, PassRefPtr<LightSource> lightSource)
-{
-    return new FESpecularLighting(filter, lightingColor, surfaceScale, specularConstant, specularExponent,
-        lightSource);
+FESpecularLighting::~FESpecularLighting() {}
+
+Color FESpecularLighting::LightingColor() const {
+  return lighting_color_;
 }
 
-FESpecularLighting::~FESpecularLighting()
-{
+bool FESpecularLighting::SetLightingColor(const Color& lighting_color) {
+  if (lighting_color_ == lighting_color)
+    return false;
+  lighting_color_ = lighting_color;
+  return true;
 }
 
-Color FESpecularLighting::lightingColor() const
-{
-    return m_lightingColor;
+float FESpecularLighting::SurfaceScale() const {
+  return surface_scale_;
 }
 
-bool FESpecularLighting::setLightingColor(const Color& lightingColor)
-{
-    if (m_lightingColor == lightingColor)
-        return false;
-    m_lightingColor = lightingColor;
-    return true;
+bool FESpecularLighting::SetSurfaceScale(float surface_scale) {
+  if (surface_scale_ == surface_scale)
+    return false;
+  surface_scale_ = surface_scale;
+  return true;
 }
 
-float FESpecularLighting::surfaceScale() const
-{
-    return m_surfaceScale;
+float FESpecularLighting::SpecularConstant() const {
+  return specular_constant_;
 }
 
-bool FESpecularLighting::setSurfaceScale(float surfaceScale)
-{
-    if (m_surfaceScale == surfaceScale)
-        return false;
-    m_surfaceScale = surfaceScale;
-    return true;
+bool FESpecularLighting::SetSpecularConstant(float specular_constant) {
+  specular_constant = std::max(specular_constant, 0.0f);
+  if (specular_constant_ == specular_constant)
+    return false;
+  specular_constant_ = specular_constant;
+  return true;
 }
 
-float FESpecularLighting::specularConstant() const
-{
-    return m_specularConstant;
+float FESpecularLighting::SpecularExponent() const {
+  return specular_exponent_;
 }
 
-bool FESpecularLighting::setSpecularConstant(float specularConstant)
-{
-    specularConstant = std::max(specularConstant, 0.0f);
-    if (m_specularConstant == specularConstant)
-        return false;
-    m_specularConstant = specularConstant;
-    return true;
+bool FESpecularLighting::SetSpecularExponent(float specular_exponent) {
+  specular_exponent = clampTo(specular_exponent, 1.0f, 128.0f);
+  if (specular_exponent_ == specular_exponent)
+    return false;
+  specular_exponent_ = specular_exponent;
+  return true;
 }
 
-float FESpecularLighting::specularExponent() const
-{
-    return m_specularExponent;
+const LightSource* FESpecularLighting::GetLightSource() const {
+  return light_source_.Get();
 }
 
-bool FESpecularLighting::setSpecularExponent(float specularExponent)
-{
-    specularExponent = clampTo(specularExponent, 1.0f, 128.0f);
-    if (m_specularExponent == specularExponent)
-        return false;
-    m_specularExponent = specularExponent;
-    return true;
+void FESpecularLighting::SetLightSource(PassRefPtr<LightSource> light_source) {
+  light_source_ = std::move(light_source);
 }
 
-const LightSource* FESpecularLighting::lightSource() const
-{
-    return m_lightSource.get();
+TextStream& FESpecularLighting::ExternalRepresentation(TextStream& ts,
+                                                       int indent) const {
+  WriteIndent(ts, indent);
+  ts << "[feSpecularLighting";
+  FilterEffect::ExternalRepresentation(ts);
+  ts << " surfaceScale=\"" << surface_scale_ << "\" "
+     << "specualConstant=\"" << specular_constant_ << "\" "
+     << "specularExponent=\"" << specular_exponent_ << "\"]\n";
+  InputEffect(0)->ExternalRepresentation(ts, indent + 1);
+  return ts;
 }
 
-void FESpecularLighting::setLightSource(PassRefPtr<LightSource> lightSource)
-{
-    m_lightSource = lightSource;
-}
-
-TextStream& FESpecularLighting::externalRepresentation(TextStream& ts, int indent) const
-{
-    writeIndent(ts, indent);
-    ts << "[feSpecularLighting";
-    FilterEffect::externalRepresentation(ts);
-    ts << " surfaceScale=\"" << m_surfaceScale << "\" "
-       << "specualConstant=\"" << m_specularConstant << "\" "
-       << "specularExponent=\"" << m_specularExponent << "\"]\n";
-    inputEffect(0)->externalRepresentation(ts, indent + 1);
-    return ts;
-}
-
-} // namespace blink
+}  // namespace blink

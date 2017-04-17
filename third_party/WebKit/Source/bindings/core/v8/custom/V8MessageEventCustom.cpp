@@ -35,83 +35,100 @@
 #include "bindings/core/v8/V8ArrayBuffer.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "bindings/core/v8/V8Blob.h"
+#include "bindings/core/v8/V8EventTarget.h"
 #include "bindings/core/v8/V8MessagePort.h"
 #include "bindings/core/v8/V8PrivateProperty.h"
 #include "bindings/core/v8/V8Window.h"
 
 namespace blink {
 
-void V8MessageEvent::dataAttributeGetterCustom(const v8::FunctionCallbackInfo<v8::Value>& info)
-{
-    ScriptState* scriptState = ScriptState::current(info.GetIsolate());
-    auto privateCachedData = V8PrivateProperty::getMessageEventCachedData(info.GetIsolate());
-    v8::Local<v8::Value> cachedData = privateCachedData.get(scriptState->context(), info.Holder());
-    if (!cachedData.IsEmpty()) {
-        v8SetReturnValue(info, cachedData);
-        return;
-    }
+void V8MessageEvent::dataAttributeGetterCustom(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
+  v8::Isolate* isolate = info.GetIsolate();
+  auto private_cached_data =
+      V8PrivateProperty::GetMessageEventCachedData(isolate);
+  v8::Local<v8::Value> cached_data =
+      private_cached_data.GetOrEmpty(info.Holder());
+  if (!cached_data.IsEmpty()) {
+    V8SetReturnValue(info, cached_data);
+    return;
+  }
 
-    MessageEvent* event = V8MessageEvent::toImpl(info.Holder());
+  MessageEvent* event = V8MessageEvent::toImpl(info.Holder());
 
-    v8::Local<v8::Value> result;
-    switch (event->getDataType()) {
-    case MessageEvent::DataTypeScriptValue:
-        result = event->dataAsScriptValue().v8ValueFor(scriptState);
-        if (result.IsEmpty())
-            result = v8::Null(info.GetIsolate());
-        break;
+  v8::Local<v8::Value> result;
+  switch (event->GetDataType()) {
+    case MessageEvent::kDataTypeScriptValue:
+      result =
+          event->DataAsScriptValue().V8ValueFor(ScriptState::Current(isolate));
+      if (result.IsEmpty())
+        result = v8::Null(isolate);
+      break;
 
-    case MessageEvent::DataTypeSerializedScriptValue:
-        if (SerializedScriptValue* serializedValue = event->dataAsSerializedScriptValue()) {
-            MessagePortArray ports = event->ports();
-            result = serializedValue->deserialize(info.GetIsolate(), &ports);
-        } else {
-            result = v8::Null(info.GetIsolate());
-        }
-        break;
+    case MessageEvent::kDataTypeSerializedScriptValue:
+      if (SerializedScriptValue* serialized_value =
+              event->DataAsSerializedScriptValue()) {
+        MessagePortArray ports = event->ports();
+        SerializedScriptValue::DeserializeOptions options;
+        options.message_ports = &ports;
+        result = serialized_value->Deserialize(isolate, options);
+      } else {
+        result = v8::Null(isolate);
+      }
+      break;
 
-    case MessageEvent::DataTypeString:
-        result = v8String(info.GetIsolate(), event->dataAsString());
-        break;
+    case MessageEvent::kDataTypeString:
+      result = V8String(isolate, event->DataAsString());
+      break;
 
-    case MessageEvent::DataTypeBlob:
-        result = toV8(event->dataAsBlob(), info.Holder(), info.GetIsolate());
-        break;
+    case MessageEvent::kDataTypeBlob:
+      result = ToV8(event->DataAsBlob(), info.Holder(), isolate);
+      break;
 
-    case MessageEvent::DataTypeArrayBuffer:
-        result = toV8(event->dataAsArrayBuffer(), info.Holder(), info.GetIsolate());
-        break;
-    }
+    case MessageEvent::kDataTypeArrayBuffer:
+      result = ToV8(event->DataAsArrayBuffer(), info.Holder(), isolate);
+      break;
+  }
 
-    // Store the result as a private value so this callback returns the cached
-    // result in future invocations.
-    privateCachedData.set(scriptState->context(), info.Holder(), result);
-    v8SetReturnValue(info, result);
+  // Store the result as a private value so this callback returns the cached
+  // result in future invocations.
+  private_cached_data.Set(info.Holder(), result);
+  V8SetReturnValue(info, result);
 }
 
-void V8MessageEvent::initMessageEventMethodCustom(const v8::FunctionCallbackInfo<v8::Value>& info)
-{
-    ExceptionState exceptionState(ExceptionState::ExecutionContext, "initMessageEvent", "MessageEvent", info.Holder(), info.GetIsolate());
-    MessageEvent* event = V8MessageEvent::toImpl(info.Holder());
-    TOSTRING_VOID(V8StringResource<>, typeArg, info[0]);
-    bool canBubbleArg = false;
-    bool cancelableArg = false;
-    if (!v8Call(info[1]->BooleanValue(info.GetIsolate()->GetCurrentContext()), canBubbleArg)
-        || !v8Call(info[2]->BooleanValue(info.GetIsolate()->GetCurrentContext()), cancelableArg))
-        return;
-    v8::Local<v8::Value> dataArg = info[3];
-    TOSTRING_VOID(V8StringResource<>, originArg, info[4]);
-    TOSTRING_VOID(V8StringResource<>, lastEventIdArg, info[5]);
-    DOMWindow* sourceArg = toDOMWindow(info.GetIsolate(), info[6]);
-    MessagePortArray* portArray = nullptr;
-    const int portArrayIndex = 7;
-    if (!isUndefinedOrNull(info[portArrayIndex])) {
-        portArray = new MessagePortArray;
-        *portArray = toMemberNativeArray<MessagePort>(info[portArrayIndex], portArrayIndex + 1, info.GetIsolate(), exceptionState);
-        if (exceptionState.throwIfNeeded())
-            return;
-    }
-    event->initMessageEvent(typeArg, canBubbleArg, cancelableArg, ScriptValue(ScriptState::current(info.GetIsolate()), dataArg), originArg, lastEventIdArg, sourceArg, portArray);
+void V8MessageEvent::initMessageEventMethodCustom(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
+  ExceptionState exception_state(info.GetIsolate(),
+                                 ExceptionState::kExecutionContext,
+                                 "MessageEvent", "initMessageEvent");
+  MessageEvent* event = V8MessageEvent::toImpl(info.Holder());
+  TOSTRING_VOID(V8StringResource<>, type_arg, info[0]);
+  bool can_bubble_arg = false;
+  bool cancelable_arg = false;
+  if (!V8Call(info[1]->BooleanValue(info.GetIsolate()->GetCurrentContext()),
+              can_bubble_arg) ||
+      !V8Call(info[2]->BooleanValue(info.GetIsolate()->GetCurrentContext()),
+              cancelable_arg))
+    return;
+  v8::Local<v8::Value> data_arg = info[3];
+  TOSTRING_VOID(V8StringResource<>, origin_arg, info[4]);
+  TOSTRING_VOID(V8StringResource<>, last_event_id_arg, info[5]);
+  EventTarget* source_arg =
+      V8EventTarget::toImplWithTypeCheck(info.GetIsolate(), info[6]);
+  MessagePortArray* port_array = nullptr;
+  const int kPortArrayIndex = 7;
+  if (!IsUndefinedOrNull(info[kPortArrayIndex])) {
+    port_array = new MessagePortArray;
+    *port_array = ToMemberNativeArray<MessagePort>(
+        info[kPortArrayIndex], kPortArrayIndex + 1, info.GetIsolate(),
+        exception_state);
+    if (exception_state.HadException())
+      return;
+  }
+  event->initMessageEvent(
+      type_arg, can_bubble_arg, cancelable_arg,
+      ScriptValue(ScriptState::Current(info.GetIsolate()), data_arg),
+      origin_arg, last_event_id_arg, source_arg, port_array);
 }
 
-} // namespace blink
+}  // namespace blink

@@ -25,688 +25,667 @@
 
 #include "core/editing/Position.h"
 
+#include <stdio.h>
+#include <ostream>  // NOLINT
 #include "core/dom/shadow/ElementShadow.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/TextAffinity.h"
-#include "wtf/text/CString.h"
-#include <stdio.h>
-#include <ostream> // NOLINT
+#include "platform/wtf/text/CString.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
 #if DCHECK_IS_ON()
-static bool canBeAnchorNode(Node* node)
-{
-    return !node || !node->isPseudoElement();
+template <typename Strategy>
+static bool CanBeAnchorNode(Node*);
+
+template <>
+bool CanBeAnchorNode<EditingStrategy>(Node* node) {
+  return !node || !node->IsPseudoElement();
+}
+
+template <>
+bool CanBeAnchorNode<EditingInFlatTreeStrategy>(Node* node) {
+  return CanBeAnchorNode<EditingStrategy>(node) &&
+         node->CanParticipateInFlatTree();
 }
 #endif
 
 template <typename Strategy>
-const TreeScope* PositionTemplate<Strategy>::commonAncestorTreeScope(const PositionTemplate<Strategy>& a, const PositionTemplate<Strategy>& b)
-{
-    if (!a.computeContainerNode() || !b.computeContainerNode())
-        return nullptr;
-    return a.computeContainerNode()->treeScope().commonAncestorTreeScope(b.computeContainerNode()->treeScope());
-}
-
-
-template <typename Strategy>
-PositionTemplate<Strategy> PositionTemplate<Strategy>::editingPositionOf(Node* anchorNode, int offset)
-{
-    if (!anchorNode || anchorNode->isTextNode())
-        return PositionTemplate<Strategy>(anchorNode, offset);
-
-    if (!Strategy::editingIgnoresContent(anchorNode))
-        return PositionTemplate<Strategy>(anchorNode, offset);
-
-    if (offset == 0)
-        return PositionTemplate<Strategy>(anchorNode, PositionAnchorType::BeforeAnchor);
-
-    // Note: |offset| can be >= 1, if |anchorNode| have child nodes, e.g.
-    // using Node.appendChild() to add a child node TEXTAREA.
-    DCHECK_GE(offset, 1);
-    return PositionTemplate<Strategy>(anchorNode, PositionAnchorType::AfterAnchor);
+DEFINE_TRACE(PositionTemplate<Strategy>) {
+  visitor->Trace(anchor_node_);
 }
 
 template <typename Strategy>
-PositionTemplate<Strategy>::PositionTemplate(Node* anchorNode, PositionAnchorType anchorType)
-    : m_anchorNode(anchorNode)
-    , m_offset(0)
-    , m_anchorType(anchorType)
-{
-    if (!m_anchorNode) {
-        m_anchorType = PositionAnchorType::OffsetInAnchor;
-        return;
-    }
-    if (m_anchorNode->isTextNode()) {
-        DCHECK(m_anchorType == PositionAnchorType::BeforeAnchor || m_anchorType == PositionAnchorType::AfterAnchor);
-        return;
-    }
-    if (m_anchorNode->isDocumentNode()) {
-        // Since |RangeBoundaryPoint| can't represent before/after Document, we
-        // should not use them.
-        DCHECK(isBeforeChildren() || isAfterChildren()) << m_anchorType;
-        return;
-    }
+const TreeScope* PositionTemplate<Strategy>::CommonAncestorTreeScope(
+    const PositionTemplate<Strategy>& a,
+    const PositionTemplate<Strategy>& b) {
+  if (!a.ComputeContainerNode() || !b.ComputeContainerNode())
+    return nullptr;
+  return a.ComputeContainerNode()->GetTreeScope().CommonAncestorTreeScope(
+      b.ComputeContainerNode()->GetTreeScope());
+}
+
+template <typename Strategy>
+PositionTemplate<Strategy> PositionTemplate<Strategy>::EditingPositionOf(
+    Node* anchor_node,
+    int offset) {
+  if (!anchor_node || anchor_node->IsTextNode())
+    return PositionTemplate<Strategy>(anchor_node, offset);
+
+  if (!EditingIgnoresContent(*anchor_node))
+    return PositionTemplate<Strategy>(anchor_node, offset);
+
+  if (offset == 0)
+    return PositionTemplate<Strategy>(anchor_node,
+                                      PositionAnchorType::kBeforeAnchor);
+
+  // Note: |offset| can be >= 1, if |anchorNode| have child nodes, e.g.
+  // using Node.appendChild() to add a child node TEXTAREA.
+  DCHECK_GE(offset, 1);
+  return PositionTemplate<Strategy>(anchor_node,
+                                    PositionAnchorType::kAfterAnchor);
+}
+
+template <typename Strategy>
+PositionTemplate<Strategy>::PositionTemplate(Node* anchor_node,
+                                             PositionAnchorType anchor_type)
+    : anchor_node_(anchor_node), offset_(0), anchor_type_(anchor_type) {
+  if (!anchor_node_) {
+    anchor_type_ = PositionAnchorType::kOffsetInAnchor;
+    return;
+  }
+  if (anchor_node_->IsTextNode()) {
+    DCHECK(anchor_type_ == PositionAnchorType::kBeforeAnchor ||
+           anchor_type_ == PositionAnchorType::kAfterAnchor);
+    return;
+  }
+  if (anchor_node_->IsDocumentNode()) {
+    // Since |RangeBoundaryPoint| can't represent before/after Document, we
+    // should not use them.
+    DCHECK(IsBeforeChildren() || IsAfterChildren()) << anchor_type_;
+    return;
+  }
 #if DCHECK_IS_ON()
-    DCHECK(canBeAnchorNode(m_anchorNode.get()));
+  DCHECK(CanBeAnchorNode<Strategy>(anchor_node_.Get())) << anchor_node_;
 #endif
-    DCHECK_NE(m_anchorType, PositionAnchorType::OffsetInAnchor);
+  DCHECK_NE(anchor_type_, PositionAnchorType::kOffsetInAnchor);
 }
 
 template <typename Strategy>
-PositionTemplate<Strategy>::PositionTemplate(Node* anchorNode, int offset)
-    : m_anchorNode(anchorNode)
-    , m_offset(offset)
-    , m_anchorType(PositionAnchorType::OffsetInAnchor)
-{
-    if (m_anchorNode)
-        DCHECK_GE(offset, 0);
-    else
-        DCHECK_EQ(offset, 0);
+PositionTemplate<Strategy>::PositionTemplate(Node* anchor_node, int offset)
+    : anchor_node_(anchor_node),
+      offset_(offset),
+      anchor_type_(PositionAnchorType::kOffsetInAnchor) {
+  if (anchor_node_)
+    DCHECK_GE(offset, 0);
+  else
+    DCHECK_EQ(offset, 0);
 #if DCHECK_IS_ON()
-    DCHECK(canBeAnchorNode(m_anchorNode.get()));
+  DCHECK(CanBeAnchorNode<Strategy>(anchor_node_.Get())) << anchor_node_;
 #endif
 }
 
 template <typename Strategy>
 PositionTemplate<Strategy>::PositionTemplate(const PositionTemplate& other)
-    : m_anchorNode(other.m_anchorNode)
-    , m_offset(other.m_offset)
-    , m_anchorType(other.m_anchorType)
-{
-}
+    : anchor_node_(other.anchor_node_),
+      offset_(other.offset_),
+      anchor_type_(other.anchor_type_) {}
 
 // --
 
 template <typename Strategy>
-Node* PositionTemplate<Strategy>::computeContainerNode() const
-{
-    if (!m_anchorNode)
-        return 0;
-
-    switch (anchorType()) {
-    case PositionAnchorType::BeforeChildren:
-    case PositionAnchorType::AfterChildren:
-    case PositionAnchorType::OffsetInAnchor:
-        return m_anchorNode.get();
-    case PositionAnchorType::BeforeAnchor:
-    case PositionAnchorType::AfterAnchor:
-        return Strategy::parent(*m_anchorNode);
-    }
-    NOTREACHED();
+Node* PositionTemplate<Strategy>::ComputeContainerNode() const {
+  if (!anchor_node_)
     return 0;
+
+  switch (AnchorType()) {
+    case PositionAnchorType::kBeforeChildren:
+    case PositionAnchorType::kAfterChildren:
+    case PositionAnchorType::kOffsetInAnchor:
+      return anchor_node_.Get();
+    case PositionAnchorType::kBeforeAnchor:
+    case PositionAnchorType::kAfterAnchor:
+      return Strategy::Parent(*anchor_node_);
+  }
+  NOTREACHED();
+  return 0;
 }
 
 template <typename Strategy>
-int PositionTemplate<Strategy>::computeOffsetInContainerNode() const
-{
-    if (!m_anchorNode)
-        return 0;
-
-    switch (anchorType()) {
-    case PositionAnchorType::BeforeChildren:
-        return 0;
-    case PositionAnchorType::AfterChildren:
-        return lastOffsetInNode(m_anchorNode.get());
-    case PositionAnchorType::OffsetInAnchor:
-        return minOffsetForNode(m_anchorNode.get(), m_offset);
-    case PositionAnchorType::BeforeAnchor:
-        return Strategy::index(*m_anchorNode);
-    case PositionAnchorType::AfterAnchor:
-        return Strategy::index(*m_anchorNode) + 1;
-    }
-    NOTREACHED();
+int PositionTemplate<Strategy>::ComputeOffsetInContainerNode() const {
+  if (!anchor_node_)
     return 0;
+
+  switch (AnchorType()) {
+    case PositionAnchorType::kBeforeChildren:
+      return 0;
+    case PositionAnchorType::kAfterChildren:
+      return LastOffsetInNode(anchor_node_.Get());
+    case PositionAnchorType::kOffsetInAnchor:
+      return MinOffsetForNode(anchor_node_.Get(), offset_);
+    case PositionAnchorType::kBeforeAnchor:
+      return Strategy::Index(*anchor_node_);
+    case PositionAnchorType::kAfterAnchor:
+      return Strategy::Index(*anchor_node_) + 1;
+  }
+  NOTREACHED();
+  return 0;
 }
 
 // Neighbor-anchored positions are invalid DOM positions, so they need to be
 // fixed up before handing them off to the Range object.
 template <typename Strategy>
-PositionTemplate<Strategy> PositionTemplate<Strategy>::parentAnchoredEquivalent() const
-{
-    if (!m_anchorNode)
-        return PositionTemplate<Strategy>();
+PositionTemplate<Strategy>
+PositionTemplate<Strategy>::ParentAnchoredEquivalent() const {
+  if (!anchor_node_)
+    return PositionTemplate<Strategy>();
 
-    // FIXME: This should only be necessary for legacy positions, but is also needed for positions before and after Tables
-    if (m_offset == 0 && !isAfterAnchorOrAfterChildren()) {
-        if (Strategy::parent(*m_anchorNode) && (Strategy::editingIgnoresContent(m_anchorNode.get()) || isDisplayInsideTable(m_anchorNode.get())))
-            return inParentBeforeNode(*m_anchorNode);
-        return PositionTemplate<Strategy>(m_anchorNode.get(), 0);
-    }
-    if (!m_anchorNode->offsetInCharacters()
-        && (isAfterAnchorOrAfterChildren() || static_cast<unsigned>(m_offset) == m_anchorNode->countChildren())
-        && (Strategy::editingIgnoresContent(m_anchorNode.get()) || isDisplayInsideTable(m_anchorNode.get()))
-        && computeContainerNode()) {
-        return inParentAfterNode(*m_anchorNode);
-    }
+  // FIXME: This should only be necessary for legacy positions, but is also
+  // needed for positions before and after Tables
+  if (offset_ == 0 && !IsAfterAnchorOrAfterChildren()) {
+    if (Strategy::Parent(*anchor_node_) &&
+        (EditingIgnoresContent(*anchor_node_) ||
+         IsDisplayInsideTable(anchor_node_.Get())))
+      return InParentBeforeNode(*anchor_node_);
+    return PositionTemplate<Strategy>(anchor_node_.Get(), 0);
+  }
+  if (!anchor_node_->IsCharacterDataNode() &&
+      (IsAfterAnchorOrAfterChildren() ||
+       static_cast<unsigned>(offset_) == anchor_node_->CountChildren()) &&
+      (EditingIgnoresContent(*anchor_node_) ||
+       IsDisplayInsideTable(anchor_node_.Get())) &&
+      ComputeContainerNode()) {
+    return InParentAfterNode(*anchor_node_);
+  }
 
-    return PositionTemplate<Strategy>(computeContainerNode(), computeOffsetInContainerNode());
+  return PositionTemplate<Strategy>(ComputeContainerNode(),
+                                    ComputeOffsetInContainerNode());
 }
 
 template <typename Strategy>
-PositionTemplate<Strategy> PositionTemplate<Strategy>::toOffsetInAnchor() const
-{
-    if (isNull())
-        return PositionTemplate<Strategy>();
+PositionTemplate<Strategy> PositionTemplate<Strategy>::ToOffsetInAnchor()
+    const {
+  if (IsNull())
+    return PositionTemplate<Strategy>();
 
-    return PositionTemplate<Strategy>(computeContainerNode(), computeOffsetInContainerNode());
+  return PositionTemplate<Strategy>(ComputeContainerNode(),
+                                    ComputeOffsetInContainerNode());
 }
 
 template <typename Strategy>
-int PositionTemplate<Strategy>::computeEditingOffset() const
-{
-    if (isAfterAnchorOrAfterChildren())
-        return Strategy::lastOffsetForEditing(m_anchorNode.get());
-    return m_offset;
+int PositionTemplate<Strategy>::ComputeEditingOffset() const {
+  if (IsAfterAnchorOrAfterChildren())
+    return Strategy::LastOffsetForEditing(anchor_node_.Get());
+  return offset_;
 }
 
 template <typename Strategy>
-Node* PositionTemplate<Strategy>::computeNodeBeforePosition() const
-{
-    if (!m_anchorNode)
-        return 0;
-    switch (anchorType()) {
-    case PositionAnchorType::BeforeChildren:
-        return 0;
-    case PositionAnchorType::AfterChildren:
-        return Strategy::lastChild(*m_anchorNode);
-    case PositionAnchorType::OffsetInAnchor:
-        return m_offset ? Strategy::childAt(*m_anchorNode, m_offset - 1) : 0;
-    case PositionAnchorType::BeforeAnchor:
-        return Strategy::previousSibling(*m_anchorNode);
-    case PositionAnchorType::AfterAnchor:
-        return m_anchorNode.get();
-    }
-    NOTREACHED();
+Node* PositionTemplate<Strategy>::ComputeNodeBeforePosition() const {
+  if (!anchor_node_)
     return 0;
+  switch (AnchorType()) {
+    case PositionAnchorType::kBeforeChildren:
+      return 0;
+    case PositionAnchorType::kAfterChildren:
+      return Strategy::LastChild(*anchor_node_);
+    case PositionAnchorType::kOffsetInAnchor:
+      return offset_ ? Strategy::ChildAt(*anchor_node_, offset_ - 1) : 0;
+    case PositionAnchorType::kBeforeAnchor:
+      return Strategy::PreviousSibling(*anchor_node_);
+    case PositionAnchorType::kAfterAnchor:
+      return anchor_node_.Get();
+  }
+  NOTREACHED();
+  return 0;
 }
 
 template <typename Strategy>
-Node* PositionTemplate<Strategy>::computeNodeAfterPosition() const
-{
-    if (!m_anchorNode)
-        return 0;
-
-    switch (anchorType()) {
-    case PositionAnchorType::BeforeChildren:
-        return Strategy::firstChild(*m_anchorNode);
-    case PositionAnchorType::AfterChildren:
-        return 0;
-    case PositionAnchorType::OffsetInAnchor:
-        return Strategy::childAt(*m_anchorNode, m_offset);
-    case PositionAnchorType::BeforeAnchor:
-        return m_anchorNode.get();
-    case PositionAnchorType::AfterAnchor:
-        return Strategy::nextSibling(*m_anchorNode);
-    }
-    NOTREACHED();
+Node* PositionTemplate<Strategy>::ComputeNodeAfterPosition() const {
+  if (!anchor_node_)
     return 0;
+
+  switch (AnchorType()) {
+    case PositionAnchorType::kBeforeChildren:
+      return Strategy::FirstChild(*anchor_node_);
+    case PositionAnchorType::kAfterChildren:
+      return 0;
+    case PositionAnchorType::kOffsetInAnchor:
+      return Strategy::ChildAt(*anchor_node_, offset_);
+    case PositionAnchorType::kBeforeAnchor:
+      return anchor_node_.Get();
+    case PositionAnchorType::kAfterAnchor:
+      return Strategy::NextSibling(*anchor_node_);
+  }
+  NOTREACHED();
+  return 0;
 }
 
 // An implementation of |Range::firstNode()|.
 template <typename Strategy>
-Node* PositionTemplate<Strategy>::nodeAsRangeFirstNode() const
-{
-    if (!m_anchorNode)
-        return nullptr;
-    if (!isOffsetInAnchor())
-        return toOffsetInAnchor().nodeAsRangeFirstNode();
-    if (m_anchorNode->offsetInCharacters())
-        return m_anchorNode.get();
-    if (Node* child = Strategy::childAt(*m_anchorNode, m_offset))
-        return child;
-    if (!m_offset)
-        return m_anchorNode.get();
-    return Strategy::nextSkippingChildren(*m_anchorNode);
+Node* PositionTemplate<Strategy>::NodeAsRangeFirstNode() const {
+  if (!anchor_node_)
+    return nullptr;
+  if (!IsOffsetInAnchor())
+    return ToOffsetInAnchor().NodeAsRangeFirstNode();
+  if (anchor_node_->IsCharacterDataNode())
+    return anchor_node_.Get();
+  if (Node* child = Strategy::ChildAt(*anchor_node_, offset_))
+    return child;
+  if (!offset_)
+    return anchor_node_.Get();
+  return Strategy::NextSkippingChildren(*anchor_node_);
 }
 
 template <typename Strategy>
-Node* PositionTemplate<Strategy>::nodeAsRangeLastNode() const
-{
-    if (isNull())
-        return nullptr;
-    if (Node* pastLastNode = nodeAsRangePastLastNode())
-        return Strategy::previous(*pastLastNode);
-    return &Strategy::lastWithinOrSelf(*computeContainerNode());
+Node* PositionTemplate<Strategy>::NodeAsRangeLastNode() const {
+  if (IsNull())
+    return nullptr;
+  if (Node* past_last_node = NodeAsRangePastLastNode())
+    return Strategy::Previous(*past_last_node);
+  return &Strategy::LastWithinOrSelf(*ComputeContainerNode());
 }
 
 // An implementation of |Range::pastLastNode()|.
 template <typename Strategy>
-Node* PositionTemplate<Strategy>::nodeAsRangePastLastNode() const
-{
-    if (!m_anchorNode)
-        return nullptr;
-    if (!isOffsetInAnchor())
-        return toOffsetInAnchor().nodeAsRangePastLastNode();
-    if (m_anchorNode->offsetInCharacters())
-        return Strategy::nextSkippingChildren(*m_anchorNode);
-    if (Node* child = Strategy::childAt(*m_anchorNode, m_offset))
-        return child;
-    return Strategy::nextSkippingChildren(*m_anchorNode);
+Node* PositionTemplate<Strategy>::NodeAsRangePastLastNode() const {
+  if (!anchor_node_)
+    return nullptr;
+  if (!IsOffsetInAnchor())
+    return ToOffsetInAnchor().NodeAsRangePastLastNode();
+  if (anchor_node_->IsCharacterDataNode())
+    return Strategy::NextSkippingChildren(*anchor_node_);
+  if (Node* child = Strategy::ChildAt(*anchor_node_, offset_))
+    return child;
+  return Strategy::NextSkippingChildren(*anchor_node_);
 }
 
 template <typename Strategy>
-Node* PositionTemplate<Strategy>::commonAncestorContainer(const PositionTemplate<Strategy>& other) const
-{
-    return Strategy::commonAncestor(*computeContainerNode(), *other.computeContainerNode());
+Node* PositionTemplate<Strategy>::CommonAncestorContainer(
+    const PositionTemplate<Strategy>& other) const {
+  return Strategy::CommonAncestor(*ComputeContainerNode(),
+                                  *other.ComputeContainerNode());
 }
 
-int comparePositions(const PositionInFlatTree& positionA, const PositionInFlatTree& positionB)
-{
-    DCHECK(positionA.isNotNull());
-    DCHECK(positionB.isNotNull());
+int ComparePositions(const PositionInFlatTree& position_a,
+                     const PositionInFlatTree& position_b) {
+  DCHECK(position_a.IsNotNull());
+  DCHECK(position_b.IsNotNull());
 
-    positionA.anchorNode()->updateDistribution();
-    Node* containerA = positionA.computeContainerNode();
-    positionB.anchorNode()->updateDistribution();
-    Node* containerB = positionB.computeContainerNode();
-    int offsetA = positionA.computeOffsetInContainerNode();
-    int offsetB = positionB.computeOffsetInContainerNode();
-    return comparePositionsInFlatTree(containerA, offsetA, containerB, offsetB);
-}
-
-template <typename Strategy>
-int PositionTemplate<Strategy>::compareTo(const PositionTemplate<Strategy>& other) const
-{
-    return comparePositions(*this, other);
+  position_a.AnchorNode()->UpdateDistribution();
+  Node* container_a = position_a.ComputeContainerNode();
+  position_b.AnchorNode()->UpdateDistribution();
+  Node* container_b = position_b.ComputeContainerNode();
+  int offset_a = position_a.ComputeOffsetInContainerNode();
+  int offset_b = position_b.ComputeOffsetInContainerNode();
+  return ComparePositionsInFlatTree(container_a, offset_a, container_b,
+                                    offset_b);
 }
 
 template <typename Strategy>
-bool PositionTemplate<Strategy>::operator<(const PositionTemplate<Strategy>& other) const
-{
-    return comparePositions(*this, other) < 0;
+int PositionTemplate<Strategy>::CompareTo(
+    const PositionTemplate<Strategy>& other) const {
+  return ComparePositions(*this, other);
 }
 
 template <typename Strategy>
-bool PositionTemplate<Strategy>::operator<=(const PositionTemplate<Strategy>& other) const
-{
-    return comparePositions(*this, other) <= 0;
+bool PositionTemplate<Strategy>::operator<(
+    const PositionTemplate<Strategy>& other) const {
+  return ComparePositions(*this, other) < 0;
 }
 
 template <typename Strategy>
-bool PositionTemplate<Strategy>::operator>(const PositionTemplate<Strategy>& other) const
-{
-    return comparePositions(*this, other) > 0;
+bool PositionTemplate<Strategy>::operator<=(
+    const PositionTemplate<Strategy>& other) const {
+  return ComparePositions(*this, other) <= 0;
 }
 
 template <typename Strategy>
-bool PositionTemplate<Strategy>::operator>=(const PositionTemplate<Strategy>& other) const
-{
-    return comparePositions(*this, other) >= 0;
+bool PositionTemplate<Strategy>::operator>(
+    const PositionTemplate<Strategy>& other) const {
+  return ComparePositions(*this, other) > 0;
 }
 
 template <typename Strategy>
-bool PositionTemplate<Strategy>::atFirstEditingPositionForNode() const
-{
-    if (isNull())
-        return true;
-    // FIXME: Position before anchor shouldn't be considered as at the first editing position for node
-    // since that position resides outside of the node.
-    switch (m_anchorType) {
-    case PositionAnchorType::OffsetInAnchor:
-        return m_offset == 0;
-    case PositionAnchorType::BeforeChildren:
-    case PositionAnchorType::BeforeAnchor:
-        return true;
-    case PositionAnchorType::AfterChildren:
-    case PositionAnchorType::AfterAnchor:
-        // TODO(yosin) We should use |Strategy::lastOffsetForEditing()| instead
-        // of DOM tree version.
-        return !EditingStrategy::lastOffsetForEditing(anchorNode());
+bool PositionTemplate<Strategy>::operator>=(
+    const PositionTemplate<Strategy>& other) const {
+  return ComparePositions(*this, other) >= 0;
+}
+
+template <typename Strategy>
+bool PositionTemplate<Strategy>::AtFirstEditingPositionForNode() const {
+  if (IsNull())
+    return true;
+  // FIXME: Position before anchor shouldn't be considered as at the first
+  // editing position for node since that position resides outside of the node.
+  switch (anchor_type_) {
+    case PositionAnchorType::kOffsetInAnchor:
+      return offset_ == 0;
+    case PositionAnchorType::kBeforeChildren:
+    case PositionAnchorType::kBeforeAnchor:
+      return true;
+    case PositionAnchorType::kAfterChildren:
+    case PositionAnchorType::kAfterAnchor:
+      // TODO(yosin) We should use |Strategy::lastOffsetForEditing()| instead
+      // of DOM tree version.
+      return !EditingStrategy::LastOffsetForEditing(AnchorNode());
+  }
+  NOTREACHED();
+  return false;
+}
+
+template <typename Strategy>
+bool PositionTemplate<Strategy>::AtLastEditingPositionForNode() const {
+  if (IsNull())
+    return true;
+  // TODO(yosin): Position after anchor shouldn't be considered as at the
+  // first editing position for node since that position resides outside of
+  // the node.
+  // TODO(yosin) We should use |Strategy::lastOffsetForEditing()| instead of
+  // DOM tree version.
+  return IsAfterAnchorOrAfterChildren() ||
+         offset_ >= EditingStrategy::LastOffsetForEditing(AnchorNode());
+}
+
+template <typename Strategy>
+bool PositionTemplate<Strategy>::AtStartOfTree() const {
+  if (IsNull())
+    return true;
+  return !Strategy::Parent(*AnchorNode()) && offset_ == 0;
+}
+
+template <typename Strategy>
+bool PositionTemplate<Strategy>::AtEndOfTree() const {
+  if (IsNull())
+    return true;
+  // TODO(yosin) We should use |Strategy::lastOffsetForEditing()| instead of
+  // DOM tree version.
+  return !Strategy::Parent(*AnchorNode()) &&
+         offset_ >= EditingStrategy::LastOffsetForEditing(AnchorNode());
+}
+
+// static
+template <typename Strategy>
+PositionTemplate<Strategy> PositionTemplate<Strategy>::InParentBeforeNode(
+    const Node& node) {
+  // FIXME: This should DCHECK(node.parentNode()). At least one caller currently
+  // hits this DCHECK though, which indicates that the caller is trying to make
+  // a position relative to a disconnected node (which is likely an error)
+  // Specifically, editing/deleting/delete-ligature-001.html crashes with
+  // DCHECK(node->parentNode())
+  return PositionTemplate<Strategy>(Strategy::Parent(node),
+                                    Strategy::Index(node));
+}
+
+// static
+template <typename Strategy>
+PositionTemplate<Strategy> PositionTemplate<Strategy>::InParentAfterNode(
+    const Node& node) {
+  DCHECK(node.parentNode()) << node;
+  return PositionTemplate<Strategy>(Strategy::Parent(node),
+                                    Strategy::Index(node) + 1);
+}
+
+// static
+template <typename Strategy>
+PositionTemplate<Strategy> PositionTemplate<Strategy>::BeforeNode(
+    Node* anchor_node) {
+  DCHECK(anchor_node);
+  return PositionTemplate<Strategy>(anchor_node,
+                                    PositionAnchorType::kBeforeAnchor);
+}
+
+// static
+template <typename Strategy>
+PositionTemplate<Strategy> PositionTemplate<Strategy>::AfterNode(
+    Node* anchor_node) {
+  DCHECK(anchor_node);
+  return PositionTemplate<Strategy>(anchor_node,
+                                    PositionAnchorType::kAfterAnchor);
+}
+
+// static
+template <typename Strategy>
+int PositionTemplate<Strategy>::LastOffsetInNode(Node* node) {
+  return node->IsCharacterDataNode()
+             ? node->MaxCharacterOffset()
+             : static_cast<int>(Strategy::CountChildren(*node));
+}
+
+// static
+template <typename Strategy>
+PositionTemplate<Strategy> PositionTemplate<Strategy>::FirstPositionInNode(
+    Node* anchor_node) {
+  if (anchor_node->IsTextNode())
+    return PositionTemplate<Strategy>(anchor_node, 0);
+  return PositionTemplate<Strategy>(anchor_node,
+                                    PositionAnchorType::kBeforeChildren);
+}
+
+// static
+template <typename Strategy>
+PositionTemplate<Strategy> PositionTemplate<Strategy>::LastPositionInNode(
+    Node* anchor_node) {
+  if (anchor_node->IsTextNode())
+    return PositionTemplate<Strategy>(anchor_node,
+                                      LastOffsetInNode(anchor_node));
+  return PositionTemplate<Strategy>(anchor_node,
+                                    PositionAnchorType::kAfterChildren);
+}
+
+// static
+template <typename Strategy>
+int PositionTemplate<Strategy>::MinOffsetForNode(Node* anchor_node,
+                                                 int offset) {
+  if (anchor_node->IsCharacterDataNode())
+    return std::min(offset, anchor_node->MaxCharacterOffset());
+
+  int new_offset = 0;
+  for (Node* node = Strategy::FirstChild(*anchor_node);
+       node && new_offset < offset; node = Strategy::NextSibling(*node))
+    new_offset++;
+
+  return new_offset;
+}
+
+// static
+template <typename Strategy>
+PositionTemplate<Strategy>
+PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(Node* node) {
+  if (!node)
+    return PositionTemplate<Strategy>();
+  return EditingIgnoresContent(*node) ? BeforeNode(node)
+                                      : FirstPositionInNode(node);
+}
+
+// static
+template <typename Strategy>
+PositionTemplate<Strategy>
+PositionTemplate<Strategy>::LastPositionInOrAfterNode(Node* node) {
+  if (!node)
+    return PositionTemplate<Strategy>();
+  return EditingIgnoresContent(*node) ? AfterNode(node)
+                                      : LastPositionInNode(node);
+}
+
+PositionInFlatTree ToPositionInFlatTree(const Position& pos) {
+  if (pos.IsNull())
+    return PositionInFlatTree();
+
+  Node* const anchor = pos.AnchorNode();
+  if (pos.IsOffsetInAnchor()) {
+    if (anchor->IsCharacterDataNode())
+      return PositionInFlatTree(anchor, pos.ComputeOffsetInContainerNode());
+    DCHECK(!anchor->IsActiveSlotOrActiveInsertionPoint());
+    int offset = pos.ComputeOffsetInContainerNode();
+    Node* child = NodeTraversal::ChildAt(*anchor, offset);
+    if (!child) {
+      if (anchor->IsShadowRoot())
+        return PositionInFlatTree(anchor->OwnerShadowHost(),
+                                  PositionAnchorType::kAfterChildren);
+      return PositionInFlatTree(anchor, PositionAnchorType::kAfterChildren);
     }
-    NOTREACHED();
-    return false;
-}
-
-template <typename Strategy>
-bool PositionTemplate<Strategy>::atLastEditingPositionForNode() const
-{
-    if (isNull())
-        return true;
-    // TODO(yosin): Position after anchor shouldn't be considered as at the
-    // first editing position for node since that position resides outside of
-    // the node.
-    // TODO(yosin) We should use |Strategy::lastOffsetForEditing()| instead of
-    // DOM tree version.
-    return isAfterAnchorOrAfterChildren() || m_offset >= EditingStrategy::lastOffsetForEditing(anchorNode());
-}
-
-template <typename Strategy>
-bool PositionTemplate<Strategy>::atStartOfTree() const
-{
-    if (isNull())
-        return true;
-    return !Strategy::parent(*anchorNode()) && m_offset == 0;
-}
-
-template <typename Strategy>
-bool PositionTemplate<Strategy>::atEndOfTree() const
-{
-    if (isNull())
-        return true;
-    // TODO(yosin) We should use |Strategy::lastOffsetForEditing()| instead of
-    // DOM tree version.
-    return !Strategy::parent(*anchorNode()) && m_offset >= EditingStrategy::lastOffsetForEditing(anchorNode());
-}
-
-// static
-template <typename Strategy>
-PositionTemplate<Strategy> PositionTemplate<Strategy>::inParentBeforeNode(const Node& node)
-{
-    // FIXME: This should DCHECK(node.parentNode())
-    // At least one caller currently hits this ASSERT though, which indicates
-    // that the caller is trying to make a position relative to a disconnected node (which is likely an error)
-    // Specifically, editing/deleting/delete-ligature-001.html crashes with DCHECK(node->parentNode())
-    return PositionTemplate<Strategy>(Strategy::parent(node), Strategy::index(node));
-}
-
-// static
-template <typename Strategy>
-PositionTemplate<Strategy> PositionTemplate<Strategy>::inParentAfterNode(const Node& node)
-{
-    DCHECK(node.parentNode()) << node;
-    return PositionTemplate<Strategy>(Strategy::parent(node), Strategy::index(node) + 1);
-}
-
-// static
-template <typename Strategy>
-PositionTemplate<Strategy> PositionTemplate<Strategy>::beforeNode(Node* anchorNode)
-{
-    DCHECK(anchorNode);
-    return PositionTemplate<Strategy>(anchorNode, PositionAnchorType::BeforeAnchor);
-}
-
-// static
-template <typename Strategy>
-PositionTemplate<Strategy> PositionTemplate<Strategy>::afterNode(Node* anchorNode)
-{
-    DCHECK(anchorNode);
-    return PositionTemplate<Strategy>(anchorNode, PositionAnchorType::AfterAnchor);
-}
-
-// static
-template <typename Strategy>
-int PositionTemplate<Strategy>::lastOffsetInNode(Node* node)
-{
-    return node->offsetInCharacters() ? node->maxCharacterOffset() : static_cast<int>(Strategy::countChildren(*node));
-}
-
-// static
-template <typename Strategy>
-PositionTemplate<Strategy> PositionTemplate<Strategy>::firstPositionInNode(Node* anchorNode)
-{
-    if (anchorNode->isTextNode())
-        return PositionTemplate<Strategy>(anchorNode, 0);
-    return PositionTemplate<Strategy>(anchorNode, PositionAnchorType::BeforeChildren);
-}
-
-// static
-template <typename Strategy>
-PositionTemplate<Strategy> PositionTemplate<Strategy>::lastPositionInNode(Node* anchorNode)
-{
-    if (anchorNode->isTextNode())
-        return PositionTemplate<Strategy>(anchorNode, lastOffsetInNode(anchorNode));
-    return PositionTemplate<Strategy>(anchorNode, PositionAnchorType::AfterChildren);
-}
-
-// static
-template <typename Strategy>
-int PositionTemplate<Strategy>::minOffsetForNode(Node* anchorNode, int offset)
-{
-    if (anchorNode->offsetInCharacters())
-        return std::min(offset, anchorNode->maxCharacterOffset());
-
-    int newOffset = 0;
-    for (Node* node = Strategy::firstChild(*anchorNode); node && newOffset < offset; node = Strategy::nextSibling(*node))
-        newOffset++;
-
-    return newOffset;
-}
-
-// static
-template <typename Strategy>
-PositionTemplate<Strategy> PositionTemplate<Strategy>::firstPositionInOrBeforeNode(Node* node)
-{
-    if (!node)
-        return PositionTemplate<Strategy>();
-    return Strategy::editingIgnoresContent(node) ? beforeNode(node) : firstPositionInNode(node);
-}
-
-// static
-template <typename Strategy>
-PositionTemplate<Strategy> PositionTemplate<Strategy>::lastPositionInOrAfterNode(Node* node)
-{
-    if (!node)
-        return PositionTemplate<Strategy>();
-    return Strategy::editingIgnoresContent(node) ? afterNode(node) : lastPositionInNode(node);
-}
-
-template <typename Strategy>
-void PositionTemplate<Strategy>::debugPosition(const char* msg) const
-{
-    static const char* const anchorTypes[] = {
-        "OffsetInAnchor",
-        "BeforeAnchor",
-        "AfterAnchor",
-        "BeforeChildren",
-        "AfterChildren",
-        "Invalid",
-    };
-
-    if (isNull()) {
-        fprintf(stderr, "Position [%s]: null\n", msg);
-        return;
+    child->UpdateDistribution();
+    if (child->IsActiveSlotOrActiveInsertionPoint()) {
+      if (anchor->IsShadowRoot())
+        return PositionInFlatTree(anchor->OwnerShadowHost(), offset);
+      return PositionInFlatTree(anchor, offset);
     }
+    if (Node* parent = FlatTreeTraversal::Parent(*child))
+      return PositionInFlatTree(parent, FlatTreeTraversal::Index(*child));
+    // When |pos| isn't appeared in flat tree, we map |pos| to after
+    // children of shadow host.
+    // e.g. "foo",0 in <progress>foo</progress>
+    if (anchor->IsShadowRoot())
+      return PositionInFlatTree(anchor->OwnerShadowHost(),
+                                PositionAnchorType::kAfterChildren);
+    return PositionInFlatTree(anchor, PositionAnchorType::kAfterChildren);
+  }
 
-    const char* anchorType = anchorTypes[std::min(static_cast<size_t>(m_anchorType), WTF_ARRAY_LENGTH(anchorTypes) - 1)];
-    if (m_anchorNode->isTextNode()) {
-        fprintf(stderr, "Position [%s]: %s [%p] %s, (%s) at %d\n", msg, anchorNode()->nodeName().utf8().data(), anchorNode(), anchorType, m_anchorNode->nodeValue().utf8().data(), m_offset);
-        return;
-    }
-
-    fprintf(stderr, "Position [%s]: %s [%p] %s at %d\n", msg, anchorNode()->nodeName().utf8().data(), anchorNode(), anchorType, m_offset);
+  if (anchor->IsShadowRoot())
+    return PositionInFlatTree(anchor->OwnerShadowHost(), pos.AnchorType());
+  // TODO(yosin): Once we have a test case for SLOT or active insertion point,
+  // this function should handle it.
+  return PositionInFlatTree(anchor, pos.AnchorType());
 }
 
-PositionInFlatTree toPositionInFlatTree(const Position& pos)
-{
-    if (pos.isNull())
-        return PositionInFlatTree();
-
-    if (pos.isOffsetInAnchor()) {
-        Node* anchor = pos.anchorNode();
-        if (anchor->offsetInCharacters())
-            return PositionInFlatTree(anchor, pos.computeOffsetInContainerNode());
-        DCHECK(!anchor->isSlotOrActiveInsertionPoint());
-        int offset = pos.computeOffsetInContainerNode();
-        Node* child = NodeTraversal::childAt(*anchor, offset);
-        if (!child) {
-            if (anchor->isShadowRoot())
-                return PositionInFlatTree(anchor->shadowHost(), PositionAnchorType::AfterChildren);
-            return PositionInFlatTree(anchor, PositionAnchorType::AfterChildren);
-        }
-        child->updateDistribution();
-        if (child->isSlotOrActiveInsertionPoint()) {
-            if (anchor->isShadowRoot())
-                return PositionInFlatTree(anchor->shadowHost(), offset);
-            return PositionInFlatTree(anchor, offset);
-        }
-        if (Node* parent = FlatTreeTraversal::parent(*child))
-            return PositionInFlatTree(parent, FlatTreeTraversal::index(*child));
-        // When |pos| isn't appeared in flat tree, we map |pos| to after
-        // children of shadow host.
-        // e.g. "foo",0 in <progress>foo</progress>
-        if (anchor->isShadowRoot())
-            return PositionInFlatTree(anchor->shadowHost(), PositionAnchorType::AfterChildren);
-        return PositionInFlatTree(anchor, PositionAnchorType::AfterChildren);
-    }
-
-    return PositionInFlatTree(pos.anchorNode(), pos.anchorType());
+Position ToPositionInDOMTree(const Position& position) {
+  return position;
 }
 
-Position toPositionInDOMTree(const Position& position)
-{
-    return position;
-}
+Position ToPositionInDOMTree(const PositionInFlatTree& position) {
+  if (position.IsNull())
+    return Position();
 
-Position toPositionInDOMTree(const PositionInFlatTree& position)
-{
-    if (position.isNull())
-        return Position();
+  Node* anchor_node = position.AnchorNode();
 
-    Node* anchorNode = position.anchorNode();
+  switch (position.AnchorType()) {
+    case PositionAnchorType::kAfterChildren:
+      // FIXME: When anchorNode is <img>, assertion fails in the constructor.
+      return Position(anchor_node, PositionAnchorType::kAfterChildren);
+    case PositionAnchorType::kAfterAnchor:
+      return Position::AfterNode(anchor_node);
+    case PositionAnchorType::kBeforeChildren:
+      return Position(anchor_node, PositionAnchorType::kBeforeChildren);
+    case PositionAnchorType::kBeforeAnchor:
+      return Position::BeforeNode(anchor_node);
+    case PositionAnchorType::kOffsetInAnchor: {
+      int offset = position.OffsetInContainerNode();
+      if (anchor_node->IsCharacterDataNode())
+        return Position(anchor_node, offset);
+      Node* child = FlatTreeTraversal::ChildAt(*anchor_node, offset);
+      if (child)
+        return Position(child->parentNode(), child->NodeIndex());
+      if (!position.OffsetInContainerNode())
+        return Position(anchor_node, PositionAnchorType::kBeforeChildren);
 
-    switch (position.anchorType()) {
-    case PositionAnchorType::AfterChildren:
-        // FIXME: When anchorNode is <img>, assertion fails in the constructor.
-        return Position(anchorNode, PositionAnchorType::AfterChildren);
-    case PositionAnchorType::AfterAnchor:
-        return Position::afterNode(anchorNode);
-    case PositionAnchorType::BeforeChildren:
-        return Position(anchorNode, PositionAnchorType::BeforeChildren);
-    case PositionAnchorType::BeforeAnchor:
-        return Position::beforeNode(anchorNode);
-    case PositionAnchorType::OffsetInAnchor: {
-        int offset = position.offsetInContainerNode();
-        if (anchorNode->offsetInCharacters())
-            return Position(anchorNode, offset);
-        Node* child = FlatTreeTraversal::childAt(*anchorNode, offset);
-        if (child)
-            return Position(child->parentNode(), child->nodeIndex());
-        if (!position.offsetInContainerNode())
-            return Position(anchorNode, PositionAnchorType::BeforeChildren);
-
-        // |child| is null when the position is at the end of the children.
-        // <div>foo|</div>
-        return Position(anchorNode, PositionAnchorType::AfterChildren);
+      // |child| is null when the position is at the end of the children.
+      // <div>foo|</div>
+      return Position(anchor_node, PositionAnchorType::kAfterChildren);
     }
     default:
-        NOTREACHED();
-        return Position();
+      NOTREACHED();
+      return Position();
+  }
+}
+
+template <typename Strategy>
+String PositionTemplate<Strategy>::ToAnchorTypeAndOffsetString() const {
+  switch (AnchorType()) {
+    case PositionAnchorType::kOffsetInAnchor: {
+      StringBuilder builder;
+      builder.Append("offsetInAnchor[");
+      builder.AppendNumber(offset_);
+      builder.Append("]");
+      return builder.ToString();
     }
+    case PositionAnchorType::kBeforeChildren:
+      return "beforeChildren";
+    case PositionAnchorType::kAfterChildren:
+      return "afterChildren";
+    case PositionAnchorType::kBeforeAnchor:
+      return "beforeAnchor";
+    case PositionAnchorType::kAfterAnchor:
+      return "afterAnchor";
+  }
+  NOTREACHED();
+  return g_empty_string;
 }
 
 #ifndef NDEBUG
 
 template <typename Strategy>
-void PositionTemplate<Strategy>::formatForDebugger(char* buffer, unsigned length) const
-{
-    StringBuilder result;
-
-    if (isNull()) {
-        result.append("<null>");
-    } else {
-        char s[1024];
-        result.append("offset ");
-        result.appendNumber(m_offset);
-        result.append(" of ");
-        anchorNode()->formatForDebugger(s, sizeof(s));
-        result.append(s);
-    }
-
-    strncpy(buffer, result.toString().utf8().data(), length - 1);
+void PositionTemplate<Strategy>::ShowTreeForThis() const {
+  if (!AnchorNode())
+    return;
+  LOG(INFO) << "\n"
+            << AnchorNode()->ToTreeStringForThis().Utf8().Data()
+            << ToAnchorTypeAndOffsetString().Utf8().Data();
 }
 
 template <typename Strategy>
-void PositionTemplate<Strategy>::showAnchorTypeAndOffset() const
-{
-    switch (anchorType()) {
-    case PositionAnchorType::OffsetInAnchor:
-        fputs("offset", stderr);
-        break;
-    case PositionAnchorType::BeforeChildren:
-        fputs("beforeChildren", stderr);
-        break;
-    case PositionAnchorType::AfterChildren:
-        fputs("afterChildren", stderr);
-        break;
-    case PositionAnchorType::BeforeAnchor:
-        fputs("before", stderr);
-        break;
-    case PositionAnchorType::AfterAnchor:
-        fputs("after", stderr);
-        break;
-    }
-    fprintf(stderr, ", offset:%d\n", m_offset);
-}
-
-template <typename Strategy>
-void PositionTemplate<Strategy>::showTreeForThis() const
-{
-    if (!anchorNode())
-        return;
-    anchorNode()->showTreeForThis();
-    showAnchorTypeAndOffset();
-}
-
-template <typename Strategy>
-void PositionTemplate<Strategy>::showTreeForThisInFlatTree() const
-{
-    if (!anchorNode())
-        return;
-    anchorNode()->showTreeForThisInFlatTree();
-    showAnchorTypeAndOffset();
+void PositionTemplate<Strategy>::ShowTreeForThisInFlatTree() const {
+  if (!AnchorNode())
+    return;
+  LOG(INFO) << "\n"
+            << AnchorNode()->ToFlatTreeStringForThis().Utf8().Data()
+            << ToAnchorTypeAndOffsetString().Utf8().Data();
 }
 
 #endif
 
 template <typename PositionType>
-static std::ostream& printPosition(std::ostream& ostream, const PositionType& position)
-{
-    if (position.isNull())
-        return ostream << "null";
-    ostream << position.anchorNode() << "@";
-    if (position.isOffsetInAnchor())
-        return ostream << position.offsetInContainerNode();
-    return ostream << position.anchorType();
+static std::ostream& PrintPosition(std::ostream& ostream,
+                                   const PositionType& position) {
+  if (position.IsNull())
+    return ostream << "null";
+  return ostream << position.AnchorNode() << "@"
+                 << position.ToAnchorTypeAndOffsetString().Utf8().Data();
 }
 
-std::ostream& operator<<(std::ostream& ostream, PositionAnchorType anchorType)
-{
-    switch (anchorType) {
-    case PositionAnchorType::AfterAnchor:
-        return ostream << "afterAnchor";
-    case PositionAnchorType::AfterChildren:
-        return ostream << "afterChildren";
-    case PositionAnchorType::BeforeAnchor:
-        return ostream << "beforeAnchor";
-    case PositionAnchorType::BeforeChildren:
-        return ostream << "beforeChildren";
-    case PositionAnchorType::OffsetInAnchor:
-        return ostream << "offsetInAnchor";
-    }
-    NOTREACHED();
-    return ostream << "anchorType=" << static_cast<int>(anchorType);
+std::ostream& operator<<(std::ostream& ostream,
+                         PositionAnchorType anchor_type) {
+  switch (anchor_type) {
+    case PositionAnchorType::kAfterAnchor:
+      return ostream << "afterAnchor";
+    case PositionAnchorType::kAfterChildren:
+      return ostream << "afterChildren";
+    case PositionAnchorType::kBeforeAnchor:
+      return ostream << "beforeAnchor";
+    case PositionAnchorType::kBeforeChildren:
+      return ostream << "beforeChildren";
+    case PositionAnchorType::kOffsetInAnchor:
+      return ostream << "offsetInAnchor";
+  }
+  NOTREACHED();
+  return ostream << "anchorType=" << static_cast<int>(anchor_type);
 }
 
-std::ostream& operator<<(std::ostream& ostream, const Position& position)
-{
-    return printPosition(ostream, position);
+std::ostream& operator<<(std::ostream& ostream, const Position& position) {
+  return PrintPosition(ostream, position);
 }
 
-std::ostream& operator<<(std::ostream& ostream, const PositionInFlatTree& position)
-{
-    return printPosition(ostream, position);
+std::ostream& operator<<(std::ostream& ostream,
+                         const PositionInFlatTree& position) {
+  return PrintPosition(ostream, position);
 }
 
 template class CORE_TEMPLATE_EXPORT PositionTemplate<EditingStrategy>;
 template class CORE_TEMPLATE_EXPORT PositionTemplate<EditingInFlatTreeStrategy>;
 
-} // namespace blink
+}  // namespace blink
 
 #ifndef NDEBUG
 
-void showTree(const blink::Position& pos)
-{
-    pos.showTreeForThis();
+void showTree(const blink::Position& pos) {
+  pos.ShowTreeForThis();
 }
 
-void showTree(const blink::Position* pos)
-{
-    if (pos)
-        pos->showTreeForThis();
-    else
-        fprintf(stderr, "Cannot showTree for (nil)\n");
+void showTree(const blink::Position* pos) {
+  if (pos)
+    pos->ShowTreeForThis();
+  else
+    LOG(INFO) << "Cannot showTree for <null>";
 }
 
 #endif

@@ -14,12 +14,22 @@ namespace content {
 class RenderFrameHost;
 }
 
+class GURL;
+class UsbChooserContext;
+
 // This implementation of the permission provider interface enforces the rules
 // of the WebUSB permission model. Devices are checked for WebUSB descriptors
 // granting access to the render frame's current origin as well as permission
 // granted by the user through a device chooser UI.
 class WebUSBPermissionProvider : public device::usb::PermissionProvider {
  public:
+  static bool HasDevicePermission(
+      UsbChooserContext* chooser_context,
+      const GURL& requesting_origin,
+      const GURL& embedding_origin,
+      bool is_embedded_frame,
+      scoped_refptr<const device::UsbDevice> device);
+
   explicit WebUSBPermissionProvider(
       content::RenderFrameHost* render_frame_host);
   ~WebUSBPermissionProvider() override;

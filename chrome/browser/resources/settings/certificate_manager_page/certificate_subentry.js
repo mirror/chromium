@@ -51,6 +51,7 @@ Polymer({
           action: action,
           subnode: this.model,
           certificateType: this.certificateType,
+          anchor: this.$.dots,
         }));
   },
 
@@ -69,7 +70,7 @@ Polymer({
 
     // Otherwise propagate the error to the parents, such that a dialog
     // displaying the error will be shown.
-    this.fire('certificates-error', error);
+    this.fire('certificates-error', {error: error, anchor: this.$.dots});
   },
 
   /**
@@ -151,6 +152,13 @@ Polymer({
 
   /** @private */
   closePopupMenu_: function() {
-    this.$$('iron-dropdown').close();
+    this.$$('dialog[is=cr-action-menu]').close();
+  },
+
+  /** @private */
+  onDotsTap_: function() {
+    var actionMenu = /** @type {!CrActionMenuElement} */(
+        this.$.menu.get());
+    actionMenu.showAt(this.$.dots);
   },
 });

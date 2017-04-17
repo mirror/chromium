@@ -30,22 +30,25 @@
 
 #include "core/inspector/InspectorMemoryAgent.h"
 
-#include "core/inspector/InstanceCounters.h"
+#include "platform/InstanceCounters.h"
 
 namespace blink {
 
-InspectorMemoryAgent::~InspectorMemoryAgent()
-{
-}
+using protocol::Response;
 
-void InspectorMemoryAgent::getDOMCounters(ErrorString*, int* documents, int* nodes, int* jsEventListeners)
-{
-    *documents = InstanceCounters::counterValue(InstanceCounters::DocumentCounter);
-    *nodes = InstanceCounters::counterValue(InstanceCounters::NodeCounter);
-    *jsEventListeners = InstanceCounters::counterValue(InstanceCounters::JSEventListenerCounter);
+InspectorMemoryAgent::~InspectorMemoryAgent() {}
+
+Response InspectorMemoryAgent::getDOMCounters(int* documents,
+                                              int* nodes,
+                                              int* js_event_listeners) {
+  *documents =
+      InstanceCounters::CounterValue(InstanceCounters::kDocumentCounter);
+  *nodes = InstanceCounters::CounterValue(InstanceCounters::kNodeCounter);
+  *js_event_listeners =
+      InstanceCounters::CounterValue(InstanceCounters::kJSEventListenerCounter);
+  return Response::OK();
 }
 
 InspectorMemoryAgent::InspectorMemoryAgent() = default;
 
-} // namespace blink
-
+}  // namespace blink

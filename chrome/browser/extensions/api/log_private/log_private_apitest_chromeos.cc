@@ -7,11 +7,11 @@
 
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/common/chrome_switches.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_debug_daemon_client.h"
-#include "content/public/browser/browser_thread.h"
 #include "extensions/common/extension_builder.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
@@ -32,14 +32,14 @@ class TestDebugDaemonClient : public chromeos::FakeDebugDaemonClient {
   ~TestDebugDaemonClient() override {}
 
   void DumpDebugLogs(bool is_compressed,
-                     base::File file,
-                     scoped_refptr<base::TaskRunner> task_runner,
+                     int file_descriptor,
                      const GetDebugLogsCallback& callback) override {
-    base::File* file_param = new base::File(std::move(file));
-    task_runner->PostTaskAndReply(
-        FROM_HERE,
-        base::Bind(
-            &GenerateTestLogDumpFile, test_file_, base::Owned(file_param)),
+    // dup() is needed as the file descriptor will be closed on the client side.
+    base::File* file_param = new base::File(dup(file_descriptor));
+    base::PostTaskWithTraitsAndReply(
+        FROM_HERE, base::TaskTraits().MayBlock(),
+        base::Bind(&GenerateTestLogDumpFile, test_file_,
+                   base::Owned(file_param)),
         base::Bind(callback, true));
   }
 
@@ -90,9 +90,9 @@ class LogPrivateApiTest : public ExtensionApiTest {
 IN_PROC_BROWSER_TEST_F(LogPrivateApiTest, DumpLogsAndCaptureEvents) {
   // Setup dummy HTTP server.
   host_resolver()->AddRule("www.test.com", "127.0.0.1");
-  ASSERT_TRUE(StartEmbeddedTestServer());
   embedded_test_server()->RegisterRequestHandler(
       base::Bind(&LogPrivateApiTest::HandleRequest, base::Unretained(this)));
+  ASSERT_TRUE(StartEmbeddedTestServer());
 
   ASSERT_TRUE(RunExtensionTest("log_private/dump_logs"));
 }

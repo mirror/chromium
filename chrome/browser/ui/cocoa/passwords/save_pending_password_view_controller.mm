@@ -24,7 +24,7 @@
   ManagePasswordsBubbleModel* model = self.model;
   if (model) {
     model->OnSaveClicked();
-    if (model->ReplaceToShowSignInPromoIfNeeded()) {
+    if (model->ReplaceToShowPromotionIfNeeded()) {
       [self.delegate refreshBubble];
       return;
     }
@@ -42,16 +42,10 @@
 - (NSView*)createPasswordView {
   if (self.model->pending_password().username_value.empty())
     return nil;
-  std::vector<const autofill::PasswordForm*> password_forms;
-  password_forms.push_back(&self.model->pending_password());
   passwordItem_.reset([[PasswordsListViewController alloc]
-      initWithModel:self.model
-              forms:password_forms]);
+      initWithModelAndForm:self.model
+                      form:&self.model->pending_password()]);
   return [passwordItem_ view];
-}
-
-- (BOOL)shouldShowGoogleSmartLockWelcome {
-  return self.model->ShouldShowGoogleSmartLockWelcome();
 }
 
 - (NSArray*)createButtonsAndAddThemToView:(NSView*)view {

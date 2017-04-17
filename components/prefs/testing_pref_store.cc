@@ -24,6 +24,10 @@ bool TestingPrefStore::GetValue(const std::string& key,
   return prefs_.GetValue(key, value);
 }
 
+std::unique_ptr<base::DictionaryValue> TestingPrefStore::GetValues() const {
+  return prefs_.AsDictionaryValue();
+}
+
 bool TestingPrefStore::GetMutableValue(const std::string& key,
                                        base::Value** value) {
   return prefs_.GetValue(key, value);
@@ -99,7 +103,8 @@ void TestingPrefStore::SetInitializationCompleted() {
 }
 
 void TestingPrefStore::NotifyPrefValueChanged(const std::string& key) {
-  FOR_EACH_OBSERVER(Observer, observers_, OnPrefValueChanged(key));
+  for (Observer& observer : observers_)
+    observer.OnPrefValueChanged(key);
 }
 
 void TestingPrefStore::NotifyInitializationCompleted() {
@@ -107,29 +112,27 @@ void TestingPrefStore::NotifyInitializationCompleted() {
   init_complete_ = true;
   if (read_success_ && read_error_ != PREF_READ_ERROR_NONE && error_delegate_)
     error_delegate_->OnError(read_error_);
-  FOR_EACH_OBSERVER(
-      Observer, observers_, OnInitializationCompleted(read_success_));
+  for (Observer& observer : observers_)
+    observer.OnInitializationCompleted(read_success_);
 }
 
 void TestingPrefStore::ReportValueChanged(const std::string& key,
                                           uint32_t flags) {
-  FOR_EACH_OBSERVER(Observer, observers_, OnPrefValueChanged(key));
+  for (Observer& observer : observers_)
+    observer.OnPrefValueChanged(key);
 }
 
 void TestingPrefStore::SetString(const std::string& key,
                                  const std::string& value) {
-  SetValue(key, base::WrapUnique(new base::StringValue(value)),
-           DEFAULT_PREF_WRITE_FLAGS);
+  SetValue(key, base::MakeUnique<base::Value>(value), DEFAULT_PREF_WRITE_FLAGS);
 }
 
 void TestingPrefStore::SetInteger(const std::string& key, int value) {
-  SetValue(key, base::WrapUnique(new base::FundamentalValue(value)),
-           DEFAULT_PREF_WRITE_FLAGS);
+  SetValue(key, base::MakeUnique<base::Value>(value), DEFAULT_PREF_WRITE_FLAGS);
 }
 
 void TestingPrefStore::SetBoolean(const std::string& key, bool value) {
-  SetValue(key, base::WrapUnique(new base::FundamentalValue(value)),
-           DEFAULT_PREF_WRITE_FLAGS);
+  SetValue(key, base::MakeUnique<base::Value>(value), DEFAULT_PREF_WRITE_FLAGS);
 }
 
 bool TestingPrefStore::GetString(const std::string& key,

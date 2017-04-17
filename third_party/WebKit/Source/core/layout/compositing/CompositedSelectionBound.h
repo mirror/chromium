@@ -33,28 +33,25 @@
 
 #include "platform/geometry/FloatPoint.h"
 #include "platform/graphics/GraphicsLayer.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 struct CompositedSelectionBound {
-    STACK_ALLOCATED();
-    CompositedSelectionBound()
-        : layer(nullptr)
-        , isTextDirectionRTL(false)
-    {
-    }
+  STACK_ALLOCATED();
+  CompositedSelectionBound() : layer(nullptr), is_text_direction_rtl(false) {}
 
-    // The structure describes the position of a caret in space of the GraphicsLayer the caret resides in.
-    // Where edgeTopInLayer is the top point of the caret, usually on the ascend line of the line box,
-    // and edgeBottomInLayer it the bottom point, on the baseline of the line box.
-    GraphicsLayer* layer;
-    FloatPoint edgeTopInLayer;
-    FloatPoint edgeBottomInLayer;
+  // The structure describes the position of a caret in space of the
+  // GraphicsLayer the caret resides in.  Where edgeTopInLayer is the top point
+  // of the caret, usually on the ascend line of the line box, and
+  // edgeBottomInLayer it the bottom point, on the baseline of the line box.
+  GraphicsLayer* layer;
+  FloatPoint edge_top_in_layer;
+  FloatPoint edge_bottom_in_layer;
 
-    bool isTextDirectionRTL;
+  bool is_text_direction_rtl;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

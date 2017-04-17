@@ -12,6 +12,8 @@
 
 #if defined(OS_ANDROID)
 #include <jni.h>
+#elif defined(OS_MACOSX)
+#include <objc/objc.h>
 #endif
 
 // This file provides cross platform typedefs for native widget types.
@@ -39,7 +41,6 @@
 // 'views'.
 
 #if defined(USE_AURA)
-class SkRegion;
 namespace aura {
 class Window;
 }
@@ -137,31 +138,15 @@ typedef jobject NativeEvent;
 
 #if defined(OS_WIN)
 typedef HFONT NativeFont;
-typedef HDC NativeDrawingContext;
 typedef IAccessible* NativeViewAccessible;
 #elif defined(OS_IOS)
 typedef UIFont* NativeFont;
-typedef CGContext* NativeDrawingContext;
-#ifdef __OBJC__
 typedef id NativeViewAccessible;
-#else
-typedef void* NativeViewAccessible;
-#endif  // __OBJC__
 #elif defined(OS_MACOSX)
 typedef NSFont* NativeFont;
-typedef CGContext* NativeDrawingContext;
-#ifdef __OBJC__
 typedef id NativeViewAccessible;
-#else
-typedef void* NativeViewAccessible;
-#endif  // __OBJC__
 #else  // Android, Linux, Chrome OS, etc.
 // Linux doesn't have a native font type.
-#if defined(USE_CAIRO)
-typedef cairo_t* NativeDrawingContext;
-#else
-typedef void* NativeDrawingContext;
-#endif  // defined(USE_CAIRO)
 #if defined(USE_X11) && !defined(OS_CHROMEOS)
 typedef AtkObject* NativeViewAccessible;
 #else
@@ -195,22 +180,22 @@ typedef intptr_t NativeViewId;
 // AcceleratedWidget provides a surface to compositors to paint pixels.
 #if defined(OS_WIN)
 typedef HWND AcceleratedWidget;
-const AcceleratedWidget kNullAcceleratedWidget = NULL;
+constexpr AcceleratedWidget kNullAcceleratedWidget = NULL;
 #elif defined(USE_X11)
 typedef unsigned long AcceleratedWidget;
-const AcceleratedWidget kNullAcceleratedWidget = 0;
+constexpr AcceleratedWidget kNullAcceleratedWidget = 0;
 #elif defined(OS_IOS)
 typedef UIView* AcceleratedWidget;
-const AcceleratedWidget kNullAcceleratedWidget = 0;
+constexpr AcceleratedWidget kNullAcceleratedWidget = 0;
 #elif defined(OS_MACOSX)
 typedef NSView* AcceleratedWidget;
-const AcceleratedWidget kNullAcceleratedWidget = 0;
+constexpr AcceleratedWidget kNullAcceleratedWidget = 0;
 #elif defined(OS_ANDROID)
 typedef ANativeWindow* AcceleratedWidget;
-const AcceleratedWidget kNullAcceleratedWidget = 0;
+constexpr AcceleratedWidget kNullAcceleratedWidget = 0;
 #elif defined(USE_OZONE)
 typedef int32_t AcceleratedWidget;
-const AcceleratedWidget kNullAcceleratedWidget = 0;
+constexpr AcceleratedWidget kNullAcceleratedWidget = 0;
 #else
 #error unknown platform
 #endif

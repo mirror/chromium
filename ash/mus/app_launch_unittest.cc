@@ -2,11 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "ash/public/interfaces/constants.mojom.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/run_loop.h"
-#include "services/shell/public/cpp/service_test.h"
+#include "mash/quick_launch/public/interfaces/constants.mojom.h"
+#include "services/service_manager/public/cpp/service_test.h"
+#include "services/ui/public/interfaces/constants.mojom.h"
 #include "services/ui/public/interfaces/window_server_test.mojom.h"
+#include "ui/views/layout/layout_provider.h"
 
 namespace ash {
 namespace mus {
@@ -16,9 +20,9 @@ void RunCallback(bool* success, const base::Closure& callback, bool result) {
   callback.Run();
 }
 
-class AppLaunchTest : public shell::test::ServiceTest {
+class AppLaunchTest : public service_manager::test::ServiceTest {
  public:
-  AppLaunchTest() : ServiceTest("exe:mash_unittests") {}
+  AppLaunchTest() : ServiceTest("mash_unittests") {}
   ~AppLaunchTest() override {}
 
  private:
@@ -27,20 +31,22 @@ class AppLaunchTest : public shell::test::ServiceTest {
     ServiceTest::SetUp();
   }
 
+  views::LayoutProvider layout_provider_;
+
   DISALLOW_COPY_AND_ASSIGN(AppLaunchTest);
 };
 
 TEST_F(AppLaunchTest, TestQuickLaunch) {
-  connector()->Connect("mojo:ash");
-  connector()->Connect("mojo:quick_launch");
+  connector()->StartService(mojom::kServiceName);
+  connector()->StartService(mash::quick_launch::mojom::kServiceName);
 
-  ::ui::mojom::WindowServerTestPtr test_interface;
-  connector()->ConnectToInterface("mojo:ui", &test_interface);
+  ui::mojom::WindowServerTestPtr test_interface;
+  connector()->BindInterface(ui::mojom::kServiceName, &test_interface);
 
   base::RunLoop run_loop;
   bool success = false;
   test_interface->EnsureClientHasDrawnWindow(
-      "mojo:quick_launch",
+      mash::quick_launch::mojom::kServiceName,
       base::Bind(&RunCallback, &success, run_loop.QuitClosure()));
   run_loop.Run();
   EXPECT_TRUE(success);

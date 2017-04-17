@@ -2,7 +2,6 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-# GYP version: components/gcm_driver.gypi:instance_id_driver
 static_library("instance_id") {
   sources = [
     "android/component_jni_registrar.cc",
@@ -17,10 +16,8 @@ static_library("instance_id") {
 
   deps = [
     "//base",
-    "//components/gcm_driver",
     "//crypto",
   ]
-  allow_circular_includes_from = [ "//components/gcm_driver" ]
 
   if (is_android) {
     sources -= [
@@ -35,7 +32,6 @@ static_library("instance_id") {
   }
 }
 
-# GYP version: components/gcm_driver.gypi:instance_id_test_support
 static_library("test_support") {
   testonly = true
   sources = [
@@ -70,6 +66,7 @@ source_set("unit_tests") {
     ":test_support",
     "//base",
     "//google_apis/gcm",
+    "//net:test_support",
     "//testing/gtest",
   ]
 }

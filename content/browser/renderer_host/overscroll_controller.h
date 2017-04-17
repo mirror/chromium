@@ -7,11 +7,8 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
-
-namespace ui {
-class LatencyInfo;
-}
+#include "third_party/WebKit/public/platform/WebGestureEvent.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
 
 namespace content {
 
@@ -26,6 +23,13 @@ enum OverscrollMode {
   OVERSCROLL_SOUTH,
   OVERSCROLL_WEST,
   OVERSCROLL_EAST
+};
+
+// Indicates the source device that was used to trigger the overscroll gesture.
+enum class OverscrollSource {
+  NONE,
+  TOUCHPAD,
+  TOUCHSCREEN,
 };
 
 // When a page is scrolled beyond the scrollable region, it will trigger an
@@ -97,9 +101,11 @@ class OverscrollController {
   // Completes the desired action from the current gesture.
   void CompleteAction();
 
-  // Sets the overscroll mode (and triggers callback in the delegate when
-  // appropriate).
-  void SetOverscrollMode(OverscrollMode new_mode);
+  // Sets the overscroll mode and triggers callback in the delegate when
+  // appropriate. When a new overscroll is started (i.e. when |new_mode| is not
+  // equal to OVERSCROLL_NONE), |source| will be set to the device that
+  // triggered the overscroll gesture.
+  void SetOverscrollMode(OverscrollMode new_mode, OverscrollSource source);
 
   // Whether this event should be processed or not handled by the controller.
   bool ShouldProcessEvent(const blink::WebInputEvent& event);

@@ -6,11 +6,16 @@
 #define CONTENT_BROWSER_SERVICE_WORKER_SERVICE_WORKER_METRICS_H_
 
 #include <stddef.h>
+#include <map>
+#include <set>
 
 #include "base/macros.h"
+#include "base/time/time.h"
+#include "content/browser/service_worker/service_worker_context_request_handler.h"
 #include "content/browser/service_worker/service_worker_database.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponseError.h"
+#include "ui/base/page_transition_types.h"
 
 class GURL;
 
@@ -106,19 +111,31 @@ class ServiceWorkerMetrics {
     FOREIGN_FETCH = 15,
     FETCH_WAITUNTIL = 16,
     FOREIGN_FETCH_WAITUNTIL = 17,
-    NAVIGATION_HINT_LINK_MOUSE_DOWN = 18,
-    NAVIGATION_HINT_LINK_TAP_UNCONFIRMED = 19,
-    NAVIGATION_HINT_LINK_TAP_DOWN = 20,
+    // NAVIGATION_HINT_LINK_MOUSE_DOWN = 18,  // Obsolete
+    // NAVIGATION_HINT_LINK_TAP_UNCONFIRMED = 19,  // Obsolete
+    // NAVIGATION_HINT_LINK_TAP_DOWN = 20,  // Obsolete
+    // Used when external consumers want to add a request to
+    // ServiceWorkerVersion to keep it alive.
+    EXTERNAL_REQUEST = 21,
+    PAYMENT_REQUEST = 22,
+    BACKGROUND_FETCH_ABORT = 23,
+    BACKGROUND_FETCH_CLICK = 24,
+    BACKGROUND_FETCH_FAIL = 25,
+    BACKGROUND_FETCHED = 26,
     // Add new events to record here.
     NUM_TYPES
   };
 
   // Used for UMA. Append only.
   enum class Site {
-    OTHER,  // Obsolete
+    OTHER,  // Obsolete for UMA. Use WITH_FETCH_HANDLER or
+            // WITHOUT_FETCH_HANDLER.
     NEW_TAB_PAGE,
     WITH_FETCH_HANDLER,
     WITHOUT_FETCH_HANDLER,
+    PLUS,
+    INBOX,
+    DOCS,
     NUM_TYPES
   };
 
@@ -130,17 +147,67 @@ class ServiceWorkerMetrics {
     NEW_PROCESS
   };
 
+  // Used for UMA. Append only.
+  // This enum describes how an activated worker was found and prepared (i.e.,
+  // reached the RUNNING status) in order to dispatch a fetch event to.
+  enum class WorkerPreparationType {
+    UNKNOWN,
+    // The worker was already starting up. We waited for it to finish.
+    STARTING,
+    // The worker was already running.
+    RUNNING,
+    // The worker was stopping. We waited for it to stop, and then started it
+    // up.
+    STOPPING,
+    // The worker was in the stopped state. We started it up, and startup
+    // required a new process to be created.
+    START_IN_NEW_PROCESS,
+    // The worker was in the stopped state. We started it up, and it used an
+    // existing process.
+    START_IN_EXISTING_PROCESS,
+    // The worker was in the stopped state. We started it up, and this occurred
+    // during browser startup.
+    START_DURING_STARTUP,
+    // Add new types here.
+    NUM_TYPES
+  };
+
   // Not used for UMA.
   enum class LoadSource { NETWORK, HTTP_CACHE, SERVICE_WORKER_STORAGE };
 
+  class ScopedEventRecorder {
+   public:
+    explicit ScopedEventRecorder();
+    ~ScopedEventRecorder();
+
+    void RecordEventHandledStatus(EventType event, bool handled);
+
+   private:
+    struct EventStat {
+      size_t fired_events = 0;
+      size_t handled_events = 0;
+    };
+
+    // Records how much of dispatched events are handled.
+    static void RecordEventHandledRatio(EventType event,
+                                        size_t handled_events,
+                                        size_t fired_events);
+
+    std::map<EventType, EventStat> event_stats_;
+
+    DISALLOW_COPY_AND_ASSIGN(ScopedEventRecorder);
+  };
+
   // Converts an event type to a string. Used for tracing.
   static const char* EventTypeToString(EventType event_type);
+
+  // If the |url| is not a special site, returns Site::OTHER.
+  static Site SiteFromURL(const GURL& url);
 
   // Excludes NTP scope from UMA for now as it tends to dominate the stats and
   // makes the results largely skewed. Some metrics don't follow this policy
   // and hence don't call this function.
   static bool ShouldExcludeSiteFromHistogram(Site site);
-  static bool ShouldExcludeURLFromHistogram(const GURL& url);
 
   // Used for ServiceWorkerDiskCache.
   static void CountInitDiskCacheResult(bool result);
@@ -158,9 +225,11 @@ class ServiceWorkerMetrics {
   static void RecordDeleteAndStartOverResult(DeleteAndStartOverResult result);
 
   // Counts the number of page loads controlled by a Service Worker.
-  static void CountControlledPageLoad(const GURL& url,
-                                      bool has_fetch_handler,
-                                      bool is_main_frame_load);
+  static void CountControlledPageLoad(Site site,
+                                      const GURL& url,
+                                      bool is_main_frame_load,
+                                      ui::PageTransition page_transition,
+                                      size_t redirect_chain_length);
 
   // Records the result of trying to start a worker. |is_installed| indicates
   // whether the version has been installed.
@@ -175,12 +244,13 @@ class ServiceWorkerMetrics {
                                     StartSituation start_situation,
                                     EventType purpose);
 
-  // Records the time taken to prepare an activated Service Worker for a main
-  // frame fetch.
-  static void RecordActivatedWorkerPreparationTimeForMainFrame(
+  // Records metrics for the preparation of an activated Service Worker for a
+  // main frame navigation.
+  CONTENT_EXPORT static void RecordActivatedWorkerPreparationForMainFrame(
       base::TimeDelta time,
       EmbeddedWorkerStatus initial_worker_status,
-      StartSituation start_situation);
+      StartSituation start_situation,
+      bool did_navigation_preload);
 
   // Records the result of trying to stop a worker.
   static void RecordWorkerStopped(StopStatus status);
@@ -192,11 +262,8 @@ class ServiceWorkerMetrics {
                                         bool is_shutdown);
   static void RecordInstallEventStatus(ServiceWorkerStatusCode status);
 
-  // Records how much of dispatched events are handled while a Service
-  // Worker is awake (i.e. after it is woken up until it gets stopped).
-  static void RecordEventHandledRatio(EventType event,
-                                      size_t handled_events,
-                                      size_t fired_events);
+  static void RecordForeignFetchRegistrationCount(size_t scope_count,
+                                                  size_t origin_count);
 
   // Records how often a dispatched event times out.
   static void RecordEventTimeout(EventType event);
@@ -205,6 +272,13 @@ class ServiceWorkerMetrics {
   static void RecordEventDuration(EventType event,
                                   base::TimeDelta time,
                                   bool was_handled);
+
+  // Records the time taken between sending an event IPC from the browser
+  // process to a Service Worker and executing the event handler in the Service
+  // Worker.
+  static void RecordEventDispatchingDelay(EventType event,
+                                          base::TimeDelta time,
+                                          Site site_for_metrics);
 
   // Records the result of dispatching a fetch event to a service worker.
   static void RecordFetchEventStatus(bool is_main_resource,
@@ -251,6 +325,32 @@ class ServiceWorkerMetrics {
   // failed |failure_count| consecutive times.
   static void RecordStartStatusAfterFailure(int failure_count,
                                             ServiceWorkerStatusCode status);
+
+  // Records the size of Service-Worker-Navigation-Preload header when the
+  // navigation preload request is to be sent.
+  static void RecordNavigationPreloadRequestHeaderSize(size_t size);
+
+  // Records timings for the navigation preload response and how
+  // it compares to starting the worker.
+  // |worker_start| is the time it took to prepare an activated and running
+  // worker to receive the fetch event. |initial_worker_status| and
+  // |start_situation| describe the preparation needed.
+  // |response_start| is the time it took until the navigation preload response
+  // started.
+  CONTENT_EXPORT static void RecordNavigationPreloadResponse(
+      base::TimeDelta worker_start,
+      base::TimeDelta response_start,
+      EmbeddedWorkerStatus initial_worker_status,
+      StartSituation start_situation);
+
+  // Records the result of trying to handle a request for a service worker
+  // script.
+  static void RecordContextRequestHandlerStatus(
+      ServiceWorkerContextRequestHandler::CreateJobStatus status,
+      bool is_installed,
+      bool is_main_script);
+
+  static void RecordRuntime(base::TimeDelta time);
 
  private:
   DISALLOW_IMPLICIT_CONSTRUCTORS(ServiceWorkerMetrics);

@@ -478,24 +478,13 @@ public class BookmarkBridge {
     }
 
     /**
-     * @return All bookmark IDs ordered by descending creation date. Partner/managed bookmarks are
-     *         not included.
-     */
-    public List<BookmarkId> getAllBookmarkIDsOrderedByCreationDate() {
-        assert mIsNativeBookmarkModelLoaded;
-        List<BookmarkId> result = new ArrayList<BookmarkId>();
-        nativeGetAllBookmarkIDsOrderedByCreationDate(mNativeBookmarkBridge, result);
-        return result;
-    }
-
-    /**
      * Synchronously gets a list of bookmarks that match the specified search query.
      * @param query Keyword used for searching bookmarks.
      * @param maxNumberOfResult Maximum number of result to fetch.
-     * @return List of bookmarks that are related to the given query.
+     * @return List of bookmark IDs that are related to the given query.
      */
-    public List<BookmarkMatch> searchBookmarks(String query, int maxNumberOfResult) {
-        List<BookmarkMatch> bookmarkMatches = new ArrayList<BookmarkMatch>();
+    public List<BookmarkId> searchBookmarks(String query, int maxNumberOfResult) {
+        List<BookmarkId> bookmarkMatches = new ArrayList<BookmarkId>();
         nativeSearchBookmarks(mNativeBookmarkBridge, bookmarkMatches, query,
                 maxNumberOfResult);
         return bookmarkMatches;
@@ -821,16 +810,6 @@ public class BookmarkBridge {
         depthList.add(depth);
     }
 
-    @CalledByNative
-    private static void addToBookmarkMatchList(List<BookmarkMatch> bookmarkMatchList,
-            long id, int type, int[] titleMatchStartPositions,
-            int[] titleMatchEndPositions, int[] urlMatchStartPositions,
-            int[] urlMatchEndPositions) {
-        bookmarkMatchList.add(new BookmarkMatch(new BookmarkId(id, type),
-                createPairsList(titleMatchStartPositions, titleMatchEndPositions),
-                createPairsList(urlMatchStartPositions, urlMatchEndPositions)));
-    }
-
     private static List<Pair<Integer, Integer>> createPairsList(int[] left, int[] right) {
         List<Pair<Integer, Integer>> pairList = new ArrayList<Pair<Integer, Integer>>();
         for (int i = 0; i < left.length; i++) {
@@ -897,8 +876,6 @@ public class BookmarkBridge {
             boolean getFolders, boolean getBookmarks, List<BookmarkId> bookmarksList);
     private native BookmarkId nativeGetChildAt(long nativeBookmarkBridge, long id, int type,
             int index);
-    private native void nativeGetAllBookmarkIDsOrderedByCreationDate(long nativeBookmarkBridge,
-            List<BookmarkId> result);
     private native void nativeSetBookmarkTitle(long nativeBookmarkBridge, long id, int type,
             String title);
     private native void nativeSetBookmarkUrl(long nativeBookmarkBridge, long id, int type,
@@ -924,7 +901,7 @@ public class BookmarkBridge {
     private native void nativeEndGroupingUndos(long nativeBookmarkBridge);
     private native void nativeLoadEmptyPartnerBookmarkShimForTesting(long nativeBookmarkBridge);
     private native void nativeSearchBookmarks(long nativeBookmarkBridge,
-            List<BookmarkMatch> bookmarkMatches, String query, int maxNumber);
+            List<BookmarkId> bookmarkMatches, String query, int maxNumber);
     private native long nativeInit(Profile profile);
     private native boolean nativeIsDoingExtensiveChanges(long nativeBookmarkBridge);
     private native void nativeDestroy(long nativeBookmarkBridge);

@@ -113,8 +113,8 @@ class FaceTypeValidator {
 };
 FaceTypeValidator face_type;
 
-ValueValidator<GLenum> frame_buffer_parameter;
-ValueValidator<GLenum> frame_buffer_target;
+ValueValidator<GLenum> framebuffer_parameter;
+ValueValidator<GLenum> framebuffer_target;
 ValueValidator<GLenum> g_l_state;
 class GetMaxIndexTypeValidator {
  public:
@@ -131,7 +131,6 @@ HintModeValidator hint_mode;
 
 ValueValidator<GLenum> hint_target;
 ValueValidator<GLenum> image_internal_format;
-ValueValidator<GLenum> image_usage;
 ValueValidator<GLenum> index_type;
 class IndexedBufferTargetValidator {
  public:
@@ -344,6 +343,12 @@ TextureMinFilterModeValidator texture_min_filter_mode;
 ValueValidator<GLenum> texture_parameter;
 ValueValidator<GLenum> texture_sized_color_renderable_internal_format;
 ValueValidator<GLenum> texture_sized_texture_filterable_internal_format;
+class TextureSrgbDecodeExtValidator {
+ public:
+  bool IsValid(const GLenum value) const;
+};
+TextureSrgbDecodeExtValidator texture_srgb_decode_ext;
+
 ValueValidator<GLenum> texture_stencil_renderable_internal_format;
 class TextureSwizzleValidator {
  public:

@@ -5,36 +5,38 @@
 #ifndef CSPDirective_h
 #define CSPDirective_h
 
+#include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class ContentSecurityPolicy;
 
-class CSPDirective : public GarbageCollectedFinalized<CSPDirective> {
-    WTF_MAKE_NONCOPYABLE(CSPDirective);
-public:
-    CSPDirective(const String& name, const String& value, ContentSecurityPolicy* policy)
-        : m_name(name)
-        , m_text(name + ' ' + value)
-        , m_policy(policy)
-    {
-    }
-    virtual ~CSPDirective() { }
-    DEFINE_INLINE_VIRTUAL_TRACE() { visitor->trace(m_policy); }
+class CORE_EXPORT CSPDirective
+    : public GarbageCollectedFinalized<CSPDirective> {
+  WTF_MAKE_NONCOPYABLE(CSPDirective);
 
-    const String& text() const { return m_text; }
+ public:
+  CSPDirective(const String& name,
+               const String& value,
+               ContentSecurityPolicy* policy)
+      : name_(name), text_(name + ' ' + value), policy_(policy) {}
+  virtual ~CSPDirective() {}
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(policy_); }
 
-protected:
-    ContentSecurityPolicy* policy() const { return m_policy; }
+  const String& GetName() const { return name_; }
+  const String& GetText() const { return text_; }
 
-private:
-    String m_name;
-    String m_text;
-    Member<ContentSecurityPolicy> m_policy;
+ protected:
+  ContentSecurityPolicy* Policy() const { return policy_; }
+
+ private:
+  String name_;
+  String text_;
+  Member<ContentSecurityPolicy> policy_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

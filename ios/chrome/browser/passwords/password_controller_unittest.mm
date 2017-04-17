@@ -11,7 +11,6 @@
 
 #include "base/json/json_reader.h"
 #include "base/mac/bind_objc_block.h"
-#import "base/mac/scoped_nsobject.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/sys_string_conversions.h"
@@ -29,15 +28,22 @@
 #import "ios/chrome/browser/autofill/form_suggestion_controller.h"
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #import "ios/chrome/browser/passwords/js_password_manager.h"
-#import "ios/web/public/web_state/web_state.h"
+#import "ios/web/public/navigation_item.h"
+#import "ios/web/public/navigation_manager.h"
+#include "ios/web/public/ssl_status.h"
+#import "ios/web/public/test/fakes/test_web_state.h"
 #import "ios/web/public/test/web_test_with_web_state.h"
-#import "ios/web/public/test/test_web_state.h"
+#import "ios/web/public/web_state/web_state.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
 #import "third_party/ocmock/OCMock/OCMock.h"
 #import "third_party/ocmock/OCMock/OCPartialMockObject.h"
 #include "url/gurl.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 using autofill::PasswordForm;
 using autofill::PasswordFormFillData;
@@ -85,17 +91,16 @@ class MockLogManager : public password_manager::LogManager {
 // using the given |store|. If not null, |weak_client| is filled with a
 // non-owning pointer to the created client. The created controller is
 // returned.
-base::scoped_nsobject<PasswordController> CreatePasswordController(
+PasswordController* CreatePasswordController(
     web::WebState* web_state,
     password_manager::PasswordStore* store,
     MockPasswordManagerClient** weak_client) {
-  auto client = base::WrapUnique(new MockPasswordManagerClient(store));
+  auto client = base::MakeUnique<MockPasswordManagerClient>(store);
   if (weak_client)
     *weak_client = client.get();
-  return base::scoped_nsobject<PasswordController>([[PasswordController alloc]
-         initWithWebState:web_state
-      passwordsUiDelegate:nil
-                   client:std::move(client)]);
+  return [[PasswordController alloc] initWithWebState:web_state
+                                  passwordsUiDelegate:nil
+                                               client:std::move(client)];
 }
 
 }  // namespace
@@ -129,8 +134,6 @@ base::scoped_nsobject<PasswordController> CreatePasswordController(
 
 @property(nonatomic, copy) NSArray* suggestions;
 
-- (void)dealloc;
-
 @end
 
 @implementation PasswordsTestSuggestionController
@@ -141,10 +144,6 @@ base::scoped_nsobject<PasswordController> CreatePasswordController(
   self.suggestions = suggestions;
 }
 
-- (void)dealloc {
-  [_suggestions release];
-  [super dealloc];
-}
 
 @end
 
@@ -164,12 +163,12 @@ class PasswordControllerTest : public web::WebTestWithWebState {
       // otherwise [passwordController_ suggestionProvider] will be retained
       // until PlatformTest teardown, at which point all Chrome objects are
       // already gone and teardown may access invalid memory.
-      suggestionController_.reset([[PasswordsTestSuggestionController alloc]
+      suggestionController_ = [[PasswordsTestSuggestionController alloc]
           initWithWebState:web_state()
-                 providers:@[ [passwordController_ suggestionProvider] ]]);
-      accessoryViewController_.reset([[FormInputAccessoryViewController alloc]
+                 providers:@[ [passwordController_ suggestionProvider] ]];
+      accessoryViewController_ = [[FormInputAccessoryViewController alloc]
           initWithWebState:web_state()
-                 providers:@[ [suggestionController_ accessoryViewProvider] ]]);
+                 providers:@[ [suggestionController_ accessoryViewProvider] ]];
     }
   }
 
@@ -194,7 +193,7 @@ class PasswordControllerTest : public web::WebTestWithWebState {
     NSString* kFormNamingScript =
         @"__gCrWeb.common.getFormIdentifier("
          "    document.querySelectorAll('form')[%d]);";
-    return base::SysNSStringToUTF8(EvaluateJavaScriptAsString(
+    return base::SysNSStringToUTF8(ExecuteJavaScript(
         [NSString stringWithFormat:kFormNamingScript, form_number]));
   }
 
@@ -212,13 +211,13 @@ class PasswordControllerTest : public web::WebTestWithWebState {
     __block int failure_count = 0;
     void (^fail_invocation)(NSInvocation*) = ^(NSInvocation* invocation) {
       if (failure_count >= target_failure_count) {
-        [failing_manager stop];
+        [failing_manager stopMocking];
         [invocation invokeWithTarget:original_manager];
       } else {
         ++failure_count;
         // Fetches the completion handler from |invocation| and calls it with
         // failure status.
-        void (^completionHandler)(BOOL);
+        __unsafe_unretained void (^completionHandler)(BOOL);
         const NSInteger kArgOffset = 1;
         const NSInteger kCompletionHandlerArgIndex = 4;
         [invocation getArgument:&completionHandler
@@ -235,15 +234,13 @@ class PasswordControllerTest : public web::WebTestWithWebState {
   }
 
   // SuggestionController for testing.
-  base::scoped_nsobject<PasswordsTestSuggestionController>
-      suggestionController_;
+  PasswordsTestSuggestionController* suggestionController_;
 
   // FormInputAccessoryViewController for testing.
-  base::scoped_nsobject<FormInputAccessoryViewController>
-      accessoryViewController_;
+  FormInputAccessoryViewController* accessoryViewController_;
 
   // PasswordController for testing.
-  base::scoped_nsobject<PasswordController> passwordController_;
+  PasswordController* passwordController_;
 
   scoped_refptr<password_manager::PasswordStore> store_;
 };
@@ -649,7 +646,7 @@ TEST_F(PasswordControllerTest, FLAKY_GetSubmittedPasswordForm) {
                                     << " and number_of_forms_to_submit="
                                     << data.number_of_forms_to_submit);
     LoadHtml(data.html_string);
-    EvaluateJavaScriptAsString(data.java_script);
+    ExecuteJavaScript(data.java_script);
     __block BOOL block_was_called = NO;
     id completion_handler = ^(BOOL found, const PasswordForm& form) {
       block_was_called = YES;
@@ -707,7 +704,7 @@ static NSString* kHtmlWithMultiplePasswordForms =
      "<input id='un0' type='text' name='u0'>"
      "<input id='pw0' type='password' name='p0'>"
      "</form>"
-     "<form action='action?query=yes#reference'>"
+     "<form action='?query=yes#reference'>"
      "<input id='un1' type='text' name='u1'>"
      "<input id='pw1' type='password' name='p1'>"
      "</form>"
@@ -752,6 +749,49 @@ static NSString* kInputFieldValueVerificationScript =
      "  }"
      "}; result";
 
+// Test html content and expected result for __gCrWeb.hasPasswordField call.
+struct TestDataForPasswordFormDetection {
+  NSString* page_content;
+  BOOL contains_password;
+};
+
+// Tests that the existence of (or the lack of) a password field in the page is
+// detected correctly.
+TEST_F(PasswordControllerTest, HasPasswordField) {
+  TestDataForPasswordFormDetection test_data[] = {
+      // Form without a password field.
+      {@"<form><input type='text' name='password'></form>", NO},
+      // Form with a password field.
+      {@"<form><input type='password' name='password'></form>", YES}};
+  for (size_t i = 0; i < arraysize(test_data); i++) {
+    TestDataForPasswordFormDetection& data = test_data[i];
+    LoadHtml(data.page_content);
+    id result = ExecuteJavaScript(@"__gCrWeb.hasPasswordField()");
+    EXPECT_NSEQ(@(data.contains_password), result)
+        << " in test " << i << ": "
+        << base::SysNSStringToUTF8(data.page_content);
+  }
+}
+
+// Tests that the existence a password field in a nested iframe/ is detected
+// correctly.
+TEST_F(PasswordControllerTest, HasPasswordFieldinFrame) {
+  TestDataForPasswordFormDetection data = {
+    // Form with a password field in a nested iframe.
+    @"<iframe name='pf'></iframe>"
+     "<script>"
+     "  var doc = frames['pf'].document.open();"
+     "  doc.write('<form><input type=\\'password\\'></form>');"
+     "  doc.close();"
+     "</script>",
+    YES
+  };
+  LoadHtml(data.page_content);
+  id result = ExecuteJavaScript(@"__gCrWeb.hasPasswordField()");
+  EXPECT_NSEQ(@(data.contains_password), result)
+      << base::SysNSStringToUTF8(data.page_content);
+}
+
 struct FillPasswordFormTestData {
   const std::string origin;
   const std::string action;
@@ -763,12 +803,15 @@ struct FillPasswordFormTestData {
   NSString* expected_result;
 };
 
-// Test that filling password forms works correctly.
+// Tests that filling password forms works correctly.
 TEST_F(PasswordControllerTest, FillPasswordForm) {
   LoadHtml(kHtmlWithMultiplePasswordForms);
 
-  EXPECT_NSEQ(@"true",
-              EvaluateJavaScriptAsString(@"__gCrWeb.hasPasswordField()"));
+  // TODO(crbug.com/614092): can we remove this assertion? This call is the only
+  // reason why hasPasswordField is a public API on gCrWeb. If the page does
+  // not contain a password field, shouldn't one of the expectations of the
+  // remaining tests also fail?
+  EXPECT_NSEQ(@YES, ExecuteJavaScript(@"__gCrWeb.hasPasswordField()"));
 
   const std::string base_url = BaseUrl();
   // clang-format off
@@ -866,7 +909,7 @@ TEST_F(PasswordControllerTest, FillPasswordForm) {
   // clang-format on
 
   for (const FillPasswordFormTestData& data : test_data) {
-    EvaluateJavaScriptAsString(kClearInputFieldsScript);
+    ExecuteJavaScript(kClearInputFieldsScript);
 
     PasswordFormFillData form_data;
     SetPasswordFormFillData(form_data, data.origin, data.action,
@@ -884,8 +927,7 @@ TEST_F(PasswordControllerTest, FillPasswordForm) {
       return block_was_called;
     });
 
-    NSString* result =
-        EvaluateJavaScriptAsString(kInputFieldValueVerificationScript);
+    id result = ExecuteJavaScript(kInputFieldValueVerificationScript);
     EXPECT_NSEQ(data.expected_result, result);
   }
 }
@@ -908,8 +950,7 @@ TEST_F(PasswordControllerTest, FindAndFillOnePasswordForm) {
     return call_counter == 1;
   });
   EXPECT_EQ(1, success_counter);
-  NSString* result =
-      EvaluateJavaScriptAsString(kInputFieldValueVerificationScript);
+  id result = ExecuteJavaScript(kInputFieldValueVerificationScript);
   EXPECT_NSEQ(@"un=john.doe@gmail.com;pw=super!secret;", result);
 }
 
@@ -941,8 +982,7 @@ TEST_F(PasswordControllerTest, FindAndFillMultiplePasswordForms) {
     return call_counter == 3;
   });
   EXPECT_EQ(2, success_counter);
-  NSString* result =
-      EvaluateJavaScriptAsString(kInputFieldValueVerificationScript);
+  id result = ExecuteJavaScript(kInputFieldValueVerificationScript);
   EXPECT_NSEQ(@"u2=john.doe@gmail.com;p2=super!secret;"
                "u3=john.doe@gmail.com;p3=super!secret;",
               result);
@@ -950,8 +990,7 @@ TEST_F(PasswordControllerTest, FindAndFillMultiplePasswordForms) {
 
 BOOL PasswordControllerTest::BasicFormFill(NSString* html) {
   LoadHtml(html);
-  EXPECT_NSEQ(@"true",
-              EvaluateJavaScriptAsString(@"__gCrWeb.hasPasswordField()"));
+  EXPECT_NSEQ(@YES, ExecuteJavaScript(@"__gCrWeb.hasPasswordField()"));
   const std::string base_url = BaseUrl();
   PasswordFormFillData form_data;
   SetPasswordFormFillData(form_data, base_url, base_url, "u0", "test_user",
@@ -991,6 +1030,10 @@ TEST_F(PasswordControllerTest, FLAKY_DontFillReadOnly) {
        "<input id='pw0' type='password' name='p0' readonly='readonly'>"
        "</form>"));
 }
+
+// An HTML page without a password form.
+static NSString* kHtmlWithoutPasswordForm =
+    @"<h2>The rain in Spain stays <i>mainly</i> in the plain.</h2>";
 
 // An HTML page containing one password form.  The username input field
 // also has custom event handlers.  We need to verify that those event
@@ -1037,7 +1080,7 @@ struct SuggestionTestData {
 TEST_F(PasswordControllerTest, SuggestionUpdateTests) {
   LoadHtml(kHtmlWithPasswordForm);
   const std::string base_url = BaseUrl();
-  EvaluateJavaScriptAsString(kUsernameAndPasswordTestPreparationScript);
+  ExecuteJavaScript(kUsernameAndPasswordTestPreparationScript);
 
   // Initialize |form_data| with test data and an indicator that autofill
   // should not be performed while the user is entering the username so that
@@ -1061,7 +1104,7 @@ TEST_F(PasswordControllerTest, SuggestionUpdateTests) {
 
   // Verify that the form has not been autofilled.
   EXPECT_NSEQ(@"[]=, onkeyup=false, onchange=false",
-              EvaluateJavaScriptAsString(kUsernamePasswordVerificationScript));
+              ExecuteJavaScript(kUsernamePasswordVerificationScript));
 
   // clang-format off
   SuggestionTestData test_data[] = {
@@ -1134,19 +1177,19 @@ TEST_F(PasswordControllerTest, SuggestionUpdateTests) {
                  << "for description=" << data.description
                  << " and eval_scripts=" << data.eval_scripts);
     // Prepare the test.
-    EvaluateJavaScriptAsString(kUsernameAndPasswordTestPreparationScript);
+    ExecuteJavaScript(kUsernameAndPasswordTestPreparationScript);
 
     for (NSString* script in data.eval_scripts) {
       // Trigger events.
-      EvaluateJavaScriptAsString(script);
+      ExecuteJavaScript(script);
 
       // Pump the run loop so that the host can respond.
       WaitForBackgroundTasks();
     }
 
     EXPECT_NSEQ(data.expected_suggestions, GetSortedSuggestionValues());
-    EXPECT_NSEQ(data.expected_result, EvaluateJavaScriptAsString(
-                                          kUsernamePasswordVerificationScript));
+    EXPECT_NSEQ(data.expected_result,
+                ExecuteJavaScript(kUsernamePasswordVerificationScript));
     // Clear all suggestions.
     [suggestionController_ setSuggestions:nil];
   }
@@ -1156,7 +1199,7 @@ TEST_F(PasswordControllerTest, SuggestionUpdateTests) {
 TEST_F(PasswordControllerTest, SelectingSuggestionShouldFillPasswordForm) {
   LoadHtml(kHtmlWithPasswordForm);
   const std::string base_url = BaseUrl();
-  EvaluateJavaScriptAsString(kUsernameAndPasswordTestPreparationScript);
+  ExecuteJavaScript(kUsernameAndPasswordTestPreparationScript);
 
   // Initialize |form_data| with test data and an indicator that autofill
   // should not be performed while the user is entering the username so that
@@ -1179,7 +1222,7 @@ TEST_F(PasswordControllerTest, SelectingSuggestionShouldFillPasswordForm) {
 
   // Verify that the form has not been autofilled.
   EXPECT_NSEQ(@"[]=, onkeyup=false, onchange=false",
-              EvaluateJavaScriptAsString(kUsernamePasswordVerificationScript));
+              ExecuteJavaScript(kUsernamePasswordVerificationScript));
 
   // Tell PasswordController that a suggestion was selected. It should fill
   // out the password form with the corresponding credentials.
@@ -1271,7 +1314,7 @@ TEST(PasswordControllerTestSimple, SaveOnNonHTMLLandingPage) {
       .WillByDefault(testing::Return(browser_state.get()));
 
   MockPasswordManagerClient* weak_client = nullptr;
-  base::scoped_nsobject<PasswordController> passwordController =
+  PasswordController* passwordController =
       CreatePasswordController(&web_state, nullptr, &weak_client);
   static_cast<TestingPrefServiceSimple*>(weak_client->GetPrefs())
       ->registry()
@@ -1295,5 +1338,49 @@ TEST(PasswordControllerTestSimple, SaveOnNonHTMLLandingPage) {
 
   web_state.SetContentIsHTML(false);
   web_state.SetCurrentURL(GURL("https://example.com"));
-  [passwordController webStateDidLoadPage:&web_state];
+  [passwordController webState:&web_state didLoadPageWithSuccess:YES];
+}
+
+// Tests that an HTTP page without a password field does not update the SSL
+// status to indicate DISPLAYED_PASSWORD_FIELD_ON_HTTP.
+TEST_F(PasswordControllerTest, HTTPNoPassword) {
+  LoadHtml(kHtmlWithoutPasswordForm, GURL("http://chromium.test"));
+
+  web::SSLStatus ssl_status =
+      web_state()->GetNavigationManager()->GetLastCommittedItem()->GetSSL();
+  EXPECT_FALSE(ssl_status.content_status &
+               web::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
+}
+
+// Tests that an HTTP page with a password field updates the SSL status
+// to indicate DISPLAYED_PASSWORD_FIELD_ON_HTTP.
+TEST_F(PasswordControllerTest, HTTPPassword) {
+  LoadHtml(kHtmlWithPasswordForm, GURL("http://chromium.test"));
+
+  web::SSLStatus ssl_status =
+      web_state()->GetNavigationManager()->GetLastCommittedItem()->GetSSL();
+  EXPECT_TRUE(ssl_status.content_status &
+              web::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
+}
+
+// Tests that an HTTPS page without a password field does not update the SSL
+// status to indicate DISPLAYED_PASSWORD_FIELD_ON_HTTP.
+TEST_F(PasswordControllerTest, HTTPSNoPassword) {
+  LoadHtml(kHtmlWithoutPasswordForm, GURL("https://chromium.test"));
+
+  web::SSLStatus ssl_status =
+      web_state()->GetNavigationManager()->GetLastCommittedItem()->GetSSL();
+  EXPECT_FALSE(ssl_status.content_status &
+               web::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
+}
+
+// Tests that an HTTPS page with a password field does not update the SSL status
+// to indicate DISPLAYED_PASSWORD_FIELD_ON_HTTP.
+TEST_F(PasswordControllerTest, HTTPSPassword) {
+  LoadHtml(kHtmlWithPasswordForm, GURL("https://chromium.test"));
+
+  web::SSLStatus ssl_status =
+      web_state()->GetNavigationManager()->GetLastCommittedItem()->GetSSL();
+  EXPECT_FALSE(ssl_status.content_status &
+               web::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
 }

@@ -23,7 +23,7 @@ namespace media_router {
 
 namespace {
 
-base::LazyInstance<MediaRouterFactory> service_factory =
+base::LazyInstance<MediaRouterFactory>::DestructorAtExit service_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
@@ -36,6 +36,11 @@ MediaRouter* MediaRouterFactory::GetApiForBrowserContext(
   // to return a pointer to MediaRouter.
   return static_cast<MediaRouter*>(
       service_factory.Get().GetServiceForBrowserContext(context, true));
+}
+
+// static
+MediaRouterFactory* MediaRouterFactory::GetInstance() {
+  return &service_factory.Get();
 }
 
 void MediaRouterFactory::BrowserContextShutdown(
@@ -60,11 +65,6 @@ MediaRouterFactory::MediaRouterFactory()
 }
 
 MediaRouterFactory::~MediaRouterFactory() {
-}
-
-// static
-MediaRouterFactory* MediaRouterFactory::GetMediaRouterFactoryForTest() {
-  return &service_factory.Get();
 }
 
 content::BrowserContext* MediaRouterFactory::GetBrowserContextToUse(

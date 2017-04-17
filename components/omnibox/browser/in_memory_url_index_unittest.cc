@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <fstream>
+#include <numeric>
 
 #include "base/auto_reset.h"
 #include "base/files/file_path.h"
@@ -14,6 +15,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/i18n/case_conversion.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
@@ -32,6 +34,7 @@
 #include "components/omnibox/browser/in_memory_url_index_test_util.h"
 #include "components/omnibox/browser/in_memory_url_index_types.h"
 #include "components/omnibox/browser/url_index_private_data.h"
+#include "components/search_engines/template_url_service.h"
 #include "sql/transaction.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -52,6 +55,18 @@ namespace {
 const size_t kInvalid = base::string16::npos;
 const size_t kMaxMatches = 3;
 const char kClientWhitelistedScheme[] = "xyz";
+
+// TemplateURLs used to test filtering of search engine URLs.
+const char kDefaultTemplateURLKeyword[] = "default-engine.com";
+const char kNonDefaultTemplateURLKeyword[] = "non-default-engine.com";
+const TemplateURLService::Initializer kTemplateURLData[] = {
+    {kDefaultTemplateURLKeyword,
+     "http://default-engine.com?q={searchTerms}",
+     "Default"},
+    {kNonDefaultTemplateURLKeyword,
+     "http://non-default-engine.com?q={searchTerms}",
+     "Not Default"},
+};
 
 // Helper function to set lower case |lower_string| and |lower_terms| (words
 // list) based on supplied |search_string| and |cursor_position|. If
@@ -159,6 +174,7 @@ class InMemoryURLIndexTest : public testing::Test {
   base::ScopedTempDir history_dir_;
   std::unique_ptr<history::HistoryService> history_service_;
   history::HistoryDatabase* history_database_;
+  std::unique_ptr<TemplateURLService> template_url_service_;
   std::unique_ptr<InMemoryURLIndex> url_index_;
 };
 
@@ -218,87 +234,58 @@ bool InMemoryURLIndexTest::DeleteURL(const GURL& url) {
 void InMemoryURLIndexTest::SetUp() {
   // We cannot access the database until the backend has been loaded.
   if (history_dir_.CreateUniqueTempDir())
-    history_service_ = history::CreateHistoryService(history_dir_.path(), true);
+    history_service_ =
+        history::CreateHistoryService(history_dir_.GetPath(), true);
   ASSERT_TRUE(history_service_);
   BlockUntilInMemoryURLIndexIsRefreshed(url_index_.get());
 
   history::HistoryBackend* backend = history_service_->history_backend_.get();
   history_database_ = backend->db();
 
-  // Create and populate a working copy of the URL history database.
-  base::FilePath history_proto_path;
-  PathService::Get(base::DIR_SOURCE_ROOT, &history_proto_path);
-  history_proto_path = history_proto_path.AppendASCII("components");
-  history_proto_path = history_proto_path.AppendASCII("test");
-  history_proto_path = history_proto_path.AppendASCII("data");
-  history_proto_path = history_proto_path.AppendASCII("omnibox");
-  history_proto_path = history_proto_path.Append(TestDBName());
-  ASSERT_TRUE(base::PathExists(history_proto_path));
+  // TODO(shess): If/when this code gets refactored, consider including the
+  // schema in the golden file (as sqlite3 .dump would generate) and using
+  // sql::test::CreateDatabaseFromSQL() to load it.  The code above which
+  // creates the database can change in ways which may not reliably represent
+  // user databases on disks in the fleet.
 
-  std::ifstream proto_file(history_proto_path.value().c_str());
-  static const size_t kCommandBufferMaxSize = 2048;
-  char sql_cmd_line[kCommandBufferMaxSize];
-
+  // Execute the contents of a golden file to populate the [urls] and [visits]
+  // tables.
+  base::FilePath golden_path;
+  PathService::Get(base::DIR_SOURCE_ROOT, &golden_path);
+  golden_path = golden_path.AppendASCII("components/test/data/omnibox");
+  golden_path = golden_path.Append(TestDBName());
+  ASSERT_TRUE(base::PathExists(golden_path));
+  std::string sql;
+  ASSERT_TRUE(base::ReadFileToString(golden_path, &sql));
   sql::Connection& db(GetDB());
   ASSERT_TRUE(db.is_open());
-  {
-    sql::Transaction transaction(&db);
-    transaction.Begin();
-    while (!proto_file.eof()) {
-      proto_file.getline(sql_cmd_line, kCommandBufferMaxSize);
-      if (!proto_file.eof()) {
-        // We only process lines which begin with a upper-case letter.
-        if (base::IsAsciiUpper(sql_cmd_line[0])) {
-          std::string sql_cmd(sql_cmd_line);
-          sql::Statement sql_stmt(db.GetUniqueStatement(sql_cmd_line));
-          EXPECT_TRUE(sql_stmt.Run());
-        }
-      }
-    }
-    transaction.Commit();
-  }
+  ASSERT_TRUE(db.Execute(sql.c_str()));
 
-  // Update the last_visit_time table column in the "urls" table
-  // such that it represents a time relative to 'now'.
-  sql::Statement statement(db.GetUniqueStatement(
-      "SELECT" HISTORY_URL_ROW_FIELDS "FROM urls;"));
-  ASSERT_TRUE(statement.is_valid());
+  // Update [urls.last_visit_time] and [visits.visit_time] to represent a time
+  // relative to 'now'.
   base::Time time_right_now = base::Time::NowFromSystemTime();
   base::TimeDelta day_delta = base::TimeDelta::FromDays(1);
   {
-    sql::Transaction transaction(&db);
-    transaction.Begin();
-    while (statement.Step()) {
-      history::URLRow row;
-      history_database_->FillURLRow(statement, &row);
-      base::Time last_visit = time_right_now;
-      for (int64_t i = row.last_visit().ToInternalValue(); i > 0; --i)
-        last_visit -= day_delta;
-      row.set_last_visit(last_visit);
-      history_database_->UpdateURLRow(row.id(), row);
-    }
-    transaction.Commit();
+    sql::Statement s(db.GetUniqueStatement(
+        "UPDATE urls SET last_visit_time = ? - ? * last_visit_time"));
+    s.BindInt64(0, time_right_now.ToInternalValue());
+    s.BindInt64(1, day_delta.ToInternalValue());
+    ASSERT_TRUE(s.Run());
+  }
+  {
+    sql::Statement s(db.GetUniqueStatement(
+        "UPDATE visits SET visit_time = ? - ? * visit_time"));
+    s.BindInt64(0, time_right_now.ToInternalValue());
+    s.BindInt64(1, day_delta.ToInternalValue());
+    ASSERT_TRUE(s.Run());
   }
 
-  // Update the visit_time table column in the "visits" table
-  // such that it represents a time relative to 'now'.
-  statement.Assign(db.GetUniqueStatement(
-      "SELECT" HISTORY_VISIT_ROW_FIELDS "FROM visits;"));
-  ASSERT_TRUE(statement.is_valid());
-  {
-    sql::Transaction transaction(&db);
-    transaction.Begin();
-    while (statement.Step()) {
-      history::VisitRow row;
-      history_database_->FillVisitRow(statement, &row);
-      base::Time last_visit = time_right_now;
-      for (int64_t i = row.visit_time.ToInternalValue(); i > 0; --i)
-        last_visit -= day_delta;
-      row.visit_time = last_visit;
-      history_database_->UpdateVisitRow(row);
-    }
-    transaction.Commit();
-  }
+  // Set up a simple template URL service with a default search engine.
+  template_url_service_ = base::MakeUnique<TemplateURLService>(
+      kTemplateURLData, arraysize(kTemplateURLData));
+  TemplateURL* template_url = template_url_service_->GetTemplateURLForKeyword(
+      base::ASCIIToUTF16(kDefaultTemplateURLKeyword));
+  template_url_service_->SetUserSelectedDefaultSearchProvider(template_url);
 
   if (InitializeInMemoryURLIndexInSetUp())
     InitializeInMemoryURLIndex();
@@ -312,7 +299,7 @@ void InMemoryURLIndexTest::TearDown() {
 }
 
 base::FilePath::StringType InMemoryURLIndexTest::TestDBName() const {
-    return FILE_PATH_LITERAL("in_memory_url_index_test.db.txt");
+  return FILE_PATH_LITERAL("in_memory_url_index_test.sql");
 }
 
 bool InMemoryURLIndexTest::InitializeInMemoryURLIndexInSetUp() const {
@@ -325,8 +312,8 @@ void InMemoryURLIndexTest::InitializeInMemoryURLIndex() {
   SchemeSet client_schemes_to_whitelist;
   client_schemes_to_whitelist.insert(kClientWhitelistedScheme);
   url_index_.reset(new InMemoryURLIndex(
-      nullptr, history_service_.get(), nullptr, pool_owner_.pool().get(),
-      base::FilePath(), client_schemes_to_whitelist));
+      nullptr, history_service_.get(), template_url_service_.get(),
+      pool_owner_.pool().get(), base::FilePath(), client_schemes_to_whitelist));
   url_index_->Init();
   url_index_->RebuildFromHistory(history_database_);
 }
@@ -470,7 +457,7 @@ class LimitedInMemoryURLIndexTest : public InMemoryURLIndexTest {
 };
 
 base::FilePath::StringType LimitedInMemoryURLIndexTest::TestDBName() const {
-  return FILE_PATH_LITERAL("in_memory_url_index_test_limited.db.txt");
+  return FILE_PATH_LITERAL("in_memory_url_index_test_limited.sql");
 }
 
 bool LimitedInMemoryURLIndexTest::InitializeInMemoryURLIndexInSetUp() const {
@@ -537,7 +524,20 @@ TEST_F(InMemoryURLIndexTest, Retrieval) {
   // No results since it will be suppressed by default scoring.
   matches = url_index_->HistoryItemsForTerms(ASCIIToUTF16("qui c"),
                                              base::string16::npos, kMaxMatches);
-  ASSERT_EQ(0U, matches.size());
+  EXPECT_EQ(0U, matches.size());
+
+  // A URL that comes from the default search engine should not be returned.
+  matches = url_index_->HistoryItemsForTerms(ASCIIToUTF16("query"),
+                                             base::string16::npos, kMaxMatches);
+  EXPECT_EQ(0U, matches.size());
+
+  // But if it's not from the default search engine, it should be returned.
+  TemplateURL* template_url = template_url_service_->GetTemplateURLForKeyword(
+      base::ASCIIToUTF16(kNonDefaultTemplateURLKeyword));
+  template_url_service_->SetUserSelectedDefaultSearchProvider(template_url);
+  matches = url_index_->HistoryItemsForTerms(ASCIIToUTF16("query"),
+                                             base::string16::npos, kMaxMatches);
+  EXPECT_EQ(1U, matches.size());
 
   // Search which will match at the end of an URL with encoded characters.
   matches = url_index_->HistoryItemsForTerms(ASCIIToUTF16("Mice"),
@@ -545,7 +545,7 @@ TEST_F(InMemoryURLIndexTest, Retrieval) {
   ASSERT_EQ(1U, matches.size());
   EXPECT_EQ(30, matches[0].url_info.id());
 
-  // Check that URLs are not escaped an escape time.
+  // Check that URLs are not escaped an extra time.
   matches = url_index_->HistoryItemsForTerms(ASCIIToUTF16("1% wikipedia"),
                                              base::string16::npos, kMaxMatches);
   ASSERT_EQ(1U, matches.size());
@@ -567,12 +567,12 @@ TEST_F(InMemoryURLIndexTest, CursorPositionRetrieval) {
   // See if a very specific term with no cursor gives an empty result.
   ScoredHistoryMatches matches = url_index_->HistoryItemsForTerms(
       ASCIIToUTF16("DrudReport"), base::string16::npos, kMaxMatches);
-  ASSERT_EQ(0U, matches.size());
+  EXPECT_EQ(0U, matches.size());
 
   // The same test with the cursor at the end should give an empty result.
   matches = url_index_->HistoryItemsForTerms(ASCIIToUTF16("DrudReport"), 10u,
                                              kMaxMatches);
-  ASSERT_EQ(0U, matches.size());
+  EXPECT_EQ(0U, matches.size());
 
   // If the cursor is between Drud and Report, we should find the desired
   // result.
@@ -586,12 +586,12 @@ TEST_F(InMemoryURLIndexTest, CursorPositionRetrieval) {
   // result on this input.
   matches = url_index_->HistoryItemsForTerms(ASCIIToUTF16("MORTGAGERATE DROPS"),
                                              base::string16::npos, kMaxMatches);
-  ASSERT_EQ(0U, matches.size());
+  EXPECT_EQ(0U, matches.size());
 
   // Ditto with cursor at end.
   matches = url_index_->HistoryItemsForTerms(ASCIIToUTF16("MORTGAGERATE DROPS"),
                                              18u, kMaxMatches);
-  ASSERT_EQ(0U, matches.size());
+  EXPECT_EQ(0U, matches.size());
 
   // If the cursor is between MORTAGE And RATE, we should find the
   // desired result.
@@ -624,7 +624,7 @@ TEST_F(InMemoryURLIndexTest, URLPrefixMatching) {
   // "view.atdmt" - found
   matches = url_index_->HistoryItemsForTerms(ASCIIToUTF16("view.atdmt"),
                                              base::string16::npos, kMaxMatches);
-  ASSERT_EQ(1U, matches.size());
+  EXPECT_EQ(1U, matches.size());
 
   // "view.atdmt" - found
   matches = url_index_->HistoryItemsForTerms(ASCIIToUTF16("view.atdmt"),
@@ -665,13 +665,113 @@ TEST_F(InMemoryURLIndexTest, ProperStringMatching) {
   // "view.atdmt" - found
   ScoredHistoryMatches matches = url_index_->HistoryItemsForTerms(
       ASCIIToUTF16("atdmt view"), base::string16::npos, kMaxMatches);
-  ASSERT_EQ(1U, matches.size());
+  EXPECT_EQ(1U, matches.size());
   matches = url_index_->HistoryItemsForTerms(ASCIIToUTF16("atdmt.view"),
                                              base::string16::npos, kMaxMatches);
-  ASSERT_EQ(0U, matches.size());
+  EXPECT_EQ(0U, matches.size());
   matches = url_index_->HistoryItemsForTerms(ASCIIToUTF16("view.atdmt"),
                                              base::string16::npos, kMaxMatches);
-  ASSERT_EQ(1U, matches.size());
+  EXPECT_EQ(1U, matches.size());
+}
+
+TEST_F(InMemoryURLIndexTest, TrimHistoryIds) {
+  // Constants ---------------------------------------------------------------
+
+  constexpr size_t kItemsToScoreLimit = 500;
+  constexpr size_t kAlmostLimit = kItemsToScoreLimit - 5;
+
+  constexpr int kLowTypedCount = 2;
+  constexpr int kHighTypedCount = 100;
+
+  constexpr int kLowVisitCount = 20;
+  constexpr int kHighVisitCount = 200;
+
+  constexpr base::TimeDelta kOld = base::TimeDelta::FromDays(15);
+  constexpr base::TimeDelta kNew = base::TimeDelta::FromDays(2);
+
+  constexpr int kMinRowId = 5000;
+
+  // Helpers -----------------------------------------------------------------
+
+  struct ItemGroup {
+    history::URLID min_id;
+    history::URLID max_id;
+    int typed_count;
+    int visit_count;
+    base::TimeDelta days_ago;
+  };
+
+  auto GetHistoryIdsUpTo = [&](HistoryID max) {
+    HistoryIDVector res(max - kMinRowId);
+    std::iota(res.begin(), res.end(), kMinRowId);
+    return res;
+  };
+
+  auto CountGroupElementsInIds = [](const ItemGroup& group,
+                                    const HistoryIDVector& ids) {
+    return std::count_if(ids.begin(), ids.end(), [&](history::URLID id) {
+      return group.min_id <= id && id < group.max_id;
+    });
+  };
+
+  // Test body --------------------------------------------------------------
+
+  // Groups of items ordered by increasing priority.
+  ItemGroup item_groups[] = {
+      {0, 0, kLowTypedCount, kLowVisitCount, kOld},
+      {0, 0, kLowTypedCount, kLowVisitCount, kNew},
+      {0, 0, kLowTypedCount, kHighVisitCount, kOld},
+      {0, 0, kLowTypedCount, kHighVisitCount, kNew},
+      {0, 0, kHighTypedCount, kLowVisitCount, kOld},
+      {0, 0, kHighTypedCount, kLowVisitCount, kNew},
+      {0, 0, kHighTypedCount, kHighVisitCount, kOld},
+      {0, 0, kHighTypedCount, kHighVisitCount, kNew},
+  };
+
+  // Initialize groups.
+  history::URLID row_id = kMinRowId;
+  for (auto& group : item_groups) {
+    group.min_id = row_id;
+    for (size_t i = 0; i < kAlmostLimit; ++i) {
+      history::URLRow new_row(
+          GURL("http://www.fake_url" + std::to_string(row_id) + ".com"),
+          row_id);
+      new_row.set_typed_count(group.typed_count);
+      new_row.set_visit_count(group.visit_count);
+      new_row.set_last_visit(base::Time::Now() - group.days_ago);
+      UpdateURL(std::move(new_row));
+      ++row_id;
+    }
+    group.max_id = row_id;
+  }
+
+  // First group. Because number of entries is small enough no trimming occurs.
+  {
+    auto ids = GetHistoryIdsUpTo(item_groups[0].max_id);
+    EXPECT_FALSE(GetPrivateData()->TrimHistoryIdsPool(&ids));
+    EXPECT_EQ(kAlmostLimit, ids.size());
+  }
+
+  // Each next group should fill almost everything, while the previous group
+  // should occupy what's left.
+  auto* error_position = std::adjacent_find(
+      std::begin(item_groups), std::end(item_groups),
+      [&](const ItemGroup& previous, const ItemGroup& current) {
+        auto ids = GetHistoryIdsUpTo(current.max_id);
+        EXPECT_TRUE(GetPrivateData()->TrimHistoryIdsPool(&ids));
+
+        size_t current_count = CountGroupElementsInIds(current, ids);
+        EXPECT_EQ(kAlmostLimit, current_count);
+        if (current_count != kAlmostLimit)
+          return true;
+
+        size_t previous_count = CountGroupElementsInIds(previous, ids);
+        EXPECT_EQ(kItemsToScoreLimit - kAlmostLimit, previous_count);
+        return previous_count != kItemsToScoreLimit - kAlmostLimit;
+      });
+
+  EXPECT_TRUE(error_position == std::end(item_groups))
+      << "broken after: " << error_position - std::begin(item_groups);
 }
 
 TEST_F(InMemoryURLIndexTest, HugeResultSet) {
@@ -685,17 +785,12 @@ TEST_F(InMemoryURLIndexTest, HugeResultSet) {
 
   ScoredHistoryMatches matches = url_index_->HistoryItemsForTerms(
       ASCIIToUTF16("b"), base::string16::npos, kMaxMatches);
-  URLIndexPrivateData& private_data(*GetPrivateData());
-  ASSERT_EQ(kMaxMatches, matches.size());
-  // There are 7 matches already in the database.
-  ASSERT_EQ(1008U, private_data.pre_filter_item_count_);
-  ASSERT_EQ(500U, private_data.post_filter_item_count_);
-  ASSERT_EQ(kMaxMatches, private_data.post_scoring_item_count_);
+  EXPECT_EQ(kMaxMatches, matches.size());
 }
 
 TEST_F(InMemoryURLIndexTest, TitleSearch) {
   // Signal if someone has changed the test DB.
-  EXPECT_EQ(29U, GetPrivateData()->history_info_map_.size());
+  EXPECT_EQ(30U, GetPrivateData()->history_info_map_.size());
 
   // Ensure title is being searched.
   ScoredHistoryMatches matches = url_index_->HistoryItemsForTerms(
@@ -733,7 +828,7 @@ TEST_F(InMemoryURLIndexTest, TitleChange) {
   base::string16 new_terms = ASCIIToUTF16("does eat oats little lambs ivy");
   matches = url_index_->HistoryItemsForTerms(new_terms, base::string16::npos,
                                              kMaxMatches);
-  ASSERT_EQ(0U, matches.size());
+  EXPECT_EQ(0U, matches.size());
 
   // Update the row.
   old_row.set_title(ASCIIToUTF16("Does eat oats and little lambs eat ivy"));
@@ -746,7 +841,7 @@ TEST_F(InMemoryURLIndexTest, TitleChange) {
   EXPECT_EQ(expected_id, matches[0].url_info.id());
   matches = url_index_->HistoryItemsForTerms(original_terms,
                                              base::string16::npos, kMaxMatches);
-  ASSERT_EQ(0U, matches.size());
+  EXPECT_EQ(0U, matches.size());
 }
 
 TEST_F(InMemoryURLIndexTest, NonUniqueTermCharacterSets) {
@@ -960,7 +1055,7 @@ TEST_F(InMemoryURLIndexTest, WhitelistedURLs) {
     { "prospero://host.dom//pros/name", false },
     { "rsync://syler@lost.com/Source", false },
     { "rtsp://media.example.com:554/twister/audiotrack", false },
-    { "service:acap://some.where.net;authentication=KERBEROSV4", false },
+    { "acap://some.where.net;authentication=KERBEROSV4", false },
     { "shttp://www.terces.com/secret", false },
     { "sieve://example.com//script", false },
     { "sip:+1-212-555-1212:1234@gateway.com;user=phone", false },
@@ -1035,7 +1130,7 @@ TEST_F(InMemoryURLIndexTest, ReadVisitsFromHistory) {
 TEST_F(InMemoryURLIndexTest, CacheSaveRestore) {
   base::ScopedTempDir temp_directory;
   ASSERT_TRUE(temp_directory.CreateUniqueTempDir());
-  set_history_dir(temp_directory.path());
+  set_history_dir(temp_directory.GetPath());
 
   URLIndexPrivateData& private_data(*GetPrivateData());
 
@@ -1104,7 +1199,7 @@ TEST_F(InMemoryURLIndexTest, CacheSaveRestore) {
 TEST_F(InMemoryURLIndexTest, RebuildFromHistoryIfCacheOld) {
   base::ScopedTempDir temp_directory;
   ASSERT_TRUE(temp_directory.CreateUniqueTempDir());
-  set_history_dir(temp_directory.path());
+  set_history_dir(temp_directory.GetPath());
 
   URLIndexPrivateData& private_data(*GetPrivateData());
 
@@ -1176,7 +1271,7 @@ TEST_F(InMemoryURLIndexTest, RebuildFromHistoryIfCacheOld) {
   ExpectPrivateDataEqual(*old_data.get(), new_data);
 }
 
-TEST_F(InMemoryURLIndexTest, AddHistoryMatch) {
+TEST_F(InMemoryURLIndexTest, CalculateWordStartsOffsets) {
   const struct {
     const char* search_string;
     size_t cursor_position;
@@ -1240,18 +1335,17 @@ TEST_F(InMemoryURLIndexTest, AddHistoryMatch) {
     String16Vector lower_terms;
     StringToTerms(test_cases[i].search_string, test_cases[i].cursor_position,
                   &lower_string, &lower_terms);
-    URLIndexPrivateData::AddHistoryMatch match(nullptr, nullptr,
-                                               *GetPrivateData(),
-                                               lower_string, lower_terms,
-                                               base::Time::Now());
+    WordStarts lower_terms_to_word_starts_offsets;
+    URLIndexPrivateData::CalculateWordStartsOffsets(
+        lower_terms, &lower_terms_to_word_starts_offsets);
 
     // Verify against expectations.
     EXPECT_EQ(test_cases[i].expected_word_starts_offsets_size,
-              match.lower_terms_to_word_starts_offsets_.size());
+              lower_terms_to_word_starts_offsets.size());
     for (size_t j = 0; j < test_cases[i].expected_word_starts_offsets_size;
          ++j) {
       EXPECT_EQ(test_cases[i].expected_word_starts_offsets[j],
-                match.lower_terms_to_word_starts_offsets_[j]);
+                lower_terms_to_word_starts_offsets[j]);
     }
   }
 }
@@ -1279,7 +1373,7 @@ InMemoryURLIndexCacheTest::InMemoryURLIndexCacheTest()
 
 void InMemoryURLIndexCacheTest::SetUp() {
   ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
-  base::FilePath path(temp_dir_.path());
+  base::FilePath path(temp_dir_.GetPath());
   url_index_.reset(new InMemoryURLIndex(nullptr, nullptr, nullptr,
                                         pool_owner_.pool().get(), path,
                                         SchemeSet()));
@@ -1303,7 +1397,7 @@ bool InMemoryURLIndexCacheTest::GetCacheFilePath(
 
 TEST_F(InMemoryURLIndexCacheTest, CacheFilePath) {
   base::FilePath expectedPath =
-      temp_dir_.path().Append(FILE_PATH_LITERAL("History Provider Cache"));
+      temp_dir_.GetPath().Append(FILE_PATH_LITERAL("History Provider Cache"));
   std::vector<base::FilePath::StringType> expected_parts;
   expectedPath.GetComponents(&expected_parts);
   base::FilePath full_file_path;

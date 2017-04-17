@@ -16,7 +16,6 @@
 #include "content/browser/dom_storage/dom_storage_namespace.h"
 #include "content/browser/dom_storage/dom_storage_task_runner.h"
 #include "content/common/dom_storage/dom_storage_messages.h"
-#include "content/public/browser/user_metrics.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -46,7 +45,7 @@ void DOMStorageMessageFilter::UninitializeInSequence() {
   host_.reset();
 }
 
-void DOMStorageMessageFilter::OnFilterAdded(IPC::Sender* sender) {
+void DOMStorageMessageFilter::OnFilterAdded(IPC::Channel* channel) {
   context_->task_runner()->PostShutdownBlockingTask(
       FROM_HERE,
       DOMStorageTaskRunner::PRIMARY_SEQUENCE,
@@ -91,10 +90,10 @@ void DOMStorageMessageFilter::OnOpenStorageArea(int connection_id,
                                                 int64_t namespace_id,
                                                 const GURL& origin) {
   DCHECK(!BrowserThread::CurrentlyOn(BrowserThread::IO));
-  if (!host_->OpenStorageArea(connection_id, namespace_id, origin)) {
-    bad_message::ReceivedBadMessage(this, bad_message::DSMF_OPEN_STORAGE);
-    return;
-  }
+  base::Optional<bad_message::BadMessageReason>
+      error = host_->OpenStorageArea(connection_id, namespace_id, origin);
+  if (error)
+    bad_message::ReceivedBadMessage(this, error.value());
 }
 
 void DOMStorageMessageFilter::OnCloseStorageArea(int connection_id) {

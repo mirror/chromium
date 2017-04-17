@@ -37,243 +37,244 @@
 #include "core/page/AutoscrollController.h"
 #include "core/page/Page.h"
 #include "core/paint/TransformRecorder.h"
-#include "platform/Logging.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/paint/ClipRecorder.h"
 #include "platform/graphics/paint/CullRect.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
-#include "platform/graphics/paint/SkPictureBuilder.h"
+#include "platform/graphics/paint/PaintRecordBuilder.h"
 #include "platform/transforms/AffineTransform.h"
-#include "public/web/WebInputEvent.h"
+#include "platform/wtf/CurrentTime.h"
+#include "public/platform/WebInputEvent.h"
 #include "web/WebInputEventConversion.h"
-#include "wtf/CurrentTime.h"
 
 namespace blink {
 
-void PageWidgetDelegate::animate(Page& page, double monotonicFrameBeginTime)
-{
-    page.autoscrollController().animate(monotonicFrameBeginTime);
-    page.animator().serviceScriptedAnimations(monotonicFrameBeginTime);
+void PageWidgetDelegate::Animate(Page& page,
+                                 double monotonic_frame_begin_time) {
+  page.GetAutoscrollController().Animate(monotonic_frame_begin_time);
+  page.Animator().ServiceScriptedAnimations(monotonic_frame_begin_time);
 }
 
-void PageWidgetDelegate::updateAllLifecyclePhases(Page& page, LocalFrame& root)
-{
-    page.animator().updateAllLifecyclePhases(root);
+void PageWidgetDelegate::UpdateAllLifecyclePhases(Page& page,
+                                                  LocalFrame& root) {
+  page.Animator().UpdateAllLifecyclePhases(root);
 }
 
-static void paintInternal(Page& page, WebCanvas* canvas,
-    const WebRect& rect, LocalFrame& root, const GlobalPaintFlags globalPaintFlags)
-{
-    if (rect.isEmpty())
-        return;
+static void PaintInternal(Page& page,
+                          WebCanvas* canvas,
+                          const WebRect& rect,
+                          LocalFrame& root,
+                          const GlobalPaintFlags global_paint_flags) {
+  if (rect.IsEmpty())
+    return;
 
-    IntRect intRect(rect);
-    SkPictureBuilder pictureBuilder(intRect);
-    {
-        GraphicsContext& paintContext = pictureBuilder.context();
+  IntRect int_rect(rect);
+  // TODO(enne): intRect is not correct: http://crbug.com/703231
+  PaintRecordBuilder builder(int_rect);
+  {
+    GraphicsContext& paint_context = builder.Context();
 
-        // FIXME: device scale factor settings are layering violations and should not
-        // be used within Blink paint code.
-        float scaleFactor = page.deviceScaleFactor();
-        paintContext.setDeviceScaleFactor(scaleFactor);
+    // FIXME: device scale factor settings are layering violations and should
+    // not be used within Blink paint code.
+    float scale_factor = page.DeviceScaleFactorDeprecated();
+    paint_context.SetDeviceScaleFactor(scale_factor);
 
-        AffineTransform scale;
-        scale.scale(scaleFactor);
-        TransformRecorder scaleRecorder(paintContext, pictureBuilder, scale);
+    AffineTransform scale;
+    scale.Scale(scale_factor);
+    TransformRecorder scale_recorder(paint_context, builder, scale);
 
-        IntRect dirtyRect(rect);
-        FrameView* view = root.view();
-        if (view) {
-            ClipRecorder clipRecorder(paintContext, pictureBuilder, DisplayItem::PageWidgetDelegateClip, dirtyRect);
-            view->paint(paintContext, globalPaintFlags, CullRect(dirtyRect));
-        } else {
-            DrawingRecorder drawingRecorder(paintContext, pictureBuilder, DisplayItem::PageWidgetDelegateBackgroundFallback, dirtyRect);
-            paintContext.fillRect(dirtyRect, Color::white);
-        }
+    IntRect dirty_rect(rect);
+    FrameView* view = root.View();
+    view->UpdateAllLifecyclePhasesExceptPaint();
+    if (view) {
+      ClipRecorder clip_recorder(paint_context, builder,
+                                 DisplayItem::kPageWidgetDelegateClip,
+                                 dirty_rect);
+      view->Paint(paint_context, global_paint_flags, CullRect(dirty_rect));
+    } else {
+      DrawingRecorder drawing_recorder(
+          paint_context, builder,
+          DisplayItem::kPageWidgetDelegateBackgroundFallback, dirty_rect);
+      paint_context.FillRect(dirty_rect, Color::kWhite);
     }
-    pictureBuilder.endRecording()->playback(canvas);
+  }
+
+  builder.EndRecording(*canvas);
 }
 
-void PageWidgetDelegate::paint(Page& page, WebCanvas* canvas,
-    const WebRect& rect, LocalFrame& root)
-{
-    paintInternal(page, canvas, rect, root, GlobalPaintNormalPhase);
+void PageWidgetDelegate::Paint(Page& page,
+                               WebCanvas* canvas,
+                               const WebRect& rect,
+                               LocalFrame& root) {
+  PaintInternal(page, canvas, rect, root, kGlobalPaintNormalPhase);
 }
 
-void PageWidgetDelegate::paintIgnoringCompositing(Page& page, WebCanvas* canvas,
-    const WebRect& rect, LocalFrame& root)
-{
-    paintInternal(page, canvas, rect, root, GlobalPaintFlattenCompositingLayers);
+void PageWidgetDelegate::PaintIgnoringCompositing(Page& page,
+                                                  WebCanvas* canvas,
+                                                  const WebRect& rect,
+                                                  LocalFrame& root) {
+  PaintInternal(page, canvas, rect, root, kGlobalPaintFlattenCompositingLayers);
 }
 
-WebInputEventResult PageWidgetDelegate::handleInputEvent(PageWidgetEventHandler& handler, const WebInputEvent& event, LocalFrame* root)
-{
-    if (event.modifiers & WebInputEvent::IsTouchAccessibility
-        && WebInputEvent::isMouseEventType(event.type)) {
-        PlatformMouseEventBuilder pme(root->view(), static_cast<const WebMouseEvent&>(event));
+WebInputEventResult PageWidgetDelegate::HandleInputEvent(
+    PageWidgetEventHandler& handler,
+    const WebCoalescedInputEvent& coalesced_event,
+    LocalFrame* root) {
+  const WebInputEvent& event = coalesced_event.Event();
+  if (event.GetModifiers() & WebInputEvent::kIsTouchAccessibility &&
+      WebInputEvent::IsMouseEventType(event.GetType())) {
+    WebMouseEvent mouse_event = TransformWebMouseEvent(
+        root->View(), static_cast<const WebMouseEvent&>(event));
 
-        IntPoint docPoint(root->view()->rootFrameToContents(pme.position()));
-        HitTestResult result = root->eventHandler().hitTestResultAtPoint(docPoint, HitTestRequest::ReadOnly | HitTestRequest::Active);
-        result.setToShadowHostIfInUserAgentShadowRoot();
-        if (result.innerNodeFrame()) {
-            Document* document = result.innerNodeFrame()->document();
-            if (document) {
-                AXObjectCache* cache = document->existingAXObjectCache();
-                if (cache)
-                    cache->onTouchAccessibilityHover(result.roundedPointInInnerNodeFrame());
-            }
-        }
+    IntPoint doc_point(root->View()->RootFrameToContents(
+        FlooredIntPoint(mouse_event.PositionInRootFrame())));
+    HitTestResult result = root->GetEventHandler().HitTestResultAtPoint(
+        doc_point, HitTestRequest::kReadOnly | HitTestRequest::kActive);
+    result.SetToShadowHostIfInRestrictedShadowRoot();
+    if (result.InnerNodeFrame()) {
+      Document* document = result.InnerNodeFrame()->GetDocument();
+      if (document) {
+        AXObjectCache* cache = document->ExistingAXObjectCache();
+        if (cache)
+          cache->OnTouchAccessibilityHover(
+              result.RoundedPointInInnerNodeFrame());
+      }
     }
+  }
 
-    switch (event.type) {
-
+  switch (event.GetType()) {
     // FIXME: WebKit seems to always return false on mouse events processing
     // methods. For now we'll assume it has processed them (as we are only
     // interested in whether keyboard events are processed).
     // FIXME: Why do we return HandleSuppressed when there is no root or
     // the root is detached?
-    case WebInputEvent::MouseMove:
-        if (!root || !root->view())
-            return WebInputEventResult::HandledSuppressed;
-        handler.handleMouseMove(*root, static_cast<const WebMouseEvent&>(event));
-        return WebInputEventResult::HandledSystem;
-    case WebInputEvent::MouseLeave:
-        if (!root || !root->view())
-            return WebInputEventResult::HandledSuppressed;
-        handler.handleMouseLeave(*root, static_cast<const WebMouseEvent&>(event));
-        return WebInputEventResult::HandledSystem;
-    case WebInputEvent::MouseDown:
-        if (!root || !root->view())
-            return WebInputEventResult::HandledSuppressed;
-        handler.handleMouseDown(*root, static_cast<const WebMouseEvent&>(event));
-        return WebInputEventResult::HandledSystem;
-    case WebInputEvent::MouseUp:
-        if (!root || !root->view())
-            return WebInputEventResult::HandledSuppressed;
-        handler.handleMouseUp(*root, static_cast<const WebMouseEvent&>(event));
-        return WebInputEventResult::HandledSystem;
-    case WebInputEvent::MouseWheel:
-        if (!root || !root->view())
-            return WebInputEventResult::NotHandled;
-        return handler.handleMouseWheel(*root, static_cast<const WebMouseWheelEvent&>(event));
+    case WebInputEvent::kMouseMove:
+      if (!root || !root->View())
+        return WebInputEventResult::kHandledSuppressed;
+      handler.HandleMouseMove(*root, static_cast<const WebMouseEvent&>(event),
+                              coalesced_event.GetCoalescedEventsPointers());
+      return WebInputEventResult::kHandledSystem;
+    case WebInputEvent::kMouseLeave:
+      if (!root || !root->View())
+        return WebInputEventResult::kHandledSuppressed;
+      handler.HandleMouseLeave(*root, static_cast<const WebMouseEvent&>(event));
+      return WebInputEventResult::kHandledSystem;
+    case WebInputEvent::kMouseDown:
+      if (!root || !root->View())
+        return WebInputEventResult::kHandledSuppressed;
+      handler.HandleMouseDown(*root, static_cast<const WebMouseEvent&>(event));
+      return WebInputEventResult::kHandledSystem;
+    case WebInputEvent::kMouseUp:
+      if (!root || !root->View())
+        return WebInputEventResult::kHandledSuppressed;
+      handler.HandleMouseUp(*root, static_cast<const WebMouseEvent&>(event));
+      return WebInputEventResult::kHandledSystem;
+    case WebInputEvent::kMouseWheel:
+      if (!root || !root->View())
+        return WebInputEventResult::kNotHandled;
+      return handler.HandleMouseWheel(
+          *root, static_cast<const WebMouseWheelEvent&>(event));
 
-    case WebInputEvent::RawKeyDown:
-    case WebInputEvent::KeyDown:
-    case WebInputEvent::KeyUp:
-        return handler.handleKeyEvent(static_cast<const WebKeyboardEvent&>(event));
+    case WebInputEvent::kRawKeyDown:
+    case WebInputEvent::kKeyDown:
+    case WebInputEvent::kKeyUp:
+      return handler.HandleKeyEvent(
+          static_cast<const WebKeyboardEvent&>(event));
 
-    case WebInputEvent::Char:
-        return handler.handleCharEvent(static_cast<const WebKeyboardEvent&>(event));
-    case WebInputEvent::GestureScrollBegin:
-    case WebInputEvent::GestureScrollEnd:
-    case WebInputEvent::GestureScrollUpdate:
-    case WebInputEvent::GestureFlingStart:
-    case WebInputEvent::GestureFlingCancel:
-    case WebInputEvent::GestureTap:
-    case WebInputEvent::GestureTapUnconfirmed:
-    case WebInputEvent::GestureTapDown:
-    case WebInputEvent::GestureShowPress:
-    case WebInputEvent::GestureTapCancel:
-    case WebInputEvent::GestureDoubleTap:
-    case WebInputEvent::GestureTwoFingerTap:
-    case WebInputEvent::GestureLongPress:
-    case WebInputEvent::GestureLongTap:
-        return handler.handleGestureEvent(static_cast<const WebGestureEvent&>(event));
+    case WebInputEvent::kChar:
+      return handler.HandleCharEvent(
+          static_cast<const WebKeyboardEvent&>(event));
+    case WebInputEvent::kGestureScrollBegin:
+    case WebInputEvent::kGestureScrollEnd:
+    case WebInputEvent::kGestureScrollUpdate:
+    case WebInputEvent::kGestureFlingStart:
+    case WebInputEvent::kGestureFlingCancel:
+    case WebInputEvent::kGestureTap:
+    case WebInputEvent::kGestureTapUnconfirmed:
+    case WebInputEvent::kGestureTapDown:
+    case WebInputEvent::kGestureShowPress:
+    case WebInputEvent::kGestureTapCancel:
+    case WebInputEvent::kGestureDoubleTap:
+    case WebInputEvent::kGestureTwoFingerTap:
+    case WebInputEvent::kGestureLongPress:
+    case WebInputEvent::kGestureLongTap:
+      return handler.HandleGestureEvent(
+          static_cast<const WebGestureEvent&>(event));
 
-    case WebInputEvent::TouchStart:
-    case WebInputEvent::TouchMove:
-    case WebInputEvent::TouchEnd:
-    case WebInputEvent::TouchCancel:
-    case WebInputEvent::TouchScrollStarted:
-        if (!root || !root->view())
-            return WebInputEventResult::NotHandled;
-        return handler.handleTouchEvent(*root, static_cast<const WebTouchEvent&>(event));
-    case WebInputEvent::GesturePinchBegin:
-    case WebInputEvent::GesturePinchEnd:
-    case WebInputEvent::GesturePinchUpdate:
-        // Touchscreen pinch events are currently not handled in main thread. Once they are,
-        // these should be passed to |handleGestureEvent| similar to gesture scroll events.
-        return WebInputEventResult::NotHandled;
+    case WebInputEvent::kTouchStart:
+    case WebInputEvent::kTouchMove:
+    case WebInputEvent::kTouchEnd:
+    case WebInputEvent::kTouchCancel:
+    case WebInputEvent::kTouchScrollStarted:
+      if (!root || !root->View())
+        return WebInputEventResult::kNotHandled;
+      return handler.HandleTouchEvent(
+          *root, static_cast<const WebTouchEvent&>(event),
+          coalesced_event.GetCoalescedEventsPointers());
+    case WebInputEvent::kGesturePinchBegin:
+    case WebInputEvent::kGesturePinchEnd:
+    case WebInputEvent::kGesturePinchUpdate:
+      // Touchscreen pinch events are currently not handled in main thread.
+      // Once they are, these should be passed to |handleGestureEvent| similar
+      // to gesture scroll events.
+      return WebInputEventResult::kNotHandled;
     default:
-        return WebInputEventResult::NotHandled;
-    }
+      return WebInputEventResult::kNotHandled;
+  }
 }
 
 // ----------------------------------------------------------------
 // Default handlers for PageWidgetEventHandler
 
-void PageWidgetEventHandler::handleMouseMove(LocalFrame& mainFrame, const WebMouseEvent& event)
-{
-    mainFrame.eventHandler().handleMouseMoveEvent(PlatformMouseEventBuilder(mainFrame.view(), event));
+void PageWidgetEventHandler::HandleMouseMove(
+    LocalFrame& main_frame,
+    const WebMouseEvent& event,
+    const std::vector<const WebInputEvent*>& coalesced_events) {
+  WebMouseEvent transformed_event =
+      TransformWebMouseEvent(main_frame.View(), event);
+  main_frame.GetEventHandler().HandleMouseMoveEvent(
+      transformed_event,
+      TransformWebMouseEventVector(main_frame.View(), coalesced_events));
 }
 
-void PageWidgetEventHandler::handleMouseLeave(LocalFrame& mainFrame, const WebMouseEvent& event)
-{
-    mainFrame.eventHandler().handleMouseLeaveEvent(PlatformMouseEventBuilder(mainFrame.view(), event));
+void PageWidgetEventHandler::HandleMouseLeave(LocalFrame& main_frame,
+                                              const WebMouseEvent& event) {
+  WebMouseEvent transformed_event =
+      TransformWebMouseEvent(main_frame.View(), event);
+  main_frame.GetEventHandler().HandleMouseLeaveEvent(transformed_event);
 }
 
-void PageWidgetEventHandler::handleMouseDown(LocalFrame& mainFrame, const WebMouseEvent& event)
-{
-    mainFrame.eventHandler().handleMousePressEvent(PlatformMouseEventBuilder(mainFrame.view(), event));
+void PageWidgetEventHandler::HandleMouseDown(LocalFrame& main_frame,
+                                             const WebMouseEvent& event) {
+  WebMouseEvent transformed_event =
+      TransformWebMouseEvent(main_frame.View(), event);
+  main_frame.GetEventHandler().HandleMousePressEvent(transformed_event);
 }
 
-void PageWidgetEventHandler::handleMouseUp(LocalFrame& mainFrame, const WebMouseEvent& event)
-{
-    mainFrame.eventHandler().handleMouseReleaseEvent(PlatformMouseEventBuilder(mainFrame.view(), event));
+void PageWidgetEventHandler::HandleMouseUp(LocalFrame& main_frame,
+                                           const WebMouseEvent& event) {
+  WebMouseEvent transformed_event =
+      TransformWebMouseEvent(main_frame.View(), event);
+  main_frame.GetEventHandler().HandleMouseReleaseEvent(transformed_event);
 }
 
-WebInputEventResult PageWidgetEventHandler::handleMouseWheel(LocalFrame& mainFrame, const WebMouseWheelEvent& event)
-{
-    return mainFrame.eventHandler().handleWheelEvent(PlatformWheelEventBuilder(mainFrame.view(), event));
+WebInputEventResult PageWidgetEventHandler::HandleMouseWheel(
+    LocalFrame& main_frame,
+    const WebMouseWheelEvent& event) {
+  WebMouseWheelEvent transformed_event =
+      TransformWebMouseWheelEvent(main_frame.View(), event);
+  return main_frame.GetEventHandler().HandleWheelEvent(transformed_event);
 }
 
-WebInputEventResult PageWidgetEventHandler::handleTouchEvent(LocalFrame& mainFrame, const WebTouchEvent& event)
-{
-    return mainFrame.eventHandler().handleTouchEvent(PlatformTouchEventBuilder(mainFrame.view(), event));
+WebInputEventResult PageWidgetEventHandler::HandleTouchEvent(
+    LocalFrame& main_frame,
+    const WebTouchEvent& event,
+    const std::vector<const WebInputEvent*>& coalesced_events) {
+  WebTouchEvent transformed_event =
+      TransformWebTouchEvent(main_frame.View(), event);
+  return main_frame.GetEventHandler().HandleTouchEvent(
+      transformed_event,
+      TransformWebTouchEventVector(main_frame.View(), coalesced_events));
 }
 
-#define WEBINPUT_EVENT_CASE(type) case WebInputEvent::type: return #type;
-
-const char* PageWidgetEventHandler::inputTypeToName(WebInputEvent::Type type)
-{
-    switch (type) {
-        WEBINPUT_EVENT_CASE(MouseDown)
-        WEBINPUT_EVENT_CASE(MouseUp)
-        WEBINPUT_EVENT_CASE(MouseMove)
-        WEBINPUT_EVENT_CASE(MouseEnter)
-        WEBINPUT_EVENT_CASE(MouseLeave)
-        WEBINPUT_EVENT_CASE(ContextMenu)
-        WEBINPUT_EVENT_CASE(MouseWheel)
-        WEBINPUT_EVENT_CASE(RawKeyDown)
-        WEBINPUT_EVENT_CASE(KeyDown)
-        WEBINPUT_EVENT_CASE(KeyUp)
-        WEBINPUT_EVENT_CASE(Char)
-        WEBINPUT_EVENT_CASE(GestureScrollBegin)
-        WEBINPUT_EVENT_CASE(GestureScrollEnd)
-        WEBINPUT_EVENT_CASE(GestureScrollUpdate)
-        WEBINPUT_EVENT_CASE(GestureFlingStart)
-        WEBINPUT_EVENT_CASE(GestureFlingCancel)
-        WEBINPUT_EVENT_CASE(GestureShowPress)
-        WEBINPUT_EVENT_CASE(GestureTap)
-        WEBINPUT_EVENT_CASE(GestureTapUnconfirmed)
-        WEBINPUT_EVENT_CASE(GestureTapDown)
-        WEBINPUT_EVENT_CASE(GestureTapCancel)
-        WEBINPUT_EVENT_CASE(GestureDoubleTap)
-        WEBINPUT_EVENT_CASE(GestureTwoFingerTap)
-        WEBINPUT_EVENT_CASE(GestureLongPress)
-        WEBINPUT_EVENT_CASE(GestureLongTap)
-        WEBINPUT_EVENT_CASE(GesturePinchBegin)
-        WEBINPUT_EVENT_CASE(GesturePinchEnd)
-        WEBINPUT_EVENT_CASE(GesturePinchUpdate)
-        WEBINPUT_EVENT_CASE(TouchStart)
-        WEBINPUT_EVENT_CASE(TouchMove)
-        WEBINPUT_EVENT_CASE(TouchEnd)
-        WEBINPUT_EVENT_CASE(TouchCancel)
-        WEBINPUT_EVENT_CASE(TouchScrollStarted)
-    default:
-        NOTREACHED();
-        return "";
-    }
-}
-
-} // namespace blink
+}  // namespace blink

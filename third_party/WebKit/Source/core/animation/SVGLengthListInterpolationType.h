@@ -14,25 +14,36 @@ namespace blink {
 enum class SVGLengthMode;
 
 class SVGLengthListInterpolationType : public SVGInterpolationType {
-public:
-    SVGLengthListInterpolationType(const QualifiedName& attribute)
-        : SVGInterpolationType(attribute)
-        , m_unitMode(SVGLength::lengthModeForAnimatedLengthAttribute(attribute))
-        , m_negativeValuesForbidden(SVGLength::negativeValuesForbiddenForAnimatedLengthAttribute(attribute))
-    { }
+ public:
+  SVGLengthListInterpolationType(const QualifiedName& attribute)
+      : SVGInterpolationType(attribute),
+        unit_mode_(SVGLength::LengthModeForAnimatedLengthAttribute(attribute)),
+        negative_values_forbidden_(
+            SVGLength::NegativeValuesForbiddenForAnimatedLengthAttribute(
+                attribute)) {}
 
-private:
-    InterpolationValue maybeConvertNeutral(const InterpolationValue& underlying, ConversionCheckers&) const final;
-    InterpolationValue maybeConvertSVGValue(const SVGPropertyBase& svgValue) const final;
-    PairwiseInterpolationValue maybeMergeSingles(InterpolationValue&& start, InterpolationValue&& end) const final;
-    void composite(UnderlyingValueOwner&, double underlyingFraction, const InterpolationValue&, double interpolationFraction) const final;
-    SVGPropertyBase* appliedSVGValue(const InterpolableValue&, const NonInterpolableValue*) const final;
-    void apply(const InterpolableValue&, const NonInterpolableValue*, InterpolationEnvironment&) const final;
+ private:
+  InterpolationValue MaybeConvertNeutral(const InterpolationValue& underlying,
+                                         ConversionCheckers&) const final;
+  InterpolationValue MaybeConvertSVGValue(
+      const SVGPropertyBase& svg_value) const final;
+  PairwiseInterpolationValue MaybeMergeSingles(
+      InterpolationValue&& start,
+      InterpolationValue&& end) const final;
+  void Composite(UnderlyingValueOwner&,
+                 double underlying_fraction,
+                 const InterpolationValue&,
+                 double interpolation_fraction) const final;
+  SVGPropertyBase* AppliedSVGValue(const InterpolableValue&,
+                                   const NonInterpolableValue*) const final;
+  void Apply(const InterpolableValue&,
+             const NonInterpolableValue*,
+             InterpolationEnvironment&) const final;
 
-    const SVGLengthMode m_unitMode;
-    const bool m_negativeValuesForbidden;
+  const SVGLengthMode unit_mode_;
+  const bool negative_values_forbidden_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGLengthListInterpolationType_h
+#endif  // SVGLengthListInterpolationType_h

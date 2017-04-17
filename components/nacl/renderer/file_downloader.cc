@@ -10,15 +10,16 @@
 #include "components/nacl/renderer/nexe_load_manager.h"
 #include "net/base/net_errors.h"
 #include "third_party/WebKit/public/platform/WebURLError.h"
-#include "third_party/WebKit/public/platform/WebURLLoader.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
+#include "third_party/WebKit/public/web/WebAssociatedURLLoader.h"
 
 namespace nacl {
 
-FileDownloader::FileDownloader(std::unique_ptr<blink::WebURLLoader> url_loader,
-                               base::File file,
-                               StatusCallback status_cb,
-                               ProgressCallback progress_cb)
+FileDownloader::FileDownloader(
+    std::unique_ptr<blink::WebAssociatedURLLoader> url_loader,
+    base::File file,
+    StatusCallback status_cb,
+    ProgressCallback progress_cb)
     : url_loader_(std::move(url_loader)),
       file_(std::move(file)),
       status_cb_(status_cb),
@@ -34,27 +35,21 @@ FileDownloader::~FileDownloader() {
 }
 
 void FileDownloader::Load(const blink::WebURLRequest& request) {
-  url_loader_->loadAsynchronously(request, this);
+  url_loader_->LoadAsynchronously(request, this);
 }
 
-void FileDownloader::didReceiveResponse(
-    blink::WebURLLoader* loader,
-    const blink::WebURLResponse& response) {
-  http_status_code_ = response.httpStatusCode();
+void FileDownloader::DidReceiveResponse(const blink::WebURLResponse& response) {
+  http_status_code_ = response.HttpStatusCode();
   if (http_status_code_ != 200)
     status_ = FAILED;
 
   // Set -1 if the content length is unknown. Set before issuing callback.
-  total_bytes_to_be_received_ = response.expectedContentLength();
+  total_bytes_to_be_received_ = response.ExpectedContentLength();
   if (!progress_cb_.is_null())
     progress_cb_.Run(total_bytes_received_, total_bytes_to_be_received_);
 }
 
-void FileDownloader::didReceiveData(blink::WebURLLoader* loader,
-                                    const char* data,
-                                    int data_length,
-                                    int encoded_data_length,
-                                    int encoded_body_length) {
+void FileDownloader::DidReceiveData(const char* data, int data_length) {
   if (status_ == SUCCESS) {
     if (file_.Write(total_bytes_received_, data, data_length) == -1) {
       status_ = FAILED;
@@ -66,10 +61,7 @@ void FileDownloader::didReceiveData(blink::WebURLLoader* loader,
   }
 }
 
-void FileDownloader::didFinishLoading(
-    blink::WebURLLoader* loader,
-    double finish_time,
-    int64_t total_encoded_data_length) {
+void FileDownloader::DidFinishLoading(double finish_time) {
   if (status_ == SUCCESS) {
     // Seek back to the beginning of the file that was just written so it's
     // easy for consumers to use.
@@ -80,11 +72,9 @@ void FileDownloader::didFinishLoading(
   delete this;
 }
 
-void FileDownloader::didFail(
-    blink::WebURLLoader* loader,
-    const blink::WebURLError& error) {
+void FileDownloader::DidFail(const blink::WebURLError& error) {
   status_ = FAILED;
-  if (error.domain.equals(blink::WebString::fromUTF8(net::kErrorDomain))) {
+  if (error.domain.Equals(blink::WebString::FromUTF8(net::kErrorDomain))) {
     switch (error.reason) {
       case net::ERR_ACCESS_DENIED:
       case net::ERR_NETWORK_ACCESS_DENIED:

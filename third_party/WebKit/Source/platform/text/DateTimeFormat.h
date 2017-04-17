@@ -28,8 +28,8 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -37,81 +37,83 @@ namespace blink {
 // standard 35, Locale Data Markup Language (LDML)[1].
 // [1] LDML http://unicode.org/reports/tr35/tr35-6.html#Date_Format_Patterns
 class PLATFORM_EXPORT DateTimeFormat {
-    STATIC_ONLY(DateTimeFormat);
-public:
-    enum FieldType {
-        FieldTypeInvalid,
-        FieldTypeLiteral,
+  STATIC_ONLY(DateTimeFormat);
 
-        // Era: AD
-        FieldTypeEra = 'G',
+ public:
+  enum FieldType {
+    kFieldTypeInvalid,
+    kFieldTypeLiteral,
 
-        // Year: 1996
-        FieldTypeYear = 'y',
-        FieldTypeYearOfWeekOfYear = 'Y',
-        FieldTypeExtendedYear = 'u',
+    // Era: AD
+    kFieldTypeEra = 'G',
 
-        // Quater: Q2
-        FieldTypeQuater = 'Q',
-        FieldTypeQuaterStandAlone = 'q',
+    // Year: 1996
+    kFieldTypeYear = 'y',
+    kFieldTypeYearOfWeekOfYear = 'Y',
+    kFieldTypeExtendedYear = 'u',
 
-        // Month: September
-        FieldTypeMonth = 'M',
-        FieldTypeMonthStandAlone = 'L',
+    // Quater: Q2
+    kFieldTypeQuater = 'Q',
+    kFieldTypeQuaterStandAlone = 'q',
 
-        // Week: 42
-        FieldTypeWeekOfYear = 'w',
-        FieldTypeWeekOfMonth = 'W',
+    // Month: September
+    kFieldTypeMonth = 'M',
+    kFieldTypeMonthStandAlone = 'L',
 
-        // Day: 12
-        FieldTypeDayOfMonth = 'd',
-        FieldTypeDayOfYear = 'D',
-        FieldTypeDayOfWeekInMonth = 'F',
-        FieldTypeModifiedJulianDay = 'g',
+    // Week: 42
+    kFieldTypeWeekOfYear = 'w',
+    kFieldTypeWeekOfMonth = 'W',
 
-        // Week Day: Tuesday
-        FieldTypeDayOfWeek = 'E',
-        FieldTypeLocalDayOfWeek = 'e',
-        FieldTypeLocalDayOfWeekStandAlon = 'c',
+    // Day: 12
+    kFieldTypeDayOfMonth = 'd',
+    kFieldTypeDayOfYear = 'D',
+    kFieldTypeDayOfWeekInMonth = 'F',
+    kFieldTypeModifiedJulianDay = 'g',
 
-        // Period: AM or PM
-        FieldTypePeriod = 'a',
+    // Week Day: Tuesday
+    kFieldTypeDayOfWeek = 'E',
+    kFieldTypeLocalDayOfWeek = 'e',
+    kFieldTypeLocalDayOfWeekStandAlon = 'c',
 
-        // Hour: 7
-        FieldTypeHour12 = 'h',
-        FieldTypeHour23 = 'H',
-        FieldTypeHour11 = 'K',
-        FieldTypeHour24 = 'k',
+    // Period: AM or PM
+    kFieldTypePeriod = 'a',
 
-        // Minute: 59
-        FieldTypeMinute = 'm',
+    // Hour: 7
+    kFieldTypeHour12 = 'h',
+    kFieldTypeHour23 = 'H',
+    kFieldTypeHour11 = 'K',
+    kFieldTypeHour24 = 'k',
 
-        // Second: 12
-        FieldTypeSecond = 's',
-        FieldTypeFractionalSecond = 'S',
-        FieldTypeMillisecondsInDay = 'A',
+    // Minute: 59
+    kFieldTypeMinute = 'm',
 
-        // Zone: PDT
-        FieldTypeZone = 'z',
-        FieldTypeRFC822Zone = 'Z',
-        FieldTypeNonLocationZone = 'v',
-    };
+    // Second: 12
+    kFieldTypeSecond = 's',
+    kFieldTypeFractionalSecond = 'S',
+    kFieldTypeMillisecondsInDay = 'A',
 
-    class TokenHandler {
-        STACK_ALLOCATED();
-        WTF_MAKE_NONCOPYABLE(TokenHandler);
-    public:
-        TokenHandler() { }
-        virtual ~TokenHandler() { }
-        virtual void visitField(FieldType, int numberOfPatternCharacters) = 0;
-        virtual void visitLiteral(const String&) = 0;
-    };
+    // Zone: PDT
+    kFieldTypeZone = 'z',
+    kFieldTypeRFC822Zone = 'Z',
+    kFieldTypeNonLocationZone = 'v',
+  };
 
-    // Returns true if succeeded, false if failed.
-    static bool parse(const String&, TokenHandler&);
-    static void quoteAndappend(const String&, StringBuilder&);
+  class TokenHandler {
+    STACK_ALLOCATED();
+    WTF_MAKE_NONCOPYABLE(TokenHandler);
+
+   public:
+    TokenHandler() {}
+    virtual ~TokenHandler() {}
+    virtual void VisitField(FieldType, int number_of_pattern_characters) = 0;
+    virtual void VisitLiteral(const String&) = 0;
+  };
+
+  // Returns true if succeeded, false if failed.
+  static bool Parse(const String&, TokenHandler&);
+  static void QuoteAndappend(const String&, StringBuilder&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DateTimeFormat_h
+#endif  // DateTimeFormat_h

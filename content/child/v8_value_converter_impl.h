@@ -13,7 +13,6 @@
 #include "content/public/child/v8_value_converter.h"
 
 namespace base {
-class BinaryValue;
 class DictionaryValue;
 class ListValue;
 class Value;
@@ -30,6 +29,7 @@ class CONTENT_EXPORT V8ValueConverterImpl : public V8ValueConverter {
   void SetRegExpAllowed(bool val) override;
   void SetFunctionAllowed(bool val) override;
   void SetStripNullFromObjects(bool val) override;
+  void SetConvertNegativeZeroToInt(bool val) override;
   void SetStrategy(Strategy* strategy) override;
   v8::Local<v8::Value> ToV8Value(
       const base::Value* value,
@@ -55,8 +55,8 @@ class CONTENT_EXPORT V8ValueConverterImpl : public V8ValueConverter {
       v8::Local<v8::Object> creation_context,
       const base::DictionaryValue* dictionary) const;
   v8::Local<v8::Value> ToArrayBuffer(v8::Isolate* isolate,
-                                      v8::Local<v8::Object> creation_context,
-                                      const base::BinaryValue* value) const;
+                                     v8::Local<v8::Object> creation_context,
+                                     const base::Value* value) const;
 
   std::unique_ptr<base::Value> FromV8ValueImpl(FromV8ValueState* state,
                                                v8::Local<v8::Value> value,
@@ -86,6 +86,9 @@ class CONTENT_EXPORT V8ValueConverterImpl : public V8ValueConverter {
   // If true, undefined and null values are ignored when converting v8 objects
   // into Values.
   bool strip_null_from_objects_;
+
+  // If true, convert -0 to an integer value (instead of a double).
+  bool convert_negative_zero_to_int_;
 
   bool avoid_identity_hash_for_testing_;
 

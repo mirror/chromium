@@ -4,8 +4,8 @@
 
 'use strict';
 
-// This file provides |assert_selection(sample, tester, expectedText)| assertion
-// to W3C test harness to write editing test cases easier.
+// This file provides |assert_selection(sample, tester, expectedText, options)|
+// assertion to W3C test harness to write editing test cases easier.
 //
 // |sample| is an HTML fragment text which is inserted as |innerHTML|. It should
 // have at least one focus boundary point marker "|" and at most one anchor
@@ -17,6 +17,12 @@
 // |expectedText| is an HTML fragment text containing at most one focus marker
 // and anchor marker. If resulting selection is none, you don't need to have
 // anchor and focus markers.
+//
+// |options| is a string as description, undefined, or a dictionary containing:
+//  description: A description
+//  dumpAs: 'domtree' or 'flattree'. Default is 'domtree'.
+//  removeSampleIfSucceeded: A boolean. Default is true.
+//  dumpFromRoot: A boolean. Default is false.
 //
 // Example:
 //  test(() => {
@@ -48,6 +54,96 @@
 // this file.
 
 (function() {
+/** @enum{string} */
+const DumpAs = {
+  DOM_TREE: 'domtree',
+  FLAT_TREE: 'flattree',
+};
+
+/** @const @type {string} */
+const kTextArea = 'TEXTAREA';
+
+class Traversal {
+  /**
+   * @param {!Node} node
+   * @return {Node}
+   */
+  firstChildOf(node) { throw new Error('You should implement firstChildOf'); }
+
+  /**
+   * @param {!Node} node
+   * @return {!Generator<Node>}
+   */
+  *childNodesOf(node) {
+    for (let child = this.firstChildOf(node); child !== null;
+         child = this.nextSiblingOf(child)) {
+      yield child;
+    }
+  }
+
+  /**
+   * @param {!DOMSelection} selection
+   * @return !SampleSelection
+   */
+  fromDOMSelection(selection) {
+    throw new Error('You should implement fromDOMSelection');
+  }
+
+  /**
+   * @param {!Node} node
+   * @return {Node}
+   */
+  nextSiblingOf(node) { throw new Error('You should implement nextSiblingOf'); }
+}
+
+class DOMTreeTraversal extends Traversal {
+  /**
+   * @override
+   * @param {!Node} node
+   * @return {Node}
+   */
+  firstChildOf(node) { return node.firstChild; }
+
+  /**
+   * @param {!DOMSelection} selection
+   * @return !SampleSelection
+   */
+  fromDOMSelection(selection) {
+    return SampleSelection.fromDOMSelection(selection);
+  }
+
+  /**
+   * @param {!Node} node
+   * @return {Node}
+   */
+  nextSiblingOf(node) { return node.nextSibling; }
+};
+
+class FlatTreeTraversal extends Traversal {
+  /**
+   * @override
+   * @param {!Node} node
+   * @return {Node}
+   */
+  firstChildOf(node) { return internals.firstChildInFlatTree(node); }
+
+  /**
+   * @param {!DOMSelection} selection
+   * @return !SampleSelection
+   */
+  fromDOMSelection(selection) {
+    // TODO(yosin): We should return non-scoped selection rather than selection
+    // scoped in main tree.
+    return SampleSelection.fromDOMSelection(selection);
+  }
+
+  /**
+   * @param {!Node} node
+   * @return {Node}
+   */
+  nextSiblingOf(node) { return internals.nextSiblingInFlatTree(node); }
+}
+
 /**
  * @param {!Node} node
  * @return {boolean}
@@ -98,6 +194,8 @@ class SampleSelection {
     this.focusNode_ = null;
     /** @type {number} */
     this.focusOffset_ = 0;
+    /** @type {HTMLElement} */
+    this.shadowHost_ = null;
   }
 
   /**
@@ -143,6 +241,11 @@ class SampleSelection {
     return this.focusOffset_;
   }
 
+  /** @public @return {HTMLElement} */
+  get shadowHost() {
+    return this.shadowHost_;
+  }
+
   /**
    * @public
    * @return {boolean}
@@ -170,6 +273,22 @@ class SampleSelection {
     selection.anchorOffset_ = domSelection.anchorOffset;
     selection.focusNode_ = domSelection.focusNode;
     selection.focusOffset_ = domSelection.focusOffset;
+
+    if (selection.anchorNode_ === null)
+      return selection;
+
+    const document = selection.anchorNode_.ownerDocument;
+    selection.shadowHost_ = (() => {
+        if (!document.activeElement)
+          return null;
+        if (document.activeElement.nodeName !== kTextArea)
+          return null;
+        const selectedNode =
+            selection.anchorNode.childNodes[selection.anchorOffset];
+        if (document.activeElement !== selectedNode)
+          return null;
+        return selectedNode;
+    })();
     return selection;
   }
 
@@ -336,7 +455,7 @@ class Parser {
 }
 
 // TODO(yosin): Once we can import JavaScript file from scripts, we should
-// import "imported/wpt/html/resources/common.js", since |HTML5_VOID_ELEMENTS|
+// import "external/wpt/html/resources/common.js", since |HTML5_VOID_ELEMENTS|
 // is defined in there.
 /**
  * @const @type {!Set<string>}
@@ -350,12 +469,15 @@ class Serializer {
   /**
    * @public
    * @param {!SampleSelection} selection
+   * @param {!Traversal} traversal
    */
-  constructor(selection) {
+  constructor(selection, traversal) {
     /** @type {!SampleSelection} */
     this.selection_ = selection;
     /** @type {!Array<strings>} */
     this.strings_ = [];
+    /** @type {!Traversal} */
+    this.traversal_ = traversal;
   }
 
   /**
@@ -371,6 +493,8 @@ class Serializer {
    */
   handleSelection(parentNode, childIndex) {
     if (this.selection_.isNone)
+      return;
+    if (this.selection_.shadowHost)
       return;
     if (parentNode === this.selection_.focusNode &&
         childIndex === this.selection_.focusOffset) {
@@ -453,7 +577,9 @@ class Serializer {
           this.emit(` ${attr.name}="${value}"`);
         });
     this.emit('>');
-    if (element.childNodes.length === 0 &&
+    if (element.nodeName === kTextArea)
+      return this.handleTextArea(element);
+    if (this.traversal_.firstChildOf(element) === null &&
         HTML5_VOID_ELEMENTS.has(tagName)) {
       return;
     }
@@ -462,11 +588,42 @@ class Serializer {
   }
 
   /**
+   * @private
+   * @param {!HTMLTextArea}
+   */
+  handleTextArea(textArea) {
+    /** @type {string} */
+    const value = textArea.value;
+    if (this.selection_.shadowHost !== textArea) {
+      this.emit(value);
+    } else {
+      /** @type {number} */
+      const start = textArea.selectionStart;
+      /** @type {number} */
+      const end = textArea.selectionEnd;
+      /** @type {boolean} */
+      const isBackward = start < end &&
+                         textArea.selectionDirection === 'backward';
+      const startMarker = isBackward ? '|' : '^';
+      const endMarker = isBackward ? '^' : '|';
+      this.emit(value.substr(0, start));
+      if (start < end) {
+        this.emit(startMarker);
+        this.emit(value.substr(start, end - start));
+      }
+      this.emit(endMarker);
+      this.emit(value.substr(end));
+    }
+    this.emit('</textarea>');
+  }
+
+  /**
    * @public
    * @param {!HTMLDocument} document
+   * @param {boolean} dumpFromRoot
    */
-  serialize(document) {
-    if (document.body)
+  serialize(document, dumpFromRoot) {
+    if (document.body && !dumpFromRoot)
         this.serializeChildren(document.body);
     else
         this.serializeInternal(document.documentElement);
@@ -478,16 +635,14 @@ class Serializer {
    * @param {!HTMLElement} element
    */
   serializeChildren(element) {
-    /** @type {!Array<!Node>} */
-    const childNodes = Array.from(element.childNodes);
-    if (childNodes.length === 0) {
+    if (this.traversal_.firstChildOf(element) === null) {
       this.handleSelection(element, 0);
       return;
     }
 
     /** @type {number} */
     let childIndex = 0;
-    for (const child of childNodes) {
+    for (let child of this.traversal_.childNodesOf(element)) {
       this.handleSelection(element, childIndex);
       this.serializeInternal(child, childIndex);
       ++childIndex;
@@ -508,6 +663,32 @@ class Serializer {
   }
 }
 
+/**
+ * @this {!DOMSelection}
+ * @param {string} html
+ * @param {string=} opt_text
+ */
+function setClipboardData(html, opt_text) {
+  assert_not_equals(window.internals, undefined,
+    'This test requests clipboard access from JavaScript.');
+  function computeTextData() {
+    if (opt_text !== undefined)
+      return opt_text;
+    const element = document.createElement('div');
+    element.innerHTML = html;
+    return element.textContent;
+  }
+  function copyHandler(event) {
+    const clipboardData = event.clipboardData;
+    clipboardData.setData('text/plain', computeTextData());
+    clipboardData.setData('text/html', html);
+    event.preventDefault();
+  }
+  document.addEventListener('copy', copyHandler);
+  document.execCommand('copy');
+  document.removeEventListener('copy', copyHandler);
+}
+
 class Sample {
   /**
    * @public
@@ -521,12 +702,16 @@ class Sample {
     document.body.appendChild(this.iframe_);
     /** @const @type {!HTMLDocument} */
     this.document_ = this.iframe_.contentDocument;
+
+    // Set focus to sample IFRAME to make |eventSender| and
+    // |testRunner.execCommand()| to work on sample rather than main frame.
+    this.iframe_.focus();
     /** @const @type {!Selection} */
     this.selection_ = this.iframe_.contentWindow.getSelection();
     this.selection_.document = this.document_;
     this.selection_.document.offsetLeft = this.iframe_.offsetLeft;
     this.selection_.document.offsetTop = this.iframe_.offsetTop;
-
+    this.selection_.setClipboardData = setClipboardData;
     this.load(sampleText);
   }
 
@@ -564,8 +749,37 @@ class Sample {
     const selection = Parser.parse(this.document_.body);
     if (selection.isNone)
       return;
+    if (this.loadSelectionInTextArea(selection))
+      return;
     this.selection_.collapse(selection.anchorNode, selection.anchorOffset);
-    this.selection_.extend(selection.focusNode, selection.focusOffset);
+    if (this.selection_.rangeCount > 0)
+      this.selection_.extend(selection.focusNode, selection.focusOffset);
+  }
+
+  /**
+   * @private
+   * @param {!SampleSelection} selection
+   * @return {boolean} Returns true if selection is in TEXTAREA.
+   */
+  loadSelectionInTextArea(selection) {
+    /** @type {Node} */
+    const enclosingNode = selection.anchorNode.parentNode;
+    if (selection.focusNode.parentNode !== enclosingNode)
+      return false;
+    if (enclosingNode.nodeName !== kTextArea)
+      return false;
+    if (selection.anchorNode !== selection.focusNode)
+      throw new Error('Selection in TEXTAREA should be in same Text node.');
+    enclosingNode.focus();
+    if (selection.anchorOffset < selection.focusOffset) {
+      enclosingNode.setSelectionRange(selection.anchorOffset,
+                                      selection.focusOffset);
+      return true;
+    }
+    enclosingNode.setSelectionRange(selection.focusOffset,
+                                    selection.anchorOffset,
+                                    'backward');
+    return true;
   }
 
   /**
@@ -575,14 +789,16 @@ class Sample {
 
   /**
    * @public
+   * @param {!Traversal} traversal
+   * @param {boolean} dumpFromRoot
    * @return {string}
    */
-  serialize() {
+  serialize(traversal, dumpFromRoot) {
     /** @type {!SampleSelection} */
-    const selection = SampleSelection.fromDOMSelection(this.selection_);
+    const selection = traversal.fromDOMSelection(this.selection_);
     /** @type {!Serializer} */
-    const serializer = new Serializer(selection);
-    return serializer.serialize(this.document_);
+    const serializer = new Serializer(selection, traversal);
+    return serializer.serialize(this.document_, dumpFromRoot);
   }
 }
 
@@ -652,13 +868,29 @@ function commonPrefixOf(str1, str2) {
  * @param {string} inputText
  * @param {function(!Selection)|string}
  * @param {string} expectedText
- * @param {string=} opt_description
+ * @param {Object=} opt_options
+ * @return {!Sample}
  */
 function assertSelection(
-    inputText, tester, expectedText, opt_description = '') {
+    inputText, tester, expectedText, opt_options = {}) {
+  const kDescription = 'description';
+  const kDumpAs = 'dumpAs';
+  const kRemoveSampleIfSucceeded = 'removeSampleIfSucceeded';
+  const kDumpFromRoot = 'dumpFromRoot';
+  /** @type {!Object} */
+  const options = typeof(opt_options) === 'string'
+      ? {description: opt_options} : opt_options;
   /** @type {string} */
-  const description =
-      opt_description === '' ? assembleDescription() : opt_description;
+  const description = kDescription in options
+      ? options[kDescription] : assembleDescription();
+  /** @type {boolean} */
+  const removeSampleIfSucceeded = kRemoveSampleIfSucceeded in options
+      ? !!options[kRemoveSampleIfSucceeded] : true;
+  /** @type {DumpAs} */
+  const dumpAs = options[kDumpAs] || DumpAs.DOM_TREE;
+  /** @type {boolean} */
+  const dumpFromRoot = options[kDumpFromRoot] || false;
+
   checkExpectedText(expectedText);
   const sample = new Sample(inputText);
   if (typeof(tester) === 'function') {
@@ -669,13 +901,31 @@ function assertSelection(
   } else {
     throw new Error(`Invalid tester: ${tester}`);
   }
+
+  /** @type {!Traversal} */
+  const traversal = (() => {
+    switch (dumpAs) {
+      case DumpAs.DOM_TREE:
+        return new DOMTreeTraversal();
+      case DumpAs.FLAT_TREE:
+        if (!window.internals)
+          throw new Error('This test requires window.internals.');
+        return new FlatTreeTraversal();
+      default:
+        throw `${kDumpAs} must be one of ` +
+              `{${Object.values(DumpAs).join(', ')}}` +
+              ` instead of '${dumpAs}'`;
+    }
+  })();
+
   /** @type {string} */
-  const actualText = sample.serialize();
+  const actualText = sample.serialize(traversal, dumpFromRoot);
   // We keep sample HTML when assertion is false for ease of debugging test
   // case.
   if (actualText === expectedText) {
-    sample.remove();
-    return;
+    if (removeSampleIfSucceeded)
+        sample.remove();
+    return sample;
   }
   throw new Error(`${description}\n` +
     `\t expected ${expectedText},\n` +

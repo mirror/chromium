@@ -14,6 +14,7 @@
 #include "gpu/command_buffer/common/gpu_memory_buffer_support.h"
 #include "third_party/skia/include/core/SkRect.h"
 #include "third_party/skia/include/core/SkRegion.h"
+#include "ui/display/types/display_snapshot.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/gfx/skia_util.h"
 
@@ -22,6 +23,7 @@ namespace display_compositor {
 BufferQueue::BufferQueue(gpu::gles2::GLES2Interface* gl,
                          uint32_t texture_target,
                          uint32_t internal_format,
+                         gfx::BufferFormat format,
                          GLHelper* gl_helper,
                          gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
                          gpu::SurfaceHandle surface_handle)
@@ -30,9 +32,13 @@ BufferQueue::BufferQueue(gpu::gles2::GLES2Interface* gl,
       allocated_count_(0),
       texture_target_(texture_target),
       internal_format_(internal_format),
+      format_(format),
       gl_helper_(gl_helper),
       gpu_memory_buffer_manager_(gpu_memory_buffer_manager),
-      surface_handle_(surface_handle) {}
+      surface_handle_(surface_handle) {
+  DCHECK(gpu::IsImageFormatCompatibleWithGpuMemoryBufferFormat(internal_format,
+                                                               format_));
+}
 
 BufferQueue::~BufferQueue() {
   FreeAllSurfaces();
@@ -54,6 +60,10 @@ void BufferQueue::BindFramebuffer() {
   if (current_surface_) {
     gl_->FramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
                               texture_target_, current_surface_->texture, 0);
+    if (current_surface_->stencil) {
+      gl_->FramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT,
+                                   GL_RENDERBUFFER, current_surface_->stencil);
+    }
   }
 }
 
@@ -109,8 +119,10 @@ void BufferQueue::SwapBuffers(const gfx::Rect& damage) {
 
 void BufferQueue::Reshape(const gfx::Size& size,
                           float scale_factor,
-                          const gfx::ColorSpace& color_space) {
-  if (size == size_ && color_space == color_space_)
+                          const gfx::ColorSpace& color_space,
+                          bool use_stencil) {
+  if (size == size_ && color_space == color_space_ &&
+      use_stencil == use_stencil_)
     return;
 #if !defined(OS_MACOSX)
   // TODO(ccameron): This assert is being hit on Mac try jobs. Determine if that
@@ -120,11 +132,13 @@ void BufferQueue::Reshape(const gfx::Size& size,
 #endif
   size_ = size;
   color_space_ = color_space;
+  use_stencil_ = use_stencil;
 
-  // TODO: add stencil buffer when needed.
   gl_->BindFramebuffer(GL_FRAMEBUFFER, fbo_);
   gl_->FramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
                             texture_target_, 0, 0);
+  gl_->FramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT,
+                               GL_RENDERBUFFER, 0);
 
   FreeAllSurfaces();
 }
@@ -194,6 +208,8 @@ void BufferQueue::FreeSurfaceResources(AllocatedSurface* surface) {
   gl_->ReleaseTexImage2DCHROMIUM(texture_target_, surface->image);
   gl_->DeleteTextures(1, &surface->texture);
   gl_->DestroyImageCHROMIUM(surface->image);
+  if (surface->stencil)
+    gl_->DeleteRenderbuffers(1, &surface->stencil);
   surface->buffer.reset();
   allocated_count_--;
 }
@@ -209,13 +225,20 @@ std::unique_ptr<BufferQueue::AllocatedSurface> BufferQueue::GetNextSurface() {
   GLuint texture;
   gl_->GenTextures(1, &texture);
 
+  GLuint stencil = 0;
+  if (use_stencil_) {
+    gl_->GenRenderbuffers(1, &stencil);
+    gl_->BindRenderbuffer(GL_RENDERBUFFER, stencil);
+    gl_->RenderbufferStorage(GL_RENDERBUFFER, GL_STENCIL_INDEX8, size_.width(),
+                             size_.height());
+    gl_->BindRenderbuffer(GL_RENDERBUFFER, 0);
+  }
+
   // We don't want to allow anything more than triple buffering.
   DCHECK_LT(allocated_count_, 4U);
-
   std::unique_ptr<gfx::GpuMemoryBuffer> buffer(
-      gpu_memory_buffer_manager_->AllocateGpuMemoryBuffer(
-          size_, gpu::DefaultBufferFormatForImageFormat(internal_format_),
-          gfx::BufferUsage::SCANOUT, surface_handle_));
+      gpu_memory_buffer_manager_->CreateGpuMemoryBuffer(
+          size_, format_, gfx::BufferUsage::SCANOUT, surface_handle_));
   if (!buffer.get()) {
     gl_->DeleteTextures(1, &texture);
     DLOG(ERROR) << "Failed to allocate GPU memory buffer";
@@ -235,8 +258,8 @@ std::unique_ptr<BufferQueue::AllocatedSurface> BufferQueue::GetNextSurface() {
   allocated_count_++;
   gl_->BindTexture(texture_target_, texture);
   gl_->BindTexImage2DCHROMIUM(texture_target_, id);
-  return base::WrapUnique(new AllocatedSurface(this, std::move(buffer), texture,
-                                               id, gfx::Rect(size_)));
+  return base::MakeUnique<AllocatedSurface>(this, std::move(buffer), texture,
+                                            id, stencil, gfx::Rect(size_));
 }
 
 BufferQueue::AllocatedSurface::AllocatedSurface(
@@ -244,11 +267,13 @@ BufferQueue::AllocatedSurface::AllocatedSurface(
     std::unique_ptr<gfx::GpuMemoryBuffer> buffer,
     uint32_t texture,
     uint32_t image,
+    uint32_t stencil,
     const gfx::Rect& rect)
     : buffer_queue(buffer_queue),
       buffer(buffer.release()),
       texture(texture),
       image(image),
+      stencil(stencil),
       damage(rect) {}
 
 BufferQueue::AllocatedSurface::~AllocatedSurface() {

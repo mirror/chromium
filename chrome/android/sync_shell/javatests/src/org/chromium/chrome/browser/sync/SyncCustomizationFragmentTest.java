@@ -11,14 +11,15 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.SwitchPreference;
 import android.preference.TwoStatePreference;
+import android.support.test.filters.SmallTest;
 import android.support.v7.app.AlertDialog;
-import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.Feature;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.autofill.PersonalDataManager;
 import org.chromium.chrome.browser.autofill.PersonalDataManager.CreditCard;
@@ -29,11 +30,12 @@ import org.chromium.chrome.browser.sync.ui.PassphraseTypeDialogFragment;
 import org.chromium.chrome.browser.sync.ui.SyncCustomizationFragment;
 import org.chromium.chrome.test.util.ActivityUtils;
 import org.chromium.chrome.test.util.browser.sync.SyncTestUtil;
-import org.chromium.sync.AndroidSyncSettings;
-import org.chromium.sync.ModelType;
-import org.chromium.sync.PassphraseType;
+import org.chromium.components.sync.AndroidSyncSettings;
+import org.chromium.components.sync.ModelType;
+import org.chromium.components.sync.PassphraseType;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -45,6 +47,7 @@ import java.util.concurrent.Callable;
  * Tests for SyncCustomizationFragment.
  */
 @SuppressLint("UseSparseArrays")
+@RetryOnFailure  // crbug.com/637448
 public class SyncCustomizationFragmentTest extends SyncTestBase {
     private static final String TAG = "SyncCustomizationFragmentTest";
 
@@ -136,7 +139,7 @@ public class SyncCustomizationFragmentTest extends SyncTestBase {
      */
     @SmallTest
     @Feature({"Sync"})
-    public void testOpeningSettingsDoesntStartBackend() throws Exception {
+    public void testOpeningSettingsDoesntStartEngine() throws Exception {
         setUpTestAccountAndSignIn();
         stopSync();
         startSyncCustomizationFragment();
@@ -144,7 +147,7 @@ public class SyncCustomizationFragmentTest extends SyncTestBase {
             @Override
             public void run() {
                 assertFalse(mProfileSyncService.isSyncRequested());
-                assertFalse(mProfileSyncService.isBackendInitialized());
+                assertFalse(mProfileSyncService.isEngineInitialized());
             }
         });
     }
@@ -157,7 +160,7 @@ public class SyncCustomizationFragmentTest extends SyncTestBase {
         SyncCustomizationFragment fragment = startSyncCustomizationFragment();
         assertDefaultSyncOffState(fragment);
         togglePreference(getSyncSwitch(fragment));
-        SyncTestUtil.waitForBackendInitialized();
+        SyncTestUtil.waitForEngineInitialized();
         assertDefaultSyncOnState(fragment);
     }
 
@@ -214,8 +217,7 @@ public class SyncCustomizationFragmentTest extends SyncTestBase {
         }
 
         Set<Integer> expectedTypes = new HashSet<Integer>(dataTypes.keySet());
-        // TODO(zea): update this once preferences are supported.
-        expectedTypes.remove(ModelType.PREFERENCES);
+        expectedTypes.add(ModelType.PREFERENCES);
         expectedTypes.add(ModelType.PRIORITY_PREFERENCES);
         assertDataTypesAre(expectedTypes);
         togglePreference(dataTypes.get(ModelType.AUTOFILL));
@@ -708,10 +710,7 @@ public class SyncCustomizationFragmentTest extends SyncTestBase {
             public void run() {
                 Set<Integer> actualDataTypes = mProfileSyncService.getPreferredDataTypes();
                 assertTrue(actualDataTypes.containsAll(enabledDataTypes));
-                // There is no Set.containsNone(), sadly.
-                for (Integer disabledDataType : disabledDataTypes) {
-                    assertFalse(actualDataTypes.contains(disabledDataType));
-                }
+                assertTrue(Collections.disjoint(disabledDataTypes, actualDataTypes));
             }
         });
     }
@@ -741,7 +740,8 @@ public class SyncCustomizationFragmentTest extends SyncTestBase {
                 boolean isLocal = false;
                 PersonalDataManager.getInstance().addServerCreditCardForTest(new CreditCard("",
                         "https://example.com", isLocal, false, "Jon Doe", "4111111111111111",
-                        "1111", "11", "20", "visa", 0, ""));
+                        "1111", "11", "20", "visa", 0, "" /* billingAddressId */,
+                        "025eb937c022489eb8dc78cbaa969218" /* serverId */));
             }
         });
     }

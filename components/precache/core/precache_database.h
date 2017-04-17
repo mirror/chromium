@@ -7,7 +7,6 @@
 
 #include <stdint.h>
 
-#include <list>
 #include <memory>
 #include <string>
 #include <vector>
@@ -18,7 +17,9 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
+#include "base/time/time.h"
 #include "components/precache/core/precache_fetcher.h"
+#include "components/precache/core/precache_referrer_host_table.h"
 #include "components/precache/core/precache_session_table.h"
 #include "components/precache/core/precache_url_table.h"
 
@@ -26,7 +27,6 @@ class GURL;
 
 namespace base {
 class FilePath;
-class Time;
 }
 
 namespace net {
@@ -67,23 +67,43 @@ class PrecacheDatabase {
   base::Time GetLastPrecacheTimestamp();
 
   // Report precache-related metrics in response to a URL being fetched, where
-  // the fetch was motivated by precaching.
+  // the fetch was motivated by precaching. This is called from the network
+  // delegate, via precache_util.
+  void RecordURLPrefetchMetrics(const net::HttpResponseInfo& info);
+
+  // Records the precache of an url |url| for top host |referrer_host|. This is
+  // called from PrecacheFetcher.
   void RecordURLPrefetch(const GURL& url,
-                         const base::TimeDelta& latency,
+                         const std::string& referrer_host,
                          const base::Time& fetch_time,
-                         const net::HttpResponseInfo& info,
+                         bool was_cached,
                          int64_t size);
 
   // Report precache-related metrics in response to a URL being fetched, where
   // the fetch was not motivated by precaching. |is_connection_cellular|
   // indicates whether the current network connection is a cellular network.
+  // This is called from the network delegate, via precache_util.
   void RecordURLNonPrefetch(const GURL& url,
-                            const base::TimeDelta& latency,
                             const base::Time& fetch_time,
                             const net::HttpResponseInfo& info,
                             int64_t size,
                             int host_rank,
                             bool is_connection_cellular);
+
+  // Returns the referrer host entry for the |referrer_host|.
+  PrecacheReferrerHostEntry GetReferrerHost(const std::string& referrer_host);
+
+  // Populates the list of used and downloaded resources for referrer host with
+  // id |referrer_host_id|. It will also clear the reported downloaded_urls.
+  void GetURLListForReferrerHost(int64_t referrer_host_id,
+                                 std::vector<GURL>* used_urls,
+                                 std::vector<GURL>* downloaded_urls);
+
+  // Updates the |manifest_id| and |fetch_time| for the referrer host
+  // |hostname|, and deletes the precached subresource URLs for this top host.
+  void UpdatePrecacheReferrerHost(const std::string& hostname,
+                                  int64_t manifest_id,
+                                  const base::Time& fetch_time);
 
   // Gets the state required to continue a precache session.
   std::unique_ptr<PrecacheUnfinishedWork> GetUnfinishedWork();
@@ -96,10 +116,16 @@ class PrecacheDatabase {
   // Deletes unfinished work from the database.
   void DeleteUnfinishedWork();
 
+  // Precache quota.
+  void SaveQuota(const PrecacheQuota& quota);
+  PrecacheQuota GetQuota();
+
   base::WeakPtr<PrecacheDatabase> GetWeakPtr();
 
  private:
   friend class PrecacheDatabaseTest;
+  friend class PrecacheFetcherTest;
+  friend class PrecacheManagerTest;
 
   bool IsDatabaseAccessible() const;
 
@@ -120,12 +146,26 @@ class PrecacheDatabase {
   // Records the time since the last precache.
   void RecordTimeSinceLastPrecache(const base::Time& fetch_time);
 
+  void RecordURLPrefetchInternal(const GURL& url,
+                                 const std::string& referrer_host,
+                                 bool is_precached,
+                                 const base::Time& fetch_time,
+                                 bool is_download_reported);
+
+  void UpdatePrecacheReferrerHostInternal(const std::string& hostname,
+                                          int64_t manifest_id,
+                                          const base::Time& fetch_time);
+
   std::unique_ptr<sql::Connection> db_;
 
   // Table that keeps track of URLs that are in the cache because of precaching,
   // and wouldn't be in the cache otherwise. If |buffered_writes_| is non-empty,
   // then this table will not be up to date until the next call to Flush().
   PrecacheURLTable precache_url_table_;
+
+  // If |buffered_writes_| is non-empty,
+  // then this table will not be up to date until the next call to Flush().
+  PrecacheReferrerHostTable precache_referrer_host_table_;
 
   // Table that persists state related to a precache session, including
   // unfinished work to be done.

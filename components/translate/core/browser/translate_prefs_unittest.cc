@@ -9,16 +9,25 @@
 #include <utility>
 #include <vector>
 
+#include "base/json/json_reader.h"
+#include "base/test/scoped_feature_list.h"
+#include "base/values.h"
 #include "build/build_config.h"
-#include "components/pref_registry/testing_pref_service_syncable.h"
 #include "components/prefs/scoped_user_pref_update.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "components/translate/core/browser/translate_download_manager.h"
-#include "components/translate/core/browser/translate_prefs.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
 
 const char kTestLanguage[] = "en";
+
+#if defined(OS_CHROMEOS)
+const char kPreferredLanguagesPref[] = "settings.language.preferred_languages";
+#else
+const char* kPreferredLanguagesPref = nullptr;
+#endif
+const char kAcceptLanguagesPref[] = "intl.accept_languages";
 
 }  // namespace
 
@@ -26,18 +35,21 @@ namespace translate {
 
 class TranslatePrefTest : public testing::Test {
  protected:
-  TranslatePrefTest() : prefs_(new user_prefs::TestingPrefServiceSyncable()) {
-#if defined(OS_CHROMEOS)
-    const char* preferred_languages_prefs =
-        "settings.language.preferred_languages";
-#else
-    const char* preferred_languages_prefs = NULL;
-#endif
+  TranslatePrefTest()
+      : prefs_(new sync_preferences::TestingPrefServiceSyncable()) {
     translate_prefs_.reset(new translate::TranslatePrefs(
-        prefs_.get(), "intl.accept_languages", preferred_languages_prefs));
+        prefs_.get(), kAcceptLanguagesPref, kPreferredLanguagesPref));
     TranslatePrefs::RegisterProfilePrefs(prefs_->registry());
     now_ = base::Time::Now();
     two_days_ago_ = now_ - base::TimeDelta::FromDays(2);
+  }
+
+  void SetUp() override {
+    prefs_->registry()->RegisterStringPref(kAcceptLanguagesPref, std::string());
+#if defined(OS_CHROMEOS)
+    prefs_->registry()->RegisterStringPref(kPreferredLanguagesPref,
+                                           std::string());
+#endif
   }
 
   void SetLastDeniedTime(const std::string& language, base::Time time) {
@@ -50,20 +62,7 @@ class TranslatePrefTest : public testing::Test {
     return update.GetOldestDenialTime();
   }
 
-  void SetUp() override {
-    base::FeatureList::ClearInstanceForTesting();
-    base::FeatureList::SetInstance(base::WrapUnique(new base::FeatureList()));
-  }
-
-  void TurnOnTranslate2016Q2UIFlag() {
-    base::FeatureList::ClearInstanceForTesting();
-    std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
-    feature_list->InitializeFromCommandLine(translate::kTranslateUI2016Q2.name,
-                                            std::string());
-    base::FeatureList::SetInstance(std::move(feature_list));
-  }
-
-  std::unique_ptr<user_prefs::TestingPrefServiceSyncable> prefs_;
+  std::unique_ptr<sync_preferences::TestingPrefServiceSyncable> prefs_;
   std::unique_ptr<translate::TranslatePrefs> translate_prefs_;
 
   // Shared time constants.
@@ -72,7 +71,8 @@ class TranslatePrefTest : public testing::Test {
 };
 
 TEST_F(TranslatePrefTest, IsTooOftenDeniedIn2016Q2UI) {
-  TurnOnTranslate2016Q2UIFlag();
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(translate::kTranslateUI2016Q2);
 
   translate_prefs_->ResetDenialState();
   EXPECT_FALSE(translate_prefs_->IsTooOftenDenied(kTestLanguage));
@@ -87,7 +87,8 @@ TEST_F(TranslatePrefTest, IsTooOftenDeniedIn2016Q2UI) {
 }
 
 TEST_F(TranslatePrefTest, IsTooOftenIgnoredIn2016Q2UI) {
-  TurnOnTranslate2016Q2UIFlag();
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(translate::kTranslateUI2016Q2);
 
   translate_prefs_->ResetDenialState();
   EXPECT_FALSE(translate_prefs_->IsTooOftenDenied(kTestLanguage));
@@ -217,6 +218,148 @@ TEST_F(TranslatePrefTest, DenialTimeUpdate_SlidingWindow) {
   update.AddDenialTime(now_);
   EXPECT_EQ(update.GetOldestDenialTime(),
             now_ - base::TimeDelta::FromMinutes(2));
+}
+
+TEST_F(TranslatePrefTest, UpdateLanguageList) {
+  // Test with basic set of languages (no country codes).
+  std::vector<std::string> languages{"en", "ja"};
+  translate_prefs_->UpdateLanguageList(languages);
+  EXPECT_EQ("en,ja", prefs_->GetString(kAcceptLanguagesPref));
+
+  // Test with languages that have country codes. Expect accepted languages both
+  // with and without a country code. (See documentation for
+  // ExpandLanguageCodes.)
+  languages = {"en-US", "ja", "en-CA"};
+  translate_prefs_->UpdateLanguageList(languages);
+#if defined(OS_CHROMEOS)
+  EXPECT_EQ("en-US,ja,en-CA", prefs_->GetString(kPreferredLanguagesPref));
+#endif
+  EXPECT_EQ("en-US,en,ja,en-CA", prefs_->GetString(kAcceptLanguagesPref));
+}
+
+TEST_F(TranslatePrefTest, ULPPrefs) {
+  // Mock the pref.
+  // Case 1: well formed ULP.
+  const char json1[] =
+      "{\n"
+      "  \"reading\": {\n"
+      "    \"confidence\": 0.8,\n"
+      "    \"preference\": [\n"
+      "      {\n"
+      "        \"language\": \"en-AU\",\n"
+      "        \"probability\": 0.4\n"
+      "      }, {\n"
+      "        \"language\": \"fr\",\n"
+      "        \"probability\": 0.6\n"
+      "      }\n"
+      "    ]\n"
+      "  }\n"
+      "}";
+  int error_code = 0;
+  std::string error_msg;
+  int error_line = 0;
+  int error_column = 0;
+  std::unique_ptr<base::Value> profile(base::JSONReader::ReadAndReturnError(
+      json1, 0, &error_code, &error_msg, &error_line, &error_column));
+  ASSERT_EQ(0, error_code) << error_msg << " at " << error_line << ":"
+                           << error_column << std::endl
+                           << json1;
+
+  prefs_->SetUserPref(TranslatePrefs::kPrefLanguageProfile, std::move(profile));
+
+  TranslatePrefs::LanguageAndProbabilityList list;
+  EXPECT_EQ(0.8, translate_prefs_->GetReadingFromUserLanguageProfile(&list));
+  EXPECT_EQ(2UL, list.size());
+  // the order in the ULP is wrong, and our code will sort it and make the
+  // larger
+  // one first.
+  EXPECT_EQ("fr", list[0].first);
+  EXPECT_EQ(0.6, list[0].second);
+  EXPECT_EQ("en", list[1].first);  // the "en-AU" should be normalize to "en"
+  EXPECT_EQ(0.4, list[1].second);
+
+  // Case 2: ill-formed ULP.
+  // Test if the ULP lacking some fields the code will gracefully ignore those
+  // items without crash.
+  const char json2[] =
+      "{\n"
+      "  \"reading\": {\n"
+      "    \"confidence\": 0.3,\n"
+      "    \"preference\": [\n"
+      "      {\n"  // The first one do not have probability. Won't be counted.
+      "        \"language\": \"th\"\n"
+      "      }, {\n"
+      "        \"language\": \"zh-TW\",\n"
+      "        \"probability\": 0.4\n"
+      "      }, {\n"  // The third one has no language nor probability. Won't be
+                      //  counted.
+      "      }, {\n"  // The forth one has 'pt-BR' which is not supported by
+                      // Translate.
+                      // Should be normalize to 'pt'
+      "        \"language\": \"pt-BR\",\n"
+      "        \"probability\": 0.1\n"
+      "      }, {\n"  // The fifth one has no language. Won't be counted.
+      "        \"probability\": 0.1\n"
+      "      }\n"
+      "    ]\n"
+      "  }\n"
+      "}";
+
+  profile.reset(base::JSONReader::ReadAndReturnError(json2, 0, &error_code,
+                                                     &error_msg, &error_line,
+                                                     &error_column)
+                    .release());
+  ASSERT_EQ(0, error_code) << error_msg << " at " << error_line << ":"
+                           << error_column << std::endl
+                           << json2;
+
+  prefs_->SetUserPref(TranslatePrefs::kPrefLanguageProfile, std::move(profile));
+
+  list.clear();
+  EXPECT_EQ(0.3, translate_prefs_->GetReadingFromUserLanguageProfile(&list));
+  EXPECT_EQ(2UL, list.size());
+  EXPECT_EQ("zh-TW", list[0].first);
+  EXPECT_EQ(0.4, list[0].second);
+  EXPECT_EQ("pt", list[1].first);  // the "pt-BR" should be normalize to "pt"
+  EXPECT_EQ(0.1, list[1].second);
+
+  // Case 3: Language Code normalization and reordering.
+  const char json3[] =
+      "{\n"
+      "  \"reading\": {\n"
+      "    \"confidence\": 0.8,\n"
+      "    \"preference\": [\n"
+      "      {\n"
+      "        \"language\": \"fr\",\n"
+      "        \"probability\": 0.4\n"
+      "      }, {\n"
+      "        \"language\": \"en-US\",\n"
+      "        \"probability\": 0.31\n"
+      "      }, {\n"
+      "        \"language\": \"en-GB\",\n"
+      "        \"probability\": 0.29\n"
+      "      }\n"
+      "    ]\n"
+      "  }\n"
+      "}";
+  profile.reset(base::JSONReader::ReadAndReturnError(json3, 0, &error_code,
+                                                     &error_msg, &error_line,
+                                                     &error_column)
+                    .release());
+  ASSERT_EQ(0, error_code) << error_msg << " at " << error_line << ":"
+                           << error_column << std::endl
+                           << json3;
+
+  prefs_->SetUserPref(TranslatePrefs::kPrefLanguageProfile, std::move(profile));
+
+  list.clear();
+  EXPECT_EQ(0.8, translate_prefs_->GetReadingFromUserLanguageProfile(&list));
+  EXPECT_EQ(2UL, list.size());
+  EXPECT_EQ("en", list[0].first);  // en-US and en-GB will be normalize into en
+  EXPECT_EQ(0.6,
+            list[0].second);  // and their probability will add to gether be 0.6
+  EXPECT_EQ("fr", list[1].first);  // fr will move down to the 2nd one
+  EXPECT_EQ(0.4, list[1].second);
 }
 
 }  // namespace translate

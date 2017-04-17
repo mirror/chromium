@@ -25,7 +25,7 @@ class OverlayJsRenderFrameObserver : public content::RenderFrameObserver {
   ~OverlayJsRenderFrameObserver() override;
 
   // RenderFrameObserver implementation.
-  void DidStartProvisionalLoad() override;
+  void DidStartProvisionalLoad(blink::WebDataSource* data_source) override;
   void DidClearWindowObject() override;
   void DidFinishLoad() override;
 
@@ -36,10 +36,15 @@ class OverlayJsRenderFrameObserver : public content::RenderFrameObserver {
   // RenderFrameObserver implementation.
   void OnDestruct() override;
 
-  // Add the mojo interface to a RenderFrame's shell::InterfaceRegistry.
+  // Add the mojo interface to a RenderFrame's
+  // service_manager::InterfaceRegistry.
   void RegisterMojoInterface();
+  // Creates the OverlayPageNotifierService connecting the browser to this
+  // observer.
   void CreateOverlayPageNotifierService(
       mojo::InterfaceRequest<mojom::OverlayPageNotifierService> request);
+  // Destroys the OverlayPageNotifierService.
+  void DestroyOverlayPageNotifierService();
 
   // Track if the current page is presented in the contextual search overlay.
   bool is_contextual_search_overlay_;

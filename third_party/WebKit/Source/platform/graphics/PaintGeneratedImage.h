@@ -7,32 +7,34 @@
 
 #include "platform/geometry/IntSize.h"
 #include "platform/graphics/GeneratedImage.h"
-
-class SkPicture;
+#include "platform/graphics/paint/PaintRecord.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT PaintGeneratedImage : public GeneratedImage {
-public:
-    static PassRefPtr<PaintGeneratedImage> create(PassRefPtr<SkPicture> picture, const IntSize& size)
-    {
-        return adoptRef(new PaintGeneratedImage(picture, size));
-    }
-    ~PaintGeneratedImage() override { }
+ public:
+  static PassRefPtr<PaintGeneratedImage> Create(sk_sp<PaintRecord> record,
+                                                const IntSize& size) {
+    return AdoptRef(new PaintGeneratedImage(std::move(record), size));
+  }
+  ~PaintGeneratedImage() override {}
 
-protected:
-    void draw(SkCanvas*, const SkPaint&, const FloatRect&, const FloatRect&, RespectImageOrientationEnum, ImageClampingMode) override;
-    void drawTile(GraphicsContext&, const FloatRect&) final;
+ protected:
+  void Draw(PaintCanvas*,
+            const PaintFlags&,
+            const FloatRect&,
+            const FloatRect&,
+            RespectImageOrientationEnum,
+            ImageClampingMode) override;
+  void DrawTile(GraphicsContext&, const FloatRect&) final;
 
-    PaintGeneratedImage(PassRefPtr<SkPicture> picture, const IntSize& size)
-        : GeneratedImage(size)
-        , m_picture(picture)
-    {
-    }
+  PaintGeneratedImage(sk_sp<PaintRecord> record, const IntSize& size)
+      : GeneratedImage(size), record_(std::move(record)) {}
 
-    RefPtr<SkPicture> m_picture;
+  sk_sp<PaintRecord> record_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PaintGeneratedImage_h
+#endif  // PaintGeneratedImage_h

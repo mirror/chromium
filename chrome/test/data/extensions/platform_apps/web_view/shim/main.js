@@ -1228,6 +1228,52 @@ function testAddContentScriptWithCode() {
   document.body.appendChild(webview);
 }
 
+function testAddMultipleContentScriptsWithCodeAndCheckGeneratedScriptUrl() {
+  var webview = document.createElement('webview');
+
+  console.log('Step 1: call <webview>.addContentScripts.');
+  var getCode = function(id) {
+    return 'var e = new Error();\n' +
+           'var n = document.createElement("span");\n' +
+           'n.id = "textnode' + id + '";\n' +
+           'n.textContent = e.stack;\n' +
+           'document.body.appendChild(n);\n';
+  }
+  var code0 = getCode('0');
+  var code1 = getCode('1');
+  webview.addContentScripts(
+      [{name: 'myrule0',
+        matches: ['http://*/extensions/*'],
+        js: {code: code0},
+        run_at: 'document_end'}]);
+  webview.addContentScripts(
+      [{name: 'myrule1',
+        matches: ['http://*/extensions/*'],
+        js: {code: code1},
+        run_at: 'document_end'}]);
+
+  webview.addEventListener('loadstop', function() {
+    console.log('Step 2: call webview.executeScript() to check result.')
+    webview.executeScript({
+      code: '[document.getElementById("textnode0").textContent,' +
+            'document.getElementById("textnode1").textContent];'},
+      function(results) {
+        embedder.test.assertEq(1, results.length);
+        var contents = results[0];
+        embedder.test.assertEq(2, contents.length);
+        embedder.test.assertTrue(
+            contents[0].indexOf('generated_script_file:') != -1);
+        embedder.test.assertTrue(
+            contents[1].indexOf('generated_script_file:') != -1);
+        embedder.test.assertTrue(contents[0] != contents[1]);
+        embedder.test.succeed();
+    });
+  });
+
+  webview.src = embedder.emptyGuestURL;
+  document.body.appendChild(webview);
+}
+
 function testExecuteScriptFail() {
   var webview = document.createElement('webview');
   document.body.appendChild(webview);
@@ -2612,8 +2658,7 @@ function testFindAPI_findupdate() {
     // Test the |findupdate| event.
     webview.addEventListener('findupdate', function(e) {
       if (e.activeMatchOrdinal > 0) {
-        // embedder.test.assertTrue(e.numberOfMatches >= e.activeMatchOrdinal)
-        // This currently fails because of http://crbug.com/342445 .
+        embedder.test.assertTrue(e.numberOfMatches >= e.activeMatchOrdinal)
         embedder.test.assertTrue(e.selectionRect.width > 0);
         embedder.test.assertTrue(e.selectionRect.height > 0);
       }
@@ -2630,9 +2675,9 @@ function testFindAPI_findupdate() {
         }
       }
     });
-    wv.find("dog");
-    wv.find("cat");
-    wv.find("dog");
+    webview.find("dog");
+    webview.find("cat");
+    webview.find("dog");
   });
 
   document.body.appendChild(webview);
@@ -2889,6 +2934,24 @@ function testPDFInWebview() {
   document.body.appendChild(webview);
 }
 
+function testNavigateToPDFInWebview() {
+  var webview = document.createElement('webview');
+  var pdfUrl = 'test.pdf';
+  // partition 'foobar' has access to local resource |pdfUrl|.
+  webview.partition = 'foobar';
+  webview.onloadabort = embedder.test.fail;
+
+  var loadstopHandler = function(e) {
+    webview.removeEventListener('loadstop', loadstopHandler);
+    webview.addEventListener('loadstop', embedder.test.succeed);
+    webview.setAttribute('src', pdfUrl);
+  };
+  webview.addEventListener('loadstop', loadstopHandler);
+
+  webview.setAttribute('src', 'about:blank');
+  document.body.appendChild(webview);
+}
+
 // This test verifies that mailto links are enabled.
 function testMailtoLink() {
   var webview = new WebView();
@@ -2908,6 +2971,28 @@ function testMailtoLink() {
       embedder.test.succeed();
     };
     webview.executeScript({code:'document.getElementById("mailto").click()'});
+  };
+
+  document.body.appendChild(webview);
+}
+
+// This test verifies that an embedder can navigate a WebView to a blob URL it
+// creates.
+function testBlobURL() {
+  var webview = new WebView();
+  var blob = new Blob(['<html><body>Blob content</body></html>'],
+                      {type: 'text/html'});
+  var blobURL = URL.createObjectURL(blob);
+  webview.src = blobURL;
+
+  webview.onloadabort = function() {
+    // The blob: URL load should not trigger a loadabort.
+    window.console.log('Blob URL load was aborted.');
+    embedder.test.fail();
+  };
+  webview.onloadstop = function() {
+    embedder.test.assertTrue(webview.src == blobURL);
+    embedder.test.succeed();
   };
 
   document.body.appendChild(webview);
@@ -2996,6 +3081,8 @@ embedder.test.testList = {
   'testContentScriptExistsAsLongAsWebViewTagExists':
       testContentScriptExistsAsLongAsWebViewTagExists,
   'testAddContentScriptWithCode': testAddContentScriptWithCode,
+  'testAddMultipleContentScriptsWithCodeAndCheckGeneratedScriptUrl':
+      testAddMultipleContentScriptsWithCodeAndCheckGeneratedScriptUrl,
   'testExecuteScriptFail': testExecuteScriptFail,
   'testExecuteScript': testExecuteScript,
   'testExecuteScriptIsAbortedWhenWebViewSourceIsChanged':
@@ -3053,7 +3140,7 @@ embedder.test.testList = {
   'testScreenshotCapture' : testScreenshotCapture,
   'testZoomAPI' : testZoomAPI,
   'testFindAPI': testFindAPI,
-  'testFindAPI_findupdate': testFindAPI,
+  'testFindAPI_findupdate': testFindAPI_findupdate,
   'testLoadDataAPI': testLoadDataAPI,
   'testResizeEvents': testResizeEvents,
   'testPerOriginZoomMode': testPerOriginZoomMode,
@@ -3065,9 +3152,11 @@ embedder.test.testList = {
   'testCloseNewWindowCleanup': testCloseNewWindowCleanup,
   'testFocusWhileFocused': testFocusWhileFocused,
   'testPDFInWebview': testPDFInWebview,
+  'testNavigateToPDFInWebview': testNavigateToPDFInWebview,
   'testMailtoLink': testMailtoLink,
   'testRendererNavigationRedirectWhileUnattached':
-       testRendererNavigationRedirectWhileUnattached
+       testRendererNavigationRedirectWhileUnattached,
+  'testBlobURL': testBlobURL
 };
 
 onload = function() {

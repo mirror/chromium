@@ -27,7 +27,6 @@ class BrowserContext;
 
 namespace gcm {
 class GCMDriver;
-class GCMProfileService;
 }
 namespace instance_id {
 class InstanceIDDriver;
@@ -49,9 +48,11 @@ class ExtensionGCMAppHandler : public gcm::GCMAppHandler,
   // BrowserContextKeyedAPI implementation.
   static BrowserContextKeyedAPIFactory<ExtensionGCMAppHandler>*
   GetFactoryInstance();
+  void Shutdown() override;
 
   // gcm::GCMAppHandler implementation.
   void ShutdownHandler() override;
+  void OnStoreReset() override;
   void OnMessage(const std::string& app_id,
                  const gcm::IncomingMessage& message) override;
   void OnMessagesDeleted(const std::string& app_id) override;

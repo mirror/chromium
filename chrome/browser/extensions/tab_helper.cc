@@ -5,11 +5,13 @@
 #include "chrome/browser/extensions/tab_helper.h"
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/activity_log/activity_log.h"
+#include "chrome/browser/extensions/api/bookmark_manager_private/bookmark_manager_private_api.h"
 #include "chrome/browser/extensions/api/declarative_content/chrome_content_rules_registry.h"
 #include "chrome/browser/extensions/api/extension_action/extension_action_api.h"
 #include "chrome/browser/extensions/bookmark_app_helper.h"
@@ -20,7 +22,6 @@
 #include "chrome/browser/extensions/install_observer.h"
 #include "chrome/browser/extensions/install_tracker.h"
 #include "chrome/browser/extensions/install_tracker_factory.h"
-#include "chrome/browser/extensions/location_bar_controller.h"
 #include "chrome/browser/extensions/webstore_inline_installer.h"
 #include "chrome/browser/extensions/webstore_inline_installer_factory.h"
 #include "chrome/browser/profiles/profile.h"
@@ -38,8 +39,8 @@
 #include "chrome/common/url_constants.h"
 #include "content/public/browser/invalidate_type.h"
 #include "content/public/browser/navigation_controller.h"
-#include "content/public/browser/navigation_details.h"
 #include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/notification_types.h"
@@ -62,6 +63,7 @@
 #include "extensions/common/extension_urls.h"
 #include "extensions/common/feature_switch.h"
 #include "extensions/common/manifest_handlers/icons_handler.h"
+#include "url/url_constants.h"
 
 #if defined(OS_WIN)
 #include "chrome/browser/web_applications/web_app_win.h"
@@ -154,7 +156,6 @@ TabHelper::TabHelper(content::WebContents* web_contents)
       update_shortcut_on_load_complete_(false),
       script_executor_(
           new ScriptExecutor(web_contents, &script_execution_observers_)),
-      location_bar_controller_(new LocationBarController(web_contents)),
       extension_action_runner_(new ExtensionActionRunner(web_contents)),
       webstore_inline_installer_factory_(new WebstoreInlineInstallerFactory()),
       registry_observer_(this),
@@ -183,6 +184,8 @@ TabHelper::TabHelper(content::WebContents* web_contents)
   ExtensionWebContentsObserver::GetForWebContents(web_contents)->dispatcher()->
       set_delegate(this);
 
+  BookmarkManagerPrivateDragEventRouter::CreateForWebContents(web_contents);
+
   registrar_.Add(this,
                  content::NOTIFICATION_LOAD_STOP,
                  content::Source<NavigationController>(
@@ -193,16 +196,6 @@ TabHelper::~TabHelper() {
   RemoveScriptExecutionObserver(ActivityLog::GetInstance(profile_));
 }
 
-void TabHelper::CreateApplicationShortcuts() {
-  DCHECK(CanCreateApplicationShortcuts());
-  if (pending_web_app_action_ != NONE)
-    return;
-
-  // Start fetching web app info for CreateApplicationShortcut dialog and show
-  // the dialog when the data is available in OnDidGetApplicationInfo.
-  GetApplicationInfo(CREATE_SHORTCUT);
-}
-
 void TabHelper::CreateHostedAppFromWebContents() {
   DCHECK(CanCreateBookmarkApp());
   if (pending_web_app_action_ != NONE)
@@ -211,14 +204,6 @@ void TabHelper::CreateHostedAppFromWebContents() {
   // Start fetching web app info for CreateApplicationShortcut dialog and show
   // the dialog when the data is available in OnDidGetApplicationInfo.
   GetApplicationInfo(CREATE_HOSTED_APP);
-}
-
-bool TabHelper::CanCreateApplicationShortcuts() const {
-#if defined(OS_MACOSX)
-  return false;
-#else
-  return web_app::IsValidUrl(web_contents()->GetURL());
-#endif
 }
 
 bool TabHelper::CanCreateBookmarkApp() const {
@@ -311,12 +296,14 @@ void TabHelper::RenderFrameCreated(content::RenderFrameHost* host) {
   SetTabId(host);
 }
 
-void TabHelper::DidNavigateMainFrame(
-    const content::LoadCommittedDetails& details,
-    const content::FrameNavigateParams& params) {
+void TabHelper::DidFinishNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->IsInMainFrame() || !navigation_handle->HasCommitted())
+    return;
+
   InvokeForContentRulesRegistries(
-      [this, &details, &params](ContentRulesRegistry* registry) {
-    registry->DidNavigateMainFrame(web_contents(), details, params);
+      [this, navigation_handle](ContentRulesRegistry* registry) {
+    registry->DidFinishNavigation(web_contents(), navigation_handle);
   });
 
   content::BrowserContext* context = web_contents()->GetBrowserContext();
@@ -333,14 +320,15 @@ void TabHelper::DidNavigateMainFrame(
         SetExtensionApp(extension);
     } else {
       UpdateExtensionAppIcon(
-          enabled_extensions.GetExtensionOrAppByURL(params.url));
+          enabled_extensions.GetExtensionOrAppByURL(
+              navigation_handle->GetURL()));
     }
   } else {
     UpdateExtensionAppIcon(
-        enabled_extensions.GetExtensionOrAppByURL(params.url));
+        enabled_extensions.GetExtensionOrAppByURL(navigation_handle->GetURL()));
   }
 
-  if (!details.is_in_page)
+  if (!navigation_handle->IsSameDocument())
     ExtensionActionAPI::Get(context)->ClearAllValuesForTab(web_contents());
 }
 
@@ -390,14 +378,6 @@ void TabHelper::OnDidGetWebApplicationInfo(const WebApplicationInfo& info) {
   last_committed_nav_entry_unique_id_ = 0;
 
   switch (pending_web_app_action_) {
-#if !defined(OS_MACOSX)
-    case CREATE_SHORTCUT: {
-      chrome::ShowCreateWebAppShortcutsDialog(
-          web_contents()->GetTopLevelNativeWindow(),
-          web_contents());
-      break;
-    }
-#endif
     case CREATE_HOSTED_APP: {
       if (web_app_info_.app_url.is_empty())
         web_app_info_.app_url = web_contents()->GetURL();
@@ -432,13 +412,16 @@ void TabHelper::OnInlineWebstoreInstall(content::RenderFrameHost* host,
                                         int install_id,
                                         int return_route_id,
                                         const std::string& webstore_item_id,
-                                        const GURL& requestor_url,
                                         int listeners_mask) {
+  GURL requestor_url(host->GetLastCommittedURL());
   // Check that the listener is reasonable. We should never get anything other
   // than an install stage listener, a download listener, or both.
+  // The requestor_url should also be valid, and the renderer should disallow
+  // child frames from sending the IPC.
   if ((listeners_mask & ~(api::webstore::INSTALL_STAGE_LISTENER |
                           api::webstore::DOWNLOAD_PROGRESS_LISTENER)) != 0 ||
-      requestor_url.is_empty()) {
+      !requestor_url.is_valid() || requestor_url == url::kAboutBlankURL ||
+      host->GetParent()) {
     NOTREACHED();
     return;
   }
@@ -524,10 +507,8 @@ void TabHelper::OnContentScriptsExecuting(
     content::RenderFrameHost* host,
     const ScriptExecutionObserver::ExecutingScriptsMap& executing_scripts_map,
     const GURL& on_url) {
-  FOR_EACH_OBSERVER(
-      ScriptExecutionObserver,
-      script_execution_observers_,
-      OnScriptsExecuted(web_contents(), executing_scripts_map, on_url));
+  for (auto& observer : script_execution_observers_)
+    observer.OnScriptsExecuted(web_contents(), executing_scripts_map, on_url);
 }
 
 const Extension* TabHelper::GetExtension(const ExtensionId& extension_app_id) {

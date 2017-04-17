@@ -4,27 +4,26 @@
 
 #include "modules/mediacapturefromelement/OnRequestCanvasDrawListener.h"
 
+#include "third_party/skia/include/core/SkImage.h"
 #include <memory>
 
 namespace blink {
 
-OnRequestCanvasDrawListener::OnRequestCanvasDrawListener(std::unique_ptr<WebCanvasCaptureHandler> handler)
-    : CanvasDrawListener(std::move(handler))
-{
-}
+OnRequestCanvasDrawListener::OnRequestCanvasDrawListener(
+    std::unique_ptr<WebCanvasCaptureHandler> handler)
+    : CanvasDrawListener(std::move(handler)) {}
 
 OnRequestCanvasDrawListener::~OnRequestCanvasDrawListener() {}
 
 // static
-OnRequestCanvasDrawListener* OnRequestCanvasDrawListener::create(std::unique_ptr<WebCanvasCaptureHandler> handler)
-{
-    return new OnRequestCanvasDrawListener(std::move(handler));
+OnRequestCanvasDrawListener* OnRequestCanvasDrawListener::Create(
+    std::unique_ptr<WebCanvasCaptureHandler> handler) {
+  return new OnRequestCanvasDrawListener(std::move(handler));
 }
 
-void OnRequestCanvasDrawListener::sendNewFrame(const WTF::PassRefPtr<SkImage>& image)
-{
-    m_frameCaptureRequested = false;
-    CanvasDrawListener::sendNewFrame(image);
+void OnRequestCanvasDrawListener::SendNewFrame(sk_sp<SkImage> image) {
+  frame_capture_requested_ = false;
+  CanvasDrawListener::SendNewFrame(std::move(image));
 }
 
-} // namespace blink
+}  // namespace blink

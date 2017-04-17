@@ -7,7 +7,7 @@
 #include "bindings/core/v8/V8BindingMacros.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/CSSPropertyNames.h"
-#include "core/css/parser/CSSVariableParser.h"
+#include "core/css/CSSSyntaxDescriptor.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/inspector/MainThreadDebugger.h"
 #include "modules/csspaint/CSSPaintDefinition.h"
@@ -16,149 +16,210 @@
 namespace blink {
 
 // static
-PaintWorkletGlobalScope* PaintWorkletGlobalScope::create(LocalFrame* frame, const KURL& url, const String& userAgent, PassRefPtr<SecurityOrigin> securityOrigin, v8::Isolate* isolate)
-{
-    PaintWorkletGlobalScope* paintWorkletGlobalScope = new PaintWorkletGlobalScope(frame, url, userAgent, securityOrigin, isolate);
-    paintWorkletGlobalScope->scriptController()->initializeContextIfNeeded();
-    MainThreadDebugger::instance()->contextCreated(paintWorkletGlobalScope->scriptController()->getScriptState(), paintWorkletGlobalScope->frame(), paintWorkletGlobalScope->getSecurityOrigin());
-    return paintWorkletGlobalScope;
+PaintWorkletGlobalScope* PaintWorkletGlobalScope::Create(
+    LocalFrame* frame,
+    const KURL& url,
+    const String& user_agent,
+    PassRefPtr<SecurityOrigin> security_origin,
+    v8::Isolate* isolate) {
+  PaintWorkletGlobalScope* paint_worklet_global_scope =
+      new PaintWorkletGlobalScope(frame, url, user_agent,
+                                  std::move(security_origin), isolate);
+  paint_worklet_global_scope->ScriptController()->InitializeContextIfNeeded();
+  MainThreadDebugger::Instance()->ContextCreated(
+      paint_worklet_global_scope->ScriptController()->GetScriptState(),
+      paint_worklet_global_scope->GetFrame(),
+      paint_worklet_global_scope->GetSecurityOrigin());
+  return paint_worklet_global_scope;
 }
 
-PaintWorkletGlobalScope::PaintWorkletGlobalScope(LocalFrame* frame, const KURL& url, const String& userAgent, PassRefPtr<SecurityOrigin> securityOrigin, v8::Isolate* isolate)
-    : MainThreadWorkletGlobalScope(frame, url, userAgent, securityOrigin, isolate)
-{
+PaintWorkletGlobalScope::PaintWorkletGlobalScope(
+    LocalFrame* frame,
+    const KURL& url,
+    const String& user_agent,
+    PassRefPtr<SecurityOrigin> security_origin,
+    v8::Isolate* isolate)
+    : MainThreadWorkletGlobalScope(frame,
+                                   url,
+                                   user_agent,
+                                   std::move(security_origin),
+                                   isolate) {}
+
+PaintWorkletGlobalScope::~PaintWorkletGlobalScope() {}
+
+void PaintWorkletGlobalScope::Dispose() {
+  MainThreadDebugger::Instance()->ContextWillBeDestroyed(
+      ScriptController()->GetScriptState());
+  // Explicitly clear the paint defininitions to break a reference cycle
+  // between them and this global scope.
+  paint_definitions_.Clear();
+
+  WorkletGlobalScope::Dispose();
 }
 
-PaintWorkletGlobalScope::~PaintWorkletGlobalScope()
-{
-}
+void PaintWorkletGlobalScope::registerPaint(const String& name,
+                                            const ScriptValue& ctor_value,
+                                            ExceptionState& exception_state) {
+  if (paint_definitions_.Contains(name)) {
+    exception_state.ThrowDOMException(
+        kNotSupportedError,
+        "A class with name:'" + name + "' is already registered.");
+    return;
+  }
 
-void PaintWorkletGlobalScope::dispose()
-{
-    // Explicitly clear the paint defininitions to break a reference cycle
-    // between them and this global scope.
-    m_paintDefinitions.clear();
+  if (name.IsEmpty()) {
+    exception_state.ThrowTypeError("The empty string is not a valid name.");
+    return;
+  }
 
-    WorkletGlobalScope::dispose();
-}
+  v8::Isolate* isolate = ScriptController()->GetScriptState()->GetIsolate();
+  v8::Local<v8::Context> context = ScriptController()->GetContext();
 
-void PaintWorkletGlobalScope::registerPaint(const String& name, const ScriptValue& ctorValue, ExceptionState& exceptionState)
-{
-    if (m_paintDefinitions.contains(name)) {
-        exceptionState.throwDOMException(NotSupportedError, "A class with name:'" + name + "' is already registered.");
-        return;
+  ASSERT(ctor_value.V8Value()->IsFunction());
+  v8::Local<v8::Function> constructor =
+      v8::Local<v8::Function>::Cast(ctor_value.V8Value());
+
+  v8::Local<v8::Value> input_properties_value;
+  if (!V8Call(constructor->Get(context, V8String(isolate, "inputProperties")),
+              input_properties_value))
+    return;
+
+  Vector<CSSPropertyID> native_invalidation_properties;
+  Vector<AtomicString> custom_invalidation_properties;
+
+  if (!IsUndefinedOrNull(input_properties_value)) {
+    Vector<String> properties = ToImplArray<Vector<String>>(
+        input_properties_value, 0, isolate, exception_state);
+
+    if (exception_state.HadException())
+      return;
+
+    for (const auto& property : properties) {
+      CSSPropertyID property_id = cssPropertyID(property);
+      if (property_id == CSSPropertyVariable) {
+        custom_invalidation_properties.push_back(property);
+      } else if (property_id != CSSPropertyInvalid) {
+        native_invalidation_properties.push_back(property_id);
+      }
     }
+  }
 
-    if (name.isEmpty()) {
-        exceptionState.throwTypeError("The empty string is not a valid name.");
+  // Get input argument types. Parse the argument type values only when
+  // cssPaintAPIArguments is enabled.
+  Vector<CSSSyntaxDescriptor> input_argument_types;
+  if (RuntimeEnabledFeatures::cssPaintAPIArgumentsEnabled()) {
+    v8::Local<v8::Value> input_argument_type_values;
+    if (!V8Call(constructor->Get(context, V8String(isolate, "inputArguments")),
+                input_argument_type_values))
+      return;
+
+    if (!IsUndefinedOrNull(input_argument_type_values)) {
+      Vector<String> argument_types = ToImplArray<Vector<String>>(
+          input_argument_type_values, 0, isolate, exception_state);
+
+      if (exception_state.HadException())
         return;
-    }
 
-    v8::Isolate* isolate = scriptController()->getScriptState()->isolate();
-    v8::Local<v8::Context> context = scriptController()->context();
-
-    ASSERT(ctorValue.v8Value()->IsFunction());
-    v8::Local<v8::Function> constructor = v8::Local<v8::Function>::Cast(ctorValue.v8Value());
-
-    v8::Local<v8::Value> inputPropertiesValue;
-    if (!v8Call(constructor->Get(context, v8String(isolate, "inputProperties")), inputPropertiesValue))
-        return;
-
-    Vector<CSSPropertyID> nativeInvalidationProperties;
-    Vector<AtomicString> customInvalidationProperties;
-
-    if (!isUndefinedOrNull(inputPropertiesValue)) {
-        Vector<String> properties = toImplArray<Vector<String>>(inputPropertiesValue, 0, isolate, exceptionState);
-
-        if (exceptionState.hadException())
-            return;
-
-        for (const auto& property : properties) {
-            CSSPropertyID propertyID = cssPropertyID(property);
-            if (propertyID == CSSPropertyInvalid) {
-                if (CSSVariableParser::isValidVariableName(property))
-                    customInvalidationProperties.append(property);
-            } else {
-                nativeInvalidationProperties.append(propertyID);
-            }
+      for (const auto& type : argument_types) {
+        CSSSyntaxDescriptor syntax_descriptor(type);
+        if (!syntax_descriptor.IsValid()) {
+          exception_state.ThrowTypeError("Invalid argument types.");
+          return;
         }
+        input_argument_types.push_back(syntax_descriptor);
+      }
     }
+  }
 
-    // Parse 'alpha' AKA hasAlpha property.
-    v8::Local<v8::Value> alphaValue;
-    if (!v8Call(constructor->Get(context, v8String(isolate, "alpha")), alphaValue))
-        return;
-    if (!isUndefinedOrNull(alphaValue) && !alphaValue->IsBoolean()) {
-        exceptionState.throwTypeError("The 'alpha' property on the class is not a boolean.");
-        return;
+  // Parse 'alpha' AKA hasAlpha property.
+  v8::Local<v8::Value> alpha_value;
+  if (!V8Call(constructor->Get(context, V8String(isolate, "alpha")),
+              alpha_value))
+    return;
+  if (!IsUndefinedOrNull(alpha_value) && !alpha_value->IsBoolean()) {
+    exception_state.ThrowTypeError(
+        "The 'alpha' property on the class is not a boolean.");
+    return;
+  }
+  bool has_alpha = alpha_value->IsBoolean()
+                       ? v8::Local<v8::Boolean>::Cast(alpha_value)->Value()
+                       : true;
+
+  v8::Local<v8::Value> prototype_value;
+  if (!V8Call(constructor->Get(context, V8String(isolate, "prototype")),
+              prototype_value))
+    return;
+
+  if (IsUndefinedOrNull(prototype_value)) {
+    exception_state.ThrowTypeError(
+        "The 'prototype' object on the class does not exist.");
+    return;
+  }
+
+  if (!prototype_value->IsObject()) {
+    exception_state.ThrowTypeError(
+        "The 'prototype' property on the class is not an object.");
+    return;
+  }
+
+  v8::Local<v8::Object> prototype =
+      v8::Local<v8::Object>::Cast(prototype_value);
+
+  v8::Local<v8::Value> paint_value;
+  if (!V8Call(prototype->Get(context, V8String(isolate, "paint")), paint_value))
+    return;
+
+  if (IsUndefinedOrNull(paint_value)) {
+    exception_state.ThrowTypeError(
+        "The 'paint' function on the prototype does not exist.");
+    return;
+  }
+
+  if (!paint_value->IsFunction()) {
+    exception_state.ThrowTypeError(
+        "The 'paint' property on the prototype is not a function.");
+    return;
+  }
+
+  v8::Local<v8::Function> paint = v8::Local<v8::Function>::Cast(paint_value);
+
+  CSSPaintDefinition* definition = CSSPaintDefinition::Create(
+      ScriptController()->GetScriptState(), constructor, paint,
+      native_invalidation_properties, custom_invalidation_properties,
+      input_argument_types, has_alpha);
+  paint_definitions_.Set(name, definition);
+
+  // Set the definition on any pending generators.
+  GeneratorHashSet* set = pending_generators_.at(name);
+  if (set) {
+    for (const auto& generator : *set) {
+      if (generator) {
+        generator->SetDefinition(definition);
+      }
     }
-    bool hasAlpha = alphaValue->IsBoolean() ? v8::Local<v8::Boolean>::Cast(alphaValue)->Value() : true;
-
-    v8::Local<v8::Value> prototypeValue;
-    if (!v8Call(constructor->Get(context, v8String(isolate, "prototype")), prototypeValue))
-        return;
-
-    if (isUndefinedOrNull(prototypeValue)) {
-        exceptionState.throwTypeError("The 'prototype' object on the class does not exist.");
-        return;
-    }
-
-    if (!prototypeValue->IsObject()) {
-        exceptionState.throwTypeError("The 'prototype' property on the class is not an object.");
-        return;
-    }
-
-    v8::Local<v8::Object> prototype = v8::Local<v8::Object>::Cast(prototypeValue);
-
-    v8::Local<v8::Value> paintValue;
-    if (!v8Call(prototype->Get(context, v8String(isolate, "paint")), paintValue))
-        return;
-
-    if (isUndefinedOrNull(paintValue)) {
-        exceptionState.throwTypeError("The 'paint' function on the prototype does not exist.");
-        return;
-    }
-
-    if (!paintValue->IsFunction()) {
-        exceptionState.throwTypeError("The 'paint' property on the prototype is not a function.");
-        return;
-    }
-
-    v8::Local<v8::Function> paint = v8::Local<v8::Function>::Cast(paintValue);
-
-    CSSPaintDefinition* definition = CSSPaintDefinition::create(scriptController()->getScriptState(), constructor, paint, nativeInvalidationProperties, customInvalidationProperties, hasAlpha);
-    m_paintDefinitions.set(name, definition);
-
-    // Set the definition on any pending generators.
-    GeneratorHashSet* set = m_pendingGenerators.get(name);
-    if (set) {
-        for (const auto& generator : *set) {
-            if (generator) {
-                generator->setDefinition(definition);
-            }
-        }
-    }
-    m_pendingGenerators.remove(name);
+  }
+  pending_generators_.erase(name);
 }
 
-CSSPaintDefinition* PaintWorkletGlobalScope::findDefinition(const String& name)
-{
-    return m_paintDefinitions.get(name);
+CSSPaintDefinition* PaintWorkletGlobalScope::FindDefinition(
+    const String& name) {
+  return paint_definitions_.at(name);
 }
 
-void PaintWorkletGlobalScope::addPendingGenerator(const String& name, CSSPaintImageGeneratorImpl* generator)
-{
-    Member<GeneratorHashSet>& set = m_pendingGenerators.add(name, nullptr).storedValue->value;
-    if (!set)
-        set = new GeneratorHashSet;
-    set->add(generator);
+void PaintWorkletGlobalScope::AddPendingGenerator(
+    const String& name,
+    CSSPaintImageGeneratorImpl* generator) {
+  Member<GeneratorHashSet>& set =
+      pending_generators_.insert(name, nullptr).stored_value->value;
+  if (!set)
+    set = new GeneratorHashSet;
+  set->insert(generator);
 }
 
-DEFINE_TRACE(PaintWorkletGlobalScope)
-{
-    visitor->trace(m_paintDefinitions);
-    visitor->trace(m_pendingGenerators);
-    MainThreadWorkletGlobalScope::trace(visitor);
+DEFINE_TRACE(PaintWorkletGlobalScope) {
+  visitor->Trace(paint_definitions_);
+  visitor->Trace(pending_generators_);
+  MainThreadWorkletGlobalScope::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

@@ -41,8 +41,8 @@ import sys
 
 from webkitpy.common.host import Host
 from webkitpy.tool.commands.analyze_baselines import AnalyzeBaselines
+from webkitpy.tool.commands.auto_rebaseline import AutoRebaseline
 from webkitpy.tool.commands.command import HelpPrintingOptionParser
-from webkitpy.tool.commands.commit_announcer import CommitAnnouncerCommand
 from webkitpy.tool.commands.flaky_tests import FlakyTests
 from webkitpy.tool.commands.help_command import HelpCommand
 from webkitpy.tool.commands.layout_tests_server import LayoutTestsServer
@@ -51,13 +51,11 @@ from webkitpy.tool.commands.pretty_diff import PrettyDiff
 from webkitpy.tool.commands.queries import CrashLog
 from webkitpy.tool.commands.queries import PrintBaselines
 from webkitpy.tool.commands.queries import PrintExpectations
-from webkitpy.tool.commands.rebaseline import AutoRebaseline
 from webkitpy.tool.commands.rebaseline import CopyExistingBaselinesInternal
 from webkitpy.tool.commands.rebaseline import Rebaseline
 from webkitpy.tool.commands.rebaseline import RebaselineExpectations
-from webkitpy.tool.commands.rebaseline import RebaselineJson
 from webkitpy.tool.commands.rebaseline import RebaselineTest
-from webkitpy.tool.commands.rebaseline_from_try_jobs import RebaselineFromTryJobs
+from webkitpy.tool.commands.rebaseline_cl import RebaselineCL
 from webkitpy.tool.commands.rebaseline_server import RebaselineServer
 
 
@@ -65,13 +63,16 @@ _log = logging.getLogger(__name__)
 
 
 class WebKitPatch(Host):
+    # FIXME: It might make more sense if this class had a Host attribute
+    # instead of being a Host subclass.
+
     global_options = [
         optparse.make_option(
-            "-v", "--verbose", action="store_true", dest="verbose", default=False,
-            help="enable all logging"),
+            '-v', '--verbose', action='store_true', dest='verbose', default=False,
+            help='enable all logging'),
         optparse.make_option(
-            "-d", "--directory", action="append", dest="patch_directories", default=[],
-            help="Directory to look at for changed files"),
+            '-d', '--directory', action='append', default=[],
+            help='Directory to look at for changed files'),
     ]
 
     def __init__(self, path):
@@ -80,7 +81,6 @@ class WebKitPatch(Host):
         self.commands = [
             AnalyzeBaselines(),
             AutoRebaseline(),
-            CommitAnnouncerCommand(),
             CopyExistingBaselinesInternal(),
             CrashLog(),
             FlakyTests(),
@@ -90,18 +90,13 @@ class WebKitPatch(Host):
             PrintBaselines(),
             PrintExpectations(),
             Rebaseline(),
+            RebaselineCL(),
             RebaselineExpectations(),
-            RebaselineFromTryJobs(),
-            RebaselineJson(),
             RebaselineServer(),
             RebaselineTest(),
         ]
-        self.help_command = HelpCommand()
+        self.help_command = HelpCommand(tool=self)
         self.commands.append(self.help_command)
-        # FIXME: Since tool is passed to Command.execute, it may not be necessary to set a tool attribute on the
-        # command objects here - maybe this should be done inside of Command.execute for commands that use self._tool.
-        for command in self.commands:
-            command.bind_to_tool(self)
 
     def main(self, argv=None):
         argv = argv or sys.argv
@@ -112,11 +107,10 @@ class WebKitPatch(Host):
 
         command = self.command_by_name(command_name) or self.help_command
         if not command:
-            option_parser.error("%s is not a recognized command" % command_name)
+            option_parser.error('%s is not a recognized command', command_name)
 
         command.set_option_parser(option_parser)
         (options, args) = command.parse_args(args)
-        self._handle_global_options(options)
 
         (should_execute, failure_reason) = self._should_execute_command(command)
         if not should_execute:
@@ -134,7 +128,7 @@ class WebKitPatch(Host):
         # Assume the first argument which doesn't start with "-" is the command name.
         command_index = 0
         for arg in args:
-            if arg[0] != "-":
+            if arg[0] != '-':
                 break
             command_index += 1
         else:
@@ -144,23 +138,19 @@ class WebKitPatch(Host):
         return (command, args[:command_index] + args[command_index + 1:])
 
     def _create_option_parser(self):
-        usage = "Usage: %prog [options] COMMAND [ARGS]"
+        usage = 'Usage: %prog [options] COMMAND [ARGS]'
         name = optparse.OptionParser().get_prog_name()
-        return HelpPrintingOptionParser(epilog_method=self.help_command._help_epilog, prog=name, usage=usage)
+        return HelpPrintingOptionParser(epilog_method=self.help_command.help_epilog, prog=name, usage=usage)
 
     def _add_global_options(self, option_parser):
         global_options = self.global_options or []
         for option in global_options:
             option_parser.add_option(option)
 
-    # FIXME: This may be unnecessary since we pass global options to all commands during execute() as well.
-    def _handle_global_options(self, options):
-        self.initialize_scm(options.patch_directories)
-
     def _should_execute_command(self, command):
-        if command.requires_local_commits and not self.scm().supports_local_commits():
-            failure_reason = "%s requires local commits using %s in %s." % (
-                command.name, self.scm().display_name(), self.scm().checkout_root)
+        if command.requires_local_commits and not self.git().supports_local_commits():
+            failure_reason = '%s requires local commits using %s in %s.' % (
+                command.name, self.git().display_name(), self.git().checkout_root)
             return (False, failure_reason)
         return (True, None)
 
@@ -171,7 +161,7 @@ class WebKitPatch(Host):
         if not command.show_in_main_help:
             return False
         if command.requires_local_commits:
-            return self.scm().supports_local_commits()
+            return self.git().supports_local_commits()
         return True
 
     def command_by_name(self, command_name):

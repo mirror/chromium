@@ -5,52 +5,75 @@
 #include "core/dom/TaskRunnerHelper.h"
 
 #include "core/dom/Document.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalFrame.h"
+#include "platform/WebFrameScheduler.h"
+#include "platform/WebTaskRunner.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebFrameScheduler.h"
-#include "public/platform/WebTaskRunner.h"
 #include "public/platform/WebThread.h"
 
 namespace blink {
 
-WebTaskRunner* TaskRunnerHelper::getUnthrottledTaskRunner(LocalFrame* frame)
-{
-    return frame ? frame->frameScheduler()->unthrottledTaskRunner() : Platform::current()->currentThread()->getWebTaskRunner();
+RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type, LocalFrame* frame) {
+  // TODO(haraken): Optimize the mapping from TaskTypes to task runners.
+  switch (type) {
+    case TaskType::kTimer:
+      return frame ? frame->FrameScheduler()->TimerTaskRunner()
+                   : Platform::Current()->CurrentThread()->GetWebTaskRunner();
+    case TaskType::kUnspecedLoading:
+    case TaskType::kNetworking:
+      return frame ? frame->FrameScheduler()->LoadingTaskRunner()
+                   : Platform::Current()->CurrentThread()->GetWebTaskRunner();
+    // Throttling following tasks may break existing web pages, so tentatively
+    // these are unthrottled.
+    // TODO(nhiroki): Throttle them again after we're convinced that it's safe
+    // or provide a mechanism that web pages can opt-out it if throttling is not
+    // desirable.
+    case TaskType::kDOMManipulation:
+    case TaskType::kDatabaseAccess:
+    case TaskType::kFileReading:
+    case TaskType::kHistoryTraversal:
+    case TaskType::kPerformanceTimeline:
+    case TaskType::kPostedMessage:
+    case TaskType::kRemoteEvent:
+    case TaskType::kSensor:
+    case TaskType::kUnshippedPortMessage:
+    case TaskType::kWebSocket:
+      return frame ? frame->FrameScheduler()->SuspendableTaskRunner()
+                   : Platform::Current()->CurrentThread()->GetWebTaskRunner();
+    case TaskType::kUserInteraction:
+    case TaskType::kEmbed:
+    case TaskType::kMediaElementEvent:
+    case TaskType::kCanvasBlobSerialization:
+    case TaskType::kMicrotask:
+    case TaskType::kPresentation:
+    case TaskType::kWebGL:
+    case TaskType::kUnspecedTimer:
+    case TaskType::kMiscPlatformAPI:
+    case TaskType::kUnthrottled:
+      return frame ? frame->FrameScheduler()->UnthrottledTaskRunner()
+                   : Platform::Current()->CurrentThread()->GetWebTaskRunner();
+  }
+  NOTREACHED();
+  return nullptr;
 }
 
-WebTaskRunner* TaskRunnerHelper::getTimerTaskRunner(LocalFrame* frame)
-{
-    return frame ? frame->frameScheduler()->timerTaskRunner() : Platform::current()->currentThread()->getWebTaskRunner();
+RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type, Document* document) {
+  return Get(type, document ? document->GetFrame() : nullptr);
 }
 
-WebTaskRunner* TaskRunnerHelper::getLoadingTaskRunner(LocalFrame* frame)
-{
-    return frame ? frame->frameScheduler()->loadingTaskRunner() : Platform::current()->currentThread()->getWebTaskRunner();
+RefPtr<WebTaskRunner> TaskRunnerHelper::Get(
+    TaskType type,
+    ExecutionContext* execution_context) {
+  return Get(type, execution_context && execution_context->IsDocument()
+                       ? static_cast<Document*>(execution_context)
+                       : nullptr);
 }
 
-WebTaskRunner* TaskRunnerHelper::getUnthrottledTaskRunner(Document* document)
-{
-    return getUnthrottledTaskRunner(document ? document->frame() : nullptr);
+RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type,
+                                            ScriptState* script_state) {
+  return Get(type,
+             script_state ? ExecutionContext::From(script_state) : nullptr);
 }
 
-WebTaskRunner* TaskRunnerHelper::getTimerTaskRunner(Document* document)
-{
-    return getTimerTaskRunner(document ? document->frame() : nullptr);
-}
-
-WebTaskRunner* TaskRunnerHelper::getLoadingTaskRunner(Document* document)
-{
-    return getLoadingTaskRunner(document ? document->frame() : nullptr);
-}
-
-WebTaskRunner* TaskRunnerHelper::getUnthrottledTaskRunner(ExecutionContext* executionContext)
-{
-    return getUnthrottledTaskRunner(executionContext && executionContext->isDocument() ? static_cast<Document*>(executionContext) : nullptr);
-}
-
-WebTaskRunner* TaskRunnerHelper::getUnthrottledTaskRunner(ScriptState* scriptState)
-{
-    return getUnthrottledTaskRunner(scriptState ? scriptState->getExecutionContext() : nullptr);
-}
-
-} // namespace blink
+}  // namespace blink

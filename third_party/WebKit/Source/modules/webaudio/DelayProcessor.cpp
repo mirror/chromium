@@ -10,42 +10,50 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
-#include "modules/webaudio/DelayDSPKernel.h"
 #include "modules/webaudio/DelayProcessor.h"
-#include "wtf/PtrUtil.h"
 #include <memory>
+#include "modules/webaudio/DelayDSPKernel.h"
+#include "platform/audio/AudioUtilities.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-DelayProcessor::DelayProcessor(float sampleRate, unsigned numberOfChannels, AudioParamHandler& delayTime, double maxDelayTime)
-    : AudioDSPKernelProcessor(sampleRate, numberOfChannels)
-    , m_delayTime(delayTime)
-    , m_maxDelayTime(maxDelayTime)
-{
+DelayProcessor::DelayProcessor(float sample_rate,
+                               unsigned number_of_channels,
+                               AudioParamHandler& delay_time,
+                               double max_delay_time)
+    : AudioDSPKernelProcessor(sample_rate, number_of_channels),
+      delay_time_(delay_time),
+      max_delay_time_(max_delay_time) {}
+
+DelayProcessor::~DelayProcessor() {
+  if (IsInitialized())
+    Uninitialize();
 }
 
-DelayProcessor::~DelayProcessor()
-{
-    if (isInitialized())
-        uninitialize();
+std::unique_ptr<AudioDSPKernel> DelayProcessor::CreateKernel() {
+  return WTF::MakeUnique<DelayDSPKernel>(this);
 }
 
-std::unique_ptr<AudioDSPKernel> DelayProcessor::createKernel()
-{
-    return wrapUnique(new DelayDSPKernel(this));
+void DelayProcessor::ProcessOnlyAudioParams(size_t frames_to_process) {
+  DCHECK_LE(frames_to_process, AudioUtilities::kRenderQuantumFrames);
+
+  float values[AudioUtilities::kRenderQuantumFrames];
+
+  delay_time_->CalculateSampleAccurateValues(values, frames_to_process);
 }
 
-} // namespace blink
-
+}  // namespace blink

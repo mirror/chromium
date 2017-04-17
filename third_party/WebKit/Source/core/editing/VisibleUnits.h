@@ -28,6 +28,7 @@
 
 #include "core/CoreExport.h"
 #include "core/editing/EditingBoundary.h"
+#include "core/editing/EphemeralRange.h"
 #include "core/editing/PositionWithAffinity.h"
 #include "core/editing/VisiblePosition.h"
 #include "platform/text/TextDirection.h"
@@ -42,31 +43,25 @@ class IntPoint;
 class InlineBox;
 class LocalFrame;
 
-enum EWordSide { RightWordIfOnBoundary = false, LeftWordIfOnBoundary = true };
+enum EWordSide { kRightWordIfOnBoundary = false, kLeftWordIfOnBoundary = true };
 
 struct InlineBoxPosition {
-    InlineBox* inlineBox;
-    int offsetInBox;
+  InlineBox* inline_box;
+  int offset_in_box;
 
-    InlineBoxPosition()
-        : inlineBox(nullptr), offsetInBox(0)
-    {
-    }
+  InlineBoxPosition() : inline_box(nullptr), offset_in_box(0) {}
 
-    InlineBoxPosition(InlineBox* inlineBox, int offsetInBox)
-        : inlineBox(inlineBox), offsetInBox(offsetInBox)
-    {
-    }
+  InlineBoxPosition(InlineBox* inline_box, int offset_in_box)
+      : inline_box(inline_box), offset_in_box(offset_in_box) {}
 
-    bool operator==(const InlineBoxPosition& other) const
-    {
-        return inlineBox == other.inlineBox && offsetInBox == other.offsetInBox;
-    }
+  bool operator==(const InlineBoxPosition& other) const {
+    return inline_box == other.inline_box &&
+           offset_in_box == other.offset_in_box;
+  }
 
-    bool operator!=(const InlineBoxPosition& other) const
-    {
-        return !operator==(other);
-    }
+  bool operator!=(const InlineBoxPosition& other) const {
+    return !operator==(other);
+  }
 };
 
 // The print for |InlineBoxPosition| is available only for testing
@@ -74,11 +69,12 @@ struct InlineBoxPosition {
 // "core/editing/VisibleUnitsTest.cpp".
 std::ostream& operator<<(std::ostream&, const InlineBoxPosition&);
 
-CORE_EXPORT LayoutObject* associatedLayoutObjectOf(const Node&, int offsetInNode);
+CORE_EXPORT LayoutObject* AssociatedLayoutObjectOf(const Node&,
+                                                   int offset_in_node);
 
 // offset functions on Node
-CORE_EXPORT int caretMinOffset(const Node*);
-CORE_EXPORT int caretMaxOffset(const Node*);
+CORE_EXPORT int CaretMinOffset(const Node*);
+CORE_EXPORT int CaretMaxOffset(const Node*);
 
 // Position
 // mostForward/BackwardCaretPosition are used for moving back and forth between
@@ -98,154 +94,253 @@ CORE_EXPORT int caretMaxOffset(const Node*);
 // endsOfNodeAreVisuallyDistinctPositions(boundary).
 // FIXME: This function should never be called when the line box tree is dirty.
 // See https://bugs.webkit.org/show_bug.cgi?id=97264
-CORE_EXPORT Position mostBackwardCaretPosition(const Position&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
-CORE_EXPORT PositionInFlatTree mostBackwardCaretPosition(const PositionInFlatTree&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
-CORE_EXPORT Position mostForwardCaretPosition(const Position&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
-CORE_EXPORT PositionInFlatTree mostForwardCaretPosition(const PositionInFlatTree&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
+CORE_EXPORT Position MostBackwardCaretPosition(
+    const Position&,
+    EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+CORE_EXPORT PositionInFlatTree MostBackwardCaretPosition(
+    const PositionInFlatTree&,
+    EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+CORE_EXPORT Position MostForwardCaretPosition(
+    const Position&,
+    EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+CORE_EXPORT PositionInFlatTree MostForwardCaretPosition(
+    const PositionInFlatTree&,
+    EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
 
-CORE_EXPORT bool isVisuallyEquivalentCandidate(const Position&);
-CORE_EXPORT bool isVisuallyEquivalentCandidate(const PositionInFlatTree&);
+CORE_EXPORT bool IsVisuallyEquivalentCandidate(const Position&);
+CORE_EXPORT bool IsVisuallyEquivalentCandidate(const PositionInFlatTree&);
 
-// Whether or not [node, 0] and [node, lastOffsetForEditing(node)] are their own VisiblePositions.
+// Whether or not [node, 0] and [node, lastOffsetForEditing(node)] are their own
+// VisiblePositions.
 // If true, adjacent candidates are visually distinct.
-CORE_EXPORT bool endsOfNodeAreVisuallyDistinctPositions(const Node*);
+CORE_EXPORT bool EndsOfNodeAreVisuallyDistinctPositions(const Node*);
 
-CORE_EXPORT Position canonicalPositionOf(const Position&);
-CORE_EXPORT PositionInFlatTree canonicalPositionOf(const PositionInFlatTree&);
+CORE_EXPORT Position CanonicalPositionOf(const Position&);
+CORE_EXPORT PositionInFlatTree CanonicalPositionOf(const PositionInFlatTree&);
 
 // Bounds of (possibly transformed) caret in absolute coords
-CORE_EXPORT IntRect absoluteCaretBoundsOf(const VisiblePosition&);
-CORE_EXPORT IntRect absoluteCaretBoundsOf(const VisiblePositionInFlatTree&);
+CORE_EXPORT IntRect AbsoluteCaretBoundsOf(const VisiblePosition&);
+CORE_EXPORT IntRect AbsoluteCaretBoundsOf(const VisiblePositionInFlatTree&);
 
-CORE_EXPORT UChar32 characterAfter(const VisiblePosition&);
-CORE_EXPORT UChar32 characterAfter(const VisiblePositionInFlatTree&);
-CORE_EXPORT UChar32 characterBefore(const VisiblePosition&);
-CORE_EXPORT UChar32 characterBefore(const VisiblePositionInFlatTree&);
+CORE_EXPORT IntRect AbsoluteSelectionBoundsOf(const VisiblePosition&);
+CORE_EXPORT IntRect AbsoluteSelectionBoundsOf(const VisiblePositionInFlatTree&);
+
+CORE_EXPORT UChar32 CharacterAfter(const VisiblePosition&);
+CORE_EXPORT UChar32 CharacterAfter(const VisiblePositionInFlatTree&);
+CORE_EXPORT UChar32 CharacterBefore(const VisiblePosition&);
+CORE_EXPORT UChar32 CharacterBefore(const VisiblePositionInFlatTree&);
 
 // TODO(yosin) Since return value of |leftPositionOf()| with |VisiblePosition|
 // isn't defined well on flat tree, we should not use it for a position in
 // flat tree.
-CORE_EXPORT VisiblePosition leftPositionOf(const VisiblePosition&);
-CORE_EXPORT VisiblePositionInFlatTree leftPositionOf(const VisiblePositionInFlatTree&);
+CORE_EXPORT VisiblePosition LeftPositionOf(const VisiblePosition&);
+CORE_EXPORT VisiblePositionInFlatTree
+LeftPositionOf(const VisiblePositionInFlatTree&);
 // TODO(yosin) Since return value of |rightPositionOf()| with |VisiblePosition|
 // isn't defined well on flat tree, we should not use it for a position in
 // flat tree.
-CORE_EXPORT VisiblePosition rightPositionOf(const VisiblePosition&);
-CORE_EXPORT VisiblePositionInFlatTree rightPositionOf(const VisiblePositionInFlatTree&);
+CORE_EXPORT VisiblePosition RightPositionOf(const VisiblePosition&);
+CORE_EXPORT VisiblePositionInFlatTree
+RightPositionOf(const VisiblePositionInFlatTree&);
 
-CORE_EXPORT VisiblePosition nextPositionOf(const VisiblePosition&, EditingBoundaryCrossingRule = CanCrossEditingBoundary);
-CORE_EXPORT VisiblePositionInFlatTree nextPositionOf(const VisiblePositionInFlatTree&, EditingBoundaryCrossingRule = CanCrossEditingBoundary);
-CORE_EXPORT VisiblePosition previousPositionOf(const VisiblePosition&, EditingBoundaryCrossingRule = CanCrossEditingBoundary);
-CORE_EXPORT VisiblePositionInFlatTree previousPositionOf(const VisiblePositionInFlatTree&, EditingBoundaryCrossingRule = CanCrossEditingBoundary);
+CORE_EXPORT VisiblePosition
+NextPositionOf(const VisiblePosition&,
+               EditingBoundaryCrossingRule = kCanCrossEditingBoundary);
+CORE_EXPORT VisiblePositionInFlatTree
+NextPositionOf(const VisiblePositionInFlatTree&,
+               EditingBoundaryCrossingRule = kCanCrossEditingBoundary);
+CORE_EXPORT VisiblePosition
+PreviousPositionOf(const VisiblePosition&,
+                   EditingBoundaryCrossingRule = kCanCrossEditingBoundary);
+CORE_EXPORT VisiblePositionInFlatTree
+PreviousPositionOf(const VisiblePositionInFlatTree&,
+                   EditingBoundaryCrossingRule = kCanCrossEditingBoundary);
 
 // words
-CORE_EXPORT VisiblePosition startOfWord(const VisiblePosition&, EWordSide = RightWordIfOnBoundary);
-CORE_EXPORT VisiblePositionInFlatTree startOfWord(const VisiblePositionInFlatTree&, EWordSide = RightWordIfOnBoundary);
-CORE_EXPORT VisiblePosition endOfWord(const VisiblePosition&, EWordSide = RightWordIfOnBoundary);
-CORE_EXPORT VisiblePositionInFlatTree endOfWord(const VisiblePositionInFlatTree&, EWordSide = RightWordIfOnBoundary);
-VisiblePosition previousWordPosition(const VisiblePosition&);
-VisiblePosition nextWordPosition(const VisiblePosition&);
-VisiblePosition rightWordPosition(const VisiblePosition&, bool skipsSpaceWhenMovingRight);
-VisiblePosition leftWordPosition(const VisiblePosition&, bool skipsSpaceWhenMovingRight);
+// TODO(yoichio): Replace |startOfWord| to |startOfWordPosition| because
+// returned Position should be canonicalized with |previousBoundary()| by
+// TextItetator.
+CORE_EXPORT Position StartOfWordPosition(const VisiblePosition&,
+                                         EWordSide = kRightWordIfOnBoundary);
+CORE_EXPORT VisiblePosition StartOfWord(const VisiblePosition&,
+                                        EWordSide = kRightWordIfOnBoundary);
+CORE_EXPORT PositionInFlatTree
+StartOfWordPosition(const VisiblePositionInFlatTree&,
+                    EWordSide = kRightWordIfOnBoundary);
+CORE_EXPORT VisiblePositionInFlatTree
+StartOfWord(const VisiblePositionInFlatTree&,
+            EWordSide = kRightWordIfOnBoundary);
+// TODO(yoichio): Replace |endOfWord| to |endOfWordPosition| because returned
+// Position should be canonicalized with |nextBoundary()| by TextItetator.
+CORE_EXPORT Position EndOfWordPosition(const VisiblePosition&,
+                                       EWordSide = kRightWordIfOnBoundary);
+CORE_EXPORT VisiblePosition EndOfWord(const VisiblePosition&,
+                                      EWordSide = kRightWordIfOnBoundary);
+CORE_EXPORT PositionInFlatTree
+EndOfWordPosition(const VisiblePositionInFlatTree&,
+                  EWordSide = kRightWordIfOnBoundary);
+CORE_EXPORT VisiblePositionInFlatTree
+EndOfWord(const VisiblePositionInFlatTree&, EWordSide = kRightWordIfOnBoundary);
+VisiblePosition PreviousWordPosition(const VisiblePosition&);
+VisiblePosition NextWordPosition(const VisiblePosition&);
+VisiblePosition RightWordPosition(const VisiblePosition&,
+                                  bool skips_space_when_moving_right);
+VisiblePosition LeftWordPosition(const VisiblePosition&,
+                                 bool skips_space_when_moving_right);
 
 // sentences
-CORE_EXPORT VisiblePosition startOfSentence(const VisiblePosition&);
-CORE_EXPORT VisiblePositionInFlatTree startOfSentence(const VisiblePositionInFlatTree&);
-CORE_EXPORT VisiblePosition endOfSentence(const VisiblePosition&);
-CORE_EXPORT VisiblePositionInFlatTree endOfSentence(const VisiblePositionInFlatTree&);
-VisiblePosition previousSentencePosition(const VisiblePosition&);
-VisiblePosition nextSentencePosition(const VisiblePosition&);
+CORE_EXPORT VisiblePosition StartOfSentence(const VisiblePosition&);
+CORE_EXPORT VisiblePositionInFlatTree
+StartOfSentence(const VisiblePositionInFlatTree&);
+CORE_EXPORT VisiblePosition EndOfSentence(const VisiblePosition&);
+CORE_EXPORT VisiblePositionInFlatTree
+EndOfSentence(const VisiblePositionInFlatTree&);
+VisiblePosition PreviousSentencePosition(const VisiblePosition&);
+VisiblePosition NextSentencePosition(const VisiblePosition&);
+EphemeralRange ExpandEndToSentenceBoundary(const EphemeralRange&);
+EphemeralRange ExpandRangeToSentenceBoundary(const EphemeralRange&);
 
 // lines
 // TODO(yosin) Return values of |VisiblePosition| version of |startOfLine()|
 // with shadow tree isn't defined well. We should not use it for shadow tree.
-CORE_EXPORT VisiblePosition startOfLine(const VisiblePosition&);
-CORE_EXPORT VisiblePositionInFlatTree startOfLine(const VisiblePositionInFlatTree&);
+CORE_EXPORT VisiblePosition StartOfLine(const VisiblePosition&);
+CORE_EXPORT VisiblePositionInFlatTree
+StartOfLine(const VisiblePositionInFlatTree&);
 // TODO(yosin) Return values of |VisiblePosition| version of |endOfLine()| with
 // shadow tree isn't defined well. We should not use it for shadow tree.
-CORE_EXPORT VisiblePosition endOfLine(const VisiblePosition&);
-CORE_EXPORT VisiblePositionInFlatTree endOfLine(const VisiblePositionInFlatTree&);
-CORE_EXPORT VisiblePosition previousLinePosition(const VisiblePosition&, LayoutUnit lineDirectionPoint, EditableType = ContentIsEditable);
-CORE_EXPORT VisiblePosition nextLinePosition(const VisiblePosition&, LayoutUnit lineDirectionPoint, EditableType = ContentIsEditable);
-CORE_EXPORT bool inSameLine(const VisiblePosition&, const VisiblePosition&);
-CORE_EXPORT bool inSameLine(const VisiblePositionInFlatTree&, const VisiblePositionInFlatTree&);
-CORE_EXPORT bool inSameLine(const PositionWithAffinity&, const PositionWithAffinity&);
-CORE_EXPORT bool inSameLine(const PositionInFlatTreeWithAffinity&, const PositionInFlatTreeWithAffinity&);
-CORE_EXPORT bool isStartOfLine(const VisiblePosition&);
-CORE_EXPORT bool isStartOfLine(const VisiblePositionInFlatTree&);
-CORE_EXPORT bool isEndOfLine(const VisiblePosition&);
-CORE_EXPORT bool isEndOfLine(const VisiblePositionInFlatTree&);
+CORE_EXPORT VisiblePosition EndOfLine(const VisiblePosition&);
+CORE_EXPORT VisiblePositionInFlatTree
+EndOfLine(const VisiblePositionInFlatTree&);
+enum EditableType { kContentIsEditable, kHasEditableAXRole };
+CORE_EXPORT VisiblePosition
+PreviousLinePosition(const VisiblePosition&,
+                     LayoutUnit line_direction_point,
+                     EditableType = kContentIsEditable);
+CORE_EXPORT VisiblePosition NextLinePosition(const VisiblePosition&,
+                                             LayoutUnit line_direction_point,
+                                             EditableType = kContentIsEditable);
+CORE_EXPORT bool InSameLine(const VisiblePosition&, const VisiblePosition&);
+CORE_EXPORT bool InSameLine(const VisiblePositionInFlatTree&,
+                            const VisiblePositionInFlatTree&);
+CORE_EXPORT bool InSameLine(const PositionWithAffinity&,
+                            const PositionWithAffinity&);
+CORE_EXPORT bool InSameLine(const PositionInFlatTreeWithAffinity&,
+                            const PositionInFlatTreeWithAffinity&);
+CORE_EXPORT bool IsStartOfLine(const VisiblePosition&);
+CORE_EXPORT bool IsStartOfLine(const VisiblePositionInFlatTree&);
+CORE_EXPORT bool IsEndOfLine(const VisiblePosition&);
+CORE_EXPORT bool IsEndOfLine(const VisiblePositionInFlatTree&);
 // TODO(yosin) Return values of |VisiblePosition| version of
 // |logicalStartOfLine()| with shadow tree isn't defined well. We should not use
 // it for shadow tree.
-CORE_EXPORT VisiblePosition logicalStartOfLine(const VisiblePosition&);
-CORE_EXPORT VisiblePositionInFlatTree logicalStartOfLine(const VisiblePositionInFlatTree&);
+CORE_EXPORT VisiblePosition LogicalStartOfLine(const VisiblePosition&);
+CORE_EXPORT VisiblePositionInFlatTree
+LogicalStartOfLine(const VisiblePositionInFlatTree&);
 // TODO(yosin) Return values of |VisiblePosition| version of
 // |logicalEndOfLine()| with shadow tree isn't defined well. We should not use
 // it for shadow tree.
-CORE_EXPORT VisiblePosition logicalEndOfLine(const VisiblePosition&);
-CORE_EXPORT VisiblePositionInFlatTree logicalEndOfLine(const VisiblePositionInFlatTree&);
-CORE_EXPORT bool isLogicalEndOfLine(const VisiblePosition&);
-CORE_EXPORT bool isLogicalEndOfLine(const VisiblePositionInFlatTree&);
-VisiblePosition leftBoundaryOfLine(const VisiblePosition&, TextDirection);
-VisiblePosition rightBoundaryOfLine(const VisiblePosition&, TextDirection);
+CORE_EXPORT VisiblePosition LogicalEndOfLine(const VisiblePosition&);
+CORE_EXPORT VisiblePositionInFlatTree
+LogicalEndOfLine(const VisiblePositionInFlatTree&);
+CORE_EXPORT bool IsLogicalEndOfLine(const VisiblePosition&);
+CORE_EXPORT bool IsLogicalEndOfLine(const VisiblePositionInFlatTree&);
+VisiblePosition LeftBoundaryOfLine(const VisiblePosition&, TextDirection);
+VisiblePosition RightBoundaryOfLine(const VisiblePosition&, TextDirection);
 
 // paragraphs (perhaps a misnomer, can be divided by line break elements)
 // TODO(yosin) Since return value of |startOfParagraph()| with |VisiblePosition|
 // isn't defined well on flat tree, we should not use it for a position in
 // flat tree.
-CORE_EXPORT VisiblePosition startOfParagraph(const VisiblePosition&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
-CORE_EXPORT VisiblePositionInFlatTree startOfParagraph(const VisiblePositionInFlatTree&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
-CORE_EXPORT VisiblePosition endOfParagraph(const VisiblePosition&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
-CORE_EXPORT VisiblePositionInFlatTree endOfParagraph(const VisiblePositionInFlatTree&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
-VisiblePosition startOfNextParagraph(const VisiblePosition&);
-VisiblePosition previousParagraphPosition(const VisiblePosition&, LayoutUnit x);
-VisiblePosition nextParagraphPosition(const VisiblePosition&, LayoutUnit x);
-CORE_EXPORT bool isStartOfParagraph(const VisiblePosition&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
-CORE_EXPORT bool isStartOfParagraph(const VisiblePositionInFlatTree&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
-CORE_EXPORT bool isEndOfParagraph(const VisiblePosition&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
-CORE_EXPORT bool isEndOfParagraph(const VisiblePositionInFlatTree&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
-bool inSameParagraph(const VisiblePosition&, const VisiblePosition&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
+CORE_EXPORT VisiblePosition
+StartOfParagraph(const VisiblePosition&,
+                 EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+CORE_EXPORT VisiblePositionInFlatTree
+StartOfParagraph(const VisiblePositionInFlatTree&,
+                 EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+CORE_EXPORT VisiblePosition
+EndOfParagraph(const VisiblePosition&,
+               EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+CORE_EXPORT VisiblePositionInFlatTree
+EndOfParagraph(const VisiblePositionInFlatTree&,
+               EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+VisiblePosition StartOfNextParagraph(const VisiblePosition&);
+VisiblePosition PreviousParagraphPosition(const VisiblePosition&, LayoutUnit x);
+VisiblePosition NextParagraphPosition(const VisiblePosition&, LayoutUnit x);
+CORE_EXPORT bool IsStartOfParagraph(
+    const VisiblePosition&,
+    EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+CORE_EXPORT bool IsStartOfParagraph(
+    const VisiblePositionInFlatTree&,
+    EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+CORE_EXPORT bool IsEndOfParagraph(
+    const VisiblePosition&,
+    EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+CORE_EXPORT bool IsEndOfParagraph(
+    const VisiblePositionInFlatTree&,
+    EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+bool InSameParagraph(const VisiblePosition&,
+                     const VisiblePosition&,
+                     EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
 
 // blocks (true paragraphs; line break elements don't break blocks)
-VisiblePosition startOfBlock(const VisiblePosition&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
-VisiblePosition endOfBlock(const VisiblePosition&, EditingBoundaryCrossingRule = CannotCrossEditingBoundary);
-bool inSameBlock(const VisiblePosition&, const VisiblePosition&);
-bool isStartOfBlock(const VisiblePosition&);
-bool isEndOfBlock(const VisiblePosition&);
+VisiblePosition StartOfBlock(
+    const VisiblePosition&,
+    EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+VisiblePosition EndOfBlock(
+    const VisiblePosition&,
+    EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+bool InSameBlock(const VisiblePosition&, const VisiblePosition&);
+bool IsStartOfBlock(const VisiblePosition&);
+bool IsEndOfBlock(const VisiblePosition&);
 
 // document
-CORE_EXPORT VisiblePosition startOfDocument(const VisiblePosition&);
-CORE_EXPORT VisiblePositionInFlatTree startOfDocument(const VisiblePositionInFlatTree&);
-CORE_EXPORT VisiblePosition endOfDocument(const VisiblePosition&);
-CORE_EXPORT VisiblePositionInFlatTree endOfDocument(const VisiblePositionInFlatTree&);
-bool isStartOfDocument(const VisiblePosition&);
-bool isEndOfDocument(const VisiblePosition&);
+CORE_EXPORT VisiblePosition StartOfDocument(const VisiblePosition&);
+CORE_EXPORT VisiblePositionInFlatTree
+StartOfDocument(const VisiblePositionInFlatTree&);
+CORE_EXPORT VisiblePosition EndOfDocument(const VisiblePosition&);
+CORE_EXPORT VisiblePositionInFlatTree
+EndOfDocument(const VisiblePositionInFlatTree&);
+bool IsStartOfDocument(const VisiblePosition&);
+bool IsEndOfDocument(const VisiblePosition&);
 
 // editable content
-VisiblePosition startOfEditableContent(const VisiblePosition&);
-VisiblePosition endOfEditableContent(const VisiblePosition&);
-CORE_EXPORT bool isEndOfEditableOrNonEditableContent(const VisiblePosition&);
-CORE_EXPORT bool isEndOfEditableOrNonEditableContent(const VisiblePositionInFlatTree&);
+VisiblePosition StartOfEditableContent(const VisiblePosition&);
+VisiblePosition EndOfEditableContent(const VisiblePosition&);
+CORE_EXPORT bool IsEndOfEditableOrNonEditableContent(const VisiblePosition&);
+CORE_EXPORT bool IsEndOfEditableOrNonEditableContent(
+    const VisiblePositionInFlatTree&);
 
-CORE_EXPORT InlineBoxPosition computeInlineBoxPosition(const Position&, TextAffinity);
-CORE_EXPORT InlineBoxPosition computeInlineBoxPosition(const Position&, TextAffinity, TextDirection primaryDirection);
-CORE_EXPORT InlineBoxPosition computeInlineBoxPosition(const PositionInFlatTree&, TextAffinity);
-CORE_EXPORT InlineBoxPosition computeInlineBoxPosition(const PositionInFlatTree&, TextAffinity, TextDirection primaryDirection);
-CORE_EXPORT InlineBoxPosition computeInlineBoxPosition(const VisiblePosition&);
-CORE_EXPORT InlineBoxPosition computeInlineBoxPosition(const VisiblePositionInFlatTree&);
+CORE_EXPORT InlineBoxPosition ComputeInlineBoxPosition(const Position&,
+                                                       TextAffinity);
+CORE_EXPORT InlineBoxPosition
+ComputeInlineBoxPosition(const Position&,
+                         TextAffinity,
+                         TextDirection primary_direction);
+CORE_EXPORT InlineBoxPosition
+ComputeInlineBoxPosition(const PositionInFlatTree&, TextAffinity);
+CORE_EXPORT InlineBoxPosition
+ComputeInlineBoxPosition(const PositionInFlatTree&,
+                         TextAffinity,
+                         TextDirection primary_direction);
+CORE_EXPORT InlineBoxPosition ComputeInlineBoxPosition(const VisiblePosition&);
 
 // Rect is local to the returned layoutObject
-CORE_EXPORT LayoutRect localCaretRectOfPosition(const PositionWithAffinity&, LayoutObject*&);
-CORE_EXPORT LayoutRect localCaretRectOfPosition(const PositionInFlatTreeWithAffinity&, LayoutObject*&);
-bool hasRenderedNonAnonymousDescendantsWithHeight(LayoutObject*);
+CORE_EXPORT LayoutRect LocalCaretRectOfPosition(const PositionWithAffinity&,
+                                                LayoutObject*&);
+CORE_EXPORT LayoutRect
+LocalCaretRectOfPosition(const PositionInFlatTreeWithAffinity&, LayoutObject*&);
+bool HasRenderedNonAnonymousDescendantsWithHeight(LayoutObject*);
 
 // Returns a hit-tested VisiblePosition for the given point in contents-space
 // coordinates.
-CORE_EXPORT VisiblePosition visiblePositionForContentsPoint(const IntPoint&, LocalFrame*);
+CORE_EXPORT VisiblePosition VisiblePositionForContentsPoint(const IntPoint&,
+                                                            LocalFrame*);
 
-CORE_EXPORT bool rendersInDifferentPosition(const Position&, const Position&);
+CORE_EXPORT bool RendersInDifferentPosition(const Position&, const Position&);
 
-} // namespace blink
+CORE_EXPORT Position SkipWhitespace(const Position&);
+CORE_EXPORT PositionInFlatTree SkipWhitespace(const PositionInFlatTree&);
 
-#endif // VisibleUnits_h
+}  // namespace blink
+
+#endif  // VisibleUnits_h

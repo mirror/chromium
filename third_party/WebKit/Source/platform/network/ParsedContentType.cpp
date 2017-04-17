@@ -1,4 +1,4 @@
- /*
+/*
  * Copyright (C) 2011 Google Inc. All rights reserved.
  * Copyright (C) 2012 Intel Corporation. All rights reserved.
  *
@@ -31,54 +31,146 @@
 
 #include "platform/network/ParsedContentType.h"
 
-#include "wtf/text/CString.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/StringView.h"
 
 namespace blink {
 
-class DummyParsedContentType final {
-    STACK_ALLOCATED();
-public:
-    void setContentType(const SubstringRange&) const { }
-    void setContentTypeParameter(const SubstringRange&, const SubstringRange&) const { }
-};
+using Mode = ParsedContentType::Mode;
 
-static void skipSpaces(const String& input, unsigned& startIndex)
-{
-    while (startIndex < input.length() && input[startIndex] == ' ')
-        ++startIndex;
+namespace {
+
+bool IsTokenCharacter(Mode mode, UChar c) {
+  if (c >= 128)
+    return false;
+  if (c < 0x20)
+    return false;
+
+  switch (c) {
+    case ' ':
+    case ';':
+    case '"':
+      return false;
+    case '(':
+    case ')':
+    case '<':
+    case '>':
+    case '@':
+    case ',':
+    case ':':
+    case '\\':
+    case '/':
+    case '[':
+    case ']':
+    case '?':
+    case '=':
+      return mode == Mode::kRelaxed;
+    default:
+      return true;
+  }
 }
 
-static SubstringRange parseParameterPart(const String& input, unsigned& startIndex)
-{
-    unsigned inputLength = input.length();
-    unsigned tokenStart = startIndex;
-    unsigned& tokenEnd = startIndex;
+bool Consume(char c, const String& input, unsigned& index) {
+  DCHECK_NE(c, ' ');
+  while (index < input.length() && input[index] == ' ')
+    ++index;
 
-    if (tokenEnd >= inputLength)
-        return SubstringRange();
+  if (index < input.length() && input[index] == c) {
+    ++index;
+    return true;
+  }
+  return false;
+}
 
-    bool quoted = input[tokenStart] == '\"';
-    bool escape = false;
+bool ConsumeToken(Mode mode,
+                  const String& input,
+                  unsigned& index,
+                  StringView& output) {
+  DCHECK(output.IsNull());
 
-    while (tokenEnd < inputLength) {
-        UChar c = input[tokenEnd];
-        if (quoted && tokenStart != tokenEnd && c == '\"' && !escape)
-            return SubstringRange(tokenStart + 1, tokenEnd++ - tokenStart - 1);
-        if (!quoted && (c == ';' || c == '='))
-            return SubstringRange(tokenStart, tokenEnd - tokenStart);
-        escape = !escape && c == '\\';
-        ++tokenEnd;
+  while (index < input.length() && input[index] == ' ')
+    ++index;
+
+  auto start = index;
+  while (index < input.length() && IsTokenCharacter(mode, input[index]))
+    ++index;
+
+  if (start == index)
+    return false;
+
+  output = StringView(input, start, index - start);
+  return true;
+}
+
+bool ConsumeQuotedString(const String& input, unsigned& index, String& output) {
+  StringBuilder builder;
+  DCHECK_EQ('"', input[index]);
+  ++index;
+  while (index < input.length()) {
+    if (input[index] == '\\') {
+      ++index;
+      if (index == input.length())
+        return false;
+      builder.Append(input[index]);
+      ++index;
+      continue;
     }
-
-    if (quoted)
-        return SubstringRange();
-    return SubstringRange(tokenStart, tokenEnd - tokenStart);
+    if (input[index] == '"') {
+      output = builder.ToString();
+      ++index;
+      return true;
+    }
+    builder.Append(input[index]);
+    ++index;
+  }
+  return false;
 }
 
-static String substringForRange(const String& string, const SubstringRange& range)
-{
-    return string.substring(range.first, range.second);
+bool ConsumeTokenOrQuotedString(Mode mode,
+                                const String& input,
+                                unsigned& index,
+                                String& output) {
+  while (index < input.length() && input[index] == ' ')
+    ++index;
+  if (input.length() == index)
+    return false;
+  if (input[index] == '"') {
+    return ConsumeQuotedString(input, index, output);
+  }
+  StringView view;
+  auto result = ConsumeToken(mode, input, index, view);
+  output = view.ToString();
+  return result;
+}
+
+bool IsEnd(const String& input, unsigned index) {
+  while (index < input.length()) {
+    if (input[index] != ' ')
+      return false;
+    ++index;
+  }
+  return true;
+}
+
+}  // namespace
+
+ParsedContentType::ParsedContentType(const String& content_type, Mode mode)
+    : mode_(mode) {
+  is_valid_ = Parse(content_type);
+}
+
+String ParsedContentType::Charset() const {
+  return ParameterValueForName("charset");
+}
+
+String ParsedContentType::ParameterValueForName(const String& name) const {
+  if (!name.ContainsOnlyASCII())
+    return String();
+  return parameters_.at(name.DeprecatedLower());
+}
+
+size_t ParsedContentType::ParameterCount() const {
+  return parameters_.size();
 }
 
 // From http://tools.ietf.org/html/rfc2045#section-5.1:
@@ -127,101 +219,63 @@ static String substringForRange(const String& string, const SubstringRange& rang
 //               ; Must be in quoted-string,
 //               ; to use within parameter values
 
-template <class ReceiverType>
-bool parseContentType(const String& contentType, ReceiverType& receiver)
-{
-    unsigned index = 0;
-    unsigned contentTypeLength = contentType.length();
-    skipSpaces(contentType, index);
-    if (index >= contentTypeLength)  {
-        DLOG(ERROR) << "Invalid Content-Type string '" << contentType << "'";
-        return false;
+bool ParsedContentType::Parse(const String& content_type) {
+  unsigned index = 0;
+
+  StringView type, subtype;
+  if (!ConsumeToken(Mode::kNormal, content_type, index, type)) {
+    DVLOG(1) << "Failed to find `type' in '" << content_type << "'";
+    return false;
+  }
+  if (!Consume('/', content_type, index)) {
+    DVLOG(1) << "Failed to find '/' in '" << content_type << "'";
+    return false;
+  }
+  if (!ConsumeToken(Mode::kNormal, content_type, index, subtype)) {
+    DVLOG(1) << "Failed to find `type' in '" << content_type << "'";
+    return false;
+  }
+
+  StringBuilder builder;
+  builder.Append(type);
+  builder.Append('/');
+  builder.Append(subtype);
+  mime_type_ = builder.ToString();
+
+  KeyValuePairs map;
+  while (!IsEnd(content_type, index)) {
+    if (!Consume(';', content_type, index)) {
+      DVLOG(1) << "Failed to find ';'";
+      return false;
     }
 
-    // There should not be any quoted strings until we reach the parameters.
-    size_t semiColonIndex = contentType.find(';', index);
-    if (semiColonIndex == kNotFound) {
-        receiver.setContentType(SubstringRange(index, contentTypeLength - index));
-        return true;
+    StringView key;
+    String value;
+    if (!ConsumeToken(Mode::kNormal, content_type, index, key)) {
+      DVLOG(1) << "Invalid Content-Type parameter name. (at " << index << ")";
+      return false;
     }
-
-    receiver.setContentType(SubstringRange(index, semiColonIndex - index));
-    index = semiColonIndex + 1;
-    while (true) {
-        skipSpaces(contentType, index);
-        SubstringRange keyRange = parseParameterPart(contentType, index);
-        if (!keyRange.second || index >= contentTypeLength) {
-            DLOG(ERROR) << "Invalid Content-Type parameter name. (at " << index << ")";
-            return false;
-        }
-
-        // Should we tolerate spaces here?
-        if (contentType[index++] != '=' || index >= contentTypeLength) {
-            DLOG(ERROR) << "Invalid Content-Type malformed parameter (at " << index << ").";
-            return false;
-        }
-
-        // Should we tolerate spaces here?
-        SubstringRange valueRange = parseParameterPart(contentType, index);
-
-        if (!valueRange.second) {
-            DLOG(ERROR) << "Invalid Content-Type, invalid parameter value (at " << index << ", for '" << substringForRange(contentType, keyRange).stripWhiteSpace() << "').";
-            return false;
-        }
-
-        // Should we tolerate spaces here?
-        if (index < contentTypeLength && contentType[index++] != ';') {
-            DLOG(ERROR) << "Invalid Content-Type, invalid character at the end of key/value parameter (at " << index << ").";
-            return false;
-        }
-
-        receiver.setContentTypeParameter(keyRange, valueRange);
-
-        if (index >= contentTypeLength)
-            return true;
+    if (!Consume('=', content_type, index)) {
+      DVLOG(1) << "Failed to find '='";
+      return false;
     }
-
-    return true;
+    if (!ConsumeTokenOrQuotedString(mode_, content_type, index, value)) {
+      DVLOG(1) << "Invalid Content-Type, invalid parameter value (at " << index
+               << ", for '" << key.ToString() << "').";
+      return false;
+    }
+    // As |key| is parsed as a token, it consists of ascii characters
+    // and hence we don't need to care about non-ascii lowercasing.
+    DCHECK(key.ToString().ContainsOnlyASCII());
+    String key_string = key.ToString().DeprecatedLower();
+    if (mode_ == Mode::kStrict && map.Find(key_string) != map.end()) {
+      DVLOG(1) << "Parameter " << key_string << " is defined multiple times.";
+      return false;
+    }
+    map.Set(key_string, value);
+  }
+  parameters_ = std::move(map);
+  return true;
 }
 
-bool isValidContentType(const String& contentType)
-{
-    if (contentType.contains('\r') || contentType.contains('\n'))
-        return false;
-
-    DummyParsedContentType parsedContentType = DummyParsedContentType();
-    return parseContentType<DummyParsedContentType>(contentType, parsedContentType);
-}
-
-ParsedContentType::ParsedContentType(const String& contentType)
-    : m_contentType(contentType.stripWhiteSpace())
-{
-    parseContentType<ParsedContentType>(m_contentType, *this);
-}
-
-String ParsedContentType::charset() const
-{
-    return parameterValueForName("charset");
-}
-
-String ParsedContentType::parameterValueForName(const String& name) const
-{
-    return m_parameters.get(name);
-}
-
-size_t ParsedContentType::parameterCount() const
-{
-    return m_parameters.size();
-}
-
-void ParsedContentType::setContentType(const SubstringRange& contentRange)
-{
-    m_mimeType = substringForRange(m_contentType, contentRange).stripWhiteSpace();
-}
-
-void ParsedContentType::setContentTypeParameter(const SubstringRange& key, const SubstringRange& value)
-{
-    m_parameters.set(substringForRange(m_contentType, key), substringForRange(m_contentType, value));
-}
-
-} // namespace blink
+}  // namespace blink

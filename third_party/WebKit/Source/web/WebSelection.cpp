@@ -9,45 +9,42 @@
 
 namespace blink {
 
-static WebSelectionBound getWebSelectionBound(const CompositedSelection& selection, bool isStart)
-{
-    DCHECK_NE(selection.type, NoSelection);
-    const CompositedSelectionBound& bound = isStart ? selection.start : selection.end;
-    DCHECK(bound.layer);
+static WebSelectionBound GetWebSelectionBound(
+    const CompositedSelection& selection,
+    bool is_start) {
+  DCHECK_NE(selection.type, kNoSelection);
+  const CompositedSelectionBound& bound =
+      is_start ? selection.start : selection.end;
+  DCHECK(bound.layer);
 
-    WebSelectionBound::Type type = WebSelectionBound::Caret;
-    if (selection.type == RangeSelection) {
-        if (isStart)
-            type = bound.isTextDirectionRTL ? WebSelectionBound::SelectionRight : WebSelectionBound::SelectionLeft;
-        else
-            type = bound.isTextDirectionRTL ? WebSelectionBound::SelectionLeft : WebSelectionBound::SelectionRight;
-    }
+  WebSelectionBound::Type type = WebSelectionBound::kCaret;
+  if (selection.type == kRangeSelection) {
+    if (is_start)
+      type = bound.is_text_direction_rtl ? WebSelectionBound::kSelectionRight
+                                         : WebSelectionBound::kSelectionLeft;
+    else
+      type = bound.is_text_direction_rtl ? WebSelectionBound::kSelectionLeft
+                                         : WebSelectionBound::kSelectionRight;
+  }
 
-    WebSelectionBound result(type);
-    result.layerId = bound.layer->platformLayer()->id();
-    result.edgeTopInLayer = roundedIntPoint(bound.edgeTopInLayer);
-    result.edgeBottomInLayer = roundedIntPoint(bound.edgeBottomInLayer);
-    result.isTextDirectionRTL = bound.isTextDirectionRTL;
-    return result;
+  WebSelectionBound result(type);
+  result.layer_id = bound.layer->PlatformLayer()->Id();
+  result.edge_top_in_layer = RoundedIntPoint(bound.edge_top_in_layer);
+  result.edge_bottom_in_layer = RoundedIntPoint(bound.edge_bottom_in_layer);
+  result.is_text_direction_rtl = bound.is_text_direction_rtl;
+  return result;
 }
 
-// SelectionType enums have the same values; enforced in AssertMatchingEnums.cpp.
+// SelectionType enums have the same values; enforced in
+// AssertMatchingEnums.cpp.
 WebSelection::WebSelection(const CompositedSelection& selection)
-    : m_selectionType(static_cast<WebSelection::SelectionType>(selection.type))
-    , m_start(getWebSelectionBound(selection, true))
-    , m_end(getWebSelectionBound(selection, false))
-    , m_isEditable(selection.isEditable)
-    , m_isEmptyTextFormControl(selection.isEmptyTextFormControl)
-{
-}
+    : selection_type_(static_cast<WebSelection::SelectionType>(selection.type)),
+      start_(GetWebSelectionBound(selection, true)),
+      end_(GetWebSelectionBound(selection, false)) {}
 
 WebSelection::WebSelection(const WebSelection& other)
-    : m_selectionType(other.m_selectionType)
-    , m_start(other.m_start)
-    , m_end(other.m_end)
-    , m_isEditable(other.m_isEditable)
-    , m_isEmptyTextFormControl(other.m_isEmptyTextFormControl)
-{
-}
+    : selection_type_(other.selection_type_),
+      start_(other.start_),
+      end_(other.end_) {}
 
-} // namespace blink
+}  // namespace blink

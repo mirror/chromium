@@ -35,53 +35,45 @@
 namespace blink {
 
 class WebGLExtensionScopedContext final {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(WebGLExtensionScopedContext);
-public:
-    explicit WebGLExtensionScopedContext(WebGLExtension*);
-    ~WebGLExtensionScopedContext();
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(WebGLExtensionScopedContext);
 
-    bool isLost() const { return !m_context; }
-    WebGLRenderingContextBase* context() const { return m_context.get(); }
+ public:
+  explicit WebGLExtensionScopedContext(WebGLExtension*);
+  ~WebGLExtensionScopedContext();
 
-private:
-    Member<WebGLRenderingContextBase> m_context;
+  bool IsLost() const { return !context_; }
+  WebGLRenderingContextBase* Context() const { return context_.Get(); }
+
+ private:
+  Member<WebGLRenderingContextBase> context_;
 };
 
-class WebGLExtension : public GarbageCollectedFinalized<WebGLExtension>, public ScriptWrappable {
-public:
-    virtual ~WebGLExtension();
-    virtual WebGLExtensionName name() const = 0;
+class WebGLExtension : public GarbageCollected<WebGLExtension>,
+                       public ScriptWrappable {
+  WTF_MAKE_NONCOPYABLE(WebGLExtension);
 
-    // Lose this extension. Passing true = force loss. Some extensions
-    // like WEBGL_lose_context are not normally lost when the context
-    // is lost but must be lost when destroying their WebGLRenderingContextBase.
-    virtual void lose(bool)
-    {
-        m_context = nullptr;
-    }
+ public:
+  virtual WebGLExtensionName GetName() const = 0;
 
-    bool isLost() { return !m_context; }
+  // Lose this extension. Passing true = force loss. Some extensions
+  // like WEBGL_lose_context are not normally lost when the context
+  // is lost but must be lost when destroying their WebGLRenderingContextBase.
+  virtual void Lose(bool) { context_ = nullptr; }
 
-    DECLARE_VIRTUAL_TRACE();
+  bool IsLost() { return !context_; }
 
-    // For use by V8 bindings only.
-    HTMLCanvasElement* canvas() const
-    {
-        if (m_context)
-            return m_context->canvas();
-        return nullptr;
-    }
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    explicit WebGLExtension(WebGLRenderingContextBase*);
+ protected:
+  explicit WebGLExtension(WebGLRenderingContextBase*);
 
-private:
-    friend WebGLExtensionScopedContext;
+ private:
+  friend WebGLExtensionScopedContext;
 
-    WeakMember<WebGLRenderingContextBase> m_context;
+  WeakMember<WebGLRenderingContextBase> context_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebGLExtension_h
+#endif  // WebGLExtension_h

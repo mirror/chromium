@@ -12,7 +12,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/time/time.h"
-#include "ui/events/event_constants.h"
+#include "ui/events/event.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/native_widget_types.h"
@@ -26,14 +26,8 @@ class PointF;
 }
 
 namespace ui {
-class Event;
-class EventProcessor;
 class EventSource;
 class EventTarget;
-class KeyEvent;
-class MouseEvent;
-class ScrollEvent;
-class TouchEvent;
 
 namespace test {
 
@@ -75,11 +69,16 @@ class EventGeneratorDelegate {
   virtual void ConvertPointFromHost(const EventTarget* hosted_target,
                                     gfx::Point* point) const = 0;
 
-  // Detemines whether the input method should be the first to handle key events
-  // before dispathcing to Views. If it does, the given |event| will be
+  // Determines if the input method should be the first to handle key events
+  // before dispatching to Views. If it does, the given |event| will be
   // dispatched and processed by the input method from the host of |target|.
   virtual void DispatchKeyEventToIME(EventTarget* target,
                                      ui::KeyEvent* event) = 0;
+
+  // Offers the event to pointer watchers on systems that provide them.
+  // Does not consume the event (pointer watchers cannot consume events).
+  virtual void DispatchEventToPointerWatchers(EventTarget* target,
+                                              const PointerEvent& event) {}
 };
 
 // ui::test::EventGenerator is a tool that generates and dispatches events.
@@ -138,16 +137,41 @@ class EventGenerator {
   void set_async(bool async) { async_ = async; }
   bool async() const { return async_; }
 
-  // Dispatch events through the application instead of directly to the
-  // target window. Currently only supported on Mac.
-  void set_targeting_application(bool targeting_application) {
-    targeting_application_ = targeting_application;
-  }
-  bool targeting_application() const { return targeting_application_; }
+  // Events could be dispatched using different methods. The choice is a
+  // tradeoff between test robustness and coverage of OS internals that affect
+  // event dispatch.
+  // Currently only supported on Mac.
+  enum class Target {
+    // Dispatch through the application. Least robust.
+    APPLICATION,
+    // Dispatch directly to target NSWindow via -sendEvent:.
+    WINDOW,
+    // Default. Emulates default NSWindow dispatch: calls specific event handler
+    // based on event type. Most robust.
+    WIDGET,
+  };
+
+  // Selects dispatch method. Currently only supported on Mac.
+  void set_target(Target target) { target_ = target; }
+  Target target() const { return target_; }
 
   // Resets the event flags bitmask.
   void set_flags(int flags) { flags_ = flags; }
   int flags() const { return flags_; }
+
+  // Many tests assume a window created at (0,0) will remain there when shown.
+  // However, an operating system's window manager may reposition the window
+  // into the work area. This can disrupt the coordinates used on test events,
+  // so an EventGeneratorDelegate may skip the step that remaps coordinates in
+  // the root window to window coordinates when dispatching events.
+  // Setting this to false skips that step, in which case the test must ensure
+  // it correctly maps coordinates in window coordinates to root window (screen)
+  // coordinates when calling, e.g., set_current_location().
+  // Default is true. This only has any effect on Mac.
+  void set_assume_window_at_origin(bool assume_window_at_origin) {
+    assume_window_at_origin_ = assume_window_at_origin;
+  }
+  bool assume_window_at_origin() { return assume_window_at_origin_; }
 
   // Generates a left button press event.
   void PressLeftButton();
@@ -169,6 +193,9 @@ class EventGenerator {
 
   // Moves the mouse wheel by |delta_x|, |delta_y|.
   void MoveMouseWheel(int delta_x, int delta_y);
+
+  // Generates a mouse enter event.
+  void SendMouseEnter();
 
   // Generates a mouse exit.
   void SendMouseExit();
@@ -220,6 +247,28 @@ class EventGenerator {
   // Generates events to move the mouse to the center of the window.
   void MoveMouseToCenterOf(EventTarget* window);
 
+  // Enter pen-pointer mode, which will cause any generated mouse events to have
+  // a pointer type ui::EventPointerType::POINTER_TYPE_PEN.
+  void EnterPenPointerMode();
+
+  // Exit pen-pointer mode. Generated mouse events will use the default pointer
+  // type event.
+  void ExitPenPointerMode();
+
+  // Set radius of touch PointerDetails.
+  void SetTouchRadius(float x, float y);
+
+  // Set tilt of touch PointerDetails.
+  void SetTouchTilt(float x, float y);
+
+  // Set pointer type of touch PointerDetails.
+  void SetTouchPointerType(ui::EventPointerType type) {
+    touch_pointer_details_.pointer_type = type;
+  }
+
+  // Set force of touch PointerDetails.
+  void SetTouchForce(float force) { touch_pointer_details_.force = force; }
+
   // Generates a touch press event.
   void PressTouch();
 
@@ -229,8 +278,19 @@ class EventGenerator {
   // Generates a ET_TOUCH_MOVED event to |point|.
   void MoveTouch(const gfx::Point& point);
 
+  // Generates a ET_TOUCH_MOVED event moving by (x, y) from current location.
+  void MoveTouchBy(int x, int y) {
+    MoveTouch(current_location_ + gfx::Vector2d(x, y));
+  }
+
   // Generates a ET_TOUCH_MOVED event to |point| with |touch_id|.
   void MoveTouchId(const gfx::Point& point, int touch_id);
+
+  // Generates a ET_TOUCH_MOVED event moving (x, y) from current location with
+  // |touch_id|.
+  void MoveTouchIdBy(int touch_id, int x, int y) {
+    MoveTouchId(current_location_ + gfx::Vector2d(x, y), touch_id);
+  }
 
   // Generates a touch release event.
   void ReleaseTouch();
@@ -253,11 +313,6 @@ class EventGenerator {
   // Generates press, move and release events to move touch
   // to the center of the window.
   void PressMoveAndReleaseTouchToCenterOf(EventTarget* window);
-
-  // Generates and dispatches a Win8 edge-swipe event (swipe up from bottom or
-  // swipe down from top).  Note that it is not possible to distinguish between
-  // the two edges with this event.
-  void GestureEdgeSwipe();
 
   // Generates and dispatches touch-events required to generate a TAP gesture.
   // Note that this can generate a number of other gesture events at the same
@@ -348,6 +403,15 @@ class EventGenerator {
                       const std::vector<gfx::PointF>& offsets,
                       int num_fingers);
 
+  // Generate a TrackPad "rest" event. That is, a user resting fingers on the
+  // trackpad without moving. This may then be followed by a ScrollSequence(),
+  // or a CancelTrackpadRest().
+  void GenerateTrackpadRest();
+
+  // Cancels a previous GenerateTrackpadRest(). That is, a user lifting fingers
+  // from the trackpad without having moved them in any direction.
+  void CancelTrackpadRest();
+
   // Generates a key press event. On platforms except Windows and X11, a key
   // event without native_event() is generated. Note that ui::EF_ flags should
   // be passed as |flags|, not the native ones like 'ShiftMask' in <X11/X.h>.
@@ -387,18 +451,32 @@ class EventGenerator {
   void DispatchNextPendingEvent();
   void DoDispatchEvent(Event* event, bool async);
 
+  // Offers event to pointer watchers (via delegate) if the event is a mouse or
+  // touch event.
+  void MaybeDispatchToPointerWatchers(const Event& event);
+
   const EventGeneratorDelegate* delegate() const;
   EventGeneratorDelegate* delegate();
 
   std::unique_ptr<EventGeneratorDelegate> delegate_;
   gfx::Point current_location_;
-  EventTarget* current_target_;
-  int flags_;
-  bool grab_;
+  EventTarget* current_target_ = nullptr;
+  int flags_ = 0;
+  bool grab_ = false;
+
+  ui::PointerDetails touch_pointer_details_;
+
   std::list<std::unique_ptr<Event>> pending_events_;
+
   // Set to true to cause events to be posted asynchronously.
-  bool async_;
-  bool targeting_application_;
+  bool async_ = false;
+
+  // Whether to skip mapping of coordinates from the root window to a hit window
+  // when dispatching events.
+  bool assume_window_at_origin_ = true;
+
+  Target target_ = Target::WIDGET;
+
   std::unique_ptr<base::TickClock> tick_clock_;
 
   DISALLOW_COPY_AND_ASSIGN(EventGenerator);

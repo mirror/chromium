@@ -7,7 +7,7 @@
 [
     RuntimeEnabled=ImageCapture,
 ] interface MediaSettingsRange {
-    readonly attribute unsigned long max;
-    readonly attribute unsigned long min;
-    readonly attribute unsigned long current;
+    readonly attribute double max;
+    readonly attribute double min;
+    readonly attribute double step;
 };

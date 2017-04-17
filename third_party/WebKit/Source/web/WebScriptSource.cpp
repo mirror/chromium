@@ -5,14 +5,14 @@
 #include "public/web/WebScriptSource.h"
 
 #include "bindings/core/v8/ScriptSourceCode.h"
-#include "wtf/text/TextPosition.h"
+#include "platform/wtf/text/TextPosition.h"
 
 namespace blink {
 
-WebScriptSource::operator ScriptSourceCode() const
-{
-    TextPosition position(OrdinalNumber::fromOneBasedInt(startLine), OrdinalNumber::first());
-    return ScriptSourceCode(code, url, position);
+WebScriptSource::operator ScriptSourceCode() const {
+  TextPosition position(OrdinalNumber::FromOneBasedInt(start_line),
+                        OrdinalNumber::First());
+  return ScriptSourceCode(code, url, position);
 }
 
-} // namespace blink
+}  // namespace blink

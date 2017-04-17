@@ -4,65 +4,94 @@
 
 #include "core/layout/LayoutTestHelper.h"
 
-#include "core/frame/FrameHost.h"
+#include "bindings/core/v8/StringOrArrayBufferOrArrayBufferView.h"
+#include "bindings/core/v8/V8Binding.h"
+#include "core/css/FontFaceDescriptors.h"
+#include "core/css/FontFaceSet.h"
+#include "core/dom/DOMArrayBuffer.h"
 #include "core/html/HTMLIFrameElement.h"
+#include "platform/loader/fetch/MemoryCache.h"
 #include "platform/scroll/ScrollbarTheme.h"
+#include "platform/testing/UnitTestHelpers.h"
 
 namespace blink {
 
-RenderingTest::RenderingTest(FrameLoaderClient* frameLoaderClient)
-    : m_frameLoaderClient(frameLoaderClient) { }
+LocalFrame* SingleChildLocalFrameClient::CreateFrame(
+    const FrameLoadRequest&,
+    const AtomicString& name,
+    HTMLFrameOwnerElement* owner_element) {
+  DCHECK(!child_) << "This test helper only supports one child frame.";
 
-void RenderingTest::SetUp()
-{
-    Page::PageClients pageClients;
-    fillWithEmptyClients(pageClients);
-    DEFINE_STATIC_LOCAL(EmptyChromeClient, chromeClient, (EmptyChromeClient::create()));
-    pageClients.chromeClient = &chromeClient;
-    m_pageHolder = DummyPageHolder::create(IntSize(800, 600), &pageClients, m_frameLoaderClient.release(), settingOverrider());
+  LocalFrame* parent_frame = owner_element->GetDocument().GetFrame();
+  auto* child_client = LocalFrameClientWithParent::Create(parent_frame);
+  child_ =
+      LocalFrame::Create(child_client, *parent_frame->GetPage(), owner_element);
+  child_->CreateView(IntSize(500, 500), Color::kTransparent);
+  child_->Init();
 
-    Settings::setMockScrollbarsEnabled(true);
-    RuntimeEnabledFeatures::setOverlayScrollbarsEnabled(true);
-    EXPECT_TRUE(ScrollbarTheme::theme().usesOverlayScrollbars());
-
-    // This ensures that the minimal DOM tree gets attached
-    // correctly for tests that don't call setBodyInnerHTML.
-    document().view()->updateAllLifecyclePhases();
+  return child_.Get();
 }
 
-void RenderingTest::TearDown()
-{
-    if (m_subframe) {
-        m_subframe->detach(FrameDetachType::Remove);
-        static_cast<SingleChildFrameLoaderClient*>(document().frame()->client())->setChild(nullptr);
-        document().frame()->host()->decrementSubframeCount();
-    }
-
-    // We need to destroy most of the Blink structure here because derived tests may restore
-    // RuntimeEnabledFeatures setting during teardown, which happens before our destructor
-    // getting invoked, breaking the assumption that REF can't change during Blink lifetime.
-    m_pageHolder = nullptr;
+void LocalFrameClientWithParent::Detached(FrameDetachType) {
+  static_cast<SingleChildLocalFrameClient*>(Parent()->Client())
+      ->DidDetachChild();
 }
 
-Document& RenderingTest::setupChildIframe(const AtomicString& iframeElementId, const String& htmlContentOfIframe)
-{
-    // TODO(pdr): This should be refactored to share code with the actual setup
-    // instead of partially duplicating it here (e.g., LocalFrame::createView).
-    HTMLIFrameElement& iframe = *toHTMLIFrameElement(document().getElementById(iframeElementId));
-    m_childFrameLoaderClient = FrameLoaderClientWithParent::create(document().frame());
-    m_subframe = LocalFrame::create(m_childFrameLoaderClient.get(), document().frame()->host(), &iframe);
-    m_subframe->setView(FrameView::create(m_subframe.get(), IntSize(500, 500)));
-    m_subframe->init();
-    m_subframe->view()->setParentVisible(true);
-    m_subframe->view()->setSelfVisible(true);
-    iframe.setWidget(m_subframe->view());
-    static_cast<SingleChildFrameLoaderClient*>(document().frame()->client())->setChild(m_subframe.get());
-    document().frame()->host()->incrementSubframeCount();
-    Document& frameDocument = *iframe.contentDocument();
-
-    frameDocument.setBaseURLOverride(KURL(ParsedURLString, "http://test.com"));
-    frameDocument.body()->setInnerHTML(htmlContentOfIframe, ASSERT_NO_EXCEPTION);
-    return frameDocument;
+ChromeClient& RenderingTest::GetChromeClient() const {
+  DEFINE_STATIC_LOCAL(EmptyChromeClient, client, (EmptyChromeClient::Create()));
+  return client;
 }
 
-} // namespace blink
+RenderingTest::RenderingTest(LocalFrameClient* local_frame_client)
+    : local_frame_client_(local_frame_client) {}
+
+void RenderingTest::SetUp() {
+  Page::PageClients page_clients;
+  FillWithEmptyClients(page_clients);
+  page_clients.chrome_client = &GetChromeClient();
+  page_holder_ =
+      DummyPageHolder::Create(IntSize(800, 600), &page_clients,
+                              local_frame_client_, SettingOverrider());
+
+  Settings::SetMockScrollbarsEnabled(true);
+  RuntimeEnabledFeatures::setOverlayScrollbarsEnabled(true);
+  EXPECT_TRUE(ScrollbarTheme::GetTheme().UsesOverlayScrollbars());
+
+  // This ensures that the minimal DOM tree gets attached
+  // correctly for tests that don't call setBodyInnerHTML.
+  GetDocument().View()->UpdateAllLifecyclePhases();
+}
+
+void RenderingTest::TearDown() {
+  // We need to destroy most of the Blink structure here because derived tests
+  // may restore RuntimeEnabledFeatures setting during teardown, which happens
+  // before our destructor getting invoked, breaking the assumption that REF
+  // can't change during Blink lifetime.
+  page_holder_ = nullptr;
+
+  // Clear memory cache, otherwise we can leak pruned resources.
+  GetMemoryCache()->EvictResources();
+}
+
+void RenderingTest::SetChildFrameHTML(const String& html) {
+  ChildDocument().SetBaseURLOverride(KURL(kParsedURLString, "http://test.com"));
+  ChildDocument().body()->setInnerHTML(html, ASSERT_NO_EXCEPTION);
+}
+
+void RenderingTest::LoadAhem() {
+  RefPtr<SharedBuffer> shared_buffer =
+      testing::ReadFromFile(testing::WebTestDataPath("Ahem.ttf"));
+  StringOrArrayBufferOrArrayBufferView buffer =
+      StringOrArrayBufferOrArrayBufferView::fromArrayBuffer(
+          DOMArrayBuffer::Create(shared_buffer->Data(), shared_buffer->size()));
+  FontFace* ahem =
+      FontFace::Create(&GetDocument(), "Ahem", buffer, FontFaceDescriptors());
+
+  ScriptState* script_state =
+      ToScriptStateForMainWorld(&page_holder_->GetFrame());
+  DummyExceptionStateForTesting exception_state;
+  FontFaceSet::From(GetDocument())
+      ->addForBinding(script_state, ahem, exception_state);
+}
+
+}  // namespace blink

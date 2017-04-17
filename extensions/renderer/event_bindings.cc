@@ -36,7 +36,7 @@ namespace {
 typedef std::map<std::string, int> EventListenerCounts;
 
 // A map of extension IDs to listener counts for that extension.
-base::LazyInstance<std::map<std::string, EventListenerCounts>>
+base::LazyInstance<std::map<std::string, EventListenerCounts>>::DestructorAtExit
     g_listener_counts = LAZY_INSTANCE_INITIALIZER;
 
 // A map of (extension ID, event name) pairs to the filtered listener counts
@@ -46,10 +46,11 @@ base::LazyInstance<std::map<std::string, EventListenerCounts>>
 using FilteredEventListenerKey = std::pair<std::string, std::string>;
 using FilteredEventListenerCounts =
     std::map<FilteredEventListenerKey, std::unique_ptr<ValueCounter>>;
-base::LazyInstance<FilteredEventListenerCounts> g_filtered_listener_counts =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<FilteredEventListenerCounts>::DestructorAtExit
+    g_filtered_listener_counts = LAZY_INSTANCE_INITIALIZER;
 
-base::LazyInstance<EventFilter> g_event_filter = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<EventFilter>::DestructorAtExit g_event_filter =
+    LAZY_INSTANCE_INITIALIZER;
 
 // Gets a unique string key identifier for a ScriptContext.
 // TODO(kalman): Just use pointer equality...?
@@ -126,8 +127,7 @@ bool AddFilter(const std::string& event_name,
   FilteredEventListenerCounts::const_iterator counts = all_counts.find(key);
   if (counts == all_counts.end()) {
     counts =
-        all_counts
-            .insert(std::make_pair(key, base::WrapUnique(new ValueCounter())))
+        all_counts.insert(std::make_pair(key, base::MakeUnique<ValueCounter>()))
             .first;
   }
   return counts->second->Add(filter);
@@ -265,21 +265,25 @@ void EventBindings::AttachFilteredEvent(
         content::V8ValueConverter::create());
     std::unique_ptr<base::Value> filter_value(converter->FromV8Value(
         v8::Local<v8::Object>::Cast(args[1]), context()->v8_context()));
-    if (!filter_value || !filter_value->IsType(base::Value::TYPE_DICTIONARY)) {
+    if (!filter_value || !filter_value->IsType(base::Value::Type::DICTIONARY)) {
       args.GetReturnValue().Set(static_cast<int32_t>(-1));
       return;
     }
     filter = base::DictionaryValue::From(std::move(filter_value));
   }
 
-  // Hold onto a weak reference to |filter| so that it can be used after passing
-  // ownership to |event_filter|.
-  base::DictionaryValue* filter_weak = filter.get();
   int id = g_event_filter.Get().AddEventMatcher(
       event_name, ParseEventMatcher(std::move(filter)));
+  if (id == -1) {
+    args.GetReturnValue().Set(static_cast<int32_t>(-1));
+    return;
+  }
   attached_matcher_ids_.insert(id);
 
   // Only send IPCs the first time a filter gets added.
+  const EventMatcher* matcher = g_event_filter.Get().GetEventMatcher(id);
+  DCHECK(matcher);
+  base::DictionaryValue* filter_weak = matcher->value();
   std::string extension_id = context()->GetExtensionID();
   if (AddFilter(event_name, extension_id, *filter_weak)) {
     bool lazy = ExtensionFrameHelper::IsContextForEventPage(context());
@@ -343,8 +347,8 @@ void EventBindings::MatchAgainstEventFilter(
 
 std::unique_ptr<EventMatcher> EventBindings::ParseEventMatcher(
     std::unique_ptr<base::DictionaryValue> filter) {
-  return base::WrapUnique(new EventMatcher(
-      std::move(filter), context()->GetRenderFrame()->GetRoutingID()));
+  return base::MakeUnique<EventMatcher>(
+      std::move(filter), context()->GetRenderFrame()->GetRoutingID());
 }
 
 void EventBindings::OnInvalidated() {

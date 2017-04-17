@@ -6,13 +6,14 @@
 #define WebViewFrameWidget_h
 
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/RefPtr.h"
 #include "web/WebFrameWidgetBase.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/RefPtr.h"
+#include "web/WebInputMethodControllerImpl.h"
+#include "web/WebLocalFrameImpl.h"
 
 namespace blink {
 
-class WebLocalFrameImpl;
 class WebViewImpl;
 class WebWidgetClient;
 
@@ -32,82 +33,86 @@ class WebWidgetClient;
 // A more detailed writeup of this transition can be read at
 // https://goo.gl/7yVrnb.
 class WebViewFrameWidget : public WebFrameWidgetBase {
-    WTF_MAKE_NONCOPYABLE(WebViewFrameWidget);
-public:
-    explicit WebViewFrameWidget(WebWidgetClient*, WebViewImpl&, WebLocalFrameImpl&);
-    virtual ~WebViewFrameWidget();
+  WTF_MAKE_NONCOPYABLE(WebViewFrameWidget);
 
-    // WebFrameWidget overrides:
-    void close() override;
-    WebSize size() override;
-    void resize(const WebSize&) override;
-    void resizeVisualViewport(const WebSize&) override;
-    void didEnterFullscreen() override;
-    void didExitFullscreen() override;
-    void beginFrame(double lastFrameTimeMonotonic) override;
-    void updateAllLifecyclePhases() override;
-    void paint(WebCanvas*, const WebRect& viewPort) override;
-    void layoutAndPaintAsync(WebLayoutAndPaintAsyncCallback*) override;
-    void compositeAndReadbackAsync(WebCompositeAndReadbackAsyncCallback*) override;
-    void themeChanged() override;
-    WebInputEventResult handleInputEvent(const WebInputEvent&) override;
-    void setCursorVisibilityState(bool isVisible) override;
-    bool hasTouchEventHandlersAt(const WebPoint&) override;
-    void applyViewportDeltas(
-        const WebFloatSize& visualViewportDelta,
-        const WebFloatSize& layoutViewportDelta,
-        const WebFloatSize& elasticOverscrollDelta,
-        float scaleFactor,
-        float topControlsShownRatioDelta) override;
-    void mouseCaptureLost() override;
-    void setFocus(bool) override;
-    bool setComposition(
-        const WebString& text,
-        const WebVector<WebCompositionUnderline>& underlines,
-        int selectionStart,
-        int selectionEnd) override;
-    bool confirmComposition() override;
-    bool confirmComposition(ConfirmCompositionBehavior selectionBehavior) override;
-    bool confirmComposition(const WebString& text) override;
-    bool compositionRange(size_t* location, size_t* length) override;
-    WebTextInputInfo textInputInfo() override;
-    WebTextInputType textInputType() override;
-    bool selectionBounds(WebRect& anchor, WebRect& focus) const override;
-    bool selectionTextDirection(WebTextDirection& start, WebTextDirection& end) const override;
-    bool isSelectionAnchorFirst() const override;
-    bool caretOrSelectionRange(size_t* location, size_t* length) override;
-    void setTextDirection(WebTextDirection) override;
-    bool isAcceleratedCompositingActive() const override;
-    bool isWebView() const override { return false; }
-    bool isPagePopup() const override { return false; }
-    void willCloseLayerTreeView() override;
-    void didAcquirePointerLock() override;
-    void didNotAcquirePointerLock() override;
-    void didLosePointerLock() override;
-    void didChangeWindowResizerRect() override;
-    WebColor backgroundColor() const override;
-    WebPagePopup* pagePopup() const override;
-    void updateTopControlsState(WebTopControlsState constraints, WebTopControlsState current, bool animate) override;
-    void setVisibilityState(WebPageVisibilityState) override;
-    bool isTransparent() const override;
-    void setIsTransparent(bool) override;
-    void setBaseBackgroundColor(WebColor) override;
+ public:
+  explicit WebViewFrameWidget(WebWidgetClient&,
+                              WebViewImpl&,
+                              WebLocalFrameImpl&);
+  virtual ~WebViewFrameWidget();
 
-    // WebFrameWidgetBase overrides:
-    bool forSubframe() const override { return false; }
-    void scheduleAnimation() override;
-    CompositorProxyClient* createCompositorProxyClient() override;
-    void setRootGraphicsLayer(GraphicsLayer*) override;
-    void attachCompositorAnimationTimeline(CompositorAnimationTimeline*) override;
-    void detachCompositorAnimationTimeline(CompositorAnimationTimeline*) override;
-    WebWidgetClient* client() const override { return m_client; }
+  // WebFrameWidget overrides:
+  void Close() override;
+  WebSize Size() override;
+  void Resize(const WebSize&) override;
+  void ResizeVisualViewport(const WebSize&) override;
+  void DidEnterFullscreen() override;
+  void DidExitFullscreen() override;
+  void SetSuppressFrameRequestsWorkaroundFor704763Only(bool) final;
+  void BeginFrame(double last_frame_time_monotonic) override;
+  void UpdateAllLifecyclePhases() override;
+  void Paint(WebCanvas*, const WebRect& view_port) override;
+  void LayoutAndPaintAsync(WebLayoutAndPaintAsyncCallback*) override;
+  void CompositeAndReadbackAsync(
+      WebCompositeAndReadbackAsyncCallback*) override;
+  void ThemeChanged() override;
+  WebInputEventResult HandleInputEvent(const WebCoalescedInputEvent&) override;
+  void SetCursorVisibilityState(bool is_visible) override;
+  bool HasTouchEventHandlersAt(const WebPoint&) override;
+  void ApplyViewportDeltas(const WebFloatSize& visual_viewport_delta,
+                           const WebFloatSize& layout_viewport_delta,
+                           const WebFloatSize& elastic_overscroll_delta,
+                           float scale_factor,
+                           float browser_controls_shown_ratio_delta) override;
+  void RecordWheelAndTouchScrollingCount(bool has_scrolled_by_wheel,
+                                         bool has_scrolled_by_touch) override;
+  void MouseCaptureLost() override;
+  void SetFocus(bool) override;
+  WebRange CompositionRange() override;
+  bool SelectionBounds(WebRect& anchor, WebRect& focus) const override;
+  bool SelectionTextDirection(WebTextDirection& start,
+                              WebTextDirection& end) const override;
+  bool IsSelectionAnchorFirst() const override;
+  WebRange CaretOrSelectionRange() override;
+  void SetTextDirection(WebTextDirection) override;
+  bool IsAcceleratedCompositingActive() const override;
+  bool IsWebView() const override { return false; }
+  bool IsPagePopup() const override { return false; }
+  void WillCloseLayerTreeView() override;
+  WebColor BackgroundColor() const override;
+  WebPagePopup* GetPagePopup() const override;
+  bool GetCompositionCharacterBounds(WebVector<WebRect>& bounds) override;
+  void UpdateBrowserControlsState(WebBrowserControlsState constraints,
+                                  WebBrowserControlsState current,
+                                  bool animate) override;
+  void SetVisibilityState(WebPageVisibilityState) override;
+  void SetBackgroundColorOverride(WebColor) override;
+  void ClearBackgroundColorOverride() override;
+  void SetBaseBackgroundColorOverride(WebColor) override;
+  void ClearBaseBackgroundColorOverride() override;
+  void SetBaseBackgroundColor(WebColor) override;
+  WebLocalFrameImpl* LocalRoot() const override;
+  WebInputMethodControllerImpl* GetActiveWebInputMethodController()
+      const override;
 
-private:
-    WebWidgetClient* m_client;
-    RefPtr<WebViewImpl> m_webView;
-    Persistent<WebLocalFrameImpl> m_mainFrame;
+  // WebFrameWidgetBase overrides:
+  bool ForSubframe() const override { return false; }
+  void ScheduleAnimation() override;
+  CompositorWorkerProxyClient* CreateCompositorWorkerProxyClient() override;
+  AnimationWorkletProxyClient* CreateAnimationWorkletProxyClient() override;
+  void SetRootGraphicsLayer(GraphicsLayer*) override;
+  void SetRootLayer(WebLayer*) override;
+  WebLayerTreeView* GetLayerTreeView() const override;
+  CompositorAnimationHost* AnimationHost() const override;
+  WebWidgetClient* Client() const override { return client_; }
+  HitTestResult CoreHitTestResultAt(const WebPoint&) override;
+
+ private:
+  WebWidgetClient* client_;
+  RefPtr<WebViewImpl> web_view_;
+  Persistent<WebLocalFrameImpl> main_frame_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebViewFrameWidget_h
+#endif  // WebViewFrameWidget_h

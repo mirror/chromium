@@ -10,19 +10,19 @@
 namespace blink {
 
 class EXTShaderTextureLOD final : public WebGLExtension {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static EXTShaderTextureLOD* create(WebGLRenderingContextBase*);
-    static bool supported(WebGLRenderingContextBase*);
-    static const char* extensionName();
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~EXTShaderTextureLOD() override;
-    WebGLExtensionName name() const override;
+ public:
+  static EXTShaderTextureLOD* Create(WebGLRenderingContextBase*);
+  static bool Supported(WebGLRenderingContextBase*);
+  static const char* ExtensionName();
 
-private:
-    explicit EXTShaderTextureLOD(WebGLRenderingContextBase*);
+  WebGLExtensionName GetName() const override;
+
+ private:
+  explicit EXTShaderTextureLOD(WebGLRenderingContextBase*);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // EXTShaderTextureLOD_h
+#endif  // EXTShaderTextureLOD_h

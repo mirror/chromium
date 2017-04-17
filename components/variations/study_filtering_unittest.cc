@@ -84,6 +84,7 @@ TEST(VariationsStudyFilteringTest, CheckStudyFormFactor) {
     Study_FormFactor_DESKTOP,
     Study_FormFactor_PHONE,
     Study_FormFactor_TABLET,
+    Study_FormFactor_KIOSK,
   };
 
   ASSERT_EQ(Study_FormFactor_FormFactor_ARRAYSIZE,
@@ -98,7 +99,8 @@ TEST(VariationsStudyFilteringTest, CheckStudyFormFactor) {
                             filter.form_factor_size() == 0;
       const bool result = internal::CheckStudyFormFactor(filter,
                                                          form_factors[j]);
-      EXPECT_EQ(expected, result) << "Case " << i << "," << j << " failed!";
+      EXPECT_EQ(expected, result) << "form_factor: case " << i << "," << j
+                                  << " failed!";
     }
 
     if (i < arraysize(form_factors)) {
@@ -116,7 +118,8 @@ TEST(VariationsStudyFilteringTest, CheckStudyFormFactor) {
                             filter.form_factor_size() == 0;
       const bool result = internal::CheckStudyFormFactor(filter,
                                                          form_factors[j]);
-      EXPECT_EQ(expected, result) << "Case " << i << "," << j << " failed!";
+      EXPECT_EQ(expected, result) << "form_factor: case " << i << "," << j
+                                  << " failed!";
     }
 
     if (i < arraysize(form_factors)) {
@@ -125,22 +128,71 @@ TEST(VariationsStudyFilteringTest, CheckStudyFormFactor) {
       form_factor_added[index] = true;
     }
   }
+
+  // Test exclude_form_factors, forward order.
+  filter.clear_form_factor();
+  bool form_factor_excluded[arraysize(form_factors)] = { 0 };
+  for (size_t i = 0; i <= arraysize(form_factors); ++i) {
+    for (size_t j = 0; j < arraysize(form_factors); ++j) {
+      const bool expected = filter.exclude_form_factor_size() == 0 ||
+                            !form_factor_excluded[j];
+      const bool result = internal::CheckStudyFormFactor(filter,
+                                                         form_factors[j]);
+      EXPECT_EQ(expected, result) << "exclude_form_factor: case " << i << ","
+                                  << j << " failed!";
+    }
+
+    if (i < arraysize(form_factors)) {
+      filter.add_exclude_form_factor(form_factors[i]);
+      form_factor_excluded[i] = true;
+    }
+  }
+
+  // Test exclude_form_factors, reverse order.
+  filter.clear_exclude_form_factor();
+  memset(&form_factor_excluded, 0, sizeof(form_factor_excluded));
+  for (size_t i = 0; i <= arraysize(form_factors); ++i) {
+    for (size_t j = 0; j < arraysize(form_factors); ++j) {
+      const bool expected = filter.exclude_form_factor_size() == 0 ||
+                            !form_factor_excluded[j];
+      const bool result = internal::CheckStudyFormFactor(filter,
+                                                         form_factors[j]);
+      EXPECT_EQ(expected, result) << "exclude_form_factor: case " << i << ","
+                                  << j << " failed!";
+    }
+
+    if (i < arraysize(form_factors)) {
+      const int index = arraysize(form_factors) - i - 1;
+      filter.add_exclude_form_factor(form_factors[index]);
+      form_factor_excluded[index] = true;
+    }
+  }
 }
 
 TEST(VariationsStudyFilteringTest, CheckStudyLocale) {
   struct {
     const char* filter_locales;
+    const char* exclude_locales;
     bool en_us_result;
     bool en_ca_result;
     bool fr_result;
   } test_cases[] = {
-    {"en-US", true, false, false},
-    {"en-US,en-CA,fr", true, true, true},
-    {"en-US,en-CA,en-GB", true, true, false},
-    {"en-GB,en-CA,en-US", true, true, false},
-    {"ja,kr,vi", false, false, false},
-    {"fr-CA", false, false, false},
-    {"", true, true, true},
+      {"en-US", "", true, false, false},
+      // Tests that locale overrides exclude_locale, when both are given. This
+      // should not occur in practice though.
+      {"en-US", "en-US", true, false, false},
+      {"en-US,en-CA,fr", "", true, true, true},
+      {"en-US,en-CA,en-GB", "", true, true, false},
+      {"en-GB,en-CA,en-US", "", true, true, false},
+      {"ja,kr,vi", "", false, false, false},
+      {"fr-CA", "", false, false, false},
+      {"", "", true, true, true},
+      {"", "en-US", false, true, true},
+      {"", "en-US,en-CA,fr", false, false, false},
+      {"", "en-US,en-CA,en-GB", false, false, true},
+      {"", "en-GB,en-CA,en-US", false, false, true},
+      {"", "ja,kr,vi", true, true, true},
+      {"", "fr-CA", true, true, true},
   };
 
   for (size_t i = 0; i < arraysize(test_cases); ++i) {
@@ -149,6 +201,10 @@ TEST(VariationsStudyFilteringTest, CheckStudyLocale) {
              test_cases[i].filter_locales, ",",
              base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL))
       filter.add_locale(locale);
+    for (const std::string& exclude_locale :
+         base::SplitString(test_cases[i].exclude_locales, ",",
+                           base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL))
+      filter.add_exclude_locale(exclude_locale);
     EXPECT_EQ(test_cases[i].en_us_result,
               internal::CheckStudyLocale(filter, "en-US"));
     EXPECT_EQ(test_cases[i].en_ca_result,
@@ -213,9 +269,11 @@ TEST(VariationsStudyFilteringTest, CheckStudyStartDate) {
     const base::Time start_date;
     bool expected_result;
   } start_test_cases[] = {
-    { now - delta, true },
-    { now, true },
-    { now + delta, false },
+      {now - delta, true},
+      // Note, the proto start_date is truncated to seconds, but the reference
+      // date isn't.
+      {now, true},
+      {now + delta, false},
   };
 
   Study_Filter filter;
@@ -228,6 +286,29 @@ TEST(VariationsStudyFilteringTest, CheckStudyStartDate) {
     const bool result = internal::CheckStudyStartDate(filter, now);
     EXPECT_EQ(start_test_cases[i].expected_result, result)
         << "Case " << i << " failed!";
+  }
+}
+
+TEST(VariationsStudyFilteringTest, CheckStudyEndDate) {
+  const base::Time now = base::Time::Now();
+  const base::TimeDelta delta = base::TimeDelta::FromHours(1);
+  const struct {
+    const base::Time end_date;
+    bool expected_result;
+  } start_test_cases[] = {
+      {now - delta, false}, {now + delta, true},
+  };
+
+  Study_Filter filter;
+
+  // End date not set should result in true.
+  EXPECT_TRUE(internal::CheckStudyEndDate(filter, now));
+
+  for (size_t i = 0; i < arraysize(start_test_cases); ++i) {
+    filter.set_end_date(TimeToProtoTime(start_test_cases[i].end_date));
+    const bool result = internal::CheckStudyEndDate(filter, now);
+    EXPECT_EQ(start_test_cases[i].expected_result, result) << "Case " << i
+                                                           << " failed!";
   }
 }
 
@@ -280,8 +361,8 @@ TEST(VariationsStudyFilteringTest, CheckStudyVersion) {
 
   for (size_t i = 0; i < arraysize(min_test_cases); ++i) {
     filter.set_min_version(min_test_cases[i].min_version);
-    const bool result =
-        internal::CheckStudyVersion(filter, Version(min_test_cases[i].version));
+    const bool result = internal::CheckStudyVersion(
+        filter, base::Version(min_test_cases[i].version));
     EXPECT_EQ(min_test_cases[i].expected_result, result) <<
         "Min. version case " << i << " failed!";
   }
@@ -289,8 +370,8 @@ TEST(VariationsStudyFilteringTest, CheckStudyVersion) {
 
   for (size_t i = 0; i < arraysize(max_test_cases); ++i) {
     filter.set_max_version(max_test_cases[i].max_version);
-    const bool result =
-        internal::CheckStudyVersion(filter, Version(max_test_cases[i].version));
+    const bool result = internal::CheckStudyVersion(
+        filter, base::Version(max_test_cases[i].version));
     EXPECT_EQ(max_test_cases[i].expected_result, result) <<
         "Max version case " << i << " failed!";
   }
@@ -302,16 +383,14 @@ TEST(VariationsStudyFilteringTest, CheckStudyVersion) {
       filter.set_max_version(max_test_cases[j].max_version);
 
       if (!min_test_cases[i].expected_result) {
-        const bool result =
-            internal::CheckStudyVersion(
-                filter, Version(min_test_cases[i].version));
+        const bool result = internal::CheckStudyVersion(
+            filter, base::Version(min_test_cases[i].version));
         EXPECT_FALSE(result) << "Case " << i << "," << j << " failed!";
       }
 
       if (!max_test_cases[j].expected_result) {
-        const bool result =
-            internal::CheckStudyVersion(
-                filter, Version(max_test_cases[j].version));
+        const bool result = internal::CheckStudyVersion(
+            filter, base::Version(max_test_cases[j].version));
         EXPECT_FALSE(result) << "Case " << i << "," << j << " failed!";
       }
     }
@@ -561,8 +640,9 @@ TEST(VariationsStudyFilteringTest, ValidateStudy) {
   study.mutable_filter()->set_max_version("2.3.4");
   EXPECT_TRUE(processed_study.Init(&study, false));
 
+  // A blank default study is allowed.
   study.clear_default_experiment_name();
-  EXPECT_FALSE(processed_study.Init(&study, false));
+  EXPECT_TRUE(processed_study.Init(&study, false));
 
   study.set_default_experiment_name("xyz");
   EXPECT_FALSE(processed_study.Init(&study, false));

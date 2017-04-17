@@ -185,8 +185,8 @@ std::unique_ptr<ExtensionInstallPrompt> MockPromptProxy::CreatePrompt() {
 
 std::unique_ptr<MockPromptProxy> CreateMockPromptProxyForBrowser(
     Browser* browser) {
-  return base::WrapUnique(
-      new MockPromptProxy(browser->tab_strip_model()->GetActiveWebContents()));
+  return base::MakeUnique<MockPromptProxy>(
+      browser->tab_strip_model()->GetActiveWebContents());
 }
 
 class ManagementPolicyMock : public extensions::ManagementPolicy::Provider {
@@ -284,16 +284,6 @@ class ExtensionCrxInstallerTest : public ExtensionBrowserTest {
         CreateWebAppInfo(kAppTitle, kAppDescription, kAppUrl, 64));
     EXPECT_TRUE(WaitForCrxInstallerDone());
     ASSERT_TRUE(crx_installer->extension());
-    ASSERT_FALSE(HasRequirementErrors(crx_installer.get()));
-    ASSERT_FALSE(HasPolicyErrors(crx_installer.get()));
-  }
-
-  bool HasRequirementErrors(CrxInstaller* crx_installer) {
-    return !crx_installer->install_checker_.requirement_errors().empty();
-  }
-
-  bool HasPolicyErrors(CrxInstaller* crx_installer) {
-    return !crx_installer->install_checker_.policy_error().empty();
   }
 };
 
@@ -345,13 +335,48 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTestWithExperimentalApis,
       test_data_dir_.AppendASCII("minimal_platform_app.crx"), 1));
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, PackAndInstallExtension) {
-  if (!FeatureSwitch::easy_off_store_install()->IsEnabled())
-    return;
+IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, BlockedFileTypes) {
+  const Extension* extension =
+      InstallExtension(test_data_dir_.AppendASCII("blocked_file_types.crx"), 1);
+  EXPECT_TRUE(base::PathExists(extension->path().AppendASCII("test.html")));
+  EXPECT_TRUE(base::PathExists(extension->path().AppendASCII("test.nexe")));
+  EXPECT_FALSE(base::PathExists(extension->path().AppendASCII("test1.EXE")));
+  EXPECT_FALSE(base::PathExists(extension->path().AppendASCII("test2.exe")));
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, AllowedThemeFileTypes) {
+  const Extension* extension = InstallExtension(
+      test_data_dir_.AppendASCII("theme_with_extension.crx"), 1);
+  ASSERT_TRUE(extension);
+  const base::FilePath& path = extension->path();
+  EXPECT_TRUE(
+      base::PathExists(path.AppendASCII("images/theme_frame_camo.PNG")));
+  EXPECT_TRUE(
+      base::PathExists(path.AppendASCII("images/theme_ntp_background.png")));
+  EXPECT_TRUE(base::PathExists(
+      path.AppendASCII("images/theme_ntp_background_norepeat.png")));
+  EXPECT_TRUE(
+      base::PathExists(path.AppendASCII("images/theme_toolbar_camo.png")));
+  EXPECT_TRUE(base::PathExists(path.AppendASCII("images/redirect_target.GIF")));
+  EXPECT_TRUE(base::PathExists(path.AppendASCII("test.image.bmp")));
+  EXPECT_TRUE(
+      base::PathExists(path.AppendASCII("test_image_with_no_extension")));
+
+  EXPECT_FALSE(base::PathExists(path.AppendASCII("non_images/test.html")));
+  EXPECT_FALSE(base::PathExists(path.AppendASCII("non_images/test.nexe")));
+  EXPECT_FALSE(base::PathExists(path.AppendASCII("non_images/test1.EXE")));
+  EXPECT_FALSE(base::PathExists(path.AppendASCII("non_images/test2.exe")));
+  EXPECT_FALSE(base::PathExists(path.AppendASCII("non_images/test.txt")));
+  EXPECT_FALSE(base::PathExists(path.AppendASCII("non_images/test.css")));
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest,
+                       PackAndInstallExtensionFromDownload) {
+  std::unique_ptr<base::AutoReset<bool>> allow_offstore_install =
+      download_crx_util::OverrideOffstoreInstallAllowedForTesting(true);
 
   const int kNumDownloadsExpected = 1;
 
-  LOG(ERROR) << "PackAndInstallExtension: Packing extension";
   base::FilePath crx_path = PackExtension(
       test_data_dir_.AppendASCII("common/background_page"));
   ASSERT_FALSE(crx_path.empty());
@@ -363,23 +388,19 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, PackAndInstallExtension) {
   download_crx_util::SetMockInstallPromptForTesting(
       mock_prompt->CreatePrompt());
 
-  LOG(ERROR) << "PackAndInstallExtension: Getting download manager";
   content::DownloadManager* download_manager =
       content::BrowserContext::GetDownloadManager(browser()->profile());
 
-  LOG(ERROR) << "PackAndInstallExtension: Setting observer";
   std::unique_ptr<content::DownloadTestObserver> observer(
       new content::DownloadTestObserverTerminal(
           download_manager, kNumDownloadsExpected,
           content::DownloadTestObserver::ON_DANGEROUS_DOWNLOAD_ACCEPT));
-  LOG(ERROR) << "PackAndInstallExtension: Navigating to URL";
-  ui_test_utils::NavigateToURLWithDisposition(browser(), url, CURRENT_TAB,
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), url, WindowOpenDisposition::CURRENT_TAB,
       ui_test_utils::BROWSER_TEST_NONE);
 
   EXPECT_TRUE(WaitForCrxInstallerDone());
-  LOG(ERROR) << "PackAndInstallExtension: Extension install";
   EXPECT_TRUE(mock_prompt->confirmation_requested());
-  LOG(ERROR) << "PackAndInstallExtension: Extension install confirmed";
 }
 
 // Tests that scopes are only granted if |record_oauth2_grant_| on the prompt is
@@ -571,13 +592,13 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, InstallToSharedLocation) {
   base::ScopedTempDir cache_dir;
   ASSERT_TRUE(cache_dir.CreateUniqueTempDir());
   ExtensionAssetsManagerChromeOS::SetSharedInstallDirForTesting(
-      cache_dir.path());
+      cache_dir.GetPath());
 
   base::FilePath crx_path = test_data_dir_.AppendASCII("crx_installer/v1.crx");
   const extensions::Extension* extension = InstallExtension(
       crx_path, 1, extensions::Manifest::EXTERNAL_PREF);
   base::FilePath extension_path = extension->path();
-  EXPECT_TRUE(cache_dir.path().IsParent(extension_path));
+  EXPECT_TRUE(cache_dir.GetPath().IsParent(extension_path));
   EXPECT_TRUE(base::PathExists(extension_path));
 
   std::string extension_id = extension->id();

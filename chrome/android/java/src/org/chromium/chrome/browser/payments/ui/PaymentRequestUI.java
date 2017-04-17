@@ -19,10 +19,13 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.support.annotation.IntDef;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
-import android.text.TextUtils.TruncateAt;
+import android.text.SpannableString;
+import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,23 +35,27 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.payments.ui.PaymentRequestSection.ExtraTextSection;
+import org.chromium.chrome.browser.payments.ShippingStrings;
 import org.chromium.chrome.browser.payments.ui.PaymentRequestSection.LineItemBreakdownSection;
 import org.chromium.chrome.browser.payments.ui.PaymentRequestSection.OptionSection;
 import org.chromium.chrome.browser.payments.ui.PaymentRequestSection.SectionSeparator;
+import org.chromium.chrome.browser.payments.ui.PaymentRequestSection.ShippingSummarySection;
 import org.chromium.chrome.browser.widget.AlwaysDismissedDialog;
-import org.chromium.chrome.browser.widget.DualControlLayout;
+import org.chromium.chrome.browser.widget.FadingEdgeScrollView;
 import org.chromium.chrome.browser.widget.animation.AnimatorProperties;
 import org.chromium.chrome.browser.widget.animation.FocusAnimator;
+import org.chromium.components.signin.ChromeSigninController;
+import org.chromium.ui.text.NoUnderlineClickableSpan;
+import org.chromium.ui.text.SpanApplier;
+import org.chromium.ui.text.SpanApplier.SpanInfo;
+import org.chromium.ui.widget.TextViewWithClickableSpans;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -133,7 +140,30 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
          * @param checkedCallback   The callback after an asynchronous check has completed.
          * @return The result of the selection.
          */
-        @SelectionResult int onSectionOptionSelected(@DataType int optionType, PaymentOption option,
+        @SelectionResult
+        int onSectionOptionSelected(@DataType int optionType, PaymentOption option,
+                Callback<PaymentInformation> checkedCallback);
+
+        /**
+         * Called when the user clicks edit icon (pencil icon) on the payment option in a section.
+         *
+         * If this method returns {@link SELECTION_RESULT_ASYNCHRONOUS_VALIDATION}, then:
+         * + The edited option should be asynchronously verified.
+         * + The section should be disabled and a progress spinny should be shown while the option
+         *   is being verified.
+         * + The checkedCallback will be invoked with the results of the check and updated
+         *   information.
+         *
+         * If this method returns {@link SELECTION_RESULT_EDITOR_LAUNCH}, then:
+         * + Interaction with UI should be disabled until updateSection() is called.
+         *
+         * @param optionType      Data being updated.
+         * @param option          The option to be edited.
+         * @param checkedCallback The callback after an asynchronous check has completed.
+         * @return The result of the edit request.
+         */
+        @SelectionResult
+        int onSectionEditOption(@DataType int optionType, PaymentOption option,
                 Callback<PaymentInformation> checkedCallback);
 
         /**
@@ -170,10 +200,9 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         void onDismiss();
 
         /**
-         * Checks if the merchant needs a shipping address to provide the shipping options.
-         * @return Whether or not the merchant needs a shipping address.
+         * Called when the user clicks on 'Settings' to control card and address options.
          */
-        boolean merchantNeedsShippingAddress();
+        void onCardAndAddressSettingsClicked();
     }
 
     /**
@@ -222,7 +251,42 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         void onPaymentRequestDismiss();
     }
 
-    /** Length of the animation to either show the UI or expand it to full height. */
+    /** Helper to notify tests of an event only once. */
+    private static class NotifierForTest {
+        private final Handler mHandler;
+        private final Runnable mNotification;
+        private boolean mNotificationPending;
+
+        /**
+         * Constructs the helper to notify tests for an event.
+         *
+         * @param notification The callback that notifies the test of an event.
+         */
+        public NotifierForTest(final Runnable notification) {
+            mHandler = new Handler();
+            mNotification = new Runnable() {
+                @Override
+                public void run() {
+                    notification.run();
+                    mNotificationPending = false;
+                }
+            };
+        }
+
+        /** Schedules a single notification for test, even if called only once. */
+        public void run() {
+            if (mNotificationPending) return;
+            mNotificationPending = true;
+            mHandler.post(mNotification);
+        }
+    }
+
+    /**
+     * Length of the animation to either show the UI or expand it to full height.
+     * Note that click of 'Pay' button is not accepted until the animation is done, so this duration
+     * also serves the function of preventing the user from accidently double-clicking on the screen
+     * when triggering payment and thus authorizing unwanted transaction.
+     */
     private static final int DIALOG_ENTER_ANIMATION_MS = 225;
 
     /** Length of the animation to hide the bottom sheet UI. */
@@ -230,10 +294,14 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
 
     private static PaymentRequestObserverForTest sObserverForTest;
 
+    /** Notifies tests that the [PAY] button can be clicked. */
+    private final NotifierForTest mReadyToPayNotifierForTest;
+
     private final Context mContext;
     private final Client mClient;
     private final boolean mRequestShipping;
     private final boolean mRequestContactDetails;
+    private final boolean mShowDataSource;
 
     private final Dialog mDialog;
     private final EditorView mEditorView;
@@ -242,17 +310,18 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
     private final ViewGroup mRequestView;
     private final PaymentRequestUiErrorView mErrorView;
     private final Callback<PaymentInformation> mUpdateSectionsCallback;
+    private final ShippingStrings mShippingStrings;
 
-    private ScrollView mPaymentContainer;
+    private FadingEdgeScrollView mPaymentContainer;
     private LinearLayout mPaymentContainerLayout;
-    private DualControlLayout mButtonBar;
+    private ViewGroup mBottomBar;
     private Button mEditButton;
     private Button mPayButton;
     private View mCloseButton;
     private View mSpinnyLayout;
 
     private LineItemBreakdownSection mOrderSummarySection;
-    private ExtraTextSection mShippingSummarySection;
+    private ShippingSummarySection mShippingSummarySection;
     private OptionSection mShippingAddressSection;
     private OptionSection mShippingOptionSection;
     private OptionSection mContactDetailsSection;
@@ -260,7 +329,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
     private List<SectionSeparator> mSectionSeparators;
 
     private PaymentRequestSection mSelectedSection;
-    private boolean mIsShowingEditDialog;
+    private boolean mIsExpandedToFullHeight;
     private boolean mIsProcessingPayClicked;
     private boolean mIsClientClosing;
     private boolean mIsClientCheckingSelection;
@@ -276,39 +345,52 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
     private Animator mSheetAnimator;
     private FocusAnimator mSectionAnimator;
     private int mAnimatorTranslation;
-    private boolean mIsInitialLayoutComplete;
 
     /**
-     * Builds and shows the UI for PaymentRequest.
+     * Builds the UI for PaymentRequest.
      *
      * @param activity        The activity on top of which the UI should be displayed.
      * @param client          The consumer of the PaymentRequest UI.
      * @param requestShipping Whether the UI should show the shipping address and option selection.
-     * @param requestContact  Whether the UI should show the email address and phone number
-     *                        selection.
+     * @param requestContact  Whether the UI should show the payer name, email address and
+     *                        phone number selection.
      * @param canAddCards     Whether the UI should show the [+ADD CARD] button. This can be false,
      *                        for example, when the merchant does not accept credit cards, so
      *                        there's no point in adding cards within PaymentRequest UI.
+     * @param showDataSource  Whether the UI should describe the source of Autofill data.
      * @param title           The title to show at the top of the UI. This can be, for example, the
      *                        &lt;title&gt; of the merchant website. If the string is too long for
      *                        UI, it elides at the end.
-     * @param origin          The origin (part of URL) to show under the title. For example,
-     *                        "https://shop.momandpop.com". If the origin is too long for the UI, it
-     *                        should elide according to:
+     * @param origin          The origin (https://tools.ietf.org/html/rfc6454) to show under the
+     *                        title. For example, "https://shop.momandpop.com". If the origin is too
+     *                        long for the UI, it should elide according to:
      * https://www.chromium.org/Home/chromium-security/enamel#TOC-Eliding-Origin-Names-And-Hostnames
+     * @param securityLevel   The security level of the page that invoked PaymentRequest.
+     * @param shippingStrings The string resource identifiers to use in the shipping sections.
      */
     public PaymentRequestUI(Activity activity, Client client, boolean requestShipping,
-            boolean requestContact, boolean canAddCards, String title, String origin) {
+            boolean requestContact, boolean canAddCards, boolean showDataSource, String title,
+            String origin, int securityLevel, ShippingStrings shippingStrings) {
         mContext = activity;
         mClient = client;
         mRequestShipping = requestShipping;
         mRequestContactDetails = requestContact;
-        mAnimatorTranslation = activity.getResources().getDimensionPixelSize(
+        mShowDataSource = showDataSource;
+        mAnimatorTranslation = mContext.getResources().getDimensionPixelSize(
                 R.dimen.payments_ui_translation);
 
         mErrorView = (PaymentRequestUiErrorView) LayoutInflater.from(mContext).inflate(
                 R.layout.payment_request_error, null);
-        mErrorView.initialize(title, origin);
+        mErrorView.initialize(title, origin, securityLevel);
+
+        mReadyToPayNotifierForTest = new NotifierForTest(new Runnable() {
+            @Override
+            public void run() {
+                if (sObserverForTest != null && isAcceptingUserInput() && mPayButton.isEnabled()) {
+                    sObserverForTest.onPaymentRequestReadyToPay(PaymentRequestUI.this);
+                }
+            }
+        });
 
         // This callback will be fired if mIsClientCheckingSelection is true.
         mUpdateSectionsCallback = new Callback<PaymentInformation>() {
@@ -334,17 +416,19 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
             }
         };
 
+        mShippingStrings = shippingStrings;
+
         mRequestView =
                 (ViewGroup) LayoutInflater.from(mContext).inflate(R.layout.payment_request, null);
-        prepareRequestView(activity, title, origin, canAddCards);
+        prepareRequestView(mContext, title, origin, securityLevel, canAddCards);
 
         // To handle the specced animations, the dialog is entirely contained within a translucent
         // FrameLayout.  This could eventually be converted to a real BottomSheetDialog, but that
         // requires exploration of how interactions would work when the dialog can be sent back and
         // forth between the peeking and expanded state.
         mFullContainer = new FrameLayout(mContext);
-        mFullContainer.setBackgroundColor(
-                ApiCompatibilityUtils.getColor(mContext.getResources(), R.color.payments_ui_scrim));
+        mFullContainer.setBackgroundColor(ApiCompatibilityUtils.getColor(
+                mContext.getResources(), R.color.modal_dialog_scrim_color));
         FrameLayout.LayoutParams bottomSheetParams = new FrameLayout.LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         bottomSheetParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
@@ -363,8 +447,13 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         dialogWindow.setGravity(Gravity.CENTER);
         dialogWindow.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         dialogWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        mDialog.show();
+    }
 
+    /**
+     * Shows the PaymentRequest UI.
+     */
+    public void show() {
+        mDialog.show();
         mClient.getDefaultPaymentInformation(new Callback<PaymentInformation>() {
             @Override
             public void onResult(PaymentInformation result) {
@@ -374,30 +463,16 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
                     updateSection(TYPE_SHIPPING_ADDRESSES, result.getShippingAddresses());
                     updateSection(TYPE_SHIPPING_OPTIONS, result.getShippingOptions());
 
-                    String selectedShippingAddress = result.getSelectedShippingAddressLabel();
-                    String selectedShippingName = result.getSelectedShippingAddressSublabel();
-                    String selectedShippingOptionLabel = result.getSelectedShippingOptionLabel();
+                    mShippingSummarySection.update(new ShippingSummaryInformation(
+                            result.getShippingAddresses(), result.getShippingOptions()));
 
-                    if (selectedShippingAddress == null || selectedShippingOptionLabel == null) {
-                        // Let the summary display a SELECT/ADD button for the first subsection
-                        // that needs it.
-                        mShippingSummarySection.setSummaryText(null, null);
-                        mShippingSummarySection.setSummaryProperties(null, false, null, false);
-
-                        PaymentRequestSection section =
-                                mShippingAddressSection.getEditButtonState() == EDIT_BUTTON_GONE
-                                        ? mShippingOptionSection : mShippingAddressSection;
-                        mShippingSummarySection.setEditButtonState(section.getEditButtonState());
-                    } else {
-                        // Show the shipping address and the name in the summary section.
-                        mShippingSummarySection.setSummaryText(
-                                selectedShippingAddress, selectedShippingName);
-                        mShippingSummarySection.setSummaryProperties(
-                                TruncateAt.MIDDLE, true, null, true);
-
-                        // Indicate the shipping option below the address.
-                        mShippingSummarySection.setExtraText(selectedShippingOptionLabel);
-                    }
+                    // Let the summary display a CHOOSE/ADD button for the first subsection that
+                    // needs it.
+                    PaymentRequestSection section =
+                            mShippingAddressSection.getEditButtonState() == EDIT_BUTTON_GONE
+                            ? mShippingOptionSection
+                            : mShippingAddressSection;
+                    mShippingSummarySection.setEditButtonState(section.getEditButtonState());
                 }
 
                 if (mRequestContactDetails) {
@@ -408,9 +483,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
                 updatePayButtonEnabled();
 
                 // Hide the loading indicators and show the real sections.
-                mPaymentContainer.setVisibility(View.VISIBLE);
-                mButtonBar.setVisibility(View.VISIBLE);
-                mRequestView.removeView(mSpinnyLayout);
+                changeSpinnerVisibility(false);
                 mRequestView.addOnLayoutChangeListener(new SheetEnlargingAnimator(false));
             }
         });
@@ -422,53 +495,52 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
      * TODO(dfalcantara): Ideally, everything related to the request and its views would just be put
      *                    into its own class but that'll require yanking out a lot of this class.
      *
-     * @param activity    Activity displaying the UI.
-     * @param title       Title of the page.
-     * @param origin      Host of the page.
-     * @param canAddCards Whether new cards can be added.
+     * @param context       The application context.
+     * @param title         Title of the page.
+     * @param origin        The RFC6454 origin of the page.
+     * @param securityLevel The security level of the page that invoked PaymentRequest.
+     * @param canAddCards   Whether new cards can be added.
      */
     private void prepareRequestView(
-            Activity activity, String title, String origin, boolean canAddCards) {
+            Context context, String title, String origin, int securityLevel, boolean canAddCards) {
         mSpinnyLayout = mRequestView.findViewById(R.id.payment_request_spinny);
+        assert mSpinnyLayout.getVisibility() == View.VISIBLE;
+        mIsShowingSpinner = true;
 
         // Indicate that we're preparing the dialog for display.
         TextView messageView = (TextView) mRequestView.findViewById(R.id.message);
         messageView.setText(R.string.payments_loading_message);
 
-        ((TextView) mRequestView.findViewById(R.id.page_title)).setText(title);
-        ((TextView) mRequestView.findViewById(R.id.hostname)).setText(origin);
+        ((PaymentRequestHeader) mRequestView.findViewById(R.id.header))
+                .setTitleAndOrigin(title, origin, securityLevel);
 
         // Set up the buttons.
         mCloseButton = mRequestView.findViewById(R.id.close_button);
         mCloseButton.setOnClickListener(this);
-        mPayButton = DualControlLayout.createButtonForLayout(
-                activity, true, activity.getString(R.string.payments_pay_button), this);
-        mEditButton = DualControlLayout.createButtonForLayout(
-                activity, false, activity.getString(R.string.payments_edit_button), this);
-        mButtonBar = (DualControlLayout) mRequestView.findViewById(R.id.button_bar);
-        mButtonBar.setAlignment(DualControlLayout.ALIGN_END);
-        mButtonBar.setStackedMargin(activity.getResources().getDimensionPixelSize(
-                R.dimen.infobar_margin_between_stacked_buttons));
-        mButtonBar.addView(mPayButton);
-        mButtonBar.addView(mEditButton);
+        mBottomBar = (ViewGroup) mRequestView.findViewById(R.id.bottom_bar);
+        mPayButton = (Button) mBottomBar.findViewById(R.id.button_primary);
+        mPayButton.setOnClickListener(this);
+        mEditButton = (Button) mBottomBar.findViewById(R.id.button_secondary);
+        mEditButton.setOnClickListener(this);
 
         // Create all the possible sections.
         mSectionSeparators = new ArrayList<>();
-        mPaymentContainer = (ScrollView) mRequestView.findViewById(R.id.option_container);
+        mPaymentContainer = (FadingEdgeScrollView) mRequestView.findViewById(R.id.option_container);
         mPaymentContainerLayout =
                 (LinearLayout) mRequestView.findViewById(R.id.payment_container_layout);
-        mOrderSummarySection = new LineItemBreakdownSection(
-                activity, activity.getString(R.string.payments_order_summary_label), this);
-        mShippingSummarySection = new ExtraTextSection(
-                activity, activity.getString(R.string.payments_shipping_summary_label), this);
+        mOrderSummarySection = new LineItemBreakdownSection(context,
+                context.getString(R.string.payments_order_summary_label), this,
+                context.getString(R.string.payments_updated_label));
+        mShippingSummarySection = new ShippingSummarySection(
+                context, context.getString(mShippingStrings.getSummaryLabel()), this);
         mShippingAddressSection = new OptionSection(
-                activity, activity.getString(R.string.payments_shipping_address_label), this);
+                context, context.getString(mShippingStrings.getAddressLabel()), this);
         mShippingOptionSection = new OptionSection(
-                activity, activity.getString(R.string.payments_shipping_option_label), this);
+                context, context.getString(mShippingStrings.getOptionLabel()), this);
         mContactDetailsSection = new OptionSection(
-                activity, activity.getString(R.string.payments_contact_details_label), this);
+                context, context.getString(R.string.payments_contact_details_label), this);
         mPaymentMethodSection = new OptionSection(
-                activity, activity.getString(R.string.payments_method_of_payment_label), this);
+                context, context.getString(R.string.payments_method_of_payment_label), this);
 
         // Some sections conditionally allow adding new options.
         mShippingOptionSection.setCanAddItems(false);
@@ -527,14 +599,12 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
             }
         };
 
-        if (shouldCloseImmediately || !mIsProcessingPayClicked) {
+        if (shouldCloseImmediately) {
             // The shouldCloseImmediately boolean is true when the merchant calls
             // instrumentResponse.complete("success") or instrumentResponse.complete("")
             // in JavaScript.
             dismissRunnable.run();
         } else {
-            mIsProcessingPayClicked = false;
-
             // Animate the bottom sheet going away.
             new DisappearingAnimator(false);
 
@@ -553,7 +623,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
      * @param bitmap The bitmap to show next to the title.
      */
     public void setTitleBitmap(Bitmap bitmap) {
-        ((ImageView) mRequestView.findViewById(R.id.icon_view)).setImageBitmap(bitmap);
+        ((PaymentRequestHeader) mRequestView.findViewById(R.id.header)).setTitleBitmap(bitmap);
         mErrorView.setBitmap(bitmap);
     }
 
@@ -590,9 +660,14 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
             mPaymentMethodSectionInformation = section;
             mPaymentMethodSection.update(section);
         }
+
+        boolean isFinishingEditItem = mIsEditingPaymentItem;
         mIsEditingPaymentItem = false;
         updateSectionButtons();
         updatePayButtonEnabled();
+
+        // Notify ready for input for test if this is finishing editing item.
+        if (isFinishingEditItem) notifyReadyForInput();
     }
 
     @Override
@@ -603,15 +678,42 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
             mShippingAddressSectionInformation.setSelectedItem(option);
             result = mClient.onSectionOptionSelected(
                     TYPE_SHIPPING_ADDRESSES, option, mUpdateSectionsCallback);
-        } else if (section == mShippingOptionSection) {
+        } else if (section == mShippingOptionSection
+                && mShippingOptionsSectionInformation.getSelectedItem() != option) {
             mShippingOptionsSectionInformation.setSelectedItem(option);
-            result = mClient.onSectionOptionSelected(TYPE_SHIPPING_OPTIONS, option, null);
+            result = mClient.onSectionOptionSelected(
+                    TYPE_SHIPPING_OPTIONS, option, mUpdateSectionsCallback);
         } else if (section == mContactDetailsSection) {
             mContactDetailsSectionInformation.setSelectedItem(option);
             result = mClient.onSectionOptionSelected(TYPE_CONTACT_DETAILS, option, null);
         } else if (section == mPaymentMethodSection) {
             mPaymentMethodSectionInformation.setSelectedItem(option);
             result = mClient.onSectionOptionSelected(TYPE_PAYMENT_METHODS, option, null);
+        }
+
+        updateStateFromResult(section, result);
+    }
+
+    @Override
+    public void onEditPaymentOption(final PaymentRequestSection section, PaymentOption option) {
+        @SelectionResult int result = SELECTION_RESULT_NONE;
+
+        assert section != mOrderSummarySection;
+        assert section != mShippingOptionSection;
+        if (section == mShippingAddressSection) {
+            assert mShippingAddressSectionInformation.getSelectedItem() == option;
+            result = mClient.onSectionEditOption(
+                    TYPE_SHIPPING_ADDRESSES, option, mUpdateSectionsCallback);
+        }
+
+        if (section == mContactDetailsSection) {
+            assert mContactDetailsSectionInformation.getSelectedItem() == option;
+            result = mClient.onSectionEditOption(TYPE_CONTACT_DETAILS, option, null);
+        }
+
+        if (section == mPaymentMethodSection) {
+            assert mPaymentMethodSectionInformation.getSelectedItem() == option;
+            result = mClient.onSectionEditOption(TYPE_PAYMENT_METHODS, option, null);
         }
 
         updateStateFromResult(section, result);
@@ -705,7 +807,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         } else if (v == mPayButton) {
             processPayButton();
         } else if (v == mEditButton) {
-            if (mIsShowingEditDialog) {
+            if (mIsExpandedToFullHeight) {
                 dismissDialog(true);
             } else {
                 expand(mOrderSummarySection);
@@ -761,11 +863,22 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
     }
 
     /**
-     * Called when the user has sent the payment information to the website, which is now processing
-     * the payment.
+     *  Called to show the processing message after instrument details have been loaded
+     *  in the case the payment request UI has been skipped.
+     */
+    public void showProcessingMessageAfterUiSkip() {
+        // Button was clicked before but not marked as clicked because we skipped the UI.
+        mIsProcessingPayClicked = true;
+        showProcessingMessage();
+    }
+
+    /**
+     * Called when the user has clicked on pay. The message is shown while the payment information
+     * is processed right until a confimation from the merchant is received.
      */
     public void showProcessingMessage() {
         assert mIsProcessingPayClicked;
+
         changeSpinnerVisibility(true);
         mDialog.show();
     }
@@ -775,24 +888,27 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         mIsShowingSpinner = showSpinner;
 
         if (showSpinner) {
-            mRequestView.removeView(mPaymentContainer);
-            mRequestView.removeView(mButtonBar);
-            mRequestView.addView(mSpinnyLayout);
+            mPaymentContainer.setVisibility(View.GONE);
+            mBottomBar.setVisibility(View.GONE);
+            mCloseButton.setVisibility(View.GONE);
+            mSpinnyLayout.setVisibility(View.VISIBLE);
 
             // Turn the bottom sheet back into a collapsed bottom sheet showing only the spinner.
             // TODO(dfalcantara): Animate this: https://crbug.com/621955
-            FrameLayout.LayoutParams params =
-                    (FrameLayout.LayoutParams) mRequestView.getLayoutParams();
-            params.width = LayoutParams.MATCH_PARENT;
-            params.height = LayoutParams.WRAP_CONTENT;
-            params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+            ((FrameLayout.LayoutParams) mRequestView.getLayoutParams()).height =
+                    LayoutParams.WRAP_CONTENT;
             mRequestView.requestLayout();
         } else {
-            mRequestView.removeView(mSpinnyLayout);
-            mRequestView.addView(mPaymentContainer);
-            mRequestView.addView(mButtonBar);
+            mPaymentContainer.setVisibility(View.VISIBLE);
+            mBottomBar.setVisibility(View.VISIBLE);
+            mCloseButton.setVisibility(View.VISIBLE);
+            mSpinnyLayout.setVisibility(View.GONE);
 
-            if (mIsShowingEditDialog) expand(mSelectedSection);
+            if (mIsExpandedToFullHeight) {
+                ((FrameLayout.LayoutParams) mRequestView.getLayoutParams()).height =
+                        LayoutParams.MATCH_PARENT;
+                mRequestView.requestLayout();
+            }
         }
     }
 
@@ -811,13 +927,13 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
                 && !mIsClientCheckingSelection
                 && !mIsEditingPaymentItem
                 && !mIsClosing);
-        notifyReadyToPay();
+        mReadyToPayNotifierForTest.run();
     }
 
     /** @return Whether or not the dialog can be closed via the X close button. */
     private boolean isAcceptingCloseButton() {
-        return mSheetAnimator == null && mSectionAnimator == null && mIsInitialLayoutComplete
-                && !mIsProcessingPayClicked && !mIsEditingPaymentItem && !mIsClosing;
+        return mSheetAnimator == null && mSectionAnimator == null && !mIsProcessingPayClicked
+                && !mIsEditingPaymentItem && !mIsClosing;
     }
 
     /** @return Whether or not the dialog is accepting user input. */
@@ -827,8 +943,18 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
                 && !mIsClientCheckingSelection;
     }
 
+    /**
+     * Sets the observer to be called when the shipping address section gains or loses focus.
+     *
+     * @param observer The observer to notify.
+     */
+    public void setShippingAddressSectionFocusChangedObserver(
+            OptionSection.FocusChangedObserver observer) {
+        mShippingAddressSection.setOptionSectionFocusChangedObserver(observer);
+    }
+
     private void expand(PaymentRequestSection section) {
-        if (!mIsShowingEditDialog) {
+        if (!mIsExpandedToFullHeight) {
             // Container now takes the full height of the screen, animating towards it.
             mRequestView.getLayoutParams().height = LayoutParams.MATCH_PARENT;
             mRequestView.addOnLayoutChangeListener(new SheetEnlargingAnimator(true));
@@ -849,8 +975,12 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
             }
 
             // New separators appear at the top and bottom of the list.
-            mSectionSeparators.add(new SectionSeparator(mPaymentContainerLayout, 0));
+            mPaymentContainer.setEdgeVisibility(
+                    FadingEdgeScrollView.DRAW_HARD_EDGE, FadingEdgeScrollView.DRAW_FADING_EDGE);
             mSectionSeparators.add(new SectionSeparator(mPaymentContainerLayout, -1));
+
+            // Add a link to Autofill settings.
+            addCardAndAddressOptionsSettingsView(mPaymentContainerLayout);
 
             // Expand all the dividers.
             for (int i = 0; i < mSectionSeparators.size(); i++) mSectionSeparators.get(i).expand();
@@ -866,7 +996,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
             // Disable all but the first button.
             updateSectionButtons();
 
-            mIsShowingEditDialog = true;
+            mIsExpandedToFullHeight = true;
         }
 
         // Update the section contents when they're selected.
@@ -897,6 +1027,40 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         }
     }
 
+    private void addCardAndAddressOptionsSettingsView(LinearLayout parent) {
+        String message;
+        if (!mShowDataSource) {
+            message = mContext.getString(R.string.payments_card_and_address_settings);
+        } else if (ChromeSigninController.get().isSignedIn()) {
+            message = mContext.getString(R.string.payments_card_and_address_settings_signed_in,
+                    ChromeSigninController.get().getSignedInAccountName());
+        } else {
+            message = mContext.getString(R.string.payments_card_and_address_settings_signed_out);
+        }
+
+        NoUnderlineClickableSpan settingsSpan = new NoUnderlineClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                mClient.onCardAndAddressSettingsClicked();
+            }
+        };
+        SpannableString spannableMessage = SpanApplier.applySpans(
+                message, new SpanInfo("BEGIN_LINK", "END_LINK", settingsSpan));
+
+        TextView view = new TextViewWithClickableSpans(mContext);
+        view.setText(spannableMessage);
+        view.setMovementMethod(LinkMovementMethod.getInstance());
+        ApiCompatibilityUtils.setTextAppearance(view, R.style.PaymentsUiSectionDescriptiveText);
+
+        // Add paddings instead of margin to let getMeasuredHeight return correct value for section
+        // resize animation.
+        int paddingSize = mContext.getResources().getDimensionPixelSize(
+                R.dimen.payments_section_large_spacing);
+        ApiCompatibilityUtils.setPaddingRelative(
+                view, paddingSize, paddingSize, paddingSize, paddingSize);
+        parent.addView(view);
+    }
+
     private Callback<SectionInformation> createUpdateSectionCallback(@DataType final int type) {
         return new Callback<SectionInformation>() {
             @Override
@@ -919,7 +1083,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
     }
 
     /**
-     * Updates the enabled/disbled state of each section's edit button.
+     * Updates the enabled/disabled state of each section's edit button.
      *
      * Only the top-most button is enabled -- the others are disabled so the user is directed
      * through the form from top to bottom.
@@ -961,18 +1125,23 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
 
     @Override
     public String getAdditionalText(PaymentRequestSection section) {
-        if (section == mShippingAddressSection) {
-            int selectedItemIndex = mShippingAddressSectionInformation.getSelectedItemIndex();
-            boolean isNecessary = mClient.merchantNeedsShippingAddress()
-                    && (selectedItemIndex == SectionInformation.NO_SELECTION
-                               || selectedItemIndex == SectionInformation.INVALID_SELECTION);
-            return isNecessary
-                    ? mContext.getString(selectedItemIndex == SectionInformation.NO_SELECTION
-                            ? R.string.payments_select_shipping_address_for_shipping_methods
-                            : R.string.payments_unsupported_shipping_address)
-                    : null;
+        if (section != mShippingAddressSection) return null;
+
+        int selectedItemIndex = mShippingAddressSectionInformation.getSelectedItemIndex();
+        if (selectedItemIndex != SectionInformation.NO_SELECTION
+                && selectedItemIndex != SectionInformation.INVALID_SELECTION) {
+            return null;
         }
-        return null;
+
+        String customErrorMessage = mShippingAddressSectionInformation.getErrorMessage();
+        if (selectedItemIndex == SectionInformation.INVALID_SELECTION
+                && !TextUtils.isEmpty(customErrorMessage)) {
+            return customErrorMessage;
+        }
+
+        return mContext.getString(selectedItemIndex == SectionInformation.NO_SELECTION
+                        ? mShippingStrings.getSelectPrompt()
+                        : mShippingStrings.getUnsupported());
     }
 
     @Override
@@ -1003,7 +1172,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
             public void run() {
                 mSectionAnimator = null;
                 notifyReadyForInput();
-                notifyReadyToPay();
+                mReadyToPayNotifierForTest.run();
             }
         };
 
@@ -1023,7 +1192,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
             mRequestView.removeOnLayoutChangeListener(this);
 
             Animator scrimFader = ObjectAnimator.ofInt(mFullContainer.getBackground(),
-                    AnimatorProperties.DRAWABLE_ALPHA_PROPERTY, 0, 127);
+                    AnimatorProperties.DRAWABLE_ALPHA_PROPERTY, 0, 255);
             Animator alphaAnimator = ObjectAnimator.ofFloat(mFullContainer, View.ALPHA, 0f, 1f);
 
             AnimatorSet alphaSet = new AnimatorSet();
@@ -1038,7 +1207,8 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
      * Animates the bottom sheet UI translating upwards from the bottom of the screen.
      * Can be canceled when a {@link SheetEnlargingAnimator} starts and expands the dialog.
      */
-    private class PeekingAnimator implements OnLayoutChangeListener {
+    private class PeekingAnimator
+            extends AnimatorListenerAdapter implements OnLayoutChangeListener {
         @Override
         public void onLayoutChange(View v, int left, int top, int right, int bottom,
                 int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -1048,18 +1218,24 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
                     mRequestView, View.TRANSLATION_Y, mAnimatorTranslation, 0);
             mSheetAnimator.setDuration(DIALOG_ENTER_ANIMATION_MS);
             mSheetAnimator.setInterpolator(new LinearOutSlowInInterpolator());
+            mSheetAnimator.addListener(this);
             mSheetAnimator.start();
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            mSheetAnimator = null;
         }
     }
 
     /** Animates the bottom sheet expanding to a larger sheet. */
     private class SheetEnlargingAnimator
             extends AnimatorListenerAdapter implements OnLayoutChangeListener {
-        private final boolean mIsButtonBarLockedInPlace;
+        private final boolean mIsBottomBarLockedInPlace;
         private int mContainerHeightDifference;
 
-        public SheetEnlargingAnimator(boolean isButtonBarLockedInPlace) {
-            mIsButtonBarLockedInPlace = isButtonBarLockedInPlace;
+        public SheetEnlargingAnimator(boolean isBottomBarLockedInPlace) {
+            mIsBottomBarLockedInPlace = isBottomBarLockedInPlace;
         }
 
         /**
@@ -1073,17 +1249,17 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
             float containerTranslation = mContainerHeightDifference * progress;
             mRequestView.setTranslationY(containerTranslation);
 
-            if (mIsButtonBarLockedInPlace) {
-                // The button bar is translated along the dialog so that is looks like it stays in
+            if (mIsBottomBarLockedInPlace) {
+                // The bottom bar is translated along the dialog so that is looks like it stays in
                 // place at the bottom while the entire bottom sheet is translating upwards.
-                mButtonBar.setTranslationY(-containerTranslation);
+                mBottomBar.setTranslationY(-containerTranslation);
 
-                // The payment container is sandwiched between the header and the button bar.
+                // The payment container is sandwiched between the header and the bottom bar.
                 // Expansion animates by changing where its "bottom" is, letting its shadows appear
                 // and disappear as it changes size.
-                int paymentContainerBottom = Math.min(
-                        mPaymentContainer.getTop() + mPaymentContainer.getMeasuredHeight(),
-                        mButtonBar.getTop());
+                int paymentContainerBottom =
+                        Math.min(mPaymentContainer.getTop() + mPaymentContainer.getMeasuredHeight(),
+                                mBottomBar.getTop());
                 mPaymentContainer.setBottom(paymentContainerBottom);
             }
         }
@@ -1116,14 +1292,13 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         public void onAnimationEnd(Animator animation) {
             // Reset the layout so that everything is in the expected place.
             mRequestView.setTranslationY(0);
-            mButtonBar.setTranslationY(0);
+            mBottomBar.setTranslationY(0);
             mRequestView.requestLayout();
 
             // Indicate that the dialog is ready to use.
             mSheetAnimator = null;
-            mIsInitialLayoutComplete = true;
             notifyReadyForInput();
-            notifyReadyToPay();
+            mReadyToPayNotifierForTest.run();
         }
     }
 
@@ -1189,19 +1364,13 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
     }
 
     @VisibleForTesting
-    public ViewGroup getContactDetailsSectionForTest() {
+    public PaymentRequestSection getContactDetailsSectionForTest() {
         return mContactDetailsSection;
     }
 
     private void notifyReadyForInput() {
         if (sObserverForTest != null && isAcceptingUserInput()) {
             sObserverForTest.onPaymentRequestReadyForInput(this);
-        }
-    }
-
-    private void notifyReadyToPay() {
-        if (sObserverForTest != null && isAcceptingUserInput() && mPayButton.isEnabled()) {
-            sObserverForTest.onPaymentRequestReadyToPay(this);
         }
     }
 

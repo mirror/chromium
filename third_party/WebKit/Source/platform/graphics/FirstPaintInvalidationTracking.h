@@ -6,12 +6,30 @@
 #define FirstPaintInvalidationTracking_h
 
 #include "platform/PlatformExport.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 
 namespace blink {
 
-PLATFORM_EXPORT bool firstPaintInvalidationTrackingEnabled();
-PLATFORM_EXPORT void setFirstPaintInvalidationTrackingEnabledForShowPaintRects(bool);
+class PLATFORM_EXPORT FirstPaintInvalidationTracking {
+ public:
+  static bool IsEnabled() {
+    if (enabled_for_show_paint_rects_)
+      return true;
 
-} // namespace blink
+    bool is_tracing_enabled;
+    TRACE_EVENT_CATEGORY_GROUP_ENABLED(
+        TRACE_DISABLED_BY_DEFAULT("blink.invalidation"), &is_tracing_enabled);
+    return is_tracing_enabled;
+  }
 
-#endif // FirstPaintInvalidationTracking_h
+  static void SetEnabledForShowPaintRects(bool enabled) {
+    enabled_for_show_paint_rects_ = enabled;
+  }
+
+ private:
+  static bool enabled_for_show_paint_rects_;
+};
+
+}  // namespace blink
+
+#endif  // FirstPaintInvalidationTracking_h

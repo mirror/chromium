@@ -8,59 +8,64 @@
 #include "core/CoreExport.h"
 #include "core/dom/custom/CustomElementDefinitionBuilder.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicStringHash.h"
+#include "platform/wtf/text/StringView.h"
 #include "v8.h"
-#include "wtf/Allocator.h"
-#include "wtf/HashSet.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/RefPtr.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/AtomicStringHash.h"
 
 namespace blink {
 
-class CustomElementsRegistry;
+class CustomElementRegistry;
 class ExceptionState;
 class ScriptState;
 class ScriptValue;
 
 class CORE_EXPORT ScriptCustomElementDefinitionBuilder
     : public CustomElementDefinitionBuilder {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(ScriptCustomElementDefinitionBuilder);
-public:
-    ScriptCustomElementDefinitionBuilder(
-        ScriptState*,
-        CustomElementsRegistry*,
-        const ScriptValue& constructorScriptValue,
-        ExceptionState&);
-    ~ScriptCustomElementDefinitionBuilder();
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(ScriptCustomElementDefinitionBuilder);
 
-    bool checkConstructorIntrinsics() override;
-    bool checkConstructorNotRegistered() override;
-    bool checkPrototype() override;
-    bool rememberOriginalProperties() override;
-    CustomElementDefinition* build(const CustomElementDescriptor&) override;
+ public:
+  ScriptCustomElementDefinitionBuilder(
+      ScriptState*,
+      CustomElementRegistry*,
+      const ScriptValue& constructor_script_value,
+      ExceptionState&);
+  ~ScriptCustomElementDefinitionBuilder();
 
-private:
-    static ScriptCustomElementDefinitionBuilder* s_stack;
+  bool CheckConstructorIntrinsics() override;
+  bool CheckConstructorNotRegistered() override;
+  bool CheckPrototype() override;
+  bool RememberOriginalProperties() override;
+  CustomElementDefinition* Build(const CustomElementDescriptor&) override;
 
-    ScriptCustomElementDefinitionBuilder* m_prev;
-    RefPtr<ScriptState> m_scriptState;
-    Member<CustomElementsRegistry> m_registry;
-    v8::Local<v8::Value> m_constructorValue;
-    v8::Local<v8::Object> m_constructor;
-    v8::Local<v8::Object> m_prototype;
-    v8::Local<v8::Function> m_connectedCallback;
-    v8::Local<v8::Function> m_disconnectedCallback;
-    v8::Local<v8::Function> m_attributeChangedCallback;
-    HashSet<AtomicString> m_observedAttributes;
-    ExceptionState& m_exceptionState;
+ private:
+  static ScriptCustomElementDefinitionBuilder* stack_;
 
-    bool valueForName(const v8::Local<v8::Object>&, const String&, v8::Local<v8::Value>&) const;
-    bool callableForName(const String&, v8::Local<v8::Function>&) const;
-    bool retrieveObservedAttributes();
+  ScriptCustomElementDefinitionBuilder* prev_;
+  RefPtr<ScriptState> script_state_;
+  Member<CustomElementRegistry> registry_;
+  v8::Local<v8::Value> constructor_value_;
+  v8::Local<v8::Object> constructor_;
+  v8::Local<v8::Object> prototype_;
+  v8::Local<v8::Function> connected_callback_;
+  v8::Local<v8::Function> disconnected_callback_;
+  v8::Local<v8::Function> adopted_callback_;
+  v8::Local<v8::Function> attribute_changed_callback_;
+  HashSet<AtomicString> observed_attributes_;
+  ExceptionState& exception_state_;
+
+  bool ValueForName(const v8::Local<v8::Object>&,
+                    const StringView&,
+                    v8::Local<v8::Value>&) const;
+  bool CallableForName(const StringView&, v8::Local<v8::Function>&) const;
+  bool RetrieveObservedAttributes();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScriptCustomElementDefinitionBuilder_h
+#endif  // ScriptCustomElementDefinitionBuilder_h

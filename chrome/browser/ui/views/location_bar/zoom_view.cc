@@ -5,22 +5,22 @@
 #include "chrome/browser/ui/views/location_bar/zoom_view.h"
 
 #include "base/i18n/number_formatting.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/location_bar/zoom_bubble_view.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/toolbar/toolbar_model.h"
 #include "components/zoom/zoom_controller.h"
-#include "ui/accessibility/ax_view_state.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/events/event.h"
 #include "ui/gfx/geometry/size.h"
-#include "ui/gfx/vector_icons_public.h"
 
 ZoomView::ZoomView(LocationBarView::Delegate* location_bar_delegate)
     : BubbleIconView(nullptr, 0),
       location_bar_delegate_(location_bar_delegate),
-      image_id_(gfx::VectorIconId::VECTOR_ICON_NONE) {
-  Update(NULL);
+      icon_(&kZoomMinusIcon) {
+  Update(nullptr);
 }
 
 ZoomView::~ZoomView() {
@@ -39,10 +39,10 @@ void ZoomView::Update(zoom::ZoomController* zoom_controller) {
       base::FormatPercent(zoom_controller->GetZoomPercent())));
 
   // The icon is hidden when the zoom level is default.
-  image_id_ = zoom_controller->GetZoomRelativeToDefault() ==
-                      zoom::ZoomController::ZOOM_BELOW_DEFAULT_ZOOM
-                  ? gfx::VectorIconId::ZOOM_MINUS
-                  : gfx::VectorIconId::ZOOM_PLUS;
+  icon_ = zoom_controller->GetZoomRelativeToDefault() ==
+                  zoom::ZoomController::ZOOM_BELOW_DEFAULT_ZOOM
+              ? &kZoomMinusIcon
+              : &kZoomPlusIcon;
   if (GetNativeTheme())
     UpdateIcon();
 
@@ -54,15 +54,15 @@ void ZoomView::OnExecuting(BubbleIconView::ExecuteSource source) {
                              ZoomBubbleView::USER_GESTURE);
 }
 
-void ZoomView::GetAccessibleState(ui::AXViewState* state) {
-  BubbleIconView::GetAccessibleState(state);
-  state->name = l10n_util::GetStringUTF16(IDS_ACCNAME_ZOOM);
+void ZoomView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  BubbleIconView::GetAccessibleNodeData(node_data);
+  node_data->SetName(l10n_util::GetStringUTF8(IDS_ACCNAME_ZOOM));
 }
 
 views::BubbleDialogDelegateView* ZoomView::GetBubble() const {
   return ZoomBubbleView::GetZoomBubble();
 }
 
-gfx::VectorIconId ZoomView::GetVectorIcon() const {
-  return image_id_;
+const gfx::VectorIcon& ZoomView::GetVectorIcon() const {
+  return *icon_;
 }

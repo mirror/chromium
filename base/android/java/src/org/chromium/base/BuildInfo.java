@@ -44,8 +44,8 @@ public class BuildInfo {
 
     /**
      * @return The build fingerprint for the current Android install.  The value is truncated to a
-     *         128 characters as this is used for crash and UMA reporting, which should avoid huge
-     *         strings.
+     * 128 characters as this is used for crash and UMA reporting, which should avoid huge
+     * strings.
      */
     @CalledByNative
     public static String getAndroidBuildFingerprint() {
@@ -64,24 +64,25 @@ public class BuildInfo {
     }
 
     @CalledByNative
-    public static String getGMSVersionCode(Context context) {
+    public static String getGMSVersionCode() {
         String msg = "gms versionCode not available.";
         try {
-            PackageManager packageManager = context.getPackageManager();
+            PackageManager packageManager =
+                    ContextUtils.getApplicationContext().getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo("com.google.android.gms", 0);
             msg = Integer.toString(packageInfo.versionCode);
         } catch (NameNotFoundException e) {
-            Log.d(TAG, "GMS package is not found: %s", e);
+            Log.d(TAG, "GMS package is not found.", e);
         }
         return msg;
     }
 
     @CalledByNative
-    public static String getPackageVersionCode(Context context) {
+    public static String getPackageVersionCode() {
         String msg = "versionCode not available.";
         try {
-            PackageManager pm = context.getPackageManager();
-            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
+            PackageManager pm = ContextUtils.getApplicationContext().getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(getPackageName(), 0);
             msg = "";
             if (pi.versionCode > 0) {
                 msg = Integer.toString(pi.versionCode);
@@ -93,11 +94,11 @@ public class BuildInfo {
     }
 
     @CalledByNative
-    public static String getPackageVersionName(Context context) {
+    public static String getPackageVersionName() {
         String msg = "versionName not available";
         try {
-            PackageManager pm = context.getPackageManager();
-            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
+            PackageManager pm = ContextUtils.getApplicationContext().getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(getPackageName(), 0);
             msg = "";
             if (pi.versionName != null) {
                 msg = pi.versionName;
@@ -109,15 +110,16 @@ public class BuildInfo {
     }
 
     @CalledByNative
-    public static String getPackageLabel(Context context) {
+    public static String getPackageLabel() {
         // Third-party code does disk read on the getApplicationInfo call. http://crbug.com/614343
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
         try {
-            PackageManager packageManager = context.getPackageManager();
-            ApplicationInfo appInfo = packageManager.getApplicationInfo(context.getPackageName(),
-                    PackageManager.GET_META_DATA);
+            PackageManager packageManager =
+                    ContextUtils.getApplicationContext().getPackageManager();
+            ApplicationInfo appInfo = packageManager.getApplicationInfo(
+                    getPackageName(), PackageManager.GET_META_DATA);
             CharSequence label = packageManager.getApplicationLabel(appInfo);
-            return  label != null ? label.toString() : "";
+            return label != null ? label.toString() : "";
         } catch (NameNotFoundException e) {
             return "";
         } finally {
@@ -126,14 +128,23 @@ public class BuildInfo {
     }
 
     @CalledByNative
-    public static String getPackageName(Context context) {
-        String packageName = context != null ? context.getPackageName() : null;
-        return packageName != null ? packageName : "";
+    public static String getPackageName() {
+        if (ContextUtils.getApplicationContext() == null) {
+            return "";
+        }
+        return ContextUtils.getApplicationContext().getPackageName();
     }
 
     @CalledByNative
     public static String getBuildType() {
         return Build.TYPE;
+    }
+
+    /**
+     * Check if this is a debuggable build of Android. Use this to enable developer-only features.
+     */
+    public static boolean isDebugAndroid() {
+        return "eng".equals(Build.TYPE) || "userdebug".equals(Build.TYPE);
     }
 
     @CalledByNative
@@ -142,9 +153,19 @@ public class BuildInfo {
     }
 
     /**
-     * @return Whether the current build version is greater than Android N.
+     * @return Whether the current device is running Android O release or newer.
      */
-    public static boolean isGreaterThanN() {
-        return Build.VERSION.SDK_INT > 24 || Build.VERSION.CODENAME.equals("NMR1");
+    public static boolean isAtLeastO() {
+        return !"REL".equals(Build.VERSION.CODENAME)
+                && ("O".equals(Build.VERSION.CODENAME) || Build.VERSION.CODENAME.startsWith("OMR"));
+    }
+
+    /**
+     * @return Whether the current app targets the SDK for at least O
+     */
+    public static boolean targetsAtLeastO(Context appContext) {
+        return isAtLeastO()
+                && appContext.getApplicationInfo().targetSdkVersion
+                == Build.VERSION_CODES.CUR_DEVELOPMENT;
     }
 }

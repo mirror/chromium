@@ -71,9 +71,6 @@ class AppWindowContents {
   // Called when the native window closes.
   virtual void NativeWindowClosed() = 0;
 
-  // Called in tests when the window is shown
-  virtual void DispatchWindowShownForTests() const = 0;
-
   // Called when the renderer notifies the browser that the window is ready.
   virtual void OnWindowReady() = 0;
 
@@ -195,6 +192,9 @@ class AppWindow : public content::WebContentsDelegate,
     // will be grouped in the shelf with other windows that are associated with
     // the app. Defaults to false.
     bool show_in_shelf;
+
+    // Icon URL to be used for setting the window icon.
+    GURL window_icon_url;
 
     // The API enables developers to specify content or window bounds. This
     // function combines them into a single, constrained window size.
@@ -356,13 +356,13 @@ class AppWindow : public content::WebContentsDelegate,
   // the renderer.
   void GetSerializedState(base::DictionaryValue* properties) const;
 
-  // Called by the window API when events can be sent to the window for this
-  // app.
-  void WindowEventsReady();
-
   // Notifies the window's contents that the render view is ready and it can
   // unblock resource requests.
   void NotifyRenderViewReady();
+
+  // Returns true if window has custom icon in case either |window_icon_url_| or
+  // |app_icon_url_| is set. Custom icon may be not loaded yet.
+  bool HasCustomIcon() const;
 
   // Whether the app window wants to be alpha enabled.
   bool requested_alpha_enabled() const { return requested_alpha_enabled_; }
@@ -374,6 +374,8 @@ class AppWindow : public content::WebContentsDelegate,
   bool is_ime_window() const { return is_ime_window_; }
 
   bool show_in_shelf() const { return show_in_shelf_; }
+
+  const GURL& window_icon_url() const { return window_icon_url_; }
 
   void SetAppWindowContentsForTesting(
       std::unique_ptr<AppWindowContents> contents) {
@@ -424,9 +426,9 @@ class AppWindow : public content::WebContentsDelegate,
                       const gfx::Rect& initial_rect,
                       bool user_gesture,
                       bool* was_blocked) override;
-  bool PreHandleKeyboardEvent(content::WebContents* source,
-                              const content::NativeWebKeyboardEvent& event,
-                              bool* is_keyboard_shortcut) override;
+  content::KeyboardEventProcessingResult PreHandleKeyboardEvent(
+      content::WebContents* source,
+      const content::NativeWebKeyboardEvent& event) override;
   void HandleKeyboardEvent(
       content::WebContents* source,
       const content::NativeWebKeyboardEvent& event) override;
@@ -441,7 +443,6 @@ class AppWindow : public content::WebContentsDelegate,
 
   // content::WebContentsObserver implementation.
   void RenderViewCreated(content::RenderViewHost* render_view_host) override;
-  void DidFirstVisuallyNonEmptyPaint() override;
 
   // ExtensionFunctionDispatcher::Delegate implementation.
   WindowController* GetExtensionWindowController() const override;
@@ -540,18 +541,8 @@ class AppWindow : public content::WebContentsDelegate,
   // Bit field of FullscreenType.
   int fullscreen_types_;
 
-  // Show has been called, so the window should be shown once the first visually
-  // non-empty paint occurs.
-  bool show_on_first_paint_;
-
-  // The first visually non-empty paint has completed.
-  bool first_paint_complete_;
-
   // Whether the window has been shown or not.
   bool has_been_shown_;
-
-  // Whether events can be sent to the window.
-  bool can_send_events_;
 
   // Whether the window is hidden or not. Hidden in this context means actively
   // by the chrome.app.window API, not in an operating system context. For
@@ -560,9 +551,6 @@ class AppWindow : public content::WebContentsDelegate,
   // with the |hidden| flag set to true, or which have been programmatically
   // hidden, are considered hidden.
   bool is_hidden_;
-
-  // Whether the delayed Show() call was for an active or inactive window.
-  ShowType delayed_show_type_;
 
   // Cache the desired value of the always-on-top property. When windows enter
   // fullscreen or overlap the Windows taskbar, this property will be
@@ -579,6 +567,11 @@ class AppWindow : public content::WebContentsDelegate,
 
   // Whether |show_in_shelf| was set in the CreateParams.
   bool show_in_shelf_;
+
+  // Icon URL to be used for setting the window icon. If not empty,
+  // app_icon_ will be fetched and set using this URL and will have
+  // app_icon_image_ as a badge.
+  GURL window_icon_url_;
 
   // PlzNavigate: this is called when the first navigation is ready to commit.
   base::Closure on_first_commit_callback_;

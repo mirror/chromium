@@ -13,8 +13,8 @@
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_pref_names.h"
 #include "components/policy/core/common/policy_types.h"
+#include "components/policy/policy_constants.h"
 #include "components/prefs/pref_value_map.h"
-#include "policy/policy_constants.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 // Note: this file should move to components/policy/core/browser, but the
@@ -68,8 +68,8 @@ TEST_F(URLBlacklistPolicyHandlerTest,
 TEST_F(URLBlacklistPolicyHandlerTest,
        CheckPolicySettings_DisabledSchemesWrongType) {
   // The policy expects a list. Give it a boolean.
-  EXPECT_TRUE(CheckPolicy(key::kDisabledSchemes,
-                          base::WrapUnique(new base::FundamentalValue(false))));
+  EXPECT_TRUE(
+      CheckPolicy(key::kDisabledSchemes, base::MakeUnique<base::Value>(false)));
   EXPECT_EQ(1U, errors_.size());
   const std::string expected = key::kDisabledSchemes;
   const std::string actual = errors_.begin()->first;
@@ -79,8 +79,8 @@ TEST_F(URLBlacklistPolicyHandlerTest,
 TEST_F(URLBlacklistPolicyHandlerTest,
        CheckPolicySettings_URLBlacklistWrongType) {
   // The policy expects a list. Give it a boolean.
-  EXPECT_TRUE(CheckPolicy(key::kURLBlacklist,
-                          base::WrapUnique(new base::FundamentalValue(false))));
+  EXPECT_TRUE(
+      CheckPolicy(key::kURLBlacklist, base::MakeUnique<base::Value>(false)));
   EXPECT_EQ(1U, errors_.size());
   const std::string expected = key::kURLBlacklist;
   const std::string actual = errors_.begin()->first;
@@ -95,8 +95,7 @@ TEST_F(URLBlacklistPolicyHandlerTest, ApplyPolicySettings_NothingSpecified) {
 TEST_F(URLBlacklistPolicyHandlerTest,
        ApplyPolicySettings_DisabledSchemesWrongType) {
   // The policy expects a list. Give it a boolean.
-  SetPolicy(key::kDisabledSchemes,
-            base::WrapUnique(new base::FundamentalValue(false)));
+  SetPolicy(key::kDisabledSchemes, base::MakeUnique<base::Value>(false));
   ApplyPolicies();
   EXPECT_FALSE(prefs_.GetValue(policy_prefs::kUrlBlacklist, NULL));
 }
@@ -104,8 +103,7 @@ TEST_F(URLBlacklistPolicyHandlerTest,
 TEST_F(URLBlacklistPolicyHandlerTest,
        ApplyPolicySettings_URLBlacklistWrongType) {
   // The policy expects a list. Give it a boolean.
-  SetPolicy(key::kURLBlacklist,
-            base::WrapUnique(new base::FundamentalValue(false)));
+  SetPolicy(key::kURLBlacklist, base::MakeUnique<base::Value>(false));
   ApplyPolicies();
   EXPECT_FALSE(prefs_.GetValue(policy_prefs::kUrlBlacklist, NULL));
 }

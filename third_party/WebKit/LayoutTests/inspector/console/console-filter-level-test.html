@@ -29,7 +29,7 @@ function test()
 {
     function dumpVisibleMessages()
     {
-        var messages = WebInspector.ConsoleView.instance()._visibleViewMessages;
+        var messages = Console.ConsoleView.instance()._visibleViewMessages;
 
         for (var i = 0; i < messages.length; i++)
             InspectorTest.addResult(">" + messages[i].toMessageElement().deepTextContent());
@@ -42,48 +42,55 @@ function test()
             dumpVisibleMessages();
             next();
         },
-        
-        function onlyWarning(next)
+
+        function verbose(next)
         {
-            WebInspector.ConsoleView.instance()._filter._levelFilterUI._toggleTypeFilter("warning");
+            Common.settings.settingForTest('messageLevelFilters2').set(ConsoleModel.ConsoleMessage.MessageLevel.Verbose);
             dumpVisibleMessages();
             next();
         },
         
-        function onlyLog(next)
+        function info(next)
         {
-            WebInspector.ConsoleView.instance()._filter._levelFilterUI._toggleTypeFilter("log");
+            Common.settings.settingForTest('messageLevelFilters2').set(ConsoleModel.ConsoleMessage.MessageLevel.Info);
+            dumpVisibleMessages();
+            next();
+        },
+
+        function warning(next)
+        {
+            Common.settings.settingForTest('messageLevelFilters2').set(ConsoleModel.ConsoleMessage.MessageLevel.Warning);
+            dumpVisibleMessages();
+            next();
+        },
+              
+        function error(next)
+        {
+            Common.settings.settingForTest('messageLevelFilters2').set(ConsoleModel.ConsoleMessage.MessageLevel.Error);
+            dumpVisibleMessages();
+            next();
+        },
+       
+        function abcMessagePlain(next)
+        {
+            Common.settings.settingForTest('messageLevelFilters2').set(ConsoleModel.ConsoleMessage.MessageLevel.Verbose);
+            Console.ConsoleView.instance()._filter._textFilterUI.setValue("abc");
+            Console.ConsoleView.instance()._filter._textFilterChanged();
             dumpVisibleMessages();
             next();
         },
         
-        function onlyErrorDebug(next)
+        function abcMessageRegex(next)
         {
-            WebInspector.ConsoleView.instance()._filter._levelFilterUI._toggleTypeFilter("error");
-            WebInspector.ConsoleView.instance()._filter._levelFilterUI._toggleTypeFilter("debug", true);
+            Console.ConsoleView.instance()._filter._textFilterUI.setValue("/ab[a-z]/");
+            Console.ConsoleView.instance()._filter._textFilterChanged();
             dumpVisibleMessages();
             next();
         },
-        
-        function onlyAbcMessagePlain(next)
+
+        function abcMessageRegexWarning(next)
         {
-            WebInspector.ConsoleView.instance()._filter._levelFilterUI._toggleTypeFilter(WebInspector.NamedBitSetFilterUI.ALL_TYPES);
-            WebInspector.ConsoleView.instance()._filter._textFilterUI.setValue("abc");
-            dumpVisibleMessages();
-            next();
-        },
-        
-        function onlyAbcMessageRegex(next)
-        {
-            WebInspector.ConsoleView.instance()._filter._textFilterUI._regexCheckBox.checked = "checked";
-            WebInspector.ConsoleView.instance()._filter._textFilterUI.setValue("ab[a-z]");
-            dumpVisibleMessages();
-            next();
-        },
-        
-        function onlyAbcMessageRegexWarning(next)
-        {
-            WebInspector.ConsoleView.instance()._filter._levelFilterUI._toggleTypeFilter("warning", false);
+            Common.settings.settingForTest('messageLevelFilters2').set(ConsoleModel.ConsoleMessage.MessageLevel.Warning);
             dumpVisibleMessages();
             next();
         }

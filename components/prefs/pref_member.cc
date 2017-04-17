@@ -131,7 +131,7 @@ void PrefMemberBase::Internal::MoveToThread(
 
 bool PrefMemberVectorStringUpdate(const base::Value& value,
                                   std::vector<std::string>* string_vector) {
-  if (!value.IsType(base::Value::TYPE_LIST))
+  if (!value.IsType(base::Value::Type::LIST))
     return false;
   const base::ListValue* list = static_cast<const base::ListValue*>(&value);
 
@@ -139,7 +139,7 @@ bool PrefMemberVectorStringUpdate(const base::Value& value,
   for (base::ListValue::const_iterator it = list->begin();
        it != list->end(); ++it) {
     std::string string_value;
-    if (!(*it)->GetAsString(&string_value))
+    if (!it->GetAsString(&string_value))
       return false;
 
     local_vector.push_back(string_value);

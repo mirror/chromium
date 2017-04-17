@@ -28,10 +28,11 @@
 #define IntPoint_h
 
 #include "platform/geometry/IntSize.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/MathExtras.h"
-#include "wtf/VectorTraits.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/MathExtras.h"
+#include "platform/wtf/SaturatedArithmetic.h"
+#include "platform/wtf/VectorTraits.h"
 
 #if OS(MACOSX)
 typedef struct CGPoint CGPoint;
@@ -44,130 +45,124 @@ typedef struct CGPoint CGPoint;
 namespace blink {
 
 class PLATFORM_EXPORT IntPoint {
-    USING_FAST_MALLOC(IntPoint);
-public:
-    IntPoint() : m_x(0), m_y(0) { }
-    IntPoint(int x, int y) : m_x(x), m_y(y) { }
-    explicit IntPoint(const IntSize& size) : m_x(size.width()), m_y(size.height()) { }
+  USING_FAST_MALLOC(IntPoint);
 
-    static IntPoint zero() { return IntPoint(); }
+ public:
+  IntPoint() : x_(0), y_(0) {}
+  IntPoint(int x, int y) : x_(x), y_(y) {}
+  explicit IntPoint(const IntSize& size)
+      : x_(size.Width()), y_(size.Height()) {}
 
-    int x() const { return m_x; }
-    int y() const { return m_y; }
+  static IntPoint Zero() { return IntPoint(); }
 
-    void setX(int x) { m_x = x; }
-    void setY(int y) { m_y = y; }
+  int X() const { return x_; }
+  int Y() const { return y_; }
 
-    void move(const IntSize& s) { move(s.width(), s.height()); }
-    void moveBy(const IntPoint& offset) { move(offset.x(), offset.y()); }
-    void move(int dx, int dy) { m_x += dx; m_y += dy; }
-    void scale(float sx, float sy)
-    {
-        m_x = lroundf(static_cast<float>(m_x * sx));
-        m_y = lroundf(static_cast<float>(m_y * sy));
-    }
+  void SetX(int x) { x_ = x; }
+  void SetY(int y) { y_ = y; }
 
-    IntPoint expandedTo(const IntPoint& other) const
-    {
-        return IntPoint(m_x > other.m_x ? m_x : other.m_x,
-            m_y > other.m_y ? m_y : other.m_y);
-    }
+  void Move(const IntSize& s) { Move(s.Width(), s.Height()); }
+  void MoveBy(const IntPoint& offset) { Move(offset.X(), offset.Y()); }
+  void Move(int dx, int dy) {
+    x_ += dx;
+    y_ += dy;
+  }
+  void SaturatedMove(int dx, int dy) {
+    x_ = SaturatedAddition(x_, dx);
+    y_ = SaturatedAddition(y_, dy);
+  }
 
-    IntPoint shrunkTo(const IntPoint& other) const
-    {
-        return IntPoint(m_x < other.m_x ? m_x : other.m_x,
-            m_y < other.m_y ? m_y : other.m_y);
-    }
+  void Scale(float sx, float sy) {
+    x_ = lroundf(static_cast<float>(x_ * sx));
+    y_ = lroundf(static_cast<float>(y_ * sy));
+  }
 
-    int distanceSquaredToPoint(const IntPoint&) const;
+  IntPoint ExpandedTo(const IntPoint& other) const {
+    return IntPoint(x_ > other.x_ ? x_ : other.x_,
+                    y_ > other.y_ ? y_ : other.y_);
+  }
 
-    void clampNegativeToZero()
-    {
-        *this = expandedTo(zero());
-    }
+  IntPoint ShrunkTo(const IntPoint& other) const {
+    return IntPoint(x_ < other.x_ ? x_ : other.x_,
+                    y_ < other.y_ ? y_ : other.y_);
+  }
 
-    IntPoint transposedPoint() const
-    {
-        return IntPoint(m_y, m_x);
-    }
+  int DistanceSquaredToPoint(const IntPoint&) const;
+
+  void ClampNegativeToZero() { *this = ExpandedTo(Zero()); }
+
+  IntPoint TransposedPoint() const { return IntPoint(y_, x_); }
 
 #if OS(MACOSX)
-    explicit IntPoint(const CGPoint&); // don't do this implicitly since it's lossy
-    operator CGPoint() const;
+  explicit IntPoint(
+      const CGPoint&);  // don't do this implicitly since it's lossy
+  operator CGPoint() const;
 
 #if defined(__OBJC__) && !defined(NSGEOMETRY_TYPES_SAME_AS_CGGEOMETRY_TYPES)
-    explicit IntPoint(const NSPoint&); // don't do this implicitly since it's lossy
-    operator NSPoint() const;
+  explicit IntPoint(
+      const NSPoint&);  // don't do this implicitly since it's lossy
+  operator NSPoint() const;
 #endif
 #endif
 
-#ifndef NDEBUG
-    String toString() const;
-#endif
+  String ToString() const;
 
-private:
-    int m_x, m_y;
+ private:
+  int x_, y_;
 };
 
-inline IntPoint& operator+=(IntPoint& a, const IntSize& b)
-{
-    a.move(b.width(), b.height());
-    return a;
+inline IntPoint& operator+=(IntPoint& a, const IntSize& b) {
+  a.Move(b.Width(), b.Height());
+  return a;
 }
 
-inline IntPoint& operator-=(IntPoint& a, const IntSize& b)
-{
-    a.move(-b.width(), -b.height());
-    return a;
+inline IntPoint& operator-=(IntPoint& a, const IntSize& b) {
+  a.Move(-b.Width(), -b.Height());
+  return a;
 }
 
-inline IntPoint operator+(const IntPoint& a, const IntSize& b)
-{
-    return IntPoint(a.x() + b.width(), a.y() + b.height());
+inline IntPoint operator+(const IntPoint& a, const IntSize& b) {
+  return IntPoint(a.X() + b.Width(), a.Y() + b.Height());
 }
 
-inline IntPoint operator+(const IntPoint& a, const IntPoint& b)
-{
-    return IntPoint(a.x() + b.x(), a.y() + b.y());
+inline IntPoint operator+(const IntPoint& a, const IntPoint& b) {
+  return IntPoint(a.X() + b.X(), a.Y() + b.Y());
 }
 
-inline IntSize operator-(const IntPoint& a, const IntPoint& b)
-{
-    return IntSize(a.x() - b.x(), a.y() - b.y());
+inline IntSize operator-(const IntPoint& a, const IntPoint& b) {
+  return IntSize(a.X() - b.X(), a.Y() - b.Y());
 }
 
-inline IntPoint operator-(const IntPoint& a, const IntSize& b)
-{
-    return IntPoint(a.x() - b.width(), a.y() - b.height());
+inline IntPoint operator-(const IntPoint& a, const IntSize& b) {
+  return IntPoint(a.X() - b.Width(), a.Y() - b.Height());
 }
 
-inline IntPoint operator-(const IntPoint& point)
-{
-    return IntPoint(-point.x(), -point.y());
+inline IntPoint operator-(const IntPoint& point) {
+  return IntPoint(-point.X(), -point.Y());
 }
 
-inline bool operator==(const IntPoint& a, const IntPoint& b)
-{
-    return a.x() == b.x() && a.y() == b.y();
+inline bool operator==(const IntPoint& a, const IntPoint& b) {
+  return a.X() == b.X() && a.Y() == b.Y();
 }
 
-inline bool operator!=(const IntPoint& a, const IntPoint& b)
-{
-    return a.x() != b.x() || a.y() != b.y();
+inline bool operator!=(const IntPoint& a, const IntPoint& b) {
+  return a.X() != b.X() || a.Y() != b.Y();
 }
 
-inline IntSize toIntSize(const IntPoint& a)
-{
-    return IntSize(a.x(), a.y());
+inline IntSize ToIntSize(const IntPoint& a) {
+  return IntSize(a.X(), a.Y());
 }
 
-inline int IntPoint::distanceSquaredToPoint(const IntPoint& point) const
-{
-    return ((*this) - point).diagonalLengthSquared();
+inline int IntPoint::DistanceSquaredToPoint(const IntPoint& point) const {
+  return ((*this) - point).DiagonalLengthSquared();
 }
 
-} // namespace blink
+// Redeclared here to avoid ODR issues.
+// See platform/testing/GeometryPrinters.h.
+void PrintTo(const IntPoint&, std::ostream*);
+
+}  // namespace blink
 
 WTF_ALLOW_MOVE_INIT_AND_COMPARE_WITH_MEM_FUNCTIONS(blink::IntPoint);
 
-#endif // IntPoint_h
+#endif  // IntPoint_h

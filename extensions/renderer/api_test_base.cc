@@ -10,12 +10,15 @@
 #include "base/location.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "base/strings/string_piece.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "extensions/common/extension_urls.h"
 #include "extensions/renderer/dispatcher.h"
 #include "extensions/renderer/process_info_native_handler.h"
 #include "gin/converter.h"
 #include "gin/dictionary.h"
+#include "gin/modules/console.h"
+#include "gin/modules/timer.h"
 #include "mojo/edk/js/core.h"
 #include "mojo/edk/js/handle.h"
 #include "mojo/edk/js/support.h"
@@ -68,40 +71,41 @@ gin::WrapperInfo TestNatives::kWrapperInfo = {gin::kEmbedderNativeGin};
 
 }  // namespace
 
-gin::WrapperInfo TestServiceProvider::kWrapperInfo = {gin::kEmbedderNativeGin};
+gin::WrapperInfo TestInterfaceProvider::kWrapperInfo =
+    {gin::kEmbedderNativeGin};
 
-gin::Handle<TestServiceProvider> TestServiceProvider::Create(
+gin::Handle<TestInterfaceProvider> TestInterfaceProvider::Create(
     v8::Isolate* isolate) {
-  return gin::CreateHandle(isolate, new TestServiceProvider());
+  return gin::CreateHandle(isolate, new TestInterfaceProvider());
 }
 
-TestServiceProvider::~TestServiceProvider() {
+TestInterfaceProvider::~TestInterfaceProvider() {
 }
 
-gin::ObjectTemplateBuilder TestServiceProvider::GetObjectTemplateBuilder(
+gin::ObjectTemplateBuilder TestInterfaceProvider::GetObjectTemplateBuilder(
     v8::Isolate* isolate) {
-  return Wrappable<TestServiceProvider>::GetObjectTemplateBuilder(isolate)
-      .SetMethod("connectToService", &TestServiceProvider::ConnectToService);
+  return Wrappable<TestInterfaceProvider>::GetObjectTemplateBuilder(isolate)
+      .SetMethod("getInterface", &TestInterfaceProvider::GetInterface);
 }
 
-mojo::Handle TestServiceProvider::ConnectToService(
-    const std::string& service_name) {
-  EXPECT_EQ(1u, service_factories_.count(service_name))
-      << "Unregistered service " << service_name << " requested.";
+mojo::Handle TestInterfaceProvider::GetInterface(
+    const std::string& interface_name) {
+  EXPECT_EQ(1u, factories_.count(interface_name))
+      << "Unregistered interface " << interface_name << " requested.";
   mojo::MessagePipe pipe;
   std::map<std::string,
            base::Callback<void(mojo::ScopedMessagePipeHandle)> >::iterator it =
-      service_factories_.find(service_name);
-  if (it != service_factories_.end())
+      factories_.find(interface_name);
+  if (it != factories_.end())
     it->second.Run(std::move(pipe.handle0));
   return pipe.handle1.release();
 }
 
-TestServiceProvider::TestServiceProvider() {
+TestInterfaceProvider::TestInterfaceProvider() {
 }
 
 // static
-void TestServiceProvider::IgnoreHandle(mojo::ScopedMessagePipeHandle handle) {
+void TestInterfaceProvider::IgnoreHandle(mojo::ScopedMessagePipeHandle handle) {
 }
 
 ApiTestEnvironment::ApiTestEnvironment(
@@ -116,14 +120,12 @@ ApiTestEnvironment::~ApiTestEnvironment() {
 
 void ApiTestEnvironment::RegisterModules() {
   v8_schema_registry_.reset(new V8SchemaRegistry);
-  const std::vector<std::pair<std::string, int> > resources =
+  const std::vector<std::pair<const char*, int>> resources =
       Dispatcher::GetJsResources();
-  for (std::vector<std::pair<std::string, int> >::const_iterator resource =
-           resources.begin();
-       resource != resources.end();
-       ++resource) {
-    if (resource->first != "test_environment_specific_bindings")
-      env()->RegisterModule(resource->first, resource->second);
+  for (const auto& resource : resources) {
+    if (base::StringPiece(resource.first) !=
+        "test_environment_specific_bindings")
+      env()->RegisterModule(resource.first, resource.second);
   }
   Dispatcher::RegisterNativeHandlers(env()->module_system(),
                                      env()->context(),
@@ -153,18 +155,24 @@ void ApiTestEnvironment::RegisterModules() {
       "exports.$set('MatchAgainstEventFilter', function() { return [] });");
 
   gin::ModuleRegistry::From(env()->context()->v8_context())
+      ->AddBuiltinModule(env()->isolate(), gin::Console::kModuleName,
+                         gin::Console::GetModule(env()->isolate()));
+  gin::ModuleRegistry::From(env()->context()->v8_context())
+      ->AddBuiltinModule(env()->isolate(), gin::TimerModule::kName,
+                         gin::TimerModule::GetModule(env()->isolate()));
+  gin::ModuleRegistry::From(env()->context()->v8_context())
       ->AddBuiltinModule(env()->isolate(), mojo::edk::js::Core::kModuleName,
                          mojo::edk::js::Core::GetModule(env()->isolate()));
   gin::ModuleRegistry::From(env()->context()->v8_context())
       ->AddBuiltinModule(env()->isolate(), mojo::edk::js::Support::kModuleName,
                          mojo::edk::js::Support::GetModule(env()->isolate()));
-  gin::Handle<TestServiceProvider> service_provider =
-      TestServiceProvider::Create(env()->isolate());
-  service_provider_ = service_provider.get();
+  gin::Handle<TestInterfaceProvider> interface_provider =
+    TestInterfaceProvider::Create(env()->isolate());
+  interface_provider_ = interface_provider.get();
   gin::ModuleRegistry::From(env()->context()->v8_context())
       ->AddBuiltinModule(env()->isolate(),
-                         "content/public/renderer/frame_service_registry",
-                         service_provider.ToV8());
+                         "content/public/renderer/frame_interfaces",
+                         interface_provider.ToV8());
 }
 
 void ApiTestEnvironment::InitializeEnvironment() {
@@ -203,12 +211,21 @@ void ApiTestEnvironment::RunTestInner(const std::string& test_name,
                                       const base::Closure& quit_closure) {
   v8::HandleScope scope(env()->isolate());
   ModuleSystem::NativesEnabledScope natives_enabled(env()->module_system());
-  v8::Local<v8::Value> result =
-      env()->module_system()->CallModuleMethod("testBody", test_name);
-  if (!result->IsTrue()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure);
-    FAIL() << "Failed to run test \"" << test_name << "\"";
-  }
+  v8::Local<v8::Value> result;
+  bool did_run = false;
+  auto callback = [](bool* did_run, const base::Closure& quit_closure,
+                     const std::string& test_name,
+                     const std::vector<v8::Local<v8::Value>>& result) {
+    *did_run = true;
+    if (result.empty() || result[0].IsEmpty() || !result[0]->IsTrue()) {
+      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure);
+      FAIL() << "Failed to run test \"" << test_name << "\"";
+    }
+  };
+  env()->module_system()->CallModuleMethodSafe(
+      "testBody", test_name, 0, nullptr,
+      base::Bind(callback, &did_run, quit_closure, test_name));
+  ASSERT_TRUE(did_run);
 }
 
 void ApiTestEnvironment::RunPromisesAgain() {

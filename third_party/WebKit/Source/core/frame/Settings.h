@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2003, 2006, 2007, 2008, 2009, 2011, 2012 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2006, 2007, 2008, 2009, 2011, 2012 Apple Inc. All rights
+ * reserved.
  *           (C) 2006 Graham Dennis (graham.dennis@gmail.com)
  *
  * Redistribution and use in source and binary forms, with or without
@@ -50,43 +51,51 @@
 namespace blink {
 
 class CORE_EXPORT Settings {
-    WTF_MAKE_NONCOPYABLE(Settings);
-    USING_FAST_MALLOC(Settings);
-public:
-    static std::unique_ptr<Settings> create();
+  WTF_MAKE_NONCOPYABLE(Settings);
+  USING_FAST_MALLOC(Settings);
 
-    GenericFontFamilySettings& genericFontFamilySettings() { return m_genericFontFamilySettings; }
-    void notifyGenericFontFamilyChange() { invalidate(SettingsDelegate::FontFamilyChange); }
+ public:
+  static std::unique_ptr<Settings> Create();
 
-    void setTextAutosizingEnabled(bool);
-    bool textAutosizingEnabled() const { return m_textAutosizingEnabled; }
+  GenericFontFamilySettings& GetGenericFontFamilySettings() {
+    return generic_font_family_settings_;
+  }
+  void NotifyGenericFontFamilyChange() {
+    Invalidate(SettingsDelegate::kFontFamilyChange);
+  }
 
-    // Only set by Layout Tests, and only used if textAutosizingEnabled() returns true.
-    void setTextAutosizingWindowSizeOverride(const IntSize&);
-    const IntSize& textAutosizingWindowSizeOverride() const { return m_textAutosizingWindowSizeOverride; }
+  void SetTextAutosizingEnabled(bool);
+  bool TextAutosizingEnabled() const { return text_autosizing_enabled_; }
 
-    SETTINGS_GETTERS_AND_SETTERS
+  // Only set by Layout Tests, and only used if textAutosizingEnabled() returns
+  // true.
+  void SetTextAutosizingWindowSizeOverride(const IntSize&);
+  const IntSize& TextAutosizingWindowSizeOverride() const {
+    return text_autosizing_window_size_override_;
+  }
 
-    // FIXME: This does not belong here.
-    static void setMockScrollbarsEnabled(bool flag);
-    static bool mockScrollbarsEnabled();
+  SETTINGS_GETTERS_AND_SETTERS
 
-    void setDelegate(SettingsDelegate*);
+  // FIXME: This does not belong here.
+  static void SetMockScrollbarsEnabled(bool flag);
+  static bool MockScrollbarsEnabled();
 
-private:
-    Settings();
+  void SetDelegate(SettingsDelegate*);
 
-    void invalidate(SettingsDelegate::ChangeType);
+ private:
+  Settings();
 
-    SettingsDelegate* m_delegate;
+  void Invalidate(SettingsDelegate::ChangeType);
 
-    GenericFontFamilySettings m_genericFontFamilySettings;
-    IntSize m_textAutosizingWindowSizeOverride;
-    bool m_textAutosizingEnabled : 1;
+  SettingsDelegate* delegate_;
 
-    SETTINGS_MEMBER_VARIABLES
+  GenericFontFamilySettings generic_font_family_settings_;
+  IntSize text_autosizing_window_size_override_;
+  bool text_autosizing_enabled_ : 1;
+
+  SETTINGS_MEMBER_VARIABLES
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Settings_h
+#endif  // Settings_h

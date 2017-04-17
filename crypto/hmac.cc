@@ -4,16 +4,17 @@
 
 #include "crypto/hmac.h"
 
-#include <openssl/hmac.h>
 #include <stddef.h>
 
 #include <algorithm>
+#include <string>
 
 #include "base/logging.h"
 #include "base/stl_util.h"
 #include "crypto/openssl_util.h"
 #include "crypto/secure_util.h"
 #include "crypto/symmetric_key.h"
+#include "third_party/boringssl/src/include/openssl/hmac.h"
 
 namespace crypto {
 
@@ -25,7 +26,7 @@ HMAC::HMAC(HashAlgorithm hash_alg) : hash_alg_(hash_alg), initialized_(false) {
 HMAC::~HMAC() {
   // Zero out key copy.
   key_.assign(key_.size(), 0);
-  STLClearObject(&key_);
+  base::STLClearObject(&key_);
 }
 
 size_t HMAC::DigestLength() const {

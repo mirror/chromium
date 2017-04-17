@@ -6,28 +6,28 @@
 #define CHROME_BROWSER_CHROMEOS_LOGIN_SCREEN_MANAGER_H_
 
 #include <map>
+#include <memory>
 #include <string>
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "base/memory/linked_ptr.h"
 #include "chrome/browser/chromeos/login/screens/base_screen.h"
 
 namespace chromeos {
 
+class WizardController;
+
 // Class that manages creation and ownership of screens.
 class ScreenManager {
  public:
-  ScreenManager();
-  virtual ~ScreenManager();
+  // |wizard_controller| is not owned by this class.
+  explicit ScreenManager(WizardController* wizard_controller);
+  ~ScreenManager();
 
   // Getter for screen with lazy initialization.
-  virtual BaseScreen* GetScreen(const std::string& screen_name);
+  BaseScreen* GetScreen(OobeScreen screen);
 
-  // Factory for screen instances.
-  virtual BaseScreen* CreateScreen(const std::string& screen_name) = 0;
-
-  bool HasScreen(const std::string& screen_name);
+  bool HasScreen(OobeScreen screen);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(EnrollmentScreenTest, TestCancel);
@@ -37,9 +37,11 @@ class ScreenManager {
   friend class WizardInProcessBrowserTest;
   friend class WizardControllerBrokenLocalStateTest;
 
-  // Screens.
-  typedef std::map<std::string, linked_ptr<BaseScreen>> ScreenMap;
-  ScreenMap screens_;
+  // Created screens.
+  std::map<OobeScreen, std::unique_ptr<BaseScreen>> screens_;
+
+  // Used to allocate BaseScreen instances. Unowned.
+  WizardController* wizard_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(ScreenManager);
 };

@@ -32,23 +32,25 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class DOMWindowCSS : public GarbageCollected<DOMWindowCSS>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static bool supports(const String& property, const String& value);
-    static bool supports(const String& conditionText);
-    static String escape(const String& ident);
+class DOMWindowCSS : public GarbageCollected<DOMWindowCSS>,
+                     public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    DEFINE_INLINE_TRACE() { }
+ public:
+  static bool supports(const String& property, const String& value);
+  static bool supports(const String& condition_text);
+  static String escape(const String& ident);
 
-private:
-    DOMWindowCSS() { }
+  DEFINE_INLINE_TRACE() {}
+
+ private:
+  DOMWindowCSS() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

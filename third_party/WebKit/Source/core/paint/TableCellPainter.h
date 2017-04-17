@@ -7,7 +7,7 @@
 
 #include "core/style/CollapsedBorderValue.h"
 #include "platform/graphics/paint/DisplayItem.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -17,27 +17,38 @@ class LayoutPoint;
 class LayoutRect;
 class LayoutTableCell;
 class LayoutObject;
-class ComputedStyle;
 
 class TableCellPainter {
-    STACK_ALLOCATED();
-public:
-    TableCellPainter(const LayoutTableCell& layoutTableCell) : m_layoutTableCell(layoutTableCell) { }
+  STACK_ALLOCATED();
 
-    void paint(const PaintInfo&, const LayoutPoint&);
+ public:
+  TableCellPainter(const LayoutTableCell& layout_table_cell)
+      : layout_table_cell_(layout_table_cell) {}
 
-    void paintCollapsedBorders(const PaintInfo&, const LayoutPoint&, const CollapsedBorderValue&);
-    void paintContainerBackgroundBehindCell(const PaintInfo&, const LayoutPoint&, const LayoutObject& backgroundObject, DisplayItem::Type);
-    void paintBoxDecorationBackground(const PaintInfo&, const LayoutPoint& paintOffset);
-    void paintMask(const PaintInfo&, const LayoutPoint& paintOffset);
+  void Paint(const PaintInfo&, const LayoutPoint&);
 
-private:
-    LayoutRect paintRectNotIncludingVisualOverflow(const LayoutPoint& paintOffset);
-    void paintBackground(const PaintInfo&, const LayoutRect&, const LayoutObject& backgroundObject);
+  void PaintCollapsedBorders(const PaintInfo&,
+                             const LayoutPoint&,
+                             const CollapsedBorderValue&);
+  void PaintContainerBackgroundBehindCell(
+      const PaintInfo&,
+      const LayoutPoint&,
+      const LayoutObject& background_object);
+  void PaintBoxDecorationBackground(const PaintInfo&,
+                                    const LayoutPoint& paint_offset);
+  void PaintMask(const PaintInfo&, const LayoutPoint& paint_offset);
 
-    const LayoutTableCell& m_layoutTableCell;
+ private:
+  const DisplayItemClient& DisplayItemClientForBorders() const;
+  LayoutRect PaintRectNotIncludingVisualOverflow(
+      const LayoutPoint& paint_offset);
+  void PaintBackground(const PaintInfo&,
+                       const LayoutRect&,
+                       const LayoutObject& background_object);
+
+  const LayoutTableCell& layout_table_cell_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TableCellPainter_h
+#endif  // TableCellPainter_h

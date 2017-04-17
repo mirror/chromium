@@ -10,6 +10,8 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
+#include "base/metrics/field_trial.h"
 #include "base/strings/string16.h"
 #include "base/test/mock_entropy_provider.h"
 #include "base/test/simple_test_tick_clock.h"
@@ -25,7 +27,9 @@
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/variations/variations_associated_data.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/web_contents_tester.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -87,17 +91,16 @@ class MockTabStripModelObserver : public TabStripModelObserver {
 class LenientMockTaskRunner {
  public:
   LenientMockTaskRunner() {}
-  MOCK_METHOD3(PostDelayedTask,
-               bool(const tracked_objects::Location&,
-                    const base::Closure&,
-                    base::TimeDelta));
+  MOCK_METHOD2(PostDelayedTask,
+               bool(const tracked_objects::Location&, base::TimeDelta));
+
  private:
   DISALLOW_COPY_AND_ASSIGN(LenientMockTaskRunner);
 };
 using MockTaskRunner = testing::StrictMock<LenientMockTaskRunner>;
 
 // Represents a pending task.
-using Task = std::pair<base::TimeTicks, base::Closure>;
+using Task = std::pair<base::TimeTicks, base::OnceClosure>;
 
 // Comparator used for sorting Task objects. Can't use std::pair's default
 // comparison operators because Closure's are comparable.
@@ -117,11 +120,11 @@ class TaskRunnerProxy : public base::TaskRunner {
       : mock_(mock), clock_(clock) {}
   bool RunsTasksOnCurrentThread() const override { return true; }
   bool PostDelayedTask(const tracked_objects::Location& location,
-                       const base::Closure& closure,
+                       base::OnceClosure closure,
                        base::TimeDelta delta) override {
-    mock_->PostDelayedTask(location, closure, delta);
+    mock_->PostDelayedTask(location, delta);
     base::TimeTicks when = clock_->NowTicks() + delta;
-    tasks_.push_back(Task(when, closure));
+    tasks_.push_back(Task(when, std::move(closure)));
     // Use 'greater' comparator to make this a min heap.
     std::push_heap(tasks_.begin(), tasks_.end(), TaskComparator());
     return true;
@@ -132,7 +135,7 @@ class TaskRunnerProxy : public base::TaskRunner {
     base::TimeTicks now = clock_->NowTicks();
     size_t count = 0;
     while (!tasks_.empty() && tasks_.front().first <= now) {
-      tasks_.front().second.Run();
+      std::move(tasks_.front().second).Run();
       std::pop_heap(tasks_.begin(), tasks_.end(), TaskComparator());
       tasks_.pop_back();
       ++count;
@@ -166,7 +169,7 @@ class TaskRunnerProxy : public base::TaskRunner {
   base::SimpleTestTickClock* clock_;
 
   // A min-heap of outstanding tasks.
-  using Task = std::pair<base::TimeTicks, base::Closure>;
+  using Task = std::pair<base::TimeTicks, base::OnceClosure>;
   std::vector<Task> tasks_;
 
   DISALLOW_COPY_AND_ASSIGN(TaskRunnerProxy);
@@ -416,7 +419,8 @@ TEST_F(TabManagerTest, ReloadDiscardedTabContextMenu) {
   tab_manager.DiscardWebContentsAt(1, &tabstrip);
   EXPECT_TRUE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
 
-  tabstrip.GetWebContentsAt(1)->GetController().Reload(false);
+  tabstrip.GetWebContentsAt(1)->GetController().Reload(
+      content::ReloadType::NORMAL, false);
   EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
   tabstrip.CloseAllTabs();
   EXPECT_TRUE(tabstrip.empty());
@@ -449,7 +453,7 @@ TEST_F(TabManagerTest, DiscardedTabKeepsLastActiveTime) {
 
 // Test to see if a tab can only be discarded once. On Windows and Mac, this
 // defaults to true unless overridden through a variation parameter. On other
-// platforms, it's always false
+// platforms, it's always false.
 #if defined(OS_WIN) || defined(OS_MACOSX)
 TEST_F(TabManagerTest, CanOnlyDiscardOnce) {
   TabManager tab_manager;
@@ -465,7 +469,8 @@ TEST_F(TabManagerTest, CanOnlyDiscardOnce) {
   {
     std::unique_ptr<base::FieldTrialList> field_trial_list_;
     field_trial_list_.reset(
-        new base::FieldTrialList(new base::MockEntropyProvider()));
+        new base::FieldTrialList(
+            base::MakeUnique<base::MockEntropyProvider>()));
     variations::testing::ClearAllVariationParams();
 
     std::map<std::string, std::string> params;
@@ -481,7 +486,8 @@ TEST_F(TabManagerTest, CanOnlyDiscardOnce) {
   {
     std::unique_ptr<base::FieldTrialList> field_trial_list_;
     field_trial_list_.reset(
-        new base::FieldTrialList(new base::MockEntropyProvider()));
+        new base::FieldTrialList(
+            base::MakeUnique<base::MockEntropyProvider>()));
     variations::testing::ClearAllVariationParams();
 
     std::map<std::string, std::string> params;
@@ -588,7 +594,6 @@ TEST_F(TabManagerTest, MAYBE_ChildProcessNotifications) {
       &ReturnSpecifiedPressure, base::Unretained(&level));
   EXPECT_CALL(mock_task_runner, PostDelayedTask(
       testing::_,
-      testing::_,
       base::TimeDelta::FromSeconds(tm.kRendererNotificationDelayInSeconds)));
   EXPECT_CALL(*this, NotifyRendererProcess(renderer2, level));
   tm.OnMemoryPressure(level);
@@ -616,7 +621,6 @@ TEST_F(TabManagerTest, MAYBE_ChildProcessNotifications) {
   // time to the foreground tab. It should also cause another scheduled event.
   EXPECT_CALL(mock_task_runner, PostDelayedTask(
       testing::_,
-      testing::_,
       base::TimeDelta::FromSeconds(tm.kRendererNotificationDelayInSeconds)));
   EXPECT_CALL(*this, NotifyRendererProcess(renderer1, level));
   EXPECT_EQ(1u, task_runner->RunNextTask());
@@ -632,7 +636,6 @@ TEST_F(TabManagerTest, MAYBE_ChildProcessNotifications) {
   // Run the scheduled task. This should cause another notification, to the
   // background tab. It should also cause another scheduled event.
   EXPECT_CALL(mock_task_runner, PostDelayedTask(
-      testing::_,
       testing::_,
       base::TimeDelta::FromSeconds(tm.kRendererNotificationDelayInSeconds)));
   EXPECT_CALL(*this, NotifyRendererProcess(renderer2, level));
@@ -665,6 +668,86 @@ TEST_F(TabManagerTest, MAYBE_ChildProcessNotifications) {
   // Clean up the tabstrip.
   tabstrip.CloseAllTabs();
   ASSERT_TRUE(tabstrip.empty());
+}
+
+TEST_F(TabManagerTest, DefaultTimeToPurgeInCorrectRange) {
+  TabManager tab_manager;
+  base::TimeDelta time_to_purge =
+      tab_manager.GetTimeToPurge(TabManager::kDefaultMinTimeToPurge);
+  EXPECT_GE(time_to_purge, base::TimeDelta::FromMinutes(30));
+  EXPECT_LT(time_to_purge, base::TimeDelta::FromMinutes(60));
+}
+
+TEST_F(TabManagerTest, ShouldPurgeAtDefaultTime) {
+  TabManager tab_manager;
+  TabStripDummyDelegate delegate;
+  TabStripModel tabstrip(&delegate, profile());
+  tabstrip.AddObserver(&tab_manager);
+
+  WebContents* test_contents = CreateWebContents();
+  tabstrip.AppendWebContents(test_contents, false);
+
+  base::SimpleTestTickClock test_clock;
+  tab_manager.set_test_tick_clock(&test_clock);
+
+  tab_manager.GetWebContentsData(test_contents)->set_is_purged(false);
+  tab_manager.GetWebContentsData(test_contents)
+      ->SetLastInactiveTime(test_clock.NowTicks());
+  tab_manager.GetWebContentsData(test_contents)
+      ->set_time_to_purge(base::TimeDelta::FromMinutes(1));
+
+  // Wait 1 minute and verify that the tab is still not to be purged.
+  test_clock.Advance(base::TimeDelta::FromMinutes(1));
+  EXPECT_FALSE(tab_manager.ShouldPurgeNow(test_contents));
+
+  // Wait another 1 second and verify that it should be purged now .
+  test_clock.Advance(base::TimeDelta::FromSeconds(1));
+  EXPECT_TRUE(tab_manager.ShouldPurgeNow(test_contents));
+
+  tab_manager.GetWebContentsData(test_contents)->set_is_purged(true);
+  tab_manager.GetWebContentsData(test_contents)
+      ->SetLastInactiveTime(test_clock.NowTicks());
+
+  // Wait 1 day and verify that the tab is still be purged.
+  test_clock.Advance(base::TimeDelta::FromHours(24));
+  EXPECT_FALSE(tab_manager.ShouldPurgeNow(test_contents));
+}
+
+TEST_F(TabManagerTest, ActivateTabResetPurgeState) {
+  TabManager tab_manager;
+  TabStripDummyDelegate delegate;
+  TabStripModel tabstrip(&delegate, profile());
+  tabstrip.AddObserver(&tab_manager);
+  tab_manager.test_tab_strip_models_.push_back(
+      TabManager::TestTabStripModel(&tabstrip, false /* !is_app */));
+
+  base::SimpleTestTickClock test_clock;
+  tab_manager.set_test_tick_clock(&test_clock);
+
+  WebContents* tab1 = CreateWebContents();
+  WebContents* tab2 = CreateWebContents();
+  tabstrip.AppendWebContents(tab1, true);
+  tabstrip.AppendWebContents(tab2, false);
+
+  tab_manager.GetWebContentsData(tab2)->SetLastInactiveTime(
+      test_clock.NowTicks());
+  static_cast<content::MockRenderProcessHost*>(tab2->GetRenderProcessHost())
+      ->set_is_process_backgrounded(true);
+  EXPECT_TRUE(tab2->GetRenderProcessHost()->IsProcessBackgrounded());
+
+  // Initially PurgeAndSuspend state should be NOT_PURGED.
+  EXPECT_FALSE(tab_manager.GetWebContentsData(tab2)->is_purged());
+  tab_manager.GetWebContentsData(tab2)->set_time_to_purge(
+      base::TimeDelta::FromMinutes(1));
+  test_clock.Advance(base::TimeDelta::FromMinutes(2));
+  tab_manager.PurgeBackgroundedTabsIfNeeded();
+  // Since tab2 is kept inactive and background for more than time-to-purge,
+  // tab2 should be purged.
+  EXPECT_TRUE(tab_manager.GetWebContentsData(tab2)->is_purged());
+
+  // Activate tab2. Tab2's PurgeAndSuspend state should be NOT_PURGED.
+  tabstrip.ActivateTabAt(1, true /* user_gesture */);
+  EXPECT_FALSE(tab_manager.GetWebContentsData(tab2)->is_purged());
 }
 
 }  // namespace memory

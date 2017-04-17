@@ -6,35 +6,35 @@
 #define CSSFontFamilyValue_h
 
 #include "core/css/CSSValue.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class CSSFontFamilyValue : public CSSValue {
-public:
-    static CSSFontFamilyValue* create(const String& familyName);
+ public:
+  static CSSFontFamilyValue* Create(const String& family_name);
 
-    String value() const { return m_string; }
+  String Value() const { return string_; }
 
-    String customCSSText() const;
+  String CustomCSSText() const;
 
-    bool equals(const CSSFontFamilyValue& other) const
-    {
-        return m_string == other.m_string;
-    }
+  bool Equals(const CSSFontFamilyValue& other) const {
+    return string_ == other.string_;
+  }
 
-    DECLARE_TRACE_AFTER_DISPATCH();
+  DECLARE_TRACE_AFTER_DISPATCH();
 
-private:
-    friend class CSSValuePool;
+ private:
+  friend class CSSValuePool;
 
-    CSSFontFamilyValue(const String&);
+  CSSFontFamilyValue(const String&);
 
-    // TODO(sashab): Change this to an AtomicString.
-    String m_string;
+  // TODO(sashab): Change this to an AtomicString.
+  String string_;
 };
 
-DEFINE_CSS_VALUE_TYPE_CASTS(CSSFontFamilyValue, isFontFamilyValue());
+DEFINE_CSS_VALUE_TYPE_CASTS(CSSFontFamilyValue, IsFontFamilyValue());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSFontFamilyValue_h
+#endif  // CSSFontFamilyValue_h

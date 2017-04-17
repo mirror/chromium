@@ -9,14 +9,13 @@
 
 #include "base/bind.h"
 #include "base/strings/utf_string_conversions.h"
-#include "chrome/browser/spellchecker/feedback_sender.h"
 #include "chrome/browser/spellchecker/spellcheck_factory.h"
-#include "chrome/browser/spellchecker/spellcheck_host_metrics.h"
 #include "chrome/browser/spellchecker/spellcheck_service.h"
-#include "chrome/browser/spellchecker/spelling_service_client.h"
-#include "chrome/common/spellcheck_marker.h"
-#include "chrome/common/spellcheck_messages.h"
 #include "components/prefs/pref_service.h"
+#include "components/spellcheck/browser/spellcheck_host_metrics.h"
+#include "components/spellcheck/browser/spelling_service_client.h"
+#include "components/spellcheck/common/spellcheck_messages.h"
+#include "components/spellcheck/spellcheck_build_features.h"
 #include "content/public/browser/render_process_host.h"
 #include "net/url_request/url_fetcher.h"
 
@@ -34,10 +33,9 @@ void SpellCheckMessageFilter::OverrideThreadForMessage(
   // The message filter overrides the thread for these messages because they
   // access spellcheck data.
   if (message.type() == SpellCheckHostMsg_RequestDictionary::ID ||
-      message.type() == SpellCheckHostMsg_NotifyChecked::ID ||
-      message.type() == SpellCheckHostMsg_RespondDocumentMarkers::ID)
+      message.type() == SpellCheckHostMsg_NotifyChecked::ID)
     *thread = BrowserThread::UI;
-#if !defined(USE_BROWSER_SPELLCHECKER)
+#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
   if (message.type() == SpellCheckHostMsg_CallSpellingService::ID)
     *thread = BrowserThread::UI;
 #endif
@@ -50,9 +48,7 @@ bool SpellCheckMessageFilter::OnMessageReceived(const IPC::Message& message) {
                         OnSpellCheckerRequestDictionary)
     IPC_MESSAGE_HANDLER(SpellCheckHostMsg_NotifyChecked,
                         OnNotifyChecked)
-    IPC_MESSAGE_HANDLER(SpellCheckHostMsg_RespondDocumentMarkers,
-                        OnRespondDocumentMarkers)
-#if !defined(USE_BROWSER_SPELLCHECKER)
+#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
     IPC_MESSAGE_HANDLER(SpellCheckHostMsg_CallSpellingService,
                         OnCallSpellingService)
 #endif
@@ -95,39 +91,19 @@ void SpellCheckMessageFilter::OnNotifyChecked(const base::string16& word,
     spellcheck->GetMetrics()->RecordCheckedWordStats(word, misspelled);
 }
 
-void SpellCheckMessageFilter::OnRespondDocumentMarkers(
-    const std::vector<uint32_t>& markers) {
-  SpellcheckService* spellcheck = GetSpellcheckService();
-  // Spellcheck service may not be available for a renderer process that is
-  // shutting down.
-  if (!spellcheck)
-    return;
-  spellcheck->GetFeedbackSender()->OnReceiveDocumentMarkers(
-      render_process_id_, markers);
-}
-
-#if !defined(USE_BROWSER_SPELLCHECKER)
+#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
 void SpellCheckMessageFilter::OnCallSpellingService(
     int route_id,
     int identifier,
-    const base::string16& text,
-    std::vector<SpellCheckMarker> markers) {
+    const base::string16& text) {
   DCHECK(!text.empty());
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  // Erase invalid markers (with offsets out of boundaries of text length).
-  markers.erase(
-      std::remove_if(
-          markers.begin(),
-          markers.end(),
-          std::not1(SpellCheckMarker::IsValidPredicate(text.length()))),
-      markers.end());
-  CallSpellingService(text, route_id, identifier, markers);
+  CallSpellingService(text, route_id, identifier);
 }
 
 void SpellCheckMessageFilter::OnTextCheckComplete(
     int route_id,
     int identifier,
-    const std::vector<SpellCheckMarker>& markers,
     bool success,
     const base::string16& text,
     const std::vector<SpellCheckResult>& results) {
@@ -137,8 +113,6 @@ void SpellCheckMessageFilter::OnTextCheckComplete(
   if (!spellcheck)
     return;
   std::vector<SpellCheckResult> results_copy = results;
-  spellcheck->GetFeedbackSender()->OnSpellcheckResults(
-      render_process_id_, text, markers, &results_copy);
 
   // Erase custom dictionary words from the spellcheck results and record
   // in-dictionary feedback.
@@ -148,10 +122,8 @@ void SpellCheckMessageFilter::OnTextCheckComplete(
   for (iter = write_iter = results_copy.begin();
        iter != results_copy.end();
        ++iter) {
-    if (spellcheck->GetCustomDictionary()->HasWord(
+    if (!spellcheck->GetCustomDictionary()->HasWord(
             text_copy.substr(iter->location, iter->length))) {
-      spellcheck->GetFeedbackSender()->RecordInDictionary(iter->hash);
-    } else {
       if (write_iter != iter)
         *write_iter = *iter;
       ++write_iter;
@@ -165,23 +137,17 @@ void SpellCheckMessageFilter::OnTextCheckComplete(
 
 // CallSpellingService always executes the callback OnTextCheckComplete.
 // (Which, in turn, sends a SpellCheckMsg_RespondSpellingService)
-void SpellCheckMessageFilter::CallSpellingService(
-    const base::string16& text,
-    int route_id,
-    int identifier,
-    const std::vector<SpellCheckMarker>& markers) {
+void SpellCheckMessageFilter::CallSpellingService(const base::string16& text,
+                                                  int route_id,
+                                                  int identifier) {
   content::RenderProcessHost* host =
       content::RenderProcessHost::FromID(render_process_id_);
 
   client_->RequestTextCheck(
-    host ? host->GetBrowserContext() : NULL,
-    SpellingServiceClient::SPELLCHECK,
-    text,
-    base::Bind(&SpellCheckMessageFilter::OnTextCheckComplete,
-               base::Unretained(this),
-               route_id,
-               identifier,
-               markers));
+      host ? host->GetBrowserContext() : NULL,
+      SpellingServiceClient::SPELLCHECK, text,
+      base::Bind(&SpellCheckMessageFilter::OnTextCheckComplete,
+                 base::Unretained(this), route_id, identifier));
 }
 #endif
 

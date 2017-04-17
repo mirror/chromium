@@ -15,7 +15,7 @@
 
 namespace gfx {
 class SlideAnimation;
-enum class VectorIconId;
+struct VectorIcon;
 }
 
 namespace ash {
@@ -32,12 +32,12 @@ class ASH_EXPORT FrameCaptionButton : public views::CustomButton {
   ~FrameCaptionButton() override;
 
   // Sets the image to use to paint the button. If |animate| is ANIMATE_YES,
-  // the button crossfades to the new visuals. If the image id matches the one
+  // the button crossfades to the new visuals. If the image matches the one
   // currently used by the button and |animate| is ANIMATE_NO, the crossfade
   // animation is progressed to the end.
   void SetImage(CaptionButtonIcon icon,
                 Animate animate,
-                gfx::VectorIconId icon_image_id);
+                const gfx::VectorIcon& icon_image);
 
   // Returns true if the button is crossfading to new visuals set in
   // SetImage().
@@ -59,8 +59,6 @@ class ASH_EXPORT FrameCaptionButton : public views::CustomButton {
 
   CaptionButtonIcon icon() const { return icon_; }
 
-  gfx::VectorIconId icon_image_id() const { return icon_image_id_; }
-
   void set_size(const gfx::Size& size) { size_ = size; }
 
  protected:
@@ -68,10 +66,9 @@ class ASH_EXPORT FrameCaptionButton : public views::CustomButton {
   void OnGestureEvent(ui::GestureEvent* event) override;
 
  private:
-  // Paints |to_center| centered within the button with |alpha|.
-  void PaintCentered(gfx::Canvas* canvas,
-                     const gfx::ImageSkia& to_center,
-                     int alpha);
+  // Determines what alpha to use for the icon based on animation and
+  // active state.
+  int GetAlphaForIcon(int base_alpha) const;
 
   // The button's current icon.
   CaptionButtonIcon icon_;
@@ -90,7 +87,7 @@ class ASH_EXPORT FrameCaptionButton : public views::CustomButton {
 
   // The image id (kept for the purposes of testing) and image used to paint the
   // button's icon.
-  gfx::VectorIconId icon_image_id_;
+  const gfx::VectorIcon* icon_definition_ = nullptr;
   gfx::ImageSkia icon_image_;
 
   // The icon image to crossfade from.

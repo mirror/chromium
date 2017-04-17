@@ -7,7 +7,7 @@
 #include <stdint.h>
 
 #include "base/command_line.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/process/process_info.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/time/time.h"
@@ -43,13 +43,7 @@ base::Time GetOriginalProcessStartTime(const base::CommandLine& command_line) {
     return base::Time::FromInternalValue(remote_start_time);
   }
 
-// base::CurrentProcessInfo::CreationTime() is only defined on some
-// platforms.
-#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
   return base::CurrentProcessInfo::CreationTime();
-#else
-  return base::Time();
-#endif
 }
 
 StartupType GetStartupType(const base::CommandLine& command_line) {
@@ -148,11 +142,6 @@ void AppListService::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterIntegerPref(prefs::kAppListEnableMethod,
                                 ENABLE_NOT_RECORDED);
   registry->RegisterInt64Pref(prefs::kAppListEnableTime, 0);
-  registry->RegisterInt64Pref(prefs::kAppListLastLaunchTime, 0);
-
-#if defined(OS_MACOSX)
-  registry->RegisterIntegerPref(prefs::kAppLauncherShortcutVersion, 0);
-#endif
 
   // Identifies whether we should show the app launcher promo or not. This
   // becomes false when the user dismisses the promo.

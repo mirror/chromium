@@ -10,16 +10,17 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #ifndef AudioDelayDSPKernel_h
@@ -31,39 +32,45 @@
 namespace blink {
 
 class PLATFORM_EXPORT AudioDelayDSPKernel : public AudioDSPKernel {
-public:
-    AudioDelayDSPKernel(double maxDelayTime, float sampleRate);
+ public:
+  AudioDelayDSPKernel(double max_delay_time, float sample_rate);
 
-    void process(const float* source, float* destination, size_t framesToProcess) override;
-    void reset() override;
+  void Process(const float* source,
+               float* destination,
+               size_t frames_to_process) override;
+  void Reset() override;
 
-    double maxDelayTime() const { return m_maxDelayTime; }
+  double MaxDelayTime() const { return max_delay_time_; }
 
-    void setDelayFrames(double numberOfFrames) { m_desiredDelayFrames = numberOfFrames; }
+  void SetDelayFrames(double number_of_frames) {
+    desired_delay_frames_ = number_of_frames;
+  }
 
-    double tailTime() const override;
-    double latencyTime() const override;
+  double TailTime() const override;
+  double LatencyTime() const override;
 
-protected:
-    AudioDelayDSPKernel(AudioDSPKernelProcessor*, size_t processingSizeInFrames);
+ protected:
+  AudioDelayDSPKernel(AudioDSPKernelProcessor*,
+                      size_t processing_size_in_frames);
 
-    virtual bool hasSampleAccurateValues();
-    virtual void calculateSampleAccurateValues(float* delayTimes, size_t framesToProcess);
-    virtual double delayTime(float sampleRate);
+  virtual bool HasSampleAccurateValues();
+  virtual void CalculateSampleAccurateValues(float* delay_times,
+                                             size_t frames_to_process);
+  virtual double DelayTime(float sample_rate);
 
-    AudioFloatArray m_buffer;
-    double m_maxDelayTime;
-    int m_writeIndex;
-    double m_currentDelayTime;
-    double m_smoothingRate;
-    bool m_firstTime;
-    double m_desiredDelayFrames;
+  AudioFloatArray buffer_;
+  double max_delay_time_;
+  int write_index_;
+  double current_delay_time_;
+  double smoothing_rate_;
+  bool first_time_;
+  double desired_delay_frames_;
 
-    AudioFloatArray m_delayTimes;
+  AudioFloatArray delay_times_;
 
-    size_t bufferLengthForDelay(double delayTime, double sampleRate) const;
+  size_t BufferLengthForDelay(double delay_time, double sample_rate) const;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AudioDelayDSPKernel_h
+#endif  // AudioDelayDSPKernel_h

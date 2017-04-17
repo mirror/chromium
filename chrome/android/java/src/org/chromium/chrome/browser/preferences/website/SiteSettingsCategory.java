@@ -15,6 +15,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Process;
 import android.preference.Preference;
 import android.provider.Settings;
 import android.text.SpannableString;
@@ -22,6 +23,7 @@ import android.text.style.ForegroundColorSpan;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ContentSettingsType;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.ui.text.SpanApplier;
@@ -38,13 +40,14 @@ public class SiteSettingsCategory {
     public static final String CATEGORY_CAMERA = "camera";
     public static final String CATEGORY_COOKIES = "cookies";
     public static final String CATEGORY_DEVICE_LOCATION = "device_location";
-    public static final String CATEGORY_FULLSCREEN = "fullscreen";
     public static final String CATEGORY_JAVASCRIPT = "javascript";
     public static final String CATEGORY_MICROPHONE = "microphone";
     public static final String CATEGORY_NOTIFICATIONS = "notifications";
     public static final String CATEGORY_POPUPS = "popups";
     public static final String CATEGORY_PROTECTED_MEDIA = "protected_content";
     public static final String CATEGORY_USE_STORAGE = "use_storage";
+    public static final String CATEGORY_USB = "usb";
+    public static final String CATEGORY_SUBRESOURCE_FILTER = "subresource_filter";
 
     // The id of this category.
     private String mCategory;
@@ -106,10 +109,6 @@ public class SiteSettingsCategory {
         if (CATEGORY_DEVICE_LOCATION.equals(category)) {
             return new LocationCategory();
         }
-        if (CATEGORY_FULLSCREEN.equals(category)) {
-            return new SiteSettingsCategory(CATEGORY_FULLSCREEN, "",
-                    ContentSettingsType.CONTENT_SETTINGS_TYPE_FULLSCREEN);
-        }
         if (CATEGORY_MICROPHONE.equals(category)) {
             return new SiteSettingsCategory(
                     SiteSettingsCategory.CATEGORY_MICROPHONE,
@@ -128,8 +127,16 @@ public class SiteSettingsCategory {
             return new SiteSettingsCategory(CATEGORY_PROTECTED_MEDIA, "",
                     ContentSettingsType.CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER);
         }
+        if (CATEGORY_SUBRESOURCE_FILTER.equals(category) && subresourceFilterCategoryEnabled()) {
+            return new SiteSettingsCategory(CATEGORY_SUBRESOURCE_FILTER, "",
+                    ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER);
+        }
         if (CATEGORY_USE_STORAGE.equals(category)) {
             return new SiteSettingsCategory(CATEGORY_USE_STORAGE, "", -1);
+        }
+        if (CATEGORY_USB.equals(category)) {
+            return new SiteSettingsCategory(
+                    CATEGORY_USB, "", ContentSettingsType.CONTENT_SETTINGS_TYPE_USB_CHOOSER_DATA);
         }
 
         return null;
@@ -159,9 +166,6 @@ public class SiteSettingsCategory {
         if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_GEOLOCATION) {
             return fromString(CATEGORY_DEVICE_LOCATION);
         }
-        if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_FULLSCREEN) {
-            return fromString(CATEGORY_FULLSCREEN);
-        }
         if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC) {
             return fromString(CATEGORY_MICROPHONE);
         }
@@ -174,6 +178,12 @@ public class SiteSettingsCategory {
         if (contentSettingsType
                 == ContentSettingsType.CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER) {
             return fromString(CATEGORY_PROTECTED_MEDIA);
+        }
+        if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER) {
+            return fromString(CATEGORY_SUBRESOURCE_FILTER);
+        }
+        if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_USB_CHOOSER_DATA) {
+            return fromString(CATEGORY_USB);
         }
 
         return null;
@@ -220,13 +230,6 @@ public class SiteSettingsCategory {
     public boolean showCameraSites() {
         return mContentSettingsType
                 == ContentSettingsType.CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA;
-    }
-
-    /**
-     * Returns whether this category is the Fullscreen category.
-     */
-    public boolean showFullscreenSites() {
-        return mContentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_FULLSCREEN;
     }
 
     /**
@@ -281,19 +284,39 @@ public class SiteSettingsCategory {
     }
 
     /**
+     * Returns whether this category is the Subresource Filter category.
+     */
+    public boolean showSubresourceFilterSites() {
+        return mContentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER;
+    }
+
+    /**
+     * Returns whether this category is the USB category.
+     */
+    public boolean showUsbDevices() {
+        return mContentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_USB_CHOOSER_DATA;
+    }
+
+    /**
+     * Returns whether the Subresource Filter category is enabled via an experiment flag.
+     */
+    public static boolean subresourceFilterCategoryEnabled() {
+        return ChromeFeatureList.isEnabled("SubresourceFilterExperimentalUI");
+    }
+
+    /**
      * Returns whether the current category is managed either by enterprise policy or by the
      * custodian of a supervised account.
      */
     public boolean isManaged() {
         PrefServiceBridge prefs = PrefServiceBridge.getInstance();
         if (showBackgroundSyncSites()) return prefs.isBackgroundSyncManaged();
-        if (showCameraSites()) return !prefs.isCameraUserModifiable();
-        if (showCookiesSites()) return prefs.isAcceptCookiesManaged();
-        if (showFullscreenSites()) return prefs.isFullscreenManaged();
+        if (showCookiesSites()) return !prefs.isAcceptCookiesUserModifiable();
         if (showGeolocationSites()) {
             return !prefs.isAllowLocationUserModifiable();
         }
         if (showJavaScriptSites()) return prefs.javaScriptManaged();
+        if (showCameraSites()) return !prefs.isCameraUserModifiable();
         if (showMicrophoneSites()) return !prefs.isMicUserModifiable();
         if (showPopupSites()) return prefs.isPopupsManaged();
         return false;
@@ -305,6 +328,7 @@ public class SiteSettingsCategory {
      */
     public boolean isManagedByCustodian() {
         PrefServiceBridge prefs = PrefServiceBridge.getInstance();
+        if (showCookiesSites()) return prefs.isAcceptCookiesManagedByCustodian();
         if (showGeolocationSites()) {
             return prefs.isAllowLocationManagedByCustodian();
         }
@@ -470,7 +494,7 @@ public class SiteSettingsCategory {
     private boolean permissionOnInAndroid(String permission, Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return true;
 
-        return PackageManager.PERMISSION_GRANTED == context.getPackageManager().checkPermission(
-                permission, context.getPackageName());
+        return PackageManager.PERMISSION_GRANTED == ApiCompatibilityUtils.checkPermission(
+                context, permission, Process.myPid(), Process.myUid());
     }
 }

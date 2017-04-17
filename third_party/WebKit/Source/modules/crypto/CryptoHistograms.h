@@ -111,15 +111,17 @@ class WebCryptoAlgorithm;
 class WebCryptoKey;
 
 // Log the usage of a particular WebCryptoAlgorithm (i.e. operation).
-void histogramAlgorithm(ExecutionContext*, const WebCryptoAlgorithm&);
+void HistogramAlgorithm(ExecutionContext*, const WebCryptoAlgorithm&);
 
 // Log the usage of a particular WebCryptoKey.
-void histogramKey(ExecutionContext*, const WebCryptoKey&);
+void HistogramKey(ExecutionContext*, const WebCryptoKey&);
 
 // This is a convenience function for calling histogramAlgorithm() and
 // histogramKey().
-void histogramAlgorithmAndKey(ExecutionContext*, const WebCryptoAlgorithm&, const WebCryptoKey&);
+void HistogramAlgorithmAndKey(ExecutionContext*,
+                              const WebCryptoAlgorithm&,
+                              const WebCryptoKey&);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

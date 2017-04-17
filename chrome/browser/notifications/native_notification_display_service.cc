@@ -5,6 +5,7 @@
 #include "chrome/browser/notifications/native_notification_display_service.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/strings/nullable_string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/notifications/non_persistent_notification_handler.h"
 #include "chrome/browser/notifications/notification.h"
@@ -13,6 +14,12 @@
 #include "chrome/browser/notifications/notification_platform_bridge.h"
 #include "chrome/browser/notifications/persistent_notification_handler.h"
 #include "chrome/browser/profiles/profile.h"
+#include "content/public/browser/browser_thread.h"
+#include "extensions/features/features.h"
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+#include "chrome/browser/extensions/api/notifications/extension_notification_handler.h"
+#endif
 
 namespace {
 
@@ -39,6 +46,10 @@ NativeNotificationDisplayService::NativeNotificationDisplayService(
                          base::MakeUnique<NonPersistentNotificationHandler>());
   AddNotificationHandler(NotificationCommon::PERSISTENT,
                          base::MakeUnique<PersistentNotificationHandler>());
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  AddNotificationHandler(NotificationCommon::EXTENSION,
+                         base::MakeUnique<ExtensionNotificationHandler>());
+#endif
 }
 
 NativeNotificationDisplayService::~NativeNotificationDisplayService() {}
@@ -68,10 +79,10 @@ void NativeNotificationDisplayService::Close(
   handler->OnClose(profile_, "", notification_id, false /* by user */);
 }
 
-bool NativeNotificationDisplayService::GetDisplayed(
-    std::set<std::string>* notifications) const {
+void NativeNotificationDisplayService::GetDisplayed(
+    const DisplayedNotificationsCallback& callback) {
   return notification_bridge_->GetDisplayed(
-      GetProfileId(profile_), profile_->IsOffTheRecord(), notifications);
+      GetProfileId(profile_), profile_->IsOffTheRecord(), callback);
 }
 
 void NativeNotificationDisplayService::ProcessNotificationOperation(
@@ -79,12 +90,13 @@ void NativeNotificationDisplayService::ProcessNotificationOperation(
     NotificationCommon::Type notification_type,
     const std::string& origin,
     const std::string& notification_id,
-    int action_index) {
+    int action_index,
+    const base::NullableString16& reply) {
   NotificationHandler* handler = GetNotificationHandler(notification_type);
   CHECK(handler);
   switch (operation) {
     case NotificationCommon::CLICK:
-      handler->OnClick(profile_, origin, notification_id, action_index);
+      handler->OnClick(profile_, origin, notification_id, action_index, reply);
       break;
     case NotificationCommon::CLOSE:
       handler->OnClose(profile_, origin, notification_id, true /* by_user */);
@@ -114,8 +126,4 @@ NotificationHandler* NativeNotificationDisplayService::GetNotificationHandler(
          notification_handlers_.end())
       << notification_type << " is not registered.";
   return notification_handlers_[notification_type].get();
-}
-
-bool NativeNotificationDisplayService::SupportsNotificationCenter() const {
-  return notification_bridge_->SupportsNotificationCenter();
 }

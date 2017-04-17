@@ -2,20 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// http://fetch.spec.whatwg.org/#request-class
+// https://fetch.spec.whatwg.org/#request-class
 
 typedef (Request or USVString) RequestInfo;
 
-enum RequestContext {
-    "", "audio", "beacon", "cspreport", "download", "embed", "eventsource", "favicon",
-    "fetch", "font", "form", "frame", "hyperlink", "iframe", "image", "imageset", "import",
-    "internal", "location", "manifest", "metarefresh", "object", "ping", "plugin",
-    "prefetch", "script", "serviceworker", "sharedworker",
-    "subresource", "style", "track", "video", "worker", "xmlhttprequest", "xslt"
-};
 enum RequestMode { "navigate", "same-origin", "no-cors", "cors" };
 enum RequestCredentials { "omit", "same-origin", "include" };
 enum RequestRedirect { "follow", "error", "manual" };
+enum RequestCache { "default", "no-store", "reload", "no-cache", "force-cache", 
+    "only-if-cached" };
+
+// https://w3c.github.io/webappsec-referrer-policy/#referrer-policies
+
 enum ReferrerPolicy {
     "",
     "no-referrer",
@@ -26,6 +24,7 @@ enum ReferrerPolicy {
 };
 
 [
+    ActiveScriptWrappable,
     Constructor(RequestInfo input, optional Dictionary requestInitDict),
     ConstructorCallWith=ScriptState,
     Exposed=(Window,Worker),
@@ -36,9 +35,10 @@ enum ReferrerPolicy {
     readonly attribute USVString url;
     [ImplementedAs=getHeaders] readonly attribute Headers headers;
     readonly attribute DOMString referrer;
-    readonly attribute ReferrerPolicy referrerPolicy;
+    [ImplementedAs=getReferrerPolicy] readonly attribute ReferrerPolicy referrerPolicy;
     readonly attribute RequestMode mode;
     readonly attribute RequestCredentials credentials;
+    [RuntimeEnabled=FetchRequestCache]readonly attribute RequestCache cache;
     readonly attribute RequestRedirect redirect;
     readonly attribute DOMString integrity;
 

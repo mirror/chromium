@@ -34,27 +34,28 @@ namespace blink {
 class Element;
 
 class RemoveCSSPropertyCommand final : public SimpleEditCommand {
-public:
-    static RemoveCSSPropertyCommand* create(Document& document, Element* element, CSSPropertyID property)
-    {
-        return new RemoveCSSPropertyCommand(document, element, property);
-    }
+ public:
+  static RemoveCSSPropertyCommand* Create(Document& document,
+                                          Element* element,
+                                          CSSPropertyID property) {
+    return new RemoveCSSPropertyCommand(document, element, property);
+  }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    RemoveCSSPropertyCommand(Document&, Element*, CSSPropertyID);
-    ~RemoveCSSPropertyCommand() override;
+ private:
+  RemoveCSSPropertyCommand(Document&, Element*, CSSPropertyID);
+  ~RemoveCSSPropertyCommand() override;
 
-    void doApply(EditingState*) override;
-    void doUnapply() override;
+  void DoApply(EditingState*) override;
+  void DoUnapply() override;
 
-    Member<Element> m_element;
-    CSSPropertyID m_property;
-    String m_oldValue;
-    bool m_important;
+  Member<Element> element_;
+  CSSPropertyID property_;
+  String old_value_;
+  bool important_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RemoveCSSPropertyCommand_h
+#endif  // RemoveCSSPropertyCommand_h

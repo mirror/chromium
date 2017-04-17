@@ -14,7 +14,6 @@
 
 namespace views {
 
-class NativeWidget;
 class SubmenuView;
 class View;
 class Widget;
@@ -25,6 +24,10 @@ namespace internal {
 class PreMenuEventDispatchHandler;
 
 }  // internal
+
+namespace test {
+class MenuControllerTest;
+}  // test
 
 // SubmenuView uses a MenuHost to house the SubmenuView.
 //
@@ -65,6 +68,8 @@ class MenuHost : public Widget {
   void ReleaseMenuHostCapture();
 
  private:
+  friend class test::MenuControllerTest;
+
   // Overridden from Widget:
   internal::RootView* CreateRootView() override;
   void OnMouseCaptureLost() override;

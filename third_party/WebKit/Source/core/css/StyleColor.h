@@ -33,44 +33,47 @@
 
 #include "core/CSSValueKeywords.h"
 #include "platform/graphics/Color.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class StyleColor {
-    DISALLOW_NEW();
-public:
-    StyleColor() : m_currentColor(true) { }
-    StyleColor(Color color) : m_color(color), m_currentColor(false) { }
-    static StyleColor currentColor() { return StyleColor(); }
+  DISALLOW_NEW();
 
-    bool isCurrentColor() const { return m_currentColor; }
-    Color getColor() const { ASSERT(!isCurrentColor()); return m_color; }
+ public:
+  StyleColor() : current_color_(true) {}
+  StyleColor(Color color) : color_(color), current_color_(false) {}
+  static StyleColor CurrentColor() { return StyleColor(); }
 
-    Color resolve(Color currentColor) const { return m_currentColor ? currentColor : m_color; }
+  bool IsCurrentColor() const { return current_color_; }
+  Color GetColor() const {
+    DCHECK(!IsCurrentColor());
+    return color_;
+  }
 
-    static Color colorFromKeyword(CSSValueID);
-    static bool isColorKeyword(CSSValueID);
-    static bool isSystemColor(CSSValueID);
+  Color Resolve(Color current_color) const {
+    return current_color_ ? current_color : color_;
+  }
 
-private:
-    Color m_color;
-    bool m_currentColor;
+  static Color ColorFromKeyword(CSSValueID);
+  static bool IsColorKeyword(CSSValueID);
+  static bool IsSystemColor(CSSValueID);
+
+ private:
+  Color color_;
+  bool current_color_;
 };
 
-inline bool operator==(const StyleColor& a, const StyleColor& b)
-{
-    if (a.isCurrentColor() || b.isCurrentColor())
-        return a.isCurrentColor() && b.isCurrentColor();
-    return a.getColor() == b.getColor();
+inline bool operator==(const StyleColor& a, const StyleColor& b) {
+  if (a.IsCurrentColor() || b.IsCurrentColor())
+    return a.IsCurrentColor() && b.IsCurrentColor();
+  return a.GetColor() == b.GetColor();
 }
 
-inline bool operator!=(const StyleColor& a, const StyleColor& b)
-{
-    return !(a == b);
+inline bool operator!=(const StyleColor& a, const StyleColor& b) {
+  return !(a == b);
 }
 
+}  // namespace blink
 
-} // namespace blink
-
-#endif // StyleColor_h
+#endif  // StyleColor_h

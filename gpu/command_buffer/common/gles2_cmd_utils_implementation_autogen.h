@@ -643,9 +643,6 @@ static const GLES2Util::EnumToString enum_to_string_table[] = {
         0x78EF, "GL_PIXEL_UNPACK_TRANSFER_BUFFER_BINDING_CHROMIUM",
     },
     {
-        0x78F2, "GL_READ_WRITE_CHROMIUM",
-    },
-    {
         0x78FA, "GL_RGB_YCRCB_420_CHROMIUM",
     },
     {
@@ -1598,6 +1595,9 @@ static const GLES2Util::EnumToString enum_to_string_table[] = {
     },
     {
         0x8905, "GL_MAX_PROGRAM_TEXEL_OFFSET",
+    },
+    {
+        0x8914, "GL_SAMPLES_PASSED_ARB",
     },
     {
         0x8916, "GL_GEOMETRY_LINKED_VERTICES_OUT_EXT",
@@ -3454,10 +3454,10 @@ static const GLES2Util::EnumToString enum_to_string_table[] = {
         1, "GL_ES_VERSION_2_0",
     },
     {
-        24, "GL_SYNC_TOKEN_SIZE_CHROMIUM",
+        16, "GL_MAILBOX_SIZE_CHROMIUM",
     },
     {
-        64, "GL_MAILBOX_SIZE_CHROMIUM",
+        24, "GL_SYNC_TOKEN_SIZE_CHROMIUM",
     },
 };
 
@@ -3632,23 +3632,7 @@ std::string GLES2Util::GetStringCmpFunction(uint32_t value) {
 }
 
 std::string GLES2Util::GetStringCompressedTextureFormat(uint32_t value) {
-  static const EnumToString string_table[] = {
-      {GL_COMPRESSED_R11_EAC, "GL_COMPRESSED_R11_EAC"},
-      {GL_COMPRESSED_SIGNED_R11_EAC, "GL_COMPRESSED_SIGNED_R11_EAC"},
-      {GL_COMPRESSED_RG11_EAC, "GL_COMPRESSED_RG11_EAC"},
-      {GL_COMPRESSED_SIGNED_RG11_EAC, "GL_COMPRESSED_SIGNED_RG11_EAC"},
-      {GL_COMPRESSED_RGB8_ETC2, "GL_COMPRESSED_RGB8_ETC2"},
-      {GL_COMPRESSED_SRGB8_ETC2, "GL_COMPRESSED_SRGB8_ETC2"},
-      {GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2,
-       "GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2"},
-      {GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2,
-       "GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2"},
-      {GL_COMPRESSED_RGBA8_ETC2_EAC, "GL_COMPRESSED_RGBA8_ETC2_EAC"},
-      {GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC,
-       "GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC"},
-  };
-  return GLES2Util::GetQualifiedEnumString(string_table,
-                                           arraysize(string_table), value);
+  return GLES2Util::GetQualifiedEnumString(NULL, 0, value);
 }
 
 std::string GLES2Util::GetStringCoverageModulationComponents(uint32_t value) {
@@ -3728,7 +3712,7 @@ std::string GLES2Util::GetStringFaceType(uint32_t value) {
                                            arraysize(string_table), value);
 }
 
-std::string GLES2Util::GetStringFrameBufferParameter(uint32_t value) {
+std::string GLES2Util::GetStringFramebufferParameter(uint32_t value) {
   static const EnumToString string_table[] = {
       {GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE,
        "GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE"},
@@ -3761,7 +3745,7 @@ std::string GLES2Util::GetStringFrameBufferParameter(uint32_t value) {
                                            arraysize(string_table), value);
 }
 
-std::string GLES2Util::GetStringFrameBufferTarget(uint32_t value) {
+std::string GLES2Util::GetStringFramebufferTarget(uint32_t value) {
   static const EnumToString string_table[] = {
       {GL_FRAMEBUFFER, "GL_FRAMEBUFFER"},
       {GL_DRAW_FRAMEBUFFER, "GL_DRAW_FRAMEBUFFER"},
@@ -4013,14 +3997,6 @@ std::string GLES2Util::GetStringImageInternalFormat(uint32_t value) {
                                            arraysize(string_table), value);
 }
 
-std::string GLES2Util::GetStringImageUsage(uint32_t value) {
-  static const EnumToString string_table[] = {
-      {GL_READ_WRITE_CHROMIUM, "GL_READ_WRITE_CHROMIUM"},
-  };
-  return GLES2Util::GetQualifiedEnumString(string_table,
-                                           arraysize(string_table), value);
-}
-
 std::string GLES2Util::GetStringIndexType(uint32_t value) {
   static const EnumToString string_table[] = {
       {GL_UNSIGNED_BYTE, "GL_UNSIGNED_BYTE"},
@@ -4265,6 +4241,7 @@ std::string GLES2Util::GetStringQueryParameter(uint32_t value) {
 
 std::string GLES2Util::GetStringQueryTarget(uint32_t value) {
   static const EnumToString string_table[] = {
+      {GL_SAMPLES_PASSED_ARB, "GL_SAMPLES_PASSED_ARB"},
       {GL_ANY_SAMPLES_PASSED_EXT, "GL_ANY_SAMPLES_PASSED_EXT"},
       {GL_ANY_SAMPLES_PASSED_CONSERVATIVE_EXT,
        "GL_ANY_SAMPLES_PASSED_CONSERVATIVE_EXT"},
@@ -4731,19 +4708,6 @@ std::string GLES2Util::GetStringTextureInternalFormatStorage(uint32_t value) {
       {GL_DEPTH_COMPONENT32F, "GL_DEPTH_COMPONENT32F"},
       {GL_DEPTH24_STENCIL8, "GL_DEPTH24_STENCIL8"},
       {GL_DEPTH32F_STENCIL8, "GL_DEPTH32F_STENCIL8"},
-      {GL_COMPRESSED_R11_EAC, "GL_COMPRESSED_R11_EAC"},
-      {GL_COMPRESSED_SIGNED_R11_EAC, "GL_COMPRESSED_SIGNED_R11_EAC"},
-      {GL_COMPRESSED_RG11_EAC, "GL_COMPRESSED_RG11_EAC"},
-      {GL_COMPRESSED_SIGNED_RG11_EAC, "GL_COMPRESSED_SIGNED_RG11_EAC"},
-      {GL_COMPRESSED_RGB8_ETC2, "GL_COMPRESSED_RGB8_ETC2"},
-      {GL_COMPRESSED_SRGB8_ETC2, "GL_COMPRESSED_SRGB8_ETC2"},
-      {GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2,
-       "GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2"},
-      {GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2,
-       "GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2"},
-      {GL_COMPRESSED_RGBA8_ETC2_EAC, "GL_COMPRESSED_RGBA8_ETC2_EAC"},
-      {GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC,
-       "GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC"},
   };
   return GLES2Util::GetQualifiedEnumString(string_table,
                                            arraysize(string_table), value);
@@ -4852,6 +4816,15 @@ std::string GLES2Util::GetStringTextureSizedTextureFilterableInternalFormat(
       {GL_RGB_YCRCB_420_CHROMIUM, "GL_RGB_YCRCB_420_CHROMIUM"},
       {GL_RGB_YCBCR_422_CHROMIUM, "GL_RGB_YCBCR_422_CHROMIUM"},
       {GL_RGB_YCBCR_420V_CHROMIUM, "GL_RGB_YCBCR_420V_CHROMIUM"},
+  };
+  return GLES2Util::GetQualifiedEnumString(string_table,
+                                           arraysize(string_table), value);
+}
+
+std::string GLES2Util::GetStringTextureSrgbDecodeExt(uint32_t value) {
+  static const EnumToString string_table[] = {
+      {GL_DECODE_EXT, "GL_DECODE_EXT"},
+      {GL_SKIP_DECODE_EXT, "GL_SKIP_DECODE_EXT"},
   };
   return GLES2Util::GetQualifiedEnumString(string_table,
                                            arraysize(string_table), value);

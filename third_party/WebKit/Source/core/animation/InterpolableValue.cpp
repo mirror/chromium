@@ -8,103 +8,95 @@
 
 namespace blink {
 
-bool InterpolableNumber::equals(const InterpolableValue& other) const
-{
-    return m_value == toInterpolableNumber(other).m_value;
+bool InterpolableNumber::Equals(const InterpolableValue& other) const {
+  return value_ == ToInterpolableNumber(other).value_;
 }
 
-bool InterpolableList::equals(const InterpolableValue& other) const
-{
-    const InterpolableList& otherList = toInterpolableList(other);
-    if (m_size != otherList.m_size)
-        return false;
-    for (size_t i = 0; i < m_size; i++) {
-        if (!m_values[i]->equals(*otherList.m_values[i]))
-            return false;
-    }
-    return true;
+bool InterpolableList::Equals(const InterpolableValue& other) const {
+  const InterpolableList& other_list = ToInterpolableList(other);
+  if (length() != other_list.length())
+    return false;
+  for (size_t i = 0; i < length(); i++) {
+    if (!values_[i]->Equals(*other_list.values_[i]))
+      return false;
+  }
+  return true;
 }
 
-void InterpolableNumber::interpolate(const InterpolableValue &to, const double progress, InterpolableValue& result) const
-{
-    const InterpolableNumber& toNumber = toInterpolableNumber(to);
-    InterpolableNumber& resultNumber = toInterpolableNumber(result);
+void InterpolableNumber::Interpolate(const InterpolableValue& to,
+                                     const double progress,
+                                     InterpolableValue& result) const {
+  const InterpolableNumber& to_number = ToInterpolableNumber(to);
+  InterpolableNumber& result_number = ToInterpolableNumber(result);
 
-    if (progress == 0 || m_value == toNumber.m_value)
-        resultNumber.m_value = m_value;
-    else if (progress == 1)
-        resultNumber.m_value = toNumber.m_value;
-    else
-        resultNumber.m_value = m_value * (1 - progress) + toNumber.m_value * progress;
+  if (progress == 0 || value_ == to_number.value_)
+    result_number.value_ = value_;
+  else if (progress == 1)
+    result_number.value_ = to_number.value_;
+  else
+    result_number.value_ =
+        value_ * (1 - progress) + to_number.value_ * progress;
 }
 
-void InterpolableBool::interpolate(const InterpolableValue &to, const double progress, InterpolableValue& result) const
-{
-    const InterpolableBool& toBool = toInterpolableBool(to);
-    InterpolableBool& resultBool = toInterpolableBool(result);
+void InterpolableList::Interpolate(const InterpolableValue& to,
+                                   const double progress,
+                                   InterpolableValue& result) const {
+  const InterpolableList& to_list = ToInterpolableList(to);
+  InterpolableList& result_list = ToInterpolableList(result);
 
-    if (progress < 0.5)
-        resultBool.m_value = m_value;
-    else
-        resultBool.m_value = toBool.m_value;
+  DCHECK_EQ(to_list.length(), length());
+  DCHECK_EQ(result_list.length(), length());
+
+  for (size_t i = 0; i < length(); i++) {
+    DCHECK(values_[i]);
+    DCHECK(to_list.values_[i]);
+    values_[i]->Interpolate(*(to_list.values_[i]), progress,
+                            *(result_list.values_[i]));
+  }
 }
 
-void InterpolableList::interpolate(const InterpolableValue& to, const double progress, InterpolableValue& result) const
-{
-    const InterpolableList& toList = toInterpolableList(to);
-    InterpolableList& resultList = toInterpolableList(result);
-
-    ASSERT(toList.m_size == m_size);
-    ASSERT(resultList.m_size == m_size);
-
-    for (size_t i = 0; i < m_size; i++) {
-        ASSERT(m_values[i]);
-        ASSERT(toList.m_values[i]);
-        m_values[i]->interpolate(*(toList.m_values[i]), progress, *(resultList.m_values[i]));
-    }
+std::unique_ptr<InterpolableValue> InterpolableList::CloneAndZero() const {
+  std::unique_ptr<InterpolableList> result = InterpolableList::Create(length());
+  for (size_t i = 0; i < length(); i++)
+    result->Set(i, values_[i]->CloneAndZero());
+  return std::move(result);
 }
 
-std::unique_ptr<InterpolableValue> InterpolableList::cloneAndZero() const
-{
-    std::unique_ptr<InterpolableList> result = InterpolableList::create(m_size);
-    for (size_t i = 0; i < m_size; i++)
-        result->set(i, m_values[i]->cloneAndZero());
-    return std::move(result);
+void InterpolableNumber::Scale(double scale) {
+  value_ = value_ * scale;
 }
 
-void InterpolableNumber::scale(double scale)
-{
-    m_value = m_value * scale;
+void InterpolableList::Scale(double scale) {
+  for (size_t i = 0; i < length(); i++)
+    values_[i]->Scale(scale);
 }
 
-void InterpolableList::scale(double scale)
-{
-    for (size_t i = 0; i < m_size; i++)
-        m_values[i]->scale(scale);
+void InterpolableNumber::ScaleAndAdd(double scale,
+                                     const InterpolableValue& other) {
+  value_ = value_ * scale + ToInterpolableNumber(other).value_;
 }
 
-void InterpolableNumber::scaleAndAdd(double scale, const InterpolableValue& other)
-{
-    m_value = m_value * scale + toInterpolableNumber(other).m_value;
+void InterpolableList::ScaleAndAdd(double scale,
+                                   const InterpolableValue& other) {
+  const InterpolableList& other_list = ToInterpolableList(other);
+  DCHECK_EQ(other_list.length(), length());
+  for (size_t i = 0; i < length(); i++)
+    values_[i]->ScaleAndAdd(scale, *other_list.values_[i]);
 }
 
-void InterpolableList::scaleAndAdd(double scale, const InterpolableValue& other)
-{
-    const InterpolableList& otherList = toInterpolableList(other);
-    ASSERT(otherList.m_size == m_size);
-    for (size_t i = 0; i < m_size; i++)
-        m_values[i]->scaleAndAdd(scale, *otherList.m_values[i]);
+void InterpolableAnimatableValue::Interpolate(const InterpolableValue& to,
+                                              const double progress,
+                                              InterpolableValue& result) const {
+  const InterpolableAnimatableValue& to_value =
+      ToInterpolableAnimatableValue(to);
+  InterpolableAnimatableValue& result_value =
+      ToInterpolableAnimatableValue(result);
+  if (progress == 0)
+    result_value.value_ = value_;
+  if (progress == 1)
+    result_value.value_ = to_value.value_;
+  result_value.value_ = AnimatableValue::Interpolate(
+      value_.Get(), to_value.value_.Get(), progress);
 }
 
-void InterpolableAnimatableValue::interpolate(const InterpolableValue& to, const double progress, InterpolableValue& result) const
-{
-    const InterpolableAnimatableValue& toValue = toInterpolableAnimatableValue(to);
-    InterpolableAnimatableValue& resultValue = toInterpolableAnimatableValue(result);
-    if (progress == 0)
-        resultValue.m_value = m_value;
-    if (progress == 1)
-        resultValue.m_value = toValue.m_value;
-    resultValue.m_value = AnimatableValue::interpolate(m_value.get(), toValue.m_value.get(), progress);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -31,6 +31,10 @@
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+#if defined(OS_POSIX)
+#include "base/files/file_descriptor_watcher_posix.h"
+#endif
+
 namespace base {
 
 namespace {
@@ -69,6 +73,7 @@ void PrintUsage() {
           "  --test-launcher-filter-file=PATH\n"
           "    Like --gtest_filter, but read the test filter from PATH.\n"
           "    One pattern per line; lines starting with '-' are exclusions.\n"
+          "    See also //testing/buildbot/filters/README.md file.\n"
           "\n"
           "  --test-launcher-batch-limit=N\n"
           "    Sets the limit of test batch to run in a single process to N.\n"
@@ -121,7 +126,7 @@ class DefaultUnitTestPlatformDelegate : public UnitTestPlatformDelegate {
 
     CHECK(temp_dir_.IsValid() || temp_dir_.CreateUniqueTempDir());
     FilePath temp_file;
-    CHECK(CreateTemporaryFileInDir(temp_dir_.path(), &temp_file));
+    CHECK(CreateTemporaryFileInDir(temp_dir_.GetPath(), &temp_file));
     std::string long_flags(
         std::string("--") + kGTestFilterFlag + "=" +
         JoinString(test_names, ":"));
@@ -229,6 +234,9 @@ int LaunchUnitTestsInternal(const RunTestSuiteCallback& run_test_suite,
   fflush(stdout);
 
   MessageLoopForIO message_loop;
+#if defined(OS_POSIX)
+  FileDescriptorWatcher file_descriptor_watcher(&message_loop);
+#endif
 
   DefaultUnitTestPlatformDelegate platform_delegate;
   UnitTestLauncherDelegate delegate(
@@ -431,9 +439,9 @@ void SerialGTestCallback(
   DeleteFile(callback_state.output_file.DirName(), true);
 
   ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, Bind(&RunUnitTestsSerially, callback_state.test_launcher,
-                      callback_state.platform_delegate, test_names,
-                      callback_state.launch_flags));
+      FROM_HERE, BindOnce(&RunUnitTestsSerially, callback_state.test_launcher,
+                          callback_state.platform_delegate, test_names,
+                          callback_state.launch_flags));
 }
 
 }  // namespace
@@ -628,8 +636,9 @@ size_t UnitTestLauncherDelegate::RetryTests(
     const std::vector<std::string>& test_names) {
   ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
-      Bind(&RunUnitTestsSerially, test_launcher, platform_delegate_, test_names,
-           use_job_objects_ ? TestLauncher::USE_JOB_OBJECTS : 0));
+      BindOnce(&RunUnitTestsSerially, test_launcher, platform_delegate_,
+               test_names,
+               use_job_objects_ ? TestLauncher::USE_JOB_OBJECTS : 0));
   return test_names.size();
 }
 

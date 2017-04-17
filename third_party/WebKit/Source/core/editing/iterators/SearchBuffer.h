@@ -26,13 +26,16 @@
 #ifndef SearchBuffer_h
 #define SearchBuffer_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/editing/EphemeralRange.h"
 #include "core/editing/FindOptions.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
+
+class TextSearcherICU;
 
 // Buffer that knows how to compare with a search target.
 // Keeps enough of the previous text to be able to search in the future, but no
@@ -42,50 +45,60 @@ namespace blink {
 // inside a word are permitted if TreatMedialCapitalAsWordStart is specified as
 // well.
 class SearchBuffer {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(SearchBuffer);
-public:
-    SearchBuffer(const String& target, FindOptions);
-    ~SearchBuffer();
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(SearchBuffer);
 
-    // Returns number of characters appended; guaranteed to be in the range
-    // [1, length].
-    template<typename CharType>
-    void append(const CharType*, size_t length);
-    size_t numberOfCharactersJustAppended() const { return m_numberOfCharactersJustAppended; }
+ public:
+  SearchBuffer(const String& target, FindOptions);
+  ~SearchBuffer();
 
-    bool needsMoreContext() const;
-    void prependContext(const UChar*, size_t length);
-    void reachedBreak();
+  // Returns number of characters appended; guaranteed to be in the range
+  // [1, length].
+  template <typename CharType>
+  void Append(const CharType*, size_t length);
+  size_t NumberOfCharactersJustAppended() const {
+    return number_of_characters_just_appended_;
+  }
 
-    // Result is the size in characters of what was found.
-    // And <startOffset> is the number of characters back to the start of what
-    // was found.
-    size_t search(size_t& startOffset);
-    bool atBreak() const;
+  bool NeedsMoreContext() const;
+  void PrependContext(const UChar*, size_t length);
+  void ReachedBreak();
 
-private:
-    bool isBadMatch(const UChar*, size_t length) const;
-    bool isWordStartMatch(size_t start, size_t length) const;
+  // Result is the size in characters of what was found.
+  // And <startOffset> is the number of characters back to the start of what
+  // was found.
+  size_t Search(size_t& start_offset);
+  bool AtBreak() const;
 
-    Vector<UChar> m_target;
-    FindOptions m_options;
+ private:
+  bool IsBadMatch(const UChar*, size_t length) const;
+  bool IsWordStartMatch(size_t start, size_t length) const;
 
-    Vector<UChar> m_buffer;
-    size_t m_overlap;
-    size_t m_prefixLength;
-    size_t m_numberOfCharactersJustAppended;
-    bool m_atBreak;
-    bool m_needsMoreContext;
+  Vector<UChar> target_;
+  FindOptions options_;
 
-    bool m_targetRequiresKanaWorkaround;
-    Vector<UChar> m_normalizedTarget;
-    mutable Vector<UChar> m_normalizedMatch;
+  Vector<UChar> buffer_;
+  size_t overlap_;
+  size_t prefix_length_;
+  size_t number_of_characters_just_appended_;
+  bool at_break_;
+  bool needs_more_context_;
+
+  bool target_requires_kana_workaround_;
+  Vector<UChar> normalized_target_;
+  mutable Vector<UChar> normalized_match_;
+
+  std::unique_ptr<TextSearcherICU> text_searcher_;
 };
 
-CORE_EXPORT EphemeralRange findPlainText(const EphemeralRange& inputRange, const String&, FindOptions);
-CORE_EXPORT EphemeralRangeInFlatTree findPlainText(const EphemeralRangeInFlatTree& inputRange, const String&, FindOptions);
+CORE_EXPORT EphemeralRange FindPlainText(const EphemeralRange& input_range,
+                                         const String&,
+                                         FindOptions);
+CORE_EXPORT EphemeralRangeInFlatTree
+FindPlainText(const EphemeralRangeInFlatTree& input_range,
+              const String&,
+              FindOptions);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SearchBuffer_h
+#endif  // SearchBuffer_h

@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
+#include "remoting/client/host_experiment_sender.h"
 #include "remoting/protocol/client_authentication_config.h"
 #include "remoting/protocol/client_stub.h"
 #include "remoting/protocol/clipboard_stub.h"
@@ -37,11 +38,8 @@ class TransportContext;
 class VideoRenderer;
 }  // namespace protocol
 
-class AudioConsumer;
-class AudioDecodeScheduler;
 class ClientContext;
 class ClientUserInterface;
-class FrameConsumerProxy;
 
 class ChromotingClient : public SignalStrategy::Listener,
                          public protocol::ConnectionToHost::HostEventCallback,
@@ -53,12 +51,14 @@ class ChromotingClient : public SignalStrategy::Listener,
   ChromotingClient(ClientContext* client_context,
                    ClientUserInterface* user_interface,
                    protocol::VideoRenderer* video_renderer,
-                   base::WeakPtr<AudioConsumer> audio_consumer);
+                   base::WeakPtr<protocol::AudioStub> audio_consumer);
 
   ~ChromotingClient() override;
 
   void set_protocol_config(
       std::unique_ptr<protocol::CandidateSessionConfig> config);
+
+  void set_host_experiment_config(const std::string& experiment_config);
 
   // Used to set fake/mock objects for tests which use the ChromotingClient.
   void SetConnectionToHostForTests(
@@ -110,19 +110,19 @@ class ChromotingClient : public SignalStrategy::Listener,
   // Starts connection once |signal_strategy_| is connected.
   void StartConnection();
 
-  // Called when the connection is authenticated.
-  void OnAuthenticated();
-
   // Called when all channels are connected.
   void OnChannelsConnected();
 
   base::ThreadChecker thread_checker_;
+
+  scoped_refptr<base::SingleThreadTaskRunner> audio_decode_task_runner_;
 
   std::unique_ptr<protocol::CandidateSessionConfig> protocol_config_;
 
   // The following are not owned by this class.
   ClientUserInterface* user_interface_ = nullptr;
   protocol::VideoRenderer* video_renderer_ = nullptr;
+  base::WeakPtr<protocol::AudioStub> audio_consumer_;
   SignalStrategy* signal_strategy_ = nullptr;
 
   std::string host_jid_;
@@ -134,8 +134,6 @@ class ChromotingClient : public SignalStrategy::Listener,
 
   protocol::MouseInputFilter mouse_input_scaler_;
 
-  std::unique_ptr<AudioDecodeScheduler> audio_decode_scheduler_;
-
   std::string local_capabilities_;
 
   // The set of all capabilities supported by the host.
@@ -143,6 +141,8 @@ class ChromotingClient : public SignalStrategy::Listener,
 
   // True if |protocol::Capabilities| message has been received.
   bool host_capabilities_received_ = false;
+
+  std::unique_ptr<HostExperimentSender> host_experiment_sender_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromotingClient);
 };

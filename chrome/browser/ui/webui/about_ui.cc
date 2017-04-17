@@ -30,6 +30,8 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/sys_info.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread.h"
 #include "base/values.h"
 #include "build/build_config.h"
@@ -44,9 +46,11 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/grit/browser_resources.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/locale_settings.h"
+#include "components/grit/components_resources.h"
 #include "components/strings/grit/components_locale_settings.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
@@ -56,28 +60,21 @@
 #include "content/public/common/content_client.h"
 #include "content/public/common/process_type.h"
 #include "google_apis/gaia/google_service_auth_error.h"
-#include "grit/browser_resources.h"
-#include "grit/components_resources.h"
 #include "net/base/escape.h"
 #include "net/base/filename_util.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_response_headers.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_status.h"
-#include "third_party/brotli/dec/decode.h"
+#include "third_party/brotli/include/brotli/decode.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/webui/jstemplate_builder.h"
 #include "ui/base/webui/web_ui_util.h"
 #include "url/gurl.h"
 
-#if defined(ENABLE_THEMES)
+#if !defined(OS_ANDROID)
 #include "chrome/browser/ui/webui/theme_source.h"
-#endif
-
-#if defined(OS_LINUX) || defined(OS_OPENBSD)
-#include "content/public/browser/zygote_host_linux.h"
-#include "content/public/common/sandbox_linux.h"
 #endif
 
 #if defined(OS_WIN)
@@ -322,15 +319,14 @@ class ChromeOSCreditsHandler
       return;
     }
     // Load local Chrome OS credits from the disk.
-    BrowserThread::PostBlockingPoolTaskAndReply(
-        FROM_HERE,
-        base::Bind(&ChromeOSCreditsHandler::LoadCreditsFileOnBlockingPool,
-                   this),
+    base::PostTaskWithTraitsAndReply(
+        FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
+                       base::TaskPriority::BACKGROUND),
+        base::Bind(&ChromeOSCreditsHandler::LoadCreditsFileAsync, this),
         base::Bind(&ChromeOSCreditsHandler::ResponseOnUIThread, this));
   }
 
-  void LoadCreditsFileOnBlockingPool() {
-    DCHECK(BrowserThread::GetBlockingPool()->RunsTasksOnCurrentThread());
+  void LoadCreditsFileAsync() {
     base::FilePath credits_file_path(chrome::kChromeOSCreditsPath);
     if (!base::ReadFileToString(credits_file_path, &contents_)) {
       // File with credits not found, ResponseOnUIThread will load credits
@@ -424,7 +420,7 @@ std::string ChromeURLs() {
   return html;
 }
 
-#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_CHROMEOS)
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
 
 const char kAboutDiscardsRunCommand[] = "run";
 
@@ -552,7 +548,9 @@ std::string AboutDiscards(const std::string& path) {
   output.append(AddStringRow(
       "Total", base::IntToString(meminfo.total / 1024)));
   output.append(AddStringRow(
-      "Free", base::IntToString(meminfo.free / 1024)));
+      "Free",
+      base::IntToString(base::SysInfo::AmountOfAvailablePhysicalMemory() /
+                        1024 / 1024)));
 #if defined(OS_CHROMEOS)
   int mem_allocated_kb = meminfo.active_anon + meminfo.inactive_anon;
 #if defined(ARCH_CPU_ARM_FAMILY)
@@ -582,7 +580,7 @@ std::string AboutDiscards(const std::string& path) {
   return output;
 }
 
-#endif  // OS_WIN || OS_CHROMEOS
+#endif  // OS_WIN || OS_MACOSX || OS_LINUX
 
 // AboutDnsHandler bounces the request back to the IO thread to collect
 // the DNS information.
@@ -652,78 +650,10 @@ std::string AboutLinuxProxyConfig() {
   data.append("<style>body { max-width: 70ex; padding: 2ex 5ex; }</style>");
   AppendBody(&data);
   base::FilePath binary = base::CommandLine::ForCurrentProcess()->GetProgram();
-  data.append(l10n_util::GetStringFUTF8(
-      IDS_ABOUT_LINUX_PROXY_CONFIG_BODY,
-      l10n_util::GetStringUTF16(IDS_PRODUCT_NAME),
-      base::ASCIIToUTF16(binary.BaseName().value())));
-  AppendFooter(&data);
-  return data;
-}
-
-void AboutSandboxRow(std::string* data, int name_id, bool good) {
-  data->append("<tr><td>");
-  data->append(l10n_util::GetStringUTF8(name_id));
-  if (good) {
-    data->append("</td><td style='color: green;'>");
-    data->append(
-        l10n_util::GetStringUTF8(IDS_CONFIRM_MESSAGEBOX_YES_BUTTON_LABEL));
-  } else {
-    data->append("</td><td style='color: red;'>");
-    data->append(
-        l10n_util::GetStringUTF8(IDS_CONFIRM_MESSAGEBOX_NO_BUTTON_LABEL));
-  }
-  data->append("</td></tr>");
-}
-
-std::string AboutSandbox() {
-  std::string data;
-  AppendHeader(&data, 0, l10n_util::GetStringUTF8(IDS_ABOUT_SANDBOX_TITLE));
-  AppendBody(&data);
-  data.append("<h1>");
-  data.append(l10n_util::GetStringUTF8(IDS_ABOUT_SANDBOX_TITLE));
-  data.append("</h1>");
-
-  // Get expected sandboxing status of renderers.
-  const int status =
-      content::ZygoteHost::GetInstance()->GetRendererSandboxStatus();
-
-  data.append("<table>");
-
-  AboutSandboxRow(&data, IDS_ABOUT_SANDBOX_SUID_SANDBOX,
-                  status & content::kSandboxLinuxSUID);
-  AboutSandboxRow(&data, IDS_ABOUT_SANDBOX_NAMESPACE_SANDBOX,
-                  status & content::kSandboxLinuxUserNS);
-  AboutSandboxRow(&data, IDS_ABOUT_SANDBOX_PID_NAMESPACES,
-                  status & content::kSandboxLinuxPIDNS);
-  AboutSandboxRow(&data, IDS_ABOUT_SANDBOX_NET_NAMESPACES,
-                  status & content::kSandboxLinuxNetNS);
-  AboutSandboxRow(&data, IDS_ABOUT_SANDBOX_SECCOMP_BPF_SANDBOX,
-                  status & content::kSandboxLinuxSeccompBPF);
-  AboutSandboxRow(&data, IDS_ABOUT_SANDBOX_SECCOMP_BPF_SANDBOX_TSYNC,
-                  status & content::kSandboxLinuxSeccompTSYNC);
-  AboutSandboxRow(&data, IDS_ABOUT_SANDBOX_YAMA_LSM,
-                  status & content::kSandboxLinuxYama);
-
-  data.append("</table>");
-
-  // Require either the setuid or namespace sandbox for our first-layer sandbox.
-  bool good_layer1 = (status & content::kSandboxLinuxSUID ||
-                      status & content::kSandboxLinuxUserNS) &&
-                     status & content::kSandboxLinuxPIDNS &&
-                     status & content::kSandboxLinuxNetNS;
-  // A second-layer sandbox is also required to be adequately sandboxed.
-  bool good_layer2 = status & content::kSandboxLinuxSeccompBPF;
-  bool good = good_layer1 && good_layer2;
-
-  if (good) {
-    data.append("<p style='color: green'>");
-    data.append(l10n_util::GetStringUTF8(IDS_ABOUT_SANDBOX_OK));
-  } else {
-    data.append("<p style='color: red'>");
-    data.append(l10n_util::GetStringUTF8(IDS_ABOUT_SANDBOX_BAD));
-  }
-  data.append("</p>");
-
+  data.append(
+      l10n_util::GetStringFUTF8(IDS_ABOUT_LINUX_PROXY_CONFIG_BODY,
+                                l10n_util::GetStringUTF16(IDS_PRODUCT_NAME),
+                                base::ASCIIToUTF16(binary.BaseName().value())));
   AppendFooter(&data);
   return data;
 }
@@ -746,8 +676,7 @@ std::string AboutUIHTMLSource::GetSource() const {
 
 void AboutUIHTMLSource::StartDataRequest(
     const std::string& path,
-    int render_process_id,
-    int render_frame_id,
+    const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
     const content::URLDataSource::GotDataCallback& callback) {
   std::string response;
   // Add your data source here, in alphabetical order.
@@ -765,23 +694,30 @@ void AboutUIHTMLSource::StartDataRequest(
     base::StringPiece raw_response =
         ResourceBundle::GetSharedInstance().GetRawDataResource(idr);
     if (idr == IDR_ABOUT_UI_CREDITS_HTML) {
-      size_t decoded_size;
-      const uint8_t* encoded_response_buffer =
+      const uint8_t* next_encoded_byte =
           reinterpret_cast<const uint8_t*>(raw_response.data());
-      CHECK(BrotliDecompressedSize(raw_response.size(), encoded_response_buffer,
-                                   &decoded_size));
-
-      // Resizing the response and using it as the buffer Brotli decompresses
-      // into.
-      response.resize(decoded_size);
-      CHECK(BrotliDecompressBuffer(raw_response.size(), encoded_response_buffer,
-                                   &decoded_size,
-                                   reinterpret_cast<uint8_t*>(&response[0])) ==
-            BROTLI_RESULT_SUCCESS);
+      size_t input_size_remaining = raw_response.size();
+      BrotliDecoderState* decoder =
+          BrotliDecoderCreateInstance(nullptr /* no custom allocator */,
+                                      nullptr /* no custom deallocator */,
+                                      nullptr /* no custom memory handle */);
+      CHECK(!!decoder);
+      while (!BrotliDecoderIsFinished(decoder)) {
+        size_t output_size_remaining = 0;
+        CHECK(BrotliDecoderDecompressStream(
+                  decoder, &input_size_remaining, &next_encoded_byte,
+                  &output_size_remaining, nullptr,
+                  nullptr) != BROTLI_DECODER_RESULT_ERROR);
+        const uint8_t* output_buffer =
+            BrotliDecoderTakeOutput(decoder, &output_size_remaining);
+        response.insert(response.end(), output_buffer,
+                        output_buffer + output_size_remaining);
+      }
+      BrotliDecoderDestroyInstance(decoder);
     } else {
       response = raw_response.as_string();
     }
-#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_CHROMEOS)
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
   } else if (source_name_ == chrome::kChromeUIDiscardsHost) {
     response = AboutDiscards(path);
 #endif
@@ -796,10 +732,6 @@ void AboutUIHTMLSource::StartDataRequest(
   } else if (source_name_ == chrome::kChromeUIOSCreditsHost) {
     ChromeOSCreditsHandler::Start(path, callback);
     return;
-#endif
-#if defined(OS_LINUX) || defined(OS_OPENBSD)
-  } else if (source_name_ == chrome::kChromeUISandboxHost) {
-    response = AboutSandbox();
 #endif
 #if !defined(OS_ANDROID)
   } else if (source_name_ == chrome::kChromeUITermsHost) {
@@ -856,7 +788,7 @@ AboutUI::AboutUI(content::WebUI* web_ui, const std::string& name)
     : WebUIController(web_ui) {
   Profile* profile = Profile::FromWebUI(web_ui);
 
-#if defined(ENABLE_THEMES)
+#if !defined(OS_ANDROID)
   // Set up the chrome://theme/ source.
   ThemeSource* theme = new ThemeSource(profile);
   content::URLDataSource::Add(profile, theme);

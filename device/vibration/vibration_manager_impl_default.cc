@@ -5,39 +5,39 @@
 #include <stdint.h>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "device/vibration/vibration_manager_impl.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
 namespace device {
 
+int64_t VibrationManagerImpl::milli_seconds_for_testing_ = -1;
+bool VibrationManagerImpl::cancelled_for_testing_ = false;
+
 namespace {
 
-class VibrationManagerEmptyImpl : public VibrationManager {
+class VibrationManagerEmptyImpl : public mojom::VibrationManager {
  public:
+  VibrationManagerEmptyImpl() {}
+  ~VibrationManagerEmptyImpl() override {}
+
   void Vibrate(int64_t milliseconds, const VibrateCallback& callback) override {
+    VibrationManagerImpl::milli_seconds_for_testing_ = milliseconds;
     callback.Run();
   }
 
-  void Cancel(const CancelCallback& callback) override { callback.Run(); }
-
- private:
-  friend VibrationManagerImpl;
-
-  explicit VibrationManagerEmptyImpl(
-      mojo::InterfaceRequest<VibrationManager> request)
-      : binding_(this, std::move(request)) {}
-  ~VibrationManagerEmptyImpl() override {}
-
-  // The binding between this object and the other end of the pipe.
-  mojo::StrongBinding<VibrationManager> binding_;
+  void Cancel(const CancelCallback& callback) override {
+    VibrationManagerImpl::cancelled_for_testing_ = true;
+    callback.Run();
+  }
 };
 
 }  // namespace
 
 // static
-void VibrationManagerImpl::Create(
-    mojo::InterfaceRequest<VibrationManager> request) {
-  new VibrationManagerEmptyImpl(std::move(request));
+void VibrationManagerImpl::Create(mojom::VibrationManagerRequest request) {
+  mojo::MakeStrongBinding(base::MakeUnique<VibrationManagerEmptyImpl>(),
+                          std::move(request));
 }
 
 }  // namespace device

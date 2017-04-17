@@ -26,46 +26,40 @@
 #define OutlineValue_h
 
 #include "core/style/BorderValue.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class OutlineValue final : public BorderValue {
-    DISALLOW_NEW();
-friend class ComputedStyle;
-public:
-    OutlineValue()
-        : m_offset(0)
-    {
-    }
+  DISALLOW_NEW();
+  friend class ComputedStyle;
 
-    bool operator==(const OutlineValue& o) const
-    {
-        return BorderValue::operator==(o) && m_offset == o.m_offset && m_isAuto == o.m_isAuto;
-    }
+ public:
+  OutlineValue() : offset_(0) {}
 
-    bool operator!=(const OutlineValue& o) const
-    {
-        return !(*this == o);
-    }
+  bool operator==(const OutlineValue& o) const {
+    return BorderValue::operator==(o) && offset_ == o.offset_ &&
+           is_auto_ == o.is_auto_;
+  }
 
-    bool visuallyEqual(const OutlineValue& o) const
-    {
-        if (m_style == BorderStyleNone && o.m_style == BorderStyleNone)
-            return true;
-        return *this == o;
-    }
+  bool operator!=(const OutlineValue& o) const { return !(*this == o); }
 
-    int offset() const { return m_offset; }
-    void setOffset(int offset) { m_offset = offset; }
+  bool VisuallyEqual(const OutlineValue& o) const {
+    if (style_ == kBorderStyleNone && o.style_ == kBorderStyleNone)
+      return true;
+    return *this == o;
+  }
 
-    OutlineIsAuto isAuto() const { return static_cast<OutlineIsAuto>(m_isAuto); }
-    void setIsAuto(OutlineIsAuto isAuto) { m_isAuto = isAuto; }
+  int Offset() const { return offset_; }
+  void SetOffset(int offset) { offset_ = offset; }
 
-private:
-    int m_offset;
+  OutlineIsAuto IsAuto() const { return static_cast<OutlineIsAuto>(is_auto_); }
+  void SetIsAuto(OutlineIsAuto is_auto) { is_auto_ = is_auto; }
+
+ private:
+  int offset_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // OutlineValue_h
+#endif  // OutlineValue_h

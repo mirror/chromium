@@ -8,7 +8,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/sys_info.h"
 #include "remoting/base/constants.h"
-#include "third_party/webrtc/libjingle/xmllite/xmlelement.h"
+#include "third_party/libjingle_xmpp/xmllite/xmlelement.h"
 
 using base::SysInfo;
 using buzz::QName;
@@ -74,8 +74,8 @@ void ServerLogEntry::AddEventNameField(const char* name) {
 
 // static
 std::unique_ptr<XmlElement> ServerLogEntry::MakeStanza() {
-  return base::WrapUnique(
-      new XmlElement(QName(kChromotingXmlNamespace, kLogCommand)));
+  return base::MakeUnique<XmlElement>(
+      QName(kChromotingXmlNamespace, kLogCommand));
 }
 
 std::unique_ptr<XmlElement> ServerLogEntry::ToStanza() const {

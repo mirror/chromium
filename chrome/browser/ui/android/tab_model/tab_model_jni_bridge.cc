@@ -9,7 +9,7 @@
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
 #include "base/android/jni_weak_ref.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
 #include "chrome/browser/android/tab_android.h"
 #include "chrome/browser/browser_process.h"
@@ -23,6 +23,8 @@
 
 using base::android::AttachCurrentThread;
 using base::android::ConvertUTF8ToJavaString;
+using base::android::JavaParamRef;
+using base::android::ScopedJavaLocalRef;
 using content::WebContents;
 
 namespace {
@@ -43,8 +45,9 @@ static Profile* FindProfile(jboolean is_incognito) {
 
 TabModelJniBridge::TabModelJniBridge(JNIEnv* env,
                                      jobject jobj,
-                                     bool is_incognito)
-    : TabModel(FindProfile(is_incognito)),
+                                     bool is_incognito,
+                                     bool is_tabbed_activity)
+    : TabModel(FindProfile(is_incognito), is_tabbed_activity),
       java_object_(env, env->NewWeakGlobalRef(jobj)) {
   TabModelList::AddTabModel(this);
 }
@@ -73,12 +76,12 @@ void TabModelJniBridge::TabAddedToModel(JNIEnv* env,
 
 int TabModelJniBridge::GetTabCount() const {
   JNIEnv* env = AttachCurrentThread();
-  return Java_TabModelJniBridge_getCount(env, java_object_.get(env).obj());
+  return Java_TabModelJniBridge_getCount(env, java_object_.get(env));
 }
 
 int TabModelJniBridge::GetActiveIndex() const {
   JNIEnv* env = AttachCurrentThread();
-  return Java_TabModelJniBridge_index(env, java_object_.get(env).obj());
+  return Java_TabModelJniBridge_index(env, java_object_.get(env));
 }
 
 void TabModelJniBridge::CreateTab(TabAndroid* parent,
@@ -86,11 +89,9 @@ void TabModelJniBridge::CreateTab(TabAndroid* parent,
                                   int parent_tab_id) {
   JNIEnv* env = AttachCurrentThread();
   Java_TabModelJniBridge_createTabWithWebContents(
-      env, java_object_.get(env).obj(),
-      (parent ? parent->GetJavaObject().obj() : nullptr),
+      env, java_object_.get(env), (parent ? parent->GetJavaObject() : nullptr),
       web_contents->GetBrowserContext()->IsOffTheRecord(),
-      web_contents->GetJavaWebContents().obj(),
-      parent_tab_id);
+      web_contents->GetJavaWebContents(), parent_tab_id);
 }
 
 WebContents* TabModelJniBridge::GetWebContentsAt(int index) const {
@@ -101,24 +102,19 @@ WebContents* TabModelJniBridge::GetWebContentsAt(int index) const {
 TabAndroid* TabModelJniBridge::GetTabAt(int index) const {
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jobject> jtab =
-      Java_TabModelJniBridge_getTabAt(env,
-                                      java_object_.get(env).obj(),
-                                      index);
+      Java_TabModelJniBridge_getTabAt(env, java_object_.get(env), index);
 
-  return jtab.is_null() ?
-      NULL : TabAndroid::GetNativeTab(env, jtab.obj());
+  return jtab.is_null() ? NULL : TabAndroid::GetNativeTab(env, jtab);
 }
 
 void TabModelJniBridge::SetActiveIndex(int index) {
   JNIEnv* env = AttachCurrentThread();
-  Java_TabModelJniBridge_setIndex(env, java_object_.get(env).obj(), index);
+  Java_TabModelJniBridge_setIndex(env, java_object_.get(env), index);
 }
 
 void TabModelJniBridge::CloseTabAt(int index) {
   JNIEnv* env = AttachCurrentThread();
-  Java_TabModelJniBridge_closeTabAt(env,
-                                    java_object_.get(env).obj(),
-                                    index);
+  Java_TabModelJniBridge_closeTabAt(env, java_object_.get(env), index);
 }
 
 WebContents* TabModelJniBridge::CreateNewTabForDevTools(
@@ -128,15 +124,13 @@ WebContents* TabModelJniBridge::CreateNewTabForDevTools(
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jstring> jurl = ConvertUTF8ToJavaString(env, url.spec());
   ScopedJavaLocalRef<jobject> obj =
-      Java_TabModelJniBridge_createNewTabForDevTools(
-          env,
-          java_object_.get(env).obj(),
-          jurl.obj());
+      Java_TabModelJniBridge_createNewTabForDevTools(env, java_object_.get(env),
+                                                     jurl);
   if (obj.is_null()) {
     VLOG(0) << "Failed to create java tab";
     return NULL;
   }
-  TabAndroid* tab = TabAndroid::GetNativeTab(env, obj.obj());
+  TabAndroid* tab = TabAndroid::GetNativeTab(env, obj);
   if (!tab) {
     VLOG(0) << "Failed to create java tab";
     return NULL;
@@ -147,7 +141,7 @@ WebContents* TabModelJniBridge::CreateNewTabForDevTools(
 bool TabModelJniBridge::IsSessionRestoreInProgress() const {
   JNIEnv* env = AttachCurrentThread();
   return Java_TabModelJniBridge_isSessionRestoreInProgress(
-      env, java_object_.get(env).obj());
+      env, java_object_.get(env));
 }
 
 void TabModelJniBridge::BroadcastSessionRestoreComplete(
@@ -222,7 +216,9 @@ bool TabModelJniBridge::Register(JNIEnv* env) {
 
 static jlong Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
-                  jboolean is_incognito) {
-  TabModel* tab_model = new TabModelJniBridge(env, obj, is_incognito);
+                  jboolean is_incognito,
+                  jboolean is_tabbed_activity) {
+  TabModel* tab_model =
+      new TabModelJniBridge(env, obj, is_incognito, is_tabbed_activity);
   return reinterpret_cast<intptr_t>(tab_model);
 }

@@ -224,10 +224,10 @@ To meet the requirements, we make each world hold a DOM wrapper storage
 that stores a mapping from the C++ DOM objects to the DOM wrappers in that world.
 
 As a result, we have multiple DOM wrapper storages in one isolate.
-The mapping of the main world is written in ScriptWrappable.
-If ScriptWrappable::m_wrapper has a non-empty value, it is a DOM wrapper of
-the C++ DOM object of the main world.
-The mapping of other worlds are written in DOMWrapperMap.
+The mapping of the main world is written in `ScriptWrappable`.
+If `ScriptWrappable::m_mainWorldWrapper` has a non-empty value, it is a DOM
+wrapper of the C++ DOM object of the main world.
+The mapping of other worlds are written in `DOMWrapperMap`.
 
 ## DOM wrappers and contexts
 
@@ -260,6 +260,6 @@ iframe.contentDocument.addEventListener("click",
 
 To make sure that a DOM wrapper is created in a correct context, you need to
 make sure that the current context must be set to the correct context
-whenever you call toV8(). If you're not sure what context to use,
+whenever you call ToV8(). If you're not sure what context to use,
 ask haraken@chromium.org.
 

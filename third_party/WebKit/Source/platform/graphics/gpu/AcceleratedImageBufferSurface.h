@@ -32,30 +32,38 @@
 #define AcceleratedImageBufferSurface_h
 
 #include "platform/graphics/ImageBufferSurface.h"
+#include "platform/graphics/paint/PaintCanvas.h"
 #include "public/platform/WebGraphicsContext3DProvider.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
 #include "third_party/skia/include/core/SkSurface.h"
 #include <memory>
 
 namespace blink {
 
-class PLATFORM_EXPORT AcceleratedImageBufferSurface : public ImageBufferSurface {
-    WTF_MAKE_NONCOPYABLE(AcceleratedImageBufferSurface); USING_FAST_MALLOC(AcceleratedImageBufferSurface);
-public:
-    AcceleratedImageBufferSurface(const IntSize&, OpacityMode = NonOpaque);
-    ~AcceleratedImageBufferSurface() override { }
+class PLATFORM_EXPORT AcceleratedImageBufferSurface
+    : public ImageBufferSurface {
+  WTF_MAKE_NONCOPYABLE(AcceleratedImageBufferSurface);
+  USING_FAST_MALLOC(AcceleratedImageBufferSurface);
 
-    SkCanvas* canvas() override { return m_surface ? m_surface->getCanvas() : nullptr; }
-    bool isValid() const override { return m_surface; }
-    bool isAccelerated() const override { return true; }
-    PassRefPtr<SkImage> newImageSnapshot(AccelerationHint, SnapshotReason) override;
-    GLuint getBackingTextureHandleForOverwrite() override;
+ public:
+  AcceleratedImageBufferSurface(const IntSize&,
+                                OpacityMode = kNonOpaque,
+                                sk_sp<SkColorSpace> = nullptr,
+                                SkColorType = kN32_SkColorType);
+  ~AcceleratedImageBufferSurface() override {}
 
-private:
-    std::unique_ptr<WebGraphicsContext3DProvider> m_contextProvider;
-    sk_sp<SkSurface> m_surface; // Uses m_contextProvider.
+  PaintCanvas* Canvas() override { return canvas_.get(); }
+  bool IsValid() const override;
+  bool IsAccelerated() const override { return true; }
+  sk_sp<SkImage> NewImageSnapshot(AccelerationHint, SnapshotReason) override;
+  GLuint GetBackingTextureHandleForOverwrite() override;
+
+ private:
+  unsigned context_id_;
+  sk_sp<SkSurface> surface_;  // Uses m_contextProvider.
+  std::unique_ptr<PaintCanvas> canvas_;
 };
 
-
-} // namespace blink
+}  // namespace blink
 
 #endif

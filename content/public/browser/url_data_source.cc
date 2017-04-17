@@ -16,9 +16,9 @@ void URLDataSource::Add(BrowserContext* browser_context,
   URLDataManager::AddDataSource(browser_context, source);
 }
 
-base::MessageLoop* URLDataSource::MessageLoopForRequestPath(
-    const std::string& path) const {
-  return BrowserThread::UnsafeGetMessageLoopForThread(BrowserThread::UI);
+scoped_refptr<base::SingleThreadTaskRunner>
+URLDataSource::TaskRunnerForRequestPath(const std::string& path) const {
+  return BrowserThread::GetTaskRunnerForThread(BrowserThread::UI);
 }
 
 bool URLDataSource::ShouldReplaceExistingSource() const {
@@ -74,6 +74,10 @@ bool URLDataSource::ShouldServeMimeTypeAsContentTypeHeader() const {
 std::string URLDataSource::GetAccessControlAllowOriginForOrigin(
     const std::string& origin) const {
   return std::string();
+}
+
+bool URLDataSource::IsGzipped(const std::string& path) const {
+  return false;
 }
 
 }  // namespace content

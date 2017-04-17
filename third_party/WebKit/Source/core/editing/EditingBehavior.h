@@ -23,90 +23,112 @@
 
 #include "core/CoreExport.h"
 #include "core/editing/EditingBehaviorTypes.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 class KeyboardEvent;
 
 class CORE_EXPORT EditingBehavior {
-    STACK_ALLOCATED();
-public:
-    explicit EditingBehavior(EditingBehaviorType type)
-        : m_type(type)
-    {
-    }
+  STACK_ALLOCATED();
 
-    // Individual functions for each case where we have more than one style of editing behavior.
-    // Create a new function for any platform difference so we can control it here.
+ public:
+  explicit EditingBehavior(EditingBehaviorType type) : type_(type) {}
 
-    // When extending a selection beyond the top or bottom boundary of an editable area,
-    // maintain the horizontal position on Windows and Android but extend it to the boundary of
-    // the editable content on Mac and Linux.
-    bool shouldMoveCaretToHorizontalBoundaryWhenPastTopOrBottom() const
-    {
-        return m_type != EditingWindowsBehavior && m_type != EditingAndroidBehavior;
-    }
+  // Individual functions for each case where we have more than one style of
+  // editing behavior. Create a new function for any platform difference so we
+  // can control it here.
 
-    bool shouldSelectReplacement() const
-    {
-        return m_type == EditingAndroidBehavior;
-    }
+  // When extending a selection beyond the top or bottom boundary of an editable
+  // area, maintain the horizontal position on Windows and Android but extend it
+  // to the boundary of the editable content on Mac and Linux.
+  bool ShouldMoveCaretToHorizontalBoundaryWhenPastTopOrBottom() const {
+    return type_ != kEditingWindowsBehavior && type_ != kEditingAndroidBehavior;
+  }
 
-    // On Windows, selections should always be considered as directional, regardless if it is
-    // mouse-based or keyboard-based.
-    bool shouldConsiderSelectionAsDirectional() const { return m_type != EditingMacBehavior; }
+  bool ShouldSelectReplacement() const {
+    return type_ == kEditingAndroidBehavior;
+  }
 
-    // On Mac, when revealing a selection (for example as a result of a Find operation on the Browser),
-    // content should be scrolled such that the selection gets certer aligned.
-    bool shouldCenterAlignWhenSelectionIsRevealed() const { return m_type == EditingMacBehavior; }
+  // On Windows, selections should always be considered as directional,
+  // regardless if it is mouse-based or keyboard-based.
+  bool ShouldConsiderSelectionAsDirectional() const {
+    return type_ != kEditingMacBehavior;
+  }
 
-    // On Mac, style is considered present when present at the beginning of selection. On other platforms,
-    // style has to be present throughout the selection.
-    bool shouldToggleStyleBasedOnStartOfSelection() const { return m_type == EditingMacBehavior; }
+  // On Mac, when revealing a selection (for example as a result of a Find
+  // operation on the Browser), content should be scrolled such that the
+  // selection gets certer aligned.
+  bool ShouldCenterAlignWhenSelectionIsRevealed() const {
+    return type_ == kEditingMacBehavior;
+  }
 
-    // Standard Mac behavior when extending to a boundary is grow the selection rather than leaving the base
-    // in place and moving the extent. Matches NSTextView.
-    bool shouldAlwaysGrowSelectionWhenExtendingToBoundary() const { return m_type == EditingMacBehavior; }
+  // On Mac, style is considered present when present at the beginning of
+  // selection. On other platforms, style has to be present throughout the
+  // selection.
+  bool ShouldToggleStyleBasedOnStartOfSelection() const {
+    return type_ == kEditingMacBehavior;
+  }
 
-    // On Mac, when processing a contextual click, the object being clicked upon should be selected.
-    bool shouldSelectOnContextualMenuClick() const { return m_type == EditingMacBehavior; }
+  // Standard Mac behavior when extending to a boundary is grow the selection
+  // rather than leaving the base in place and moving the extent. Matches
+  // NSTextView.
+  bool ShouldAlwaysGrowSelectionWhenExtendingToBoundary() const {
+    return type_ == kEditingMacBehavior;
+  }
 
-    // On Mac and Windows, pressing backspace (when it isn't handled otherwise) should navigate back.
-    bool shouldNavigateBackOnBackspace() const
-    {
-        return m_type != EditingUnixBehavior && m_type != EditingAndroidBehavior;
-    }
+  // On Mac, when processing a contextual click, the object being clicked upon
+  // should be selected.
+  bool ShouldSelectOnContextualMenuClick() const {
+    return type_ == kEditingMacBehavior;
+  }
 
-    // On Mac, selecting backwards by word/line from the middle of a word/line, and then going
-    // forward leaves the caret back in the middle with no selection, instead of directly selecting
-    // to the other end of the line/word (Unix/Windows behavior).
-    bool shouldExtendSelectionByWordOrLineAcrossCaret() const { return m_type != EditingMacBehavior; }
+  // On Mac and Windows, pressing backspace (when it isn't handled otherwise)
+  // should navigate back.
+  bool ShouldNavigateBackOnBackspace() const {
+    return type_ != kEditingUnixBehavior && type_ != kEditingAndroidBehavior;
+  }
 
-    // Based on native behavior, when using ctrl(alt)+arrow to move caret by word, ctrl(alt)+left arrow moves caret to
-    // immediately before the word in all platforms, for example, the word break positions are: "|abc |def |hij |opq".
-    // But ctrl+right arrow moves caret to "abc |def |hij |opq" on Windows and "abc| def| hij| opq|" on Mac and Linux.
-    bool shouldSkipSpaceWhenMovingRight() const { return m_type == EditingWindowsBehavior; }
+  // On Mac, selecting backwards by word/line from the middle of a word/line,
+  // and then going forward leaves the caret back in the middle with no
+  // selection, instead of directly selecting to the other end of the line/word
+  // (Unix/Windows behavior).
+  bool ShouldExtendSelectionByWordOrLineAcrossCaret() const {
+    return type_ != kEditingMacBehavior;
+  }
 
-    // On Mac, undo of delete/forward-delete of text should select the deleted text. On other platforms deleted text
-    // should not be selected and the cursor should be placed where the deletion started.
-    bool shouldUndoOfDeleteSelectText() const { return m_type == EditingMacBehavior; }
+  // Based on native behavior, when using ctrl(alt)+arrow to move caret by word,
+  // ctrl(alt)+left arrow moves caret to immediately before the word in all
+  // platforms. For example, the word break positions are:
+  //   "|abc |def |hij |opq".
+  // But ctrl+right arrow moves caret to "abc |def |hij |opq" on Windows and
+  // "abc| def| hij| opq|" on Mac and Linux.
+  bool ShouldSkipSpaceWhenMovingRight() const {
+    return type_ == kEditingWindowsBehavior;
+  }
 
-    // Support for global selections, used on platforms like the X Window
-    // System that treat selection as a type of clipboard.
-    bool supportsGlobalSelection() const
-    {
-        return m_type != EditingWindowsBehavior && m_type != EditingMacBehavior;
-    }
+  // On Mac, undo of delete/forward-delete of text should select the deleted
+  // text. On other platforms deleted text should not be selected and the cursor
+  // should be placed where the deletion started.
+  bool ShouldUndoOfDeleteSelectText() const {
+    return type_ == kEditingMacBehavior;
+  }
 
-    // Convert a KeyboardEvent to a command name like "Copy", "Undo" and so on.
-    // If nothing, return empty string.
-    const char* interpretKeyEvent(const KeyboardEvent&) const;
+  // Support for global selections, used on platforms like the X Window
+  // System that treat selection as a type of clipboard.
+  bool SupportsGlobalSelection() const {
+    return type_ != kEditingWindowsBehavior && type_ != kEditingMacBehavior;
+  }
 
-    bool shouldInsertCharacter(const KeyboardEvent&) const;
-private:
-    EditingBehaviorType m_type;
+  // Convert a KeyboardEvent to a command name like "Copy", "Undo" and so on.
+  // If nothing, return empty string.
+  const char* InterpretKeyEvent(const KeyboardEvent&) const;
+
+  bool ShouldInsertCharacter(const KeyboardEvent&) const;
+
+ private:
+  EditingBehaviorType type_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // EditingBehavior_h
+#endif  // EditingBehavior_h

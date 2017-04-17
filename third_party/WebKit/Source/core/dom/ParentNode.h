@@ -39,51 +39,52 @@
 namespace blink {
 
 class ParentNode {
-public:
-    static HTMLCollection* children(ContainerNode& node)
-    {
-        return node.children();
-    }
+ public:
+  static HTMLCollection* children(ContainerNode& node) {
+    return node.Children();
+  }
 
-    static Element* firstElementChild(ContainerNode& node)
-    {
-        return ElementTraversal::firstChild(node);
-    }
+  static Element* firstElementChild(ContainerNode& node) {
+    return ElementTraversal::FirstChild(node);
+  }
 
-    static Element* lastElementChild(ContainerNode& node)
-    {
-        return ElementTraversal::lastChild(node);
-    }
+  static Element* lastElementChild(ContainerNode& node) {
+    return ElementTraversal::LastChild(node);
+  }
 
-    static unsigned childElementCount(ContainerNode& node)
-    {
-        unsigned count = 0;
-        for (Element* child = ElementTraversal::firstChild(node); child; child = ElementTraversal::nextSibling(*child))
-            ++count;
-        return count;
-    }
+  static unsigned childElementCount(ContainerNode& node) {
+    unsigned count = 0;
+    for (Element* child = ElementTraversal::FirstChild(node); child;
+         child = ElementTraversal::NextSibling(*child))
+      ++count;
+    return count;
+  }
 
-    static void prepend(Node& node, const HeapVector<NodeOrString>& nodes, ExceptionState& exceptionState)
-    {
-        return node.prepend(nodes, exceptionState);
-    }
+  static void prepend(Node& node,
+                      const HeapVector<NodeOrString>& nodes,
+                      ExceptionState& exception_state) {
+    return node.Prepend(nodes, exception_state);
+  }
 
-    static void append(Node& node, const HeapVector<NodeOrString>& nodes, ExceptionState& exceptionState)
-    {
-        return node.append(nodes, exceptionState);
-    }
+  static void append(Node& node,
+                     const HeapVector<NodeOrString>& nodes,
+                     ExceptionState& exception_state) {
+    return node.Append(nodes, exception_state);
+  }
 
-    static Element* querySelector(ContainerNode& node, const AtomicString& selectors, ExceptionState& exceptionState)
-    {
-        return node.querySelector(selectors, exceptionState);
-    }
+  static Element* querySelector(ContainerNode& node,
+                                const AtomicString& selectors,
+                                ExceptionState& exception_state) {
+    return node.QuerySelector(selectors, exception_state);
+  }
 
-    static StaticElementList* querySelectorAll(ContainerNode& node, const AtomicString& selectors, ExceptionState& exceptionState)
-    {
-        return node.querySelectorAll(selectors, exceptionState);
-    }
+  static StaticElementList* querySelectorAll(ContainerNode& node,
+                                             const AtomicString& selectors,
+                                             ExceptionState& exception_state) {
+    return node.QuerySelectorAll(selectors, exception_state);
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ParentNode_h
+#endif  // ParentNode_h

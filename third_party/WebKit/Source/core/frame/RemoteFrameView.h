@@ -5,7 +5,7 @@
 #ifndef RemoteFrameView_h
 #define RemoteFrameView_h
 
-#include "platform/Widget.h"
+#include "platform/FrameViewBase.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/heap/Handle.h"
 
@@ -13,48 +13,51 @@ namespace blink {
 
 class RemoteFrame;
 
-class RemoteFrameView final : public Widget {
-public:
-    static RemoteFrameView* create(RemoteFrame*);
+class RemoteFrameView final : public FrameViewBase {
+ public:
+  static RemoteFrameView* Create(RemoteFrame*);
 
-    ~RemoteFrameView() override;
+  ~RemoteFrameView() override;
 
-    bool isRemoteFrameView() const override { return true; }
-    void setParent(Widget*) override;
+  bool IsRemoteFrameView() const override { return true; }
+  void SetParent(FrameViewBase*) override;
 
-    RemoteFrame& frame() const
-    {
-        ASSERT(m_remoteFrame);
-        return *m_remoteFrame;
-    }
+  RemoteFrame& GetFrame() const {
+    ASSERT(remote_frame_);
+    return *remote_frame_;
+  }
 
-    void dispose() override;
+  void Dispose() override;
+  // Override to notify remote frame that its viewport size has changed.
+  void FrameRectsChanged() override;
+  void InvalidateRect(const IntRect&) override;
+  void SetFrameRect(const IntRect&) override;
+  void Hide() override;
+  void Show() override;
+  void SetParentVisible(bool) override;
 
-    // Override to notify remote frame that its viewport size has changed.
-    void frameRectsChanged() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    void invalidateRect(const IntRect&) override;
+ private:
+  explicit RemoteFrameView(RemoteFrame*);
 
-    void setFrameRect(const IntRect&) override;
+  void UpdateRemoteViewportIntersection();
 
-    void hide() override;
-    void show() override;
-    void setParentVisible(bool) override;
+  // The properties and handling of the cycle between RemoteFrame
+  // and its RemoteFrameView corresponds to that between LocalFrame
+  // and FrameView. Please see the FrameView::m_frame comment for
+  // details.
+  Member<RemoteFrame> remote_frame_;
 
-    DECLARE_VIRTUAL_TRACE();
-
-private:
-    explicit RemoteFrameView(RemoteFrame*);
-
-    // The properties and handling of the cycle between RemoteFrame
-    // and its RemoteFrameView corresponds to that between LocalFrame
-    // and FrameView. Please see the FrameView::m_frame comment for
-    // details.
-    Member<RemoteFrame> m_remoteFrame;
+  IntRect last_viewport_intersection_;
 };
 
-DEFINE_TYPE_CASTS(RemoteFrameView, Widget, widget, widget->isRemoteFrameView(), widget.isRemoteFrameView());
+DEFINE_TYPE_CASTS(RemoteFrameView,
+                  FrameViewBase,
+                  frameViewBase,
+                  frameViewBase->IsRemoteFrameView(),
+                  frameViewBase.IsRemoteFrameView());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RemoteFrameView_h
+#endif  // RemoteFrameView_h

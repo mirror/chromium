@@ -181,7 +181,7 @@
         Start reading from current location
       </message>
       <message desc="The description of the showPowerKey key. Displayed in the Options page." name="IDS_CHROMEVOX_SHOW_POWER_KEY">
-        Open ChromeVox keyboard help
+        Open ChromeVox menus
       </message>
       <message desc="The description of the hidePowerKey key. Displayed in the Options page." name="IDS_CHROMEVOX_HIDE_POWER_KEY">
         Hide ChromeVox help
@@ -193,13 +193,13 @@
         Open ChromeVox tutorial
       </message>
       <message desc="The description of the toggleSearchWidget key. Displayed in the Options page." name="IDS_CHROMEVOX_TOGGLE_SEARCH_WIDGET">
-        Toggle search widget
+        ChromeVox find in page
       </message>
       <message desc="The description of the showOptionsPage key. Displayed in the Options page." name="IDS_CHROMEVOX_SHOW_OPTIONS_PAGE">
         Open options page
       </message>
-      <message desc="The description of the showKbExplorerPage key. Displayed in the Options page." name="IDS_CHROMEVOX_SHOW_KB_EXPLORER_PAGE">
-        Open keyboard explorer
+      <message desc="The description of the showKbExplorerPage key; this allows users to learn about their keyboard. Displayed in the Options page." name="IDS_CHROMEVOX_SHOW_KB_EXPLORER_PAGE">
+        Open learn mode
       </message>
       <message desc="The description of the decreaseTtsRate key. Displayed in the Options page." name="IDS_CHROMEVOX_DECREASE_TTS_RATE">
         Decrease rate of speech
@@ -438,6 +438,31 @@
       <message desc="The title of the extension's options page." name="IDS_CHROMEVOX_OPTIONS_PAGE_TITLE">
         ChromeVox Options
       </message>
+      <message desc="An options page section header for options about the ChromeVox virtual display. This section lets users change the rows, columns, and display style of the virtual braille display." name="IDS_CHROMEVOX_OPTIONS_VIRTUAL_BRAILLE_DISPLAY">
+        Virtual Braille Display
+      </message>
+      <message desc="An explanatory paragraph as part of the ChromeVox options page. Explains that the section on virtual braille display allows the user to control a simulation of a refreshable braille display (a physical hardware device) in the panel at the top of the screen." name="IDS_CHROMEVOX_OPTIONS_VIRTUAL_BRAILLE_DISPLAY_DETAILS">
+        Simulates the output of a refreshable braille display
+        in the ChromeVox panel at the top of the screen.
+      </message>
+      <message desc="The label for a numberic input field where the user can choose the number of lines of text in a grid." name="IDS_CHROMEVOX_OPTIONS_VIRTUAL_BRAILLE_DISPLAY_ROWS">
+        Lines:
+      </message>
+      <message desc="The label for a numberic input field where the user can choose the number of cells in each line of a grid." name="IDS_CHROMEVOX_OPTIONS_VIRTUAL_BRAILLE_DISPLAY_COLUMNS">
+        Cells in each line:
+      </message>
+      <message desc="A description that tells the user that the current display style of the virtual display interleaves braille and regular text, one on top of the other." name="IDS_CHROMEVOX_OPTIONS_CURRENT_DISPLAY_STYLE_INTERLEAVE">
+        Current display style is interleave.
+      </message>
+      <message desc="A description that tells the user that the current display style of the virtual display is side by side, where regular text is on the left and braille is on the right." name="IDS_CHROMEVOX_OPTIONS_CURRENT_DISPLAY_STYLE_SIDE_BY_SIDE">
+        Current display style is side by side.
+      </message>
+      <message desc="Labels the change display style button when the display style is side by side. Pressing the button would make the text interleave with the braille cells, one on top of the other." name="IDS_CHROMEVOX_OPTIONS_CHANGE_CURRENT_DISPLAY_STYLE_INTERLEAVE">
+        Change display style to interleave.
+      </message>
+      <message desc="Labels the change display style button when the display style is interleave. Pressing the button would put all the text on the left side and all the braille cells on the right." name="IDS_CHROMEVOX_OPTIONS_CHANGE_CURRENT_DISPLAY_STYLE_SIDE_BY_SIDE">
+        Change display style to side by side.
+      </message>
       <message desc="The summary of the extension's options.  Shown at the top of the options page." name="IDS_CHROMEVOX_OPTIONS_PAGE_SUMMARY">
         Use the options below to customize ChromeVox. Changes take effect immediately.
       </message>
@@ -453,6 +478,21 @@
       <message desc="An option to use more verbose feedback for the user." name="IDS_CHROMEVOX_OPTIONS_VERBOSITY_VERBOSE">
         Enable verbose descriptions.
       </message>
+      <message desc="An option to automatically read the page after it loads." name="IDS_CHROMEVOX_OPTIONS_AUTO_READ">
+        Automatically read page after it finishes loading.
+      </message>
+      <message desc="Describes the multi select option for how to play audio when ChromeVox speaks using text to speech." name="IDS_CHROMEVOX_OPTIONS_AUDIO_DESCRIPTION">
+        When playing audio...
+      </message>
+      <message desc="Sets audio playback to be at normal volume." name="IDS_CHROMEVOX_OPTIONS_AUDIO_NORMAL">
+        Play at normal volume even if ChromeVox is speaking
+      </message>
+      <message desc="An option to use audio ducking." name="IDS_CHROMEVOX_OPTIONS_AUDIO_duck">
+        Play at lower volume when ChromeVox is speaking
+      </message>
+      <message desc="An option to use audio suspension while text to speech is speaking." name="IDS_CHROMEVOX_OPTIONS_AUDIO_suspend">
+        Pause playback when ChromeVox is speaking
+      </message>
       <message desc="An option to show the cursor between characters." name="IDS_CHROMEVOX_OPTIONS_CURSOR_BETWEEN_CHARACTERS">
         Place cursor between characters when editing text (like Mac OS X).
       </message>
@@ -460,7 +500,7 @@
         Voices
       </message>
       <message desc="Labels the voice selection list box." name="IDS_CHROMEVOX_OPTIONS_VOICES_DESCRIPTION">
-        Change the current voice by selecting an option from the list below.
+        Select current voice:
       </message>
       <message desc="An options page section header for options about the ChromeVox braille support. This section allows the user to customize varous aspects of the braille output and input support." name="IDS_CHROMEVOX_OPTIONS_BRAILLE">
         Braille
@@ -472,7 +512,7 @@
         Switch to 6 dot braille
       </message>
       <message desc="Labels the braille table selection list box.  A braille table describes how text gets converted from a unicode encoding into a pattern of dots. This varies based on locale and contraction. See http://en.wikipedia.org/wiki/Braille for a more in-depth discussion." name="IDS_CHROMEVOX_OPTIONS_BRAILLE_DESCRIPTION_6">
-        Change the current 6 dot braille table by selecting an option from the list below.
+        Select a 6-dot braille table:
       </message>
       <message desc="How to present the name of a braille table to the user. For example, a locale could be 'English (United States)' and a grade could be '2'. Together they would be 'English (UnitedStates), Grade 2'. A braille table describes how text gets converted from Unicode text into a pattern of braille dots. This varies based on locale and contraction. See http://en.wikipedia.org/wiki/Braille for a more in-depth discussion." name="IDS_CHROMEVOX_BRAILLE_TABLE_NAME_WITH_GRADE">
         <ph name="locale">$1</ph>, Grade <ph name="grade">$2</ph>
@@ -484,7 +524,7 @@
         <ph name="locale">$1</ph> (<ph name="variant">$2</ph>), Grade <ph name="grade">$3</ph>
       </message>
       <message desc="Labels the braille table selection list box.  A braille table describes how text gets converted from a unicode encoding into a pattern of dots. This varies based on locale and contraction. See http://en.wikipedia.org/wiki/Braille for a more in-depth discussion." name="IDS_CHROMEVOX_OPTIONS_BRAILLE_DESCRIPTION_8">
-        Change the current 8 dot braille table by selecting an option from the list below.
+        Select an 8-dot braille table:
       </message>
       <message desc="Labels the checkbox that enables wrapping of words if a whole line doesn't fit on a braille display. When this option is enabled, an effort is made to keep the characters of words together on the display. Otherwise, as many characters as possible are put on each braille display line, possible splitting words between lines." name="IDS_CHROMEVOX_OPTIONS_BRAILLE_WORD_WRAP">
         Enable word wrap
@@ -507,11 +547,11 @@
       <message desc="An option for setting the key combination that will be used as the ChromeVox modifier key (aka, the 'Cvox' key)." name="IDS_CHROMEVOX_OPTIONS_CVOX_MODIFIER_KEY">
         ChromeVox modifier key
       </message>
-      <message desc="The title of the ChromeOS Keyboard explorer page.  The keyboard explorer voices the name of each key when the user presses it." name="IDS_CHROMEVOX_KBEXPLORER_TITLE">
-        ChromeOS Keyboard Explorer
+      <message desc="The title of ChromeVox Learn Mode page.  The keyboard explorer voices the name of each key when the user presses it." name="IDS_CHROMEVOX_KBEXPLORER_TITLE">
+        ChromeVox Learn Mode
       </message>
-      <message desc="The instructions for the keyboard explorer.  The keyboard explorer voices the name of each key when the user presses it. * These instructions describe how to use the keyboard explorer." name="IDS_CHROMEVOX_KBEXPLORER_INSTRUCTIONS">
-        Press any key to learn its name. Ctrl+W will close the keyboard explorer.
+      <message desc="The instructions for ChromeVox Learn Mode.  The keyboard explorer voices the name of each key when the user presses it. * These instructions describe how to use the keyboard explorer." name="IDS_CHROMEVOX_KBEXPLORER_INSTRUCTIONS">
+        Press any key to learn its name. Ctrl+W will close learn mode.
       </message>
       <message desc="Spoken when a new Chrome tab named 'title' is opened." name="IDS_CHROMEVOX_CHROME_TAB_CREATED">
         tab created
@@ -542,6 +582,12 @@
       </message>
       <message desc="The unchecked state for a checkbox." name="IDS_CHROMEVOX_CHECKBOX_UNCHECKED_STATE">
         not checked
+      </message>
+      <message desc="Describes a switch named 'name' in the on/checked state." name="IDS_CHROMEVOX_DESCRIBE_SWITCH_ON">
+        <ph name="name">$1</ph>, switch on
+      </message>
+      <message desc="Describes a switch named 'name' in the off/unchecked state." name="IDS_CHROMEVOX_DESCRIBE_SWITCH_OFF">
+        <ph name="name">$1</ph>, switch off
       </message>
       <message desc="Describes a HTML radio button named 'name' in the selected state." name="IDS_CHROMEVOX_DESCRIBE_RADIO_SELECTED">
         <ph name="name">$1</ph>, radio button selected
@@ -601,7 +647,7 @@
         <ph name="name">$1</ph>, tab
       </message>
       <message desc="Describes a slider with name 'name' and value 'value'." name="IDS_CHROMEVOX_DESCRIBE_SLIDER">
-        <ph name="value">$1</ph>, <ph name="name">$2</ph>, slider
+        <ph name="value">$1</ph> <ph name="name">$2</ph> slider
       </message>
       <message desc="Spoken through the a11y api after describing an element if it is selected." name="IDS_CHROMEVOX_DESCRIBE_SELECTED">
         , selected
@@ -1071,6 +1117,12 @@
       <message desc="This is an abbreviated ARIA widget role name shown on a braille display. When translating, try to find a contracted form of the translation for 'progress bar' according to local conventions. If reasonable, use all lowercase and avoid punctuation to keep the number of characters as low as possible." name="IDS_CHROMEVOX_ROLE_PROGRESSBAR_BRL">
         pgbar
       </message>
+      <message desc="Describes a progress indicator widget." name="IDS_CHROMEVOX_ROLE_PROGRESS_INDICATOR">
+        Progress indicator
+      </message>
+      <message desc="This is an abbreviated widget role name shown on a braille display. When translating, try to find a contracted form of the translation for 'progress indicator' according to local conventions. If reasonable, use all lowercase and avoid punctuation to keep the number of characters as low as possible." name="IDS_CHROMEVOX_ROLE_PROGRESS_INDICATOR_BRL">
+        pgbar
+      </message>
       <message desc="Describes an element with the ARIA role radio." name="IDS_CHROMEVOX_ROLE_RADIO">
         Radio button
       </message>
@@ -1107,7 +1159,7 @@
       <message desc="This is an abbreviated ARIA widget role name shown on a braille display. When translating, try to find a contracted form of the translation for 'status' according to local conventions. If reasonable, use all lowercase and avoid punctuation to keep the number of characters as low as possible." name="IDS_CHROMEVOX_ROLE_STATUS_BRL">
         sts
       </message>
-      <message desc="Describes an element with the ARIA role tab." name="IDS_CHROMEVOX_ROLE_TAB">
+      <message desc="Describes an element with the ARIA role tab." name="IDS_CHROMEVOX_ROLE_TAB" meaning="UI element">
         Tab
       </message>
       <message desc="This is an ARIA widget role name shown on a braille display. If the translation is longer than 5 characters, try to abbreviate it according to local conventions, and when doing so, if reasonable, use all lowercase and avoid punctuation to keep the number of characters as low as possible." name="IDS_CHROMEVOX_ROLE_TAB_BRL">
@@ -1304,6 +1356,12 @@
       </message>
       <message desc="This is the name of an ARIA document structure role shown on a braille display. When translating, try to find a contracted form of the translation for 'separator' according to local conventions. If reasonable, use all lowercase and avoid punctuation to keep the number of characters as low as possible." name="IDS_CHROMEVOX_ROLE_SEPARATOR_BRL">
         seprtr
+      </message>
+      <message desc="Describes an element with the ARIA role meter." name="IDS_CHROMEVOX_ROLE_METER">
+        Meter
+      </message>
+      <message desc="This is the name of an ARIA meter role shown on a braille display. When translating, try to find a contracted form of the translation for meter according to local conventions. If reasonable, use all lowercase and avoid punctuation to keep the number of characters as low as possible." name="IDS_CHROMEVOX_ROLE_METER_BRL">
+        meter
       </message>
       <message desc="Describes an element with the ARIA attribute aria-autocomplete=inline." name="IDS_CHROMEVOX_ARIA_AUTOCOMPLETE_INLINE">
         Autocompletion inline
@@ -1575,8 +1633,8 @@
       <message desc="Describes an &lt;input&gt; element with type=email." name="IDS_CHROMEVOX_INPUT_TYPE_EMAIL">
         Edit text, email entry
       </message>
-      <message desc="Shown on a braille display for a text field that accept an email address as input. When translating, keep the @ sign and try to find an abbreviation for 'edit field'. If reasonable, use all lowercase and avoid punctuation to keep the number of characters as low as possible." name="IDS_CHROMEVOX_INPUT_TYPE_EMAIL_BRL">
-        @ed
+      <message desc="Shown on a braille display for a text field that accept an email address as input. When translating, keep the @ sign and try to find an abbreviation for 'edit field 8 dot' according to local conventions; 8 dot refers to the braille table chosen by the user that includes 8 dots in a braille cell appropriate for writing computer symbols. If reasonable, use all lowercase and avoid punctuation to keep the number of characters as low as possible." name="IDS_CHROMEVOX_INPUT_TYPE_EMAIL_BRL">
+        @ed 8dot
       </message>
       <message desc="Describes an &lt;input&gt; element with type=file." name="IDS_CHROMEVOX_INPUT_TYPE_FILE">
         File selection
@@ -1623,8 +1681,8 @@
       <message desc="Describes an &lt;input&gt; element with type=url." name="IDS_CHROMEVOX_INPUT_TYPE_URL">
         Edit text, URL entry
       </message>
-      <message desc="Shown on a braille display to describe a text field for entering a URL. When translating, try to find a contracted form of the translation for 'url edit field' according to local conventions. If reasonable, use all lowercase and avoid punctuation to keep the number of characters as low as possible." name="IDS_CHROMEVOX_INPUT_TYPE_URL_BRL">
-        urled
+      <message desc="Shown on a braille display to describe a text field for entering a URL. When translating, try to find a contracted form of the translation for 'url edit field 8 dot' according to local conventions; 8 dot refers to the braille table chosen by the user that includes 8 dots in a braille cell appropriate for writing computer symbols. If reasonable, use all lowercase and avoid punctuation to keep the number of characters as low as possible." name="IDS_CHROMEVOX_INPUT_TYPE_URL_BRL">
+        urled 8dot
       </message>
       <message desc="Describes an &lt;input&gt; element with type=week." name="IDS_CHROMEVOX_INPUT_TYPE_WEEK">
         Week of the year control
@@ -2167,7 +2225,7 @@
         Perform default action
       </message>
       <message desc="Exclamation (!) character description." name="IDS_CHROMEVOX_EXCLAMATION">
-        {COUNT, plural, =1 {exclamation point}other {# exclamation points}}
+        {COUNT, plural, =1 {exclamation}other {# exclamations}}
       </message>
       <message desc="Space ( ) character description." name="IDS_CHROMEVOX_SPACE">
         {COUNT, plural, =1 {space}other {# spaces}}
@@ -2268,8 +2326,11 @@
       <message desc="Backslash (\) character description." name="IDS_CHROMEVOX_BACKSLASH">
         {COUNT, plural, =1 {backslash}other {# backslashes}}
       </message>
+      <message desc="BULLET (•) character description." name="IDS_CHROMEVOX_BULLET">
+        {COUNT, plural, =1 {bullet}other {# bullets}}
+      </message>
       <message desc="Describes the braille click command. Displayed in the options page." name="IDS_CHROMEVOX_BRAILLE_ROUTING">
-        Click the item under a routing key
+        Click the item under routing key $1
       </message>
       <message desc="Describes the braille pan backward command. Displayed in the options page." name="IDS_CHROMEVOX_BRAILLE_PAN_LEFT">
         Pan backward
@@ -2288,6 +2349,18 @@
       </message>
       <message desc="The description of the braille bottom command.  Displayed in the Options page." name="IDS_CHROMEVOX_BRAILLE_BOTTOM">
         Move braille display to bottom of page
+      </message>
+      <message desc="Describes a single physical braille dot on a refreshable braille display.  Will usually be followed with numbers to describe the layout of a braille cell. For example, dot 8" name="IDS_CHROMEVOX_BRAILLE_DOT">
+        dot <ph name="dot">$1</ph>
+      </message>
+      <message desc="Describes multiple physical braille dots on a refreshable braille display.  Will usually be followed with numbers to describe the layout of a braille cell. For example, dots 1 2 3 4 8" name="IDS_CHROMEVOX_BRAILLE_DOTS">
+        dots <ph name="dot">$1</ph>
+      </message>
+      <message desc="Describes dots on a refreshable braille display pressed with the space key. For example, dots 1 2 3 4 8 chord" name="IDS_CHROMEVOX_BRAILLE_CHORD">
+        $1 chord
+      </message>
+      <message desc="The description of the command that allows the user to view a graphic as a dot pattern on a refreshable braille display." name="IDS_CHROMEVOX_VIEW_GRAPHIC_AS_BRAILLE">
+        View Graphic As Braille
       </message>
       <message desc="Spoken to describe an access key.  An access key consists of a single letter. When pressed along with a modifier (usually alt, but depends on platform), a targetted node will be activated." name="IDS_CHROMEVOX_ACCESS_KEY">
         has access key, <ph name="key">$1</ph>
@@ -2412,6 +2485,12 @@
       <message desc="Title of the ChromeVox panel, a window that displays the text ChromeVox is speaking and contains controls to manipulate ChromeVox." name="IDS_CHROMEVOX_PANEL_TITLE">
         ChromeVox Panel
       </message>
+      <message desc="Title of the ChromeVox panel when menus are open, a window that displays the text ChromeVox is speaking and contains controls to manipulate ChromeVox." name="IDS_CHROMEVOX_PANEL_MENUS_TITLE">
+        ChromeVox Menus
+      </message>
+      <message desc="Title of the ChromeVox panel when the tutorial is open, a window that displays the text ChromeVox is speaking and contains controls to manipulate ChromeVox." name="IDS_CHROMEVOX_PANEL_TUTORIAL_TITLE">
+        ChromeVox Tutorial
+      </message>
       <message desc="Title of the button that opens up the ChromeVox menus." name="IDS_CHROMEVOX_MENUS_TITLE">
         ChromeVox Menus
       </message>
@@ -2438,6 +2517,9 @@
       </message>
       <message desc="Title displayed in the panel when there are no menu items." name="IDS_CHROMEVOX_PANEL_MENU_ITEM_NONE">
         No items.
+      </message>
+      <message desc="Title displayed in the panel for the menuitem to report an issue." name="IDS_CHROMEVOX_PANEL_MENU_ITEM_REPORT_ISSUE">
+        Report an issue
       </message>
       <message desc="Title of a notification that ChromeVox has been updated." name="IDS_CHROMEVOX_UPDATE_TITLE">
         ChromeVox Updated
@@ -2473,8 +2555,8 @@
       <message desc="Introductory text for the 'ChromeVox Next' tutorial" name="IDS_CHROMEVOX_TUTORIAL_WELCOME_TEXT">
         Are you using ChromeVox Next spoken feedback for the first time? This quick tutorial explains the essentials for getting started with ChromeVox Next.
       </message>
-      <message desc="Text that tells users to press the enter key to move to the next page in the tutorial" name="IDS_CHROMEVOX_TUTORIAL_ENTER_TO_ADVANCE">
-        To advance, press Enter.
+      <message desc="Text that tells users to press the enter key to move to the next page or backspace to move to the previous page in the tutorial" name="IDS_CHROMEVOX_TUTORIAL_ENTER_TO_ADVANCE">
+        To advance, press enter; to go back, press backspace.
       </message>
       <message desc="Heading that talks about turning ChromeVox on, off, and stopping it from speaking" name="IDS_CHROMEVOX_TUTORIAL_ON_OFF_HEADING">
         On, Off, and Stop
@@ -2512,11 +2594,17 @@
       <message desc="Part of the ChromeVox tutorial, explains two keystrokes to jump to the next or previous heading." name="IDS_CHROMEVOX_TUTORIAL_JUMP">
         Use jump commands to skip to specific types of elements. To jump forward between headings, press Search + H, or to jump backward, press Search + Shift + H.
       </message>
+      <message desc="Part of the ChromeVox tutorial, heading used to illustrate jumping." name="IDS_CHROMEVOX_TUTORIAL_JUMP_SECOND_HEADING">
+        This is the second heading. Keep going; either press Search+H or Search+Shift+H
+      </message>
+      <message desc="Part of the ChromeVox tutorial, heading used to illustrate jumping from last heading." name="IDS_CHROMEVOX_TUTORIAL_JUMP_WRAP_HEADING">
+        This is the last heading. Press Search+H to wrap to the first heading, or Search+Shift+H to go to the second heading on this page.
+      </message>
       <message desc="Heading for a section of the ChromeVox tutorial on menus of ChromeVox commands to press" name="IDS_CHROMEVOX_TUTORIAL_MENUS_HEADING">
         Command Menus
       </message>
       <message desc="Part of the ChromeVox tutorial, explains the keystrokes to press to open and use a menu of commands." name="IDS_CHROMEVOX_TUTORIAL_MENUS">
-        To explore all ChromeVox commands and shortcuts, press Search + Period, then use the Arrow keys to navigate the menus, and Enter to activate a command.
+        To explore all ChromeVox commands and shortcuts, press Search + Period, then use the Arrow keys to navigate the menus, and Enter to activate a command. Return here by pressing Search+o then t.
       </message>
       <message desc="Heading for a section of the ChromeVox tutorial on Chrome shortcuts" name="IDS_CHROMEVOX_TUTORIAL_CHROME_SHORTCUTS_HEADING">
         Helpful Chrome Shortcuts
@@ -2540,6 +2628,24 @@ To open the Chrome browser menu, press Alt+F.
         Congratulations! You’ve learned the essentials to use ChromeVox Next (beta) successfully. Remember that you can open the ChromeVox command menu at any time by pressing Search+Period. To learn even more about ChromeVox and Chrome OS, visit the following articles.
 If you're done with the tutorial, use ChromeVox to navigate to the Close button and click it.
       </message>
+      <message desc="Part of the ChromeVox update notes for m56, title." name="IDS_CHROMEVOX_UPDATE_56_TITLE">
+        You've been updated to a major new release of ChromeVox!
+      </message>
+      <message desc="Part of the ChromeVox update notes for m56, introductory text." name="IDS_CHROMEVOX_UPDATE_56_INTRO">
+        We've been hard at work on a new and improved ChromeVox experience; here's what's new
+      </message>
+      <message desc="Part of the ChromeVox update notes for m56, new items 1." name="IDS_CHROMEVOX_UPDATE_56_ITEM_1">
+        New key bindings. We've made Search the ChromeVox modifier and dramatically simplified the key combinations.
+      </message>
+      <message desc="Part of the ChromeVox update notes for m56, new items 2." name="IDS_CHROMEVOX_UPDATE_56_ITEM_2">
+        New earcons. We've refreshed the set of audio icons you hear to make browsing more responsive.
+      </message>
+      <message desc="Part of the ChromeVox update notes for m56, new items 3." name="IDS_CHROMEVOX_UPDATE_56_ITEM_3">
+        Under the hood upgrades. We've revamped how ChromeVox works from the bottom up. Expect better performance, stability, and web support/compliance.
+      </message>
+      <message desc="Part of the ChromeVox update notes for m56, closing paragraph." name="IDS_CHROMEVOX_UPDATE_56_OUTTRO">
+        We're excited to hear from you on this new experience. Send us feedback directly by pressing Search+a, then i. Press the next button to continue onto the tutorial to learn everything you need to get started.
+      </message>
       <message desc="Title of an article on the command reference for 'ChromeVox Next'" name="IDS_CHROMEVOX_NEXT_COMMAND_REFERENCE">
         ChromeVox Next Command Reference
       </message>
@@ -2548,6 +2654,81 @@ If you're done with the tutorial, use ChromeVox to navigate to the Close button 
       </message>
       <message desc="Title of an article on how to use accessibility features of the Chromebook touch screen" name="IDS_CHROMEVOX_TOUCHSCREEN_ACCESSIBILITY">
         Use Chromebook touch screen accessibility features
+      </message>
+      <message desc="Describes a UI element that is busy" name="IDS_CHROMEVOX_BUSY_STATE">
+        busy
+      </message>
+      <message desc="Brailled for a UI element that is busy" name="IDS_CHROMEVOX_BUSY_STATE_BRL">
+        busy
+      </message>
+      <message desc="Describes a UI element invoked after pressing enter such as an ok button in a dialog" name="IDS_CHROMEVOX_DEFAULT_STATE">
+        default
+      </message>
+      <message desc="Brailles for a UI element invoked after pressing enter such as an ok button in a dialog" name="IDS_CHROMEVOX_DEFAULT_STATE_BRL">
+        default
+      </message>
+      <message desc="Title of the earcon page in the ChromeVox tutorial" name="IDS_CHROMEVOX_TUTORIAL_EARCON_PAGE_TITLE">
+        Sounds
+      </message>
+      <message desc="Body text of the earcon page in the ChromeVox tutorial" name="IDS_CHROMEVOX_TUTORIAL_EARCON_PAGE_BODY">
+        ChromeVox uses sounds to give you essential and additional information. You can use these sounds to navigate more quickly by learning what each sound means. Once you get more comfortable, you can turn off verbose descriptions in speech and rely on them for essential information about the page. Here's a complete list of sounds and what they mean.
+      </message>
+      <message desc="Describes an audio clip that gets played for a specific event or control type. Use the default string as a guide to what the audio clip represents or conveys." name="IDS_CHROMEVOX_ALERT_MODAL_EARCON_DESCRIPTION">
+        A modal alert
+      </message>
+      <message desc="Describes an audio clip that gets played for a specific event or control type. Use the default string as a guide to what the audio clip represents or conveys." name="IDS_CHROMEVOX_ALERT_NONMODAL_EARCON_DESCRIPTION">
+        A non modal alert
+      </message>
+      <message desc="Describes an audio clip that gets played for a specific event or control type. Use the default string as a guide to what the audio clip represents or conveys." name="IDS_CHROMEVOX_BUTTON_EARCON_DESCRIPTION">
+        A button
+      </message>
+      <message desc="Describes an audio clip that gets played for a specific event or control type. Use the default string as a guide to what the audio clip represents or conveys." name="IDS_CHROMEVOX_CHECK_OFF_EARCON_DESCRIPTION">
+        An unchecked checkbox
+      </message>
+      <message desc="Describes an audio clip that gets played for a specific event or control type. Use the default string as a guide to what the audio clip represents or conveys." name="IDS_CHROMEVOX_CHECK_ON_EARCON_DESCRIPTION">
+        A checked checkbox
+      </message>
+      <message desc="Describes an audio clip that gets played for a specific event or control type. Use the default string as a guide to what the audio clip represents or conveys." name="IDS_CHROMEVOX_EDITABLE_TEXT_EARCON_DESCRIPTION">
+        An editable text field
+      </message>
+      <message desc="Describes an audio clip that gets played for a specific event or control type. Use the default string as a guide to what the audio clip represents or conveys." name="IDS_CHROMEVOX_INVALID_KEYPRESS_EARCON_DESCRIPTION">
+        An invalid key press
+      </message>
+      <message desc="Describes an audio clip that gets played for a specific event or control type. Use the default string as a guide to what the audio clip represents or conveys." name="IDS_CHROMEVOX_LINK_EARCON_DESCRIPTION">
+        A link
+      </message>
+      <message desc="Describes an audio clip that gets played for a specific event or control type. Use the default string as a guide to what the audio clip represents or conveys." name="IDS_CHROMEVOX_LISTBOX_EARCON_DESCRIPTION">
+        A listbox or combo box
+      </message>
+      <message desc="Describes an audio clip that gets played for a specific event or control type. Use the default string as a guide to what the audio clip represents or conveys." name="IDS_CHROMEVOX_PAGE_START_LOADING_EARCON_DESCRIPTION">
+        A page load in progress
+      </message>
+      <message desc="Describes an audio clip that gets played for a specific event or control type. Use the default string as a guide to what the audio clip represents or conveys." name="IDS_CHROMEVOX_POP_UP_BUTTON_EARCON_DESCRIPTION">
+        A pop up button
+      </message>
+      <message desc="Describes an audio clip that gets played for a specific event or control type. Use the default string as a guide to what the audio clip represents or conveys." name="IDS_CHROMEVOX_SLIDER_EARCON_DESCRIPTION">
+        A slider
+      </message>
+      <message desc="Describes an audio clip that gets played for a specific event or control type. Use the default string as a guide to what the audio clip represents or conveys." name="IDS_CHROMEVOX_WRAP_EARCON_DESCRIPTION">
+        Wrap from beginning to end or end to beginning inside of a page, dialog, or other container
+      </message>
+      <message desc="Describes a command to turn off the visual display for accessibility without impacting usage of the machine." name="IDS_CHROMEVOX_DARKEN_SCREEN">
+        Darken screen
+      </message>
+      <message desc="Describes a command to turn the visual display on for accessibility undoing any previous request to turn off the visual display." name="IDS_CHROMEVOX_UNDARKEN_SCREEN">
+        Undarken screen
+      </message>
+      <message desc="Describes a command that turns text to speech feedback off." name="IDS_CHROMEVOX_SPEECH_OFF">
+        Speech off
+      </message>
+      <message desc="Describes a command that turns text to speech feedback on." name="IDS_CHROMEVOX_SPEECH_ON">
+        Speech on
+      </message>
+      <message desc="Description of a command that toggles text to speech feedback on or off." name="IDS_CHROMEVOX_SPEECH_ON_OFF_DESCRIPTION">
+        Toggle speech on or off
+      </message>
+      <message desc="Description of a command that toggles between 6 and 8 dot braille." name="IDS_CHROMEVOX_TOGGLE_BRAILLE_TABLE">
+        Toggle between 6 and 8 dot braille
       </message>
     </messages>
   </release>

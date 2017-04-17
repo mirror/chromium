@@ -5,77 +5,92 @@
 #ifndef InvalidatableInterpolation_h
 #define InvalidatableInterpolation_h
 
+#include "core/animation/Interpolation.h"
 #include "core/animation/InterpolationType.h"
+#include "core/animation/InterpolationTypesMap.h"
 #include "core/animation/PrimitiveInterpolation.h"
-#include "core/animation/PropertyInterpolationTypesMapping.h"
-#include "core/animation/StyleInterpolation.h"
 #include "core/animation/TypedInterpolationValue.h"
 #include <memory>
 
 namespace blink {
 
-// TODO(alancutter): This class will replace *StyleInterpolation and Interpolation.
-// For now it needs to distinguish itself during the refactor and temporarily has an ugly name.
+// TODO(alancutter): This class will replace *StyleInterpolation and
+// Interpolation. For now it needs to distinguish itself during the refactor and
+// temporarily has an ugly name.
 class CORE_EXPORT InvalidatableInterpolation : public Interpolation {
-public:
-    static PassRefPtr<InvalidatableInterpolation> create(
-        PropertyHandle property,
-        const InterpolationTypes& interpolationTypes,
-        PassRefPtr<PropertySpecificKeyframe> startKeyframe,
-        PassRefPtr<PropertySpecificKeyframe> endKeyframe)
-    {
-        return adoptRef(new InvalidatableInterpolation(property, interpolationTypes, startKeyframe, endKeyframe));
-    }
+ public:
+  static PassRefPtr<InvalidatableInterpolation> Create(
+      const PropertyHandle& property,
+      PassRefPtr<PropertySpecificKeyframe> start_keyframe,
+      PassRefPtr<PropertySpecificKeyframe> end_keyframe) {
+    return AdoptRef(new InvalidatableInterpolation(
+        property, std::move(start_keyframe), std::move(end_keyframe)));
+  }
 
-    PropertyHandle getProperty() const final { return m_property; }
-    virtual void interpolate(int iteration, double fraction);
-    bool dependsOnUnderlyingValue() const final;
-    virtual void apply(InterpolationEnvironment&) const { NOTREACHED(); }
-    static void applyStack(const ActiveInterpolations&, InterpolationEnvironment&);
+  const PropertyHandle& GetProperty() const final { return property_; }
+  virtual void Interpolate(int iteration, double fraction);
+  bool DependsOnUnderlyingValue() const final;
+  static void ApplyStack(const ActiveInterpolations&,
+                         InterpolationEnvironment&);
 
-    virtual bool isInvalidatableInterpolation() const { return true; }
+  virtual bool IsInvalidatableInterpolation() const { return true; }
 
-private:
-    InvalidatableInterpolation(
-        PropertyHandle property,
-        const InterpolationTypes& interpolationTypes,
-        PassRefPtr<PropertySpecificKeyframe> startKeyframe,
-        PassRefPtr<PropertySpecificKeyframe> endKeyframe)
-        : Interpolation(nullptr, nullptr)
-        , m_property(property)
-        , m_interpolationTypes(interpolationTypes)
-        , m_startKeyframe(startKeyframe)
-        , m_endKeyframe(endKeyframe)
-        , m_currentFraction(std::numeric_limits<double>::quiet_NaN())
-        , m_isCached(false)
-    { }
+ private:
+  InvalidatableInterpolation(
+      const PropertyHandle& property,
+      PassRefPtr<PropertySpecificKeyframe> start_keyframe,
+      PassRefPtr<PropertySpecificKeyframe> end_keyframe)
+      : Interpolation(),
+        property_(property),
+        interpolation_types_(nullptr),
+        interpolation_types_version_(0),
+        start_keyframe_(std::move(start_keyframe)),
+        end_keyframe_(std::move(end_keyframe)),
+        current_fraction_(std::numeric_limits<double>::quiet_NaN()),
+        is_conversion_cached_(false) {}
 
-    using ConversionCheckers = InterpolationType::ConversionCheckers;
+  using ConversionCheckers = InterpolationType::ConversionCheckers;
 
-    std::unique_ptr<TypedInterpolationValue> maybeConvertUnderlyingValue(const InterpolationEnvironment&) const;
-    const TypedInterpolationValue* ensureValidInterpolation(const InterpolationEnvironment&, const UnderlyingValueOwner&) const;
-    void clearCache() const;
-    bool isCacheValid(const InterpolationEnvironment&, const UnderlyingValueOwner&) const;
-    bool isNeutralKeyframeActive() const;
-    std::unique_ptr<PairwisePrimitiveInterpolation> maybeConvertPairwise(const InterpolationEnvironment&, const UnderlyingValueOwner&) const;
-    std::unique_ptr<TypedInterpolationValue> convertSingleKeyframe(const PropertySpecificKeyframe&, const InterpolationEnvironment&, const UnderlyingValueOwner&) const;
-    void addConversionCheckers(const InterpolationType&, ConversionCheckers&) const;
-    void setFlagIfInheritUsed(InterpolationEnvironment&) const;
-    double underlyingFraction() const;
+  std::unique_ptr<TypedInterpolationValue> MaybeConvertUnderlyingValue(
+      const InterpolationEnvironment&) const;
+  const TypedInterpolationValue* EnsureValidConversion(
+      const InterpolationEnvironment&,
+      const UnderlyingValueOwner&) const;
+  void EnsureValidInterpolationTypes(const InterpolationEnvironment&) const;
+  void ClearConversionCache() const;
+  bool IsConversionCacheValid(const InterpolationEnvironment&,
+                              const UnderlyingValueOwner&) const;
+  bool IsNeutralKeyframeActive() const;
+  std::unique_ptr<PairwisePrimitiveInterpolation> MaybeConvertPairwise(
+      const InterpolationEnvironment&,
+      const UnderlyingValueOwner&) const;
+  std::unique_ptr<TypedInterpolationValue> ConvertSingleKeyframe(
+      const PropertySpecificKeyframe&,
+      const InterpolationEnvironment&,
+      const UnderlyingValueOwner&) const;
+  void AddConversionCheckers(const InterpolationType&,
+                             ConversionCheckers&) const;
+  void SetFlagIfInheritUsed(InterpolationEnvironment&) const;
+  double UnderlyingFraction() const;
 
-    const PropertyHandle m_property;
-    const InterpolationTypes& m_interpolationTypes;
-    RefPtr<PropertySpecificKeyframe> m_startKeyframe;
-    RefPtr<PropertySpecificKeyframe> m_endKeyframe;
-    double m_currentFraction;
-    mutable bool m_isCached;
-    mutable std::unique_ptr<PrimitiveInterpolation> m_cachedPairConversion;
-    mutable ConversionCheckers m_conversionCheckers;
-    mutable std::unique_ptr<TypedInterpolationValue> m_cachedValue;
+  const PropertyHandle property_;
+  mutable const InterpolationTypes* interpolation_types_;
+  mutable size_t interpolation_types_version_;
+  RefPtr<PropertySpecificKeyframe> start_keyframe_;
+  RefPtr<PropertySpecificKeyframe> end_keyframe_;
+  double current_fraction_;
+  mutable bool is_conversion_cached_;
+  mutable std::unique_ptr<PrimitiveInterpolation> cached_pair_conversion_;
+  mutable ConversionCheckers conversion_checkers_;
+  mutable std::unique_ptr<TypedInterpolationValue> cached_value_;
 };
 
-DEFINE_TYPE_CASTS(InvalidatableInterpolation, Interpolation, value, value->isInvalidatableInterpolation(), value.isInvalidatableInterpolation());
+DEFINE_TYPE_CASTS(InvalidatableInterpolation,
+                  Interpolation,
+                  value,
+                  value->IsInvalidatableInterpolation(),
+                  value.IsInvalidatableInterpolation());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // InvalidatableInterpolation_h
+#endif  // InvalidatableInterpolation_h

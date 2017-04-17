@@ -8,11 +8,12 @@
 #include "base/callback_helpers.h"
 #include "base/lazy_instance.h"
 #include "base/trace_event/trace_event.h"
+#include "cc/output/context_cache_controller.h"
 #include "cc/output/managed_memory_policy.h"
-#include "gpu/command_buffer/client/gl_in_process_context.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
 #include "gpu/command_buffer/client/gles2_lib.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
+#include "gpu/ipc/gl_in_process_context.h"
 #include "gpu/skia_bindings/gl_bindings_skia_cmd_buffer.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "third_party/skia/include/gpu/gl/GrGLInterface.h"
@@ -61,11 +62,15 @@ AwRenderThreadContextProvider::AwRenderThreadContextProvider(
   limits.min_transfer_buffer_size = 64 * 1024;
 
   context_.reset(gpu::GLInProcessContext::Create(
-      service, surface, surface->IsOffscreen(), gfx::kNullAcceleratedWidget,
-      nullptr /* share_context */, attributes, limits, nullptr, nullptr));
+      service, surface, surface->IsOffscreen(), gpu::kNullSurfaceHandle,
+      nullptr /* share_context */, attributes, limits, nullptr, nullptr,
+      nullptr));
 
   context_->GetImplementation()->SetLostContextCallback(base::Bind(
       &AwRenderThreadContextProvider::OnLostContext, base::Unretained(this)));
+
+  cache_controller_.reset(
+      new cc::ContextCacheController(context_->GetImplementation(), nullptr));
 }
 
 AwRenderThreadContextProvider::~AwRenderThreadContextProvider() {
@@ -114,7 +119,13 @@ class GrContext* AwRenderThreadContextProvider::GrContext() {
   gr_context_ = sk_sp<::GrContext>(GrContext::Create(
       // GrContext takes ownership of |interface|.
       kOpenGL_GrBackend, reinterpret_cast<GrBackendContext>(interface.get())));
+  cache_controller_->SetGrContext(gr_context_.get());
   return gr_context_.get();
+}
+
+cc::ContextCacheController* AwRenderThreadContextProvider::CacheController() {
+  DCHECK(main_thread_checker_.CalledOnValidThread());
+  return cache_controller_.get();
 }
 
 void AwRenderThreadContextProvider::InvalidateGrContext(uint32_t state) {
@@ -128,16 +139,6 @@ base::Lock* AwRenderThreadContextProvider::GetLock() {
   // This context provider is not used on multiple threads.
   NOTREACHED();
   return nullptr;
-}
-
-void AwRenderThreadContextProvider::DeleteCachedResources() {
-  DCHECK(main_thread_checker_.CalledOnValidThread());
-
-  if (gr_context_) {
-    TRACE_EVENT_INSTANT0("gpu", "GrContext::freeGpuResources",
-                         TRACE_EVENT_SCOPE_THREAD);
-    gr_context_->freeGpuResources();
-  }
 }
 
 void AwRenderThreadContextProvider::SetLostContextCallback(

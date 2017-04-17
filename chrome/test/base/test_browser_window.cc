@@ -5,11 +5,10 @@
 #include "chrome/test/base/test_browser_window.h"
 
 #include "base/memory/ptr_util.h"
-#include "build/build_config.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_list_observer.h"
+#include "content/public/browser/keyboard_event_processing_result.h"
 #include "ui/gfx/geometry/rect.h"
-
 
 // Helpers --------------------------------------------------------------------
 
@@ -20,7 +19,7 @@ std::unique_ptr<Browser> CreateBrowserWithTestWindowForParams(
   TestBrowserWindow* window = new TestBrowserWindow;
   new TestBrowserWindowOwner(window);
   params->window = window;
-  return base::WrapUnique(new Browser(*params));
+  return base::MakeUnique<Browser>(*params);
 }
 
 }  // namespace chrome
@@ -34,17 +33,12 @@ GURL TestBrowserWindow::TestLocationBar::GetDestinationURL() const {
 
 WindowOpenDisposition
     TestBrowserWindow::TestLocationBar::GetWindowOpenDisposition() const {
-  return CURRENT_TAB;
+  return WindowOpenDisposition::CURRENT_TAB;
 }
 
 ui::PageTransition
     TestBrowserWindow::TestLocationBar::GetPageTransition() const {
   return ui::PAGE_TRANSITION_LINK;
-}
-
-bool TestBrowserWindow::TestLocationBar::ShowPageActionPopup(
-    const extensions::Extension* extension, bool grant_active_tab) {
-  return false;
 }
 
 const OmniboxView* TestBrowserWindow::TestLocationBar::GetOmniboxView() const {
@@ -127,10 +121,10 @@ ToolbarActionsBar* TestBrowserWindow::GetToolbarActionsBar() {
   return nullptr;
 }
 
-bool TestBrowserWindow::PreHandleKeyboardEvent(
-    const content::NativeWebKeyboardEvent& event,
-    bool* is_keyboard_shortcut) {
-  return false;
+content::KeyboardEventProcessingResult
+TestBrowserWindow::PreHandleKeyboardEvent(
+    const content::NativeWebKeyboardEvent& event) {
+  return content::KeyboardEventProcessingResult::NOT_HANDLED;
 }
 
 bool TestBrowserWindow::IsBookmarkBarVisible() const {
@@ -149,8 +143,16 @@ bool TestBrowserWindow::IsToolbarVisible() const {
   return false;
 }
 
-gfx::Rect TestBrowserWindow::GetRootWindowResizerRect() const {
-  return gfx::Rect();
+bool TestBrowserWindow::IsToolbarShowing() const {
+  return false;
+}
+
+ShowTranslateBubbleResult TestBrowserWindow::ShowTranslateBubble(
+    content::WebContents* contents,
+    translate::TranslateStep step,
+    translate::TranslateErrors::Type error_type,
+    bool is_user_gesture) {
+  return ShowTranslateBubbleResult::SUCCESS;
 }
 
 autofill::SaveCardBubbleView* TestBrowserWindow::ShowSaveCreditCardBubble(
@@ -170,7 +172,7 @@ DownloadShelf* TestBrowserWindow::GetDownloadShelf() {
 
 WindowOpenDisposition TestBrowserWindow::GetDispositionForPopupBounds(
     const gfx::Rect& bounds) {
-  return NEW_POPUP;
+  return WindowOpenDisposition::NEW_POPUP;
 }
 
 FindBar* TestBrowserWindow::CreateFindBar() {

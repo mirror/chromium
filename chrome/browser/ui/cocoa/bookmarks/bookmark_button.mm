@@ -10,6 +10,7 @@
 #include "base/mac/foundation_util.h"
 #import "base/mac/scoped_nsobject.h"
 #include "base/mac/sdk_forward_declarations.h"
+#include "base/metrics/user_metrics.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_bar_controller.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_bar_folder_window.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_bar_view_cocoa.h"
@@ -18,7 +19,6 @@
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/view_id_util.h"
 #include "components/bookmarks/browser/bookmark_model.h"
-#include "content/public/browser/user_metrics.h"
 #include "ui/base/clipboard/clipboard_util_mac.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
 #import "ui/base/cocoa/nsview_additions.h"
@@ -59,6 +59,7 @@ BookmarkButton* gDraggedButton = nil; // Weak
 
 @synthesize delegate = delegate_;
 @synthesize acceptsTrackIn = acceptsTrackIn_;
+@synthesize backgroundColor = backgroundColor_;
 
 - (id)initWithFrame:(NSRect)frameRect {
   // BookmarkButton's ViewID may be changed to VIEW_ID_OTHER_BOOKMARKS in
@@ -81,6 +82,8 @@ BookmarkButton* gDraggedButton = nil; // Weak
     [area_ release];
   }
 
+  [backgroundColor_ release];
+
   [super dealloc];
 }
 
@@ -97,12 +100,12 @@ BookmarkButton* gDraggedButton = nil; // Weak
   return [self bookmarkNode] ? NO : YES;
 }
 
-- (void)setIsContinuousPulsing:(BOOL)flag {
-  [[self cell] setIsContinuousPulsing:flag];
+- (void)setPulseIsStuckOn:(BOOL)flag {
+  [[self cell] setPulseIsStuckOn:flag];
 }
 
-- (BOOL)isContinuousPulsing {
-  return [[self cell] isContinuousPulsing];
+- (BOOL)isPulseStuckOn {
+  return [[self cell] isPulseStuckOn];
 }
 
 - (NSPoint)screenLocationForRemoveAnimation {
@@ -194,16 +197,14 @@ BookmarkButton* gDraggedButton = nil; // Weak
     NSWindow* window = [[self delegate] browserWindow];
     visibilityDelegate_ =
         [BrowserWindowController browserWindowControllerForWindow:window];
-    [visibilityDelegate_ lockBarVisibilityForOwner:self
-                                     withAnimation:NO
-                                             delay:NO];
+    [visibilityDelegate_ lockToolbarVisibilityForOwner:self withAnimation:NO];
   }
   const BookmarkNode* node = [self bookmarkNode];
   const BookmarkNode* parent = node->parent();
   if (parent && parent->type() == BookmarkNode::FOLDER) {
-    content::RecordAction(UserMetricsAction("BookmarkBarFolder_DragStart"));
+    base::RecordAction(UserMetricsAction("BookmarkBarFolder_DragStart"));
   } else {
-    content::RecordAction(UserMetricsAction("BookmarkBar_DragStart"));
+    base::RecordAction(UserMetricsAction("BookmarkBar_DragStart"));
   }
 
   dragMouseOffset_ = [self convertPoint:[event locationInWindow] fromView:nil];
@@ -255,9 +256,7 @@ BookmarkButton* gDraggedButton = nil; // Weak
   gDraggedButton = nil;
 
   // visibilityDelegate_ can be nil if we're detached, and that's fine.
-  [visibilityDelegate_ releaseBarVisibilityForOwner:self
-                                      withAnimation:YES
-                                              delay:YES];
+  [visibilityDelegate_ releaseToolbarVisibilityForOwner:self withAnimation:YES];
   visibilityDelegate_ = nil;
 
   return kDraggableButtonImplUseBase;
@@ -370,17 +369,23 @@ BookmarkButton* gDraggedButton = nil; // Weak
     [id(delegate_) mouseDragged:theEvent];
 }
 
-- (void)rightMouseDown:(NSEvent*)event {
-  // Ensure that right-clicking on a button while a context menu is open
+- (void)willOpenMenu:(NSMenu *)menu withEvent:(NSEvent *)event {
+  // Ensure that right-clicking on a button while a context menu is already open
   // highlights the new button.
+  [delegate_ mouseEnteredButton:self event:event];
+
   GradientButtonCell* cell =
       base::mac::ObjCCastStrict<GradientButtonCell>([self cell]);
-  [delegate_ mouseEnteredButton:self event:event];
-  [cell setMouseInside:YES animate:YES];
+  // Opt for animate:NO, otherwise the upcoming contextual menu's modal loop
+  // will block the animation and the button's state will visually never change
+  // ( https://crbug.com/649256 ).
+  [cell setMouseInside:YES animate:NO];
+}
 
-  // Keep a ref to |self|, in case -rightMouseDown: deletes this bookmark.
-  base::scoped_nsobject<BookmarkButton> keepAlive([self retain]);
-  [super rightMouseDown:event];
+- (void)didCloseMenu:(NSMenu *)menu withEvent:(NSEvent *)event {
+  // Update the highlight after the contextual menu closes.
+  GradientButtonCell* cell =
+      base::mac::ObjCCastStrict<GradientButtonCell>([self cell]);
 
   if (![cell isMouseReallyInside]) {
     [cell setMouseInside:NO animate:YES];
@@ -424,15 +429,16 @@ BookmarkButton* gDraggedButton = nil; // Weak
 
 - (void)drawRect:(NSRect)rect {
   NSView* bookmarkBarToolbarView = [[self superview] superview];
-  [self cr_drawUsingAncestor:bookmarkBarToolbarView inRect:(NSRect)rect];
+  if (backgroundColor_) {
+    [backgroundColor_ set];
+    NSRectFill(rect);
+  } else {
+    [self cr_drawUsingAncestor:bookmarkBarToolbarView inRect:(NSRect)rect];
+  }
   [super drawRect:rect];
 }
 
 - (void)updateIconToMatchTheme {
-  if (!ui::MaterialDesignController::IsModeMaterial()) {
-    return;
-  }
-
   // During testing, the window might not be a browser window, and the
   // superview might not be a BookmarkBarView.
   if (![[self window] respondsToSelector:@selector(hasDarkTheme)] ||

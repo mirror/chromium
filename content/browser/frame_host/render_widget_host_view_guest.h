@@ -16,7 +16,7 @@
 #include "content/browser/frame_host/render_widget_host_view_child_frame.h"
 #include "content/common/content_export.h"
 #include "content/common/cursors/webcursor.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "ui/events/event.h"
 #include "ui/events/gestures/gesture_recognizer.h"
 #include "ui/events/gestures/gesture_types.h"
@@ -28,7 +28,6 @@ namespace content {
 class BrowserPluginGuest;
 class RenderWidgetHost;
 class RenderWidgetHostImpl;
-struct NativeWebKeyboardEvent;
 struct TextInputState;
 
 // See comments in render_widget_host_view.h about this class and its members.
@@ -45,7 +44,7 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
     : public RenderWidgetHostViewChildFrame,
       public ui::GestureConsumer {
  public:
-  RenderWidgetHostViewGuest(
+  static RenderWidgetHostViewGuest* Create(
       RenderWidgetHost* widget,
       BrowserPluginGuest* guest,
       base::WeakPtr<RenderWidgetHostViewBase> platform_view);
@@ -69,6 +68,7 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
   gfx::Rect GetBoundsInRootWindow() override;
   gfx::Size GetPhysicalBackingSize() const override;
   base::string16 GetSelectedText() override;
+  void SetNeedsBeginFrames(bool needs_begin_frames) override;
 
   // RenderWidgetHostViewBase implementation.
   void InitAsPopup(RenderWidgetHostView* parent_host_view,
@@ -92,18 +92,22 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
                         const gfx::Range& range) override;
   void SelectionBoundsChanged(
       const ViewHostMsg_SelectionBounds_Params& params) override;
-  void OnSwapCompositorFrame(uint32_t output_surface_id,
+  void SubmitCompositorFrame(const cc::LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
 #if defined(USE_AURA)
   void ProcessAckedTouchEvent(const TouchEventWithLatencyInfo& touch,
                               InputEventAckState ack_result) override;
 #endif
+  void ProcessMouseEvent(const blink::WebMouseEvent& event,
+                         const ui::LatencyInfo& latency) override;
   void ProcessTouchEvent(const blink::WebTouchEvent& event,
                          const ui::LatencyInfo& latency) override;
 
   bool LockMouse() override;
   void UnlockMouse() override;
-  void GetScreenInfo(blink::WebScreenInfo* results) override;
+  void DidCreateNewRendererCompositorFrameSink(
+      cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink)
+      override;
 
 #if defined(OS_MACOSX)
   // RenderWidgetHostView implementation.
@@ -115,24 +119,42 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
   void StopSpeaking() override;
 #endif  // defined(OS_MACOSX)
 
-  void LockCompositingSurface() override;
-  void UnlockCompositingSurface() override;
-
   void WheelEventAck(const blink::WebMouseWheelEvent& event,
                      InputEventAckState ack_result) override;
 
   void GestureEventAck(const blink::WebGestureEvent& event,
                        InputEventAckState ack_result) override;
 
- protected:
-  friend class RenderWidgetHostView;
+  bool IsRenderWidgetHostViewGuest() override;
+  RenderWidgetHostViewBase* GetOwnerRenderWidgetHostView() const;
 
  private:
-  RenderWidgetHostViewBase* GetOwnerRenderWidgetHostView() const;
+  friend class RenderWidgetHostView;
+
+  void SendSurfaceInfoToEmbedderImpl(
+      const cc::SurfaceInfo& surface_info,
+      const cc::SurfaceSequence& sequence) override;
+
+  RenderWidgetHostViewGuest(
+      RenderWidgetHost* widget,
+      BrowserPluginGuest* guest,
+      base::WeakPtr<RenderWidgetHostViewBase> platform_view);
+
+  // Since we now route GestureEvents directly to the guest renderer, we need
+  // a way to make sure that the BrowserPlugin in the embedder gets focused so
+  // that keyboard input (which still travels via BrowserPlugin) is routed to
+  // the plugin and thus onwards to the guest.
+  // TODO(wjmaclean): When we remove BrowserPlugin, delete this code.
+  // http://crbug.com/533069
+  void MaybeSendSyntheticTapGesture(
+      const blink::WebFloatPoint& position,
+      const blink::WebFloatPoint& screenPosition) const;
 
   void OnHandleInputEvent(RenderWidgetHostImpl* embedder,
                           int browser_plugin_instance_id,
                           const blink::WebInputEvent* event);
+
+  bool HasEmbedderChanged() override;
 
   // BrowserPluginGuest and RenderWidgetHostViewGuest's lifetimes are not tied
   // to one another, therefore we access |guest_| through WeakPtr.
@@ -142,6 +164,12 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
   // RenderWidgetHostViewGuest mostly only cares about stuff related to
   // compositing, the rest are directly forwarded to this |platform_view_|.
   base::WeakPtr<RenderWidgetHostViewBase> platform_view_;
+
+  // When true the guest will forward its selection updates to the owner RWHV.
+  // The guest may forward its updates only when there is an ongoing IME
+  // session.
+  bool should_forward_text_selection_;
+
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostViewGuest);
 };
 

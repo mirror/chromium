@@ -31,83 +31,103 @@
 #ifndef PageScaleConstraintsSet_h
 #define PageScaleConstraintsSet_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/dom/ViewportDescription.h"
 #include "core/frame/PageScaleConstraints.h"
 #include "platform/Length.h"
 #include "platform/geometry/IntSize.h"
-#include "wtf/Allocator.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
 // This class harmonizes the viewport (particularly page scale) constraints from
 // the meta viewport tag and other sources.
 class CORE_EXPORT PageScaleConstraintsSet {
-    USING_FAST_MALLOC(PageScaleConstraintsSet);
-public:
-    static std::unique_ptr<PageScaleConstraintsSet> create()
-    {
-        return wrapUnique(new PageScaleConstraintsSet);
-    }
+  USING_FAST_MALLOC(PageScaleConstraintsSet);
 
-    void setDefaultConstraints(const PageScaleConstraints&);
-    const PageScaleConstraints& defaultConstraints() const;
+ public:
+  static std::unique_ptr<PageScaleConstraintsSet> Create() {
+    return WTF::WrapUnique(new PageScaleConstraintsSet);
+  }
 
-    // Settings defined in the website's viewport tag, if viewport tag support
-    // is enabled.
-    const PageScaleConstraints& pageDefinedConstraints() const { return m_pageDefinedConstraints; }
-    void updatePageDefinedConstraints(const ViewportDescription&, Length legacyFallbackWidth);
-    void adjustForAndroidWebViewQuirks(const ViewportDescription&, int layoutFallbackWidth, float deviceScaleFactor, bool supportTargetDensityDPI, bool wideViewportQuirkEnabled, bool useWideViewport, bool loadWithOverviewMode, bool nonUserScalableQuirkEnabled);
-    void clearPageDefinedConstraints();
+  void SetDefaultConstraints(const PageScaleConstraints&);
+  const PageScaleConstraints& DefaultConstraints() const;
 
-    // Constraints may also be set from Chromium -- this overrides any
-    // page-defined values.
-    const PageScaleConstraints& userAgentConstraints() const { return m_userAgentConstraints; }
-    void setUserAgentConstraints(const PageScaleConstraints&);
+  // Settings defined in the website's viewport tag, if viewport tag support
+  // is enabled.
+  const PageScaleConstraints& PageDefinedConstraints() const {
+    return page_defined_constraints_;
+  }
+  void UpdatePageDefinedConstraints(const ViewportDescription&,
+                                    Length legacy_fallback_width);
+  void AdjustForAndroidWebViewQuirks(const ViewportDescription&,
+                                     int layout_fallback_width,
+                                     float device_scale_factor,
+                                     bool support_target_density_dpi,
+                                     bool wide_viewport_quirk_enabled,
+                                     bool use_wide_viewport,
+                                     bool load_with_overview_mode,
+                                     bool non_user_scalable_quirk_enabled);
+  void ClearPageDefinedConstraints();
 
-    const PageScaleConstraints& fullscreenConstraints() const { return m_fullscreenConstraints; }
-    void setFullscreenConstraints(const PageScaleConstraints&);
+  // Constraints may also be set from Chromium -- this overrides any
+  // page-defined values.
+  const PageScaleConstraints& UserAgentConstraints() const {
+    return user_agent_constraints_;
+  }
+  void SetUserAgentConstraints(const PageScaleConstraints&);
 
-    // Actual computed values, taking into account the above plus the current
-    // viewport size and document width.
-    const PageScaleConstraints& finalConstraints() const { return m_finalConstraints; }
-    void computeFinalConstraints();
-    void adjustFinalConstraintsToContentsSize(IntSize contentsSize, int nonOverlayScrollbarWidth, bool shrinksViewportContentToFit);
+  const PageScaleConstraints& FullscreenConstraints() const {
+    return fullscreen_constraints_;
+  }
+  void SetFullscreenConstraints(const PageScaleConstraints&);
 
-    void didChangeContentsSize(IntSize contentsSize, float pageScaleFactor);
+  // Actual computed values, taking into account the above plus the current
+  // viewport size and document width.
+  const PageScaleConstraints& FinalConstraints() const {
+    return final_constraints_;
+  }
+  void ComputeFinalConstraints();
+  void AdjustFinalConstraintsToContentsSize(
+      IntSize contents_size,
+      int non_overlay_scrollbar_width,
+      bool shrinks_viewport_content_to_fit);
 
-    // This should be set to true on each page load to note that the page scale
-    // factor needs to be reset to its initial value.
-    void setNeedsReset(bool);
-    bool needsReset() const { return m_needsReset; }
+  void DidChangeContentsSize(IntSize contents_size, float page_scale_factor);
 
-    // This is set when one of the inputs to finalConstraints changes.
-    bool constraintsDirty() const { return m_constraintsDirty; }
+  // This should be set to true on each page load to note that the page scale
+  // factor needs to be reset to its initial value.
+  void SetNeedsReset(bool);
+  bool NeedsReset() const { return needs_reset_; }
 
-    void didChangeInitialContainingBlockSize(const IntSize&);
+  // This is set when one of the inputs to finalConstraints changes.
+  bool ConstraintsDirty() const { return constraints_dirty_; }
 
-    IntSize layoutSize() const;
+  void DidChangeInitialContainingBlockSize(const IntSize&);
 
-private:
-    PageScaleConstraintsSet();
+  IntSize GetLayoutSize() const;
+  IntSize InitialViewportSize() const { return icb_size_; }
 
-    PageScaleConstraints computeConstraintsStack() const;
+ private:
+  PageScaleConstraintsSet();
 
-    PageScaleConstraints m_defaultConstraints;
-    PageScaleConstraints m_pageDefinedConstraints;
-    PageScaleConstraints m_userAgentConstraints;
-    PageScaleConstraints m_fullscreenConstraints;
-    PageScaleConstraints m_finalConstraints;
+  PageScaleConstraints ComputeConstraintsStack() const;
 
-    int m_lastContentsWidth;
-    IntSize m_icbSize;
+  PageScaleConstraints default_constraints_;
+  PageScaleConstraints page_defined_constraints_;
+  PageScaleConstraints user_agent_constraints_;
+  PageScaleConstraints fullscreen_constraints_;
+  PageScaleConstraints final_constraints_;
 
-    bool m_needsReset;
-    bool m_constraintsDirty;
+  int last_contents_width_;
+  IntSize icb_size_;
+
+  bool needs_reset_;
+  bool constraints_dirty_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PageScaleConstraintsSet_h
+#endif  // PageScaleConstraintsSet_h

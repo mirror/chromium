@@ -6,6 +6,7 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/autocomplete/shortcuts_backend_factory.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/infobars/infobar_service.h"
@@ -15,9 +16,7 @@
 #include "components/infobars/core/infobar.h"
 #include "components/omnibox/browser/shortcuts_backend.h"
 #include "content/public/browser/web_contents.h"
-#include "grit/theme_resources.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/gfx/vector_icons_public.h"
 
 AlternateNavInfoBarDelegate::~AlternateNavInfoBarDelegate() {
 }
@@ -109,14 +108,6 @@ AlternateNavInfoBarDelegate::GetIdentifier() const {
   return ALTERNATE_NAV_INFOBAR_DELEGATE;
 }
 
-int AlternateNavInfoBarDelegate::GetIconId() const {
-  return IDR_INFOBAR_ALT_NAV_URL;
-}
-
-gfx::VectorIconId AlternateNavInfoBarDelegate::GetVectorIconId() const {
-#if defined(OS_MACOSX)
-  return gfx::VectorIconId::VECTOR_ICON_NONE;
-#else
-  return gfx::VectorIconId::GLOBE;
-#endif
+const gfx::VectorIcon& AlternateNavInfoBarDelegate::GetVectorIcon() const {
+  return kGlobeIcon;
 }

@@ -131,11 +131,6 @@
   <release seq="1" allow_pseudo="false">
     <messages fallback_to_english="true">
 
-      <!-- The default value for |WebPreference::uses_universal_detector|. -->
-      <message name="IDS_USES_UNIVERSAL_DETECTOR" use_name_for_id="true">
-        true
-      </message>
-
       <!-- The file name of the spellchecking dictionary without the extension (case-sensitive). -->
       <message name="IDS_SPELLCHECK_DICTIONARY" use_name_for_id="true">
         en-US
@@ -155,13 +150,6 @@
       <message name="IDS_EXTENSION_TOOLBAR_REDESIGN_NOTIFICATION_BUBBLE_WIDTH_CHARS" use_name_for_id="true">
         55
       </message>
-
-      <if expr="is_win or is_linux or chromeos">
-        <!-- The width of the ash/ChromeOS system tray menu in pixels. -->
-        <message name="IDS_SYSTEM_TRAY_MENU_BUBBLE_WIDTH_PIXELS" use_name_for_id="true">
-          300
-        </message>
-      </if>
 
       <if expr="is_win">
         <!-- The width of the Conflicting Module bubble in characters (See above). -->
@@ -207,14 +195,9 @@
         8
       </message>
 
-      <!-- Locale-dependent static encodings string -->
-      <message name="IDS_STATIC_ENCODING_LIST" use_name_for_id="true">
-        windows-1252
-      </message>
-
       <!-- The URL for the the Welcome to Chrome page shown on first run. -->
       <message name="IDS_WELCOME_PAGE_URL" translateable="false">
-        http://tools.google.com/chrome/intl/[GRITLANGCODE]/welcome.html
+        https://www.google.com/intl/[GRITLANGCODE]/chrome/browser/welcome.html
       </message>
 
       <!-- The language dependent download view size. -->

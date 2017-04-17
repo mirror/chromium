@@ -5,10 +5,16 @@
 #include <stddef.h>
 #include <sys/types.h>
 
+#include <set>
+#include <string>
+
 #include "ash/shell.h"
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
+#include "base/run_loop.h"
+#include "base/values.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/input_method/input_method_manager_impl.h"
 #include "chrome/browser/chromeos/login/login_manager_test.h"
@@ -20,12 +26,18 @@
 #include "chrome/browser/chromeos/settings/stub_cros_settings_provider.h"
 #include "chrome/browser/chromeos/system/fake_input_device_settings.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager_chromeos.h"
+#include "chrome/browser/ui/browser.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/test/base/in_process_browser_test.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/feedback/tracing_manager.h"
 #include "components/prefs/pref_service.h"
+#include "components/prefs/pref_store.h"
+#include "components/prefs/writeable_pref_store.h"
 #include "components/user_manager/user_manager.h"
+#include "content/public/common/service_manager_connection.h"
 #include "content/public/test/test_utils.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/ime/chromeos/fake_ime_keyboard.h"
 #include "ui/events/event_utils.h"
@@ -100,7 +112,7 @@ class PreferencesTest : public LoginManagerTest {
     EXPECT_EQ(prefs->GetInteger(prefs::kTouchpadSensitivity),
               input_settings_->current_touchpad_settings().GetSensitivity());
     EXPECT_EQ(prefs->GetBoolean(prefs::kTouchHudProjectionEnabled),
-              ash::Shell::GetInstance()->is_touch_hud_projection_enabled());
+              ash::Shell::Get()->is_touch_hud_projection_enabled());
     EXPECT_EQ(prefs->GetBoolean(prefs::kLanguageXkbAutoRepeatEnabled),
               keyboard_->auto_repeat_is_enabled_);
     input_method::AutoRepeatRate rate = keyboard_->last_auto_repeat_rate_;
@@ -139,6 +151,61 @@ class PreferencesTest : public LoginManagerTest {
   input_method::FakeImeKeyboard* keyboard_;
 
   DISALLOW_COPY_AND_ASSIGN(PreferencesTest);
+};
+
+class PreferencesServiceBrowserTest : public InProcessBrowserTest {
+ public:
+  PreferencesServiceBrowserTest() {}
+
+ protected:
+  static service_manager::Connector* connector() {
+    return content::ServiceManagerConnection::GetForProcess()->GetConnector();
+  }
+
+  void WaitForPrefChange(PrefStore* store, const std::string& key) {
+    base::RunLoop run_loop;
+    TestPrefObserver observer(key, run_loop.QuitClosure());
+    store->AddObserver(&observer);
+    run_loop.Run();
+    store->RemoveObserver(&observer);
+  }
+
+  bool GetIntegerPrefValue(PrefStore* store,
+                           const std::string& key,
+                           int* out_value) {
+    const base::Value* value = nullptr;
+    if (!store->GetValue(key, &value))
+      return false;
+    return value->GetAsInteger(out_value);
+  }
+
+ private:
+  class TestPrefObserver : public PrefStore::Observer {
+   public:
+    TestPrefObserver(const std::string& pref_name,
+                     const base::Closure& callback)
+        : pref_name_(pref_name), callback_(callback) {}
+
+    ~TestPrefObserver() override {}
+
+    // PrefStore::Observer:
+    void OnPrefValueChanged(const std::string& key) override {
+      if (key == pref_name_)
+        callback_.Run();
+    }
+
+    void OnInitializationCompleted(bool success) override {
+      ASSERT_TRUE(success);
+    }
+
+   private:
+    const std::string pref_name_;
+    const base::Closure callback_;
+
+    DISALLOW_COPY_AND_ASSIGN(TestPrefObserver);
+  };
+
+  DISALLOW_COPY_AND_ASSIGN(PreferencesServiceBrowserTest);
 };
 
 IN_PROC_BROWSER_TEST_F(PreferencesTest, PRE_MultiProfiles) {

@@ -6,14 +6,18 @@
 
 #include <stdint.h>
 
+#include <utility>
+
 #include "base/base64.h"
 #include "base/json/json_string_value_serializer.h"
 #include "base/lazy_instance.h"
 #include "base/memory/singleton.h"
+#include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event_impl.h"
+#include "base/values.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace content {
@@ -63,10 +67,9 @@ void EtwTracingAgent::StartAgentTracing(
 
   // Start the consumer thread and start consuming events.
   thread_.Start();
-  thread_.message_loop()->PostTask(
-      FROM_HERE,
-      base::Bind(&EtwTracingAgent::TraceAndConsumeOnThread,
-                 base::Unretained(this)));
+  thread_.task_runner()->PostTask(
+      FROM_HERE, base::Bind(&EtwTracingAgent::TraceAndConsumeOnThread,
+                            base::Unretained(this)));
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
@@ -81,10 +84,9 @@ void EtwTracingAgent::StopAgentTracing(
   }
 
   // Stop consuming and flush events.
-  thread_.message_loop()->PostTask(FROM_HERE,
-      base::Bind(&EtwTracingAgent::FlushOnThread,
-                 base::Unretained(this),
-                 callback));
+  thread_.task_runner()->PostTask(FROM_HERE,
+                                  base::Bind(&EtwTracingAgent::FlushOnThread,
+                                             base::Unretained(this), callback));
 }
 
 void EtwTracingAgent::OnStopSystemTracingDone(
@@ -167,50 +169,45 @@ void EtwTracingAgent::AddSyncEventToBuffer() {
 
   // Add fields to the event.
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
-  value->Set("guid", new base::StringValue("ClockSync"));
-  value->Set("walltime", new base::StringValue(
-      base::StringPrintf("%08X%08X",
-                         walltime_in_us.HighPart,
-                         walltime_in_us.LowPart)));
-  value->Set("tick", new base::StringValue(
-      base::StringPrintf("%08X%08X",
-                         now_in_us.HighPart,
-                         now_in_us.LowPart)));
+  value->Set("guid", new base::Value("ClockSync"));
+  value->Set("walltime",
+             new base::Value(base::StringPrintf(
+                 "%08X%08X", walltime_in_us.HighPart, walltime_in_us.LowPart)));
+  value->Set("tick", new base::Value(base::StringPrintf(
+                         "%08X%08X", now_in_us.HighPart, now_in_us.LowPart)));
 
   // Append it to the events buffer.
-  events_->Append(value.release());
+  events_->Append(std::move(value));
 }
 
 void EtwTracingAgent::AppendEventToBuffer(EVENT_TRACE* event) {
-  using base::FundamentalValue;
+  using base::Value;
 
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
 
   // Add header fields to the event.
   LARGE_INTEGER ts_us;
   ts_us.QuadPart = event->Header.TimeStamp.QuadPart / 10;
-  value->Set("ts", new base::StringValue(
-      base::StringPrintf("%08X%08X", ts_us.HighPart, ts_us.LowPart)));
+  value->Set("ts", new base::Value(base::StringPrintf(
+                       "%08X%08X", ts_us.HighPart, ts_us.LowPart)));
 
-  value->Set("guid", new base::StringValue(GuidToString(event->Header.Guid)));
+  value->Set("guid", new base::Value(GuidToString(event->Header.Guid)));
 
-  value->Set("op", new FundamentalValue(event->Header.Class.Type));
-  value->Set("ver", new FundamentalValue(event->Header.Class.Version));
-  value->Set("pid",
-             new FundamentalValue(static_cast<int>(event->Header.ProcessId)));
-  value->Set("tid",
-             new FundamentalValue(static_cast<int>(event->Header.ThreadId)));
-  value->Set("cpu", new FundamentalValue(event->BufferContext.ProcessorNumber));
+  value->Set("op", new Value(event->Header.Class.Type));
+  value->Set("ver", new Value(event->Header.Class.Version));
+  value->Set("pid", new Value(static_cast<int>(event->Header.ProcessId)));
+  value->Set("tid", new Value(static_cast<int>(event->Header.ThreadId)));
+  value->Set("cpu", new Value(event->BufferContext.ProcessorNumber));
 
   // Base64 encode the payload bytes.
   base::StringPiece buffer(static_cast<const char*>(event->MofData),
                            event->MofLength);
   std::string payload;
   base::Base64Encode(buffer, &payload);
-  value->Set("payload", new base::StringValue(payload));
+  value->Set("payload", new base::Value(payload));
 
   // Append it to the events buffer.
-  events_->Append(value.release());
+  events_->Append(std::move(value));
 }
 
 void EtwTracingAgent::TraceAndConsumeOnThread() {
@@ -231,10 +228,10 @@ void EtwTracingAgent::FlushOnThread(
     const StopAgentTracingCallback& callback) {
   // Add the header information to the stream.
   std::unique_ptr<base::DictionaryValue> header(new base::DictionaryValue());
-  header->Set("name", new base::StringValue("ETW"));
+  header->Set("name", new base::Value("ETW"));
 
   // Release and pass the events buffer.
-  header->Set("content", events_.release());
+  header->Set("content", std::move(events_));
 
   // Serialize the results as a JSon string.
   std::string output;

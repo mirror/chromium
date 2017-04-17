@@ -31,18 +31,16 @@
 #ifndef NavigatorOnLine_h
 #define NavigatorOnLine_h
 
-#include "core/page/NetworkStateNotifier.h"
+#include "core/CoreExport.h"
+#include "platform/network/NetworkStateNotifier.h"
 
 namespace blink {
 
-class NavigatorOnLine {
-public:
-    bool onLine()
-    {
-        return networkStateNotifier().onLine();
-    }
+class CORE_EXPORT NavigatorOnLine {
+ public:
+  bool onLine() { return GetNetworkStateNotifier().OnLine(); }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NavigatorOnLine_h
+#endif  // NavigatorOnLine_h

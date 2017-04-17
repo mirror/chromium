@@ -7,13 +7,11 @@
 #include <memory>
 
 #include "base/compiler_specific.h"
-#include "base/macros.h"
 #include "base/metrics/statistics_recorder.h"
 #include "base/test/test_suite.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "build/build_config.h"
-#include "content/browser/browser_thread_impl.h"
-#include "content/browser/gpu/gpu_process_host.h"
+#include "content/browser/gpu/gpu_main_thread_factory.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/utility_process_host_impl.h"
 #include "content/common/url_schemes.h"
@@ -26,7 +24,7 @@
 #include "ui/base/ui_base_paths.h"
 
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
-#include "gin/v8_initializer.h"
+#include "gin/v8_initializer.h"  // nogncheck
 #endif
 
 #if defined(OS_ANDROID)
@@ -36,10 +34,10 @@
 #include "device/geolocation/android/geolocation_jni_registrar.h"
 #include "media/base/android/media_jni_registrar.h"
 #include "media/capture/video/android/capture_jni_registrar.h"
+#include "mojo/android/system/mojo_jni_registrar.h"
 #include "net/android/net_jni_registrar.h"
 #include "ui/android/ui_android_jni_registrar.h"
 #include "ui/base/android/ui_base_jni_registrar.h"
-#include "ui/events/android/events_jni_registrar.h"
 #include "ui/gfx/android/gfx_jni_registrar.h"
 #include "ui/gl/android/gl_jni_registrar.h"
 #endif
@@ -55,17 +53,6 @@
 
 
 namespace content {
-
-class ContentTestSuiteBaseListener : public testing::EmptyTestEventListener {
- public:
-  ContentTestSuiteBaseListener() {
-  }
-  void OnTestEnd(const testing::TestInfo& test_info) override {
-    BrowserThreadImpl::FlushThreadPoolHelperForTesting();
-  }
- private:
-  DISALLOW_COPY_AND_ASSIGN(ContentTestSuiteBaseListener);
-};
 
 ContentTestSuiteBase::ContentTestSuiteBase(int argc, char** argv)
     : base::TestSuite(argc, argv) {
@@ -93,23 +80,17 @@ void ContentTestSuiteBase::Initialize() {
   gfx::android::RegisterJni(env);
   media::RegisterCaptureJni(env);
   media::RegisterJni(env);
+  mojo::android::RegisterSystemJni(env);
   net::android::RegisterJni(env);
   ui::android::RegisterJni(env);
   ui::RegisterUIAndroidJni(env);
   ui::gl::android::RegisterJni(env);
-  ui::events::android::RegisterJni(env);
 #if !defined(USE_AURA)
   ui::shell_dialogs::RegisterJni(env);
   content::Compositor::Initialize();
 #endif
 #endif
 
-#if defined(USE_OZONE)
-  ui::OzonePlatform::InitializeForUI();
-#endif
-
-  testing::UnitTest::GetInstance()->listeners().Append(
-      new ContentTestSuiteBaseListener);
   ui::MaterialDesignController::Initialize();
 }
 
@@ -125,7 +106,7 @@ void ContentTestSuiteBase::RegisterInProcessThreads() {
       CreateInProcessUtilityThread);
   RenderProcessHostImpl::RegisterRendererMainThreadFactory(
       CreateInProcessRendererThread);
-  GpuProcessHost::RegisterGpuMainThreadFactory(CreateInProcessGpuThread);
+  content::RegisterGpuMainThreadFactory(CreateInProcessGpuThread);
 }
 
 }  // namespace content

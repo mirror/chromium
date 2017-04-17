@@ -9,6 +9,7 @@
 #define COMPONENTS_CONTENT_SETTINGS_CORE_BROWSER_HOST_CONTENT_SETTINGS_MAP_H_
 
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -25,12 +26,10 @@
 #include "components/keyed_service/core/refcounted_keyed_service.h"
 #include "components/prefs/pref_change_registrar.h"
 
-class ExtensionService;
 class GURL;
 class PrefService;
 
 namespace base {
-class Clock;
 class Value;
 }
 
@@ -38,6 +37,7 @@ namespace content_settings {
 class ObservableProvider;
 class ProviderInterface;
 class PrefProvider;
+class RuleIterator;
 class TestUtils;
 }
 
@@ -195,6 +195,13 @@ class HostContentSettingsMap : public content_settings::Observer,
       const std::string& resource_identifier,
       std::unique_ptr<base::Value> value);
 
+  // Check if a call to SetNarrowestContentSetting would succeed or if it would
+  // fail because of an invalid pattern.
+  bool CanSetNarrowestContentSetting(
+      const GURL& primary_url,
+      const GURL& secondary_url,
+      ContentSettingsType type) const;
+
   // Sets the most specific rule that currently defines the setting for the
   // given content type. TODO(raymes): Remove this once all content settings
   // are scoped to origin scope. There is no scope more narrow than origin
@@ -209,6 +216,14 @@ class HostContentSettingsMap : public content_settings::Observer,
   //
   // This should only be called on the UI thread.
   void ClearSettingsForOneType(ContentSettingsType content_type);
+
+  // If |pattern_predicate| is null, this method is equivalent to the above.
+  // Otherwise, it only deletes exceptions matched by |pattern_predicate|.
+  void ClearSettingsForOneTypeWithPredicate(
+      ContentSettingsType content_type,
+      const base::Callback<bool(
+          const ContentSettingsPattern& primary_pattern,
+          const ContentSettingsPattern& secondary_pattern)>& pattern_predicate);
 
   static bool IsDefaultSettingAllowedForType(ContentSetting setting,
                                              ContentSettingsType content_type);
@@ -228,45 +243,9 @@ class HostContentSettingsMap : public content_settings::Observer,
   // to convert backwards.
   static ProviderType GetProviderTypeFromSource(const std::string& source);
 
-  bool is_off_the_record() const {
-    return is_off_the_record_;
+  bool is_incognito() const {
+    return is_incognito_;
   }
-
-  // Returns a single |ContentSetting| which applies to the given URLs, just as
-  // |GetContentSetting| does. If the setting is allowed, it also records the
-  // last usage to preferences.
-  //
-  // This should only be called on the UI thread, unlike |GetContentSetting|.
-  ContentSetting GetContentSettingAndMaybeUpdateLastUsage(
-      const GURL& primary_url,
-      const GURL& secondary_url,
-      ContentSettingsType content_type,
-      const std::string& resource_identifier);
-
-  // Sets the last time that a given content type has been used for the pattern
-  // which matches the URLs to the current time.
-  void UpdateLastUsage(const GURL& primary_url,
-                       const GURL& secondary_url,
-                       ContentSettingsType content_type);
-
-  // Sets the last time that a given content type has been used for a pattern
-  // pair to the current time.
-  void UpdateLastUsageByPattern(const ContentSettingsPattern& primary_pattern,
-                                const ContentSettingsPattern& secondary_pattern,
-                                ContentSettingsType content_type);
-
-  // Returns the last time the pattern that matches the URL has requested
-  // permission for the |content_type| setting.
-  base::Time GetLastUsage(const GURL& primary_url,
-                          const GURL& secondary_url,
-                          ContentSettingsType content_type);
-
-  // Returns the last time the pattern has requested permission for the
-  // |content_type| setting.
-  base::Time GetLastUsageByPattern(
-      const ContentSettingsPattern& primary_pattern,
-      const ContentSettingsPattern& secondary_pattern,
-      ContentSettingsType content_type);
 
   // Adds/removes an observer for content settings changes.
   void AddObserver(content_settings::Observer* observer);
@@ -274,9 +253,6 @@ class HostContentSettingsMap : public content_settings::Observer,
 
   // Schedules any pending lossy website settings to be written to disk.
   void FlushLossyWebsiteSettings();
-
-  // Passes ownership of |clock|.
-  void SetPrefClockForTesting(std::unique_ptr<base::Clock> clock);
 
   // Migrate old domain scoped ALLOW settings to be origin scoped for
   // ContentSettingsTypes which are domain scoped. Only narrow down ALLOW
@@ -298,14 +274,8 @@ class HostContentSettingsMap : public content_settings::Observer,
                            DomainToOriginMigrationStatus);
   FRIEND_TEST_ALL_PREFIXES(HostContentSettingsMapTest,
                            MigrateDomainScopedSettings);
-  FRIEND_TEST_ALL_PREFIXES(HostContentSettingsMapTest, MigrateKeygenSettings);
 
   friend class content_settings::TestUtils;
-
-  typedef std::map<ProviderType, content_settings::ProviderInterface*>
-      ProviderMap;
-  typedef ProviderMap::iterator ProviderIterator;
-  typedef ProviderMap::const_iterator ConstProviderIterator;
 
   ~HostContentSettingsMap() override;
 
@@ -319,18 +289,8 @@ class HostContentSettingsMap : public content_settings::Observer,
       ContentSettingsType content_type,
       ProviderType* provider_type) const;
 
-  // Migrate Keygen settings which only use a primary pattern. Settings which
-  // only used a primary pattern were inconsistent in what they did with the
-  // secondary pattern. Some stored a ContentSettingsPattern::Wildcard() whereas
-  // others stored the same pattern twice. This function migrates all such
-  // settings to use ContentSettingsPattern::Wildcard(). This allows us to make
-  // the scoping code consistent across different settings.
-  // TODO(lshang): Remove this when clients have migrated (~M53). We should
-  // leave in some code to remove old-format settings for a long time.
-  void MigrateKeygenSettings();
-
-  // Collect UMA data about the number of exceptions.
-  void RecordNumberOfExceptions();
+  // Collect UMA data of exceptions.
+  void RecordExceptionMetrics();
 
   // Adds content settings for |content_type| and |resource_identifier|,
   // provided by |provider|, into |settings|. If |incognito| is true, adds only
@@ -359,6 +319,11 @@ class HostContentSettingsMap : public content_settings::Observer,
       ContentSettingsType content_type,
       const std::string& resource_identifier,
       content_settings::SettingInfo* info) const;
+
+  content_settings::PatternPair GetNarrowestPatterns(
+      const GURL& primary_url,
+      const GURL& secondary_url,
+      ContentSettingsType type) const;
 
   static std::unique_ptr<base::Value> GetContentSettingValueAndPatterns(
       const content_settings::ProviderInterface* provider,
@@ -390,13 +355,14 @@ class HostContentSettingsMap : public content_settings::Observer,
   // Weak; owned by the Profile.
   PrefService* prefs_;
 
-  // Whether this settings map is for an OTR session.
-  bool is_off_the_record_;
+  // Whether this settings map is for an incognito session.
+  bool is_incognito_;
 
   // Content setting providers. This is only modified at construction
   // time and by RegisterExtensionService, both of which should happen
   // before any other uses of it.
-  ProviderMap content_settings_providers_;
+  std::map<ProviderType, std::unique_ptr<content_settings::ProviderInterface>>
+      content_settings_providers_;
 
   // content_settings_providers_[PREF_PROVIDER] but specialized.
   content_settings::PrefProvider* pref_provider_ = nullptr;

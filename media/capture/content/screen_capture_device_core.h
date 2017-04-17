@@ -37,6 +37,10 @@ class CAPTURE_EXPORT VideoCaptureMachine {
                      const VideoCaptureParams& params,
                      const base::Callback<void(bool)> callback) = 0;
 
+  // Suspend/Resume frame delivery. Implementations of these are optional.
+  virtual void Suspend() {}
+  virtual void Resume() {}
+
   // Stops capturing.
   // |callback| is invoked after the capturing has stopped.
   virtual void Stop(const base::Closure& callback) = 0;
@@ -82,11 +86,15 @@ class CAPTURE_EXPORT ScreenCaptureDeviceCore
   void AllocateAndStart(const VideoCaptureParams& params,
                         std::unique_ptr<VideoCaptureDevice::Client> client);
   void RequestRefreshFrame();
+  void Suspend();
+  void Resume();
   void StopAndDeAllocate();
+  void OnConsumerReportingUtilization(int frame_feedback_id,
+                                      double utilization);
 
  private:
   // Flag indicating current state.
-  enum State { kIdle, kCapturing, kError, kLastCaptureState };
+  enum State { kIdle, kCapturing, kSuspended, kError, kLastCaptureState };
 
   void TransitionStateTo(State next_state);
 
@@ -113,6 +121,12 @@ class CAPTURE_EXPORT ScreenCaptureDeviceCore
   // capture pipeline. Besides the VideoCaptureDevice itself, it is the only
   // component of the system with direct access to |client_|.
   scoped_refptr<ThreadSafeCaptureOracle> oracle_proxy_;
+
+  // After Resume(), some unknown amount of time has passed, and the content of
+  // the capture source may have changed. This flag is used to ensure that the
+  // passive refresh mechanism is not used for the first refresh frame following
+  // a Resume().
+  bool force_active_refresh_once_;
 
   DISALLOW_COPY_AND_ASSIGN(ScreenCaptureDeviceCore);
 };

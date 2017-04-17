@@ -2,7 +2,8 @@
  * Copyright (C) 2001 Peter Kelly (pmk@post.com)
  * Copyright (C) 2001 Tobias Anton (anton@stud.fbi.fh-darmstadt.de)
  * Copyright (C) 2006 Samuel Weinig (sam.weinig@gmail.com)
- * Copyright (C) 2003, 2004, 2005, 2006, 2008, 2009 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2008, 2009 Apple Inc. All rights
+ * reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,105 +27,98 @@
 
 #include "core/events/AddEventListenerOptionsResolved.h"
 #include "core/events/EventListener.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
 class RegisteredEventListener {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    RegisteredEventListener()
-        : m_useCapture(false)
-        , m_passive(false)
-        , m_blockedEventWarningEmitted(false)
-        , m_passiveForcedForDocumentTarget(false)
-    {
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    RegisteredEventListener(EventListener* listener, const AddEventListenerOptionsResolved& options)
-        : m_listener(listener)
-        , m_useCapture(options.capture())
-        , m_passive(options.passive())
-        , m_blockedEventWarningEmitted(false)
-        , m_passiveForcedForDocumentTarget(options.passiveForcedForDocumentTarget())
-    {
-    }
+ public:
+  RegisteredEventListener()
+      : use_capture_(false),
+        passive_(false),
+        once_(false),
+        blocked_event_warning_emitted_(false),
+        passive_forced_for_document_target_(false),
+        passive_specified_(false) {}
 
-    DEFINE_INLINE_TRACE()
-    {
-        visitor->trace(m_listener);
-    }
+  RegisteredEventListener(EventListener* listener,
+                          const AddEventListenerOptionsResolved& options)
+      : listener_(listener),
+        use_capture_(options.capture()),
+        passive_(options.passive()),
+        once_(options.once()),
+        blocked_event_warning_emitted_(false),
+        passive_forced_for_document_target_(
+            options.PassiveForcedForDocumentTarget()),
+        passive_specified_(options.PassiveSpecified()) {}
 
-    AddEventListenerOptionsResolved options() const
-    {
-        AddEventListenerOptionsResolved result;
-        result.setCapture(m_useCapture);
-        result.setPassive(m_passive);
-        result.setPassiveForcedForDocumentTarget(m_passiveForcedForDocumentTarget);
-        return result;
-    }
+  DEFINE_INLINE_TRACE() { visitor->Trace(listener_); }
 
-    const EventListener* listener() const
-    {
-        return m_listener;
-    }
+  AddEventListenerOptionsResolved Options() const {
+    AddEventListenerOptionsResolved result;
+    result.setCapture(use_capture_);
+    result.setPassive(passive_);
+    result.SetPassiveForcedForDocumentTarget(
+        passive_forced_for_document_target_);
+    result.setOnce(once_);
+    result.SetPassiveSpecified(passive_specified_);
+    return result;
+  }
 
-    EventListener* listener()
-    {
-        return m_listener;
-    }
+  const EventListener* Listener() const { return listener_; }
 
-    bool passive() const
-    {
-        return m_passive;
-    }
+  EventListener* Listener() { return listener_; }
 
-    bool capture() const
-    {
-        return m_useCapture;
-    }
+  bool Passive() const { return passive_; }
 
-    bool blockedEventWarningEmitted() const
-    {
-        return m_blockedEventWarningEmitted;
-    }
+  bool Once() const { return once_; }
 
-    bool passiveForcedForDocumentTarget() const
-    {
-        return m_passiveForcedForDocumentTarget;
-    }
+  bool Capture() const { return use_capture_; }
 
-    void setBlockedEventWarningEmitted()
-    {
-        m_blockedEventWarningEmitted = true;
-    }
+  bool BlockedEventWarningEmitted() const {
+    return blocked_event_warning_emitted_;
+  }
 
-    bool matches(const EventListener* listener, const EventListenerOptions& options) const
-    {
-        // Equality is soley based on the listener and useCapture flags.
-        ASSERT(m_listener);
-        ASSERT(listener);
-        return *m_listener == *listener && static_cast<bool>(m_useCapture) == options.capture();
-    }
+  bool PassiveForcedForDocumentTarget() const {
+    return passive_forced_for_document_target_;
+  }
 
-    bool operator==(const RegisteredEventListener& other) const
-    {
-        // Equality is soley based on the listener and useCapture flags.
-        ASSERT(m_listener);
-        ASSERT(other.m_listener);
-        return *m_listener == *other.m_listener && m_useCapture == other.m_useCapture;
-    }
+  bool PassiveSpecified() const { return passive_specified_; }
 
-private:
-    Member<EventListener> m_listener;
-    unsigned m_useCapture : 1;
-    unsigned m_passive : 1;
-    unsigned m_blockedEventWarningEmitted : 1;
-    unsigned m_passiveForcedForDocumentTarget : 1;
+  void SetBlockedEventWarningEmitted() {
+    blocked_event_warning_emitted_ = true;
+  }
+
+  bool Matches(const EventListener* listener,
+               const EventListenerOptions& options) const {
+    // Equality is soley based on the listener and useCapture flags.
+    DCHECK(listener_);
+    DCHECK(listener);
+    return *listener_ == *listener &&
+           static_cast<bool>(use_capture_) == options.capture();
+  }
+
+  bool operator==(const RegisteredEventListener& other) const {
+    // Equality is soley based on the listener and useCapture flags.
+    DCHECK(listener_);
+    DCHECK(other.listener_);
+    return *listener_ == *other.listener_ && use_capture_ == other.use_capture_;
+  }
+
+ private:
+  Member<EventListener> listener_;
+  unsigned use_capture_ : 1;
+  unsigned passive_ : 1;
+  unsigned once_ : 1;
+  unsigned blocked_event_warning_emitted_ : 1;
+  unsigned passive_forced_for_document_target_ : 1;
+  unsigned passive_specified_ : 1;
 };
 
-} // namespace blink
+}  // namespace blink
 
 WTF_ALLOW_CLEAR_UNUSED_SLOTS_WITH_MEM_FUNCTIONS(blink::RegisteredEventListener);
 
-#endif // RegisteredEventListener_h
+#endif  // RegisteredEventListener_h

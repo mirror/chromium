@@ -16,6 +16,7 @@
 #include "base/macros.h"
 #include "ui/events/devices/x11/events_devices_x11_export.h"
 #include "ui/gfx/sequential_id_generator.h"
+#include "ui/gfx/x/x11_types.h"
 
 namespace base {
 
@@ -24,8 +25,6 @@ template <typename T> struct DefaultSingletonTraits;
 
 typedef unsigned long Cursor;
 typedef unsigned long Window;
-typedef struct _XDisplay Display;
-typedef union _XEvent XEvent;
 
 namespace ui {
 
@@ -43,7 +42,7 @@ class EVENTS_DEVICES_X11_EXPORT TouchFactory {
   static void SetTouchDeviceListFromCommandLine();
 
   // Updates the list of devices.
-  void UpdateDeviceList(Display* display);
+  void UpdateDeviceList(XDisplay* display);
 
   // Checks whether an XI2 event should be processed or not (i.e. if the event
   // originated from a device we are interested in).
@@ -142,10 +141,6 @@ class EVENTS_DEVICES_X11_EXPORT TouchFactory {
 
   // Associate each device ID with its master device ID.
   std::map<int, int> device_master_id_list_;
-
-  // Indicates whether touch events are explicitly disabled by the flag
-  // #touch-events.
-  bool touch_events_flag_disabled_;
 
   // The status of the touch screens devices themselves.
   bool touch_screens_enabled_;

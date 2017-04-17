@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include <algorithm>
+#include <map>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -20,16 +21,17 @@
 #include "base/strings/string16.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/values.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/autofill/core/common/password_form_fill_data.h"
-#include "components/browser_sync/browser/profile_sync_service.h"
+#include "components/browser_sync/profile_sync_service.h"
 #include "components/infobars/core/infobar_manager.h"
 #include "components/password_manager/core/browser/password_bubble_experiment.h"
 #include "components/password_manager/core/browser/password_generation_manager.h"
 #include "components/password_manager/core/browser/password_manager.h"
 #include "components/password_manager/core/browser/password_manager_client.h"
 #include "components/password_manager/core/browser/password_manager_driver.h"
-#include "components/sync_driver/sync_service.h"
+#include "components/sync/driver/sync_service.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/browser/infobars/infobar_manager_impl.h"
@@ -38,6 +40,7 @@
 #import "ios/chrome/browser/passwords/js_password_manager.h"
 #import "ios/chrome/browser/passwords/password_generation_agent.h"
 #include "ios/chrome/browser/sync/ios_chrome_profile_sync_service_factory.h"
+#import "ios/web/public/origin_util.h"
 #include "ios/web/public/url_scheme_util.h"
 #import "ios/web/public/web_state/js/crw_js_injection_receiver.h"
 #import "ios/web/public/web_state/web_state.h"
@@ -213,19 +216,19 @@ NSString* SerializePasswordFormFillData(
   // Input elements in the form. The list does not necessarily contain
   // all elements from the form, but all elements listed here are required
   // to identify the right form to fill.
-  auto fieldList = base::WrapUnique(new base::ListValue());
+  auto fieldList = base::MakeUnique<base::ListValue>();
 
-  auto usernameField = base::WrapUnique(new base::DictionaryValue());
+  auto usernameField = base::MakeUnique<base::DictionaryValue>();
   usernameField->SetString("name", formData.username_field.name);
   usernameField->SetString("value", formData.username_field.value);
-  fieldList->Append(usernameField.release());
+  fieldList->Append(std::move(usernameField));
 
-  auto passwordField = base::WrapUnique(new base::DictionaryValue());
+  auto passwordField = base::MakeUnique<base::DictionaryValue>();
   passwordField->SetString("name", formData.password_field.name);
   passwordField->SetString("value", formData.password_field.value);
-  fieldList->Append(passwordField.release());
+  fieldList->Append(std::move(passwordField));
 
-  rootDict.Set("fields", fieldList.release());
+  rootDict.Set("fields", std::move(fieldList));
 
   std::string jsonString;
   base::JSONWriter::Write(rootDict, &jsonString);
@@ -287,7 +290,7 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
     passwordManager_.reset(new PasswordManager(passwordManagerClient_.get()));
     passwordManagerDriver_.reset(new IOSChromePasswordManagerDriver(self));
     if (experimental_flags::IsPasswordGenerationEnabled() &&
-        !passwordManagerClient_->IsOffTheRecord()) {
+        !passwordManagerClient_->IsIncognito()) {
       passwordGenerationManager_.reset(new PasswordGenerationManager(
           passwordManagerClient_.get(), passwordManagerDriver_.get()));
       passwordGenerationAgent_.reset([[PasswordGenerationAgent alloc]
@@ -345,13 +348,11 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
             const std::vector<autofill::PasswordForm>& forms) {
     for (const auto& form : forms) {
       autofill::PasswordFormFillData formData;
-      autofill::PasswordFormMap matches;
+      std::map<base::string16, const autofill::PasswordForm*> matches;
       // Initialize |matches| to satisfy the expectation from
       // InitPasswordFormFillData() that the preferred match (3rd parameter)
       // should be one of the |matches|.
-      auto scoped_form = base::WrapUnique(new autofill::PasswordForm(form));
-      matches.insert(
-          std::make_pair(form.username_value, std::move(scoped_form)));
+      matches.insert(std::make_pair(form.username_value, &form));
       autofill::InitPasswordFormFillData(form, matches, &form, false, false,
                                          &formData);
       [self fillPasswordForm:formData
@@ -365,7 +366,7 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 #pragma mark -
 #pragma mark CRWWebStateObserver
 
-- (void)webStateDidLoadPage:(web::WebState*)webState {
+- (void)webState:(web::WebState*)webState didLoadPageWithSuccess:(BOOL)success {
   // Clear per-page state.
   formData_.reset();
 
@@ -443,10 +444,11 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 }
 
 - (void)getPasswordForms:(std::vector<autofill::PasswordForm>*)forms
-           fromFormsJSON:(NSString*)jsonString
+           fromFormsJSON:(NSString*)JSONNSString
                  pageURL:(const GURL&)pageURL {
   DCHECK(forms);
-  if (![jsonString length]) {
+  std::string JSONString = base::SysNSStringToUTF8(JSONNSString);
+  if (JSONString.empty()) {
     VLOG(1) << "Error in password controller javascript.";
     return;
   }
@@ -454,10 +456,10 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
   int errorCode = 0;
   std::string errorMessage;
   std::unique_ptr<base::Value> jsonData(base::JSONReader::ReadAndReturnError(
-      std::string([jsonString UTF8String]), false, &errorCode, &errorMessage));
-  if (errorCode || !jsonData || !jsonData->IsType(base::Value::TYPE_LIST)) {
+      JSONString, false, &errorCode, &errorMessage));
+  if (errorCode || !jsonData || !jsonData->IsType(base::Value::Type::LIST)) {
     VLOG(1) << "JSON parse error " << errorMessage
-            << " JSON string: " << [jsonString UTF8String];
+            << " JSON string: " << JSONString;
     return;
   }
 
@@ -508,33 +510,34 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 }
 
 - (BOOL)getPasswordForm:(autofill::PasswordForm*)form
-   fromPasswordFormJSON:(NSString*)jsonString
-                pageURL:(const GURL&)pageURL {
+    fromPasswordFormJSON:(NSString*)JSONNSString
+                 pageURL:(const GURL&)pageURL {
   DCHECK(form);
   // There is no identifiable password form on the page.
-  if ([jsonString isEqualToString:@"noPasswordsFound"])
+  if ([JSONNSString isEqualToString:@"noPasswordsFound"])
     return NO;
 
   int errorCode = 0;
   std::string errorMessage;
-  std::unique_ptr<const base::Value> jsonData(
-      base::JSONReader::ReadAndReturnError(std::string([jsonString UTF8String]),
-                                           false, &errorCode, &errorMessage));
+  std::string JSONString = base::SysNSStringToUTF8(JSONNSString);
+  std::unique_ptr<const base::Value> JSONData(
+      base::JSONReader::ReadAndReturnError(JSONString, false, &errorCode,
+                                           &errorMessage));
 
   // If the the JSON string contains null, there is no identifiable password
   // form on the page.
-  if (!errorCode && !jsonData) {
+  if (!errorCode && !JSONData) {
     return NO;
   }
 
-  if (errorCode || !jsonData->IsType(base::Value::TYPE_DICTIONARY)) {
+  if (errorCode || !JSONData->IsType(base::Value::Type::DICTIONARY)) {
     VLOG(1) << "JSON parse error " << errorMessage
-            << " JSON string: " << [jsonString UTF8String];
+            << " JSON string: " << JSONString;
     return NO;
   }
 
   const base::DictionaryValue* passwordJsonData;
-  return jsonData->GetAsDictionary(&passwordJsonData) &&
+  return JSONData->GetAsDictionary(&passwordJsonData) &&
          [self getPasswordForm:form
                 fromDictionary:passwordJsonData
                        pageURL:pageURL];
@@ -547,6 +550,15 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
     return;
 
   if (!forms.empty()) {
+    // Notify web_state about password forms, so that this can be taken into
+    // account for the security state.
+    if (webStateObserverBridge_) {
+      web::WebState* web_state = webStateObserverBridge_->web_state();
+      if (web_state && !web::IsOriginSecure(web_state->GetLastCommittedURL())) {
+        web_state->OnPasswordInputShownOnHttp();
+      }
+    }
+
     // Invoke the password manager callback to autofill password forms
     // on the loaded page.
     passwordManager_->OnPasswordFormsParsed(passwordManagerDriver_.get(),
@@ -847,12 +859,11 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 
   bool isSmartLockBrandingEnabled = false;
   if (self.browserState) {
-    sync_driver::SyncService* sync_service =
+    syncer::SyncService* sync_service =
         IOSChromeProfileSyncServiceFactory::GetForBrowserState(
             self.browserState);
     isSmartLockBrandingEnabled =
-        password_bubble_experiment::IsSmartLockBrandingSavePromptEnabled(
-            sync_service);
+        password_bubble_experiment::IsSmartLockUser(sync_service);
   }
   infobars::InfoBarManager* infoBarManager =
       InfoBarManagerImpl::FromWebState(webStateObserverBridge_->web_state());

@@ -95,6 +95,7 @@ OptionsWebUITest.prototype = {
       '#privacy-explanation > A',
       '#languages-section > .settings-row > A',
       '#cloudprint-options-mdns > .settings-row > A',
+      '#cups-printers-section > .settings-row > A',
       '#do-not-track-confirm-overlay > .action-area > .hbox.stretch > A',
     ];
 
@@ -126,9 +127,9 @@ function waitUntilHidden(targets) {
   function isHidden(el) { return el.hidden; }
   function ensureTransition(el) { ensureTransitionEndEvent(el, 500); }
 
-  document.addEventListener('webkitTransitionEnd', function f(e) {
+  document.addEventListener('transitionend', function f(e) {
     if (targets.indexOf(e.target) >= 0 && targets.every(isHidden)) {
-      document.removeEventListener(f, 'webkitTransitionEnd');
+      document.removeEventListener(f, 'transitionend');
       testDone();
     }
   });
@@ -311,11 +312,12 @@ TEST_F('OptionsWebUITest', 'EnableAndDisableDoNotTrack', function() {
   dntCheckbox.click();
 });
 
+// Fails on chromeos, http://crbug.com/660867
 // Verify that preventDefault() is called on 'Enter' keydown events that trigger
 // the default button. If this doesn't happen, other elements that may get
 // focus (by the overlay closing for instance), will execute in addition to the
 // default button. See crbug.com/268336.
-TEST_F('OptionsWebUITest', 'EnterPreventsDefault', function() {
+TEST_F('OptionsWebUITest', 'DISABLED_EnterPreventsDefault', function() {
   var page = HomePageOverlay.getInstance();
   PageManager.showPageByName(page.name);
   var event = new KeyboardEvent('keydown', {
@@ -345,7 +347,7 @@ TEST_F('OptionsWebUITest', 'DISABLED_OverlayShowDoesntShift', function() {
   var frozenPages = document.getElementsByClassName('frozen');  // Gets updated.
   expectEquals(0, frozenPages.length);
 
-  document.addEventListener('webkitTransitionEnd', function(e) {
+  document.addEventListener('transitionend', function(e) {
     if (e.target != overlay)
       return;
 

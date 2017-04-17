@@ -5,13 +5,13 @@
 #ifndef CC_IPC_COMPOSITOR_FRAME_METADATA_STRUCT_TRAITS_H_
 #define CC_IPC_COMPOSITOR_FRAME_METADATA_STRUCT_TRAITS_H_
 
-#include "cc/ipc/compositor_frame_metadata.mojom.h"
+#include "cc/ipc/compositor_frame_metadata.mojom-shared.h"
 #include "cc/output/compositor_frame_metadata.h"
 
 namespace mojo {
 
 template <>
-struct StructTraits<cc::mojom::CompositorFrameMetadata,
+struct StructTraits<cc::mojom::CompositorFrameMetadataDataView,
                     cc::CompositorFrameMetadata> {
   static float device_scale_factor(
       const cc::CompositorFrameMetadata& metadata) {
@@ -57,19 +57,33 @@ struct StructTraits<cc::mojom::CompositorFrameMetadata,
     return metadata.root_overflow_y_hidden;
   }
 
+  static bool may_contain_video(const cc::CompositorFrameMetadata& metadata) {
+    return metadata.may_contain_video;
+  }
+
   static bool is_resourceless_software_draw_with_scroll_or_animation(
       const cc::CompositorFrameMetadata& metadata) {
     return metadata.is_resourceless_software_draw_with_scroll_or_animation;
   }
 
-  static gfx::Vector2dF location_bar_offset(
+  static float top_controls_height(
       const cc::CompositorFrameMetadata& metadata) {
-    return metadata.location_bar_offset;
+    return metadata.top_controls_height;
   }
 
-  static gfx::Vector2dF location_bar_content_translation(
+  static float top_controls_shown_ratio(
       const cc::CompositorFrameMetadata& metadata) {
-    return metadata.location_bar_content_translation;
+    return metadata.top_controls_shown_ratio;
+  }
+
+  static float bottom_controls_height(
+      const cc::CompositorFrameMetadata& metadata) {
+    return metadata.bottom_controls_height;
+  }
+
+  static float bottom_controls_shown_ratio(
+      const cc::CompositorFrameMetadata& metadata) {
+    return metadata.bottom_controls_shown_ratio;
   }
 
   static uint32_t root_background_color(
@@ -87,14 +101,33 @@ struct StructTraits<cc::mojom::CompositorFrameMetadata,
     return metadata.latency_info;
   }
 
-  static const std::vector<uint32_t>& satisfies_sequences(
-      const cc::CompositorFrameMetadata& metadata) {
-    return metadata.satisfies_sequences;
-  }
-
   static const std::vector<cc::SurfaceId>& referenced_surfaces(
       const cc::CompositorFrameMetadata& metadata) {
     return metadata.referenced_surfaces;
+  }
+
+  static const std::vector<cc::SurfaceId>& embedded_surfaces(
+      const cc::CompositorFrameMetadata& metadata) {
+    return metadata.embedded_surfaces;
+  }
+
+  static bool can_activate_before_dependencies(
+      const cc::CompositorFrameMetadata& metadata) {
+    return metadata.can_activate_before_dependencies;
+  }
+
+  static uint32_t content_source_id(
+      const cc::CompositorFrameMetadata& metadata) {
+    return metadata.content_source_id;
+  }
+
+  static const cc::BeginFrameAck& begin_frame_ack(
+      const cc::CompositorFrameMetadata& metadata) {
+    return metadata.begin_frame_ack;
+  }
+
+  static uint32_t frame_token(const cc::CompositorFrameMetadata& metadata) {
+    return metadata.frame_token;
   }
 
   static bool Read(cc::mojom::CompositorFrameMetadataDataView data,

@@ -116,7 +116,7 @@ void ShillIPConfigClientImpl::SetProperty(
   writer.AppendString(name);
   // IPConfig supports writing basic type and string array properties.
   switch (value.GetType()) {
-    case base::Value::TYPE_LIST: {
+    case base::Value::Type::LIST: {
       const base::ListValue* list_value = NULL;
       value.GetAsList(&list_value);
       dbus::MessageWriter variant_writer(NULL);
@@ -126,19 +126,19 @@ void ShillIPConfigClientImpl::SetProperty(
       for (base::ListValue::const_iterator it = list_value->begin();
            it != list_value->end();
            ++it) {
-        DLOG_IF(ERROR, (*it)->GetType() != base::Value::TYPE_STRING)
-            << "Unexpected type " << (*it)->GetType();
+        DLOG_IF(ERROR, it->GetType() != base::Value::Type::STRING)
+            << "Unexpected type " << it->GetType();
         std::string str;
-        (*it)->GetAsString(&str);
+        it->GetAsString(&str);
         array_writer.AppendString(str);
       }
       variant_writer.CloseContainer(&array_writer);
       writer.CloseContainer(&variant_writer);
     }
-    case base::Value::TYPE_BOOLEAN:
-    case base::Value::TYPE_INTEGER:
-    case base::Value::TYPE_DOUBLE:
-    case base::Value::TYPE_STRING:
+    case base::Value::Type::BOOLEAN:
+    case base::Value::Type::INTEGER:
+    case base::Value::Type::DOUBLE:
+    case base::Value::Type::STRING:
       dbus::AppendBasicTypeValueDataAsVariant(&writer, value);
       break;
     default:

@@ -11,9 +11,9 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import org.chromium.chrome.R;
-import org.chromium.sync.AndroidSyncSettings;
-import org.chromium.sync.signin.AccountManagerHelper;
-import org.chromium.sync.signin.ChromeSigninController;
+import org.chromium.components.signin.AccountManagerHelper;
+import org.chromium.components.signin.ChromeSigninController;
+import org.chromium.components.sync.AndroidSyncSettings;
 
 /**
  * A preference that displays the account currently being synced and allows the user to choose a new
@@ -47,12 +47,11 @@ public class SyncedAccountPreference extends ListPreference {
             // signed in account
         }
 
-        Account[] accounts = AccountManagerHelper.get(getContext()).getGoogleAccounts();
+        Account[] accounts = AccountManagerHelper.get().getGoogleAccounts();
         String[] accountNames = new String[accounts.length];
         String[] accountValues = new String[accounts.length];
 
-        String signedInAccountName =
-                ChromeSigninController.get(getContext()).getSignedInAccountName();
+        String signedInAccountName = ChromeSigninController.get().getSignedInAccountName();
         String signedInSettingsKey = "";
 
         for (int i = 0; i < accounts.length; ++i) {

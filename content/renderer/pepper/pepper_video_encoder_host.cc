@@ -7,8 +7,10 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/shared_memory.h"
 #include "base/numerics/safe_math.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "content/common/pepper_file_util.h"
 #include "content/public/renderer/renderer_ppapi_host.h"
@@ -401,16 +403,16 @@ void PepperVideoEncoderHost::RequireBitstreamBuffers(
       break;
     }
 
-    shm_buffers_.push_back(new ShmBuffer(i, std::move(shm)));
+    shm_buffers_.push_back(base::MakeUnique<ShmBuffer>(i, std::move(shm)));
   }
 
   // Feed buffers to the encoder.
   std::vector<SerializedHandle> handles;
-  for (size_t i = 0; i < shm_buffers_.size(); ++i) {
-    encoder_->UseOutputBitstreamBuffer(shm_buffers_[i]->ToBitstreamBuffer());
+  for (const auto& buffer : shm_buffers_) {
+    encoder_->UseOutputBitstreamBuffer(buffer->ToBitstreamBuffer());
     handles.push_back(SerializedHandle(
         renderer_ppapi_host_->ShareSharedMemoryHandleWithRemote(
-            shm_buffers_[i]->shm->handle()),
+            buffer->shm->handle()),
         output_buffer_size));
   }
 
@@ -523,8 +525,7 @@ bool PepperVideoEncoderHost::EnsureGpuChannel() {
   // There is no guarantee that we have a 3D context to work with. So
   // we create a dummy command buffer to communicate with the gpu process.
   scoped_refptr<gpu::GpuChannelHost> channel =
-      RenderThreadImpl::current()->EstablishGpuChannelSync(
-          CAUSE_FOR_GPU_LAUNCH_PEPPERVIDEOENCODERACCELERATOR_INITIALIZE);
+      RenderThreadImpl::current()->EstablishGpuChannelSync();
   if (!channel)
     return false;
 

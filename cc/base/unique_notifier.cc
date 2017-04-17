@@ -23,26 +23,33 @@ UniqueNotifier::~UniqueNotifier() {
 }
 
 void UniqueNotifier::Cancel() {
+  base::AutoLock hold(lock_);
   notification_pending_ = false;
 }
 
 void UniqueNotifier::Schedule() {
+  base::AutoLock hold(lock_);
   if (notification_pending_)
     return;
 
   task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&UniqueNotifier::Notify, weak_ptr_factory_.GetWeakPtr()));
+      base::BindOnce(&UniqueNotifier::Notify, weak_ptr_factory_.GetWeakPtr()));
   notification_pending_ = true;
 }
 
 void UniqueNotifier::Notify() {
-  if (!notification_pending_)
-    return;
+  // Scope to release |lock_| before running the closure.
+  {
+    base::AutoLock hold(lock_);
+    if (!notification_pending_)
+      return;
 
-  // Note that the order here is important in case closure schedules another
-  // run.
-  notification_pending_ = false;
+    // Note that the order here is important in case closure schedules another
+    // run.
+    notification_pending_ = false;
+  }
+
   closure_.Run();
 }
 

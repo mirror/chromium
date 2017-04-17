@@ -5,7 +5,7 @@
 #ifndef BlockPainter_h
 #define BlockPainter_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -14,36 +14,43 @@ class InlineBox;
 class LayoutBlock;
 class LayoutBox;
 class LayoutFlexibleBox;
-class LayoutObject;
 class LayoutPoint;
-class LayoutRect;
 
 class BlockPainter {
-    STACK_ALLOCATED();
-public:
-    BlockPainter(const LayoutBlock& block) : m_layoutBlock(block) { }
+  STACK_ALLOCATED();
 
-    void paint(const PaintInfo&, const LayoutPoint& paintOffset);
-    void paintObject(const PaintInfo&, const LayoutPoint&);
-    void paintContents(const PaintInfo&, const LayoutPoint&);
-    void paintChildren(const PaintInfo&, const LayoutPoint&);
-    void paintChild(const LayoutBox&, const PaintInfo&, const LayoutPoint&);
-    void paintOverflowControlsIfNeeded(const PaintInfo&, const LayoutPoint&);
+ public:
+  BlockPainter(const LayoutBlock& block) : layout_block_(block) {}
 
-    // See ObjectPainter::paintAllPhasesAtomically().
-    void paintAllChildPhasesAtomically(const LayoutBox&, const PaintInfo&, const LayoutPoint&);
-    static void paintChildrenOfFlexibleBox(const LayoutFlexibleBox&, const PaintInfo&, const LayoutPoint& paintOffset);
-    static void paintInlineBox(const InlineBox&, const PaintInfo&, const LayoutPoint& paintOffset);
+  void Paint(const PaintInfo&, const LayoutPoint& paint_offset);
+  void PaintObject(const PaintInfo&, const LayoutPoint&);
+  void PaintContents(const PaintInfo&, const LayoutPoint&);
+  void PaintChildren(const PaintInfo&, const LayoutPoint&);
+  void PaintChild(const LayoutBox&, const PaintInfo&, const LayoutPoint&);
+  void PaintOverflowControlsIfNeeded(const PaintInfo&, const LayoutPoint&);
 
-    // The adjustedPaintOffset should include the location (offset) of the object itself.
-    bool intersectsPaintRect(const PaintInfo&, const LayoutPoint& adjustedPaintOffset) const;
+  // See ObjectPainter::paintAllPhasesAtomically().
+  void PaintAllChildPhasesAtomically(const LayoutBox&,
+                                     const PaintInfo&,
+                                     const LayoutPoint&);
+  static void PaintChildrenOfFlexibleBox(const LayoutFlexibleBox&,
+                                         const PaintInfo&,
+                                         const LayoutPoint& paint_offset);
+  static void PaintInlineBox(const InlineBox&,
+                             const PaintInfo&,
+                             const LayoutPoint& paint_offset);
 
-private:
-    void paintCarets(const PaintInfo&, const LayoutPoint&);
+  // The adjustedPaintOffset should include the location (offset) of the object
+  // itself.
+  bool IntersectsPaintRect(const PaintInfo&,
+                           const LayoutPoint& adjusted_paint_offset) const;
 
-    const LayoutBlock& m_layoutBlock;
+ private:
+  void PaintCarets(const PaintInfo&, const LayoutPoint&);
+
+  const LayoutBlock& layout_block_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BlockPainter_h
+#endif  // BlockPainter_h

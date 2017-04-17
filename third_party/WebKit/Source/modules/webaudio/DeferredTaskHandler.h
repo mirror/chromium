@@ -10,16 +10,17 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #ifndef DeferredTaskHandler_h
@@ -27,14 +28,14 @@
 
 #include "modules/ModulesExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/HashSet.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
-#include "wtf/ThreadSafeRefCounted.h"
-#include "wtf/Threading.h"
-#include "wtf/ThreadingPrimitives.h"
-#include "wtf/Vector.h"
-#include "wtf/build_config.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/ThreadSafeRefCounted.h"
+#include "platform/wtf/Threading.h"
+#include "platform/wtf/ThreadingPrimitives.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/build_config.h"
 
 namespace blink {
 
@@ -46,159 +47,163 @@ class AudioSummingJunction;
 
 // DeferredTaskHandler manages the major part of pre- and post- rendering tasks,
 // and provides a lock mechanism against the audio rendering graph. A
-// DeferredTaskHandler object is created when an BaseAudioContext object is created.
+// DeferredTaskHandler object is created when an BaseAudioContext object is
+// created.
 //
-// DeferredTaskHandler outlives the BaseAudioContext only if all of the following
-// conditions match:
+// DeferredTaskHandler outlives the BaseAudioContext only if all of the
+// following conditions match:
 // - An audio rendering thread is running,
 // - It is requested to stop,
 // - The audio rendering thread calls requestToDeleteHandlersOnMainThread(),
 // - It posts a task of deleteHandlersOnMainThread(), and
 // - GC happens and it collects the BaseAudioContext before the task execution.
 //
-class MODULES_EXPORT DeferredTaskHandler final : public ThreadSafeRefCounted<DeferredTaskHandler> {
-public:
-    static PassRefPtr<DeferredTaskHandler> create();
-    ~DeferredTaskHandler();
+class MODULES_EXPORT DeferredTaskHandler final
+    : public ThreadSafeRefCounted<DeferredTaskHandler> {
+ public:
+  static PassRefPtr<DeferredTaskHandler> Create();
+  ~DeferredTaskHandler();
 
-    void handleDeferredTasks();
-    void contextWillBeDestroyed();
+  void HandleDeferredTasks();
+  void ContextWillBeDestroyed();
 
-    // BaseAudioContext can pull node(s) at the end of each render quantum even when
-    // they are not connected to any downstream nodes.  These two methods are
-    // called by the nodes who want to add/remove themselves into/from the
-    // automatic pull lists.
-    void addAutomaticPullNode(AudioHandler*);
-    void removeAutomaticPullNode(AudioHandler*);
-    // Called right before handlePostRenderTasks() to handle nodes which need to
-    // be pulled even when they are not connected to anything.
-    void processAutomaticPullNodes(size_t framesToProcess);
+  // BaseAudioContext can pull node(s) at the end of each render quantum even
+  // when they are not connected to any downstream nodes.  These two methods are
+  // called by the nodes who want to add/remove themselves into/from the
+  // automatic pull lists.
+  void AddAutomaticPullNode(AudioHandler*);
+  void RemoveAutomaticPullNode(AudioHandler*);
+  // Called right before handlePostRenderTasks() to handle nodes which need to
+  // be pulled even when they are not connected to anything.
+  void ProcessAutomaticPullNodes(size_t frames_to_process);
 
-    // Keep track of AudioNode's that have their channel count mode changed. We
-    // process the changes in the post rendering phase.
-    void addChangedChannelCountMode(AudioHandler*);
-    void removeChangedChannelCountMode(AudioHandler*);
+  // Keep track of AudioNode's that have their channel count mode changed. We
+  // process the changes in the post rendering phase.
+  void AddChangedChannelCountMode(AudioHandler*);
+  void RemoveChangedChannelCountMode(AudioHandler*);
 
-    // Keep track of AudioNode's that have their channel interpretation
-    // changed. We process the changes in the post rendering phase.
-    void addChangedChannelInterpretation(AudioHandler*);
-    void removeChangedChannelInterpretation(AudioHandler*);
+  // Keep track of AudioNode's that have their channel interpretation
+  // changed. We process the changes in the post rendering phase.
+  void AddChangedChannelInterpretation(AudioHandler*);
+  void RemoveChangedChannelInterpretation(AudioHandler*);
 
-    // Only accessed when the graph lock is held.
-    void markSummingJunctionDirty(AudioSummingJunction*);
-    // Only accessed when the graph lock is held. Must be called on the main thread.
-    void removeMarkedSummingJunction(AudioSummingJunction*);
+  // Only accessed when the graph lock is held.
+  void MarkSummingJunctionDirty(AudioSummingJunction*);
+  // Only accessed when the graph lock is held. Must be called on the main
+  // thread.
+  void RemoveMarkedSummingJunction(AudioSummingJunction*);
 
-    void markAudioNodeOutputDirty(AudioNodeOutput*);
-    void removeMarkedAudioNodeOutput(AudioNodeOutput*);
+  void MarkAudioNodeOutputDirty(AudioNodeOutput*);
+  void RemoveMarkedAudioNodeOutput(AudioNodeOutput*);
 
-    // In AudioNode::breakConnection() and deref(), a tryLock() is used for
-    // calling actual processing, but if it fails keep track here.
-    void addDeferredBreakConnection(AudioHandler&);
-    void breakConnections();
+  // In AudioNode::breakConnection() and deref(), a tryLock() is used for
+  // calling actual processing, but if it fails keep track here.
+  void AddDeferredBreakConnection(AudioHandler&);
+  void BreakConnections();
 
-    void addRenderingOrphanHandler(PassRefPtr<AudioHandler>);
-    void requestToDeleteHandlersOnMainThread();
-    void clearHandlersToBeDeleted();
+  void AddRenderingOrphanHandler(PassRefPtr<AudioHandler>);
+  void RequestToDeleteHandlersOnMainThread();
+  void ClearHandlersToBeDeleted();
 
-    //
-    // Thread Safety and Graph Locking:
-    //
-    void setAudioThreadToCurrentThread();
-    ThreadIdentifier audioThread() const { return acquireLoad(&m_audioThread); }
+  //
+  // Thread Safety and Graph Locking:
+  //
+  void SetAudioThreadToCurrentThread();
+  ThreadIdentifier AudioThread() const { return AcquireLoad(&audio_thread_); }
 
-    // TODO(hongchan): Use no-barrier load here. (crbug.com/247328)
-    //
-    // It is okay to use a relaxed (no-barrier) load here. Because the data
-    // referenced by m_audioThread is not actually being used, thus we do not
-    // need a barrier between the load of m_audioThread and of that data.
-    bool isAudioThread() const { return currentThread() == acquireLoad(&m_audioThread); }
+  // TODO(hongchan): Use no-barrier load here. (crbug.com/247328)
+  //
+  // It is okay to use a relaxed (no-barrier) load here. Because the data
+  // referenced by m_audioThread is not actually being used, thus we do not
+  // need a barrier between the load of m_audioThread and of that data.
+  bool IsAudioThread() const {
+    return CurrentThread() == AcquireLoad(&audio_thread_);
+  }
 
-    void lock();
-    bool tryLock();
-    void unlock();
+  void lock();
+  bool TryLock();
+  void unlock();
 
-    // This locks the audio render thread for OfflineAudioContext rendering.
-    // MUST NOT be used in the real-time audio context.
-    void offlineLock();
+  // This locks the audio render thread for OfflineAudioContext rendering.
+  // MUST NOT be used in the real-time audio context.
+  void OfflineLock();
 
-#if ENABLE(ASSERT)
-    // Returns true if this thread owns the context's lock.
-    bool isGraphOwner();
-#endif
+  // Returns true if this thread owns the context's lock.
+  bool IsGraphOwner();
 
-    class MODULES_EXPORT AutoLocker {
-        STACK_ALLOCATED();
-    public:
-        explicit AutoLocker(DeferredTaskHandler& handler)
-            : m_handler(handler)
-        {
-            m_handler.lock();
-        }
-        explicit AutoLocker(BaseAudioContext*);
+  class MODULES_EXPORT AutoLocker {
+    STACK_ALLOCATED();
 
-        ~AutoLocker() { m_handler.unlock(); }
+   public:
+    explicit AutoLocker(DeferredTaskHandler& handler) : handler_(handler) {
+      handler_.lock();
+    }
+    explicit AutoLocker(BaseAudioContext*);
 
-    private:
-        DeferredTaskHandler& m_handler;
-    };
+    ~AutoLocker() { handler_.unlock(); }
 
-    // This is for locking offline render thread (which is considered as the
-    // audio thread) with unlocking on self-destruction at the end of the scope.
-    // Also note that it uses lock() rather than tryLock() because the timing
-    // MUST be accurate on offline rendering.
-    class MODULES_EXPORT OfflineGraphAutoLocker {
-        STACK_ALLOCATED();
-    public:
-        explicit OfflineGraphAutoLocker(OfflineAudioContext*);
+   private:
+    DeferredTaskHandler& handler_;
+  };
 
-        ~OfflineGraphAutoLocker() { m_handler.unlock(); }
+  // This is for locking offline render thread (which is considered as the
+  // audio thread) with unlocking on self-destruction at the end of the scope.
+  // Also note that it uses lock() rather than tryLock() because the timing
+  // MUST be accurate on offline rendering.
+  class MODULES_EXPORT OfflineGraphAutoLocker {
+    STACK_ALLOCATED();
 
-    private:
-        DeferredTaskHandler& m_handler;
-    };
+   public:
+    explicit OfflineGraphAutoLocker(OfflineAudioContext*);
 
-private:
-    DeferredTaskHandler();
-    void updateAutomaticPullNodes();
-    void updateChangedChannelCountMode();
-    void updateChangedChannelInterpretation();
-    void handleDirtyAudioSummingJunctions();
-    void handleDirtyAudioNodeOutputs();
-    void deleteHandlersOnMainThread();
+    ~OfflineGraphAutoLocker() { handler_.unlock(); }
 
-    // For the sake of thread safety, we maintain a seperate Vector of automatic
-    // pull nodes for rendering in m_renderingAutomaticPullNodes.  It will be
-    // copied from m_automaticPullNodes by updateAutomaticPullNodes() at the
-    // very start or end of the rendering quantum.
-    HashSet<AudioHandler*> m_automaticPullNodes;
-    Vector<AudioHandler*> m_renderingAutomaticPullNodes;
-    // m_automaticPullNodesNeedUpdating keeps track if m_automaticPullNodes is modified.
-    bool m_automaticPullNodesNeedUpdating;
+   private:
+    DeferredTaskHandler& handler_;
+  };
 
-    // Collection of nodes where the channel count mode has changed. We want the
-    // channel count mode to change in the pre- or post-rendering phase so as
-    // not to disturb the running audio thread.
-    HashSet<AudioHandler*> m_deferredCountModeChange;
+ private:
+  DeferredTaskHandler();
+  void UpdateAutomaticPullNodes();
+  void UpdateChangedChannelCountMode();
+  void UpdateChangedChannelInterpretation();
+  void HandleDirtyAudioSummingJunctions();
+  void HandleDirtyAudioNodeOutputs();
+  void DeleteHandlersOnMainThread();
 
-    HashSet<AudioHandler*> m_deferredChannelInterpretationChange;
+  // For the sake of thread safety, we maintain a seperate Vector of automatic
+  // pull nodes for rendering in m_renderingAutomaticPullNodes.  It will be
+  // copied from m_automaticPullNodes by updateAutomaticPullNodes() at the
+  // very start or end of the rendering quantum.
+  HashSet<AudioHandler*> automatic_pull_nodes_;
+  Vector<AudioHandler*> rendering_automatic_pull_nodes_;
+  // m_automaticPullNodesNeedUpdating keeps track if m_automaticPullNodes is
+  // modified.
+  bool automatic_pull_nodes_need_updating_;
 
-    // These two HashSet must be accessed only when the graph lock is held.
-    // These raw pointers are safe because their destructors unregister them.
-    HashSet<AudioSummingJunction*> m_dirtySummingJunctions;
-    HashSet<AudioNodeOutput*> m_dirtyAudioNodeOutputs;
+  // Collection of nodes where the channel count mode has changed. We want the
+  // channel count mode to change in the pre- or post-rendering phase so as
+  // not to disturb the running audio thread.
+  HashSet<AudioHandler*> deferred_count_mode_change_;
 
-    // Only accessed in the audio thread.
-    Vector<AudioHandler*> m_deferredBreakConnectionList;
+  HashSet<AudioHandler*> deferred_channel_interpretation_change_;
 
-    Vector<RefPtr<AudioHandler>> m_renderingOrphanHandlers;
-    Vector<RefPtr<AudioHandler>> m_deletableOrphanHandlers;
+  // These two HashSet must be accessed only when the graph lock is held.
+  // These raw pointers are safe because their destructors unregister them.
+  HashSet<AudioSummingJunction*> dirty_summing_junctions_;
+  HashSet<AudioNodeOutput*> dirty_audio_node_outputs_;
 
-    // Graph locking.
-    RecursiveMutex m_contextGraphMutex;
-    volatile ThreadIdentifier m_audioThread;
+  // Only accessed in the audio thread.
+  Vector<AudioHandler*> deferred_break_connection_list_;
+
+  Vector<RefPtr<AudioHandler>> rendering_orphan_handlers_;
+  Vector<RefPtr<AudioHandler>> deletable_orphan_handlers_;
+
+  // Graph locking.
+  RecursiveMutex context_graph_mutex_;
+  volatile ThreadIdentifier audio_thread_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DeferredTaskHandler_h
+#endif  // DeferredTaskHandler_h

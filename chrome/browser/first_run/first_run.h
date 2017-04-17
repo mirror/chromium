@@ -20,6 +20,10 @@ class CommandLine;
 class FilePath;
 }
 
+namespace content {
+class WebContents;
+}
+
 namespace user_prefs {
 class PrefRegistrySyncable;
 }
@@ -71,13 +75,9 @@ struct MasterPrefs {
   // remove items from here which are being stored temporarily only to be later
   // dumped into local_state. Also see related TODO in chrome_browser_main.cc.
 
-  int ping_delay;
-  bool homepage_defined;
-  int do_import_items;
-  int dont_import_items;
-  bool make_chrome_default_for_user;
-  bool suppress_first_run_default_browser_prompt;
-  bool welcome_page_on_os_upgrade_enabled;
+  bool make_chrome_default_for_user = false;
+  bool suppress_first_run_default_browser_prompt = false;
+  bool welcome_page_on_os_upgrade_enabled = true;
   std::vector<GURL> new_tabs;
   std::vector<GURL> bookmarks;
   std::string import_bookmarks_path;
@@ -87,7 +87,11 @@ struct MasterPrefs {
   std::string suppress_default_browser_prompt_for_version;
 };
 
-// Returns true if this is the first time chrome is run for this user.
+void RegisterProfilePrefs(
+    user_prefs::PrefRegistrySyncable* registry);
+
+// Returns true if Chrome should behave as if this is the first time Chrome is
+// run for this user.
 bool IsChromeFirstRun();
 
 #if defined(OS_MACOSX)
@@ -111,12 +115,6 @@ bool IsMetricsReportingOptIn();
 // (http://crbug.com/264694).
 void CreateSentinelIfNeeded();
 
-// Get RLZ ping delay pref name.
-std::string GetPingDelayPrefName();
-
-// Register user preferences used by the MasterPrefs structure.
-void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
-
 // Sets the kShowFirstRunBubbleOption local state pref so that the browser
 // shows the bubble once the main message loop gets going (or refrains from
 // showing the bubble, if |show_bubble| is not FIRST_RUN_BUBBLE_SHOW).
@@ -135,6 +133,13 @@ void SetShouldShowWelcomePage();
 // SetShouldShowWelcomePage() is called.
 bool ShouldShowWelcomePage();
 
+// Returns true if |contents| hosts one of the welcome pages.
+bool IsOnWelcomePage(content::WebContents* contents);
+
+// Iterates over the given tabs, replacing "magic words" designated for
+// use in Master Preferences files with corresponding URLs.
+std::vector<GURL> ProcessMasterPrefsTabs(const std::vector<GURL>& tabs);
+
 // Sets a flag that will cause ShouldDoPersonalDataManagerFirstRun()
 // to return true exactly once, so that the browser loads
 // PersonalDataManager once the main message loop gets going.
@@ -150,13 +155,10 @@ bool ShouldDoPersonalDataManagerFirstRun();
 // Log a metric for the "FirstRun.SearchEngineBubble" histogram.
 void LogFirstRunMetric(FirstRunBubbleMetric metric);
 
-// Automatically import history and home page (and search engine, if
-// ShouldShowSearchEngineDialog is true). Also imports bookmarks from file if
+// Automatically imports items requested by |profile|'s configuration (sum of
+// policies and master prefs). Also imports bookmarks from file if
 // |import_bookmarks_path| is not empty.
 void AutoImport(Profile* profile,
-                bool homepage_defined,
-                int import_items,
-                int dont_import_items,
                 const std::string& import_bookmarks_path);
 
 // Does remaining first run tasks. This can pop the first run consent dialog on

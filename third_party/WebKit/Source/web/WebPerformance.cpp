@@ -34,191 +34,185 @@
 
 namespace blink {
 
-static double millisecondsToSeconds(unsigned long long milliseconds)
-{
-    return static_cast<double>(milliseconds / 1000.0);
+static double MillisecondsToSeconds(unsigned long long milliseconds) {
+  return static_cast<double>(milliseconds / 1000.0);
 }
 
-void WebPerformance::reset()
-{
-    m_private.reset();
+void WebPerformance::Reset() {
+  private_.Reset();
 }
 
-void WebPerformance::assign(const WebPerformance& other)
-{
-    m_private = other.m_private;
+void WebPerformance::Assign(const WebPerformance& other) {
+  private_ = other.private_;
 }
 
-WebNavigationType WebPerformance::navigationType() const
-{
-    switch (m_private->navigation()->type()) {
-    case PerformanceNavigation::TYPE_NAVIGATE:
-        return WebNavigationTypeOther;
-    case PerformanceNavigation::TYPE_RELOAD:
-        return WebNavigationTypeReload;
-    case PerformanceNavigation::TYPE_BACK_FORWARD:
-        return WebNavigationTypeBackForward;
-    case PerformanceNavigation::TYPE_RESERVED:
-        return WebNavigationTypeOther;
-    }
-    NOTREACHED();
-    return WebNavigationTypeOther;
+WebNavigationType WebPerformance::GetNavigationType() const {
+  switch (private_->navigation()->type()) {
+    case PerformanceNavigation::kTypeNavigate:
+      return kWebNavigationTypeOther;
+    case PerformanceNavigation::kTypeReload:
+      return kWebNavigationTypeReload;
+    case PerformanceNavigation::kTypeBackForward:
+      return kWebNavigationTypeBackForward;
+    case PerformanceNavigation::kTypeReserved:
+      return kWebNavigationTypeOther;
+  }
+  NOTREACHED();
+  return kWebNavigationTypeOther;
 }
 
-double WebPerformance::navigationStart() const
-{
-    return millisecondsToSeconds(m_private->timing()->navigationStart());
+double WebPerformance::NavigationStart() const {
+  return MillisecondsToSeconds(private_->timing()->navigationStart());
 }
 
-double WebPerformance::unloadEventEnd() const
-{
-    return millisecondsToSeconds(m_private->timing()->unloadEventEnd());
+double WebPerformance::UnloadEventEnd() const {
+  return MillisecondsToSeconds(private_->timing()->unloadEventEnd());
 }
 
-double WebPerformance::redirectStart() const
-{
-    return millisecondsToSeconds(m_private->timing()->redirectStart());
+double WebPerformance::RedirectStart() const {
+  return MillisecondsToSeconds(private_->timing()->redirectStart());
 }
 
-double WebPerformance::redirectEnd() const
-{
-    return millisecondsToSeconds(m_private->timing()->redirectEnd());
+double WebPerformance::RedirectEnd() const {
+  return MillisecondsToSeconds(private_->timing()->redirectEnd());
 }
 
-unsigned short WebPerformance::redirectCount() const
-{
-    return m_private->navigation()->redirectCount();
+unsigned short WebPerformance::RedirectCount() const {
+  return private_->navigation()->redirectCount();
 }
 
-double WebPerformance::fetchStart() const
-{
-    return millisecondsToSeconds(m_private->timing()->fetchStart());
+double WebPerformance::FetchStart() const {
+  return MillisecondsToSeconds(private_->timing()->fetchStart());
 }
 
-double WebPerformance::domainLookupStart() const
-{
-    return millisecondsToSeconds(m_private->timing()->domainLookupStart());
+double WebPerformance::DomainLookupStart() const {
+  return MillisecondsToSeconds(private_->timing()->domainLookupStart());
 }
 
-double WebPerformance::domainLookupEnd() const
-{
-    return millisecondsToSeconds(m_private->timing()->domainLookupEnd());
+double WebPerformance::DomainLookupEnd() const {
+  return MillisecondsToSeconds(private_->timing()->domainLookupEnd());
 }
 
-double WebPerformance::connectStart() const
-{
-    return millisecondsToSeconds(m_private->timing()->connectStart());
+double WebPerformance::ConnectStart() const {
+  return MillisecondsToSeconds(private_->timing()->connectStart());
 }
 
-double WebPerformance::connectEnd() const
-{
-    return millisecondsToSeconds(m_private->timing()->connectEnd());
+double WebPerformance::ConnectEnd() const {
+  return MillisecondsToSeconds(private_->timing()->connectEnd());
 }
 
-double WebPerformance::requestStart() const
-{
-    return millisecondsToSeconds(m_private->timing()->requestStart());
+double WebPerformance::RequestStart() const {
+  return MillisecondsToSeconds(private_->timing()->requestStart());
 }
 
-double WebPerformance::responseStart() const
-{
-    return millisecondsToSeconds(m_private->timing()->responseStart());
+double WebPerformance::ResponseStart() const {
+  return MillisecondsToSeconds(private_->timing()->responseStart());
 }
 
-double WebPerformance::responseEnd() const
-{
-    return millisecondsToSeconds(m_private->timing()->responseEnd());
+double WebPerformance::ResponseEnd() const {
+  return MillisecondsToSeconds(private_->timing()->responseEnd());
 }
 
-double WebPerformance::domLoading() const
-{
-    return millisecondsToSeconds(m_private->timing()->domLoading());
+double WebPerformance::DomLoading() const {
+  return MillisecondsToSeconds(private_->timing()->domLoading());
 }
 
-double WebPerformance::domInteractive() const
-{
-    return millisecondsToSeconds(m_private->timing()->domInteractive());
+double WebPerformance::DomInteractive() const {
+  return MillisecondsToSeconds(private_->timing()->domInteractive());
 }
 
-double WebPerformance::domContentLoadedEventStart() const
-{
-    return millisecondsToSeconds(m_private->timing()->domContentLoadedEventStart());
+double WebPerformance::DomContentLoadedEventStart() const {
+  return MillisecondsToSeconds(
+      private_->timing()->domContentLoadedEventStart());
 }
 
-double WebPerformance::domContentLoadedEventEnd() const
-{
-    return millisecondsToSeconds(m_private->timing()->domContentLoadedEventEnd());
+double WebPerformance::DomContentLoadedEventEnd() const {
+  return MillisecondsToSeconds(private_->timing()->domContentLoadedEventEnd());
 }
 
-double WebPerformance::domComplete() const
-{
-    return millisecondsToSeconds(m_private->timing()->domComplete());
+double WebPerformance::DomComplete() const {
+  return MillisecondsToSeconds(private_->timing()->domComplete());
 }
 
-double WebPerformance::loadEventStart() const
-{
-    return millisecondsToSeconds(m_private->timing()->loadEventStart());
+double WebPerformance::LoadEventStart() const {
+  return MillisecondsToSeconds(private_->timing()->loadEventStart());
 }
 
-double WebPerformance::loadEventEnd() const
-{
-    return millisecondsToSeconds(m_private->timing()->loadEventEnd());
+double WebPerformance::LoadEventEnd() const {
+  return MillisecondsToSeconds(private_->timing()->loadEventEnd());
 }
 
-double WebPerformance::firstLayout() const
-{
-    return millisecondsToSeconds(m_private->timing()->firstLayout());
+double WebPerformance::FirstLayout() const {
+  return MillisecondsToSeconds(private_->timing()->FirstLayout());
 }
 
-double WebPerformance::firstPaint() const
-{
-    return millisecondsToSeconds(m_private->timing()->firstPaint());
+double WebPerformance::FirstPaint() const {
+  return MillisecondsToSeconds(private_->timing()->FirstPaint());
 }
 
-double WebPerformance::firstTextPaint() const
-{
-    return millisecondsToSeconds(m_private->timing()->firstTextPaint());
+double WebPerformance::FirstTextPaint() const {
+  return MillisecondsToSeconds(private_->timing()->FirstTextPaint());
 }
 
-double WebPerformance::firstImagePaint() const
-{
-    return millisecondsToSeconds(m_private->timing()->firstImagePaint());
+double WebPerformance::FirstImagePaint() const {
+  return MillisecondsToSeconds(private_->timing()->FirstImagePaint());
 }
 
-double WebPerformance::firstContentfulPaint() const
-{
-    return millisecondsToSeconds(m_private->timing()->firstContentfulPaint());
+double WebPerformance::FirstContentfulPaint() const {
+  return MillisecondsToSeconds(private_->timing()->FirstContentfulPaint());
 }
 
-double WebPerformance::parseStart() const
-{
-    return millisecondsToSeconds(m_private->timing()->parseStart());
+double WebPerformance::FirstMeaningfulPaint() const {
+  return MillisecondsToSeconds(private_->timing()->FirstMeaningfulPaint());
 }
 
-double WebPerformance::parseStop() const
-{
-    return millisecondsToSeconds(m_private->timing()->parseStop());
+double WebPerformance::ParseStart() const {
+  return MillisecondsToSeconds(private_->timing()->ParseStart());
 }
 
-double WebPerformance::parseBlockedOnScriptLoadDuration() const
-{
-    return millisecondsToSeconds(m_private->timing()->parseBlockedOnScriptLoadDuration());
+double WebPerformance::ParseStop() const {
+  return MillisecondsToSeconds(private_->timing()->ParseStop());
 }
 
-double WebPerformance::parseBlockedOnScriptLoadFromDocumentWriteDuration() const
-{
-    return millisecondsToSeconds(m_private->timing()->parseBlockedOnScriptLoadFromDocumentWriteDuration());
+double WebPerformance::ParseBlockedOnScriptLoadDuration() const {
+  return MillisecondsToSeconds(
+      private_->timing()->ParseBlockedOnScriptLoadDuration());
+}
+
+double WebPerformance::ParseBlockedOnScriptLoadFromDocumentWriteDuration()
+    const {
+  return MillisecondsToSeconds(
+      private_->timing()->ParseBlockedOnScriptLoadFromDocumentWriteDuration());
+}
+
+double WebPerformance::ParseBlockedOnScriptExecutionDuration() const {
+  return MillisecondsToSeconds(
+      private_->timing()->ParseBlockedOnScriptExecutionDuration());
+}
+
+double WebPerformance::ParseBlockedOnScriptExecutionFromDocumentWriteDuration()
+    const {
+  return MillisecondsToSeconds(
+      private_->timing()
+          ->ParseBlockedOnScriptExecutionFromDocumentWriteDuration());
+}
+
+double WebPerformance::AuthorStyleSheetParseDurationBeforeFCP() const {
+  return MillisecondsToSeconds(
+      private_->timing()->AuthorStyleSheetParseDurationBeforeFCP());
+}
+
+double WebPerformance::UpdateStyleDurationBeforeFCP() const {
+  return MillisecondsToSeconds(
+      private_->timing()->UpdateStyleDurationBeforeFCP());
 }
 
 WebPerformance::WebPerformance(Performance* performance)
-    : m_private(performance)
-{
+    : private_(performance) {}
+
+WebPerformance& WebPerformance::operator=(Performance* performance) {
+  private_ = performance;
+  return *this;
 }
 
-WebPerformance& WebPerformance::operator=(Performance*performance)
-{
-    m_private = performance;
-    return *this;
-}
-
-} // namespace blink
+}  // namespace blink

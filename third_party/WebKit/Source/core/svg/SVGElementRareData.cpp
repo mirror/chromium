@@ -4,67 +4,58 @@
 
 #include "core/svg/SVGElementRareData.h"
 
-#include "core/css/CSSCursorImageValue.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/dom/Document.h"
-#include "core/svg/SVGCursorElement.h"
+#include "core/svg/SVGElementProxy.h"
 
 namespace blink {
 
-MutableStylePropertySet* SVGElementRareData::ensureAnimatedSMILStyleProperties()
-{
-    if (!m_animatedSMILStyleProperties)
-        m_animatedSMILStyleProperties = MutableStylePropertySet::create(SVGAttributeMode);
-    return m_animatedSMILStyleProperties.get();
+MutableStylePropertySet*
+SVGElementRareData::EnsureAnimatedSMILStyleProperties() {
+  if (!animated_smil_style_properties_)
+    animated_smil_style_properties_ =
+        MutableStylePropertySet::Create(kSVGAttributeMode);
+  return animated_smil_style_properties_.Get();
 }
 
-ComputedStyle* SVGElementRareData::overrideComputedStyle(Element* element, const ComputedStyle* parentStyle)
-{
-    ASSERT(element);
-    if (!m_useOverrideComputedStyle)
-        return nullptr;
-    if (!m_overrideComputedStyle || m_needsOverrideComputedStyleUpdate) {
-        // The style computed here contains no CSS Animations/Transitions or SMIL induced rules - this is needed to compute the "base value" for the SMIL animation sandwhich model.
-        m_overrideComputedStyle = element->document().ensureStyleResolver().styleForElement(element, parentStyle, DisallowStyleSharing, MatchAllRulesExcludingSMIL);
-        m_needsOverrideComputedStyleUpdate = false;
-    }
-    ASSERT(m_overrideComputedStyle);
-    return m_overrideComputedStyle.get();
+ComputedStyle* SVGElementRareData::OverrideComputedStyle(
+    Element* element,
+    const ComputedStyle* parent_style) {
+  DCHECK(element);
+  if (!use_override_computed_style_)
+    return nullptr;
+  if (!override_computed_style_ || needs_override_computed_style_update_) {
+    // The style computed here contains no CSS Animations/Transitions or SMIL
+    // induced rules - this is needed to compute the "base value" for the SMIL
+    // animation sandwhich model.
+    override_computed_style_ =
+        element->GetDocument().EnsureStyleResolver().StyleForElement(
+            element, parent_style, parent_style, kDisallowStyleSharing,
+            kMatchAllRulesExcludingSMIL);
+    needs_override_computed_style_update_ = false;
+  }
+  DCHECK(override_computed_style_);
+  return override_computed_style_.Get();
 }
 
-DEFINE_TRACE(SVGElementRareData)
-{
-    visitor->trace(m_outgoingReferences);
-    visitor->trace(m_incomingReferences);
-    visitor->trace(m_animatedSMILStyleProperties);
-    visitor->trace(m_elementInstances);
-    visitor->trace(m_correspondingElement);
-    visitor->trace(m_owner);
-    visitor->template registerWeakMembers<SVGElementRareData, &SVGElementRareData::processWeakMembers>(this);
+DEFINE_TRACE(SVGElementRareData) {
+  visitor->Trace(outgoing_references_);
+  visitor->Trace(incoming_references_);
+  visitor->Trace(element_proxy_set_);
+  visitor->Trace(animated_smil_style_properties_);
+  visitor->Trace(element_instances_);
+  visitor->Trace(corresponding_element_);
+  visitor->Trace(owner_);
 }
 
-void SVGElementRareData::processWeakMembers(Visitor* visitor)
-{
-    ASSERT(m_owner);
-    if (!ThreadHeap::isHeapObjectAlive(m_cursorElement))
-        m_cursorElement = nullptr;
-
-    if (!ThreadHeap::isHeapObjectAlive(m_cursorImageValue)) {
-        // The owning SVGElement is still alive and if it is pointing to an SVGCursorElement
-        // we unregister it when the CSSCursorImageValue dies.
-        if (m_cursorElement) {
-            m_cursorElement->removeReferencedElement(m_owner);
-            m_cursorElement = nullptr;
-        }
-        m_cursorImageValue = nullptr;
-    }
-    ASSERT(!m_cursorElement || ThreadHeap::isHeapObjectAlive(m_cursorElement));
-    ASSERT(!m_cursorImageValue || ThreadHeap::isHeapObjectAlive(m_cursorImageValue));
+AffineTransform* SVGElementRareData::AnimateMotionTransform() {
+  return &animate_motion_transform_;
 }
 
-AffineTransform* SVGElementRareData::animateMotionTransform()
-{
-    return &m_animateMotionTransform;
+SVGElementProxySet& SVGElementRareData::EnsureElementProxySet() {
+  if (!element_proxy_set_)
+    element_proxy_set_ = new SVGElementProxySet;
+  return *element_proxy_set_;
 }
 
-} // namespace blink
+}  // namespace blink

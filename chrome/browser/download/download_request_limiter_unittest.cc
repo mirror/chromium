@@ -9,9 +9,10 @@
 #include "base/run_loop.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/content_settings/host_content_settings_map_factory.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
-#include "chrome/test/base/testing_profile.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_details.h"
@@ -28,7 +29,7 @@
 #else
 #include "chrome/browser/download/download_permission_request.h"
 #include "chrome/browser/permissions/permission_request_manager.h"
-#include "chrome/browser/ui/website_settings/mock_permission_bubble_factory.h"
+#include "chrome/browser/ui/permission_bubble/mock_permission_prompt_factory.h"
 #endif
 
 using content::WebContents;
@@ -99,41 +100,42 @@ class TestingDelegate {
  public:
   void SetUp(WebContents* web_contents) {
     PermissionRequestManager::CreateForWebContents(web_contents);
-    mock_permission_bubble_factory_.reset(new MockPermissionBubbleFactory(
+    mock_permission_prompt_factory_.reset(new MockPermissionPromptFactory(
         PermissionRequestManager::FromWebContents(web_contents)));
     PermissionRequestManager::FromWebContents(web_contents)
         ->DisplayPendingRequests();
   }
 
-  void TearDown() { mock_permission_bubble_factory_.reset(); }
+  void TearDown() { mock_permission_prompt_factory_.reset(); }
 
   void LoadCompleted(WebContents* web_contents) {
-    mock_permission_bubble_factory_->DocumentOnLoadCompletedInMainFrame();
+    mock_permission_prompt_factory_->DocumentOnLoadCompletedInMainFrame();
   }
 
-  void ResetCounts() { mock_permission_bubble_factory_->ResetCounts(); }
+  void ResetCounts() { mock_permission_prompt_factory_->ResetCounts(); }
 
-  int AllowCount() { return mock_permission_bubble_factory_->show_count(); }
+  int AllowCount() { return mock_permission_prompt_factory_->show_count(); }
 
   void UpdateExpectations(TestingAction action) {
     // Set expectations for PermissionRequestManager.
-    if (action == ACCEPT) {
-      mock_permission_bubble_factory_->set_response_type(
-          PermissionRequestManager::ACCEPT_ALL);
-    } else if (action == CANCEL) {
-      mock_permission_bubble_factory_->set_response_type(
-          PermissionRequestManager::DENY_ALL);
-    } else if (action == WAIT) {
-      mock_permission_bubble_factory_->set_response_type(
-          PermissionRequestManager::NONE);
-    } else {
-      mock_permission_bubble_factory_->set_response_type(
-          PermissionRequestManager::DISMISS);
+    PermissionRequestManager::AutoResponseType response_type =
+        PermissionRequestManager::DISMISS;
+    switch (action) {
+      case ACCEPT:
+        response_type = PermissionRequestManager::ACCEPT_ALL;
+        break;
+      case CANCEL:
+        response_type = PermissionRequestManager::DENY_ALL;
+        break;
+      case WAIT:
+        response_type = PermissionRequestManager::NONE;
+        break;
     }
+    mock_permission_prompt_factory_->set_response_type(response_type);
   }
 
  private:
-  std::unique_ptr<MockPermissionBubbleFactory> mock_permission_bubble_factory_;
+  std::unique_ptr<MockPermissionPromptFactory> mock_permission_prompt_factory_;
 };
 #endif
 }  // namespace
@@ -142,24 +144,16 @@ class DownloadRequestLimiterTest : public ChromeRenderViewHostTestHarness {
  public:
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
-    profile_.reset(new TestingProfile());
     testing_delegate_.SetUp(web_contents());
 
     UpdateExpectations(ACCEPT);
     cancel_count_ = continue_count_ = 0;
     download_request_limiter_ = new DownloadRequestLimiter();
-
-    content_settings_ = new HostContentSettingsMap(
-        profile_->GetPrefs(), false /* incognito_profile */,
-        false /* guest_profile */);
-    DownloadRequestLimiter::SetContentSettingsForTesting(
-        content_settings_.get());
   }
 
   void TearDown() override {
-    content_settings_->ShutdownOnUIThread();
-    content_settings_ = nullptr;
     testing_delegate_.TearDown();
+
     ChromeRenderViewHostTestHarness::TearDown();
   }
 
@@ -206,13 +200,6 @@ class DownloadRequestLimiterTest : public ChromeRenderViewHostTestHarness {
     // Ensure a download state exists.
     download_request_limiter_->GetDownloadState(web_contents, nullptr, true);
     SetHostContentSetting(web_contents, setting);
-
-    // Manually send the update notification. In the browser, this is sent from
-    // ContentSettingRPHBubbleModel.
-    content::NotificationService::current()->Notify(
-        chrome::NOTIFICATION_WEB_CONTENT_SETTINGS_CHANGED,
-        content::Source<WebContents>(web_contents),
-        content::NotificationService::NoDetails());
   }
 
  protected:
@@ -225,9 +212,11 @@ class DownloadRequestLimiterTest : public ChromeRenderViewHostTestHarness {
   }
 
   void SetHostContentSetting(WebContents* contents, ContentSetting setting) {
-    content_settings_->SetContentSettingDefaultScope(
-        contents->GetURL(), GURL(), CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS,
-        std::string(), setting);
+    HostContentSettingsMapFactory::GetForProfile(
+        Profile::FromBrowserContext(contents->GetBrowserContext()))
+        ->SetContentSettingDefaultScope(
+            contents->GetURL(), GURL(),
+            CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS, std::string(), setting);
   }
 
   void LoadCompleted() { testing_delegate_.LoadCompleted(web_contents()); }
@@ -238,12 +227,6 @@ class DownloadRequestLimiterTest : public ChromeRenderViewHostTestHarness {
     testing_delegate_.UpdateExpectations(action);
   }
 
-  void NavigateAndCommitWithParams(
-      content::NavigationController::LoadURLParams& params) {
-    controller().LoadURLWithParams(params);
-    content::WebContentsTester::For(web_contents())->CommitPendingNavigation();
-  }
-
   scoped_refptr<DownloadRequestLimiter> download_request_limiter_;
 
   // Number of times ContinueDownload was invoked.
@@ -252,11 +235,7 @@ class DownloadRequestLimiterTest : public ChromeRenderViewHostTestHarness {
   // Number of times CancelDownload was invoked.
   int cancel_count_;
 
-  scoped_refptr<HostContentSettingsMap> content_settings_;
   TestingDelegate testing_delegate_;
-
- private:
-  std::unique_ptr<TestingProfile> profile_;
 };
 
 TEST_F(DownloadRequestLimiterTest, DownloadRequestLimiter_Allow) {
@@ -319,7 +298,7 @@ TEST_F(DownloadRequestLimiterTest, DownloadRequestLimiter_ResetOnNavigation) {
 
   // Do a user gesture, because we're at allow all, this shouldn't change the
   // state.
-  OnUserInteraction(blink::WebInputEvent::RawKeyDown);
+  OnUserInteraction(blink::WebInputEvent::kRawKeyDown);
   ASSERT_EQ(DownloadRequestLimiter::ALLOW_ALL_DOWNLOADS,
             download_request_limiter_->GetDownloadStatus(web_contents()));
 
@@ -363,12 +342,10 @@ TEST_F(DownloadRequestLimiterTest, DownloadRequestLimiter_RendererInitiated) {
             download_request_limiter_->GetDownloadStatus(web_contents()));
 
   // Set up a renderer-initiated navigation to the same host.
-  content::NavigationController::LoadURLParams load_params(
-      GURL("http://foo.com/bar2"));
-  load_params.is_renderer_initiated = true;
-  load_params.transition_type = ui::PAGE_TRANSITION_GENERATED;
-  load_params.referrer = content::Referrer();
-  NavigateAndCommitWithParams(load_params);
+  content::RenderFrameHostTester* rfh_tester =
+      content::RenderFrameHostTester::For(web_contents()->GetMainFrame());
+  rfh_tester->NavigateAndCommitRendererInitiated(true,
+                                                 GURL("http://foo.com/bar2"));
   LoadCompleted();
 
   // The state should not be reset.
@@ -376,15 +353,13 @@ TEST_F(DownloadRequestLimiterTest, DownloadRequestLimiter_RendererInitiated) {
             download_request_limiter_->GetDownloadStatus(web_contents()));
 
   // Renderer-initiated nav to a different host shouldn't reset the state.
-  load_params.url = GURL("http://fooey.com/bar");
-  NavigateAndCommitWithParams(load_params);
+  rfh_tester->NavigateAndCommitRendererInitiated(true,
+                                                 GURL("http://fooey.com/bar"));
   LoadCompleted();
   ASSERT_EQ(DownloadRequestLimiter::PROMPT_BEFORE_DOWNLOAD,
             download_request_limiter_->GetDownloadStatus(web_contents()));
 
   // Set up a subframe. Navigations in the subframe shouldn't reset the state.
-  content::RenderFrameHostTester* rfh_tester =
-      content::RenderFrameHostTester::For(web_contents()->GetMainFrame());
   content::RenderFrameHost* subframe = rfh_tester->AppendChild("subframe");
   content::RenderFrameHostTester* subframe_tester =
       content::RenderFrameHostTester::For(subframe);
@@ -405,14 +380,14 @@ TEST_F(DownloadRequestLimiterTest, DownloadRequestLimiter_RendererInitiated) {
 
   // The state should not be reset on a renderer-initiated load to either the
   // same host or a different host, in either the main frame or the subframe.
-  load_params.url = GURL("http://fooeybar.com/bar");
-  NavigateAndCommitWithParams(load_params);
+  rfh_tester->NavigateAndCommitRendererInitiated(
+      true, GURL("http://fooeybar.com/bar"));
   LoadCompleted();
   ASSERT_EQ(DownloadRequestLimiter::DOWNLOADS_NOT_ALLOWED,
             download_request_limiter_->GetDownloadStatus(web_contents()));
 
-  load_params.url = GURL("http://foo.com/bar");
-  NavigateAndCommitWithParams(load_params);
+  rfh_tester->NavigateAndCommitRendererInitiated(true,
+                                                 GURL("http://foo.com/bar"));
   LoadCompleted();
   ASSERT_EQ(DownloadRequestLimiter::DOWNLOADS_NOT_ALLOWED,
             download_request_limiter_->GetDownloadStatus(web_contents()));
@@ -450,8 +425,10 @@ TEST_F(DownloadRequestLimiterTest, DownloadRequestLimiter_RendererInitiated) {
 
   // The state should not be reset on a pending renderer-initiated load to
   // the same host.
-  load_params.url = GURL("http://foobar.com/bar");
-  NavigateAndCommitWithParams(load_params);
+  rfh_tester =
+      content::RenderFrameHostTester::For(web_contents()->GetMainFrame());
+  rfh_tester->NavigateAndCommitRendererInitiated(true,
+                                                 GURL("http://foobar.com/bar"));
   LoadCompleted();
   ASSERT_EQ(DownloadRequestLimiter::ALLOW_ALL_DOWNLOADS,
             download_request_limiter_->GetDownloadStatus(web_contents()));
@@ -471,8 +448,8 @@ TEST_F(DownloadRequestLimiterTest, DownloadRequestLimiter_RendererInitiated) {
 
   // But a pending load to a different host in the main frame should reset the
   // state.
-  load_params.url = GURL("http://foo.com");
-  NavigateAndCommitWithParams(load_params);
+  rfh_tester->NavigateAndCommitRendererInitiated(true,
+                                                 GURL("http://foo.com"));
   LoadCompleted();
   ASSERT_EQ(DownloadRequestLimiter::ALLOW_ONE_DOWNLOAD,
             download_request_limiter_->GetDownloadStatus(web_contents()));
@@ -489,11 +466,11 @@ TEST_F(DownloadRequestLimiterTest, DownloadRequestLimiter_ResetOnUserGesture) {
             download_request_limiter_->GetDownloadStatus(web_contents()));
 
   // Do a user gesture with scroll, which should be ignored.
-  OnUserInteraction(blink::WebInputEvent::GestureScrollBegin);
+  OnUserInteraction(blink::WebInputEvent::kGestureScrollBegin);
   ASSERT_EQ(DownloadRequestLimiter::PROMPT_BEFORE_DOWNLOAD,
             download_request_limiter_->GetDownloadStatus(web_contents()));
   // Do a user gesture with mouse click, which should reset back to allow one.
-  OnUserInteraction(blink::WebInputEvent::MouseDown);
+  OnUserInteraction(blink::WebInputEvent::kMouseDown);
   ASSERT_EQ(DownloadRequestLimiter::ALLOW_ONE_DOWNLOAD,
             download_request_limiter_->GetDownloadStatus(web_contents()));
 
@@ -503,8 +480,8 @@ TEST_F(DownloadRequestLimiterTest, DownloadRequestLimiter_ResetOnUserGesture) {
   ASSERT_EQ(DownloadRequestLimiter::PROMPT_BEFORE_DOWNLOAD,
             download_request_limiter_->GetDownloadStatus(web_contents()));
 
-  // Do a user gesture with gesture tap, which should reset back to allow one.
-  OnUserInteraction(blink::WebInputEvent::GestureTapDown);
+  // Do a touch event, which should reset back to allow one.
+  OnUserInteraction(blink::WebInputEvent::kTouchStart);
   ASSERT_EQ(DownloadRequestLimiter::ALLOW_ONE_DOWNLOAD,
             download_request_limiter_->GetDownloadStatus(web_contents()));
 
@@ -515,7 +492,7 @@ TEST_F(DownloadRequestLimiterTest, DownloadRequestLimiter_ResetOnUserGesture) {
             download_request_limiter_->GetDownloadStatus(web_contents()));
 
   // Do a user gesture with keyboard down, which should reset back to allow one.
-  OnUserInteraction(blink::WebInputEvent::RawKeyDown);
+  OnUserInteraction(blink::WebInputEvent::kRawKeyDown);
   ASSERT_EQ(DownloadRequestLimiter::ALLOW_ONE_DOWNLOAD,
             download_request_limiter_->GetDownloadStatus(web_contents()));
 
@@ -533,7 +510,7 @@ TEST_F(DownloadRequestLimiterTest, DownloadRequestLimiter_ResetOnUserGesture) {
   ExpectAndResetCounts(0, 1, 1, __LINE__);
 
   // A user gesture now should NOT change the state.
-  OnUserInteraction(blink::WebInputEvent::MouseDown);
+  OnUserInteraction(blink::WebInputEvent::kMouseDown);
   ASSERT_EQ(DownloadRequestLimiter::DOWNLOADS_NOT_ALLOWED,
             download_request_limiter_->GetDownloadStatus(web_contents()));
   // And make sure we really can't download.
@@ -617,8 +594,7 @@ TEST_F(DownloadRequestLimiterTest, DownloadRequestLimiter_RawWebContents) {
   ExpectAndResetCounts(1, 0, 0, __LINE__);
   EXPECT_EQ(DownloadRequestLimiter::PROMPT_BEFORE_DOWNLOAD,
             download_request_limiter_->GetDownloadStatus(web_contents.get()));
-  OnUserInteractionFor(web_contents.get(),
-                       blink::WebInputEvent::GestureTapDown);
+  OnUserInteractionFor(web_contents.get(), blink::WebInputEvent::kTouchStart);
   EXPECT_EQ(DownloadRequestLimiter::ALLOW_ONE_DOWNLOAD,
             download_request_limiter_->GetDownloadStatus(web_contents.get()));
   CanDownloadFor(web_contents.get());
@@ -629,7 +605,7 @@ TEST_F(DownloadRequestLimiterTest, DownloadRequestLimiter_RawWebContents) {
   ExpectAndResetCounts(0, 1, 0, __LINE__);
   EXPECT_EQ(DownloadRequestLimiter::DOWNLOADS_NOT_ALLOWED,
             download_request_limiter_->GetDownloadStatus(web_contents.get()));
-  OnUserInteractionFor(web_contents.get(), blink::WebInputEvent::RawKeyDown);
+  OnUserInteractionFor(web_contents.get(), blink::WebInputEvent::kRawKeyDown);
   EXPECT_EQ(DownloadRequestLimiter::ALLOW_ONE_DOWNLOAD,
             download_request_limiter_->GetDownloadStatus(web_contents.get()));
   CanDownloadFor(web_contents.get());
@@ -652,19 +628,19 @@ TEST_F(DownloadRequestLimiterTest,
 
   CanDownload();
   ExpectAndResetCounts(1, 0, 0, __LINE__);
-  ASSERT_EQ(DownloadRequestLimiter::PROMPT_BEFORE_DOWNLOAD,
+  ASSERT_EQ(DownloadRequestLimiter::ALLOW_ALL_DOWNLOADS,
             download_request_limiter_->GetDownloadStatus(web_contents()));
 
   SetHostContentSetting(web_contents(), CONTENT_SETTING_BLOCK);
 
   CanDownload();
   ExpectAndResetCounts(0, 1, 0, __LINE__);
-  ASSERT_EQ(DownloadRequestLimiter::PROMPT_BEFORE_DOWNLOAD,
+  ASSERT_EQ(DownloadRequestLimiter::DOWNLOADS_NOT_ALLOWED,
             download_request_limiter_->GetDownloadStatus(web_contents()));
 
   CanDownload();
   ExpectAndResetCounts(0, 1, 0, __LINE__);
-  ASSERT_EQ(DownloadRequestLimiter::PROMPT_BEFORE_DOWNLOAD,
+  ASSERT_EQ(DownloadRequestLimiter::DOWNLOADS_NOT_ALLOWED,
             download_request_limiter_->GetDownloadStatus(web_contents()));
 }
 

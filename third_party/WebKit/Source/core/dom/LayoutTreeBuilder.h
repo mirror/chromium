@@ -2,8 +2,10 @@
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
- * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All
+ * rights reserved.
+ * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved.
+ * (http://www.torchmobile.com/)
  * Copyright (C) 2011 Google Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -31,7 +33,7 @@
 #include "core/dom/Node.h"
 #include "core/dom/Text.h"
 #include "core/layout/LayoutObject.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
@@ -39,61 +41,65 @@ class ComputedStyle;
 
 template <typename NodeType>
 class LayoutTreeBuilder {
-    STACK_ALLOCATED();
-protected:
-    LayoutTreeBuilder(NodeType& node, LayoutObject* layoutObjectParent)
-        : m_node(node)
-        , m_layoutObjectParent(layoutObjectParent)
-    {
-        DCHECK(!node.layoutObject());
-        DCHECK(node.needsAttach());
-        DCHECK(node.document().inStyleRecalc());
-        DCHECK(node.inActiveDocument());
-    }
+  STACK_ALLOCATED();
 
-    LayoutObject* nextLayoutObject() const
-    {
-        DCHECK(m_layoutObjectParent);
+ protected:
+  LayoutTreeBuilder(NodeType& node, LayoutObject* layout_object_parent)
+      : node_(node), layout_object_parent_(layout_object_parent) {
+    DCHECK(!node.GetLayoutObject());
+    DCHECK(node.NeedsAttach());
+    DCHECK(node.GetDocument().InStyleRecalc());
+    DCHECK(node.InActiveDocument());
+  }
 
-        // Avoid an O(N^2) walk over the children when reattaching all children of a node.
-        if (m_layoutObjectParent->node() && m_layoutObjectParent->node()->needsAttach())
-            return 0;
+  LayoutObject* NextLayoutObject() const {
+    DCHECK(layout_object_parent_);
 
-        return LayoutTreeBuilderTraversal::nextSiblingLayoutObject(*m_node);
-    }
+    // Avoid an O(N^2) walk over the children when reattaching all children of a
+    // node.
+    if (layout_object_parent_->GetNode() &&
+        layout_object_parent_->GetNode()->NeedsAttach())
+      return 0;
 
-    Member<NodeType> m_node;
-    LayoutObject* m_layoutObjectParent;
+    return LayoutTreeBuilderTraversal::NextSiblingLayoutObject(*node_);
+  }
+
+  Member<NodeType> node_;
+  LayoutObject* layout_object_parent_;
 };
 
 class LayoutTreeBuilderForElement : public LayoutTreeBuilder<Element> {
-public:
-    LayoutTreeBuilderForElement(Element&, ComputedStyle*);
+ public:
+  LayoutTreeBuilderForElement(Element&, ComputedStyle*);
 
-    void createLayoutObjectIfNeeded()
-    {
-        if (shouldCreateLayoutObject())
-            createLayoutObject();
-    }
+  void CreateLayoutObjectIfNeeded() {
+    if (ShouldCreateLayoutObject())
+      CreateLayoutObject();
+  }
 
-private:
-    LayoutObject* parentLayoutObject() const;
-    LayoutObject* nextLayoutObject() const;
-    bool shouldCreateLayoutObject() const;
-    ComputedStyle& style() const;
-    void createLayoutObject();
+  ComputedStyle* ResolvedStyle() const { return style_.Get(); }
 
-    mutable RefPtr<ComputedStyle> m_style;
+ private:
+  LayoutObject* ParentLayoutObject() const;
+  LayoutObject* NextLayoutObject() const;
+  bool ShouldCreateLayoutObject() const;
+  ComputedStyle& Style() const;
+  void CreateLayoutObject();
+
+  mutable RefPtr<ComputedStyle> style_;
 };
 
 class LayoutTreeBuilderForText : public LayoutTreeBuilder<Text> {
-public:
-    LayoutTreeBuilderForText(Text& text, LayoutObject* layoutParent)
-        : LayoutTreeBuilder(text, layoutParent) { }
+ public:
+  LayoutTreeBuilderForText(Text& text,
+                           LayoutObject* layout_parent,
+                           ComputedStyle* style_from_parent)
+      : LayoutTreeBuilder(text, layout_parent), style_(style_from_parent) {}
 
-    void createLayoutObject();
+  RefPtr<ComputedStyle> style_;
+  void CreateLayoutObject();
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

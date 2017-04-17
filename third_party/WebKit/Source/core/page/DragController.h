@@ -32,7 +32,7 @@
 #include "platform/geometry/IntPoint.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -47,63 +47,84 @@ class FrameSelection;
 class HTMLInputElement;
 class Node;
 class Page;
-class PlatformMouseEvent;
+class WebMouseEvent;
 
-class CORE_EXPORT DragController final : public GarbageCollected<DragController> {
-    WTF_MAKE_NONCOPYABLE(DragController);
-public:
-    static DragController* create(Page*);
+class CORE_EXPORT DragController final
+    : public GarbageCollected<DragController> {
+  WTF_MAKE_NONCOPYABLE(DragController);
 
-    DragSession dragEntered(DragData*);
-    void dragExited(DragData*);
-    DragSession dragUpdated(DragData*);
-    bool performDrag(DragData*);
+ public:
+  static DragController* Create(Page*);
 
-    enum SelectionDragPolicy {
-        ImmediateSelectionDragResolution,
-        DelayedSelectionDragResolution,
-    };
-    Node* draggableNode(const LocalFrame*, Node*, const IntPoint&, SelectionDragPolicy, DragSourceAction&) const;
-    void dragEnded();
+  DragSession DragEnteredOrUpdated(DragData*, LocalFrame& local_root);
+  void DragExited(DragData*, LocalFrame& local_root);
+  bool PerformDrag(DragData*, LocalFrame& local_root);
 
-    bool populateDragDataTransfer(LocalFrame* src, const DragState&, const IntPoint& dragOrigin);
-    bool startDrag(LocalFrame* src, const DragState&, const PlatformMouseEvent& dragEvent, const IntPoint& dragOrigin);
+  enum SelectionDragPolicy {
+    kImmediateSelectionDragResolution,
+    kDelayedSelectionDragResolution,
+  };
+  Node* DraggableNode(const LocalFrame*,
+                      Node*,
+                      const IntPoint&,
+                      SelectionDragPolicy,
+                      DragSourceAction&) const;
+  void DragEnded();
 
-    DECLARE_TRACE();
+  bool PopulateDragDataTransfer(LocalFrame* src,
+                                const DragState&,
+                                const IntPoint& drag_origin);
+  bool StartDrag(LocalFrame* src,
+                 const DragState&,
+                 const WebMouseEvent& drag_event,
+                 const IntPoint& drag_origin);
 
-    static const int DragIconRightInset;
-    static const int DragIconBottomInset;
+  DragState& GetDragState();
 
-private:
-    DragController(Page*);
+  DECLARE_TRACE();
 
-    DispatchEventResult dispatchTextInputEventFor(LocalFrame*, DragData*);
-    bool canProcessDrag(DragData*);
-    bool concludeEditDrag(DragData*);
-    DragSession dragEnteredOrUpdated(DragData*);
-    DragOperation operationForLoad(DragData*);
-    bool tryDocumentDrag(DragData*, DragDestinationAction, DragSession&);
-    bool tryDHTMLDrag(DragData*, DragOperation&);
-    DragOperation dragOperation(DragData*);
-    void cancelDrag();
-    bool dragIsMove(FrameSelection&, DragData*);
-    bool isCopyKeyDown(DragData*);
+ private:
+  explicit DragController(Page*);
 
-    void mouseMovedIntoDocument(Document*);
+  DispatchEventResult DispatchTextInputEventFor(LocalFrame*, DragData*);
+  bool CanProcessDrag(DragData*, LocalFrame& local_root);
+  bool ConcludeEditDrag(DragData*);
+  DragOperation OperationForLoad(DragData*, LocalFrame& local_root);
+  bool TryDocumentDrag(DragData*,
+                       DragDestinationAction,
+                       DragSession&,
+                       LocalFrame& local_root);
+  bool TryDHTMLDrag(DragData*, DragOperation&, LocalFrame& local_root);
+  DragOperation GetDragOperation(DragData*);
+  void CancelDrag();
+  bool DragIsMove(FrameSelection&, DragData*);
+  bool IsCopyKeyDown(DragData*);
 
-    void doSystemDrag(DragImage*, const IntPoint& dragLocation, const IntPoint& dragOrigin, DataTransfer*, LocalFrame*, bool forLink);
+  void MouseMovedIntoDocument(Document*);
 
-    Member<Page> m_page;
+  void DoSystemDrag(DragImage*,
+                    const IntPoint& drag_location,
+                    const IntPoint& drag_origin,
+                    DataTransfer*,
+                    LocalFrame*,
+                    bool for_link);
 
-    Member<Document> m_documentUnderMouse; // The document the mouse was last dragged over.
-    Member<Document> m_dragInitiator; // The Document (if any) that initiated the drag.
-    Member<HTMLInputElement> m_fileInputElementUnderMouse;
-    bool m_documentIsHandlingDrag;
+  Member<Page> page_;
 
-    DragDestinationAction m_dragDestinationAction;
-    bool m_didInitiateDrag;
+  // The document the mouse was last dragged over.
+  Member<Document> document_under_mouse_;
+  // The Document (if any) that initiated the drag.
+  Member<Document> drag_initiator_;
+
+  Member<DragState> drag_state_;
+
+  Member<HTMLInputElement> file_input_element_under_mouse_;
+  bool document_is_handling_drag_;
+
+  DragDestinationAction drag_destination_action_;
+  bool did_initiate_drag_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DragController_h
+#endif  // DragController_h

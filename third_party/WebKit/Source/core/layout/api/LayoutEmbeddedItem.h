@@ -11,44 +11,37 @@
 namespace blink {
 
 class LayoutEmbeddedItem : public LayoutPartItem {
-public:
-    explicit LayoutEmbeddedItem(LayoutEmbeddedObject* layoutEmbeddedObject)
-        : LayoutPartItem(layoutEmbeddedObject)
-    {
-    }
+ public:
+  explicit LayoutEmbeddedItem(LayoutEmbeddedObject* layout_embedded_object)
+      : LayoutPartItem(layout_embedded_object) {}
 
-    explicit LayoutEmbeddedItem(const LayoutItem& item)
-        : LayoutPartItem(item)
-    {
-        ASSERT_WITH_SECURITY_IMPLICATION(!item || item.isEmbeddedObject());
-    }
+  explicit LayoutEmbeddedItem(const LayoutItem& item) : LayoutPartItem(item) {
+    SECURITY_DCHECK(!item || item.IsEmbeddedObject());
+  }
 
-    explicit LayoutEmbeddedItem(std::nullptr_t) : LayoutPartItem(nullptr) { }
+  explicit LayoutEmbeddedItem(std::nullptr_t) : LayoutPartItem(nullptr) {}
 
-    LayoutEmbeddedItem() { }
+  LayoutEmbeddedItem() {}
 
-    void setPluginAvailability(LayoutEmbeddedObject::PluginAvailability availability)
-    {
-        toEmbeddedObject()->setPluginAvailability(availability);
-    }
+  void SetPluginAvailability(
+      LayoutEmbeddedObject::PluginAvailability availability) {
+    ToEmbeddedObject()->SetPluginAvailability(availability);
+  }
 
-    bool showsUnavailablePluginIndicator() const
-    {
-        return toEmbeddedObject()->showsUnavailablePluginIndicator();
-    }
+  bool ShowsUnavailablePluginIndicator() const {
+    return ToEmbeddedObject()->ShowsUnavailablePluginIndicator();
+  }
 
-private:
-    LayoutEmbeddedObject* toEmbeddedObject()
-    {
-        return toLayoutEmbeddedObject(layoutObject());
-    }
+ private:
+  LayoutEmbeddedObject* ToEmbeddedObject() {
+    return ToLayoutEmbeddedObject(GetLayoutObject());
+  }
 
-    const LayoutEmbeddedObject* toEmbeddedObject() const
-    {
-        return toLayoutEmbeddedObject(layoutObject());
-    }
+  const LayoutEmbeddedObject* ToEmbeddedObject() const {
+    return ToLayoutEmbeddedObject(GetLayoutObject());
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutEmbeddedItem_h
+#endif  // LayoutEmbeddedItem_h

@@ -32,203 +32,319 @@
 #include "core/CSSValueKeywords.h"
 #include "core/css/CSSDefaultStyleSheets.h"
 #include "core/css/CSSPrimitiveValueMappings.h"
+#include "core/css/CSSStyleSheet.h"
 #include "core/css/CSSToLengthConversionData.h"
+#include "core/css/MediaValuesInitialViewport.h"
 #include "core/css/StylePropertySet.h"
 #include "core/css/StyleRule.h"
-#include "core/css/resolver/ScopedStyleResolver.h"
+#include "core/css/StyleRuleImport.h"
+#include "core/css/StyleSheetContents.h"
 #include "core/dom/Document.h"
+#include "core/dom/DocumentStyleSheetCollection.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/ViewportDescription.h"
+#include "core/frame/FrameView.h"
+#include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/layout/api/LayoutViewItem.h"
 
 namespace blink {
 
-ViewportStyleResolver::ViewportStyleResolver(Document* document)
-    : m_document(document)
-    , m_hasAuthorStyle(false)
-{
-    ASSERT(m_document);
+ViewportStyleResolver::ViewportStyleResolver(Document& document)
+    : document_(document) {
+  DCHECK(document.GetFrame());
+  initial_viewport_medium_ = new MediaQueryEvaluator(
+      MediaValuesInitialViewport::Create(*document.GetFrame()));
 }
 
-void ViewportStyleResolver::collectViewportRules()
-{
-    CSSDefaultStyleSheets& defaultStyleSheets = CSSDefaultStyleSheets::instance();
-    collectViewportRules(defaultStyleSheets.defaultStyle(), UserAgentOrigin);
+void ViewportStyleResolver::Reset() {
+  viewport_dependent_media_query_results_.Clear();
+  device_dependent_media_query_results_.Clear();
+  property_set_ = nullptr;
+  has_author_style_ = false;
+  has_viewport_units_ = false;
+  needs_update_ = kNoUpdate;
+}
 
-    WebViewportStyle viewportStyle = m_document->settings() ? m_document->settings()->viewportStyle() : WebViewportStyle::Default;
-    RuleSet* viewportRules = nullptr;
-    switch (viewportStyle) {
-    case WebViewportStyle::Default:
-        break;
-    case WebViewportStyle::Mobile:
-        viewportRules = defaultStyleSheets.defaultMobileViewportStyle();
-        break;
-    case WebViewportStyle::Television:
-        viewportRules = defaultStyleSheets.defaultTelevisionViewportStyle();
-        break;
+void ViewportStyleResolver::CollectViewportRulesFromUASheets() {
+  CSSDefaultStyleSheets& default_style_sheets =
+      CSSDefaultStyleSheets::Instance();
+  WebViewportStyle viewport_style =
+      document_->GetSettings() ? document_->GetSettings()->GetViewportStyle()
+                               : WebViewportStyle::kDefault;
+  StyleSheetContents* viewport_contents = nullptr;
+  switch (viewport_style) {
+    case WebViewportStyle::kDefault:
+      break;
+    case WebViewportStyle::kMobile:
+      viewport_contents = default_style_sheets.EnsureMobileViewportStyleSheet();
+      break;
+    case WebViewportStyle::kTelevision:
+      viewport_contents =
+          default_style_sheets.EnsureTelevisionViewportStyleSheet();
+      break;
+  }
+  if (viewport_contents)
+    CollectViewportChildRules(viewport_contents->ChildRules(),
+                              kUserAgentOrigin);
+
+  if (document_->IsMobileDocument()) {
+    CollectViewportChildRules(
+        default_style_sheets.EnsureXHTMLMobileProfileStyleSheet()->ChildRules(),
+        kUserAgentOrigin);
+  }
+  DCHECK(!default_style_sheets.DefaultStyleSheet()->HasViewportRule());
+}
+
+void ViewportStyleResolver::CollectViewportChildRules(
+    const HeapVector<Member<StyleRuleBase>>& rules,
+    Origin origin) {
+  for (auto& rule : rules) {
+    if (rule->IsViewportRule()) {
+      AddViewportRule(*ToStyleRuleViewport(rule), origin);
+    } else if (rule->IsMediaRule()) {
+      StyleRuleMedia* media_rule = ToStyleRuleMedia(rule);
+      if (!media_rule->MediaQueries() ||
+          initial_viewport_medium_->Eval(
+              media_rule->MediaQueries(),
+              &viewport_dependent_media_query_results_,
+              &device_dependent_media_query_results_))
+        CollectViewportChildRules(media_rule->ChildRules(), origin);
+    } else if (rule->IsSupportsRule()) {
+      StyleRuleSupports* supports_rule = ToStyleRuleSupports(rule);
+      if (supports_rule->ConditionIsSupported())
+        CollectViewportChildRules(supports_rule->ChildRules(), origin);
     }
-    if (viewportRules)
-        collectViewportRules(viewportRules, UserAgentOrigin);
-
-    if (m_document->isMobileDocument())
-        collectViewportRules(defaultStyleSheets.defaultXHTMLMobileProfileStyle(), UserAgentOrigin);
-
-    if (ScopedStyleResolver* scopedResolver = m_document->scopedStyleResolver())
-        scopedResolver->collectViewportRulesTo(this);
-
-    resolve();
+  }
 }
 
-void ViewportStyleResolver::collectViewportRules(RuleSet* rules, Origin origin)
-{
-    rules->compactRulesIfNeeded();
-
-    const HeapVector<Member<StyleRuleViewport>>& viewportRules = rules->viewportRules();
-    for (size_t i = 0; i < viewportRules.size(); ++i)
-        addViewportRule(viewportRules[i], origin);
+void ViewportStyleResolver::CollectViewportRulesFromImports(
+    StyleSheetContents& contents) {
+  for (const auto& import_rule : contents.ImportRules()) {
+    if (!import_rule->GetStyleSheet())
+      continue;
+    if (!import_rule->GetStyleSheet()->HasViewportRule())
+      continue;
+    if (import_rule->MediaQueries() &&
+        initial_viewport_medium_->Eval(import_rule->MediaQueries(),
+                                       &viewport_dependent_media_query_results_,
+                                       &device_dependent_media_query_results_))
+      CollectViewportRulesFromAuthorSheetContents(
+          *import_rule->GetStyleSheet());
+  }
 }
 
-void ViewportStyleResolver::addViewportRule(StyleRuleViewport* viewportRule, Origin origin)
-{
-    StylePropertySet& propertySet = viewportRule->mutableProperties();
-
-    unsigned propertyCount = propertySet.propertyCount();
-    if (!propertyCount)
-        return;
-
-    if (origin == AuthorOrigin)
-        m_hasAuthorStyle = true;
-
-    if (!m_propertySet) {
-        m_propertySet = propertySet.mutableCopy();
-        return;
-    }
-
-    // We cannot use mergeAndOverrideOnConflict() here because it doesn't
-    // respect the !important declaration (but addRespectingCascade() does).
-    for (unsigned i = 0; i < propertyCount; ++i)
-        m_propertySet->addRespectingCascade(propertySet.propertyAt(i).toCSSProperty());
+void ViewportStyleResolver::CollectViewportRulesFromAuthorSheetContents(
+    StyleSheetContents& contents) {
+  CollectViewportRulesFromImports(contents);
+  if (contents.HasViewportRule())
+    CollectViewportChildRules(contents.ChildRules(), kAuthorOrigin);
 }
 
-void ViewportStyleResolver::resolve()
-{
-    if (!m_propertySet) {
-        m_document->setViewportDescription(ViewportDescription(ViewportDescription::UserAgentStyleSheet));
-        return;
-    }
-
-    ViewportDescription description(m_hasAuthorStyle ? ViewportDescription::AuthorStyleSheet : ViewportDescription::UserAgentStyleSheet);
-
-    description.userZoom = viewportArgumentValue(CSSPropertyUserZoom);
-    description.zoom = viewportArgumentValue(CSSPropertyZoom);
-    description.minZoom = viewportArgumentValue(CSSPropertyMinZoom);
-    description.maxZoom = viewportArgumentValue(CSSPropertyMaxZoom);
-    description.minWidth = viewportLengthValue(CSSPropertyMinWidth);
-    description.maxWidth = viewportLengthValue(CSSPropertyMaxWidth);
-    description.minHeight = viewportLengthValue(CSSPropertyMinHeight);
-    description.maxHeight = viewportLengthValue(CSSPropertyMaxHeight);
-    description.orientation = viewportArgumentValue(CSSPropertyOrientation);
-
-    m_document->setViewportDescription(description);
-
-    m_propertySet = nullptr;
-    m_hasAuthorStyle = false;
+void ViewportStyleResolver::CollectViewportRulesFromAuthorSheet(
+    const CSSStyleSheet& sheet) {
+  DCHECK(sheet.Contents());
+  StyleSheetContents& contents = *sheet.Contents();
+  if (!contents.HasViewportRule() && contents.ImportRules().IsEmpty())
+    return;
+  if (sheet.MediaQueries() &&
+      !initial_viewport_medium_->Eval(sheet.MediaQueries(),
+                                      &viewport_dependent_media_query_results_,
+                                      &device_dependent_media_query_results_))
+    return;
+  CollectViewportRulesFromAuthorSheetContents(contents);
 }
 
-float ViewportStyleResolver::viewportArgumentValue(CSSPropertyID id) const
-{
-    float defaultValue = ViewportDescription::ValueAuto;
+void ViewportStyleResolver::AddViewportRule(StyleRuleViewport& viewport_rule,
+                                            Origin origin) {
+  StylePropertySet& property_set = viewport_rule.MutableProperties();
 
-    // UserZoom default value is CSSValueZoom, which maps to true, meaning that
-    // yes, it is user scalable. When the value is set to CSSValueFixed, we
-    // return false.
-    if (id == CSSPropertyUserZoom)
-        defaultValue = 1;
+  unsigned property_count = property_set.PropertyCount();
+  if (!property_count)
+    return;
 
-    const CSSValue* value = m_propertySet->getPropertyCSSValue(id);
-    if (!value || !value->isPrimitiveValue())
-        return defaultValue;
+  if (origin == kAuthorOrigin)
+    has_author_style_ = true;
 
-    const CSSPrimitiveValue* primitiveValue = toCSSPrimitiveValue(value);
+  if (!property_set_) {
+    property_set_ = property_set.MutableCopy();
+    return;
+  }
 
-    if (primitiveValue->isNumber() || primitiveValue->isPx())
-        return primitiveValue->getFloatValue();
+  // We cannot use mergeAndOverrideOnConflict() here because it doesn't
+  // respect the !important declaration (but addRespectingCascade() does).
+  for (unsigned i = 0; i < property_count; ++i)
+    property_set_->AddRespectingCascade(
+        property_set.PropertyAt(i).ToCSSProperty());
+}
 
-    if (primitiveValue->isFontRelativeLength())
-        return primitiveValue->getFloatValue() * m_document->computedStyle()->getFontDescription().computedSize();
+void ViewportStyleResolver::Resolve() {
+  if (!property_set_) {
+    document_->SetViewportDescription(
+        ViewportDescription(ViewportDescription::kUserAgentStyleSheet));
+    return;
+  }
 
-    if (primitiveValue->isPercentage()) {
-        float percentValue = primitiveValue->getFloatValue() / 100.0f;
-        switch (id) {
-        case CSSPropertyMaxZoom:
-        case CSSPropertyMinZoom:
-        case CSSPropertyZoom:
-            return percentValue;
-        default:
-            ASSERT_NOT_REACHED();
-            break;
-        }
-    }
+  ViewportDescription description(
+      has_author_style_ ? ViewportDescription::kAuthorStyleSheet
+                        : ViewportDescription::kUserAgentStyleSheet);
 
-    switch (primitiveValue->getValueID()) {
-    case CSSValueAuto:
-        return defaultValue;
-    case CSSValueLandscape:
-        return ViewportDescription::ValueLandscape;
-    case CSSValuePortrait:
-        return ViewportDescription::ValuePortrait;
-    case CSSValueZoom:
-        return defaultValue;
-    case CSSValueInternalExtendToZoom:
-        return ViewportDescription::ValueExtendToZoom;
-    case CSSValueFixed:
+  description.user_zoom = ViewportArgumentValue(CSSPropertyUserZoom);
+  description.zoom = ViewportArgumentValue(CSSPropertyZoom);
+  description.min_zoom = ViewportArgumentValue(CSSPropertyMinZoom);
+  description.max_zoom = ViewportArgumentValue(CSSPropertyMaxZoom);
+  description.min_width = ViewportLengthValue(CSSPropertyMinWidth);
+  description.max_width = ViewportLengthValue(CSSPropertyMaxWidth);
+  description.min_height = ViewportLengthValue(CSSPropertyMinHeight);
+  description.max_height = ViewportLengthValue(CSSPropertyMaxHeight);
+  description.orientation = ViewportArgumentValue(CSSPropertyOrientation);
+
+  document_->SetViewportDescription(description);
+}
+
+float ViewportStyleResolver::ViewportArgumentValue(CSSPropertyID id) const {
+  float default_value = ViewportDescription::kValueAuto;
+
+  // UserZoom default value is CSSValueZoom, which maps to true, meaning that
+  // yes, it is user scalable. When the value is set to CSSValueFixed, we
+  // return false.
+  if (id == CSSPropertyUserZoom)
+    default_value = 1;
+
+  const CSSValue* value = property_set_->GetPropertyCSSValue(id);
+  if (!value || !(value->IsPrimitiveValue() || value->IsIdentifierValue()))
+    return default_value;
+
+  if (value->IsIdentifierValue()) {
+    switch (ToCSSIdentifierValue(value)->GetValueID()) {
+      case CSSValueAuto:
+        return default_value;
+      case CSSValueLandscape:
+        return ViewportDescription::kValueLandscape;
+      case CSSValuePortrait:
+        return ViewportDescription::kValuePortrait;
+      case CSSValueZoom:
+        return default_value;
+      case CSSValueInternalExtendToZoom:
+        return ViewportDescription::kValueExtendToZoom;
+      case CSSValueFixed:
         return 0;
-    default:
-        return defaultValue;
+      default:
+        return default_value;
     }
+  }
+
+  const CSSPrimitiveValue* primitive_value = ToCSSPrimitiveValue(value);
+
+  if (primitive_value->IsNumber() || primitive_value->IsPx())
+    return primitive_value->GetFloatValue();
+
+  if (primitive_value->IsFontRelativeLength())
+    return primitive_value->GetFloatValue() *
+           document_->GetComputedStyle()->GetFontDescription().ComputedSize();
+
+  if (primitive_value->IsPercentage()) {
+    float percent_value = primitive_value->GetFloatValue() / 100.0f;
+    switch (id) {
+      case CSSPropertyMaxZoom:
+      case CSSPropertyMinZoom:
+      case CSSPropertyZoom:
+        return percent_value;
+      default:
+        NOTREACHED();
+        break;
+    }
+  }
+
+  NOTREACHED();
+  return default_value;
 }
 
-Length ViewportStyleResolver::viewportLengthValue(CSSPropertyID id) const
-{
-    ASSERT(id == CSSPropertyMaxHeight
-        || id == CSSPropertyMinHeight
-        || id == CSSPropertyMaxWidth
-        || id == CSSPropertyMinWidth);
+Length ViewportStyleResolver::ViewportLengthValue(CSSPropertyID id) {
+  DCHECK(id == CSSPropertyMaxHeight || id == CSSPropertyMinHeight ||
+         id == CSSPropertyMaxWidth || id == CSSPropertyMinWidth);
 
-    const CSSValue* value = m_propertySet->getPropertyCSSValue(id);
-    if (!value || !value->isPrimitiveValue())
-        return Length(); // auto
+  const CSSValue* value = property_set_->GetPropertyCSSValue(id);
+  if (!value || !(value->IsPrimitiveValue() || value->IsIdentifierValue()))
+    return Length();  // auto
 
-    const CSSPrimitiveValue* primitiveValue = toCSSPrimitiveValue(value);
+  if (value->IsIdentifierValue()) {
+    CSSValueID value_id = ToCSSIdentifierValue(value)->GetValueID();
+    if (value_id == CSSValueInternalExtendToZoom)
+      return Length(kExtendToZoom);
+    if (value_id == CSSValueAuto)
+      return Length(kAuto);
+  }
 
-    if (primitiveValue->getValueID() == CSSValueInternalExtendToZoom)
-        return Length(ExtendToZoom);
+  const CSSPrimitiveValue* primitive_value = ToCSSPrimitiveValue(value);
+  ComputedStyle* document_style = document_->MutableComputedStyle();
 
-    ComputedStyle* documentStyle = m_document->mutableComputedStyle();
+  // If we have viewport units the conversion will mark the document style as
+  // having viewport units.
+  bool document_style_has_viewport_units = document_style->HasViewportUnits();
+  document_style->SetHasViewportUnits(false);
 
-    // If we have viewport units the conversion will mark the document style as having viewport units.
-    bool documentStyleHasViewportUnits = documentStyle->hasViewportUnits();
-    documentStyle->setHasViewportUnits(false);
+  FrameView* view = document_->GetFrame()->View();
+  DCHECK(view);
 
-    CSSToLengthConversionData::FontSizes fontSizes(documentStyle, documentStyle);
-    CSSToLengthConversionData::ViewportSize viewportSize(m_document->layoutViewItem());
+  CSSToLengthConversionData::FontSizes font_sizes(document_style,
+                                                  document_style);
+  CSSToLengthConversionData::ViewportSize viewport_size(
+      view->InitialViewportWidth(), view->InitialViewportHeight());
 
-    if (primitiveValue->getValueID() == CSSValueAuto)
-        return Length(Auto);
+  Length result = primitive_value->ConvertToLength(CSSToLengthConversionData(
+      document_style, font_sizes, viewport_size, 1.0f));
+  if (document_style->HasViewportUnits())
+    has_viewport_units_ = true;
+  document_style->SetHasViewportUnits(document_style_has_viewport_units);
 
-    Length result = primitiveValue->convertToLength(CSSToLengthConversionData(documentStyle, fontSizes, viewportSize, 1.0f));
-    if (documentStyle->hasViewportUnits())
-        m_document->setHasViewportUnits();
-    documentStyle->setHasViewportUnits(documentStyleHasViewportUnits);
-
-    return result;
+  return result;
 }
 
-DEFINE_TRACE(ViewportStyleResolver)
-{
-    visitor->trace(m_propertySet);
-    visitor->trace(m_document);
+void ViewportStyleResolver::InitialViewportChanged() {
+  if (needs_update_ == kCollectRules)
+    return;
+  if (has_viewport_units_)
+    needs_update_ = kResolve;
+
+  auto& results = viewport_dependent_media_query_results_;
+  for (unsigned i = 0; i < results.size(); i++) {
+    if (initial_viewport_medium_->Eval(results[i]->Expression()) !=
+        results[i]->Result()) {
+      needs_update_ = kCollectRules;
+      break;
+    }
+  }
+  if (needs_update_ == kNoUpdate)
+    return;
+  document_->ScheduleLayoutTreeUpdateIfNeeded();
 }
 
-} // namespace blink
+void ViewportStyleResolver::SetNeedsCollectRules() {
+  needs_update_ = kCollectRules;
+  document_->ScheduleLayoutTreeUpdateIfNeeded();
+}
+
+void ViewportStyleResolver::UpdateViewport(
+    DocumentStyleSheetCollection& collection) {
+  if (needs_update_ == kNoUpdate)
+    return;
+  if (needs_update_ == kCollectRules) {
+    Reset();
+    CollectViewportRulesFromUASheets();
+    if (RuntimeEnabledFeatures::cssViewportEnabled())
+      collection.CollectViewportRules(*this);
+  }
+  Resolve();
+  needs_update_ = kNoUpdate;
+}
+
+DEFINE_TRACE(ViewportStyleResolver) {
+  visitor->Trace(document_);
+  visitor->Trace(property_set_);
+  visitor->Trace(initial_viewport_medium_);
+  visitor->Trace(viewport_dependent_media_query_results_);
+  visitor->Trace(device_dependent_media_query_results_);
+}
+
+}  // namespace blink

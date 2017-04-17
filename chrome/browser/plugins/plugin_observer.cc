@@ -9,118 +9,47 @@
 #include "base/auto_reset.h"
 #include "base/bind.h"
 #include "base/debug/crash_logging.h"
-#include "base/metrics/histogram.h"
-#include "base/stl_util.h"
+#include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
+#include "chrome/browser/plugins/flash_download_interception.h"
 #include "chrome/browser/plugins/plugin_finder.h"
 #include "chrome/browser/plugins/plugin_infobar_delegates.h"
+#include "chrome/browser/plugins/plugin_installer.h"
+#include "chrome/browser/plugins/plugin_installer_observer.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/tab_modal_confirm_dialog.h"
+#include "chrome/browser/ui/tab_modal_confirm_dialog_delegate.h"
+#include "chrome/common/features.h"
 #include "chrome/common/render_messages.h"
-#include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
-#include "components/content_settings/content/common/content_settings_messages.h"
+#include "chrome/grit/theme_resources.h"
+#include "components/component_updater/component_updater_service.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/infobars/core/confirm_infobar_delegate.h"
 #include "components/infobars/core/infobar.h"
 #include "components/infobars/core/infobar_delegate.h"
 #include "components/infobars/core/simple_alert_infobar_delegate.h"
 #include "components/metrics_services_manager/metrics_services_manager.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/plugin_service.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/webplugininfo.h"
-#include "grit/theme_resources.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/gfx/vector_icons_public.h"
 
-#if defined(ENABLE_PLUGIN_INSTALLATION)
-#include "chrome/browser/plugins/plugin_installer.h"
-#include "chrome/browser/plugins/plugin_installer_observer.h"
-#include "chrome/browser/ui/tab_modal_confirm_dialog_delegate.h"
-#endif  // defined(ENABLE_PLUGIN_INSTALLATION)
-
-using content::OpenURLParams;
 using content::PluginService;
-using content::Referrer;
-using content::WebContents;
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(PluginObserver);
 
 namespace {
-
-#if defined(ENABLE_PLUGIN_INSTALLATION)
-
-// ConfirmInstallDialogDelegate ------------------------------------------------
-
-class ConfirmInstallDialogDelegate : public TabModalConfirmDialogDelegate,
-                                     public WeakPluginInstallerObserver {
- public:
-  ConfirmInstallDialogDelegate(content::WebContents* web_contents,
-                               PluginInstaller* installer,
-                               std::unique_ptr<PluginMetadata> plugin_metadata);
-
-  // TabModalConfirmDialogDelegate methods:
-  base::string16 GetTitle() override;
-  base::string16 GetDialogMessage() override;
-  base::string16 GetAcceptButtonTitle() override;
-  void OnAccepted() override;
-  void OnCanceled() override;
-
-  // WeakPluginInstallerObserver methods:
-  void DownloadStarted() override;
-  void OnlyWeakObserversLeft() override;
-
- private:
-  content::WebContents* web_contents_;
-  std::unique_ptr<PluginMetadata> plugin_metadata_;
-};
-
-ConfirmInstallDialogDelegate::ConfirmInstallDialogDelegate(
-    content::WebContents* web_contents,
-    PluginInstaller* installer,
-    std::unique_ptr<PluginMetadata> plugin_metadata)
-    : TabModalConfirmDialogDelegate(web_contents),
-      WeakPluginInstallerObserver(installer),
-      web_contents_(web_contents),
-      plugin_metadata_(std::move(plugin_metadata)) {}
-
-base::string16 ConfirmInstallDialogDelegate::GetTitle() {
-  return l10n_util::GetStringFUTF16(
-      IDS_PLUGIN_CONFIRM_INSTALL_DIALOG_TITLE, plugin_metadata_->name());
-}
-
-base::string16 ConfirmInstallDialogDelegate::GetDialogMessage() {
-  return l10n_util::GetStringFUTF16(IDS_PLUGIN_CONFIRM_INSTALL_DIALOG_MSG,
-                                    plugin_metadata_->name());
-}
-
-base::string16 ConfirmInstallDialogDelegate::GetAcceptButtonTitle() {
-  return l10n_util::GetStringUTF16(
-      IDS_PLUGIN_CONFIRM_INSTALL_DIALOG_ACCEPT_BUTTON);
-}
-
-void ConfirmInstallDialogDelegate::OnAccepted() {
-  installer()->StartInstalling(plugin_metadata_->plugin_url(), web_contents_);
-}
-
-void ConfirmInstallDialogDelegate::OnCanceled() {
-}
-
-void ConfirmInstallDialogDelegate::DownloadStarted() {
-  Cancel();
-}
-
-void ConfirmInstallDialogDelegate::OnlyWeakObserversLeft() {
-  Cancel();
-}
-#endif  // defined(ENABLE_PLUGIN_INSTALLATION)
 
 // ReloadPluginInfoBarDelegate -------------------------------------------------
 
@@ -137,8 +66,7 @@ class ReloadPluginInfoBarDelegate : public ConfirmInfoBarDelegate {
 
   // ConfirmInfobarDelegate:
   infobars::InfoBarDelegate::InfoBarIdentifier GetIdentifier() const override;
-  int GetIconId() const override;
-  gfx::VectorIconId GetVectorIconId() const override;
+  const gfx::VectorIcon& GetVectorIcon() const override;
   base::string16 GetMessageText() const override;
   int GetButtons() const override;
   base::string16 GetButtonLabel(InfoBarButton button) const override;
@@ -164,23 +92,15 @@ ReloadPluginInfoBarDelegate::ReloadPluginInfoBarDelegate(
     : controller_(controller),
       message_(message) {}
 
-ReloadPluginInfoBarDelegate::~ReloadPluginInfoBarDelegate(){ }
+ReloadPluginInfoBarDelegate::~ReloadPluginInfoBarDelegate() {}
 
 infobars::InfoBarDelegate::InfoBarIdentifier
 ReloadPluginInfoBarDelegate::GetIdentifier() const {
   return RELOAD_PLUGIN_INFOBAR_DELEGATE;
 }
 
-int ReloadPluginInfoBarDelegate::GetIconId() const {
-  return IDR_INFOBAR_PLUGIN_CRASHED;
-}
-
-gfx::VectorIconId ReloadPluginInfoBarDelegate::GetVectorIconId() const {
-#if !defined(OS_MACOSX) && !defined(OS_ANDROID)
-  return gfx::VectorIconId::EXTENSION_CRASHED;
-#else
-  return gfx::VectorIconId::VECTOR_ICON_NONE;
-#endif
+const gfx::VectorIcon& ReloadPluginInfoBarDelegate::GetVectorIcon() const {
+  return kExtensionCrashedIcon;
 }
 
 base::string16 ReloadPluginInfoBarDelegate::GetMessageText() const {
@@ -198,7 +118,7 @@ base::string16 ReloadPluginInfoBarDelegate::GetButtonLabel(
 }
 
 bool ReloadPluginInfoBarDelegate::Accept() {
-  controller_->Reload(true);
+  controller_->Reload(content::ReloadType::NORMAL, true);
   return true;
 }
 
@@ -206,7 +126,6 @@ bool ReloadPluginInfoBarDelegate::Accept() {
 
 // PluginObserver -------------------------------------------------------------
 
-#if defined(ENABLE_PLUGIN_INSTALLATION)
 class PluginObserver::PluginPlaceholderHost : public PluginInstallerObserver {
  public:
   PluginPlaceholderHost(PluginObserver* observer,
@@ -217,30 +136,6 @@ class PluginObserver::PluginPlaceholderHost : public PluginInstallerObserver {
         observer_(observer),
         routing_id_(routing_id) {
     DCHECK(installer);
-    switch (installer->state()) {
-      case PluginInstaller::INSTALLER_STATE_IDLE: {
-        observer->Send(new ChromeViewMsg_FoundMissingPlugin(routing_id_,
-                                                            plugin_name));
-        break;
-      }
-      case PluginInstaller::INSTALLER_STATE_DOWNLOADING: {
-        DownloadStarted();
-        break;
-      }
-    }
-  }
-
-  // PluginInstallerObserver methods:
-  void DownloadStarted() override {
-    observer_->Send(new ChromeViewMsg_StartedDownloadingPlugin(routing_id_));
-  }
-
-  void DownloadError(const std::string& msg) override {
-    observer_->Send(new ChromeViewMsg_ErrorDownloadingPlugin(routing_id_, msg));
-  }
-
-  void DownloadCancelled() override {
-    observer_->Send(new ChromeViewMsg_CancelledDownloadingPlugin(routing_id_));
   }
 
   void DownloadFinished() override {
@@ -253,7 +148,54 @@ class PluginObserver::PluginPlaceholderHost : public PluginInstallerObserver {
 
   int routing_id_;
 };
-#endif  // defined(ENABLE_PLUGIN_INSTALLATION)
+
+class PluginObserver::ComponentObserver
+    : public update_client::UpdateClient::Observer {
+ public:
+  using Events = update_client::UpdateClient::Observer::Events;
+  ComponentObserver(PluginObserver* observer,
+                    int routing_id,
+                    const std::string& component_id)
+      : observer_(observer),
+        routing_id_(routing_id),
+        component_id_(component_id) {
+    g_browser_process->component_updater()->AddObserver(this);
+  }
+
+  ~ComponentObserver() override {
+    g_browser_process->component_updater()->RemoveObserver(this);
+  }
+
+  void OnEvent(Events event, const std::string& id) override {
+    if (id != component_id_)
+      return;
+    switch (event) {
+      case Events::COMPONENT_UPDATED:
+        observer_->Send(
+            new ChromeViewMsg_PluginComponentUpdateSuccess(routing_id_));
+        observer_->RemoveComponentObserver(routing_id_);
+        break;
+      case Events::COMPONENT_UPDATE_FOUND:
+        observer_->Send(
+            new ChromeViewMsg_PluginComponentUpdateDownloading(routing_id_));
+        break;
+      case Events::COMPONENT_NOT_UPDATED:
+        observer_->Send(
+            new ChromeViewMsg_PluginComponentUpdateFailure(routing_id_));
+        observer_->RemoveComponentObserver(routing_id_);
+        break;
+      default:
+        // No message to send.
+        break;
+    }
+  }
+
+ private:
+  PluginObserver* observer_;
+  int routing_id_;
+  std::string component_id_;
+  DISALLOW_COPY_AND_ASSIGN(ComponentObserver);
+};
 
 PluginObserver::PluginObserver(content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents),
@@ -261,9 +203,6 @@ PluginObserver::PluginObserver(content::WebContents* web_contents)
 }
 
 PluginObserver::~PluginObserver() {
-#if defined(ENABLE_PLUGIN_INSTALLATION)
-  STLDeleteValues(&plugin_placeholders_);
-#endif
 }
 
 void PluginObserver::PluginCrashed(const base::FilePath& plugin_path,
@@ -321,12 +260,12 @@ bool PluginObserver::OnMessageReceived(
   IPC_BEGIN_MESSAGE_MAP(PluginObserver, message)
     IPC_MESSAGE_HANDLER(ChromeViewHostMsg_BlockedOutdatedPlugin,
                         OnBlockedOutdatedPlugin)
-#if defined(ENABLE_PLUGIN_INSTALLATION)
+    IPC_MESSAGE_HANDLER(ChromeViewHostMsg_BlockedComponentUpdatedPlugin,
+                        OnBlockedComponentUpdatedPlugin)
     IPC_MESSAGE_HANDLER(ChromeViewHostMsg_RemovePluginPlaceholderHost,
                         OnRemovePluginPlaceholderHost)
-#endif
-    IPC_MESSAGE_HANDLER(ChromeViewHostMsg_OpenAboutPlugins,
-                        OnOpenAboutPlugins)
+    IPC_MESSAGE_HANDLER(ChromeViewHostMsg_ShowFlashPermissionBubble,
+                        OnShowFlashPermissionBubble)
     IPC_MESSAGE_HANDLER(ChromeViewHostMsg_CouldNotLoadPlugin,
                         OnCouldNotLoadPlugin)
 
@@ -338,48 +277,51 @@ bool PluginObserver::OnMessageReceived(
 
 void PluginObserver::OnBlockedOutdatedPlugin(int placeholder_id,
                                              const std::string& identifier) {
-#if defined(ENABLE_PLUGIN_INSTALLATION)
   PluginFinder* finder = PluginFinder::GetInstance();
   // Find plugin to update.
   PluginInstaller* installer = NULL;
   std::unique_ptr<PluginMetadata> plugin;
   if (finder->FindPluginWithIdentifier(identifier, &installer, &plugin)) {
-    plugin_placeholders_[placeholder_id] = new PluginPlaceholderHost(
-        this, placeholder_id, plugin->name(), installer);
+    plugin_placeholders_[placeholder_id] =
+        base::MakeUnique<PluginPlaceholderHost>(this, placeholder_id,
+                                                plugin->name(), installer);
     OutdatedPluginInfoBarDelegate::Create(
         InfoBarService::FromWebContents(web_contents()), installer,
         std::move(plugin));
   } else {
     NOTREACHED();
   }
-#else
-  // If we don't support third-party plugin installation, we shouldn't have
-  // outdated plugins.
-  NOTREACHED();
-#endif  // defined(ENABLE_PLUGIN_INSTALLATION)
 }
 
-#if defined(ENABLE_PLUGIN_INSTALLATION)
+void PluginObserver::OnBlockedComponentUpdatedPlugin(
+    int placeholder_id,
+    const std::string& identifier) {
+  component_observers_[placeholder_id] =
+      base::MakeUnique<ComponentObserver>(this, placeholder_id, identifier);
+  g_browser_process->component_updater()->GetOnDemandUpdater().OnDemandUpdate(
+      identifier, component_updater::Callback());
+}
+
+void PluginObserver::RemoveComponentObserver(int placeholder_id) {
+  auto it = component_observers_.find(placeholder_id);
+  DCHECK(it != component_observers_.end());
+  component_observers_.erase(it);
+}
+
 void PluginObserver::OnRemovePluginPlaceholderHost(int placeholder_id) {
-  std::map<int, PluginPlaceholderHost*>::iterator it =
-      plugin_placeholders_.find(placeholder_id);
+  auto it = plugin_placeholders_.find(placeholder_id);
   if (it == plugin_placeholders_.end()) {
     NOTREACHED();
     return;
   }
-  delete it->second;
   plugin_placeholders_.erase(it);
 }
-#endif  // defined(ENABLE_PLUGIN_INSTALLATION)
 
-void PluginObserver::OnOpenAboutPlugins() {
-  web_contents()->OpenURL(OpenURLParams(
-      GURL(chrome::kChromeUIPluginsURL),
-      content::Referrer::SanitizeForRequest(
-          GURL(chrome::kChromeUIPluginsURL),
-          content::Referrer(web_contents()->GetURL(),
-                            blink::WebReferrerPolicyDefault)),
-      NEW_FOREGROUND_TAB, ui::PAGE_TRANSITION_AUTO_BOOKMARK, false));
+void PluginObserver::OnShowFlashPermissionBubble() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  FlashDownloadInterception::InterceptFlashDownloadNavigation(
+      web_contents(), web_contents()->GetLastCommittedURL());
 }
 
 void PluginObserver::OnCouldNotLoadPlugin(const base::FilePath& plugin_path) {
@@ -389,13 +331,7 @@ void PluginObserver::OnCouldNotLoadPlugin(const base::FilePath& plugin_path) {
       PluginService::GetInstance()->GetPluginDisplayNameByPath(plugin_path);
   SimpleAlertInfoBarDelegate::Create(
       InfoBarService::FromWebContents(web_contents()),
-      infobars::InfoBarDelegate::PLUGIN_OBSERVER,
-      IDR_INFOBAR_PLUGIN_CRASHED,
-#if !defined(OS_MACOSX) && !defined(OS_ANDROID)
-      gfx::VectorIconId::EXTENSION_CRASHED,
-#else
-      gfx::VectorIconId::VECTOR_ICON_NONE,
-#endif
+      infobars::InfoBarDelegate::PLUGIN_OBSERVER, &kExtensionCrashedIcon,
       l10n_util::GetStringFUTF16(IDS_PLUGIN_INITIALIZATION_ERROR_PROMPT,
                                  plugin_name),
       true);

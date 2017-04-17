@@ -7,39 +7,40 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/HashMap.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/text/StringHash.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/text/StringHash.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class InspectedFrames;
 class LocalFrame;
 
-class CORE_EXPORT InspectorResourceContainer : public GarbageCollectedFinalized<InspectorResourceContainer> {
-    WTF_MAKE_NONCOPYABLE(InspectorResourceContainer);
-public:
-    explicit InspectorResourceContainer(InspectedFrames*);
-    ~InspectorResourceContainer();
-    DECLARE_TRACE();
+class CORE_EXPORT InspectorResourceContainer
+    : public GarbageCollectedFinalized<InspectorResourceContainer> {
+  WTF_MAKE_NONCOPYABLE(InspectorResourceContainer);
 
-    void didCommitLoadForLocalFrame(LocalFrame*);
+ public:
+  explicit InspectorResourceContainer(InspectedFrames*);
+  ~InspectorResourceContainer();
+  DECLARE_TRACE();
 
-    void storeStyleSheetContent(const String& url, const String& content);
-    bool loadStyleSheetContent(const String& url, String* content);
+  void DidCommitLoadForLocalFrame(LocalFrame*);
 
-    void storeStyleElementContent(int backendNodeId, const String& content);
-    bool loadStyleElementContent(int backendNodeId, String* content);
+  void StoreStyleSheetContent(const String& url, const String& content);
+  bool LoadStyleSheetContent(const String& url, String* content);
 
-private:
-    Member<InspectedFrames> m_inspectedFrames;
-    HashMap<String, String> m_styleSheetContents;
-    HashMap<int, String> m_styleElementContents;
+  void StoreStyleElementContent(int backend_node_id, const String& content);
+  bool LoadStyleElementContent(int backend_node_id, String* content);
+
+ private:
+  Member<InspectedFrames> inspected_frames_;
+  HashMap<String, String> style_sheet_contents_;
+  HashMap<int, String> style_element_contents_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-
-#endif // !defined(InspectorResourceContainer_h)
+#endif  // !defined(InspectorResourceContainer_h)

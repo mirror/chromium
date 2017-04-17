@@ -4,87 +4,66 @@
 <script src="../../../http/tests/inspector/inspector-test.js"></script>
 <script src="../../../http/tests/inspector/timeline-test.js"></script>
 <script>
-function changeClassNameAndDisplay(callback)
+function changeClassNameAndDisplay()
 {
-    requestAnimationFrame(function() {
-        document.getElementById("testElementOne").className = "red";
-        document.getElementById("testElementTwo").className = "red";
-        var forceStyleRecalc = document.body.offsetTop;
-        if (window.testRunner)
-            testRunner.layoutAndPaintAsyncThen(callback);
-    });
+    document.getElementById("testElementOne").className = "red";
+    document.getElementById("testElementTwo").className = "red";
+    var forceStyleRecalc = document.body.offsetTop;
+    return waitForFrame();
 }
 
-function changeIdWithoutStyleChangeAndDisplay(callback)
+function changeIdWithoutStyleChangeAndDisplay()
 {
-    requestAnimationFrame(function() {
-        document.getElementById("testElementOne").id = "testElementNoMatchingStyles1";
-        document.getElementById("testElementTwo").id = "testElementNoMatchingStyles2";
-        var forceStyleRecalc = document.body.offsetTop;
-        if (window.testRunner)
-            testRunner.layoutAndPaintAsyncThen(callback);
-    });
+    document.getElementById("testElementOne").id = "testElementNoMatchingStyles1";
+    document.getElementById("testElementTwo").id = "testElementNoMatchingStyles2";
+    var forceStyleRecalc = document.body.offsetTop;
+    return waitForFrame();
 }
 
-function changeIdAndDisplay(callback)
+function changeIdAndDisplay()
 {
-    requestAnimationFrame(function() {
-        document.getElementById("testElementNoMatchingStyles1").id = "testElementFour";
-        document.getElementById("testElementNoMatchingStyles2").id = "testElementFive";
-        var forceStyleRecalc = document.body.offsetTop;
-        if (window.testRunner)
-            testRunner.layoutAndPaintAsyncThen(callback);
-    });
+    document.getElementById("testElementNoMatchingStyles1").id = "testElementFour";
+    document.getElementById("testElementNoMatchingStyles2").id = "testElementFive";
+    var forceStyleRecalc = document.body.offsetTop;
+    return waitForFrame();
 }
 
-function changeStyleAttributeAndDisplay(callback)
+function changeStyleAttributeAndDisplay()
 {
-    requestAnimationFrame(function() {
-        document.getElementById("testElementFour").setAttribute("style", "color: purple");
-        document.getElementById("testElementFive").setAttribute("style", "color: pink");
-        var forceStyleRecalc = document.body.offsetTop;
-        if (window.testRunner)
-            testRunner.layoutAndPaintAsyncThen(callback);
-    });
+    document.getElementById("testElementFour").setAttribute("style", "color: purple");
+    document.getElementById("testElementFive").setAttribute("style", "color: pink");
+    var forceStyleRecalc = document.body.offsetTop;
+    return waitForFrame();
 }
 
-function changeAttributeAndDisplay(callback)
+function changeAttributeAndDisplay()
 {
-    requestAnimationFrame(function() {
-        document.getElementById("testElementFour").setAttribute("dir", "rtl");
-        document.getElementById("testElementFive").setAttribute("dir", "rtl");
-        var forceStyleRecalc = document.body.offsetTop;
-        if (window.testRunner)
-            testRunner.layoutAndPaintAsyncThen(callback);
-    });
+    document.getElementById("testElementFour").setAttribute("dir", "rtl");
+    document.getElementById("testElementFive").setAttribute("dir", "rtl");
+    var forceStyleRecalc = document.body.offsetTop;
+    return waitForFrame();
 }
 
-function changePseudoAndDisplay(callback)
+function changePseudoAndDisplay()
 {
-    requestAnimationFrame(function() {
-        var element1 = document.getElementById("testElementFour");
-        var element2 = document.getElementById("testElementFive");
-        eventSender.mouseMoveTo(element2.offsetLeft + 2, element2.offsetTop + 2);
-        requestAnimationFrame(function() {
-            var forceStyleRecalc = document.body.offsetTop;
-            if (window.testRunner)
-                testRunner.layoutAndPaintAsyncThen(callback);
-        });
+    var element1 = document.getElementById("testElementFour");
+    var element2 = document.getElementById("testElementFive");
+    eventSender.mouseMoveTo(element2.offsetLeft + 2, element2.offsetTop + 2);
+    return waitForFrame().then(function() {
+        var forceStyleRecalc = document.body.offsetTop;
+        return waitForFrame();
     });
 }
 
 function test()
 {
-    var currentPanel = WebInspector.inspectorView.currentPanel();
-    InspectorTest.assertEquals(currentPanel._panelName, "timeline", "Current panel should be the timeline.");
     Runtime.experiments.enableForTest("timelineInvalidationTracking");
 
     InspectorTest.runTestSuite([
         function testClassName(next)
         {
             InspectorTest.invokeAsyncWithTimeline("changeClassNameAndDisplay", function() {
-                var record = InspectorTest.findFirstTimelineRecord(WebInspector.TimelineModel.RecordType.UpdateLayoutTree);
-                InspectorTest.addArray(record._event.invalidationTrackingEvents, InspectorTest.InvalidationFormatters);
+                InspectorTest.dumpInvalidations(TimelineModel.TimelineModel.RecordType.UpdateLayoutTree, 0);
                 next();
             });
         },
@@ -92,8 +71,8 @@ function test()
         function testIdWithoutStyleChange(next)
         {
             InspectorTest.invokeAsyncWithTimeline("changeIdWithoutStyleChangeAndDisplay", function() {
-                var record = InspectorTest.findFirstTimelineRecord(WebInspector.TimelineModel.RecordType.UpdateLayoutTree);
-                InspectorTest.assertTrue(record === undefined, "There should be no style recalculation for an id change without style changes.");
+                var event = InspectorTest.findTimelineEvent(TimelineModel.TimelineModel.RecordType.UpdateLayoutTree);
+                InspectorTest.assertTrue(!event, "There should be no style recalculation for an id change without style changes.");
                 next();
             });
         },
@@ -101,8 +80,7 @@ function test()
         function testId(next)
         {
             InspectorTest.invokeAsyncWithTimeline("changeIdAndDisplay", function() {
-                var record = InspectorTest.findFirstTimelineRecord(WebInspector.TimelineModel.RecordType.UpdateLayoutTree);
-                InspectorTest.addArray(record._event.invalidationTrackingEvents, InspectorTest.InvalidationFormatters);
+                InspectorTest.dumpInvalidations(TimelineModel.TimelineModel.RecordType.UpdateLayoutTree, 0);
                 next();
             });
         },
@@ -110,8 +88,7 @@ function test()
         function testStyleAttributeChange(next)
         {
             InspectorTest.invokeAsyncWithTimeline("changeStyleAttributeAndDisplay", function() {
-                var record = InspectorTest.findFirstTimelineRecord(WebInspector.TimelineModel.RecordType.UpdateLayoutTree);
-                InspectorTest.addArray(record._event.invalidationTrackingEvents, InspectorTest.InvalidationFormatters);
+                InspectorTest.dumpInvalidations(TimelineModel.TimelineModel.RecordType.UpdateLayoutTree, 0);
                 next();
             });
         },
@@ -119,8 +96,7 @@ function test()
         function testAttributeChange(next)
         {
             InspectorTest.invokeAsyncWithTimeline("changeAttributeAndDisplay", function() {
-                var record = InspectorTest.findFirstTimelineRecord(WebInspector.TimelineModel.RecordType.UpdateLayoutTree);
-                InspectorTest.addArray(record._event.invalidationTrackingEvents, InspectorTest.InvalidationFormatters);
+                InspectorTest.dumpInvalidations(TimelineModel.TimelineModel.RecordType.UpdateLayoutTree, 0);
                 next();
             });
         },
@@ -128,8 +104,7 @@ function test()
         function testPseudoChange(next)
         {
             InspectorTest.invokeAsyncWithTimeline("changePseudoAndDisplay", function() {
-                var record = InspectorTest.findFirstTimelineRecord(WebInspector.TimelineModel.RecordType.UpdateLayoutTree);
-                InspectorTest.addArray(record._event.invalidationTrackingEvents, InspectorTest.InvalidationFormatters);
+                InspectorTest.dumpInvalidations(TimelineModel.TimelineModel.RecordType.UpdateLayoutTree, 0);
                 next();
             });
         }

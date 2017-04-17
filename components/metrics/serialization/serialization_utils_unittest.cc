@@ -22,7 +22,7 @@ class SerializationUtilsTest : public testing::Test {
   SerializationUtilsTest() {
     bool success = temporary_dir.CreateUniqueTempDir();
     if (success) {
-      base::FilePath dir_path = temporary_dir.path();
+      base::FilePath dir_path = temporary_dir.GetPath();
       filename = dir_path.value() + "chromeossampletest";
       filepath = base::FilePath(filename);
     }
@@ -128,10 +128,10 @@ TEST_F(SerializationUtilsTest, ReadLongMessageTest) {
   std::unique_ptr<MetricSample> crash = MetricSample::CrashSample("test");
   SerializationUtils::WriteMetricToFile(*crash.get(), filename);
 
-  ScopedVector<MetricSample> samples;
+  std::vector<std::unique_ptr<MetricSample>> samples;
   SerializationUtils::ReadAndTruncateMetricsFromFile(filename, &samples);
   ASSERT_EQ(size_t(1), samples.size());
-  ASSERT_TRUE(samples[0] != NULL);
+  ASSERT_TRUE(samples[0].get() != nullptr);
   EXPECT_TRUE(crash->IsEqual(*samples[0]));
 }
 
@@ -151,11 +151,11 @@ TEST_F(SerializationUtilsTest, WriteReadTest) {
   SerializationUtils::WriteMetricToFile(*lhist.get(), filename);
   SerializationUtils::WriteMetricToFile(*shist.get(), filename);
   SerializationUtils::WriteMetricToFile(*action.get(), filename);
-  ScopedVector<MetricSample> vect;
+  std::vector<std::unique_ptr<MetricSample>> vect;
   SerializationUtils::ReadAndTruncateMetricsFromFile(filename, &vect);
   ASSERT_EQ(vect.size(), size_t(5));
-  for (int i = 0; i < 5; i++) {
-    ASSERT_TRUE(vect[0] != NULL);
+  for (auto& sample : vect) {
+    ASSERT_NE(nullptr, sample.get());
   }
   EXPECT_TRUE(hist->IsEqual(*vect[0]));
   EXPECT_TRUE(crash->IsEqual(*vect[1]));

@@ -31,6 +31,7 @@
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_service_impl.h"
 #include "components/policy/core/common/policy_types.h"
+#include "components/policy/policy_constants.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_type.h"
@@ -39,7 +40,6 @@
 #include "net/cert/x509_certificate.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/test_data_directory.h"
-#include "policy/policy_constants.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -185,10 +185,8 @@ std::string ValueToString(const base::Value& value) {
 }
 
 void AppendAll(const base::ListValue& from, base::ListValue* to) {
-  for (base::ListValue::const_iterator it = from.begin(); it != from.end();
-       ++it) {
-    to->Append((*it)->DeepCopy());
-  }
+  for (const auto& value : from)
+    to->Append(value.CreateDeepCopy());
 }
 
 // Matcher to match base::Value.
@@ -314,10 +312,12 @@ class NetworkConfigurationUpdaterTest : public testing::Test {
   std::unique_ptr<PolicyServiceImpl> policy_service_;
   FakeUser fake_user_;
 
+  // Must outlive |profile_|.
+  content::TestBrowserThreadBundle thread_bundle_;
+
   TestingProfile profile_;
 
   std::unique_ptr<NetworkConfigurationUpdater> network_configuration_updater_;
-  content::TestBrowserThreadBundle thread_bundle_;
 };
 
 TEST_F(NetworkConfigurationUpdaterTest, CellularAllowRoaming) {
@@ -358,7 +358,7 @@ TEST_F(NetworkConfigurationUpdaterTest, PolicyIsValidatedAndRepaired) {
   PolicyMap policy;
   policy.Set(key::kOpenNetworkConfiguration, POLICY_LEVEL_MANDATORY,
              POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
-             base::WrapUnique(new base::StringValue(onc_policy)), nullptr);
+             base::MakeUnique<base::Value>(onc_policy), nullptr);
   UpdateProviderPolicy(policy);
 
   EXPECT_CALL(network_config_handler_,
@@ -479,7 +479,7 @@ TEST_F(NetworkConfigurationUpdaterTest,
   PolicyMap policy;
   policy.Set(key::kOpenNetworkConfiguration, POLICY_LEVEL_MANDATORY,
              POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
-             base::WrapUnique(new base::StringValue(kFakeONC)), nullptr);
+             base::MakeUnique<base::Value>(kFakeONC), nullptr);
   UpdateProviderPolicy(policy);
   base::RunLoop().RunUntilIdle();
 
@@ -500,7 +500,7 @@ TEST_F(NetworkConfigurationUpdaterTest,
   PolicyMap policy;
   policy.Set(key::kOpenNetworkConfiguration, POLICY_LEVEL_MANDATORY,
              POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
-             base::WrapUnique(new base::StringValue(kFakeONC)), nullptr);
+             base::MakeUnique<base::Value>(kFakeONC), nullptr);
   UpdateProviderPolicy(policy);
 
   EXPECT_CALL(network_config_handler_,
@@ -567,8 +567,8 @@ class NetworkConfigurationUpdaterTestWithParam
 TEST_P(NetworkConfigurationUpdaterTestWithParam, InitialUpdates) {
   PolicyMap policy;
   policy.Set(GetParam(), POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
-             POLICY_SOURCE_CLOUD,
-             base::WrapUnique(new base::StringValue(kFakeONC)), nullptr);
+             POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>(kFakeONC),
+             nullptr);
   UpdateProviderPolicy(policy);
 
   EXPECT_CALL(network_config_handler_,
@@ -589,8 +589,8 @@ TEST_P(NetworkConfigurationUpdaterTestWithParam,
        PolicyNotSetBeforePolicyProviderInitialized) {
   PolicyMap policy;
   policy.Set(GetParam(), POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
-             POLICY_SOURCE_CLOUD,
-             base::WrapUnique(new base::StringValue(kFakeONC)), nullptr);
+             POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>(kFakeONC),
+             nullptr);
   UpdateProviderPolicy(policy);
 
   CreateNetworkConfigurationUpdater();
@@ -617,8 +617,8 @@ TEST_P(NetworkConfigurationUpdaterTestWithParam,
 
   PolicyMap policy;
   policy.Set(GetParam(), POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
-             POLICY_SOURCE_CLOUD,
-             base::WrapUnique(new base::StringValue(kFakeONC)), nullptr);
+             POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>(kFakeONC),
+             nullptr);
   UpdateProviderPolicy(policy);
 
   EXPECT_CALL(network_config_handler_,
@@ -657,8 +657,8 @@ TEST_P(NetworkConfigurationUpdaterTestWithParam, PolicyChange) {
 
   PolicyMap policy;
   policy.Set(GetParam(), POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
-             POLICY_SOURCE_CLOUD,
-             base::WrapUnique(new base::StringValue(kFakeONC)), nullptr);
+             POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>(kFakeONC),
+             nullptr);
   UpdateProviderPolicy(policy);
   Mock::VerifyAndClearExpectations(&network_config_handler_);
   EXPECT_EQ(ExpectedImportCertificatesCallCount(),

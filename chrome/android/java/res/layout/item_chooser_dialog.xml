@@ -39,6 +39,7 @@
         android:id="@+id/container"
         android:layout_width="fill_parent"
         android:layout_height="100dp" >
+
         <ProgressBar
             android:id="@+id/progress"
             android:layout_width="24dp"

@@ -25,45 +25,43 @@
 
 #include "modules/webdatabase/SQLTransactionStateMachine.h"
 
-#include "platform/Logging.h"
-#include "wtf/Assertions.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
-#if !LOG_DISABLED
-const char* nameForSQLTransactionState(SQLTransactionState state)
-{
-    switch (state) {
-    case SQLTransactionState::End:
-        return "end";
-    case SQLTransactionState::Idle:
-        return "idle";
-    case SQLTransactionState::AcquireLock:
-        return "acquireLock";
-    case SQLTransactionState::OpenTransactionAndPreflight:
-        return "openTransactionAndPreflight";
-    case SQLTransactionState::RunStatements:
-        return "runStatements";
-    case SQLTransactionState::PostflightAndCommit:
-        return "postflightAndCommit";
-    case SQLTransactionState::CleanupAndTerminate:
-        return "cleanupAndTerminate";
-    case SQLTransactionState::CleanupAfterTransactionErrorCallback:
-        return "cleanupAfterTransactionErrorCallback";
-    case SQLTransactionState::DeliverTransactionCallback:
-        return "deliverTransactionCallback";
-    case SQLTransactionState::DeliverTransactionErrorCallback:
-        return "deliverTransactionErrorCallback";
-    case SQLTransactionState::DeliverStatementCallback:
-        return "deliverStatementCallback";
-    case SQLTransactionState::DeliverQuotaIncreaseCallback:
-        return "deliverQuotaIncreaseCallback";
-    case SQLTransactionState::DeliverSuccessCallback:
-        return "deliverSuccessCallback";
+#if DCHECK_IS_ON()
+const char* NameForSQLTransactionState(SQLTransactionState state) {
+  switch (state) {
+    case SQLTransactionState::kEnd:
+      return "end";
+    case SQLTransactionState::kIdle:
+      return "idle";
+    case SQLTransactionState::kAcquireLock:
+      return "acquireLock";
+    case SQLTransactionState::kOpenTransactionAndPreflight:
+      return "openTransactionAndPreflight";
+    case SQLTransactionState::kRunStatements:
+      return "runStatements";
+    case SQLTransactionState::kPostflightAndCommit:
+      return "postflightAndCommit";
+    case SQLTransactionState::kCleanupAndTerminate:
+      return "cleanupAndTerminate";
+    case SQLTransactionState::kCleanupAfterTransactionErrorCallback:
+      return "cleanupAfterTransactionErrorCallback";
+    case SQLTransactionState::kDeliverTransactionCallback:
+      return "deliverTransactionCallback";
+    case SQLTransactionState::kDeliverTransactionErrorCallback:
+      return "deliverTransactionErrorCallback";
+    case SQLTransactionState::kDeliverStatementCallback:
+      return "deliverStatementCallback";
+    case SQLTransactionState::kDeliverQuotaIncreaseCallback:
+      return "deliverQuotaIncreaseCallback";
+    case SQLTransactionState::kDeliverSuccessCallback:
+      return "deliverSuccessCallback";
     default:
-        return "UNKNOWN";
-    }
+      return "UNKNOWN";
+  }
 }
 #endif
 
-} // namespace blink
+}  // namespace blink

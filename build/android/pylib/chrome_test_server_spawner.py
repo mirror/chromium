@@ -35,7 +35,8 @@ os.environ['PYTHONPATH'] = os.environ.get('PYTHONPATH', '') + (':%s:%s:%s:%s:%s'
        os.path.join(host_paths.DIR_SOURCE_ROOT, 'third_party', 'pyftpdlib',
                     'src'),
        os.path.join(host_paths.DIR_SOURCE_ROOT, 'net', 'tools', 'testserver'),
-       os.path.join(host_paths.DIR_SOURCE_ROOT, 'sync', 'tools', 'testserver')))
+       os.path.join(host_paths.DIR_SOURCE_ROOT, 'components', 'sync', 'tools',
+                    'testserver')))
 
 
 SERVER_TYPES = {
@@ -219,7 +220,8 @@ class TestServerThread(threading.Thread):
     self._GenerateCommandLineArguments()
     command = host_paths.DIR_SOURCE_ROOT
     if self.arguments['server-type'] == 'sync':
-      command = [os.path.join(command, 'sync', 'tools', 'testserver',
+      command = [os.path.join(command, 'components', 'sync', 'tools',
+                              'testserver',
                               'sync_testserver.py')] + self.command_line
     else:
       command = [os.path.join(command, 'net', 'tools', 'testserver',
@@ -319,7 +321,14 @@ class SpawningServerRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     logging.info(content_length)
     test_server_argument_json = self.rfile.read(content_length)
     logging.info(test_server_argument_json)
-    assert not self.server.test_server_instance
+    # There should only be one test server instance at a time. However it may
+    # be possible that a previous instance was not cleaned up properly
+    # (crbug.com/665686)
+    if self.server.test_server_instance:
+      port = self.server.test_server_instance.host_port
+      logging.info('Killing lingering test server instance on port: %d', port)
+      self.server.test_server_instance.Stop()
+      self.server.test_server_instance = None
     ready_event = threading.Event()
     self.server.test_server_instance = TestServerThread(
         ready_event,

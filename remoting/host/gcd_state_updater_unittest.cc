@@ -15,7 +15,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "remoting/base/constants.h"
-#include "remoting/host/fake_oauth_token_getter.h"
+#include "remoting/base/fake_oauth_token_getter.h"
 #include "remoting/host/gcd_rest_client.h"
 #include "remoting/signaling/fake_signal_strategy.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -35,12 +35,11 @@ class GcdStateUpdaterTest : public testing::Test {
         token_getter_(OAuthTokenGetter::SUCCESS,
                       "<fake_user_email>",
                       "<fake_access_token>"),
-        rest_client_(new GcdRestClient(
-            "http://gcd_base_url",
-            "<gcd_device_id>",
-            nullptr,
-            &token_getter_)),
-        signal_strategy_("local_jid") {
+        rest_client_(new GcdRestClient("http://gcd_base_url",
+                                       "<gcd_device_id>",
+                                       nullptr,
+                                       &token_getter_)),
+        signal_strategy_(SignalingAddress("local_jid")) {
     rest_client_->SetClockForTest(base::WrapUnique(new base::SimpleTestClock));
   }
 
@@ -96,7 +95,7 @@ TEST_F(GcdStateUpdaterTest, QueuedRequests) {
   task_runner_->RunUntilIdle();
   signal_strategy_.Disconnect();
   task_runner_->RunUntilIdle();
-  signal_strategy_.SetLocalJid("local_jid2");
+  signal_strategy_.SetLocalAddress(SignalingAddress("local_jid2"));
   signal_strategy_.Connect();
   task_runner_->RunUntilIdle();
 

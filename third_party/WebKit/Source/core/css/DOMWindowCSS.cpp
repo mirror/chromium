@@ -33,40 +33,42 @@
 #include "core/css/CSSPropertyMetadata.h"
 #include "core/css/StylePropertySet.h"
 #include "core/css/parser/CSSParser.h"
-#include "core/css/parser/CSSVariableParser.h"
-#include "wtf/text/StringBuilder.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-bool DOMWindowCSS::supports(const String& property, const String& value)
-{
-    CSSPropertyID unresolvedProperty = unresolvedCSSPropertyID(property);
-    if (unresolvedProperty == CSSPropertyInvalid) {
-        if (RuntimeEnabledFeatures::cssVariablesEnabled() && CSSVariableParser::isValidVariableName(property)) {
-            MutableStylePropertySet* dummyStyle = MutableStylePropertySet::create(HTMLStandardMode);
-            return CSSParser::parseValueForCustomProperty(dummyStyle, "--valid", value, false, 0);
-        }
-        return false;
-    }
+bool DOMWindowCSS::supports(const String& property, const String& value) {
+  CSSPropertyID unresolved_property = unresolvedCSSPropertyID(property);
+  if (unresolved_property == CSSPropertyInvalid)
+    return false;
+  if (unresolved_property == CSSPropertyVariable) {
+    MutableStylePropertySet* dummy_style =
+        MutableStylePropertySet::Create(kHTMLStandardMode);
+    bool is_animation_tainted = false;
+    return CSSParser::ParseValueForCustomProperty(dummy_style, "--valid",
+                                                  nullptr, value, false,
+                                                  nullptr, is_animation_tainted)
+        .did_parse;
+  }
 
-    ASSERT(CSSPropertyMetadata::isEnabledProperty(unresolvedProperty));
+  DCHECK(CSSPropertyMetadata::IsEnabledProperty(unresolved_property));
 
-    // This will return false when !important is present
-    MutableStylePropertySet* dummyStyle = MutableStylePropertySet::create(HTMLStandardMode);
-    return CSSParser::parseValue(dummyStyle, unresolvedProperty, value, false, 0);
+  // This will return false when !important is present
+  MutableStylePropertySet* dummy_style =
+      MutableStylePropertySet::Create(kHTMLStandardMode);
+  return CSSParser::ParseValue(dummy_style, unresolved_property, value, false)
+      .did_parse;
 }
 
-bool DOMWindowCSS::supports(const String& conditionText)
-{
-    return CSSParser::parseSupportsCondition(conditionText);
+bool DOMWindowCSS::supports(const String& condition_text) {
+  return CSSParser::ParseSupportsCondition(condition_text);
 }
 
-String DOMWindowCSS::escape(const String& ident)
-{
-    StringBuilder builder;
-    serializeIdentifier(ident, builder);
-    return builder.toString();
+String DOMWindowCSS::escape(const String& ident) {
+  StringBuilder builder;
+  SerializeIdentifier(ident, builder);
+  return builder.ToString();
 }
 
-} // namespace blink
+}  // namespace blink

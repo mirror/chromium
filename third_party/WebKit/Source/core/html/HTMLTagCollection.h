@@ -30,37 +30,45 @@
 
 namespace blink {
 
-// Collection that limits to a particular tag and whose rootNode is in an HTMLDocument.
+// Collection that limits to a particular tag and whose rootNode is in an
+// HTMLDocument.
 class HTMLTagCollection final : public TagCollection {
-public:
-    static HTMLTagCollection* create(ContainerNode& rootNode, CollectionType type, const AtomicString& localName)
-    {
-        ASSERT_UNUSED(type, type == HTMLTagCollectionType);
-        return new HTMLTagCollection(rootNode, localName);
-    }
+ public:
+  static HTMLTagCollection* Create(ContainerNode& root_node,
+                                   CollectionType type,
+                                   const AtomicString& local_name) {
+    DCHECK_EQ(type, kHTMLTagCollectionType);
+    return new HTMLTagCollection(root_node, local_name);
+  }
 
-    bool elementMatches(const Element&) const;
+  bool ElementMatches(const Element&) const;
 
-private:
-    HTMLTagCollection(ContainerNode& rootNode, const AtomicString& localName);
+ private:
+  HTMLTagCollection(ContainerNode& root_node, const AtomicString& local_name);
 
-    AtomicString m_loweredLocalName;
+  AtomicString lowered_local_name_;
 };
 
-DEFINE_TYPE_CASTS(HTMLTagCollection, LiveNodeListBase, collection, collection->type() == HTMLTagCollectionType, collection.type() == HTMLTagCollectionType);
+DEFINE_TYPE_CASTS(HTMLTagCollection,
+                  LiveNodeListBase,
+                  collection,
+                  collection->GetType() == kHTMLTagCollectionType,
+                  collection.GetType() == kHTMLTagCollectionType);
 
-inline bool HTMLTagCollection::elementMatches(const Element& testElement) const
-{
-    // Implements http://dvcs.w3.org/hg/domcore/raw-file/tip/Overview.html#concept-getelementsbytagname
-    if (m_localName != starAtom) {
-        const AtomicString& localName = testElement.isHTMLElement() ? m_loweredLocalName : m_localName;
-        if (localName != testElement.localName())
-            return false;
-    }
-    ASSERT(m_namespaceURI == starAtom);
-    return true;
+inline bool HTMLTagCollection::ElementMatches(
+    const Element& test_element) const {
+  // Implements
+  // https://dom.spec.whatwg.org/#concept-getelementsbytagname
+  if (local_name_ != g_star_atom) {
+    const AtomicString& local_name =
+        test_element.IsHTMLElement() ? lowered_local_name_ : local_name_;
+    if (local_name != test_element.localName())
+      return false;
+  }
+  DCHECK_EQ(namespace_uri_, g_star_atom);
+  return true;
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLTagCollection_h
+#endif  // HTMLTagCollection_h

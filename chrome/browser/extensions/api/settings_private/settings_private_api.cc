@@ -44,12 +44,10 @@ ExtensionFunction::ResponseAction SettingsPrivateSetPrefFunction::Run() {
       delegate->SetPref(parameters->name, parameters->value.get());
   switch (result) {
     case PrefsUtil::SUCCESS:
-      return RespondNow(
-          OneArgument(base::MakeUnique<base::FundamentalValue>(true)));
+      return RespondNow(OneArgument(base::MakeUnique<base::Value>(true)));
     case PrefsUtil::PREF_NOT_MODIFIABLE:
       // Not an error, but return false to indicate setting the pref failed.
-      return RespondNow(
-          OneArgument(base::MakeUnique<base::FundamentalValue>(false)));
+      return RespondNow(OneArgument(base::MakeUnique<base::Value>(false)));
     case PrefsUtil::PREF_NOT_FOUND:
       return RespondNow(Error("Pref not found: *", parameters->name));
     case PrefsUtil::PREF_TYPE_MISMATCH:
@@ -60,8 +58,7 @@ ExtensionFunction::ResponseAction SettingsPrivateSetPrefFunction::Run() {
                               parameters->name));
   }
   NOTREACHED();
-  return RespondNow(
-      OneArgument(base::MakeUnique<base::FundamentalValue>(false)));
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(false)));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -99,44 +96,43 @@ ExtensionFunction::ResponseAction SettingsPrivateGetPrefFunction::Run() {
     return RespondNow(Error(kDelegateIsNull));
 
   std::unique_ptr<base::Value> value = delegate->GetPref(parameters->name);
-  if (value->IsType(base::Value::TYPE_NULL))
+  if (value->IsType(base::Value::Type::NONE))
     return RespondNow(Error("Pref * does not exist", parameters->name));
   else
     return RespondNow(OneArgument(std::move(value)));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// SettingsPrivateGetDefaultZoomPercentFunction
+// SettingsPrivateGetDefaultZoomFunction
 ////////////////////////////////////////////////////////////////////////////////
 
-SettingsPrivateGetDefaultZoomPercentFunction::
-    ~SettingsPrivateGetDefaultZoomPercentFunction() {
+SettingsPrivateGetDefaultZoomFunction::
+    ~SettingsPrivateGetDefaultZoomFunction() {
 }
 
 ExtensionFunction::ResponseAction
-    SettingsPrivateGetDefaultZoomPercentFunction::Run() {
+    SettingsPrivateGetDefaultZoomFunction::Run() {
   SettingsPrivateDelegate* delegate =
       SettingsPrivateDelegateFactory::GetForBrowserContext(browser_context());
 
   if (delegate == nullptr)
     return RespondNow(Error(kDelegateIsNull));
   else
-    return RespondNow(OneArgument(delegate->GetDefaultZoomPercent()));
+    return RespondNow(OneArgument(delegate->GetDefaultZoom()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// SettingsPrivateSetDefaultZoomPercentFunction
+// SettingsPrivateSetDefaultZoomFunction
 ////////////////////////////////////////////////////////////////////////////////
 
-SettingsPrivateSetDefaultZoomPercentFunction::
-    ~SettingsPrivateSetDefaultZoomPercentFunction() {
+SettingsPrivateSetDefaultZoomFunction::
+    ~SettingsPrivateSetDefaultZoomFunction() {
 }
 
 ExtensionFunction::ResponseAction
-    SettingsPrivateSetDefaultZoomPercentFunction::Run() {
-  std::unique_ptr<api::settings_private::SetDefaultZoomPercent::Params>
-      parameters =
-          api::settings_private::SetDefaultZoomPercent::Params::Create(*args_);
+    SettingsPrivateSetDefaultZoomFunction::Run() {
+  std::unique_ptr<api::settings_private::SetDefaultZoom::Params> parameters =
+      api::settings_private::SetDefaultZoom::Params::Create(*args_);
   EXTENSION_FUNCTION_VALIDATE(parameters.get());
 
   SettingsPrivateDelegate* delegate =
@@ -144,9 +140,8 @@ ExtensionFunction::ResponseAction
   if (delegate == nullptr)
     return RespondNow(Error(kDelegateIsNull));
 
-  delegate->SetDefaultZoomPercent(parameters->percent);
-  return RespondNow(
-      OneArgument(base::MakeUnique<base::FundamentalValue>(true)));
+  delegate->SetDefaultZoom(parameters->zoom);
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(true)));
 }
 
 }  // namespace extensions

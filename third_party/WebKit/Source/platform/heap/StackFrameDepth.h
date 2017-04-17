@@ -5,11 +5,11 @@
 #ifndef StackFrameDepth_h
 #define StackFrameDepth_h
 
-#include "platform/PlatformExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/Assertions.h"
-#include <cstddef>
 #include <stdint.h>
+#include <cstddef>
+#include "platform/PlatformExport.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
@@ -20,95 +20,86 @@ namespace blink {
 // Use isSafeToRecurse() to determine if it is safe to consume
 // more stack by invoking another recursive call.
 class PLATFORM_EXPORT StackFrameDepth final {
-    STATIC_ONLY(StackFrameDepth);
-public:
-    inline static bool isSafeToRecurse()
-    {
-        // Asssume that the stack grows towards lower addresses, which
-        // all the ABIs currently supported do.
-        //
-        // A unit test checks that the assumption holds for a target
-        // (HeapTest.StackGrowthDirection.)
-        return currentStackFrame() > s_stackFrameLimit;
-    }
+  DISALLOW_NEW();
 
-    static void enableStackLimit();
-    static void disableStackLimit()
-    {
-        s_stackFrameLimit = kMinimumStackLimit;
-    }
+ public:
+  StackFrameDepth() : stack_frame_limit_(kMinimumStackLimit) {}
+  bool IsSafeToRecurse() {
+    // Asssume that the stack grows towards lower addresses, which
+    // all the ABIs currently supported do.
+    //
+    // A unit test checks that the assumption holds for a target
+    // (HeapTest.StackGrowthDirection.)
+    return CurrentStackFrame() > stack_frame_limit_;
+  }
 
-#if ENABLE(ASSERT)
-    inline static bool isEnabled() { return s_stackFrameLimit != kMinimumStackLimit; }
-    inline static bool isAcceptableStackUse()
-    {
+  void EnableStackLimit();
+  void DisableStackLimit() { stack_frame_limit_ = kMinimumStackLimit; }
+
+  bool IsEnabled() { return stack_frame_limit_ != kMinimumStackLimit; }
+  bool IsAcceptableStackUse() {
 #if defined(ADDRESS_SANITIZER)
-        // ASan adds extra stack usage leading to too noisy asserts.
-        return true;
+    // ASan adds extra stack usage leading to too noisy asserts.
+    return true;
 #else
-        return !isEnabled() || isSafeToRecurse();
+    return !IsEnabled() || IsSafeToRecurse();
 #endif
-    }
-#endif
-
-    static size_t getUnderestimatedStackSize();
-    static void* getStackStart();
+  }
 
 #if COMPILER(MSVC)
 // Ignore C4172: returning address of local variable or temporary: dummy. This
 // warning suppression has to go outside of the function to take effect.
 #pragma warning(push)
-#pragma warning(disable: 4172)
+#pragma warning(disable : 4172)
 #endif
-    static uintptr_t currentStackFrame(const char* dummy = nullptr)
-    {
+  static uintptr_t CurrentStackFrame(const char* dummy = nullptr) {
 #if COMPILER(GCC)
-        return reinterpret_cast<uintptr_t>(__builtin_frame_address(0));
+    return reinterpret_cast<uintptr_t>(__builtin_frame_address(0));
 #elif COMPILER(MSVC)
-        return reinterpret_cast<uintptr_t>(&dummy) - sizeof(void*);
+    return reinterpret_cast<uintptr_t>(&dummy) - sizeof(void*);
 #else
 #error "Stack frame pointer estimation not supported on this platform."
-        return 0;
+    return 0;
 #endif
-    }
+  }
 #if COMPILER(MSVC)
 #pragma warning(pop)
 #endif
 
-private:
-    // The maximum depth of eager, unrolled trace() calls that is
-    // considered safe and allowed for targets with an unknown
-    // thread stack size.
-    static const int kSafeStackFrameSize = 32 * 1024;
+ private:
+  // The maximum depth of eager, unrolled trace() calls that is
+  // considered safe and allowed for targets with an unknown
+  // thread stack size.
+  static const int kSafeStackFrameSize = 32 * 1024;
 
-    // The stack pointer is assumed to grow towards lower addresses;
-    // |kMinimumStackLimit| then being the limit that a stack
-    // pointer will always exceed.
-    static const uintptr_t kMinimumStackLimit = ~0ul;
+  // The stack pointer is assumed to grow towards lower addresses;
+  // |kMinimumStackLimit| then being the limit that a stack
+  // pointer will always exceed.
+  static const uintptr_t kMinimumStackLimit = ~0ul;
 
-    static uintptr_t getFallbackStackLimit();
+  static uintptr_t GetFallbackStackLimit();
 
-    // The (pointer-valued) stack limit.
-    static uintptr_t s_stackFrameLimit;
+  // The (pointer-valued) stack limit.
+  uintptr_t stack_frame_limit_;
 };
 
 class StackFrameDepthScope {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(StackFrameDepthScope);
-public:
-    StackFrameDepthScope()
-    {
-        StackFrameDepth::enableStackLimit();
-        // Enabled unless under stack pressure.
-        ASSERT(StackFrameDepth::isSafeToRecurse() || !StackFrameDepth::isEnabled());
-    }
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(StackFrameDepthScope);
 
-    ~StackFrameDepthScope()
-    {
-        StackFrameDepth::disableStackLimit();
-    }
+ public:
+  explicit StackFrameDepthScope(StackFrameDepth* depth) : depth_(depth) {
+    depth_->EnableStackLimit();
+    // Enabled unless under stack pressure.
+    DCHECK(depth_->IsSafeToRecurse() || !depth_->IsEnabled());
+  }
+
+  ~StackFrameDepthScope() { depth_->DisableStackLimit(); }
+
+ private:
+  StackFrameDepth* depth_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StackFrameDepth_h
+#endif  // StackFrameDepth_h

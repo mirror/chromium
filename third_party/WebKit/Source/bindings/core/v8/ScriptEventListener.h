@@ -33,7 +33,7 @@
 
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/V8LazyEventListener.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
@@ -42,13 +42,29 @@ class ExecutionContext;
 class LocalFrame;
 class Node;
 class QualifiedName;
+class SourceLocation;
 
-V8LazyEventListener* createAttributeEventListener(Node*, const QualifiedName&, const AtomicString& value, const AtomicString& eventParameterName);
-V8LazyEventListener* createAttributeEventListener(LocalFrame*, const QualifiedName&, const AtomicString& value, const AtomicString& eventParameterName);
-v8::Local<v8::Object> eventListenerHandler(ExecutionContext*, EventListener*);
-v8::Local<v8::Function> eventListenerEffectiveFunction(v8::Isolate*, v8::Local<v8::Object> handler);
-void getFunctionLocation(v8::Local<v8::Function>, String& scriptId, int& lineNumber, int& columnNumber);
+V8LazyEventListener* CreateAttributeEventListener(
+    Node*,
+    const QualifiedName&,
+    const AtomicString& value,
+    const AtomicString& event_parameter_name);
+V8LazyEventListener* CreateAttributeEventListener(
+    LocalFrame*,
+    const QualifiedName&,
+    const AtomicString& value,
+    const AtomicString& event_parameter_name);
+v8::Local<v8::Object> EventListenerHandler(ExecutionContext*, EventListener*);
+v8::Local<v8::Function> EventListenerEffectiveFunction(
+    v8::Isolate*,
+    v8::Local<v8::Object> handler);
+void GetFunctionLocation(v8::Local<v8::Function>,
+                         String& script_id,
+                         int& line_number,
+                         int& column_number);
+std::unique_ptr<SourceLocation> GetFunctionLocation(ExecutionContext*,
+                                                    EventListener*);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScriptEventListener_h
+#endif  // ScriptEventListener_h

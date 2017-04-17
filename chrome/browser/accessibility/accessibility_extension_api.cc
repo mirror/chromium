@@ -10,7 +10,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
 #include "build/build_config.h"
-#include "chrome/browser/accessibility/accessibility_extension_api.h"
 #include "chrome/browser/extensions/api/tabs/tabs_constants.h"
 #include "chrome/browser/extensions/chrome_extension_function_details.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -26,11 +25,15 @@
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/lazy_background_task_queue.h"
 #include "extensions/common/error_utils.h"
+#include "extensions/common/image_util.h"
 #include "extensions/common/manifest_handlers/background_info.h"
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
 #include "chrome/browser/chromeos/ui/accessibility_focus_ring_controller.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/power_manager_client.h"
+
 using chromeos::AccessibilityFocusRingController;
 #endif
 
@@ -48,8 +51,9 @@ const char kHeight[] = "height";
 const char kErrorNotSupported[] = "This API is not supported on this platform.";
 }  // namespace
 
-bool AccessibilityPrivateSetNativeAccessibilityEnabledFunction::RunSync() {
-  bool enabled;
+ExtensionFunction::ResponseAction
+AccessibilityPrivateSetNativeAccessibilityEnabledFunction::Run() {
+  bool enabled = false;
   EXTENSION_FUNCTION_VALIDATE(args_->GetBoolean(0, &enabled));
   if (enabled) {
     content::BrowserAccessibilityState::GetInstance()->
@@ -58,10 +62,11 @@ bool AccessibilityPrivateSetNativeAccessibilityEnabledFunction::RunSync() {
     content::BrowserAccessibilityState::GetInstance()->
         DisableAccessibility();
   }
-  return true;
+  return RespondNow(NoArguments());
 }
 
-bool AccessibilityPrivateSetFocusRingFunction::RunSync() {
+ExtensionFunction::ResponseAction
+AccessibilityPrivateSetFocusRingFunction::Run() {
 #if defined(OS_CHROMEOS)
   base::ListValue* rect_values = NULL;
   EXTENSION_FUNCTION_VALIDATE(args_->GetList(0, &rect_values));
@@ -78,6 +83,16 @@ bool AccessibilityPrivateSetFocusRingFunction::RunSync() {
     rects.push_back(gfx::Rect(left, top, width, height));
   }
 
+  std::string color_str;
+  if (args_->GetSize() >= 2 && args_->GetString(1, &color_str)) {
+    SkColor color;
+    if (!extensions::image_util::ParseHexColorString(color_str, &color))
+      return RespondNow(Error("Could not parse hex color"));
+    AccessibilityFocusRingController::GetInstance()->SetFocusRingColor(color);
+  } else {
+    AccessibilityFocusRingController::GetInstance()->ResetFocusRingColor();
+  }
+
   // Move the visible focus ring to cover all of these rects.
   AccessibilityFocusRingController::GetInstance()->SetFocusRing(
       rects, AccessibilityFocusRingController::PERSIST_FOCUS_RING);
@@ -90,11 +105,10 @@ bool AccessibilityPrivateSetFocusRingFunction::RunSync() {
     manager->SetTouchAccessibilityAnchorPoint(rects[0].CenterPoint());
   }
 
-  return true;
+  return RespondNow(NoArguments());
 #endif  // defined(OS_CHROMEOS)
 
-  error_ = kErrorNotSupported;
-  return false;
+  return RespondNow(Error(kErrorNotSupported));
 }
 
 ExtensionFunction::ResponseAction
@@ -124,6 +138,27 @@ AccessibilityPrivateSetKeyboardListenerFunction::Run() {
                                             details.GetProfile());
     manager->set_keyboard_listener_capture(false);
   }
+  return RespondNow(NoArguments());
+#endif  // defined OS_CHROMEOS
+
+  return RespondNow(Error(kErrorNotSupported));
+}
+
+ExtensionFunction::ResponseAction
+AccessibilityPrivateDarkenScreenFunction::Run() {
+  ChromeExtensionFunctionDetails details(this);
+  CHECK(extension());
+
+#if defined(OS_CHROMEOS)
+  bool darken;
+  EXTENSION_FUNCTION_VALIDATE(args_->GetBoolean(0, &darken));
+  chromeos::PowerManagerClient* client =
+      chromeos::DBusThreadManager::Get()->GetPowerManagerClient();
+
+  // Called twice to ensure the cros end of the dbus message is in a good
+  // state.
+  client->SetBacklightsForcedOff(!darken);
+  client->SetBacklightsForcedOff(darken);
   return RespondNow(NoArguments());
 #endif  // defined OS_CHROMEOS
 

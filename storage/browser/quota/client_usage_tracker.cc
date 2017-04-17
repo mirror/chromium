@@ -46,7 +46,7 @@ bool OriginSetContainsOrigin(const OriginSetByHost& origins,
                              const std::string& host,
                              const GURL& origin) {
   OriginSetByHost::const_iterator itr = origins.find(host);
-  return itr != origins.end() && ContainsKey(itr->second, origin);
+  return itr != origins.end() && base::ContainsKey(itr->second, origin);
 }
 
 void DidGetGlobalUsageForLimitedGlobalUsage(const UsageCallback& callback,
@@ -122,9 +122,9 @@ void ClientUsageTracker::GetGlobalUsage(const GlobalUsageCallback& callback) {
 
 void ClientUsageTracker::GetHostUsage(
     const std::string& host, const UsageCallback& callback) {
-  if (ContainsKey(cached_hosts_, host) &&
-      !ContainsKey(non_cached_limited_origins_by_host_, host) &&
-      !ContainsKey(non_cached_unlimited_origins_by_host_, host)) {
+  if (base::ContainsKey(cached_hosts_, host) &&
+      !base::ContainsKey(non_cached_limited_origins_by_host_, host) &&
+      !base::ContainsKey(non_cached_unlimited_origins_by_host_, host)) {
     // TODO(kinuko): Drop host_usage_map_ cache periodically.
     callback.Run(GetCachedHostUsage(host));
     return;
@@ -163,6 +163,15 @@ void ClientUsageTracker::UpdateUsageCache(const GURL& origin, int64_t delta) {
   // We don't know about this host yet, so populate our cache for it.
   GetHostUsage(host, base::Bind(&ClientUsageTracker::DidGetHostUsageAfterUpdate,
                                 AsWeakPtr(), origin));
+}
+
+int64_t ClientUsageTracker::GetCachedUsage() const {
+  int64_t usage = 0;
+  for (const auto& host_and_usage_map : cached_usage_by_host_) {
+    for (const auto& origin_and_usage : host_and_usage_map.second)
+      usage += origin_and_usage.second;
+  }
+  return usage;
 }
 
 void ClientUsageTracker::GetCachedHostsUsage(

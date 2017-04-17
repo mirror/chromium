@@ -15,27 +15,34 @@ class LocalFrame;
 class Page;
 
 class CORE_EXPORT PageAnimator final : public GarbageCollected<PageAnimator> {
-public:
-    static PageAnimator* create(Page&);
-    DECLARE_TRACE();
-    void scheduleVisualUpdate(LocalFrame*);
-    void serviceScriptedAnimations(double monotonicAnimationStartTime);
+ public:
+  static PageAnimator* Create(Page&);
+  DECLARE_TRACE();
+  void ScheduleVisualUpdate(LocalFrame*);
+  void ServiceScriptedAnimations(double monotonic_animation_start_time);
 
-    bool isServicingAnimations() const { return m_servicingAnimations; }
+  bool IsServicingAnimations() const { return servicing_animations_; }
 
-    // See documents of methods with the same names in FrameView class.
-    void updateAllLifecyclePhases(LocalFrame& rootFrame);
-    AnimationClock& clock() { return m_animationClock; }
+  // TODO(alancutter): Remove the need for this by implementing frame request
+  // suppression logic at the BeginMainFrame level. This is a temporary
+  // workaround to fix a perf regression.
+  // DO NOT use this outside of crbug.com/704763.
+  void SetSuppressFrameRequestsWorkaroundFor704763Only(bool);
 
-private:
-    explicit PageAnimator(Page&);
+  // See documents of methods with the same names in FrameView class.
+  void UpdateAllLifecyclePhases(LocalFrame& root_frame);
+  AnimationClock& Clock() { return animation_clock_; }
 
-    Member<Page> m_page;
-    bool m_servicingAnimations;
-    bool m_updatingLayoutAndStyleForPainting;
-    AnimationClock m_animationClock;
+ private:
+  explicit PageAnimator(Page&);
+
+  Member<Page> page_;
+  bool servicing_animations_;
+  bool updating_layout_and_style_for_painting_;
+  bool suppress_frame_requests_workaround_for704763_only_ = false;
+  AnimationClock animation_clock_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PageAnimator_h
+#endif  // PageAnimator_h

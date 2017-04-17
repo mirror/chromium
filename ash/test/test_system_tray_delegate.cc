@@ -6,51 +6,28 @@
 
 #include <string>
 
-#include "ash/common/login_status.h"
-#include "ash/common/session/session_state_delegate.h"
-#include "ash/common/wm_shell.h"
+#include "ash/login_status.h"
+#include "ash/session/session_controller.h"
 #include "ash/shell.h"
-#include "base/message_loop/message_loop.h"
 #include "base/time/time.h"
-
-#if defined(OS_CHROMEOS)
-#include "ash/system/chromeos/rotation/tray_rotation_lock.h"
-#include "ash/system/chromeos/tray_display.h"
-#include "base/memory/ptr_util.h"
-#else
-#include "ash/common/system/tray/system_tray_item.h"
-#endif
 
 namespace ash {
 namespace test {
 
 namespace {
 
-bool g_system_update_required = false;
 LoginStatus g_initial_status = LoginStatus::USER;
 
 }  // namespace
 
 TestSystemTrayDelegate::TestSystemTrayDelegate()
-    : should_show_display_notification_(false),
-      login_status_(g_initial_status),
-      session_length_limit_set_(false) {}
+    : login_status_(g_initial_status), session_length_limit_set_(false) {}
 
 TestSystemTrayDelegate::~TestSystemTrayDelegate() {}
 
-// static
-void TestSystemTrayDelegate::SetInitialLoginStatus(LoginStatus login_status) {
-  g_initial_status = login_status;
-}
-
-// static
-void TestSystemTrayDelegate::SetSystemUpdateRequired(bool required) {
-  g_system_update_required = required;
-}
-
 void TestSystemTrayDelegate::SetLoginStatus(LoginStatus login_status) {
   login_status_ = login_status;
-  Shell::GetInstance()->UpdateAfterLoginStatusChange(login_status);
+  Shell::Get()->UpdateAfterLoginStatusChange(login_status);
 }
 
 void TestSystemTrayDelegate::SetSessionLengthLimitForTest(
@@ -67,6 +44,10 @@ void TestSystemTrayDelegate::SetCurrentIME(const IMEInfo& info) {
   current_ime_ = info;
 }
 
+void TestSystemTrayDelegate::SetAvailableIMEList(const IMEInfoList& list) {
+  ime_list_ = list;
+}
+
 LoginStatus TestSystemTrayDelegate::GetUserLoginStatus() const {
   // Initial login status has been changed for testing.
   if (g_initial_status != LoginStatus::USER &&
@@ -76,28 +57,17 @@ LoginStatus TestSystemTrayDelegate::GetUserLoginStatus() const {
 
   // At new user image screen manager->IsUserLoggedIn() would return true
   // but there's no browser session available yet so use SessionStarted().
-  SessionStateDelegate* delegate = WmShell::Get()->GetSessionStateDelegate();
+  SessionController* controller = Shell::Get()->session_controller();
 
-  if (!delegate->IsActiveUserSessionStarted())
+  if (!controller->IsActiveUserSessionStarted())
     return LoginStatus::NOT_LOGGED_IN;
-  if (delegate->IsScreenLocked())
+  if (controller->IsScreenLocked())
     return LoginStatus::LOCKED;
   return login_status_;
 }
 
 bool TestSystemTrayDelegate::IsUserSupervised() const {
   return login_status_ == LoginStatus::SUPERVISED;
-}
-
-void TestSystemTrayDelegate::GetSystemUpdateInfo(UpdateInfo* info) const {
-  DCHECK(info);
-  info->severity = UpdateInfo::UPDATE_NORMAL;
-  info->update_required = g_system_update_required;
-  info->factory_reset_required = false;
-}
-
-bool TestSystemTrayDelegate::ShouldShowDisplayNotification() {
-  return should_show_display_notification_;
 }
 
 bool TestSystemTrayDelegate::GetSessionStartTime(
@@ -116,30 +86,23 @@ bool TestSystemTrayDelegate::GetSessionLengthLimit(
   return session_length_limit_set_;
 }
 
-void TestSystemTrayDelegate::SignOut() {
-  base::MessageLoop::current()->QuitWhenIdle();
-}
-
-std::unique_ptr<SystemTrayItem> TestSystemTrayDelegate::CreateDisplayTrayItem(
-    SystemTray* tray) {
-#if defined(OS_CHROMEOS)
-  return base::MakeUnique<TrayDisplay>(tray);
-#else
-  return nullptr;
-#endif
-}
-
-std::unique_ptr<SystemTrayItem>
-TestSystemTrayDelegate::CreateRotationLockTrayItem(SystemTray* tray) {
-#if defined(OS_CHROMEOS)
-  return base::MakeUnique<TrayRotationLock>(tray);
-#else
-  return nullptr;
-#endif
-}
-
 void TestSystemTrayDelegate::GetCurrentIME(IMEInfo* info) {
   *info = current_ime_;
+}
+
+void TestSystemTrayDelegate::GetAvailableIMEList(IMEInfoList* list) {
+  *list = ime_list_;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+ScopedInitialLoginStatus::ScopedInitialLoginStatus(LoginStatus new_status)
+    : old_status_(g_initial_status) {
+  g_initial_status = new_status;
+}
+
+ScopedInitialLoginStatus::~ScopedInitialLoginStatus() {
+  g_initial_status = old_status_;
 }
 
 }  // namespace test

@@ -6,26 +6,27 @@
 #define IOS_CHROME_BROWSER_SYNC_SYNC_SETUP_SERVICE_H_
 
 #include <map>
+#include <memory>
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
 #include "components/keyed_service/core/keyed_service.h"
-#include "sync/internal_api/public/base/model_type.h"
-#include "sync/internal_api/public/util/syncer_error.h"
-
-namespace sync_driver {
-class SyncService;
-class SyncSetupInProgressHandle;
-}
+#include "components/sync/base/model_type.h"
+#include "components/sync/base/syncer_error.h"
 
 class PrefService;
+
+namespace syncer {
+class SyncService;
+class SyncSetupInProgressHandle;
+}  // namespace syncer
 
 // Class that allows configuring sync. It handles enabling and disabling it, as
 // well as choosing datatypes. Most actions are delayed until a commit is done,
 // to allow the complex sync setup flow on iOS.
 class SyncSetupService : public KeyedService {
  public:
-  typedef enum {
+  using SyncServiceState = enum {
     kNoSyncServiceError,
     kSyncServiceSignInNeedsUpdate,
     kSyncServiceCouldNotConnect,
@@ -33,19 +34,21 @@ class SyncSetupService : public KeyedService {
     kSyncServiceNeedsPassphrase,
     kSyncServiceUnrecoverableError,
     kLastSyncServiceError = kSyncServiceUnrecoverableError
-  } SyncServiceState;
+  };
 
   // The set of user-selectable datatypes handled by Chrome for iOS.
-  typedef enum {
+  using SyncableDatatype = enum {
     kSyncBookmarks,
     kSyncOmniboxHistory,
     kSyncPasswords,
     kSyncOpenTabs,
     kSyncAutofill,
+    kSyncPreferences,
+    kSyncReadingList,
     kNumberOfSyncableDatatypes
-  } SyncableDatatype;
+  };
 
-  SyncSetupService(sync_driver::SyncService* sync_service, PrefService* prefs);
+  SyncSetupService(syncer::SyncService* sync_service, PrefService* prefs);
   ~SyncSetupService() override;
 
   // Returns the |syncer::ModelType| associated to the given
@@ -102,12 +105,12 @@ class SyncSetupService : public KeyedService {
   // currently selected datatypes.
   void SetSyncEnabledWithoutChangingDatatypes(bool sync_enabled);
 
-  sync_driver::SyncService* const sync_service_;
+  syncer::SyncService* const sync_service_;
   PrefService* const prefs_;
   syncer::ModelTypeSet user_selectable_types_;
 
   // Prevents Sync from running until configuration is complete.
-  std::unique_ptr<sync_driver::SyncSetupInProgressHandle> sync_blocker_;
+  std::unique_ptr<syncer::SyncSetupInProgressHandle> sync_blocker_;
 
   DISALLOW_COPY_AND_ASSIGN(SyncSetupService);
 };

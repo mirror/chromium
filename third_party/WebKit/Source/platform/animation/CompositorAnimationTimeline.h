@@ -5,44 +5,39 @@
 #ifndef CompositorAnimationTimeline_h
 #define CompositorAnimationTimeline_h
 
+#include <memory>
 #include "base/memory/ref_counted.h"
 #include "cc/animation/animation_timeline.h"
 #include "platform/PlatformExport.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-class CompositorAnimationHost;
 class CompositorAnimationPlayerClient;
 
 // A compositor representation for cc::AnimationTimeline.
 class PLATFORM_EXPORT CompositorAnimationTimeline {
-    WTF_MAKE_NONCOPYABLE(CompositorAnimationTimeline);
-public:
-    static std::unique_ptr<CompositorAnimationTimeline> create()
-    {
-        return wrapUnique(new CompositorAnimationTimeline());
-    }
+  WTF_MAKE_NONCOPYABLE(CompositorAnimationTimeline);
 
-    ~CompositorAnimationTimeline();
+ public:
+  static std::unique_ptr<CompositorAnimationTimeline> Create() {
+    return WTF::WrapUnique(new CompositorAnimationTimeline());
+  }
 
-    cc::AnimationTimeline* animationTimeline() const;
-    // TODO(ymalik): Currently we just wrap cc::AnimationHost in
-    // CompositorAnimationHost. Correctly introduce CompositorAnimationHost
-    // to blink. See crbug.com/610763.
-    CompositorAnimationHost compositorAnimationHost();
+  ~CompositorAnimationTimeline();
 
-    void playerAttached(const CompositorAnimationPlayerClient&);
-    void playerDestroyed(const CompositorAnimationPlayerClient&);
+  cc::AnimationTimeline* GetAnimationTimeline() const;
 
-private:
-    CompositorAnimationTimeline();
+  void PlayerAttached(const CompositorAnimationPlayerClient&);
+  void PlayerDestroyed(const CompositorAnimationPlayerClient&);
 
-    scoped_refptr<cc::AnimationTimeline> m_animationTimeline;
+ private:
+  CompositorAnimationTimeline();
+
+  scoped_refptr<cc::AnimationTimeline> animation_timeline_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CompositorAnimationTimeline_h
+#endif  // CompositorAnimationTimeline_h

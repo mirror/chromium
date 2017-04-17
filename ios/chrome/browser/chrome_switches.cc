@@ -12,9 +12,6 @@ namespace switches {
 // all work out.
 // -----------------------------------------------------------------------------
 
-// Disables all bookmarks view in bookmark manager.
-const char kDisableAllBookmarksView[] = "disable-all-bookmarks-view";
-
 // Disables Contextual Search.
 const char kDisableContextualSearch[] = "disable-contextual-search";
 
@@ -34,29 +31,30 @@ const char kDisableIOSPasswordGeneration[] = "disable-ios-password-generation";
 const char kDisableIOSPasswordSuggestions[] =
     "disable-ios-password-suggestions";
 
-// Disables the use of WKWebView instead of UIWebView.
-const char kDisableIOSWKWebView[] = "disable-wkwebview";
-
 // Disable the snapshots lru cache.
 const char kDisableLRUSnapshotCache[] = "disable-lru-snapshot-cache";
 
 // Disable auto-reload of error pages if offline.
 const char kDisableOfflineAutoReload[] = "disable-offline-auto-reload";
 
-// Disables the tab switcher.
-const char kDisableTabSwitcher[] = "disable-tab-switcher";
+// Disable the Payment Request API.
+const char kDisablePaymentRequest[] = "disable-payment-request";
+
+// Disables the tab strip auto scroll new tabs.
+const char kDisableTabStripAutoScrollNewTabs[] =
+    "disable-tab-strip-autoscroll-new-tabs";
 
 // Disables Physical Web scanning for nearby URLs.
 const char kDisableIOSPhysicalWeb[] = "disable-ios-physical-web";
 
-// Enables all bookmarks view in bookmark manager.
-const char kEnableAllBookmarksView[] = "enable-all-bookmarks-view";
+// Disables the string change from "Save Image" to "Download Image".
+const char kDisableDownloadImageRenaming[] = "disable-download-image-renaming";
+
+// Disables the Suggestions UI
+const char kDisableSuggestionsUI[] = "disable-suggestions-ui";
 
 // Enables Contextual Search.
 const char kEnableContextualSearch[] = "enable-contextual-search";
-
-// Enable the experimental Credential Manager JavaScript API.
-const char kEnableCredentialManagerAPI[] = "enable-credential-manager-api";
 
 // Enables a workaround for fast inset updates for UIWebView.scrollView.
 const char kEnableIOSFastWebScrollViewInsets[] =
@@ -74,26 +72,29 @@ const char kEnableIOSHandoffToOtherDevices[] =
 // Enable password generation for iOS.
 const char kEnableIOSPasswordGeneration[] = "enable-ios-password-generation";
 
-// Enables the use of WKWebView instead of UIWebView.
-const char kEnableIOSWKWebView[] = "enable-wkwebview";
-
 // Enables the snapshot lru cache.
 const char kEnableLRUSnapshotCache[] = "enable-lru-snapshot-cache";
 
 // Enable auto-reload of error pages if offline.
 const char kEnableOfflineAutoReload[] = "enable-offline-auto-reload";
 
-// Enables the QR Code scanner.
-const char kEnableQRScanner[] = "enable-qr-scanner";
+// Enable the Payment Request API.
+const char kEnablePaymentRequest[] = "enable-payment-request";
 
 // Enables context-sensitive reader mode button in the toolbar.
 const char kEnableReaderModeToolbarIcon[] = "enable-reader-mode-toolbar-icon";
 
-// Enables the tab switcher.
-const char kEnableTabSwitcher[] = "enable-tab-switcher";
+// Enables the Spotlight actions.
+const char kEnableSpotlightActions[] = "enable-spotlight-actions";
 
 // Enables Physical Web scanning for nearby URLs.
 const char kEnableIOSPhysicalWeb[] = "enable-ios-physical-web";
+
+// Enables the string change from "Save Image" to "Download Image".
+const char kEnableDownloadImageRenaming[] = "enable-download-image-renaming";
+
+// Enables the Suggestions UI
+const char kEnableSuggestionsUI[] = "enable-suggestions-ui";
 
 // Forces additional Chrome Variation Ids that will be sent in X-Client-Data
 // header, specified as a 64-bit encoded list of numeric experiment ids. Ids
@@ -122,10 +123,5 @@ const char kIOSTestingFixedHttpsPort[] = "testing-fixed-https-port";
 
 // Enables grouping websites by domain and filtering them by period.
 const char kHistoryEnableGroupByDomain[] = "enable-grouped-history";
-
-// Use to opt-in to marking HTTP as non-secure.
-const char kMarkNonSecureAs[] = "mark-non-secure-as";
-const char kMarkNonSecureAsNeutral[] = "neutral";
-const char kMarkNonSecureAsNonSecure[] = "non-secure";
 
 }  // namespace switches

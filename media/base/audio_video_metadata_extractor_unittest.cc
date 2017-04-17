@@ -11,6 +11,7 @@
 #include "build/build_config.h"
 #include "media/base/test_data_util.h"
 #include "media/filters/file_data_source.h"
+#include "media/media_features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace media {
@@ -123,7 +124,7 @@ TEST(AudioVideoMetadataExtractorTest, VideoWebM) {
   EXPECT_EQ(0u, extractor->attached_images_bytes().size());
 }
 
-#if defined(USE_PROPRIETARY_CODECS)
+#if BUILDFLAG(USE_PROPRIETARY_CODECS)
 TEST(AudioVideoMetadataExtractorTest, AndroidRotatedMP4Video) {
   std::unique_ptr<AudioVideoMetadataExtractor> extractor =
       GetExtractor("90rotation.mp4", true, true, 0, 1920, 1080);
@@ -136,7 +137,7 @@ TEST(AudioVideoMetadataExtractorTest, AndroidRotatedMP4Video) {
   EXPECT_EQ(4u, extractor->stream_infos()[0].tags.size());
   EXPECT_EQ("isom3gp4", GetTagValue(extractor->stream_infos()[0].tags,
                                     "compatible_brands"));
-  EXPECT_EQ("2014-02-11 00:39:25",
+  EXPECT_EQ("2014-02-11T00:39:25.000000Z",
             GetTagValue(extractor->stream_infos()[0].tags, "creation_time"));
   EXPECT_EQ("isom",
             GetTagValue(extractor->stream_infos()[0].tags, "major_brand"));
@@ -145,7 +146,7 @@ TEST(AudioVideoMetadataExtractorTest, AndroidRotatedMP4Video) {
 
   EXPECT_EQ("h264", extractor->stream_infos()[1].type);
   EXPECT_EQ(5u, extractor->stream_infos()[1].tags.size());
-  EXPECT_EQ("2014-02-11 00:39:25",
+  EXPECT_EQ("2014-02-11T00:39:25.000000Z",
             GetTagValue(extractor->stream_infos()[1].tags, "creation_time"));
   EXPECT_EQ("VideoHandle",
             GetTagValue(extractor->stream_infos()[1].tags, "handler_name"));
@@ -154,7 +155,7 @@ TEST(AudioVideoMetadataExtractorTest, AndroidRotatedMP4Video) {
 
   EXPECT_EQ("aac", extractor->stream_infos()[2].type);
   EXPECT_EQ(3u, extractor->stream_infos()[2].tags.size());
-  EXPECT_EQ("2014-02-11 00:39:25",
+  EXPECT_EQ("2014-02-11T00:39:25.000000Z",
             GetTagValue(extractor->stream_infos()[2].tags, "creation_time"));
   EXPECT_EQ("SoundHandle",
             GetTagValue(extractor->stream_infos()[2].tags, "handler_name"));

@@ -31,25 +31,27 @@
 #ifndef LocalFileSystemClient_h
 #define LocalFileSystemClient_h
 
-#include "modules/filesystem/FileSystemClient.h"
-#include "wtf/Forward.h"
 #include <memory>
+#include "modules/filesystem/FileSystemClient.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class LocalFileSystemClient final : public FileSystemClient {
-public:
-    static std::unique_ptr<FileSystemClient> create();
+ public:
+  static std::unique_ptr<FileSystemClient> Create();
 
-    ~LocalFileSystemClient() override;
+  ~LocalFileSystemClient() override;
 
-    bool requestFileSystemAccessSync(ExecutionContext*) override;
-    void requestFileSystemAccessAsync(ExecutionContext*, std::unique_ptr<ContentSettingCallbacks>) override;
+  bool RequestFileSystemAccessSync(ExecutionContext*) override;
+  void RequestFileSystemAccessAsync(
+      ExecutionContext*,
+      std::unique_ptr<ContentSettingCallbacks>) override;
 
-private:
-    LocalFileSystemClient();
+ private:
+  LocalFileSystemClient();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LocalFileSystemClient_h
+#endif  // LocalFileSystemClient_h

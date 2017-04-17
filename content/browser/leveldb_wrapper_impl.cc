@@ -5,11 +5,19 @@
 #include "content/browser/leveldb_wrapper_impl.h"
 
 #include "base/bind.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "components/leveldb/public/cpp/util.h"
 #include "content/public/browser/browser_thread.h"
-#include "mojo/common/common_type_converters.h"
 
 namespace content {
+
+void LevelDBWrapperImpl::Delegate::MigrateData(
+    base::OnceCallback<void(std::unique_ptr<ValueMap>)> callback) {
+  std::move(callback).Run(nullptr);
+}
+
+void LevelDBWrapperImpl::Delegate::OnMapLoaded(leveldb::mojom::DatabaseError) {}
 
 bool LevelDBWrapperImpl::s_aggressive_flushing_enabled_ = false;
 
@@ -34,16 +42,6 @@ base::TimeDelta LevelDBWrapperImpl::RateLimiter::ComputeDelayNeeded(
 LevelDBWrapperImpl::CommitBatch::CommitBatch() : clear_all_first(false) {}
 LevelDBWrapperImpl::CommitBatch::~CommitBatch() {}
 
-size_t LevelDBWrapperImpl::CommitBatch::GetDataSize() const {
-  if (changed_values.empty())
-    return 0;
-
-  size_t count = 0;
-  for (const auto& pair : changed_values)
-    count += (pair.first.size(), pair.second.size());
-  return count;
-}
-
 LevelDBWrapperImpl::LevelDBWrapperImpl(
     leveldb::mojom::LevelDBDatabase* database,
     const std::string& prefix,
@@ -51,9 +49,9 @@ LevelDBWrapperImpl::LevelDBWrapperImpl(
     base::TimeDelta default_commit_delay,
     int max_bytes_per_hour,
     int max_commits_per_hour,
-    const base::Closure& no_bindings_callback)
-    : prefix_(prefix),
-      no_bindings_callback_(no_bindings_callback),
+    Delegate* delegate)
+    : prefix_(leveldb::StdStringToUint8Vector(prefix)),
+      delegate_(delegate),
       database_(database),
       bytes_used_(0),
       max_size_(max_size),
@@ -75,36 +73,58 @@ void LevelDBWrapperImpl::Bind(mojom::LevelDBWrapperRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
 
-void LevelDBWrapperImpl::AddObserver(mojom::LevelDBObserverPtr observer) {
-  observers_.AddPtr(std::move(observer));
-}
-
 void LevelDBWrapperImpl::EnableAggressiveCommitDelay() {
   s_aggressive_flushing_enabled_ = true;
 }
 
-void LevelDBWrapperImpl::Put(mojo::Array<uint8_t> key,
-                             mojo::Array<uint8_t> value,
-                             const mojo::String& source,
+void LevelDBWrapperImpl::ScheduleImmediateCommit() {
+  if (!on_load_complete_tasks_.empty()) {
+    LoadMap(base::Bind(&LevelDBWrapperImpl::ScheduleImmediateCommit,
+                       base::Unretained(this)));
+    return;
+  }
+
+  if (!database_ || !commit_batch_)
+    return;
+  CommitChanges();
+}
+
+void LevelDBWrapperImpl::PurgeMemory() {
+  if (!map_ ||          // We're not using any memory.
+      commit_batch_ ||  // We leave things alone with changes pending.
+      !database_) {  // Don't purge anything if we're not backed by a database.
+    return;
+  }
+
+  map_.reset();
+}
+
+void LevelDBWrapperImpl::AddObserver(
+    mojom::LevelDBObserverAssociatedPtrInfo observer) {
+  mojom::LevelDBObserverAssociatedPtr observer_ptr;
+  observer_ptr.Bind(std::move(observer));
+  observers_.AddPtr(std::move(observer_ptr));
+}
+
+void LevelDBWrapperImpl::Put(const std::vector<uint8_t>& key,
+                             const std::vector<uint8_t>& value,
+                             const std::string& source,
                              const PutCallback& callback) {
   if (!map_) {
-    LoadMap(
-        base::Bind(&LevelDBWrapperImpl::Put, base::Unretained(this),
-                   base::Passed(&key), base::Passed(&value), source, callback));
+    LoadMap(base::Bind(&LevelDBWrapperImpl::Put, base::Unretained(this), key,
+                       value, source, callback));
     return;
   }
 
   bool has_old_item = false;
-  mojo::Array<uint8_t> old_value;
   size_t old_item_size = 0;
   auto found = map_->find(key);
   if (found != map_->end()) {
-    if (found->second.Equals(value)) {
+    if (found->second == value) {
       callback.Run(true);  // Key already has this value.
       return;
     }
-    old_value = std::move(found->second);
-    old_item_size = key.size() + old_value.size();
+    old_item_size = key.size() + found->second.size();
     has_old_item = true;
   }
   size_t new_item_size = key.size() + value.size();
@@ -119,35 +139,37 @@ void LevelDBWrapperImpl::Put(mojo::Array<uint8_t> key,
 
   if (database_) {
     CreateCommitBatchIfNeeded();
-    commit_batch_->changed_values[key.Clone()] = value.Clone();
+    commit_batch_->changed_keys.insert(key);
   }
 
-  (*map_)[key.Clone()] = value.Clone();
+  std::vector<uint8_t> old_value;
+  if (has_old_item) {
+    old_value.swap((*map_)[key]);
+  }
+  (*map_)[key] = value;
   bytes_used_ = new_bytes_used;
   if (!has_old_item) {
     // We added a new key/value pair.
     observers_.ForAllPtrs(
         [&key, &value, &source](mojom::LevelDBObserver* observer) {
-          observer->KeyAdded(key.Clone(), value.Clone(), source);
+          observer->KeyAdded(key, value, source);
         });
   } else {
     // We changed the value for an existing key.
     observers_.ForAllPtrs(
         [&key, &value, &source, &old_value](mojom::LevelDBObserver* observer) {
-          observer->KeyChanged(
-              key.Clone(), value.Clone(), old_value.Clone(), source);
+          observer->KeyChanged(key, value, old_value, source);
         });
   }
   callback.Run(true);
 }
 
-void LevelDBWrapperImpl::Delete(mojo::Array<uint8_t> key,
-                                const mojo::String& source,
+void LevelDBWrapperImpl::Delete(const std::vector<uint8_t>& key,
+                                const std::string& source,
                                 const DeleteCallback& callback) {
   if (!map_) {
-    LoadMap(
-        base::Bind(&LevelDBWrapperImpl::Delete, base::Unretained(this),
-                   base::Passed(&key), source, callback));
+    LoadMap(base::Bind(&LevelDBWrapperImpl::Delete, base::Unretained(this), key,
+                       source, callback));
     return;
   }
 
@@ -159,21 +181,20 @@ void LevelDBWrapperImpl::Delete(mojo::Array<uint8_t> key,
 
   if (database_) {
     CreateCommitBatchIfNeeded();
-    commit_batch_->changed_values[key.Clone()] = mojo::Array<uint8_t>(nullptr);
+    commit_batch_->changed_keys.insert(std::move(found->first));
   }
 
-  mojo::Array<uint8_t> old_value = std::move(found->second);
+  std::vector<uint8_t> old_value(std::move(found->second));
   map_->erase(found);
   bytes_used_ -= key.size() + old_value.size();
   observers_.ForAllPtrs(
       [&key, &source, &old_value](mojom::LevelDBObserver* observer) {
-        observer->KeyDeleted(
-            key.Clone(), old_value.Clone(), source);
+        observer->KeyDeleted(key, old_value, source);
       });
   callback.Run(true);
 }
 
-void LevelDBWrapperImpl::DeleteAll(const mojo::String& source,
+void LevelDBWrapperImpl::DeleteAll(const std::string& source,
                                    const DeleteAllCallback& callback) {
   if (!map_) {
     LoadMap(
@@ -182,11 +203,17 @@ void LevelDBWrapperImpl::DeleteAll(const mojo::String& source,
     return;
   }
 
-  if (database_ && !map_->empty()) {
+  if (map_->empty()) {
+    callback.Run(true);
+    return;
+  }
+
+  if (database_) {
     CreateCommitBatchIfNeeded();
     commit_batch_->clear_all_first = true;
-    commit_batch_->changed_values.clear();
+    commit_batch_->changed_keys.clear();
   }
+
   map_->clear();
   bytes_used_ = 0;
   observers_.ForAllPtrs(
@@ -196,50 +223,54 @@ void LevelDBWrapperImpl::DeleteAll(const mojo::String& source,
   callback.Run(true);
 }
 
-void LevelDBWrapperImpl::Get(mojo::Array<uint8_t> key,
+void LevelDBWrapperImpl::Get(const std::vector<uint8_t>& key,
                              const GetCallback& callback) {
   if (!map_) {
-    LoadMap(
-        base::Bind(&LevelDBWrapperImpl::Get, base::Unretained(this),
-                   base::Passed(&key), callback));
+    LoadMap(base::Bind(&LevelDBWrapperImpl::Get, base::Unretained(this), key,
+                       callback));
     return;
   }
 
   auto found = map_->find(key);
   if (found == map_->end()) {
-    callback.Run(false, mojo::Array<uint8_t>());
+    callback.Run(false, std::vector<uint8_t>());
     return;
   }
-  callback.Run(true, found->second.Clone());
+  callback.Run(true, found->second);
 }
 
-void LevelDBWrapperImpl::GetAll(const mojo::String& source,
-                                const GetAllCallback& callback) {
+void LevelDBWrapperImpl::GetAll(
+    mojom::LevelDBWrapperGetAllCallbackAssociatedPtrInfo complete_callback,
+    const GetAllCallback& callback) {
   if (!map_) {
-    LoadMap(
-        base::Bind(&LevelDBWrapperImpl::GetAll, base::Unretained(this),
-                   source, callback));
+    LoadMap(base::Bind(&LevelDBWrapperImpl::GetAll, base::Unretained(this),
+                       base::Passed(std::move(complete_callback)), callback));
     return;
   }
 
-  mojo::Array<mojom::KeyValuePtr> all;
+  std::vector<mojom::KeyValuePtr> all;
   for (const auto& it : (*map_)) {
     mojom::KeyValuePtr kv = mojom::KeyValue::New();
-    kv->key = it.first.Clone();
-    kv->value = it.second.Clone();
+    kv->key = it.first;
+    kv->value = it.second;
     all.push_back(std::move(kv));
   }
   callback.Run(leveldb::mojom::DatabaseError::OK, std::move(all));
-  observers_.ForAllPtrs(
-      [source](mojom::LevelDBObserver* observer) {
-        observer->GetAllComplete(source);
-      });
+  if (complete_callback.is_valid()) {
+    mojom::LevelDBWrapperGetAllCallbackAssociatedPtr complete_ptr;
+    complete_ptr.Bind(std::move(complete_callback));
+    complete_ptr->Complete(true);
+  }
 }
 
 void LevelDBWrapperImpl::OnConnectionError() {
   if (!bindings_.empty())
     return;
-  no_bindings_callback_.Run();
+  // If any tasks are waiting for load to complete, delay calling the
+  // no_bindings_callback_ until all those tasks have completed.
+  if (!on_load_complete_tasks_.empty())
+    return;
+  delegate_->OnNoBindings();
 }
 
 void LevelDBWrapperImpl::LoadMap(const base::Closure& completion_callback) {
@@ -248,30 +279,72 @@ void LevelDBWrapperImpl::LoadMap(const base::Closure& completion_callback) {
   if (on_load_complete_tasks_.size() > 1)
     return;
 
-  // TODO(michaeln): Import from sqlite localstorage db.
-  database_->GetPrefixed(mojo::Array<uint8_t>::From(prefix_),
-                         base::Bind(&LevelDBWrapperImpl::OnLoadComplete,
-                                    weak_ptr_factory_.GetWeakPtr()));
+  if (!database_) {
+    OnMapLoaded(leveldb::mojom::DatabaseError::IO_ERROR,
+                std::vector<leveldb::mojom::KeyValuePtr>());
+    return;
+  }
+
+  database_->GetPrefixed(prefix_, base::Bind(&LevelDBWrapperImpl::OnMapLoaded,
+                                             weak_ptr_factory_.GetWeakPtr()));
 }
 
-void LevelDBWrapperImpl::OnLoadComplete(
+void LevelDBWrapperImpl::OnMapLoaded(
     leveldb::mojom::DatabaseError status,
-    mojo::Array<leveldb::mojom::KeyValuePtr> data) {
+    std::vector<leveldb::mojom::KeyValuePtr> data) {
   DCHECK(!map_);
+
+  if (data.empty() && status == leveldb::mojom::DatabaseError::OK) {
+    delegate_->MigrateData(
+        base::BindOnce(&LevelDBWrapperImpl::OnGotMigrationData,
+                       weak_ptr_factory_.GetWeakPtr()));
+    return;
+  }
+
   map_.reset(new ValueMap);
-  for (auto& it : data)
-    (*map_)[std::move(it->key)] = std::move(it->value);
+  bytes_used_ = 0;
+  for (auto& it : data) {
+    DCHECK_GE(it->key.size(), prefix_.size());
+    (*map_)[std::vector<uint8_t>(it->key.begin() + prefix_.size(),
+                                 it->key.end())] = it->value;
+    bytes_used_ += it->key.size() - prefix_.size() + it->value.size();
+  }
 
   // We proceed without using a backing store, nothing will be persisted but the
   // class is functional for the lifetime of the object.
-  // TODO(michaeln): Uma here or in the DB file?
+  delegate_->OnMapLoaded(status);
   if (status != leveldb::mojom::DatabaseError::OK)
     database_ = nullptr;
 
+  OnLoadComplete();
+}
+
+void LevelDBWrapperImpl::OnGotMigrationData(std::unique_ptr<ValueMap> data) {
+  map_ = data ? std::move(data) : base::MakeUnique<ValueMap>();
+  bytes_used_ = 0;
+  for (const auto& it : *map_)
+    bytes_used_ += it.first.size() + it.second.size();
+
+  if (database_ && !empty()) {
+    CreateCommitBatchIfNeeded();
+    for (const auto& it : *map_)
+      commit_batch_->changed_keys.insert(it.first);
+    CommitChanges();
+  }
+
+  OnLoadComplete();
+}
+
+void LevelDBWrapperImpl::OnLoadComplete() {
   std::vector<base::Closure> tasks;
   on_load_complete_tasks_.swap(tasks);
   for (auto& task : tasks)
     task.Run();
+
+  // We might need to call the no_bindings_callback_ here if bindings became
+  // empty while waiting for load to complete.
+  if (bindings_.empty())
+    delegate_->OnNoBindings();
 }
 
 void LevelDBWrapperImpl::CreateCommitBatchIfNeeded() {
@@ -310,40 +383,49 @@ base::TimeDelta LevelDBWrapperImpl::ComputeCommitDelay() const {
       default_commit_delay_,
       std::max(commit_rate_limiter_.ComputeDelayNeeded(elapsed_time),
                data_rate_limiter_.ComputeDelayNeeded(elapsed_time)));
-  // TODO(michaeln): UMA_HISTOGRAM_LONG_TIMES("LevelDBWrapper.CommitDelay", d);
+  UMA_HISTOGRAM_LONG_TIMES("LevelDBWrapper.CommitDelay", delay);
   return delay;
 }
 
 void LevelDBWrapperImpl::CommitChanges() {
   DCHECK(database_);
-  if (commit_batch_)
+  DCHECK(map_);
+  if (!commit_batch_)
     return;
 
   commit_rate_limiter_.add_samples(1);
-  data_rate_limiter_.add_samples(commit_batch_->GetDataSize());
 
   // Commit all our changes in a single batch.
-  mojo::Array<leveldb::mojom::BatchedOperationPtr> operations;
+  std::vector<leveldb::mojom::BatchedOperationPtr> operations =
+      delegate_->PrepareToCommit();
   if (commit_batch_->clear_all_first) {
     leveldb::mojom::BatchedOperationPtr item =
         leveldb::mojom::BatchedOperation::New();
     item->type = leveldb::mojom::BatchOperationType::DELETE_PREFIXED_KEY;
-    item->key = mojo::Array<uint8_t>::From(std::string(prefix_));
+    item->key = prefix_;
     operations.push_back(std::move(item));
   }
-  for (auto& it : commit_batch_->changed_values) {
+  size_t data_size = 0;
+  for (const auto& key: commit_batch_->changed_keys) {
+    data_size += key.size();
     leveldb::mojom::BatchedOperationPtr item =
         leveldb::mojom::BatchedOperation::New();
-    item->key = it.first.Clone();
-    if (item->value.is_null()) {
+    item->key.reserve(prefix_.size() + key.size());
+    item->key.insert(item->key.end(), prefix_.begin(), prefix_.end());
+    item->key.insert(item->key.end(), key.begin(), key.end());
+    auto it = map_->find(key);
+    if (it == map_->end()) {
       item->type = leveldb::mojom::BatchOperationType::DELETE_KEY;
     } else {
       item->type = leveldb::mojom::BatchOperationType::PUT_KEY;
-      item->value = std::move(it.second);
+      item->value = it->second;
+      data_size += it->second.size();
     }
     operations.push_back(std::move(item));
   }
   commit_batch_.reset();
+
+  data_rate_limiter_.add_samples(data_size);
 
   ++commit_batches_in_flight_;
 
@@ -355,9 +437,9 @@ void LevelDBWrapperImpl::CommitChanges() {
 }
 
 void LevelDBWrapperImpl::OnCommitComplete(leveldb::mojom::DatabaseError error) {
-  // TODO(michaeln): What if it fails, uma here or in the DB class?
   --commit_batches_in_flight_;
   StartCommitTimer();
+  delegate_->DidCommit(error);
 }
 
 }  // namespace content

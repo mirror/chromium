@@ -26,149 +26,165 @@
 #ifndef PlatformLocale_h
 #define PlatformLocale_h
 
+#include <memory>
 #include "platform/DateComponents.h"
 #include "platform/Language.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebLocalizedString.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
-#include <memory>
 
 namespace blink {
 
 class PLATFORM_EXPORT Locale {
-    WTF_MAKE_NONCOPYABLE(Locale);
-    USING_FAST_MALLOC(Locale);
-public:
-    static std::unique_ptr<Locale> create(const String& localeIdentifier);
-    static Locale& defaultLocale();
+  WTF_MAKE_NONCOPYABLE(Locale);
+  USING_FAST_MALLOC(Locale);
 
-    String queryString(WebLocalizedString::Name);
-    String queryString(WebLocalizedString::Name, const String& parameter);
-    String queryString(WebLocalizedString::Name, const String& parameter1, const String& parameter2);
-    String validationMessageTooLongText(unsigned valueLength, int maxLength);
-    String validationMessageTooShortText(unsigned valueLength, int minLength);
+ public:
+  static std::unique_ptr<Locale> Create(const String& locale_identifier);
+  static Locale& DefaultLocale();
 
-    // Converts the specified number string to another number string localized
-    // for this Locale locale. The input string must conform to HTML
-    // floating-point numbers, and is not empty.
-    String convertToLocalizedNumber(const String&);
+  String QueryString(WebLocalizedString::Name);
+  String QueryString(WebLocalizedString::Name, const String& parameter);
+  String QueryString(WebLocalizedString::Name,
+                     const String& parameter1,
+                     const String& parameter2);
+  String ValidationMessageTooLongText(unsigned value_length, int max_length);
+  String ValidationMessageTooShortText(unsigned value_length, int min_length);
 
-    // Converts the specified localized number string to a number string in the
-    // HTML floating-point number format. The input string is provided by a end
-    // user, and might not be a number string. It's ok that the function returns
-    // a string which is not conforms to the HTML floating-point number format,
-    // callers of this function are responsible to check the format of the
-    // resultant string.
-    String convertFromLocalizedNumber(const String&);
+  // Converts the specified number string to another number string localized
+  // for this Locale locale. The input string must conform to HTML
+  // floating-point numbers, and is not empty.
+  String ConvertToLocalizedNumber(const String&);
 
-    // Remove characters from |input| if a character is not included in
-    // locale-specific number characters and |standardChars|.
-    String stripInvalidNumberCharacters(const String& input, const String& standardChars) const;
+  // Converts the specified localized number string to a number string in the
+  // HTML floating-point number format. The input string is provided by a end
+  // user, and might not be a number string. It's ok that the function returns
+  // a string which is not conforms to the HTML floating-point number format,
+  // callers of this function are responsible to check the format of the
+  // resultant string.
+  String ConvertFromLocalizedNumber(const String&);
 
-    // Returns localized decimal separator, e.g. "." for English, "," for French.
-    String localizedDecimalSeparator();
+  // Remove characters from |input| if a character is not included in
+  // locale-specific number characters and |standardChars|.
+  String StripInvalidNumberCharacters(const String& input,
+                                      const String& standard_chars);
 
-    // Returns date format in Unicode TR35 LDML[1] containing day of month,
-    // month, and year, e.g. "dd/mm/yyyy"
-    // [1] LDML http://unicode.org/reports/tr35/#Date_Format_Patterns
-    virtual String dateFormat() = 0;
+  // Returns localized decimal separator, e.g. "." for English, "," for French.
+  String LocalizedDecimalSeparator();
 
-    // Returns a year-month format in Unicode TR35 LDML.
-    virtual String monthFormat() = 0;
+  // Returns date format in Unicode TR35 LDML[1] containing day of month,
+  // month, and year, e.g. "dd/mm/yyyy"
+  // [1] LDML http://unicode.org/reports/tr35/#Date_Format_Patterns
+  virtual String DateFormat() = 0;
 
-    // Returns a year-month format using short month lanel in Unicode TR35 LDML.
-    virtual String shortMonthFormat() = 0;
+  // Returns a year-month format in Unicode TR35 LDML.
+  virtual String MonthFormat() = 0;
 
-    // Returns time format in Unicode TR35 LDML[1] containing hour, minute, and
-    // second with optional period(AM/PM), e.g. "h:mm:ss a"
-    // [1] LDML http://unicode.org/reports/tr35/#Date_Format_Patterns
-    virtual String timeFormat() = 0;
+  // Returns a year-month format using short month lanel in Unicode TR35 LDML.
+  virtual String ShortMonthFormat() = 0;
 
-    // Returns time format in Unicode TR35 LDML containing hour, and minute
-    // with optional period(AM/PM), e.g. "h:mm a"
-    // Note: Some platforms return same value as timeFormat().
-    virtual String shortTimeFormat() = 0;
+  // Returns time format in Unicode TR35 LDML[1] containing hour, minute, and
+  // second with optional period(AM/PM), e.g. "h:mm:ss a"
+  // [1] LDML http://unicode.org/reports/tr35/#Date_Format_Patterns
+  virtual String TimeFormat() = 0;
 
-    // Returns a date-time format in Unicode TR35 LDML. It should have a seconds
-    // field.
-    virtual String dateTimeFormatWithSeconds() = 0;
+  // Returns time format in Unicode TR35 LDML containing hour, and minute
+  // with optional period(AM/PM), e.g. "h:mm a"
+  // Note: Some platforms return same value as timeFormat().
+  virtual String ShortTimeFormat() = 0;
 
-    // Returns a date-time format in Unicode TR35 LDML. It should have no seconds
-    // field.
-    virtual String dateTimeFormatWithoutSeconds() = 0;
+  // Returns a date-time format in Unicode TR35 LDML. It should have a seconds
+  // field.
+  virtual String DateTimeFormatWithSeconds() = 0;
 
-    // weekFormatInLDML() returns week and year format in LDML, Unicode
-    // technical standard 35, Locale Data Markup Language, e.g. "'Week' ww, yyyy"
-    String weekFormatInLDML();
+  // Returns a date-time format in Unicode TR35 LDML. It should have no seconds
+  // field.
+  virtual String DateTimeFormatWithoutSeconds() = 0;
 
-    // Returns a vector of string of which size is 12. The first item is a
-    // localized string of Jan and the last item is a localized string of
-    // Dec. These strings should be short.
-    virtual const Vector<String>& shortMonthLabels() = 0;
+  // weekFormatInLDML() returns week and year format in LDML, Unicode
+  // technical standard 35, Locale Data Markup Language, e.g. "'Week' ww, yyyy"
+  String WeekFormatInLDML();
 
-    // Returns a vector of string of which size is 12. The first item is a
-    // stand-alone localized string of January and the last item is a
-    // stand-alone localized string of December. These strings should not be
-    // abbreviations.
-    virtual const Vector<String>& standAloneMonthLabels() = 0;
+  // Returns a vector of string of which size is 12. The first item is a
+  // localized string of Jan and the last item is a localized string of
+  // Dec. These strings should be short.
+  virtual const Vector<String>& ShortMonthLabels() = 0;
 
-    // Stand-alone month version of shortMonthLabels.
-    virtual const Vector<String>& shortStandAloneMonthLabels() = 0;
+  // Returns a vector of string of which size is 12. The first item is a
+  // stand-alone localized string of January and the last item is a
+  // stand-alone localized string of December. These strings should not be
+  // abbreviations.
+  virtual const Vector<String>& StandAloneMonthLabels() = 0;
 
-    // Returns localized period field(AM/PM) strings.
-    virtual const Vector<String>& timeAMPMLabels() = 0;
+  // Stand-alone month version of shortMonthLabels.
+  virtual const Vector<String>& ShortStandAloneMonthLabels() = 0;
 
-    // Returns a vector of string of which size is 12. The first item is a
-    // localized string of January, and the last item is a localized string of
-    // December. These strings should not be abbreviations.
-    virtual const Vector<String>& monthLabels() = 0;
+  // Returns localized period field(AM/PM) strings.
+  virtual const Vector<String>& TimeAMPMLabels() = 0;
 
-    // Returns a vector of string of which size is 7. The first item is a
-    // localized short string of Monday, and the last item is a localized
-    // short string of Saturday. These strings should be short.
-    virtual const Vector<String>& weekDayShortLabels() = 0;
+  // Returns a vector of string of which size is 12. The first item is a
+  // localized string of January, and the last item is a localized string of
+  // December. These strings should not be abbreviations.
+  virtual const Vector<String>& MonthLabels() = 0;
 
-    // The first day of a week. 0 is Sunday, and 6 is Saturday.
-    virtual unsigned firstDayOfWeek() = 0;
+  // Returns a vector of string of which size is 7. The first item is a
+  // localized short string of Monday, and the last item is a localized
+  // short string of Saturday. These strings should be short.
+  virtual const Vector<String>& WeekDayShortLabels() = 0;
 
-    // Returns true if people use right-to-left writing in the locale for this
-    // object.
-    virtual bool isRTL() = 0;
+  // The first day of a week. 0 is Sunday, and 6 is Saturday.
+  virtual unsigned FirstDayOfWeek() = 0;
 
-    enum FormatType { FormatTypeUnspecified, FormatTypeShort, FormatTypeMedium };
+  // Returns true if people use right-to-left writing in the locale for this
+  // object.
+  virtual bool IsRTL() = 0;
 
-    // Serializes the specified date into a formatted date string to
-    // display to the user. If an implementation doesn't support
-    // localized dates the function should return an empty string.
-    // FormatType can be used to specify if you want the short format.
-    String formatDateTime(const DateComponents&, FormatType = FormatTypeUnspecified);
+  enum FormatType {
+    kFormatTypeUnspecified,
+    kFormatTypeShort,
+    kFormatTypeMedium
+  };
 
-    virtual ~Locale();
+  // Serializes the specified date into a formatted date string to
+  // display to the user. If an implementation doesn't support
+  // localized dates the function should return an empty string.
+  // FormatType can be used to specify if you want the short format.
+  String FormatDateTime(const DateComponents&,
+                        FormatType = kFormatTypeUnspecified);
 
-protected:
-    enum {
-        // 0-9 for digits.
-        DecimalSeparatorIndex = 10,
-        GroupSeparatorIndex = 11,
-        DecimalSymbolsSize
-    };
+  virtual ~Locale();
 
-    Locale() : m_hasLocaleData(false) { }
-    virtual void initializeLocaleData() = 0;
-    void setLocaleData(const Vector<String, DecimalSymbolsSize>&, const String& positivePrefix, const String& positiveSuffix, const String& negativePrefix, const String& negativeSuffix);
+ protected:
+  enum {
+    // 0-9 for digits.
+    kDecimalSeparatorIndex = 10,
+    kGroupSeparatorIndex = 11,
+    kDecimalSymbolsSize
+  };
 
-private:
-    bool detectSignAndGetDigitRange(const String& input, bool& isNegative, unsigned& startIndex, unsigned& endIndex);
-    unsigned matchedDecimalSymbolIndex(const String& input, unsigned& position);
+  Locale() : has_locale_data_(false) {}
+  virtual void InitializeLocaleData() = 0;
+  void SetLocaleData(const Vector<String, kDecimalSymbolsSize>&,
+                     const String& positive_prefix,
+                     const String& positive_suffix,
+                     const String& negative_prefix,
+                     const String& negative_suffix);
 
-    String m_decimalSymbols[DecimalSymbolsSize];
-    String m_positivePrefix;
-    String m_positiveSuffix;
-    String m_negativePrefix;
-    String m_negativeSuffix;
-    String m_acceptableNumberCharacters;
-    bool m_hasLocaleData;
+ private:
+  bool DetectSignAndGetDigitRange(const String& input,
+                                  bool& is_negative,
+                                  unsigned& start_index,
+                                  unsigned& end_index);
+  unsigned MatchedDecimalSymbolIndex(const String& input, unsigned& position);
+
+  String decimal_symbols_[kDecimalSymbolsSize];
+  String positive_prefix_;
+  String positive_suffix_;
+  String negative_prefix_;
+  String negative_suffix_;
+  String acceptable_number_characters_;
+  bool has_locale_data_;
 };
 
-} // namespace blink
+}  // namespace blink
 #endif

@@ -6,13 +6,14 @@
 
 #include "base/time/time.h"
 #include "content/public/renderer/render_thread.h"
+#include "device/sensors/public/cpp/device_sensors_consts.h"
 #include "third_party/WebKit/public/platform/WebDeviceLightListener.h"
 
 namespace {
 // Default rate for firing of DeviceLight events.
-const int kDefaultLightPumpFrequencyHz = 5;
 const int kDefaultLightPumpDelayMicroseconds =
-    base::Time::kMicrosecondsPerSecond / kDefaultLightPumpFrequencyHz;
+    base::Time::kMicrosecondsPerSecond /
+    device::kDefaultAmbientLightFrequencyHz;
 }  // namespace
 
 namespace content {
@@ -30,10 +31,10 @@ DeviceLightEventPump::~DeviceLightEventPump() {
 
 void DeviceLightEventPump::FireEvent() {
   DCHECK(listener());
-  DeviceLightData data;
+  device::DeviceLightData data;
   if (reader_->GetLatestData(&data) && ShouldFireEvent(data.value)) {
     last_seen_data_ = data.value;
-    listener()->didChangeDeviceLight(data.value);
+    listener()->DidChangeDeviceLight(data.value);
   }
 }
 
@@ -58,7 +59,7 @@ bool DeviceLightEventPump::InitializeReader(base::SharedMemoryHandle handle) {
 void DeviceLightEventPump::SendFakeDataForTesting(void* fake_data) {
   double data = *static_cast<double*>(fake_data);
 
-  listener()->didChangeDeviceLight(data);
+  listener()->DidChangeDeviceLight(data);
 }
 
 }  // namespace content

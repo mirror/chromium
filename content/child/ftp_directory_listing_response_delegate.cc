@@ -9,7 +9,7 @@
 
 #include <vector>
 
-#include "base/i18n/icu_encoding_detection.h"
+#include "base/i18n/encoding_detection.h"
 #include "base/i18n/icu_string_conversions.h"
 #include "base/logging.h"
 #include "base/strings/string_util.h"
@@ -21,6 +21,7 @@
 #include "net/base/escape.h"
 #include "net/base/net_errors.h"
 #include "net/ftp/ftp_directory_listing_parser.h"
+#include "net/net_features.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/platform/WebURLLoaderClient.h"
 
@@ -40,7 +41,7 @@ base::string16 ConvertPathToUTF16(const std::string& path) {
   // Try detecting the encoding. The sample is rather small though, so it may
   // fail.
   std::string encoding;
-  if (base::DetectEncoding(path, &encoding) && !encoding.empty()) {
+  if (base::DetectEncoding(path, &encoding) && encoding != "US-ASCII") {
     base::string16 path_utf16;
     if (base::CodepageToUTF16(path, encoding.c_str(),
                               base::OnStringConversionError::SUBSTITUTE,
@@ -63,13 +64,13 @@ FtpDirectoryListingResponseDelegate::FtpDirectoryListingResponseDelegate(
     const WebURLResponse& response)
     : client_(client),
       loader_(loader) {
-  if (response.getExtraData()) {
+  if (response.GetExtraData()) {
     // extraData can be NULL during tests.
     WebURLResponseExtraDataImpl* extra_data =
-        static_cast<WebURLResponseExtraDataImpl*>(response.getExtraData());
+        static_cast<WebURLResponseExtraDataImpl*>(response.GetExtraData());
     extra_data->set_is_ftp_directory_listing(true);
   }
-  Init(response.url());
+  Init(response.Url());
 }
 
 void FtpDirectoryListingResponseDelegate::Cancel() {
@@ -85,7 +86,7 @@ void FtpDirectoryListingResponseDelegate::OnReceivedData(const char* data,
 void FtpDirectoryListingResponseDelegate::OnCompletedRequest() {
   std::vector<FtpDirectoryListingEntry> entries;
   int rv = -1;
-#if !defined(DISABLE_FTP_SUPPORT)
+#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
   rv = net::ParseFtpDirectoryListing(buffer_, base::Time::Now(), &entries);
 #endif
   if (rv != net::OK) {
@@ -130,8 +131,7 @@ void FtpDirectoryListingResponseDelegate::Init(const GURL& response_url) {
 void FtpDirectoryListingResponseDelegate::SendDataToClient(
     const std::string& data) {
   if (client_) {
-    client_->didReceiveData(loader_, data.data(), data.length(), -1,
-                            data.length());
+    client_->DidReceiveData(data.data(), data.length());
   }
 }
 

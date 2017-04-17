@@ -24,9 +24,9 @@ var LanguageState;
  * enabled: an array of the currently enabled input methods.
  * currentId: ID of the currently active input method.
  * @typedef {{
- *     supported: !Array<!chrome.languageSettingsPrivate.InputMethod>,
- *     enabled: !Array<!chrome.languageSettingsPrivate.InputMethod>,
- *     currentId: string,
+ *   supported: !Array<!chrome.languageSettingsPrivate.InputMethod>,
+ *   enabled: !Array<!chrome.languageSettingsPrivate.InputMethod>,
+ *   currentId: string,
  * }}
  */
 var InputMethodsModel;
@@ -37,21 +37,24 @@ var InputMethodsModel;
  *     at initialization.
  * enabled: an array of enabled language states, ordered by preference.
  * translateTarget: the default language to translate into.
+ * prospectiveUILanguage: the "prospective" UI language, i.e., the one to be
+ *     used on next restart. Matches the current UI language preference unless
+ *     the user has chosen a different language without restarting. May differ
+ *     from the actually used language (navigator.language). Chrome OS and
+ *     Windows only.
  * inputMethods: the InputMethodsModel (Chrome OS only).
  * @typedef {{
  *   supported: !Array<!chrome.languageSettingsPrivate.Language>,
  *   enabled: !Array<!LanguageState>,
  *   translateTarget: string,
+ *   prospectiveUILanguage: (string|undefined),
  *   inputMethods: (!InputMethodsModel|undefined),
  * }}
  */
 var LanguagesModel;
 
 /**
- * Helper methods implemented by settings-languages-singleton. The nature of
- * the interaction between the singleton Polymer element and the |languages|
- * properties kept in sync is hidden from the consumer, which can just treat
- * these methods as a handy interface.
+ * Helper methods for reading and writing language settings.
  * @interface
  */
 var LanguageHelper = function() {};
@@ -66,18 +69,13 @@ LanguageHelper.prototype = {
    * the actual UI language until a restart.
    * @param {string} languageCode
    */
-  setUILanguage: assertNotReached,
-
-  /** Resets the prospective UI language back to the actual UI language. */
-  resetUILanguage: assertNotReached,
+  setProspectiveUILanguage: assertNotReached,
 
   /**
-   * Returns the "prospective" UI language, i.e. the one to be used on next
-   * restart. If the pref is not set, the current UI language is also the
-   * "prospective" language.
-   * @return {string} Language code of the prospective UI language.
+   * True if the prospective UI language has been changed.
+   * @return {boolean}
    */
-  getProspectiveUILanguage: assertNotReached,
+  requiresRestart: assertNotReached,
 
   /**
    * @param {string} languageCode
@@ -110,6 +108,12 @@ LanguageHelper.prototype = {
    *     of the list. A Positive one moves the language toward the back.
    */
   moveLanguage: assertNotReached,
+
+  /**
+   * Moves the language directly to the front of the list of enabled languages.
+   * @param {string} languageCode
+   */
+  moveLanguageToFront: assertNotReached,
 
   /**
    * Enables translate for the given language by removing the translate
@@ -171,7 +175,7 @@ LanguageHelper.prototype = {
   setCurrentInputMethod: assertNotReached,
 
   /**
-   * param {string} languageCode
+   * @param {string} languageCode
    * @return {!Array<!chrome.languageSettingsPrivate.InputMethod>}
    */
   getInputMethodsForLanguage: assertNotReached,
@@ -184,13 +188,4 @@ LanguageHelper.prototype = {
 
   /** @param {string} id Input method ID. */
   openInputMethodOptions: assertNotReached,
-
-  /** @param {string} id New current input method ID. */
-  onInputMethodChanged_: assertNotReached,
-
-  /** @param {string} id Added input method ID. */
-  onInputMethodAdded_: assertNotReached,
-
-  /** @param {string} id Removed input method ID. */
-  onInputMethodRemoved_: assertNotReached,
 };

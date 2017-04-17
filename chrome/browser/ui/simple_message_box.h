@@ -5,14 +5,19 @@
 #ifndef CHROME_BROWSER_UI_SIMPLE_MESSAGE_BOX_H_
 #define CHROME_BROWSER_UI_SIMPLE_MESSAGE_BOX_H_
 
+#include "base/compiler_specific.h"
 #include "base/strings/string16.h"
 #include "ui/gfx/native_widget_types.h"
 
 namespace chrome {
 
 enum MessageBoxResult {
-  MESSAGE_BOX_RESULT_NO = 0,  // User chose NO or CANCEL.
-  MESSAGE_BOX_RESULT_YES = 1, // User chose YES or OK.
+  // User chose NO or CANCEL. If there's a checkbox, then the checkbox was
+  // unchecked.
+  MESSAGE_BOX_RESULT_NO = 0,
+
+  // User chose YES or OK. If there's a checkbox, then the checkbox was checked.
+  MESSAGE_BOX_RESULT_YES = 1,
 };
 
 enum MessageBoxType {
@@ -30,6 +35,13 @@ enum MessageBoxType {
 void ShowWarningMessageBox(gfx::NativeWindow parent,
                            const base::string16& title,
                            const base::string16& message);
+
+// As above, but with a checkbox. Returns true if the checkbox was checked when
+// the dialog was dismissed, false otherwise.
+bool ShowWarningMessageBoxWithCheckbox(gfx::NativeWindow parent,
+                                       const base::string16& title,
+                                       const base::string16& message,
+                                       const base::string16& checkbox_text);
 
 // As above, but two buttons are displayed and the return value indicates which
 // is chosen.
@@ -49,6 +61,10 @@ MessageBoxResult ShowMessageBoxWithButtonText(gfx::NativeWindow parent,
                                               const base::string16& message,
                                               const base::string16& yes_text,
                                               const base::string16& no_text);
+
+// Closes the current message box, if any, accepting or declining based on
+// |accept|. Returns whether there was a message box showing.
+bool CloseMessageBoxForTest(bool accept) WARN_UNUSED_RESULT;
 
 }  // namespace chrome
 

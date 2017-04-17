@@ -18,6 +18,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
+#include "chrome/common/extensions/extension_process_policy.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "content/public/common/content_switches.h"
 #include "extensions/browser/api/test/test_api.h"
@@ -150,22 +151,21 @@ ExtensionApiTest::ExtensionApiTest() {
 
 ExtensionApiTest::~ExtensionApiTest() {}
 
-void ExtensionApiTest::SetUpInProcessBrowserTestFixture() {
+void ExtensionApiTest::SetUpOnMainThread() {
+  ExtensionBrowserTest::SetUpOnMainThread();
   DCHECK(!test_config_.get()) << "Previous test did not clear config state.";
   test_config_.reset(new base::DictionaryValue());
   test_config_->SetString(kTestDataDirectory,
                           net::FilePathToFileURL(test_data_dir_).spec());
   test_config_->SetInteger(kTestWebSocketPort, 0);
-  bool isolate_extensions = base::CommandLine::ForCurrentProcess()->HasSwitch(
-                                switches::kSitePerProcess) ||
-                            base::CommandLine::ForCurrentProcess()->HasSwitch(
-                                extensions::switches::kIsolateExtensions);
+  bool isolate_extensions = extensions::IsIsolateExtensionsEnabled();
   test_config_->SetBoolean(kIsolateExtensions, isolate_extensions);
   extensions::TestGetConfigFunction::set_test_config_state(
       test_config_.get());
 }
 
-void ExtensionApiTest::TearDownInProcessBrowserTestFixture() {
+void ExtensionApiTest::TearDownOnMainThread() {
+  ExtensionBrowserTest::TearDownOnMainThread();
   extensions::TestGetConfigFunction::set_test_config_state(NULL);
   test_config_.reset(NULL);
 }
@@ -343,9 +343,9 @@ bool ExtensionApiTest::RunExtensionTestImpl(const std::string& extension_name,
     else
       ui_test_utils::NavigateToURL(browser(), url);
   } else if (launch_platform_app) {
-    AppLaunchParams params(browser()->profile(), extension,
-                           extensions::LAUNCH_CONTAINER_NONE, NEW_WINDOW,
-                           extensions::SOURCE_TEST);
+    AppLaunchParams params(
+        browser()->profile(), extension, extensions::LAUNCH_CONTAINER_NONE,
+        WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST);
     params.command_line = *base::CommandLine::ForCurrentProcess();
     OpenApplication(params);
   }
@@ -390,7 +390,15 @@ const extensions::Extension* ExtensionApiTest::GetSingleLoadedExtension() {
 }
 
 bool ExtensionApiTest::StartEmbeddedTestServer() {
-  if (!embedded_test_server()->Start())
+  if (!InitializeEmbeddedTestServer())
+    return false;
+
+  EmbeddedTestServerAcceptConnections();
+  return true;
+}
+
+bool ExtensionApiTest::InitializeEmbeddedTestServer() {
+  if (!embedded_test_server()->InitializeAndListen())
     return false;
 
   // Build a dictionary of values that tests can use to build URLs that
@@ -402,12 +410,18 @@ bool ExtensionApiTest::StartEmbeddedTestServer() {
   return true;
 }
 
+void ExtensionApiTest::EmbeddedTestServerAcceptConnections() {
+  embedded_test_server()->StartAcceptingConnections();
+}
+
 bool ExtensionApiTest::StartWebSocketServer(
-    const base::FilePath& root_directory) {
+    const base::FilePath& root_directory,
+    bool enable_basic_auth) {
   websocket_server_.reset(new net::SpawnedTestServer(
       net::SpawnedTestServer::TYPE_WS,
       net::SpawnedTestServer::kLocalhost,
       root_directory));
+  websocket_server_->set_websocket_basic_auth(enable_basic_auth);
 
   if (!websocket_server_->Start())
     return false;

@@ -4,420 +4,624 @@
 
 #include "core/html/canvas/CanvasAsyncBlobCreator.h"
 
+#include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/fileapi/Blob.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/image-encoders/JPEGImageEncoder.h"
 #include "platform/image-encoders/PNGImageEncoder.h"
 #include "platform/threading/BackgroundTaskRunner.h"
+#include "platform/wtf/CurrentTime.h"
+#include "platform/wtf/Functional.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebScheduler.h"
-#include "public/platform/WebTaskRunner.h"
 #include "public/platform/WebThread.h"
 #include "public/platform/WebTraceLocation.h"
-#include "wtf/CurrentTime.h"
-#include "wtf/Functional.h"
-#include "wtf/PtrUtil.h"
 
 namespace blink {
 
 namespace {
 
-const double SlackBeforeDeadline = 0.001; // a small slack period between deadline and current time for safety
-const int NumChannelsPng = 4;
-const int LongTaskImageSizeThreshold = 1000 * 1000; // The max image size we expect to encode in 14ms on Linux in PNG format
+const double kSlackBeforeDeadline =
+    0.001;  // a small slack period between deadline and current time for safety
+const int kNumChannelsPng = 4;
 
 // The encoding task is highly likely to switch from idle task to alternative
 // code path when the startTimeoutDelay is set to be below 150ms. As we want the
 // majority of encoding tasks to take the usual async idle task, we set a
 // lenient limit -- 200ms here. This limit still needs to be short enough for
 // the latency to be negligible to the user.
-const double IdleTaskStartTimeoutDelay = 200.0;
+const double kIdleTaskStartTimeoutDelay = 200.0;
 // We should be more lenient on completion timeout delay to ensure that the
 // switch from idle to main thread only happens to a minority of toBlob calls
 #if !OS(ANDROID)
 // Png image encoding on 4k by 4k canvas on Mac HDD takes 5.7+ seconds
-const double IdleTaskCompleteTimeoutDelay = 6700.0;
+const double kIdleTaskCompleteTimeoutDelay = 6700.0;
 #else
 // Png image encoding on 4k by 4k canvas on Android One takes 9.0+ seconds
-const double IdleTaskCompleteTimeoutDelay = 10000.0;
+const double kIdleTaskCompleteTimeoutDelay = 10000.0;
 #endif
 
-bool isDeadlineNearOrPassed(double deadlineSeconds)
-{
-    return (deadlineSeconds - SlackBeforeDeadline - monotonicallyIncreasingTime() <= 0);
+bool IsDeadlineNearOrPassed(double deadline_seconds) {
+  return (deadline_seconds - kSlackBeforeDeadline -
+              MonotonicallyIncreasingTime() <=
+          0);
 }
 
-String convertMimeTypeEnumToString(CanvasAsyncBlobCreator::MimeType mimeTypeEnum)
-{
-    switch (mimeTypeEnum) {
-    case CanvasAsyncBlobCreator::MimeTypePng:
-        return "image/png";
-    case CanvasAsyncBlobCreator::MimeTypeJpeg:
-        return "image/jpeg";
-    case CanvasAsyncBlobCreator::MimeTypeWebp:
-        return "image/webp";
+String ConvertMimeTypeEnumToString(
+    CanvasAsyncBlobCreator::MimeType mime_type_enum) {
+  switch (mime_type_enum) {
+    case CanvasAsyncBlobCreator::kMimeTypePng:
+      return "image/png";
+    case CanvasAsyncBlobCreator::kMimeTypeJpeg:
+      return "image/jpeg";
+    case CanvasAsyncBlobCreator::kMimeTypeWebp:
+      return "image/webp";
     default:
-        return "image/unknown";
+      return "image/unknown";
+  }
+}
+
+CanvasAsyncBlobCreator::MimeType ConvertMimeTypeStringToEnum(
+    const String& mime_type) {
+  CanvasAsyncBlobCreator::MimeType mime_type_enum;
+  if (mime_type == "image/png") {
+    mime_type_enum = CanvasAsyncBlobCreator::kMimeTypePng;
+  } else if (mime_type == "image/jpeg") {
+    mime_type_enum = CanvasAsyncBlobCreator::kMimeTypeJpeg;
+  } else if (mime_type == "image/webp") {
+    mime_type_enum = CanvasAsyncBlobCreator::kMimeTypeWebp;
+  } else {
+    mime_type_enum = CanvasAsyncBlobCreator::kNumberOfMimeTypeSupported;
+  }
+  return mime_type_enum;
+}
+
+void RecordIdleTaskStatusHistogram(
+    CanvasAsyncBlobCreator::IdleTaskStatus status) {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      EnumerationHistogram, to_blob_idle_task_status,
+      new EnumerationHistogram("Blink.Canvas.ToBlob.IdleTaskStatus",
+                               CanvasAsyncBlobCreator::kIdleTaskCount));
+  to_blob_idle_task_status.Count(status);
+}
+
+// This enum is used in histogram and any more types should be appended at the
+// end of the list.
+enum ElapsedTimeHistogramType {
+  kInitiateEncodingDelay,
+  kIdleEncodeDuration,
+  kToBlobDuration,
+  kNumberOfElapsedTimeHistogramTypes
+};
+
+void RecordElapsedTimeHistogram(ElapsedTimeHistogramType type,
+                                CanvasAsyncBlobCreator::MimeType mime_type,
+                                double elapsed_time) {
+  if (type == kInitiateEncodingDelay) {
+    if (mime_type == CanvasAsyncBlobCreator::kMimeTypePng) {
+      DEFINE_THREAD_SAFE_STATIC_LOCAL(
+          CustomCountHistogram, to_blob_png_initiate_encoding_counter,
+          new CustomCountHistogram(
+              "Blink.Canvas.ToBlob.InitiateEncodingDelay.PNG", 0, 10000000,
+              50));
+      to_blob_png_initiate_encoding_counter.Count(elapsed_time * 1000000.0);
+    } else if (mime_type == CanvasAsyncBlobCreator::kMimeTypeJpeg) {
+      DEFINE_THREAD_SAFE_STATIC_LOCAL(
+          CustomCountHistogram, to_blob_jpeg_initiate_encoding_counter,
+          new CustomCountHistogram(
+              "Blink.Canvas.ToBlob.InitiateEncodingDelay.JPEG", 0, 10000000,
+              50));
+      to_blob_jpeg_initiate_encoding_counter.Count(elapsed_time * 1000000.0);
     }
-}
-
-CanvasAsyncBlobCreator::MimeType convertMimeTypeStringToEnum(const String& mimeType)
-{
-    CanvasAsyncBlobCreator::MimeType mimeTypeEnum;
-    if (mimeType == "image/png") {
-        mimeTypeEnum = CanvasAsyncBlobCreator::MimeTypePng;
-    } else if (mimeType == "image/jpeg") {
-        mimeTypeEnum = CanvasAsyncBlobCreator::MimeTypeJpeg;
-    } else if (mimeType == "image/webp") {
-        mimeTypeEnum = CanvasAsyncBlobCreator::MimeTypeWebp;
-    } else {
-        mimeTypeEnum = CanvasAsyncBlobCreator::NumberOfMimeTypeSupported;
+  } else if (type == kIdleEncodeDuration) {
+    if (mime_type == CanvasAsyncBlobCreator::kMimeTypePng) {
+      DEFINE_THREAD_SAFE_STATIC_LOCAL(
+          CustomCountHistogram, to_blob_png_idle_encode_counter,
+          new CustomCountHistogram("Blink.Canvas.ToBlob.IdleEncodeDuration.PNG",
+                                   0, 10000000, 50));
+      to_blob_png_idle_encode_counter.Count(elapsed_time * 1000000.0);
+    } else if (mime_type == CanvasAsyncBlobCreator::kMimeTypeJpeg) {
+      DEFINE_THREAD_SAFE_STATIC_LOCAL(
+          CustomCountHistogram, to_blob_jpeg_idle_encode_counter,
+          new CustomCountHistogram(
+              "Blink.Canvas.ToBlob.IdleEncodeDuration.JPEG", 0, 10000000, 50));
+      to_blob_jpeg_idle_encode_counter.Count(elapsed_time * 1000000.0);
     }
-    return mimeTypeEnum;
-}
-
-} // anonymous namespace
-
-CanvasAsyncBlobCreator* CanvasAsyncBlobCreator::create(DOMUint8ClampedArray* unpremultipliedRGBAImageData, const String& mimeType, const IntSize& size, BlobCallback* callback, double startTime, Document* document)
-{
-    return new CanvasAsyncBlobCreator(unpremultipliedRGBAImageData, convertMimeTypeStringToEnum(mimeType), size, callback, startTime, document);
-}
-
-CanvasAsyncBlobCreator::CanvasAsyncBlobCreator(DOMUint8ClampedArray* data, MimeType mimeType, const IntSize& size, BlobCallback* callback, double startTime, Document* document)
-    : m_data(data)
-    , m_document(document)
-    , m_size(size)
-    , m_mimeType(mimeType)
-    , m_callback(callback)
-    , m_startTime(startTime)
-    , m_elapsedTime(0)
-{
-    ASSERT(m_data->length() == (unsigned) (size.height() * size.width() * 4));
-    m_encodedImage = wrapUnique(new Vector<unsigned char>());
-    m_pixelRowStride = size.width() * NumChannelsPng;
-    m_idleTaskStatus = IdleTaskNotSupported;
-    m_numRowsCompleted = 0;
-}
-
-CanvasAsyncBlobCreator::~CanvasAsyncBlobCreator()
-{
-}
-
-void CanvasAsyncBlobCreator::dispose()
-{
-    // Eagerly let go of references to prevent retention of these
-    // resources while any remaining posted tasks are queued.
-    m_data.clear();
-    m_document.clear();
-    m_callback.clear();
-}
-
-void CanvasAsyncBlobCreator::scheduleAsyncBlobCreation(bool canUseIdlePeriodScheduling, const double& quality)
-{
-    ASSERT(isMainThread());
-
-    if (canUseIdlePeriodScheduling) {
-        m_idleTaskStatus = IdleTaskNotStarted;
-        if (m_mimeType == MimeTypePng) {
-            this->scheduleInitiatePngEncoding();
-        } else if (m_mimeType == MimeTypeJpeg) {
-            this->scheduleInitiateJpegEncoding(quality);
-        } else {
-            // Progressive encoding is only applicable to png and jpeg image format,
-            // and thus idle tasks scheduling can only be applied to these image formats.
-            // TODO(xlai): Progressive encoding on webp image formats (crbug.com/571399)
-            ASSERT_NOT_REACHED();
-        }
-        // We post the below task to check if the above idle task isn't late.
-        // There's no risk of concurrency as both tasks are on main thread.
-        this->postDelayedTaskToMainThread(BLINK_FROM_HERE, WTF::bind(&CanvasAsyncBlobCreator::idleTaskStartTimeoutEvent, wrapPersistent(this), quality), IdleTaskStartTimeoutDelay);
-    } else if (m_mimeType == MimeTypeWebp) {
-        BackgroundTaskRunner::TaskSize taskSize = (m_size.height() * m_size.width() >= LongTaskImageSizeThreshold) ? BackgroundTaskRunner::TaskSizeLongRunningTask : BackgroundTaskRunner::TaskSizeShortRunningTask;
-        BackgroundTaskRunner::postOnBackgroundThread(BLINK_FROM_HERE, crossThreadBind(&CanvasAsyncBlobCreator::encodeImageOnEncoderThread, wrapCrossThreadPersistent(this), quality), taskSize);
+  } else if (type == kToBlobDuration) {
+    if (mime_type == CanvasAsyncBlobCreator::kMimeTypePng) {
+      DEFINE_THREAD_SAFE_STATIC_LOCAL(
+          CustomCountHistogram, to_blob_png_counter,
+          new CustomCountHistogram("Blink.Canvas.ToBlobDuration.PNG", 0,
+                                   10000000, 50));
+      to_blob_png_counter.Count(elapsed_time * 1000000.0);
+    } else if (mime_type == CanvasAsyncBlobCreator::kMimeTypeJpeg) {
+      DEFINE_THREAD_SAFE_STATIC_LOCAL(
+          CustomCountHistogram, to_blob_jpeg_counter,
+          new CustomCountHistogram("Blink.Canvas.ToBlobDuration.JPEG", 0,
+                                   10000000, 50));
+      to_blob_jpeg_counter.Count(elapsed_time * 1000000.0);
+    } else if (mime_type == CanvasAsyncBlobCreator::kMimeTypeWebp) {
+      DEFINE_THREAD_SAFE_STATIC_LOCAL(
+          CustomCountHistogram, to_blob_webp_counter,
+          new CustomCountHistogram("Blink.Canvas.ToBlobDuration.WEBP", 0,
+                                   10000000, 50));
+      to_blob_webp_counter.Count(elapsed_time * 1000000.0);
     }
+  }
 }
 
-void CanvasAsyncBlobCreator::scheduleInitiateJpegEncoding(const double& quality)
-{
-    m_scheduleInitiateStartTime = WTF::monotonicallyIncreasingTime();
-    Platform::current()->mainThread()->scheduler()->postIdleTask(BLINK_FROM_HERE, WTF::bind(&CanvasAsyncBlobCreator::initiateJpegEncoding, wrapPersistent(this), quality));
+}  // anonymous namespace
+
+CanvasAsyncBlobCreator* CanvasAsyncBlobCreator::Create(
+    DOMUint8ClampedArray* unpremultiplied_rgba_image_data,
+    const String& mime_type,
+    const IntSize& size,
+    BlobCallback* callback,
+    double start_time,
+    Document* document) {
+  return new CanvasAsyncBlobCreator(
+      unpremultiplied_rgba_image_data, ConvertMimeTypeStringToEnum(mime_type),
+      size, callback, start_time, document, nullptr);
 }
 
-void CanvasAsyncBlobCreator::initiateJpegEncoding(const double& quality, double deadlineSeconds)
-{
-    ASSERT(isMainThread());
-    DEFINE_STATIC_LOCAL(CustomCountHistogram, toBlobJPEGInitiateEncodingCounter, ("Blink.Canvas.ToBlob.InitiateEncodingDelay.JPEG", 0, 10000000, 50));
-    toBlobJPEGInitiateEncodingCounter.count((WTF::monotonicallyIncreasingTime() - m_scheduleInitiateStartTime) * 1000000.0);
-    if (m_idleTaskStatus == IdleTaskSwitchedToMainThreadTask) {
+CanvasAsyncBlobCreator* CanvasAsyncBlobCreator::Create(
+    DOMUint8ClampedArray* unpremultiplied_rgba_image_data,
+    const String& mime_type,
+    const IntSize& size,
+    double start_time,
+    Document* document,
+    ScriptPromiseResolver* resolver) {
+  return new CanvasAsyncBlobCreator(
+      unpremultiplied_rgba_image_data, ConvertMimeTypeStringToEnum(mime_type),
+      size, nullptr, start_time, document, resolver);
+}
+
+CanvasAsyncBlobCreator::CanvasAsyncBlobCreator(DOMUint8ClampedArray* data,
+                                               MimeType mime_type,
+                                               const IntSize& size,
+                                               BlobCallback* callback,
+                                               double start_time,
+                                               Document* document,
+                                               ScriptPromiseResolver* resolver)
+    : data_(data),
+      document_(document),
+      size_(size),
+      mime_type_(mime_type),
+      start_time_(start_time),
+      elapsed_time_(0),
+      callback_(callback),
+      script_promise_resolver_(resolver) {
+  DCHECK(data_->length() == (unsigned)(size.Height() * size.Width() * 4));
+  encoded_image_ = WTF::WrapUnique(new Vector<unsigned char>());
+  pixel_row_stride_ = size.Width() * kNumChannelsPng;
+  idle_task_status_ = kIdleTaskNotSupported;
+  num_rows_completed_ = 0;
+  if (document) {
+    parent_frame_task_runner_ =
+        ParentFrameTaskRunners::Create(document->GetFrame());
+  }
+  if (script_promise_resolver_) {
+    function_type_ = kOffscreenCanvasToBlobPromise;
+  } else {
+    function_type_ = kHTMLCanvasToBlobCallback;
+  }
+}
+
+CanvasAsyncBlobCreator::~CanvasAsyncBlobCreator() {}
+
+void CanvasAsyncBlobCreator::Dispose() {
+  // Eagerly let go of references to prevent retention of these
+  // resources while any remaining posted tasks are queued.
+  data_.Clear();
+  document_.Clear();
+  parent_frame_task_runner_.Clear();
+  callback_.Clear();
+  script_promise_resolver_.Clear();
+}
+
+void CanvasAsyncBlobCreator::ScheduleAsyncBlobCreation(const double& quality) {
+  if (mime_type_ == kMimeTypeWebp) {
+    if (!IsMainThread()) {
+      DCHECK(function_type_ == kOffscreenCanvasToBlobPromise);
+      // When OffscreenCanvas.convertToBlob() occurs on worker thread,
+      // we do not need to use background task runner to reduce load on main.
+      // So we just directly encode images on the worker thread.
+      if (!ImageDataBuffer(size_, data_->Data())
+               .EncodeImage("image/webp", quality, encoded_image_.get())) {
+        TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, document_)
+            ->PostTask(
+                BLINK_FROM_HERE,
+                WTF::Bind(&CanvasAsyncBlobCreator::CreateNullAndReturnResult,
+                          WrapPersistent(this)));
+
         return;
-    }
+      }
+      TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, document_)
+          ->PostTask(
+              BLINK_FROM_HERE,
+              WTF::Bind(&CanvasAsyncBlobCreator::CreateBlobAndReturnResult,
+                        WrapPersistent(this)));
 
-    ASSERT(m_idleTaskStatus == IdleTaskNotStarted);
-    m_idleTaskStatus = IdleTaskStarted;
-
-    if (!initializeJpegStruct(quality)) {
-        m_idleTaskStatus = IdleTaskFailed;
-        return;
-    }
-    this->idleEncodeRowsJpeg(deadlineSeconds);
-}
-
-void CanvasAsyncBlobCreator::scheduleInitiatePngEncoding()
-{
-    m_scheduleInitiateStartTime = WTF::monotonicallyIncreasingTime();
-    Platform::current()->mainThread()->scheduler()->postIdleTask(BLINK_FROM_HERE, WTF::bind(&CanvasAsyncBlobCreator::initiatePngEncoding, wrapPersistent(this)));
-}
-
-void CanvasAsyncBlobCreator::initiatePngEncoding(double deadlineSeconds)
-{
-    ASSERT(isMainThread());
-    DEFINE_STATIC_LOCAL(CustomCountHistogram, toBlobPNGInitiateEncodingCounter, ("Blink.Canvas.ToBlob.InitiateEncodingDelay.PNG", 0, 10000000, 50));
-    toBlobPNGInitiateEncodingCounter.count((WTF::monotonicallyIncreasingTime() - m_scheduleInitiateStartTime) * 1000000.0);
-    if (m_idleTaskStatus == IdleTaskSwitchedToMainThreadTask) {
-        return;
-    }
-
-    ASSERT(m_idleTaskStatus == IdleTaskNotStarted);
-    m_idleTaskStatus = IdleTaskStarted;
-
-    if (!initializePngStruct()) {
-        m_idleTaskStatus = IdleTaskFailed;
-        return;
-    }
-    this->idleEncodeRowsPng(deadlineSeconds);
-}
-
-void CanvasAsyncBlobCreator::idleEncodeRowsPng(double deadlineSeconds)
-{
-    ASSERT(isMainThread());
-    if (m_idleTaskStatus == IdleTaskSwitchedToMainThreadTask) {
-        return;
-    }
-
-    double startTime = WTF::monotonicallyIncreasingTime();
-    unsigned char* inputPixels = m_data->data() + m_pixelRowStride * m_numRowsCompleted;
-    for (int y = m_numRowsCompleted; y < m_size.height(); ++y) {
-        if (isDeadlineNearOrPassed(deadlineSeconds)) {
-            m_numRowsCompleted = y;
-            m_elapsedTime += (WTF::monotonicallyIncreasingTime() - startTime);
-            Platform::current()->currentThread()->scheduler()->postIdleTask(BLINK_FROM_HERE, WTF::bind(&CanvasAsyncBlobCreator::idleEncodeRowsPng, wrapPersistent(this)));
-            return;
-        }
-        PNGImageEncoder::writeOneRowToPng(inputPixels, m_pngEncoderState.get());
-        inputPixels += m_pixelRowStride;
-    }
-    m_numRowsCompleted = m_size.height();
-    PNGImageEncoder::finalizePng(m_pngEncoderState.get());
-
-    m_idleTaskStatus = IdleTaskCompleted;
-    m_elapsedTime += (WTF::monotonicallyIncreasingTime() - startTime);
-    DEFINE_STATIC_LOCAL(CustomCountHistogram, toBlobPNGIdleEncodeCounter, ("Blink.Canvas.ToBlob.IdleEncodeDuration.PNG", 0, 10000000, 50));
-    toBlobPNGIdleEncodeCounter.count(m_elapsedTime * 1000000.0);
-
-    if (isDeadlineNearOrPassed(deadlineSeconds)) {
-        TaskRunnerHelper::getUnthrottledTaskRunner(m_document)->postTask(BLINK_FROM_HERE, WTF::bind(&CanvasAsyncBlobCreator::createBlobAndInvokeCallback, wrapPersistent(this)));
     } else {
-        this->createBlobAndInvokeCallback();
+      BackgroundTaskRunner::PostOnBackgroundThread(
+          BLINK_FROM_HERE,
+          CrossThreadBind(&CanvasAsyncBlobCreator::EncodeImageOnEncoderThread,
+                          WrapCrossThreadPersistent(this), quality));
     }
-}
-
-void CanvasAsyncBlobCreator::idleEncodeRowsJpeg(double deadlineSeconds)
-{
-    ASSERT(isMainThread());
-    if (m_idleTaskStatus == IdleTaskSwitchedToMainThreadTask) {
-        return;
-    }
-
-    double startTime = WTF::monotonicallyIncreasingTime();
-    m_numRowsCompleted = JPEGImageEncoder::progressiveEncodeRowsJpegHelper(m_jpegEncoderState.get(), m_data->data(), m_numRowsCompleted, SlackBeforeDeadline, deadlineSeconds);
-    m_elapsedTime += (WTF::monotonicallyIncreasingTime() - startTime);
-    if (m_numRowsCompleted == m_size.height()) {
-        m_idleTaskStatus = IdleTaskCompleted;
-        DEFINE_STATIC_LOCAL(CustomCountHistogram, toBlobJPEGIdleEncodeCounter, ("Blink.Canvas.ToBlob.IdleEncodeDuration.JPEG", 0, 10000000, 50));
-        toBlobJPEGIdleEncodeCounter.count(m_elapsedTime * 1000000.0);
-        if (isDeadlineNearOrPassed(deadlineSeconds)) {
-            TaskRunnerHelper::getUnthrottledTaskRunner(m_document)->postTask(BLINK_FROM_HERE, WTF::bind(&CanvasAsyncBlobCreator::createBlobAndInvokeCallback, wrapPersistent(this)));
-        } else {
-            this->createBlobAndInvokeCallback();
-        }
-    } else if (m_numRowsCompleted == JPEGImageEncoder::ProgressiveEncodeFailed) {
-        m_idleTaskStatus = IdleTaskFailed;
-        this->createNullAndInvokeCallback();
+  } else {
+    idle_task_status_ = kIdleTaskNotStarted;
+    if (mime_type_ == kMimeTypePng) {
+      this->ScheduleInitiatePngEncoding();
+    } else if (mime_type_ == kMimeTypeJpeg) {
+      this->ScheduleInitiateJpegEncoding(quality);
     } else {
-        Platform::current()->currentThread()->scheduler()->postIdleTask(BLINK_FROM_HERE, WTF::bind(&CanvasAsyncBlobCreator::idleEncodeRowsJpeg, wrapPersistent(this)));
+      // Progressive encoding is only applicable to png and jpeg image format,
+      // and thus idle tasks scheduling can only be applied to these image
+      // formats.
+      // TODO(xlai): Progressive encoding on webp image formats
+      // (crbug.com/571399)
+      NOTREACHED();
     }
+
+    // We post the below task to check if the above idle task isn't late.
+    // There's no risk of concurrency as both tasks are on the same thread.
+    this->PostDelayedTaskToCurrentThread(
+        BLINK_FROM_HERE,
+        WTF::Bind(&CanvasAsyncBlobCreator::IdleTaskStartTimeoutEvent,
+                  WrapPersistent(this), quality),
+        kIdleTaskStartTimeoutDelay);
+  }
 }
 
-void CanvasAsyncBlobCreator::encodeRowsPngOnMainThread()
-{
-    ASSERT(m_idleTaskStatus == IdleTaskSwitchedToMainThreadTask);
-
-    // Continue encoding from the last completed row
-    unsigned char* inputPixels = m_data->data() + m_pixelRowStride * m_numRowsCompleted;
-    for (int y = m_numRowsCompleted; y < m_size.height(); ++y) {
-        PNGImageEncoder::writeOneRowToPng(inputPixels, m_pngEncoderState.get());
-        inputPixels += m_pixelRowStride;
-    }
-    PNGImageEncoder::finalizePng(m_pngEncoderState.get());
-    this->createBlobAndInvokeCallback();
-
-    this->signalAlternativeCodePathFinishedForTesting();
+void CanvasAsyncBlobCreator::ScheduleInitiateJpegEncoding(
+    const double& quality) {
+  schedule_initiate_start_time_ = WTF::MonotonicallyIncreasingTime();
+  Platform::Current()->CurrentThread()->Scheduler()->PostIdleTask(
+      BLINK_FROM_HERE, WTF::Bind(&CanvasAsyncBlobCreator::InitiateJpegEncoding,
+                                 WrapPersistent(this), quality));
 }
 
-void CanvasAsyncBlobCreator::encodeRowsJpegOnMainThread()
-{
-    ASSERT(m_idleTaskStatus == IdleTaskSwitchedToMainThreadTask);
+void CanvasAsyncBlobCreator::InitiateJpegEncoding(const double& quality,
+                                                  double deadline_seconds) {
+  RecordElapsedTimeHistogram(
+      kInitiateEncodingDelay, kMimeTypeJpeg,
+      WTF::MonotonicallyIncreasingTime() - schedule_initiate_start_time_);
+  if (idle_task_status_ == kIdleTaskSwitchedToImmediateTask) {
+    return;
+  }
 
-    // Continue encoding from the last completed row
-    if (JPEGImageEncoder::encodeWithPreInitializedState(std::move(m_jpegEncoderState), m_data->data(), m_numRowsCompleted)) {
-        this->createBlobAndInvokeCallback();
+  DCHECK(idle_task_status_ == kIdleTaskNotStarted);
+  idle_task_status_ = kIdleTaskStarted;
+
+  if (!InitializeJpegStruct(quality)) {
+    idle_task_status_ = kIdleTaskFailed;
+    return;
+  }
+  this->IdleEncodeRowsJpeg(deadline_seconds);
+}
+
+void CanvasAsyncBlobCreator::ScheduleInitiatePngEncoding() {
+  schedule_initiate_start_time_ = WTF::MonotonicallyIncreasingTime();
+  Platform::Current()->CurrentThread()->Scheduler()->PostIdleTask(
+      BLINK_FROM_HERE, WTF::Bind(&CanvasAsyncBlobCreator::InitiatePngEncoding,
+                                 WrapPersistent(this)));
+}
+
+void CanvasAsyncBlobCreator::InitiatePngEncoding(double deadline_seconds) {
+  RecordElapsedTimeHistogram(
+      kInitiateEncodingDelay, kMimeTypePng,
+      WTF::MonotonicallyIncreasingTime() - schedule_initiate_start_time_);
+  if (idle_task_status_ == kIdleTaskSwitchedToImmediateTask) {
+    return;
+  }
+
+  DCHECK(idle_task_status_ == kIdleTaskNotStarted);
+  idle_task_status_ = kIdleTaskStarted;
+
+  if (!InitializePngStruct()) {
+    idle_task_status_ = kIdleTaskFailed;
+    return;
+  }
+  this->IdleEncodeRowsPng(deadline_seconds);
+}
+
+void CanvasAsyncBlobCreator::IdleEncodeRowsPng(double deadline_seconds) {
+  if (idle_task_status_ == kIdleTaskSwitchedToImmediateTask) {
+    return;
+  }
+
+  double start_time = WTF::MonotonicallyIncreasingTime();
+  unsigned char* input_pixels =
+      data_->Data() + pixel_row_stride_ * num_rows_completed_;
+  for (int y = num_rows_completed_; y < size_.Height(); ++y) {
+    if (IsDeadlineNearOrPassed(deadline_seconds)) {
+      num_rows_completed_ = y;
+      elapsed_time_ += (WTF::MonotonicallyIncreasingTime() - start_time);
+      Platform::Current()->CurrentThread()->Scheduler()->PostIdleTask(
+          BLINK_FROM_HERE, WTF::Bind(&CanvasAsyncBlobCreator::IdleEncodeRowsPng,
+                                     WrapPersistent(this)));
+      return;
+    }
+    PNGImageEncoder::WriteOneRowToPng(input_pixels, png_encoder_state_.get());
+    input_pixels += pixel_row_stride_;
+  }
+  num_rows_completed_ = size_.Height();
+  PNGImageEncoder::FinalizePng(png_encoder_state_.get());
+
+  idle_task_status_ = kIdleTaskCompleted;
+  elapsed_time_ += (WTF::MonotonicallyIncreasingTime() - start_time);
+  RecordElapsedTimeHistogram(kIdleEncodeDuration, kMimeTypePng, elapsed_time_);
+  if (IsDeadlineNearOrPassed(deadline_seconds)) {
+    TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, document_)
+        ->PostTask(BLINK_FROM_HERE,
+                   WTF::Bind(&CanvasAsyncBlobCreator::CreateBlobAndReturnResult,
+                             WrapPersistent(this)));
+  } else {
+    this->CreateBlobAndReturnResult();
+  }
+}
+
+void CanvasAsyncBlobCreator::IdleEncodeRowsJpeg(double deadline_seconds) {
+  if (idle_task_status_ == kIdleTaskSwitchedToImmediateTask) {
+    return;
+  }
+
+  double start_time = WTF::MonotonicallyIncreasingTime();
+  num_rows_completed_ = JPEGImageEncoder::ProgressiveEncodeRowsJpegHelper(
+      jpeg_encoder_state_.get(), data_->Data(), num_rows_completed_,
+      kSlackBeforeDeadline, deadline_seconds);
+  elapsed_time_ += (WTF::MonotonicallyIncreasingTime() - start_time);
+  if (num_rows_completed_ == size_.Height()) {
+    idle_task_status_ = kIdleTaskCompleted;
+    RecordElapsedTimeHistogram(kIdleEncodeDuration, kMimeTypeJpeg,
+                               elapsed_time_);
+
+    if (IsDeadlineNearOrPassed(deadline_seconds)) {
+      TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, document_)
+          ->PostTask(
+              BLINK_FROM_HERE,
+              WTF::Bind(&CanvasAsyncBlobCreator::CreateBlobAndReturnResult,
+                        WrapPersistent(this)));
     } else {
-        this->createNullAndInvokeCallback();
+      this->CreateBlobAndReturnResult();
     }
-
-    this->signalAlternativeCodePathFinishedForTesting();
+  } else if (num_rows_completed_ ==
+             JPEGImageEncoder::kProgressiveEncodeFailed) {
+    idle_task_status_ = kIdleTaskFailed;
+    this->CreateNullAndReturnResult();
+  } else {
+    Platform::Current()->CurrentThread()->Scheduler()->PostIdleTask(
+        BLINK_FROM_HERE, WTF::Bind(&CanvasAsyncBlobCreator::IdleEncodeRowsJpeg,
+                                   WrapPersistent(this)));
+  }
 }
 
-void CanvasAsyncBlobCreator::recordIdleTaskStatusHistogram()
-{
-    DEFINE_STATIC_LOCAL(EnumerationHistogram, toBlobIdleTaskStatus, ("Blink.Canvas.ToBlob.IdleTaskStatus", IdleTaskCount));
-    toBlobIdleTaskStatus.count(m_idleTaskStatus);
+void CanvasAsyncBlobCreator::ForceEncodeRowsPngOnCurrentThread() {
+  DCHECK(idle_task_status_ == kIdleTaskSwitchedToImmediateTask);
+
+  // Continue encoding from the last completed row
+  unsigned char* input_pixels =
+      data_->Data() + pixel_row_stride_ * num_rows_completed_;
+  for (int y = num_rows_completed_; y < size_.Height(); ++y) {
+    PNGImageEncoder::WriteOneRowToPng(input_pixels, png_encoder_state_.get());
+    input_pixels += pixel_row_stride_;
+  }
+  PNGImageEncoder::FinalizePng(png_encoder_state_.get());
+
+  if (IsMainThread()) {
+    this->CreateBlobAndReturnResult();
+  } else {
+    TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, document_)
+        ->PostTask(
+            BLINK_FROM_HERE,
+            CrossThreadBind(&CanvasAsyncBlobCreator::CreateBlobAndReturnResult,
+                            WrapCrossThreadPersistent(this)));
+  }
+
+  this->SignalAlternativeCodePathFinishedForTesting();
 }
 
-void CanvasAsyncBlobCreator::createBlobAndInvokeCallback()
-{
-    ASSERT(isMainThread());
-    recordIdleTaskStatusHistogram();
+void CanvasAsyncBlobCreator::ForceEncodeRowsJpegOnCurrentThread() {
+  DCHECK(idle_task_status_ == kIdleTaskSwitchedToImmediateTask);
 
-    double elapsedTime = WTF::monotonicallyIncreasingTime() - m_startTime;
-    if (m_mimeType == MimeTypePng) {
-        DEFINE_STATIC_LOCAL(CustomCountHistogram, toBlobPNGCounter, ("Blink.Canvas.ToBlobDuration.PNG", 0, 10000000, 50));
-        toBlobPNGCounter.count(elapsedTime * 1000000.0);
-    } else if (m_mimeType == MimeTypeJpeg) {
-        DEFINE_STATIC_LOCAL(CustomCountHistogram, toBlobJPEGCounter, ("Blink.Canvas.ToBlobDuration.JPEG", 0, 10000000, 50));
-        toBlobJPEGCounter.count(elapsedTime * 1000000.0);
+  // Continue encoding from the last completed row
+  void (CanvasAsyncBlobCreator::*function_to_be_called)(void);
+  if (JPEGImageEncoder::EncodeWithPreInitializedState(
+          std::move(jpeg_encoder_state_), data_->Data(), num_rows_completed_)) {
+    function_to_be_called = &CanvasAsyncBlobCreator::CreateBlobAndReturnResult;
+  } else {
+    function_to_be_called = &CanvasAsyncBlobCreator::CreateNullAndReturnResult;
+  }
+
+  if (IsMainThread()) {
+    (this->*function_to_be_called)();
+  } else {
+    TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, document_)
+        ->PostTask(BLINK_FROM_HERE,
+                   CrossThreadBind(function_to_be_called,
+                                   WrapCrossThreadPersistent(this)));
+  }
+
+  this->SignalAlternativeCodePathFinishedForTesting();
+}
+
+void CanvasAsyncBlobCreator::CreateBlobAndReturnResult() {
+  RecordIdleTaskStatusHistogram(idle_task_status_);
+  RecordElapsedTimeHistogram(kToBlobDuration, mime_type_,
+                             WTF::MonotonicallyIncreasingTime() - start_time_);
+
+  Blob* result_blob =
+      Blob::Create(encoded_image_->Data(), encoded_image_->size(),
+                   ConvertMimeTypeEnumToString(mime_type_));
+  if (function_type_ == kHTMLCanvasToBlobCallback) {
+    TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, document_)
+        ->PostTask(BLINK_FROM_HERE, WTF::Bind(&BlobCallback::handleEvent,
+                                              WrapPersistent(callback_.Get()),
+                                              WrapPersistent(result_blob)));
+  } else {
+    script_promise_resolver_->Resolve(result_blob);
+  }
+  // Avoid unwanted retention, see dispose().
+  Dispose();
+}
+
+void CanvasAsyncBlobCreator::CreateNullAndReturnResult() {
+  RecordIdleTaskStatusHistogram(idle_task_status_);
+  if (function_type_ == kHTMLCanvasToBlobCallback) {
+    DCHECK(IsMainThread());
+    RecordIdleTaskStatusHistogram(idle_task_status_);
+    TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, document_)
+        ->PostTask(BLINK_FROM_HERE,
+                   WTF::Bind(&BlobCallback::handleEvent,
+                             WrapPersistent(callback_.Get()), nullptr));
+  } else {
+    script_promise_resolver_->Reject(DOMException::Create(
+        kEncodingError, "Encoding of the source image has failed."));
+  }
+  // Avoid unwanted retention, see dispose().
+  Dispose();
+}
+
+void CanvasAsyncBlobCreator::EncodeImageOnEncoderThread(double quality) {
+  DCHECK(!IsMainThread());
+  DCHECK(mime_type_ == kMimeTypeWebp);
+
+  if (!ImageDataBuffer(size_, data_->Data())
+           .EncodeImage("image/webp", quality, encoded_image_.get())) {
+    parent_frame_task_runner_->Get(TaskType::kCanvasBlobSerialization)
+        ->PostTask(
+            BLINK_FROM_HERE,
+            CrossThreadBind(&CanvasAsyncBlobCreator::CreateNullAndReturnResult,
+                            WrapCrossThreadPersistent(this)));
+    return;
+  }
+
+  parent_frame_task_runner_->Get(TaskType::kCanvasBlobSerialization)
+      ->PostTask(
+          BLINK_FROM_HERE,
+          CrossThreadBind(&CanvasAsyncBlobCreator::CreateBlobAndReturnResult,
+                          WrapCrossThreadPersistent(this)));
+}
+
+bool CanvasAsyncBlobCreator::InitializePngStruct() {
+  png_encoder_state_ =
+      PNGImageEncoderState::Create(size_, encoded_image_.get());
+  if (!png_encoder_state_) {
+    this->CreateNullAndReturnResult();
+    return false;
+  }
+  return true;
+}
+
+bool CanvasAsyncBlobCreator::InitializeJpegStruct(double quality) {
+  jpeg_encoder_state_ =
+      JPEGImageEncoderState::Create(size_, quality, encoded_image_.get());
+  if (!jpeg_encoder_state_) {
+    this->CreateNullAndReturnResult();
+    return false;
+  }
+  return true;
+}
+
+void CanvasAsyncBlobCreator::IdleTaskStartTimeoutEvent(double quality) {
+  if (idle_task_status_ == kIdleTaskStarted) {
+    // Even if the task started quickly, we still want to ensure completion
+    this->PostDelayedTaskToCurrentThread(
+        BLINK_FROM_HERE,
+        WTF::Bind(&CanvasAsyncBlobCreator::IdleTaskCompleteTimeoutEvent,
+                  WrapPersistent(this)),
+        kIdleTaskCompleteTimeoutDelay);
+  } else if (idle_task_status_ == kIdleTaskNotStarted) {
+    // If the idle task does not start after a delay threshold, we will
+    // force it to happen on main thread (even though it may cause more
+    // janks) to prevent toBlob being postponed forever in extreme cases.
+    idle_task_status_ = kIdleTaskSwitchedToImmediateTask;
+    SignalTaskSwitchInStartTimeoutEventForTesting();
+
+    if (mime_type_ == kMimeTypePng) {
+      if (InitializePngStruct()) {
+        TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, document_)
+            ->PostTask(
+                BLINK_FROM_HERE,
+                WTF::Bind(
+                    &CanvasAsyncBlobCreator::ForceEncodeRowsPngOnCurrentThread,
+                    WrapPersistent(this)));
+      } else {
+        // Failing in initialization of png struct
+        this->SignalAlternativeCodePathFinishedForTesting();
+      }
     } else {
-        DEFINE_STATIC_LOCAL(CustomCountHistogram, toBlobWEBPCounter, ("Blink.Canvas.ToBlobDuration.WEBP", 0, 10000000, 50));
-        toBlobWEBPCounter.count(elapsedTime * 1000000.0);
+      DCHECK(mime_type_ == kMimeTypeJpeg);
+      if (InitializeJpegStruct(quality)) {
+        TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, document_)
+            ->PostTask(
+                BLINK_FROM_HERE,
+                WTF::Bind(
+                    &CanvasAsyncBlobCreator::ForceEncodeRowsJpegOnCurrentThread,
+                    WrapPersistent(this)));
+      } else {
+        // Failing in initialization of jpeg struct
+        this->SignalAlternativeCodePathFinishedForTesting();
+      }
     }
-    Blob* resultBlob = Blob::create(m_encodedImage->data(), m_encodedImage->size(), convertMimeTypeEnumToString(m_mimeType));
-    TaskRunnerHelper::getUnthrottledTaskRunner(m_document)->postTask(BLINK_FROM_HERE, WTF::bind(&BlobCallback::handleEvent, wrapPersistent(m_callback.get()), wrapPersistent(resultBlob)));
-    // Avoid unwanted retention, see dispose().
-    dispose();
+  } else {
+    DCHECK(idle_task_status_ == kIdleTaskFailed ||
+           idle_task_status_ == kIdleTaskCompleted);
+    this->SignalAlternativeCodePathFinishedForTesting();
+  }
 }
 
-void CanvasAsyncBlobCreator::createNullAndInvokeCallback()
-{
-    ASSERT(isMainThread());
-    recordIdleTaskStatusHistogram();
-    TaskRunnerHelper::getUnthrottledTaskRunner(m_document)->postTask(BLINK_FROM_HERE, WTF::bind(&BlobCallback::handleEvent, wrapPersistent(m_callback.get()), nullptr));
-    // Avoid unwanted retention, see dispose().
-    dispose();
-}
+void CanvasAsyncBlobCreator::IdleTaskCompleteTimeoutEvent() {
+  DCHECK(idle_task_status_ != kIdleTaskNotStarted);
 
-void CanvasAsyncBlobCreator::encodeImageOnEncoderThread(double quality)
-{
-    ASSERT(!isMainThread());
-    ASSERT(m_mimeType == MimeTypeWebp);
+  if (idle_task_status_ == kIdleTaskStarted) {
+    // It has taken too long to complete for the idle task.
+    idle_task_status_ = kIdleTaskSwitchedToImmediateTask;
+    SignalTaskSwitchInCompleteTimeoutEventForTesting();
 
-    if (!ImageDataBuffer(m_size, m_data->data()).encodeImage("image/webp", quality, m_encodedImage.get())) {
-        TaskRunnerHelper::getUnthrottledTaskRunner(m_document)->postTask(BLINK_FROM_HERE, crossThreadBind(&BlobCallback::handleEvent, wrapCrossThreadPersistent(m_callback.get()), nullptr));
-        return;
-    }
-
-    TaskRunnerHelper::getUnthrottledTaskRunner(m_document)->postTask(BLINK_FROM_HERE, crossThreadBind(&CanvasAsyncBlobCreator::createBlobAndInvokeCallback, wrapCrossThreadPersistent(this)));
-}
-
-bool CanvasAsyncBlobCreator::initializePngStruct()
-{
-    m_pngEncoderState = PNGImageEncoderState::create(m_size, m_encodedImage.get());
-    if (!m_pngEncoderState) {
-        this->createNullAndInvokeCallback();
-        return false;
-    }
-    return true;
-}
-
-bool CanvasAsyncBlobCreator::initializeJpegStruct(double quality)
-{
-    m_jpegEncoderState = JPEGImageEncoderState::create(m_size, quality, m_encodedImage.get());
-    if (!m_jpegEncoderState) {
-        this->createNullAndInvokeCallback();
-        return false;
-    }
-    return true;
-}
-
-void CanvasAsyncBlobCreator::idleTaskStartTimeoutEvent(double quality)
-{
-    if (m_idleTaskStatus == IdleTaskStarted) {
-        // Even if the task started quickly, we still want to ensure completion
-        this->postDelayedTaskToMainThread(BLINK_FROM_HERE, WTF::bind(&CanvasAsyncBlobCreator::idleTaskCompleteTimeoutEvent, wrapPersistent(this)), IdleTaskCompleteTimeoutDelay);
-    } else if (m_idleTaskStatus == IdleTaskNotStarted) {
-        // If the idle task does not start after a delay threshold, we will
-        // force it to happen on main thread (even though it may cause more
-        // janks) to prevent toBlob being postponed forever in extreme cases.
-        m_idleTaskStatus = IdleTaskSwitchedToMainThreadTask;
-        signalTaskSwitchInStartTimeoutEventForTesting();
-
-        if (m_mimeType == MimeTypePng) {
-            if (initializePngStruct()) {
-                TaskRunnerHelper::getUnthrottledTaskRunner(m_document)->postTask(BLINK_FROM_HERE, WTF::bind(&CanvasAsyncBlobCreator::encodeRowsPngOnMainThread, wrapPersistent(this)));
-            } else {
-                // Failing in initialization of png struct
-                this->signalAlternativeCodePathFinishedForTesting();
-            }
-        } else {
-            ASSERT(m_mimeType == MimeTypeJpeg);
-            if (initializeJpegStruct(quality)) {
-                TaskRunnerHelper::getUnthrottledTaskRunner(m_document)->postTask(BLINK_FROM_HERE, WTF::bind(&CanvasAsyncBlobCreator::encodeRowsJpegOnMainThread, wrapPersistent(this)));
-            } else {
-                // Failing in initialization of jpeg struct
-                this->signalAlternativeCodePathFinishedForTesting();
-            }
-        }
+    if (mime_type_ == kMimeTypePng) {
+      TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, document_)
+          ->PostTask(
+              BLINK_FROM_HERE,
+              WTF::Bind(
+                  &CanvasAsyncBlobCreator::ForceEncodeRowsPngOnCurrentThread,
+                  WrapPersistent(this)));
     } else {
-        ASSERT(m_idleTaskStatus == IdleTaskFailed || m_idleTaskStatus == IdleTaskCompleted);
-        this->signalAlternativeCodePathFinishedForTesting();
+      DCHECK(mime_type_ == kMimeTypeJpeg);
+      TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, document_)
+          ->PostTask(
+              BLINK_FROM_HERE,
+              WTF::Bind(
+                  &CanvasAsyncBlobCreator::ForceEncodeRowsJpegOnCurrentThread,
+                  WrapPersistent(this)));
     }
+  } else {
+    DCHECK(idle_task_status_ == kIdleTaskFailed ||
+           idle_task_status_ == kIdleTaskCompleted);
+    this->SignalAlternativeCodePathFinishedForTesting();
+  }
 }
 
-void CanvasAsyncBlobCreator::idleTaskCompleteTimeoutEvent()
-{
-    ASSERT(m_idleTaskStatus != IdleTaskNotStarted);
-
-    if (m_idleTaskStatus == IdleTaskStarted) {
-        // It has taken too long to complete for the idle task.
-        m_idleTaskStatus = IdleTaskSwitchedToMainThreadTask;
-        signalTaskSwitchInCompleteTimeoutEventForTesting();
-
-        if (m_mimeType == MimeTypePng) {
-            TaskRunnerHelper::getUnthrottledTaskRunner(m_document)->postTask(BLINK_FROM_HERE, WTF::bind(&CanvasAsyncBlobCreator::encodeRowsPngOnMainThread, wrapPersistent(this)));
-        } else {
-            ASSERT(m_mimeType == MimeTypeJpeg);
-            TaskRunnerHelper::getUnthrottledTaskRunner(m_document)->postTask(BLINK_FROM_HERE, WTF::bind(&CanvasAsyncBlobCreator::encodeRowsJpegOnMainThread, wrapPersistent(this)));
-        }
-    } else {
-        ASSERT(m_idleTaskStatus == IdleTaskFailed || m_idleTaskStatus == IdleTaskCompleted);
-        this->signalAlternativeCodePathFinishedForTesting();
-    }
+void CanvasAsyncBlobCreator::PostDelayedTaskToCurrentThread(
+    const WebTraceLocation& location,
+    std::unique_ptr<WTF::Closure> task,
+    double delay_ms) {
+  TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, document_)
+      ->PostDelayedTask(location, std::move(task), delay_ms);
 }
 
-void CanvasAsyncBlobCreator::postDelayedTaskToMainThread(const WebTraceLocation& location, std::unique_ptr<WTF::Closure> task, double delayMs)
-{
-    DCHECK(isMainThread());
-    TaskRunnerHelper::getUnthrottledTaskRunner(m_document)->postDelayedTask(location, std::move(task), delayMs);
+DEFINE_TRACE(CanvasAsyncBlobCreator) {
+  visitor->Trace(document_);
+  visitor->Trace(data_);
+  visitor->Trace(callback_);
+  visitor->Trace(parent_frame_task_runner_);
+  visitor->Trace(script_promise_resolver_);
 }
 
-DEFINE_TRACE(CanvasAsyncBlobCreator)
-{
-    visitor->trace(m_document);
-    visitor->trace(m_data);
-    visitor->trace(m_callback);
-}
-
-} // namespace blink
+}  // namespace blink

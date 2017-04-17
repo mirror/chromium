@@ -26,42 +26,47 @@
 #ifndef WebScrollbarThemeGeometryNative_h
 #define WebScrollbarThemeGeometryNative_h
 
+#include <memory>
 #include "platform/PlatformExport.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 #include "public/platform/WebRect.h"
 #include "public/platform/WebScrollbarThemeGeometry.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include <memory>
 
 namespace blink {
 
 class ScrollbarTheme;
 class WebScrollbar;
 
-class PLATFORM_EXPORT WebScrollbarThemeGeometryNative : public WebScrollbarThemeGeometry {
-    USING_FAST_MALLOC(WebScrollbarThemeGeometryNative);
-    WTF_MAKE_NONCOPYABLE(WebScrollbarThemeGeometryNative);
-public:
-    static std::unique_ptr<WebScrollbarThemeGeometryNative> create(ScrollbarTheme&);
+class PLATFORM_EXPORT WebScrollbarThemeGeometryNative
+    : public WebScrollbarThemeGeometry {
+  USING_FAST_MALLOC(WebScrollbarThemeGeometryNative);
+  WTF_MAKE_NONCOPYABLE(WebScrollbarThemeGeometryNative);
 
-    bool hasButtons(WebScrollbar*) override;
-    bool hasThumb(WebScrollbar*) override;
-    WebRect trackRect(WebScrollbar*) override;
-    WebRect thumbRect(WebScrollbar*) override;
-    WebRect backButtonStartRect(WebScrollbar*) override;
-    WebRect backButtonEndRect(WebScrollbar*) override;
-    WebRect forwardButtonStartRect(WebScrollbar*) override;
-    WebRect forwardButtonEndRect(WebScrollbar*) override;
+ public:
+  static std::unique_ptr<WebScrollbarThemeGeometryNative> Create(
+      ScrollbarTheme&);
 
-private:
-    explicit WebScrollbarThemeGeometryNative(ScrollbarTheme&);
+  bool HasButtons(WebScrollbar*) override;
+  bool HasThumb(WebScrollbar*) override;
+  WebRect TrackRect(WebScrollbar*) override;
+  WebRect ThumbRect(WebScrollbar*) override;
+  WebRect BackButtonStartRect(WebScrollbar*) override;
+  WebRect BackButtonEndRect(WebScrollbar*) override;
+  WebRect ForwardButtonStartRect(WebScrollbar*) override;
+  WebRect ForwardButtonEndRect(WebScrollbar*) override;
+  WebSize NinePatchThumbCanvasSize(WebScrollbar*) override;
+  WebRect NinePatchThumbAperture(WebScrollbar*) override;
 
-    // The theme is not owned by this class. It is assumed that the theme is a
-    // static pointer and its lifetime is essentially infinite. Only thread-safe
-    // functions on the theme can be called by this theme.
-    ScrollbarTheme& m_theme;
+ private:
+  explicit WebScrollbarThemeGeometryNative(ScrollbarTheme&);
+
+  // The theme is not owned by this class. It is assumed that the theme is a
+  // static pointer and its lifetime is essentially infinite. Only thread-safe
+  // functions on the theme can be called by this theme.
+  ScrollbarTheme& theme_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

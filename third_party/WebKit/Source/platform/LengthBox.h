@@ -26,86 +26,83 @@
 #include "platform/PlatformExport.h"
 #include "platform/text/TextDirection.h"
 #include "platform/text/WritingMode.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT LengthBox {
-    DISALLOW_NEW();
-public:
-    LengthBox()
-    {
-    }
+  DISALLOW_NEW();
 
-    LengthBox(LengthType t)
-        : m_left(t)
-        , m_right(t)
-        , m_top(t)
-        , m_bottom(t)
-    {
-    }
+ public:
+  LengthBox() {}
 
-    LengthBox(int v)
-        : m_left(Length(v, Fixed))
-        , m_right(Length(v, Fixed))
-        , m_top(Length(v, Fixed))
-        , m_bottom(Length(v, Fixed))
-    {
-    }
+  LengthBox(LengthType t) : left_(t), right_(t), top_(t), bottom_(t) {}
 
-    LengthBox(const Length& t, const Length& r, const Length& b, const Length& l)
-        : m_left(l)
-        , m_right(r)
-        , m_top(t)
-        , m_bottom(b)
-    {
-    }
+  LengthBox(int v)
+      : left_(Length(v, kFixed)),
+        right_(Length(v, kFixed)),
+        top_(Length(v, kFixed)),
+        bottom_(Length(v, kFixed)) {}
 
-    LengthBox(int t, int r, int b, int l)
-        : m_left(Length(l, Fixed))
-        , m_right(Length(r, Fixed))
-        , m_top(Length(t, Fixed))
-        , m_bottom(Length(b, Fixed))
-    {
-    }
+  LengthBox(const Length& t, const Length& r, const Length& b, const Length& l)
+      : left_(l), right_(r), top_(t), bottom_(b) {}
 
-    const Length& left() const { return m_left; }
-    const Length& right() const { return m_right; }
-    const Length& top() const { return m_top; }
-    const Length& bottom() const { return m_bottom; }
+  LengthBox(int t, int r, int b, int l)
+      : left_(Length(l, kFixed)),
+        right_(Length(r, kFixed)),
+        top_(Length(t, kFixed)),
+        bottom_(Length(b, kFixed)) {}
 
-    const Length& logicalLeft(WritingMode) const;
-    const Length& logicalRight(WritingMode) const;
+  // For use in ComputedStyle.h
+  static const Length& LogicalLeft(WritingMode,
+                                   const Length& left,
+                                   const Length& top);
+  static const Length& LogicalRight(WritingMode,
+                                    const Length& right,
+                                    const Length& bottom);
+  static const Length& Before(WritingMode,
+                              const Length& top,
+                              const Length& left,
+                              const Length& right);
+  static const Length& After(WritingMode,
+                             const Length& bottom,
+                             const Length& left,
+                             const Length& right);
 
-    const Length& before(WritingMode) const;
-    const Length& after(WritingMode) const;
-    const Length& start(WritingMode, TextDirection) const;
-    const Length& end(WritingMode, TextDirection) const;
-    const Length& over(WritingMode) const;
-    const Length& under(WritingMode) const;
+  const Length& Left() const { return left_; }
+  const Length& Right() const { return right_; }
+  const Length& Top() const { return top_; }
+  const Length& Bottom() const { return bottom_; }
 
-    bool operator==(const LengthBox& o) const
-    {
-        return m_left == o.m_left && m_right == o.m_right && m_top == o.m_top && m_bottom == o.m_bottom;
-    }
+  const Length& LogicalLeft(WritingMode) const;
+  const Length& LogicalRight(WritingMode) const;
 
-    bool operator!=(const LengthBox& o) const
-    {
-        return !(*this == o);
-    }
+  const Length& Before(WritingMode) const;
+  const Length& After(WritingMode) const;
+  const Length& Start(WritingMode, TextDirection) const;
+  const Length& end(WritingMode, TextDirection) const;
+  const Length& Over(WritingMode) const;
+  const Length& Under(WritingMode) const;
 
-    bool nonZero() const
-    {
-        return !(m_left.isZero() && m_right.isZero() && m_top.isZero() && m_bottom.isZero());
-    }
+  bool operator==(const LengthBox& o) const {
+    return left_ == o.left_ && right_ == o.right_ && top_ == o.top_ &&
+           bottom_ == o.bottom_;
+  }
 
-    // Must be public for SET_VAR in ComputedStyle.h
-    Length m_left;
-    Length m_right;
-    Length m_top;
-    Length m_bottom;
+  bool operator!=(const LengthBox& o) const { return !(*this == o); }
+
+  bool NonZero() const {
+    return !(left_.IsZero() && right_.IsZero() && top_.IsZero() &&
+             bottom_.IsZero());
+  }
+
+  // Must be public for SET_VAR in ComputedStyle.h
+  Length left_;
+  Length right_;
+  Length top_;
+  Length bottom_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LengthBox_h
+#endif  // LengthBox_h

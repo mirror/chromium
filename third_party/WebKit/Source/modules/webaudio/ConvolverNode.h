@@ -10,85 +10,104 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #ifndef ConvolverNode_h
 #define ConvolverNode_h
 
+#include <memory>
 #include "base/gtest_prod_util.h"
 #include "modules/ModulesExport.h"
 #include "modules/webaudio/AudioNode.h"
-#include "wtf/RefPtr.h"
-#include "wtf/ThreadingPrimitives.h"
-#include <memory>
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/ThreadingPrimitives.h"
 
 namespace blink {
 
 class AudioBuffer;
+class ConvolverOptions;
 class ExceptionState;
 class Reverb;
 
 class MODULES_EXPORT ConvolverHandler final : public AudioHandler {
-public:
-    static PassRefPtr<ConvolverHandler> create(AudioNode&, float sampleRate);
-    ~ConvolverHandler() override;
+ public:
+  static PassRefPtr<ConvolverHandler> Create(AudioNode&, float sample_rate);
+  ~ConvolverHandler() override;
 
-    // AudioHandler
-    void process(size_t framesToProcess) override;
+  // AudioHandler
+  void Process(size_t frames_to_process) override;
+  // Called in the main thread when the number of channels for the input may
+  // have changed.
+  void CheckNumberOfChannelsForInput(AudioNodeInput*) override;
 
-    // Impulse responses
-    void setBuffer(AudioBuffer*, ExceptionState&);
-    AudioBuffer* buffer();
+  // Impulse responses
+  void SetBuffer(AudioBuffer*, ExceptionState&);
+  AudioBuffer* Buffer();
 
-    bool normalize() const { return m_normalize; }
-    void setNormalize(bool normalize) { m_normalize = normalize; }
+  bool Normalize() const { return normalize_; }
+  void SetNormalize(bool normalize) { normalize_ = normalize; }
+  void SetChannelCount(unsigned long, ExceptionState&) final;
+  void SetChannelCountMode(const String&, ExceptionState&) final;
 
-private:
-    ConvolverHandler(AudioNode&, float sampleRate);
-    double tailTime() const override;
-    double latencyTime() const override;
+ private:
+  ConvolverHandler(AudioNode&, float sample_rate);
+  double TailTime() const override;
+  double LatencyTime() const override;
 
-    std::unique_ptr<Reverb> m_reverb;
-    // This Persistent doesn't make a reference cycle including the owner
-    // ConvolverNode.
-    Persistent<AudioBuffer> m_buffer;
+  // Determine how many output channels to use from the number of
+  // input channels and the number of channels in the impulse response
+  // buffer.
+  unsigned ComputeNumberOfOutputChannels(unsigned input_channels,
+                                         unsigned response_channels) const;
 
-    // This synchronizes dynamic changes to the convolution impulse response with process().
-    mutable Mutex m_processLock;
+  std::unique_ptr<Reverb> reverb_;
+  // This Persistent doesn't make a reference cycle including the owner
+  // ConvolverNode.
+  // It is cross-thread, as it will be accessed by the audio and main threads.
+  CrossThreadPersistent<AudioBuffer> buffer_;
 
-    // Normalize the impulse response or not. Must default to true.
-    bool m_normalize;
+  // This synchronizes dynamic changes to the convolution impulse response with
+  // process().
+  mutable Mutex process_lock_;
 
-    FRIEND_TEST_ALL_PREFIXES(ConvolverNodeTest, ReverbLifetime);
+  // Normalize the impulse response or not. Must default to true.
+  bool normalize_;
+
+  FRIEND_TEST_ALL_PREFIXES(ConvolverNodeTest, ReverbLifetime);
 };
 
 class MODULES_EXPORT ConvolverNode final : public AudioNode {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static ConvolverNode* create(BaseAudioContext&, ExceptionState&);
+  DEFINE_WRAPPERTYPEINFO();
 
-    AudioBuffer* buffer() const;
-    void setBuffer(AudioBuffer*, ExceptionState&);
-    bool normalize() const;
-    void setNormalize(bool);
+ public:
+  static ConvolverNode* Create(BaseAudioContext&, ExceptionState&);
+  static ConvolverNode* Create(BaseAudioContext*,
+                               const ConvolverOptions&,
+                               ExceptionState&);
 
-private:
-    ConvolverNode(BaseAudioContext&);
-    ConvolverHandler& convolverHandler() const;
+  AudioBuffer* buffer() const;
+  void setBuffer(AudioBuffer*, ExceptionState&);
+  bool normalize() const;
+  void setNormalize(bool);
 
-    FRIEND_TEST_ALL_PREFIXES(ConvolverNodeTest, ReverbLifetime);
+ private:
+  ConvolverNode(BaseAudioContext&);
+  ConvolverHandler& GetConvolverHandler() const;
+
+  FRIEND_TEST_ALL_PREFIXES(ConvolverNodeTest, ReverbLifetime);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ConvolverNode_h
+#endif  // ConvolverNode_h

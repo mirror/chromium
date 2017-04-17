@@ -8,111 +8,99 @@
 #include "cc/animation/animation_timeline.h"
 #include "platform/animation/CompositorAnimation.h"
 #include "platform/animation/CompositorAnimationDelegate.h"
-#include "public/platform/WebLayer.h"
 
 namespace blink {
 
 CompositorAnimationPlayer::CompositorAnimationPlayer()
-    : m_animationPlayer(cc::AnimationPlayer::Create(cc::AnimationIdProvider::NextPlayerId()))
-    , m_delegate()
-{
+    : animation_player_(
+          cc::AnimationPlayer::Create(cc::AnimationIdProvider::NextPlayerId())),
+      delegate_() {}
+
+CompositorAnimationPlayer::~CompositorAnimationPlayer() {
+  SetAnimationDelegate(nullptr);
+  // Detach player from timeline, otherwise it stays there (leaks) until
+  // compositor shutdown.
+  if (animation_player_->animation_timeline())
+    animation_player_->animation_timeline()->DetachPlayer(animation_player_);
 }
 
-CompositorAnimationPlayer::~CompositorAnimationPlayer()
-{
-    setAnimationDelegate(nullptr);
-    // Detach player from timeline, otherwise it stays there (leaks) until
-    // compositor shutdown.
-    if (m_animationPlayer->animation_timeline())
-        m_animationPlayer->animation_timeline()->DetachPlayer(m_animationPlayer);
+cc::AnimationPlayer* CompositorAnimationPlayer::CcAnimationPlayer() const {
+  return animation_player_.get();
 }
 
-cc::AnimationPlayer* CompositorAnimationPlayer::animationPlayer() const
-{
-    return m_animationPlayer.get();
+void CompositorAnimationPlayer::SetAnimationDelegate(
+    CompositorAnimationDelegate* delegate) {
+  delegate_ = delegate;
+  animation_player_->set_animation_delegate(delegate ? this : nullptr);
 }
 
-void CompositorAnimationPlayer::setAnimationDelegate(CompositorAnimationDelegate* delegate)
-{
-    m_delegate = delegate;
-    m_animationPlayer->set_animation_delegate(delegate ? this : nullptr);
+void CompositorAnimationPlayer::AttachElement(const CompositorElementId& id) {
+  animation_player_->AttachElement(id);
 }
 
-void CompositorAnimationPlayer::attachElement(const CompositorElementId& id)
-{
-    m_animationPlayer->AttachElement(id);
+void CompositorAnimationPlayer::DetachElement() {
+  animation_player_->DetachElement();
 }
 
-void CompositorAnimationPlayer::detachElement()
-{
-    m_animationPlayer->DetachElement();
+bool CompositorAnimationPlayer::IsElementAttached() const {
+  return !!animation_player_->element_id();
 }
 
-bool CompositorAnimationPlayer::isElementAttached() const
-{
-    return !!m_animationPlayer->element_id();
+void CompositorAnimationPlayer::AddAnimation(
+    std::unique_ptr<CompositorAnimation> animation) {
+  animation_player_->AddAnimation(animation->ReleaseCcAnimation());
 }
 
-void CompositorAnimationPlayer::addAnimation(CompositorAnimation* animation)
-{
-    m_animationPlayer->AddAnimation(animation->passAnimation());
-    delete animation;
+void CompositorAnimationPlayer::RemoveAnimation(int animation_id) {
+  animation_player_->RemoveAnimation(animation_id);
 }
 
-void CompositorAnimationPlayer::removeAnimation(uint64_t animationId)
-{
-    m_animationPlayer->RemoveAnimation(animationId);
+void CompositorAnimationPlayer::PauseAnimation(int animation_id,
+                                               double time_offset) {
+  animation_player_->PauseAnimation(animation_id, time_offset);
 }
 
-void CompositorAnimationPlayer::pauseAnimation(uint64_t animationId, double timeOffset)
-{
-    m_animationPlayer->PauseAnimation(animationId, timeOffset);
-}
-
-void CompositorAnimationPlayer::abortAnimation(uint64_t animationId)
-{
-    m_animationPlayer->AbortAnimation(animationId);
+void CompositorAnimationPlayer::AbortAnimation(int animation_id) {
+  animation_player_->AbortAnimation(animation_id);
 }
 
 void CompositorAnimationPlayer::NotifyAnimationStarted(
-    base::TimeTicks monotonicTime,
-    cc::TargetProperty::Type targetProperty,
-    int group)
-{
-    if (m_delegate)
-        m_delegate->notifyAnimationStarted((monotonicTime - base::TimeTicks()).InSecondsF(), group);
+    base::TimeTicks monotonic_time,
+    cc::TargetProperty::Type target_property,
+    int group) {
+  if (delegate_)
+    delegate_->NotifyAnimationStarted(
+        (monotonic_time - base::TimeTicks()).InSecondsF(), group);
 }
 
 void CompositorAnimationPlayer::NotifyAnimationFinished(
-    base::TimeTicks monotonicTime,
-    cc::TargetProperty::Type targetProperty,
-    int group)
-{
-    if (m_delegate)
-        m_delegate->notifyAnimationFinished((monotonicTime - base::TimeTicks()).InSecondsF(), group);
+    base::TimeTicks monotonic_time,
+    cc::TargetProperty::Type target_property,
+    int group) {
+  if (delegate_)
+    delegate_->NotifyAnimationFinished(
+        (monotonic_time - base::TimeTicks()).InSecondsF(), group);
 }
 
 void CompositorAnimationPlayer::NotifyAnimationAborted(
-    base::TimeTicks monotonicTime,
-    cc::TargetProperty::Type targetProperty,
-    int group)
-{
-    if (m_delegate)
-        m_delegate->notifyAnimationAborted((monotonicTime - base::TimeTicks()).InSecondsF(), group);
+    base::TimeTicks monotonic_time,
+    cc::TargetProperty::Type target_property,
+    int group) {
+  if (delegate_)
+    delegate_->NotifyAnimationAborted(
+        (monotonic_time - base::TimeTicks()).InSecondsF(), group);
 }
 
 void CompositorAnimationPlayer::NotifyAnimationTakeover(
-    base::TimeTicks monotonicTime,
+    base::TimeTicks monotonic_time,
     cc::TargetProperty::Type,
-    double animationStartTime,
-    std::unique_ptr<cc::AnimationCurve> curve)
-{
-    if (m_delegate) {
-        m_delegate->notifyAnimationTakeover(
-            (monotonicTime - base::TimeTicks()).InSecondsF(),
-            animationStartTime,
-            std::move(curve));
-    }
+    double animation_start_time,
+    std::unique_ptr<cc::AnimationCurve> curve) {
+  if (delegate_) {
+    delegate_->NotifyAnimationTakeover(
+        (monotonic_time - base::TimeTicks()).InSecondsF(), animation_start_time,
+        std::move(curve));
+  }
 }
 
-} // namespace blink
+}  // namespace blink

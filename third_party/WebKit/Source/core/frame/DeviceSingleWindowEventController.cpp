@@ -10,68 +10,88 @@
 
 namespace blink {
 
-DeviceSingleWindowEventController::DeviceSingleWindowEventController(Document& document)
-    : PlatformEventController(document.page())
-    , m_needsCheckingNullEvents(true)
-    , m_document(document)
-{
-    document.domWindow()->registerEventListenerObserver(this);
+DeviceSingleWindowEventController::DeviceSingleWindowEventController(
+    Document& document)
+    : PlatformEventController(document.GetFrame()),
+      needs_checking_null_events_(true),
+      document_(document) {
+  document.domWindow()->RegisterEventListenerObserver(this);
 }
 
-DeviceSingleWindowEventController::~DeviceSingleWindowEventController()
-{
+DeviceSingleWindowEventController::~DeviceSingleWindowEventController() {}
+
+void DeviceSingleWindowEventController::DidUpdateData() {
+  DispatchDeviceEvent(LastEvent());
 }
 
-void DeviceSingleWindowEventController::didUpdateData()
-{
-    dispatchDeviceEvent(lastEvent());
+void DeviceSingleWindowEventController::DispatchDeviceEvent(Event* event) {
+  if (!GetDocument().domWindow() || GetDocument().IsContextSuspended() ||
+      GetDocument().IsContextDestroyed())
+    return;
+
+  GetDocument().domWindow()->DispatchEvent(event);
+
+  if (needs_checking_null_events_) {
+    if (IsNullEvent(event))
+      StopUpdating();
+    else
+      needs_checking_null_events_ = false;
+  }
 }
 
-void DeviceSingleWindowEventController::dispatchDeviceEvent(Event* event)
-{
-    if (!document().domWindow() || document().activeDOMObjectsAreSuspended() || document().activeDOMObjectsAreStopped())
-        return;
+void DeviceSingleWindowEventController::DidAddEventListener(
+    LocalDOMWindow* window,
+    const AtomicString& event_type) {
+  if (event_type != EventTypeName())
+    return;
 
-    document().domWindow()->dispatchEvent(event);
+  if (GetPage() && GetPage()->IsPageVisible())
+    StartUpdating();
 
-    if (m_needsCheckingNullEvents) {
-        if (isNullEvent(event))
-            stopUpdating();
-        else
-            m_needsCheckingNullEvents = false;
-    }
+  has_event_listener_ = true;
 }
 
-void DeviceSingleWindowEventController::didAddEventListener(LocalDOMWindow* window, const AtomicString& eventType)
-{
-    if (eventType != eventTypeName())
-        return;
+void DeviceSingleWindowEventController::DidRemoveEventListener(
+    LocalDOMWindow* window,
+    const AtomicString& event_type) {
+  if (event_type != EventTypeName() ||
+      window->HasEventListeners(EventTypeName()))
+    return;
 
-    if (page() && page()->isPageVisible())
-        startUpdating();
-
-    m_hasEventListener = true;
+  StopUpdating();
+  has_event_listener_ = false;
 }
 
-void DeviceSingleWindowEventController::didRemoveEventListener(LocalDOMWindow* window, const AtomicString& eventType)
-{
-    if (eventType != eventTypeName() || window->hasEventListeners(eventTypeName()))
-        return;
-
-    stopUpdating();
-    m_hasEventListener = false;
+void DeviceSingleWindowEventController::DidRemoveAllEventListeners(
+    LocalDOMWindow*) {
+  StopUpdating();
+  has_event_listener_ = false;
 }
 
-void DeviceSingleWindowEventController::didRemoveAllEventListeners(LocalDOMWindow*)
-{
-    stopUpdating();
-    m_hasEventListener = false;
+bool DeviceSingleWindowEventController::IsSameSecurityOriginAsMainFrame()
+    const {
+  if (!GetDocument().GetFrame() || !GetDocument().GetPage())
+    return false;
+
+  if (GetDocument().GetFrame()->IsMainFrame())
+    return true;
+
+  SecurityOrigin* main_security_origin = GetDocument()
+                                             .GetPage()
+                                             ->MainFrame()
+                                             ->GetSecurityContext()
+                                             ->GetSecurityOrigin();
+
+  if (main_security_origin &&
+      GetDocument().GetSecurityOrigin()->CanAccess(main_security_origin))
+    return true;
+
+  return false;
 }
 
-DEFINE_TRACE(DeviceSingleWindowEventController)
-{
-    visitor->trace(m_document);
-    PlatformEventController::trace(visitor);
+DEFINE_TRACE(DeviceSingleWindowEventController) {
+  visitor->Trace(document_);
+  PlatformEventController::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

@@ -5,33 +5,41 @@
 #ifndef StyleMotionData_h
 #define StyleMotionData_h
 
-#include "core/style/StyleMotionRotation.h"
+#include "core/style/StyleOffsetRotation.h"
 #include "core/style/StylePath.h"
 #include "platform/Length.h"
-#include "wtf/Allocator.h"
+#include "platform/LengthPoint.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class StyleMotionData {
-    DISALLOW_NEW();
-public:
-    StyleMotionData(StylePath* path, const Length& offset, StyleMotionRotation rotation)
-        : m_path(path)
-        , m_offset(offset)
-        , m_rotation(rotation)
-    {
-    }
+  DISALLOW_NEW();
 
-    bool operator==(const StyleMotionData&) const;
+ public:
+  StyleMotionData(const LengthPoint& anchor,
+                  const LengthPoint& position,
+                  StylePath* path,
+                  const Length& distance,
+                  StyleOffsetRotation rotation)
+      : anchor_(anchor),
+        position_(position),
+        path_(path),
+        distance_(distance),
+        rotation_(rotation) {}
 
-    bool operator!=(const StyleMotionData& o) const { return !(*this == o); }
+  bool operator==(const StyleMotionData&) const;
 
-    // Must be public for SET_VAR in ComputedStyle.h
-    RefPtr<StylePath> m_path; // nullptr indicates path is 'none'
-    Length m_offset;
-    StyleMotionRotation m_rotation;
+  bool operator!=(const StyleMotionData& o) const { return !(*this == o); }
+
+  // Must be public for SET_VAR in ComputedStyle.h
+  LengthPoint anchor_;
+  LengthPoint position_;
+  RefPtr<StylePath> path_;  // nullptr indicates path is 'none'
+  Length distance_;
+  StyleOffsetRotation rotation_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StyleMotionData_h
+#endif  // StyleMotionData_h

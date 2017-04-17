@@ -44,34 +44,40 @@ class MessageEvent;
 class SharedWorkerThread;
 
 class SharedWorkerGlobalScope final : public WorkerGlobalScope {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    typedef WorkerGlobalScope Base;
-    static SharedWorkerGlobalScope* create(const String& name, SharedWorkerThread*, std::unique_ptr<WorkerThreadStartupData>);
-    ~SharedWorkerGlobalScope() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    bool isSharedWorkerGlobalScope() const override { return true; }
+ public:
+  static SharedWorkerGlobalScope* Create(
+      const String& name,
+      SharedWorkerThread*,
+      std::unique_ptr<WorkerThreadStartupData>);
+  ~SharedWorkerGlobalScope() override;
 
-    // EventTarget
-    const AtomicString& interfaceName() const override;
+  bool IsSharedWorkerGlobalScope() const override { return true; }
 
-    // Setters/Getters for attributes in SharedWorkerGlobalScope.idl
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(connect);
-    String name() const { return m_name; }
+  // EventTarget
+  const AtomicString& InterfaceName() const override;
 
-    SharedWorkerThread* thread();
+  // Setters/Getters for attributes in SharedWorkerGlobalScope.idl
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(connect);
+  String name() const { return name_; }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    SharedWorkerGlobalScope(const String& name, const KURL&, const String& userAgent, SharedWorkerThread*, std::unique_ptr<SecurityOrigin::PrivilegeData>, WorkerClients*);
-    void exceptionThrown(const String& errorMessage, std::unique_ptr<SourceLocation>) override;
+ private:
+  SharedWorkerGlobalScope(const String& name,
+                          const KURL&,
+                          const String& user_agent,
+                          SharedWorkerThread*,
+                          std::unique_ptr<SecurityOrigin::PrivilegeData>,
+                          WorkerClients*);
+  void ExceptionThrown(ErrorEvent*) override;
 
-    String m_name;
+  String name_;
 };
 
-CORE_EXPORT MessageEvent* createConnectEvent(MessagePort*);
+CORE_EXPORT MessageEvent* CreateConnectEvent(MessagePort*);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SharedWorkerGlobalScope_h
+#endif  // SharedWorkerGlobalScope_h

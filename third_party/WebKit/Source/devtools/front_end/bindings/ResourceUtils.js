@@ -27,64 +27,60 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 /**
  * @param {string} url
- * @return {?WebInspector.Resource}
+ * @return {?SDK.Resource}
  */
-WebInspector.resourceForURL = function(url)
-{
-    var targets = WebInspector.targetManager.targets();
-    for (var i = 0; i < targets.length; ++i) {
-        var resource = targets[i].resourceTreeModel.resourceForURL(url);
-        if (resource)
-            return resource;
-    }
-    return null;
-}
+Bindings.resourceForURL = function(url) {
+  for (var resourceTreeModel of SDK.targetManager.models(SDK.ResourceTreeModel)) {
+    var resource = resourceTreeModel.resourceForURL(url);
+    if (resource)
+      return resource;
+  }
+  return null;
+};
 
 /**
- * @param {function(!WebInspector.Resource)} callback
+ * @param {function(!SDK.Resource)} callback
  */
-WebInspector.forAllResources = function(callback)
-{
-    var targets = WebInspector.targetManager.targets();
-    for (var i = 0; i < targets.length; ++i)
-        targets[i].resourceTreeModel.forAllResources(callback);
-}
+Bindings.forAllResources = function(callback) {
+  for (var resourceTreeModel of SDK.targetManager.models(SDK.ResourceTreeModel))
+    resourceTreeModel.forAllResources(callback);
+};
 
 /**
  * @param {string} url
  * @return {string}
  */
-WebInspector.displayNameForURL = function(url)
-{
-    if (!url)
-        return "";
+Bindings.displayNameForURL = function(url) {
+  if (!url)
+    return '';
 
-    var resource = WebInspector.resourceForURL(url);
-    if (resource)
-        return resource.displayName;
+  var resource = Bindings.resourceForURL(url);
+  if (resource)
+    return resource.displayName;
 
-    var uiSourceCode = WebInspector.networkMapping.uiSourceCodeForURLForAnyTarget(url);
-    if (uiSourceCode)
-        return uiSourceCode.displayName();
+  var uiSourceCode = Workspace.workspace.uiSourceCodeForURL(url);
+  if (uiSourceCode)
+    return uiSourceCode.displayName();
 
-    if (!WebInspector.targetManager.inspectedPageURL())
-        return url.trimURL("");
+  var mainTarget = SDK.targetManager.mainTarget();
+  var inspectedURL = mainTarget && mainTarget.inspectedURL();
+  if (!inspectedURL)
+    return url.trimURL('');
 
-    var parsedURL = WebInspector.targetManager.inspectedPageURL().asParsedURL();
-    var lastPathComponent = parsedURL ? parsedURL.lastPathComponent : parsedURL;
-    var index = WebInspector.targetManager.inspectedPageURL().indexOf(lastPathComponent);
-    if (index !== -1 && index + lastPathComponent.length === WebInspector.targetManager.inspectedPageURL().length) {
-        var baseURL = WebInspector.targetManager.inspectedPageURL().substring(0, index);
-        if (url.startsWith(baseURL))
-            return url.substring(index);
-    }
+  var parsedURL = inspectedURL.asParsedURL();
+  var lastPathComponent = parsedURL ? parsedURL.lastPathComponent : parsedURL;
+  var index = inspectedURL.indexOf(lastPathComponent);
+  if (index !== -1 && index + lastPathComponent.length === inspectedURL.length) {
+    var baseURL = inspectedURL.substring(0, index);
+    if (url.startsWith(baseURL))
+      return url.substring(index);
+  }
 
-    if (!parsedURL)
-        return url;
+  if (!parsedURL)
+    return url;
 
-    var displayName = url.trimURL(parsedURL.host);
-    return displayName === "/" ? parsedURL.host + "/" : displayName;
-}
+  var displayName = url.trimURL(parsedURL.host);
+  return displayName === '/' ? parsedURL.host + '/' : displayName;
+};

@@ -6,7 +6,7 @@
 #define CC_LAYERS_SOLID_COLOR_SCROLLBAR_LAYER_H_
 
 #include "base/macros.h"
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/scrollbar_layer_interface.h"
 
@@ -40,6 +40,18 @@ class CC_EXPORT SolidColorScrollbarLayer : public ScrollbarLayerInterface,
 
   ScrollbarOrientation orientation() const override;
 
+  int thumb_thickness() const {
+    return solid_color_scrollbar_layer_inputs_.thumb_thickness;
+  }
+
+  int track_start() const {
+    return solid_color_scrollbar_layer_inputs_.track_start;
+  }
+
+  bool is_left_side_vertical_scrollbar() const {
+    return solid_color_scrollbar_layer_inputs_.is_left_side_vertical_scrollbar;
+  }
+
  protected:
   SolidColorScrollbarLayer(ScrollbarOrientation orientation,
                            int thumb_thickness,
@@ -48,20 +60,26 @@ class CC_EXPORT SolidColorScrollbarLayer : public ScrollbarLayerInterface,
                            int scroll_layer_id);
   ~SolidColorScrollbarLayer() override;
 
-  // Layer overrides for proto conversions.
-  void SetTypeForProtoSerialization(proto::LayerNode* proto) const override;
-  void LayerSpecificPropertiesToProto(proto::LayerProperties* proto) override;
-  void FromLayerSpecificPropertiesProto(
-      const proto::LayerProperties& proto) override;
-
  private:
   friend class LayerSerializationTest;
 
-  int scroll_layer_id_;
-  ScrollbarOrientation orientation_;
-  int thumb_thickness_;
-  int track_start_;
-  bool is_left_side_vertical_scrollbar_;
+  // Encapsulate all data, callbacks, interfaces received from the embedder.
+  struct SolidColorScrollbarLayerInputs {
+    SolidColorScrollbarLayerInputs(ScrollbarOrientation orientation,
+                                   int thumb_thickness,
+                                   int track_start,
+                                   bool is_left_side_vertical_scrollbar,
+                                   int scroll_layer_id);
+    ~SolidColorScrollbarLayerInputs();
+
+    int scroll_layer_id;
+    ScrollbarOrientation orientation;
+    int thumb_thickness;
+    int track_start;
+    bool is_left_side_vertical_scrollbar;
+  };
+
+  SolidColorScrollbarLayerInputs solid_color_scrollbar_layer_inputs_;
 
   DISALLOW_COPY_AND_ASSIGN(SolidColorScrollbarLayer);
 };

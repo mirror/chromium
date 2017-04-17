@@ -41,6 +41,20 @@ class MockPwsClient implements PwsClient {
         mPwsResults.add(pwsResults);
     }
 
+    public void addPwsResult(PwsResult pwsResult) {
+        List<PwsResult> pwsResults = new ArrayList<>();
+        pwsResults.add(pwsResult);
+        addPwsResults(pwsResults);
+    }
+
+    public void addCombinedPwsResults() {
+        List<PwsResult> pwsResults = new ArrayList<>();
+        for (List<PwsResult> subList : mPwsResults) {
+            pwsResults.addAll(subList);
+        }
+        addPwsResults(pwsResults);
+    }
+
     public void addIconBitmap(Bitmap iconBitmap) {
         mIconBitmaps.add(iconBitmap);
     }
@@ -63,8 +77,7 @@ class MockPwsClient implements PwsClient {
      * @param fetchIconCallback The callback to be run when the icon is received.
      */
     @Override
-    public void fetchIcon(final String iconUrl,
-            final FetchIconCallback fetchIconCallback) {
+    public void fetchIcon(final String iconUrl, final FetchIconCallback fetchIconCallback) {
         mFetchIconCalls.add(iconUrl);
         fetchIconCallback.onIconReceived(iconUrl, mIconBitmaps.remove(0));
     }

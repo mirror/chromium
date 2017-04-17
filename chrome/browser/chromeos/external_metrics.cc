@@ -7,21 +7,23 @@
 #include <stddef.h>
 
 #include <map>
+#include <memory>
 #include <string>
+#include <vector>
 
 #include "base/bind.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/metrics/statistics_recorder.h"
+#include "base/metrics/user_metrics.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/metrics/chromeos_metrics_provider.h"
 #include "components/metrics/metrics_service.h"
 #include "components/metrics/serialization/metric_sample.h"
 #include "components/metrics/serialization/serialization_utils.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/user_metrics.h"
 
-using base::UserMetricsAction;
 using content::BrowserThread;
 
 namespace chromeos {
@@ -70,7 +72,7 @@ scoped_refptr<ExternalMetrics> ExternalMetrics::CreateForTesting(
 }
 
 void ExternalMetrics::RecordActionUI(const std::string& action_string) {
-  content::RecordComputedAction(action_string);
+  base::RecordComputedAction(action_string);
 }
 
 void ExternalMetrics::RecordAction(const std::string& action) {
@@ -132,13 +134,11 @@ void ExternalMetrics::RecordSparseHistogram(
 }
 
 int ExternalMetrics::CollectEvents() {
-  ScopedVector<metrics::MetricSample> samples;
+  std::vector<std::unique_ptr<metrics::MetricSample>> samples;
   metrics::SerializationUtils::ReadAndTruncateMetricsFromFile(uma_events_file_,
                                                               &samples);
 
-  for (ScopedVector<metrics::MetricSample>::iterator it = samples.begin();
-       it != samples.end();
-       ++it) {
+  for (auto it = samples.begin(); it != samples.end(); ++it) {
     const metrics::MetricSample& sample = **it;
 
     // Do not use the UMA_HISTOGRAM_... macros here.  They cache the Histogram

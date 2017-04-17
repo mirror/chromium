@@ -16,7 +16,7 @@ function initialize_extensionsPanelTest()
 {
     InspectorTest.getPanelSize = function()
     {
-        var boundingRect = WebInspector.inspectorView._tabbedPane._contentElement.getBoundingClientRect();
+        var boundingRect = UI.inspectorView._tabbedPane._contentElement.getBoundingClientRect();
         return {
             width: boundingRect.width,
             height: boundingRect.height
@@ -25,7 +25,7 @@ function initialize_extensionsPanelTest()
 
     InspectorTest.dumpStatusBarButtons = function()
     {
-        var panel = WebInspector.inspectorView.currentPanel();
+        var panel = UI.inspectorView.currentPanelDeprecated();
         var items = panel._panelToolbar._contentElement.children;
         InspectorTest.addResult("Status bar buttons state:");
         for (var i = 0; i < items.length; ++i) {
@@ -38,13 +38,13 @@ function initialize_extensionsPanelTest()
             }
             // Strip url(...) and prefix of the URL within, leave just last 3 components.
             var url = item.style.backgroundImage.replace(/^url\(.*(([/][^/]*){3}[^/)]*)\)$/, "...$1");
-            InspectorTest.addResult("status bar item " + i + ", icon: \"" + url + ", tooltip: '" + item[WebInspector.Tooltip._symbol].content + "', disabled: " + item.disabled);
+            InspectorTest.addResult("status bar item " + i + ", icon: \"" + url + ", tooltip: '" + item[UI.Tooltip._symbol].content + "', disabled: " + item.disabled);
        }
     }
 
     InspectorTest.clickButton = function(index)
     {
-        var panel = WebInspector.inspectorView.currentPanel();
+        var panel = UI.inspectorView.currentPanelDeprecated();
         var items = panel._panelToolbar._contentElement.children;
         for (var i = 0, buttonIndex = 0; i < items.length; ++i) {
             if (items[i] instanceof HTMLButtonElement) {
@@ -64,18 +64,18 @@ function initialize_extensionsPanelTest()
         InspectorTest.disableConsoleViewport();
         InspectorTest.evaluateInPage("logMessage()");
         var wrappedConsoleMessageAdded = InspectorTest.safeWrap(consoleMessageAdded);
-        WebInspector.multitargetConsoleModel.addEventListener(WebInspector.ConsoleModel.Events.MessageAdded, wrappedConsoleMessageAdded);
+        ConsoleModel.consoleModel.addEventListener(ConsoleModel.ConsoleModel.Events.MessageAdded, wrappedConsoleMessageAdded);
 
         function consoleMessageAdded()
         {
-            WebInspector.multitargetConsoleModel.removeEventListener(WebInspector.ConsoleModel.Events.MessageAdded, wrappedConsoleMessageAdded);
-            WebInspector.ConsoleView.instance()._viewportThrottler.flush();
+            ConsoleModel.consoleModel.removeEventListener(ConsoleModel.ConsoleModel.Events.MessageAdded, wrappedConsoleMessageAdded);
+            Console.ConsoleView.instance()._invalidateViewport();
             InspectorTest.deprecatedRunAfterPendingDispatches(clickOnMessage)
         }
 
         function clickOnMessage()
         {
-            var xpathResult = document.evaluate("//a[starts-with(., 'extensions-panel.html')]", WebInspector.ConsoleView.instance()._viewport.element, null, XPathResult.ANY_UNORDERED_NODE_TYPE, null);
+            var xpathResult = document.evaluate("//span[@class='devtools-link' and starts-with(., 'extensions-panel.html')]", Console.ConsoleView.instance()._viewport.element, null, XPathResult.ANY_UNORDERED_NODE_TYPE, null);
 
             var click = document.createEvent("MouseEvent");
             click.initMouseEvent("click", true, true);
@@ -88,18 +88,16 @@ function initialize_extensionsPanelTest()
         function showURL(panelName, url, lineNumber)
         {
             var url = url.replace(/^.*(([/][^/]*){3}[^/)]*)$/, "...$1");
-            InspectorTest.addResult("Showing resource " + url + " in panel " + panelName + " (" + WebInspector.inspectorView.currentPanel().name + "), line: " + lineNumber);
+            InspectorTest.addResult("Showing resource " + url + " in panel " + panelName + "), line: " + lineNumber);
         }
         InspectorTest.recordNetwork();
-
-        InspectorTest.addSniffer(WebInspector.panels.sources, "showUILocation", showUILocationHook, true);
-        InspectorTest.addSniffer(WebInspector.panels.resources, "showResource", showResourceHook, true);
-        InspectorTest.addSniffer(WebInspector.panels.network, "revealAndHighlightRequest", showRequestHook, true);
+        InspectorTest.addSniffer(UI.panels.sources, "showUILocation", showUILocationHook, true);
+        InspectorTest.addSniffer(UI.panels.resources._sidebar, "showResource", showResourceHook, true);
+        InspectorTest.addSniffer(UI.panels.network, "revealAndHighlightRequest", showRequestHook, true);
 
         function showUILocationHook(uiLocation)
         {
-            var networkURL = WebInspector.networkMapping.networkURL(uiLocation.uiSourceCode);
-            showURL("sources", networkURL, uiLocation.lineNumber);
+            showURL("sources", uiLocation.uiSourceCode.url(), uiLocation.lineNumber);
         }
 
         function showResourceHook(resource, lineNumber)
@@ -107,16 +105,19 @@ function initialize_extensionsPanelTest()
             showURL("resources", resource.url, lineNumber);
         }
 
+        /**
+         * @param {!SDK.NetworkRequest} request
+         */
         function showRequestHook(request)
         {
-            showURL("network", request.url);
+            showURL("network", request.url());
         }
     }
 
     InspectorTest.switchToLastPanel = function()
     {
-        var lastPanelName = WebInspector.inspectorView._tabbedPane._tabs.peekLast().id;
-        return WebInspector.inspectorView.showPanel(lastPanelName);
+        var lastPanelName = UI.inspectorView._tabbedPane._tabs.peekLast().id;
+        return UI.inspectorView.showPanel(lastPanelName);
     }
 }
 
@@ -194,7 +195,7 @@ function extension_testCreatePanel(nextTest)
             panel.show();
         }
         webInspector.panels.setOpenResourceHandler(handleOpenResource);
-        evaluateOnFrontend("WebInspector.openAnchorLocationRegistry._activeHandler = 'test extension'");
+        evaluateOnFrontend("Components.Linkifier._linkHandlerSetting().set('test extension')");
         evaluateOnFrontend("InspectorTest.logMessageAndClickOnURL();");
         expectOnShown = true;
     }
@@ -224,17 +225,18 @@ function extension_testSearch(nextTest)
 
         function performSearch(query)
         {
-            var panel = WebInspector.inspectorView.currentPanel();
-            panel.searchableView().showSearchField();
-            panel.searchableView()._searchInputElement.value = query;
-            panel.searchableView()._performSearch(true, true);
-            panel.searchableView().cancelSearch();
+            UI.inspectorView.panel("file://TestPanelforsearch").then(panel => {
+                panel.searchableView().showSearchField();
+                panel.searchableView()._searchInputElement.value = query;
+                panel.searchableView()._performSearch(true, true);
+                panel.searchableView().cancelSearch();
+            });
         }
 
         evaluateOnFrontend(performSearch.toString() + " performSearch(\"hello\");");
     }
     var basePath = location.pathname.replace(/\/[^/]*$/, "/");
-    webInspector.panels.create("Test Panel", basePath + "extension-panel.png", basePath + "non-existent.html", onPanelCreated);
+    webInspector.panels.create("Test Panel for search", basePath + "extension-panel.png", basePath + "non-existent.html", onPanelCreated);
 }
 
 function extension_testStatusBarButtons(nextTest)
@@ -298,7 +300,7 @@ function extension_testGlobalShortcuts(nextTest)
 {
     var platform;
     var testPanel;
-    evaluateOnFrontend("reply(WebInspector.platform())", function(result) {
+    evaluateOnFrontend("reply(Host.platform())", function(result) {
         platform = result;
         var basePath = location.pathname.replace(/\/[^/]*$/, "/");
         webInspector.panels.create("Shortcuts Test Panel", basePath + "extension-panel.png", basePath + "extension-panel.html", onPanelCreated);
@@ -312,7 +314,6 @@ function extension_testGlobalShortcuts(nextTest)
     {
         testPanel = panel;
         testPanel.onShown.addListener(onPanelShown);
-        testPanel.onHidden.addListener(onPanelHidden);
         evaluateOnFrontend("InspectorTest.switchToLastPanel();");
     }
     var panelWindow;
@@ -327,15 +328,8 @@ function extension_testGlobalShortcuts(nextTest)
     function onPanelResized()
     {
         panelWindow.removeEventListener("resize", onPanelResized);
-        output("Panel resized, switching away...");
-        var isMac = platform === "mac";
-        dispatchKeydownEvent({ ctrlKey: !isMac, metaKey: isMac, key: "]" });
-    }
-    function onPanelHidden()
-    {
-        output("Panel hidden, test passed.");
-        testPanel.onShown.removeListener(onPanelHidden);
-        evaluateOnFrontend("reply(WebInspector.inspectorView.closeDrawer())", nextTest);
+        output("Panel resized, test passed.");
+        evaluateOnFrontend("reply(UI.inspectorView._closeDrawer())", nextTest);
     }
 }
 

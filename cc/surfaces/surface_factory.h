@@ -7,62 +7,65 @@
 
 #include <memory>
 #include <set>
-#include <unordered_map>
 
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "cc/output/compositor_frame.h"
+#include "cc/surfaces/pending_frame_observer.h"
 #include "cc/surfaces/surface_id.h"
 #include "cc/surfaces/surface_resource_holder.h"
 #include "cc/surfaces/surface_sequence.h"
 #include "cc/surfaces/surfaces_export.h"
 
-namespace gfx {
-class Size;
-}
-
 namespace cc {
-class BeginFrameSource;
 class CopyOutputRequest;
 class Surface;
 class SurfaceFactoryClient;
 class SurfaceManager;
 
-// A SurfaceFactory is used to create surfaces that may share resources and
-// receive returned resources for frames submitted to those surfaces. Resources
-// submitted to frames created by a particular factory will be returned to that
-// factory's client when they are no longer being used. This is the only class
-// most users of surfaces will need to directly interact with.
-class CC_SURFACES_EXPORT SurfaceFactory
-    : public base::SupportsWeakPtr<SurfaceFactory> {
+// This class is used for creating surfaces and submitting compositor frames to
+// them. Surfaces are created lazily each time SubmitCompositorFrame is
+// called with a local frame id that is different from the last call. Only one
+// surface is owned by this class at a time, and upon constructing a new surface
+// the old one will be destructed. Resources submitted to surfaces created by a
+// particular factory will be returned to that factory's client when they are no
+// longer being used. This is the only class most users of surfaces will need to
+// directly interact with.
+class CC_SURFACES_EXPORT SurfaceFactory : public PendingFrameObserver {
  public:
   using DrawCallback = base::Callback<void()>;
 
-  SurfaceFactory(SurfaceManager* manager, SurfaceFactoryClient* client);
-  ~SurfaceFactory();
+  SurfaceFactory(const FrameSinkId& frame_sink_id,
+                 SurfaceManager* manager,
+                 SurfaceFactoryClient* client);
+  ~SurfaceFactory() override;
 
-  void Create(const SurfaceId& surface_id);
-  void Destroy(const SurfaceId& surface_id);
-  void DestroyAll();
+  const FrameSinkId& frame_sink_id() const { return frame_sink_id_; }
 
-  // Set that the current frame on new_id is to be treated as the successor to
-  // the current frame on old_id for the purposes of calculating damage.
-  void SetPreviousFrameSurface(const SurfaceId& new_id,
-                               const SurfaceId& old_id);
+  // Destroys the current surface. You need to call this method before the
+  // factory is destroyed, or when you would like to get rid of the surface as
+  // soon as possible (otherwise, the next time you call SubmitCompositorFrame
+  // the old surface will be dealt with).
+  void EvictSurface();
 
-  // A frame can only be submitted to a surface created by this factory,
-  // although the frame may reference surfaces created by other factories.
-  // The callback is called the first time this frame is used to draw, or if
-  // the frame is discarded.
-  void SubmitCompositorFrame(const SurfaceId& surface_id,
+  // Submits the frame to the current surface being managed by the factory if
+  // the local frame ids match, or creates a new surface with the given local
+  // frame id, destroys the old one, and submits the frame to this new surface.
+  // The frame can contain references to any surface, regardless of which
+  // factory owns it. The callback is called the first time this frame is used
+  // to draw, or if the frame is discarded.
+  void SubmitCompositorFrame(const LocalSurfaceId& local_surface_id,
                              CompositorFrame frame,
                              const DrawCallback& callback);
-  void RequestCopyOfSurface(const SurfaceId& surface_id,
-                            std::unique_ptr<CopyOutputRequest> copy_request);
+  void RequestCopyOfSurface(std::unique_ptr<CopyOutputRequest> copy_request);
 
-  void WillDrawSurface(const SurfaceId& id, const gfx::Rect& damage_rect);
+  // Evicts the current frame on the surface. All the resources
+  // will be released and Surface::HasFrame will return false.
+  void ClearSurface();
+
+  void WillDrawSurface(const LocalSurfaceId& id, const gfx::Rect& damage_rect);
 
   SurfaceFactoryClient* client() { return client_; }
 
@@ -72,26 +75,34 @@ class CC_SURFACES_EXPORT SurfaceFactory
 
   SurfaceManager* manager() { return manager_; }
 
+  Surface* current_surface_for_testing() { return current_surface_.get(); }
+
   // This can be set to false if resources from this SurfaceFactory don't need
   // to have sync points set on them when returned from the Display, for
   // example if the Display shares a context with the creator.
   bool needs_sync_points() const { return needs_sync_points_; }
   void set_needs_sync_points(bool needs) { needs_sync_points_ = needs; }
 
-  // SurfaceFactory's owner can call this when it finds out that SurfaceManager
-  // is no longer alive during destruction.
-  void DidDestroySurfaceManager() { manager_ = nullptr; }
-
  private:
+  // PendingFrameObserver implementation.
+  void OnSurfaceActivated(Surface* surface) override;
+  void OnSurfaceDependenciesChanged(
+      Surface* surface,
+      const SurfaceDependencies& added_dependencies,
+      const SurfaceDependencies& removed_dependencies) override;
+  void OnSurfaceDiscarded(Surface* surface) override;
+
+  std::unique_ptr<Surface> Create(const LocalSurfaceId& local_surface_id);
+  void Destroy(std::unique_ptr<Surface> surface);
+
+  const FrameSinkId frame_sink_id_;
   SurfaceManager* manager_;
   SurfaceFactoryClient* client_;
   SurfaceResourceHolder holder_;
-
   bool needs_sync_points_;
-
-  using OwningSurfaceMap =
-      std::unordered_map<SurfaceId, std::unique_ptr<Surface>, SurfaceIdHash>;
-  OwningSurfaceMap surface_map_;
+  bool seen_first_frame_activation_ = false;
+  std::unique_ptr<Surface> current_surface_;
+  base::WeakPtrFactory<SurfaceFactory> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(SurfaceFactory);
 };

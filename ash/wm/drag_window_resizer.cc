@@ -4,14 +4,13 @@
 
 #include "ash/wm/drag_window_resizer.h"
 
-#include "ash/aura/wm_window_aura.h"
-#include "ash/common/wm/window_positioning_utils.h"
-#include "ash/common/wm/window_state.h"
 #include "ash/display/mouse_cursor_event_filter.h"
-#include "ash/screen_util.h"
 #include "ash/shell.h"
 #include "ash/wm/drag_window_controller.h"
+#include "ash/wm/window_positioning_utils.h"
+#include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/memory/weak_ptr.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/env.h"
@@ -32,7 +31,7 @@ DragWindowResizer* DragWindowResizer::instance_ = NULL;
 DragWindowResizer::~DragWindowResizer() {
   if (window_state_)
     window_state_->DeleteDragDetails();
-  Shell* shell = Shell::GetInstance();
+  Shell* shell = Shell::Get();
   shell->mouse_cursor_filter()->set_mouse_warp_enabled(true);
   shell->mouse_cursor_filter()->HideSharedEdgeIndicator();
   if (instance_ == this)
@@ -91,8 +90,8 @@ void DragWindowResizer::CompleteDrag() {
     if (bounds.height() > size.height())
       bounds.set_height(size.height());
 
-    gfx::Rect dst_bounds =
-        ScreenUtil::ConvertRectToScreen(GetAuraTarget()->parent(), bounds);
+    gfx::Rect dst_bounds = bounds;
+    ::wm::ConvertRectToScreen(GetAuraTarget()->parent(), &dst_bounds);
 
     // Adjust the position so that the cursor is on the window.
     if (!dst_bounds.Contains(last_mouse_location_in_screen)) {
@@ -127,7 +126,7 @@ DragWindowResizer::DragWindowResizer(WindowResizer* next_window_resizer,
   // |mouse_warp_mode_| should be set to WARP_DRAG so that the user could move a
   // window/tab to another display.
   MouseCursorEventFilter* mouse_cursor_filter =
-      Shell::GetInstance()->mouse_cursor_filter();
+      Shell::Get()->mouse_cursor_filter();
   mouse_cursor_filter->set_mouse_warp_enabled(ShouldAllowMouseWarp());
   if (ShouldAllowMouseWarp())
     mouse_cursor_filter->ShowSharedEdgeIndicator(
@@ -144,8 +143,8 @@ void DragWindowResizer::UpdateDragWindow(
   if (!drag_window_controller_)
     drag_window_controller_.reset(new DragWindowController(GetAuraTarget()));
 
-  const gfx::Rect bounds_in_screen = ScreenUtil::ConvertRectToScreen(
-      GetAuraTarget()->parent(), bounds_in_parent);
+  gfx::Rect bounds_in_screen = bounds_in_parent;
+  ::wm::ConvertRectToScreen(GetAuraTarget()->parent(), &bounds_in_screen);
 
   gfx::Rect root_bounds_in_screen =
       GetAuraTarget()->GetRootWindow()->GetBoundsInScreen();
@@ -167,7 +166,7 @@ bool DragWindowResizer::ShouldAllowMouseWarp() {
 }
 
 aura::Window* DragWindowResizer::GetAuraTarget() {
-  return WmWindowAura::GetAuraWindow(GetTarget());
+  return WmWindow::GetAuraWindow(GetTarget());
 }
 
 }  // namespace ash

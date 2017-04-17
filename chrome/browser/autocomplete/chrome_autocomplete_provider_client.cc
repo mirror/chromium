@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -16,22 +17,26 @@
 #include "chrome/browser/bitmap_fetcher/bitmap_fetcher_service.h"
 #include "chrome/browser/bitmap_fetcher/bitmap_fetcher_service_factory.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/history/top_sites_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
-#include "components/browser_sync/browser/profile_sync_service.h"
+#include "components/browser_sync/profile_sync_service.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/omnibox/browser/autocomplete_classifier.h"
 #include "components/prefs/pref_service.h"
-#include "components/sync_driver/sync_service_utils.h"
+#include "components/sync/driver/sync_service_utils.h"
 #include "content/public/browser/notification_service.h"
+#include "extensions/features/features.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/browser/autocomplete/keyword_extensions_delegate_impl.h"
 #endif
 
@@ -41,18 +46,18 @@ namespace {
 // This list should be kept in sync with chrome/common/url_constants.h.
 // Only include useful sub-pages, confirmation alerts are not useful.
 const char* const kChromeSettingsSubPages[] = {
-    chrome::kAutofillSubPage,
-    chrome::kClearBrowserDataSubPage,
-    chrome::kContentSettingsSubPage,
-    chrome::kContentSettingsExceptionsSubPage,
-    chrome::kImportDataSubPage,
-    chrome::kLanguageOptionsSubPage,
-    chrome::kPasswordManagerSubPage,
-    chrome::kResetProfileSettingsSubPage,
-    chrome::kSearchEnginesSubPage,
-    chrome::kSyncSetupSubPage,
+    chrome::kAutofillSubPage,        chrome::kClearBrowserDataSubPage,
+    chrome::kContentSettingsSubPage, chrome::kLanguageOptionsSubPage,
+    chrome::kPasswordManagerSubPage, chrome::kResetProfileSettingsSubPage,
+    chrome::kSearchEnginesSubPage,   chrome::kSyncSetupSubPage,
 #if defined(OS_CHROMEOS)
-    chrome::kInternetOptionsSubPage,
+    chrome::kAccessibilitySubPage,   chrome::kBluetoothSubPage,
+    chrome::kDateTimeSubPage,        chrome::kDisplaySubPage,
+    chrome::kInternetSubPage,        chrome::kPowerSubPage,
+    chrome::kStylusSubPage,
+#else
+    chrome::kCreateProfileSubPage,   chrome::kImportDataSubPage,
+    chrome::kManageProfileSubPage,
 #endif
 };
 
@@ -99,7 +104,7 @@ ChromeAutocompleteProviderClient::GetTopSites() {
 }
 
 bookmarks::BookmarkModel* ChromeAutocompleteProviderClient::GetBookmarkModel() {
-  return BookmarkModelFactory::GetForProfile(profile_);
+  return BookmarkModelFactory::GetForBrowserContext(profile_);
 }
 
 history::URLDatabase* ChromeAutocompleteProviderClient::GetInMemoryDatabase() {
@@ -141,12 +146,17 @@ ChromeAutocompleteProviderClient::GetShortcutsBackendIfExists() {
 std::unique_ptr<KeywordExtensionsDelegate>
 ChromeAutocompleteProviderClient::GetKeywordExtensionsDelegate(
     KeywordProvider* keyword_provider) {
-#if defined(ENABLE_EXTENSIONS)
-  return base::WrapUnique(
-      new KeywordExtensionsDelegateImpl(profile_, keyword_provider));
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return base::MakeUnique<KeywordExtensionsDelegateImpl>(profile_,
+                                                         keyword_provider);
 #else
   return nullptr;
 #endif
+}
+
+physical_web::PhysicalWebDataSource*
+ChromeAutocompleteProviderClient::GetPhysicalWebDataSource() {
+  return g_browser_process->GetPhysicalWebDataSource();
 }
 
 std::string ChromeAutocompleteProviderClient::GetAcceptLanguages() const {
@@ -177,6 +187,13 @@ std::vector<base::string16> ChromeAutocompleteProviderClient::GetBuiltinURLs() {
     builtins.push_back(settings +
                        base::ASCIIToUTF16(kChromeSettingsSubPages[i]));
   }
+
+  if (!base::FeatureList::IsEnabled(features::kMaterialDesignSettings)) {
+    builtins.push_back(
+        settings +
+        base::ASCIIToUTF16(
+            chrome::kDeprecatedOptionsContentSettingsExceptionsSubPage));
+  }
 #endif
 
   return builtins;
@@ -205,7 +222,7 @@ bool ChromeAutocompleteProviderClient::SearchSuggestEnabled() const {
 }
 
 bool ChromeAutocompleteProviderClient::TabSyncEnabledAndUnencrypted() const {
-  return sync_driver::IsTabSyncEnabledAndUnencrypted(
+  return syncer::IsTabSyncEnabledAndUnencrypted(
       ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile_),
       profile_->GetPrefs());
 }
@@ -233,7 +250,47 @@ void ChromeAutocompleteProviderClient::PrefetchImage(const GURL& url) {
   BitmapFetcherService* image_service =
       BitmapFetcherServiceFactory::GetForBrowserContext(profile_);
   DCHECK(image_service);
-  image_service->Prefetch(url);
+
+  // TODO(jdonnelly, rhalavati): Create a helper function with Callback to
+  // create annotation and pass it to image_service, merging this annotation and
+  // chrome/browser/ui/omnibox/chrome_omnibox_client.cc
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("omnibox_prefetch_image", R"(
+        semantics {
+          sender: "Omnibox"
+          description:
+            "Chromium provides answers in the suggestion list for certain "
+            "queries that the user types in the omnibox. This request "
+            "retrieves a small image (for example, an icon illustrating the "
+            "current weather conditions) when this can add information to an "
+            "answer."
+          trigger:
+            "Change of results for the query typed by the user in the "
+            "omnibox."
+          data:
+            "The only data sent is the path to an image. No user data is "
+            "included, although some might be inferrable (e.g. whether the "
+            "weather is sunny or rainy in the user's current location) from "
+            "the name of the image in the path."
+          destination: WEBSITE
+        }
+        policy {
+          cookies_allowed: true
+          cookies_store: "user"
+          setting:
+            "You can enable or disable this feature via 'Use a prediction "
+            "service to help complete searches and URLs typed in the "
+            "address bar.' in Chromium's settings under Advanced. The "
+            "feature is enabled by default."
+          chrome_policy {
+            SearchSuggestEnabled {
+                policy_options {mode: MANDATORY}
+                SearchSuggestEnabled: false
+            }
+          }
+        })");
+
+  image_service->Prefetch(url, traffic_annotation);
 }
 
 void ChromeAutocompleteProviderClient::OnAutocompleteControllerResultReady(

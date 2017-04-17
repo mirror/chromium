@@ -31,102 +31,78 @@
 #ifndef ScopedPersistent_h
 #define ScopedPersistent_h
 
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
 #include <memory>
-#include <v8.h>
+
+#include "bindings/core/v8/ScriptWrappableVisitor.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
-template<typename T>
+template <typename T>
 class ScopedPersistent {
-    USING_FAST_MALLOC(ScopedPersistent);
-    WTF_MAKE_NONCOPYABLE(ScopedPersistent);
-public:
-    ScopedPersistent() { }
+  USING_FAST_MALLOC(ScopedPersistent);
+  WTF_MAKE_NONCOPYABLE(ScopedPersistent);
 
-    ScopedPersistent(v8::Isolate* isolate, v8::Local<T> handle)
-        : m_handle(isolate, handle)
-    {
-    }
+ public:
+  ScopedPersistent() {}
 
-    ScopedPersistent(v8::Isolate* isolate, v8::MaybeLocal<T> maybe)
-    {
-        v8::Local<T> local;
-        if (maybe.ToLocal(&local))
-            m_handle.Reset(isolate, local);
-    }
+  ScopedPersistent(v8::Isolate* isolate, v8::Local<T> handle)
+      : handle_(isolate, handle) {}
 
-    ~ScopedPersistent()
-    {
-        clear();
-    }
+  ScopedPersistent(v8::Isolate* isolate, v8::MaybeLocal<T> maybe) {
+    v8::Local<T> local;
+    if (maybe.ToLocal(&local))
+      handle_.Reset(isolate, local);
+  }
 
-    ALWAYS_INLINE v8::Local<T> newLocal(v8::Isolate* isolate) const
-    {
-        return v8::Local<T>::New(isolate, m_handle);
-    }
+  virtual ~ScopedPersistent() { Clear(); }
 
-    // If you don't need to get weak callback, use setPhantom instead.
-    // setPhantom is faster than setWeak.
-    template<typename P>
-    void setWeak(P* parameters, void (*callback)(const v8::WeakCallbackInfo<P>&), v8::WeakCallbackType type = v8::WeakCallbackType::kParameter)
-    {
-        m_handle.SetWeak(parameters, callback, type);
-    }
+  ALWAYS_INLINE v8::Local<T> NewLocal(v8::Isolate* isolate) const {
+    return v8::Local<T>::New(isolate, handle_);
+  }
 
-    // Turns this handle into a weak phantom handle without
-    // finalization callback.
-    void setPhantom()
-    {
-        m_handle.SetWeak();
-    }
+  // If you don't need to get weak callback, use setPhantom instead.
+  // setPhantom is faster than setWeak.
+  template <typename P>
+  void SetWeak(P* parameters,
+               void (*callback)(const v8::WeakCallbackInfo<P>&),
+               v8::WeakCallbackType type = v8::WeakCallbackType::kParameter) {
+    handle_.SetWeak(parameters, callback, type);
+  }
 
-    void clearWeak()
-    {
-        m_handle.template ClearWeak<void>();
-    }
+  // Turns this handle into a weak phantom handle without
+  // finalization callback.
+  void SetPhantom() { handle_.SetWeak(); }
 
-    bool isEmpty() const { return m_handle.IsEmpty(); }
-    bool isWeak() const { return m_handle.IsWeak(); }
+  void ClearWeak() { handle_.template ClearWeak<void>(); }
 
-    void set(v8::Isolate* isolate, v8::Local<T> handle)
-    {
-        m_handle.Reset(isolate, handle);
-    }
+  bool IsEmpty() const { return handle_.IsEmpty(); }
+  bool IsWeak() const { return handle_.IsWeak(); }
 
-    // Note: This is clear in the std::unique_ptr sense, not the v8::Handle sense.
-    void clear()
-    {
-        m_handle.Reset();
-    }
+  virtual void Set(v8::Isolate* isolate, v8::Local<T> handle) {
+    handle_.Reset(isolate, handle);
+  }
 
-    void setReference(const v8::Persistent<v8::Object>& parent, v8::Isolate* isolate)
-    {
-        isolate->SetReference(parent, m_handle);
-    }
+  // Note: This is clear in the std::unique_ptr sense, not the v8::Local sense.
+  void Clear() { handle_.Reset(); }
 
-    bool operator==(const ScopedPersistent<T>& other)
-    {
-        return m_handle == other.m_handle;
-    }
+  bool operator==(const ScopedPersistent<T>& other) {
+    return handle_ == other.handle_;
+  }
 
-    template <class S>
-    bool operator==(const v8::Local<S> other) const
-    {
-        return m_handle == other;
-    }
+  template <class S>
+  bool operator==(const v8::Local<S> other) const {
+    return handle_ == other;
+  }
 
-    ALWAYS_INLINE v8::Persistent<T>& get()
-    {
-        return m_handle;
-    }
+  ALWAYS_INLINE v8::Persistent<T>& Get() { return handle_; }
 
-
-private:
-    v8::Persistent<T> m_handle;
+ private:
+  v8::Persistent<T> handle_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScopedPersistent_h
+#endif  // ScopedPersistent_h

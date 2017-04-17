@@ -9,6 +9,7 @@
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/time.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_job_coordinator.h"
@@ -441,16 +442,18 @@ void ServiceWorkerRegisterJob::DispatchInstallEvent() {
 void ServiceWorkerRegisterJob::OnInstallFinished(
     int request_id,
     blink::WebServiceWorkerEventResult result,
-    bool has_fetch_handler) {
+    bool has_fetch_handler,
+    base::Time dispatch_event_time) {
   new_version()->FinishRequest(
-      request_id, result == blink::WebServiceWorkerEventResultCompleted);
+      request_id, result == blink::kWebServiceWorkerEventResultCompleted,
+      dispatch_event_time);
 
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_FAILED;
   switch (result) {
-    case blink::WebServiceWorkerEventResultCompleted:
+    case blink::kWebServiceWorkerEventResultCompleted:
       status = SERVICE_WORKER_OK;
       break;
-    case blink::WebServiceWorkerEventResultRejected:
+    case blink::kWebServiceWorkerEventResultRejected:
       status = SERVICE_WORKER_ERROR_EVENT_WAITUNTIL_REJECTED;
       break;
     default:
@@ -463,10 +466,16 @@ void ServiceWorkerRegisterJob::OnInstallFinished(
   }
 
   ServiceWorkerMetrics::RecordInstallEventStatus(status);
+  ServiceWorkerMetrics::RecordForeignFetchRegistrationCount(
+      new_version()->foreign_fetch_scopes().size(),
+      new_version()->foreign_fetch_origins().size());
 
   SetPhase(STORE);
   DCHECK(!registration()->last_update_check().is_null());
-  new_version()->set_has_fetch_handler(has_fetch_handler);
+  new_version()->set_fetch_handler_existence(
+      has_fetch_handler
+          ? ServiceWorkerVersion::FetchHandlerExistence::EXISTS
+          : ServiceWorkerVersion::FetchHandlerExistence::DOES_NOT_EXIST);
   context_->storage()->StoreRegistration(
       registration(),
       new_version(),

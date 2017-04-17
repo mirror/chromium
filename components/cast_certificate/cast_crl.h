@@ -14,6 +14,11 @@
 #include "base/time/time.h"
 #include "net/cert/internal/parsed_certificate.h"
 
+namespace net {
+class TrustStore;
+struct CertPath;
+}
+
 namespace cast_certificate {
 
 // This class represents the CRL information parsed from the binary proto.
@@ -25,22 +30,19 @@ class CastCRL {
   // of X.509 certificates.
   //
   // Inputs:
-  // * |certs| is the verified chain of X.509 certificates:
-  //   * |certs[0]| is the target certificate (i.e. the device certificate).
-  //   * |certs[i]| is the certificate that issued certs[i-1].
-  //   * |certs.back()| is assumed to be a trusted root.
+  // * |chain| the chain of verified certificates, including trust anchor.
   //
   // * |time| is the unix timestamp to use for determining if the certificate
   //   is revoked.
   //
   // Output:
   // Returns true if no certificate in the chain was revoked.
-  virtual bool CheckRevocation(const net::ParsedCertificateList& certs,
+  virtual bool CheckRevocation(const net::CertPath& chain,
                                const base::Time& time) const = 0;
 };
 
 // Parses and verifies the CRL used to verify the revocation status of
-// Cast device certificates.
+// Cast device certificates, using the built-in Cast CRL trust anchors.
 //
 // Inputs:
 // * |crl_proto| is a serialized cast_certificate.CrlBundle proto.
@@ -51,13 +53,15 @@ class CastCRL {
 std::unique_ptr<CastCRL> ParseAndVerifyCRL(const std::string& crl_proto,
                                            const base::Time& time);
 
-// Exposed only for testing, not for use in production code.
+// This is an overloaded version of ParseAndVerifyCRL that allows
+// the input of a custom TrustStore.
 //
-// Replaces trusted root certificates into the CastCRLTrustStore.
-//
-// Output:
-// Returns true if successful, false if nothing is changed.
-bool SetCRLTrustAnchorForTest(const std::string& cert) WARN_UNUSED_RESULT;
+// For production use pass |trust_store| as nullptr to use the production trust
+// store.
+std::unique_ptr<CastCRL> ParseAndVerifyCRLUsingCustomTrustStore(
+    const std::string& crl_proto,
+    const base::Time& time,
+    net::TrustStore* trust_store);
 
 }  // namespace cast_certificate
 

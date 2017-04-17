@@ -11,7 +11,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
-#include "ui/accessibility/ax_view_state.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/animation/animation_delegate.h"
@@ -42,6 +42,9 @@ const int kClosedToastWidth = 5;
 const int kFadeInOutDuration = 200;
 
 }  // namespace.
+
+// static
+const char ToastContentsView::kViewClassName[] = "ToastContentsView";
 
 // static
 gfx::Size ToastContentsView::GetToastSizeForView(const views::View* view) {
@@ -168,6 +171,12 @@ void ToastContentsView::SetBoundsWithAnimation(gfx::Rect new_bounds) {
   bounds_animation_->Show();
 }
 
+void ToastContentsView::ActivateToast() {
+  set_can_activate(true);
+  if (GetWidget())
+    GetWidget()->Activate();
+}
+
 void ToastContentsView::StartFadeIn() {
   // The decrement is done in OnBoundsAnimationEndedOrCancelled callback.
   if (collection_)
@@ -238,10 +247,6 @@ void ToastContentsView::AnimationCanceled(
 }
 
 // views::WidgetDelegate
-views::View* ToastContentsView::GetContentsView() {
-  return this;
-}
-
 void ToastContentsView::WindowClosing() {
   if (!is_closing_ && collection_.get())
     collection_->ForgetToast(this);
@@ -257,7 +262,7 @@ void ToastContentsView::OnDisplayChanged() {
     return;
 
   collection_->OnDisplayMetricsChanged(
-      Screen::GetScreen()->GetDisplayNearestWindow(native_view));
+      Screen::GetScreen()->GetDisplayNearestView(native_view));
 }
 
 void ToastContentsView::OnWorkAreaChanged() {
@@ -270,7 +275,15 @@ void ToastContentsView::OnWorkAreaChanged() {
     return;
 
   collection_->OnDisplayMetricsChanged(
-      Screen::GetScreen()->GetDisplayNearestWindow(native_view));
+      Screen::GetScreen()->GetDisplayNearestView(native_view));
+}
+
+void ToastContentsView::OnWidgetActivationChanged(views::Widget* widget,
+                                                  bool active) {
+  if (active)
+    collection_->PausePopupTimers();
+  else
+    collection_->RestartPopupTimers();
 }
 
 // views::View
@@ -313,10 +326,14 @@ void ToastContentsView::UpdatePreferredSize() {
   SetBoundsWithAnimation(bounds());
 }
 
-void ToastContentsView::GetAccessibleState(ui::AXViewState* state) {
+void ToastContentsView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   if (child_count() > 0)
-    child_at(0)->GetAccessibleState(state);
-  state->role = ui::AX_ROLE_WINDOW;
+    child_at(0)->GetAccessibleNodeData(node_data);
+  node_data->role = ui::AX_ROLE_WINDOW;
+}
+
+const char* ToastContentsView::GetClassName() const {
+  return kViewClassName;
 }
 
 void ToastContentsView::ClickOnNotification(
@@ -329,6 +346,12 @@ void ToastContentsView::ClickOnSettingsButton(
     const std::string& notification_id) {
   if (collection_)
     collection_->ClickOnSettingsButton(notification_id);
+}
+
+void ToastContentsView::UpdateNotificationSize(
+    const std::string& notification_id) {
+  if (collection_)
+    collection_->UpdateNotificationSize(notification_id);
 }
 
 void ToastContentsView::RemoveNotification(
@@ -365,11 +388,16 @@ void ToastContentsView::CreateWidget(
     PopupAlignmentDelegate* alignment_delegate) {
   views::Widget::InitParams params(views::Widget::InitParams::TYPE_POPUP);
   params.keep_on_top = true;
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+  params.opacity = views::Widget::InitParams::OPAQUE_WINDOW;
+#else
   params.opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
+#endif
   params.delegate = this;
   views::Widget* widget = new views::Widget();
   alignment_delegate->ConfigureWidgetInitParamsForContainer(widget, &params);
   widget->set_focus_on_creation(false);
+  widget->AddObserver(this);
 
 #if defined(OS_WIN)
   // We want to ensure that this toast always goes to the native desktop,

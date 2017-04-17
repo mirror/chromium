@@ -6,215 +6,208 @@
 
 #include "platform/blob/BlobData.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/wtf/RefCounted.h"
 #include "public/platform/WebHTTPHeaderVisitor.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURLRequest.h"
-#include "wtf/RefCounted.h"
 
 namespace blink {
 
-class WebServiceWorkerRequestPrivate : public RefCounted<WebServiceWorkerRequestPrivate> {
-public:
-    WebServiceWorkerRequestPrivate()
-        : m_mode(WebURLRequest::FetchRequestModeNoCORS)
-        , m_isMainResourceLoad(false)
-        , m_credentialsMode(WebURLRequest::FetchCredentialsModeOmit)
-        , m_redirectMode(WebURLRequest::FetchRedirectModeFollow)
-        , m_requestContext(WebURLRequest::RequestContextUnspecified)
-        , m_frameType(WebURLRequest::FrameTypeNone)
-        , m_clientId(WebString())
-        , m_isReload(false)
-    {
-    }
-    WebURL m_url;
-    WebString m_method;
-    HTTPHeaderMap m_headers;
-    RefPtr<BlobDataHandle> blobDataHandle;
-    Referrer m_referrer;
-    WebURLRequest::FetchRequestMode m_mode;
-    bool m_isMainResourceLoad;
-    WebURLRequest::FetchCredentialsMode m_credentialsMode;
-    WebURLRequest::FetchRedirectMode m_redirectMode;
-    WebURLRequest::RequestContext m_requestContext;
-    WebURLRequest::FrameType m_frameType;
-    WebString m_clientId;
-    bool m_isReload;
+class WebServiceWorkerRequestPrivate
+    : public RefCounted<WebServiceWorkerRequestPrivate> {
+ public:
+  WebServiceWorkerRequestPrivate()
+      : mode_(WebURLRequest::kFetchRequestModeNoCORS),
+        is_main_resource_load_(false),
+        credentials_mode_(WebURLRequest::kFetchCredentialsModeOmit),
+        cache_mode_(WebURLRequest::kFetchRequestCacheModeDefault),
+        redirect_mode_(WebURLRequest::kFetchRedirectModeFollow),
+        request_context_(WebURLRequest::kRequestContextUnspecified),
+        frame_type_(WebURLRequest::kFrameTypeNone),
+        client_id_(WebString()),
+        is_reload_(false) {}
+  WebURL url_;
+  WebString method_;
+  HTTPHeaderMap headers_;
+  RefPtr<BlobDataHandle> blob_data_handle;
+  Referrer referrer_;
+  WebURLRequest::FetchRequestMode mode_;
+  bool is_main_resource_load_;
+  WebURLRequest::FetchCredentialsMode credentials_mode_;
+  WebURLRequest::FetchRequestCacheMode cache_mode_;
+  WebURLRequest::FetchRedirectMode redirect_mode_;
+  WebURLRequest::RequestContext request_context_;
+  WebURLRequest::FrameType frame_type_;
+  WebString client_id_;
+  bool is_reload_;
 };
 
 WebServiceWorkerRequest::WebServiceWorkerRequest()
-    : m_private(adoptRef(new WebServiceWorkerRequestPrivate))
-{
+    : private_(AdoptRef(new WebServiceWorkerRequestPrivate)) {}
+
+void WebServiceWorkerRequest::Reset() {
+  private_.Reset();
 }
 
-void WebServiceWorkerRequest::reset()
-{
-    m_private.reset();
+void WebServiceWorkerRequest::Assign(const WebServiceWorkerRequest& other) {
+  private_ = other.private_;
 }
 
-void WebServiceWorkerRequest::assign(const WebServiceWorkerRequest& other)
-{
-    m_private = other.m_private;
+void WebServiceWorkerRequest::SetURL(const WebURL& url) {
+  private_->url_ = url;
 }
 
-void WebServiceWorkerRequest::setURL(const WebURL& url)
-{
-    m_private->m_url = url;
+const WebURL& WebServiceWorkerRequest::Url() const {
+  return private_->url_;
 }
 
-WebURL WebServiceWorkerRequest::url() const
-{
-    return m_private->m_url;
+void WebServiceWorkerRequest::SetMethod(const WebString& method) {
+  private_->method_ = method;
 }
 
-void WebServiceWorkerRequest::setMethod(const WebString& method)
-{
-    m_private->m_method = method;
+const WebString& WebServiceWorkerRequest::Method() const {
+  return private_->method_;
 }
 
-WebString WebServiceWorkerRequest::method() const
-{
-    return m_private->m_method;
+void WebServiceWorkerRequest::SetHeader(const WebString& key,
+                                        const WebString& value) {
+  if (DeprecatedEqualIgnoringCase(key, "referer"))
+    return;
+  private_->headers_.Set(key, value);
 }
 
-void WebServiceWorkerRequest::setHeader(const WebString& key, const WebString& value)
-{
-    if (equalIgnoringCase(key, "referer"))
-        return;
-    m_private->m_headers.set(key, value);
+void WebServiceWorkerRequest::AppendHeader(const WebString& key,
+                                           const WebString& value) {
+  if (DeprecatedEqualIgnoringCase(key, "referer"))
+    return;
+  HTTPHeaderMap::AddResult result = private_->headers_.Add(key, value);
+  if (!result.is_new_entry)
+    result.stored_value->value =
+        result.stored_value->value + ", " + String(value);
 }
 
-void WebServiceWorkerRequest::appendHeader(const WebString& key, const WebString& value)
-{
-    if (equalIgnoringCase(key, "referer"))
-        return;
-    HTTPHeaderMap::AddResult result = m_private->m_headers.add(key, value);
-    if (!result.isNewEntry)
-        result.storedValue->value = result.storedValue->value + ", " + String(value);
+void WebServiceWorkerRequest::VisitHTTPHeaderFields(
+    WebHTTPHeaderVisitor* header_visitor) const {
+  for (HTTPHeaderMap::const_iterator i = private_->headers_.begin(),
+                                     end = private_->headers_.end();
+       i != end; ++i)
+    header_visitor->VisitHeader(i->key, i->value);
 }
 
-void WebServiceWorkerRequest::visitHTTPHeaderFields(WebHTTPHeaderVisitor* headerVisitor) const
-{
-    for (HTTPHeaderMap::const_iterator i = m_private->m_headers.begin(), end = m_private->m_headers.end(); i != end; ++i)
-        headerVisitor->visitHeader(i->key, i->value);
+const HTTPHeaderMap& WebServiceWorkerRequest::Headers() const {
+  return private_->headers_;
 }
 
-const HTTPHeaderMap& WebServiceWorkerRequest::headers() const
-{
-    return m_private->m_headers;
+void WebServiceWorkerRequest::SetBlob(const WebString& uuid, long long size) {
+  private_->blob_data_handle = BlobDataHandle::Create(uuid, String(), size);
 }
 
-void WebServiceWorkerRequest::setBlob(const WebString& uuid, long long size)
-{
-    m_private->blobDataHandle = BlobDataHandle::create(uuid, String(), size);
+PassRefPtr<BlobDataHandle> WebServiceWorkerRequest::GetBlobDataHandle() const {
+  return private_->blob_data_handle;
 }
 
-PassRefPtr<BlobDataHandle> WebServiceWorkerRequest::blobDataHandle() const
-{
-    return m_private->blobDataHandle;
+void WebServiceWorkerRequest::SetReferrer(const WebString& web_referrer,
+                                          WebReferrerPolicy referrer_policy) {
+  // WebString doesn't have the distinction between empty and null. We use
+  // the null WTFString for referrer.
+  DCHECK_EQ(Referrer::NoReferrer(), String());
+  String referrer =
+      web_referrer.IsEmpty() ? Referrer::NoReferrer() : String(web_referrer);
+  private_->referrer_ =
+      Referrer(referrer, static_cast<ReferrerPolicy>(referrer_policy));
 }
 
-void WebServiceWorkerRequest::setReferrer(const WebString& webReferrer, WebReferrerPolicy referrerPolicy)
-{
-    // WebString doesn't have the distinction between empty and null. We use
-    // the null WTFString for referrer.
-    ASSERT(Referrer::noReferrer() == String());
-    String referrer = webReferrer.isEmpty() ? Referrer::noReferrer() : String(webReferrer);
-    m_private->m_referrer = Referrer(referrer, static_cast<ReferrerPolicy>(referrerPolicy));
+WebURL WebServiceWorkerRequest::ReferrerUrl() const {
+  return KURL(kParsedURLString, private_->referrer_.referrer);
 }
 
-WebURL WebServiceWorkerRequest::referrerUrl() const
-{
-    return KURL(ParsedURLString, m_private->m_referrer.referrer);
+WebReferrerPolicy WebServiceWorkerRequest::GetReferrerPolicy() const {
+  return static_cast<WebReferrerPolicy>(private_->referrer_.referrer_policy);
 }
 
-WebReferrerPolicy WebServiceWorkerRequest::referrerPolicy() const
-{
-    return static_cast<WebReferrerPolicy>(m_private->m_referrer.referrerPolicy);
+const Referrer& WebServiceWorkerRequest::GetReferrer() const {
+  return private_->referrer_;
 }
 
-const Referrer& WebServiceWorkerRequest::referrer() const
-{
-    return m_private->m_referrer;
+void WebServiceWorkerRequest::SetMode(WebURLRequest::FetchRequestMode mode) {
+  private_->mode_ = mode;
 }
 
-void WebServiceWorkerRequest::setMode(WebURLRequest::FetchRequestMode mode)
-{
-    m_private->m_mode = mode;
+WebURLRequest::FetchRequestMode WebServiceWorkerRequest::Mode() const {
+  return private_->mode_;
 }
 
-WebURLRequest::FetchRequestMode WebServiceWorkerRequest::mode() const
-{
-    return m_private->m_mode;
+void WebServiceWorkerRequest::SetIsMainResourceLoad(
+    bool is_main_resource_load) {
+  private_->is_main_resource_load_ = is_main_resource_load;
 }
 
-void WebServiceWorkerRequest::setIsMainResourceLoad(bool isMainResourceLoad)
-{
-    m_private->m_isMainResourceLoad = isMainResourceLoad;
+bool WebServiceWorkerRequest::IsMainResourceLoad() const {
+  return private_->is_main_resource_load_;
 }
 
-bool WebServiceWorkerRequest::isMainResourceLoad() const
-{
-    return m_private->m_isMainResourceLoad;
+void WebServiceWorkerRequest::SetCredentialsMode(
+    WebURLRequest::FetchCredentialsMode credentials_mode) {
+  private_->credentials_mode_ = credentials_mode;
 }
 
-void WebServiceWorkerRequest::setCredentialsMode(WebURLRequest::FetchCredentialsMode credentialsMode)
-{
-    m_private->m_credentialsMode = credentialsMode;
+WebURLRequest::FetchCredentialsMode WebServiceWorkerRequest::CredentialsMode()
+    const {
+  return private_->credentials_mode_;
 }
 
-WebURLRequest::FetchCredentialsMode WebServiceWorkerRequest::credentialsMode() const
-{
-    return m_private->m_credentialsMode;
+void WebServiceWorkerRequest::SetCacheMode(
+    WebURLRequest::FetchRequestCacheMode cache_mode) {
+  private_->cache_mode_ = cache_mode;
 }
 
-void WebServiceWorkerRequest::setRedirectMode(WebURLRequest::FetchRedirectMode redirectMode)
-{
-    m_private->m_redirectMode = redirectMode;
+WebURLRequest::FetchRequestCacheMode WebServiceWorkerRequest::CacheMode()
+    const {
+  return private_->cache_mode_;
 }
 
-WebURLRequest::FetchRedirectMode WebServiceWorkerRequest::redirectMode() const
-{
-    return m_private->m_redirectMode;
+void WebServiceWorkerRequest::SetRedirectMode(
+    WebURLRequest::FetchRedirectMode redirect_mode) {
+  private_->redirect_mode_ = redirect_mode;
 }
 
-void WebServiceWorkerRequest::setRequestContext(WebURLRequest::RequestContext requestContext)
-{
-    m_private->m_requestContext = requestContext;
+WebURLRequest::FetchRedirectMode WebServiceWorkerRequest::RedirectMode() const {
+  return private_->redirect_mode_;
 }
 
-WebURLRequest::RequestContext WebServiceWorkerRequest::requestContext() const
-{
-    return m_private->m_requestContext;
+void WebServiceWorkerRequest::SetRequestContext(
+    WebURLRequest::RequestContext request_context) {
+  private_->request_context_ = request_context;
 }
 
-void WebServiceWorkerRequest::setFrameType(WebURLRequest::FrameType frameType)
-{
-    m_private->m_frameType = frameType;
+WebURLRequest::RequestContext WebServiceWorkerRequest::GetRequestContext()
+    const {
+  return private_->request_context_;
 }
 
-WebURLRequest::FrameType WebServiceWorkerRequest::frameType() const
-{
-    return m_private->m_frameType;
+void WebServiceWorkerRequest::SetFrameType(
+    WebURLRequest::FrameType frame_type) {
+  private_->frame_type_ = frame_type;
 }
 
-void WebServiceWorkerRequest::setClientId(const WebString& clientId)
-{
-    m_private->m_clientId = clientId;
+WebURLRequest::FrameType WebServiceWorkerRequest::GetFrameType() const {
+  return private_->frame_type_;
 }
 
-WebString WebServiceWorkerRequest::clientId() const
-{
-    return m_private->m_clientId;
+void WebServiceWorkerRequest::SetClientId(const WebString& client_id) {
+  private_->client_id_ = client_id;
 }
 
-void WebServiceWorkerRequest::setIsReload(bool isReload)
-{
-    m_private->m_isReload = isReload;
+const WebString& WebServiceWorkerRequest::ClientId() const {
+  return private_->client_id_;
 }
 
-bool WebServiceWorkerRequest::isReload() const
-{
-    return m_private->m_isReload;
+void WebServiceWorkerRequest::SetIsReload(bool is_reload) {
+  private_->is_reload_ = is_reload;
 }
 
-} // namespace blink
+bool WebServiceWorkerRequest::IsReload() const {
+  return private_->is_reload_;
+}
+
+}  // namespace blink

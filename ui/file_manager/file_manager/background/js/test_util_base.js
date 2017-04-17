@@ -14,7 +14,7 @@ var test = test || {};
  * @param {Array<string>=} opt_styleNames List of CSS property name to be
  *     obtained.
  * @return {{attributes:Object<string>, text:string,
- *                  styles:Object<string>, hidden:boolean}} Element
+ *           styles:Object<string>, hidden:boolean}} Element
  *     information that contains contentText, attribute names and
  *     values, hidden attribute, and style names and values.
  */
@@ -26,6 +26,7 @@ function extractElementInfo(element, contentWindow, opt_styleNames) {
   }
   var styles = {};
   var styleNames = opt_styleNames || [];
+  assert(Array.isArray(styleNames));
   var computedStyles = contentWindow.getComputedStyle(element);
   for (var i = 0; i < styleNames.length; i++) {
     styles[styleNames[i]] = computedStyles[styleNames[i]];
@@ -91,8 +92,8 @@ test.util.TESTING_EXTENSION_IDS = [
  */
 test.util.sync.getWindows = function() {
   var windows = {};
-  for (var id in window.background.appWindows) {
-    var windowWrapper = window.background.appWindows[id];
+  for (var id in window.appWindows) {
+    var windowWrapper = window.appWindows[id];
     windows[id] = {
       outerWidth: windowWrapper.contentWindow.outerWidth,
       outerHeight: windowWrapper.contentWindow.outerHeight
@@ -114,16 +115,16 @@ test.util.sync.getWindows = function() {
  * @return {boolean} Result: True if success, false otherwise.
  */
 test.util.sync.closeWindow = function(appId) {
-  if (appId in window.background.appWindows &&
-      window.background.appWindows[appId].contentWindow) {
-    window.background.appWindows[appId].close();
+  if (appId in window.appWindows &&
+      window.appWindows[appId].contentWindow) {
+    window.appWindows[appId].close();
     return true;
   }
   return false;
 };
 
 /**
- * Gets a document in the Files.app's window, including iframes.
+ * Gets a document in the Files app's window, including iframes.
  *
  * @param {Window} contentWindow Window to be used.
  * @param {string=} opt_iframeQuery Query for the iframe.
@@ -170,8 +171,8 @@ test.util.sync.getElement_ = function(
  */
 test.util.sync.getErrorCount = function() {
   var totalCount = window.JSErrorCount;
-  for (var appId in window.background.appWindows) {
-    var contentWindow = window.background.appWindows[appId].contentWindow;
+  for (var appId in window.appWindows) {
+    var contentWindow = window.appWindows[appId].contentWindow;
     if (contentWindow.JSErrorCount)
       totalCount += contentWindow.JSErrorCount;
   }
@@ -187,7 +188,7 @@ test.util.sync.getErrorCount = function() {
  * @return {boolean} True for success.
  */
 test.util.sync.resizeWindow = function(contentWindow, width, height) {
-  window.background.appWindows[contentWindow.appID].resizeTo(width, height);
+  window.appWindows[contentWindow.appID].resizeTo(width, height);
   return true;
 };
 
@@ -197,7 +198,7 @@ test.util.sync.resizeWindow = function(contentWindow, width, height) {
  * @return {boolean} True for success.
  */
 test.util.sync.maximizeWindow = function(contentWindow) {
-  window.background.appWindows[contentWindow.appID].maximize();
+  window.appWindows[contentWindow.appID].maximize();
   return true;
 };
 
@@ -207,7 +208,7 @@ test.util.sync.maximizeWindow = function(contentWindow) {
  * @return {boolean} True for success.
  */
 test.util.sync.restoreWindow = function(contentWindow) {
-  window.background.appWindows[contentWindow.appID].restore();
+  window.appWindows[contentWindow.appID].restore();
   return true;
 };
 
@@ -217,38 +218,85 @@ test.util.sync.restoreWindow = function(contentWindow) {
  * @return {boolean} True if the window is maximized now.
  */
 test.util.sync.isWindowMaximized = function(contentWindow) {
-  return window.background.appWindows[contentWindow.appID].isMaximized();
+  return window.appWindows[contentWindow.appID].isMaximized();
 };
 
 /**
  * Queries all elements.
  *
- * @param {Window} contentWindow Window to be tested.
+ * @param {!Window} contentWindow Window to be tested.
  * @param {string} targetQuery Query to specify the element.
  * @param {?string} iframeQuery Iframe selector or null if no iframe.
  * @param {Array<string>=} opt_styleNames List of CSS property name to be
  *     obtained.
- * @return {Array<{attributes:Object<string>, text:string,
+ * @return {!Array<{attributes:Object<string>, text:string,
  *                  styles:Object<string>, hidden:boolean}>} Element
  *     information that contains contentText, attribute names and
  *     values, hidden attribute, and style names and values.
  */
 test.util.sync.queryAllElements = function(
     contentWindow, targetQuery, iframeQuery, opt_styleNames) {
+  return test.util.sync.deepQueryAllElements(
+      contentWindow, [targetQuery], iframeQuery, opt_styleNames);
+};
+
+/**
+ * Queries elements inside shadow DOM.
+ *
+ * @param {!Window} contentWindow Window to be tested.
+ * @param {!Array<string>} targetQuery Query to specify the element.
+ *   |targetQuery[0]| specifies the first element(s). |targetQuery[1]| specifies
+ *   elements inside the shadow DOM of the first element, and so on.
+ * @param {?string} iframeQuery Iframe selector or null if no iframe.
+ * @param {Array<string>=} opt_styleNames List of CSS property name to be
+ *     obtained.
+ * @return {!Array<{attributes:Object<string>, text:string,
+ *                  styles:Object<string>, hidden:boolean}>} Element
+ *     information that contains contentText, attribute names and
+ *     values, hidden attribute, and style names and values.
+ */
+test.util.sync.deepQueryAllElements = function(
+    contentWindow, targetQuery, iframeQuery, opt_styleNames) {
   var doc = test.util.sync.getDocument_(
       contentWindow, iframeQuery || undefined);
   if (!doc)
     return [];
-  // The return value of querySelectorAll is not an array.
-  return Array.prototype.map.call(
-      doc.querySelectorAll(targetQuery),
-      function(element) {
-        return extractElementInfo(element, contentWindow, opt_styleNames);
-      });
+
+  var elems = test.util.sync.deepQuerySelectorAll_(doc, targetQuery);
+  return elems.map(function(element) {
+    return extractElementInfo(element, contentWindow, opt_styleNames);
+  });
 };
 
 /**
- * Get the information of the active element.
+ * Selects elements below |root|, possibly following shadow DOM subtree.
+ *
+ * @param {(!HTMLElement|!Document)} root Element to search from.
+ * @param {!Array<string>} targetQuery Query to specify the element.
+ *   |targetQuery[0]| specifies the first element(s). |targetQuery[1]| specifies
+ *   elements inside the shadow DOM of the first element, and so on.
+ * @return {!Array<!HTMLElement>} Matched elements.
+ *
+ * @private
+ */
+test.util.sync.deepQuerySelectorAll_ = function(root, targetQuery) {
+  var elems = Array.prototype.slice.call(root.querySelectorAll(targetQuery[0]));
+  var remaining = targetQuery.slice(1);
+  if (remaining.length === 0)
+    return elems;
+
+  var res = [];
+  for (var i = 0; i < elems.length; i++) {
+    if (elems[i].shadowRoot) {
+      res = res.concat(
+          test.util.sync.deepQuerySelectorAll_(elems[i].shadowRoot, remaining));
+    }
+  }
+  return res;
+};
+
+/**
+ * Gets the information of the active element.
  *
  * @param {Window} contentWindow Window to be tested.
  * @param {string} targetQuery Query to specify the element.
@@ -516,7 +564,7 @@ test.util.async.getNotificationIDs = function(callback) {
  */
 test.util.async.getFilesUnderVolume = function(volumeType, names, callback) {
   var displayRootPromise =
-      VolumeManager.getInstance().then(function(volumeManager) {
+      volumeManagerFactory.getInstance().then(function(volumeManager) {
     var volumeInfo = volumeManager.getCurrentProfileVolumeInfo(volumeType);
     return volumeInfo.resolveDisplayRoot();
   });
@@ -563,8 +611,8 @@ test.util.registerRemoteTestUtils = function() {
       throw new Error('Invalid request.');
     var args = request.args.slice();  // shallow copy
     if (request.appId) {
-      if (window.background.appWindows[request.appId]) {
-        args.unshift(window.background.appWindows[request.appId].contentWindow);
+      if (window.appWindows[request.appId]) {
+        args.unshift(window.appWindows[request.appId].contentWindow);
       } else if (window.background.dialogs[request.appId]) {
         args.unshift(window.background.dialogs[request.appId]);
       } else {

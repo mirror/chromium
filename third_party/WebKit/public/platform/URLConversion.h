@@ -13,8 +13,8 @@ namespace blink {
 
 class WebString;
 
-BLINK_COMMON_EXPORT GURL WebStringToGURL(const WebString&);
+BLINK_PLATFORM_EXPORT GURL WebStringToGURL(const WebString&);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

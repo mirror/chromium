@@ -18,7 +18,6 @@
 namespace content {
 
 class BrowserContext;
-class ServiceWorkerContext;
 struct PushSubscriptionOptions;
 
 // A push service-agnostic interface that the Push API uses for talking to
@@ -31,12 +30,10 @@ class CONTENT_EXPORT PushMessagingService {
                           const std::vector<uint8_t>& auth,
                           PushRegistrationStatus status)>;
   using UnregisterCallback = base::Callback<void(PushUnregistrationStatus)>;
-
-  using EncryptionInfoCallback = base::Callback<void(
-      bool success,
-      const std::vector<uint8_t>& p256dh,
-      const std::vector<uint8_t>& auth)>;
-
+  using SubscriptionInfoCallback =
+      base::Callback<void(bool is_valid,
+                          const std::vector<uint8_t>& p256dh,
+                          const std::vector<uint8_t>& auth)>;
   using StringCallback = base::Callback<void(const std::string& data,
                                              bool success,
                                              bool not_found)>;
@@ -66,16 +63,24 @@ class CONTENT_EXPORT PushMessagingService {
                                    const PushSubscriptionOptions& options,
                                    const RegisterCallback& callback) = 0;
 
-  // Retrieves the encryption information associated with the subscription
-  // associated to |origin| and |service_worker_registration_id|.
-  virtual void GetEncryptionInfo(const GURL& origin,
-                                 int64_t service_worker_registration_id,
-                                 const EncryptionInfoCallback& callback) = 0;
+  // Retrieves the subscription associated with |origin| and
+  // |service_worker_registration_id|, validates that the provided
+  // |subscription_id| matches the stored one, then passes the encryption
+  // information to the callback. |sender_id| is also required since an
+  // InstanceID might have multiple tokens associated with different senders,
+  // though in practice Push doesn't yet use that.
+  virtual void GetSubscriptionInfo(
+      const GURL& origin,
+      int64_t service_worker_registration_id,
+      const std::string& sender_id,
+      const std::string& subscription_id,
+      const SubscriptionInfoCallback& callback) = 0;
 
-  // Unsubscribe the given |sender_id| from the push messaging service. The
-  // subscription will be synchronously deactivated locally, and asynchronously
-  // sent to the push service, with automatic retry.
-  virtual void Unsubscribe(const GURL& requesting_origin,
+  // Unsubscribe the given |sender_id| from the push messaging service. Locally
+  // deactivates the subscription, then runs |callback|, then asynchronously
+  // attempts to unsubscribe with the push service.
+  virtual void Unsubscribe(PushUnregistrationReason reason,
+                           const GURL& requesting_origin,
                            int64_t service_worker_registration_id,
                            const std::string& sender_id,
                            const UnregisterCallback& callback) = 0;
@@ -92,6 +97,12 @@ class CONTENT_EXPORT PushMessagingService {
   // permission check behaviour.
   virtual bool SupportNonVisibleMessages() = 0;
 
+  // Unsubscribes the push subscription associated with this service worker
+  // registration, if such a push subscription exists.
+  virtual void DidDeleteServiceWorkerRegistration(
+      const GURL& origin,
+      int64_t service_worker_registration_id) = 0;
+
  protected:
   static void GetSenderId(BrowserContext* browser_context,
                           const GURL& origin,
@@ -100,10 +111,20 @@ class CONTENT_EXPORT PushMessagingService {
 
   // Clear the push subscription id stored in the service worker with the given
   // |service_worker_registration_id| for the given |origin|.
-  static void ClearPushSubscriptionID(BrowserContext* browser_context,
+  static void ClearPushSubscriptionId(BrowserContext* browser_context,
                                       const GURL& origin,
                                       int64_t service_worker_registration_id,
                                       const base::Closure& callback);
+
+  // Stores a push subscription in the service worker for the given |origin|.
+  // Must only be used by tests.
+  static void StorePushSubscriptionForTesting(
+      BrowserContext* browser_context,
+      const GURL& origin,
+      int64_t service_worker_registration_id,
+      const std::string& subscription_id,
+      const std::string& sender_id,
+      const base::Closure& callback);
 };
 
 }  // namespace content

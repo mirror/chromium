@@ -17,7 +17,6 @@
 #include "ui/gfx/android/java_bitmap.h"
 #include "ui/gfx/geometry/vector3d_f.h"
 
-namespace chrome {
 namespace android {
 
 DecorationTitle::DecorationTitle(ui::ResourceManager* resource_manager,
@@ -82,22 +81,20 @@ void DecorationTitle::SetFaviconResourceId(int favicon_resource_id) {
 }
 
 void DecorationTitle::SetUIResourceIds() {
-  ui::ResourceManager::Resource* title_resource =
-      resource_manager_->GetResource(ui::ANDROID_RESOURCE_TYPE_DYNAMIC_BITMAP,
-                                     title_resource_id_);
+  ui::Resource* title_resource = resource_manager_->GetResource(
+      ui::ANDROID_RESOURCE_TYPE_DYNAMIC_BITMAP, title_resource_id_);
   if (title_resource) {
-    layer_opaque_->SetUIResourceId(title_resource->ui_resource->id());
-    layer_fade_->SetUIResourceId(title_resource->ui_resource->id());
-    title_size_ = title_resource->size;
+    layer_opaque_->SetUIResourceId(title_resource->ui_resource()->id());
+    layer_fade_->SetUIResourceId(title_resource->ui_resource()->id());
+    title_size_ = title_resource->size();
   }
 
   if (!is_loading_) {
-    ui::ResourceManager::Resource* favicon_resource =
-        resource_manager_->GetResource(ui::ANDROID_RESOURCE_TYPE_DYNAMIC_BITMAP,
-                                       favicon_resource_id_);
+    ui::Resource* favicon_resource = resource_manager_->GetResource(
+        ui::ANDROID_RESOURCE_TYPE_DYNAMIC_BITMAP, favicon_resource_id_);
     if (favicon_resource) {
-      layer_favicon_->SetUIResourceId(favicon_resource->ui_resource->id());
-      favicon_size_ = favicon_resource->size;
+      layer_favicon_->SetUIResourceId(favicon_resource->ui_resource()->id());
+      favicon_size_ = favicon_resource->size();
     } else {
       layer_favicon_->SetUIResourceId(0);
     }
@@ -106,12 +103,11 @@ void DecorationTitle::SetUIResourceIds() {
     int resource_id =
         is_incognito_ ? spinner_incognito_resource_id_ : spinner_resource_id_;
 
-    ui::ResourceManager::Resource* spinner_resource =
-        resource_manager_->GetResource(ui::ANDROID_RESOURCE_TYPE_STATIC,
-                                       resource_id);
+    ui::Resource* spinner_resource = resource_manager_->GetResource(
+        ui::ANDROID_RESOURCE_TYPE_STATIC, resource_id);
 
     if (spinner_resource)
-      layer_favicon_->SetUIResourceId(spinner_resource->ui_resource->id());
+      layer_favicon_->SetUIResourceId(spinner_resource->ui_resource()->id());
 
     // Rotate about the center of the layer.
     layer_favicon_->SetTransformOrigin(
@@ -152,9 +148,8 @@ void DecorationTitle::setBounds(const gfx::Size& bounds) {
   if (bounds.GetArea() == 0.f) {
     layer_->SetHideLayerAndSubtree(true);
     return;
-  } else {
-    layer_->SetHideLayerAndSubtree(false);
   }
+  layer_->SetHideLayerAndSubtree(false);
 
   // Current implementation assumes there is always enough space
   // to draw favicon and title fade.
@@ -242,4 +237,3 @@ scoped_refptr<cc::Layer> DecorationTitle::layer() {
 }
 
 }  // namespace android
-}  // namespace chrome

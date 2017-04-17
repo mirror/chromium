@@ -61,6 +61,7 @@ class POLICY_EXPORT CloudPolicyManager
   const CloudPolicyCore* core() const { return &core_; }
 
   // ConfigurationPolicyProvider:
+  void Init(SchemaRegistry* registry) override;
   void Shutdown() override;
   bool IsInitializationComplete(PolicyDomain domain) const override;
   void RefreshPolicies() override;
@@ -83,9 +84,11 @@ class POLICY_EXPORT CloudPolicyManager
   virtual void GetChromePolicy(PolicyMap* policy_map);
 
   void CreateComponentCloudPolicyService(
+      const std::string& policy_type,
       const base::FilePath& policy_cache_path,
       const scoped_refptr<net::URLRequestContextGetter>& request_context,
-      CloudPolicyClient* client);
+      CloudPolicyClient* client,
+      SchemaRegistry* schema_registry);
 
   void ClearAndDestroyComponentCloudPolicyService();
 

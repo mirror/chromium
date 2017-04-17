@@ -29,115 +29,107 @@
 #ifndef AudioChannel_h
 #define AudioChannel_h
 
+#include <memory>
 #include "platform/PlatformExport.h"
 #include "platform/audio/AudioArray.h"
-#include "wtf/Allocator.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-// An AudioChannel represents a buffer of non-interleaved floating-point audio samples.
+// An AudioChannel represents a buffer of non-interleaved floating-point audio
+// samples.
 // The PCM samples are normally assumed to be in a nominal range -1.0 -> +1.0
 class PLATFORM_EXPORT AudioChannel {
-    USING_FAST_MALLOC(AudioChannel);
-    WTF_MAKE_NONCOPYABLE(AudioChannel);
-public:
-    // Memory can be externally referenced, or can be internally allocated with an AudioFloatArray.
+  USING_FAST_MALLOC(AudioChannel);
+  WTF_MAKE_NONCOPYABLE(AudioChannel);
 
-    // Reference an external buffer.
-    AudioChannel(float* storage, size_t length)
-        : m_length(length)
-        , m_rawPointer(storage)
-        , m_silent(false)
-    {
-    }
+ public:
+  // Memory can be externally referenced, or can be internally allocated with an
+  // AudioFloatArray.
 
-    // Manage storage for us.
-    explicit AudioChannel(size_t length)
-        : m_length(length)
-        , m_rawPointer(nullptr)
-        , m_silent(true)
-    {
-        m_memBuffer = wrapUnique(new AudioFloatArray(length));
-    }
+  // Reference an external buffer.
+  AudioChannel(float* storage, size_t length)
+      : length_(length), raw_pointer_(storage), silent_(false) {}
 
-    // A "blank" audio channel -- must call set() before it's useful...
-    AudioChannel()
-        : m_length(0)
-        , m_rawPointer(nullptr)
-        , m_silent(true)
-    {
-    }
+  // Manage storage for us.
+  explicit AudioChannel(size_t length)
+      : length_(length), raw_pointer_(nullptr), silent_(true) {
+    mem_buffer_ = WTF::WrapUnique(new AudioFloatArray(length));
+  }
 
-    // Redefine the memory for this channel.
-    // storage represents external memory not managed by this object.
-    void set(float* storage, size_t length)
-    {
-        m_memBuffer.reset(); // cleanup managed storage
-        m_rawPointer = storage;
-        m_length = length;
-        m_silent = false;
-    }
+  // A "blank" audio channel -- must call set() before it's useful...
+  AudioChannel() : length_(0), raw_pointer_(nullptr), silent_(true) {}
 
-    // How many sample-frames do we contain?
-    size_t length() const { return m_length; }
+  // Redefine the memory for this channel.
+  // storage represents external memory not managed by this object.
+  void Set(float* storage, size_t length) {
+    mem_buffer_.reset();  // cleanup managed storage
+    raw_pointer_ = storage;
+    length_ = length;
+    silent_ = false;
+  }
 
-    // resizeSmaller() can only be called with a new length <= the current length.
-    // The data stored in the bus will remain undisturbed.
-    void resizeSmaller(size_t newLength);
+  // How many sample-frames do we contain?
+  size_t length() const { return length_; }
 
-    // Direct access to PCM sample data. Non-const accessor clears silent flag.
-    float* mutableData()
-    {
-        clearSilentFlag();
-        return m_rawPointer ? m_rawPointer : m_memBuffer->data();
-    }
+  // resizeSmaller() can only be called with a new length <= the current length.
+  // The data stored in the bus will remain undisturbed.
+  void ResizeSmaller(size_t new_length);
 
-    const float* data() const { return m_rawPointer ? m_rawPointer : m_memBuffer->data(); }
+  // Direct access to PCM sample data. Non-const accessor clears silent flag.
+  float* MutableData() {
+    ClearSilentFlag();
+    return raw_pointer_ ? raw_pointer_ : mem_buffer_->Data();
+  }
 
-    // Zeroes out all sample values in buffer.
-    void zero()
-    {
-        if (m_silent)
-            return;
+  const float* Data() const {
+    return raw_pointer_ ? raw_pointer_ : mem_buffer_->Data();
+  }
 
-        m_silent = true;
+  // Zeroes out all sample values in buffer.
+  void Zero() {
+    if (silent_)
+      return;
 
-        if (m_memBuffer.get())
-            m_memBuffer->zero();
-        else
-            memset(m_rawPointer, 0, sizeof(float) * m_length);
-    }
+    silent_ = true;
 
-    // Clears the silent flag.
-    void clearSilentFlag() { m_silent = false; }
+    if (mem_buffer_.get())
+      mem_buffer_->Zero();
+    else
+      memset(raw_pointer_, 0, sizeof(float) * length_);
+  }
 
-    bool isSilent() const { return m_silent; }
+  // Clears the silent flag.
+  void ClearSilentFlag() { silent_ = false; }
 
-    // Scales all samples by the same amount.
-    void scale(float scale);
+  bool IsSilent() const { return silent_; }
 
-    // A simple memcpy() from the source channel
-    void copyFrom(const AudioChannel* sourceChannel);
+  // Scales all samples by the same amount.
+  void Scale(float scale);
 
-    // Copies the given range from the source channel.
-    void copyFromRange(const AudioChannel* sourceChannel, unsigned startFrame, unsigned endFrame);
+  // A simple memcpy() from the source channel
+  void CopyFrom(const AudioChannel* source_channel);
 
-    // Sums (with unity gain) from the source channel.
-    void sumFrom(const AudioChannel* sourceChannel);
+  // Copies the given range from the source channel.
+  void CopyFromRange(const AudioChannel* source_channel,
+                     unsigned start_frame,
+                     unsigned end_frame);
 
-    // Returns maximum absolute value (useful for normalization).
-    float maxAbsValue() const;
+  // Sums (with unity gain) from the source channel.
+  void SumFrom(const AudioChannel* source_channel);
 
-private:
-    size_t m_length;
+  // Returns maximum absolute value (useful for normalization).
+  float MaxAbsValue() const;
 
-    float* m_rawPointer;
-    std::unique_ptr<AudioFloatArray> m_memBuffer;
-    bool m_silent;
+ private:
+  size_t length_;
+
+  float* raw_pointer_;
+  std::unique_ptr<AudioFloatArray> mem_buffer_;
+  bool silent_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AudioChannel_h
+#endif  // AudioChannel_h

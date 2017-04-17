@@ -4,10 +4,13 @@
 
 #include "net/tools/quic/quic_client_session.h"
 
-#include "base/logging.h"
-#include "net/quic/crypto/crypto_protocol.h"
-#include "net/quic/crypto/proof_verifier_chromium.h"
-#include "net/quic/quic_server_id.h"
+#include "net/log/net_log_with_source.h"
+#include "net/quic/chromium/crypto/proof_verifier_chromium.h"
+#include "net/quic/core/crypto/crypto_protocol.h"
+#include "net/quic/core/quic_server_id.h"
+#include "net/quic/platform/api/quic_bug_tracker.h"
+#include "net/quic/platform/api/quic_logging.h"
+#include "net/quic/platform/api/quic_ptr_util.h"
 #include "net/tools/quic/quic_spdy_client_stream.h"
 
 using std::string;
@@ -28,7 +31,7 @@ QuicClientSession::QuicClientSession(
 QuicClientSession::~QuicClientSession() {}
 
 void QuicClientSession::Initialize() {
-  crypto_stream_.reset(CreateQuicCryptoStream());
+  crypto_stream_ = CreateQuicCryptoStream();
   QuicClientSessionBase::Initialize();
 }
 
@@ -40,17 +43,17 @@ void QuicClientSession::OnProofVerifyDetailsAvailable(
 
 bool QuicClientSession::ShouldCreateOutgoingDynamicStream() {
   if (!crypto_stream_->encryption_established()) {
-    DVLOG(1) << "Encryption not active so no outgoing stream created.";
+    QUIC_DLOG(INFO) << "Encryption not active so no outgoing stream created.";
     return false;
   }
   if (GetNumOpenOutgoingStreams() >= max_open_outgoing_streams()) {
-    DVLOG(1) << "Failed to create a new outgoing stream. "
-             << "Already " << GetNumOpenOutgoingStreams() << " open.";
+    QUIC_DLOG(INFO) << "Failed to create a new outgoing stream. "
+                    << "Already " << GetNumOpenOutgoingStreams() << " open.";
     return false;
   }
   if (goaway_received() && respect_goaway_) {
-    DVLOG(1) << "Failed to create a new outgoing stream. "
-             << "Already received goaway.";
+    QUIC_DLOG(INFO) << "Failed to create a new outgoing stream. "
+                    << "Already received goaway.";
     return false;
   }
   return true;
@@ -61,14 +64,15 @@ QuicSpdyClientStream* QuicClientSession::CreateOutgoingDynamicStream(
   if (!ShouldCreateOutgoingDynamicStream()) {
     return nullptr;
   }
-  QuicSpdyClientStream* stream = CreateClientStream();
+  std::unique_ptr<QuicSpdyClientStream> stream = CreateClientStream();
   stream->SetPriority(priority);
-  ActivateStream(stream);
-  return stream;
+  QuicSpdyClientStream* stream_ptr = stream.get();
+  ActivateStream(std::move(stream));
+  return stream_ptr;
 }
 
-QuicSpdyClientStream* QuicClientSession::CreateClientStream() {
-  return new QuicSpdyClientStream(GetNextOutgoingStreamId(), this);
+std::unique_ptr<QuicSpdyClientStream> QuicClientSession::CreateClientStream() {
+  return QuicMakeUnique<QuicSpdyClientStream>(GetNextOutgoingStreamId(), this);
 }
 
 QuicCryptoClientStreamBase* QuicClientSession::GetCryptoStream() {
@@ -90,16 +94,16 @@ int QuicClientSession::GetNumReceivedServerConfigUpdates() const {
 
 bool QuicClientSession::ShouldCreateIncomingDynamicStream(QuicStreamId id) {
   if (!connection()->connected()) {
-    LOG(DFATAL) << "ShouldCreateIncomingDynamicStream called when disconnected";
+    QUIC_BUG << "ShouldCreateIncomingDynamicStream called when disconnected";
     return false;
   }
   if (goaway_received() && respect_goaway_) {
-    DVLOG(1) << "Failed to create a new outgoing stream. "
-             << "Already received goaway.";
+    QUIC_DLOG(INFO) << "Failed to create a new outgoing stream. "
+                    << "Already received goaway.";
     return false;
   }
   if (id % 2 != 0) {
-    LOG(WARNING) << "Received invalid push stream id " << id;
+    QUIC_LOG(WARNING) << "Received invalid push stream id " << id;
     connection()->CloseConnection(
         QUIC_INVALID_STREAM_ID, "Server created odd numbered stream",
         ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET);
@@ -115,13 +119,14 @@ QuicSpdyStream* QuicClientSession::CreateIncomingDynamicStream(
   }
   QuicSpdyStream* stream = new QuicSpdyClientStream(id, this);
   stream->CloseWriteSide();
-  ActivateStream(stream);
+  ActivateStream(QuicWrapUnique(stream));
   return stream;
 }
 
-QuicCryptoClientStreamBase* QuicClientSession::CreateQuicCryptoStream() {
-  return new QuicCryptoClientStream(
-      server_id_, this, new ProofVerifyContextChromium(0, BoundNetLog()),
+std::unique_ptr<QuicCryptoClientStreamBase>
+QuicClientSession::CreateQuicCryptoStream() {
+  return QuicMakeUnique<QuicCryptoClientStream>(
+      server_id_, this, new ProofVerifyContextChromium(0, NetLogWithSource()),
       crypto_config_, this);
 }
 

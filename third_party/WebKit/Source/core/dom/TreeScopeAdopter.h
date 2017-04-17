@@ -2,9 +2,11 @@
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All
+ * rights reserved.
  * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
- * Copyright (C) 2009 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ * Copyright (C) 2009 Torch Mobile Inc. All rights reserved.
+ * (http://www.torchmobile.com/)
  * Copyright (C) 2011 Google Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -32,39 +34,42 @@ namespace blink {
 class TreeScope;
 
 class TreeScopeAdopter {
-    STACK_ALLOCATED();
-public:
-    TreeScopeAdopter(Node& toAdopt, TreeScope& newScope);
+  STACK_ALLOCATED();
 
-    void execute() const { moveTreeToNewScope(*m_toAdopt); }
-    bool needsScopeChange() const { return m_oldScope != m_newScope; }
+ public:
+  TreeScopeAdopter(Node& to_adopt, TreeScope& new_scope);
+
+  void Execute() const;
+  bool NeedsScopeChange() const { return old_scope_ != new_scope_; }
 
 #if DCHECK_IS_ON()
-    static void ensureDidMoveToNewDocumentWasCalled(Document&);
+  static void EnsureDidMoveToNewDocumentWasCalled(Document&);
 #else
-    static void ensureDidMoveToNewDocumentWasCalled(Document&) { }
+  static void EnsureDidMoveToNewDocumentWasCalled(Document&) {}
 #endif
 
-private:
-    void updateTreeScope(Node&) const;
-    void moveTreeToNewScope(Node&) const;
-    void moveTreeToNewDocument(Node&, Document& oldDocument, Document& newDocument) const;
-    void moveNodeToNewDocument(Node&, Document& oldDocument, Document& newDocument) const;
-    TreeScope& oldScope() const { return *m_oldScope; }
-    TreeScope& newScope() const { return *m_newScope; }
+ private:
+  void UpdateTreeScope(Node&) const;
+  void MoveTreeToNewScope(Node&) const;
+  void MoveTreeToNewDocument(Node&,
+                             Document& old_document,
+                             Document& new_document) const;
+  void MoveNodeToNewDocument(Node&,
+                             Document& old_document,
+                             Document& new_document) const;
+  TreeScope& OldScope() const { return *old_scope_; }
+  TreeScope& NewScope() const { return *new_scope_; }
 
-    Member<Node> m_toAdopt;
-    Member<TreeScope> m_newScope;
-    Member<TreeScope> m_oldScope;
+  Member<Node> to_adopt_;
+  Member<TreeScope> new_scope_;
+  Member<TreeScope> old_scope_;
 };
 
-inline TreeScopeAdopter::TreeScopeAdopter(Node& toAdopt, TreeScope& newScope)
-    : m_toAdopt(toAdopt)
-    , m_newScope(newScope)
-    , m_oldScope(toAdopt.treeScope())
-{
-}
+inline TreeScopeAdopter::TreeScopeAdopter(Node& to_adopt, TreeScope& new_scope)
+    : to_adopt_(to_adopt),
+      new_scope_(new_scope),
+      old_scope_(to_adopt.GetTreeScope()) {}
 
-} // namespace blink
+}  // namespace blink
 
 #endif

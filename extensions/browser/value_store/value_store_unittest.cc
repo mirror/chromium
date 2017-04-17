@@ -7,7 +7,7 @@
 #include <utility>
 
 #include "base/json/json_writer.h"
-#include "base/memory/linked_ptr.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 
 using content::BrowserThread;
@@ -88,12 +88,9 @@ testing::AssertionResult ChangesEq(
         " but was " << actual.size();
   }
 
-  std::map<std::string, linked_ptr<ValueStoreChange> > expected_as_map;
-  for (ValueStoreChangeList::const_iterator it = expected.begin();
-      it != expected.end(); ++it) {
-    expected_as_map[it->key()] =
-        linked_ptr<ValueStoreChange>(new ValueStoreChange(*it));
-  }
+  std::map<std::string, std::unique_ptr<ValueStoreChange>> expected_as_map;
+  for (const ValueStoreChange& change : expected)
+    expected_as_map[change.key()] = base::MakeUnique<ValueStoreChange>(change);
 
   std::set<std::string> keys_seen;
 
@@ -136,9 +133,9 @@ ValueStoreTest::ValueStoreTest()
       dict123_(new base::DictionaryValue()),
       ui_thread_(BrowserThread::UI, base::MessageLoop::current()),
       file_thread_(BrowserThread::FILE, base::MessageLoop::current()) {
-  val1_.reset(new base::StringValue(key1_ + "Value"));
-  val2_.reset(new base::StringValue(key2_ + "Value"));
-  val3_.reset(new base::StringValue(key3_ + "Value"));
+  val1_.reset(new base::Value(key1_ + "Value"));
+  val2_.reset(new base::Value(key2_ + "Value"));
+  val3_.reset(new base::Value(key3_ + "Value"));
 
   list1_.push_back(key1_);
   list2_.push_back(key2_);
@@ -171,7 +168,7 @@ ValueStoreTest::~ValueStoreTest() {}
 
 void ValueStoreTest::SetUp() {
   ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
-  storage_.reset((GetParam())(temp_dir_.path().AppendASCII("dbName")));
+  storage_.reset((GetParam())(temp_dir_.GetPath().AppendASCII("dbName")));
   ASSERT_TRUE(storage_.get());
 }
 
@@ -333,7 +330,7 @@ TEST_P(ValueStoreTest, ClearWhenNotEmpty) {
 // indexing into a dictionary.
 TEST_P(ValueStoreTest, DotsInKeyNames) {
   std::string dot_key("foo.bar");
-  base::StringValue dot_value("baz.qux");
+  base::Value dot_value("baz.qux");
   std::vector<std::string> dot_list;
   dot_list.push_back(dot_key);
   base::DictionaryValue dot_dict;

@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
- * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved.
+ * (http://www.torchmobile.com/)
  * Copyright (C) 2009 Adam Barth. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,103 +32,87 @@
 #ifndef NavigationScheduler_h
 #define NavigationScheduler_h
 
-#include "core/CoreExport.h"
-#include "platform/heap/Handle.h"
-#include "public/platform/WebScheduler.h"
-#include "wtf/Forward.h"
-#include "wtf/HashMap.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/text/WTFString.h"
 #include <memory>
+#include "core/CoreExport.h"
+#include "platform/WebTaskRunner.h"
+#include "platform/heap/Handle.h"
+#include "platform/weborigin/KURL.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/text/WTFString.h"
+#include "public/platform/WebScheduler.h"
 
 namespace blink {
 
-class CancellableTaskFactory;
 class Document;
 class FormSubmission;
 class LocalFrame;
 class ScheduledNavigation;
 
-class CORE_EXPORT NavigationScheduler final : public GarbageCollectedFinalized<NavigationScheduler> {
-    WTF_MAKE_NONCOPYABLE(NavigationScheduler);
-public:
-    static NavigationScheduler* create(LocalFrame* frame)
-    {
-        return new NavigationScheduler(frame);
-    }
+class CORE_EXPORT NavigationScheduler final
+    : public GarbageCollectedFinalized<NavigationScheduler> {
+  WTF_MAKE_NONCOPYABLE(NavigationScheduler);
 
-    ~NavigationScheduler();
+ public:
+  static NavigationScheduler* Create(LocalFrame* frame) {
+    return new NavigationScheduler(frame);
+  }
 
-    bool locationChangePending();
-    bool isNavigationScheduledWithin(double intervalInSeconds) const;
+  ~NavigationScheduler();
 
-    void scheduleRedirect(double delay, const String& url);
-    void scheduleLocationChange(Document*, const String& url, bool replacesCurrentItem = true);
-    void schedulePageBlock(Document*);
-    void scheduleFormSubmission(Document*, FormSubmission*);
-    void scheduleReload();
+  bool LocationChangePending();
+  bool IsNavigationScheduledWithin(double interval_in_seconds) const;
 
-    void startTimer();
-    void cancel();
+  void ScheduleRedirect(double delay, const KURL&);
+  void ScheduleLocationChange(Document*,
+                              const KURL&,
+                              bool replaces_current_item = true);
+  void SchedulePageBlock(Document*, int reason);
+  void ScheduleFormSubmission(Document*, FormSubmission*);
+  void ScheduleReload();
 
-    DECLARE_TRACE();
+  void StartTimer();
+  void Cancel();
 
-private:
-    explicit NavigationScheduler(LocalFrame*);
+  DECLARE_TRACE();
 
-    bool shouldScheduleReload() const;
-    bool shouldScheduleNavigation(const String& url) const;
+ private:
+  explicit NavigationScheduler(LocalFrame*);
 
-    void navigateTask();
-    void schedule(ScheduledNavigation*);
+  bool ShouldScheduleReload() const;
+  bool ShouldScheduleNavigation(const KURL&) const;
 
-    static bool mustReplaceCurrentItem(LocalFrame* targetFrame);
+  void NavigateTask();
+  void Schedule(ScheduledNavigation*);
 
-    Member<LocalFrame> m_frame;
-    std::unique_ptr<CancellableTaskFactory> m_navigateTaskFactory;
-    Member<ScheduledNavigation> m_redirect;
-    WebScheduler::NavigatingFrameType m_frameType; // Exists because we can't deref m_frame in destructor.
+  static bool MustReplaceCurrentItem(LocalFrame* target_frame);
+
+  Member<LocalFrame> frame_;
+  TaskHandle navigate_task_handle_;
+  Member<ScheduledNavigation> redirect_;
+
+  // Exists because we can't deref m_frame in destructor.
+  WebScheduler::NavigatingFrameType frame_type_;
 };
 
 class NavigationDisablerForBeforeUnload {
-    WTF_MAKE_NONCOPYABLE(NavigationDisablerForBeforeUnload);
-    STACK_ALLOCATED();
-public:
-    NavigationDisablerForBeforeUnload()
-    {
-        s_navigationDisableCount++;
-    }
-    ~NavigationDisablerForBeforeUnload()
-    {
-        ASSERT(s_navigationDisableCount);
-        s_navigationDisableCount--;
-    }
-    static bool isNavigationAllowed() { return !s_navigationDisableCount; }
+  WTF_MAKE_NONCOPYABLE(NavigationDisablerForBeforeUnload);
+  STACK_ALLOCATED();
 
-private:
-    static unsigned s_navigationDisableCount;
+ public:
+  NavigationDisablerForBeforeUnload() { navigation_disable_count_++; }
+  ~NavigationDisablerForBeforeUnload() {
+    DCHECK(navigation_disable_count_);
+    navigation_disable_count_--;
+  }
+  static bool IsNavigationAllowed() { return !navigation_disable_count_; }
+
+ private:
+  static unsigned navigation_disable_count_;
 };
 
-class CORE_EXPORT NavigationCounterForUnload {
-    WTF_MAKE_NONCOPYABLE(NavigationCounterForUnload);
-    STACK_ALLOCATED();
-public:
-    NavigationCounterForUnload()
-    {
-        s_inUnloadHandler++;
-    }
-    ~NavigationCounterForUnload()
-    {
-        DCHECK(s_inUnloadHandler);
-        s_inUnloadHandler--;
-    }
-    static bool inUnloadHandler() { return !!s_inUnloadHandler; }
+}  // namespace blink
 
-private:
-    static unsigned s_inUnloadHandler;
-};
-
-} // namespace blink
-
-#endif // NavigationScheduler_h
+#endif  // NavigationScheduler_h

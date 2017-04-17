@@ -68,7 +68,7 @@ void LocalFileSyncContext::MaybeInitializeFileSystemContext(
     FileSystemContext* file_system_context,
     const SyncStatusCallback& callback) {
   DCHECK(ui_task_runner_->RunsTasksOnCurrentThread());
-  if (ContainsKey(file_system_contexts_, file_system_context)) {
+  if (base::ContainsKey(file_system_contexts_, file_system_context)) {
     // The context has been already initialized. Just dispatch the callback
     // with SYNC_STATUS_OK.
     ui_task_runner_->PostTask(FROM_HERE, base::Bind(callback, SYNC_STATUS_OK));
@@ -605,8 +605,8 @@ void LocalFileSyncContext::NotifyAvailableChangesOnIOThread() {
 void LocalFileSyncContext::NotifyAvailableChanges(
     const std::set<GURL>& origins,
     const std::vector<base::Closure>& callbacks) {
-  FOR_EACH_OBSERVER(LocalOriginChangeObserver, origin_change_observers_,
-                    OnChangesAvailableInOrigins(origins));
+  for (auto& observer : origin_change_observers_)
+    observer.OnChangesAvailableInOrigins(origins);
   for (const auto& callback : callbacks)
     callback.Run();
 }
@@ -741,8 +741,8 @@ void LocalFileSyncContext::DidInitialize(
     return;
   }
   DCHECK(ui_task_runner_->RunsTasksOnCurrentThread());
-  DCHECK(!ContainsKey(file_system_contexts_, file_system_context));
-  DCHECK(ContainsKey(pending_initialize_callbacks_, file_system_context));
+  DCHECK(!base::ContainsKey(file_system_contexts_, file_system_context));
+  DCHECK(base::ContainsKey(pending_initialize_callbacks_, file_system_context));
 
   SyncFileSystemBackend* backend =
       SyncFileSystemBackend::GetBackend(file_system_context);
@@ -912,8 +912,7 @@ void LocalFileSyncContext::DidGetWritingStatusForSync(
   DCHECK(file_util);
 
   base::File::Error file_error = file_util->GetFileInfo(
-      base::WrapUnique(new FileSystemOperationContext(file_system_context))
-          .get(),
+      base::MakeUnique<FileSystemOperationContext>(file_system_context).get(),
       url, &file_info, &platform_path);
 
   storage::ScopedFile snapshot;

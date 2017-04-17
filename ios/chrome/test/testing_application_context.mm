@@ -9,7 +9,7 @@
 #include "base/time/default_clock.h"
 #include "base/time/default_tick_clock.h"
 #include "components/network_time/network_time_tracker.h"
-#include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
+#import "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 #include "net/url_request/url_request_context_getter.h"
 
 TestingApplicationContext::TestingApplicationContext()
@@ -105,13 +105,18 @@ metrics::MetricsService* TestingApplicationContext::GetMetricsService() {
   return nullptr;
 }
 
+ukm::UkmService* TestingApplicationContext::GetUkmService() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  return nullptr;
+}
+
 variations::VariationsService*
 TestingApplicationContext::GetVariationsService() {
   DCHECK(thread_checker_.CalledOnValidThread());
   return nullptr;
 }
 
-rappor::RapporService* TestingApplicationContext::GetRapporService() {
+rappor::RapporServiceImpl* TestingApplicationContext::GetRapporServiceImpl() {
   DCHECK(thread_checker_.CalledOnValidThread());
   return nullptr;
 }
@@ -151,6 +156,12 @@ TestingApplicationContext::GetComponentUpdateService() {
 }
 
 CRLSetFetcher* TestingApplicationContext::GetCRLSetFetcher() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  return nullptr;
+}
+
+physical_web::PhysicalWebDataSource*
+TestingApplicationContext::GetPhysicalWebDataSource() {
   DCHECK(thread_checker_.CalledOnValidThread());
   return nullptr;
 }

@@ -11,15 +11,8 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/time/time.h"
 #include "components/password_manager/core/browser/password_store_default.h"
-
-class PrefService;
-
-namespace user_prefs {
-class PrefRegistrySyncable;
-}
 
 namespace password_manager {
 class LoginDatabase;
@@ -79,13 +72,16 @@ class PasswordStoreX : public password_manager::PasswordStoreDefault {
     // matching |form|, all stored non-blacklisted credentials, and all stored
     // blacklisted credentials, respectively. On success, they return true.
     virtual bool GetLogins(const FormDigest& form,
-                           ScopedVector<autofill::PasswordForm>* forms)
-        WARN_UNUSED_RESULT = 0;
+                           std::vector<std::unique_ptr<autofill::PasswordForm>>*
+                               forms) WARN_UNUSED_RESULT = 0;
     virtual bool GetAutofillableLogins(
-        ScopedVector<autofill::PasswordForm>* forms) WARN_UNUSED_RESULT = 0;
-    virtual bool GetBlacklistLogins(ScopedVector<autofill::PasswordForm>* forms)
+        std::vector<std::unique_ptr<autofill::PasswordForm>>* forms)
         WARN_UNUSED_RESULT = 0;
-    virtual bool GetAllLogins(ScopedVector<autofill::PasswordForm>* forms)
+    virtual bool GetBlacklistLogins(
+        std::vector<std::unique_ptr<autofill::PasswordForm>>* forms)
+        WARN_UNUSED_RESULT = 0;
+    virtual bool GetAllLogins(
+        std::vector<std::unique_ptr<autofill::PasswordForm>>* forms)
         WARN_UNUSED_RESULT = 0;
   };
 
@@ -120,12 +116,12 @@ class PasswordStoreX : public password_manager::PasswordStoreDefault {
       base::Time delete_end) override;
   password_manager::PasswordStoreChangeList DisableAutoSignInForOriginsImpl(
       const base::Callback<bool(const GURL&)>& origin_filter) override;
-  ScopedVector<autofill::PasswordForm> FillMatchingLogins(
+  std::vector<std::unique_ptr<autofill::PasswordForm>> FillMatchingLogins(
       const FormDigest& form) override;
   bool FillAutofillableLogins(
-      ScopedVector<autofill::PasswordForm>* forms) override;
+      std::vector<std::unique_ptr<autofill::PasswordForm>>* forms) override;
   bool FillBlacklistLogins(
-      ScopedVector<autofill::PasswordForm>* forms) override;
+      std::vector<std::unique_ptr<autofill::PasswordForm>>* forms) override;
 
   // Check to see whether migration is necessary, and perform it if so.
   void CheckMigration();

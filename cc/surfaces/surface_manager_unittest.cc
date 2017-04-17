@@ -13,10 +13,12 @@ namespace cc {
 
 class FakeSurfaceFactoryClient : public SurfaceFactoryClient {
  public:
-  explicit FakeSurfaceFactoryClient(int id_namespace)
-      : source_(nullptr), manager_(nullptr), id_namespace_(id_namespace) {}
-  FakeSurfaceFactoryClient(int id_namespace, SurfaceManager* manager)
-      : source_(nullptr), manager_(nullptr), id_namespace_(id_namespace) {
+  explicit FakeSurfaceFactoryClient(const FrameSinkId& frame_sink_id)
+      : source_(nullptr), manager_(nullptr), frame_sink_id_(frame_sink_id) {}
+
+  FakeSurfaceFactoryClient(const FrameSinkId& frame_sink_id,
+                           SurfaceManager* manager)
+      : source_(nullptr), manager_(nullptr), frame_sink_id_(frame_sink_id) {
     DCHECK(manager);
     Register(manager);
   }
@@ -25,21 +27,21 @@ class FakeSurfaceFactoryClient : public SurfaceFactoryClient {
     if (manager_) {
       Unregister();
     }
-    EXPECT_EQ(source_, nullptr);
+    EXPECT_EQ(nullptr, source_);
   }
 
   BeginFrameSource* source() { return source_; }
-  uint32_t id_namespace() { return id_namespace_; }
+  const FrameSinkId& frame_sink_id() { return frame_sink_id_; }
 
   void Register(SurfaceManager* manager) {
-    EXPECT_EQ(manager_, nullptr);
+    EXPECT_EQ(nullptr, manager_);
     manager_ = manager;
-    manager_->RegisterSurfaceFactoryClient(id_namespace_, this);
+    manager_->RegisterSurfaceFactoryClient(frame_sink_id_, this);
   }
 
   void Unregister() {
     EXPECT_NE(manager_, nullptr);
-    manager_->UnregisterSurfaceFactoryClient(id_namespace_);
+    manager_->UnregisterSurfaceFactoryClient(frame_sink_id_);
     manager_ = nullptr;
   }
 
@@ -53,15 +55,7 @@ class FakeSurfaceFactoryClient : public SurfaceFactoryClient {
  private:
   BeginFrameSource* source_;
   SurfaceManager* manager_;
-  uint32_t id_namespace_;
-};
-
-class EmptyBeginFrameSource : public BeginFrameSource {
- public:
-  void DidFinishFrame(BeginFrameObserver* obs,
-                      size_t remaining_frames) override {}
-  void AddObserver(BeginFrameObserver* obs) override {}
-  void RemoveObserver(BeginFrameObserver* obs) override {}
+  FrameSinkId frame_sink_id_;
 };
 
 class SurfaceManagerTest : public testing::Test {
@@ -69,16 +63,16 @@ class SurfaceManagerTest : public testing::Test {
   // These tests don't care about namespace registration, so just preregister
   // a set of namespaces that tests can use freely without worrying if they're
   // valid or not.
-  enum { MAX_NAMESPACE = 10 };
+  enum { MAX_FRAME_SINK = 10 };
 
   SurfaceManagerTest() {
-    for (size_t i = 0; i < MAX_NAMESPACE; ++i)
-      manager_.RegisterSurfaceClientId(i);
+    for (size_t i = 0; i < MAX_FRAME_SINK; ++i)
+      manager_.RegisterFrameSinkId(FrameSinkId(i, i));
   }
 
   ~SurfaceManagerTest() override {
-    for (size_t i = 0; i < MAX_NAMESPACE; ++i)
-      manager_.InvalidateSurfaceClientId(i);
+    for (size_t i = 0; i < MAX_FRAME_SINK; ++i)
+      manager_.InvalidateFrameSinkId(FrameSinkId(i, i));
   }
 
  protected:
@@ -86,73 +80,73 @@ class SurfaceManagerTest : public testing::Test {
 };
 
 TEST_F(SurfaceManagerTest, SingleClients) {
-  FakeSurfaceFactoryClient client(1);
-  FakeSurfaceFactoryClient other_client(2);
-  EmptyBeginFrameSource source;
+  FakeSurfaceFactoryClient client(FrameSinkId(1, 1));
+  FakeSurfaceFactoryClient other_client(FrameSinkId(2, 2));
+  StubBeginFrameSource source;
 
-  EXPECT_EQ(client.source(), nullptr);
-  EXPECT_EQ(other_client.source(), nullptr);
+  EXPECT_EQ(nullptr, client.source());
+  EXPECT_EQ(nullptr, other_client.source());
   client.Register(&manager_);
   other_client.Register(&manager_);
-  EXPECT_EQ(client.source(), nullptr);
-  EXPECT_EQ(other_client.source(), nullptr);
+  EXPECT_EQ(nullptr, client.source());
+  EXPECT_EQ(nullptr, other_client.source());
 
   // Test setting unsetting BFS
-  manager_.RegisterBeginFrameSource(&source, client.id_namespace());
-  EXPECT_EQ(client.source(), &source);
-  EXPECT_EQ(other_client.source(), nullptr);
+  manager_.RegisterBeginFrameSource(&source, client.frame_sink_id());
+  EXPECT_EQ(&source, client.source());
+  EXPECT_EQ(nullptr, other_client.source());
   manager_.UnregisterBeginFrameSource(&source);
-  EXPECT_EQ(client.source(), nullptr);
-  EXPECT_EQ(other_client.source(), nullptr);
+  EXPECT_EQ(nullptr, client.source());
+  EXPECT_EQ(nullptr, other_client.source());
 
   // Set BFS for other namespace
-  manager_.RegisterBeginFrameSource(&source, other_client.id_namespace());
-  EXPECT_EQ(other_client.source(), &source);
-  EXPECT_EQ(client.source(), nullptr);
+  manager_.RegisterBeginFrameSource(&source, other_client.frame_sink_id());
+  EXPECT_EQ(&source, other_client.source());
+  EXPECT_EQ(nullptr, client.source());
   manager_.UnregisterBeginFrameSource(&source);
-  EXPECT_EQ(client.source(), nullptr);
-  EXPECT_EQ(other_client.source(), nullptr);
+  EXPECT_EQ(nullptr, client.source());
+  EXPECT_EQ(nullptr, other_client.source());
 
   // Re-set BFS for original
-  manager_.RegisterBeginFrameSource(&source, client.id_namespace());
-  EXPECT_EQ(client.source(), &source);
+  manager_.RegisterBeginFrameSource(&source, client.frame_sink_id());
+  EXPECT_EQ(&source, client.source());
   manager_.UnregisterBeginFrameSource(&source);
-  EXPECT_EQ(client.source(), nullptr);
+  EXPECT_EQ(nullptr, client.source());
 }
 
 TEST_F(SurfaceManagerTest, MultipleDisplays) {
-  EmptyBeginFrameSource root1_source;
-  EmptyBeginFrameSource root2_source;
+  StubBeginFrameSource root1_source;
+  StubBeginFrameSource root2_source;
 
   // root1 -> A -> B
   // root2 -> C
-  FakeSurfaceFactoryClient root1(1, &manager_);
-  FakeSurfaceFactoryClient root2(2, &manager_);
-  FakeSurfaceFactoryClient client_a(3, &manager_);
-  FakeSurfaceFactoryClient client_b(4, &manager_);
-  FakeSurfaceFactoryClient client_c(5, &manager_);
+  FakeSurfaceFactoryClient root1(FrameSinkId(1, 1), &manager_);
+  FakeSurfaceFactoryClient root2(FrameSinkId(2, 2), &manager_);
+  FakeSurfaceFactoryClient client_a(FrameSinkId(3, 3), &manager_);
+  FakeSurfaceFactoryClient client_b(FrameSinkId(4, 4), &manager_);
+  FakeSurfaceFactoryClient client_c(FrameSinkId(5, 5), &manager_);
 
-  manager_.RegisterBeginFrameSource(&root1_source, root1.id_namespace());
-  manager_.RegisterBeginFrameSource(&root2_source, root2.id_namespace());
+  manager_.RegisterBeginFrameSource(&root1_source, root1.frame_sink_id());
+  manager_.RegisterBeginFrameSource(&root2_source, root2.frame_sink_id());
   EXPECT_EQ(root1.source(), &root1_source);
   EXPECT_EQ(root2.source(), &root2_source);
 
   // Set up initial hierarchy.
-  manager_.RegisterSurfaceNamespaceHierarchy(root1.id_namespace(),
-                                             client_a.id_namespace());
+  manager_.RegisterFrameSinkHierarchy(root1.frame_sink_id(),
+                                      client_a.frame_sink_id());
   EXPECT_EQ(client_a.source(), root1.source());
-  manager_.RegisterSurfaceNamespaceHierarchy(client_a.id_namespace(),
-                                             client_b.id_namespace());
+  manager_.RegisterFrameSinkHierarchy(client_a.frame_sink_id(),
+                                      client_b.frame_sink_id());
   EXPECT_EQ(client_b.source(), root1.source());
-  manager_.RegisterSurfaceNamespaceHierarchy(root2.id_namespace(),
-                                             client_c.id_namespace());
+  manager_.RegisterFrameSinkHierarchy(root2.frame_sink_id(),
+                                      client_c.frame_sink_id());
   EXPECT_EQ(client_c.source(), root2.source());
 
   // Attach A into root2's subtree, like a window moving across displays.
   // root1 -> A -> B
   // root2 -> C -> A -> B
-  manager_.RegisterSurfaceNamespaceHierarchy(client_c.id_namespace(),
-                                             client_a.id_namespace());
+  manager_.RegisterFrameSinkHierarchy(client_c.frame_sink_id(),
+                                      client_a.frame_sink_id());
   // With the heuristic of just keeping existing BFS in the face of multiple,
   // no client sources should change.
   EXPECT_EQ(client_a.source(), root1.source());
@@ -160,31 +154,108 @@ TEST_F(SurfaceManagerTest, MultipleDisplays) {
   EXPECT_EQ(client_c.source(), root2.source());
 
   // Detach A from root1.  A and B should now be updated to root2.
-  manager_.UnregisterSurfaceNamespaceHierarchy(root1.id_namespace(),
-                                               client_a.id_namespace());
+  manager_.UnregisterFrameSinkHierarchy(root1.frame_sink_id(),
+                                        client_a.frame_sink_id());
   EXPECT_EQ(client_a.source(), root2.source());
   EXPECT_EQ(client_b.source(), root2.source());
   EXPECT_EQ(client_c.source(), root2.source());
 
   // Detach root1 from BFS.  root1 should now have no source.
   manager_.UnregisterBeginFrameSource(&root1_source);
-  EXPECT_EQ(root1.source(), nullptr);
-  EXPECT_NE(root2.source(), nullptr);
+  EXPECT_EQ(nullptr, root1.source());
+  EXPECT_NE(nullptr, root2.source());
 
   // Detatch root2 from BFS.
   manager_.UnregisterBeginFrameSource(&root2_source);
-  EXPECT_EQ(client_a.source(), nullptr);
-  EXPECT_EQ(client_b.source(), nullptr);
-  EXPECT_EQ(client_c.source(), nullptr);
-  EXPECT_EQ(root2.source(), nullptr);
+  EXPECT_EQ(nullptr, client_a.source());
+  EXPECT_EQ(nullptr, client_b.source());
+  EXPECT_EQ(nullptr, client_c.source());
+  EXPECT_EQ(nullptr, root2.source());
 
   // Cleanup hierarchy.
-  manager_.UnregisterSurfaceNamespaceHierarchy(root2.id_namespace(),
-                                               client_c.id_namespace());
-  manager_.UnregisterSurfaceNamespaceHierarchy(client_c.id_namespace(),
-                                               client_a.id_namespace());
-  manager_.UnregisterSurfaceNamespaceHierarchy(client_a.id_namespace(),
-                                               client_b.id_namespace());
+  manager_.UnregisterFrameSinkHierarchy(root2.frame_sink_id(),
+                                        client_c.frame_sink_id());
+  manager_.UnregisterFrameSinkHierarchy(client_c.frame_sink_id(),
+                                        client_a.frame_sink_id());
+  manager_.UnregisterFrameSinkHierarchy(client_a.frame_sink_id(),
+                                        client_b.frame_sink_id());
+}
+
+// This test verifies that a BeginFrameSource path to the root from a
+// FrameSinkId is preserved even if that FrameSinkId has no children
+// and does not have a corresponding SurfaceFactoryClient.
+TEST_F(SurfaceManagerTest, ParentWithoutClientRetained) {
+  StubBeginFrameSource root_source;
+
+  constexpr FrameSinkId kFrameSinkIdRoot(1, 1);
+  constexpr FrameSinkId kFrameSinkIdA(2, 2);
+  constexpr FrameSinkId kFrameSinkIdB(3, 3);
+  constexpr FrameSinkId kFrameSinkIdC(4, 4);
+
+  FakeSurfaceFactoryClient root(kFrameSinkIdRoot, &manager_);
+  FakeSurfaceFactoryClient client_b(kFrameSinkIdB, &manager_);
+  FakeSurfaceFactoryClient client_c(kFrameSinkIdC, &manager_);
+
+  manager_.RegisterBeginFrameSource(&root_source, root.frame_sink_id());
+  EXPECT_EQ(&root_source, root.source());
+
+  // Set up initial hierarchy: root -> A -> B.
+  // Note that A does not have a SurfaceFactoryClient.
+  manager_.RegisterFrameSinkHierarchy(kFrameSinkIdRoot, kFrameSinkIdA);
+  manager_.RegisterFrameSinkHierarchy(kFrameSinkIdA, kFrameSinkIdB);
+  // The root's BeginFrameSource should propagate to B.
+  EXPECT_EQ(root.source(), client_b.source());
+
+  // Unregister B, and attach C to A: root -> A -> C
+  manager_.UnregisterFrameSinkHierarchy(kFrameSinkIdA, kFrameSinkIdB);
+  EXPECT_EQ(nullptr, client_b.source());
+  manager_.RegisterFrameSinkHierarchy(kFrameSinkIdA, kFrameSinkIdC);
+  // The root's BeginFrameSource should propagate to C.
+  EXPECT_EQ(root.source(), client_c.source());
+
+  manager_.UnregisterBeginFrameSource(&root_source);
+  EXPECT_EQ(nullptr, root.source());
+  EXPECT_EQ(nullptr, client_c.source());
+}
+
+// This test sets up the same hierarchy as ParentWithoutClientRetained.
+// However, this unit test registers the BeginFrameSource AFTER C
+// has been attached to A. This test verifies that the BeginFrameSource
+// propagates all the way to C.
+TEST_F(SurfaceManagerTest,
+       ParentWithoutClientRetained_LateBeginFrameRegistration) {
+  StubBeginFrameSource root_source;
+
+  constexpr FrameSinkId kFrameSinkIdRoot(1, 1);
+  constexpr FrameSinkId kFrameSinkIdA(2, 2);
+  constexpr FrameSinkId kFrameSinkIdB(3, 3);
+  constexpr FrameSinkId kFrameSinkIdC(4, 4);
+
+  FakeSurfaceFactoryClient root(kFrameSinkIdRoot, &manager_);
+  FakeSurfaceFactoryClient client_b(kFrameSinkIdB, &manager_);
+  FakeSurfaceFactoryClient client_c(kFrameSinkIdC, &manager_);
+
+  // Set up initial hierarchy: root -> A -> B.
+  // Note that A does not have a SurfaceFactoryClient.
+  manager_.RegisterFrameSinkHierarchy(kFrameSinkIdRoot, kFrameSinkIdA);
+  manager_.RegisterFrameSinkHierarchy(kFrameSinkIdA, kFrameSinkIdB);
+  // The root does not yet have a BeginFrameSource so client B should not have
+  // one either.
+  EXPECT_EQ(nullptr, client_b.source());
+
+  // Unregister B, and attach C to A: root -> A -> C
+  manager_.UnregisterFrameSinkHierarchy(kFrameSinkIdA, kFrameSinkIdB);
+  manager_.RegisterFrameSinkHierarchy(kFrameSinkIdA, kFrameSinkIdC);
+
+  // Registering a BeginFrameSource at the root should propagate it to C.
+  manager_.RegisterBeginFrameSource(&root_source, root.frame_sink_id());
+  // The root's BeginFrameSource should propagate to C.
+  EXPECT_EQ(&root_source, root.source());
+  EXPECT_EQ(root.source(), client_c.source());
+
+  manager_.UnregisterBeginFrameSource(&root_source);
+  EXPECT_EQ(nullptr, root.source());
+  EXPECT_EQ(nullptr, client_c.source());
 }
 
 // In practice, registering and unregistering both parent/child relationships
@@ -196,9 +267,9 @@ TEST_F(SurfaceManagerTest, MultipleDisplays) {
 class SurfaceManagerOrderingTest : public SurfaceManagerTest {
  public:
   SurfaceManagerOrderingTest()
-      : client_a_(1),
-        client_b_(2),
-        client_c_(3),
+      : client_a_(FrameSinkId(1, 1)),
+        client_b_(FrameSinkId(2, 2)),
+        client_c_(FrameSinkId(3, 3)),
         hierarchy_registered_(false),
         clients_registered_(false),
         bfs_registered_(false) {
@@ -206,28 +277,28 @@ class SurfaceManagerOrderingTest : public SurfaceManagerTest {
   }
 
   ~SurfaceManagerOrderingTest() override {
-    EXPECT_EQ(hierarchy_registered_, false);
-    EXPECT_EQ(clients_registered_, false);
-    EXPECT_EQ(bfs_registered_, false);
+    EXPECT_FALSE(hierarchy_registered_);
+    EXPECT_FALSE(clients_registered_);
+    EXPECT_FALSE(bfs_registered_);
     AssertCorrectBFSState();
   }
 
   void RegisterHierarchy() {
     DCHECK(!hierarchy_registered_);
     hierarchy_registered_ = true;
-    manager_.RegisterSurfaceNamespaceHierarchy(client_a_.id_namespace(),
-                                               client_b_.id_namespace());
-    manager_.RegisterSurfaceNamespaceHierarchy(client_b_.id_namespace(),
-                                               client_c_.id_namespace());
+    manager_.RegisterFrameSinkHierarchy(client_a_.frame_sink_id(),
+                                        client_b_.frame_sink_id());
+    manager_.RegisterFrameSinkHierarchy(client_b_.frame_sink_id(),
+                                        client_c_.frame_sink_id());
     AssertCorrectBFSState();
   }
   void UnregisterHierarchy() {
     DCHECK(hierarchy_registered_);
     hierarchy_registered_ = false;
-    manager_.UnregisterSurfaceNamespaceHierarchy(client_a_.id_namespace(),
-                                                 client_b_.id_namespace());
-    manager_.UnregisterSurfaceNamespaceHierarchy(client_b_.id_namespace(),
-                                                 client_c_.id_namespace());
+    manager_.UnregisterFrameSinkHierarchy(client_a_.frame_sink_id(),
+                                          client_b_.frame_sink_id());
+    manager_.UnregisterFrameSinkHierarchy(client_b_.frame_sink_id(),
+                                          client_c_.frame_sink_id());
     AssertCorrectBFSState();
   }
 
@@ -252,7 +323,7 @@ class SurfaceManagerOrderingTest : public SurfaceManagerTest {
   void RegisterBFS() {
     DCHECK(!bfs_registered_);
     bfs_registered_ = true;
-    manager_.RegisterBeginFrameSource(&source_, client_a_.id_namespace());
+    manager_.RegisterBeginFrameSource(&source_, client_a_.frame_sink_id());
     AssertCorrectBFSState();
   }
   void UnregisterBFS() {
@@ -263,15 +334,15 @@ class SurfaceManagerOrderingTest : public SurfaceManagerTest {
   }
 
   void AssertEmptyBFS() {
-    EXPECT_EQ(client_a_.source(), nullptr);
-    EXPECT_EQ(client_b_.source(), nullptr);
-    EXPECT_EQ(client_c_.source(), nullptr);
+    EXPECT_EQ(nullptr, client_a_.source());
+    EXPECT_EQ(nullptr, client_b_.source());
+    EXPECT_EQ(nullptr, client_c_.source());
   }
 
   void AssertAllValidBFS() {
-    EXPECT_EQ(client_a_.source(), &source_);
-    EXPECT_EQ(client_b_.source(), &source_);
-    EXPECT_EQ(client_c_.source(), &source_);
+    EXPECT_EQ(&source_, client_a_.source());
+    EXPECT_EQ(&source_, client_b_.source());
+    EXPECT_EQ(&source_, client_c_.source());
   }
 
  protected:
@@ -282,16 +353,16 @@ class SurfaceManagerOrderingTest : public SurfaceManagerTest {
     }
     if (!hierarchy_registered_) {
       // A valid but not attached to anything.
-      EXPECT_EQ(client_a_.source(), &source_);
-      EXPECT_EQ(client_b_.source(), nullptr);
-      EXPECT_EQ(client_c_.source(), nullptr);
+      EXPECT_EQ(&source_, client_a_.source());
+      EXPECT_EQ(nullptr, client_b_.source());
+      EXPECT_EQ(nullptr, client_c_.source());
       return;
     }
 
     AssertAllValidBFS();
   }
 
-  EmptyBeginFrameSource source_;
+  StubBeginFrameSource source_;
   // A -> B -> C hierarchy, with A always having the BFS.
   FakeSurfaceFactoryClient client_a_;
   FakeSurfaceFactoryClient client_b_;

@@ -4,17 +4,11 @@
 
 #include "bindings/core/v8/WrapperTypeInfo.h"
 
-#include "core/events/EventTarget.h"
-
 namespace blink {
 
-static_assert(offsetof(struct WrapperTypeInfo, ginEmbedder) == offsetof(struct gin::WrapperInfo, embedder), "offset of WrapperTypeInfo.ginEmbedder must be the same as gin::WrapperInfo.embedder");
+static_assert(offsetof(struct WrapperTypeInfo, gin_embedder) ==
+                  offsetof(struct gin::WrapperInfo, embedder),
+              "offset of WrapperTypeInfo.ginEmbedder must be the same as "
+              "gin::WrapperInfo.embedder");
 
-EventTarget* WrapperTypeInfo::toEventTarget(v8::Local<v8::Object> object) const
-{
-    if (eventTargetInheritance == NotInheritFromEventTarget)
-        return 0;
-    return static_cast<EventTarget*>(toScriptWrappable(object));
-}
-
-} // namespace blink
+}  // namespace blink

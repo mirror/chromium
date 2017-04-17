@@ -29,146 +29,141 @@
 #ifndef InspectorOverlay_h
 #define InspectorOverlay_h
 
+#include <v8-inspector.h>
+#include <memory>
 #include "core/inspector/InspectorDOMAgent.h"
 #include "core/inspector/InspectorOverlayHost.h"
+#include "core/inspector/protocol/Forward.h"
 #include "platform/Timer.h"
 #include "platform/geometry/FloatQuad.h"
 #include "platform/geometry/LayoutRect.h"
 #include "platform/graphics/Color.h"
 #include "platform/heap/Handle.h"
-#include "platform/inspector_protocol/Values.h"
-#include "public/web/WebInputEvent.h"
-#include "wtf/RefPtr.h"
-#include "wtf/text/WTFString.h"
-#include <memory>
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/text/WTFString.h"
+#include "public/platform/WebInputEvent.h"
 
 namespace blink {
 
 class Color;
-class EmptyChromeClient;
 class LocalFrame;
-class GraphicsContext;
-class GraphicsLayer;
-class InspectorCSSAgent;
-class LayoutEditor;
 class Node;
 class Page;
 class PageOverlay;
-class V8InspectorSession;
-class WebViewImpl;
+class WebGestureEvent;
+class WebMouseEvent;
+class WebLocalFrameImpl;
+class WebTouchEvent;
 
 namespace protocol {
 class Value;
 }
 
 class InspectorOverlay final
-    : public GarbageCollectedFinalized<InspectorOverlay>
-    , public InspectorDOMAgent::Client
-    , public InspectorOverlayHost::Listener {
-    USING_GARBAGE_COLLECTED_MIXIN(InspectorOverlay);
-public:
-    static InspectorOverlay* create(WebViewImpl* webViewImpl)
-    {
-        return new InspectorOverlay(webViewImpl);
-    }
+    : public GarbageCollectedFinalized<InspectorOverlay>,
+      public InspectorDOMAgent::Client,
+      public InspectorOverlayHost::Listener {
+  USING_GARBAGE_COLLECTED_MIXIN(InspectorOverlay);
 
-    ~InspectorOverlay() override;
-    DECLARE_TRACE();
+ public:
+  explicit InspectorOverlay(WebLocalFrameImpl*);
+  ~InspectorOverlay() override;
+  DECLARE_TRACE();
 
-    void init(InspectorCSSAgent*, V8InspectorSession*, InspectorDOMAgent*);
+  void Init(v8_inspector::V8InspectorSession*, InspectorDOMAgent*);
 
-    void clear();
-    void suspend();
-    void resume();
-    bool handleInputEvent(const WebInputEvent&);
-    void pageLayoutInvalidated(bool resized);
-    void setShowViewportSizeOnResize(bool);
-    void setPausedInDebuggerMessage(const String&);
+  void Clear();
+  void Suspend();
+  void Resume();
+  bool HandleInputEvent(const WebInputEvent&);
+  void PageLayoutInvalidated(bool resized);
+  void SetShowViewportSizeOnResize(bool);
+  void ShowReloadingBlanket();
+  void HideReloadingBlanket();
+  void SetPausedInDebuggerMessage(const String&);
 
-    // Does not yet include paint.
-    void updateAllLifecyclePhases();
+  // Does not yet include paint.
+  void UpdateAllLifecyclePhases();
 
-    PageOverlay* pageOverlay() { return m_pageOverlay.get(); };
-    String evaluateInOverlayForTest(const String&);
+  PageOverlay* GetPageOverlay() { return page_overlay_.get(); };
+  String EvaluateInOverlayForTest(const String&);
 
-private:
-    explicit InspectorOverlay(WebViewImpl*);
-    class InspectorOverlayChromeClient;
-    class InspectorPageOverlayDelegate;
+ private:
+  class InspectorOverlayChromeClient;
+  class InspectorPageOverlayDelegate;
 
-    // InspectorOverlayHost::Listener implementation.
-    void overlayResumed() override;
-    void overlaySteppedOver() override;
-    void overlayStartedPropertyChange(const String&) override;
-    void overlayPropertyChanged(float) override;
-    void overlayEndedPropertyChange() override;
-    void overlayClearSelection(bool) override;
-    void overlayNextSelector() override;
-    void overlayPreviousSelector() override;
+  // InspectorOverlayHost::Listener implementation.
+  void OverlayResumed() override;
+  void OverlaySteppedOver() override;
 
-    // InspectorDOMAgent::Client implementation.
-    void hideHighlight() override;
-    void highlightNode(Node*, const InspectorHighlightConfig&, bool omitTooltip) override;
-    void highlightQuad(std::unique_ptr<FloatQuad>, const InspectorHighlightConfig&) override;
-    void setInspectMode(InspectorDOMAgent::SearchMode, std::unique_ptr<InspectorHighlightConfig>) override;
-    void setInspectedNode(Node*) override;
+  // InspectorDOMAgent::Client implementation.
+  void HideHighlight() override;
+  void HighlightNode(Node*,
+                     const InspectorHighlightConfig&,
+                     bool omit_tooltip) override;
+  void HighlightQuad(std::unique_ptr<FloatQuad>,
+                     const InspectorHighlightConfig&) override;
+  void SetInspectMode(InspectorDOMAgent::SearchMode,
+                      std::unique_ptr<InspectorHighlightConfig>) override;
 
-    void highlightNode(Node*, Node* eventTarget, const InspectorHighlightConfig&, bool omitTooltip);
-    bool isEmpty();
-    void drawNodeHighlight();
-    void drawQuadHighlight();
-    void drawPausedInDebuggerMessage();
-    void drawViewSize();
+  void HighlightNode(Node*,
+                     Node* event_target,
+                     const InspectorHighlightConfig&,
+                     bool omit_tooltip);
+  bool IsEmpty();
+  void DrawNodeHighlight();
+  void DrawQuadHighlight();
+  void DrawPausedInDebuggerMessage();
+  void DrawViewSize();
 
-    float windowToViewportScale() const;
+  float WindowToViewportScale() const;
 
-    Page* overlayPage();
-    LocalFrame* overlayMainFrame();
-    void reset(const IntSize& viewportSize, const IntPoint& documentScrollOffset);
-    void evaluateInOverlay(const String& method, const String& argument);
-    void evaluateInOverlay(const String& method, std::unique_ptr<protocol::Value> argument);
-    void onTimer(Timer<InspectorOverlay>*);
-    void rebuildOverlayPage();
-    void invalidate();
-    void scheduleUpdate();
-    void clearInternal();
+  Page* OverlayPage();
+  LocalFrame* OverlayMainFrame();
+  void Reset(const IntSize& viewport_size,
+             const IntPoint& document_scroll_offset);
+  void EvaluateInOverlay(const String& method, const String& argument);
+  void EvaluateInOverlay(const String& method,
+                         std::unique_ptr<protocol::Value> argument);
+  void OnTimer(TimerBase*);
+  void RebuildOverlayPage();
+  void Invalidate();
+  void ScheduleUpdate();
+  void ClearInternal();
 
-    bool handleMousePress();
-    bool handleGestureEvent(const PlatformGestureEvent&);
-    bool handleTouchEvent(const PlatformTouchEvent&);
-    bool handleMouseMove(const PlatformMouseEvent&);
-    bool shouldSearchForNode();
-    void inspect(Node*);
-    void initializeLayoutEditorIfNeeded(Node*);
+  bool HandleMousePress();
+  bool HandleGestureEvent(const WebGestureEvent&);
+  bool HandleTouchEvent(const WebTouchEvent&);
+  bool HandleMouseMove(const WebMouseEvent&);
+  bool ShouldSearchForNode();
+  void Inspect(Node*);
 
-    WebViewImpl* m_webViewImpl;
-    String m_pausedInDebuggerMessage;
-    Member<Node> m_highlightNode;
-    Member<Node> m_eventTargetNode;
-    InspectorHighlightConfig m_nodeHighlightConfig;
-    std::unique_ptr<FloatQuad> m_highlightQuad;
-    Member<Page> m_overlayPage;
-    Member<InspectorOverlayChromeClient> m_overlayChromeClient;
-    Member<InspectorOverlayHost> m_overlayHost;
-    InspectorHighlightConfig m_quadHighlightConfig;
-    bool m_drawViewSize;
-    bool m_resizeTimerActive;
-    bool m_omitTooltip;
-    Timer<InspectorOverlay> m_timer;
-    int m_suspendCount;
-    bool m_inLayout;
-    bool m_needsUpdate;
-    V8InspectorSession* m_v8Session;
-    Member<InspectorDOMAgent> m_domAgent;
-    Member<InspectorCSSAgent> m_cssAgent;
-    Member<LayoutEditor> m_layoutEditor;
-    std::unique_ptr<PageOverlay> m_pageOverlay;
-    Member<Node> m_hoveredNodeForInspectMode;
-    InspectorDOMAgent::SearchMode m_inspectMode;
-    std::unique_ptr<InspectorHighlightConfig> m_inspectModeHighlightConfig;
+  Member<WebLocalFrameImpl> frame_impl_;
+  String paused_in_debugger_message_;
+  Member<Node> highlight_node_;
+  Member<Node> event_target_node_;
+  InspectorHighlightConfig node_highlight_config_;
+  std::unique_ptr<FloatQuad> highlight_quad_;
+  Member<Page> overlay_page_;
+  Member<InspectorOverlayChromeClient> overlay_chrome_client_;
+  Member<InspectorOverlayHost> overlay_host_;
+  InspectorHighlightConfig quad_highlight_config_;
+  bool draw_view_size_;
+  bool resize_timer_active_;
+  bool omit_tooltip_;
+  TaskRunnerTimer<InspectorOverlay> timer_;
+  bool suspended_;
+  bool show_reloading_blanket_;
+  bool in_layout_;
+  bool needs_update_;
+  v8_inspector::V8InspectorSession* v8_session_;
+  Member<InspectorDOMAgent> dom_agent_;
+  std::unique_ptr<PageOverlay> page_overlay_;
+  Member<Node> hovered_node_for_inspect_mode_;
+  InspectorDOMAgent::SearchMode inspect_mode_;
+  std::unique_ptr<InspectorHighlightConfig> inspect_mode_highlight_config_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-
-#endif // InspectorOverlay_h
+#endif  // InspectorOverlay_h

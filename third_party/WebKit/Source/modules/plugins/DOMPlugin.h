@@ -21,46 +21,52 @@
 #define DOMPlugin_h
 
 #include "bindings/core/v8/ScriptWrappable.h"
-#include "core/frame/LocalFrameLifecycleObserver.h"
+#include "core/dom/ContextLifecycleObserver.h"
 #include "modules/plugins/DOMMimeType.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
 class PluginData;
 
-class DOMPlugin final : public GarbageCollectedFinalized<DOMPlugin>, public ScriptWrappable, public LocalFrameLifecycleObserver {
-    USING_GARBAGE_COLLECTED_MIXIN(DOMPlugin);
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static DOMPlugin* create(PluginData* pluginData, LocalFrame* frame, unsigned index)
-    {
-        return new DOMPlugin(pluginData, frame, index);
-    }
-    virtual ~DOMPlugin();
+class DOMPlugin final : public GarbageCollectedFinalized<DOMPlugin>,
+                        public ScriptWrappable,
+                        public ContextClient {
+  USING_GARBAGE_COLLECTED_MIXIN(DOMPlugin);
+  DEFINE_WRAPPERTYPEINFO();
 
-    String name() const;
-    String filename() const;
-    String description() const;
+ public:
+  static DOMPlugin* Create(PluginData* plugin_data,
+                           LocalFrame* frame,
+                           unsigned index) {
+    return new DOMPlugin(plugin_data, frame, index);
+  }
+  virtual ~DOMPlugin();
 
-    unsigned length() const;
+  String name() const;
+  String filename() const;
+  String description() const;
 
-    DOMMimeType* item(unsigned index);
-    DOMMimeType* namedItem(const AtomicString& propertyName);
+  unsigned length() const;
 
-    DECLARE_VIRTUAL_TRACE();
+  DOMMimeType* item(unsigned index);
+  DOMMimeType* namedItem(const AtomicString& property_name);
 
-private:
-    DOMPlugin(PluginData*, LocalFrame*, unsigned index);
+  DECLARE_VIRTUAL_TRACE();
 
-    const PluginInfo& pluginInfo() const { return m_pluginData->plugins()[m_index]; }
+ private:
+  DOMPlugin(PluginData*, LocalFrame*, unsigned index);
 
-    RefPtr<PluginData> m_pluginData;
-    unsigned m_index;
+  const PluginInfo& GetPluginInfo() const {
+    return plugin_data_->Plugins()[index_];
+  }
+
+  RefPtr<PluginData> plugin_data_;
+  unsigned index_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMPlugin_h
+#endif  // DOMPlugin_h

@@ -21,62 +21,65 @@
 #define PluginData_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/RefCounted.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class Page;
 struct PluginInfo;
 
 struct MimeClassInfo {
-    String type;
-    String desc;
-    Vector<String> extensions;
+  String type;
+  String desc;
+  Vector<String> extensions;
 };
 
-inline bool operator==(const MimeClassInfo& a, const MimeClassInfo& b)
-{
-    return a.type == b.type && a.desc == b.desc && a.extensions == b.extensions;
+inline bool operator==(const MimeClassInfo& a, const MimeClassInfo& b) {
+  return a.type == b.type && a.desc == b.desc && a.extensions == b.extensions;
 }
 
 struct PluginInfo {
-    String name;
-    String file;
-    String desc;
-    Vector<MimeClassInfo> mimes;
+  String name;
+  String file;
+  String desc;
+  Vector<MimeClassInfo> mimes;
 };
 
 class PLATFORM_EXPORT PluginData : public RefCounted<PluginData> {
-    WTF_MAKE_NONCOPYABLE(PluginData);
-public:
-    static PassRefPtr<PluginData> create(const Page* page) { return adoptRef(new PluginData(page)); }
+  WTF_MAKE_NONCOPYABLE(PluginData);
 
-    const Vector<PluginInfo>& plugins() const { return m_plugins; }
-    const Vector<MimeClassInfo>& mimes() const { return m_mimes; }
-    const Vector<size_t>& mimePluginIndices() const { return m_mimePluginIndices; }
+ public:
+  static PassRefPtr<PluginData> Create(SecurityOrigin* main_frame_origin) {
+    return AdoptRef(new PluginData(main_frame_origin));
+  }
 
-    bool supportsMimeType(const String& mimeType) const;
-    String pluginNameForMimeType(const String& mimeType) const;
+  const Vector<PluginInfo>& Plugins() const { return plugins_; }
+  const Vector<MimeClassInfo>& Mimes() const { return mimes_; }
+  const Vector<size_t>& MimePluginIndices() const {
+    return mime_plugin_indices_;
+  }
+  const SecurityOrigin* Origin() const { return main_frame_origin_.Get(); }
 
-    static void refresh();
+  bool SupportsMimeType(const String& mime_type) const;
+  String PluginNameForMimeType(const String& mime_type) const;
 
-private:
-    explicit PluginData(const Page*);
-    void initPlugins(const Page*);
-    const PluginInfo* pluginInfoForMimeType(const String& mimeType) const;
+  // refreshBrowserSidePluginCache doesn't update existent instances of
+  // PluginData.
+  static void RefreshBrowserSidePluginCache();
 
-    Vector<PluginInfo> m_plugins;
-    Vector<MimeClassInfo> m_mimes;
-    Vector<size_t> m_mimePluginIndices;
+ private:
+  explicit PluginData(SecurityOrigin* main_frame_origin);
+  const PluginInfo* PluginInfoForMimeType(const String& mime_type) const;
+
+  Vector<PluginInfo> plugins_;
+  Vector<MimeClassInfo> mimes_;
+  Vector<size_t> mime_plugin_indices_;
+  RefPtr<SecurityOrigin> main_frame_origin_;
 };
 
-// Checks if any of the plugins handle this extension, and if so returns the
-// plugin's mime type for this extension. Otherwise returns an empty string.
-PLATFORM_EXPORT String getPluginMimeTypeFromExtension(const String& extension);
-
-} // namespace blink
+}  // namespace blink
 
 #endif

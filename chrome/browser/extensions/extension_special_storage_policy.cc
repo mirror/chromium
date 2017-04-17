@@ -10,9 +10,9 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
-#include "base/metrics/histogram.h"
-#include "base/stl_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/content_settings/cookie_settings_factory.h"
 #include "chrome/common/chrome_switches.h"
@@ -114,11 +114,6 @@ bool ExtensionSpecialStoragePolicy::IsStorageSessionOnly(const GURL& origin) {
   return cookie_settings_->IsCookieSessionOnly(origin);
 }
 
-bool ExtensionSpecialStoragePolicy::CanQueryDiskSize(const GURL& origin) {
-  base::AutoLock locker(lock_);
-  return installed_apps_.Contains(origin);
-}
-
 bool ExtensionSpecialStoragePolicy::HasSessionOnlyOrigins() {
   if (cookie_settings_.get() == NULL)
     return false;
@@ -177,9 +172,6 @@ void ExtensionSpecialStoragePolicy::GrantRightsForExtension(
       extension->is_app()) {
     if (NeedsProtection(extension) && protected_apps_.Add(extension))
       change_flags |= SpecialStoragePolicy::STORAGE_PROTECTED;
-    // FIXME: Does GrantRightsForExtension imply |extension| is installed?
-    if (extension->is_app())
-      installed_apps_.Add(extension);
 
     if (extension->permissions_data()->HasAPIPermission(
             APIPermission::kUnlimitedStorage) &&
@@ -225,9 +217,6 @@ void ExtensionSpecialStoragePolicy::RevokeRightsForExtension(
     if (NeedsProtection(extension) && protected_apps_.Remove(extension))
       change_flags |= SpecialStoragePolicy::STORAGE_PROTECTED;
 
-    if (extension->is_app())
-      installed_apps_.Remove(extension);
-
     if (extension->permissions_data()->HasAPIPermission(
             APIPermission::kUnlimitedStorage) &&
         unlimited_extensions_.Remove(extension))
@@ -251,7 +240,6 @@ void ExtensionSpecialStoragePolicy::RevokeRightsForAllExtensions() {
   {
     base::AutoLock locker(lock_);
     protected_apps_.Clear();
-    installed_apps_.Clear();
     unlimited_extensions_.Clear();
     file_handler_extensions_.Clear();
     isolated_extensions_.Clear();
@@ -303,9 +291,7 @@ void ExtensionSpecialStoragePolicy::NotifyCleared() {
 
 ExtensionSpecialStoragePolicy::SpecialCollection::SpecialCollection() {}
 
-ExtensionSpecialStoragePolicy::SpecialCollection::~SpecialCollection() {
-  STLDeleteValues(&cached_results_);
-}
+ExtensionSpecialStoragePolicy::SpecialCollection::~SpecialCollection() {}
 
 bool ExtensionSpecialStoragePolicy::SpecialCollection::Contains(
     const GURL& origin) {
@@ -326,18 +312,17 @@ bool ExtensionSpecialStoragePolicy::SpecialCollection::GrantsCapabilitiesTo(
 const extensions::ExtensionSet*
 ExtensionSpecialStoragePolicy::SpecialCollection::ExtensionsContaining(
     const GURL& origin) {
-  CachedResults::const_iterator found = cached_results_.find(origin);
-  if (found != cached_results_.end())
-    return found->second;
+  std::unique_ptr<extensions::ExtensionSet>& result = cached_results_[origin];
+  if (result)
+    return result.get();
 
-  extensions::ExtensionSet* result = new extensions::ExtensionSet();
-  for (extensions::ExtensionSet::const_iterator iter = extensions_.begin();
-       iter != extensions_.end(); ++iter) {
-    if ((*iter)->OverlapsWithOrigin(origin))
-      result->Insert(*iter);
+  result = base::MakeUnique<extensions::ExtensionSet>();
+  for (auto& extension : extensions_) {
+    if (extension->OverlapsWithOrigin(origin))
+      result->Insert(extension);
   }
-  cached_results_[origin] = result;
-  return result;
+
+  return result.get();
 }
 
 bool ExtensionSpecialStoragePolicy::SpecialCollection::ContainsExtension(
@@ -363,5 +348,5 @@ void ExtensionSpecialStoragePolicy::SpecialCollection::Clear() {
 }
 
 void ExtensionSpecialStoragePolicy::SpecialCollection::ClearCache() {
-  STLDeleteValues(&cached_results_);
+  cached_results_.clear();
 }

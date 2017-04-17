@@ -22,12 +22,6 @@
 
 namespace {
 
-// Returns true if the underlying page supports Instant search.
-bool PageSupportsInstantSearch(content::WebContents* contents) {
-  // Search results page supports Instant search.
-  return SearchTabHelper::FromWebContents(contents)->IsSearchResultsPage();
-}
-
 // Returns true if |match| is associated with the default search provider.
 bool MatchIsFromDefaultSearchProvider(const AutocompleteMatch& match,
                                       Profile* profile) {
@@ -41,10 +35,8 @@ bool MatchIsFromDefaultSearchProvider(const AutocompleteMatch& match,
 }  // namespace
 
 InstantSearchPrerenderer::InstantSearchPrerenderer(Profile* profile,
-                                                   const GURL& url)
-    : profile_(profile),
-      prerender_url_(url) {
-}
+                                                   const GURL& prerender_url)
+    : profile_(profile), prerender_url_(prerender_url) {}
 
 InstantSearchPrerenderer::~InstantSearchPrerenderer() {
   if (prerender_handle_)
@@ -57,7 +49,8 @@ InstantSearchPrerenderer* InstantSearchPrerenderer::GetForProfile(
   DCHECK(profile);
   InstantService* instant_service =
       InstantServiceFactory::GetForProfile(profile);
-  return instant_service ? instant_service->instant_search_prerenderer() : NULL;
+  return instant_service ? instant_service->GetInstantSearchPrerenderer()
+                         : nullptr;
 }
 
 void InstantSearchPrerenderer::Init(
@@ -72,7 +65,7 @@ void InstantSearchPrerenderer::Init(
   std::unique_ptr<prerender::PrerenderHandle> old_prerender_handle =
       std::move(prerender_handle_);
   prerender::PrerenderManager* prerender_manager =
-      prerender::PrerenderManagerFactory::GetForProfile(profile_);
+      prerender::PrerenderManagerFactory::GetForBrowserContext(profile_);
   if (prerender_manager) {
     prerender_handle_ = prerender_manager->AddPrerenderForInstant(
         prerender_url_, session_storage_namespace, size);
@@ -121,14 +114,11 @@ bool InstantSearchPrerenderer::CanCommitQuery(
     content::WebContents* source,
     const base::string16& query) const {
   if (!source || query.empty() || !prerender_handle_ ||
-      !prerender_handle_->IsFinishedLoading() ||
-      !prerender_contents() || !QueryMatchesPrefetch(query)) {
+      !prerender_handle_->IsFinishedLoading() || !prerender_contents()) {
     return false;
   }
 
-  // InstantSearchPrerenderer can commit query to the prerendered page only if
-  // the underlying |source| page doesn't support Instant search.
-  return !PageSupportsInstantSearch(source);
+  return true;
 }
 
 bool InstantSearchPrerenderer::UsePrerenderedPage(
@@ -137,11 +127,10 @@ bool InstantSearchPrerenderer::UsePrerenderedPage(
   base::string16 search_terms =
       search::ExtractSearchTermsFromURL(profile_, url);
   prerender::PrerenderManager* prerender_manager =
-      prerender::PrerenderManagerFactory::GetForProfile(profile_);
+      prerender::PrerenderManagerFactory::GetForBrowserContext(profile_);
   if (search_terms.empty() || !params->target_contents ||
       !prerender_contents() || !prerender_manager ||
-      !QueryMatchesPrefetch(search_terms) ||
-      params->disposition != CURRENT_TAB) {
+      params->disposition != WindowOpenDisposition::CURRENT_TAB) {
     Cancel();
     return false;
   }
@@ -184,17 +173,10 @@ bool InstantSearchPrerenderer::IsAllowed(const AutocompleteMatch& match,
   // This handles the by-far-the-most-common cases while still being simple and
   // maintainable.
   return source && AutocompleteMatch::IsSearchType(match.type) &&
-      MatchIsFromDefaultSearchProvider(match, profile_) &&
-      !PageSupportsInstantSearch(source);
+      MatchIsFromDefaultSearchProvider(match, profile_);
 }
 
 content::WebContents* InstantSearchPrerenderer::prerender_contents() const {
   return (prerender_handle_ && prerender_handle_->contents()) ?
       prerender_handle_->contents()->prerender_contents() : NULL;
-}
-
-bool InstantSearchPrerenderer::QueryMatchesPrefetch(
-    const base::string16& query) const {
-  return search::ShouldReuseInstantSearchBasePage() ||
-         last_instant_suggestion_.text == query;
 }

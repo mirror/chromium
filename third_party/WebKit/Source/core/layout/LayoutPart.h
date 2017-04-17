@@ -25,62 +25,78 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/LayoutReplaced.h"
-#include "platform/Widget.h"
+#include "core/plugins/PluginView.h"
+#include "platform/FrameViewBase.h"
 
 namespace blink {
 
-// LayoutObject for frames via LayoutFrame and LayoutIFrame, and plugins via LayoutEmbeddedObject.
+// LayoutObject for frames via LayoutFrame and LayoutIFrame, and plugins via
+// LayoutEmbeddedObject.
 class CORE_EXPORT LayoutPart : public LayoutReplaced {
-public:
-    explicit LayoutPart(Element*);
-    ~LayoutPart() override;
+ public:
+  explicit LayoutPart(Element*);
+  ~LayoutPart() override;
 
-    bool requiresAcceleratedCompositing() const;
+  bool RequiresAcceleratedCompositing() const;
 
-    bool needsPreferredWidthsRecalculation() const final;
+  bool NeedsPreferredWidthsRecalculation() const final;
 
-    bool nodeAtPoint(HitTestResult&, const HitTestLocation& locationInContainer, const LayoutPoint& accumulatedOffset, HitTestAction) override;
+  bool NodeAtPoint(HitTestResult&,
+                   const HitTestLocation& location_in_container,
+                   const LayoutPoint& accumulated_offset,
+                   HitTestAction) override;
 
-    void ref() { ++m_refCount; }
-    void deref();
+  void Ref() { ++ref_count_; }
+  void Deref();
 
-    Widget* widget() const;
+  // LayoutPart::ChildFrameView returns the FrameView associated with
+  // the current Node, if Node is HTMLFrameOwnerElement.
+  // This is different to LayoutObject::GetFrameView which returns
+  // the FrameView associated with the root Document Frame.
+  FrameView* ChildFrameView() const;
+  PluginView* Plugin() const;
+  FrameViewBase* PluginOrFrame() const;
 
-    void updateOnWidgetChange();
-    void updateWidgetGeometry();
+  LayoutRect ReplacedContentRect() const final;
 
-    bool isLayoutPart() const final { return true; }
-    virtual void paintContents(const PaintInfo&, const LayoutPoint&) const;
+  void UpdateOnWidgetChange();
+  void UpdateGeometry();
 
-    bool isThrottledFrameView() const;
+  bool IsLayoutPart() const final { return true; }
+  virtual void PaintContents(const PaintInfo&, const LayoutPoint&) const;
 
-protected:
-    PaintLayerType layerTypeRequired() const override;
+  bool IsThrottledFrameView() const;
 
-    void styleDidChange(StyleDifference, const ComputedStyle* oldStyle) final;
-    void layout() override;
-    void paint(const PaintInfo&, const LayoutPoint&) const override;
-    CursorDirective getCursor(const LayoutPoint&, Cursor&) const final;
+ protected:
+  PaintLayerType LayerTypeRequired() const override;
 
-    // Overridden to invalidate the child frame if any.
-    void invalidatePaintOfSubtreesIfNeeded(const PaintInvalidationState&) override;
+  void StyleDidChange(StyleDifference, const ComputedStyle* old_style) final;
+  void UpdateLayout() override;
+  void Paint(const PaintInfo&, const LayoutPoint&) const override;
+  CursorDirective GetCursor(const LayoutPoint&, Cursor&) const final;
 
-private:
-    void updateWidgetGeometryInternal();
-    CompositingReasons additionalCompositingReasons() const override;
+  // Overridden to invalidate the child frame if any.
+  void InvalidatePaintOfSubtreesIfNeeded(
+      const PaintInvalidationState&) override;
 
-    void willBeDestroyed() final;
-    void destroy() final;
+ private:
+  void UpdateGeometryInternal(FrameViewBase&);
+  CompositingReasons AdditionalCompositingReasons() const override;
 
-    void setWidgetGeometry(const LayoutRect&);
+  void WillBeDestroyed() final;
+  void Destroy() final;
 
-    bool nodeAtPointOverWidget(HitTestResult&, const HitTestLocation& locationInContainer, const LayoutPoint& accumulatedOffset, HitTestAction);
+  bool NodeAtPointOverFrameViewBase(
+      HitTestResult&,
+      const HitTestLocation& location_in_container,
+      const LayoutPoint& accumulated_offset,
+      HitTestAction);
 
-    int m_refCount;
+  int ref_count_;
 };
 
-DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutPart, isLayoutPart());
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutPart, IsLayoutPart());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutPart_h
+#endif  // LayoutPart_h

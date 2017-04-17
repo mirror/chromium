@@ -5,9 +5,11 @@
 #ifndef CHROME_BROWSER_UI_ASH_LAUNCHER_BROWSER_SHORTCUT_LAUNCHER_ITEM_CONTROLLER_H_
 #define CHROME_BROWSER_UI_ASH_LAUNCHER_BROWSER_SHORTCUT_LAUNCHER_ITEM_CONTROLLER_H_
 
+#include "ash/public/cpp/shelf_item_delegate.h"
 #include "base/macros.h"
-#include "chrome/browser/ui/ash/launcher/launcher_item_controller.h"
 #include "chrome/browser/ui/browser_list.h"
+#include "content/public/browser/notification_observer.h"
+#include "content/public/browser/notification_registrar.h"
 
 namespace ash {
 class ShelfModel;
@@ -17,18 +19,13 @@ namespace content {
 class WebContents;
 }
 
-namespace gfx {
-class Image;
-}
-
-class Browser;
-class ChromeLauncherController;
-
-// Item controller for an browser shortcut.
-class BrowserShortcutLauncherItemController : public LauncherItemController {
+// Shelf item delegate for a browser shortcut; only one such item should exist.
+// This item shows an application menu that lists open browser windows or tabs.
+class BrowserShortcutLauncherItemController
+    : public ash::ShelfItemDelegate,
+      public content::NotificationObserver {
  public:
-  BrowserShortcutLauncherItemController(ChromeLauncherController* controller,
-                                        ash::ShelfModel* shelf_model);
+  explicit BrowserShortcutLauncherItemController(ash::ShelfModel* shelf_model);
 
   ~BrowserShortcutLauncherItemController() override;
 
@@ -42,38 +39,20 @@ class BrowserShortcutLauncherItemController : public LauncherItemController {
   // Check if there is any active browsers windows.
   bool IsListOfActiveBrowserEmpty();
 
-  // LauncherItemController overrides:
-  bool IsOpen() const override;
-  bool IsVisible() const override;
-  void Launch(ash::LaunchSource source, int event_flags) override;
-  ShelfItemDelegate::PerformedAction Activate(
-      ash::LaunchSource source) override;
-  ChromeLauncherAppMenuItems GetApplicationList(int event_flags) override;
-  ash::ShelfItemDelegate::PerformedAction ItemSelected(
-      const ui::Event& event) override;
-  base::string16 GetTitle() override;
-  ash::ShelfMenuModel* CreateApplicationMenu(int event_flags) override;
-  bool IsDraggable() override;
-  bool CanPin() const override;
-  bool ShouldShowTooltip() override;
+  // ash::ShelfItemDelegate overrides:
+  void ItemSelected(std::unique_ptr<ui::Event> event,
+                    int64_t display_id,
+                    ash::ShelfLaunchSource source,
+                    const ItemSelectedCallback& callback) override;
+  ash::MenuItemList GetAppMenuItems(int event_flags) override;
+  void ExecuteCommand(uint32_t command_id, int32_t event_flags) override;
   void Close() override;
 
  private:
-  // Get the favicon for the browser list entry for |web_contents|.
-  // Note that for incognito windows the incognito icon will be returned.
-  gfx::Image GetBrowserListIcon(content::WebContents* web_contents) const;
-
-  // Get the title for the browser list entry for |web_contents|.
-  // If |web_contents| has not loaded, returns "Net Tab".
-  base::string16 GetBrowserListTitle(content::WebContents* web_contents) const;
-
-  // Check if the given |web_contents| is in incognito mode.
-  bool IsIncognito(content::WebContents* web_contents) const;
-
   // Activate a browser - or advance to the next one on the list.
-  // Returns the action performed. Should be one of kNoAction,
-  // kExistingWindowActivated, or kNewWindowCreated.
-  PerformedAction ActivateOrAdvanceToNextBrowser();
+  // Returns the action performed. Should be one of SHELF_ACTION_NONE,
+  // SHELF_ACTION_WINDOW_ACTIVATED, or SHELF_ACTION_NEW_WINDOW_CREATED.
+  ash::ShelfAction ActivateOrAdvanceToNextBrowser();
 
   // Returns true when the given |browser| is listed in the browser application
   // list.
@@ -82,7 +61,18 @@ class BrowserShortcutLauncherItemController : public LauncherItemController {
   // Get a list of active browsers.
   BrowserList::BrowserVector GetListOfActiveBrowsers();
 
+  // content::NotificationObserver:
+  void Observe(int type,
+               const content::NotificationSource& source,
+               const content::NotificationDetails& details) override;
+
   ash::ShelfModel* shelf_model_;
+
+  // The cached list of open browser windows shown in an application menu.
+  BrowserList::BrowserVector browser_menu_items_;
+
+  // Registers for notifications of closing browser windows.
+  content::NotificationRegistrar registrar_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserShortcutLauncherItemController);
 };

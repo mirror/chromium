@@ -4,12 +4,12 @@
 
 package org.chromium.net;
 
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
+
+import org.json.JSONObject;
 
 import org.chromium.base.PathUtils;
 import org.chromium.base.test.util.Feature;
-import org.chromium.net.CronetTestBase.OnlyRunNativeCronet;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,16 +19,16 @@ import java.io.FileReader;
  * Tests for experimental options.
  */
 public class ExperimentalOptionsTest extends CronetTestBase {
-    private static final String TAG = "cr.QuicTest";
+    private static final String TAG = ExperimentalOptionsTest.class.getSimpleName();
     private CronetTestFramework mTestFramework;
-    private CronetEngine.Builder mBuilder;
+    private ExperimentalCronetEngine.Builder mBuilder;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        System.loadLibrary("cronet_tests");
-        mBuilder = new CronetEngine.Builder(getContext());
-        mBuilder.setMockCertVerifierForTesting(QuicTestServer.createMockCertVerifier());
+        mBuilder = new ExperimentalCronetEngine.Builder(getContext());
+        CronetTestUtil.setMockCertVerifierForTesting(
+                mBuilder, QuicTestServer.createMockCertVerifier());
         assertTrue(Http2TestServer.startHttp2TestServer(
                 getContext(), QuicTestServer.getServerCert(), QuicTestServer.getServerCertKey()));
     }
@@ -36,7 +36,7 @@ public class ExperimentalOptionsTest extends CronetTestBase {
     @Override
     protected void tearDown() throws Exception {
         assertTrue(Http2TestServer.shutdownHttp2TestServer());
-        if (mTestFramework.mCronetEngine != null) {
+        if (mTestFramework != null && mTestFramework.mCronetEngine != null) {
             mTestFramework.mCronetEngine.shutdown();
         }
         super.tearDown();
@@ -45,9 +45,53 @@ public class ExperimentalOptionsTest extends CronetTestBase {
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
+    // Tests that NetLog writes effective experimental options to NetLog.
+    public void testNetLog() throws Exception {
+        File directory = new File(PathUtils.getDataDirectory());
+        File logfile = File.createTempFile("cronet", "json", directory);
+        JSONObject hostResolverParams = CronetTestUtil.generateHostResolverRules();
+        JSONObject experimentalOptions =
+                new JSONObject().put("HostResolverRules", hostResolverParams);
+        mBuilder.setExperimentalOptions(experimentalOptions.toString());
+
+        mTestFramework = new CronetTestFramework(null, null, getContext(), mBuilder);
+        mTestFramework.mCronetEngine.startNetLogToFile(logfile.getPath(), false);
+        String url = Http2TestServer.getEchoMethodUrl();
+        TestUrlRequestCallback callback = new TestUrlRequestCallback();
+        UrlRequest.Builder builder = mTestFramework.mCronetEngine.newUrlRequestBuilder(
+                url, callback, callback.getExecutor());
+        UrlRequest urlRequest = builder.build();
+        urlRequest.start();
+        callback.blockForDone();
+        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        assertEquals("GET", callback.mResponseAsString);
+        mTestFramework.mCronetEngine.stopNetLog();
+        assertTrue(logfile.exists());
+        assertTrue(logfile.length() != 0);
+        BufferedReader logReader = new BufferedReader(new FileReader(logfile));
+        boolean validFile = false;
+        try {
+            String logLine;
+            while ((logLine = logReader.readLine()) != null) {
+                if (logLine.contains("HostResolverRules")) {
+                    validFile = true;
+                    break;
+                }
+            }
+        } finally {
+            logReader.close();
+        }
+        assertTrue(validFile);
+        assertTrue(logfile.delete());
+        assertTrue(!logfile.exists());
+    }
+
+    @SmallTest
+    @Feature({"Cronet"})
+    @OnlyRunNativeCronet
     public void testSetSSLKeyLogFile() throws Exception {
         String url = Http2TestServer.getEchoMethodUrl();
-        File dir = new File(PathUtils.getDataDirectory(getContext()));
+        File dir = new File(PathUtils.getDataDirectory());
         File file = File.createTempFile("ssl_key_log_file", "", dir);
 
         JSONObject experimentalOptions = new JSONObject().put("ssl_key_log_file", file.getPath());
@@ -55,8 +99,8 @@ public class ExperimentalOptionsTest extends CronetTestBase {
         mTestFramework = new CronetTestFramework(null, null, getContext(), mBuilder);
 
         TestUrlRequestCallback callback = new TestUrlRequestCallback();
-        UrlRequest.Builder builder = new UrlRequest.Builder(
-                url, callback, callback.getExecutor(), mTestFramework.mCronetEngine);
+        UrlRequest.Builder builder = mTestFramework.mCronetEngine.newUrlRequestBuilder(
+                url, callback, callback.getExecutor());
         UrlRequest urlRequest = builder.build();
         urlRequest.start();
         callback.blockForDone();

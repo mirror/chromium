@@ -38,9 +38,11 @@ class FakeUpdateClient : public update_client::UpdateClient {
   // Used for tests that uninstall pings get requested properly.
   struct UninstallPing {
     std::string id;
-    Version version;
+    base::Version version;
     int reason;
-    UninstallPing(const std::string& id, const Version& version, int reason)
+    UninstallPing(const std::string& id,
+                  const base::Version& version,
+                  int reason)
         : id(id), version(version), reason(reason) {}
   };
   std::vector<UninstallPing>& uninstall_pings() { return uninstall_pings_; }
@@ -50,10 +52,10 @@ class FakeUpdateClient : public update_client::UpdateClient {
   void RemoveObserver(Observer* observer) override {}
   void Install(const std::string& id,
                const CrxDataCallback& crx_data_callback,
-               const CompletionCallback& completion_callback) override {}
+               const update_client::Callback& callback) override {}
   void Update(const std::vector<std::string>& ids,
               const CrxDataCallback& crx_data_callback,
-              const CompletionCallback& completion_callback) override;
+              const update_client::Callback& callback) override;
   bool GetCrxUpdateState(
       const std::string& id,
       update_client::CrxUpdateItem* update_item) const override {
@@ -62,7 +64,7 @@ class FakeUpdateClient : public update_client::UpdateClient {
   bool IsUpdating(const std::string& id) const override { return false; }
   void Stop() override {}
   void SendUninstallPing(const std::string& id,
-                         const Version& version,
+                         const base::Version& version,
                          int reason) override {
     uninstall_pings_.emplace_back(id, version, reason);
   }
@@ -82,7 +84,7 @@ FakeUpdateClient::FakeUpdateClient() {}
 
 void FakeUpdateClient::Update(const std::vector<std::string>& ids,
                               const CrxDataCallback& crx_data_callback,
-                              const CompletionCallback& completion_callback) {
+                              const update_client::Callback& callback) {
   crx_data_callback.Run(ids, &data_);
 }
 
@@ -146,10 +148,7 @@ class FakeExtensionSystem : public MockExtensionSystem {
 
 class UpdateServiceTest : public ExtensionsTest {
  public:
-  UpdateServiceTest() {
-    extensions_browser_client()->set_extension_system_factory(
-        &fake_extension_system_factory_);
-  }
+  UpdateServiceTest() {}
   ~UpdateServiceTest() override {}
 
   void SetUp() override {
@@ -157,6 +156,8 @@ class UpdateServiceTest : public ExtensionsTest {
     browser_threads_.reset(new content::TestBrowserThreadBundle(
         content::TestBrowserThreadBundle::DEFAULT));
 
+    extensions_browser_client()->set_extension_system_factory(
+        &fake_extension_system_factory_);
     extensions_browser_client()->SetUpdateClientFactory(base::Bind(
         &UpdateServiceTest::CreateUpdateClient, base::Unretained(this)));
 
@@ -207,9 +208,10 @@ TEST_F(UpdateServiceTest, BasicUpdateOperations) {
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   base::FilePath foo_js(FILE_PATH_LITERAL("foo.js"));
   base::FilePath bar_html(FILE_PATH_LITERAL("bar/bar.html"));
-  ASSERT_TRUE(AddFileToDirectory(temp_dir.path(), foo_js, "hello"))
-      << "Failed to write " << temp_dir.path().value() << "/" << foo_js.value();
-  ASSERT_TRUE(AddFileToDirectory(temp_dir.path(), bar_html, "world"));
+  ASSERT_TRUE(AddFileToDirectory(temp_dir.GetPath(), foo_js, "hello"))
+      << "Failed to write " << temp_dir.GetPath().value() << "/"
+      << foo_js.value();
+  ASSERT_TRUE(AddFileToDirectory(temp_dir.GetPath(), bar_html, "world"));
 
   ExtensionBuilder builder;
   builder.SetManifest(DictionaryBuilder()
@@ -218,7 +220,7 @@ TEST_F(UpdateServiceTest, BasicUpdateOperations) {
                           .Set("manifest_version", 2)
                           .Build());
   builder.SetID(crx_file::id_util::GenerateId("whatever"));
-  builder.SetPath(temp_dir.path());
+  builder.SetPath(temp_dir.GetPath());
 
   scoped_refptr<Extension> extension1(builder.Build());
 
@@ -243,10 +245,10 @@ TEST_F(UpdateServiceTest, BasicUpdateOperations) {
   // accidentally return paths outside the extension's dir, etc.
   base::FilePath tmp;
   EXPECT_TRUE(installer->GetInstalledFile(foo_js.MaybeAsASCII(), &tmp));
-  EXPECT_EQ(temp_dir.path().Append(foo_js), tmp) << tmp.value();
+  EXPECT_EQ(temp_dir.GetPath().Append(foo_js), tmp) << tmp.value();
 
   EXPECT_TRUE(installer->GetInstalledFile(bar_html.MaybeAsASCII(), &tmp));
-  EXPECT_EQ(temp_dir.path().Append(bar_html), tmp) << tmp.value();
+  EXPECT_EQ(temp_dir.GetPath().Append(bar_html), tmp) << tmp.value();
 
   EXPECT_FALSE(installer->GetInstalledFile("does_not_exist", &tmp));
   EXPECT_FALSE(installer->GetInstalledFile("does/not/exist", &tmp));
@@ -265,7 +267,7 @@ TEST_F(UpdateServiceTest, BasicUpdateOperations) {
       extension1->manifest()->value()->DeepCopy());
   new_manifest->SetString("version", "2.0");
 
-  installer->Install(*new_manifest, new_version_dir.path());
+  installer->Install(*new_manifest, new_version_dir.GetPath());
 
   scoped_refptr<content::MessageLoopRunner> loop_runner =
       new content::MessageLoopRunner();
@@ -276,7 +278,8 @@ TEST_F(UpdateServiceTest, BasicUpdateOperations) {
       extension_system()->install_requests();
   ASSERT_EQ(1u, requests->size());
   EXPECT_EQ(requests->at(0).extension_id, extension1->id());
-  EXPECT_NE(requests->at(0).temp_dir.value(), new_version_dir.path().value());
+  EXPECT_NE(requests->at(0).temp_dir.value(),
+            new_version_dir.GetPath().value());
 }
 
 TEST_F(UpdateServiceTest, UninstallPings) {

@@ -311,6 +311,8 @@ cvox.ChromeVoxEditableTextBase.prototype.speak =
  * @param {cvox.TextChangeEvent} evt The text change event.
  */
 cvox.ChromeVoxEditableTextBase.prototype.changed = function(evt) {
+  // Normalize space characters.
+  evt.value = evt.value.replace('\u00a0', ' ');
   if (!this.shouldDescribeChange(evt)) {
     this.lastChangeDescribed = false;
     return;
@@ -341,7 +343,7 @@ cvox.ChromeVoxEditableTextBase.prototype.describeSelectionChanged =
   //   - one to speak
 
   if (this.isPassword) {
-    this.speak((new goog.i18n.MessageFormat(Msgs.getMsg('dot'))
+    this.speak((new goog.i18n.MessageFormat(Msgs.getMsg('bullet'))
         .format({'COUNT': 1})), evt.triggeredByUser);
     return;
   }
@@ -356,6 +358,8 @@ cvox.ChromeVoxEditableTextBase.prototype.describeSelectionChanged =
       var lineValue = this.getLine(this.getLineIndex(evt.start));
       if (lineValue == '') {
         lineValue = Msgs.getMsg('text_box_blank');
+      } else if (lineValue == '\n') {
+        // Pass through the literal line value so character outputs 'new line'.
       } else if (/^\s+$/.test(lineValue)) {
         lineValue = Msgs.getMsg('text_box_whitespace');
       }
@@ -437,7 +441,7 @@ cvox.ChromeVoxEditableTextBase.prototype.describeTextChanged = function(evt) {
     personality = cvox.AbstractTts.PERSONALITY_DELETED;
   }
   if (this.isPassword) {
-    this.speak((new goog.i18n.MessageFormat(Msgs.getMsg('dot'))
+    this.speak((new goog.i18n.MessageFormat(Msgs.getMsg('bullet'))
         .format({'COUNT': 1})), evt.triggeredByUser, personality);
     return;
   }
@@ -520,7 +524,7 @@ cvox.ChromeVoxEditableTextBase.prototype.describeTextChanged = function(evt) {
       ((evtValue.length + 1) == value.length)) {
     // The user added text either to the beginning or the end.
     if (evtValue.length > value.length) {
-      if (evtValue.indexOf(value) == 0) {
+      if (evtValue.startsWith(value)) {
         this.speak(evtValue[evtValue.length - 1], evt.triggeredByUser,
                    personality);
         return;
@@ -531,7 +535,7 @@ cvox.ChromeVoxEditableTextBase.prototype.describeTextChanged = function(evt) {
     }
     // The user deleted text either from the beginning or the end.
     if (evtValue.length < value.length) {
-      if (value.indexOf(evtValue) == 0) {
+      if (value.startsWith(evtValue)) {
         this.speak(value[value.length - 1], evt.triggeredByUser, personality);
         return;
       } else if (value.indexOf(evtValue) == 1) {

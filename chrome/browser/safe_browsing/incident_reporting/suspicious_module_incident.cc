@@ -6,7 +6,7 @@
 
 #include "base/logging.h"
 #include "chrome/browser/safe_browsing/incident_reporting/incident_handler_util.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
+#include "components/safe_browsing/csd.pb.h"
 
 namespace safe_browsing {
 
@@ -33,11 +33,6 @@ std::string SuspiciousModuleIncident::GetKey() const {
 // Returns a digest computed over the payload.
 uint32_t SuspiciousModuleIncident::ComputeDigest() const {
   return HashMessage(payload()->suspicious_module());
-}
-
-MinimumProfileConsent SuspiciousModuleIncident::GetMinimumProfileConsent()
-    const {
-  return MinimumProfileConsent::SAFE_BROWSING_EXTENDED_REPORTING_ENABLED;
 }
 
 }  // namespace safe_browsing

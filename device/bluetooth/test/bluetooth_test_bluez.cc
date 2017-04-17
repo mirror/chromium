@@ -66,13 +66,35 @@ void BluetoothTestBlueZ::SetUp() {
   BluetoothTestBase::SetUp();
   std::unique_ptr<bluez::BluezDBusManagerSetter> dbus_setter =
       bluez::BluezDBusManager::GetSetterForTesting();
+
+  fake_bluetooth_adapter_client_ = new bluez::FakeBluetoothAdapterClient;
+  dbus_setter->SetBluetoothAdapterClient(
+      std::unique_ptr<bluez::BluetoothAdapterClient>(
+          fake_bluetooth_adapter_client_));
+
   fake_bluetooth_device_client_ = new bluez::FakeBluetoothDeviceClient;
   dbus_setter->SetBluetoothDeviceClient(
       std::unique_ptr<bluez::BluetoothDeviceClient>(
           fake_bluetooth_device_client_));
+
+  // Make the fake adapter post tasks without delay in order to avoid timing
+  // issues.
+  fake_bluetooth_adapter_client_->SetSimulationIntervalMs(0);
 }
 
 void BluetoothTestBlueZ::TearDown() {
+  for (const auto& connection : gatt_connections_) {
+    if (connection->IsConnected())
+      connection->Disconnect();
+  }
+  gatt_connections_.clear();
+
+  for (const auto& session : discovery_sessions_) {
+    if (session->IsActive())
+      session->Stop(base::Bind(&base::DoNothing), base::Bind(&base::DoNothing));
+  }
+  discovery_sessions_.clear();
+
   adapter_ = nullptr;
   bluez::BluezDBusManager::Shutdown();
   BluetoothTestBase::TearDown();
@@ -87,6 +109,8 @@ void BluetoothTestBlueZ::InitWithFakeAdapter() {
   adapter_ = new bluez::BluetoothAdapterBlueZ(
       base::Bind(&AdapterCallback, run_loop.QuitClosure()));
   run_loop.Run();
+  adapter_->SetPowered(true, base::Bind(&base::DoNothing),
+                       base::Bind(&base::DoNothing));
 }
 
 BluetoothDevice* BluetoothTestBlueZ::SimulateLowEnergyDevice(
@@ -94,19 +118,23 @@ BluetoothDevice* BluetoothTestBlueZ::SimulateLowEnergyDevice(
   if (device_ordinal > 6 || device_ordinal < 1)
     return nullptr;
 
-  std::string device_name = kTestDeviceName;
+  base::Optional<std::string> device_name = kTestDeviceName;
   std::string device_address = kTestDeviceAddress1;
   std::vector<std::string> service_uuids;
   BluetoothTransport device_type = BLUETOOTH_TRANSPORT_LE;
+  std::unordered_map<std::string, std::vector<uint8_t>> service_data;
 
   switch (device_ordinal) {
     case 1:
       service_uuids.push_back(kTestUUIDGenericAccess);
       service_uuids.push_back(kTestUUIDGenericAttribute);
+      service_data[kTestUUIDHeartRate] = {0x01};
       break;
     case 2:
       service_uuids.push_back(kTestUUIDImmediateAlert);
       service_uuids.push_back(kTestUUIDLinkLoss);
+      service_data[kTestUUIDHeartRate] = {};
+      service_data[kTestUUIDImmediateAlert] = {0x00, 0x02};
       break;
     case 3:
       device_name = kTestDeviceNameEmpty;
@@ -116,36 +144,40 @@ BluetoothDevice* BluetoothTestBlueZ::SimulateLowEnergyDevice(
       device_address = kTestDeviceAddress2;
       break;
     case 5:
-      // TODO: implement. See crbug.com/622432
-      NOTIMPLEMENTED();
-      return nullptr;
+      device_name = base::nullopt;
     case 6:
       device_address = kTestDeviceAddress2;
       device_type = BLUETOOTH_TRANSPORT_DUAL;
       break;
   }
 
-  if (!adapter_->GetDevice(device_address)) {
-    fake_bluetooth_device_client_->CreateTestDevice(
-        dbus::ObjectPath(bluez::FakeBluetoothAdapterClient::kAdapterPath),
-        device_name /* name */, device_name /* alias */, device_address,
-        service_uuids, device_type);
-  }
   BluetoothDevice* device = adapter_->GetDevice(device_address);
+  if (device) {
+    fake_bluetooth_device_client_->UpdateServiceData(GetDevicePath(device),
+                                                     service_data);
+    return device;
+  }
 
-  return device;
+  fake_bluetooth_device_client_->CreateTestDevice(
+      dbus::ObjectPath(bluez::FakeBluetoothAdapterClient::kAdapterPath),
+      /* name */ device_name,
+      /* alias */ device_name.value_or("") + "(alias)", device_address,
+      service_uuids, device_type, service_data);
+
+  return adapter_->GetDevice(device_address);
 }
 
 BluetoothDevice* BluetoothTestBlueZ::SimulateClassicDevice() {
   std::string device_name = kTestDeviceName;
   std::string device_address = kTestDeviceAddress3;
   std::vector<std::string> service_uuids;
+  std::unordered_map<std::string, std::vector<uint8_t>> service_data;
 
   if (!adapter_->GetDevice(device_address)) {
     fake_bluetooth_device_client_->CreateTestDevice(
         dbus::ObjectPath(bluez::FakeBluetoothAdapterClient::kAdapterPath),
         device_name /* name */, device_name /* alias */, device_address,
-        service_uuids, BLUETOOTH_TRANSPORT_CLASSIC);
+        service_uuids, BLUETOOTH_TRANSPORT_CLASSIC, service_data);
   }
   return adapter_->GetDevice(device_address);
 }

@@ -29,15 +29,16 @@ class LayoutTestContentRendererClient : public ShellContentRendererClient {
       blink::WebRTCPeerConnectionHandlerClient* client) override;
   blink::WebMIDIAccessor* OverrideCreateMIDIAccessor(
       blink::WebMIDIAccessorClient* client) override;
-  blink::WebAudioDevice* OverrideCreateAudioDevice(double sample_rate) override;
+  blink::WebAudioDevice* OverrideCreateAudioDevice() override;
   blink::WebClipboard* OverrideWebClipboard() override;
   blink::WebThemeEngine* OverrideThemeEngine() override;
-  std::unique_ptr<blink::WebAppBannerClient> CreateAppBannerClient(
-      RenderFrame* render_frame) override;
   std::unique_ptr<MediaStreamRendererFactory> CreateMediaStreamRendererFactory()
       override;
+  std::unique_ptr<gfx::ICCProfile> GetImageDecodeColorProfile() override;
   void DidInitializeWorkerContextOnWorkerThread(
       v8::Local<v8::Context> context) override;
+  void RunScriptsAtDocumentEnd(RenderFrame* render_frame) override;
+  void SetRuntimeFeaturesDefaultsBeforeBlinkInitialization() override;
 
  private:
   std::unique_ptr<LayoutTestRenderThreadObserver> shell_observer_;

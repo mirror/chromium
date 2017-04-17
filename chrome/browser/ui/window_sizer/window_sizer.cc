@@ -23,9 +23,10 @@
 #include "ui/display/screen.h"
 
 #if defined(USE_ASH)
-#include "ash/common/wm/window_positioner.h"
-#include "ash/shell.h"
-#include "chrome/browser/ui/ash/ash_util.h"
+#include "ash/ash_switches.h"
+#include "ash/shell.h"  // nogncheck
+#include "ash/wm/window_positioner.h"  // nogncheck
+#include "chrome/browser/ui/ash/ash_util.h"  // nogncheck
 #endif
 
 namespace {
@@ -79,14 +80,6 @@ class DefaultStateProvider : public WindowSizer::StateProvider {
       wp_pref->GetInteger("work_area_right", &work_area_right);
       if (*show_state == ui::SHOW_STATE_DEFAULT && maximized)
         *show_state = ui::SHOW_STATE_MAXIMIZED;
-#if defined(USE_ASH)
-      bool docked = false;
-      wp_pref->GetBoolean("docked", &docked);
-      if (*show_state == ui::SHOW_STATE_DEFAULT && docked &&
-          !browser_->is_type_tabbed()) {
-        *show_state = ui::SHOW_STATE_DOCKED;
-      }
-#endif  // USE_ASH
     }
     work_area->SetRect(work_area_left, work_area_top,
                       std::max(0, work_area_right - work_area_left),
@@ -156,8 +149,8 @@ class DefaultTargetDisplayProvider : public WindowSizer::TargetDisplayProvider {
                                     const gfx::Rect& bounds) const override {
 #if defined(USE_ASH)
     // Use the target display on ash.
-    if (chrome::ShouldOpenAshOnStartup()) {
-      aura::Window* target = ash::Shell::GetTargetRootWindow();
+    if (ash_util::ShouldOpenAshOnStartup()) {
+      aura::Window* target = ash::Shell::GetRootWindowForNewWindows();
       return screen->GetDisplayNearestWindow(target);
     }
 #endif
@@ -297,7 +290,7 @@ void WindowSizer::GetDefaultWindowBounds(const display::Display& display,
   DCHECK(default_bounds);
 #if defined(USE_ASH)
   // TODO(beng): insufficient but currently necessary. http://crbug.com/133312
-  if (chrome::ShouldOpenAshOnStartup()) {
+  if (ash_util::ShouldOpenAshOnStartup()) {
     *default_bounds = ash::WindowPositioner::GetDefaultWindowBounds(display);
     return;
   }

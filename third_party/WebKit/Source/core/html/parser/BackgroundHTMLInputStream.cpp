@@ -28,92 +28,100 @@
 namespace blink {
 
 BackgroundHTMLInputStream::BackgroundHTMLInputStream()
-    : m_firstValidCheckpointIndex(0)
-    , m_firstValidSegmentIndex(0)
-    , m_totalCheckpointTokenCount(0)
-{
+    : first_valid_checkpoint_index_(0),
+      first_valid_segment_index_(0),
+      total_checkpoint_token_count_(0) {}
+
+void BackgroundHTMLInputStream::Append(const String& input) {
+  current_.Append(SegmentedString(input));
+  segments_.push_back(input);
 }
 
-void BackgroundHTMLInputStream::append(const String& input)
-{
-    m_current.append(SegmentedString(input));
-    m_segments.append(input);
+void BackgroundHTMLInputStream::Close() {
+  current_.Close();
 }
 
-void BackgroundHTMLInputStream::close()
-{
-    m_current.close();
+HTMLInputCheckpoint BackgroundHTMLInputStream::CreateCheckpoint(
+    size_t tokens_extracted_since_previous_checkpoint) {
+  HTMLInputCheckpoint checkpoint = checkpoints_.size();
+  checkpoints_.push_back(Checkpoint(
+      current_, segments_.size(), tokens_extracted_since_previous_checkpoint));
+  total_checkpoint_token_count_ += tokens_extracted_since_previous_checkpoint;
+  return checkpoint;
 }
 
-HTMLInputCheckpoint BackgroundHTMLInputStream::createCheckpoint(size_t tokensExtractedSincePreviousCheckpoint)
-{
-    HTMLInputCheckpoint checkpoint = m_checkpoints.size();
-    m_checkpoints.append(Checkpoint(m_current, m_segments.size(), tokensExtractedSincePreviousCheckpoint));
-    m_totalCheckpointTokenCount += tokensExtractedSincePreviousCheckpoint;
-    return checkpoint;
+void BackgroundHTMLInputStream::InvalidateCheckpointsBefore(
+    HTMLInputCheckpoint new_first_valid_checkpoint_index) {
+  DCHECK_LT(new_first_valid_checkpoint_index, checkpoints_.size());
+  // There is nothing to do for the first valid checkpoint.
+  if (first_valid_checkpoint_index_ == new_first_valid_checkpoint_index)
+    return;
+
+  DCHECK_GT(new_first_valid_checkpoint_index, first_valid_checkpoint_index_);
+  const Checkpoint& last_invalid_checkpoint =
+      checkpoints_[new_first_valid_checkpoint_index - 1];
+
+  DCHECK_LE(first_valid_segment_index_,
+            last_invalid_checkpoint.number_of_segments_already_appended);
+  for (size_t i = first_valid_segment_index_;
+       i < last_invalid_checkpoint.number_of_segments_already_appended; ++i)
+    segments_[i] = String();
+  first_valid_segment_index_ =
+      last_invalid_checkpoint.number_of_segments_already_appended;
+
+  for (size_t i = first_valid_checkpoint_index_;
+       i < new_first_valid_checkpoint_index; ++i)
+    checkpoints_[i].Clear();
+  first_valid_checkpoint_index_ = new_first_valid_checkpoint_index;
+
+  UpdateTotalCheckpointTokenCount();
 }
 
-void BackgroundHTMLInputStream::invalidateCheckpointsBefore(HTMLInputCheckpoint newFirstValidCheckpointIndex)
-{
-    ASSERT(newFirstValidCheckpointIndex < m_checkpoints.size());
-    // There is nothing to do for the first valid checkpoint.
-    if (m_firstValidCheckpointIndex == newFirstValidCheckpointIndex)
-        return;
+void BackgroundHTMLInputStream::RewindTo(HTMLInputCheckpoint checkpoint_index,
+                                         const String& unparsed_input) {
+  DCHECK_LT(checkpoint_index,
+            checkpoints_
+                .size());  // If this DCHECK fires, checkpointIndex is invalid.
+  const Checkpoint& checkpoint = checkpoints_[checkpoint_index];
 
-    ASSERT(newFirstValidCheckpointIndex > m_firstValidCheckpointIndex);
-    const Checkpoint& lastInvalidCheckpoint = m_checkpoints[newFirstValidCheckpointIndex - 1];
+#if DCHECK_IS_ON()
+  DCHECK(!checkpoint.IsNull());
+#endif
 
-    ASSERT(m_firstValidSegmentIndex <= lastInvalidCheckpoint.numberOfSegmentsAlreadyAppended);
-    for (size_t i = m_firstValidSegmentIndex; i < lastInvalidCheckpoint.numberOfSegmentsAlreadyAppended; ++i)
-        m_segments[i] = String();
-    m_firstValidSegmentIndex = lastInvalidCheckpoint.numberOfSegmentsAlreadyAppended;
+  bool is_closed = current_.IsClosed();
 
-    for (size_t i = m_firstValidCheckpointIndex; i < newFirstValidCheckpointIndex; ++i)
-        m_checkpoints[i].clear();
-    m_firstValidCheckpointIndex = newFirstValidCheckpointIndex;
+  current_ = checkpoint.input;
 
-    updateTotalCheckpointTokenCount();
+  for (size_t i = checkpoint.number_of_segments_already_appended;
+       i < segments_.size(); ++i) {
+    DCHECK(!segments_[i].IsNull());
+    current_.Append(SegmentedString(segments_[i]));
+  }
+
+  if (!unparsed_input.IsEmpty()) {
+    current_.Prepend(SegmentedString(unparsed_input),
+                     SegmentedString::PrependType::kNewInput);
+  }
+
+  if (is_closed && !current_.IsClosed())
+    current_.Close();
+
+  DCHECK_EQ(current_.IsClosed(), is_closed);
+
+  segments_.Clear();
+  checkpoints_.Clear();
+  first_valid_checkpoint_index_ = 0;
+  first_valid_segment_index_ = 0;
+
+  UpdateTotalCheckpointTokenCount();
 }
 
-void BackgroundHTMLInputStream::rewindTo(HTMLInputCheckpoint checkpointIndex, const String& unparsedInput)
-{
-    ASSERT(checkpointIndex < m_checkpoints.size()); // If this ASSERT fires, checkpointIndex is invalid.
-    const Checkpoint& checkpoint = m_checkpoints[checkpointIndex];
-    ASSERT(!checkpoint.isNull());
-
-    bool isClosed = m_current.isClosed();
-
-    m_current = checkpoint.input;
-
-    for (size_t i = checkpoint.numberOfSegmentsAlreadyAppended; i < m_segments.size(); ++i) {
-        ASSERT(!m_segments[i].isNull());
-        m_current.append(SegmentedString(m_segments[i]));
-    }
-
-    if (!unparsedInput.isEmpty()) {
-        m_current.prepend(SegmentedString(unparsedInput),
-            SegmentedString::PrependType::NewInput);
-    }
-
-    if (isClosed && !m_current.isClosed())
-        m_current.close();
-
-    ASSERT(m_current.isClosed() == isClosed);
-
-    m_segments.clear();
-    m_checkpoints.clear();
-    m_firstValidCheckpointIndex = 0;
-    m_firstValidSegmentIndex = 0;
-
-    updateTotalCheckpointTokenCount();
+void BackgroundHTMLInputStream::UpdateTotalCheckpointTokenCount() {
+  total_checkpoint_token_count_ = 0;
+  for (const auto& checkpoint : checkpoints_) {
+    total_checkpoint_token_count_ +=
+        checkpoint.tokens_extracted_since_previous_checkpoint;
+  }
 }
 
-void BackgroundHTMLInputStream::updateTotalCheckpointTokenCount()
-{
-    m_totalCheckpointTokenCount = 0;
-    size_t lastCheckpointIndex = m_checkpoints.size();
-    for (size_t i = 0; i < lastCheckpointIndex; ++i)
-        m_totalCheckpointTokenCount += m_checkpoints[i].tokensExtractedSincePreviousCheckpoint;
-}
-
-} // namespace blink
+}  // namespace blink

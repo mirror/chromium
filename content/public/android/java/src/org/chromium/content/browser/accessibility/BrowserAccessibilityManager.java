@@ -35,13 +35,24 @@ import java.util.Locale;
  */
 @JNINamespace("content")
 public class BrowserAccessibilityManager {
-    private static final String TAG = "BrowserAccessibilityManager";
+    // Constants from AccessibilityNodeInfo defined in the K SDK.
+    private static final int ACTION_COLLAPSE = 0x00080000;
+    private static final int ACTION_EXPAND = 0x00040000;
 
     // Constants from AccessibilityNodeInfo defined in the L SDK.
     private static final int ACTION_SET_TEXT = 0x200000;
     private static final String ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE =
             "ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE";
     private static final int WINDOW_CONTENT_CHANGED_DELAY_MS = 500;
+
+    // Constants from AccessibilityNodeInfo defined in the M SDK.
+    // Source: https://developer.android.com/reference/android/R.id.html
+    protected static final int ACTION_CONTEXT_CLICK = 0x0102003c;
+    protected static final int ACTION_SHOW_ON_SCREEN = 0x01020036;
+    protected static final int ACTION_SCROLL_UP = 0x01020038;
+    protected static final int ACTION_SCROLL_DOWN = 0x0102003a;
+    protected static final int ACTION_SCROLL_LEFT = 0x01020039;
+    protected static final int ACTION_SCROLL_RIGHT = 0x0102003b;
 
     private final AccessibilityNodeProvider mAccessibilityNodeProvider;
     private ContentViewCore mContentViewCore;
@@ -62,6 +73,7 @@ public class BrowserAccessibilityManager {
     private int mSelectionEndIndex;
     protected int mAccessibilityFocusId;
     private Runnable mSendWindowContentChangedRunnable;
+    private View mAutofillPopupView;
 
     /**
      * Create a BrowserAccessibilityManager object, which is owned by the C++
@@ -149,7 +161,6 @@ public class BrowserAccessibilityManager {
         if (!mAccessibilityManager.isEnabled() || mNativeObj == 0) {
             return null;
         }
-
         int rootId = nativeGetRootId(mNativeObj);
 
         if (virtualViewId == View.NO_ID) {
@@ -208,7 +219,6 @@ public class BrowserAccessibilityManager {
         switch (action) {
             case AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS:
                 if (!moveAccessibilityFocusToId(virtualViewId)) return true;
-
                 if (!mIsHovering) {
                     nativeScrollToMakeNodeVisible(
                             mNativeObj, mAccessibilityFocusId);
@@ -301,10 +311,71 @@ public class BrowserAccessibilityManager {
                 return scrollForward(virtualViewId);
             case AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD:
                 return scrollBackward(virtualViewId);
+            case AccessibilityNodeInfo.ACTION_CUT:
+                if (mContentViewCore != null && mContentViewCore.getWebContents() != null) {
+                    mContentViewCore.getWebContents().cut();
+                    return true;
+                }
+                return false;
+            case AccessibilityNodeInfo.ACTION_COPY:
+                if (mContentViewCore != null && mContentViewCore.getWebContents() != null) {
+                    mContentViewCore.getWebContents().copy();
+                    return true;
+                }
+                return false;
+            case AccessibilityNodeInfo.ACTION_PASTE:
+                if (mContentViewCore != null && mContentViewCore.getWebContents() != null) {
+                    mContentViewCore.getWebContents().paste();
+                    return true;
+                }
+                return false;
+            case AccessibilityNodeInfo.ACTION_COLLAPSE:
+            case AccessibilityNodeInfo.ACTION_EXPAND:
+                // If something is collapsible or expandable, just activate it to toggle.
+                nativeClick(mNativeObj, virtualViewId);
+                return true;
+            case ACTION_SHOW_ON_SCREEN:
+                nativeScrollToMakeNodeVisible(mNativeObj, virtualViewId);
+                return true;
+            case ACTION_CONTEXT_CLICK:
+                nativeShowContextMenu(mNativeObj, virtualViewId);
+                return true;
+            case ACTION_SCROLL_UP:
+                return nativeScroll(mNativeObj, virtualViewId, ScrollDirection.UP);
+            case ACTION_SCROLL_DOWN:
+                return nativeScroll(mNativeObj, virtualViewId, ScrollDirection.DOWN);
+            case ACTION_SCROLL_LEFT:
+                return nativeScroll(mNativeObj, virtualViewId, ScrollDirection.LEFT);
+            case ACTION_SCROLL_RIGHT:
+                return nativeScroll(mNativeObj, virtualViewId, ScrollDirection.RIGHT);
             default:
                 break;
         }
         return false;
+    }
+
+    public void onAutofillPopupDisplayed(View autofillPopupView) {
+        if (mAccessibilityManager.isEnabled() && mNativeObj != 0) {
+            mAutofillPopupView = autofillPopupView;
+            nativeOnAutofillPopupDisplayed(mNativeObj);
+        }
+    }
+
+    public void onAutofillPopupDismissed() {
+        if (mAccessibilityManager.isEnabled() && mNativeObj != 0) {
+            nativeOnAutofillPopupDismissed(mNativeObj);
+            mAutofillPopupView = null;
+        }
+    }
+
+    public void onAutofillPopupAccessibilityFocusCleared() {
+        if (mAccessibilityManager.isEnabled() && mNativeObj != 0) {
+            int id = nativeGetIdForElementAfterElementHostingAutofillPopup(mNativeObj);
+            if (id == 0) return;
+
+            moveAccessibilityFocusToId(id);
+            nativeScrollToMakeNodeVisible(mNativeObj, mAccessibilityFocusId);
+        }
     }
 
     /**
@@ -370,8 +441,7 @@ public class BrowserAccessibilityManager {
         if (id == 0) return false;
 
         moveAccessibilityFocusToId(id);
-        nativeScrollToMakeNodeVisible(
-                mNativeObj, mAccessibilityFocusId);
+        nativeScrollToMakeNodeVisible(mNativeObj, mAccessibilityFocusId);
         return true;
     }
 
@@ -381,7 +451,8 @@ public class BrowserAccessibilityManager {
             mSelectionEndIndex = -1;
         }
         mSelectionGranularity = granularity;
-        if (nativeIsEditableText(mNativeObj, mAccessibilityFocusId)) {
+        if (nativeIsEditableText(mNativeObj, mAccessibilityFocusId)
+                && nativeIsFocused(mNativeObj, mAccessibilityFocusId)) {
             mSelectionStartIndex = nativeGetEditableTextSelectionStart(
                     mNativeObj, mAccessibilityFocusId);
             mSelectionEndIndex = nativeGetEditableTextSelectionEnd(
@@ -429,7 +500,8 @@ public class BrowserAccessibilityManager {
         if (!extendSelection) {
             mSelectionStartIndex = mSelectionEndIndex;
         }
-        if (nativeIsEditableText(mNativeObj, mAccessibilityFocusId)) {
+        if (nativeIsEditableText(mNativeObj, mAccessibilityFocusId)
+                && nativeIsFocused(mNativeObj, mAccessibilityFocusId)) {
             nativeSetSelection(mNativeObj, mAccessibilityFocusId,
                     mSelectionStartIndex, mSelectionEndIndex);
         }
@@ -491,6 +563,8 @@ public class BrowserAccessibilityManager {
         // for the whole subtree of the root.
         if (mAccessibilityFocusId == mCurrentRootId) {
             nativeSetAccessibilityFocus(mNativeObj, -1);
+        } else if (nativeIsAutofillPopupNode(mNativeObj, mAccessibilityFocusId)) {
+            mAutofillPopupView.requestFocus();
         } else {
             nativeSetAccessibilityFocus(mNativeObj, mAccessibilityFocusId);
         }
@@ -509,7 +583,6 @@ public class BrowserAccessibilityManager {
                     AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED);
             mAccessibilityFocusId = View.NO_ID;
         }
-
         moveAccessibilityFocusToId(newAccessibilityFocusId);
     }
 
@@ -782,51 +855,93 @@ public class BrowserAccessibilityManager {
         }
     }
 
-    // LollipopBrowserAccessibilityManager overrides this with the non-deprecated APIs.
+    // For anything lower than API level 21 (Lollipop), calls AccessibilityNodeInfo.addAction(int)
+    // if it's a supported action, and does nothing otherwise.  For 21 and higher, this is
+    // overridden in LollipopBrowserAccessibilityManager using the new non-deprecated API.
     @SuppressWarnings("deprecation")
+    protected void addAction(AccessibilityNodeInfo node, int actionId) {
+        // Before API level 21, it's not possible to expose actions other than the "legacy standard"
+        // ones.
+        if (actionId > AccessibilityNodeInfo.ACTION_SET_TEXT) return;
+
+        node.addAction(actionId);
+    }
+
     @CalledByNative
     protected void addAccessibilityNodeInfoActions(AccessibilityNodeInfo node,
             int virtualViewId, boolean canScrollForward, boolean canScrollBackward,
             boolean canScrollUp, boolean canScrollDown, boolean canScrollLeft,
             boolean canScrollRight, boolean clickable, boolean editableText, boolean enabled,
-            boolean focusable, boolean focused) {
-        node.addAction(AccessibilityNodeInfo.ACTION_NEXT_HTML_ELEMENT);
-        node.addAction(AccessibilityNodeInfo.ACTION_PREVIOUS_HTML_ELEMENT);
-        node.addAction(AccessibilityNodeInfo.ACTION_NEXT_AT_MOVEMENT_GRANULARITY);
-        node.addAction(AccessibilityNodeInfo.ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY);
+            boolean focusable, boolean focused, boolean isCollapsed, boolean isExpanded,
+            boolean hasNonEmptyValue) {
+        addAction(node, AccessibilityNodeInfo.ACTION_NEXT_HTML_ELEMENT);
+        addAction(node, AccessibilityNodeInfo.ACTION_PREVIOUS_HTML_ELEMENT);
+        addAction(node, AccessibilityNodeInfo.ACTION_NEXT_AT_MOVEMENT_GRANULARITY);
+        addAction(node, AccessibilityNodeInfo.ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY);
+        addAction(node, ACTION_SHOW_ON_SCREEN);
+        addAction(node, ACTION_CONTEXT_CLICK);
 
         if (editableText && enabled) {
-            node.addAction(ACTION_SET_TEXT);
-            node.addAction(AccessibilityNodeInfo.ACTION_SET_SELECTION);
+            // TODO: don't support actions that modify it if it's read-only (but
+            // SET_SELECTION and COPY are okay).
+            addAction(node, ACTION_SET_TEXT);
+            addAction(node, AccessibilityNodeInfo.ACTION_PASTE);
+
+            if (hasNonEmptyValue) {
+                addAction(node, AccessibilityNodeInfo.ACTION_SET_SELECTION);
+                addAction(node, AccessibilityNodeInfo.ACTION_CUT);
+                addAction(node, AccessibilityNodeInfo.ACTION_COPY);
+            }
         }
 
         if (canScrollForward) {
-            node.addAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
+            addAction(node, AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
         }
 
         if (canScrollBackward) {
-            node.addAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD);
+            addAction(node, AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD);
         }
 
-        // TODO(dmazzoni): add custom actions for scrolling up, down,
-        // left, and right.
+        if (canScrollUp) {
+            addAction(node, ACTION_SCROLL_UP);
+        }
+
+        if (canScrollDown) {
+            addAction(node, ACTION_SCROLL_DOWN);
+        }
+
+        if (canScrollLeft) {
+            addAction(node, ACTION_SCROLL_LEFT);
+        }
+
+        if (canScrollRight) {
+            addAction(node, ACTION_SCROLL_RIGHT);
+        }
 
         if (focusable) {
             if (focused) {
-                node.addAction(AccessibilityNodeInfo.ACTION_CLEAR_FOCUS);
+                addAction(node, AccessibilityNodeInfo.ACTION_CLEAR_FOCUS);
             } else {
-                node.addAction(AccessibilityNodeInfo.ACTION_FOCUS);
+                addAction(node, AccessibilityNodeInfo.ACTION_FOCUS);
             }
         }
 
         if (mAccessibilityFocusId == virtualViewId) {
-            node.addAction(AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS);
+            addAction(node, AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS);
         } else {
-            node.addAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS);
+            addAction(node, AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS);
         }
 
         if (clickable) {
-            node.addAction(AccessibilityNodeInfo.ACTION_CLICK);
+            addAction(node, AccessibilityNodeInfo.ACTION_CLICK);
+        }
+
+        if (isCollapsed) {
+            addAction(node, ACTION_EXPAND);
+        }
+
+        if (isExpanded) {
+            addAction(node, ACTION_COLLAPSE);
         }
     }
 
@@ -1068,9 +1183,19 @@ public class BrowserAccessibilityManager {
                         Settings.Secure.ACCESSIBILITY_SPEAK_PASSWORD, 0) == 1);
     }
 
+    private native void nativeOnAutofillPopupDisplayed(
+            long nativeBrowserAccessibilityManagerAndroid);
+    private native void nativeOnAutofillPopupDismissed(
+            long nativeBrowserAccessibilityManagerAndroid);
+    private native int nativeGetIdForElementAfterElementHostingAutofillPopup(
+            long nativeBrowserAccessibilityManagerAndroid);
     private native int nativeGetRootId(long nativeBrowserAccessibilityManagerAndroid);
     private native boolean nativeIsNodeValid(long nativeBrowserAccessibilityManagerAndroid, int id);
+    private native boolean nativeIsAutofillPopupNode(
+            long nativeBrowserAccessibilityManagerAndroid, int id);
     private native boolean nativeIsEditableText(
+            long nativeBrowserAccessibilityManagerAndroid, int id);
+    private native boolean nativeIsFocused(
             long nativeBrowserAccessibilityManagerAndroid, int id);
     private native int nativeGetEditableTextSelectionStart(
             long nativeBrowserAccessibilityManagerAndroid, int id);
@@ -1108,4 +1233,6 @@ public class BrowserAccessibilityManager {
             long nativeBrowserAccessibilityManagerAndroid, int id, int direction);
     protected native String nativeGetSupportedHtmlElementTypes(
             long nativeBrowserAccessibilityManagerAndroid);
+    private native void nativeShowContextMenu(
+            long nativeBrowserAccessibilityManagerAndroid, int id);
 }

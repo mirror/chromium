@@ -13,7 +13,6 @@ import sys
 
 
 SUPPORTED_UBUNTU_VERSIONS = (
-  {'number': '12.04', 'codename': 'precise'},
   {'number': '14.04', 'codename': 'trusty'},
   {'number': '14.10', 'codename': 'utopic'},
   {'number': '15.04', 'codename': 'vivid'},
@@ -39,6 +38,7 @@ _packages_dev = (
   'elfutils',
   'fakeroot',
   'flex',
+  'fonts-ipafont',
   'fonts-thai-tlwg',
   'g++',
   'git-core',
@@ -137,6 +137,7 @@ _packages_lib = (
   'libsqlite3-0',
   'libstdc++6',
   'libx11-6',
+  'libx11-xcb1',
   'libxau6',
   'libxcb1',
   'libxcomposite1',
@@ -167,6 +168,7 @@ _packages_dbg = (
   'libpixman-1-0-dbg',
   'libsqlite3-0-dbg',
   'libx11-6-dbg',
+  'libx11-xcb1-dbg',
   'libxau6-dbg',
   'libxcb1-dbg',
   'libxcomposite1-dbg',
@@ -297,9 +299,7 @@ def compute_dynamic_package_lists():
   lsb_codename = lsb_release_short_codename()
 
   # Find the proper version of libstdc++6-4.x-dbg.
-  if lsb_codename == 'precise':
-    _packages_dbg += ('libstdc++6-4.6-dbg',)
-  elif lsb_codename == 'trusty':
+  if lsb_codename == 'trusty':
     _packages_dbg += ('libstdc++6-4.8-dbg',)
   else:
     _packages_dbg += ('libstdc++6-4.9-dbg',)

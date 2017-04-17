@@ -29,38 +29,42 @@
 
 #include "bindings/core/v8/ScopedPersistent.h"
 #include "core/CoreExport.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/text/WTFString.h"
-#include <v8.h>
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/text/WTFString.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
-enum MultilineMode {
-    MultilineDisabled,
-    MultilineEnabled
-};
+enum MultilineMode { kMultilineDisabled, kMultilineEnabled };
 
 class CORE_EXPORT ScriptRegexp {
-    USING_FAST_MALLOC(ScriptRegexp); WTF_MAKE_NONCOPYABLE(ScriptRegexp);
-public:
-    enum CharacterMode {
-        BMP, // NOLINT
-        UTF16, // NOLINT
-    };
+  USING_FAST_MALLOC(ScriptRegexp);
+  WTF_MAKE_NONCOPYABLE(ScriptRegexp);
 
-    ScriptRegexp(const String&, TextCaseSensitivity, MultilineMode = MultilineDisabled, CharacterMode = BMP);
+ public:
+  enum CharacterMode {
+    BMP,    // NOLINT
+    UTF16,  // NOLINT
+  };
 
-    int match(const String&, int startFrom = 0, int* matchLength = 0) const;
+  // For TextCaseSensitivity argument, TextCaseASCIIInsensitive and
+  // TextCaseUnicodeInsensitive has identical behavior. They just add "i" flag.
+  ScriptRegexp(const String&,
+               TextCaseSensitivity,
+               MultilineMode = kMultilineDisabled,
+               CharacterMode = BMP);
 
-    bool isValid() const { return !m_regex.isEmpty(); }
-    // exceptionMessage is available only if !isValid().
-    String exceptionMessage() const { return m_exceptionMessage; }
+  int Match(const String&, int start_from = 0, int* match_length = 0) const;
 
-private:
-    ScopedPersistent<v8::RegExp> m_regex;
-    String m_exceptionMessage;
+  bool IsValid() const { return !regex_.IsEmpty(); }
+  // exceptionMessage is available only if !isValid().
+  String ExceptionMessage() const { return exception_message_; }
+
+ private:
+  ScopedPersistent<v8::RegExp> regex_;
+  String exception_message_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScriptRegexp_h
+#endif  // ScriptRegexp_h

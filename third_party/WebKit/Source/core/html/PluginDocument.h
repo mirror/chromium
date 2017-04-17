@@ -31,34 +31,34 @@
 namespace blink {
 
 class Node;
-class Widget;
+class PluginView;
 
 class CORE_EXPORT PluginDocument final : public HTMLDocument {
-public:
-    static PluginDocument* create(const DocumentInit& initializer = DocumentInit())
-    {
-        return new PluginDocument(initializer);
-    }
+ public:
+  static PluginDocument* Create(
+      const DocumentInit& initializer = DocumentInit()) {
+    return new PluginDocument(initializer);
+  }
 
-    void setPluginNode(Node* pluginNode) { m_pluginNode = pluginNode; }
+  void SetPluginNode(Node* plugin_node) { plugin_node_ = plugin_node; }
 
-    Widget* pluginWidget();
-    Node* pluginNode();
+  PluginView* GetPluginView();
+  Node* PluginNode();
 
-    void detachLayoutTree(const AttachContext& = AttachContext()) override;
+  void Shutdown() override;
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    explicit PluginDocument(const DocumentInit&);
+ private:
+  explicit PluginDocument(const DocumentInit&);
 
-    DocumentParser* createParser() override;
+  DocumentParser* CreateParser() override;
 
-    Member<Node> m_pluginNode;
+  Member<Node> plugin_node_;
 };
 
 DEFINE_DOCUMENT_TYPE_CASTS(PluginDocument);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PluginDocument_h
+#endif  // PluginDocument_h

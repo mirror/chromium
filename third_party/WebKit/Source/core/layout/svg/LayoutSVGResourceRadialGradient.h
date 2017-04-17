@@ -29,34 +29,46 @@ namespace blink {
 class SVGRadialGradientElement;
 
 class LayoutSVGResourceRadialGradient final : public LayoutSVGResourceGradient {
-public:
-    explicit LayoutSVGResourceRadialGradient(SVGRadialGradientElement*);
-    ~LayoutSVGResourceRadialGradient() override;
+ public:
+  explicit LayoutSVGResourceRadialGradient(SVGRadialGradientElement*);
+  ~LayoutSVGResourceRadialGradient() override;
 
-    const char* name() const override { return "LayoutSVGResourceRadialGradient"; }
+  const char* GetName() const override {
+    return "LayoutSVGResourceRadialGradient";
+  }
 
-    static const LayoutSVGResourceType s_resourceType = RadialGradientResourceType;
-    LayoutSVGResourceType resourceType() const override { return s_resourceType; }
+  static const LayoutSVGResourceType kResourceType =
+      kRadialGradientResourceType;
+  LayoutSVGResourceType ResourceType() const override { return kResourceType; }
 
-    SVGUnitTypes::SVGUnitType gradientUnits() const override { return attributes().gradientUnits(); }
-    AffineTransform calculateGradientTransform() const override { return attributes().gradientTransform(); }
-    bool collectGradientAttributes(SVGGradientElement*) override;
-    PassRefPtr<Gradient> buildGradient() const override;
+  SVGUnitTypes::SVGUnitType GradientUnits() const override {
+    return Attributes().GradientUnits();
+  }
+  AffineTransform CalculateGradientTransform() const override {
+    return Attributes().GradientTransform();
+  }
+  bool CollectGradientAttributes() override;
+  PassRefPtr<Gradient> BuildGradient() const override;
 
-    FloatPoint centerPoint(const RadialGradientAttributes&) const;
-    FloatPoint focalPoint(const RadialGradientAttributes&) const;
-    float radius(const RadialGradientAttributes&) const;
-    float focalRadius(const RadialGradientAttributes&) const;
+  FloatPoint CenterPoint(const RadialGradientAttributes&) const;
+  FloatPoint FocalPoint(const RadialGradientAttributes&) const;
+  float Radius(const RadialGradientAttributes&) const;
+  float FocalRadius(const RadialGradientAttributes&) const;
 
-private:
-    Persistent<RadialGradientAttributesWrapper> m_attributesWrapper;
+ private:
+  Persistent<RadialGradientAttributesWrapper> attributes_wrapper_;
 
-    RadialGradientAttributes& mutableAttributes() { return m_attributesWrapper->attributes(); }
-    const RadialGradientAttributes& attributes() const { return m_attributesWrapper->attributes(); }
+  RadialGradientAttributes& MutableAttributes() {
+    return attributes_wrapper_->Attributes();
+  }
+  const RadialGradientAttributes& Attributes() const {
+    return attributes_wrapper_->Attributes();
+  }
 };
 
-DEFINE_LAYOUT_SVG_RESOURCE_TYPE_CASTS(LayoutSVGResourceRadialGradient, RadialGradientResourceType);
+DEFINE_LAYOUT_SVG_RESOURCE_TYPE_CASTS(LayoutSVGResourceRadialGradient,
+                                      kRadialGradientResourceType);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

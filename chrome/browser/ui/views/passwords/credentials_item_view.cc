@@ -7,15 +7,16 @@
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/ui/passwords/manage_passwords_view_utils.h"
+#include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
 #include "components/autofill/core/common/password_form.h"
-#include "grit/theme_resources.h"
-#include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/canvas.h"
-#include "ui/gfx/image/image.h"
 #include "ui/gfx/path.h"
 #include "ui/views/border.h"
+#include "ui/views/bubble/tooltip_icon.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/layout_constants.h"
@@ -66,17 +67,18 @@ CredentialsItemView::CredentialsItemView(
     SkColor hover_color,
     const autofill::PasswordForm* form,
     net::URLRequestContextGetter* request_context)
-    : LabelButton(button_listener, base::string16()),
+    : CustomButton(button_listener),
       form_(form),
       upper_label_(nullptr),
       lower_label_(nullptr),
+      info_icon_(nullptr),
       hover_color_(hover_color),
       weak_ptr_factory_(this) {
   set_notify_enter_exit_on_child(true);
   // Create an image-view for the avatar. Make sure it ignores events so that
   // the parent can receive the events instead.
   image_view_ = new CircularImageView;
-  image_view_->set_interactive(false);
+  image_view_->set_can_process_events_within_subtree(false);
   gfx::Image image = ResourceBundle::GetSharedInstance().GetImageNamed(
       IDR_PROFILE_AVATAR_PLACEHOLDER_LARGE);
   DCHECK(image.Width() >= kAvatarImageSize &&
@@ -90,20 +92,37 @@ CredentialsItemView::CredentialsItemView(
   }
   AddChildView(image_view_);
 
-  ui::ResourceBundle* rb = &ui::ResourceBundle::GetSharedInstance();
+  // TODO(tapted): Check these (and the STYLE_ values below) against the spec on
+  // http://crbug.com/651681.
+  const int kLabelContext =
+      ui::MaterialDesignController::IsSecondaryUiMaterial()
+          ? CONTEXT_BODY_TEXT_SMALL
+          : CONTEXT_DEPRECATED_SMALL;
+
   if (!upper_text.empty()) {
-    upper_label_ = new views::Label(
-        upper_text, rb->GetFontList(ui::ResourceBundle::SmallFont));
+    upper_label_ = new views::Label(upper_text, kLabelContext,
+                                    views::style::STYLE_PRIMARY);
     upper_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     AddChildView(upper_label_);
   }
 
   if (!lower_text.empty()) {
-    lower_label_ = new views::Label(
-        lower_text, rb->GetFontList(ui::ResourceBundle::SmallFont));
+    lower_label_ = new views::Label(lower_text, kLabelContext, STYLE_SECONDARY);
     lower_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    lower_label_->SetMultiLine(true);
     AddChildView(lower_label_);
   }
+
+  if (form_->is_public_suffix_match) {
+    info_icon_ = new views::TooltipIcon(
+        base::UTF8ToUTF16(form_->origin.GetOrigin().spec()));
+    AddChildView(info_icon_);
+  }
+
+  if (!upper_text.empty() && !lower_text.empty())
+    SetAccessibleName(upper_text + base::ASCIIToUTF16("\n") + lower_text);
+  else
+    SetAccessibleName(upper_text + lower_text);
 
   SetFocusBehavior(FocusBehavior::ALWAYS);
 }
@@ -145,7 +164,7 @@ int CredentialsItemView::GetHeightForWidth(int w) const {
 }
 
 void CredentialsItemView::Layout() {
-  gfx::Rect child_area(GetChildAreaBounds());
+  gfx::Rect child_area(GetLocalBounds());
   child_area.Inset(GetInsets());
 
   gfx::Size image_size(image_view_->GetPreferredSize());
@@ -168,11 +187,17 @@ void CredentialsItemView::Layout() {
     label_origin.Offset(0, upper_size.height());
     lower_label_->SetBoundsRect(gfx::Rect(label_origin, lower_size));
   }
+  if (info_icon_) {
+    info_icon_->SizeToPreferredSize();
+    info_icon_->SetPosition(
+        gfx::Point(child_area.right() - info_icon_->width(),
+                   child_area.CenterPoint().y() - info_icon_->height() / 2));
+  }
 }
 
 void CredentialsItemView::OnPaint(gfx::Canvas* canvas) {
   if (state() == STATE_PRESSED || state() == STATE_HOVERED)
     canvas->DrawColor(hover_color_);
 
-  LabelButton::OnPaint(canvas);
+  CustomButton::OnPaint(canvas);
 }

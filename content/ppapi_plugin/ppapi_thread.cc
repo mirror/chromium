@@ -15,7 +15,8 @@
 #include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/memory/discardable_memory_allocator.h"
-#include "base/metrics/histogram.h"
+#include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/rand_util.h"
 #include "base/single_thread_task_runner.h"
@@ -25,8 +26,8 @@
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
+#include "components/discardable_memory/client/client_discardable_shared_memory_manager.h"
 #include "content/child/browser_font_resource_trusted.h"
-#include "content/child/child_discardable_shared_memory_manager.h"
 #include "content/child/child_process.h"
 #include "content/common/child_process_messages.h"
 #include "content/ppapi_plugin/broker_process_dispatcher.h"
@@ -36,6 +37,8 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/pepper_plugin_info.h"
 #include "content/public/common/sandbox_init.h"
+#include "content/public/common/service_manager_connection.h"
+#include "content/public/common/service_names.mojom.h"
 #include "ipc/ipc_channel_handle.h"
 #include "ipc/ipc_platform_file.h"
 #include "ipc/ipc_sync_channel.h"
@@ -48,6 +51,8 @@
 #include "ppapi/proxy/plugin_message_filter.h"
 #include "ppapi/proxy/ppapi_messages.h"
 #include "ppapi/proxy/resource_reply_thread_registrar.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/ui/public/interfaces/constants.mojom.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "ui/base/ui_base_switches.h"
 
@@ -58,6 +63,10 @@
 #include "sandbox/win/src/sandbox.h"
 #elif defined(OS_MACOSX)
 #include "content/common/sandbox_init_mac.h"
+#endif
+
+#if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
+#include "content/common/media/cdm_host_files.h"
 #endif
 
 #if defined(OS_WIN)
@@ -101,6 +110,11 @@ static void WarmupWindowsLocales(const ppapi::PpapiPermissions& permissions) {
 
 #endif
 
+static bool IsRunningInMash() {
+  const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
+  return cmdline->HasSwitch(switches::kIsRunningInMash);
+}
+
 namespace content {
 
 typedef int32_t (*InitializeBrokerFunc)
@@ -111,13 +125,14 @@ PpapiThread::PpapiThread(const base::CommandLine& command_line, bool is_broker)
       plugin_globals_(GetIOTaskRunner()),
       connect_instance_func_(NULL),
       local_pp_module_(base::RandInt(0, std::numeric_limits<PP_Module>::max())),
-      next_plugin_dispatcher_id_(1) {
+      next_plugin_dispatcher_id_(1),
+      field_trial_syncer_(this) {
   plugin_globals_.SetPluginProxyDelegate(this);
   plugin_globals_.set_command_line(
       command_line.GetSwitchValueASCII(switches::kPpapiFlashArgs));
 
   blink_platform_impl_.reset(new PpapiBlinkPlatformImpl);
-  blink::Platform::initialize(blink_platform_impl_.get());
+  blink::Platform::Initialize(blink_platform_impl_.get());
 
   if (!is_broker_) {
     scoped_refptr<ppapi::proxy::PluginMessageFilter> plugin_filter(
@@ -130,9 +145,26 @@ PpapiThread::PpapiThread(const base::CommandLine& command_line, bool is_broker)
   // In single process, browser main loop set up the discardable memory
   // allocator.
   if (!command_line.HasSwitch(switches::kSingleProcess)) {
+    discardable_memory::mojom::DiscardableSharedMemoryManagerPtr manager_ptr;
+    if (IsRunningInMash()) {
+#if defined(USE_AURA)
+      GetServiceManagerConnection()->GetConnector()->BindInterface(
+          ui::mojom::kServiceName, &manager_ptr);
+#else
+      NOTREACHED();
+#endif
+    } else {
+      ChildThread::Get()->GetConnector()->BindInterface(
+          mojom::kBrowserServiceName, mojo::MakeRequest(&manager_ptr));
+    }
+    discardable_shared_memory_manager_ = base::MakeUnique<
+        discardable_memory::ClientDiscardableSharedMemoryManager>(
+        std::move(manager_ptr), GetIOTaskRunner());
     base::DiscardableMemoryAllocator::SetInstance(
-        ChildThreadImpl::discardable_shared_memory_manager());
+        discardable_shared_memory_manager_.get());
   }
+  field_trial_syncer_.InitFieldTrialObserving(command_line,
+                                              switches::kSingleProcess);
 }
 
 PpapiThread::~PpapiThread() {
@@ -145,7 +177,6 @@ void PpapiThread::Shutdown() {
   if (plugin_entry_points_.shutdown_module)
     plugin_entry_points_.shutdown_module();
   blink_platform_impl_->Shutdown();
-  blink::Platform::shutdown();
 }
 
 bool PpapiThread::Send(IPC::Message* msg) {
@@ -345,6 +376,22 @@ void PpapiThread::OnLoadPlugin(const base::FilePath& path,
     }
   }
 
+#if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
+  // Use a local instance of CdmHostFiles so that if we return early for any
+  // error, all files will closed automatically.
+  std::unique_ptr<CdmHostFiles> cdm_host_files;
+
+#if defined(OS_WIN) || defined(OS_MACOSX)
+  // Open CDM host files before the process is sandboxed.
+  if (!is_broker_ && IsCdm(path))
+    cdm_host_files = CdmHostFiles::Create(path);
+#elif defined(OS_LINUX)
+  cdm_host_files = CdmHostFiles::TakeGlobalInstance();
+  if (is_broker_ || !IsCdm(path))
+    cdm_host_files.reset();  // Close all opened files.
+#endif  // defined(OS_WIN) || defined(OS_MACOSX)
+#endif  // BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
+
 #if defined(OS_WIN)
   // If code subsequently tries to exit using abort(), force a crash (since
   // otherwise these would be silent terminations and fly under the radar).
@@ -431,6 +478,18 @@ void PpapiThread::OnLoadPlugin(const base::FilePath& path,
       ReportLoadResult(path, INIT_FAILED);
       return;
     }
+#if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
+    // Now the process is sandboxed. Verify CDM host.
+    if (cdm_host_files) {
+      DCHECK(IsCdm(path));
+      if (!cdm_host_files->VerifyFiles(library.get(), path)) {
+        LOG(WARNING) << "CDM host verification failed.";
+        // TODO(xhwang): Add a new load result if needed.
+        ReportLoadResult(path, INIT_FAILED);
+        return;
+      }
+    }
+#endif  // BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
   }
 
   // Initialization succeeded, so keep the plugin DLL loaded.
@@ -484,15 +543,18 @@ void PpapiThread::OnHang() {
     base::PlatformThread::Sleep(base::TimeDelta::FromSeconds(1));
 }
 
+void PpapiThread::OnFieldTrialGroupFinalized(const std::string& trial_name,
+                                             const std::string& group_name) {
+  // IPC to the browser process to tell it the specified trial was activated.
+  Send(new PpapiHostMsg_FieldTrialActivated(trial_name));
+}
+
 bool PpapiThread::SetupChannel(base::ProcessId renderer_pid,
                                int renderer_child_id,
                                bool incognito,
                                IPC::ChannelHandle* handle) {
   DCHECK(is_broker_ == (connect_instance_func_ != NULL));
-  IPC::ChannelHandle plugin_handle;
-  plugin_handle.name = IPC::Channel::GenerateVerifiedChannelID(
-      base::StringPrintf(
-          "%d.r%d", base::GetCurrentProcId(), renderer_child_id));
+  mojo::MessagePipe pipe;
 
   ppapi::proxy::ProxyChannel* dispatcher = NULL;
   bool init_result = false;
@@ -501,10 +563,8 @@ bool PpapiThread::SetupChannel(base::ProcessId renderer_pid,
     BrokerProcessDispatcher* broker_dispatcher =
         new BrokerProcessDispatcher(plugin_entry_points_.get_interface,
                                     connect_instance_func_, peer_is_browser);
-    init_result = broker_dispatcher->InitBrokerWithChannel(this,
-                                                           renderer_pid,
-                                                           plugin_handle,
-                                                           false);
+    init_result = broker_dispatcher->InitBrokerWithChannel(
+        this, renderer_pid, pipe.handle0.release(), false);
     dispatcher = broker_dispatcher;
   } else {
     DCHECK_NE(base::kNullProcessId, renderer_pid);
@@ -512,10 +572,8 @@ bool PpapiThread::SetupChannel(base::ProcessId renderer_pid,
         new PluginProcessDispatcher(plugin_entry_points_.get_interface,
                                     permissions_,
                                     incognito);
-    init_result = plugin_dispatcher->InitPluginWithChannel(this,
-                                                           renderer_pid,
-                                                           plugin_handle,
-                                                           false);
+    init_result = plugin_dispatcher->InitPluginWithChannel(
+        this, renderer_pid, pipe.handle0.release(), false);
     dispatcher = plugin_dispatcher;
   }
 
@@ -523,16 +581,7 @@ bool PpapiThread::SetupChannel(base::ProcessId renderer_pid,
     delete dispatcher;
     return false;
   }
-
-  handle->name = plugin_handle.name;
-#if defined(OS_POSIX)
-  // On POSIX, transfer ownership of the renderer-side (client) FD.
-  // This ensures this process will be notified when it is closed even if a
-  // connection is not established.
-  handle->socket = base::FileDescriptor(dispatcher->TakeRendererFD());
-  if (handle->socket.fd == -1)
-    return false;
-#endif
+  *handle = pipe.handle1.release();
 
   // From here, the dispatcher will manage its own lifetime according to the
   // lifetime of the attached channel.

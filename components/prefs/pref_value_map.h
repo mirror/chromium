@@ -7,20 +7,21 @@
 
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
-#include "base/containers/scoped_ptr_hash_map.h"
 #include "base/macros.h"
 #include "components/prefs/base_prefs_export.h"
 
 namespace base {
+class DictionaryValue;
 class Value;
 }
 
 // A generic string to value map used by the PrefStore implementations.
 class COMPONENTS_PREFS_EXPORT PrefValueMap {
  public:
-  using Map = base::ScopedPtrHashMap<std::string, std::unique_ptr<base::Value>>;
+  using Map = std::unordered_map<std::string, std::unique_ptr<base::Value>>;
   using iterator = Map::iterator;
   using const_iterator = Map::const_iterator;
 
@@ -82,6 +83,9 @@ class COMPONENTS_PREFS_EXPORT PrefValueMap {
   // only in one of the maps.
   void GetDifferingKeys(const PrefValueMap* other,
                         std::vector<std::string>* differing_keys) const;
+
+  // Copies the map into a dictionary value.
+  std::unique_ptr<base::DictionaryValue> AsDictionaryValue() const;
 
  private:
   Map prefs_;

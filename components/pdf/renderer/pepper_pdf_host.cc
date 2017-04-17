@@ -5,13 +5,12 @@
 #include "components/pdf/renderer/pepper_pdf_host.h"
 
 #include "base/memory/ptr_util.h"
-#include "components/pdf/common/pdf_messages.h"
 #include "components/pdf/renderer/pdf_accessibility_tree.h"
+#include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/referrer.h"
 #include "content/public/renderer/pepper_plugin_instance.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_thread.h"
-#include "content/public/renderer/render_view.h"
 #include "content/public/renderer/renderer_ppapi_host.h"
 #include "ppapi/host/dispatch_host_message.h"
 #include "ppapi/host/host_message_context.h"
@@ -98,33 +97,32 @@ int32_t PepperPDFHost::OnResourceMessageReceived(
 
 int32_t PepperPDFHost::OnHostMsgDidStartLoading(
     ppapi::host::HostMessageContext* context) {
-  content::RenderView* render_view = GetRenderView();
-  if (!render_view)
+  content::RenderFrame* render_frame = GetRenderFrame();
+  if (!render_frame)
     return PP_ERROR_FAILED;
 
-  render_view->DidStartLoading();
+  render_frame->PluginDidStartLoading();
   return PP_OK;
 }
 
 int32_t PepperPDFHost::OnHostMsgDidStopLoading(
     ppapi::host::HostMessageContext* context) {
-  content::RenderView* render_view = GetRenderView();
-  if (!render_view)
+  content::RenderFrame* render_frame = GetRenderFrame();
+  if (!render_frame)
     return PP_ERROR_FAILED;
 
-  render_view->DidStopLoading();
+  render_frame->PluginDidStopLoading();
   return PP_OK;
 }
 
 int32_t PepperPDFHost::OnHostMsgSetContentRestriction(
     ppapi::host::HostMessageContext* context,
     int restrictions) {
-  content::RenderView* render_view = GetRenderView();
-  if (!render_view)
+  mojom::PdfService* service = GetRemotePdfService();
+  if (!service)
     return PP_ERROR_FAILED;
 
-  render_view->Send(new PDFHostMsg_PDFUpdateContentRestrictions(
-      render_view->GetRoutingID(), restrictions));
+  service->UpdateContentRestrictions(restrictions);
   return PP_OK;
 }
 
@@ -139,12 +137,11 @@ int32_t PepperPDFHost::OnHostMsgUserMetricsRecordAction(
 
 int32_t PepperPDFHost::OnHostMsgHasUnsupportedFeature(
     ppapi::host::HostMessageContext* context) {
-  content::RenderView* render_view = GetRenderView();
-  if (!render_view)
+  mojom::PdfService* service = GetRemotePdfService();
+  if (!service)
     return PP_ERROR_FAILED;
 
-  render_view->Send(
-      new PDFHostMsg_PDFHasUnsupportedFeature(render_view->GetRoutingID()));
+  service->HasUnsupportedFeature();
   return PP_OK;
 }
 
@@ -160,17 +157,17 @@ int32_t PepperPDFHost::OnHostMsgSaveAs(
   if (!instance)
     return PP_ERROR_FAILED;
 
-  content::RenderView* render_view = instance->GetRenderView();
-  if (!render_view)
-    return PP_ERROR_FAILED;
-
   GURL url = instance->GetPluginURL();
   content::Referrer referrer;
   referrer.url = url;
-  referrer.policy = blink::WebReferrerPolicyDefault;
+  referrer.policy = blink::kWebReferrerPolicyDefault;
   referrer = content::Referrer::SanitizeForRequest(url, referrer);
-  render_view->Send(
-      new PDFHostMsg_PDFSaveURLAs(render_view->GetRoutingID(), url, referrer));
+
+  mojom::PdfService* service = GetRemotePdfService();
+  if (!service)
+    return PP_ERROR_FAILED;
+
+  service->SaveUrlAs(url, referrer);
   return PP_OK;
 }
 
@@ -236,10 +233,22 @@ void PepperPDFHost::CreatePdfAccessibilityTreeIfNeeded() {
   }
 }
 
-content::RenderView* PepperPDFHost::GetRenderView() {
+content::RenderFrame* PepperPDFHost::GetRenderFrame() {
   content::PepperPluginInstance* instance =
       host_->GetPluginInstance(pp_instance());
-  return instance ? instance->GetRenderView() : nullptr;
+  return instance ? instance->GetRenderFrame() : nullptr;
+}
+
+mojom::PdfService* PepperPDFHost::GetRemotePdfService() {
+  content::RenderFrame* render_frame = GetRenderFrame();
+  if (!render_frame)
+    return nullptr;
+
+  if (!remote_pdf_service_) {
+    render_frame->GetRemoteAssociatedInterfaces()->GetInterface(
+        &remote_pdf_service_);
+  }
+  return remote_pdf_service_.get();
 }
 
 }  // namespace pdf

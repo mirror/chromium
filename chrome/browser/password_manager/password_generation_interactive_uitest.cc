@@ -23,6 +23,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/events/base_event_utils.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 
 namespace {
@@ -116,9 +117,11 @@ class PasswordGenerationInteractiveTest :
   }
 
   void SendKeyToPopup(ui::KeyboardCode key) {
-    content::NativeWebKeyboardEvent event;
-    event.windowsKeyCode = key;
-    event.type = blink::WebKeyboardEvent::RawKeyDown;
+    content::NativeWebKeyboardEvent event(
+        blink::WebKeyboardEvent::kRawKeyDown,
+        blink::WebInputEvent::kNoModifiers,
+        blink::WebInputEvent::kTimeStampForTesting);
+    event.windows_key_code = key;
     RenderViewHost()->GetWidget()->ForwardKeyboardEvent(event);
   }
 

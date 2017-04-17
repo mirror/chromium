@@ -5,15 +5,15 @@
 #include "content/renderer/pepper/plugin_instance_throttler_impl.h"
 
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
 #include "content/public/common/content_constants.h"
 #include "content/public/renderer/render_thread.h"
 #include "content/renderer/pepper/pepper_plugin_instance_impl.h"
 #include "content/renderer/render_frame_impl.h"
 #include "ppapi/shared_impl/ppapi_constants.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebRect.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebPluginContainer.h"
 #include "third_party/WebKit/public/web/WebPluginParams.h"
@@ -41,8 +41,9 @@ const int kAudioThrottledFrameTimeoutMilliseconds = 500;
 const int PluginInstanceThrottlerImpl::kMaximumFramesToExamine = 150;
 
 // static
-std::unique_ptr<PluginInstanceThrottler> PluginInstanceThrottler::Create() {
-  return base::WrapUnique(new PluginInstanceThrottlerImpl);
+std::unique_ptr<PluginInstanceThrottler> PluginInstanceThrottler::Create(
+    RenderFrame::RecordPeripheralDecision record_decision) {
+  return base::WrapUnique(new PluginInstanceThrottlerImpl(record_decision));
 }
 
 // static
@@ -53,8 +54,10 @@ void PluginInstanceThrottler::RecordUnthrottleMethodMetric(
       PluginInstanceThrottler::UNTHROTTLE_METHOD_NUM_ITEMS);
 }
 
-PluginInstanceThrottlerImpl::PluginInstanceThrottlerImpl()
-    : state_(THROTTLER_STATE_AWAITING_KEYFRAME),
+PluginInstanceThrottlerImpl::PluginInstanceThrottlerImpl(
+    content::RenderFrame::RecordPeripheralDecision record_decision)
+    : record_decision_(record_decision),
+      state_(THROTTLER_STATE_AWAITING_KEYFRAME),
       is_hidden_for_placeholder_(false),
       web_plugin_(nullptr),
       frames_examined_(0),
@@ -65,11 +68,11 @@ PluginInstanceThrottlerImpl::PluginInstanceThrottlerImpl()
               kAudioThrottledFrameTimeoutMilliseconds),
           this,
           &PluginInstanceThrottlerImpl::EngageThrottle),
-      weak_factory_(this) {
-}
+      weak_factory_(this) {}
 
 PluginInstanceThrottlerImpl::~PluginInstanceThrottlerImpl() {
-  FOR_EACH_OBSERVER(Observer, observer_list_, OnThrottlerDestroyed());
+  for (auto& observer : observer_list_)
+    observer.OnThrottlerDestroyed();
   if (state_ != THROTTLER_STATE_MARKED_ESSENTIAL)
     RecordUnthrottleMethodMetric(UNTHROTTLE_METHOD_NEVER);
 }
@@ -99,15 +102,19 @@ void PluginInstanceThrottlerImpl::MarkPluginEssential(
   state_ = THROTTLER_STATE_MARKED_ESSENTIAL;
   RecordUnthrottleMethodMetric(method);
 
-  FOR_EACH_OBSERVER(Observer, observer_list_, OnPeripheralStateChange());
+  for (auto& observer : observer_list_)
+    observer.OnPeripheralStateChange();
 
-  if (was_throttled)
-    FOR_EACH_OBSERVER(Observer, observer_list_, OnThrottleStateChange());
+  if (was_throttled) {
+    for (auto& observer : observer_list_)
+      observer.OnThrottleStateChange();
+  }
 }
 
 void PluginInstanceThrottlerImpl::SetHiddenForPlaceholder(bool hidden) {
   is_hidden_for_placeholder_ = hidden;
-  FOR_EACH_OBSERVER(Observer, observer_list_, OnHiddenForPlaceholder(hidden));
+  for (auto& observer : observer_list_)
+    observer.OnHiddenForPlaceholder(hidden);
 }
 
 PepperWebPluginImpl* PluginInstanceThrottlerImpl::GetWebPlugin() const {
@@ -140,15 +147,18 @@ void PluginInstanceThrottlerImpl::Initialize(
 
   // |frame| may be nullptr in tests.
   if (frame) {
-    float zoom_factor = GetWebPlugin()->container()->pageZoomFactor();
+    float zoom_factor = GetWebPlugin()->Container()->PageZoomFactor();
     auto status = frame->GetPeripheralContentStatus(
-        frame->GetWebFrame()->top()->getSecurityOrigin(), content_origin,
+        frame->GetWebFrame()->Top()->GetSecurityOrigin(), content_origin,
         gfx::Size(roundf(unobscured_size.width() / zoom_factor),
-                  roundf(unobscured_size.height() / zoom_factor)));
-    if (status != RenderFrame::CONTENT_STATUS_PERIPHERAL) {
+                  roundf(unobscured_size.height() / zoom_factor)),
+        record_decision_);
+    if (status != RenderFrame::CONTENT_STATUS_PERIPHERAL &&
+        status != RenderFrame::CONTENT_STATUS_TINY) {
       DCHECK_NE(THROTTLER_STATE_MARKED_ESSENTIAL, state_);
       state_ = THROTTLER_STATE_MARKED_ESSENTIAL;
-      FOR_EACH_OBSERVER(Observer, observer_list_, OnPeripheralStateChange());
+      for (auto& observer : observer_list_)
+        observer.OnPeripheralStateChange();
 
       if (status == RenderFrame::CONTENT_STATUS_ESSENTIAL_CROSS_ORIGIN_BIG)
         frame->WhitelistContentOrigin(content_origin);
@@ -165,20 +175,20 @@ void PluginInstanceThrottlerImpl::Initialize(
   }
 }
 
-void PluginInstanceThrottlerImpl::OnImageFlush(const SkBitmap* bitmap) {
+void PluginInstanceThrottlerImpl::OnImageFlush(const SkBitmap& bitmap) {
   DCHECK(needs_representative_keyframe());
-  if (!bitmap)
-    return;
+  // Even if the bitmap is empty, count that as a boring but valid bitmap.
 
   ++frames_examined_;
 
-  // Does not make a copy, just takes a reference to the underlying pixel data.
-  last_received_frame_ = *bitmap;
+  // Does not make a deep copy, just takes a reference to the underlying pixel
+  // data. This may have lifetime issues!
+  last_received_frame_ = bitmap;
 
   if (audio_throttled_)
     audio_throttled_frame_timeout_.Reset();
 
-  double boring_score = color_utils::CalculateBoringScore(*bitmap);
+  double boring_score = color_utils::CalculateBoringScore(bitmap);
   if (boring_score <= kAcceptableFrameMaximumBoringness ||
       frames_examined_ >= kMaximumFramesToExamine) {
     EngageThrottle();
@@ -191,12 +201,12 @@ bool PluginInstanceThrottlerImpl::ConsumeInputEvent(
   // TODO(tommycli): We should instead show a custom context menu (probably
   // using PluginPlaceholder) so users aren't confused and try to click the
   // Flash-internal 'Play' menu item. This is a stopgap solution.
-  if (event.modifiers & blink::WebInputEvent::Modifiers::RightButtonDown)
+  if (event.GetModifiers() & blink::WebInputEvent::Modifiers::kRightButtonDown)
     return false;
 
   if (state_ != THROTTLER_STATE_MARKED_ESSENTIAL &&
-      event.type == blink::WebInputEvent::MouseUp &&
-      (event.modifiers & blink::WebInputEvent::LeftButtonDown)) {
+      event.GetType() == blink::WebInputEvent::kMouseUp &&
+      (event.GetModifiers() & blink::WebInputEvent::kLeftButtonDown)) {
     bool was_throttled = IsThrottled();
     MarkPluginEssential(UNTHROTTLE_METHOD_BY_CLICK);
     return was_throttled;
@@ -210,15 +220,16 @@ void PluginInstanceThrottlerImpl::EngageThrottle() {
     return;
 
   if (!last_received_frame_.empty()) {
-    FOR_EACH_OBSERVER(Observer, observer_list_,
-                      OnKeyframeExtracted(&last_received_frame_));
+    for (auto& observer : observer_list_)
+      observer.OnKeyframeExtracted(&last_received_frame_);
 
     // Release our reference to the underlying pixel data.
     last_received_frame_.reset();
   }
 
   state_ = THROTTLER_STATE_PLUGIN_THROTTLED;
-  FOR_EACH_OBSERVER(Observer, observer_list_, OnThrottleStateChange());
+  for (auto& observer : observer_list_)
+    observer.OnThrottleStateChange();
 }
 
 }  // namespace content

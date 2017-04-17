@@ -31,56 +31,60 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/graphics/Image.h"
+#include "platform/graphics/paint/PaintRecord.h"
+#include "platform/graphics/paint/PaintShader.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
-#include "wtf/Noncopyable.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefCounted.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefCounted.h"
 
 class SkMatrix;
-class SkPaint;
-class SkPicture;
 
 namespace blink {
 
 class PLATFORM_EXPORT Pattern : public RefCounted<Pattern> {
-    WTF_MAKE_NONCOPYABLE(Pattern);
-public:
-    enum RepeatMode {
-        RepeatModeX    = 1 << 0,
-        RepeatModeY    = 1 << 1,
+  WTF_MAKE_NONCOPYABLE(Pattern);
 
-        RepeatModeNone = 0,
-        RepeatModeXY   = RepeatModeX | RepeatModeY
-    };
+ public:
+  enum RepeatMode {
+    kRepeatModeX = 1 << 0,
+    kRepeatModeY = 1 << 1,
 
-    static PassRefPtr<Pattern> createImagePattern(PassRefPtr<Image>, RepeatMode = RepeatModeXY);
-    static PassRefPtr<Pattern> createPicturePattern(PassRefPtr<SkPicture>,
-        RepeatMode = RepeatModeXY);
-    virtual ~Pattern();
+    kRepeatModeNone = 0,
+    kRepeatModeXY = kRepeatModeX | kRepeatModeY
+  };
 
-    void applyToPaint(SkPaint&, const SkMatrix&) const;
+  static PassRefPtr<Pattern> CreateImagePattern(PassRefPtr<Image>,
+                                                RepeatMode = kRepeatModeXY);
+  static PassRefPtr<Pattern> CreatePaintRecordPattern(
+      sk_sp<PaintRecord>,
+      RepeatMode = kRepeatModeXY);
+  virtual ~Pattern();
 
-    bool isRepeatX() const { return m_repeatMode & RepeatModeX; }
-    bool isRepeatY() const { return m_repeatMode & RepeatModeY; }
-    bool isRepeatXY() const { return m_repeatMode == RepeatModeXY; }
+  void ApplyToFlags(PaintFlags&, const SkMatrix&);
 
-    virtual bool isTextureBacked() const { return false; }
+  bool IsRepeatX() const { return repeat_mode_ & kRepeatModeX; }
+  bool IsRepeatY() const { return repeat_mode_ & kRepeatModeY; }
+  bool IsRepeatXY() const { return repeat_mode_ == kRepeatModeXY; }
 
-protected:
-    virtual sk_sp<SkShader> createShader(const SkMatrix&) const = 0;
+  virtual bool IsTextureBacked() const { return false; }
 
-    void adjustExternalMemoryAllocated(int64_t delta);
+ protected:
+  virtual sk_sp<PaintShader> CreateShader(const SkMatrix&) = 0;
+  virtual bool IsLocalMatrixChanged(const SkMatrix&) const;
 
-    RepeatMode m_repeatMode;
+  void AdjustExternalMemoryAllocated(int64_t delta);
 
-    Pattern(RepeatMode, int64_t externalMemoryAllocated = 0);
+  RepeatMode repeat_mode_;
 
-private:
-    mutable sk_sp<SkShader> m_cachedShader;
-    int64_t m_externalMemoryAllocated;
+  Pattern(RepeatMode, int64_t external_memory_allocated = 0);
+  mutable sk_sp<PaintShader> cached_shader_;
+
+ private:
+  int64_t external_memory_allocated_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

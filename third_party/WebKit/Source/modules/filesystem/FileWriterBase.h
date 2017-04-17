@@ -39,47 +39,38 @@ namespace blink {
 class WebFileWriter;
 
 class FileWriterBase : public GarbageCollectedMixin {
-public:
-    virtual ~FileWriterBase();
-    void initialize(std::unique_ptr<WebFileWriter>, long long length);
+  USING_PRE_FINALIZER(FileWriterBase, Dispose);
 
-    long long position() const
-    {
-        return m_position;
-    }
-    long long length() const
-    {
-        return m_length;
-    }
+ public:
+  virtual ~FileWriterBase();
+  void Initialize(std::unique_ptr<WebFileWriter>, long long length);
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+  long long position() const { return position_; }
+  long long length() const { return length_; }
 
-protected:
-    FileWriterBase();
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
-    WebFileWriter* writer()
-    {
-        return m_writer.get();
-    }
+ protected:
+  FileWriterBase();
 
-    void setPosition(long long position)
-    {
-        m_position = position;
-    }
+  WebFileWriter* Writer() { return writer_.get(); }
 
-    void setLength(long long length)
-    {
-        m_length = length;
-    }
+  void SetPosition(long long position) { position_ = position; }
 
-    void seekInternal(long long position);
+  void SetLength(long long length) { length_ = length; }
 
-private:
-    std::unique_ptr<WebFileWriter> m_writer;
-    long long m_position;
-    long long m_length;
+  void SeekInternal(long long position);
+
+  void ResetWriter();
+
+ private:
+  void Dispose();
+
+  std::unique_ptr<WebFileWriter> writer_;
+  long long position_;
+  long long length_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FileWriterBase_h
+#endif  // FileWriterBase_h

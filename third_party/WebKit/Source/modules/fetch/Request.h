@@ -15,8 +15,8 @@
 #include "platform/heap/Handle.h"
 #include "platform/network/EncodedFormData.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebURLRequest.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -28,61 +28,79 @@ class WebServiceWorkerRequest;
 using RequestInfo = RequestOrUSVString;
 
 class MODULES_EXPORT Request final : public Body {
-    DEFINE_WRAPPERTYPEINFO();
-    WTF_MAKE_NONCOPYABLE(Request);
-public:
-    // These "create" function must be called with entering an appropriate
-    // V8 context.
-    // From Request.idl:
-    static Request* create(ScriptState*, const RequestInfo&, const Dictionary&, ExceptionState&);
+  DEFINE_WRAPPERTYPEINFO();
+  WTF_MAKE_NONCOPYABLE(Request);
 
-    static Request* create(ScriptState*, const String&, ExceptionState&);
-    static Request* create(ScriptState*, const String&, const Dictionary&, ExceptionState&);
-    static Request* create(ScriptState*, Request*, ExceptionState&);
-    static Request* create(ScriptState*, Request*, const Dictionary&, ExceptionState&);
-    static Request* create(ScriptState*, FetchRequestData*);
-    static Request* create(ScriptState*, const WebServiceWorkerRequest&);
+ public:
+  // These "create" function must be called with entering an appropriate
+  // V8 context.
+  // From Request.idl:
+  static Request* Create(ScriptState*,
+                         const RequestInfo&,
+                         const Dictionary&,
+                         ExceptionState&);
 
-    // From Request.idl:
-    String method() const;
-    KURL url() const;
-    Headers* getHeaders() const { return m_headers; }
-    String context() const;
-    String referrer() const;
-    String referrerPolicy() const;
-    String mode() const;
-    String credentials() const;
-    String redirect() const;
-    String integrity() const;
+  static Request* Create(ScriptState*, const String&, ExceptionState&);
+  static Request* Create(ScriptState*,
+                         const String&,
+                         const Dictionary&,
+                         ExceptionState&);
+  static Request* Create(ScriptState*, Request*, ExceptionState&);
+  static Request* Create(ScriptState*,
+                         Request*,
+                         const Dictionary&,
+                         ExceptionState&);
+  static Request* Create(ScriptState*, FetchRequestData*);
+  static Request* Create(ScriptState*, const WebServiceWorkerRequest&);
 
-    // From Request.idl:
-    // This function must be called with entering an appropriate V8 context.
-    Request* clone(ScriptState*, ExceptionState&);
+  // From Request.idl:
+  String method() const;
+  KURL url() const;
+  Headers* getHeaders() const { return headers_; }
+  String Context() const;
+  String referrer() const;
+  String getReferrerPolicy() const;
+  String mode() const;
+  String credentials() const;
+  String cache() const;
+  String redirect() const;
+  String integrity() const;
 
-    FetchRequestData* passRequestData(ScriptState*);
-    void populateWebServiceWorkerRequest(WebServiceWorkerRequest&) const;
-    bool hasBody() const;
-    BodyStreamBuffer* bodyBuffer() override { return m_request->buffer(); }
-    const BodyStreamBuffer* bodyBuffer() const override { return m_request->buffer(); }
-    PassRefPtr<EncodedFormData> attachedCredential() const { return m_request->attachedCredential(); }
+  // From Request.idl:
+  // This function must be called with entering an appropriate V8 context.
+  Request* clone(ScriptState*, ExceptionState&);
 
-    DECLARE_VIRTUAL_TRACE();
+  FetchRequestData* PassRequestData(ScriptState*);
+  void PopulateWebServiceWorkerRequest(WebServiceWorkerRequest&) const;
+  bool HasBody() const;
+  BodyStreamBuffer* BodyBuffer() override { return request_->Buffer(); }
+  const BodyStreamBuffer* BodyBuffer() const override {
+    return request_->Buffer();
+  }
+  PassRefPtr<EncodedFormData> AttachedCredential() const {
+    return request_->AttachedCredential();
+  }
 
-private:
-    Request(ScriptState*, FetchRequestData*, Headers*);
-    Request(ScriptState*, FetchRequestData*);
-    Request(ScriptState*, const WebServiceWorkerRequest&);
+  DECLARE_VIRTUAL_TRACE();
 
-    const FetchRequestData* request() const { return m_request; }
-    static Request* createRequestWithRequestOrString(ScriptState*, Request*, const String&, RequestInit&, ExceptionState&);
+ private:
+  Request(ScriptState*, FetchRequestData*, Headers*);
+  Request(ScriptState*, FetchRequestData*);
 
-    String mimeType() const override;
-    void refreshBody(ScriptState*);
+  const FetchRequestData* GetRequest() const { return request_; }
+  static Request* CreateRequestWithRequestOrString(ScriptState*,
+                                                   Request*,
+                                                   const String&,
+                                                   RequestInit&,
+                                                   ExceptionState&);
 
-    const Member<FetchRequestData> m_request;
-    const Member<Headers> m_headers;
+  String MimeType() const override;
+  void RefreshBody(ScriptState*);
+
+  const Member<FetchRequestData> request_;
+  const Member<Headers> headers_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Request_h
+#endif  // Request_h

@@ -6,62 +6,38 @@
 
 #import "base/mac/foundation_util.h"
 #include "base/strings/sys_string_conversions.h"
-#include "base/test/ios/wait_util.h"
-#include "ios/testing/earl_grey/wait_util.h"
+#import "ios/testing/earl_grey/matchers.h"
+#import "ios/testing/wait_util.h"
 #import "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/test/earl_grey/web_view_matchers.h"
 #import "ios/web/shell/test/app/web_shell_test_util.h"
 #import "ios/web/shell/view_controller.h"
 
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
+
 namespace web {
 
-id<GREYMatcher> webViewContainingText(const std::string& text) {
-  return [GREYMatchers matcherForWebViewContainingText:text];
+id<GREYMatcher> WebViewContainingText(const std::string& text) {
+  WebState* web_state = shell_test_util::GetCurrentWebState();
+  return WebViewContainingText(std::move(text), web_state);
 }
 
-id<GREYMatcher> webViewCssSelector(const std::string& selector) {
-  return [GREYMatchers matcherForWebWithCSSSelector:selector];
+id<GREYMatcher> WebViewCssSelector(const std::string& selector) {
+  WebState* web_state = shell_test_util::GetCurrentWebState();
+  return WebViewCssSelector(std::move(selector), web_state);
 }
 
-id<GREYMatcher> webViewScrollView() {
-  return [GREYMatchers matcherForWebViewScrollView];
+id<GREYMatcher> WebView() {
+  return WebViewInWebState(shell_test_util::GetCurrentWebState());
 }
 
-id<GREYMatcher> addressFieldText(const std::string& text) {
-  return [GREYMatchers matcherForAddressFieldEqualToText:text];
+id<GREYMatcher> WebViewScrollView() {
+  return WebViewScrollView(shell_test_util::GetCurrentWebState());
 }
 
-id<GREYMatcher> backButton() {
-  return [GREYMatchers matcherForWebShellBackButton];
-}
-
-id<GREYMatcher> forwardButton() {
-  return [GREYMatchers matcherForWebShellForwardButton];
-}
-
-id<GREYMatcher> addressField() {
-  return [GREYMatchers matcherForWebShellAddressField];
-}
-
-}  // namespace web
-
-@implementation GREYMatchers (WebShellAdditions)
-
-+ (id<GREYMatcher>)matcherForWebViewContainingText:(const std::string&)text {
-  web::WebState* webState = web::shell_test_util::GetCurrentWebState();
-  return web::webViewContainingText(text, webState);
-}
-
-+ (id<GREYMatcher>)matcherForWebWithCSSSelector:(const std::string&)selector {
-  web::WebState* webState = web::shell_test_util::GetCurrentWebState();
-  return web::webViewCssSelector(selector, webState);
-}
-
-+ (id<GREYMatcher>)matcherForWebViewScrollView {
-  return web::webViewScrollView(web::shell_test_util::GetCurrentWebState());
-}
-
-+ (id<GREYMatcher>)matcherForAddressFieldEqualToText:(const std::string&)text {
+id<GREYMatcher> AddressFieldText(std::string text) {
   MatchesBlock matches = ^BOOL(UIView* view) {
     if (![view isKindOfClass:[UITextField class]]) {
       return NO;
@@ -70,10 +46,17 @@ id<GREYMatcher> addressField() {
             isEqualToString:kWebShellAddressFieldAccessibilityLabel]) {
       return NO;
     }
-    UITextField* textField = base::mac::ObjCCastStrict<UITextField>(view);
-    testing::WaitUntilCondition(testing::kWaitForUIElementTimeout, ^bool() {
-      return [textField.text isEqualToString:base::SysUTF8ToNSString(text)];
-    });
+    UITextField* text_field = base::mac::ObjCCastStrict<UITextField>(view);
+    NSString* error_message = [NSString
+        stringWithFormat:
+            @"Address field text did not match. expected: %@, actual: %@",
+            base::SysUTF8ToNSString(text), text_field.text];
+    GREYAssert(testing::WaitUntilConditionOrTimeout(
+                   testing::kWaitForUIElementTimeout,
+                   ^{
+                     return base::SysNSStringToUTF8(text_field.text) == text;
+                   }),
+               error_message);
     return YES;
   };
 
@@ -82,21 +65,20 @@ id<GREYMatcher> addressField() {
     [description appendText:base::SysUTF8ToNSString(text)];
   };
 
-  return [[[GREYElementMatcherBlock alloc] initWithMatchesBlock:matches
-                                               descriptionBlock:describe]
-      autorelease];
+  return [[GREYElementMatcherBlock alloc] initWithMatchesBlock:matches
+                                              descriptionBlock:describe];
 }
 
-+ (id<GREYMatcher>)matcherForWebShellBackButton {
+id<GREYMatcher> BackButton() {
   return grey_accessibilityLabel(kWebShellBackButtonAccessibilityLabel);
 }
 
-+ (id<GREYMatcher>)matcherForWebShellForwardButton {
+id<GREYMatcher> ForwardButton() {
   return grey_accessibilityLabel(kWebShellForwardButtonAccessibilityLabel);
 }
 
-+ (id<GREYMatcher>)matcherForWebShellAddressField {
+id<GREYMatcher> AddressField() {
   return grey_accessibilityLabel(kWebShellAddressFieldAccessibilityLabel);
 }
 
-@end
+}  // namespace web

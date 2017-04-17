@@ -27,132 +27,124 @@
 #include "core/css/MediaList.h"
 #include "core/dom/Document.h"
 #include "core/dom/StyleEngine.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/events/Event.h"
-#include "core/events/EventSender.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
-static StyleEventSender& styleLoadEventSender()
-{
-    DEFINE_STATIC_LOCAL(StyleEventSender, sharedLoadEventSender, (StyleEventSender::create(EventTypeNames::load)));
-    return sharedLoadEventSender;
+inline HTMLStyleElement::HTMLStyleElement(Document& document,
+                                          bool created_by_parser)
+    : HTMLElement(styleTag, document),
+      StyleElement(&document, created_by_parser),
+      fired_load_(false),
+      loaded_sheet_(false) {}
+
+HTMLStyleElement::~HTMLStyleElement() {}
+
+HTMLStyleElement* HTMLStyleElement::Create(Document& document,
+                                           bool created_by_parser) {
+  return new HTMLStyleElement(document, created_by_parser);
 }
 
-inline HTMLStyleElement::HTMLStyleElement(Document& document, bool createdByParser)
-    : HTMLElement(styleTag, document)
-    , StyleElement(&document, createdByParser)
-    , m_firedLoad(false)
-    , m_loadedSheet(false)
-{
+void HTMLStyleElement::ParseAttribute(
+    const AttributeModificationParams& params) {
+  if (params.name == titleAttr && sheet_ && IsInDocumentTree()) {
+    sheet_->SetTitle(params.new_value);
+  } else if (params.name == mediaAttr && isConnected() &&
+             GetDocument().IsActive() && sheet_) {
+    sheet_->SetMediaQueries(MediaQuerySet::Create(params.new_value));
+    GetDocument().GetStyleEngine().MediaQueriesChangedInScope(GetTreeScope());
+  } else {
+    HTMLElement::ParseAttribute(params);
+  }
 }
 
-HTMLStyleElement::~HTMLStyleElement()
-{
+void HTMLStyleElement::FinishParsingChildren() {
+  StyleElement::ProcessingResult result =
+      StyleElement::FinishParsingChildren(*this);
+  HTMLElement::FinishParsingChildren();
+  if (result == StyleElement::kProcessingFatalError)
+    NotifyLoadedSheetAndAllCriticalSubresources(
+        kErrorOccurredLoadingSubresource);
 }
 
-HTMLStyleElement* HTMLStyleElement::create(Document& document, bool createdByParser)
-{
-    return new HTMLStyleElement(document, createdByParser);
+Node::InsertionNotificationRequest HTMLStyleElement::InsertedInto(
+    ContainerNode* insertion_point) {
+  HTMLElement::InsertedInto(insertion_point);
+  return kInsertionShouldCallDidNotifySubtreeInsertions;
 }
 
-void HTMLStyleElement::parseAttribute(const QualifiedName& name, const AtomicString& oldValue, const AtomicString& value)
-{
-    if (name == titleAttr && m_sheet) {
-        m_sheet->setTitle(value);
-    } else if (name == mediaAttr && isConnected() && document().isActive() && m_sheet) {
-        m_sheet->setMediaQueries(MediaQuerySet::create(value));
-        document().styleEngine().setNeedsActiveStyleUpdate(m_sheet.get(), FullStyleUpdate);
-    } else {
-        HTMLElement::parseAttribute(name, oldValue, value);
-    }
+void HTMLStyleElement::RemovedFrom(ContainerNode* insertion_point) {
+  HTMLElement::RemovedFrom(insertion_point);
+  StyleElement::RemovedFrom(*this, insertion_point);
 }
 
-void HTMLStyleElement::finishParsingChildren()
-{
-    StyleElement::ProcessingResult result = StyleElement::finishParsingChildren(this);
-    HTMLElement::finishParsingChildren();
-    if (result == StyleElement::ProcessingFatalError)
-        notifyLoadedSheetAndAllCriticalSubresources(ErrorOccurredLoadingSubresource);
+void HTMLStyleElement::DidNotifySubtreeInsertionsToDocument() {
+  if (StyleElement::ProcessStyleSheet(GetDocument(), *this) ==
+      StyleElement::kProcessingFatalError)
+    NotifyLoadedSheetAndAllCriticalSubresources(
+        kErrorOccurredLoadingSubresource);
 }
 
-Node::InsertionNotificationRequest HTMLStyleElement::insertedInto(ContainerNode* insertionPoint)
-{
-    HTMLElement::insertedInto(insertionPoint);
-    StyleElement::insertedInto(this, insertionPoint);
-    return InsertionShouldCallDidNotifySubtreeInsertions;
+void HTMLStyleElement::ChildrenChanged(const ChildrenChange& change) {
+  HTMLElement::ChildrenChanged(change);
+  if (StyleElement::ChildrenChanged(*this) ==
+      StyleElement::kProcessingFatalError)
+    NotifyLoadedSheetAndAllCriticalSubresources(
+        kErrorOccurredLoadingSubresource);
 }
 
-void HTMLStyleElement::removedFrom(ContainerNode* insertionPoint)
-{
-    HTMLElement::removedFrom(insertionPoint);
-    StyleElement::removedFrom(this, insertionPoint);
+const AtomicString& HTMLStyleElement::media() const {
+  return getAttribute(mediaAttr);
 }
 
-void HTMLStyleElement::didNotifySubtreeInsertionsToDocument()
-{
-    if (StyleElement::processStyleSheet(document(), this) == StyleElement::ProcessingFatalError)
-        notifyLoadedSheetAndAllCriticalSubresources(ErrorOccurredLoadingSubresource);
+const AtomicString& HTMLStyleElement::type() const {
+  return getAttribute(typeAttr);
 }
 
-void HTMLStyleElement::childrenChanged(const ChildrenChange& change)
-{
-    HTMLElement::childrenChanged(change);
-    if (StyleElement::childrenChanged(this) == StyleElement::ProcessingFatalError)
-        notifyLoadedSheetAndAllCriticalSubresources(ErrorOccurredLoadingSubresource);
+void HTMLStyleElement::DispatchPendingEvent(
+    std::unique_ptr<IncrementLoadEventDelayCount> count) {
+  DispatchEvent(Event::Create(loaded_sheet_ ? EventTypeNames::load
+                                            : EventTypeNames::error));
+
+  // Checks Document's load event synchronously here for performance.
+  // This is safe because dispatchPendingEvent() is called asynchronously.
+  count->ClearAndCheckLoadEvent();
 }
 
-const AtomicString& HTMLStyleElement::media() const
-{
-    return getAttribute(mediaAttr);
+void HTMLStyleElement::NotifyLoadedSheetAndAllCriticalSubresources(
+    LoadedSheetErrorStatus error_status) {
+  bool is_load_event = error_status == kNoErrorLoadingSubresource;
+  if (fired_load_ && is_load_event)
+    return;
+  loaded_sheet_ = is_load_event;
+  TaskRunnerHelper::Get(TaskType::kDOMManipulation, &GetDocument())
+      ->PostTask(BLINK_FROM_HERE,
+                 WTF::Bind(&HTMLStyleElement::DispatchPendingEvent,
+                           WrapPersistent(this),
+                           WTF::Passed(IncrementLoadEventDelayCount::Create(
+                               GetDocument()))));
+  fired_load_ = true;
 }
 
-const AtomicString& HTMLStyleElement::type() const
-{
-    return getAttribute(typeAttr);
+bool HTMLStyleElement::disabled() const {
+  if (!sheet_)
+    return false;
+
+  return sheet_->disabled();
 }
 
-void HTMLStyleElement::dispatchPendingLoadEvents()
-{
-    styleLoadEventSender().dispatchPendingEvents();
+void HTMLStyleElement::setDisabled(bool set_disabled) {
+  if (CSSStyleSheet* style_sheet = sheet())
+    style_sheet->setDisabled(set_disabled);
 }
 
-void HTMLStyleElement::dispatchPendingEvent(StyleEventSender* eventSender)
-{
-    ASSERT_UNUSED(eventSender, eventSender == &styleLoadEventSender());
-    dispatchEvent(Event::create(m_loadedSheet ? EventTypeNames::load : EventTypeNames::error));
+DEFINE_TRACE(HTMLStyleElement) {
+  StyleElement::Trace(visitor);
+  HTMLElement::Trace(visitor);
 }
 
-void HTMLStyleElement::notifyLoadedSheetAndAllCriticalSubresources(LoadedSheetErrorStatus errorStatus)
-{
-    bool isLoadEvent = errorStatus == NoErrorLoadingSubresource;
-    if (m_firedLoad && isLoadEvent)
-        return;
-    m_loadedSheet = isLoadEvent;
-    styleLoadEventSender().dispatchEventSoon(this);
-    m_firedLoad = true;
-}
-
-bool HTMLStyleElement::disabled() const
-{
-    if (!m_sheet)
-        return false;
-
-    return m_sheet->disabled();
-}
-
-void HTMLStyleElement::setDisabled(bool setDisabled)
-{
-    if (CSSStyleSheet* styleSheet = sheet())
-        styleSheet->setDisabled(setDisabled);
-}
-
-DEFINE_TRACE(HTMLStyleElement)
-{
-    StyleElement::trace(visitor);
-    HTMLElement::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

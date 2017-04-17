@@ -8,6 +8,7 @@
 #include "base/hash.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/task_runner_util.h"
 #include "chromeos/system/devicetype.h"
@@ -128,7 +129,8 @@ void BluetoothHostPairingController::ChangeStage(Stage new_stage) {
     return;
   VLOG(1) << "ChangeStage " << new_stage;
   current_stage_ = new_stage;
-  FOR_EACH_OBSERVER(Observer, observers_, PairingStageChanged(new_stage));
+  for (Observer& observer : observers_)
+    observer.PairingStageChanged(new_stage);
 }
 
 void BluetoothHostPairingController::SendHostStatus() {
@@ -164,28 +166,18 @@ void BluetoothHostPairingController::SendHostStatus() {
 }
 
 void BluetoothHostPairingController::Reset() {
-  if (controller_socket_.get()) {
-    controller_socket_->Close();
-    controller_socket_ = nullptr;
-  }
-
-  if (service_socket_.get()) {
-    service_socket_->Close();
-    service_socket_ = nullptr;
-  }
-
   if (adapter_.get()) {
-    if (adapter_->IsDiscoverable()) {
-      adapter_->SetDiscoverable(false, base::Bind(&base::DoNothing),
-                                base::Bind(&base::DoNothing));
+    device::BluetoothDevice* device =
+        adapter_->GetDevice(controller_device_address_);
+    if (device && device->IsPaired()) {
+      device->Forget(base::Bind(&BluetoothHostPairingController::OnForget,
+                                ptr_factory_.GetWeakPtr()),
+                     base::Bind(&BluetoothHostPairingController::OnForget,
+                                ptr_factory_.GetWeakPtr()));
+      return;
     }
-
-    base::PostTaskAndReplyWithResult(
-        file_task_runner_.get(), FROM_HERE, base::Bind(&GetDevices),
-        base::Bind(&BluetoothHostPairingController::PowerOffAdapterIfApplicable,
-                   ptr_factory_.GetWeakPtr()));
   }
-  ChangeStage(STAGE_NONE);
+  OnForget();
 }
 
 void BluetoothHostPairingController::OnGetAdapter(
@@ -270,6 +262,8 @@ void BluetoothHostPairingController::OnCreateService(
 void BluetoothHostPairingController::OnAccept(
     const device::BluetoothDevice* device,
     scoped_refptr<device::BluetoothSocket> socket) {
+  controller_device_address_ = device->GetAddress();
+
   DCHECK(thread_checker_.CalledOnValidThread());
   adapter_->SetDiscoverable(
       false,
@@ -277,9 +271,7 @@ void BluetoothHostPairingController::OnAccept(
                  ptr_factory_.GetWeakPtr(), false),
       base::Bind(&BluetoothHostPairingController::OnSetError,
                  ptr_factory_.GetWeakPtr()));
-
   controller_socket_ = socket;
-  service_socket_ = nullptr;
 
   SendHostStatus();
 
@@ -369,6 +361,36 @@ void BluetoothHostPairingController::ResetAdapter() {
     delegate_->OnAdapterReset();
 }
 
+void BluetoothHostPairingController::OnForget() {
+  if (controller_socket_.get()) {
+    controller_socket_->Close();
+    controller_socket_ = nullptr;
+  }
+
+  if (service_socket_.get()) {
+    service_socket_->Close();
+    service_socket_ = nullptr;
+  }
+
+  if (adapter_.get()) {
+    if (adapter_->IsDiscoverable()) {
+      adapter_->SetDiscoverable(false, base::Bind(&base::DoNothing),
+                                base::Bind(&base::DoNothing));
+    }
+
+    base::PostTaskAndReplyWithResult(
+        file_task_runner_.get(), FROM_HERE, base::Bind(&GetDevices),
+        base::Bind(&BluetoothHostPairingController::PowerOffAdapterIfApplicable,
+                   ptr_factory_.GetWeakPtr()));
+  }
+  ChangeStage(STAGE_NONE);
+}
+
+void BluetoothHostPairingController::SetControllerDeviceAddressForTesting(
+    const std::string& address) {
+  controller_device_address_ = address;
+}
+
 void BluetoothHostPairingController::OnReceiveError(
     device::BluetoothSocket::ErrorReason reason,
     const std::string& error_message) {
@@ -384,13 +406,12 @@ void BluetoothHostPairingController::OnHostStatusMessage(
 void BluetoothHostPairingController::OnConfigureHostMessage(
     const pairing_api::ConfigureHost& message) {
   ChangeStage(STAGE_SETUP_BASIC_CONFIGURATION);
-  FOR_EACH_OBSERVER(Observer, observers_,
-                    ConfigureHostRequested(
-                        message.parameters().accepted_eula(),
-                        message.parameters().lang(),
-                        message.parameters().timezone(),
-                        message.parameters().send_reports(),
-                        message.parameters().keyboard_layout()));
+  for (Observer& observer : observers_) {
+    observer.ConfigureHostRequested(
+        message.parameters().accepted_eula(), message.parameters().lang(),
+        message.parameters().timezone(), message.parameters().send_reports(),
+        message.parameters().keyboard_layout());
+  }
 }
 
 void BluetoothHostPairingController::OnPairDevicesMessage(
@@ -398,9 +419,8 @@ void BluetoothHostPairingController::OnPairDevicesMessage(
   DCHECK(thread_checker_.CalledOnValidThread());
   enrollment_domain_ = message.parameters().enrolling_domain();
   ChangeStage(STAGE_ENROLLING);
-  FOR_EACH_OBSERVER(Observer, observers_,
-                    EnrollHostRequested(
-                        message.parameters().admin_access_token()));
+  for (Observer& observer : observers_)
+    observer.EnrollHostRequested(message.parameters().admin_access_token());
 }
 
 void BluetoothHostPairingController::OnCompleteSetupMessage(
@@ -423,8 +443,8 @@ void BluetoothHostPairingController::OnErrorMessage(
 void BluetoothHostPairingController::OnAddNetworkMessage(
     const pairing_api::AddNetwork& message) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  FOR_EACH_OBSERVER(Observer, observers_,
-                    AddNetworkRequested(message.parameters().onc_spec()));
+  for (Observer& observer : observers_)
+    observer.AddNetworkRequested(message.parameters().onc_spec());
 }
 
 void BluetoothHostPairingController::AdapterPresentChanged(

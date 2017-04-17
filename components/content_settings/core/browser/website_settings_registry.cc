@@ -12,8 +12,8 @@
 
 namespace {
 
-base::LazyInstance<content_settings::WebsiteSettingsRegistry> g_instance =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<content_settings::WebsiteSettingsRegistry>::DestructorAtExit
+    g_instance = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
@@ -77,13 +77,16 @@ const WebsiteSettingsInfo* WebsiteSettingsRegistry::Register(
 #elif defined(OS_ANDROID)
   if (!(platform & PLATFORM_ANDROID))
     return nullptr;
+  // Don't sync settings to mobile platforms. The UI is different to desktop and
+  // doesn't allow the settings to be managed in the same way. See
+  // crbug.com/642184.
+  sync_status = WebsiteSettingsInfo::UNSYNCABLE;
 #elif defined(OS_IOS)
   if (!(platform & PLATFORM_IOS))
     return nullptr;
-  // Only default settings for Cookies and Popups are used in iOS. Exceptions
-  // and all the other content setting types are not used in iOS currently. So
-  // make content settings unsyncable on iOS for now.
-  // TODO(lshang): address this once we have proper content settings on iOS.
+  // Don't sync settings to mobile platforms. The UI is different to desktop and
+  // doesn't allow the settings to be managed in the same way. See
+  // crbug.com/642184.
   sync_status = WebsiteSettingsInfo::UNSYNCABLE;
 #else
 #error "Unsupported platform"
@@ -139,6 +142,29 @@ void WebsiteSettingsRegistry::Init() {
            WebsiteSettingsInfo::REQUESTING_ORIGIN_AND_TOP_LEVEL_ORIGIN_SCOPE,
            DESKTOP | PLATFORM_ANDROID,
            WebsiteSettingsInfo::DONT_INHERIT_IN_INCOGNITO);
+  // TODO(raymes): Deprecated. See crbug.com/681709. Remove after M60.
+  Register(CONTENT_SETTINGS_TYPE_PROMPT_NO_DECISION_COUNT,
+           "prompt-no-decision-count", nullptr, WebsiteSettingsInfo::UNSYNCABLE,
+           WebsiteSettingsInfo::NOT_LOSSY,
+           WebsiteSettingsInfo::REQUESTING_ORIGIN_ONLY_SCOPE,
+           DESKTOP | PLATFORM_ANDROID,
+           WebsiteSettingsInfo::INHERIT_IN_INCOGNITO);
+  Register(CONTENT_SETTINGS_TYPE_IMPORTANT_SITE_INFO, "important-site-info",
+           nullptr, WebsiteSettingsInfo::UNSYNCABLE, WebsiteSettingsInfo::LOSSY,
+           WebsiteSettingsInfo::REQUESTING_ORIGIN_ONLY_SCOPE,
+           DESKTOP | PLATFORM_ANDROID,
+           WebsiteSettingsInfo::INHERIT_IN_INCOGNITO);
+  Register(CONTENT_SETTINGS_TYPE_PERMISSION_AUTOBLOCKER_DATA,
+           "permission-autoblocking-data", nullptr,
+           WebsiteSettingsInfo::UNSYNCABLE, WebsiteSettingsInfo::NOT_LOSSY,
+           WebsiteSettingsInfo::REQUESTING_ORIGIN_ONLY_SCOPE,
+           DESKTOP | PLATFORM_ANDROID,
+           WebsiteSettingsInfo::INHERIT_IN_INCOGNITO);
+  Register(
+      CONTENT_SETTINGS_TYPE_PASSWORD_PROTECTION, "password-protection", nullptr,
+      WebsiteSettingsInfo::UNSYNCABLE, WebsiteSettingsInfo::NOT_LOSSY,
+      WebsiteSettingsInfo::REQUESTING_ORIGIN_ONLY_SCOPE,
+      DESKTOP | PLATFORM_ANDROID, WebsiteSettingsInfo::INHERIT_IN_INCOGNITO);
 }
 
 }  // namespace content_settings

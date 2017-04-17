@@ -31,8 +31,8 @@
 #include "core/animation/DocumentAnimations.h"
 
 #include "core/animation/AnimationClock.h"
-#include "core/animation/AnimationTimeline.h"
 #include "core/animation/CompositorPendingAnimations.h"
+#include "core/animation/DocumentTimeline.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/Node.h"
@@ -44,38 +44,40 @@ namespace blink {
 
 namespace {
 
-void updateAnimationTiming(Document& document, TimingUpdateReason reason)
-{
-    document.timeline().serviceAnimations(reason);
+void UpdateAnimationTiming(Document& document, TimingUpdateReason reason) {
+  document.Timeline().ServiceAnimations(reason);
 }
 
-} // namespace
+}  // namespace
 
-void DocumentAnimations::updateAnimationTimingForAnimationFrame(Document& document)
-{
-    updateAnimationTiming(document, TimingUpdateForAnimationFrame);
+void DocumentAnimations::UpdateAnimationTimingForAnimationFrame(
+    Document& document) {
+  UpdateAnimationTiming(document, kTimingUpdateForAnimationFrame);
 }
 
-bool DocumentAnimations::needsAnimationTimingUpdate(const Document& document)
-{
-    return document.timeline().hasOutdatedAnimation() || document.timeline().needsAnimationTimingUpdate();
+bool DocumentAnimations::NeedsAnimationTimingUpdate(const Document& document) {
+  return document.Timeline().HasOutdatedAnimation() ||
+         document.Timeline().NeedsAnimationTimingUpdate();
 }
 
-void DocumentAnimations::updateAnimationTimingIfNeeded(Document& document)
-{
-    if (needsAnimationTimingUpdate(document))
-        updateAnimationTiming(document, TimingUpdateOnDemand);
+void DocumentAnimations::UpdateAnimationTimingIfNeeded(Document& document) {
+  if (NeedsAnimationTimingUpdate(document))
+    UpdateAnimationTiming(document, kTimingUpdateOnDemand);
 }
 
-void DocumentAnimations::updateCompositorAnimations(Document& document)
-{
-    ASSERT(document.lifecycle().state() == DocumentLifecycle::CompositingClean);
-    if (document.compositorPendingAnimations().update()) {
-        ASSERT(document.view());
-        document.view()->scheduleAnimation();
-    }
+void DocumentAnimations::UpdateAnimations(
+    Document& document,
+    DocumentLifecycle::LifecycleState required_lifecycle_state,
+    Optional<CompositorElementIdSet>& composited_element_ids) {
+  DCHECK(document.Lifecycle().GetState() >= required_lifecycle_state);
 
-    document.timeline().scheduleNextService();
+  if (document.GetCompositorPendingAnimations().Update(
+          composited_element_ids)) {
+    DCHECK(document.View());
+    document.View()->ScheduleAnimation();
+  }
+
+  document.Timeline().ScheduleNextService();
 }
 
-} // namespace blink
+}  // namespace blink

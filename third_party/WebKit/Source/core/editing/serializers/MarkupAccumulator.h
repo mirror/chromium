@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights
+ * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -29,54 +30,63 @@
 #include "core/editing/EditingStrategy.h"
 #include "core/editing/serializers/MarkupFormatter.h"
 #include "core/editing/serializers/Serialization.h"
-#include "wtf/HashMap.h"
-#include "wtf/Vector.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
 class Attribute;
-class DocumentType;
 class Element;
 class Node;
 
 class MarkupAccumulator {
-    WTF_MAKE_NONCOPYABLE(MarkupAccumulator);
-    STACK_ALLOCATED();
-public:
-    MarkupAccumulator(EAbsoluteURLs, SerializationType = SerializationType::AsOwnerDocument);
-    virtual ~MarkupAccumulator();
+  WTF_MAKE_NONCOPYABLE(MarkupAccumulator);
+  STACK_ALLOCATED();
 
-    void appendString(const String&);
-    virtual void appendStartTag(Node&, Namespaces* = nullptr);
-    virtual void appendEndTag(const Element&);
-    void appendStartMarkup(StringBuilder&, Node&, Namespaces*);
-    void appendEndMarkup(StringBuilder&, const Element&);
+ public:
+  MarkupAccumulator(EAbsoluteURLs,
+                    SerializationType = SerializationType::kAsOwnerDocument);
+  virtual ~MarkupAccumulator();
 
-    bool serializeAsHTMLDocument(const Node&) const;
-    String toString() { return m_markup.toString(); }
+  void AppendString(const String&);
+  virtual void AppendStartTag(Node&, Namespaces* = nullptr);
+  virtual void AppendEndTag(const Element&);
+  void AppendStartMarkup(StringBuilder&, Node&, Namespaces*);
+  void AppendEndMarkup(StringBuilder&, const Element&);
 
-    virtual void appendCustomAttributes(StringBuilder&, const Element&, Namespaces*);
+  bool SerializeAsHTMLDocument(const Node&) const;
+  String ToString() { return markup_.ToString(); }
 
-    virtual void appendText(StringBuilder&, Text&);
-    virtual bool shouldIgnoreAttribute(const Attribute&);
-    virtual void appendElement(StringBuilder&, Element&, Namespaces*);
-    void appendOpenTag(StringBuilder&, const Element&, Namespaces*);
-    void appendCloseTag(StringBuilder&, const Element&);
-    virtual void appendAttribute(StringBuilder&, const Element&, const Attribute&, Namespaces*);
+  virtual void AppendCustomAttributes(StringBuilder&,
+                                      const Element&,
+                                      Namespaces*);
 
-    EntityMask entityMaskForText(const Text&) const;
+  virtual void AppendText(StringBuilder&, Text&);
+  virtual bool ShouldIgnoreAttribute(const Element&, const Attribute&) const;
+  virtual bool ShouldIgnoreElement(const Element&) const;
+  virtual void AppendElement(StringBuilder&, const Element&, Namespaces*);
+  void AppendOpenTag(StringBuilder&, const Element&, Namespaces*);
+  void AppendCloseTag(StringBuilder&, const Element&);
+  virtual void AppendAttribute(StringBuilder&,
+                               const Element&,
+                               const Attribute&,
+                               Namespaces*);
 
-private:
-    MarkupFormatter m_formatter;
-    StringBuilder m_markup;
+  EntityMask EntityMaskForText(const Text&) const;
+
+ private:
+  MarkupFormatter formatter_;
+  StringBuilder markup_;
 };
 
-template<typename Strategy>
-String serializeNodes(MarkupAccumulator&, Node&, EChildrenOnly);
+template <typename Strategy>
+String SerializeNodes(MarkupAccumulator&, Node&, EChildrenOnly);
 
-extern template String serializeNodes<EditingStrategy>(MarkupAccumulator&, Node&, EChildrenOnly);
+extern template String SerializeNodes<EditingStrategy>(MarkupAccumulator&,
+                                                       Node&,
+                                                       EChildrenOnly);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

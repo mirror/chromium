@@ -6,8 +6,8 @@
 #define V8PagePopupControllerBinding_h
 
 #include "bindings/core/v8/WrapperTypeInfo.h"
-#include "wtf/Allocator.h"
-#include <v8.h>
+#include "platform/wtf/Allocator.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -16,12 +16,14 @@ namespace blink {
 // popups.  Form popups should be implemented in another way, and this class
 // should be removed.
 class V8PagePopupControllerBinding {
-    STATIC_ONLY(V8PagePopupControllerBinding);
-public:
-    // Installs 'pagePopupController' attribute into 'window' object.
-    static void installPagePopupController(v8::Local<v8::Context>, v8::Local<v8::Object> windowWrapper);
+  STATIC_ONLY(V8PagePopupControllerBinding);
+
+ public:
+  // Installs 'pagePopupController' attribute into 'window' object.
+  static void InstallPagePopupController(v8::Local<v8::Context>,
+                                         v8::Local<v8::Object> window_wrapper);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V8PagePopupControllerBinding_h
+#endif  // V8PagePopupControllerBinding_h

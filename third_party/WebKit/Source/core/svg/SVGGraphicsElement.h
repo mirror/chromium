@@ -25,70 +25,77 @@
 #include "core/CoreExport.h"
 #include "core/svg/SVGAnimatedTransformList.h"
 #include "core/svg/SVGElement.h"
-#include "core/svg/SVGRectTearOff.h"
 #include "core/svg/SVGTests.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
 class AffineTransform;
-class Path;
 class SVGMatrixTearOff;
+class SVGRectTearOff;
 
 class CORE_EXPORT SVGGraphicsElement : public SVGElement, public SVGTests {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(SVGGraphicsElement);
-public:
-    ~SVGGraphicsElement() override;
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(SVGGraphicsElement);
 
-    enum StyleUpdateStrategy { AllowStyleUpdate, DisallowStyleUpdate };
+ public:
+  ~SVGGraphicsElement() override;
 
-    AffineTransform getCTM(StyleUpdateStrategy = AllowStyleUpdate);
-    AffineTransform getScreenCTM(StyleUpdateStrategy = AllowStyleUpdate);
-    SVGMatrixTearOff* getCTMFromJavascript();
-    SVGMatrixTearOff* getScreenCTMFromJavascript();
+  enum StyleUpdateStrategy { kAllowStyleUpdate, kDisallowStyleUpdate };
 
-    SVGElement* nearestViewportElement() const;
-    SVGElement* farthestViewportElement() const;
+  AffineTransform GetCTM(StyleUpdateStrategy = kAllowStyleUpdate);
+  AffineTransform GetScreenCTM(StyleUpdateStrategy = kAllowStyleUpdate);
+  SVGMatrixTearOff* getCTMFromJavascript();
+  SVGMatrixTearOff* getScreenCTMFromJavascript();
 
-    AffineTransform localCoordinateSpaceTransform(SVGElement::CTMScope) const override { return calculateAnimatedLocalTransform(); }
-    bool hasAnimatedLocalTransform() const;
-    AffineTransform calculateAnimatedLocalTransform() const;
-    AffineTransform* animateMotionTransform() override;
+  SVGElement* nearestViewportElement() const;
+  SVGElement* farthestViewportElement() const;
 
-    virtual FloatRect getBBox();
-    SVGRectTearOff* getBBoxFromJavascript();
+  AffineTransform LocalCoordinateSpaceTransform() const override {
+    return CalculateTransform(kIncludeMotionTransform);
+  }
+  AffineTransform* AnimateMotionTransform() override;
 
-    bool isValid() const final { return SVGTests::isValid(); }
+  virtual FloatRect GetBBox();
+  SVGRectTearOff* getBBoxFromJavascript();
 
-    SVGAnimatedTransformList* transform() { return m_transform.get(); }
-    const SVGAnimatedTransformList* transform() const { return m_transform.get(); }
+  bool IsValid() const final { return SVGTests::IsValid(); }
 
-    AffineTransform computeCTM(SVGElement::CTMScope mode, SVGGraphicsElement::StyleUpdateStrategy,
-        const SVGGraphicsElement* ancestor = 0) const;
+  SVGAnimatedTransformList* transform() { return transform_.Get(); }
+  const SVGAnimatedTransformList* transform() const { return transform_.Get(); }
 
-    DECLARE_VIRTUAL_TRACE();
+  AffineTransform ComputeCTM(SVGElement::CTMScope mode,
+                             SVGGraphicsElement::StyleUpdateStrategy,
+                             const SVGGraphicsElement* ancestor = 0) const;
 
-protected:
-    SVGGraphicsElement(const QualifiedName&, Document&, ConstructionType = CreateSVGElement);
+  DECLARE_VIRTUAL_TRACE();
 
-    bool supportsFocus() const override { return Element::supportsFocus() || hasFocusEventListeners(); }
+ protected:
+  SVGGraphicsElement(const QualifiedName&,
+                     Document&,
+                     ConstructionType = kCreateSVGElement);
 
-    void svgAttributeChanged(const QualifiedName&) override;
+  bool SupportsFocus() const override {
+    return Element::SupportsFocus() || HasFocusEventListeners();
+  }
 
-    Member<SVGAnimatedTransformList> m_transform;
+  void CollectStyleForPresentationAttribute(const QualifiedName&,
+                                            const AtomicString&,
+                                            MutableStylePropertySet*) override;
+  void SvgAttributeChanged(const QualifiedName&) override;
 
-private:
-    bool isSVGGraphicsElement() const final { return true; }
+  Member<SVGAnimatedTransformList> transform_;
+
+ private:
+  bool IsSVGGraphicsElement() const final { return true; }
 };
 
-inline bool isSVGGraphicsElement(const SVGElement& element)
-{
-    return element.isSVGGraphicsElement();
+inline bool IsSVGGraphicsElement(const SVGElement& element) {
+  return element.IsSVGGraphicsElement();
 }
 
 DEFINE_SVGELEMENT_TYPE_CASTS_WITH_FUNCTION(SVGGraphicsElement);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGGraphicsElement_h
+#endif  // SVGGraphicsElement_h

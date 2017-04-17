@@ -10,10 +10,9 @@
 #include "base/macros.h"
 #include "components/arc/arc_service.h"
 #include "components/arc/ime/arc_ime_bridge.h"
-#include "ui/aura/client/focus_change_observer.h"
+#include "components/exo/wm_helper.h"
 #include "ui/aura/env_observer.h"
 #include "ui/aura/window_observer.h"
-#include "ui/aura/window_tracker.h"
 #include "ui/base/ime/text_input_client.h"
 #include "ui/base/ime/text_input_flags.h"
 #include "ui/base/ime/text_input_type.h"
@@ -22,10 +21,6 @@
 #include "ui/keyboard/keyboard_controller_observer.h"
 
 namespace aura {
-namespace client {
-class FocusClient;
-}
-
 class Window;
 }
 
@@ -43,12 +38,20 @@ class ArcImeService : public ArcService,
                       public ArcImeBridge::Delegate,
                       public aura::EnvObserver,
                       public aura::WindowObserver,
-                      public aura::client::FocusChangeObserver,
+                      public exo::WMHelper::FocusObserver,
                       public keyboard::KeyboardControllerObserver,
                       public ui::TextInputClient {
  public:
   explicit ArcImeService(ArcBridgeService* bridge_service);
   ~ArcImeService() override;
+
+  class ArcWindowDelegate {
+   public:
+    virtual ~ArcWindowDelegate() {}
+    virtual bool IsArcWindow(const aura::Window* window) const = 0;
+    virtual void RegisterFocusObserver() = 0;
+    virtual void UnregisterFocusObserver() = 0;
+  };
 
   // Injects the custom IPC bridge object for testing purpose only.
   void SetImeBridgeForTesting(std::unique_ptr<ArcImeBridge> test_ime_bridge);
@@ -56,13 +59,19 @@ class ArcImeService : public ArcService,
   // Injects the custom IME for testing purpose only.
   void SetInputMethodForTesting(ui::InputMethod* test_input_method);
 
+  // Injects the custom delegate for ARC windows, for testing purpose only.
+  void SetArcWindowDelegateForTesting(
+      std::unique_ptr<ArcWindowDelegate> delegate);
+
   // Overridden from aura::EnvObserver:
   void OnWindowInitialized(aura::Window* new_window) override;
 
   // Overridden from aura::WindowObserver:
-  void OnWindowAddedToRootWindow(aura::Window* window) override;
+  void OnWindowDestroying(aura::Window* window) override;
+  void OnWindowRemovingFromRootWindow(aura::Window* window,
+                                      aura::Window* new_root) override;
 
-  // Overridden from aura::client::FocusChangeObserver:
+  // Overridden from exo::WMHelper::FocusObserver:
   void OnWindowFocused(aura::Window* gained_focus,
                        aura::Window* lost_focus) override;
 
@@ -74,6 +83,7 @@ class ArcImeService : public ArcService,
 
   // Overridden from keyboard::KeyboardControllerObserver.
   void OnKeyboardBoundsChanging(const gfx::Rect& rect) override;
+  void OnKeyboardClosed() override;
 
   // Overridden from ui::TextInputClient:
   void SetCompositionText(const ui::CompositionText& composition) override;
@@ -105,7 +115,7 @@ class ArcImeService : public ArcService,
   bool ChangeTextDirectionAndLayoutAlignment(
       base::i18n::TextDirection direction) override;
   void ExtendSelectionAndDelete(size_t before, size_t after) override;
-  void EnsureCaretInRect(const gfx::Rect& rect) override {}
+  void EnsureCaretNotInRect(const gfx::Rect& rect) override {}
   bool IsTextEditCommandEnabled(ui::TextEditCommand command) const override;
   void SetTextEditCommandForNextKeyEvent(ui::TextEditCommand command) override {
   }
@@ -114,17 +124,17 @@ class ArcImeService : public ArcService,
   ui::InputMethod* GetInputMethod();
 
   std::unique_ptr<ArcImeBridge> ime_bridge_;
+  std::unique_ptr<ArcWindowDelegate> arc_window_delegate_;
   ui::TextInputType ime_type_;
   gfx::Rect cursor_rect_;
   bool has_composition_text_;
 
-  aura::WindowTracker arc_windows_;
-  aura::WindowTracker focused_arc_window_;
+  aura::Window* focused_arc_window_ = nullptr;
 
-  aura::client::FocusClient* focus_client_;
   keyboard::KeyboardController* keyboard_controller_;
 
   ui::InputMethod* test_input_method_;
+  bool is_focus_observer_installed_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcImeService);
 };

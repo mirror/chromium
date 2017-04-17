@@ -12,8 +12,8 @@
 namespace ui {
 namespace {
 
-base::LazyInstance<OverlayManagerCast::OverlayCompositedCallback>
-    g_overlay_composited_callback = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<OverlayManagerCast::OverlayCompositedCallback>::
+    DestructorAtExit g_overlay_composited_callback = LAZY_INSTANCE_INITIALIZER;
 
 // Translates a gfx::OverlayTransform into a VideoPlane::Transform.
 // Could be just a lookup table once we have unit tests for this code
@@ -80,7 +80,7 @@ OverlayManagerCast::~OverlayManagerCast() {
 
 std::unique_ptr<OverlayCandidatesOzone>
 OverlayManagerCast::CreateOverlayCandidates(gfx::AcceleratedWidget w) {
-  return base::WrapUnique(new OverlayCandidatesCast());
+  return base::MakeUnique<OverlayCandidatesCast>();
 }
 
 // static

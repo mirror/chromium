@@ -3,43 +3,55 @@
 // found in the LICENSE file.
 
 // TestBrowserThreadBundle is a convenience class for creating a set of
-// TestBrowserThreads in unit tests.  For most tests, it is sufficient to
-// just instantiate the TestBrowserThreadBundle as a member variable.
-// It is a good idea to put the TestBrowserThreadBundle as the first member
-// variable in test classes, so it is destroyed last, and the test threads
-// always exist from the perspective of other classes.
+// TestBrowserThreads, a blocking pool, and a task scheduler in unit tests. For
+// most tests, it is sufficient to just instantiate the TestBrowserThreadBundle
+// as a member variable. It is a good idea to put the TestBrowserThreadBundle as
+// the first member variable in test classes, so it is destroyed last, and the
+// test threads always exist from the perspective of other classes.
 //
 // By default, all of the created TestBrowserThreads will be backed by a single
-// shared MessageLoop. If a test truly needs separate threads, it can do
-// so by passing the appropriate combination of option values during
-// the TestBrowserThreadBundle construction.
+// shared MessageLoop. If a test truly needs separate threads, it can do so by
+// passing the appropriate combination of option values during the
+// TestBrowserThreadBundle construction. TaskScheduler and blocking pool tasks
+// always run on dedicated threads.
 //
-// The TestBrowserThreadBundle will attempt to drain the MessageLoop on
-// destruction. Sometimes a test needs to drain currently enqueued tasks
-// mid-test. Browser tests should call content::RunAllPendingInMessageLoop().
-// Unit tests should use base::RunLoop (e.g., base::RunLoop().RunUntilIdle()).
-// TODO(phajdan.jr): Revise this comment after switch to Aura.
+// To synchronously run tasks from the shared MessageLoop:
 //
-// The TestBrowserThreadBundle will also flush the blocking pool on destruction.
-// We do this to avoid memory leaks, particularly in the case of threads posting
-// tasks to the blocking pool via PostTaskAndReply. By ensuring that the tasks
-// are run while the originating TestBroswserThreads still exist, we prevent
-// leakage of PostTaskAndReplyRelay objects. We also flush the blocking pool
-// again at the point where it would normally be shut down, to better simulate
-// the normal thread shutdown process.
+// ... until there are no undelayed tasks in the shared MessageLoop:
+//    base::RunLoop::RunUntilIdle();
 //
-// Some tests using the IO thread expect a MessageLoopForIO. Passing
-// IO_MAINLOOP will use a MessageLoopForIO for the main MessageLoop.
-// Most of the time, this avoids needing to use a REAL_IO_THREAD.
+// ... until there are no undelayed tasks in the shared MessageLoop, in
+// TaskScheduler or in the blocking pool (excluding tasks not posted from the
+// shared MessageLoop's thread, TaskScheduler or the blocking pool):
+//    content::RunAllBlockingPoolTasksUntilIdle();
+//
+// ... until a condition is met:
+//    base::RunLoop run_loop;
+//    // Runs until a task running in the shared MessageLoop calls
+//    // run_loop.Quit() or runs run_loop.QuitClosure() (&run_loop or
+//    // run_loop.QuitClosure() must be kept somewhere accessible by that task).
+//    run_loop.Run();
+//
+// To wait until there are no pending undelayed tasks in TaskScheduler or in the
+// blocking pool, without running tasks from the shared MessageLoop:
+//    base::TaskScheduler::GetInstance()->FlushForTesting();
+//    // Note: content::BrowserThread::GetBlockingPool()->FlushForTesting() is
+//    // equivalent but deprecated.
+//
+// The destructor of TestBrowserThreadBundle runs remaining TestBrowserThreads
+// tasks, remaining blocking pool tasks, and remaining BLOCK_SHUTDOWN task
+// scheduler tasks.
+//
+// If a test needs a MessageLoopForIO on the main thread, it should use the
+// IO_MAINLOOP option. Most of the time, IO_MAINLOOP avoids needing to use a
+// REAL_IO_THREAD.
 //
 // For some tests it is important to emulate real browser startup. During real
-// browser startup some initialization is done (e.g. creation of thread objects)
-// between creating the main thread message loop, which is bound to the existing
-// main thread, and starting the other threads. Passing DONT_START_THREADS to
-// constructor will delay staring these other threads until the test explicitly
-// calls Start().
+// browser startup, the main MessageLoop is created before other threads.
+// Passing DONT_CREATE_THREADS to constructor will delay creating other threads
+// until the test explicitly calls CreateThreads().
 //
-// DONT_START_THREADS should only be used when the options specify at least
+// DONT_CREATE_THREADS should only be used when the options specify at least
 // one real thread other than the main thread.
 
 #ifndef CONTENT_PUBLIC_TEST_TEST_BROWSER_THREAD_BUNDLE_H_
@@ -51,6 +63,9 @@
 
 namespace base {
 class MessageLoop;
+namespace test {
+class ScopedAsyncTaskScheduler;
+}  // namespace test
 }  // namespace base
 
 namespace content {
@@ -63,23 +78,20 @@ class TestBrowserThreadBundle {
   // which of the named BrowserThreads should be backed by a real
   // threads. The UI thread is always the main thread in a unit test.
   enum Options {
-    DEFAULT = 0x00,
-    IO_MAINLOOP = 0x01,
-    REAL_DB_THREAD = 0x02,
-    REAL_FILE_THREAD = 0x08,
-    REAL_FILE_USER_BLOCKING_THREAD = 0x10,
-    REAL_PROCESS_LAUNCHER_THREAD = 0x20,
-    REAL_CACHE_THREAD = 0x40,
-    REAL_IO_THREAD = 0x80,
-    DONT_START_THREADS = 0x100,
+    DEFAULT = 0,
+    IO_MAINLOOP = 1 << 0,
+    REAL_DB_THREAD = 1 << 1,
+    REAL_FILE_THREAD = 1 << 2,
+    REAL_IO_THREAD = 1 << 3,
+    DONT_CREATE_THREADS = 1 << 4,
   };
 
   TestBrowserThreadBundle();
   explicit TestBrowserThreadBundle(int options);
 
-  // Start the real threads; should only be called from other classes if the
-  // DONT_START_THREADS option was used when the bundle was created.
-  void Start();
+  // Creates threads; should only be called from other classes if the
+  // DONT_CREATE_THREADS option was used when the bundle was created.
+  void CreateThreads();
 
   ~TestBrowserThreadBundle();
 
@@ -87,6 +99,8 @@ class TestBrowserThreadBundle {
   void Init();
 
   std::unique_ptr<base::MessageLoop> message_loop_;
+  std::unique_ptr<base::test::ScopedAsyncTaskScheduler>
+      scoped_async_task_scheduler_;
   std::unique_ptr<TestBrowserThread> ui_thread_;
   std::unique_ptr<TestBrowserThread> db_thread_;
   std::unique_ptr<TestBrowserThread> file_thread_;
@@ -96,7 +110,7 @@ class TestBrowserThreadBundle {
   std::unique_ptr<TestBrowserThread> io_thread_;
 
   int options_;
-  bool threads_started_;
+  bool threads_created_;
 
   DISALLOW_COPY_AND_ASSIGN(TestBrowserThreadBundle);
 };

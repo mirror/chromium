@@ -16,17 +16,17 @@
 #include "chrome/browser/importer/importer_unittest_utils.h"
 #include "chrome/common/importer/imported_bookmark_entry.h"
 #include "chrome/test/base/testing_profile.h"
-#include "components/bookmarks/browser/bookmark_match.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/bookmark_utils.h"
+#include "components/bookmarks/browser/titled_url_match.h"
 #include "components/bookmarks/test/bookmark_test_helpers.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/history/core/browser/history_types.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using bookmarks::BookmarkMatch;
 using bookmarks::BookmarkModel;
+using bookmarks::TitledUrlMatch;
 
 class TestProfileWriter : public ProfileWriter {
  public:
@@ -81,7 +81,7 @@ class ProfileWriterTest : public testing::Test {
       const std::vector<BookmarkModel::URLAndTitle>& bookmarks_record,
       BookmarkModel* bookmark_model,
       size_t expected) {
-    std::vector<BookmarkMatch> matches;
+    std::vector<TitledUrlMatch> matches;
     for (size_t i = 0; i < bookmarks_record.size(); ++i) {
       bookmark_model->GetBookmarksMatching(
           bookmarks_record[i].title, 10, &matches);
@@ -138,7 +138,7 @@ TEST_F(ProfileWriterTest, CheckBookmarksWithMultiProfile) {
   profile2.CreateBookmarkModel(true);
 
   BookmarkModel* bookmark_model2 =
-      BookmarkModelFactory::GetForProfile(&profile2);
+      BookmarkModelFactory::GetForBrowserContext(&profile2);
   bookmarks::test::WaitForBookmarkModelToLoad(bookmark_model2);
   bookmarks::AddIfNotBookmarked(
       bookmark_model2, GURL("http://www.bing.com"), base::ASCIIToUTF16("Bing"));
@@ -147,7 +147,7 @@ TEST_F(ProfileWriterTest, CheckBookmarksWithMultiProfile) {
 
   CreateImportedBookmarksEntries();
   BookmarkModel* bookmark_model1 =
-      BookmarkModelFactory::GetForProfile(&profile1);
+      BookmarkModelFactory::GetForBrowserContext(&profile1);
   bookmarks::test::WaitForBookmarkModelToLoad(bookmark_model1);
 
   scoped_refptr<TestProfileWriter> profile_writer(
@@ -171,7 +171,7 @@ TEST_F(ProfileWriterTest, CheckBookmarksAfterWritingDataTwice) {
 
   CreateImportedBookmarksEntries();
   BookmarkModel* bookmark_model =
-      BookmarkModelFactory::GetForProfile(&profile);
+      BookmarkModelFactory::GetForBrowserContext(&profile);
   bookmarks::test::WaitForBookmarkModelToLoad(bookmark_model);
 
   scoped_refptr<TestProfileWriter> profile_writer(

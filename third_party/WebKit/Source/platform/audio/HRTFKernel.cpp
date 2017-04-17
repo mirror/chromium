@@ -26,105 +26,121 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "platform/FloatConversion.h"
-#include "platform/audio/AudioChannel.h"
 #include "platform/audio/HRTFKernel.h"
-#include "wtf/MathExtras.h"
-#include "wtf/PtrUtil.h"
+
 #include <algorithm>
 #include <memory>
+#include "platform/audio/AudioChannel.h"
+#include "platform/wtf/MathExtras.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-// Takes the input AudioChannel as an input impulse response and calculates the average group delay.
-// This represents the initial delay before the most energetic part of the impulse response.
-// The sample-frame delay is removed from the impulseP impulse response, and this value  is returned.
-// the length of the passed in AudioChannel must be a power of 2.
-static float extractAverageGroupDelay(AudioChannel* channel, size_t analysisFFTSize)
-{
-    ASSERT(channel);
+// Takes the input AudioChannel as an input impulse response and calculates the
+// average group delay.  This represents the initial delay before the most
+// energetic part of the impulse response.  The sample-frame delay is removed
+// from the impulseP impulse response, and this value  is returned.  The length
+// of the passed in AudioChannel must be a power of 2.
+static float ExtractAverageGroupDelay(AudioChannel* channel,
+                                      size_t analysis_fft_size) {
+  DCHECK(channel);
 
-    float* impulseP = channel->mutableData();
+  float* impulse_p = channel->MutableData();
 
-    bool isSizeGood = channel->length() >= analysisFFTSize;
-    ASSERT(isSizeGood);
-    if (!isSizeGood)
-        return 0;
+  bool is_size_good = channel->length() >= analysis_fft_size;
+  DCHECK(is_size_good);
+  if (!is_size_good)
+    return 0;
 
-    // Check for power-of-2.
-    ASSERT(1UL << static_cast<unsigned>(log2(analysisFFTSize)) == analysisFFTSize);
+  // Check for power-of-2.
+  DCHECK_EQ(1UL << static_cast<unsigned>(log2(analysis_fft_size)),
+            analysis_fft_size);
 
-    FFTFrame estimationFrame(analysisFFTSize);
-    estimationFrame.doFFT(impulseP);
+  FFTFrame estimation_frame(analysis_fft_size);
+  estimation_frame.DoFFT(impulse_p);
 
-    float frameDelay = narrowPrecisionToFloat(estimationFrame.extractAverageGroupDelay());
-    estimationFrame.doInverseFFT(impulseP);
+  float frame_delay =
+      clampTo<float>(estimation_frame.ExtractAverageGroupDelay());
+  estimation_frame.DoInverseFFT(impulse_p);
 
-    return frameDelay;
+  return frame_delay;
 }
 
-HRTFKernel::HRTFKernel(AudioChannel* channel, size_t fftSize, float sampleRate)
-    : m_frameDelay(0)
-    , m_sampleRate(sampleRate)
-{
-    ASSERT(channel);
+HRTFKernel::HRTFKernel(AudioChannel* channel,
+                       size_t fft_size,
+                       float sample_rate)
+    : frame_delay_(0), sample_rate_(sample_rate) {
+  DCHECK(channel);
 
-    // Determine the leading delay (average group delay) for the response.
-    m_frameDelay = extractAverageGroupDelay(channel, fftSize / 2);
+  // Determine the leading delay (average group delay) for the response.
+  frame_delay_ = ExtractAverageGroupDelay(channel, fft_size / 2);
 
-    float* impulseResponse = channel->mutableData();
-    size_t responseLength = channel->length();
+  float* impulse_response = channel->MutableData();
+  size_t response_length = channel->length();
 
-    // We need to truncate to fit into 1/2 the FFT size (with zero padding) in order to do proper convolution.
-    size_t truncatedResponseLength = std::min(responseLength, fftSize / 2); // truncate if necessary to max impulse response length allowed by FFT
+  // We need to truncate to fit into 1/2 the FFT size (with zero padding) in
+  // order to do proper convolution.
+  // Truncate if necessary to max impulse response length allowed by FFT.
+  size_t truncated_response_length = std::min(response_length, fft_size / 2);
 
-    // Quick fade-out (apply window) at truncation point
-    unsigned numberOfFadeOutFrames = static_cast<unsigned>(sampleRate / 4410); // 10 sample-frames @44.1KHz sample-rate
-    ASSERT(numberOfFadeOutFrames < truncatedResponseLength);
-    if (numberOfFadeOutFrames < truncatedResponseLength) {
-        for (unsigned i = truncatedResponseLength - numberOfFadeOutFrames; i < truncatedResponseLength; ++i) {
-            float x = 1.0f - static_cast<float>(i - (truncatedResponseLength - numberOfFadeOutFrames)) / numberOfFadeOutFrames;
-            impulseResponse[i] *= x;
-        }
+  // Quick fade-out (apply window) at truncation point
+  unsigned number_of_fade_out_frames = static_cast<unsigned>(
+      sample_rate / 4410);  // 10 sample-frames @44.1KHz sample-rate
+  DCHECK_LT(number_of_fade_out_frames, truncated_response_length);
+  if (number_of_fade_out_frames < truncated_response_length) {
+    for (unsigned i = truncated_response_length - number_of_fade_out_frames;
+         i < truncated_response_length; ++i) {
+      float x = 1.0f - static_cast<float>(i - (truncated_response_length -
+                                               number_of_fade_out_frames)) /
+                           number_of_fade_out_frames;
+      impulse_response[i] *= x;
     }
+  }
 
-    m_fftFrame = wrapUnique(new FFTFrame(fftSize));
-    m_fftFrame->doPaddedFFT(impulseResponse, truncatedResponseLength);
+  fft_frame_ = WTF::MakeUnique<FFTFrame>(fft_size);
+  fft_frame_->DoPaddedFFT(impulse_response, truncated_response_length);
 }
 
-std::unique_ptr<AudioChannel> HRTFKernel::createImpulseResponse()
-{
-    std::unique_ptr<AudioChannel> channel = wrapUnique(new AudioChannel(fftSize()));
-    FFTFrame fftFrame(*m_fftFrame);
+std::unique_ptr<AudioChannel> HRTFKernel::CreateImpulseResponse() {
+  std::unique_ptr<AudioChannel> channel =
+      WTF::WrapUnique(new AudioChannel(FftSize()));
+  FFTFrame fft_frame(*fft_frame_);
 
-    // Add leading delay back in.
-    fftFrame.addConstantGroupDelay(m_frameDelay);
-    fftFrame.doInverseFFT(channel->mutableData());
+  // Add leading delay back in.
+  fft_frame.AddConstantGroupDelay(frame_delay_);
+  fft_frame.DoInverseFFT(channel->MutableData());
 
-    return channel;
+  return channel;
 }
 
 // Interpolates two kernels with x: 0 -> 1 and returns the result.
-std::unique_ptr<HRTFKernel> HRTFKernel::createInterpolatedKernel(HRTFKernel* kernel1, HRTFKernel* kernel2, float x)
-{
-    ASSERT(kernel1 && kernel2);
-    if (!kernel1 || !kernel2)
-        return nullptr;
+std::unique_ptr<HRTFKernel> HRTFKernel::CreateInterpolatedKernel(
+    HRTFKernel* kernel1,
+    HRTFKernel* kernel2,
+    float x) {
+  DCHECK(kernel1);
+  DCHECK(kernel2);
+  if (!kernel1 || !kernel2)
+    return nullptr;
 
-    ASSERT(x >= 0.0 && x < 1.0);
-    x = clampTo(x, 0.0f, 1.0f);
+  DCHECK_GE(x, 0.0);
+  DCHECK_LT(x, 1.0);
+  x = clampTo(x, 0.0f, 1.0f);
 
-    float sampleRate1 = kernel1->sampleRate();
-    float sampleRate2 = kernel2->sampleRate();
-    ASSERT(sampleRate1 == sampleRate2);
-    if (sampleRate1 != sampleRate2)
-        return nullptr;
+  float sample_rate1 = kernel1->SampleRate();
+  float sample_rate2 = kernel2->SampleRate();
+  DCHECK_EQ(sample_rate1, sample_rate2);
+  if (sample_rate1 != sample_rate2)
+    return nullptr;
 
-    float frameDelay = (1 - x) * kernel1->frameDelay() + x * kernel2->frameDelay();
+  float frame_delay =
+      (1 - x) * kernel1->FrameDelay() + x * kernel2->FrameDelay();
 
-    std::unique_ptr<FFTFrame> interpolatedFrame = FFTFrame::createInterpolatedFrame(*kernel1->fftFrame(), *kernel2->fftFrame(), x);
-    return HRTFKernel::create(std::move(interpolatedFrame), frameDelay, sampleRate1);
+  std::unique_ptr<FFTFrame> interpolated_frame =
+      FFTFrame::CreateInterpolatedFrame(*kernel1->FftFrame(),
+                                        *kernel2->FftFrame(), x);
+  return HRTFKernel::Create(std::move(interpolated_frame), frame_delay,
+                            sample_rate1);
 }
 
-} // namespace blink
-
+}  // namespace blink

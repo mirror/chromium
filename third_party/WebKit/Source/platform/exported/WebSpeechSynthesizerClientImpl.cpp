@@ -29,64 +29,63 @@
 
 namespace blink {
 
-WebSpeechSynthesizerClientImpl::WebSpeechSynthesizerClientImpl(PlatformSpeechSynthesizer* synthesizer, PlatformSpeechSynthesizerClient* client)
-    : m_synthesizer(synthesizer)
-    , m_client(client)
-{
+WebSpeechSynthesizerClientImpl::WebSpeechSynthesizerClientImpl(
+    PlatformSpeechSynthesizer* synthesizer,
+    PlatformSpeechSynthesizerClient* client)
+    : synthesizer_(synthesizer), client_(client) {}
+
+WebSpeechSynthesizerClientImpl::~WebSpeechSynthesizerClientImpl() {}
+
+void WebSpeechSynthesizerClientImpl::SetVoiceList(
+    const WebVector<WebSpeechSynthesisVoice>& voices) {
+  Vector<RefPtr<PlatformSpeechSynthesisVoice>> out_voices;
+  for (size_t i = 0; i < voices.size(); i++)
+    out_voices.push_back(voices[i]);
+  synthesizer_->SetVoiceList(out_voices);
+  client_->VoicesDidChange();
 }
 
-WebSpeechSynthesizerClientImpl::~WebSpeechSynthesizerClientImpl()
-{
+void WebSpeechSynthesizerClientImpl::DidStartSpeaking(
+    const WebSpeechSynthesisUtterance& utterance) {
+  client_->DidStartSpeaking(utterance);
 }
 
-void WebSpeechSynthesizerClientImpl::setVoiceList(const WebVector<WebSpeechSynthesisVoice>& voices)
-{
-    Vector<RefPtr<PlatformSpeechSynthesisVoice>> outVoices;
-    for (size_t i = 0; i < voices.size(); i++)
-        outVoices.append(voices[i]);
-    m_synthesizer->setVoiceList(outVoices);
-    m_client->voicesDidChange();
+void WebSpeechSynthesizerClientImpl::DidFinishSpeaking(
+    const WebSpeechSynthesisUtterance& utterance) {
+  client_->DidFinishSpeaking(utterance);
 }
 
-void WebSpeechSynthesizerClientImpl::didStartSpeaking(const WebSpeechSynthesisUtterance& utterance)
-{
-    m_client->didStartSpeaking(utterance);
+void WebSpeechSynthesizerClientImpl::DidPauseSpeaking(
+    const WebSpeechSynthesisUtterance& utterance) {
+  client_->DidPauseSpeaking(utterance);
 }
 
-void WebSpeechSynthesizerClientImpl::didFinishSpeaking(const WebSpeechSynthesisUtterance& utterance)
-{
-    m_client->didFinishSpeaking(utterance);
+void WebSpeechSynthesizerClientImpl::DidResumeSpeaking(
+    const WebSpeechSynthesisUtterance& utterance) {
+  client_->DidResumeSpeaking(utterance);
 }
 
-void WebSpeechSynthesizerClientImpl::didPauseSpeaking(const WebSpeechSynthesisUtterance& utterance)
-{
-    m_client->didPauseSpeaking(utterance);
+void WebSpeechSynthesizerClientImpl::SpeakingErrorOccurred(
+    const WebSpeechSynthesisUtterance& utterance) {
+  client_->SpeakingErrorOccurred(utterance);
 }
 
-void WebSpeechSynthesizerClientImpl::didResumeSpeaking(const WebSpeechSynthesisUtterance& utterance)
-{
-    m_client->didResumeSpeaking(utterance);
+void WebSpeechSynthesizerClientImpl::WordBoundaryEventOccurred(
+    const WebSpeechSynthesisUtterance& utterance,
+    unsigned char_index) {
+  client_->BoundaryEventOccurred(utterance, kSpeechWordBoundary, char_index);
 }
 
-void WebSpeechSynthesizerClientImpl::speakingErrorOccurred(const WebSpeechSynthesisUtterance& utterance)
-{
-    m_client->speakingErrorOccurred(utterance);
+void WebSpeechSynthesizerClientImpl::SentenceBoundaryEventOccurred(
+    const WebSpeechSynthesisUtterance& utterance,
+    unsigned char_index) {
+  client_->BoundaryEventOccurred(utterance, kSpeechSentenceBoundary,
+                                 char_index);
 }
 
-void WebSpeechSynthesizerClientImpl::wordBoundaryEventOccurred(const WebSpeechSynthesisUtterance& utterance, unsigned charIndex)
-{
-    m_client->boundaryEventOccurred(utterance, SpeechWordBoundary, charIndex);
+DEFINE_TRACE(WebSpeechSynthesizerClientImpl) {
+  visitor->Trace(synthesizer_);
+  visitor->Trace(client_);
 }
 
-void WebSpeechSynthesizerClientImpl::sentenceBoundaryEventOccurred(const WebSpeechSynthesisUtterance& utterance, unsigned charIndex)
-{
-    m_client->boundaryEventOccurred(utterance, SpeechSentenceBoundary, charIndex);
-}
-
-DEFINE_TRACE(WebSpeechSynthesizerClientImpl)
-{
-    visitor->trace(m_synthesizer);
-    visitor->trace(m_client);
-}
-
-} // namespace blink
+}  // namespace blink

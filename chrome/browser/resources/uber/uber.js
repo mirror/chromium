@@ -50,7 +50,7 @@ cr.define('uber', function() {
     // flicker on load.
     // HACK(csilv): Search URLs aren't overlays, special case them.
     if (params.id == 'settings' && params.path &&
-        params.path.indexOf('search') != 0) {
+        !params.path.startsWith('search')) {
       backgroundNavigation();
     }
 
@@ -156,7 +156,7 @@ cr.define('uber', function() {
    * @param {Event} e The posted object.
    */
   function handleWindowMessage(e) {
-    e = /** @type{!MessageEvent<!{method: string, params: *}>} */(e);
+    e = /** @type {!MessageEvent<!{method: string, params: *}>} */(e);
     if (e.data.method === 'beginInterceptingEvents') {
       backgroundNavigation();
     } else if (e.data.method === 'stopInterceptingEvents') {
@@ -426,7 +426,7 @@ cr.define('uber', function() {
       var navWidth = Math.max(0, +navFrame.dataset.width + scrollOffset);
       navFrame.style.width = navWidth + 'px';
     } else {
-      navFrame.style.webkitTransform = 'translateX(' + -scrollOffset + 'px)';
+      navFrame.style.transform = 'translateX(' + -scrollOffset + 'px)';
     }
   }
 
@@ -459,7 +459,7 @@ cr.define('uber', function() {
         container.hidden = true;
         container.setAttribute('aria-hidden', 'true');
       }
-      container.addEventListener('webkitTransitionEnd', function(event) {
+      container.addEventListener('transitionend', function(event) {
         if (!event.target.classList.contains('selected'))
           event.target.hidden = true;
       });

@@ -11,7 +11,6 @@
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/extensions/extension_ui_util.h"
-#include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/extensions/install_tracker.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/app_list_controller_delegate.h"
@@ -22,7 +21,6 @@
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
-#include "extensions/browser/extensions_browser_client.h"
 #include "extensions/browser/pref_names.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -47,20 +45,6 @@ void ExtensionAppModelBuilder::InitializePrefChangeRegistrars() {
       prefs::kHideWebStoreIcon,
       base::Bind(&ExtensionAppModelBuilder::OnProfilePreferenceChanged,
                  base::Unretained(this)));
-
-  if (!extensions::util::IsNewBookmarkAppsEnabled())
-    return;
-
-  // TODO(calamity): analyze the performance impact of doing this every
-  // extension pref change.
-  extensions::ExtensionsBrowserClient* client =
-      extensions::ExtensionsBrowserClient::Get();
-  extension_pref_change_registrar_.Init(
-      client->GetPrefServiceForContext(profile()));
-  extension_pref_change_registrar_.Add(
-    extensions::pref_names::kExtensions,
-    base::Bind(&ExtensionAppModelBuilder::OnExtensionPreferenceChanged,
-               base::Unretained(this)));
 }
 
 void ExtensionAppModelBuilder::OnProfilePreferenceChanged() {
@@ -82,13 +66,9 @@ void ExtensionAppModelBuilder::OnProfilePreferenceChanged() {
                               gfx::ImageSkia(),
                               (*app)->is_platform_app()));
     } else {
-      RemoveApp((*app)->id());
+      RemoveApp((*app)->id(), false);
     }
   }
-}
-
-void ExtensionAppModelBuilder::OnExtensionPreferenceChanged() {
-  model()->NotifyExtensionPreferenceChanged();
 }
 
 void ExtensionAppModelBuilder::OnBeginExtensionInstall(
@@ -205,9 +185,9 @@ std::unique_ptr<ExtensionAppItem> ExtensionAppModelBuilder::CreateAppItem(
     const std::string& extension_name,
     const gfx::ImageSkia& installing_icon,
     bool is_platform_app) {
-  return base::WrapUnique(
-      new ExtensionAppItem(profile(), GetSyncItem(extension_id), extension_id,
-                           extension_name, installing_icon, is_platform_app));
+  return base::MakeUnique<ExtensionAppItem>(
+      profile(), GetSyncItem(extension_id), extension_id, extension_name,
+      installing_icon, is_platform_app);
 }
 
 void ExtensionAppModelBuilder::BuildModel() {
@@ -244,36 +224,4 @@ void ExtensionAppModelBuilder::PopulateApps() {
 ExtensionAppItem* ExtensionAppModelBuilder::GetExtensionAppItem(
     const std::string& extension_id) {
   return static_cast<ExtensionAppItem*>(GetAppItem(extension_id));
-}
-
-void ExtensionAppModelBuilder::OnListItemMoved(size_t from_index,
-                                               size_t to_index,
-                                               app_list::AppListItem* item) {
-  DCHECK(!service());
-
-  // This will get called from AppListItemList::ListItemMoved after
-  // set_position is called for the item.
-  if (item->GetItemType() != ExtensionAppItem::kItemType)
-    return;
-
-  app_list::AppListItemList* item_list = model()->top_level_item_list();
-  ExtensionAppItem* prev = nullptr;
-  for (size_t idx = to_index; idx > 0; --idx) {
-    app_list::AppListItem* item = item_list->item_at(idx - 1);
-    if (item->GetItemType() == ExtensionAppItem::kItemType) {
-      prev = static_cast<ExtensionAppItem*>(item);
-      break;
-    }
-  }
-  ExtensionAppItem* next = nullptr;
-  for (size_t idx = to_index; idx < item_list->item_count() - 1; ++idx) {
-    app_list::AppListItem* item = item_list->item_at(idx + 1);
-    if (item->GetItemType() == ExtensionAppItem::kItemType) {
-      next = static_cast<ExtensionAppItem*>(item);
-      break;
-    }
-  }
-  // item->Move will call set_position, overriding the item's position.
-  if (prev || next)
-    static_cast<ExtensionAppItem*>(item)->Move(prev, next);
 }

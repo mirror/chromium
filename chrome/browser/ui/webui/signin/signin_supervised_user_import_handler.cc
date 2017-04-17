@@ -39,7 +39,6 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/common/referrer.h"
-#include "grit/theme_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "url/gurl.h"
 
@@ -103,11 +102,9 @@ void SigninSupervisedUserImportHandler::OpenUrlInLastActiveProfileBrowser(
   std::string url;
   bool success = args->GetString(0, &url);
   DCHECK(success);
-  content::OpenURLParams params(GURL(url),
-                                content::Referrer(),
-                                NEW_FOREGROUND_TAB,
-                                ui::PAGE_TRANSITION_LINK,
-                                false);
+  content::OpenURLParams params(GURL(url), content::Referrer(),
+                                WindowOpenDisposition::NEW_FOREGROUND_TAB,
+                                ui::PAGE_TRANSITION_LINK, false);
   // ProfileManager::GetLastUsedProfile() will attempt to load the default
   // profile if there is no last used profile. If the default profile is not
   // fully loaded and initialized, it will attempt to do so synchronously.
@@ -128,8 +125,8 @@ void SigninSupervisedUserImportHandler::OpenUrlInLastActiveProfileBrowser(
     // it doesn't exist.
     Browser* browser = chrome::FindLastActiveWithProfile(last_used_profile);
     if (!browser)
-      browser = new Browser(Browser::CreateParams(Browser::TYPE_TABBED,
-                                                  last_used_profile));
+      browser = new Browser(
+          Browser::CreateParams(Browser::TYPE_TABBED, last_used_profile, true));
     browser->OpenURL(params);
   }
 }
@@ -142,7 +139,7 @@ void SigninSupervisedUserImportHandler::AuthenticateCustodian(
   bool success = args->GetString(0, &email);
   DCHECK(success);
 
-  UserManager::ShowReauthDialog(
+  UserManagerProfileDialog::ShowReauthDialog(
       web_ui()->GetWebContents()->GetBrowserContext(), email,
       signin_metrics::Reason::REASON_REAUTHENTICATION);
 }
@@ -221,9 +218,7 @@ void SigninSupervisedUserImportHandler::LoadCustodianProfileCallback(
 
 void SigninSupervisedUserImportHandler::RejectCallback(
     const base::string16& error) {
-  RejectJavascriptCallback(
-      base::StringValue(webui_callback_id_),
-      base::StringValue(error));
+  RejectJavascriptCallback(base::Value(webui_callback_id_), base::Value(error));
   webui_callback_id_.clear();
 }
 
@@ -300,9 +295,7 @@ void SigninSupervisedUserImportHandler::SendExistingSupervisedUsers(
   }
 
   // Resolve callback with response.
-  ResolveJavascriptCallback(
-      base::StringValue(webui_callback_id_),
-      supervised_users);
+  ResolveJavascriptCallback(base::Value(webui_callback_id_), supervised_users);
   webui_callback_id_.clear();
 }
 

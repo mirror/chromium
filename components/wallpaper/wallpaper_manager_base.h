@@ -80,6 +80,10 @@ struct WALLPAPER_EXPORT WallpaperInfo {
   }
 };
 
+// Asserts that the current task is sequenced with any other task that calls
+// this.
+void WALLPAPER_EXPORT AssertCalledOnWallpaperSequence();
+
 class WallpaperManagerBrowserTest;
 
 // Name of wallpaper sequence token.
@@ -272,6 +276,11 @@ class WALLPAPER_EXPORT WallpaperManagerBase {
                                   const gfx::ImageSkia& image,
                                   bool update_wallpaper) = 0;
 
+  // Updates wallpaper info for |account_id| to default. If |update_wallpaper|
+  // is false, don't change wallpaper but only update cache.
+  virtual void SetDefaultWallpaper(const AccountId& account_id,
+                                   bool update_wallpaper);
+
   // Use given files as new default wallpaper.
   // Reloads current wallpaper, if old default was loaded.
   // Current value of default_wallpaper_image_ is destroyed.
@@ -350,6 +359,10 @@ class WALLPAPER_EXPORT WallpaperManagerBase {
   // Ruturns files identifier for the |account_id|.
   virtual WallpaperFilesId GetFilesId(const AccountId& account_id) const = 0;
 
+  // If the device is enterprise managed and the device wallpaper policy exists,
+  // set the device wallpaper as the login screen wallpaper.
+  virtual bool SetDeviceWallpaperIfApplicable(const AccountId& account_id) = 0;
+
  protected:
   friend class TestApi;
   friend class WallpaperManagerBrowserTest;
@@ -398,7 +411,8 @@ class WALLPAPER_EXPORT WallpaperManagerBase {
       gfx::ImageSkia* large_wallpaper_image);
 
   // Initialize wallpaper for the specified user to default and saves this
-  // settings in local state.
+  // settings in local state. Note if the device policy controlled wallpaper
+  // exists, use the device wallpaper as the default wallpaper.
   virtual void InitInitialUserWallpaper(const AccountId& account_id,
                                         bool is_persistent);
 
@@ -467,6 +481,17 @@ class WALLPAPER_EXPORT WallpaperManagerBase {
   // false if wallpaper information is not found.
   virtual bool GetUserWallpaperInfo(const AccountId& account_id,
                                     WallpaperInfo* info) const = 0;
+
+  // Returns true if the device wallpaper should be set for the account.
+  virtual bool ShouldSetDeviceWallpaper(const AccountId& account_id,
+                                        std::string* url,
+                                        std::string* hash) = 0;
+
+  // Returns the file directory where the downloaded device wallpaper is saved.
+  virtual base::FilePath GetDeviceWallpaperDir() = 0;
+
+  // Returns the full path for the downloaded device wallpaper.
+  virtual base::FilePath GetDeviceWallpaperFilePath() = 0;
 
   // Sets wallpaper to the decoded wallpaper if |update_wallpaper| is true.
   // Otherwise, cache wallpaper to memory if not logged in.  (Takes a UserImage
@@ -548,6 +573,9 @@ class WALLPAPER_EXPORT WallpaperManagerBase {
       const WallpaperLayout layout,
       MovableOnDestroyCallbackHolder on_finish,
       std::unique_ptr<user_manager::UserImage>* result_out) = 0;
+
+  // Record the Wallpaper App that the user is using right now on Chrome OS.
+  virtual void RecordWallpaperAppType() = 0;
 
   // Returns wallpaper subdirectory name for current resolution.
   virtual const char* GetCustomWallpaperSubdirForCurrentResolution();

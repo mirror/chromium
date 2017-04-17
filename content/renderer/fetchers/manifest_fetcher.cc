@@ -6,15 +6,16 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
-#include "content/public/renderer/resource_fetcher.h"
+#include "content/public/renderer/associated_resource_fetcher.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
+#include "third_party/WebKit/public/web/WebAssociatedURLLoaderOptions.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
 
 namespace content {
 
 ManifestFetcher::ManifestFetcher(const GURL& url)
     : completed_(false) {
-  fetcher_.reset(ResourceFetcher::Create(url));
+  fetcher_.reset(AssociatedResourceFetcher::Create(url));
 }
 
 ManifestFetcher::~ManifestFetcher() {
@@ -27,18 +28,16 @@ void ManifestFetcher::Start(blink::WebFrame* frame,
                             const Callback& callback) {
   callback_ = callback;
 
-  blink::WebURLLoaderOptions options;
-  options.allowCredentials = use_credentials;
-  options.crossOriginRequestPolicy =
-      blink::WebURLLoaderOptions::CrossOriginRequestPolicyUseAccessControl;
+  blink::WebAssociatedURLLoaderOptions options;
+  options.allow_credentials = use_credentials;
+  options.cross_origin_request_policy = blink::WebAssociatedURLLoaderOptions::
+      kCrossOriginRequestPolicyUseAccessControl;
   fetcher_->SetLoaderOptions(options);
 
-  fetcher_->Start(frame,
-                  blink::WebURLRequest::RequestContextManifest,
-                  blink::WebURLRequest::FrameTypeNone,
-                  ResourceFetcher::FRAME_ASSOCIATED_LOADER,
-                  base::Bind(&ManifestFetcher::OnLoadComplete,
-                             base::Unretained(this)));
+  fetcher_->Start(
+      frame, blink::WebURLRequest::kRequestContextManifest,
+      blink::WebURLRequest::kFrameTypeNone,
+      base::Bind(&ManifestFetcher::OnLoadComplete, base::Unretained(this)));
 }
 
 void ManifestFetcher::Cancel() {

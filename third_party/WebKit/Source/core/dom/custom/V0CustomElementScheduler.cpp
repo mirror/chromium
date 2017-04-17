@@ -47,106 +47,124 @@
 namespace blink {
 
 // FIXME: Consider moving the element's callback queue to ElementRareData.
-typedef HeapHashMap<Member<Element>, Member<V0CustomElementCallbackQueue>> ElementCallbackQueueMap;
+typedef HeapHashMap<Member<Element>, Member<V0CustomElementCallbackQueue>>
+    ElementCallbackQueueMap;
 
-static ElementCallbackQueueMap& callbackQueues()
-{
-    DEFINE_STATIC_LOCAL(ElementCallbackQueueMap, map, (new ElementCallbackQueueMap));
-    return map;
+static ElementCallbackQueueMap& CallbackQueues() {
+  DEFINE_STATIC_LOCAL(ElementCallbackQueueMap, map,
+                      (new ElementCallbackQueueMap));
+  return map;
 }
 
-static V0CustomElementCallbackQueue& ensureCallbackQueue(Element* element)
-{
-    ElementCallbackQueueMap::ValueType* it = callbackQueues().add(element, nullptr).storedValue;
-    if (!it->value)
-        it->value = V0CustomElementCallbackQueue::create(element);
-    return *it->value.get();
+static V0CustomElementCallbackQueue& EnsureCallbackQueue(Element* element) {
+  ElementCallbackQueueMap::ValueType* it =
+      CallbackQueues().insert(element, nullptr).stored_value;
+  if (!it->value)
+    it->value = V0CustomElementCallbackQueue::Create(element);
+  return *it->value.Get();
 }
 
 // Finds or creates the callback queue for element.
-static V0CustomElementCallbackQueue& scheduleCallbackQueue(Element* element)
-{
-    V0CustomElementCallbackQueue& callbackQueue = ensureCallbackQueue(element);
-    if (callbackQueue.inCreatedCallback()) {
-        // Don't move it. Authors use the createdCallback like a
-        // constructor. By not moving it, the createdCallback
-        // completes before any other callbacks are entered for this
-        // element.
-        return callbackQueue;
-    }
+static V0CustomElementCallbackQueue& ScheduleCallbackQueue(Element* element) {
+  V0CustomElementCallbackQueue& callback_queue = EnsureCallbackQueue(element);
+  if (callback_queue.InCreatedCallback()) {
+    // Don't move it. Authors use the createdCallback like a
+    // constructor. By not moving it, the createdCallback
+    // completes before any other callbacks are entered for this
+    // element.
+    return callback_queue;
+  }
 
-    if (V0CustomElementProcessingStack::inCallbackDeliveryScope()) {
-        // The processing stack is active.
-        V0CustomElementProcessingStack::instance().enqueue(&callbackQueue);
-        return callbackQueue;
-    }
+  if (V0CustomElementProcessingStack::InCallbackDeliveryScope()) {
+    // The processing stack is active.
+    V0CustomElementProcessingStack::Instance().Enqueue(&callback_queue);
+    return callback_queue;
+  }
 
-    V0CustomElementMicrotaskDispatcher::instance().enqueue(&callbackQueue);
-    return callbackQueue;
+  V0CustomElementMicrotaskDispatcher::Instance().Enqueue(&callback_queue);
+  return callback_queue;
 }
 
-void V0CustomElementScheduler::scheduleCallback(V0CustomElementLifecycleCallbacks* callbacks, Element* element, V0CustomElementLifecycleCallbacks::CallbackType type)
-{
-    DCHECK(type != V0CustomElementLifecycleCallbacks::AttributeChangedCallback);
+void V0CustomElementScheduler::ScheduleCallback(
+    V0CustomElementLifecycleCallbacks* callbacks,
+    Element* element,
+    V0CustomElementLifecycleCallbacks::CallbackType type) {
+  DCHECK(type != V0CustomElementLifecycleCallbacks::kAttributeChangedCallback);
 
-    if (!callbacks->hasCallback(type))
-        return;
+  if (!callbacks->HasCallback(type))
+    return;
 
-    V0CustomElementCallbackQueue& queue = scheduleCallbackQueue(element);
-    queue.append(V0CustomElementCallbackInvocation::createInvocation(callbacks, type));
+  V0CustomElementCallbackQueue& queue = ScheduleCallbackQueue(element);
+  queue.Append(
+      V0CustomElementCallbackInvocation::CreateInvocation(callbacks, type));
 }
 
-void V0CustomElementScheduler::scheduleAttributeChangedCallback(V0CustomElementLifecycleCallbacks* callbacks, Element* element, const AtomicString& name, const AtomicString& oldValue, const AtomicString& newValue)
-{
-    if (!callbacks->hasCallback(V0CustomElementLifecycleCallbacks::AttributeChangedCallback))
-        return;
+void V0CustomElementScheduler::ScheduleAttributeChangedCallback(
+    V0CustomElementLifecycleCallbacks* callbacks,
+    Element* element,
+    const AtomicString& name,
+    const AtomicString& old_value,
+    const AtomicString& new_value) {
+  if (!callbacks->HasCallback(
+          V0CustomElementLifecycleCallbacks::kAttributeChangedCallback))
+    return;
 
-    V0CustomElementCallbackQueue& queue = scheduleCallbackQueue(element);
-    queue.append(V0CustomElementCallbackInvocation::createAttributeChangedInvocation(callbacks, name, oldValue, newValue));
+  V0CustomElementCallbackQueue& queue = ScheduleCallbackQueue(element);
+  queue.Append(
+      V0CustomElementCallbackInvocation::CreateAttributeChangedInvocation(
+          callbacks, name, old_value, new_value));
 }
 
-void V0CustomElementScheduler::resolveOrScheduleResolution(V0CustomElementRegistrationContext* context, Element* element, const V0CustomElementDescriptor& descriptor)
-{
-    if (V0CustomElementProcessingStack::inCallbackDeliveryScope()) {
-        context->resolve(element, descriptor);
-        return;
-    }
+void V0CustomElementScheduler::ResolveOrScheduleResolution(
+    V0CustomElementRegistrationContext* context,
+    Element* element,
+    const V0CustomElementDescriptor& descriptor) {
+  if (V0CustomElementProcessingStack::InCallbackDeliveryScope()) {
+    context->Resolve(element, descriptor);
+    return;
+  }
 
-    Document& document = element->document();
-    V0CustomElementMicrotaskResolutionStep* step = V0CustomElementMicrotaskResolutionStep::create(context, element, descriptor);
-    enqueueMicrotaskStep(document, step);
+  Document& document = element->GetDocument();
+  V0CustomElementMicrotaskResolutionStep* step =
+      V0CustomElementMicrotaskResolutionStep::Create(context, element,
+                                                     descriptor);
+  EnqueueMicrotaskStep(document, step);
 }
 
-V0CustomElementMicrotaskImportStep* V0CustomElementScheduler::scheduleImport(HTMLImportChild* import)
-{
-    DCHECK(!import->hasFinishedLoading());
-    DCHECK(import->parent());
+V0CustomElementMicrotaskImportStep* V0CustomElementScheduler::ScheduleImport(
+    HTMLImportChild* import) {
+  DCHECK(!import->HasFinishedLoading());
+  DCHECK(import->Parent());
 
-    // Ownership of the new step is transferred to the parent
-    // processing step, or the base queue.
-    V0CustomElementMicrotaskImportStep* step = V0CustomElementMicrotaskImportStep::create(import);
-    V0CustomElementMicrotaskImportStep* rawStep = step;
-    enqueueMicrotaskStep(*(import->parent()->document()), step, import->isSync());
-    return rawStep;
+  // Ownership of the new step is transferred to the parent
+  // processing step, or the base queue.
+  V0CustomElementMicrotaskImportStep* step =
+      V0CustomElementMicrotaskImportStep::Create(import);
+  V0CustomElementMicrotaskImportStep* raw_step = step;
+  EnqueueMicrotaskStep(*(import->Parent()->GetDocument()), step,
+                       import->IsSync());
+  return raw_step;
 }
 
-void V0CustomElementScheduler::enqueueMicrotaskStep(Document& document, V0CustomElementMicrotaskStep* step, bool importIsSync)
-{
-    Document& master = document.importsController() ? *(document.importsController()->master()) : document;
-    master.customElementMicrotaskRunQueue()->enqueue(document.importLoader(), step, importIsSync);
+void V0CustomElementScheduler::EnqueueMicrotaskStep(
+    Document& document,
+    V0CustomElementMicrotaskStep* step,
+    bool import_is_sync) {
+  Document& master = document.ImportsController()
+                         ? *(document.ImportsController()->Master())
+                         : document;
+  master.CustomElementMicrotaskRunQueue()->Enqueue(document.ImportLoader(),
+                                                   step, import_is_sync);
 }
 
-
-void V0CustomElementScheduler::callbackDispatcherDidFinish()
-{
-    if (V0CustomElementMicrotaskDispatcher::instance().elementQueueIsEmpty())
-        callbackQueues().clear();
+void V0CustomElementScheduler::CallbackDispatcherDidFinish() {
+  if (V0CustomElementMicrotaskDispatcher::Instance().ElementQueueIsEmpty())
+    CallbackQueues().Clear();
 }
 
-void V0CustomElementScheduler::microtaskDispatcherDidFinish()
-{
-    DCHECK(!V0CustomElementProcessingStack::inCallbackDeliveryScope());
-    callbackQueues().clear();
+void V0CustomElementScheduler::MicrotaskDispatcherDidFinish() {
+  DCHECK(!V0CustomElementProcessingStack::InCallbackDeliveryScope());
+  CallbackQueues().Clear();
 }
 
-} // namespace blink
+}  // namespace blink

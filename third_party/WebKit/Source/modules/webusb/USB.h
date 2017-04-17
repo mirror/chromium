@@ -17,68 +17,76 @@
 namespace blink {
 
 class LocalFrame;
-class ScopedScriptPromiseResolver;
+class ScriptPromiseResolver;
 class ScriptState;
 class USBDevice;
 class USBDeviceRequestOptions;
 
-class USB final
-    : public EventTargetWithInlineData
-    , public ContextLifecycleObserver
-    , public device::usb::blink::DeviceManagerClient {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(USB);
-    USING_PRE_FINALIZER(USB, dispose);
-public:
-    static USB* create(LocalFrame& frame)
-    {
-        return new USB(frame);
-    }
+class USB final : public EventTargetWithInlineData,
+                  public ContextLifecycleObserver,
+                  public device::usb::blink::DeviceManagerClient {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(USB);
+  USING_PRE_FINALIZER(USB, Dispose);
 
-    virtual ~USB();
+ public:
+  static USB* Create(LocalFrame& frame) { return new USB(frame); }
 
-    void dispose();
+  virtual ~USB();
 
-    // USB.idl
-    ScriptPromise getDevices(ScriptState*);
-    ScriptPromise requestDevice(ScriptState*, const USBDeviceRequestOptions&);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(connect);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(disconnect);
+  void Dispose();
 
-    // EventTarget overrides.
-    ExecutionContext* getExecutionContext() const override;
-    const AtomicString& interfaceName() const override;
+  // USB.idl
+  ScriptPromise getDevices(ScriptState*);
+  ScriptPromise requestDevice(ScriptState*, const USBDeviceRequestOptions&);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(connect);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(disconnect);
 
-    // ContextLifecycleObserver overrides.
-    void contextDestroyed() override;
+  // EventTarget overrides.
+  ExecutionContext* GetExecutionContext() const override;
+  const AtomicString& InterfaceName() const override;
 
-    USBDevice* getOrCreateDevice(device::usb::blink::DeviceInfoPtr);
+  // ContextLifecycleObserver overrides.
+  void ContextDestroyed(ExecutionContext*) override;
 
-    device::usb::blink::DeviceManager* deviceManager() const { return m_deviceManager.get(); }
+  USBDevice* GetOrCreateDevice(device::usb::blink::DeviceInfoPtr);
 
-    void onGetDevices(ScriptPromiseResolver*, mojo::WTFArray<device::usb::blink::DeviceInfoPtr>);
-    void onGetPermission(ScriptPromiseResolver*, device::usb::blink::DeviceInfoPtr);
+  device::usb::blink::DeviceManager* GetDeviceManager() const {
+    return device_manager_.get();
+  }
 
-    // DeviceManagerClient implementation.
-    void OnDeviceAdded(device::usb::blink::DeviceInfoPtr);
-    void OnDeviceRemoved(device::usb::blink::DeviceInfoPtr);
+  void OnGetDevices(ScriptPromiseResolver*,
+                    Vector<device::usb::blink::DeviceInfoPtr>);
+  void OnGetPermission(ScriptPromiseResolver*,
+                       device::usb::blink::DeviceInfoPtr);
 
-    void onDeviceManagerConnectionError();
-    void onChooserServiceConnectionError();
+  // DeviceManagerClient implementation.
+  void OnDeviceAdded(device::usb::blink::DeviceInfoPtr);
+  void OnDeviceRemoved(device::usb::blink::DeviceInfoPtr);
 
-    DECLARE_VIRTUAL_TRACE();
+  void OnDeviceManagerConnectionError();
+  void OnChooserServiceConnectionError();
 
-private:
-    explicit USB(LocalFrame& frame);
+  DECLARE_VIRTUAL_TRACE();
 
-    device::usb::blink::DeviceManagerPtr m_deviceManager;
-    HeapHashSet<Member<ScriptPromiseResolver>> m_deviceManagerRequests;
-    device::usb::blink::ChooserServicePtr m_chooserService;
-    HeapHashSet<Member<ScriptPromiseResolver>> m_chooserServiceRequests;
-    mojo::Binding<device::usb::blink::DeviceManagerClient> m_clientBinding;
-    HeapHashMap<String, WeakMember<USBDevice>> m_deviceCache;
+ protected:
+  // EventTarget protected overrides.
+  void AddedEventListener(const AtomicString& event_type,
+                          RegisteredEventListener&) override;
+
+ private:
+  explicit USB(LocalFrame& frame);
+
+  void EnsureDeviceManagerConnection();
+
+  device::usb::blink::DeviceManagerPtr device_manager_;
+  HeapHashSet<Member<ScriptPromiseResolver>> device_manager_requests_;
+  device::usb::blink::ChooserServicePtr chooser_service_;
+  HeapHashSet<Member<ScriptPromiseResolver>> chooser_service_requests_;
+  mojo::Binding<device::usb::blink::DeviceManagerClient> client_binding_;
+  HeapHashMap<String, WeakMember<USBDevice>> device_cache_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // USB_h
+#endif  // USB_h

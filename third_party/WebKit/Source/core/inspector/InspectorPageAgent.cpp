@@ -30,22 +30,17 @@
 
 #include "core/inspector/InspectorPageAgent.h"
 
+#include <memory>
 #include "bindings/core/v8/DOMWrapperWorld.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ScriptRegexp.h"
 #include "core/HTMLNames.h"
 #include "core/dom/DOMImplementation.h"
 #include "core/dom/Document.h"
-#include "core/fetch/CSSStyleSheetResource.h"
-#include "core/fetch/FontResource.h"
-#include "core/fetch/ImageResource.h"
-#include "core/fetch/MemoryCache.h"
-#include "core/fetch/Resource.h"
-#include "core/fetch/ResourceFetcher.h"
-#include "core/fetch/ScriptResource.h"
-#include "core/frame/FrameHost.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
+#include "core/frame/VisualViewport.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/VoidCallback.h"
 #include "core/html/imports/HTMLImportLoader.h"
@@ -55,711 +50,883 @@
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/inspector/InspectedFrames.h"
 #include "core/inspector/InspectorCSSAgent.h"
-#include "core/inspector/InspectorInstrumentation.h"
 #include "core/inspector/InspectorResourceContentLoader.h"
+#include "core/inspector/V8InspectorString.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
-#include "platform/MIMETypeRegistry.h"
+#include "core/loader/resource/CSSStyleSheetResource.h"
+#include "core/loader/resource/ScriptResource.h"
+#include "core/page/Page.h"
+#include "core/probe/CoreProbes.h"
 #include "platform/PlatformResourceLoader.h"
 #include "platform/UserGestureIndicator.h"
-#include "platform/inspector_protocol/Values.h"
-#include "platform/v8_inspector/public/V8ContentSearchUtil.h"
-#include "platform/v8_inspector/public/V8InspectorSession.h"
+#include "platform/loader/fetch/MemoryCache.h"
+#include "platform/loader/fetch/Resource.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "wtf/CurrentTime.h"
-#include "wtf/ListHashSet.h"
-#include "wtf/Vector.h"
-#include "wtf/text/Base64.h"
-#include "wtf/text/TextEncoding.h"
-#include <memory>
+#include "platform/wtf/CurrentTime.h"
+#include "platform/wtf/ListHashSet.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/Base64.h"
+#include "platform/wtf/text/TextEncoding.h"
 
 namespace blink {
 
+using protocol::Response;
+
 namespace PageAgentState {
-static const char pageAgentEnabled[] = "pageAgentEnabled";
-static const char pageAgentScriptsToEvaluateOnLoad[] = "pageAgentScriptsToEvaluateOnLoad";
-static const char screencastEnabled[] = "screencastEnabled";
-static const char autoAttachToCreatedPages[] = "autoAttachToCreatedPages";
-static const char blockedEventsWarningThreshold[] = "blockedEventsWarningThreshold";
+static const char kPageAgentEnabled[] = "pageAgentEnabled";
+static const char kPageAgentScriptsToEvaluateOnLoad[] =
+    "pageAgentScriptsToEvaluateOnLoad";
+static const char kScreencastEnabled[] = "screencastEnabled";
+static const char kAutoAttachToCreatedPages[] = "autoAttachToCreatedPages";
+static const char kOverlaySuspended[] = "overlaySuspended";
+static const char kOverlayMessage[] = "overlayMessage";
 }
 
 namespace {
 
-KURL urlWithoutFragment(const KURL& url)
-{
-    KURL result = url;
-    result.removeFragmentIdentifier();
-    return result;
+KURL UrlWithoutFragment(const KURL& url) {
+  KURL result = url;
+  result.RemoveFragmentIdentifier();
+  return result;
 }
 
-String frameId(LocalFrame* frame)
-{
-    return frame ? IdentifiersFactory::frameId(frame) : "";
+String FrameId(LocalFrame* frame) {
+  return frame ? IdentifiersFactory::FrameId(frame) : "";
 }
 
-String dialogTypeToProtocol(ChromeClient::DialogType dialogType)
-{
-    switch (dialogType) {
-    case ChromeClient::AlertDialog:
-        return protocol::Page::DialogTypeEnum::Alert;
-    case ChromeClient::ConfirmDialog:
-        return protocol::Page::DialogTypeEnum::Confirm;
-    case ChromeClient::PromptDialog:
-        return protocol::Page::DialogTypeEnum::Prompt;
-    case ChromeClient::HTMLDialog:
-        return protocol::Page::DialogTypeEnum::Beforeunload;
-    }
-    return protocol::Page::DialogTypeEnum::Alert;
+String DialogTypeToProtocol(ChromeClient::DialogType dialog_type) {
+  switch (dialog_type) {
+    case ChromeClient::kAlertDialog:
+      return protocol::Page::DialogTypeEnum::Alert;
+    case ChromeClient::kConfirmDialog:
+      return protocol::Page::DialogTypeEnum::Confirm;
+    case ChromeClient::kPromptDialog:
+      return protocol::Page::DialogTypeEnum::Prompt;
+    case ChromeClient::kHTMLDialog:
+      return protocol::Page::DialogTypeEnum::Beforeunload;
+  }
+  return protocol::Page::DialogTypeEnum::Alert;
 }
 
-} // namespace
+}  // namespace
 
-static bool prepareResourceBuffer(Resource* cachedResource, bool* hasZeroSize)
-{
-    if (!cachedResource)
-        return false;
+static bool PrepareResourceBuffer(Resource* cached_resource,
+                                  bool* has_zero_size) {
+  if (!cached_resource)
+    return false;
 
-    if (cachedResource->getDataBufferingPolicy() == DoNotBufferData)
-        return false;
+  if (cached_resource->GetDataBufferingPolicy() == kDoNotBufferData)
+    return false;
 
-    // Zero-sized resources don't have data at all -- so fake the empty buffer, instead of indicating error by returning 0.
-    if (!cachedResource->encodedSize()) {
-        *hasZeroSize = true;
-        return true;
-    }
-
-    if (cachedResource->isPurgeable()) {
-        // If the resource is purgeable then make it unpurgeable to get
-        // get its data. This might fail, in which case we return an
-        // empty String.
-        // FIXME: should we do something else in the case of a purged
-        // resource that informs the user why there is no data in the
-        // inspector?
-        if (!cachedResource->lock())
-            return false;
-    }
-
-    *hasZeroSize = false;
+  // Zero-sized resources don't have data at all -- so fake the empty buffer,
+  // instead of indicating error by returning 0.
+  if (!cached_resource->EncodedSize()) {
+    *has_zero_size = true;
     return true;
+  }
+
+  *has_zero_size = false;
+  return true;
 }
 
-static bool hasTextContent(Resource* cachedResource)
-{
-    Resource::Type type = cachedResource->getType();
-    return type == Resource::CSSStyleSheet || type == Resource::XSLStyleSheet || type == Resource::Script || type == Resource::Raw || type == Resource::ImportResource || type == Resource::MainResource;
+static bool HasTextContent(Resource* cached_resource) {
+  Resource::Type type = cached_resource->GetType();
+  return type == Resource::kCSSStyleSheet || type == Resource::kXSLStyleSheet ||
+         type == Resource::kScript || type == Resource::kRaw ||
+         type == Resource::kImportResource || type == Resource::kMainResource;
 }
 
-static std::unique_ptr<TextResourceDecoder> createResourceTextDecoder(const String& mimeType, const String& textEncodingName)
-{
-    if (!textEncodingName.isEmpty())
-        return TextResourceDecoder::create("text/plain", textEncodingName);
-    if (DOMImplementation::isXMLMIMEType(mimeType)) {
-        std::unique_ptr<TextResourceDecoder> decoder = TextResourceDecoder::create("application/xml");
-        decoder->useLenientXMLDecoding();
-        return decoder;
-    }
-    if (equalIgnoringCase(mimeType, "text/html"))
-        return TextResourceDecoder::create("text/html", "UTF-8");
-    if (MIMETypeRegistry::isSupportedJavaScriptMIMEType(mimeType) || DOMImplementation::isJSONMIMEType(mimeType))
-        return TextResourceDecoder::create("text/plain", "UTF-8");
-    if (DOMImplementation::isTextMIMEType(mimeType))
-        return TextResourceDecoder::create("text/plain", "ISO-8859-1");
-    return std::unique_ptr<TextResourceDecoder>();
+static std::unique_ptr<TextResourceDecoder> CreateResourceTextDecoder(
+    const String& mime_type,
+    const String& text_encoding_name) {
+  if (!text_encoding_name.IsEmpty())
+    return TextResourceDecoder::Create("text/plain", text_encoding_name);
+  if (DOMImplementation::IsXMLMIMEType(mime_type)) {
+    std::unique_ptr<TextResourceDecoder> decoder =
+        TextResourceDecoder::Create("application/xml");
+    decoder->UseLenientXMLDecoding();
+    return decoder;
+  }
+  if (DeprecatedEqualIgnoringCase(mime_type, "text/html"))
+    return TextResourceDecoder::Create("text/html", "UTF-8");
+  if (MIMETypeRegistry::IsSupportedJavaScriptMIMEType(mime_type) ||
+      DOMImplementation::IsJSONMIMEType(mime_type))
+    return TextResourceDecoder::Create("text/plain", "UTF-8");
+  if (DOMImplementation::IsTextMIMEType(mime_type))
+    return TextResourceDecoder::Create("text/plain", "ISO-8859-1");
+  return std::unique_ptr<TextResourceDecoder>();
 }
 
-static void maybeEncodeTextContent(const String& textContent, PassRefPtr<SharedBuffer> buffer, String* result, bool* base64Encoded)
-{
-    if (!textContent.isNull() && !textContent.utf8(WTF::StrictUTF8Conversion).isNull()) {
-        *result = textContent;
-        *base64Encoded = false;
-    } else if (buffer) {
-        *result = base64Encode(buffer->data(), buffer->size());
-        *base64Encoded = true;
-    } else {
-        DCHECK(!textContent.is8Bit());
-        *result = base64Encode(textContent.utf8(WTF::LenientUTF8Conversion));
-        *base64Encoded = true;
-    }
+static void MaybeEncodeTextContent(const String& text_content,
+                                   PassRefPtr<const SharedBuffer> buffer,
+                                   String* result,
+                                   bool* base64_encoded) {
+  if (!text_content.IsNull() &&
+      !text_content.Utf8(WTF::kStrictUTF8Conversion).IsNull()) {
+    *result = text_content;
+    *base64_encoded = false;
+  } else if (buffer) {
+    *result = Base64Encode(buffer->Data(), buffer->size());
+    *base64_encoded = true;
+  } else if (text_content.IsNull()) {
+    *result = "";
+    *base64_encoded = false;
+  } else {
+    DCHECK(!text_content.Is8Bit());
+    *result = Base64Encode(text_content.Utf8(WTF::kLenientUTF8Conversion));
+    *base64_encoded = true;
+  }
 }
 
 // static
-bool InspectorPageAgent::sharedBufferContent(PassRefPtr<SharedBuffer> buffer, const String& mimeType, const String& textEncodingName, String* result, bool* base64Encoded)
-{
+bool InspectorPageAgent::SharedBufferContent(
+    PassRefPtr<const SharedBuffer> buffer,
+    const String& mime_type,
+    const String& text_encoding_name,
+    String* result,
+    bool* base64_encoded) {
+  if (!buffer)
+    return false;
+
+  String text_content;
+  std::unique_ptr<TextResourceDecoder> decoder =
+      CreateResourceTextDecoder(mime_type, text_encoding_name);
+  WTF::TextEncoding encoding(text_encoding_name);
+
+  if (decoder) {
+    text_content = decoder->Decode(buffer->Data(), buffer->size());
+    text_content = text_content + decoder->Flush();
+  } else if (encoding.IsValid()) {
+    text_content = encoding.Decode(buffer->Data(), buffer->size());
+  }
+
+  MaybeEncodeTextContent(text_content, std::move(buffer), result,
+                         base64_encoded);
+  return true;
+}
+
+// static
+bool InspectorPageAgent::CachedResourceContent(Resource* cached_resource,
+                                               String* result,
+                                               bool* base64_encoded) {
+  bool has_zero_size;
+  if (!PrepareResourceBuffer(cached_resource, &has_zero_size))
+    return false;
+
+  if (!HasTextContent(cached_resource)) {
+    RefPtr<const SharedBuffer> buffer = has_zero_size
+                                            ? SharedBuffer::Create()
+                                            : cached_resource->ResourceBuffer();
     if (!buffer)
-        return false;
-
-    String textContent;
-    std::unique_ptr<TextResourceDecoder> decoder = createResourceTextDecoder(mimeType, textEncodingName);
-    WTF::TextEncoding encoding(textEncodingName);
-
-    if (decoder) {
-        textContent = decoder->decode(buffer->data(), buffer->size());
-        textContent = textContent + decoder->flush();
-    } else if (encoding.isValid()) {
-        textContent = encoding.decode(buffer->data(), buffer->size());
-    }
-
-    maybeEncodeTextContent(textContent, buffer, result, base64Encoded);
+      return false;
+    *result = Base64Encode(buffer->Data(), buffer->size());
+    *base64_encoded = true;
     return true;
-}
+  }
 
-// static
-bool InspectorPageAgent::cachedResourceContent(Resource* cachedResource, String* result, bool* base64Encoded)
-{
-    bool hasZeroSize;
-    if (!prepareResourceBuffer(cachedResource, &hasZeroSize))
-        return false;
+  if (has_zero_size) {
+    *result = "";
+    *base64_encoded = false;
+    return true;
+  }
 
-    if (!hasTextContent(cachedResource)) {
-        RefPtr<SharedBuffer> buffer = hasZeroSize ? SharedBuffer::create() : cachedResource->resourceBuffer();
-        if (!buffer)
-            return false;
-        *result = base64Encode(buffer->data(), buffer->size());
-        *base64Encoded = true;
-        return true;
-    }
-
-    if (hasZeroSize) {
-        *result = "";
-        *base64Encoded = false;
-        return true;
-    }
-
-    DCHECK(cachedResource);
-    switch (cachedResource->getType()) {
-    case Resource::CSSStyleSheet:
-        maybeEncodeTextContent(toCSSStyleSheetResource(cachedResource)->sheetText(), cachedResource->resourceBuffer(), result, base64Encoded);
-        return true;
-    case Resource::Script:
-        maybeEncodeTextContent(cachedResource->resourceBuffer() ? toScriptResource(cachedResource)->decodedText() : toScriptResource(cachedResource)->script().toString(), cachedResource->resourceBuffer(), result, base64Encoded);
-        return true;
+  DCHECK(cached_resource);
+  switch (cached_resource->GetType()) {
+    case Resource::kCSSStyleSheet:
+      MaybeEncodeTextContent(
+          ToCSSStyleSheetResource(cached_resource)
+              ->SheetText(CSSStyleSheetResource::MIMETypeCheck::kLax),
+          cached_resource->ResourceBuffer(), result, base64_encoded);
+      return true;
+    case Resource::kScript:
+      MaybeEncodeTextContent(
+          cached_resource->ResourceBuffer()
+              ? ToScriptResource(cached_resource)->DecodedText()
+              : ToScriptResource(cached_resource)->SourceText(),
+          cached_resource->ResourceBuffer(), result, base64_encoded);
+      return true;
     default:
-        String textEncodingName = cachedResource->response().textEncodingName();
-        if (textEncodingName.isEmpty() && cachedResource->getType() != Resource::Raw)
-            textEncodingName = "WinLatin1";
-        return InspectorPageAgent::sharedBufferContent(cachedResource->resourceBuffer(), cachedResource->response().mimeType(), textEncodingName, result, base64Encoded);
-    }
+      String text_encoding_name =
+          cached_resource->GetResponse().TextEncodingName();
+      if (text_encoding_name.IsEmpty() &&
+          cached_resource->GetType() != Resource::kRaw)
+        text_encoding_name = "WinLatin1";
+      return InspectorPageAgent::SharedBufferContent(
+          cached_resource->ResourceBuffer(),
+          cached_resource->GetResponse().MimeType(), text_encoding_name, result,
+          base64_encoded);
+  }
 }
 
-InspectorPageAgent* InspectorPageAgent::create(InspectedFrames* inspectedFrames, Client* client, InspectorResourceContentLoader* resourceContentLoader, V8InspectorSession* v8Session)
-{
-    return new InspectorPageAgent(inspectedFrames, client, resourceContentLoader, v8Session);
+InspectorPageAgent* InspectorPageAgent::Create(
+    InspectedFrames* inspected_frames,
+    Client* client,
+    InspectorResourceContentLoader* resource_content_loader,
+    v8_inspector::V8InspectorSession* v8_session) {
+  return new InspectorPageAgent(inspected_frames, client,
+                                resource_content_loader, v8_session);
 }
 
-Resource* InspectorPageAgent::cachedResource(LocalFrame* frame, const KURL& url)
-{
-    Document* document = frame->document();
-    if (!document)
-        return nullptr;
-    Resource* cachedResource = document->fetcher()->cachedResource(url);
-    if (!cachedResource) {
-        HeapVector<Member<Document>> allImports = InspectorPageAgent::importsForFrame(frame);
-        for (Document* import : allImports) {
-            cachedResource = import->fetcher()->cachedResource(url);
-            if (cachedResource)
-                break;
-        }
-    }
-    if (!cachedResource)
-        cachedResource = memoryCache()->resourceForURL(url, document->fetcher()->getCacheIdentifier());
-    return cachedResource;
-}
-
-String InspectorPageAgent::resourceTypeJson(InspectorPageAgent::ResourceType resourceType)
-{
-    switch (resourceType) {
-    case DocumentResource:
-        return protocol::Page::ResourceTypeEnum::Document;
-    case FontResource:
-        return protocol::Page::ResourceTypeEnum::Font;
-    case ImageResource:
-        return protocol::Page::ResourceTypeEnum::Image;
-    case MediaResource:
-        return protocol::Page::ResourceTypeEnum::Media;
-    case ScriptResource:
-        return protocol::Page::ResourceTypeEnum::Script;
-    case StylesheetResource:
-        return protocol::Page::ResourceTypeEnum::Stylesheet;
-    case TextTrackResource:
-        return protocol::Page::ResourceTypeEnum::TextTrack;
-    case XHRResource:
-        return protocol::Page::ResourceTypeEnum::XHR;
-    case FetchResource:
-        return protocol::Page::ResourceTypeEnum::Fetch;
-    case EventSourceResource:
-        return protocol::Page::ResourceTypeEnum::EventSource;
-    case WebSocketResource:
-        return protocol::Page::ResourceTypeEnum::WebSocket;
-    case ManifestResource:
-        return protocol::Page::ResourceTypeEnum::Manifest;
-    case OtherResource:
-        return protocol::Page::ResourceTypeEnum::Other;
-    }
-    return protocol::Page::ResourceTypeEnum::Other;
-}
-
-InspectorPageAgent::ResourceType InspectorPageAgent::cachedResourceType(const Resource& cachedResource)
-{
-    switch (cachedResource.getType()) {
-    case Resource::Image:
-        return InspectorPageAgent::ImageResource;
-    case Resource::Font:
-        return InspectorPageAgent::FontResource;
-    case Resource::Media:
-        return InspectorPageAgent::MediaResource;
-    case Resource::Manifest:
-        return InspectorPageAgent::ManifestResource;
-    case Resource::TextTrack:
-        return InspectorPageAgent::TextTrackResource;
-    case Resource::CSSStyleSheet:
-        // Fall through.
-    case Resource::XSLStyleSheet:
-        return InspectorPageAgent::StylesheetResource;
-    case Resource::Script:
-        return InspectorPageAgent::ScriptResource;
-    case Resource::ImportResource:
-        // Fall through.
-    case Resource::MainResource:
-        return InspectorPageAgent::DocumentResource;
-    default:
+Resource* InspectorPageAgent::CachedResource(LocalFrame* frame,
+                                             const KURL& url) {
+  Document* document = frame->GetDocument();
+  if (!document)
+    return nullptr;
+  Resource* cached_resource = document->Fetcher()->CachedResource(url);
+  if (!cached_resource) {
+    HeapVector<Member<Document>> all_imports =
+        InspectorPageAgent::ImportsForFrame(frame);
+    for (Document* import : all_imports) {
+      cached_resource = import->Fetcher()->CachedResource(url);
+      if (cached_resource)
         break;
     }
-    return InspectorPageAgent::OtherResource;
+  }
+  if (!cached_resource)
+    cached_resource = GetMemoryCache()->ResourceForURL(
+        url, document->Fetcher()->GetCacheIdentifier());
+  return cached_resource;
 }
 
-String InspectorPageAgent::cachedResourceTypeJson(const Resource& cachedResource)
-{
-    return resourceTypeJson(cachedResourceType(cachedResource));
+String InspectorPageAgent::ResourceTypeJson(
+    InspectorPageAgent::ResourceType resource_type) {
+  switch (resource_type) {
+    case kDocumentResource:
+      return protocol::Page::ResourceTypeEnum::Document;
+    case kFontResource:
+      return protocol::Page::ResourceTypeEnum::Font;
+    case kImageResource:
+      return protocol::Page::ResourceTypeEnum::Image;
+    case kMediaResource:
+      return protocol::Page::ResourceTypeEnum::Media;
+    case kScriptResource:
+      return protocol::Page::ResourceTypeEnum::Script;
+    case kStylesheetResource:
+      return protocol::Page::ResourceTypeEnum::Stylesheet;
+    case kTextTrackResource:
+      return protocol::Page::ResourceTypeEnum::TextTrack;
+    case kXHRResource:
+      return protocol::Page::ResourceTypeEnum::XHR;
+    case kFetchResource:
+      return protocol::Page::ResourceTypeEnum::Fetch;
+    case kEventSourceResource:
+      return protocol::Page::ResourceTypeEnum::EventSource;
+    case kWebSocketResource:
+      return protocol::Page::ResourceTypeEnum::WebSocket;
+    case kManifestResource:
+      return protocol::Page::ResourceTypeEnum::Manifest;
+    case kOtherResource:
+      return protocol::Page::ResourceTypeEnum::Other;
+  }
+  return protocol::Page::ResourceTypeEnum::Other;
 }
 
-InspectorPageAgent::InspectorPageAgent(InspectedFrames* inspectedFrames, Client* client, InspectorResourceContentLoader* resourceContentLoader, V8InspectorSession* v8Session)
-    : m_inspectedFrames(inspectedFrames)
-    , m_v8Session(v8Session)
-    , m_client(client)
-    , m_lastScriptIdentifier(0)
-    , m_enabled(false)
-    , m_reloading(false)
-    , m_inspectorResourceContentLoader(resourceContentLoader)
-    , m_resourceContentLoaderClientId(resourceContentLoader->createClientId())
-{
+InspectorPageAgent::ResourceType InspectorPageAgent::CachedResourceType(
+    const Resource& cached_resource) {
+  switch (cached_resource.GetType()) {
+    case Resource::kImage:
+      return InspectorPageAgent::kImageResource;
+    case Resource::kFont:
+      return InspectorPageAgent::kFontResource;
+    case Resource::kMedia:
+      return InspectorPageAgent::kMediaResource;
+    case Resource::kManifest:
+      return InspectorPageAgent::kManifestResource;
+    case Resource::kTextTrack:
+      return InspectorPageAgent::kTextTrackResource;
+    case Resource::kCSSStyleSheet:
+    // Fall through.
+    case Resource::kXSLStyleSheet:
+      return InspectorPageAgent::kStylesheetResource;
+    case Resource::kScript:
+      return InspectorPageAgent::kScriptResource;
+    case Resource::kImportResource:
+    // Fall through.
+    case Resource::kMainResource:
+      return InspectorPageAgent::kDocumentResource;
+    default:
+      break;
+  }
+  return InspectorPageAgent::kOtherResource;
 }
 
-void InspectorPageAgent::restore()
-{
-    ErrorString error;
-    if (m_state->booleanProperty(PageAgentState::pageAgentEnabled, false))
-        enable(&error);
-    setBlockedEventsWarningThreshold(&error, m_state->doubleProperty(PageAgentState::blockedEventsWarningThreshold, 0.0));
+String InspectorPageAgent::CachedResourceTypeJson(
+    const Resource& cached_resource) {
+  return ResourceTypeJson(CachedResourceType(cached_resource));
 }
 
-void InspectorPageAgent::enable(ErrorString*)
-{
-    m_enabled = true;
-    m_state->setBoolean(PageAgentState::pageAgentEnabled, true);
-    m_instrumentingAgents->addInspectorPageAgent(this);
+InspectorPageAgent::InspectorPageAgent(
+    InspectedFrames* inspected_frames,
+    Client* client,
+    InspectorResourceContentLoader* resource_content_loader,
+    v8_inspector::V8InspectorSession* v8_session)
+    : inspected_frames_(inspected_frames),
+      v8_session_(v8_session),
+      client_(client),
+      last_script_identifier_(0),
+      enabled_(false),
+      reloading_(false),
+      inspector_resource_content_loader_(resource_content_loader),
+      resource_content_loader_client_id_(
+          resource_content_loader->CreateClientId()) {}
+
+void InspectorPageAgent::Restore() {
+  if (state_->booleanProperty(PageAgentState::kPageAgentEnabled, false))
+    enable();
+  if (client_) {
+    String overlay_message;
+    state_->getString(PageAgentState::kOverlayMessage, &overlay_message);
+    client_->ConfigureOverlay(
+        state_->booleanProperty(PageAgentState::kOverlaySuspended, false),
+        overlay_message);
+  }
 }
 
-void InspectorPageAgent::disable(ErrorString*)
-{
-    m_enabled = false;
-    m_state->setBoolean(PageAgentState::pageAgentEnabled, false);
-    m_state->remove(PageAgentState::pageAgentScriptsToEvaluateOnLoad);
-    m_scriptToEvaluateOnLoadOnce = String();
-    m_pendingScriptToEvaluateOnLoadOnce = String();
-    m_instrumentingAgents->removeInspectorPageAgent(this);
-    m_inspectorResourceContentLoader->cancel(m_resourceContentLoaderClientId);
-
-    stopScreencast(0);
-
-    finishReload();
+Response InspectorPageAgent::enable() {
+  enabled_ = true;
+  state_->setBoolean(PageAgentState::kPageAgentEnabled, true);
+  instrumenting_agents_->addInspectorPageAgent(this);
+  return Response::OK();
 }
 
-void InspectorPageAgent::addScriptToEvaluateOnLoad(ErrorString*, const String& source, String* identifier)
-{
-    protocol::DictionaryValue* scripts = m_state->getObject(PageAgentState::pageAgentScriptsToEvaluateOnLoad);
-    if (!scripts) {
-        std::unique_ptr<protocol::DictionaryValue> newScripts = protocol::DictionaryValue::create();
-        scripts = newScripts.get();
-        m_state->setObject(PageAgentState::pageAgentScriptsToEvaluateOnLoad, std::move(newScripts));
-    }
-    // Assure we don't override existing ids -- m_lastScriptIdentifier could get out of sync WRT actual
-    // scripts once we restored the scripts from the cookie during navigation.
-    do {
-        *identifier = String::number(++m_lastScriptIdentifier);
-    } while (scripts->get(*identifier));
-    scripts->setString(*identifier, source);
+Response InspectorPageAgent::disable() {
+  enabled_ = false;
+  state_->setBoolean(PageAgentState::kPageAgentEnabled, false);
+  state_->remove(PageAgentState::kPageAgentScriptsToEvaluateOnLoad);
+  script_to_evaluate_on_load_once_ = String();
+  pending_script_to_evaluate_on_load_once_ = String();
+  instrumenting_agents_->removeInspectorPageAgent(this);
+  inspector_resource_content_loader_->Cancel(
+      resource_content_loader_client_id_);
+
+  stopScreencast();
+  configureOverlay(false, String());
+
+  FinishReload();
+  return Response::OK();
 }
 
-void InspectorPageAgent::removeScriptToEvaluateOnLoad(ErrorString* error, const String& identifier)
-{
-    protocol::DictionaryValue* scripts = m_state->getObject(PageAgentState::pageAgentScriptsToEvaluateOnLoad);
-    if (!scripts || !scripts->get(identifier)) {
-        *error = "Script not found";
-        return;
-    }
-    scripts->remove(identifier);
+Response InspectorPageAgent::addScriptToEvaluateOnLoad(const String& source,
+                                                       String* identifier) {
+  protocol::DictionaryValue* scripts =
+      state_->getObject(PageAgentState::kPageAgentScriptsToEvaluateOnLoad);
+  if (!scripts) {
+    std::unique_ptr<protocol::DictionaryValue> new_scripts =
+        protocol::DictionaryValue::create();
+    scripts = new_scripts.get();
+    state_->setObject(PageAgentState::kPageAgentScriptsToEvaluateOnLoad,
+                      std::move(new_scripts));
+  }
+  // Assure we don't override existing ids -- m_lastScriptIdentifier could get
+  // out of sync WRT actual scripts once we restored the scripts from the cookie
+  // during navigation.
+  do {
+    *identifier = String::Number(++last_script_identifier_);
+  } while (scripts->get(*identifier));
+  scripts->setString(*identifier, source);
+  return Response::OK();
 }
 
-void InspectorPageAgent::setAutoAttachToCreatedPages(ErrorString*, bool autoAttach)
-{
-    m_state->setBoolean(PageAgentState::autoAttachToCreatedPages, autoAttach);
+Response InspectorPageAgent::removeScriptToEvaluateOnLoad(
+    const String& identifier) {
+  protocol::DictionaryValue* scripts =
+      state_->getObject(PageAgentState::kPageAgentScriptsToEvaluateOnLoad);
+  if (!scripts || !scripts->get(identifier))
+    return Response::Error("Script not found");
+  scripts->remove(identifier);
+  return Response::OK();
 }
 
-void InspectorPageAgent::reload(ErrorString*, const Maybe<bool>& optionalBypassCache, const Maybe<String>& optionalScriptToEvaluateOnLoad)
-{
-    m_pendingScriptToEvaluateOnLoadOnce = optionalScriptToEvaluateOnLoad.fromMaybe("");
-    m_v8Session->setSkipAllPauses(true);
-    m_reloading = true;
-    m_inspectedFrames->root()->reload(optionalBypassCache.fromMaybe(false) ? FrameLoadTypeReloadBypassingCache : FrameLoadTypeReload, ClientRedirectPolicy::NotClientRedirect);
+Response InspectorPageAgent::setAutoAttachToCreatedPages(bool auto_attach) {
+  state_->setBoolean(PageAgentState::kAutoAttachToCreatedPages, auto_attach);
+  return Response::OK();
 }
 
-void InspectorPageAgent::navigate(ErrorString*, const String& url, String* outFrameId)
-{
-    *outFrameId = frameId(m_inspectedFrames->root());
+Response InspectorPageAgent::reload(
+    Maybe<bool> optional_bypass_cache,
+    Maybe<String> optional_script_to_evaluate_on_load) {
+  pending_script_to_evaluate_on_load_once_ =
+      optional_script_to_evaluate_on_load.fromMaybe("");
+  v8_session_->setSkipAllPauses(true);
+  reloading_ = true;
+  inspected_frames_->Root()->Reload(optional_bypass_cache.fromMaybe(false)
+                                        ? kFrameLoadTypeReloadBypassingCache
+                                        : kFrameLoadTypeReload,
+                                    ClientRedirectPolicy::kNotClientRedirect);
+  return Response::OK();
 }
 
-static void cachedResourcesForDocument(Document* document, HeapVector<Member<Resource>>& result, bool skipXHRs)
-{
-    const ResourceFetcher::DocumentResourceMap& allResources = document->fetcher()->allResources();
-    for (const auto& resource : allResources) {
-        Resource* cachedResource = resource.value.get();
-        if (!cachedResource)
-            continue;
+Response InspectorPageAgent::navigate(const String& url,
+                                      Maybe<String> referrer,
+                                      String* out_frame_id) {
+  *out_frame_id = FrameId(inspected_frames_->Root());
+  return Response::OK();
+}
 
-        // Skip images that were not auto loaded (images disabled in the user agent),
-        // fonts that were referenced in CSS but never used/downloaded, etc.
-        if (cachedResource->stillNeedsLoad())
-            continue;
-        if (cachedResource->getType() == Resource::Raw && skipXHRs)
-            continue;
-        result.append(cachedResource);
-    }
+Response InspectorPageAgent::stopLoading() {
+  return Response::OK();
+}
+
+static void CachedResourcesForDocument(Document* document,
+                                       HeapVector<Member<Resource>>& result,
+                                       bool skip_xhrs) {
+  const ResourceFetcher::DocumentResourceMap& all_resources =
+      document->Fetcher()->AllResources();
+  for (const auto& resource : all_resources) {
+    Resource* cached_resource = resource.value.Get();
+    if (!cached_resource)
+      continue;
+
+    // Skip images that were not auto loaded (images disabled in the user
+    // agent), fonts that were referenced in CSS but never used/downloaded, etc.
+    if (cached_resource->StillNeedsLoad())
+      continue;
+    if (cached_resource->GetType() == Resource::kRaw && skip_xhrs)
+      continue;
+    result.push_back(cached_resource);
+  }
 }
 
 // static
-HeapVector<Member<Document>> InspectorPageAgent::importsForFrame(LocalFrame* frame)
-{
-    HeapVector<Member<Document>> result;
-    Document* rootDocument = frame->document();
+HeapVector<Member<Document>> InspectorPageAgent::ImportsForFrame(
+    LocalFrame* frame) {
+  HeapVector<Member<Document>> result;
+  Document* root_document = frame->GetDocument();
 
-    if (HTMLImportsController* controller = rootDocument->importsController()) {
-        for (size_t i = 0; i < controller->loaderCount(); ++i) {
-            if (Document* document = controller->loaderAt(i)->document())
-                result.append(document);
-        }
+  if (HTMLImportsController* controller = root_document->ImportsController()) {
+    for (size_t i = 0; i < controller->LoaderCount(); ++i) {
+      if (Document* document = controller->LoaderAt(i)->GetDocument())
+        result.push_back(document);
     }
+  }
 
-    return result;
+  return result;
 }
 
-static HeapVector<Member<Resource>> cachedResourcesForFrame(LocalFrame* frame, bool skipXHRs)
-{
-    HeapVector<Member<Resource>> result;
-    Document* rootDocument = frame->document();
-    HeapVector<Member<Document>> loaders = InspectorPageAgent::importsForFrame(frame);
+static HeapVector<Member<Resource>> CachedResourcesForFrame(LocalFrame* frame,
+                                                            bool skip_xhrs) {
+  HeapVector<Member<Resource>> result;
+  Document* root_document = frame->GetDocument();
+  HeapVector<Member<Document>> loaders =
+      InspectorPageAgent::ImportsForFrame(frame);
 
-    cachedResourcesForDocument(rootDocument, result, skipXHRs);
-    for (size_t i = 0; i < loaders.size(); ++i)
-        cachedResourcesForDocument(loaders[i], result, skipXHRs);
+  CachedResourcesForDocument(root_document, result, skip_xhrs);
+  for (size_t i = 0; i < loaders.size(); ++i)
+    CachedResourcesForDocument(loaders[i], result, skip_xhrs);
 
-    return result;
+  return result;
 }
 
-void InspectorPageAgent::getResourceTree(ErrorString*, std::unique_ptr<protocol::Page::FrameResourceTree>* object)
-{
-    *object = buildObjectForFrameTree(m_inspectedFrames->root());
+Response InspectorPageAgent::getResourceTree(
+    std::unique_ptr<protocol::Page::FrameResourceTree>* object) {
+  *object = BuildObjectForFrameTree(inspected_frames_->Root());
+  return Response::OK();
 }
 
-void InspectorPageAgent::finishReload()
-{
-    if (!m_reloading)
-        return;
-    m_reloading = false;
-    m_v8Session->setSkipAllPauses(false);
+void InspectorPageAgent::FinishReload() {
+  if (!reloading_)
+    return;
+  reloading_ = false;
+  v8_session_->setSkipAllPauses(false);
 }
 
-void InspectorPageAgent::getResourceContentAfterResourcesContentLoaded(const String& frameId, const String& url, std::unique_ptr<GetResourceContentCallback> callback)
-{
-    LocalFrame* frame = IdentifiersFactory::frameById(m_inspectedFrames, frameId);
-    if (!frame) {
-        callback->sendFailure("No frame for given id found");
-        return;
+void InspectorPageAgent::GetResourceContentAfterResourcesContentLoaded(
+    const String& frame_id,
+    const String& url,
+    std::unique_ptr<GetResourceContentCallback> callback) {
+  LocalFrame* frame =
+      IdentifiersFactory::FrameById(inspected_frames_, frame_id);
+  if (!frame) {
+    callback->sendFailure(Response::Error("No frame for given id found"));
+    return;
+  }
+  String content;
+  bool base64_encoded;
+  if (InspectorPageAgent::CachedResourceContent(
+          InspectorPageAgent::CachedResource(frame,
+                                             KURL(kParsedURLString, url)),
+          &content, &base64_encoded))
+    callback->sendSuccess(content, base64_encoded);
+  else
+    callback->sendFailure(Response::Error("No resource with given URL found"));
+}
+
+void InspectorPageAgent::getResourceContent(
+    const String& frame_id,
+    const String& url,
+    std::unique_ptr<GetResourceContentCallback> callback) {
+  if (!enabled_) {
+    callback->sendFailure(Response::Error("Agent is not enabled."));
+    return;
+  }
+  inspector_resource_content_loader_->EnsureResourcesContentLoaded(
+      resource_content_loader_client_id_,
+      WTF::Bind(
+          &InspectorPageAgent::GetResourceContentAfterResourcesContentLoaded,
+          WrapPersistent(this), frame_id, url,
+          WTF::Passed(std::move(callback))));
+}
+
+void InspectorPageAgent::SearchContentAfterResourcesContentLoaded(
+    const String& frame_id,
+    const String& url,
+    const String& query,
+    bool case_sensitive,
+    bool is_regex,
+    std::unique_ptr<SearchInResourceCallback> callback) {
+  LocalFrame* frame =
+      IdentifiersFactory::FrameById(inspected_frames_, frame_id);
+  if (!frame) {
+    callback->sendFailure(Response::Error("No frame for given id found"));
+    return;
+  }
+  String content;
+  bool base64_encoded;
+  if (!InspectorPageAgent::CachedResourceContent(
+          InspectorPageAgent::CachedResource(frame,
+                                             KURL(kParsedURLString, url)),
+          &content, &base64_encoded)) {
+    callback->sendFailure(Response::Error("No resource with given URL found"));
+    return;
+  }
+
+  auto matches = v8_session_->searchInTextByLines(
+      ToV8InspectorStringView(content), ToV8InspectorStringView(query),
+      case_sensitive, is_regex);
+  auto results = protocol::Array<
+      v8_inspector::protocol::Debugger::API::SearchMatch>::create();
+  for (size_t i = 0; i < matches.size(); ++i)
+    results->addItem(std::move(matches[i]));
+  callback->sendSuccess(std::move(results));
+}
+
+void InspectorPageAgent::searchInResource(
+    const String& frame_id,
+    const String& url,
+    const String& query,
+    Maybe<bool> optional_case_sensitive,
+    Maybe<bool> optional_is_regex,
+    std::unique_ptr<SearchInResourceCallback> callback) {
+  if (!enabled_) {
+    callback->sendFailure(Response::Error("Agent is not enabled."));
+    return;
+  }
+  inspector_resource_content_loader_->EnsureResourcesContentLoaded(
+      resource_content_loader_client_id_,
+      WTF::Bind(&InspectorPageAgent::SearchContentAfterResourcesContentLoaded,
+                WrapPersistent(this), frame_id, url, query,
+                optional_case_sensitive.fromMaybe(false),
+                optional_is_regex.fromMaybe(false),
+                WTF::Passed(std::move(callback))));
+}
+
+Response InspectorPageAgent::setDocumentContent(const String& frame_id,
+                                                const String& html) {
+  LocalFrame* frame =
+      IdentifiersFactory::FrameById(inspected_frames_, frame_id);
+  if (!frame)
+    return Response::Error("No frame for given id found");
+
+  Document* document = frame->GetDocument();
+  if (!document)
+    return Response::Error("No Document instance to set HTML for");
+  DOMPatchSupport::PatchDocument(*document, html);
+  return Response::OK();
+}
+
+void InspectorPageAgent::DidClearDocumentOfWindowObject(LocalFrame* frame) {
+  if (!GetFrontend())
+    return;
+
+  protocol::DictionaryValue* scripts =
+      state_->getObject(PageAgentState::kPageAgentScriptsToEvaluateOnLoad);
+  if (scripts) {
+    for (size_t i = 0; i < scripts->size(); ++i) {
+      auto script = scripts->at(i);
+      String script_text;
+      if (script.second->asString(&script_text))
+        frame->GetScriptController().ExecuteScriptInMainWorld(script_text);
     }
-    String content;
-    bool base64Encoded;
-    if (InspectorPageAgent::cachedResourceContent(InspectorPageAgent::cachedResource(frame, KURL(ParsedURLString, url)), &content, &base64Encoded))
-        callback->sendSuccess(content, base64Encoded);
-    else
-        callback->sendFailure("No resource with given URL found");
+  }
+  if (!script_to_evaluate_on_load_once_.IsEmpty()) {
+    frame->GetScriptController().ExecuteScriptInMainWorld(
+        script_to_evaluate_on_load_once_);
+  }
 }
 
-void InspectorPageAgent::getResourceContent(ErrorString* errorString, const String& frameId, const String& url, std::unique_ptr<GetResourceContentCallback> callback)
-{
-    if (!m_enabled) {
-        callback->sendFailure("Agent is not enabled.");
-        return;
-    }
-    m_inspectorResourceContentLoader->ensureResourcesContentLoaded(m_resourceContentLoaderClientId, WTF::bind(&InspectorPageAgent::getResourceContentAfterResourcesContentLoaded, wrapPersistent(this), frameId, url, passed(std::move(callback))));
+void InspectorPageAgent::DomContentLoadedEventFired(LocalFrame* frame) {
+  if (frame != inspected_frames_->Root())
+    return;
+  GetFrontend()->domContentEventFired(MonotonicallyIncreasingTime());
 }
 
-void InspectorPageAgent::searchContentAfterResourcesContentLoaded(const String& frameId, const String& url, const String& query, bool caseSensitive, bool isRegex, std::unique_ptr<SearchInResourceCallback> callback)
-{
-    LocalFrame* frame = IdentifiersFactory::frameById(m_inspectedFrames, frameId);
-    if (!frame) {
-        callback->sendFailure("No frame for given id found");
-        return;
-    }
-    String content;
-    bool base64Encoded;
-    if (!InspectorPageAgent::cachedResourceContent(InspectorPageAgent::cachedResource(frame, KURL(ParsedURLString, url)), &content, &base64Encoded)) {
-        callback->sendFailure("No resource with given URL found");
-        return;
-    }
-
-    callback->sendSuccess(V8ContentSearchUtil::searchInTextByLines(m_v8Session, content, query, caseSensitive, isRegex));
+void InspectorPageAgent::LoadEventFired(LocalFrame* frame) {
+  if (frame != inspected_frames_->Root())
+    return;
+  GetFrontend()->loadEventFired(MonotonicallyIncreasingTime());
 }
 
-void InspectorPageAgent::searchInResource(ErrorString*, const String& frameId, const String& url, const String& query, const Maybe<bool>& optionalCaseSensitive, const Maybe<bool>& optionalIsRegex, std::unique_ptr<SearchInResourceCallback> callback)
-{
-    if (!m_enabled) {
-        callback->sendFailure("Agent is not enabled.");
-        return;
-    }
-    m_inspectorResourceContentLoader->ensureResourcesContentLoaded(m_resourceContentLoaderClientId, WTF::bind(&InspectorPageAgent::searchContentAfterResourcesContentLoaded, wrapPersistent(this), frameId, url, query, optionalCaseSensitive.fromMaybe(false), optionalIsRegex.fromMaybe(false), passed(std::move(callback))));
+void InspectorPageAgent::DidCommitLoad(LocalFrame*, DocumentLoader* loader) {
+  if (loader->GetFrame() == inspected_frames_->Root()) {
+    FinishReload();
+    script_to_evaluate_on_load_once_ = pending_script_to_evaluate_on_load_once_;
+    pending_script_to_evaluate_on_load_once_ = String();
+  }
+  GetFrontend()->frameNavigated(BuildObjectForFrame(loader->GetFrame()));
 }
 
-void InspectorPageAgent::setDocumentContent(ErrorString* errorString, const String& frameId, const String& html)
-{
-    LocalFrame* frame = IdentifiersFactory::frameById(m_inspectedFrames, frameId);
-    if (!frame) {
-        *errorString = "No frame for given id found";
-        return;
-    }
-
-    Document* document = frame->document();
-    if (!document) {
-        *errorString = "No Document instance to set HTML for";
-        return;
-    }
-    DOMPatchSupport::patchDocument(*document, html);
+void InspectorPageAgent::FrameAttachedToParent(LocalFrame* frame) {
+  Frame* parent_frame = frame->Tree().Parent();
+  if (!parent_frame->IsLocalFrame())
+    parent_frame = 0;
+  std::unique_ptr<SourceLocation> location =
+      SourceLocation::CaptureWithFullStackTrace();
+  GetFrontend()->frameAttached(
+      FrameId(frame), FrameId(ToLocalFrame(parent_frame)),
+      location ? location->BuildInspectorObject() : nullptr);
 }
 
-void InspectorPageAgent::didClearDocumentOfWindowObject(LocalFrame* frame)
-{
-    if (!frontend())
-        return;
-
-    protocol::DictionaryValue* scripts = m_state->getObject(PageAgentState::pageAgentScriptsToEvaluateOnLoad);
-    if (scripts) {
-        for (size_t i = 0; i < scripts->size(); ++i) {
-            auto script = scripts->at(i);
-            String16 scriptText;
-            if (script.second->asString(&scriptText))
-                frame->script().executeScriptInMainWorld(scriptText);
-        }
-    }
-    if (!m_scriptToEvaluateOnLoadOnce.isEmpty())
-        frame->script().executeScriptInMainWorld(m_scriptToEvaluateOnLoadOnce);
+void InspectorPageAgent::FrameDetachedFromParent(LocalFrame* frame) {
+  GetFrontend()->frameDetached(FrameId(frame));
 }
 
-void InspectorPageAgent::domContentLoadedEventFired(LocalFrame* frame)
-{
-    if (frame != m_inspectedFrames->root())
-        return;
-    frontend()->domContentEventFired(monotonicallyIncreasingTime());
+bool InspectorPageAgent::ScreencastEnabled() {
+  return enabled_ &&
+         state_->booleanProperty(PageAgentState::kScreencastEnabled, false);
 }
 
-void InspectorPageAgent::loadEventFired(LocalFrame* frame)
-{
-    if (frame != m_inspectedFrames->root())
-        return;
-    frontend()->loadEventFired(monotonicallyIncreasingTime());
+void InspectorPageAgent::FrameStartedLoading(LocalFrame* frame, FrameLoadType) {
+  GetFrontend()->frameStartedLoading(FrameId(frame));
 }
 
-void InspectorPageAgent::didCommitLoad(LocalFrame*, DocumentLoader* loader)
-{
-    if (loader->frame() == m_inspectedFrames->root()) {
-        finishReload();
-        m_scriptToEvaluateOnLoadOnce = m_pendingScriptToEvaluateOnLoadOnce;
-        m_pendingScriptToEvaluateOnLoadOnce = String();
-    }
-    frontend()->frameNavigated(buildObjectForFrame(loader->frame()));
+void InspectorPageAgent::FrameStoppedLoading(LocalFrame* frame) {
+  GetFrontend()->frameStoppedLoading(FrameId(frame));
 }
 
-void InspectorPageAgent::frameAttachedToParent(LocalFrame* frame)
-{
-    Frame* parentFrame = frame->tree().parent();
-    if (!parentFrame->isLocalFrame())
-        parentFrame = 0;
-    frontend()->frameAttached(frameId(frame), frameId(toLocalFrame(parentFrame)));
+void InspectorPageAgent::FrameScheduledNavigation(LocalFrame* frame,
+                                                  double delay) {
+  GetFrontend()->frameScheduledNavigation(FrameId(frame), delay);
 }
 
-void InspectorPageAgent::frameDetachedFromParent(LocalFrame* frame)
-{
-    frontend()->frameDetached(frameId(frame));
+void InspectorPageAgent::FrameClearedScheduledNavigation(LocalFrame* frame) {
+  GetFrontend()->frameClearedScheduledNavigation(FrameId(frame));
 }
 
-bool InspectorPageAgent::screencastEnabled()
-{
-    return m_enabled && m_state->booleanProperty(PageAgentState::screencastEnabled, false);
+void InspectorPageAgent::WillRunJavaScriptDialog(
+    const String& message,
+    ChromeClient::DialogType dialog_type) {
+  GetFrontend()->javascriptDialogOpening(message,
+                                         DialogTypeToProtocol(dialog_type));
+  GetFrontend()->flush();
 }
 
-void InspectorPageAgent::frameStartedLoading(LocalFrame* frame)
-{
-    frontend()->frameStartedLoading(frameId(frame));
+void InspectorPageAgent::DidRunJavaScriptDialog(bool result) {
+  GetFrontend()->javascriptDialogClosed(result);
+  GetFrontend()->flush();
 }
 
-void InspectorPageAgent::frameStoppedLoading(LocalFrame* frame)
-{
-    frontend()->frameStoppedLoading(frameId(frame));
-}
-
-void InspectorPageAgent::frameScheduledNavigation(LocalFrame* frame, double delay)
-{
-    frontend()->frameScheduledNavigation(frameId(frame), delay);
-}
-
-void InspectorPageAgent::frameClearedScheduledNavigation(LocalFrame* frame)
-{
-    frontend()->frameClearedScheduledNavigation(frameId(frame));
-}
-
-void InspectorPageAgent::willRunJavaScriptDialog(const String& message, ChromeClient::DialogType dialogType)
-{
-    frontend()->javascriptDialogOpening(message, dialogTypeToProtocol(dialogType));
-    frontend()->flush();
-}
-
-void InspectorPageAgent::didRunJavaScriptDialog(bool result)
-{
-    frontend()->javascriptDialogClosed(result);
-    frontend()->flush();
-}
-
-void InspectorPageAgent::didUpdateLayout()
-{
-    if (m_enabled && m_client)
-        m_client->pageLayoutInvalidated(false);
-}
-
-void InspectorPageAgent::didResizeMainFrame()
-{
-    if (!m_inspectedFrames->root()->isMainFrame())
-        return;
+void InspectorPageAgent::DidResizeMainFrame() {
+  if (!inspected_frames_->Root()->IsMainFrame())
+    return;
 #if !OS(ANDROID)
-    if (m_enabled && m_client)
-        m_client->pageLayoutInvalidated(true);
+  PageLayoutInvalidated(true);
 #endif
-    frontend()->frameResized();
+  GetFrontend()->frameResized();
 }
 
-void InspectorPageAgent::didRecalculateStyle()
-{
-    if (m_enabled && m_client)
-        m_client->pageLayoutInvalidated(false);
+void InspectorPageAgent::DidChangeViewport() {
+  PageLayoutInvalidated(false);
 }
 
-void InspectorPageAgent::windowCreated(LocalFrame* created)
-{
-    if (m_enabled && m_state->booleanProperty(PageAgentState::autoAttachToCreatedPages, false))
-        m_client->waitForCreateWindow(created);
+void InspectorPageAgent::Will(const probe::UpdateLayout&) {}
+
+void InspectorPageAgent::Did(const probe::UpdateLayout&) {
+  PageLayoutInvalidated(false);
 }
 
-std::unique_ptr<protocol::Page::Frame> InspectorPageAgent::buildObjectForFrame(LocalFrame* frame)
-{
-    std::unique_ptr<protocol::Page::Frame> frameObject = protocol::Page::Frame::create()
-        .setId(frameId(frame))
-        .setLoaderId(IdentifiersFactory::loaderId(frame->loader().documentLoader()))
-        .setUrl(urlWithoutFragment(frame->document()->url()).getString())
-        .setMimeType(frame->loader().documentLoader()->responseMIMEType())
-        .setSecurityOrigin(frame->document()->getSecurityOrigin()->toRawString()).build();
-    // FIXME: This doesn't work for OOPI.
-    Frame* parentFrame = frame->tree().parent();
-    if (parentFrame && parentFrame->isLocalFrame())
-        frameObject->setParentId(frameId(toLocalFrame(parentFrame)));
-    if (frame->deprecatedLocalOwner()) {
-        AtomicString name = frame->deprecatedLocalOwner()->getNameAttribute();
-        if (name.isEmpty())
-            name = frame->deprecatedLocalOwner()->getAttribute(HTMLNames::idAttr);
-        frameObject->setName(name);
-    }
+void InspectorPageAgent::Will(const probe::RecalculateStyle&) {}
 
-    return frameObject;
+void InspectorPageAgent::Did(const probe::RecalculateStyle&) {
+  PageLayoutInvalidated(false);
 }
 
-std::unique_ptr<protocol::Page::FrameResourceTree> InspectorPageAgent::buildObjectForFrameTree(LocalFrame* frame)
-{
-    std::unique_ptr<protocol::Page::Frame> frameObject = buildObjectForFrame(frame);
-    std::unique_ptr<protocol::Array<protocol::Page::FrameResource>> subresources = protocol::Array<protocol::Page::FrameResource>::create();
-
-    HeapVector<Member<Resource>> allResources = cachedResourcesForFrame(frame, true);
-    for (Resource* cachedResource : allResources) {
-        std::unique_ptr<protocol::Page::FrameResource> resourceObject = protocol::Page::FrameResource::create()
-            .setUrl(urlWithoutFragment(cachedResource->url()).getString())
-            .setType(cachedResourceTypeJson(*cachedResource))
-            .setMimeType(cachedResource->response().mimeType()).build();
-        if (cachedResource->wasCanceled())
-            resourceObject->setCanceled(true);
-        else if (cachedResource->getStatus() == Resource::LoadError)
-            resourceObject->setFailed(true);
-        subresources->addItem(std::move(resourceObject));
-    }
-
-    HeapVector<Member<Document>> allImports = InspectorPageAgent::importsForFrame(frame);
-    for (Document* import : allImports) {
-        std::unique_ptr<protocol::Page::FrameResource> resourceObject = protocol::Page::FrameResource::create()
-            .setUrl(urlWithoutFragment(import->url()).getString())
-            .setType(resourceTypeJson(InspectorPageAgent::DocumentResource))
-            .setMimeType(import->suggestedMIMEType()).build();
-        subresources->addItem(std::move(resourceObject));
-    }
-
-    std::unique_ptr<protocol::Page::FrameResourceTree> result = protocol::Page::FrameResourceTree::create()
-        .setFrame(std::move(frameObject))
-        .setResources(std::move(subresources)).build();
-
-    std::unique_ptr<protocol::Array<protocol::Page::FrameResourceTree>> childrenArray;
-    for (Frame* child = frame->tree().firstChild(); child; child = child->tree().nextSibling()) {
-        if (!child->isLocalFrame())
-            continue;
-        if (!childrenArray)
-            childrenArray = protocol::Array<protocol::Page::FrameResourceTree>::create();
-        childrenArray->addItem(buildObjectForFrameTree(toLocalFrame(child)));
-    }
-    result->setChildFrames(std::move(childrenArray));
-    return result;
+void InspectorPageAgent::PageLayoutInvalidated(bool resized) {
+  if (enabled_ && client_)
+    client_->PageLayoutInvalidated(resized);
 }
 
-void InspectorPageAgent::startScreencast(ErrorString*, const Maybe<String>& format, const Maybe<int>& quality, const Maybe<int>& maxWidth, const Maybe<int>& maxHeight, const Maybe<int>& everyNthFrame)
-{
-    m_state->setBoolean(PageAgentState::screencastEnabled, true);
+void InspectorPageAgent::WindowCreated(LocalFrame* created) {
+  if (enabled_ &&
+      state_->booleanProperty(PageAgentState::kAutoAttachToCreatedPages, false))
+    client_->WaitForCreateWindow(created);
 }
 
-void InspectorPageAgent::stopScreencast(ErrorString*)
-{
-    m_state->setBoolean(PageAgentState::screencastEnabled, false);
+std::unique_ptr<protocol::Page::Frame> InspectorPageAgent::BuildObjectForFrame(
+    LocalFrame* frame) {
+  std::unique_ptr<protocol::Page::Frame> frame_object =
+      protocol::Page::Frame::create()
+          .setId(FrameId(frame))
+          .setLoaderId(
+              IdentifiersFactory::LoaderId(frame->Loader().GetDocumentLoader()))
+          .setUrl(UrlWithoutFragment(frame->GetDocument()->Url()).GetString())
+          .setMimeType(frame->Loader().GetDocumentLoader()->ResponseMIMEType())
+          .setSecurityOrigin(
+              frame->GetDocument()->GetSecurityOrigin()->ToRawString())
+          .build();
+  // FIXME: This doesn't work for OOPI.
+  Frame* parent_frame = frame->Tree().Parent();
+  if (parent_frame && parent_frame->IsLocalFrame())
+    frame_object->setParentId(FrameId(ToLocalFrame(parent_frame)));
+  if (frame->DeprecatedLocalOwner()) {
+    AtomicString name = frame->DeprecatedLocalOwner()->GetNameAttribute();
+    if (name.IsEmpty())
+      name = frame->DeprecatedLocalOwner()->getAttribute(HTMLNames::idAttr);
+    frame_object->setName(name);
+  }
+
+  return frame_object;
 }
 
-void InspectorPageAgent::setOverlayMessage(ErrorString*, const Maybe<String>& message)
-{
-    if (m_client)
-        m_client->setPausedInDebuggerMessage(message.fromMaybe(String()));
+std::unique_ptr<protocol::Page::FrameResourceTree>
+InspectorPageAgent::BuildObjectForFrameTree(LocalFrame* frame) {
+  std::unique_ptr<protocol::Page::Frame> frame_object =
+      BuildObjectForFrame(frame);
+  std::unique_ptr<protocol::Array<protocol::Page::FrameResource>> subresources =
+      protocol::Array<protocol::Page::FrameResource>::create();
+
+  HeapVector<Member<Resource>> all_resources =
+      CachedResourcesForFrame(frame, true);
+  for (Resource* cached_resource : all_resources) {
+    std::unique_ptr<protocol::Page::FrameResource> resource_object =
+        protocol::Page::FrameResource::create()
+            .setUrl(UrlWithoutFragment(cached_resource->Url()).GetString())
+            .setType(CachedResourceTypeJson(*cached_resource))
+            .setMimeType(cached_resource->GetResponse().MimeType())
+            .setContentSize(cached_resource->GetResponse().DecodedBodyLength())
+            .build();
+    double last_modified = cached_resource->GetResponse().LastModified();
+    if (!std::isnan(last_modified))
+      resource_object->setLastModified(last_modified);
+    if (cached_resource->WasCanceled())
+      resource_object->setCanceled(true);
+    else if (cached_resource->GetStatus() == ResourceStatus::kLoadError)
+      resource_object->setFailed(true);
+    subresources->addItem(std::move(resource_object));
+  }
+
+  HeapVector<Member<Document>> all_imports =
+      InspectorPageAgent::ImportsForFrame(frame);
+  for (Document* import : all_imports) {
+    std::unique_ptr<protocol::Page::FrameResource> resource_object =
+        protocol::Page::FrameResource::create()
+            .setUrl(UrlWithoutFragment(import->Url()).GetString())
+            .setType(ResourceTypeJson(InspectorPageAgent::kDocumentResource))
+            .setMimeType(import->SuggestedMIMEType())
+            .build();
+    subresources->addItem(std::move(resource_object));
+  }
+
+  std::unique_ptr<protocol::Page::FrameResourceTree> result =
+      protocol::Page::FrameResourceTree::create()
+          .setFrame(std::move(frame_object))
+          .setResources(std::move(subresources))
+          .build();
+
+  std::unique_ptr<protocol::Array<protocol::Page::FrameResourceTree>>
+      children_array;
+  for (Frame* child = frame->Tree().FirstChild(); child;
+       child = child->Tree().NextSibling()) {
+    if (!child->IsLocalFrame())
+      continue;
+    if (!children_array)
+      children_array =
+          protocol::Array<protocol::Page::FrameResourceTree>::create();
+    children_array->addItem(BuildObjectForFrameTree(ToLocalFrame(child)));
+  }
+  result->setChildFrames(std::move(children_array));
+  return result;
 }
 
-void InspectorPageAgent::setBlockedEventsWarningThreshold(ErrorString*, double threshold)
-{
-    m_state->setDouble(PageAgentState::blockedEventsWarningThreshold, threshold);
-    FrameHost* host = m_inspectedFrames->root()->host();
-    if (!host)
-        return;
-    host->settings().setBlockedMainThreadEventsWarningThreshold(threshold);
+Response InspectorPageAgent::startScreencast(Maybe<String> format,
+                                             Maybe<int> quality,
+                                             Maybe<int> max_width,
+                                             Maybe<int> max_height,
+                                             Maybe<int> every_nth_frame) {
+  state_->setBoolean(PageAgentState::kScreencastEnabled, true);
+  return Response::OK();
 }
 
-DEFINE_TRACE(InspectorPageAgent)
-{
-    visitor->trace(m_inspectedFrames);
-    visitor->trace(m_inspectorResourceContentLoader);
-    InspectorBaseAgent::trace(visitor);
+Response InspectorPageAgent::stopScreencast() {
+  state_->setBoolean(PageAgentState::kScreencastEnabled, false);
+  return Response::OK();
 }
 
-} // namespace blink
+Response InspectorPageAgent::configureOverlay(Maybe<bool> suspended,
+                                              Maybe<String> message) {
+  state_->setBoolean(PageAgentState::kOverlaySuspended,
+                     suspended.fromMaybe(false));
+  state_->setString(PageAgentState::kOverlaySuspended,
+                    message.fromMaybe(String()));
+  if (client_)
+    client_->ConfigureOverlay(suspended.fromMaybe(false),
+                              message.fromMaybe(String()));
+  return Response::OK();
+}
+
+Response InspectorPageAgent::getLayoutMetrics(
+    std::unique_ptr<protocol::Page::LayoutViewport>* out_layout_viewport,
+    std::unique_ptr<protocol::Page::VisualViewport>* out_visual_viewport,
+    std::unique_ptr<protocol::DOM::Rect>* out_content_size) {
+  LocalFrame* main_frame = inspected_frames_->Root();
+  VisualViewport& visual_viewport = main_frame->GetPage()->GetVisualViewport();
+
+  main_frame->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  IntRect visible_contents = main_frame->View()->VisibleContentRect();
+  *out_layout_viewport = protocol::Page::LayoutViewport::create()
+                             .setPageX(visible_contents.X())
+                             .setPageY(visible_contents.Y())
+                             .setClientWidth(visible_contents.Width())
+                             .setClientHeight(visible_contents.Height())
+                             .build();
+
+  FrameView* frame_view = main_frame->View();
+  ScrollOffset page_offset = frame_view->GetScrollableArea()->GetScrollOffset();
+  float page_zoom = main_frame->PageZoomFactor();
+  FloatRect visible_rect = visual_viewport.VisibleRect();
+  float scale = visual_viewport.Scale();
+  float scrollbar_width = frame_view->VerticalScrollbarWidth() / scale;
+  float scrollbar_height = frame_view->HorizontalScrollbarHeight() / scale;
+
+  IntSize content_size = frame_view->GetScrollableArea()->ContentsSize();
+  *out_content_size = protocol::DOM::Rect::create()
+                          .setX(0)
+                          .setY(0)
+                          .setWidth(content_size.Width())
+                          .setHeight(content_size.Height())
+                          .build();
+
+  *out_visual_viewport =
+      protocol::Page::VisualViewport::create()
+          .setOffsetX(AdjustScrollForAbsoluteZoom(visible_rect.X(), page_zoom))
+          .setOffsetY(AdjustScrollForAbsoluteZoom(visible_rect.Y(), page_zoom))
+          .setPageX(AdjustScrollForAbsoluteZoom(page_offset.Width(), page_zoom))
+          .setPageY(
+              AdjustScrollForAbsoluteZoom(page_offset.Height(), page_zoom))
+          .setClientWidth(visible_rect.Width() - scrollbar_width)
+          .setClientHeight(visible_rect.Height() - scrollbar_height)
+          .setScale(scale)
+          .build();
+  return Response::OK();
+}
+
+DEFINE_TRACE(InspectorPageAgent) {
+  visitor->Trace(inspected_frames_);
+  visitor->Trace(inspector_resource_content_loader_);
+  InspectorBaseAgent::Trace(visitor);
+}
+
+}  // namespace blink

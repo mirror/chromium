@@ -20,8 +20,10 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/test/chromedriver/chrome/mobile_device.h"
+#include "chrome/test/chromedriver/chrome/page_load_strategy.h"
 #include "chrome/test/chromedriver/chrome/status.h"
 #include "chrome/test/chromedriver/logging.h"
+#include "chrome/test/chromedriver/session.h"
 
 namespace {
 
@@ -179,6 +181,27 @@ Status ParseMobileEmulation(const base::Value& option,
   return Status(kOk);
 }
 
+Status ParsePageLoadStrategy(const base::Value& option,
+                             Capabilities* capabilities) {
+  if (!option.GetAsString(&capabilities->page_load_strategy))
+    return Status(kUnknownError, "must be a string");
+  if (capabilities->page_load_strategy == PageLoadStrategy::kNormal ||
+      capabilities->page_load_strategy == PageLoadStrategy::kNone)
+    return Status(kOk);
+  return Status(kUnknownError, "page load strategy unsupported");
+}
+
+Status ParseUnexpectedAlertBehaviour(const base::Value& option,
+                             Capabilities* capabilities) {
+  if (!option.GetAsString(&capabilities->unexpected_alert_behaviour))
+    return Status(kUnknownError, "must be a string");
+  if (capabilities->unexpected_alert_behaviour == kAccept ||
+      capabilities->unexpected_alert_behaviour == kDismiss ||
+      capabilities->unexpected_alert_behaviour == kIgnore)
+    return Status(kOk);
+  return Status(kUnknownError, "unexpected alert behaviour unsupported");
+}
+
 Status ParseSwitches(const base::Value& option,
                      Capabilities* capabilities) {
   const base::ListValue* switches_list = NULL;
@@ -234,7 +257,7 @@ Status ParseProxy(const base::Value& option, Capabilities* capabilities) {
     std::string proxy_servers;
     for (size_t i = 0; i < arraysize(proxy_servers_options); ++i) {
       if (!proxy_dict->Get(proxy_servers_options[i][0], &option_value) ||
-          option_value->IsType(base::Value::TYPE_NULL)) {
+          option_value->IsType(base::Value::Type::NONE)) {
         continue;
       }
       std::string value;
@@ -254,7 +277,7 @@ Status ParseProxy(const base::Value& option, Capabilities* capabilities) {
 
     std::string proxy_bypass_list;
     if (proxy_dict->Get("noProxy", &option_value) &&
-        !option_value->IsType(base::Value::TYPE_NULL)) {
+        !option_value->IsType(base::Value::Type::NONE)) {
       if (!option_value->GetAsString(&proxy_bypass_list))
         return Status(kUnknownError, "'noProxy' must be a string");
     }
@@ -415,6 +438,9 @@ Status ParseChromeOptions(
 
   parser_map["perfLoggingPrefs"] = base::Bind(&ParsePerfLoggingPrefs);
   parser_map["windowTypes"] = base::Bind(&ParseWindowTypes);
+  // Compliance is read when session is initialized and correct response is
+  // sent if not parsed correctly.
+  parser_map["w3c"] = base::Bind(&IgnoreCapability);
 
   if (is_android) {
     parser_map["androidActivity"] =
@@ -448,6 +474,8 @@ Status ParseChromeOptions(
         base::Bind(&ParseString, &capabilities->minidump_path);
     parser_map["mobileEmulation"] = base::Bind(&ParseMobileEmulation);
     parser_map["prefs"] = base::Bind(&ParseDict, &capabilities->prefs);
+    parser_map["useAutomationExtension"] =
+        base::Bind(&ParseBoolean, &capabilities->use_automation_extension);
   }
 
   for (base::DictionaryValue::Iterator it(*chrome_options); !it.IsAtEnd();
@@ -586,8 +614,10 @@ PerfLoggingPrefs::~PerfLoggingPrefs() {}
 Capabilities::Capabilities()
     : android_use_running_app(false),
       detach(false),
-      force_devtools_screenshot(false),
-      network_emulation_enabled(false) {}
+      force_devtools_screenshot(true),
+      page_load_strategy(PageLoadStrategy::kNormal),
+      network_emulation_enabled(false),
+      use_automation_extension(true) {}
 
 Capabilities::~Capabilities() {}
 
@@ -604,6 +634,9 @@ Status Capabilities::Parse(const base::DictionaryValue& desired_caps) {
   parser_map["chromeOptions"] = base::Bind(&ParseChromeOptions);
   parser_map["loggingPrefs"] = base::Bind(&ParseLoggingPrefs);
   parser_map["proxy"] = base::Bind(&ParseProxy);
+  parser_map["pageLoadStrategy"] = base::Bind(&ParsePageLoadStrategy);
+  parser_map["unexpectedAlertBehaviour"] =
+      base::Bind(&ParseUnexpectedAlertBehaviour);
   // Network emulation requires device mode, which is only enabled when
   // mobile emulation is on.
   if (desired_caps.GetDictionary("chromeOptions.mobileEmulation", nullptr)) {

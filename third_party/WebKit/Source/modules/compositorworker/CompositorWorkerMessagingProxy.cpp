@@ -10,18 +10,19 @@
 
 namespace blink {
 
-CompositorWorkerMessagingProxy::CompositorWorkerMessagingProxy(InProcessWorkerBase* worker, WorkerClients* workerClients)
-    : InProcessWorkerMessagingProxy(worker, workerClients)
-{
+CompositorWorkerMessagingProxy::CompositorWorkerMessagingProxy(
+    InProcessWorkerBase* worker,
+    WorkerClients* worker_clients)
+    : InProcessWorkerMessagingProxy(worker, worker_clients) {
+  DCHECK(IsMainThread());
 }
 
-CompositorWorkerMessagingProxy::~CompositorWorkerMessagingProxy()
-{
+CompositorWorkerMessagingProxy::~CompositorWorkerMessagingProxy() {}
+
+std::unique_ptr<WorkerThread>
+CompositorWorkerMessagingProxy::CreateWorkerThread(double origin_time) {
+  return CompositorWorkerThread::Create(LoaderProxy(), WorkerObjectProxy(),
+                                        origin_time);
 }
 
-std::unique_ptr<WorkerThread> CompositorWorkerMessagingProxy::createWorkerThread(double originTime)
-{
-    return CompositorWorkerThread::create(loaderProxy(), workerObjectProxy(), originTime);
-}
-
-} // namespace blink
+}  // namespace blink

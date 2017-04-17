@@ -8,51 +8,47 @@
 
 namespace blink {
 
-CSSAnimationData::CSSAnimationData()
-{
-    m_nameList.append(initialName());
-    m_iterationCountList.append(initialIterationCount());
-    m_directionList.append(initialDirection());
-    m_fillModeList.append(initialFillMode());
-    m_playStateList.append(initialPlayState());
+CSSAnimationData::CSSAnimationData() {
+  name_list_.push_back(InitialName());
+  iteration_count_list_.push_back(InitialIterationCount());
+  direction_list_.push_back(InitialDirection());
+  fill_mode_list_.push_back(InitialFillMode());
+  play_state_list_.push_back(InitialPlayState());
 }
 
 CSSAnimationData::CSSAnimationData(const CSSAnimationData& other)
-    : CSSTimingData(other)
-    , m_nameList(other.m_nameList)
-    , m_iterationCountList(other.m_iterationCountList)
-    , m_directionList(other.m_directionList)
-    , m_fillModeList(other.m_fillModeList)
-    , m_playStateList(other.m_playStateList)
-{
+    : CSSTimingData(other),
+      name_list_(other.name_list_),
+      iteration_count_list_(other.iteration_count_list_),
+      direction_list_(other.direction_list_),
+      fill_mode_list_(other.fill_mode_list_),
+      play_state_list_(other.play_state_list_) {}
+
+const AtomicString& CSSAnimationData::InitialName() {
+  DEFINE_STATIC_LOCAL(const AtomicString, name, ("none"));
+  return name;
 }
 
-const AtomicString& CSSAnimationData::initialName()
-{
-    DEFINE_STATIC_LOCAL(const AtomicString, name, ("none"));
-    return name;
+bool CSSAnimationData::AnimationsMatchForStyleRecalc(
+    const CSSAnimationData& other) const {
+  return name_list_ == other.name_list_ &&
+         play_state_list_ == other.play_state_list_ &&
+         iteration_count_list_ == other.iteration_count_list_ &&
+         direction_list_ == other.direction_list_ &&
+         fill_mode_list_ == other.fill_mode_list_ &&
+         DelayList() == other.DelayList() &&
+         DurationList() == other.DurationList();
 }
 
-bool CSSAnimationData::animationsMatchForStyleRecalc(const CSSAnimationData& other) const
-{
-    return m_nameList == other.m_nameList && m_playStateList == other.m_playStateList
-        && m_iterationCountList == other.m_iterationCountList
-        && m_directionList == other.m_directionList
-        && m_fillModeList == other.m_fillModeList
-        && delayList() == other.delayList()
-        && durationList() == other.durationList();
+Timing CSSAnimationData::ConvertToTiming(size_t index) const {
+  DCHECK_LT(index, name_list_.size());
+  Timing timing = CSSTimingData::ConvertToTiming(index);
+
+  timing.iteration_count = GetRepeated(iteration_count_list_, index);
+  timing.direction = GetRepeated(direction_list_, index);
+  timing.fill_mode = GetRepeated(fill_mode_list_, index);
+  timing.AssertValid();
+  return timing;
 }
 
-Timing CSSAnimationData::convertToTiming(size_t index) const
-{
-    ASSERT(index < m_nameList.size());
-    Timing timing = CSSTimingData::convertToTiming(index);
-
-    timing.iterationCount = getRepeated(m_iterationCountList, index);
-    timing.direction = getRepeated(m_directionList, index);
-    timing.fillMode = getRepeated(m_fillModeList, index);
-    timing.assertValid();
-    return timing;
-}
-
-} // namespace blink
+}  // namespace blink

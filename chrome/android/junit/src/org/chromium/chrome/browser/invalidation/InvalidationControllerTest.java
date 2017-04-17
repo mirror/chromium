@@ -8,6 +8,20 @@ import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.os.Bundle;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.Shadows;
+import org.robolectric.annotation.Config;
+import org.robolectric.res.builder.RobolectricPackageManager;
+import org.robolectric.shadows.ShadowActivity;
+import org.robolectric.shadows.ShadowLooper;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationState;
@@ -16,22 +30,14 @@ import org.chromium.base.CollectionUtil;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.browser.sync.ProfileSyncService;
-import org.chromium.components.invalidation.InvalidationClientService;
-import org.chromium.sync.AndroidSyncSettings;
-import org.chromium.sync.ModelType;
-import org.chromium.sync.ModelTypeHelper;
-import org.chromium.sync.notifier.InvalidationIntentProtocol;
-import org.chromium.sync.signin.ChromeSigninController;
-import org.chromium.sync.test.util.MockSyncContentResolverDelegate;
+import org.chromium.components.signin.ChromeSigninController;
+import org.chromium.components.sync.AndroidSyncSettings;
+import org.chromium.components.sync.ModelType;
+import org.chromium.components.sync.ModelTypeHelper;
+import org.chromium.components.sync.notifier.InvalidationIntentProtocol;
+import org.chromium.components.sync.test.util.MockSyncContentResolverDelegate;
 import org.chromium.testing.local.CustomShadowAsyncTask;
 import org.chromium.testing.local.LocalRobolectricTestRunner;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowActivity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -41,7 +47,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Tests for the {@link InvalidationController}.
  */
 @RunWith(LocalRobolectricTestRunner.class)
-@Config(manifest = Config.NONE, shadows = {CustomShadowAsyncTask.class})
+@Config(manifest = Config.NONE, sdk = 21, shadows = {CustomShadowAsyncTask.class})
 public class InvalidationControllerTest {
     /**
      * Stubbed out ProfileSyncService with a setter to control return value of
@@ -87,8 +93,22 @@ public class InvalidationControllerTest {
     @Before
     public void setUp() throws Exception {
         Activity activity = Robolectric.buildActivity(Activity.class).setup().get();
-        mShadowActivity = Robolectric.shadowOf(activity);
+        mShadowActivity = Shadows.shadowOf(activity);
         mContext = activity;
+
+        RobolectricPackageManager packageManager =
+                (RobolectricPackageManager) mContext.getPackageManager();
+        Bundle metaData = new Bundle();
+        metaData.putString(
+                "ipc.invalidation.ticl.listener_service_class",
+                ChromeInvalidationClientService.class.getName());
+        ApplicationInfo applicationInfo = new ApplicationInfo();
+        applicationInfo.metaData = metaData;
+        PackageInfo packageInfo = new PackageInfo();
+        packageInfo.packageName = mContext.getPackageName();
+        packageInfo.applicationInfo = applicationInfo;
+        packageManager.addPackage(packageInfo);
+
         ContextUtils.initApplicationContextForTests(mContext.getApplicationContext());
 
         ModelTypeHelper.setTestDelegate(new ModelTypeHelper.TestDelegate() {
@@ -114,7 +134,8 @@ public class InvalidationControllerTest {
         delegate.setMasterSyncAutomatically(true);
         AndroidSyncSettings.overrideForTests(mContext, delegate);
 
-        ChromeSigninController.get(mContext).setSignedInAccountName("test@example.com");
+        ChromeSigninController.get().setSignedInAccountName("test@example.com");
+        AndroidSyncSettings.updateAccount(mContext, ChromeSigninController.get().getSignedInUser());
         AndroidSyncSettings.enableChromeSync(mContext);
     }
 
@@ -124,7 +145,7 @@ public class InvalidationControllerTest {
     @Test
     @Feature({"Sync"})
     public void testStop() throws Exception {
-        InvalidationController controller = new InvalidationController(mContext, true, false);
+        InvalidationController controller = new InvalidationController(mContext, true);
         controller.stop();
         Intent intent = getOnlyIntent();
         validateIntentComponent(intent);
@@ -139,7 +160,7 @@ public class InvalidationControllerTest {
     @Test
     @Feature({"Sync"})
     public void testEnsureStartedAndUpdateRegisteredTypes() {
-        InvalidationController controller = new InvalidationController(mContext, false, false);
+        InvalidationController controller = new InvalidationController(mContext, false);
         controller.ensureStartedAndUpdateRegisteredTypes();
         Intent intent = getOnlyIntent();
 
@@ -169,7 +190,7 @@ public class InvalidationControllerTest {
     public void testPauseAndResumeMainActivityWithSyncDisabled() throws Exception {
         AndroidSyncSettings.disableChromeSync(mContext);
 
-        InvalidationController controller = new InvalidationController(mContext, false, false);
+        InvalidationController controller = new InvalidationController(mContext, false);
         controller.onApplicationStateChange(ApplicationState.HAS_PAUSED_ACTIVITIES);
         controller.onApplicationStateChange(ApplicationState.HAS_RUNNING_ACTIVITIES);
         assertNoNewIntents();
@@ -184,7 +205,7 @@ public class InvalidationControllerTest {
     public void testNullProfileSyncService() throws Exception {
         ProfileSyncService.overrideForTests(null);
 
-        InvalidationController controller = new InvalidationController(mContext, false, false);
+        InvalidationController controller = new InvalidationController(mContext, false);
         controller.ensureStartedAndUpdateRegisteredTypes();
         assertNoNewIntents();
     }
@@ -198,7 +219,7 @@ public class InvalidationControllerTest {
         final AtomicBoolean listenerCallbackCalled = new AtomicBoolean();
 
         // Create instance.
-        new InvalidationController(mContext, true, false) {
+        new InvalidationController(mContext, true) {
             @Override
             public void onApplicationStateChange(int newState) {
                 listenerCallbackCalled.set(true);
@@ -220,16 +241,16 @@ public class InvalidationControllerTest {
     @Test
     @Feature({"Sync"})
     public void testCannotToggleSessionInvalidations() {
-        InvalidationController controller = new InvalidationController(mContext, false, false);
+        InvalidationController controller = new InvalidationController(mContext, false);
         controller.ensureStartedAndUpdateRegisteredTypes();
         Assert.assertEquals(mAllTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
 
         controller.onRecentTabsPageOpened();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         assertNoNewIntents();
 
         controller.onRecentTabsPageClosed();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         assertNoNewIntents();
     }
 
@@ -244,16 +265,16 @@ public class InvalidationControllerTest {
     @Test
     @Feature({"Sync"})
     public void testRecentTabsPageShown() {
-        InvalidationController controller = new InvalidationController(mContext, true, false);
+        InvalidationController controller = new InvalidationController(mContext, true);
         controller.ensureStartedAndUpdateRegisteredTypes();
         Assert.assertEquals(mNonSessionTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
 
         controller.onRecentTabsPageOpened();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(mAllTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
 
         controller.onRecentTabsPageClosed();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(mNonSessionTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
     }
 
@@ -265,18 +286,18 @@ public class InvalidationControllerTest {
     @Test
     @Feature({"Sync"})
     public void testStartWhileRecentTabsPageShown() {
-        InvalidationController controller = new InvalidationController(mContext, true, false);
+        InvalidationController controller = new InvalidationController(mContext, true);
         controller.onRecentTabsPageOpened();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         assertNoNewIntents();
 
         controller.ensureStartedAndUpdateRegisteredTypes();
         Assert.assertEquals(IntentType.START_AND_REGISTER, getIntentType(getOnlyIntent()));
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(mAllTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
 
         controller.onRecentTabsPageClosed();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(mNonSessionTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
     }
 
@@ -286,24 +307,24 @@ public class InvalidationControllerTest {
     @Test
     @Feature({"Sync"})
     public void testMultipleRecentTabsPages() {
-        InvalidationController controller = new InvalidationController(mContext, true, false);
+        InvalidationController controller = new InvalidationController(mContext, true);
         controller.ensureStartedAndUpdateRegisteredTypes();
         Assert.assertEquals(mNonSessionTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
 
         controller.onRecentTabsPageOpened();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(mAllTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
 
         controller.onRecentTabsPageOpened();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         assertNoNewIntents();
 
         controller.onRecentTabsPageClosed();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         assertNoNewIntents();
 
         controller.onRecentTabsPageClosed();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(mNonSessionTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
     }
 
@@ -313,25 +334,25 @@ public class InvalidationControllerTest {
     @Test
     @Feature({"Sync"})
     public void testOpenCloseRecentTabsPageQuickly() {
-        InvalidationController controller = new InvalidationController(mContext, true, false);
+        InvalidationController controller = new InvalidationController(mContext, true);
         controller.ensureStartedAndUpdateRegisteredTypes();
         Assert.assertEquals(mNonSessionTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
 
         controller.onRecentTabsPageOpened();
         controller.onRecentTabsPageClosed();
         controller.onRecentTabsPageOpened();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(mAllTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
 
         controller.onRecentTabsPageClosed();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(mNonSessionTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
 
         controller.onRecentTabsPageOpened();
         controller.onRecentTabsPageClosed();
         controller.onRecentTabsPageOpened();
         controller.onRecentTabsPageClosed();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         assertNoNewIntents();
     }
 
@@ -343,21 +364,21 @@ public class InvalidationControllerTest {
     @Test
     @Feature({"Sync"})
     public void testDisableSessionInvalidationsOnStart() {
-        InvalidationController controller = new InvalidationController(mContext, true, false);
+        InvalidationController controller = new InvalidationController(mContext, true);
         controller.ensureStartedAndUpdateRegisteredTypes();
         Assert.assertEquals(mNonSessionTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
         controller.onRecentTabsPageOpened();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(mAllTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
 
         controller.onRecentTabsPageClosed();
         controller.stop();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(IntentType.STOP, getIntentType(getOnlyIntent()));
 
         controller.ensureStartedAndUpdateRegisteredTypes();
         Assert.assertEquals(mAllTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(mNonSessionTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
     }
 
@@ -369,21 +390,21 @@ public class InvalidationControllerTest {
     @Test
     @Feature({"Sync"})
     public void testDisableSessionInvalidationsOnResume() {
-        InvalidationController controller = new InvalidationController(mContext, true, false);
+        InvalidationController controller = new InvalidationController(mContext, true);
         controller.ensureStartedAndUpdateRegisteredTypes();
         Assert.assertEquals(mNonSessionTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
         controller.onRecentTabsPageOpened();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(mAllTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
 
         controller.onRecentTabsPageClosed();
         controller.onApplicationStateChange(ApplicationState.HAS_PAUSED_ACTIVITIES);
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(IntentType.STOP, getIntentType(getOnlyIntent()));
 
         controller.onApplicationStateChange(ApplicationState.HAS_RUNNING_ACTIVITIES);
         Assert.assertEquals(IntentType.START, getIntentType(getOnlyIntent()));
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(mNonSessionTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
     }
 
@@ -394,20 +415,20 @@ public class InvalidationControllerTest {
     @Test
     @Feature({"Sync"})
     public void testPauseAndResumeMainActivity() throws Exception {
-        InvalidationController controller = new InvalidationController(mContext, true, false);
+        InvalidationController controller = new InvalidationController(mContext, true);
         controller.ensureStartedAndUpdateRegisteredTypes();
         Assert.assertEquals(mNonSessionTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
         controller.onRecentTabsPageOpened();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(mAllTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
 
         controller.onApplicationStateChange(ApplicationState.HAS_PAUSED_ACTIVITIES);
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(IntentType.STOP, getIntentType(getOnlyIntent()));
 
         // Resuming the activity should not send a START_AND_REGISTER intent.
         controller.onApplicationStateChange(ApplicationState.HAS_RUNNING_ACTIVITIES);
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(IntentType.START, getIntentType(getOnlyIntent()));
     }
 
@@ -418,16 +439,16 @@ public class InvalidationControllerTest {
     @Test
     @Feature({"Sync"})
     public void testPauseAndResumeMainActivityAfterStop() throws Exception {
-        InvalidationController controller = new InvalidationController(mContext, true, false);
+        InvalidationController controller = new InvalidationController(mContext, true);
         controller.ensureStartedAndUpdateRegisteredTypes();
         Assert.assertEquals(mNonSessionTypes, getRegisterIntentRegisterTypes(getOnlyIntent()));
 
         controller.stop();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertEquals(IntentType.STOP, getIntentType(getOnlyIntent()));
 
         controller.onRecentTabsPageOpened();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         assertNoNewIntents();
     }
 
@@ -437,7 +458,8 @@ public class InvalidationControllerTest {
     private static void validateIntentComponent(Intent intent) {
         Assert.assertNotNull(intent.getComponent());
         Assert.assertEquals(
-                InvalidationClientService.class.getName(), intent.getComponent().getClassName());
+                ChromeInvalidationClientService.class.getName(),
+                intent.getComponent().getClassName());
     }
 
     /**

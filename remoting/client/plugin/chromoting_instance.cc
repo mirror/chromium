@@ -43,7 +43,6 @@
 #include "remoting/client/normalizing_input_filter_cros.h"
 #include "remoting/client/normalizing_input_filter_mac.h"
 #include "remoting/client/normalizing_input_filter_win.h"
-#include "remoting/client/plugin/delegating_signal_strategy.h"
 #include "remoting/client/plugin/pepper_audio_player.h"
 #include "remoting/client/plugin/pepper_main_thread_task_runner.h"
 #include "remoting/client/plugin/pepper_mouse_locker.h"
@@ -56,6 +55,7 @@
 #include "remoting/protocol/connection_to_host.h"
 #include "remoting/protocol/host_stub.h"
 #include "remoting/protocol/transport_context.h"
+#include "remoting/signaling/delegating_signal_strategy.h"
 #include "third_party/webrtc/base/helpers.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_region.h"
 #include "url/gurl.h"
@@ -193,7 +193,7 @@ ChromotingInstance::ChromotingInstance(PP_Instance pp_instance)
   rtc::InitRandom(random_seed, sizeof(random_seed));
 
   // Send hello message.
-  PostLegacyJsonMessage("hello", base::WrapUnique(new base::DictionaryValue()));
+  PostLegacyJsonMessage("hello", base::MakeUnique<base::DictionaryValue>());
 }
 
 ChromotingInstance::~ChromotingInstance() {
@@ -342,7 +342,7 @@ void ChromotingInstance::OnVideoDecodeError() {
 
 void ChromotingInstance::OnVideoFirstFrameReceived() {
   PostLegacyJsonMessage("onFirstFrameReceived",
-                        base::WrapUnique(new base::DictionaryValue()));
+                        base::MakeUnique<base::DictionaryValue>());
 }
 
 void ChromotingInstance::OnVideoFrameDirtyRegion(
@@ -356,7 +356,7 @@ void ChromotingInstance::OnVideoFrameDirtyRegion(
     rect_value->AppendInteger(rect.top());
     rect_value->AppendInteger(rect.width());
     rect_value->AppendInteger(rect.height());
-    rects_value->Append(rect_value.release());
+    rects_value->Append(std::move(rect_value));
   }
 
   std::unique_ptr<base::DictionaryValue> data(new base::DictionaryValue());
@@ -668,18 +668,23 @@ void ChromotingInstance::HandleConnect(const base::DictionaryValue& data) {
 
   client_.reset(new ChromotingClient(&context_, this, video_renderer_.get(),
                                      audio_player_->GetWeakPtr()));
+  std::string host_experiment_config;
+  if (data.GetString("hostConfiguration", &host_experiment_config)) {
+    client_->set_host_experiment_config(host_experiment_config);
+  }
 
   // Setup the signal strategy.
   signal_strategy_.reset(new DelegatingSignalStrategy(
-      local_jid, base::Bind(&ChromotingInstance::SendOutgoingIq,
-                            weak_factory_.GetWeakPtr())));
+      SignalingAddress(local_jid), plugin_task_runner_,
+      base::Bind(&ChromotingInstance::SendOutgoingIq,
+                 weak_factory_.GetWeakPtr())));
 
   // Create TransportContext.
   scoped_refptr<protocol::TransportContext> transport_context(
       new protocol::TransportContext(
           signal_strategy_.get(),
-          base::WrapUnique(new PepperPortAllocatorFactory(this)),
-          base::WrapUnique(new PepperUrlRequestFactory(this)),
+          base::MakeUnique<PepperPortAllocatorFactory>(this),
+          base::MakeUnique<PepperUrlRequestFactory>(this),
           protocol::NetworkSettings(
               protocol::NetworkSettings::NAT_TRAVERSAL_FULL),
           protocol::TransportRole::CLIENT));
@@ -727,7 +732,7 @@ void ChromotingInstance::HandleOnIncomingIq(const base::DictionaryValue& data) {
   // Just ignore the message if it's received before Connect() is called. It's
   // likely to be a leftover from a previous session, so it's safe to ignore it.
   if (signal_strategy_)
-    signal_strategy_->OnIncomingMessage(iq);
+    signal_strategy_->GetIncomingMessageCallback().Run(iq);
 }
 
 void ChromotingInstance::HandleReleaseAllKeys(

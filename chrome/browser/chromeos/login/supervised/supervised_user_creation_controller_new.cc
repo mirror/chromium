@@ -8,6 +8,7 @@
 #include "base/bind.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/metrics/user_metrics.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/sys_info.h"
@@ -26,12 +27,11 @@
 #include "chromeos/dbus/session_manager_client.h"
 #include "chromeos/login/auth/key.h"
 #include "chromeos/login/auth/user_context.h"
-#include "components/browser_sync/browser/profile_sync_service.h"
+#include "components/browser_sync/profile_sync_service.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/user_metrics.h"
 #include "crypto/random.h"
 #include "google_apis/gaia/google_service_auth_error.h"
 
@@ -307,13 +307,13 @@ void SupervisedUserCreationControllerNew::OnAddKeySuccess() {
 
   VLOG(1) << " Phase 3 : Create/update user on chrome.com/manage";
 
-  ProfileSyncService* sync_service =
+  browser_sync::ProfileSyncService* sync_service =
       ProfileSyncServiceFactory::GetInstance()->GetForProfile(
           creation_context_->manager_profile);
-  ProfileSyncService::SyncStatusSummary status =
+  browser_sync::ProfileSyncService::SyncStatusSummary status =
       sync_service->QuerySyncStatusSummary();
 
-  if (status == ProfileSyncService::DATATYPES_NOT_INITIALIZED)
+  if (status == browser_sync::ProfileSyncService::DATATYPES_NOT_INITIALIZED)
     consumer_->OnLongCreationWarning();
 
   creation_context_->registration_utility =
@@ -391,7 +391,7 @@ void SupervisedUserCreationControllerNew::OnSupervisedUserFilesStored(
   ChromeUserManager::Get()
       ->GetSupervisedUserManager()
       ->CommitCreationTransaction();
-  content::RecordAction(
+  base::RecordAction(
       base::UserMetricsAction("ManagedMode_LocallyManagedUserCreated"));
 
   stage_ = TRANSACTION_COMMITTED;

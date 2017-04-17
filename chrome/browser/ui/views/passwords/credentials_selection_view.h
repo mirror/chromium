@@ -4,6 +4,7 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_PASSWORDS_CREDENTIALS_SELECTION_VIEW_H_
 #define CHROME_BROWSER_UI_VIEWS_PASSWORDS_CREDENTIALS_SELECTION_VIEW_H_
 
+#include <memory>
 #include <vector>
 
 #include "base/macros.h"
@@ -14,28 +15,29 @@ namespace views {
 class Combobox;
 }
 
+namespace ui {
+class SimpleComboboxModel;
+}
+
 class ManagePasswordsBubbleModel;
 
 // A view where the user can select a credential.
 class CredentialsSelectionView : public views::View {
  public:
-  CredentialsSelectionView(
-      ManagePasswordsBubbleModel* manage_passwords_bubble_model,
-      const std::vector<const autofill::PasswordForm*>& password_forms,
-      const base::string16& best_matched_username);
+  explicit CredentialsSelectionView(
+      ManagePasswordsBubbleModel* manage_passwords_bubble_model);
   ~CredentialsSelectionView() override;
 
   // This methods also reports a user action.
   const autofill::PasswordForm* GetSelectedCredentials();
 
  private:
-  views::Combobox* GenerateUsernameCombobox(
-      const std::vector<const autofill::PasswordForm*>& forms,
-      const base::string16& best_matched_username);
+  void GenerateUsernameCombobox(const base::string16& best_matched_username);
   void ReportUserActionOnce(bool was_update_rejected, int selected_index);
 
-  const std::vector<const autofill::PasswordForm*>& password_forms_;
-  views::Combobox* combobox_;
+  const std::vector<autofill::PasswordForm>* password_forms_;
+  std::unique_ptr<views::Combobox> combobox_;
+  std::unique_ptr<ui::SimpleComboboxModel> combobox_model_;
   int default_index_;
   bool is_default_best_match_;
   bool is_default_preferred_;

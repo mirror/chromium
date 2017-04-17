@@ -20,6 +20,7 @@
 #include "chromeos/network/network_configuration_observer.h"
 #include "chromeos/network/network_handler.h"
 #include "chromeos/network/network_handler_callbacks.h"
+#include "chromeos/network/network_state_handler_observer.h"
 
 namespace base {
 class DictionaryValue;
@@ -55,9 +56,9 @@ namespace chromeos {
 // user consumption.  Both |callback| and |error_callback| are permitted to be
 // null callbacks.
 class CHROMEOS_EXPORT NetworkConfigurationHandler
-    : public base::SupportsWeakPtr<NetworkConfigurationHandler> {
+    : public NetworkStateHandlerObserver {
  public:
-  ~NetworkConfigurationHandler();
+  ~NetworkConfigurationHandler() override;
 
   // Manages the observer list.
   void AddObserver(NetworkConfigurationObserver* observer);
@@ -114,6 +115,15 @@ class CHROMEOS_EXPORT NetworkConfigurationHandler
       const base::Closure& callback,
       const network_handler::ErrorCallback& error_callback);
 
+  // Removes the network |service_path| from the profile that contains its
+  // currently active configuration.
+  // See notes on |source| and callbacks in class description above.
+  void RemoveConfigurationFromCurrentProfile(
+      const std::string& service_path,
+      NetworkConfigurationObserver::Source source,
+      const base::Closure& callback,
+      const network_handler::ErrorCallback& error_callback);
+
   // Changes the profile for the network |service_path| to |profile_path|.
   // See notes on |source| and callbacks in class description above.
   void SetNetworkProfile(const std::string& service_path,
@@ -121,6 +131,10 @@ class CHROMEOS_EXPORT NetworkConfigurationHandler
                          NetworkConfigurationObserver::Source source,
                          const base::Closure& callback,
                          const network_handler::ErrorCallback& error_callback);
+
+  // NetworkStateHandlerObserver
+  void NetworkListChanged() override;
+  void OnShuttingDown() override;
 
   // Construct and initialize an instance for testing.
   static NetworkConfigurationHandler* InitializeForTest(
@@ -138,7 +152,9 @@ class CHROMEOS_EXPORT NetworkConfigurationHandler
   void Init(NetworkStateHandler* network_state_handler,
             NetworkDeviceHandler* network_device_handler);
 
-  void RunCreateNetworkCallback(
+  // Called when a configuration completes. This will wait for the cached
+  // state (NetworkStateHandler) to update before triggering the callback.
+  void ConfigurationCompleted(
       const std::string& profile_path,
       NetworkConfigurationObserver::Source source,
       std::unique_ptr<base::DictionaryValue> configure_properties,
@@ -198,14 +214,32 @@ class CHROMEOS_EXPORT NetworkConfigurationHandler
   // Signals the device handler to request an IP config refresh.
   void RequestRefreshIPConfigs(const std::string& service_path);
 
+  // Removes network configuration for |service_path| from the profile specified
+  // by |profile_path|. If |profile_path| is not set, the network is removed
+  // from all the profiles that include it.
+  void RemoveConfigurationFromProfile(
+      const std::string& service_path,
+      const std::string& profile_path,
+      NetworkConfigurationObserver::Source source,
+      const base::Closure& callback,
+      const network_handler::ErrorCallback& error_callback);
+
   // Unowned associated Network*Handlers (global or test instance).
   NetworkStateHandler* network_state_handler_;
   NetworkDeviceHandler* network_device_handler_;
 
-  // Map of in-progress deleter instances. Owned by this class.
-  std::map<std::string, ProfileEntryDeleter*> profile_entry_deleters_;
+  // Map of in-progress deleter instances.
+  std::map<std::string, std::unique_ptr<ProfileEntryDeleter>>
+      profile_entry_deleters_;
+
+  // Map of configuration callbacks to run once the service becomes available
+  // in the NetworkStateHandler cache.
+  std::map<std::string, network_handler::ServiceResultCallback>
+      configure_callbacks_;
 
   base::ObserverList<NetworkConfigurationObserver, true> observers_;
+
+  base::WeakPtrFactory<NetworkConfigurationHandler> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkConfigurationHandler);
 };

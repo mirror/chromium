@@ -18,6 +18,7 @@
 
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host.h"
@@ -592,7 +593,9 @@ class DesktopWindowTreeHostX11HighDPITest
   DISALLOW_COPY_AND_ASSIGN(DesktopWindowTreeHostX11HighDPITest);
 };
 
-TEST_F(DesktopWindowTreeHostX11HighDPITest, LocatedEventDispatchWithCapture) {
+// https://crbug.com/702687
+TEST_F(DesktopWindowTreeHostX11HighDPITest,
+       DISABLED_LocatedEventDispatchWithCapture) {
   Widget first;
   Widget::InitParams params = CreateParams(Widget::InitParams::TYPE_WINDOW);
   params.ownership = Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;

@@ -31,8 +31,8 @@
 #ifndef OrderIterator_h
 #define OrderIterator_h
 
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 #include <set>
 
@@ -41,50 +41,55 @@ namespace blink {
 class LayoutBox;
 
 class OrderIterator {
-    DISALLOW_NEW();
-    WTF_MAKE_NONCOPYABLE(OrderIterator);
-public:
-    friend class OrderIteratorPopulator;
+  DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(OrderIterator);
 
-    OrderIterator(const LayoutBox*);
+ public:
+  friend class OrderIteratorPopulator;
 
-    LayoutBox* currentChild() { return m_currentChild; }
-    const LayoutBox* currentChild() const { return m_currentChild; }
-    LayoutBox* first();
-    const LayoutBox* first() const { return const_cast<OrderIterator*>(this)->first(); }
-    LayoutBox* next();
-    const LayoutBox* next() const { return const_cast<OrderIterator*>(this)->next(); }
+  OrderIterator(const LayoutBox*);
 
-    void reset();
+  LayoutBox* CurrentChild() { return current_child_; }
+  const LayoutBox* CurrentChild() const { return current_child_; }
+  LayoutBox* First();
+  const LayoutBox* First() const {
+    return const_cast<OrderIterator*>(this)->First();
+  }
+  LayoutBox* Next();
+  const LayoutBox* Next() const {
+    return const_cast<OrderIterator*>(this)->Next();
+  }
 
-private:
-    const LayoutBox* m_containerBox;
+  void Reset();
 
-    LayoutBox* m_currentChild;
+ private:
+  const LayoutBox* container_box_;
 
-    typedef std::set<int> OrderValues;
-    OrderValues m_orderValues;
-    OrderValues::const_iterator m_orderValuesIterator;
-    bool m_isReset;
+  LayoutBox* current_child_;
+
+  typedef std::set<int> OrderValues;
+  OrderValues order_values_;
+  OrderValues::const_iterator order_values_iterator_;
+  bool is_reset_;
 };
 
 class OrderIteratorPopulator {
-    STACK_ALLOCATED();
-public:
-    explicit OrderIteratorPopulator(OrderIterator& iterator)
-        : m_iterator(iterator)
-    {
-        m_iterator.m_orderValues.clear();
-    }
+  STACK_ALLOCATED();
 
-    ~OrderIteratorPopulator();
+ public:
+  explicit OrderIteratorPopulator(OrderIterator& iterator)
+      : iterator_(iterator) {
+    iterator_.order_values_.clear();
+  }
 
-    void collectChild(const LayoutBox*);
+  ~OrderIteratorPopulator();
 
-private:
-    OrderIterator& m_iterator;
+  void CollectChild(const LayoutBox*);
+
+ private:
+  OrderIterator& iterator_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif //  OrderIterator_h
+#endif  //  OrderIterator_h

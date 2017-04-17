@@ -6,6 +6,8 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
+#include "content/browser/indexed_db/indexed_db_factory.h"
 #include "content/browser/indexed_db/indexed_db_transaction.h"
 #include "content/browser/indexed_db/leveldb/leveldb_iterator_impl.h"
 #include "content/browser/indexed_db/leveldb/leveldb_transaction.h"
@@ -27,32 +29,36 @@ IndexedDBClassFactory* IndexedDBClassFactory::Get() {
     return s_factory.Pointer();
 }
 
-IndexedDBDatabase* IndexedDBClassFactory::CreateIndexedDBDatabase(
+scoped_refptr<IndexedDBDatabase> IndexedDBClassFactory::CreateIndexedDBDatabase(
     const base::string16& name,
-    IndexedDBBackingStore* backing_store,
-    IndexedDBFactory* factory,
+    scoped_refptr<IndexedDBBackingStore> backing_store,
+    scoped_refptr<IndexedDBFactory> factory,
     const IndexedDBDatabase::Identifier& unique_identifier) {
   return new IndexedDBDatabase(name, backing_store, factory, unique_identifier);
 }
 
-IndexedDBTransaction* IndexedDBClassFactory::CreateIndexedDBTransaction(
+std::unique_ptr<IndexedDBTransaction>
+IndexedDBClassFactory::CreateIndexedDBTransaction(
     int64_t id,
-    base::WeakPtr<IndexedDBConnection> connection,
+    IndexedDBConnection* connection,
     const std::set<int64_t>& scope,
     blink::WebIDBTransactionMode mode,
     IndexedDBBackingStore::Transaction* backing_store_transaction) {
-  return new IndexedDBTransaction(id, std::move(connection), scope, mode,
-                                  backing_store_transaction);
+  return std::unique_ptr<IndexedDBTransaction>(new IndexedDBTransaction(
+      id, connection, scope, mode, backing_store_transaction));
 }
 
-LevelDBTransaction* IndexedDBClassFactory::CreateLevelDBTransaction(
-    LevelDBDatabase* db) {
+scoped_refptr<LevelDBTransaction>
+IndexedDBClassFactory::CreateLevelDBTransaction(LevelDBDatabase* db) {
   return new LevelDBTransaction(db);
 }
 
-content::LevelDBIteratorImpl* IndexedDBClassFactory::CreateIteratorImpl(
-    std::unique_ptr<leveldb::Iterator> iterator) {
-  return new LevelDBIteratorImpl(std::move(iterator));
+std::unique_ptr<LevelDBIteratorImpl> IndexedDBClassFactory::CreateIteratorImpl(
+    std::unique_ptr<leveldb::Iterator> iterator,
+    LevelDBDatabase* db,
+    const leveldb::Snapshot* snapshot) {
+  return base::WrapUnique(
+      new LevelDBIteratorImpl(std::move(iterator), db, snapshot));
 }
 
 }  // namespace content

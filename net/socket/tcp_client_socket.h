@@ -14,13 +14,14 @@
 #include "net/base/address_list.h"
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
-#include "net/log/net_log.h"
 #include "net/socket/connection_attempts.h"
 #include "net/socket/stream_socket.h"
 #include "net/socket/tcp_socket.h"
 
 namespace net {
 
+class NetLog;
+struct NetLogSource;
 class SocketPerformanceWatcher;
 
 // A client socket that uses TCP as the transport layer.
@@ -33,7 +34,7 @@ class NET_EXPORT TCPClientSocket : public StreamSocket {
       const AddressList& addresses,
       std::unique_ptr<SocketPerformanceWatcher> socket_performance_watcher,
       net::NetLog* net_log,
-      const net::NetLog::Source& source);
+      const net::NetLogSource& source);
 
   // Adopts the given, connected socket and then acts as if Connect() had been
   // called. This function is used by TCPServerSocket and for testing.
@@ -52,12 +53,12 @@ class NET_EXPORT TCPClientSocket : public StreamSocket {
   bool IsConnectedAndIdle() const override;
   int GetPeerAddress(IPEndPoint* address) const override;
   int GetLocalAddress(IPEndPoint* address) const override;
-  const BoundNetLog& NetLog() const override;
+  const NetLogWithSource& NetLog() const override;
   void SetSubresourceSpeculation() override;
   void SetOmniboxSpeculation() override;
   bool WasEverUsed() const override;
   void EnableTCPFastOpenIfSupported() override;
-  bool WasNpnNegotiated() const override;
+  bool WasAlpnNegotiated() const override;
   NextProto GetNegotiatedProtocol() const override;
   bool GetSSLInfo(SSLInfo* ssl_info) override;
 
@@ -67,6 +68,9 @@ class NET_EXPORT TCPClientSocket : public StreamSocket {
   int Read(IOBuffer* buf,
            int buf_len,
            const CompletionCallback& callback) override;
+  int ReadIfReady(IOBuffer* buf,
+                  int buf_len,
+                  const CompletionCallback& callback) override;
   int Write(IOBuffer* buf,
             int buf_len,
             const CompletionCallback& callback) override;
@@ -88,6 +92,13 @@ class NET_EXPORT TCPClientSocket : public StreamSocket {
     CONNECT_STATE_CONNECT_COMPLETE,
     CONNECT_STATE_NONE,
   };
+
+  // A helper method shared by Read() and ReadIfReady(). If |read_if_ready| is
+  // set to true, ReadIfReady() will be used instead of Read().
+  int ReadCommon(IOBuffer* buf,
+                 int buf_len,
+                 const CompletionCallback& callback,
+                 bool read_if_ready);
 
   // State machine used by Connect().
   int DoConnectLoop(int result);

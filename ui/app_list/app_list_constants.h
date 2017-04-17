@@ -70,16 +70,13 @@ APP_LIST_EXPORT extern const int kTileIconSize;
 
 APP_LIST_EXPORT extern const SkColor kIconColor;
 
-APP_LIST_EXPORT extern const int kCenteredPreferredCols;
-APP_LIST_EXPORT extern const int kCenteredPreferredRows;
-
-APP_LIST_EXPORT extern const int kExperimentalPreferredCols;
-APP_LIST_EXPORT extern const int kExperimentalPreferredRows;
+APP_LIST_EXPORT extern const size_t kNumStartPageTiles;
+APP_LIST_EXPORT extern const size_t kMaxSearchResults;
 
 APP_LIST_EXPORT extern const int kReorderDroppingCircleRadius;
 
-APP_LIST_EXPORT extern const int kExperimentalAppsGridPadding;
-APP_LIST_EXPORT extern const int kExperimentalSearchBoxPadding;
+APP_LIST_EXPORT extern const int kAppsGridPadding;
+APP_LIST_EXPORT extern const int kSearchBoxPadding;
 
 APP_LIST_EXPORT extern size_t kMaxFolderItems;
 APP_LIST_EXPORT extern const size_t kNumFolderTopItems;
@@ -91,11 +88,6 @@ APP_LIST_EXPORT extern const char kPageOpenedHistogram[];
 APP_LIST_EXPORT extern const char kSearchResultOpenDisplayTypeHistogram[];
 APP_LIST_EXPORT extern const char kSearchQueryLength[];
 APP_LIST_EXPORT extern const char kSearchResultDistanceFromOrigin[];
-
-#if defined(OS_LINUX)
-// The WM_CLASS name for the app launcher window on Linux.
-APP_LIST_EXPORT extern const char kAppListWMClass[];
-#endif
 
 // Returns the shadow values for a view at |z_height|.
 APP_LIST_EXPORT gfx::ShadowValue GetShadowForZHeight(int z_height);

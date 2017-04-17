@@ -69,8 +69,11 @@ class DeviceLocalAccountPolicyBroker
       AffiliatedInvalidationServiceProvider* invalidation_service_provider);
   ~DeviceLocalAccountPolicyBroker() override;
 
-  // Initialize the broker, loading its |store_|.
+  // Initialize the broker, start asynchronous load of its |store_|.
   void Initialize();
+
+  // Loads store synchronously.
+  void LoadImmediately();
 
   // For the difference between |account_id| and |user_id|, see the
   // documentation of DeviceLocalAccount.
@@ -127,7 +130,7 @@ class DeviceLocalAccountPolicyBroker
   const base::FilePath component_policy_cache_path_;
   SchemaRegistry schema_registry_;
   const std::unique_ptr<DeviceLocalAccountPolicyStore> store_;
-  DeviceLocalAccountExtensionTracker extension_tracker_;
+  std::unique_ptr<DeviceLocalAccountExtensionTracker> extension_tracker_;
   scoped_refptr<DeviceLocalAccountExternalDataManager> external_data_manager_;
   scoped_refptr<chromeos::DeviceLocalAccountExternalPolicyLoader>
       extension_loader_;

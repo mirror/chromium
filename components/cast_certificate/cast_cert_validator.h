@@ -14,6 +14,9 @@
 #include "base/strings/string_piece.h"
 #include "base/time/time.h"
 
+namespace net {
+class TrustStore;
+}
 namespace cast_certificate {
 
 class CastCRL;
@@ -59,7 +62,8 @@ class CertVerificationContext {
   DISALLOW_COPY_AND_ASSIGN(CertVerificationContext);
 };
 
-// Verifies a cast device certficate given a chain of DER-encoded certificates.
+// Verifies a cast device certficate given a chain of DER-encoded certificates,
+// using the built-in Cast trust anchors.
 //
 // Inputs:
 //
@@ -74,8 +78,8 @@ class CertVerificationContext {
 // * |crl| is the CRL to check for certificate revocation status.
 //   If this is a nullptr, then revocation checking is currently disabled.
 //
-// * |crl_options| is for choosing how to handle the absence of a CRL.
-//   If crl_required is set to true, then an empty |crl| input would result
+// * |crl_policy| is for choosing how to handle the absence of a CRL.
+//   If CRL_REQUIRED is passed, then an empty |crl| input would result
 //   in a failed verification. Otherwise, |crl| is ignored if it is absent.
 //
 // Outputs:
@@ -95,6 +99,20 @@ bool VerifyDeviceCert(const std::vector<std::string>& certs,
                       const CastCRL* crl,
                       CRLPolicy crl_policy) WARN_UNUSED_RESULT;
 
+// This is an overloaded version of VerifyDeviceCert that allows
+// the input of a custom TrustStore.
+//
+// For production use pass |trust_store| as nullptr to use the production trust
+// store.
+bool VerifyDeviceCertUsingCustomTrustStore(
+    const std::vector<std::string>& certs,
+    const base::Time& time,
+    std::unique_ptr<CertVerificationContext>* context,
+    CastDeviceCertPolicy* policy,
+    const CastCRL* crl,
+    CRLPolicy crl_policy,
+    net::TrustStore* trust_store) WARN_UNUSED_RESULT;
+
 // Exposed only for unit-tests, not for use in production code.
 // Production code would get a context from VerifyDeviceCert().
 //
@@ -102,12 +120,6 @@ bool VerifyDeviceCert(const std::vector<std::string>& certs,
 // The common name will be hardcoded to some test value.
 std::unique_ptr<CertVerificationContext> CertVerificationContextImplForTest(
     const base::StringPiece& spki);
-
-// Exposed only for testing, not for use in production code.
-//
-// Replaces trusted root certificates in the CastTrustStore.
-// Returns true if successful, false if nothing is changed.
-bool SetTrustAnchorForTest(const std::string& cert) WARN_UNUSED_RESULT;
 
 }  // namespace cast_certificate
 

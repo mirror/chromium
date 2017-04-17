@@ -58,7 +58,8 @@ ChooserContextBase::GetGrantedObjects(const GURL& requesting_origin,
   for (auto& object : *object_list) {
     // Steal ownership of |object| from |object_list|.
     std::unique_ptr<base::DictionaryValue> object_dict =
-        base::DictionaryValue::From(std::move(object));
+        base::DictionaryValue::From(
+            base::MakeUnique<base::Value>(std::move(object)));
     if (object_dict && IsValidObject(*object_dict))
       results.push_back(std::move(object_dict));
   }
@@ -84,16 +85,16 @@ ChooserContextBase::GetAllGrantedObjects() {
     if (!setting->GetList(kObjectListKey, &object_list))
       continue;
 
-    for (const auto& object : *object_list) {
+    for (auto& object : *object_list) {
       base::DictionaryValue* object_dict;
-      if (!object->GetAsDictionary(&object_dict) ||
+      if (!object.GetAsDictionary(&object_dict) ||
           !IsValidObject(*object_dict)) {
         continue;
       }
 
-      results.push_back(base::WrapUnique(
-          new Object(requesting_origin, embedding_origin, object_dict,
-                     content_setting.source, content_setting.incognito)));
+      results.push_back(base::MakeUnique<Object>(
+          requesting_origin, embedding_origin, object_dict,
+          content_setting.source, content_setting.incognito));
     }
   }
 
@@ -115,7 +116,7 @@ void ChooserContextBase::GrantObjectPermission(
     object_list = new base::ListValue();
     setting->Set(kObjectListKey, object_list);
   }
-  object_list->AppendIfNotPresent(object.release());
+  object_list->AppendIfNotPresent(std::move(object));
   SetWebsiteSetting(requesting_origin, embedding_origin, std::move(setting));
 }
 

@@ -6,7 +6,7 @@
 #define CC_LAYERS_PAINTED_SCROLLBAR_LAYER_H_
 
 #include "base/macros.h"
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
 #include "cc/input/scrollbar.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/scrollbar_layer_interface.h"
@@ -14,7 +14,6 @@
 #include "cc/resources/scoped_ui_resource.h"
 
 namespace cc {
-class ScrollbarThemeComposite;
 
 class CC_EXPORT PaintedScrollbarLayer : public ScrollbarLayerInterface,
                                         public Layer {
@@ -71,9 +70,6 @@ class CC_EXPORT PaintedScrollbarLayer : public ScrollbarLayerInterface,
     SetNeedsPushProperties();
     return true;
   }
-
-  int MaxTextureSize();
-  float ClampScaleToMaxTextureSize(float scale);
 
   UIResourceBitmap RasterizeScrollbarPart(const gfx::Rect& layer_rect,
                                           const gfx::Rect& content_rect,

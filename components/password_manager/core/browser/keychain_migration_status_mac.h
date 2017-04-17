@@ -23,6 +23,16 @@ enum class MigrationStatus {
   // Migration failed twice. It should not be tried again.
   FAILED_TWICE,
 
+  // Migration finished successfully. The Keychain was cleaned up.
+  MIGRATED_DELETED,
+
+  // Best effort migration happened. Some passwords were inaccessible.
+  MIGRATED_PARTIALLY,
+
+  // Gave up on migration as the passwords aren't accessible anyway after Chrome
+  // changes the certificate.
+  MIGRATION_STOPPED,
+
   MIGRATION_STATUS_COUNT,
 };
 

@@ -7,10 +7,12 @@
 
 #include <stdint.h>
 
+#include <string>
 #include <tuple>
 
 #include "base/containers/hash_tables.h"
 #include "base/hash.h"
+#include "base/strings/stringprintf.h"
 #include "services/ui/common/types.h"
 #include "services/ui/common/util.h"
 
@@ -36,9 +38,9 @@ const ClientSpecificId kInvalidClientId = 0;
 // that embed roots use the client id in creating the window id to avoid
 // possible conflicts.
 struct WindowId {
-  WindowId(ClientSpecificId client_id, ClientSpecificId window_id)
+  constexpr WindowId(ClientSpecificId client_id, ClientSpecificId window_id)
       : client_id(client_id), window_id(window_id) {}
-  WindowId() : client_id(0), window_id(0) {}
+  constexpr WindowId() : client_id(0), window_id(0) {}
 
   bool operator==(const WindowId& other) const {
     return other.client_id == client_id && other.window_id == window_id;
@@ -49,6 +51,10 @@ struct WindowId {
   bool operator<(const WindowId& other) const {
     return std::tie(client_id, window_id) <
            std::tie(other.client_id, other.window_id);
+  }
+
+  std::string ToString() const {
+    return base::StringPrintf("%u:%u", client_id, window_id);
   }
 
   ClientSpecificId client_id;
@@ -89,25 +95,17 @@ inline WindowId RootWindowId(uint16_t index) {
   return WindowId(kInvalidClientId, 2 + index);
 }
 
+struct ClientWindowIdHash {
+  size_t operator()(const ClientWindowId& id) const { return id.id; }
+};
+
+struct WindowIdHash {
+  size_t operator()(const WindowId& id) const {
+    return WindowIdToTransportId(id);
+  }
+};
+
 }  // namespace ws
 }  // namespace ui
-
-namespace BASE_HASH_NAMESPACE {
-
-template <>
-struct hash<ui::ws::ClientWindowId> {
-  size_t operator()(const ui::ws::ClientWindowId& id) const {
-    return hash<ui::Id>()(id.id);
-  }
-};
-
-template <>
-struct hash<ui::ws::WindowId> {
-  size_t operator()(const ui::ws::WindowId& id) const {
-    return hash<ui::Id>()(WindowIdToTransportId(id));
-  }
-};
-
-}  // namespace BASE_HASH_NAMESPACE
 
 #endif  // SERVICES_UI_WS_IDS_H_

@@ -24,7 +24,6 @@
 #include "base/callback_forward.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "base/memory/linked_ptr.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
@@ -34,10 +33,6 @@
 #include "content/public/browser/notification_registrar.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "url/gurl.h"
-
-namespace base {
-class TimeDelta;
-}
 
 namespace content {
 class RenderProcessHost;
@@ -52,8 +47,6 @@ class URLRequestStatus;
 namespace safe_browsing {
 class ClientMalwareRequest;
 class ClientPhishingRequest;
-class ClientPhishingResponse;
-class ClientSideModel;
 
 // Main service which pushes models to the renderers, responds to classification
 // requests. This owns two ModelLoader objects.
@@ -163,7 +156,6 @@ class ClientSideDetectionService : public net::URLFetcherDelegate,
 
     CacheState(bool phish, base::Time time);
   };
-  typedef std::map<GURL, linked_ptr<CacheState> > PhishingCache;
 
   static const char kClientReportMalwareUrl[];
   static const char kClientReportPhishingUrl[];
@@ -230,13 +222,13 @@ class ClientSideDetectionService : public net::URLFetcherDelegate,
 
   // Map of client report phishing request to the corresponding callback that
   // has to be invoked when the request is done.
-  struct ClientReportInfo;
-  std::map<const net::URLFetcher*, ClientReportInfo*>
+  struct ClientPhishingReportInfo;
+  std::map<const net::URLFetcher*, std::unique_ptr<ClientPhishingReportInfo>>
       client_phishing_reports_;
   // Map of client malware ip request to the corresponding callback that
   // has to be invoked when the request is done.
   struct ClientMalwareReportInfo;
-  std::map<const net::URLFetcher*, ClientMalwareReportInfo*>
+  std::map<const net::URLFetcher*, std::unique_ptr<ClientMalwareReportInfo>>
       client_malware_reports_;
 
   // Cache of completed requests. Used to satisfy requests for the same urls
@@ -245,7 +237,7 @@ class ClientSideDetectionService : public net::URLFetcherDelegate,
   // size of this cache is limited by kMaxReportsPerDay *
   // ceil(InDays(max(kNegativeCacheInterval, kPositiveCacheInterval))).
   // TODO(gcasto): Serialize this so that it doesn't reset on browser restart.
-  PhishingCache cache_;
+  std::map<GURL, std::unique_ptr<CacheState>> cache_;
 
   // Timestamp of when we sent a phishing request. Used to limit the number
   // of phishing requests that we send in a day.

@@ -11,35 +11,38 @@
 namespace blink {
 
 class ShadowListPropertyFunctions {
-public:
-    static const ShadowList* getInitialShadowList(CSSPropertyID) { return nullptr; }
-    static const ShadowList* getShadowList(CSSPropertyID property, const ComputedStyle& style)
-    {
-        switch (property) {
-        case CSSPropertyBoxShadow:
-            return style.boxShadow();
-        case CSSPropertyTextShadow:
-            return style.textShadow();
-        default:
-            NOTREACHED();
-            return nullptr;
-        }
+ public:
+  static const ShadowList* GetInitialShadowList(CSSPropertyID) {
+    return nullptr;
+  }
+  static const ShadowList* GetShadowList(CSSPropertyID property,
+                                         const ComputedStyle& style) {
+    switch (property) {
+      case CSSPropertyBoxShadow:
+        return style.BoxShadow();
+      case CSSPropertyTextShadow:
+        return style.TextShadow();
+      default:
+        NOTREACHED();
+        return nullptr;
     }
-    static void setShadowList(CSSPropertyID property, ComputedStyle& style, PassRefPtr<ShadowList> shadowList)
-    {
-        switch (property) {
-        case CSSPropertyBoxShadow:
-            style.setBoxShadow(shadowList);
-            return;
-        case CSSPropertyTextShadow:
-            style.setTextShadow(shadowList);
-            return;
-        default:
-            NOTREACHED();
-        }
+  }
+  static void SetShadowList(CSSPropertyID property,
+                            ComputedStyle& style,
+                            PassRefPtr<ShadowList> shadow_list) {
+    switch (property) {
+      case CSSPropertyBoxShadow:
+        style.SetBoxShadow(std::move(shadow_list));
+        return;
+      case CSSPropertyTextShadow:
+        style.SetTextShadow(std::move(shadow_list));
+        return;
+      default:
+        NOTREACHED();
     }
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ShadowListPropertyFunctions_h
+#endif  // ShadowListPropertyFunctions_h

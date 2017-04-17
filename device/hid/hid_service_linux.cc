@@ -16,8 +16,10 @@
 #include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/files/scoped_file.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
@@ -25,7 +27,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "components/device_event_log/device_event_log.h"
-#include "device/core/device_monitor_linux.h"
+#include "device/base/device_monitor_linux.h"
 #include "device/hid/hid_connection_linux.h"
 #include "device/hid/hid_device_info_linux.h"
 #include "device/udev_linux/scoped_udev.h"
@@ -51,45 +53,44 @@ const char kSysfsReportDescriptorKey[] = "report_descriptor";
 struct HidServiceLinux::ConnectParams {
   ConnectParams(scoped_refptr<HidDeviceInfoLinux> device_info,
                 const ConnectCallback& callback,
-                scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-                scoped_refptr<base::SingleThreadTaskRunner> file_task_runner)
-      : device_info(device_info),
+                scoped_refptr<base::SequencedTaskRunner> task_runner,
+                scoped_refptr<base::SequencedTaskRunner> blocking_task_runner)
+      : device_info(std::move(device_info)),
         callback(callback),
-        task_runner(task_runner),
-        file_task_runner(file_task_runner) {}
+        task_runner(std::move(task_runner)),
+        blocking_task_runner(std::move(blocking_task_runner)) {}
   ~ConnectParams() {}
 
   scoped_refptr<HidDeviceInfoLinux> device_info;
   ConnectCallback callback;
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner;
-  scoped_refptr<base::SingleThreadTaskRunner> file_task_runner;
-  base::File device_file;
+  scoped_refptr<base::SequencedTaskRunner> task_runner;
+  scoped_refptr<base::SequencedTaskRunner> blocking_task_runner;
+  base::ScopedFD fd;
 };
 
 class HidServiceLinux::FileThreadHelper : public DeviceMonitorLinux::Observer {
  public:
   FileThreadHelper(base::WeakPtr<HidServiceLinux> service,
-                   scoped_refptr<base::SingleThreadTaskRunner> task_runner)
-      : observer_(this), service_(service), task_runner_(task_runner) {}
+                   scoped_refptr<base::SequencedTaskRunner> task_runner)
+      : observer_(this), service_(service), task_runner_(task_runner) {
+    thread_checker_.DetachFromThread();
+  }
 
   ~FileThreadHelper() override {
     DCHECK(thread_checker_.CalledOnValidThread());
   }
 
-  static void Start(std::unique_ptr<FileThreadHelper> self) {
+  void Start() {
     base::ThreadRestrictions::AssertIOAllowed();
-    self->thread_checker_.DetachFromThread();
+    DCHECK(thread_checker_.CalledOnValidThread());
 
     DeviceMonitorLinux* monitor = DeviceMonitorLinux::GetInstance();
-    self->observer_.Add(monitor);
-    monitor->Enumerate(base::Bind(&FileThreadHelper::OnDeviceAdded,
-                                  base::Unretained(self.get())));
-    self->task_runner_->PostTask(
+    observer_.Add(monitor);
+    monitor->Enumerate(
+        base::Bind(&FileThreadHelper::OnDeviceAdded, base::Unretained(this)));
+    task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&HidServiceLinux::FirstEnumerationComplete, self->service_));
-
-    // |self| is now owned by the current message loop.
-    ignore_result(self.release());
+        base::Bind(&HidServiceLinux::FirstEnumerationComplete, service_));
   }
 
  private:
@@ -187,34 +188,37 @@ class HidServiceLinux::FileThreadHelper : public DeviceMonitorLinux::Observer {
     }
   }
 
-  void WillDestroyMonitorMessageLoop() override {
-    DCHECK(thread_checker_.CalledOnValidThread());
-    delete this;
-  }
-
   base::ThreadChecker thread_checker_;
   ScopedObserver<DeviceMonitorLinux, DeviceMonitorLinux::Observer> observer_;
 
   // This weak pointer is only valid when checked on this task runner.
   base::WeakPtr<HidServiceLinux> service_;
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(FileThreadHelper);
 };
 
 HidServiceLinux::HidServiceLinux(
-    scoped_refptr<base::SingleThreadTaskRunner> file_task_runner)
-    : file_task_runner_(file_task_runner), weak_factory_(this) {
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
-  std::unique_ptr<FileThreadHelper> helper(
-      new FileThreadHelper(weak_factory_.GetWeakPtr(), task_runner_));
-  helper_ = helper.get();
-  file_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&FileThreadHelper::Start, base::Passed(&helper)));
+    scoped_refptr<base::SequencedTaskRunner> blocking_task_runner)
+    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      blocking_task_runner_(std::move(blocking_task_runner)),
+      weak_factory_(this) {
+  helper_ = base::MakeUnique<FileThreadHelper>(weak_factory_.GetWeakPtr(),
+                                               task_runner_);
+  blocking_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&FileThreadHelper::Start, base::Unretained(helper_.get())));
 }
 
 HidServiceLinux::~HidServiceLinux() {
-  file_task_runner_->DeleteSoon(FROM_HERE, helper_);
+  DCHECK(!helper_);
+}
+
+void HidServiceLinux::Shutdown() {
+  const bool did_post_task =
+      blocking_task_runner_->DeleteSoon(FROM_HERE, helper_.release());
+  DCHECK(did_post_task);
+  HidService::Shutdown();
 }
 
 void HidServiceLinux::Connect(const HidDeviceId& device_id,
@@ -230,7 +234,7 @@ void HidServiceLinux::Connect(const HidDeviceId& device_id,
       static_cast<HidDeviceInfoLinux*>(map_entry->second.get());
 
   std::unique_ptr<ConnectParams> params(new ConnectParams(
-      device_info, callback, task_runner_, file_task_runner_));
+      device_info, callback, task_runner_, blocking_task_runner_));
 
 #if defined(OS_CHROMEOS)
   chromeos::PermissionBrokerClient* client =
@@ -244,9 +248,9 @@ void HidServiceLinux::Connect(const HidDeviceId& device_id,
       base::Bind(&HidServiceLinux::OnPathOpenComplete, base::Passed(&params)),
       error_callback);
 #else
-  file_task_runner_->PostTask(FROM_HERE,
-                              base::Bind(&HidServiceLinux::OpenOnBlockingThread,
-                                         base::Passed(&params)));
+  blocking_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&HidServiceLinux::OpenOnBlockingThread,
+                            base::Passed(&params)));
 #endif  // defined(OS_CHROMEOS)
 }
 
@@ -254,12 +258,13 @@ void HidServiceLinux::Connect(const HidDeviceId& device_id,
 
 // static
 void HidServiceLinux::OnPathOpenComplete(std::unique_ptr<ConnectParams> params,
-                                         dbus::FileDescriptor fd) {
-  scoped_refptr<base::SingleThreadTaskRunner> file_task_runner =
-      params->file_task_runner;
-  file_task_runner->PostTask(
-      FROM_HERE, base::Bind(&HidServiceLinux::ValidateFdOnBlockingThread,
-                            base::Passed(&params), base::Passed(&fd)));
+                                         base::ScopedFD fd) {
+  scoped_refptr<base::SequencedTaskRunner> blocking_task_runner =
+      params->blocking_task_runner;
+  params->fd = std::move(fd);
+  blocking_task_runner->PostTask(
+      FROM_HERE,
+      base::Bind(&HidServiceLinux::FinishOpen, base::Passed(&params)));
 }
 
 // static
@@ -272,27 +277,16 @@ void HidServiceLinux::OnPathOpenError(const std::string& device_path,
   callback.Run(nullptr);
 }
 
-// static
-void HidServiceLinux::ValidateFdOnBlockingThread(
-    std::unique_ptr<ConnectParams> params,
-    dbus::FileDescriptor fd) {
-  base::ThreadRestrictions::AssertIOAllowed();
-  fd.CheckValidity();
-  DCHECK(fd.is_valid());
-  params->device_file = base::File(fd.TakeValue());
-  FinishOpen(std::move(params));
-}
-
 #else
 
 // static
 void HidServiceLinux::OpenOnBlockingThread(
     std::unique_ptr<ConnectParams> params) {
   base::ThreadRestrictions::AssertIOAllowed();
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner = params->task_runner;
+  scoped_refptr<base::SequencedTaskRunner> task_runner = params->task_runner;
 
   base::FilePath device_path(params->device_info->device_node());
-  base::File& device_file = params->device_file;
+  base::File device_file;
   int flags =
       base::File::FLAG_OPEN | base::File::FLAG_READ | base::File::FLAG_WRITE;
   device_file.Initialize(device_path, flags);
@@ -313,7 +307,7 @@ void HidServiceLinux::OpenOnBlockingThread(
     task_runner->PostTask(FROM_HERE, base::Bind(params->callback, nullptr));
     return;
   }
-
+  params->fd.reset(device_file.TakePlatformFile());
   FinishOpen(std::move(params));
 }
 
@@ -322,9 +316,9 @@ void HidServiceLinux::OpenOnBlockingThread(
 // static
 void HidServiceLinux::FinishOpen(std::unique_ptr<ConnectParams> params) {
   base::ThreadRestrictions::AssertIOAllowed();
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner = params->task_runner;
+  scoped_refptr<base::SequencedTaskRunner> task_runner = params->task_runner;
 
-  if (!base::SetNonBlocking(params->device_file.GetPlatformFile())) {
+  if (!base::SetNonBlocking(params->fd.get())) {
     HID_PLOG(ERROR) << "Failed to set the non-blocking flag on the device fd";
     task_runner->PostTask(FROM_HERE, base::Bind(params->callback, nullptr));
     return;
@@ -337,10 +331,10 @@ void HidServiceLinux::FinishOpen(std::unique_ptr<ConnectParams> params) {
 
 // static
 void HidServiceLinux::CreateConnection(std::unique_ptr<ConnectParams> params) {
-  DCHECK(params->device_file.IsValid());
+  DCHECK(params->fd.is_valid());
   params->callback.Run(make_scoped_refptr(new HidConnectionLinux(
-      params->device_info, std::move(params->device_file),
-      params->file_task_runner)));
+      std::move(params->device_info), std::move(params->fd),
+      std::move(params->blocking_task_runner))));
 }
 
 }  // namespace device

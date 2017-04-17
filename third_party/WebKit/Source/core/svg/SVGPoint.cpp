@@ -33,93 +33,89 @@
 #include "core/svg/SVGAnimationElement.h"
 #include "core/svg/SVGParserUtilities.h"
 #include "platform/transforms/AffineTransform.h"
-#include "wtf/text/StringBuilder.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-SVGPoint::SVGPoint()
-{
+SVGPoint::SVGPoint() {}
+
+SVGPoint::SVGPoint(const FloatPoint& point) : value_(point) {}
+
+SVGPoint* SVGPoint::Clone() const {
+  return SVGPoint::Create(value_);
 }
 
-SVGPoint::SVGPoint(const FloatPoint& point)
-    : m_value(point)
-{
+template <typename CharType>
+SVGParsingError SVGPoint::Parse(const CharType*& ptr, const CharType* end) {
+  float x = 0;
+  float y = 0;
+  if (!ParseNumber(ptr, end, x) ||
+      !ParseNumber(ptr, end, y, kDisallowWhitespace))
+    return SVGParseStatus::kExpectedNumber;
+
+  if (SkipOptionalSVGSpaces(ptr, end)) {
+    // Nothing should come after the second number.
+    return SVGParseStatus::kTrailingGarbage;
+  }
+
+  value_ = FloatPoint(x, y);
+  return SVGParseStatus::kNoError;
 }
 
-SVGPoint* SVGPoint::clone() const
-{
-    return SVGPoint::create(m_value);
+FloatPoint SVGPoint::MatrixTransform(const AffineTransform& transform) const {
+  double new_x, new_y;
+  transform.Map(static_cast<double>(X()), static_cast<double>(Y()), new_x,
+                new_y);
+  return FloatPoint::NarrowPrecision(new_x, new_y);
 }
 
-template<typename CharType>
-SVGParsingError SVGPoint::parse(const CharType*& ptr, const CharType* end)
-{
-    float x = 0;
-    float y = 0;
-    if (!parseNumber(ptr, end, x)
-        || !parseNumber(ptr, end, y, DisallowWhitespace))
-        return SVGParseStatus::ExpectedNumber;
+SVGParsingError SVGPoint::SetValueAsString(const String& string) {
+  if (string.IsEmpty()) {
+    value_ = FloatPoint(0.0f, 0.0f);
+    return SVGParseStatus::kNoError;
+  }
 
-    if (skipOptionalSVGSpaces(ptr, end)) {
-        // Nothing should come after the second number.
-        return SVGParseStatus::TrailingGarbage;
-    }
-
-    m_value = FloatPoint(x, y);
-    return SVGParseStatus::NoError;
+  if (string.Is8Bit()) {
+    const LChar* ptr = string.Characters8();
+    const LChar* end = ptr + string.length();
+    return Parse(ptr, end);
+  }
+  const UChar* ptr = string.Characters16();
+  const UChar* end = ptr + string.length();
+  return Parse(ptr, end);
 }
 
-FloatPoint SVGPoint::matrixTransform(const AffineTransform& transform) const
-{
-    double newX, newY;
-    transform.map(static_cast<double>(x()), static_cast<double>(y()), newX, newY);
-    return FloatPoint::narrowPrecision(newX, newY);
+String SVGPoint::ValueAsString() const {
+  StringBuilder builder;
+  builder.AppendNumber(X());
+  builder.Append(' ');
+  builder.AppendNumber(Y());
+  return builder.ToString();
 }
 
-SVGParsingError SVGPoint::setValueAsString(const String& string)
-{
-    if (string.isEmpty()) {
-        m_value = FloatPoint(0.0f, 0.0f);
-        return SVGParseStatus::NoError;
-    }
-
-    if (string.is8Bit()) {
-        const LChar* ptr = string.characters8();
-        const LChar* end = ptr + string.length();
-        return parse(ptr, end);
-    }
-    const UChar* ptr = string.characters16();
-    const UChar* end = ptr + string.length();
-    return parse(ptr, end);
+void SVGPoint::Add(SVGPropertyBase* other, SVGElement*) {
+  // SVGPoint is not animated by itself
+  NOTREACHED();
 }
 
-String SVGPoint::valueAsString() const
-{
-    StringBuilder builder;
-    builder.appendNumber(x());
-    builder.append(' ');
-    builder.appendNumber(y());
-    return builder.toString();
+void SVGPoint::CalculateAnimatedValue(
+    SVGAnimationElement* animation_element,
+    float percentage,
+    unsigned repeat_count,
+    SVGPropertyBase* from_value,
+    SVGPropertyBase* to_value,
+    SVGPropertyBase* to_at_end_of_duration_value,
+    SVGElement*) {
+  // SVGPoint is not animated by itself
+  NOTREACHED();
 }
 
-void SVGPoint::add(SVGPropertyBase* other, SVGElement*)
-{
-    // SVGPoint is not animated by itself
-    ASSERT_NOT_REACHED();
+float SVGPoint::CalculateDistance(SVGPropertyBase* to,
+                                  SVGElement* context_element) {
+  // SVGPoint is not animated by itself
+  NOTREACHED();
+  return 0.0f;
 }
 
-void SVGPoint::calculateAnimatedValue(SVGAnimationElement* animationElement, float percentage, unsigned repeatCount, SVGPropertyBase* fromValue, SVGPropertyBase* toValue, SVGPropertyBase* toAtEndOfDurationValue, SVGElement*)
-{
-    // SVGPoint is not animated by itself
-    ASSERT_NOT_REACHED();
-}
-
-float SVGPoint::calculateDistance(SVGPropertyBase* to, SVGElement* contextElement)
-{
-    // SVGPoint is not animated by itself
-    ASSERT_NOT_REACHED();
-    return 0.0f;
-}
-
-} // namespace blink
+}  // namespace blink

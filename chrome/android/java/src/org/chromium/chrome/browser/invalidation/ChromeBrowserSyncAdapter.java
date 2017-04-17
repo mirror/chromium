@@ -23,7 +23,7 @@ import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
 import org.chromium.chrome.browser.init.EmptyBrowserParts;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.components.invalidation.PendingInvalidation;
-import org.chromium.sync.signin.ChromeSigninController;
+import org.chromium.components.signin.ChromeSigninController;
 
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
@@ -46,7 +46,7 @@ public class ChromeBrowserSyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority,
             ContentProviderClient provider, SyncResult syncResult) {
         if (extras.getBoolean(ContentResolver.SYNC_EXTRAS_INITIALIZE)) {
-            Account signedInAccount = ChromeSigninController.get(getContext()).getSignedInUser();
+            Account signedInAccount = ChromeSigninController.get().getSignedInUser();
             if (account.equals(signedInAccount)) {
                 ContentResolver.setIsSyncable(account, authority, 1);
             } else {

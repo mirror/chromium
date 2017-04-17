@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_CHROMEOS_EXTENSIONS_GFX_UTILS_H_
 
 #include <string>
+#include <vector>
 
 namespace content {
 class BrowserContext;
@@ -17,6 +18,18 @@ class ImageSkia;
 
 namespace extensions {
 namespace util {
+
+// Returns true if the equivalent PlayStore app, which is corresponding to the
+// Chrome extension (identified by |extension_id|), has been installed.
+bool HasEquivalentInstalledArcApp(content::BrowserContext* context,
+                                  const std::string& extension_id);
+
+// Returns the equivalent Chrome extensions that have been installed to the
+// Playstore app (identified by |arc_package_name|). Returns an empty vector if
+// there is no such Chrome extension.
+const std::vector<std::string> GetEquivalentInstalledExtensions(
+    content::BrowserContext* context,
+    const std::string& arc_package_name);
 
 // May apply additional badge in order to distinguish dual apps from Chrome and
 // Android side.

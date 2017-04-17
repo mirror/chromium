@@ -13,7 +13,6 @@
 
 namespace content {
 class NavigationManager;
-class NavigationEntry;
 }
 
 namespace sessions {
@@ -36,7 +35,6 @@ class SESSIONS_EXPORT IOSLiveTab : public LiveTab,
   sessions::SerializedNavigationEntry GetEntryAtIndex(int index) override;
   sessions::SerializedNavigationEntry GetPendingEntry() override;
   int GetEntryCount() override;
-  void LoadIfNecessary() override;
   const std::string& GetUserAgentOverride() const override;
 
   web::WebState* web_state() { return web_state_; }

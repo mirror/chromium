@@ -21,274 +21,324 @@
 #ifndef StylePropertySet_h
 #define StylePropertySet_h
 
+#include <algorithm>
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/css/CSSProperty.h"
 #include "core/css/PropertySetCSSStyleDeclaration.h"
 #include "core/css/parser/CSSParserMode.h"
-#include "wtf/ListHashSet.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
-#include <algorithm>
+#include "platform/wtf/ListHashSet.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class CSSStyleDeclaration;
 class ImmutableStylePropertySet;
 class MutableStylePropertySet;
+class PropertyRegistry;
 class StyleSheetContents;
 
-class CORE_EXPORT StylePropertySet : public GarbageCollectedFinalized<StylePropertySet> {
-    WTF_MAKE_NONCOPYABLE(StylePropertySet);
-    friend class PropertyReference;
-public:
+class CORE_EXPORT StylePropertySet
+    : public GarbageCollectedFinalized<StylePropertySet> {
+  WTF_MAKE_NONCOPYABLE(StylePropertySet);
+  friend class PropertyReference;
 
-    void finalizeGarbageCollectedObject();
+ public:
+  void FinalizeGarbageCollectedObject();
 
-    class PropertyReference {
-        STACK_ALLOCATED();
-    public:
-        PropertyReference(const StylePropertySet& propertySet, unsigned index)
-            : m_propertySet(&propertySet)
-            , m_index(index)
-        {
-        }
+  class PropertyReference {
+    STACK_ALLOCATED();
 
-        CSSPropertyID id() const { return static_cast<CSSPropertyID>(propertyMetadata().m_propertyID); }
-        CSSPropertyID shorthandID() const { return propertyMetadata().shorthandID(); }
+   public:
+    PropertyReference(const StylePropertySet& property_set, unsigned index)
+        : property_set_(&property_set), index_(index) {}
 
-        bool isImportant() const { return propertyMetadata().m_important; }
-        bool isInherited() const { return propertyMetadata().m_inherited; }
-        bool isImplicit() const { return propertyMetadata().m_implicit; }
+    CSSPropertyID Id() const {
+      return static_cast<CSSPropertyID>(PropertyMetadata().property_id_);
+    }
+    CSSPropertyID ShorthandID() const {
+      return PropertyMetadata().ShorthandID();
+    }
 
-        const CSSValue& value() const { return propertyValue(); }
+    bool IsImportant() const { return PropertyMetadata().important_; }
+    bool IsInherited() const { return PropertyMetadata().inherited_; }
+    bool IsImplicit() const { return PropertyMetadata().implicit_; }
 
-        // FIXME: Remove this.
-        CSSProperty toCSSProperty() const { return CSSProperty(propertyMetadata(), propertyValue()); }
+    const CSSValue& Value() const { return PropertyValue(); }
 
-        const StylePropertyMetadata& propertyMetadata() const;
+    // FIXME: Remove this.
+    CSSProperty ToCSSProperty() const {
+      return CSSProperty(PropertyMetadata(), PropertyValue());
+    }
 
-    private:
-        const CSSValue& propertyValue() const;
+    const StylePropertyMetadata& PropertyMetadata() const;
 
-        Member<const StylePropertySet> m_propertySet;
-        unsigned m_index;
-    };
+   private:
+    const CSSValue& PropertyValue() const;
 
-    unsigned propertyCount() const;
-    bool isEmpty() const;
-    PropertyReference propertyAt(unsigned index) const { return PropertyReference(*this, index); }
+    Member<const StylePropertySet> property_set_;
+    unsigned index_;
+  };
 
-    template<typename T> // CSSPropertyID or AtomicString
-    int findPropertyIndex(T property) const;
+  unsigned PropertyCount() const;
+  bool IsEmpty() const;
+  PropertyReference PropertyAt(unsigned index) const {
+    return PropertyReference(*this, index);
+  }
 
-    bool hasProperty(CSSPropertyID property) const { return findPropertyIndex(property) != -1; }
+  template <typename T>  // CSSPropertyID or AtomicString
+  int FindPropertyIndex(T property) const;
 
-    template<typename T> // CSSPropertyID or AtomicString
-    const CSSValue* getPropertyCSSValue(T property) const;
+  bool HasProperty(CSSPropertyID property) const {
+    return FindPropertyIndex(property) != -1;
+  }
 
-    template<typename T> // CSSPropertyID or AtomicString
-    String getPropertyValue(T property) const;
+  template <typename T>  // CSSPropertyID or AtomicString
+  const CSSValue* GetPropertyCSSValue(T property) const;
 
-    template<typename T> // CSSPropertyID or AtomicString
-    bool propertyIsImportant(T property) const;
+  template <typename T>  // CSSPropertyID or AtomicString
+  String GetPropertyValue(T property) const;
 
-    bool shorthandIsImportant(CSSPropertyID) const;
-    bool shorthandIsImportant(AtomicString customPropertyName) const;
+  template <typename T>  // CSSPropertyID or AtomicString
+  bool PropertyIsImportant(T property) const;
 
-    CSSPropertyID getPropertyShorthand(CSSPropertyID) const;
-    bool isPropertyImplicit(CSSPropertyID) const;
+  bool ShorthandIsImportant(CSSPropertyID) const;
+  bool ShorthandIsImportant(AtomicString custom_property_name) const;
 
-    CSSParserMode cssParserMode() const { return static_cast<CSSParserMode>(m_cssParserMode); }
+  CSSPropertyID GetPropertyShorthand(CSSPropertyID) const;
+  bool IsPropertyImplicit(CSSPropertyID) const;
 
-    MutableStylePropertySet* mutableCopy() const;
-    ImmutableStylePropertySet* immutableCopyIfNeeded() const;
+  CSSParserMode CssParserMode() const {
+    return static_cast<CSSParserMode>(css_parser_mode_);
+  }
 
-    MutableStylePropertySet* copyPropertiesInSet(const Vector<CSSPropertyID>&) const;
+  MutableStylePropertySet* MutableCopy() const;
+  ImmutableStylePropertySet* ImmutableCopyIfNeeded() const;
 
-    String asText() const;
+  MutableStylePropertySet* CopyPropertiesInSet(
+      const Vector<CSSPropertyID>&) const;
 
-    bool isMutable() const { return m_isMutable; }
+  String AsText() const;
 
-    bool hasFailedOrCanceledSubresources() const;
+  bool IsMutable() const { return is_mutable_; }
 
-    static unsigned averageSizeInBytes();
+  bool HasFailedOrCanceledSubresources() const;
+
+  static unsigned AverageSizeInBytes();
 
 #ifndef NDEBUG
-    void showStyle();
+  void ShowStyle();
 #endif
 
-    bool propertyMatches(CSSPropertyID, const CSSValue&) const;
+  bool PropertyMatches(CSSPropertyID, const CSSValue&) const;
 
-    DECLARE_TRACE();
-    DEFINE_INLINE_TRACE_AFTER_DISPATCH() { }
+  DECLARE_TRACE();
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {}
 
-protected:
+ protected:
+  enum { kMaxArraySize = (1 << 28) - 1 };
 
-    enum { MaxArraySize = (1 << 28) - 1 };
+  StylePropertySet(CSSParserMode css_parser_mode)
+      : css_parser_mode_(css_parser_mode), is_mutable_(true), array_size_(0) {}
 
-    StylePropertySet(CSSParserMode cssParserMode)
-        : m_cssParserMode(cssParserMode)
-        , m_isMutable(true)
-        , m_arraySize(0)
-    { }
+  StylePropertySet(CSSParserMode css_parser_mode, unsigned immutable_array_size)
+      : css_parser_mode_(css_parser_mode),
+        is_mutable_(false),
+        array_size_(std::min(immutable_array_size, unsigned(kMaxArraySize))) {}
 
-    StylePropertySet(CSSParserMode cssParserMode, unsigned immutableArraySize)
-        : m_cssParserMode(cssParserMode)
-        , m_isMutable(false)
-        , m_arraySize(std::min(immutableArraySize, unsigned(MaxArraySize)))
-    { }
+  unsigned css_parser_mode_ : 3;
+  mutable unsigned is_mutable_ : 1;
+  unsigned array_size_ : 28;
 
-    unsigned m_cssParserMode : 3;
-    mutable unsigned m_isMutable : 1;
-    unsigned m_arraySize : 28;
+  friend class PropertySetCSSStyleDeclaration;
+};
 
-    friend class PropertySetCSSStyleDeclaration;
+// Used for lazily parsing properties.
+class CSSLazyPropertyParser
+    : public GarbageCollectedFinalized<CSSLazyPropertyParser> {
+  WTF_MAKE_NONCOPYABLE(CSSLazyPropertyParser);
+
+ public:
+  CSSLazyPropertyParser() {}
+  virtual ~CSSLazyPropertyParser() {}
+  virtual StylePropertySet* ParseProperties() = 0;
+  DECLARE_VIRTUAL_TRACE();
 };
 
 class CORE_EXPORT ImmutableStylePropertySet : public StylePropertySet {
-public:
-    ~ImmutableStylePropertySet();
-    static ImmutableStylePropertySet* create(const CSSProperty* properties, unsigned count, CSSParserMode);
+ public:
+  ~ImmutableStylePropertySet();
+  static ImmutableStylePropertySet* Create(const CSSProperty* properties,
+                                           unsigned count,
+                                           CSSParserMode);
 
-    unsigned propertyCount() const { return m_arraySize; }
+  unsigned PropertyCount() const { return array_size_; }
 
-    const Member<const CSSValue>* valueArray() const;
-    const StylePropertyMetadata* metadataArray() const;
+  const Member<const CSSValue>* ValueArray() const;
+  const StylePropertyMetadata* MetadataArray() const;
 
-    template<typename T> // CSSPropertyID or AtomicString
-    int findPropertyIndex(T property) const;
+  template <typename T>  // CSSPropertyID or AtomicString
+  int FindPropertyIndex(T property) const;
 
-    DECLARE_TRACE_AFTER_DISPATCH();
+  DECLARE_TRACE_AFTER_DISPATCH();
 
-    void* operator new(std::size_t, void* location)
-    {
-        return location;
-    }
+  void* operator new(std::size_t, void* location) { return location; }
 
-    void* m_storage;
+  void* storage_;
 
-private:
-    ImmutableStylePropertySet(const CSSProperty*, unsigned count, CSSParserMode);
+ private:
+  ImmutableStylePropertySet(const CSSProperty*, unsigned count, CSSParserMode);
 };
 
-inline const Member<const CSSValue>* ImmutableStylePropertySet::valueArray() const
-{
-    return reinterpret_cast<const Member<const CSSValue>*>(const_cast<const void**>(&(this->m_storage)));
+inline const Member<const CSSValue>* ImmutableStylePropertySet::ValueArray()
+    const {
+  return reinterpret_cast<const Member<const CSSValue>*>(
+      const_cast<const void**>(&(this->storage_)));
 }
 
-inline const StylePropertyMetadata* ImmutableStylePropertySet::metadataArray() const
-{
-    return reinterpret_cast<const StylePropertyMetadata*>(&reinterpret_cast<const char*>(&(this->m_storage))[m_arraySize * sizeof(Member<CSSValue>)]);
+inline const StylePropertyMetadata* ImmutableStylePropertySet::MetadataArray()
+    const {
+  return reinterpret_cast<const StylePropertyMetadata*>(
+      &reinterpret_cast<const char*>(
+          &(this->storage_))[array_size_ * sizeof(Member<CSSValue>)]);
 }
 
-DEFINE_TYPE_CASTS(ImmutableStylePropertySet, StylePropertySet, set, !set->isMutable(), !set.isMutable());
+DEFINE_TYPE_CASTS(ImmutableStylePropertySet,
+                  StylePropertySet,
+                  set,
+                  !set->IsMutable(),
+                  !set.IsMutable());
 
 class CORE_EXPORT MutableStylePropertySet : public StylePropertySet {
-public:
-    ~MutableStylePropertySet() { }
-    static MutableStylePropertySet* create(CSSParserMode);
-    static MutableStylePropertySet* create(const CSSProperty* properties, unsigned count);
+ public:
+  ~MutableStylePropertySet() {}
+  static MutableStylePropertySet* Create(CSSParserMode);
+  static MutableStylePropertySet* Create(const CSSProperty* properties,
+                                         unsigned count);
 
-    unsigned propertyCount() const { return m_propertyVector.size(); }
+  unsigned PropertyCount() const { return property_vector_.size(); }
 
-    // Returns whether this style set was changed.
-    bool addParsedProperties(const HeapVector<CSSProperty, 256>&);
-    bool addRespectingCascade(const CSSProperty&);
+  // Returns whether this style set was changed.
+  bool AddParsedProperties(const HeapVector<CSSProperty, 256>&);
+  bool AddRespectingCascade(const CSSProperty&);
 
-    // These expand shorthand properties into multiple properties.
-    bool setProperty(CSSPropertyID unresolvedProperty, const String& value, bool important = false, StyleSheetContents* contextStyleSheet = 0);
-    bool setProperty(const AtomicString& customPropertyName, const String& value, bool important = false, StyleSheetContents* contextStyleSheet = 0);
-    // TODO(sashab): Make this take a const CSSValue&
-    void setProperty(CSSPropertyID, const CSSValue*, bool important = false);
+  struct SetResult {
+    bool did_parse;
+    bool did_change;
+  };
+  // These expand shorthand properties into multiple properties.
+  SetResult SetProperty(CSSPropertyID unresolved_property,
+                        const String& value,
+                        bool important = false,
+                        StyleSheetContents* context_style_sheet = 0);
+  SetResult SetProperty(const AtomicString& custom_property_name,
+                        const PropertyRegistry*,
+                        const String& value,
+                        bool important,
+                        StyleSheetContents* context_style_sheet,
+                        bool is_animation_tainted);
+  void SetProperty(CSSPropertyID, const CSSValue&, bool important = false);
 
-    // These do not. FIXME: This is too messy, we can do better.
-    bool setProperty(CSSPropertyID, CSSValueID identifier, bool important = false);
-    bool setProperty(const CSSProperty&, CSSProperty* slot = 0);
+  // These do not. FIXME: This is too messy, we can do better.
+  bool SetProperty(CSSPropertyID,
+                   CSSValueID identifier,
+                   bool important = false);
+  bool SetProperty(const CSSProperty&, CSSProperty* slot = 0);
 
-    template<typename T> // CSSPropertyID or AtomicString
-    bool removeProperty(T property, String* returnText = 0);
-    bool removePropertiesInSet(const CSSPropertyID* set, unsigned length);
-    void removeEquivalentProperties(const StylePropertySet*);
-    void removeEquivalentProperties(const CSSStyleDeclaration*);
+  template <typename T>  // CSSPropertyID or AtomicString
+  bool RemoveProperty(T property, String* return_text = 0);
+  bool RemovePropertiesInSet(const CSSPropertyID* set, unsigned length);
+  void RemoveEquivalentProperties(const StylePropertySet*);
+  void RemoveEquivalentProperties(const CSSStyleDeclaration*);
 
-    void mergeAndOverrideOnConflict(const StylePropertySet*);
+  void MergeAndOverrideOnConflict(const StylePropertySet*);
 
-    void clear();
-    void parseDeclarationList(const String& styleDeclaration, StyleSheetContents* contextStyleSheet);
+  void Clear();
+  void ParseDeclarationList(const String& style_declaration,
+                            StyleSheetContents* context_style_sheet);
 
-    CSSStyleDeclaration* ensureCSSStyleDeclaration();
+  CSSStyleDeclaration* EnsureCSSStyleDeclaration();
 
-    template<typename T> // CSSPropertyID or AtomicString
-    int findPropertyIndex(T property) const;
+  template <typename T>  // CSSPropertyID or AtomicString
+  int FindPropertyIndex(T property) const;
 
-    DECLARE_TRACE_AFTER_DISPATCH();
+  DECLARE_TRACE_AFTER_DISPATCH();
 
-private:
-    explicit MutableStylePropertySet(CSSParserMode);
-    explicit MutableStylePropertySet(const StylePropertySet&);
-    MutableStylePropertySet(const CSSProperty* properties, unsigned count);
+ private:
+  explicit MutableStylePropertySet(CSSParserMode);
+  explicit MutableStylePropertySet(const StylePropertySet&);
+  MutableStylePropertySet(const CSSProperty* properties, unsigned count);
 
-    bool removePropertyAtIndex(int, String* returnText);
+  bool RemovePropertyAtIndex(int, String* return_text);
 
-    bool removeShorthandProperty(CSSPropertyID);
-    bool removeShorthandProperty(const AtomicString& customPropertyName) { return false; }
-    CSSProperty* findCSSPropertyWithID(CSSPropertyID, const AtomicString& customPropertyName = nullAtom);
-    Member<PropertySetCSSStyleDeclaration> m_cssomWrapper;
+  bool RemoveShorthandProperty(CSSPropertyID);
+  bool RemoveShorthandProperty(const AtomicString& custom_property_name) {
+    return false;
+  }
+  CSSProperty* FindCSSPropertyWithID(
+      CSSPropertyID,
+      const AtomicString& custom_property_name = g_null_atom);
+  Member<PropertySetCSSStyleDeclaration> cssom_wrapper_;
 
-    friend class StylePropertySet;
+  friend class StylePropertySet;
 
-    HeapVector<CSSProperty, 4> m_propertyVector;
+  HeapVector<CSSProperty, 4> property_vector_;
 };
 
-DEFINE_TYPE_CASTS(MutableStylePropertySet, StylePropertySet, set, set->isMutable(), set.isMutable());
+DEFINE_TYPE_CASTS(MutableStylePropertySet,
+                  StylePropertySet,
+                  set,
+                  set->IsMutable(),
+                  set.IsMutable());
 
-inline MutableStylePropertySet* toMutableStylePropertySet(const Persistent<StylePropertySet>& set)
-{
-    return toMutableStylePropertySet(set.get());
+inline MutableStylePropertySet* ToMutableStylePropertySet(
+    const Persistent<StylePropertySet>& set) {
+  return ToMutableStylePropertySet(set.Get());
 }
 
-inline MutableStylePropertySet* toMutableStylePropertySet(const Member<StylePropertySet>& set)
-{
-    return toMutableStylePropertySet(set.get());
+inline MutableStylePropertySet* ToMutableStylePropertySet(
+    const Member<StylePropertySet>& set) {
+  return ToMutableStylePropertySet(set.Get());
 }
 
-inline const StylePropertyMetadata& StylePropertySet::PropertyReference::propertyMetadata() const
-{
-    if (m_propertySet->isMutable())
-        return toMutableStylePropertySet(*m_propertySet).m_propertyVector.at(m_index).metadata();
-    return toImmutableStylePropertySet(*m_propertySet).metadataArray()[m_index];
+inline const StylePropertyMetadata&
+StylePropertySet::PropertyReference::PropertyMetadata() const {
+  if (property_set_->IsMutable())
+    return ToMutableStylePropertySet(*property_set_)
+        .property_vector_.at(index_)
+        .Metadata();
+  return ToImmutableStylePropertySet(*property_set_).MetadataArray()[index_];
 }
 
-inline const CSSValue& StylePropertySet::PropertyReference::propertyValue() const
-{
-    if (m_propertySet->isMutable())
-        return *toMutableStylePropertySet(*m_propertySet).m_propertyVector.at(m_index).value();
-    return *toImmutableStylePropertySet(*m_propertySet).valueArray()[m_index];
+inline const CSSValue& StylePropertySet::PropertyReference::PropertyValue()
+    const {
+  if (property_set_->IsMutable())
+    return *ToMutableStylePropertySet(*property_set_)
+                .property_vector_.at(index_)
+                .Value();
+  return *ToImmutableStylePropertySet(*property_set_).ValueArray()[index_];
 }
 
-inline unsigned StylePropertySet::propertyCount() const
-{
-    if (m_isMutable)
-        return toMutableStylePropertySet(this)->m_propertyVector.size();
-    return m_arraySize;
+inline unsigned StylePropertySet::PropertyCount() const {
+  if (is_mutable_)
+    return ToMutableStylePropertySet(this)->property_vector_.size();
+  return array_size_;
 }
 
-inline bool StylePropertySet::isEmpty() const
-{
-    return !propertyCount();
+inline bool StylePropertySet::IsEmpty() const {
+  return !PropertyCount();
 }
 
-template<typename T>
-inline int StylePropertySet::findPropertyIndex(T property) const
-{
-    if (m_isMutable)
-        return toMutableStylePropertySet(this)->findPropertyIndex(property);
-    return toImmutableStylePropertySet(this)->findPropertyIndex(property);
+template <typename T>
+inline int StylePropertySet::FindPropertyIndex(T property) const {
+  if (is_mutable_)
+    return ToMutableStylePropertySet(this)->FindPropertyIndex(property);
+  return ToImmutableStylePropertySet(this)->FindPropertyIndex(property);
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StylePropertySet_h
+#endif  // StylePropertySet_h

@@ -4,6 +4,7 @@
 
 #include "chrome/installer/util/install_util.h"
 
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -13,10 +14,12 @@
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/strings/string_util.h"
 #include "base/test/scoped_path_override.h"
 #include "base/test/test_reg_util_win.h"
+#include "base/version.h"
 #include "base/win/registry.h"
 #include "chrome/installer/util/google_update_constants.h"
 #include "chrome/installer/util/test_app_registration_data.h"
@@ -38,24 +41,22 @@ class MockRegistryValuePredicate : public InstallUtil::RegistryValuePredicate {
 class TestBrowserDistribution : public BrowserDistribution {
  public:
   TestBrowserDistribution()
-      : BrowserDistribution(CHROME_BROWSER,
-                            std::unique_ptr<AppRegistrationData>(
-                                new TestAppRegistrationData())) {}
+      : BrowserDistribution(base::MakeUnique<TestAppRegistrationData>()) {}
 };
 
 class InstallUtilTest : public testing::Test {
  protected:
   InstallUtilTest() {}
 
-  void SetUp() override {
-    ResetRegistryOverrides();
-  }
+  void SetUp() override { ASSERT_NO_FATAL_FAILURE(ResetRegistryOverrides()); }
 
   void ResetRegistryOverrides() {
     registry_override_manager_.reset(
         new registry_util::RegistryOverrideManager);
-    registry_override_manager_->OverrideRegistry(HKEY_CURRENT_USER);
-    registry_override_manager_->OverrideRegistry(HKEY_LOCAL_MACHINE);
+    ASSERT_NO_FATAL_FAILURE(
+        registry_override_manager_->OverrideRegistry(HKEY_CURRENT_USER));
+    ASSERT_NO_FATAL_FAILURE(
+        registry_override_manager_->OverrideRegistry(HKEY_LOCAL_MACHINE));
   }
 
  private:
@@ -104,101 +105,6 @@ TEST_F(InstallUtilTest, GetCurrentDate) {
     systime.wDay = _wtoi(date.substr(6, 2).c_str());
     // Check if they make sense.
     EXPECT_TRUE(SystemTimeToFileTime(&systime, &ft));
-  }
-}
-
-TEST_F(InstallUtilTest, UpdateInstallerStageAP) {
-  const bool system_level = false;
-  const HKEY root = system_level ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
-  std::wstring state_key_path(L"PhonyClientState");
-
-  // Update the stage when there's no "ap" value.
-  {
-    ResetRegistryOverrides();
-    RegKey(root, state_key_path.c_str(), KEY_SET_VALUE);
-    InstallUtil::UpdateInstallerStage(system_level, state_key_path,
-                                      installer::BUILDING);
-    std::wstring value;
-    EXPECT_EQ(ERROR_SUCCESS,
-              RegKey(root, state_key_path.c_str(), KEY_QUERY_VALUE)
-                  .ReadValue(google_update::kRegApField, &value));
-    EXPECT_EQ(L"-stage:building", value);
-  }
-
-  // Update the stage when there is an "ap" value.
-  {
-    ResetRegistryOverrides();
-    RegKey(root, state_key_path.c_str(), KEY_SET_VALUE)
-        .WriteValue(google_update::kRegApField, L"2.0-dev");
-    InstallUtil::UpdateInstallerStage(system_level, state_key_path,
-                                      installer::BUILDING);
-    std::wstring value;
-    EXPECT_EQ(ERROR_SUCCESS,
-              RegKey(root, state_key_path.c_str(), KEY_QUERY_VALUE)
-                  .ReadValue(google_update::kRegApField, &value));
-    EXPECT_EQ(L"2.0-dev-stage:building", value);
-  }
-
-  // Clear the stage.
-  {
-    ResetRegistryOverrides();
-    RegKey(root, state_key_path.c_str(), KEY_SET_VALUE)
-      .WriteValue(google_update::kRegApField, L"2.0-dev-stage:building");
-    InstallUtil::UpdateInstallerStage(system_level, state_key_path,
-                                      installer::NO_STAGE);
-    std::wstring value;
-    EXPECT_EQ(ERROR_SUCCESS,
-              RegKey(root, state_key_path.c_str(), KEY_QUERY_VALUE)
-                  .ReadValue(google_update::kRegApField, &value));
-    EXPECT_EQ(L"2.0-dev", value);
-  }
-}
-
-TEST_F(InstallUtilTest, UpdateInstallerStage) {
-  const bool system_level = false;
-  const HKEY root = system_level ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
-  std::wstring state_key_path(L"PhonyClientState");
-
-  // Update the stage when there's no "InstallerExtraCode1" value.
-  {
-    ResetRegistryOverrides();
-    RegKey(root, state_key_path.c_str(), KEY_SET_VALUE)
-        .DeleteValue(installer::kInstallerExtraCode1);
-    InstallUtil::UpdateInstallerStage(system_level, state_key_path,
-                                      installer::BUILDING);
-    DWORD value;
-    EXPECT_EQ(ERROR_SUCCESS,
-              RegKey(root, state_key_path.c_str(), KEY_QUERY_VALUE)
-                  .ReadValueDW(installer::kInstallerExtraCode1, &value));
-    EXPECT_EQ(static_cast<DWORD>(installer::BUILDING), value);
-  }
-
-  // Update the stage when there is an "InstallerExtraCode1" value.
-  {
-    ResetRegistryOverrides();
-    RegKey(root, state_key_path.c_str(), KEY_SET_VALUE)
-        .WriteValue(installer::kInstallerExtraCode1,
-                    static_cast<DWORD>(installer::UNPACKING));
-    InstallUtil::UpdateInstallerStage(system_level, state_key_path,
-                                      installer::BUILDING);
-    DWORD value;
-    EXPECT_EQ(ERROR_SUCCESS,
-              RegKey(root, state_key_path.c_str(), KEY_QUERY_VALUE)
-                  .ReadValueDW(installer::kInstallerExtraCode1, &value));
-    EXPECT_EQ(static_cast<DWORD>(installer::BUILDING), value);
-  }
-
-  // Clear the stage.
-  {
-    ResetRegistryOverrides();
-    RegKey(root, state_key_path.c_str(), KEY_SET_VALUE)
-        .WriteValue(installer::kInstallerExtraCode1, static_cast<DWORD>(5));
-    InstallUtil::UpdateInstallerStage(system_level, state_key_path,
-                                      installer::NO_STAGE);
-    DWORD value;
-    EXPECT_EQ(ERROR_FILE_NOT_FOUND,
-              RegKey(root, state_key_path.c_str(), KEY_QUERY_VALUE)
-                  .ReadValueDW(installer::kInstallerExtraCode1, &value));
   }
 }
 
@@ -302,7 +208,7 @@ TEST_F(InstallUtilTest, DeleteRegistryValueIf) {
   const wchar_t value[] = L"hi mom";
 
   {
-    ResetRegistryOverrides();
+    ASSERT_NO_FATAL_FAILURE(ResetRegistryOverrides());
     // Nothing to delete if the key isn't even there.
     {
       MockRegistryValuePredicate pred;
@@ -365,7 +271,7 @@ TEST_F(InstallUtilTest, DeleteRegistryValueIf) {
   }
 
   {
-    ResetRegistryOverrides();
+    ASSERT_NO_FATAL_FAILURE(ResetRegistryOverrides());
     // Default value matches: delete using empty string.
     {
       MockRegistryValuePredicate pred;
@@ -385,7 +291,7 @@ TEST_F(InstallUtilTest, DeleteRegistryValueIf) {
   }
 
   {
-    ResetRegistryOverrides();
+    ASSERT_NO_FATAL_FAILURE(ResetRegistryOverrides());
     // Default value matches: delete using NULL.
     {
       MockRegistryValuePredicate pred;
@@ -419,7 +325,7 @@ TEST_F(InstallUtilTest, ProgramCompare) {
   base::ScopedTempDir test_dir;
   ASSERT_TRUE(test_dir.CreateUniqueTempDir());
   const base::FilePath some_long_dir(
-      test_dir.path().Append(L"Some Long Directory Name"));
+      test_dir.GetPath().Append(L"Some Long Directory Name"));
   const base::FilePath expect(some_long_dir.Append(L"file.txt"));
   const base::FilePath expect_upcase(some_long_dir.Append(L"FILE.txt"));
   const base::FilePath other(some_long_dir.Append(L"otherfile.txt"));
@@ -462,77 +368,6 @@ TEST_F(InstallUtilTest, ProgramCompare) {
                                                       short_expect));
   EXPECT_TRUE(InstallUtil::ProgramCompare(expect).Evaluate(
       L"\"" + short_expect + L"\""));
-}
-
-TEST_F(InstallUtilTest, ProgramCompareWithDirectories) {
-  base::ScopedTempDir test_dir;
-  ASSERT_TRUE(test_dir.CreateUniqueTempDir());
-  const base::FilePath some_long_dir(
-      test_dir.path().Append(L"Some Long Directory Name"));
-  const base::FilePath expect(some_long_dir.Append(L"directory"));
-  const base::FilePath expect_upcase(some_long_dir.Append(L"DIRECTORY"));
-  const base::FilePath other(some_long_dir.Append(L"other_directory"));
-
-  ASSERT_TRUE(base::CreateDirectory(some_long_dir));
-  ASSERT_TRUE(base::CreateDirectory(expect));
-  ASSERT_TRUE(base::CreateDirectory(other));
-
-  InstallUtil::ProgramCompare program_compare(
-      expect, InstallUtil::ProgramCompare::ComparisonType::FILE_OR_DIRECTORY);
-
-  // Paths match exactly.
-  EXPECT_TRUE(program_compare.EvaluatePath(expect));
-  // Paths differ by case.
-  EXPECT_TRUE(program_compare.EvaluatePath(expect_upcase));
-  // Paths don't match.
-  EXPECT_FALSE(program_compare.EvaluatePath(other));
-
-  // Test where strings don't match, but the same directory is indicated.
-  std::wstring short_expect;
-  DWORD short_len =
-      GetShortPathName(expect.value().c_str(),
-                       base::WriteInto(&short_expect, MAX_PATH), MAX_PATH);
-  ASSERT_NE(static_cast<DWORD>(0), short_len);
-  ASSERT_GT(static_cast<DWORD>(MAX_PATH), short_len);
-  short_expect.resize(short_len);
-  ASSERT_FALSE(
-      base::FilePath::CompareEqualIgnoreCase(expect.value(), short_expect));
-  EXPECT_TRUE(program_compare.EvaluatePath(expect));
-  EXPECT_TRUE(program_compare.EvaluatePath(expect_upcase));
-  EXPECT_FALSE(program_compare.EvaluatePath(other));
-}
-
-// Win64 Chrome is always installed in the 32-bit Program Files directory. Test
-// that IsPerUserInstall returns false for an arbitrary path with
-// DIR_PROGRAM_FILESX86 as a suffix but not DIR_PROGRAM_FILES when the two are
-// unrelated.
-TEST_F(InstallUtilTest, IsPerUserInstall) {
-  InstallUtil::ResetIsPerUserInstallForTest();
-
-#if defined(_WIN64)
-  const int kChromeProgramFilesKey = base::DIR_PROGRAM_FILESX86;
-#else
-  const int kChromeProgramFilesKey = base::DIR_PROGRAM_FILES;
-#endif
-  base::ScopedPathOverride program_files_override(kChromeProgramFilesKey);
-  base::FilePath some_exe;
-  ASSERT_TRUE(PathService::Get(kChromeProgramFilesKey, &some_exe));
-  some_exe = some_exe.AppendASCII("Company")
-      .AppendASCII("Product")
-      .AppendASCII("product.exe");
-  EXPECT_FALSE(InstallUtil::IsPerUserInstall(some_exe));
-  InstallUtil::ResetIsPerUserInstallForTest();
-
-#if defined(_WIN64)
-  const int kOtherProgramFilesKey = base::DIR_PROGRAM_FILES;
-  base::ScopedPathOverride other_program_files_override(kOtherProgramFilesKey);
-  ASSERT_TRUE(PathService::Get(kOtherProgramFilesKey, &some_exe));
-  some_exe = some_exe.AppendASCII("Company")
-      .AppendASCII("Product")
-      .AppendASCII("product.exe");
-  EXPECT_TRUE(InstallUtil::IsPerUserInstall(some_exe));
-  InstallUtil::ResetIsPerUserInstallForTest();
-#endif  // defined(_WIN64)
 }
 
 TEST_F(InstallUtilTest, AddDowngradeVersion) {

@@ -63,7 +63,7 @@ class DumpReaderWin(DumpReader):
         try:
             stack = self._host.executive.run_command(cmd)
         except:
-            _log.warning('Failed to execute "%s"' % ' '.join(cmd))
+            _log.warning('Failed to execute "%s"', ' '.join(cmd))
         else:
             return stack
         return None
@@ -124,8 +124,8 @@ class DumpReaderWin(DumpReader):
                         '%s\\Debuggers\\x86' % win_sdk,
                         '%s\\Debuggers\\x64' % win_sdk,
                     ])
-            except OSError as e:
-                if e.errno != errno.ENOENT:
+            except OSError as error:
+                if error.errno != errno.ENOENT:
                     raise
 
         for cdb_path in possible_cdb_locations:

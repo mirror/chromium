@@ -14,11 +14,11 @@
 #include "components/policy/core/browser/policy_error_map.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/schema.h"
+#include "components/policy/policy_constants.h"
 #include "components/prefs/pref_value_map.h"
+#include "components/strings/grit/components_strings.h"
 #include "extensions/browser/pref_names.h"
 #include "extensions/common/extension.h"
-#include "grit/components_strings.h"
-#include "policy/policy_constants.h"
 #include "url/gurl.h"
 
 namespace extensions {
@@ -28,7 +28,7 @@ namespace extensions {
 ExtensionListPolicyHandler::ExtensionListPolicyHandler(const char* policy_name,
                                                        const char* pref_path,
                                                        bool allow_wildcards)
-    : policy::TypeCheckingPolicyHandler(policy_name, base::Value::TYPE_LIST),
+    : policy::TypeCheckingPolicyHandler(policy_name, base::Value::Type::LIST),
       pref_path_(pref_path),
       allow_wildcards_(allow_wildcards) {}
 
@@ -78,10 +78,10 @@ bool ExtensionListPolicyHandler::CheckAndGetList(
   for (base::ListValue::const_iterator entry(list_value->begin());
        entry != list_value->end(); ++entry) {
     std::string id;
-    if (!(*entry)->GetAsString(&id)) {
+    if (!entry->GetAsString(&id)) {
       errors->AddError(policy_name(), entry - list_value->begin(),
                        IDS_POLICY_TYPE_ERROR,
-                       base::Value::GetTypeName(base::Value::TYPE_STRING));
+                       base::Value::GetTypeName(base::Value::Type::STRING));
       continue;
     }
     if (!(allow_wildcards_ && id == "*") && !crx_file::id_util::IdIsValid(id)) {
@@ -99,43 +99,41 @@ bool ExtensionListPolicyHandler::CheckAndGetList(
   return true;
 }
 
-// ExtensionInstallForcelistPolicyHandler implementation -----------------------
+// ExtensionInstallListPolicyHandler implementation ----------------------------
 
-ExtensionInstallForcelistPolicyHandler::ExtensionInstallForcelistPolicyHandler()
-    : policy::TypeCheckingPolicyHandler(policy::key::kExtensionInstallForcelist,
-                                        base::Value::TYPE_LIST) {}
+ExtensionInstallListPolicyHandler::ExtensionInstallListPolicyHandler(
+    const char* policy_name,
+    const char* pref_name)
+    : policy::TypeCheckingPolicyHandler(policy_name, base::Value::Type::LIST),
+      pref_name_(pref_name) {}
 
-ExtensionInstallForcelistPolicyHandler::
-    ~ExtensionInstallForcelistPolicyHandler() {}
-
-bool ExtensionInstallForcelistPolicyHandler::CheckPolicySettings(
+bool ExtensionInstallListPolicyHandler::CheckPolicySettings(
     const policy::PolicyMap& policies,
     policy::PolicyErrorMap* errors) {
   const base::Value* value;
   return CheckAndGetValue(policies, errors, &value) &&
-      ParseList(value, NULL, errors);
+         ParseList(value, nullptr, errors);
 }
 
-void ExtensionInstallForcelistPolicyHandler::ApplyPolicySettings(
+void ExtensionInstallListPolicyHandler::ApplyPolicySettings(
     const policy::PolicyMap& policies,
     PrefValueMap* prefs) {
-  const base::Value* value = NULL;
+  const base::Value* value = nullptr;
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  if (CheckAndGetValue(policies, NULL, &value) &&
-      value &&
-      ParseList(value, dict.get(), NULL)) {
-    prefs->SetValue(pref_names::kInstallForceList, std::move(dict));
+  if (CheckAndGetValue(policies, nullptr, &value) && value &&
+      ParseList(value, dict.get(), nullptr)) {
+    prefs->SetValue(pref_name_, std::move(dict));
   }
 }
 
-bool ExtensionInstallForcelistPolicyHandler::ParseList(
+bool ExtensionInstallListPolicyHandler::ParseList(
     const base::Value* policy_value,
     base::DictionaryValue* extension_dict,
     policy::PolicyErrorMap* errors) {
   if (!policy_value)
     return true;
 
-  const base::ListValue* policy_list_value = NULL;
+  const base::ListValue* policy_list_value = nullptr;
   if (!policy_value->GetAsList(&policy_list_value)) {
     // This should have been caught in CheckPolicySettings.
     NOTREACHED();
@@ -145,11 +143,11 @@ bool ExtensionInstallForcelistPolicyHandler::ParseList(
   for (base::ListValue::const_iterator entry(policy_list_value->begin());
        entry != policy_list_value->end(); ++entry) {
     std::string entry_string;
-    if (!(*entry)->GetAsString(&entry_string)) {
+    if (!entry->GetAsString(&entry_string)) {
       if (errors) {
         errors->AddError(policy_name(), entry - policy_list_value->begin(),
                          IDS_POLICY_TYPE_ERROR,
-                         base::Value::GetTypeName(base::Value::TYPE_STRING));
+                         base::Value::GetTypeName(base::Value::Type::STRING));
       }
       continue;
     }
@@ -167,8 +165,8 @@ bool ExtensionInstallForcelistPolicyHandler::ParseList(
       continue;
     }
 
-    std::string extension_id = entry_string.substr(0, pos);
-    std::string update_url = entry_string.substr(pos+1);
+    const std::string extension_id = entry_string.substr(0, pos);
+    const std::string update_url = entry_string.substr(pos + 1);
     if (!crx_file::id_util::IdIsValid(extension_id) ||
         !GURL(update_url).is_valid()) {
       if (errors) {
@@ -180,20 +178,34 @@ bool ExtensionInstallForcelistPolicyHandler::ParseList(
     }
 
     if (extension_dict) {
-      extensions::ExternalPolicyLoader::AddExtension(
-          extension_dict, extension_id, update_url);
+      ExternalPolicyLoader::AddExtension(extension_dict, extension_id,
+                                         update_url);
     }
   }
 
   return true;
 }
 
+// ExtensionInstallForcelistPolicyHandler implementation -----------------------
+
+ExtensionInstallForcelistPolicyHandler::ExtensionInstallForcelistPolicyHandler()
+    : ExtensionInstallListPolicyHandler(policy::key::kExtensionInstallForcelist,
+                                        pref_names::kInstallForceList) {}
+
+// ExtensionInstallLoginScreenAppListPolicyHandler implementation --------------
+
+ExtensionInstallLoginScreenAppListPolicyHandler::
+    ExtensionInstallLoginScreenAppListPolicyHandler()
+    : ExtensionInstallListPolicyHandler(
+          policy::key::kDeviceLoginScreenAppInstallList,
+          pref_names::kInstallLoginScreenAppList) {}
+
 // ExtensionURLPatternListPolicyHandler implementation -------------------------
 
 ExtensionURLPatternListPolicyHandler::ExtensionURLPatternListPolicyHandler(
     const char* policy_name,
     const char* pref_path)
-    : policy::TypeCheckingPolicyHandler(policy_name, base::Value::TYPE_LIST),
+    : policy::TypeCheckingPolicyHandler(policy_name, base::Value::Type::LIST),
       pref_path_(pref_path) {}
 
 ExtensionURLPatternListPolicyHandler::~ExtensionURLPatternListPolicyHandler() {}
@@ -218,10 +230,10 @@ bool ExtensionURLPatternListPolicyHandler::CheckPolicySettings(
   for (base::ListValue::const_iterator entry(list_value->begin());
        entry != list_value->end(); ++entry) {
     std::string url_pattern_string;
-    if (!(*entry)->GetAsString(&url_pattern_string)) {
+    if (!entry->GetAsString(&url_pattern_string)) {
       errors->AddError(policy_name(), entry - list_value->begin(),
                        IDS_POLICY_TYPE_ERROR,
-                       base::Value::GetTypeName(base::Value::TYPE_STRING));
+                       base::Value::GetTypeName(base::Value::Type::STRING));
       return false;
     }
 
@@ -272,14 +284,14 @@ bool ExtensionSettingsPolicyHandler::CheckPolicySettings(
   // |policy_value| is expected to conform to the defined schema. But it's
   // not strictly valid since there are additional restrictions.
   const base::DictionaryValue* dict_value = NULL;
-  DCHECK(policy_value->IsType(base::Value::TYPE_DICTIONARY));
+  DCHECK(policy_value->IsType(base::Value::Type::DICTIONARY));
   policy_value->GetAsDictionary(&dict_value);
 
   for (base::DictionaryValue::Iterator it(*dict_value); !it.IsAtEnd();
        it.Advance()) {
     DCHECK(it.key() == schema_constants::kWildcard ||
            crx_file::id_util::IdIsValid(it.key()));
-    DCHECK(it.value().IsType(base::Value::TYPE_DICTIONARY));
+    DCHECK(it.value().IsType(base::Value::Type::DICTIONARY));
 
     // Extracts sub dictionary.
     const base::DictionaryValue* sub_dict = NULL;

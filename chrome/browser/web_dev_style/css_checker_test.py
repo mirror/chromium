@@ -105,6 +105,11 @@ class CssCheckerTest(SuperMoxTestBase):
 body.alternate-logo #logo {
   -webkit-mask-image: url(images/google_logo.png@2x);
   background: none;
+  @apply(--some-variable);
+}
+
+div {
+  -webkit-margin-start: 5px;
 }
 
 .stuff1 {
@@ -134,6 +139,21 @@ div {
 - Alphabetize properties and list vendor specific (i.e. -webkit) above standard.
     border-left: 5px;
     border: 5px solid red;""")
+
+  def testCssAlphaWithVariables(self):
+    self.VerifyContentIsValid("""
+#id {
+  --zzyxx-xylophone: 3px;
+  --ignore-me: {
+    /* TODO(dbeam): fix this by creating a "sort context". If we simply strip
+     * off the mixin, the inside contents will be compared to the outside
+     * contents, which isn't what we want. */
+    visibility: hidden;
+    color: black;
+  };
+  --aardvark-animal: var(--zzyxz-xylophone);
+}
+""")
 
   def testCssBracesHaveSpaceBeforeAndNothingAfter(self):
     self.VerifyContentsProducesOutput("""
@@ -271,6 +291,16 @@ img {
 }""", """
 - Don't use data URIs in source files. Use grit instead.
     background: url( data:image/jpeg,4\/\/350|\/|3|2 );""")
+
+  def testCssNoMixinShims(self):
+    self.VerifyContentsProducesOutput("""
+:host {
+  --good-property: red;
+  --not-okay-mixin_-_not-okay-property: green;
+}""", """
+- Don't override custom properties created by Polymer's mixin shim. Set \
+mixins or documented custom properties directly.
+    --not-okay-mixin_-_not-okay-property: green;""")
 
   def testCssNoQuotesInUrl(self):
     self.VerifyContentsProducesOutput("""
@@ -431,7 +461,7 @@ body.alternate-logo #logo {
     width: 0in;
 """)
 
-  def testHtmlInlineStyle(self):
+  def testInlineStyleInHtml(self):
     self.VerifyContentsProducesOutput("""<!doctype html>
 <html>
 <head>
@@ -453,11 +483,26 @@ body.alternate-logo #logo {
     flex-direction:column;
 """, filename='test.html')
 
-  def testHtmlIncludeStyle(self):
+  def testInlineStyleInHtmlWithIncludes(self):
     self.VerifyContentsProducesOutput("""<!doctype html>
 <html>
-  <style include="fake-shared-css">
+  <style include="fake-shared-css other-shared-css">
     body {
+      flex-direction:column;
+    }
+  </style>
+</head>
+</html>""", """
+- Colons (:) should have a space after them.
+    flex-direction:column;
+""", filename='test.html')
+
+  def testInlineSTyleInHtmlWithTagsInComments(self):
+    self.VerifyContentsProducesOutput("""<!doctype html>
+<html>
+  <style>
+    body {
+      /* You better ignore the <tag> in this comment! */
       flex-direction:column;
     }
   </style>

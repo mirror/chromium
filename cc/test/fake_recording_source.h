@@ -8,7 +8,7 @@
 #include <stddef.h>
 
 #include "cc/base/region.h"
-#include "cc/playback/recording_source.h"
+#include "cc/layers/recording_source.h"
 #include "cc/test/fake_content_layer_client.h"
 #include "cc/trees/layer_tree_settings.h"
 #include "third_party/skia/include/core/SkImage.h"
@@ -50,11 +50,6 @@ class FakeRecordingSource : public RecordingSource {
   // RecordingSource overrides.
   scoped_refptr<RasterSource> CreateRasterSource(
       bool can_use_lcd) const override;
-  bool IsSuitableForGpuRasterization() const override;
-
-  void SetDisplayListUsesCachedPicture(bool use_cached_picture) {
-    client_.set_display_list_use_cached_picture(use_cached_picture);
-  }
 
   void SetRecordedViewport(const gfx::Rect& recorded_viewport) {
     recorded_viewport_ = recorded_viewport;
@@ -72,43 +67,51 @@ class FakeRecordingSource : public RecordingSource {
   void Rerecord() {
     SetNeedsDisplayRect(recorded_viewport_);
     Region invalidation;
-    UpdateAndExpandInvalidation(&client_, &invalidation, size_, 0,
-                                RECORD_NORMALLY);
+    gfx::Rect new_recorded_viewport = client_.PaintableRegion();
+    scoped_refptr<DisplayItemList> display_list =
+        client_.PaintContentsToDisplayList(
+            ContentLayerClient::PAINTING_BEHAVIOR_NORMAL);
+    size_t painter_reported_memory_usage =
+        client_.GetApproximateUnsharedMemoryUsage();
+    UpdateAndExpandInvalidation(&invalidation, size_, new_recorded_viewport);
+    UpdateDisplayItemList(display_list, painter_reported_memory_usage);
   }
 
   void add_draw_rect(const gfx::Rect& rect) {
-    client_.add_draw_rect(rect, default_paint_);
+    client_.add_draw_rect(rect, default_flags_);
   }
 
-  void add_draw_rect_with_paint(const gfx::Rect& rect, const SkPaint& paint) {
-    client_.add_draw_rect(rect, paint);
+  void add_draw_rect_with_flags(const gfx::Rect& rect,
+                                const PaintFlags& flags) {
+    client_.add_draw_rect(rect, flags);
   }
 
   void add_draw_rectf(const gfx::RectF& rect) {
-    client_.add_draw_rectf(rect, default_paint_);
+    client_.add_draw_rectf(rect, default_flags_);
   }
 
-  void add_draw_rectf_with_paint(const gfx::RectF& rect, const SkPaint& paint) {
-    client_.add_draw_rectf(rect, paint);
+  void add_draw_rectf_with_flags(const gfx::RectF& rect,
+                                 const PaintFlags& flags) {
+    client_.add_draw_rectf(rect, flags);
   }
 
   void add_draw_image(sk_sp<const SkImage> image, const gfx::Point& point) {
-    client_.add_draw_image(std::move(image), point, default_paint_);
+    client_.add_draw_image(std::move(image), point, default_flags_);
   }
 
   void add_draw_image_with_transform(sk_sp<const SkImage> image,
                                      const gfx::Transform& transform) {
     client_.add_draw_image_with_transform(std::move(image), transform,
-                                          default_paint_);
+                                          default_flags_);
   }
 
-  void add_draw_image_with_paint(sk_sp<const SkImage> image,
+  void add_draw_image_with_flags(sk_sp<const SkImage> image,
                                  const gfx::Point& point,
-                                 const SkPaint& paint) {
-    client_.add_draw_image(std::move(image), point, paint);
+                                 const PaintFlags& flags) {
+    client_.add_draw_image(std::move(image), point, flags);
   }
 
-  void set_default_paint(const SkPaint& paint) { default_paint_ = paint; }
+  void set_default_flags(const PaintFlags& flags) { default_flags_ = flags; }
 
   void set_reported_memory_usage(size_t reported_memory_usage) {
     client_.set_reported_memory_usage(reported_memory_usage);
@@ -119,15 +122,9 @@ class FakeRecordingSource : public RecordingSource {
     client_.set_bounds(size_);
   }
 
-  void SetForceUnsuitableForGpuRasterization(bool flag) {
-    force_unsuitable_for_gpu_rasterization_ = flag;
-  }
-
   void SetPlaybackAllowedEvent(base::WaitableEvent* event) {
     playback_allowed_event_ = event;
   }
-
-  DisplayItemList* display_list() const { return display_list_.get(); }
 
   // Checks that the basic properties of the |other| match |this|.  For the
   // DisplayItemList, it checks that the painted result matches the painted
@@ -136,8 +133,7 @@ class FakeRecordingSource : public RecordingSource {
 
  private:
   FakeContentLayerClient client_;
-  SkPaint default_paint_;
-  bool force_unsuitable_for_gpu_rasterization_;
+  PaintFlags default_flags_;
   base::WaitableEvent* playback_allowed_event_;
 };
 

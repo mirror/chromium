@@ -4,20 +4,25 @@
 
 package org.chromium.net;
 
+import static org.chromium.base.CollectionUtil.newHashSet;
+
 import android.os.ConditionVariable;
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
 
 import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
-import org.chromium.net.CronetTestBase.OnlyRunNativeCronet;
+import org.chromium.net.MetricsTestUtil.TestRequestFinishedListener;
 import org.chromium.net.TestBidirectionalStreamCallback.FailureType;
 import org.chromium.net.TestBidirectionalStreamCallback.ResponseStep;
 import org.chromium.net.impl.CronetBidirectionalStream;
+import org.chromium.net.impl.UrlResponseInfoImpl;
 
 import java.nio.ByteBuffer;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -34,8 +39,10 @@ public class BidirectionalStreamTest extends CronetTestBase {
         super.setUp();
         // Load library first to create MockCertVerifier.
         System.loadLibrary("cronet_tests");
-        CronetEngine.Builder builder = new CronetEngine.Builder(getContext());
-        builder.setMockCertVerifierForTesting(QuicTestServer.createMockCertVerifier());
+        ExperimentalCronetEngine.Builder builder =
+                new ExperimentalCronetEngine.Builder(getContext());
+        CronetTestUtil.setMockCertVerifierForTesting(
+                builder, QuicTestServer.createMockCertVerifier());
 
         mTestFramework = startCronetTestFrameworkWithUrlAndCronetEngineBuilder(null, builder);
         assertTrue(Http2TestServer.startHttp2TestServer(
@@ -78,48 +85,76 @@ public class BidirectionalStreamTest extends CronetTestBase {
             headersList.add(new AbstractMap.SimpleImmutableEntry<String, String>(
                     headers[i], headers[i + 1]));
         }
-        UrlResponseInfo urlResponseInfo = new UrlResponseInfo(
+        UrlResponseInfoImpl urlResponseInfo = new UrlResponseInfoImpl(
                 Arrays.asList(urls), statusCode, message, headersList, false, "h2", null);
-        urlResponseInfo.setReceivedBytesCount(receivedBytes);
+        urlResponseInfo.setReceivedByteCount(receivedBytes);
         return urlResponseInfo;
+    }
+
+    private void runSimpleGetWithExpectedReceivedByteCount(int expectedReceivedBytes)
+            throws Exception {
+        String url = Http2TestServer.getEchoMethodUrl();
+        TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
+        TestRequestFinishedListener requestFinishedListener = new TestRequestFinishedListener();
+        mTestFramework.mCronetEngine.addRequestFinishedListener(requestFinishedListener);
+        // Create stream.
+        BidirectionalStream stream =
+                mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .setHttpMethod("GET")
+                        .build();
+        stream.start();
+        callback.blockForDone();
+        assertTrue(stream.isDone());
+        requestFinishedListener.blockUntilDone();
+        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        // Default method is 'GET'.
+        assertEquals("GET", callback.mResponseAsString);
+        UrlResponseInfo urlResponseInfo = createUrlResponseInfo(
+                new String[] {url}, "", 200, expectedReceivedBytes, ":status", "200");
+        assertResponseEquals(urlResponseInfo, callback.mResponseInfo);
+        checkResponseInfo(callback.mResponseInfo, Http2TestServer.getEchoMethodUrl(), 200, "");
+        RequestFinishedInfo finishedInfo = requestFinishedListener.getRequestInfo();
+        assertTrue(finishedInfo.getAnnotations().isEmpty());
     }
 
     @SmallTest
     @Feature({"Cronet"})
-    public void testBuilderChecks() throws Exception {
+    public void testBuilderCheck() throws Exception {
+        if (testingJavaImpl()) {
+            runBuilderCheckJavaImpl();
+        } else {
+            runBuilderCheckNativeImpl();
+        }
+    }
+
+    private void runBuilderCheckNativeImpl() throws Exception {
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         try {
-            new BidirectionalStream.Builder(
-                    null, callback, callback.getExecutor(), mTestFramework.mCronetEngine);
+            mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                    null, callback, callback.getExecutor());
             fail("URL not null-checked");
         } catch (NullPointerException e) {
             assertEquals("URL is required.", e.getMessage());
         }
         try {
-            new BidirectionalStream.Builder(Http2TestServer.getServerUrl(), null,
-                    callback.getExecutor(), mTestFramework.mCronetEngine);
+            mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                    Http2TestServer.getServerUrl(), null, callback.getExecutor());
             fail("Callback not null-checked");
         } catch (NullPointerException e) {
             assertEquals("Callback is required.", e.getMessage());
         }
         try {
-            new BidirectionalStream.Builder(
-                    Http2TestServer.getServerUrl(), callback, null, mTestFramework.mCronetEngine);
+            mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                    Http2TestServer.getServerUrl(), callback, null);
             fail("Executor not null-checked");
         } catch (NullPointerException e) {
             assertEquals("Executor is required.", e.getMessage());
         }
-        try {
-            new BidirectionalStream.Builder(
-                    Http2TestServer.getServerUrl(), callback, callback.getExecutor(), null);
-            fail("CronetEngine not null-checked");
-        } catch (NullPointerException e) {
-            assertEquals("CronetEngine is required.", e.getMessage());
-        }
         // Verify successful creation doesn't throw.
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getServerUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getServerUrl(), callback, callback.getExecutor());
         try {
             builder.addHeader(null, "value");
             fail("Header name is not null-checked");
@@ -140,6 +175,18 @@ public class BidirectionalStreamTest extends CronetTestBase {
         }
     }
 
+    private void runBuilderCheckJavaImpl() {
+        try {
+            TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
+            mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                    Http2TestServer.getServerUrl(), callback, callback.getExecutor());
+            fail("JavaCronetEngine doesn't support BidirectionalStream."
+                    + " Expected UnsupportedOperationException");
+        } catch (UnsupportedOperationException e) {
+            // Expected.
+        }
+    }
+
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -147,40 +194,25 @@ public class BidirectionalStreamTest extends CronetTestBase {
         String url = "http://example.com";
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         // Create stream.
-        BidirectionalStream stream = new BidirectionalStream
-                                             .Builder(url, callback, callback.getExecutor(),
-                                                     mTestFramework.mCronetEngine)
-                                             .build();
+        BidirectionalStream stream =
+                mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .build();
         stream.start();
         callback.blockForDone();
         assertTrue(stream.isDone());
-        assertEquals("Exception in BidirectionalStream: net::ERR_DISALLOWED_URL_SCHEME",
+        assertContains("Exception in BidirectionalStream: net::ERR_DISALLOWED_URL_SCHEME",
                 callback.mError.getMessage());
-        assertEquals(-301, callback.mError.getCronetInternalErrorCode());
+        assertEquals(-301, ((NetworkException) callback.mError).getCronetInternalErrorCode());
     }
 
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
     public void testSimpleGet() throws Exception {
-        String url = Http2TestServer.getEchoMethodUrl();
-        TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
-        // Create stream.
-        BidirectionalStream stream = new BidirectionalStream
-                                             .Builder(url, callback, callback.getExecutor(),
-                                                     mTestFramework.mCronetEngine)
-                                             .setHttpMethod("GET")
-                                             .build();
-        stream.start();
-        callback.blockForDone();
-        assertTrue(stream.isDone());
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        // Default method is 'GET'.
-        assertEquals("GET", callback.mResponseAsString);
-        UrlResponseInfo urlResponseInfo =
-                createUrlResponseInfo(new String[] {url}, "", 200, 27, ":status", "200");
-        assertResponseEquals(urlResponseInfo, callback.mResponseInfo);
-        checkResponseInfo(callback.mResponseInfo, Http2TestServer.getEchoMethodUrl(), 200, "");
+        // Since this is the first request on the connection, the expected received bytes count
+        // must account for an HPACK dynamic table size update.
+        runSimpleGetWithExpectedReceivedByteCount(31);
     }
 
     @SmallTest
@@ -190,18 +222,18 @@ public class BidirectionalStreamTest extends CronetTestBase {
         String url = Http2TestServer.getEchoMethodUrl();
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         // Create stream.
-        BidirectionalStream stream = new BidirectionalStream
-                                             .Builder(url, callback, callback.getExecutor(),
-                                                     mTestFramework.mCronetEngine)
-                                             .setHttpMethod("HEAD")
-                                             .build();
+        BidirectionalStream stream =
+                mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .setHttpMethod("HEAD")
+                        .build();
         stream.start();
         callback.blockForDone();
         assertTrue(stream.isDone());
         assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
         assertEquals("HEAD", callback.mResponseAsString);
         UrlResponseInfo urlResponseInfo =
-                createUrlResponseInfo(new String[] {url}, "", 200, 28, ":status", "200");
+                createUrlResponseInfo(new String[] {url}, "", 200, 32, ":status", "200");
         assertResponseEquals(urlResponseInfo, callback.mResponseInfo);
         checkResponseInfo(callback.mResponseInfo, Http2TestServer.getEchoMethodUrl(), 200, "");
     }
@@ -215,17 +247,30 @@ public class BidirectionalStreamTest extends CronetTestBase {
         callback.addWriteData("Test String".getBytes());
         callback.addWriteData("1234567890".getBytes());
         callback.addWriteData("woot!".getBytes());
+        TestRequestFinishedListener requestFinishedListener = new TestRequestFinishedListener();
+        mTestFramework.mCronetEngine.addRequestFinishedListener(requestFinishedListener);
         // Create stream.
-        BidirectionalStream stream = new BidirectionalStream
-                                             .Builder(url, callback, callback.getExecutor(),
-                                                     mTestFramework.mCronetEngine)
-                                             .addHeader("foo", "bar")
-                                             .addHeader("empty", "")
-                                             .addHeader("Content-Type", "zebra")
-                                             .build();
+        BidirectionalStream stream =
+                mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .addHeader("foo", "bar")
+                        .addHeader("empty", "")
+                        .addHeader("Content-Type", "zebra")
+                        .addRequestAnnotation(this)
+                        .addRequestAnnotation("request annotation")
+                        .build();
+        Date startTime = new Date();
         stream.start();
         callback.blockForDone();
         assertTrue(stream.isDone());
+        requestFinishedListener.blockUntilDone();
+        Date endTime = new Date();
+        RequestFinishedInfo finishedInfo = requestFinishedListener.getRequestInfo();
+        MetricsTestUtil.checkRequestFinishedInfo(finishedInfo, url, startTime, endTime);
+        assertEquals(RequestFinishedInfo.SUCCEEDED, finishedInfo.getFinishedReason());
+        MetricsTestUtil.checkHasConnectTiming(finishedInfo.getMetrics(), startTime, endTime, true);
+        assertEquals(newHashSet("request annotation", this),
+                new HashSet<Object>(finishedInfo.getAnnotations()));
         assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
         assertEquals("Test String1234567890woot!", callback.mResponseAsString);
         assertEquals("bar", callback.mResponseInfo.getAllHeaders().get("echo-foo").get(0));
@@ -243,14 +288,13 @@ public class BidirectionalStreamTest extends CronetTestBase {
         callback.addWriteData("Test String".getBytes(), false);
         callback.addWriteData("1234567890".getBytes(), false);
         callback.addWriteData("woot!".getBytes(), true);
-        BidirectionalStream stream = new BidirectionalStream
-                                             .Builder(url, callback, callback.getExecutor(),
-                                                     mTestFramework.mCronetEngine)
-                                             .disableAutoFlush(true)
-                                             .addHeader("foo", "bar")
-                                             .addHeader("empty", "")
-                                             .addHeader("Content-Type", "zebra")
-                                             .build();
+        BidirectionalStream stream =
+                mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .addHeader("foo", "bar")
+                        .addHeader("empty", "")
+                        .addHeader("Content-Type", "zebra")
+                        .build();
         // Flush before stream is started should not crash.
         stream.flush();
 
@@ -322,14 +366,13 @@ public class BidirectionalStreamTest extends CronetTestBase {
         callback.addWriteData("4".getBytes(), false);
         callback.addWriteData("5".getBytes(), true);
         callback.addWriteData("6".getBytes(), false);
-        CronetBidirectionalStream stream = (CronetBidirectionalStream) new BidirectionalStream
-                                                   .Builder(url, callback, callback.getExecutor(),
-                                                           mTestFramework.mCronetEngine)
-                                                   .disableAutoFlush(true)
-                                                   .addHeader("foo", "bar")
-                                                   .addHeader("empty", "")
-                                                   .addHeader("Content-Type", "zebra")
-                                                   .build();
+        CronetBidirectionalStream stream =
+                (CronetBidirectionalStream) mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .addHeader("foo", "bar")
+                        .addHeader("empty", "")
+                        .addHeader("Content-Type", "zebra")
+                        .build();
         callback.setAutoAdvance(false);
         stream.start();
         callback.waitForNextWriteStep(); // onStreamReady
@@ -352,6 +395,58 @@ public class BidirectionalStreamTest extends CronetTestBase {
         assertEquals("", callback.mResponseInfo.getAllHeaders().get("echo-empty").get(0));
         assertEquals(
                 "zebra", callback.mResponseInfo.getAllHeaders().get("echo-content-type").get(0));
+    }
+
+    @SmallTest
+    @Feature({"Cronet"})
+    @OnlyRunNativeCronet
+    // Regression test for crbug.com/692168.
+    public void testCancelWhileWriteDataPending() throws Exception {
+        String url = Http2TestServer.getEchoStreamUrl();
+        // Use a direct executor to avoid race.
+        TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback(
+                /*useDirectExecutor*/ true) {
+            @Override
+            public void onStreamReady(BidirectionalStream stream) {
+                // Start the first write.
+                stream.write(getDummyData(), false);
+                stream.flush();
+            }
+            @Override
+            public void onReadCompleted(BidirectionalStream stream, UrlResponseInfo info,
+                    ByteBuffer byteBuffer, boolean endOfStream) {
+                super.onReadCompleted(stream, info, byteBuffer, endOfStream);
+                // Cancel now when the write side is busy.
+                stream.cancel();
+            }
+            @Override
+            public void onWriteCompleted(BidirectionalStream stream, UrlResponseInfo info,
+                    ByteBuffer buffer, boolean endOfStream) {
+                // Flush twice to keep the flush queue non-empty.
+                stream.write(getDummyData(), false);
+                stream.flush();
+                stream.write(getDummyData(), false);
+                stream.flush();
+            }
+            // Returns a piece of dummy data to send to the server.
+            private ByteBuffer getDummyData() {
+                byte[] data = new byte[100];
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = 'x';
+                }
+                ByteBuffer dummyData = ByteBuffer.allocateDirect(data.length);
+                dummyData.put(data);
+                dummyData.flip();
+                return dummyData;
+            }
+        };
+        CronetBidirectionalStream stream =
+                (CronetBidirectionalStream) mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .build();
+        stream.start();
+        callback.blockForDone();
+        assertTrue(callback.mOnCanceledCalled);
     }
 
     @SmallTest
@@ -382,15 +477,14 @@ public class BidirectionalStreamTest extends CronetTestBase {
                     }
                 }
             };
-            BidirectionalStream stream = new BidirectionalStream
-                                                 .Builder(url, callback, callback.getExecutor(),
-                                                         mTestFramework.mCronetEngine)
-                                                 .setHttpMethod("GET")
-                                                 .disableAutoFlush(true)
-                                                 .delayRequestHeadersUntilFirstFlush(i == 0)
-                                                 .addHeader("foo", "bar")
-                                                 .addHeader("empty", "")
-                                                 .build();
+            BidirectionalStream stream =
+                    mTestFramework.mCronetEngine
+                            .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                            .setHttpMethod("GET")
+                            .delayRequestHeadersUntilFirstFlush(i == 0)
+                            .addHeader("foo", "bar")
+                            .addHeader("empty", "")
+                            .build();
             // Flush before stream is started should not crash.
             stream.flush();
 
@@ -418,15 +512,14 @@ public class BidirectionalStreamTest extends CronetTestBase {
             String url = Http2TestServer.getEchoStreamUrl();
             TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
             callback.addWriteData("Test String".getBytes(), true);
-            BidirectionalStream stream = new BidirectionalStream
-                                                 .Builder(url, callback, callback.getExecutor(),
-                                                         mTestFramework.mCronetEngine)
-                                                 .disableAutoFlush(true)
-                                                 .delayRequestHeadersUntilFirstFlush(i == 0)
-                                                 .addHeader("foo", "bar")
-                                                 .addHeader("empty", "")
-                                                 .addHeader("Content-Type", "zebra")
-                                                 .build();
+            BidirectionalStream stream =
+                    mTestFramework.mCronetEngine
+                            .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                            .delayRequestHeadersUntilFirstFlush(i == 0)
+                            .addHeader("foo", "bar")
+                            .addHeader("empty", "")
+                            .addHeader("Content-Type", "zebra")
+                            .build();
             stream.start();
             callback.blockForDone();
             assertTrue(stream.isDone());
@@ -454,15 +547,14 @@ public class BidirectionalStreamTest extends CronetTestBase {
             callback.addWriteData("Test String".getBytes(), false);
             callback.addWriteData("1234567890".getBytes(), false);
             callback.addWriteData("woot!".getBytes(), true);
-            BidirectionalStream stream = new BidirectionalStream
-                                                 .Builder(url, callback, callback.getExecutor(),
-                                                         mTestFramework.mCronetEngine)
-                                                 .disableAutoFlush(true)
-                                                 .delayRequestHeadersUntilFirstFlush(i == 0)
-                                                 .addHeader("foo", "bar")
-                                                 .addHeader("empty", "")
-                                                 .addHeader("Content-Type", "zebra")
-                                                 .build();
+            BidirectionalStream stream =
+                    mTestFramework.mCronetEngine
+                            .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                            .delayRequestHeadersUntilFirstFlush(i == 0)
+                            .addHeader("foo", "bar")
+                            .addHeader("empty", "")
+                            .addHeader("Content-Type", "zebra")
+                            .build();
             stream.start();
             callback.blockForDone();
             assertTrue(stream.isDone());
@@ -497,13 +589,13 @@ public class BidirectionalStreamTest extends CronetTestBase {
         callback.addWriteData("Test String".getBytes());
         callback.addWriteData("1234567890".getBytes());
         callback.addWriteData("woot!".getBytes());
-        BidirectionalStream stream = new BidirectionalStream
-                                             .Builder(url, callback, callback.getExecutor(),
-                                                     mTestFramework.mCronetEngine)
-                                             .addHeader("foo", "bar")
-                                             .addHeader("empty", "")
-                                             .addHeader("Content-Type", "zebra")
-                                             .build();
+        BidirectionalStream stream =
+                mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .addHeader("foo", "bar")
+                        .addHeader("empty", "")
+                        .addHeader("Content-Type", "zebra")
+                        .build();
         stream.start();
         callback.blockForDone();
         assertTrue(stream.isDone());
@@ -537,14 +629,13 @@ public class BidirectionalStreamTest extends CronetTestBase {
         callback.addWriteData("Test String".getBytes(), false);
         callback.addWriteData("1234567890".getBytes(), false);
         callback.addWriteData("woot!".getBytes(), true);
-        BidirectionalStream stream = new BidirectionalStream
-                                             .Builder(url, callback, callback.getExecutor(),
-                                                     mTestFramework.mCronetEngine)
-                                             .disableAutoFlush(true)
-                                             .addHeader("foo", "bar")
-                                             .addHeader("empty", "")
-                                             .addHeader("Content-Type", "zebra")
-                                             .build();
+        BidirectionalStream stream =
+                mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .addHeader("foo", "bar")
+                        .addHeader("empty", "")
+                        .addHeader("Content-Type", "zebra")
+                        .build();
         stream.start();
         callback.blockForDone();
         assertTrue(stream.isDone());
@@ -565,8 +656,8 @@ public class BidirectionalStreamTest extends CronetTestBase {
         callback.addWriteData("Put This Data!".getBytes());
         String methodName = "PUT";
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getServerUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getServerUrl(), callback, callback.getExecutor());
         builder.setHttpMethod(methodName);
         builder.build().start();
         callback.blockForDone();
@@ -581,8 +672,8 @@ public class BidirectionalStreamTest extends CronetTestBase {
     public void testBadMethod() throws Exception {
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getServerUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getServerUrl(), callback, callback.getExecutor());
         try {
             builder.setHttpMethod("bad:method!");
             builder.build().start();
@@ -598,8 +689,8 @@ public class BidirectionalStreamTest extends CronetTestBase {
     public void testBadHeaderName() throws Exception {
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getServerUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getServerUrl(), callback, callback.getExecutor());
         try {
             builder.addHeader("goodheader1", "headervalue");
             builder.addHeader("header:name", "headervalue");
@@ -617,8 +708,8 @@ public class BidirectionalStreamTest extends CronetTestBase {
     public void testBadHeaderValue() throws Exception {
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getServerUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getServerUrl(), callback, callback.getExecutor());
         try {
             builder.addHeader("headername", "bad header\r\nvalue");
             builder.build().start();
@@ -636,8 +727,9 @@ public class BidirectionalStreamTest extends CronetTestBase {
         String headerName = "header-name";
         String headerValue = "header-value";
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getEchoHeaderUrl(headerName),
-                        callback, callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getEchoHeaderUrl(headerName), callback,
+                        callback.getExecutor());
         builder.addHeader(headerName, headerValue);
         builder.setHttpMethod("GET");
         builder.build().start();
@@ -655,8 +747,8 @@ public class BidirectionalStreamTest extends CronetTestBase {
         String headerValue1 = "header-value1";
         String headerValue2 = "header-value2";
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getEchoAllHeadersUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getEchoAllHeadersUrl(), callback, callback.getExecutor());
         builder.addHeader(headerName, headerValue1);
         builder.addHeader(headerName, headerValue2);
         builder.setHttpMethod("GET");
@@ -682,8 +774,8 @@ public class BidirectionalStreamTest extends CronetTestBase {
         String headerName = "header-name";
         String headerValue = "header-value";
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getEchoTrailersUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getEchoTrailersUrl(), callback, callback.getExecutor());
         builder.addHeader(headerName, headerValue);
         builder.setHttpMethod("GET");
         builder.build().start();
@@ -702,8 +794,9 @@ public class BidirectionalStreamTest extends CronetTestBase {
         String userAgentValue = "User-Agent-Value";
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getEchoHeaderUrl(userAgentName),
-                        callback, callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getEchoHeaderUrl(userAgentName), callback,
+                        callback.getExecutor());
         builder.setHttpMethod("GET");
         builder.addHeader(userAgentName, userAgentValue);
         builder.build().start();
@@ -718,15 +811,15 @@ public class BidirectionalStreamTest extends CronetTestBase {
     public void testCustomCronetEngineUserAgent() throws Exception {
         String userAgentName = "User-Agent";
         String userAgentValue = "User-Agent-Value";
-        CronetEngine engine =
-                new CronetEngine.Builder(getContext())
-                        .setMockCertVerifierForTesting(QuicTestServer.createMockCertVerifier())
-                        .setUserAgent(userAgentValue)
-                        .build();
+        ExperimentalCronetEngine.Builder engineBuilder =
+                new ExperimentalCronetEngine.Builder(getContext());
+        engineBuilder.setUserAgent(userAgentValue);
+        CronetTestUtil.setMockCertVerifierForTesting(
+                engineBuilder, QuicTestServer.createMockCertVerifier());
+        ExperimentalCronetEngine engine = engineBuilder.build();
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
-        BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getEchoHeaderUrl(userAgentName),
-                        callback, callback.getExecutor(), engine);
+        BidirectionalStream.Builder builder = engine.newBidirectionalStreamBuilder(
+                Http2TestServer.getEchoHeaderUrl(userAgentName), callback, callback.getExecutor());
         builder.setHttpMethod("GET");
         builder.build().start();
         callback.blockForDone();
@@ -741,8 +834,9 @@ public class BidirectionalStreamTest extends CronetTestBase {
         String userAgentName = "User-Agent";
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getEchoHeaderUrl(userAgentName),
-                        callback, callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getEchoHeaderUrl(userAgentName), callback,
+                        callback.getExecutor());
         builder.setHttpMethod("GET");
         builder.build().start();
         callback.blockForDone();
@@ -764,12 +858,12 @@ public class BidirectionalStreamTest extends CronetTestBase {
             stringData.append(writeData);
         }
         // Create stream.
-        BidirectionalStream stream = new BidirectionalStream
-                                             .Builder(url, callback, callback.getExecutor(),
-                                                     mTestFramework.mCronetEngine)
-                                             .addHeader("foo", "Value with Spaces")
-                                             .addHeader("Content-Type", "zebra")
-                                             .build();
+        BidirectionalStream stream =
+                mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .addHeader("foo", "Value with Spaces")
+                        .addHeader("Content-Type", "zebra")
+                        .build();
         stream.start();
         callback.blockForDone();
         assertTrue(stream.isDone());
@@ -789,10 +883,10 @@ public class BidirectionalStreamTest extends CronetTestBase {
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         callback.addWriteData(new byte[0]);
         // Create stream.
-        BidirectionalStream stream = new BidirectionalStream
-                                             .Builder(url, callback, callback.getExecutor(),
-                                                     mTestFramework.mCronetEngine)
-                                             .build();
+        BidirectionalStream stream =
+                mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .build();
         stream.start();
         callback.blockForDone();
         assertTrue(stream.isDone());
@@ -819,10 +913,10 @@ public class BidirectionalStreamTest extends CronetTestBase {
         callback.addWriteData("1".getBytes());
         callback.addWriteData("2".getBytes());
         // Create stream.
-        BidirectionalStream stream = new BidirectionalStream
-                                             .Builder(url, callback, callback.getExecutor(),
-                                                     mTestFramework.mCronetEngine)
-                                             .build();
+        BidirectionalStream stream =
+                mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .build();
         stream.start();
         callback.blockForDone();
         assertTrue(stream.isDone());
@@ -854,10 +948,10 @@ public class BidirectionalStreamTest extends CronetTestBase {
         callback.addWriteData("1".getBytes());
         callback.addWriteData("2".getBytes());
         // Create stream.
-        BidirectionalStream stream = new BidirectionalStream
-                                             .Builder(url, callback, callback.getExecutor(),
-                                                     mTestFramework.mCronetEngine)
-                                             .build();
+        BidirectionalStream stream =
+                mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .build();
         stream.start();
         callback.blockForDone();
         assertTrue(stream.isDone());
@@ -868,8 +962,7 @@ public class BidirectionalStreamTest extends CronetTestBase {
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
-    // Disabled due to timeout. See crbug.com/591112
-    @DisabledTest
+    @DisabledTest(message = "Disabled due to timeout. See crbug.com/591112")
     public void testReadAndWrite() throws Exception {
         String url = Http2TestServer.getEchoStreamUrl();
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback() {
@@ -886,10 +979,10 @@ public class BidirectionalStreamTest extends CronetTestBase {
         callback.addWriteData("1".getBytes());
         callback.addWriteData("2".getBytes());
         // Create stream.
-        BidirectionalStream stream = new BidirectionalStream
-                                             .Builder(url, callback, callback.getExecutor(),
-                                                     mTestFramework.mCronetEngine)
-                                             .build();
+        BidirectionalStream stream =
+                mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .build();
         stream.start();
         callback.waitForNextWriteStep();
         callback.waitForNextReadStep();
@@ -915,10 +1008,10 @@ public class BidirectionalStreamTest extends CronetTestBase {
             stringData.append(writeData);
         }
         // Create stream.
-        BidirectionalStream stream = new BidirectionalStream
-                                             .Builder(url, callback, callback.getExecutor(),
-                                                     mTestFramework.mCronetEngine)
-                                             .build();
+        BidirectionalStream stream =
+                mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .build();
         stream.start();
         // Write first.
         callback.waitForNextWriteStep(); // onStreamReady
@@ -960,10 +1053,10 @@ public class BidirectionalStreamTest extends CronetTestBase {
             stringData.append(writeData);
         }
         // Create stream.
-        BidirectionalStream stream = new BidirectionalStream
-                                             .Builder(url, callback, callback.getExecutor(),
-                                                     mTestFramework.mCronetEngine)
-                                             .build();
+        BidirectionalStream stream =
+                mTestFramework.mCronetEngine
+                        .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
+                        .build();
         stream.start();
         callback.waitForNextWriteStep();
         callback.waitForNextReadStep();
@@ -1000,8 +1093,8 @@ public class BidirectionalStreamTest extends CronetTestBase {
         callback.setAutoAdvance(false);
         // Since the method is "GET", the expected response body is also "GET".
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getEchoMethodUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getEchoMethodUrl(), callback, callback.getExecutor());
         BidirectionalStream stream = builder.setHttpMethod("GET").build();
         stream.start();
         callback.waitForNextReadStep();
@@ -1080,7 +1173,10 @@ public class BidirectionalStreamTest extends CronetTestBase {
 
         // Make sure there are no other pending messages, which would trigger
         // asserts in TestBidirectionalCallback.
-        testSimpleGet();
+        // The expected received bytes count is lower than it would be for the first request on the
+        // connection, because the server includes an HPACK dynamic table size update only in the
+        // first response HEADERS frame.
+        runSimpleGetWithExpectedReceivedByteCount(27);
     }
 
     @SmallTest
@@ -1090,8 +1186,8 @@ public class BidirectionalStreamTest extends CronetTestBase {
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         callback.setAutoAdvance(false);
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getEchoMethodUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getEchoMethodUrl(), callback, callback.getExecutor());
         BidirectionalStream stream = builder.setHttpMethod("GET").build();
         stream.start();
         callback.waitForNextReadStep();
@@ -1131,16 +1227,29 @@ public class BidirectionalStreamTest extends CronetTestBase {
 
     private void throwOrCancel(
             FailureType failureType, ResponseStep failureStep, boolean expectError) {
+        // Use a fresh CronetEngine each time so Http2 session is not reused.
+        ExperimentalCronetEngine.Builder builder =
+                new ExperimentalCronetEngine.Builder(getContext());
+        CronetTestUtil.setMockCertVerifierForTesting(
+                builder, QuicTestServer.createMockCertVerifier());
+        mTestFramework = startCronetTestFrameworkWithUrlAndCronetEngineBuilder(null, builder);
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         callback.setFailure(failureType, failureStep);
-        BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getEchoMethodUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
-        BidirectionalStream stream = builder.setHttpMethod("GET").build();
+        TestRequestFinishedListener requestFinishedListener = new TestRequestFinishedListener();
+        mTestFramework.mCronetEngine.addRequestFinishedListener(requestFinishedListener);
+        BidirectionalStream.Builder streamBuilder =
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getEchoMethodUrl(), callback, callback.getExecutor());
+        BidirectionalStream stream = streamBuilder.setHttpMethod("GET").build();
+        Date startTime = new Date();
         stream.start();
         callback.blockForDone();
-        // assertEquals(callback.mResponseStep, failureStep);
         assertTrue(stream.isDone());
+        requestFinishedListener.blockUntilDone();
+        Date endTime = new Date();
+        RequestFinishedInfo finishedInfo = requestFinishedListener.getRequestInfo();
+        RequestFinishedInfo.Metrics metrics = finishedInfo.getMetrics();
+        assertNotNull(metrics);
         // Cancellation when stream is ready does not guarantee that
         // mResponseInfo is null because there might be a
         // onResponseHeadersReceived already queued in the executor.
@@ -1148,12 +1257,38 @@ public class BidirectionalStreamTest extends CronetTestBase {
         if (failureStep != ResponseStep.ON_STREAM_READY) {
             assertNotNull(callback.mResponseInfo);
         }
+        // Check metrics information.
+        if (failureStep == ResponseStep.ON_RESPONSE_STARTED
+                || failureStep == ResponseStep.ON_READ_COMPLETED
+                || failureStep == ResponseStep.ON_TRAILERS) {
+            // For steps after response headers are received, there will be
+            // connect timing metrics.
+            MetricsTestUtil.checkTimingMetrics(metrics, startTime, endTime);
+            MetricsTestUtil.checkHasConnectTiming(metrics, startTime, endTime, true);
+            assertTrue(metrics.getSentByteCount() > 0);
+            assertTrue(metrics.getReceivedByteCount() > 0);
+        } else if (failureStep == ResponseStep.ON_STREAM_READY) {
+            assertNotNull(metrics.getRequestStart());
+            MetricsTestUtil.assertAfter(metrics.getRequestStart(), startTime);
+            assertNotNull(metrics.getRequestEnd());
+            MetricsTestUtil.assertAfter(endTime, metrics.getRequestEnd());
+            // Entire request should take more than 0 ms
+            assertTrue(metrics.getRequestEnd().getTime() - metrics.getRequestStart().getTime() > 0);
+        }
         assertEquals(expectError, callback.mError != null);
         assertEquals(expectError, callback.mOnErrorCalled);
+        if (expectError) {
+            assertNotNull(finishedInfo.getException());
+            assertEquals(RequestFinishedInfo.FAILED, finishedInfo.getFinishedReason());
+        } else {
+            assertNull(finishedInfo.getException());
+            assertEquals(RequestFinishedInfo.CANCELED, finishedInfo.getFinishedReason());
+        }
         assertEquals(failureType == FailureType.CANCEL_SYNC
                         || failureType == FailureType.CANCEL_ASYNC
                         || failureType == FailureType.CANCEL_ASYNC_WITHOUT_PAUSE,
                 callback.mOnCanceledCalled);
+        mTestFramework.mCronetEngine.removeRequestFinishedListener(requestFinishedListener);
     }
 
     @SmallTest
@@ -1185,8 +1320,8 @@ public class BidirectionalStreamTest extends CronetTestBase {
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         callback.setFailure(FailureType.THROW_SYNC, ResponseStep.ON_SUCCEEDED);
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getEchoMethodUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getEchoMethodUrl(), callback, callback.getExecutor());
         BidirectionalStream stream = builder.setHttpMethod("GET").build();
         stream.start();
         callback.blockForDone();
@@ -1206,8 +1341,8 @@ public class BidirectionalStreamTest extends CronetTestBase {
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         callback.setAutoAdvance(false);
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getEchoMethodUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getEchoMethodUrl(), callback, callback.getExecutor());
         CronetBidirectionalStream stream =
                 (CronetBidirectionalStream) builder.setHttpMethod("GET").build();
         stream.start();
@@ -1276,8 +1411,8 @@ public class BidirectionalStreamTest extends CronetTestBase {
         // if there are active streams.
         callback.setAutoAdvance(false);
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getEchoMethodUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getEchoMethodUrl(), callback, callback.getExecutor());
         CronetBidirectionalStream stream =
                 (CronetBidirectionalStream) builder.setHttpMethod("GET").build();
         stream.start();
@@ -1321,8 +1456,8 @@ public class BidirectionalStreamTest extends CronetTestBase {
         // Test that CronetEngine can be shut down after stream reports a failure.
         TestBidirectionalStreamCallback callback = new ShutdownTestBidirectionalStreamCallback();
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getEchoMethodUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getEchoMethodUrl(), callback, callback.getExecutor());
         CronetBidirectionalStream stream =
                 (CronetBidirectionalStream) builder.setHttpMethod("GET").build();
         stream.start();
@@ -1339,8 +1474,8 @@ public class BidirectionalStreamTest extends CronetTestBase {
         // Test that CronetEngine can be shut down after stream is canceled.
         TestBidirectionalStreamCallback callback = new ShutdownTestBidirectionalStreamCallback();
         BidirectionalStream.Builder builder =
-                new BidirectionalStream.Builder(Http2TestServer.getEchoMethodUrl(), callback,
-                        callback.getExecutor(), mTestFramework.mCronetEngine);
+                mTestFramework.mCronetEngine.newBidirectionalStreamBuilder(
+                        Http2TestServer.getEchoMethodUrl(), callback, callback.getExecutor());
         CronetBidirectionalStream stream =
                 (CronetBidirectionalStream) builder.setHttpMethod("GET").build();
 

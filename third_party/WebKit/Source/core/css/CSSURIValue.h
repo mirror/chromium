@@ -6,45 +6,53 @@
 #define CSSURIValue_h
 
 #include "core/css/CSSValue.h"
-#include "core/fetch/DocumentResource.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class Document;
+class KURL;
+class SVGElementProxy;
 
 class CSSURIValue : public CSSValue {
-public:
-    static CSSURIValue* create(const String& str)
-    {
-        return new CSSURIValue(str);
-    }
-    ~CSSURIValue();
+ public:
+  static CSSURIValue* Create(const String& relative_url, const KURL& url) {
+    return new CSSURIValue(AtomicString(relative_url), url);
+  }
+  static CSSURIValue* Create(const AtomicString& absolute_url) {
+    return new CSSURIValue(absolute_url, absolute_url);
+  }
+  ~CSSURIValue();
 
-    DocumentResource* cachedDocument() const { return m_document; }
-    DocumentResource* load(Document&) const;
+  SVGElementProxy& EnsureElementProxy(const Document&) const;
+  void ReResolveUrl(const Document&) const;
 
-    const String& value() const { return m_url; }
-    const String& url() const { return m_url; }
+  const String& Value() const { return relative_url_; }
 
-    String customCSSText() const;
+  String CustomCSSText() const;
 
-    bool loadRequested() const { return m_loadRequested; }
-    bool equals(const CSSURIValue&) const;
+  bool IsLocal(const Document&) const;
+  bool Equals(const CSSURIValue&) const;
 
-    DECLARE_TRACE_AFTER_DISPATCH();
+  DECLARE_TRACE_AFTER_DISPATCH();
 
-private:
-    CSSURIValue(const String&);
+ private:
+  CSSURIValue(const AtomicString&, const KURL&);
+  CSSURIValue(const AtomicString& relative_url,
+              const AtomicString& absolute_url);
 
-    String m_url;
+  KURL AbsoluteUrl() const;
+  AtomicString FragmentIdentifier() const;
 
-    // Document cache.
-    mutable Member<DocumentResource> m_document;
-    mutable bool m_loadRequested;
+  AtomicString relative_url_;
+  bool is_local_;
+
+  mutable Member<SVGElementProxy> proxy_;
+  mutable AtomicString absolute_url_;
 };
 
-DEFINE_CSS_VALUE_TYPE_CASTS(CSSURIValue, isURIValue());
+DEFINE_CSS_VALUE_TYPE_CASTS(CSSURIValue, IsURIValue());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSURIValue_h
+#endif  // CSSURIValue_h

@@ -43,38 +43,37 @@ function test()
 
     function debuggerTest()
     {
-        var scripts = InspectorTest.debuggerModel.scripts;
-        for (var scriptId in scripts) {
-            var scriptCandidate = scripts[scriptId];
-            if (scriptCandidate.sourceURL === InspectorTest.resourceTreeModel.inspectedPageURL() && scriptCandidate.lineOffset === 4) {
+        for (var scriptCandidate of InspectorTest.debuggerModel.scripts()) {
+            if (scriptCandidate.sourceURL === InspectorTest.mainTarget.inspectedURL() && scriptCandidate.lineOffset === 4) {
                 script = scriptCandidate;
                 break;
             }
         }
 
-        uiSourceCode = WebInspector.workspace.uiSourceCodeForURL(InspectorTest.resourceTreeModel.inspectedPageURL());
+        uiSourceCode = Workspace.workspace.uiSourceCodeForURL(InspectorTest.mainTarget.inspectedURL());
         var linkifyMe = "at triggerError (http://localhost/show/:22:11)";
-        var fragment = WebInspector.linkifyStringAsFragment(linkifyMe);
-        var anchor = fragment.querySelector('a');
-        InspectorTest.addResult("The string \"" + linkifyMe + " \" linkifies to url: " + anchor.href);
-        InspectorTest.addResult("The lineNumber is " + anchor.lineNumber + " with type " + (typeof anchor.lineNumber));
-        InspectorTest.addResult("The columnNumber is " + anchor.columnNumber + " with type " + (typeof anchor.columnNumber));
+        var fragment = Components.linkifyStringAsFragment(linkifyMe);
+        var anchor = fragment.querySelector('.devtools-link');
+        var info = Components.Linkifier._linkInfo(anchor);
+        InspectorTest.addResult("The string \"" + linkifyMe + " \" linkifies to url: " + (info && info.url));
+        InspectorTest.addResult("The lineNumber is " + (info && info.lineNumber));
+        InspectorTest.addResult("The columnNumber is " + (info && info.columnNumber));
 
-        linkifier = new WebInspector.Linkifier();
+        linkifier = new Components.Linkifier();
         var count1 = liveLocationsCount();
-        link = linkifier.linkifyScriptLocation(WebInspector.targetManager.mainTarget(), null, InspectorTest.resourceTreeModel.inspectedPageURL(), 8, 0, "dummy-class");
+        link = linkifier.linkifyScriptLocation(SDK.targetManager.mainTarget(), null, InspectorTest.mainTarget.inspectedURL(), 8, 0, "dummy-class");
         var count2 = liveLocationsCount();
 
         InspectorTest.addResult("listeners added on raw source code: " + (count2 - count1));
         InspectorTest.addResult("original location: " + link.textContent);
-        InspectorTest.addSniffer(WebInspector.ScriptFormatterEditorAction.prototype, "_updateButton", uiSourceCodeScriptFormatted);
+        InspectorTest.addSniffer(Sources.ScriptFormatterEditorAction.prototype, "_updateButton", uiSourceCodeScriptFormatted);
         scriptFormatter._toggleFormatScriptSource();
     }
 
     function uiSourceCodeScriptFormatted()
     {
         InspectorTest.addResult("pretty printed location: " + link.textContent);
-        scriptFormatter._discardFormattedUISourceCodeScript(WebInspector.panels.sources.visibleView.uiSourceCode());
+        Sources.sourceFormatter.discardFormattedUISourceCode(UI.panels.sources.visibleView.uiSourceCode());
         InspectorTest.addResult("reverted location: " + link.textContent);
 
         var count1 = liveLocationsCount();
@@ -88,7 +87,8 @@ function test()
 
     function liveLocationsCount()
     {
-        return WebInspector.debuggerWorkspaceBinding._ensureInfoForScript(script)._locations.size;
+        var scriptInfo = Bindings.debuggerWorkspaceBinding._ensureInfoForScript(script);
+        return scriptInfo._locations ? scriptInfo._locations.size : 0;
     }
 }
 

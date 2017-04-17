@@ -7,6 +7,7 @@
 
 #include <stddef.h>
 
+#include <initializer_list>
 #include <memory>
 #include <set>
 #include <string>
@@ -20,11 +21,16 @@
 #include "components/version_info/version_info.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/features/feature.h"
+#include "extensions/common/features/feature_session_type.h"
 #include "extensions/common/manifest.h"
+
+namespace base {
+class CommandLine;
+}
 
 namespace extensions {
 
-class BaseFeatureProviderTest;
+class FeatureProviderTest;
 class ExtensionAPITest;
 class ManifestUnitTest;
 class SimpleFeatureTest;
@@ -45,15 +51,6 @@ class SimpleFeature : public Feature {
 
   SimpleFeature();
   ~SimpleFeature() override;
-
-  // Parses the JSON representation of a feature into the fields of this object.
-  // Note: Validate() should be called after this.
-  void Parse(const base::DictionaryValue* dictionary);
-
-  // Checks whether the feature is valid. Invalid features should not be used.
-  // Subclasses can override to implement specific checking, but should always
-  // call this method as well.
-  virtual bool Validate(std::string* error);
 
   Availability IsAvailableToContext(const Extension* extension,
                                     Context context) const {
@@ -99,28 +96,28 @@ class SimpleFeature : public Feature {
   };
 
   // Setters used by generated code to create the feature.
-  // NOTE: These setters use rvalue references deliberately. These should only
-  // ever be used by generated code, and we ensure that in each call, the new
-  // value is constructed in-place. This allows us to avoid a copy when we
-  // assign it to the value in this class, and results in noticable improvements
-  // in both speed and binary size.
-  void set_blacklist(std::vector<std::string>&& blacklist);
+  // NOTE: These setters use base::StringPiece and std::initalizer_list rather
+  // than std::string and std::vector for binary size reasons. Using STL types
+  // directly in the header means that code that doesn't already have that exact
+  // type ends up triggering many implicit conversions which are all inlined.
+  void set_blacklist(std::initializer_list<const char* const> blacklist);
   void set_channel(version_info::Channel channel) {
     channel_.reset(new version_info::Channel(channel));
   }
-  void set_command_line_switch(std::string&& command_line_switch);
+  void set_command_line_switch(base::StringPiece command_line_switch);
   void set_component_extensions_auto_granted(bool granted) {
     component_extensions_auto_granted_ = granted;
   }
-  void set_contexts(std::vector<Context>&& contexts);
-  void set_dependencies(std::vector<std::string>&& dependencies);
-  void set_extension_types(std::vector<Manifest::Type>&& types);
+  void set_contexts(std::initializer_list<Context> contexts);
+  void set_dependencies(std::initializer_list<const char* const> dependencies);
+  void set_extension_types(std::initializer_list<Manifest::Type> types);
+  void set_session_types(std::initializer_list<FeatureSessionType> types);
   void set_internal(bool is_internal) { is_internal_ = is_internal; }
   void set_location(Location location) { location_ = location; }
   // set_matches() is an exception to pass-by-value since we construct an
   // URLPatternSet from the vector of strings.
   // TODO(devlin): Pass in an URLPatternSet directly.
-  void set_matches(const std::vector<std::string>& matches);
+  void set_matches(std::initializer_list<const char* const> matches);
   void set_max_manifest_version(int max_manifest_version) {
     max_manifest_version_ = max_manifest_version;
   }
@@ -128,8 +125,8 @@ class SimpleFeature : public Feature {
     min_manifest_version_ = min_manifest_version;
   }
   void set_noparent(bool no_parent) { no_parent_ = no_parent; }
-  void set_platforms(std::vector<Platform>&& platforms);
-  void set_whitelist(std::vector<std::string>&& whitelist);
+  void set_platforms(std::initializer_list<Platform> platforms);
+  void set_whitelist(std::initializer_list<const char* const> whitelist);
 
  protected:
   // Accessors used by subclasses in feature verification.
@@ -158,7 +155,8 @@ class SimpleFeature : public Feature {
                                      Manifest::Type type,
                                      const GURL& url,
                                      Context context,
-                                     version_info::Channel channel) const;
+                                     version_info::Channel channel,
+                                     FeatureSessionType session_type) const;
 
   // Handy utilities which construct the correct availability message.
   Availability CreateAvailability(AvailabilityResult result) const;
@@ -170,12 +168,14 @@ class SimpleFeature : public Feature {
                                   Context context) const;
   Availability CreateAvailability(AvailabilityResult result,
                                   version_info::Channel channel) const;
+  Availability CreateAvailability(AvailabilityResult result,
+                                  FeatureSessionType session_type) const;
 
  private:
   friend struct FeatureComparator;
   friend class SimpleFeatureTest;
-  FRIEND_TEST_ALL_PREFIXES(BaseFeatureProviderTest, ManifestFeatureTypes);
-  FRIEND_TEST_ALL_PREFIXES(BaseFeatureProviderTest, PermissionFeatureTypes);
+  FRIEND_TEST_ALL_PREFIXES(FeatureProviderTest, ManifestFeatureTypes);
+  FRIEND_TEST_ALL_PREFIXES(FeatureProviderTest, PermissionFeatureTypes);
   FRIEND_TEST_ALL_PREFIXES(ExtensionAPITest, DefaultConfigurationFeatures);
   FRIEND_TEST_ALL_PREFIXES(FeaturesGenerationTest, FeaturesTest);
   FRIEND_TEST_ALL_PREFIXES(ManifestUnitTest, Extension);
@@ -183,6 +183,7 @@ class SimpleFeature : public Feature {
   FRIEND_TEST_ALL_PREFIXES(SimpleFeatureTest, CommandLineSwitch);
   FRIEND_TEST_ALL_PREFIXES(SimpleFeatureTest, ComplexFeatureAvailability);
   FRIEND_TEST_ALL_PREFIXES(SimpleFeatureTest, Context);
+  FRIEND_TEST_ALL_PREFIXES(SimpleFeatureTest, SessionType);
   FRIEND_TEST_ALL_PREFIXES(SimpleFeatureTest, FeatureValidation);
   FRIEND_TEST_ALL_PREFIXES(SimpleFeatureTest, HashedIdBlacklist);
   FRIEND_TEST_ALL_PREFIXES(SimpleFeatureTest, HashedIdWhitelist);
@@ -209,10 +210,32 @@ class SimpleFeature : public Feature {
 
   bool MatchesManifestLocation(Manifest::Location manifest_location) const;
 
+  // Checks if the feature is allowed in a session of type |session_type|
+  // (based on session type feature restrictions).
+  bool MatchesSessionTypes(FeatureSessionType session_type) const;
+
   Availability CheckDependencies(
       const base::Callback<Availability(const Feature*)>& checker) const;
 
   static bool IsValidExtensionId(const std::string& extension_id);
+
+  // Returns the availability of the feature with respect to the basic
+  // environment Chrome is running in.
+  Availability GetEnvironmentAvailability(
+      Platform platform,
+      version_info::Channel channel,
+      FeatureSessionType session_type,
+      base::CommandLine* command_line) const;
+
+  // Returns the availability of the feature with respect to a given extension's
+  // properties.
+  Availability GetManifestAvailability(const std::string& extension_id,
+                                       Manifest::Type type,
+                                       Manifest::Location location,
+                                       int manifest_version) const;
+
+  // Returns the availability of the feature with respect to a given context.
+  Availability GetContextAvailability(Context context, const GURL& url) const;
 
   // For clarity and consistency, we handle the default value of each of these
   // members the same way: it matches everything. It is up to the higher level
@@ -222,6 +245,7 @@ class SimpleFeature : public Feature {
   std::vector<std::string> whitelist_;
   std::vector<std::string> dependencies_;
   std::vector<Manifest::Type> extension_types_;
+  std::vector<FeatureSessionType> session_types_;
   std::vector<Context> contexts_;
   std::vector<Platform> platforms_;
   URLPatternSet matches_;

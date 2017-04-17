@@ -6,18 +6,21 @@
 #define InternalsRTCCertificate_h
 
 #include "modules/peerconnection/RTCCertificate.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class Internals;
 
 class InternalsRTCCertificate {
-    STATIC_ONLY(InternalsRTCCertificate);
-public:
-    static bool rtcCertificateEquals(Internals&, RTCCertificate*, RTCCertificate*);
+  STATIC_ONLY(InternalsRTCCertificate);
+
+ public:
+  static bool rtcCertificateEquals(Internals&,
+                                   RTCCertificate*,
+                                   RTCCertificate*);
 };
 
-} // blink
+}  // blink
 
-#endif // InternalsRTCCertificate_h
+#endif  // InternalsRTCCertificate_h

@@ -23,57 +23,55 @@
 #include "core/css/CSSMediaRule.h"
 
 #include "core/css/StyleRule.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-CSSMediaRule::CSSMediaRule(StyleRuleMedia* mediaRule, CSSStyleSheet* parent)
-    : CSSGroupingRule(mediaRule, parent)
-{
+CSSMediaRule::CSSMediaRule(StyleRuleMedia* media_rule, CSSStyleSheet* parent)
+    : CSSConditionRule(media_rule, parent) {}
+
+CSSMediaRule::~CSSMediaRule() {}
+
+MediaQuerySet* CSSMediaRule::MediaQueries() const {
+  return ToStyleRuleMedia(group_rule_.Get())->MediaQueries();
 }
 
-CSSMediaRule::~CSSMediaRule()
-{
+String CSSMediaRule::cssText() const {
+  StringBuilder result;
+  result.Append("@media ");
+  if (MediaQueries()) {
+    result.Append(MediaQueries()->MediaText());
+    result.Append(' ');
+  }
+  result.Append("{\n");
+  AppendCSSTextForItems(result);
+  result.Append('}');
+  return result.ToString();
 }
 
-MediaQuerySet* CSSMediaRule::mediaQueries() const
-{
-    return toStyleRuleMedia(m_groupRule.get())->mediaQueries();
+String CSSMediaRule::conditionText() const {
+  if (!MediaQueries())
+    return String();
+  return MediaQueries()->MediaText();
 }
 
-String CSSMediaRule::cssText() const
-{
-    StringBuilder result;
-    result.append("@media ");
-    if (mediaQueries()) {
-        result.append(mediaQueries()->mediaText());
-        result.append(' ');
-    }
-    result.append("{ \n");
-    appendCSSTextForItems(result);
-    result.append('}');
-    return result.toString();
+MediaList* CSSMediaRule::media() const {
+  if (!MediaQueries())
+    return nullptr;
+  if (!media_cssom_wrapper_)
+    media_cssom_wrapper_ =
+        MediaList::Create(MediaQueries(), const_cast<CSSMediaRule*>(this));
+  return media_cssom_wrapper_.Get();
 }
 
-MediaList* CSSMediaRule::media() const
-{
-    if (!mediaQueries())
-        return nullptr;
-    if (!m_mediaCSSOMWrapper)
-        m_mediaCSSOMWrapper = MediaList::create(mediaQueries(), const_cast<CSSMediaRule*>(this));
-    return m_mediaCSSOMWrapper.get();
+void CSSMediaRule::Reattach(StyleRuleBase* rule) {
+  CSSConditionRule::Reattach(rule);
+  if (media_cssom_wrapper_ && MediaQueries())
+    media_cssom_wrapper_->Reattach(MediaQueries());
 }
 
-void CSSMediaRule::reattach(StyleRuleBase* rule)
-{
-    CSSGroupingRule::reattach(rule);
-    if (m_mediaCSSOMWrapper && mediaQueries())
-        m_mediaCSSOMWrapper->reattach(mediaQueries());
+DEFINE_TRACE(CSSMediaRule) {
+  visitor->Trace(media_cssom_wrapper_);
+  CSSConditionRule::Trace(visitor);
 }
-
-DEFINE_TRACE(CSSMediaRule)
-{
-    visitor->trace(m_mediaCSSOMWrapper);
-    CSSGroupingRule::trace(visitor);
-}
-} // namespace blink
+}  // namespace blink

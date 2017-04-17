@@ -12,7 +12,8 @@
 #include "base/debug/profiler.h"
 #include "base/i18n/number_formatting.h"
 #include "base/macros.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
@@ -37,7 +38,6 @@
 #include "chrome/browser/ui/global_error/global_error_service_factory.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/toolbar/bookmark_sub_menu_model.h"
-#include "chrome/browser/ui/toolbar/encoding_menu_controller.h"
 #include "chrome/browser/ui/toolbar/recent_tabs_sub_menu_model.h"
 #include "chrome/browser/ui/toolbar/toolbar_actions_bar.h"
 #include "chrome/browser/upgrade_detector.h"
@@ -46,11 +46,13 @@
 #include "chrome/common/profiling.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
 #include "components/bookmarks/common/bookmark_pref_names.h"
 #include "components/dom_distiller/core/dom_distiller_switches.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/common/profile_management_switches.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/zoom/zoom_controller.h"
 #include "components/zoom/zoom_event_manager.h"
 #include "content/public/browser/host_zoom_map.h"
@@ -58,11 +60,7 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/notification_types.h"
-#include "content/public/browser/user_metrics.h"
 #include "content/public/browser/web_contents.h"
-#include "extensions/common/feature_switch.h"
-#include "grit/components_strings.h"
-#include "grit/theme_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/layout.h"
 #include "ui/base/models/button_menu_item_model.h"
@@ -82,7 +80,7 @@
 #endif
 
 #if defined(USE_ASH)
-#include "ash/shell.h"
+#include "ash/shell.h"  // nogncheck
 #endif
 
 using base::UserMetricsAction;
@@ -108,70 +106,6 @@ base::string16 GetUpgradeDialogMenuItemName() {
 }
 
 }  // namespace
-
-////////////////////////////////////////////////////////////////////////////////
-// EncodingMenuModel
-
-EncodingMenuModel::EncodingMenuModel(Browser* browser)
-    : ui::SimpleMenuModel(this),
-      browser_(browser) {
-  Build();
-}
-
-EncodingMenuModel::~EncodingMenuModel() {
-}
-
-void EncodingMenuModel::Build() {
-  EncodingMenuController::EncodingMenuItemList encoding_menu_items;
-  EncodingMenuController encoding_menu_controller;
-  encoding_menu_controller.GetEncodingMenuItems(browser_->profile(),
-                                                &encoding_menu_items);
-
-  int group_id = 0;
-  EncodingMenuController::EncodingMenuItemList::iterator it =
-      encoding_menu_items.begin();
-  for (; it != encoding_menu_items.end(); ++it) {
-    int id = it->first;
-    base::string16& label = it->second;
-    if (id == 0) {
-      AddSeparator(ui::NORMAL_SEPARATOR);
-    } else {
-      if (id == IDC_ENCODING_AUTO_DETECT) {
-        AddCheckItem(id, label);
-      } else {
-        // Use the id of the first radio command as the id of the group.
-        if (group_id <= 0)
-          group_id = id;
-        AddRadioItem(id, label, group_id);
-      }
-    }
-  }
-}
-
-bool EncodingMenuModel::IsCommandIdChecked(int command_id) const {
-  WebContents* current_tab =
-      browser_->tab_strip_model()->GetActiveWebContents();
-  if (!current_tab)
-    return false;
-  EncodingMenuController controller;
-  return controller.IsItemChecked(browser_->profile(),
-                                  current_tab->GetEncoding(), command_id);
-}
-
-bool EncodingMenuModel::IsCommandIdEnabled(int command_id) const {
-  bool enabled = chrome::IsCommandEnabled(browser_, command_id);
-  // Special handling for the contents of the Encoding submenu. On Mac OS,
-  // instead of enabling/disabling the top-level menu item, the submenu's
-  // contents get disabled, per Apple's HIG.
-#if defined(OS_MACOSX)
-  enabled &= chrome::IsCommandEnabled(browser_, IDC_ENCODING_MENU);
-#endif
-  return enabled;
-}
-
-void EncodingMenuModel::ExecuteCommand(int command_id, int event_flags) {
-  chrome::ExecuteCommand(browser_, command_id);
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 // ZoomMenuModel
@@ -242,11 +176,14 @@ ToolsMenuModel::~ToolsMenuModel() {}
 // - Developer tools.
 // - Option to enable profiling.
 void ToolsMenuModel::Build(Browser* browser) {
-  bool show_create_shortcuts = true;
-#if defined(OS_CHROMEOS) || defined(OS_MACOSX) || defined(USE_ASH)
-  show_create_shortcuts = false;
-#endif
-  AddItemWithStringId(IDC_SAVE_PAGE, IDS_SAVE_PAGE);
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableSaveAsMenuLabelExperiment) ||
+      base::FieldTrialList::FindFullName("SaveAsMenuText") == "download") {
+    AddItemWithStringId(IDC_SAVE_PAGE, IDS_DOWNLOAD_PAGE);
+  } else {
+    AddItemWithStringId(IDC_SAVE_PAGE, IDS_SAVE_PAGE);
+  }
+
   if (extensions::util::IsNewBookmarkAppsEnabled()) {
     int string_id = IDS_ADD_TO_DESKTOP;
 #if defined(OS_MACOSX)
@@ -256,8 +193,6 @@ void ToolsMenuModel::Build(Browser* browser) {
     string_id = IDS_ADD_TO_SHELF;
 #endif  // defined(USE_ASH)
     AddItemWithStringId(IDC_CREATE_HOSTED_APP, string_id);
-  } else if (show_create_shortcuts) {
-    AddItemWithStringId(IDC_CREATE_SHORTCUTS, IDS_CREATE_SHORTCUTS);
   }
 
   AddSeparator(ui::NORMAL_SEPARATOR);
@@ -268,10 +203,6 @@ void ToolsMenuModel::Build(Browser* browser) {
 #if defined(OS_CHROMEOS)
   AddItemWithStringId(IDC_TAKE_SCREENSHOT, IDS_TAKE_SCREENSHOT);
 #endif
-  encoding_menu_model_.reset(new EncodingMenuModel(browser));
-  AddSubMenuWithStringId(IDC_ENCODING_MENU, IDS_ENCODING_MENU,
-                         encoding_menu_model_.get());
-
   AddSeparator(ui::NORMAL_SEPARATOR);
   AddItemWithStringId(IDC_DEV_TOOLS, IDS_DEV_TOOLS);
 
@@ -500,12 +431,6 @@ void AppMenuModel::LogMenuMetrics(int command_id) {
       }
       LogMenuAction(MENU_ACTION_CREATE_HOSTED_APP);
       break;
-    case IDC_CREATE_SHORTCUTS:
-      if (!uma_action_recorded_)
-        UMA_HISTOGRAM_MEDIUM_TIMES("WrenchMenu.TimeToAction.CreateShortcuts",
-                                   delta);
-      LogMenuAction(MENU_ACTION_CREATE_SHORTCUTS);
-      break;
     case IDC_MANAGE_EXTENSIONS:
       if (!uma_action_recorded_) {
         UMA_HISTOGRAM_MEDIUM_TIMES("WrenchMenu.TimeToAction.ManageExtensions",
@@ -573,7 +498,7 @@ void AppMenuModel::LogMenuMetrics(int command_id) {
       }
       break;
     case IDC_FULLSCREEN:
-      content::RecordAction(UserMetricsAction("EnterFullScreenWithWrenchMenu"));
+      base::RecordAction(UserMetricsAction("EnterFullScreenWithWrenchMenu"));
 
       if (!uma_action_recorded_) {
         UMA_HISTOGRAM_MEDIUM_TIMES("WrenchMenu.TimeToAction.EnterFullScreen",
@@ -616,7 +541,7 @@ void AppMenuModel::LogMenuMetrics(int command_id) {
 
     // Help menu.
     case IDC_HELP_PAGE_VIA_MENU:
-      content::RecordAction(UserMetricsAction("ShowHelpTabViaWrenchMenu"));
+      base::RecordAction(UserMetricsAction("ShowHelpTabViaWrenchMenu"));
 
       if (!uma_action_recorded_)
         UMA_HISTOGRAM_MEDIUM_TIMES("WrenchMenu.TimeToAction.HelpPage", delta);
@@ -683,24 +608,14 @@ bool AppMenuModel::IsCommandIdVisible(int command_id) const {
     case kEmptyMenuItemCommand:
       return false;  // Always hidden (see CreateActionToolbarOverflowMenu).
 #endif
-#if defined(OS_WIN)
-    case IDC_VIEW_INCOMPATIBILITIES: {
-      EnumerateModulesModel* loaded_modules =
-          EnumerateModulesModel::GetInstance();
-      if (loaded_modules->confirmed_bad_modules_detected() <= 0)
-        return false;
-      // We'll leave the app menu adornment on until the user clicks the link.
-      if (loaded_modules->modules_to_notify_about() <= 0)
-        loaded_modules->AcknowledgeConflictNotification();
-      return true;
-    }
-    case IDC_PIN_TO_START_SCREEN:
-      return false;
-#else
     case IDC_VIEW_INCOMPATIBILITIES:
-    case IDC_PIN_TO_START_SCREEN:
+#if defined(OS_WIN)
+      return EnumerateModulesModel::GetInstance()->ShouldShowConflictWarning();
+#else
       return false;
 #endif
+    case IDC_PIN_TO_START_SCREEN:
+      return false;
     case IDC_UPGRADE_DIALOG:
       return browser_defaults::kShowUpgradeMenuItem &&
           UpgradeDetector::GetInstance()->notify_upgrade();
@@ -769,8 +684,7 @@ bool AppMenuModel::ShouldShowNewIncognitoWindowMenuItem() {
 // - Learn about the browser and global customisation e.g. settings, help.
 // - Browser relaunch, quit.
 void AppMenuModel::Build() {
-  if (extensions::FeatureSwitch::extension_action_redesign()->IsEnabled())
-    CreateActionToolbarOverflowMenu();
+  CreateActionToolbarOverflowMenu();
 
   AddItem(IDC_VIEW_INCOMPATIBILITIES,
       l10n_util::GetStringUTF16(IDS_VIEW_INCOMPATIBILITIES));
@@ -791,9 +705,8 @@ void AppMenuModel::Build() {
   AddSeparator(ui::NORMAL_SEPARATOR);
 
   if (!browser_->profile()->IsOffTheRecord()) {
-    recent_tabs_sub_menu_model_.reset(new RecentTabsSubMenuModel(provider_,
-                                                                 browser_,
-                                                                 NULL));
+    recent_tabs_sub_menu_model_ =
+        base::MakeUnique<RecentTabsSubMenuModel>(provider_, browser_);
     AddSubMenuWithStringId(IDC_RECENT_TABS_MENU, IDS_HISTORY_MENU,
                            recent_tabs_sub_menu_model_.get());
   }
@@ -806,8 +719,11 @@ void AppMenuModel::Build() {
 
   CreateZoomMenu();
   AddItemWithStringId(IDC_PRINT, IDS_PRINT);
+
+#if defined(ENABLE_MEDIA_ROUTER)
   if (media_router::MediaRouterEnabled(browser()->profile()))
     AddItemWithStringId(IDC_ROUTE_MEDIA, IDS_MEDIA_ROUTER_MENU_ITEM_TITLE);
+#endif  // defined(ENABLE_MEDIA_ROUTER)
 
   AddItemWithStringId(IDC_FIND, IDS_FIND);
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -863,7 +779,7 @@ bool AppMenuModel::AddGlobalErrorMenuItems() {
               error->MenuItemIcon());
       menu_items_added = true;
       if (IDC_SHOW_SIGNIN_ERROR == error->MenuItemCommandID()) {
-        content::RecordAction(
+        base::RecordAction(
             base::UserMetricsAction("Signin_Impression_FromMenu"));
       }
     }

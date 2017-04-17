@@ -12,7 +12,6 @@
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_background_view.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_view.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
-#include "grit/theme_resources.h"
 #import "ui/base/cocoa/focus_tracker.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/theme_provider.h"
@@ -26,6 +25,15 @@
 // of non-layer backed content like the window controls.
 - (void)insertTabStripBackgroundViewIntoWindow:(NSWindow*)window
                                       titleBar:(BOOL)hasTitleBar;
+
+// Called when NSWindowWillEnterFullScreenNotification notification received.
+// Makes visual effects view hidden as it should not be displayed in fullscreen.
+- (void)windowWillEnterFullScreenNotification:(NSNotification*)notification;
+
+// Called when NSWindowWillExitFullScreenNotification notification received.
+// Makes visual effects view visible since it was hidden in fullscreen.
+- (void)windowWillExitFullScreenNotification:(NSNotification*)notification;
+
 @end
 
 @interface TabWindowOverlayWindow : NSWindow
@@ -49,6 +57,30 @@
   return [[self parentWindow] hasDarkTheme];
 }
 
+- (BOOL)inIncognitoModeWithSystemTheme {
+  return [[self parentWindow] inIncognitoModeWithSystemTheme];
+}
+
+@end
+
+// Subview of the window's contentView, contains everything but the tab strip.
+@interface ChromeContentView : NSView
+@end
+
+@implementation ChromeContentView
+
+// NSView overrides.
+
+// Since Auto Layout and frame-based layout behave differently in small but
+// important ways (e.g. Auto Layout can restrict window resizing, frame-based
+// layout doesn't log a warning when a view's autoresizing mask can't be
+// maintained), ensure that it's on instead of letting it depend on content.
++ (BOOL)requiresConstraintBasedLayout {
+  // TODO(sdy): Turn back on (or remove) after investigating a performance
+  // regression: https://crbug.com/706931
+  return NO;
+}
+
 @end
 
 @implementation TabWindowController
@@ -68,7 +100,7 @@
   if ((self = [super initWithWindow:window])) {
     [[self window] setDelegate:self];
 
-    chromeContentView_.reset([[NSView alloc]
+    chromeContentView_.reset([[ChromeContentView alloc]
         initWithFrame:NSMakeRect(0, 0, kDefaultWidth, kDefaultHeight)]);
     [chromeContentView_
         setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
@@ -86,12 +118,10 @@
     // the parent window so that it can be translucent, while the tab strip view
     // moves to the child window and stays opaque.
     NSView* windowView = [window contentView];
+    CGFloat paintHeight = [FramedBrowserWindow browserFrameViewPaintHeight];
     tabStripBackgroundView_.reset([[TabStripBackgroundView alloc]
-        initWithFrame:NSMakeRect(0,
-                                 NSMaxY([windowView bounds]) -
-                                     kBrowserFrameViewPaintHeight,
-                                 NSWidth([windowView bounds]),
-                                 kBrowserFrameViewPaintHeight)]);
+        initWithFrame:NSMakeRect(0, NSMaxY([windowView bounds]) - paintHeight,
+                                 NSWidth([windowView bounds]), paintHeight)]);
     [tabStripBackgroundView_
         setAutoresizingMask:NSViewWidthSizable | NSViewMinYMargin];
     [self insertTabStripBackgroundViewIntoWindow:window titleBar:hasTitleBar];
@@ -103,8 +133,32 @@
                                        NSViewMinYMargin];
     if (hasTabStrip)
       [windowView addSubview:tabStripView_];
+
+    if (chrome::ShouldUseFullSizeContentView()) {
+      // |windowWillEnterFullScreen:| and |windowWillExitFullScreen:| are
+      // already called because self is a delegate for the window. However this
+      // class is designed for subclassing and can not implement
+      // NSWindowDelegate methods (because subclasses can do so as well and they
+      // should be able to). TODO(crbug.com/654656): Move |visualEffectView_| to
+      // subclass.
+      [[NSNotificationCenter defaultCenter]
+          addObserver:self
+             selector:@selector(windowWillEnterFullScreenNotification:)
+                 name:NSWindowWillEnterFullScreenNotification
+               object:window];
+      [[NSNotificationCenter defaultCenter]
+          addObserver:self
+             selector:@selector(windowWillExitFullScreenNotification:)
+                 name:NSWindowWillExitFullScreenNotification
+               object:window];
+    }
   }
   return self;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [super dealloc];
 }
 
 - (NSView*)tabStripBackgroundView {
@@ -319,6 +373,19 @@
   return 0;
 }
 
+- (CGFloat)menubarHeight {
+  // The height of the menubar. We can't use |-[NSMenu menuBarHeight]| since it
+  // returns 0 when the menu bar is hidden.
+  const CGFloat kMenubarHeight = 22;
+  return kMenubarHeight;
+}
+
+- (BOOL)isInAnyFullscreenMode {
+  // Subclass must implement.
+  NOTIMPLEMENTED();
+  return NO;
+}
+
 - (NSView*)avatarView {
   return nil;
 }
@@ -356,8 +423,8 @@
   // In Material Design on 10.10 and higher, the top portion of the window is
   // blurred using an NSVisualEffectView.
   Class nsVisualEffectViewClass = NSClassFromString(@"NSVisualEffectView");
-  if (!ui::MaterialDesignController::IsModeMaterial() ||
-      !nsVisualEffectViewClass) {
+  if (!nsVisualEffectViewClass) {
+    DCHECK(!chrome::ShouldUseFullSizeContentView());
     [rootView addSubview:tabStripBackgroundView_
               positioned:NSWindowBelow
               relativeTo:nil];
@@ -370,12 +437,12 @@
   if (hasTitleBar)
     return;
 
-  base::scoped_nsobject<NSVisualEffectView> visualEffectView(
+  visualEffectView_.reset(
       [[nsVisualEffectViewClass alloc]
           initWithFrame:[tabStripBackgroundView_ frame]]);
-  DCHECK(visualEffectView);
+  DCHECK(visualEffectView_);
 
-  [visualEffectView setAutoresizingMask:
+  [visualEffectView_ setAutoresizingMask:
       [tabStripBackgroundView_ autoresizingMask]];
   [tabStripBackgroundView_
       setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
@@ -386,25 +453,37 @@
   // before the |browser_| ivar has been set. Without a browser object we
   // can't check the window's theme. The final setup happens in
   // -[TabStripView setController:], at which point we have access to the theme.
-  [visualEffectView setAppearance:
+  [visualEffectView_ setAppearance:
       [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
-  [visualEffectView setMaterial:NSVisualEffectMaterialLight];
-  [visualEffectView setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
-  [visualEffectView setState:NSVisualEffectStateFollowsWindowActiveState];
+  [visualEffectView_ setMaterial:NSVisualEffectMaterialLight];
+  [visualEffectView_ setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+  [visualEffectView_ setState:NSVisualEffectStateFollowsWindowActiveState];
 
-  [rootView addSubview:visualEffectView
-            positioned:NSWindowBelow
-            relativeTo:nil];
+  if (chrome::ShouldUseFullSizeContentView()) {
+    [[window contentView] addSubview:visualEffectView_];
+  } else {
+    [rootView addSubview:visualEffectView_
+              positioned:NSWindowBelow
+              relativeTo:nil];
+  }
 
   // Make the |tabStripBackgroundView_| a child of the NSVisualEffectView.
-  [tabStripBackgroundView_ setFrame:[visualEffectView bounds]];
-  [visualEffectView addSubview:tabStripBackgroundView_];
+  [tabStripBackgroundView_ setFrame:[visualEffectView_ bounds]];
+  [visualEffectView_ addSubview:tabStripBackgroundView_];
 }
 
 // Called when the size of the window content area has changed. Override to
 // position specific views. Base class implementation does nothing.
 - (void)layoutSubviews {
   NOTIMPLEMENTED();
+}
+
+- (void)windowWillEnterFullScreenNotification:(NSNotification*)notification {
+  [[visualEffectView_ animator] setAlphaValue:0.0];
+}
+
+- (void)windowWillExitFullScreenNotification:(NSNotification*)notification {
+  [[visualEffectView_ animator] setAlphaValue:1.0];
 }
 
 @end

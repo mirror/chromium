@@ -16,6 +16,7 @@
 #include "components/update_client/crx_update_item.h"
 #include "components/update_client/persisted_data.h"
 #include "components/update_client/update_checker.h"
+#include "components/update_client/update_client_errors.h"
 
 namespace update_client {
 
@@ -25,12 +26,13 @@ UpdateContext::UpdateContext(
     const std::vector<std::string>& ids,
     const UpdateClient::CrxDataCallback& crx_data_callback,
     const UpdateEngine::NotifyObserversCallback& notify_observers_callback,
-    const UpdateEngine::CompletionCallback& callback,
+    const UpdateEngine::Callback& callback,
     UpdateChecker::Factory update_checker_factory,
     CrxDownloader::Factory crx_downloader_factory,
     PingManager* ping_manager)
     : config(config),
       is_foreground(is_foreground),
+      enabled_component_updates(config->EnabledComponentUpdates()),
       ids(ids),
       crx_data_callback(crx_data_callback),
       notify_observers_callback(notify_observers_callback),
@@ -40,11 +42,9 @@ UpdateContext::UpdateContext(
       update_checker_factory(update_checker_factory),
       crx_downloader_factory(crx_downloader_factory),
       ping_manager(ping_manager),
-      retry_after_sec_(0) {}
+      retry_after_sec(0) {}
 
-UpdateContext::~UpdateContext() {
-  STLDeleteElements(&update_items);
-}
+UpdateContext::~UpdateContext() {}
 
 UpdateEngine::UpdateEngine(
     const scoped_refptr<Configurator>& config,
@@ -68,12 +68,9 @@ bool UpdateEngine::GetUpdateState(const std::string& id,
   DCHECK(thread_checker_.CalledOnValidThread());
   for (const auto* context : update_contexts_) {
     const auto& update_items = context->update_items;
-    const auto it = std::find_if(update_items.begin(), update_items.end(),
-                                 [id](const CrxUpdateItem* update_item) {
-                                   return id == update_item->id;
-                                 });
+    const auto it = update_items.find(id);
     if (it != update_items.end()) {
-      *update_item = **it;
+      *update_item = *it->second.get();
       return true;
     }
   }
@@ -84,12 +81,12 @@ void UpdateEngine::Update(
     bool is_foreground,
     const std::vector<std::string>& ids,
     const UpdateClient::CrxDataCallback& crx_data_callback,
-    const CompletionCallback& callback) {
+    const Callback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (IsThrottled(is_foreground)) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, Error::ERROR_UPDATE_RETRY_LATER));
+        FROM_HERE, base::Bind(callback, Error::RETRY_LATER));
     return;
   }
 
@@ -98,12 +95,11 @@ void UpdateEngine::Update(
       notify_observers_callback_, callback, update_checker_factory_,
       crx_downloader_factory_, ping_manager_));
 
-  CrxUpdateItem update_item;
   std::unique_ptr<ActionUpdateCheck> update_check_action(new ActionUpdateCheck(
       (*update_context->update_checker_factory)(config_, metadata_.get()),
       config_->GetBrowserVersion(), config_->ExtraRequestParams()));
 
-  update_context->current_action.reset(update_check_action.release());
+  update_context->current_action = std::move(update_check_action);
   update_contexts_.insert(update_context.get());
 
   update_context->current_action->Run(
@@ -114,11 +110,11 @@ void UpdateEngine::Update(
   ignore_result(update_context.release());
 }
 
-void UpdateEngine::UpdateComplete(UpdateContext* update_context, int error) {
+void UpdateEngine::UpdateComplete(UpdateContext* update_context, Error error) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(update_contexts_.find(update_context) != update_contexts_.end());
 
-  const int throttle_sec(update_context->retry_after_sec_);
+  const int throttle_sec(update_context->retry_after_sec);
   DCHECK_LE(throttle_sec, 24 * 60 * 60);
 
   // Only positive values for throttle_sec are effective. 0 means that no
@@ -127,8 +123,9 @@ void UpdateEngine::UpdateComplete(UpdateContext* update_context, int error) {
   if (throttle_sec >= 0)
     throttle_updates_until_ =
         throttle_sec
-            ? base::Time::Now() + base::TimeDelta::FromSeconds(throttle_sec)
-            : base::Time();
+            ? base::TimeTicks::Now() +
+                  base::TimeDelta::FromSeconds(throttle_sec)
+            : base::TimeTicks();
 
   auto callback = update_context->callback;
 
@@ -142,7 +139,7 @@ bool UpdateEngine::IsThrottled(bool is_foreground) const {
   if (is_foreground || throttle_updates_until_.is_null())
     return false;
 
-  const auto now(base::Time::Now());
+  const auto now(base::TimeTicks::Now());
 
   // Throttle the calls in the interval (t - 1 day, t) to limit the effect of
   // unset clocks or clock drift.

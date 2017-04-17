@@ -39,7 +39,7 @@ PolicyConverter::PolicyConverter(const Schema* policy_schema)
 
 PolicyConverter::~PolicyConverter() {
   Java_PolicyConverter_onNativeDestroyed(base::android::AttachCurrentThread(),
-                                         java_obj_.obj());
+                                         java_obj_);
 }
 
 std::unique_ptr<PolicyBundle> PolicyConverter::GetPolicyBundle() {
@@ -56,27 +56,25 @@ void PolicyConverter::SetPolicyBoolean(JNIEnv* env,
                                        const JavaRef<jobject>& obj,
                                        const JavaRef<jstring>& policyKey,
                                        jboolean value) {
-  SetPolicyValue(
-      ConvertJavaStringToUTF8(env, policyKey),
-      base::WrapUnique(new base::FundamentalValue(static_cast<bool>(value))));
+  SetPolicyValue(ConvertJavaStringToUTF8(env, policyKey),
+                 base::MakeUnique<base::Value>(static_cast<bool>(value)));
 }
 
 void PolicyConverter::SetPolicyInteger(JNIEnv* env,
                                        const JavaRef<jobject>& obj,
                                        const JavaRef<jstring>& policyKey,
                                        jint value) {
-  SetPolicyValue(
-      ConvertJavaStringToUTF8(env, policyKey),
-      base::WrapUnique(new base::FundamentalValue(static_cast<int>(value))));
+  SetPolicyValue(ConvertJavaStringToUTF8(env, policyKey),
+                 base::MakeUnique<base::Value>(static_cast<int>(value)));
 }
 
 void PolicyConverter::SetPolicyString(JNIEnv* env,
                                       const JavaRef<jobject>& obj,
                                       const JavaRef<jstring>& policyKey,
                                       const JavaRef<jstring>& value) {
-  SetPolicyValue(ConvertJavaStringToUTF8(env, policyKey),
-                 base::WrapUnique(new base::StringValue(
-                     ConvertJavaStringToUTF8(env, value))));
+  SetPolicyValue(
+      ConvertJavaStringToUTF8(env, policyKey),
+      base::MakeUnique<base::Value>(ConvertJavaStringToUTF8(env, value)));
 }
 
 void PolicyConverter::SetPolicyStringArray(JNIEnv* env,
@@ -114,61 +112,61 @@ std::unique_ptr<base::Value> PolicyConverter::ConvertValueToSchema(
     return value;
 
   switch (schema.type()) {
-    case base::Value::TYPE_NULL:
-      return base::Value::CreateNullValue();
+    case base::Value::Type::NONE:
+      return base::MakeUnique<base::Value>();
 
-    case base::Value::TYPE_BOOLEAN: {
+    case base::Value::Type::BOOLEAN: {
       std::string string_value;
       if (value->GetAsString(&string_value)) {
         if (string_value.compare("true") == 0)
-          return base::WrapUnique(new base::FundamentalValue(true));
+          return base::MakeUnique<base::Value>(true);
 
         if (string_value.compare("false") == 0)
-          return base::WrapUnique(new base::FundamentalValue(false));
+          return base::MakeUnique<base::Value>(false);
 
         return value;
       }
       int int_value = 0;
       if (value->GetAsInteger(&int_value))
-        return base::WrapUnique(new base::FundamentalValue(int_value != 0));
+        return base::MakeUnique<base::Value>(int_value != 0);
 
       return value;
     }
 
-    case base::Value::TYPE_INTEGER: {
+    case base::Value::Type::INTEGER: {
       std::string string_value;
       if (value->GetAsString(&string_value)) {
         int int_value = 0;
         if (base::StringToInt(string_value, &int_value))
-          return base::WrapUnique(new base::FundamentalValue(int_value));
+          return base::MakeUnique<base::Value>(int_value);
       }
       return value;
     }
 
-    case base::Value::TYPE_DOUBLE: {
+    case base::Value::Type::DOUBLE: {
       std::string string_value;
       if (value->GetAsString(&string_value)) {
         double double_value = 0;
         if (base::StringToDouble(string_value, &double_value))
-          return base::WrapUnique(new base::FundamentalValue(double_value));
+          return base::MakeUnique<base::Value>(double_value);
       }
       return value;
     }
 
     // String can't be converted from other types.
-    case base::Value::TYPE_STRING: {
+    case base::Value::Type::STRING: {
       return value;
     }
 
     // Binary is not a valid schema type.
-    case base::Value::TYPE_BINARY: {
+    case base::Value::Type::BINARY: {
       NOTREACHED();
       return std::unique_ptr<base::Value>();
     }
 
     // Complex types have to be deserialized from JSON.
-    case base::Value::TYPE_DICTIONARY:
-    case base::Value::TYPE_LIST: {
+    case base::Value::Type::DICTIONARY:
+    case base::Value::Type::LIST: {
       std::string string_value;
       if (value->GetAsString(&string_value)) {
         std::unique_ptr<base::Value> decoded_value =
