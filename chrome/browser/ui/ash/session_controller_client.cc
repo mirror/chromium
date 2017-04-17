@@ -12,6 +12,7 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/login/users/multi_profile_user_controller.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
@@ -22,6 +23,7 @@
 #include "chromeos/dbus/session_manager_client.h"
 #include "components/prefs/pref_service.h"
 #include "components/session_manager/core/session_manager.h"
+#include "content/public/browser/notification_service.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -78,17 +80,20 @@ void DoSwitchUser(const AccountId& account_id) {
 }  // namespace
 
 SessionControllerClient::SessionControllerClient() : binding_(this) {
+  DCHECK(!g_instance);
+  g_instance = this;
+
   SessionManager::Get()->AddObserver(this);
   UserManager::Get()->AddSessionStateObserver(this);
   UserManager::Get()->AddObserver(this);
+
+  registrar_.Add(this, chrome::NOTIFICATION_APP_TERMINATING,
+                 content::NotificationService::AllSources());
 
   ConnectToSessionControllerAndSetClient();
   SendSessionInfoIfChanged();
   // User sessions and their order will be sent via UserSessionStateObserver
   // even for crash-n-restart.
-
-  DCHECK(!g_instance);
-  g_instance = this;
 }
 
 SessionControllerClient::~SessionControllerClient() {
@@ -254,6 +259,14 @@ void SessionControllerClient::FlushForTesting() {
 
 void SessionControllerClient::OnSessionStateChanged() {
   SendSessionInfoIfChanged();
+}
+
+void SessionControllerClient::Observe(
+    int type,
+    const content::NotificationSource& source,
+    const content::NotificationDetails& details) {
+  DCHECK_EQ(chrome::NOTIFICATION_APP_TERMINATING, type);
+  session_controller_->NotifyAppTerminating();
 }
 
 void SessionControllerClient::ConnectToSessionControllerAndSetClient() {
