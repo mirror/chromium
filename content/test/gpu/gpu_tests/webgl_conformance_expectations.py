@@ -8,9 +8,10 @@ from gpu_tests.gpu_test_expectations import GpuTestExpectations
 # See the GpuTestExpectations class for documentation.
 
 class WebGLConformanceExpectations(GpuTestExpectations):
-  def __init__(self, conformance_path):
+  def __init__(self, conformance_path, url_prefixes=None, is_asan=False):
     self.conformance_path = conformance_path
-    super(WebGLConformanceExpectations, self).__init__()
+    super(WebGLConformanceExpectations, self).__init__(
+      url_prefixes=url_prefixes, is_asan=is_asan)
 
   def Fail(self, pattern, condition=None, bug=None):
     self.CheckPatternIsValid(pattern)
@@ -27,7 +28,7 @@ class WebGLConformanceExpectations(GpuTestExpectations):
 
   def CheckPatternIsValid(self, pattern):
     # Look for basic wildcards.
-    if not '*' in pattern and not 'WebglExtension.' in pattern:
+    if not '*' in pattern and not 'WebglExtension_' in pattern:
       full_path = os.path.normpath(os.path.join(self.conformance_path, pattern))
       if not os.path.exists(full_path):
         raise Exception('The WebGL conformance test path specified in ' +
@@ -40,537 +41,225 @@ class WebGLConformanceExpectations(GpuTestExpectations):
     # It's expected that not all extensions will be available on all platforms.
     # Having a test listed here is not necessarily a problem.
 
-    self.Fail('WebglExtension.EXT_color_buffer_float',
+    self.Fail('WebglExtension_EXT_color_buffer_float',
         ['win', 'mac'])
-    self.Fail('WebglExtension.WEBGL_compressed_texture_astc',
+    # Skip these, rather than expect them to fail, to speed up test
+    # execution. The browser is restarted even after expected test
+    # failures.
+    self.Skip('WebglExtension_WEBGL_compressed_texture_astc',
         ['win', 'mac', 'linux'])
-    self.Fail('WebglExtension.WEBGL_compressed_texture_atc',
+    self.Skip('WebglExtension_WEBGL_compressed_texture_atc',
         ['win', 'mac', 'linux'])
-    self.Fail('WebglExtension.WEBGL_compressed_texture_etc1',
-        ['mac', 'linux'])
-    self.Fail('WebglExtension.WEBGL_compressed_texture_pvrtc',
+    self.Skip('WebglExtension_WEBGL_compressed_texture_etc1',
         ['win', 'mac', 'linux'])
+    self.Skip('WebglExtension_WEBGL_compressed_texture_pvrtc',
+        ['win', 'mac', 'linux'])
+    self.Skip('WebglExtension_WEBGL_compressed_texture_s3tc_srgb',
+        ['win', 'mac', 'linux', 'android'])
 
     # Extensions not available under D3D9
-    self.Fail('WebglExtension.EXT_disjoint_timer_query',
+    self.Fail('WebglExtension_EXT_disjoint_timer_query',
         ['win', 'd3d9'])
-    self.Fail('WebglExtension.EXT_sRGB',
-        ['win', 'd3d9'])
-    self.Fail('WebglExtension.WEBGL_compressed_texture_etc1',
+    self.Fail('WebglExtension_EXT_sRGB',
         ['win', 'd3d9'])
 
-    self.Fail('WebglExtension.WEBGL_depth_texture',
+    self.Fail('WebglExtension_WEBGL_depth_texture',
         ['win', 'amd', 'd3d9'])
 
-    self.Fail('WebglExtension.WEBGL_draw_buffers',
-        ['win', 'd3d9'])
+    self.Fail('WebglExtension_WEBGL_draw_buffers',
+        ['win', 'd3d9', 'no_passthrough'])
 
     # Android general
-    self.Fail('WebglExtension.EXT_disjoint_timer_query',
+    self.Fail('WebglExtension_EXT_disjoint_timer_query',
         ['android'])
-    self.Fail('WebglExtension.EXT_frag_depth',
+    self.Fail('WebglExtension_EXT_frag_depth',
         ['android'])
-    self.Fail('WebglExtension.EXT_shader_texture_lod',
+    self.Fail('WebglExtension_EXT_shader_texture_lod',
         ['android'])
-    self.Fail('WebglExtension.WEBGL_compressed_texture_astc',
+    self.Fail('WebglExtension_WEBGL_compressed_texture_astc',
         ['android'])
-    self.Fail('WebglExtension.WEBGL_compressed_texture_pvrtc',
+    self.Fail('WebglExtension_WEBGL_compressed_texture_pvrtc',
         ['android'])
-    self.Fail('WebglExtension.WEBGL_compressed_texture_s3tc',
+    self.Fail('WebglExtension_WEBGL_compressed_texture_s3tc',
         ['android'])
-    self.Fail('WebglExtension.WEBGL_depth_texture',
+    self.Fail('WebglExtension_WEBGL_depth_texture',
         ['android'])
-    self.Fail('WebglExtension.WEBGL_draw_buffers',
-        ['android'])
-
-    # Nexus 5
-    self.Fail('WebglExtension.OES_texture_float_linear',
-              ['android', ('qualcomm', 'Adreno (TM) 330')])
-    self.Fail('conformance/extensions/angle-instanced-arrays.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
-    self.Fail('conformance/extensions/ext-texture-filter-anisotropic.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
-    self.Fail('conformance/extensions/oes-texture-half-float.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
-    self.Fail('conformance/extensions/oes-texture-half-float-with-canvas.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
-    self.Fail('conformance/extensions/webgl-compressed-texture-atc.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
-    self.Fail('conformance/glsl/bugs/' +
-              'array-of-struct-with-int-first-position.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
-    self.Fail('conformance/glsl/bugs/gl-fragcoord-multisampling-bug.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
-    self.Fail('conformance/glsl/bugs/sampler-struct-function-arg.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
-    self.Fail('conformance/glsl/matrices/glsl-mat4-to-mat3.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
-    self.Fail('conformance/glsl/misc/shader-struct-scope.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
-    self.Fail('conformance/glsl/misc/' +
-              'shader-with-vec4-vec3-vec4-conditional.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
-    self.Fail('conformance/glsl/misc/shaders-with-invariance.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
-    self.Fail('conformance/glsl/misc/struct-equals.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
-    self.Fail('conformance/state/state-uneffected-after-compositing.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
-
-    # Nexus 5X
-    self.Fail('conformance/extensions/oes-texture-float-with-image-data.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=609883)
-    self.Fail('conformance/extensions/oes-texture-float-with-image.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=609883)
-    self.Fail('conformance/extensions/oes-texture-half-float-with-canvas.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=609883)
-    self.Fail('conformance/extensions/' +
-              'oes-texture-half-float-with-image-data.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=609883)
-    self.Fail('conformance/extensions/oes-texture-half-float-with-image.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=609883)
-    self.Fail('conformance/extensions/oes-texture-half-float-with-video.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=609883)
-    self.Fail('conformance/extensions/webgl-compressed-texture-atc.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=609883)
-    self.Fail('conformance/glsl/bugs/sampler-struct-function-arg.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=609883)
-    # This test is skipped because it is crashing the GPU process.
-    self.Skip('conformance/glsl/misc/shader-with-non-reserved-words.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=609883)
-    self.Fail('WebglExtension.EXT_sRGB',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/misc/' +
-              'tex-image-and-sub-image-2d-with-array-buffer-view.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/canvas/*',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image/tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_data/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_data/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_data/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_data/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_data/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/svg_image/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/svg_image/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/svg_image/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/svg_image/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/svg_image/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/video/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', 'android-content-shell', 'android-chromium',
-               ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/video/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', 'android-content-shell', 'android-chromium',
-               ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/video/tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', 'android-content-shell', 'android-chromium',
-               ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/video/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', 'android-content-shell', 'android-chromium',
-               ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/video/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', 'android-content-shell', 'android-chromium',
-               ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/webgl_canvas/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/webgl_canvas/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/webgl_canvas/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/webgl_canvas/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/webgl_canvas/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image_data/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image_data/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image_data/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image_data/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image_data/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_canvas/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_canvas/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_canvas/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_canvas/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_canvas/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_blob/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_blob/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_blob/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_blob/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_blob/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-    self.Fail('conformance/uniforms/uniform-samplers-test.html',
-              ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
-
-    # Nexus 6 (Adreno 420) and 6P (Adreno 430)
-    self.Fail('WebglExtension.EXT_sRGB',
-              ['android',
-               ('qualcomm', 'Adreno (TM) 420'),
-               ('qualcomm', 'Adreno (TM) 430')])
-    self.Fail('conformance/context/context-size-change.html',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=611945)
-    self.Fail('conformance/extensions/oes-texture-half-float.html',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=611945)
-    self.Fail('conformance/extensions/oes-texture-half-float-with-canvas.html',
-              ['android',
-               ('qualcomm', 'Adreno (TM) 420'),
-               ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/extensions/' +
-              'oes-texture-half-float-with-image-data.html',
-              ['android',
-               ('qualcomm', 'Adreno (TM) 420'),
-               ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/extensions/oes-texture-half-float-with-image.html',
-              ['android',
-               ('qualcomm', 'Adreno (TM) 420'),
-               ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/extensions/oes-texture-half-float-with-video.html',
-              ['android',
-               ('qualcomm', 'Adreno (TM) 420'),
-               ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/extensions/webgl-compressed-texture-atc.html',
-              ['android',
-               ('qualcomm', 'Adreno (TM) 420'),
-               ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/glsl/bugs/gl-fragcoord-multisampling-bug.html',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=611945)
-    self.Fail('conformance/glsl/bugs/qualcomm-crash.html',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=611945)
-    self.Fail('conformance/glsl/bugs/sampler-struct-function-arg.html',
-              ['android',
-               ('qualcomm', 'Adreno (TM) 420'),
-               ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    # This test is skipped because running it causes a future test to fail.
-    # The list of tests which may be that future test is very long. It is
-    # almost (but not quite) every webgl conformance test.
-    self.Skip('conformance/glsl/misc/shader-struct-scope.html',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=614550)
-    self.Fail('conformance/glsl/misc/shaders-with-invariance.html',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=611945)
-    self.Fail('conformance/rendering/gl-viewport-test.html',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=611945)
-    self.Fail('conformance/textures/image/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_data/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_data/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_data/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_data/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_data/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/svg_image/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android',
-              ('qualcomm', 'Adreno (TM) 420'),
-              ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/svg_image/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android',
-              ('qualcomm', 'Adreno (TM) 420'),
-              ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/svg_image/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android',
-              ('qualcomm', 'Adreno (TM) 420'),
-              ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/svg_image/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android',
-              ('qualcomm', 'Adreno (TM) 420'),
-              ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/svg_image/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android',
-              ('qualcomm', 'Adreno (TM) 420'),
-              ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    # The following tests mentions android-content-shell and android-chrome,
-    # but not webview.
-    # This is because webview already has this expectation below
-    self.Fail('conformance/textures/video/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', 'android-content-shell', 'android-chromium',
-              ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/video/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', 'android-content-shell', 'android-chromium',
-              ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/video/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', 'android-content-shell', 'android-chromium',
-              ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/video/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', 'android-content-shell', 'android-chromium',
-              ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/video/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', 'android-content-shell', 'android-chromium',
-              ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/webgl_canvas/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/webgl_canvas/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/webgl_canvas/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/webgl_canvas/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/webgl_canvas/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image_data/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image_data/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image_data/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image_data/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image_data/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_canvas/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_canvas/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_canvas/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_canvas/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_canvas/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_blob/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_blob/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_blob/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_blob/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_blob/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/' +
-              'tex-2d-rgb-rgb-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/' +
-              'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/' +
-              'tex-2d-rgba-rgba-unsigned_byte.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/' +
-              'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/' +
-              'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-              ['android', ('qualcomm', 'Adreno (TM) 430')], bug=611945)
-    self.Fail('conformance/glsl/misc/shader-with-_webgl-identifier.vert.html',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=611945)
-
-    # Nexus 9
-    self.Fail('WebglExtension.WEBGL_compressed_texture_atc',
-              ['android', ('nvidia', 'NVIDIA Tegra')])
-
-    # Pixel C
-    self.Flaky('conformance/textures/video/' +
-               'tex-2d-rgb-rgb-unsigned_byte.html',
-               ['android', 'android-chromium',
-                ('nvidia', 'NVIDIA Tegra')], bug=624621)
-    self.Flaky('conformance/textures/video/' +
-               'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-               ['android', 'android-chromium',
-                ('nvidia', 'NVIDIA Tegra')], bug=624621)
-    self.Flaky('conformance/textures/video/tex-2d-rgba-rgba-unsigned_byte.html',
-               ['android', 'android-chromium',
-                ('nvidia', 'NVIDIA Tegra')], bug=624621)
-    self.Flaky('conformance/textures/video/' +
-               'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-               ['android', 'android-chromium',
-                ('nvidia', 'NVIDIA Tegra')], bug=624621)
-    self.Flaky('conformance/textures/video/' +
-               'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-               ['android', 'android-chromium',
-                ('nvidia', 'NVIDIA Tegra')], bug=624621)
-    self.Fail('conformance/glsl/bugs/constant-precision-qualifier.html',
-              ['android', 'android-chromium',
-               ('nvidia', 'NVIDIA Tegra')], bug=624621)
+    self.Fail('WebglExtension_WEBGL_draw_buffers',
+        ['android', 'no_passthrough'])
 
     # ========================
     # Conformance expectations
     # ========================
     # Fails on all platforms
 
+    # Need to add detection of feedback loops with multiple render targets.
+    self.Fail('conformance/extensions/webgl-draw-buffers-feedback-loop.html',
+        bug=1619) # angle bug ID
+
     # We need to add WebGL 1 check in command buffer that format/type from
     # TexSubImage2D have to match the current texture's.
     self.Fail('conformance/textures/misc/tex-sub-image-2d-bad-args.html',
-        bug=570453)
+        bug=625738)
 
+    # canvas.commit() promise synchronization isn't fully reliable yet.
+    self.Fail('conformance/offscreencanvas/offscreencanvas-resize.html',
+              bug=709484)
+
+    # Passthrough command decoder
+    self.Fail('conformance/extensions/ext-sRGB.html',
+        ['passthrough'], bug=679696)
+    self.Fail('conformance/extensions/oes-standard-derivatives.html',
+        ['passthrough'], bug=665521)
+    self.Fail('conformance/extensions/ext-disjoint-timer-query.html',
+        ['passthrough'], bug=1523) # angle bug ID
+    self.Fail('conformance/extensions/ext-frag-depth.html',
+        ['passthrough'], bug=1523) # angle bug ID
+    self.Fail('conformance/extensions/ext-shader-texture-lod.html',
+        ['passthrough'], bug=1523) # angle bug ID
+    self.Fail('conformance/extensions/get-extension.html',
+        ['passthrough'], bug=682745)
+    self.Fail('conformance/extensions/oes-texture-float.html',
+        ['passthrough'], bug=1523) # angle bug ID
+    self.Fail('conformance/extensions/oes-texture-float-linear.html',
+        ['passthrough'], bug=1523) # angle bug ID
+    self.Fail('conformance/extensions/oes-texture-half-float.html',
+        ['passthrough'], bug=1523) # angle bug ID
+    self.Fail('conformance/extensions/oes-texture-half-float-linear.html',
+        ['passthrough'], bug=1523) # angle bug ID
+    self.Fail('conformance/extensions/webgl-compressed-texture-s3tc.html',
+        ['passthrough'], bug=1523) # angle bug ID
+    self.Fail('conformance/extensions/webgl-depth-texture.html',
+        ['passthrough'], bug=1523) # angle bug ID
     self.Fail('conformance/extensions/webgl-draw-buffers.html',
-        bug=625365)
-    # self.Fail('conformance/extensions/webgl-draw-buffers.html',
-    #     ['win', 'intel', 'opengl'], bug=1007) # angle bug ID
-    # self.Fail('conformance/extensions/webgl-draw-buffers.html',
-    #     ['mavericks', ('nvidia', 0xfe9)], bug=586536)
-    # self.Fail('conformance/extensions/webgl-draw-buffers.html',
-    #     ['linux', ('intel', 0x412), 'opengl'], bug=586536)
+        ['passthrough'], bug=1523) # angle bug ID
+    self.Fail('conformance/extensions/' +
+        'webgl-draw-buffers-framebuffer-unsupported.html',
+        ['passthrough'], bug=682745)
+    self.Fail('conformance/extensions/' +
+        'webgl-draw-buffers-max-draw-buffers.html',
+        ['passthrough'], bug=1523) # angle bug ID
+    self.Fail('conformance/canvas/framebuffer-bindings-unaffected-on-' +
+        'resize.html', ['passthrough'], bug=665521)
+    self.Fail('conformance/glsl/misc/shader-with-dfdx.frag.html',
+        ['passthrough'], bug=1639) # angle bug ID
+    self.Fail('conformance/glsl/misc/shaders-with-name-conflicts.html',
+        ['passthrough'], bug=1639) # angle bug ID
+    self.Fail('conformance/misc/invalid-passed-params.html',
+        ['passthrough'], bug=1639) # angle bug ID
+    self.Fail('conformance/misc/object-deletion-behaviour.html',
+        ['passthrough'], bug=1639) # angle bug ID
+    self.Fail('conformance/misc/uninitialized-test.html',
+        ['passthrough'], bug=1635) # angle bug ID
+    self.Fail('conformance/reading/read-pixels-test.html',
+        ['passthrough'], bug=1639) # angle bug ID
+    self.Fail('conformance/renderbuffers/renderbuffer-initialization.html',
+        ['passthrough'], bug=1635) # angle bug ID
+    self.Fail('conformance/textures/misc/texture-mips.html',
+        ['passthrough'], bug=665518)
+    self.Fail('WebglExtension_OES_texture_float_linear',
+        ['passthrough'], bug=1523) # angle bug ID
+    self.Fail('WebglExtension_OES_element_index_uint',
+        ['passthrough'], bug=671217) # angle bug ID
+    self.Fail('WebglExtension_OES_texture_half_float_linear',
+        ['passthrough'], bug=1523) # angle bug ID
+    self.Fail('WebglExtension_WEBGL_draw_buffers',
+        ['passthrough'], bug=1523) # angle bug ID
+    self.Skip('conformance/textures/canvas/*',
+        ['passthrough'], bug=1932) # angle bug ID
+    self.Skip('conformance/textures/video/*',
+        ['passthrough'], bug=1932) # angle bug ID
+    self.Skip('conformance/textures/image_bitmap_from_canvas/*',
+        ['passthrough'], bug=1932) # angle bug ID
+    self.Skip('conformance/textures/webgl_canvas/*',
+        ['passthrough'], bug=1932) # angle bug ID
+    self.Skip('conformance/extensions/oes-texture-half-float-with-canvas.html',
+        ['passthrough'], bug=1932) # angle bug ID
+    self.Skip('conformance/extensions/oes-texture-float-with-canvas.html',
+        ['passthrough'], bug=1932) # angle bug ID
+    self.Skip('conformance/extensions/oes-texture-half-float-with-video.html',
+        ['passthrough'], bug=1932) # angle bug ID
+    self.Skip('conformance/extensions/oes-texture-float-with-video.html',
+        ['passthrough'], bug=1932) # angle bug ID
 
-    # OpenGL / NVIDIA failures
-    self.Fail('conformance/attribs/gl-disabled-vertex-attrib.html',
-        ['win', 'linux', 'nvidia', 'opengl'], bug=1007) # angle bug ID
+    # Passthrough command decoder / OpenGL
+    self.Fail('conformance/buffers/buffer-uninitialized.html',
+        ['passthrough', 'opengl'], bug=665521)
+    self.Fail('conformance/glsl/misc/shader-with-non-reserved-words.html',
+        ['passthrough', 'opengl'], bug=665521)
+    self.Fail('conformance/renderbuffers/framebuffer-test.html',
+        ['passthrough', 'opengl'], bug=665521)
+    self.Fail('conformance/textures/misc/copy-tex-image-and-sub-image-2d.html',
+        ['passthrough', 'opengl'], bug=665521)
+    self.Fail('conformance/textures/misc/copytexsubimage2d-subrects.html',
+        ['passthrough', 'opengl'], bug=665521)
+    self.Fail('conformance/textures/misc/copytexsubimage2d-large-partial-' +
+        'copy-corruption.html', ['passthrough', 'opengl'], bug=665521)
+    self.Fail('conformance/textures/misc/gl-teximage.html',
+        ['passthrough', 'opengl'], bug=665521)
+    self.Fail('conformance/textures/misc/texture-npot-video.html',
+        ['passthrough', 'opengl'], bug=665521)
+    self.Fail('conformance/textures/misc/texture-npot.html',
+        ['passthrough', 'opengl'], bug=665521)
+    self.Fail('conformance/textures/misc/texture-fakeblack.html',
+        ['passthrough', 'opengl'], bug=665521)
+
+    # Passthrough command decoder / OpenGL / Intel
+    self.Fail('conformance/renderbuffers/framebuffer-object-attachment.html',
+        ['passthrough', 'opengl', 'intel'], bug=665521)
+    self.Fail('conformance/textures/misc/texture-attachment-formats.html',
+        ['passthrough', 'opengl', 'intel'], bug=665521)
+
+    # Passthrough command decoder / OpenGL / AMD
+    self.Fail('conformance/glsl/constructors/glsl-construct-mat2.html',
+        ['passthrough', 'opengl', 'amd'], bug=665521)
+    self.Fail('conformance/glsl/constructors/' +
+        'glsl-construct-vec-mat-corner-cases.html',
+        ['passthrough', 'opengl', 'amd'], bug=665521)
+    self.Fail('conformance/glsl/constructors/' +
+        'glsl-construct-vec-mat-index.html',
+        ['passthrough', 'opengl', 'amd', 'linux'], bug=665521)
+    self.Fail('conformance/glsl/misc/shader-struct-scope.html',
+        ['passthrough', 'opengl', 'amd', 'linux'], bug=665521)
+    self.Skip('conformance/glsl/misc/shaders-with-invariance.html',
+        ['passthrough', 'opengl', 'amd', 'linux'], bug=1007) # angle bug ID
+    self.Fail('conformance/glsl/misc/struct-nesting-of-variable-names.html',
+        ['passthrough', 'opengl', 'amd', 'linux'], bug=665521)
+    self.Fail('conformance/renderbuffers/framebuffer-state-restoration.html',
+        ['passthrough', 'opengl', 'amd'], bug=665521)
+    self.Fail('conformance/uniforms/out-of-bounds-uniform-array-access.html',
+        ['passthrough', 'opengl', 'amd'], bug=665521)
+    self.Fail('conformance/renderbuffers/framebuffer-object-attachment.html',
+        ['passthrough', 'opengl', 'amd'], bug=665521)
+    self.Fail('conformance/textures/misc/texture-attachment-formats.html',
+        ['passthrough', 'opengl', 'amd'], bug=665521)
+
+    # Passthrough command decoder / D3D11
+    self.Fail('conformance/extensions/oes-element-index-uint.html',
+        ['passthrough', 'd3d11'], bug=1523) # angle bug ID
+    self.Fail('conformance/extensions/webgl-debug-shaders.html',
+        ['passthrough', 'd3d11'], bug=1523) # angle bug ID
+    self.Fail('conformance/glsl/misc/shaders-with-uniform-structs.html',
+        ['passthrough', 'd3d11'], bug=1639) # angle bug ID
+    self.Fail('conformance/glsl/variables/glsl-built-ins.html',
+        ['passthrough', 'd3d11'], bug=1639) # angle bug ID
+    self.Fail('conformance/renderbuffers/framebuffer-object-attachment.html',
+        ['passthrough', 'd3d11'], bug=602688)
+    self.Fail('conformance/rendering/draw-elements-out-of-bounds.html',
+        ['passthrough', 'd3d11'], bug=1639) # angle bug ID
+    self.Fail('conformance/textures/misc/copy-tex-image-and-sub-image-2d.html',
+        ['passthrough', 'd3d11'], bug=1639) # angle bug ID
+    self.Fail('conformance/textures/misc/texture-attachment-formats.html',
+        ['passthrough', 'd3d11'], bug=602688)
+    self.Fail('conformance/textures/misc/texture-copying-feedback-loops.html',
+        ['passthrough', 'd3d11'], bug=1639) # angle bug ID
+    self.Fail('conformance/uniforms/uniform-samplers-test.html',
+        ['passthrough', 'd3d11'], bug=1639) # angle bug ID
+
+    # Win / AMD / Passthrough command decoder / D3D11
+    self.Flaky('conformance/textures/misc/copytexsubimage2d-subrects.html',
+        ['win', 'amd', 'passthrough', 'd3d11'], bug=685232)
 
     # Win failures
-    self.Fail('conformance/extensions/oes-texture-half-float.html',
-        ['win'], bug=607283)
-    # Note that the following two tests pass with OpenGL.
-    self.Fail('conformance/glsl/bugs/' +
-              'pow-of-small-constant-in-user-defined-function.html',
-        ['win'], bug=485641)
     # Note that the following test seems to pass, but it may still be flaky.
     self.Fail('conformance/glsl/constructors/' +
               'glsl-construct-vec-mat-index.html',
@@ -582,14 +271,29 @@ class WebGLConformanceExpectations(GpuTestExpectations):
 
     # Win NVIDIA failures
     self.Flaky('conformance/textures/misc/texture-npot-video.html',
-        ['win', 'nvidia'], bug=626524)
+        ['win', 'nvidia', 'no_passthrough'], bug=626524)
     self.Flaky('conformance/textures/misc/texture-upload-size.html',
         ['win', 'nvidia'], bug=630860)
+    self.Fail('conformance/extensions/ext-sRGB.html',
+        ['win', 'nvidia', 'no_passthrough'], bug=679696)
+
+    # Win10 / NVIDIA Quadro P400 / D3D9 failures
+    self.Fail('conformance/canvas/drawingbuffer-static-canvas-test.html',
+        ['win10', ('nvidia', 0x1cb3), 'd3d9'], bug=680754)
+    self.Fail('conformance/canvas/' +
+        'framebuffer-bindings-affected-by-to-data-url.html',
+        ['win10', ('nvidia', 0x1cb3), 'd3d9'], bug=680754)
+    self.Fail('conformance/ogles/GL/cos/cos_001_to_006.html',
+        ['win10', ('nvidia', 0x1cb3), 'd3d9'], bug=680754)
 
     # Win7 / Intel failures
     self.Fail('conformance/textures/misc/' +
               'copy-tex-image-and-sub-image-2d.html',
-              ['win7', 'intel'])
+              ['win7', 'intel', 'no_passthrough'])
+
+    # Win7 / NVIDIA D3D9 failures
+    self.Flaky('conformance/canvas/canvas-test.html',
+        ['win7', 'nvidia', 'd3d9'], bug=690248)
 
     # Win / AMD flakiness seen on new tryservers.
     # It's unfortunate that this suppression needs to be so broad, but
@@ -598,6 +302,11 @@ class WebGLConformanceExpectations(GpuTestExpectations):
     self.Flaky('conformance/*', ['win', ('amd', 0x6779)], bug=491419)
 
     # Win AMD failures
+    # This test is probably flaky on all AMD, but only visible on the
+    # new AMD (the whole test suite is flaky on the old config).
+    # Mark as Fail since it often flakes in all 3 retries
+    self.Fail('conformance/extensions/oes-texture-half-float.html',
+              ['win', 'no_passthrough', ('amd', 0x6613)], bug=653533)
 
     # Win / AMD D3D9 failures
     self.Fail('conformance/extensions/angle-instanced-arrays.html',
@@ -608,9 +317,9 @@ class WebGLConformanceExpectations(GpuTestExpectations):
     # Win / D3D9 failures
     # Skipping these two tests because they're causing assertion failures.
     self.Skip('conformance/extensions/oes-texture-float-with-canvas.html',
-        ['win', 'd3d9'], bug=896) # angle bug ID
+        ['win', 'd3d9', 'no_passthrough'], bug=896) # angle bug ID
     self.Skip('conformance/extensions/oes-texture-half-float-with-canvas.html',
-        ['win', 'd3d9'], bug=896) # angle bug ID
+        ['win', 'd3d9', 'no_passthrough'], bug=896) # angle bug ID
     self.Fail('conformance/glsl/bugs/floor-div-cos-should-not-truncate.html',
         ['win', 'd3d9'], bug=1179) # angle bug ID
     # The functions test have been persistently flaky on D3D9
@@ -620,22 +329,44 @@ class WebGLConformanceExpectations(GpuTestExpectations):
         ['win', 'd3d9'], bug=617148)
     self.Flaky('conformance/glsl/matrices/glsl-mat3-construction.html',
         ['win', 'd3d9'], bug=617148)
+    self.Skip('conformance/glsl/misc/large-loop-compile.html',
+        ['win', 'd3d9'], bug=674572)
 
     # WIN / D3D9 / Intel failures
     self.Fail('conformance/ogles/GL/cos/cos_001_to_006.html',
         ['win', 'intel', 'd3d9'], bug=540538)
 
     # WIN / OpenGL / NVIDIA failures
+    self.Fail('conformance/textures/misc/texture-size.html',
+        ['win10', ('nvidia', 0x1cb3), 'opengl'], bug=703779)
+    self.Fail('conformance/extensions/webgl-compressed-texture-size-limit.html',
+        ['win10', ('nvidia', 0x1cb3), 'opengl'], bug=703779)
+    self.Fail('conformance/textures/misc/texture-size-limit.html',
+        ['win10', ('nvidia', 0x1cb3), 'opengl'], bug=703779)
+
     # Mark ANGLE's OpenGL as flaky on Windows Nvidia
     self.Flaky('conformance/*', ['win', 'nvidia', 'opengl'], bug=582083)
 
     # Win / OpenGL / AMD failures
+    self.Skip('conformance/attribs/gl-bindAttribLocation-aliasing.html',
+        ['win', 'amd', 'opengl'], bug=649824)
+    self.Flaky('conformance/attribs/gl-bindAttribLocation-matrix.html',
+        ['win', ('amd', 0x6779), 'opengl'], bug=649824)
+    self.Flaky('conformance/attribs/gl-bindAttribLocation-repeated.html',
+        ['win', ('amd', 0x6779), 'opengl'], bug=649824)
+    self.Fail('conformance/extensions/webgl-draw-buffers.html',
+        ['win', ('amd', 0x6779), 'opengl', 'no_passthrough'], bug=649824)
     self.Skip('conformance/glsl/misc/shader-struct-scope.html',
         ['win', 'amd', 'opengl'], bug=1007) # angle bug ID
     self.Skip('conformance/glsl/misc/shaders-with-invariance.html',
-        ['win', 'amd', 'opengl'], bug=1007) # angle bug ID
+        ['win', 'amd', 'opengl', 'no_passthrough'], bug=1007) # angle bug ID
     self.Fail('conformance/glsl/misc/struct-nesting-of-variable-names.html',
         ['win', 'amd', 'opengl'], bug=1007) # angle bug ID
+    self.Fail('conformance/rendering/clipping-wide-points.html',
+        ['win', 'amd', 'opengl'], bug=1506) # angle bug ID
+
+    # Mark ANGLE's OpenGL as flaky on Windows Amd
+    self.Flaky('conformance/*', ['win', 'amd', 'opengl'], bug=582083)
 
     # Win / OpenGL / Intel failures
     self.Fail('conformance/glsl/functions/glsl-function-normalize.html',
@@ -644,64 +375,137 @@ class WebGLConformanceExpectations(GpuTestExpectations):
         ['win', 'intel', 'opengl'], bug=1007) # angle bug ID
     self.Fail('conformance/uniforms/uniform-default-values.html',
         ['win', 'intel', 'opengl'], bug=1007) # angle bug ID
+    self.Fail('conformance/glsl/bugs/sampler-struct-function-arg.html',
+        ['win10', 'intel', 'opengl'], bug=1007) # angle bug ID
+    self.Fail('conformance/glsl/variables/gl-pointcoord.html',
+        ['win10', 'intel', 'opengl'], bug=1007) # angle bug ID
+
+    # Win / OpenGL / Intel HD 530 failures
+    self.Fail('conformance/canvas/draw-webgl-to-canvas-test.html',
+        ['win10', 'intel', 'opengl'], bug=680797)
+    self.Fail('conformance/extensions/angle-instanced-arrays.html',
+        ['win10', 'intel', 'opengl'], bug=680797)
+    self.Fail('conformance/extensions/ext-sRGB.html',
+        ['win10', 'intel', 'opengl', 'no_passthrough'], bug=680797)
+    self.Fail('conformance/extensions/ext-shader-texture-lod.html',
+        ['win10', 'intel', 'opengl', 'no_passthrough'], bug=680797)
+    self.Fail('conformance/extensions/oes-texture-float-with-canvas.html',
+        ['win10', 'intel', 'opengl', 'no_passthrough'], bug=680797)
+    self.Fail('conformance/extensions/oes-texture-half-float.html',
+        ['win10', 'intel', 'opengl', 'no_passthrough'], bug=680797)
+    self.Fail('conformance/extensions/oes-texture-half-float-with-canvas.html',
+        ['win10', 'intel', 'opengl', 'no_passthrough'], bug=680797)
+    self.Fail('conformance/extensions/oes-vertex-array-object.html',
+        ['win10', 'intel', 'opengl'], bug=680797)
+    self.Fail('conformance/glsl/bugs/' +
+        'array-of-struct-with-int-first-position.html',
+        ['win10', 'intel', 'opengl'], bug=680797)
+    self.Fail('conformance/glsl/bugs/constant-precision-qualifier.html',
+        ['win10', 'intel', 'opengl'], bug=680797)
+    self.Fail('conformance/glsl/matrices/matrix-compound-multiply.html',
+        ['win10', 'intel', 'opengl'], bug=680797)
+    self.Fail('conformance/more/conformance/webGLArrays.html',
+        ['win10', 'intel', 'opengl'], bug=680797)
+    self.Fail('conformance/ogles/GL/struct/struct_049_to_056.html',
+        ['win10', 'intel', 'opengl'], bug=680797)
+    self.Fail('conformance/renderbuffers/framebuffer-state-restoration.html',
+        ['win10', 'intel', 'opengl'], bug=680797)
+    self.Fail('conformance/rendering/draw-with-changing-start-vertex-bug.html',
+        ['win10', 'intel', 'opengl'], bug=680797)
+    self.Fail('conformance/textures/image_bitmap_from_canvas/' +
+        'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
+        ['win10', 'intel', 'opengl'], bug=680797)
+    self.Fail('conformance/textures/image_bitmap_from_canvas/' +
+        'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
+        ['win10', 'intel', 'opengl'], bug=680797)
+    self.Fail('conformance/textures/misc/texture-fakeblack.html',
+        ['win10', 'intel', 'opengl', 'no_passthrough'], bug=680797)
+
+    # Win / Intel / Passthrough command decoder
+    self.Flaky('conformance/renderbuffers/framebuffer-state-restoration.html',
+        ['win', 'intel', 'passthrough', 'd3d11'], bug=602688)
+    self.Fail('conformance/textures/misc/' +
+        'copytexsubimage2d-large-partial-copy-corruption.html',
+        ['win', 'intel', 'passthrough', 'd3d11'], bug=602688)
+    self.Fail('conformance/textures/misc/copytexsubimage2d-subrects.html',
+        ['win10', 'intel', 'passthrough', 'd3d11'], bug=685232)
 
     # Mac failures
-    self.Fail('conformance/glsl/misc/shaders-with-invariance.html',
-        ['mac'], bug=421710)
-    self.Fail('deqp/data/gles2/shaders/scoping.html',
-        ['mac'], bug=478572)
-
-    # Mac Retina NVIDIA failures
-    self.Fail(
-        'conformance/glsl/bugs/array-of-struct-with-int-first-position.html',
-        ['mac', ('nvidia', 0xfd5), ('nvidia', 0xfe9)], bug=368912)
-
-    # Mac Retina AMD failures
     self.Flaky('conformance/extensions/oes-texture-float-with-video.html',
-        ['mac', ('amd', 0x6821)], bug=599272)
+        ['mac', 'no_passthrough'], bug=599272)
+
+    # Mac AMD failures
+    self.Fail('conformance/glsl/bugs/bool-type-cast-bug-int-float.html',
+        ['mac', 'amd'], bug=483282)
+    self.Fail('conformance/extensions/webgl-draw-buffers.html',
+        ['mac', 'amd', 'no_passthrough'], bug=625365)
+    self.Fail('conformance/rendering/clipping-wide-points.html',
+        ['mac', 'amd'], bug=642822)
+
+    # Mac Retina NVidia failures
+    self.Fail('conformance/attribs/gl-disabled-vertex-attrib.html',
+        ['mac', ('nvidia', 0xfe9)], bug=635081)
+    self.Fail('conformance/programs/' +
+        'gl-bind-attrib-location-long-names-test.html',
+        ['mac', ('nvidia', 0xfe9)], bug=635081)
+    self.Fail('conformance/programs/gl-bind-attrib-location-test.html',
+        ['mac', ('nvidia', 0xfe9)], bug=635081)
+    self.Fail('conformance/renderbuffers/framebuffer-object-attachment.html',
+        ['mac', ('nvidia', 0xfe9), 'no_passthrough'], bug=635081)
+    self.Fail('conformance/textures/misc/tex-input-validation.html',
+        ['mac', ('nvidia', 0xfe9)], bug=635081)
 
     # Linux failures
     self.Flaky('conformance/textures/video/' +
                'tex-2d-rgba-rgba-unsigned_byte.html',
-               ['linux'], bug=627525)
+               ['linux', 'no_passthrough'], bug=627525)
     self.Flaky('conformance/textures/video/' +
                'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-               ['linux'], bug=627525)
+               ['linux', 'no_passthrough'], bug=627525)
     self.Flaky('conformance/textures/video/' +
                'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-               ['linux'], bug=627525)
+               ['linux', 'no_passthrough'], bug=627525)
     self.Flaky('conformance/textures/video/' +
                'tex-2d-rgb-rgb-unsigned_byte.html',
-               ['linux'], bug=627525)
+               ['linux', 'no_passthrough'], bug=627525)
     self.Flaky('conformance/textures/video/' +
                'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-               ['linux'], bug=627525)
-
-    # OpenGL
-    self.Fail('conformance/extensions/oes-texture-half-float.html',
-        ['linux', 'opengl'], bug=607283)
+               ['linux', 'no_passthrough'], bug=627525)
+    self.Fail('conformance/extensions/webgl-compressed-texture-astc.html',
+        ['linux', 'intel'], bug=680675)
 
     # NVIDIA
-    self.Fail('conformance/extensions/angle-instanced-arrays.html',
-              ['linux', 'nvidia'], bug=544989) # Too flaky to retry
     self.Flaky('conformance/extensions/oes-element-index-uint.html',
-               ['linux', 'nvidia'], bug=524144)
+               ['linux', 'nvidia', 'no_passthrough'], bug=524144)
     self.Flaky('conformance/textures/image/' +
                'tex-2d-rgb-rgb-unsigned_byte.html',
                ['linux', 'nvidia'], bug=596622)
+    self.Fail('conformance/glsl/bugs/unary-minus-operator-float-bug.html',
+        ['linux', 'nvidia'], bug=672380)
+
+    # NVIDIA P400 OpenGL
+    self.Fail('conformance/textures/misc/texture-size.html',
+        ['linux', ('nvidia', 0x1cb3), 'opengl'], bug=703779)
+    self.Fail('conformance/extensions/webgl-compressed-texture-size-limit.html',
+        ['linux', ('nvidia', 0x1cb3), 'opengl'], bug=703779)
+    self.Fail('conformance/textures/misc/texture-size-limit.html',
+        ['linux', ('nvidia', 0x1cb3), 'opengl'], bug=703779)
+
     # AMD
     self.Flaky('conformance/more/functions/uniformi.html',
                ['linux', 'amd'], bug=550989)
+    self.Fail('conformance/rendering/clipping-wide-points.html',
+        ['linux', 'amd'], bug=642822)
 
-    # AMD Radeon 6450
+    # AMD Radeon 6450 and/or R7 240
     self.Fail('conformance/extensions/angle-instanced-arrays.html',
-        ['linux', ('amd', 0x6779)], bug=479260)
+        ['linux', 'amd', 'no_angle'], bug=479260)
     self.Flaky('conformance/extensions/ext-texture-filter-anisotropic.html',
         ['linux', ('amd', 0x6779)], bug=436212)
     self.Flaky('conformance/glsl/misc/shader-struct-scope.html',
-        ['linux', ('amd', 0x6779)], bug=436212)
+        ['linux', ('amd', 0x6779), 'no_passthrough'], bug=436212)
     self.Flaky('conformance/glsl/misc/struct-nesting-of-variable-names.html',
-        ['linux', ('amd', 0x6779)], bug=436212)
+        ['linux', ('amd', 0x6779), 'no_passthrough'], bug=436212)
     self.Flaky('conformance/rendering/point-size.html',
         ['linux', ('amd', 0x6779)], bug=436212)
     self.Flaky('conformance/textures/misc/texture-sub-image-cube-maps.html',
@@ -709,9 +513,9 @@ class WebGLConformanceExpectations(GpuTestExpectations):
     self.Flaky('conformance/more/functions/uniformf.html',
         ['linux', ('amd', 0x6779)], bug=436212)
     self.Fail('conformance/glsl/misc/shaders-with-invariance.html',
-        ['linux', ('amd', 0x6779)], bug=479952)
+        ['linux', 'amd', 'no_passthrough'], bug=479952)
     self.Flaky('conformance/textures/misc/texture-mips.html',
-        ['linux', ('amd', 0x6779)], bug=479981)
+        ['linux', ('amd', 0x6779), 'no_passthrough'], bug=479981)
     self.Flaky('conformance/textures/misc/texture-size-cube-maps.html',
         ['linux', ('amd', 0x6779)], bug=479983)
     self.Flaky('conformance/uniforms/uniform-default-values.html',
@@ -724,45 +528,26 @@ class WebGLConformanceExpectations(GpuTestExpectations):
     # See https://bugs.freedesktop.org/show_bug.cgi?id=94477
     self.Skip('conformance/glsl/bugs/temp-expressions-should-not-crash.html',
         ['linux', 'intel'], bug=540543)  # GPU timeout
-    self.Fail('conformance/glsl/bugs/qualcomm-loop-with-continue-crash.html',
-        ['linux', 'intel'], bug=540543)  # ANGLE bug 1277
-    self.Fail('conformance/glsl/misc/empty_main.vert.html',
-        ['linux', 'intel'], bug=540543)  # ANGLE bug 1277
-    self.Fail('conformance/glsl/misc/gl_position_unset.vert.html',
-        ['linux', 'intel'], bug=540543)  # ANGLE bug 1277
-    self.Fail('conformance/glsl/misc/shaders-with-invariance.html',
-        ['linux', 'intel'], bug=540543)  # ANGLE bug 1276
-    self.Fail('conformance/glsl/misc/shaders-with-varyings.html',
-        ['linux', 'intel'], bug=540543)
-    self.Fail('conformance/extensions/ext-disjoint-timer-query.html',
-        ['linux', 'intel', 'opengl'], bug=1312)  # ANGLE bug id
-    self.Fail('deqp/data/gles2/shaders/linkage.html',
-        ['linux', 'intel'], bug=540543)
-    # The Mesa Intel driver has a scoping bug, see
-    # https://bugs.freedesktop.org/show_bug.cgi?id=95184
-    self.Fail('deqp/data/gles2/shaders/scoping.html',
-        ['linux', 'intel'], bug=610800)
-    self.Fail('conformance/glsl/bugs/sampler-array-using-loop-index.html',
-        ['linux', 'intel', 'opengl'], bug=598924)
-    self.Skip('conformance/uniforms/gl-uniform-arrays.html',
-        ['linux', 'debug', ('intel', 0x412)], bug=604140)
+    # Fixed on Mesa 12.0
+    self.Fail('conformance/rendering/clipping-wide-points.html',
+        ['linux', 'intel'], bug=642822)
 
-    # Android failures
+    self.Fail('WebglExtension_EXT_disjoint_timer_query',
+        ['linux', 'intel'], bug=687210)
+
+    ####################
+    # Android failures #
+    ####################
+
     self.Fail('conformance/glsl/bugs/sequence-operator-evaluation-order.html',
         ['android'], bug=478572)
-    self.Fail('deqp/data/gles2/shaders/constants.html',
-        ['android'], bug=478572)
-    self.Fail('deqp/data/gles2/shaders/conversions.html',
-        ['android'], bug=478572)
-    self.Fail('deqp/data/gles2/shaders/declarations.html',
-        ['android'], bug=478572)
-    self.Fail('deqp/data/gles2/shaders/linkage.html',
-        ['android'], bug=478572)
-    self.Fail('conformance/textures/image/tex-2d-rgb-rgb-unsigned_byte.html',
-        ['android'], bug=586183)
-    # The following tests timed out on android, so skip them for now.
-    self.Skip('conformance/textures/image_bitmap_from_video/*',
-        ['android'], bug=585108)
+    # The following test is very slow and therefore times out on Android bot.
+    self.Skip('conformance/rendering/multisample-corruption.html',
+        ['android'])
+
+    self.Fail('conformance/textures/misc/' +
+        'copytexsubimage2d-large-partial-copy-corruption.html',
+        ['android', 'no_passthrough'], bug=679697)
     # The following WebView crashes are causing problems with further
     # tests in the suite, so skip them for now.
     self.Skip('conformance/textures/video/' +
@@ -781,114 +566,159 @@ class WebGLConformanceExpectations(GpuTestExpectations):
         'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
         ['android', 'android-webview-shell'], bug=352645)
     self.Skip('conformance/textures/misc/texture-npot-video.html',
-        ['android', 'android-webview-shell'], bug=352645)
-    # These are failing on the Nexus 5 and 6
-    self.Fail('conformance/extensions/oes-texture-float-with-canvas.html',
-              ['android', 'qualcomm'], bug=499555)
+        ['android', 'android-webview-shell', 'no_passthrough'], bug=352645)
     # This crashes in Android WebView on the Nexus 6, preventing the
     # suite from running further. Rather than add multiple
     # suppressions, skip it until it's passing at least in content
     # shell.
     self.Skip('conformance/extensions/oes-texture-float-with-video.html',
-              ['android', 'qualcomm'], bug=499555)
-    # Nexus 5 failures
-    self.Fail('conformance/glsl/bugs/struct-constructor-highp-bug.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=559342)
+        ['android', 'qualcomm', 'no_passthrough'], bug=499555)
+
+    # Nexus 5
+    self.Fail('conformance/extensions/angle-instanced-arrays.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
+    self.Fail('conformance/extensions/ext-texture-filter-anisotropic.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
+    self.Fail('conformance/extensions/webgl-compressed-texture-atc.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
+    self.Fail('conformance/glsl/bugs/' +
+        'array-of-struct-with-int-first-position.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
+    self.Fail('conformance/glsl/bugs/gl-fragcoord-multisampling-bug.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
     self.Fail('conformance/glsl/bugs/qualcomm-loop-with-continue-crash.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=527761)
-    self.Fail('conformance/glsl/bugs/sketchfab-lighting-shader-crash.html',
-              ['android', ('qualcomm', 'Adreno (TM) 330')], bug=551937)
-    # Nexus 6 and 6P failures
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=527761)
+    self.Fail('conformance/glsl/bugs/sampler-struct-function-arg.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
+    self.Fail('conformance/glsl/bugs/struct-constructor-highp-bug.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=559342)
+    self.Fail('conformance/glsl/matrices/glsl-mat4-to-mat3.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
+    self.Fail('conformance/glsl/misc/shader-struct-scope.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
+    self.Fail('conformance/glsl/misc/' +
+        'shader-with-vec4-vec3-vec4-conditional.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
+    self.Fail('conformance/glsl/misc/shaders-with-invariance.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330'), 'no_passthrough'],
+        bug=611943)
+    self.Fail('conformance/glsl/misc/struct-equals.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=611943)
+    self.Fail('deqp/data/gles2/shaders/linkage.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=478572)
+    self.Fail('WebglExtension_OES_texture_float_linear',
+        ['android', ('qualcomm', 'Adreno (TM) 330'), 'no_passthrough'])
+    self.Fail('conformance/more/functions/vertexAttribPointerBadArgs.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=678850)
+    self.Fail('conformance/attribs/gl-vertexattribpointer.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=678850)
+    self.Fail('conformance/glsl/bugs/' +
+              'varying-arrays-should-not-be-reversed.html',
+        ['android', ('qualcomm', 'Adreno (TM) 330')], bug=709704)
+
+    # Nexus 5X
+    # This one is causing intermittent timeouts on the device, and it
+    # looks like when that happens, the next test also always times
+    # out. Skip it for now until it's fixed and running reliably.
+    self.Skip('conformance/extensions/oes-texture-half-float-with-video.html',
+        ['android', ('qualcomm', 'Adreno (TM) 418'), 'no_passthrough'],
+        bug=609883)
+    self.Fail('conformance/extensions/webgl-compressed-texture-atc.html',
+        ['android', ('qualcomm', 'Adreno (TM) 418')], bug=609883)
+    self.Fail('conformance/glsl/bugs/sampler-struct-function-arg.html',
+        ['android', ('qualcomm', 'Adreno (TM) 418')], bug=609883)
+    # This test is skipped because it is crashing the GPU process.
+    self.Skip('conformance/glsl/misc/shader-with-non-reserved-words.html',
+        ['android', ('qualcomm', 'Adreno (TM) 418'), 'no_passthrough'],
+        bug=609883)
+    self.Fail('conformance/uniforms/uniform-samplers-test.html',
+        ['android', ('qualcomm', 'Adreno (TM) 418'), 'no_passthrough'],
+        bug=610951)
+    self.Fail('WebglExtension_EXT_sRGB',
+        ['android', ('qualcomm', 'Adreno (TM) 418')], bug=610951)
+
+    # Nexus 6 (Adreno 420) and 6P (Adreno 430)
     self.Fail('conformance/context/' +
-              'context-attributes-alpha-depth-stencil-antialias.html',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=499555)
+        'context-attributes-alpha-depth-stencil-antialias.html',
+        ['android', ('qualcomm', 'Adreno (TM) 420')], bug=499555)
+    self.Fail('conformance/context/context-size-change.html',
+        ['android', ('qualcomm', 'Adreno (TM) 420')], bug=611945)
     self.Fail('conformance/context/premultiplyalpha-test.html',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=499555)
-    self.Fail('conformance/extensions/oes-texture-float-with-image-data.html',
-              ['android',
-               ('qualcomm', 'Adreno (TM) 420'),
-               ('qualcomm', 'Adreno (TM) 430')], bug=499555)
-    self.Fail('conformance/extensions/oes-texture-float-with-image.html',
-              ['android',
-               ('qualcomm', 'Adreno (TM) 420'),
-               ('qualcomm', 'Adreno (TM) 430')], bug=499555)
-    self.Fail('conformance/textures/image_bitmap_from_blob/*',
-        ['android', ('qualcomm', 'Adreno (TM) 420')], bug=585108)
-    self.Fail('conformance/textures/image_bitmap_from_canvas/*',
-        ['android', ('qualcomm', 'Adreno (TM) 420')], bug=585108)
-    self.Fail('conformance/textures/image_bitmap_from_image/*',
-        ['android', ('qualcomm', 'Adreno (TM) 420')], bug=585108)
-    self.Fail('conformance/textures/image_bitmap_from_image_data/*',
-        ['android', ('qualcomm', 'Adreno (TM) 420')], bug=585108)
-    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/*',
-        ['android', ('qualcomm', 'Adreno (TM) 420')], bug=598262)
-    self.Fail('conformance/textures/video/' +
-        'tex-2d-rgb-rgb-unsigned_byte.html',
-        ['android', 'android-content-shell', 'android-chromium',
-         ('qualcomm', 'Adreno (TM) 420')], bug=499555)
-    self.Fail('conformance/textures/video/' +
-        'tex-2d-rgba-rgba-unsigned_byte.html',
-        ['android', 'android-content-shell', 'android-chromium',
-         ('qualcomm', 'Adreno (TM) 420')], bug=499555)
-    self.Fail('conformance/textures/video/' +
-        'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
-        ['android', 'android-content-shell', 'android-chromium',
-         ('qualcomm', 'Adreno (TM) 420')], bug=499555)
-    self.Fail('conformance/textures/video/' +
-        'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-        ['android', 'android-content-shell', 'android-chromium',
-         ('qualcomm', 'Adreno (TM) 420')], bug=499555)
-    self.Fail('conformance/textures/video/' +
-        'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-        ['android', 'android-content-shell', 'android-chromium',
-         ('qualcomm', 'Adreno (TM) 420')], bug=499555)
+        ['android', ('qualcomm', 'Adreno (TM) 420')], bug=499555)
+    self.Fail('conformance/extensions/webgl-compressed-texture-atc.html',
+        ['android',
+         ('qualcomm', 'Adreno (TM) 420'),
+         ('qualcomm', 'Adreno (TM) 430')], bug=611945)
+    self.Fail('conformance/glsl/bugs/gl-fragcoord-multisampling-bug.html',
+        ['android', ('qualcomm', 'Adreno (TM) 420')], bug=611945)
+    self.Fail('conformance/glsl/bugs/qualcomm-crash.html',
+        ['android', ('qualcomm', 'Adreno (TM) 420')], bug=611945)
+    self.Fail('conformance/glsl/bugs/sampler-struct-function-arg.html',
+        ['android',
+         ('qualcomm', 'Adreno (TM) 420'),
+         ('qualcomm', 'Adreno (TM) 430')], bug=611945)
+    # This test is skipped because running it causes a future test to fail.
+    # The list of tests which may be that future test is very long. It is
+    # almost (but not quite) every webgl conformance test.
+    self.Skip('conformance/glsl/misc/shader-struct-scope.html',
+        ['android', ('qualcomm', 'Adreno (TM) 420')], bug=614550)
+    self.Fail('conformance/glsl/misc/shaders-with-invariance.html',
+        ['android', ('qualcomm', 'Adreno (TM) 420'), 'no_passthrough'],
+        bug=611945)
     # bindBufferBadArgs is causing the GPU thread to crash, taking
     # down the WebView shell, causing the next test to fail and
     # subsequent tests to be aborted.
     self.Skip('conformance/more/functions/bindBufferBadArgs.html',
-              ['android', 'android-webview-shell',
-               ('qualcomm', 'Adreno (TM) 420')], bug=499874)
+        ['android', 'android-webview-shell',
+         ('qualcomm', 'Adreno (TM) 420')], bug=499874)
     self.Fail('conformance/rendering/gl-scissor-test.html',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=499555)
+        ['android', ('qualcomm', 'Adreno (TM) 420')], bug=499555)
+    self.Fail('conformance/rendering/gl-viewport-test.html',
+        ['android', ('qualcomm', 'Adreno (TM) 420')], bug=611945)
     self.Fail('conformance/textures/misc/' +
-              'copy-tex-image-and-sub-image-2d.html',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=499555)
-    self.Fail('conformance/textures/misc/' +
-              'tex-image-and-sub-image-2d-with-array-buffer-view.html',
-              ['android',
-               ('qualcomm', 'Adreno (TM) 420'),
-               ('qualcomm', 'Adreno (TM) 430')], bug=499555)
-    self.Fail('conformance/textures/canvas/*',
-              ['android',
-               ('qualcomm', 'Adreno (TM) 420'),
-               ('qualcomm', 'Adreno (TM) 430')], bug=499555)
-    self.Fail('conformance/textures/image_data/*',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=499555)
-    self.Fail('conformance/textures/image/*',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=499555)
-    self.Fail('conformance/textures/webgl_canvas/*',
-              ['android', ('qualcomm', 'Adreno (TM) 420')], bug=499555)
-    # Nexus 9 failures
-    self.Fail('deqp/data/gles2/shaders/functions.html',
-              ['android', 'nvidia'], bug=478572)
-    self.Skip('conformance/extensions/oes-texture-float-with-video.html',
-              ['android', 'nvidia'], bug=499555) # flaky
-    self.Fail('conformance/glsl/bugs/multiplication-assignment.html',
-              ['android', 'nvidia'], bug=606096)
-    self.Fail('conformance/glsl/constructors/glsl-construct-mat2.html',
-              ['android', 'nvidia'], bug=606096)
-    self.Fail('conformance/glsl/constructors/glsl-construct-mat3.html',
-              ['android', 'nvidia'], bug=606096)
-    self.Fail('conformance/glsl/constructors/glsl-construct-mat4.html',
-              ['android', 'nvidia'], bug=606096)
+        'copy-tex-image-and-sub-image-2d.html',
+        ['android', ('qualcomm', 'Adreno (TM) 420'), 'no_passthrough'],
+        bug=499555)
+    self.Fail('conformance/uniforms/uniform-samplers-test.html',
+        ['android', ('qualcomm', 'Adreno (TM) 430'), 'no_passthrough'],
+        bug=663071)
+    self.Fail('conformance/offscreencanvas/' +
+        'context-attribute-preserve-drawing-buffer.html',
+        ['android', ('qualcomm', 'Adreno (TM) 420')], bug=693135)
+    self.Fail('WebglExtension_EXT_sRGB',
+        ['android',
+         ('qualcomm', 'Adreno (TM) 420'), ('qualcomm', 'Adreno (TM) 430')])
 
-    # The following test is very slow and therefore times out on Android bot.
-    self.Skip('conformance/rendering/multisample-corruption.html',
-        ['android'])
+    # Nexus 9
+    self.Fail('deqp/data/gles2/shaders/functions.html',
+        ['android', 'nvidia'], bug=478572)
+    self.Fail('conformance/glsl/bugs/multiplication-assignment.html',
+        ['android', 'nvidia'], bug=606096)
+    self.Fail('WebglExtension_WEBGL_compressed_texture_atc',
+        ['android', ('nvidia', 'NVIDIA Tegra')])
+
+    # Pixel C
+    self.Fail('conformance/glsl/bugs/constant-precision-qualifier.html',
+        ['android', 'android-chromium',
+         ('nvidia', 'NVIDIA Tegra')], bug=624621)
+
+    # NVIDIA Shield
+    self.Flaky('conformance/context/' +
+        'context-eviction-with-garbage-collection.html',
+        ['android', ('nvidia', 'NVIDIA Tegra')], bug=701929)
+    self.Flaky('conformance/glsl/misc/glsl-long-variable-names.html',
+        ['android', ('nvidia', 'NVIDIA Tegra')], bug=701929)
+    self.Flaky('conformance/textures/image_bitmap_from_video/' +
+        'tex-2d-rgb-rgb-unsigned_byte.html',
+        ['android', ('nvidia', 'NVIDIA Tegra')], bug=701929)
+
+    ############
+    # ChromeOS #
+    ############
 
     # ChromeOS: affecting all devices.
     self.Fail('conformance/extensions/webgl-depth-texture.html',
-        ['chromeos'], bug=382651)
+        ['chromeos', 'no_passthrough'], bug=382651)
 
     # ChromeOS: all Intel except for pinetrail (stumpy, parrot, peppy,...)
     # We will just include pinetrail here for now as we don't want to list
@@ -900,7 +730,7 @@ class WebGLConformanceExpectations(GpuTestExpectations):
     self.Fail('conformance/glsl/misc/shaders-with-varyings.html',
         ['chromeos', 'intel'], bug=375556)
     self.Fail('conformance/renderbuffers/framebuffer-object-attachment.html',
-        ['chromeos', 'intel'], bug=375556)
+        ['chromeos', 'intel', 'no_passthrough'], bug=375556)
     self.Fail('conformance/textures/misc/texture-size-limit.html',
         ['chromeos', 'intel'], bug=385361)
 
@@ -961,11 +791,11 @@ class WebGLConformanceExpectations(GpuTestExpectations):
     self.Fail('conformance/rendering/polygon-offset.html',
         ['chromeos', ('intel', 0xa011)], bug=375554)
     self.Fail('conformance/textures/misc/texture-mips.html',
-        ['chromeos', ('intel', 0xa011)], bug=375554)
+        ['chromeos', ('intel', 0xa011), 'no_passthrough'], bug=375554)
     self.Fail('conformance/textures/misc/texture-npot.html',
-        ['chromeos', ('intel', 0xa011)], bug=375554)
+        ['chromeos', ('intel', 0xa011), 'no_passthrough'], bug=375554)
     self.Fail('conformance/textures/misc/texture-npot-video.html',
-        ['chromeos', ('intel', 0xa011)], bug=375554)
+        ['chromeos', ('intel', 0xa011), 'no_passthrough'], bug=375554)
     self.Fail('conformance/textures/misc/texture-size.html',
         ['chromeos', ('intel', 0xa011)], bug=375554)
     self.Fail('conformance/uniforms/gl-uniform-arrays.html',

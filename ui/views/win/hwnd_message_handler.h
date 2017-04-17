@@ -30,7 +30,6 @@
 #include "ui/views/views_export.h"
 
 namespace gfx {
-class Canvas;
 class ImageSkia;
 class Insets;
 namespace win {
@@ -58,6 +57,11 @@ class WindowsSessionChangeObserver;
 // from happening.
 const int WM_NCUAHDRAWCAPTION = 0xAE;
 const int WM_NCUAHDRAWFRAME = 0xAF;
+
+// The HWNDMessageHandler sends this message to itself on
+// WM_WINDOWPOSCHANGING. It's used to inform the client if a
+// WM_WINDOWPOSCHANGED won't be received.
+const int WM_WINDOWSIZINGFINISHED = WM_USER;
 
 // IsMsgHandled() and BEGIN_SAFE_MSG_MAP_EX are a modified version of
 // BEGIN_MSG_MAP_EX. The main difference is it uses a WeakPtrFactory member
@@ -231,7 +235,10 @@ class VIEWS_EXPORT HWNDMessageHandler :
                              WPARAM w_param,
                              LPARAM l_param,
                              bool* handled) override;
-
+  LRESULT HandlePointerMessage(unsigned int message,
+                               WPARAM w_param,
+                               LPARAM l_param,
+                               bool* handled) override;
   LRESULT HandleScrollMessage(unsigned int message,
                               WPARAM w_param,
                               LPARAM l_param,
@@ -303,8 +310,8 @@ class VIEWS_EXPORT HWNDMessageHandler :
   // Lock or unlock the window from being able to redraw itself in response to
   // updates to its invalid region.
   class ScopedRedrawLock;
-  void LockUpdates(bool force);
-  void UnlockUpdates(bool force);
+  void LockUpdates();
+  void UnlockUpdates();
 
   // Stops ignoring SetWindowPos() requests (see below).
   void StopIgnoringPosChanges() { ignore_window_pos_changes_ = false; }
@@ -313,6 +320,11 @@ class VIEWS_EXPORT HWNDMessageHandler :
   // onscreen.
   void ForceRedrawWindow(int attempts);
 
+  // Returns whether Windows should help with frame rendering (i.e. we're using
+  // the glass frame).
+  bool IsFrameSystemDrawn() const;
+
+  // Returns true if IsFrameSystemDrawn() and there's actually a frame to draw.
   bool HasSystemFrame() const;
 
   // Adds or removes the frame extension into client area with
@@ -349,6 +361,11 @@ class VIEWS_EXPORT HWNDMessageHandler :
 
     // Pointer events.
     CR_MESSAGE_HANDLER_EX(WM_POINTERACTIVATE, OnPointerActivate)
+    CR_MESSAGE_HANDLER_EX(WM_POINTERDOWN, OnPointerEvent)
+    CR_MESSAGE_HANDLER_EX(WM_POINTERUP, OnPointerEvent)
+    CR_MESSAGE_HANDLER_EX(WM_POINTERUPDATE, OnPointerEvent)
+    CR_MESSAGE_HANDLER_EX(WM_POINTERENTER, OnPointerEvent)
+    CR_MESSAGE_HANDLER_EX(WM_POINTERLEAVE, OnPointerEvent)
 
     // Key events.
     CR_MESSAGE_HANDLER_EX(WM_KEYDOWN, OnKeyEvent)
@@ -372,6 +389,8 @@ class VIEWS_EXPORT HWNDMessageHandler :
 
     // Touch Events.
     CR_MESSAGE_HANDLER_EX(WM_TOUCH, OnTouchEvent)
+
+    CR_MESSAGE_HANDLER_EX(WM_WINDOWSIZINGFINISHED, OnWindowSizingFinished)
 
     // Uses the general handler macro since the specific handler macro
     // MSG_WM_NCACTIVATE would convert WPARAM type to BOOL type. The high
@@ -400,6 +419,7 @@ class VIEWS_EXPORT HWNDMessageHandler :
     CR_MSG_WM_MOVE(OnMove)
     CR_MSG_WM_MOVING(OnMoving)
     CR_MSG_WM_NCCALCSIZE(OnNCCalcSize)
+    CR_MSG_WM_NCCREATE(OnNCCreate)
     CR_MSG_WM_NCHITTEST(OnNCHitTest)
     CR_MSG_WM_NCPAINT(OnNCPaint)
     CR_MSG_WM_NOTIFY(OnNotify)
@@ -411,6 +431,7 @@ class VIEWS_EXPORT HWNDMessageHandler :
     CR_MSG_WM_SIZE(OnSize)
     CR_MSG_WM_SYSCOMMAND(OnSysCommand)
     CR_MSG_WM_THEMECHANGED(OnThemeChanged)
+    CR_MSG_WM_TIMECHANGE(OnTimeChange)
     CR_MSG_WM_WINDOWPOSCHANGED(OnWindowPosChanged)
     CR_MSG_WM_WINDOWPOSCHANGING(OnWindowPosChanging)
   CR_END_MSG_MAP()
@@ -447,10 +468,12 @@ class VIEWS_EXPORT HWNDMessageHandler :
   LRESULT OnMouseActivate(UINT message, WPARAM w_param, LPARAM l_param);
   LRESULT OnMouseRange(UINT message, WPARAM w_param, LPARAM l_param);
   LRESULT OnPointerActivate(UINT message, WPARAM w_param, LPARAM l_param);
+  LRESULT OnPointerEvent(UINT message, WPARAM w_param, LPARAM l_param);
   void OnMove(const gfx::Point& point);
   void OnMoving(UINT param, const RECT* new_bounds);
   LRESULT OnNCActivate(UINT message, WPARAM w_param, LPARAM l_param);
   LRESULT OnNCCalcSize(BOOL mode, LPARAM l_param);
+  LRESULT OnNCCreate(LPCREATESTRUCT lpCreateStruct);
   LRESULT OnNCHitTest(const gfx::Point& point);
   void OnNCPaint(HRGN rgn);
   LRESULT OnNCUAHDrawCaption(UINT message, WPARAM w_param, LPARAM l_param);
@@ -467,9 +490,11 @@ class VIEWS_EXPORT HWNDMessageHandler :
   void OnSize(UINT param, const gfx::Size& size);
   void OnSysCommand(UINT notification_code, const gfx::Point& point);
   void OnThemeChanged();
+  void OnTimeChange();
   LRESULT OnTouchEvent(UINT message, WPARAM w_param, LPARAM l_param);
   void OnWindowPosChanging(WINDOWPOS* window_pos);
   void OnWindowPosChanged(WINDOWPOS* window_pos);
+  LRESULT OnWindowSizingFinished(UINT message, WPARAM w_param, LPARAM l_param);
 
   // Receives Windows Session Change notifications.
   void OnSessionChange(WPARAM status_code);
@@ -565,6 +590,13 @@ class VIEWS_EXPORT HWNDMessageHandler :
   // The current DPI.
   int dpi_;
 
+  // Whether EnableNonClientDpiScaling was called successfully with this window.
+  // This flag exists because EnableNonClientDpiScaling must be called during
+  // WM_NCCREATE and EnableChildWindowDpiMessage is called after window
+  // creation. We don't want to call both, so this helps us determine if a call
+  // to EnableChildWindowDpiMessage is necessary.
+  bool called_enable_non_client_dpi_scaling_;
+
   // Event handling ------------------------------------------------------------
 
   // The flags currently being used with TrackMouseEvent to track mouse
@@ -642,8 +674,12 @@ class VIEWS_EXPORT HWNDMessageHandler :
   bool dwm_transition_desired_;
 
   // True if HandleWindowSizeChanging has been called in the delegate, but not
-  // HandleWindowSizeChanged.
+  // HandleClientSizeChanged.
   bool sent_window_size_changing_;
+
+  // This is used to keep track of whether a WM_WINDOWPOSCHANGED has
+  // been received after the WM_WINDOWPOSCHANGING.
+  uint32_t current_window_size_message_ = 0;
 
   // Manages observation of Windows Session Change messages.
   std::unique_ptr<WindowsSessionChangeObserver>
@@ -674,7 +710,8 @@ class VIEWS_EXPORT HWNDMessageHandler :
   // to keep a raw pointer to the HWNDMessageHandler instance as we track the
   // window destruction and ensure that the map is cleaned up.
   using FullscreenWindowMonitorMap = std::map<HMONITOR, HWNDMessageHandler*>;
-  static base::LazyInstance<FullscreenWindowMonitorMap> fullscreen_monitor_map_;
+  static base::LazyInstance<FullscreenWindowMonitorMap>::DestructorAtExit
+      fullscreen_monitor_map_;
 
   // The WeakPtrFactories below must occur last in the class definition so they
   // get destroyed last.

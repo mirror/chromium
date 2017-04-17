@@ -24,48 +24,48 @@
 #include "core/CoreExport.h"
 #include "core/svg/SVGParsingError.h"
 #include "core/svg/SVGPathData.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class CORE_EXPORT SVGPathStringSource {
-    WTF_MAKE_NONCOPYABLE(SVGPathStringSource);
-    STACK_ALLOCATED();
-public:
-    explicit SVGPathStringSource(const String&);
+  WTF_MAKE_NONCOPYABLE(SVGPathStringSource);
+  STACK_ALLOCATED();
 
-    bool hasMoreData() const
-    {
-        if (m_is8BitSource)
-            return m_current.m_character8 < m_end.m_character8;
-        return m_current.m_character16 < m_end.m_character16;
-    }
-    PathSegmentData parseSegment();
+ public:
+  explicit SVGPathStringSource(const String&);
 
-    SVGParsingError parseError() const { return m_error; }
+  bool HasMoreData() const {
+    if (is8_bit_source_)
+      return current_.character8_ < end_.character8_;
+    return current_.character16_ < end_.character16_;
+  }
+  PathSegmentData ParseSegment();
 
-private:
-    void eatWhitespace();
-    float parseNumberWithError();
-    bool parseArcFlagWithError();
-    void setErrorMark(SVGParseStatus);
+  SVGParsingError ParseError() const { return error_; }
 
-    bool m_is8BitSource;
+ private:
+  void EatWhitespace();
+  float ParseNumberWithError();
+  bool ParseArcFlagWithError();
+  void SetErrorMark(SVGParseStatus);
 
-    union {
-        const LChar* m_character8;
-        const UChar* m_character16;
-    } m_current;
-    union {
-        const LChar* m_character8;
-        const UChar* m_character16;
-    } m_end;
+  bool is8_bit_source_;
 
-    SVGPathSegType m_previousCommand;
-    SVGParsingError m_error;
-    String m_string;
+  union {
+    const LChar* character8_;
+    const UChar* character16_;
+  } current_;
+  union {
+    const LChar* character8_;
+    const UChar* character16_;
+  } end_;
+
+  SVGPathSegType previous_command_;
+  SVGParsingError error_;
+  String string_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGPathStringSource_h
+#endif  // SVGPathStringSource_h

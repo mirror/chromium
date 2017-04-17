@@ -21,6 +21,8 @@ component("compositor") {
     "compositor.h",
     "compositor_animation_observer.h",
     "compositor_export.h",
+    "compositor_lock.cc",
+    "compositor_lock.h",
     "compositor_observer.h",
     "compositor_switches.cc",
     "compositor_switches.h",
@@ -45,7 +47,9 @@ component("compositor") {
     "layer_animator.h",
     "layer_animator_collection.cc",
     "layer_animator_collection.h",
+    "layer_delegate.cc",
     "layer_delegate.h",
+    "layer_observer.h",
     "layer_owner.cc",
     "layer_owner.h",
     "layer_threaded_animation_delegate.h",
@@ -76,11 +80,16 @@ component("compositor") {
     "//base",
     "//base/third_party/dynamic_annotations",
     "//cc",
+    "//cc/animation",
+    "//cc/paint",
     "//cc/surfaces",
     "//cc/surfaces:surface_id",
+    "//cc/surfaces:surfaces",
     "//gpu/command_buffer/common",
     "//skia",
+    "//ui/display",
     "//ui/gfx",
+    "//ui/gfx/animation",
     "//ui/gfx/geometry",
     "//ui/gl",
   ]
@@ -103,6 +112,10 @@ static_library("test_support") {
     "test/context_factories_for_test.h",
     "test/draw_waiter_for_test.cc",
     "test/draw_waiter_for_test.h",
+    "test/fake_compositor_lock.cc",
+    "test/fake_compositor_lock.h",
+    "test/fake_context_factory.cc",
+    "test/fake_context_factory.h",
     "test/in_process_context_factory.cc",
     "test/in_process_context_factory.h",
     "test/in_process_context_provider.cc",
@@ -138,10 +151,10 @@ static_library("test_support") {
     "//cc",
     "//cc:test_support",
     "//cc/surfaces",
-    "//gpu/command_buffer/client:gl_in_process_context",
     "//gpu/command_buffer/client:gles2_c_lib",
     "//gpu/command_buffer/client:gles2_implementation",
     "//gpu/command_buffer/common:gles2_utils",
+    "//gpu/ipc:gl_in_process_context",
     "//gpu/skia_bindings",
     "//skia",
     "//testing/gtest",
@@ -159,6 +172,8 @@ static_library("test_support") {
 
   if (use_ozone) {
     sources += [ "test/test_compositor_host_ozone.cc" ]
+
+    deps += [ "//ui/ozone" ]
   } else if (use_x11) {
     sources += [ "test/test_compositor_host_x11.cc" ]
   }

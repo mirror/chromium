@@ -15,6 +15,7 @@ source_set("xkb") {
 
   deps = [
     "//base",
+    "//ui/base:ui_features",
     "//ui/events:dom_keycode_converter",
   ]
 }

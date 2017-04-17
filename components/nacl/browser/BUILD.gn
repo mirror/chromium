@@ -38,12 +38,16 @@ static_library("browser") {
     "//components/url_formatter",
     "//content/public/browser",
     "//content/public/common",
-    "//ipc",
+    "//mojo/edk/system",
     "//native_client/src/trusted/service_runtime:sel_main_chrome",
     "//net",
     "//ppapi/host",
     "//ppapi/proxy:ipc",
     "//ppapi/shared_impl",
+  ]
+
+  public_deps = [
+    "//ipc",
   ]
 
   data_deps = []
@@ -60,7 +64,9 @@ static_library("browser") {
       "//sandbox/linux:suid_sandbox_client",
     ]
 
-    data_deps += [ "//components/nacl/loader:helper_nonsfi" ]
+    if (enable_nacl_nonsfi) {
+      data_deps += [ "//components/nacl/loader:helper_nonsfi" ]
+    }
   }
 
   if (is_win && current_cpu == "x86") {
@@ -77,6 +83,7 @@ source_set("unit_tests") {
     "pnacl_host_unittest.cc",
     "pnacl_translation_cache_unittest.cc",
     "test_nacl_browser_delegate.cc",
+    "test_nacl_browser_delegate.h",
   ]
 
   deps = [

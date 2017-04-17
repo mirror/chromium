@@ -10,6 +10,8 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
+#include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/message_center/fake_message_center.h"
@@ -113,6 +115,37 @@ class FakeMessageCenterImpl : public FakeMessageCenter {
   bool locked_ = false;
 };
 
+// This is the class we are testing, but we need to override some functions
+// in it, hence MockMessageCenterView.
+class MockMessageCenterView : public MessageCenterView {
+ public:
+  MockMessageCenterView(MessageCenter* message_center,
+                        MessageCenterTray* tray,
+                        int max_height,
+                        bool initially_settings_visible);
+
+  bool SetRepositionTarget() override;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockMessageCenterView);
+};
+
+MockMessageCenterView::MockMessageCenterView(MessageCenter* message_center,
+                                             MessageCenterTray* tray,
+                                             int max_height,
+                                             bool initially_settings_visible)
+    : MessageCenterView(message_center,
+                        tray,
+                        max_height,
+                        initially_settings_visible) {}
+
+// Always say that the current reposition session is still active, by
+// returning true. Normally the reposition session is set based on where the
+// mouse is hovering.
+bool MockMessageCenterView::SetRepositionTarget() {
+  return true;
+}
+
 /* Test fixture ***************************************************************/
 
 class MessageCenterViewTest : public views::ViewsTestBase,
@@ -120,7 +153,7 @@ class MessageCenterViewTest : public views::ViewsTestBase,
                               public MessageCenterController {
  public:
   // Expose the private enum class MessageCenter::Mode for this test.
-  typedef MessageCenterView::Mode Mode;
+  using Mode = MessageCenterView::Mode;
 
   MessageCenterViewTest();
   ~MessageCenterViewTest() override;
@@ -128,6 +161,7 @@ class MessageCenterViewTest : public views::ViewsTestBase,
   void SetUp() override;
   void TearDown() override;
 
+  NotificationList::Notifications Notifications();
   MessageCenterView* GetMessageCenterView();
   MessageListView* GetMessageListView();
   FakeMessageCenterImpl* GetMessageCenter() const;
@@ -153,6 +187,7 @@ class MessageCenterViewTest : public views::ViewsTestBase,
   void ClickOnNotificationButton(const std::string& notification_id,
                                  int button_index) override;
   void ClickOnSettingsButton(const std::string& notification_id) override;
+  void UpdateNotificationSize(const std::string& notification_id) override;
 
   // Overridden from MockNotificationView::Test
   void RegisterCall(CallType type) override;
@@ -168,9 +203,10 @@ class MessageCenterViewTest : public views::ViewsTestBase,
  private:
   views::View* MakeParent(views::View* child1, views::View* child2);
 
-  NotificationList::Notifications notifications_;
+  // The ownership map of notifications; the key is the id.
+  std::map<std::string, std::unique_ptr<Notification>> notifications_;
   std::unique_ptr<views::Widget> widget_;
-  std::unique_ptr<MessageCenterView> message_center_view_;
+  std::unique_ptr<MockMessageCenterView> message_center_view_;
   std::unique_ptr<FakeMessageCenterImpl> message_center_;
   std::map<CallType,int> callCounts_;
 
@@ -189,31 +225,32 @@ void MessageCenterViewTest::SetUp() {
   message_center_.reset(new FakeMessageCenterImpl());
 
   // Create a dummy notification.
-  Notification* notification1 = new Notification(
+  std::unique_ptr<Notification> notification1 = base::MakeUnique<Notification>(
       NOTIFICATION_TYPE_SIMPLE, std::string(kNotificationId1),
       base::UTF8ToUTF16("title"), base::UTF8ToUTF16("message1"), gfx::Image(),
       base::UTF8ToUTF16("display source"), GURL(),
       NotifierId(NotifierId::APPLICATION, "extension_id"),
-      message_center::RichNotificationData(), NULL);
+      message_center::RichNotificationData(), nullptr);
 
-  Notification* notification2 = new Notification(
+  std::unique_ptr<Notification> notification2 = base::MakeUnique<Notification>(
       NOTIFICATION_TYPE_SIMPLE, std::string(kNotificationId2),
       base::UTF8ToUTF16("title2"), base::UTF8ToUTF16("message2"), gfx::Image(),
       base::UTF8ToUTF16("display source"), GURL(),
       NotifierId(NotifierId::APPLICATION, "extension_id"),
-      message_center::RichNotificationData(), NULL);
+      message_center::RichNotificationData(), nullptr);
 
   // ...and a list for it.
-  notifications_.insert(notification1);
-  notifications_.insert(notification2);
-  message_center_->SetVisibleNotifications(notifications_);
+  notifications_[std::string(kNotificationId1)] = std::move(notification1);
+  notifications_[std::string(kNotificationId2)] = std::move(notification2);
+  NotificationList::Notifications notifications = Notifications();
+  message_center_->SetVisibleNotifications(notifications);
 
-  // Then create a new MessageCenterView with that single notification.
-  message_center_view_.reset(new MessageCenterView(
-      message_center_.get(), NULL, 100, false, /*top_down =*/false));
+  // Then create a new MockMessageCenterView with that single notification.
+  message_center_view_.reset(
+      new MockMessageCenterView(message_center_.get(), NULL, 100, false));
   GetMessageListView()->quit_message_loop_after_animation_for_test_ = true;
   GetMessageCenterView()->SetBounds(0, 0, 380, 600);
-  message_center_view_->SetNotifications(notifications_);
+  message_center_view_->SetNotifications(notifications);
   message_center_view_->set_owned_by_client();
 
   widget_.reset(new views::Widget());
@@ -229,15 +266,23 @@ void MessageCenterViewTest::SetUp() {
 
   // Wait until the animation finishes if available.
   if (GetAnimator()->IsAnimating())
-    base::MessageLoop::current()->Run();
+    base::RunLoop().Run();
 }
 
 void MessageCenterViewTest::TearDown() {
   widget_->CloseNow();
   widget_.reset();
   message_center_view_.reset();
-  STLDeleteElements(&notifications_);
+  notifications_.clear();
   views::ViewsTestBase::TearDown();
+}
+
+NotificationList::Notifications MessageCenterViewTest::Notifications() {
+  NotificationList::Notifications result;
+  for (const auto& notification_pair : notifications_)
+    result.insert(notification_pair.second.get());
+
+  return result;
 }
 
 MessageCenterView* MessageCenterViewTest::GetMessageCenterView() {
@@ -290,39 +335,27 @@ void MessageCenterViewTest::ClickOnNotification(
 void MessageCenterViewTest::AddNotification(
     std::unique_ptr<Notification> notification) {
   std::string notification_id = notification->id();
-  notifications_.insert(notification.release());
-  message_center_->SetVisibleNotifications(notifications_);
+  notifications_[notification_id] = std::move(notification);
+  message_center_->SetVisibleNotifications(Notifications());
   message_center_view_->OnNotificationAdded(notification_id);
 }
 
 void MessageCenterViewTest::UpdateNotification(
     const std::string& notification_id,
     std::unique_ptr<Notification> notification) {
-  for (auto it = notifications_.begin(); it != notifications_.end(); it++) {
-    if ((*it)->id() == notification_id) {
-      delete *it;
-      notifications_.erase(it);
-      break;
-    }
-  }
-  // |notifications| is a "set" container so we don't need to be aware the
-  // order.
-  notifications_.insert(notification.release());
-  message_center_->SetVisibleNotifications(notifications_);
+  DCHECK_EQ(notification_id, notification->id());
+  notifications_[notification_id] = std::move(notification);
+
+  message_center_->SetVisibleNotifications(Notifications());
   message_center_view_->OnNotificationUpdated(notification_id);
 }
 
 void MessageCenterViewTest::RemoveNotification(
     const std::string& notification_id,
     bool by_user) {
-  for (auto it = notifications_.begin(); it != notifications_.end(); it++) {
-    if ((*it)->id() == notification_id) {
-      delete *it;
-      notifications_.erase(it);
-      break;
-    }
-  }
-  message_center_->SetVisibleNotifications(notifications_);
+  notifications_.erase(notification_id);
+
+  message_center_->SetVisibleNotifications(Notifications());
   message_center_view_->OnNotificationRemoved(notification_id, by_user);
 }
 
@@ -347,6 +380,12 @@ void MessageCenterViewTest::ClickOnNotificationButton(
 }
 
 void MessageCenterViewTest::ClickOnSettingsButton(
+    const std::string& notification_id) {
+  // For this test, this method should not be invoked.
+  NOTREACHED();
+}
+
+void MessageCenterViewTest::UpdateNotificationSize(
     const std::string& notification_id) {
   // For this test, this method should not be invoked.
   NOTREACHED();
@@ -418,13 +457,13 @@ TEST_F(MessageCenterViewTest, SizeAfterUpdate) {
   int width =
       GetMessageListView()->width() - GetMessageListView()->GetInsets().width();
 
-  std::unique_ptr<Notification> notification(new Notification(
+  std::unique_ptr<Notification> notification = base::MakeUnique<Notification>(
       NOTIFICATION_TYPE_SIMPLE, std::string(kNotificationId2),
       base::UTF8ToUTF16("title2"),
       base::UTF8ToUTF16("message\nwhich\nis\nvertically\nlong\n."),
       gfx::Image(), base::UTF8ToUTF16("display source"), GURL(),
       NotifierId(NotifierId::APPLICATION, "extension_id"),
-      message_center::RichNotificationData(), NULL));
+      message_center::RichNotificationData(), nullptr);
 
   EXPECT_EQ(
       GetMessageListView()->height(),
@@ -439,7 +478,7 @@ TEST_F(MessageCenterViewTest, SizeAfterUpdate) {
 
   // Wait until the animation finishes if available.
   if (GetAnimator()->IsAnimating())
-    base::MessageLoop::current()->Run();
+    base::RunLoop().Run();
 
   EXPECT_EQ(2, GetMessageListView()->child_count());
   EXPECT_EQ(GetMessageListView()->height(),
@@ -456,13 +495,77 @@ TEST_F(MessageCenterViewTest, SizeAfterUpdate) {
           GetMessageListView()->GetInsets().height());
 }
 
+TEST_F(MessageCenterViewTest, SizeAfterUpdateBelowWithRepositionTarget) {
+  EXPECT_EQ(2, GetMessageListView()->child_count());
+  // Make sure that notification 2 is placed above notification 1.
+  EXPECT_LT(GetNotificationView(kNotificationId2)->bounds().y(),
+            GetNotificationView(kNotificationId1)->bounds().y());
+
+  GetMessageListView()->SetRepositionTargetForTest(
+      GetNotificationView(kNotificationId1)->bounds());
+
+  std::unique_ptr<Notification> notification = base::MakeUnique<Notification>(
+      NOTIFICATION_TYPE_SIMPLE, std::string(kNotificationId2),
+      base::UTF8ToUTF16("title2"),
+      base::UTF8ToUTF16("message\nwhich\nis\nvertically\nlong\n."),
+      gfx::Image(), base::UTF8ToUTF16("display source"), GURL(),
+      NotifierId(NotifierId::APPLICATION, "extension_id"),
+      message_center::RichNotificationData(), nullptr);
+  UpdateNotification(kNotificationId2, std::move(notification));
+
+  // Wait until the animation finishes if available.
+  if (GetAnimator()->IsAnimating())
+    base::RunLoop().Run();
+
+  int width =
+      GetMessageListView()->width() - GetMessageListView()->GetInsets().width();
+  EXPECT_EQ(
+      GetMessageListView()->height(),
+      GetNotificationView(kNotificationId1)->GetHeightForWidth(width) +
+          (kMarginBetweenItems - MessageView::GetShadowInsets().bottom()) +
+          GetNotificationView(kNotificationId2)->GetHeightForWidth(width) +
+          GetMessageListView()->GetInsets().height());
+}
+
+TEST_F(MessageCenterViewTest, SizeAfterUpdateOfRepositionTarget) {
+  EXPECT_EQ(2, GetMessageListView()->child_count());
+  // Make sure that notification 2 is placed above notification 1.
+  EXPECT_LT(GetNotificationView(kNotificationId2)->bounds().y(),
+            GetNotificationView(kNotificationId1)->bounds().y());
+
+  GetMessageListView()->SetRepositionTargetForTest(
+      GetNotificationView(kNotificationId1)->bounds());
+
+  std::unique_ptr<Notification> notification = base::MakeUnique<Notification>(
+      NOTIFICATION_TYPE_SIMPLE, std::string(kNotificationId1),
+      base::UTF8ToUTF16("title2"),
+      base::UTF8ToUTF16("message\nwhich\nis\nvertically\nlong\n."),
+      gfx::Image(), base::UTF8ToUTF16("display source"), GURL(),
+      NotifierId(NotifierId::APPLICATION, "extension_id"),
+      message_center::RichNotificationData(), nullptr);
+  UpdateNotification(kNotificationId1, std::move(notification));
+
+  // Wait until the animation finishes if available.
+  if (GetAnimator()->IsAnimating())
+    base::RunLoop().Run();
+
+  int width =
+      GetMessageListView()->width() - GetMessageListView()->GetInsets().width();
+  EXPECT_EQ(
+      GetMessageListView()->height(),
+      GetNotificationView(kNotificationId1)->GetHeightForWidth(width) +
+          (kMarginBetweenItems - MessageView::GetShadowInsets().bottom()) +
+          GetNotificationView(kNotificationId2)->GetHeightForWidth(width) +
+          GetMessageListView()->GetInsets().height());
+}
+
 TEST_F(MessageCenterViewTest, SizeAfterRemove) {
   EXPECT_EQ(2, GetMessageListView()->child_count());
   RemoveNotification(kNotificationId1, false);
 
   // Wait until the animation finishes if available.
   if (GetAnimator()->IsAnimating())
-    base::MessageLoop::current()->Run();
+    base::RunLoop().Run();
 
   EXPECT_EQ(1, GetMessageListView()->child_count());
 
@@ -486,18 +589,18 @@ TEST_F(MessageCenterViewTest, PositionAfterUpdate) {
   GetMessageListView()->SetRepositionTargetForTest(
       GetNotificationView(kNotificationId1)->bounds());
 
-  std::unique_ptr<Notification> notification(new Notification(
+  std::unique_ptr<Notification> notification = base::MakeUnique<Notification>(
       NOTIFICATION_TYPE_SIMPLE, std::string(kNotificationId2),
       base::UTF8ToUTF16("title2"),
       base::UTF8ToUTF16("message\nwhich\nis\nvertically\nlong\n."),
       gfx::Image(), base::UTF8ToUTF16("display source"), GURL(),
       NotifierId(NotifierId::APPLICATION, "extension_id"),
-      message_center::RichNotificationData(), NULL));
+      message_center::RichNotificationData(), nullptr);
   UpdateNotification(kNotificationId2, std::move(notification));
 
   // Wait until the animation finishes if available.
   if (GetAnimator()->IsAnimating())
-    base::MessageLoop::current()->Run();
+    base::RunLoop().Run();
 
   // The vertical position of the target from bottom should be kept over change.
   int current_vertical_pos_from_bottom =
@@ -525,7 +628,7 @@ TEST_F(MessageCenterViewTest, PositionAfterRemove) {
 
   // Wait until the animation finishes if available.
   if (GetAnimator()->IsAnimating())
-    base::MessageLoop::current()->Run();
+    base::RunLoop().Run();
 
   EXPECT_EQ(1, GetMessageListView()->child_count());
 
@@ -556,7 +659,7 @@ TEST_F(MessageCenterViewTest, CloseButton) {
 
   ((views::ButtonListener*)GetButtonBar())
       ->ButtonPressed(close_button, DummyEvent());
-  base::MessageLoop::current()->Run();
+  base::RunLoop().Run();
   EXPECT_TRUE(GetMessageCenter()->remove_all_closable_notification_called_);
 }
 
@@ -569,20 +672,22 @@ TEST_F(MessageCenterViewTest, CloseButtonEnablity) {
   EXPECT_TRUE(close_button->enabled());
 
   RemoveNotification(kNotificationId1, false);
-  base::MessageLoop::current()->Run();
+  base::RunLoop().Run();
 
   // There should be 1 non-pinned notification.
   EXPECT_EQ(1u, GetMessageCenter()->GetVisibleNotifications().size());
   EXPECT_TRUE(close_button->enabled());
 
   RemoveNotification(kNotificationId2, false);
-  base::MessageLoop::current()->Run();
+  base::RunLoop().Run();
 
   // There should be no notification.
   EXPECT_EQ(0u, GetMessageCenter()->GetVisibleNotifications().size());
   EXPECT_FALSE(close_button->enabled());
 
-  Notification normal_notification(
+#if defined(OS_CHROMEOS)
+  // Non-pinned version of notification #1
+  Notification normal_notification1(
       NOTIFICATION_TYPE_SIMPLE, std::string(kNotificationId1),
       base::UTF8ToUTF16("title2"),
       base::UTF8ToUTF16("message\nwhich\nis\nvertically\nlong\n."),
@@ -590,25 +695,48 @@ TEST_F(MessageCenterViewTest, CloseButtonEnablity) {
       NotifierId(NotifierId::APPLICATION, "extension_id"),
       message_center::RichNotificationData(), NULL);
 
-#if defined(OS_CHROMEOS)
-  Notification pinned_notification(
+  // Pinned version of notification #1
+  Notification pinned_notification1(
+      NOTIFICATION_TYPE_SIMPLE, std::string(kNotificationId1),
+      base::UTF8ToUTF16("title2"),
+      base::UTF8ToUTF16("message\nwhich\nis\nvertically\nlong\n."),
+      gfx::Image(), base::UTF8ToUTF16("display source"), GURL(),
+      NotifierId(NotifierId::APPLICATION, "extension_id"),
+      message_center::RichNotificationData(), NULL);
+  pinned_notification1.set_pinned(true);
+
+  // Pinned notification #2
+  Notification pinned_notification2(
       NOTIFICATION_TYPE_SIMPLE, std::string(kNotificationId2),
       base::UTF8ToUTF16("title2"),
       base::UTF8ToUTF16("message\nwhich\nis\nvertically\nlong\n."),
       gfx::Image(), base::UTF8ToUTF16("display source"), GURL(),
       NotifierId(NotifierId::APPLICATION, "extension_id"),
       message_center::RichNotificationData(), NULL);
-  pinned_notification.set_pinned(true);
+  pinned_notification2.set_pinned(true);
 
-  AddNotification(
-      std::unique_ptr<Notification>(new Notification(normal_notification)));
+  AddNotification(base::MakeUnique<Notification>(normal_notification1));
 
   // There should be 1 non-pinned notification.
   EXPECT_EQ(1u, GetMessageCenter()->GetVisibleNotifications().size());
   EXPECT_TRUE(close_button->enabled());
 
-  AddNotification(
-      std::unique_ptr<Notification>(new Notification(pinned_notification)));
+  UpdateNotification(kNotificationId1,
+                     base::MakeUnique<Notification>(pinned_notification1));
+
+  // There should be 1 pinned notification.
+  EXPECT_EQ(1u, GetMessageCenter()->GetVisibleNotifications().size());
+  EXPECT_FALSE(close_button->enabled());
+
+  // Adds 1 pinned notification.
+  AddNotification(base::MakeUnique<Notification>(pinned_notification2));
+
+  // There should be 1 pinned notification.
+  EXPECT_EQ(2u, GetMessageCenter()->GetVisibleNotifications().size());
+  EXPECT_FALSE(close_button->enabled());
+
+  UpdateNotification(kNotificationId1,
+                     base::MakeUnique<Notification>(normal_notification1));
 
   // There should be 1 normal notification and 1 pinned notification.
   EXPECT_EQ(2u, GetMessageCenter()->GetVisibleNotifications().size());
@@ -626,8 +754,7 @@ TEST_F(MessageCenterViewTest, CloseButtonEnablity) {
   EXPECT_EQ(0u, GetMessageCenter()->GetVisibleNotifications().size());
   EXPECT_FALSE(close_button->enabled());
 
-  AddNotification(
-      std::unique_ptr<Notification>(new Notification(pinned_notification)));
+  AddNotification(base::MakeUnique<Notification>(pinned_notification2));
 
   // There should be 1 pinned notification.
   EXPECT_EQ(1u, GetMessageCenter()->GetVisibleNotifications().size());
@@ -655,15 +782,13 @@ TEST_F(MessageCenterViewTest, CheckModeWithRemovingAndAddingNotifications) {
   EXPECT_EQ(Mode::BUTTONS_ONLY, GetMessageCenterViewInternalMode());
 
   // Add a notification.
-  Notification normal_notification(
+  AddNotification(base::MakeUnique<Notification>(
       NOTIFICATION_TYPE_SIMPLE, std::string(kNotificationId1),
       base::UTF8ToUTF16("title2"),
       base::UTF8ToUTF16("message\nwhich\nis\nvertically\nlong\n."),
       gfx::Image(), base::UTF8ToUTF16("display source"), GURL(),
       NotifierId(NotifierId::APPLICATION, "extension_id"),
-      message_center::RichNotificationData(), NULL);
-  AddNotification(
-      std::unique_ptr<Notification>(new Notification(normal_notification)));
+      message_center::RichNotificationData(), nullptr));
   EXPECT_EQ(Mode::NOTIFICATIONS, GetMessageCenterViewInternalMode());
 }
 
@@ -712,15 +837,13 @@ TEST_F(MessageCenterViewTest,
   EXPECT_EQ(Mode::SETTINGS, GetMessageCenterViewInternalMode());
 
   // Add a notification during settings is visible.
-  Notification normal_notification(
+  AddNotification(base::MakeUnique<Notification>(
       NOTIFICATION_TYPE_SIMPLE, std::string(kNotificationId1),
       base::UTF8ToUTF16("title2"),
       base::UTF8ToUTF16("message\nwhich\nis\nvertically\nlong\n."),
       gfx::Image(), base::UTF8ToUTF16("display source"), GURL(),
       NotifierId(NotifierId::APPLICATION, "extension_id"),
-      message_center::RichNotificationData(), NULL);
-  AddNotification(
-      std::unique_ptr<Notification>(new Notification(normal_notification)));
+      message_center::RichNotificationData(), nullptr));
   EXPECT_EQ(Mode::SETTINGS, GetMessageCenterViewInternalMode());
 
   // Hide the settings.
@@ -733,6 +856,18 @@ TEST_F(MessageCenterViewTest, LockScreen) {
 
   EXPECT_TRUE(GetNotificationView(kNotificationId1)->IsDrawn());
   EXPECT_TRUE(GetNotificationView(kNotificationId2)->IsDrawn());
+
+  views::Button* close_button = GetButtonBar()->GetCloseAllButtonForTest();
+  ASSERT_NE(nullptr, close_button);
+  views::Button* quiet_mode_button =
+      GetButtonBar()->GetQuietModeButtonForTest();
+  ASSERT_NE(nullptr, quiet_mode_button);
+  views::Button* settings_button = GetButtonBar()->GetSettingsButtonForTest();
+  ASSERT_NE(nullptr, settings_button);
+
+  EXPECT_TRUE(close_button->visible());
+  EXPECT_TRUE(quiet_mode_button->visible());
+  EXPECT_TRUE(settings_button->visible());
 
   // Lock!
   SetLockedState(true);
@@ -753,17 +888,20 @@ TEST_F(MessageCenterViewTest, LockScreen) {
   GetMessageCenterView()->SizeToPreferredSize();
   EXPECT_EQ(kLockedMessageCenterViewHeight, GetMessageCenterView()->height());
 
-  AddNotification(std::unique_ptr<Notification>(new Notification(
+  AddNotification(base::MakeUnique<Notification>(
       NOTIFICATION_TYPE_SIMPLE, std::string(kNotificationId1),
-      base::UTF8ToUTF16("title1"),
-      base::UTF8ToUTF16("message"),
-      gfx::Image(), base::UTF8ToUTF16("display source"), GURL(),
+      base::UTF8ToUTF16("title1"), base::UTF8ToUTF16("message"), gfx::Image(),
+      base::UTF8ToUTF16("display source"), GURL(),
       NotifierId(NotifierId::APPLICATION, "extension_id"),
-      message_center::RichNotificationData(), NULL)));
+      message_center::RichNotificationData(), nullptr));
   EXPECT_FALSE(GetNotificationView(kNotificationId1)->IsDrawn());
 
   GetMessageCenterView()->SizeToPreferredSize();
   EXPECT_EQ(kLockedMessageCenterViewHeight, GetMessageCenterView()->height());
+
+  EXPECT_FALSE(close_button->visible());
+  EXPECT_FALSE(quiet_mode_button->visible());
+  EXPECT_FALSE(settings_button->visible());
 
   // Unlock!
   SetLockedState(false);
@@ -773,6 +911,10 @@ TEST_F(MessageCenterViewTest, LockScreen) {
   GetMessageCenterView()->SizeToPreferredSize();
   EXPECT_NE(kLockedMessageCenterViewHeight, GetMessageCenterView()->height());
 
+  EXPECT_TRUE(close_button->visible());
+  EXPECT_TRUE(quiet_mode_button->visible());
+  EXPECT_TRUE(settings_button->visible());
+
   // Lock!
   SetLockedState(true);
 
@@ -780,6 +922,10 @@ TEST_F(MessageCenterViewTest, LockScreen) {
 
   GetMessageCenterView()->SizeToPreferredSize();
   EXPECT_EQ(kLockedMessageCenterViewHeight, GetMessageCenterView()->height());
+
+  EXPECT_FALSE(close_button->visible());
+  EXPECT_FALSE(quiet_mode_button->visible());
+  EXPECT_FALSE(settings_button->visible());
 }
 
 TEST_F(MessageCenterViewTest, NoNotification) {
@@ -794,13 +940,12 @@ TEST_F(MessageCenterViewTest, NoNotification) {
   GetMessageCenterView()->SizeToPreferredSize();
   EXPECT_EQ(kEmptyMessageCenterViewHeight, GetMessageCenterView()->height());
 
-  AddNotification(std::unique_ptr<Notification>(new Notification(
+  AddNotification(base::MakeUnique<Notification>(
       NOTIFICATION_TYPE_SIMPLE, std::string(kNotificationId1),
-      base::UTF8ToUTF16("title1"),
-      base::UTF8ToUTF16("message"),
-      gfx::Image(), base::UTF8ToUTF16("display source"), GURL(),
+      base::UTF8ToUTF16("title1"), base::UTF8ToUTF16("message"), gfx::Image(),
+      base::UTF8ToUTF16("display source"), GURL(),
       NotifierId(NotifierId::APPLICATION, "extension_id"),
-      message_center::RichNotificationData(), NULL)));
+      message_center::RichNotificationData(), nullptr));
 
   GetMessageCenterView()->SizeToPreferredSize();
   EXPECT_NE(kEmptyMessageCenterViewHeight, GetMessageCenterView()->height());

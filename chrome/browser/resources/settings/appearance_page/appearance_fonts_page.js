@@ -39,16 +39,16 @@
 
     properties: {
       /** @private */
-      advancedExtensionInstalled_: Boolean,
-
-      /** @private */
       advancedExtensionSublabel_: String,
 
-      /** @private */
-      advancedExtensionUrl_: String,
+      /** @private {!DropdownMenuOptionList} */
+      fontOptions_: Object,
 
-      /** @private {!settings.FontsBrowserProxy} */
-      browserProxy_: Object,
+      /** @private */
+      isGuest_: {
+        type: Boolean,
+        value: function() { return loadTimeData.getBoolean('isGuest'); }
+      },
 
       /**
        * Common font sizes.
@@ -78,6 +78,15 @@
         notify: true,
       },
     },
+
+    /** @private {?settings.FontsBrowserProxy} */
+    browserProxy_: null,
+
+    /** @private {boolean} */
+    advancedExtensionInstalled_: false,
+
+    /** @private {?string} */
+    advancedExtensionUrl_: null,
 
     observers: [
       'fontSizeChanged_(prefs.webkit.webprefs.default_font_size.value)',
@@ -118,7 +127,7 @@
     },
 
     /**
-     * @param {!FontsData} response A list of fonts, encodings and the advanced
+     * @param {!FontsData} response A list of fonts and the advanced
      *     font settings extension URL.
      * @private
      */
@@ -130,19 +139,7 @@
           name: response.fontList[i][1]
         });
       }
-      this.$.standardFont.menuOptions = fontMenuOptions;
-      this.$.serifFont.menuOptions = fontMenuOptions;
-      this.$.sansSerifFont.menuOptions = fontMenuOptions;
-      this.$.fixedFont.menuOptions = fontMenuOptions;
-
-      var encodingMenuOptions = [];
-      for (i = 0; i < response.encodingList.length; ++i) {
-        encodingMenuOptions.push({
-          value: response.encodingList[i][0],
-          name: response.encodingList[i][1]
-        });
-      }
-      this.$.encoding.menuOptions = encodingMenuOptions;
+      this.fontOptions_ = fontMenuOptions;
       this.advancedExtensionUrl_ = response.extensionUrl;
     },
 
@@ -159,15 +156,13 @@
     },
 
     /**
-     * Creates an html style value.
-     * @param {number} fontSize The font size to use.
-     * @param {string} fontFamily The name of the font family use.
-     * @return {string}
+     * Get the minimum font size, accounting for unset prefs.
+     * @return {?}
      * @private
      */
-    computeStyle_: function(fontSize, fontFamily) {
-      return 'font-size: ' + fontSize + "px; font-family: '" + fontFamily +
-          "';";
+    computeMinimumFontSize_: function() {
+      return this.get('prefs.webkit.webprefs.minimum_font_size.value') ||
+          MINIMUM_FONT_SIZE_RANGE_[0];
     },
   });
 })();

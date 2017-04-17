@@ -29,28 +29,30 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "modules/ModulesExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
+class MODULES_EXPORT SpeechRecognitionAlternative final
+    : public GarbageCollectedFinalized<SpeechRecognitionAlternative>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-class MODULES_EXPORT SpeechRecognitionAlternative final : public GarbageCollectedFinalized<SpeechRecognitionAlternative>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SpeechRecognitionAlternative* create(const String&, double);
+ public:
+  static SpeechRecognitionAlternative* Create(const String&, double);
 
-    const String& transcript() const { return m_transcript; }
-    double confidence() const { return m_confidence; }
+  const String& transcript() const { return transcript_; }
+  double confidence() const { return confidence_; }
 
-    DEFINE_INLINE_TRACE() { }
+  DEFINE_INLINE_TRACE() {}
 
-private:
-    SpeechRecognitionAlternative(const String&, double);
+ private:
+  SpeechRecognitionAlternative(const String&, double);
 
-    String m_transcript;
-    double m_confidence;
+  String transcript_;
+  double confidence_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SpeechRecognitionAlternative_h
+#endif  // SpeechRecognitionAlternative_h

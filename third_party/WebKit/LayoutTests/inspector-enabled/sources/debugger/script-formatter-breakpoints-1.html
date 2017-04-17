@@ -24,8 +24,8 @@ function onload()
 
 var test = function()
 {
-    WebInspector.breakpointManager._storage._breakpoints = {};
-    var panel = WebInspector.panels.sources;
+    Bindings.breakpointManager._storage._breakpoints = {};
+    var panel = UI.panels.sources;
     var scriptFormatter;
     var sourceFrame;
 
@@ -46,7 +46,10 @@ var test = function()
             {
                 sourceFrame = frame;
                 InspectorTest.setBreakpoint(sourceFrame, 11, "", true);
-                InspectorTest.waitUntilPaused(pausedInF1);
+                Promise.all([
+                    InspectorTest.waitBreakpointSidebarPane(true),
+                    InspectorTest.waitUntilPausedPromise()
+                ]).then(pausedInF1);
                 InspectorTest.evaluateInPageWithTimeout("f1()");
             }
 
@@ -58,22 +61,25 @@ var test = function()
 
             function resumed()
             {
-                InspectorTest.addSniffer(WebInspector.ScriptFormatterEditorAction.prototype, "_updateButton", uiSourceCodeScriptFormatted);
+                InspectorTest.addSniffer(Sources.ScriptFormatterEditorAction.prototype, "_updateButton", uiSourceCodeScriptFormatted);
                 scriptFormatter._toggleFormatScriptSource();
             }
 
             function uiSourceCodeScriptFormatted()
             {
                 // There should be a breakpoint in f1 although script is pretty-printed.
-                InspectorTest.waitUntilPaused(pausedInF1Again);
+                Promise.all([
+                    InspectorTest.waitBreakpointSidebarPane(true),
+                    InspectorTest.waitUntilPausedPromise()
+                ]).then(pausedInF1Again);
                 InspectorTest.evaluateInPageWithTimeout("f1()");
             }
 
             function pausedInF1Again(callFrames)
             {
                 InspectorTest.dumpBreakpointSidebarPane("while paused in pretty printed");
-                scriptFormatter._discardFormattedUISourceCodeScript(panel.visibleView.uiSourceCode());
-                InspectorTest.addSniffer(WebInspector.JavaScriptBreakpointsSidebarPane.prototype, "didReceiveBreakpointLineForTest", onBreakpointsUpdated);
+                Sources.sourceFormatter.discardFormattedUISourceCode(panel.visibleView.uiSourceCode());
+                InspectorTest.waitBreakpointSidebarPane().then(onBreakpointsUpdated);
             }
 
             function onBreakpointsUpdated()

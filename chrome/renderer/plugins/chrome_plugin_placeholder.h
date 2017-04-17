@@ -6,8 +6,11 @@
 #define CHROME_RENDERER_PLUGINS_CHROME_PLUGIN_PLACEHOLDER_H_
 
 #include <stdint.h>
+#include <string>
 
 #include "base/macros.h"
+#include "chrome/common/features.h"
+#include "chrome/common/prerender_types.h"
 #include "chrome/renderer/plugins/power_saver_info.h"
 #include "components/plugins/renderer/loadable_plugin_placeholder.h"
 #include "content/public/renderer/context_menu_client.h"
@@ -22,9 +25,6 @@ class ChromePluginPlaceholder final
       public gin::Wrappable<ChromePluginPlaceholder> {
  public:
   static gin::WrapperInfo kWrapperInfo;
-
-  // Check if Chrome participates in small content experiment.
-  static bool IsSmallContentFilterEnabled();
 
   static ChromePluginPlaceholder* CreateBlockedPlugin(
       content::RenderFrame* render_frame,
@@ -45,9 +45,7 @@ class ChromePluginPlaceholder final
 
   void SetStatus(ChromeViewHostMsg_GetPluginInfo_Status status);
 
-#if defined(ENABLE_PLUGIN_INSTALLATION)
   int32_t CreateRoutingId();
-#endif
 
  private:
   ChromePluginPlaceholder(content::RenderFrame* render_frame,
@@ -79,31 +77,23 @@ class ChromePluginPlaceholder final
   void OnMenuAction(int request_id, unsigned action) override;
   void OnMenuClosed(int request_id) override;
 
-  // Javascript callbacks:
-  // Open chrome://plugins in a new tab.
-  void OpenAboutPluginsCallback();
+  // Show the Plugins permission bubble.
+  void ShowPermissionBubbleCallback();
 
   // IPC message handlers:
-#if defined(ENABLE_PLUGIN_INSTALLATION)
-  void OnDidNotFindMissingPlugin();
-  void OnFoundMissingPlugin(const base::string16& plugin_name);
-  void OnStartedDownloadingPlugin();
   void OnFinishedDownloadingPlugin();
-  void OnErrorDownloadingPlugin(const std::string& error);
-  void OnCancelledDownloadingPlugin();
-#endif
+  void OnPluginComponentUpdateDownloading();
+  void OnPluginComponentUpdateSuccess();
+  void OnPluginComponentUpdateFailure();
+  void OnSetPrerenderMode(prerender::PrerenderMode mode);
 
   ChromeViewHostMsg_GetPluginInfo_Status status_;
 
   base::string16 title_;
 
-#if defined(ENABLE_PLUGIN_INSTALLATION)
   // |routing_id()| is the routing ID of our associated RenderView, but we have
   // a separate routing ID for messages specific to this placeholder.
   int32_t placeholder_routing_id_ = MSG_ROUTING_NONE;
-
-  bool has_host_ = false;
-#endif
 
   int context_menu_request_id_;  // Nonzero when request pending.
   base::string16 plugin_name_;

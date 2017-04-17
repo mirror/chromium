@@ -23,27 +23,12 @@ import org.chromium.chrome.browser.widget.FadingShadow;
 
 /**
  * Simple wrapper on top of a ScrollView that will acquire focus when tapped.  Ensures the
- * New Tab page receives focus when clicked.
+ * New Tab page receives focus when clicked. This is only used in the Incognito NTP.
  */
 public class NewTabPageScrollView extends ScrollView {
     private static final String TAG = "NewTabPageScrollView";
 
-    /**
-     * Listener for scroll changes.
-     */
-    public interface OnScrollListener {
-        /**
-         * Triggered when the scroll changes.  See ScrollView#onScrollChanged for more
-         * details.
-         */
-        void onScrollChanged(int l, int t, int oldl, int oldt);
-    }
-
     private GestureDetector mGestureDetector;
-    private OnScrollListener mOnScrollListener;
-
-    private NewTabPageLayout mNewTabPageLayout;
-
     private FadingShadow mFadingShadow;
 
     /**
@@ -76,22 +61,6 @@ public class NewTabPageScrollView extends ScrollView {
     }
 
     @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-
-        // Incognito also uses this scroll view but will not have the id so will return null.
-        mNewTabPageLayout = (NewTabPageLayout) findViewById(R.id.ntp_content);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (mNewTabPageLayout != null) {
-            mNewTabPageLayout.setParentViewportHeight(MeasureSpec.getSize(heightMeasureSpec));
-        }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
-    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         mGestureDetector.onTouchEvent(ev);
         return super.onInterceptTouchEvent(ev);
@@ -119,20 +88,6 @@ public class NewTabPageScrollView extends ScrollView {
             }
             throw ex;
         }
-    }
-
-    /**
-     * Sets the listener to be notified of scroll changes.
-     * @param listener The listener to be updated on scroll changes.
-     */
-    public void setOnScrollListener(OnScrollListener listener) {
-        mOnScrollListener = listener;
-    }
-
-    @Override
-    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-        super.onScrollChanged(l, t, oldl, oldt);
-        if (mOnScrollListener != null) mOnScrollListener.onScrollChanged(l, t, oldl, oldt);
     }
 
     @Override

@@ -5,9 +5,9 @@
 <script src="resources/mock-share-service.js"></script>
 <script>
 
-share_test((t, mock) => {
-  mock.pushShareResult('384957', '[object Object]', null);
-  return navigator.share(384957, {});
+share_test((t, webshare, mock) => {
+  mock.pushShareResult('384957', '[object Object]', '', webshare.ShareError.OK);
+  return callWithKeyDown(() => navigator.share({title: 384957, text: {}}));
 }, 'share of types other than string (expect implicitly converted to string)');
 
 </script>

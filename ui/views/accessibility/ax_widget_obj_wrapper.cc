@@ -32,8 +32,10 @@ AXAuraObjWrapper* AXWidgetObjWrapper::GetParent() {
 
 void AXWidgetObjWrapper::GetChildren(
     std::vector<AXAuraObjWrapper*>* out_children) {
-  if (!widget_->IsVisible() || !widget_->GetRootView()->visible())
+  if (!widget_->IsVisible() || !widget_->GetRootView() ||
+      !widget_->GetRootView()->visible()) {
     return;
+  }
 
   out_children->push_back(
       AXAuraObjCache::GetInstance()->GetOrCreate(widget_->GetRootView()));
@@ -56,6 +58,16 @@ int32_t AXWidgetObjWrapper::GetID() {
 
 void AXWidgetObjWrapper::OnWidgetDestroying(Widget* widget) {
   AXAuraObjCache::GetInstance()->Remove(widget);
+}
+
+void AXWidgetObjWrapper::OnWidgetClosing(Widget* widget) {
+  AXAuraObjCache::GetInstance()->Remove(widget);
+}
+
+void AXWidgetObjWrapper::OnWidgetVisibilityChanged(Widget*, bool) {
+  // If a widget changes visibility it may affect what's focused, in particular
+  // when a widget that contains the focused view gets hidden.
+  AXAuraObjCache::GetInstance()->OnFocusedViewChanged();
 }
 
 void AXWidgetObjWrapper::OnWillRemoveView(Widget* widget, View* view) {

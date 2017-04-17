@@ -5,6 +5,10 @@
 #ifndef CHROME_BROWSER_UI_SYNC_TAB_CONTENTS_SYNCED_TAB_DELEGATE_H_
 #define CHROME_BROWSER_UI_SYNC_TAB_CONTENTS_SYNCED_TAB_DELEGATE_H_
 
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "components/sessions/core/session_id.h"
@@ -16,7 +20,7 @@ class WebContents;
 }
 
 class TabContentsSyncedTabDelegate
-    : public browser_sync::SyncedTabDelegate,
+    : public sync_sessions::SyncedTabDelegate,
       public content::WebContentsUserData<TabContentsSyncedTabDelegate> {
  public:
   ~TabContentsSyncedTabDelegate() override;
@@ -36,12 +40,13 @@ class TabContentsSyncedTabDelegate
       int i,
       sessions::SerializedNavigationEntry* serialized_entry) const override;
   bool ProfileIsSupervised() const override;
-  const std::vector<const sessions::SerializedNavigationEntry*>*
+  const std::vector<std::unique_ptr<const sessions::SerializedNavigationEntry>>*
   GetBlockedNavigations() const override;
   bool IsPlaceholderTab() const override;
   int GetSyncId() const override;
   void SetSyncId(int sync_id) override;
   bool ShouldSync(sync_sessions::SyncSessionsClient* sessions_client) override;
+  SessionID::id_type GetSourceTabID() const override;
 
  private:
   explicit TabContentsSyncedTabDelegate(content::WebContents* web_contents);

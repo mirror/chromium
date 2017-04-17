@@ -13,8 +13,8 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/strings/string_number_conversions.h"
-#include "base/strings/string_split.h"
+#include "base/strings/stringprintf.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/api/messaging/native_messaging_host_manifest.h"
@@ -29,12 +29,6 @@
 namespace extensions {
 
 namespace {
-
-#if defined(OS_WIN)
-// Name of the command line switch used to pass handle of the native view to
-// the native messaging host.
-const char kParentWindowSwitchName[] = "parent-window";
-#endif  // defined(OS_WIN)
 
 // Default implementation on NativeProcessLauncher interface.
 class NativeProcessLauncherImpl : public NativeProcessLauncher {
@@ -113,17 +107,17 @@ void NativeProcessLauncherImpl::Core::Launch(
     const GURL& origin,
     const std::string& native_host_name,
     const LaunchedCallback& callback) {
-  content::BrowserThread::PostBlockingPoolTask(
-      FROM_HERE, base::Bind(&Core::DoLaunchOnThreadPool, this,
-                            origin, native_host_name, callback));
+  base::PostTaskWithTraits(FROM_HERE,
+                           base::TaskTraits().MayBlock().WithPriority(
+                               base::TaskPriority::USER_VISIBLE),
+                           base::Bind(&Core::DoLaunchOnThreadPool, this, origin,
+                                      native_host_name, callback));
 }
 
 void NativeProcessLauncherImpl::Core::DoLaunchOnThreadPool(
     const GURL& origin,
     const std::string& native_host_name,
     const LaunchedCallback& callback) {
-  DCHECK(content::BrowserThread::GetBlockingPool()->RunsTasksOnCurrentThread());
-
   if (!NativeMessagingHostManifest::IsValidName(native_host_name)) {
     PostErrorResult(callback, RESULT_INVALID_NAME);
     return;
@@ -134,8 +128,8 @@ void NativeProcessLauncherImpl::Core::DoLaunchOnThreadPool(
       FindManifest(native_host_name, allow_user_level_hosts_, &error_message);
 
   if (manifest_path.empty()) {
-    LOG(ERROR) << "Can't find manifest for native messaging host "
-               << native_host_name;
+    LOG(WARNING) << "Can't find manifest for native messaging host "
+                 << native_host_name;
     PostErrorResult(callback, RESULT_NOT_FOUND);
     return;
   }
@@ -144,16 +138,16 @@ void NativeProcessLauncherImpl::Core::DoLaunchOnThreadPool(
       NativeMessagingHostManifest::Load(manifest_path, &error_message);
 
   if (!manifest) {
-    LOG(ERROR) << "Failed to load manifest for native messaging host "
-               << native_host_name << ": " << error_message;
+    LOG(WARNING) << "Failed to load manifest for native messaging host "
+                 << native_host_name << ": " << error_message;
     PostErrorResult(callback, RESULT_NOT_FOUND);
     return;
   }
 
   if (manifest->name() != native_host_name) {
-    LOG(ERROR) << "Failed to load manifest for native messaging host "
-               << native_host_name
-               << ": Invalid name specified in the manifest.";
+    LOG(WARNING) << "Failed to load manifest for native messaging host "
+                 << native_host_name
+                 << ": Invalid name specified in the manifest.";
     PostErrorResult(callback, RESULT_NOT_FOUND);
     return;
   }
@@ -171,8 +165,8 @@ void NativeProcessLauncherImpl::Core::DoLaunchOnThreadPool(
 #if defined(OS_WIN)
     host_path = manifest_path.DirName().Append(host_path);
 #else  // defined(OS_WIN)
-    LOG(ERROR) << "Native messaging host path must be absolute for "
-               << native_host_name;
+    LOG(WARNING) << "Native messaging host path must be absolute for "
+                 << native_host_name;
     PostErrorResult(callback, RESULT_NOT_FOUND);
     return;
 #endif  // !defined(OS_WIN)
@@ -181,7 +175,7 @@ void NativeProcessLauncherImpl::Core::DoLaunchOnThreadPool(
   // In case when the manifest file is there, but the host binary doesn't exist
   // report the NOT_FOUND error.
   if (!base::PathExists(host_path)) {
-    LOG(ERROR)
+    LOG(WARNING)
         << "Found manifest, but not the binary for native messaging host "
         << native_host_name << ". Host path specified in the manifest: "
         << host_path.AsUTF8Unsafe();
@@ -190,13 +184,16 @@ void NativeProcessLauncherImpl::Core::DoLaunchOnThreadPool(
   }
 
   base::CommandLine command_line(host_path);
+  // Note: The origin must be the first argument, so do not use AppendSwitch*
+  // hereafter because CommandLine inserts these switches before the other
+  // arguments.
   command_line.AppendArg(origin.spec());
 
   // Pass handle of the native view window to the native messaging host. This
   // way the host will be able to create properly focused UI windows.
 #if defined(OS_WIN)
-  command_line.AppendSwitchASCII(kParentWindowSwitchName,
-                                 base::Int64ToString(window_handle_));
+  command_line.AppendArg(
+      base::StringPrintf("--parent-window=%d", window_handle_));
 #endif  // !defined(OS_WIN)
 
   base::Process process;

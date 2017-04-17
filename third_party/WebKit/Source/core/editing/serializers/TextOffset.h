@@ -5,31 +5,32 @@
 #ifndef TextOffset_h
 #define TextOffset_h
 
+#include "platform/wtf/Forward.h"
 #include "public/platform/Platform.h"
-#include "wtf/Forward.h"
 
 namespace blink {
 
 class Text;
 
 class TextOffset {
-    STACK_ALLOCATED();
-public:
-    TextOffset();
-    TextOffset(Text*, int);
-    TextOffset(const TextOffset&);
+  STACK_ALLOCATED();
 
-    Text* text() const { return m_text.get(); }
-    int offset() const { return m_offset; }
+ public:
+  TextOffset();
+  TextOffset(Text*, int);
+  TextOffset(const TextOffset&);
 
-    bool isNull() const;
-    bool isNotNull() const;
+  Text* GetText() const { return text_.Get(); }
+  int Offset() const { return offset_; }
 
-private:
-    Member<Text> m_text;
-    int m_offset;
+  bool IsNull() const;
+  bool IsNotNull() const;
+
+ private:
+  Member<Text> text_;
+  int offset_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TextOffset_h
+#endif  // TextOffset_h

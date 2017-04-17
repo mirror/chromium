@@ -50,7 +50,7 @@ newroot = common.create_self_signed_root_certificate('Root')
 newroot.set_validity_range(JANUARY_2_2015_UTC, common.JANUARY_1_2016_UTC)
 # Root with the new key signed by the old key.
 newrootrollover = common.create_intermediate_certificate('Root', oldroot)
-newrootrollover.set_key_path(newroot.get_key_path())
+newrootrollover.set_key(newroot.get_key())
 newrootrollover.set_validity_range(JANUARY_2_2015_UTC,
                                    common.JANUARY_1_2016_UTC)
 
@@ -62,7 +62,7 @@ oldintermediate.set_validity_range(common.JANUARY_1_2015_UTC,
 # Intermediate signed by newroot. Same key as oldintermediate.
 newintermediate = common.create_intermediate_certificate('Intermediate',
                                                          newroot)
-newintermediate.set_key_path(oldintermediate.get_key_path())
+newintermediate.set_key(oldintermediate.get_key())
 newintermediate.set_validity_range(JANUARY_2_2015_UTC,
                                    common.JANUARY_1_2016_UTC)
 
@@ -72,21 +72,25 @@ target = common.create_end_entity_certificate('Target', oldintermediate)
 oldchain = [target, oldintermediate]
 rolloverchain = [target, newintermediate, newrootrollover]
 longrolloverchain = [target, newintermediate, newroot, newrootrollover]
-oldtrusted = [oldroot]
+oldtrusted = common.TrustAnchor(oldroot, constrained=False)
 
 newchain = [target, newintermediate]
-newtrusted = [newroot]
+newtrusted = common.TrustAnchor(newroot, constrained=False)
 
 time = common.DEFAULT_TIME
+key_purpose = common.DEFAULT_KEY_PURPOSE
 verify_result = True
+errors = None
 
-common.write_test_file(__doc__, oldchain, oldtrusted, time, verify_result,
+common.write_test_file(__doc__, oldchain, oldtrusted, time, key_purpose,
+                       verify_result, errors,
                        out_pem="key-rollover-oldchain.pem")
-common.write_test_file(__doc__, rolloverchain, oldtrusted, time, verify_result,
+common.write_test_file(__doc__, rolloverchain, oldtrusted, time, key_purpose,
+                       verify_result, errors,
                        out_pem="key-rollover-rolloverchain.pem")
 common.write_test_file(__doc__, longrolloverchain, oldtrusted, time,
-                       verify_result,
+                       key_purpose, verify_result, errors,
                        out_pem="key-rollover-longrolloverchain.pem")
-common.write_test_file(__doc__, newchain, newtrusted, time, verify_result,
+common.write_test_file(__doc__, newchain, newtrusted, time, key_purpose,
+                       verify_result, errors,
                        out_pem="key-rollover-newchain.pem")
-

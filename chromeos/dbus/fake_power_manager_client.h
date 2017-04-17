@@ -39,6 +39,10 @@ class CHROMEOS_EXPORT FakePowerManagerClient : public PowerManagerClient {
   bool have_video_activity_report() const {
     return !video_activity_reports_.empty();
   }
+  int num_set_backlights_forced_off_calls() const {
+    return num_set_backlights_forced_off_calls_;
+  }
+  void set_tablet_mode(TabletMode mode) { tablet_mode_ = mode; }
 
   // PowerManagerClient overrides
   void Init(dbus::Bus* bus) override;
@@ -63,6 +67,10 @@ class CHROMEOS_EXPORT FakePowerManagerClient : public PowerManagerClient {
   void SetPolicy(const power_manager::PowerManagementPolicy& policy) override;
   void SetIsProjecting(bool is_projecting) override;
   void SetPowerSource(const std::string& id) override;
+  void SetBacklightsForcedOff(bool forced_off) override;
+  void GetBacklightsForcedOff(
+      const GetBacklightsForcedOffCallback& callback) override;
+  void GetSwitchStates(const GetSwitchStatesCallback& callback) override;
   base::Closure GetSuspendReadinessCallback() override;
   int GetNumPendingSuspendReadinessCallbacks() override;
 
@@ -76,8 +84,15 @@ class CHROMEOS_EXPORT FakePowerManagerClient : public PowerManagerClient {
   void SendSuspendDone();
   void SendDarkSuspendImminent();
 
+  // Emulates the power manager announcing that the system is changing
+  // brightness to |level|.
+  void SendBrightnessChanged(int level, bool user_initiated);
+
   // Notifies observers that the power button has been pressed or released.
   void SendPowerButtonEvent(bool down, const base::TimeTicks& timestamp);
+
+  // Sets |lid_state_| and notifies |observers_| about the change.
+  void SetLidState(LidState state, const base::TimeTicks& timestamp);
 
   // Updates |props_| and notifies observers of its changes.
   void UpdatePowerProperties(
@@ -100,16 +115,25 @@ class CHROMEOS_EXPORT FakePowerManagerClient : public PowerManagerClient {
   power_manager::PowerSupplyProperties props_;
 
   // Number of times that various methods have been called.
-  int num_request_restart_calls_;
-  int num_request_shutdown_calls_;
-  int num_set_policy_calls_;
-  int num_set_is_projecting_calls_;
+  int num_request_restart_calls_ = 0;
+  int num_request_shutdown_calls_ = 0;
+  int num_set_policy_calls_ = 0;
+  int num_set_is_projecting_calls_ = 0;
+  int num_set_backlights_forced_off_calls_ = 0;
 
   // Number of pending suspend readiness callbacks.
-  int num_pending_suspend_readiness_callbacks_;
+  int num_pending_suspend_readiness_callbacks_ = 0;
 
   // Last projecting state set in SetIsProjecting().
-  bool is_projecting_;
+  bool is_projecting_ = false;
+
+  // Display and keyboard backlights (if present) forced off state set in
+  // SetBacklightsForcedOff().
+  bool backlights_forced_off_ = false;
+
+  // States returned by GetSwitchStates().
+  LidState lid_state_ = LidState::OPEN;
+  TabletMode tablet_mode_ = TabletMode::UNSUPPORTED;
 
   // Video activity reports that we were requested to send, in the order they
   // were requested. True if fullscreen.

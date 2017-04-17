@@ -8,7 +8,7 @@
 
 import common
 
-# Self-signed root certificate (part of trust store).
+# Self-signed root certificate (used as trust anchor).
 root = common.create_self_signed_root_certificate('Root')
 root.set_validity_range(common.JANUARY_1_2015_UTC, common.JANUARY_1_2016_UTC)
 
@@ -22,11 +22,17 @@ target = common.create_end_entity_certificate('Target', intermediate)
 target.set_validity_range(common.JANUARY_1_2015_UTC, common.JANUARY_1_2016_UTC)
 
 chain = [target, intermediate]
-trusted = [root]
+trusted = common.TrustAnchor(root, constrained=False)
 
 # Both the root and target are valid at this time, however the
 # intermediate certificate is not.
 time = common.MARCH_2_2015_UTC
+key_purpose = common.DEFAULT_KEY_PURPOSE
 verify_result = False
+errors = """----- Certificate i=1 (CN=Intermediate) -----
+ERROR: Time is after notAfter
 
-common.write_test_file(__doc__, chain, trusted, time, verify_result)
+"""
+
+common.write_test_file(__doc__, chain, trusted, time, key_purpose,
+                       verify_result, errors)

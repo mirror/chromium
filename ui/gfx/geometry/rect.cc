@@ -15,6 +15,7 @@
 #endif
 
 #include "base/logging.h"
+#include "base/numerics/saturated_arithmetic.h"
 #include "base/strings/stringprintf.h"
 #include "build/build_config.h"
 #include "ui/gfx/geometry/insets.h"
@@ -59,22 +60,80 @@ void AdjustAlongAxis(int dst_origin, int dst_size, int* origin, int* size) {
 
 namespace gfx {
 
+// This is the per-axis heuristic for picking the most useful origin and
+// width/height to represent the input range.
+static void SaturatedClampRange(int min, int max, int* origin, int* span) {
+  if (max < min) {
+    *span = 0;
+    *origin = min;
+    return;
+  }
+
+  int effective_span = base::SaturatedSubtraction(max, min);
+  int span_loss = base::SaturatedSubtraction(max, min + effective_span);
+
+  // If the desired width is within the limits of ints, we can just
+  // use the simple computations to represent the range precisely.
+  if (span_loss == 0) {
+    *span = effective_span;
+    *origin = min;
+    return;
+  }
+
+  // Now we have to approximate. If one of min or max is close enough
+  // to zero we choose to represent that one precisely. The other side is
+  // probably practically "infinite", so we move it.
+  if (base::SaturatedAbsolute(max) < std::numeric_limits<int>::max() / 2) {
+    // Maintain origin + span == max.
+    *span = effective_span;
+    *origin = max - effective_span;
+  } else if (base::SaturatedAbsolute(min) <
+             std::numeric_limits<int>::max() / 2) {
+    // Maintain origin == min.
+    *span = effective_span;
+    *origin = min;
+  } else {
+    // Both are big, so keep the center.
+    *span = effective_span;
+    *origin = min + span_loss / 2;
+  }
+}
+
+void Rect::SetByBounds(int left, int top, int right, int bottom) {
+  int x, y;
+  int width, height;
+  SaturatedClampRange(left, right, &x, &width);
+  SaturatedClampRange(top, bottom, &y, &height);
+  origin_.SetPoint(x, y);
+  size_.SetSize(width, height);
+}
+
 void Rect::Inset(const Insets& insets) {
   Inset(insets.left(), insets.top(), insets.right(), insets.bottom());
 }
 
 void Rect::Inset(int left, int top, int right, int bottom) {
   origin_ += Vector2d(left, top);
-  set_width(std::max(width() - left - right, static_cast<int>(0)));
-  set_height(std::max(height() - top - bottom, static_cast<int>(0)));
+  // left+right might overflow/underflow, but width() - (left+right) might
+  // overflow as well.
+  set_width(base::SaturatedSubtraction(width(),
+                                       base::SaturatedAddition(left, right)));
+  set_height(base::SaturatedSubtraction(height(),
+                                        base::SaturatedAddition(top, bottom)));
 }
 
 void Rect::Offset(int horizontal, int vertical) {
   origin_ += Vector2d(horizontal, vertical);
+  // Ensure that width and height remain valid.
+  set_width(width());
+  set_height(height());
 }
 
 void Rect::operator+=(const Vector2d& offset) {
   origin_ += offset;
+  // Ensure that width and height remain valid.
+  set_width(width());
+  set_height(height());
 }
 
 void Rect::operator-=(const Vector2d& offset) {
@@ -117,19 +176,21 @@ bool Rect::Intersects(const Rect& rect) const {
 
 void Rect::Intersect(const Rect& rect) {
   if (IsEmpty() || rect.IsEmpty()) {
-    SetRect(0, 0, 0, 0);
+    SetRect(0, 0, 0, 0);  // Throws away empty position.
     return;
   }
 
-  int rx = std::max(x(), rect.x());
-  int ry = std::max(y(), rect.y());
-  int rr = std::min(right(), rect.right());
-  int rb = std::min(bottom(), rect.bottom());
+  int left = std::max(x(), rect.x());
+  int top = std::max(y(), rect.y());
+  int new_right = std::min(right(), rect.right());
+  int new_bottom = std::min(bottom(), rect.bottom());
 
-  if (rx >= rr || ry >= rb)
-    rx = ry = rr = rb = 0;  // non-intersecting
+  if (left >= new_right || top >= new_bottom) {
+    SetRect(0, 0, 0, 0);  // Throws away empty position.
+    return;
+  }
 
-  SetRect(rx, ry, rr - rx, rb - ry);
+  SetByBounds(left, top, new_right, new_bottom);
 }
 
 void Rect::Union(const Rect& rect) {
@@ -140,12 +201,9 @@ void Rect::Union(const Rect& rect) {
   if (rect.IsEmpty())
     return;
 
-  int rx = std::min(x(), rect.x());
-  int ry = std::min(y(), rect.y());
-  int rr = std::max(right(), rect.right());
-  int rb = std::max(bottom(), rect.bottom());
-
-  SetRect(rx, ry, rr - rx, rb - ry);
+  SetByBounds(std::min(x(), rect.x()), std::min(y(), rect.y()),
+              std::max(right(), rect.right()),
+              std::max(bottom(), rect.bottom()));
 }
 
 void Rect::Subtract(const Rect& rect) {
@@ -176,7 +234,7 @@ void Rect::Subtract(const Rect& rect) {
       rb = rect.y();
     }
   }
-  SetRect(rx, ry, rr - rx, rb - ry);
+  SetByBounds(rx, ry, rr, rb);
 }
 
 void Rect::AdjustToFit(const Rect& rect) {
@@ -230,12 +288,8 @@ int Rect::ManhattanInternalDistance(const Rect& rect) const {
   Rect c(*this);
   c.Union(rect);
 
-  static const int kEpsilon = std::numeric_limits<int>::is_integer
-                                  ? 1
-                                  : std::numeric_limits<int>::epsilon();
-
-  int x = std::max<int>(0, c.width() - width() - rect.width() + kEpsilon);
-  int y = std::max<int>(0, c.height() - height() - rect.height() + kEpsilon);
+  int x = std::max(0, c.width() - width() - rect.width() + 1);
+  int y = std::max(0, c.height() - height() - rect.height() + 1);
   return x + y;
 }
 
@@ -283,11 +337,10 @@ Rect SubtractRects(const Rect& a, const Rect& b) {
 }
 
 Rect BoundingRect(const Point& p1, const Point& p2) {
-  int rx = std::min(p1.x(), p2.x());
-  int ry = std::min(p1.y(), p2.y());
-  int rr = std::max(p1.x(), p2.x());
-  int rb = std::max(p1.y(), p2.y());
-  return Rect(rx, ry, rr - rx, rb - ry);
+  Rect result;
+  result.SetByBounds(std::min(p1.x(), p2.x()), std::min(p1.y(), p2.y()),
+                     std::max(p1.x(), p2.x()), std::max(p1.y(), p2.y()));
+  return result;
 }
 
 }  // namespace gfx

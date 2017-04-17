@@ -25,7 +25,7 @@
 #include "remoting/protocol/transport_context.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/webrtc/libjingle/xmllite/xmlelement.h"
+#include "third_party/libjingle_xmpp/xmllite/xmlelement.h"
 
 using testing::_;
 
@@ -39,10 +39,6 @@ namespace {
 const int kMessageSize = 1024;
 const int kMessages = 100;
 const char kChannelName[] = "test_channel";
-
-ACTION_P(QuitRunLoop, run_loop) {
-  run_loop->Quit();
-}
 
 ACTION_P2(QuitRunLoopOnCounter, run_loop, counter) {
   --(*counter);
@@ -95,7 +91,7 @@ class IceTransportTest : public testing::Test {
     host_message_pipe_.reset();
     client_transport_.reset();
     host_transport_.reset();
-    message_loop_.RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
   }
 
   void ProcessTransportInfo(std::unique_ptr<IceTransport>* target_transport,
@@ -118,23 +114,23 @@ class IceTransportTest : public testing::Test {
     jingle_glue::JingleThreadWrapper::EnsureForCurrentMessageLoop();
 
     host_transport_.reset(new IceTransport(
-        new TransportContext(
-            nullptr, base::WrapUnique(new ChromiumPortAllocatorFactory()),
-            nullptr, network_settings_, TransportRole::SERVER),
+        new TransportContext(nullptr,
+                             base::MakeUnique<ChromiumPortAllocatorFactory>(),
+                             nullptr, network_settings_, TransportRole::SERVER),
         &host_event_handler_));
     if (!host_authenticator_) {
-      host_authenticator_.reset(new FakeAuthenticator(
-          FakeAuthenticator::HOST, 0, FakeAuthenticator::ACCEPT, true));
+      host_authenticator_.reset(
+          new FakeAuthenticator(FakeAuthenticator::ACCEPT));
     }
 
     client_transport_.reset(new IceTransport(
-        new TransportContext(
-            nullptr, base::WrapUnique(new ChromiumPortAllocatorFactory()),
-            nullptr, network_settings_, TransportRole::CLIENT),
+        new TransportContext(nullptr,
+                             base::MakeUnique<ChromiumPortAllocatorFactory>(),
+                             nullptr, network_settings_, TransportRole::CLIENT),
         &client_event_handler_));
     if (!client_authenticator_) {
-      client_authenticator_.reset(new FakeAuthenticator(
-          FakeAuthenticator::CLIENT, 0, FakeAuthenticator::ACCEPT, true));
+      client_authenticator_.reset(
+          new FakeAuthenticator(FakeAuthenticator::ACCEPT));
     }
 
     host_event_handler_.set_error_callback(base::Bind(
@@ -247,8 +243,8 @@ TEST_F(IceTransportTest, MuxDataStream) {
 
 TEST_F(IceTransportTest, FailedChannelAuth) {
   // Use host authenticator with one that rejects channel authentication.
-  host_authenticator_.reset(new FakeAuthenticator(
-      FakeAuthenticator::HOST, 0, FakeAuthenticator::REJECT_CHANNEL, true));
+  host_authenticator_.reset(
+      new FakeAuthenticator(FakeAuthenticator::REJECT_CHANNEL));
 
   InitializeConnection();
 

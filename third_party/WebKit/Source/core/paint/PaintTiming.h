@@ -6,9 +6,10 @@
 #define PaintTiming_h
 
 #include "core/dom/Document.h"
+#include "core/paint/FirstMeaningfulPaintDetector.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -16,75 +17,100 @@ class LocalFrame;
 
 // PaintTiming is responsible for tracking paint-related timings for a given
 // document.
-class PaintTiming final : public GarbageCollectedFinalized<PaintTiming>, public Supplement<Document> {
-    WTF_MAKE_NONCOPYABLE(PaintTiming);
-    USING_GARBAGE_COLLECTED_MIXIN(PaintTiming);
-public:
-    virtual ~PaintTiming() { }
+class CORE_EXPORT PaintTiming final
+    : public GarbageCollectedFinalized<PaintTiming>,
+      public Supplement<Document> {
+  WTF_MAKE_NONCOPYABLE(PaintTiming);
+  USING_GARBAGE_COLLECTED_MIXIN(PaintTiming);
 
-    static PaintTiming& from(Document&);
+ public:
+  virtual ~PaintTiming() {}
 
-    // mark*() methods record the time for the given paint event, record a trace
-    // event, and notify that paint timing has changed. These methods do nothing
-    // (early return) if a time has already been recorded for the given paint
-    // event.
-    void markFirstPaint();
+  static PaintTiming& From(Document&);
 
-    // markFirstTextPaint, markFirstImagePaint, and markFirstContentfulPaint
-    // will also record first paint if first paint hasn't been recorded yet.
-    void markFirstContentfulPaint();
+  // mark*() methods record the time for the given paint event, record a trace
+  // event, and notify that paint timing has changed. These methods do nothing
+  // (early return) if a time has already been recorded for the given paint
+  // event.
+  void MarkFirstPaint();
 
-    // markFirstTextPaint and markFirstImagePaint will also record first
-    // contentful paint if first contentful paint hasn't been recorded yet.
-    void markFirstTextPaint();
-    void markFirstImagePaint();
+  // markFirstTextPaint, markFirstImagePaint, and markFirstContentfulPaint
+  // will also record first paint if first paint hasn't been recorded yet.
+  void MarkFirstContentfulPaint();
 
-    // The getters below return monotonically-increasing seconds, or zero if the
-    // given paint event has not yet occurred. See the comments for
-    // monotonicallyIncreasingTime in wtf/CurrentTime.h for additional details.
+  // markFirstTextPaint and markFirstImagePaint will also record first
+  // contentful paint if first contentful paint hasn't been recorded yet.
+  void MarkFirstTextPaint();
+  void MarkFirstImagePaint();
 
-    // firstPaint returns the first time that anything was painted for the
-    // current document.
-    double firstPaint() const { return m_firstPaint; }
+  void SetFirstMeaningfulPaintCandidate(double timestamp);
+  void SetFirstMeaningfulPaint(double stamp);
+  void NotifyPaint(bool is_first_paint, bool text_painted, bool image_painted);
 
-    // firstContentfulPaint returns the first time that 'contentful' content was
-    // painted. For instance, the first time that text or image content was
-    // painted.
-    double firstContentfulPaint() const { return m_firstContentfulPaint; }
+  // The getters below return monotonically-increasing seconds, or zero if the
+  // given paint event has not yet occurred. See the comments for
+  // monotonicallyIncreasingTime in wtf/CurrentTime.h for additional details.
 
-    // firstTextPaint returns the first time that text content was painted.
-    double firstTextPaint() const { return m_firstTextPaint; }
+  // firstPaint returns the first time that anything was painted for the
+  // current document.
+  double FirstPaint() const { return first_paint_; }
 
-    // firstImagePaint returns the first time that image content was painted.
-    double firstImagePaint() const { return m_firstImagePaint; }
+  // firstContentfulPaint returns the first time that 'contentful' content was
+  // painted. For instance, the first time that text or image content was
+  // painted.
+  double FirstContentfulPaint() const { return first_contentful_paint_; }
 
-    DECLARE_VIRTUAL_TRACE();
+  // firstTextPaint returns the first time that text content was painted.
+  double FirstTextPaint() const { return first_text_paint_; }
 
-private:
-    explicit PaintTiming(Document&);
-    LocalFrame* frame() const;
-    void notifyPaintTimingChanged();
+  // firstImagePaint returns the first time that image content was painted.
+  double FirstImagePaint() const { return first_image_paint_; }
 
-    // set*() set the timing for the given paint event to the given timestamp
-    // and record a trace event if the value is currently zero, but do not
-    // notify that paint timing changed. These methods can be invoked from other
-    // mark*() or set*() methods to make sure that first paint is marked as part
-    // of marking first contentful paint, or that first contentful paint is
-    // marked as part of marking first text/image paint, for example.
-    void setFirstPaint(double stamp);
+  // firstMeaningfulPaint returns the first time that page's primary content
+  // was painted.
+  double FirstMeaningfulPaint() const { return first_meaningful_paint_; }
 
-    // setFirstContentfulPaint will also set first paint time if first paint
-    // time has not yet been recorded.
-    void setFirstContentfulPaint(double stamp);
+  // firstMeaningfulPaintCandidate indicates the first time we considered a
+  // paint to qualify as the potentially first meaningful paint. Unlike
+  // firstMeaningfulPaint, this signal is available in real time, but it may be
+  // an optimistic (i.e., too early) estimate.
+  double FirstMeaningfulPaintCandidate() const {
+    return first_meaningful_paint_candidate_;
+  }
 
-    double m_firstPaint = 0.0;
-    double m_firstTextPaint = 0.0;
-    double m_firstImagePaint = 0.0;
-    double m_firstContentfulPaint = 0.0;
+  FirstMeaningfulPaintDetector& GetFirstMeaningfulPaintDetector() {
+    return *fmp_detector_;
+  }
 
-    Member<Document> m_document;
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  explicit PaintTiming(Document&);
+  LocalFrame* GetFrame() const;
+  void NotifyPaintTimingChanged();
+
+  // set*() set the timing for the given paint event to the given timestamp
+  // and record a trace event if the value is currently zero, but do not
+  // notify that paint timing changed. These methods can be invoked from other
+  // mark*() or set*() methods to make sure that first paint is marked as part
+  // of marking first contentful paint, or that first contentful paint is
+  // marked as part of marking first text/image paint, for example.
+  void SetFirstPaint(double stamp);
+
+  // setFirstContentfulPaint will also set first paint time if first paint
+  // time has not yet been recorded.
+  void SetFirstContentfulPaint(double stamp);
+
+  double first_paint_ = 0.0;
+  double first_text_paint_ = 0.0;
+  double first_image_paint_ = 0.0;
+  double first_contentful_paint_ = 0.0;
+  double first_meaningful_paint_ = 0.0;
+  double first_meaningful_paint_candidate_ = 0.0;
+
+  Member<FirstMeaningfulPaintDetector> fmp_detector_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -123,28 +123,12 @@ class ToolbarActionsModelUnitTest
   ~ToolbarActionsModelUnitTest() override {}
 
  protected:
-  // Initialize the ExtensionService, ToolbarActionsModel, and
-  // ExtensionSystem.
+  // Initialize the ExtensionService, ToolbarActionsModel, and ExtensionSystem.
   void Init();
 
-  enum class MigrationStatus {
-    // The feature is enabled without any extension to migrate.
-    FEATURE_ENABLED_NO_EXTENSION,
-    // The feature is enabled and the user has installed an extension.
-    FEATURE_ENABLED_EXTENSION_INSTALLED,
-    // Feature is enabled with extension and a pref of false.
-    FEATURE_ENABLED_WITH_PREF_FALSE,
-    // Feature is enabled with extension and a pref of true.
-    FEATURE_ENABLED_WITH_PREF_TRUE,
-    // The feature is now disabled after previously being enabled, and the user
-    // has a pref reflecting a previous migration.
-    FEATURE_DISABLED_WITH_PREF_TRUE,
-  };
-
-  // Initialize the ExtensionService, ToolbarActionsModel, and ExtensionSystem,
-  // and an action extension to migrate to a component.  |migration_status|
-  // is used to configure the user's initial migration status.
-  void InitForMigrationTest(MigrationStatus migration_status);
+  // Initializes the ExtensionService, ToolbarActionsModel, and ExtensionSystem,
+  // making ToolbarActionsModel use a MockComponentToolbarActionsFactory.
+  void InitWithMockActionsFactory();
 
   void TearDown() override;
 
@@ -163,9 +147,6 @@ class ToolbarActionsModelUnitTest
   // action, and are added in that order.
   testing::AssertionResult AddActionExtensions() WARN_UNUSED_RESULT;
 
-  // Creates an extension that is to be migrated to a component action.
-  void CreateMigratedActionExtension();
-
   // Returns the action's id at the given index in the toolbar model, or empty
   // if one does not exist.
   // If |model| is specified, it is used. Otherwise, this defaults to
@@ -176,8 +157,6 @@ class ToolbarActionsModelUnitTest
 
   // Returns true if the |toobar_model_| has an action with the given |id|.
   bool ModelHasActionForId(const std::string& id) const;
-
-  void SetMockActionsFactory(MockComponentToolbarActionsFactory* factory);
 
   ToolbarActionsModel* toolbar_model() { return toolbar_model_; }
 
@@ -198,9 +177,6 @@ class ToolbarActionsModelUnitTest
   }
   const extensions::Extension* browser_action() const {
     return browser_action_extension_.get();
-  }
-  const extensions::Extension* browser_action_migrated() const {
-    return browser_action_migrated_.get();
   }
   const extensions::Extension* page_action() const {
     return page_action_extension_.get();
@@ -230,14 +206,11 @@ class ToolbarActionsModelUnitTest
   scoped_refptr<const extensions::Extension> browser_action_a_;
   scoped_refptr<const extensions::Extension> browser_action_b_;
   scoped_refptr<const extensions::Extension> browser_action_c_;
-  scoped_refptr<const extensions::Extension> browser_action_migrated_;
 
   // Sample extensions with different kinds of actions.
   scoped_refptr<const extensions::Extension> browser_action_extension_;
   scoped_refptr<const extensions::Extension> page_action_extension_;
   scoped_refptr<const extensions::Extension> no_action_extension_;
-
-  std::unique_ptr<MockComponentToolbarActionsFactory> mock_actions_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ToolbarActionsModelUnitTest);
 };
@@ -247,48 +220,26 @@ void ToolbarActionsModelUnitTest::Init() {
   toolbar_model_ =
       extensions::extension_action_test_util::CreateToolbarModelForProfile(
           profile());
-  model_observer_.reset(new ToolbarActionsModelTestObserver(toolbar_model_));
+  model_observer_ =
+      base::MakeUnique<ToolbarActionsModelTestObserver>(toolbar_model_);
 }
 
-void ToolbarActionsModelUnitTest::InitForMigrationTest(
-    MigrationStatus migration_status) {
+void ToolbarActionsModelUnitTest::InitWithMockActionsFactory() {
   InitializeEmptyExtensionService();
-  SetMockActionsFactory(new MockComponentToolbarActionsFactory(nullptr));
-  CreateMigratedActionExtension();
+  toolbar_model_ = extensions::extension_action_test_util::
+      CreateToolbarModelForProfileWithoutWaitingForReady(profile());
+  toolbar_model_->SetMockActionsFactoryForTest(
+      base::MakeUnique<MockComponentToolbarActionsFactory>(profile()));
 
-  {
-    DictionaryPrefUpdate update(profile()->GetPrefs(),
-                                ::prefs::kToolbarMigratedComponentActionStatus);
-    switch (migration_status) {
-      case MigrationStatus::FEATURE_ENABLED_EXTENSION_INSTALLED:
-        mock_actions_factory_->set_migrated_feature_enabled(true);
-        ASSERT_TRUE(AddExtension(browser_action_migrated()));
-        break;
-      case MigrationStatus::FEATURE_ENABLED_NO_EXTENSION:
-        mock_actions_factory_->set_migrated_feature_enabled(true);
-        break;
-      case MigrationStatus::FEATURE_ENABLED_WITH_PREF_TRUE:
-        mock_actions_factory_->set_migrated_feature_enabled(true);
-        ASSERT_TRUE(AddExtension(browser_action_migrated()));
-        update->SetBoolean(component_action_id(), true);
-        break;
-      case MigrationStatus::FEATURE_ENABLED_WITH_PREF_FALSE:
-        mock_actions_factory_->set_migrated_feature_enabled(true);
-        ASSERT_TRUE(AddExtension(browser_action_migrated()));
-        update->SetBoolean(component_action_id(), false);
-        break;
-      case MigrationStatus::FEATURE_DISABLED_WITH_PREF_TRUE:
-        mock_actions_factory_->set_migrated_feature_enabled(false);
-        ASSERT_TRUE(AddExtension(browser_action_migrated()));
-        update->SetBoolean(component_action_id(), true);
-        break;
-    }
-  }
+  // Trigger ToolbarActionsModel::OnReady() after the actions factory has been
+  // swapped out for a mock one.
+  static_cast<extensions::TestExtensionSystem*>(
+      extensions::ExtensionSystem::Get(profile()))
+      ->SetReady();
+  base::RunLoop().RunUntilIdle();
 
-  toolbar_model_ =
-      extensions::extension_action_test_util::CreateToolbarModelForProfile(
-          profile());
-  model_observer_.reset(new ToolbarActionsModelTestObserver(toolbar_model_));
+  model_observer_ =
+      base::MakeUnique<ToolbarActionsModelTestObserver>(toolbar_model_);
 }
 
 void ToolbarActionsModelUnitTest::TearDown() {
@@ -368,15 +319,6 @@ ToolbarActionsModelUnitTest::AddBrowserActionExtensions() {
   return AddAndVerifyExtensions(extensions);
 }
 
-void ToolbarActionsModelUnitTest::CreateMigratedActionExtension() {
-  browser_action_migrated_ =
-      extensions::extension_action_test_util::CreateActionExtension(
-          "browser_actionMigrated",
-          extensions::extension_action_test_util::BROWSER_ACTION);
-  mock_actions_factory_->set_migrated_extension_id(
-      browser_action_migrated_->id());
-}
-
 const std::string ToolbarActionsModelUnitTest::GetActionIdAtIndex(
     size_t index,
     const ToolbarActionsModel* model) const {
@@ -409,11 +351,6 @@ testing::AssertionResult ToolbarActionsModelUnitTest::AddAndVerifyExtensions(
     }
   }
   return testing::AssertionSuccess();
-}
-
-void ToolbarActionsModelUnitTest::SetMockActionsFactory(
-    MockComponentToolbarActionsFactory* factory) {
-  mock_actions_factory_.reset(factory);
 }
 
 // A basic test for component actions and extensions with browser actions
@@ -1117,11 +1054,11 @@ TEST_F(ToolbarActionsModelUnitTest, ActionsToolbarIncognitoEnableExtension) {
     // The extension id will be calculated from the file path; we need this to
     // wait for the extension to load.
     base::FilePath path_for_id =
-        base::MakeAbsoluteFilePath(dirs[i]->unpacked_path());
+        base::MakeAbsoluteFilePath(dirs[i]->UnpackedPath());
     std::string id = crx_file::id_util::GenerateIdForPath(path_for_id);
     extensions::TestExtensionRegistryObserver observer(registry(), id);
-    extensions::UnpackedInstaller::Create(service())
-        ->Load(dirs[i]->unpacked_path());
+    extensions::UnpackedInstaller::Create(service())->Load(
+        dirs[i]->UnpackedPath());
     observer.WaitForExtensionLoaded();
     extensions[i] = registry()->enabled_extensions().GetByID(id);
     ASSERT_TRUE(extensions[i]);
@@ -1308,44 +1245,13 @@ TEST_F(ToolbarActionsModelUnitTest, ToolbarModelPrefChange) {
             observer()->inserted_count() - observer()->removed_count());
 }
 
-TEST_F(ToolbarActionsModelUnitTest, ComponentExtensionsAddedToEnd) {
-  Init();
-
-  ASSERT_TRUE(AddBrowserActionExtensions());
-
-  EXPECT_EQ(browser_action_a()->id(), GetActionIdAtIndex(0));
-  EXPECT_EQ(browser_action_b()->id(), GetActionIdAtIndex(1));
-  EXPECT_EQ(browser_action_c()->id(), GetActionIdAtIndex(2));
-
-  const char kName[] = "component";
-  extensions::DictionaryBuilder manifest;
-  manifest.Set("name", kName)
-      .Set("description", "An extension")
-      .Set("manifest_version", 2)
-      .Set("version", "1.0.0")
-      .Set("browser_action", extensions::DictionaryBuilder().Build());
-  scoped_refptr<const extensions::Extension> component_extension =
-      extensions::ExtensionBuilder()
-          .SetManifest(manifest.Build())
-          .SetID(crx_file::id_util::GenerateId(kName))
-          .SetLocation(extensions::Manifest::COMPONENT)
-          .Build();
-  service()->AddExtension(component_extension.get());
-
-  EXPECT_EQ(component_extension.get()->id(), GetActionIdAtIndex(0));
-  EXPECT_EQ(browser_action_a()->id(), GetActionIdAtIndex(1));
-  EXPECT_EQ(browser_action_b()->id(), GetActionIdAtIndex(2));
-  EXPECT_EQ(browser_action_c()->id(), GetActionIdAtIndex(3));
-}
-
 // Test various different reorderings, removals, and reinsertions of the
 // toolbar with component actions.
 TEST_F(ToolbarActionsModelUnitTest,
        ActionsToolbarReorderAndReinsertWithSwitchAndComponentActions) {
   extensions::FeatureSwitch::ScopedOverride enable_redesign(
       extensions::FeatureSwitch::extension_action_redesign(), true);
-  SetMockActionsFactory(new MockComponentToolbarActionsFactory(nullptr));
-  Init();
+  InitWithMockActionsFactory();
 
   // One component action was added when the model was initialized.
   EXPECT_EQ(1u, num_toolbar_items());
@@ -1460,6 +1366,76 @@ TEST_F(ToolbarActionsModelUnitTest,
   EXPECT_EQ(browser_action_c()->id(), GetActionIdAtIndex(1u));
 }
 
+TEST_F(ToolbarActionsModelUnitTest, AddAndRemoveComponentActionWithOVerflow) {
+  Init();
+  // Add three extension actions: A, B, C.
+  ASSERT_TRUE(AddBrowserActionExtensions());
+  EXPECT_EQ(3u, num_toolbar_items());
+
+  // Hide the last icon: A, B, [C].
+  toolbar_model()->SetVisibleIconCount(2);
+  EXPECT_EQ(2u, toolbar_model()->visible_icon_count());
+  EXPECT_EQ(browser_action_c()->id(), GetActionIdAtIndex(2u));
+
+  // Add a component action, CA. Now the icons should be: A, B, CA, [C].
+  toolbar_model()->AddComponentAction(component_action_id());
+  EXPECT_EQ(4u, num_toolbar_items());
+  EXPECT_EQ(3u, toolbar_model()->visible_icon_count());
+  EXPECT_EQ(component_action_id(), GetActionIdAtIndex(2u));
+  EXPECT_EQ(browser_action_c()->id(), GetActionIdAtIndex(3u));
+
+  // Remove the component action. Extension C should stay in the overflow.
+  // The icons should be: A, B, [C].
+  toolbar_model()->RemoveComponentAction(component_action_id());
+  EXPECT_EQ(3u, num_toolbar_items());
+  EXPECT_EQ(2u, toolbar_model()->visible_icon_count());
+  EXPECT_EQ(browser_action_c()->id(), GetActionIdAtIndex(2u));
+}
+
+TEST_F(ToolbarActionsModelUnitTest, AddComponentActionInIncognito) {
+  Init();
+  // Add three extension actions: A, B, C.
+  ASSERT_TRUE(AddBrowserActionExtensions());
+  EXPECT_EQ(3u, num_toolbar_items());
+
+  // Enable extension C in incognito.
+  extensions::ExtensionPrefs* extension_prefs =
+      extensions::ExtensionPrefs::Get(profile());
+  extension_prefs->SetIsIncognitoEnabled(browser_action_c()->id(), true);
+  extensions::util::SetIsIncognitoEnabled(browser_action_c()->id(), profile(),
+                                          true);
+
+  // Get an incognito toolbar.
+  ToolbarActionsModel* incognito_model =
+      extensions::extension_action_test_util::CreateToolbarModelForProfile(
+          profile()->GetOffTheRecordProfile());
+
+  // The incognito toolbar should only have extension C.
+  EXPECT_EQ(1u, incognito_model->toolbar_items().size());
+
+  // Add a component action to the incognito toolbar. It shouldn't appear on the
+  // non-incognito toolbar.
+  incognito_model->AddComponentAction(component_action_id());
+  EXPECT_EQ(2u, incognito_model->toolbar_items().size());
+  EXPECT_EQ(2u, incognito_model->visible_icon_count());
+  EXPECT_EQ(component_action_id(), GetActionIdAtIndex(1u, incognito_model));
+  EXPECT_EQ(3u, num_toolbar_items());
+  incognito_model->RemoveComponentAction(component_action_id());
+
+  // Set visible count to 2 so that C is overflowed on the non-incognito
+  // toolbar. Its state is A, B, [C]. C stays visible on the incognito toolbar.
+  toolbar_model()->SetVisibleIconCount(2);
+  EXPECT_EQ(1u, incognito_model->toolbar_items().size());
+  EXPECT_EQ(1u, incognito_model->visible_icon_count());
+
+  // Add a component action to the incognito toolbar. It shouldn't appear in the
+  // overflow menu.
+  incognito_model->AddComponentAction(component_action_id());
+  EXPECT_EQ(2u, incognito_model->toolbar_items().size());
+  EXPECT_EQ(2u, incognito_model->visible_icon_count());
+  EXPECT_EQ(component_action_id(), GetActionIdAtIndex(1u, incognito_model));
+}
+
 TEST_F(ToolbarActionsModelUnitTest,
        TestUninstallVisibleExtensionDoesntBringOutOther) {
   Init();
@@ -1484,59 +1460,14 @@ TEST_F(ToolbarActionsModelUnitTest,
   EXPECT_EQ(browser_action_c()->id(), GetActionIdAtIndex(1u));
 }
 
-TEST_F(ToolbarActionsModelUnitTest,
-       NoMigrationToComponentActionWithoutExtension) {
-  extensions::FeatureSwitch::ScopedOverride enable_redesign(
-      extensions::FeatureSwitch::extension_action_redesign(), true);
-  InitForMigrationTest(MigrationStatus::FEATURE_ENABLED_NO_EXTENSION);
+TEST_F(ToolbarActionsModelUnitTest, AddComponentActionBeforeInitialization) {
+  InitializeEmptyExtensionService();
+  ToolbarActionsModel* toolbar_model = extensions::extension_action_test_util::
+      CreateToolbarModelForProfileWithoutWaitingForReady(profile());
+  ASSERT_FALSE(toolbar_model->actions_initialized());
 
-  EXPECT_EQ(0u, num_toolbar_items());
-}
-
-TEST_F(ToolbarActionsModelUnitTest, MigrationFromExtensionToComponentAction) {
-  extensions::FeatureSwitch::ScopedOverride enable_redesign(
-      extensions::FeatureSwitch::extension_action_redesign(), true);
-  InitForMigrationTest(MigrationStatus::FEATURE_ENABLED_EXTENSION_INSTALLED);
-
-  // Initialization disables the extension and adds the migrated component
-  // action.
-  EXPECT_EQ(1u, num_toolbar_items());
-  EXPECT_EQ(component_action_id(), GetActionIdAtIndex(0u));
-}
-
-TEST_F(ToolbarActionsModelUnitTest, MigratedComponentActionAddedWithPrefTrue) {
-  extensions::FeatureSwitch::ScopedOverride enable_redesign(
-      extensions::FeatureSwitch::extension_action_redesign(), true);
-  InitForMigrationTest(MigrationStatus::FEATURE_ENABLED_WITH_PREF_TRUE);
-
-  EXPECT_EQ(1u, num_toolbar_items());
-  EXPECT_EQ(component_action_id(), GetActionIdAtIndex(0u));
-}
-
-TEST_F(ToolbarActionsModelUnitTest, NoMigratedComponentActionWithPrefFalse) {
-  extensions::FeatureSwitch::ScopedOverride enable_redesign(
-      extensions::FeatureSwitch::extension_action_redesign(), true);
-  InitForMigrationTest(MigrationStatus::FEATURE_ENABLED_WITH_PREF_FALSE);
-
-  EXPECT_EQ(0u, num_toolbar_items());
-}
-
-TEST_F(ToolbarActionsModelUnitTest, MigrationFromComponentActionToExtension) {
-  extensions::FeatureSwitch::ScopedOverride enable_redesign(
-      extensions::FeatureSwitch::extension_action_redesign(), true);
-  InitForMigrationTest(MigrationStatus::FEATURE_DISABLED_WITH_PREF_TRUE);
-
-  // Initialization re-enables the extension and removes the migrated component
-  // action.
-  EXPECT_EQ(1u, num_toolbar_items());
-  EXPECT_EQ(browser_action_migrated()->id(), GetActionIdAtIndex(0u));
-}
-
-TEST_F(ToolbarActionsModelUnitTest,
-       MigrationToExtensionWithoutExtensionActionRedesign) {
-  InitForMigrationTest(MigrationStatus::FEATURE_DISABLED_WITH_PREF_TRUE);
-
-  // Initialization re-enables the extension.
-  EXPECT_EQ(1u, num_toolbar_items());
-  EXPECT_EQ(browser_action_migrated()->id(), GetActionIdAtIndex(0u));
+  // AddComponentAction() should be a no-op if actions_initialized() is false.
+  toolbar_model->AddComponentAction(component_action_id());
+  EXPECT_EQ(0u, toolbar_model->toolbar_items().size());
+  EXPECT_FALSE(toolbar_model->HasComponentAction(component_action_id()));
 }

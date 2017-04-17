@@ -603,12 +603,15 @@ xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
     xmlXPathObjectPtr formatObj = NULL;
     xmlXPathObjectPtr decimalObj = NULL;
     xsltStylesheetPtr sheet;
-    xsltDecimalFormatPtr formatValues;
+    xsltDecimalFormatPtr formatValues = NULL;
     xmlChar *result;
+    const xmlChar *ncname;
+    const xmlChar *prefix = NULL;
+    const xmlChar *nsUri = NULL;
     xsltTransformContextPtr tctxt;
 
     tctxt = xsltXPathGetTransformContext(ctxt);
-    if (tctxt == NULL)
+    if ((tctxt == NULL) || (tctxt->inst == NULL))
 	return;
     sheet = tctxt->style;
     if (sheet == NULL)
@@ -619,7 +622,21 @@ xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
     case 3:
 	CAST_TO_STRING;
 	decimalObj = valuePop(ctxt);
-	formatValues = xsltDecimalFormatGetByName(sheet, decimalObj->stringval);
+        ncname = xsltSplitQName(sheet->dict, decimalObj->stringval, &prefix);
+        if (prefix != NULL) {
+            xmlNsPtr ns = xmlSearchNs(tctxt->inst->doc, tctxt->inst, prefix);
+            if (ns == NULL) {
+                xsltTransformError(tctxt, NULL, NULL,
+                    "format-number : No namespace found for QName '%s:%s'\n",
+                    prefix, ncname);
+                sheet->errors++;
+                ncname = NULL;
+            }
+            nsUri = ns->href;
+        }
+        if (ncname != NULL) {
+	    formatValues = xsltDecimalFormatGetByQName(sheet, nsUri, ncname);
+        }
 	if (formatValues == NULL) {
 	    xsltTransformError(tctxt, NULL, NULL,
 		    "format-number() : undeclared decimal format '%s'\n",
@@ -835,7 +852,7 @@ xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
     }
     obj = valuePop(ctxt);
     tctxt = xsltXPathGetTransformContext(ctxt);
-    if (tctxt == NULL) {
+    if ((tctxt == NULL) || (tctxt->inst == NULL)) {
 	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
 		"element-available() : internal error tctxt == NULL\n");
 	xmlXPathFreeObject(obj);
@@ -850,7 +867,7 @@ xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
 
 	name = xmlStrdup(obj->stringval);
 	ns = xmlSearchNs(tctxt->inst->doc, tctxt->inst, NULL);
-	if (ns != NULL) nsURI = xmlStrdup(ns->href);
+	if (ns != NULL) nsURI = ns->href;
     } else {
 	nsURI = xmlXPathNsLookup(ctxt->context, prefix);
 	if (nsURI == NULL) {

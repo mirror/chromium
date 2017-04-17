@@ -20,8 +20,6 @@
 
 template <class T> class scoped_refptr;
 
-class GURL;
-
 namespace base {
 class FilePath;
 class SequencedTaskRunner;
@@ -53,6 +51,7 @@ class GCMClient {
     IMMEDIATE_START
   };
 
+  // Used for UMA. Can add enum values, but never renumber or delete and reuse.
   enum Result {
     // Successful operation.
     SUCCESS,
@@ -70,7 +69,10 @@ class GCMClient {
     // Exceeded the specified TTL during message sending.
     TTL_EXCEEDED,
     // Other errors.
-    UNKNOWN_ERROR
+    UNKNOWN_ERROR,
+
+    // Used for UMA. Keep LAST_RESULT up to date and sync with histograms.xml.
+    LAST_RESULT = UNKNOWN_ERROR
   };
 
   enum ChromePlatform {
@@ -98,6 +100,7 @@ class GCMClient {
     ChromePlatform platform;
     ChromeChannel channel;
     std::string version;
+    std::string product_category_for_subtypes;
   };
 
   // Detailed information of the Send Error event.
@@ -123,6 +126,8 @@ class GCMClient {
     std::string gcm_client_state;
     bool connection_client_created;
     std::string connection_state;
+    base::Time last_checkin;
+    base::Time next_checkin;
     uint64_t android_id;
     std::vector<std::string> registered_app_ids;
     int send_queue_size;
@@ -211,6 +216,10 @@ class GCMClient {
 
     // Called when the connection is interrupted.
     virtual void OnDisconnected() = 0;
+
+    // Called when the GCM store is reset (e.g. due to corruption), which
+    // changes the device ID, invalidating all prior registrations.
+    virtual void OnStoreReset() = 0;
   };
 
   GCMClient();
@@ -251,6 +260,13 @@ class GCMClient {
   //                      authorized entity and scope.
   virtual void Register(
       const linked_ptr<RegistrationInfo>& registration_info) = 0;
+
+  // Checks that the provided |registration_id| (aka token for Instance ID
+  // registrations) matches the stored registration info. Also checks sender IDs
+  // match for GCM registrations.
+  virtual bool ValidateRegistration(
+      const linked_ptr<RegistrationInfo>& registration_info,
+      const std::string& registration_id) = 0;
 
   // Unregisters from the server to stop accessing the provided service.
   // Delegate::OnUnregisterFinished will be called asynchronously upon

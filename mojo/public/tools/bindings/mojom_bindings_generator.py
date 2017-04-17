@@ -37,10 +37,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
 
 from mojom.error import Error
 import mojom.fileutil as fileutil
-from mojom.generate.data import OrderedModuleFromData
+from mojom.generate import translate
 from mojom.generate import template_expander
 from mojom.parse.parser import Parse
-from mojom.parse.translate import Translate
 
 
 _BUILTIN_GENERATORS = {
@@ -102,6 +101,12 @@ def FindImportFile(rel_dir, file_name, search_rel_dirs):
 
 
 class MojomProcessor(object):
+  """Parses mojom files and creates ASTs for them.
+
+  Attributes:
+    _processed_files: {Dict[str, mojom.generate.module.Module]} Mapping from
+        relative mojom filename paths to the module AST for that mojom file.
+  """
   def __init__(self, should_generate):
     self._should_generate = should_generate
     self._processed_files = {}
@@ -136,20 +141,18 @@ class MojomProcessor(object):
     tree = self._parsed_files[rel_filename.path]
 
     dirname, name = os.path.split(rel_filename.path)
-    mojom = Translate(tree, name)
-    if args.debug_print_intermediate:
-      pprint.PrettyPrinter().pprint(mojom)
 
     # Process all our imports first and collect the module object for each.
     # We use these to generate proper type info.
-    for import_data in mojom['imports']:
+    imports = {}
+    for parsed_imp in tree.import_list:
       rel_import_file = FindImportFile(
           RelativePath(dirname, rel_filename.source_root),
-          import_data['filename'], args.import_directories)
-      import_data['module'] = self._GenerateModule(
+          parsed_imp.import_filename, args.import_directories)
+      imports[parsed_imp.import_filename] = self._GenerateModule(
           args, remaining_args, generator_modules, rel_import_file)
 
-    module = OrderedModuleFromData(mojom)
+    module = translate.OrderedModule(tree, name, imports)
 
     # Set the path as relative to the source root.
     module.path = rel_filename.relative_path()
@@ -163,7 +166,11 @@ class MojomProcessor(object):
             module, args.output_dir, typemap=self._typemap.get(language, {}),
             variant=args.variant, bytecode_path=args.bytecode_path,
             for_blink=args.for_blink,
-            use_new_wrapper_types=args.use_new_wrapper_types)
+            use_once_callback=args.use_once_callback,
+            use_new_js_bindings=args.use_new_js_bindings,
+            export_attribute=args.export_attribute,
+            export_header=args.export_header,
+            generate_non_variant_code=args.generate_non_variant_code)
         filtered_args = []
         if hasattr(generator_module, 'GENERATOR_PREFIX'):
           prefix = '--' + generator_module.GENERATOR_PREFIX + '_'
@@ -190,7 +197,7 @@ class MojomProcessor(object):
       with open(rel_filename.path) as f:
         source = f.read()
     except IOError as e:
-      print "%s: Error: %s" % (e.rel_filename.path, e.strerror) + \
+      print "%s: Error: %s" % (rel_filename.path, e.strerror) + \
           MakeImportStackMessage(imported_filename_stack + [rel_filename.path])
       sys.exit(1)
 
@@ -230,6 +237,12 @@ def _Generate(args, remaining_args):
   processor.LoadTypemaps(set(args.typemaps))
   for filename in args.filename:
     processor.ProcessFile(args, remaining_args, generator_modules, filename)
+  if args.depfile:
+    assert args.depfile_target
+    with open(args.depfile, 'w') as f:
+      f.write('%s: %s' % (
+          args.depfile_target,
+          ' '.join(processor._parsed_files.keys())))
 
   return 0
 
@@ -258,9 +271,6 @@ def main():
   generate_parser.add_argument("-o", "--output_dir", dest="output_dir",
                                default=".",
                                help="output directory for generated files")
-  generate_parser.add_argument("--debug_print_intermediate",
-                               action="store_true",
-                               help="print the intermediate representation")
   generate_parser.add_argument("-g", "--generators",
                                dest="generators_string",
                                metavar="GENERATORS",
@@ -286,9 +296,29 @@ def main():
                                help="Use WTF types as generated types for mojo "
                                "string/array/map.")
   generate_parser.add_argument(
-      "--use_new_wrapper_types", action="store_true",
-      help="Map mojom array/map/string to STL (for chromium variant) or WTF "
-      "(for blink variant) types directly.")
+      "--use_once_callback", action="store_true",
+      help="Use base::OnceCallback instead of base::RepeatingCallback.")
+  generate_parser.add_argument(
+      "--use_new_js_bindings", action="store_true",
+      help="Use the new module loading approach and the core API exposed by "
+      "Web IDL. This option only affects the JavaScript bindings.")
+  generate_parser.add_argument(
+      "--export_attribute", type=str, default="",
+      help="Optional attribute to specify on class declaration to export it "
+      "for the component build.")
+  generate_parser.add_argument(
+      "--export_header", type=str, default="",
+      help="Optional header to include in the generated headers to support the "
+      "component build.")
+  generate_parser.add_argument(
+      "--generate_non_variant_code", action="store_true",
+      help="Generate code that is shared by different variants.")
+  generate_parser.add_argument(
+      "--depfile", type=str,
+      help="A file into which the list of input files will be written.")
+  generate_parser.add_argument(
+      "--depfile_target", type=str,
+      help="The target name to use in the depfile.")
   generate_parser.set_defaults(func=_Generate)
 
   precompile_parser = subparsers.add_parser("precompile",

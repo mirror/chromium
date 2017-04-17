@@ -31,6 +31,7 @@
 #ifndef ServiceWorkerContainer_h
 #define ServiceWorkerContainer_h
 
+#include <memory>
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseProperty.h"
 #include "bindings/core/v8/ScriptWrappable.h"
@@ -41,67 +42,84 @@
 #include "modules/serviceworkers/ServiceWorker.h"
 #include "modules/serviceworkers/ServiceWorkerRegistration.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Forward.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProviderClient.h"
-#include "wtf/Forward.h"
-#include <memory>
 
 namespace blink {
 
 class ExecutionContext;
+class NavigatorServiceWorker;
 class WebServiceWorker;
 class WebServiceWorkerProvider;
-class WebServiceWorkerRegistration;
 
 class MODULES_EXPORT ServiceWorkerContainer final
-    : public EventTargetWithInlineData
-    , public ContextLifecycleObserver
-    , public WebServiceWorkerProviderClient {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(ServiceWorkerContainer);
-public:
-    using RegistrationCallbacks = WebServiceWorkerProvider::WebServiceWorkerRegistrationCallbacks;
+    : public EventTargetWithInlineData,
+      public ContextLifecycleObserver,
+      public WebServiceWorkerProviderClient {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(ServiceWorkerContainer);
 
-    static ServiceWorkerContainer* create(ExecutionContext*);
-    ~ServiceWorkerContainer();
+ public:
+  using RegistrationCallbacks =
+      WebServiceWorkerProvider::WebServiceWorkerRegistrationCallbacks;
 
-    DECLARE_VIRTUAL_TRACE();
+  static ServiceWorkerContainer* Create(ExecutionContext*,
+                                        NavigatorServiceWorker*);
+  ~ServiceWorkerContainer();
 
-    ServiceWorker* controller() { return m_controller; }
-    ScriptPromise ready(ScriptState*);
-    WebServiceWorkerProvider* provider() { return m_provider; }
+  DECLARE_VIRTUAL_TRACE();
 
-    void registerServiceWorkerImpl(ExecutionContext*, const KURL& scriptURL, const KURL& scope, std::unique_ptr<RegistrationCallbacks>);
+  ServiceWorker* controller() { return controller_; }
+  ScriptPromise ready(ScriptState*);
+  WebServiceWorkerProvider* Provider() { return provider_; }
 
-    ScriptPromise registerServiceWorker(ScriptState*, const String& pattern, const RegistrationOptions&);
-    ScriptPromise getRegistration(ScriptState*, const String& documentURL);
-    ScriptPromise getRegistrations(ScriptState*);
+  void RegisterServiceWorkerImpl(ExecutionContext*,
+                                 const KURL& script_url,
+                                 const KURL& scope,
+                                 std::unique_ptr<RegistrationCallbacks>);
 
-    void contextDestroyed() override;
+  ScriptPromise registerServiceWorker(ScriptState*,
+                                      const String& pattern,
+                                      const RegistrationOptions&);
+  ScriptPromise getRegistration(ScriptState*, const String& document_url);
+  ScriptPromise getRegistrations(ScriptState*);
 
-    // WebServiceWorkerProviderClient overrides.
-    void setController(std::unique_ptr<WebServiceWorker::Handle>, bool shouldNotifyControllerChange) override;
-    void dispatchMessageEvent(std::unique_ptr<WebServiceWorker::Handle>, const WebString& message, const WebMessagePortChannelArray&) override;
+  void ContextDestroyed(ExecutionContext*) override;
 
-    // EventTarget overrides.
-    ExecutionContext* getExecutionContext() const override { return ContextLifecycleObserver::getExecutionContext(); }
-    const AtomicString& interfaceName() const override;
+  // WebServiceWorkerProviderClient overrides.
+  void SetController(std::unique_ptr<WebServiceWorker::Handle>,
+                     bool should_notify_controller_change) override;
+  void DispatchMessageEvent(std::unique_ptr<WebServiceWorker::Handle>,
+                            const WebString& message,
+                            WebMessagePortChannelArray) override;
+  void CountFeature(uint32_t feature) override;
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(controllerchange);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
+  // EventTarget overrides.
+  ExecutionContext* GetExecutionContext() const override {
+    return ContextLifecycleObserver::GetExecutionContext();
+  }
+  const AtomicString& InterfaceName() const override;
 
-private:
-    explicit ServiceWorkerContainer(ExecutionContext*);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(controllerchange);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
 
-    class GetRegistrationForReadyCallback;
-    typedef ScriptPromiseProperty<Member<ServiceWorkerContainer>, Member<ServiceWorkerRegistration>, Member<ServiceWorkerRegistration>> ReadyProperty;
-    ReadyProperty* createReadyProperty();
+ private:
+  ServiceWorkerContainer(ExecutionContext*, NavigatorServiceWorker*);
 
-    WebServiceWorkerProvider* m_provider;
-    Member<ServiceWorker> m_controller;
-    Member<ReadyProperty> m_ready;
+  class GetRegistrationForReadyCallback;
+  typedef ScriptPromiseProperty<Member<ServiceWorkerContainer>,
+                                Member<ServiceWorkerRegistration>,
+                                Member<ServiceWorkerRegistration>>
+      ReadyProperty;
+  ReadyProperty* CreateReadyProperty();
+
+  WebServiceWorkerProvider* provider_;
+  Member<ServiceWorker> controller_;
+  Member<ReadyProperty> ready_;
+  Member<NavigatorServiceWorker> navigator_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ServiceWorkerContainer_h
+#endif  // ServiceWorkerContainer_h

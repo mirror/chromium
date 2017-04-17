@@ -6,175 +6,198 @@
 
 #include "base/bind.h"
 #include "base/location.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/time.h"
 #include "chrome/browser/android/offline_pages/offline_page_mhtml_archiver.h"
 #include "chrome/browser/android/offline_pages/offline_page_model_factory.h"
 #include "chrome/browser/android/offline_pages/offline_page_tab_helper.h"
+#include "chrome/browser/android/offline_pages/request_coordinator_factory.h"
 #include "chrome/browser/android/tab_android.h"
-#include "components/offline_pages/offline_page_feature.h"
-#include "components/offline_pages/offline_page_item.h"
-#include "components/offline_pages/offline_page_model.h"
+#include "chrome/browser/net/net_error_tab_helper.h"
+#include "components/offline_pages/core/background/request_coordinator.h"
+#include "components/offline_pages/core/background/save_page_request.h"
+#include "components/offline_pages/core/client_namespace_constants.h"
+#include "components/offline_pages/core/client_policy_controller.h"
+#include "components/offline_pages/core/offline_page_feature.h"
+#include "components/offline_pages/core/offline_page_item.h"
+#include "components/offline_pages/core/offline_page_model.h"
+#include "components/offline_pages/core/request_header/offline_page_header.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
-#include "url/gurl.h"
 
 namespace offline_pages {
 namespace {
 
-// Returns an offline page originated from the |online_url|.
-const OfflinePageItem* MaybeGetBestOfflinePageForOnlineURL(
-    content::BrowserContext* browser_context,
-    const GURL& online_url) {
-  DCHECK(browser_context);
+void OnGetPagesByURLDone(
+    const GURL& url,
+    int tab_id,
+    const std::vector<std::string>& namespaces_to_show_in_original_tab,
+    const base::Callback<void(const OfflinePageItem*)>& callback,
+    const MultipleOfflinePageItemResult& pages) {
+  const OfflinePageItem* selected_page_for_final_url = nullptr;
+  const OfflinePageItem* selected_page_for_original_url = nullptr;
+  std::string tab_id_str = base::IntToString(tab_id);
 
-  if (!IsOfflinePagesEnabled())
-    return nullptr;
+  for (const auto& page : pages) {
+    auto result = std::find(namespaces_to_show_in_original_tab.begin(),
+                            namespaces_to_show_in_original_tab.end(),
+                            page.client_id.name_space);
+    if (result != namespaces_to_show_in_original_tab.end() &&
+        page.client_id.id != tab_id_str) {
+      continue;
+    }
 
+    if (OfflinePageUtils::EqualsIgnoringFragment(url, page.url)) {
+      if (!selected_page_for_final_url ||
+          page.creation_time > selected_page_for_final_url->creation_time) {
+        selected_page_for_final_url = &page;
+      }
+    } else {
+      // This is consistent with exact match against original url done in
+      // OfflinePageModelImpl.
+      DCHECK(url == page.original_url);
+      if (!selected_page_for_original_url ||
+          page.creation_time > selected_page_for_original_url->creation_time) {
+        selected_page_for_original_url = &page;
+      }
+    }
+  }
+
+  // Match for final URL should take high priority than matching for original
+  // URL.
+  callback.Run(selected_page_for_final_url ? selected_page_for_final_url
+                                           : selected_page_for_original_url);
+}
+
+bool IsSupportedByDownload(content::BrowserContext* browser_context,
+                           const std::string& name_space) {
   OfflinePageModel* offline_page_model =
       OfflinePageModelFactory::GetForBrowserContext(browser_context);
-  if (!offline_page_model)
-    return nullptr;
-
-  return offline_page_model->MaybeGetBestPageForOnlineURL(online_url);
+  DCHECK(offline_page_model);
+  ClientPolicyController* policy_controller =
+      offline_page_model->GetPolicyController();
+  DCHECK(policy_controller);
+  return policy_controller->IsSupportedByDownload(name_space);
 }
 
-// Returns an offline page that is stored as the |offline_url|.
-const OfflinePageItem* GetOfflinePageForOfflineURL(
+void CheckDuplicateOngoingDownloads(
     content::BrowserContext* browser_context,
-    const GURL& offline_url) {
-  DCHECK(browser_context);
+    const GURL& url,
+    const OfflinePageUtils::DuplicateCheckCallback& callback) {
+  RequestCoordinator* request_coordinator =
+      RequestCoordinatorFactory::GetForBrowserContext(browser_context);
+  if (!request_coordinator)
+    return;
 
-  if (!IsOfflinePagesEnabled())
-    return nullptr;
+  auto request_coordinator_continuation =
+      [](content::BrowserContext* browser_context, const GURL& url,
+         const OfflinePageUtils::DuplicateCheckCallback& callback,
+         std::vector<std::unique_ptr<SavePageRequest>> requests) {
+        base::Time latest_request_time;
+        for (auto& request : requests) {
+          if (IsSupportedByDownload(browser_context,
+                                    request->client_id().name_space) &&
+              request->url() == url &&
+              latest_request_time < request->creation_time()) {
+            latest_request_time = request->creation_time();
+          }
+        }
 
-  // Note that we first check if the url likely points to an offline page
-  // before calling GetPageByOfflineURL in order to avoid unnecessary lookup
-  // cost.
-  if (!OfflinePageUtils::MightBeOfflineURL(offline_url))
-    return nullptr;
+        if (latest_request_time.is_null()) {
+          callback.Run(OfflinePageUtils::DuplicateCheckResult::NOT_FOUND);
+        } else {
+          // Using CUSTOM_COUNTS instead of time-oriented histogram to record
+          // samples in seconds rather than milliseconds.
+          UMA_HISTOGRAM_CUSTOM_COUNTS(
+              "OfflinePages.DownloadRequestTimeSinceDuplicateRequested",
+              (base::Time::Now() - latest_request_time).InSeconds(),
+              base::TimeDelta::FromSeconds(1).InSeconds(),
+              base::TimeDelta::FromDays(7).InSeconds(), 50);
 
-  OfflinePageModel* offline_page_model =
-      OfflinePageModelFactory::GetForBrowserContext(browser_context);
-  if (!offline_page_model)
-    return nullptr;
+          callback.Run(
+              OfflinePageUtils::DuplicateCheckResult::DUPLICATE_REQUEST_FOUND);
+        }
+      };
 
-  return offline_page_model->MaybeGetPageByOfflineURL(offline_url);
-}
-
-void OnGetPageByOfflineURLDone(
-    const base::Callback<void(const GURL&)>& callback,
-    const OfflinePageItem* item) {
-  GURL result_url;
-  if (item)
-    result_url = item->url;
-  callback.Run(result_url);
-}
-
-void OnGetBestPageForOnlineURLDone(
-    const base::Callback<void(const GURL&)>& callback,
-    const OfflinePageItem* item) {
-  GURL result_url;
-  if (item)
-    result_url = item->GetOfflineURL();
-  callback.Run(result_url);
+  request_coordinator->GetAllRequests(base::Bind(
+      request_coordinator_continuation, browser_context, url, callback));
 }
 
 }  // namespace
 
 // static
-bool OfflinePageUtils::MightBeOfflineURL(const GURL& url) {
-  // It has to be a file URL ending with .mhtml extension.
-  return url.is_valid() && url.SchemeIsFile() &&
-         base::EndsWith(url.spec(),
-                        OfflinePageMHTMLArchiver::GetFileNameExtension(),
-                        base::CompareCase::INSENSITIVE_ASCII);
-}
-
-// static
-void OfflinePageUtils::GetOfflineURLForOnlineURL(
+void OfflinePageUtils::SelectPageForURL(
     content::BrowserContext* browser_context,
-    const GURL& online_url,
-    const base::Callback<void(const GURL&)>& callback) {
+    const GURL& url,
+    OfflinePageModel::URLSearchMode url_search_mode,
+    int tab_id,
+    const base::Callback<void(const OfflinePageItem*)>& callback) {
   OfflinePageModel* offline_page_model =
       OfflinePageModelFactory::GetForBrowserContext(browser_context);
   if (!offline_page_model) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&OnGetPageByOfflineURLDone, callback, nullptr));
+        FROM_HERE, base::Bind(callback, nullptr));
     return;
   }
 
-  offline_page_model->GetBestPageForOnlineURL(
-      online_url, base::Bind(&OnGetBestPageForOnlineURLDone, callback));
-}
-
-// static
-GURL OfflinePageUtils::MaybeGetOnlineURLForOfflineURL(
-    content::BrowserContext* browser_context,
-    const GURL& offline_url) {
-  const OfflinePageItem* offline_page =
-      GetOfflinePageForOfflineURL(browser_context, offline_url);
-  if (!offline_page)
-    return GURL();
-
-  return offline_page->url;
-}
-
-// static
-void OfflinePageUtils::GetOnlineURLForOfflineURL(
-    content::BrowserContext* browser_context,
-    const GURL& offline_url,
-    const base::Callback<void(const GURL&)>& callback) {
-  OfflinePageModel* offline_page_model =
-      OfflinePageModelFactory::GetForBrowserContext(browser_context);
-  if (!offline_page_model) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&OnGetPageByOfflineURLDone, callback, nullptr));
-    return;
-  }
-
-  offline_page_model->GetPageByOfflineURL(
-      offline_url, base::Bind(&OnGetPageByOfflineURLDone, callback));
-}
-
-// static
-bool OfflinePageUtils::IsOfflinePage(content::BrowserContext* browser_context,
-                                     const GURL& offline_url) {
-  return GetOfflinePageForOfflineURL(browser_context, offline_url) != nullptr;
-}
-
-// static
-bool OfflinePageUtils::HasOfflinePageForOnlineURL(
-    content::BrowserContext* browser_context,
-    const GURL& online_url) {
-  const OfflinePageItem* offline_page =
-      MaybeGetBestOfflinePageForOnlineURL(browser_context, online_url);
-  return offline_page && !offline_page->file_path.empty();
-}
-
-// static
-void OfflinePageUtils::MarkPageAccessed(
-    content::BrowserContext* browser_context, const GURL& offline_url) {
-  DCHECK(browser_context);
-
-  const OfflinePageItem* offline_page =
-      GetOfflinePageForOfflineURL(browser_context, offline_url);
-  if (!offline_page)
-    return;
-
-  OfflinePageModel* offline_page_model =
-      OfflinePageModelFactory::GetForBrowserContext(browser_context);
-  DCHECK(offline_page_model);
-  offline_page_model->MarkPageAccessed(offline_page->offline_id);
+  offline_page_model->GetPagesByURL(
+      url,
+      url_search_mode,
+      base::Bind(&OnGetPagesByURLDone, url, tab_id,
+                 offline_page_model->GetPolicyController()
+                     ->GetNamespacesRestrictedToOriginalTab(),
+                 callback));
 }
 
 const OfflinePageItem* OfflinePageUtils::GetOfflinePageFromWebContents(
     content::WebContents* web_contents) {
   OfflinePageTabHelper* tab_helper =
       OfflinePageTabHelper::FromWebContents(web_contents);
-  return tab_helper ? tab_helper->offline_page() : nullptr;
+  if (!tab_helper)
+    return nullptr;
+  const OfflinePageItem* offline_page = tab_helper->offline_page();
+  if (!offline_page)
+    return nullptr;
+
+  // Returns the cached offline page only if the offline URL matches with
+  // current tab URL (skipping fragment identifier part). This is to prevent
+  // from returning the wrong offline page if DidStartNavigation is never called
+  // to clear it up.
+  GURL::Replacements remove_params;
+  remove_params.ClearRef();
+  GURL offline_url = offline_page->url.ReplaceComponents(remove_params);
+  GURL web_contents_url =
+      web_contents->GetVisibleURL().ReplaceComponents(remove_params);
+  return offline_url == web_contents_url ? offline_page : nullptr;
+}
+
+// static
+const OfflinePageHeader* OfflinePageUtils::GetOfflineHeaderFromWebContents(
+    content::WebContents* web_contents) {
+  OfflinePageTabHelper* tab_helper =
+      OfflinePageTabHelper::FromWebContents(web_contents);
+  return tab_helper ? &(tab_helper->offline_header()) : nullptr;
+}
+
+// static
+bool OfflinePageUtils::IsShowingOfflinePreview(
+    content::WebContents* web_contents) {
+  OfflinePageTabHelper* tab_helper =
+      OfflinePageTabHelper::FromWebContents(web_contents);
+  return tab_helper && tab_helper->IsShowingOfflinePreview();
+}
+
+// static
+bool OfflinePageUtils::IsShowingDownloadButtonInErrorPage(
+    content::WebContents* web_contents) {
+  chrome_browser_net::NetErrorTabHelper* tab_helper =
+      chrome_browser_net::NetErrorTabHelper::FromWebContents(web_contents);
+  return tab_helper && tab_helper->is_showing_download_button_in_error_page();
 }
 
 // static
@@ -185,6 +208,94 @@ bool OfflinePageUtils::GetTabId(content::WebContents* web_contents,
     return false;
   *tab_id = tab_android->GetAndroidId();
   return true;
+}
+
+// static
+bool OfflinePageUtils::CurrentlyShownInCustomTab(
+    content::WebContents* web_contents) {
+  TabAndroid* tab_android = TabAndroid::FromWebContents(web_contents);
+  DCHECK(tab_android);
+  return tab_android && tab_android->IsCurrentlyACustomTab();
+}
+
+// static
+bool OfflinePageUtils::EqualsIgnoringFragment(const GURL& lhs,
+                                              const GURL& rhs) {
+  GURL::Replacements remove_params;
+  remove_params.ClearRef();
+
+  GURL lhs_stripped = lhs.ReplaceComponents(remove_params);
+  GURL rhs_stripped = rhs.ReplaceComponents(remove_params);
+
+  return lhs_stripped == rhs_stripped;
+}
+
+// static
+GURL OfflinePageUtils::GetOriginalURLFromWebContents(
+    content::WebContents* web_contents) {
+  content::NavigationEntry* entry =
+      web_contents->GetController().GetLastCommittedEntry();
+  if (!entry || entry->GetRedirectChain().size() <= 1)
+    return GURL();
+  return entry->GetRedirectChain().front();
+}
+
+// static
+void OfflinePageUtils::CheckDuplicateDownloads(
+    content::BrowserContext* browser_context,
+    const GURL& url,
+    const DuplicateCheckCallback& callback) {
+  // First check for finished downloads, that is, saved pages.
+  OfflinePageModel* offline_page_model =
+      OfflinePageModelFactory::GetForBrowserContext(browser_context);
+  if (!offline_page_model)
+    return;
+
+  auto continuation = [](content::BrowserContext* browser_context,
+                         const GURL& url,
+                         const DuplicateCheckCallback& callback,
+                         const std::vector<OfflinePageItem>& pages) {
+    base::Time latest_saved_time;
+    for (const auto& offline_page_item : pages) {
+      if (IsSupportedByDownload(browser_context,
+                                offline_page_item.client_id.name_space) &&
+          latest_saved_time < offline_page_item.creation_time) {
+        latest_saved_time = offline_page_item.creation_time;
+      }
+    }
+    if (latest_saved_time.is_null()) {
+      // Then check for ongoing downloads, that is, requests.
+      CheckDuplicateOngoingDownloads(browser_context, url, callback);
+    } else {
+      // Using CUSTOM_COUNTS instead of time-oriented histogram to record
+      // samples in seconds rather than milliseconds.
+      UMA_HISTOGRAM_CUSTOM_COUNTS(
+          "OfflinePages.DownloadRequestTimeSinceDuplicateSaved",
+          (base::Time::Now() - latest_saved_time).InSeconds(),
+          base::TimeDelta::FromSeconds(1).InSeconds(),
+          base::TimeDelta::FromDays(7).InSeconds(), 50);
+
+      callback.Run(DuplicateCheckResult::DUPLICATE_PAGE_FOUND);
+    }
+  };
+
+  offline_page_model->GetPagesByURL(
+      url, OfflinePageModel::URLSearchMode::SEARCH_BY_ALL_URLS,
+      base::Bind(continuation, browser_context, url, callback));
+}
+
+// static
+void OfflinePageUtils::ScheduleDownload(content::WebContents* web_contents,
+                                        const std::string& name_space,
+                                        const GURL& url,
+                                        DownloadUIActionFlags ui_action) {
+  DCHECK(web_contents);
+
+  OfflinePageTabHelper* tab_helper =
+      OfflinePageTabHelper::FromWebContents(web_contents);
+  if (!tab_helper)
+    return;
+  tab_helper->ScheduleDownloadHelper(web_contents, name_space, url, ui_action);
 }
 
 }  // namespace offline_pages

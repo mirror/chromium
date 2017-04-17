@@ -27,16 +27,14 @@
 namespace blink {
 
 inline SVGSwitchElement::SVGSwitchElement(Document& document)
-    : SVGGraphicsElement(SVGNames::switchTag, document)
-{
-    UseCounter::count(document, UseCounter::SVGSwitchElement);
+    : SVGGraphicsElement(SVGNames::switchTag, document) {
+  UseCounter::Count(document, UseCounter::kSVGSwitchElement);
 }
 
 DEFINE_NODE_FACTORY(SVGSwitchElement)
 
-LayoutObject* SVGSwitchElement::createLayoutObject(const ComputedStyle&)
-{
-    return new LayoutSVGTransformableContainer(this);
+LayoutObject* SVGSwitchElement::CreateLayoutObject(const ComputedStyle&) {
+  return new LayoutSVGTransformableContainer(this);
 }
 
-} // namespace blink
+}  // namespace blink

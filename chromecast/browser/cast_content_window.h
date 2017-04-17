@@ -8,54 +8,49 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "content/public/browser/web_contents_observer.h"
-
-namespace aura {
-class WindowTreeHost;
-}
+#include "base/memory/ref_counted.h"
+#include "content/public/browser/web_contents.h"
+#include "ui/events/event.h"
 
 namespace content {
-class BrowserContext;
 class WebContents;
 }
 
-namespace gfx {
-class Size;
-}
-
 namespace chromecast {
+class CastWindowManager;
+
 namespace shell {
 
-class CastContentWindow : public content::WebContentsObserver {
+// Class that represents the "window" a WebContents is displayed in cast_shell.
+// For Linux, this represents an Aura window. For Android, this is a Activity.
+// See CastContentWindowLinux and CastContentWindowAndroid.
+class CastContentWindow {
  public:
-  CastContentWindow();
+  class Delegate {
+   public:
+    virtual void OnWindowDestroyed() = 0;
+    virtual void OnKeyEvent(const ui::KeyEvent& key_event) = 0;
 
-  // Removes the window from the screen.
-  ~CastContentWindow() override;
+   protected:
+    virtual ~Delegate() {}
+  };
+
+  // Creates the platform specific CastContentWindow. |delegate| should outlive
+  // the created CastContentWindow.
+  static std::unique_ptr<CastContentWindow> Create(
+      CastContentWindow::Delegate* delegate);
+
+  virtual ~CastContentWindow() {}
 
   // Sets the window's background to be transparent (call before
   // CreateWindowTree).
-  void SetTransparent() { transparent_ = true; }
+  virtual void SetTransparent() = 0;
 
-  // Create a full-screen window for |web_contents|.
-  void CreateWindowTree(content::WebContents* web_contents);
-
-  std::unique_ptr<content::WebContents> CreateWebContents(
-      content::BrowserContext* browser_context);
-
-  // content::WebContentsObserver implementation:
-  void DidFirstVisuallyNonEmptyPaint() override;
-  void MediaStoppedPlaying(const MediaPlayerId& id) override;
-  void MediaStartedPlaying(const MediaPlayerId& id) override;
-  void RenderViewCreated(content::RenderViewHost* render_view_host) override;
-
- private:
-#if defined(USE_AURA)
-  std::unique_ptr<aura::WindowTreeHost> window_tree_host_;
-#endif
-  bool transparent_;
-
-  DISALLOW_COPY_AND_ASSIGN(CastContentWindow);
+  // Creates a full-screen window for |web_contents| and display it.
+  // |web_contents| should outlive this CastContentWindow.
+  // |window_manager| should outlive this CastContentWindow.
+  virtual void ShowWebContents(content::WebContents* web_contents,
+                               CastWindowManager* window_manager) = 0;
 };
 
 }  // namespace shell

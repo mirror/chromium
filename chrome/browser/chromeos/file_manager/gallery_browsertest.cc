@@ -250,7 +250,8 @@ IN_PROC_BROWSER_TEST_F(GalleryBrowserTestInGuestMode, RotateImageOnDownloads) {
 }
 
 // http://crbug.com/508949
-#if defined(MEMORY_SANITIZER)
+// http://crbug.com/690983 (Chrome OS debug build)
+#if defined(MEMORY_SANITIZER) || (defined(OS_CHROMEOS) && !defined(NDEBUG))
 #define MAYBE_RotateImageOnDrive DISABLED_RotateImageOnDrive
 #else
 #define MAYBE_RotateImageOnDrive RotateImageOnDrive
@@ -309,6 +310,32 @@ IN_PROC_BROWSER_TEST_F(GalleryBrowserTestInGuestMode,
 #endif
 IN_PROC_BROWSER_TEST_F(GalleryBrowserTest, MAYBE_ExposureImageOnDrive) {
   set_test_case_name("exposureImageOnDrive");
+  StartTest();
+}
+
+#if defined(DISABLE_SLOW_FILESAPP_TESTS)
+#define MAYBE_ResizeImageOnDownloads DISABLED_ResizeImageOnDownloads
+#else
+#define MAYBE_ResizeImageOnDownloads ResizeImageOnDownloads
+#endif
+IN_PROC_BROWSER_TEST_F(GalleryBrowserTest, MAYBE_ResizeImageOnDownloads) {
+  set_test_case_name("resizeImageOnDownloads");
+  StartTest();
+}
+
+IN_PROC_BROWSER_TEST_F(GalleryBrowserTestInGuestMode,
+                       MAYBE_ResizeImageOnDownloads) {
+  set_test_case_name("resizeImageOnDownloads");
+  StartTest();
+}
+
+#if defined(DISABLE_SLOW_FILESAPP_TESTS)
+#define MAYBE_ResizeImageOnDrive DISABLED_ResizeImageOnDrive
+#else
+#define MAYBE_ResizeImageOnDrive ResizeImageOnDrive
+#endif
+IN_PROC_BROWSER_TEST_F(GalleryBrowserTest, MAYBE_ResizeImageOnDrive) {
+  set_test_case_name("resizeImageOnDrive");
   StartTest();
 }
 

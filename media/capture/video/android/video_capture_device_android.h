@@ -10,15 +10,21 @@
 
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/thread.h"
+#include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "media/capture/capture_export.h"
 #include "media/capture/video/video_capture_device.h"
 
+namespace base {
+class SingleThreadTaskRunner;
+}
+
 namespace tracked_objects {
 class Location;
-}  // namespace tracked_
+}  // namespace tracked_objects
 
 namespace media {
 
@@ -41,10 +47,12 @@ class CAPTURE_EXPORT VideoCaptureDeviceAndroid : public VideoCaptureDevice {
     ANDROID_IMAGE_FORMAT_UNKNOWN = 0,
   };
 
-  explicit VideoCaptureDeviceAndroid(const Name& device_name);
+  explicit VideoCaptureDeviceAndroid(
+      const VideoCaptureDeviceDescriptor& device_descriptor);
   ~VideoCaptureDeviceAndroid() override;
 
-  static VideoCaptureDevice* Create(const Name& device_name);
+  static VideoCaptureDevice* Create(
+      const VideoCaptureDeviceDescriptor& device_descriptor);
   static bool RegisterVideoCaptureDevice(JNIEnv* env);
 
   // Registers the Java VideoCaptureDevice pointer, used by the rest of the
@@ -79,7 +87,8 @@ class CAPTURE_EXPORT VideoCaptureDeviceAndroid : public VideoCaptureDevice {
                             jint uv_pixel_stride,
                             jint width,
                             jint height,
-                            jint rotation);
+                            jint rotation,
+                            jlong timestamp);
 
   // Implement org.chromium.media.VideoCapture.nativeOnError.
   void OnError(JNIEnv* env,
@@ -92,38 +101,54 @@ class CAPTURE_EXPORT VideoCaptureDeviceAndroid : public VideoCaptureDevice {
                     jlong callback_id,
                     const base::android::JavaParamRef<jbyteArray>& data);
 
+  // Implement org.chromium.media.VideoCapture.nativeOnStarted.
+  void OnStarted(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
+
+  void ConfigureForTesting();
+
  private:
   enum InternalState {
-    kIdle,       // The device is opened but not in use.
-    kCapturing,  // Video is being captured.
-    kError       // Hit error. User needs to recover by destroying the object.
+    kIdle,        // The device is opened but not in use.
+    kConfigured,  // The device has been AllocateAndStart()ed.
+    kError        // Hit error. User needs to recover by destroying the object.
   };
 
   VideoPixelFormat GetColorspace();
   void SetErrorState(const tracked_objects::Location& from_here,
                      const std::string& reason);
 
-  // Prevent racing on accessing |state_| and |client_| since both could be
-  // accessed from different threads.
+  void DoGetPhotoCapabilities(GetPhotoCapabilitiesCallback callback);
+  void DoSetPhotoOptions(mojom::PhotoSettingsPtr settings,
+                         SetPhotoOptionsCallback callback);
+  void DoTakePhoto(TakePhotoCallback callback);
+
+  // Thread on which we are created.
+  const scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
+
+  // |lock_| protects |state_|, |client_|, |got_first_frame_| and
+  // |photo_requests_queue_| from concurrent access.
   base::Lock lock_;
   InternalState state_;
-  bool got_first_frame_;
-  base::TimeTicks expected_next_frame_time_;
-  base::TimeTicks first_ref_time_;
-  base::TimeDelta frame_interval_;
   std::unique_ptr<VideoCaptureDevice::Client> client_;
+  bool got_first_frame_;
+  // Photo-related requests waiting for |got_first_frame_| to be served. Android
+  // APIs need the device capturing or nearly-capturing to be fully oeprational.
+  std::list<base::Closure> photo_requests_queue_;
+
+  base::TimeTicks expected_next_frame_time_;
+  base::TimeDelta frame_interval_;
 
   // List of |photo_callbacks_| in flight, being served in Java side.
   base::Lock photo_callbacks_lock_;
   std::list<std::unique_ptr<TakePhotoCallback>> photo_callbacks_;
 
-  gfx::Size next_photo_resolution_;
-
-  Name device_name_;
+  const VideoCaptureDeviceDescriptor device_descriptor_;
   VideoCaptureFormat capture_format_;
 
   // Java VideoCaptureAndroid instance.
   base::android::ScopedJavaLocalRef<jobject> j_capture_;
+
+  base::WeakPtrFactory<VideoCaptureDeviceAndroid> weak_ptr_factory_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(VideoCaptureDeviceAndroid);
 };

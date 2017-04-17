@@ -16,6 +16,7 @@
 #include "base/synchronization/lock.h"
 #include "base/task_runner.h"
 #include "build/build_config.h"
+#include "mojo/edk/embedder/connection_params.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/platform_handle_vector.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
@@ -76,7 +77,10 @@ class NodeChannel : public base::RefCountedThreadSafe<NodeChannel>,
                                          const ports::NodeName& source_node,
                                          Channel::MessagePtr message) = 0;
 #endif
-
+    virtual void OnAcceptPeer(const ports::NodeName& from_node,
+                              const ports::NodeName& token,
+                              const ports::NodeName& peer_name,
+                              const ports::PortName& port_name) = 0;
     virtual void OnChannelError(const ports::NodeName& node,
                                 NodeChannel* channel) = 0;
 
@@ -87,7 +91,7 @@ class NodeChannel : public base::RefCountedThreadSafe<NodeChannel>,
 
   static scoped_refptr<NodeChannel> Create(
       Delegate* delegate,
-      ScopedPlatformHandle platform_handle,
+      ConnectionParams connection_params,
       scoped_refptr<base::TaskRunner> io_task_runner,
       const ProcessErrorCallback& process_error_callback);
 
@@ -124,6 +128,9 @@ class NodeChannel : public base::RefCountedThreadSafe<NodeChannel>,
                    const ports::NodeName& token);
   void AcceptParent(const ports::NodeName& token,
                     const ports::NodeName& child_name);
+  void AcceptPeer(const ports::NodeName& sender_name,
+                  const ports::NodeName& token,
+                  const ports::PortName& port_name);
   void AddBrokerClient(const ports::NodeName& client_name,
                        base::ProcessHandle process_handle);
   void BrokerClientAdded(const ports::NodeName& client_name,
@@ -161,7 +168,7 @@ class NodeChannel : public base::RefCountedThreadSafe<NodeChannel>,
       std::queue<std::pair<ports::NodeName, Channel::MessagePtr>>;
 
   NodeChannel(Delegate* delegate,
-              ScopedPlatformHandle platform_handle,
+              ConnectionParams connection_params,
               scoped_refptr<base::TaskRunner> io_task_runner,
               const ProcessErrorCallback& process_error_callback);
   ~NodeChannel() override;

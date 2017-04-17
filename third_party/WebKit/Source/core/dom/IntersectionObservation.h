@@ -6,7 +6,6 @@
 #define IntersectionObservation_h
 
 #include "core/dom/DOMHighResTimeStamp.h"
-#include "platform/geometry/LayoutRect.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -14,49 +13,36 @@ namespace blink {
 class Element;
 class IntersectionObserver;
 
-class IntersectionObservation final : public GarbageCollected<IntersectionObservation> {
-public:
-    IntersectionObservation(IntersectionObserver&, Element&, bool shouldReportRootBounds);
+// IntersectionObservation represents the result of calling
+// IntersectionObserver::observe(target) for some target element; it tracks the
+// intersection between a single target element and the IntersectionObserver's
+// root.  It is an implementation-internal class without any exposed interface.
+class IntersectionObservation final
+    : public GarbageCollected<IntersectionObservation> {
+ public:
+  IntersectionObservation(IntersectionObserver&, Element&);
 
-    struct IntersectionGeometry {
-        LayoutRect targetRect;
-        LayoutRect intersectionRect;
-        LayoutRect rootRect;
-        bool doesIntersect;
+  IntersectionObserver* Observer() const { return observer_.Get(); }
+  Element* Target() const { return target_; }
+  unsigned LastThresholdIndex() const { return last_threshold_index_; }
+  void ComputeIntersectionObservations(DOMHighResTimeStamp);
+  void Disconnect();
+  void UpdateShouldReportRootBoundsAfterDomChange();
 
-        IntersectionGeometry() : doesIntersect(false) {}
-    };
+  DECLARE_TRACE();
 
-    IntersectionObserver& observer() const { return *m_observer; }
-    Element* target() const { return m_target; }
-    unsigned lastThresholdIndex() const { return m_lastThresholdIndex; }
-    void setLastThresholdIndex(unsigned index) { m_lastThresholdIndex = index; }
-    bool shouldReportRootBounds() const { return m_shouldReportRootBounds; }
-    void computeIntersectionObservations(DOMHighResTimeStamp);
-    void disconnect();
-    void clearRootAndRemoveFromTarget();
+ private:
+  void SetLastThresholdIndex(unsigned index) { last_threshold_index_ = index; }
 
-    DECLARE_TRACE();
+  Member<IntersectionObserver> observer_;
+  WeakMember<Element> target_;
 
-private:
-    void applyRootMargin(LayoutRect&) const;
-    void initializeGeometry(IntersectionGeometry&) const;
-    void initializeTargetRect(LayoutRect&) const;
-    void initializeRootRect(LayoutRect&) const;
-    void clipToRoot(IntersectionGeometry&) const;
-    void mapTargetRectToTargetFrameCoordinates(LayoutRect&) const;
-    void mapRootRectToRootFrameCoordinates(LayoutRect&) const;
-    void mapRootRectToTargetFrameCoordinates(LayoutRect&) const;
-    bool computeGeometry(IntersectionGeometry&) const;
+  unsigned should_report_root_bounds_ : 1;
 
-    Member<IntersectionObserver> m_observer;
-
-    WeakMember<Element> m_target;
-
-    unsigned m_shouldReportRootBounds : 1;
-    unsigned m_lastThresholdIndex : 30;
+  unsigned last_threshold_index_ : 30;
+  static const unsigned kMaxThresholdIndex = (unsigned)0x40000000;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // IntersectionObservation_h
+#endif  // IntersectionObservation_h

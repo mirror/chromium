@@ -6,6 +6,7 @@
 #define InspectorLogAgent_h
 
 #include "core/CoreExport.h"
+#include "core/frame/PerformanceMonitor.h"
 #include "core/inspector/InspectorBaseAgent.h"
 #include "core/inspector/protocol/Log.h"
 
@@ -14,28 +15,44 @@ namespace blink {
 class ConsoleMessage;
 class ConsoleMessageStorage;
 
-class CORE_EXPORT InspectorLogAgent : public InspectorBaseAgent<protocol::Log::Metainfo> {
-    WTF_MAKE_NONCOPYABLE(InspectorLogAgent);
-public:
-    explicit InspectorLogAgent(ConsoleMessageStorage*);
-    ~InspectorLogAgent() override;
-    DECLARE_VIRTUAL_TRACE();
+class CORE_EXPORT InspectorLogAgent
+    : public InspectorBaseAgent<protocol::Log::Metainfo>,
+      public PerformanceMonitor::Client {
+  USING_GARBAGE_COLLECTED_MIXIN(InspectorLogAgent);
+  WTF_MAKE_NONCOPYABLE(InspectorLogAgent);
 
-    void restore() override;
+ public:
+  InspectorLogAgent(ConsoleMessageStorage*, PerformanceMonitor*);
+  ~InspectorLogAgent() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    // Called from InspectorInstrumentation.
-    void consoleMessageAdded(ConsoleMessage*);
+  void Restore() override;
 
-    // Protocol methods.
-    void enable(ErrorString*) override;
-    void disable(ErrorString*) override;
-    void clear(ErrorString*) override;
+  // Called from InspectorInstrumentation.
+  void ConsoleMessageAdded(ConsoleMessage*);
 
-private:
-    bool m_enabled;
-    Member<ConsoleMessageStorage> m_storage;
+  // Protocol methods.
+  protocol::Response enable() override;
+  protocol::Response disable() override;
+  protocol::Response clear() override;
+  protocol::Response startViolationsReport(
+      std::unique_ptr<protocol::Array<protocol::Log::ViolationSetting>>)
+      override;
+  protocol::Response stopViolationsReport() override;
+
+ private:
+  // PerformanceMonitor::Client implementation.
+  void ReportLongLayout(double duration) override;
+  void ReportGenericViolation(PerformanceMonitor::Violation,
+                              const String& text,
+                              double time,
+                              SourceLocation*) override;
+
+  bool enabled_;
+  Member<ConsoleMessageStorage> storage_;
+  Member<PerformanceMonitor> performance_monitor_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // !defined(InspectorLogAgent_h)
+#endif  // !defined(InspectorLogAgent_h)

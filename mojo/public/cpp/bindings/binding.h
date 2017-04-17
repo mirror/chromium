@@ -5,6 +5,7 @@
 #ifndef MOJO_PUBLIC_CPP_BINDINGS_BINDING_H_
 #define MOJO_PUBLIC_CPP_BINDINGS_BINDING_H_
 
+#include <string>
 #include <utility>
 
 #include "base/callback_forward.h"
@@ -12,15 +13,17 @@
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "mojo/public/cpp/bindings/connection_error_callback.h"
 #include "mojo/public/cpp/bindings/interface_ptr.h"
 #include "mojo/public/cpp/bindings/interface_ptr_info.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "mojo/public/cpp/bindings/lib/binding_state.h"
+#include "mojo/public/cpp/bindings/raw_ptr_impl_ref_traits.h"
 #include "mojo/public/cpp/system/core.h"
 
 namespace mojo {
 
-class AssociatedGroup;
+class MessageReceiver;
 
 // Represents the binding of an interface implementation to a message pipe.
 // When the |Binding| object is destroyed, the binding between the message pipe
@@ -63,21 +66,24 @@ class AssociatedGroup;
 // single thread for the purposes of task scheduling. Please note that incoming
 // synchrounous method calls may not be run from this task runner, when they
 // reenter outgoing synchrounous calls on the same thread.
-template <typename Interface>
+template <typename Interface,
+          typename ImplRefTraits = RawPtrImplRefTraits<Interface>>
 class Binding {
  public:
+  using ImplPointerType = typename ImplRefTraits::PointerType;
+
   // Constructs an incomplete binding that will use the implementation |impl|.
   // The binding may be completed with a subsequent call to the |Bind| method.
   // Does not take ownership of |impl|, which must outlive the binding.
-  explicit Binding(Interface* impl) : internal_state_(impl) {}
+  explicit Binding(ImplPointerType impl) : internal_state_(std::move(impl)) {}
 
   // Constructs a completed binding of message pipe |handle| to implementation
   // |impl|. Does not take ownership of |impl|, which must outlive the binding.
-  Binding(Interface* impl,
+  Binding(ImplPointerType impl,
           ScopedMessagePipeHandle handle,
           scoped_refptr<base::SingleThreadTaskRunner> runner =
               base::ThreadTaskRunnerHandle::Get())
-      : Binding(impl) {
+      : Binding(std::move(impl)) {
     Bind(std::move(handle), std::move(runner));
   }
 
@@ -86,22 +92,22 @@ class Binding {
   // pass |ptr| on to the client of the service. Does not take ownership of any
   // of the parameters. |impl| must outlive the binding. |ptr| only needs to
   // last until the constructor returns.
-  Binding(Interface* impl,
+  Binding(ImplPointerType impl,
           InterfacePtr<Interface>* ptr,
           scoped_refptr<base::SingleThreadTaskRunner> runner =
               base::ThreadTaskRunnerHandle::Get())
-      : Binding(impl) {
+      : Binding(std::move(impl)) {
     Bind(ptr, std::move(runner));
   }
 
   // Constructs a completed binding of |impl| to the message pipe endpoint in
   // |request|, taking ownership of the endpoint. Does not take ownership of
   // |impl|, which must outlive the binding.
-  Binding(Interface* impl,
+  Binding(ImplPointerType impl,
           InterfaceRequest<Interface> request,
           scoped_refptr<base::SingleThreadTaskRunner> runner =
               base::ThreadTaskRunnerHandle::Get())
-      : Binding(impl) {
+      : Binding(std::move(impl)) {
     Bind(request.PassMessagePipe(), std::move(runner));
   }
 
@@ -152,6 +158,14 @@ class Binding {
     Bind(request.PassMessagePipe(), std::move(runner));
   }
 
+  // Adds a message filter to be notified of each incoming message before
+  // dispatch. If a filter returns |false| from Accept(), the message is not
+  // dispatched and the pipe is closed. Filters cannot be removed.
+  void AddFilter(std::unique_ptr<MessageReceiver> filter) {
+    DCHECK(is_bound());
+    internal_state_.AddFilter(std::move(filter));
+  }
+
   // Whether there are any associated interfaces running on the pipe currently.
   bool HasAssociatedInterfaces() const {
     return internal_state_.HasAssociatedInterfaces();
@@ -178,16 +192,21 @@ class Binding {
   // true if a method was successfully read and dispatched.
   //
   // This method may only be called if the object has been bound to a message
-  // pipe and there are no associated interfaces running.
+  // pipe. This returns once a message is received either on the master
+  // interface or any associated interfaces.
   bool WaitForIncomingMethodCall(
       MojoDeadline deadline = MOJO_DEADLINE_INDEFINITE) {
-    CHECK(!HasAssociatedInterfaces());
     return internal_state_.WaitForIncomingMethodCall(deadline);
   }
 
   // Closes the message pipe that was previously bound. Put this object into a
   // state where it can be rebound to a new pipe.
   void Close() { internal_state_.Close(); }
+
+  // Similar to the method above, but also specifies a disconnect reason.
+  void CloseWithReason(uint32_t custom_reason, const std::string& description) {
+    internal_state_.CloseWithReason(custom_reason, description);
+  }
 
   // Unbinds the underlying pipe from this binding and returns it so it can be
   // used in another context, such as on another thread or with a different
@@ -217,6 +236,12 @@ class Binding {
     internal_state_.set_connection_error_handler(error_handler);
   }
 
+  void set_connection_error_with_reason_handler(
+      const ConnectionErrorWithReasonCallback& error_handler) {
+    DCHECK(is_bound());
+    internal_state_.set_connection_error_with_reason_handler(error_handler);
+  }
+
   // Returns the interface implementation that was previously specified. Caller
   // does not take ownership.
   Interface* impl() { return internal_state_.impl(); }
@@ -231,20 +256,17 @@ class Binding {
   // transferred to the caller.
   MessagePipeHandle handle() const { return internal_state_.handle(); }
 
-  // Returns the associated group that this object belongs to. Returns null if:
-  //   - this object is not bound; or
-  //   - the interface doesn't have methods to pass associated interface
-  //     pointers or requests.
-  AssociatedGroup* associated_group() {
-    return internal_state_.associated_group();
-  }
+  // Sends a no-op message on the underlying message pipe and runs the current
+  // message loop until its response is received. This can be used in tests to
+  // verify that no message was sent on a message pipe in response to some
+  // stimulus.
+  void FlushForTesting() { internal_state_.FlushForTesting(); }
 
   // Exposed for testing, should not generally be used.
   void EnableTestingMode() { internal_state_.EnableTestingMode(); }
 
  private:
-  internal::BindingState<Interface, Interface::PassesAssociatedKinds_>
-      internal_state_;
+  internal::BindingState<Interface, ImplRefTraits> internal_state_;
 
   DISALLOW_COPY_AND_ASSIGN(Binding);
 };

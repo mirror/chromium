@@ -11,8 +11,10 @@
 #include "components/webcrypto/crypto_data.h"
 #include "components/webcrypto/status.h"
 #include "crypto/openssl_util.h"
-#include "crypto/scoped_openssl_types.h"
 #include "third_party/WebKit/public/platform/WebCryptoKeyAlgorithm.h"
+#include "third_party/boringssl/src/include/openssl/digest.h"
+#include "third_party/boringssl/src/include/openssl/evp.h"
+#include "third_party/boringssl/src/include/openssl/rsa.h"
 
 namespace webcrypto {
 
@@ -25,7 +27,7 @@ Status GetPKeyAndDigest(const blink::WebCryptoKey& key,
                         const EVP_MD** digest) {
   *pkey = GetEVP_PKEY(key);
 
-  *digest = GetDigest(key.algorithm().rsaHashedParams()->hash());
+  *digest = GetDigest(key.Algorithm().RsaHashedParams()->GetHash());
   if (!*digest)
     return Status::ErrorUnsupported();
 
@@ -40,9 +42,10 @@ Status ApplyRsaPssOptions(const blink::WebCryptoKey& key,
                           unsigned int salt_length_bytes,
                           EVP_PKEY_CTX* pctx) {
   // Only apply RSA-PSS options if the key is for RSA-PSS.
-  if (key.algorithm().id() != blink::WebCryptoAlgorithmIdRsaPss) {
+  if (key.Algorithm().Id() != blink::kWebCryptoAlgorithmIdRsaPss) {
     DCHECK_EQ(0u, salt_length_bytes);
-    DCHECK_EQ(blink::WebCryptoAlgorithmIdRsaSsaPkcs1v1_5, key.algorithm().id());
+    DCHECK_EQ(blink::kWebCryptoAlgorithmIdRsaSsaPkcs1v1_5,
+              key.Algorithm().Id());
     return Status::Success();
   }
 
@@ -70,11 +73,11 @@ Status RsaSign(const blink::WebCryptoKey& key,
                unsigned int pss_salt_length_bytes,
                const CryptoData& data,
                std::vector<uint8_t>* buffer) {
-  if (key.type() != blink::WebCryptoKeyTypePrivate)
+  if (key.GetType() != blink::kWebCryptoKeyTypePrivate)
     return Status::ErrorUnexpectedKeyType();
 
   crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
-  crypto::ScopedEVP_MD_CTX ctx(EVP_MD_CTX_create());
+  bssl::ScopedEVP_MD_CTX ctx;
   EVP_PKEY_CTX* pctx = NULL;  // Owned by |ctx|.
 
   EVP_PKEY* private_key = NULL;
@@ -87,8 +90,7 @@ Status RsaSign(const blink::WebCryptoKey& key,
   // returns a maximum allocation size, while the call without a NULL returns
   // the real one, which may be smaller.
   size_t sig_len = 0;
-  if (!ctx.get() ||
-      !EVP_DigestSignInit(ctx.get(), &pctx, digest, NULL, private_key)) {
+  if (!EVP_DigestSignInit(ctx.get(), &pctx, digest, NULL, private_key)) {
     return Status::OperationError();
   }
 
@@ -115,11 +117,11 @@ Status RsaVerify(const blink::WebCryptoKey& key,
                  const CryptoData& signature,
                  const CryptoData& data,
                  bool* signature_match) {
-  if (key.type() != blink::WebCryptoKeyTypePublic)
+  if (key.GetType() != blink::kWebCryptoKeyTypePublic)
     return Status::ErrorUnexpectedKeyType();
 
   crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
-  crypto::ScopedEVP_MD_CTX ctx(EVP_MD_CTX_create());
+  bssl::ScopedEVP_MD_CTX ctx;
   EVP_PKEY_CTX* pctx = NULL;  // Owned by |ctx|.
 
   EVP_PKEY* public_key = NULL;

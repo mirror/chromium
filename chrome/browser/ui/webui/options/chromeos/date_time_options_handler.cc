@@ -59,8 +59,8 @@ void DateTimeOptionsHandler::RegisterMessages() {
 
 void DateTimeOptionsHandler::SystemClockCanSetTimeChanged(bool can_set_time) {
   if (page_initialized_) {
-    web_ui()->CallJavascriptFunctionUnsafe(
-        "BrowserOptions.setCanSetTime", base::FundamentalValue(can_set_time));
+    web_ui()->CallJavascriptFunctionUnsafe("BrowserOptions.setCanSetTime",
+                                           base::Value(can_set_time));
   }
   can_set_time_ = can_set_time;
 }
@@ -68,7 +68,7 @@ void DateTimeOptionsHandler::SystemClockCanSetTimeChanged(bool can_set_time) {
 void DateTimeOptionsHandler::HandleShowSetTime(const base::ListValue* args) {
   // Make sure the clock status hasn't changed since the button was clicked.
   if (can_set_time_) {
-    SetTimeDialog::ShowDialog(
+    SetTimeDialog::ShowDialogInParent(
         web_ui()->GetWebContents()->GetTopLevelNativeWindow());
   }
 }

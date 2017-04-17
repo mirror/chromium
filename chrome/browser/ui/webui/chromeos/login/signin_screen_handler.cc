@@ -9,16 +9,16 @@
 #include <algorithm>
 #include <vector>
 
-#include "ash/common/system/chromeos/devicetype_utils.h"
-#include "ash/common/wm_shell.h"
+#include "ash/public/interfaces/constants.mojom.h"
 #include "ash/shell.h"
+#include "ash/system/devicetype_utils.h"
 #include "ash/wm/lock_state_controller.h"
 #include "base/bind.h"
 #include "base/i18n/number_formatting.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
@@ -34,13 +34,15 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
 #include "chrome/browser/chromeos/input_method/input_method_util.h"
+#include "chrome/browser/chromeos/language_preferences.h"
 #include "chrome/browser/chromeos/login/error_screens_histogram_helper.h"
 #include "chrome/browser/chromeos/login/hwid_checker.h"
 #include "chrome/browser/chromeos/login/lock/screen_locker.h"
-#include "chrome/browser/chromeos/login/quick_unlock/pin_storage.h"
-#include "chrome/browser/chromeos/login/quick_unlock/pin_storage_factory.h"
+#include "chrome/browser/chromeos/login/lock/webui_screen_locker.h"
+#include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_factory.h"
+#include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_storage.h"
 #include "chrome/browser/chromeos/login/reauth_stats.h"
-#include "chrome/browser/chromeos/login/screens/core_oobe_actor.h"
+#include "chrome/browser/chromeos/login/screens/core_oobe_view.h"
 #include "chrome/browser/chromeos/login/screens/network_error.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host.h"
@@ -59,16 +61,18 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_metrics.h"
 #include "chrome/browser/signin/easy_unlock_service.h"
-#include "chrome/browser/ui/ash/ash_util.h"
+#include "chrome/browser/ui/ash/session_controller_client.h"
 #include "chrome/browser/ui/webui/chromeos/login/error_screen_handler.h"
 #include "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.h"
 #include "chrome/browser/ui/webui/chromeos/login/l10n_util.h"
 #include "chrome/browser/ui/webui/chromeos/login/native_window_delegate.h"
 #include "chrome/browser/ui/webui/chromeos/login/network_state_informer.h"
+#include "chrome/common/channel_info.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "chromeos/login/auth/key.h"
@@ -80,14 +84,17 @@
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/proximity_auth/screenlock_bridge.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/user_manager/known_user.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "components/user_manager/user_type.h"
+#include "components/version_info/version_info.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/service_manager_connection.h"
 #include "google_apis/gaia/gaia_auth_util.h"
-#include "grit/components_strings.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_descriptor.h"
@@ -197,16 +204,16 @@ static bool SetUserInputMethodImpl(
   if (!chromeos::input_method::InputMethodManager::Get()->IsLoginKeyboard(
           user_input_method)) {
     LOG(WARNING) << "SetUserInputMethod('" << username
-                 << "'): stored user LRU input method '" << user_input_method
+                 << "'): stored user last input method '" << user_input_method
                  << "' is no longer Full Latin Keyboard Language"
                  << " (entry dropped). Use hardware default instead.";
 
     PrefService* const local_state = g_browser_process->local_state();
-    DictionaryPrefUpdate updater(local_state, prefs::kUsersLRUInputMethod);
+    DictionaryPrefUpdate updater(local_state, prefs::kUsersLastInputMethod);
 
-    base::DictionaryValue* const users_lru_input_methods = updater.Get();
-    if (users_lru_input_methods != nullptr) {
-      users_lru_input_methods->SetStringWithoutPathExpansion(username, "");
+    base::DictionaryValue* const users_last_input_methods = updater.Get();
+    if (users_last_input_methods != nullptr) {
+      users_last_input_methods->SetStringWithoutPathExpansion(username, "");
     }
     return false;
   }
@@ -221,6 +228,39 @@ static bool SetUserInputMethodImpl(
   ime_state->ChangeInputMethod(user_input_method, false /* show_message */);
 
   return true;
+}
+
+void EnforcePolicyInputMethods(std::string user_input_method) {
+  chromeos::CrosSettings* cros_settings = chromeos::CrosSettings::Get();
+  const base::ListValue* login_screen_input_methods = nullptr;
+  if (!cros_settings->GetList(chromeos::kDeviceLoginScreenInputMethods,
+                              &login_screen_input_methods)) {
+    return;
+  }
+
+  std::vector<std::string> allowed_input_methods;
+
+  // Add user's input method first so it is pre-selected.
+  if (!user_input_method.empty()) {
+    allowed_input_methods.push_back(user_input_method);
+  }
+
+  std::string input_method;
+  for (const auto& input_method_entry : *login_screen_input_methods) {
+    if (input_method_entry.GetAsString(&input_method))
+      allowed_input_methods.push_back(input_method);
+  }
+  chromeos::input_method::InputMethodManager* imm =
+      chromeos::input_method::InputMethodManager::Get();
+  imm->GetActiveIMEState()->SetAllowedInputMethods(allowed_input_methods);
+}
+
+void StopEnforcingPolicyInputMethods() {
+  // Empty means all input methods are allowed
+  std::vector<std::string> allowed_input_methods;
+  chromeos::input_method::InputMethodManager* imm =
+      chromeos::input_method::InputMethodManager::Get();
+  imm->GetActiveIMEState()->SetAllowedInputMethods(allowed_input_methods);
 }
 
 }  // namespace
@@ -249,22 +289,26 @@ void LoginScreenContext::Init() {
 
 SigninScreenHandler::SigninScreenHandler(
     const scoped_refptr<NetworkStateInformer>& network_state_informer,
-    NetworkErrorModel* network_error_model,
-    CoreOobeActor* core_oobe_actor,
-    GaiaScreenHandler* gaia_screen_handler)
-    : network_state_informer_(network_state_informer),
-      network_error_model_(network_error_model),
-      core_oobe_actor_(core_oobe_actor),
+    ErrorScreen* error_screen,
+    CoreOobeView* core_oobe_view,
+    GaiaScreenHandler* gaia_screen_handler,
+    JSCallsContainer* js_calls_container)
+    : BaseWebUIHandler(js_calls_container),
+      network_state_informer_(network_state_informer),
+      error_screen_(error_screen),
+      core_oobe_view_(core_oobe_view),
       caps_lock_enabled_(chromeos::input_method::InputMethodManager::Get()
                              ->GetImeKeyboard()
                              ->CapsLockIsEnabled()),
       proxy_auth_dialog_reload_times_(kMaxGaiaReloadForProxyAuthDialog),
       gaia_screen_handler_(gaia_screen_handler),
+      touch_view_binding_(this),
       histogram_helper_(new ErrorScreensHistogramHelper("Signin")),
       weak_factory_(this) {
   DCHECK(network_state_informer_.get());
-  DCHECK(network_error_model_);
-  DCHECK(core_oobe_actor_);
+  DCHECK(error_screen_);
+  DCHECK(core_oobe_view_);
+  DCHECK(js_calls_container);
   gaia_screen_handler_->set_signin_screen_handler(this);
   network_state_informer_->AddObserver(this);
 
@@ -285,13 +329,17 @@ SigninScreenHandler::SigninScreenHandler(
       chromeos::input_method::InputMethodManager::Get()->GetImeKeyboard();
   if (keyboard)
     keyboard->AddObserver(this);
+  allowed_input_methods_subscription_ =
+      chromeos::CrosSettings::Get()->AddSettingsObserver(
+          chromeos::kDeviceLoginScreenInputMethods,
+          base::Bind(&SigninScreenHandler::OnAllowedInputMethodsChanged,
+                     base::Unretained(this)));
 
-  if (!chrome::IsRunningInMash()) {
-    max_mode_delegate_.reset(new TouchViewControllerDelegate());
-    max_mode_delegate_->AddObserver(this);
-  } else {
-    NOTIMPLEMENTED();
-  }
+  content::ServiceManagerConnection::GetForProcess()
+      ->GetConnector()
+      ->BindInterface(ash::mojom::kServiceName, &touch_view_manager_ptr_);
+  touch_view_manager_ptr_->AddObserver(
+      touch_view_binding_.CreateInterfacePtrAndBind());
 }
 
 SigninScreenHandler::~SigninScreenHandler() {
@@ -304,36 +352,33 @@ SigninScreenHandler::~SigninScreenHandler() {
       chromeos::input_method::InputMethodManager::Get()->GetImeKeyboard();
   if (keyboard)
     keyboard->RemoveObserver(this);
+  StopEnforcingPolicyInputMethods();
   weak_factory_.InvalidateWeakPtrs();
   if (delegate_)
     delegate_->SetWebUIHandler(nullptr);
   network_state_informer_->RemoveObserver(this);
-  if (max_mode_delegate_) {
-    max_mode_delegate_->RemoveObserver(this);
-    max_mode_delegate_.reset(nullptr);
-  }
   proximity_auth::ScreenlockBridge::Get()->SetLockHandler(nullptr);
   proximity_auth::ScreenlockBridge::Get()->SetFocusedUser(EmptyAccountId());
 }
 
 // static
-std::string SigninScreenHandler::GetUserLRUInputMethod(
+std::string SigninScreenHandler::GetUserLastInputMethod(
     const std::string& username) {
   PrefService* const local_state = g_browser_process->local_state();
-  const base::DictionaryValue* users_lru_input_methods =
-      local_state->GetDictionary(prefs::kUsersLRUInputMethod);
+  const base::DictionaryValue* users_last_input_methods =
+      local_state->GetDictionary(prefs::kUsersLastInputMethod);
 
-  if (!users_lru_input_methods) {
-    DLOG(WARNING) << "GetUserLRUInputMethod('" << username
-                  << "'): no kUsersLRUInputMethod";
+  if (!users_last_input_methods) {
+    DLOG(WARNING) << "GetUserLastInputMethod('" << username
+                  << "'): no kUsersLastInputMethod";
     return std::string();
   }
 
   std::string input_method;
 
-  if (!users_lru_input_methods->GetStringWithoutPathExpansion(username,
-                                                              &input_method)) {
-    DVLOG(0) << "GetUserLRUInputMethod('" << username
+  if (!users_last_input_methods->GetStringWithoutPathExpansion(username,
+                                                               &input_method)) {
+    DVLOG(0) << "GetUserLastInputMethod('" << username
              << "'): no input method for this user";
     return std::string();
   }
@@ -348,12 +393,14 @@ void SigninScreenHandler::SetUserInputMethod(
     input_method::InputMethodManager::State* ime_state) {
   bool succeed = false;
 
-  const std::string input_method = GetUserLRUInputMethod(username);
+  const std::string input_method = GetUserLastInputMethod(username);
+
+  EnforcePolicyInputMethods(input_method);
 
   if (!input_method.empty())
     succeed = SetUserInputMethodImpl(username, input_method, ime_state);
 
-  // This is also a case when LRU layout is set only for a few local users,
+  // This is also a case when last layout is set only for a few local users,
   // thus others need to be switched to default locale.
   // Otherwise they will end up using another user's locale to log in.
   if (!succeed) {
@@ -377,7 +424,12 @@ void SigninScreenHandler::DeclareLocalizedValues(
                IDS_PIN_KEYBOARD_HINT_TEXT_PIN);
   builder->Add("pinKeyboardPlaceholderPinPassword",
                IDS_PIN_KEYBOARD_HINT_TEXT_PIN_PASSWORD);
-  builder->Add("pinKeyboardClear", IDS_PIN_KEYBOARD_CLEAR);
+  builder->Add("pinKeyboardDeleteAccessibleName",
+               IDS_PIN_KEYBOARD_DELETE_ACCESSIBLE_NAME);
+  builder->Add("fingerprintHint", IDS_FINGERPRINT_HINT_TEXT);
+  builder->Add("fingerprintIconMessage", IDS_FINGERPRINT_ICON_MESSAGE);
+  builder->Add("fingerprintSigningin", IDS_FINGERPRINT_LOGIN_TEXT);
+  builder->Add("fingerprintSigninFailed", IDS_FINGERPRINT_LOGIN_FAILED_TEXT);
   builder->Add("signingIn", IDS_LOGIN_POD_SIGNING_IN);
   builder->Add("podMenuButtonAccessibleName",
                IDS_LOGIN_POD_MENU_BUTTON_ACCESSIBLE_NAME);
@@ -385,6 +437,8 @@ void SigninScreenHandler::DeclareLocalizedValues(
                IDS_LOGIN_POD_MENU_REMOVE_ITEM_ACCESSIBLE_NAME);
   builder->Add("passwordFieldAccessibleName",
                IDS_LOGIN_POD_PASSWORD_FIELD_ACCESSIBLE_NAME);
+  builder->Add("submitButtonAccessibleName",
+               IDS_LOGIN_POD_SUBMIT_BUTTON_ACCESSIBLE_NAME);
   builder->Add("signedIn", IDS_SCREEN_LOCK_ACTIVE_USER);
   builder->Add("launchAppButton", IDS_LAUNCH_APP_BUTTON);
   builder->Add("restart", IDS_RESTART_BUTTON);
@@ -447,6 +501,19 @@ void SigninScreenHandler::DeclareLocalizedValues(
   builder->Add("publicAccountEnter", IDS_LOGIN_PUBLIC_ACCOUNT_ENTER);
   builder->Add("publicAccountEnterAccessibleName",
                IDS_LOGIN_PUBLIC_ACCOUNT_ENTER_ACCESSIBLE_NAME);
+  builder->Add("publicAccountMonitoringWarning",
+               IDS_LOGIN_PUBLIC_ACCOUNT_MONITORING_WARNING);
+  builder->Add("publicAccountLearnMore", IDS_LOGIN_PUBLIC_ACCOUNT_LEARN_MORE);
+  builder->Add("publicAccountMonitoringInfo",
+               IDS_LOGIN_PUBLIC_ACCOUNT_MONITORING_INFO);
+  builder->Add("publicAccountMonitoringInfoItem1",
+               IDS_LOGIN_PUBLIC_ACCOUNT_MONITORING_INFO_ITEM_1);
+  builder->Add("publicAccountMonitoringInfoItem2",
+               IDS_LOGIN_PUBLIC_ACCOUNT_MONITORING_INFO_ITEM_2);
+  builder->Add("publicAccountMonitoringInfoItem3",
+               IDS_LOGIN_PUBLIC_ACCOUNT_MONITORING_INFO_ITEM_3);
+  builder->Add("publicAccountMonitoringInfoItem4",
+               IDS_LOGIN_PUBLIC_ACCOUNT_MONITORING_INFO_ITEM_4);
   builder->Add("publicSessionSelectLanguage", IDS_LANGUAGE_SELECTION_SELECT);
   builder->Add("publicSessionSelectKeyboard", IDS_KEYBOARD_SELECTION_SELECT);
   builder->Add("removeUserWarningTextNonSyncNoStats", base::string16());
@@ -462,12 +529,19 @@ void SigninScreenHandler::DeclareLocalizedValues(
                IDS_LOGIN_POD_LEGACY_SUPERVISED_USER_REMOVE_WARNING,
                base::UTF8ToUTF16(
                    chrome::kLegacySupervisedUserManagementDisplayURL));
+  builder->Add("removeNonOwnerUserWarningText",
+               IDS_LOGIN_POD_NON_OWNER_USER_REMOVE_WARNING);
   builder->Add("removeUserWarningButtonTitle",
                IDS_LOGIN_POD_USER_REMOVE_WARNING_BUTTON);
   builder->Add("samlNotice", IDS_LOGIN_SAML_NOTICE);
   builder->Add("samlNoticeWithVideo", IDS_LOGIN_SAML_NOTICE_WITH_VIDEO);
   builder->AddF("confirmPasswordTitle", IDS_LOGIN_CONFIRM_PASSWORD_TITLE,
                 ash::GetChromeOSDeviceName());
+  builder->Add("manualPasswordTitle", IDS_LOGIN_MANUAL_PASSWORD_TITLE);
+  builder->Add("manualPasswordInputLabel",
+               IDS_LOGIN_MANUAL_PASSWORD_INPUT_LABEL);
+  builder->Add("manualPasswordMismatch",
+               IDS_LOGIN_MANUAL_PASSWORD_MISMATCH);
   builder->Add("confirmPasswordLabel", IDS_LOGIN_CONFIRM_PASSWORD_LABEL);
   builder->Add("confirmPasswordIncorrectPassword",
                IDS_LOGIN_CONFIRM_PASSWORD_INCORRECT_PASSWORD);
@@ -491,6 +565,14 @@ void SigninScreenHandler::DeclareLocalizedValues(
                IDS_LOGIN_UNRECOVERABLE_CRYPTOHOME_ERROR_CONTINUE);
   builder->Add("unrecoverableCryptohomeErrorRecreatingProfile",
                IDS_LOGIN_UNRECOVERABLE_CRYPTOHOME_ERROR_WAIT_MESSAGE);
+
+  builder->Add("adEnterOldPasswordHint", IDS_AD_PASSWORD_CHANGE_OLD_PASSWORD);
+  builder->Add("adEnterNewPasswordHint", IDS_AD_PASSWORD_CHANGE_NEW_PASSWORD);
+  builder->Add("adRepeatNewPasswordHint",
+               IDS_AD_PASSWORD_CHANGE_REPEAT_NEW_PASSWORD);
+  builder->Add("adPasswordChangeMessage", IDS_AD_PASSWORD_CHANGE_MESSAGE);
+  builder->Add("adOldPasswordError", IDS_AD_PASSWORD_CHANGE_INVALID_PASSWORD);
+  builder->Add("adNewPasswordError", IDS_AD_PASSWORD_CHANGE_PASSWORDS_MISMATCH);
 }
 
 void SigninScreenHandler::RegisterMessages() {
@@ -531,6 +613,7 @@ void SigninScreenHandler::RegisterMessages() {
   AddCallback("showLoadingTimeoutError",
               &SigninScreenHandler::HandleShowLoadingTimeoutError);
   AddCallback("focusPod", &SigninScreenHandler::HandleFocusPod);
+  AddCallback("noPodFocused", &SigninScreenHandler::HandleNoPodFocused);
   AddCallback("getPublicSessionKeyboardLayouts",
               &SigninScreenHandler::HandleGetPublicSessionKeyboardLayouts);
   AddCallback("getTouchViewState",
@@ -547,6 +630,8 @@ void SigninScreenHandler::RegisterMessages() {
   // This message is sent by the kiosk app menu, but is handled here
   // so we can tell the delegate to launch the app.
   AddCallback("launchKioskApp", &SigninScreenHandler::HandleLaunchKioskApp);
+  AddCallback("launchArcKioskApp",
+              &SigninScreenHandler::HandleLaunchArcKioskApp);
 }
 
 void SigninScreenHandler::Show(const LoginScreenContext& context) {
@@ -594,6 +679,14 @@ void SigninScreenHandler::ZeroOfflineTimeoutForTesting() {
   zero_offline_timeout_for_test_ = true;
 }
 
+bool SigninScreenHandler::GetKeyboardRemappedPrefValue(
+    const std::string& pref_name,
+    int* value) {
+  return focused_pod_account_id_ && focused_pod_account_id_->is_valid() &&
+         user_manager::known_user::GetIntegerPref(*focused_pod_account_id_,
+                                                  pref_name, value);
+}
+
 // SigninScreenHandler, private: -----------------------------------------------
 
 void SigninScreenHandler::ShowImpl() {
@@ -626,6 +719,14 @@ void SigninScreenHandler::ShowImpl() {
     base::DictionaryValue params;
     params.SetBoolean("disableAddUser", AllWhitelistedUsersPresent());
     UpdateUIState(UI_STATE_ACCOUNT_PICKER, &params);
+  }
+
+  // Enable pin for any users who can use it.
+  if (user_manager::UserManager::IsInitialized()) {
+    for (user_manager::User* user :
+         user_manager::UserManager::Get()->GetLoggedInUsers()) {
+      UpdatePinKeyboardState(user->GetAccountId());
+    }
   }
 }
 
@@ -728,7 +829,7 @@ void SigninScreenHandler::UpdateStateInternal(NetworkError::ErrorReason reason,
       &SigninScreenHandler::ReloadGaia, weak_factory_.GetWeakPtr(), true));
 
   if (is_online || !is_behind_captive_portal)
-    network_error_model_->HideCaptivePortal();
+    error_screen_->HideCaptivePortal();
 
   // Hide offline message (if needed) and return if current screen is
   // not a Gaia frame.
@@ -801,45 +902,44 @@ void SigninScreenHandler::SetupAndShowOfflineMessage(
       (reason == NetworkError::ERROR_REASON_LOADING_TIMEOUT);
 
   if (is_proxy_error) {
-    network_error_model_->SetErrorState(NetworkError::ERROR_STATE_PROXY,
-                                        std::string());
+    error_screen_->SetErrorState(NetworkError::ERROR_STATE_PROXY,
+                                 std::string());
   } else if (is_behind_captive_portal) {
     // Do not bother a user with obsessive captive portal showing. This
     // check makes captive portal being shown only once: either when error
     // screen is shown for the first time or when switching from another
     // error screen (offline, proxy).
-    if (IsGaiaVisible() || (network_error_model_->GetErrorState() !=
-                            NetworkError::ERROR_STATE_PORTAL)) {
-      network_error_model_->FixCaptivePortal();
+    if (IsGaiaVisible() ||
+        (error_screen_->GetErrorState() != NetworkError::ERROR_STATE_PORTAL)) {
+      error_screen_->FixCaptivePortal();
     }
     const std::string network_name = GetNetworkName(network_path);
-    network_error_model_->SetErrorState(NetworkError::ERROR_STATE_PORTAL,
-                                        network_name);
+    error_screen_->SetErrorState(NetworkError::ERROR_STATE_PORTAL,
+                                 network_name);
   } else if (is_gaia_loading_timeout) {
-    network_error_model_->SetErrorState(
-        NetworkError::ERROR_STATE_AUTH_EXT_TIMEOUT, std::string());
+    error_screen_->SetErrorState(NetworkError::ERROR_STATE_AUTH_EXT_TIMEOUT,
+                                 std::string());
   } else {
-    network_error_model_->SetErrorState(NetworkError::ERROR_STATE_OFFLINE,
-                                        std::string());
+    error_screen_->SetErrorState(NetworkError::ERROR_STATE_OFFLINE,
+                                 std::string());
   }
 
   const bool guest_signin_allowed =
       IsGuestSigninAllowed() &&
-      IsSigninScreenError(network_error_model_->GetErrorState());
-  network_error_model_->AllowGuestSignin(guest_signin_allowed);
+      IsSigninScreenError(error_screen_->GetErrorState());
+  error_screen_->AllowGuestSignin(guest_signin_allowed);
 
   const bool offline_login_allowed =
-      IsOfflineLoginAllowed() &&
-      IsSigninScreenError(network_error_model_->GetErrorState()) &&
-      network_error_model_->GetErrorState() !=
+      IsSigninScreenError(error_screen_->GetErrorState()) &&
+      error_screen_->GetErrorState() !=
           NetworkError::ERROR_STATE_AUTH_EXT_TIMEOUT;
-  network_error_model_->AllowOfflineLogin(offline_login_allowed);
+  error_screen_->AllowOfflineLogin(offline_login_allowed);
 
   if (GetCurrentScreen() != OobeScreen::SCREEN_ERROR_MESSAGE) {
-    network_error_model_->SetUIState(NetworkError::UI_STATE_SIGNIN);
-    network_error_model_->SetParentScreen(OobeScreen::SCREEN_GAIA_SIGNIN);
-    network_error_model_->Show();
-    histogram_helper_->OnErrorShow(network_error_model_->GetErrorState());
+    error_screen_->SetUIState(NetworkError::UI_STATE_SIGNIN);
+    error_screen_->SetParentScreen(OobeScreen::SCREEN_GAIA_SIGNIN);
+    error_screen_->Show();
+    histogram_helper_->OnErrorShow(error_screen_->GetErrorState());
   }
 }
 
@@ -850,7 +950,7 @@ void SigninScreenHandler::HideOfflineMessage(NetworkStateInformer::State state,
 
   gaia_reload_reason_ = NetworkError::ERROR_REASON_NONE;
 
-  network_error_model_->Hide();
+  error_screen_->Hide();
   histogram_helper_->OnErrorHide();
 
   // Forces a reload for Gaia screen on hiding error message.
@@ -863,12 +963,22 @@ void SigninScreenHandler::ReloadGaia(bool force_reload) {
 }
 
 void SigninScreenHandler::Initialize() {
-  // If delegate_ is nullptr here (e.g. WebUIScreenLocker has been destroyed),
-  // don't do anything, just return.
-  if (!delegate_)
-    return;
+  // Preload PIN keyboard if any of the users can authenticate via PIN.
+  if (user_manager::UserManager::IsInitialized()) {
+    for (user_manager::User* user :
+         user_manager::UserManager::Get()->GetUnlockUsers()) {
+      chromeos::quick_unlock::QuickUnlockStorage* quick_unlock_storage =
+          chromeos::quick_unlock::QuickUnlockFactory::GetForUser(user);
+      if (quick_unlock_storage &&
+          quick_unlock_storage->IsPinAuthenticationAvailable()) {
+        CallJS("cr.ui.Oobe.preloadPinKeyboard");
+        break;
+      }
+    }
+  }
 
-  if (show_on_init_) {
+  // |delegate_| is null when we are preloading the lock screen.
+  if (delegate_ && show_on_init_) {
     show_on_init_ = false;
     ShowImpl();
   }
@@ -881,7 +991,7 @@ gfx::NativeWindow SigninScreenHandler::GetNativeWindow() {
 }
 
 void SigninScreenHandler::RegisterPrefs(PrefRegistrySimple* registry) {
-  registry->RegisterDictionaryPref(prefs::kUsersLRUInputMethod);
+  registry->RegisterDictionaryPref(prefs::kUsersLastInputMethod);
 }
 
 void SigninScreenHandler::OnCurrentScreenChanged(OobeScreen current_screen,
@@ -893,22 +1003,26 @@ void SigninScreenHandler::OnCurrentScreenChanged(OobeScreen current_screen,
 }
 
 void SigninScreenHandler::ClearAndEnablePassword() {
-  core_oobe_actor_->ResetSignInUI(false);
+  core_oobe_view_->ResetSignInUI(false);
 }
 
 void SigninScreenHandler::ClearUserPodPassword() {
-  core_oobe_actor_->ClearUserPodPassword();
+  core_oobe_view_->ClearUserPodPassword();
 }
 
 void SigninScreenHandler::RefocusCurrentPod() {
-  core_oobe_actor_->RefocusCurrentPod();
+  core_oobe_view_->RefocusCurrentPod();
 }
 
-void SigninScreenHandler::HidePinKeyboardIfNeeded(const AccountId& account_id) {
-  chromeos::PinStorage* pin_storage =
-      chromeos::PinStorageFactory::GetForAccountId(account_id);
-  if (pin_storage && !pin_storage->IsPinAuthenticationAvailable())
-    CallJS("login.AccountPickerScreen.disablePinKeyboardForUser", account_id);
+void SigninScreenHandler::UpdatePinKeyboardState(const AccountId& account_id) {
+  chromeos::quick_unlock::QuickUnlockStorage* quick_unlock_storage =
+      chromeos::quick_unlock::QuickUnlockFactory::GetForAccountId(account_id);
+  if (!quick_unlock_storage)
+    return;
+
+  bool is_enabled = quick_unlock_storage->IsPinAuthenticationAvailable();
+  CallJS("login.AccountPickerScreen.setPinEnabledForUser", account_id,
+         is_enabled);
 }
 
 void SigninScreenHandler::OnUserRemoved(const AccountId& account_id,
@@ -919,8 +1033,12 @@ void SigninScreenHandler::OnUserRemoved(const AccountId& account_id,
 }
 
 void SigninScreenHandler::OnUserImageChanged(const user_manager::User& user) {
-  if (page_is_ready())
-    CallJS("login.AccountPickerScreen.updateUserImage", user.GetAccountId());
+  if (page_is_ready()) {
+    // TODO(jdufault): Remove DCHECK after resolving crbug.com/699798
+    DCHECK(is_js_initialized_and_ready());
+    CallJSOrDefer("login.AccountPickerScreen.updateUserImage",
+                  user.GetAccountId());
+  }
 }
 
 void SigninScreenHandler::OnPreferencesChanged() {
@@ -964,14 +1082,14 @@ void SigninScreenHandler::ShowError(int login_attempts,
                                     const std::string& error_text,
                                     const std::string& help_link_text,
                                     HelpAppLauncher::HelpTopic help_topic_id) {
-  core_oobe_actor_->ShowSignInError(login_attempts, error_text, help_link_text,
-                                    help_topic_id);
+  core_oobe_view_->ShowSignInError(login_attempts, error_text, help_link_text,
+                                   help_topic_id);
 }
 
 void SigninScreenHandler::ShowErrorScreen(LoginDisplay::SigninError error_id) {
   switch (error_id) {
     case LoginDisplay::TPM_ERROR:
-      core_oobe_actor_->ShowTpmError();
+      core_oobe_view_->ShowTpmError();
       break;
     default:
       NOTREACHED() << "Unknown sign in error";
@@ -980,12 +1098,12 @@ void SigninScreenHandler::ShowErrorScreen(LoginDisplay::SigninError error_id) {
 }
 
 void SigninScreenHandler::ShowSigninUI(const std::string& email) {
-  core_oobe_actor_->ShowSignInUI(email);
+  core_oobe_view_->ShowSignInUI(email);
 }
 
 void SigninScreenHandler::ShowPasswordChangedDialog(bool show_password_error,
                                                     const std::string& email) {
-  core_oobe_actor_->ShowPasswordChangedScreen(show_password_error, email);
+  core_oobe_view_->ShowPasswordChangedScreen(show_password_error, email);
 }
 
 void SigninScreenHandler::ShowSigninScreenForCreds(
@@ -1031,16 +1149,13 @@ void SigninScreenHandler::Observe(int type,
 void SigninScreenHandler::SuspendDone(const base::TimeDelta& sleep_duration) {
   for (user_manager::User* user :
        user_manager::UserManager::Get()->GetUnlockUsers()) {
-    HidePinKeyboardIfNeeded(user->GetAccountId());
+    UpdatePinKeyboardState(user->GetAccountId());
   }
 }
 
-void SigninScreenHandler::OnMaximizeModeStarted() {
-  CallJS("login.AccountPickerScreen.setTouchViewState", true);
-}
-
-void SigninScreenHandler::OnMaximizeModeEnded() {
-  CallJS("login.AccountPickerScreen.setTouchViewState", false);
+void SigninScreenHandler::OnTouchViewToggled(bool enabled) {
+  touch_view_enabled_ = enabled;
+  CallJSOrDefer("login.AccountPickerScreen.setTouchViewState", enabled);
 }
 
 bool SigninScreenHandler::ShouldLoadGaia() const {
@@ -1057,17 +1172,27 @@ void SigninScreenHandler::UpdateAddButtonStatus() {
 }
 
 void SigninScreenHandler::HandleAuthenticateUser(const AccountId& account_id,
-                                                 const std::string& password) {
+                                                 const std::string& password,
+                                                 bool authenticated_by_pin) {
   if (!delegate_)
     return;
   DCHECK_EQ(account_id.GetUserEmail(),
             gaia::SanitizeEmail(account_id.GetUserEmail()));
+  chromeos::quick_unlock::QuickUnlockStorage* quick_unlock_storage =
+      chromeos::quick_unlock::QuickUnlockFactory::GetForAccountId(account_id);
+  // If pin storage is unavailable, authenticated by PIN must be false.
+  DCHECK(!quick_unlock_storage ||
+         quick_unlock_storage->IsPinAuthenticationAvailable() ||
+         !authenticated_by_pin);
 
   UserContext user_context(account_id);
   user_context.SetKey(Key(password));
+  user_context.SetIsUsingPin(authenticated_by_pin);
+  if (account_id.GetAccountType() == AccountType::ACTIVE_DIRECTORY)
+    user_context.SetUserType(user_manager::USER_TYPE_ACTIVE_DIRECTORY);
   delegate_->Login(user_context, SigninSpecifics());
 
-  HidePinKeyboardIfNeeded(account_id);
+  UpdatePinKeyboardState(account_id);
 }
 
 void SigninScreenHandler::HandleLaunchIncognito() {
@@ -1082,7 +1207,7 @@ void SigninScreenHandler::HandleShowSupervisedUserCreationScreen() {
     return;
   }
   LoginDisplayHost::default_host()->StartWizard(
-      WizardController::kSupervisedUserCreationScreenName);
+      OobeScreen::SCREEN_CREATE_SUPERVISED_USER_FLOW);
 }
 
 void SigninScreenHandler::HandleLaunchPublicSession(
@@ -1099,7 +1224,7 @@ void SigninScreenHandler::HandleLaunchPublicSession(
 }
 
 void SigninScreenHandler::HandleOfflineLogin(const base::ListValue* args) {
-  if (!delegate_ || delegate_->IsShowUsers()) {
+  if (!delegate_) {
     NOTREACHED();
     return;
   }
@@ -1112,7 +1237,7 @@ void SigninScreenHandler::HandleOfflineLogin(const base::ListValue* args) {
 }
 
 void SigninScreenHandler::HandleShutdownSystem() {
-  ash::Shell::GetInstance()->lock_state_controller()->RequestShutdown();
+  ash::Shell::Get()->lock_state_controller()->RequestShutdown();
 }
 
 void SigninScreenHandler::HandleLoadWallpaper(const AccountId& account_id) {
@@ -1168,6 +1293,7 @@ void SigninScreenHandler::HandleToggleKioskEnableScreen() {
   policy::BrowserPolicyConnectorChromeOS* connector =
       g_browser_process->platform_part()->browser_policy_connector_chromeos();
   if (delegate_ && !connector->IsEnterpriseManaged() &&
+      KioskAppManager::IsConsumerKioskEnabled() &&
       LoginDisplayHost::default_host()) {
     delegate_->ShowKioskEnableScreen();
   }
@@ -1182,9 +1308,10 @@ void SigninScreenHandler::HandleToggleKioskAutolaunchScreen() {
 
 void SigninScreenHandler::LoadUsers(const base::ListValue& users_list,
                                     bool showGuest) {
-  CallJS("login.AccountPickerScreen.loadUsers",
-         users_list,
-         delegate_->IsShowGuest());
+  // TODO(jdufault): Remove DCHECK after resolving crbug.com/699798
+  DCHECK(is_js_initialized_and_ready());
+  CallJSOrDefer("login.AccountPickerScreen.loadUsers", users_list,
+                delegate_->IsShowGuest());
 }
 
 void SigninScreenHandler::HandleAccountPickerReady() {
@@ -1199,13 +1326,13 @@ void SigninScreenHandler::HandleAccountPickerReady() {
 
   PrefService* prefs = g_browser_process->local_state();
   if (prefs->GetBoolean(prefs::kFactoryResetRequested)) {
-    if (core_oobe_actor_)
-      core_oobe_actor_->ShowDeviceResetScreen();
+    if (core_oobe_view_)
+      core_oobe_view_->ShowDeviceResetScreen();
 
     return;
   } else if (prefs->GetBoolean(prefs::kDebuggingFeaturesRequested)) {
-    if (core_oobe_actor_)
-      core_oobe_actor_->ShowEnableDebuggingScreen();
+    if (core_oobe_view_)
+      core_oobe_view_->ShowEnableDebuggingScreen();
 
     return;
   }
@@ -1218,8 +1345,9 @@ void SigninScreenHandler::HandleAccountPickerReady() {
 
 void SigninScreenHandler::HandleWallpaperReady() {
   if (ScreenLocker::default_screen_locker()) {
-    ScreenLocker::default_screen_locker()->delegate()->
-        OnLockBackgroundDisplayed();
+    ScreenLocker::default_screen_locker()
+        ->web_ui()
+        ->OnLockBackgroundDisplayed();
   }
 }
 
@@ -1248,6 +1376,7 @@ void SigninScreenHandler::HandleLoginVisible(const std::string& source) {
   webui_visible_ = true;
   if (preferences_changed_delayed_)
     OnPreferencesChanged();
+  OnAllowedInputMethodsChanged();
 }
 
 void SigninScreenHandler::HandleCancelPasswordChangedFlow(
@@ -1319,14 +1448,16 @@ void SigninScreenHandler::HandleFocusPod(const AccountId& account_id) {
   if (!test_focus_pod_callback_.is_null())
     test_focus_pod_callback_.Run();
 
+  focused_pod_account_id_ = base::MakeUnique<AccountId>(account_id);
+
   const user_manager::User* user =
       user_manager::UserManager::Get()->FindUser(account_id);
   // |user| may be nullptr in kiosk mode or unit tests.
   if (user && user->is_logged_in() && !user->is_active()) {
-    ash::WmShell::Get()->GetSessionStateDelegate()->SwitchActiveUser(
-        account_id);
+    SessionControllerClient::DoSwitchActiveUser(account_id);
   } else {
     SetUserInputMethod(account_id.GetUserEmail(), ime_state_.get());
+    SetKeyboardSettings(account_id);
     WallpaperManager::Get()->SetUserWallpaperDelayed(account_id);
 
     bool use_24hour_clock = false;
@@ -1338,6 +1469,11 @@ void SigninScreenHandler::HandleFocusPod(const AccountId& account_id) {
               use_24hour_clock ? base::k24HourClock : base::k12HourClock);
     }
   }
+}
+
+void SigninScreenHandler::HandleNoPodFocused() {
+  focused_pod_account_id_.reset();
+  EnforcePolicyInputMethods(std::string());
 }
 
 void SigninScreenHandler::HandleGetPublicSessionKeyboardLayouts(
@@ -1366,11 +1502,15 @@ void SigninScreenHandler::HandleLaunchKioskApp(const AccountId& app_account_id,
     delegate_->Login(context, specifics);
 }
 
+void SigninScreenHandler::HandleLaunchArcKioskApp(
+    const AccountId& app_account_id) {
+  UserContext context(user_manager::USER_TYPE_ARC_KIOSK_APP, app_account_id);
+  if (delegate_)
+    delegate_->Login(context, SigninSpecifics());
+}
+
 void SigninScreenHandler::HandleGetTouchViewState() {
-  if (max_mode_delegate_) {
-    CallJS("login.AccountPickerScreen.setTouchViewState",
-           max_mode_delegate_->IsMaximizeModeEnabled());
-  }
+  CallJS("login.AccountPickerScreen.setTouchViewState", touch_view_enabled_);
 }
 
 void SigninScreenHandler::HandleLogRemoveUserWarningShown() {
@@ -1437,10 +1577,6 @@ void SigninScreenHandler::CancelPasswordChangedFlowInternal() {
   }
 }
 
-OobeUI* SigninScreenHandler::GetOobeUI() const {
-  return static_cast<OobeUI*>(web_ui()->GetController());
-}
-
 bool SigninScreenHandler::IsGaiaVisible() const {
   return IsSigninScreen(GetCurrentScreen()) &&
       ui_state_ == UI_STATE_GAIA_SIGNIN;
@@ -1453,7 +1589,7 @@ bool SigninScreenHandler::IsGaiaHiddenByError() const {
 
 bool SigninScreenHandler::IsSigninScreenHiddenByError() const {
   return (GetCurrentScreen() == OobeScreen::SCREEN_ERROR_MESSAGE) &&
-         (IsSigninScreen(network_error_model_->GetParentScreen()));
+         (IsSigninScreen(error_screen_->GetParentScreen()));
 }
 
 bool SigninScreenHandler::IsGuestSigninAllowed() const {
@@ -1465,19 +1601,9 @@ bool SigninScreenHandler::IsGuestSigninAllowed() const {
   return allow_guest;
 }
 
-bool SigninScreenHandler::IsOfflineLoginAllowed() const {
-  CrosSettings* cros_settings = CrosSettings::Get();
-  if (!cros_settings)
-    return false;
-
-  // Offline login is allowed only when user pods are hidden.
-  bool show_pods;
-  cros_settings->GetBoolean(kAccountsPrefShowUserNamesOnSignIn, &show_pods);
-  return !show_pods;
-}
-
 void SigninScreenHandler::OnShowAddUser() {
   is_account_picker_showing_first_time_ = false;
+  EnforcePolicyInputMethods(std::string());
   gaia_screen_handler_->ShowGaiaAsync();
 }
 
@@ -1496,6 +1622,47 @@ void SigninScreenHandler::OnFeedbackFinished() {
 
   // Recreate user's cryptohome after the feedback is attempted.
   HandleResyncUserData();
+}
+
+void SigninScreenHandler::OnAllowedInputMethodsChanged() {
+  if (!webui_visible_)
+    return;
+
+  if (focused_pod_account_id_) {
+    std::string user_input_method =
+        GetUserLastInputMethod(focused_pod_account_id_->GetUserEmail());
+    EnforcePolicyInputMethods(user_input_method);
+  } else {
+    EnforcePolicyInputMethods(std::string());
+  }
+}
+
+void SigninScreenHandler::SetKeyboardSettings(const AccountId& account_id) {
+  bool auto_repeat_enabled = language_prefs::kXkbAutoRepeatEnabled;
+  if (user_manager::known_user::GetBooleanPref(
+          account_id, prefs::kLanguageXkbAutoRepeatEnabled,
+          &auto_repeat_enabled) &&
+      !auto_repeat_enabled) {
+    input_method::InputMethodManager::Get()
+        ->GetImeKeyboard()
+        ->SetAutoRepeatEnabled(false);
+    return;
+  }
+
+  int auto_repeat_delay = language_prefs::kXkbAutoRepeatDelayInMs;
+  int auto_repeat_interval = language_prefs::kXkbAutoRepeatIntervalInMs;
+  user_manager::known_user::GetIntegerPref(
+      account_id, prefs::kLanguageXkbAutoRepeatDelay, &auto_repeat_delay);
+  user_manager::known_user::GetIntegerPref(
+      account_id, prefs::kLanguageXkbAutoRepeatInterval, &auto_repeat_interval);
+  input_method::AutoRepeatRate rate;
+  rate.initial_delay_in_ms = auto_repeat_delay;
+  rate.repeat_interval_in_ms = auto_repeat_interval;
+  input_method::InputMethodManager::Get()
+      ->GetImeKeyboard()
+      ->SetAutoRepeatEnabled(true);
+  input_method::InputMethodManager::Get()->GetImeKeyboard()->SetAutoRepeatRate(
+      rate);
 }
 
 }  // namespace chromeos

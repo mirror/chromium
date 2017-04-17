@@ -32,54 +32,64 @@
 #define SVGLengthTearOff_h
 
 #include "bindings/core/v8/ScriptWrappable.h"
-#include "core/css/CSSPrimitiveValue.h"
 #include "core/svg/SVGLength.h"
 #include "core/svg/properties/SVGPropertyTearOff.h"
 
 namespace blink {
 
-class SVGLengthTearOff final : public SVGPropertyTearOff<SVGLength>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    // Forward declare these enums in the w3c naming scheme, for IDL generation
-    enum {
-        SVG_LENGTHTYPE_UNKNOWN = LengthTypeUnknown,
-        SVG_LENGTHTYPE_NUMBER = LengthTypeNumber,
-        SVG_LENGTHTYPE_PERCENTAGE = LengthTypePercentage,
-        SVG_LENGTHTYPE_EMS = LengthTypeEMS,
-        SVG_LENGTHTYPE_EXS = LengthTypeEXS,
-        SVG_LENGTHTYPE_PX = LengthTypePX,
-        SVG_LENGTHTYPE_CM = LengthTypeCM,
-        SVG_LENGTHTYPE_MM = LengthTypeMM,
-        SVG_LENGTHTYPE_IN = LengthTypeIN,
-        SVG_LENGTHTYPE_PT = LengthTypePT,
-        SVG_LENGTHTYPE_PC = LengthTypePC
-    };
+class SVGLengthTearOff final : public SVGPropertyTearOff<SVGLength>,
+                               public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    static SVGLengthTearOff* create(SVGLength* target, SVGElement* contextElement, PropertyIsAnimValType propertyIsAnimVal, const QualifiedName& attributeName = QualifiedName::null())
-    {
-        return new SVGLengthTearOff(target, contextElement, propertyIsAnimVal, attributeName);
-    }
+ public:
+  // Forward declare these enums in the w3c naming scheme, for IDL generation
+  enum {
+    kSvgLengthtypeUnknown = 0,
+    kSvgLengthtypeNumber = 1,
+    kSvgLengthtypePercentage = 2,
+    kSvgLengthtypeEms = 3,
+    kSvgLengthtypeExs = 4,
+    kSvgLengthtypePx = 5,
+    kSvgLengthtypeCm = 6,
+    kSvgLengthtypeMm = 7,
+    kSvgLengthtypeIn = 8,
+    kSvgLengthtypePt = 9,
+    kSvgLengthtypePc = 10
+  };
 
-    SVGLengthType unitType();
-    SVGLengthMode unitMode();
-    float value(ExceptionState&);
-    void setValue(float value, ExceptionState&);
-    float valueInSpecifiedUnits();
-    void setValueInSpecifiedUnits(float value, ExceptionState&);
-    String valueAsString();
-    void setValueAsString(const String&, ExceptionState&);
-    void newValueSpecifiedUnits(unsigned short unitType, float valueInSpecifiedUnits, ExceptionState&);
-    void convertToSpecifiedUnits(unsigned short unitType, ExceptionState&);
+  static SVGLengthTearOff* Create(
+      SVGLength* target,
+      SVGElement* context_element,
+      PropertyIsAnimValType property_is_anim_val,
+      const QualifiedName& attribute_name = QualifiedName::Null()) {
+    return new SVGLengthTearOff(target, context_element, property_is_anim_val,
+                                attribute_name);
+  }
 
-    bool hasExposedLengthUnit();
+  unsigned short unitType();
+  SVGLengthMode UnitMode();
+  float value(ExceptionState&);
+  void setValue(float value, ExceptionState&);
+  float valueInSpecifiedUnits();
+  void setValueInSpecifiedUnits(float value, ExceptionState&);
+  String valueAsString();
+  void setValueAsString(const String&, ExceptionState&);
+  void newValueSpecifiedUnits(unsigned short unit_type,
+                              float value_in_specified_units,
+                              ExceptionState&);
+  void convertToSpecifiedUnits(unsigned short unit_type, ExceptionState&);
 
-    DECLARE_VIRTUAL_TRACE_WRAPPERS();
+  bool HasExposedLengthUnit();
 
-private:
-    SVGLengthTearOff(SVGLength*, SVGElement* contextElement, PropertyIsAnimValType, const QualifiedName& attributeName = QualifiedName::null());
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
+
+ private:
+  SVGLengthTearOff(SVGLength*,
+                   SVGElement* context_element,
+                   PropertyIsAnimValType,
+                   const QualifiedName& attribute_name = QualifiedName::Null());
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGLengthTearOff_h
+#endif  // SVGLengthTearOff_h

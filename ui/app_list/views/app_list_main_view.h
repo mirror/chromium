@@ -8,7 +8,6 @@
 #include <string>
 
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/memory/weak_ptr.h"
 #include "base/timer/timer.h"
 #include "ui/app_list/app_list_export.h"
@@ -17,10 +16,6 @@
 #include "ui/app_list/views/search_box_view_delegate.h"
 #include "ui/app_list/views/search_result_list_view_delegate.h"
 #include "ui/views/view.h"
-
-namespace views {
-class Widget;
-}
 
 namespace app_list {
 
@@ -53,8 +48,6 @@ class APP_LIST_EXPORT AppListMainView : public views::View,
 
   void Close();
 
-  void Prerender();
-
   void ModelChanged();
 
   SearchBoxView* search_box_view() const { return search_box_view_; }
@@ -68,9 +61,6 @@ class APP_LIST_EXPORT AppListMainView : public views::View,
   AppListModel* model() { return model_; }
   AppListViewDelegate* view_delegate() { return delegate_; }
 
-  // Returns true if the app list should be centered and in landscape mode.
-  bool ShouldCenterWindow() const;
-
   // Called when the search box's visibility is changed.
   void NotifySearchBoxVisibilityChanged();
 
@@ -82,29 +72,14 @@ class APP_LIST_EXPORT AppListMainView : public views::View,
   void OnSearchEngineIsGoogleChanged(bool is_google) override;
 
  private:
-  class IconLoader;
-
   // Adds the ContentsView.
   void AddContentsViews();
 
   // Gets the PaginationModel owned by the AppsGridView.
   PaginationModel* GetAppsPaginationModel();
 
-  // Loads icon image for the apps in the selected page of |pagination_model_|.
-  // |parent| is used to determine the image scale factor to use.
-  void PreloadIcons(gfx::NativeView parent);
-
-  // Invoked when |icon_loading_wait_timer_| fires.
-  void OnIconLoadingWaitTimer();
-
-  // Invoked from an IconLoader when icon loading is finished.
-  void OnItemIconLoaded(IconLoader* loader);
-
   // Overridden from AppsGridViewDelegate:
   void ActivateApp(AppListItem* item, int event_flags) override;
-  void GetShortcutPathForApp(
-      const std::string& app_id,
-      const base::Callback<void(const base::FilePath&)>& callback) override;
   void CancelDragInActiveFolder() override;
 
   // Overridden from SearchBoxViewDelegate:
@@ -121,14 +96,6 @@ class APP_LIST_EXPORT AppListMainView : public views::View,
   // Created by AppListView. Owned by views hierarchy.
   SearchBoxView* search_box_view_;
   ContentsView* contents_view_;  // Owned by views hierarchy.
-
-  // A timer that fires when maximum allowed time to wait for icon loading has
-  // passed.
-  base::OneShotTimer icon_loading_wait_timer_;
-
-  ScopedVector<IconLoader> pending_icon_loaders_;
-
-  base::WeakPtrFactory<AppListMainView> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListMainView);
 };

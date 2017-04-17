@@ -8,76 +8,84 @@
 #include "platform/graphics/ContiguousContainer.h"
 #include "platform/graphics/paint/DisplayItem.h"
 #include "platform/graphics/paint/Transform3DDisplayItem.h"
-#include "wtf/Alignment.h"
-#include "wtf/Assertions.h"
-
-class SkPictureGpuAnalyzer;
+#include "platform/wtf/Alignment.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
+class JSONArray;
 struct PaintChunk;
 
 // kDisplayItemAlignment must be a multiple of alignof(derived display item) for
 // each derived display item; the ideal value is the least common multiple.
 // Currently the limiting factor is TransformationMatrix (in
 // BeginTransform3DDisplayItem), which requests 16-byte alignment.
-static const size_t kDisplayItemAlignment = WTF_ALIGN_OF(BeginTransform3DDisplayItem);
-static const size_t kMaximumDisplayItemSize = sizeof(BeginTransform3DDisplayItem);
+static const size_t kDisplayItemAlignment =
+    WTF_ALIGN_OF(BeginTransform3DDisplayItem);
+static const size_t kMaximumDisplayItemSize =
+    sizeof(BeginTransform3DDisplayItem);
 
 // A container for a list of display items.
-class PLATFORM_EXPORT DisplayItemList : public ContiguousContainer<DisplayItem, kDisplayItemAlignment> {
-public:
-    DisplayItemList(size_t initialSizeBytes)
-        : ContiguousContainer(kMaximumDisplayItemSize, initialSizeBytes) {}
-    DisplayItemList(DisplayItemList&& source)
-        : ContiguousContainer(std::move(source))
-        , m_visualRects(std::move(source.m_visualRects))
-        , m_beginItemIndices(std::move(source.m_beginItemIndices))
-    {}
+class PLATFORM_EXPORT DisplayItemList
+    : public ContiguousContainer<DisplayItem, kDisplayItemAlignment> {
+ public:
+  DisplayItemList(size_t initial_size_bytes)
+      : ContiguousContainer(kMaximumDisplayItemSize, initial_size_bytes) {}
+  DisplayItemList(DisplayItemList&& source)
+      : ContiguousContainer(std::move(source)),
+        visual_rects_(std::move(source.visual_rects_)) {}
 
-    DisplayItemList& operator=(DisplayItemList&& source)
-    {
-        ContiguousContainer::operator=(std::move(source));
-        m_visualRects = std::move(source.m_visualRects);
-        m_beginItemIndices = std::move(source.m_beginItemIndices);
-        return *this;
-    }
+  DisplayItemList& operator=(DisplayItemList&& source) {
+    ContiguousContainer::operator=(std::move(source));
+    visual_rects_ = std::move(source.visual_rects_);
+    return *this;
+  }
 
-    DisplayItem& appendByMoving(DisplayItem&);
+  DisplayItem& AppendByMoving(DisplayItem&);
 
-    bool hasVisualRect(size_t index) const { return index < m_visualRects.size(); }
-    IntRect visualRect(size_t index) const
-    {
-        DCHECK(hasVisualRect(index));
-        return m_visualRects[index];
-    }
+  bool HasVisualRect(size_t index) const {
+    return index < visual_rects_.size();
+  }
+  IntRect VisualRect(size_t index) const {
+    DCHECK(HasVisualRect(index));
+    return visual_rects_[index];
+  }
 
-    void appendVisualRect(const IntRect& visualRect);
+  void AppendVisualRect(const IntRect& visual_rect);
 
-    // Useful for iterating with a range-based for loop.
-    template <typename Iterator>
-    class Range {
-    public:
-        Range(const Iterator& begin, const Iterator& end)
-            : m_begin(begin), m_end(end) {}
-        Iterator begin() const { return m_begin; }
-        Iterator end() const { return m_end; }
-    private:
-        Iterator m_begin;
-        Iterator m_end;
-    };
-    Range<iterator> itemsInPaintChunk(const PaintChunk&);
-    Range<const_iterator> itemsInPaintChunk(const PaintChunk&) const;
+  // Useful for iterating with a range-based for loop.
+  template <typename Iterator>
+  class Range {
+   public:
+    Range(const Iterator& begin, const Iterator& end)
+        : begin_(begin), end_(end) {}
+    Iterator begin() const { return begin_; }
+    Iterator end() const { return end_; }
 
-private:
-    // If we're currently within a paired display item block, unions the
-    // given visual rect with the begin display item's visual rect.
-    void growCurrentBeginItemVisualRect(const IntRect& visualRect);
+   private:
+    Iterator begin_;
+    Iterator end_;
+  };
+  Range<iterator> ItemsInPaintChunk(const PaintChunk&);
+  Range<const_iterator> ItemsInPaintChunk(const PaintChunk&) const;
 
-    Vector<IntRect> m_visualRects;
-    Vector<size_t> m_beginItemIndices;
+  enum JsonOptions {
+    kDefault = 0,
+    kShowPaintRecords = 1,
+    kSkipNonDrawings = 1 << 1,
+    kShowClientDebugName = 1 << 2,
+    kShownOnlyDisplayItemTypes = 1 << 3
+  };
+  typedef unsigned JsonFlags;
+
+  std::unique_ptr<JSONArray> SubsequenceAsJSON(size_t begin_index,
+                                               size_t end_index,
+                                               JsonFlags options) const;
+
+ private:
+  Vector<IntRect> visual_rects_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DisplayItemList_h
+#endif  // DisplayItemList_h

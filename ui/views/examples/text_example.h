@@ -5,8 +5,10 @@
 #ifndef UI_VIEWS_EXAMPLES_TEXT_EXAMPLE_H_
 #define UI_VIEWS_EXAMPLES_TEXT_EXAMPLE_H_
 
+#include <memory>
+#include <vector>
+
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/combobox/combobox_listener.h"
 #include "ui/views/examples/example_base.h"
@@ -67,9 +69,6 @@ class VIEWS_EXAMPLES_EXPORT TextExample : public ExampleBase,
   // Check box to enable/disable character break behavior.
   Checkbox* break_checkbox_;
 
-  // Check box to enable/disable text halo.
-  Checkbox* halo_checkbox_;
-
   // Check box to enable/disable bold style.
   Checkbox* bold_checkbox_;
 
@@ -81,7 +80,7 @@ class VIEWS_EXAMPLES_EXPORT TextExample : public ExampleBase,
 
   // We create a model for each of the combobox, so we need to keep them
   // around until destruction time.
-  ScopedVector<ExampleComboboxModel> example_combobox_model_;
+  std::vector<std::unique_ptr<ExampleComboboxModel>> example_combobox_model_;
 
   DISALLOW_COPY_AND_ASSIGN(TextExample);
 };

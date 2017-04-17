@@ -18,6 +18,8 @@ gfx::BufferFormat BufferFormatForInternalFormat(unsigned internalformat) {
   switch (internalformat) {
     case GL_RED_EXT:
       return gfx::BufferFormat::R_8;
+    case GL_RG_EXT:
+      return gfx::BufferFormat::RG_88;
     case GL_RGB:
       return gfx::BufferFormat::BGRX_8888;
     case GL_RGBA:
@@ -72,6 +74,7 @@ bool IsImageFormatCompatibleWithGpuMemoryBufferFormat(
     case gfx::BufferFormat::DXT5:
     case gfx::BufferFormat::ETC1:
     case gfx::BufferFormat::R_8:
+    case gfx::BufferFormat::RG_88:
     case gfx::BufferFormat::RGBA_8888:
     case gfx::BufferFormat::YVU_420:
     case gfx::BufferFormat::YUV_420_BIPLANAR:
@@ -81,6 +84,7 @@ bool IsImageFormatCompatibleWithGpuMemoryBufferFormat(
     case gfx::BufferFormat::RGBX_8888:
       return internalformat == GL_RGB;
     case gfx::BufferFormat::RGBA_4444:
+    case gfx::BufferFormat::RGBA_F16:
       return internalformat == GL_RGBA;
   }
 
@@ -88,8 +92,9 @@ bool IsImageFormatCompatibleWithGpuMemoryBufferFormat(
   return false;
 }
 
-bool IsGpuMemoryBufferFormatSupported(gfx::BufferFormat format,
-                                      const gpu::Capabilities& capabilities) {
+bool IsImageFromGpuMemoryBufferFormatSupported(
+    gfx::BufferFormat format,
+    const gpu::Capabilities& capabilities) {
   switch (format) {
     case gfx::BufferFormat::ATC:
     case gfx::BufferFormat::ATCIA:
@@ -104,6 +109,7 @@ bool IsGpuMemoryBufferFormatSupported(gfx::BufferFormat format,
     case gfx::BufferFormat::ETC1:
       return capabilities.texture_format_etc1;
     case gfx::BufferFormat::R_8:
+    case gfx::BufferFormat::RG_88:
       return capabilities.texture_rg;
     case gfx::BufferFormat::UYVY_422:
       return capabilities.image_ycbcr_422;
@@ -113,8 +119,16 @@ bool IsGpuMemoryBufferFormatSupported(gfx::BufferFormat format,
     case gfx::BufferFormat::RGBX_8888:
     case gfx::BufferFormat::YVU_420:
       return true;
+    case gfx::BufferFormat::RGBA_F16:
+      return capabilities.texture_half_float_linear;
     case gfx::BufferFormat::YUV_420_BIPLANAR:
+#if defined(OS_CHROMEOS) && defined(ARCH_CPU_ARM_FAMILY)
+      // TODO(dcastagna): Determine ycbcr_420v_image on CrOS at runtime
+      // querying minigbm. crbug.com/646148
+      return true;
+#else
       return capabilities.image_ycbcr_420v;
+#endif
   }
 
   NOTREACHED();
@@ -133,12 +147,14 @@ bool IsImageSizeValidForGpuMemoryBufferFormat(const gfx::Size& size,
       // by the block size.
       return size.width() % 4 == 0 && size.height() % 4 == 0;
     case gfx::BufferFormat::R_8:
+    case gfx::BufferFormat::RG_88:
     case gfx::BufferFormat::BGR_565:
     case gfx::BufferFormat::RGBA_4444:
     case gfx::BufferFormat::RGBA_8888:
     case gfx::BufferFormat::RGBX_8888:
     case gfx::BufferFormat::BGRA_8888:
     case gfx::BufferFormat::BGRX_8888:
+    case gfx::BufferFormat::RGBA_F16:
       return true;
     case gfx::BufferFormat::YVU_420:
     case gfx::BufferFormat::YUV_420_BIPLANAR:

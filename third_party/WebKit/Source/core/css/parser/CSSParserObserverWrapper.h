@@ -6,53 +6,59 @@
 #define CSSParserObserverWrapper_h
 
 #include "core/css/parser/CSSParserObserver.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
+class CSSParserToken;
+class CSSParserTokenRange;
+
 class CSSParserObserverWrapper {
-    STACK_ALLOCATED();
-public:
-    explicit CSSParserObserverWrapper(CSSParserObserver& observer)
-        : m_observer(observer)
-    { }
+  STACK_ALLOCATED();
 
-    unsigned startOffset(const CSSParserTokenRange&);
-    unsigned previousTokenStartOffset(const CSSParserTokenRange&);
-    unsigned endOffset(const CSSParserTokenRange&); // Includes trailing comments
+ public:
+  explicit CSSParserObserverWrapper(CSSParserObserver& observer)
+      : observer_(observer) {}
 
-    void skipCommentsBefore(const CSSParserTokenRange&, bool leaveDirectlyBefore);
-    void yieldCommentsBefore(const CSSParserTokenRange&);
+  unsigned StartOffset(const CSSParserTokenRange&);
+  unsigned PreviousTokenStartOffset(const CSSParserTokenRange&);
+  unsigned EndOffset(const CSSParserTokenRange&);  // Includes trailing comments
 
-    CSSParserObserver& observer() { return m_observer; }
-    void addComment(unsigned startOffset, unsigned endOffset, unsigned tokensBefore)
-    {
-        CommentPosition position = {startOffset, endOffset, tokensBefore};
-        m_commentOffsets.append(position);
-    }
-    void addToken(unsigned startOffset) { m_tokenOffsets.append(startOffset); }
-    void finalizeConstruction(CSSParserToken* firstParserToken)
-    {
-        m_firstParserToken = firstParserToken;
-        m_commentIterator = m_commentOffsets.begin();
-    }
+  void SkipCommentsBefore(const CSSParserTokenRange&,
+                          bool leave_directly_before);
+  void YieldCommentsBefore(const CSSParserTokenRange&);
 
-private:
-    CSSParserObserver& m_observer;
-    Vector<unsigned> m_tokenOffsets;
-    CSSParserToken* m_firstParserToken;
+  CSSParserObserver& Observer() { return observer_; }
+  void AddComment(unsigned start_offset,
+                  unsigned end_offset,
+                  unsigned tokens_before) {
+    CommentPosition position = {start_offset, end_offset, tokens_before};
+    comment_offsets_.push_back(position);
+  }
+  void AddToken(unsigned start_offset) {
+    token_offsets_.push_back(start_offset);
+  }
+  void FinalizeConstruction(CSSParserToken* first_parser_token) {
+    first_parser_token_ = first_parser_token;
+    comment_iterator_ = comment_offsets_.begin();
+  }
 
-    struct CommentPosition {
-        DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-        unsigned startOffset;
-        unsigned endOffset;
-        unsigned tokensBefore;
-    };
+ private:
+  CSSParserObserver& observer_;
+  Vector<unsigned> token_offsets_;
+  CSSParserToken* first_parser_token_;
 
-    Vector<CommentPosition> m_commentOffsets;
-    Vector<CommentPosition>::iterator m_commentIterator;
+  struct CommentPosition {
+    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+    unsigned start_offset;
+    unsigned end_offset;
+    unsigned tokens_before;
+  };
+
+  Vector<CommentPosition> comment_offsets_;
+  Vector<CommentPosition>::iterator comment_iterator_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSParserObserverWrapper_h
+#endif  // CSSParserObserverWrapper_h

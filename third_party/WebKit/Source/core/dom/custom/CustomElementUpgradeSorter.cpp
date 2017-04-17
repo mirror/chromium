@@ -8,83 +8,98 @@
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/Node.h"
 #include "core/dom/shadow/ShadowRoot.h"
+#include "core/html/HTMLLinkElement.h"
+#include "core/html/imports/HTMLImportChild.h"
+#include "core/html/imports/HTMLImportLoader.h"
 
 namespace blink {
 
 CustomElementUpgradeSorter::CustomElementUpgradeSorter()
-    : m_elements(new HeapHashSet<Member<Element>>())
-    , m_parentChildMap(new ParentChildMap())
-{
+    : elements_(new HeapHashSet<Member<Element>>()),
+      parent_child_map_(new ParentChildMap()) {}
+
+static HTMLLinkElement* GetLinkElementForImport(const Document& import) {
+  if (HTMLImportLoader* loader = import.ImportLoader())
+    return loader->FirstImport()->Link();
+  return nullptr;
 }
 
-void CustomElementUpgradeSorter::add(Element* element)
-{
-    m_elements->add(element);
+CustomElementUpgradeSorter::AddResult
+CustomElementUpgradeSorter::AddToParentChildMap(Node* parent, Node* child) {
+  ParentChildMap::AddResult result = parent_child_map_->insert(parent, nullptr);
+  if (!result.is_new_entry) {
+    result.stored_value->value->insert(child);
+    // The entry for the parent exists; so must its parents.
+    return kParentAlreadyExistsInMap;
+  }
 
-    for (Node* n = element, *parent = n->parentOrShadowHostNode();
-        parent;
-        n = parent, parent = parent->parentOrShadowHostNode()) {
+  ChildSet* child_set = new ChildSet();
+  child_set->insert(child);
+  result.stored_value->value = child_set;
+  return kParentAddedToMap;
+}
 
-        ParentChildMap::iterator it = m_parentChildMap->find(parent);
-        if (it == m_parentChildMap->end()) {
-            ParentChildMap::AddResult result =
-                m_parentChildMap->add(parent, HeapHashSet<Member<Node>>());
-            result.storedValue->value.add(n);
-        } else {
-            it->value.add(n);
-            // The entry for the parent exists; so must its parents.
-            break;
-        }
+void CustomElementUpgradeSorter::Add(Element* element) {
+  elements_->insert(element);
+
+  for (Node *n = element, *parent = n->ParentOrShadowHostNode(); parent;
+       n = parent, parent = parent->ParentOrShadowHostNode()) {
+    if (AddToParentChildMap(parent, n) == kParentAlreadyExistsInMap)
+      break;
+
+    // Create parent-child link between <link rel="import"> and its imported
+    // document so that the content of the imported document be visited as if
+    // the imported document were inserted in the link element.
+    if (parent->IsDocumentNode()) {
+      Element* link = GetLinkElementForImport(*ToDocument(parent));
+      if (!link ||
+          AddToParentChildMap(link, parent) == kParentAlreadyExistsInMap)
+        break;
+      parent = link;
     }
+  }
 }
 
-void CustomElementUpgradeSorter::visit(
-    HeapVector<Member<Element>>* result,
-    ChildSet& children,
-    const ChildSet::iterator& it)
-{
-    if (it == children.end())
-        return;
-    if (it->get()->isElementNode() && m_elements->contains(toElement(*it)))
-        result->append(toElement(*it));
-    sorted(result, *it);
-    children.remove(it);
+void CustomElementUpgradeSorter::Visit(HeapVector<Member<Element>>* result,
+                                       ChildSet& children,
+                                       const ChildSet::iterator& it) {
+  if (it == children.end())
+    return;
+  if (it->Get()->IsElementNode() && elements_->Contains(ToElement(*it)))
+    result->push_back(ToElement(*it));
+  Sorted(result, *it);
+  children.erase(it);
 }
 
-void CustomElementUpgradeSorter::sorted(
-    HeapVector<Member<Element>>* result,
-    Node* parent)
-{
-    ParentChildMap::iterator childrenIterator = m_parentChildMap->find(parent);
-    if (childrenIterator == m_parentChildMap->end())
-        return;
+void CustomElementUpgradeSorter::Sorted(HeapVector<Member<Element>>* result,
+                                        Node* parent) {
+  ParentChildMap::iterator children_iterator = parent_child_map_->Find(parent);
+  if (children_iterator == parent_child_map_->end())
+    return;
 
-    ChildSet& children = childrenIterator->value;
+  ChildSet* children = children_iterator->value.Get();
 
-    if (children.size() == 1) {
-        visit(result, children, children.begin());
-        return;
-    }
+  if (children->size() == 1) {
+    Visit(result, *children, children->begin());
+    return;
+  }
 
-    // TODO(dominicc): When custom elements are used in UA shadow
-    // roots, expand this to include UA shadow roots.
-    ShadowRoot* shadowRoot = parent->isElementNode()
-        ? toElement(parent)->authorShadowRoot()
-        : nullptr;
-    if (shadowRoot)
-        visit(result, children, children.find(shadowRoot));
+  // TODO(dominicc): When custom elements are used in UA shadow
+  // roots, expand this to include UA shadow roots.
+  ShadowRoot* shadow_root =
+      parent->IsElementNode() ? ToElement(parent)->AuthorShadowRoot() : nullptr;
+  if (shadow_root)
+    Visit(result, *children, children->Find(shadow_root));
 
-    for (Element* e = ElementTraversal::firstChild(*parent);
-        e && children.size() > 1;
-        e = ElementTraversal::nextSibling(*e)) {
+  for (Element* e = ElementTraversal::FirstChild(*parent);
+       e && children->size() > 1; e = ElementTraversal::NextSibling(*e)) {
+    Visit(result, *children, children->Find(e));
+  }
 
-        visit(result, children, children.find(e));
-    }
+  if (children->size() == 1)
+    Visit(result, *children, children->begin());
 
-    if (children.size() == 1)
-        visit(result, children, children.begin());
-
-    DCHECK(children.isEmpty());
+  DCHECK(children->IsEmpty());
 }
 
-} // namespace blink
+}  // namespace blink

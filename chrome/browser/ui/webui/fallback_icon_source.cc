@@ -30,8 +30,7 @@ std::string FallbackIconSource::GetSource() const {
 
 void FallbackIconSource::StartDataRequest(
     const std::string& path,
-    int render_process_id,
-    int render_frame_id,
+    const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
     const content::URLDataSource::GotDataCallback& callback) {
   chrome::ParsedFallbackIconPath parsed;
   bool success = parsed.Parse(path);
@@ -54,6 +53,10 @@ std::string FallbackIconSource::GetMimeType(const std::string&) const {
   // We need to explicitly return a mime type, otherwise if the user tries to
   // drag the image they get no extension.
   return "image/png";
+}
+
+bool FallbackIconSource::AllowCaching() const {
+  return false;
 }
 
 bool FallbackIconSource::ShouldReplaceExistingSource() const {

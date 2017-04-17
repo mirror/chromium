@@ -1,3 +1,6 @@
+<if expr="chromeos">
+<link rel="import" href="/people_page/lock_screen_constants.html">
+</if>
 <div id="settings" class="page" hidden>
   <header>
     <h1 i18n-content="settingsTitle"></h1>
@@ -134,8 +137,12 @@
           </button>
         </span>
         <button id="storage-manager-button"
-            i18n-content="storageManagerButtonTitle" hidden>
+            i18n-content="storageManagerButtonTitle">
         </button>
+      </div>
+      <div id="stylus-row" hidden>
+        <a is="action-link" id="stylus-settings-link"
+            i18n-content="stylusSettingsButtonTitle"></a>
       </div>
       <div id="power-row" hidden>
         <a is="action-link" id="power-settings-link"
@@ -344,18 +351,6 @@
       </div>
     </div>
   </section>
-
-  <section id="device-control-section" hidden>
-    <h3 i18n-content="deviceControlTitle"></h3>
-    <div id="consumer-management-section">
-      <div class="settings-row">
-        <span i18n-content="consumerManagementDescription"></span>
-      </div>
-      <div class="settings-row">
-        <button id="consumer-management-button"></button>
-      </div>
-    </div>
-  </section>
 </if>
   <section id="privacy-section">
     <h3 i18n-content="advancedSectionTitlePrivacy"></h3>
@@ -412,13 +407,12 @@
       <div class="checkbox controlled-setting-with-label">
         <label>
           <input
+              id="safeBrowsingExtendedReportingCheckbox"
               metric="Options_SafeBrowsingExtendedReportingCheckbox"
-              pref="safebrowsing.extended_reporting_enabled"
               type="checkbox">
           <span>
             <span i18n-content="safeBrowsingEnableExtendedReporting"></span>
-            <span class="controlled-setting-indicator"
-                pref="safebrowsing.extended_reporting_enabled"></span>
+            <span class="controlled-setting-indicator"></span>
           </span>
         </label>
       </div>
@@ -576,12 +570,12 @@
     <div class="checkbox controlled-setting-with-label">
       <label>
         <input id="password-manager-enabled"
-            pref="profile.password_manager_enabled"
+            pref="credentials_enable_service"
             metric="Options_PasswordManager" type="checkbox">
         <span>
           <span i18n-content="passwordManagerEnabled"></span>
           <span class="controlled-setting-indicator"
-              pref="profile.password_manager_enabled"></span>
+              pref="credentials_enable_service"></span>
         </span>
       </label>
       <a is="action-link" id="manage-passwords" i18n-content="managePasswords">
@@ -770,6 +764,21 @@
 </if>
       </div>
   </section>
+<if expr="chromeos">
+  <section id="cups-printers-section" hidden>
+    <h3 i18n-content="advancedSectionTitleCupsPrint"></h3>
+    <div class="settings-row">
+      <span i18n-content="cupsPrintOptionLabel"></span>
+      <a target="_blank" i18n-content="learnMore"
+          i18n-values="href:cupsPrintLearnMoreURL">
+      </a>
+    </div>
+    <div class="settings-row">
+      <button id="cupsPrintersManageButton"
+          i18n-content="cupsPrintersManageButton"></button>
+    </div>
+  </section>
+</if>
 <if expr="enable_service_discovery">
     <section id="cloudprint-options-mdns">
       <h3 i18n-content="advancedSectionTitleCloudPrint"></h3>
@@ -892,6 +901,8 @@
         <div id="accessibility-settings" hidden>
           <button id="accessibility-settings-button"
             i18n-content="accessibilitySettings"></button>
+          <button id="talkback-settings-button"
+            i18n-content="accessibilityTalkBackSettings"></button>
         </div>
       </div>
     </div>
@@ -957,7 +968,7 @@
             aria-labelledby="accessibility-autoclick-label"
             pref="settings.a11y.autoclick_delay_ms">
           <!-- i18n strings contain the autoclick duration; if the autoclick
-               timing gets changed, then the 18n strings also needs to be
+               timing gets changed, then the i18n strings also needs to be
                updated. -->
           <option value="600"
               i18n-content="autoclickDelayExtremelyShort"></option>

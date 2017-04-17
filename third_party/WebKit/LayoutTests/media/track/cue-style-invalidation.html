@@ -28,7 +28,7 @@ async_test(function(t) {
         var red = "rgb(255, 0, 0)";
         var green = "rgb(0, 128, 0)";
 
-        var cueNode = textTrackDisplayElement(video, "cue");
+        var cueNode = textTrackCueElementByIndex(video, 0).firstChild;
         var iNode = cueNode.firstElementChild;
         var cNode = iNode.nextSibling.nextSibling;
         var bNode = cNode.nextSibling.nextSibling;
@@ -37,7 +37,7 @@ async_test(function(t) {
         ascendant.offsetTop;
         ascendant.classList.add("cue");
         if (window.internals)
-            assert_equals(internals.updateStyleAndReturnAffectedElementCount(), 9);
+            assert_equals(internals.updateStyleAndReturnAffectedElementCount(), 10);
         assert_equals(getComputedStyle(cueNode).backgroundColor, green);
 
         assert_equals(getComputedStyle(cNode).backgroundColor, red);

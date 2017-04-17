@@ -4,8 +4,8 @@
 
 package org.chromium.content.browser.test.util;
 
-
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.JavaScriptCallback;
 import org.chromium.content_public.browser.WebContents;
@@ -17,12 +17,9 @@ import java.util.concurrent.TimeoutException;
  * This class is used to provide callback hooks for tests and related classes.
  */
 public class TestCallbackHelperContainer {
-    private final TestContentViewClient mTestContentViewClient;
     private TestWebContentsObserver mTestWebContentsObserver;
 
     public TestCallbackHelperContainer(final ContentViewCore contentViewCore) {
-        mTestContentViewClient = new TestContentViewClient();
-        contentViewCore.setContentViewClient(mTestContentViewClient);
         // TODO(yfriedman): Change callers to be executed on the UI thread. Unfortunately this is
         // super convenient as the caller is nearly always on the test thread which is fine to block
         // and it's cumbersome to keep bouncing to the UI thread.
@@ -33,12 +30,6 @@ public class TestCallbackHelperContainer {
                         .getWebContents());
             }
         });
-    }
-
-    protected TestCallbackHelperContainer(
-            TestContentViewClient viewClient, TestWebContentsObserver contentsObserver) {
-        mTestContentViewClient = viewClient;
-        mTestWebContentsObserver = contentsObserver;
     }
 
     /**
@@ -134,8 +125,8 @@ public class TestCallbackHelperContainer {
                             notifyCalled(jsonResult);
                         }
                     };
-            webContents.evaluateJavaScriptForTests(code, callback);
             mJsonResult = null;
+            webContents.evaluateJavaScriptForTests(code, callback);
         }
 
         /**
@@ -157,53 +148,27 @@ public class TestCallbackHelperContainer {
             return result;
         }
 
-
-        /**
-         * Returns a criteria that checks that the evaluation has finished.
-         */
-        public Criteria getHasValueCriteria() {
-            return new Criteria() {
-                @Override
-                public boolean isSatisfied() {
-                    return hasValue();
-                }
-            };
-        }
-
         /**
          * Waits till the JavaScript evaluation finishes and returns true if a value was returned,
          * false if it timed-out.
          */
-        public boolean waitUntilHasValue(long timeout, TimeUnit timeoutUnits)
+        public boolean waitUntilHasValue(long timeout, TimeUnit unit)
                 throws InterruptedException, TimeoutException {
-            waitUntilCriteria(getHasValueCriteria(), timeout, timeoutUnits);
+            int count = getCallCount();
+            // Reads and writes are atomic for reference variables in java, this is thread safe
+            if (hasValue()) return true;
+            waitForCallback(count, 1, timeout, unit);
             return hasValue();
         }
 
         public boolean waitUntilHasValue() throws InterruptedException, TimeoutException {
-            waitUntilCriteria(getHasValueCriteria());
-            return hasValue();
+            return waitUntilHasValue(CallbackHelper.WAIT_TIMEOUT_SECONDS, TimeUnit.SECONDS);
         }
 
         public void notifyCalled(String jsonResult) {
             assert !hasValue();
             mJsonResult = jsonResult;
             notifyCalled();
-        }
-    }
-
-    /**
-     * CallbackHelper for OnStartContentIntent.
-     */
-    public static class OnStartContentIntentHelper extends CallbackHelper {
-        private String mIntentUrl;
-        public void notifyCalled(String intentUrl) {
-            mIntentUrl = intentUrl;
-            notifyCalled();
-        }
-        public String getIntentUrl() {
-            assert getCallCount() > 0;
-            return mIntentUrl;
         }
     }
 
@@ -217,9 +182,5 @@ public class TestCallbackHelperContainer {
 
     public OnReceivedErrorHelper getOnReceivedErrorHelper() {
         return mTestWebContentsObserver.getOnReceivedErrorHelper();
-    }
-
-    public OnStartContentIntentHelper getOnStartContentIntentHelper() {
-        return mTestContentViewClient.getOnStartContentIntentHelper();
     }
 }

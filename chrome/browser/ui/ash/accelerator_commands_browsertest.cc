@@ -2,14 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/common/accelerators/accelerator_commands.h"
+#include "ash/accelerators/accelerator_commands.h"
 
 #include "ash/accelerators/accelerator_commands_aura.h"
-#include "ash/aura/wm_window_aura.h"
-#include "ash/common/ash_switches.h"
-#include "ash/common/wm/window_state.h"
 #include "ash/shell.h"
+#include "ash/wm/window_state.h"
 #include "ash/wm/window_state_aura.h"
+#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "build/build_config.h"
@@ -22,6 +21,7 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/native_app_window.h"
+#include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
@@ -35,8 +35,7 @@ namespace {
 // WidgetDelegateView which allows the widget to be maximized.
 class MaximizableWidgetDelegate : public views::WidgetDelegateView {
  public:
-  MaximizableWidgetDelegate() {
-  }
+  MaximizableWidgetDelegate() {}
   ~MaximizableWidgetDelegate() override {}
 
   bool CanMaximize() const override { return true; }
@@ -52,7 +51,7 @@ class MaximizableWidgetDelegate : public views::WidgetDelegateView {
 // fullscreen.)
 bool IsInImmersiveFullscreen(ash::wm::WindowState* window_state) {
   return window_state->IsFullscreen() &&
-      !window_state->hide_shelf_when_fullscreen();
+         !window_state->hide_shelf_when_fullscreen();
 }
 
 }  // namespace
@@ -75,7 +74,7 @@ IN_PROC_BROWSER_TEST_F(AcceleratorCommandsBrowserTest, ToggleMaximized) {
   // When in fullscreen accelerators::ToggleMaximized gets out of fullscreen.
   EXPECT_FALSE(window_state->IsFullscreen());
   Browser* browser = chrome::FindBrowserWithWindow(
-      ash::WmWindowAura::GetAuraWindow(window_state->window()));
+      ash::WmWindow::GetAuraWindow(window_state->window()));
   ASSERT_TRUE(browser);
   chrome::ToggleFullscreenMode(browser);
   EXPECT_TRUE(window_state->IsFullscreen());
@@ -141,15 +140,17 @@ IN_PROC_BROWSER_TEST_P(AcceleratorCommandsFullscreenBrowserTest,
 
   // 2) ToggleFullscreen() should have no effect on windows which cannot be
   // maximized.
-  ash::WmWindowAura::GetAuraWindow(window_state->window())
-      ->SetProperty(aura::client::kCanMaximizeKey, false);
+  ash::WmWindow::GetAuraWindow(window_state->window())
+      ->SetProperty(aura::client::kResizeBehaviorKey,
+                    ui::mojom::kResizeBehaviorNone);
   ash::accelerators::ToggleFullscreen();
   EXPECT_TRUE(IsInitialShowState(window_state));
 
   // 3) Hosted apps.
   Browser::CreateParams browser_create_params(
       Browser::CreateParams::CreateForApp("Test", true /* trusted_source */,
-                                          gfx::Rect(), browser()->profile()));
+                                          gfx::Rect(), browser()->profile(),
+                                          true));
 
   Browser* app_host_browser = new Browser(browser_create_params);
   ASSERT_TRUE(app_host_browser->is_app());
@@ -169,7 +170,7 @@ IN_PROC_BROWSER_TEST_P(AcceleratorCommandsFullscreenBrowserTest,
 
   // 4) Popup browser windows.
   browser_create_params =
-      Browser::CreateParams(Browser::TYPE_POPUP, browser()->profile());
+      Browser::CreateParams(Browser::TYPE_POPUP, browser()->profile(), true);
   Browser* popup_browser = new Browser(browser_create_params);
   ASSERT_TRUE(popup_browser->is_type_popup());
   ASSERT_FALSE(popup_browser->is_app());

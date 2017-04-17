@@ -5,60 +5,93 @@
 #ifndef CONTENT_BROWSER_DEVTOOLS_PROTOCOL_NETWORK_HANDLER_H_
 #define CONTENT_BROWSER_DEVTOOLS_PROTOCOL_NETWORK_HANDLER_H_
 
+#include <memory>
+
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
-#include "content/browser/devtools/protocol/devtools_protocol_dispatcher.h"
+#include "content/browser/devtools/protocol/devtools_domain_handler.h"
+#include "content/browser/devtools/protocol/network.h"
+#include "net/base/net_errors.h"
 #include "net/cookies/canonical_cookie.h"
 
 namespace content {
 
+class DevToolsSession;
 class RenderFrameHostImpl;
+struct BeginNavigationParams;
+struct CommonNavigationParams;
+struct ResourceRequest;
+struct ResourceRequestCompletionStatus;
+struct ResourceResponseHead;
 
-namespace devtools {
-namespace network {
+namespace protocol {
 
-class NetworkHandler {
+class NetworkHandler : public DevToolsDomainHandler,
+                       public Network::Backend {
  public:
-  typedef DevToolsProtocolClient::Response Response;
-
   NetworkHandler();
-  virtual ~NetworkHandler();
+  ~NetworkHandler() override;
 
-  void SetRenderFrameHost(RenderFrameHostImpl* host);
-  void SetClient(std::unique_ptr<Client> client);
+  static NetworkHandler* FromSession(DevToolsSession* session);
 
-  Response ClearBrowserCache();
-  Response ClearBrowserCookies();
-  Response GetCookies(DevToolsCommandId command_id);
-  Response DeleteCookie(DevToolsCommandId command_id,
-                        const std::string& cookie_name,
-                        const std::string& url);
+  void Wire(UberDispatcher* dispatcher) override;
+  void SetRenderFrameHost(RenderFrameHostImpl* host) override;
 
-  Response CanEmulateNetworkConditions(bool* result);
-  Response EmulateNetworkConditions(bool offline,
-                                    double latency,
-                                    double download_throughput,
-                                    double upload_throughput,
-                                    const std::string* connection_type);
-  Response GetCertificateDetails(int certificate_id,
-                                 scoped_refptr<CertificateDetails>* result);
-  Response ShowCertificateViewer(int certificate_id);
+  Response Enable(Maybe<int> max_total_size,
+                  Maybe<int> max_resource_size) override;
+  Response Disable() override;
+
+  Response ClearBrowserCache() override;
+  void ClearBrowserCookies(
+      std::unique_ptr<ClearBrowserCookiesCallback> callback) override;
+
+  void GetCookies(Maybe<protocol::Array<String>> urls,
+                  std::unique_ptr<GetCookiesCallback> callback) override;
+  void GetAllCookies(std::unique_ptr<GetAllCookiesCallback> callback) override;
+  void DeleteCookie(const std::string& cookie_name,
+                    const std::string& url,
+                    std::unique_ptr<DeleteCookieCallback> callback) override;
+  void SetCookie(
+      const std::string& url,
+      const std::string& name,
+      const std::string& value,
+      Maybe<std::string> domain,
+      Maybe<std::string> path,
+      Maybe<bool> secure,
+      Maybe<bool> http_only,
+      Maybe<std::string> same_site,
+      Maybe<double> expires,
+      std::unique_ptr<SetCookieCallback> callback) override;
+
+  Response SetUserAgentOverride(const std::string& user_agent) override;
+  Response CanEmulateNetworkConditions(bool* result) override;
+
+  void NavigationPreloadRequestSent(int worker_version_id,
+                                    const std::string& request_id,
+                                    const ResourceRequest& request);
+  void NavigationPreloadResponseReceived(int worker_version_id,
+                                         const std::string& request_id,
+                                         const GURL& url,
+                                         const ResourceResponseHead& head);
+  void NavigationPreloadCompleted(
+      const std::string& request_id,
+      const ResourceRequestCompletionStatus& completion_status);
+  void NavigationFailed(const CommonNavigationParams& common_params,
+                        const BeginNavigationParams& begin_params,
+                        net::Error error_code);
+
+  bool enabled() const { return enabled_; }
+  std::string UserAgentOverride() const;
 
  private:
-  void SendGetCookiesResponse(
-      DevToolsCommandId command_id,
-      const net::CookieList& cookie_list);
-  void SendDeleteCookieResponse(DevToolsCommandId command_id);
-
+  std::unique_ptr<Network::Frontend> frontend_;
   RenderFrameHostImpl* host_;
-  std::unique_ptr<Client> client_;
-  base::WeakPtrFactory<NetworkHandler> weak_factory_;
+  bool enabled_;
+  std::string user_agent_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkHandler);
 };
 
-}  // namespace network
-}  // namespace devtools
+}  // namespace protocol
 }  // namespace content
 
 #endif  // CONTENT_BROWSER_DEVTOOLS_PROTOCOL_NETWORK_HANDLER_H_

@@ -31,84 +31,89 @@
 #ifndef ElementAnimation_h
 #define ElementAnimation_h
 
-#include "bindings/core/v8/EffectModelOrDictionarySequenceOrDictionary.h"
-#include "core/animation/AnimationTimeline.h"
+#include "bindings/core/v8/DictionarySequenceOrDictionary.h"
+#include "bindings/core/v8/ScriptState.h"
+#include "bindings/core/v8/UnrestrictedDoubleOrKeyframeEffectOptions.h"
+#include "core/animation/DocumentTimeline.h"
 #include "core/animation/EffectInput.h"
 #include "core/animation/ElementAnimations.h"
 #include "core/animation/KeyframeEffect.h"
-#include "core/animation/KeyframeEffectOptions.h"
+#include "core/animation/KeyframeEffectReadOnly.h"
 #include "core/animation/TimingInput.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
+#include "core/dom/ExecutionContext.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
-class Dictionary;
-
 class ElementAnimation {
-    STATIC_ONLY(ElementAnimation);
-public:
-    static Animation* animate(ExecutionContext* executionContext, Element& element, const EffectModelOrDictionarySequenceOrDictionary& effectInput, double duration, ExceptionState& exceptionState)
-    {
-        EffectModel* effect = EffectInput::convert(&element, effectInput, executionContext, exceptionState);
-        if (exceptionState.hadException())
-            return nullptr;
+  STATIC_ONLY(ElementAnimation);
 
-        Timing timing;
-        if (!TimingInput::convert(duration, timing, exceptionState))
-            return nullptr;
+ public:
+  static Animation* animate(ScriptState* script_state,
+                            Element& element,
+                            const DictionarySequenceOrDictionary& effect_input,
+                            UnrestrictedDoubleOrKeyframeEffectOptions options,
+                            ExceptionState& exception_state) {
+    EffectModel* effect = EffectInput::Convert(
+        &element, effect_input, ExecutionContext::From(script_state),
+        exception_state);
+    if (exception_state.HadException())
+      return nullptr;
 
-        return animateInternal(element, effect, timing);
+    Timing timing;
+    if (!TimingInput::Convert(options, timing, &element.GetDocument(),
+                              exception_state))
+      return nullptr;
+
+    if (options.isKeyframeEffectOptions()) {
+      Animation* animation = animate(element, effect, timing);
+      animation->setId(options.getAsKeyframeEffectOptions().id());
+      return animation;
     }
+    return animate(element, effect, timing);
+  }
 
-    static Animation* animate(ExecutionContext* executionContext, Element& element, const EffectModelOrDictionarySequenceOrDictionary& effectInput, const KeyframeEffectOptions& options, ExceptionState& exceptionState)
-    {
-        EffectModel* effect = EffectInput::convert(&element, effectInput, executionContext, exceptionState);
-        if (exceptionState.hadException())
-            return nullptr;
+  static Animation* animate(ScriptState* script_state,
+                            Element& element,
+                            const DictionarySequenceOrDictionary& effect_input,
+                            ExceptionState& exception_state) {
+    EffectModel* effect = EffectInput::Convert(
+        &element, effect_input, ExecutionContext::From(script_state),
+        exception_state);
+    if (exception_state.HadException())
+      return nullptr;
+    return animate(element, effect, Timing());
+  }
 
-        Timing timing;
-        if (!TimingInput::convert(options, timing, &element.document(), exceptionState))
-            return nullptr;
+  static Animation* animate(Element& element,
+                            EffectModel* effect,
+                            const Timing& timing) {
+    KeyframeEffect* keyframe_effect =
+        KeyframeEffect::Create(&element, effect, timing);
+    return element.GetDocument().Timeline().Play(keyframe_effect);
+  }
 
-        Animation* animation = animateInternal(element, effect, timing);
-        animation->setId(options.id());
-        return animation;
+  static HeapVector<Member<Animation>> getAnimations(Element& element) {
+    HeapVector<Member<Animation>> animations;
+
+    if (!element.HasAnimations())
+      return animations;
+
+    for (const auto& animation :
+         element.GetDocument().Timeline().getAnimations()) {
+      DCHECK(animation->effect());
+      if (ToKeyframeEffectReadOnly(animation->effect())->Target() == element &&
+          (animation->effect()->IsCurrent() ||
+           animation->effect()->IsInEffect()))
+        animations.push_back(animation);
     }
-
-    static Animation* animate(ExecutionContext* executionContext, Element& element, const EffectModelOrDictionarySequenceOrDictionary& effectInput, ExceptionState& exceptionState)
-    {
-        EffectModel* effect = EffectInput::convert(&element, effectInput, executionContext, exceptionState);
-        if (exceptionState.hadException())
-            return nullptr;
-        return animateInternal(element, effect, Timing());
-    }
-
-    static HeapVector<Member<Animation>> getAnimations(Element& element)
-    {
-        HeapVector<Member<Animation>> animations;
-
-        if (!element.hasAnimations())
-            return animations;
-
-        for (const auto& animation : element.document().timeline().getAnimations()) {
-            ASSERT(animation->effect());
-            if (toKeyframeEffect(animation->effect())->target() == element && (animation->effect()->isCurrent() || animation->effect()->isInEffect()))
-                animations.append(animation);
-        }
-        return animations;
-    }
-
-private:
-    static Animation* animateInternal(Element& element, EffectModel* effect, const Timing& timing)
-    {
-        KeyframeEffect* keyframeEffect = KeyframeEffect::create(&element, effect, timing);
-        return element.document().timeline().play(keyframeEffect);
-    }
+    return animations;
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ElementAnimation_h
+#endif  // ElementAnimation_h

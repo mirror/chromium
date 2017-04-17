@@ -22,7 +22,7 @@
 
 
 from webkitpy.common.system.filesystem import FileSystem
-from webkitpy.common.system.logtesting import LoggingTestCase
+from webkitpy.common.system.log_testing import LoggingTestCase
 from webkitpy.style.checker import ProcessorBase
 from webkitpy.style.filereader import TextFileReader
 
@@ -35,7 +35,6 @@ class TextFileReaderTest(LoggingTestCase):
 
         This processor simply records the parameters passed to its process()
         method for later checking by the unittest test methods.
-
         """
 
         def __init__(self):

@@ -6,12 +6,11 @@
 
 #include <stdlib.h>
 
-#include <openssl/ssl.h>
-
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "net/ssl/ssl_connection_status_flags.h"
+#include "third_party/boringssl/src/include/openssl/ssl.h"
 
 // Rather than storing the names of all the ciphersuites we eliminate the
 // redundancy and break each cipher suite into a key exchange method, cipher
@@ -129,6 +128,9 @@ const struct CipherSuite kCipherSuites[] = {
     {0xc3, 0x85b},     // TLS_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA256
     {0xc4, 0xa5b},     // TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA256
     {0xc5, 0xc5b},     // TLS_DH_anon_WITH_CAMELLIA_256_CBC_SHA256
+    {0x1301, 0x1f6f},  // TLS_AES_128_GCM_SHA256
+    {0x1302, 0x1f77},  // TLS_AES_256_GCM_SHA384
+    {0x1303, 0x1f8f},  // TLS_CHACHA20_POLY1305_SHA256
     {0x16b7, 0x128f},  // TLS_CECPQ1_RSA_WITH_CHACHA20_POLY1305_SHA256 (exper)
     {0x16b8, 0x138f},  // TLS_CECPQ1_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (exper)
     {0x16b9, 0x1277},  // TLS_CECPQ1_RSA_WITH_AES_256_GCM_SHA384 (exper)
@@ -211,27 +213,30 @@ const struct CipherSuite kCipherSuites[] = {
 const struct {
   char name[15];
 } kKeyExchangeNames[20] = {
-  {"NULL"},  // 0
-  {"RSA"},  // 1
-  {"RSA_EXPORT"},  // 2
-  {"DH_DSS_EXPORT"},  // 3
-  {"DH_DSS"},  // 4
-  {"DH_RSA_EXPORT"},  // 5
-  {"DH_RSA"},  // 6
-  {"DHE_DSS_EXPORT"},  // 7
-  {"DHE_DSS"},  // 8
-  {"DHE_RSA_EXPORT"},  // 9
-  {"DHE_RSA"},  // 10
-  {"DH_anon_EXPORT"},  // 11
-  {"DH_anon"},  // 12
-  {"ECDH_ECDSA"},  // 13
-  {"ECDHE_ECDSA"},  // 14
-  {"ECDH_RSA"},  // 15
-  {"ECDHE_RSA"},  // 16
-  {"ECDH_anon"},  // 17
-  {"CECPQ1_RSA"},  // 18
-  {"CECPQ1_ECDSA"},  // 19
+    {"NULL"},            // 0
+    {"RSA"},             // 1
+    {"RSA_EXPORT"},      // 2
+    {"DH_DSS_EXPORT"},   // 3
+    {"DH_DSS"},          // 4
+    {"DH_RSA_EXPORT"},   // 5
+    {"DH_RSA"},          // 6
+    {"DHE_DSS_EXPORT"},  // 7
+    {"DHE_DSS"},         // 8
+    {"DHE_RSA_EXPORT"},  // 9
+    {"DHE_RSA"},         // 10
+    {"DH_anon_EXPORT"},  // 11
+    {"DH_anon"},         // 12
+    {"ECDH_ECDSA"},      // 13
+    {"ECDHE_ECDSA"},     // 14
+    {"ECDH_RSA"},        // 15
+    {"ECDHE_RSA"},       // 16
+    {"ECDH_anon"},       // 17
+    {"CECPQ1_RSA"},      // 18
+    {"CECPQ1_ECDSA"},    // 19
+    // 31 is reserved to indicate a TLS 1.3 AEAD-only suite.
 };
+
+constexpr int kTLS13KeyExchangeValue = 31;
 
 const struct {
   char name[18];
@@ -301,6 +306,51 @@ bool GetCipherProperties(uint16_t cipher_suite,
   return true;
 }
 
+int ObsoleteSSLStatusForProtocol(int ssl_version) {
+  int obsolete_ssl = net::OBSOLETE_SSL_NONE;
+  if (ssl_version < net::SSL_CONNECTION_VERSION_TLS1_2)
+    obsolete_ssl |= net::OBSOLETE_SSL_MASK_PROTOCOL;
+  return obsolete_ssl;
+}
+
+int ObsoleteSSLStatusForCipherSuite(uint16_t cipher_suite) {
+  int obsolete_ssl = net::OBSOLETE_SSL_NONE;
+
+  int key_exchange, cipher, mac;
+  if (!GetCipherProperties(cipher_suite, &key_exchange, &cipher, &mac)) {
+    // Cannot determine/unknown cipher suite. Err on the side of caution.
+    obsolete_ssl |= net::OBSOLETE_SSL_MASK_KEY_EXCHANGE;
+    obsolete_ssl |= net::OBSOLETE_SSL_MASK_CIPHER;
+    return obsolete_ssl;
+  }
+
+  switch (key_exchange) {
+    case 14:  // ECDHE_ECDSA
+    case 16:  // ECDHE_RSA
+    case 18:  // CECPQ1_RSA
+    case 19:  // CECPQ1_ECDSA
+    case kTLS13KeyExchangeValue:  // TLS 1.3
+      break;
+    default:
+      obsolete_ssl |= net::OBSOLETE_SSL_MASK_KEY_EXCHANGE;
+  }
+
+  switch (cipher) {
+    case 13:  // AES_128_GCM
+    case 14:  // AES_256_GCM
+    case 17:  // CHACHA20_POLY1305
+      break;
+    default:
+      obsolete_ssl |= net::OBSOLETE_SSL_MASK_CIPHER;
+  }
+
+  // Only AEADs allowed.
+  if (mac != kAEADMACValue)
+    obsolete_ssl |= net::OBSOLETE_SSL_MASK_CIPHER;
+
+  return obsolete_ssl;
+}
+
 }  // namespace
 
 namespace net {
@@ -309,19 +359,26 @@ void SSLCipherSuiteToStrings(const char** key_exchange_str,
                              const char** cipher_str,
                              const char** mac_str,
                              bool* is_aead,
+                             bool* is_tls13,
                              uint16_t cipher_suite) {
   *key_exchange_str = *cipher_str = *mac_str = "???";
   *is_aead = false;
+  *is_tls13 = false;
 
   int key_exchange, cipher, mac;
   if (!GetCipherProperties(cipher_suite, &key_exchange, &cipher, &mac))
     return;
 
-  *key_exchange_str = kKeyExchangeNames[key_exchange].name;
+  if (key_exchange == kTLS13KeyExchangeValue) {
+    *key_exchange_str = nullptr;
+    *is_tls13 = true;
+  } else {
+    *key_exchange_str = kKeyExchangeNames[key_exchange].name;
+  }
   *cipher_str = kCipherNames[cipher].name;
   if (mac == kAEADMACValue) {
     *is_aead = true;
-    *mac_str = NULL;
+    *mac_str = nullptr;
   } else {
     *mac_str = kMacNames[mac].name;
   }
@@ -370,36 +427,16 @@ bool ParseSSLCipherString(const std::string& cipher_string,
   return false;
 }
 
-bool IsSecureTLSCipherSuite(uint16_t cipher_suite) {
-  int key_exchange, cipher, mac;
-  if (!GetCipherProperties(cipher_suite, &key_exchange, &cipher, &mac))
-    return false;
+int ObsoleteSSLStatus(int connection_status) {
+  int obsolete_ssl = OBSOLETE_SSL_NONE;
 
-  // Only allow ECDHE key exchanges.
-  switch (key_exchange) {
-    case 14:  // ECDHE_ECDSA
-    case 16:  // ECDHE_RSA
-    case 18:  // CECPQ1_RSA
-    case 19:  // CECPQ1_ECDSA
-      break;
-    default:
-      return false;
-  }
+  int ssl_version = SSLConnectionStatusToVersion(connection_status);
+  obsolete_ssl |= ObsoleteSSLStatusForProtocol(ssl_version);
 
-  switch (cipher) {
-    case 13:  // AES_128_GCM
-    case 14:  // AES_256_GCM
-    case 17:  // CHACHA20_POLY1305
-      break;
-    default:
-      return false;
-  }
+  uint16_t cipher_suite = SSLConnectionStatusToCipherSuite(connection_status);
+  obsolete_ssl |= ObsoleteSSLStatusForCipherSuite(cipher_suite);
 
-  // Only AEADs allowed.
-  if (mac != kAEADMACValue)
-    return false;
-
-  return true;
+  return obsolete_ssl;
 }
 
 bool IsTLSCipherSuiteAllowedByHTTP2(uint16_t cipher_suite) {
@@ -414,6 +451,7 @@ bool IsTLSCipherSuiteAllowedByHTTP2(uint16_t cipher_suite) {
     case 16:  // ECDHE_RSA
     case 18:  // CECPQ1_RSA
     case 19:  // CECPQ1_ECDSA
+    case kTLS13KeyExchangeValue:  // TLS 1.3
       break;
     default:
       return false;
@@ -433,20 +471,6 @@ bool IsTLSCipherSuiteAllowedByHTTP2(uint16_t cipher_suite) {
     return false;
 
   return true;
-}
-
-const char* ECCurveName(uint16_t cipher_suite, int key_exchange_info) {
-  int key_exchange, cipher, mac;
-  if (!GetCipherProperties(cipher_suite, &key_exchange, &cipher, &mac))
-    return nullptr;
-  switch (key_exchange) {
-    case 14:  // ECDHE_ECDSA
-    case 16:  // ECDHE_RSA
-      break;
-    default:
-      return nullptr;
-  }
-  return SSL_get_curve_name(key_exchange_info);
 }
 
 }  // namespace net

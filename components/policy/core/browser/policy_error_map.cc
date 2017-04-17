@@ -7,10 +7,12 @@
 #include <utility>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "grit/components_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 
@@ -139,52 +141,58 @@ bool PolicyErrorMap::IsReady() const {
 }
 
 void PolicyErrorMap::AddError(const std::string& policy, int message_id) {
-  AddError(new SimplePendingError(policy, message_id, std::string()));
-}
-
-void PolicyErrorMap::AddError(const std::string& policy,
-                              const std::string& subkey,
-                              int message_id) {
   AddError(
-      new DictSubkeyPendingError(policy, subkey, message_id, std::string()));
+      base::MakeUnique<SimplePendingError>(policy, message_id, std::string()));
+}
+
+void PolicyErrorMap::AddError(const std::string& policy,
+                              const std::string& subkey,
+                              int message_id) {
+  AddError(base::MakeUnique<DictSubkeyPendingError>(policy, subkey, message_id,
+                                                    std::string()));
 }
 
 void PolicyErrorMap::AddError(const std::string& policy,
                               int index,
                               int message_id) {
-  AddError(new ListItemPendingError(policy, index, message_id, std::string()));
+  AddError(base::MakeUnique<ListItemPendingError>(policy, index, message_id,
+                                                  std::string()));
 }
 
 void PolicyErrorMap::AddError(const std::string& policy,
                               int message_id,
                               const std::string& replacement) {
-  AddError(new SimplePendingError(policy, message_id, replacement));
+  AddError(
+      base::MakeUnique<SimplePendingError>(policy, message_id, replacement));
 }
 
 void PolicyErrorMap::AddError(const std::string& policy,
                               const std::string& subkey,
                               int message_id,
                               const std::string& replacement) {
-  AddError(new DictSubkeyPendingError(policy, subkey, message_id, replacement));
+  AddError(base::MakeUnique<DictSubkeyPendingError>(policy, subkey, message_id,
+                                                    replacement));
 }
 
 void PolicyErrorMap::AddError(const std::string& policy,
                               int index,
                               int message_id,
                               const std::string& replacement) {
-  AddError(new ListItemPendingError(policy, index, message_id, replacement));
+  AddError(base::MakeUnique<ListItemPendingError>(policy, index, message_id,
+                                                  replacement));
 }
 
 void PolicyErrorMap::AddError(const std::string& policy,
                               const std::string& error_path,
                               const std::string& message) {
-  AddError(new SchemaValidatingPendingError(policy, error_path, message));
+  AddError(base::MakeUnique<SchemaValidatingPendingError>(policy, error_path,
+                                                          message));
 }
 
 base::string16 PolicyErrorMap::GetErrors(const std::string& policy) {
   CheckReadyAndConvert();
   std::pair<const_iterator, const_iterator> range = map_.equal_range(policy);
-  std::vector<base::string16> list;
+  std::vector<base::StringPiece16> list;
   for (const_iterator it = range.first; it != range.second; ++it)
     list.push_back(it->second);
   return base::JoinString(list, base::ASCIIToUTF16("\n"));
@@ -215,12 +223,12 @@ void PolicyErrorMap::Clear() {
   map_.clear();
 }
 
-void PolicyErrorMap::AddError(PendingError* error) {
+void PolicyErrorMap::AddError(std::unique_ptr<PendingError> error) {
   if (IsReady()) {
-    Convert(error);
-    delete error;
+    Convert(error.get());
+    // Allow error to be deleted as it exits function scope.
   } else {
-    pending_.push_back(error);
+    pending_.push_back(std::move(error));
   }
 }
 
@@ -231,7 +239,7 @@ void PolicyErrorMap::Convert(PendingError* error) {
 void PolicyErrorMap::CheckReadyAndConvert() {
   DCHECK(IsReady());
   for (size_t i = 0; i < pending_.size(); ++i) {
-    Convert(pending_[i]);
+    Convert(pending_[i].get());
   }
   pending_.clear();
 }

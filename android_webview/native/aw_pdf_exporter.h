@@ -11,6 +11,8 @@
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
 
+#include "printing/page_range.h"
+
 namespace content {
 class WebContents;
 };
@@ -24,7 +26,7 @@ namespace android_webview {
 class AwPdfExporter {
  public:
   AwPdfExporter(JNIEnv* env,
-                jobject obj,
+                const base::android::JavaRef<jobject>& obj,
                 content::WebContents* web_contents);
 
   ~AwPdfExporter();
@@ -32,11 +34,13 @@ class AwPdfExporter {
   void ExportToPdf(JNIEnv* env,
                    const base::android::JavaParamRef<jobject>& obj,
                    int fd,
+                   jintArray pages,
                    const base::android::JavaParamRef<jobject>& cancel_signal);
 
  private:
   void InitPdfSettings(JNIEnv* env,
-                       jobject obj,
+                       const base::android::JavaRef<jobject>& obj,
+                       const printing::PageRanges& page_ranges,
                        printing::PrintSettings& settings);
   void DidExportPdf(int fd, bool success);
 

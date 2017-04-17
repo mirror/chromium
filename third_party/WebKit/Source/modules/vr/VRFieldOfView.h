@@ -5,69 +5,53 @@
 #ifndef VRFieldOfView_h
 #define VRFieldOfView_h
 
-#include "bindings/core/v8/ScriptWrappable.h"
-#include "modules/vr/VRFieldOfViewInit.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class VRFieldOfView final : public GarbageCollected<VRFieldOfView>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static VRFieldOfView* create(const VRFieldOfViewInit& fov)
-    {
-        return new VRFieldOfView(fov);
-    }
+class VRFieldOfView final : public GarbageCollected<VRFieldOfView> {
+ public:
+  VRFieldOfView()
+      : up_degrees_(0.0),
+        down_degrees_(0.0),
+        left_degrees_(0.0),
+        right_degrees_(0.0) {}
 
-    VRFieldOfView() : m_upDegrees(0.0), m_downDegrees(0.0), m_leftDegrees(0.0), m_rightDegrees(0.0)
-    {
-    }
+  VRFieldOfView(double up_degrees,
+                double right_degrees,
+                double down_degrees,
+                double left_degrees)
+      : up_degrees_(0.0),
+        down_degrees_(0.0),
+        left_degrees_(0.0),
+        right_degrees_(0.0) {}
 
-    VRFieldOfView(double upDegrees, double rightDegrees, double downDegrees, double leftDegrees)
-        : m_upDegrees(0.0)
-        , m_downDegrees(0.0)
-        , m_leftDegrees(0.0)
-        , m_rightDegrees(0.0)
-    {
-    }
+  explicit VRFieldOfView(const VRFieldOfView& fov)
+      : up_degrees_(fov.up_degrees_),
+        down_degrees_(fov.down_degrees_),
+        left_degrees_(fov.left_degrees_),
+        right_degrees_(fov.right_degrees_) {}
 
-    explicit VRFieldOfView(const VRFieldOfViewInit& fov)
-        : m_upDegrees(fov.upDegrees())
-        , m_downDegrees(fov.downDegrees())
-        , m_leftDegrees(fov.leftDegrees())
-        , m_rightDegrees(fov.rightDegrees())
-    {
-    }
+  double UpDegrees() const { return up_degrees_; }
+  double DownDegrees() const { return down_degrees_; }
+  double LeftDegrees() const { return left_degrees_; }
+  double RightDegrees() const { return right_degrees_; }
 
-    explicit VRFieldOfView(const VRFieldOfView& fov)
-        : m_upDegrees(fov.m_upDegrees)
-        , m_downDegrees(fov.m_downDegrees)
-        , m_leftDegrees(fov.m_leftDegrees)
-        , m_rightDegrees(fov.m_rightDegrees)
-    {
-    }
+  void SetUpDegrees(double value) { up_degrees_ = value; }
+  void SetDownDegrees(double value) { down_degrees_ = value; }
+  void SetLeftDegrees(double value) { left_degrees_ = value; }
+  void SetRightDegrees(double value) { right_degrees_ = value; }
 
-    double upDegrees() const { return m_upDegrees; }
-    double downDegrees() const { return m_downDegrees; }
-    double leftDegrees() const { return m_leftDegrees; }
-    double rightDegrees() const { return m_rightDegrees; }
+  DEFINE_INLINE_TRACE() {}
 
-    void setUpDegrees(double value) { m_upDegrees = value; }
-    void setDownDegrees(double value) { m_downDegrees = value; }
-    void setLeftDegrees(double value) { m_leftDegrees = value; }
-    void setRightDegrees(double value) { m_rightDegrees = value; }
-
-    DEFINE_INLINE_TRACE() { }
-
-private:
-    double m_upDegrees;
-    double m_downDegrees;
-    double m_leftDegrees;
-    double m_rightDegrees;
+ private:
+  double up_degrees_;
+  double down_degrees_;
+  double left_degrees_;
+  double right_degrees_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // VRFieldOfView_h
+#endif  // VRFieldOfView_h

@@ -7,9 +7,6 @@
 
 namespace remoting {
 
-// The command line switch specifying the daemon IPC endpoint.
-extern const char kDaemonPipeSwitchName[];
-
 extern const char kElevateSwitchName[];
 
 // "--help" prints the usage message.
@@ -31,6 +28,19 @@ extern const char kProcessTypeDaemon[];
 extern const char kProcessTypeDesktop[];
 extern const char kProcessTypeHost[];
 extern const char kProcessTypeRdpDesktopSession[];
+
+// Used to pass the HWND for the parent process to a child process.
+extern const char kParentWindowSwitchName[];
+
+// Name of the pipe used to communicate from the parent to the child process.
+extern const char kInputSwitchName[];
+
+// Name of the pipe used to communicate from the child to the parent process.
+extern const char kOutputSwitchName[];
+
+// Token used to create a message pipe between a pair of child and parent
+// processes.
+extern const char kMojoPipeToken[];
 
 }  // namespace remoting
 

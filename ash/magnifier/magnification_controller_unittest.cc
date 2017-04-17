@@ -4,8 +4,7 @@
 
 #include "ash/magnifier/magnification_controller.h"
 
-#include "ash/common/accessibility_types.h"
-#include "ash/display/display_manager.h"
+#include "ash/accessibility_types.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "base/strings/stringprintf.h"
@@ -13,6 +12,7 @@
 #include "ui/aura/test/aura_test_utils.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/ime/input_method.h"
+#include "ui/display/manager/display_manager.h"
 #include "ui/display/screen.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -45,10 +45,7 @@ class TextInputView : public views::WidgetDelegateView {
     return gfx::Size(kTextInputWindowWidth, kTextInputWindowHeight);
   }
 
-  // Overridden from views::WidgetDelegate:
-  views::View* GetContentsView() override { return this; }
-
-  void FocusOnTextInput() { GetFocusManager()->SetFocusedView(text_field_); }
+  void FocusOnTextInput() { text_field_->RequestFocus(); }
 
  private:
   views::Textfield* text_field_;  // owned by views hierarchy
@@ -67,15 +64,6 @@ class MagnificationControllerTest : public test::AshTestBase {
     AshTestBase::SetUp();
     UpdateDisplay(base::StringPrintf("%dx%d", kRootWidth, kRootHeight));
 
-#if defined(OS_WIN)
-    // RootWindow and Display can't resize on Windows Ash.
-    // http://crbug.com/165962
-    aura::Window* root = GetRootWindow();
-    gfx::Rect root_bounds(root->bounds());
-    EXPECT_EQ(kRootHeight, root_bounds.height());
-    EXPECT_EQ(kRootWidth, root_bounds.width());
-#endif
-
     GetMagnificationController()->DisableMoveMagnifierDelayForTesting();
   }
 
@@ -92,7 +80,7 @@ class MagnificationControllerTest : public test::AshTestBase {
   }
 
   ash::MagnificationController* GetMagnificationController() const {
-    return ash::Shell::GetInstance()->magnification_controller();
+    return ash::Shell::Get()->magnification_controller();
   }
 
   gfx::Rect GetViewport() const {
@@ -684,9 +672,7 @@ TEST_F(MagnificationControllerTest, CenterTextCaretInViewport) {
 
 // Make sure that unified desktop can enter magnified mode.
 TEST_F(MagnificationControllerTest, EnableMagnifierInUnifiedDesktop) {
-  if (!SupportsMultipleDisplays())
-    return;
-  Shell::GetInstance()->display_manager()->SetUnifiedDesktopEnabled(true);
+  Shell::Get()->display_manager()->SetUnifiedDesktopEnabled(true);
 
   EXPECT_EQ(1.0f, GetMagnificationController()->GetScale());
 

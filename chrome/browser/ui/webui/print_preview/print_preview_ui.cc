@@ -5,16 +5,20 @@
 #include "chrome/browser/ui/webui/print_preview/print_preview_ui.h"
 
 #include <map>
+#include <utility>
 #include <vector>
 
+#include "base/feature_list.h"
 #include "base/id_map.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted_memory.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/lock.h"
 #include "base/values.h"
@@ -26,21 +30,29 @@
 #include "chrome/browser/ui/webui/metrics_handler.h"
 #include "chrome/browser/ui/webui/print_preview/print_preview_handler.h"
 #include "chrome/browser/ui/webui/theme_source.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/grit/browser_resources.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/printing/common/print_messages.h"
+#include "components/strings/grit/components_strings.h"
 #include "content/public/browser/url_data_source.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui_data_source.h"
-#include "grit/browser_resources.h"
-#include "grit/components_strings.h"
+#include "extensions/common/constants.h"
+#include "printing/features/features.h"
 #include "printing/page_size_margins.h"
 #include "printing/print_job_constants.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/web_dialogs/web_dialog_delegate.h"
 #include "ui/web_dialogs/web_dialog_ui.h"
+
+#if defined(OS_CHROMEOS)
+#include "base/command_line.h"
+#include "chrome/common/chrome_switches.h"
+#endif
 
 using content::WebContents;
 using printing::PageSizeMargins;
@@ -50,10 +62,8 @@ namespace {
 #if defined(OS_MACOSX)
 // U+0028 U+21E7 U+2318 U+0050 U+0029 in UTF8
 const char kBasicPrintShortcut[] = "\x28\xE2\x8c\xA5\xE2\x8C\x98\x50\x29";
-#elif defined(OS_WIN) || defined(OS_CHROMEOS)
+#elif !defined(OS_CHROMEOS)
 const char kBasicPrintShortcut[] = "(Ctrl+Shift+P)";
-#else
-const char kBasicPrintShortcut[] = "(Shift+Ctrl+P)";
 #endif
 
 // Thread-safe wrapper around a std::map to keep track of mappings from
@@ -97,12 +107,12 @@ class PrintPreviewRequestIdMapWithLock {
 };
 
 // Written to on the UI thread, read from any thread.
-base::LazyInstance<PrintPreviewRequestIdMapWithLock>
+base::LazyInstance<PrintPreviewRequestIdMapWithLock>::DestructorAtExit
     g_print_preview_request_id_map = LAZY_INSTANCE_INITIALIZER;
 
 // PrintPreviewUI IDMap used to avoid exposing raw pointer addresses to WebUI.
 // Only accessed on the UI thread.
-base::LazyInstance<IDMap<PrintPreviewUI> >
+base::LazyInstance<IDMap<PrintPreviewUI*>>::DestructorAtExit
     g_print_preview_ui_id_map = LAZY_INSTANCE_INITIALIZER;
 
 // PrintPreviewUI serves data for chrome://print requests.
@@ -182,6 +192,7 @@ content::WebUIDataSource* CreatePrintPreviewUISource() {
   source->AddLocalizedString("destinationLabel",
                              IDS_PRINT_PREVIEW_DESTINATION_LABEL);
   source->AddLocalizedString("copiesLabel", IDS_PRINT_PREVIEW_COPIES_LABEL);
+  source->AddLocalizedString("scalingLabel", IDS_PRINT_PREVIEW_SCALING_LABEL);
   source->AddLocalizedString("examplePageRangeText",
                              IDS_PRINT_PREVIEW_EXAMPLE_PAGE_RANGE_TEXT);
   source->AddLocalizedString("layoutLabel", IDS_PRINT_PREVIEW_LAYOUT_LABEL);
@@ -224,8 +235,13 @@ content::WebUIDataSource* CreatePrintPreviewUISource() {
   source->AddLocalizedString(
       "resolveExtensionUSBErrorMessage",
       IDS_PRINT_PREVIEW_RESOLVE_EXTENSION_USB_ERROR_MESSAGE);
+#if defined(OS_CHROMEOS)
+  source->AddLocalizedString("configuringInProgressText",
+                             IDS_PRINT_CONFIGURING_IN_PROGRESS_TEXT);
+  source->AddLocalizedString("configuringFailedText",
+                             IDS_PRINT_CONFIGURING_FAILED_TEXT);
+#else
   const base::string16 shortcut_text(base::UTF8ToUTF16(kBasicPrintShortcut));
-#if !defined(OS_CHROMEOS)
   source->AddString(
       "systemDialogOption",
       l10n_util::GetStringFUTF16(
@@ -253,10 +269,8 @@ content::WebUIDataSource* CreatePrintPreviewUISource() {
                              IDS_PRINT_PREVIEW_PAGE_RANGE_SYNTAX_INSTRUCTION);
   source->AddLocalizedString("copiesInstruction",
                              IDS_PRINT_PREVIEW_COPIES_INSTRUCTION);
-  source->AddLocalizedString("incrementTitle",
-                             IDS_PRINT_PREVIEW_INCREMENT_TITLE);
-  source->AddLocalizedString("decrementTitle",
-                             IDS_PRINT_PREVIEW_DECREMENT_TITLE);
+  source->AddLocalizedString("scalingInstruction",
+                             IDS_PRINT_PREVIEW_SCALING_INSTRUCTION);
   source->AddLocalizedString("printPagesLabel",
                              IDS_PRINT_PREVIEW_PRINT_PAGES_LABEL);
   source->AddLocalizedString("optionsLabel", IDS_PRINT_PREVIEW_OPTIONS_LABEL);
@@ -269,6 +283,8 @@ content::WebUIDataSource* CreatePrintPreviewUISource() {
       IDS_PRINT_PREVIEW_OPTION_BACKGROUND_COLORS_AND_IMAGES);
   source->AddLocalizedString("optionSelectionOnly",
                              IDS_PRINT_PREVIEW_OPTION_SELECTION_ONLY);
+  source->AddLocalizedString("optionRasterize",
+                             IDS_PRINT_PREVIEW_OPTION_RASTERIZE);
   source->AddLocalizedString("marginsLabel", IDS_PRINT_PREVIEW_MARGINS_LABEL);
   source->AddLocalizedString("defaultMargins",
                              IDS_PRINT_PREVIEW_DEFAULT_MARGINS);
@@ -334,9 +350,7 @@ content::WebUIDataSource* CreatePrintPreviewUISource() {
   source->AddLocalizedString(
       "noDestsPromoAddPrinterButtonLabel",
       IDS_PRINT_PREVIEW_NO_DESTS_PROMO_ADD_PRINTER_BUTTON_LABEL);
-  source->AddLocalizedString(
-      "noDestsPromoNotNowButtonLabel",
-      IDS_PRINT_PREVIEW_NO_DESTS_PROMO_NOT_NOW_BUTTON_LABEL);
+  source->AddLocalizedString("noDestsPromoNotNowButtonLabel", IDS_NOT_NOW);
   source->AddLocalizedString("couldNotPrint",
                              IDS_PRINT_PREVIEW_COULD_NOT_PRINT);
   source->AddLocalizedString("registerPromoButtonText",
@@ -378,6 +392,8 @@ content::WebUIDataSource* CreatePrintPreviewUISource() {
                           IDR_PRINT_PREVIEW_IMAGES_PRINTER);
   source->AddResourcePath("images/printer_shared.png",
                           IDR_PRINT_PREVIEW_IMAGES_PRINTER_SHARED);
+  source->AddResourcePath("images/business.svg",
+                          IDR_PRINT_PREVIEW_IMAGES_ENTERPRISE_PRINTER);
   source->AddResourcePath("images/third_party.png",
                           IDR_PRINT_PREVIEW_IMAGES_THIRD_PARTY);
   source->AddResourcePath("images/third_party_fedex.png",
@@ -390,11 +406,31 @@ content::WebUIDataSource* CreatePrintPreviewUISource() {
                           IDR_PRINT_PREVIEW_IMAGES_MOBILE_SHARED);
   source->SetDefaultResource(IDR_PRINT_PREVIEW_HTML);
   source->SetRequestFilter(base::Bind(&HandleRequestCallback));
+  source->OverrideContentSecurityPolicyScriptSrc(
+      base::StringPrintf("script-src chrome://resources 'self' 'unsafe-eval' "
+                         "chrome-extension://%s;",
+                         extension_misc::kPdfExtensionId));
   source->OverrideContentSecurityPolicyChildSrc("child-src 'self';");
   source->DisableDenyXFrameOptions();
   source->OverrideContentSecurityPolicyObjectSrc("object-src 'self';");
   source->AddLocalizedString("moreOptionsLabel", IDS_MORE_OPTIONS_LABEL);
   source->AddLocalizedString("lessOptionsLabel", IDS_LESS_OPTIONS_LABEL);
+
+  bool scaling_enabled = base::FeatureList::IsEnabled(features::kPrintScaling);
+  source->AddBoolean("scalingEnabled", scaling_enabled);
+
+  bool print_pdf_as_image_enabled = base::FeatureList::IsEnabled(
+      features::kPrintPdfAsImage);
+  source->AddBoolean("printPdfAsImageEnabled", print_pdf_as_image_enabled);
+
+#if defined(OS_CHROMEOS)
+  bool cups_and_md_settings_enabled =
+      !base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ::switches::kDisableNativeCups);
+  source->AddBoolean("showLocalManageButton", cups_and_md_settings_enabled);
+#else
+  source->AddBoolean("showLocalManageButton", true);
+#endif
   return source;
 }
 
@@ -406,9 +442,10 @@ PrintPreviewUI::PrintPreviewUI(content::WebUI* web_ui)
     : ConstrainedWebDialogUI(web_ui),
       initial_preview_start_time_(base::TimeTicks::Now()),
       id_(g_print_preview_ui_id_map.Get().Add(this)),
-      handler_(NULL),
+      handler_(nullptr),
       source_is_modifiable_(true),
       source_has_selection_(false),
+      print_selection_only_(false),
       dialog_closed_(false) {
   // Set up the chrome://print/ data source.
   Profile* profile = Profile::FromWebUI(web_ui);
@@ -417,11 +454,10 @@ PrintPreviewUI::PrintPreviewUI(content::WebUI* web_ui)
   // Set up the chrome://theme/ source.
   content::URLDataSource::Add(profile, new ThemeSource(profile));
 
-  // WebUI owns |handler_|.
-  handler_ = new PrintPreviewHandler();
-  web_ui->AddMessageHandler(handler_);
-
-  web_ui->AddMessageHandler(new MetricsHandler());
+  auto handler = base::MakeUnique<PrintPreviewHandler>();
+  handler_ = handler.get();
+  web_ui->AddMessageHandler(std::move(handler));
+  web_ui->AddMessageHandler(base::MakeUnique<MetricsHandler>());
 
   g_print_preview_request_id_map.Get().Set(id_, -1);
 }
@@ -513,21 +549,16 @@ void PrintPreviewUI::OnPrintPreviewRequest(int request_id) {
   g_print_preview_request_id_map.Get().Set(id_, request_id);
 }
 
-#if defined(ENABLE_BASIC_PRINTING)
-void PrintPreviewUI::OnShowSystemDialog() {
-  web_ui()->CallJavascriptFunctionUnsafe("onSystemDialogLinkClicked");
-}
-#endif  // ENABLE_BASIC_PRINTING
-
 void PrintPreviewUI::OnDidGetPreviewPageCount(
     const PrintHostMsg_DidGetPreviewPageCount_Params& params) {
   DCHECK_GT(params.page_count, 0);
   if (g_testing_delegate)
     g_testing_delegate->DidGetPreviewPageCount(params.page_count);
-  base::FundamentalValue count(params.page_count);
-  base::FundamentalValue request_id(params.preview_request_id);
+  base::Value count(params.page_count);
+  base::Value request_id(params.preview_request_id);
+  base::Value fit_to_page_scaling(params.fit_to_page_scaling);
   web_ui()->CallJavascriptFunctionUnsafe("onDidGetPreviewPageCount", count,
-                                         request_id);
+                                         request_id, fit_to_page_scaling);
 }
 
 void PrintPreviewUI::OnDidGetDefaultPageLayout(
@@ -555,7 +586,7 @@ void PrintPreviewUI::OnDidGetDefaultPageLayout(
   layout.SetInteger(printing::kSettingPrintableAreaHeight,
                     printable_area.height());
 
-  base::FundamentalValue has_page_size_style(has_custom_page_size_style);
+  base::Value has_page_size_style(has_custom_page_size_style);
   web_ui()->CallJavascriptFunctionUnsafe("onDidGetDefaultPageLayout", layout,
                                          has_page_size_style);
 }
@@ -563,15 +594,13 @@ void PrintPreviewUI::OnDidGetDefaultPageLayout(
 void PrintPreviewUI::OnDidPreviewPage(int page_number,
                                       int preview_request_id) {
   DCHECK_GE(page_number, 0);
-  base::FundamentalValue number(page_number);
-  base::FundamentalValue ui_identifier(id_);
-  base::FundamentalValue request_id(preview_request_id);
+  base::Value number(page_number);
+  base::Value ui_identifier(id_);
+  base::Value request_id(preview_request_id);
   if (g_testing_delegate)
     g_testing_delegate->DidRenderPreviewPage(web_ui()->GetWebContents());
   web_ui()->CallJavascriptFunctionUnsafe("onDidPreviewPage", number,
                                          ui_identifier, request_id);
-  if (g_testing_delegate && g_testing_delegate->IsAutoCancelEnabled())
-    web_ui()->CallJavascriptFunctionUnsafe("autoCancelForTesting");
 }
 
 void PrintPreviewUI::OnPreviewDataIsAvailable(int expected_pages_count,
@@ -589,8 +618,8 @@ void PrintPreviewUI::OnPreviewDataIsAvailable(int expected_pages_count,
         handler_->regenerate_preview_request_count());
     initial_preview_start_time_ = base::TimeTicks();
   }
-  base::FundamentalValue ui_identifier(id_);
-  base::FundamentalValue ui_preview_request_id(preview_request_id);
+  base::Value ui_identifier(id_);
+  base::Value ui_preview_request_id(preview_request_id);
   web_ui()->CallJavascriptFunctionUnsafe("updatePrintPreview", ui_identifier,
                                          ui_preview_request_id);
 }
@@ -626,8 +655,11 @@ void PrintPreviewUI::OnHidePreviewDialog() {
   ConstrainedWebDialogDelegate* delegate = GetConstrainedDelegate();
   if (!delegate)
     return;
-  delegate->ReleaseWebContentsOnDialogClose();
-  background_printing_manager->OwnPrintPreviewDialog(preview_dialog);
+  std::unique_ptr<content::WebContents> preview_contents =
+      delegate->ReleaseWebContents();
+  DCHECK_EQ(preview_dialog, preview_contents.get());
+  background_printing_manager->OwnPrintPreviewDialog(
+      preview_contents.release());
   OnClosePrintPreviewDialog();
 }
 

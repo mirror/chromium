@@ -114,7 +114,7 @@ IN_PROC_BROWSER_TEST_F(AutofillServerTest,
   // Load the test page. Expect a query request upon loading the page.
   const char kDataURIPrefix[] = "data:text/html;charset=utf-8,";
   const char kFormHtml[] =
-      "<form id='test_form'>"
+      "<form id='test_form' action='about:blank'>"
       "  <input id='one'>"
       "  <input id='two' autocomplete='off'>"
       "  <input id='three'>"
@@ -159,13 +159,13 @@ IN_PROC_BROWSER_TEST_F(AutofillServerTest,
   upload.set_form_name("test_form");
 
   test::FillUploadField(upload.add_field(), 2594484045U, "one", "text", nullptr,
-                        2U, nullptr);
+                        2U);
   test::FillUploadField(upload.add_field(), 2750915947U, "two", "text", "off",
-                        2U, nullptr);
+                        2U);
   test::FillUploadField(upload.add_field(), 3494787134U, "three", "text",
-                        nullptr, 2U, nullptr);
+                        nullptr, 2U);
   test::FillUploadField(upload.add_field(), 1236501728U, "four", "text", "off",
-                        2U, nullptr);
+                        2U);
 
   std::string expected_upload_string;
   ASSERT_TRUE(upload.SerializeToString(&expected_upload_string));
@@ -173,8 +173,8 @@ IN_PROC_BROWSER_TEST_F(AutofillServerTest,
   WindowedNetworkObserver upload_network_observer(expected_upload_string);
   content::WebContents* web_contents =
       browser()->tab_strip_model()->GetActiveWebContents();
-  content::SimulateMouseClick(
-      web_contents, 0, blink::WebMouseEvent::ButtonLeft);
+  content::SimulateMouseClick(web_contents, 0,
+                              blink::WebMouseEvent::Button::kLeft);
   upload_network_observer.Wait();
 }
 

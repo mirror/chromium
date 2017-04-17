@@ -11,8 +11,10 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
+#include "net/base/escape.h"
 #include "net/http/http_log_util.h"
 #include "net/http/http_util.h"
+#include "net/log/net_log_capture_mode.h"
 
 namespace net {
 
@@ -27,9 +29,11 @@ const char HttpRequestHeaders::kContentLength[] = "Content-Length";
 const char HttpRequestHeaders::kContentType[] = "Content-Type";
 const char HttpRequestHeaders::kCookie[] = "Cookie";
 const char HttpRequestHeaders::kHost[] = "Host";
+const char HttpRequestHeaders::kIfMatch[] = "If-Match";
 const char HttpRequestHeaders::kIfModifiedSince[] = "If-Modified-Since";
 const char HttpRequestHeaders::kIfNoneMatch[] = "If-None-Match";
 const char HttpRequestHeaders::kIfRange[] = "If-Range";
+const char HttpRequestHeaders::kIfUnmodifiedSince[] = "If-Unmodified-Since";
 const char HttpRequestHeaders::kOrigin[] = "Origin";
 const char HttpRequestHeaders::kPragma[] = "Pragma";
 const char HttpRequestHeaders::kProxyAuthorization[] = "Proxy-Authorization";
@@ -89,9 +93,8 @@ void HttpRequestHeaders::Clear() {
 
 void HttpRequestHeaders::SetHeader(const base::StringPiece& key,
                                    const base::StringPiece& value) {
-  DCHECK(HttpUtil::IsValidHeaderName(key.as_string()));
-  // TODO(ricea): Revert this. See crbug.com/627398.
-  CHECK(HttpUtil::IsValidHeaderValue(value.as_string()));
+  DCHECK(HttpUtil::IsValidHeaderName(key));
+  DCHECK(HttpUtil::IsValidHeaderValue(value));
   HeaderVector::iterator it = FindHeader(key);
   if (it != headers_.end())
     it->value.assign(value.data(), value.size());
@@ -101,9 +104,8 @@ void HttpRequestHeaders::SetHeader(const base::StringPiece& key,
 
 void HttpRequestHeaders::SetHeaderIfMissing(const base::StringPiece& key,
                                             const base::StringPiece& value) {
-  DCHECK(HttpUtil::IsValidHeaderName(key.as_string()));
-  // TODO(ricea): Revert this. See crbug.com/627398.
-  CHECK(HttpUtil::IsValidHeaderValue(value.as_string()));
+  DCHECK(HttpUtil::IsValidHeaderName(key));
+  DCHECK(HttpUtil::IsValidHeaderValue(value));
   HeaderVector::iterator it = FindHeader(key);
   if (it == headers_.end())
     headers_.push_back(HeaderKeyValuePair(key, value));
@@ -132,26 +134,22 @@ void HttpRequestHeaders::AddHeaderFromString(
   }
 
   const base::StringPiece header_key(header_line.data(), key_end_index);
+  if (!HttpUtil::IsValidHeaderName(header_key)) {
+    LOG(DFATAL) << "\"" << header_line << "\" has invalid header key.";
+    return;
+  }
 
   const std::string::size_type value_index = key_end_index + 1;
 
   if (value_index < header_line.size()) {
-    std::string header_value(header_line.data() + value_index,
-                             header_line.size() - value_index);
-    std::string::const_iterator header_value_begin =
-        header_value.begin();
-    std::string::const_iterator header_value_end =
-        header_value.end();
-    HttpUtil::TrimLWS(&header_value_begin, &header_value_end);
-
-    if (header_value_begin == header_value_end) {
-      // Value was all LWS.
-      SetHeader(header_key, "");
-    } else {
-      SetHeader(header_key,
-                base::StringPiece(&*header_value_begin,
-                                  header_value_end - header_value_begin));
+    base::StringPiece header_value(header_line.data() + value_index,
+                                   header_line.size() - value_index);
+    header_value = HttpUtil::TrimLWS(header_value);
+    if (!HttpUtil::IsValidHeaderValue(header_value)) {
+      LOG(DFATAL) << "\"" << header_line << "\" has invalid header value.";
+      return;
     }
+    SetHeader(header_key, header_value);
   } else if (value_index == header_line.size()) {
     SetHeader(header_key, "");
   } else {
@@ -193,14 +191,16 @@ std::unique_ptr<base::Value> HttpRequestHeaders::NetLogCallback(
     const std::string* request_line,
     NetLogCaptureMode capture_mode) const {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
-  dict->SetString("line", *request_line);
+  dict->SetString("line", EscapeNonASCII(*request_line));
   base::ListValue* headers = new base::ListValue();
-  for (HeaderVector::const_iterator it = headers_.begin();
-       it != headers_.end(); ++it) {
+  for (HeaderVector::const_iterator it = headers_.begin(); it != headers_.end();
+       ++it) {
     std::string log_value =
         ElideHeaderValueForNetLog(capture_mode, it->key, it->value);
-    headers->AppendString(
-        base::StringPrintf("%s: %s", it->key.c_str(), log_value.c_str()));
+    std::string escaped_name = EscapeNonASCII(it->key);
+    std::string escaped_value = EscapeNonASCII(log_value);
+    headers->AppendString(base::StringPrintf("%s: %s", escaped_name.c_str(),
+                                             escaped_value.c_str()));
   }
   dict->Set("headers", headers);
   return std::move(dict);
@@ -227,7 +227,7 @@ bool HttpRequestHeaders::FromNetLogParam(const base::Value* event_param,
        it != header_list->end();
        ++it) {
     std::string header_line;
-    if (!(*it)->GetAsString(&header_line)) {
+    if (!it->GetAsString(&header_line)) {
       headers->Clear();
       *request_line = "";
       return false;

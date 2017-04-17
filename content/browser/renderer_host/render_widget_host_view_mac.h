@@ -26,6 +26,7 @@
 #include "content/browser/renderer_host/browser_compositor_view_mac.h"
 #include "content/browser/renderer_host/input/mouse_wheel_rails_filter_mac.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
+#include "content/browser/renderer_host/text_input_manager.h"
 #include "content/common/content_export.h"
 #include "content/common/cursors/webcursor.h"
 #include "content/common/edit_command.h"
@@ -39,16 +40,12 @@
 #include "ui/display/display_observer.h"
 
 namespace content {
+class RenderWidgetHost;
 class RenderWidgetHostImpl;
 class RenderWidgetHostViewMac;
 class RenderWidgetHostViewMacEditCommandHelper;
 class WebContents;
 struct TextInputState;
-}
-
-namespace ui {
-class Compositor;
-class Layer;
 }
 
 @class FullscreenWindowManager;
@@ -173,6 +170,11 @@ class Layer;
   // key down event.
   BOOL suppressNextEscapeKeyUp_;
 
+  // This is used to indicate if a stylus is currently in the proximity of the
+  // tablet.
+  bool isStylusEnteringProximity_;
+  blink::WebPointerProperties::PointerType pointerType_;
+
   // The set of key codes from key down events that we haven't seen the matching
   // key up events yet.
   // Used for filtering out non-matching NSKeyUp events.
@@ -194,10 +196,11 @@ class Layer;
 // Cancel ongoing composition (abandon the marked text).
 - (void)cancelComposition;
 // Confirm ongoing composition.
-- (void)confirmComposition;
+- (void)finishComposingText;
 - (void)updateCursor:(NSCursor*)cursor;
 - (NSRect)firstViewRectForCharacterRange:(NSRange)theRange
                              actualRange:(NSRangePointer)actualRange;
+- (void)tabletEvent:(NSEvent*)theEvent;
 - (void)quickLookWithEvent:(NSEvent*)event;
 - (void)showLookUpDictionaryOverlayAtPoint:(NSPoint)point;
 - (void)showLookUpDictionaryOverlayFromRange:(NSRange)range
@@ -225,6 +228,7 @@ namespace content {
 class CONTENT_EXPORT RenderWidgetHostViewMac
     : public RenderWidgetHostViewBase,
       public BrowserCompositorMacClient,
+      public TextInputManager::Observer,
       public ui::AcceleratedWidgetMacNSView,
       public IPC::Sender,
       public display::DisplayObserver {
@@ -259,7 +263,6 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   gfx::NativeView GetNativeView() const override;
   gfx::NativeViewAccessible GetNativeViewAccessible() override;
   bool HasFocus() const override;
-  bool IsSurfaceAvailableForCopy() const override;
   void Show() override;
   void Hide() override;
   bool IsShowing() override;
@@ -274,6 +277,8 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   bool IsSpeaking() const override;
   void StopSpeaking() override;
   void SetBackgroundColor(SkColor color) override;
+  SkColor background_color() const override;
+  void SetNeedsBeginFrames(bool needs_begin_frames) override;
 
   // Implementation of RenderWidgetHostViewBase.
   void InitAsPopup(RenderWidgetHostView* parent_host_view,
@@ -282,58 +287,53 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   void Focus() override;
   void UpdateCursor(const WebCursor& cursor) override;
   void SetIsLoading(bool is_loading) override;
-  void TextInputStateChanged(const TextInputState& params) override;
-  void ImeCancelComposition() override;
-  void ImeCompositionRangeChanged(
-      const gfx::Range& range,
-      const std::vector<gfx::Rect>& character_bounds) override;
   void RenderProcessGone(base::TerminationStatus status,
                          int error_code) override;
   void Destroy() override;
   void SetTooltipText(const base::string16& tooltip_text) override;
-  void SelectionChanged(const base::string16& text,
-                        size_t offset,
-                        const gfx::Range& range) override;
-  void SelectionBoundsChanged(
-      const ViewHostMsg_SelectionBounds_Params& params) override;
-  void CopyFromCompositingSurface(const gfx::Rect& src_subrect,
-                                  const gfx::Size& dst_size,
-                                  const ReadbackRequestCallback& callback,
-                                  SkColorType preferred_color_type) override;
-  void CopyFromCompositingSurfaceToVideoFrame(
-      const gfx::Rect& src_subrect,
-      const scoped_refptr<media::VideoFrame>& target,
+  bool IsSurfaceAvailableForCopy() const override;
+  void CopyFromSurface(const gfx::Rect& src_rect,
+                       const gfx::Size& output_size,
+                       const ReadbackRequestCallback& callback,
+                       const SkColorType color_type) override;
+  void CopyFromSurfaceToVideoFrame(
+      const gfx::Rect& src_rect,
+      scoped_refptr<media::VideoFrame> target,
       const base::Callback<void(const gfx::Rect&, bool)>& callback) override;
-  bool CanCopyToVideoFrame() const override;
   void BeginFrameSubscription(
       std::unique_ptr<RenderWidgetHostViewFrameSubscriber> subscriber) override;
   void EndFrameSubscription() override;
   ui::AcceleratedWidgetMac* GetAcceleratedWidgetMac() const override;
-  void OnSwapCompositorFrame(uint32_t output_surface_id,
+  void FocusedNodeChanged(bool is_editable_node,
+                          const gfx::Rect& node_bounds_in_screen) override;
+  void DidCreateNewRendererCompositorFrameSink(
+      cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink)
+      override;
+  void SubmitCompositorFrame(const cc::LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
+  void OnBeginFrameDidNotSwap(const cc::BeginFrameAck& ack) override;
   void ClearCompositorFrame() override;
   BrowserAccessibilityManager* CreateBrowserAccessibilityManager(
       BrowserAccessibilityDelegate* delegate, bool for_root_frame) override;
   gfx::Point AccessibilityOriginInScreen(const gfx::Rect& bounds) override;
+  gfx::AcceleratedWidget AccessibilityGetAcceleratedWidget() override;
 
   bool HasAcceleratedSurface(const gfx::Size& desired_size) override;
-  void GetScreenInfo(blink::WebScreenInfo* results) override;
   gfx::Rect GetBoundsInRootWindow() override;
-  void LockCompositingSurface() override;
-  void UnlockCompositingSurface() override;
 
   bool LockMouse() override;
   void UnlockMouse() override;
+  void OnSetNeedsFlushInput() override;
   void GestureEventAck(const blink::WebGestureEvent& event,
                        InputEventAckState ack_result) override;
 
   std::unique_ptr<SyntheticGestureTarget> CreateSyntheticGestureTarget()
       override;
 
-  uint32_t GetSurfaceClientId() override;
-  uint32_t SurfaceClientIdAtPoint(cc::SurfaceHittestDelegate* delegate,
-                                  const gfx::Point& point,
-                                  gfx::Point* transformed_point) override;
+  cc::FrameSinkId GetFrameSinkId() override;
+  cc::FrameSinkId FrameSinkIdAtPoint(cc::SurfaceHittestDelegate* delegate,
+                                     const gfx::Point& point,
+                                     gfx::Point* transformed_point) override;
   // Returns true when we can do SurfaceHitTesting for the event type.
   bool ShouldRouteEvent(const blink::WebInputEvent& event) const;
   void ProcessMouseEvent(const blink::WebMouseEvent& event,
@@ -344,10 +344,28 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
                          const ui::LatencyInfo& latency) override;
   void ProcessGestureEvent(const blink::WebGestureEvent& event,
                            const ui::LatencyInfo& latency) override;
-  void TransformPointToLocalCoordSpace(const gfx::Point& point,
+  bool TransformPointToLocalCoordSpace(const gfx::Point& point,
                                        const cc::SurfaceId& original_surface,
                                        gfx::Point* transformed_point) override;
+  bool TransformPointToCoordSpaceForView(
+      const gfx::Point& point,
+      RenderWidgetHostViewBase* target_view,
+      gfx::Point* transformed_point) override;
 
+  // TextInputManager::Observer implementation.
+  void OnUpdateTextInputStateCalled(TextInputManager* text_input_manager,
+                                    RenderWidgetHostViewBase* updated_view,
+                                    bool did_update_state) override;
+  void OnImeCancelComposition(TextInputManager* text_input_manager,
+                              RenderWidgetHostViewBase* updated_view) override;
+  void OnImeCompositionRangeChanged(
+      TextInputManager* text_input_manager,
+      RenderWidgetHostViewBase* updated_view) override;
+  void OnSelectionBoundsChanged(
+      TextInputManager* text_input_manager,
+      RenderWidgetHostViewBase* updated_view) override;
+  void OnTextSelectionChanged(TextInputManager* text_input_manager,
+                              RenderWidgetHostViewBase* updated_view) override;
   // IPC::Sender implementation.
   bool Send(IPC::Message* message) override;
 
@@ -360,17 +378,9 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   // Forwards the mouse event to the renderer.
   void ForwardMouseEvent(const blink::WebMouseEvent& event);
 
-  // Called when RenderWidget wants to start BeginFrame scheduling or stop.
-  void OnSetNeedsBeginFrames(bool needs_begin_frames);
-
   void KillSelf();
 
   void SetTextInputActive(bool active);
-
-  const std::string& selected_text() const { return selected_text_; }
-  const gfx::Range& composition_range() const { return composition_range_; }
-  const base::string16& selection_text() const { return selection_text_; }
-  size_t selection_text_offset() const { return selection_text_offset_; }
 
   // Returns true and stores first rectangle for character range if the
   // requested |range| is already cached, otherwise returns false.
@@ -398,16 +408,16 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
 
   WebContents* GetWebContents();
 
+  // Applies background color without notifying the RenderWidget about
+  // opaqueness changes.
+  void UpdateBackgroundColorFromRenderer(SkColor color);
+
   // These member variables should be private, but the associated ObjC class
   // needs access to them and can't be made a friend.
 
   // The associated Model.  Can be NULL if Destroy() is called when
   // someone (other than superview) has retained |cocoa_view_|.
   RenderWidgetHostImpl* render_widget_host_;
-
-  // Current text input type.
-  ui::TextInputType text_input_type_;
-  bool can_compose_inline_;
 
   // The background CoreAnimation layer which is hosted by |cocoa_view_|.
   base::scoped_nsobject<CALayer> background_layer_;
@@ -431,9 +441,6 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
 
   int window_number() const;
 
-  // The scale factor for the screen that the view is currently on.
-  float ViewScaleFactor() const;
-
   // Update properties, such as the scale factor for the backing store
   // and for any CALayers, and the screen color profile.
   void UpdateBackingStoreProperties();
@@ -446,14 +453,6 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   // BrowserCompositorMacClient implementation.
   NSView* BrowserCompositorMacGetNSView() const override;
   SkColor BrowserCompositorMacGetGutterColor(SkColor color) const override;
-  void BrowserCompositorMacSendReclaimCompositorResources(
-      int output_surface_id,
-      bool is_swap_ack,
-      const cc::ReturnedResourceArray& resources) override;
-  void BrowserCompositorMacOnLostCompositorResources() override;
-  void BrowserCompositorMacUpdateVSyncParameters(
-      const base::TimeTicks& timebase,
-      const base::TimeDelta& interval) override;
   void BrowserCompositorMacSendBeginFrame(
       const cc::BeginFrameArgs& args) override;
 
@@ -465,6 +464,25 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
 
   // Exposed for testing.
   cc::SurfaceId SurfaceIdForTesting() const override;
+
+  // Helper method to obtain ui::TextInputType for the active widget from the
+  // TextInputManager.
+  ui::TextInputType GetTextInputType();
+
+  // Helper method to obtain the currently active widget from TextInputManager.
+  // An active widget is a RenderWidget which is currently focused and has a
+  // |TextInputState.type| which is not ui::TEXT_INPUT_TYPE_NONE.
+  RenderWidgetHostImpl* GetActiveWidget();
+
+  // Returns the composition range information for the active RenderWidgetHost
+  // (accepting IME and keyboard input).
+  const TextInputManager::CompositionRangeInfo* GetCompositionRangeInfo();
+
+  // Returns the TextSelection information for the active widget. If
+  // |is_guest_view_hack_| is true, then it will return the TextSelection
+  // information for this RenderWidgetHostViewMac (which is serving as a
+  // platform view for a guest).
+  const TextInputManager::TextSelection* GetTextSelection();
 
  private:
   friend class RenderWidgetHostViewMacTest;
@@ -479,11 +497,17 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   // IPC message handlers.
   void OnGetRenderedTextCompleted(const std::string& text);
 
-  // Send updated vsync parameters to the renderer.
-  void SendVSyncParametersToRenderer();
+  // Send updated vsync parameters to the top level display.
+  void UpdateDisplayVSyncParameters();
 
   // Dispatches a TTS session.
   void SpeakText(const std::string& text);
+
+  // Get the focused view that should be used for retrieving the text selection.
+  RenderWidgetHostViewBase* GetFocusedViewForTextSelection();
+
+  // Adds/Removes frame observer based on state.
+  void UpdateNeedsBeginFramesInternal();
 
   // The associated view. This is weak and is inserted into the view hierarchy
   // to own this RenderWidgetHostViewMac object. Set to nil at the start of the
@@ -526,15 +550,14 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   base::TimeTicks vsync_timebase_;
   base::TimeDelta vsync_interval_;
 
-  // The current composition character range and its bounds.
-  gfx::Range composition_range_;
-  std::vector<gfx::Rect> composition_bounds_;
+  // Whether a request for begin frames has been issued.
+  bool needs_begin_frames_;
 
-  // The current caret bounds.
-  gfx::Rect caret_rect_;
+  // Whether a request to flush input has been issued.
+  bool needs_flush_input_;
 
-  // The current first selection bounds.
-  gfx::Rect first_selection_rect_;
+  // The background color of the web content.
+  SkColor background_color_;
 
   // Factory used to safely scope delayed calls to ShutdownHost().
   base::WeakPtrFactory<RenderWidgetHostViewMac> weak_factory_;

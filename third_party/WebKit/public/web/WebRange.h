@@ -31,49 +31,43 @@
 #ifndef WebRange_h
 #define WebRange_h
 
-#include "WebFrame.h"
 #include "public/platform/WebCommon.h"
-#include "public/platform/WebPrivatePtr.h"
-#include "public/platform/WebVector.h"
+#if BLINK_IMPLEMENTATION
+#include "core/editing/EphemeralRange.h"
+#endif
 
 namespace blink {
 
+class LocalFrame;
+class PlainTextRange;
 class Range;
-class WebString;
 
-// Provides readonly access to some properties of a DOM range.
-class WebRange {
-public:
-    ~WebRange() { reset(); }
+class WebRange final {
+ public:
+  BLINK_EXPORT WebRange(int start, int length);
+  BLINK_EXPORT WebRange() {}
 
-    WebRange() { }
-    WebRange(const WebRange& r) { assign(r); }
-    WebRange& operator=(const WebRange& r)
-    {
-        assign(r);
-        return *this;
-    }
+  int StartOffset() const { return start_; }
+  int EndOffset() const { return end_; }
+  int length() const { return end_ - start_; }
 
-    BLINK_EXPORT void reset();
-    BLINK_EXPORT void assign(const WebRange&);
-
-    bool isNull() const { return m_private.isNull(); }
-
-    BLINK_EXPORT int startOffset() const;
-    BLINK_EXPORT int endOffset() const;
-    BLINK_EXPORT WebString toPlainText() const;
-
-    BLINK_EXPORT static WebRange fromDocumentRange(WebLocalFrame*, int start, int length);
+  bool IsNull() const { return start_ == -1 && end_ == -1; }
+  bool IsEmpty() const { return start_ == end_; }
 
 #if BLINK_IMPLEMENTATION
-    WebRange(Range*);
-    operator Range*() const;
+  WebRange(const EphemeralRange&);
+  WebRange(const PlainTextRange&);
+
+  EphemeralRange CreateEphemeralRange(LocalFrame*) const;
 #endif
 
-private:
-    WebPrivatePtr<Range> m_private;
+ private:
+  // Note that this also matches the values for gfx::Range::InvalidRange
+  // for easy conversion.
+  int start_ = -1;
+  int end_ = -1;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

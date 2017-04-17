@@ -32,114 +32,109 @@
 #include "core/css/StylePropertySet.h"
 #include "core/css/parser/CSSParser.h"
 #include "core/html/HTMLCanvasElement.h"
+#include "core/html/parser/HTMLParserIdioms.h"
 #include "modules/canvas2d/CanvasGradient.h"
 #include "modules/canvas2d/CanvasPattern.h"
+#include "platform/graphics/paint/PaintFlags.h"
 #include "platform/graphics/skia/SkiaUtils.h"
+#include "platform/wtf/PassRefPtr.h"
 #include "third_party/skia/include/core/SkShader.h"
-#include "wtf/PassRefPtr.h"
 
 namespace blink {
 
-enum ColorParseResult { ParsedRGBA, ParsedCurrentColor, ParsedSystemColor, ParseFailed };
+enum ColorParseResult {
+  kParsedRGBA,
+  kParsedCurrentColor,
+  kParsedSystemColor,
+  kParseFailed
+};
 
-static ColorParseResult parseColor(Color& parsedColor, const String& colorString)
-{
-    if (equalIgnoringCase(colorString, "currentcolor"))
-        return ParsedCurrentColor;
-    const bool useStrictParsing = true;
-    if (CSSParser::parseColor(parsedColor, colorString, useStrictParsing))
-        return ParsedRGBA;
-    if (CSSParser::parseSystemColor(parsedColor, colorString))
-        return ParsedSystemColor;
-    return ParseFailed;
+static ColorParseResult ParseColor(Color& parsed_color,
+                                   const String& color_string) {
+  if (DeprecatedEqualIgnoringCase(color_string, "currentcolor"))
+    return kParsedCurrentColor;
+  const bool kUseStrictParsing = true;
+  if (CSSParser::ParseColor(parsed_color, color_string, kUseStrictParsing))
+    return kParsedRGBA;
+  if (CSSParser::ParseSystemColor(parsed_color, color_string))
+    return kParsedSystemColor;
+  return kParseFailed;
 }
 
-static Color currentColor(HTMLCanvasElement* canvas)
-{
-    if (!canvas || !canvas->isConnected() || !canvas->inlineStyle())
-        return Color::black;
-    Color color = Color::black;
-    CSSParser::parseColor(color, canvas->inlineStyle()->getPropertyValue(CSSPropertyColor));
-    return color;
+static Color CurrentColor(HTMLCanvasElement* canvas) {
+  if (!canvas || !canvas->isConnected() || !canvas->InlineStyle())
+    return Color::kBlack;
+  Color color = Color::kBlack;
+  CSSParser::ParseColor(
+      color, canvas->InlineStyle()->GetPropertyValue(CSSPropertyColor));
+  return color;
 }
 
-bool parseColorOrCurrentColor(Color& parsedColor, const String& colorString, HTMLCanvasElement* canvas)
-{
-    ColorParseResult parseResult = parseColor(parsedColor, colorString);
-    switch (parseResult) {
-    case ParsedRGBA:
-    case ParsedSystemColor:
-        return true;
-    case ParsedCurrentColor:
-        parsedColor = canvas ? currentColor(canvas) : Color::black;
-        return true;
-    case ParseFailed:
-        return false;
+bool ParseColorOrCurrentColor(Color& parsed_color,
+                              const String& color_string,
+                              HTMLCanvasElement* canvas) {
+  ColorParseResult parse_result = ParseColor(
+      parsed_color, color_string.StripWhiteSpace(IsHTMLSpace<UChar>));
+  switch (parse_result) {
+    case kParsedRGBA:
+    case kParsedSystemColor:
+      return true;
+    case kParsedCurrentColor:
+      parsed_color = canvas ? CurrentColor(canvas) : Color::kBlack;
+      return true;
+    case kParseFailed:
+      return false;
     default:
-        ASSERT_NOT_REACHED();
-        return false;
-    }
+      ASSERT_NOT_REACHED();
+      return false;
+  }
 }
 
-CanvasStyle::CanvasStyle(RGBA32 rgba)
-    : m_type(ColorRGBA)
-    , m_rgba(rgba)
-{
-}
+CanvasStyle::CanvasStyle(RGBA32 rgba) : type_(kColorRGBA), rgba_(rgba) {}
 
 CanvasStyle::CanvasStyle(CanvasGradient* gradient)
-    : m_type(Gradient)
-    , m_gradient(gradient)
-{
-}
+    : type_(kGradient), gradient_(gradient) {}
 
 CanvasStyle::CanvasStyle(CanvasPattern* pattern)
-    : m_type(ImagePattern)
-    , m_pattern(pattern)
-{
+    : type_(kImagePattern), pattern_(pattern) {}
+
+CanvasStyle* CanvasStyle::CreateFromGradient(CanvasGradient* gradient) {
+  ASSERT(gradient);
+  return new CanvasStyle(gradient);
 }
 
-CanvasStyle* CanvasStyle::createFromGradient(CanvasGradient* gradient)
-{
-    ASSERT(gradient);
-    return new CanvasStyle(gradient);
+CanvasStyle* CanvasStyle::CreateFromPattern(CanvasPattern* pattern) {
+  ASSERT(pattern);
+  return new CanvasStyle(pattern);
 }
 
-CanvasStyle* CanvasStyle::createFromPattern(CanvasPattern* pattern)
-{
-    ASSERT(pattern);
-    return new CanvasStyle(pattern);
-}
-
-void CanvasStyle::applyToPaint(SkPaint& paint) const
-{
-    switch (m_type) {
-    case ColorRGBA:
-        paint.setShader(nullptr);
-        break;
-    case Gradient:
-        getCanvasGradient()->getGradient()->applyToPaint(paint, SkMatrix::I());
-        break;
-    case ImagePattern:
-        getCanvasPattern()->getPattern()->applyToPaint(paint, affineTransformToSkMatrix(getCanvasPattern()->getTransform()));
-        break;
+void CanvasStyle::ApplyToFlags(PaintFlags& flags) const {
+  switch (type_) {
+    case kColorRGBA:
+      flags.setShader(nullptr);
+      break;
+    case kGradient:
+      GetCanvasGradient()->GetGradient()->ApplyToFlags(flags, SkMatrix::I());
+      break;
+    case kImagePattern:
+      GetCanvasPattern()->GetPattern()->ApplyToFlags(
+          flags, AffineTransformToSkMatrix(GetCanvasPattern()->GetTransform()));
+      break;
     default:
-        ASSERT_NOT_REACHED();
-    }
+      ASSERT_NOT_REACHED();
+  }
 }
 
-RGBA32 CanvasStyle::paintColor() const
-{
-    if (m_type == ColorRGBA)
-        return m_rgba;
-    ASSERT(m_type == Gradient || m_type == ImagePattern);
-    return Color::black;
+RGBA32 CanvasStyle::PaintColor() const {
+  if (type_ == kColorRGBA)
+    return rgba_;
+  ASSERT(type_ == kGradient || type_ == kImagePattern);
+  return Color::kBlack;
 }
 
-DEFINE_TRACE(CanvasStyle)
-{
-    visitor->trace(m_gradient);
-    visitor->trace(m_pattern);
+DEFINE_TRACE(CanvasStyle) {
+  visitor->Trace(gradient_);
+  visitor->Trace(pattern_);
 }
 
-} // namespace blink
+}  // namespace blink

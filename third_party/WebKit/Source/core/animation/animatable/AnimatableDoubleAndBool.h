@@ -10,36 +10,25 @@
 
 namespace blink {
 
-class CORE_EXPORT AnimatableDoubleAndBool final : public AnimatableValue {
-public:
-    ~AnimatableDoubleAndBool() override { }
-    static PassRefPtr<AnimatableDoubleAndBool> create(double number, bool flag)
-    {
-        return adoptRef(new AnimatableDoubleAndBool(number, flag));
-    }
+class AnimatableDoubleAndBool final : public AnimatableValue {
+ public:
+  ~AnimatableDoubleAndBool() override {}
+  static PassRefPtr<AnimatableDoubleAndBool> Create(double number, bool flag) {
+    return AdoptRef(new AnimatableDoubleAndBool(number, flag));
+  }
 
-    double toDouble() const { return m_number; }
-    bool flag() const { return m_flag; }
+ private:
+  AnimatableDoubleAndBool(double number, bool flag)
+      : number_(number), flag_(flag) {}
+  AnimatableType GetType() const override { return kTypeDoubleAndBool; }
+  bool EqualTo(const AnimatableValue*) const override;
 
-protected:
-    PassRefPtr<AnimatableValue> interpolateTo(const AnimatableValue*, double fraction) const override;
-    bool usesDefaultInterpolationWith(const AnimatableValue*) const override;
-
-private:
-    AnimatableDoubleAndBool(double number, bool flag)
-        : m_number(number)
-        , m_flag(flag)
-    {
-    }
-    AnimatableType type() const override { return TypeDoubleAndBool; }
-    bool equalTo(const AnimatableValue*) const override;
-
-    double m_number;
-    bool m_flag;
+  double number_;
+  bool flag_;
 };
 
-DEFINE_ANIMATABLE_VALUE_TYPE_CASTS(AnimatableDoubleAndBool, isDoubleAndBool());
+DEFINE_ANIMATABLE_VALUE_TYPE_CASTS(AnimatableDoubleAndBool, IsDoubleAndBool());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AnimatableDoubleAndBool_h
+#endif  // AnimatableDoubleAndBool_h

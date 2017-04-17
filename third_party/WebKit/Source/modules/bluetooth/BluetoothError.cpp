@@ -6,83 +6,181 @@
 
 #include "core/dom/DOMException.h"
 #include "core/dom/ExceptionCode.h"
-#include "third_party/WebKit/public/platform/modules/bluetooth/web_bluetooth.mojom-blink.h"
 
 namespace blink {
 
-DOMException* BluetoothError::take(ScriptPromiseResolver*, int32_t webError /* Corresponds to WebBluetoothError in web_bluetooth.mojom */)
-{
-    switch (static_cast<mojom::blink::WebBluetoothError>(webError)) {
-    case mojom::blink::WebBluetoothError::SUCCESS:
-        ASSERT_NOT_REACHED();
-        return DOMException::create(UnknownError);
-#define MAP_ERROR(enumeration, name, message)          \
-    case mojom::blink::WebBluetoothError::enumeration: \
-        return DOMException::create(name, message)
+namespace {
 
-        // InvalidModificationErrors:
-        MAP_ERROR(GATT_INVALID_ATTRIBUTE_LENGTH, InvalidModificationError, "GATT Error: invalid attribute length.");
+const char kGATTServerNotConnectedBase[] =
+    "GATT Server is disconnected. "
+    "Cannot %s. (Re)connect first with `device.gatt.connect`.";
 
-        // InvalidStateErrors:
-        MAP_ERROR(SERVICE_NO_LONGER_EXISTS, InvalidStateError, "GATT Service no longer exists.");
-        MAP_ERROR(CHARACTERISTIC_NO_LONGER_EXISTS, InvalidStateError, "GATT Characteristic no longer exists.");
+}  // namespace
 
-        // NetworkErrors:
-        MAP_ERROR(CONNECT_ALREADY_IN_PROGRESS, NetworkError, "Connection already in progress.");
-        MAP_ERROR(CONNECT_ATTRIBUTE_LENGTH_INVALID, NetworkError, "Write operation exceeds the maximum length of the attribute.");
-        MAP_ERROR(CONNECT_AUTH_CANCELED, NetworkError, "Authentication canceled.");
-        MAP_ERROR(CONNECT_AUTH_FAILED, NetworkError, "Authentication failed.");
-        MAP_ERROR(CONNECT_AUTH_REJECTED, NetworkError, "Authentication rejected.");
-        MAP_ERROR(CONNECT_AUTH_TIMEOUT, NetworkError, "Authentication timeout.");
-        MAP_ERROR(CONNECT_CONNECTION_CONGESTED, NetworkError, "Remote device connection is congested.");
-        MAP_ERROR(CONNECT_INSUFFICIENT_ENCRYPTION, NetworkError, "Insufficient encryption for a given operation");
-        MAP_ERROR(CONNECT_OFFSET_INVALID, NetworkError, "Read or write operation was requested with an invalid offset.");
-        MAP_ERROR(CONNECT_READ_NOT_PERMITTED, NetworkError, "GATT read operation is not permitted.");
-        MAP_ERROR(CONNECT_REQUEST_NOT_SUPPORTED, NetworkError, "The given request is not supported.");
-        MAP_ERROR(CONNECT_UNKNOWN_ERROR, NetworkError, "Unknown error when connecting to the device.");
-        MAP_ERROR(CONNECT_UNKNOWN_FAILURE, NetworkError, "Connection failed for unknown reason.");
-        MAP_ERROR(CONNECT_UNSUPPORTED_DEVICE, NetworkError, "Unsupported device.");
-        MAP_ERROR(CONNECT_WRITE_NOT_PERMITTED, NetworkError, "GATT write operation is not permitted.");
-        MAP_ERROR(DEVICE_NO_LONGER_IN_RANGE, NetworkError, "Bluetooth Device is no longer in range.");
-        MAP_ERROR(GATT_NOT_PAIRED, NetworkError, "GATT Error: Not paired.");
-        MAP_ERROR(GATT_OPERATION_IN_PROGRESS, NetworkError, "GATT operation already in progress.");
-        MAP_ERROR(UNTRANSLATED_CONNECT_ERROR_CODE, NetworkError, "Unknown ConnectErrorCode.");
+// static
+DOMException* BluetoothError::CreateNotConnectedException(
+    BluetoothOperation operation) {
+  const char* operation_string = nullptr;
+  switch (operation) {
+    case BluetoothOperation::kServicesRetrieval:
+      operation_string = "retrieve services";
+      break;
+    case BluetoothOperation::kCharacteristicsRetrieval:
+      operation_string = "retrieve characteristics";
+      break;
+    case BluetoothOperation::kDescriptorsRetrieval:
+      operation_string = "retrieve descriptors";
+      break;
+    case BluetoothOperation::GATT:
+      operation_string = "perform GATT operations";
+      break;
+  }
 
-        // NotFoundErrors:
-        MAP_ERROR(WEB_BLUETOOTH_NOT_SUPPORTED, NotFoundError, "Web Bluetooth is not supported on this platform. For a list of supported platforms see: https://goo.gl/J6ASzs");
-        MAP_ERROR(NO_BLUETOOTH_ADAPTER, NotFoundError, "Bluetooth adapter not available.");
-        MAP_ERROR(CHOSEN_DEVICE_VANISHED, NotFoundError, "User selected a device that doesn't exist anymore.");
-        MAP_ERROR(CHOOSER_CANCELLED, NotFoundError, "User cancelled the requestDevice() chooser.");
-        MAP_ERROR(CHOOSER_NOT_SHOWN_API_GLOBALLY_DISABLED, NotFoundError, "Web Bluetooth API globally disabled.");
-        MAP_ERROR(CHOOSER_NOT_SHOWN_API_LOCALLY_DISABLED, NotFoundError, "User or their enterprise policy has disabled Web Bluetooth.");
-        MAP_ERROR(CHOOSER_NOT_SHOWN_USER_DENIED_PERMISSION_TO_SCAN, NotFoundError, "User denied the browser permission to scan for Bluetooth devices.");
-        MAP_ERROR(SERVICE_NOT_FOUND, NotFoundError, "No Services with specified UUID found in Device.");
-        MAP_ERROR(NO_SERVICES_FOUND, NotFoundError, "No Services found in device.");
-        MAP_ERROR(CHARACTERISTIC_NOT_FOUND, NotFoundError, "No Characteristics with specified UUID found in Service.");
-        MAP_ERROR(NO_CHARACTERISTICS_FOUND, NotFoundError, "No Characteristics found in service.");
-
-        // NotSupportedErrors:
-        MAP_ERROR(GATT_UNKNOWN_ERROR, NotSupportedError, "GATT Error Unknown.");
-        MAP_ERROR(GATT_UNKNOWN_FAILURE, NotSupportedError, "GATT operation failed for unknown reason.");
-        MAP_ERROR(GATT_NOT_PERMITTED, NotSupportedError, "GATT operation not permitted.");
-        MAP_ERROR(GATT_NOT_SUPPORTED, NotSupportedError, "GATT Error: Not supported.");
-        MAP_ERROR(GATT_UNTRANSLATED_ERROR_CODE, NotSupportedError, "GATT Error: Unknown GattErrorCode.");
-
-        // SecurityErrors:
-        MAP_ERROR(GATT_NOT_AUTHORIZED, SecurityError, "GATT operation not authorized.");
-        MAP_ERROR(BLACKLISTED_CHARACTERISTIC_UUID, SecurityError, "getCharacteristic(s) called with blacklisted UUID. https://goo.gl/4NeimX");
-        MAP_ERROR(BLACKLISTED_READ, SecurityError, "readValue() called on blacklisted object marked exclude-reads. https://goo.gl/4NeimX");
-        MAP_ERROR(BLACKLISTED_WRITE, SecurityError, "writeValue() called on blacklisted object marked exclude-writes. https://goo.gl/4NeimX");
-        MAP_ERROR(NOT_ALLOWED_TO_ACCESS_SERVICE, SecurityError, "Origin is not allowed to access the service. Tip: Add the service UUID to 'optionalServices' in requestDevice() options. https://goo.gl/HxfxSQ");
-        MAP_ERROR(REQUEST_DEVICE_WITH_BLACKLISTED_UUID, SecurityError, "requestDevice() called with a filter containing a blacklisted UUID. https://goo.gl/4NeimX");
-        MAP_ERROR(REQUEST_DEVICE_FROM_CROSS_ORIGIN_IFRAME, SecurityError, "requestDevice() called from cross-origin iframe.");
-        MAP_ERROR(REQUEST_DEVICE_WITHOUT_FRAME, SecurityError, "No window to show the requestDevice() dialog.");
-
-#undef MAP_ERROR
-    }
-
-    ASSERT_NOT_REACHED();
-    return DOMException::create(UnknownError);
+  return DOMException::Create(
+      kNetworkError,
+      String::Format(kGATTServerNotConnectedBase, operation_string));
 }
 
-} // namespace blink
+// static
+DOMException* BluetoothError::CreateDOMException(
+    BluetoothErrorCode error,
+    const String& detailed_message) {
+  switch (error) {
+    case BluetoothErrorCode::kInvalidService:
+    case BluetoothErrorCode::kInvalidCharacteristic:
+    case BluetoothErrorCode::kInvalidDescriptor:
+      return DOMException::Create(kInvalidStateError, detailed_message);
+    case BluetoothErrorCode::kServiceNotFound:
+    case BluetoothErrorCode::kCharacteristicNotFound:
+    case BluetoothErrorCode::kDescriptorNotFound:
+      return DOMException::Create(kNotFoundError, detailed_message);
+  }
+  NOTREACHED();
+  return DOMException::Create(kUnknownError);
+}
+
+// static
+DOMException* BluetoothError::CreateDOMException(
+    mojom::blink::WebBluetoothResult error) {
+  switch (error) {
+    case mojom::blink::WebBluetoothResult::SUCCESS:
+    case mojom::blink::WebBluetoothResult::SERVICE_NOT_FOUND:
+    case mojom::blink::WebBluetoothResult::CHARACTERISTIC_NOT_FOUND:
+    case mojom::blink::WebBluetoothResult::DESCRIPTOR_NOT_FOUND:
+      // The above result codes are not expected here. SUCCESS is not
+      // an error and the others have a detailed message and are
+      // expected to be redirected to the switch above that handles
+      // BluetoothErrorCode.
+      NOTREACHED();
+      return DOMException::Create(kUnknownError);
+#define MAP_ERROR(enumeration, name, message)         \
+  case mojom::blink::WebBluetoothResult::enumeration: \
+    return DOMException::Create(name, message);
+
+      // InvalidModificationErrors:
+      MAP_ERROR(GATT_INVALID_ATTRIBUTE_LENGTH, kInvalidModificationError,
+                "GATT Error: invalid attribute length.");
+
+      // InvalidStateErrors:
+      MAP_ERROR(SERVICE_NO_LONGER_EXISTS, kInvalidStateError,
+                "GATT Service no longer exists.");
+      MAP_ERROR(CHARACTERISTIC_NO_LONGER_EXISTS, kInvalidStateError,
+                "GATT Characteristic no longer exists.");
+      MAP_ERROR(DESCRIPTOR_NO_LONGER_EXISTS, kInvalidStateError,
+                "GATT Descriptor no longer exists.");
+
+      // NetworkErrors:
+      MAP_ERROR(CONNECT_ALREADY_IN_PROGRESS, kNetworkError,
+                "Connection already in progress.");
+      MAP_ERROR(CONNECT_AUTH_CANCELED, kNetworkError,
+                "Authentication canceled.");
+      MAP_ERROR(CONNECT_AUTH_FAILED, kNetworkError, "Authentication failed.");
+      MAP_ERROR(CONNECT_AUTH_REJECTED, kNetworkError,
+                "Authentication rejected.");
+      MAP_ERROR(CONNECT_AUTH_TIMEOUT, kNetworkError, "Authentication timeout.");
+      MAP_ERROR(CONNECT_UNKNOWN_ERROR, kNetworkError,
+                "Unknown error when connecting to the device.");
+      MAP_ERROR(CONNECT_UNKNOWN_FAILURE, kNetworkError,
+                "Connection failed for unknown reason.");
+      MAP_ERROR(CONNECT_UNSUPPORTED_DEVICE, kNetworkError,
+                "Unsupported device.");
+      MAP_ERROR(DEVICE_NO_LONGER_IN_RANGE, kNetworkError,
+                "Bluetooth Device is no longer in range.");
+      MAP_ERROR(GATT_NOT_PAIRED, kNetworkError, "GATT Error: Not paired.");
+      MAP_ERROR(GATT_OPERATION_IN_PROGRESS, kNetworkError,
+                "GATT operation already in progress.");
+
+      // NotFoundErrors:
+      MAP_ERROR(WEB_BLUETOOTH_NOT_SUPPORTED, kNotFoundError,
+                "Web Bluetooth is not supported on this platform. For a list "
+                "of supported platforms see: https://goo.gl/J6ASzs");
+      MAP_ERROR(NO_BLUETOOTH_ADAPTER, kNotFoundError,
+                "Bluetooth adapter not available.");
+      MAP_ERROR(CHOSEN_DEVICE_VANISHED, kNotFoundError,
+                "User selected a device that doesn't exist anymore.");
+      MAP_ERROR(CHOOSER_CANCELLED, kNotFoundError,
+                "User cancelled the requestDevice() chooser.");
+      MAP_ERROR(CHOOSER_NOT_SHOWN_API_GLOBALLY_DISABLED, kNotFoundError,
+                "Web Bluetooth API globally disabled.");
+      MAP_ERROR(CHOOSER_NOT_SHOWN_API_LOCALLY_DISABLED, kNotFoundError,
+                "User or their enterprise policy has disabled Web Bluetooth.");
+      MAP_ERROR(
+          CHOOSER_NOT_SHOWN_USER_DENIED_PERMISSION_TO_SCAN, kNotFoundError,
+          "User denied the browser permission to scan for Bluetooth devices.");
+      MAP_ERROR(NO_SERVICES_FOUND, kNotFoundError,
+                "No Services found in device.");
+      MAP_ERROR(NO_CHARACTERISTICS_FOUND, kNotFoundError,
+                "No Characteristics found in service.");
+      MAP_ERROR(NO_DESCRIPTORS_FOUND, kNotFoundError,
+                "No Descriptors found in Characteristic.");
+      MAP_ERROR(BLUETOOTH_LOW_ENERGY_NOT_AVAILABLE, kNotFoundError,
+                "Bluetooth Low Energy not available.");
+
+      // NotSupportedErrors:
+      MAP_ERROR(GATT_UNKNOWN_ERROR, kNotSupportedError, "GATT Error Unknown.");
+      MAP_ERROR(GATT_UNKNOWN_FAILURE, kNotSupportedError,
+                "GATT operation failed for unknown reason.");
+      MAP_ERROR(GATT_NOT_PERMITTED, kNotSupportedError,
+                "GATT operation not permitted.");
+      MAP_ERROR(GATT_NOT_SUPPORTED, kNotSupportedError,
+                "GATT Error: Not supported.");
+      MAP_ERROR(GATT_UNTRANSLATED_ERROR_CODE, kNotSupportedError,
+                "GATT Error: Unknown GattErrorCode.");
+
+      // SecurityErrors:
+      MAP_ERROR(GATT_NOT_AUTHORIZED, kSecurityError,
+                "GATT operation not authorized.");
+      MAP_ERROR(BLOCKLISTED_CHARACTERISTIC_UUID, kSecurityError,
+                "getCharacteristic(s) called with blocklisted UUID. "
+                "https://goo.gl/4NeimX");
+      MAP_ERROR(BLOCKLISTED_DESCRIPTOR_UUID, kSecurityError,
+                "getDescriptor(s) called with blocklisted UUID. "
+                "https://goo.gl/4NeimX");
+      MAP_ERROR(BLOCKLISTED_READ, kSecurityError,
+                "readValue() called on blocklisted object marked "
+                "exclude-reads. https://goo.gl/4NeimX");
+      MAP_ERROR(BLOCKLISTED_WRITE, kSecurityError,
+                "writeValue() called on blocklisted object marked "
+                "exclude-writes. https://goo.gl/4NeimX");
+      MAP_ERROR(NOT_ALLOWED_TO_ACCESS_ANY_SERVICE, kSecurityError,
+                "Origin is not allowed to access any service. Tip: Add the "
+                "service UUID to 'optionalServices' in requestDevice() "
+                "options. https://goo.gl/HxfxSQ");
+      MAP_ERROR(NOT_ALLOWED_TO_ACCESS_SERVICE, kSecurityError,
+                "Origin is not allowed to access the service. Tip: Add the "
+                "service UUID to 'optionalServices' in requestDevice() "
+                "options. https://goo.gl/HxfxSQ");
+      MAP_ERROR(REQUEST_DEVICE_WITH_BLOCKLISTED_UUID, kSecurityError,
+                "requestDevice() called with a filter containing a blocklisted "
+                "UUID. https://goo.gl/4NeimX");
+      MAP_ERROR(REQUEST_DEVICE_FROM_CROSS_ORIGIN_IFRAME, kSecurityError,
+                "requestDevice() called from cross-origin iframe.");
+
+#undef MAP_ERROR
+  }
+
+  NOTREACHED();
+  return DOMException::Create(kUnknownError);
+}
+
+}  // namespace blink

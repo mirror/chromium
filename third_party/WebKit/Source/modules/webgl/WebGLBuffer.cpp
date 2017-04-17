@@ -30,39 +30,31 @@
 
 namespace blink {
 
-WebGLBuffer* WebGLBuffer::create(WebGLRenderingContextBase* ctx)
-{
-    return new WebGLBuffer(ctx);
+WebGLBuffer* WebGLBuffer::Create(WebGLRenderingContextBase* ctx) {
+  return new WebGLBuffer(ctx);
 }
 
 WebGLBuffer::WebGLBuffer(WebGLRenderingContextBase* ctx)
-    : WebGLSharedPlatform3DObject(ctx)
-    , m_initialTarget(0)
-    , m_size(0)
-{
-    GLuint buffer;
-    ctx->contextGL()->GenBuffers(1, &buffer);
-    setObject(buffer);
+    : WebGLSharedPlatform3DObject(ctx), initial_target_(0), size_(0) {
+  GLuint buffer;
+  ctx->ContextGL()->GenBuffers(1, &buffer);
+  SetObject(buffer);
 }
 
-WebGLBuffer::~WebGLBuffer()
-{
-    // See the comment in WebGLObject::detachAndDeleteObject().
-    detachAndDeleteObject();
+WebGLBuffer::~WebGLBuffer() {
+  RunDestructor();
 }
 
-void WebGLBuffer::deleteObjectImpl(gpu::gles2::GLES2Interface* gl)
-{
-    gl->DeleteBuffers(1, &m_object);
-    m_object = 0;
+void WebGLBuffer::DeleteObjectImpl(gpu::gles2::GLES2Interface* gl) {
+  gl->DeleteBuffers(1, &object_);
+  object_ = 0;
 }
 
-void WebGLBuffer::setInitialTarget(GLenum target)
-{
-    // WebGL restricts the ability to bind buffers to multiple targets based on
-    // it's initial bind point.
-    ASSERT(!m_initialTarget);
-    m_initialTarget = target;
+void WebGLBuffer::SetInitialTarget(GLenum target) {
+  // WebGL restricts the ability to bind buffers to multiple targets based on
+  // it's initial bind point.
+  ASSERT(!initial_target_);
+  initial_target_ = target;
 }
 
-} // namespace blink
+}  // namespace blink

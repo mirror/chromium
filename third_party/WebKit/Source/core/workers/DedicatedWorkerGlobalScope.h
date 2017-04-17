@@ -40,33 +40,49 @@
 namespace blink {
 
 class DedicatedWorkerThread;
+class InProcessWorkerObjectProxy;
+class ScriptState;
 class WorkerThreadStartupData;
 
 class CORE_EXPORT DedicatedWorkerGlobalScope final : public WorkerGlobalScope {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static DedicatedWorkerGlobalScope* create(DedicatedWorkerThread*, std::unique_ptr<WorkerThreadStartupData>, double timeOrigin);
-    ~DedicatedWorkerGlobalScope() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    bool isDedicatedWorkerGlobalScope() const override { return true; }
-    void countFeature(UseCounter::Feature) const override;
-    void countDeprecation(UseCounter::Feature) const override;
+ public:
+  static DedicatedWorkerGlobalScope* Create(
+      DedicatedWorkerThread*,
+      std::unique_ptr<WorkerThreadStartupData>,
+      double time_origin);
+  ~DedicatedWorkerGlobalScope() override;
 
-    // EventTarget
-    const AtomicString& interfaceName() const override;
+  bool IsDedicatedWorkerGlobalScope() const override { return true; }
 
-    void postMessage(ExecutionContext*, PassRefPtr<SerializedScriptValue>, const MessagePortArray&, ExceptionState&);
+  // EventTarget
+  const AtomicString& InterfaceName() const override;
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
+  void postMessage(ScriptState*,
+                   PassRefPtr<SerializedScriptValue>,
+                   const MessagePortArray&,
+                   ExceptionState&);
 
-    DedicatedWorkerThread* thread() const;
+  static bool CanTransferArrayBuffersAndImageBitmaps() { return true; }
 
-    DECLARE_VIRTUAL_TRACE();
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
 
-private:
-    DedicatedWorkerGlobalScope(const KURL&, const String& userAgent, DedicatedWorkerThread*, double timeOrigin, std::unique_ptr<SecurityOrigin::PrivilegeData>, WorkerClients*);
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  friend class DedicatedWorkerThreadForTest;
+
+  DedicatedWorkerGlobalScope(const KURL&,
+                             const String& user_agent,
+                             DedicatedWorkerThread*,
+                             double time_origin,
+                             std::unique_ptr<SecurityOrigin::PrivilegeData>,
+                             WorkerClients*);
+
+  InProcessWorkerObjectProxy& WorkerObjectProxy() const;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DedicatedWorkerGlobalScope_h
+#endif  // DedicatedWorkerGlobalScope_h

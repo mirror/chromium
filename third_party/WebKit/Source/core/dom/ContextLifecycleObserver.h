@@ -33,28 +33,97 @@
 
 namespace blink {
 
-class CORE_EXPORT ContextLifecycleObserver : public LifecycleObserver<ExecutionContext, ContextLifecycleObserver> {
-public:
-    ExecutionContext* getExecutionContext() const { return lifecycleContext(); }
+class LocalDOMWindow;
+class LocalFrame;
 
-    enum Type {
-        GenericType,
-        ActiveDOMObjectType,
-    };
+// ContextClient and ContextLifecycleObserver are helpers to associate an
+// object with an ExecutionContext.
+//
+// - getExecutionContext() returns null after the context is detached.
+// - frame() is a syntax sugar for getExecutionContext()->frame(). It returns
+//   null after the context is detached or the context is not a Document.
+//
+// Both can safely be used up until destruction; i.e., unsafe to
+// call upon in a destructor.
+class CORE_EXPORT ContextClient : public GarbageCollectedMixin {
+ public:
+  ExecutionContext* GetExecutionContext() const;
+  LocalFrame* GetFrame() const;
 
-    Type observerType() const { return m_observerType; }
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    explicit ContextLifecycleObserver(ExecutionContext* executionContext, Type type = GenericType)
-        : LifecycleObserver(executionContext)
-        , m_observerType(type)
-    {
-    }
+ protected:
+  explicit ContextClient(ExecutionContext*);
+  explicit ContextClient(LocalFrame*);
 
-private:
-    Type m_observerType;
+ private:
+  WeakMember<ExecutionContext> execution_context_;
 };
 
-} // namespace blink
+// ContextLifecycleObserver provides an additional contextDestroyed() hook
+// to execute cleanup code when a context is destroyed. Prefer the simpler
+// ContextClient when possible.
+class CORE_EXPORT ContextLifecycleObserver
+    : public LifecycleObserver<ExecutionContext, ContextLifecycleObserver> {
+ public:
+  virtual void ContextDestroyed(ExecutionContext*) {}
 
-#endif // ContextLifecycleObserver_h
+  ExecutionContext* GetExecutionContext() const { return LifecycleContext(); }
+  LocalFrame* GetFrame() const;
+
+  enum Type {
+    kGenericType,
+    kSuspendableObjectType,
+  };
+
+  Type ObserverType() const { return observer_type_; }
+
+ protected:
+  explicit ContextLifecycleObserver(ExecutionContext* execution_context,
+                                    Type type = kGenericType)
+      : LifecycleObserver(execution_context), observer_type_(type) {}
+
+ private:
+  Type observer_type_;
+};
+
+// DOMWindowClient is a helper to associate an object with a LocalDOMWindow.
+//
+// - domWindow() returns null after the window is detached.
+// - frame() is a syntax sugar for domWindow()->frame(). It returns
+//   null after the window is detached.
+//
+// Both can safely be used up until destruction; i.e., unsafe to
+// call upon in a destructor.
+//
+// If the object is a per-ExecutionContext thing, use ContextClient/
+// ContextLifecycleObserver. If the object is a per-DOMWindow thing, use
+// DOMWindowClient. Basically, DOMWindowClient is expected to be used (only)
+// for objects directly held by LocalDOMWindow. Other objects should use
+// ContextClient/ContextLifecycleObserver.
+//
+// There is a subtle difference between the timing when the context gets
+// detached and the timing when the window gets detached. In common cases,
+// these two happen at the same timing. The only exception is a case where
+// a frame navigates from an initial empty document to another same-origin
+// document. In this case, a Document is recreated but a DOMWindow is reused.
+// Hence, in the navigated document ContextClient::getExecutionContext()
+// returns null while DOMWindowClient::domWindow() keeps returning the window.
+class CORE_EXPORT DOMWindowClient : public GarbageCollectedMixin {
+ public:
+  LocalDOMWindow* DomWindow() const;
+  LocalFrame* GetFrame() const;
+
+  DECLARE_VIRTUAL_TRACE();
+
+ protected:
+  explicit DOMWindowClient(LocalDOMWindow*);
+  explicit DOMWindowClient(LocalFrame*);
+
+ private:
+  WeakMember<LocalDOMWindow> dom_window_;
+};
+
+}  // namespace blink
+
+#endif  // ContextLifecycleObserver_h

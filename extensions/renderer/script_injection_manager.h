@@ -26,7 +26,6 @@ class RenderFrame;
 }
 
 namespace extensions {
-class Extension;
 
 // The ScriptInjectionManager manages extensions injecting scripts into frames
 // via both content/user scripts and tabs.executeScript(). It is responsible for
@@ -63,8 +62,7 @@ class ScriptInjectionManager : public UserScriptSetManager::Observer {
   void OnInjectionFinished(ScriptInjection* injection);
 
   // UserScriptSetManager::Observer implementation.
-  void OnUserScriptsUpdated(const std::set<HostID>& changed_hosts,
-                            const std::vector<UserScript*>& scripts) override;
+  void OnUserScriptsUpdated(const std::set<HostID>& changed_hosts) override;
 
   // Notifies that an RFOHelper should be removed.
   void RemoveObserver(RFOHelper* helper);

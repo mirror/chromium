@@ -30,6 +30,13 @@ void WebStateObserverBridge::NavigationItemCommitted(
   }
 }
 
+void WebStateObserverBridge::DidFinishNavigation(
+    web::NavigationContext* navigation_context) {
+  if ([observer_ respondsToSelector:@selector(webState:didFinishNavigation:)]) {
+    [observer_ webState:web_state() didFinishNavigation:navigation_context];
+  }
+}
+
 void WebStateObserverBridge::DidStartLoading() {
   SEL selector = @selector(webStateDidStartLoading:);
   if ([observer_ respondsToSelector:selector]) {
@@ -46,27 +53,47 @@ void WebStateObserverBridge::DidStopLoading() {
 
 void WebStateObserverBridge::PageLoaded(
     web::PageLoadCompletionStatus load_completion_status) {
-  SEL selector = @selector(webStateDidLoadPage:);
-  if ([observer_ respondsToSelector:selector])
-    [observer_ webStateDidLoadPage:web_state()];
+  SEL selector = @selector(webState:didLoadPageWithSuccess:);
+  if ([observer_ respondsToSelector:selector]) {
+    BOOL success = NO;
+    switch (load_completion_status) {
+      case PageLoadCompletionStatus::SUCCESS:
+        success = YES;
+        break;
+      case PageLoadCompletionStatus::FAILURE:
+        success = NO;
+        break;
+    }
+    [observer_ webState:web_state() didLoadPageWithSuccess:success];
+  }
 }
 
-void WebStateObserverBridge::InsterstitialDismissed() {
+void WebStateObserverBridge::InterstitialDismissed() {
   SEL selector = @selector(webStateDidDismissInterstitial:);
   if ([observer_ respondsToSelector:selector])
     [observer_ webStateDidDismissInterstitial:web_state()];
 }
 
-void WebStateObserverBridge::UrlHashChanged() {
-  SEL selector = @selector(webStateDidChangeURLHash:);
+void WebStateObserverBridge::LoadProgressChanged(double progress) {
+  SEL selector = @selector(webState:didChangeLoadingProgress:);
   if ([observer_ respondsToSelector:selector])
-    [observer_ webStateDidChangeURLHash:web_state()];
+    [observer_ webState:web_state() didChangeLoadingProgress:progress];
 }
 
-void WebStateObserverBridge::HistoryStateChanged() {
-  SEL selector = @selector(webStateDidChangeHistoryState:);
+void WebStateObserverBridge::TitleWasSet() {
+  if ([observer_ respondsToSelector:@selector(webStateDidChangeTitle:)])
+    [observer_ webStateDidChangeTitle:web_state()];
+}
+
+void WebStateObserverBridge::DidChangeVisibleSecurityState() {
+  SEL selector = @selector(webStateDidChangeVisibleSecurityState:);
   if ([observer_ respondsToSelector:selector])
-    [observer_ webStateDidChangeHistoryState:web_state()];
+    [observer_ webStateDidChangeVisibleSecurityState:web_state()];
+}
+
+void WebStateObserverBridge::DidSuppressDialog() {
+  if ([observer_ respondsToSelector:@selector(webStateDidSuppressDialog:)])
+    [observer_ webStateDidSuppressDialog:web_state()];
 }
 
 void WebStateObserverBridge::DocumentSubmitted(const std::string& form_name,
@@ -85,14 +112,12 @@ void WebStateObserverBridge::FormActivityRegistered(
     const std::string& field_name,
     const std::string& type,
     const std::string& value,
-    int key_code,
     bool input_missing) {
   SEL selector = @selector(webState:
       didRegisterFormActivityWithFormNamed:
                                  fieldName:
                                       type:
                                      value:
-                                   keyCode:
                               inputMissing:);
   if ([observer_ respondsToSelector:selector]) {
     [observer_ webState:web_state()
@@ -100,7 +125,6 @@ void WebStateObserverBridge::FormActivityRegistered(
                                    fieldName:field_name
                                         type:type
                                        value:value
-                                     keyCode:key_code
                                 inputMissing:input_missing];
   }
 }
@@ -110,6 +134,11 @@ void WebStateObserverBridge::FaviconUrlUpdated(
   SEL selector = @selector(webState:didUpdateFaviconURLCandidates:);
   if ([observer_ respondsToSelector:selector])
     [observer_ webState:web_state() didUpdateFaviconURLCandidates:candidates];
+}
+
+void WebStateObserverBridge::RenderProcessGone() {
+  if ([observer_ respondsToSelector:@selector(renderProcessGoneForWebState:)])
+    [observer_ renderProcessGoneForWebState:web_state()];
 }
 
 void WebStateObserverBridge::WebStateDestroyed() {

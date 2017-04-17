@@ -12,19 +12,24 @@
 
 #include "base/command_line.h"
 #include "base/logging.h"
-#include "base/metrics/sparse_histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/trace_event/trace_event.h"
 #include "gpu/config/gpu_switches.h"
+#include "third_party/angle/src/gpu_info_util/SystemInfo.h"  // nogncheck
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/gl_version_info.h"
 #include "ui/gl/init/gl_factory.h"
+
+#if defined(USE_X11) && !defined(OS_CHROMEOS)
+#include "ui/gl/gl_visual_picker_glx.h"
+#endif
 
 namespace {
 
@@ -41,7 +46,7 @@ scoped_refptr<gl::GLSurface> InitializeGLSurface() {
 
 scoped_refptr<gl::GLContext> InitializeGLContext(gl::GLSurface* surface) {
   scoped_refptr<gl::GLContext> context(
-      gl::init::CreateGLContext(nullptr, surface, gl::PreferIntegratedGpu));
+      gl::init::CreateGLContext(nullptr, surface, gl::GLContextAttribs()));
   if (!context.get()) {
     LOG(ERROR) << "gl::init::CreateGLContext failed";
     return NULL;
@@ -95,7 +100,7 @@ int StringContainsName(
   return -1;
 }
 
-}  // namespace anonymous
+}  // namespace
 
 namespace gpu {
 
@@ -157,7 +162,7 @@ CollectInfoResult CollectGraphicsInfoGL(GPUInfo* gpu_info) {
   UMA_HISTOGRAM_SPARSE_SLOWLY("GPU.MaxMSAASampleCount", max_samples);
 
   gl::GLWindowSystemBindingInfo window_system_binding_info;
-  if (GetGLWindowSystemBindingInfo(&window_system_binding_info)) {
+  if (gl::init::GetGLWindowSystemBindingInfo(&window_system_binding_info)) {
     gpu_info->gl_ws_vendor = window_system_binding_info.vendor;
     gpu_info->gl_ws_version = window_system_binding_info.version;
     gpu_info->gl_ws_extensions = window_system_binding_info.extensions;
@@ -172,6 +177,14 @@ CollectInfoResult CollectGraphicsInfoGL(GPUInfo* gpu_info) {
     glGetIntegerv(GL_RESET_NOTIFICATION_STRATEGY_ARB,
         reinterpret_cast<GLint*>(&gpu_info->gl_reset_notification_strategy));
   }
+
+#if defined(USE_X11) && !defined(OS_CHROMEOS)
+  if (gl::GetGLImplementation() == gl::kGLImplementationDesktopGL) {
+    gl::GLVisualPickerGLX* visual_picker = gl::GLVisualPickerGLX::GetInstance();
+    gpu_info->system_visual = visual_picker->system_visual().visualid;
+    gpu_info->rgba_visual = visual_picker->rgba_visual().visualid;
+  }
+#endif
 
   // TODO(kbr): remove once the destruction of a current context automatically
   // clears the current context.
@@ -213,10 +226,12 @@ void MergeGPUInfoGL(GPUInfo* basic_gpu_info,
   if (!context_gpu_info.driver_version.empty())
     basic_gpu_info->driver_version = context_gpu_info.driver_version;
 
-  basic_gpu_info->can_lose_context = context_gpu_info.can_lose_context;
   basic_gpu_info->sandboxed = context_gpu_info.sandboxed;
   basic_gpu_info->direct_rendering = context_gpu_info.direct_rendering;
   basic_gpu_info->in_process_gpu = context_gpu_info.in_process_gpu;
+  basic_gpu_info->passthrough_cmd_decoder =
+      context_gpu_info.passthrough_cmd_decoder;
+  basic_gpu_info->supports_overlays = context_gpu_info.supports_overlays;
   basic_gpu_info->context_info_state = context_gpu_info.context_info_state;
   basic_gpu_info->initialization_time = context_gpu_info.initialization_time;
   basic_gpu_info->video_decode_accelerator_capabilities =
@@ -225,6 +240,11 @@ void MergeGPUInfoGL(GPUInfo* basic_gpu_info,
       context_gpu_info.video_encode_accelerator_supported_profiles;
   basic_gpu_info->jpeg_decode_accelerator_supported =
       context_gpu_info.jpeg_decode_accelerator_supported;
+
+#if defined(USE_X11) && !defined(OS_CHROMEOS)
+  basic_gpu_info->system_visual = context_gpu_info.system_visual;
+  basic_gpu_info->rgba_visual = context_gpu_info.rgba_visual;
+#endif
 }
 
 void IdentifyActiveGPU(GPUInfo* gpu_info) {
@@ -286,5 +306,43 @@ void IdentifyActiveGPU(GPUInfo* gpu_info) {
   }
 }
 
-}  // namespace gpu
+void FillGPUInfoFromSystemInfo(GPUInfo* gpu_info,
+                               angle::SystemInfo* system_info) {
+  DCHECK(system_info->primaryGPUIndex >= 0);
 
+  angle::GPUDeviceInfo* primary =
+      &system_info->gpus[system_info->primaryGPUIndex];
+
+  gpu_info->gpu.vendor_id = primary->vendorId;
+  gpu_info->gpu.device_id = primary->deviceId;
+  if (system_info->primaryGPUIndex == system_info->activeGPUIndex) {
+    gpu_info->gpu.active = true;
+  }
+
+  gpu_info->driver_vendor = std::move(primary->driverVendor);
+  gpu_info->driver_version = std::move(primary->driverVersion);
+  gpu_info->driver_date = std::move(primary->driverDate);
+
+  for (size_t i = 0; i < system_info->gpus.size(); i++) {
+    if (static_cast<int>(i) == system_info->primaryGPUIndex) {
+      continue;
+    }
+
+    GPUInfo::GPUDevice device;
+    device.vendor_id = system_info->gpus[i].vendorId;
+    device.device_id = system_info->gpus[i].deviceId;
+    if (static_cast<int>(i) == system_info->activeGPUIndex) {
+      device.active = true;
+    }
+
+    gpu_info->secondary_gpus.push_back(device);
+  }
+
+  gpu_info->optimus = system_info->isOptimus;
+  gpu_info->amd_switchable = system_info->isAMDSwitchable;
+
+  gpu_info->machine_model_name = system_info->machineModelName;
+  gpu_info->machine_model_version = system_info->machineModelVersion;
+}
+
+}  // namespace gpu

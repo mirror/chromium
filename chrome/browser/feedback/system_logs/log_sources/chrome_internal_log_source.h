@@ -23,6 +23,7 @@ class ChromeInternalLogSource : public SystemLogsSource {
  private:
   void PopulateSyncLogs(SystemLogsResponse* response);
   void PopulateExtensionInfoLogs(SystemLogsResponse* response);
+  void PopulatePowerApiLogs(SystemLogsResponse* response);
   void PopulateDataReductionProxyLogs(SystemLogsResponse* response);
 
 #if defined(OS_CHROMEOS)
@@ -31,6 +32,8 @@ class ChromeInternalLogSource : public SystemLogsSource {
 
 #if defined(OS_WIN)
   void PopulateUsbKeyboardDetected(SystemLogsResponse* response);
+  void PopulateEnrolledToDomain(SystemLogsResponse* response);
+  void PopulateInstallerBrandCode(SystemLogsResponse* response);
 #endif
 
   DISALLOW_COPY_AND_ASSIGN(ChromeInternalLogSource);

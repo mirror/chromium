@@ -14,22 +14,24 @@ class USBConnectionEventInit;
 class USBDevice;
 
 class USBConnectionEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static USBConnectionEvent* create(const AtomicString& type, const USBConnectionEventInit&);
-    static USBConnectionEvent* create(const AtomicString& type, USBDevice*);
+  DEFINE_WRAPPERTYPEINFO();
 
-    USBConnectionEvent(const AtomicString& type, const USBConnectionEventInit&);
-    USBConnectionEvent(const AtomicString& type, USBDevice*);
+ public:
+  static USBConnectionEvent* Create(const AtomicString& type,
+                                    const USBConnectionEventInit&);
+  static USBConnectionEvent* Create(const AtomicString& type, USBDevice*);
 
-    USBDevice* device() const { return m_device; }
+  USBConnectionEvent(const AtomicString& type, const USBConnectionEventInit&);
+  USBConnectionEvent(const AtomicString& type, USBDevice*);
 
-    DECLARE_VIRTUAL_TRACE();
+  USBDevice* device() const { return device_; }
 
-private:
-    Member<USBDevice> m_device;
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  Member<USBDevice> device_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // USBConnectionEvent_h
+#endif  // USBConnectionEvent_h

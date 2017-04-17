@@ -5,30 +5,57 @@
 #ifndef ResizeViewportAnchor_h
 #define ResizeViewportAnchor_h
 
-#include "platform/geometry/DoublePoint.h"
+#include "core/page/Page.h"
 #include "platform/heap/Handle.h"
-#include "web/ViewportAnchor.h"
+#include "platform/scroll/ScrollTypes.h"
 
 namespace blink {
 
 class FrameView;
-class VisualViewport;
 
-// The resize anchor saves the current scroll offset of the visual viewport and
-// restores to that scroll offset so that document location appears exactly
-// unchanged to the user.
-class ResizeViewportAnchor : public ViewportAnchor {
+// This class scrolls the viewports to compensate for bounds clamping caused by
+// viewport size changes.
+//
+// It is needed when the layout viewport grows (causing its own scroll position
+// to be clamped) and also when it shrinks (causing the visual viewport's scroll
+// position to be clamped).
+class ResizeViewportAnchor final
+    : public GarbageCollected<ResizeViewportAnchor> {
+  WTF_MAKE_NONCOPYABLE(ResizeViewportAnchor);
+
+ public:
+  ResizeViewportAnchor(Page& page) : page_(page), scope_count_(0) {}
+
+  class ResizeScope {
     STACK_ALLOCATED();
-public:
-    ResizeViewportAnchor(FrameView& rootFrameView, VisualViewport&);
-    ~ResizeViewportAnchor();
 
-private:
-    // Inner viewport origin in the reference frame of the root document, in CSS
-    // pixels.
-    DoublePoint m_visualViewportInDocument;
+   public:
+    explicit ResizeScope(ResizeViewportAnchor& anchor) : anchor_(anchor) {
+      anchor_->BeginScope();
+    }
+    ~ResizeScope() { anchor_->EndScope(); }
+
+   private:
+    Member<ResizeViewportAnchor> anchor_;
+  };
+
+  void ResizeFrameView(IntSize);
+
+  DEFINE_INLINE_TRACE() { visitor->Trace(page_); }
+
+ private:
+  void BeginScope() { scope_count_++; }
+  void EndScope();
+  FrameView* RootFrameView();
+
+  // The amount of resize-induced clamping drift accumulated during the
+  // ResizeScope.  Note that this should NOT include other kinds of scrolling
+  // that may occur during layout, such as from ScrollAnchor.
+  ScrollOffset drift_;
+  Member<Page> page_;
+  int scope_count_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ResizeViewportAnchor_h
+#endif  // ResizeViewportAnchor_h

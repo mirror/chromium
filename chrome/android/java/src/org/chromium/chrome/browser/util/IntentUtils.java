@@ -4,13 +4,17 @@
 
 package org.chromium.chrome.browser.util;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.os.BadParcelableException;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.TransactionTooLargeException;
+import android.support.annotation.Nullable;
 import android.support.v4.app.BundleCompat;
 
 import org.chromium.base.Log;
@@ -37,6 +41,18 @@ public class IntentUtils {
             // Catches un-parceling exceptions.
             Log.e(TAG, "hasExtra failed on intent " + intent);
             return false;
+        }
+    }
+
+    /**
+     * Just like {@link Intent#removeExtra(String)} but doesn't throw exceptions.
+     */
+    public static void safeRemoveExtra(Intent intent, String name) {
+        try {
+            intent.removeExtra(name);
+        } catch (Throwable t) {
+            // Catches un-parceling exceptions.
+            Log.e(TAG, "removeExtra failed on intent " + intent);
         }
     }
 
@@ -211,6 +227,18 @@ public class IntentUtils {
     }
 
     /**
+     * Just like {@link Intent#getParcelableArrayExtra(String)} but doesn't throw exceptions.
+     */
+    public static Parcelable[] safeGetParcelableArrayExtra(Intent intent, String name) {
+        try {
+            return intent.getParcelableArrayExtra(name);
+        } catch (Throwable t) {
+            Log.e(TAG, "getParcelableArrayExtra failed on intent " + intent);
+            return null;
+        }
+    }
+
+    /**
      * Just like {@link Intent#getStringArrayListExtra(String)} but doesn't throw exceptions.
      */
     public static ArrayList<String> safeGetStringArrayListExtra(Intent intent, String name) {
@@ -285,6 +313,28 @@ public class IntentUtils {
         intent.putExtras(bundle);
     }
 
+    /** See {@link #safeStartActivity(Context, Intent, Bundle)}. */
+    public static boolean safeStartActivity(Context context, Intent intent) {
+        return safeStartActivity(context, intent, null);
+    }
+
+    /**
+     * Catches any failures to start an Activity.
+     * @param context Context to use when starting the Activity.
+     * @param intent  Intent to fire.
+     * @param bundle  Bundle of launch options.
+     * @return Whether or not Android accepted the Intent.
+     */
+    public static boolean safeStartActivity(
+            Context context, Intent intent, @Nullable Bundle bundle) {
+        try {
+            context.startActivity(intent, bundle);
+            return true;
+        } catch (ActivityNotFoundException e) {
+            return false;
+        }
+    }
+
     /**
      * Returns how large the Intent will be in Parcel form, which is helpful for gauging whether
      * Android will deliver the Intent instead of throwing a TransactionTooLargeException.
@@ -307,5 +357,37 @@ public class IntentUtils {
      */
     public static boolean isIntentTooLarge(Intent intent) {
         return getParceledIntentSize(intent) > MAX_INTENT_SIZE_THRESHOLD;
+    }
+
+    /**
+     * Given an exception, check whether it wrapped a {@link TransactionTooLargeException}.  If it
+     * does, then log the underlying error.  If not, throw the original exception again.
+     *
+     * @param e      The caught RuntimeException.
+     * @param intent The intent that triggered the RuntimeException to be thrown.
+     */
+    public static void logTransactionTooLargeOrRethrow(RuntimeException e, Intent intent) {
+        // See http://crbug.com/369574.
+        if (e.getCause() instanceof TransactionTooLargeException) {
+            Log.e(TAG, "Could not resolve Activity for intent " + intent.toString(), e);
+        } else {
+            throw e;
+        }
+    }
+
+    /**
+     * Sanitizes an intent. In case the intent cannot be unparcelled, all extras will be removed to
+     * make it safe to use.
+     * @return A safe to use version of this intent.
+     */
+    public static Intent sanitizeIntent(final Intent incomingIntent) {
+        if (incomingIntent == null) return null;
+        try {
+            incomingIntent.getBooleanExtra("TriggerUnparcel", false);
+            return incomingIntent;
+        } catch (BadParcelableException e) {
+            Log.e(TAG, "Invalid incoming intent.", e);
+            return incomingIntent.replaceExtras((Bundle) null);
+        }
     }
 }

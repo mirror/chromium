@@ -11,9 +11,11 @@
 #include "device/bluetooth/test/bluetooth_test.h"
 
 #if __OBJC__
+@class MockCBDescriptor;
 @class MockCBCharacteristic;
 @class MockCBPeripheral;
 #else   // __OBJC__
+class MockCBDescriptor;
 class MockCBCharacteristic;
 class MockCBPeripheral;
 #endif  // __OBJC__
@@ -39,7 +41,10 @@ class BluetoothTestMac : public BluetoothTestBase {
   void InitWithDefaultAdapter() override;
   void InitWithoutDefaultAdapter() override;
   void InitWithFakeAdapter() override;
+  void ResetEventCounts() override;
   BluetoothDevice* SimulateLowEnergyDevice(int device_ordinal) override;
+  void SimulateConnectedLowEnergyDevice(
+      ConnectedDeviceType device_ordinal) override;
   void SimulateGattConnection(BluetoothDevice* device) override;
   void SimulateGattConnectionError(
       BluetoothDevice* device,
@@ -48,6 +53,7 @@ class BluetoothTestMac : public BluetoothTestBase {
   void SimulateGattServicesDiscovered(
       BluetoothDevice* device,
       const std::vector<std::string>& uuids) override;
+  void SimulateGattServicesChanged(BluetoothDevice* device) override;
   void SimulateGattServiceRemoved(BluetoothRemoteGattService* service) override;
   void SimulateGattCharacteristic(BluetoothRemoteGattService* service,
                                   const std::string& uuid,
@@ -63,9 +69,16 @@ class BluetoothTestMac : public BluetoothTestBase {
   void SimulateGattCharacteristicWriteError(
       BluetoothRemoteGattCharacteristic* characteristic,
       BluetoothRemoteGattService::GattErrorCode error_code) override;
+  void SimulateGattDescriptor(BluetoothRemoteGattCharacteristic* characteristic,
+                              const std::string& uuid) override;
   void SimulateGattNotifySessionStarted(
       BluetoothRemoteGattCharacteristic* characteristic) override;
   void SimulateGattNotifySessionStartError(
+      BluetoothRemoteGattCharacteristic* characteristic,
+      BluetoothRemoteGattService::GattErrorCode error_code) override;
+  void SimulateGattNotifySessionStopped(
+      BluetoothRemoteGattCharacteristic* characteristic) override;
+  void SimulateGattNotifySessionStopError(
       BluetoothRemoteGattCharacteristic* characteristic,
       BluetoothRemoteGattService::GattErrorCode error_code) override;
   void SimulateGattCharacteristicChanged(
@@ -74,6 +87,39 @@ class BluetoothTestMac : public BluetoothTestBase {
   void SimulateGattCharacteristicRemoved(
       BluetoothRemoteGattService* service,
       BluetoothRemoteGattCharacteristic* characteristic) override;
+  void SimulateGattDescriptorRead(BluetoothRemoteGattDescriptor* descriptor,
+                                  const std::vector<uint8_t>& value) override;
+  void SimulateGattDescriptorReadError(
+      BluetoothRemoteGattDescriptor* descriptor,
+      BluetoothRemoteGattService::GattErrorCode error_code) override;
+  void SimulateGattDescriptorWrite(
+      BluetoothRemoteGattDescriptor* descriptor) override;
+  void SimulateGattDescriptorWriteError(
+      BluetoothRemoteGattDescriptor* descriptor,
+      BluetoothRemoteGattService::GattErrorCode error_code) override;
+  void ExpectedChangeNotifyValueAttempts(int attempts) override;
+  void ExpectedNotifyValue(NotifyValueState expected_value_state) override;
+
+  // macOS is the only platform for which we need to discover each set of
+  // attributes individually so we need a method to simulate discovering each
+  // set of attributes.
+  void SimulateDidDiscoverServices(BluetoothDevice* device,
+                                   const std::vector<std::string>& uuids);
+  // CoreBluetooth can return NSData when reading remote gatt descriptors.
+  // This methods simulate receiving NSData from CoreBluetooth.
+  void SimulateGattDescriptorReadNSData(
+      BluetoothRemoteGattDescriptor* descriptor,
+      const std::vector<uint8_t>& value);
+  // CoreBluetooth can return NSString when reading remote gatt descriptors.
+  // This methods simulate receiving NSString from CoreBluetooth.
+  void SimulateGattDescriptorReadNSString(
+      BluetoothRemoteGattDescriptor* descriptor,
+      const std::string& value);
+  // CoreBluetooth can return NSString when reading remote gatt descriptors.
+  // This methods simulate receiving NSString from CoreBluetooth.
+  void SimulateGattDescriptorReadNSNumber(
+      BluetoothRemoteGattDescriptor* descriptor,
+      short value);
 
   // Callback for the bluetooth central manager mock.
   void OnFakeBluetoothDeviceConnectGattCalled();
@@ -81,25 +127,51 @@ class BluetoothTestMac : public BluetoothTestBase {
 
   // Callback for the bluetooth peripheral mock.
   void OnFakeBluetoothServiceDiscovery();
+  void OnFakeBluetoothCharacteristicDiscovery();
   void OnFakeBluetoothCharacteristicReadValue();
   void OnFakeBluetoothCharacteristicWriteValue(std::vector<uint8_t> value);
-  void OnFakeBluetoothGattSetCharacteristicNotification();
+  void OnFakeBluetoothGattSetCharacteristicNotification(bool notify_value);
+  void OnFakeBluetoothDescriptorReadValue();
+  void OnFakeBluetoothDescriptorWriteValue(std::vector<uint8_t> value);
+
+  // Returns the service UUIDs used to retrieve connected peripherals.
+  BluetoothDevice::UUIDSet RetrieveConnectedPeripheralServiceUUIDs();
+  // Reset RetrieveConnectedPeripheralServiceUUIDs set.
+  void ResetRetrieveConnectedPeripheralServiceUUIDs();
 
  protected:
   class ScopedMockCentralManager;
 
+  // Returns MockCBPeripheral from BluetoothDevice.
+  MockCBPeripheral* GetMockCBPeripheral(BluetoothDevice* device) const;
   // Returns MockCBPeripheral from BluetoothRemoteGattService.
   MockCBPeripheral* GetMockCBPeripheral(
       BluetoothRemoteGattService* service) const;
-  // Returns MockCBPeripheral from BluetoothRemoteGattService.
+  // Returns MockCBPeripheral from BluetoothRemoteGattCharacteristic.
+  MockCBPeripheral* GetMockCBPeripheral(
+      BluetoothRemoteGattCharacteristic* characteristic) const;
+  // Returns MockCBPeripheral from BluetoothRemoteGattDescriptor.
+  MockCBPeripheral* GetMockCBPeripheral(
+      BluetoothRemoteGattDescriptor* descriptor) const;
+  // Returns MockCBCharacteristic from BluetoothRemoteGattCharacteristic.
   MockCBCharacteristic* GetCBMockCharacteristic(
       BluetoothRemoteGattCharacteristic* characteristic) const;
+  // Returns MockCBDescriptor from BluetoothRemoteGattDescriptor.
+  MockCBDescriptor* GetCBMockDescriptor(
+      BluetoothRemoteGattDescriptor* descriptor) const;
+  // Adds services in MockCBPeripheral.
+  void AddServicesToDevice(BluetoothDevice* device,
+                           const std::vector<std::string>& uuids);
 
   // Utility function for finding CBUUIDs with relatively nice SHA256 hashes.
   std::string FindCBUUIDForHashTarget();
 
   BluetoothAdapterMac* adapter_mac_ = nullptr;
   std::unique_ptr<ScopedMockCentralManager> mock_central_manager_;
+
+  // Value set by -[CBPeripheral setNotifyValue:forCharacteristic:] call.
+  bool last_notify_value_ = false;
+  int gatt_characteristic_discovery_attempts_ = 0;
 };
 
 // Defines common test fixture name. Use TEST_F(BluetoothTest, YourTestName).

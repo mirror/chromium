@@ -10,16 +10,17 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #include "modules/webaudio/MediaStreamAudioDestinationNode.h"
@@ -27,11 +28,12 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
 #include "modules/webaudio/AudioNodeInput.h"
+#include "modules/webaudio/AudioNodeOptions.h"
 #include "modules/webaudio/BaseAudioContext.h"
 #include "platform/UUID.h"
 #include "platform/mediastream/MediaStreamCenter.h"
+#include "platform/wtf/Locker.h"
 #include "public/platform/WebRTCPeerConnectionHandler.h"
-#include "wtf/Locker.h"
 
 namespace blink {
 
@@ -39,105 +41,150 @@ namespace blink {
 // block here to avoid anything can cause the crash.
 static const unsigned long kMaxChannelCount = 8;
 
-MediaStreamAudioDestinationHandler::MediaStreamAudioDestinationHandler(AudioNode& node, size_t numberOfChannels)
-    : AudioBasicInspectorHandler(NodeTypeMediaStreamAudioDestination, node, node.context()->sampleRate(), numberOfChannels)
-    , m_mixBus(AudioBus::create(numberOfChannels, ProcessingSizeInFrames))
-{
-    m_source = MediaStreamSource::create("WebAudio-" + createCanonicalUUIDString(), MediaStreamSource::TypeAudio, "MediaStreamAudioDestinationNode", false, MediaStreamSource::ReadyStateLive, true);
-    MediaStreamSourceVector audioSources;
-    audioSources.append(m_source.get());
-    MediaStreamSourceVector videoSources;
-    m_stream = MediaStream::create(node.context()->getExecutionContext(), MediaStreamDescriptor::create(audioSources, videoSources));
-    MediaStreamCenter::instance().didCreateMediaStreamAndTracks(m_stream->descriptor());
+MediaStreamAudioDestinationHandler::MediaStreamAudioDestinationHandler(
+    AudioNode& node,
+    size_t number_of_channels)
+    : AudioBasicInspectorHandler(kNodeTypeMediaStreamAudioDestination,
+                                 node,
+                                 node.context()->sampleRate(),
+                                 number_of_channels),
+      mix_bus_(AudioBus::Create(number_of_channels,
+                                AudioUtilities::kRenderQuantumFrames)) {
+  source_ = MediaStreamSource::Create("WebAudio-" + CreateCanonicalUUIDString(),
+                                      MediaStreamSource::kTypeAudio,
+                                      "MediaStreamAudioDestinationNode", false,
+                                      MediaStreamSource::kReadyStateLive, true);
+  MediaStreamSourceVector audio_sources;
+  audio_sources.push_back(source_.Get());
+  MediaStreamSourceVector video_sources;
+  stream_ = MediaStream::Create(
+      node.context()->GetExecutionContext(),
+      MediaStreamDescriptor::Create(audio_sources, video_sources));
+  MediaStreamCenter::Instance().DidCreateMediaStreamAndTracks(
+      stream_->Descriptor());
 
-    m_source->setAudioFormat(numberOfChannels, node.context()->sampleRate());
+  source_->SetAudioFormat(number_of_channels, node.context()->sampleRate());
 
-    initialize();
+  Initialize();
 }
 
-PassRefPtr<MediaStreamAudioDestinationHandler> MediaStreamAudioDestinationHandler::create(AudioNode& node, size_t numberOfChannels)
-{
-    return adoptRef(new MediaStreamAudioDestinationHandler(node, numberOfChannels));
+PassRefPtr<MediaStreamAudioDestinationHandler>
+MediaStreamAudioDestinationHandler::Create(AudioNode& node,
+                                           size_t number_of_channels) {
+  return AdoptRef(
+      new MediaStreamAudioDestinationHandler(node, number_of_channels));
 }
 
-MediaStreamAudioDestinationHandler::~MediaStreamAudioDestinationHandler()
-{
-    uninitialize();
+MediaStreamAudioDestinationHandler::~MediaStreamAudioDestinationHandler() {
+  Uninitialize();
 }
 
-void MediaStreamAudioDestinationHandler::process(size_t numberOfFrames)
-{
-    // Conform the input bus into the internal mix bus, which represents
-    // MediaStreamDestination's channel count.
-    m_mixBus->copyFrom(*input(0).bus());
+void MediaStreamAudioDestinationHandler::Process(size_t number_of_frames) {
+  // Conform the input bus into the internal mix bus, which represents
+  // MediaStreamDestination's channel count.
 
-    m_source->consumeAudio(m_mixBus.get(), numberOfFrames);
-}
+  // Synchronize with possible dynamic changes to the channel count.
+  MutexTryLocker try_locker(process_lock_);
 
-void MediaStreamAudioDestinationHandler::setChannelCount(unsigned long channelCount, ExceptionState& exceptionState)
-{
-    ASSERT(isMainThread());
-
-    // Currently the maximum channel count supported for this node is 8,
-    // which is constrained by m_source (WebAudioCapturereSource). Although
-    // it has its own safety check for the excessive channels, throwing an
-    // exception here is useful to developers.
-    if (channelCount > maxChannelCount()) {
-        exceptionState.throwDOMException(
-            IndexSizeError,
-            ExceptionMessages::indexOutsideRange<unsigned>("channel count",
-                channelCount,
-                1,
-                ExceptionMessages::InclusiveBound,
-                maxChannelCount(),
-                ExceptionMessages::InclusiveBound));
-        return;
+  // If we can get the lock, we can process normally by updating the
+  // mix bus to a new channel count, if needed.  If not, just use the
+  // old mix bus to do the mixing; we'll update the bus next time
+  // around.
+  if (try_locker.Locked()) {
+    unsigned count = ChannelCount();
+    if (count != mix_bus_->NumberOfChannels()) {
+      mix_bus_ = AudioBus::Create(count, AudioUtilities::kRenderQuantumFrames);
+      // setAudioFormat has an internal lock.  This can cause audio to
+      // glitch.  This is outside of our control.
+      source_->SetAudioFormat(count, Context()->sampleRate());
     }
+  }
 
-    unsigned long oldChannelCount = this->channelCount();
-    AudioHandler::setChannelCount(channelCount, exceptionState);
+  mix_bus_->CopyFrom(*Input(0).Bus());
 
-    // Update the pipeline with the new channel count only if absolutely
-    // necessary. This process requires the graph lock.
-    //
-    // TODO(hongchan): There might be a data race here since both threads
-    // have access to m_mixBus.
-    if (!exceptionState.hadException() && this->channelCount() != oldChannelCount && isInitialized()) {
-        BaseAudioContext::AutoLocker locker(context());
-        m_mixBus = AudioBus::create(channelCount, ProcessingSizeInFrames);
-        m_source->setAudioFormat(channelCount, context()->sampleRate());
-    }
+  // consumeAudio has an internal lock (also used by setAudioFormat).
+  // This can cause audio to glitch.  This is outside of our control.
+  source_->ConsumeAudio(mix_bus_.Get(), number_of_frames);
 }
 
-unsigned long MediaStreamAudioDestinationHandler::maxChannelCount() const
-{
-    return kMaxChannelCount;
+void MediaStreamAudioDestinationHandler::SetChannelCount(
+    unsigned long channel_count,
+    ExceptionState& exception_state) {
+  DCHECK(IsMainThread());
+
+  // Currently the maximum channel count supported for this node is 8,
+  // which is constrained by m_source (WebAudioCapturereSource). Although
+  // it has its own safety check for the excessive channels, throwing an
+  // exception here is useful to developers.
+  if (channel_count < 1 || channel_count > MaxChannelCount()) {
+    exception_state.ThrowDOMException(
+        kNotSupportedError,
+        ExceptionMessages::IndexOutsideRange<unsigned>(
+            "channel count", channel_count, 1,
+            ExceptionMessages::kInclusiveBound, MaxChannelCount(),
+            ExceptionMessages::kInclusiveBound));
+    return;
+  }
+
+  // Synchronize changes in the channel count with process() which
+  // needs to update m_mixBus.
+  MutexLocker locker(process_lock_);
+
+  AudioHandler::SetChannelCount(channel_count, exception_state);
+}
+
+unsigned long MediaStreamAudioDestinationHandler::MaxChannelCount() const {
+  return kMaxChannelCount;
 }
 
 // ----------------------------------------------------------------
 
-MediaStreamAudioDestinationNode::MediaStreamAudioDestinationNode(BaseAudioContext& context, size_t numberOfChannels)
-    : AudioBasicInspectorNode(context)
-{
-    setHandler(MediaStreamAudioDestinationHandler::create(*this, numberOfChannels));
+MediaStreamAudioDestinationNode::MediaStreamAudioDestinationNode(
+    BaseAudioContext& context,
+    size_t number_of_channels)
+    : AudioBasicInspectorNode(context) {
+  SetHandler(
+      MediaStreamAudioDestinationHandler::Create(*this, number_of_channels));
 }
 
-MediaStreamAudioDestinationNode* MediaStreamAudioDestinationNode::create(BaseAudioContext& context, size_t numberOfChannels, ExceptionState& exceptionState)
-{
-    DCHECK(isMainThread());
+MediaStreamAudioDestinationNode* MediaStreamAudioDestinationNode::Create(
+    BaseAudioContext& context,
+    size_t number_of_channels,
+    ExceptionState& exception_state) {
+  DCHECK(IsMainThread());
 
-    if (context.isContextClosed()) {
-        context.throwExceptionForClosedState(exceptionState);
-        return nullptr;
-    }
+  if (context.IsContextClosed()) {
+    context.ThrowExceptionForClosedState(exception_state);
+    return nullptr;
+  }
 
-    return new MediaStreamAudioDestinationNode(context, numberOfChannels);
+  return new MediaStreamAudioDestinationNode(context, number_of_channels);
 }
 
-MediaStream* MediaStreamAudioDestinationNode::stream() const
-{
-    return static_cast<MediaStreamAudioDestinationHandler&>(handler()).stream();
+MediaStreamAudioDestinationNode* MediaStreamAudioDestinationNode::Create(
+    BaseAudioContext* context,
+    const AudioNodeOptions& options,
+    ExceptionState& exception_state) {
+  DCHECK(IsMainThread());
+
+  // Default to stereo; |options| will update it approriately if needed.
+  MediaStreamAudioDestinationNode* node =
+      new MediaStreamAudioDestinationNode(*context, 2);
+
+  // Need to handle channelCount here ourselves because the upper
+  // limit is different from the normal AudioNode::setChannelCount
+  // limit of 32.  Error messages will sometimes show the wrong
+  // limits.
+  if (options.hasChannelCount())
+    node->setChannelCount(options.channelCount(), exception_state);
+
+  node->HandleChannelOptions(options, exception_state);
+
+  return node;
 }
 
-} // namespace blink
+MediaStream* MediaStreamAudioDestinationNode::stream() const {
+  return static_cast<MediaStreamAudioDestinationHandler&>(Handler()).Stream();
+}
 
+}  // namespace blink

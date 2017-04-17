@@ -23,29 +23,30 @@
 namespace blink {
 
 enum AnimatedPropertyType {
-    AnimatedAngle,
-    AnimatedBoolean,
-    AnimatedColor,
-    AnimatedEnumeration,
-    AnimatedInteger,
-    AnimatedIntegerOptionalInteger,
-    AnimatedLength,
-    AnimatedLengthList,
-    AnimatedNumber,
-    AnimatedNumberList,
-    AnimatedNumberOptionalNumber,
-    AnimatedPath,
-    AnimatedPoint,
-    AnimatedPoints,
-    AnimatedPreserveAspectRatio,
-    AnimatedRect,
-    AnimatedString,
-    AnimatedStringList,
-    AnimatedTransform,
-    AnimatedTransformList,
-    AnimatedUnknown
+  kAnimatedUnknown = 0,
+  kAnimatedAngle,
+  kAnimatedBoolean,
+  kAnimatedColor,
+  kAnimatedEnumeration,
+  kAnimatedInteger,
+  kAnimatedIntegerOptionalInteger,
+  kAnimatedLength,
+  kAnimatedLengthList,
+  kAnimatedNumber,
+  kAnimatedNumberList,
+  kAnimatedNumberOptionalNumber,
+  kAnimatedPath,
+  kAnimatedPoint,
+  kAnimatedPoints,
+  kAnimatedPreserveAspectRatio,
+  kAnimatedRect,
+  kAnimatedString,
+  kAnimatedStringList,
+  kAnimatedTransform,
+  kAnimatedTransformList,
+  kNumberOfAnimatedPropertyTypes
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGPropertyInfo_h
+#endif  // SVGPropertyInfo_h

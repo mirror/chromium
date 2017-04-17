@@ -28,50 +28,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 #include "core/css/CSSPropertySourceData.h"
 
-#include "wtf/StaticConstructors.h"
-#include "wtf/text/StringBuilder.h"
-#include "wtf/text/StringHash.h"
+#include "platform/wtf/StaticConstructors.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/StringHash.h"
 
 namespace blink {
 
-SourceRange::SourceRange()
-    : start(0)
-    , end(0)
-{
-}
+SourceRange::SourceRange() : start(0), end(0) {}
 
 SourceRange::SourceRange(unsigned start, unsigned end)
-    : start(start)
-    , end(end)
-{
+    : start(start), end(end) {}
+
+unsigned SourceRange::length() const {
+  return end - start;
 }
 
-unsigned SourceRange::length() const
-{
-    return end - start;
-}
-
-CSSPropertySourceData::CSSPropertySourceData(const String& name, const String& value, bool important, bool disabled, bool parsedOk, const SourceRange& range)
-    : name(name)
-    , value(value)
-    , important(important)
-    , disabled(disabled)
-    , parsedOk(parsedOk)
-    , range(range)
-{
-}
+CSSPropertySourceData::CSSPropertySourceData(const String& name,
+                                             const String& value,
+                                             bool important,
+                                             bool disabled,
+                                             bool parsed_ok,
+                                             const SourceRange& range)
+    : name(name),
+      value(value),
+      important(important),
+      disabled(disabled),
+      parsed_ok(parsed_ok),
+      range(range) {}
 
 CSSPropertySourceData::CSSPropertySourceData(const CSSPropertySourceData& other)
-    : name(other.name)
-    , value(other.value)
-    , important(other.important)
-    , disabled(other.disabled)
-    , parsedOk(other.parsedOk)
-    , range(other.range)
-{
-}
+    : name(other.name),
+      value(other.value),
+      important(other.important),
+      disabled(other.disabled),
+      parsed_ok(other.parsed_ok),
+      range(other.range) {}
 
-} // namespace blink
+}  // namespace blink

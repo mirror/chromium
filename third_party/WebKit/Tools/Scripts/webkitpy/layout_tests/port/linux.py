@@ -39,11 +39,10 @@ _log = logging.getLogger(__name__)
 class LinuxPort(base.Port):
     port_name = 'linux'
 
-    SUPPORTED_VERSIONS = ('precise', 'trusty')
+    SUPPORTED_VERSIONS = ('trusty',)
 
     FALLBACK_PATHS = {}
     FALLBACK_PATHS['trusty'] = ['linux'] + win.WinPort.latest_platform_fallback_path()
-    FALLBACK_PATHS['precise'] = ['linux-precise'] + FALLBACK_PATHS['trusty']
 
     DEFAULT_BUILD_DIRECTORIES = ('out',)
 
@@ -60,7 +59,7 @@ class LinuxPort(base.Port):
     def __init__(self, host, port_name, **kwargs):
         super(LinuxPort, self).__init__(host, port_name, **kwargs)
         self._version = port_name[port_name.index('linux-') + len('linux-'):]
-        self._architecture = "x86_64"
+        self._architecture = 'x86_64'
         assert self._version in self.SUPPORTED_VERSIONS
 
         if not self.get_option('disable_breakpad'):
@@ -97,10 +96,10 @@ class LinuxPort(base.Port):
     def path_to_apache(self):
         # The Apache binary path can vary depending on OS and distribution
         # See http://wiki.apache.org/httpd/DistrosDefaultLayout
-        for path in ["/usr/sbin/httpd", "/usr/sbin/apache2"]:
+        for path in ['/usr/sbin/httpd', '/usr/sbin/apache2']:
             if self._filesystem.exists(path):
                 return path
-        _log.error("Could not find apache. Not installed or unknown path.")
+        _log.error('Could not find apache. Not installed or unknown path.')
         return None
 
     def setup_test_run(self):
@@ -143,20 +142,6 @@ class LinuxPort(base.Port):
         self._filesystem.rmtree(dummy_home)
         self.host.environ['HOME'] = self._original_home
 
-    def _check_apache_install(self):
-        result = self._check_file_exists(self.path_to_apache(), "apache2")
-        result = self._check_file_exists(self.path_to_apache_config_file(), "apache2 config file") and result
-        if not result:
-            _log.error('    Please install using: "sudo apt-get install apache2 libapache2-mod-php5"')
-            _log.error('')
-        return result
-
-    def _wdiff_missing_message(self):
-        return 'wdiff is not installed; please install using "sudo apt-get install wdiff"'
-
     def _path_to_driver(self, target=None):
         binary_name = self.driver_name()
         return self._build_path_with_target(target, binary_name)
-
-    def _path_to_helper(self):
-        return None

@@ -4,7 +4,7 @@
 
 #include "content/browser/renderer_host/p2p/socket_host.h"
 
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/sys_byteorder.h"
 #include "content/browser/renderer_host/p2p/socket_host_tcp.h"
 #include "content/browser/renderer_host/p2p/socket_host_tcp_server.h"
@@ -204,7 +204,7 @@ P2PSocketHost* P2PSocketHost::Create(IPC::Sender* message_sender,
   }
 
   NOTREACHED();
-  return NULL;
+  return nullptr;
 }
 
 void P2PSocketHost::StartRtpDump(

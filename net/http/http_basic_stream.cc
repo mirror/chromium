@@ -4,7 +4,7 @@
 
 #include "net/http/http_basic_stream.h"
 
-#include <memory>
+#include <utility>
 
 #include "net/http/http_request_info.h"
 #include "net/http/http_response_body_drainer.h"
@@ -13,15 +13,18 @@
 
 namespace net {
 
-HttpBasicStream::HttpBasicStream(ClientSocketHandle* connection,
-                                 bool using_proxy)
-    : state_(connection, using_proxy) {}
+HttpBasicStream::HttpBasicStream(std::unique_ptr<ClientSocketHandle> connection,
+                                 bool using_proxy,
+                                 bool http_09_on_non_default_ports_enabled)
+    : state_(std::move(connection),
+             using_proxy,
+             http_09_on_non_default_ports_enabled) {}
 
 HttpBasicStream::~HttpBasicStream() {}
 
 int HttpBasicStream::InitializeStream(const HttpRequestInfo* request_info,
                                       RequestPriority priority,
-                                      const BoundNetLog& net_log,
+                                      const NetLogWithSource& net_log,
                                       const CompletionCallback& callback) {
   state_.Initialize(request_info, priority, net_log, callback);
   return OK;
@@ -35,10 +38,6 @@ int HttpBasicStream::SendRequest(const HttpRequestHeaders& headers,
       state_.GenerateRequestLine(), headers, response, callback);
 }
 
-UploadProgress HttpBasicStream::GetUploadProgress() const {
-  return parser()->GetUploadProgress();
-}
-
 int HttpBasicStream::ReadResponseHeaders(const CompletionCallback& callback) {
   return parser()->ReadResponseHeaders(callback);
 }
@@ -50,7 +49,11 @@ int HttpBasicStream::ReadResponseBody(IOBuffer* buf,
 }
 
 void HttpBasicStream::Close(bool not_reusable) {
-  parser()->Close(not_reusable);
+  // parser() is null if |this| is created by an orphaned
+  // HttpStreamFactoryImpl::Job in which case InitializeStream() will not have
+  // been called.
+  if (parser())
+    parser()->Close(not_reusable);
 }
 
 HttpStream* HttpBasicStream::RenewStreamForAuth() {
@@ -60,8 +63,8 @@ HttpStream* HttpBasicStream::RenewStreamForAuth() {
   // be extra-sure it doesn't touch the connection again, delete it here rather
   // than leaving it until the destructor is called.
   state_.DeleteParser();
-  return new HttpBasicStream(state_.ReleaseConnection().release(),
-                             state_.using_proxy());
+  return new HttpBasicStream(state_.ReleaseConnection(), state_.using_proxy(),
+                             state_.http_09_on_non_default_ports_enabled());
 }
 
 bool HttpBasicStream::IsResponseBodyComplete() const {
@@ -96,6 +99,11 @@ bool HttpBasicStream::GetLoadTimingInfo(
                                                 load_timing_info);
 }
 
+bool HttpBasicStream::GetAlternativeService(
+    AlternativeService* alternative_service) const {
+  return false;
+}
+
 void HttpBasicStream::GetSSLInfo(SSLInfo* ssl_info) {
   parser()->GetSSLInfo(ssl_info);
 }
@@ -112,9 +120,10 @@ bool HttpBasicStream::GetRemoteEndpoint(IPEndPoint* endpoint) {
   return state_.connection()->socket()->GetPeerAddress(endpoint) == OK;
 }
 
-Error HttpBasicStream::GetSignedEKMForTokenBinding(crypto::ECPrivateKey* key,
-                                                   std::vector<uint8_t>* out) {
-  return parser()->GetSignedEKMForTokenBinding(key, out);
+Error HttpBasicStream::GetTokenBindingSignature(crypto::ECPrivateKey* key,
+                                                TokenBindingType tb_type,
+                                                std::vector<uint8_t>* out) {
+  return parser()->GetTokenBindingSignature(key, tb_type, out);
 }
 
 void HttpBasicStream::Drain(HttpNetworkSession* session) {

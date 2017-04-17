@@ -6,36 +6,36 @@
 #define DOMWindowPerformance_h
 
 #include "core/CoreExport.h"
-#include "core/frame/DOMWindowProperty.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
-class DOMWindow;
+class LocalDOMWindow;
 class Performance;
 
-class CORE_EXPORT DOMWindowPerformance final : public GarbageCollected<DOMWindowPerformance>, public Supplement<LocalDOMWindow>, public DOMWindowProperty {
-    USING_GARBAGE_COLLECTED_MIXIN(DOMWindowPerformance);
-    WTF_MAKE_NONCOPYABLE(DOMWindowPerformance);
-public:
-    static DOMWindowPerformance& from(LocalDOMWindow&);
-    static Performance* performance(DOMWindow&);
+class CORE_EXPORT DOMWindowPerformance final
+    : public GarbageCollected<DOMWindowPerformance>,
+      public Supplement<LocalDOMWindow> {
+  USING_GARBAGE_COLLECTED_MIXIN(DOMWindowPerformance);
+  WTF_MAKE_NONCOPYABLE(DOMWindowPerformance);
 
-    DECLARE_TRACE();
+ public:
+  static DOMWindowPerformance& From(LocalDOMWindow&);
+  static Performance* performance(LocalDOMWindow&);
 
-private:
-    explicit DOMWindowPerformance(LocalDOMWindow&);
-    static const char* supplementName();
+  DECLARE_TRACE();
 
-    Performance* performance();
+ private:
+  explicit DOMWindowPerformance(LocalDOMWindow&);
+  static const char* SupplementName();
 
-    // TODO(sof): try to move this direct reference and instead rely on frame().
-    Member<LocalDOMWindow> m_window;
-    Member<Performance> m_performance;
+  Performance* performance();
+
+  Member<Performance> performance_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMWindowPerformance_h
+#endif  // DOMWindowPerformance_h

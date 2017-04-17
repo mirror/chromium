@@ -20,6 +20,11 @@ var ExportView = (function() {
     // Call superclass's constructor.
     superClass.call(this, ExportView.MAIN_BOX_ID);
 
+    this.deprecatedNoticeUI_ = $(ExportView.DEPRECATED_NOTICE_UI_ID);
+    this.showDeprecatedUIButton_ = $(ExportView.SHOW_DEPRECATED_UI_BUTTON_ID);
+    this.showDeprecatedUIButton_.onclick = this.onShowDeprecatedUI_.bind(this);
+    this.deprecatedExportUI_ = $(ExportView.DEPRECATED_EXPORT_UI_ID);
+
     var privacyStrippingCheckbox = $(ExportView.PRIVACY_STRIPPING_CHECKBOX_ID);
     privacyStrippingCheckbox.onclick =
         this.onSetPrivacyStripping_.bind(this, privacyStrippingCheckbox);
@@ -27,8 +32,11 @@ var ExportView = (function() {
     this.saveFileButton_ = $(ExportView.SAVE_FILE_BUTTON_ID);
     this.saveFileButton_.onclick = this.onSaveFile_.bind(this);
     this.saveStatusText_ = $(ExportView.SAVE_STATUS_TEXT_ID);
+    this.isSaving_ = false;
 
     this.userCommentsTextArea_ = $(ExportView.USER_COMMENTS_TEXT_AREA_ID);
+    this.updateSaveFileButton_();
+    this.userCommentsTextArea_.onkeyup = this.onUserCommentsUpdated_.bind(this);
 
     // Track blob for previous log dump so it can be revoked when a new dump is
     // saved.
@@ -43,6 +51,10 @@ var ExportView = (function() {
   ExportView.TAB_HASH = '#export';
 
   // IDs for special HTML elements in export_view.html
+  ExportView.DEPRECATED_NOTICE_UI_ID = 'export-view-deprecated-notice';
+  ExportView.SHOW_DEPRECATED_UI_BUTTON_ID = 'export-view-show-deprecated-ui';
+  ExportView.DEPRECATED_EXPORT_UI_ID = 'export-view-ui-deprecated';
+
   ExportView.MAIN_BOX_ID = 'export-view-tab-content';
   ExportView.DOWNLOAD_ANCHOR_ID = 'export-view-download-anchor';
   ExportView.SAVE_FILE_BUTTON_ID = 'export-view-save-log-file';
@@ -57,6 +69,15 @@ var ExportView = (function() {
   ExportView.prototype = {
     // Inherit the superclass's methods.
     __proto__: superClass.prototype,
+
+    /**
+     * Hides the export-view deprecation warning message and shows the
+     * deprecated export-view UI.
+     */
+    onShowDeprecatedUI_: function() {
+      setNodeDisplay(this.deprecatedNoticeUI_, false);
+      setNodeDisplay(this.deprecatedExportUI_, true);
+    },
 
     /**
      * Depending on the value of the checkbox, enables or disables stripping
@@ -85,12 +106,14 @@ var ExportView = (function() {
      * of failure.
      */
     setSaveFileStatus: function(text, isSaving) {
-      this.enableSaveFileButton_(!isSaving);
+      this.isSaving_ = isSaving;
+      this.updateSaveFileButton_();
       this.saveStatusText_.textContent = text;
     },
 
-    enableSaveFileButton_: function(enabled) {
-      this.saveFileButton_.disabled = !enabled;
+    updateSaveFileButton_: function() {
+      this.saveFileButton_.disabled =
+          this.userCommentsTextArea_.value == '' || this.isSaving_;
     },
 
     showPrivacyWarning: function() {
@@ -125,10 +148,7 @@ var ExportView = (function() {
      */
     createLogDump_: function(callback) {
       // Get an explanation for the dump file (this is mandatory!)
-      var userComments = this.getNonEmptyUserComments_();
-      if (userComments == undefined) {
-        return;
-      }
+      var userComments = this.userCommentsTextArea_.value;
 
       this.setSaveFileStatus('Preparing data...', true);
 
@@ -136,17 +156,14 @@ var ExportView = (function() {
 
       // If we have a cached log dump, update it synchronously.
       if (this.loadedLogDump_) {
-        var dumpText = log_util.createUpdatedLogDump(userComments,
-                                                     this.loadedLogDump_,
-                                                     privacyStripping);
+        var dumpText = log_util.createUpdatedLogDump(
+            userComments, this.loadedLogDump_, privacyStripping);
         callback(dumpText);
         return;
       }
 
       // Otherwise, poll information from the browser before creating one.
-      log_util.createLogDumpAsync(userComments,
-                                  callback,
-                                  privacyStripping);
+      log_util.createLogDumpAsync(userComments, callback, privacyStripping);
     },
 
     /**
@@ -154,30 +171,14 @@ var ExportView = (function() {
      */
     setUserComments_: function(userComments) {
       this.userCommentsTextArea_.value = userComments;
+      this.onUserCommentsUpdated_();
     },
 
     /**
-     * Fetches the user comments for this dump. If none were entered, warns the
-     * user and returns undefined. Otherwise returns the comments text.
+     * User comments are updated.
      */
-    getNonEmptyUserComments_: function() {
-      var value = this.userCommentsTextArea_.value;
-
-      // Reset the class name in case we had hilighted it earlier.
-      this.userCommentsTextArea_.className = '';
-
-      // We don't accept empty explanations. We don't care what is entered, as
-      // long as there is something (a single whitespace would work).
-      if (value == '') {
-        // Put a big obnoxious red border around the text area.
-        this.userCommentsTextArea_.className =
-            'export-view-explanation-warning';
-        alert('Please fill in the text field!');
-        this.userCommentsTextArea_.focus();
-        return undefined;
-      }
-
-      return value;
+    onUserCommentsUpdated_: function() {
+      this.updateSaveFileButton_();
     },
 
     /**

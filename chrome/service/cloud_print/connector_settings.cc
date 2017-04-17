@@ -6,7 +6,7 @@
 
 #include <stddef.h>
 
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/values.h"
 #include "chrome/common/cloud_print/cloud_print_constants.h"
 #include "chrome/common/pref_names.h"
@@ -67,9 +67,6 @@ void ConnectorSettings::InitFrom(ServiceProcessPrefs* prefs) {
   int timeout = prefs->GetInt(
       prefs::kCloudPrintXmppPingTimeout, kDefaultXmppPingTimeoutSecs);
   SetXmppPingTimeoutSec(timeout);
-  UMA_HISTOGRAM_LONG_TIMES(
-      "CloudPrint.XmppTimeout",
-      base::TimeDelta::FromSeconds(xmpp_ping_timeout_sec_));
 
   const base::ListValue* printers = prefs->GetList(prefs::kCloudPrintPrinters);
   if (printers) {

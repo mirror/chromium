@@ -37,97 +37,84 @@
 
 namespace blink {
 
-class WebHitTestResultPrivate : public GarbageCollectedFinalized<WebHitTestResultPrivate> {
-public:
-    static WebHitTestResultPrivate* create(const HitTestResult&);
-    static WebHitTestResultPrivate* create(const WebHitTestResultPrivate&);
-    DEFINE_INLINE_TRACE() { visitor->trace(m_result); }
-    const HitTestResult& result() const { return m_result; }
+class WebHitTestResultPrivate
+    : public GarbageCollectedFinalized<WebHitTestResultPrivate> {
+ public:
+  static WebHitTestResultPrivate* Create(const HitTestResult&);
+  static WebHitTestResultPrivate* Create(const WebHitTestResultPrivate&);
+  DEFINE_INLINE_TRACE() { visitor->Trace(result_); }
+  const HitTestResult& Result() const { return result_; }
 
-private:
-    WebHitTestResultPrivate(const HitTestResult&);
-    WebHitTestResultPrivate(const WebHitTestResultPrivate&);
+ private:
+  WebHitTestResultPrivate(const HitTestResult&);
+  WebHitTestResultPrivate(const WebHitTestResultPrivate&);
 
-    HitTestResult m_result;
+  HitTestResult result_;
 };
 
-inline WebHitTestResultPrivate::WebHitTestResultPrivate(const HitTestResult& result)
-    : m_result(result)
-{
+inline WebHitTestResultPrivate::WebHitTestResultPrivate(
+    const HitTestResult& result)
+    : result_(result) {}
+
+inline WebHitTestResultPrivate::WebHitTestResultPrivate(
+    const WebHitTestResultPrivate& result)
+    : result_(result.result_) {}
+
+WebHitTestResultPrivate* WebHitTestResultPrivate::Create(
+    const HitTestResult& result) {
+  return new WebHitTestResultPrivate(result);
 }
 
-inline WebHitTestResultPrivate::WebHitTestResultPrivate(const WebHitTestResultPrivate& result)
-    : m_result(result.m_result)
-{
+WebHitTestResultPrivate* WebHitTestResultPrivate::Create(
+    const WebHitTestResultPrivate& result) {
+  return new WebHitTestResultPrivate(result);
 }
 
-WebHitTestResultPrivate* WebHitTestResultPrivate::create(const HitTestResult& result)
-{
-    return new WebHitTestResultPrivate(result);
+WebNode WebHitTestResult::GetNode() const {
+  return WebNode(private_->Result().InnerNode());
 }
 
-WebHitTestResultPrivate* WebHitTestResultPrivate::create(const WebHitTestResultPrivate& result)
-{
-    return new WebHitTestResultPrivate(result);
+WebPoint WebHitTestResult::LocalPoint() const {
+  return RoundedIntPoint(private_->Result().LocalPoint());
 }
 
-WebNode WebHitTestResult::node() const
-{
-    return WebNode(m_private->result().innerNode());
+WebElement WebHitTestResult::UrlElement() const {
+  return WebElement(private_->Result().URLElement());
 }
 
-WebPoint WebHitTestResult::localPoint() const
-{
-    return roundedIntPoint(m_private->result().localPoint());
+WebURL WebHitTestResult::AbsoluteImageURL() const {
+  return private_->Result().AbsoluteImageURL();
 }
 
-WebElement WebHitTestResult::urlElement() const
-{
-    return WebElement(m_private->result().URLElement());
+WebURL WebHitTestResult::AbsoluteLinkURL() const {
+  return private_->Result().AbsoluteLinkURL();
 }
 
-WebURL WebHitTestResult::absoluteImageURL() const
-{
-    return m_private->result().absoluteImageURL();
-}
-
-WebURL WebHitTestResult::absoluteLinkURL() const
-{
-    return m_private->result().absoluteLinkURL();
-}
-
-bool WebHitTestResult::isContentEditable() const
-{
-    return m_private->result().isContentEditable();
+bool WebHitTestResult::IsContentEditable() const {
+  return private_->Result().IsContentEditable();
 }
 
 WebHitTestResult::WebHitTestResult(const HitTestResult& result)
-    : m_private(WebHitTestResultPrivate::create(result))
-{
+    : private_(WebHitTestResultPrivate::Create(result)) {}
+
+WebHitTestResult& WebHitTestResult::operator=(const HitTestResult& result) {
+  private_ = WebHitTestResultPrivate::Create(result);
+  return *this;
 }
 
-WebHitTestResult& WebHitTestResult::operator=(const HitTestResult& result)
-{
-    m_private = WebHitTestResultPrivate::create(result);
-    return *this;
+bool WebHitTestResult::IsNull() const {
+  return !private_.Get();
 }
 
-bool WebHitTestResult::isNull() const
-{
-    return !m_private.get();
+void WebHitTestResult::Assign(const WebHitTestResult& info) {
+  if (info.IsNull())
+    private_.Reset();
+  else
+    private_ = WebHitTestResultPrivate::Create(*info.private_.Get());
 }
 
-void WebHitTestResult::assign(const WebHitTestResult& info)
-{
-    if (info.isNull())
-        m_private.reset();
-    else
-        m_private = WebHitTestResultPrivate::create(*info.m_private.get());
+void WebHitTestResult::Reset() {
+  private_.Reset();
 }
 
-void WebHitTestResult::reset()
-{
-    m_private.reset();
-}
-
-} // namespace blink
+}  // namespace blink

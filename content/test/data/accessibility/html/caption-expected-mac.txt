@@ -1,21 +1,21 @@
 AXWebArea
-++AXTable AXDescription='Browser and Engine' AXTitleUIElement='AXGroup'
+++AXTable AXTitle='Browser and Engine'
 ++++AXGroup
 ++++++AXStaticText AXValue='Browser and Engine'
 ++++AXRow
-++++++AXCell
+++++++AXCell AXTitle='Browser'
 ++++++++AXStaticText AXValue='Browser'
-++++++AXCell
+++++++AXCell AXTitle='Engine'
 ++++++++AXStaticText AXValue='Engine'
 ++++AXRow
-++++++AXCell
+++++++AXCell AXTitle='Chrome'
 ++++++++AXStaticText AXValue='Chrome'
-++++++AXCell
+++++++AXCell AXTitle='Blink'
 ++++++++AXStaticText AXValue='Blink'
 ++++AXRow
-++++++AXCell
+++++++AXCell AXTitle='Safari'
 ++++++++AXStaticText AXValue='Safari'
-++++++AXCell
+++++++AXCell AXTitle='WebKit'
 ++++++++AXStaticText AXValue='WebKit'
 ++++AXColumn
 ++++AXColumn

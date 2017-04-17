@@ -31,12 +31,14 @@
 #ifndef WebSerializedScriptValue_h
 #define WebSerializedScriptValue_h
 
-#include "../platform/WebCommon.h"
-#include "../platform/WebPrivatePtr.h"
+#include "public/platform/WebCommon.h"
+#include "public/platform/WebPrivatePtr.h"
 
 namespace v8 {
+class Isolate;
 class Value;
-template <class T> class Local;
+template <class T>
+class Local;
 }
 
 namespace blink {
@@ -46,45 +48,46 @@ class WebString;
 
 // FIXME: Should this class be in platform?
 class WebSerializedScriptValue {
-public:
-    ~WebSerializedScriptValue() { reset(); }
+ public:
+  ~WebSerializedScriptValue() { Reset(); }
 
-    WebSerializedScriptValue() { }
-    WebSerializedScriptValue(const WebSerializedScriptValue& d) { assign(d); }
-    WebSerializedScriptValue& operator=(const WebSerializedScriptValue& d)
-    {
-        assign(d);
-        return *this;
-    }
+  WebSerializedScriptValue() {}
+  WebSerializedScriptValue(const WebSerializedScriptValue& d) { Assign(d); }
+  WebSerializedScriptValue& operator=(const WebSerializedScriptValue& d) {
+    Assign(d);
+    return *this;
+  }
 
-    BLINK_EXPORT static WebSerializedScriptValue fromString(const WebString&);
+  // Creates a serialized script value from its wire format data.
+  BLINK_EXPORT static WebSerializedScriptValue FromString(const WebString&);
 
-    BLINK_EXPORT static WebSerializedScriptValue serialize(v8::Local<v8::Value>);
+  BLINK_EXPORT static WebSerializedScriptValue Serialize(v8::Isolate*,
+                                                         v8::Local<v8::Value>);
 
-    // Create a WebSerializedScriptValue that represents a serialization error.
-    BLINK_EXPORT static WebSerializedScriptValue createInvalid();
+  // Create a WebSerializedScriptValue that represents a serialization error.
+  BLINK_EXPORT static WebSerializedScriptValue CreateInvalid();
 
-    BLINK_EXPORT void reset();
-    BLINK_EXPORT void assign(const WebSerializedScriptValue&);
+  BLINK_EXPORT void Reset();
+  BLINK_EXPORT void Assign(const WebSerializedScriptValue&);
 
-    bool isNull() const { return m_private.isNull(); }
+  bool IsNull() const { return private_.IsNull(); }
 
-    // Returns a string representation of the WebSerializedScriptValue.
-    BLINK_EXPORT WebString toString() const;
+  // Returns a string representation of the WebSerializedScriptValue.
+  BLINK_EXPORT WebString ToString() const;
 
-    // Convert the serialized value to a parsed v8 value.
-    BLINK_EXPORT v8::Local<v8::Value> deserialize();
+  // Convert the serialized value to a parsed v8 value.
+  BLINK_EXPORT v8::Local<v8::Value> Deserialize(v8::Isolate*);
 
 #if BLINK_IMPLEMENTATION
-    WebSerializedScriptValue(const WTF::PassRefPtr<SerializedScriptValue>&);
-    WebSerializedScriptValue& operator=(const WTF::PassRefPtr<SerializedScriptValue>&);
-    operator WTF::PassRefPtr<SerializedScriptValue>() const;
+  WebSerializedScriptValue(WTF::PassRefPtr<SerializedScriptValue>);
+  WebSerializedScriptValue& operator=(WTF::PassRefPtr<SerializedScriptValue>);
+  operator WTF::PassRefPtr<SerializedScriptValue>() const;
 #endif
 
-private:
-    WebPrivatePtr<SerializedScriptValue> m_private;
+ private:
+  WebPrivatePtr<SerializedScriptValue> private_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

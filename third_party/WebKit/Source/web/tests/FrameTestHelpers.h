@@ -34,12 +34,14 @@
 #include "core/frame/Settings.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/scroll/ScrollbarTheme.h"
+#include "public/platform/WebMouseEvent.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/web/WebFrameClient.h"
 #include "public/web/WebFrameOwnerProperties.h"
 #include "public/web/WebHistoryItem.h"
 #include "public/web/WebRemoteFrameClient.h"
+#include "public/web/WebSettings.h"
 #include "public/web/WebViewClient.h"
 #include "web/WebViewImpl.h"
 #include <gmock/gmock.h>
@@ -50,7 +52,6 @@
 namespace blink {
 
 class WebFrame;
-class WebFrameWidget;
 class WebLocalFrameImpl;
 class WebRemoteFrameImpl;
 class WebSettings;
@@ -65,184 +66,232 @@ class TestWebViewClient;
 // Loads a url into the specified WebFrame for testing purposes. Pumps any
 // pending resource requests, as well as waiting for the threaded parser to
 // finish, before returning.
-void loadFrame(WebFrame*, const std::string& url);
+void LoadFrame(WebFrame*, const std::string& url);
 // Same as above, but for WebFrame::loadHTMLString().
-void loadHTMLString(WebFrame*, const std::string& html, const WebURL& baseURL);
+void LoadHTMLString(WebFrame*, const std::string& html, const WebURL& base_url);
 // Same as above, but for WebFrame::loadHistoryItem().
-void loadHistoryItem(WebFrame*, const WebHistoryItem&, WebHistoryLoadType, WebCachePolicy);
+void LoadHistoryItem(WebFrame*,
+                     const WebHistoryItem&,
+                     WebHistoryLoadType,
+                     WebCachePolicy);
 // Same as above, but for WebFrame::reload().
-void reloadFrame(WebFrame*);
-void reloadFrameIgnoringCache(WebFrame*);
+void ReloadFrame(WebFrame*);
+void ReloadFrameBypassingCache(WebFrame*);
 
 // Pumps pending resource requests while waiting for a frame to load. Consider
 // using one of the above helper methods whenever possible.
-void pumpPendingRequestsForFrameToLoad(WebFrame*);
+void PumpPendingRequestsForFrameToLoad(WebFrame*);
 
-WebMouseEvent createMouseEvent(WebInputEvent::Type, WebMouseEvent::Button, const IntPoint&, int modifiers);
+WebMouseEvent CreateMouseEvent(WebInputEvent::Type,
+                               WebMouseEvent::Button,
+                               const IntPoint&,
+                               int modifiers);
 
 // Calls WebRemoteFrame::createLocalChild, but with some arguments prefilled
 // with default test values (i.e. with a default |client| or |properties| and/or
 // with a precalculated |uniqueName|).
-WebLocalFrameImpl* createLocalChild(WebRemoteFrame* parent, const WebString& name = WebString(), WebFrameClient* = nullptr, WebWidgetClient* = nullptr, WebFrame* previousSibling = nullptr, const WebFrameOwnerProperties& = WebFrameOwnerProperties());
-WebRemoteFrameImpl* createRemoteChild(WebRemoteFrame* parent, WebRemoteFrameClient*, const WebString& name = WebString());
+WebLocalFrameImpl* CreateLocalChild(
+    WebRemoteFrame* parent,
+    const WebString& name = WebString(),
+    WebFrameClient* = nullptr,
+    WebWidgetClient* = nullptr,
+    WebFrame* previous_sibling = nullptr,
+    const WebFrameOwnerProperties& = WebFrameOwnerProperties());
+WebRemoteFrameImpl* CreateRemoteChild(WebRemoteFrame* parent,
+                                      WebRemoteFrameClient*,
+                                      const WebString& name = WebString());
 
 // Helpers for unit tests with parameterized WebSettings overrides.
 typedef void (*SettingOverrideFunction)(WebSettings*);
-void DefaultSettingOverride(WebSettings*);
-void RootLayerScrollsSettingOverride(WebSettings*);
 class SettingOverrider {
-public:
-    virtual void overrideSettings(WebSettings*) = 0;
+ public:
+  virtual void OverrideSettings(WebSettings*) = 0;
 };
 
-// Forces to use mocked overlay scrollbars instead of the default native theme scrollbars to avoid
-// crash in Chromium code when it tries to load UI resources that are not available when running
-// blink unit tests, and to ensure consistent layout regardless of differences between scrollbar themes.
-// WebViewHelper includes this, so this is only needed if a test doesn't use WebViewHelper or the test
-// needs a bigger scope of mock scrollbar settings than the scope of WebViewHelper.
+// Forces to use mocked overlay scrollbars instead of the default native theme
+// scrollbars to avoid crash in Chromium code when it tries to load UI
+// resources that are not available when running blink unit tests, and to
+// ensure consistent layout regardless of differences between scrollbar themes.
+// WebViewHelper includes this, so this is only needed if a test doesn't use
+// WebViewHelper or the test needs a bigger scope of mock scrollbar settings
+// than the scope of WebViewHelper.
 class UseMockScrollbarSettings {
-public:
-    UseMockScrollbarSettings()
-        : m_originalMockScrollbarEnabled(Settings::mockScrollbarsEnabled())
-        , m_originalOverlayScrollbarsEnabled(RuntimeEnabledFeatures::overlayScrollbarsEnabled())
-    {
-        Settings::setMockScrollbarsEnabled(true);
-        RuntimeEnabledFeatures::setOverlayScrollbarsEnabled(true);
-        EXPECT_TRUE(ScrollbarTheme::theme().usesOverlayScrollbars());
-    }
+ public:
+  UseMockScrollbarSettings()
+      : original_mock_scrollbar_enabled_(Settings::MockScrollbarsEnabled()),
+        original_overlay_scrollbars_enabled_(
+            RuntimeEnabledFeatures::overlayScrollbarsEnabled()) {
+    Settings::SetMockScrollbarsEnabled(true);
+    RuntimeEnabledFeatures::setOverlayScrollbarsEnabled(true);
+    EXPECT_TRUE(ScrollbarTheme::GetTheme().UsesOverlayScrollbars());
+  }
 
-    ~UseMockScrollbarSettings()
-    {
-        Settings::setMockScrollbarsEnabled(m_originalMockScrollbarEnabled);
-        RuntimeEnabledFeatures::setOverlayScrollbarsEnabled(m_originalOverlayScrollbarsEnabled);
-    }
+  UseMockScrollbarSettings(bool use_mock, bool use_overlay)
+      : original_mock_scrollbar_enabled_(Settings::MockScrollbarsEnabled()),
+        original_overlay_scrollbars_enabled_(
+            RuntimeEnabledFeatures::overlayScrollbarsEnabled()) {
+    Settings::SetMockScrollbarsEnabled(use_mock);
+    RuntimeEnabledFeatures::setOverlayScrollbarsEnabled(use_overlay);
+  }
 
-private:
-    bool m_originalMockScrollbarEnabled;
-    bool m_originalOverlayScrollbarsEnabled;
+  ~UseMockScrollbarSettings() {
+    Settings::SetMockScrollbarsEnabled(original_mock_scrollbar_enabled_);
+    RuntimeEnabledFeatures::setOverlayScrollbarsEnabled(
+        original_overlay_scrollbars_enabled_);
+  }
+
+ private:
+  bool original_mock_scrollbar_enabled_;
+  bool original_overlay_scrollbars_enabled_;
 };
 
 class TestWebWidgetClient : public WebWidgetClient {
-public:
-    virtual ~TestWebWidgetClient() {}
-    bool allowsBrokenNullLayerTreeView() const override { return true; }
+ public:
+  virtual ~TestWebWidgetClient() {}
+  bool AllowsBrokenNullLayerTreeView() const override { return true; }
+  WebLayerTreeView* InitializeLayerTreeView() override;
+
+ private:
+  std::unique_ptr<WebLayerTreeView> layer_tree_view_;
 };
 
 class TestWebViewWidgetClient : public TestWebWidgetClient {
-public:
-    explicit TestWebViewWidgetClient(TestWebViewClient* testWebViewClient)
-        : m_testWebViewClient(testWebViewClient)
-    {
-    }
-    virtual ~TestWebViewWidgetClient() {}
+ public:
+  explicit TestWebViewWidgetClient(TestWebViewClient* test_web_view_client)
+      : test_web_view_client_(test_web_view_client) {}
+  virtual ~TestWebViewWidgetClient() {}
 
-    void initializeLayerTreeView() override;
-    WebLayerTreeView* layerTreeView() override;
-    void scheduleAnimation() override;
-    void didMeaningfulLayout(WebMeaningfulLayout) override;
+  WebLayerTreeView* InitializeLayerTreeView() override;
+  void ScheduleAnimation() override;
+  void DidMeaningfulLayout(WebMeaningfulLayout) override;
 
-private:
-    TestWebViewClient* m_testWebViewClient;
+ private:
+  TestWebViewClient* test_web_view_client_;
 };
 
 class TestWebViewClient : public WebViewClient {
-public:
-    TestWebViewClient()
-        : m_testWebWidgetClient(this)
-        , m_animationScheduled(false)
-    {
-    }
-    virtual ~TestWebViewClient() { }
-    void initializeLayerTreeView() override;
-    WebLayerTreeView* layerTreeView() override { return m_layerTreeView.get(); }
+ public:
+  TestWebViewClient()
+      : test_web_widget_client_(this), animation_scheduled_(false) {}
+  virtual ~TestWebViewClient() {}
+  WebLayerTreeView* InitializeLayerTreeView() override;
 
-    void scheduleAnimation() override { m_animationScheduled = true; }
-    bool animationScheduled() { return m_animationScheduled; }
-    void clearAnimationScheduled() { m_animationScheduled = false; }
+  void ScheduleAnimation() override { animation_scheduled_ = true; }
+  bool AnimationScheduled() { return animation_scheduled_; }
+  void ClearAnimationScheduled() { animation_scheduled_ = false; }
+  bool CanHandleGestureEvent() override { return true; }
+  bool CanUpdateLayout() override { return true; }
 
-    // TODO(lfg): This is a temporary method to retrieve the WebWidgetClient,
-    // while we refactor WebView to not inherit from Webwidget.
-    // Returns the WebWidgetClient.
-    TestWebWidgetClient* widgetClient() { return &m_testWebWidgetClient; }
+  // TODO(lfg): This is a temporary method to retrieve the WebWidgetClient,
+  // while we refactor WebView to not inherit from Webwidget.
+  // Returns the WebWidgetClient.
+  TestWebWidgetClient* WidgetClient() { return &test_web_widget_client_; }
 
-private:
-    friend class TestWebViewWidgetClient;
+ private:
+  friend class TestWebViewWidgetClient;
 
-    TestWebViewWidgetClient m_testWebWidgetClient;
-    std::unique_ptr<WebLayerTreeView> m_layerTreeView;
-    bool m_animationScheduled;
+  TestWebViewWidgetClient test_web_widget_client_;
+  std::unique_ptr<WebLayerTreeView> layer_tree_view_;
+  bool animation_scheduled_;
 };
 
-// Convenience class for handling the lifetime of a WebView and its associated mainframe in tests.
+// Convenience class for handling the lifetime of a WebView and its associated
+// mainframe in tests.
 class WebViewHelper {
-    WTF_MAKE_NONCOPYABLE(WebViewHelper);
-public:
-    WebViewHelper(SettingOverrider* = 0);
-    ~WebViewHelper();
+  WTF_MAKE_NONCOPYABLE(WebViewHelper);
 
-    // Creates and initializes the WebView. Implicitly calls reset() first. If
-    // a WebFrameClient or a WebViewClient are passed in, they must outlive the
-    // WebViewHelper.
-    WebViewImpl* initializeWithOpener(WebFrame* opener, bool enableJavascript = false, TestWebFrameClient* = nullptr, TestWebViewClient* = nullptr, TestWebWidgetClient* = nullptr, void (*updateSettingsFunc)(WebSettings*) = nullptr);
+ public:
+  WebViewHelper(SettingOverrider* = 0);
+  ~WebViewHelper();
 
-    // Same as initializeWithOpener(), but always sets the opener to null.
-    WebViewImpl* initialize(bool enableJavascript = false, TestWebFrameClient* = nullptr, TestWebViewClient* = nullptr, TestWebWidgetClient* = nullptr, void (*updateSettingsFunc)(WebSettings*) = 0);
+  // Creates and initializes the WebView. Implicitly calls reset() first. If
+  // a WebFrameClient or a WebViewClient are passed in, they must outlive the
+  // WebViewHelper.
+  WebViewImpl* InitializeWithOpener(
+      WebFrame* opener,
+      bool enable_javascript = false,
+      TestWebFrameClient* = nullptr,
+      TestWebViewClient* = nullptr,
+      TestWebWidgetClient* = nullptr,
+      void (*update_settings_func)(WebSettings*) = nullptr);
 
-    // Same as initialize() but also performs the initial load of the url. Only
-    // returns once the load is complete.
-    WebViewImpl* initializeAndLoad(const std::string& url, bool enableJavascript = false, TestWebFrameClient* = nullptr, TestWebViewClient* = nullptr, TestWebWidgetClient* = nullptr, void (*updateSettingsFunc)(WebSettings*) = 0);
+  // Same as initializeWithOpener(), but always sets the opener to null.
+  WebViewImpl* Initialize(bool enable_javascript = false,
+                          TestWebFrameClient* = nullptr,
+                          TestWebViewClient* = nullptr,
+                          TestWebWidgetClient* = nullptr,
+                          void (*update_settings_func)(WebSettings*) = 0);
 
-    void resize(WebSize);
+  // Same as initialize() but also performs the initial load of the url. Only
+  // returns once the load is complete.
+  WebViewImpl* InitializeAndLoad(
+      const std::string& url,
+      bool enable_javascript = false,
+      TestWebFrameClient* = nullptr,
+      TestWebViewClient* = nullptr,
+      TestWebWidgetClient* = nullptr,
+      void (*update_settings_func)(WebSettings*) = 0);
 
-    void reset();
+  void Resize(WebSize);
 
-    WebViewImpl* webView() const { return m_webView; }
+  void Reset();
 
-private:
-    WebViewImpl* m_webView;
-    SettingOverrider* m_settingOverrider;
-    UseMockScrollbarSettings m_mockScrollbarSettings;
-    TestWebViewClient* m_testWebViewClient;
+  WebViewImpl* WebView() const { return web_view_; }
+
+ private:
+  WebViewImpl* web_view_;
+  SettingOverrider* setting_overrider_;
+  UseMockScrollbarSettings mock_scrollbar_settings_;
+  TestWebViewClient* test_web_view_client_;
 };
 
-// Minimal implementation of WebFrameClient needed for unit tests that load frames. Tests that load
-// frames and need further specialization of WebFrameClient behavior should subclass this.
+// Minimal implementation of WebFrameClient needed for unit tests that load
+// frames. Tests that load frames and need further specialization of
+// WebFrameClient behavior should subclass this.
 class TestWebFrameClient : public WebFrameClient {
-public:
-    TestWebFrameClient();
+ public:
+  TestWebFrameClient();
 
-    WebFrame* createChildFrame(WebLocalFrame* parent, WebTreeScopeType, const WebString& name, const WebString& uniqueName, WebSandboxFlags, const WebFrameOwnerProperties&) override;
-    void frameDetached(WebLocalFrame*, DetachType) override;
-    void didStartLoading(bool) override;
-    void didStopLoading() override;
+  void FrameDetached(WebLocalFrame*, DetachType) override;
+  WebLocalFrame* CreateChildFrame(WebLocalFrame* parent,
+                                  WebTreeScopeType,
+                                  const WebString& name,
+                                  const WebString& fallback_name,
+                                  WebSandboxFlags,
+                                  const WebFrameOwnerProperties&) override;
+  void DidStartLoading(bool) override;
+  void DidStopLoading() override;
 
-    bool isLoading() { return m_loadsInProgress > 0; }
+  bool IsLoading() { return loads_in_progress_ > 0; }
 
-private:
-    int m_loadsInProgress = 0;
+  // Tests can override the virtual method below to mock the interface provider.
+  virtual blink::InterfaceProvider* GetInterfaceProvider() { return nullptr; }
+
+ private:
+  int loads_in_progress_ = 0;
 };
 
-// Minimal implementation of WebRemoteFrameClient needed for unit tests that load remote frames. Tests that load
-// frames and need further specialization of WebFrameClient behavior should subclass this.
+// Minimal implementation of WebRemoteFrameClient needed for unit tests that
+// load remote frames. Tests that load frames and need further specialization
+// of WebFrameClient behavior should subclass this.
 class TestWebRemoteFrameClient : public WebRemoteFrameClient {
-public:
-    TestWebRemoteFrameClient();
+ public:
+  TestWebRemoteFrameClient();
 
-    WebRemoteFrameImpl* frame() const { return m_frame; }
+  WebRemoteFrameImpl* GetFrame() const { return frame_; }
 
-    // WebRemoteFrameClient overrides:
-    void frameDetached(DetachType) override;
-    void forwardPostMessage(
-        WebLocalFrame* sourceFrame,
-        WebRemoteFrame* targetFrame,
-        WebSecurityOrigin targetOrigin,
-        WebDOMMessageEvent) override { }
+  // WebRemoteFrameClient overrides:
+  void FrameDetached(DetachType) override;
+  void ForwardPostMessage(WebLocalFrame* source_frame,
+                          WebRemoteFrame* target_frame,
+                          WebSecurityOrigin target_origin,
+                          WebDOMMessageEvent) override {}
 
-private:
-    Persistent<WebRemoteFrameImpl> const m_frame;
+ private:
+  Persistent<WebRemoteFrameImpl> const frame_;
 };
 
-} // namespace FrameTestHelpers
-} // namespace blink
+}  // namespace FrameTestHelpers
+}  // namespace blink
 
-#endif // FrameTestHelpers_h
+#endif  // FrameTestHelpers_h

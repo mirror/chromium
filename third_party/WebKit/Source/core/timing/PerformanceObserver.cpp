@@ -5,10 +5,10 @@
 #include "core/timing/PerformanceObserver.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/PerformanceObserverCallback.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/timing/PerformanceBase.h"
 #include "core/timing/PerformanceEntry.h"
-#include "core/timing/PerformanceObserverCallback.h"
 #include "core/timing/PerformanceObserverEntryList.h"
 #include "core/timing/PerformanceObserverInit.h"
 #include "platform/Timer.h"
@@ -16,86 +16,92 @@
 
 namespace blink {
 
-PerformanceObserver* PerformanceObserver::create(PerformanceBase* performance, PerformanceObserverCallback* callback)
-{
-    ASSERT(isMainThread());
-    return new PerformanceObserver(performance, callback);
+PerformanceObserver* PerformanceObserver::Create(
+    ExecutionContext* execution_context,
+    PerformanceBase* performance,
+    PerformanceObserverCallback* callback) {
+  ASSERT(IsMainThread());
+  return new PerformanceObserver(execution_context, performance, callback);
 }
 
-PerformanceObserver::PerformanceObserver(PerformanceBase* performance, PerformanceObserverCallback* callback)
-    : m_callback(callback)
-    , m_performance(performance)
-    , m_filterOptions(PerformanceEntry::Invalid)
-    , m_isRegistered(false)
-{
+PerformanceObserver::PerformanceObserver(ExecutionContext* execution_context,
+                                         PerformanceBase* performance,
+                                         PerformanceObserverCallback* callback)
+    : execution_context_(execution_context),
+      callback_(this, callback),
+      performance_(performance),
+      filter_options_(PerformanceEntry::kInvalid),
+      is_registered_(false) {}
+
+void PerformanceObserver::observe(const PerformanceObserverInit& observer_init,
+                                  ExceptionState& exception_state) {
+  if (!performance_) {
+    exception_state.ThrowTypeError(
+        "Window may be destroyed? Performance target is invalid.");
+    return;
+  }
+
+  PerformanceEntryTypeMask entry_types = PerformanceEntry::kInvalid;
+  if (observer_init.hasEntryTypes() && observer_init.entryTypes().size()) {
+    const Vector<String>& sequence = observer_init.entryTypes();
+    for (const auto& entry_type_string : sequence)
+      entry_types |= PerformanceEntry::ToEntryTypeEnum(entry_type_string);
+  }
+  if (entry_types == PerformanceEntry::kInvalid) {
+    exception_state.ThrowTypeError(
+        "A Performance Observer MUST have at least one valid entryType in its "
+        "entryTypes attribute.");
+    return;
+  }
+  filter_options_ = entry_types;
+  if (is_registered_)
+    performance_->UpdatePerformanceObserverFilterOptions();
+  else
+    performance_->RegisterPerformanceObserver(*this);
+  is_registered_ = true;
 }
 
-void PerformanceObserver::observe(const PerformanceObserverInit& observerInit, ExceptionState& exceptionState)
-{
-    if (!m_performance) {
-        exceptionState.throwTypeError("Window may be destroyed? Performance target is invalid.");
-        return;
-    }
-
-    PerformanceEntryTypeMask entryTypes = PerformanceEntry::Invalid;
-    if (observerInit.hasEntryTypes() && observerInit.entryTypes().size()) {
-        const Vector<String>& sequence = observerInit.entryTypes();
-        for (const auto& entryTypeString : sequence)
-            entryTypes |= PerformanceEntry::toEntryTypeEnum(entryTypeString);
-    }
-    if (entryTypes == PerformanceEntry::Invalid) {
-        exceptionState.throwTypeError("A Performance Observer MUST have a non-empty entryTypes attribute.");
-        return;
-    }
-    m_filterOptions = entryTypes;
-    if (m_isRegistered)
-        m_performance->updatePerformanceObserverFilterOptions();
-    else
-        m_performance->registerPerformanceObserver(*this);
-    m_isRegistered = true;
+void PerformanceObserver::disconnect() {
+  if (performance_) {
+    performance_->UnregisterPerformanceObserver(*this);
+  }
+  performance_entries_.Clear();
+  is_registered_ = false;
 }
 
-void PerformanceObserver::disconnect()
-{
-    if (m_performance)
-        m_performance->unregisterPerformanceObserver(*this);
-
-    m_performanceEntries.clear();
-    m_isRegistered = false;
+void PerformanceObserver::EnqueuePerformanceEntry(PerformanceEntry& entry) {
+  ASSERT(IsMainThread());
+  performance_entries_.push_back(&entry);
+  if (performance_)
+    performance_->ActivateObserver(*this);
 }
 
-void PerformanceObserver::enqueuePerformanceEntry(PerformanceEntry& entry)
-{
-    ASSERT(isMainThread());
-    m_performanceEntries.append(&entry);
-    if (m_performance)
-        m_performance->activateObserver(*this);
+bool PerformanceObserver::ShouldBeSuspended() const {
+  return execution_context_->IsContextSuspended();
 }
 
-bool PerformanceObserver::shouldBeSuspended() const
-{
-    return m_callback->getExecutionContext() && m_callback->getExecutionContext()->activeDOMObjectsAreSuspended();
+void PerformanceObserver::Deliver() {
+  ASSERT(!ShouldBeSuspended());
+
+  if (performance_entries_.IsEmpty())
+    return;
+
+  PerformanceEntryVector performance_entries;
+  performance_entries.Swap(performance_entries_);
+  PerformanceObserverEntryList* entry_list =
+      new PerformanceObserverEntryList(performance_entries);
+  callback_->call(this, entry_list, this);
 }
 
-void PerformanceObserver::deliver()
-{
-    ASSERT(!shouldBeSuspended());
-
-    if (m_performanceEntries.isEmpty())
-        return;
-
-    PerformanceEntryVector performanceEntries;
-    performanceEntries.swap(m_performanceEntries);
-    Member<PerformanceObserverEntryList> entryList(new PerformanceObserverEntryList(performanceEntries));
-
-    m_callback->handleEvent(entryList, this);
+DEFINE_TRACE(PerformanceObserver) {
+  visitor->Trace(execution_context_);
+  visitor->Trace(callback_);
+  visitor->Trace(performance_);
+  visitor->Trace(performance_entries_);
 }
 
-DEFINE_TRACE(PerformanceObserver)
-{
-    visitor->trace(m_callback);
-    visitor->trace(m_performance);
-    visitor->trace(m_performanceEntries);
+DEFINE_TRACE_WRAPPERS(PerformanceObserver) {
+  visitor->TraceWrappers(callback_);
 }
 
-} // namespace blink
+}  // namespace blink

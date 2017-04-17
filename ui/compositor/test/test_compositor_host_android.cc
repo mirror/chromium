@@ -16,10 +16,13 @@ namespace ui {
 
 class TestCompositorHostAndroid : public TestCompositorHost {
  public:
-  TestCompositorHostAndroid(const gfx::Rect& bounds,
-                            ui::ContextFactory* context_factory) {
-    compositor_.reset(new ui::Compositor(context_factory,
-                                         base::ThreadTaskRunnerHandle::Get()));
+  TestCompositorHostAndroid(
+      const gfx::Rect& bounds,
+      ui::ContextFactory* context_factory,
+      ui::ContextFactoryPrivate* context_factory_private) {
+    compositor_.reset(new ui::Compositor(
+        context_factory_private->AllocateFrameSinkId(), context_factory,
+        context_factory_private, base::ThreadTaskRunnerHandle::Get()));
     // TODO(sievers): Support onscreen here.
     compositor_->SetAcceleratedWidget(gfx::kNullAcceleratedWidget);
     compositor_->SetScaleAndSize(1.0f,
@@ -27,7 +30,7 @@ class TestCompositorHostAndroid : public TestCompositorHost {
   }
 
   // Overridden from TestCompositorHost:
-  void Show() override {}
+  void Show() override { compositor_->SetVisible(true); }
   ui::Compositor* GetCompositor() override { return compositor_.get(); }
 
  private:
@@ -38,8 +41,10 @@ class TestCompositorHostAndroid : public TestCompositorHost {
 
 TestCompositorHost* TestCompositorHost::Create(
     const gfx::Rect& bounds,
-    ui::ContextFactory* context_factory) {
-  return new TestCompositorHostAndroid(bounds, context_factory);
+    ui::ContextFactory* context_factory,
+    ui::ContextFactoryPrivate* context_factory_private) {
+  return new TestCompositorHostAndroid(bounds, context_factory,
+                                       context_factory_private);
 }
 
 }  // namespace ui

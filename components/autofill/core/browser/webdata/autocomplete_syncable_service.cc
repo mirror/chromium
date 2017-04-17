@@ -5,6 +5,7 @@
 #include "components/autofill/core/browser/webdata/autocomplete_syncable_service.h"
 
 #include <stdint.h>
+
 #include <utility>
 
 #include "base/location.h"
@@ -12,12 +13,12 @@
 #include "base/strings/utf_string_conversions.h"
 #include "components/autofill/core/browser/webdata/autofill_table.h"
 #include "components/autofill/core/browser/webdata/autofill_webdata_service.h"
+#include "components/sync/model/sync_error.h"
+#include "components/sync/model/sync_error_factory.h"
+#include "components/sync/protocol/autofill_specifics.pb.h"
+#include "components/sync/protocol/sync.pb.h"
 #include "components/webdata/common/web_database.h"
 #include "net/base/escape.h"
-#include "sync/api/sync_error.h"
-#include "sync/api/sync_error_factory.h"
-#include "sync/protocol/autofill_specifics.pb.h"
-#include "sync/protocol/sync.pb.h"
 
 namespace autofill {
 namespace {
@@ -308,15 +309,14 @@ void AutocompleteSyncableService::CreateOrUpdateEntry(
     return;
   }
 
-  AutofillKey key(autofill_specifics.name().c_str(),
-                  autofill_specifics.value().c_str());
+  AutofillKey key(autofill_specifics.name(), autofill_specifics.value());
   AutocompleteEntryMap::iterator it = loaded_data->find(key);
   const google::protobuf::RepeatedField<int64_t>& timestamps =
       autofill_specifics.usage_timestamp();
   if (it == loaded_data->end()) {
     // New entry.
     base::Time date_created, date_last_used;
-    if (timestamps.size() > 0) {
+    if (!timestamps.empty()) {
       date_created = base::Time::FromInternalValue(*timestamps.begin());
       date_last_used = base::Time::FromInternalValue(*timestamps.rbegin());
     }

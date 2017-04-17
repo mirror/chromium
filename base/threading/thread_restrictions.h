@@ -6,19 +6,17 @@
 #define BASE_THREADING_THREAD_RESTRICTIONS_H_
 
 #include "base/base_export.h"
+#include "base/logging.h"
 #include "base/macros.h"
-
-// See comment at top of thread_checker.h
-#if (!defined(NDEBUG) || defined(DCHECK_ALWAYS_ON))
-#define ENABLE_THREAD_RESTRICTIONS 1
-#else
-#define ENABLE_THREAD_RESTRICTIONS 0
-#endif
 
 class BrowserProcessImpl;
 class HistogramSynchronizer;
 class NativeBackendKWallet;
-class ScopedAllowWaitForLegacyWebViewApi;
+
+namespace android_webview {
+class AwFormDatabaseService;
+class CookieManager;
+}
 
 namespace cc {
 class CompletionEvent;
@@ -43,6 +41,9 @@ class NestedMessagePumpAndroid;
 class ScopedAllowWaitForAndroidLayoutTests;
 class ScopedAllowWaitForDebugURL;
 class SoftwareOutputDeviceMus;
+class SynchronousCompositor;
+class SynchronousCompositorBrowserFilter;
+class SynchronousCompositorHost;
 class TextInputClientMac;
 class CategorizedWorkerPool;
 }  // namespace content
@@ -57,10 +58,10 @@ namespace gpu {
 class GpuChannelHost;
 }
 namespace mojo {
-namespace common {
-class MessagePumpMojo;
-}
 class SyncCallRestrictions;
+namespace edk {
+class ScopedIPCSupport;
+}
 }
 namespace ui {
 class CommandBufferClientImpl;
@@ -90,6 +91,10 @@ namespace base {
 
 namespace android {
 class JavaHandlerThread;
+}
+
+namespace internal {
+class TaskTracker;
 }
 
 class SequencedWorkerPool;
@@ -137,21 +142,7 @@ class BASE_EXPORT ThreadRestrictions {
     DISALLOW_COPY_AND_ASSIGN(ScopedAllowIO);
   };
 
-  // Constructing a ScopedAllowSingleton temporarily allows accessing for the
-  // current thread.  Doing this is almost always incorrect.
-  class BASE_EXPORT ScopedAllowSingleton {
-   public:
-    ScopedAllowSingleton() { previous_value_ = SetSingletonAllowed(true); }
-    ~ScopedAllowSingleton() { SetSingletonAllowed(previous_value_); }
-   private:
-    // Whether singleton use is allowed when the ScopedAllowSingleton was
-    // constructed.
-    bool previous_value_;
-
-    DISALLOW_COPY_AND_ASSIGN(ScopedAllowSingleton);
-  };
-
-#if ENABLE_THREAD_RESTRICTIONS
+#if DCHECK_IS_ON()
   // Set whether the current thread to make IO calls.
   // Threads start out in the *allowed* state.
   // Returns the previous value.
@@ -190,14 +181,19 @@ class BASE_EXPORT ThreadRestrictions {
  private:
   // DO NOT ADD ANY OTHER FRIEND STATEMENTS, talk to jam or brettw first.
   // BEGIN ALLOWED USAGE.
+  friend class android_webview::AwFormDatabaseService;
+  friend class android_webview::CookieManager;
   friend class content::BrowserShutdownProfileDumper;
   friend class content::BrowserSurfaceViewManager;
   friend class content::BrowserTestBase;
   friend class content::NestedMessagePumpAndroid;
   friend class content::ScopedAllowWaitForAndroidLayoutTests;
   friend class content::ScopedAllowWaitForDebugURL;
+  friend class content::SynchronousCompositor;
+  friend class content::SynchronousCompositorBrowserFilter;
+  friend class content::SynchronousCompositorHost;
   friend class ::HistogramSynchronizer;
-  friend class ::ScopedAllowWaitForLegacyWebViewApi;
+  friend class internal::TaskTracker;
   friend class cc::CompletionEvent;
   friend class cc::SingleThreadTaskGraphRunner;
   friend class content::CategorizedWorkerPool;
@@ -210,8 +206,8 @@ class BASE_EXPORT ThreadRestrictions {
   friend class ThreadTestHelper;
   friend class PlatformThread;
   friend class android::JavaHandlerThread;
-  friend class mojo::common::MessagePumpMojo;
   friend class mojo::SyncCallRestrictions;
+  friend class mojo::edk::ScopedIPCSupport;
   friend class ui::CommandBufferClientImpl;
   friend class ui::CommandBufferLocal;
   friend class ui::GpuState;
@@ -240,7 +236,7 @@ class BASE_EXPORT ThreadRestrictions {
   friend class views::ScreenMus;
 // END USAGE THAT NEEDS TO BE FIXED.
 
-#if ENABLE_THREAD_RESTRICTIONS
+#if DCHECK_IS_ON()
   static bool SetWaitAllowed(bool allowed);
 #else
   static bool SetWaitAllowed(bool allowed) { return true; }

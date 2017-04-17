@@ -9,15 +9,16 @@
 #include "base/memory/weak_ptr.h"
 #include "device/usb/usb_device.h"
 
+namespace base {
+class SequencedTaskRunner;
+}
+
 namespace device {
 
 class UsbServiceAndroid;
 
 class UsbDeviceAndroid : public UsbDevice {
  public:
-  // Register C++ methods exposed to Java using JNI.
-  static bool RegisterJNI(JNIEnv* env);
-
   static scoped_refptr<UsbDeviceAndroid> Create(
       JNIEnv* env,
       base::WeakPtr<UsbServiceAndroid> service,

@@ -4,31 +4,26 @@
 
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager_chromeos.h"
 
-#include "ash/aura/wm_window_aura.h"
-#include "ash/common/ash_switches.h"
-#include "ash/common/multi_profile_uma.h"
-#include "ash/common/session/session_state_delegate.h"
-#include "ash/common/shell_window_ids.h"
-#include "ash/common/system/tray/system_tray_notifier.h"
-#include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
-#include "ash/common/wm/window_state.h"
-#include "ash/common/wm_shell.h"
-#include "ash/root_window_controller.h"
-#include "ash/shelf/shelf.h"
+#include "ash/media_controller.h"
+#include "ash/multi_profile_uma.h"
+#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
+#include "ash/wm/window_state.h"
 #include "ash/wm/window_state_aura.h"
+#include "ash/wm_window.h"
 #include "base/auto_reset.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string_util.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
-#include "chrome/browser/chromeos/login/session/user_session_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_notification_blocker_chromeos.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chrome/browser/ui/ash/multi_user/user_switch_animator_chromeos.h"
+#include "chrome/browser/ui/ash/session_controller_client.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
@@ -36,10 +31,10 @@
 #include "content/public/browser/notification_service.h"
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/app_window_registry.h"
-#include "google_apis/gaia/gaia_auth_util.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
+#include "ui/aura/window_tree_host.h"
 #include "ui/base/ui_base_types.h"
 #include "ui/events/event.h"
 #include "ui/message_center/message_center.h"
@@ -59,47 +54,6 @@ const int kUserFadeTimeMS = 110;
 
 // The animation time in ms for a window which get teleported to another screen.
 const int kTeleportAnimationTimeMS = 300;
-
-// Checks if a given event is a user event.
-bool IsUserEvent(const ui::Event* e) {
-  if (e) {
-    ui::EventType type = e->type();
-    if (type != ui::ET_CANCEL_MODE &&
-        type != ui::ET_UMA_DATA &&
-        type != ui::ET_UNKNOWN)
-      return true;
-  }
-  return false;
-}
-
-// Test if we are currently processing a user event which might lead to a
-// browser / app creation.
-bool IsProcessingUserEvent() {
-  // When there is a nested message loop (e.g. active menu or drag and drop
-  // operation) - we are in a nested loop and can ignore this.
-  // Note: Unit tests might not have a message loop.
-  base::MessageLoop* message_loop = base::MessageLoop::current();
-  if (message_loop && message_loop->is_running() && message_loop->IsNested())
-    return false;
-
-  // TODO(skuhne): "Open link in new window" will come here after the menu got
-  // closed, executing the command from the nested menu loop. However at that
-  // time there is no active event processed. A solution for that need to be
-  // found past M-32. A global event handler filter (pre and post) might fix
-  // that problem in conjunction with a depth counter - but - for the menu
-  // execution we come here after the loop was finished (so it's not nested
-  // anymore) and the root window should therefore still have the event which
-  // lead to the menu invocation, but it is not. By fixing that problem this
-  // would "magically work".
-  aura::Window::Windows root_window_list = ash::Shell::GetAllRootWindows();
-  for (aura::Window::Windows::iterator it = root_window_list.begin();
-       it != root_window_list.end();
-       ++it) {
-    if (IsUserEvent((*it)->GetHost()->dispatcher()->current_event()))
-      return true;
-  }
-  return false;
-}
 
 // Records the type of window which was transferred to another desktop.
 void RecordUMAForTransferredWindowType(aura::Window* window) {
@@ -173,24 +127,18 @@ class AnimationSetter {
  public:
   AnimationSetter(aura::Window* window, int animation_time_in_ms)
       : window_(window),
-        previous_animation_type_(
-            wm::GetWindowVisibilityAnimationType(window_)),
+        previous_animation_type_(wm::GetWindowVisibilityAnimationType(window_)),
         previous_animation_time_(
             wm::GetWindowVisibilityAnimationDuration(*window_)) {
     wm::SetWindowVisibilityAnimationType(
-        window_,
-        wm::WINDOW_VISIBILITY_ANIMATION_TYPE_FADE);
+        window_, wm::WINDOW_VISIBILITY_ANIMATION_TYPE_FADE);
     wm::SetWindowVisibilityAnimationDuration(
-        window_,
-        base::TimeDelta::FromMilliseconds(animation_time_in_ms));
+        window_, base::TimeDelta::FromMilliseconds(animation_time_in_ms));
   }
 
   ~AnimationSetter() {
-    wm::SetWindowVisibilityAnimationType(window_,
-                                                    previous_animation_type_);
-    wm::SetWindowVisibilityAnimationDuration(
-        window_,
-        previous_animation_time_);
+    wm::SetWindowVisibilityAnimationType(window_, previous_animation_type_);
+    wm::SetWindowVisibilityAnimationDuration(window_, previous_animation_time_);
   }
 
  private:
@@ -248,14 +196,15 @@ MultiUserWindowManagerChromeOS::~MultiUserWindowManagerChromeOS() {
   // Remove all window observers.
   WindowToEntryMap::iterator window = window_to_entry_.begin();
   while (window != window_to_entry_.end()) {
+    // Explicitly remove this from window observer list since OnWindowDestroyed
+    // no longer does that.
+    window->first->RemoveObserver(this);
     OnWindowDestroyed(window->first);
     window = window_to_entry_.begin();
   }
 
-  if (ash::WmShell::HasInstance()) {
-    ash::WmShell::Get()->GetSessionStateDelegate()->RemoveSessionStateObserver(
-        this);
-  }
+  if (user_manager::UserManager::IsInitialized())
+    user_manager::UserManager::Get()->RemoveSessionStateObserver(this);
 
   // Remove all app observers.
   ProfileManager* profile_manager = g_browser_process->profile_manager();
@@ -284,10 +233,8 @@ void MultiUserWindowManagerChromeOS::Init() {
          account_id_to_app_observer_.end());
 
   // Add a session state observer to be able to monitor session changes.
-  if (ash::WmShell::HasInstance()) {
-    ash::WmShell::Get()->GetSessionStateDelegate()->AddSessionStateObserver(
-        this);
-  }
+  if (user_manager::UserManager::IsInitialized())
+    user_manager::UserManager::Get()->AddSessionStateObserver(this);
 
   // The BrowserListObserver would have been better to use then the old
   // notification system, but that observer fires before the window got created.
@@ -321,7 +268,7 @@ void MultiUserWindowManagerChromeOS::SetWindowOwner(
 
   // Check if this window was created due to a user interaction. If it was,
   // transfer it to the current user.
-  if (IsProcessingUserEvent())
+  if (window->GetProperty(aura::client::kCreatedByUserGesture))
     window_to_entry_[window]->set_show_for_user(current_account_id_);
 
   // Add all transient children to our set of windows. Note that the function
@@ -329,7 +276,8 @@ void MultiUserWindowManagerChromeOS::SetWindowOwner(
   AddTransientOwnerRecursive(window, window);
 
   // Notify entry adding.
-  FOR_EACH_OBSERVER(Observer, observers_, OnOwnerEntryAdded(window));
+  for (Observer& observer : observers_)
+    observer.OnOwnerEntryAdded(window);
 
   if (!IsWindowOnDesktopOfUser(window, current_account_id_))
     SetWindowVisibility(window, false, 0);
@@ -354,7 +302,7 @@ void MultiUserWindowManagerChromeOS::ShowWindowForUser(
       previous_owner != current_account_id_)
     return;
 
-  ash::WmShell::Get()->GetSessionStateDelegate()->SwitchActiveUser(account_id);
+  SessionControllerClient::DoSwitchActiveUser(account_id);
 }
 
 bool MultiUserWindowManagerChromeOS::AreWindowsSharedAmongUsers() const {
@@ -433,9 +381,9 @@ void MultiUserWindowManagerChromeOS::RemoveObserver(Observer* observer) {
 }
 
 void MultiUserWindowManagerChromeOS::ActiveUserChanged(
-    const AccountId& account_id) {
+    const user_manager::User* active_user) {
   // This needs to be set before the animation starts.
-  current_account_id_ = account_id;
+  current_account_id_ = active_user->GetAccountId();
 
   // Here to avoid a very nasty race condition, we must destruct any previously
   // created animation before creating a new one. Otherwise, the newly
@@ -443,10 +391,11 @@ void MultiUserWindowManagerChromeOS::ActiveUserChanged(
   // animation only to be reshown again by the destructor of the old animation.
   animation_.reset();
   animation_.reset(new UserSwitchAnimatorChromeOS(
-      this, account_id, GetAdjustedAnimationTimeInMS(kUserFadeTimeMS)));
+      this, current_account_id_,
+      GetAdjustedAnimationTimeInMS(kUserFadeTimeMS)));
   // Call notifier here instead of observing ActiveUserChanged because
   // this must happen after MultiUserWindowManagerChromeOS is notified.
-  ash::WmShell::Get()->system_tray_notifier()->NotifyMediaCaptureChanged();
+  ash::Shell::Get()->media_controller()->RequestCaptureState();
 }
 
 void MultiUserWindowManagerChromeOS::OnWindowDestroyed(aura::Window* window) {
@@ -462,7 +411,8 @@ void MultiUserWindowManagerChromeOS::OnWindowDestroyed(aura::Window* window) {
   window_to_entry_.erase(window);
 
   // Notify entry change.
-  FOR_EACH_OBSERVER(Observer, observers_, OnOwnerEntryRemoved(window));
+  for (Observer& observer : observers_)
+    observer.OnOwnerEntryRemoved(window);
 }
 
 void MultiUserWindowManagerChromeOS::OnWindowVisibilityChanging(
@@ -589,7 +539,8 @@ bool MultiUserWindowManagerChromeOS::ShowWindowForUserIntern(
   }
 
   // Notify entry change.
-  FOR_EACH_OBSERVER(Observer, observers_, OnOwnerEntryChanged(window));
+  for (Observer& observer : observers_)
+    observer.OnOwnerEntryChanged(window);
   return true;
 }
 
@@ -617,8 +568,7 @@ void MultiUserWindowManagerChromeOS::SetWindowVisibility(
         account_id = GetUserPresentingWindow(owning_window);
         DCHECK(account_id.is_valid());
       }
-      ash::WmShell::Get()->GetSessionStateDelegate()->SwitchActiveUser(
-          account_id);
+      SessionControllerClient::DoSwitchActiveUser(account_id);
       return;
     }
   }
@@ -634,7 +584,8 @@ void MultiUserWindowManagerChromeOS::SetWindowVisibility(
 }
 
 void MultiUserWindowManagerChromeOS::NotifyAfterUserSwitchAnimationFinished() {
-  FOR_EACH_OBSERVER(Observer, observers_, OnUserSwitchAnimationFinished());
+  for (Observer& observer : observers_)
+    observer.OnUserSwitchAnimationFinished();
 }
 
 void MultiUserWindowManagerChromeOS::AddBrowserWindow(Browser* browser) {
@@ -740,8 +691,8 @@ void MultiUserWindowManagerChromeOS::SetWindowVisible(
   // we tell it to maximize / track this window now before it gets shown, to
   // reduce animation jank from multiple resizes.
   if (visible) {
-    ash::WmShell::Get()->maximize_mode_controller()->AddWindow(
-        ash::WmWindowAura::Get(window));
+    ash::Shell::Get()->maximize_mode_controller()->AddWindow(
+        ash::WmWindow::Get(window));
   }
 
   AnimationSetter animation_setter(

@@ -12,12 +12,12 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
+#include "components/autofill/core/browser/autofill_client.h"
 #include "components/autofill/core/browser/card_unmask_delegate.h"
 #include "components/autofill/core/browser/payments/payments_client.h"
 
 namespace autofill {
 
-class AutofillClient;
 class CreditCard;
 class PersonalDataManager;
 
@@ -27,29 +27,44 @@ namespace payments {
 class FullCardRequest : public CardUnmaskDelegate {
  public:
   // The interface for receiving the full card details.
-  class Delegate {
+  class ResultDelegate {
    public:
-    virtual void OnFullCardDetails(const CreditCard& card,
-                                   const base::string16& cvc) = 0;
-    virtual void OnFullCardError() = 0;
+    virtual ~ResultDelegate() = default;
+    virtual void OnFullCardRequestSucceeded(const CreditCard& card,
+                                            const base::string16& cvc) = 0;
+    virtual void OnFullCardRequestFailed() = 0;
+  };
+
+  // The delegate responsible for displaying the unmask prompt UI.
+  class UIDelegate {
+   public:
+    virtual ~UIDelegate() = default;
+    virtual void ShowUnmaskPrompt(
+        const CreditCard& card,
+        AutofillClient::UnmaskCardReason reason,
+        base::WeakPtr<CardUnmaskDelegate> delegate) = 0;
+    virtual void OnUnmaskVerificationResult(
+        AutofillClient::PaymentsRpcResult result) = 0;
   };
 
   // The parameters should outlive the FullCardRequest.
-  FullCardRequest(AutofillClient* autofill_client,
+  FullCardRequest(RiskDataLoader* risk_data_loader,
                   payments::PaymentsClient* payments_client,
                   PersonalDataManager* personal_data_manager);
   ~FullCardRequest();
 
   // Retrieves the pan and cvc for |card| and invokes
-  // Delegate::OnFullCardDetails() or Delegate::OnFullCardError(). Only one
-  // request should be active at a time.
+  // Delegate::OnFullCardRequestSucceeded() or
+  // Delegate::OnFullCardRequestFailed(). Only one request should be active at a
+  // time.
   //
   // If the card is local, has a non-empty GUID, and the user has updated its
   // expiration date, then this function will write the new information to
   // autofill table on disk.
   void GetFullCard(const CreditCard& card,
                    AutofillClient::UnmaskCardReason reason,
-                   base::WeakPtr<Delegate> delegate);
+                   base::WeakPtr<ResultDelegate> result_delegate,
+                   base::WeakPtr<UIDelegate> ui_delegate);
 
   // Returns true if there's a pending request to get the full card.
   bool IsGettingFullCard() const;
@@ -68,9 +83,8 @@ class FullCardRequest : public CardUnmaskDelegate {
   // Resets the state of the request.
   void Reset();
 
-  // Responsible for showing the UI that prompts the user for the CVC and/or the
-  // updated expiration date.
-  AutofillClient* const autofill_client_;
+  // Used to fetch risk data for this request.
+  RiskDataLoader* const risk_data_loader_;
 
   // Responsible for unmasking a masked server card.
   payments::PaymentsClient* const payments_client_;
@@ -79,7 +93,10 @@ class FullCardRequest : public CardUnmaskDelegate {
   PersonalDataManager* const personal_data_manager_;
 
   // Receiver of the full PAN and CVC.
-  base::WeakPtr<Delegate> delegate_;
+  base::WeakPtr<ResultDelegate> result_delegate_;
+
+  // Delegate responsible for displaying the unmask prompt UI.
+  base::WeakPtr<UIDelegate> ui_delegate_;
 
   // The pending request to get a card's full PAN and CVC.
   std::unique_ptr<payments::PaymentsClient::UnmaskRequestDetails> request_;

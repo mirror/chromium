@@ -6,15 +6,15 @@
 
 #include "base/memory/ptr_util.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/base/ui_features.h"
+#include "ui/gfx/color_utils.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/gfx/vector_icons.h"
 #include "ui/resources/grit/ui_resources.h"
 #include "ui/views/controls/button/label_button.h"
-#include "ui/views/controls/button/label_button_border.h"
-#include "ui/views/controls/focusable_rounded_border_mac.h"
 #import "ui/views/controls/scrollbar/cocoa_scroll_bar.h"
-#include "ui/views/style/mac/combobox_background_mac.h"
-#include "ui/views/style/mac/dialog_button_border_mac.h"
+#include "ui/views/vector_icons.h"
+
+#import <Cocoa/Cocoa.h>
 
 namespace views {
 
@@ -23,10 +23,27 @@ const int PlatformStyle::kMinLabelButtonWidth = 32;
 const int PlatformStyle::kMinLabelButtonHeight = 30;
 const bool PlatformStyle::kDefaultLabelButtonHasBoldFont = false;
 const bool PlatformStyle::kDialogDefaultButtonCanBeCancel = false;
-const bool PlatformStyle::kTextfieldDragVerticallyDragsToEnd = true;
+const bool PlatformStyle::kSelectWordOnRightClick = true;
+const bool PlatformStyle::kSelectAllOnRightClickWhenUnfocused = true;
+const bool PlatformStyle::kTreeViewSelectionPaintsEntireRow = true;
+const bool PlatformStyle::kTreeViewUsesOpenIcon = false;
+const bool PlatformStyle::kUseRipples = false;
+
+// On Mac, the Cocoa browser window does not flip its UI in RTL (e.g. bookmark
+// star remains on the right, padlock on the left). So bubbles should open in
+// the same direction as in LTR by default, unless the entire browser is views.
+const bool PlatformStyle::kMirrorBubbleArrowInRTLByDefault =
+    BUILDFLAG(MAC_VIEWS_BROWSER);
 
 const CustomButton::NotifyAction PlatformStyle::kMenuNotifyActivationAction =
     CustomButton::NOTIFY_ON_PRESS;
+
+const CustomButton::KeyClickAction PlatformStyle::kKeyClickActionOnSpace =
+    CustomButton::CLICK_ON_KEY_PRESS;
+
+// On Mac, the Return key is used to perform the default action even when a
+// control is focused.
+const bool PlatformStyle::kReturnClicksFocusedControl = false;
 
 // static
 gfx::ImageSkia PlatformStyle::CreateComboboxArrow(bool is_enabled,
@@ -39,34 +56,13 @@ gfx::ImageSkia PlatformStyle::CreateComboboxArrow(bool is_enabled,
   }
   const int kComboboxArrowWidth = 24;
   return gfx::CreateVectorIcon(
-      is_enabled ? gfx::VectorIconId::COMBOBOX_ARROW_MAC_ENABLED
-                 : gfx::VectorIconId::COMBOBOX_ARROW_MAC_DISABLED,
+      is_enabled ? kComboboxArrowMacEnabledIcon : kComboboxArrowMacDisabledIcon,
       kComboboxArrowWidth, SK_ColorBLACK);
 }
 
 // static
-std::unique_ptr<FocusableBorder> PlatformStyle::CreateComboboxBorder() {
-  return base::WrapUnique(new FocusableRoundedBorder);
-}
-
-// static
-std::unique_ptr<Background> PlatformStyle::CreateComboboxBackground(
-    int shoulder_width) {
-  return base::WrapUnique(new ComboboxBackgroundMac(shoulder_width));
-}
-
-// static
-std::unique_ptr<LabelButtonBorder> PlatformStyle::CreateLabelButtonBorder(
-    Button::ButtonStyle style) {
-  if (style == Button::STYLE_BUTTON)
-    return base::WrapUnique(new DialogButtonBorderMac());
-
-  return base::WrapUnique(new LabelButtonAssetBorder(style));
-}
-
-// static
 std::unique_ptr<ScrollBar> PlatformStyle::CreateScrollBar(bool is_horizontal) {
-  return base::WrapUnique(new CocoaScrollBar(is_horizontal));
+  return base::MakeUnique<CocoaScrollBar>(is_horizontal);
 }
 
 // static
@@ -74,8 +70,7 @@ SkColor PlatformStyle::TextColorForButton(
     const ButtonColorByState& color_by_state,
     const LabelButton& button) {
   Button::ButtonState state = button.state();
-  if (button.style() == Button::STYLE_BUTTON &&
-      DialogButtonBorderMac::ShouldRenderDefault(button)) {
+  if (button.style() == Button::STYLE_BUTTON && button.is_default()) {
     // For convenience, we currently assume Mac wants the color corresponding to
     // the pressed state for default buttons.
     state = Button::STATE_PRESSED;
@@ -87,10 +82,13 @@ SkColor PlatformStyle::TextColorForButton(
 void PlatformStyle::ApplyLabelButtonTextStyle(
     views::Label* label,
     ButtonColorByState* color_by_state) {
-  const ui::NativeTheme* theme = label->GetNativeTheme();
   ButtonColorByState& colors = *color_by_state;
-  colors[Button::STATE_PRESSED] =
-      theme->GetSystemColor(ui::NativeTheme::kColorId_ButtonHighlightColor);
+  colors[Button::STATE_PRESSED] = SK_ColorWHITE;
+}
+
+// static
+void PlatformStyle::OnTextfieldEditFailed() {
+  NSBeep();
 }
 
 }  // namespace views

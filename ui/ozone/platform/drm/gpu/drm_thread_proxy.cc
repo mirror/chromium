@@ -24,7 +24,7 @@ void DrmThreadProxy::BindThreadIntoMessagingProxy(
 
 std::unique_ptr<DrmWindowProxy> DrmThreadProxy::CreateDrmWindowProxy(
     gfx::AcceleratedWidget widget) {
-  return base::WrapUnique(new DrmWindowProxy(widget, &drm_thread_));
+  return base::MakeUnique<DrmWindowProxy>(widget, &drm_thread_);
 }
 
 scoped_refptr<GbmBuffer> DrmThreadProxy::CreateBuffer(
@@ -61,6 +61,13 @@ void DrmThreadProxy::GetScanoutFormats(
       drm_thread_.task_runner(),
       base::Bind(&DrmThread::GetScanoutFormats, base::Unretained(&drm_thread_),
                  widget, scanout_formats));
+}
+
+void DrmThreadProxy::AddBinding(ozone::mojom::DeviceCursorRequest request) {
+  drm_thread_.task_runner()->PostTask(
+      FROM_HERE,
+      base::Bind(&DrmThread::AddBinding, base::Unretained(&drm_thread_),
+                 base::Passed(&request)));
 }
 
 }  // namespace ui

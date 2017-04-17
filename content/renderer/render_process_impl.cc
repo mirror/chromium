@@ -12,15 +12,32 @@
 #include <mlang.h>
 #endif
 
+#include <stddef.h>
+
+#include <algorithm>
+#include <utility>
+
+#include "base/bind.h"
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
+#include "base/debug/crash_logging.h"
 #include "base/feature_list.h"
+#include "base/memory/ptr_util.h"
 #include "base/sys_info.h"
+#include "base/task_scheduler/initialization_util.h"
+#include "base/time/time.h"
 #include "content/child/site_isolation_stats_gatherer.h"
+#include "content/public/common/bindings_policy.h"
+#include "content/public/common/content_client.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/renderer/content_renderer_client.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
 #include "v8/include/v8.h"
+
+#if defined(OS_WIN)
+#include "base/win/win_util.h"
+#endif
 
 namespace {
 
@@ -43,18 +60,54 @@ void SetV8FlagIfFeature(const base::Feature& feature, const char* v8_flag) {
   }
 }
 
+void SetV8FlagIfNotFeature(const base::Feature& feature, const char* v8_flag) {
+  if (!base::FeatureList::IsEnabled(feature)) {
+    v8::V8::SetFlagsFromString(v8_flag, strlen(v8_flag));
+  }
+}
+
 void SetV8FlagIfHasSwitch(const char* switch_name, const char* v8_flag) {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(switch_name)) {
     v8::V8::SetFlagsFromString(v8_flag, strlen(v8_flag));
   }
 }
 
+std::unique_ptr<base::TaskScheduler::InitParams>
+GetDefaultTaskSchedulerInitParams() {
+  using StandbyThreadPolicy =
+      base::SchedulerWorkerPoolParams::StandbyThreadPolicy;
+
+  constexpr int kMaxNumThreadsInBackgroundPool = 1;
+  constexpr int kMaxNumThreadsInBackgroundBlockingPool = 1;
+  constexpr int kMaxNumThreadsInForegroundPoolLowerBound = 2;
+  constexpr int kMaxNumThreadsInForegroundBlockingPool = 1;
+  constexpr auto kSuggestedReclaimTime = base::TimeDelta::FromSeconds(30);
+
+  return base::MakeUnique<base::TaskScheduler::InitParams>(
+      base::SchedulerWorkerPoolParams(StandbyThreadPolicy::LAZY,
+                                      kMaxNumThreadsInBackgroundPool,
+                                      kSuggestedReclaimTime),
+      base::SchedulerWorkerPoolParams(StandbyThreadPolicy::LAZY,
+                                      kMaxNumThreadsInBackgroundBlockingPool,
+                                      kSuggestedReclaimTime),
+      base::SchedulerWorkerPoolParams(
+          StandbyThreadPolicy::LAZY,
+          std::max(kMaxNumThreadsInForegroundPoolLowerBound,
+                   base::SysInfo::NumberOfProcessors()),
+          kSuggestedReclaimTime),
+      base::SchedulerWorkerPoolParams(StandbyThreadPolicy::LAZY,
+                                      kMaxNumThreadsInForegroundBlockingPool,
+                                      kSuggestedReclaimTime));
+}
+
 }  // namespace
 
 namespace content {
 
-RenderProcessImpl::RenderProcessImpl()
-    : enabled_bindings_(0) {
+RenderProcessImpl::RenderProcessImpl(
+    std::unique_ptr<base::TaskScheduler::InitParams> task_scheduler_init_params)
+    : RenderProcess("Renderer", std::move(task_scheduler_init_params)),
+      enabled_bindings_(0) {
 #if defined(OS_WIN)
   // HACK:  See http://b/issue?id=1024307 for rationale.
   if (GetModuleHandle(L"LPK.DLL") == NULL) {
@@ -86,7 +139,11 @@ RenderProcessImpl::RenderProcessImpl()
   SetV8FlagIfHasSwitch(switches::kDisableJavaScriptHarmonyShipping,
                        "--noharmony-shipping");
   SetV8FlagIfHasSwitch(switches::kJavaScriptHarmony, "--harmony");
-  SetV8FlagIfHasSwitch(switches::kEnableWasm, "--expose-wasm");
+  SetV8FlagIfFeature(features::kAsmJsToWebAssembly, "--validate-asm");
+  SetV8FlagIfNotFeature(features::kWebAssembly,
+                        "--wasm-disable-structured-cloning");
+  SetV8FlagIfFeature(features::kSharedArrayBuffer,
+                     "--harmony-sharedarraybuffer");
 
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
@@ -99,16 +156,31 @@ RenderProcessImpl::RenderProcessImpl()
 
   SiteIsolationStatsGatherer::SetEnabled(
       GetContentClient()->renderer()->ShouldGatherSiteIsolationStats());
+
+  if (command_line.HasSwitch(switches::kDomAutomationController))
+    enabled_bindings_ |= BINDINGS_POLICY_DOM_AUTOMATION;
+  if (command_line.HasSwitch(switches::kStatsCollectionController))
+    enabled_bindings_ |= BINDINGS_POLICY_STATS_COLLECTION;
 }
 
 RenderProcessImpl::~RenderProcessImpl() {
 #ifndef NDEBUG
-  int count = blink::WebFrame::instanceCount();
+  int count = blink::WebFrame::InstanceCount();
   if (count)
     DLOG(ERROR) << "WebFrame LEAKED " << count << " TIMES";
 #endif
 
   GetShutDownEvent()->Signal();
+}
+
+std::unique_ptr<RenderProcess> RenderProcessImpl::Create() {
+  auto task_scheduler_init_params =
+      content::GetContentClient()->renderer()->GetTaskSchedulerInitParams();
+  if (!task_scheduler_init_params)
+    task_scheduler_init_params = GetDefaultTaskSchedulerInitParams();
+
+  return base::WrapUnique(
+      new RenderProcessImpl(std::move(task_scheduler_init_params)));
 }
 
 void RenderProcessImpl::AddBindings(int bindings) {

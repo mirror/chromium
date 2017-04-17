@@ -31,21 +31,20 @@
 #ifndef ThreadState_h
 #define ThreadState_h
 
+#include <memory>
 #include "platform/PlatformExport.h"
 #include "platform/heap/BlinkGC.h"
-#include "platform/heap/BlinkGCInterruptor.h"
 #include "platform/heap/ThreadingTraits.h"
+#include "platform/wtf/AddressSanitizer.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Functional.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/ThreadSpecific.h"
+#include "platform/wtf/Threading.h"
+#include "platform/wtf/ThreadingPrimitives.h"
 #include "public/platform/WebThread.h"
-#include "wtf/AddressSanitizer.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/Functional.h"
-#include "wtf/HashMap.h"
-#include "wtf/HashSet.h"
-#include "wtf/ThreadSpecific.h"
-#include "wtf/Threading.h"
-#include "wtf/ThreadingPrimitives.h"
-#include <memory>
 
 namespace v8 {
 class Isolate;
@@ -54,15 +53,10 @@ class Isolate;
 namespace blink {
 
 class BasePage;
-class CallbackStack;
-struct GCInfo;
 class GarbageCollectedMixinConstructorMarker;
-class HeapObjectHeader;
 class PersistentNode;
 class PersistentRegion;
 class BaseArena;
-class SafePointAwareMutexLocker;
-class SafePointBarrier;
 class ThreadHeap;
 class ThreadState;
 class Visitor;
@@ -79,24 +73,20 @@ class Visitor;
 // Since a pre-finalizer adds pressure on GC performance, you should use it
 // only if necessary.
 //
-// A pre-finalizer is similar to the HeapHashMap<WeakMember<Foo>, std::unique_ptr<Disposer>>
-// idiom.  The difference between this and the idiom is that pre-finalizer
-// function is called whenever an object is destructed with this feature.  The
-// HeapHashMap<WeakMember<Foo>, std::unique_ptr<Disposer>> idiom requires an assumption
-// that the HeapHashMap outlives objects pointed by WeakMembers.
-// FIXME: Replace all of the HeapHashMap<WeakMember<Foo>, std::unique_ptr<Disposer>>
-// idiom usages with the pre-finalizer if the replacement won't cause
-// performance regressions.
+// A pre-finalizer is similar to the
+// HeapHashMap<WeakMember<Foo>, std::unique_ptr<Disposer>> idiom.  The
+// difference between this and the idiom is that pre-finalizer function is
+// called whenever an object is destructed with this feature.  The
+// HeapHashMap<WeakMember<Foo>, std::unique_ptr<Disposer>> idiom requires an
+// assumption that the HeapHashMap outlives objects pointed by WeakMembers.
+// FIXME: Replace all of the
+// HeapHashMap<WeakMember<Foo>, std::unique_ptr<Disposer>> idiom usages with the
+// pre-finalizer if the replacement won't cause performance regressions.
 //
 // Usage:
 //
 // class Foo : GarbageCollected<Foo> {
 //     USING_PRE_FINALIZER(Foo, dispose);
-// public:
-//     Foo()
-//     {
-//         ThreadState::current()->registerPreFinalizer(this);
-//     }
 // private:
 //     void dispose()
 //     {
@@ -104,612 +94,645 @@ class Visitor;
 //     }
 //     Member<Bar> m_bar;
 // };
-#define USING_PRE_FINALIZER(Class, preFinalizer)    \
-public:                                             \
-static bool invokePreFinalizer(void* object)        \
-{                                                   \
-    Class* self = reinterpret_cast<Class*>(object); \
-    if (ThreadHeap::isHeapObjectAlive(self))              \
-        return false;                               \
-    self->Class::preFinalizer();                    \
-    return true;                                    \
-}                                                   \
-using UsingPreFinalizerMacroNeedsTrailingSemiColon = char
+#define USING_PRE_FINALIZER(Class, preFinalizer)                           \
+ public:                                                                   \
+  static bool InvokePreFinalizer(void* object) {                           \
+    Class* self = reinterpret_cast<Class*>(object);                        \
+    if (ThreadHeap::IsHeapObjectAlive(self))                               \
+      return false;                                                        \
+    self->Class::preFinalizer();                                           \
+    return true;                                                           \
+  }                                                                        \
+                                                                           \
+ private:                                                                  \
+  ThreadState::PrefinalizerRegistration<Class> prefinalizer_dummy_ = this; \
+  using UsingPreFinalizerMacroNeedsTrailingSemiColon = char
 
 class PLATFORM_EXPORT ThreadState {
-    USING_FAST_MALLOC(ThreadState);
-    WTF_MAKE_NONCOPYABLE(ThreadState);
-public:
-    typedef std::pair<void*, PreFinalizerCallback> PreFinalizer;
+  USING_FAST_MALLOC(ThreadState);
+  WTF_MAKE_NONCOPYABLE(ThreadState);
 
-    // See setGCState() for possible state transitions.
-    enum GCState {
-        NoGCScheduled,
-        IdleGCScheduled,
-        PreciseGCScheduled,
-        FullGCScheduled,
-        PageNavigationGCScheduled,
-        GCRunning,
-        EagerSweepScheduled,
-        LazySweepScheduled,
-        Sweeping,
-        SweepingAndIdleGCScheduled,
-        SweepingAndPreciseGCScheduled,
-    };
+ public:
+  // See setGCState() for possible state transitions.
+  enum GCState {
+    kNoGCScheduled,
+    kIdleGCScheduled,
+    kPreciseGCScheduled,
+    kFullGCScheduled,
+    kPageNavigationGCScheduled,
+    kGCRunning,
+    kSweeping,
+    kSweepingAndIdleGCScheduled,
+    kSweepingAndPreciseGCScheduled,
+  };
 
-    // The NoAllocationScope class is used in debug mode to catch unwanted
-    // allocations. E.g. allocations during GC.
-    class NoAllocationScope final {
-        STACK_ALLOCATED();
-    public:
-        explicit NoAllocationScope(ThreadState* state) : m_state(state)
-        {
-            m_state->enterNoAllocationScope();
-        }
-        ~NoAllocationScope()
-        {
-            m_state->leaveNoAllocationScope();
-        }
-    private:
-        ThreadState* m_state;
-    };
+  // The NoAllocationScope class is used in debug mode to catch unwanted
+  // allocations. E.g. allocations during GC.
+  class NoAllocationScope final {
+    STACK_ALLOCATED();
 
-    class SweepForbiddenScope final {
-        STACK_ALLOCATED();
-    public:
-        explicit SweepForbiddenScope(ThreadState* state) : m_state(state)
-        {
-            ASSERT(!m_state->m_sweepForbidden);
-            m_state->m_sweepForbidden = true;
-        }
-        ~SweepForbiddenScope()
-        {
-            ASSERT(m_state->m_sweepForbidden);
-            m_state->m_sweepForbidden = false;
-        }
-    private:
-        ThreadState* m_state;
-    };
+   public:
+    explicit NoAllocationScope(ThreadState* state) : state_(state) {
+      state_->EnterNoAllocationScope();
+    }
+    ~NoAllocationScope() { state_->LeaveNoAllocationScope(); }
 
-    void lockThreadAttachMutex();
-    void unlockThreadAttachMutex();
+   private:
+    ThreadState* state_;
+  };
 
-    bool perThreadHeapEnabled() const { return m_perThreadHeapEnabled; }
+  class SweepForbiddenScope final {
+    STACK_ALLOCATED();
 
-    bool isTerminating() { return m_isTerminating; }
-
-    static void attachMainThread();
-    static void detachMainThread();
-    void cleanupMainThread();
-
-    // Associate ThreadState object with the current thread. After this
-    // call thread can start using the garbage collected heap infrastructure.
-    // It also has to periodically check for safepoints.
-    static void attachCurrentThread(bool perThreadHeapEnabled);
-
-    // Disassociate attached ThreadState from the current thread. The thread
-    // can no longer use the garbage collected heap after this call.
-    static void detachCurrentThread();
-
-    static ThreadState* current()
-    {
-#if defined(__GLIBC__) || OS(ANDROID) || OS(FREEBSD)
-        // TLS lookup is fast in these platforms.
-        return **s_threadSpecific;
-#else
-        uintptr_t dummy;
-        uintptr_t addressDiff = s_mainThreadStackStart - reinterpret_cast<uintptr_t>(&dummy);
-        // This is a fast way to judge if we are in the main thread.
-        // If |&dummy| is within |s_mainThreadUnderestimatedStackSize| byte from
-        // the stack start of the main thread, we judge that we are in
-        // the main thread.
-        if (LIKELY(addressDiff < s_mainThreadUnderestimatedStackSize)) {
-            ASSERT(**s_threadSpecific == mainThreadState());
-            return mainThreadState();
-        }
-        // TLS lookup is slow.
-        return **s_threadSpecific;
-#endif
+   public:
+    explicit SweepForbiddenScope(ThreadState* state) : state_(state) {
+      ASSERT(!state_->sweep_forbidden_);
+      state_->sweep_forbidden_ = true;
+    }
+    ~SweepForbiddenScope() {
+      ASSERT(state_->sweep_forbidden_);
+      state_->sweep_forbidden_ = false;
     }
 
-    static ThreadState* mainThreadState()
-    {
-        return reinterpret_cast<ThreadState*>(s_mainThreadStateStorage);
+   private:
+    ThreadState* state_;
+  };
+
+  // Used to denote when access to unmarked objects is allowed but we shouldn't
+  // ressurect it by making new references (e.g. during weak processing and pre
+  // finalizer).
+  class ObjectResurrectionForbiddenScope final {
+    STACK_ALLOCATED();
+
+   public:
+    explicit ObjectResurrectionForbiddenScope(ThreadState* state)
+        : state_(state) {
+      state_->EnterObjectResurrectionForbiddenScope();
+    }
+    ~ObjectResurrectionForbiddenScope() {
+      state_->LeaveObjectResurrectionForbiddenScope();
     }
 
-    static ThreadState* fromObject(const void*);
+   private:
+    ThreadState* state_;
+  };
 
-    bool isMainThread() const { return this == mainThreadState(); }
-#if ENABLE(ASSERT)
-    bool checkThread() const { return m_thread == currentThread(); }
-#endif
+  static void AttachMainThread();
 
-    ThreadHeap& heap() { return *m_heap; }
+  // Associate ThreadState object with the current thread. After this
+  // call thread can start using the garbage collected heap infrastructure.
+  // It also has to periodically check for safepoints.
+  static void AttachCurrentThread();
 
-    // When ThreadState is detaching from non-main thread its
-    // heap is expected to be empty (because it is going away).
-    // Perform registered cleanup tasks and garbage collection
-    // to sweep away any objects that are left on this heap.
-    // We assert that nothing must remain after this cleanup.
-    // If assertion does not hold we crash as we are potentially
-    // in the dangling pointer situation.
-    void runTerminationGC();
+  // Disassociate attached ThreadState from the current thread. The thread
+  // can no longer use the garbage collected heap after this call.
+  static void DetachCurrentThread();
 
-    void performIdleGC(double deadlineSeconds);
-    void performIdleLazySweep(double deadlineSeconds);
+  static ThreadState* Current() { return **thread_specific_; }
 
-    void scheduleIdleGC();
-    void scheduleIdleLazySweep();
-    void schedulePreciseGC();
-    void scheduleV8FollowupGCIfNeeded(BlinkGC::V8GCType);
-    void schedulePageNavigationGCIfNeeded(float estimatedRemovalRatio);
-    void schedulePageNavigationGC();
-    void scheduleGCIfNeeded();
-    void willStartV8GC(BlinkGC::V8GCType);
-    void setGCState(GCState);
-    GCState gcState() const { return m_gcState; }
-    bool isInGC() const { return gcState() == GCRunning; }
-    bool isSweepingInProgress() const
-    {
-        return gcState() == Sweeping || gcState() == SweepingAndPreciseGCScheduled || gcState() == SweepingAndIdleGCScheduled;
+  static ThreadState* MainThreadState() {
+    return reinterpret_cast<ThreadState*>(main_thread_state_storage_);
+  }
+
+  static ThreadState* FromObject(const void*);
+
+  bool IsMainThread() const { return this == MainThreadState(); }
+  bool CheckThread() const { return thread_ == CurrentThread(); }
+
+  ThreadHeap& Heap() const { return *heap_; }
+
+  // When ThreadState is detaching from non-main thread its
+  // heap is expected to be empty (because it is going away).
+  // Perform registered cleanup tasks and garbage collection
+  // to sweep away any objects that are left on this heap.
+  // We assert that nothing must remain after this cleanup.
+  // If assertion does not hold we crash as we are potentially
+  // in the dangling pointer situation.
+  void RunTerminationGC();
+
+  void PerformIdleGC(double deadline_seconds);
+  void PerformIdleLazySweep(double deadline_seconds);
+
+  void ScheduleIdleGC();
+  void ScheduleIdleLazySweep();
+  void SchedulePreciseGC();
+  void ScheduleV8FollowupGCIfNeeded(BlinkGC::V8GCType);
+  void SchedulePageNavigationGCIfNeeded(float estimated_removal_ratio);
+  void SchedulePageNavigationGC();
+  void ScheduleGCIfNeeded();
+  void WillStartV8GC(BlinkGC::V8GCType);
+  void SetGCState(GCState);
+  GCState GcState() const { return gc_state_; }
+  bool IsInGC() const { return GcState() == kGCRunning; }
+  bool IsSweepingInProgress() const {
+    return GcState() == kSweeping ||
+           GcState() == kSweepingAndPreciseGCScheduled ||
+           GcState() == kSweepingAndIdleGCScheduled;
+  }
+
+  // A GC runs in the following sequence.
+  //
+  // 1) preGC() is called.
+  // 2) ThreadHeap::collectGarbage() is called. This marks live objects.
+  // 3) postGC() is called. This does thread-local weak processing.
+  // 4) preSweep() is called. This does pre-finalization, eager sweeping and
+  //    heap compaction.
+  // 4) Lazy sweeping sweeps heaps incrementally. completeSweep() may be called
+  //    to complete the sweeping.
+  // 5) postSweep() is called.
+  //
+  // Notes:
+  // - The world is stopped between 1) and 3).
+  // - isInGC() returns true between 1) and 3).
+  // - isSweepingInProgress() returns true while any sweeping operation is
+  //   running.
+  void MakeConsistentForGC();
+  void PreGC();
+  void PostGC(BlinkGC::GCType);
+  void CompleteSweep();
+  void PreSweep(BlinkGC::GCType);
+  void PostSweep();
+  // makeConsistentForMutator() drops marks from marked objects and rebuild
+  // free lists. This is called after taking a snapshot and before resuming
+  // the executions of mutators.
+  void MakeConsistentForMutator();
+
+  void Compact();
+
+  // Support for disallowing allocation. Mainly used for sanity
+  // checks asserts.
+  bool IsAllocationAllowed() const { return !no_allocation_count_; }
+  void EnterNoAllocationScope() { no_allocation_count_++; }
+  void LeaveNoAllocationScope() { no_allocation_count_--; }
+  bool IsWrapperTracingForbidden() { return IsMixinInConstruction(); }
+  bool IsGCForbidden() const {
+    return gc_forbidden_count_ || IsMixinInConstruction();
+  }
+  void EnterGCForbiddenScope() { gc_forbidden_count_++; }
+  void LeaveGCForbiddenScope() {
+    DCHECK_GT(gc_forbidden_count_, 0u);
+    gc_forbidden_count_--;
+  }
+  bool IsMixinInConstruction() const { return mixins_being_constructed_count_; }
+  void EnterMixinConstructionScope() { mixins_being_constructed_count_++; }
+  void LeaveMixinConstructionScope() {
+    DCHECK_GT(mixins_being_constructed_count_, 0u);
+    mixins_being_constructed_count_--;
+  }
+  bool SweepForbidden() const { return sweep_forbidden_; }
+  bool IsObjectResurrectionForbidden() const {
+    return object_resurrection_forbidden_;
+  }
+  void EnterObjectResurrectionForbiddenScope() {
+    DCHECK(!object_resurrection_forbidden_);
+    object_resurrection_forbidden_ = true;
+  }
+  void LeaveObjectResurrectionForbiddenScope() {
+    DCHECK(object_resurrection_forbidden_);
+    object_resurrection_forbidden_ = false;
+  }
+
+  class MainThreadGCForbiddenScope final {
+    STACK_ALLOCATED();
+
+   public:
+    MainThreadGCForbiddenScope()
+        : thread_state_(ThreadState::MainThreadState()) {
+      thread_state_->EnterGCForbiddenScope();
     }
+    ~MainThreadGCForbiddenScope() { thread_state_->LeaveGCForbiddenScope(); }
 
-    // A GC runs in the following sequence.
-    //
-    // 1) All threads park at safe points.
-    // 2) The GCing thread calls preGC() for all ThreadStates.
-    // 3) The GCing thread calls ThreadHeap::collectGarbage().
-    //    This does marking but doesn't do sweeping.
-    // 4) The GCing thread calls postGC() for all ThreadStates.
-    // 5) The GCing thread resume all threads.
-    // 6) Each thread calls preSweep().
-    // 7) Each thread runs lazy sweeping (concurrently with sweepings
-    //    in other threads) and eventually calls completeSweep().
-    // 8) Each thread calls postSweep().
-    //
-    // Notes:
-    // - We stop the world between 1) and 5).
-    // - isInGC() returns true between 2) and 4).
-    // - isSweepingInProgress() returns true between 6) and 7).
-    // - It is valid that the next GC is scheduled while some thread
-    //   has not yet completed its lazy sweeping of the last GC.
-    //   In this case, the next GC just cancels the remaining lazy sweeping.
-    //   Specifically, preGC() of the next GC calls makeConsistentForGC()
-    //   and it marks all not-yet-swept objets as dead.
-    void makeConsistentForGC();
-    void preGC();
-    void postGC(BlinkGC::GCType);
-    void preSweep();
-    void completeSweep();
-    void postSweep();
-    // makeConsistentForMutator() drops marks from marked objects and rebuild
-    // free lists. This is called after taking a snapshot and before resuming
-    // the executions of mutators.
-    void makeConsistentForMutator();
+   private:
+    ThreadState* const thread_state_;
+  };
 
-    // Support for disallowing allocation. Mainly used for sanity
-    // checks asserts.
-    bool isAllocationAllowed() const { return !isAtSafePoint() && !m_noAllocationCount; }
-    void enterNoAllocationScope() { m_noAllocationCount++; }
-    void leaveNoAllocationScope() { m_noAllocationCount--; }
-    bool isGCForbidden() const { return m_gcForbiddenCount; }
-    void enterGCForbiddenScope() { m_gcForbiddenCount++; }
-    void leaveGCForbiddenScope()
-    {
-        ASSERT(m_gcForbiddenCount > 0);
-        m_gcForbiddenCount--;
+  class GCForbiddenScope final {
+    STACK_ALLOCATED();
+
+   public:
+    explicit GCForbiddenScope(ThreadState* thread_state)
+        : thread_state_(thread_state) {
+      thread_state_->EnterGCForbiddenScope();
     }
-    bool sweepForbidden() const { return m_sweepForbidden; }
+    ~GCForbiddenScope() { thread_state_->LeaveGCForbiddenScope(); }
 
-    void flushHeapDoesNotContainCacheIfNeeded();
+   private:
+    ThreadState* const thread_state_;
+  };
 
-    // Safepoint related functionality.
-    //
-    // When a thread attempts to perform GC it needs to stop all other threads
-    // that use the heap or at least guarantee that they will not touch any
-    // heap allocated object until GC is complete.
-    //
-    // We say that a thread is at a safepoint if this thread is guaranteed to
-    // not touch any heap allocated object or any heap related functionality until
-    // it leaves the safepoint.
-    //
-    // Notice that a thread does not have to be paused if it is at safepoint it
-    // can continue to run and perform tasks that do not require interaction
-    // with the heap. It will be paused if it attempts to leave the safepoint and
-    // there is a GC in progress.
-    //
-    // Each thread that has ThreadState attached must:
-    //   - periodically check if GC is requested from another thread by calling a safePoint() method;
-    //   - use SafePointScope around long running loops that have no safePoint() invocation inside,
-    //     such loops must not touch any heap object;
-    //   - register an BlinkGCInterruptor that can interrupt long running loops that have no calls to safePoint and
-    //     are not wrapped in a SafePointScope (e.g. BlinkGCInterruptor for JavaScript code)
-    //
+  void FlushHeapDoesNotContainCacheIfNeeded();
 
-    // Check if GC is requested by another thread and pause this thread if this is the case.
-    // Can only be called when current thread is in a consistent state.
-    void safePoint(BlinkGC::StackState);
+  // Safepoint related functionality.
+  //
+  // When a thread attempts to perform GC it needs to stop all other threads
+  // that use the heap or at least guarantee that they will not touch any
+  // heap allocated object until GC is complete.
+  //
+  // We say that a thread is at a safepoint if this thread is guaranteed to
+  // not touch any heap allocated object or any heap related functionality until
+  // it leaves the safepoint.
+  //
+  // Notice that a thread does not have to be paused if it is at safepoint it
+  // can continue to run and perform tasks that do not require interaction
+  // with the heap. It will be paused if it attempts to leave the safepoint and
+  // there is a GC in progress.
+  //
+  // Each thread that has ThreadState attached must:
+  //   - periodically check if GC is requested from another thread by calling a
+  //     safePoint() method;
+  //   - use SafePointScope around long running loops that have no safePoint()
+  //     invocation inside, such loops must not touch any heap object;
+  //
+  // Check if GC is requested by another thread and pause this thread if this is
+  // the case.  Can only be called when current thread is in a consistent state.
+  void SafePoint(BlinkGC::StackState);
 
-    // Mark current thread as running inside safepoint.
-    void enterSafePoint(BlinkGC::StackState, void*);
-    void leaveSafePoint(SafePointAwareMutexLocker* = nullptr);
-    bool isAtSafePoint() const { return m_atSafePoint; }
+  // Mark current thread as running inside safepoint.
+  void EnterSafePoint(BlinkGC::StackState, void*);
+  void LeaveSafePoint();
 
-    void addInterruptor(std::unique_ptr<BlinkGCInterruptor>);
+  void RecordStackEnd(intptr_t* end_of_stack) { end_of_stack_ = end_of_stack; }
+  NO_SANITIZE_ADDRESS void CopyStackUntilSafePointScope();
 
-    void recordStackEnd(intptr_t* endOfStack)
-    {
-        m_endOfStack = endOfStack;
-    }
+  // Get one of the heap structures for this thread.
+  // The thread heap is split into multiple heap parts based on object types
+  // and object sizes.
+  BaseArena* Arena(int arena_index) const {
+    ASSERT(0 <= arena_index);
+    ASSERT(arena_index < BlinkGC::kNumberOfArenas);
+    return arenas_[arena_index];
+  }
 
-    // Get one of the heap structures for this thread.
-    // The thread heap is split into multiple heap parts based on object types
-    // and object sizes.
-    BaseArena* arena(int arenaIndex) const
-    {
-        ASSERT(0 <= arenaIndex);
-        ASSERT(arenaIndex < BlinkGC::NumberOfArenas);
-        return m_arenas[arenaIndex];
-    }
-
-#if ENABLE(ASSERT)
-    // Infrastructure to determine if an address is within one of the
-    // address ranges for the Blink heap. If the address is in the Blink
-    // heap the containing heap page is returned.
-    BasePage* findPageFromAddress(Address);
-    BasePage* findPageFromAddress(const void* pointer) { return findPageFromAddress(reinterpret_cast<Address>(const_cast<void*>(pointer))); }
-#endif
-
-    // A region of PersistentNodes allocated on the given thread.
-    PersistentRegion* getPersistentRegion() const { return m_persistentRegion.get(); }
-    // A region of PersistentNodes not owned by any particular thread.
-
-    // Visit local thread stack and trace all pointers conservatively.
-    void visitStack(Visitor*);
-
-    // Visit the asan fake stack frame corresponding to a slot on the
-    // real machine stack if there is one.
-    void visitAsanFakeStackForPointer(Visitor*, Address);
-
-    // Visit all persistents allocated on this thread.
-    void visitPersistents(Visitor*);
-
-    struct GCSnapshotInfo {
-        STACK_ALLOCATED();
-        GCSnapshotInfo(size_t numObjectTypes);
-
-        // Map from gcInfoIndex (vector-index) to count/size.
-        Vector<int> liveCount;
-        Vector<int> deadCount;
-        Vector<size_t> liveSize;
-        Vector<size_t> deadSize;
-    };
-
-    void pushThreadLocalWeakCallback(void*, WeakCallback);
-    bool popAndInvokeThreadLocalWeakCallback(Visitor*);
-    void threadLocalWeakProcessing();
-
-    size_t objectPayloadSizeForTesting();
-
-    // Register the pre-finalizer for the |self| object. This method is normally
-    // called in the constructor of the |self| object. The class T must have
-    // USING_PRE_FINALIZER().
-    template<typename T>
-    void registerPreFinalizer(T* self)
-    {
-        static_assert(sizeof(&T::invokePreFinalizer) > 0, "USING_PRE_FINALIZER(T) must be defined.");
-        ASSERT(checkThread());
-        ASSERT(!sweepForbidden());
-        ASSERT(!m_orderedPreFinalizers.contains(PreFinalizer(self, T::invokePreFinalizer)));
-        m_orderedPreFinalizers.add(PreFinalizer(self, T::invokePreFinalizer));
-    }
-
-    // Unregister the pre-finalizer for the |self| object.
-    template<typename T>
-    void unregisterPreFinalizer(T* self)
-    {
-        static_assert(sizeof(&T::invokePreFinalizer) > 0, "USING_PRE_FINALIZER(T) must be defined.");
-        ASSERT(checkThread());
-        // Ignore pre-finalizers called during pre-finalizers or destructors.
-        if (sweepForbidden())
-            return;
-        ASSERT(m_orderedPreFinalizers.contains(PreFinalizer(self, T::invokePreFinalizer)));
-        m_orderedPreFinalizers.remove(PreFinalizer(self, &T::invokePreFinalizer));
-    }
-
-    void shouldFlushHeapDoesNotContainCache() { m_shouldFlushHeapDoesNotContainCache = true; }
-
-    void registerTraceDOMWrappers(v8::Isolate* isolate,
-        void (*traceDOMWrappers)(v8::Isolate*, Visitor*),
-        void (*invalidateDeadObjectsInWrappersMarkingDeque)(v8::Isolate*))
-    {
-        m_isolate = isolate;
-        m_traceDOMWrappers = traceDOMWrappers;
-        m_invalidateDeadObjectsInWrappersMarkingDeque = invalidateDeadObjectsInWrappersMarkingDeque;
-    }
-
-    // By entering a gc-forbidden scope, conservative GCs will not
-    // be allowed while handling an out-of-line allocation request.
-    // Intended used when constructing subclasses of GC mixins, where
-    // the object being constructed cannot be safely traced & marked
-    // fully should a GC be allowed while its subclasses are being
-    // constructed.
-    void enterGCForbiddenScopeIfNeeded(GarbageCollectedMixinConstructorMarker* gcMixinMarker)
-    {
-        ASSERT(checkThread());
-        if (!m_gcMixinMarker) {
-            enterGCForbiddenScope();
-            m_gcMixinMarker = gcMixinMarker;
-        }
-    }
-    void leaveGCForbiddenScopeIfNeeded(GarbageCollectedMixinConstructorMarker* gcMixinMarker)
-    {
-        ASSERT(checkThread());
-        if (m_gcMixinMarker == gcMixinMarker) {
-            leaveGCForbiddenScope();
-            m_gcMixinMarker = nullptr;
-        }
-    }
-
-    // vectorBackingArena() returns an arena that the vector allocation should use.
-    // We have four vector arenas and want to choose the best arena here.
-    //
-    // The goal is to improve the succession rate where expand and
-    // promptlyFree happen at an allocation point. This is a key for reusing
-    // the same memory as much as possible and thus improves performance.
-    // To achieve the goal, we use the following heuristics:
-    //
-    // - A vector that has been expanded recently is likely to be expanded
-    //   again soon.
-    // - A vector is likely to be promptly freed if the same type of vector
-    //   has been frequently promptly freed in the past.
-    // - Given the above, when allocating a new vector, look at the four vectors
-    //   that are placed immediately prior to the allocation point of each arena.
-    //   Choose the arena where the vector is least likely to be expanded
-    //   nor promptly freed.
-    //
-    // To implement the heuristics, we add an arenaAge to each arena. The arenaAge
-    // is updated if:
-    //
-    // - a vector on the arena is expanded; or
-    // - a vector that meets the condition (*) is allocated on the arena
-    //
-    //   (*) More than 33% of the same type of vectors have been promptly
-    //       freed since the last GC.
-    //
-    BaseArena* vectorBackingArena(size_t gcInfoIndex)
-    {
-        ASSERT(checkThread());
-        size_t entryIndex = gcInfoIndex & likelyToBePromptlyFreedArrayMask;
-        --m_likelyToBePromptlyFreed[entryIndex];
-        int arenaIndex = m_vectorBackingArenaIndex;
-        // If m_likelyToBePromptlyFreed[entryIndex] > 0, that means that
-        // more than 33% of vectors of the type have been promptly freed
-        // since the last GC.
-        if (m_likelyToBePromptlyFreed[entryIndex] > 0) {
-            m_arenaAges[arenaIndex] = ++m_currentArenaAges;
-            m_vectorBackingArenaIndex = arenaIndexOfVectorArenaLeastRecentlyExpanded(BlinkGC::Vector1ArenaIndex, BlinkGC::Vector4ArenaIndex);
-        }
-        ASSERT(isVectorArenaIndex(arenaIndex));
-        return m_arenas[arenaIndex];
-    }
-    BaseArena* expandedVectorBackingArena(size_t gcInfoIndex);
-    static bool isVectorArenaIndex(int arenaIndex)
-    {
-        return BlinkGC::Vector1ArenaIndex <= arenaIndex && arenaIndex <= BlinkGC::Vector4ArenaIndex;
-    }
-    void allocationPointAdjusted(int arenaIndex);
-    void promptlyFreed(size_t gcInfoIndex);
-
-    void accumulateSweepingTime(double time) { m_accumulatedSweepingTime += time; }
-
-#if OS(WIN) && COMPILER(MSVC)
-    size_t threadStackSize();
+#if DCHECK_IS_ON()
+  // Infrastructure to determine if an address is within one of the
+  // address ranges for the Blink heap. If the address is in the Blink
+  // heap the containing heap page is returned.
+  BasePage* FindPageFromAddress(Address);
+  BasePage* FindPageFromAddress(const void* pointer) {
+    return FindPageFromAddress(
+        reinterpret_cast<Address>(const_cast<void*>(pointer)));
+  }
 #endif
 
-    void freePersistentNode(PersistentNode*);
+  // A region of PersistentNodes allocated on the given thread.
+  PersistentRegion* GetPersistentRegion() const {
+    return persistent_region_.get();
+  }
+  // A region of PersistentNodes not owned by any particular thread.
 
-    using PersistentClearCallback = void(*)(void*);
+  // Visit local thread stack and trace all pointers conservatively.
+  void VisitStack(Visitor*);
 
-    void registerStaticPersistentNode(PersistentNode*, PersistentClearCallback);
-    void releaseStaticPersistentNodes();
+  // Visit the asan fake stack frame corresponding to a slot on the
+  // real machine stack if there is one.
+  void VisitAsanFakeStackForPointer(Visitor*, Address);
+
+  // Visit all persistents allocated on this thread.
+  void VisitPersistents(Visitor*);
+
+  struct GCSnapshotInfo {
+    STACK_ALLOCATED();
+    GCSnapshotInfo(size_t num_object_types);
+
+    // Map from gcInfoIndex (vector-index) to count/size.
+    Vector<int> live_count;
+    Vector<int> dead_count;
+    Vector<size_t> live_size;
+    Vector<size_t> dead_size;
+  };
+
+  size_t ObjectPayloadSizeForTesting();
+
+  void ShouldFlushHeapDoesNotContainCache() {
+    should_flush_heap_does_not_contain_cache_ = true;
+  }
+
+  bool IsAddressInHeapDoesNotContainCache(Address);
+
+  void RegisterTraceDOMWrappers(
+      v8::Isolate* isolate,
+      void (*trace_dom_wrappers)(v8::Isolate*, Visitor*),
+      void (*invalidate_dead_objects_in_wrappers_marking_deque)(v8::Isolate*),
+      void (*perform_cleanup)(v8::Isolate*)) {
+    isolate_ = isolate;
+    DCHECK(!isolate_ || trace_dom_wrappers);
+    DCHECK(!isolate_ || invalidate_dead_objects_in_wrappers_marking_deque);
+    DCHECK(!isolate_ || perform_cleanup);
+    trace_dom_wrappers_ = trace_dom_wrappers;
+    invalidate_dead_objects_in_wrappers_marking_deque_ =
+        invalidate_dead_objects_in_wrappers_marking_deque;
+    perform_cleanup_ = perform_cleanup;
+  }
+
+  // By entering a gc-forbidden scope, conservative GCs will not
+  // be allowed while handling an out-of-line allocation request.
+  // Intended used when constructing subclasses of GC mixins, where
+  // the object being constructed cannot be safely traced & marked
+  // fully should a GC be allowed while its subclasses are being
+  // constructed.
+  void EnterGCForbiddenScopeIfNeeded(
+      GarbageCollectedMixinConstructorMarker* gc_mixin_marker) {
+    ASSERT(CheckThread());
+    if (!gc_mixin_marker_) {
+      EnterMixinConstructionScope();
+      gc_mixin_marker_ = gc_mixin_marker;
+    }
+  }
+  void LeaveGCForbiddenScopeIfNeeded(
+      GarbageCollectedMixinConstructorMarker* gc_mixin_marker) {
+    ASSERT(CheckThread());
+    if (gc_mixin_marker_ == gc_mixin_marker) {
+      LeaveMixinConstructionScope();
+      gc_mixin_marker_ = nullptr;
+    }
+  }
+
+  // vectorBackingArena() returns an arena that the vector allocation should
+  // use.  We have four vector arenas and want to choose the best arena here.
+  //
+  // The goal is to improve the succession rate where expand and
+  // promptlyFree happen at an allocation point. This is a key for reusing
+  // the same memory as much as possible and thus improves performance.
+  // To achieve the goal, we use the following heuristics:
+  //
+  // - A vector that has been expanded recently is likely to be expanded
+  //   again soon.
+  // - A vector is likely to be promptly freed if the same type of vector
+  //   has been frequently promptly freed in the past.
+  // - Given the above, when allocating a new vector, look at the four vectors
+  //   that are placed immediately prior to the allocation point of each arena.
+  //   Choose the arena where the vector is least likely to be expanded
+  //   nor promptly freed.
+  //
+  // To implement the heuristics, we add an arenaAge to each arena. The arenaAge
+  // is updated if:
+  //
+  // - a vector on the arena is expanded; or
+  // - a vector that meets the condition (*) is allocated on the arena
+  //
+  //   (*) More than 33% of the same type of vectors have been promptly
+  //       freed since the last GC.
+  //
+  BaseArena* VectorBackingArena(size_t gc_info_index) {
+    ASSERT(CheckThread());
+    size_t entry_index = gc_info_index & kLikelyToBePromptlyFreedArrayMask;
+    --likely_to_be_promptly_freed_[entry_index];
+    int arena_index = vector_backing_arena_index_;
+    // If m_likelyToBePromptlyFreed[entryIndex] > 0, that means that
+    // more than 33% of vectors of the type have been promptly freed
+    // since the last GC.
+    if (likely_to_be_promptly_freed_[entry_index] > 0) {
+      arena_ages_[arena_index] = ++current_arena_ages_;
+      vector_backing_arena_index_ =
+          ArenaIndexOfVectorArenaLeastRecentlyExpanded(
+              BlinkGC::kVector1ArenaIndex, BlinkGC::kVector4ArenaIndex);
+    }
+    ASSERT(IsVectorArenaIndex(arena_index));
+    return arenas_[arena_index];
+  }
+  BaseArena* ExpandedVectorBackingArena(size_t gc_info_index);
+  static bool IsVectorArenaIndex(int arena_index) {
+    return BlinkGC::kVector1ArenaIndex <= arena_index &&
+           arena_index <= BlinkGC::kVector4ArenaIndex;
+  }
+  void AllocationPointAdjusted(int arena_index);
+  void PromptlyFreed(size_t gc_info_index);
+
+  void AccumulateSweepingTime(double time) {
+    accumulated_sweeping_time_ += time;
+  }
+
+  void FreePersistentNode(PersistentNode*);
+
+  using PersistentClearCallback = void (*)(void*);
+
+  void RegisterStaticPersistentNode(PersistentNode*, PersistentClearCallback);
+  void ReleaseStaticPersistentNodes();
 
 #if defined(LEAK_SANITIZER)
-    void enterStaticReferenceRegistrationDisabledScope();
-    void leaveStaticReferenceRegistrationDisabledScope();
+  void enterStaticReferenceRegistrationDisabledScope();
+  void leaveStaticReferenceRegistrationDisabledScope();
 #endif
 
-    void resetHeapCounters();
-    void increaseAllocatedObjectSize(size_t);
-    void decreaseAllocatedObjectSize(size_t);
-    void increaseMarkedObjectSize(size_t);
+  void ResetHeapCounters();
+  void IncreaseAllocatedObjectSize(size_t);
+  void DecreaseAllocatedObjectSize(size_t);
+  void IncreaseMarkedObjectSize(size_t);
 
-    void callThreadShutdownHooks();
+  v8::Isolate* GetIsolate() const { return isolate_; }
 
-    v8::Isolate* isolate() const { return m_isolate; }
+  BlinkGC::StackState GetStackState() const { return stack_state_; }
 
-private:
-    enum SnapshotType {
-        HeapSnapshot,
-        FreelistSnapshot
-    };
+  void CollectGarbage(BlinkGC::StackState, BlinkGC::GCType, BlinkGC::GCReason);
+  void CollectAllGarbage();
 
-    ThreadState(bool perThreadHeapEnabled);
-    ~ThreadState();
-
-    NO_SANITIZE_ADDRESS void copyStackUntilSafePointScope();
-    void clearSafePointScopeMarker()
-    {
-        m_safePointStackCopy.clear();
-        m_safePointScopeMarker = nullptr;
+  // Register the pre-finalizer for the |self| object. The class T must have
+  // USING_PRE_FINALIZER().
+  template <typename T>
+  class PrefinalizerRegistration final {
+   public:
+    PrefinalizerRegistration(T* self) {
+      static_assert(sizeof(&T::InvokePreFinalizer) > 0,
+                    "USING_PRE_FINALIZER(T) must be defined.");
+      ThreadState* state = ThreadState::Current();
+#if DCHECK_IS_ON()
+      DCHECK(state->CheckThread());
+#endif
+      DCHECK(!state->SweepForbidden());
+      DCHECK(!state->ordered_pre_finalizers_.Contains(
+          PreFinalizer(self, T::InvokePreFinalizer)));
+      state->ordered_pre_finalizers_.insert(
+          PreFinalizer(self, T::InvokePreFinalizer));
     }
+  };
 
-    // shouldSchedule{Precise,Idle}GC and shouldForceConservativeGC
-    // implement the heuristics that are used to determine when to collect garbage.
-    // If shouldForceConservativeGC returns true, we force the garbage
-    // collection immediately. Otherwise, if should*GC returns true, we
-    // record that we should garbage collect the next time we return
-    // to the event loop. If both return false, we don't need to
-    // collect garbage at this point.
-    bool shouldScheduleIdleGC();
-    bool shouldSchedulePreciseGC();
-    bool shouldForceConservativeGC();
-    // V8 minor or major GC is likely to drop a lot of references to objects
-    // on Oilpan's heap. We give a chance to schedule a GC.
-    bool shouldScheduleV8FollowupGC();
-    // Page navigation is likely to drop a lot of references to objects
-    // on Oilpan's heap. We give a chance to schedule a GC.
-    // estimatedRemovalRatio is the estimated ratio of objects that will be no
-    // longer necessary due to the navigation.
-    bool shouldSchedulePageNavigationGC(float estimatedRemovalRatio);
+  static const char* GcReasonString(BlinkGC::GCReason);
 
-    // Internal helpers to handle memory pressure conditions.
+  // Returns |true| if |object| resides on this thread's heap.
+  // It is well-defined to call this method on any heap allocated
+  // reference, provided its associated heap hasn't been detached
+  // and shut down. Its behavior is undefined for any other pointer
+  // value.
+  bool IsOnThreadHeap(const void* object) const {
+    return &FromObject(object)->Heap() == &Heap();
+  }
 
-    // Returns true if memory use is in a near-OOM state
-    // (aka being under "memory pressure".)
-    bool shouldForceMemoryPressureGC();
+ private:
+  template <typename T>
+  friend class PrefinalizerRegistration;
+  enum SnapshotType { kHeapSnapshot, kFreelistSnapshot };
 
-    // Returns true if shouldForceMemoryPressureGC() held and a
-    // conservative GC was performed to handle the emergency.
-    bool forceMemoryPressureGCIfNeeded();
+  ThreadState();
+  ~ThreadState();
 
-    size_t estimatedLiveSize(size_t currentSize, size_t sizeAtLastGC);
-    size_t totalMemorySize();
-    double heapGrowingRate();
-    double partitionAllocGrowingRate();
-    bool judgeGCThreshold(size_t allocatedObjectSizeThreshold, size_t totalMemorySizeThreshold, double heapGrowingRateThreshold);
+  void ClearSafePointScopeMarker() {
+    safe_point_stack_copy_.Clear();
+    safe_point_scope_marker_ = nullptr;
+  }
 
-    void runScheduledGC(BlinkGC::StackState);
+  // shouldSchedule{Precise,Idle}GC and shouldForceConservativeGC
+  // implement the heuristics that are used to determine when to collect
+  // garbage.
+  // If shouldForceConservativeGC returns true, we force the garbage
+  // collection immediately. Otherwise, if should*GC returns true, we
+  // record that we should garbage collect the next time we return
+  // to the event loop. If both return false, we don't need to
+  // collect garbage at this point.
+  bool ShouldScheduleIdleGC();
+  bool ShouldSchedulePreciseGC();
+  bool ShouldForceConservativeGC();
+  // V8 minor or major GC is likely to drop a lot of references to objects
+  // on Oilpan's heap. We give a chance to schedule a GC.
+  bool ShouldScheduleV8FollowupGC();
+  // Page navigation is likely to drop a lot of references to objects
+  // on Oilpan's heap. We give a chance to schedule a GC.
+  // estimatedRemovalRatio is the estimated ratio of objects that will be no
+  // longer necessary due to the navigation.
+  bool ShouldSchedulePageNavigationGC(float estimated_removal_ratio);
 
-    void eagerSweep();
+  // Internal helpers to handle memory pressure conditions.
 
-#if defined(ADDRESS_SANITIZER)
-    void poisonEagerArena();
-    void poisonAllHeaps();
-#endif
+  // Returns true if memory use is in a near-OOM state
+  // (aka being under "memory pressure".)
+  bool ShouldForceMemoryPressureGC();
 
-    void cleanupPages();
+  // Returns true if shouldForceMemoryPressureGC() held and a
+  // conservative GC was performed to handle the emergency.
+  bool ForceMemoryPressureGCIfNeeded();
 
-    void prepareForThreadStateTermination();
+  size_t EstimatedLiveSize(size_t current_size, size_t size_at_last_gc);
+  size_t TotalMemorySize();
+  double HeapGrowingRate();
+  double PartitionAllocGrowingRate();
+  bool JudgeGCThreshold(size_t allocated_object_size_threshold,
+                        size_t total_memory_size_threshold,
+                        double heap_growing_rate_threshold);
 
-    void invokePreFinalizers();
+  void RunScheduledGC(BlinkGC::StackState);
 
-    void takeSnapshot(SnapshotType);
-    void clearArenaAges();
-    int arenaIndexOfVectorArenaLeastRecentlyExpanded(int beginArenaIndex, int endArenaIndex);
-
-    void reportMemoryToV8();
-
-    // Should only be called under protection of threadAttachMutex().
-    const Vector<std::unique_ptr<BlinkGCInterruptor>>& interruptors() const { return m_interruptors; }
-
-    friend class SafePointAwareMutexLocker;
-    friend class SafePointBarrier;
-    friend class SafePointScope;
-
-    static WTF::ThreadSpecific<ThreadState*>* s_threadSpecific;
-    static uintptr_t s_mainThreadStackStart;
-    static uintptr_t s_mainThreadUnderestimatedStackSize;
-
-    // We can't create a static member of type ThreadState here
-    // because it will introduce global constructor and destructor.
-    // We would like to manage lifetime of the ThreadState attached
-    // to the main thread explicitly instead and still use normal
-    // constructor and destructor for the ThreadState class.
-    // For this we reserve static storage for the main ThreadState
-    // and lazily construct ThreadState in it using placement new.
-    static uint8_t s_mainThreadStateStorage[];
-
-    ThreadHeap* m_heap;
-    ThreadIdentifier m_thread;
-    std::unique_ptr<PersistentRegion> m_persistentRegion;
-    BlinkGC::StackState m_stackState;
-#if OS(WIN) && COMPILER(MSVC)
-    size_t m_threadStackSize;
-#endif
-    intptr_t* m_startOfStack;
-    intptr_t* m_endOfStack;
-
-    void* m_safePointScopeMarker;
-    Vector<Address> m_safePointStackCopy;
-    bool m_atSafePoint;
-    Vector<std::unique_ptr<BlinkGCInterruptor>> m_interruptors;
-    bool m_sweepForbidden;
-    size_t m_noAllocationCount;
-    size_t m_gcForbiddenCount;
-    double m_accumulatedSweepingTime;
-
-    BaseArena* m_arenas[BlinkGC::NumberOfArenas];
-    int m_vectorBackingArenaIndex;
-    size_t m_arenaAges[BlinkGC::NumberOfArenas];
-    size_t m_currentArenaAges;
-
-    bool m_perThreadHeapEnabled;
-    bool m_isTerminating;
-    GarbageCollectedMixinConstructorMarker* m_gcMixinMarker;
-
-    bool m_shouldFlushHeapDoesNotContainCache;
-    GCState m_gcState;
-
-    std::unique_ptr<CallbackStack> m_threadLocalWeakCallbackStack;
-
-    // Pre-finalizers are called in the reverse order in which they are
-    // registered by the constructors (including constructors of Mixin objects)
-    // for an object, by processing the m_orderedPreFinalizers back-to-front.
-    ListHashSet<PreFinalizer> m_orderedPreFinalizers;
-
-    v8::Isolate* m_isolate;
-    void (*m_traceDOMWrappers)(v8::Isolate*, Visitor*);
-    void (*m_invalidateDeadObjectsInWrappersMarkingDeque)(v8::Isolate*);
+  void EagerSweep();
 
 #if defined(ADDRESS_SANITIZER)
-    void* m_asanFakeStack;
+  void PoisonEagerArena();
+  void PoisonAllHeaps();
 #endif
 
-    // PersistentNodes that are stored in static references;
-    // references that either have to be cleared upon the thread
-    // detaching from Oilpan and shutting down or references we
-    // have to clear before initiating LSan's leak detection.
-    HashMap<PersistentNode*, PersistentClearCallback> m_staticPersistents;
+  void RemoveAllPages();
+
+  void InvokePreFinalizers();
+
+  void TakeSnapshot(SnapshotType);
+  void ClearArenaAges();
+  int ArenaIndexOfVectorArenaLeastRecentlyExpanded(int begin_arena_index,
+                                                   int end_arena_index);
+
+  void ReportMemoryToV8();
+
+  friend class SafePointScope;
+
+  static WTF::ThreadSpecific<ThreadState*>* thread_specific_;
+
+  // We can't create a static member of type ThreadState here
+  // because it will introduce global constructor and destructor.
+  // We would like to manage lifetime of the ThreadState attached
+  // to the main thread explicitly instead and still use normal
+  // constructor and destructor for the ThreadState class.
+  // For this we reserve static storage for the main ThreadState
+  // and lazily construct ThreadState in it using placement new.
+  static uint8_t main_thread_state_storage_[];
+
+  std::unique_ptr<ThreadHeap> heap_;
+  ThreadIdentifier thread_;
+  std::unique_ptr<PersistentRegion> persistent_region_;
+  BlinkGC::StackState stack_state_;
+  intptr_t* start_of_stack_;
+  intptr_t* end_of_stack_;
+
+  void* safe_point_scope_marker_;
+  Vector<Address> safe_point_stack_copy_;
+  bool sweep_forbidden_;
+  size_t no_allocation_count_;
+  size_t gc_forbidden_count_;
+  size_t mixins_being_constructed_count_;
+  double accumulated_sweeping_time_;
+  bool object_resurrection_forbidden_;
+
+  BaseArena* arenas_[BlinkGC::kNumberOfArenas];
+  int vector_backing_arena_index_;
+  size_t arena_ages_[BlinkGC::kNumberOfArenas];
+  size_t current_arena_ages_;
+
+  GarbageCollectedMixinConstructorMarker* gc_mixin_marker_;
+
+  bool should_flush_heap_does_not_contain_cache_;
+  GCState gc_state_;
+
+  using PreFinalizerCallback = bool (*)(void*);
+  using PreFinalizer = std::pair<void*, PreFinalizerCallback>;
+
+  // Pre-finalizers are called in the reverse order in which they are
+  // registered by the constructors (including constructors of Mixin objects)
+  // for an object, by processing the m_orderedPreFinalizers back-to-front.
+  ListHashSet<PreFinalizer> ordered_pre_finalizers_;
+
+  v8::Isolate* isolate_;
+  void (*trace_dom_wrappers_)(v8::Isolate*, Visitor*);
+  void (*invalidate_dead_objects_in_wrappers_marking_deque_)(v8::Isolate*);
+  void (*perform_cleanup_)(v8::Isolate*);
+
+#if defined(ADDRESS_SANITIZER)
+  void* asan_fake_stack_;
+#endif
+
+  // PersistentNodes that are stored in static references;
+  // references that either have to be cleared upon the thread
+  // detaching from Oilpan and shutting down or references we
+  // have to clear before initiating LSan's leak detection.
+  HashMap<PersistentNode*, PersistentClearCallback> static_persistents_;
 
 #if defined(LEAK_SANITIZER)
-    // Count that controls scoped disabling of persistent registration.
-    size_t m_disabledStaticPersistentsRegistration;
+  // Count that controls scoped disabling of persistent registration.
+  size_t m_disabledStaticPersistentsRegistration;
 #endif
 
-    // Ideally we want to allocate an array of size |gcInfoTableMax| but it will
-    // waste memory. Thus we limit the array size to 2^8 and share one entry
-    // with multiple types of vectors. This won't be an issue in practice,
-    // since there will be less than 2^8 types of objects in common cases.
-    static const int likelyToBePromptlyFreedArraySize = (1 << 8);
-    static const int likelyToBePromptlyFreedArrayMask = likelyToBePromptlyFreedArraySize - 1;
-    std::unique_ptr<int[]> m_likelyToBePromptlyFreed;
+  // Ideally we want to allocate an array of size |gcInfoTableMax| but it will
+  // waste memory. Thus we limit the array size to 2^8 and share one entry
+  // with multiple types of vectors. This won't be an issue in practice,
+  // since there will be less than 2^8 types of objects in common cases.
+  static const int kLikelyToBePromptlyFreedArraySize = (1 << 8);
+  static const int kLikelyToBePromptlyFreedArrayMask =
+      kLikelyToBePromptlyFreedArraySize - 1;
+  std::unique_ptr<int[]> likely_to_be_promptly_freed_;
 
-    // Stats for heap memory of this thread.
-    size_t m_allocatedObjectSize;
-    size_t m_markedObjectSize;
-    size_t m_reportedMemoryToV8;
+  // Stats for heap memory of this thread.
+  size_t allocated_object_size_;
+  size_t marked_object_size_;
+  size_t reported_memory_to_v8_;
 };
 
-template<ThreadAffinity affinity> class ThreadStateFor;
+template <ThreadAffinity affinity>
+class ThreadStateFor;
 
-template<> class ThreadStateFor<MainThreadOnly> {
-    STATIC_ONLY(ThreadStateFor);
-public:
-    static ThreadState* state()
-    {
-        // This specialization must only be used from the main thread.
-        ASSERT(ThreadState::current()->isMainThread());
-        return ThreadState::mainThreadState();
-    }
+template <>
+class ThreadStateFor<kMainThreadOnly> {
+  STATIC_ONLY(ThreadStateFor);
+
+ public:
+  static ThreadState* GetState() {
+    // This specialization must only be used from the main thread.
+    ASSERT(ThreadState::Current()->IsMainThread());
+    return ThreadState::MainThreadState();
+  }
 };
 
-template<> class ThreadStateFor<AnyThread> {
-    STATIC_ONLY(ThreadStateFor);
-public:
-    static ThreadState* state() { return ThreadState::current(); }
+template <>
+class ThreadStateFor<kAnyThread> {
+  STATIC_ONLY(ThreadStateFor);
+
+ public:
+  static ThreadState* GetState() { return ThreadState::Current(); }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ThreadState_h
+#endif  // ThreadState_h

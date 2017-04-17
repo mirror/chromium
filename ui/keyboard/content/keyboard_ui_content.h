@@ -19,14 +19,10 @@ class Window;
 }
 namespace content {
 class BrowserContext;
-class SiteInstance;
 class WebContents;
 }
 namespace gfx {
 class Rect;
-}
-namespace ui {
-class InputMethod;
 }
 namespace wm {
 class Shadow;
@@ -34,11 +30,10 @@ class Shadow;
 
 namespace keyboard {
 
-class KeyboardController;
 class WindowBoundsChangeObserver;
 
 // An implementation of KeyboardUI that uses a content::WebContents to implement
-//the keyboard.
+// the keyboard.
 class KEYBOARD_EXPORT KeyboardUIContent : public KeyboardUI,
                                           public aura::WindowObserver {
  public:

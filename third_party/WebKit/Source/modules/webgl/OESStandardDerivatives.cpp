@@ -27,34 +27,29 @@
 
 namespace blink {
 
-OESStandardDerivatives::OESStandardDerivatives(WebGLRenderingContextBase* context)
-    : WebGLExtension(context)
-{
-    context->extensionsUtil()->ensureExtensionEnabled("GL_OES_standard_derivatives");
+OESStandardDerivatives::OESStandardDerivatives(
+    WebGLRenderingContextBase* context)
+    : WebGLExtension(context) {
+  context->ExtensionsUtil()->EnsureExtensionEnabled(
+      "GL_OES_standard_derivatives");
 }
 
-OESStandardDerivatives::~OESStandardDerivatives()
-{
+WebGLExtensionName OESStandardDerivatives::GetName() const {
+  return kOESStandardDerivativesName;
 }
 
-WebGLExtensionName OESStandardDerivatives::name() const
-{
-    return OESStandardDerivativesName;
+OESStandardDerivatives* OESStandardDerivatives::Create(
+    WebGLRenderingContextBase* context) {
+  return new OESStandardDerivatives(context);
 }
 
-OESStandardDerivatives* OESStandardDerivatives::create(WebGLRenderingContextBase* context)
-{
-    return new OESStandardDerivatives(context);
+bool OESStandardDerivatives::Supported(WebGLRenderingContextBase* context) {
+  return context->ExtensionsUtil()->SupportsExtension(
+      "GL_OES_standard_derivatives");
 }
 
-bool OESStandardDerivatives::supported(WebGLRenderingContextBase* context)
-{
-    return context->extensionsUtil()->supportsExtension("GL_OES_standard_derivatives");
+const char* OESStandardDerivatives::ExtensionName() {
+  return "OES_standard_derivatives";
 }
 
-const char* OESStandardDerivatives::extensionName()
-{
-    return "OES_standard_derivatives";
-}
-
-} // namespace blink
+}  // namespace blink

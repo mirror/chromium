@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ * All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,35 +24,44 @@
 #define PageRuleCollector_h
 
 #include "core/css/resolver/MatchResult.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class StyleRulePage;
 
 class PageRuleCollector {
-    STACK_ALLOCATED();
-public:
-    PageRuleCollector(const ComputedStyle* rootElementStyle, int pageIndex);
+  STACK_ALLOCATED();
 
-    void matchPageRules(RuleSet* rules);
-    const MatchResult& matchedResult() { return m_result; }
+ public:
+  PageRuleCollector(const ComputedStyle* root_element_style, int page_index);
 
-private:
-    bool isLeftPage(const ComputedStyle* rootElementStyle, int pageIndex) const;
-    bool isRightPage(const ComputedStyle* rootElementStyle, int pageIndex) const { return !isLeftPage(rootElementStyle, pageIndex); }
-    bool isFirstPage(int pageIndex) const;
-    String pageName(int pageIndex) const;
+  void MatchPageRules(RuleSet* rules);
+  const MatchResult& MatchedResult() { return result_; }
 
-    void matchPageRulesForList(HeapVector<Member<StyleRulePage>>& matchedRules, const HeapVector<Member<StyleRulePage>>& rules, bool isLeftPage, bool isFirstPage, const String& pageName);
+ private:
+  bool IsLeftPage(const ComputedStyle* root_element_style,
+                  int page_index) const;
+  bool IsRightPage(const ComputedStyle* root_element_style,
+                   int page_index) const {
+    return !IsLeftPage(root_element_style, page_index);
+  }
+  bool IsFirstPage(int page_index) const;
+  String PageName(int page_index) const;
 
-    const bool m_isLeftPage;
-    const bool m_isFirstPage;
-    const String m_pageName;
+  void MatchPageRulesForList(HeapVector<Member<StyleRulePage>>& matched_rules,
+                             const HeapVector<Member<StyleRulePage>>& rules,
+                             bool is_left_page,
+                             bool is_first_page,
+                             const String& page_name);
 
-    MatchResult m_result;
+  const bool is_left_page_;
+  const bool is_first_page_;
+  const String page_name_;
+
+  MatchResult result_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PageRuleCollector_h
+#endif  // PageRuleCollector_h

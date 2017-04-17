@@ -28,11 +28,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+// https://www.w3.org/TR/2012/WD-file-system-api-20120417/#idl-def-DirectoryEntrySync
 [
     NoInterfaceObject
 ] interface DirectoryEntrySync : EntrySync {
     DirectoryReaderSync createReader();
-    [RaisesException] FileEntrySync getFile([TreatUndefinedAs=NullString] DOMString? path, FileSystemFlags flags);
-    [RaisesException] DirectoryEntrySync getDirectory([TreatUndefinedAs=NullString] DOMString? path, FileSystemFlags flags);
+    [RaisesException] FileEntrySync getFile(DOMString? path, FileSystemFlags flags);
+    [RaisesException] DirectoryEntrySync getDirectory(DOMString? path, FileSystemFlags flags);
     [RaisesException] void removeRecursively();
 };

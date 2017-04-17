@@ -27,13 +27,14 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
-#include "device/core/device_client.h"
+#include "device/base/device_client.h"
 #include "device/test/usb_test_gadget.h"
 #include "device/usb/usb_device.h"
 #include "device/usb/usb_device_handle.h"
 #include "device/usb/usb_service.h"
 #include "net/base/escape.h"
 #include "net/proxy/proxy_service.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "net/url_request/url_request_context.h"
@@ -93,7 +94,7 @@ bool ReadFile(const base::FilePath& file_path, std::string* content) {
     return false;
   }
 
-  STLClearObject(content);
+  base::STLClearObject(content);
   int rv;
   do {
     char buf[4096];
@@ -130,8 +131,8 @@ std::unique_ptr<net::URLFetcher> CreateURLFetcher(
     const GURL& url,
     net::URLFetcher::RequestType request_type,
     net::URLFetcherDelegate* delegate) {
-  std::unique_ptr<net::URLFetcher> url_fetcher =
-      net::URLFetcher::Create(url, request_type, delegate);
+  std::unique_ptr<net::URLFetcher> url_fetcher = net::URLFetcher::Create(
+      url, request_type, delegate, TRAFFIC_ANNOTATION_FOR_TESTS);
 
   url_fetcher->SetRequestContext(request_context_getter.get());
 
@@ -218,8 +219,8 @@ class UsbGadgetFactory : public UsbService::Observer,
   std::unique_ptr<UsbTestGadget> WaitForDevice() {
     EnumerateDevices();
     run_loop_.Run();
-    return base::WrapUnique(
-        new UsbTestGadgetImpl(request_context_getter_, usb_service_, device_));
+    return base::MakeUnique<UsbTestGadgetImpl>(request_context_getter_,
+                                               usb_service_, device_);
   }
 
  private:

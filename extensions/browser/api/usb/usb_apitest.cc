@@ -7,10 +7,9 @@
 #include <numeric>
 
 #include "base/memory/ptr_util.h"
-#include "chrome/browser/extensions/extension_apitest.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/test/test_utils.h"
-#include "device/core/mock_device_client.h"
+#include "device/base/mock_device_client.h"
 #include "device/usb/mock_usb_device.h"
 #include "device/usb/mock_usb_device_handle.h"
 #include "device/usb/mock_usb_service.h"
@@ -108,7 +107,17 @@ class TestDevicePermissionsPrompt
 
   void ShowDialog() override { prompt()->SetObserver(this); }
 
-  void OnDevicesChanged() override {
+  void OnDeviceAdded(size_t index, const base::string16& device_name) override {
+    OnDevicesChanged();
+  }
+
+  void OnDeviceRemoved(size_t index,
+                       const base::string16& device_name) override {
+    OnDevicesChanged();
+  }
+
+ private:
+  void OnDevicesChanged() {
     for (size_t i = 0; i < prompt()->GetDeviceCount(); ++i) {
       prompt()->GrantDevicePermission(i);
       if (!prompt()->multiple()) {
@@ -125,7 +134,7 @@ class TestExtensionsAPIClient : public ShellExtensionsAPIClient {
 
   std::unique_ptr<DevicePermissionsPrompt> CreateDevicePermissionsPrompt(
       content::WebContents* web_contents) const override {
-    return base::WrapUnique(new TestDevicePermissionsPrompt(web_contents));
+    return base::MakeUnique<TestDevicePermissionsPrompt>(web_contents);
   }
 };
 

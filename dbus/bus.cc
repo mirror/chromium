@@ -45,7 +45,7 @@ const char kServiceNameOwnerChangeMatchRule[] =
 class Watch : public base::MessagePumpLibevent::Watcher {
  public:
   explicit Watch(DBusWatch* watch)
-      : raw_watch_(watch) {
+      : raw_watch_(watch), file_descriptor_watcher_(FROM_HERE) {
     dbus_watch_set_data(raw_watch_, this, NULL);
   }
 
@@ -398,13 +398,6 @@ void Bus::RemoveObjectManagerInternalHelper(
   // Release the object manager and run the callback.
   object_manager = NULL;
   callback.Run();
-}
-
-void Bus::GetManagedObjects() {
-  for (ObjectManagerTable::iterator iter = object_manager_table_.begin();
-       iter != object_manager_table_.end(); ++iter) {
-    iter->second->GetManagedObjects();
-  }
 }
 
 bool Bus::Connect() {

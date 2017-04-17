@@ -4,10 +4,13 @@
 
 #include "net/cert/internal/parsed_certificate.h"
 
+#include "net/cert/internal/certificate_policies.h"
+#include "net/cert/internal/extended_key_usage.h"
 #include "net/cert/internal/name_constraints.h"
 #include "net/cert/internal/signature_algorithm.h"
 #include "net/cert/internal/verify_name_match.h"
 #include "net/der/parser.h"
+#include "third_party/boringssl/src/include/openssl/pool.h"
 
 namespace net {
 
@@ -21,45 +24,89 @@ WARN_UNUSED_RESULT bool GetSequenceValue(const der::Input& tlv,
 
 }  // namespace
 
+bool ParsedCertificate::GetExtension(const der::Input& extension_oid,
+                                     ParsedExtension* parsed_extension) const {
+  if (!tbs_.has_extensions)
+    return false;
+
+  auto it = extensions_.find(extension_oid);
+  if (it == extensions_.end()) {
+    *parsed_extension = ParsedExtension();
+    return false;
+  }
+
+  *parsed_extension = it->second;
+  return true;
+}
+
 ParsedCertificate::ParsedCertificate() {}
 ParsedCertificate::~ParsedCertificate() {}
 
-scoped_refptr<ParsedCertificate> ParsedCertificate::CreateFromCertificateData(
+// static
+scoped_refptr<ParsedCertificate> ParsedCertificate::Create(
+    bssl::UniquePtr<CRYPTO_BUFFER> cert_data,
+    const ParseCertificateOptions& options,
+    CertErrors* errors) {
+  return CreateInternal(std::move(cert_data), der::Input(), options, errors);
+}
+
+// static
+bool ParsedCertificate::CreateAndAddToVector(
+    bssl::UniquePtr<CRYPTO_BUFFER> cert_data,
+    const ParseCertificateOptions& options,
+    std::vector<scoped_refptr<net::ParsedCertificate>>* chain,
+    CertErrors* errors) {
+  scoped_refptr<ParsedCertificate> cert(
+      Create(std::move(cert_data), options, errors));
+  if (!cert)
+    return false;
+  chain->push_back(std::move(cert));
+  return true;
+}
+
+// static
+scoped_refptr<ParsedCertificate> ParsedCertificate::CreateWithoutCopyingUnsafe(
     const uint8_t* data,
     size_t length,
-    DataSource source,
-    const ParseCertificateOptions& options) {
-  scoped_refptr<ParsedCertificate> result(new ParsedCertificate);
+    const ParseCertificateOptions& options,
+    CertErrors* errors) {
+  return CreateInternal(nullptr, der::Input(data, length), options, errors);
+}
 
-  switch (source) {
-    case DataSource::INTERNAL_COPY:
-      result->cert_data_.assign(data, data + length);
-      result->cert_ =
-          der::Input(result->cert_data_.data(), result->cert_data_.size());
-      break;
-    case DataSource::EXTERNAL_REFERENCE:
-      result->cert_ = der::Input(data, length);
-      break;
+// static
+scoped_refptr<ParsedCertificate> ParsedCertificate::CreateInternal(
+    bssl::UniquePtr<CRYPTO_BUFFER> backing_data,
+    der::Input static_data,
+    const ParseCertificateOptions& options,
+    CertErrors* errors) {
+  // TODO(crbug.com/634443): Add errors
+  scoped_refptr<ParsedCertificate> result(new ParsedCertificate);
+  if (backing_data) {
+    result->cert_data_ = std::move(backing_data);
+    result->cert_ = der::Input(CRYPTO_BUFFER_data(result->cert_data_.get()),
+                               CRYPTO_BUFFER_len(result->cert_data_.get()));
+  } else {
+    result->cert_ = static_data;
   }
 
   if (!ParseCertificate(result->cert_, &result->tbs_certificate_tlv_,
                         &result->signature_algorithm_tlv_,
-                        &result->signature_value_)) {
+                        &result->signature_value_, errors)) {
     return nullptr;
   }
 
-  if (!ParseTbsCertificate(result->tbs_certificate_tlv_, options,
-                           &result->tbs_)) {
+  if (!ParseTbsCertificate(result->tbs_certificate_tlv_, options, &result->tbs_,
+                           errors)) {
     return nullptr;
   }
 
   // Attempt to parse the signature algorithm contained in the Certificate.
-  // Do not give up on failure here, since SignatureAlgorithm::CreateFromDer
+  // Do not give up on failure here, since SignatureAlgorithm::Create
   // will fail on valid but unsupported signature algorithms.
   // TODO(mattm): should distinguish between unsupported algorithms and parsing
   // errors.
   result->signature_algorithm_ =
-      SignatureAlgorithm::CreateFromDer(result->signature_algorithm_tlv_);
+      SignatureAlgorithm::Create(result->signature_algorithm_tlv_, errors);
 
   der::Input subject_value;
   if (!GetSequenceValue(result->tbs_.subject_tlv, &subject_value) ||
@@ -72,41 +119,44 @@ scoped_refptr<ParsedCertificate> ParsedCertificate::CreateFromCertificateData(
     return nullptr;
   }
 
-  // Parse the standard X.509 extensions and remove them from
-  // |unparsed_extensions|.
+  // Parse the standard X.509 extensions.
   if (result->tbs_.has_extensions) {
     // ParseExtensions() ensures there are no duplicates, and maps the (unique)
     // OID to the extension value.
-    if (!ParseExtensions(result->tbs_.extensions_tlv,
-                         &result->unparsed_extensions_)) {
+    if (!ParseExtensions(result->tbs_.extensions_tlv, &result->extensions_)) {
       return nullptr;
     }
 
     ParsedExtension extension;
 
     // Basic constraints.
-    if (ConsumeExtension(BasicConstraintsOid(), &result->unparsed_extensions_,
-                         &extension)) {
+    if (result->GetExtension(BasicConstraintsOid(), &extension)) {
       result->has_basic_constraints_ = true;
       if (!ParseBasicConstraints(extension.value, &result->basic_constraints_))
         return nullptr;
     }
 
-    // KeyUsage.
-    if (ConsumeExtension(KeyUsageOid(), &result->unparsed_extensions_,
-                         &extension)) {
+    // Key Usage.
+    if (result->GetExtension(KeyUsageOid(), &extension)) {
       result->has_key_usage_ = true;
       if (!ParseKeyUsage(extension.value, &result->key_usage_))
         return nullptr;
     }
 
+    // Extended Key Usage.
+    if (result->GetExtension(ExtKeyUsageOid(), &extension)) {
+      result->has_extended_key_usage_ = true;
+      if (!ParseEKUExtension(extension.value, &result->extended_key_usage_))
+        return nullptr;
+    }
+
     // Subject alternative name.
-    if (ConsumeExtension(SubjectAltNameOid(), &result->unparsed_extensions_,
-                         &result->subject_alt_names_extension_)) {
+    if (result->GetExtension(SubjectAltNameOid(),
+                             &result->subject_alt_names_extension_)) {
       // RFC 5280 section 4.2.1.6:
       // SubjectAltName ::= GeneralNames
-      result->subject_alt_names_ = GeneralNames::CreateFromDer(
-          result->subject_alt_names_extension_.value);
+      result->subject_alt_names_ =
+          GeneralNames::Create(result->subject_alt_names_extension_.value);
       if (!result->subject_alt_names_)
         return nullptr;
       // RFC 5280 section 4.1.2.6:
@@ -121,18 +171,16 @@ scoped_refptr<ParsedCertificate> ParsedCertificate::CreateFromCertificateData(
     }
 
     // Name constraints.
-    if (ConsumeExtension(NameConstraintsOid(), &result->unparsed_extensions_,
-                         &extension)) {
+    if (result->GetExtension(NameConstraintsOid(), &extension)) {
       result->name_constraints_ =
-          NameConstraints::CreateFromDer(extension.value, extension.critical);
+          NameConstraints::Create(extension.value, extension.critical);
       if (!result->name_constraints_)
         return nullptr;
     }
 
     // Authority information access.
-    if (ConsumeExtension(AuthorityInfoAccessOid(),
-                         &result->unparsed_extensions_,
-                         &result->authority_info_access_extension_)) {
+    if (result->GetExtension(AuthorityInfoAccessOid(),
+                             &result->authority_info_access_extension_)) {
       result->has_authority_info_access_ = true;
       if (!ParseAuthorityInfoAccess(
               result->authority_info_access_extension_.value,
@@ -140,35 +188,17 @@ scoped_refptr<ParsedCertificate> ParsedCertificate::CreateFromCertificateData(
         return nullptr;
     }
 
-    // NOTE: if additional extensions are consumed here, the verification code
-    // must be updated to process those extensions, since the
-    // VerifyNoUnconsumedCriticalExtensions uses the unparsed_extensions_
-    // variable to tell which extensions were processed.
+    // Policies.
+    if (result->GetExtension(CertificatePoliciesOid(), &extension)) {
+      result->has_policy_oids_ = true;
+      if (!ParseCertificatePoliciesExtension(extension.value,
+                                             &result->policy_oids_)) {
+        return nullptr;
+      }
+    }
   }
 
   return result;
-}
-
-scoped_refptr<ParsedCertificate> ParsedCertificate::CreateFromCertificateCopy(
-    const base::StringPiece& data,
-    const ParseCertificateOptions& options) {
-  return ParsedCertificate::CreateFromCertificateData(
-      reinterpret_cast<const uint8_t*>(data.data()), data.size(),
-      DataSource::INTERNAL_COPY, options);
-}
-
-bool ParsedCertificate::CreateAndAddToVector(
-    const uint8_t* data,
-    size_t length,
-    DataSource source,
-    const ParseCertificateOptions& options,
-    ParsedCertificateList* chain) {
-  scoped_refptr<ParsedCertificate> cert(
-      CreateFromCertificateData(data, length, source, options));
-  if (!cert)
-    return false;
-  chain->push_back(std::move(cert));
-  return true;
 }
 
 }  // namespace net

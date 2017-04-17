@@ -7,25 +7,20 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "chrome/browser/chromeos/login/screens/wrong_hwid_screen_actor.h"
+#include "chrome/browser/chromeos/login/screens/wrong_hwid_screen_view.h"
 #include "chrome/browser/ui/webui/chromeos/login/base_screen_handler.h"
 #include "content/public/browser/web_ui.h"
-
-namespace base {
-class DictionaryValue;
-}
 
 namespace chromeos {
 
 // WebUI implementation of WrongHWIDScreenActor.
-class WrongHWIDScreenHandler : public WrongHWIDScreenActor,
+class WrongHWIDScreenHandler : public WrongHWIDScreenView,
                                public BaseScreenHandler {
  public:
   WrongHWIDScreenHandler();
   ~WrongHWIDScreenHandler() override;
 
   // WrongHWIDScreenActor implementation:
-  void PrepareToShow() override;
   void Show() override;
   void Hide() override;
   void SetDelegate(Delegate* delegate) override;
@@ -42,10 +37,10 @@ class WrongHWIDScreenHandler : public WrongHWIDScreenActor,
   // JS messages handlers.
   void HandleOnSkip();
 
-  Delegate* delegate_;
+  Delegate* delegate_ = nullptr;
 
   // Keeps whether screen should be shown right after initialization.
-  bool show_on_init_;
+  bool show_on_init_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(WrongHWIDScreenHandler);
 };

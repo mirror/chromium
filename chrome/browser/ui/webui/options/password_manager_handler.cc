@@ -13,7 +13,7 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/utf_string_conversions.h"
@@ -28,7 +28,7 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/autofill/core/common/password_form.h"
-#include "components/browser_sync/browser/profile_sync_service.h"
+#include "components/browser_sync/profile_sync_service.h"
 #include "components/password_manager/core/browser/export/password_exporter.h"
 #include "components/password_manager/core/browser/password_bubble_experiment.h"
 #include "components/password_manager/core/browser/password_manager_constants.h"
@@ -42,16 +42,11 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_source.h"
-#include "content/public/browser/user_metrics.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/origin_util.h"
 #include "ui/base/l10n/l10n_util.h"
-
-#if defined(OS_WIN) && defined(USE_ASH)
-#include "chrome/browser/ui/ash/ash_util.h"
-#endif
 
 namespace options {
 
@@ -135,13 +130,8 @@ void PasswordManagerHandler::GetLocalizedValues(
 
   RegisterStrings(localized_strings, resources, arraysize(resources));
 
-  const ProfileSyncService* sync_service =
-      ProfileSyncServiceFactory::GetForProfile(GetProfile());
-  int title_id =
-      password_bubble_experiment::IsSmartLockBrandingEnabled(sync_service)
-          ? IDS_PASSWORD_MANAGER_SMART_LOCK_FOR_PASSWORDS
-          : IDS_PASSWORDS_EXCEPTIONS_WINDOW_TITLE;
-  RegisterTitle(localized_strings, "passwordsPage", title_id);
+  RegisterTitle(localized_strings, "passwordsPage",
+                IDS_PASSWORDS_EXCEPTIONS_WINDOW_TITLE);
 
   localized_strings->SetString("passwordManagerLearnMoreURL",
                                chrome::kPasswordManagerLearnMoreURL);
@@ -254,10 +244,9 @@ void PasswordManagerHandler::ShowPassword(
     const std::string& username,
     const base::string16& password_value) {
   // Call back the front end to reveal the password.
-  web_ui()->CallJavascriptFunctionUnsafe(
-      "PasswordManager.showPassword",
-      base::FundamentalValue(static_cast<int>(index)),
-      base::StringValue(password_value));
+  web_ui()->CallJavascriptFunctionUnsafe("PasswordManager.showPassword",
+                                         base::Value(static_cast<int>(index)),
+                                         base::Value(password_value));
 }
 
 void PasswordManagerHandler::HandleUpdatePasswordLists(

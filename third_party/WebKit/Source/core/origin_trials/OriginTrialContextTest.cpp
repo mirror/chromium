@@ -4,10 +4,10 @@
 
 #include "core/origin_trials/OriginTrialContext.h"
 
+#include <memory>
 #include "core/HTMLNames.h"
 #include "core/dom/DOMException.h"
 #include "core/frame/FrameView.h"
-#include "core/html/HTMLDocument.h"
 #include "core/html/HTMLHeadElement.h"
 #include "core/html/HTMLMetaElement.h"
 #include "core/testing/DummyPageHolder.h"
@@ -15,18 +15,17 @@
 #include "platform/testing/HistogramTester.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/Vector.h"
 #include "public/platform/WebOriginTrialTokenStatus.h"
 #include "public/platform/WebTrialTokenValidator.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/Vector.h"
-#include <memory>
 
 namespace blink {
 namespace {
 
-const char kNonExistingFeatureName[] = "This feature does not exist";
-const char kFrobulateFeatureName[] = "Frobulate";
+const char kNonExistingTrialName[] = "This trial does not exist";
+const char kFrobulateTrialName[] = "Frobulate";
 const char kFrobulateEnabledOrigin[] = "https://www.example.com";
 const char kFrobulateEnabledOriginUnsecure[] = "http://www.example.com";
 
@@ -37,201 +36,193 @@ const char kResultHistogram[] = "OriginTrials.ValidationResult";
 const char kTokenPlaceholder[] = "The token contents are not used";
 
 class MockTokenValidator : public WebTrialTokenValidator {
-public:
-    MockTokenValidator()
-        : m_response(WebOriginTrialTokenStatus::NotSupported)
-        , m_callCount(0)
-    {
-    }
-    ~MockTokenValidator() override {}
+ public:
+  MockTokenValidator()
+      : response_(WebOriginTrialTokenStatus::kNotSupported), call_count_(0) {}
+  ~MockTokenValidator() override {}
 
-    // blink::WebTrialTokenValidator implementation
-    WebOriginTrialTokenStatus validateToken(const WebString& token, const WebSecurityOrigin& origin, WebString* featureName) override
-    {
-        m_callCount++;
-        *featureName = m_feature;
-        return m_response;
-    }
+  // blink::WebTrialTokenValidator implementation
+  WebOriginTrialTokenStatus ValidateToken(const WebString& token,
+                                          const WebSecurityOrigin& origin,
+                                          WebString* feature_name) override {
+    call_count_++;
+    *feature_name = feature_;
+    return response_;
+  }
 
-    // Useful methods for controlling the validator
-    void setResponse(WebOriginTrialTokenStatus response, const WebString& feature)
-    {
-        m_response = response;
-        m_feature = feature;
-    }
-    int callCount()
-    {
-        return m_callCount;
-    }
+  // Useful methods for controlling the validator
+  void SetResponse(WebOriginTrialTokenStatus response,
+                   const WebString& feature) {
+    response_ = response;
+    feature_ = feature;
+  }
+  int CallCount() { return call_count_; }
 
-private:
-    WebOriginTrialTokenStatus m_response;
-    WebString m_feature;
-    int m_callCount;
+ private:
+  WebOriginTrialTokenStatus response_;
+  WebString feature_;
+  int call_count_;
 
-    DISALLOW_COPY_AND_ASSIGN(MockTokenValidator);
+  DISALLOW_COPY_AND_ASSIGN(MockTokenValidator);
 };
 
-} // namespace
+}  // namespace
 
 class OriginTrialContextTest : public ::testing::Test {
-protected:
-    OriginTrialContextTest()
-        : m_frameworkWasEnabled(RuntimeEnabledFeatures::originTrialsEnabled())
-        , m_executionContext(new NullExecutionContext())
-        , m_tokenValidator(wrapUnique(new MockTokenValidator()))
-        , m_originTrialContext(new OriginTrialContext(m_executionContext.get(), m_tokenValidator.get()))
-        , m_histogramTester(new HistogramTester())
-    {
-        RuntimeEnabledFeatures::setOriginTrialsEnabled(true);
-    }
+ protected:
+  OriginTrialContextTest()
+      : framework_was_enabled_(RuntimeEnabledFeatures::originTrialsEnabled()),
+        execution_context_(new NullExecutionContext()),
+        token_validator_(WTF::MakeUnique<MockTokenValidator>()),
+        origin_trial_context_(new OriginTrialContext(*execution_context_,
+                                                     token_validator_.get())),
+        histogram_tester_(new HistogramTester()) {
+    RuntimeEnabledFeatures::setOriginTrialsEnabled(true);
+  }
 
-    ~OriginTrialContextTest()
-    {
-        RuntimeEnabledFeatures::setOriginTrialsEnabled(m_frameworkWasEnabled);
-    }
+  ~OriginTrialContextTest() {
+    RuntimeEnabledFeatures::setOriginTrialsEnabled(framework_was_enabled_);
+  }
 
-    MockTokenValidator* tokenValidator() { return m_tokenValidator.get(); }
+  MockTokenValidator* TokenValidator() { return token_validator_.get(); }
 
-    void updateSecurityOrigin(const String& origin)
-    {
-        KURL pageURL(ParsedURLString, origin);
-        RefPtr<SecurityOrigin> pageOrigin = SecurityOrigin::create(pageURL);
-        m_executionContext->setSecurityOrigin(pageOrigin);
-        m_executionContext->setIsSecureContext(SecurityOrigin::isSecure(pageURL));
-    }
+  void UpdateSecurityOrigin(const String& origin) {
+    KURL page_url(kParsedURLString, origin);
+    RefPtr<SecurityOrigin> page_origin = SecurityOrigin::Create(page_url);
+    execution_context_->SetSecurityOrigin(page_origin);
+    execution_context_->SetIsSecureContext(SecurityOrigin::IsSecure(page_url));
+  }
 
-    bool isFeatureEnabled(const String& origin, const String& featureName)
-    {
-        updateSecurityOrigin(origin);
-        // Need at least one token to ensure the token validator is called.
-        m_originTrialContext->addToken(kTokenPlaceholder);
-        return m_originTrialContext->isFeatureEnabled(featureName);
-    }
+  bool IsTrialEnabled(const String& origin, const String& feature_name) {
+    UpdateSecurityOrigin(origin);
+    // Need at least one token to ensure the token validator is called.
+    origin_trial_context_->AddToken(kTokenPlaceholder);
+    return origin_trial_context_->IsTrialEnabled(feature_name);
+  }
 
-    void expectStatusUniqueMetric(WebOriginTrialTokenStatus status, int count)
-    {
-        m_histogramTester->expectUniqueSample(
-            kResultHistogram, static_cast<int>(status), count);
-    }
+  void ExpectStatusUniqueMetric(WebOriginTrialTokenStatus status, int count) {
+    histogram_tester_->ExpectUniqueSample(kResultHistogram,
+                                          static_cast<int>(status), count);
+  }
 
-    void expecStatusTotalMetric(int total)
-    {
-        m_histogramTester->expectTotalCount(kResultHistogram, total);
-    }
+  void ExpecStatusTotalMetric(int total) {
+    histogram_tester_->ExpectTotalCount(kResultHistogram, total);
+  }
 
-private:
-    const bool m_frameworkWasEnabled;
-    Persistent<NullExecutionContext> m_executionContext;
-    std::unique_ptr<MockTokenValidator> m_tokenValidator;
-    Persistent<OriginTrialContext> m_originTrialContext;
-    std::unique_ptr<HistogramTester> m_histogramTester;
+ private:
+  const bool framework_was_enabled_;
+  Persistent<NullExecutionContext> execution_context_;
+  std::unique_ptr<MockTokenValidator> token_validator_;
+  Persistent<OriginTrialContext> origin_trial_context_;
+  std::unique_ptr<HistogramTester> histogram_tester_;
 };
 
-TEST_F(OriginTrialContextTest, EnabledNonExistingFeature)
-{
-    tokenValidator()->setResponse(WebOriginTrialTokenStatus::Success, kFrobulateFeatureName);
-    bool isNonExistingFeatureEnabled = isFeatureEnabled(kFrobulateEnabledOrigin,
-        kNonExistingFeatureName);
-    EXPECT_FALSE(isNonExistingFeatureEnabled);
+TEST_F(OriginTrialContextTest, EnabledNonExistingTrial) {
+  TokenValidator()->SetResponse(WebOriginTrialTokenStatus::kSuccess,
+                                kFrobulateTrialName);
+  bool is_non_existing_trial_enabled =
+      IsTrialEnabled(kFrobulateEnabledOrigin, kNonExistingTrialName);
+  EXPECT_FALSE(is_non_existing_trial_enabled);
 
-    // Status metric should be updated.
-    expectStatusUniqueMetric(WebOriginTrialTokenStatus::Success, 1);
+  // Status metric should be updated.
+  ExpectStatusUniqueMetric(WebOriginTrialTokenStatus::kSuccess, 1);
 }
 
 // The feature should be enabled if a valid token for the origin is provided
-TEST_F(OriginTrialContextTest, EnabledSecureRegisteredOrigin)
-{
-    tokenValidator()->setResponse(WebOriginTrialTokenStatus::Success, kFrobulateFeatureName);
-    bool isOriginEnabled = isFeatureEnabled(kFrobulateEnabledOrigin,
-        kFrobulateFeatureName);
-    EXPECT_TRUE(isOriginEnabled);
-    EXPECT_EQ(1, tokenValidator()->callCount());
+TEST_F(OriginTrialContextTest, EnabledSecureRegisteredOrigin) {
+  TokenValidator()->SetResponse(WebOriginTrialTokenStatus::kSuccess,
+                                kFrobulateTrialName);
+  bool is_origin_enabled =
+      IsTrialEnabled(kFrobulateEnabledOrigin, kFrobulateTrialName);
+  EXPECT_TRUE(is_origin_enabled);
+  EXPECT_EQ(1, TokenValidator()->CallCount());
 
-    // Status metric should be updated.
-    expectStatusUniqueMetric(WebOriginTrialTokenStatus::Success, 1);
+  // Status metric should be updated.
+  ExpectStatusUniqueMetric(WebOriginTrialTokenStatus::kSuccess, 1);
 }
 
 // ... but if the browser says it's invalid for any reason, that's enough to
 // reject.
-TEST_F(OriginTrialContextTest, InvalidTokenResponseFromPlatform)
-{
-    tokenValidator()->setResponse(WebOriginTrialTokenStatus::Malformed, kFrobulateFeatureName);
-    bool isOriginEnabled = isFeatureEnabled(kFrobulateEnabledOrigin,
-        kFrobulateFeatureName);
-    EXPECT_FALSE(isOriginEnabled);
-    EXPECT_EQ(1, tokenValidator()->callCount());
+TEST_F(OriginTrialContextTest, InvalidTokenResponseFromPlatform) {
+  TokenValidator()->SetResponse(WebOriginTrialTokenStatus::kMalformed,
+                                kFrobulateTrialName);
+  bool is_origin_enabled =
+      IsTrialEnabled(kFrobulateEnabledOrigin, kFrobulateTrialName);
+  EXPECT_FALSE(is_origin_enabled);
+  EXPECT_EQ(1, TokenValidator()->CallCount());
 
-    // Status metric should be updated.
-    expectStatusUniqueMetric(WebOriginTrialTokenStatus::Malformed, 1);
+  // Status metric should be updated.
+  ExpectStatusUniqueMetric(WebOriginTrialTokenStatus::kMalformed, 1);
 }
 
 // The feature should not be enabled if the origin is insecure, even if a valid
 // token for the origin is provided
-TEST_F(OriginTrialContextTest, EnabledNonSecureRegisteredOrigin)
-{
-    tokenValidator()->setResponse(WebOriginTrialTokenStatus::Success, kFrobulateFeatureName);
-    bool isOriginEnabled = isFeatureEnabled(kFrobulateEnabledOriginUnsecure,
-        kFrobulateFeatureName);
-    EXPECT_FALSE(isOriginEnabled);
-    EXPECT_EQ(0, tokenValidator()->callCount());
-    expectStatusUniqueMetric(WebOriginTrialTokenStatus::Insecure, 1);
+TEST_F(OriginTrialContextTest, EnabledNonSecureRegisteredOrigin) {
+  TokenValidator()->SetResponse(WebOriginTrialTokenStatus::kSuccess,
+                                kFrobulateTrialName);
+  bool is_origin_enabled =
+      IsTrialEnabled(kFrobulateEnabledOriginUnsecure, kFrobulateTrialName);
+  EXPECT_FALSE(is_origin_enabled);
+  EXPECT_EQ(0, TokenValidator()->CallCount());
+  ExpectStatusUniqueMetric(WebOriginTrialTokenStatus::kInsecure, 1);
 }
 
-TEST_F(OriginTrialContextTest, ParseHeaderValue)
-{
-    std::unique_ptr<Vector<String>> tokens;
-    ASSERT_TRUE(tokens = OriginTrialContext::parseHeaderValue(" foo\t "));
-    ASSERT_EQ(1u, tokens->size());
-    EXPECT_EQ("foo", (*tokens)[0]);
+TEST_F(OriginTrialContextTest, ParseHeaderValue) {
+  std::unique_ptr<Vector<String>> tokens;
+  ASSERT_TRUE(tokens = OriginTrialContext::ParseHeaderValue(" foo\t "));
+  ASSERT_EQ(1u, tokens->size());
+  EXPECT_EQ("foo", (*tokens)[0]);
 
-    ASSERT_TRUE(tokens = OriginTrialContext::parseHeaderValue(" \" bar \" "));
-    ASSERT_EQ(1u, tokens->size());
-    EXPECT_EQ(" bar ", (*tokens)[0]);
+  ASSERT_TRUE(tokens = OriginTrialContext::ParseHeaderValue(" \" bar \" "));
+  ASSERT_EQ(1u, tokens->size());
+  EXPECT_EQ(" bar ", (*tokens)[0]);
 
-    ASSERT_TRUE(tokens = OriginTrialContext::parseHeaderValue(" foo, bar"));
-    ASSERT_EQ(2u, tokens->size());
-    EXPECT_EQ("foo", (*tokens)[0]);
-    EXPECT_EQ("bar", (*tokens)[1]);
+  ASSERT_TRUE(tokens = OriginTrialContext::ParseHeaderValue(" foo, bar"));
+  ASSERT_EQ(2u, tokens->size());
+  EXPECT_EQ("foo", (*tokens)[0]);
+  EXPECT_EQ("bar", (*tokens)[1]);
 
-    ASSERT_TRUE(tokens = OriginTrialContext::parseHeaderValue(",foo, ,bar,,'  ', ''"));
-    ASSERT_EQ(3u, tokens->size());
-    EXPECT_EQ("foo", (*tokens)[0]);
-    EXPECT_EQ("bar", (*tokens)[1]);
-    EXPECT_EQ("  ", (*tokens)[2]);
+  ASSERT_TRUE(tokens =
+                  OriginTrialContext::ParseHeaderValue(",foo, ,bar,,'  ', ''"));
+  ASSERT_EQ(3u, tokens->size());
+  EXPECT_EQ("foo", (*tokens)[0]);
+  EXPECT_EQ("bar", (*tokens)[1]);
+  EXPECT_EQ("  ", (*tokens)[2]);
 
-    ASSERT_TRUE(tokens = OriginTrialContext::parseHeaderValue("  \"abc\"  , 'def',g"));
-    ASSERT_EQ(3u, tokens->size());
-    EXPECT_EQ("abc", (*tokens)[0]);
-    EXPECT_EQ("def", (*tokens)[1]);
-    EXPECT_EQ("g", (*tokens)[2]);
+  ASSERT_TRUE(tokens =
+                  OriginTrialContext::ParseHeaderValue("  \"abc\"  , 'def',g"));
+  ASSERT_EQ(3u, tokens->size());
+  EXPECT_EQ("abc", (*tokens)[0]);
+  EXPECT_EQ("def", (*tokens)[1]);
+  EXPECT_EQ("g", (*tokens)[2]);
 
-    ASSERT_TRUE(tokens = OriginTrialContext::parseHeaderValue(" \"a\\b\\\"c'd\", 'e\\f\\'g' "));
-    ASSERT_EQ(2u, tokens->size());
-    EXPECT_EQ("ab\"c'd", (*tokens)[0]);
-    EXPECT_EQ("ef'g", (*tokens)[1]);
+  ASSERT_TRUE(tokens = OriginTrialContext::ParseHeaderValue(
+                  " \"a\\b\\\"c'd\", 'e\\f\\'g' "));
+  ASSERT_EQ(2u, tokens->size());
+  EXPECT_EQ("ab\"c'd", (*tokens)[0]);
+  EXPECT_EQ("ef'g", (*tokens)[1]);
 
-    ASSERT_TRUE(tokens = OriginTrialContext::parseHeaderValue("\"ab,c\" , 'd,e'"));
-    ASSERT_EQ(2u, tokens->size());
-    EXPECT_EQ("ab,c", (*tokens)[0]);
-    EXPECT_EQ("d,e", (*tokens)[1]);
+  ASSERT_TRUE(tokens =
+                  OriginTrialContext::ParseHeaderValue("\"ab,c\" , 'd,e'"));
+  ASSERT_EQ(2u, tokens->size());
+  EXPECT_EQ("ab,c", (*tokens)[0]);
+  EXPECT_EQ("d,e", (*tokens)[1]);
 
-    ASSERT_TRUE(tokens = OriginTrialContext::parseHeaderValue("  "));
-    EXPECT_EQ(0u, tokens->size());
+  ASSERT_TRUE(tokens = OriginTrialContext::ParseHeaderValue("  "));
+  EXPECT_EQ(0u, tokens->size());
 
-    ASSERT_TRUE(tokens = OriginTrialContext::parseHeaderValue(""));
-    EXPECT_EQ(0u, tokens->size());
+  ASSERT_TRUE(tokens = OriginTrialContext::ParseHeaderValue(""));
+  EXPECT_EQ(0u, tokens->size());
 
-    ASSERT_TRUE(tokens = OriginTrialContext::parseHeaderValue(" ,, \"\" "));
-    EXPECT_EQ(0u, tokens->size());
+  ASSERT_TRUE(tokens = OriginTrialContext::ParseHeaderValue(" ,, \"\" "));
+  EXPECT_EQ(0u, tokens->size());
 }
 
-TEST_F(OriginTrialContextTest, ParseHeaderValue_NotCommaSeparated)
-{
-    EXPECT_FALSE(OriginTrialContext::parseHeaderValue("foo bar"));
-    EXPECT_FALSE(OriginTrialContext::parseHeaderValue("\"foo\" 'bar'"));
-    EXPECT_FALSE(OriginTrialContext::parseHeaderValue("foo 'bar'"));
-    EXPECT_FALSE(OriginTrialContext::parseHeaderValue("\"foo\" bar"));
+TEST_F(OriginTrialContextTest, ParseHeaderValue_NotCommaSeparated) {
+  EXPECT_FALSE(OriginTrialContext::ParseHeaderValue("foo bar"));
+  EXPECT_FALSE(OriginTrialContext::ParseHeaderValue("\"foo\" 'bar'"));
+  EXPECT_FALSE(OriginTrialContext::ParseHeaderValue("foo 'bar'"));
+  EXPECT_FALSE(OriginTrialContext::ParseHeaderValue("\"foo\" bar"));
 }
 
-} // namespace blink
+}  // namespace blink

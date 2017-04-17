@@ -17,6 +17,7 @@
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "media/base/audio_decoder_config.h"
+#include "media/base/encryption_scheme.h"
 #include "media/base/media_tracks.h"
 #include "media/base/media_util.h"
 #include "media/base/stream_parser_buffer.h"
@@ -33,6 +34,45 @@
 namespace media {
 namespace mp4 {
 
+namespace {
+const int kMaxEmptySampleLogs = 20;
+
+// Caller should be prepared to handle return of Unencrypted() in case of
+// unsupported scheme.
+EncryptionScheme GetEncryptionScheme(const ProtectionSchemeInfo& sinf) {
+  if (!sinf.HasSupportedScheme())
+    return Unencrypted();
+  FourCC fourcc = sinf.type.type;
+  EncryptionScheme::CipherMode mode = EncryptionScheme::CIPHER_MODE_UNENCRYPTED;
+  EncryptionScheme::Pattern pattern;
+#if BUILDFLAG(ENABLE_CBCS_ENCRYPTION_SCHEME)
+  bool uses_pattern_encryption = false;
+#endif
+  switch (fourcc) {
+    case FOURCC_CENC:
+      mode = EncryptionScheme::CIPHER_MODE_AES_CTR;
+      break;
+#if BUILDFLAG(ENABLE_CBCS_ENCRYPTION_SCHEME)
+    case FOURCC_CBCS:
+      mode = EncryptionScheme::CIPHER_MODE_AES_CBC;
+      uses_pattern_encryption = true;
+      break;
+#endif
+    default:
+      NOTREACHED();
+      break;
+  }
+#if BUILDFLAG(ENABLE_CBCS_ENCRYPTION_SCHEME)
+  if (uses_pattern_encryption) {
+    uint8_t crypt = sinf.info.track_encryption.default_crypt_byte_block;
+    uint8_t skip = sinf.info.track_encryption.default_skip_byte_block;
+    pattern = EncryptionScheme::Pattern(crypt, skip);
+  }
+#endif
+  return EncryptionScheme(mode, pattern);
+}
+}  // namespace
+
 MP4StreamParser::MP4StreamParser(const std::set<int>& audio_object_types,
                                  bool has_sbr)
     : state_(kWaitingForInit),
@@ -41,14 +81,9 @@ MP4StreamParser::MP4StreamParser(const std::set<int>& audio_object_types,
       highest_end_offset_(0),
       has_audio_(false),
       has_video_(false),
-      audio_track_id_(0),
-      video_track_id_(0),
       audio_object_types_(audio_object_types),
       has_sbr_(has_sbr),
-      is_audio_track_encrypted_(false),
-      is_video_track_encrypted_(false),
-      num_top_level_box_skipped_(0) {
-}
+      num_empty_samples_skipped_(0) {}
 
 MP4StreamParser::~MP4StreamParser() {}
 
@@ -101,8 +136,7 @@ bool MP4StreamParser::Parse(const uint8_t* buf, int size) {
 
   queue_.Push(buf, size);
 
-  BufferQueue audio_buffers;
-  BufferQueue video_buffers;
+  BufferQueueMap buffers;
 
   bool result = false;
   bool err = false;
@@ -125,7 +159,7 @@ bool MP4StreamParser::Parse(const uint8_t* buf, int size) {
         break;
 
       case kEmittingSamples:
-        result = EnqueueSample(&audio_buffers, &video_buffers, &err);
+        result = EnqueueSample(&buffers, &err);
         if (result) {
           int64_t max_clear = runs_->GetMaxClearOffset() + moof_head_;
           err = !ReadAndDiscardMDATsUntil(max_clear);
@@ -135,7 +169,7 @@ bool MP4StreamParser::Parse(const uint8_t* buf, int size) {
   } while (result && !err);
 
   if (!err)
-    err = !SendAndFlushSamples(&audio_buffers, &video_buffers);
+    err = !SendAndFlushSamples(&buffers);
 
   if (err) {
     DLOG(ERROR) << "Error while parsing MP4";
@@ -165,7 +199,7 @@ bool MP4StreamParser::ParseBox(bool* err) {
     *err = !ParseMoof(reader.get());
 
     // Set up first mdat offset for ReadMDATsUntil().
-    mdat_tail_ = queue_.head() + reader->size();
+    mdat_tail_ = queue_.head() + reader->box_size();
 
     // Return early to avoid evicting 'moof' data from queue. Auxiliary info may
     // be located anywhere in the file, including inside the 'moof' itself.
@@ -179,7 +213,7 @@ bool MP4StreamParser::ParseBox(bool* err) {
              << FourCCToString(reader->type());
   }
 
-  queue_.Pop(reader->size());
+  queue_.Pop(reader->box_size());
   return !(*err);
 }
 
@@ -187,6 +221,9 @@ bool MP4StreamParser::ParseMoov(BoxReader* reader) {
   moov_.reset(new Movie);
   RCHECK(moov_->Parse(reader));
   runs_.reset();
+  audio_track_ids_.clear();
+  video_track_ids_.clear();
+  is_track_encrypted_.clear();
 
   has_audio_ = false;
   has_video_ = false;
@@ -200,9 +237,6 @@ bool MP4StreamParser::ParseMoov(BoxReader* reader) {
 
   for (std::vector<Track>::const_iterator track = moov_->tracks.begin();
        track != moov_->tracks.end(); ++track) {
-    // TODO(strobe): Only the first audio and video track present in a file are
-    // used. (Track selection is better accomplished via Source IDs, though, so
-    // adding support for track selection within a stream is low-priority.)
     const SampleDescription& samp_descr =
         track->media.information.sample_table.description;
 
@@ -222,8 +256,6 @@ bool MP4StreamParser::ParseMoov(BoxReader* reader) {
 
     if (track->media.handler.type == kAudio) {
       detected_audio_track_count++;
-      if (audio_config.IsValidConfig())
-        continue;  // Skip other audio tracks once we found a supported one.
 
       RCHECK(!samp_descr.audio_entries.empty());
 
@@ -312,20 +344,35 @@ bool MP4StreamParser::ParseMoov(BoxReader* reader) {
         return false;
       }
 
-      is_audio_track_encrypted_ = entry.sinf.info.track_encryption.is_encrypted;
-      DVLOG(1) << "is_audio_track_encrypted_: " << is_audio_track_encrypted_;
-      audio_config.Initialize(
-          codec, sample_format, channel_layout, sample_per_second, extra_data,
-          is_audio_track_encrypted_ ? AesCtrEncryptionScheme() : Unencrypted(),
-          base::TimeDelta(), 0);
+      uint32_t audio_track_id = track->header.track_id;
+      if (audio_track_ids_.find(audio_track_id) != audio_track_ids_.end()) {
+        MEDIA_LOG(ERROR, media_log_)
+            << "Audio track with track_id=" << audio_track_id
+            << " already present.";
+        return false;
+      }
+      bool is_track_encrypted = entry.sinf.info.track_encryption.is_encrypted;
+      is_track_encrypted_[audio_track_id] = is_track_encrypted;
+      EncryptionScheme scheme = Unencrypted();
+      if (is_track_encrypted) {
+        scheme = GetEncryptionScheme(entry.sinf);
+        if (!scheme.is_encrypted())
+          return false;
+      }
+      audio_config.Initialize(codec, sample_format, channel_layout,
+                              sample_per_second, extra_data, scheme,
+                              base::TimeDelta(), 0);
+      DVLOG(1) << "audio_track_id=" << audio_track_id
+               << " config=" << audio_config.AsHumanReadableString();
       if (!audio_config.IsValidConfig()) {
         MEDIA_LOG(ERROR, media_log_) << "Invalid audio decoder config: "
                                      << audio_config.AsHumanReadableString();
         return false;
       }
       has_audio_ = true;
-      audio_track_id_ = track->header.track_id;
-      media_tracks->AddAudioTrack(audio_config, audio_track_id_, "main",
+      audio_track_ids_.insert(audio_track_id);
+      const char* track_kind = (audio_track_ids_.size() == 1 ? "main" : "");
+      media_tracks->AddAudioTrack(audio_config, audio_track_id, track_kind,
                                   track->media.handler.name,
                                   track->media.header.language());
       continue;
@@ -333,8 +380,6 @@ bool MP4StreamParser::ParseMoov(BoxReader* reader) {
 
     if (track->media.handler.type == kVideo) {
       detected_video_track_count++;
-      if (video_config.IsValidConfig())
-        continue;  // Skip other video tracks once we found a supported one.
 
       RCHECK(!samp_descr.video_entries.empty());
       if (desc_idx >= samp_descr.video_entries.size())
@@ -365,23 +410,38 @@ bool MP4StreamParser::ParseMoov(BoxReader* reader) {
             gfx::Size(track->header.width, track->header.height);
       }
 
-      is_video_track_encrypted_ = entry.sinf.info.track_encryption.is_encrypted;
-      DVLOG(1) << "is_video_track_encrypted_: " << is_video_track_encrypted_;
-      video_config.Initialize(
-          entry.video_codec, entry.video_codec_profile, PIXEL_FORMAT_YV12,
-          COLOR_SPACE_HD_REC709, coded_size, visible_rect, natural_size,
-          // No decoder-specific buffer needed for AVC;
-          // SPS/PPS are embedded in the video stream
-          EmptyExtraData(),
-          is_video_track_encrypted_ ? AesCtrEncryptionScheme() : Unencrypted());
+      uint32_t video_track_id = track->header.track_id;
+      if (video_track_ids_.find(video_track_id) != video_track_ids_.end()) {
+        MEDIA_LOG(ERROR, media_log_)
+            << "Video track with track_id=" << video_track_id
+            << " already present.";
+        return false;
+      }
+      bool is_track_encrypted = entry.sinf.info.track_encryption.is_encrypted;
+      is_track_encrypted_[video_track_id] = is_track_encrypted;
+      EncryptionScheme scheme = Unencrypted();
+      if (is_track_encrypted) {
+        scheme = GetEncryptionScheme(entry.sinf);
+        if (!scheme.is_encrypted())
+          return false;
+      }
+      video_config.Initialize(entry.video_codec, entry.video_codec_profile,
+                              PIXEL_FORMAT_YV12, COLOR_SPACE_HD_REC709,
+                              coded_size, visible_rect, natural_size,
+                              // No decoder-specific buffer needed for AVC;
+                              // SPS/PPS are embedded in the video stream
+                              EmptyExtraData(), scheme);
+      DVLOG(1) << "video_track_id=" << video_track_id
+               << " config=" << video_config.AsHumanReadableString();
       if (!video_config.IsValidConfig()) {
         MEDIA_LOG(ERROR, media_log_) << "Invalid video decoder config: "
                                      << video_config.AsHumanReadableString();
         return false;
       }
       has_video_ = true;
-      video_track_id_ = track->header.track_id;
-      media_tracks->AddVideoTrack(video_config, video_track_id_, "main",
+      video_track_ids_.insert(video_track_id);
+      const char* track_kind = (video_track_ids_.size() == 1 ? "main" : "");
+      media_tracks->AddVideoTrack(video_config, video_track_id, track_kind,
                                   track->media.handler.name,
                                   track->media.header.language());
       continue;
@@ -406,7 +466,17 @@ bool MP4StreamParser::ParseMoov(BoxReader* reader) {
         moov_->extends.header.fragment_duration, moov_->header.timescale);
     params.liveness = DemuxerStream::LIVENESS_RECORDED;
   } else if (moov_->header.duration > 0 &&
-             moov_->header.duration != std::numeric_limits<uint64_t>::max()) {
+             ((moov_->header.version == 0 &&
+               moov_->header.duration !=
+                   std::numeric_limits<uint32_t>::max()) ||
+              (moov_->header.version == 1 &&
+               moov_->header.duration !=
+                   std::numeric_limits<uint64_t>::max()))) {
+    // In ISO/IEC 14496-12:2012, 8.2.2.3: "If the duration cannot be determined
+    // then duration is set to all 1s."
+    // The duration field is either 32-bit or 64-bit depending on the version in
+    // MovieHeaderBox. We interpret not 0 and not all 1's here as "known
+    // duration".
     params.duration =
         TimeDeltaFromRational(moov_->header.duration, moov_->header.timescale);
     params.liveness = DemuxerStream::LIVENESS_RECORDED;
@@ -415,6 +485,10 @@ bool MP4StreamParser::ParseMoov(BoxReader* reader) {
     // real-time, such as used in live streaming, it is not likely that the
     // fragment_duration is known in advance and this (mehd) box may be
     // omitted."
+
+    // We have an unknown duration (neither any mvex fragment_duration nor moov
+    // duration value indicated a known duration, above.)
+
     // TODO(wolenetz): Investigate gating liveness detection on timeline_offset
     // when it's populated. See http://crbug.com/312699
     params.liveness = DemuxerStream::LIVENESS_LIVE;
@@ -486,15 +560,13 @@ bool MP4StreamParser::PrepareAACBuffer(
   return true;
 }
 
-bool MP4StreamParser::EnqueueSample(BufferQueue* audio_buffers,
-                                    BufferQueue* video_buffers,
-                                    bool* err) {
+bool MP4StreamParser::EnqueueSample(BufferQueueMap* buffers, bool* err) {
   DCHECK_EQ(state_, kEmittingSamples);
 
   if (!runs_->IsRunValid()) {
     // Flush any buffers we've gotten in this chunk so that buffers don't
     // cross |new_segment_cb_| calls
-    *err = !SendAndFlushSamples(audio_buffers, video_buffers);
+    *err = !SendAndFlushSamples(buffers);
     if (*err)
       return false;
 
@@ -520,8 +592,10 @@ bool MP4StreamParser::EnqueueSample(BufferQueue* audio_buffers,
   queue_.Peek(&buf, &buf_size);
   if (!buf_size) return false;
 
-  bool audio = has_audio_ && audio_track_id_ == runs_->track_id();
-  bool video = has_video_ && video_track_id_ == runs_->track_id();
+  bool audio =
+      audio_track_ids_.find(runs_->track_id()) != audio_track_ids_.end();
+  bool video =
+      video_track_ids_.find(runs_->track_id()) != video_track_ids_.end();
 
   // Skip this entire track if it's not one we're interested in
   if (!audio && !video) {
@@ -546,6 +620,16 @@ bool MP4StreamParser::EnqueueSample(BufferQueue* audio_buffers,
   queue_.PeekAt(runs_->sample_offset() + moof_head_, &buf, &buf_size);
   if (buf_size < runs_->sample_size()) return false;
 
+  if (runs_->sample_size() == 0) {
+    // Generally not expected, but spec allows it. Code below this block assumes
+    // the current sample is not empty.
+    LIMITED_MEDIA_LOG(DEBUG, media_log_, num_empty_samples_skipped_,
+                      kMaxEmptySampleLogs)
+        << " Skipping 'trun' sample with size of 0.";
+    runs_->AdvanceSample();
+    return true;
+  }
+
   std::unique_ptr<DecryptConfig> decrypt_config;
   std::vector<SubsampleEntry> subsamples;
   if (runs_->is_encrypted()) {
@@ -560,7 +644,8 @@ bool MP4StreamParser::EnqueueSample(BufferQueue* audio_buffers,
   std::vector<uint8_t> frame_buf(buf, buf + runs_->sample_size());
   if (video) {
     if (runs_->video_description().video_codec == kCodecH264 ||
-        runs_->video_description().video_codec == kCodecHEVC) {
+        runs_->video_description().video_codec == kCodecHEVC ||
+        runs_->video_description().video_codec == kCodecDolbyVision) {
       DCHECK(runs_->video_description().frame_bitstream_converter);
       if (!runs_->video_description().frame_bitstream_converter->ConvertFrame(
               &frame_buf, runs_->is_keyframe(), &subsamples)) {
@@ -584,15 +669,12 @@ bool MP4StreamParser::EnqueueSample(BufferQueue* audio_buffers,
 
   if (decrypt_config) {
     if (!subsamples.empty()) {
-    // Create a new config with the updated subsamples.
-    decrypt_config.reset(new DecryptConfig(
-        decrypt_config->key_id(),
-        decrypt_config->iv(),
-        subsamples));
+      // Create a new config with the updated subsamples.
+      decrypt_config.reset(new DecryptConfig(decrypt_config->key_id(),
+                                             decrypt_config->iv(), subsamples));
     }
     // else, use the existing config.
-  } else if ((audio && is_audio_track_encrypted_) ||
-             (video && is_video_track_encrypted_)) {
+  } else if (is_track_encrypted_[runs_->track_id()]) {
     // The media pipeline requires a DecryptConfig with an empty |iv|.
     // TODO(ddorwin): Refactor so we do not need a fake key ID ("1");
     decrypt_config.reset(
@@ -602,13 +684,9 @@ bool MP4StreamParser::EnqueueSample(BufferQueue* audio_buffers,
   StreamParserBuffer::Type buffer_type = audio ? DemuxerStream::AUDIO :
       DemuxerStream::VIDEO;
 
-  // TODO(wolenetz/acolwell): Validate and use a common cross-parser TrackId
-  // type and allow multiple tracks for same media type, if applicable. See
-  // https://crbug.com/341581.
-  scoped_refptr<StreamParserBuffer> stream_buf =
-      StreamParserBuffer::CopyFrom(&frame_buf[0], frame_buf.size(),
-                                   runs_->is_keyframe(),
-                                   buffer_type, 0);
+  scoped_refptr<StreamParserBuffer> stream_buf = StreamParserBuffer::CopyFrom(
+      &frame_buf[0], frame_buf.size(), runs_->is_keyframe(), buffer_type,
+      runs_->track_id());
 
   if (decrypt_config)
     stream_buf->set_decrypt_config(std::move(decrypt_config));
@@ -617,34 +695,24 @@ bool MP4StreamParser::EnqueueSample(BufferQueue* audio_buffers,
   stream_buf->set_timestamp(runs_->cts());
   stream_buf->SetDecodeTimestamp(runs_->dts());
 
-  DVLOG(3) << "Pushing frame: aud=" << audio
+  DVLOG(3) << "Emit " << (audio ? "audio" : "video") << " frame: "
+           << " track_id=" << runs_->track_id()
            << ", key=" << runs_->is_keyframe()
            << ", dur=" << runs_->duration().InMilliseconds()
            << ", dts=" << runs_->dts().InMilliseconds()
            << ", cts=" << runs_->cts().InMilliseconds()
            << ", size=" << runs_->sample_size();
 
-  if (audio) {
-    audio_buffers->push_back(stream_buf);
-  } else {
-    video_buffers->push_back(stream_buf);
-  }
-
+  (*buffers)[runs_->track_id()].push_back(stream_buf);
   runs_->AdvanceSample();
   return true;
 }
 
-bool MP4StreamParser::SendAndFlushSamples(BufferQueue* audio_buffers,
-                                          BufferQueue* video_buffers) {
-  if (audio_buffers->empty() && video_buffers->empty())
+bool MP4StreamParser::SendAndFlushSamples(BufferQueueMap* buffers) {
+  if (buffers->empty())
     return true;
-
-  TextBufferQueueMap empty_text_map;
-  bool success = new_buffers_cb_.Run(*audio_buffers,
-                                     *video_buffers,
-                                     empty_text_map);
-  audio_buffers->clear();
-  video_buffers->clear();
+  bool success = new_buffers_cb_.Run(*buffers);
+  buffers->clear();
   return success;
 }
 
@@ -657,7 +725,7 @@ bool MP4StreamParser::ReadAndDiscardMDATsUntil(int64_t max_clear_offset) {
     queue_.PeekAt(mdat_tail_, &buf, &size);
 
     FourCC type;
-    int box_sz;
+    size_t box_sz;
     if (!BoxReader::StartTopLevelBox(buf, size, media_log_, &type, &box_sz,
                                      &err))
       break;
@@ -667,7 +735,8 @@ bool MP4StreamParser::ReadAndDiscardMDATsUntil(int64_t max_clear_offset) {
           << "Unexpected box type while parsing MDATs: "
           << FourCCToString(type);
     }
-    mdat_tail_ += box_sz;
+    // TODO(chcunningham): Fix mdat_tail_ and ByteQueue classes to use size_t.
+    mdat_tail_ += base::checked_cast<int64_t>(box_sz);
   }
   queue_.Trim(std::min(mdat_tail_, upper_bound));
   return !err;

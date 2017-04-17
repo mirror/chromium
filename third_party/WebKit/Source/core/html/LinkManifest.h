@@ -6,30 +6,29 @@
 #define LinkManifest_h
 
 #include "core/html/LinkResource.h"
-#include "wtf/Allocator.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
 class HTMLLinkElement;
 
 class LinkManifest final : public LinkResource {
-public:
+ public:
+  static LinkManifest* Create(HTMLLinkElement* owner);
 
-    static LinkManifest* create(HTMLLinkElement* owner);
+  ~LinkManifest() override;
 
-    ~LinkManifest() override;
+  // LinkResource
+  void Process() override;
+  LinkResourceType GetType() const override { return kManifest; }
+  bool HasLoaded() const override;
+  void OwnerRemoved() override;
 
-    // LinkResource
-    void process() override;
-    LinkResourceType type() const override { return Manifest; }
-    bool hasLoaded() const override;
-    void ownerRemoved() override;
-
-private:
-    explicit LinkManifest(HTMLLinkElement* owner);
+ private:
+  explicit LinkManifest(HTMLLinkElement* owner);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LinkManifest_h
+#endif  // LinkManifest_h

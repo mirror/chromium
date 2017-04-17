@@ -26,73 +26,12 @@ RuntimeCustomBindings::RuntimeCustomBindings(ScriptContext* context)
   RouteFunction(
       "GetManifest",
       base::Bind(&RuntimeCustomBindings::GetManifest, base::Unretained(this)));
-  RouteFunction("OpenChannelToExtension", "runtime.connect",
-                base::Bind(&RuntimeCustomBindings::OpenChannelToExtension,
-                           base::Unretained(this)));
-  RouteFunction("OpenChannelToNativeApp", "runtime.connectNative",
-                base::Bind(&RuntimeCustomBindings::OpenChannelToNativeApp,
-                           base::Unretained(this)));
   RouteFunction("GetExtensionViews",
                 base::Bind(&RuntimeCustomBindings::GetExtensionViews,
                            base::Unretained(this)));
 }
 
 RuntimeCustomBindings::~RuntimeCustomBindings() {
-}
-
-void RuntimeCustomBindings::OpenChannelToExtension(
-    const v8::FunctionCallbackInfo<v8::Value>& args) {
-  // Get the current RenderFrame so that we can send a routed IPC message from
-  // the correct source.
-  content::RenderFrame* renderframe = context()->GetRenderFrame();
-  if (!renderframe)
-    return;
-
-  // The Javascript code should validate/fill the arguments.
-  CHECK_EQ(args.Length(), 3);
-  CHECK(args[0]->IsString() && args[1]->IsString() && args[2]->IsBoolean());
-
-  ExtensionMsg_ExternalConnectionInfo info;
-
-  // For messaging APIs, hosted apps should be considered a web page so hide
-  // its extension ID.
-  const Extension* extension = context()->extension();
-  if (extension && !extension->is_hosted_app())
-    info.source_id = extension->id();
-
-  info.target_id = *v8::String::Utf8Value(args[0]);
-  info.source_url = context()->url();
-  std::string channel_name = *v8::String::Utf8Value(args[1]);
-  bool include_tls_channel_id =
-      args.Length() > 2 ? args[2]->BooleanValue() : false;
-  int port_id = -1;
-  // TODO(devlin): This file is littered with sync IPCs. Yuck.
-  renderframe->Send(new ExtensionHostMsg_OpenChannelToExtension(
-      renderframe->GetRoutingID(), info, channel_name, include_tls_channel_id,
-      &port_id));
-  args.GetReturnValue().Set(static_cast<int32_t>(port_id));
-}
-
-void RuntimeCustomBindings::OpenChannelToNativeApp(
-    const v8::FunctionCallbackInfo<v8::Value>& args) {
-  // The Javascript code should validate/fill the arguments.
-  CHECK_EQ(args.Length(), 1);
-  CHECK(args[0]->IsString());
-
-  // Verify that the extension has permission to use native messaging.
-  if (!context()->GetAvailability("runtime.connectNative").is_available())
-    return;
-
-  content::RenderFrame* render_frame = context()->GetRenderFrame();
-  if (!render_frame)
-    return;
-
-  std::string native_app_name = *v8::String::Utf8Value(args[0]);
-
-  int port_id = -1;
-  render_frame->Send(new ExtensionHostMsg_OpenChannelToNativeApp(
-      render_frame->GetRoutingID(), native_app_name, &port_id));
-  args.GetReturnValue().Set(static_cast<int32_t>(port_id));
 }
 
 void RuntimeCustomBindings::GetManifest(
@@ -156,13 +95,13 @@ void RuntimeCustomBindings::GetExtensionViews(
     // behavior by treating an app window's iframe as its main frame, and maybe
     // other nastiness).
     blink::WebFrame* web_frame = frame->GetWebFrame();
-    if (web_frame->top() != web_frame)
+    if (web_frame->Top() != web_frame)
       continue;
 
-    if (!blink::WebFrame::scriptCanAccess(web_frame))
+    if (!blink::WebFrame::ScriptCanAccess(web_frame))
       continue;
 
-    v8::Local<v8::Context> context = web_frame->mainWorldScriptContext();
+    v8::Local<v8::Context> context = web_frame->MainWorldScriptContext();
     if (!context.IsEmpty()) {
       v8::Local<v8::Value> window = context->Global();
       CHECK(!window.IsEmpty());

@@ -7,7 +7,7 @@ PASS
 Running: testClassName
 [
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:10}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:9}
         changedAttribute : undefined
         changedClass : "red"
         changedId : undefined
@@ -15,11 +15,10 @@ Running: testClassName
         extraData : undefined
         nodeName : "DIV id='testElementOne' class='red'"
         selectorPart : undefined
-        synthetic : true
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:11}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:10}
         changedAttribute : undefined
         changedClass : "red"
         changedId : undefined
@@ -27,7 +26,6 @@ Running: testClassName
         extraData : undefined
         nodeName : "DIV id='testElementTwo' class='red'"
         selectorPart : undefined
-        synthetic : true
         type : "StyleRecalcInvalidationTracking"
     }
 ]
@@ -37,7 +35,7 @@ Running: testIdWithoutStyleChange
 Running: testId
 [
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:32}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:25}
         changedAttribute : undefined
         changedClass : undefined
         changedId : "testElementFour"
@@ -45,11 +43,10 @@ Running: testId
         extraData : undefined
         nodeName : "DIV id='testElementFour' class='red'"
         selectorPart : undefined
-        synthetic : true
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:33}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:26}
         changedAttribute : undefined
         changedClass : undefined
         changedId : "testElementFive"
@@ -57,7 +54,6 @@ Running: testId
         extraData : undefined
         nodeName : "DIV id='testElementFive' class='red'"
         selectorPart : undefined
-        synthetic : true
         type : "StyleRecalcInvalidationTracking"
     }
 ]
@@ -65,7 +61,7 @@ Running: testId
 Running: testStyleAttributeChange
 [
     {
-        cause : {reason: StyleSheetChange, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:43}
+        cause : {reason: StyleSheetChange, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:33}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined
@@ -76,7 +72,7 @@ Running: testStyleAttributeChange
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: StyleSheetChange, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:44}
+        cause : {reason: StyleSheetChange, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:34}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined
@@ -91,7 +87,7 @@ Running: testStyleAttributeChange
 Running: testAttributeChange
 [
     {
-        cause : {reason: Attribute, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:54}
+        cause : {reason: Attribute, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:41}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined
@@ -102,7 +98,7 @@ Running: testAttributeChange
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Attribute, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:55}
+        cause : {reason: Attribute, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:42}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined
@@ -113,7 +109,7 @@ Running: testAttributeChange
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:54}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:41}
         changedAttribute : "dir"
         changedClass : undefined
         changedId : undefined
@@ -121,11 +117,10 @@ Running: testAttributeChange
         extraData : undefined
         nodeName : "DIV id='testElementFour' class='red'"
         selectorPart : undefined
-        synthetic : true
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:55}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:42}
         changedAttribute : "dir"
         changedClass : undefined
         changedId : undefined
@@ -133,7 +128,6 @@ Running: testAttributeChange
         extraData : undefined
         nodeName : "DIV id='testElementFive' class='red'"
         selectorPart : undefined
-        synthetic : true
         type : "StyleRecalcInvalidationTracking"
     }
 ]
@@ -141,7 +135,7 @@ Running: testAttributeChange
 Running: testPseudoChange
 [
     {
-        cause : {reason: PseudoClass, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:67}
+        cause : {reason: PseudoClass, stackTrace: .../inspector/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.html:51}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined

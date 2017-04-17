@@ -10,32 +10,27 @@
 
 namespace blink {
 
-PaintFilterEffect::PaintFilterEffect(Filter* filter, const SkPaint& paint)
-    : FilterEffect(filter)
-    , m_paint(paint)
-{
-    setOperatingColorSpace(ColorSpaceDeviceRGB);
+PaintFilterEffect::PaintFilterEffect(Filter* filter, const PaintFlags& flags)
+    : FilterEffect(filter), flags_(flags) {
+  SetOperatingColorSpace(kColorSpaceDeviceRGB);
 }
 
-PaintFilterEffect::~PaintFilterEffect()
-{
+PaintFilterEffect::~PaintFilterEffect() {}
+
+PaintFilterEffect* PaintFilterEffect::Create(Filter* filter,
+                                             const PaintFlags& flags) {
+  return new PaintFilterEffect(filter, flags);
 }
 
-PaintFilterEffect* PaintFilterEffect::create(Filter* filter, const SkPaint& paint)
-{
-    return new PaintFilterEffect(filter, paint);
+sk_sp<SkImageFilter> PaintFilterEffect::CreateImageFilter() {
+  return SkPaintImageFilter::Make(ToSkPaint(flags_), nullptr);
 }
 
-sk_sp<SkImageFilter> PaintFilterEffect::createImageFilter()
-{
-    return SkPaintImageFilter::Make(m_paint, nullptr);
+TextStream& PaintFilterEffect::ExternalRepresentation(TextStream& ts,
+                                                      int indent) const {
+  WriteIndent(ts, indent);
+  ts << "[PaintFilterEffect]\n";
+  return ts;
 }
 
-TextStream& PaintFilterEffect::externalRepresentation(TextStream& ts, int indent) const
-{
-    writeIndent(ts, indent);
-    ts << "[PaintFilterEffect]\n";
-    return ts;
-}
-
-} // namespace blink
+}  // namespace blink

@@ -7,15 +7,17 @@ package org.chromium.chrome.browser.preferences.website;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Environment;
+import android.support.test.filters.MediumTest;
+import android.support.test.filters.SmallTest;
 import android.support.v7.app.AlertDialog;
-import android.test.suitebuilder.annotation.MediumTest;
-import android.test.suitebuilder.annotation.SmallTest;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.util.Feature;
+import org.chromium.base.test.util.MinAndroidSdkLevel;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeActivity;
-import org.chromium.chrome.browser.preferences.PrefServiceBridge;
+import org.chromium.chrome.browser.preferences.privacy.BrowsingDataBridge;
 import org.chromium.chrome.test.ChromeActivityTestCaseBase;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
@@ -26,6 +28,7 @@ import org.chromium.net.test.EmbeddedTestServer;
  */
 @TargetApi(Build.VERSION_CODES.KITKAT)
 @CommandLineFlags.Add({"enable-site-engagement"})
+@MinAndroidSdkLevel(Build.VERSION_CODES.KITKAT)
 public class ManageSpaceActivityTest extends ChromeActivityTestCaseBase<ChromeActivity> {
     private EmbeddedTestServer mTestServer;
 
@@ -36,8 +39,7 @@ public class ManageSpaceActivityTest extends ChromeActivityTestCaseBase<ChromeAc
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mTestServer = EmbeddedTestServer.createAndStartFileServer(
-                getInstrumentation().getContext(), Environment.getExternalStorageDirectory());
+        mTestServer = EmbeddedTestServer.createAndStartServer(getInstrumentation().getContext());
     }
 
     @Override
@@ -62,7 +64,7 @@ public class ManageSpaceActivityTest extends ChromeActivityTestCaseBase<ChromeAc
         return (ManageSpaceActivity) getInstrumentation().startActivitySync(intent);
     }
 
-    public void waitForClearButtonEnabled(final ManageSpaceActivity activity) throws Exception {
+    public void waitForClearButtonEnabled(final ManageSpaceActivity activity) {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -80,7 +82,7 @@ public class ManageSpaceActivityTest extends ChromeActivityTestCaseBase<ChromeAc
         };
     }
 
-    public void waitForDialogShowing(final ManageSpaceActivity activity) throws Exception {
+    public void waitForDialogShowing(final ManageSpaceActivity activity) {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -99,11 +101,14 @@ public class ManageSpaceActivityTest extends ChromeActivityTestCaseBase<ChromeAc
     }
 
     @SmallTest
+    @RetryOnFailure
     public void testLaunchActivity() {
         startManageSpaceActivity();
     }
 
     @MediumTest
+    @RetryOnFailure
+    @Feature({"SiteEngagement"})
     public void testClearUnimportantOnly() throws Exception {
         final String cookiesUrl =
                 mTestServer.getURL("/chrome/test/data/android/storage_persistance.html");
@@ -119,7 +124,7 @@ public class ManageSpaceActivityTest extends ChromeActivityTestCaseBase<ChromeAc
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                PrefServiceBridge.markOriginAsImportantForTesting(serverOrigin);
+                BrowsingDataBridge.markOriginAsImportantForTesting(serverOrigin);
             }
         });
 
@@ -139,6 +144,7 @@ public class ManageSpaceActivityTest extends ChromeActivityTestCaseBase<ChromeAc
     }
 
     @MediumTest
+    @Feature({"SiteEngagement"})
     public void testClearUnimporantWithoutChromeStart() throws Exception {
         ManageSpaceActivity manageSpaceActivity = startManageSpaceActivity();
         // Click 'clear' in the CBD screen.

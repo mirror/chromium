@@ -12,8 +12,8 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/common/device_sensors/device_orientation_hardware_buffer.h"
 #include "content/public/test/test_utils.h"
+#include "device/sensors/public/cpp/device_orientation_hardware_buffer.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceOrientationListener.h"
 
@@ -27,8 +27,8 @@ class MockDeviceOrientationListener
   }
   ~MockDeviceOrientationListener() override {}
 
-  void didChangeDeviceOrientation(
-      const blink::WebDeviceOrientationData& data) override {
+  void DidChangeDeviceOrientation(
+      const device::OrientationData& data) override {
     memcpy(&data_, &data, sizeof(data));
     did_change_device_orientation_ = true;
   }
@@ -39,13 +39,11 @@ class MockDeviceOrientationListener
   void set_did_change_device_orientation(bool value) {
     did_change_device_orientation_ = value;
   }
-  const blink::WebDeviceOrientationData& data() const {
-    return data_;
-  }
+  const device::OrientationData& data() const { return data_; }
 
  private:
   bool did_change_device_orientation_;
-  blink::WebDeviceOrientationData data_;
+  device::OrientationData data_;
 
   DISALLOW_COPY_AND_ASSIGN(MockDeviceOrientationListener);
 };
@@ -80,26 +78,27 @@ class DeviceOrientationEventPumpTest : public testing::Test {
     listener_.reset(new MockDeviceOrientationListener);
     orientation_pump_.reset(new DeviceOrientationEventPumpForTesting);
     shared_memory_ = mojo::SharedBufferHandle::Create(
-        sizeof(DeviceOrientationHardwareBuffer));
-    mapping_ = shared_memory_->Map(sizeof(DeviceOrientationHardwareBuffer));
+        sizeof(device::DeviceOrientationHardwareBuffer));
+    mapping_ =
+        shared_memory_->Map(sizeof(device::DeviceOrientationHardwareBuffer));
     ASSERT_TRUE(mapping_);
-    memset(buffer(), 0, sizeof(DeviceOrientationHardwareBuffer));
+    memset(buffer(), 0, sizeof(device::DeviceOrientationHardwareBuffer));
   }
 
   void InitBuffer() {
-    blink::WebDeviceOrientationData& data = buffer()->data;
+    device::OrientationData& data = buffer()->data;
     data.alpha = 1;
-    data.hasAlpha = true;
+    data.has_alpha = true;
     data.beta = 2;
-    data.hasBeta = true;
+    data.has_beta = true;
     data.gamma = 3;
-    data.hasGamma = true;
-    data.allAvailableSensorsAreActive = true;
+    data.has_gamma = true;
+    data.all_available_sensors_are_active = true;
   }
 
   void InitBufferNoData() {
-    blink::WebDeviceOrientationData& data = buffer()->data;
-    data.allAvailableSensorsAreActive = true;
+    device::OrientationData& data = buffer()->data;
+    data.all_available_sensors_are_active = true;
   }
 
   MockDeviceOrientationListener* listener() { return listener_.get(); }
@@ -110,8 +109,9 @@ class DeviceOrientationEventPumpTest : public testing::Test {
     return shared_memory_->Clone(
         mojo::SharedBufferHandle::AccessMode::READ_ONLY);
   }
-  DeviceOrientationHardwareBuffer* buffer() {
-    return reinterpret_cast<DeviceOrientationHardwareBuffer*>(mapping_.get());
+  device::DeviceOrientationHardwareBuffer* buffer() {
+    return reinterpret_cast<device::DeviceOrientationHardwareBuffer*>(
+        mapping_.get());
   }
 
  private:
@@ -131,15 +131,15 @@ TEST_F(DeviceOrientationEventPumpTest, DidStartPolling) {
 
   base::RunLoop().Run();
 
-  const blink::WebDeviceOrientationData& received_data = listener()->data();
+  const device::OrientationData& received_data = listener()->data();
   EXPECT_TRUE(listener()->did_change_device_orientation());
-  EXPECT_TRUE(received_data.allAvailableSensorsAreActive);
+  EXPECT_TRUE(received_data.all_available_sensors_are_active);
   EXPECT_EQ(1, static_cast<double>(received_data.alpha));
-  EXPECT_TRUE(received_data.hasAlpha);
+  EXPECT_TRUE(received_data.has_alpha);
   EXPECT_EQ(2, static_cast<double>(received_data.beta));
-  EXPECT_TRUE(received_data.hasBeta);
+  EXPECT_TRUE(received_data.has_beta);
   EXPECT_EQ(3, static_cast<double>(received_data.gamma));
-  EXPECT_TRUE(received_data.hasGamma);
+  EXPECT_TRUE(received_data.has_gamma);
 }
 
 TEST_F(DeviceOrientationEventPumpTest, FireAllNullEvent) {
@@ -149,12 +149,12 @@ TEST_F(DeviceOrientationEventPumpTest, FireAllNullEvent) {
 
   base::RunLoop().Run();
 
-  const blink::WebDeviceOrientationData& received_data = listener()->data();
+  const device::OrientationData& received_data = listener()->data();
   EXPECT_TRUE(listener()->did_change_device_orientation());
-  EXPECT_TRUE(received_data.allAvailableSensorsAreActive);
-  EXPECT_FALSE(received_data.hasAlpha);
-  EXPECT_FALSE(received_data.hasBeta);
-  EXPECT_FALSE(received_data.hasGamma);
+  EXPECT_TRUE(received_data.all_available_sensors_are_active);
+  EXPECT_FALSE(received_data.has_alpha);
+  EXPECT_FALSE(received_data.has_beta);
+  EXPECT_FALSE(received_data.has_gamma);
 }
 
 TEST_F(DeviceOrientationEventPumpTest, UpdateRespectsOrientationThreshold) {
@@ -164,15 +164,15 @@ TEST_F(DeviceOrientationEventPumpTest, UpdateRespectsOrientationThreshold) {
 
   base::RunLoop().Run();
 
-  const blink::WebDeviceOrientationData& received_data = listener()->data();
+  const device::OrientationData& received_data = listener()->data();
   EXPECT_TRUE(listener()->did_change_device_orientation());
-  EXPECT_TRUE(received_data.allAvailableSensorsAreActive);
+  EXPECT_TRUE(received_data.all_available_sensors_are_active);
   EXPECT_EQ(1, static_cast<double>(received_data.alpha));
-  EXPECT_TRUE(received_data.hasAlpha);
+  EXPECT_TRUE(received_data.has_alpha);
   EXPECT_EQ(2, static_cast<double>(received_data.beta));
-  EXPECT_TRUE(received_data.hasBeta);
+  EXPECT_TRUE(received_data.has_beta);
   EXPECT_EQ(3, static_cast<double>(received_data.gamma));
-  EXPECT_TRUE(received_data.hasGamma);
+  EXPECT_TRUE(received_data.has_gamma);
 
   buffer()->data.alpha =
       1 + DeviceOrientationEventPump::kOrientationThreshold / 2.0;
@@ -187,13 +187,13 @@ TEST_F(DeviceOrientationEventPumpTest, UpdateRespectsOrientationThreshold) {
   base::RunLoop().Run();
 
   EXPECT_FALSE(listener()->did_change_device_orientation());
-  EXPECT_TRUE(received_data.allAvailableSensorsAreActive);
+  EXPECT_TRUE(received_data.all_available_sensors_are_active);
   EXPECT_EQ(1, static_cast<double>(received_data.alpha));
-  EXPECT_TRUE(received_data.hasAlpha);
+  EXPECT_TRUE(received_data.has_alpha);
   EXPECT_EQ(2, static_cast<double>(received_data.beta));
-  EXPECT_TRUE(received_data.hasBeta);
+  EXPECT_TRUE(received_data.has_beta);
   EXPECT_EQ(3, static_cast<double>(received_data.gamma));
-  EXPECT_TRUE(received_data.hasGamma);
+  EXPECT_TRUE(received_data.has_gamma);
 
   buffer()->data.alpha =
       1 + DeviceOrientationEventPump::kOrientationThreshold;

@@ -33,8 +33,10 @@ function startWorkerAndRunTest()
     }
 }
 
-function startSecondWorker(onActionComplete)
+function startSecondWorker()
 {
+    var callback;
+    var promise = new Promise((fulfill) => callback = fulfill);
     // Make sure there is at least one trace event recorded for the first worker.
     worker1.onmessage = gotResponseFromFirstWorker;
     worker1.postMessage("");
@@ -50,9 +52,10 @@ function startSecondWorker(onActionComplete)
         {
             worker2.onmessage = null;
             makeDOMEvent();
-            onActionComplete();
+            callback();
         }
     }
+    return promise;
 }
 
 function test()
@@ -64,30 +67,28 @@ function test()
     {
         var mainThread = { name: "Main Thread", events: InspectorTest.timelineModel()._mainThreadEvents };
         processThread(new Set(["startSecondWorker", "worker2.onmessage"]), mainThread);
-        InspectorTest.timelineModel()._virtualThreads.forEach(function(thread)
-        {
+        for (var thread of InspectorTest.timelineModel()._virtualThreads) {
             if (!thread.isWorker())
-                return;
-            processThread(new Set(["onmessage"]), thread);
-        });
+                continue;
+            processThread(new Set(["Function Call"]), thread);
+        }
         InspectorTest.completeTest();
     }
 
-    function processThread(expectedFunctions, thread)
+    function processThread(expectedEvents, thread)
     {
         InspectorTest.addResult(thread.name);
-        var missingFunctions = thread.events.reduce(processEvent, expectedFunctions);
-        if (missingFunctions.size) {
-            InspectorTest.addResult("FAIL: missing functions:");
-            missingFunctions.forEach(InspectorTest.addResult);
+        var missingEvents = thread.events.reduce(processEvent, expectedEvents);
+        if (missingEvents.size) {
+            InspectorTest.addResult("FAIL: missing events:");
+            missingEvents.forEach(InspectorTest.addResult);
         }
     }
 
-    function processEvent(expectedFunctions, event)
+    function processEvent(expectedEvents, event)
     {
-        if (event.name === WebInspector.TimelineModel.RecordType.JSFrame)
-            expectedFunctions.delete(event.args.data.functionName);
-        return expectedFunctions;
+        expectedEvents.delete(Timeline.TimelineUIUtils.eventTitle(event));
+        return expectedEvents;
     }
 }
 

@@ -7,7 +7,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/mac/mac_util.h"
 #include "base/mac/mach_logging.h"
@@ -19,9 +18,6 @@
 namespace gfx {
 
 namespace {
-
-const base::Feature kIOSurfaceClearYosemite{"IOSurfaceClearYosemite",
-                                            base::FEATURE_DISABLED_BY_DEFAULT};
 
 void AddIntegerValue(CFMutableDictionaryRef dictionary,
                      const CFStringRef key,
@@ -41,10 +37,14 @@ int32_t BytesPerElement(gfx::BufferFormat format, int plane) {
     case gfx::BufferFormat::RGBA_8888:
       DCHECK_EQ(plane, 0);
       return 4;
+    case gfx::BufferFormat::RGBA_F16:
+      DCHECK_EQ(plane, 0);
+      return 8;
     case gfx::BufferFormat::YUV_420_BIPLANAR:
       static int32_t bytes_per_element[] = {1, 2};
       DCHECK_LT(static_cast<size_t>(plane), arraysize(bytes_per_element));
       return bytes_per_element[plane];
+    case gfx::BufferFormat::RG_88:
     case gfx::BufferFormat::UYVY_422:
       DCHECK_EQ(plane, 0);
       return 2;
@@ -73,10 +73,13 @@ int32_t PixelFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::BGRX_8888:
     case gfx::BufferFormat::RGBA_8888:
       return 'BGRA';
+    case gfx::BufferFormat::RGBA_F16:
+      return 'RGhA';
     case gfx::BufferFormat::YUV_420_BIPLANAR:
       return '420v';
     case gfx::BufferFormat::UYVY_422:
       return '2vuy';
+    case gfx::BufferFormat::RG_88:
     case gfx::BufferFormat::ATC:
     case gfx::BufferFormat::ATCIA:
     case gfx::BufferFormat::DXT1:
@@ -166,9 +169,9 @@ IOSurfaceRef CreateIOSurface(const gfx::Size& size, gfx::BufferFormat format) {
   // causes PDFs to render incorrectly. Hopefully this check can be removed once
   // pdfium switches to a Skia backend on Mac.
   // https://crbug.com/594343.
-  bool should_clear = !base::mac::IsOSMavericks();
-  if (base::mac::IsOSYosemite())
-    should_clear = base::FeatureList::IsEnabled(kIOSurfaceClearYosemite);
+  // IOSurface clearing causes significant performance regression on about half
+  // of all devices running Yosemite. https://crbug.com/606850#c22.
+  bool should_clear = !base::mac::IsOS10_9() && !base::mac::IsOS10_10();
 
   if (should_clear) {
     // Zero-initialize the IOSurface. Calling IOSurfaceLock/IOSurfaceUnlock
@@ -179,15 +182,28 @@ IOSurfaceRef CreateIOSurface(const gfx::Size& size, gfx::BufferFormat format) {
     DCHECK_EQ(kIOReturnSuccess, r);
   }
 
+  bool force_system_color_space = false;
+
   // Displaying an IOSurface that does not have a color space using an
   // AVSampleBufferDisplayLayer can result in a black screen. Specify the
   // main display's color profile by default, which will result in no color
   // correction being done for the main monitor (which is the behavior of not
   // specifying a color space).
   // https://crbug.com/608879
-  if (format == gfx::BufferFormat::YUV_420_BIPLANAR) {
-    base::ScopedCFTypeRef<CGColorSpaceRef> color_space(
-        CGDisplayCopyColorSpace(CGMainDisplayID()));
+  if (format == gfx::BufferFormat::YUV_420_BIPLANAR)
+    force_system_color_space = true;
+
+  // On Sierra, all IOSurfaces are color corrected as though they are in sRGB
+  // color space by default. Prior to Sierra, IOSurfaces were not color
+  // corrected (they were treated as though they were in the display color
+  // space). Override this by defaulting IOSurfaces to be in the main display
+  // color space.
+  // https://crbug.com/654488
+  if (base::mac::IsAtLeastOS10_12())
+    force_system_color_space = true;
+
+  if (force_system_color_space) {
+    CGColorSpaceRef color_space = base::mac::GetSystemColorSpace();
     base::ScopedCFTypeRef<CFDataRef> color_space_icc(
         CGColorSpaceCopyICCProfile(color_space));
     // Note that nullptr is an acceptable input to IOSurfaceSetValue.

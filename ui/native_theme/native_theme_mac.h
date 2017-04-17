@@ -27,18 +27,21 @@ class NATIVE_THEME_EXPORT NativeThemeMac : public NativeThemeBase {
     COUNT
   };
 
-  static NativeThemeMac* instance();
+  // Adjusts an SkColor based on the current system control tint. For example,
+  // if the current tint is "graphite", this function maps the provided value to
+  // an appropriate gray.
+  static SkColor ApplySystemControlTint(SkColor color);
 
   // Overridden from NativeTheme:
   SkColor GetSystemColor(ColorId color_id) const override;
 
   // Overridden from NativeThemeBase:
   void PaintMenuPopupBackground(
-      SkCanvas* canvas,
+      cc::PaintCanvas* canvas,
       const gfx::Size& size,
       const MenuBackgroundExtraParams& menu_background) const override;
   void PaintMenuItemBackground(
-      SkCanvas* canvas,
+      cc::PaintCanvas* canvas,
       State state,
       const gfx::Rect& rect,
       const MenuItemExtraParams& menu_item) const override;
@@ -56,12 +59,16 @@ class NATIVE_THEME_EXPORT NativeThemeMac : public NativeThemeBase {
   // style is used for dialog buttons, comboboxes, and tabbed pane tabs.
   // Depending on the control part being drawn, the left or the right side can
   // be given rounded corners.
-  static void PaintStyledGradientButton(SkCanvas* canvas,
+  static void PaintStyledGradientButton(cc::PaintCanvas* canvas,
                                         const gfx::Rect& bounds,
                                         ButtonBackgroundType type,
                                         bool round_left,
                                         bool round_right,
                                         bool focus);
+
+ protected:
+  friend class NativeTheme;
+  static NativeThemeMac* instance();
 
  private:
   NativeThemeMac();

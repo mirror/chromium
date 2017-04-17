@@ -16,6 +16,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/lock.h"
 #include "media/base/cdm_key_information.h"
+#include "media/base/cdm_promise.h"
 #include "media/cdm/aes_decryptor.h"
 #include "media/cdm/ppapi/external_clear_key/clear_key_cdm_common.h"
 
@@ -39,7 +40,7 @@ class ClearKeyCdm : public ClearKeyCdmInterface {
   ClearKeyCdm(Host* host, const std::string& key_system, const GURL& origin);
   ~ClearKeyCdm() override;
 
-  // ContentDecryptionModule implementation.
+  // ClearKeyCdmInterface implementation.
   void Initialize(bool allow_distinctive_identifier,
                   bool allow_persistent_state) override;
   void CreateSessionAndGenerateRequest(uint32_t promise_id,
@@ -93,9 +94,8 @@ class ClearKeyCdm : public ClearKeyCdmInterface {
 
   // ContentDecryptionModule callbacks.
   void OnSessionMessage(const std::string& session_id,
-                        MediaKeys::MessageType message_type,
-                        const std::vector<uint8_t>& message,
-                        const GURL& legacy_destination_url);
+                        ContentDecryptionModule::MessageType message_type,
+                        const std::vector<uint8_t>& message);
   void OnSessionKeysChange(const std::string& session_id,
                            bool has_additional_usable_key,
                            CdmKeysInfo keys_info);
@@ -107,7 +107,7 @@ class ClearKeyCdm : public ClearKeyCdmInterface {
   void OnSessionLoaded(uint32_t promise_id, const std::string& session_id);
   void OnPromiseResolved(uint32_t promise_id);
   void OnPromiseFailed(uint32_t promise_id,
-                       MediaKeys::Exception exception_code,
+                       CdmPromise::Exception exception_code,
                        uint32_t system_code,
                        const std::string& error_message);
 
@@ -140,13 +140,20 @@ class ClearKeyCdm : public ClearKeyCdmInterface {
                                       cdm::AudioFrames* audio_frames);
 #endif  // CLEAR_KEY_CDM_USE_FAKE_AUDIO_DECODER
 
+  void OnUnitTestComplete(bool success);
+
   void StartFileIOTest();
 
   // Callback for CDM File IO test.
   void OnFileIOTestComplete(bool success);
 
+  void StartOutputProtectionTest();
+  void StartPlatformVerificationTest();
+
   // Keep track of the last session created.
   void SetSessionId(const std::string& session_id);
+
+  void VerifyCdmHostTest();
 
   scoped_refptr<AesDecryptor> decryptor_;
 
@@ -208,6 +215,9 @@ class ClearKeyCdm : public ClearKeyCdmInterface {
   std::unique_ptr<CdmVideoDecoder> video_decoder_;
 
   std::unique_ptr<FileIOTestRunner> file_io_test_runner_;
+
+  bool is_running_output_protection_test_;
+  bool is_running_platform_verification_test_;
 
   DISALLOW_COPY_AND_ASSIGN(ClearKeyCdm);
 };

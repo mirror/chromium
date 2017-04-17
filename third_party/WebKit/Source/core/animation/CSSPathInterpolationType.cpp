@@ -4,88 +4,109 @@
 
 #include "core/animation/CSSPathInterpolationType.h"
 
+#include <memory>
 #include "core/animation/PathInterpolationFunctions.h"
+#include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSPathValue.h"
 #include "core/css/resolver/StyleResolverState.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-void CSSPathInterpolationType::apply(const InterpolableValue& interpolableValue, const NonInterpolableValue* nonInterpolableValue, InterpolationEnvironment& environment) const
-{
-    ASSERT(cssProperty() == CSSPropertyD);
-    std::unique_ptr<SVGPathByteStream> pathByteStream = PathInterpolationFunctions::appliedValue(interpolableValue, nonInterpolableValue);
-    if (pathByteStream->isEmpty()) {
-        environment.state().style()->setD(nullptr);
-        return;
-    }
-    environment.state().style()->setD(StylePath::create(std::move(pathByteStream)));
+void CSSPathInterpolationType::ApplyStandardPropertyValue(
+    const InterpolableValue& interpolable_value,
+    const NonInterpolableValue* non_interpolable_value,
+    StyleResolverState& state) const {
+  DCHECK_EQ(CssProperty(), CSSPropertyD);
+  std::unique_ptr<SVGPathByteStream> path_byte_stream =
+      PathInterpolationFunctions::AppliedValue(interpolable_value,
+                                               non_interpolable_value);
+  if (path_byte_stream->IsEmpty()) {
+    state.Style()->SetD(nullptr);
+    return;
+  }
+  state.Style()->SetD(StylePath::Create(std::move(path_byte_stream)));
 }
 
-void CSSPathInterpolationType::composite(UnderlyingValueOwner& underlyingValueOwner, double underlyingFraction, const InterpolationValue& value, double interpolationFraction) const
-{
-    PathInterpolationFunctions::composite(underlyingValueOwner, underlyingFraction, *this, value);
+void CSSPathInterpolationType::Composite(
+    UnderlyingValueOwner& underlying_value_owner,
+    double underlying_fraction,
+    const InterpolationValue& value,
+    double interpolation_fraction) const {
+  PathInterpolationFunctions::Composite(underlying_value_owner,
+                                        underlying_fraction, *this, value);
 }
 
-InterpolationValue CSSPathInterpolationType::maybeConvertNeutral(const InterpolationValue& underlying, ConversionCheckers& conversionCheckers) const
-{
-    return PathInterpolationFunctions::maybeConvertNeutral(underlying, conversionCheckers);
+InterpolationValue CSSPathInterpolationType::MaybeConvertNeutral(
+    const InterpolationValue& underlying,
+    ConversionCheckers& conversion_checkers) const {
+  return PathInterpolationFunctions::MaybeConvertNeutral(underlying,
+                                                         conversion_checkers);
 }
 
-InterpolationValue CSSPathInterpolationType::maybeConvertInitial(const StyleResolverState&, ConversionCheckers&) const
-{
-    return PathInterpolationFunctions::convertValue(nullptr);
+InterpolationValue CSSPathInterpolationType::MaybeConvertInitial(
+    const StyleResolverState&,
+    ConversionCheckers&) const {
+  return PathInterpolationFunctions::ConvertValue(nullptr);
 }
 
-class ParentPathChecker : public InterpolationType::ConversionChecker {
-public:
-    static std::unique_ptr<ParentPathChecker> create(PassRefPtr<StylePath> stylePath)
-    {
-        return wrapUnique(new ParentPathChecker(stylePath));
-    }
+class InheritedPathChecker : public InterpolationType::ConversionChecker {
+ public:
+  static std::unique_ptr<InheritedPathChecker> Create(
+      PassRefPtr<StylePath> style_path) {
+    return WTF::WrapUnique(new InheritedPathChecker(std::move(style_path)));
+  }
 
-private:
-    ParentPathChecker(PassRefPtr<StylePath> stylePath)
-        : m_stylePath(stylePath)
-    { }
+ private:
+  InheritedPathChecker(PassRefPtr<StylePath> style_path)
+      : style_path_(style_path) {}
 
-    bool isValid(const InterpolationEnvironment& environment, const InterpolationValue& underlying) const final
-    {
-        return environment.state().parentStyle()->svgStyle().d() == m_stylePath.get();
-    }
+  bool IsValid(const InterpolationEnvironment& environment,
+               const InterpolationValue& underlying) const final {
+    return environment.GetState().ParentStyle()->SvgStyle().D() ==
+           style_path_.Get();
+  }
 
-    const RefPtr<StylePath> m_stylePath;
+  const RefPtr<StylePath> style_path_;
 };
 
-InterpolationValue CSSPathInterpolationType::maybeConvertInherit(const StyleResolverState& state, ConversionCheckers& conversionCheckers) const
-{
-    ASSERT(cssProperty() == CSSPropertyD);
-    if (!state.parentStyle())
-        return nullptr;
+InterpolationValue CSSPathInterpolationType::MaybeConvertInherit(
+    const StyleResolverState& state,
+    ConversionCheckers& conversion_checkers) const {
+  DCHECK_EQ(CssProperty(), CSSPropertyD);
+  if (!state.ParentStyle())
+    return nullptr;
 
-    conversionCheckers.append(ParentPathChecker::create(state.parentStyle()->svgStyle().d()));
-    return PathInterpolationFunctions::convertValue(state.parentStyle()->svgStyle().d());
+  conversion_checkers.push_back(
+      InheritedPathChecker::Create(state.ParentStyle()->SvgStyle().D()));
+  return PathInterpolationFunctions::ConvertValue(
+      state.ParentStyle()->SvgStyle().D());
 }
 
-InterpolationValue CSSPathInterpolationType::maybeConvertValue(const CSSValue& value, const StyleResolverState& state, ConversionCheckers& conversionCheckers) const
-{
-    if (!value.isPathValue()) {
-        ASSERT(toCSSPrimitiveValue(value).getValueID() == CSSValueNone);
-        return nullptr;
-    }
-    return PathInterpolationFunctions::convertValue(toCSSPathValue(value).byteStream());
+InterpolationValue CSSPathInterpolationType::MaybeConvertValue(
+    const CSSValue& value,
+    const StyleResolverState*,
+    ConversionCheckers& conversion_checkers) const {
+  if (!value.IsPathValue()) {
+    DCHECK_EQ(ToCSSIdentifierValue(value).GetValueID(), CSSValueNone);
+    return nullptr;
+  }
+  return PathInterpolationFunctions::ConvertValue(
+      ToCSSPathValue(value).ByteStream());
 }
 
-InterpolationValue CSSPathInterpolationType::maybeConvertUnderlyingValue(const InterpolationEnvironment& environment) const
-{
-    ASSERT(cssProperty() == CSSPropertyD);
-    return PathInterpolationFunctions::convertValue(environment.state().style()->svgStyle().d());
+InterpolationValue
+CSSPathInterpolationType::MaybeConvertStandardPropertyUnderlyingValue(
+    const ComputedStyle& style) const {
+  DCHECK_EQ(CssProperty(), CSSPropertyD);
+  return PathInterpolationFunctions::ConvertValue(style.SvgStyle().D());
 }
 
-PairwiseInterpolationValue CSSPathInterpolationType::maybeMergeSingles(InterpolationValue&& start, InterpolationValue&& end) const
-{
-    return PathInterpolationFunctions::maybeMergeSingles(std::move(start), std::move(end));
+PairwiseInterpolationValue CSSPathInterpolationType::MaybeMergeSingles(
+    InterpolationValue&& start,
+    InterpolationValue&& end) const {
+  return PathInterpolationFunctions::MaybeMergeSingles(std::move(start),
+                                                       std::move(end));
 }
 
-} // namespace blink
+}  // namespace blink

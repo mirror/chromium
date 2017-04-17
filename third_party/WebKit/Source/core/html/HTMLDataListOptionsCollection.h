@@ -11,34 +11,37 @@
 namespace blink {
 
 class HTMLDataListOptionsCollection : public HTMLCollection {
-public:
-    static HTMLDataListOptionsCollection* create(ContainerNode& ownerNode, CollectionType type)
-    {
-        ASSERT_UNUSED(type, type == DataListOptions);
-        return new HTMLDataListOptionsCollection(ownerNode);
-    }
+ public:
+  static HTMLDataListOptionsCollection* Create(ContainerNode& owner_node,
+                                               CollectionType type) {
+    DCHECK_EQ(type, kDataListOptions);
+    return new HTMLDataListOptionsCollection(owner_node);
+  }
 
-    HTMLOptionElement* item(unsigned offset) const { return toHTMLOptionElement(HTMLCollection::item(offset)); }
+  HTMLOptionElement* Item(unsigned offset) const {
+    return toHTMLOptionElement(HTMLCollection::item(offset));
+  }
 
-    bool elementMatches(const HTMLElement&) const;
-private:
-    explicit HTMLDataListOptionsCollection(ContainerNode& ownerNode)
-        : HTMLCollection(ownerNode, DataListOptions, DoesNotOverrideItemAfter)
-    { }
+  bool ElementMatches(const HTMLElement&) const;
+
+ private:
+  explicit HTMLDataListOptionsCollection(ContainerNode& owner_node)
+      : HTMLCollection(owner_node,
+                       kDataListOptions,
+                       kDoesNotOverrideItemAfter) {}
 };
 
-DEFINE_TYPE_CASTS(HTMLDataListOptionsCollection, LiveNodeListBase, collection, collection->type() == DataListOptions, collection.type() == DataListOptions);
+DEFINE_TYPE_CASTS(HTMLDataListOptionsCollection,
+                  LiveNodeListBase,
+                  collection,
+                  collection->GetType() == kDataListOptions,
+                  collection.GetType() == kDataListOptions);
 
-inline bool HTMLDataListOptionsCollection::elementMatches(const HTMLElement& element) const
-{
-    if (isHTMLOptionElement(element)) {
-        const HTMLOptionElement& option = toHTMLOptionElement(element);
-        if (!option.isDisabledFormControl() && !option.value().isEmpty())
-            return true;
-    }
-    return false;
+inline bool HTMLDataListOptionsCollection::ElementMatches(
+    const HTMLElement& element) const {
+  return isHTMLOptionElement(element);
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLDataListOptionsCollection_h
+#endif  // HTMLDataListOptionsCollection_h

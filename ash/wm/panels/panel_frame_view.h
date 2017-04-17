@@ -8,7 +8,7 @@
 #include <memory>
 
 #include "ash/ash_export.h"
-#include "ash/common/shell_observer.h"
+#include "ash/shell_observer.h"
 #include "base/macros.h"
 #include "ui/views/window/non_client_view.h"
 
@@ -19,7 +19,6 @@ class ImageView;
 namespace ash {
 class DefaultHeaderPainter;
 class FrameCaptionButtonContainerView;
-class FrameBorderHitTestController;
 
 class ASH_EXPORT PanelFrameView : public views::NonClientFrameView,
                                   public ShellObserver {
@@ -41,6 +40,8 @@ class ASH_EXPORT PanelFrameView : public views::NonClientFrameView,
 
  private:
   void InitHeaderPainter();
+
+  WmWindow* GetWidgetWindow();
 
   // Height from top of window to top of client area.
   int NonClientTopBorderHeight() const;
@@ -74,10 +75,6 @@ class ASH_EXPORT PanelFrameView : public views::NonClientFrameView,
 
   // Helper class for painting the header.
   std::unique_ptr<DefaultHeaderPainter> header_painter_;
-
-  // Updates the hittest bounds overrides based on the window state type.
-  std::unique_ptr<FrameBorderHitTestController>
-      frame_border_hit_test_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(PanelFrameView);
 };

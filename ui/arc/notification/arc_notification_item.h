@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
+#include "components/arc/common/notifications.mojom.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/arc/notification/arc_notification_manager.h"
@@ -29,22 +30,29 @@ class ArcNotificationItem {
   virtual ~ArcNotificationItem();
 
   virtual void UpdateWithArcNotificationData(
-      const mojom::ArcNotificationData& data);
+      mojom::ArcNotificationDataPtr data);
 
   // Methods called from ArcNotificationManager:
-  void OnClosedFromAndroid(bool by_user);
+  void OnClosedFromAndroid();
 
   // Methods called from ArcNotificationItemDelegate:
   void Close(bool by_user);
   void Click();
   void ButtonClick(int button_index);
+  void OpenSettings();
+  bool IsOpeningSettingsSupported() const;
+  void ToggleExpansion();
+
+  const std::string& notification_key() const { return notification_key_; }
 
  protected:
-  static int ConvertAndroidPriority(int android_priority);
+  static int ConvertAndroidPriority(
+      mojom::ArcNotificationPriority android_priority);
 
-  // Checks whether there is on-going |notification_|. If so, cache the |data|
-  // in |newer_data_| and returns true. Otherwise, returns false.
-  bool CacheArcNotificationData(const mojom::ArcNotificationData& data);
+  // Checks whether there is on-going |notification_|.
+  bool HasPendingNotification();
+  // Cache the |data| in |newer_data_|.
+  void CacheArcNotificationData(mojom::ArcNotificationDataPtr data);
 
   // Sets the pending |notification_|.
   void SetNotification(
@@ -57,9 +65,9 @@ class ArcNotificationItem {
   bool CalledOnValidThread() const;
 
   const AccountId& profile_id() const { return profile_id_; }
-  const std::string& notification_key() const { return notification_key_; }
   const std::string& notification_id() const { return notification_id_; }
   message_center::MessageCenter* message_center() { return message_center_; }
+  ArcNotificationManager* manager() { return manager_; }
 
   message_center::Notification* pending_notification() {
     return notification_.get();

@@ -31,427 +31,527 @@
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintLayerStackingNode.h"
 #include "core/paint/PaintLayerStackingNodeIterator.h"
-#include "platform/TraceEvent.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 
 namespace blink {
 
 class OverlapMapContainer {
-public:
-    void add(const IntRect& bounds)
-    {
-        m_layerRects.append(bounds);
-        m_boundingBox.unite(bounds);
-    }
+ public:
+  void Add(const IntRect& bounds) {
+    layer_rects_.push_back(bounds);
+    bounding_box_.Unite(bounds);
+  }
 
-    bool overlapsLayers(const IntRect& bounds) const
-    {
-        // Checking with the bounding box will quickly reject cases when
-        // layers are created for lists of items going in one direction and
-        // never overlap with each other.
-        if (!bounds.intersects(m_boundingBox))
-            return false;
-        for (unsigned i = 0; i < m_layerRects.size(); i++) {
-            if (m_layerRects[i].intersects(bounds))
-                return true;
-        }
-        return false;
+  bool OverlapsLayers(const IntRect& bounds) const {
+    // Checking with the bounding box will quickly reject cases when
+    // layers are created for lists of items going in one direction and
+    // never overlap with each other.
+    if (!bounds.Intersects(bounding_box_))
+      return false;
+    for (unsigned i = 0; i < layer_rects_.size(); i++) {
+      if (layer_rects_[i].Intersects(bounds))
+        return true;
     }
+    return false;
+  }
 
-    void unite(const OverlapMapContainer& otherContainer)
-    {
-        m_layerRects.appendVector(otherContainer.m_layerRects);
-        m_boundingBox.unite(otherContainer.m_boundingBox);
-    }
-private:
-    Vector<IntRect, 64> m_layerRects;
-    IntRect m_boundingBox;
+  void Unite(const OverlapMapContainer& other_container) {
+    layer_rects_.AppendVector(other_container.layer_rects_);
+    bounding_box_.Unite(other_container.bounding_box_);
+  }
+
+ private:
+  Vector<IntRect, 64> layer_rects_;
+  IntRect bounding_box_;
+};
+
+struct OverlapMapContainers {
+  OverlapMapContainer clipped;
+  OverlapMapContainer unclipped;
 };
 
 class CompositingRequirementsUpdater::OverlapMap {
-    WTF_MAKE_NONCOPYABLE(OverlapMap);
-public:
-    OverlapMap()
-    {
-        // Begin by assuming the root layer will be composited so that there
-        // is something on the stack. The root layer should also never get a
-        // finishCurrentOverlapTestingContext() call.
-        beginNewOverlapTestingContext();
-    }
+  WTF_MAKE_NONCOPYABLE(OverlapMap);
 
-    void add(PaintLayer* layer, const IntRect& bounds)
-    {
-        ASSERT(!layer->isRootLayer());
-        if (bounds.isEmpty())
-            return;
+ public:
+  OverlapMap() {
+    // Begin by assuming the root layer will be composited so that there
+    // is something on the stack. The root layer should also never get a
+    // finishCurrentOverlapTestingContext() call.
+    BeginNewOverlapTestingContext();
+  }
 
-        // Layers do not contribute to overlap immediately--instead, they will
-        // contribute to overlap as soon as they have been recursively processed
-        // and popped off the stack.
-        ASSERT(m_overlapStack.size() >= 2);
-        m_overlapStack[m_overlapStack.size() - 2].add(bounds);
-    }
+  // Each rect added is marked as clipped or unclipped. clipped rects may
+  // overlap only with other clipped rects, but unclipped rects may overlap
+  // with anything.
+  //
+  // This is used to model composited overflow scrolling, where PaintLayers
+  // within the scroller are not clipped for overlap testing, whereas
+  // PaintLayers not within it are. This is necessary because PaintLayerClipper
+  // is not smart enough to understand not to clip composited overflow clips,
+  // but still clip otherwise.
+  void Add(PaintLayer* layer, const IntRect& bounds, bool is_clipped) {
+    DCHECK(!layer->IsRootLayer());
+    if (bounds.IsEmpty())
+      return;
 
-    bool overlapsLayers(const IntRect& bounds) const
-    {
-        return m_overlapStack.last().overlapsLayers(bounds);
-    }
+    // Layers do not contribute to overlap immediately--instead, they will
+    // contribute to overlap as soon as they have been recursively processed
+    // and popped off the stack.
+    DCHECK_GE(overlap_stack_.size(), 2ul);
+    if (is_clipped)
+      overlap_stack_[overlap_stack_.size() - 2].clipped.Add(bounds);
+    else
+      overlap_stack_[overlap_stack_.size() - 2].unclipped.Add(bounds);
+  }
 
-    void beginNewOverlapTestingContext()
-    {
-        // This effectively creates a new "clean slate" for overlap state.
-        // This is used when we know that a subtree or remaining set of
-        // siblings does not need to check overlap with things behind it.
-        m_overlapStack.append(OverlapMapContainer());
-    }
+  bool OverlapsLayers(const IntRect& bounds, bool is_clipped) const {
+    bool clipped_overlap = overlap_stack_.back().clipped.OverlapsLayers(bounds);
+    if (is_clipped)
+      return clipped_overlap;
+    // Unclipped is allowed to overlap clipped, but not vice-versa.
+    return clipped_overlap ||
+           overlap_stack_.back().unclipped.OverlapsLayers(bounds);
+  }
 
-    void finishCurrentOverlapTestingContext()
-    {
-        // The overlap information on the top of the stack is still necessary
-        // for checking overlap of any layers outside this context that may
-        // overlap things from inside this context. Therefore, we must merge
-        // the information from the top of the stack before popping the stack.
-        //
-        // FIXME: we may be able to avoid this deep copy by rearranging how
-        //        overlapMap state is managed.
-        m_overlapStack[m_overlapStack.size() - 2].unite(m_overlapStack.last());
-        m_overlapStack.removeLast();
-    }
+  void BeginNewOverlapTestingContext() {
+    // This effectively creates a new "clean slate" for overlap state.
+    // This is used when we know that a subtree or remaining set of
+    // siblings does not need to check overlap with things behind it.
+    overlap_stack_.Grow(overlap_stack_.size() + 1);
+  }
 
-private:
-    Vector<OverlapMapContainer> m_overlapStack;
+  void FinishCurrentOverlapTestingContext() {
+    // The overlap information on the top of the stack is still necessary
+    // for checking overlap of any layers outside this context that may
+    // overlap things from inside this context. Therefore, we must merge
+    // the information from the top of the stack before popping the stack.
+    //
+    // FIXME: we may be able to avoid this deep copy by rearranging how
+    //        overlapMap state is managed.
+    overlap_stack_[overlap_stack_.size() - 2].clipped.Unite(
+        overlap_stack_.back().clipped);
+    overlap_stack_[overlap_stack_.size() - 2].unclipped.Unite(
+        overlap_stack_.back().unclipped);
+    overlap_stack_.pop_back();
+  }
+
+ private:
+  Vector<OverlapMapContainers> overlap_stack_;
 };
 
 class CompositingRequirementsUpdater::RecursionData {
-public:
-    explicit RecursionData(PaintLayer* compositingAncestor)
-        : m_compositingAncestor(compositingAncestor)
-        , m_subtreeIsCompositing(false)
-        , m_hasUnisolatedCompositedBlendingDescendant(false)
-        , m_testingOverlap(true)
-        , m_hasCompositedScrollingAncestor(false)
-    {
-    }
+ public:
+  explicit RecursionData(PaintLayer* compositing_ancestor)
+      : compositing_ancestor_(compositing_ancestor),
+        subtree_is_compositing_(false),
+        has_unisolated_composited_blending_descendant_(false),
+        testing_overlap_(true),
+        has_composited_scrolling_ancestor_(false) {}
 
-    PaintLayer* m_compositingAncestor;
-    bool m_subtreeIsCompositing;
-    bool m_hasUnisolatedCompositedBlendingDescendant;
-    bool m_testingOverlap;
-    bool m_hasCompositedScrollingAncestor;
+  PaintLayer* compositing_ancestor_;
+  bool subtree_is_compositing_;
+  bool has_unisolated_composited_blending_descendant_;
+  bool testing_overlap_;
+  bool has_composited_scrolling_ancestor_;
 };
 
-static bool requiresCompositingOrSquashing(CompositingReasons reasons)
-{
-#if ENABLE(ASSERT)
-    bool fastAnswer = reasons != CompositingReasonNone;
-    bool slowAnswer = requiresCompositing(reasons) || requiresSquashing(reasons);
-    ASSERT(fastAnswer == slowAnswer);
+static bool RequiresCompositingOrSquashing(CompositingReasons reasons) {
+#if DCHECK_IS_ON()
+  bool fast_answer = reasons != kCompositingReasonNone;
+  bool slow_answer = RequiresCompositing(reasons) || RequiresSquashing(reasons);
+  DCHECK_EQ(slow_answer, fast_answer);
 #endif
-    return reasons != CompositingReasonNone;
+  return reasons != kCompositingReasonNone;
 }
 
-static CompositingReasons subtreeReasonsForCompositing(PaintLayer* layer, bool hasCompositedDescendants, bool has3DTransformedDescendants)
-{
-    CompositingReasons subtreeReasons = CompositingReasonNone;
+static CompositingReasons SubtreeReasonsForCompositing(
+    PaintLayer* layer,
+    bool has_composited_descendants,
+    bool has3d_transformed_descendants) {
+  CompositingReasons subtree_reasons = kCompositingReasonNone;
 
-    // When a layer has composited descendants, some effects, like 2d transforms, filters, masks etc must be implemented
-    // via compositing so that they also apply to those composited descendants.
-    if (hasCompositedDescendants) {
-        subtreeReasons |= layer->potentialCompositingReasonsFromStyle() & CompositingReasonComboCompositedDescendants;
+  // When a layer has composited descendants, some effects, like 2d transforms,
+  // filters, masks etc must be implemented via compositing so that they also
+  // apply to those composited descendants.
+  if (has_composited_descendants) {
+    subtree_reasons |= layer->PotentialCompositingReasonsFromStyle() &
+                       kCompositingReasonComboCompositedDescendants;
 
-        if (layer->shouldIsolateCompositedDescendants()) {
-            ASSERT(layer->stackingNode()->isStackingContext());
-            subtreeReasons |= CompositingReasonIsolateCompositedDescendants;
-        }
-
-        // FIXME: This should move into CompositingReasonFinder::potentialCompositingReasonsFromStyle, but
-        // theres a poor interaction with LayoutTextControlSingleLine, which sets this hasOverflowClip directly.
-        if (layer->layoutObject()->hasClipRelatedProperty())
-            subtreeReasons |= CompositingReasonClipsCompositingDescendants;
-
-        if (layer->layoutObject()->style()->position() == FixedPosition)
-            subtreeReasons |= CompositingReasonPositionFixedWithCompositedDescendants;
+    if (layer->ShouldIsolateCompositedDescendants()) {
+      DCHECK(layer->StackingNode()->IsStackingContext());
+      subtree_reasons |= kCompositingReasonIsolateCompositedDescendants;
     }
 
-    // A layer with preserve-3d or perspective only needs to be composited if there are descendant layers that
-    // will be affected by the preserve-3d or perspective.
-    if (has3DTransformedDescendants)
-        subtreeReasons |= layer->potentialCompositingReasonsFromStyle() & CompositingReasonCombo3DDescendants;
+    // FIXME: This should move into
+    // CompositingReasonFinder::potentialCompositingReasonsFromStyle, but theres
+    // a poor interaction with LayoutTextControlSingleLine, which sets this
+    // hasOverflowClip directly.
+    if (layer->GetLayoutObject().HasClipRelatedProperty())
+      subtree_reasons |= kCompositingReasonClipsCompositingDescendants;
 
-    return subtreeReasons;
+    if (layer->GetLayoutObject().Style()->GetPosition() == EPosition::kFixed)
+      subtree_reasons |=
+          kCompositingReasonPositionFixedWithCompositedDescendants;
+  }
+
+  // A layer with preserve-3d or perspective only needs to be composited if
+  // there are descendant layers that will be affected by the preserve-3d or
+  // perspective.
+  if (has3d_transformed_descendants) {
+    subtree_reasons |= layer->PotentialCompositingReasonsFromStyle() &
+                       kCompositingReasonCombo3DDescendants;
+  }
+
+  return subtree_reasons;
 }
 
-CompositingRequirementsUpdater::CompositingRequirementsUpdater(LayoutView& layoutView, CompositingReasonFinder& compositingReasonFinder)
-    : m_layoutView(layoutView)
-    , m_compositingReasonFinder(compositingReasonFinder)
-{
+CompositingRequirementsUpdater::CompositingRequirementsUpdater(
+    LayoutView& layout_view,
+    CompositingReasonFinder& compositing_reason_finder)
+    : layout_view_(layout_view),
+      compositing_reason_finder_(compositing_reason_finder) {}
+
+CompositingRequirementsUpdater::~CompositingRequirementsUpdater() {}
+
+void CompositingRequirementsUpdater::Update(PaintLayer* root) {
+  TRACE_EVENT0("blink", "CompositingRequirementsUpdater::updateRecursive");
+
+  // Go through the layers in presentation order, so that we can compute which
+  // Layers need compositing layers.
+  // FIXME: we could maybe do this and the hierarchy update in one pass, but the
+  // parenting logic would be more complex.
+  RecursionData recursion_data(root);
+  OverlapMap overlap_test_request_map;
+  bool saw3d_transform = false;
+
+  // FIXME: Passing these unclippedDescendants down and keeping track
+  // of them dynamically, we are requiring a full tree walk. This
+  // should be removed as soon as proper overlap testing based on
+  // scrolling and animation bounds is implemented (crbug.com/252472).
+  Vector<PaintLayer*> unclipped_descendants;
+  IntRect absolute_descendant_bounding_box;
+  UpdateRecursive(0, root, overlap_test_request_map, recursion_data,
+                  saw3d_transform, unclipped_descendants,
+                  absolute_descendant_bounding_box);
 }
 
-CompositingRequirementsUpdater::~CompositingRequirementsUpdater()
-{
-}
+void CompositingRequirementsUpdater::UpdateRecursive(
+    PaintLayer* ancestor_layer,
+    PaintLayer* layer,
+    OverlapMap& overlap_map,
+    RecursionData& current_recursion_data,
+    bool& descendant_has3d_transform,
+    Vector<PaintLayer*>& unclipped_descendants,
+    IntRect& absolute_descendant_bounding_box) {
+  PaintLayerCompositor* compositor = layout_view_.Compositor();
 
-void CompositingRequirementsUpdater::update(PaintLayer* root)
-{
-    TRACE_EVENT0("blink", "CompositingRequirementsUpdater::updateRecursive");
+  layer->StackingNode()->UpdateLayerListsIfNeeded();
 
-    // Go through the layers in presentation order, so that we can compute which Layers need compositing layers.
-    // FIXME: we could maybe do this and the hierarchy update in one pass, but the parenting logic would be more complex.
-    RecursionData recursionData(root);
-    OverlapMap overlapTestRequestMap;
-    bool saw3DTransform = false;
+  CompositingReasons reasons_to_composite = kCompositingReasonNone;
+  CompositingReasons direct_reasons = kCompositingReasonNone;
 
-    // FIXME: Passing these unclippedDescendants down and keeping track
-    // of them dynamically, we are requiring a full tree walk. This
-    // should be removed as soon as proper overlap testing based on
-    // scrolling and animation bounds is implemented (crbug.com/252472).
-    Vector<PaintLayer*> unclippedDescendants;
-    IntRect absoluteDescendantBoundingBox;
-    updateRecursive(0, root, overlapTestRequestMap, recursionData, saw3DTransform, unclippedDescendants, absoluteDescendantBoundingBox);
-}
+  // Video is special. It's the only PaintLayer type that can both have
+  // PaintLayer children and whose children can't use its backing to render
+  // into. These children (the controls) always need to be promoted into their
+  // own layers to draw on top of the accelerated video.
+  if (current_recursion_data.compositing_ancestor_ &&
+      current_recursion_data.compositing_ancestor_->GetLayoutObject().IsVideo())
+    direct_reasons |= kCompositingReasonVideoOverlay;
 
-void CompositingRequirementsUpdater::updateRecursive(PaintLayer* ancestorLayer, PaintLayer* layer, OverlapMap& overlapMap, RecursionData& currentRecursionData,
-    bool& descendantHas3DTransform, Vector<PaintLayer*>& unclippedDescendants, IntRect& absoluteDescendantBoundingBox)
-{
-    PaintLayerCompositor* compositor = m_layoutView.compositor();
+  bool has_composited_scrolling_ancestor =
+      layer->AncestorScrollingLayer() &&
+      (compositing_reason_finder_.DirectReasons(layer->AncestorScrollingLayer(),
+                                                false) &
+       kCompositingReasonOverflowScrollingTouch);
 
-    layer->stackingNode()->updateLayerListsIfNeeded();
+  // TODO(chrishtr): use |hasCompositedScrollingAncestor| instead.
+  const bool ignore_lcd_text =
+      current_recursion_data.has_composited_scrolling_ancestor_;
+  direct_reasons |=
+      compositing_reason_finder_.DirectReasons(layer, ignore_lcd_text);
 
-    CompositingReasons reasonsToComposite = CompositingReasonNone;
-    CompositingReasons directReasons = m_compositingReasonFinder.directReasons(layer);
+  bool can_be_composited = compositor->CanBeComposited(layer);
+  if (can_be_composited) {
+    reasons_to_composite |= direct_reasons;
 
-    // Video is special. It's the only PaintLayer type that can both have
-    // PaintLayer children and whose children can't use its backing to render
-    // into. These children (the controls) always need to be promoted into their
-    // own layers to draw on top of the accelerated video.
-    if (currentRecursionData.m_compositingAncestor && currentRecursionData.m_compositingAncestor->layoutObject()->isVideo())
-        directReasons |= CompositingReasonVideoOverlay;
+    if (layer->IsRootLayer() && compositor->RootShouldAlwaysComposite())
+      reasons_to_composite |= kCompositingReasonRoot;
 
-    if (currentRecursionData.m_hasCompositedScrollingAncestor && layer->layoutObject()->styleRef().hasViewportConstrainedPosition())
-        directReasons |= CompositingReasonPositionFixed;
+    // Add CompositingReasonOverflowScrollingTouch for layers that do not
+    // already have it but need it.
+    // Note that m_compositingReasonFinder.directReasons(layer) already includes
+    // CompositingReasonOverflowScrollingTouch for anything that has
+    // layer->needsCompositedScrolling() true. That is, for cases where we
+    // explicitly decide not to have LCD text or cases where the layer will
+    // still support LCD text even if the layer is composited.
+    if (reasons_to_composite && layer->ScrollsOverflow() &&
+        !layer->NeedsCompositedScrolling()) {
+      // We can get here for a scroller that will be composited for some other
+      // reason and hence will already use grayscale AA text. We recheck for
+      // needsCompositedScrolling ignoring LCD to correctly add the
+      // CompositingReasonOverflowScrollingTouch reason to layers that can
+      // support it with grayscale AA text.
+      layer->GetScrollableArea()->UpdateNeedsCompositedScrolling(
+          PaintLayerScrollableArea::kIgnoreLCDText);
+      if (layer->NeedsCompositedScrolling())
+        reasons_to_composite |= kCompositingReasonOverflowScrollingTouch;
+    }
+  }
 
-    bool canBeComposited = compositor->canBeComposited(layer);
-    if (canBeComposited) {
-        reasonsToComposite |= directReasons;
+  if ((reasons_to_composite & kCompositingReasonOverflowScrollingTouch) &&
+      !layer->IsRootLayer())
+    current_recursion_data.has_composited_scrolling_ancestor_ = true;
 
-        if (layer->isRootLayer() && compositor->rootShouldAlwaysComposite())
-            reasonsToComposite |= CompositingReasonRoot;
+  // Next, accumulate reasons related to overlap.
+  // If overlap testing is used, this reason will be overridden. If overlap
+  // testing is not used, we must assume we overlap if there is anything
+  // composited behind us in paint-order.
+  CompositingReasons overlap_compositing_reason =
+      current_recursion_data.subtree_is_compositing_
+          ? kCompositingReasonAssumedOverlap
+          : kCompositingReasonNone;
 
-        if (reasonsToComposite && layer->scrollsOverflow() && !layer->needsCompositedScrolling()) {
-            // We will only set needsCompositedScrolling if we don't care about
-            // the LCD text hit, we may be able to switch to the compositor
-            // driven path if we're alread composited for other reasons and are
-            // therefore using grayscale AA.
-            //
-            // FIXME: it should also be possible to promote if the layer can
-            // still use LCD text when promoted, but detecting when the
-            // compositor can do this is tricky. Currently, the layer must be
-            // both opaque and may only have an integer translation as its
-            // transform. Both opacity and screen space transform are inherited
-            // properties, so this cannot be determined from local information.
-            layer->getScrollableArea()->updateNeedsCompositedScrolling(PaintLayerScrollableArea::IgnoreLCDText);
-            if (layer->needsCompositedScrolling())
-                reasonsToComposite |= CompositingReasonOverflowScrollingTouch;
-        }
+  // TODO(chrishtr): use |hasCompositedScrollingAncestor| instead.
+  if (current_recursion_data.has_composited_scrolling_ancestor_) {
+    Vector<size_t> unclipped_descendants_to_remove;
+    for (size_t i = 0; i < unclipped_descendants.size(); i++) {
+      PaintLayer* unclipped_descendant = unclipped_descendants.at(i);
+      // If we've reached the containing block of one of the unclipped
+      // descendants, that element is no longer relevant to whether or not we
+      // should opt in. Unfortunately we can't easily remove from the list
+      // while we're iterating, so we have to store it for later removal.
+      if (unclipped_descendant->GetLayoutObject().ContainingBlock() ==
+          &layer->GetLayoutObject()) {
+        unclipped_descendants_to_remove.push_back(i);
+        continue;
+      }
+      if (layer->ScrollsWithRespectTo(unclipped_descendant))
+        reasons_to_composite |= kCompositingReasonAssumedOverlap;
     }
 
-    if ((reasonsToComposite & CompositingReasonOverflowScrollingTouch) && !layer->isRootLayer())
-        currentRecursionData.m_hasCompositedScrollingAncestor = true;
-
-    // Next, accumulate reasons related to overlap.
-    // If overlap testing is used, this reason will be overridden. If overlap testing is not
-    // used, we must assume we overlap if there is anything composited behind us in paint-order.
-    CompositingReasons overlapCompositingReason = currentRecursionData.m_subtreeIsCompositing ? CompositingReasonAssumedOverlap : CompositingReasonNone;
-
-    if (currentRecursionData.m_hasCompositedScrollingAncestor) {
-        Vector<size_t> unclippedDescendantsToRemove;
-        for (size_t i = 0; i < unclippedDescendants.size(); i++) {
-            PaintLayer* unclippedDescendant = unclippedDescendants.at(i);
-            // If we've reached the containing block of one of the unclipped
-            // descendants, that element is no longer relevant to whether or not we
-            // should opt in. Unfortunately we can't easily remove from the list
-            // while we're iterating, so we have to store it for later removal.
-            if (unclippedDescendant->layoutObject()->containingBlock() == layer->layoutObject()) {
-                unclippedDescendantsToRemove.append(i);
-                continue;
-            }
-            if (layer->scrollsWithRespectTo(unclippedDescendant))
-                reasonsToComposite |= CompositingReasonAssumedOverlap;
-        }
-
-        // Remove irrelevant unclipped descendants in reverse order so our stored
-        // indices remain valid.
-        for (size_t i = 0; i < unclippedDescendantsToRemove.size(); i++)
-            unclippedDescendants.remove(unclippedDescendantsToRemove.at(unclippedDescendantsToRemove.size() - i - 1));
-
-        if (reasonsToComposite & CompositingReasonOutOfFlowClipping)
-            unclippedDescendants.append(layer);
+    // Remove irrelevant unclipped descendants in reverse order so our stored
+    // indices remain valid.
+    for (size_t i = 0; i < unclipped_descendants_to_remove.size(); i++) {
+      unclipped_descendants.erase(unclipped_descendants_to_remove.at(
+          unclipped_descendants_to_remove.size() - i - 1));
     }
 
-    const IntRect& absBounds = layer->clippedAbsoluteBoundingBox();
-    absoluteDescendantBoundingBox = absBounds;
-
-    if (currentRecursionData.m_testingOverlap && !requiresCompositingOrSquashing(directReasons))
-        overlapCompositingReason = overlapMap.overlapsLayers(absBounds) ? CompositingReasonOverlap : CompositingReasonNone;
-
-    reasonsToComposite |= overlapCompositingReason;
-
-    // The children of this layer don't need to composite, unless there is
-    // a compositing layer among them, so start by inheriting the compositing
-    // ancestor with m_subtreeIsCompositing set to false.
-    RecursionData childRecursionData = currentRecursionData;
-    childRecursionData.m_subtreeIsCompositing = false;
-
-    bool willBeCompositedOrSquashed = canBeComposited && requiresCompositingOrSquashing(reasonsToComposite);
-    if (willBeCompositedOrSquashed) {
-        // This layer now acts as the ancestor for kids.
-        childRecursionData.m_compositingAncestor = layer;
-
-        // Here we know that all children and the layer's own contents can blindly paint into
-        // this layer's backing, until a descendant is composited. So, we don't need to check
-        // for overlap with anything behind this layer.
-        overlapMap.beginNewOverlapTestingContext();
-        // This layer is going to be composited, so children can safely ignore the fact that there's an
-        // animation running behind this layer, meaning they can rely on the overlap map testing again.
-        childRecursionData.m_testingOverlap = true;
+    if (reasons_to_composite & kCompositingReasonOutOfFlowClipping) {
+      // TODO(schenney): We only need to promote when the clipParent is not a
+      // descendant of the ancestor scroller, which we do not check for here.
+      // Hence we might be promoting needlessly.
+      unclipped_descendants.push_back(layer);
     }
+  }
 
-#if ENABLE(ASSERT)
-    LayerListMutationDetector mutationChecker(layer->stackingNode());
+  const IntRect& abs_bounds = has_composited_scrolling_ancestor
+                                  ? layer->UnclippedAbsoluteBoundingBox()
+                                  : layer->ClippedAbsoluteBoundingBox();
+  absolute_descendant_bounding_box = abs_bounds;
+  if (current_recursion_data.testing_overlap_ &&
+      !RequiresCompositingOrSquashing(direct_reasons)) {
+    bool overlaps = overlap_map.OverlapsLayers(
+        abs_bounds, !has_composited_scrolling_ancestor);
+    overlap_compositing_reason =
+        overlaps ? kCompositingReasonOverlap : kCompositingReasonNone;
+  }
+
+  reasons_to_composite |= overlap_compositing_reason;
+
+  // The children of this layer don't need to composite, unless there is
+  // a compositing layer among them, so start by inheriting the compositing
+  // ancestor with m_subtreeIsCompositing set to false.
+  RecursionData child_recursion_data = current_recursion_data;
+  child_recursion_data.subtree_is_compositing_ = false;
+
+  bool will_be_composited_or_squashed =
+      can_be_composited && RequiresCompositingOrSquashing(reasons_to_composite);
+  if (will_be_composited_or_squashed) {
+    // This layer now acts as the ancestor for kids.
+    child_recursion_data.compositing_ancestor_ = layer;
+
+    // Here we know that all children and the layer's own contents can blindly
+    // paint into this layer's backing, until a descendant is composited. So, we
+    // don't need to check for overlap with anything behind this layer.
+    overlap_map.BeginNewOverlapTestingContext();
+    // This layer is going to be composited, so children can safely ignore the
+    // fact that there's an animation running behind this layer, meaning they
+    // can rely on the overlap map testing again.
+    child_recursion_data.testing_overlap_ = true;
+  }
+
+#if DCHECK_IS_ON()
+  LayerListMutationDetector mutation_checker(layer->StackingNode());
 #endif
 
-    bool anyDescendantHas3DTransform = false;
-    bool willHaveForegroundLayer = false;
+  bool any_descendant_has3d_transform = false;
+  bool will_have_foreground_layer = false;
 
-    if (layer->stackingNode()->isStackingContext()) {
-        PaintLayerStackingNodeIterator iterator(*layer->stackingNode(), NegativeZOrderChildren);
-        while (PaintLayerStackingNode* curNode = iterator.next()) {
-            IntRect absoluteChildDescendantBoundingBox;
-            updateRecursive(layer, curNode->layer(), overlapMap, childRecursionData, anyDescendantHas3DTransform, unclippedDescendants, absoluteChildDescendantBoundingBox);
-            absoluteDescendantBoundingBox.unite(absoluteChildDescendantBoundingBox);
+  if (layer->StackingNode()->IsStackingContext()) {
+    PaintLayerStackingNodeIterator iterator(*layer->StackingNode(),
+                                            kNegativeZOrderChildren);
+    while (PaintLayerStackingNode* cur_node = iterator.Next()) {
+      IntRect absolute_child_descendant_bounding_box;
+      UpdateRecursive(layer, cur_node->Layer(), overlap_map,
+                      child_recursion_data, any_descendant_has3d_transform,
+                      unclipped_descendants,
+                      absolute_child_descendant_bounding_box);
+      absolute_descendant_bounding_box.Unite(
+          absolute_child_descendant_bounding_box);
 
-            // If we have to make a layer for this child, make one now so we can have a contents layer
-            // (since we need to ensure that the -ve z-order child renders underneath our contents).
-            if (childRecursionData.m_subtreeIsCompositing) {
-                reasonsToComposite |= CompositingReasonNegativeZIndexChildren;
+      // If we have to make a layer for this child, make one now so we can have
+      // a contents layer (since we need to ensure that the -ve z-order child
+      // renders underneath our contents).
+      if (child_recursion_data.subtree_is_compositing_) {
+        reasons_to_composite |= kCompositingReasonNegativeZIndexChildren;
 
-                if (!willBeCompositedOrSquashed) {
-                    // make layer compositing
-                    childRecursionData.m_compositingAncestor = layer;
-                    overlapMap.beginNewOverlapTestingContext();
-                    willBeCompositedOrSquashed = true;
-                    willHaveForegroundLayer = true;
+        if (!will_be_composited_or_squashed) {
+          // make layer compositing
+          child_recursion_data.compositing_ancestor_ = layer;
+          overlap_map.BeginNewOverlapTestingContext();
+          will_be_composited_or_squashed = true;
+          will_have_foreground_layer = true;
 
-                    // FIXME: temporary solution for the first negative z-index composited child:
-                    //        re-compute the absBounds for the child so that we can add the
-                    //        negative z-index child's bounds to the new overlap context.
-                    overlapMap.beginNewOverlapTestingContext();
-                    overlapMap.add(curNode->layer(), curNode->layer()->clippedAbsoluteBoundingBox());
-                    overlapMap.finishCurrentOverlapTestingContext();
-                }
-            }
+          // FIXME: temporary solution for the first negative z-index composited
+          // child: re-compute the absBounds for the child so that we can add
+          // the negative z-index child's bounds to the new overlap context.
+          overlap_map.BeginNewOverlapTestingContext();
+          overlap_map.Add(cur_node->Layer(),
+                          cur_node->Layer()->ClippedAbsoluteBoundingBox(),
+                          true);
+          overlap_map.FinishCurrentOverlapTestingContext();
         }
+      }
     }
+  }
 
-    if (willHaveForegroundLayer) {
-        ASSERT(willBeCompositedOrSquashed);
-        // A foreground layer effectively is a new backing for all subsequent children, so
-        // we don't need to test for overlap with anything behind this. So, we can finish
-        // the previous context that was accumulating rects for the negative z-index
-        // children, and start with a fresh new empty context.
-        overlapMap.finishCurrentOverlapTestingContext();
-        overlapMap.beginNewOverlapTestingContext();
-        // This layer is going to be composited, so children can safely ignore the fact that there's an
-        // animation running behind this layer, meaning they can rely on the overlap map testing again
-        childRecursionData.m_testingOverlap = true;
-    }
+  if (will_have_foreground_layer) {
+    DCHECK(will_be_composited_or_squashed);
+    // A foreground layer effectively is a new backing for all subsequent
+    // children, so we don't need to test for overlap with anything behind this.
+    // So, we can finish the previous context that was accumulating rects for
+    // the negative z-index children, and start with a fresh new empty context.
+    overlap_map.FinishCurrentOverlapTestingContext();
+    overlap_map.BeginNewOverlapTestingContext();
+    // This layer is going to be composited, so children can safely ignore the
+    // fact that there's an animation running behind this layer, meaning they
+    // can rely on the overlap map testing again.
+    child_recursion_data.testing_overlap_ = true;
+  }
 
-    PaintLayerStackingNodeIterator iterator(*layer->stackingNode(), NormalFlowChildren | PositiveZOrderChildren);
-    while (PaintLayerStackingNode* curNode = iterator.next()) {
-        IntRect absoluteChildDescendantBoundingBox;
-        updateRecursive(layer, curNode->layer(), overlapMap, childRecursionData, anyDescendantHas3DTransform, unclippedDescendants, absoluteChildDescendantBoundingBox);
-        absoluteDescendantBoundingBox.unite(absoluteChildDescendantBoundingBox);
-    }
+  PaintLayerStackingNodeIterator iterator(
+      *layer->StackingNode(), kNormalFlowChildren | kPositiveZOrderChildren);
+  while (PaintLayerStackingNode* cur_node = iterator.Next()) {
+    IntRect absolute_child_descendant_bounding_box;
+    UpdateRecursive(layer, cur_node->Layer(), overlap_map, child_recursion_data,
+                    any_descendant_has3d_transform, unclipped_descendants,
+                    absolute_child_descendant_bounding_box);
+    absolute_descendant_bounding_box.Unite(
+        absolute_child_descendant_bounding_box);
+  }
 
-    // Now that the subtree has been traversed, we can check for compositing reasons that depended on the state of the subtree.
+  // Now that the subtree has been traversed, we can check for compositing
+  // reasons that depended on the state of the subtree.
 
-    if (layer->stackingNode()->isStackingContext()) {
-        layer->setShouldIsolateCompositedDescendants(childRecursionData.m_hasUnisolatedCompositedBlendingDescendant);
+  if (layer->StackingNode()->IsStackingContext()) {
+    layer->SetShouldIsolateCompositedDescendants(
+        child_recursion_data.has_unisolated_composited_blending_descendant_);
+  } else {
+    layer->SetShouldIsolateCompositedDescendants(false);
+    current_recursion_data.has_unisolated_composited_blending_descendant_ =
+        child_recursion_data.has_unisolated_composited_blending_descendant_;
+  }
+
+  // Subsequent layers in the parent's stacking context may also need to
+  // composite.
+  if (child_recursion_data.subtree_is_compositing_)
+    current_recursion_data.subtree_is_compositing_ = true;
+
+  // Set the flag to say that this SC has compositing children.
+  layer->SetHasCompositingDescendant(
+      child_recursion_data.subtree_is_compositing_);
+
+  if (layer->IsRootLayer()) {
+    // The root layer needs to be composited if anything else in the tree is
+    // composited.  Otherwise, we can disable compositing entirely.
+    if (child_recursion_data.subtree_is_compositing_ ||
+        RequiresCompositingOrSquashing(reasons_to_composite) ||
+        compositor->RootShouldAlwaysComposite()) {
+      reasons_to_composite |= kCompositingReasonRoot;
+      current_recursion_data.subtree_is_compositing_ = true;
     } else {
-        layer->setShouldIsolateCompositedDescendants(false);
-        currentRecursionData.m_hasUnisolatedCompositedBlendingDescendant = childRecursionData.m_hasUnisolatedCompositedBlendingDescendant;
+      compositor->SetCompositingModeEnabled(false);
+      reasons_to_composite = kCompositingReasonNone;
+    }
+  } else {
+    // All layers (even ones that aren't being composited) need to get added to
+    // the overlap map. Layers that are not separately composited will paint
+    // into their compositing ancestor's backing, and so are still considered
+    // for overlap.
+    if (child_recursion_data.compositing_ancestor_ &&
+        !child_recursion_data.compositing_ancestor_->IsRootLayer())
+      overlap_map.Add(layer, abs_bounds, !has_composited_scrolling_ancestor);
+
+    // Now check for reasons to become composited that depend on the state of
+    // descendant layers.
+    CompositingReasons subtree_compositing_reasons =
+        SubtreeReasonsForCompositing(
+            layer, child_recursion_data.subtree_is_compositing_,
+            any_descendant_has3d_transform);
+    reasons_to_composite |= subtree_compositing_reasons;
+    if (!will_be_composited_or_squashed && can_be_composited &&
+        RequiresCompositingOrSquashing(subtree_compositing_reasons)) {
+      child_recursion_data.compositing_ancestor_ = layer;
+      // FIXME: this context push is effectively a no-op but needs to exist for
+      // now, because the code is designed to push overlap information to the
+      // second-from-top context of the stack.
+      overlap_map.BeginNewOverlapTestingContext();
+      overlap_map.Add(layer, absolute_descendant_bounding_box,
+                      !has_composited_scrolling_ancestor);
+      will_be_composited_or_squashed = true;
     }
 
-    // Subsequent layers in the parent's stacking context may also need to composite.
-    if (childRecursionData.m_subtreeIsCompositing)
-        currentRecursionData.m_subtreeIsCompositing = true;
-
-    // Set the flag to say that this SC has compositing children.
-    layer->setHasCompositingDescendant(childRecursionData.m_subtreeIsCompositing);
-
-    if (layer->isRootLayer()) {
-        // The root layer needs to be composited if anything else in the tree is composited.
-        // Otherwise, we can disable compositing entirely.
-        if (childRecursionData.m_subtreeIsCompositing || requiresCompositingOrSquashing(reasonsToComposite) || compositor->rootShouldAlwaysComposite()) {
-            reasonsToComposite |= CompositingReasonRoot;
-            currentRecursionData.m_subtreeIsCompositing = true;
-        } else {
-            compositor->setCompositingModeEnabled(false);
-            reasonsToComposite = CompositingReasonNone;
-        }
-    } else {
-        // All layers (even ones that aren't being composited) need to get added to
-        // the overlap map. Layers that are not separately composited will paint into their
-        // compositing ancestor's backing, and so are still considered for overlap.
-        if (childRecursionData.m_compositingAncestor && !childRecursionData.m_compositingAncestor->isRootLayer())
-            overlapMap.add(layer, absBounds);
-
-        // Now check for reasons to become composited that depend on the state of descendant layers.
-        CompositingReasons subtreeCompositingReasons = subtreeReasonsForCompositing(layer, childRecursionData.m_subtreeIsCompositing, anyDescendantHas3DTransform);
-        reasonsToComposite |= subtreeCompositingReasons;
-        if (!willBeCompositedOrSquashed && canBeComposited && requiresCompositingOrSquashing(subtreeCompositingReasons)) {
-            childRecursionData.m_compositingAncestor = layer;
-            // FIXME: this context push is effectively a no-op but needs to exist for
-            // now, because the code is designed to push overlap information to the
-            // second-from-top context of the stack.
-            overlapMap.beginNewOverlapTestingContext();
-            overlapMap.add(layer, absoluteDescendantBoundingBox);
-            willBeCompositedOrSquashed = true;
-        }
-
-        if (willBeCompositedOrSquashed)
-            reasonsToComposite |= layer->potentialCompositingReasonsFromStyle() & CompositingReasonInlineTransform;
-
-        // If the original layer is composited, the reflection needs to be, too.
-        if (layer->reflectionInfo()) {
-            // FIXME: Shouldn't we call computeCompositingRequirements to handle a reflection overlapping with another layoutObject?
-            PaintLayer* reflectionLayer = layer->reflectionInfo()->reflectionLayer();
-            CompositingReasons reflectionCompositingReason = willBeCompositedOrSquashed ? CompositingReasonReflectionOfCompositedParent : CompositingReasonNone;
-            reflectionLayer->setCompositingReasons(reflectionCompositingReason, CompositingReasonReflectionOfCompositedParent);
-        }
-
-        if (willBeCompositedOrSquashed && layer->layoutObject()->style()->hasBlendMode())
-            currentRecursionData.m_hasUnisolatedCompositedBlendingDescendant = true;
-
-        // Tell the parent it has compositing descendants.
-        if (willBeCompositedOrSquashed)
-            currentRecursionData.m_subtreeIsCompositing = true;
-
-        // Turn overlap testing off for later layers if it's already off, or if we have an animating transform.
-        // Note that if the layer clips its descendants, there's no reason to propagate the child animation to the parent layers. That's because
-        // we know for sure the animation is contained inside the clipping rectangle, which is already added to the overlap map.
-        bool isCompositedClippingLayer = canBeComposited && (reasonsToComposite & CompositingReasonClipsCompositingDescendants);
-        bool isCompositedWithInlineTransform = reasonsToComposite & CompositingReasonInlineTransform;
-        if ((!childRecursionData.m_testingOverlap && !isCompositedClippingLayer) || layer->layoutObject()->style()->hasCurrentTransformAnimation() || isCompositedWithInlineTransform)
-            currentRecursionData.m_testingOverlap = false;
-
-        if (childRecursionData.m_compositingAncestor == layer)
-            overlapMap.finishCurrentOverlapTestingContext();
-
-        descendantHas3DTransform |= anyDescendantHas3DTransform || layer->has3DTransform();
+    if (will_be_composited_or_squashed) {
+      reasons_to_composite |= layer->PotentialCompositingReasonsFromStyle() &
+                              kCompositingReasonInlineTransform;
     }
 
-    // At this point we have finished collecting all reasons to composite this layer.
-    layer->setCompositingReasons(reasonsToComposite);
+    if (will_be_composited_or_squashed &&
+        layer->GetLayoutObject().Style()->HasBlendMode())
+      current_recursion_data.has_unisolated_composited_blending_descendant_ =
+          true;
+
+    // Tell the parent it has compositing descendants.
+    if (will_be_composited_or_squashed)
+      current_recursion_data.subtree_is_compositing_ = true;
+
+    // Turn overlap testing off for later layers if it's already off, or if we
+    // have an animating transform.  Note that if the layer clips its
+    // descendants, there's no reason to propagate the child animation to the
+    // parent layers. That's because we know for sure the animation is contained
+    // inside the clipping rectangle, which is already added to the overlap map.
+    bool is_composited_clipping_layer =
+        can_be_composited &&
+        (reasons_to_composite & kCompositingReasonClipsCompositingDescendants);
+    bool is_composited_with_inline_transform =
+        reasons_to_composite & kCompositingReasonInlineTransform;
+    if ((!child_recursion_data.testing_overlap_ &&
+         !is_composited_clipping_layer) ||
+        layer->GetLayoutObject().Style()->HasCurrentTransformAnimation() ||
+        is_composited_with_inline_transform)
+      current_recursion_data.testing_overlap_ = false;
+
+    if (child_recursion_data.compositing_ancestor_ == layer)
+      overlap_map.FinishCurrentOverlapTestingContext();
+
+    descendant_has3d_transform |=
+        any_descendant_has3d_transform || layer->Has3DTransform();
+  }
+
+  // At this point we have finished collecting all reasons to composite this
+  // layer.
+  layer->SetCompositingReasons(reasons_to_composite);
 }
 
-} // namespace blink
+}  // namespace blink

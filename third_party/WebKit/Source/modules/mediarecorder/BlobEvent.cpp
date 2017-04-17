@@ -2,52 +2,45 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-
 #include "modules/mediarecorder/BlobEvent.h"
 
 #include "modules/mediarecorder/BlobEventInit.h"
+#include "platform/wtf/dtoa/double.h"
 
 namespace blink {
 
 // static
-BlobEvent* BlobEvent::create()
-{
-    return new BlobEvent;
+BlobEvent* BlobEvent::Create(const AtomicString& type,
+                             const BlobEventInit& initializer) {
+  return new BlobEvent(type, initializer);
 }
 
 // static
-BlobEvent* BlobEvent::create(const AtomicString& type, const BlobEventInit& initializer)
-{
-    return new BlobEvent(type, initializer);
+BlobEvent* BlobEvent::Create(const AtomicString& type,
+                             Blob* blob,
+                             double timecode) {
+  return new BlobEvent(type, blob, timecode);
 }
 
-// static
-BlobEvent* BlobEvent::create(const AtomicString& type, Blob* blob)
-{
-    return new BlobEvent(type, blob);
+const AtomicString& BlobEvent::InterfaceName() const {
+  return EventNames::BlobEvent;
 }
 
-const AtomicString& BlobEvent::interfaceName() const
-{
-    return EventNames::BlobEvent;
-}
-
-DEFINE_TRACE(BlobEvent)
-{
-    visitor->trace(m_blob);
-    Event::trace(visitor);
+DEFINE_TRACE(BlobEvent) {
+  visitor->Trace(blob_);
+  Event::Trace(visitor);
 }
 
 BlobEvent::BlobEvent(const AtomicString& type, const BlobEventInit& initializer)
-    : Event(type, initializer)
-    , m_blob(initializer.data())
-{
-}
+    : Event(type, initializer),
+      blob_(initializer.data()),
+      timecode_(initializer.hasTimecode()
+                    ? initializer.timecode()
+                    : WTF::double_conversion::Double::NaN()) {}
 
-BlobEvent::BlobEvent(const AtomicString& type, Blob* blob)
-    : Event(type, false /* canBubble */, false /* cancelable */)
-    , m_blob(blob)
-{
-}
+BlobEvent::BlobEvent(const AtomicString& type, Blob* blob, double timecode)
+    : Event(type, false /* canBubble */, false /* cancelable */),
+      blob_(blob),
+      timecode_(timecode) {}
 
-} // namespace blink
+}  // namespace blink

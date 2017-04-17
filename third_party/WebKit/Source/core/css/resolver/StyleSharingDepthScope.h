@@ -12,23 +12,20 @@ namespace blink {
 
 // Maintains the style sharing depth in the style resolver.
 class StyleSharingDepthScope final {
-    STACK_ALLOCATED();
-public:
-    explicit StyleSharingDepthScope(Node& parent)
-        : m_resolver(parent.document().styleResolver())
-    {
-        m_resolver->increaseStyleSharingDepth();
-    }
+  STACK_ALLOCATED();
 
-    ~StyleSharingDepthScope()
-    {
-        m_resolver->decreaseStyleSharingDepth();
-    }
+ public:
+  explicit StyleSharingDepthScope(Node& parent)
+      : resolver_(parent.GetDocument().GetStyleResolver()) {
+    resolver_->IncreaseStyleSharingDepth();
+  }
 
-private:
-    Member<StyleResolver> m_resolver;
+  ~StyleSharingDepthScope() { resolver_->DecreaseStyleSharingDepth(); }
+
+ private:
+  Member<StyleResolver> resolver_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StyleSharingDepthScope_h
+#endif  // StyleSharingDepthScope_h

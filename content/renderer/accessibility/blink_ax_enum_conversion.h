@@ -24,6 +24,9 @@ ui::AXEvent AXEventFromBlink(blink::WebAXEvent event);
 // in AXNodeData instead.)
 uint32_t AXStateFromBlink(const blink::WebAXObject& o);
 
+ui::AXSupportedAction AXSupportedActionFromBlink(
+    blink::WebAXSupportedAction supported_action);
+
 ui::AXMarkerType AXMarkerTypeFromBlink(blink::WebAXMarkerType marker_type);
 
 ui::AXTextDirection AXTextDirectionFromBlink(
@@ -44,6 +47,8 @@ ui::AXNameFrom AXNameFromFromBlink(blink::WebAXNameFrom name_from);
 
 ui::AXDescriptionFrom AXDescriptionFromFromBlink(
     blink::WebAXDescriptionFrom description_from);
+
+ui::AXTextAffinity AXTextAffinityFromBlink(blink::WebAXTextAffinity affinity);
 
 }  // namespace content
 

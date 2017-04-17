@@ -33,90 +33,57 @@
 
 #include "platform/heap/Handle.h"
 #include "platform/text/TextDecoration.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-enum TextCheckingType {
-    TextCheckingTypeNone     = 0,
-    TextCheckingTypeSpelling = 1 << 1,
-    TextCheckingTypeGrammar  = 1 << 2,
-};
-
-typedef unsigned TextCheckingTypeMask;
-
-enum TextCheckingProcessType {
-    TextCheckingProcessBatch,
-    TextCheckingProcessIncremental
-};
-
 struct GrammarDetail {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    int location;
-    int length;
-    Vector<String> guesses;
-    String userDescription;
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  int location;
+  int length;
+  Vector<String> guesses;
+  String user_description;
 };
 
 struct TextCheckingResult {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    TextDecorationType decoration;
-    int location;
-    int length;
-    Vector<GrammarDetail> details;
-    String replacement;
-    uint32_t hash;
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  TextDecorationType decoration;
+  int location;
+  int length;
+  Vector<GrammarDetail> details;
+  String replacement;
 };
 
-const int unrequestedTextCheckingSequence = -1;
+const int kUnrequestedTextCheckingSequence = -1;
 
 class TextCheckingRequestData final {
-    DISALLOW_NEW();
-    friend class SpellCheckRequest; // For access to m_sequence.
-public:
-    TextCheckingRequestData()
-        : m_sequence(unrequestedTextCheckingSequence)
-        , m_mask(TextCheckingTypeNone)
-        , m_processType(TextCheckingProcessIncremental)
-    { }
-    TextCheckingRequestData(int sequence, const String& text, TextCheckingTypeMask mask, TextCheckingProcessType processType, const Vector<uint32_t>& markers, const Vector<unsigned>& offsets)
-        : m_sequence(sequence)
-        , m_text(text)
-        , m_mask(mask)
-        , m_processType(processType)
-        , m_markers(markers)
-        , m_offsets(offsets)
-    { }
+  DISALLOW_NEW();
+ public:
+  TextCheckingRequestData(const String& text)
+      : sequence_(kUnrequestedTextCheckingSequence), text_(text) {}
 
-    int sequence() const { return m_sequence; }
-    String text() const { return m_text; }
-    TextCheckingTypeMask mask() const { return m_mask; }
-    bool maskContains(TextCheckingType type) const { return m_mask & type; }
-    TextCheckingProcessType processType() const { return m_processType; }
-    const Vector<uint32_t>& markers() const { return m_markers; }
-    const Vector<unsigned>& offsets() const { return m_offsets; }
+  void SetSequence(int sequence) { sequence_ = sequence; }
+  int Sequence() const { return sequence_; }
+  String GetText() const { return text_; }
 
-private:
-    int m_sequence;
-    String m_text;
-    TextCheckingTypeMask m_mask;
-    TextCheckingProcessType m_processType;
-    Vector<uint32_t> m_markers;
-    Vector<unsigned> m_offsets;
+ private:
+  int sequence_;
+  String text_;
 };
 
-class TextCheckingRequest : public GarbageCollectedFinalized<TextCheckingRequest> {
-public:
-    virtual ~TextCheckingRequest() { }
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+class TextCheckingRequest
+    : public GarbageCollectedFinalized<TextCheckingRequest> {
+ public:
+  virtual ~TextCheckingRequest() {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
-    virtual const TextCheckingRequestData& data() const = 0;
-    virtual void didSucceed(const Vector<TextCheckingResult>&) = 0;
-    virtual void didCancel() = 0;
+  virtual const TextCheckingRequestData& Data() const = 0;
+  virtual void DidSucceed(const Vector<TextCheckingResult>&) = 0;
+  virtual void DidCancel() = 0;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TextChecking_h
+#endif  // TextChecking_h

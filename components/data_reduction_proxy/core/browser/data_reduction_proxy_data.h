@@ -9,7 +9,9 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/supports_user_data.h"
+#include "net/nqe/effective_connection_type.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -23,6 +25,7 @@ namespace data_reduction_proxy {
 class DataReductionProxyData : public base::SupportsUserData::Data {
  public:
   DataReductionProxyData();
+  ~DataReductionProxyData() override;
 
   // Whether the DataReductionProxy was used for this request or navigation.
   bool used_data_reduction_proxy() const { return used_data_reduction_proxy_; }
@@ -44,11 +47,28 @@ class DataReductionProxyData : public base::SupportsUserData::Data {
     session_key_ = session_key;
   }
 
-  // The URL of the request before redirects.
-  GURL original_request_url() const { return original_request_url_; }
-  void set_original_request_url(const GURL& original_request_url) {
-    original_request_url_ = original_request_url;
+  // The URL the frame is navigating to. This may change during the navigation
+  // when encountering a server redirect.
+  GURL request_url() const { return request_url_; }
+  void set_request_url(const GURL& request_url) { request_url_ = request_url; }
+
+  // The EffectiveConnectionType after the proxy is resolved. This is set for
+  // main frame requests only.
+  net::EffectiveConnectionType effective_connection_type() const {
+    return effective_connection_type_;
   }
+  void set_effective_connection_type(
+      const net::EffectiveConnectionType& effective_connection_type) {
+    effective_connection_type_ = effective_connection_type;
+  }
+
+  // An identifier that is guaranteed to be unique to each page load during a
+  // data saver session. Only present on main frame requests.
+  base::Optional<uint64_t> page_id() const { return page_id_; }
+  void set_page_id(uint64_t page_id) { page_id_ = page_id; }
+
+  // Removes |this| from |request|.
+  static void ClearData(net::URLRequest* request);
 
   // Returns the Data from the URLRequest's UserData.
   static DataReductionProxyData* GetData(const net::URLRequest& request);
@@ -75,8 +95,17 @@ class DataReductionProxyData : public base::SupportsUserData::Data {
   // The session key used for this request or navigation.
   std::string session_key_;
 
-  // The URL of the request before redirects.
-  GURL original_request_url_;
+  // The URL the frame is navigating to. This may change during the navigation
+  // when encountering a server redirect.
+  GURL request_url_;
+
+  // The EffectiveConnectionType when the request or navigation starts. This is
+  // set for main frame requests only.
+  net::EffectiveConnectionType effective_connection_type_;
+
+  // An identifier that is guaranteed to be unique to each page load during a
+  // data saver session. Only present on main frame requests.
+  base::Optional<uint64_t> page_id_;
 
   DISALLOW_COPY_AND_ASSIGN(DataReductionProxyData);
 };

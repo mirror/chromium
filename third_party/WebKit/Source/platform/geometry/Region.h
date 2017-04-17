@@ -28,160 +28,153 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/geometry/IntRect.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT Region {
+  DISALLOW_NEW();
+
+ public:
+  Region();
+  Region(const IntRect&);
+
+  IntRect Bounds() const { return bounds_; }
+  bool IsEmpty() const { return bounds_.IsEmpty(); }
+  bool IsRect() const { return shape_.IsRect(); }
+
+  Vector<IntRect> Rects() const;
+
+  void Unite(const Region&);
+  void Intersect(const Region&);
+  void Subtract(const Region&);
+
+  void Translate(const IntSize&);
+
+  // Returns true if the query region is a subset of this region.
+  bool Contains(const Region&) const;
+
+  bool Contains(const IntPoint&) const;
+
+  // Returns true if the query region intersects any part of this region.
+  bool Intersects(const Region&) const;
+
+#ifndef NDEBUG
+  void Dump() const;
+#endif
+
+ private:
+  struct Span {
+    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+    Span(int y, size_t segment_index) : y(y), segment_index(segment_index) {}
+
+    int y;
+    size_t segment_index;
+  };
+
+  class Shape {
     DISALLOW_NEW();
-public:
-    Region();
-    Region(const IntRect&);
 
-    IntRect bounds() const { return m_bounds; }
-    bool isEmpty() const { return m_bounds.isEmpty(); }
-    bool isRect() const { return m_shape.isRect(); }
+   public:
+    Shape();
+    Shape(const IntRect&);
+    Shape(size_t segments_capacity, size_t spans_capacity);
 
-    Vector<IntRect> rects() const;
+    IntRect Bounds() const;
+    bool IsEmpty() const { return spans_.IsEmpty(); }
+    bool IsRect() const { return spans_.size() <= 2 && segments_.size() <= 2; }
 
-    void unite(const Region&);
-    void intersect(const Region&);
-    void subtract(const Region&);
+    typedef const Span* SpanIterator;
+    SpanIterator SpansBegin() const;
+    SpanIterator SpansEnd() const;
+    size_t SpansSize() const { return spans_.size(); }
 
-    void translate(const IntSize&);
+    typedef const int* SegmentIterator;
+    SegmentIterator SegmentsBegin(SpanIterator) const;
+    SegmentIterator SegmentsEnd(SpanIterator) const;
+    size_t SegmentsSize() const { return segments_.size(); }
 
-    // Returns true if the query region is a subset of this region.
-    bool contains(const Region&) const;
+    static Shape UnionShapes(const Shape& shape1, const Shape& shape2);
+    static Shape IntersectShapes(const Shape& shape1, const Shape& shape2);
+    static Shape SubtractShapes(const Shape& shape1, const Shape& shape2);
 
-    bool contains(const IntPoint&) const;
+    void Translate(const IntSize&);
+    void Swap(Shape&);
 
-    // Returns true if the query region intersects any part of this region.
-    bool intersects(const Region&) const;
+    struct CompareContainsOperation;
+    struct CompareIntersectsOperation;
 
-#ifndef NDEBUG
-    void dump() const;
-#endif
-
-private:
-    struct Span {
-        DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-        Span(int y, size_t segmentIndex)
-            : y(y), segmentIndex(segmentIndex)
-        {
-        }
-
-        int y;
-        size_t segmentIndex;
-    };
-
-    class Shape {
-        DISALLOW_NEW();
-    public:
-        Shape();
-        Shape(const IntRect&);
-        Shape(size_t segmentsCapacity, size_t spansCapacity);
-
-        IntRect bounds() const;
-        bool isEmpty() const { return m_spans.isEmpty(); }
-        bool isRect() const { return m_spans.size() <= 2 && m_segments.size() <= 2; }
-
-        typedef const Span* SpanIterator;
-        SpanIterator spansBegin() const;
-        SpanIterator spansEnd() const;
-        size_t spansSize() const { return m_spans.size(); }
-
-        typedef const int* SegmentIterator;
-        SegmentIterator segmentsBegin(SpanIterator) const;
-        SegmentIterator segmentsEnd(SpanIterator) const;
-        size_t segmentsSize() const { return m_segments.size(); }
-
-        static Shape unionShapes(const Shape& shape1, const Shape& shape2);
-        static Shape intersectShapes(const Shape& shape1, const Shape& shape2);
-        static Shape subtractShapes(const Shape& shape1, const Shape& shape2);
-
-        void translate(const IntSize&);
-        void swap(Shape&);
-
-        struct CompareContainsOperation;
-        struct CompareIntersectsOperation;
-
-        template<typename CompareOperation>
-        static bool compareShapes(const Shape& shape1, const Shape& shape2);
-        void trimCapacities();
+    template <typename CompareOperation>
+    static bool CompareShapes(const Shape& shape1, const Shape& shape2);
+    void TrimCapacities();
 
 #ifndef NDEBUG
-        void dump() const;
+    void Dump() const;
 #endif
 
-    private:
-        struct UnionOperation;
-        struct IntersectOperation;
-        struct SubtractOperation;
+   private:
+    struct UnionOperation;
+    struct IntersectOperation;
+    struct SubtractOperation;
 
-        template<typename Operation>
-        static Shape shapeOperation(const Shape& shape1, const Shape& shape2);
+    template <typename Operation>
+    static Shape ShapeOperation(const Shape& shape1, const Shape& shape2);
 
-        void appendSegment(int x);
-        void appendSpan(int y);
-        void appendSpan(int y, SegmentIterator begin, SegmentIterator end);
-        void appendSpans(const Shape&, SpanIterator begin, SpanIterator end);
+    void AppendSegment(int x);
+    void AppendSpan(int y);
+    void AppendSpan(int y, SegmentIterator begin, SegmentIterator end);
+    void AppendSpans(const Shape&, SpanIterator begin, SpanIterator end);
 
-        bool canCoalesce(SegmentIterator begin, SegmentIterator end);
+    bool CanCoalesce(SegmentIterator begin, SegmentIterator end);
 
-        Vector<int, 32> m_segments;
-        Vector<Span, 16> m_spans;
+    Vector<int, 32> segments_;
+    Vector<Span, 16> spans_;
 
-        friend bool operator==(const Shape&, const Shape&);
-    };
-
-    IntRect m_bounds;
-    Shape m_shape;
-
-    friend bool operator==(const Region&, const Region&);
     friend bool operator==(const Shape&, const Shape&);
-    friend bool operator==(const Span&, const Span&);
+  };
+
+  IntRect bounds_;
+  Shape shape_;
+
+  friend bool operator==(const Region&, const Region&);
+  friend bool operator==(const Shape&, const Shape&);
+  friend bool operator==(const Span&, const Span&);
 };
 
-static inline Region intersect(const Region& a, const Region& b)
-{
-    Region result(a);
-    result.intersect(b);
+static inline Region Intersect(const Region& a, const Region& b) {
+  Region result(a);
+  result.Intersect(b);
 
-    return result;
+  return result;
 }
 
-static inline Region subtract(const Region& a, const Region& b)
-{
-    Region result(a);
-    result.subtract(b);
+static inline Region Subtract(const Region& a, const Region& b) {
+  Region result(a);
+  result.Subtract(b);
 
-    return result;
+  return result;
 }
 
-static inline Region translate(const Region& region, const IntSize& offset)
-{
-    Region result(region);
-    result.translate(offset);
+static inline Region Translate(const Region& region, const IntSize& offset) {
+  Region result(region);
+  result.Translate(offset);
 
-    return result;
+  return result;
 }
 
-inline bool operator==(const Region& a, const Region& b)
-{
-    return a.m_bounds == b.m_bounds && a.m_shape == b.m_shape;
+inline bool operator==(const Region& a, const Region& b) {
+  return a.bounds_ == b.bounds_ && a.shape_ == b.shape_;
 }
 
-inline bool operator==(const Region::Shape& a, const Region::Shape& b)
-{
-    return a.m_spans == b.m_spans && a.m_segments == b.m_segments;
+inline bool operator==(const Region::Shape& a, const Region::Shape& b) {
+  return a.spans_ == b.spans_ && a.segments_ == b.segments_;
 }
 
-inline bool operator==(const Region::Span& a, const Region::Span& b)
-{
-    return a.y == b.y && a.segmentIndex == b.segmentIndex;
+inline bool operator==(const Region::Span& a, const Region::Span& b) {
+  return a.y == b.y && a.segment_index == b.segment_index;
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Region_h
+#endif  // Region_h

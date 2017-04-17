@@ -5,37 +5,31 @@
 #include "core/css/CSSCustomIdentValue.h"
 
 #include "core/css/CSSMarkup.h"
-#include "wtf/text/StringBuilder.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-CSSCustomIdentValue::CSSCustomIdentValue(const String& str)
-    : CSSValue(CustomIdentClass)
-    , m_string(str)
-    , m_propertyId(CSSPropertyInvalid) { }
+CSSCustomIdentValue::CSSCustomIdentValue(const AtomicString& str)
+    : CSSValue(kCustomIdentClass),
+      string_(str),
+      property_id_(CSSPropertyInvalid) {}
 
 CSSCustomIdentValue::CSSCustomIdentValue(CSSPropertyID id)
-    : CSSValue(CustomIdentClass)
-    , m_string()
-    , m_propertyId(id)
-{
-    ASSERT(isKnownPropertyID());
+    : CSSValue(kCustomIdentClass), string_(), property_id_(id) {
+  DCHECK(IsKnownPropertyID());
 }
 
-
-String CSSCustomIdentValue::customCSSText() const
-{
-    if (isKnownPropertyID())
-        return getPropertyNameAtomicString(m_propertyId);
-    StringBuilder builder;
-    serializeIdentifier(m_string, builder);
-    return builder.toString();
+String CSSCustomIdentValue::CustomCSSText() const {
+  if (IsKnownPropertyID())
+    return getPropertyNameAtomicString(property_id_);
+  StringBuilder builder;
+  SerializeIdentifier(string_, builder);
+  return builder.ToString();
 }
 
-DEFINE_TRACE_AFTER_DISPATCH(CSSCustomIdentValue)
-{
-    CSSValue::traceAfterDispatch(visitor);
+DEFINE_TRACE_AFTER_DISPATCH(CSSCustomIdentValue) {
+  CSSValue::TraceAfterDispatch(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

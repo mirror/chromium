@@ -7,7 +7,7 @@
 #include <string>
 #include <utility>
 
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/default_tick_clock.h"
 #include "content/public/browser/notification_service.h"
@@ -98,9 +98,7 @@ SessionRestoreStatsCollector::TabLoaderStats::TabLoaderStats()
     : tab_count(0u),
       tabs_deferred(0u),
       tabs_load_started(0u),
-      tabs_loaded(0u),
-      parallel_tab_loads(0u) {
-}
+      tabs_loaded(0u) {}
 
 SessionRestoreStatsCollector::TabState::TabState(
     NavigationController* controller)
@@ -285,7 +283,7 @@ void SessionRestoreStatsCollector::Observe(
           if (tab_state.loading_state == TAB_IS_LOADED)
             loaded_tabs.push_back(tab_state.controller);
         }
-        for (auto& tab : loaded_tabs)
+        for (auto* tab : loaded_tabs)
           RemoveTab(tab);
       }
       break;
@@ -373,7 +371,7 @@ SessionRestoreStatsCollector::GetTabState(NavigationController* tab) {
 SessionRestoreStatsCollector::TabState*
 SessionRestoreStatsCollector::GetTabState(RenderWidgetHost* tab) {
   for (auto& pair : tabs_tracked_) {
-    auto rwh = GetRenderWidgetHost(pair.first);
+    auto* rwh = GetRenderWidgetHost(pair.first);
     if (rwh == tab)
       return &pair.second;
   }
@@ -397,11 +395,8 @@ void SessionRestoreStatsCollector::MarkTabAsLoading(TabState* tab_state) {
   tab_state->loading_state = TAB_IS_LOADING;
   ++loading_tab_count_;
 
-  if (!done_tracking_non_deferred_tabs_) {
+  if (!done_tracking_non_deferred_tabs_)
     ++tab_loader_stats_.tabs_load_started;
-    tab_loader_stats_.parallel_tab_loads =
-        std::max(tab_loader_stats_.parallel_tab_loads, loading_tab_count_);
-  }
 }
 
 void SessionRestoreStatsCollector::ReleaseIfDoneTracking() {
@@ -516,9 +511,6 @@ void SessionRestoreStatsCollector::UmaStatsReportingDelegate::
         base::Histogram::kUmaTargetedHistogramFlag);
     counter_for_count->AddTime(tab_loader_stats.non_deferred_tabs_loaded);
   }
-
-  UMA_HISTOGRAM_COUNTS_100("SessionRestore.ParallelTabLoads",
-                           tab_loader_stats.parallel_tab_loads);
 }
 
 void SessionRestoreStatsCollector::UmaStatsReportingDelegate::

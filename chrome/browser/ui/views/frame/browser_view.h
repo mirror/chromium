@@ -23,7 +23,6 @@
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_context.h"
 #include "chrome/browser/ui/infobar_container_delegate.h"
-#include "chrome/browser/ui/signin_view_controller.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "chrome/browser/ui/views/exclusive_access_bubble_views_context.h"
 #include "chrome/browser/ui/views/extensions/extension_keybinding_registry_views.h"
@@ -32,6 +31,8 @@
 #include "chrome/browser/ui/views/frame/immersive_mode_controller.h"
 #include "chrome/browser/ui/views/frame/web_contents_close_handler.h"
 #include "chrome/browser/ui/views/load_complete_listener.h"
+#include "chrome/browser/ui/views/tabs/tab.h"
+#include "chrome/browser/ui/views/tabs/tab_renderer_data.h"
 #include "chrome/common/features.h"
 #include "components/omnibox/browser/omnibox_popup_model_observer.h"
 #include "ui/base/accelerators/accelerator.h"
@@ -202,6 +203,10 @@ class BrowserView : public BrowserWindow,
   // not incognito or a guest session.
   bool IsRegularOrGuestSession() const;
 
+  // Returns whether or not a client edge (the border around the web content)
+  // should be laid out and drawn.
+  bool HasClientEdge() const;
+
   // Provides the containing frame with the accelerator for the specified
   // command id. This can be used to provide menu item shortcut hints etc.
   // Returns true if an accelerator was found for the specified |cmd_id|, false
@@ -306,7 +311,7 @@ class BrowserView : public BrowserWindow,
   bool IsBookmarkBarAnimating() const override;
   bool IsTabStripEditable() const override;
   bool IsToolbarVisible() const override;
-  gfx::Rect GetRootWindowResizerRect() const override;
+  bool IsToolbarShowing() const override;
   void ShowUpdateChromeDialog() override;
   void ShowBookmarkBubble(const GURL& url, bool already_bookmarked) override;
   void ShowBookmarkAppBubble(
@@ -316,10 +321,11 @@ class BrowserView : public BrowserWindow,
       content::WebContents* contents,
       autofill::SaveCardBubbleController* controller,
       bool is_user_gesture) override;
-  void ShowTranslateBubble(content::WebContents* contents,
-                           translate::TranslateStep step,
-                           translate::TranslateErrors::Type error_type,
-                           bool is_user_gesture) override;
+  ShowTranslateBubbleResult ShowTranslateBubble(
+      content::WebContents* contents,
+      translate::TranslateStep step,
+      translate::TranslateErrors::Type error_type,
+      bool is_user_gesture) override;
 #if BUILDFLAG(ENABLE_ONE_CLICK_SIGNIN)
   void ShowOneClickSigninConfirmation(
       const base::string16& email,
@@ -335,15 +341,13 @@ class BrowserView : public BrowserWindow,
       bool app_modal,
       const base::Callback<void(bool)>& callback) override;
   void UserChangedTheme() override;
-  void ShowWebsiteSettings(
-      Profile* profile,
-      content::WebContents* web_contents,
-      const GURL& virtual_url,
-      const security_state::SecurityStateModel::SecurityInfo& security_info)
-      override;
+  void ShowPageInfo(Profile* profile,
+                    content::WebContents* web_contents,
+                    const GURL& virtual_url,
+                    const security_state::SecurityInfo& security_info) override;
   void ShowAppMenu() override;
-  bool PreHandleKeyboardEvent(const content::NativeWebKeyboardEvent& event,
-                              bool* is_keyboard_shortcut) override;
+  content::KeyboardEventProcessingResult PreHandleKeyboardEvent(
+      const content::NativeWebKeyboardEvent& event) override;
   void HandleKeyboardEvent(
       const content::NativeWebKeyboardEvent& event) override;
   void CutCopyPaste(int command_id) override;
@@ -355,7 +359,8 @@ class BrowserView : public BrowserWindow,
   void ShowAvatarBubbleFromAvatarButton(
       AvatarBubbleMode mode,
       const signin::ManageAccountsParams& manage_accounts_params,
-      signin_metrics::AccessPoint access_point) override;
+      signin_metrics::AccessPoint access_point,
+      bool is_source_keyboard) override;
   int GetRenderViewHeightInsetWithDetachedBookmarkBar() override;
   void ExecuteExtensionCommand(const extensions::Extension* extension,
                                const extensions::Command& command) override;
@@ -370,10 +375,10 @@ class BrowserView : public BrowserWindow,
   BookmarkBarView* GetBookmarkBarView() const;
   LocationBarView* GetLocationBarView() const;
   views::View* GetTabContentsContainerView() const;
-  ToolbarView* GetToolbarView() const;
 
   // Overridden from TabStripModelObserver:
-  void TabInsertedAt(content::WebContents* contents,
+  void TabInsertedAt(TabStripModel* tab_strip_model,
+                     content::WebContents* contents,
                      int index,
                      bool foreground) override;
   void TabDetachedAt(content::WebContents* contents, int index) override;
@@ -430,12 +435,12 @@ class BrowserView : public BrowserWindow,
   // Overridden from views::View:
   const char* GetClassName() const override;
   void Layout() override;
+  void OnGestureEvent(ui::GestureEvent* event) override;
   void ViewHierarchyChanged(
       const ViewHierarchyChangedDetails& details) override;
   void ChildPreferredSizeChanged(View* child) override;
-  void GetAccessibleState(ui::AXViewState* state) override;
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   void OnThemeChanged() override;
-  void OnNativeThemeChanged(const ui::NativeTheme* theme) override;
 
   // Overridden from ui::AcceleratorTarget:
   bool AcceleratorPressed(const ui::Accelerator& accelerator) override;
@@ -463,10 +468,18 @@ class BrowserView : public BrowserWindow,
   extensions::ActiveTabPermissionGranter* GetActiveTabPermissionGranter()
       override;
 
+  // Creates an accessible tab label for screen readers that includes the tab
+  // status for the given tab index. This takes the form of
+  // "Page title - Tab state".
+  base::string16 GetAccessibleTabLabel(bool include_app_name, int index) const;
+
   // Testing interface:
   views::View* GetContentsContainerForTest() { return contents_container_; }
   views::WebView* GetContentsWebViewForTest() { return contents_web_view_; }
   views::WebView* GetDevToolsWebViewForTest() { return devtools_web_view_; }
+
+  // Called by BrowserFrame during theme changes.
+  void NativeThemeUpdated(const ui::NativeTheme* theme);
 
  private:
   // Do not friend BrowserViewLayout. Use the BrowserViewLayoutDelegate
@@ -528,8 +541,9 @@ class BrowserView : public BrowserWindow,
 
   // Invoked to update the necessary things when our fullscreen state changes
   // to |fullscreen|. On Windows this is invoked immediately when we toggle the
-  // full screen state. On Linux changing the fullscreen state is async, so we
-  // ask the window to change its fullscreen state, then when we get
+  // full screen node_data. On Linux changing the fullscreen node_data is async,
+  // so we
+  // ask the window to change its fullscreen node_data, then when we get
   // notification that it succeeded this method is invoked.
   // If |url| is not empty, it is the URL of the page that requested fullscreen
   // (via the fullscreen JS API).
@@ -653,7 +667,7 @@ class BrowserView : public BrowserWindow,
   // The Status information bubble that appears at the bottom of the window.
   std::unique_ptr<StatusBubbleViews> status_bubble_;
 
-  // A mapping between accelerators and commands.
+  // A mapping between accelerators and command IDs.
   std::map<ui::Accelerator, int> accelerator_table_;
 
   // True if we have already been initialized.
@@ -693,8 +707,6 @@ class BrowserView : public BrowserWindow,
   std::unique_ptr<ImmersiveModeController> immersive_mode_controller_;
 
   std::unique_ptr<WebContentsCloseHandler> web_contents_close_handler_;
-
-  SigninViewController signin_view_controller_;
 
   // The class that registers for keyboard shortcuts for extension commands.
   std::unique_ptr<ExtensionKeybindingRegistryViews>

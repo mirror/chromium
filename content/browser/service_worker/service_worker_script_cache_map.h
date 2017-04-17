@@ -37,7 +37,7 @@ class CONTENT_EXPORT ServiceWorkerScriptCacheMap {
   void NotifyStartedCaching(const GURL& url, int64_t resource_id);
   void NotifyFinishedCaching(const GURL& url,
                              int64_t size_bytes,
-                             const net::URLRequestStatus& status,
+                             net::Error net_error,
                              const std::string& status_message);
 
   // Used to retrieve the results of the initial run of a new version.
@@ -70,6 +70,10 @@ class CONTENT_EXPORT ServiceWorkerScriptCacheMap {
 
   // The version objects owns its script cache and provides a rawptr to it.
   friend class ServiceWorkerVersion;
+  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerVersionBrowserTest,
+                           ReadResourceFailure_WaitingWorker);
+  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerReadFromCacheJobTest, ResourceNotFound);
+
   ServiceWorkerScriptCacheMap(
       ServiceWorkerVersion* owner,
       base::WeakPtr<ServiceWorkerContextCore> context);

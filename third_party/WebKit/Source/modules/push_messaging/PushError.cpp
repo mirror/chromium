@@ -6,28 +6,31 @@
 
 #include "core/dom/DOMException.h"
 #include "core/dom/ExceptionCode.h"
-#include "wtf/Assertions.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
-DOMException* PushError::take(ScriptPromiseResolver*, const WebPushError& webError)
-{
-    switch (webError.errorType) {
-    case WebPushError::ErrorTypeAbort:
-        return DOMException::create(AbortError, webError.message);
-    case WebPushError::ErrorTypeNetwork:
-        return DOMException::create(NetworkError, webError.message);
-    case WebPushError::ErrorTypeNotFound:
-        return DOMException::create(NotFoundError, webError.message);
-    case WebPushError::ErrorTypeNotSupported:
-        return DOMException::create(NotSupportedError, webError.message);
-    case WebPushError::ErrorTypePermissionDenied:
-        return DOMException::create(PermissionDeniedError, webError.message);
-    case WebPushError::ErrorTypeUnknown:
-        return DOMException::create(UnknownError, webError.message);
-    }
-    NOTREACHED();
-    return DOMException::create(UnknownError);
+DOMException* PushError::Take(ScriptPromiseResolver*,
+                              const WebPushError& web_error) {
+  switch (web_error.error_type) {
+    case WebPushError::kErrorTypeAbort:
+      return DOMException::Create(kAbortError, web_error.message);
+    case WebPushError::kErrorTypeInvalidState:
+      return DOMException::Create(kInvalidStateError, web_error.message);
+    case WebPushError::kErrorTypeNetwork:
+      return DOMException::Create(kNetworkError, web_error.message);
+    case WebPushError::kErrorTypeNone:
+      NOTREACHED();
+      return DOMException::Create(kUnknownError, web_error.message);
+    case WebPushError::kErrorTypeNotAllowed:
+      return DOMException::Create(kNotAllowedError, web_error.message);
+    case WebPushError::kErrorTypeNotFound:
+      return DOMException::Create(kNotFoundError, web_error.message);
+    case WebPushError::kErrorTypeNotSupported:
+      return DOMException::Create(kNotSupportedError, web_error.message);
+  }
+  NOTREACHED();
+  return DOMException::Create(kUnknownError);
 }
 
-} // namespace blink
+}  // namespace blink

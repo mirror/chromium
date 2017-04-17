@@ -29,18 +29,50 @@ const char kRecommendIdentifier[] = "recommend_identifier";
 const char kRequireIdentifier[] = "require_identifier";
 const char kUnsupported[] = "unsupported";
 
-// TODO(sandersd): Audio and video variants (doesn't matter for now because the
-// checks are in KeySystems).
-const char kSupportedContainer[] = "video/webm";
+const char kSupportedVideoContainer[] = "video/webm";
+const char kSupportedAudioContainer[] = "audio/webm";
 const char kUnsupportedContainer[] = "video/foo";
 
 // TODO(sandersd): Extended codec variants (requires proprietary codec support).
-const char kSupportedCodec[] = "vp8";
+const char kSupportedVideoCodec[] = "vp8";
+const char kSupportedAudioCodec[] = "opus";
 const char kUnsupportedCodec[] = "foo";
 const char kUnsupportedCodecs[] = "vp8,foo";
-const char kSupportedCodecs[] = "vp8,vp8";
+const char kSupportedVideoCodecs[] = "vp8,vp8";
 
 const char kDefaultSecurityOrigin[] = "https://example.com/";
+
+// The IDL for MediaKeySystemConfiguration specifies some defaults, so
+// create a config object that mimics what would be created if an empty
+// dictionary was passed in.
+blink::WebMediaKeySystemConfiguration EmptyConfiguration() {
+  // http://w3c.github.io/encrypted-media/#mediakeysystemconfiguration-dictionary
+  // If this member (sessionTypes) is not present when the dictionary
+  // is passed to requestMediaKeySystemAccess(), the dictionary will
+  // be treated as if this member is set to [ "temporary" ].
+  std::vector<blink::WebEncryptedMediaSessionType> session_types;
+  session_types.push_back(blink::WebEncryptedMediaSessionType::kTemporary);
+
+  blink::WebMediaKeySystemConfiguration config;
+  config.label = "";
+  config.session_types = session_types;
+  return config;
+}
+
+// EME spec requires that at least one of |video_capabilities| and
+// |audio_capabilities| be specified. Add a single valid audio capability
+// to the EmptyConfiguration().
+blink::WebMediaKeySystemConfiguration UsableConfiguration() {
+  // Blink code parses the contentType into mimeType and codecs, so mimic
+  // that here.
+  std::vector<blink::WebMediaKeySystemMediaCapability> audio_capabilities(1);
+  audio_capabilities[0].mime_type = kSupportedAudioContainer;
+  audio_capabilities[0].codecs = kSupportedAudioCodec;
+
+  blink::WebMediaKeySystemConfiguration config = EmptyConfiguration();
+  config.audio_capabilities = audio_capabilities;
+  return config;
+}
 
 class FakeKeySystems : public KeySystems {
  public:
@@ -78,11 +110,25 @@ class FakeKeySystems : public KeySystems {
       const std::vector<std::string>& codecs) const override {
     if (container_mime_type == kUnsupportedContainer)
       return EmeConfigRule::NOT_SUPPORTED;
-    DCHECK_EQ(kSupportedContainer, container_mime_type);
+    switch (media_type) {
+      case EmeMediaType::AUDIO:
+        DCHECK_EQ(kSupportedAudioContainer, container_mime_type);
+        break;
+      case EmeMediaType::VIDEO:
+        DCHECK_EQ(kSupportedVideoContainer, container_mime_type);
+        break;
+    }
     for (const std::string& codec : codecs) {
       if (codec == kUnsupportedCodec)
         return EmeConfigRule::NOT_SUPPORTED;
-      DCHECK_EQ(kSupportedCodec, codec);
+      switch (media_type) {
+        case EmeMediaType::AUDIO:
+          DCHECK_EQ(kSupportedAudioCodec, codec);
+          break;
+        case EmeMediaType::VIDEO:
+          DCHECK_EQ(kSupportedVideoCodec, codec);
+          break;
+      }
     }
     return EmeConfigRule::SUPPORTED;
   }
@@ -91,6 +137,8 @@ class FakeKeySystems : public KeySystems {
       const std::string& key_system,
       EmeMediaType media_type,
       const std::string& requested_robustness) const override {
+    if (requested_robustness.empty())
+      return EmeConfigRule::SUPPORTED;
     if (requested_robustness == kUnsupported)
       return EmeConfigRule::NOT_SUPPORTED;
     if (requested_robustness == kRequireIdentifier)
@@ -224,10 +272,10 @@ class KeySystemConfigSelectorTest : public testing::Test {
   std::unique_ptr<FakeMediaPermission> media_permission_;
 
   // Held values for the call to SelectConfig().
-  blink::WebString key_system_ = blink::WebString::fromUTF8(kSupported);
+  blink::WebString key_system_ = blink::WebString::FromUTF8(kSupported);
   std::vector<blink::WebMediaKeySystemConfiguration> configs_;
   blink::WebSecurityOrigin security_origin_ =
-      blink::WebSecurityOrigin::createFromString(kDefaultSecurityOrigin);
+      blink::WebSecurityOrigin::CreateFromString(kDefaultSecurityOrigin);
 
   // Holds the last successful accumulated configuration.
   blink::WebMediaKeySystemConfiguration config_;
@@ -244,26 +292,67 @@ TEST_F(KeySystemConfigSelectorTest, NoConfigs) {
   ASSERT_TRUE(SelectConfigReturnsError());
 }
 
-// Most of the tests below assume that an empty config is valid.
+TEST_F(KeySystemConfigSelectorTest, DefaultConfig) {
+  blink::WebMediaKeySystemConfiguration config = EmptyConfiguration();
+
+  // label = "";
+  ASSERT_EQ("", config.label);
+
+  // initDataTypes = [];
+  ASSERT_EQ(0u, config.init_data_types.size());
+
+  // audioCapabilities = [];
+  ASSERT_EQ(0u, config.audio_capabilities.size());
+
+  // videoCapabilities = [];
+  ASSERT_EQ(0u, config.video_capabilities.size());
+
+  // distinctiveIdentifier = "optional";
+  ASSERT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::kOptional,
+            config.distinctive_identifier);
+
+  // persistentState = "optional";
+  ASSERT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::kOptional,
+            config.persistent_state);
+
+  // If this member is not present when the dictionary is passed to
+  // requestMediaKeySystemAccess(), the dictionary will be treated as
+  // if this member is set to [ "temporary" ].
+  ASSERT_EQ(1u, config.session_types.size());
+  ASSERT_EQ(blink::WebEncryptedMediaSessionType::kTemporary,
+            config.session_types[0]);
+}
+
 TEST_F(KeySystemConfigSelectorTest, EmptyConfig) {
-  configs_.push_back(blink::WebMediaKeySystemConfiguration());
+  // EME spec requires that at least one of |video_capabilities| and
+  // |audio_capabilities| be specified.
+  configs_.push_back(EmptyConfiguration());
+  ASSERT_TRUE(SelectConfigReturnsError());
+}
+
+// Most of the tests below assume that the the usable config is valid.
+// Tests that touch |video_capabilities| and/or |audio_capabilities| can
+// modify the empty config.
+
+TEST_F(KeySystemConfigSelectorTest, UsableConfig) {
+  configs_.push_back(UsableConfiguration());
 
   ASSERT_TRUE(SelectConfigReturnsConfig());
-  EXPECT_TRUE(config_.label.isNull());
-  EXPECT_TRUE(config_.initDataTypes.isEmpty());
-  EXPECT_TRUE(config_.audioCapabilities.isEmpty());
-  EXPECT_TRUE(config_.videoCapabilities.isEmpty());
-  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::NotAllowed,
-            config_.distinctiveIdentifier);
-  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::NotAllowed,
-            config_.persistentState);
-  ASSERT_EQ(1u, config_.sessionTypes.size());
-  EXPECT_EQ(blink::WebEncryptedMediaSessionType::Temporary,
-            config_.sessionTypes[0]);
+  EXPECT_EQ("", config_.label);
+  EXPECT_TRUE(config_.init_data_types.IsEmpty());
+  EXPECT_EQ(1u, config_.audio_capabilities.size());
+  EXPECT_TRUE(config_.video_capabilities.IsEmpty());
+  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::kNotAllowed,
+            config_.distinctive_identifier);
+  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::kNotAllowed,
+            config_.persistent_state);
+  ASSERT_EQ(1u, config_.session_types.size());
+  EXPECT_EQ(blink::WebEncryptedMediaSessionType::kTemporary,
+            config_.session_types[0]);
 }
 
 TEST_F(KeySystemConfigSelectorTest, Label) {
-  blink::WebMediaKeySystemConfiguration config;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
   config.label = "foo";
   configs_.push_back(config);
 
@@ -276,36 +365,34 @@ TEST_F(KeySystemConfigSelectorTest, Label) {
 
 TEST_F(KeySystemConfigSelectorTest, KeySystem_NonAscii) {
   key_system_ = "\xde\xad\xbe\xef";
-  configs_.push_back(blink::WebMediaKeySystemConfiguration());
+  configs_.push_back(UsableConfiguration());
   ASSERT_TRUE(SelectConfigReturnsError());
 }
 
 TEST_F(KeySystemConfigSelectorTest, KeySystem_Unsupported) {
   key_system_ = kUnsupported;
-  configs_.push_back(blink::WebMediaKeySystemConfiguration());
+  configs_.push_back(UsableConfiguration());
   ASSERT_TRUE(SelectConfigReturnsError());
 }
 
 // --- initDataTypes ---
 
 TEST_F(KeySystemConfigSelectorTest, InitDataTypes_Empty) {
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasInitDataTypes = true;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
   configs_.push_back(config);
 
-  ASSERT_TRUE(SelectConfigReturnsError());
+  ASSERT_TRUE(SelectConfigReturnsConfig());
 }
 
 TEST_F(KeySystemConfigSelectorTest, InitDataTypes_NoneSupported) {
   key_systems_->init_data_type_webm_supported_ = true;
 
   std::vector<blink::WebEncryptedMediaInitDataType> init_data_types;
-  init_data_types.push_back(blink::WebEncryptedMediaInitDataType::Unknown);
-  init_data_types.push_back(blink::WebEncryptedMediaInitDataType::Cenc);
+  init_data_types.push_back(blink::WebEncryptedMediaInitDataType::kUnknown);
+  init_data_types.push_back(blink::WebEncryptedMediaInitDataType::kCenc);
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasInitDataTypes = true;
-  config.initDataTypes = init_data_types;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
+  config.init_data_types = init_data_types;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsError());
@@ -315,19 +402,18 @@ TEST_F(KeySystemConfigSelectorTest, InitDataTypes_SubsetSupported) {
   key_systems_->init_data_type_webm_supported_ = true;
 
   std::vector<blink::WebEncryptedMediaInitDataType> init_data_types;
-  init_data_types.push_back(blink::WebEncryptedMediaInitDataType::Unknown);
-  init_data_types.push_back(blink::WebEncryptedMediaInitDataType::Cenc);
-  init_data_types.push_back(blink::WebEncryptedMediaInitDataType::Webm);
+  init_data_types.push_back(blink::WebEncryptedMediaInitDataType::kUnknown);
+  init_data_types.push_back(blink::WebEncryptedMediaInitDataType::kCenc);
+  init_data_types.push_back(blink::WebEncryptedMediaInitDataType::kWebm);
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasInitDataTypes = true;
-  config.initDataTypes = init_data_types;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
+  config.init_data_types = init_data_types;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsConfig());
-  ASSERT_EQ(1u, config_.initDataTypes.size());
-  EXPECT_EQ(blink::WebEncryptedMediaInitDataType::Webm,
-            config_.initDataTypes[0]);
+  ASSERT_EQ(1u, config_.init_data_types.size());
+  EXPECT_EQ(blink::WebEncryptedMediaInitDataType::kWebm,
+            config_.init_data_types[0]);
 }
 
 // --- distinctiveIdentifier ---
@@ -335,36 +421,36 @@ TEST_F(KeySystemConfigSelectorTest, InitDataTypes_SubsetSupported) {
 TEST_F(KeySystemConfigSelectorTest, DistinctiveIdentifier_Default) {
   key_systems_->distinctive_identifier = EmeFeatureSupport::REQUESTABLE;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.distinctiveIdentifier =
-      blink::WebMediaKeySystemConfiguration::Requirement::Optional;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
+  config.distinctive_identifier =
+      blink::WebMediaKeySystemConfiguration::Requirement::kOptional;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsConfig());
-  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::NotAllowed,
-            config_.distinctiveIdentifier);
+  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::kNotAllowed,
+            config_.distinctive_identifier);
 }
 
 TEST_F(KeySystemConfigSelectorTest, DistinctiveIdentifier_Forced) {
   media_permission_->is_granted = true;
   key_systems_->distinctive_identifier = EmeFeatureSupport::ALWAYS_ENABLED;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.distinctiveIdentifier =
-      blink::WebMediaKeySystemConfiguration::Requirement::Optional;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
+  config.distinctive_identifier =
+      blink::WebMediaKeySystemConfiguration::Requirement::kOptional;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigRequestsPermissionAndReturnsConfig());
-  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::Required,
-            config_.distinctiveIdentifier);
+  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::kRequired,
+            config_.distinctive_identifier);
 }
 
 TEST_F(KeySystemConfigSelectorTest, DistinctiveIdentifier_Blocked) {
   key_systems_->distinctive_identifier = EmeFeatureSupport::NOT_SUPPORTED;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.distinctiveIdentifier =
-      blink::WebMediaKeySystemConfiguration::Requirement::Required;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
+  config.distinctive_identifier =
+      blink::WebMediaKeySystemConfiguration::Requirement::kRequired;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsError());
@@ -374,23 +460,23 @@ TEST_F(KeySystemConfigSelectorTest, DistinctiveIdentifier_RequestsPermission) {
   media_permission_->is_granted = true;
   key_systems_->distinctive_identifier = EmeFeatureSupport::REQUESTABLE;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.distinctiveIdentifier =
-      blink::WebMediaKeySystemConfiguration::Requirement::Required;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
+  config.distinctive_identifier =
+      blink::WebMediaKeySystemConfiguration::Requirement::kRequired;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigRequestsPermissionAndReturnsConfig());
-  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::Required,
-            config_.distinctiveIdentifier);
+  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::kRequired,
+            config_.distinctive_identifier);
 }
 
 TEST_F(KeySystemConfigSelectorTest, DistinctiveIdentifier_RespectsPermission) {
   media_permission_->is_granted = false;
   key_systems_->distinctive_identifier = EmeFeatureSupport::REQUESTABLE;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.distinctiveIdentifier =
-      blink::WebMediaKeySystemConfiguration::Requirement::Required;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
+  config.distinctive_identifier =
+      blink::WebMediaKeySystemConfiguration::Requirement::kRequired;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigRequestsPermissionAndReturnsError());
@@ -401,35 +487,35 @@ TEST_F(KeySystemConfigSelectorTest, DistinctiveIdentifier_RespectsPermission) {
 TEST_F(KeySystemConfigSelectorTest, PersistentState_Default) {
   key_systems_->persistent_state = EmeFeatureSupport::REQUESTABLE;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.persistentState =
-      blink::WebMediaKeySystemConfiguration::Requirement::Optional;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
+  config.persistent_state =
+      blink::WebMediaKeySystemConfiguration::Requirement::kOptional;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsConfig());
-  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::NotAllowed,
-            config_.persistentState);
+  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::kNotAllowed,
+            config_.persistent_state);
 }
 
 TEST_F(KeySystemConfigSelectorTest, PersistentState_Forced) {
   key_systems_->persistent_state = EmeFeatureSupport::ALWAYS_ENABLED;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.persistentState =
-      blink::WebMediaKeySystemConfiguration::Requirement::Optional;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
+  config.persistent_state =
+      blink::WebMediaKeySystemConfiguration::Requirement::kOptional;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsConfig());
-  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::Required,
-            config_.persistentState);
+  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::kRequired,
+            config_.persistent_state);
 }
 
 TEST_F(KeySystemConfigSelectorTest, PersistentState_Blocked) {
   key_systems_->persistent_state = EmeFeatureSupport::ALWAYS_ENABLED;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.persistentState =
-      blink::WebMediaKeySystemConfiguration::Requirement::NotAllowed;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
+  config.persistent_state =
+      blink::WebMediaKeySystemConfiguration::Requirement::kNotAllowed;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsError());
@@ -438,12 +524,16 @@ TEST_F(KeySystemConfigSelectorTest, PersistentState_Blocked) {
 // --- sessionTypes ---
 
 TEST_F(KeySystemConfigSelectorTest, SessionTypes_Empty) {
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasSessionTypes = true;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
+
+  // Usable configuration has [ "temporary" ].
+  std::vector<blink::WebEncryptedMediaSessionType> session_types;
+  config.session_types = session_types;
+
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsConfig());
-  EXPECT_TRUE(config_.sessionTypes.isEmpty());
+  EXPECT_TRUE(config_.session_types.IsEmpty());
 }
 
 TEST_F(KeySystemConfigSelectorTest, SessionTypes_SubsetSupported) {
@@ -452,13 +542,12 @@ TEST_F(KeySystemConfigSelectorTest, SessionTypes_SubsetSupported) {
   key_systems_->persistent_license = EmeSessionTypeSupport::NOT_SUPPORTED;
 
   std::vector<blink::WebEncryptedMediaSessionType> session_types;
-  session_types.push_back(blink::WebEncryptedMediaSessionType::Temporary);
+  session_types.push_back(blink::WebEncryptedMediaSessionType::kTemporary);
   session_types.push_back(
-      blink::WebEncryptedMediaSessionType::PersistentLicense);
+      blink::WebEncryptedMediaSessionType::kPersistentLicense);
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasSessionTypes = true;
-  config.sessionTypes = session_types;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
+  config.session_types = session_types;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsError());
@@ -470,25 +559,24 @@ TEST_F(KeySystemConfigSelectorTest, SessionTypes_AllSupported) {
   key_systems_->persistent_license = EmeSessionTypeSupport::SUPPORTED;
 
   std::vector<blink::WebEncryptedMediaSessionType> session_types;
-  session_types.push_back(blink::WebEncryptedMediaSessionType::Temporary);
+  session_types.push_back(blink::WebEncryptedMediaSessionType::kTemporary);
   session_types.push_back(
-      blink::WebEncryptedMediaSessionType::PersistentLicense);
+      blink::WebEncryptedMediaSessionType::kPersistentLicense);
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.persistentState =
-      blink::WebMediaKeySystemConfiguration::Requirement::Optional;
-  config.hasSessionTypes = true;
-  config.sessionTypes = session_types;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
+  config.persistent_state =
+      blink::WebMediaKeySystemConfiguration::Requirement::kOptional;
+  config.session_types = session_types;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsConfig());
-  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::Required,
-            config_.persistentState);
-  ASSERT_EQ(2u, config_.sessionTypes.size());
-  EXPECT_EQ(blink::WebEncryptedMediaSessionType::Temporary,
-            config_.sessionTypes[0]);
-  EXPECT_EQ(blink::WebEncryptedMediaSessionType::PersistentLicense,
-            config_.sessionTypes[1]);
+  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::kRequired,
+            config_.persistent_state);
+  ASSERT_EQ(2u, config_.session_types.size());
+  EXPECT_EQ(blink::WebEncryptedMediaSessionType::kTemporary,
+            config_.session_types[0]);
+  EXPECT_EQ(blink::WebEncryptedMediaSessionType::kPersistentLicense,
+            config_.session_types[1]);
 }
 
 TEST_F(KeySystemConfigSelectorTest, SessionTypes_PermissionCanBeRequired) {
@@ -500,43 +588,40 @@ TEST_F(KeySystemConfigSelectorTest, SessionTypes_PermissionCanBeRequired) {
 
   std::vector<blink::WebEncryptedMediaSessionType> session_types;
   session_types.push_back(
-      blink::WebEncryptedMediaSessionType::PersistentLicense);
+      blink::WebEncryptedMediaSessionType::kPersistentLicense);
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.distinctiveIdentifier =
-      blink::WebMediaKeySystemConfiguration::Requirement::Optional;
-  config.persistentState =
-      blink::WebMediaKeySystemConfiguration::Requirement::Optional;
-  config.hasSessionTypes = true;
-  config.sessionTypes = session_types;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
+  config.distinctive_identifier =
+      blink::WebMediaKeySystemConfiguration::Requirement::kOptional;
+  config.persistent_state =
+      blink::WebMediaKeySystemConfiguration::Requirement::kOptional;
+  config.session_types = session_types;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigRequestsPermissionAndReturnsConfig());
-  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::Required,
-            config_.distinctiveIdentifier);
+  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::kRequired,
+            config_.distinctive_identifier);
 }
 
 // --- videoCapabilities ---
 
 TEST_F(KeySystemConfigSelectorTest, VideoCapabilities_Empty) {
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasVideoCapabilities = true;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
   configs_.push_back(config);
 
-  ASSERT_TRUE(SelectConfigReturnsError());
+  ASSERT_TRUE(SelectConfigReturnsConfig());
 }
 
 TEST_F(KeySystemConfigSelectorTest, VideoCapabilities_NoneSupported) {
   std::vector<blink::WebMediaKeySystemMediaCapability> video_capabilities(2);
-  video_capabilities[0].contentType = "a";
-  video_capabilities[0].mimeType = kUnsupportedContainer;
-  video_capabilities[1].contentType = "b";
-  video_capabilities[1].mimeType = kSupportedContainer;
+  video_capabilities[0].content_type = "a";
+  video_capabilities[0].mime_type = kUnsupportedContainer;
+  video_capabilities[1].content_type = "b";
+  video_capabilities[1].mime_type = kSupportedVideoContainer;
   video_capabilities[1].codecs = kUnsupportedCodec;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasVideoCapabilities = true;
-  config.videoCapabilities = video_capabilities;
+  blink::WebMediaKeySystemConfiguration config = EmptyConfiguration();
+  config.video_capabilities = video_capabilities;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsError());
@@ -544,51 +629,50 @@ TEST_F(KeySystemConfigSelectorTest, VideoCapabilities_NoneSupported) {
 
 TEST_F(KeySystemConfigSelectorTest, VideoCapabilities_SubsetSupported) {
   std::vector<blink::WebMediaKeySystemMediaCapability> video_capabilities(2);
-  video_capabilities[0].contentType = "a";
-  video_capabilities[0].mimeType = kUnsupportedContainer;
-  video_capabilities[1].contentType = "b";
-  video_capabilities[1].mimeType = kSupportedContainer;
+  video_capabilities[0].content_type = "a";
+  video_capabilities[0].mime_type = kUnsupportedContainer;
+  video_capabilities[1].content_type = "b";
+  video_capabilities[1].mime_type = kSupportedVideoContainer;
+  video_capabilities[1].codecs = kSupportedVideoCodec;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasVideoCapabilities = true;
-  config.videoCapabilities = video_capabilities;
+  blink::WebMediaKeySystemConfiguration config = EmptyConfiguration();
+  config.video_capabilities = video_capabilities;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsConfig());
-  ASSERT_EQ(1u, config_.videoCapabilities.size());
-  EXPECT_EQ("b", config_.videoCapabilities[0].contentType);
-  EXPECT_EQ(kSupportedContainer, config_.videoCapabilities[0].mimeType);
+  ASSERT_EQ(1u, config_.video_capabilities.size());
+  EXPECT_EQ("b", config_.video_capabilities[0].content_type);
+  EXPECT_EQ(kSupportedVideoContainer, config_.video_capabilities[0].mime_type);
 }
 
 TEST_F(KeySystemConfigSelectorTest, VideoCapabilities_AllSupported) {
   std::vector<blink::WebMediaKeySystemMediaCapability> video_capabilities(2);
-  video_capabilities[0].contentType = "a";
-  video_capabilities[0].mimeType = kSupportedContainer;
-  video_capabilities[1].contentType = "b";
-  video_capabilities[1].mimeType = kSupportedContainer;
-  video_capabilities[1].codecs = kSupportedCodecs;
+  video_capabilities[0].content_type = "a";
+  video_capabilities[0].mime_type = kSupportedVideoContainer;
+  video_capabilities[0].codecs = kSupportedVideoCodecs;
+  video_capabilities[1].content_type = "b";
+  video_capabilities[1].mime_type = kSupportedVideoContainer;
+  video_capabilities[1].codecs = kSupportedVideoCodecs;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasVideoCapabilities = true;
-  config.videoCapabilities = video_capabilities;
+  blink::WebMediaKeySystemConfiguration config = EmptyConfiguration();
+  config.video_capabilities = video_capabilities;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsConfig());
-  ASSERT_EQ(2u, config_.videoCapabilities.size());
-  EXPECT_EQ("a", config_.videoCapabilities[0].contentType);
-  EXPECT_EQ("b", config_.videoCapabilities[1].contentType);
+  ASSERT_EQ(2u, config_.video_capabilities.size());
+  EXPECT_EQ("a", config_.video_capabilities[0].content_type);
+  EXPECT_EQ("b", config_.video_capabilities[1].content_type);
 }
 
 TEST_F(KeySystemConfigSelectorTest,
        VideoCapabilities_Codecs_SubsetSupported) {
   std::vector<blink::WebMediaKeySystemMediaCapability> video_capabilities(1);
-  video_capabilities[0].contentType = "a";
-  video_capabilities[0].mimeType = kSupportedContainer;
+  video_capabilities[0].content_type = "a";
+  video_capabilities[0].mime_type = kSupportedVideoContainer;
   video_capabilities[0].codecs = kUnsupportedCodecs;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasVideoCapabilities = true;
-  config.videoCapabilities = video_capabilities;
+  blink::WebMediaKeySystemConfiguration config = EmptyConfiguration();
+  config.video_capabilities = video_capabilities;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsError());
@@ -596,45 +680,72 @@ TEST_F(KeySystemConfigSelectorTest,
 
 TEST_F(KeySystemConfigSelectorTest, VideoCapabilities_Codecs_AllSupported) {
   std::vector<blink::WebMediaKeySystemMediaCapability> video_capabilities(1);
-  video_capabilities[0].contentType = "a";
-  video_capabilities[0].mimeType = kSupportedContainer;
-  video_capabilities[0].codecs = kSupportedCodecs;
+  video_capabilities[0].content_type = "a";
+  video_capabilities[0].mime_type = kSupportedVideoContainer;
+  video_capabilities[0].codecs = kSupportedVideoCodecs;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasVideoCapabilities = true;
-  config.videoCapabilities = video_capabilities;
+  blink::WebMediaKeySystemConfiguration config = EmptyConfiguration();
+  config.video_capabilities = video_capabilities;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsConfig());
-  ASSERT_EQ(1u, config_.videoCapabilities.size());
-  EXPECT_EQ(kSupportedCodecs, config_.videoCapabilities[0].codecs);
+  ASSERT_EQ(1u, config_.video_capabilities.size());
+  EXPECT_EQ(kSupportedVideoCodecs, config_.video_capabilities[0].codecs);
+}
+
+TEST_F(KeySystemConfigSelectorTest, VideoCapabilities_Missing_Codecs) {
+  std::vector<blink::WebMediaKeySystemMediaCapability> video_capabilities(1);
+  video_capabilities[0].content_type = "a";
+  video_capabilities[0].mime_type = kSupportedVideoContainer;
+
+  blink::WebMediaKeySystemConfiguration config = EmptyConfiguration();
+  config.video_capabilities = video_capabilities;
+  configs_.push_back(config);
+
+  ASSERT_TRUE(SelectConfigReturnsError());
+}
+
+TEST_F(KeySystemConfigSelectorTest, VideoCapabilities_Robustness_Empty) {
+  std::vector<blink::WebMediaKeySystemMediaCapability> video_capabilities(1);
+  video_capabilities[0].content_type = "a";
+  video_capabilities[0].mime_type = kSupportedVideoContainer;
+  video_capabilities[0].codecs = kSupportedVideoCodec;
+  ASSERT_TRUE(video_capabilities[0].robustness.IsEmpty());
+
+  blink::WebMediaKeySystemConfiguration config = EmptyConfiguration();
+  config.video_capabilities = video_capabilities;
+  configs_.push_back(config);
+
+  ASSERT_TRUE(SelectConfigReturnsConfig());
+  ASSERT_EQ(1u, config_.video_capabilities.size());
+  EXPECT_TRUE(config_.video_capabilities[0].robustness.IsEmpty());
 }
 
 TEST_F(KeySystemConfigSelectorTest, VideoCapabilities_Robustness_Supported) {
   std::vector<blink::WebMediaKeySystemMediaCapability> video_capabilities(1);
-  video_capabilities[0].contentType = "a";
-  video_capabilities[0].mimeType = kSupportedContainer;
+  video_capabilities[0].content_type = "a";
+  video_capabilities[0].mime_type = kSupportedVideoContainer;
+  video_capabilities[0].codecs = kSupportedVideoCodec;
   video_capabilities[0].robustness = kSupported;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasVideoCapabilities = true;
-  config.videoCapabilities = video_capabilities;
+  blink::WebMediaKeySystemConfiguration config = EmptyConfiguration();
+  config.video_capabilities = video_capabilities;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsConfig());
-  ASSERT_EQ(1u, config_.videoCapabilities.size());
-  EXPECT_EQ(kSupported, config_.videoCapabilities[0].robustness);
+  ASSERT_EQ(1u, config_.video_capabilities.size());
+  EXPECT_EQ(kSupported, config_.video_capabilities[0].robustness);
 }
 
 TEST_F(KeySystemConfigSelectorTest, VideoCapabilities_Robustness_Unsupported) {
   std::vector<blink::WebMediaKeySystemMediaCapability> video_capabilities(1);
-  video_capabilities[0].contentType = "a";
-  video_capabilities[0].mimeType = kSupportedContainer;
+  video_capabilities[0].content_type = "a";
+  video_capabilities[0].mime_type = kSupportedVideoContainer;
+  video_capabilities[0].codecs = kSupportedVideoCodec;
   video_capabilities[0].robustness = kUnsupported;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasVideoCapabilities = true;
-  config.videoCapabilities = video_capabilities;
+  blink::WebMediaKeySystemConfiguration config = EmptyConfiguration();
+  config.video_capabilities = video_capabilities;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsError());
@@ -646,18 +757,18 @@ TEST_F(KeySystemConfigSelectorTest,
   key_systems_->distinctive_identifier = EmeFeatureSupport::REQUESTABLE;
 
   std::vector<blink::WebMediaKeySystemMediaCapability> video_capabilities(1);
-  video_capabilities[0].contentType = "a";
-  video_capabilities[0].mimeType = kSupportedContainer;
+  video_capabilities[0].content_type = "a";
+  video_capabilities[0].mime_type = kSupportedVideoContainer;
+  video_capabilities[0].codecs = kSupportedVideoCodec;
   video_capabilities[0].robustness = kRequireIdentifier;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasVideoCapabilities = true;
-  config.videoCapabilities = video_capabilities;
+  blink::WebMediaKeySystemConfiguration config = EmptyConfiguration();
+  config.video_capabilities = video_capabilities;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigRequestsPermissionAndReturnsConfig());
-  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::Required,
-            config_.distinctiveIdentifier);
+  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::kRequired,
+            config_.distinctive_identifier);
 }
 
 TEST_F(KeySystemConfigSelectorTest,
@@ -666,18 +777,18 @@ TEST_F(KeySystemConfigSelectorTest,
   key_systems_->distinctive_identifier = EmeFeatureSupport::REQUESTABLE;
 
   std::vector<blink::WebMediaKeySystemMediaCapability> video_capabilities(1);
-  video_capabilities[0].contentType = "a";
-  video_capabilities[0].mimeType = kSupportedContainer;
+  video_capabilities[0].content_type = "a";
+  video_capabilities[0].mime_type = kSupportedVideoContainer;
+  video_capabilities[0].codecs = kSupportedVideoCodec;
   video_capabilities[0].robustness = kRecommendIdentifier;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasVideoCapabilities = true;
-  config.videoCapabilities = video_capabilities;
+  blink::WebMediaKeySystemConfiguration config = EmptyConfiguration();
+  config.video_capabilities = video_capabilities;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigRequestsPermissionAndReturnsConfig());
-  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::NotAllowed,
-            config_.distinctiveIdentifier);
+  EXPECT_EQ(blink::WebMediaKeySystemConfiguration::Requirement::kNotAllowed,
+            config_.distinctive_identifier);
 }
 
 // --- audioCapabilities ---
@@ -686,26 +797,26 @@ TEST_F(KeySystemConfigSelectorTest,
 
 TEST_F(KeySystemConfigSelectorTest, AudioCapabilities_SubsetSupported) {
   std::vector<blink::WebMediaKeySystemMediaCapability> audio_capabilities(2);
-  audio_capabilities[0].contentType = "a";
-  audio_capabilities[0].mimeType = kUnsupportedContainer;
-  audio_capabilities[1].contentType = "b";
-  audio_capabilities[1].mimeType = kSupportedContainer;
+  audio_capabilities[0].content_type = "a";
+  audio_capabilities[0].mime_type = kUnsupportedContainer;
+  audio_capabilities[1].content_type = "b";
+  audio_capabilities[1].mime_type = kSupportedAudioContainer;
+  audio_capabilities[1].codecs = kSupportedAudioCodec;
 
-  blink::WebMediaKeySystemConfiguration config;
-  config.hasAudioCapabilities = true;
-  config.audioCapabilities = audio_capabilities;
+  blink::WebMediaKeySystemConfiguration config = EmptyConfiguration();
+  config.audio_capabilities = audio_capabilities;
   configs_.push_back(config);
 
   ASSERT_TRUE(SelectConfigReturnsConfig());
-  ASSERT_EQ(1u, config_.audioCapabilities.size());
-  EXPECT_EQ("b", config_.audioCapabilities[0].contentType);
-  EXPECT_EQ(kSupportedContainer, config_.audioCapabilities[0].mimeType);
+  ASSERT_EQ(1u, config_.audio_capabilities.size());
+  EXPECT_EQ("b", config_.audio_capabilities[0].content_type);
+  EXPECT_EQ(kSupportedAudioContainer, config_.audio_capabilities[0].mime_type);
 }
 
 // --- Multiple configurations ---
 
 TEST_F(KeySystemConfigSelectorTest, Configurations_AllSupported) {
-  blink::WebMediaKeySystemConfiguration config;
+  blink::WebMediaKeySystemConfiguration config = UsableConfiguration();
   config.label = "a";
   configs_.push_back(config);
   config.label = "b";
@@ -716,12 +827,14 @@ TEST_F(KeySystemConfigSelectorTest, Configurations_AllSupported) {
 }
 
 TEST_F(KeySystemConfigSelectorTest, Configurations_SubsetSupported) {
-  blink::WebMediaKeySystemConfiguration config1;
+  blink::WebMediaKeySystemConfiguration config1 = UsableConfiguration();
   config1.label = "a";
-  config1.hasInitDataTypes = true;
+  std::vector<blink::WebEncryptedMediaInitDataType> init_data_types;
+  init_data_types.push_back(blink::WebEncryptedMediaInitDataType::kUnknown);
+  config1.init_data_types = init_data_types;
   configs_.push_back(config1);
 
-  blink::WebMediaKeySystemConfiguration config2;
+  blink::WebMediaKeySystemConfiguration config2 = UsableConfiguration();
   config2.label = "b";
   configs_.push_back(config2);
 
@@ -734,13 +847,13 @@ TEST_F(KeySystemConfigSelectorTest,
   media_permission_->is_granted = true;
   key_systems_->distinctive_identifier = EmeFeatureSupport::REQUESTABLE;
 
-  blink::WebMediaKeySystemConfiguration config1;
+  blink::WebMediaKeySystemConfiguration config1 = UsableConfiguration();
   config1.label = "a";
-  config1.distinctiveIdentifier =
-      blink::WebMediaKeySystemConfiguration::Requirement::Required;
+  config1.distinctive_identifier =
+      blink::WebMediaKeySystemConfiguration::Requirement::kRequired;
   configs_.push_back(config1);
 
-  blink::WebMediaKeySystemConfiguration config2;
+  blink::WebMediaKeySystemConfiguration config2 = UsableConfiguration();
   config2.label = "b";
   configs_.push_back(config2);
 
@@ -753,13 +866,13 @@ TEST_F(KeySystemConfigSelectorTest,
   media_permission_->is_granted = false;
   key_systems_->distinctive_identifier = EmeFeatureSupport::REQUESTABLE;
 
-  blink::WebMediaKeySystemConfiguration config1;
+  blink::WebMediaKeySystemConfiguration config1 = UsableConfiguration();
   config1.label = "a";
-  config1.distinctiveIdentifier =
-      blink::WebMediaKeySystemConfiguration::Requirement::Required;
+  config1.distinctive_identifier =
+      blink::WebMediaKeySystemConfiguration::Requirement::kRequired;
   configs_.push_back(config1);
 
-  blink::WebMediaKeySystemConfiguration config2;
+  blink::WebMediaKeySystemConfiguration config2 = UsableConfiguration();
   config2.label = "b";
   configs_.push_back(config2);
 

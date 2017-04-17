@@ -27,21 +27,20 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import collections
+import logging
 import re
 import urllib2
 
 from webkitpy.common.memoized import memoized
-from webkitpy.common.net.layouttestresults import LayoutTestResults
-from webkitpy.common.net.networktransaction import NetworkTransaction
-from webkitpy.common.system.logutils import get_logger
+from webkitpy.common.net.layout_test_results import LayoutTestResults
+from webkitpy.common.net.network_transaction import NetworkTransaction
 
+_log = logging.getLogger(__name__)
 
 RESULTS_URL_BASE = 'https://storage.googleapis.com/chromium-layout-test-archives'
 
-_log = get_logger(__file__)
 
-
-class Build(collections.namedtuple('TryJob', ('builder_name', 'build_number'))):
+class Build(collections.namedtuple('Build', ('builder_name', 'build_number'))):
     """Represents a combination of builder and build number.
 
     If build number is None, this represents the latest build
@@ -68,7 +67,7 @@ class BuildBot(object):
         """
         if build_number:
             url_base = self.builder_results_url_base(builder_name)
-            return "%s/%s/layout-test-results" % (url_base, build_number)
+            return '%s/%s/layout-test-results' % (url_base, build_number)
         return self.accumulated_results_url_base(builder_name)
 
     def builder_results_url_base(self, builder_name):
@@ -80,31 +79,81 @@ class BuildBot(object):
         """
         return '%s/%s' % (RESULTS_URL_BASE, re.sub('[ .()]', '_', builder_name))
 
+    @memoized
+    def fetch_retry_summary_json(self, build):
+        """Fetches and returns the text of the archived retry_summary file.
+
+        This file is expected to contain the results of retrying layout tests
+        with and without a patch in a try job. It includes lists of tests
+        that failed only with the patch ("failures"), and tests that failed
+        both with and without ("ignored").
+        """
+        url_base = '%s/%s' % (self.builder_results_url_base(build.builder_name), build.build_number)
+        return NetworkTransaction(return_none_on_404=True).run(
+            lambda: self.fetch_file(url_base, 'retry_summary.json'))
+
     def accumulated_results_url_base(self, builder_name):
-        return self.builder_results_url_base(builder_name) + "/results/layout-test-results"
+        return self.builder_results_url_base(builder_name) + '/results/layout-test-results'
 
     @memoized
     def latest_layout_test_results(self, builder_name):
         return self.fetch_layout_test_results(self.accumulated_results_url_base(builder_name))
 
+    @memoized
+    def fetch_results(self, build):
+        return self.fetch_layout_test_results(self.results_url(build.builder_name, build.build_number))
+
+    @memoized
     def fetch_layout_test_results(self, results_url):
         """Returns a LayoutTestResults object for results fetched from a given URL."""
-        # FIXME: This should cache that the result was a 404 and stop hitting the network.
-        # This may be able to be done by just adding a @memoized decorator.
-        results_file = NetworkTransaction(convert_404_to_None=True).run(
-            lambda: self._fetch_file_from_results(results_url, "failing_results.json"))
-        revision = NetworkTransaction(convert_404_to_None=True).run(
-            lambda: self._fetch_file_from_results(results_url, "LAST_CHANGE"))
-        if not revision:
-            results_file = None
+        results_file = NetworkTransaction(return_none_on_404=True).run(
+            lambda: self.fetch_file(results_url, 'failing_results.json'))
+        if results_file is None:
+            _log.warning('Got 404 response from:\n%s/failing_results.json', results_url)
+            return None
+        revision = NetworkTransaction(return_none_on_404=True).run(
+            lambda: self.fetch_file(results_url, 'LAST_CHANGE'))
+        if revision is None:
+            _log.warning('Got 404 response from:\n%s/LAST_CHANGE', results_url)
+            return None
         return LayoutTestResults.results_from_string(results_file, revision)
 
-    def _fetch_file_from_results(self, results_url, file_name):
+    def fetch_file(self, url_base, filename):
         # It seems this can return None if the url redirects and then returns 404.
         # FIXME: This could use Web instead of using urllib2 directly.
-        result = urllib2.urlopen("%s/%s" % (results_url, file_name))
+        result = urllib2.urlopen('%s/%s' % (url_base, filename))
         if not result:
             return None
         # urlopen returns a file-like object which sometimes works fine with str()
         # but sometimes is a addinfourl object.  In either case calling read() is correct.
         return result.read()
+
+
+def current_build_link(host):
+    """Returns a link to the current job if running on buildbot, or None."""
+    master_name = host.environ.get('BUILDBOT_MASTERNAME')
+    builder_name = host.environ.get('BUILDBOT_BUILDERNAME')
+    build_number = host.environ.get('BUILDBOT_BUILDNUMBER')
+    if not (master_name and builder_name and build_number):
+        return None
+    return 'https://build.chromium.org/p/%s/builders/%s/builds/%s' % (master_name, builder_name, build_number)
+
+
+def filter_latest_builds(builds):
+    """Filters Build objects to include only the latest for each builder.
+
+    Args:
+        builds: A collection of Build objects.
+
+    Returns:
+        A list of Build objects; only one Build object per builder name. If
+        there are only Builds with no build number, then one is kept; if there
+        are Builds with build numbers, then the one with the highest build
+        number is kept.
+    """
+    latest_builds = {}
+    for build in builds:
+        builder = build.builder_name
+        if builder not in latest_builds or build.build_number > latest_builds[builder].build_number:
+            latest_builds[builder] = build
+    return sorted(latest_builds.values())

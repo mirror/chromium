@@ -10,10 +10,17 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/values.h"
+#include "components/update_client/update_client_errors.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace extensions {
+
+namespace {
+using InstallError = update_client::InstallError;
+using Result = update_client::CrxInstaller::Result;
+}  // namespace
 
 UpdateInstallShim::UpdateInstallShim(std::string extension_id,
                                      const base::FilePath& extension_root,
@@ -26,26 +33,26 @@ void UpdateInstallShim::OnUpdateError(int error) {
   VLOG(1) << "OnUpdateError (" << extension_id_ << ") " << error;
 }
 
-bool UpdateInstallShim::Install(const base::DictionaryValue& manifest,
-                                const base::FilePath& unpack_path) {
+Result UpdateInstallShim::Install(const base::DictionaryValue& manifest,
+                                  const base::FilePath& unpack_path) {
   base::ScopedTempDir temp_dir;
   if (!temp_dir.CreateUniqueTempDir())
-    return false;
+    return Result(InstallError::GENERIC_ERROR);
 
   // The UpdateClient code will delete unpack_path if it still exists after
   // this method is done, so we rename it on top of our temp dir.
-  if (!base::DeleteFile(temp_dir.path(), true) ||
-      !base::Move(unpack_path, temp_dir.path())) {
+  if (!base::DeleteFile(temp_dir.GetPath(), true) ||
+      !base::Move(unpack_path, temp_dir.GetPath())) {
     LOG(ERROR) << "Trying to install update for " << extension_id_
                << "and failed to move " << unpack_path.value() << " to  "
-               << temp_dir.path().value();
-    return false;
+               << temp_dir.GetPath().value();
+    return Result(InstallError::GENERIC_ERROR);
   }
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
       base::Bind(&UpdateInstallShim::RunCallbackOnUIThread, this,
                  temp_dir.Take()));
-  return true;
+  return Result(InstallError::NONE);
 }
 
 bool UpdateInstallShim::GetInstalledFile(const std::string& file,
@@ -72,9 +79,11 @@ UpdateInstallShim::~UpdateInstallShim() {}
 
 void UpdateInstallShim::RunCallbackOnUIThread(const base::FilePath& temp_dir) {
   if (callback_.is_null()) {
-    content::BrowserThread::PostBlockingPoolTask(
-        FROM_HERE, base::Bind(base::IgnoreResult(&base::DeleteFile), temp_dir,
-                              true /*recursive */));
+    base::PostTaskWithTraits(FROM_HERE,
+                             base::TaskTraits().MayBlock().WithPriority(
+                                 base::TaskPriority::BACKGROUND),
+                             base::Bind(base::IgnoreResult(&base::DeleteFile),
+                                        temp_dir, true /*recursive */));
     return;
   }
   callback_.Run(extension_id_, temp_dir);

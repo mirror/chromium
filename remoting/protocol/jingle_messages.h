@@ -10,44 +10,14 @@
 #include <string>
 
 #include "remoting/protocol/errors.h"
-#include "third_party/webrtc/libjingle/xmllite/xmlelement.h"
+#include "remoting/signaling/signaling_address.h"
+#include "third_party/libjingle_xmpp/xmllite/xmlelement.h"
 #include "third_party/webrtc/p2p/base/candidate.h"
 
 namespace remoting {
 namespace protocol {
 
 class ContentDescription;
-
-// Represents an address of a Chromoting endpoint and its routing channel.
-// TODO(kelvinp): Move the struct to remoting/signaling. Potentially we could
-// update SignalStrategy interface to use this instead of jid for addressing.
-struct SignalingAddress {
-  enum class Channel { LCS, XMPP };
-
-  SignalingAddress();
-  SignalingAddress(const std::string& jid);
-  SignalingAddress(const std::string& jid,
-                   const std::string& endpoint_id,
-                   Channel channel);
-
-  // Represents the |to| or |from| field in an IQ stanza.
-  std::string jid;
-
-  // Represents the identifier of an endpoint. In  LCS, this is the LCS address
-  // encoded in a JID like format.  In XMPP, it is empty.
-  std::string endpoint_id;
-
-  Channel channel;
-
-  inline const std::string& id() const {
-    return (channel == Channel::LCS) ? endpoint_id : jid;
-  }
-
-  inline bool empty() const { return jid.empty(); }
-
-  bool operator==(const SignalingAddress& other);
-  bool operator!=(const SignalingAddress& other);
-};
 
 struct JingleMessage {
   enum ActionType {
@@ -85,6 +55,11 @@ struct JingleMessage {
   // message when parsing fails.
   bool ParseXml(const buzz::XmlElement* stanza, std::string* error);
 
+  // Adds an XmlElement into |attachments|. This function implicitly creates
+  // |attachments| if it's empty, and |attachment| should not be an empty
+  // unique_ptr.
+  void AddAttachment(std::unique_ptr<buzz::XmlElement> attachment);
+
   std::unique_ptr<buzz::XmlElement> ToXml() const;
 
   SignalingAddress from;
@@ -100,6 +75,10 @@ struct JingleMessage {
 
   // Content of session-info messages.
   std::unique_ptr<buzz::XmlElement> info;
+
+  // Content of plugin message. The node is read or written by all plugins, and
+  // ActionType independent.
+  std::unique_ptr<buzz::XmlElement> attachments;
 
   // Value from the <reason> tag if it is present in the
   // message. Useful mainly for session-terminate messages, but Jingle

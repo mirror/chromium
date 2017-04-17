@@ -5,6 +5,7 @@
 #ifndef ServiceWorkerRegistrationNotifications_h
 #define ServiceWorkerRegistrationNotifications_h
 
+#include <memory>
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "platform/Supplementable.h"
@@ -12,10 +13,9 @@
 #include "platform/heap/Handle.h"
 #include "platform/heap/HeapAllocator.h"
 #include "platform/heap/Visitor.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
 #include "public/platform/modules/notifications/WebNotificationManager.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PassRefPtr.h"
-#include <memory>
 
 namespace blink {
 
@@ -29,31 +29,48 @@ class SecurityOrigin;
 class ServiceWorkerRegistration;
 struct WebNotificationData;
 
-class ServiceWorkerRegistrationNotifications final : public GarbageCollected<ServiceWorkerRegistrationNotifications>, public Supplement<ServiceWorkerRegistration>, public ContextLifecycleObserver {
-    USING_GARBAGE_COLLECTED_MIXIN(ServiceWorkerRegistrationNotifications);
-    WTF_MAKE_NONCOPYABLE(ServiceWorkerRegistrationNotifications);
-public:
-    static ScriptPromise showNotification(ScriptState*, ServiceWorkerRegistration&, const String& title, const NotificationOptions&, ExceptionState&);
-    static ScriptPromise getNotifications(ScriptState*, ServiceWorkerRegistration&, const GetNotificationOptions&);
+class ServiceWorkerRegistrationNotifications final
+    : public GarbageCollected<ServiceWorkerRegistrationNotifications>,
+      public Supplement<ServiceWorkerRegistration>,
+      public ContextLifecycleObserver {
+  USING_GARBAGE_COLLECTED_MIXIN(ServiceWorkerRegistrationNotifications);
+  WTF_MAKE_NONCOPYABLE(ServiceWorkerRegistrationNotifications);
 
-    // ContextLifecycleObserver interface.
-    void contextDestroyed() override;
+ public:
+  static ScriptPromise showNotification(ScriptState*,
+                                        ServiceWorkerRegistration&,
+                                        const String& title,
+                                        const NotificationOptions&,
+                                        ExceptionState&);
+  static ScriptPromise getNotifications(ScriptState*,
+                                        ServiceWorkerRegistration&,
+                                        const GetNotificationOptions&);
 
-    DECLARE_VIRTUAL_TRACE();
+  // ContextLifecycleObserver interface.
+  void ContextDestroyed(ExecutionContext*) override;
 
-private:
-    ServiceWorkerRegistrationNotifications(ExecutionContext*, ServiceWorkerRegistration*);
+  DECLARE_VIRTUAL_TRACE();
 
-    static const char* supplementName();
-    static ServiceWorkerRegistrationNotifications& from(ExecutionContext*, ServiceWorkerRegistration&);
+ private:
+  ServiceWorkerRegistrationNotifications(ExecutionContext*,
+                                         ServiceWorkerRegistration*);
 
-    void prepareShow(const WebNotificationData&, std::unique_ptr<WebNotificationShowCallbacks>);
-    void didLoadResources(PassRefPtr<SecurityOrigin>, const WebNotificationData&, std::unique_ptr<WebNotificationShowCallbacks>, NotificationResourcesLoader*);
+  static const char* SupplementName();
+  static ServiceWorkerRegistrationNotifications& From(
+      ExecutionContext*,
+      ServiceWorkerRegistration&);
 
-    Member<ServiceWorkerRegistration> m_registration;
-    HeapHashSet<Member<NotificationResourcesLoader>> m_loaders;
+  void PrepareShow(const WebNotificationData&,
+                   std::unique_ptr<WebNotificationShowCallbacks>);
+  void DidLoadResources(PassRefPtr<SecurityOrigin>,
+                        const WebNotificationData&,
+                        std::unique_ptr<WebNotificationShowCallbacks>,
+                        NotificationResourcesLoader*);
+
+  Member<ServiceWorkerRegistration> registration_;
+  HeapHashSet<Member<NotificationResourcesLoader>> loaders_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ServiceWorkerRegistrationNotifications_h
+#endif  // ServiceWorkerRegistrationNotifications_h

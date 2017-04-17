@@ -20,88 +20,71 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
-#include "cc/animation/target_property.h"
-#include "cc/base/cc_export.h"
-#include "cc/blimp/client_picture_cache.h"
-#include "cc/blimp/engine_picture_cache.h"
-#include "cc/debug/micro_benchmark.h"
-#include "cc/debug/micro_benchmark_controller.h"
+#include "cc/benchmarks/micro_benchmark.h"
+#include "cc/benchmarks/micro_benchmark_controller.h"
+#include "cc/cc_export.h"
+#include "cc/input/browser_controls_state.h"
 #include "cc/input/event_listener_properties.h"
 #include "cc/input/input_handler.h"
 #include "cc/input/layer_selection_bound.h"
 #include "cc/input/scrollbar.h"
-#include "cc/input/top_controls_state.h"
 #include "cc/layers/layer_collections.h"
 #include "cc/layers/layer_list_iterator.h"
-#include "cc/output/output_surface.h"
-#include "cc/output/renderer_capabilities.h"
+#include "cc/output/compositor_frame_sink.h"
 #include "cc/output/swap_promise.h"
 #include "cc/resources/resource_format.h"
-#include "cc/resources/scoped_ui_resource.h"
-#include "cc/surfaces/surface_sequence.h"
+#include "cc/surfaces/surface_reference_owner.h"
+#include "cc/surfaces/surface_sequence_generator.h"
 #include "cc/trees/compositor_mode.h"
 #include "cc/trees/layer_tree_host_client.h"
 #include "cc/trees/layer_tree_settings.h"
-#include "cc/trees/mutator_host_client.h"
+#include "cc/trees/mutator_host.h"
 #include "cc/trees/proxy.h"
-#include "cc/trees/swap_promise_monitor.h"
+#include "cc/trees/swap_promise_manager.h"
+#include "cc/trees/target_property.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/rect.h"
 
-namespace gpu {
-class GpuMemoryBufferManager;
-}
+class SkImage;
 
 namespace cc {
-
-class AnimationEvents;
-class AnimationHost;
-class BeginFrameSource;
 class HeadsUpDisplayLayer;
-class ImageSerializationProcessor;
 class Layer;
+class LayerTreeHostClient;
 class LayerTreeHostImpl;
 class LayerTreeHostImplClient;
 class LayerTreeHostSingleThreadClient;
 class LayerTreeMutator;
-class PropertyTrees;
-class Region;
-class RemoteProtoChannel;
-class RenderingStatsInstrumentation;
-class ResourceProvider;
-class ResourceUpdateQueue;
-class SharedBitmapManager;
-class TaskGraphRunner;
-class TopControlsManager;
-class UIResourceRequest;
+class MutatorEvents;
+class MutatorHost;
 struct PendingPageScaleAnimation;
+class RenderingStatsInstrumentation;
+class TaskGraphRunner;
+class UIResourceManager;
 struct RenderingStats;
 struct ScrollAndScaleSet;
 
-namespace proto {
-class LayerTreeHost;
-}
-
-class CC_EXPORT LayerTreeHost : public MutatorHostClient {
+class CC_EXPORT LayerTreeHost : public NON_EXPORTED_BASE(SurfaceReferenceOwner),
+                                public NON_EXPORTED_BASE(MutatorHostClient) {
  public:
   // TODO(sad): InitParams should be a movable type so that it can be
   // std::move()d to the Create* functions.
   struct CC_EXPORT InitParams {
     LayerTreeHostClient* client = nullptr;
-    SharedBitmapManager* shared_bitmap_manager = nullptr;
-    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager = nullptr;
     TaskGraphRunner* task_graph_runner = nullptr;
     LayerTreeSettings const* settings = nullptr;
     scoped_refptr<base::SingleThreadTaskRunner> main_task_runner;
-    std::unique_ptr<BeginFrameSource> external_begin_frame_source;
-    ImageSerializationProcessor* image_serialization_processor = nullptr;
-    std::unique_ptr<AnimationHost> animation_host;
+    MutatorHost* mutator_host = nullptr;
+
+    // The image worker task runner is used to schedule image decodes. The
+    // compositor thread may make sync calls to this thread, analogous to the
+    // raster worker threads.
+    scoped_refptr<base::SequencedTaskRunner> image_worker_task_runner;
 
     InitParams();
     ~InitParams();
   };
 
-  // The SharedBitmapManager will be used on the compositor thread.
   static std::unique_ptr<LayerTreeHost> CreateThreaded(
       scoped_refptr<base::SingleThreadTaskRunner> impl_task_runner,
       InitParams* params);
@@ -110,113 +93,164 @@ class CC_EXPORT LayerTreeHost : public MutatorHostClient {
       LayerTreeHostSingleThreadClient* single_thread_client,
       InitParams* params);
 
-  static std::unique_ptr<LayerTreeHost> CreateRemoteServer(
-      RemoteProtoChannel* remote_proto_channel,
-      InitParams* params);
+  ~LayerTreeHost() override;
 
-  // The lifetime of this LayerTreeHost is tied to the lifetime of the remote
-  // server LayerTreeHost. It should be created on receiving
-  // CompositorMessageToImpl::InitializeImpl message and destroyed on receiving
-  // a CompositorMessageToImpl::CloseImpl message from the server. This ensures
-  // that the client will not send any compositor messages once the
-  // LayerTreeHost on the server is destroyed.
-  static std::unique_ptr<LayerTreeHost> CreateRemoteClient(
-      RemoteProtoChannel* remote_proto_channel,
-      scoped_refptr<base::SingleThreadTaskRunner> impl_task_runner,
-      InitParams* params);
+  // Returns the process global unique identifier for this LayerTreeHost.
+  int GetId() const;
 
-  virtual ~LayerTreeHost();
+  // The current source frame number. This is incremented for each main frame
+  // update(commit) pushed to the compositor thread.
+  int SourceFrameNumber() const;
 
-  // LayerTreeHost interface to Proxy.
-  void WillBeginMainFrame();
-  void DidBeginMainFrame();
-  void BeginMainFrame(const BeginFrameArgs& args);
-  void BeginMainFrameNotExpectedSoon();
-  void AnimateLayers(base::TimeTicks monotonic_frame_begin_time);
-  void DidStopFlinging();
-  void RequestMainFrameUpdate();
-  void FinishCommitOnImplThread(LayerTreeHostImpl* host_impl);
-  void WillCommit();
-  void CommitComplete();
-  void SetOutputSurface(std::unique_ptr<OutputSurface> output_surface);
-  std::unique_ptr<OutputSurface> ReleaseOutputSurface();
-  void RequestNewOutputSurface();
-  void DidInitializeOutputSurface();
-  void DidFailToInitializeOutputSurface();
-  virtual std::unique_ptr<LayerTreeHostImpl> CreateLayerTreeHostImpl(
-      LayerTreeHostImplClient* client);
-  void DidLoseOutputSurface();
-  bool output_surface_lost() const { return output_surface_lost_; }
-  void DidCommitAndDrawFrame() { client_->DidCommitAndDrawFrame(); }
-  void DidCompleteSwapBuffers() { client_->DidCompleteSwapBuffers(); }
-  bool UpdateLayers();
+  // Returns the UIResourceManager used to create UIResources for
+  // UIResourceLayers pushed to the LayerTree.
+  UIResourceManager* GetUIResourceManager() const;
 
-  LayerListIterator<Layer> begin() const;
-  LayerListIterator<Layer> end() const;
-  LayerListReverseIterator<Layer> rbegin();
-  LayerListReverseIterator<Layer> rend();
+  // Returns the TaskRunnerProvider used to access the main and compositor
+  // thread task runners.
+  TaskRunnerProvider* GetTaskRunnerProvider() const;
 
-  // Called when the compositor completed page scale animation.
-  void DidCompletePageScaleAnimation();
+  // Returns the settings used by this host.
+  const LayerTreeSettings& GetSettings() const;
 
-  LayerTreeHostClient* client() { return client_; }
-  const base::WeakPtr<InputHandler>& GetInputHandler() {
-    return input_handler_weak_ptr_;
-  }
+  // Sets the client id used to generate the SurfaceId that uniquely identifies
+  // the Surfaces produced by this compositor.
+  void SetFrameSinkId(const FrameSinkId& frame_sink_id);
 
-  void NotifyInputThrottledUntilCommit();
+  // Sets the LayerTreeMutator interface used to directly mutate the compositor
+  // state on the compositor thread. (Compositor-Worker)
+  void SetLayerTreeMutator(std::unique_ptr<LayerTreeMutator> mutator);
 
-  void LayoutAndUpdateLayers();
-  void Composite(base::TimeTicks frame_begin_time);
+  // Call this function when you expect there to be a swap buffer.
+  // See swap_promise.h for how to use SwapPromise.
+  void QueueSwapPromise(std::unique_ptr<SwapPromise> swap_promise);
 
-  void FinishAllRendering();
+  // Returns the SwapPromiseManager used to create SwapPromiseMonitors for this
+  // host.
+  SwapPromiseManager* GetSwapPromiseManager();
 
+  // Sets whether the content is suitable to use Gpu Rasterization.
+  void SetHasGpuRasterizationTrigger(bool has_trigger);
+
+  // Visibility and CompositorFrameSink -------------------------------
+
+  void SetVisible(bool visible);
+  bool IsVisible() const;
+
+  // Called in response to an CompositorFrameSink request made to the client
+  // using LayerTreeHostClient::RequestNewCompositorFrameSink. The client will
+  // be informed of the CompositorFrameSink initialization status using
+  // DidInitializaCompositorFrameSink or DidFailToInitializeCompositorFrameSink.
+  // The request is completed when the host successfully initializes an
+  // CompositorFrameSink.
+  void SetCompositorFrameSink(
+      std::unique_ptr<CompositorFrameSink> compositor_frame_sink);
+
+  // Forces the host to immediately release all references to the
+  // CompositorFrameSink, if any. Can be safely called any time.
+  std::unique_ptr<CompositorFrameSink> ReleaseCompositorFrameSink();
+
+  // Frame Scheduling (main and compositor frames) requests -------
+
+  // Requests a main frame update even if no content has changed. This is used,
+  // for instance in the case of RequestAnimationFrame from blink to ensure the
+  // main frame update is run on the next tick without pre-emptively forcing a
+  // full commit synchronization or layer updates.
+  void SetNeedsAnimate();
+
+  // Requests a main frame update and also ensure that the host pulls layer
+  // updates from the client, even if no content might have changed, without
+  // forcing a full commit synchronization.
+  virtual void SetNeedsUpdateLayers();
+
+  // Requests that the next main frame update performs a full commit
+  // synchronization.
+  virtual void SetNeedsCommit();
+
+  // Requests that the next frame re-chooses crisp raster scales for all layers.
+  void SetNeedsRecalculateRasterScales();
+
+  // Returns true if a main frame with commit synchronization has been
+  // requested.
+  bool CommitRequested() const;
+
+  // Enables/disables the compositor from requesting main frame updates from the
+  // client.
   void SetDeferCommits(bool defer_commits);
 
-  int source_frame_number() const { return source_frame_number_; }
+  // Synchronously performs a main frame update and layer updates. Used only in
+  // single threaded mode when the compositor's internal scheduling is disabled.
+  void LayoutAndUpdateLayers();
 
-  bool gpu_rasterization_histogram_recorded() const {
-    return gpu_rasterization_histogram_recorded_;
-  }
+  // Synchronously performs a complete main frame update, commit and compositor
+  // frame. Used only in single threaded mode when the compositor's internal
+  // scheduling is disabled.
+  void Composite(base::TimeTicks frame_begin_time);
 
-  void SetNeedsDisplayOnAllLayers();
-
-  void CollectRenderingStats(RenderingStats* stats) const;
-
-  RenderingStatsInstrumentation* rendering_stats_instrumentation() const {
-    return rendering_stats_instrumentation_.get();
-  }
-
-  virtual const RendererCapabilities& GetRendererCapabilities() const;
-
-  void SetNeedsAnimate();
-  virtual void SetNeedsUpdateLayers();
-  virtual void SetNeedsCommit();
-  virtual void SetNeedsFullTreeSync();
-  virtual void SetNeedsMetaInfoRecomputation(
-      bool needs_meta_info_recomputation);
-  void SetNeedsRedraw();
+  // Requests a redraw (compositor frame) for the given rect.
   void SetNeedsRedrawRect(const gfx::Rect& damage_rect);
-  bool CommitRequested() const;
-  bool BeginMainFrameRequested() const;
 
+  // Requests a main frame (including layer updates) and ensures that this main
+  // frame results in a redraw for the complete viewport when producing the
+  // CompositorFrame.
+  void SetNeedsCommitWithForcedRedraw();
+
+  // Input Handling ---------------------------------------------
+
+  // Notifies the compositor that input from the browser is being throttled till
+  // the next commit. The compositor will prioritize activation of the pending
+  // tree so a commit can be performed.
+  void NotifyInputThrottledUntilCommit();
+
+  // Sets the state of the browser controls. (Used for URL bar animations on
+  // android).
+  void UpdateBrowserControlsState(BrowserControlsState constraints,
+                                  BrowserControlsState current,
+                                  bool animate);
+
+  // Returns a reference to the InputHandler used to respond to input events on
+  // the compositor thread.
+  const base::WeakPtr<InputHandler>& GetInputHandler() const;
+
+  // Informs the compositor that an active fling gesture being processed on the
+  // main thread has been finished.
+  void DidStopFlinging();
+
+  // Debugging and benchmarks ---------------------------------
+  void SetDebugState(const LayerTreeDebugState& debug_state);
+  const LayerTreeDebugState& GetDebugState() const;
+
+  // Returns the id of the benchmark on success, 0 otherwise.
+  int ScheduleMicroBenchmark(const std::string& benchmark_name,
+                             std::unique_ptr<base::Value> value,
+                             const MicroBenchmark::DoneCallback& callback);
+
+  // Returns true if the message was successfully delivered and handled.
+  bool SendMessageToMicroBenchmark(int id, std::unique_ptr<base::Value> value);
+
+  // When the main thread informs the impl thread that it is ready to commit,
+  // generally it would remain blocked till the main thread state is copied to
+  // the pending tree. Calling this would ensure that the main thread remains
+  // blocked till the pending tree is activated.
   void SetNextCommitWaitsForActivation();
 
-  void SetNextCommitForcesRedraw();
-
-  void SetAnimationEvents(std::unique_ptr<AnimationEvents> events);
+  // The LayerTreeHost tracks whether the content is suitable for Gpu raster.
+  // Calling this will reset it back to not suitable state.
+  void ResetGpuRasterizationTracking();
 
   void SetRootLayer(scoped_refptr<Layer> root_layer);
   Layer* root_layer() { return root_layer_.get(); }
   const Layer* root_layer() const { return root_layer_.get(); }
-  const Layer* overscroll_elasticity_layer() const {
-    return overscroll_elasticity_layer_.get();
-  }
-  const Layer* page_scale_layer() const { return page_scale_layer_.get(); }
+
   void RegisterViewportLayers(scoped_refptr<Layer> overscroll_elasticity_layer,
                               scoped_refptr<Layer> page_scale_layer,
                               scoped_refptr<Layer> inner_viewport_scroll_layer,
                               scoped_refptr<Layer> outer_viewport_scroll_layer);
+
+  Layer* overscroll_elasticity_layer() const {
+    return overscroll_elasticity_layer_.get();
+  }
+  Layer* page_scale_layer() const { return page_scale_layer_.get(); }
   Layer* inner_viewport_scroll_layer() const {
     return inner_viewport_scroll_layer_.get();
   }
@@ -225,11 +259,12 @@ class CC_EXPORT LayerTreeHost : public MutatorHostClient {
   }
 
   void RegisterSelection(const LayerSelection& selection);
+  const LayerSelection& selection() const { return selection_; }
 
+  void SetHaveScrollEventHandlers(bool have_event_handlers);
   bool have_scroll_event_handlers() const {
     return have_scroll_event_handlers_;
   }
-  void SetHaveScrollEventHandlers(bool have_event_handlers);
 
   void SetEventListenerProperties(EventListenerClass event_class,
                                   EventListenerProperties event_properties);
@@ -238,38 +273,29 @@ class CC_EXPORT LayerTreeHost : public MutatorHostClient {
     return event_listener_properties_[static_cast<size_t>(event_class)];
   }
 
-  const LayerTreeSettings& settings() const { return settings_; }
-
-  void SetDebugState(const LayerTreeDebugState& debug_state);
-  const LayerTreeDebugState& debug_state() const { return debug_state_; }
-
-  bool has_gpu_rasterization_trigger() const {
-    return has_gpu_rasterization_trigger_;
-  }
-  void SetHasGpuRasterizationTrigger(bool has_trigger);
-
   void SetViewportSize(const gfx::Size& device_viewport_size);
-  void SetTopControlsHeight(float height, bool shrink);
-  void SetTopControlsShownRatio(float ratio);
-
   gfx::Size device_viewport_size() const { return device_viewport_size_; }
 
-  void ApplyPageScaleDeltaFromImplSide(float page_scale_delta);
+  void SetBrowserControlsHeight(float height, bool shrink);
+  void SetBrowserControlsShownRatio(float ratio);
+  void SetBottomControlsHeight(float height);
+
   void SetPageScaleFactorAndLimits(float page_scale_factor,
                                    float min_page_scale_factor,
                                    float max_page_scale_factor);
   float page_scale_factor() const { return page_scale_factor_; }
-  gfx::Vector2dF elastic_overscroll() const { return elastic_overscroll_; }
+  float min_page_scale_factor() const { return min_page_scale_factor_; }
+  float max_page_scale_factor() const { return max_page_scale_factor_; }
 
-  SkColor background_color() const { return background_color_; }
   void set_background_color(SkColor color) { background_color_ = color; }
+  SkColor background_color() const { return background_color_; }
 
   void set_has_transparent_background(bool transparent) {
     has_transparent_background_ = transparent;
   }
-
-  void SetVisible(bool visible);
-  bool visible() const { return visible_; }
+  bool has_transparent_background() const {
+    return has_transparent_background_;
+  }
 
   void StartPageScaleAnimation(const gfx::Vector2d& target_offset,
                                bool use_anchor,
@@ -277,93 +303,133 @@ class CC_EXPORT LayerTreeHost : public MutatorHostClient {
                                base::TimeDelta duration);
   bool HasPendingPageScaleAnimation() const;
 
-  void ApplyScrollAndScale(ScrollAndScaleSet* info);
-  void SetImplTransform(const gfx::Transform& transform);
-
   void SetDeviceScaleFactor(float device_scale_factor);
-  void SetPaintedDeviceScaleFactor(float painted_device_scale_factor);
-
   float device_scale_factor() const { return device_scale_factor_; }
 
-  void UpdateTopControlsState(TopControlsState constraints,
-                              TopControlsState current,
-                              bool animate);
-
-  HeadsUpDisplayLayer* hud_layer() const { return hud_layer_.get(); }
-
-  Proxy* proxy() const { return proxy_.get(); }
-  TaskRunnerProvider* task_runner_provider() const {
-    return task_runner_provider_.get();
+  void SetPaintedDeviceScaleFactor(float painted_device_scale_factor);
+  float painted_device_scale_factor() const {
+    return painted_device_scale_factor_;
   }
-  AnimationHost* animation_host() const { return animation_host_.get(); }
 
-  bool in_paint_layer_contents() const { return in_paint_layer_contents_; }
+  void SetContentSourceId(uint32_t);
+  uint32_t content_source_id() const { return content_source_id_; }
 
-  bool has_output_surface() const { return !!current_output_surface_; }
+  // If this LayerTreeHost needs a valid LocalSurfaceId then commits will be
+  // deferred until a valid LocalSurfaceId is provided.
+  void SetLocalSurfaceId(const LocalSurfaceId& local_surface_id);
+  const LocalSurfaceId& local_surface_id() const { return local_surface_id_; }
 
-  // CreateUIResource creates a resource given a bitmap.  The bitmap is
-  // generated via an interface function, which is called when initializing the
-  // resource and when the resource has been lost (due to lost context).  The
-  // parameter of the interface is a single boolean, which indicates whether the
-  // resource has been lost or not.  CreateUIResource returns an Id of the
-  // resource, which is always positive.
-  virtual UIResourceId CreateUIResource(UIResourceClient* client);
-  // Deletes a UI resource.  May safely be called more than once.
-  virtual void DeleteUIResource(UIResourceId id);
-  // Put the recreation of all UI resources into the resource queue after they
-  // were evicted on the impl thread.
-  void RecreateUIResources();
+  void SetRasterColorSpace(const gfx::ColorSpace& raster_color_space);
+  const gfx::ColorSpace& raster_color_space() const {
+    return raster_color_space_;
+  }
 
-  virtual gfx::Size GetUIResourceSize(UIResourceId id) const;
-
-  bool UsingSharedMemoryResources();
-  int id() const { return id_; }
-
-  // Returns the id of the benchmark on success, 0 otherwise.
-  int ScheduleMicroBenchmark(const std::string& benchmark_name,
-                             std::unique_ptr<base::Value> value,
-                             const MicroBenchmark::DoneCallback& callback);
-  // Returns true if the message was successfully delivered and handled.
-  bool SendMessageToMicroBenchmark(int id, std::unique_ptr<base::Value> value);
-
-  // When a SwapPromiseMonitor is created on the main thread, it calls
-  // InsertSwapPromiseMonitor() to register itself with LayerTreeHost.
-  // When the monitor is destroyed, it calls RemoveSwapPromiseMonitor()
-  // to unregister itself.
-  void InsertSwapPromiseMonitor(SwapPromiseMonitor* monitor);
-  void RemoveSwapPromiseMonitor(SwapPromiseMonitor* monitor);
-
-  // Call this function when you expect there to be a swap buffer.
-  // See swap_promise.h for how to use SwapPromise.
-  void QueueSwapPromise(std::unique_ptr<SwapPromise> swap_promise);
-
-  void BreakSwapPromises(SwapPromise::DidNotSwapReason reason);
-
-  size_t num_queued_swap_promises() const { return swap_promise_list_.size(); }
-
-  void set_surface_client_id(uint32_t client_id);
-  SurfaceSequence CreateSurfaceSequence();
-
+  // Used externally by blink for setting the PropertyTrees when
+  // |settings_.use_layer_lists| is true. This is a SPV2 setting.
   PropertyTrees* property_trees() { return &property_trees_; }
-  bool needs_meta_info_recomputation() {
-    return needs_meta_info_recomputation_;
-  }
 
-  void SetLayerTreeMutator(std::unique_ptr<LayerTreeMutator> mutator);
+  void SetNeedsDisplayOnAllLayers();
 
+  void RegisterLayer(Layer* layer);
+  void UnregisterLayer(Layer* layer);
   Layer* LayerById(int id) const;
 
-  Layer* LayerByElementId(ElementId element_id) const;
-  void AddToElementMap(Layer* layer);
-  void RemoveFromElementMap(Layer* layer);
+  size_t NumLayers() const;
+
+  bool in_update_property_trees() const { return in_update_property_trees_; }
+  bool PaintContent(const LayerList& update_layer_list,
+                    bool* content_is_suitable_for_gpu);
+  bool in_paint_layer_contents() const { return in_paint_layer_contents_; }
 
   void AddLayerShouldPushProperties(Layer* layer);
   void RemoveLayerShouldPushProperties(Layer* layer);
   std::unordered_set<Layer*>& LayersThatShouldPushProperties();
-  bool LayerNeedsPushPropertiesForTesting(Layer* layer);
+  bool LayerNeedsPushPropertiesForTesting(Layer* layer) const;
 
-  void RegisterLayer(Layer* layer);
-  void UnregisterLayer(Layer* layer);
+  void SetPageScaleFromImplSide(float page_scale);
+  void SetElasticOverscrollFromImplSide(gfx::Vector2dF elastic_overscroll);
+  gfx::Vector2dF elastic_overscroll() const { return elastic_overscroll_; }
+
+  void UpdateHudLayer(bool show_hud_info);
+  HeadsUpDisplayLayer* hud_layer() const { return hud_layer_.get(); }
+
+  virtual void SetNeedsFullTreeSync();
+  bool needs_full_tree_sync() const { return needs_full_tree_sync_; }
+
+  void SetPropertyTreesNeedRebuild();
+
+  void PushPropertiesTo(LayerTreeImpl* tree_impl);
+
+  MutatorHost* mutator_host() const { return mutator_host_; }
+
+  Layer* LayerByElementId(ElementId element_id) const;
+  void RegisterElement(ElementId element_id,
+                       ElementListType list_type,
+                       Layer* layer);
+  void UnregisterElement(ElementId element_id,
+                         ElementListType list_type,
+                         Layer* layer);
+  void SetElementIdsForTesting();
+
+  void BuildPropertyTreesForTesting();
+
+  // Layer iterators.
+  LayerListIterator<Layer> begin() const;
+  LayerListIterator<Layer> end() const;
+  LayerListReverseIterator<Layer> rbegin();
+  LayerListReverseIterator<Layer> rend();
+
+  // LayerTreeHostInProcess interface to Proxy.
+  void WillBeginMainFrame();
+  void DidBeginMainFrame();
+  void BeginMainFrame(const BeginFrameArgs& args);
+  void BeginMainFrameNotExpectedSoon();
+  void AnimateLayers(base::TimeTicks monotonic_frame_begin_time);
+  void RequestMainFrameUpdate();
+  void FinishCommitOnImplThread(LayerTreeHostImpl* host_impl);
+  void WillCommit();
+  void CommitComplete();
+  void RequestNewCompositorFrameSink();
+  void DidInitializeCompositorFrameSink();
+  void DidFailToInitializeCompositorFrameSink();
+  virtual std::unique_ptr<LayerTreeHostImpl> CreateLayerTreeHostImpl(
+      LayerTreeHostImplClient* client);
+  void DidLoseCompositorFrameSink();
+  void DidCommitAndDrawFrame() { client_->DidCommitAndDrawFrame(); }
+  void DidReceiveCompositorFrameAck() {
+    client_->DidReceiveCompositorFrameAck();
+  }
+  bool UpdateLayers();
+  // Called when the compositor completed page scale animation.
+  void DidCompletePageScaleAnimation();
+  void ApplyScrollAndScale(ScrollAndScaleSet* info);
+
+  LayerTreeHostClient* client() { return client_; }
+
+  bool gpu_rasterization_histogram_recorded() const {
+    return gpu_rasterization_histogram_recorded_;
+  }
+
+  void CollectRenderingStats(RenderingStats* stats) const;
+
+  RenderingStatsInstrumentation* rendering_stats_instrumentation() const {
+    return rendering_stats_instrumentation_.get();
+  }
+
+  void SetAnimationEvents(std::unique_ptr<MutatorEvents> events);
+
+  bool has_gpu_rasterization_trigger() const {
+    return has_gpu_rasterization_trigger_;
+  }
+
+  Proxy* proxy() const { return proxy_.get(); }
+
+  bool IsSingleThreaded() const;
+  bool IsThreaded() const;
+
+  // SurfaceReferenceOwner implementation.
+  SurfaceSequenceGenerator* GetSurfaceSequenceGenerator() override;
+
   // MutatorHostClient implementation.
   bool IsElementInList(ElementId element_id,
                        ElementListType list_type) const override;
@@ -382,100 +448,49 @@ class CC_EXPORT LayerTreeHost : public MutatorHostClient {
       ElementId element_id,
       ElementListType list_type,
       const gfx::ScrollOffset& scroll_offset) override;
-  void ElementTransformIsAnimatingChanged(ElementId element_id,
-                                          ElementListType list_type,
-                                          AnimationChangeType change_type,
-                                          bool is_animating) override;
-  void ElementOpacityIsAnimatingChanged(ElementId element_id,
-                                        ElementListType list_type,
-                                        AnimationChangeType change_type,
-                                        bool is_animating) override;
-  void ElementFilterIsAnimatingChanged(ElementId element_id,
-                                       ElementListType list_type,
-                                       AnimationChangeType change_type,
-                                       bool is_animating) override;
+
+  void ElementIsAnimatingChanged(ElementId element_id,
+                                 ElementListType list_type,
+                                 const PropertyAnimationState& mask,
+                                 const PropertyAnimationState& state) override;
+
   void ScrollOffsetAnimationFinished() override {}
   gfx::ScrollOffset GetScrollOffsetForAnimation(
       ElementId element_id) const override;
 
-  // Serializes the parts of this LayerTreeHost that is needed for a commit to a
-  // protobuf message. Not all members are serialized as they are not helpful
-  // for remote usage.
-  // The |swap_promise_list_| is transferred to the serializer in
-  // |swap_promises|.
-  void ToProtobufForCommit(
-      proto::LayerTreeHost* proto,
-      std::vector<std::unique_ptr<SwapPromise>>* swap_promises);
-
-  // Deserializes the protobuf into this LayerTreeHost before a commit. The
-  // expected input is a serialized remote LayerTreeHost. After deserializing
-  // the protobuf, the normal commit-flow should continue.
-  void FromProtobufForCommit(const proto::LayerTreeHost& proto);
-
-  bool IsSingleThreaded() const;
-  bool IsThreaded() const;
-  bool IsRemoteServer() const;
-  bool IsRemoteClient() const;
-  void BuildPropertyTreesForTesting();
-
-  void SetElementIdsForTesting();
-
-  ImageSerializationProcessor* image_serialization_processor() const {
-    return image_serialization_processor_;
-  }
-
-  EnginePictureCache* engine_picture_cache() const {
-    return engine_picture_cache_ ? engine_picture_cache_.get() : nullptr;
-  }
-
-  ClientPictureCache* client_picture_cache() const {
-    return client_picture_cache_ ? client_picture_cache_.get() : nullptr;
-  }
+  void QueueImageDecode(sk_sp<const SkImage> image,
+                        const base::Callback<void(bool)>& callback);
 
  protected:
   LayerTreeHost(InitParams* params, CompositorMode mode);
+
   void InitializeThreaded(
       scoped_refptr<base::SingleThreadTaskRunner> main_task_runner,
-      scoped_refptr<base::SingleThreadTaskRunner> impl_task_runner,
-      std::unique_ptr<BeginFrameSource> external_begin_frame_source);
+      scoped_refptr<base::SingleThreadTaskRunner> impl_task_runner);
   void InitializeSingleThreaded(
       LayerTreeHostSingleThreadClient* single_thread_client,
-      scoped_refptr<base::SingleThreadTaskRunner> main_task_runner,
-      std::unique_ptr<BeginFrameSource> external_begin_frame_source);
-  void InitializeRemoteServer(
-      RemoteProtoChannel* remote_proto_channel,
       scoped_refptr<base::SingleThreadTaskRunner> main_task_runner);
-  void InitializeRemoteClient(
-      RemoteProtoChannel* remote_proto_channel,
-      scoped_refptr<base::SingleThreadTaskRunner> main_task_runner,
-      scoped_refptr<base::SingleThreadTaskRunner> impl_task_runner);
   void InitializeForTesting(
       std::unique_ptr<TaskRunnerProvider> task_runner_provider,
-      std::unique_ptr<Proxy> proxy_for_testing,
-      std::unique_ptr<BeginFrameSource> external_begin_frame_source);
-  void InitializePictureCacheForTesting();
-  void SetOutputSurfaceLostForTesting(bool is_lost) {
-    output_surface_lost_ = is_lost;
-  }
+      std::unique_ptr<Proxy> proxy_for_testing);
   void SetTaskRunnerProviderForTesting(
       std::unique_ptr<TaskRunnerProvider> task_runner_provider);
+  void SetUIResourceManagerForTesting(
+      std::unique_ptr<UIResourceManager> ui_resource_manager);
 
-  // shared_bitmap_manager(), gpu_memory_buffer_manager(), and
-  // task_graph_runner() return valid values only until the LayerTreeHostImpl is
-  // created in CreateLayerTreeHostImpl().
-  SharedBitmapManager* shared_bitmap_manager() const {
-    return shared_bitmap_manager_;
-  }
-  gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager() const {
-    return gpu_memory_buffer_manager_;
-  }
+  // task_graph_runner() returns a valid value only until the LayerTreeHostImpl
+  // is created in CreateLayerTreeHostImpl().
   TaskGraphRunner* task_graph_runner() const { return task_graph_runner_; }
-
-  MicroBenchmarkController micro_benchmark_controller_;
 
   void OnCommitForSwapPromises();
 
-  void RecordGpuRasterizationHistogram();
+  void RecordGpuRasterizationHistogram(const LayerTreeHostImpl* host_impl);
+
+  MicroBenchmarkController micro_benchmark_controller_;
+
+  base::WeakPtr<InputHandler> input_handler_weak_ptr_;
+
+  scoped_refptr<base::SequencedTaskRunner> image_worker_task_runner_;
 
  private:
   friend class LayerTreeHostSerializationTest;
@@ -485,133 +500,123 @@ class CC_EXPORT LayerTreeHost : public MutatorHostClient {
   enum { kNumFramesToConsiderBeforeGpuRasterization = 60 };
 
   void ApplyViewportDeltas(ScrollAndScaleSet* info);
-  void InitializeProxy(
-      std::unique_ptr<Proxy> proxy,
-      std::unique_ptr<BeginFrameSource> external_begin_frame_source);
+  void RecordWheelAndTouchScrollingCount(ScrollAndScaleSet* info);
+  void ApplyPageScaleDeltaFromImplSide(float page_scale_delta);
+  void InitializeProxy(std::unique_ptr<Proxy> proxy);
 
   bool DoUpdateLayers(Layer* root_layer);
-  void UpdateHudLayer();
 
-  bool AnimateLayersRecursive(Layer* current, base::TimeTicks time);
-
-  struct UIResourceClientData {
-    UIResourceClient* client;
-    gfx::Size size;
-  };
-
-  using UIResourceClientMap =
-      std::unordered_map<UIResourceId, UIResourceClientData>;
-  UIResourceClientMap ui_resource_client_map_;
-  int next_ui_resource_id_;
-
-  using UIResourceRequestQueue = std::vector<UIResourceRequest>;
-  UIResourceRequestQueue ui_resource_request_queue_;
-
-  void CalculateLCDTextMetricsCallback(Layer* layer);
-
-  void NotifySwapPromiseMonitorsOfSetNeedsCommit();
-
-  void SetPropertyTreesNeedRebuild();
+  void UpdateDeferCommitsInternal();
 
   const CompositorMode compositor_mode_;
 
-  bool needs_full_tree_sync_;
-  bool needs_meta_info_recomputation_;
+  std::unique_ptr<UIResourceManager> ui_resource_manager_;
 
   LayerTreeHostClient* client_;
   std::unique_ptr<Proxy> proxy_;
   std::unique_ptr<TaskRunnerProvider> task_runner_provider_;
 
-  int source_frame_number_;
+  int source_frame_number_ = 0U;
   std::unique_ptr<RenderingStatsInstrumentation>
       rendering_stats_instrumentation_;
 
-  // |current_output_surface_| can't be updated until we've successfully
-  // initialized a new output surface. |new_output_surface_| contains the
-  // new output surface that is currently being initialized. If initialization
-  // is successful then |new_output_surface_| replaces
-  // |current_output_surface_|.
-  std::unique_ptr<OutputSurface> new_output_surface_;
-  std::unique_ptr<OutputSurface> current_output_surface_;
-  bool output_surface_lost_;
+  SwapPromiseManager swap_promise_manager_;
 
-  scoped_refptr<Layer> root_layer_;
-  scoped_refptr<HeadsUpDisplayLayer> hud_layer_;
-
-  base::WeakPtr<InputHandler> input_handler_weak_ptr_;
+  // |current_compositor_frame_sink_| can't be updated until we've successfully
+  // initialized a new CompositorFrameSink. |new_compositor_frame_sink_|
+  // contains the new CompositorFrameSink that is currently being initialized.
+  // If initialization is successful then |new_compositor_frame_sink_| replaces
+  // |current_compositor_frame_sink_|.
+  std::unique_ptr<CompositorFrameSink> new_compositor_frame_sink_;
+  std::unique_ptr<CompositorFrameSink> current_compositor_frame_sink_;
 
   const LayerTreeSettings settings_;
   LayerTreeDebugState debug_state_;
 
-  gfx::Size device_viewport_size_;
-  bool top_controls_shrink_blink_size_;
-  float top_controls_height_;
-  float top_controls_shown_ratio_;
-  float device_scale_factor_;
-  float painted_device_scale_factor_;
+  bool visible_ = false;
 
-  bool visible_;
-
-  float page_scale_factor_;
-  float min_page_scale_factor_;
-  float max_page_scale_factor_;
-  gfx::Vector2dF elastic_overscroll_;
-  bool has_gpu_rasterization_trigger_;
-  bool content_is_suitable_for_gpu_rasterization_;
-  bool gpu_rasterization_histogram_recorded_;
-
-  SkColor background_color_;
-  bool has_transparent_background_;
-
-  bool have_scroll_event_handlers_;
-  EventListenerProperties event_listener_properties_[static_cast<size_t>(
-      EventListenerClass::kNumClasses)];
-
-  std::unique_ptr<AnimationHost> animation_host_;
-
-  std::unique_ptr<PendingPageScaleAnimation> pending_page_scale_animation_;
+  bool has_gpu_rasterization_trigger_ = false;
+  bool content_is_suitable_for_gpu_rasterization_ = true;
+  bool gpu_rasterization_histogram_recorded_ = false;
 
   // If set, then page scale animation has completed, but the client hasn't been
   // notified about it yet.
-  bool did_complete_scale_animation_;
-
-  bool in_paint_layer_contents_;
+  bool did_complete_scale_animation_ = false;
 
   int id_;
-  bool next_commit_forces_redraw_;
+  bool next_commit_forces_redraw_ = false;
+  bool next_commit_forces_recalculate_raster_scales_ = false;
+  // Track when we're inside a main frame to see if compositor is being
+  // destroyed midway which causes a crash. crbug.com/654672
+  bool inside_main_frame_ = false;
+
+  TaskGraphRunner* task_graph_runner_;
+
+  SurfaceSequenceGenerator surface_sequence_generator_;
+  uint32_t num_consecutive_frames_suitable_for_gpu_ = 0;
+
+  scoped_refptr<Layer> root_layer_;
 
   scoped_refptr<Layer> overscroll_elasticity_layer_;
   scoped_refptr<Layer> page_scale_layer_;
   scoped_refptr<Layer> inner_viewport_scroll_layer_;
   scoped_refptr<Layer> outer_viewport_scroll_layer_;
 
+  float top_controls_height_ = 0.f;
+  float top_controls_shown_ratio_ = 0.f;
+  bool browser_controls_shrink_blink_size_ = false;
+
+  float bottom_controls_height_ = 0.f;
+
+  float device_scale_factor_ = 1.f;
+  float painted_device_scale_factor_ = 1.f;
+  float page_scale_factor_ = 1.f;
+  float min_page_scale_factor_ = 1.f;
+  float max_page_scale_factor_ = 1.f;
+  gfx::ColorSpace raster_color_space_;
+
+  uint32_t content_source_id_;
+  LocalSurfaceId local_surface_id_;
+  bool defer_commits_ = false;
+
+  SkColor background_color_ = SK_ColorWHITE;
+  bool has_transparent_background_ = false;
+
   LayerSelection selection_;
 
-  SharedBitmapManager* shared_bitmap_manager_;
-  gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager_;
-  TaskGraphRunner* task_graph_runner_;
+  gfx::Size device_viewport_size_;
 
-  ImageSerializationProcessor* image_serialization_processor_;
-  std::unique_ptr<EnginePictureCache> engine_picture_cache_;
-  std::unique_ptr<ClientPictureCache> client_picture_cache_;
+  bool have_scroll_event_handlers_ = false;
+  EventListenerProperties event_listener_properties_[static_cast<size_t>(
+      EventListenerClass::kNumClasses)];
 
-  std::vector<std::unique_ptr<SwapPromise>> swap_promise_list_;
-  std::set<SwapPromiseMonitor*> swap_promise_monitor_;
+  std::unique_ptr<PendingPageScaleAnimation> pending_page_scale_animation_;
 
   PropertyTrees property_trees_;
 
-  using LayerIdMap = std::unordered_map<int, Layer*>;
-  LayerIdMap layer_id_map_;
+  bool needs_full_tree_sync_ = true;
 
-  using ElementLayersMap = std::unordered_map<ElementId, Layer*, ElementIdHash>;
-  ElementLayersMap element_layers_map_;
+  gfx::Vector2dF elastic_overscroll_;
+
+  scoped_refptr<HeadsUpDisplayLayer> hud_layer_;
 
   // Set of layers that need to push properties.
   std::unordered_set<Layer*> layers_that_should_push_properties_;
 
-  uint32_t surface_client_id_;
-  uint32_t next_surface_sequence_;
-  uint32_t num_consecutive_frames_suitable_for_gpu_ = 0;
+  // Layer id to Layer map.
+  std::unordered_map<int, Layer*> layer_id_map_;
+
+  std::unordered_map<ElementId, Layer*, ElementIdHash> element_layers_map_;
+
+  bool in_paint_layer_contents_ = false;
+  bool in_update_property_trees_ = false;
+
+  MutatorHost* mutator_host_;
+
+  std::vector<std::pair<sk_sp<const SkImage>, base::Callback<void(bool)>>>
+      queued_image_decodes_;
+
+  bool did_navigate_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(LayerTreeHost);
 };

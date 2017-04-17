@@ -26,6 +26,10 @@
 // is fixed. For now, put it at the end to avoid compiler errors.
 #import "breakpad/src/client/ios/BreakpadController.h"
 
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
+
 namespace breakpad_helper {
 
 namespace {
@@ -46,7 +50,6 @@ NSString* const kUploadedInRecoveryMode = @"uploaded_in_recovery_mode";
 // Multiple state information are combined into one CrachReportMultiParameter
 // to save limited and finite number of ReportParameters.
 // These are the values grouped in the user_application_state parameter.
-NSString* const kDataProxyIsEnabled = @"dataproxy";
 NSString* const kOrientationState = @"orient";
 NSString* const kHorizontalSizeClass = @"sizeclass";
 NSString* const kSignedIn = @"signIn";
@@ -194,7 +197,6 @@ void AddReportParameter(NSString* key, NSString* value, bool async) {
     dispatch_semaphore_signal(semaphore);
   }];
   dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-  dispatch_release(semaphore);
 }
 
 int GetCrashReportCount() {
@@ -205,7 +207,6 @@ int GetCrashReportCount() {
     dispatch_semaphore_signal(semaphore);
   }];
   dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-  dispatch_release(semaphore);
   return outerCrashReportCount;
 }
 
@@ -286,17 +287,6 @@ void SetCurrentlySignedIn(bool signedIn) {
                                                      withValue:1];
   } else {
     [[CrashReportUserApplicationState sharedInstance] removeValue:kSignedIn];
-  }
-}
-
-void SetDataReductionProxyIsEnabled(bool value) {
-  if (value) {
-    [[CrashReportUserApplicationState sharedInstance]
-         setValue:kDataProxyIsEnabled
-        withValue:value];
-  } else {
-    [[CrashReportUserApplicationState sharedInstance]
-        removeValue:kDataProxyIsEnabled];
   }
 }
 

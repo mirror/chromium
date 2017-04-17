@@ -14,7 +14,6 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
-#include "base/feature_list.h"
 #include "base/format_macros.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -23,6 +22,7 @@
 #include "base/process/process.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
+#include "base/test/scoped_feature_list.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/loader/resource_loader.h"
 #include "content/browser/loader/resource_loader_delegate.h"
@@ -33,7 +33,7 @@
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/common/content_features.h"
-#include "content/public/common/process_type.h"
+#include "content/public/common/previews_state.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/test/mock_resource_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -64,6 +64,10 @@ std::string GenerateHeader(size_t response_data_size) {
       response_data_size);
 }
 
+int64_t TotalReceivedBytes(size_t response_data_size) {
+  return response_data_size + GenerateHeader(response_data_size).size();
+}
+
 std::string GenerateData(size_t response_data_size) {
   return std::string(response_data_size, 'a');
 }
@@ -92,16 +96,16 @@ class RecordingResourceMessageFilter : public ResourceMessageFilter {
                                  net::URLRequestContext* request_context)
       : ResourceMessageFilter(
             0,
-            PROCESS_TYPE_RENDERER,
-            nullptr,
             nullptr,
             nullptr,
             nullptr,
             nullptr,
             base::Bind(&RecordingResourceMessageFilter::GetContexts,
-                       base::Unretained(this))),
+                       base::Unretained(this)),
+            BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)),
         resource_context_(resource_context),
         request_context_(request_context) {
+    InitializeForTest();
     set_peer_process_for_testing(base::Process::Current());
   }
 
@@ -143,7 +147,10 @@ class AsyncResourceHandlerTest : public ::testing::Test,
       : thread_bundle_(TestBrowserThreadBundle::IO_MAINLOOP), context_(true) {}
 
   void TearDown() override {
+    if (filter_)
+      filter_->OnChannelClosing();
     // Prevent memory leaks.
+    filter_ = nullptr;
     rdh_.Shutdown();
     base::RunLoop().RunUntilIdle();
   }
@@ -159,40 +166,37 @@ class AsyncResourceHandlerTest : public ::testing::Test,
     filter_ =
         new RecordingResourceMessageFilter(resource_context_.get(), &context_);
     ResourceRequestInfoImpl* info = new ResourceRequestInfoImpl(
-        PROCESS_TYPE_RENDERER,                 // process_type
-        0,                                     // child_id
-        0,                                     // route_id
-        -1,                                    // frame_tree_node_id
-        0,                                     // origin_pid
-        0,                                     // request_id
-        0,                                     // render_frame_id
-        false,                                 // is_main_frame
-        false,                                 // parent_is_main_frame
-        RESOURCE_TYPE_IMAGE,                   // resource_type
-        ui::PAGE_TRANSITION_LINK,              // transition_type
-        false,                                 // should_replace_current_entry
-        false,                                 // is_download
-        false,                                 // is_stream
-        false,                                 // allow_download
-        false,                                 // has_user_gesture
-        false,                                 // enable load timing
-        false,                                 // enable upload progress
-        false,                                 // do_not_prompt_for_login
-        blink::WebReferrerPolicyDefault,       // referrer_policy
-        blink::WebPageVisibilityStateVisible,  // visibility_state
-        resource_context_.get(),               // context
-        filter_->GetWeakPtr(),                 // filter
-        false,                                 // report_raw_headers
-        true,                                  // is_async
-        false,                                 // is_using_lofi
-        std::string(),                         // original_headers
-        nullptr,                               // body
-        false);                                // initiated_in_secure_context
+        filter_->requester_info_for_test(),
+        0,                                      // route_id
+        -1,                                     // frame_tree_node_id
+        0,                                      // origin_pid
+        0,                                      // request_id
+        0,                                      // render_frame_id
+        false,                                  // is_main_frame
+        false,                                  // parent_is_main_frame
+        RESOURCE_TYPE_IMAGE,                    // resource_type
+        ui::PAGE_TRANSITION_LINK,               // transition_type
+        false,                                  // should_replace_current_entry
+        false,                                  // is_download
+        false,                                  // is_stream
+        false,                                  // allow_download
+        false,                                  // has_user_gesture
+        false,                                  // enable load timing
+        false,                                  // enable upload progress
+        false,                                  // do_not_prompt_for_login
+        blink::kWebReferrerPolicyDefault,       // referrer_policy
+        blink::kWebPageVisibilityStateVisible,  // visibility_state
+        resource_context_.get(),                // context
+        false,                                  // report_raw_headers
+        true,                                   // is_async
+        PREVIEWS_OFF,                           // previews_state
+        nullptr,                                // body
+        false);                                 // initiated_in_secure_context
     info->AssociateWithRequest(request.get());
     std::unique_ptr<AsyncResourceHandler> handler =
         base::MakeUnique<AsyncResourceHandler>(request.get(), &rdh_);
     loader_ = base::MakeUnique<ResourceLoader>(
-        std::move(request), std::move(handler), nullptr, this);
+        std::move(request), std::move(handler), this);
   }
 
   void StartRequestAndWaitWithResponseDataSize(size_t response_data_size) {
@@ -218,8 +222,10 @@ class AsyncResourceHandlerTest : public ::testing::Test,
   }
   void DidStartRequest(ResourceLoader* loader) override {}
   void DidReceiveRedirect(ResourceLoader* loader,
-                          const GURL& new_url) override {}
-  void DidReceiveResponse(ResourceLoader* loader) override {}
+                          const GURL& new_url,
+                          ResourceResponse* response) override {}
+  void DidReceiveResponse(ResourceLoader* loader,
+                          ResourceResponse* response) override {}
   void DidFinishLoading(ResourceLoader* loader) override {
     loader_.reset();
     finish_waiter_->Quit();
@@ -245,7 +251,8 @@ TEST_F(AsyncResourceHandlerTest, Construct) {
 TEST_F(AsyncResourceHandlerTest, OneChunkLengths) {
   // Larger than kInlinedLeadingChunkSize and smaller than
   // kMaxAllocationSize.
-  StartRequestAndWaitWithResponseDataSize(4096);
+  constexpr auto kDataSize = 4096;
+  StartRequestAndWaitWithResponseDataSize(kDataSize);
   const auto& messages = filter_->messages();
   ASSERT_EQ(4u, messages.size());
   ASSERT_EQ(ResourceMsg_DataReceived::ID, messages[2]->type());
@@ -253,37 +260,23 @@ TEST_F(AsyncResourceHandlerTest, OneChunkLengths) {
   ResourceMsg_DataReceived::Read(messages[2].get(), &params);
 
   int encoded_data_length = std::get<3>(params);
-  EXPECT_EQ(4157, encoded_data_length);
-  int encoded_body_length = std::get<4>(params);
-  EXPECT_EQ(4096, encoded_body_length);
-}
+  EXPECT_EQ(kDataSize, encoded_data_length);
 
-TEST_F(AsyncResourceHandlerTest, InlinedChunkLengths) {
-  // TODO(ricea): Remove this Feature-enabling code once the feature is on by
-  // default.
-  auto feature_list = base::MakeUnique<base::FeatureList>();
-  feature_list->InitializeFromCommandLine(
-      features::kOptimizeLoadingIPCForSmallResources.name, "");
-  base::FeatureList::ClearInstanceForTesting();
-  base::FeatureList::SetInstance(std::move(feature_list));
+  ASSERT_EQ(ResourceMsg_RequestComplete::ID, messages[3]->type());
+  ResourceMsg_RequestComplete::Param completion_params;
+  ResourceMsg_RequestComplete::Read(messages[3].get(), &completion_params);
+  ResourceRequestCompletionStatus completion_status =
+      std::get<1>(completion_params);
 
-  // Smaller than kInlinedLeadingChunkSize.
-  StartRequestAndWaitWithResponseDataSize(8);
-  const auto& messages = filter_->messages();
-  ASSERT_EQ(3u, messages.size());
-  ASSERT_EQ(ResourceMsg_InlinedDataChunkReceived::ID, messages[1]->type());
-  ResourceMsg_InlinedDataChunkReceived::Param params;
-  ResourceMsg_InlinedDataChunkReceived::Read(messages[1].get(), &params);
-
-  int encoded_data_length = std::get<2>(params);
-  EXPECT_EQ(66, encoded_data_length);
-  int encoded_body_length = std::get<3>(params);
-  EXPECT_EQ(8, encoded_body_length);
+  EXPECT_EQ(TotalReceivedBytes(kDataSize),
+            completion_status.encoded_data_length);
+  EXPECT_EQ(kDataSize, completion_status.encoded_body_length);
 }
 
 TEST_F(AsyncResourceHandlerTest, TwoChunksLengths) {
   // Larger than kMaxAllocationSize.
-  StartRequestAndWaitWithResponseDataSize(64*1024);
+  constexpr auto kDataSize = 64 * 1024;
+  StartRequestAndWaitWithResponseDataSize(kDataSize);
   const auto& messages = filter_->messages();
   ASSERT_EQ(5u, messages.size());
   ASSERT_EQ(ResourceMsg_DataReceived::ID, messages[2]->type());
@@ -291,17 +284,22 @@ TEST_F(AsyncResourceHandlerTest, TwoChunksLengths) {
   ResourceMsg_DataReceived::Read(messages[2].get(), &params);
 
   int encoded_data_length = std::get<3>(params);
-  EXPECT_EQ(32830, encoded_data_length);
-  int encoded_body_length = std::get<4>(params);
-  EXPECT_EQ(32768, encoded_body_length);
+  EXPECT_EQ(32768, encoded_data_length);
 
   ASSERT_EQ(ResourceMsg_DataReceived::ID, messages[3]->type());
   ResourceMsg_DataReceived::Read(messages[3].get(), &params);
 
   encoded_data_length = std::get<3>(params);
   EXPECT_EQ(32768, encoded_data_length);
-  encoded_body_length = std::get<4>(params);
-  EXPECT_EQ(32768, encoded_body_length);
+
+  ASSERT_EQ(ResourceMsg_RequestComplete::ID, messages[4]->type());
+  ResourceMsg_RequestComplete::Param completion_params;
+  ResourceMsg_RequestComplete::Read(messages[4].get(), &completion_params);
+  ResourceRequestCompletionStatus completion_status =
+      std::get<1>(completion_params);
+  EXPECT_EQ(TotalReceivedBytes(kDataSize),
+            completion_status.encoded_data_length);
+  EXPECT_EQ(kDataSize, completion_status.encoded_body_length);
 }
 
 }  // namespace

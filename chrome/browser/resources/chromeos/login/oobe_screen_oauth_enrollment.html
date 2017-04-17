@@ -2,11 +2,23 @@
      Use of this source code is governed by a BSD-style license that can be
      found in the LICENSE file. -->
 
+<link rel="import" href="chrome://oobe/custom_elements.html">
+
 <div id="oauth-enrollment" class="step no-logo hidden" hidden>
   <div id="oauth-enroll-step-contents">
     <div id="oauth-enroll-step-signin">
       <webview id="oauth-enroll-auth-view" name="oauth-enroll-auth-view">
       </webview>
+    </div>
+    <div id="oauth-enroll-step-working">
+      <throbber-notice class="fit" i18n-values="text:oauthEnrollWorking">
+      </throbber-notice>
+    </div>
+    <div id="oauth-enroll-step-ad-join">
+      <offline-ad-login id="oauth-enroll-ad-join-ui" show-machine-input
+          class="fit" i18n-values=
+          "ad-welcome-message:oauthEnrollAdDomainJoinWelcomeMessage">
+      </offline-ad-login>
     </div>
     <div id="oauth-enroll-step-error" role="alert">
       <notification-card id="oauth-enroll-error-card" type="fail"
@@ -17,6 +29,11 @@
       <notification-card id="oauth-enroll-success-card" type="success"
           i18n-values="button-label:oauthEnrollDone"
           i18n-content="oauthEnrollSuccess">
+      </notification-card>
+    </div>
+    <div id="oauth-enroll-step-abe-success" role="alert">
+      <notification-card id="oauth-enroll-abe-success-card" type="success"
+          i18n-values="button-label:oauthEnrollDone">
       </notification-card>
     </div>
     <div id="oauth-enroll-step-attribute-prompt">
@@ -33,7 +50,7 @@
                   i18n-content="oauthEnrollAttributeExplanation"></span>
             <a href="#" id="oauth-enroll-learn-more-link"
                class="oauth-enroll-link"
-               i18n-content="oauthEnrollExplaneAttributeLink"></a>
+               i18n-content="oauthEnrollExplainAttributeLink"></a>
             <gaia-input-form id="oauth-enroll-attribute-input"
                              i18n-values="button-text:oauthEnrollNextBtn">
               <gaia-input id="oauth-enroll-asset-id" type="text"
@@ -53,6 +70,11 @@
     <div id="oauth-enroll-step-attribute-prompt-error">
       <notification-card id="oauth-enroll-attribute-prompt-error-card"
           type="fail" i18n-values="button-label:oauthEnrollDone">
+      </notification-card>
+    </div>
+    <div id="oauth-enroll-step-active-directory-join-error">
+      <notification-card id="oauth-enroll-active-directory-join-error-card"
+          type="fail" i18n-values="button-label:oauthEnrollRetry">
       </notification-card>
     </div>
   </div>

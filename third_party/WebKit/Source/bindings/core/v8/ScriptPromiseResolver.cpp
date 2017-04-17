@@ -4,94 +4,87 @@
 
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 
-#include "core/inspector/InspectorInstrumentation.h"
+#include "core/dom/ExecutionContext.h"
+#include "core/dom/TaskRunnerHelper.h"
+#include "core/probe/CoreProbes.h"
 
 namespace blink {
 
-ScriptPromiseResolver::ScriptPromiseResolver(ScriptState* scriptState)
-    : ActiveDOMObject(scriptState->getExecutionContext())
-    , m_state(Pending)
-    , m_scriptState(scriptState)
-    , m_timer(this, &ScriptPromiseResolver::onTimerFired)
-    , m_resolver(scriptState)
-#if ENABLE(ASSERT)
-    , m_isPromiseCalled(false)
-#endif
-{
-    if (getExecutionContext()->activeDOMObjectsAreStopped()) {
-        m_state = Detached;
-        m_resolver.clear();
+ScriptPromiseResolver::ScriptPromiseResolver(ScriptState* script_state)
+    : SuspendableObject(ExecutionContext::From(script_state)),
+      state_(kPending),
+      script_state_(script_state),
+      timer_(TaskRunnerHelper::Get(TaskType::kMicrotask, GetExecutionContext()),
+             this,
+             &ScriptPromiseResolver::OnTimerFired),
+      resolver_(script_state) {
+  if (GetExecutionContext()->IsContextDestroyed()) {
+    state_ = kDetached;
+    resolver_.Clear();
+  }
+  probe::AsyncTaskScheduled(GetExecutionContext(), "Promise", this);
+}
+
+void ScriptPromiseResolver::Suspend() {
+  timer_.Stop();
+}
+
+void ScriptPromiseResolver::Resume() {
+  if (state_ == kResolving || state_ == kRejecting)
+    timer_.StartOneShot(0, BLINK_FROM_HERE);
+}
+
+void ScriptPromiseResolver::Detach() {
+  if (state_ == kDetached)
+    return;
+  timer_.Stop();
+  state_ = kDetached;
+  resolver_.Clear();
+  value_.Clear();
+  keep_alive_.Clear();
+  probe::AsyncTaskCanceled(GetExecutionContext(), this);
+}
+
+void ScriptPromiseResolver::KeepAliveWhilePending() {
+  // keepAliveWhilePending() will be called twice if the resolver
+  // is created in a suspended execution context and the resolver
+  // is then resolved/rejected while in that suspended state.
+  if (state_ == kDetached || keep_alive_)
+    return;
+
+  // Keep |this| around while the promise is Pending;
+  // see detach() for the dual operation.
+  keep_alive_ = this;
+}
+
+void ScriptPromiseResolver::OnTimerFired(TimerBase*) {
+  ASSERT(state_ == kResolving || state_ == kRejecting);
+  if (!GetScriptState()->ContextIsValid()) {
+    Detach();
+    return;
+  }
+
+  ScriptState::Scope scope(script_state_.Get());
+  ResolveOrRejectImmediately();
+}
+
+void ScriptPromiseResolver::ResolveOrRejectImmediately() {
+  DCHECK(!GetExecutionContext()->IsContextDestroyed());
+  DCHECK(!GetExecutionContext()->IsContextSuspended());
+  {
+    probe::AsyncTask async_task(GetExecutionContext(), this);
+    if (state_ == kResolving) {
+      resolver_.Resolve(value_.NewLocal(script_state_->GetIsolate()));
+    } else {
+      ASSERT(state_ == kRejecting);
+      resolver_.Reject(value_.NewLocal(script_state_->GetIsolate()));
     }
-    InspectorInstrumentation::asyncTaskScheduled(getExecutionContext(), "Promise", this);
+  }
+  Detach();
 }
 
-void ScriptPromiseResolver::suspend()
-{
-    m_timer.stop();
+DEFINE_TRACE(ScriptPromiseResolver) {
+  SuspendableObject::Trace(visitor);
 }
 
-void ScriptPromiseResolver::resume()
-{
-    if (m_state == Resolving || m_state == Rejecting)
-        m_timer.startOneShot(0, BLINK_FROM_HERE);
-}
-
-void ScriptPromiseResolver::detach()
-{
-    if (m_state == Detached)
-        return;
-    m_timer.stop();
-    m_state = Detached;
-    m_resolver.clear();
-    m_value.clear();
-    m_keepAlive.clear();
-    InspectorInstrumentation::asyncTaskCanceled(getExecutionContext(), this);
-}
-
-void ScriptPromiseResolver::keepAliveWhilePending()
-{
-    // keepAliveWhilePending() will be called twice if the resolver
-    // is created in a suspended execution context and the resolver
-    // is then resolved/rejected while in that suspended state.
-    if (m_state == Detached || m_keepAlive)
-        return;
-
-    // Keep |this| around while the promise is Pending;
-    // see detach() for the dual operation.
-    m_keepAlive = this;
-}
-
-void ScriptPromiseResolver::onTimerFired(Timer<ScriptPromiseResolver>*)
-{
-    ASSERT(m_state == Resolving || m_state == Rejecting);
-    if (!getScriptState()->contextIsValid()) {
-        detach();
-        return;
-    }
-
-    ScriptState::Scope scope(m_scriptState.get());
-    resolveOrRejectImmediately();
-}
-
-void ScriptPromiseResolver::resolveOrRejectImmediately()
-{
-    ASSERT(!getExecutionContext()->activeDOMObjectsAreStopped());
-    ASSERT(!getExecutionContext()->activeDOMObjectsAreSuspended());
-    {
-        InspectorInstrumentation::AsyncTask asyncTask(getExecutionContext(), this);
-        if (m_state == Resolving) {
-            m_resolver.resolve(m_value.newLocal(m_scriptState->isolate()));
-        } else {
-            ASSERT(m_state == Rejecting);
-            m_resolver.reject(m_value.newLocal(m_scriptState->isolate()));
-        }
-    }
-    detach();
-}
-
-DEFINE_TRACE(ScriptPromiseResolver)
-{
-    ActiveDOMObject::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

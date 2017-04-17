@@ -36,6 +36,7 @@ class Browser;
 class BrowserWindow;
 class BrowserWindowCocoa;
 @class BrowserWindowFullscreenTransition;
+@class BrowserWindowTouchBar;
 @class DevToolsController;
 @class DownloadShelfController;
 class ExtensionKeybindingRegistryCocoa;
@@ -43,13 +44,13 @@ class ExclusiveAccessController;
 class ExclusiveAccessContext;
 @class FindBarCocoaController;
 @class FullscreenModeController;
+@class FullscreenToolbarController;
+@class FullscreenToolbarVisibilityLockController;
 @class FullscreenWindow;
 class FullscreenLowPowerCoordinatorCocoa;
 @class InfoBarContainerController;
 class LocationBarViewMac;
 @class OverlayableContentsController;
-class PermissionBubbleCocoa;
-@class FullscreenToolbarController;
 class StatusBubbleMac;
 @class TabStripController;
 @class TabStripView;
@@ -63,6 +64,13 @@ class WebContents;
 namespace extensions {
 class Command;
 }
+
+namespace {
+class OmniboxPopupModelObserverBridge;
+}
+
+constexpr const gfx::Size kMinCocoaTabbedWindowSize(400, 272);
+constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 
 @interface BrowserWindowController
     : TabWindowController<BookmarkBarControllerDelegate,
@@ -92,6 +100,7 @@ class Command;
       fullscreenTransition_;
   std::unique_ptr<FullscreenLowPowerCoordinatorCocoa>
       fullscreenLowPowerCoordinator_;
+  base::scoped_nsobject<BrowserWindowTouchBar> touchBar_;
 
   // Strong. StatusBubble is a special case of a strong reference that
   // we don't wrap in a scoped_ptr because it is acting the same
@@ -130,6 +139,7 @@ class Command;
   // Lazily created view which draws the background for the floating set of bars
   // in presentation mode (for window types having a floating bar; it remains
   // nil for those which don't).
+  // TODO(spqchan): Rename this to "fullscreenToolbarBackingView"
   base::scoped_nsobject<NSView> floatingBarBackingView_;
 
   // The borderless window used in fullscreen mode when Cocoa's System
@@ -161,9 +171,6 @@ class Command;
   // return nil.
   BOOL isUsingCustomAnimation_;
 
-  // True if the toolbar needs to be shown in fullscreen.
-  BOOL shouldShowFullscreenToolbar_;
-
   // True if a call to exit AppKit fullscreen was made during the transition to
   // fullscreen.
   BOOL shouldExitAfterEnteringFullscreen_;
@@ -181,26 +188,23 @@ class Command;
   // The proportion of the floating bar which is shown.
   CGFloat floatingBarShownFraction_;
 
-  // Various UI elements/events may want to ensure that the floating bar is
-  // visible (in presentation mode), e.g., because of where the mouse is or
-  // where keyboard focus is. Whenever an object requires bar visibility, it has
-  // itself added to |barVisibilityLocks_|. When it no longer requires bar
-  // visibility, it has itself removed.
-  base::scoped_nsobject<NSMutableSet> barVisibilityLocks_;
-
-  // Bar visibility locks and releases only result (when appropriate) in changes
-  // in visible state when the following is |YES|.
-  BOOL barVisibilityUpdatesEnabled_;
-
   // If this ivar is set to YES, layoutSubviews calls will be ignored. This is
   // used in fullscreen transition to prevent spurious resize messages from
   // being sent to the renderer, which causes the transition to be janky.
   BOOL blockLayoutSubviews_;
 
+  // Set when AppKit invokes -windowWillClose: to protect against possible
+  // crashes. See http://crbug.com/671213.
+  BOOL didWindowWillClose_;
+
   // The Extension Command Registry used to determine which keyboard events to
   // handle.
   std::unique_ptr<ExtensionKeybindingRegistryCocoa>
-      extension_keybinding_registry_;
+      extensionKeybindingRegistry_;
+
+  // Observes whether the omnibox popup is shown or hidden.
+  std::unique_ptr<OmniboxPopupModelObserverBridge>
+      omniboxPopupModelObserverBridge_;
 }
 
 // A convenience class method which gets the |BrowserWindowController| for a
@@ -281,10 +285,6 @@ class Command;
 // whether it would be appropriate to show a zoom bubble or not.
 - (void)zoomChangedForActiveTab:(BOOL)canShowBubble;
 
-// Return the rect, in WebKit coordinates (flipped), of the window's grow box
-// in the coordinate system of the content area of the currently selected tab.
-- (NSRect)selectedTabGrowBoxRect;
-
 // Called to tell the selected tab to update its loading state.
 // |force| is set if the update is due to changing tabs, as opposed to
 // the page-load finishing.  See comment in reload_button_cocoa.h.
@@ -304,7 +304,7 @@ class Command;
 // coordinates (origin in bottom-left).
 - (NSRect)regularWindowFrame;
 
-// Whether or not to show the avatar, which is either the incognito guy or the
+// Whether or not to show the avatar, which is either the incognito icon or the
 // user's profile avatar.
 - (BOOL)shouldShowAvatar;
 
@@ -398,6 +398,12 @@ class Command;
 // UpdateAlertState.
 - (TabAlertState)alertState;
 
+// Returns the BrowserWindowTouchBar object associated with the window.
+- (BrowserWindowTouchBar*)browserWindowTouchBar;
+
+// Invalidates the browser's touch bar.
+- (void)invalidateTouchBar;
+
 @end  // @interface BrowserWindowController
 
 
@@ -461,20 +467,7 @@ class Command;
 // invoked causes all fullscreen modes to exit.
 //
 // ----------------------------------------------------------------------------
-// There are 3 "styles" of omnibox sliding.
-// + OMNIBOX_TABS_PRESENT: Both the omnibox and the tabstrip are present.
-// Moving the cursor to the top causes the menubar to appear, and everything
-// else to slide down.
-// + OMNIBOX_TABS_HIDDEN: Both tabstrip and omnibox are hidden. Moving cursor
-// to top shows tabstrip, omnibox, and menu bar.
-// + OMNIBOX_TABS_NONE: Both tabstrip and omnibox are hidden. Moving cursor
-// to top causes the menubar to appear, but not the tabstrip and omnibox.
 //
-// The omnibox sliding styles are used in conjunction with the fullscreen APIs.
-// There is exactly 1 sliding style active at a time. The sliding is mangaged
-// by the fullscreenToolbarController_.
-//
-// ----------------------------------------------------------------------------
 // There are several "fullscreen modes" bantered around. Technically, any
 // fullscreen API can be combined with any sliding style.
 //
@@ -485,7 +478,7 @@ class Command;
 //
 // + Canonical Fullscreen: When a user clicks on the fullscreen button, they
 // expect a fullscreen behavior similar to other AppKit apps.
-//  - AppKitFullscreen API + OMNIBOX_TABS_PRESENT/OMNIBOX_TABS_HIDDEN.
+//  - AppKitFullscreen API + TOOLBAR_PRESENT/TOOLBAR_HIDDEN.
 //  - The button click directly invokes the AppKitFullscreen API. This class
 //  get a callback, and calls adjustUIForOmniboxFullscreen.
 //  - There is a menu item that is intended to invoke the same behavior. When
@@ -534,12 +527,6 @@ class Command;
 // |bubbleType|.
 - (void)updateFullscreenExitBubble;
 
-// Set the toolbar's visibility in fullscreen mode.
-- (void)setFullscreenToolbarVisible:(BOOL)visible;
-
-// Returns YES if the browser window is in or entering any fullscreen mode.
-- (BOOL)isInAnyFullscreenMode;
-
 // Returns YES if the browser window is currently in or entering fullscreen via
 // the built-in immersive mechanism.
 - (BOOL)isInImmersiveFullscreen;
@@ -565,24 +552,23 @@ class Command;
 
 // Query/lock/release the requirement that the tab strip/toolbar/attached
 // bookmark bar bar cluster is visible (e.g., when one of its elements has
-// focus). This is required for the floating bar in presentation mode, but
-// should also be called when not in presentation mode; see the comments for
+// focus). This is required for the floating bar if it's hidden in fullscreen,
+// but should also be called when not in fullscreen mode; see the comments for
 // |barVisibilityLocks_| for more details. Double locks/releases by the same
-// owner are ignored. If |animate:| is YES, then an animation may be performed,
-// possibly after a small delay if |delay:| is YES. If |animate:| is NO,
-// |delay:| will be ignored. In the case of multiple calls, later calls have
-// precedence with the rule that |animate:NO| has precedence over |animate:YES|,
-// and |delay:NO| has precedence over |delay:YES|.
-- (BOOL)isBarVisibilityLockedForOwner:(id)owner;
-- (void)lockBarVisibilityForOwner:(id)owner
-                    withAnimation:(BOOL)animate
-                            delay:(BOOL)delay;
-- (void)releaseBarVisibilityForOwner:(id)owner
-                       withAnimation:(BOOL)animate
-                               delay:(BOOL)delay;
+// owner are ignored. If |animate:| is YES, then an animation may be
+// performed. In the case of multiple calls, later calls have precedence with
+// the rule that |animate:NO| has precedence over |animate:YES|. If |owner| is
+// nil in isToolbarVisibilityLockedForOwner, the method returns YES if there are
+// any locks.
+- (BOOL)isToolbarVisibilityLockedForOwner:(id)owner;
+- (void)lockToolbarVisibilityForOwner:(id)owner withAnimation:(BOOL)animate;
+- (void)releaseToolbarVisibilityForOwner:(id)owner withAnimation:(BOOL)animate;
 
 // Returns YES if any of the views in the floating bar currently has focus.
 - (BOOL)floatingBarHasFocus;
+
+// Returns YES if the fullscreen is for tab content or an extension.
+- (BOOL)isFullscreenForTabContentOrExtension;
 
 // Accessor for the controller managing fullscreen ExclusiveAccessContext.
 - (ExclusiveAccessController*)exclusiveAccessController;

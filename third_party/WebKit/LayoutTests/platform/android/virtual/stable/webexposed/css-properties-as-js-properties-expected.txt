@@ -160,11 +160,13 @@ minWidth
 minZoom
 mixBlendMode
 motion
-motionOffset
-motionPath
-motionRotation
 objectFit
 objectPosition
+offset
+offsetDistance
+offsetPath
+offsetRotate
+offsetRotation
 opacity
 order
 orientation
@@ -243,6 +245,7 @@ transitionProperty
 transitionTimingFunction
 unicodeBidi
 unicodeRange
+userSelect
 userZoom
 vectorEffect
 verticalAlign
@@ -352,7 +355,6 @@ webkitTransformOriginY
 webkitTransformOriginZ
 webkitUserDrag
 webkitUserModify
-webkitUserSelect
 webkitWritingMode
 whiteSpace
 widows

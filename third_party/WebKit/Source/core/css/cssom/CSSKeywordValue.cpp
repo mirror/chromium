@@ -6,37 +6,75 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/css/CSSCustomIdentValue.h"
-#include "core/css/CSSPrimitiveValue.h"
+#include "core/css/CSSIdentifierValue.h"
+#include "core/css/CSSInheritedValue.h"
+#include "core/css/CSSInitialValue.h"
+#include "core/css/CSSUnsetValue.h"
 #include "core/css/parser/CSSPropertyParser.h"
 
 namespace blink {
 
-CSSKeywordValue* CSSKeywordValue::create(const String& keyword, ExceptionState& exceptionState)
-{
-    if (keyword.isEmpty()) {
-        exceptionState.throwTypeError("CSSKeywordValue does not support empty strings");
-        return nullptr;
+CSSKeywordValue* CSSKeywordValue::Create(const AtomicString& keyword,
+                                         ExceptionState& exception_state) {
+  if (keyword.IsEmpty()) {
+    exception_state.ThrowTypeError(
+        "CSSKeywordValue does not support empty strings");
+    return nullptr;
+  }
+  return new CSSKeywordValue(keyword);
+}
+
+CSSKeywordValue* CSSKeywordValue::FromCSSValue(const CSSValue& value) {
+  if (value.IsInheritedValue())
+    return new CSSKeywordValue(getValueName(CSSValueInherit));
+  if (value.IsInitialValue())
+    return new CSSKeywordValue(getValueName(CSSValueInitial));
+  if (value.IsUnsetValue())
+    return new CSSKeywordValue(getValueName(CSSValueUnset));
+  if (value.IsIdentifierValue()) {
+    return new CSSKeywordValue(
+        getValueName(ToCSSIdentifierValue(value).GetValueID()));
+  }
+  if (value.IsCustomIdentValue()) {
+    const CSSCustomIdentValue& ident_value = ToCSSCustomIdentValue(value);
+    if (ident_value.IsKnownPropertyID()) {
+      // CSSPropertyID represents the LHS of a CSS declaration, and
+      // CSSKeywordValue represents a RHS.
+      return nullptr;
     }
-    return new CSSKeywordValue(keyword);
+    return new CSSKeywordValue(ident_value.Value());
+  }
+  NOTREACHED();
+  return nullptr;
 }
 
-const String& CSSKeywordValue::keywordValue() const
-{
-    return m_keywordValue;
+CSSKeywordValue* CSSKeywordValue::Create(const AtomicString& keyword) {
+  DCHECK(!keyword.IsEmpty());
+  return new CSSKeywordValue(keyword);
 }
 
-CSSValueID CSSKeywordValue::keywordValueID() const
-{
-    return cssValueKeywordID(m_keywordValue);
+const AtomicString& CSSKeywordValue::keywordValue() const {
+  return keyword_value_;
 }
 
-CSSValue* CSSKeywordValue::toCSSValue() const
-{
-    CSSValueID keywordID = keywordValueID();
-    if (keywordID == CSSValueID::CSSValueInvalid) {
-        return CSSCustomIdentValue::create(m_keywordValue);
-    }
-    return CSSPrimitiveValue::createIdentifier(keywordID);
+CSSValueID CSSKeywordValue::KeywordValueID() const {
+  return CssValueKeywordID(keyword_value_);
 }
 
-} // namespace blink
+CSSValue* CSSKeywordValue::ToCSSValue() const {
+  CSSValueID keyword_id = KeywordValueID();
+  switch (keyword_id) {
+    case (CSSValueInherit):
+      return CSSInheritedValue::Create();
+    case (CSSValueInitial):
+      return CSSInitialValue::Create();
+    case (CSSValueUnset):
+      return CSSUnsetValue::Create();
+    case (CSSValueInvalid):
+      return CSSCustomIdentValue::Create(keyword_value_);
+    default:
+      return CSSIdentifierValue::Create(keyword_id);
+  }
+}
+
+}  // namespace blink

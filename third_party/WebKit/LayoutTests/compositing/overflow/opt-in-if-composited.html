@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<script src="resources/composited-scroll.js"></script>
 <script>
 if (window.internals)
     window.internals.settings.setPreferCompositingToLCDTextEnabled(false);
@@ -6,18 +7,6 @@ if (window.internals)
 if (window.testRunner) {
     window.testRunner.dumpAsText();
     window.testRunner.waitUntilDone();
-}
-
-function isUsingCompositedScrolling(layer) {
-    if (layer.bounds[1] == 1000)
-        return true;
-    if (layer.children) {
-        for (var i = 0; i < layer.children.length; i++) {
-            if (isUsingCompositedScrolling(layer.children[i]))
-                return true;
-        }
-    }
-    return false;
 }
 
 var result = "";

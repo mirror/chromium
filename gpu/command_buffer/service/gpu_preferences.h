@@ -11,6 +11,7 @@
 #include "build/build_config.h"
 #include "gpu/command_buffer/common/constants.h"
 #include "gpu/gpu_export.h"
+#include "media/media_features.h"
 
 namespace gpu {
 
@@ -22,6 +23,15 @@ struct GPU_EXPORT GpuPreferences {
 
   ~GpuPreferences();
 
+  // Support for accelerated vpx decoding for various vendors,
+  // intended to be used as a bitfield.
+  // VPX_VENDOR_ALL should be updated whenever a new entry is added.
+  enum VpxDecodeVendors {
+    VPX_VENDOR_NONE = 0x00,
+    VPX_VENDOR_MICROSOFT = 0x01,
+    VPX_VENDOR_AMD = 0x02,
+    VPX_VENDOR_ALL = 0x03,
+  };
   // ===================================
   // Settings from //content/public/common/content_switches.h
 
@@ -42,14 +52,18 @@ struct GPU_EXPORT GpuPreferences {
   bool disable_vaapi_accelerated_video_encode = false;
 #endif
 
-#if defined(ENABLE_WEBRTC)
+#if BUILDFLAG(ENABLE_WEBRTC)
   // Disables HW encode acceleration for WebRTC.
   bool disable_web_rtc_hw_encoding = false;
 #endif
 
 #if defined(OS_WIN)
   // Enables experimental hardware acceleration for VP8/VP9 video decoding.
-  bool enable_accelerated_vpx_decode = false;
+  // Bitmask - 0x1=Microsoft, 0x2=AMD, 0x03=Try all.
+  VpxDecodeVendors enable_accelerated_vpx_decode = VPX_VENDOR_MICROSOFT;
+
+  // Enables using CODECAPI_AVLowLatencyMode.
+  bool enable_low_latency_dxva = true;
 
   // Enables support for avoiding copying DXGI NV12 textures.
   bool enable_zero_copy_dxgi_video = false;
@@ -85,6 +99,9 @@ struct GPU_EXPORT GpuPreferences {
   // Enable GPU service logging.
   bool enable_gpu_service_logging_gpu = false;
 
+  // Enable logging of GPU driver debug messages.
+  bool enable_gpu_driver_debug_logging = false;
+
   // Turn off gpu program caching
   bool disable_gpu_program_cache = false;
 
@@ -99,9 +116,6 @@ struct GPU_EXPORT GpuPreferences {
 
   // Disables the GPU shader on disk cache.
   bool disable_gpu_shader_disk_cache = false;
-
-  // Allows async texture uploads (off main thread) via GL context sharing.
-  bool enable_share_group_async_texture_upload = false;
 
   // Simulates shared textures when share groups are not available.
   // Not available everywhere.
@@ -124,8 +138,8 @@ struct GPU_EXPORT GpuPreferences {
   // Turns on calling TRACE for every GL call.
   bool enable_gpu_service_tracing = false;
 
-  // Enable OpenGL ES 3 APIs without proper service side validation.
-  bool enable_unsafe_es3_apis = false;
+  // Enable OpenGL ES 3 APIs.
+  bool enable_es3_apis = true;
 
   // Use the Pass-through command decoder, skipping all validation and state
   // tracking.

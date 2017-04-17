@@ -22,7 +22,6 @@
 #include "chromeos/network/network_event_log.h"
 #include "chromeos/network/onc/onc_utils.h"
 #include "crypto/scoped_nss_types.h"
-#include "net/base/crypto_module.h"
 #include "net/base/net_errors.h"
 #include "net/cert/nss_cert_database.h"
 #include "net/cert/x509_certificate.h"
@@ -168,7 +167,7 @@ bool CertificateImporterImpl::ParseServerOrCaCertificate(
     for (base::ListValue::const_iterator it = trust_list->begin();
          it != trust_list->end(); ++it) {
       std::string trust_type;
-      if (!(*it)->GetAsString(&trust_type))
+      if (!it->GetAsString(&trust_type))
         NOTREACHED();
 
       if (trust_type == ::onc::certificate::kWeb) {
@@ -286,12 +285,12 @@ bool CertificateImporterImpl::ParseClientCertificate(
   crypto::ScopedPK11Slot private_slot(nssdb->GetPrivateSlot());
   if (!private_slot)
     return false;
-  scoped_refptr<net::CryptoModule> module(
-      net::CryptoModule::CreateFromHandle(private_slot.get()));
+
   net::CertificateList imported_certs;
 
-  int import_result = nssdb->ImportFromPKCS12(
-      module.get(), decoded_pkcs12, base::string16(), false, &imported_certs);
+  int import_result =
+      nssdb->ImportFromPKCS12(private_slot.get(), decoded_pkcs12,
+                              base::string16(), false, &imported_certs);
   if (import_result != net::OK) {
     std::string error_string = net::ErrorToString(import_result);
     LOG(ERROR) << "Unable to import client certificate, error: "

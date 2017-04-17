@@ -1,4 +1,3 @@
-CONSOLE WARNING: line 362: The <keygen> element is deprecated and will be removed in M54, around October 2016. See https://www.chromestatus.com/features/5716060992962560 for more details.
 This test setting various attributes of a elements to JavaScript null.
 
 TEST SUCCEEDED: The value was null. [tested Node.nodeValue]
@@ -151,10 +150,6 @@ TEST SUCCEEDED: The value was the string 'null'. [tested HTMLInputElement.useMap
 
 TEST SUCCEEDED: The value was the empty string. [tested HTMLInputElement.value]
 
-TEST SUCCEEDED: The value was the string 'null'. [tested HTMLKeygenElement.challenge]
-TEST SUCCEEDED: The value was the empty string. [tested HTMLKeygenElement.keytype]
-TEST SUCCEEDED: The value was the string 'null'. [tested HTMLKeygenElement.name]
-
 TEST SUCCEEDED: The value was the string 'null'. [tested HTMLLabelElement.htmlFor]
 
 TEST SUCCEEDED: The value was the string 'null'. [tested HTMLLegendElement.align]
@@ -228,7 +223,6 @@ TEST SUCCEEDED: The value was the string 'null'. [tested HTMLScriptElement.chars
 TEST SUCCEEDED: The value was the string 'null' resolved as a URL. [tested HTMLScriptElement.src]
 TEST SUCCEEDED: The value was the string 'null'. [tested HTMLScriptElement.type]
 TEST SUCCEEDED: The value was null. [tested HTMLScriptElement.crossOrigin]
-TEST SUCCEEDED: The value was the string 'null'. [tested HTMLScriptElement.nonce]
 
 TEST SUCCEEDED: The value was the empty string. [tested HTMLSelectElement.value]
 TEST SUCCEEDED: The value was the string 'null'. [tested HTMLSelectElement.name]
@@ -249,7 +243,7 @@ TEST SUCCEEDED: The value was the string 'null'. [tested HTMLTableCellElement.ch
 TEST SUCCEEDED: The value was the string 'null'. [tested HTMLTableCellElement.chOff]
 TEST SUCCEEDED: The value was the empty string. [tested HTMLTableCellElement.headers]
 TEST SUCCEEDED: The value was the string 'null'. [tested HTMLTableCellElement.height]
-TEST SUCCEEDED: The value was the string 'null'. [tested HTMLTableCellElement.scope]
+TEST SUCCEEDED: The value was the empty string. [tested HTMLTableCellElement.scope]
 TEST SUCCEEDED: The value was the string 'null'. [tested HTMLTableCellElement.vAlign]
 TEST SUCCEEDED: The value was the string 'null'. [tested HTMLTableCellElement.width]
 

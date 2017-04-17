@@ -5,6 +5,7 @@
 #ifndef MOJO_PUBLIC_CPP_BINDINGS_ASSOCIATED_INTERFACE_REQUEST_H_
 #define MOJO_PUBLIC_CPP_BINDINGS_ASSOCIATED_INTERFACE_REQUEST_H_
 
+#include <string>
 #include <utility>
 
 #include "base/macros.h"
@@ -62,6 +63,10 @@ class AssociatedInterfaceRequest {
     // Now that the two refer to different objects, they are equivalent if
     // and only if they are both invalid.
     return !is_pending() && !other.is_pending();
+  }
+
+  void ResetWithReason(uint32_t custom_reason, const std::string& description) {
+    handle_.ResetWithReason(custom_reason, description);
   }
 
  private:

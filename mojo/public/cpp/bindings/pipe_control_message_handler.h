@@ -5,9 +5,11 @@
 #ifndef MOJO_PUBLIC_CPP_BINDINGS_PIPE_CONTROL_MESSAGE_HANDLER_H_
 #define MOJO_PUBLIC_CPP_BINDINGS_PIPE_CONTROL_MESSAGE_HANDLER_H_
 
+#include <string>
+
+#include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "mojo/public/cpp/bindings/interface_id.h"
-#include "mojo/public/cpp/bindings/lib/serialization_context.h"
+#include "mojo/public/cpp/bindings/bindings_export.h"
 #include "mojo/public/cpp/bindings/message.h"
 
 namespace mojo {
@@ -15,7 +17,8 @@ namespace mojo {
 class PipeControlMessageHandlerDelegate;
 
 // Handler for messages defined in pipe_control_messages.mojom.
-class PipeControlMessageHandler : public MessageReceiver {
+class MOJO_CPP_BINDINGS_EXPORT PipeControlMessageHandler
+    : NON_EXPORTED_BASE(public MessageReceiver) {
  public:
   explicit PipeControlMessageHandler(
       PipeControlMessageHandlerDelegate* delegate);
@@ -43,7 +46,6 @@ class PipeControlMessageHandler : public MessageReceiver {
 
   std::string description_;
   PipeControlMessageHandlerDelegate* const delegate_;
-  internal::SerializationContext context_;
 
   DISALLOW_COPY_AND_ASSIGN(PipeControlMessageHandler);
 };

@@ -21,35 +21,37 @@
 
 #include "platform/geometry/FloatPoint3D.h"
 
-#include "wtf/MathExtras.h"
 #include <math.h>
+#include "platform/wtf/MathExtras.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-void FloatPoint3D::normalize()
-{
-    float tempLength = length();
+void FloatPoint3D::Normalize() {
+  float temp_length = length();
 
-    if (tempLength) {
-        m_x /= tempLength;
-        m_y /= tempLength;
-        m_z /= tempLength;
-    }
+  if (temp_length) {
+    x_ /= temp_length;
+    y_ /= temp_length;
+    z_ /= temp_length;
+  }
 }
 
-float FloatPoint3D::angleBetween(const FloatPoint3D& y) const
-{
-    float xLength = this->length();
-    float yLength = y.length();
+float FloatPoint3D::AngleBetween(const FloatPoint3D& y) const {
+  float x_length = this->length();
+  float y_length = y.length();
 
-    if (xLength && yLength) {
-        float cosAngle = this->dot(y) / (xLength * yLength);
-        // Due to round-off |cosAngle| can have a magnitude greater than 1.  Clamp the value to [-1,
-        // 1] before computing the angle.
-        return acos(clampTo(cosAngle, -1.0, 1.0));
-    }
-    return 0;
+  if (x_length && y_length) {
+    float cos_angle = this->Dot(y) / (x_length * y_length);
+    // Due to round-off |cosAngle| can have a magnitude greater than 1.  Clamp
+    // the value to [-1, 1] before computing the angle.
+    return acos(clampTo(cos_angle, -1.0, 1.0));
+  }
+  return 0;
 }
 
-} // namespace blink
+String FloatPoint3D::ToString() const {
+  return String::Format("%lg,%lg,%lg", X(), Y(), Z());
+}
 
+}  // namespace blink

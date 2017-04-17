@@ -31,25 +31,31 @@
 #ifndef WebViewImpl_h
 #define WebViewImpl_h
 
+#include <memory>
 #include "core/page/ContextMenuProvider.h"
 #include "core/page/EventWithHitTestResults.h"
 #include "platform/animation/CompositorAnimationTimeline.h"
 #include "platform/geometry/IntPoint.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/graphics/GraphicsLayer.h"
-#include "platform/graphics/compositing/PaintArtifactCompositor.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Compiler.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/Vector.h"
 #include "public/platform/WebDisplayMode.h"
 #include "public/platform/WebFloatSize.h"
 #include "public/platform/WebGestureCurveTarget.h"
+#include "public/platform/WebGestureEvent.h"
+#include "public/platform/WebInputEvent.h"
 #include "public/platform/WebInputEventResult.h"
 #include "public/platform/WebLayer.h"
 #include "public/platform/WebPoint.h"
 #include "public/platform/WebRect.h"
+#include "public/platform/WebScheduler.h"
 #include "public/platform/WebSize.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebVector.h"
-#include "public/web/WebInputEvent.h"
 #include "public/web/WebNavigationPolicy.h"
 #include "public/web/WebPageImportanceSignals.h"
 #include "public/web/WebView.h"
@@ -58,18 +64,15 @@
 #include "web/EditorClientImpl.h"
 #include "web/MediaKeysClientImpl.h"
 #include "web/PageWidgetDelegate.h"
+#include "web/ResizeViewportAnchor.h"
 #include "web/SpellCheckerClientImpl.h"
 #include "web/StorageClientImpl.h"
 #include "web/WebExport.h"
-#include "wtf/Compiler.h"
-#include "wtf/HashSet.h"
-#include "wtf/RefCounted.h"
-#include "wtf/Vector.h"
-#include <memory>
 
 namespace blink {
 
-class DataObject;
+class BrowserControls;
+class CompositorAnimationHost;
 class DevToolsEmulator;
 class Frame;
 class FullscreenController;
@@ -78,707 +81,665 @@ class LinkHighlightImpl;
 class PageOverlay;
 class PageScaleConstraintsSet;
 class PaintLayerCompositor;
-class TopControls;
 class UserGestureToken;
 class WebActiveGestureAnimation;
 class WebDevToolsAgentImpl;
 class WebElement;
+class WebInputMethodControllerImpl;
 class WebLayerTreeView;
 class WebLocalFrame;
 class WebLocalFrameImpl;
-class WebImage;
 class CompositorMutatorImpl;
 class WebPagePopupImpl;
 class WebPlugin;
 class WebRemoteFrame;
-class WebSelection;
 class WebSettingsImpl;
 class WebViewScheduler;
 
-class WEB_EXPORT WebViewImpl final : WTF_NON_EXPORTED_BASE(public WebView)
-    , public RefCounted<WebViewImpl>
-    , WTF_NON_EXPORTED_BASE(public WebGestureCurveTarget)
-    , public PageWidgetEventHandler {
-public:
-    static WebViewImpl* create(WebViewClient*, WebPageVisibilityState);
-    static HashSet<WebViewImpl*>& allInstances();
+class WEB_EXPORT WebViewImpl final
+    : NON_EXPORTED_BASE(public WebView),
+      public RefCounted<WebViewImpl>,
+      NON_EXPORTED_BASE(public WebGestureCurveTarget),
+      public PageWidgetEventHandler,
+      public WebScheduler::InterventionReporter,
+      public WebViewScheduler::WebViewSchedulerSettings {
+ public:
+  static WebViewImpl* Create(WebViewClient*, WebPageVisibilityState);
+  static HashSet<WebViewImpl*>& AllInstances();
 
-    // WebWidget methods:
-    void close() override;
-    WebSize size() override;
-    void resize(const WebSize&) override;
-    void resizeVisualViewport(const WebSize&) override;
-    void didEnterFullscreen() override;
-    void didExitFullscreen() override;
+  // WebWidget methods:
+  void Close() override;
+  WebSize Size() override;
+  void Resize(const WebSize&) override;
+  void ResizeVisualViewport(const WebSize&) override;
+  void DidEnterFullscreen() override;
+  void DidExitFullscreen() override;
 
-    void beginFrame(double lastFrameTimeMonotonic) override;
+  void SetSuppressFrameRequestsWorkaroundFor704763Only(bool) override;
+  void BeginFrame(double last_frame_time_monotonic) override;
 
-    void updateAllLifecyclePhases() override;
-    void paint(WebCanvas*, const WebRect&) override;
+  void UpdateAllLifecyclePhases() override;
+  void Paint(WebCanvas*, const WebRect&) override;
 #if OS(ANDROID)
-    void paintIgnoringCompositing(WebCanvas*, const WebRect&) override;
+  void PaintIgnoringCompositing(WebCanvas*, const WebRect&) override;
 #endif
-    void layoutAndPaintAsync(WebLayoutAndPaintAsyncCallback*) override;
-    void compositeAndReadbackAsync(WebCompositeAndReadbackAsyncCallback*) override;
-    void themeChanged() override;
-    WebInputEventResult handleInputEvent(const WebInputEvent&) override;
-    void setCursorVisibilityState(bool isVisible) override;
-    bool hasTouchEventHandlersAt(const WebPoint&) override;
-
-    void applyViewportDeltas(
-        const WebFloatSize& visualViewportDelta,
-        const WebFloatSize& layoutViewportDelta,
-        const WebFloatSize& elasticOverscrollDelta,
-        float pageScaleDelta,
-        float topControlsShownRatioDelta) override;
-    void mouseCaptureLost() override;
-    void setFocus(bool enable) override;
-    bool setComposition(
-        const WebString& text,
-        const WebVector<WebCompositionUnderline>& underlines,
-        int selectionStart,
-        int selectionEnd) override;
-    bool confirmComposition() override;
-    bool confirmComposition(ConfirmCompositionBehavior selectionBehavior) override;
-    bool confirmComposition(const WebString& text) override;
-    bool compositionRange(size_t* location, size_t* length) override;
-    WebTextInputInfo textInputInfo() override;
-    WebTextInputType textInputType() override;
-    WebColor backgroundColor() const override;
-    WebPagePopup* pagePopup() const override;
-    bool selectionBounds(WebRect& anchor, WebRect& focus) const override;
-    bool selectionTextDirection(WebTextDirection& start, WebTextDirection& end) const override;
-    bool isSelectionAnchorFirst() const override;
-    bool caretOrSelectionRange(size_t* location, size_t* length) override;
-    void setTextDirection(WebTextDirection) override;
-    bool isAcceleratedCompositingActive() const override;
-    void willCloseLayerTreeView() override;
-    void didAcquirePointerLock() override;
-    void didNotAcquirePointerLock() override;
-    void didLosePointerLock() override;
-    void didChangeWindowResizerRect() override;
-    bool getCompositionCharacterBounds(WebVector<WebRect>& bounds) override;
-    void applyReplacementRange(int start, int length) override;
-
-    // WebView methods:
-    virtual bool isWebView() const { return true; }
-    void setMainFrame(WebFrame*) override;
-    void setCredentialManagerClient(WebCredentialManagerClient*) override;
-    void setPrerendererClient(WebPrerendererClient*) override;
-    void setSpellCheckClient(WebSpellCheckClient*) override;
-    WebSettings* settings() override;
-    WebString pageEncoding() const override;
-    void setPageEncoding(const WebString&) override;
-    bool tabsToLinks() const override;
-    void setTabsToLinks(bool value) override;
-    bool tabKeyCyclesThroughElements() const override;
-    void setTabKeyCyclesThroughElements(bool value) override;
-    bool isActive() const override;
-    void setIsActive(bool value) override;
-    void setDomainRelaxationForbidden(bool, const WebString& scheme) override;
-    void setWindowFeatures(const WebWindowFeatures&) override;
-    void setOpenedByDOM() override;
-    void resizeWithTopControls(
-        const WebSize&,
-        float topControlsHeight,
-        bool topControlsShrinkLayout) override;
-    WebFrame* mainFrame() override;
-    WebFrame* findFrameByName(
-        const WebString& name, WebFrame* relativeToFrame) override;
-    WebLocalFrame* focusedFrame() override;
-    void setFocusedFrame(WebFrame*) override;
-    void focusDocumentView(WebFrame*) override;
-    void setInitialFocus(bool reverse) override;
-    void clearFocusedElement() override;
-    bool scrollFocusedEditableElementIntoRect(const WebRect&) override;
-    void smoothScroll(int targetX, int targetY, long durationMs) override;
-    void zoomToFindInPageRect(const WebRect&);
-    void advanceFocus(bool reverse) override;
-    void advanceFocusAcrossFrames(WebFocusType, WebRemoteFrame* from, WebLocalFrame* to) override;
-    double zoomLevel() override;
-    double setZoomLevel(double) override;
-    void zoomLimitsChanged(double minimumZoomLevel, double maximumZoomLevel) override;
-    float textZoomFactor() override;
-    float setTextZoomFactor(float) override;
-    bool zoomToMultipleTargetsRect(const WebRect&) override;
-    float pageScaleFactor() const override;
-    void setDefaultPageScaleLimits(float minScale, float maxScale) override;
-    void setInitialPageScaleOverride(float) override;
-    void setMaximumLegibleScale(float) override;
-    void setPageScaleFactor(float) override;
-    void setVisualViewportOffset(const WebFloatPoint&) override;
-    WebFloatPoint visualViewportOffset() const override;
-    WebFloatSize visualViewportSize() const override;
-    void resetScrollAndScaleState() override;
-    void setIgnoreViewportTagScaleLimits(bool) override;
-    WebSize contentsPreferredMinimumSize() override;
-    void setDisplayMode(WebDisplayMode) override;
-
-    void setDeviceScaleFactor(float) override;
-    void setZoomFactorForDeviceScaleFactor(float) override;
-
-    void setDeviceColorProfile(const WebVector<char>&) override;
-    void resetDeviceColorProfileForTesting() override;
-
-    void enableAutoResizeMode(
-        const WebSize& minSize,
-        const WebSize& maxSize) override;
-    void disableAutoResizeMode() override;
-    void performMediaPlayerAction(
-        const WebMediaPlayerAction& action,
-        const WebPoint& location) override;
-    void performPluginAction(
-        const WebPluginAction&,
-        const WebPoint&) override;
-    WebHitTestResult hitTestResultAt(const WebPoint&) override;
-    WebHitTestResult hitTestResultForTap(const WebPoint&, const WebSize&) override;
-    void dragSourceEndedAt(
-        const WebPoint& clientPoint,
-        const WebPoint& screenPoint,
-        WebDragOperation) override;
-    void dragSourceSystemDragEnded() override;
-    WebDragOperation dragTargetDragEnter(
-        const WebDragData&,
-        const WebPoint& clientPoint,
-        const WebPoint& screenPoint,
-        WebDragOperationsMask operationsAllowed,
-        int modifiers) override;
-    WebDragOperation dragTargetDragOver(
-        const WebPoint& clientPoint,
-        const WebPoint& screenPoint,
-        WebDragOperationsMask operationsAllowed,
-        int modifiers) override;
-    void dragTargetDragLeave() override;
-    void dragTargetDrop(
-        const WebDragData&,
-        const WebPoint& clientPoint,
-        const WebPoint& screenPoint,
-        int modifiers) override;
-    void spellingMarkers(WebVector<uint32_t>* markers) override;
-    void removeSpellingMarkersUnderWords(const WebVector<WebString>& words) override;
-    unsigned long createUniqueIdentifierForRequest() override;
-    void enableDeviceEmulation(const WebDeviceEmulationParams&) override;
-    void disableDeviceEmulation() override;
-    WebAXObject accessibilityObject() override;
-    void setSelectionColors(unsigned activeBackgroundColor,
-                                    unsigned activeForegroundColor,
-                                    unsigned inactiveBackgroundColor,
-                                    unsigned inactiveForegroundColor) override;
-    void performCustomContextMenuAction(unsigned action) override;
-    void showContextMenu() override;
-    void didCloseContextMenu() override;
-    void extractSmartClipData(WebRect, WebString&, WebString&, WebRect&) override;
-    void hidePopups() override;
-    void setPageOverlayColor(WebColor) override;
-    WebPageImportanceSignals* pageImportanceSignals() override;
-    void transferActiveWheelFlingAnimation(const WebActiveWheelFlingParameters&) override;
-    bool endActiveFlingAnimation() override;
-    bool isFlinging() const override { return !!m_gestureAnimation.get(); }
-    void setShowPaintRects(bool) override;
-    void setShowDebugBorders(bool);
-    void setShowFPSCounter(bool) override;
-    void setShowScrollBottleneckRects(bool) override;
-    void acceptLanguagesChanged() override;
-
-    void didUpdateFullScreenSize();
-
-    float defaultMinimumPageScaleFactor() const;
-    float defaultMaximumPageScaleFactor() const;
-    float minimumPageScaleFactor() const;
-    float maximumPageScaleFactor() const;
-    float clampPageScaleFactorToLimits(float) const;
-    void resetScaleStateImmediately();
-
-    HitTestResult coreHitTestResultAt(const WebPoint&);
-    void invalidateRect(const IntRect&);
-
-    void setIgnoreInputEvents(bool newValue);
-    void setBaseBackgroundColor(WebColor);
-    void setBackgroundColorOverride(WebColor);
-    void setZoomFactorOverride(float);
-    void setCompositorDeviceScaleFactorOverride(float);
-    void setRootLayerTransform(const WebSize& offset, float scale);
-
-    Color baseBackgroundColor() const { return m_baseBackgroundColor; }
-
-    WebColor backgroundColorOverride() const { return m_backgroundColorOverride; }
-
-    Frame* focusedCoreFrame() const;
-
-    // Returns the currently focused Element or null if no element has focus.
-    Element* focusedElement() const;
-
-    static WebViewImpl* fromPage(Page*);
-
-    WebViewClient* client()
-    {
-        return m_client;
-    }
-
-    WebSpellCheckClient* spellCheckClient()
-    {
-        return m_spellCheckClient;
-    }
-
-    // Returns the page object associated with this view. This may be null when
-    // the page is shutting down, but will be valid at all other times.
-    Page* page() const
-    {
-        return m_page.get();
-    }
-
-    WebDevToolsAgentImpl* mainFrameDevToolsAgentImpl();
-
-    DevToolsEmulator* devToolsEmulator() const
-    {
-        return m_devToolsEmulator.get();
-    }
-
-    // Returns the main frame associated with this view. This may be null when
-    // the page is shutting down, but will be valid at all other times.
-    WebLocalFrameImpl* mainFrameImpl() const;
-
-    // Event related methods:
-    void mouseContextMenu(const WebMouseEvent&);
-    void mouseDoubleClick(const WebMouseEvent&);
-
-    bool detectContentOnTouch(const GestureEventWithHitTestResults& targetedEvent);
-    bool startPageScaleAnimation(const IntPoint& targetPosition, bool useAnchor, float newScale, double durationInSeconds);
-
-    void hasTouchEventHandlers(bool);
-
-    // WebGestureCurveTarget implementation for fling.
-    bool scrollBy(const WebFloatSize& delta, const WebFloatSize& velocity) override;
-
-    // Handles context menu events orignated via the the keyboard. These
-    // include the VK_APPS virtual key and the Shift+F10 combine. Code is
-    // based on the Webkit function bool WebView::handleContextMenuEvent(WPARAM
-    // wParam, LPARAM lParam) in webkit\webkit\win\WebView.cpp. The only
-    // significant change in this function is the code to convert from a
-    // Keyboard event to the Right Mouse button down event.
-    WebInputEventResult sendContextMenuEvent(const WebKeyboardEvent&);
-
-    void showContextMenuAtPoint(float x, float y, ContextMenuProvider*);
-
-    void showContextMenuForElement(WebElement);
-
-    // Notifies the WebView that a load has been committed. isNewNavigation
-    // will be true if a new session history item should be created for that
-    // load. isNavigationWithinPage will be true if the navigation does
-    // not take the user away from the current page.
-    void didCommitLoad(bool isNewNavigation, bool isNavigationWithinPage);
-
-    void postLayoutResize(WebLocalFrameImpl* webframe);
-
-    // Indicates two things:
-    //   1) This view may have a new layout now.
-    //   2) Calling updateAllLifecyclePhases() is a no-op.
-    // After calling WebWidget::updateAllLifecyclePhases(), expect to get this notification
-    // unless the view did not need a layout.
-    void layoutUpdated(WebLocalFrameImpl*);
-
-    void didChangeContentsSize();
-    void pageScaleFactorChanged();
-
-    // Returns true if popup menus should be rendered by the browser, false if
-    // they should be rendered by WebKit (which is the default).
-    static bool useExternalPopupMenus();
-
-    bool shouldAutoResize() const
-    {
-        return m_shouldAutoResize;
-    }
-
-    IntSize minAutoSize() const
-    {
-        return m_minAutoSize;
-    }
-
-    IntSize maxAutoSize() const
-    {
-        return m_maxAutoSize;
-    }
-
-    void updateMainFrameLayoutSize();
-    void updatePageDefinedViewportConstraints(const ViewportDescription&);
-
-    // Start a system drag and drop operation.
-    void startDragging(
-        LocalFrame*,
-        const WebDragData& dragData,
-        WebDragOperationsMask mask,
-        const WebImage& dragImage,
-        const WebPoint& dragImageOffset);
-
-    PagePopup* openPagePopup(PagePopupClient*);
-    void closePagePopup(PagePopup*);
-    void cleanupPagePopup();
-    LocalDOMWindow* pagePopupWindow() const;
-
-    // Returns the input event we're currently processing. This is used in some
-    // cases where the WebCore DOM event doesn't have the information we need.
-    static const WebInputEvent* currentInputEvent()
-    {
-        return m_currentInputEvent;
-    }
-
-    GraphicsLayer* rootGraphicsLayer();
-    void registerViewportLayersWithCompositor();
-    PaintLayerCompositor* compositor() const;
-    CompositorAnimationTimeline* linkHighlightsTimeline() const { return m_linkHighlightsTimeline.get(); }
-
-    WebViewScheduler* scheduler() const override;
-    void setVisibilityState(WebPageVisibilityState, bool) override;
-
-    bool hasOpenedPopup() const { return m_pagePopup.get(); }
-
-    // Returns true if the event leads to scrolling.
-    static bool mapKeyCodeForScroll(
-        int keyCode,
-        ScrollDirectionPhysical*,
-        ScrollGranularity*);
-
-    // Called by a full frame plugin inside this view to inform it that its
-    // zoom level has been updated.  The plugin should only call this function
-    // if the zoom change was triggered by the browser, it's only needed in case
-    // a plugin can update its own zoom, say because of its own UI.
-    void fullFramePluginZoomLevelChanged(double zoomLevel);
-
-    void computeScaleAndScrollForBlockRect(const WebPoint& hitPoint, const WebRect& blockRect, float padding, float defaultScaleWhenAlreadyLegible, float& scale, WebPoint& scroll);
-    Node* bestTapNode(const GestureEventWithHitTestResults& targetedTapEvent);
-    void enableTapHighlightAtPoint(const GestureEventWithHitTestResults& targetedTapEvent);
-    void enableTapHighlights(HeapVector<Member<Node>>&);
-    void computeScaleAndScrollForFocusedNode(Node* focusedNode, bool zoomInToLegibleScale, float& scale, IntPoint& scroll, bool& needAnimation);
-
-    void animateDoubleTapZoom(const IntPoint&);
-
-    void enableFakePageScaleAnimationForTesting(bool);
-    bool fakeDoubleTapAnimationPendingForTesting() const { return m_doubleTapZoomPending; }
-    IntPoint fakePageScaleAnimationTargetPositionForTesting() const { return m_fakePageScaleAnimationTargetPosition; }
-    float fakePageScaleAnimationPageScaleForTesting() const { return m_fakePageScaleAnimationPageScaleFactor; }
-    bool fakePageScaleAnimationUseAnchorForTesting() const { return m_fakePageScaleAnimationUseAnchor; }
-
-    void enterFullScreenForElement(Element*);
-    void exitFullScreenForElement(Element*);
-
-    void clearCompositedSelection();
-    void updateCompositedSelection(const WebSelection&);
-
-    // Exposed for the purpose of overriding device metrics.
-    void sendResizeEventAndRepaint();
-
-    // Exposed for testing purposes.
-    bool hasHorizontalScrollbar();
-    bool hasVerticalScrollbar();
-
-    // Exposed for tests.
-    unsigned numLinkHighlights() { return m_linkHighlights.size(); }
-    LinkHighlightImpl* getLinkHighlight(int i) { return m_linkHighlights[i].get(); }
-
-    WebSettingsImpl* settingsImpl();
-
-    // Returns the bounding box of the block type node touched by the WebPoint.
-    WebRect computeBlockBound(const WebPoint&, bool ignoreClipping);
-
-    WebLayerTreeView* layerTreeView() const { return m_layerTreeView; }
-
-    bool matchesHeuristicsForGpuRasterizationForTesting() const { return m_matchesHeuristicsForGpuRasterization; }
-
-    void updateTopControlsState(WebTopControlsState constraint, WebTopControlsState current, bool animate) override;
-
-    TopControls& topControls();
-    // Called anytime top controls layout height or content offset have changed.
-    void didUpdateTopControls();
-
-    void forceNextWebGLContextCreationToFail() override;
-    void forceNextDrawingBufferCreationToFail() override;
-
-    CompositorProxyClient* createCompositorProxyClient();
-    IntSize mainFrameSize();
-    WebDisplayMode displayMode() const { return m_displayMode; }
-
-    PageScaleConstraintsSet& pageScaleConstraintsSet() const;
-
-    FloatSize elasticOverscroll() const { return m_elasticOverscroll; }
-
-    // Attaches the PaintArtifactCompositor's tree to this WebView's layer tree
-    // view.
-    void attachPaintArtifactCompositor();
-
-    // Detaches the PaintArtifactCompositor and clears the layer tree view's
-    // root layer.
-    void detachPaintArtifactCompositor();
-
-    // Use in Slimming Paint v2 to update the layer tree for the content.
-    PaintArtifactCompositor& getPaintArtifactCompositor() { return m_paintArtifactCompositor; }
-
-    bool isTransparent() const;
-    void setIsTransparent(bool value);
-
-    double lastFrameTimeMonotonic() const { return m_lastFrameTimeMonotonic; }
-
-    ChromeClientImpl& chromeClient() const { return *m_chromeClientImpl.get(); }
-
-private:
-    InspectorOverlay* inspectorOverlay();
-
-    void setPageScaleFactorAndLocation(float, const FloatPoint&);
-    void propagateZoomFactorToLocalFrameRoots(Frame*, float);
-
-    void scrollAndRescaleViewports(float scaleFactor, const IntPoint& mainFrameOrigin, const FloatPoint& visualViewportOrigin);
-
-    float maximumLegiblePageScale() const;
-    void refreshPageScaleFactorAfterLayout();
-    IntSize contentsSize() const;
-
-    void performResize();
-    void resizeViewWhileAnchored(FrameView*, float topControlsHeight, bool topControlsShrinkLayout);
-
-    // Overrides the compositor visibility. See the description of
-    // m_overrideCompositorVisibility for more details.
-    void setCompositorVisibility(bool);
-
-    // TODO(lfg): Remove once WebViewFrameWidget is deleted.
-    void scheduleAnimationForWidget();
-
-    friend class WebView;  // So WebView::Create can call our constructor
-    friend class WebViewFrameWidget;
-    friend class WTF::RefCounted<WebViewImpl>;
-    friend void setCurrentInputEventForTest(const WebInputEvent*);
-
-    enum DragAction {
-      DragEnter,
-      DragOver
-    };
-
-    explicit WebViewImpl(WebViewClient*, WebPageVisibilityState);
-    ~WebViewImpl() override;
-
-    int textInputFlags();
-
-    WebString inputModeOfFocusedElement();
-
-    // Returns true if the event was actually processed.
-    bool keyEventDefault(const WebKeyboardEvent&);
-
-    bool confirmComposition(const WebString& text, ConfirmCompositionBehavior);
-
-    // Returns true if the view was scrolled.
-    bool scrollViewWithKeyboard(int keyCode, int modifiers);
-
-    void hideSelectPopup();
-
-    HitTestResult hitTestResultForRootFramePos(const IntPoint&);
-    HitTestResult hitTestResultForViewportPos(const IntPoint&);
-
-    // Consolidate some common code between starting a drag over a target and
-    // updating a drag over a target. If we're starting a drag, |isEntering|
-    // should be true.
-    WebDragOperation dragTargetDragEnterOrOver(const WebPoint& clientPoint,
-                                               const WebPoint& screenPoint,
-                                               DragAction,
-                                               int modifiers);
-
-    void configureAutoResizeMode();
-
-    void initializeLayerTreeView();
-
-    void setIsAcceleratedCompositingActive(bool);
-    void doComposite();
-    void reallocateRenderer();
-    void updateLayerTreeViewport();
-    void updateLayerTreeBackgroundColor();
-    void updateRootLayerTransform();
-    void updateLayerTreeDeviceScaleFactor();
-
-    // Helper function: Widens the width of |source| by the specified margins
-    // while keeping it smaller than page width.
-    WebRect widenRectWithinPageBounds(const WebRect& source, int targetMargin, int minimumMargin);
-
-    void pointerLockMouseEvent(const WebInputEvent&);
-
-    // PageWidgetEventHandler functions
-    void handleMouseLeave(LocalFrame&, const WebMouseEvent&) override;
-    void handleMouseDown(LocalFrame&, const WebMouseEvent&) override;
-    void handleMouseUp(LocalFrame&, const WebMouseEvent&) override;
-    WebInputEventResult handleMouseWheel(LocalFrame&, const WebMouseWheelEvent&) override;
-    WebInputEventResult handleGestureEvent(const WebGestureEvent&) override;
-    WebInputEventResult handleKeyEvent(const WebKeyboardEvent&) override;
-    WebInputEventResult handleCharEvent(const WebKeyboardEvent&) override;
-
-    WebInputEventResult handleSyntheticWheelFromTouchpadPinchEvent(const WebGestureEvent&);
-
-    WebPlugin* focusedPluginIfInputMethodSupported(LocalFrame*);
-
-    WebGestureEvent createGestureScrollEventFromFling(WebInputEvent::Type, WebGestureDevice) const;
-
-    void enablePopupMouseWheelEventListener();
-    void disablePopupMouseWheelEventListener();
-
-    void cancelPagePopup();
-    void updatePageOverlays();
-
-    float deviceScaleFactor() const;
-
-    void setRootGraphicsLayer(GraphicsLayer*);
-    void attachCompositorAnimationTimeline(CompositorAnimationTimeline*);
-    void detachCompositorAnimationTimeline(CompositorAnimationTimeline*);
-
-    LocalFrame* focusedLocalFrameInWidget() const;
-    LocalFrame* focusedLocalFrameAvailableForIme() const;
-
-    WebViewClient* m_client; // Can be 0 (e.g. unittests, shared workers, etc.)
-    WebSpellCheckClient* m_spellCheckClient;
-
-    Persistent<ChromeClientImpl> m_chromeClientImpl;
-    ContextMenuClientImpl m_contextMenuClientImpl;
-    EditorClientImpl m_editorClientImpl;
-    SpellCheckerClientImpl m_spellCheckerClientImpl;
-    StorageClientImpl m_storageClientImpl;
-
-    WebSize m_size;
-    // If true, automatically resize the layout view around its content.
-    bool m_shouldAutoResize;
-    // The lower bound on the size when auto-resizing.
-    IntSize m_minAutoSize;
-    // The upper bound on the size when auto-resizing.
-    IntSize m_maxAutoSize;
-
-    Persistent<Page> m_page;
-
-    // An object that can be used to manipulate m_page->settings() without linking
-    // against WebCore. This is lazily allocated the first time GetWebSettings()
-    // is called.
-    std::unique_ptr<WebSettingsImpl> m_webSettings;
-
-    // A copy of the web drop data object we received from the browser.
-    Persistent<DataObject> m_currentDragData;
-
-    // Keeps track of the current zoom level. 0 means no zoom, positive numbers
-    // mean zoom in, negative numbers mean zoom out.
-    double m_zoomLevel;
-
-    double m_minimumZoomLevel;
-
-    double m_maximumZoomLevel;
-
-    // Additional zoom factor used to scale the content by device scale factor.
-    double m_zoomFactorForDeviceScaleFactor;
-
-    // This value, when multiplied by the font scale factor, gives the maximum
-    // page scale that can result from automatic zooms.
-    float m_maximumLegibleScale;
-
-    // The scale moved to by the latest double tap zoom, if any.
-    float m_doubleTapZoomPageScaleFactor;
-    // Have we sent a double-tap zoom and not yet heard back the scale?
-    bool m_doubleTapZoomPending;
-
-    // Used for testing purposes.
-    bool m_enableFakePageScaleAnimationForTesting;
-    IntPoint m_fakePageScaleAnimationTargetPosition;
-    float m_fakePageScaleAnimationPageScaleFactor;
-    bool m_fakePageScaleAnimationUseAnchor;
-
-    bool m_doingDragAndDrop;
-
-    bool m_ignoreInputEvents;
-
-    float m_compositorDeviceScaleFactorOverride;
-    WebSize m_rootLayerOffset;
-    float m_rootLayerScale;
-
-    // Webkit expects keyPress events to be suppressed if the associated keyDown
-    // event was handled. Safari implements this behavior by peeking out the
-    // associated WM_CHAR event if the keydown was handled. We emulate
-    // this behavior by setting this flag if the keyDown was handled.
-    bool m_suppressNextKeypressEvent;
-
-    // Represents whether or not this object should process incoming IME events.
-    bool m_imeAcceptEvents;
-
-    // The available drag operations (copy, move link...) allowed by the source.
-    WebDragOperation m_operationsAllowed;
-
-    // The current drag operation as negotiated by the source and destination.
-    // When not equal to DragOperationNone, the drag data can be dropped onto the
-    // current drop target in this WebView (the drop target can accept the drop).
-    WebDragOperation m_dragOperation;
-
-    // The popup associated with an input/select element.
-    RefPtr<WebPagePopupImpl> m_pagePopup;
-
-    Persistent<DevToolsEmulator> m_devToolsEmulator;
-    std::unique_ptr<PageOverlay> m_pageColorOverlay;
-
-    // Whether the webview is rendering transparently.
-    bool m_isTransparent;
-
-    // Whether the user can press tab to focus links.
-    bool m_tabsToLinks;
-
-    // If set, the (plugin) node which has mouse capture.
-    Persistent<Node> m_mouseCaptureNode;
-    RefPtr<UserGestureToken> m_mouseCaptureGestureToken;
-
-    RefPtr<UserGestureToken> m_pointerLockGestureToken;
-
-    WebLayerTreeView* m_layerTreeView;
-    WebLayer* m_rootLayer;
-    GraphicsLayer* m_rootGraphicsLayer;
-    GraphicsLayer* m_visualViewportContainerLayer;
-    bool m_matchesHeuristicsForGpuRasterization;
-    static const WebInputEvent* m_currentInputEvent;
-
-    MediaKeysClientImpl m_mediaKeysClientImpl;
-    std::unique_ptr<WebActiveGestureAnimation> m_gestureAnimation;
-    WebPoint m_positionOnFlingStart;
-    WebPoint m_globalPositionOnFlingStart;
-    int m_flingModifier;
-    WebGestureDevice m_flingSourceDevice;
-    Vector<std::unique_ptr<LinkHighlightImpl>> m_linkHighlights;
-    std::unique_ptr<CompositorAnimationTimeline> m_linkHighlightsTimeline;
-    Persistent<FullscreenController> m_fullscreenController;
-
-    WebColor m_baseBackgroundColor;
-    WebColor m_backgroundColorOverride;
-    float m_zoomFactorOverride;
-
-    bool m_userGestureObserved;
-    bool m_shouldDispatchFirstVisuallyNonEmptyLayout;
-    bool m_shouldDispatchFirstLayoutAfterFinishedParsing;
-    bool m_shouldDispatchFirstLayoutAfterFinishedLoading;
-    WebDisplayMode m_displayMode;
-
-    FloatSize m_elasticOverscroll;
-
-    // This is owned by the LayerTreeHostImpl, and should only be used on the
-    // compositor thread. The LayerTreeHostImpl is indirectly owned by this
-    // class so this pointer should be valid until this class is destructed.
-    CrossThreadPersistent<CompositorMutatorImpl> m_mutator;
-
-    Persistent<EventListener> m_popupMouseWheelEventListener;
-
-    WebPageImportanceSignals m_pageImportanceSignals;
-
-    const std::unique_ptr<WebViewScheduler> m_scheduler;
-
-    // Manages the layer tree created for this page in Slimming Paint v2.
-    PaintArtifactCompositor m_paintArtifactCompositor;
-
-    double m_lastFrameTimeMonotonic;
-
-    // TODO(lfg): This is used in order to disable compositor visibility while
-    // the page is still visible. This is needed until the WebView and WebWidget
-    // split is complete, since in out-of-process iframes the page can be
-    // visible, but the WebView should not be used as a widget.
-    bool m_overrideCompositorVisibility;
+  void LayoutAndPaintAsync(WebLayoutAndPaintAsyncCallback*) override;
+  void CompositeAndReadbackAsync(
+      WebCompositeAndReadbackAsyncCallback*) override;
+  void ThemeChanged() override;
+  WebInputEventResult HandleInputEvent(const WebCoalescedInputEvent&) override;
+  void SetCursorVisibilityState(bool is_visible) override;
+  bool HasTouchEventHandlersAt(const WebPoint&) override;
+
+  void ApplyViewportDeltas(const WebFloatSize& visual_viewport_delta,
+                           const WebFloatSize& layout_viewport_delta,
+                           const WebFloatSize& elastic_overscroll_delta,
+                           float page_scale_delta,
+                           float browser_controls_shown_ratio_delta) override;
+  void RecordWheelAndTouchScrollingCount(bool has_scrolled_by_wheel,
+                                         bool has_scrolled_by_touch) override;
+  void MouseCaptureLost() override;
+  void SetFocus(bool enable) override;
+  WebRange CompositionRange() override;
+  WebColor BackgroundColor() const override;
+  WebPagePopup* GetPagePopup() const override;
+  bool SelectionBounds(WebRect& anchor, WebRect& focus) const override;
+  bool SelectionTextDirection(WebTextDirection& start,
+                              WebTextDirection& end) const override;
+  bool IsSelectionAnchorFirst() const override;
+  WebRange CaretOrSelectionRange() override;
+  void SetTextDirection(WebTextDirection) override;
+  bool IsAcceleratedCompositingActive() const override;
+  void WillCloseLayerTreeView() override;
+  void DidAcquirePointerLock() override;
+  void DidNotAcquirePointerLock() override;
+  void DidLosePointerLock() override;
+
+  // WebView methods:
+  virtual bool IsWebView() const { return true; }
+  void SetMainFrame(WebFrame*) override;
+  void SetCredentialManagerClient(WebCredentialManagerClient*) override;
+  void SetPrerendererClient(WebPrerendererClient*) override;
+  void SetSpellCheckClient(WebSpellCheckClient*) override;
+  WebSettings* GetSettings() override;
+  WebString PageEncoding() const override;
+  bool TabsToLinks() const override;
+  void SetTabsToLinks(bool value) override;
+  bool TabKeyCyclesThroughElements() const override;
+  void SetTabKeyCyclesThroughElements(bool value) override;
+  bool IsActive() const override;
+  void SetIsActive(bool value) override;
+  void SetDomainRelaxationForbidden(bool, const WebString& scheme) override;
+  void SetWindowFeatures(const WebWindowFeatures&) override;
+  void SetOpenedByDOM() override;
+  void ResizeWithBrowserControls(const WebSize&,
+                                 float browser_controls_height,
+                                 bool browser_controls_shrink_layout) override;
+  WebFrame* MainFrame() override;
+  WebFrame* FindFrameByName(const WebString& name,
+                            WebFrame* relative_to_frame) override;
+  WebLocalFrame* FocusedFrame() override;
+  void SetFocusedFrame(WebFrame*) override;
+  void FocusDocumentView(WebFrame*) override;
+  void SetInitialFocus(bool reverse) override;
+  void ClearFocusedElement() override;
+  bool ScrollFocusedEditableElementIntoRect(const WebRect&) override;
+  void SmoothScroll(int target_x, int target_y, long duration_ms) override;
+  void ZoomToFindInPageRect(const WebRect&);
+  void AdvanceFocus(bool reverse) override;
+  void AdvanceFocusAcrossFrames(WebFocusType,
+                                WebRemoteFrame* from,
+                                WebLocalFrame* to) override;
+  double ZoomLevel() override;
+  double SetZoomLevel(double) override;
+  void ZoomLimitsChanged(double minimum_zoom_level,
+                         double maximum_zoom_level) override;
+  float TextZoomFactor() override;
+  float SetTextZoomFactor(float) override;
+  bool ZoomToMultipleTargetsRect(const WebRect&) override;
+  float PageScaleFactor() const override;
+  void SetDefaultPageScaleLimits(float min_scale, float max_scale) override;
+  void SetInitialPageScaleOverride(float) override;
+  void SetMaximumLegibleScale(float) override;
+  void SetPageScaleFactor(float) override;
+  void SetVisualViewportOffset(const WebFloatPoint&) override;
+  WebFloatPoint VisualViewportOffset() const override;
+  WebFloatSize VisualViewportSize() const override;
+  void ResetScrollAndScaleState() override;
+  void SetIgnoreViewportTagScaleLimits(bool) override;
+  WebSize ContentsPreferredMinimumSize() override;
+  void SetDisplayMode(WebDisplayMode) override;
+
+  void SetDeviceScaleFactor(float) override;
+  void SetZoomFactorForDeviceScaleFactor(float) override;
+
+  void SetDeviceColorProfile(const gfx::ICCProfile&) override;
+
+  void EnableAutoResizeMode(const WebSize& min_size,
+                            const WebSize& max_size) override;
+  void DisableAutoResizeMode() override;
+  void PerformMediaPlayerAction(const WebMediaPlayerAction& action,
+                                const WebPoint& location) override;
+  void PerformPluginAction(const WebPluginAction&, const WebPoint&) override;
+  void AudioStateChanged(bool is_audio_playing) override;
+  WebHitTestResult HitTestResultAt(const WebPoint&) override;
+  WebHitTestResult HitTestResultForTap(const WebPoint&,
+                                       const WebSize&) override;
+  void SpellingMarkerOffsetsForTest(WebVector<unsigned>* offsets) override;
+  void RemoveSpellingMarkersUnderWords(
+      const WebVector<WebString>& words) override;
+  unsigned long CreateUniqueIdentifierForRequest() override;
+  void EnableDeviceEmulation(const WebDeviceEmulationParams&) override;
+  void DisableDeviceEmulation() override;
+  WebAXObject AccessibilityObject() override;
+  void SetSelectionColors(unsigned active_background_color,
+                          unsigned active_foreground_color,
+                          unsigned inactive_background_color,
+                          unsigned inactive_foreground_color) override;
+  void PerformCustomContextMenuAction(unsigned action) override;
+  void ShowContextMenu() override;
+  void DidCloseContextMenu() override;
+  void HidePopups() override;
+  void SetPageOverlayColor(WebColor) override;
+  WebPageImportanceSignals* PageImportanceSignals() override;
+  void TransferActiveWheelFlingAnimation(
+      const WebActiveWheelFlingParameters&) override;
+  bool EndActiveFlingAnimation() override;
+  bool IsFlinging() const override { return !!gesture_animation_.get(); }
+  void SetShowPaintRects(bool) override;
+  void SetShowDebugBorders(bool);
+  void SetShowFPSCounter(bool) override;
+  void SetShowScrollBottleneckRects(bool) override;
+  void AcceptLanguagesChanged() override;
+
+  // WebScheduler::InterventionReporter implementation:
+  void ReportIntervention(const WebString& message) override;
+
+  // WebViewScheduler::WebViewSchedulerSettings implementation:
+  float ExpensiveBackgroundThrottlingCPUBudget() override;
+  float ExpensiveBackgroundThrottlingInitialBudget() override;
+  float ExpensiveBackgroundThrottlingMaxBudget() override;
+  float ExpensiveBackgroundThrottlingMaxDelay() override;
+
+  void DidUpdateFullscreenSize();
+
+  float DefaultMinimumPageScaleFactor() const;
+  float DefaultMaximumPageScaleFactor() const;
+  float MinimumPageScaleFactor() const;
+  float MaximumPageScaleFactor() const;
+  float ClampPageScaleFactorToLimits(float) const;
+  void ResetScaleStateImmediately();
+
+  HitTestResult CoreHitTestResultAt(const WebPoint&);
+  void InvalidateRect(const IntRect&);
+
+  void SetBaseBackgroundColor(WebColor);
+  void SetBaseBackgroundColorOverride(WebColor);
+  void ClearBaseBackgroundColorOverride();
+  void SetBackgroundColorOverride(WebColor);
+  void ClearBackgroundColorOverride();
+  void SetZoomFactorOverride(float);
+  void SetCompositorDeviceScaleFactorOverride(float);
+  void SetDeviceEmulationTransform(const TransformationMatrix&);
+  TransformationMatrix GetDeviceEmulationTransformForTesting() const;
+
+  Color BaseBackgroundColor() const;
+  bool BackgroundColorOverrideEnabled() const {
+    return background_color_override_enabled_;
+  }
+  WebColor BackgroundColorOverride() const {
+    return background_color_override_;
+  }
+
+  Frame* FocusedCoreFrame() const;
+
+  // Returns the currently focused Element or null if no element has focus.
+  Element* FocusedElement() const;
+
+  static WebViewImpl* FromPage(Page*);
+
+  WebViewClient* Client() { return client_; }
+
+  WebSpellCheckClient* SpellCheckClient() { return spell_check_client_; }
+
+  // Returns the page object associated with this view. This may be null when
+  // the page is shutting down, but will be valid at all other times.
+  Page* GetPage() const { return page_.Get(); }
+
+  WebDevToolsAgentImpl* MainFrameDevToolsAgentImpl();
+
+  DevToolsEmulator* GetDevToolsEmulator() const {
+    return dev_tools_emulator_.Get();
+  }
+
+  // Returns the main frame associated with this view. This may be null when
+  // the page is shutting down, but will be valid at all other times.
+  WebLocalFrameImpl* MainFrameImpl() const;
+
+  // Event related methods:
+  void MouseContextMenu(const WebMouseEvent&);
+  void MouseDoubleClick(const WebMouseEvent&);
+
+  bool StartPageScaleAnimation(const IntPoint& target_position,
+                               bool use_anchor,
+                               float new_scale,
+                               double duration_in_seconds);
+
+  // WebGestureCurveTarget implementation for fling.
+  bool ScrollBy(const WebFloatSize& delta,
+                const WebFloatSize& velocity) override;
+
+  // Handles context menu events orignated via the the keyboard. These
+  // include the VK_APPS virtual key and the Shift+F10 combine. Code is
+  // based on the Webkit function bool WebView::handleContextMenuEvent(WPARAM
+  // wParam, LPARAM lParam) in webkit\webkit\win\WebView.cpp. The only
+  // significant change in this function is the code to convert from a
+  // Keyboard event to the Right Mouse button down event.
+  WebInputEventResult SendContextMenuEvent(const WebKeyboardEvent&);
+
+  void ShowContextMenuAtPoint(float x, float y, ContextMenuProvider*);
+
+  void ShowContextMenuForElement(WebElement);
+
+  // Notifies the WebView that a load has been committed. isNewNavigation
+  // will be true if a new session history item should be created for that
+  // load. isNavigationWithinPage will be true if the navigation does
+  // not take the user away from the current page.
+  void DidCommitLoad(bool is_new_navigation, bool is_navigation_within_page);
+
+  void PostLayoutResize(WebLocalFrameImpl* webframe);
+
+  // Indicates two things:
+  //   1) This view may have a new layout now.
+  //   2) Calling updateAllLifecyclePhases() is a no-op.
+  // After calling WebWidget::updateAllLifecyclePhases(), expect to get this
+  // notification unless the view did not need a layout.
+  void LayoutUpdated(WebLocalFrameImpl*);
+
+  void DidChangeContentsSize();
+  void PageScaleFactorChanged();
+  void MainFrameScrollOffsetChanged();
+
+  // Returns true if popup menus should be rendered by the browser, false if
+  // they should be rendered by WebKit (which is the default).
+  static bool UseExternalPopupMenus();
+
+  bool ShouldAutoResize() const { return should_auto_resize_; }
+
+  IntSize MinAutoSize() const { return min_auto_size_; }
+
+  IntSize MaxAutoSize() const { return max_auto_size_; }
+
+  void UpdateMainFrameLayoutSize();
+  void UpdatePageDefinedViewportConstraints(const ViewportDescription&);
+
+  PagePopup* OpenPagePopup(PagePopupClient*);
+  void ClosePagePopup(PagePopup*);
+  void CleanupPagePopup();
+  LocalDOMWindow* PagePopupWindow() const;
+
+  // Returns the input event we're currently processing. This is used in some
+  // cases where the WebCore DOM event doesn't have the information we need.
+  static const WebInputEvent* CurrentInputEvent() {
+    return current_input_event_;
+  }
+
+  GraphicsLayer* RootGraphicsLayer();
+  void RegisterViewportLayersWithCompositor();
+  PaintLayerCompositor* Compositor() const;
+  CompositorAnimationTimeline* LinkHighlightsTimeline() const {
+    return link_highlights_timeline_.get();
+  }
+
+  WebViewScheduler* Scheduler() const override;
+  void SetVisibilityState(WebPageVisibilityState, bool) override;
+
+  bool HasOpenedPopup() const { return page_popup_.Get(); }
+
+  // Called by a full frame plugin inside this view to inform it that its
+  // zoom level has been updated.  The plugin should only call this function
+  // if the zoom change was triggered by the browser, it's only needed in case
+  // a plugin can update its own zoom, say because of its own UI.
+  void FullFramePluginZoomLevelChanged(double zoom_level);
+
+  void ComputeScaleAndScrollForBlockRect(
+      const WebPoint& hit_point,
+      const WebRect& block_rect,
+      float padding,
+      float default_scale_when_already_legible,
+      float& scale,
+      WebPoint& scroll);
+  Node* BestTapNode(const GestureEventWithHitTestResults& targeted_tap_event);
+  void EnableTapHighlightAtPoint(
+      const GestureEventWithHitTestResults& targeted_tap_event);
+  void EnableTapHighlights(HeapVector<Member<Node>>&);
+  void ComputeScaleAndScrollForFocusedNode(Node* focused_node,
+                                           bool zoom_in_to_legible_scale,
+                                           float& scale,
+                                           IntPoint& scroll,
+                                           bool& need_animation);
+
+  void AnimateDoubleTapZoom(const IntPoint&);
+
+  void ResolveTapDisambiguation(double timestamp_seconds,
+                                WebPoint tap_viewport_offset,
+                                bool is_long_press) override;
+
+  void EnableFakePageScaleAnimationForTesting(bool);
+  bool FakeDoubleTapAnimationPendingForTesting() const {
+    return double_tap_zoom_pending_;
+  }
+  IntPoint FakePageScaleAnimationTargetPositionForTesting() const {
+    return fake_page_scale_animation_target_position_;
+  }
+  float FakePageScaleAnimationPageScaleForTesting() const {
+    return fake_page_scale_animation_page_scale_factor_;
+  }
+  bool FakePageScaleAnimationUseAnchorForTesting() const {
+    return fake_page_scale_animation_use_anchor_;
+  }
+
+  void EnterFullscreen(LocalFrame&);
+  void ExitFullscreen(LocalFrame&);
+  void FullscreenElementChanged(Element*, Element*);
+
+  // Exposed for the purpose of overriding device metrics.
+  void SendResizeEventAndRepaint();
+
+  // Exposed for testing purposes.
+  bool HasHorizontalScrollbar();
+  bool HasVerticalScrollbar();
+
+  // Exposed for tests.
+  unsigned NumLinkHighlights() { return link_highlights_.size(); }
+  LinkHighlightImpl* GetLinkHighlight(int i) {
+    return link_highlights_[i].get();
+  }
+
+  WebSettingsImpl* SettingsImpl();
+
+  // Returns the bounding box of the block type node touched by the WebPoint.
+  WebRect ComputeBlockBound(const WebPoint&, bool ignore_clipping);
+
+  WebLayerTreeView* LayerTreeView() const { return layer_tree_view_; }
+  CompositorAnimationHost* AnimationHost() const {
+    return animation_host_.get();
+  }
+
+  bool MatchesHeuristicsForGpuRasterizationForTesting() const {
+    return matches_heuristics_for_gpu_rasterization_;
+  }
+
+  void UpdateBrowserControlsState(WebBrowserControlsState constraint,
+                                  WebBrowserControlsState current,
+                                  bool animate) override;
+
+  BrowserControls& GetBrowserControls();
+  // Called anytime browser controls layout height or content offset have
+  // changed.
+  void DidUpdateBrowserControls();
+
+  void ForceNextWebGLContextCreationToFail() override;
+  void ForceNextDrawingBufferCreationToFail() override;
+
+  CompositorWorkerProxyClient* CreateCompositorWorkerProxyClient();
+  AnimationWorkletProxyClient* CreateAnimationWorkletProxyClient();
+
+  IntSize MainFrameSize();
+  WebDisplayMode DisplayMode() const { return display_mode_; }
+
+  PageScaleConstraintsSet& GetPageScaleConstraintsSet() const;
+
+  FloatSize ElasticOverscroll() const { return elastic_overscroll_; }
+
+  double LastFrameTimeMonotonic() const { return last_frame_time_monotonic_; }
+
+  ChromeClientImpl& ChromeClient() const { return *chrome_client_impl_.Get(); }
+
+  // Returns the currently active WebInputMethodController which is the one
+  // corresponding to the focused frame. It will return nullptr if there is no
+  // focused frame, or if the there is one but it belongs to a different local
+  // root.
+  WebInputMethodControllerImpl* GetActiveWebInputMethodController() const;
+
+ private:
+  InspectorOverlay* GetInspectorOverlay();
+
+  void SetPageScaleFactorAndLocation(float, const FloatPoint&);
+  void PropagateZoomFactorToLocalFrameRoots(Frame*, float);
+
+  void ScrollAndRescaleViewports(float scale_factor,
+                                 const IntPoint& main_frame_origin,
+                                 const FloatPoint& visual_viewport_origin);
+
+  float MaximumLegiblePageScale() const;
+  void RefreshPageScaleFactorAfterLayout();
+  IntSize ContentsSize() const;
+
+  void PerformResize();
+  void ResizeViewWhileAnchored(float browser_controls_height,
+                               bool browser_controls_shrink_layout);
+
+  // Overrides the compositor visibility. See the description of
+  // m_overrideCompositorVisibility for more details.
+  void SetCompositorVisibility(bool);
+
+  // TODO(lfg): Remove once WebViewFrameWidget is deleted.
+  void ScheduleAnimationForWidget();
+  bool GetCompositionCharacterBounds(WebVector<WebRect>&) override;
+
+  void UpdateBaseBackgroundColor();
+
+  friend class WebView;  // So WebView::Create can call our constructor
+  friend class WebViewFrameWidget;
+  friend class WTF::RefCounted<WebViewImpl>;
+  friend void SetCurrentInputEventForTest(const WebInputEvent*);
+
+  explicit WebViewImpl(WebViewClient*, WebPageVisibilityState);
+  ~WebViewImpl() override;
+
+  void HideSelectPopup();
+
+  HitTestResult HitTestResultForRootFramePos(const IntPoint&);
+  HitTestResult HitTestResultForViewportPos(const IntPoint&);
+
+  void ConfigureAutoResizeMode();
+
+  void InitializeLayerTreeView();
+
+  void SetIsAcceleratedCompositingActive(bool);
+  void DoComposite();
+  void ReallocateRenderer();
+  void UpdateLayerTreeViewport();
+  void UpdateLayerTreeBackgroundColor();
+  void UpdateDeviceEmulationTransform();
+  void UpdateLayerTreeDeviceScaleFactor();
+
+  // Helper function: Widens the width of |source| by the specified margins
+  // while keeping it smaller than page width.
+  WebRect WidenRectWithinPageBounds(const WebRect& source,
+                                    int target_margin,
+                                    int minimum_margin);
+
+  // PageWidgetEventHandler functions
+  void HandleMouseLeave(LocalFrame&, const WebMouseEvent&) override;
+  void HandleMouseDown(LocalFrame&, const WebMouseEvent&) override;
+  void HandleMouseUp(LocalFrame&, const WebMouseEvent&) override;
+  WebInputEventResult HandleMouseWheel(LocalFrame&,
+                                       const WebMouseWheelEvent&) override;
+  WebInputEventResult HandleGestureEvent(const WebGestureEvent&) override;
+  WebInputEventResult HandleKeyEvent(const WebKeyboardEvent&) override;
+  WebInputEventResult HandleCharEvent(const WebKeyboardEvent&) override;
+
+  WebInputEventResult HandleSyntheticWheelFromTouchpadPinchEvent(
+      const WebGestureEvent&);
+
+  WebPlugin* FocusedPluginIfInputMethodSupported(LocalFrame*);
+
+  WebGestureEvent CreateGestureScrollEventFromFling(WebInputEvent::Type,
+                                                    WebGestureDevice) const;
+
+  void EnablePopupMouseWheelEventListener();
+  void DisablePopupMouseWheelEventListener();
+
+  void CancelPagePopup();
+  void UpdatePageOverlays();
+
+  float DeviceScaleFactor() const;
+
+  void SetRootGraphicsLayer(GraphicsLayer*);
+  void SetRootLayer(WebLayer*);
+  void AttachCompositorAnimationTimeline(CompositorAnimationTimeline*);
+  void DetachCompositorAnimationTimeline(CompositorAnimationTimeline*);
+
+  LocalFrame* FocusedLocalFrameInWidget() const;
+  LocalFrame* FocusedLocalFrameAvailableForIme() const;
+
+  CompositorMutatorImpl& Mutator();
+
+  WebViewClient* client_;  // Can be 0 (e.g. unittests, shared workers, etc.)
+  WebSpellCheckClient* spell_check_client_;
+
+  Persistent<ChromeClientImpl> chrome_client_impl_;
+  ContextMenuClientImpl context_menu_client_impl_;
+  EditorClientImpl editor_client_impl_;
+  SpellCheckerClientImpl spell_checker_client_impl_;
+  StorageClientImpl storage_client_impl_;
+
+  WebSize size_;
+  // If true, automatically resize the layout view around its content.
+  bool should_auto_resize_;
+  // The lower bound on the size when auto-resizing.
+  IntSize min_auto_size_;
+  // The upper bound on the size when auto-resizing.
+  IntSize max_auto_size_;
+
+  Persistent<Page> page_;
+
+  // An object that can be used to manipulate m_page->settings() without linking
+  // against WebCore. This is lazily allocated the first time GetWebSettings()
+  // is called.
+  std::unique_ptr<WebSettingsImpl> web_settings_;
+
+  // Keeps track of the current zoom level. 0 means no zoom, positive numbers
+  // mean zoom in, negative numbers mean zoom out.
+  double zoom_level_;
+
+  double minimum_zoom_level_;
+
+  double maximum_zoom_level_;
+
+  // Additional zoom factor used to scale the content by device scale factor.
+  double zoom_factor_for_device_scale_factor_;
+
+  // This value, when multiplied by the font scale factor, gives the maximum
+  // page scale that can result from automatic zooms.
+  float maximum_legible_scale_;
+
+  // The scale moved to by the latest double tap zoom, if any.
+  float double_tap_zoom_page_scale_factor_;
+  // Have we sent a double-tap zoom and not yet heard back the scale?
+  bool double_tap_zoom_pending_;
+
+  // Used for testing purposes.
+  bool enable_fake_page_scale_animation_for_testing_;
+  IntPoint fake_page_scale_animation_target_position_;
+  float fake_page_scale_animation_page_scale_factor_;
+  bool fake_page_scale_animation_use_anchor_;
+
+  float compositor_device_scale_factor_override_;
+  TransformationMatrix device_emulation_transform_;
+
+  // Webkit expects keyPress events to be suppressed if the associated keyDown
+  // event was handled. Safari implements this behavior by peeking out the
+  // associated WM_CHAR event if the keydown was handled. We emulate
+  // this behavior by setting this flag if the keyDown was handled.
+  bool suppress_next_keypress_event_;
+
+  // TODO(ekaramad): Can we remove this and make sure IME events are not called
+  // when there is no page focus?
+  // Represents whether or not this object should process incoming IME events.
+  bool ime_accept_events_;
+
+  // The popup associated with an input/select element.
+  RefPtr<WebPagePopupImpl> page_popup_;
+
+  // This stores the last hidden page popup. If a GestureTap attempts to open
+  // the popup that is closed by its previous GestureTapDown, the popup remains
+  // closed.
+  RefPtr<WebPagePopupImpl> last_hidden_page_popup_;
+
+  Persistent<DevToolsEmulator> dev_tools_emulator_;
+  std::unique_ptr<PageOverlay> page_color_overlay_;
+
+  // Whether the user can press tab to focus links.
+  bool tabs_to_links_;
+
+  // If set, the (plugin) node which has mouse capture.
+  Persistent<Node> mouse_capture_node_;
+  RefPtr<UserGestureToken> mouse_capture_gesture_token_;
+
+  WebLayerTreeView* layer_tree_view_;
+  std::unique_ptr<CompositorAnimationHost> animation_host_;
+
+  WebLayer* root_layer_;
+  GraphicsLayer* root_graphics_layer_;
+  GraphicsLayer* visual_viewport_container_layer_;
+  bool matches_heuristics_for_gpu_rasterization_;
+  static const WebInputEvent* current_input_event_;
+
+  MediaKeysClientImpl media_keys_client_impl_;
+  std::unique_ptr<WebActiveGestureAnimation> gesture_animation_;
+  WebPoint position_on_fling_start_;
+  WebPoint global_position_on_fling_start_;
+  int fling_modifier_;
+  WebGestureDevice fling_source_device_;
+  Vector<std::unique_ptr<LinkHighlightImpl>> link_highlights_;
+  std::unique_ptr<CompositorAnimationTimeline> link_highlights_timeline_;
+  std::unique_ptr<FullscreenController> fullscreen_controller_;
+
+  WebPoint last_tap_disambiguation_best_candidate_position_;
+
+  WebColor base_background_color_;
+  bool base_background_color_override_enabled_;
+  WebColor base_background_color_override_;
+  bool background_color_override_enabled_;
+  WebColor background_color_override_;
+  float zoom_factor_override_;
+
+  bool should_dispatch_first_visually_non_empty_layout_;
+  bool should_dispatch_first_layout_after_finished_parsing_;
+  bool should_dispatch_first_layout_after_finished_loading_;
+  WebDisplayMode display_mode_;
+
+  FloatSize elastic_overscroll_;
+
+  // This is owned by the LayerTreeHostImpl, and should only be used on the
+  // compositor thread. The LayerTreeHostImpl is indirectly owned by this
+  // class so this pointer should be valid until this class is destructed.
+  CrossThreadPersistent<CompositorMutatorImpl> mutator_;
+
+  Persistent<EventListener> popup_mouse_wheel_event_listener_;
+
+  WebPageImportanceSignals page_importance_signals_;
+
+  const std::unique_ptr<WebViewScheduler> scheduler_;
+
+  double last_frame_time_monotonic_;
+
+  // TODO(lfg): This is used in order to disable compositor visibility while
+  // the page is still visible. This is needed until the WebView and WebWidget
+  // split is complete, since in out-of-process iframes the page can be
+  // visible, but the WebView should not be used as a widget.
+  bool override_compositor_visibility_;
+
+  Persistent<ResizeViewportAnchor> resize_viewport_anchor_;
 };
 
 // We have no ways to check if the specified WebView is an instance of
 // WebViewImpl because WebViewImpl is the only implementation of WebView.
 DEFINE_TYPE_CASTS(WebViewImpl, WebView, webView, true, true);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

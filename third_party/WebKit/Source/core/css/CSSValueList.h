@@ -1,6 +1,7 @@
 /*
  * (C) 1999-2003 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010 Apple Inc. All rights
+ * reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,61 +24,61 @@
 
 #include "core/CoreExport.h"
 #include "core/css/CSSValue.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class CORE_EXPORT CSSValueList : public CSSValue {
-    WTF_MAKE_NONCOPYABLE(CSSValueList);
-public:
-    using iterator = HeapVector<Member<const CSSValue>, 4>::iterator;
-    using const_iterator = HeapVector<Member<const CSSValue>, 4>::const_iterator;
+  WTF_MAKE_NONCOPYABLE(CSSValueList);
 
-    static CSSValueList* createCommaSeparated()
-    {
-        return new CSSValueList(CommaSeparator);
-    }
-    static CSSValueList* createSpaceSeparated()
-    {
-        return new CSSValueList(SpaceSeparator);
-    }
-    static CSSValueList* createSlashSeparated()
-    {
-        return new CSSValueList(SlashSeparator);
-    }
+ public:
+  using iterator = HeapVector<Member<const CSSValue>, 4>::iterator;
+  using const_iterator = HeapVector<Member<const CSSValue>, 4>::const_iterator;
 
-    iterator begin() { return m_values.begin(); }
-    iterator end() { return m_values.end(); }
-    const_iterator begin() const { return m_values.begin(); }
-    const_iterator end() const { return m_values.end(); }
+  static CSSValueList* CreateCommaSeparated() {
+    return new CSSValueList(kCommaSeparator);
+  }
+  static CSSValueList* CreateSpaceSeparated() {
+    return new CSSValueList(kSpaceSeparator);
+  }
+  static CSSValueList* CreateSlashSeparated() {
+    return new CSSValueList(kSlashSeparator);
+  }
 
-    size_t length() const { return m_values.size(); }
-    const CSSValue& item(size_t index) const { return *m_values[index]; }
+  iterator begin() { return values_.begin(); }
+  iterator end() { return values_.end(); }
+  const_iterator begin() const { return values_.begin(); }
+  const_iterator end() const { return values_.end(); }
 
-    void append(const CSSValue& value) { m_values.append(value); }
-    bool removeAll(const CSSValue&);
-    bool hasValue(const CSSValue&) const;
-    CSSValueList* copy() const;
+  size_t length() const { return values_.size(); }
+  const CSSValue& Item(size_t index) const { return *values_[index]; }
 
-    String customCSSText() const;
-    bool equals(const CSSValueList&) const;
+  void Append(const CSSValue& value) { values_.push_back(value); }
+  bool RemoveAll(const CSSValue&);
+  bool HasValue(const CSSValue&) const;
+  CSSValueList* Copy() const;
 
-    bool hasFailedOrCanceledSubresources() const;
+  String CustomCSSText() const;
+  bool Equals(const CSSValueList&) const;
 
-    DECLARE_TRACE_AFTER_DISPATCH();
+  bool HasFailedOrCanceledSubresources() const;
 
-protected:
-    CSSValueList(ClassType, ValueListSeparator);
+  bool MayContainUrl() const;
+  void ReResolveUrl(const Document&) const;
 
-private:
-    explicit CSSValueList(ValueListSeparator);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
-    HeapVector<Member<const CSSValue>, 4> m_values;
+ protected:
+  CSSValueList(ClassType, ValueListSeparator);
+
+ private:
+  explicit CSSValueList(ValueListSeparator);
+
+  HeapVector<Member<const CSSValue>, 4> values_;
 };
 
-DEFINE_CSS_VALUE_TYPE_CASTS(CSSValueList, isValueList());
+DEFINE_CSS_VALUE_TYPE_CASTS(CSSValueList, IsValueList());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSValueList_h
+#endif  // CSSValueList_h

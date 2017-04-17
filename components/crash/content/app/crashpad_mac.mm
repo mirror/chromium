@@ -4,6 +4,7 @@
 
 #include "components/crash/content/app/crashpad.h"
 
+#include <CoreFoundation/CoreFoundation.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -34,6 +35,7 @@ base::FilePath PlatformCrashpadInitialization(bool initial_client,
                                               bool browser_process,
                                               bool embedded_handler) {
   base::FilePath database_path;  // Only valid in the browser process.
+  base::FilePath metrics_path;  // Only valid in the browser process.
   DCHECK(!embedded_handler);  // This is not used on Mac.
 
   if (initial_client) {
@@ -45,38 +47,56 @@ base::FilePath PlatformCrashpadInitialization(bool initial_client,
       // Is there a way to recover if this fails?
       CrashReporterClient* crash_reporter_client = GetCrashReporterClient();
       crash_reporter_client->GetCrashDumpLocation(&database_path);
+      crash_reporter_client->GetCrashMetricsLocation(&metrics_path);
 
-      // TODO(mark): Reading the Breakpad keys is temporary and transitional. At
-      // the very least, they should be renamed to Crashpad. For the time being,
-      // this isn't the worst thing: Crashpad is still uploading to a
-      // Breakpad-type server, after all.
-      NSBundle* framework_bundle = base::mac::FrameworkBundle();
-      NSString* product = base::mac::ObjCCast<NSString>(
-          [framework_bundle objectForInfoDictionaryKey:@"BreakpadProduct"]);
-      NSString* version = base::mac::ObjCCast<NSString>(
-          [framework_bundle objectForInfoDictionaryKey:@"BreakpadVersion"]);
-      NSString* url_ns = base::mac::ObjCCast<NSString>(
-          [framework_bundle objectForInfoDictionaryKey:@"BreakpadURL"]);
-#if defined(GOOGLE_CHROME_BUILD)
-      NSString* channel = base::mac::ObjCCast<NSString>(
-          [base::mac::OuterBundle() objectForInfoDictionaryKey:@"KSChannelID"]);
+#if defined(GOOGLE_CHROME_BUILD) && defined(OFFICIAL_BUILD)
+      // Only allow the possibility of report upload in official builds. This
+      // crash server won't have symbols for any other build types.
+      std::string url = "https://clients2.google.com/cr/report";
 #else
-      NSString* channel = nil;
+      std::string url;
 #endif
 
-      std::string url = base::SysNSStringToUTF8(url_ns);
-
       std::map<std::string, std::string> process_annotations;
-      process_annotations["prod"] = base::SysNSStringToUTF8(product);
-      process_annotations["ver"] = base::SysNSStringToUTF8(version);
+
+      NSBundle* outer_bundle = base::mac::OuterBundle();
+      NSString* product = base::mac::ObjCCast<NSString>([outer_bundle
+          objectForInfoDictionaryKey:base::mac::CFToNSCast(kCFBundleNameKey)]);
+      process_annotations["prod"] =
+          base::SysNSStringToUTF8(product).append("_Mac");
+
+#if defined(GOOGLE_CHROME_BUILD)
+      // Empty means stable.
+      const bool allow_empty_channel = true;
+#else
+      const bool allow_empty_channel = false;
+#endif
+      NSString* channel = base::mac::ObjCCast<NSString>(
+          [outer_bundle objectForInfoDictionaryKey:@"KSChannelID"]);
       if (channel) {
         process_annotations["channel"] = base::SysNSStringToUTF8(channel);
+      } else if (allow_empty_channel) {
+        process_annotations["channel"] = "";
       }
+
+      NSString* version =
+          base::mac::ObjCCast<NSString>([base::mac::FrameworkBundle()
+              objectForInfoDictionaryKey:@"CFBundleShortVersionString"]);
+      process_annotations["ver"] = base::SysNSStringToUTF8(version);
+
       process_annotations["plat"] = std::string("OS X");
 
-      crashpad::CrashpadClient crashpad_client;
-
       std::vector<std::string> arguments;
+
+      if (crash_reporter_client->ShouldMonitorCrashHandlerExpensively()) {
+        arguments.push_back("--monitor-self");
+      }
+
+      // Set up --monitor-self-annotation even in the absence of --monitor-self
+      // so that minidumps produced by Crashpad's generate_dump tool will
+      // contain these annotations.
+      arguments.push_back("--monitor-self-annotation=ptype=crashpad-handler");
+
       if (!browser_process) {
         // If this is an initial client that's not the browser process, it's
         // important that the new Crashpad handler also not be connected to any
@@ -86,20 +106,14 @@ base::FilePath PlatformCrashpadInitialization(bool initial_client,
             "--reset-own-crash-exception-port-to-system-default");
       }
 
-      bool result = crashpad_client.StartHandler(handler_path,
-                                                 database_path,
-                                                 url,
-                                                 process_annotations,
-                                                 arguments,
-                                                 true);
-      if (result) {
-        result = crashpad_client.UseHandler();
-      }
+      bool result = GetCrashpadClient().StartHandler(
+          handler_path, database_path, metrics_path, url, process_annotations,
+          arguments, true, false);
 
       // If this is an initial client that's not the browser process, it's
       // important to sever the connection to any existing handler. If
-      // StartHandler() or UseHandler() failed, call UseSystemDefaultHandler()
-      // in that case to drop the link to the existing handler.
+      // StartHandler() failed, call UseSystemDefaultHandler() to drop the link
+      // to the existing handler.
       if (!result && !browser_process) {
         crashpad::CrashpadClient::UseSystemDefaultHandler();
       }

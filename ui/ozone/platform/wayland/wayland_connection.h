@@ -10,7 +10,9 @@
 #include "base/message_loop/message_pump_libevent.h"
 #include "ui/events/platform/platform_event_source.h"
 #include "ui/gfx/native_widget_types.h"
+#include "ui/ozone/platform/wayland/wayland_keyboard.h"
 #include "ui/ozone/platform/wayland/wayland_object.h"
+#include "ui/ozone/platform/wayland/wayland_output.h"
 #include "ui/ozone/platform/wayland/wayland_pointer.h"
 
 namespace ui {
@@ -37,6 +39,9 @@ class WaylandConnection : public PlatformEventSource,
   WaylandWindow* GetWindow(gfx::AcceleratedWidget widget);
   void AddWindow(gfx::AcceleratedWidget widget, WaylandWindow* window);
   void RemoveWindow(gfx::AcceleratedWidget widget);
+
+  const std::vector<std::unique_ptr<WaylandOutput>>& GetOutputList() const;
+  WaylandOutput* PrimaryOutput() const;
 
  private:
   void Flush();
@@ -74,10 +79,13 @@ class WaylandConnection : public PlatformEventSource,
   wl::Object<xdg_shell> shell_;
 
   std::unique_ptr<WaylandPointer> pointer_;
+  std::unique_ptr<WaylandKeyboard> keyboard_;
 
   bool scheduled_flush_ = false;
   bool watching_ = false;
   base::MessagePumpLibevent::FileDescriptorWatcher controller_;
+
+  std::vector<std::unique_ptr<WaylandOutput>> output_list_;
 
   DISALLOW_COPY_AND_ASSIGN(WaylandConnection);
 };

@@ -15,6 +15,7 @@
 #include "base/memory/ref_counted.h"
 #include "components/display_compositor/display_compositor_export.h"
 #include "gpu/ipc/common/surface_handle.h"
+#include "ui/gfx/buffer_types.h"
 #include "ui/gfx/color_space.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
@@ -36,14 +37,15 @@ namespace display_compositor {
 class GLHelper;
 
 // Provides a surface that manages its own buffers, backed by GpuMemoryBuffers
-// created using CHROMIUM_gpu_memory_buffer_image. Double/triple buffering is
-// implemented internally. Doublebuffering occurs if PageFlipComplete is called
-// before the next BindFramebuffer call, otherwise it creates extra buffers.
+// created using CHROMIUM_image. Double/triple buffering is implemented
+// internally. Doublebuffering occurs if PageFlipComplete is called before the
+// next BindFramebuffer call, otherwise it creates extra buffers.
 class DISPLAY_COMPOSITOR_EXPORT BufferQueue {
  public:
   BufferQueue(gpu::gles2::GLES2Interface* gl,
               uint32_t texture_target,
               uint32_t internal_format,
+              gfx::BufferFormat format,
               GLHelper* gl_helper,
               gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
               gpu::SurfaceHandle surface_handle);
@@ -56,7 +58,8 @@ class DISPLAY_COMPOSITOR_EXPORT BufferQueue {
   void PageFlipComplete();
   void Reshape(const gfx::Size& size,
                float scale_factor,
-               const gfx::ColorSpace& color_space);
+               const gfx::ColorSpace& color_space,
+               bool use_stencil);
 
   void RecreateBuffers();
 
@@ -75,12 +78,14 @@ class DISPLAY_COMPOSITOR_EXPORT BufferQueue {
                      std::unique_ptr<gfx::GpuMemoryBuffer> buffer,
                      uint32_t texture,
                      uint32_t image,
+                     uint32_t stencil,
                      const gfx::Rect& rect);
     ~AllocatedSurface();
     BufferQueue* const buffer_queue;
     std::unique_ptr<gfx::GpuMemoryBuffer> buffer;
     const uint32_t texture;
     const uint32_t image;
+    const uint32_t stencil;
     gfx::Rect damage;  // This is the damage for this frame from the previous.
   };
 
@@ -106,10 +111,12 @@ class DISPLAY_COMPOSITOR_EXPORT BufferQueue {
   gpu::gles2::GLES2Interface* const gl_;
   gfx::Size size_;
   gfx::ColorSpace color_space_;
+  bool use_stencil_ = false;
   uint32_t fbo_;
   size_t allocated_count_;
   uint32_t texture_target_;
   uint32_t internal_format_;
+  gfx::BufferFormat format_;
   // This surface is currently bound. This may be nullptr if no surface has
   // been bound, or if allocation failed at bind.
   std::unique_ptr<AllocatedSurface> current_surface_;

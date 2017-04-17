@@ -18,7 +18,7 @@
 #include "chrome/browser/chromeos/login/ui/webui_login_view.h"
 #include "chrome/browser/chromeos/net/network_portal_detector_test_impl.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
-#include "chrome/browser/ui/webui/signin/get_auth_frame.h"
+#include "chrome/browser/ui/webui/signin/signin_utils.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chromeos/chromeos_switches.h"
@@ -228,16 +228,21 @@ void OobeBaseTest::WaitForGaiaPageLoad() {
 }
 
 void OobeBaseTest::WaitForGaiaPageReload() {
-  JS()
-      .Evaluate(
-          "$('gaia-signin').gaiaAuthHost_.addEventListener('ready',"
-          "function f() {"
-          "$(\'gaia-signin\').gaiaAuthHost_.removeEventListener(\'ready\', f);"
-          "window.domAutomationController.setAutomationId(0);"
-          "window.domAutomationController.send('GaiaReady');"
-          "});");
-
+  // Starts listening to message before executing the JS code that generates
+  // the message below.
   content::DOMMessageQueue message_queue;
+
+  JS().Evaluate(
+      "(function() {"
+      "  var authenticator = $('gaia-signin').gaiaAuthHost_;"
+      "  var f = function() {"
+      "    authenticator.removeEventListener('ready', f);"
+      "    window.domAutomationController.setAutomationId(0);"
+      "    window.domAutomationController.send('GaiaReady');"
+      "  };"
+      "  authenticator.addEventListener('ready', f);"
+      "})();");
+
   std::string message;
   do {
     ASSERT_TRUE(message_queue.WaitForMessage(&message));

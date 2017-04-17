@@ -7,7 +7,7 @@
 
 #include "core/html/HTMLCanvasElement.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -15,15 +15,21 @@ class MediaStream;
 class ExceptionState;
 
 class HTMLCanvasElementCapture {
-    STATIC_ONLY(HTMLCanvasElementCapture);
-public:
-    static MediaStream* captureStream(HTMLCanvasElement&, ExceptionState&);
-    static MediaStream* captureStream(HTMLCanvasElement&, double frameRate, ExceptionState&);
-private:
-    static MediaStream* captureStream(HTMLCanvasElement&, bool givenFrameRate, double frameRate, ExceptionState&);
+  STATIC_ONLY(HTMLCanvasElementCapture);
 
+ public:
+  static MediaStream* captureStream(HTMLCanvasElement&, ExceptionState&);
+  static MediaStream* captureStream(HTMLCanvasElement&,
+                                    double frame_rate,
+                                    ExceptionState&);
+
+ private:
+  static MediaStream* captureStream(HTMLCanvasElement&,
+                                    bool given_frame_rate,
+                                    double frame_rate,
+                                    ExceptionState&);
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

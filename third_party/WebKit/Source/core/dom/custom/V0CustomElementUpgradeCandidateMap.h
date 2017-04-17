@@ -34,39 +34,43 @@
 #include "core/dom/custom/V0CustomElementDescriptor.h"
 #include "core/dom/custom/V0CustomElementDescriptorHash.h"
 #include "core/dom/custom/V0CustomElementObserver.h"
-#include "wtf/HashMap.h"
-#include "wtf/LinkedHashSet.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/LinkedHashSet.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
-class V0CustomElementUpgradeCandidateMap final : public V0CustomElementObserver {
-    WTF_MAKE_NONCOPYABLE(V0CustomElementUpgradeCandidateMap);
-public:
-    static V0CustomElementUpgradeCandidateMap* create();
-    ~V0CustomElementUpgradeCandidateMap() override;
+class V0CustomElementUpgradeCandidateMap final
+    : public V0CustomElementObserver {
+  WTF_MAKE_NONCOPYABLE(V0CustomElementUpgradeCandidateMap);
 
-    // API for V0CustomElementRegistrationContext to save and take candidates
+ public:
+  static V0CustomElementUpgradeCandidateMap* Create();
+  ~V0CustomElementUpgradeCandidateMap() override;
 
-    typedef HeapLinkedHashSet<WeakMember<Element>> ElementSet;
+  // API for V0CustomElementRegistrationContext to save and take candidates
 
-    void add(const V0CustomElementDescriptor&, Element*);
-    ElementSet* takeUpgradeCandidatesFor(const V0CustomElementDescriptor&);
+  typedef HeapLinkedHashSet<WeakMember<Element>> ElementSet;
 
-    DECLARE_VIRTUAL_TRACE();
+  void Add(const V0CustomElementDescriptor&, Element*);
+  ElementSet* TakeUpgradeCandidatesFor(const V0CustomElementDescriptor&);
 
-private:
-    V0CustomElementUpgradeCandidateMap() { }
+  DECLARE_VIRTUAL_TRACE();
 
-    void elementWasDestroyed(Element*) override;
+ private:
+  V0CustomElementUpgradeCandidateMap() {}
 
-    typedef HeapHashMap<WeakMember<Element>, V0CustomElementDescriptor> UpgradeCandidateMap;
-    UpgradeCandidateMap m_upgradeCandidates;
+  void ElementWasDestroyed(Element*) override;
 
-    typedef HeapHashMap<V0CustomElementDescriptor, Member<ElementSet>> UnresolvedDefinitionMap;
-    UnresolvedDefinitionMap m_unresolvedDefinitions;
+  typedef HeapHashMap<WeakMember<Element>, V0CustomElementDescriptor>
+      UpgradeCandidateMap;
+  UpgradeCandidateMap upgrade_candidates_;
+
+  typedef HeapHashMap<V0CustomElementDescriptor, Member<ElementSet>>
+      UnresolvedDefinitionMap;
+  UnresolvedDefinitionMap unresolved_definitions_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V0CustomElementUpgradeCandidateMap_h
+#endif  // V0CustomElementUpgradeCandidateMap_h

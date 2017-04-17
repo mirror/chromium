@@ -5,6 +5,7 @@
 #import "ui/views/cocoa/native_widget_mac_nswindow.h"
 
 #include "base/mac/foundation_util.h"
+#import "base/mac/sdk_forward_declarations.h"
 #import "ui/views/cocoa/bridged_native_widget.h"
 #import "ui/base/cocoa/user_interface_item_command_handler.h"
 #import "ui/views/cocoa/views_nswindow_delegate.h"
@@ -107,13 +108,31 @@
   return [super hasKeyAppearance];
 }
 
-// Override sendEvent to allow key events to be forwarded to a toolkit-views
-// menu while it is active, and while still allowing any native subview to
-// retain firstResponder status.
+// Override sendEvent to intercept window drag events and allow key events to be
+// forwarded to a toolkit-views menu while it is active, and while still
+// allowing any native subview to retain firstResponder status.
 - (void)sendEvent:(NSEvent*)event {
   // Let CommandDispatcher check if this is a redispatched event.
   if ([commandDispatcher_ preSendEvent:event])
     return;
+
+  // If a window drag event monitor is not used, query the BridgedNativeWidget
+  // to decide if a window drag should be performed.
+  if (!views::BridgedNativeWidget::ShouldUseDragEventMonitor()) {
+    views::BridgedNativeWidget* bridge =
+        views::NativeWidgetMac::GetBridgeForNativeWindow(self);
+
+    if (bridge && bridge->ShouldDragWindow(event)) {
+      // Using performWindowDragWithEvent: does not generate a
+      // NSWindowWillMoveNotification. Hence post one.
+      [[NSNotificationCenter defaultCenter]
+          postNotificationName:NSWindowWillMoveNotification
+                        object:self];
+
+      [self performWindowDragWithEvent:event];
+      return;
+    }
+  }
 
   NSEventType type = [event type];
   if ((type != NSKeyDown && type != NSKeyUp) || ![self hasViewsMenuActive]) {
@@ -179,32 +198,25 @@
   return [super performKeyEquivalent:event];
 }
 
+- (BOOL)defaultValidateUserInterfaceItem:
+    (id<NSValidatedUserInterfaceItem>)item {
+  return [super validateUserInterfaceItem:item];
+}
+
 - (void)commandDispatch:(id)sender {
-  [commandHandler_ commandDispatch:sender window:self];
+  [commandDispatcher_ dispatch:sender forHandler:commandHandler_];
 }
 
 - (void)commandDispatchUsingKeyModifiers:(id)sender {
-  [commandHandler_ commandDispatchUsingKeyModifiers:sender window:self];
+  [commandDispatcher_ dispatchUsingKeyModifiers:sender
+                                     forHandler:commandHandler_];
 }
 
 // NSWindow overrides (NSUserInterfaceItemValidations implementation)
 
 - (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)item {
-  // Since this class implements these selectors, |super| will always say they
-  // are enabled. Only use [super] to validate other selectors. If there is no
-  // command handler, defer to AppController.
-  if ([item action] == @selector(commandDispatch:) ||
-      [item action] == @selector(commandDispatchUsingKeyModifiers:)) {
-    if (commandHandler_)
-      return [commandHandler_ validateUserInterfaceItem:item window:self];
-
-    id appController = [NSApp delegate];
-    DCHECK([appController
-        conformsToProtocol:@protocol(NSUserInterfaceValidations)]);
-    return [appController validateUserInterfaceItem:item];
-  }
-
-  return [super validateUserInterfaceItem:item];
+  return [commandDispatcher_ validateUserInterfaceItem:item
+                                            forHandler:commandHandler_];
 }
 
 @end

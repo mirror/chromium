@@ -14,6 +14,7 @@
 #include <list>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -45,6 +46,8 @@
 
 namespace chrome_pdf {
 
+namespace {
+
 const char kChromePrint[] = "chrome://print/";
 const char kChromeExtension[] =
     "chrome-extension://mhjfbmdgcfjbbpaeojofohoefgiehjai";
@@ -56,6 +59,13 @@ const char kJSViewportType[] = "viewport";
 const char kJSXOffset[] = "xOffset";
 const char kJSYOffset[] = "yOffset";
 const char kJSZoom[] = "zoom";
+const char kJSPinchPhase[] = "pinchPhase";
+// kJSPinchX and kJSPinchY represent the center of the pinch gesture.
+const char kJSPinchX[] = "pinchX";
+const char kJSPinchY[] = "pinchY";
+// kJSPinchVector represents the amount of panning caused by the pinch gesture.
+const char kJSPinchVectorX[] = "pinchVectorX";
+const char kJSPinchVectorY[] = "pinchVectorY";
 // Stop scrolling message (Page -> Plugin)
 const char kJSStopScrollingType[] = "stopScrolling";
 // Document dimension arguments (Plugin -> Page).
@@ -146,9 +156,7 @@ const int kAccessibilityPageDelayMs = 100;
 
 const double kMinZoom = 0.01;
 
-namespace {
-
-static const char kPPPPdfInterface[] = PPP_PDF_INTERFACE_1;
+const char kPPPPdfInterface[] = PPP_PDF_INTERFACE_1;
 
 // Used for UMA. Do not delete entries, and keep in sync with histograms.xml.
 enum PDFFeatures {
@@ -262,8 +270,7 @@ pp::Var ModalDialog(const pp::Instance* instance,
       interface->GetWindowObject(instance->pp_instance()));
   if (default_answer.empty())
     return window.Call(type, message);
-  else
-    return window.Call(type, message, default_answer);
+  return window.Call(type, message, default_answer);
 }
 
 }  // namespace
@@ -274,6 +281,8 @@ OutOfProcessInstance::OutOfProcessInstance(PP_Instance instance)
       pp::Printing_Dev(this),
       cursor_(PP_CURSORTYPE_POINTER),
       zoom_(1.0),
+      needs_reraster_(true),
+      last_bitmap_smaller_(false),
       device_scale_(1.0),
       full_(false),
       paint_manager_(this, this, true),
@@ -282,6 +291,7 @@ OutOfProcessInstance::OutOfProcessInstance(PP_Instance instance)
       preview_document_load_state_(LOAD_STATE_COMPLETE),
       uma_(this),
       told_browser_about_unsupported_feature_(false),
+      font_substitution_reported_(false),
       print_preview_page_count_(0),
       last_progress_sent_(0),
       recently_sent_find_update_(false),
@@ -290,7 +300,8 @@ OutOfProcessInstance::OutOfProcessInstance(PP_Instance instance)
       stop_scrolling_(false),
       background_color_(0),
       top_toolbar_height_(0),
-      accessibility_state_(ACCESSIBILITY_STATE_OFF) {
+      accessibility_state_(ACCESSIBILITY_STATE_OFF),
+      is_print_preview_(false) {
   loader_factory_.Initialize(this);
   timer_factory_.Initialize(this);
   form_factory_.Initialize(this);
@@ -321,10 +332,10 @@ bool OutOfProcessInstance::Init(uint32_t argc,
   if (!document_url_var.is_string())
     return false;
   std::string document_url = document_url_var.AsString();
-  std::string extension_url = std::string(kChromeExtension);
-  std::string print_preview_url = std::string(kChromePrint);
-  if (!base::StringPiece(document_url).starts_with(kChromeExtension) &&
-      !base::StringPiece(document_url).starts_with(kChromePrint)) {
+  base::StringPiece document_url_piece(document_url);
+  is_print_preview_ = document_url_piece.starts_with(kChromePrint);
+  if (!document_url_piece.starts_with(kChromeExtension) &&
+      !is_print_preview_) {
     return false;
   }
 
@@ -340,10 +351,11 @@ bool OutOfProcessInstance::Init(uint32_t argc,
   if (full_)
     SetPluginToHandleFindRequests();
 
-  text_input_.reset(new pp::TextInput_Dev(this));
+  text_input_ = base::MakeUnique<pp::TextInput_Dev>(this);
 
   const char* stream_url = nullptr;
   const char* original_url = nullptr;
+  const char* top_level_url = nullptr;
   const char* headers = nullptr;
   for (uint32_t i = 0; i < argc; ++i) {
     bool success = true;
@@ -351,6 +363,8 @@ bool OutOfProcessInstance::Init(uint32_t argc,
       original_url = argv[i];
     else if (strcmp(argn[i], "stream-url") == 0)
       stream_url = argv[i];
+    else if (strcmp(argn[i], "top-level-url") == 0)
+      top_level_url = argv[i];
     else if (strcmp(argn[i], "headers") == 0)
       headers = argv[i];
     else if (strcmp(argn[i], "background-color") == 0)
@@ -372,11 +386,12 @@ bool OutOfProcessInstance::Init(uint32_t argc,
   // A |kJSResetPrintPreviewModeType| message will be sent to the plugin letting
   // it know the url to load. By not loading here we avoid loading the same
   // document twice.
-  if (IsPrintPreviewUrl(original_url))
+  if (IsPrintPreview())
     return true;
 
   LoadUrl(stream_url);
   url_ = original_url;
+  pp::PDF::SetCrashData(GetPluginInstance(), original_url, top_level_url);
   return engine_->New(original_url, headers);
 }
 
@@ -392,12 +407,101 @@ void OutOfProcessInstance::HandleMessage(const pp::Var& message) {
   if (type == kJSViewportType &&
       dict.Get(pp::Var(kJSXOffset)).is_number() &&
       dict.Get(pp::Var(kJSYOffset)).is_number() &&
-      dict.Get(pp::Var(kJSZoom)).is_number()) {
+      dict.Get(pp::Var(kJSZoom)).is_number() &&
+      dict.Get(pp::Var(kJSPinchPhase)).is_number()) {
     received_viewport_message_ = true;
     stop_scrolling_ = false;
+    PinchPhase pinch_phase =
+        static_cast<PinchPhase>(dict.Get(pp::Var(kJSPinchPhase)).AsInt());
     double zoom = dict.Get(pp::Var(kJSZoom)).AsDouble();
+    double zoom_ratio = zoom / zoom_;
+
     pp::FloatPoint scroll_offset(dict.Get(pp::Var(kJSXOffset)).AsDouble(),
                                  dict.Get(pp::Var(kJSYOffset)).AsDouble());
+
+    if (pinch_phase == PINCH_START) {
+      scroll_offset_at_last_raster_ = scroll_offset;
+      last_bitmap_smaller_ = false;
+      needs_reraster_ = false;
+      return;
+    }
+
+    // When zooming in, we set a layer transform to avoid unneeded rerasters.
+    // Also, if we're zooming out and the last time we rerastered was when
+    // we were even further zoomed out (i.e. we pinch zoomed in and are now
+    // pinch zooming back out in the same gesture), we update the layer
+    // transform instead of rerastering.
+    if (pinch_phase == PINCH_UPDATE_ZOOM_IN ||
+        (pinch_phase == PINCH_UPDATE_ZOOM_OUT && zoom_ratio > 1.0)) {
+      if (!(dict.Get(pp::Var(kJSPinchX)).is_number() &&
+            dict.Get(pp::Var(kJSPinchY)).is_number() &&
+            dict.Get(pp::Var(kJSPinchVectorX)).is_number() &&
+            dict.Get(pp::Var(kJSPinchVectorY)).is_number())) {
+        NOTREACHED();
+        return;
+      }
+
+      pp::Point pinch_center(dict.Get(pp::Var(kJSPinchX)).AsDouble(),
+                             dict.Get(pp::Var(kJSPinchY)).AsDouble());
+      // Pinch vector is the panning caused due to change in pinch
+      // center between start and end of the gesture.
+      pp::Point pinch_vector =
+          pp::Point(dict.Get(kJSPinchVectorX).AsDouble() * zoom_ratio,
+                    dict.Get(kJSPinchVectorY).AsDouble() * zoom_ratio);
+      pp::Point scroll_delta;
+      // If the rendered document doesn't fill the display area we will
+      // use |paint_offset| to anchor the paint vertically into the same place.
+      // We use the scroll bars instead of the pinch vector to get the actual
+      // position on screen of the paint.
+      pp::Point paint_offset;
+
+      if (plugin_size_.width() > GetDocumentPixelWidth() * zoom_ratio) {
+        // We want to keep the paint in the middle but it must stay in the same
+        // position relative to the scroll bars.
+        paint_offset = pp::Point(0, (1 - zoom_ratio) * pinch_center.y());
+        scroll_delta =
+            pp::Point(0, (scroll_offset.y() -
+                          scroll_offset_at_last_raster_.y() * zoom_ratio));
+
+        pinch_vector = pp::Point();
+        last_bitmap_smaller_ = true;
+      } else if (last_bitmap_smaller_) {
+          pinch_center = pp::Point((plugin_size_.width() / device_scale_) / 2,
+              (plugin_size_.height() / device_scale_) / 2);
+          const double zoom_when_doc_covers_plugin_width =
+              zoom_ * plugin_size_.width() / GetDocumentPixelWidth();
+          paint_offset = pp::Point(
+              (1 - zoom / zoom_when_doc_covers_plugin_width) * pinch_center.x(),
+              (1 - zoom_ratio) * pinch_center.y());
+          pinch_vector = pp::Point();
+          scroll_delta =
+              pp::Point((scroll_offset.x() -
+                         scroll_offset_at_last_raster_.x() * zoom_ratio),
+                        (scroll_offset.y() -
+                         scroll_offset_at_last_raster_.y() * zoom_ratio));
+      }
+
+      paint_manager_.SetTransform(zoom_ratio, pinch_center,
+          pinch_vector + paint_offset + scroll_delta,
+          true);
+      needs_reraster_ = false;
+      return;
+    }
+
+    if (pinch_phase == PINCH_UPDATE_ZOOM_OUT || pinch_phase == PINCH_END) {
+      // We reraster on pinch zoom out in order to solve the invalid regions
+      // that appear after zooming out.
+      // On pinch end the scale is again 1.f and we request a reraster
+      // in the new position.
+      paint_manager_.ClearTransform();
+      last_bitmap_smaller_ = false;
+      needs_reraster_ = true;
+
+      // If we're rerastering due to zooming out, we need to update
+      // |scroll_offset_at_last_raster_|, in case the user continues the
+      // gesture by zooming in.
+      scroll_offset_at_last_raster_ = scroll_offset;
+    }
 
     // Bound the input parameters.
     zoom = std::max(kMinZoom, zoom);
@@ -430,6 +534,10 @@ void OutOfProcessInstance::HandleMessage(const pp::Var& message) {
              dict.Get(pp::Var(kJSPrintPreviewGrayscale)).is_bool() &&
              dict.Get(pp::Var(kJSPrintPreviewPageCount)).is_int()) {
     url_ = dict.Get(pp::Var(kJSPrintPreviewUrl)).AsString();
+    // For security reasons we crash if the URL that is trying to be loaded here
+    // isn't a print preview one.
+    CHECK(IsPrintPreview());
+    CHECK(IsPrintPreviewUrl(url_));
     preview_pages_info_ = std::queue<PreviewPageInfo>();
     preview_document_load_state_ = LOAD_STATE_COMPLETE;
     document_load_state_ = LOAD_STATE_LOADING;
@@ -446,7 +554,12 @@ void OutOfProcessInstance::HandleMessage(const pp::Var& message) {
   } else if (type == kJSLoadPreviewPageType &&
              dict.Get(pp::Var(kJSPreviewPageUrl)).is_string() &&
              dict.Get(pp::Var(kJSPreviewPageIndex)).is_int()) {
-    ProcessPreviewPageInfo(dict.Get(pp::Var(kJSPreviewPageUrl)).AsString(),
+    std::string url = dict.Get(pp::Var(kJSPreviewPageUrl)).AsString();
+    // For security reasons we crash if the URL that is trying to be loaded here
+    // isn't a print preview one.
+    CHECK(IsPrintPreview());
+    CHECK(IsPrintPreviewUrl(url));
+    ProcessPreviewPageInfo(url,
                            dict.Get(pp::Var(kJSPreviewPageIndex)).AsInt());
   } else if (type == kJSStopScrollingType) {
     stop_scrolling_ = true;
@@ -623,12 +736,7 @@ void OutOfProcessInstance::LoadAccessibility() {
     return;
   }
 
-  PP_PrivateAccessibilityViewportInfo viewport_info;
-  viewport_info.scroll.x = 0;
-  viewport_info.scroll.y = -top_toolbar_height_ * device_scale_;
-  viewport_info.offset = available_area_.point();
-  viewport_info.zoom = zoom_ * device_scale_;
-  pp::PDF::SetAccessibilityViewportInfo(GetPluginInstance(), &viewport_info);
+  SendAccessibilityViewportInfo();
 
   // Schedule loading the first page.
   pp::CompletionCallback callback = timer_factory_.NewCallback(
@@ -643,6 +751,12 @@ void OutOfProcessInstance::SendNextAccessibilityPage(int32_t page_index) {
     return;
 
   int char_count = engine_->GetCharCount(page_index);
+
+  // Treat a char count of -1 (error) as 0 (an empty page), since
+  // other pages might have valid content.
+  if (char_count < 0)
+    char_count = 0;
+
   PP_PrivateAccessibilityPageInfo page_info;
   page_info.page_index = page_index;
   page_info.bounds = engine_->GetPageBoundsRect(page_index);
@@ -696,6 +810,15 @@ void OutOfProcessInstance::SendNextAccessibilityPage(int32_t page_index) {
       &OutOfProcessInstance::SendNextAccessibilityPage);
   pp::Module::Get()->core()->CallOnMainThread(kAccessibilityPageDelayMs,
                                               callback, page_index + 1);
+}
+
+void OutOfProcessInstance::SendAccessibilityViewportInfo() {
+  PP_PrivateAccessibilityViewportInfo viewport_info;
+  viewport_info.scroll.x = 0;
+  viewport_info.scroll.y = -top_toolbar_height_ * device_scale_;
+  viewport_info.offset = available_area_.point();
+  viewport_info.zoom = zoom_ * device_scale_;
+  pp::PDF::SetAccessibilityViewportInfo(GetPluginInstance(), &viewport_info);
 }
 
 pp::Var OutOfProcessInstance::GetLinkAtPosition(
@@ -781,7 +904,7 @@ void OutOfProcessInstance::OnPaint(
     ready->push_back(PaintManager::ReadyRect(rect, image_data_, true));
   }
 
-  if (!received_viewport_message_)
+  if (!received_viewport_message_ || !needs_reraster_)
     return;
 
   engine_->PrePaint();
@@ -841,7 +964,7 @@ void OutOfProcessInstance::DidOpen(int32_t result) {
       document_load_state_ = LOAD_STATE_LOADING;
       DocumentLoadFailed();
     }
-  } else if (result != PP_ERROR_ABORTED) {  // Can happen in tests.
+  } else if (result != PP_ERROR_ABORTED) { // Can happen in tests.
     NOTREACHED();
     DocumentLoadFailed();
   }
@@ -858,7 +981,7 @@ void OutOfProcessInstance::DidOpen(int32_t result) {
 
 void OutOfProcessInstance::DidOpenPreview(int32_t result) {
   if (result == PP_OK) {
-    preview_client_.reset(new PreviewModeClient(this));
+    preview_client_ = base::MakeUnique<PreviewModeClient>(this);
     preview_engine_.reset(PDFEngine::Create(preview_client_.get()));
     preview_engine_->HandleDocumentLoad(embed_preview_loader_);
   } else {
@@ -981,7 +1104,8 @@ void OutOfProcessInstance::NavigateTo(const std::string& url,
   pp::VarDictionary message;
   message.Set(kType, kJSNavigateType);
   message.Set(kJSNavigateUrl, url);
-  message.Set(kJSNavigateWindowOpenDisposition, pp::Var(disposition));
+  message.Set(kJSNavigateWindowOpenDisposition,
+              pp::Var(static_cast<int32_t>(disposition)));
   PostMessage(message);
 }
 
@@ -1048,8 +1172,8 @@ void OutOfProcessInstance::GetDocumentPassword(
     return;
   }
 
-  password_callback_.reset(
-      new pp::CompletionCallbackWithOutput<pp::Var>(callback));
+  password_callback_ =
+      base::MakeUnique<pp::CompletionCallbackWithOutput<pp::Var>>(callback);
   pp::VarDictionary message;
   message.Set(pp::Var(kType), pp::Var(kJSGetPasswordType));
   PostMessage(message);
@@ -1193,11 +1317,13 @@ void OutOfProcessInstance::DocumentLoadComplete(int page_count) {
   // Clear focus state for OSK.
   FormTextFieldFocusChange(false);
 
-  DCHECK(document_load_state_ == LOAD_STATE_LOADING);
+  DCHECK_EQ(LOAD_STATE_LOADING, document_load_state_);
   document_load_state_ = LOAD_STATE_COMPLETE;
   UserMetricsRecordAction("PDF.LoadSuccess");
   uma_.HistogramEnumeration("PDF.DocumentFeature", LOADED_DOCUMENT,
                             FEATURES_COUNT);
+  if (!font_substitution_reported_)
+    uma_.HistogramEnumeration("PDF.IsFontSubstituted", 0, 2);
 
   // Note: If we are in print preview mode the scroll location is retained
   // across document loads so we don't want to scroll again and override it.
@@ -1286,7 +1412,7 @@ void OutOfProcessInstance::PreviewDocumentLoadComplete() {
 }
 
 void OutOfProcessInstance::DocumentLoadFailed() {
-  DCHECK(document_load_state_ == LOAD_STATE_LOADING);
+  DCHECK_EQ(LOAD_STATE_LOADING, document_load_state_);
   UserMetricsRecordAction("PDF.LoadFailure");
 
   if (did_call_start_loading_) {
@@ -1302,6 +1428,13 @@ void OutOfProcessInstance::DocumentLoadFailed() {
   message.Set(pp::Var(kType), pp::Var(kJSLoadProgressType));
   message.Set(pp::Var(kJSProgressPercentage), pp::Var(-1));
   PostMessage(message);
+}
+
+void OutOfProcessInstance::FontSubstituted() {
+  if (font_substitution_reported_)
+    return;
+  font_substitution_reported_ = true;
+  uma_.HistogramEnumeration("PDF.IsFontSubstituted", 1, 2);
 }
 
 void OutOfProcessInstance::PreviewDocumentLoadFailed() {
@@ -1345,17 +1478,14 @@ void OutOfProcessInstance::DocumentHasUnsupportedFeature(
 void OutOfProcessInstance::DocumentLoadProgress(uint32_t available,
                                                 uint32_t doc_size) {
   double progress = 0.0;
-  if (doc_size == 0) {
+  if (doc_size) {
+    progress = 100.0 * static_cast<double>(available) / doc_size;
+  } else {
     // Document size is unknown. Use heuristics.
     // We'll make progress logarithmic from 0 to 100M.
     static const double kFactor = log(100000000.0) / 100.0;
-    if (available > 0) {
-      progress = log(static_cast<double>(available)) / kFactor;
-      if (progress > 100.0)
-        progress = 100.0;
-    }
-  } else {
-    progress = 100.0 * static_cast<double>(available) / doc_size;
+    if (available > 0)
+      progress = std::min(log(static_cast<double>(available)) / kFactor, 100.0);
   }
 
   // We send 100% load progress in DocumentLoadComplete.
@@ -1381,10 +1511,8 @@ void OutOfProcessInstance::FormTextFieldFocusChange(bool in_focus) {
   message.Set(pp::Var(kJSFieldFocus), pp::Var(in_focus));
   PostMessage(message);
 
-  if (in_focus)
-    text_input_->SetTextInputType(PP_TEXTINPUT_TYPE_DEV_TEXT);
-  else
-    text_input_->SetTextInputType(PP_TEXTINPUT_TYPE_DEV_NONE);
+  text_input_->SetTextInputType(in_focus ? PP_TEXTINPUT_TYPE_DEV_TEXT
+                                         : PP_TEXTINPUT_TYPE_DEV_NONE);
 }
 
 void OutOfProcessInstance::ResetRecentlySentFindUpdate(int32_t /* unused */) {
@@ -1414,6 +1542,9 @@ void OutOfProcessInstance::OnGeometryChanged(double old_zoom,
   if (document_size_.IsEmpty())
     return;
   paint_manager_.InvalidateRect(pp::Rect(pp::Point(), plugin_size_));
+
+  if (accessibility_state_ == ACCESSIBILITY_STATE_LOADED)
+    SendAccessibilityViewportInfo();
 }
 
 void OutOfProcessInstance::LoadUrl(const std::string& url) {
@@ -1432,6 +1563,7 @@ void OutOfProcessInstance::LoadUrlInternal(
   pp::URLRequestInfo request(this);
   request.SetURL(url);
   request.SetMethod("GET");
+  request.SetFollowRedirects(false);
 
   *loader = CreateURLLoaderInternal();
   pp::CompletionCallback callback = loader_factory_.NewCallback(method);
@@ -1467,7 +1599,7 @@ void OutOfProcessInstance::AppendBlankPrintPreviewPages() {
 }
 
 bool OutOfProcessInstance::IsPrintPreview() {
-  return IsPrintPreviewUrl(url_);
+  return is_print_preview_;
 }
 
 uint32_t OutOfProcessInstance::GetBackgroundColor() {
@@ -1483,8 +1615,7 @@ void OutOfProcessInstance::IsSelectingChanged(bool is_selecting) {
 
 void OutOfProcessInstance::ProcessPreviewPageInfo(const std::string& url,
                                                   int dst_page_index) {
-  if (!IsPrintPreview())
-    return;
+  DCHECK(IsPrintPreview());
 
   int src_page_index = ExtractPrintPreviewPageIndex(url);
   if (src_page_index < 1)

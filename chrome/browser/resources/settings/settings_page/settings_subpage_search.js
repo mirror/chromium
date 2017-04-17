@@ -4,15 +4,22 @@
 
 /**
  * @fileoverview
- * 'settings-subpage' shows a subpage beneath a subheader. The header contains
- * the subpage title and a back icon. The back icon fires an event which
- * is caught by settings-animated-pages, so it requires no separate handling.
+ * 'settings-subpage-search' shows a search field in the subpage's header.
  */
 
 Polymer({
   is: 'settings-subpage-search',
 
   behaviors: [CrSearchFieldBehavior],
+
+  properties: {
+    autofocus: Boolean,
+  },
+
+  /** @return {!HTMLInputElement} */
+  getSearchInput: function() {
+    return this.$.searchInput;
+  },
 
   /** @private */
   onTapClear_: function() {

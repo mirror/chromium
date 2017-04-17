@@ -5,7 +5,6 @@
 #include "chrome/browser/ui/webui/settings/chromeos/device_pointer_handler.h"
 
 #include "base/bind.h"
-#include "base/sys_info.h"
 #include "base/values.h"
 #include "content/public/browser/web_ui.h"
 
@@ -38,14 +37,13 @@ void PointerHandler::OnJavascriptDisallowed() {
 
 void PointerHandler::TouchpadExists(bool exists) {
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue("has-touchpad-changed"),
-                         base::FundamentalValue(exists));
+                         base::Value("has-touchpad-changed"),
+                         base::Value(exists));
 }
 
 void PointerHandler::MouseExists(bool exists) {
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue("has-mouse-changed"),
-                         base::FundamentalValue(exists));
+                         base::Value("has-mouse-changed"), base::Value(exists));
 }
 
 void PointerHandler::HandleInitialize(const base::ListValue* args) {

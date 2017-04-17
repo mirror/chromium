@@ -5,55 +5,36 @@
 package org.chromium.chrome.browser.bookmarks;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.view.View;
-import android.view.ViewGroup.MarginLayoutParams;
 
-import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.NativePage;
+import org.chromium.chrome.browser.BasicNativePage;
+import org.chromium.chrome.browser.NativePageHost;
 import org.chromium.chrome.browser.UrlConstants;
-import org.chromium.chrome.browser.bookmarks.BookmarkDelegate.BookmarkStateChangeListener;
-import org.chromium.chrome.browser.tab.Tab;
-import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.chrome.browser.snackbar.SnackbarManager.SnackbarManageable;
 
 /**
  * A native page holding a {@link BookmarkManager} on _tablet_.
  */
-public class BookmarkPage implements NativePage, BookmarkStateChangeListener {
-    private final Activity mActivity;
-    private final Tab mTab;
-    private final String mTitle;
-    private final int mBackgroundColor;
-    private final int mThemeColor;
+public class BookmarkPage extends BasicNativePage {
     private BookmarkManager mManager;
-    private String mCurrentUrl;
+    private String mTitle;
 
     /**
      * Create a new instance of the bookmarks page.
      * @param activity The activity to get context and manage fragments.
-     * @param tab The tab to load urls.
+     * @param host A NativePageHost to load urls.
      */
-    public BookmarkPage(Activity activity, Tab tab) {
-        mActivity = activity;
-        mTab = tab;
+    public BookmarkPage(Activity activity, NativePageHost host) {
+        super(activity, host);
+    }
+
+    @Override
+    protected void initialize(Activity activity, NativePageHost host) {
+        mManager = new BookmarkManager(
+                activity, false, ((SnackbarManageable) activity).getSnackbarManager());
+        mManager.setBasicNativePage(this);
         mTitle = activity.getString(R.string.bookmarks);
-        mBackgroundColor = ApiCompatibilityUtils.getColor(activity.getResources(),
-                R.color.default_primary_color);
-        mThemeColor = ApiCompatibilityUtils.getColor(
-                activity.getResources(), R.color.default_primary_color);
-
-        mManager = new BookmarkManager(mActivity, false);
-        Resources res = mActivity.getResources();
-
-        MarginLayoutParams layoutParams = new MarginLayoutParams(
-                MarginLayoutParams.MATCH_PARENT, MarginLayoutParams.MATCH_PARENT);
-        layoutParams.setMargins(0,
-                res.getDimensionPixelSize(R.dimen.tab_strip_height)
-                + res.getDimensionPixelSize(R.dimen.toolbar_height_no_shadow),
-                0, 0);
-        mManager.getView().setLayoutParams(layoutParams);
-        mManager.setUrlChangeListener(this);
     }
 
     @Override
@@ -67,33 +48,13 @@ public class BookmarkPage implements NativePage, BookmarkStateChangeListener {
     }
 
     @Override
-    public String getUrl() {
-        return mManager.getCurrentUrl();
-    }
-
-    @Override
     public String getHost() {
         return UrlConstants.BOOKMARKS_HOST;
     }
 
     @Override
-    public int getBackgroundColor() {
-        return mBackgroundColor;
-    }
-
-    @Override
-    public int getThemeColor() {
-        return mThemeColor;
-    }
-
-    @Override
-    public boolean needsToolbarShadow() {
-        return true;
-    }
-
-    @Override
     public void updateForUrl(String url) {
-        mCurrentUrl = url;
+        super.updateForUrl(url);
         mManager.updateForUrl(url);
     }
 
@@ -101,11 +62,6 @@ public class BookmarkPage implements NativePage, BookmarkStateChangeListener {
     public void destroy() {
         mManager.destroy();
         mManager = null;
-    }
-
-    @Override
-    public void onBookmarkUIStateChange(String url) {
-        if (url.equals(mCurrentUrl)) return;
-        mTab.loadUrl(new LoadUrlParams(url));
+        super.destroy();
     }
 }

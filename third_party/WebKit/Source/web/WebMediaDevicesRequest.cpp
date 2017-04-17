@@ -28,64 +28,57 @@
 #include "core/dom/Document.h"
 #include "modules/mediastream/MediaDevicesRequest.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/Vector.h"
 #include "public/platform/WebMediaDeviceInfo.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebVector.h"
 #include "public/web/WebDocument.h"
-#include "wtf/Vector.h"
 
 namespace blink {
 
 WebMediaDevicesRequest::WebMediaDevicesRequest(MediaDevicesRequest* request)
-    : m_private(request)
-{
+    : private_(request) {}
+
+void WebMediaDevicesRequest::Reset() {
+  private_.Reset();
 }
 
-void WebMediaDevicesRequest::reset()
-{
-    m_private.reset();
+WebSecurityOrigin WebMediaDevicesRequest::GetSecurityOrigin() const {
+  DCHECK(!IsNull());
+  DCHECK(private_->GetExecutionContext());
+  return WebSecurityOrigin(
+      private_->GetExecutionContext()->GetSecurityOrigin());
 }
 
-WebSecurityOrigin WebMediaDevicesRequest::getSecurityOrigin() const
-{
-    DCHECK(!isNull());
-    DCHECK(m_private->getExecutionContext());
-    return WebSecurityOrigin(m_private->getExecutionContext()->getSecurityOrigin());
+WebDocument WebMediaDevicesRequest::OwnerDocument() const {
+  DCHECK(!IsNull());
+  return WebDocument(private_->OwnerDocument());
 }
 
-WebDocument WebMediaDevicesRequest::ownerDocument() const
-{
-    DCHECK(!isNull());
-    return WebDocument(m_private->ownerDocument());
+void WebMediaDevicesRequest::RequestSucceeded(
+    WebVector<WebMediaDeviceInfo> web_devices) {
+  DCHECK(!IsNull());
+
+  MediaDeviceInfoVector devices(web_devices.size());
+  for (size_t i = 0; i < web_devices.size(); ++i)
+    devices[i] = MediaDeviceInfo::Create(web_devices[i]);
+
+  private_->Succeed(devices);
 }
 
-void WebMediaDevicesRequest::requestSucceeded(WebVector<WebMediaDeviceInfo> webDevices)
-{
-    DCHECK(!isNull());
-
-    MediaDeviceInfoVector devices(webDevices.size());
-    for (size_t i = 0; i < webDevices.size(); ++i)
-        devices[i] = MediaDeviceInfo::create(webDevices[i]);
-
-    m_private->succeed(devices);
+bool WebMediaDevicesRequest::Equals(const WebMediaDevicesRequest& other) const {
+  if (IsNull() || other.IsNull())
+    return false;
+  return private_.Get() == other.private_.Get();
 }
 
-bool WebMediaDevicesRequest::equals(const WebMediaDevicesRequest& other) const
-{
-    if (isNull() || other.isNull())
-        return false;
-    return m_private.get() == other.m_private.get();
+void WebMediaDevicesRequest::Assign(const WebMediaDevicesRequest& other) {
+  private_ = other.private_;
 }
 
-void WebMediaDevicesRequest::assign(const WebMediaDevicesRequest& other)
-{
-    m_private = other.m_private;
+WebMediaDevicesRequest::operator MediaDevicesRequest*() const {
+  return private_.Get();
 }
 
-WebMediaDevicesRequest::operator MediaDevicesRequest*() const
-{
-    return m_private.get();
-}
-
-} // namespace blink
+}  // namespace blink

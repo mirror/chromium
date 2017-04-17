@@ -90,9 +90,6 @@ cr.define('ntp', function() {
     }
     measureNavDots();
 
-    // Load the current theme colors.
-    themeChanged();
-
     newTabView = new NewTabView();
 
     if (!loadTimeData.getBoolean('showWebStoreIcon')) {
@@ -104,6 +101,8 @@ cr.define('ntp', function() {
       var webStoreLink = loadTimeData.getString('webStoreLink');
       var url = appendParam(webStoreLink, 'utm_source', 'chrome-ntp-launcher');
       $('chrome-web-store-link').href = url;
+      $('chrome-web-store-link').addEventListener('auxclick',
+          onChromeWebStoreButtonClick);
       $('chrome-web-store-link').addEventListener('click',
           onChromeWebStoreButtonClick);
     }
@@ -155,9 +154,11 @@ cr.define('ntp', function() {
   /**
    * Launches the chrome web store app with the chrome-ntp-launcher
    * source.
-   * @param {Event} e The click event.
+   * @param {Event} e The click/auxclick event.
    */
   function onChromeWebStoreButtonClick(e) {
+    if (e.button > 1)
+      return; // Ignore buttons other than left and middle.
     chrome.send('recordAppLaunchByURL',
                 [encodeURIComponent(this.href),
                  ntp.APP_LAUNCH.NTP_WEBSTORE_FOOTER]);
@@ -258,19 +259,6 @@ cr.define('ntp', function() {
 
   function setBookmarkBarAttached(attached) {
     document.documentElement.setAttribute('bookmarkbarattached', attached);
-  }
-
-  /**
-   * Set the dominant color for a node. This will be called in response to
-   * getFaviconDominantColor. The node represented by |id| better have a setter
-   * for stripeColor.
-   * @param {string} id The ID of a node.
-   * @param {string} color The color represented as a CSS string.
-   */
-  function setFaviconDominantColor(id, color) {
-    var node = $(id);
-    if (node)
-      node.stripeColor = color;
   }
 
   /**
@@ -444,7 +432,6 @@ cr.define('ntp', function() {
     saveAppPageName: saveAppPageName,
     setAppToBeHighlighted: setAppToBeHighlighted,
     setBookmarkBarAttached: setBookmarkBarAttached,
-    setFaviconDominantColor: setFaviconDominantColor,
     themeChanged: themeChanged,
     updateLogin: updateLogin
   };

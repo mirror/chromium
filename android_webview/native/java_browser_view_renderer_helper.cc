@@ -8,6 +8,7 @@
 
 #include "android_webview/public/browser/draw_sw.h"
 #include "base/android/scoped_java_ref.h"
+#include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
 #include "jni/JavaBrowserViewRendererHelper_jni.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -35,7 +36,7 @@ class JavaCanvasHolder : public SoftwareCanvasHolder {
 
  private:
   AwPixelInfo* pixels_;
-  sk_sp<SkCanvas> canvas_;
+  std::unique_ptr<SkCanvas> canvas_;
   DISALLOW_COPY_AND_ASSIGN(JavaCanvasHolder);
 };
 
@@ -49,8 +50,7 @@ JavaCanvasHolder::JavaCanvasHolder(JNIEnv* env,
   if (!pixels_ || !pixels_->state)
     return;
 
-  canvas_ = sk_sp<SkCanvas>(
-      SkCanvasStateUtils::CreateFromCanvasState(pixels_->state));
+  canvas_ = SkCanvasStateUtils::MakeFromCanvasState(pixels_->state);
   // Workarounds for http://crbug.com/271096: SW draw only supports
   // translate & scale transforms, and a simple rectangular clip.
   if (canvas_ && (!canvas_->isClipRect() ||
@@ -88,7 +88,7 @@ class AuxiliaryCanvasHolder : public SoftwareCanvasHolder {
   ScopedJavaLocalRef<jobject> jbitmap_;
   gfx::Vector2d scroll_;
   std::unique_ptr<SkBitmap> bitmap_;
-  sk_sp<SkCanvas> canvas_;
+  std::unique_ptr<SkCanvas> canvas_;
   DISALLOW_COPY_AND_ASSIGN(AuxiliaryCanvasHolder);
 };
 
@@ -101,7 +101,7 @@ AuxiliaryCanvasHolder::AuxiliaryCanvasHolder(
   DCHECK(size.width() > 0);
   DCHECK(size.height() > 0);
   jbitmap_ = Java_JavaBrowserViewRendererHelper_createBitmap(
-      env, size.width(), size.height(), jcanvas_.obj());
+      env, size.width(), size.height(), jcanvas_);
   if (!jbitmap_.obj())
     return;
 
@@ -121,7 +121,7 @@ AuxiliaryCanvasHolder::AuxiliaryCanvasHolder(
       SkImageInfo::MakeN32Premul(bitmap_info.width, bitmap_info.height);
   bitmap_.reset(new SkBitmap);
   bitmap_->installPixels(info, pixels, bitmap_info.stride);
-  canvas_ = sk_make_sp<SkCanvas>(*bitmap_);
+  canvas_ = base::MakeUnique<SkCanvas>(*bitmap_);
 }
 
 AuxiliaryCanvasHolder::~AuxiliaryCanvasHolder() {
@@ -134,7 +134,7 @@ AuxiliaryCanvasHolder::~AuxiliaryCanvasHolder() {
   }
 
   Java_JavaBrowserViewRendererHelper_drawBitmapIntoCanvas(
-      env, jbitmap_.obj(), jcanvas_.obj(), scroll_.x(), scroll_.y());
+      env, jbitmap_, jcanvas_, scroll_.x(), scroll_.y());
 }
 
 SkCanvas* AuxiliaryCanvasHolder::GetCanvas() {
@@ -167,10 +167,6 @@ std::unique_ptr<SoftwareCanvasHolder> SoftwareCanvasHolder::Create(
     holder.reset();
   }
   return holder;
-}
-
-bool RegisterJavaBrowserViewRendererHelper(JNIEnv* env) {
-  return RegisterNativesImpl(env);
 }
 
 }  // namespace android_webview

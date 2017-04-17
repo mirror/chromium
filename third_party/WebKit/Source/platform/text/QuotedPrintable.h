@@ -32,16 +32,16 @@
 #define QuotedPrintable_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-PLATFORM_EXPORT void quotedPrintableEncode(const Vector<char>&, Vector<char>&);
-PLATFORM_EXPORT void quotedPrintableEncode(const char*, size_t, Vector<char>&);
+PLATFORM_EXPORT void QuotedPrintableEncode(const Vector<char>&, Vector<char>&);
+PLATFORM_EXPORT void QuotedPrintableEncode(const char*, size_t, Vector<char>&);
 
-PLATFORM_EXPORT void quotedPrintableDecode(const Vector<char>&, Vector<char>&);
-PLATFORM_EXPORT void quotedPrintableDecode(const char*, size_t, Vector<char>&);
+PLATFORM_EXPORT void QuotedPrintableDecode(const Vector<char>&, Vector<char>&);
+PLATFORM_EXPORT void QuotedPrintableDecode(const char*, size_t, Vector<char>&);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // QuotedPrintable_h
+#endif  // QuotedPrintable_h

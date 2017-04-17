@@ -20,32 +20,24 @@
 #include "base/macros.h"
 #include "base/process/kill.h"
 #include "build/build_config.h"
+#include "content/browser/renderer_host/input/input_device_change_observer.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_owner_delegate.h"
 #include "content/browser/site_instance_impl.h"
-#include "content/common/drag_event_source_info.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/render_process_host_observer.h"
 #include "content/public/browser/render_view_host.h"
-#include "content/public/common/window_container_type.h"
 #include "net/base/load_states.h"
 #include "third_party/WebKit/public/web/WebAXEnums.h"
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
 #include "third_party/WebKit/public/web/WebPopupType.h"
 #include "third_party/skia/include/core/SkColor.h"
-#include "ui/base/window_open_disposition.h"
-
-class SkBitmap;
-struct ViewHostMsg_CreateWindow_Params;
+#include "ui/base/mojo/window_open_disposition.mojom.h"
 
 namespace content {
 
-class PageState;
-class RenderWidgetHostDelegate;
-class SessionStorageNamespace;
-struct FileChooserFileInfo;
-struct FileChooserParams;
 struct FrameReplicationState;
+class TimeoutMonitor;
 
 // This implements the RenderViewHost interface that is exposed to
 // embedders of content, and adds things only visible to content.
@@ -95,44 +87,10 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
   RenderProcessHost* GetProcess() const override;
   int GetRoutingID() const override;
   RenderFrameHost* GetMainFrame() override;
-  void AllowBindings(int binding_flags) override;
-  void ClearFocusedElement() override;
-  bool IsFocusedElementEditable() override;
   void DirectoryEnumerationFinished(
       int request_id,
       const std::vector<base::FilePath>& files) override;
   void DisableScrollbarsForThreshold(const gfx::Size& size) override;
-  void DragSourceEndedAt(int client_x,
-                         int client_y,
-                         int screen_x,
-                         int screen_y,
-                         blink::WebDragOperation operation) override;
-  void DragSourceSystemDragEnded() override;
-  // |drop_data| must have been filtered. The embedder should call
-  // FilterDropData before passing the drop data to RVHI.
-  void DragTargetDragEnter(const DropData& drop_data,
-                           const gfx::Point& client_pt,
-                           const gfx::Point& screen_pt,
-                           blink::WebDragOperationsMask operations_allowed,
-                           int key_modifiers) override;
-  void DragTargetDragEnterWithMetaData(
-      const std::vector<DropData::Metadata>& metadata,
-      const gfx::Point& client_pt,
-      const gfx::Point& screen_pt,
-      blink::WebDragOperationsMask operations_allowed,
-      int key_modifiers) override;
-  void DragTargetDragOver(const gfx::Point& client_pt,
-                          const gfx::Point& screen_pt,
-                          blink::WebDragOperationsMask operations_allowed,
-                          int key_modifiers) override;
-  void DragTargetDragLeave() override;
-  // |drop_data| must have been filtered. The embedder should call
-  // FilterDropData before passing the drop data to RVHI.
-  void DragTargetDrop(const DropData& drop_data,
-                      const gfx::Point& client_pt,
-                      const gfx::Point& screen_pt,
-                      int key_modifiers) override;
-  void FilterDropData(DropData* drop_data) override;
   void EnableAutoResize(const gfx::Size& min_size,
                         const gfx::Size& max_size) override;
   void DisableAutoResize(const gfx::Size& new_size) override;
@@ -144,13 +102,11 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
       const gfx::Point& location,
       const blink::WebPluginAction& action) override;
   RenderViewHostDelegate* GetDelegate() const override;
-  int GetEnabledBindings() const override;
   SiteInstanceImpl* GetSiteInstance() const override;
   bool IsRenderViewLive() const override;
   void NotifyMoveOrResizeStarted() override;
   void SetWebUIProperty(const std::string& name,
                         const std::string& value) override;
-  void Zoom(PageZoom zoom) override;
   void SyncRendererPrefs() override;
   WebPreferences GetWebkitPreferences() override;
   void UpdateWebkitPreferences(const WebPreferences& prefs) override;
@@ -171,17 +127,16 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
   // Set up the RenderView child process. Virtual because it is overridden by
   // TestRenderViewHost.
   // The |opener_route_id| parameter indicates which RenderView created this
-  // (MSG_ROUTING_NONE if none). If |max_page_id| is larger than -1, the
-  // RenderView is told to start issuing page IDs at |max_page_id| + 1.
+  // (MSG_ROUTING_NONE if none).
   // |window_was_created_with_opener| is true if this top-level frame was
   // created with an opener. (The opener may have been closed since.)
   // The |proxy_route_id| is only used when creating a RenderView in swapped out
-  // state.  |replicated_frame_state| contains replicated data for the
-  // top-level frame, such as its name and sandbox flags.
+  // state.
+  // |replicated_frame_state| contains replicated data for the top-level frame,
+  // such as its name and sandbox flags.
   virtual bool CreateRenderView(
       int opener_frame_route_id,
       int proxy_route_id,
-      int32_t max_page_id,
       const FrameReplicationState& replicated_frame_state,
       bool window_was_created_with_opener);
 
@@ -216,23 +171,10 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
   // Tells the renderer view to focus the first (last if reverse is true) node.
   void SetInitialFocus(bool reverse);
 
-  // Notifies the RenderViewHost that its load state changed.
-  void LoadStateChanged(const GURL& url,
-                        const net::LoadStateWithParam& load_state,
-                        uint64_t upload_position,
-                        uint64_t upload_size);
-
   bool SuddenTerminationAllowed() const;
   void set_sudden_termination_allowed(bool enabled) {
     sudden_termination_allowed_ = enabled;
   }
-
-  // Creates a new RenderView with the given route id.
-  void CreateNewWindow(int32_t route_id,
-                       int32_t main_frame_route_id,
-                       int32_t main_frame_widget_route_id,
-                       const ViewHostMsg_CreateWindow_Params& params,
-                       SessionStorageNamespace* session_storage_namespace);
 
   // Creates a new RenderWidget with the given route id.  |popup_type| indicates
   // if this widget is a popup and what kind of popup it is (select, autofill).
@@ -240,6 +182,10 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
 
   // Creates a full screen RenderWidget.
   void CreateNewFullscreenWidget(int32_t route_id);
+
+  // Send RenderViewReady to observers once the process is launched, but not
+  // re-entrantly.
+  void PostRenderViewReady();
 
   // TODO(creis): Remove after debugging https:/crbug.com/575245.
   int main_frame_routing_id() const {
@@ -286,7 +232,6 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
   void OnShowWidget(int route_id, const gfx::Rect& initial_rect);
   void OnShowFullscreenWidget(int route_id);
   void OnRenderProcessGone(int status, int error_code);
-  void OnUpdateState(int32_t page_id, const PageState& state);
   void OnUpdateTargetURL(const GURL& url);
   void OnClose();
   void OnRequestMove(const gfx::Rect& pos);
@@ -294,18 +239,9 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
   void OnDidContentsPreferredSizeChange(const gfx::Size& new_size);
   void OnPasteFromSelectionClipboard();
   void OnRouteCloseEvent();
-  void OnStartDragging(const DropData& drop_data,
-                       blink::WebDragOperationsMask operations_allowed,
-                       const SkBitmap& bitmap,
-                       const gfx::Vector2d& bitmap_offset_in_dip,
-                       const DragEventSourceInfo& event_info);
-  void OnUpdateDragCursor(blink::WebDragOperation drag_operation);
   void OnTakeFocus(bool reverse);
-  void OnFocusedNodeChanged(bool is_editable_node,
-                            const gfx::Rect& node_bounds_in_viewport);
   void OnClosePageACK();
   void OnDidZoomURL(double zoom_level, const GURL& url);
-  void OnFocusedNodeTouched(bool editable);
   void OnFocus();
 
  private:
@@ -318,13 +254,15 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
   FRIEND_TEST_ALL_PREFIXES(RenderViewHostTest, RoutingIdSane);
   FRIEND_TEST_ALL_PREFIXES(RenderFrameHostManagerTest,
                            CleanUpSwappedOutRVHOnProcessCrash);
+  FRIEND_TEST_ALL_PREFIXES(RenderFrameHostManagerTest,
+                           CloseWithPendingWhileUnresponsive);
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessBrowserTest,
                            NavigateMainFrameToChildSite);
 
-  // Send RenderViewReady to observers once the process is launched, but not
-  // re-entrantly.
-  void PostRenderViewReady();
   void RenderViewReady();
+
+  // Called by |close_timeout_| when the page closing timeout fires.
+  void ClosePageTimeout();
 
   // TODO(creis): Move to a private namespace on RenderFrameHostImpl.
   // Delay to wait on closing the WebContents for a beforeunload/unload handler
@@ -336,12 +274,6 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
   // mostly the same across all RVHs in a process.  Move the rest to RFH.
   // See https://crbug.com/304341.
   WebPreferences ComputeWebkitPrefs();
-
-  // 1. Grants permissions to URL (if any)
-  // 2. Grants permissions to filenames
-  // 3. Grants permissions to file system files.
-  // 4. Register the files with the IsolatedContext.
-  void GrantFileAccessFromDropData(DropData* drop_data);
 
   // The RenderWidgetHost.
   std::unique_ptr<RenderWidgetHostImpl> render_widget_host_;
@@ -356,15 +288,6 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
   // in this RenderViewHost are part of this SiteInstance.  Cannot change
   // over time.
   scoped_refptr<SiteInstanceImpl> instance_;
-
-  // A bitwise OR of bindings types that have been enabled for this RenderView.
-  // See BindingsPolicy for details.
-  int enabled_bindings_;
-
-  // The most recent page ID we've heard from the renderer process.  This is
-  // used as context when other session history related IPCs arrive.
-  // TODO(creis): Allocate this in WebContents/NavigationController instead.
-  int32_t page_id_;
 
   // Tracks whether this RenderViewHost is in an active state.  False if the
   // main frame is pending swap out, pending deletion, or swapped out, because
@@ -391,13 +314,19 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
   // The termination status of the last render view that terminated.
   base::TerminationStatus render_view_termination_status_;
 
-  // True if the current focused element is editable.
-  bool is_focused_element_editable_;
-
   // This is updated every time UpdateWebkitPreferences is called. That method
   // is in turn called when any of the settings change that the WebPreferences
   // values depend on.
   std::unique_ptr<WebPreferences> web_preferences_;
+
+  // The timeout monitor that runs from when the page close is started in
+  // ClosePage() until either the render process ACKs the close with an IPC to
+  // OnClosePageACK(), or until the timeout triggers and the page is forcibly
+  // closed.
+  std::unique_ptr<TimeoutMonitor> close_timeout_;
+
+  // This monitors input changes so they can be reflected to the interaction MQ.
+  std::unique_ptr<InputDeviceChangeObserver> input_device_change_observer_;
 
   bool updating_web_preferences_;
 

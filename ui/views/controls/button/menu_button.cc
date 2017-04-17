@@ -5,11 +5,9 @@
 #include "ui/views/controls/button/menu_button.h"
 
 #include "base/strings/utf_string_conversions.h"
-#include "ui/accessibility/ax_view_state.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
-#include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
-#include "ui/base/ui_base_switches_util.h"
 #include "ui/display/screen.h"
 #include "ui/events/event.h"
 #include "ui/events/event_constants.h"
@@ -18,7 +16,6 @@
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/text_constants.h"
 #include "ui/resources/grit/ui_resources.h"
-#include "ui/strings/grit/ui_strings.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/button/menu_button_listener.h"
 #include "ui/views/mouse_constants.h"
@@ -146,8 +143,6 @@ bool MenuButton::Activate(const ui::Event* event) {
     increment_pressed_lock_called_ = nullptr;
     destroyed_flag_ = nullptr;
 
-    menu_closed_time_ = TimeTicks::Now();
-
     if (!increment_pressed_lock_called && pressed_lock_count_ == 0) {
       AnimateInkDrop(InkDropState::ACTION_TRIGGERED,
                      ui::LocatedEvent::FromIfValid(event));
@@ -256,17 +251,15 @@ void MenuButton::OnGestureEvent(ui::GestureEvent* event) {
         SetState(Button::STATE_NORMAL);
       return;
     }
-    if (switches::IsTouchFeedbackEnabled()) {
-      if (event->type() == ui::ET_GESTURE_TAP_DOWN) {
-        event->SetHandled();
-        if (pressed_lock_count_ == 0)
-          SetState(Button::STATE_HOVERED);
-      } else if (state() == Button::STATE_HOVERED &&
-                 (event->type() == ui::ET_GESTURE_TAP_CANCEL ||
-                  event->type() == ui::ET_GESTURE_END) &&
-                 pressed_lock_count_ == 0) {
-        SetState(Button::STATE_NORMAL);
-      }
+    if (event->type() == ui::ET_GESTURE_TAP_DOWN) {
+      event->SetHandled();
+      if (pressed_lock_count_ == 0)
+        SetState(Button::STATE_HOVERED);
+    } else if (state() == Button::STATE_HOVERED &&
+               (event->type() == ui::ET_GESTURE_TAP_CANCEL ||
+                event->type() == ui::ET_GESTURE_END) &&
+               pressed_lock_count_ == 0) {
+      SetState(Button::STATE_NORMAL);
     }
   }
   LabelButton::OnGestureEvent(event);
@@ -302,11 +295,14 @@ bool MenuButton::OnKeyReleased(const ui::KeyEvent& event) {
   return false;
 }
 
-void MenuButton::GetAccessibleState(ui::AXViewState* state) {
-  CustomButton::GetAccessibleState(state);
-  state->role = ui::AX_ROLE_POP_UP_BUTTON;
-  state->default_action = l10n_util::GetStringUTF16(IDS_APP_ACCACTION_PRESS);
-  state->AddStateFlag(ui::AX_STATE_HASPOPUP);
+void MenuButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  CustomButton::GetAccessibleNodeData(node_data);
+  node_data->role = ui::AX_ROLE_POP_UP_BUTTON;
+  node_data->AddStateFlag(ui::AX_STATE_HASPOPUP);
+  if (enabled()) {
+    node_data->AddIntAttribute(ui::AX_ATTR_ACTION,
+                               ui::AX_SUPPORTED_ACTION_OPEN);
+  }
 }
 
 void MenuButton::PaintMenuMarker(gfx::Canvas* canvas) {
@@ -349,7 +345,7 @@ bool MenuButton::ShouldEnterPushedState(const ui::Event& event) {
   return IsTriggerableEventType(event);
 }
 
-void MenuButton::StateChanged() {
+void MenuButton::StateChanged(ButtonState old_state) {
   if (pressed_lock_count_ != 0) {
     // The button's state was changed while it was supposed to be locked in a
     // pressed state. This shouldn't happen, but conceivably could if a caller
@@ -360,7 +356,7 @@ void MenuButton::StateChanged() {
     else if (state() == STATE_DISABLED)
       should_disable_after_press_ = true;
   } else {
-    LabelButton::StateChanged();
+    LabelButton::StateChanged(old_state);
   }
 }
 
@@ -377,7 +373,7 @@ void MenuButton::IncrementPressedLocked(bool snap_ink_drop_to_activated) {
   should_disable_after_press_ = state() == STATE_DISABLED;
   if (state() != STATE_PRESSED) {
     if (snap_ink_drop_to_activated)
-      ink_drop()->SnapToActivated();
+      GetInkDrop()->SnapToActivated();
     else
       AnimateInkDrop(InkDropState::ACTIVATED, nullptr /* event */);
   }
@@ -390,6 +386,7 @@ void MenuButton::DecrementPressedLocked() {
 
   // If this was the last lock, manually reset state to the desired state.
   if (pressed_lock_count_ == 0) {
+    menu_closed_time_ = TimeTicks::Now();
     ButtonState desired_state = STATE_NORMAL;
     if (should_disable_after_press_) {
       desired_state = STATE_DISABLED;

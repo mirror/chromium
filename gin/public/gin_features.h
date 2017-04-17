@@ -9,14 +9,12 @@
 #define GIN_PUBLIC_GIN_FEATURES_H_
 
 #include "base/feature_list.h"
-#include "gin/gin_export.h"
+#include "gin/gin_features_export.h"
 
 namespace features {
 
-GIN_EXPORT extern const base::Feature kV8Ignition;
-GIN_EXPORT extern const base::Feature kV8IgnitionLowEnd;
-GIN_EXPORT extern const base::Feature kV8IgnitionLazy;
-GIN_EXPORT extern const base::Feature kV8IgnitionEager;
+GIN_FEATURES_EXPORT extern const base::Feature kV8NoTurbo;
+GIN_FEATURES_EXPORT extern const base::Feature kV8IgnitionLowEnd;
 
 }  // namespace features
 

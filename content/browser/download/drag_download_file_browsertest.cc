@@ -6,6 +6,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "content/browser/download/download_file_factory.h"
 #include "content/browser/download/download_file_impl.h"
 #include "content/browser/download/download_item_impl.h"
@@ -81,7 +82,7 @@ class DragDownloadFileTest : public ContentBrowserTest {
   }
 
   const base::FilePath& downloads_directory() const {
-    return downloads_directory_.path();
+    return downloads_directory_.GetPath();
   }
 
  private:

@@ -24,7 +24,6 @@
 #ifndef NodeList_h
 #define NodeList_h
 
-#include "bindings/core/v8/Iterable.h"
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
 
@@ -32,30 +31,29 @@ namespace blink {
 
 class Node;
 
-class CORE_EXPORT NodeList : public GarbageCollectedFinalized<NodeList>, public ScriptWrappable, public ValueIterable<Node *> {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    virtual ~NodeList() { }
+class CORE_EXPORT NodeList : public GarbageCollectedFinalized<NodeList>,
+                             public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    // DOM methods & attributes for NodeList
-    virtual unsigned length() const = 0;
-    virtual Node* item(unsigned index) const = 0;
+ public:
+  virtual ~NodeList() {}
 
-    // Other methods (not part of DOM)
-    virtual bool isEmptyNodeList() const { return false; }
-    virtual bool isChildNodeList() const { return false; }
+  // DOM methods & attributes for NodeList
+  virtual unsigned length() const = 0;
+  virtual Node* item(unsigned index) const = 0;
 
-    virtual Node* virtualOwnerNode() const { return 0; }
+  // Other methods (not part of DOM)
+  virtual bool IsEmptyNodeList() const { return false; }
+  virtual bool IsChildNodeList() const { return false; }
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+  virtual Node* VirtualOwnerNode() const { return 0; }
 
-protected:
-    NodeList() { }
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
-private:
-    IterationSource* startIteration(ScriptState*, ExceptionState&) override;
+ protected:
+  NodeList() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NodeList_h
+#endif  // NodeList_h

@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "chrome/browser/chrome_browser_main_extra_parts.h"
+#include "ui/views/layout/layout_provider.h"
 
 namespace ui {
 class InputDeviceClient;
@@ -16,10 +17,12 @@ class InputDeviceClient;
 
 namespace views {
 class ViewsDelegate;
-class WindowManagerConnection;
 }
 
 #if defined(USE_AURA)
+namespace views {
+class MusClient;
+}
 namespace wm {
 class WMState;
 }
@@ -34,15 +37,19 @@ class ChromeBrowserMainExtraPartsViews : public ChromeBrowserMainExtraParts {
   void ToolkitInitialized() override;
   void PreCreateThreads() override;
   void PreProfileInit() override;
+  void ServiceManagerConnectionStarted(
+      content::ServiceManagerConnection* connection) override;
 
  private:
   std::unique_ptr<views::ViewsDelegate> views_delegate_;
+  std::unique_ptr<views::LayoutProvider> layout_provider_;
 
 #if defined(USE_AURA)
+  // Not created when running in ash::Config::MUS.
   std::unique_ptr<wm::WMState> wm_state_;
-#endif
-#if defined(USE_AURA) && defined(MOJO_SHELL_CLIENT)
-  std::unique_ptr<views::WindowManagerConnection> window_manager_connection_;
+
+  // Only used when running in ash::Config::MASH.
+  std::unique_ptr<views::MusClient> mus_client_;
 
   // Subscribes to updates about input-devices.
   std::unique_ptr<ui::InputDeviceClient> input_device_client_;

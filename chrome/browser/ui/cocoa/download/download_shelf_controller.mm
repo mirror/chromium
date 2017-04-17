@@ -24,6 +24,7 @@
 #include "content/public/browser/download_manager.h"
 #import "third_party/google_toolbox_for_mac/src/AppKit/GTMNSAnimation+Duration.h"
 #import "ui/base/cocoa/hover_button.h"
+#import "ui/base/cocoa/nsview_additions.h"
 
 using content::DownloadItem;
 
@@ -82,7 +83,7 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
 - (void)installTrackingArea;
 - (void)removeTrackingArea;
 - (void)willEnterFullscreen;
-- (void)willLeaveFullscreen;
+- (void)didExitFullscreen;
 - (void)updateCloseButton;
 @end
 
@@ -134,8 +135,8 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
                         name:NSWindowWillEnterFullScreenNotification
                       object:nil];
   [defaultCenter addObserver:self
-                    selector:@selector(willLeaveFullscreen)
-                        name:NSWindowWillExitFullScreenNotification
+                    selector:@selector(didExitFullscreen)
+                        name:NSWindowDidExitFullScreenNotification
                       object:nil];
   [self installTrackingArea];
 }
@@ -226,7 +227,8 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
 }
 
 - (void)showDownloadShelf:(BOOL)show
-             isUserAction:(BOOL)isUserAction {
+             isUserAction:(BOOL)isUserAction
+                  animate:(BOOL)animate {
   [self cancelAutoClose];
   shouldCloseOnMouseExit_ = NO;
 
@@ -250,11 +252,11 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
   // do no animation over janky animation.  Find a way to make animating in
   // smoother.
   AnimatableView* view = [self animatableView];
-  if (show) {
-    [view setHeight:maxShelfHeight_];
-    [view setHidden:NO];
-  } else {
+  if (animate && !show) {
     [view animateToNewHeight:0 duration:kDownloadShelfCloseDuration];
+  } else {
+    [view setHeight:show ? maxShelfHeight_ : 0];
+    [view setHidden:!show];
   }
 
   barIsVisible_ = show;
@@ -478,9 +480,11 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
   [self updateCloseButton];
 }
 
-- (void)willLeaveFullscreen {
+- (void)didExitFullscreen {
   isFullscreen_ = NO;
   [self updateCloseButton];
+  for (DownloadItemController* controller in downloadItemControllers_.get())
+    [[controller view] cr_recursivelySetNeedsDisplay:YES];
 }
 
 - (void)updateCloseButton {

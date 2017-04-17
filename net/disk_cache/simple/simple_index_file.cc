@@ -120,7 +120,10 @@ bool WritePickleFile(base::Pickle* pickle, const base::FilePath& file_name) {
 
 // Called for each cache directory traversal iteration.
 void ProcessEntryFile(SimpleIndex::EntrySet* entries,
-                      const base::FilePath& file_path) {
+                      const base::FilePath& file_path,
+                      base::Time last_accessed,
+                      base::Time last_modified,
+                      int64_t size) {
   static const size_t kEntryFilesLength =
       kEntryFilesHashLength + kEntryFilesSuffixLength;
   // Converting to std::string is OK since we never use UTF8 wide chars in our
@@ -138,30 +141,26 @@ void ProcessEntryFile(SimpleIndex::EntrySet* entries,
     return;
   }
 
-  File::Info file_info;
-  if (!base::GetFileInfo(file_path, &file_info)) {
-    LOG(ERROR) << "Could not get file info for " << file_path.value();
-    return;
-  }
   base::Time last_used_time;
 #if defined(OS_POSIX)
   // For POSIX systems, a last access time is available. However, it's not
   // guaranteed to be more accurate than mtime. It is no worse though.
-  last_used_time = file_info.last_accessed;
+  last_used_time = last_accessed;
 #endif
   if (last_used_time.is_null())
-    last_used_time = file_info.last_modified;
+    last_used_time = last_modified;
 
-  int64_t file_size = file_info.size;
   SimpleIndex::EntrySet::iterator it = entries->find(hash_key);
+  base::CheckedNumeric<uint32_t> total_entry_size = size;
+
   if (it == entries->end()) {
     SimpleIndex::InsertInEntrySet(
-        hash_key,
-        EntryMetadata(last_used_time, file_size),
+        hash_key, EntryMetadata(last_used_time, total_entry_size.ValueOrDie()),
         entries);
   } else {
     // Summing up the total size of the entry through all the *_[0-1] files
-    it->second.SetEntrySize(it->second.GetEntrySize() + file_size);
+    total_entry_size += it->second.GetEntrySize();
+    it->second.SetEntrySize(total_entry_size.ValueOrDie());
   }
 }
 

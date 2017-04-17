@@ -35,7 +35,8 @@ extern const size_t kSampleCorruptPakSize;
 TEST(DataPackTest, LoadFromPath) {
   base::ScopedTempDir dir;
   ASSERT_TRUE(dir.CreateUniqueTempDir());
-  base::FilePath data_path = dir.path().Append(FILE_PATH_LITERAL("sample.pak"));
+  base::FilePath data_path =
+      dir.GetPath().Append(FILE_PATH_LITERAL("sample.pak"));
 
   // Dump contents into the pak file.
   ASSERT_EQ(base::WriteFile(data_path, kSamplePakContents, kSamplePakSize),
@@ -67,7 +68,8 @@ TEST(DataPackTest, LoadFromPath) {
 TEST(DataPackTest, LoadFromFile) {
   base::ScopedTempDir dir;
   ASSERT_TRUE(dir.CreateUniqueTempDir());
-  base::FilePath data_path = dir.path().Append(FILE_PATH_LITERAL("sample.pak"));
+  base::FilePath data_path =
+      dir.GetPath().Append(FILE_PATH_LITERAL("sample.pak"));
 
   // Dump contents into the pak file.
   ASSERT_EQ(base::WriteFile(data_path, kSamplePakContents, kSamplePakSize),
@@ -102,7 +104,8 @@ TEST(DataPackTest, LoadFromFile) {
 TEST(DataPackTest, LoadFromFileRegion) {
   base::ScopedTempDir dir;
   ASSERT_TRUE(dir.CreateUniqueTempDir());
-  base::FilePath data_path = dir.path().Append(FILE_PATH_LITERAL("sample.pak"));
+  base::FilePath data_path =
+      dir.GetPath().Append(FILE_PATH_LITERAL("sample.pak"));
 
   // Construct a file which has a non page-aligned zero-filled header followed
   // by the actual pak file content.
@@ -119,6 +122,31 @@ TEST(DataPackTest, LoadFromFileRegion) {
   DataPack pack(SCALE_FACTOR_100P);
   base::MemoryMappedFile::Region region = {sizeof(kPadding), kSamplePakSize};
   ASSERT_TRUE(pack.LoadFromFileRegion(std::move(file), region));
+
+  base::StringPiece data;
+  ASSERT_TRUE(pack.HasResource(4));
+  ASSERT_TRUE(pack.GetStringPiece(4, &data));
+  EXPECT_EQ("this is id 4", data);
+  ASSERT_TRUE(pack.HasResource(6));
+  ASSERT_TRUE(pack.GetStringPiece(6, &data));
+  EXPECT_EQ("this is id 6", data);
+
+  // Try reading zero-length data blobs, just in case.
+  ASSERT_TRUE(pack.GetStringPiece(1, &data));
+  EXPECT_EQ(0U, data.length());
+  ASSERT_TRUE(pack.GetStringPiece(10, &data));
+  EXPECT_EQ(0U, data.length());
+
+  // Try looking up an invalid key.
+  ASSERT_FALSE(pack.HasResource(140));
+  ASSERT_FALSE(pack.GetStringPiece(140, &data));
+}
+
+TEST(DataPackTest, LoadFromBuffer) {
+  DataPack pack(SCALE_FACTOR_100P);
+
+  ASSERT_TRUE(pack.LoadFromBuffer(
+      base::StringPiece(kSamplePakContents, kSamplePakSize)));
 
   base::StringPiece data;
   ASSERT_TRUE(pack.HasResource(4));
@@ -158,7 +186,7 @@ TEST(DataPackTest, LoadFileWithTruncatedHeader) {
 TEST_P(DataPackTest, Write) {
   base::ScopedTempDir dir;
   ASSERT_TRUE(dir.CreateUniqueTempDir());
-  base::FilePath file = dir.path().Append(FILE_PATH_LITERAL("data.pak"));
+  base::FilePath file = dir.GetPath().Append(FILE_PATH_LITERAL("data.pak"));
 
   std::string one("one");
   std::string two("two");
@@ -196,7 +224,8 @@ TEST_P(DataPackTest, Write) {
 TEST(DataPackTest, ModifiedWhileUsed) {
   base::ScopedTempDir dir;
   ASSERT_TRUE(dir.CreateUniqueTempDir());
-  base::FilePath data_path = dir.path().Append(FILE_PATH_LITERAL("sample.pak"));
+  base::FilePath data_path =
+      dir.GetPath().Append(FILE_PATH_LITERAL("sample.pak"));
 
   // Dump contents into the pak file.
   ASSERT_EQ(base::WriteFile(data_path, kSamplePakContents, kSamplePakSize),

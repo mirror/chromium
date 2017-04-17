@@ -4,6 +4,7 @@
 
 #include "extensions/browser/app_window/app_window_contents.h"
 
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -12,7 +13,6 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
-#include "content/public/browser/resource_dispatcher_host.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/renderer_preferences.h"
@@ -65,14 +65,15 @@ void AppWindowContentsImpl::LoadContents(int32_t creator_process_id) {
 void AppWindowContentsImpl::NativeWindowChanged(
     NativeAppWindow* native_app_window) {
   base::ListValue args;
-  base::DictionaryValue* dictionary = new base::DictionaryValue();
-  args.Append(dictionary);
-  host_->GetSerializedState(dictionary);
+  std::unique_ptr<base::DictionaryValue> dictionary(
+      new base::DictionaryValue());
+  host_->GetSerializedState(dictionary.get());
+  args.Append(std::move(dictionary));
 
   content::RenderFrameHost* rfh = web_contents_->GetMainFrame();
-  rfh->Send(new ExtensionMsg_MessageInvoke(
-      rfh->GetRoutingID(), host_->extension_id(), "app.window",
-      "updateAppWindowProperties", args, false));
+  rfh->Send(new ExtensionMsg_MessageInvoke(rfh->GetRoutingID(),
+                                           host_->extension_id(), "app.window",
+                                           "updateAppWindowProperties", args));
 }
 
 void AppWindowContentsImpl::NativeWindowClosed() {
@@ -80,20 +81,11 @@ void AppWindowContentsImpl::NativeWindowClosed() {
   rvh->Send(new ExtensionMsg_AppWindowClosed(rvh->GetRoutingID()));
 }
 
-void AppWindowContentsImpl::DispatchWindowShownForTests() const {
-  base::ListValue args;
-  content::RenderFrameHost* rfh = web_contents_->GetMainFrame();
-  rfh->Send(new ExtensionMsg_MessageInvoke(
-      rfh->GetRoutingID(), host_->extension_id(), "app.window",
-      "appWindowShownForTests", args, false));
-}
-
 void AppWindowContentsImpl::OnWindowReady() {
   is_window_ready_ = true;
   if (is_blocking_requests_) {
     is_blocking_requests_ = false;
-    content::ResourceDispatcherHost::ResumeBlockedRequestsForFrameFromUI(
-        web_contents_->GetMainFrame());
+    web_contents_->GetMainFrame()->ResumeBlockedRequestsForFrame();
   }
 }
 
@@ -133,7 +125,7 @@ void AppWindowContentsImpl::SuspendRenderFrameHost(
   if (is_window_ready_)
     return;
   is_blocking_requests_ = true;
-  content::ResourceDispatcherHost::BlockRequestsForFrameFromUI(rfh);
+  rfh->BlockRequestsForFrame();
 }
 
 }  // namespace extensions

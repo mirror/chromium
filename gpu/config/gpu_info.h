@@ -20,6 +20,10 @@
 #include "gpu/gpu_export.h"
 #include "ui/gfx/geometry/size.h"
 
+#if defined(USE_X11) && !defined(OS_CHROMEOS)
+typedef unsigned long VisualID;
+#endif
+
 namespace gpu {
 
 // Result for the various Collect*Info* functions below.
@@ -58,7 +62,11 @@ enum VideoCodecProfile {
   HEVCPROFILE_MAIN,
   HEVCPROFILE_MAIN10,
   HEVCPROFILE_MAIN_STILL_PICTURE,
-  VIDEO_CODEC_PROFILE_MAX = HEVCPROFILE_MAIN_STILL_PICTURE,
+  DOLBYVISION_PROFILE0,
+  DOLBYVISION_PROFILE4,
+  DOLBYVISION_PROFILE5,
+  DOLBYVISION_PROFILE7,
+  VIDEO_CODEC_PROFILE_MAX = DOLBYVISION_PROFILE7,
 };
 
 // Specification of a decoding profile supported by a hardware decoder.
@@ -119,10 +127,6 @@ struct GPU_EXPORT GPUInfo {
   GPUInfo(const GPUInfo& other);
   ~GPUInfo();
 
-  bool SupportsAccelerated2dCanvas() const {
-    return !can_lose_context && !software_rendering;
-  }
-
   // The amount of time taken to get from the process starting to the message
   // loop being pumped.
   base::TimeDelta initialization_time;
@@ -133,25 +137,11 @@ struct GPU_EXPORT GPUInfo {
   // Computer has AMD Dynamic Switchable Graphics
   bool amd_switchable;
 
-  // Lenovo dCute is installed. http://crbug.com/181665.
-  bool lenovo_dcute;
-
-  // Version of DisplayLink driver installed. Zero if not installed.
-  // http://crbug.com/177611.
-  Version display_link_version;
-
   // Primary GPU, for exmaple, the discrete GPU in a dual GPU machine.
   GPUDevice gpu;
 
   // Secondary GPUs, for example, the integrated GPU in a dual GPU machine.
   std::vector<GPUDevice> secondary_gpus;
-
-  // On Windows, the unique identifier of the adapter the GPU process uses.
-  // The default is zero, which makes the browser process create its D3D device
-  // on the primary adapter. Note that the primary adapter can change at any
-  // time so it is better to specify a particular LUID. Note that valid LUIDs
-  // are always non-zero.
-  uint64_t adapter_luid;
 
   // The vendor of the graphics driver currently installed.
   std::string driver_vendor;
@@ -209,10 +199,6 @@ struct GPU_EXPORT GPUInfo {
   // reset detection or notification not available.
   uint32_t gl_reset_notification_strategy;
 
-  // The device semantics, i.e. whether the Vista and Windows 7 specific
-  // semantics are available.
-  bool can_lose_context;
-
   bool software_rendering;
 
   // Whether the driver uses direct rendering. True on most platforms, false on
@@ -227,6 +213,12 @@ struct GPU_EXPORT GPUInfo {
 
   // True if the GPU is running in the browser process instead of its own.
   bool in_process_gpu;
+
+  // True if the GPU process is using the passthrough command decoder.
+  bool passthrough_cmd_decoder;
+
+  // True if the current set of outputs supports overlays.
+  bool supports_overlays = false;
 
   // The state of whether the basic/context/DxDiagnostics info is collected and
   // if the collection fails or not.
@@ -243,6 +235,11 @@ struct GPU_EXPORT GPUInfo {
   VideoEncodeAcceleratorSupportedProfiles
       video_encode_accelerator_supported_profiles;
   bool jpeg_decode_accelerator_supported;
+
+#if defined(USE_X11) && !defined(OS_CHROMEOS)
+  VisualID system_visual;
+  VisualID rgba_visual;
+#endif
 
   // Note: when adding new members, please remember to update EnumerateFields
   // in gpu_info.cc.

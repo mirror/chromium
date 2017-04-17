@@ -4,192 +4,410 @@
 
 #include "platform/fonts/shaping/HarfBuzzShaper.h"
 
+#include <unicode/uscript.h>
 #include "platform/fonts/Font.h"
 #include "platform/fonts/FontCache.h"
-#include "platform/fonts/GlyphPage.h"
+#include "platform/fonts/shaping/ShapeResultInlineHeaders.h"
 #include "platform/fonts/shaping/ShapeResultTestInfo.h"
+#include "platform/text/TextBreakIterator.h"
 #include "platform/text/TextRun.h"
+#include "platform/wtf/Vector.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/Vector.h"
-#include <unicode/uscript.h>
 
 namespace blink {
 
 class HarfBuzzShaperTest : public ::testing::Test {
-protected:
-    void SetUp() override
-    {
-        fontDescription.setComputedSize(12.0);
-        font = Font(fontDescription);
-        font.update(nullptr);
-    }
+ protected:
+  void SetUp() override {
+    font_description.SetComputedSize(12.0);
+    font = Font(font_description);
+    font.Update(nullptr);
+  }
 
-    void TearDown() override
-    {
-    }
+  void TearDown() override {}
 
-    FontCachePurgePreventer fontCachePurgePreventer;
-    FontDescription fontDescription;
-    Font font;
-    unsigned startIndex = 0;
-    unsigned numGlyphs = 0;
-    hb_script_t script = HB_SCRIPT_INVALID;
+  FontCachePurgePreventer font_cache_purge_preventer;
+  FontDescription font_description;
+  Font font;
+  unsigned start_index = 0;
+  unsigned num_glyphs = 0;
+  hb_script_t script = HB_SCRIPT_INVALID;
 };
 
-static inline ShapeResultTestInfo* testInfo(RefPtr<ShapeResult>& result)
-{
-    return static_cast<ShapeResultTestInfo*>(result.get());
+static inline ShapeResultTestInfo* TestInfo(RefPtr<ShapeResult>& result) {
+  return static_cast<ShapeResultTestInfo*>(result.Get());
 }
 
-TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsLatin)
-{
-    TextRun latinCommon(reinterpret_cast<const LChar*>("ABC DEF."), 8);
-    HarfBuzzShaper shaper(&font, latinCommon);
-    RefPtr<ShapeResult> result = shaper.shapeResult();
-
-    ASSERT_EQ(1u, testInfo(result)->numberOfRunsForTesting());
-    ASSERT_TRUE(testInfo(result)->runInfoForTesting(0, startIndex, numGlyphs, script));
-    EXPECT_EQ(0u, startIndex);
-    EXPECT_EQ(8u, numGlyphs);
-    EXPECT_EQ(HB_SCRIPT_LATIN, script);
+static inline String To16Bit(const char* text, unsigned length) {
+  return String::Make16BitFrom8BitSource(reinterpret_cast<const LChar*>(text),
+                                         length);
 }
 
-TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsLeadingCommon)
-{
-    TextRun leadingCommon(reinterpret_cast<const LChar*>("... test"), 8);
-    HarfBuzzShaper shaper(&font, leadingCommon);
-    RefPtr<ShapeResult> result = shaper.shapeResult();
+TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsLatin) {
+  String latin_common = To16Bit("ABC DEF.", 8);
+  HarfBuzzShaper shaper(latin_common.Characters16(), 8);
+  RefPtr<ShapeResult> result = shaper.Shape(&font, TextDirection::kLtr);
 
-    ASSERT_EQ(1u, testInfo(result)->numberOfRunsForTesting());
-    ASSERT_TRUE(testInfo(result)->runInfoForTesting(0, startIndex, numGlyphs, script));
-    EXPECT_EQ(0u, startIndex);
-    EXPECT_EQ(8u, numGlyphs);
-    EXPECT_EQ(HB_SCRIPT_LATIN, script);
+  EXPECT_EQ(1u, TestInfo(result)->NumberOfRunsForTesting());
+  ASSERT_TRUE(
+      TestInfo(result)->RunInfoForTesting(0, start_index, num_glyphs, script));
+  EXPECT_EQ(0u, start_index);
+  EXPECT_EQ(8u, num_glyphs);
+  EXPECT_EQ(HB_SCRIPT_LATIN, script);
 }
 
-TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsUnicodeVariants)
-{
-    struct {
-        const char* name;
-        UChar string[4];
-        hb_script_t script;
-    } testlist[] = {
-        { "Standard Variants text style", { 0x30, 0xFE0E }, HB_SCRIPT_COMMON },
-        { "Standard Variants emoji style", { 0x203C, 0xFE0F }, HB_SCRIPT_COMMON },
-        { "Standard Variants of Ideograph", { 0x4FAE, 0xFE00 }, HB_SCRIPT_HAN },
-        { "Ideographic Variants", { 0x3402, 0xDB40, 0xDD00 }, HB_SCRIPT_HAN },
-        { "Not-defined Variants", { 0x41, 0xDB40, 0xDDEF }, HB_SCRIPT_LATIN },
-    };
-    for (auto& test : testlist) {
-        String str(test.string);
-        TextRun run(str);
-        HarfBuzzShaper shaper(&font, run);
-        RefPtr<ShapeResult> result = shaper.shapeResult();
+TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsLeadingCommon) {
+  String leading_common = To16Bit("... test", 8);
+  HarfBuzzShaper shaper(leading_common.Characters16(), 8);
+  RefPtr<ShapeResult> result = shaper.Shape(&font, TextDirection::kLtr);
 
-        EXPECT_EQ(1u, testInfo(result)->numberOfRunsForTesting()) << test.name;
-        ASSERT_TRUE(testInfo(result)->runInfoForTesting(0, startIndex, numGlyphs, script)) << test.name;
-        EXPECT_EQ(0u, startIndex) << test.name;
-        if (numGlyphs == 2) {
-            // If the specified VS is not in the font, it's mapped to .notdef.
-            // then hb_ot_hide_default_ignorables() swaps it to a space with zero-advance.
-            // http://lists.freedesktop.org/archives/harfbuzz/2015-May/004888.html
-            // OpenType recommends Glyph ID 3 for a space; not a hard requirement though.
-            // https://www.microsoft.com/typography/otspec/recom.htm
+  EXPECT_EQ(1u, TestInfo(result)->NumberOfRunsForTesting());
+  ASSERT_TRUE(
+      TestInfo(result)->RunInfoForTesting(0, start_index, num_glyphs, script));
+  EXPECT_EQ(0u, start_index);
+  EXPECT_EQ(8u, num_glyphs);
+  EXPECT_EQ(HB_SCRIPT_LATIN, script);
+}
+
+TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsUnicodeVariants) {
+  struct {
+    const char* name;
+    UChar string[4];
+    unsigned length;
+    hb_script_t script;
+  } testlist[] = {
+      {"Standard Variants text style", {0x30, 0xFE0E}, 2, HB_SCRIPT_COMMON},
+      {"Standard Variants emoji style", {0x203C, 0xFE0F}, 2, HB_SCRIPT_COMMON},
+      {"Standard Variants of Ideograph", {0x4FAE, 0xFE00}, 2, HB_SCRIPT_HAN},
+      {"Ideographic Variants", {0x3402, 0xDB40, 0xDD00}, 3, HB_SCRIPT_HAN},
+      {"Not-defined Variants", {0x41, 0xDB40, 0xDDEF}, 3, HB_SCRIPT_LATIN},
+  };
+  for (auto& test : testlist) {
+    HarfBuzzShaper shaper(test.string, test.length);
+    RefPtr<ShapeResult> result = shaper.Shape(&font, TextDirection::kLtr);
+
+    EXPECT_EQ(1u, TestInfo(result)->NumberOfRunsForTesting()) << test.name;
+    ASSERT_TRUE(
+        TestInfo(result)->RunInfoForTesting(0, start_index, num_glyphs, script))
+        << test.name;
+    EXPECT_EQ(0u, start_index) << test.name;
+    if (num_glyphs == 2) {
+// If the specified VS is not in the font, it's mapped to .notdef.
+// then hb_ot_hide_default_ignorables() swaps it to a space with zero-advance.
+// http://lists.freedesktop.org/archives/harfbuzz/2015-May/004888.html
 #if !OS(MACOSX)
-            EXPECT_EQ(3u, testInfo(result)->glyphForTesting(0, 1)) << test.name;
+      EXPECT_EQ(TestInfo(result)->FontDataForTesting(0)->SpaceGlyph(),
+                TestInfo(result)->GlyphForTesting(0, 1))
+          << test.name;
 #endif
-            EXPECT_EQ(0.f, testInfo(result)->advanceForTesting(0, 1)) << test.name;
-        } else {
-            EXPECT_EQ(1u, numGlyphs) << test.name;
-        }
-        EXPECT_EQ(test.script, script) << test.name;
+      EXPECT_EQ(0.f, TestInfo(result)->AdvanceForTesting(0, 1)) << test.name;
+    } else {
+      EXPECT_EQ(1u, num_glyphs) << test.name;
     }
+    EXPECT_EQ(test.script, script) << test.name;
+  }
 }
 
-TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsDevanagariCommon)
-{
-    UChar devanagariCommonString[] = { 0x915, 0x94d, 0x930, 0x28, 0x20, 0x29 };
-    TextRun devanagariCommonLatin(devanagariCommonString, 6);
-    HarfBuzzShaper shaper(&font, devanagariCommonLatin);
-    RefPtr<ShapeResult> result = shaper.shapeResult();
+TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsDevanagariCommon) {
+  UChar devanagari_common_string[] = {0x915, 0x94d, 0x930, 0x28, 0x20, 0x29};
+  String devanagari_common_latin(devanagari_common_string, 6);
+  HarfBuzzShaper shaper(devanagari_common_latin.Characters16(), 6);
+  RefPtr<ShapeResult> result = shaper.Shape(&font, TextDirection::kLtr);
 
-    ASSERT_EQ(2u, testInfo(result)->numberOfRunsForTesting());
-    ASSERT_TRUE(testInfo(result)->runInfoForTesting(0, startIndex, numGlyphs, script));
-    EXPECT_EQ(0u, startIndex);
-    EXPECT_EQ(1u, numGlyphs);
-    EXPECT_EQ(HB_SCRIPT_DEVANAGARI, script);
+  EXPECT_EQ(2u, TestInfo(result)->NumberOfRunsForTesting());
+  ASSERT_TRUE(
+      TestInfo(result)->RunInfoForTesting(0, start_index, num_glyphs, script));
+  EXPECT_EQ(0u, start_index);
+  EXPECT_EQ(1u, num_glyphs);
+  EXPECT_EQ(HB_SCRIPT_DEVANAGARI, script);
 
-    ASSERT_TRUE(testInfo(result)->runInfoForTesting(1, startIndex, numGlyphs, script));
-    EXPECT_EQ(3u, startIndex);
-    EXPECT_EQ(3u, numGlyphs);
-    EXPECT_EQ(HB_SCRIPT_DEVANAGARI, script);
+  ASSERT_TRUE(
+      TestInfo(result)->RunInfoForTesting(1, start_index, num_glyphs, script));
+  EXPECT_EQ(3u, start_index);
+  EXPECT_EQ(3u, num_glyphs);
+  EXPECT_EQ(HB_SCRIPT_DEVANAGARI, script);
 }
 
-TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsDevanagariCommonLatinCommon)
-{
-    UChar devanagariCommonLatinString[] = { 0x915, 0x94d, 0x930, 0x20, 0x61, 0x62, 0x2E };
-    TextRun devanagariCommonLatin(devanagariCommonLatinString, 7);
-    HarfBuzzShaper shaper(&font, devanagariCommonLatin);
-    RefPtr<ShapeResult> result = shaper.shapeResult();
+TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsDevanagariCommonLatinCommon) {
+  UChar devanagari_common_latin_string[] = {0x915, 0x94d, 0x930, 0x20,
+                                            0x61,  0x62,  0x2E};
+  HarfBuzzShaper shaper(devanagari_common_latin_string, 7);
+  RefPtr<ShapeResult> result = shaper.Shape(&font, TextDirection::kLtr);
 
-    ASSERT_EQ(3u, testInfo(result)->numberOfRunsForTesting());
-    ASSERT_TRUE(testInfo(result)->runInfoForTesting(0, startIndex, numGlyphs, script));
-    EXPECT_EQ(0u, startIndex);
-    EXPECT_EQ(1u, numGlyphs);
-    EXPECT_EQ(HB_SCRIPT_DEVANAGARI, script);
+  EXPECT_EQ(3u, TestInfo(result)->NumberOfRunsForTesting());
+  ASSERT_TRUE(
+      TestInfo(result)->RunInfoForTesting(0, start_index, num_glyphs, script));
+  EXPECT_EQ(0u, start_index);
+  EXPECT_EQ(1u, num_glyphs);
+  EXPECT_EQ(HB_SCRIPT_DEVANAGARI, script);
 
-    ASSERT_TRUE(testInfo(result)->runInfoForTesting(1, startIndex, numGlyphs, script));
-    EXPECT_EQ(3u, startIndex);
-    EXPECT_EQ(1u, numGlyphs);
-    EXPECT_EQ(HB_SCRIPT_DEVANAGARI, script);
+  ASSERT_TRUE(
+      TestInfo(result)->RunInfoForTesting(1, start_index, num_glyphs, script));
+  EXPECT_EQ(3u, start_index);
+  EXPECT_EQ(1u, num_glyphs);
+  EXPECT_EQ(HB_SCRIPT_DEVANAGARI, script);
 
-    ASSERT_TRUE(testInfo(result)->runInfoForTesting(2, startIndex, numGlyphs, script));
-    EXPECT_EQ(4u, startIndex);
-    EXPECT_EQ(3u, numGlyphs);
-    EXPECT_EQ(HB_SCRIPT_LATIN, script);
+  ASSERT_TRUE(
+      TestInfo(result)->RunInfoForTesting(2, start_index, num_glyphs, script));
+  EXPECT_EQ(4u, start_index);
+  EXPECT_EQ(3u, num_glyphs);
+  EXPECT_EQ(HB_SCRIPT_LATIN, script);
 }
 
-TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsArabicThaiHanLatin)
-{
-    UChar mixedString[] = { 0x628, 0x64A, 0x629, 0xE20, 0x65E5, 0x62 };
-    TextRun mixed(mixedString, 6);
-    HarfBuzzShaper shaper(&font, mixed);
-    RefPtr<ShapeResult> result = shaper.shapeResult();
+TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsArabicThaiHanLatin) {
+  UChar mixed_string[] = {0x628, 0x64A, 0x629, 0xE20, 0x65E5, 0x62};
+  HarfBuzzShaper shaper(mixed_string, 6);
+  RefPtr<ShapeResult> result = shaper.Shape(&font, TextDirection::kLtr);
 
-    ASSERT_EQ(4u, testInfo(result)->numberOfRunsForTesting());
-    ASSERT_TRUE(testInfo(result)->runInfoForTesting(0, startIndex, numGlyphs, script));
-    EXPECT_EQ(0u, startIndex);
-    EXPECT_EQ(3u, numGlyphs);
-    EXPECT_EQ(HB_SCRIPT_ARABIC, script);
+  EXPECT_EQ(4u, TestInfo(result)->NumberOfRunsForTesting());
+  ASSERT_TRUE(
+      TestInfo(result)->RunInfoForTesting(0, start_index, num_glyphs, script));
+  EXPECT_EQ(0u, start_index);
+  EXPECT_EQ(3u, num_glyphs);
+  EXPECT_EQ(HB_SCRIPT_ARABIC, script);
 
-    ASSERT_TRUE(testInfo(result)->runInfoForTesting(1, startIndex, numGlyphs, script));
-    EXPECT_EQ(3u, startIndex);
-    EXPECT_EQ(1u, numGlyphs);
-    EXPECT_EQ(HB_SCRIPT_THAI, script);
+  ASSERT_TRUE(
+      TestInfo(result)->RunInfoForTesting(1, start_index, num_glyphs, script));
+  EXPECT_EQ(3u, start_index);
+  EXPECT_EQ(1u, num_glyphs);
+  EXPECT_EQ(HB_SCRIPT_THAI, script);
 
-    ASSERT_TRUE(testInfo(result)->runInfoForTesting(2, startIndex, numGlyphs, script));
-    EXPECT_EQ(4u, startIndex);
-    EXPECT_EQ(1u, numGlyphs);
-    EXPECT_EQ(HB_SCRIPT_HAN, script);
+  ASSERT_TRUE(
+      TestInfo(result)->RunInfoForTesting(2, start_index, num_glyphs, script));
+  EXPECT_EQ(4u, start_index);
+  EXPECT_EQ(1u, num_glyphs);
+  EXPECT_EQ(HB_SCRIPT_HAN, script);
 
-    ASSERT_TRUE(testInfo(result)->runInfoForTesting(3, startIndex, numGlyphs, script));
-    EXPECT_EQ(5u, startIndex);
-    EXPECT_EQ(1u, numGlyphs);
-    EXPECT_EQ(HB_SCRIPT_LATIN, script);
+  ASSERT_TRUE(
+      TestInfo(result)->RunInfoForTesting(3, start_index, num_glyphs, script));
+  EXPECT_EQ(5u, start_index);
+  EXPECT_EQ(1u, num_glyphs);
+  EXPECT_EQ(HB_SCRIPT_LATIN, script);
 }
 
-TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsArabic)
-{
-    UChar arabicString[] = { 0x628, 0x64A, 0x629 };
-    TextRun arabic(arabicString, 3);
-    HarfBuzzShaper shaper(&font, arabic);
-    RefPtr<ShapeResult> result = shaper.shapeResult();
+TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsArabicThaiHanLatinTwice) {
+  UChar mixed_string[] = {0x628, 0x64A, 0x629, 0xE20, 0x65E5, 0x62};
+  HarfBuzzShaper shaper(mixed_string, 6);
+  RefPtr<ShapeResult> result = shaper.Shape(&font, TextDirection::kLtr);
+  EXPECT_EQ(4u, TestInfo(result)->NumberOfRunsForTesting());
 
-    ASSERT_EQ(1u, testInfo(result)->numberOfRunsForTesting());
-    ASSERT_TRUE(testInfo(result)->runInfoForTesting(0, startIndex, numGlyphs, script));
-    EXPECT_EQ(0u, startIndex);
-    EXPECT_EQ(3u, numGlyphs);
-    EXPECT_EQ(HB_SCRIPT_ARABIC, script);
+  // Shape again on the same shape object and check the number of runs.
+  // Should be equal if no state was retained between shape calls.
+  RefPtr<ShapeResult> result2 = shaper.Shape(&font, TextDirection::kLtr);
+  EXPECT_EQ(4u, TestInfo(result2)->NumberOfRunsForTesting());
 }
 
-} // namespace blink
+TEST_F(HarfBuzzShaperTest, ResolveCandidateRunsArabic) {
+  UChar arabic_string[] = {0x628, 0x64A, 0x629};
+  HarfBuzzShaper shaper(arabic_string, 3);
+  RefPtr<ShapeResult> result = shaper.Shape(&font, TextDirection::kRtl);
+
+  EXPECT_EQ(1u, TestInfo(result)->NumberOfRunsForTesting());
+  ASSERT_TRUE(
+      TestInfo(result)->RunInfoForTesting(0, start_index, num_glyphs, script));
+  EXPECT_EQ(0u, start_index);
+  EXPECT_EQ(3u, num_glyphs);
+  EXPECT_EQ(HB_SCRIPT_ARABIC, script);
+}
+
+// This is a simplified test and doesn't accuratly reflect how the shape range
+// is to be used. If you instead of the string you imagine the following HTML:
+// <div>Hello <span>World</span>!</div>
+// It better reflects the intended use where the range given to each shape call
+// corresponds to the text content of a TextNode.
+TEST_F(HarfBuzzShaperTest, ShapeLatinSegment) {
+  String string = To16Bit("Hello World!", 12);
+  TextDirection direction = TextDirection::kLtr;
+
+  HarfBuzzShaper shaper(string.Characters16(), 12);
+  RefPtr<ShapeResult> combined = shaper.Shape(&font, direction);
+  RefPtr<ShapeResult> first = shaper.Shape(&font, direction, 0, 6);
+  RefPtr<ShapeResult> second = shaper.Shape(&font, direction, 6, 11);
+  RefPtr<ShapeResult> third = shaper.Shape(&font, direction, 11, 12);
+
+  HarfBuzzShaper shaper2(string.Characters16(), 6);
+  RefPtr<ShapeResult> first_reference = shaper2.Shape(&font, direction);
+
+  HarfBuzzShaper shaper3(string.Characters16() + 6, 5);
+  RefPtr<ShapeResult> second_reference = shaper3.Shape(&font, direction);
+
+  HarfBuzzShaper shaper4(string.Characters16() + 11, 1);
+  RefPtr<ShapeResult> third_reference = shaper4.Shape(&font, direction);
+
+  // Width of each segment should be the same when shaped using start and end
+  // offset as it is when shaping the three segments using separate shaper
+  // instances.
+  // A full pixel is needed for tolerance to account for kerning on some
+  // platforms.
+  ASSERT_NEAR(first_reference->Width(), first->Width(), 1);
+  ASSERT_NEAR(second_reference->Width(), second->Width(), 1);
+  ASSERT_NEAR(third_reference->Width(), third->Width(), 1);
+
+  // Width of shape results for the entire string should match the combined
+  // shape results from the three segments.
+  float total_width = first->Width() + second->Width() + third->Width();
+  ASSERT_NEAR(combined->Width(), total_width, 1);
+}
+
+// Represents the case where a part of a cluster has a different color.
+// <div>0x647<span style="color: red;">0x64A</span></div>
+// This test requires context-aware shaping which hasn't been implemented yet.
+// See crbug.com/689155
+TEST_F(HarfBuzzShaperTest, DISABLED_ShapeArabicWithContext) {
+  UChar arabic_string[] = {0x647, 0x64A};
+  HarfBuzzShaper shaper(arabic_string, 2);
+
+  RefPtr<ShapeResult> combined = shaper.Shape(&font, TextDirection::kRtl);
+
+  RefPtr<ShapeResult> first = shaper.Shape(&font, TextDirection::kRtl, 0, 1);
+  RefPtr<ShapeResult> second = shaper.Shape(&font, TextDirection::kRtl, 1, 2);
+
+  // Combined width should be the same when shaping the two characters
+  // separately as when shaping them combined.
+  ASSERT_NEAR(combined->Width(), first->Width() + second->Width(), 0.1);
+}
+
+TEST_F(HarfBuzzShaperTest, PositionForOffsetLatin) {
+  String string = To16Bit("Hello World!", 12);
+  TextDirection direction = TextDirection::kLtr;
+
+  HarfBuzzShaper shaper(string.Characters16(), 12);
+  RefPtr<ShapeResult> result = shaper.Shape(&font, direction);
+  RefPtr<ShapeResult> first = shaper.Shape(&font, direction, 0, 5);    // Hello
+  RefPtr<ShapeResult> second = shaper.Shape(&font, direction, 6, 11);  // World
+
+  EXPECT_EQ(0.0f, result->PositionForOffset(0));
+  ASSERT_NEAR(first->Width(), result->PositionForOffset(5), 1);
+  ASSERT_NEAR(second->Width(),
+              result->PositionForOffset(11) - result->PositionForOffset(6), 1);
+  ASSERT_NEAR(result->Width(), result->PositionForOffset(12), 0.1);
+}
+
+TEST_F(HarfBuzzShaperTest, PositionForOffsetArabic) {
+  UChar arabic_string[] = {0x628, 0x64A, 0x629};
+  TextDirection direction = TextDirection::kRtl;
+
+  HarfBuzzShaper shaper(arabic_string, 3);
+  RefPtr<ShapeResult> result = shaper.Shape(&font, direction);
+
+  EXPECT_EQ(0.0f, result->PositionForOffset(3));
+  ASSERT_NEAR(result->Width(), result->PositionForOffset(0), 0.1);
+}
+
+TEST_F(HarfBuzzShaperTest, OffsetForPositionMatchesPositionForOffsetLatin) {
+  String string = To16Bit("Hello World!", 12);
+  TextDirection direction = TextDirection::kLtr;
+
+  HarfBuzzShaper shaper(string.Characters16(), 12);
+  RefPtr<ShapeResult> result = shaper.Shape(&font, direction);
+
+  // Last argument is includePartialGlyphs
+  EXPECT_EQ(0u, result->OffsetForPosition(result->PositionForOffset(0), true));
+  EXPECT_EQ(1u, result->OffsetForPosition(result->PositionForOffset(1), true));
+  EXPECT_EQ(2u, result->OffsetForPosition(result->PositionForOffset(2), true));
+  EXPECT_EQ(3u, result->OffsetForPosition(result->PositionForOffset(3), true));
+  EXPECT_EQ(4u, result->OffsetForPosition(result->PositionForOffset(4), true));
+  EXPECT_EQ(5u, result->OffsetForPosition(result->PositionForOffset(5), true));
+  EXPECT_EQ(6u, result->OffsetForPosition(result->PositionForOffset(6), true));
+  EXPECT_EQ(7u, result->OffsetForPosition(result->PositionForOffset(7), true));
+  EXPECT_EQ(8u, result->OffsetForPosition(result->PositionForOffset(8), true));
+  EXPECT_EQ(9u, result->OffsetForPosition(result->PositionForOffset(9), true));
+  EXPECT_EQ(10u,
+            result->OffsetForPosition(result->PositionForOffset(10), true));
+  EXPECT_EQ(11u,
+            result->OffsetForPosition(result->PositionForOffset(11), true));
+  EXPECT_EQ(12u,
+            result->OffsetForPosition(result->PositionForOffset(12), true));
+}
+
+TEST_F(HarfBuzzShaperTest, OffsetForPositionMatchesPositionForOffsetArabic) {
+  UChar arabic_string[] = {0x628, 0x64A, 0x629};
+  TextDirection direction = TextDirection::kRtl;
+
+  HarfBuzzShaper shaper(arabic_string, 3);
+  RefPtr<ShapeResult> result = shaper.Shape(&font, direction);
+
+  // Last argument is includePartialGlyphs
+  EXPECT_EQ(0u, result->OffsetForPosition(result->PositionForOffset(0), true));
+  EXPECT_EQ(1u, result->OffsetForPosition(result->PositionForOffset(1), true));
+  EXPECT_EQ(2u, result->OffsetForPosition(result->PositionForOffset(2), true));
+  EXPECT_EQ(3u, result->OffsetForPosition(result->PositionForOffset(3), true));
+}
+
+TEST_F(HarfBuzzShaperTest, OffsetForPositionMatchesPositionForOffsetMixed) {
+  UChar mixed_string[] = {0x628, 0x64A, 0x629, 0xE20, 0x65E5, 0x62};
+  HarfBuzzShaper shaper(mixed_string, 6);
+  RefPtr<ShapeResult> result = shaper.Shape(&font, TextDirection::kLtr);
+
+  // Last argument is includePartialGlyphs
+  EXPECT_EQ(0u, result->OffsetForPosition(result->PositionForOffset(0), true));
+  EXPECT_EQ(1u, result->OffsetForPosition(result->PositionForOffset(1), true));
+  EXPECT_EQ(2u, result->OffsetForPosition(result->PositionForOffset(2), true));
+  EXPECT_EQ(3u, result->OffsetForPosition(result->PositionForOffset(3), true));
+  EXPECT_EQ(4u, result->OffsetForPosition(result->PositionForOffset(4), true));
+  EXPECT_EQ(5u, result->OffsetForPosition(result->PositionForOffset(5), true));
+  EXPECT_EQ(6u, result->OffsetForPosition(result->PositionForOffset(6), true));
+}
+
+TEST_F(HarfBuzzShaperTest, ShapeResultCopyRangeIntoLatin) {
+  String string = To16Bit("Testing ShapeResult::createSubRun", 33);
+  TextDirection direction = TextDirection::kLtr;
+
+  HarfBuzzShaper shaper(string.Characters16(), 33);
+  RefPtr<ShapeResult> result = shaper.Shape(&font, direction);
+
+  RefPtr<ShapeResult> composite_result =
+      ShapeResult::Create(&font, 0, direction);
+  result->CopyRange(0, 10, composite_result.Get());
+  result->CopyRange(10, 20, composite_result.Get());
+  result->CopyRange(20, 30, composite_result.Get());
+  result->CopyRange(30, 33, composite_result.Get());
+
+  EXPECT_EQ(result->NumCharacters(), composite_result->NumCharacters());
+  EXPECT_EQ(result->SnappedWidth(), composite_result->SnappedWidth());
+  EXPECT_EQ(result->SnappedStartPositionForOffset(0),
+            composite_result->SnappedStartPositionForOffset(0));
+  EXPECT_EQ(result->SnappedStartPositionForOffset(15),
+            composite_result->SnappedStartPositionForOffset(15));
+  EXPECT_EQ(result->SnappedStartPositionForOffset(30),
+            composite_result->SnappedStartPositionForOffset(30));
+  EXPECT_EQ(result->SnappedStartPositionForOffset(33),
+            composite_result->SnappedStartPositionForOffset(33));
+}
+
+TEST_F(HarfBuzzShaperTest, ShapeResultCopyRangeIntoArabicThaiHanLatin) {
+  UChar mixed_string[] = {0x628, 0x20, 0x64A, 0x629, 0x20, 0xE20, 0x65E5, 0x62};
+  TextDirection direction = TextDirection::kLtr;
+
+  HarfBuzzShaper shaper(mixed_string, 8);
+  RefPtr<ShapeResult> result = shaper.Shape(&font, direction);
+
+  RefPtr<ShapeResult> composite_result =
+      ShapeResult::Create(&font, 0, direction);
+  result->CopyRange(0, 4, composite_result.Get());
+  result->CopyRange(4, 6, composite_result.Get());
+  result->CopyRange(6, 8, composite_result.Get());
+
+  EXPECT_EQ(result->NumCharacters(), composite_result->NumCharacters());
+  EXPECT_EQ(result->SnappedWidth(), composite_result->SnappedWidth());
+  EXPECT_EQ(result->SnappedStartPositionForOffset(0),
+            composite_result->SnappedStartPositionForOffset(0));
+  EXPECT_EQ(result->SnappedStartPositionForOffset(1),
+            composite_result->SnappedStartPositionForOffset(1));
+  EXPECT_EQ(result->SnappedStartPositionForOffset(2),
+            composite_result->SnappedStartPositionForOffset(2));
+  EXPECT_EQ(result->SnappedStartPositionForOffset(3),
+            composite_result->SnappedStartPositionForOffset(3));
+  EXPECT_EQ(result->SnappedStartPositionForOffset(4),
+            composite_result->SnappedStartPositionForOffset(4));
+  EXPECT_EQ(result->SnappedStartPositionForOffset(5),
+            composite_result->SnappedStartPositionForOffset(5));
+  EXPECT_EQ(result->SnappedStartPositionForOffset(6),
+            composite_result->SnappedStartPositionForOffset(6));
+  EXPECT_EQ(result->SnappedStartPositionForOffset(7),
+            composite_result->SnappedStartPositionForOffset(7));
+  EXPECT_EQ(result->SnappedStartPositionForOffset(8),
+            composite_result->SnappedStartPositionForOffset(8));
+}
+
+}  // namespace blink

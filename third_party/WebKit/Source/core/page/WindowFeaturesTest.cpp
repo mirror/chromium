@@ -4,33 +4,33 @@
 //
 #include "core/page/WindowFeatures.h"
 
-#include "wtf/text/WTFString.h"
 #include <gtest/gtest.h>
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 using WindowFeaturesTest = ::testing::Test;
 
-TEST_F(WindowFeaturesTest, NoOpener)
-{
-    static const struct {
-        const char* featureString;
-        bool noopener;
-    } cases[] = {
-        { "", false },
-        { "something", false },
-        { "something, something", false },
-        { "notnoopener", false },
-        { "noopener", true },
-        { "something, noopener", true },
-        { "noopener, something", true },
-        { "NoOpEnEr", true },
-    };
+TEST_F(WindowFeaturesTest, NoOpener) {
+  static const struct {
+    const char* feature_string;
+    bool noopener;
+  } kCases[] = {
+      {"", false},
+      {"something", false},
+      {"something, something", false},
+      {"notnoopener", false},
+      {"noopener", true},
+      {"something, noopener", true},
+      {"noopener, something", true},
+      {"NoOpEnEr", true},
+  };
 
-    for (const auto& test : cases) {
-        WindowFeatures features(test.featureString);
-        EXPECT_EQ(test.noopener, features.noopener) << "Testing '" << test.featureString << "'";
-    }
+  for (const auto& test : kCases) {
+    WindowFeatures features(test.feature_string);
+    EXPECT_EQ(test.noopener, features.noopener)
+        << "Testing '" << test.feature_string << "'";
+  }
 }
 
-} // namespace blink
+}  // namespace blink

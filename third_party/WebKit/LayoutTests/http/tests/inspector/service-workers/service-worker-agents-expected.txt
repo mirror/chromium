@@ -2,14 +2,14 @@ Tests the way service workers don't enable DOM agent and does enable Debugger ag
 
 Debugger-related command should be issued: {
     "id": "<id>",
-    "method": "ServiceWorker.sendMessage",
+    "method": "Target.sendMessageToTarget",
     "params": {
-        "workerId": "<id>",
+        "targetId": "<id>",
         "message": {
             "id": "<id>",
-            "method": "Worker.sendMessageToWorker",
+            "method": "Target.sendMessageToTarget",
             "params": {
-                "workerId": "<id>",
+                "targetId": "<id>",
                 "message": {
                     "id": "<id>",
                     "method": "Debugger.enable"
@@ -22,14 +22,14 @@ Suspending targets.
 Resuming targets.
 Debugger-related command should be issued: {
     "id": "<id>",
-    "method": "ServiceWorker.sendMessage",
+    "method": "Target.sendMessageToTarget",
     "params": {
-        "workerId": "<id>",
+        "targetId": "<id>",
         "message": {
             "id": "<id>",
-            "method": "Worker.sendMessageToWorker",
+            "method": "Target.sendMessageToTarget",
             "params": {
-                "workerId": "<id>",
+                "targetId": "<id>",
                 "message": {
                     "id": "<id>",
                     "method": "Debugger.enable"

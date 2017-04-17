@@ -9,6 +9,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
@@ -20,7 +21,7 @@ namespace extensions {
 
 SettingsPrivateEventRouter::SettingsPrivateEventRouter(
     content::BrowserContext* context)
-    : context_(context), listening_(false) {
+    : context_(context), listening_(false), weak_ptr_factory_(this) {
   // Register with the event router so we know when renderers are listening to
   // our events. We first check and see if there *is* an event router, because
   // some unit tests try to create all context services, but don't initialize
@@ -94,15 +95,13 @@ void SettingsPrivateEventRouter::StartOrStopListeningForPrefsChanges() {
       std::string pref_name = it.first;
       if (prefs_util_->IsCrosSetting(pref_name)) {
 #if defined(OS_CHROMEOS)
-        std::unique_ptr<chromeos::CrosSettings::ObserverSubscription> observer =
-            chromeos::CrosSettings::Get()->AddSettingsObserver(
+        std::unique_ptr<chromeos::CrosSettings::ObserverSubscription>
+            subscription = chromeos::CrosSettings::Get()->AddSettingsObserver(
                 pref_name.c_str(),
                 base::Bind(&SettingsPrivateEventRouter::OnPreferenceChanged,
                            base::Unretained(this), pref_name));
-        linked_ptr<chromeos::CrosSettings::ObserverSubscription> subscription(
-            observer.release());
         cros_settings_subscription_map_.insert(
-            make_pair(pref_name, subscription));
+            make_pair(pref_name, std::move(subscription)));
 #endif
       } else {
         FindRegistrarForPref(it.first)
@@ -125,6 +124,15 @@ void SettingsPrivateEventRouter::StartOrStopListeningForPrefsChanges() {
 
 void SettingsPrivateEventRouter::OnPreferenceChanged(
     const std::string& pref_name) {
+  // This posts an asynchronous task to ensure that all pref stores are updated,
+  // as |prefs_util_->GetPref()| relies on this information to determine if a
+  // preference is controlled by e.g. extensions.
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&SettingsPrivateEventRouter::SendPrefChange,
+                            weak_ptr_factory_.GetWeakPtr(), pref_name));
+}
+
+void SettingsPrivateEventRouter::SendPrefChange(const std::string& pref_name) {
   EventRouter* event_router = EventRouter::Get(context_);
   if (!event_router->HasEventListener(
           api::settings_private::OnPrefsChanged::kEventName)) {

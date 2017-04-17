@@ -31,42 +31,50 @@
 #ifndef ThreadableLoaderClient_h
 #define ThreadableLoaderClient_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Noncopyable.h"
 #include "public/platform/WebDataConsumerHandle.h"
-#include "wtf/Noncopyable.h"
-#include <memory>
 
 namespace blink {
 
+class KURL;
 class ResourceError;
 class ResourceResponse;
 class ResourceTimingInfo;
 
 class CORE_EXPORT ThreadableLoaderClient {
-    WTF_MAKE_NONCOPYABLE(ThreadableLoaderClient);
-public:
-    virtual void didSendData(unsigned long long /*bytesSent*/, unsigned long long /*totalBytesToBeSent*/) { }
+  WTF_MAKE_NONCOPYABLE(ThreadableLoaderClient);
 
-    virtual void didReceiveResponse(unsigned long /*identifier*/, const ResourceResponse&, std::unique_ptr<WebDataConsumerHandle>) { }
-    virtual void didReceiveData(const char*, unsigned /*dataLength*/) { }
-    virtual void didReceiveCachedMetadata(const char*, int /*dataLength*/) { }
-    virtual void didFinishLoading(unsigned long /*identifier*/, double /*finishTime*/) { }
-    virtual void didFail(const ResourceError&) { }
-    virtual void didFailAccessControlCheck(const ResourceError& error) { didFail(error); }
-    virtual void didFailRedirectCheck() { }
-    virtual void didReceiveResourceTiming(const ResourceTimingInfo&) { }
+ public:
+  virtual void DidSendData(unsigned long long /*bytesSent*/,
+                           unsigned long long /*totalBytesToBeSent*/) {}
+  virtual void DidReceiveRedirectTo(const KURL&) {}
+  virtual void DidReceiveResponse(unsigned long /*identifier*/,
+                                  const ResourceResponse&,
+                                  std::unique_ptr<WebDataConsumerHandle>) {}
+  virtual void DidReceiveData(const char*, unsigned /*dataLength*/) {}
+  virtual void DidReceiveCachedMetadata(const char*, int /*dataLength*/) {}
+  virtual void DidFinishLoading(unsigned long /*identifier*/,
+                                double /*finishTime*/) {}
+  virtual void DidFail(const ResourceError&) {}
+  virtual void DidFailAccessControlCheck(const ResourceError& error) {
+    DidFail(error);
+  }
+  virtual void DidFailRedirectCheck() {}
+  virtual void DidReceiveResourceTiming(const ResourceTimingInfo&) {}
 
-    virtual bool isDocumentThreadableLoaderClient() { return false; }
+  virtual bool IsDocumentThreadableLoaderClient() { return false; }
 
-    virtual void didDownloadData(int /*dataLength*/) { }
+  virtual void DidDownloadData(int /*dataLength*/) {}
 
-    virtual ~ThreadableLoaderClient() { }
+  virtual ~ThreadableLoaderClient() {}
 
-protected:
-    ThreadableLoaderClient() { }
+ protected:
+  ThreadableLoaderClient() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ThreadableLoaderClient_h
+#endif  // ThreadableLoaderClient_h

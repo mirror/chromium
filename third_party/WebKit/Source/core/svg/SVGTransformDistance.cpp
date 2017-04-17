@@ -26,184 +26,200 @@
 namespace blink {
 
 SVGTransformDistance::SVGTransformDistance()
-    : m_transformType(SVG_TRANSFORM_UNKNOWN)
-    , m_angle(0)
-    , m_cx(0)
-    , m_cy(0)
-{
+    : transform_type_(kSvgTransformUnknown), angle_(0), cx_(0), cy_(0) {}
+
+SVGTransformDistance::SVGTransformDistance(SVGTransformType transform_type,
+                                           float angle,
+                                           float cx,
+                                           float cy,
+                                           const AffineTransform& transform)
+    : transform_type_(transform_type),
+      angle_(angle),
+      cx_(cx),
+      cy_(cy),
+      transform_(transform) {}
+
+SVGTransformDistance::SVGTransformDistance(SVGTransform* from_svg_transform,
+                                           SVGTransform* to_svg_transform)
+    : angle_(0), cx_(0), cy_(0) {
+  transform_type_ = from_svg_transform->TransformType();
+  DCHECK_EQ(transform_type_, to_svg_transform->TransformType());
+
+  switch (transform_type_) {
+    case kSvgTransformMatrix:
+      NOTREACHED();
+    case kSvgTransformUnknown:
+      break;
+    case kSvgTransformRotate: {
+      FloatSize center_distance = to_svg_transform->RotationCenter() -
+                                  from_svg_transform->RotationCenter();
+      angle_ = to_svg_transform->Angle() - from_svg_transform->Angle();
+      cx_ = center_distance.Width();
+      cy_ = center_distance.Height();
+      break;
+    }
+    case kSvgTransformTranslate: {
+      FloatSize translation_distance =
+          to_svg_transform->Translate() - from_svg_transform->Translate();
+      transform_.Translate(translation_distance.Width(),
+                           translation_distance.Height());
+      break;
+    }
+    case kSvgTransformScale: {
+      float scale_x = to_svg_transform->Scale().Width() -
+                      from_svg_transform->Scale().Width();
+      float scale_y = to_svg_transform->Scale().Height() -
+                      from_svg_transform->Scale().Height();
+      transform_.ScaleNonUniform(scale_x, scale_y);
+      break;
+    }
+    case kSvgTransformSkewx:
+    case kSvgTransformSkewy:
+      angle_ = to_svg_transform->Angle() - from_svg_transform->Angle();
+      break;
+  }
 }
 
-SVGTransformDistance::SVGTransformDistance(SVGTransformType transformType, float angle, float cx, float cy, const AffineTransform& transform)
-    : m_transformType(transformType)
-    , m_angle(angle)
-    , m_cx(cx)
-    , m_cy(cy)
-    , m_transform(transform)
-{
+SVGTransformDistance SVGTransformDistance::ScaledDistance(
+    float scale_factor) const {
+  switch (transform_type_) {
+    case kSvgTransformMatrix:
+      NOTREACHED();
+    case kSvgTransformUnknown:
+      return SVGTransformDistance();
+    case kSvgTransformRotate:
+      return SVGTransformDistance(transform_type_, angle_ * scale_factor,
+                                  cx_ * scale_factor, cy_ * scale_factor,
+                                  AffineTransform());
+    case kSvgTransformScale:
+      return SVGTransformDistance(
+          transform_type_, angle_ * scale_factor, cx_ * scale_factor,
+          cy_ * scale_factor, AffineTransform(transform_).Scale(scale_factor));
+    case kSvgTransformTranslate: {
+      AffineTransform new_transform(transform_);
+      new_transform.SetE(transform_.E() * scale_factor);
+      new_transform.SetF(transform_.F() * scale_factor);
+      return SVGTransformDistance(transform_type_, 0, 0, 0, new_transform);
+    }
+    case kSvgTransformSkewx:
+    case kSvgTransformSkewy:
+      return SVGTransformDistance(transform_type_, angle_ * scale_factor,
+                                  cx_ * scale_factor, cy_ * scale_factor,
+                                  AffineTransform());
+  }
+
+  NOTREACHED();
+  return SVGTransformDistance();
 }
 
-SVGTransformDistance::SVGTransformDistance(SVGTransform* fromSVGTransform, SVGTransform* toSVGTransform)
-    : m_angle(0)
-    , m_cx(0)
-    , m_cy(0)
-{
-    m_transformType = fromSVGTransform->transformType();
-    ASSERT(m_transformType == toSVGTransform->transformType());
+SVGTransform* SVGTransformDistance::AddSVGTransforms(SVGTransform* first,
+                                                     SVGTransform* second,
+                                                     unsigned repeat_count) {
+  DCHECK_EQ(first->TransformType(), second->TransformType());
 
-    switch (m_transformType) {
-    case SVG_TRANSFORM_MATRIX:
-        ASSERT_NOT_REACHED();
-    case SVG_TRANSFORM_UNKNOWN:
-        break;
-    case SVG_TRANSFORM_ROTATE: {
-        FloatSize centerDistance = toSVGTransform->rotationCenter() - fromSVGTransform->rotationCenter();
-        m_angle = toSVGTransform->angle() - fromSVGTransform->angle();
-        m_cx = centerDistance.width();
-        m_cy = centerDistance.height();
-        break;
+  SVGTransform* transform = SVGTransform::Create();
+
+  switch (first->TransformType()) {
+    case kSvgTransformMatrix:
+      NOTREACHED();
+    case kSvgTransformUnknown:
+      return transform;
+    case kSvgTransformRotate: {
+      transform->SetRotate(first->Angle() + second->Angle() * repeat_count,
+                           first->RotationCenter().X() +
+                               second->RotationCenter().X() * repeat_count,
+                           first->RotationCenter().Y() +
+                               second->RotationCenter().Y() * repeat_count);
+      return transform;
     }
-    case SVG_TRANSFORM_TRANSLATE: {
-        FloatSize translationDistance = toSVGTransform->translate() - fromSVGTransform->translate();
-        m_transform.translate(translationDistance.width(), translationDistance.height());
-        break;
+    case kSvgTransformTranslate: {
+      float dx =
+          first->Translate().X() + second->Translate().X() * repeat_count;
+      float dy =
+          first->Translate().Y() + second->Translate().Y() * repeat_count;
+      transform->SetTranslate(dx, dy);
+      return transform;
     }
-    case SVG_TRANSFORM_SCALE: {
-        float scaleX = toSVGTransform->scale().width() - fromSVGTransform->scale().width();
-        float scaleY = toSVGTransform->scale().height() - fromSVGTransform->scale().height();
-        m_transform.scaleNonUniform(scaleX, scaleY);
-        break;
+    case kSvgTransformScale: {
+      FloatSize scale = second->Scale();
+      scale.Scale(repeat_count);
+      scale += first->Scale();
+      transform->SetScale(scale.Width(), scale.Height());
+      return transform;
     }
-    case SVG_TRANSFORM_SKEWX:
-    case SVG_TRANSFORM_SKEWY:
-        m_angle = toSVGTransform->angle() - fromSVGTransform->angle();
-        break;
-    }
+    case kSvgTransformSkewx:
+      transform->SetSkewX(first->Angle() + second->Angle() * repeat_count);
+      return transform;
+    case kSvgTransformSkewy:
+      transform->SetSkewY(first->Angle() + second->Angle() * repeat_count);
+      return transform;
+  }
+  NOTREACHED();
+  return transform;
 }
 
-SVGTransformDistance SVGTransformDistance::scaledDistance(float scaleFactor) const
-{
-    switch (m_transformType) {
-    case SVG_TRANSFORM_MATRIX:
-        ASSERT_NOT_REACHED();
-    case SVG_TRANSFORM_UNKNOWN:
-        return SVGTransformDistance();
-    case SVG_TRANSFORM_ROTATE:
-        return SVGTransformDistance(m_transformType, m_angle * scaleFactor, m_cx * scaleFactor, m_cy * scaleFactor, AffineTransform());
-    case SVG_TRANSFORM_SCALE:
-        return SVGTransformDistance(m_transformType, m_angle * scaleFactor, m_cx * scaleFactor, m_cy * scaleFactor, AffineTransform(m_transform).scale(scaleFactor));
-    case SVG_TRANSFORM_TRANSLATE: {
-        AffineTransform newTransform(m_transform);
-        newTransform.setE(m_transform.e() * scaleFactor);
-        newTransform.setF(m_transform.f() * scaleFactor);
-        return SVGTransformDistance(m_transformType, 0, 0, 0, newTransform);
-    }
-    case SVG_TRANSFORM_SKEWX:
-    case SVG_TRANSFORM_SKEWY:
-        return SVGTransformDistance(m_transformType, m_angle * scaleFactor, m_cx * scaleFactor, m_cy * scaleFactor, AffineTransform());
-    }
+SVGTransform* SVGTransformDistance::AddToSVGTransform(
+    SVGTransform* transform) const {
+  DCHECK(transform_type_ == transform->TransformType() ||
+         transform_type_ == kSvgTransformUnknown);
 
-    ASSERT_NOT_REACHED();
-    return SVGTransformDistance();
+  SVGTransform* new_transform = transform->Clone();
+
+  switch (transform_type_) {
+    case kSvgTransformMatrix:
+      NOTREACHED();
+    case kSvgTransformUnknown:
+      return SVGTransform::Create();
+    case kSvgTransformTranslate: {
+      FloatPoint translation = transform->Translate();
+      translation += FloatSize::NarrowPrecision(transform_.E(), transform_.F());
+      new_transform->SetTranslate(translation.X(), translation.Y());
+      return new_transform;
+    }
+    case kSvgTransformScale: {
+      FloatSize scale = transform->Scale();
+      scale += FloatSize::NarrowPrecision(transform_.A(), transform_.D());
+      new_transform->SetScale(scale.Width(), scale.Height());
+      return new_transform;
+    }
+    case kSvgTransformRotate: {
+      FloatPoint center = transform->RotationCenter();
+      new_transform->SetRotate(transform->Angle() + angle_, center.X() + cx_,
+                               center.Y() + cy_);
+      return new_transform;
+    }
+    case kSvgTransformSkewx:
+      new_transform->SetSkewX(transform->Angle() + angle_);
+      return new_transform;
+    case kSvgTransformSkewy:
+      new_transform->SetSkewY(transform->Angle() + angle_);
+      return new_transform;
+  }
+
+  NOTREACHED();
+  return new_transform;
 }
 
-SVGTransform* SVGTransformDistance::addSVGTransforms(SVGTransform* first, SVGTransform* second, unsigned repeatCount)
-{
-    ASSERT(first->transformType() == second->transformType());
-
-    SVGTransform* transform = SVGTransform::create();
-
-    switch (first->transformType()) {
-    case SVG_TRANSFORM_MATRIX:
-        ASSERT_NOT_REACHED();
-    case SVG_TRANSFORM_UNKNOWN:
-        return transform;
-    case SVG_TRANSFORM_ROTATE: {
-        transform->setRotate(first->angle() + second->angle() * repeatCount, first->rotationCenter().x() + second->rotationCenter().x() * repeatCount, first->rotationCenter().y() + second->rotationCenter().y() * repeatCount);
-        return transform;
-    }
-    case SVG_TRANSFORM_TRANSLATE: {
-        float dx = first->translate().x() + second->translate().x() * repeatCount;
-        float dy = first->translate().y() + second->translate().y() * repeatCount;
-        transform->setTranslate(dx, dy);
-        return transform;
-    }
-    case SVG_TRANSFORM_SCALE: {
-        FloatSize scale = second->scale();
-        scale.scale(repeatCount);
-        scale += first->scale();
-        transform->setScale(scale.width(), scale.height());
-        return transform;
-    }
-    case SVG_TRANSFORM_SKEWX:
-        transform->setSkewX(first->angle() + second->angle() * repeatCount);
-        return transform;
-    case SVG_TRANSFORM_SKEWY:
-        transform->setSkewY(first->angle() + second->angle() * repeatCount);
-        return transform;
-    }
-    ASSERT_NOT_REACHED();
-    return transform;
+float SVGTransformDistance::Distance() const {
+  switch (transform_type_) {
+    case kSvgTransformMatrix:
+      NOTREACHED();
+    case kSvgTransformUnknown:
+      return 0;
+    case kSvgTransformRotate:
+      return sqrtf(angle_ * angle_ + cx_ * cx_ + cy_ * cy_);
+    case kSvgTransformScale:
+      return static_cast<float>(sqrt(transform_.A() * transform_.A() +
+                                     transform_.D() * transform_.D()));
+    case kSvgTransformTranslate:
+      return static_cast<float>(sqrt(transform_.E() * transform_.E() +
+                                     transform_.F() * transform_.F()));
+    case kSvgTransformSkewx:
+    case kSvgTransformSkewy:
+      return angle_;
+  }
+  NOTREACHED();
+  return 0;
 }
 
-SVGTransform* SVGTransformDistance::addToSVGTransform(SVGTransform* transform) const
-{
-    ASSERT(m_transformType == transform->transformType() || m_transformType == SVG_TRANSFORM_UNKNOWN);
-
-    SVGTransform* newTransform = transform->clone();
-
-    switch (m_transformType) {
-    case SVG_TRANSFORM_MATRIX:
-        ASSERT_NOT_REACHED();
-    case SVG_TRANSFORM_UNKNOWN:
-        return SVGTransform::create();
-    case SVG_TRANSFORM_TRANSLATE: {
-        FloatPoint translation = transform->translate();
-        translation += FloatSize::narrowPrecision(m_transform.e(), m_transform.f());
-        newTransform->setTranslate(translation.x(), translation.y());
-        return newTransform;
-    }
-    case SVG_TRANSFORM_SCALE: {
-        FloatSize scale = transform->scale();
-        scale += FloatSize::narrowPrecision(m_transform.a(), m_transform.d());
-        newTransform->setScale(scale.width(), scale.height());
-        return newTransform;
-    }
-    case SVG_TRANSFORM_ROTATE: {
-        FloatPoint center = transform->rotationCenter();
-        newTransform->setRotate(transform->angle() + m_angle, center.x() + m_cx, center.y() + m_cy);
-        return newTransform;
-    }
-    case SVG_TRANSFORM_SKEWX:
-        newTransform->setSkewX(transform->angle() + m_angle);
-        return newTransform;
-    case SVG_TRANSFORM_SKEWY:
-        newTransform->setSkewY(transform->angle() + m_angle);
-        return newTransform;
-    }
-
-    ASSERT_NOT_REACHED();
-    return newTransform;
-}
-
-float SVGTransformDistance::distance() const
-{
-    switch (m_transformType) {
-    case SVG_TRANSFORM_MATRIX:
-        ASSERT_NOT_REACHED();
-    case SVG_TRANSFORM_UNKNOWN:
-        return 0;
-    case SVG_TRANSFORM_ROTATE:
-        return sqrtf(m_angle * m_angle + m_cx * m_cx + m_cy * m_cy);
-    case SVG_TRANSFORM_SCALE:
-        return static_cast<float>(sqrt(m_transform.a() * m_transform.a() + m_transform.d() * m_transform.d()));
-    case SVG_TRANSFORM_TRANSLATE:
-        return static_cast<float>(sqrt(m_transform.e() * m_transform.e() + m_transform.f() * m_transform.f()));
-    case SVG_TRANSFORM_SKEWX:
-    case SVG_TRANSFORM_SKEWY:
-        return m_angle;
-    }
-    ASSERT_NOT_REACHED();
-    return 0;
-}
-
-} // namespace blink
+}  // namespace blink

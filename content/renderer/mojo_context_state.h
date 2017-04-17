@@ -8,9 +8,9 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <vector>
 
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "gin/modules/module_registry_observer.h"
 #include "v8/include/v8.h"
 
@@ -19,15 +19,11 @@ class WebFrame;
 class WebURLResponse;
 }
 
-namespace gin {
-class ContextHolder;
-struct PendingModule;
-}
-
 namespace content {
 
 class ResourceFetcher;
 class MojoMainRunner;
+enum class MojoBindingsType;
 
 // MojoContextState manages the modules needed for mojo bindings. It does this
 // by way of gin. Non-builtin modules are downloaded by way of ResourceFetchers.
@@ -35,7 +31,7 @@ class MojoContextState : public gin::ModuleRegistryObserver {
  public:
   MojoContextState(blink::WebFrame* frame,
                    v8::Local<v8::Context> context,
-                   bool for_layout_tests);
+                   MojoBindingsType bindings_type);
   ~MojoContextState() override;
 
   void Run();
@@ -74,7 +70,7 @@ class MojoContextState : public gin::ModuleRegistryObserver {
   std::unique_ptr<MojoMainRunner> runner_;
 
   // Set of fetchers we're waiting on to download script.
-  ScopedVector<ResourceFetcher> module_fetchers_;
+  std::vector<std::unique_ptr<ResourceFetcher>> module_fetchers_;
 
   // Set of modules we've fetched script from.
   std::set<std::string> fetched_modules_;

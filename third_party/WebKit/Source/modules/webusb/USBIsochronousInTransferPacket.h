@@ -8,39 +8,40 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/dom/DOMDataView.h"
 #include "platform/heap/GarbageCollected.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class USBIsochronousInTransferPacket final : public GarbageCollectedFinalized<USBIsochronousInTransferPacket>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static USBIsochronousInTransferPacket* create(const String& status, DOMDataView* data)
-    {
-        return new USBIsochronousInTransferPacket(status, data);
-    }
+class USBIsochronousInTransferPacket final
+    : public GarbageCollectedFinalized<USBIsochronousInTransferPacket>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~USBIsochronousInTransferPacket() {}
+ public:
+  static USBIsochronousInTransferPacket* Create(const String& status) {
+    return new USBIsochronousInTransferPacket(status, nullptr);
+  }
 
-    String status() const { return m_status; }
-    DOMDataView* data() const { return m_data; }
+  static USBIsochronousInTransferPacket* Create(const String& status,
+                                                DOMDataView* data) {
+    return new USBIsochronousInTransferPacket(status, data);
+  }
 
-    DEFINE_INLINE_TRACE()
-    {
-        visitor->trace(m_data);
-    }
+  ~USBIsochronousInTransferPacket() {}
 
-private:
-    USBIsochronousInTransferPacket(const String& status, DOMDataView* data)
-        : m_status(status)
-        , m_data(data)
-    {
-    }
+  String status() const { return status_; }
+  DOMDataView* data() const { return data_; }
 
-    const String m_status;
-    const Member<DOMDataView> m_data;
+  DEFINE_INLINE_TRACE() { visitor->Trace(data_); }
+
+ private:
+  USBIsochronousInTransferPacket(const String& status, DOMDataView* data)
+      : status_(status), data_(data) {}
+
+  const String status_;
+  const Member<DOMDataView> data_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // USBIsochronousInTransferPacket_h
+#endif  // USBIsochronousInTransferPacket_h

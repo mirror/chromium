@@ -19,14 +19,14 @@ function initialize_extensionsSidebarTest()
     {
         var sidebar = InspectorTest._extensionSidebar(panelName);
         InspectorTest.deprecatedRunAfterPendingDispatches(function() {
-            sidebar.revealWidget();
+            sidebar.revealView();
             callback();
         });
     }
 
     InspectorTest._extensionSidebar = function(panelName)
     {
-        var sidebarPanes = WebInspector.extensionServer.sidebarPanes();
+        var sidebarPanes = Extensions.extensionServer.sidebarPanes();
         var result;
         for (var i = 0; i < sidebarPanes.length; ++i) {
             if (sidebarPanes[i].panelName() === panelName)
@@ -153,7 +153,7 @@ function extension_testElementsSidebarSetExpression(nextTest)
         }
         // Do an extra round-trip to the inspected page to assure inspect()'s round-trip to
         // front-end is complete and $0 is properly updated with currently inspected node.
-        webInspector.inspectedWindow.eval("", function() {
+        webInspector.inspectedWindow.eval("undefined", function() {
             sidebar.setExpression("(" + expression.toString() + ")();", "title", extension_dumpSidebarContent.bind(this, panelName, nextTest));
         });
     }

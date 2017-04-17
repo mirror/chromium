@@ -30,661 +30,524 @@
 
 #include "platform/image-decoders/webp/WEBPImageDecoder.h"
 
+#include <memory>
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/SharedBuffer.h"
 #include "platform/image-decoders/ImageDecoderTestHelpers.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/dtoa/utils.h"
 #include "public/platform/WebData.h"
 #include "public/platform/WebSize.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/Vector.h"
-#include "wtf/dtoa/utils.h"
-#include <memory>
 
 namespace blink {
 
 namespace {
 
-std::unique_ptr<ImageDecoder> createDecoder(ImageDecoder::AlphaOption alphaOption)
-{
-    return wrapUnique(new WEBPImageDecoder(alphaOption, ImageDecoder::GammaAndColorProfileApplied, ImageDecoder::noDecodedImageByteLimit));
+std::unique_ptr<ImageDecoder> CreateDecoder(
+    ImageDecoder::AlphaOption alpha_option) {
+  return WTF::WrapUnique(new WEBPImageDecoder(
+      alpha_option, ColorBehavior::TransformToTargetForTesting(),
+      ImageDecoder::kNoDecodedImageByteLimit));
 }
 
-std::unique_ptr<ImageDecoder> createDecoder()
-{
-    return createDecoder(ImageDecoder::AlphaNotPremultiplied);
-}
-
-void testRandomFrameDecode(const char* webpFile)
-{
-    SCOPED_TRACE(webpFile);
-
-    RefPtr<SharedBuffer> fullData = readFile(webpFile);
-    ASSERT_TRUE(fullData.get());
-    Vector<unsigned> baselineHashes;
-    createDecodingBaseline(&createDecoder, fullData.get(), &baselineHashes);
-    size_t frameCount = baselineHashes.size();
-
-    // Random decoding should get the same results as sequential decoding.
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
-    decoder->setData(fullData.get(), true);
-    const size_t skippingStep = 5;
-    for (size_t i = 0; i < skippingStep; ++i) {
-        for (size_t j = i; j < frameCount; j += skippingStep) {
-            SCOPED_TRACE(testing::Message() << "Random i:" << i << " j:" << j);
-            ImageFrame* frame = decoder->frameBufferAtIndex(j);
-            EXPECT_EQ(baselineHashes[j], hashBitmap(frame->bitmap()));
-        }
-    }
-
-    // Decoding in reverse order.
-    decoder = createDecoder();
-    decoder->setData(fullData.get(), true);
-    for (size_t i = frameCount; i; --i) {
-        SCOPED_TRACE(testing::Message() << "Reverse i:" << i);
-        ImageFrame* frame = decoder->frameBufferAtIndex(i - 1);
-        EXPECT_EQ(baselineHashes[i - 1], hashBitmap(frame->bitmap()));
-    }
-}
-
-void testRandomDecodeAfterClearFrameBufferCache(const char* webpFile)
-{
-    SCOPED_TRACE(webpFile);
-
-    RefPtr<SharedBuffer> data = readFile(webpFile);
-    ASSERT_TRUE(data.get());
-    Vector<unsigned> baselineHashes;
-    createDecodingBaseline(&createDecoder, data.get(), &baselineHashes);
-    size_t frameCount = baselineHashes.size();
-
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
-    decoder->setData(data.get(), true);
-    for (size_t clearExceptFrame = 0; clearExceptFrame < frameCount; ++clearExceptFrame) {
-        decoder->clearCacheExceptFrame(clearExceptFrame);
-        const size_t skippingStep = 5;
-        for (size_t i = 0; i < skippingStep; ++i) {
-            for (size_t j = 0; j < frameCount; j += skippingStep) {
-                SCOPED_TRACE(testing::Message() << "Random i:" << i << " j:" << j);
-                ImageFrame* frame = decoder->frameBufferAtIndex(j);
-                EXPECT_EQ(baselineHashes[j], hashBitmap(frame->bitmap()));
-            }
-        }
-    }
-}
-
-void testDecodeAfterReallocatingData(const char* webpFile)
-{
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
-    RefPtr<SharedBuffer> data = readFile(webpFile);
-    ASSERT_TRUE(data.get());
-
-    // Parse from 'data'.
-    decoder->setData(data.get(), true);
-    size_t frameCount = decoder->frameCount();
-
-    // ... and then decode frames from 'reallocatedData'.
-    RefPtr<SharedBuffer> reallocatedData = data.get()->copy();
-    ASSERT_TRUE(reallocatedData.get());
-    data.clear();
-    decoder->setData(reallocatedData.get(), true);
-
-    for (size_t i = 0; i < frameCount; ++i) {
-        const ImageFrame* const frame = decoder->frameBufferAtIndex(i);
-        EXPECT_EQ(ImageFrame::FrameComplete, frame->getStatus());
-    }
-}
-
-void testByteByByteSizeAvailable(const char* webpFile, size_t frameOffset, bool hasColorProfile, int expectedRepetitionCount)
-{
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
-    RefPtr<SharedBuffer> data = readFile(webpFile);
-    ASSERT_TRUE(data.get());
-    EXPECT_LT(frameOffset, data->size());
-
-    // Send data to the decoder byte-by-byte and use the provided frame offset in the data to check
-    // isSizeAvailable() changes state only when that offset is reached, and the associated decoder
-    // state also: size, colorProfile, frameCount, repetitionCount ...
-
-    for (size_t length = 1; length <= frameOffset; ++length) {
-        RefPtr<SharedBuffer> tempData = SharedBuffer::create(data->data(), length);
-        decoder->setData(tempData.get(), false);
-
-        if (length < frameOffset) {
-            EXPECT_FALSE(decoder->isSizeAvailable());
-            EXPECT_TRUE(decoder->size().isEmpty());
-            EXPECT_FALSE(decoder->hasColorProfile());
-            EXPECT_EQ(0u, decoder->frameCount());
-            EXPECT_EQ(cAnimationLoopOnce, decoder->repetitionCount());
-            EXPECT_FALSE(decoder->frameBufferAtIndex(0));
-        } else {
-            EXPECT_TRUE(decoder->isSizeAvailable());
-            EXPECT_FALSE(decoder->size().isEmpty());
-#if USE(QCMSLIB)
-            if (hasColorProfile)
-                EXPECT_TRUE(decoder->hasColorProfile());
-            else
-                EXPECT_FALSE(decoder->hasColorProfile());
-#else
-            EXPECT_FALSE(decoder->hasColorProfile());
-#endif
-            EXPECT_EQ(1u, decoder->frameCount());
-            EXPECT_EQ(expectedRepetitionCount, decoder->repetitionCount());
-        }
-
-        EXPECT_FALSE(decoder->failed());
-        if (decoder->failed())
-            return;
-    }
+std::unique_ptr<ImageDecoder> CreateDecoder() {
+  return CreateDecoder(ImageDecoder::kAlphaNotPremultiplied);
 }
 
 // If 'parseErrorExpected' is true, error is expected during parse (frameCount()
 // call); else error is expected during decode (frameBufferAtIndex() call).
-void testInvalidImage(const char* webpFile, bool parseErrorExpected)
-{
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
+void TestInvalidImage(const char* webp_file, bool parse_error_expected) {
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
 
-    RefPtr<SharedBuffer> data = readFile(webpFile);
-    ASSERT_TRUE(data.get());
-    decoder->setData(data.get(), true);
+  RefPtr<SharedBuffer> data = ReadFile(webp_file);
+  ASSERT_TRUE(data.Get());
+  decoder->SetData(data.Get(), true);
 
-    if (parseErrorExpected) {
-        EXPECT_EQ(0u, decoder->frameCount());
-        EXPECT_FALSE(decoder->frameBufferAtIndex(0));
-    } else {
-        EXPECT_GT(decoder->frameCount(), 0u);
-        ImageFrame* frame = decoder->frameBufferAtIndex(0);
-        ASSERT_TRUE(frame);
-        EXPECT_EQ(ImageFrame::FramePartial, frame->getStatus());
-    }
-    EXPECT_EQ(cAnimationLoopOnce, decoder->repetitionCount());
-    EXPECT_TRUE(decoder->failed());
-}
-
-uint32_t premultiplyColor(uint32_t c)
-{
-    return SkPremultiplyARGBInline(SkGetPackedA32(c), SkGetPackedR32(c), SkGetPackedG32(c), SkGetPackedB32(c));
-}
-
-void verifyFramesMatch(const char* webpFile, const ImageFrame* const a, ImageFrame* const b)
-{
-    const SkBitmap& bitmapA = a->bitmap();
-    const SkBitmap& bitmapB = b->bitmap();
-    ASSERT_EQ(bitmapA.width(), bitmapB.width());
-    ASSERT_EQ(bitmapA.height(), bitmapB.height());
-
-    int maxDifference = 0;
-    for (int y = 0; y < bitmapA.height(); ++y) {
-        for (int x = 0; x < bitmapA.width(); ++x) {
-            uint32_t colorA = *bitmapA.getAddr32(x, y);
-            if (!a->premultiplyAlpha())
-                colorA = premultiplyColor(colorA);
-            uint32_t colorB = *bitmapB.getAddr32(x, y);
-            if (!b->premultiplyAlpha())
-                colorB = premultiplyColor(colorB);
-            uint8_t* pixelA = reinterpret_cast<uint8_t*>(&colorA);
-            uint8_t* pixelB = reinterpret_cast<uint8_t*>(&colorB);
-            for (int channel = 0; channel < 4; ++channel) {
-                const int difference = abs(pixelA[channel] - pixelB[channel]);
-                if (difference > maxDifference)
-                    maxDifference = difference;
-            }
-        }
-    }
-
-    // Pre-multiplication could round the RGBA channel values. So, we declare
-    // that the frames match if the RGBA channel values differ by at most 2.
-    EXPECT_GE(2, maxDifference) << webpFile;
-}
-
-// Verify that result of alpha blending is similar for AlphaPremultiplied and AlphaNotPremultiplied cases.
-void testAlphaBlending(const char* webpFile)
-{
-    RefPtr<SharedBuffer> data = readFile(webpFile);
-    ASSERT_TRUE(data.get());
-
-    std::unique_ptr<ImageDecoder> decoderA = createDecoder(ImageDecoder::AlphaPremultiplied);
-    decoderA->setData(data.get(), true);
-
-    std::unique_ptr<ImageDecoder> decoderB = createDecoder(ImageDecoder::AlphaNotPremultiplied);
-    decoderB->setData(data.get(), true);
-
-    size_t frameCount = decoderA->frameCount();
-    ASSERT_EQ(frameCount, decoderB->frameCount());
-
-    for (size_t i = 0; i < frameCount; ++i)
-        verifyFramesMatch(webpFile, decoderA->frameBufferAtIndex(i), decoderB->frameBufferAtIndex(i));
-}
-
-} // anonymous namespace
-
-TEST(AnimatedWebPTests, uniqueGenerationIDs)
-{
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
-
-    RefPtr<SharedBuffer> data = readFile("/LayoutTests/fast/images/resources/webp-animated.webp");
-    ASSERT_TRUE(data.get());
-    decoder->setData(data.get(), true);
-
-    ImageFrame* frame = decoder->frameBufferAtIndex(0);
-    uint32_t generationID0 = frame->bitmap().getGenerationID();
-    frame = decoder->frameBufferAtIndex(1);
-    uint32_t generationID1 = frame->bitmap().getGenerationID();
-
-    EXPECT_TRUE(generationID0 != generationID1);
-}
-
-TEST(AnimatedWebPTests, verifyAnimationParametersTransparentImage)
-{
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
-    EXPECT_EQ(cAnimationLoopOnce, decoder->repetitionCount());
-
-    RefPtr<SharedBuffer> data = readFile("/LayoutTests/fast/images/resources/webp-animated.webp");
-    ASSERT_TRUE(data.get());
-    decoder->setData(data.get(), true);
-
-    const int canvasWidth = 11;
-    const int canvasHeight = 29;
-    const struct AnimParam {
-        int xOffset, yOffset, width, height;
-        ImageFrame::DisposalMethod disposalMethod;
-        ImageFrame::AlphaBlendSource alphaBlendSource;
-        unsigned duration;
-        bool hasAlpha;
-    } frameParameters[] = {
-        { 0, 0, 11, 29, ImageFrame::DisposeKeep, ImageFrame::BlendAtopPreviousFrame, 1000u, true },
-        { 2, 10, 7, 17, ImageFrame::DisposeKeep, ImageFrame::BlendAtopPreviousFrame, 500u, true },
-        { 2, 2, 7, 16, ImageFrame::DisposeKeep, ImageFrame::BlendAtopPreviousFrame, 1000u, true },
-    };
-
-    for (size_t i = 0; i < WTF_ARRAY_LENGTH(frameParameters); ++i) {
-        const ImageFrame* const frame = decoder->frameBufferAtIndex(i);
-        EXPECT_EQ(ImageFrame::FrameComplete, frame->getStatus());
-        EXPECT_EQ(canvasWidth, frame->bitmap().width());
-        EXPECT_EQ(canvasHeight, frame->bitmap().height());
-        EXPECT_EQ(frameParameters[i].xOffset, frame->originalFrameRect().x());
-        EXPECT_EQ(frameParameters[i].yOffset, frame->originalFrameRect().y());
-        EXPECT_EQ(frameParameters[i].width, frame->originalFrameRect().width());
-        EXPECT_EQ(frameParameters[i].height, frame->originalFrameRect().height());
-        EXPECT_EQ(frameParameters[i].disposalMethod, frame->getDisposalMethod());
-        EXPECT_EQ(frameParameters[i].alphaBlendSource, frame->getAlphaBlendSource());
-        EXPECT_EQ(frameParameters[i].duration, frame->duration());
-        EXPECT_EQ(frameParameters[i].hasAlpha, frame->hasAlpha());
-    }
-
-    EXPECT_EQ(WTF_ARRAY_LENGTH(frameParameters), decoder->frameCount());
-    EXPECT_EQ(cAnimationLoopInfinite, decoder->repetitionCount());
-}
-
-TEST(AnimatedWebPTests, verifyAnimationParametersOpaqueFramesTransparentBackground)
-{
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
-    EXPECT_EQ(cAnimationLoopOnce, decoder->repetitionCount());
-
-    RefPtr<SharedBuffer> data = readFile("/LayoutTests/fast/images/resources/webp-animated-opaque.webp");
-    ASSERT_TRUE(data.get());
-    decoder->setData(data.get(), true);
-
-    const int canvasWidth = 94;
-    const int canvasHeight = 87;
-    const struct AnimParam {
-        int xOffset, yOffset, width, height;
-        ImageFrame::DisposalMethod disposalMethod;
-        ImageFrame::AlphaBlendSource alphaBlendSource;
-        unsigned duration;
-        bool hasAlpha;
-    } frameParameters[] = {
-        { 4, 10, 33, 32, ImageFrame::DisposeOverwriteBgcolor, ImageFrame::BlendAtopPreviousFrame, 1000u, true },
-        { 34, 30, 33, 32, ImageFrame::DisposeOverwriteBgcolor, ImageFrame::BlendAtopPreviousFrame, 1000u, true },
-        { 62, 50, 32, 32, ImageFrame::DisposeOverwriteBgcolor, ImageFrame::BlendAtopPreviousFrame, 1000u, true },
-        { 10, 54, 32, 33, ImageFrame::DisposeOverwriteBgcolor, ImageFrame::BlendAtopPreviousFrame, 1000u, true },
-    };
-
-    for (size_t i = 0; i < WTF_ARRAY_LENGTH(frameParameters); ++i) {
-        const ImageFrame* const frame = decoder->frameBufferAtIndex(i);
-        EXPECT_EQ(ImageFrame::FrameComplete, frame->getStatus());
-        EXPECT_EQ(canvasWidth, frame->bitmap().width());
-        EXPECT_EQ(canvasHeight, frame->bitmap().height());
-        EXPECT_EQ(frameParameters[i].xOffset, frame->originalFrameRect().x());
-        EXPECT_EQ(frameParameters[i].yOffset, frame->originalFrameRect().y());
-        EXPECT_EQ(frameParameters[i].width, frame->originalFrameRect().width());
-        EXPECT_EQ(frameParameters[i].height, frame->originalFrameRect().height());
-        EXPECT_EQ(frameParameters[i].disposalMethod, frame->getDisposalMethod());
-        EXPECT_EQ(frameParameters[i].alphaBlendSource, frame->getAlphaBlendSource());
-        EXPECT_EQ(frameParameters[i].duration, frame->duration());
-        EXPECT_EQ(frameParameters[i].hasAlpha, frame->hasAlpha());
-    }
-
-    EXPECT_EQ(WTF_ARRAY_LENGTH(frameParameters), decoder->frameCount());
-    EXPECT_EQ(cAnimationLoopInfinite, decoder->repetitionCount());
-}
-
-TEST(AnimatedWebPTests, verifyAnimationParametersBlendOverwrite)
-{
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
-    EXPECT_EQ(cAnimationLoopOnce, decoder->repetitionCount());
-
-    RefPtr<SharedBuffer> data = readFile("/LayoutTests/fast/images/resources/webp-animated-no-blend.webp");
-    ASSERT_TRUE(data.get());
-    decoder->setData(data.get(), true);
-
-    const int canvasWidth = 94;
-    const int canvasHeight = 87;
-    const struct AnimParam {
-        int xOffset, yOffset, width, height;
-        ImageFrame::DisposalMethod disposalMethod;
-        ImageFrame::AlphaBlendSource alphaBlendSource;
-        unsigned duration;
-        bool hasAlpha;
-    } frameParameters[] = {
-        { 4, 10, 33, 32, ImageFrame::DisposeOverwriteBgcolor, ImageFrame::BlendAtopBgcolor, 1000u, true },
-        { 34, 30, 33, 32, ImageFrame::DisposeOverwriteBgcolor, ImageFrame::BlendAtopBgcolor, 1000u, true },
-        { 62, 50, 32, 32, ImageFrame::DisposeOverwriteBgcolor, ImageFrame::BlendAtopBgcolor, 1000u, true },
-        { 10, 54, 32, 33, ImageFrame::DisposeOverwriteBgcolor, ImageFrame::BlendAtopBgcolor, 1000u, true },
-    };
-
-    for (size_t i = 0; i < WTF_ARRAY_LENGTH(frameParameters); ++i) {
-        const ImageFrame* const frame = decoder->frameBufferAtIndex(i);
-        EXPECT_EQ(ImageFrame::FrameComplete, frame->getStatus());
-        EXPECT_EQ(canvasWidth, frame->bitmap().width());
-        EXPECT_EQ(canvasHeight, frame->bitmap().height());
-        EXPECT_EQ(frameParameters[i].xOffset, frame->originalFrameRect().x());
-        EXPECT_EQ(frameParameters[i].yOffset, frame->originalFrameRect().y());
-        EXPECT_EQ(frameParameters[i].width, frame->originalFrameRect().width());
-        EXPECT_EQ(frameParameters[i].height, frame->originalFrameRect().height());
-        EXPECT_EQ(frameParameters[i].disposalMethod, frame->getDisposalMethod());
-        EXPECT_EQ(frameParameters[i].alphaBlendSource, frame->getAlphaBlendSource());
-        EXPECT_EQ(frameParameters[i].duration, frame->duration());
-        EXPECT_EQ(frameParameters[i].hasAlpha, frame->hasAlpha());
-    }
-
-    EXPECT_EQ(WTF_ARRAY_LENGTH(frameParameters), decoder->frameCount());
-    EXPECT_EQ(cAnimationLoopInfinite, decoder->repetitionCount());
-}
-
-TEST(AnimatedWebPTests, parseAndDecodeByteByByte)
-{
-    testByteByByteDecode(&createDecoder, "/LayoutTests/fast/images/resources/webp-animated.webp", 3u, cAnimationLoopInfinite);
-    testByteByByteDecode(&createDecoder, "/LayoutTests/fast/images/resources/webp-animated-icc-xmp.webp", 13u, 32000);
-}
-
-TEST(AnimatedWebPTests, invalidImages)
-{
-    // ANMF chunk size is smaller than ANMF header size.
-    testInvalidImage("/LayoutTests/fast/images/resources/invalid-animated-webp.webp", true);
-    // One of the frame rectangles extends outside the image boundary.
-    testInvalidImage("/LayoutTests/fast/images/resources/invalid-animated-webp3.webp", true);
-}
-
-TEST(AnimatedWebPTests, truncatedLastFrame)
-{
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
-
-    RefPtr<SharedBuffer> data = readFile("/LayoutTests/fast/images/resources/invalid-animated-webp2.webp");
-    ASSERT_TRUE(data.get());
-    decoder->setData(data.get(), true);
-
-    size_t frameCount = 8;
-    EXPECT_EQ(frameCount, decoder->frameCount());
-    ImageFrame* frame = decoder->frameBufferAtIndex(0);
+  if (parse_error_expected) {
+    EXPECT_EQ(0u, decoder->FrameCount());
+    EXPECT_FALSE(decoder->FrameBufferAtIndex(0));
+  } else {
+    EXPECT_GT(decoder->FrameCount(), 0u);
+    ImageFrame* frame = decoder->FrameBufferAtIndex(0);
     ASSERT_TRUE(frame);
-    EXPECT_EQ(ImageFrame::FrameComplete, frame->getStatus());
-    EXPECT_FALSE(decoder->failed());
-    frame = decoder->frameBufferAtIndex(frameCount - 1);
-    ASSERT_TRUE(frame);
-    EXPECT_EQ(ImageFrame::FramePartial, frame->getStatus());
-    EXPECT_TRUE(decoder->failed());
-    frame = decoder->frameBufferAtIndex(0);
-    ASSERT_TRUE(frame);
-    EXPECT_EQ(ImageFrame::FrameComplete, frame->getStatus());
+    EXPECT_EQ(ImageFrame::kFramePartial, frame->GetStatus());
+  }
+  EXPECT_EQ(kCAnimationLoopOnce, decoder->RepetitionCount());
+  EXPECT_TRUE(decoder->Failed());
 }
 
-TEST(AnimatedWebPTests, truncatedInBetweenFrame)
-{
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
+}  // anonymous namespace
 
-    RefPtr<SharedBuffer> fullData = readFile("/LayoutTests/fast/images/resources/invalid-animated-webp4.webp");
-    ASSERT_TRUE(fullData.get());
-    RefPtr<SharedBuffer> data = SharedBuffer::create(fullData->data(), fullData->size() - 1);
-    decoder->setData(data.get(), false);
+TEST(AnimatedWebPTests, uniqueGenerationIDs) {
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
 
-    ImageFrame* frame = decoder->frameBufferAtIndex(1);
-    ASSERT_TRUE(frame);
-    EXPECT_EQ(ImageFrame::FrameComplete, frame->getStatus());
-    frame = decoder->frameBufferAtIndex(2);
-    ASSERT_TRUE(frame);
-    EXPECT_EQ(ImageFrame::FramePartial, frame->getStatus());
-    EXPECT_TRUE(decoder->failed());
+  RefPtr<SharedBuffer> data =
+      ReadFile("/LayoutTests/images/resources/webp-animated.webp");
+  ASSERT_TRUE(data.Get());
+  decoder->SetData(data.Get(), true);
+
+  ImageFrame* frame = decoder->FrameBufferAtIndex(0);
+  uint32_t generation_id0 = frame->Bitmap().getGenerationID();
+  frame = decoder->FrameBufferAtIndex(1);
+  uint32_t generation_id1 = frame->Bitmap().getGenerationID();
+
+  EXPECT_TRUE(generation_id0 != generation_id1);
 }
 
-// Reproduce a crash that used to happen for a specific file with specific sequence of method calls.
-TEST(AnimatedWebPTests, reproCrash)
-{
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
+TEST(AnimatedWebPTests, verifyAnimationParametersTransparentImage) {
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
+  EXPECT_EQ(kCAnimationLoopOnce, decoder->RepetitionCount());
 
-    RefPtr<SharedBuffer> fullData = readFile("/LayoutTests/fast/images/resources/invalid_vp8_vp8x.webp");
-    ASSERT_TRUE(fullData.get());
+  RefPtr<SharedBuffer> data =
+      ReadFile("/LayoutTests/images/resources/webp-animated.webp");
+  ASSERT_TRUE(data.Get());
+  decoder->SetData(data.Get(), true);
 
-    // Parse partial data up to which error in bitstream is not detected.
-    const size_t partialSize = 32768;
-    ASSERT_GT(fullData->size(), partialSize);
-    RefPtr<SharedBuffer> data = SharedBuffer::create(fullData->data(), partialSize);
-    decoder->setData(data.get(), false);
-    EXPECT_EQ(1u, decoder->frameCount());
-    ImageFrame* frame = decoder->frameBufferAtIndex(0);
-    ASSERT_TRUE(frame);
-    EXPECT_EQ(ImageFrame::FramePartial, frame->getStatus());
-    EXPECT_FALSE(decoder->failed());
+  const int kCanvasWidth = 11;
+  const int kCanvasHeight = 29;
+  const struct AnimParam {
+    int x_offset, y_offset, width, height;
+    ImageFrame::DisposalMethod disposal_method;
+    ImageFrame::AlphaBlendSource alpha_blend_source;
+    unsigned duration;
+    bool has_alpha;
+  } kFrameParameters[] = {
+      {0, 0, 11, 29, ImageFrame::kDisposeKeep,
+       ImageFrame::kBlendAtopPreviousFrame, 1000u, true},
+      {2, 10, 7, 17, ImageFrame::kDisposeKeep,
+       ImageFrame::kBlendAtopPreviousFrame, 500u, true},
+      {2, 2, 7, 16, ImageFrame::kDisposeKeep,
+       ImageFrame::kBlendAtopPreviousFrame, 1000u, true},
+  };
 
-    // Parse full data now. The error in bitstream should now be detected.
-    decoder->setData(fullData.get(), true);
-    EXPECT_EQ(1u, decoder->frameCount());
-    frame = decoder->frameBufferAtIndex(0);
-    ASSERT_TRUE(frame);
-    EXPECT_EQ(ImageFrame::FramePartial, frame->getStatus());
-    EXPECT_EQ(cAnimationLoopOnce, decoder->repetitionCount());
-    EXPECT_TRUE(decoder->failed());
+  for (size_t i = 0; i < WTF_ARRAY_LENGTH(kFrameParameters); ++i) {
+    const ImageFrame* const frame = decoder->FrameBufferAtIndex(i);
+    EXPECT_EQ(ImageFrame::kFrameComplete, frame->GetStatus());
+    EXPECT_EQ(kCanvasWidth, frame->Bitmap().width());
+    EXPECT_EQ(kCanvasHeight, frame->Bitmap().height());
+    EXPECT_EQ(kFrameParameters[i].x_offset, frame->OriginalFrameRect().X());
+    EXPECT_EQ(kFrameParameters[i].y_offset, frame->OriginalFrameRect().Y());
+    EXPECT_EQ(kFrameParameters[i].width, frame->OriginalFrameRect().Width());
+    EXPECT_EQ(kFrameParameters[i].height, frame->OriginalFrameRect().Height());
+    EXPECT_EQ(kFrameParameters[i].disposal_method, frame->GetDisposalMethod());
+    EXPECT_EQ(kFrameParameters[i].alpha_blend_source,
+              frame->GetAlphaBlendSource());
+    EXPECT_EQ(kFrameParameters[i].duration, frame->Duration());
+    EXPECT_EQ(kFrameParameters[i].has_alpha, frame->HasAlpha());
+  }
+
+  EXPECT_EQ(WTF_ARRAY_LENGTH(kFrameParameters), decoder->FrameCount());
+  EXPECT_EQ(kCAnimationLoopInfinite, decoder->RepetitionCount());
 }
 
-TEST(AnimatedWebPTests, progressiveDecode)
-{
-    RefPtr<SharedBuffer> fullData = readFile("/LayoutTests/fast/images/resources/webp-animated.webp");
-    ASSERT_TRUE(fullData.get());
-    const size_t fullLength = fullData->size();
+TEST(AnimatedWebPTests,
+     verifyAnimationParametersOpaqueFramesTransparentBackground) {
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
+  EXPECT_EQ(kCAnimationLoopOnce, decoder->RepetitionCount());
 
-    std::unique_ptr<ImageDecoder>  decoder;
-    ImageFrame* frame;
+  RefPtr<SharedBuffer> data =
+      ReadFile("/LayoutTests/images/resources/webp-animated-opaque.webp");
+  ASSERT_TRUE(data.Get());
+  decoder->SetData(data.Get(), true);
 
-    Vector<unsigned> truncatedHashes;
-    Vector<unsigned> progressiveHashes;
+  const int kCanvasWidth = 94;
+  const int kCanvasHeight = 87;
+  const struct AnimParam {
+    int x_offset, y_offset, width, height;
+    ImageFrame::DisposalMethod disposal_method;
+    ImageFrame::AlphaBlendSource alpha_blend_source;
+    unsigned duration;
+    bool has_alpha;
+  } kFrameParameters[] = {
+      {4, 10, 33, 32, ImageFrame::kDisposeOverwriteBgcolor,
+       ImageFrame::kBlendAtopPreviousFrame, 1000u, true},
+      {34, 30, 33, 32, ImageFrame::kDisposeOverwriteBgcolor,
+       ImageFrame::kBlendAtopPreviousFrame, 1000u, true},
+      {62, 50, 32, 32, ImageFrame::kDisposeOverwriteBgcolor,
+       ImageFrame::kBlendAtopPreviousFrame, 1000u, true},
+      {10, 54, 32, 33, ImageFrame::kDisposeOverwriteBgcolor,
+       ImageFrame::kBlendAtopPreviousFrame, 1000u, true},
+  };
 
-    // Compute hashes when the file is truncated.
-    const size_t increment = 1;
-    for (size_t i = 1; i <= fullLength; i += increment) {
-        decoder = createDecoder();
-        RefPtr<SharedBuffer> data = SharedBuffer::create(fullData->data(), i);
-        decoder->setData(data.get(), i == fullLength);
-        frame = decoder->frameBufferAtIndex(0);
-        if (!frame) {
-            truncatedHashes.append(0);
-            continue;
-        }
-        truncatedHashes.append(hashBitmap(frame->bitmap()));
-    }
+  for (size_t i = 0; i < WTF_ARRAY_LENGTH(kFrameParameters); ++i) {
+    const ImageFrame* const frame = decoder->FrameBufferAtIndex(i);
+    EXPECT_EQ(ImageFrame::kFrameComplete, frame->GetStatus());
+    EXPECT_EQ(kCanvasWidth, frame->Bitmap().width());
+    EXPECT_EQ(kCanvasHeight, frame->Bitmap().height());
+    EXPECT_EQ(kFrameParameters[i].x_offset, frame->OriginalFrameRect().X());
+    EXPECT_EQ(kFrameParameters[i].y_offset, frame->OriginalFrameRect().Y());
+    EXPECT_EQ(kFrameParameters[i].width, frame->OriginalFrameRect().Width());
+    EXPECT_EQ(kFrameParameters[i].height, frame->OriginalFrameRect().Height());
+    EXPECT_EQ(kFrameParameters[i].disposal_method, frame->GetDisposalMethod());
+    EXPECT_EQ(kFrameParameters[i].alpha_blend_source,
+              frame->GetAlphaBlendSource());
+    EXPECT_EQ(kFrameParameters[i].duration, frame->Duration());
+    EXPECT_EQ(kFrameParameters[i].has_alpha, frame->HasAlpha());
+  }
 
-    // Compute hashes when the file is progressively decoded.
-    decoder = createDecoder();
-    for (size_t i = 1; i <= fullLength; i += increment) {
-        RefPtr<SharedBuffer> data = SharedBuffer::create(fullData->data(), i);
-        decoder->setData(data.get(), i == fullLength);
-        frame = decoder->frameBufferAtIndex(0);
-        if (!frame) {
-            progressiveHashes.append(0);
-            continue;
-        }
-        progressiveHashes.append(hashBitmap(frame->bitmap()));
-    }
-
-    bool match = true;
-    for (size_t i = 0; i < truncatedHashes.size(); ++i) {
-        if (truncatedHashes[i] != progressiveHashes[i]) {
-            match = false;
-            break;
-        }
-    }
-    EXPECT_TRUE(match);
+  EXPECT_EQ(WTF_ARRAY_LENGTH(kFrameParameters), decoder->FrameCount());
+  EXPECT_EQ(kCAnimationLoopInfinite, decoder->RepetitionCount());
 }
 
-TEST(AnimatedWebPTests, frameIsCompleteAndDuration)
-{
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
+TEST(AnimatedWebPTests, verifyAnimationParametersBlendOverwrite) {
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
+  EXPECT_EQ(kCAnimationLoopOnce, decoder->RepetitionCount());
 
-    RefPtr<SharedBuffer> data = readFile("/LayoutTests/fast/images/resources/webp-animated.webp");
-    ASSERT_TRUE(data.get());
+  RefPtr<SharedBuffer> data =
+      ReadFile("/LayoutTests/images/resources/webp-animated-no-blend.webp");
+  ASSERT_TRUE(data.Get());
+  decoder->SetData(data.Get(), true);
 
-    ASSERT_GE(data->size(), 10u);
-    RefPtr<SharedBuffer> tempData = SharedBuffer::create(data->data(), data->size() - 10);
-    decoder->setData(tempData.get(), false);
+  const int kCanvasWidth = 94;
+  const int kCanvasHeight = 87;
+  const struct AnimParam {
+    int x_offset, y_offset, width, height;
+    ImageFrame::DisposalMethod disposal_method;
+    ImageFrame::AlphaBlendSource alpha_blend_source;
+    unsigned duration;
+    bool has_alpha;
+  } kFrameParameters[] = {
+      {4, 10, 33, 32, ImageFrame::kDisposeOverwriteBgcolor,
+       ImageFrame::kBlendAtopBgcolor, 1000u, true},
+      {34, 30, 33, 32, ImageFrame::kDisposeOverwriteBgcolor,
+       ImageFrame::kBlendAtopBgcolor, 1000u, true},
+      {62, 50, 32, 32, ImageFrame::kDisposeOverwriteBgcolor,
+       ImageFrame::kBlendAtopBgcolor, 1000u, true},
+      {10, 54, 32, 33, ImageFrame::kDisposeOverwriteBgcolor,
+       ImageFrame::kBlendAtopBgcolor, 1000u, true},
+  };
 
-    EXPECT_EQ(2u, decoder->frameCount());
-    EXPECT_FALSE(decoder->failed());
-    EXPECT_TRUE(decoder->frameIsCompleteAtIndex(0));
-    EXPECT_EQ(1000, decoder->frameDurationAtIndex(0));
-    EXPECT_TRUE(decoder->frameIsCompleteAtIndex(1));
-    EXPECT_EQ(500, decoder->frameDurationAtIndex(1));
+  for (size_t i = 0; i < WTF_ARRAY_LENGTH(kFrameParameters); ++i) {
+    const ImageFrame* const frame = decoder->FrameBufferAtIndex(i);
+    EXPECT_EQ(ImageFrame::kFrameComplete, frame->GetStatus());
+    EXPECT_EQ(kCanvasWidth, frame->Bitmap().width());
+    EXPECT_EQ(kCanvasHeight, frame->Bitmap().height());
+    EXPECT_EQ(kFrameParameters[i].x_offset, frame->OriginalFrameRect().X());
+    EXPECT_EQ(kFrameParameters[i].y_offset, frame->OriginalFrameRect().Y());
+    EXPECT_EQ(kFrameParameters[i].width, frame->OriginalFrameRect().Width());
+    EXPECT_EQ(kFrameParameters[i].height, frame->OriginalFrameRect().Height());
+    EXPECT_EQ(kFrameParameters[i].disposal_method, frame->GetDisposalMethod());
+    EXPECT_EQ(kFrameParameters[i].alpha_blend_source,
+              frame->GetAlphaBlendSource());
+    EXPECT_EQ(kFrameParameters[i].duration, frame->Duration());
+    EXPECT_EQ(kFrameParameters[i].has_alpha, frame->HasAlpha());
+  }
 
-    decoder->setData(data.get(), true);
-    EXPECT_EQ(3u, decoder->frameCount());
-    EXPECT_TRUE(decoder->frameIsCompleteAtIndex(0));
-    EXPECT_EQ(1000, decoder->frameDurationAtIndex(0));
-    EXPECT_TRUE(decoder->frameIsCompleteAtIndex(1));
-    EXPECT_EQ(500, decoder->frameDurationAtIndex(1));
-    EXPECT_TRUE(decoder->frameIsCompleteAtIndex(2));
-    EXPECT_EQ(1000.0, decoder->frameDurationAtIndex(2));
+  EXPECT_EQ(WTF_ARRAY_LENGTH(kFrameParameters), decoder->FrameCount());
+  EXPECT_EQ(kCAnimationLoopInfinite, decoder->RepetitionCount());
 }
 
-TEST(AnimatedWebPTests, updateRequiredPreviousFrameAfterFirstDecode)
-{
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
-
-    RefPtr<SharedBuffer> fullData = readFile("/LayoutTests/fast/images/resources/webp-animated.webp");
-    ASSERT_TRUE(fullData.get());
-
-    // Give it data that is enough to parse but not decode in order to check the status
-    // of requiredPreviousFrameIndex before decoding.
-    size_t partialSize = 1;
-    do {
-        RefPtr<SharedBuffer> data = SharedBuffer::create(fullData->data(), partialSize);
-        decoder->setData(data.get(), false);
-        ++partialSize;
-    } while (!decoder->frameCount() || decoder->frameBufferAtIndex(0)->getStatus() == ImageFrame::FrameEmpty);
-
-    EXPECT_EQ(kNotFound, decoder->frameBufferAtIndex(0)->requiredPreviousFrameIndex());
-    size_t frameCount = decoder->frameCount();
-    for (size_t i = 1; i < frameCount; ++i)
-        EXPECT_EQ(i - 1, decoder->frameBufferAtIndex(i)->requiredPreviousFrameIndex());
-
-    decoder->setData(fullData.get(), true);
-    for (size_t i = 0; i < frameCount; ++i)
-        EXPECT_EQ(kNotFound, decoder->frameBufferAtIndex(i)->requiredPreviousFrameIndex());
+TEST(AnimatedWebPTests, parseAndDecodeByteByByte) {
+  TestByteByByteDecode(&CreateDecoder,
+                       "/LayoutTests/images/resources/webp-animated.webp", 3u,
+                       kCAnimationLoopInfinite);
+  TestByteByByteDecode(
+      &CreateDecoder,
+      "/LayoutTests/images/resources/webp-animated-icc-xmp.webp", 13u, 32000);
 }
 
-TEST(AnimatedWebPTests, randomFrameDecode)
-{
-    testRandomFrameDecode("/LayoutTests/fast/images/resources/webp-animated.webp");
-    testRandomFrameDecode("/LayoutTests/fast/images/resources/webp-animated-opaque.webp");
-    testRandomFrameDecode("/LayoutTests/fast/images/resources/webp-animated-large.webp");
-    testRandomFrameDecode("/LayoutTests/fast/images/resources/webp-animated-icc-xmp.webp");
+TEST(AnimatedWebPTests, invalidImages) {
+  // ANMF chunk size is smaller than ANMF header size.
+  TestInvalidImage("/LayoutTests/images/resources/invalid-animated-webp.webp",
+                   true);
+  // One of the frame rectangles extends outside the image boundary.
+  TestInvalidImage("/LayoutTests/images/resources/invalid-animated-webp3.webp",
+                   true);
 }
 
-TEST(AnimatedWebPTests, randomDecodeAfterClearFrameBufferCache)
-{
-    testRandomDecodeAfterClearFrameBufferCache("/LayoutTests/fast/images/resources/webp-animated.webp");
-    testRandomDecodeAfterClearFrameBufferCache("/LayoutTests/fast/images/resources/webp-animated-opaque.webp");
-    testRandomDecodeAfterClearFrameBufferCache("/LayoutTests/fast/images/resources/webp-animated-large.webp");
-    testRandomDecodeAfterClearFrameBufferCache("/LayoutTests/fast/images/resources/webp-animated-icc-xmp.webp");
+TEST(AnimatedWebPTests, truncatedLastFrame) {
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
+
+  RefPtr<SharedBuffer> data =
+      ReadFile("/LayoutTests/images/resources/invalid-animated-webp2.webp");
+  ASSERT_TRUE(data.Get());
+  decoder->SetData(data.Get(), true);
+
+  size_t frame_count = 8;
+  EXPECT_EQ(frame_count, decoder->FrameCount());
+  ImageFrame* frame = decoder->FrameBufferAtIndex(0);
+  ASSERT_TRUE(frame);
+  EXPECT_EQ(ImageFrame::kFrameComplete, frame->GetStatus());
+  EXPECT_FALSE(decoder->Failed());
+  frame = decoder->FrameBufferAtIndex(frame_count - 1);
+  ASSERT_TRUE(frame);
+  EXPECT_EQ(ImageFrame::kFramePartial, frame->GetStatus());
+  EXPECT_TRUE(decoder->Failed());
+  frame = decoder->FrameBufferAtIndex(0);
+  ASSERT_TRUE(frame);
+  EXPECT_EQ(ImageFrame::kFrameComplete, frame->GetStatus());
 }
 
-TEST(AnimatedWebPTests, DISABLED_resumePartialDecodeAfterClearFrameBufferCache)
-{
-    RefPtr<SharedBuffer> fullData = readFile("/LayoutTests/fast/images/resources/webp-animated-large.webp");
-    ASSERT_TRUE(fullData.get());
-    Vector<unsigned> baselineHashes;
-    createDecodingBaseline(&createDecoder, fullData.get(), &baselineHashes);
-    size_t frameCount = baselineHashes.size();
+TEST(AnimatedWebPTests, truncatedInBetweenFrame) {
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
 
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
+  RefPtr<SharedBuffer> full_data =
+      ReadFile("/LayoutTests/images/resources/invalid-animated-webp4.webp");
+  ASSERT_TRUE(full_data.Get());
+  RefPtr<SharedBuffer> data =
+      SharedBuffer::Create(full_data->Data(), full_data->size() - 1);
+  decoder->SetData(data.Get(), false);
 
-    // Let frame 0 be partially decoded.
-    size_t partialSize = 1;
-    do {
-        RefPtr<SharedBuffer> data = SharedBuffer::create(fullData->data(), partialSize);
-        decoder->setData(data.get(), false);
-        ++partialSize;
-    } while (!decoder->frameCount() || decoder->frameBufferAtIndex(0)->getStatus() == ImageFrame::FrameEmpty);
-
-    // Skip to the last frame and clear.
-    decoder->setData(fullData.get(), true);
-    EXPECT_EQ(frameCount, decoder->frameCount());
-    ImageFrame* lastFrame = decoder->frameBufferAtIndex(frameCount - 1);
-    EXPECT_EQ(baselineHashes[frameCount - 1], hashBitmap(lastFrame->bitmap()));
-    decoder->clearCacheExceptFrame(kNotFound);
-
-    // Resume decoding of the first frame.
-    ImageFrame* firstFrame = decoder->frameBufferAtIndex(0);
-    EXPECT_EQ(ImageFrame::FrameComplete, firstFrame->getStatus());
-    EXPECT_EQ(baselineHashes[0], hashBitmap(firstFrame->bitmap()));
+  ImageFrame* frame = decoder->FrameBufferAtIndex(1);
+  ASSERT_TRUE(frame);
+  EXPECT_EQ(ImageFrame::kFrameComplete, frame->GetStatus());
+  frame = decoder->FrameBufferAtIndex(2);
+  ASSERT_TRUE(frame);
+  EXPECT_EQ(ImageFrame::kFramePartial, frame->GetStatus());
+  EXPECT_TRUE(decoder->Failed());
 }
 
-TEST(AnimatedWebPTests, decodeAfterReallocatingData)
-{
-    testDecodeAfterReallocatingData("/LayoutTests/fast/images/resources/webp-animated.webp");
-    testDecodeAfterReallocatingData("/LayoutTests/fast/images/resources/webp-animated-icc-xmp.webp");
+// Tests for a crash that used to happen for a specific file with specific
+// sequence of method calls.
+TEST(AnimatedWebPTests, reproCrash) {
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
+
+  RefPtr<SharedBuffer> full_data =
+      ReadFile("/LayoutTests/images/resources/invalid_vp8_vp8x.webp");
+  ASSERT_TRUE(full_data.Get());
+
+  // Parse partial data up to which error in bitstream is not detected.
+  const size_t kPartialSize = 32768;
+  ASSERT_GT(full_data->size(), kPartialSize);
+  RefPtr<SharedBuffer> data =
+      SharedBuffer::Create(full_data->Data(), kPartialSize);
+  decoder->SetData(data.Get(), false);
+  EXPECT_EQ(1u, decoder->FrameCount());
+  ImageFrame* frame = decoder->FrameBufferAtIndex(0);
+  ASSERT_TRUE(frame);
+  EXPECT_EQ(ImageFrame::kFramePartial, frame->GetStatus());
+  EXPECT_FALSE(decoder->Failed());
+
+  // Parse full data now. The error in bitstream should now be detected.
+  decoder->SetData(full_data.Get(), true);
+  EXPECT_EQ(1u, decoder->FrameCount());
+  frame = decoder->FrameBufferAtIndex(0);
+  ASSERT_TRUE(frame);
+  EXPECT_EQ(ImageFrame::kFramePartial, frame->GetStatus());
+  EXPECT_EQ(kCAnimationLoopOnce, decoder->RepetitionCount());
+  EXPECT_TRUE(decoder->Failed());
 }
 
-TEST(AnimatedWebPTests, alphaBlending)
-{
-    testAlphaBlending("/LayoutTests/fast/images/resources/webp-animated.webp");
-    testAlphaBlending("/LayoutTests/fast/images/resources/webp-animated-semitransparent1.webp");
-    testAlphaBlending("/LayoutTests/fast/images/resources/webp-animated-semitransparent2.webp");
-    testAlphaBlending("/LayoutTests/fast/images/resources/webp-animated-semitransparent3.webp");
-    testAlphaBlending("/LayoutTests/fast/images/resources/webp-animated-semitransparent4.webp");
+TEST(AnimatedWebPTests, progressiveDecode) {
+  TestProgressiveDecoding(&CreateDecoder,
+                          "/LayoutTests/images/resources/webp-animated.webp");
 }
 
-TEST(AnimatedWebPTests, isSizeAvailable)
-{
-    testByteByByteSizeAvailable("/LayoutTests/fast/images/resources/webp-animated.webp", 142u, false, cAnimationLoopInfinite);
-    // FIXME: Add color profile support for animated webp images.
-    testByteByByteSizeAvailable("/LayoutTests/fast/images/resources/webp-animated-icc-xmp.webp", 1404u, false, 32000);
+TEST(AnimatedWebPTests, frameIsCompleteAndDuration) {
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
+
+  RefPtr<SharedBuffer> data =
+      ReadFile("/LayoutTests/images/resources/webp-animated.webp");
+  ASSERT_TRUE(data.Get());
+
+  ASSERT_GE(data->size(), 10u);
+  RefPtr<SharedBuffer> temp_data =
+      SharedBuffer::Create(data->Data(), data->size() - 10);
+  decoder->SetData(temp_data.Get(), false);
+
+  EXPECT_EQ(2u, decoder->FrameCount());
+  EXPECT_FALSE(decoder->Failed());
+  EXPECT_TRUE(decoder->FrameIsCompleteAtIndex(0));
+  EXPECT_EQ(1000, decoder->FrameDurationAtIndex(0));
+  EXPECT_TRUE(decoder->FrameIsCompleteAtIndex(1));
+  EXPECT_EQ(500, decoder->FrameDurationAtIndex(1));
+
+  decoder->SetData(data.Get(), true);
+  EXPECT_EQ(3u, decoder->FrameCount());
+  EXPECT_TRUE(decoder->FrameIsCompleteAtIndex(0));
+  EXPECT_EQ(1000, decoder->FrameDurationAtIndex(0));
+  EXPECT_TRUE(decoder->FrameIsCompleteAtIndex(1));
+  EXPECT_EQ(500, decoder->FrameDurationAtIndex(1));
+  EXPECT_TRUE(decoder->FrameIsCompleteAtIndex(2));
+  EXPECT_EQ(1000.0, decoder->FrameDurationAtIndex(2));
 }
 
-TEST(StaticWebPTests, truncatedImage)
-{
-    // VP8 data is truncated.
-    testInvalidImage("/LayoutTests/fast/images/resources/truncated.webp", false);
-    // Chunk size in RIFF header doesn't match the file size.
-    testInvalidImage("/LayoutTests/fast/images/resources/truncated2.webp", true);
+TEST(AnimatedWebPTests, updateRequiredPreviousFrameAfterFirstDecode) {
+  TestUpdateRequiredPreviousFrameAfterFirstDecode(
+      &CreateDecoder, "/LayoutTests/images/resources/webp-animated.webp");
 }
 
-TEST(StaticWebPTests, incrementalDecode)
-{
-    // Regression test for a bug where some valid images were failing to decode incrementally.
-    testByteByByteDecode(&createDecoder, "/LayoutTests/fast/images/resources/crbug.364830.webp", 1u, cAnimationNone);
+TEST(AnimatedWebPTests, randomFrameDecode) {
+  TestRandomFrameDecode(&CreateDecoder,
+                        "/LayoutTests/images/resources/webp-animated.webp");
+  TestRandomFrameDecode(
+      &CreateDecoder,
+      "/LayoutTests/images/resources/webp-animated-opaque.webp");
+  TestRandomFrameDecode(
+      &CreateDecoder, "/LayoutTests/images/resources/webp-animated-large.webp");
+  TestRandomFrameDecode(
+      &CreateDecoder,
+      "/LayoutTests/images/resources/webp-animated-icc-xmp.webp");
 }
 
-TEST(StaticWebPTests, isSizeAvailable)
-{
-    testByteByByteSizeAvailable("/LayoutTests/fast/images/resources/webp-color-profile-lossy.webp", 520u, true, cAnimationNone);
-    testByteByByteSizeAvailable("/LayoutTests/fast/images/resources/test.webp", 30u, false, cAnimationNone);
+TEST(AnimatedWebPTests, randomDecodeAfterClearFrameBufferCache) {
+  TestRandomDecodeAfterClearFrameBufferCache(
+      &CreateDecoder, "/LayoutTests/images/resources/webp-animated.webp");
+  TestRandomDecodeAfterClearFrameBufferCache(
+      &CreateDecoder,
+      "/LayoutTests/images/resources/webp-animated-opaque.webp");
+  TestRandomDecodeAfterClearFrameBufferCache(
+      &CreateDecoder, "/LayoutTests/images/resources/webp-animated-large.webp");
+  TestRandomDecodeAfterClearFrameBufferCache(
+      &CreateDecoder,
+      "/LayoutTests/images/resources/webp-animated-icc-xmp.webp");
 }
 
-TEST(StaticWebPTests, notAnimated)
-{
-    std::unique_ptr<ImageDecoder> decoder = createDecoder();
-    RefPtr<SharedBuffer> data = readFile("/LayoutTests/fast/images/resources/webp-color-profile-lossy.webp");
-    ASSERT_TRUE(data.get());
-    decoder->setData(data.get(), true);
-    EXPECT_EQ(1u, decoder->frameCount());
-    EXPECT_EQ(cAnimationNone, decoder->repetitionCount());
+// This test is disabled since it timed out on the Windows bot. See
+// crrev.com/962853004
+TEST(AnimatedWebPTests,
+     DISABLED_resumePartialDecodeAfterClearFrameBufferCache) {
+  TestResumePartialDecodeAfterClearFrameBufferCache(
+      &CreateDecoder, "/LayoutTests/images/resources/webp-animated-large.webp");
 }
 
-} // namespace blink
+TEST(AnimatedWebPTests, decodeAfterReallocatingData) {
+  TestDecodeAfterReallocatingData(
+      &CreateDecoder, "/LayoutTests/images/resources/webp-animated.webp");
+  TestDecodeAfterReallocatingData(
+      &CreateDecoder,
+      "/LayoutTests/images/resources/webp-animated-icc-xmp.webp");
+}
+
+TEST(AnimatedWebPTests, alphaBlending) {
+  TestAlphaBlending(&CreateDecoder,
+                    "/LayoutTests/images/resources/webp-animated.webp");
+  TestAlphaBlending(
+      &CreateDecoder,
+      "/LayoutTests/images/resources/webp-animated-semitransparent1.webp");
+  TestAlphaBlending(
+      &CreateDecoder,
+      "/LayoutTests/images/resources/webp-animated-semitransparent2.webp");
+  TestAlphaBlending(
+      &CreateDecoder,
+      "/LayoutTests/images/resources/webp-animated-semitransparent3.webp");
+  TestAlphaBlending(
+      &CreateDecoder,
+      "/LayoutTests/images/resources/webp-animated-semitransparent4.webp");
+}
+
+TEST(AnimatedWebPTests, isSizeAvailable) {
+  TestByteByByteSizeAvailable(
+      &CreateDecoder, "/LayoutTests/images/resources/webp-animated.webp", 142u,
+      false, kCAnimationLoopInfinite);
+  // FIXME: Add color profile support for animated webp images.
+  TestByteByByteSizeAvailable(
+      &CreateDecoder,
+      "/LayoutTests/images/resources/webp-animated-icc-xmp.webp", 1404u, false,
+      32000);
+}
+
+TEST(AnimatedWEBPTests, clearCacheExceptFrameWithAncestors) {
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
+
+  RefPtr<SharedBuffer> full_data =
+      ReadFile("/LayoutTests/images/resources/webp-animated.webp");
+  ASSERT_TRUE(full_data.Get());
+  decoder->SetData(full_data.Get(), true);
+
+  ASSERT_EQ(3u, decoder->FrameCount());
+  // We need to store pointers to the image frames, since calling
+  // frameBufferAtIndex will decode the frame if it is not FrameComplete,
+  // and we want to read the status of the frame without decoding it again.
+  ImageFrame* buffers[3];
+  size_t buffer_sizes[3];
+  for (size_t i = 0; i < decoder->FrameCount(); i++) {
+    buffers[i] = decoder->FrameBufferAtIndex(i);
+    ASSERT_EQ(ImageFrame::kFrameComplete, buffers[i]->GetStatus());
+    buffer_sizes[i] = decoder->FrameBytesAtIndex(i);
+  }
+
+  // Explicitly set the required previous frame for the frames, since this test
+  // is designed on this chain. Whether the frames actually depend on each
+  // other is not important for this test - clearCacheExceptFrame just looks at
+  // the frame status and the required previous frame.
+  buffers[1]->SetRequiredPreviousFrameIndex(0);
+  buffers[2]->SetRequiredPreviousFrameIndex(1);
+
+  // Clear the cache except for a single frame. All other frames should be
+  // cleared to FrameEmpty, since this frame is FrameComplete.
+  EXPECT_EQ(buffer_sizes[0] + buffer_sizes[2],
+            decoder->ClearCacheExceptFrame(1));
+  EXPECT_EQ(ImageFrame::kFrameEmpty, buffers[0]->GetStatus());
+  EXPECT_EQ(ImageFrame::kFrameComplete, buffers[1]->GetStatus());
+  EXPECT_EQ(ImageFrame::kFrameEmpty, buffers[2]->GetStatus());
+
+  // Verify that the required previous frame is also preserved if the provided
+  // frame is not FrameComplete. The simulated situation is:
+  //
+  // Frame 0          <---------    Frame 1         <---------    Frame 2
+  // FrameComplete    depends on    FrameComplete   depends on    FramePartial
+  //
+  // The expected outcome is that frame 1 and frame 2 are preserved, since
+  // frame 1 is necessary to fully decode frame 2.
+  for (size_t i = 0; i < decoder->FrameCount(); i++) {
+    ASSERT_EQ(ImageFrame::kFrameComplete,
+              decoder->FrameBufferAtIndex(i)->GetStatus());
+  }
+  buffers[2]->SetStatus(ImageFrame::kFramePartial);
+  EXPECT_EQ(buffer_sizes[0], decoder->ClearCacheExceptFrame(2));
+  EXPECT_EQ(ImageFrame::kFrameEmpty, buffers[0]->GetStatus());
+  EXPECT_EQ(ImageFrame::kFrameComplete, buffers[1]->GetStatus());
+  EXPECT_EQ(ImageFrame::kFramePartial, buffers[2]->GetStatus());
+
+  // Verify that the nearest FrameComplete required frame is preserved if
+  // earlier required frames in the ancestor list are not FrameComplete. The
+  // simulated situation is:
+  //
+  // Frame 0          <---------    Frame 1      <---------    Frame 2
+  // FrameComplete    depends on    FrameEmpty   depends on    FramePartial
+  //
+  // The expected outcome is that frame 0 and frame 2 are preserved. Frame 2
+  // should be preserved since it is the frame passed to clearCacheExceptFrame.
+  // Frame 0 should be preserved since it is the nearest FrameComplete ancestor.
+  // Thus, since frame 1 is FrameEmpty, no data is cleared in this case.
+  for (size_t i = 0; i < decoder->FrameCount(); i++) {
+    ASSERT_EQ(ImageFrame::kFrameComplete,
+              decoder->FrameBufferAtIndex(i)->GetStatus());
+  }
+  buffers[1]->SetStatus(ImageFrame::kFrameEmpty);
+  buffers[2]->SetStatus(ImageFrame::kFramePartial);
+  EXPECT_EQ(0u, decoder->ClearCacheExceptFrame(2));
+  EXPECT_EQ(ImageFrame::kFrameComplete, buffers[0]->GetStatus());
+  EXPECT_EQ(ImageFrame::kFrameEmpty, buffers[1]->GetStatus());
+  EXPECT_EQ(ImageFrame::kFramePartial, buffers[2]->GetStatus());
+}
+
+TEST(StaticWebPTests, truncatedImage) {
+  // VP8 data is truncated.
+  TestInvalidImage("/LayoutTests/images/resources/truncated.webp", false);
+  // Chunk size in RIFF header doesn't match the file size.
+  TestInvalidImage("/LayoutTests/images/resources/truncated2.webp", true);
+}
+
+// Regression test for a bug where some valid images were failing to decode
+// incrementally.
+TEST(StaticWebPTests, incrementalDecode) {
+  TestByteByByteDecode(&CreateDecoder,
+                       "/LayoutTests/images/resources/crbug.364830.webp", 1u,
+                       kCAnimationNone);
+}
+
+TEST(StaticWebPTests, isSizeAvailable) {
+  TestByteByByteSizeAvailable(
+      &CreateDecoder,
+      "/LayoutTests/images/resources/webp-color-profile-lossy.webp", 520u, true,
+      kCAnimationNone);
+  TestByteByByteSizeAvailable(&CreateDecoder,
+                              "/LayoutTests/images/resources/test.webp", 30u,
+                              false, kCAnimationNone);
+}
+
+TEST(StaticWebPTests, notAnimated) {
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
+  RefPtr<SharedBuffer> data =
+      ReadFile("/LayoutTests/images/resources/webp-color-profile-lossy.webp");
+  ASSERT_TRUE(data.Get());
+  decoder->SetData(data.Get(), true);
+  EXPECT_EQ(1u, decoder->FrameCount());
+  EXPECT_EQ(kCAnimationNone, decoder->RepetitionCount());
+}
+
+}  // namespace blink

@@ -28,17 +28,17 @@
 
 #include "platform/weborigin/SecurityPolicy.h"
 
+#include <memory>
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/OriginAccessEntry.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "wtf/HashMap.h"
-#include "wtf/HashSet.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/Threading.h"
-#include "wtf/text/StringHash.h"
-#include <memory>
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/Threading.h"
+#include "platform/wtf/text/StringHash.h"
 
 namespace blink {
 
@@ -46,208 +46,274 @@ using OriginAccessWhiteList = Vector<OriginAccessEntry>;
 using OriginAccessMap = HashMap<String, std::unique_ptr<OriginAccessWhiteList>>;
 using OriginSet = HashSet<String>;
 
-static OriginAccessMap& originAccessMap()
-{
-    DEFINE_STATIC_LOCAL(OriginAccessMap, originAccessMap, ());
-    return originAccessMap;
+static OriginAccessMap& GetOriginAccessMap() {
+  DEFINE_STATIC_LOCAL(OriginAccessMap, origin_access_map, ());
+  return origin_access_map;
 }
 
-static OriginSet& trustworthyOriginSet()
-{
-    DEFINE_STATIC_LOCAL(OriginSet, trustworthyOriginSet, ());
-    return trustworthyOriginSet;
+static OriginSet& TrustworthyOriginSet() {
+  DEFINE_STATIC_LOCAL(OriginSet, trustworthy_origin_set, ());
+  return trustworthy_origin_set;
 }
 
-void SecurityPolicy::init()
-{
-    originAccessMap();
-    trustworthyOriginSet();
+void SecurityPolicy::Init() {
+  GetOriginAccessMap();
+  TrustworthyOriginSet();
 }
 
-bool SecurityPolicy::shouldHideReferrer(const KURL& url, const String& referrer)
-{
-    bool referrerIsSecureURL = protocolIs(referrer, "https");
-    String scheme = KURL(KURL(), referrer).protocol();
-    bool schemeIsAllowed = SchemeRegistry::shouldTreatURLSchemeAsAllowedForReferrer(scheme);
+bool SecurityPolicy::ShouldHideReferrer(const KURL& url, const KURL& referrer) {
+  bool referrer_is_secure_url = referrer.ProtocolIs("https");
+  bool scheme_is_allowed =
+      SchemeRegistry::ShouldTreatURLSchemeAsAllowedForReferrer(
+          referrer.Protocol());
 
-    if (!schemeIsAllowed)
-        return true;
+  if (!scheme_is_allowed)
+    return true;
 
-    if (!referrerIsSecureURL)
-        return false;
-
-    bool URLIsSecureURL = url.protocolIs("https");
-
-    return !URLIsSecureURL;
-}
-
-Referrer SecurityPolicy::generateReferrer(ReferrerPolicy referrerPolicy, const KURL& url, const String& referrer)
-{
-    ReferrerPolicy referrerPolicyNoDefault = referrerPolicy;
-    if (referrerPolicyNoDefault == ReferrerPolicyDefault) {
-        if (RuntimeEnabledFeatures::reducedReferrerGranularityEnabled()) {
-            referrerPolicyNoDefault = ReferrerPolicyNoReferrerWhenDowngradeOriginWhenCrossOrigin;
-        } else {
-            referrerPolicyNoDefault = ReferrerPolicyNoReferrerWhenDowngrade;
-        }
-    }
-    if (referrer == Referrer::noReferrer())
-        return Referrer(Referrer::noReferrer(), referrerPolicyNoDefault);
-    ASSERT(!referrer.isEmpty());
-
-    String scheme = KURL(KURL(), referrer).protocol();
-    if (!SchemeRegistry::shouldTreatURLSchemeAsAllowedForReferrer(scheme))
-        return Referrer(Referrer::noReferrer(), referrerPolicyNoDefault);
-
-    if (SecurityOrigin::shouldUseInnerURL(url))
-        return Referrer(Referrer::noReferrer(), referrerPolicyNoDefault);
-
-    switch (referrerPolicyNoDefault) {
-    case ReferrerPolicyNever:
-        return Referrer(Referrer::noReferrer(), referrerPolicyNoDefault);
-    case ReferrerPolicyAlways:
-        return Referrer(referrer, referrerPolicyNoDefault);
-    case ReferrerPolicyOrigin: {
-        String origin = SecurityOrigin::createFromString(referrer)->toString();
-        // A security origin is not a canonical URL as it lacks a path. Add /
-        // to turn it into a canonical URL we can use as referrer.
-        return Referrer(origin + "/", referrerPolicyNoDefault);
-    }
-    case ReferrerPolicyOriginWhenCrossOrigin: {
-        RefPtr<SecurityOrigin> referrerOrigin = SecurityOrigin::createFromString(referrer);
-        RefPtr<SecurityOrigin> urlOrigin = SecurityOrigin::create(url);
-        if (!urlOrigin->isSameSchemeHostPort(referrerOrigin.get())) {
-            String origin = referrerOrigin->toString();
-            return Referrer(origin + "/", referrerPolicyNoDefault);
-        }
-        break;
-    }
-    case ReferrerPolicyNoReferrerWhenDowngradeOriginWhenCrossOrigin: {
-        // If the flag is enabled, and we're dealing with a cross-origin request, strip it.
-        // Otherwise fallthrough to NoReferrerWhenDowngrade behavior.
-        RefPtr<SecurityOrigin> referrerOrigin = SecurityOrigin::createFromString(referrer);
-        RefPtr<SecurityOrigin> urlOrigin = SecurityOrigin::create(url);
-        if (!urlOrigin->isSameSchemeHostPort(referrerOrigin.get())) {
-            String origin = referrerOrigin->toString();
-            return Referrer(shouldHideReferrer(url, referrer) ? Referrer::noReferrer() : origin + "/", referrerPolicyNoDefault);
-        }
-        break;
-    }
-    case ReferrerPolicyNoReferrerWhenDowngrade:
-        break;
-    case ReferrerPolicyDefault:
-        ASSERT_NOT_REACHED();
-        break;
-    }
-
-    return Referrer(shouldHideReferrer(url, referrer) ? Referrer::noReferrer() : referrer, referrerPolicyNoDefault);
-}
-
-void SecurityPolicy::addOriginTrustworthyWhiteList(PassRefPtr<SecurityOrigin> origin)
-{
-    // Must be called before we start other threads.
-    ASSERT(WTF::isBeforeThreadCreated());
-    if (origin->isUnique())
-        return;
-    trustworthyOriginSet().add(origin->toRawString());
-}
-
-bool SecurityPolicy::isOriginWhiteListedTrustworthy(const SecurityOrigin& origin)
-{
-    if (origin.isUnique())
-        return false;
-    return trustworthyOriginSet().contains(origin.toRawString());
-}
-
-bool SecurityPolicy::isAccessWhiteListed(const SecurityOrigin* activeOrigin, const SecurityOrigin* targetOrigin)
-{
-    if (OriginAccessWhiteList* list = originAccessMap().get(activeOrigin->toString())) {
-        for (size_t i = 0; i < list->size();  ++i) {
-            if (list->at(i).matchesOrigin(*targetOrigin) != OriginAccessEntry::DoesNotMatchOrigin)
-                return true;
-        }
-    }
+  if (!referrer_is_secure_url)
     return false;
+
+  bool url_is_secure_url = url.ProtocolIs("https");
+
+  return !url_is_secure_url;
 }
 
-bool SecurityPolicy::isAccessToURLWhiteListed(const SecurityOrigin* activeOrigin, const KURL& url)
-{
-    RefPtr<SecurityOrigin> targetOrigin = SecurityOrigin::create(url);
-    return isAccessWhiteListed(activeOrigin, targetOrigin.get());
+Referrer SecurityPolicy::GenerateReferrer(ReferrerPolicy referrer_policy,
+                                          const KURL& url,
+                                          const String& referrer) {
+  ReferrerPolicy referrer_policy_no_default = referrer_policy;
+  if (referrer_policy_no_default == kReferrerPolicyDefault) {
+    if (RuntimeEnabledFeatures::reducedReferrerGranularityEnabled()) {
+      referrer_policy_no_default =
+          kReferrerPolicyNoReferrerWhenDowngradeOriginWhenCrossOrigin;
+    } else {
+      referrer_policy_no_default = kReferrerPolicyNoReferrerWhenDowngrade;
+    }
+  }
+  if (referrer == Referrer::NoReferrer())
+    return Referrer(Referrer::NoReferrer(), referrer_policy_no_default);
+  ASSERT(!referrer.IsEmpty());
+
+  KURL referrer_url = KURL(KURL(), referrer);
+  String scheme = referrer_url.Protocol();
+  if (!SchemeRegistry::ShouldTreatURLSchemeAsAllowedForReferrer(scheme))
+    return Referrer(Referrer::NoReferrer(), referrer_policy_no_default);
+
+  if (SecurityOrigin::ShouldUseInnerURL(url))
+    return Referrer(Referrer::NoReferrer(), referrer_policy_no_default);
+
+  switch (referrer_policy_no_default) {
+    case kReferrerPolicyNever:
+      return Referrer(Referrer::NoReferrer(), referrer_policy_no_default);
+    case kReferrerPolicyAlways:
+      return Referrer(referrer, referrer_policy_no_default);
+    case kReferrerPolicyOrigin: {
+      String origin = SecurityOrigin::Create(referrer_url)->ToString();
+      // A security origin is not a canonical URL as it lacks a path. Add /
+      // to turn it into a canonical URL we can use as referrer.
+      return Referrer(origin + "/", referrer_policy_no_default);
+    }
+    case kReferrerPolicyOriginWhenCrossOrigin: {
+      RefPtr<SecurityOrigin> referrer_origin =
+          SecurityOrigin::Create(referrer_url);
+      RefPtr<SecurityOrigin> url_origin = SecurityOrigin::Create(url);
+      if (!url_origin->IsSameSchemeHostPort(referrer_origin.Get())) {
+        String origin = referrer_origin->ToString();
+        return Referrer(origin + "/", referrer_policy_no_default);
+      }
+      break;
+    }
+    case kReferrerPolicyNoReferrerWhenDowngradeOriginWhenCrossOrigin: {
+      // If the flag is enabled, and we're dealing with a cross-origin request,
+      // strip it.  Otherwise fall through to NoReferrerWhenDowngrade behavior.
+      RefPtr<SecurityOrigin> referrer_origin =
+          SecurityOrigin::Create(referrer_url);
+      RefPtr<SecurityOrigin> url_origin = SecurityOrigin::Create(url);
+      if (!url_origin->IsSameSchemeHostPort(referrer_origin.Get())) {
+        String origin = referrer_origin->ToString();
+        return Referrer(ShouldHideReferrer(url, referrer_url)
+                            ? Referrer::NoReferrer()
+                            : origin + "/",
+                        referrer_policy_no_default);
+      }
+      break;
+    }
+    case kReferrerPolicyNoReferrerWhenDowngrade:
+      break;
+    case kReferrerPolicyDefault:
+      ASSERT_NOT_REACHED();
+      break;
+  }
+
+  return Referrer(
+      ShouldHideReferrer(url, referrer_url) ? Referrer::NoReferrer() : referrer,
+      referrer_policy_no_default);
 }
 
-void SecurityPolicy::addOriginAccessWhitelistEntry(const SecurityOrigin& sourceOrigin, const String& destinationProtocol, const String& destinationDomain, bool allowDestinationSubdomains)
-{
-    ASSERT(isMainThread());
-    ASSERT(!sourceOrigin.isUnique());
-    if (sourceOrigin.isUnique())
-        return;
-
-    String sourceString = sourceOrigin.toString();
-    OriginAccessMap::AddResult result = originAccessMap().add(sourceString, nullptr);
-    if (result.isNewEntry)
-        result.storedValue->value = wrapUnique(new OriginAccessWhiteList);
-
-    OriginAccessWhiteList* list = result.storedValue->value.get();
-    list->append(OriginAccessEntry(destinationProtocol, destinationDomain, allowDestinationSubdomains ? OriginAccessEntry::AllowSubdomains : OriginAccessEntry::DisallowSubdomains));
+void SecurityPolicy::AddOriginTrustworthyWhiteList(
+    PassRefPtr<SecurityOrigin> origin) {
+#if DCHECK_IS_ON()
+  // Must be called before we start other threads.
+  DCHECK(WTF::IsBeforeThreadCreated());
+#endif
+  if (origin->IsUnique())
+    return;
+  TrustworthyOriginSet().insert(origin->ToRawString());
 }
 
-void SecurityPolicy::removeOriginAccessWhitelistEntry(const SecurityOrigin& sourceOrigin, const String& destinationProtocol, const String& destinationDomain, bool allowDestinationSubdomains)
-{
-    ASSERT(isMainThread());
-    ASSERT(!sourceOrigin.isUnique());
-    if (sourceOrigin.isUnique())
-        return;
-
-    String sourceString = sourceOrigin.toString();
-    OriginAccessMap& map = originAccessMap();
-    OriginAccessMap::iterator it = map.find(sourceString);
-    if (it == map.end())
-        return;
-
-    OriginAccessWhiteList* list = it->value.get();
-    size_t index = list->find(OriginAccessEntry(destinationProtocol, destinationDomain, allowDestinationSubdomains ? OriginAccessEntry::AllowSubdomains : OriginAccessEntry::DisallowSubdomains));
-
-    if (index == kNotFound)
-        return;
-
-    list->remove(index);
-
-    if (list->isEmpty())
-        map.remove(it);
-}
-
-void SecurityPolicy::resetOriginAccessWhitelists()
-{
-    ASSERT(isMainThread());
-    originAccessMap().clear();
-}
-
-bool SecurityPolicy::referrerPolicyFromString(const String& policy, ReferrerPolicy* result)
-{
-    ASSERT(!policy.isNull());
-
-    if (equalIgnoringCase(policy, "no-referrer") || equalIgnoringCase(policy, "never")) {
-        *result = ReferrerPolicyNever;
-        return true;
-    }
-    if (equalIgnoringCase(policy, "unsafe-url") || equalIgnoringCase(policy, "always")) {
-        *result = ReferrerPolicyAlways;
-        return true;
-    }
-    if (equalIgnoringCase(policy, "origin")) {
-        *result = ReferrerPolicyOrigin;
-        return true;
-    }
-    if (equalIgnoringCase(policy, "origin-when-cross-origin") || equalIgnoringCase(policy, "origin-when-crossorigin")) {
-        *result = ReferrerPolicyOriginWhenCrossOrigin;
-        return true;
-    }
-    if (equalIgnoringCase(policy, "no-referrer-when-downgrade") || equalIgnoringCase(policy, "default")) {
-        *result = ReferrerPolicyNoReferrerWhenDowngrade;
-        return true;
-    }
+bool SecurityPolicy::IsOriginWhiteListedTrustworthy(
+    const SecurityOrigin& origin) {
+  // Early return if there are no whitelisted origins to avoid unnecessary
+  // allocations, copies, and frees.
+  if (origin.IsUnique() || TrustworthyOriginSet().IsEmpty())
     return false;
+  return TrustworthyOriginSet().Contains(origin.ToRawString());
 }
 
-} // namespace blink
+bool SecurityPolicy::IsUrlWhiteListedTrustworthy(const KURL& url) {
+  // Early return to avoid initializing the SecurityOrigin.
+  if (TrustworthyOriginSet().IsEmpty())
+    return false;
+  return IsOriginWhiteListedTrustworthy(*SecurityOrigin::Create(url).Get());
+}
+
+bool SecurityPolicy::IsAccessWhiteListed(const SecurityOrigin* active_origin,
+                                         const SecurityOrigin* target_origin) {
+  if (OriginAccessWhiteList* list =
+          GetOriginAccessMap().at(active_origin->ToString())) {
+    for (size_t i = 0; i < list->size(); ++i) {
+      if (list->at(i).MatchesOrigin(*target_origin) !=
+          OriginAccessEntry::kDoesNotMatchOrigin)
+        return true;
+    }
+  }
+  return false;
+}
+
+bool SecurityPolicy::IsAccessToURLWhiteListed(
+    const SecurityOrigin* active_origin,
+    const KURL& url) {
+  RefPtr<SecurityOrigin> target_origin = SecurityOrigin::Create(url);
+  return IsAccessWhiteListed(active_origin, target_origin.Get());
+}
+
+void SecurityPolicy::AddOriginAccessWhitelistEntry(
+    const SecurityOrigin& source_origin,
+    const String& destination_protocol,
+    const String& destination_domain,
+    bool allow_destination_subdomains) {
+  ASSERT(IsMainThread());
+  ASSERT(!source_origin.IsUnique());
+  if (source_origin.IsUnique())
+    return;
+
+  String source_string = source_origin.ToString();
+  OriginAccessMap::AddResult result =
+      GetOriginAccessMap().insert(source_string, nullptr);
+  if (result.is_new_entry)
+    result.stored_value->value = WTF::WrapUnique(new OriginAccessWhiteList);
+
+  OriginAccessWhiteList* list = result.stored_value->value.get();
+  list->push_back(OriginAccessEntry(
+      destination_protocol, destination_domain,
+      allow_destination_subdomains ? OriginAccessEntry::kAllowSubdomains
+                                   : OriginAccessEntry::kDisallowSubdomains));
+}
+
+void SecurityPolicy::RemoveOriginAccessWhitelistEntry(
+    const SecurityOrigin& source_origin,
+    const String& destination_protocol,
+    const String& destination_domain,
+    bool allow_destination_subdomains) {
+  ASSERT(IsMainThread());
+  ASSERT(!source_origin.IsUnique());
+  if (source_origin.IsUnique())
+    return;
+
+  String source_string = source_origin.ToString();
+  OriginAccessMap& map = GetOriginAccessMap();
+  OriginAccessMap::iterator it = map.Find(source_string);
+  if (it == map.end())
+    return;
+
+  OriginAccessWhiteList* list = it->value.get();
+  size_t index = list->Find(OriginAccessEntry(
+      destination_protocol, destination_domain,
+      allow_destination_subdomains ? OriginAccessEntry::kAllowSubdomains
+                                   : OriginAccessEntry::kDisallowSubdomains));
+
+  if (index == kNotFound)
+    return;
+
+  list->erase(index);
+
+  if (list->IsEmpty())
+    map.erase(it);
+}
+
+void SecurityPolicy::ResetOriginAccessWhitelists() {
+  ASSERT(IsMainThread());
+  GetOriginAccessMap().Clear();
+}
+
+bool SecurityPolicy::ReferrerPolicyFromString(
+    const String& policy,
+    ReferrerPolicyLegacyKeywordsSupport legacy_keywords_support,
+    ReferrerPolicy* result) {
+  DCHECK(!policy.IsNull());
+  bool support_legacy_keywords =
+      (legacy_keywords_support == kSupportReferrerPolicyLegacyKeywords);
+
+  if (EqualIgnoringASCIICase(policy, "no-referrer") ||
+      (support_legacy_keywords && EqualIgnoringASCIICase(policy, "never"))) {
+    *result = kReferrerPolicyNever;
+    return true;
+  }
+  if (EqualIgnoringASCIICase(policy, "unsafe-url") ||
+      (support_legacy_keywords && EqualIgnoringASCIICase(policy, "always"))) {
+    *result = kReferrerPolicyAlways;
+    return true;
+  }
+  if (EqualIgnoringASCIICase(policy, "origin")) {
+    *result = kReferrerPolicyOrigin;
+    return true;
+  }
+  if (EqualIgnoringASCIICase(policy, "origin-when-cross-origin") ||
+      (support_legacy_keywords &&
+       EqualIgnoringASCIICase(policy, "origin-when-crossorigin"))) {
+    *result = kReferrerPolicyOriginWhenCrossOrigin;
+    return true;
+  }
+  if (EqualIgnoringASCIICase(policy, "no-referrer-when-downgrade") ||
+      (support_legacy_keywords && EqualIgnoringASCIICase(policy, "default"))) {
+    *result = kReferrerPolicyNoReferrerWhenDowngrade;
+    return true;
+  }
+  return false;
+}
+
+bool SecurityPolicy::ReferrerPolicyFromHeaderValue(
+    const String& header_value,
+    ReferrerPolicyLegacyKeywordsSupport legacy_keywords_support,
+    ReferrerPolicy* result) {
+  ReferrerPolicy referrer_policy = kReferrerPolicyDefault;
+
+  Vector<String> tokens;
+  header_value.Split(',', true, tokens);
+  for (const auto& token : tokens) {
+    ReferrerPolicy current_result;
+    if (SecurityPolicy::ReferrerPolicyFromString(token.StripWhiteSpace(),
+                                                 legacy_keywords_support,
+                                                 &current_result)) {
+      referrer_policy = current_result;
+    }
+  }
+
+  if (referrer_policy == kReferrerPolicyDefault)
+    return false;
+
+  *result = referrer_policy;
+  return true;
+}
+
+}  // namespace blink

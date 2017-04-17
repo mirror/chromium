@@ -14,10 +14,7 @@
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/fileapi/mock_file_change_observer.h"
-#include "content/browser/quota/mock_quota_manager.h"
 #include "content/public/test/mock_blob_url_request_context.h"
-#include "content/public/test/test_file_system_backend.h"
-#include "content/public/test/test_file_system_context.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_job.h"
@@ -29,6 +26,9 @@
 #include "storage/browser/fileapi/file_system_operation_context.h"
 #include "storage/browser/fileapi/file_system_operation_runner.h"
 #include "storage/browser/fileapi/local_file_util.h"
+#include "storage/browser/test/mock_quota_manager.h"
+#include "storage/browser/test/test_file_system_backend.h"
+#include "storage/browser/test/test_file_system_context.h"
 #include "storage/common/fileapi/file_system_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -70,14 +70,14 @@ class FileSystemOperationImplWriteTest
     ASSERT_TRUE(dir_.CreateUniqueTempDir());
 
     quota_manager_ =
-        new MockQuotaManager(false /* is_incognito */, dir_.path(),
+        new MockQuotaManager(false /* is_incognito */, dir_.GetPath(),
                              base::ThreadTaskRunnerHandle::Get().get(),
                              base::ThreadTaskRunnerHandle::Get().get(),
                              NULL /* special storage policy */);
     virtual_path_ = base::FilePath(FILE_PATH_LITERAL("temporary file"));
 
     file_system_context_ = CreateFileSystemContextForTesting(
-        quota_manager_->proxy(), dir_.path());
+        quota_manager_->proxy(), dir_.GetPath());
     url_request_context_.reset(
         new MockBlobURLRequestContext(file_system_context_.get()));
 

@@ -6,201 +6,142 @@
 
 #include <utility>
 
-#include "ash/common/material_design/material_design_controller.h"
-#include "ash/mus/accelerators/accelerator_registrar_impl.h"
-#include "ash/mus/root_window_controller.h"
-#include "ash/mus/shelf_layout_impl.h"
-#include "ash/mus/user_window_controller_impl.h"
+#include "ash/mojo_interface_factory.h"
+#include "ash/mus/network_connect_delegate_mus.h"
 #include "ash/mus/window_manager.h"
+#include "ash/public/cpp/config.h"
+#include "ash/system/power/power_status.h"
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
-#include "services/shell/public/cpp/connection.h"
-#include "services/shell/public/cpp/connector.h"
-#include "services/tracing/public/cpp/tracing_impl.h"
-#include "services/ui/common/event_matcher_util.h"
-#include "services/ui/common/gpu_service.h"
-#include "services/ui/public/cpp/window.h"
-#include "services/ui/public/cpp/window_tree_client.h"
+#include "base/threading/sequenced_worker_pool.h"
+#include "base/threading/thread_task_runner_handle.h"
+#include "chromeos/audio/cras_audio_handler.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/network/network_connect.h"
+#include "chromeos/network/network_handler.h"
+#include "chromeos/system/fake_statistics_provider.h"
+#include "device/bluetooth/bluetooth_adapter_factory.h"
+#include "device/bluetooth/dbus/bluez_dbus_manager.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/service_context.h"
+#include "services/tracing/public/cpp/provider.h"
+#include "services/ui/common/accelerator_util.h"
+#include "ui/aura/env.h"
+#include "ui/aura/mus/window_tree_client.h"
 #include "ui/events/event.h"
 #include "ui/message_center/message_center.h"
 #include "ui/views/mus/aura_init.h"
 
-#if defined(OS_CHROMEOS)
-#include "ash/common/system/chromeos/power/power_status.h"
-#include "chromeos/audio/cras_audio_handler.h"
-#include "chromeos/dbus/dbus_thread_manager.h"
-#include "device/bluetooth/dbus/bluez_dbus_manager.h"  // nogncheck
-#endif
-
 namespace ash {
 namespace mus {
-namespace {
 
-void InitializeComponents() {
-  message_center::MessageCenter::Initialize();
-#if defined(OS_CHROMEOS)
-  // Must occur after mojo::ApplicationRunner has initialized AtExitManager, but
-  // before WindowManager::Init().
-  chromeos::DBusThreadManager::Initialize();
-  bluez::BluezDBusManager::Initialize(
-      chromeos::DBusThreadManager::Get()->GetSystemBus(),
-      chromeos::DBusThreadManager::Get()->IsUsingStub(
-          chromeos::DBusClientBundle::BLUETOOTH));
-  // TODO(jamescook): Initialize real audio handler.
-  chromeos::CrasAudioHandler::InitializeForTesting();
-  PowerStatus::Initialize();
-#endif
-}
-
-void ShutdownComponents() {
-#if defined(OS_CHROMEOS)
-  PowerStatus::Shutdown();
-  chromeos::CrasAudioHandler::Shutdown();
-  bluez::BluezDBusManager::Shutdown();
-  chromeos::DBusThreadManager::Shutdown();
-#endif
-  message_center::MessageCenter::Shutdown();
-}
-
-}  // namespace
-
-WindowManagerApplication::WindowManagerApplication()
-    : screenlock_state_listener_binding_(this) {}
+WindowManagerApplication::WindowManagerApplication() {}
 
 WindowManagerApplication::~WindowManagerApplication() {
-  // AcceleratorRegistrarImpl removes an observer in its destructor. Destroy
-  // it early on.
-  std::set<AcceleratorRegistrarImpl*> accelerator_registrars(
-      accelerator_registrars_);
-  for (AcceleratorRegistrarImpl* registrar : accelerator_registrars)
-    registrar->Destroy();
-
   // Destroy the WindowManager while still valid. This way we ensure
   // OnWillDestroyRootWindowController() is called (if it hasn't been already).
   window_manager_.reset();
 
+  if (blocking_pool_) {
+    // Like BrowserThreadImpl, the goal is to make it impossible for ash to
+    // 'infinite loop' during shutdown, but to reasonably expect that all
+    // BLOCKING_SHUTDOWN tasks queued during shutdown get run. There's nothing
+    // particularly scientific about the number chosen.
+    const int kMaxNewShutdownBlockingTasks = 1000;
+    blocking_pool_->Shutdown(kMaxNewShutdownBlockingTasks);
+  }
+
+  statistics_provider_.reset();
   ShutdownComponents();
 }
 
-void WindowManagerApplication::OnAcceleratorRegistrarDestroyed(
-    AcceleratorRegistrarImpl* registrar) {
-  accelerator_registrars_.erase(registrar);
-}
-
 void WindowManagerApplication::InitWindowManager(
-    ::ui::WindowTreeClient* window_tree_client) {
-  InitializeComponents();
+    std::unique_ptr<aura::WindowTreeClient> window_tree_client,
+    const scoped_refptr<base::SequencedWorkerPool>& blocking_pool,
+    bool init_network_handler) {
+  // Tests may have already set the WindowTreeClient.
+  if (!aura::Env::GetInstance()->HasWindowTreeClient())
+    aura::Env::GetInstance()->SetWindowTreeClient(window_tree_client.get());
+  InitializeComponents(init_network_handler);
 
-  window_manager_->Init(window_tree_client);
-  window_manager_->AddObserver(this);
+  // TODO(jamescook): Refactor StatisticsProvider so we can get just the data
+  // we need in ash. Right now StatisticsProviderImpl launches the crossystem
+  // binary to get system data, which we don't want to do twice on startup.
+  statistics_provider_.reset(
+      new chromeos::system::ScopedFakeStatisticsProvider());
+  statistics_provider_->SetMachineStatistic("initial_locale", "en-US");
+  statistics_provider_->SetMachineStatistic("keyboard_layout", "");
+
+  window_manager_->Init(std::move(window_tree_client), blocking_pool);
 }
 
-void WindowManagerApplication::OnStart(const shell::Identity& identity) {
-  ::ui::GpuService::Initialize(connector());
-  window_manager_.reset(new WindowManager(connector()));
+void WindowManagerApplication::InitializeComponents(bool init_network_handler) {
+  message_center::MessageCenter::Initialize();
 
-  aura_init_.reset(new views::AuraInit(connector(), "ash_mus_resources.pak"));
-  MaterialDesignController::Initialize();
+  // Must occur after mojo::ApplicationRunner has initialized AtExitManager, but
+  // before WindowManager::Init().
+  chromeos::DBusThreadManager::Initialize(
+      chromeos::DBusThreadManager::PROCESS_ASH);
 
-  tracing_.Initialize(connector(), identity.name());
-
-  ::ui::WindowTreeClient* window_tree_client = new ::ui::WindowTreeClient(
-      window_manager_.get(), window_manager_.get(), nullptr);
-  window_tree_client->ConnectAsWindowManager(connector());
-
-  InitWindowManager(window_tree_client);
+  // See ChromeBrowserMainPartsChromeos for ordering details.
+  bluez::BluezDBusManager::Initialize(
+      chromeos::DBusThreadManager::Get()->GetSystemBus(),
+      chromeos::DBusThreadManager::Get()->IsUsingFakes());
+  if (init_network_handler)
+    chromeos::NetworkHandler::Initialize();
+  network_connect_delegate_.reset(new NetworkConnectDelegateMus());
+  chromeos::NetworkConnect::Initialize(network_connect_delegate_.get());
+  // TODO(jamescook): Initialize real audio handler.
+  chromeos::CrasAudioHandler::InitializeForTesting();
 }
 
-bool WindowManagerApplication::OnConnect(shell::Connection* connection) {
-  connection->AddInterface<mojom::ShelfLayout>(this);
-  connection->AddInterface<mojom::UserWindowController>(this);
-  connection->AddInterface<::ui::mojom::AcceleratorRegistrar>(this);
-  if (connection->GetRemoteIdentity().name() == "mojo:mash_session") {
-    connection->GetInterface(&session_);
-    session_->AddScreenlockStateListener(
-        screenlock_state_listener_binding_.CreateInterfacePtrAndBind());
-  }
-  return true;
+void WindowManagerApplication::ShutdownComponents() {
+  // NOTE: PowerStatus is shutdown by Shell.
+  chromeos::CrasAudioHandler::Shutdown();
+  chromeos::NetworkConnect::Shutdown();
+  network_connect_delegate_.reset();
+  // We may not have started the NetworkHandler.
+  if (chromeos::NetworkHandler::IsInitialized())
+    chromeos::NetworkHandler::Shutdown();
+  device::BluetoothAdapterFactory::Shutdown();
+  bluez::BluezDBusManager::Shutdown();
+  chromeos::DBusThreadManager::Shutdown();
+  message_center::MessageCenter::Shutdown();
 }
 
-void WindowManagerApplication::Create(
-    const shell::Identity& remote_identity,
-    mojo::InterfaceRequest<mojom::ShelfLayout> request) {
-  // TODO(msw): Handle multiple shelves (one per display).
-  if (!window_manager_->GetRootWindowControllers().empty()) {
-    shelf_layout_bindings_.AddBinding(shelf_layout_.get(), std::move(request));
-  } else {
-    shelf_layout_requests_.push_back(std::move(request));
-  }
+void WindowManagerApplication::OnStart() {
+  mojo_interface_factory::RegisterInterfaces(
+      &registry_, base::ThreadTaskRunnerHandle::Get());
+
+  aura_init_ = base::MakeUnique<views::AuraInit>(
+      context()->connector(), context()->identity(), "ash_mus_resources.pak",
+      "ash_mus_resources_200.pak", nullptr,
+      views::AuraInit::Mode::AURA_MUS_WINDOW_MANAGER);
+  window_manager_ =
+      base::MakeUnique<WindowManager>(context()->connector(), Config::MASH);
+
+  tracing_.Initialize(context()->connector(), context()->identity().name());
+
+  std::unique_ptr<aura::WindowTreeClient> window_tree_client =
+      base::MakeUnique<aura::WindowTreeClient>(
+          context()->connector(), window_manager_.get(), window_manager_.get());
+  window_tree_client->ConnectAsWindowManager();
+
+  const size_t kMaxNumberThreads = 3u;  // Matches that of content.
+  const char kThreadNamePrefix[] = "MashBlocking";
+  blocking_pool_ = new base::SequencedWorkerPool(
+      kMaxNumberThreads, kThreadNamePrefix, base::TaskPriority::USER_VISIBLE);
+  const bool init_network_handler = true;
+  InitWindowManager(std::move(window_tree_client), blocking_pool_,
+                    init_network_handler);
 }
 
-void WindowManagerApplication::Create(
-    const shell::Identity& remote_identity,
-    mojo::InterfaceRequest<mojom::UserWindowController> request) {
-  if (!window_manager_->GetRootWindowControllers().empty()) {
-    user_window_controller_bindings_.AddBinding(user_window_controller_.get(),
-                                                std::move(request));
-  } else {
-    user_window_controller_requests_.push_back(std::move(request));
-  }
-}
-
-void WindowManagerApplication::Create(
-    const shell::Identity& remote_identity,
-    mojo::InterfaceRequest<::ui::mojom::AcceleratorRegistrar> request) {
-  if (!window_manager_->window_manager_client())
-    return;  // Can happen during shutdown.
-
-  uint16_t accelerator_namespace_id;
-  if (!window_manager_->GetNextAcceleratorNamespaceId(
-          &accelerator_namespace_id)) {
-    DVLOG(1) << "Max number of accelerators registered, ignoring request.";
-    // All ids are used. Normally shouldn't happen, so we close the connection.
-    return;
-  }
-  accelerator_registrars_.insert(new AcceleratorRegistrarImpl(
-      window_manager_.get(), accelerator_namespace_id, std::move(request),
-      base::Bind(&WindowManagerApplication::OnAcceleratorRegistrarDestroyed,
-                 base::Unretained(this))));
-}
-
-void WindowManagerApplication::ScreenlockStateChanged(bool locked) {
-  window_manager_->SetScreenLocked(locked);
-}
-
-void WindowManagerApplication::OnRootWindowControllerAdded(
-    RootWindowController* controller) {
-  if (user_window_controller_)
-    return;
-
-  // TODO(sky): |shelf_layout_| and |user_window_controller_| should really
-  // be owned by WindowManager and/or RootWindowController. But this code is
-  // temporary while migrating away from sysui.
-
-  shelf_layout_.reset(new ShelfLayoutImpl);
-  user_window_controller_.reset(new UserWindowControllerImpl());
-
-  // TODO(msw): figure out if this should be per display, or global.
-  user_window_controller_->Initialize(controller);
-  for (auto& request : user_window_controller_requests_)
-    user_window_controller_bindings_.AddBinding(user_window_controller_.get(),
-                                                std::move(request));
-  user_window_controller_requests_.clear();
-
-  // TODO(msw): figure out if this should be per display, or global.
-  shelf_layout_->Initialize(controller);
-  for (auto& request : shelf_layout_requests_)
-    shelf_layout_bindings_.AddBinding(shelf_layout_.get(), std::move(request));
-  shelf_layout_requests_.clear();
-}
-
-void WindowManagerApplication::OnWillDestroyRootWindowController(
-    RootWindowController* controller) {
-  // TODO(msw): this isn't right, ownership should belong in WindowManager
-  // and/or RootWindowController. But this is temporary until we get rid of
-  // sysui.
-  shelf_layout_.reset();
-  user_window_controller_.reset();
+void WindowManagerApplication::OnBindInterface(
+    const service_manager::ServiceInfo& source_info,
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  registry_.BindInterface(source_info.identity, interface_name,
+                          std::move(interface_pipe));
 }
 
 }  // namespace mus

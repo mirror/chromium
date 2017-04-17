@@ -5,34 +5,38 @@
 #ifndef OrientationIterator_h
 #define OrientationIterator_h
 
+#include <memory>
 #include "platform/fonts/FontOrientation.h"
 #include "platform/fonts/ScriptRunIterator.h"
 #include "platform/fonts/UTF16TextIterator.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include <memory>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT OrientationIterator {
-    USING_FAST_MALLOC(OrientationIterator);
-    WTF_MAKE_NONCOPYABLE(OrientationIterator);
-public:
-    enum RenderOrientation {
-        OrientationKeep,
-        OrientationRotateSideways,
-        OrientationInvalid
-    };
+  USING_FAST_MALLOC(OrientationIterator);
+  WTF_MAKE_NONCOPYABLE(OrientationIterator);
 
-    OrientationIterator(const UChar* buffer, unsigned bufferSize, FontOrientation runOrientation);
+ public:
+  enum RenderOrientation {
+    kOrientationKeep,
+    kOrientationRotateSideways,
+    kOrientationInvalid
+  };
 
-    bool consume(unsigned* orientationLimit, RenderOrientation*);
-private:
-    std::unique_ptr<UTF16TextIterator> m_utf16Iterator;
-    unsigned m_bufferSize;
-    bool m_atEnd;
+  OrientationIterator(const UChar* buffer,
+                      unsigned buffer_size,
+                      FontOrientation run_orientation);
+
+  bool Consume(unsigned* orientation_limit, RenderOrientation*);
+
+ private:
+  std::unique_ptr<UTF16TextIterator> utf16_iterator_;
+  unsigned buffer_size_;
+  bool at_end_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

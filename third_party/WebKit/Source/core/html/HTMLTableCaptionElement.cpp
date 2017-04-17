@@ -32,20 +32,21 @@ namespace blink {
 using namespace HTMLNames;
 
 inline HTMLTableCaptionElement::HTMLTableCaptionElement(Document& document)
-    : HTMLElement(captionTag, document)
-{
-}
+    : HTMLElement(captionTag, document) {}
 
 DEFINE_NODE_FACTORY(HTMLTableCaptionElement)
 
-void HTMLTableCaptionElement::collectStyleForPresentationAttribute(const QualifiedName& name, const AtomicString& value, MutableStylePropertySet* style)
-{
-    if (name == alignAttr) {
-        if (!value.isEmpty())
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyCaptionSide, value);
-    } else {
-        HTMLElement::collectStyleForPresentationAttribute(name, value, style);
-    }
+void HTMLTableCaptionElement::CollectStyleForPresentationAttribute(
+    const QualifiedName& name,
+    const AtomicString& value,
+    MutableStylePropertySet* style) {
+  if (name == alignAttr) {
+    if (!value.IsEmpty())
+      AddPropertyToPresentationAttributeStyle(style, CSSPropertyCaptionSide,
+                                              value);
+  } else {
+    HTMLElement::CollectStyleForPresentationAttribute(name, value, style);
+  }
 }
 
-} // namespace blink
+}  // namespace blink

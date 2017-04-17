@@ -36,44 +36,46 @@ namespace blink {
 class MediaDevicesRequest;
 class WebDocument;
 class WebMediaDeviceInfo;
-template <typename T> class WebVector;
+template <typename T>
+class WebVector;
 
 class WebMediaDevicesRequest {
-public:
-    WebMediaDevicesRequest() { }
-    WebMediaDevicesRequest(const WebMediaDevicesRequest& request) { assign(request); }
-    ~WebMediaDevicesRequest() { reset(); }
+ public:
+  WebMediaDevicesRequest() {}
+  WebMediaDevicesRequest(const WebMediaDevicesRequest& request) {
+    Assign(request);
+  }
+  ~WebMediaDevicesRequest() { Reset(); }
 
-    WebMediaDevicesRequest& operator=(const WebMediaDevicesRequest& other)
-    {
-        assign(other);
-        return *this;
-    }
+  WebMediaDevicesRequest& operator=(const WebMediaDevicesRequest& other) {
+    Assign(other);
+    return *this;
+  }
 
-    BLINK_EXPORT void reset();
-    bool isNull() const { return m_private.isNull(); }
-    BLINK_EXPORT bool equals(const WebMediaDevicesRequest&) const;
-    BLINK_EXPORT void assign(const WebMediaDevicesRequest&);
+  BLINK_EXPORT void Reset();
+  bool IsNull() const { return private_.IsNull(); }
+  BLINK_EXPORT bool Equals(const WebMediaDevicesRequest&) const;
+  BLINK_EXPORT void Assign(const WebMediaDevicesRequest&);
 
-    BLINK_EXPORT WebSecurityOrigin getSecurityOrigin() const;
-    BLINK_EXPORT WebDocument ownerDocument() const;
+  BLINK_EXPORT WebSecurityOrigin GetSecurityOrigin() const;
+  BLINK_EXPORT WebDocument OwnerDocument() const;
 
-    BLINK_EXPORT void requestSucceeded(WebVector<WebMediaDeviceInfo>);
+  BLINK_EXPORT void RequestSucceeded(WebVector<WebMediaDeviceInfo>);
 
 #if BLINK_IMPLEMENTATION
-    WebMediaDevicesRequest(MediaDevicesRequest*);
-    operator MediaDevicesRequest*() const;
+  WebMediaDevicesRequest(MediaDevicesRequest*);
+  operator MediaDevicesRequest*() const;
 #endif
 
-private:
-    WebPrivatePtr<MediaDevicesRequest> m_private;
+ private:
+  WebPrivatePtr<MediaDevicesRequest> private_;
 };
 
-inline bool operator==(const WebMediaDevicesRequest& a, const WebMediaDevicesRequest& b)
-{
-    return a.equals(b);
+inline bool operator==(const WebMediaDevicesRequest& a,
+                       const WebMediaDevicesRequest& b) {
+  return a.Equals(b);
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebMediaDevicesRequest_h
+#endif  // WebMediaDevicesRequest_h

@@ -12,7 +12,6 @@
 #include "base/memory/scoped_vector.h"
 #include "media/midi/midi_input_port_android.h"
 
-namespace media {
 namespace midi {
 
 class MidiOutputPortAndroid;
@@ -38,8 +37,6 @@ class MidiDeviceAndroid final {
     return env->IsSameObject(raw_device_.obj(), raw_device);
   }
 
-  static bool Register(JNIEnv* env);
-
  private:
   base::android::ScopedJavaGlobalRef<jobject> raw_device_;
   ScopedVector<MidiInputPortAndroid> input_ports_;
@@ -47,6 +44,5 @@ class MidiDeviceAndroid final {
 };
 
 }  // namespace midi
-}  // namespace media
 
 #endif  // MEDIA_MIDI_MIDI_DEVICE_ANDROID_H_

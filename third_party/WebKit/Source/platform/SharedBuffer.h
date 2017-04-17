@@ -28,141 +28,136 @@
 #define SharedBuffer_h
 
 #include "platform/PlatformExport.h"
-#include "platform/PurgeableVector.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 #include "third_party/skia/include/core/SkData.h"
-#include "wtf/Forward.h"
-#include "wtf/RefCounted.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
 class WebProcessMemoryDump;
 
 class PLATFORM_EXPORT SharedBuffer : public RefCounted<SharedBuffer> {
-public:
-    enum : unsigned { kSegmentSize = 0x1000 };
+ public:
+  enum : unsigned { kSegmentSize = 0x1000 };
 
-    static PassRefPtr<SharedBuffer> create() { return adoptRef(new SharedBuffer); }
+  static PassRefPtr<SharedBuffer> Create() {
+    return AdoptRef(new SharedBuffer);
+  }
 
-    HAS_STRICTLY_TYPED_ARG
-    static PassRefPtr<SharedBuffer> create(STRICTLY_TYPED_ARG(size))
-    {
-        STRICT_ARG_TYPE(size_t);
-        return adoptRef(new SharedBuffer(size));
-    }
+  HAS_STRICTLY_TYPED_ARG
+  static PassRefPtr<SharedBuffer> Create(STRICTLY_TYPED_ARG(size)) {
+    STRICT_ARG_TYPE(size_t);
+    return AdoptRef(new SharedBuffer(size));
+  }
 
-    HAS_STRICTLY_TYPED_ARG
-    static PassRefPtr<SharedBuffer> create(const char* data, STRICTLY_TYPED_ARG(size))
-    {
-        STRICT_ARG_TYPE(size_t);
-        return adoptRef(new SharedBuffer(data, size));
-    }
+  HAS_STRICTLY_TYPED_ARG
+  static PassRefPtr<SharedBuffer> Create(const char* data,
+                                         STRICTLY_TYPED_ARG(size)) {
+    STRICT_ARG_TYPE(size_t);
+    return AdoptRef(new SharedBuffer(data, size));
+  }
 
-    HAS_STRICTLY_TYPED_ARG
-    static PassRefPtr<SharedBuffer> create(const unsigned char* data, STRICTLY_TYPED_ARG(size))
-    {
-        STRICT_ARG_TYPE(size_t);
-        return adoptRef(new SharedBuffer(data, size));
-    }
+  HAS_STRICTLY_TYPED_ARG
+  static PassRefPtr<SharedBuffer> Create(const unsigned char* data,
+                                         STRICTLY_TYPED_ARG(size)) {
+    STRICT_ARG_TYPE(size_t);
+    return AdoptRef(new SharedBuffer(data, size));
+  }
 
-    HAS_STRICTLY_TYPED_ARG
-    static PassRefPtr<SharedBuffer> createPurgeable(const char* data, STRICTLY_TYPED_ARG(size))
-    {
-        STRICT_ARG_TYPE(size_t);
-        return adoptRef(new SharedBuffer(data, size, PurgeableVector::Purgeable));
-    }
+  static PassRefPtr<SharedBuffer> AdoptVector(Vector<char>&);
 
-    static PassRefPtr<SharedBuffer> adoptVector(Vector<char>&);
+  ~SharedBuffer();
 
-    ~SharedBuffer();
+  // Calling this function will force internal segmented buffers to be merged
+  // into a flat buffer. Use getSomeData() whenever possible for better
+  // performance.
+  const char* Data() const;
 
-    // Calling this function will force internal segmented buffers to be merged
-    // into a flat buffer. Use getSomeData() whenever possible for better
-    // performance.
-    const char* data() const;
+  size_t size() const;
 
-    size_t size() const;
+  bool IsEmpty() const { return !size(); }
 
-    bool isEmpty() const { return !size(); }
+  void Append(PassRefPtr<SharedBuffer>);
 
-    void append(PassRefPtr<SharedBuffer>);
+  HAS_STRICTLY_TYPED_ARG
+  void Append(const char* data, STRICTLY_TYPED_ARG(size)) {
+    ALLOW_NUMERIC_ARG_TYPES_PROMOTABLE_TO(size_t);
+    AppendInternal(data, size);
+  }
+  void Append(const Vector<char>&);
 
-    HAS_STRICTLY_TYPED_ARG
-    void append(const char* data, STRICTLY_TYPED_ARG(size))
-    {
-        ALLOW_NUMERIC_ARG_TYPES_PROMOTABLE_TO(size_t);
-        appendInternal(data, size);
-    }
-    void append(const Vector<char>&);
+  void Clear();
 
-    void clear();
+  PassRefPtr<SharedBuffer> Copy() const;
 
-    PassRefPtr<SharedBuffer> copy() const;
+  // Return the number of consecutive bytes after "position". "data"
+  // points to the first byte.
+  // Return 0 when no more data left.
+  // When extracting all data with getSomeData(), the caller should
+  // repeat calling it until it returns 0.
+  // Usage:
+  //      const char* segment;
+  //      size_t pos = 0;
+  //      while (size_t length = sharedBuffer->getSomeData(segment, pos)) {
+  //          // Use the data. for example: decoder->decode(segment, length);
+  //          pos += length;
+  //      }
+  HAS_STRICTLY_TYPED_ARG
+  size_t GetSomeData(
+      const char*& data,
+      STRICTLY_TYPED_ARG(position) = static_cast<size_t>(0)) const {
+    STRICT_ARG_TYPE(size_t);
+    return GetSomeDataInternal(data, position);
+  }
 
-    // Return the number of consecutive bytes after "position". "data"
-    // points to the first byte.
-    // Return 0 when no more data left.
-    // When extracting all data with getSomeData(), the caller should
-    // repeat calling it until it returns 0.
-    // Usage:
-    //      const char* segment;
-    //      size_t pos = 0;
-    //      while (size_t length = sharedBuffer->getSomeData(segment, pos)) {
-    //          // Use the data. for example: decoder->decode(segment, length);
-    //          pos += length;
-    //      }
-    HAS_STRICTLY_TYPED_ARG
-    size_t getSomeData(const char*& data, STRICTLY_TYPED_ARG(position) = static_cast<size_t>(0)) const
-    {
-        STRICT_ARG_TYPE(size_t);
-        return getSomeDataInternal(data, position);
-    }
+  // Returns the content data into "dest" as a flat buffer. "byteLength" must
+  // exactly match with size(). |dest| must not be null even if |bytesLength|
+  // is 0.
+  HAS_STRICTLY_TYPED_ARG
+  void GetAsBytes(void* dest, STRICTLY_TYPED_ARG(byte_length)) const {
+    STRICT_ARG_TYPE(size_t);
+    DCHECK_EQ(byte_length, size());
+    auto result = GetAsBytesInternal(dest, 0, byte_length);
+    DCHECK(result);
+  }
 
-    // Returns the content data into "dest" as a flat buffer. "byteLength" must
-    // exactly match with size(). Returns true on success, otherwise the content
-    // of "dest" is not guaranteed.
-    HAS_STRICTLY_TYPED_ARG
-    bool getAsBytes(void* dest, STRICTLY_TYPED_ARG(byteLength)) const
-    {
-        STRICT_ARG_TYPE(size_t);
-        return getAsBytesInternal(dest, byteLength);
-    }
+  // Copies "byteLength" bytes from "position"-th bytes (0 origin) of the
+  // content data into "dest" as a flat buffer, Returns true on success,
+  // otherwise the content of "dest" is not guaranteed.
+  HAS_STRICTLY_TYPED_ARG
+  bool GetPartAsBytes(void* dest,
+                      STRICTLY_TYPED_ARG(position),
+                      STRICTLY_TYPED_ARG(byte_length)) const {
+    STRICT_ARG_TYPE(size_t);
+    return GetAsBytesInternal(dest, position, byte_length);
+  }
 
-    // Creates an SkData and copies this SharedBuffer's contents to that
-    // SkData without merging segmented buffers into a flat buffer.
-    PassRefPtr<SkData> getAsSkData() const;
+  // Creates an SkData and copies this SharedBuffer's contents to that
+  // SkData without merging segmented buffers into a flat buffer.
+  sk_sp<SkData> GetAsSkData() const;
 
-    // See PurgeableVector::lock().
-    bool lock();
+  void OnMemoryDump(const String& dump_prefix, WebProcessMemoryDump*) const;
 
-    // WARNING: Calling unlock() on a SharedBuffer that wasn't created with the
-    // purgeability option does an extra memcpy(). Please use
-    // SharedBuffer::createPurgeable() if you intend to call unlock().
-    void unlock();
+ private:
+  SharedBuffer();
+  explicit SharedBuffer(size_t);
+  SharedBuffer(const char*, size_t);
+  SharedBuffer(const unsigned char*, size_t);
 
-    bool isLocked() const;
+  // See SharedBuffer::data().
+  void MergeSegmentsIntoBuffer() const;
 
-    void onMemoryDump(const String& dumpPrefix, WebProcessMemoryDump*) const;
+  void AppendInternal(const char* data, size_t);
+  bool GetAsBytesInternal(void* dest, size_t, size_t) const;
+  size_t GetSomeDataInternal(const char*& data, size_t position) const;
 
-private:
-    SharedBuffer();
-    explicit SharedBuffer(size_t);
-    SharedBuffer(const char*, size_t);
-    SharedBuffer(const unsigned char*, size_t);
-    SharedBuffer(const char*, size_t, PurgeableVector::PurgeableOption);
-
-    // See SharedBuffer::data().
-    void mergeSegmentsIntoBuffer() const;
-
-    void appendInternal(const char* data, size_t);
-    bool getAsBytesInternal(void* dest, size_t) const;
-    size_t getSomeDataInternal(const char*& data, size_t position) const;
-
-    size_t m_size;
-    mutable PurgeableVector m_buffer;
-    mutable Vector<char*> m_segments;
+  size_t size_;
+  mutable Vector<char> buffer_;
+  mutable Vector<char*> segments_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SharedBuffer_h
+#endif  // SharedBuffer_h

@@ -33,47 +33,51 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class EventDispatchMediator;
 
 class CORE_EXPORT ScopedEventQueue {
-    WTF_MAKE_NONCOPYABLE(ScopedEventQueue); USING_FAST_MALLOC(ScopedEventQueue);
-public:
-    ~ScopedEventQueue();
+  WTF_MAKE_NONCOPYABLE(ScopedEventQueue);
+  USING_FAST_MALLOC(ScopedEventQueue);
 
-    void enqueueEventDispatchMediator(EventDispatchMediator*);
-    void dispatchAllEvents();
-    static ScopedEventQueue* instance();
+ public:
+  ~ScopedEventQueue();
 
-    void incrementScopingLevel();
-    void decrementScopingLevel();
-    bool shouldQueueEvents() const { return m_scopingLevel > 0; }
+  void EnqueueEventDispatchMediator(EventDispatchMediator*);
+  void DispatchAllEvents();
+  static ScopedEventQueue* Instance();
 
-private:
-    ScopedEventQueue();
-    static void initialize();
-    void dispatchEvent(EventDispatchMediator*) const;
+  void IncrementScopingLevel();
+  void DecrementScopingLevel();
+  bool ShouldQueueEvents() const { return scoping_level_ > 0; }
 
-    PersistentHeapVector<Member<EventDispatchMediator>> m_queuedEventDispatchMediators;
-    unsigned m_scopingLevel;
+ private:
+  ScopedEventQueue();
+  static void Initialize();
+  void DispatchEvent(EventDispatchMediator*) const;
 
-    static ScopedEventQueue* s_instance;
+  PersistentHeapVector<Member<EventDispatchMediator>>
+      queued_event_dispatch_mediators_;
+  unsigned scoping_level_;
+
+  static ScopedEventQueue* instance_;
 };
 
 class EventQueueScope {
-    WTF_MAKE_NONCOPYABLE(EventQueueScope);
-    STACK_ALLOCATED();
-public:
-    EventQueueScope() { ScopedEventQueue::instance()->incrementScopingLevel(); }
-    ~EventQueueScope() { ScopedEventQueue::instance()->decrementScopingLevel(); }
+  WTF_MAKE_NONCOPYABLE(EventQueueScope);
+  STACK_ALLOCATED();
+
+ public:
+  EventQueueScope() { ScopedEventQueue::Instance()->IncrementScopingLevel(); }
+  ~EventQueueScope() { ScopedEventQueue::Instance()->DecrementScopingLevel(); }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScopedEventQueue_h
+#endif  // ScopedEventQueue_h

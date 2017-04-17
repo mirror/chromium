@@ -12,20 +12,25 @@
 namespace blink {
 
 struct PathCoordinates {
-    double initialX = 0;
-    double initialY = 0;
-    double currentX = 0;
-    double currentY = 0;
+  double initial_x = 0;
+  double initial_y = 0;
+  double current_x = 0;
+  double current_y = 0;
 };
 
 class SVGPathSegInterpolationFunctions {
-    STATIC_ONLY(SVGPathSegInterpolationFunctions);
-public:
-    static std::unique_ptr<InterpolableValue> consumePathSeg(const PathSegmentData&, PathCoordinates& currentCoordinates);
-    static PathSegmentData consumeInterpolablePathSeg(const InterpolableValue&, SVGPathSegType, PathCoordinates& currentCoordinates);
+  STATIC_ONLY(SVGPathSegInterpolationFunctions);
+
+ public:
+  static std::unique_ptr<InterpolableValue> ConsumePathSeg(
+      const PathSegmentData&,
+      PathCoordinates& current_coordinates);
+  static PathSegmentData ConsumeInterpolablePathSeg(
+      const InterpolableValue&,
+      SVGPathSegType,
+      PathCoordinates& current_coordinates);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGPathSegInterpolationFunctions_h
-
+#endif  // SVGPathSegInterpolationFunctions_h

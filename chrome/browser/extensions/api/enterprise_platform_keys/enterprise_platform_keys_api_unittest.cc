@@ -13,8 +13,8 @@
 #include "base/values.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
-#include "chrome/browser/chromeos/policy/stub_enterprise_install_attributes.h"
 #include "chrome/browser/chromeos/settings/scoped_cros_settings_test_helper.h"
+#include "chrome/browser/chromeos/settings/stub_install_attributes.h"
 #include "chrome/browser/extensions/extension_function_test_utils.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/ui/browser.h"
@@ -161,11 +161,7 @@ class EPKChallengeKeyTestBase : public BrowserWithTestWindowTest {
     ON_CALL(mock_attestation_flow_, GetCertificate(_, _, _, _, _))
         .WillByDefault(Invoke(GetCertificateCallbackTrue));
 
-    // Set the Enterprise install attributes.
-    stub_install_attributes_.SetDomain("google.com");
-    stub_install_attributes_.SetRegistrationUser(kUserEmail);
-    stub_install_attributes_.SetDeviceId("device_id");
-    stub_install_attributes_.SetMode(policy::DEVICE_MODE_ENTERPRISE);
+    stub_install_attributes_.SetCloudManaged("google.com", "device_id");
 
     settings_helper_.ReplaceProvider(chromeos::kDeviceAttestationEnabled);
     settings_helper_.SetBoolean(chromeos::kDeviceAttestationEnabled, true);
@@ -210,11 +206,8 @@ class EPKChallengeKeyTestBase : public BrowserWithTestWindowTest {
   std::string RunFunctionAndReturnError(UIThreadExtensionFunction* function,
                                         std::unique_ptr<base::ListValue> args,
                                         Browser* browser) {
-    scoped_refptr<ExtensionFunction> function_owner(function);
-    // Without a callback the function will not generate a result.
-    function->set_has_callback(true);
     utils::RunFunction(function, std::move(args), browser, utils::NONE);
-    EXPECT_FALSE(function->GetResultList()) << "Did not expect a result";
+    EXPECT_EQ(ExtensionFunction::FAILED, *function->response_type());
     return function->GetError();
   }
 
@@ -243,7 +236,7 @@ class EPKChallengeKeyTestBase : public BrowserWithTestWindowTest {
   NiceMock<chromeos::attestation::MockAttestationFlow> mock_attestation_flow_;
   chromeos::ScopedCrosSettingsTestHelper settings_helper_;
   scoped_refptr<extensions::Extension> extension_;
-  policy::StubEnterpriseInstallAttributes stub_install_attributes_;
+  chromeos::StubInstallAttributes stub_install_attributes_;
   TestingProfileManager profile_manager_;
   // fake_user_manager_ is owned by user_manager_enabler_.
   chromeos::FakeChromeUserManager* fake_user_manager_;
@@ -269,8 +262,24 @@ class EPKChallengeMachineKeyTest : public EPKChallengeKeyTestBase {
   }
 
   std::unique_ptr<base::ListValue> CreateArgs() {
+    return CreateArgsInternal(nullptr);
+  }
+
+  std::unique_ptr<base::ListValue> CreateArgsNoRegister() {
+    return CreateArgsInternal(base::MakeUnique<bool>(false));
+  }
+
+  std::unique_ptr<base::ListValue> CreateArgsRegister() {
+    return CreateArgsInternal(base::MakeUnique<bool>(true));
+  }
+
+  std::unique_ptr<base::ListValue> CreateArgsInternal(
+      std::unique_ptr<bool> register_key) {
     std::unique_ptr<base::ListValue> args(new base::ListValue);
-    args->Append(base::BinaryValue::CreateWithCopiedBuffer("challenge", 9));
+    args->Append(base::Value::CreateWithCopiedBuffer("challenge", 9));
+    if (register_key) {
+      args->AppendBoolean(*register_key);
+    }
     return args;
   }
 
@@ -280,7 +289,7 @@ class EPKChallengeMachineKeyTest : public EPKChallengeKeyTestBase {
 };
 
 TEST_F(EPKChallengeMachineKeyTest, NonEnterpriseDevice) {
-  stub_install_attributes_.SetRegistrationUser("");
+  stub_install_attributes_.SetConsumerOwned();
 
   EXPECT_EQ(EPKPChallengeMachineKey::kNonEnterpriseDeviceError,
             RunFunctionAndReturnError(func_.get(), CreateArgs(), browser()));
@@ -327,6 +336,15 @@ TEST_F(EPKChallengeMachineKeyTest, SignChallengeFailed) {
             RunFunctionAndReturnError(func_.get(), CreateArgs(), browser()));
 }
 
+TEST_F(EPKChallengeMachineKeyTest, KeyRegistrationFailed) {
+  EXPECT_CALL(mock_async_method_caller_, TpmAttestationRegisterKey(_, _, _, _))
+      .WillRepeatedly(Invoke(RegisterKeyCallbackFalse));
+
+  EXPECT_EQ(
+      EPKPChallengeMachineKey::kKeyRegistrationFailedError,
+      RunFunctionAndReturnError(func_.get(), CreateArgsRegister(), browser()));
+}
+
 TEST_F(EPKChallengeMachineKeyTest, KeyExists) {
   EXPECT_CALL(mock_cryptohome_client_, TpmAttestationDoesKeyExist(_, _, _, _))
       .WillRepeatedly(WithArgs<3>(Invoke(
@@ -336,6 +354,22 @@ TEST_F(EPKChallengeMachineKeyTest, KeyExists) {
 
   EXPECT_TRUE(
       utils::RunFunction(func_.get(), CreateArgs(), browser(), utils::NONE));
+}
+
+TEST_F(EPKChallengeMachineKeyTest, KeyNotRegisteredByDefault) {
+  EXPECT_CALL(mock_async_method_caller_, TpmAttestationRegisterKey(_, _, _, _))
+      .Times(0);
+
+  EXPECT_TRUE(
+      utils::RunFunction(func_.get(), CreateArgs(), browser(), utils::NONE));
+}
+
+TEST_F(EPKChallengeMachineKeyTest, KeyNotRegistered) {
+  EXPECT_CALL(mock_async_method_caller_, TpmAttestationRegisterKey(_, _, _, _))
+      .Times(0);
+
+  EXPECT_TRUE(utils::RunFunction(func_.get(), CreateArgsNoRegister(), browser(),
+                                 utils::NONE));
 }
 
 TEST_F(EPKChallengeMachineKeyTest, Success) {
@@ -356,7 +390,37 @@ TEST_F(EPKChallengeMachineKeyTest, Success) {
   std::unique_ptr<base::Value> value(
       RunFunctionAndReturnSingleResult(func_.get(), CreateArgs(), browser()));
 
-  const base::BinaryValue* response;
+  const base::Value* response;
+  ASSERT_TRUE(value->GetAsBinary(&response));
+  EXPECT_EQ("response",
+            std::string(response->GetBuffer(), response->GetSize()));
+}
+
+TEST_F(EPKChallengeMachineKeyTest, KeyRegisteredSuccess) {
+  // GetCertificate must be called exactly once.
+  EXPECT_CALL(mock_attestation_flow_,
+              GetCertificate(
+                  chromeos::attestation::PROFILE_ENTERPRISE_MACHINE_CERTIFICATE,
+                  _, _, _, _))
+      .Times(1);
+  // TpmAttestationRegisterKey must be called exactly once.
+  EXPECT_CALL(mock_async_method_caller_,
+              TpmAttestationRegisterKey(chromeos::attestation::KEY_DEVICE,
+                                        _ /* Unused by the API. */,
+                                        "attest-ent-machine", _))
+      .Times(1);
+  // SignEnterpriseChallenge must be called exactly once.
+  EXPECT_CALL(
+      mock_async_method_caller_,
+      TpmAttestationSignEnterpriseChallenge(
+          chromeos::attestation::KEY_DEVICE, cryptohome::Identification(),
+          "attest-ent-machine", "google.com", "device_id", _, "challenge", _))
+      .Times(1);
+
+  std::unique_ptr<base::Value> value(RunFunctionAndReturnSingleResult(
+      func_.get(), CreateArgsRegister(), browser()));
+
+  const base::Value* response;
   ASSERT_TRUE(value->GetAsBinary(&response));
   EXPECT_EQ("response",
             std::string(response->GetBuffer(), response->GetSize()));
@@ -414,8 +478,8 @@ class EPKChallengeUserKeyTest : public EPKChallengeKeyTestBase {
 
   std::unique_ptr<base::ListValue> CreateArgsInternal(bool register_key) {
     std::unique_ptr<base::ListValue> args(new base::ListValue);
-    args->Append(base::BinaryValue::CreateWithCopiedBuffer("challenge", 9));
-    args->Append(new base::FundamentalValue(register_key));
+    args->Append(base::Value::CreateWithCopiedBuffer("challenge", 9));
+    args->AppendBoolean(register_key);
     return args;
   }
 
@@ -499,7 +563,7 @@ TEST_F(EPKChallengeUserKeyTest, KeyNotRegistered) {
 }
 
 TEST_F(EPKChallengeUserKeyTest, PersonalDevice) {
-  stub_install_attributes_.SetRegistrationUser("");
+  stub_install_attributes_.SetConsumerOwned();
 
   // Currently personal devices are not supported.
   EXPECT_EQ(GetCertificateError(kUserRejected),
@@ -531,7 +595,7 @@ TEST_F(EPKChallengeUserKeyTest, Success) {
   std::unique_ptr<base::Value> value(
       RunFunctionAndReturnSingleResult(func_.get(), CreateArgs(), browser()));
 
-  const base::BinaryValue* response;
+  const base::Value* response;
   ASSERT_TRUE(value->GetAsBinary(&response));
   EXPECT_EQ("response",
             std::string(response->GetBuffer(), response->GetSize()));

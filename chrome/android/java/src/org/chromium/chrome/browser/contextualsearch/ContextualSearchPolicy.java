@@ -5,8 +5,11 @@
 package org.chromium.chrome.browser.contextualsearch;
 
 import android.content.Context;
+import android.net.Uri;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
+import org.chromium.base.CollectionUtil;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.ChromeVersionInfo;
 import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.ContextualSearchPanel;
@@ -15,6 +18,7 @@ import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 
 import java.net.URL;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -27,11 +31,16 @@ import javax.annotation.Nullable;
  */
 class ContextualSearchPolicy {
     private static final Pattern CONTAINS_WHITESPACE_PATTERN = Pattern.compile("\\s");
+    private static final String DOMAIN_GOOGLE = "google";
+    private static final String PATH_AMP = "/amp/";
     private static final int REMAINING_NOT_APPLICABLE = -1;
     private static final int ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000;
     private static final int TAP_TRIGGERED_PROMO_LIMIT = 50;
     private static final int TAP_RESOLVE_PREFETCH_LIMIT_FOR_DECIDED = 50;
     private static final int TAP_RESOLVE_PREFETCH_LIMIT_FOR_UNDECIDED = 20;
+
+    private static final HashSet<String> PREDOMINENTLY_ENGLISH_SPEAKING_COUNTRIES =
+            CollectionUtil.newHashSet("GB", "US");
 
     private final ChromePreferenceManager mPreferenceManager;
     private final ContextualSearchSelectionController mSelectionController;
@@ -46,12 +55,11 @@ class ContextualSearchPolicy {
     private Integer mTapLimitForUndecided;
 
     /**
-     * @param context The Android Context.
+     * ContextualSearchPolicy constructor.
      */
-    public ContextualSearchPolicy(Context context,
-                                  ContextualSearchSelectionController selectionController,
-                                  ContextualSearchNetworkCommunicator networkCommunicator) {
-        mPreferenceManager = ChromePreferenceManager.getInstance(context);
+    public ContextualSearchPolicy(ContextualSearchSelectionController selectionController,
+            ContextualSearchNetworkCommunicator networkCommunicator) {
+        mPreferenceManager = ChromePreferenceManager.getInstance();
 
         mSelectionController = selectionController;
         mNetworkCommunicator = networkCommunicator;
@@ -394,11 +402,11 @@ class ContextualSearchPolicy {
     }
 
     /**
-     * @return Whether Contextual Search should enable its JavaScript API in the overlay panel.
+     * @return Whether the given URL is used for Accelerated Mobile Pages by Google.
      */
-    boolean isContextualSearchJsApiEnabled() {
-        // Quick answers requires the JS API.
-        return ContextualSearchFieldTrial.isQuickAnswersEnabled();
+    boolean isAmpUrl(String url) {
+        Uri uri = Uri.parse(url);
+        return uri.getHost().contains(DOMAIN_GOOGLE) && uri.getPath().startsWith(PATH_AMP);
     }
 
     // --------------------------------------------------------------------------------------------
@@ -456,15 +464,27 @@ class ContextualSearchPolicy {
      *         none is available.
      */
     String bestTargetLanguage(List<String> targetLanguages) {
+        return bestTargetLanguage(targetLanguages, Locale.getDefault().getCountry());
+    }
+
+    /**
+     * Determines the best language to convert into, given the ordered list of languages the user
+     * knows, and the UX language.
+     * @param targetLanguages The list of languages to consider converting to.
+     * @param countryOfUx The country of the UX.
+     * @return the best language or an empty string.
+     */
+    @VisibleForTesting
+    String bestTargetLanguage(List<String> targetLanguages, String countryOfUx) {
         // For now, we just return the first language, unless it's English
         // (due to over-usage).
         // TODO(donnd): Improve this logic. Determining the right language seems non-trivial.
         // E.g. If this language doesn't match the user's server preferences, they might see a page
         // in one language and the one box translation in another, which might be confusing.
-        // Also this logic should only apply on Android, where English setup is over used.
+        // Also this logic should only apply on Android, where English setup is overused.
         if (targetLanguages.size() > 1
                 && TextUtils.equals(targetLanguages.get(0), Locale.ENGLISH.getLanguage())
-                && !ContextualSearchFieldTrial.isEnglishTargetTranslationEnabled()) {
+                && !PREDOMINENTLY_ENGLISH_SPEAKING_COUNTRIES.contains(countryOfUx)) {
             return targetLanguages.get(1);
         } else if (targetLanguages.size() > 0) {
             return targetLanguages.get(0);
@@ -476,25 +496,25 @@ class ContextualSearchPolicy {
     /**
      * @return Whether any translation feature for Contextual Search is enabled.
      */
-    boolean isTranslationEnabled() {
-        return ContextualSearchFieldTrial.isTranslationEnabled();
+    boolean isTranslationDisabled() {
+        return ContextualSearchFieldTrial.isTranslationDisabled();
     }
 
     /**
-     * @return Whether forcing a translation Onebox is disabled.
+     * @return The ISO country code for the user's home country, or an empty string if not
+     *         available or privacy-enabled.
      */
-    boolean isForceTranslationOneboxDisabled() {
-        return ContextualSearchFieldTrial.isForceTranslationOneboxDisabled();
-    }
+    String getHomeCountry(Context context) {
+        if (ContextualSearchFieldTrial.isSendHomeCountryDisabled()) return "";
 
-    /**
-     * @return Whether forcing a translation Onebox based on auto-detection of the source language
-     *         is disabled.
-     */
-    boolean isAutoDetectTranslationOneboxDisabled() {
-        if (isForceTranslationOneboxDisabled()) return true;
+        TelephonyManager telephonyManager =
+                (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        if (telephonyManager == null) return "";
 
-        return ContextualSearchFieldTrial.isAutoDetectTranslationOneboxDisabled();
+        String simCountryIso = telephonyManager.getSimCountryIso();
+        if (TextUtils.isEmpty(simCountryIso)) return "";
+
+        return simCountryIso;
     }
 
     /**

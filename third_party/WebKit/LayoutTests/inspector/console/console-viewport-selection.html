@@ -16,7 +16,7 @@ function populateConsoleWithMessages(count)
 function test()
 {
     InspectorTest.fixConsoleViewportDimensions(600, 200);
-    var consoleView = WebInspector.ConsoleView.instance();
+    var consoleView = Console.ConsoleView.instance();
     var viewport = consoleView._viewport;
     const minimumViewportMessagesCount = 10;
     const messagesCount = 150;
@@ -161,7 +161,7 @@ function test()
             while (blueSpan.nodeName !== "SPAN" || blueSpan.textContent !== "world")
                 blueSpan = blueSpan.traverseNextNode();
 
-            window.getSelection().setBaseAndExtent(blueSpan, 0, blueSpan, blueSpan.textContent.length);
+            window.getSelection().setBaseAndExtent(blueSpan, 0, blueSpan, blueSpan.childNodes.length);
             InspectorTest.addResult("Selected text: " + viewport._selectedText());
             next();
         },
@@ -181,6 +181,27 @@ function test()
             var text = viewport._selectedText();
             var count = text ? text.split("\n").length : 0;
             InspectorTest.addResult(count === messagesCount ? "Selected all " + count + " messages." : "Selected " + count + " messages instead of " + messagesCount);
+            next();
+        },
+
+        function testSelectWithNonTextNodeContainer(next)
+        {
+            viewport.forceScrollItemToBeFirst(0);
+
+            var nonTextNodeBase = consoleView.itemElement(1).element();
+            var nonTextNodeExtent = consoleView.itemElement(2).element();
+            var textNodeBase = consoleView.itemElement(1).element().traverseNextTextNode();
+            var textNodeExtent = consoleView.itemElement(2).element().traverseNextTextNode();
+
+            window.getSelection().setBaseAndExtent(nonTextNodeBase, 0, nonTextNodeExtent, 0);
+            InspectorTest.addResult("Selected text: " + viewport._selectedText());
+
+            window.getSelection().setBaseAndExtent(textNodeBase, 0, nonTextNodeExtent, 0);
+            InspectorTest.addResult("Selected text: " + viewport._selectedText());
+
+            window.getSelection().setBaseAndExtent(nonTextNodeBase, 0, textNodeExtent, 0);
+            InspectorTest.addResult("Selected text: " + viewport._selectedText());
+
             next();
         }
     ];

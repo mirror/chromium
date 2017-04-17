@@ -106,12 +106,6 @@ public class ContentSettingsResources {
                     new ResourceItem(R.drawable.permission_cookie, R.string.cookies_title,
                                  R.string.cookies_title, ContentSetting.ALLOW, ContentSetting.BLOCK,
                                  R.string.website_settings_category_cookie_allowed, 0));
-            localMap.put(ContentSettingsType.CONTENT_SETTINGS_TYPE_FULLSCREEN,
-                    new ResourceItem(R.drawable.permission_fullscreen,
-                                 R.string.website_settings_fullscreen,
-                                 R.string.fullscreen_permission_title, ContentSetting.ALLOW,
-                                 ContentSetting.ASK,
-                                 R.string.website_settings_category_always_allowed, 0));
             localMap.put(ContentSettingsType.CONTENT_SETTINGS_TYPE_GEOLOCATION,
                     new ResourceItem(R.drawable.permission_location,
                                  R.string.website_settings_device_location,
@@ -124,12 +118,6 @@ public class ContentSettingsResources {
                                  R.string.javascript_permission_title, ContentSetting.ALLOW,
                                  ContentSetting.BLOCK,
                                  R.string.website_settings_category_javascript_allowed, 0));
-            localMap.put(ContentSettingsType.CONTENT_SETTINGS_TYPE_KEYGEN,
-                    new ResourceItem(R.drawable.permission_keygen,
-                                 R.string.keygen_permission_title,
-                                 R.string.keygen_permission_title, ContentSetting.ALLOW,
-                                 ContentSetting.BLOCK,
-                                 0, R.string.website_settings_category_blocked_recommended));
             localMap.put(
                     ContentSettingsType.CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA,
                     new ResourceItem(R.drawable.permission_camera,
@@ -160,6 +148,15 @@ public class ContentSettingsResources {
                                  org.chromium.chrome.R.string.protected_content,
                                  org.chromium.chrome.R.string.protected_content,
                                  ContentSetting.ASK, ContentSetting.BLOCK, 0, 0));
+            // TODO(csharrison): Swap out the placeholder icon once it is ready.
+            localMap.put(ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER,
+                    new ResourceItem(R.drawable.permission_popups,
+                            R.string.subresource_filter_permission_title,
+                            R.string.subresource_filter_permission_title, ContentSetting.ALLOW,
+                            ContentSetting.BLOCK, 0, 0));
+            localMap.put(ContentSettingsType.CONTENT_SETTINGS_TYPE_USB_CHOOSER_DATA,
+                    new ResourceItem(R.drawable.settings_usb, 0, 0, ContentSetting.ASK,
+                                 ContentSetting.BLOCK, 0, 0));
             sResourceInfo = localMap;
         }
         return sResourceInfo;

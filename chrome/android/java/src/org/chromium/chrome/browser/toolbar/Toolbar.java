@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.view.View;
 
 import org.chromium.chrome.browser.compositor.layouts.LayoutUpdateHost;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 
 /**
  * An interface for outside packages to interact with ToolbarLayout. Other than for testing purposes
@@ -35,12 +36,25 @@ public interface Toolbar {
     void getPositionRelativeToContainer(View containerView, int[] position);
 
     /**
+     * Get the height of the toolbar in px.
+     * @return The height of the toolbar.
+     */
+    int getHeight();
+
+    /**
      * Sets whether or not the toolbar should draw as if it's being captured for a snapshot
      * texture.  In this mode it will only draw the toolbar in it's normal state (no TabSwitcher
      * or animations).
      * @param textureMode Whether or not to be in texture capture mode.
      */
     void setTextureCaptureMode(boolean textureMode);
+
+    /**
+     * Set the {@link BottomSheet} for triggering animations. This can be null if Chrome Home is
+     * disabled.
+     * @param sheet The {@link BottomSheet}.
+     */
+    void setBottomSheet(BottomSheet sheet);
 
     /**
      * @return Whether a dirty check for invalidation makes sense at this time.
@@ -65,6 +79,12 @@ public interface Toolbar {
     void setLayoutUpdateHost(LayoutUpdateHost layoutUpdateHost);
 
     /**
+     * Sets whether or not the menu button should be highlighted.
+     * @param highlight Whether or not the menu button should be highlighted.
+     */
+    void setMenuButtonHighlight(boolean highlight);
+
+    /**
      * Show the update badge on the app menu button. Will have no effect if there is no app menu
      * button for the current Activity.
      */
@@ -85,9 +105,4 @@ public interface Toolbar {
      * @param animate Whether the removal of the badge should be animated.
      */
     void removeAppMenuUpdateBadge(boolean animate);
-
-    /**
-     * Herb: Sets the listener that is told when the "return to previous app" button is clicked.
-     */
-    void setReturnButtonListener(View.OnClickListener listener);
 }

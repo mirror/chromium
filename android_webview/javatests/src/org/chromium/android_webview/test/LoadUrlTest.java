@@ -4,25 +4,22 @@
 
 package org.chromium.android_webview.test;
 
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
 import android.util.Pair;
 
-import org.apache.http.Header;
-import org.apache.http.HttpRequest;
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.test.util.CommonResources;
 import org.chromium.android_webview.test.util.JSUtils;
 import org.chromium.base.annotations.SuppressFBWarnings;
+import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.Feature;
-import org.chromium.content.browser.test.util.CallbackHelper;
 import org.chromium.content.browser.test.util.HistoryUtils;
 import org.chromium.net.test.util.TestWebServer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -114,21 +111,20 @@ public class LoadUrlTest extends AwTestBase {
         return result;
     }
 
-    private void validateRequestHeaders(String[] refNamesAndValues, HttpRequest request) {
+    private void validateRequestHeaders(String[] refNamesAndValues, List<String> request) {
+        List<String> matchingHeaders;
         for (int i = 0; i < refNamesAndValues.length; i += 2) {
-            Header[] matchingHeaders = request.getHeaders(refNamesAndValues[i]);
-            assertEquals(1, matchingHeaders.length);
-
-            Header header = matchingHeaders[0];
-            assertEquals(refNamesAndValues[i].toLowerCase(Locale.ENGLISH), header.getName());
-            assertEquals(refNamesAndValues[i + 1], header.getValue());
+            matchingHeaders = TestWebServer.getMatchingHeadersValues(request, refNamesAndValues[i]);
+            assertEquals(1, matchingHeaders.size());
+            assertEquals(refNamesAndValues[i + 1], matchingHeaders.get(0));
         }
     }
 
-    private void validateNoRequestHeaders(String[] refNamesAndValues, HttpRequest request) {
+    private void validateNoRequestHeaders(String[] refNamesAndValues, List<String> request) {
+        List<String> matchingHeaders;
         for (int i = 0; i < refNamesAndValues.length; i += 2) {
-            Header[] matchingHeaders = request.getHeaders(refNamesAndValues[i]);
-            assertEquals(0, matchingHeaders.length);
+            matchingHeaders = TestWebServer.getMatchingHeadersValues(request, refNamesAndValues[i]);
+            assertEquals(0, matchingHeaders.size());
         }
     }
 
@@ -182,22 +178,18 @@ public class LoadUrlTest extends AwTestBase {
                     path,
                     "<html><body>foo</body></html>",
                     null);
-            String[] extraHeaders = {
-                "user-agent", "007"
-            };
+            String[] extraHeaders = {"user-agent", "Borewicz 07 & Bond 007"};
 
             loadUrlWithExtraHeadersSync(awContents,
                                         contentsClient.getOnPageFinishedHelper(),
                                         url,
                                         createHeadersMap(extraHeaders));
-            Header[] matchingHeaders = webServer.getLastRequest(path).getHeaders(extraHeaders[0]);
-            assertEquals(1, matchingHeaders.length);
-            Header header = matchingHeaders[0];
-            assertEquals(extraHeaders[0].toLowerCase(Locale.ENGLISH),
-                    header.getName().toLowerCase(Locale.ENGLISH));
+            List<String> matchingHeaders = TestWebServer.getMatchingHeadersValues(
+                    webServer.getLastRequest(path), extraHeaders[0]);
+            assertEquals(1, matchingHeaders.size());
             // Just check that the value is there, and it's not the one we provided.
-            assertTrue(header.getValue().length() > 0);
-            assertFalse(extraHeaders[1].equals(header.getValue()));
+            assertTrue(matchingHeaders.get(0).length() > 0);
+            assertFalse(extraHeaders[1].equals(matchingHeaders.get(0)));
         } finally {
             webServer.shutdown();
         }
@@ -404,6 +396,37 @@ public class LoadUrlTest extends AwTestBase {
             loadUrlSync(awContents, contentsClient.getOnPageFinishedHelper(), url2);
             onReceivedTitleHelper.waitForCallback(onReceivedTitleCallCount);
             assertEquals(title, onReceivedTitleHelper.getTitle());
+        } finally {
+            webServer.shutdown();
+        }
+    }
+
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testCrossDomainNavigation() throws Throwable {
+        final TestAwContentsClient contentsClient = new TestAwContentsClient();
+        final AwTestContainerView testContainerView =
+                createAwTestContainerViewOnMainSync(contentsClient);
+        final AwContents awContents = testContainerView.getAwContents();
+        final String data = "<html><head><title>foo</title></head></html>";
+
+        TestAwContentsClient.OnReceivedTitleHelper onReceivedTitleHelper =
+                contentsClient.getOnReceivedTitleHelper();
+        int onReceivedTitleCallCount = onReceivedTitleHelper.getCallCount();
+
+        loadDataSync(
+                awContents, contentsClient.getOnPageFinishedHelper(), data, "text/html", false);
+        onReceivedTitleHelper.waitForCallback(onReceivedTitleCallCount);
+        assertEquals("foo", onReceivedTitleHelper.getTitle());
+        TestWebServer webServer = TestWebServer.start();
+
+        try {
+            final String url =
+                    webServer.setResponse("/page.html", CommonResources.ABOUT_HTML, null);
+            onReceivedTitleCallCount = onReceivedTitleHelper.getCallCount();
+            loadUrlSync(awContents, contentsClient.getOnPageFinishedHelper(), url);
+            onReceivedTitleHelper.waitForCallback(onReceivedTitleCallCount);
+            assertEquals(CommonResources.ABOUT_TITLE, onReceivedTitleHelper.getTitle());
         } finally {
             webServer.shutdown();
         }

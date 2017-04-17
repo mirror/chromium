@@ -37,182 +37,167 @@ namespace blink {
 namespace XPath {
 
 Filter::Filter(Expression* expr, HeapVector<Member<Predicate>>& predicates)
-    : m_expr(expr)
-{
-    m_predicates.swap(predicates);
-    setIsContextNodeSensitive(m_expr->isContextNodeSensitive());
-    setIsContextPositionSensitive(m_expr->isContextPositionSensitive());
-    setIsContextSizeSensitive(m_expr->isContextSizeSensitive());
+    : expr_(expr) {
+  predicates_.Swap(predicates);
+  SetIsContextNodeSensitive(expr_->IsContextNodeSensitive());
+  SetIsContextPositionSensitive(expr_->IsContextPositionSensitive());
+  SetIsContextSizeSensitive(expr_->IsContextSizeSensitive());
 }
 
-Filter::~Filter()
-{
+Filter::~Filter() {}
+
+DEFINE_TRACE(Filter) {
+  visitor->Trace(expr_);
+  visitor->Trace(predicates_);
+  Expression::Trace(visitor);
 }
 
-DEFINE_TRACE(Filter)
-{
-    visitor->trace(m_expr);
-    visitor->trace(m_predicates);
-    Expression::trace(visitor);
+Value Filter::Evaluate(EvaluationContext& evaluation_context) const {
+  Value v = expr_->Evaluate(evaluation_context);
+
+  NodeSet& nodes = v.ModifiableNodeSet(evaluation_context);
+  nodes.Sort();
+
+  for (const auto& predicate : predicates_) {
+    NodeSet* new_nodes = NodeSet::Create();
+    evaluation_context.size = nodes.size();
+    evaluation_context.position = 0;
+
+    for (const auto& node : nodes) {
+      evaluation_context.node = node;
+      ++evaluation_context.position;
+
+      if (predicate->Evaluate(evaluation_context))
+        new_nodes->Append(node);
+    }
+    nodes.Swap(*new_nodes);
+  }
+
+  return v;
 }
 
-Value Filter::evaluate(EvaluationContext& evaluationContext) const
-{
-    Value v = m_expr->evaluate(evaluationContext);
+LocationPath::LocationPath() : absolute_(false) {
+  SetIsContextNodeSensitive(true);
+}
 
-    NodeSet& nodes = v.modifiableNodeSet(evaluationContext);
-    nodes.sort();
+LocationPath::~LocationPath() {}
 
-    for (unsigned i = 0; i < m_predicates.size(); i++) {
-        NodeSet* newNodes = NodeSet::create();
-        evaluationContext.size = nodes.size();
-        evaluationContext.position = 0;
+DEFINE_TRACE(LocationPath) {
+  visitor->Trace(steps_);
+  Expression::Trace(visitor);
+}
 
-        for (unsigned j = 0; j < nodes.size(); j++) {
-            Node* node = nodes[j];
+Value LocationPath::Evaluate(EvaluationContext& evaluation_context) const {
+  EvaluationContext cloned_context = evaluation_context;
+  // http://www.w3.org/TR/xpath/
+  // Section 2, Location Paths:
+  // "/ selects the document root (which is always the parent of the document
+  // element)"
+  // "A / by itself selects the root node of the document containing the context
+  // node."
+  // In the case of a tree that is detached from the document, we violate
+  // the spec and treat / as the root node of the detached tree.
+  // This is for compatibility with Firefox, and also seems like a more
+  // logical treatment of where you would expect the "root" to be.
+  Node* context = evaluation_context.node.Get();
+  if (absolute_ && context->getNodeType() != Node::kDocumentNode) {
+    if (context->isConnected())
+      context = context->ownerDocument();
+    else
+      context = &NodeTraversal::HighestAncestorOrSelf(*context);
+  }
 
-            evaluationContext.node = node;
-            ++evaluationContext.position;
+  NodeSet* nodes = NodeSet::Create();
+  nodes->Append(context);
+  Evaluate(cloned_context, *nodes);
 
-            if (m_predicates[i]->evaluate(evaluationContext))
-                newNodes->append(node);
-        }
-        nodes.swap(*newNodes);
+  return Value(nodes, Value::kAdopt);
+}
+
+void LocationPath::Evaluate(EvaluationContext& context, NodeSet& nodes) const {
+  bool result_is_sorted = nodes.IsSorted();
+
+  for (const auto& step : steps_) {
+    NodeSet* new_nodes = NodeSet::Create();
+    HeapHashSet<Member<Node>> new_nodes_set;
+
+    bool need_to_check_for_duplicate_nodes =
+        !nodes.SubtreesAreDisjoint() ||
+        (step->GetAxis() != Step::kChildAxis &&
+         step->GetAxis() != Step::kSelfAxis &&
+         step->GetAxis() != Step::kDescendantAxis &&
+         step->GetAxis() != Step::kDescendantOrSelfAxis &&
+         step->GetAxis() != Step::kAttributeAxis);
+
+    if (need_to_check_for_duplicate_nodes)
+      result_is_sorted = false;
+
+    // This is a simplified check that can be improved to handle more cases.
+    if (nodes.SubtreesAreDisjoint() && (step->GetAxis() == Step::kChildAxis ||
+                                        step->GetAxis() == Step::kSelfAxis))
+      new_nodes->MarkSubtreesDisjoint(true);
+
+    for (const auto& input_node : nodes) {
+      NodeSet* matches = NodeSet::Create();
+      step->Evaluate(context, input_node, *matches);
+
+      if (!matches->IsSorted())
+        result_is_sorted = false;
+
+      for (const auto& node : *matches) {
+        if (!need_to_check_for_duplicate_nodes ||
+            new_nodes_set.insert(node).is_new_entry)
+          new_nodes->Append(node);
+      }
     }
 
-    return v;
+    nodes.Swap(*new_nodes);
+  }
+
+  nodes.MarkSorted(result_is_sorted);
 }
 
-LocationPath::LocationPath()
-    : m_absolute(false)
-{
-    setIsContextNodeSensitive(true);
+void LocationPath::AppendStep(Step* step) {
+  unsigned step_count = steps_.size();
+  if (step_count && OptimizeStepPair(steps_[step_count - 1], step))
+    return;
+  step->Optimize();
+  steps_.push_back(step);
 }
 
-LocationPath::~LocationPath()
-{
-}
-
-DEFINE_TRACE(LocationPath)
-{
-    visitor->trace(m_steps);
-    Expression::trace(visitor);
-}
-
-Value LocationPath::evaluate(EvaluationContext& evaluationContext) const
-{
-    EvaluationContext clonedContext = evaluationContext;
-    // http://www.w3.org/TR/xpath/
-    // Section 2, Location Paths:
-    // "/ selects the document root (which is always the parent of the document element)"
-    // "A / by itself selects the root node of the document containing the context node."
-    // In the case of a tree that is detached from the document, we violate
-    // the spec and treat / as the root node of the detached tree.
-    // This is for compatibility with Firefox, and also seems like a more
-    // logical treatment of where you would expect the "root" to be.
-    Node* context = evaluationContext.node.get();
-    if (m_absolute && context->getNodeType() != Node::DOCUMENT_NODE)  {
-        if (context->isConnected())
-            context = context->ownerDocument();
-        else
-            context = &NodeTraversal::highestAncestorOrSelf(*context);
-    }
-
-    NodeSet* nodes = NodeSet::create();
-    nodes->append(context);
-    evaluate(clonedContext, *nodes);
-
-    return Value(nodes, Value::adopt);
-}
-
-void LocationPath::evaluate(EvaluationContext& context, NodeSet& nodes) const
-{
-    bool resultIsSorted = nodes.isSorted();
-
-    for (unsigned i = 0; i < m_steps.size(); i++) {
-        Step* step = m_steps[i];
-        NodeSet* newNodes = NodeSet::create();
-        HeapHashSet<Member<Node>> newNodesSet;
-
-        bool needToCheckForDuplicateNodes = !nodes.subtreesAreDisjoint() || (step->getAxis() != Step::ChildAxis && step->getAxis() != Step::SelfAxis
-            && step->getAxis() != Step::DescendantAxis && step->getAxis() != Step::DescendantOrSelfAxis && step->getAxis() != Step::AttributeAxis);
-
-        if (needToCheckForDuplicateNodes)
-            resultIsSorted = false;
-
-        // This is a simplified check that can be improved to handle more cases.
-        if (nodes.subtreesAreDisjoint() && (step->getAxis() == Step::ChildAxis || step->getAxis() == Step::SelfAxis))
-            newNodes->markSubtreesDisjoint(true);
-
-        for (unsigned j = 0; j < nodes.size(); j++) {
-            NodeSet* matches = NodeSet::create();
-            step->evaluate(context, nodes[j], *matches);
-
-            if (!matches->isSorted())
-                resultIsSorted = false;
-
-            for (size_t nodeIndex = 0; nodeIndex < matches->size(); ++nodeIndex) {
-                Node* node = (*matches)[nodeIndex];
-                if (!needToCheckForDuplicateNodes || newNodesSet.add(node).isNewEntry)
-                    newNodes->append(node);
-            }
-        }
-
-        nodes.swap(*newNodes);
-    }
-
-    nodes.markSorted(resultIsSorted);
-}
-
-void LocationPath::appendStep(Step* step)
-{
-    unsigned stepCount = m_steps.size();
-    if (stepCount && optimizeStepPair(m_steps[stepCount - 1], step))
-        return;
-    step->optimize();
-    m_steps.append(step);
-}
-
-void LocationPath::insertFirstStep(Step* step)
-{
-    if (m_steps.size() && optimizeStepPair(step, m_steps[0])) {
-        m_steps[0] = step;
-        return;
-    }
-    step->optimize();
-    m_steps.insert(0, step);
+void LocationPath::InsertFirstStep(Step* step) {
+  if (steps_.size() && OptimizeStepPair(step, steps_[0])) {
+    steps_[0] = step;
+    return;
+  }
+  step->Optimize();
+  steps_.insert(0, step);
 }
 
 Path::Path(Expression* filter, LocationPath* path)
-    : m_filter(filter)
-    , m_path(path)
-{
-    setIsContextNodeSensitive(filter->isContextNodeSensitive());
-    setIsContextPositionSensitive(filter->isContextPositionSensitive());
-    setIsContextSizeSensitive(filter->isContextSizeSensitive());
+    : filter_(filter), path_(path) {
+  SetIsContextNodeSensitive(filter->IsContextNodeSensitive());
+  SetIsContextPositionSensitive(filter->IsContextPositionSensitive());
+  SetIsContextSizeSensitive(filter->IsContextSizeSensitive());
 }
 
-Path::~Path()
-{
+Path::~Path() {}
+
+DEFINE_TRACE(Path) {
+  visitor->Trace(filter_);
+  visitor->Trace(path_);
+  Expression::Trace(visitor);
 }
 
-DEFINE_TRACE(Path)
-{
-    visitor->trace(m_filter);
-    visitor->trace(m_path);
-    Expression::trace(visitor);
+Value Path::Evaluate(EvaluationContext& context) const {
+  Value v = filter_->Evaluate(context);
+
+  NodeSet& nodes = v.ModifiableNodeSet(context);
+  path_->Evaluate(context, nodes);
+
+  return v;
 }
 
-Value Path::evaluate(EvaluationContext& context) const
-{
-    Value v = m_filter->evaluate(context);
+}  // namespace XPath
 
-    NodeSet& nodes = v.modifiableNodeSet(context);
-    m_path->evaluate(context, nodes);
-
-    return v;
-}
-
-} // namespace XPath
-
-} // namespace blink
+}  // namespace blink

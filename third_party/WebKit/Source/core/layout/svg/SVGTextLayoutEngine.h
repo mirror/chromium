@@ -20,18 +20,17 @@
 #ifndef SVGTextLayoutEngine_h
 #define SVGTextLayoutEngine_h
 
+#include <memory>
 #include "core/layout/api/LineLayoutSVGInlineText.h"
 #include "core/layout/svg/LayoutSVGInlineText.h"
 #include "core/layout/svg/SVGTextFragment.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
-#include <memory>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class ComputedStyle;
 class InlineFlowBox;
-class LayoutObject;
 class PathPositionMapper;
 class SVGInlineFlowBox;
 class SVGInlineTextBox;
@@ -39,64 +38,68 @@ class SVGTextMetrics;
 
 // SVGTextLayoutEngine performs the second layout phase for SVG text.
 //
-// The InlineBox tree was created, containing the text chunk information, necessary to apply
-// certain SVG specific text layout properties (text-length adjustments and text-anchor).
-// The second layout phase uses the SVGTextLayoutAttributes stored in the individual
-// LayoutSVGInlineText layoutObjects to compute the final positions for each character
-// which are stored in the SVGInlineTextBox objects.
+// The InlineBox tree was created, containing the text chunk information,
+// necessary to apply certain SVG specific text layout properties (text-length
+// adjustments and text-anchor).
+// The second layout phase uses the SVGTextLayoutAttributes stored in the
+// individual LayoutSVGInlineText layoutObjects to compute the final positions
+// for each character which are stored in the SVGInlineTextBox objects.
 
 class SVGTextLayoutEngine {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(SVGTextLayoutEngine);
-public:
-    SVGTextLayoutEngine(const Vector<LayoutSVGInlineText*>&);
-    ~SVGTextLayoutEngine();
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(SVGTextLayoutEngine);
 
-    void layoutCharactersInTextBoxes(InlineFlowBox* start);
-    void finishLayout();
+ public:
+  SVGTextLayoutEngine(const Vector<LayoutSVGInlineText*>&);
+  ~SVGTextLayoutEngine();
 
-private:
-    bool setCurrentTextPosition(const SVGCharacterData&);
-    void advanceCurrentTextPosition(float glyphAdvance);
-    bool applyRelativePositionAdjustmentsIfNeeded(const SVGCharacterData&);
+  void LayoutCharactersInTextBoxes(InlineFlowBox* start);
+  void FinishLayout();
 
-    void computeCurrentFragmentMetrics(SVGInlineTextBox*);
-    void recordTextFragment(SVGInlineTextBox*);
+ private:
+  bool SetCurrentTextPosition(const SVGCharacterData&);
+  void AdvanceCurrentTextPosition(float glyph_advance);
+  bool ApplyRelativePositionAdjustmentsIfNeeded(const SVGCharacterData&);
 
-    void beginTextPathLayout(SVGInlineFlowBox*);
-    void endTextPathLayout();
+  void ComputeCurrentFragmentMetrics(SVGInlineTextBox*);
+  void RecordTextFragment(SVGInlineTextBox*);
 
-    void layoutInlineTextBox(SVGInlineTextBox*);
-    void layoutTextOnLineOrPath(SVGInlineTextBox*, LineLayoutSVGInlineText, const ComputedStyle&);
+  void BeginTextPathLayout(SVGInlineFlowBox*);
+  void EndTextPathLayout();
 
-    const LayoutSVGInlineText* nextLogicalTextNode();
-    const LayoutSVGInlineText* currentLogicalCharacterMetrics(SVGTextMetrics&);
-    void advanceToNextLogicalCharacter(const SVGTextMetrics&);
+  void LayoutInlineTextBox(SVGInlineTextBox*);
+  void LayoutTextOnLineOrPath(SVGInlineTextBox*,
+                              LineLayoutSVGInlineText,
+                              const ComputedStyle&);
 
-    // Logical iteration state.
-    const Vector<LayoutSVGInlineText*>& m_descendantTextNodes;
-    unsigned m_currentLogicalTextNodeIndex;
-    unsigned m_logicalCharacterOffset;
-    unsigned m_logicalMetricsListOffset;
+  const LayoutSVGInlineText* NextLogicalTextNode();
+  const LayoutSVGInlineText* CurrentLogicalCharacterMetrics(SVGTextMetrics&);
+  void AdvanceToNextLogicalCharacter(const SVGTextMetrics&);
 
-    Vector<SVGInlineTextBox*> m_lineLayoutBoxes;
+  // Logical iteration state.
+  const Vector<LayoutSVGInlineText*>& descendant_text_nodes_;
+  unsigned current_logical_text_node_index_;
+  unsigned logical_character_offset_;
+  unsigned logical_metrics_list_offset_;
 
-    SVGTextFragment m_currentTextFragment;
-    SVGInlineTextMetricsIterator m_visualMetricsIterator;
-    FloatPoint m_textPosition;
-    bool m_isVerticalText;
-    bool m_inPathLayout;
-    bool m_textLengthSpacingInEffect;
+  Vector<SVGInlineTextBox*> line_layout_boxes_;
 
-    // Text on path layout
-    std::unique_ptr<PathPositionMapper> m_textPath;
-    float m_textPathStartOffset;
-    float m_textPathCurrentOffset;
-    float m_textPathDisplacement;
-    float m_textPathSpacing;
-    float m_textPathScaling;
+  SVGTextFragment current_text_fragment_;
+  SVGInlineTextMetricsIterator visual_metrics_iterator_;
+  FloatPoint text_position_;
+  bool is_vertical_text_;
+  bool in_path_layout_;
+  bool text_length_spacing_in_effect_;
+
+  // Text on path layout
+  std::unique_ptr<PathPositionMapper> text_path_;
+  float text_path_start_offset_;
+  float text_path_current_offset_;
+  float text_path_displacement_;
+  float text_path_spacing_;
+  float text_path_scaling_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

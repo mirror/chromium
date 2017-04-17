@@ -5,10 +5,10 @@
 #ifndef LayoutAnalyzer_h
 #define LayoutAnalyzer_h
 
-#include "platform/LayoutUnit.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
 #include <memory>
+#include "platform/LayoutUnit.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -20,78 +20,80 @@ class TracedValue;
 // Usage:
 // LayoutAnalyzer::Scope analyzer(*this);
 class LayoutAnalyzer {
-    USING_FAST_MALLOC(LayoutAnalyzer);
-    WTF_MAKE_NONCOPYABLE(LayoutAnalyzer);
-public:
-    enum Counter {
-        LayoutBlockWidthChanged,
-        LayoutBlockHeightChanged,
-        LayoutBlockSizeChanged,
-        LayoutBlockSizeDidNotChange,
-        LayoutObjectsThatSpecifyColumns,
-        LayoutAnalyzerStackMaximumDepth,
-        LayoutObjectsThatAreFloating,
-        LayoutObjectsThatHaveALayer,
-        LayoutInlineObjectsThatAlwaysCreateLineBoxes,
-        LayoutObjectsThatHadNeverHadLayout,
-        LayoutObjectsThatAreOutOfFlowPositioned,
-        LayoutObjectsThatNeedPositionedMovementLayout,
-        PerformLayoutRootLayoutObjects,
-        LayoutObjectsThatNeedLayoutForThemselves,
-        LayoutObjectsThatNeedSimplifiedLayout,
-        LayoutObjectsThatAreTableCells,
-        LayoutObjectsThatAreTextAndCanNotUseTheSimpleFontCodePath,
-        CharactersInLayoutObjectsThatAreTextAndCanNotUseTheSimpleFontCodePath,
-        LayoutObjectsThatAreTextAndCanUseTheSimpleFontCodePath,
-        CharactersInLayoutObjectsThatAreTextAndCanUseTheSimpleFontCodePath,
-        TotalLayoutObjectsThatWereLaidOut,
-    };
-    static const size_t NumCounters = 21;
+  USING_FAST_MALLOC(LayoutAnalyzer);
+  WTF_MAKE_NONCOPYABLE(LayoutAnalyzer);
 
-    class Scope {
-        STACK_ALLOCATED();
-    public:
-        explicit Scope(const LayoutObject&);
-        ~Scope();
+ public:
+  enum Counter {
+    kLayoutBlockWidthChanged,
+    kLayoutBlockHeightChanged,
+    kLayoutBlockSizeChanged,
+    kLayoutBlockSizeDidNotChange,
+    kLayoutObjectsThatSpecifyColumns,
+    kLayoutAnalyzerStackMaximumDepth,
+    kLayoutObjectsThatAreFloating,
+    kLayoutObjectsThatHaveALayer,
+    kLayoutInlineObjectsThatAlwaysCreateLineBoxes,
+    kLayoutObjectsThatHadNeverHadLayout,
+    kLayoutObjectsThatAreOutOfFlowPositioned,
+    kLayoutObjectsThatNeedPositionedMovementLayout,
+    kPerformLayoutRootLayoutObjects,
+    kLayoutObjectsThatNeedLayoutForThemselves,
+    kLayoutObjectsThatNeedSimplifiedLayout,
+    kLayoutObjectsThatAreTableCells,
+    kLayoutObjectsThatAreTextAndCanNotUseTheSimpleFontCodePath,
+    kCharactersInLayoutObjectsThatAreTextAndCanNotUseTheSimpleFontCodePath,
+    kLayoutObjectsThatAreTextAndCanUseTheSimpleFontCodePath,
+    kCharactersInLayoutObjectsThatAreTextAndCanUseTheSimpleFontCodePath,
+    kTotalLayoutObjectsThatWereLaidOut,
+  };
+  static const size_t kNumCounters = 21;
 
-    private:
-        const LayoutObject& m_layoutObject;
-        LayoutAnalyzer* m_analyzer;
-    };
+  class Scope {
+    STACK_ALLOCATED();
 
-    class BlockScope {
-        STACK_ALLOCATED();
-    public:
-        explicit BlockScope(const LayoutBlock&);
-        ~BlockScope();
+   public:
+    explicit Scope(const LayoutObject&);
+    ~Scope();
 
-    private:
-        const LayoutBlock& m_block;
-        LayoutUnit m_width;
-        LayoutUnit m_height;
-    };
+   private:
+    const LayoutObject& layout_object_;
+    LayoutAnalyzer* analyzer_;
+  };
 
-    LayoutAnalyzer() { }
+  class BlockScope {
+    STACK_ALLOCATED();
 
-    void reset();
-    void push(const LayoutObject&);
-    void pop(const LayoutObject&);
+   public:
+    explicit BlockScope(const LayoutBlock&);
+    ~BlockScope();
 
-    void increment(Counter counter, unsigned delta = 1)
-    {
-        m_counters[counter] += delta;
-    }
+   private:
+    const LayoutBlock& block_;
+    LayoutUnit width_;
+    LayoutUnit height_;
+  };
 
-    std::unique_ptr<TracedValue> toTracedValue();
+  LayoutAnalyzer() {}
 
-private:
-    const char* nameForCounter(Counter) const;
+  void Reset();
+  void Push(const LayoutObject&);
+  void Pop(const LayoutObject&);
 
-    double m_startMs;
-    unsigned m_depth;
-    unsigned m_counters[NumCounters];
+  void Increment(Counter counter, unsigned delta = 1) {
+    counters_[counter] += delta;
+  }
+
+  std::unique_ptr<TracedValue> ToTracedValue();
+
+ private:
+  const char* NameForCounter(Counter) const;
+
+  double start_ms_;
+  unsigned depth_;
+  unsigned counters_[kNumCounters];
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutAnalyzer_h
+#endif  // LayoutAnalyzer_h

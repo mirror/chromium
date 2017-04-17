@@ -8,16 +8,28 @@
 #ifndef BASE_CALLBACK_INTERNAL_H_
 #define BASE_CALLBACK_INTERNAL_H_
 
-#include "base/atomic_ref_count.h"
 #include "base/base_export.h"
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 
 namespace base {
+
+struct FakeBindState;
+
 namespace internal {
+
 template <CopyMode copy_mode>
 class CallbackBase;
+
+class BindStateBase;
+
+template <typename Functor, typename... BoundArgs>
+struct BindState;
+
+struct BindStateBaseRefCountTraits {
+  static void Destruct(const BindStateBase*);
+};
 
 // BindStateBase is used to provide an opaque handle that the Callback
 // class can use to represent a function object with bound arguments.  It
@@ -30,24 +42,46 @@ class CallbackBase;
 // Creating a vtable for every BindState template instantiation results in a lot
 // of bloat. Its only task is to call the destructor which can be done with a
 // function pointer.
-class BindStateBase {
- protected:
-  explicit BindStateBase(void (*destructor)(BindStateBase*))
-      : ref_count_(0), destructor_(destructor) {}
-  ~BindStateBase() = default;
+class BASE_EXPORT BindStateBase
+    : public RefCountedThreadSafe<BindStateBase, BindStateBaseRefCountTraits> {
+ public:
+  REQUIRE_ADOPTION_FOR_REFCOUNTED_TYPE();
+
+  using InvokeFuncStorage = void(*)();
 
  private:
-  friend class scoped_refptr<BindStateBase>;
+  BindStateBase(InvokeFuncStorage polymorphic_invoke,
+                void (*destructor)(const BindStateBase*));
+  BindStateBase(InvokeFuncStorage polymorphic_invoke,
+                void (*destructor)(const BindStateBase*),
+                bool (*is_cancelled)(const BindStateBase*));
+
+  ~BindStateBase() = default;
+
+  friend struct BindStateBaseRefCountTraits;
+  friend class RefCountedThreadSafe<BindStateBase, BindStateBaseRefCountTraits>;
+
   template <CopyMode copy_mode>
   friend class CallbackBase;
 
-  void AddRef();
-  void Release();
+  // Whitelist subclasses that access the destructor of BindStateBase.
+  template <typename Functor, typename... BoundArgs>
+  friend struct BindState;
+  friend struct ::base::FakeBindState;
 
-  AtomicRefCount ref_count_;
+  bool IsCancelled() const {
+    return is_cancelled_(this);
+  }
+
+  // In C++, it is safe to cast function pointers to function pointers of
+  // another type. It is not okay to use void*. We create a InvokeFuncStorage
+  // that that can store our function pointer, and then cast it back to
+  // the original type on usage.
+  InvokeFuncStorage polymorphic_invoke_;
 
   // Pointer to a function that will properly destroy |this|.
-  void (*destructor_)(BindStateBase*);
+  void (*destructor_)(const BindStateBase*);
+  bool (*is_cancelled_)(const BindStateBase*);
 
   DISALLOW_COPY_AND_ASSIGN(BindStateBase);
 };
@@ -62,28 +96,36 @@ class BASE_EXPORT CallbackBase<CopyMode::MoveOnly> {
   CallbackBase(CallbackBase&& c);
   CallbackBase& operator=(CallbackBase&& c);
 
+  explicit CallbackBase(const CallbackBase<CopyMode::Copyable>& c);
+  CallbackBase& operator=(const CallbackBase<CopyMode::Copyable>& c);
+
+  explicit CallbackBase(CallbackBase<CopyMode::Copyable>&& c);
+  CallbackBase& operator=(CallbackBase<CopyMode::Copyable>&& c);
+
   // Returns true if Callback is null (doesn't refer to anything).
-  bool is_null() const { return bind_state_.get() == NULL; }
+  bool is_null() const { return !bind_state_; }
   explicit operator bool() const { return !is_null(); }
+
+  // Returns true if the callback invocation will be nop due to an cancellation.
+  // It's invalid to call this on uninitialized callback.
+  bool IsCancelled() const;
 
   // Returns the Callback into an uninitialized state.
   void Reset();
 
  protected:
-  // In C++, it is safe to cast function pointers to function pointers of
-  // another type. It is not okay to use void*. We create a InvokeFuncStorage
-  // that that can store our function pointer, and then cast it back to
-  // the original type on usage.
-  using InvokeFuncStorage = void(*)();
+  using InvokeFuncStorage = BindStateBase::InvokeFuncStorage;
 
   // Returns true if this callback equals |other|. |other| may be null.
   bool EqualsInternal(const CallbackBase& other) const;
 
   // Allow initializing of |bind_state_| via the constructor to avoid default
-  // initialization of the scoped_refptr.  We do not also initialize
-  // |polymorphic_invoke_| here because doing a normal assignment in the
-  // derived Callback templates makes for much nicer compiler errors.
+  // initialization of the scoped_refptr.
   explicit CallbackBase(BindStateBase* bind_state);
+
+  InvokeFuncStorage polymorphic_invoke() const {
+    return bind_state_->polymorphic_invoke_;
+  }
 
   // Force the destructor to be instantiated inside this translation unit so
   // that our subclasses will not get inlined versions.  Avoids more template
@@ -91,7 +133,6 @@ class BASE_EXPORT CallbackBase<CopyMode::MoveOnly> {
   ~CallbackBase();
 
   scoped_refptr<BindStateBase> bind_state_;
-  InvokeFuncStorage polymorphic_invoke_ = nullptr;
 };
 
 // CallbackBase<Copyable> is a direct base class of Copyable Callbacks.

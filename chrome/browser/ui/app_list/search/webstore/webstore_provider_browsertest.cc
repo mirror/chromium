@@ -169,10 +169,11 @@ class WebstoreProviderTest : public InProcessBrowserTest {
         base::Bind(&WebstoreProviderTest::HandleRequest,
                    base::Unretained(this)));
     ASSERT_TRUE(embedded_test_server()->Start());
+    // Minor hack: the gallery URL is expected not to end with a slash. Just
+    // append "path" to maintain this.
     base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-        ::switches::kAppsGalleryURL, embedded_test_server()->base_url().spec());
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kEnableExperimentalAppList);
+        ::switches::kAppsGalleryURL,
+        embedded_test_server()->base_url().spec() + "path");
 
     mock_controller_.reset(new AppListControllerDelegateForTest);
     webstore_provider_.reset(new WebstoreProvider(
@@ -218,7 +219,7 @@ class WebstoreProviderTest : public InProcessBrowserTest {
                      size_t expected_result_size) {
     ASSERT_EQ(expected_result_size, webstore_provider_->results().size());
     for (size_t i = 0; i < expected_result_size; ++i) {
-      const SearchResult* result = webstore_provider_->results()[i];
+      const SearchResult* result = (webstore_provider_->results()[i]).get();
       // A search for an installed app will return a general webstore search
       // instead of an app in the webstore.
       if (!strcmp(expected_results[i].id, kWebstoreUrlPlaceholder)) {

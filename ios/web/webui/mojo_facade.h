@@ -6,10 +6,11 @@
 #define IOS_WEB_WEBUI_MOJO_FACADE_H_
 
 #include <map>
+#include <memory>
 #include <string>
 
 #import "base/ios/weak_nsobject.h"
-#import "mojo/public/cpp/system/watcher.h"
+#include "mojo/public/cpp/system/simple_watcher.h"
 
 @protocol CRWJSInjectionEvaluator;
 
@@ -18,11 +19,11 @@ class DictionaryValue;
 class Value;
 }  // base
 
-namespace shell {
+namespace service_manager {
 namespace mojom {
 class InterfaceProvider;
 }  // mojom
-}  // shell
+}  // service_manager
 
 namespace web {
 
@@ -33,7 +34,7 @@ class MojoFacade {
  public:
   // Constructs MojoFacade. The calling code must retain the ownership of
   // |interface_provider| and |script_evaluator|, both can not be null.
-  MojoFacade(shell::mojom::InterfaceProvider* interface_provider,
+  MojoFacade(service_manager::mojom::InterfaceProvider* interface_provider,
              id<CRWJSInjectionEvaluator> script_evaluator);
   ~MojoFacade();
 
@@ -43,7 +44,7 @@ class MojoFacade {
   // a string representing the name of Mojo message and "args" is a dictionary
   // with arguments specific for each message name.
   // Supported message names with their handler methods in parenthesis:
-  //   service_provider.connectToService (HandleServiceProviderConnectToService)
+  //   interface_provider.getInterface (HandleInterfaceProviderGetInterface)
   //   core.close (HandleCoreClose)
   //   core.createMessagePipe (HandleCoreCreateMessagePipe)
   //   core.writeMessage (HandleCoreWriteMessage)
@@ -62,9 +63,10 @@ class MojoFacade {
       std::unique_ptr<base::DictionaryValue>* out_args);
 
   // Connects to specified Mojo interface. |args| is a dictionary which must
-  // contain "serviceName" key, which is a string representing a service name.
+  // contain "interfaceName" key, which is a string representing a interface
+  // name.
   // Returns MojoHandle as a number.
-  std::unique_ptr<base::Value> HandleServiceProviderConnectToService(
+  std::unique_ptr<base::Value> HandleInterfaceProviderGetInterface(
       const base::DictionaryValue* args);
 
   // Closes the given handle. |args| is a dictionary which must contain "handle"
@@ -124,14 +126,14 @@ class MojoFacade {
   std::unique_ptr<base::Value> HandleSupportCancelWatch(
       const base::DictionaryValue* args);
 
-  // Provides service interfaces.
-  shell::mojom::InterfaceProvider* interface_provider_;
+  // Provides interfaces.
+  service_manager::mojom::InterfaceProvider* interface_provider_;
   // Runs JavaScript on WebUI page.
   base::WeakNSProtocol<id<CRWJSInjectionEvaluator>> script_evaluator_;
   // Id of the last created watch.
   int last_watch_id_;
   // Currently active watches created through this facade.
-  std::map<int, mojo::Watcher> watchers_;
+  std::map<int, std::unique_ptr<mojo::SimpleWatcher>> watchers_;
 };
 
 }  // web

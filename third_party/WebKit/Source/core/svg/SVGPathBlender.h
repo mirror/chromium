@@ -21,32 +21,34 @@
 #define SVGPathBlender_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
-struct PathSegmentData;
 class SVGPathConsumer;
 class SVGPathByteStreamSource;
 
 class SVGPathBlender final {
-    WTF_MAKE_NONCOPYABLE(SVGPathBlender);
-    STACK_ALLOCATED();
-public:
-    SVGPathBlender(SVGPathByteStreamSource* fromSource, SVGPathByteStreamSource* toSource, SVGPathConsumer*);
+  WTF_MAKE_NONCOPYABLE(SVGPathBlender);
+  STACK_ALLOCATED();
 
-    bool addAnimatedPath(unsigned repeatCount);
-    bool blendAnimatedPath(float);
+ public:
+  SVGPathBlender(SVGPathByteStreamSource* from_source,
+                 SVGPathByteStreamSource* to_source,
+                 SVGPathConsumer*);
 
-private:
-    class BlendState;
-    bool blendAnimatedPath(BlendState&);
+  bool AddAnimatedPath(unsigned repeat_count);
+  bool BlendAnimatedPath(float);
 
-    SVGPathByteStreamSource* m_fromSource;
-    SVGPathByteStreamSource* m_toSource;
-    SVGPathConsumer* m_consumer;
+ private:
+  class BlendState;
+  bool BlendAnimatedPath(BlendState&);
+
+  SVGPathByteStreamSource* from_source_;
+  SVGPathByteStreamSource* to_source_;
+  SVGPathConsumer* consumer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGPathBlender_h
+#endif  // SVGPathBlender_h

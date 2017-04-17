@@ -5,6 +5,8 @@
 #ifndef MOJO_PUBLIC_CPP_BINDINGS_ARRAY_TRAITS_STL_H_
 #define MOJO_PUBLIC_CPP_BINDINGS_ARRAY_TRAITS_STL_H_
 
+#include <map>
+#include <set>
 #include <vector>
 
 #include "mojo/public/cpp/bindings/array_traits.h"
@@ -42,19 +44,82 @@ struct ArrayTraits<std::vector<T>> {
     return input[index];
   }
 
-  static bool Resize(std::vector<T>& input, size_t size) {
+  static inline bool Resize(std::vector<T>& input, size_t size) {
+    // Instead of calling std::vector<T>::resize() directly, this is a hack to
+    // make compilers happy. Some compilers (e.g., Mac, Android, Linux MSan)
+    // currently don't allow resizing types like
+    // std::vector<std::vector<MoveOnlyType>>.
+    // Because the deserialization code doesn't care about the original contents
+    // of |input|, we discard them directly.
+    //
+    // The "inline" keyword of this method matters. Without it, we have observed
+    // significant perf regression with some tests on Mac. crbug.com/631415
     if (input.size() != size) {
-      // This is a hack to make compilers for Mac and Android happy. They
-      // currently don't allow resizing types like
-      // std::vector<std::vector<MoveOnlyType>>.
-      // Because the deserialization code doesn't care about the original
-      // contents of |input|, we discard them directly.
       std::vector<T> temp(size);
       input.swap(temp);
     }
 
     return true;
   }
+};
+
+// This ArrayTraits specialization is used only for serialization.
+template <typename T>
+struct ArrayTraits<std::set<T>> {
+  using Element = T;
+  using ConstIterator = typename std::set<T>::const_iterator;
+
+  static bool IsNull(const std::set<T>& input) {
+    // std::set<> is always converted to non-null mojom array.
+    return false;
+  }
+
+  static size_t GetSize(const std::set<T>& input) { return input.size(); }
+
+  static ConstIterator GetBegin(const std::set<T>& input) {
+    return input.begin();
+  }
+  static void AdvanceIterator(ConstIterator& iterator) {
+    ++iterator;
+  }
+  static const T& GetValue(ConstIterator& iterator) {
+    return *iterator;
+  }
+};
+
+template <typename K, typename V>
+struct MapValuesArrayView {
+  explicit MapValuesArrayView(const std::map<K, V>& map) : map(map) {}
+  const std::map<K, V>& map;
+};
+
+// Convenience function to create a MapValuesArrayView<> that infers the
+// template arguments from its argument type.
+template <typename K, typename V>
+MapValuesArrayView<K, V> MapValuesToArray(const std::map<K, V>& map) {
+  return MapValuesArrayView<K, V>(map);
+}
+
+// This ArrayTraits specialization is used only for serialization and converts
+// a map<K, V> into an array<V>, discarding the keys.
+template <typename K, typename V>
+struct ArrayTraits<MapValuesArrayView<K, V>> {
+  using Element = V;
+  using ConstIterator = typename std::map<K, V>::const_iterator;
+
+  static bool IsNull(const MapValuesArrayView<K, V>& input) {
+    // std::map<> is always converted to non-null mojom array.
+    return false;
+  }
+
+  static size_t GetSize(const MapValuesArrayView<K, V>& input) {
+    return input.map.size();
+  }
+  static ConstIterator GetBegin(const MapValuesArrayView<K, V>& input) {
+    return input.map.begin();
+  }
+  static void AdvanceIterator(ConstIterator& iterator) { ++iterator; }
+  static const V& GetValue(ConstIterator& iterator) { return iterator->second; }
 };
 
 }  // namespace mojo

@@ -31,12 +31,13 @@
 #ifndef ThreadableLoader_h
 #define ThreadableLoader_h
 
-#include "core/CoreExport.h"
-#include "core/fetch/ResourceLoaderOptions.h"
-#include "platform/CrossThreadCopier.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
 #include <memory>
+#include "core/CoreExport.h"
+#include "platform/CrossThreadCopier.h"
+#include "platform/heap/Handle.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -45,149 +46,156 @@ class ExecutionContext;
 class ThreadableLoaderClient;
 
 enum CrossOriginRequestPolicy {
-    DenyCrossOriginRequests,
-    UseAccessControl,
-    AllowCrossOriginRequests
+  kDenyCrossOriginRequests,
+  kUseAccessControl,
+  kAllowCrossOriginRequests
 };
 
-enum PreflightPolicy {
-    ConsiderPreflight,
-    ForcePreflight,
-    PreventPreflight
-};
+enum PreflightPolicy { kConsiderPreflight, kForcePreflight, kPreventPreflight };
 
 enum ContentSecurityPolicyEnforcement {
-    EnforceContentSecurityPolicy,
-    DoNotEnforceContentSecurityPolicy,
+  kEnforceContentSecurityPolicy,
+  kDoNotEnforceContentSecurityPolicy,
 };
 
 struct ThreadableLoaderOptions {
-    DISALLOW_NEW();
-    ThreadableLoaderOptions()
-        : preflightPolicy(ConsiderPreflight)
-        , crossOriginRequestPolicy(DenyCrossOriginRequests)
-        , contentSecurityPolicyEnforcement(EnforceContentSecurityPolicy)
-        , timeoutMilliseconds(0) { }
+  DISALLOW_NEW();
+  ThreadableLoaderOptions()
+      : preflight_policy(kConsiderPreflight),
+        cross_origin_request_policy(kDenyCrossOriginRequests),
+        content_security_policy_enforcement(kEnforceContentSecurityPolicy),
+        timeout_milliseconds(0) {}
 
-    // When adding members, CrossThreadThreadableLoaderOptionsData should
-    // be updated.
-    PreflightPolicy preflightPolicy; // If AccessControl is used, how to determine if a preflight is needed.
-    CrossOriginRequestPolicy crossOriginRequestPolicy;
-    AtomicString initiator;
-    ContentSecurityPolicyEnforcement contentSecurityPolicyEnforcement;
-    unsigned long timeoutMilliseconds;
+  // When adding members, CrossThreadThreadableLoaderOptionsData should
+  // be updated.
+
+  // If AccessControl is used, how to determine if a preflight is needed.
+  PreflightPolicy preflight_policy;
+
+  CrossOriginRequestPolicy cross_origin_request_policy;
+  AtomicString initiator;
+  ContentSecurityPolicyEnforcement content_security_policy_enforcement;
+  unsigned long timeout_milliseconds;
 };
 
 // Encode AtomicString as String to cross threads.
 struct CrossThreadThreadableLoaderOptionsData {
-    STACK_ALLOCATED();
-    explicit CrossThreadThreadableLoaderOptionsData(const ThreadableLoaderOptions& options)
-        : preflightPolicy(options.preflightPolicy)
-        , crossOriginRequestPolicy(options.crossOriginRequestPolicy)
-        , initiator(options.initiator.getString().isolatedCopy())
-        , contentSecurityPolicyEnforcement(options.contentSecurityPolicyEnforcement)
-        , timeoutMilliseconds(options.timeoutMilliseconds) { }
+  STACK_ALLOCATED();
+  explicit CrossThreadThreadableLoaderOptionsData(
+      const ThreadableLoaderOptions& options)
+      : preflight_policy(options.preflight_policy),
+        cross_origin_request_policy(options.cross_origin_request_policy),
+        initiator(options.initiator.GetString().IsolatedCopy()),
+        content_security_policy_enforcement(
+            options.content_security_policy_enforcement),
+        timeout_milliseconds(options.timeout_milliseconds) {}
 
-    operator ThreadableLoaderOptions() const
-    {
-        ThreadableLoaderOptions options;
-        options.preflightPolicy = preflightPolicy;
-        options.crossOriginRequestPolicy = crossOriginRequestPolicy;
-        options.initiator = AtomicString(initiator);
-        options.contentSecurityPolicyEnforcement = contentSecurityPolicyEnforcement;
-        options.timeoutMilliseconds = timeoutMilliseconds;
-        return options;
-    }
+  operator ThreadableLoaderOptions() const {
+    ThreadableLoaderOptions options;
+    options.preflight_policy = preflight_policy;
+    options.cross_origin_request_policy = cross_origin_request_policy;
+    options.initiator = AtomicString(initiator);
+    options.content_security_policy_enforcement =
+        content_security_policy_enforcement;
+    options.timeout_milliseconds = timeout_milliseconds;
+    return options;
+  }
 
-    PreflightPolicy preflightPolicy;
-    CrossOriginRequestPolicy crossOriginRequestPolicy;
-    String initiator;
-    ContentSecurityPolicyEnforcement contentSecurityPolicyEnforcement;
-    unsigned long timeoutMilliseconds;
+  PreflightPolicy preflight_policy;
+  CrossOriginRequestPolicy cross_origin_request_policy;
+  String initiator;
+  ContentSecurityPolicyEnforcement content_security_policy_enforcement;
+  unsigned long timeout_milliseconds;
 };
 
 template <>
 struct CrossThreadCopier<ThreadableLoaderOptions> {
-    typedef CrossThreadThreadableLoaderOptionsData Type;
-    static Type copy(const ThreadableLoaderOptions& options)
-    {
-        return CrossThreadThreadableLoaderOptionsData(options);
-    }
+  typedef CrossThreadThreadableLoaderOptionsData Type;
+  static Type Copy(const ThreadableLoaderOptions& options) {
+    return CrossThreadThreadableLoaderOptionsData(options);
+  }
 };
 
-// Useful for doing loader operations from any thread (not threadsafe,
-// just able to run on threads other than the main thread).
+// Useful for doing loader operations from any thread (not threadsafe, just able
+// to run on threads other than the main thread).
 //
 // Arguments common to both loadResourceSynchronously() and create():
 //
 // - ThreadableLoaderOptions argument configures this ThreadableLoader's
 //   behavior.
 //
-// - ResourceLoaderOptions argument will be passed to the FetchRequest
+// - ResourceLoaderOptions argument will be passed to the FetchParameters
 //   that this ThreadableLoader creates. It can be altered e.g. when
 //   redirect happens.
-class CORE_EXPORT ThreadableLoader {
-    WTF_MAKE_NONCOPYABLE(ThreadableLoader);
-public:
-    // ThreadableLoaderClient methods may not destroy the ThreadableLoader
-    // instance in them.
-    static void loadResourceSynchronously(ExecutionContext&, const ResourceRequest&, ThreadableLoaderClient&, const ThreadableLoaderOptions&, const ResourceLoaderOptions&);
+class CORE_EXPORT ThreadableLoader
+    : public GarbageCollectedFinalized<ThreadableLoader> {
+  WTF_MAKE_NONCOPYABLE(ThreadableLoader);
 
-    // This method never returns nullptr.
-    //
-    // This method must always be followed by start() call.
-    // ThreadableLoaderClient methods are never called before start() call.
-    //
-    // The async loading feature is separated into the create() method and
-    // and the start() method in order to:
-    // - reduce work done in a constructor
-    // - not to ask the users to handle failures in the constructor and other
-    //   async failures separately
-    //
-    // Loading completes when one of the following methods are called:
-    // - didFinishLoading()
-    // - didFail()
-    // - didFailAccessControlCheck()
-    // - didFailRedirectCheck()
-    // After any of these methods is called, the loader won't call any of the
-    // ThreadableLoaderClient methods.
-    //
-    // A user must guarantee that the loading completes before the attached
-    // client gets invalid. Also, a user must guarantee that the loading
-    // completes before the ThreadableLoader is destructed.
-    //
-    // When ThreadableLoader::cancel() is called,
-    // ThreadableLoaderClient::didFail() is called with a ResourceError
-    // with isCancellation() returning true, if any of didFinishLoading()
-    // or didFail.*() methods have not been called yet. (didFail() may be
-    // called with a ResourceError with isCancellation() returning true
-    // also for cancellation happened inside the loader.)
-    //
-    // ThreadableLoaderClient methods:
-    // - may call cancel()
-    // - can destroy the ThreadableLoader instance in them (by clearing
-    //   std::unique_ptr<ThreadableLoader>).
-    static std::unique_ptr<ThreadableLoader> create(ExecutionContext&, ThreadableLoaderClient*, const ThreadableLoaderOptions&, const ResourceLoaderOptions&);
+ public:
+  static void LoadResourceSynchronously(ExecutionContext&,
+                                        const ResourceRequest&,
+                                        ThreadableLoaderClient&,
+                                        const ThreadableLoaderOptions&,
+                                        const ResourceLoaderOptions&);
 
-    // The methods on the ThreadableLoaderClient passed on create() call
-    // may be called synchronous to start() call.
-    virtual void start(const ResourceRequest&) = 0;
+  // This method never returns nullptr.
+  //
+  // This method must always be followed by start() call.
+  // ThreadableLoaderClient methods are never called before start() call.
+  //
+  // The async loading feature is separated into the create() method and
+  // and the start() method in order to:
+  // - reduce work done in a constructor
+  // - not to ask the users to handle failures in the constructor and other
+  //   async failures separately
+  //
+  // Loading completes when one of the following methods are called:
+  // - didFinishLoading()
+  // - didFail()
+  // - didFailAccessControlCheck()
+  // - didFailRedirectCheck()
+  // After any of these methods is called, the loader won't call any of the
+  // ThreadableLoaderClient methods.
+  //
+  // A user must guarantee that the loading completes before the attached
+  // client gets invalid. Also, a user must guarantee that the loading
+  // completes before the ThreadableLoader is destructed.
+  //
+  // When ThreadableLoader::cancel() is called,
+  // ThreadableLoaderClient::didFail() is called with a ResourceError
+  // with isCancellation() returning true, if any of didFinishLoading()
+  // or didFail.*() methods have not been called yet. (didFail() may be
+  // called with a ResourceError with isCancellation() returning true
+  // also for cancellation happened inside the loader.)
+  //
+  // ThreadableLoaderClient methods may call cancel().
+  static ThreadableLoader* Create(ExecutionContext&,
+                                  ThreadableLoaderClient*,
+                                  const ThreadableLoaderOptions&,
+                                  const ResourceLoaderOptions&);
 
-    // A ThreadableLoader may have a timeout specified. It is possible, in some cases, for
-    // the timeout to be overridden after the request is sent (for example, XMLHttpRequests
-    // may override their timeout setting after sending).
-    //
-    // Set a new timeout relative to the time the request started, in milliseconds.
-    virtual void overrideTimeout(unsigned long timeoutMilliseconds) = 0;
+  // The methods on the ThreadableLoaderClient passed on create() call
+  // may be called synchronous to start() call.
+  virtual void Start(const ResourceRequest&) = 0;
 
-    virtual void cancel() = 0;
+  // A ThreadableLoader may have a timeout specified. It is possible, in some
+  // cases, for the timeout to be overridden after the request is sent (for
+  // example, XMLHttpRequests may override their timeout setting after sending).
+  //
+  // Set a new timeout relative to the time the request started, in
+  // milliseconds.
+  virtual void OverrideTimeout(unsigned long timeout_milliseconds) = 0;
 
-    virtual ~ThreadableLoader() { }
+  virtual void Cancel() = 0;
 
-protected:
-    ThreadableLoader() { }
+  virtual ~ThreadableLoader() {}
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
+
+ protected:
+  ThreadableLoader() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ThreadableLoader_h
+#endif  // ThreadableLoader_h

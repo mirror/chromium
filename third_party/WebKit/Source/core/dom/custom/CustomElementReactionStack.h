@@ -5,9 +5,10 @@
 #ifndef CustomElementReactionStack_h
 #define CustomElementReactionStack_h
 
+#include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -17,32 +18,50 @@ class Element;
 
 // https://html.spec.whatwg.org/multipage/scripting.html#custom-element-reactions
 class CORE_EXPORT CustomElementReactionStack final
-    : public GarbageCollected<CustomElementReactionStack> {
-    WTF_MAKE_NONCOPYABLE(CustomElementReactionStack);
-public:
-    CustomElementReactionStack();
+    : public GarbageCollected<CustomElementReactionStack>,
+      public TraceWrapperBase {
+  WTF_MAKE_NONCOPYABLE(CustomElementReactionStack);
 
-    DECLARE_TRACE();
+ public:
+  CustomElementReactionStack();
 
-    void push();
-    void popInvokingReactions();
-    void enqueueToCurrentQueue(Element*, CustomElementReaction*);
-    void enqueueToBackupQueue(Element*, CustomElementReaction*);
+  DECLARE_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
-private:
-    using ElementReactionQueueMap =
-        HeapHashMap<Member<Element>, Member<CustomElementReactionQueue>>;
-    ElementReactionQueueMap m_map;
+  void Push();
+  void PopInvokingReactions();
+  void EnqueueToCurrentQueue(Element*, CustomElementReaction*);
+  void EnqueueToBackupQueue(Element*, CustomElementReaction*);
+  void ClearQueue(Element*);
 
-    using ElementQueue = HeapVector<Member<Element>, 1>;
-    HeapVector<Member<ElementQueue>> m_stack;
-    Member<ElementQueue> m_backupQueue;
+  static CustomElementReactionStack& Current();
 
-    void invokeBackupQueue();
-    void invokeReactions(ElementQueue&);
-    void enqueue(Member<ElementQueue>&, Element*, CustomElementReaction*);
+ private:
+  friend class CustomElementReactionStackTestSupport;
+
+  using ElementReactionQueueMap =
+      HeapHashMap<TraceWrapperMember<Element>,
+                  Member<CustomElementReactionQueue>>;
+  ElementReactionQueueMap map_;
+
+  using ElementQueue = HeapVector<Member<Element>, 1>;
+  HeapVector<Member<ElementQueue>> stack_;
+  Member<ElementQueue> backup_queue_;
+
+  void InvokeBackupQueue();
+  void InvokeReactions(ElementQueue&);
+  void Enqueue(Member<ElementQueue>&, Element*, CustomElementReaction*);
 };
 
-} // namespace blink
+class CORE_EXPORT CustomElementReactionStackTestSupport final {
+ private:
+  friend class ResetCustomElementReactionStackForTest;
 
-#endif // CustomElementReactionStack_h
+  CustomElementReactionStackTestSupport() = delete;
+  static CustomElementReactionStack* SetCurrentForTest(
+      CustomElementReactionStack*);
+};
+
+}  // namespace blink
+
+#endif  // CustomElementReactionStack_h

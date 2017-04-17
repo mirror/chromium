@@ -10,15 +10,15 @@
 #include "base/mac/scoped_nsautorelease_pool.h"
 #include "base/metrics/histogram.h"
 #include "components/printing/common/print_messages.h"
+#include "printing/features/features.h"
 #include "printing/metafile_skia_wrapper.h"
 #include "printing/page_size_margins.h"
 #include "third_party/WebKit/public/platform/WebCanvas.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
-#include "third_party/skia/include/core/SkCanvas.h"
 
 namespace printing {
 
-#if defined(ENABLE_BASIC_PRINTING)
+#if BUILDFLAG(ENABLE_BASIC_PRINTING)
 bool PrintWebViewHelper::PrintPagesNative(blink::WebLocalFrame* frame,
                                           int page_count) {
   const PrintMsg_PrintPages_Params& params = *print_pages_params_;
@@ -28,33 +28,35 @@ bool PrintWebViewHelper::PrintPagesNative(blink::WebLocalFrame* frame,
   if (printed_pages.empty())
     return false;
 
-  PrintMsg_PrintPage_Params page_params;
-  page_params.params = print_params;
-  for (int page_number : printed_pages) {
-    page_params.page_number = page_number;
-    PrintPageInternal(page_params, frame);
+  if (delegate_->UseSingleMetafile()) {
+    PrintPagesInternal(print_params, printed_pages, frame);
+    return true;
   }
+
+  for (int page_number : printed_pages)
+    PrintPagesInternal(print_params, std::vector<int>{page_number}, frame);
   return true;
 }
-#endif  // defined(ENABLE_BASIC_PRINTING)
+#endif  // BUILDFLAG(ENABLE_BASIC_PRINTING)
 
-void PrintWebViewHelper::PrintPageInternal(
-    const PrintMsg_PrintPage_Params& params,
+void PrintWebViewHelper::PrintPagesInternal(
+    const PrintMsg_Print_Params& params,
+    const std::vector<int>& printed_pages,
     blink::WebLocalFrame* frame) {
   PdfMetafileSkia metafile(PDF_SKIA_DOCUMENT_TYPE);
   CHECK(metafile.Init());
 
-  int page_number = params.page_number;
   gfx::Size page_size_in_dpi;
   gfx::Rect content_area_in_dpi;
-  RenderPage(print_pages_params_->params, page_number, frame, false, &metafile,
-             &page_size_in_dpi, &content_area_in_dpi);
+  for (int page_number : printed_pages) {
+    RenderPage(params, page_number, frame, false, &metafile, &page_size_in_dpi,
+               &content_area_in_dpi);
+  }
   metafile.FinishDocument();
 
   PrintHostMsg_DidPrintPage_Params page_params;
   page_params.data_size = metafile.GetDataSize();
-  page_params.page_number = page_number;
-  page_params.document_cookie = params.params.document_cookie;
+  page_params.document_cookie = params.document_cookie;
   page_params.page_size = page_size_in_dpi;
   page_params.content_area = content_area_in_dpi;
 
@@ -65,10 +67,14 @@ void PrintWebViewHelper::PrintPageInternal(
     page_params.data_size = 0;
   }
 
-  Send(new PrintHostMsg_DidPrintPage(routing_id(), page_params));
+  for (int page_number : printed_pages) {
+    page_params.page_number = page_number;
+    Send(new PrintHostMsg_DidPrintPage(routing_id(), page_params));
+    page_params.metafile_data_handle = base::SharedMemoryHandle();
+  }
 }
 
-#if defined(ENABLE_PRINT_PREVIEW)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
 bool PrintWebViewHelper::RenderPreviewPage(
     int page_number,
     const PrintMsg_Print_Params& print_params) {
@@ -105,7 +111,7 @@ bool PrintWebViewHelper::RenderPreviewPage(
   }
   return PreviewPageRendered(page_number, draft_metafile.get());
 }
-#endif  // defined(ENABLE_PRINT_PREVIEW)
+#endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
 void PrintWebViewHelper::RenderPage(const PrintMsg_Print_Params& params,
                                     int page_number,
@@ -114,8 +120,9 @@ void PrintWebViewHelper::RenderPage(const PrintMsg_Print_Params& params,
                                     PdfMetafileSkia* metafile,
                                     gfx::Size* page_size,
                                     gfx::Rect* content_rect) {
-  double scale_factor = 1.0f;
-  double webkit_shrink_factor = frame->getPrintPageShrink(page_number);
+  double scale_factor =
+      params.scale_factor >= kEpsilon ? params.scale_factor : 1.0f;
+  double webkit_shrink_factor = frame->GetPrintPageShrink(page_number);
   PageSizeMargins page_layout_in_points;
   gfx::Rect content_area;
 
@@ -133,21 +140,21 @@ void PrintWebViewHelper::RenderPage(const PrintMsg_Print_Params& params,
       params.display_header_footer ? gfx::Rect(*page_size) : content_area;
 
   {
-    SkCanvas* canvas = metafile->GetVectorCanvasForNewPage(
+    cc::PaintCanvas* canvas = metafile->GetVectorCanvasForNewPage(
         *page_size, canvas_area, scale_factor);
     if (!canvas)
       return;
 
-    MetafileSkiaWrapper::SetMetafileOnCanvas(*canvas, metafile);
-    skia::SetIsPreviewMetafile(*canvas, is_preview);
-#if defined(ENABLE_PRINT_PREVIEW)
+    MetafileSkiaWrapper::SetMetafileOnCanvas(canvas, metafile);
+    cc::SetIsPreviewMetafile(canvas, is_preview);
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
     if (params.display_header_footer) {
       PrintHeaderAndFooter(static_cast<blink::WebCanvas*>(canvas),
                            page_number + 1,
                            print_preview_context_.total_page_count(), *frame,
                            scale_factor, page_layout_in_points, params);
     }
-#endif  // defined(ENABLE_PRINT_PREVIEW)
+#endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
     RenderPageContent(frame, page_number, canvas_area, content_area,
                       scale_factor, static_cast<blink::WebCanvas*>(canvas));
   }

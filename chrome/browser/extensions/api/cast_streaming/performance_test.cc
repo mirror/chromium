@@ -13,7 +13,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/test/trace_event_analyzer.h"
 #include "base/time/default_tick_clock.h"
-#include "base/win/windows_version.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/tab_helper.h"
@@ -26,11 +25,6 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/common/content_switches.h"
-#include "extensions/common/feature_switch.h"
-#include "extensions/common/features/base_feature_provider.h"
-#include "extensions/common/features/complex_feature.h"
-#include "extensions/common/features/feature.h"
-#include "extensions/common/features/simple_feature.h"
 #include "extensions/common/switches.h"
 #include "extensions/test/extension_test_message_listener.h"
 #include "media/base/audio_bus.h"
@@ -47,11 +41,16 @@
 #include "net/base/ip_endpoint.h"
 #include "net/base/net_errors.h"
 #include "net/base/rand_callback.h"
-#include "net/udp/udp_server_socket.h"
+#include "net/log/net_log_source.h"
+#include "net/socket/udp_server_socket.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/perf/perf_test.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/gl/gl_switches.h"
+
+#if defined(OS_WIN)
+#include "base/win/windows_version.h"
+#endif
 
 namespace {
 
@@ -336,7 +335,7 @@ class CastV2PerformanceTest
     // Method: Bind a UDP socket on port 0, and then check which port the
     // operating system assigned to it.
     std::unique_ptr<net::UDPServerSocket> receive_socket(
-        new net::UDPServerSocket(NULL, net::NetLog::Source()));
+        new net::UDPServerSocket(NULL, net::NetLogSource()));
     receive_socket->AllowAddressReuse();
     CHECK_EQ(net::OK, receive_socket->Listen(
                           net::IPEndPoint(net::IPAddress::IPv4Localhost(), 0)));

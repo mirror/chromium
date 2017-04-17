@@ -4,18 +4,11 @@
 
 /**
  * @fileoverview
- * 'settings-bluetooth-page' is the settings page for managing bluetooth
- *  properties and devices.
- *
- * Example:
- *    <core-animated-pages>
- *      <settings-bluetooth-page>
- *      </settings-bluetooth-page>
- *      ... other pages ...
- *    </core-animated-pages>
+ * 'Settings page for managing bluetooth properties and devices. This page
+ * just provodes a summary and link to the subpage.
  */
 
-var bluetoothPage = bluetoothPage || {
+var bluetoothApis = bluetoothApis || {
   /**
    * Set this to provide a fake implementation for testing.
    * @type {Bluetooth}
@@ -32,69 +25,7 @@ var bluetoothPage = bluetoothPage || {
 Polymer({
   is: 'settings-bluetooth-page',
 
-  behaviors: [
-    I18nBehavior,
-  ],
-
   properties: {
-    /** The current active route. */
-    currentRoute: {
-      type: Object,
-      notify: true,
-    },
-
-    /** Whether bluetooth is enabled. */
-    bluetoothEnabled: {
-      type: Boolean,
-      value: false,
-      observer: 'bluetoothEnabledChanged_',
-    },
-
-    /** Whether the device list is expanded. */
-    deviceListExpanded: {
-      type: Boolean,
-      value: false,
-    },
-
-    /**
-     * The cached bluetooth adapter state.
-     * @type {!chrome.bluetooth.AdapterState|undefined}
-     */
-    adapterState: Object,
-
-    /**
-     * The ordered list of bluetooth devices.
-     * @type {!Array<!chrome.bluetooth.Device>}
-     */
-    deviceList: {
-      type: Array,
-      value: function() { return []; },
-    },
-
-    /**
-     * Set to the name of the dialog to show. This page uses a single
-     * paper-dialog to host one of three dialog elements, 'addDevice',
-     * 'pairDevice', or 'connectError'. This allows a seamless transition
-     * between dialogs. Note: This property should be set before opening the
-     * dialog and setting the property will not itself cause the dialog to open.
-     */
-    dialogId: String,
-
-    /**
-     * Current Pairing device.
-     * @type {?chrome.bluetooth.Device|undefined}
-     */
-    pairingDevice: Object,
-
-    /**
-     * Current Pairing event.
-     * @type {?chrome.bluetoothPrivate.PairingEvent|undefined}
-     */
-    pairingEvent: Object,
-
-    /** The translated error message to show when a connect error occurs. */
-    errorMessage: String,
-
     /** Preferences state. */
     prefs: {
       type: Object,
@@ -102,8 +33,42 @@ Polymer({
     },
 
     /**
+     * Reflects the current state of the toggle buttons (in this page and the
+     * subpage). This will be set when the adapter state change or when the user
+     * changes the toggle.
+     * @private
+     */
+    bluetoothToggleState_: {
+      type: Boolean,
+      observer: 'bluetoothToggleStateChanged_',
+    },
+
+    /**
+     * Set to true before the adapter state is received, when the adapter is
+     * unavailable, and while an adapter state change is requested. This
+     * prevents user changes while a change is in progress or when the adapter
+     * is not available.
+     * @private
+     */
+    bluetoothToggleDisabled_: {
+      type: Boolean,
+      value: true,
+    },
+
+    /**
+     * The cached bluetooth adapter state.
+     * @type {!chrome.bluetooth.AdapterState|undefined}
+     * @private
+     */
+    adapterState_: {
+      type: Object,
+      notify: true,
+    },
+
+    /**
      * Interface for bluetooth calls. May be overriden by tests.
      * @type {Bluetooth}
+     * @private
      */
     bluetooth: {
       type: Object,
@@ -113,12 +78,15 @@ Polymer({
     /**
      * Interface for bluetoothPrivate calls. May be overriden by tests.
      * @type {BluetoothPrivate}
+     * @private
      */
     bluetoothPrivate: {
       type: Object,
       value: chrome.bluetoothPrivate,
     },
   },
+
+  observers: ['deviceListChanged_(deviceList_.*)'],
 
   /**
    * Listener for chrome.bluetooth.onAdapterStateChanged events.
@@ -127,33 +95,12 @@ Polymer({
    */
   bluetoothAdapterStateChangedListener_: undefined,
 
-  /**
-   * Listener for chrome.bluetooth.onBluetoothDeviceAdded/Changed events.
-   * @type {function(!chrome.bluetooth.Device)|undefined}
-   * @private
-   */
-  bluetoothDeviceUpdatedListener_: undefined,
-
-  /**
-   * Listener for chrome.bluetooth.onBluetoothDeviceRemoved events.
-   * @type {function(!chrome.bluetooth.Device)|undefined}
-   * @private
-   */
-  bluetoothDeviceRemovedListener_: undefined,
-
-  /**
-   * Listener for chrome.bluetoothPrivate.onPairing events.
-   * @type {function(!chrome.bluetoothPrivate.PairingEvent)|undefined}
-   * @private
-   */
-  bluetoothPrivateOnPairingListener_: undefined,
-
   /** @override */
   ready: function() {
-    if (bluetoothPage.bluetoothApiForTest)
-      this.bluetooth = bluetoothPage.bluetoothApiForTest;
-    if (bluetoothPage.bluetoothPrivateApiForTest)
-      this.bluetoothPrivate = bluetoothPage.bluetoothPrivateApiForTest;
+    if (bluetoothApis.bluetoothApiForTest)
+      this.bluetooth = bluetoothApis.bluetoothApiForTest;
+    if (bluetoothApis.bluetoothPrivateApiForTest)
+      this.bluetoothPrivate = bluetoothApis.bluetoothPrivateApiForTest;
   },
 
   /** @override */
@@ -162,18 +109,6 @@ Polymer({
         this.onBluetoothAdapterStateChanged_.bind(this);
     this.bluetooth.onAdapterStateChanged.addListener(
         this.bluetoothAdapterStateChangedListener_);
-
-    this.bluetoothDeviceUpdatedListener_ =
-        this.onBluetoothDeviceUpdated_.bind(this);
-    this.bluetooth.onDeviceAdded.addListener(
-        this.bluetoothDeviceUpdatedListener_);
-    this.bluetooth.onDeviceChanged.addListener(
-        this.bluetoothDeviceUpdatedListener_);
-
-    this.bluetoothDeviceRemovedListener_ =
-        this.onBluetoothDeviceRemoved_.bind(this);
-    this.bluetooth.onDeviceRemoved.addListener(
-        this.bluetoothDeviceRemovedListener_);
 
     // Request the inital adapter state.
     this.bluetooth.getAdapterState(this.bluetoothAdapterStateChangedListener_);
@@ -185,62 +120,27 @@ Polymer({
       this.bluetooth.onAdapterStateChanged.removeListener(
           this.bluetoothAdapterStateChangedListener_);
     }
-    if (this.bluetoothDeviceUpdatedListener_) {
-      this.bluetooth.onDeviceAdded.removeListener(
-          this.bluetoothDeviceUpdatedListener_);
-      this.bluetooth.onDeviceChanged.removeListener(
-          this.bluetoothDeviceUpdatedListener_);
-    }
-    if (this.bluetoothDeviceRemovedListener_) {
-      this.bluetooth.onDeviceRemoved.removeListener(
-          this.bluetoothDeviceRemovedListener_);
-    }
-  },
-
-  bluetoothEnabledChanged_: function() {
-    // When bluetooth is enabled, auto-expand the device list.
-    if (this.bluetoothEnabled)
-      this.deviceListExpanded = true;
   },
 
   /**
-   * @param {boolean} bluetoothEnabled
-   * @param {boolean} deviceListExpanded
-   * @return {boolean} Whether the <iron-collapse> can be shown.
+   * @return {string}
    * @private
    */
-  canShowDeviceList_: function(bluetoothEnabled, deviceListExpanded) {
-    return bluetoothEnabled && deviceListExpanded;
+  getIcon_: function() {
+    if (!this.bluetoothToggleState_)
+      return 'settings:bluetooth-disabled';
+    return 'settings:bluetooth';
   },
 
   /**
-   * If bluetooth is enabled, request the complete list of devices and update
-   * |deviceList|.
+   * @param {boolean} enabled
+   * @param {string} onstr
+   * @param {string} offstr
+   * @return {string}
    * @private
    */
-  updateDeviceList_: function() {
-    if (!this.bluetoothEnabled) {
-      this.deviceList = [];
-      return;
-    }
-    this.bluetooth.getDevices(function(devices) {
-      this.deviceList = devices;
-    }.bind(this));
-  },
-
-  /**
-   * Event called when a user action changes the bluetoothEnabled state.
-   * @private
-   */
-  onBluetoothEnabledChange_: function() {
-    this.bluetoothPrivate.setAdapterState(
-        {powered: this.bluetoothEnabled}, function() {
-          if (chrome.runtime.lastError) {
-            console.error(
-                'Error enabling bluetooth: ' +
-                chrome.runtime.lastError.message);
-          }
-        });
+  getOnOffString_: function(enabled, onstr, offstr) {
+    return enabled ? onstr : offstr;
   },
 
   /**
@@ -249,299 +149,57 @@ Polymer({
    * @private
    */
   onBluetoothAdapterStateChanged_: function(state) {
-    this.adapterState = state;
-    this.bluetoothEnabled = state.powered;
-    this.updateDeviceList_();
-  },
-
-  /**
-   * Process bluetooth.onDeviceAdded and onDeviceChanged events.
-   * @param {!chrome.bluetooth.Device} device
-   * @private
-   */
-  onBluetoothDeviceUpdated_: function(device) {
-    var address = device.address;
-    if (this.dialogId && this.pairingDevice &&
-        this.pairingDevice.address == address) {
-      this.pairingDevice = device;
-    }
-    var index = this.getDeviceIndex_(address);
-    if (index >= 0) {
-      // Use splice to update the item in order to update the dom-repeat lists.
-      // See https://github.com/Polymer/polymer/issues/3254.
-      this.splice('deviceList', index, 1, device);
-      return;
-    }
-    this.push('deviceList', device);
-  },
-
-  /**
-   * Process bluetooth.onDeviceRemoved events.
-   * @param {!chrome.bluetooth.Device} device
-   * @private
-   */
-  onBluetoothDeviceRemoved_: function(device) {
-    var address = device.address;
-    var index = this.getDeviceIndex_(address);
-    if (index < 0)
-      return;
-    this.splice('deviceList', index, 1);
+    this.adapterState_ = state;
+    this.bluetoothToggleState_ = state.powered;
+    this.bluetoothToggleDisabled_ = !state.available;
   },
 
   /** @private */
-  startDiscovery_: function() {
-    if (!this.adapterState || this.adapterState.discovering)
+  onTap_: function() {
+    if (this.adapterState_.available === false)
       return;
-
-    if (!this.bluetoothPrivateOnPairingListener_) {
-      this.bluetoothPrivateOnPairingListener_ =
-          this.onBluetoothPrivateOnPairing_.bind(this);
-      this.bluetoothPrivate.onPairing.addListener(
-          this.bluetoothPrivateOnPairingListener_);
-    }
-
-    this.bluetooth.startDiscovery(function() {
-      if (chrome.runtime.lastError) {
-        if (chrome.runtime.lastError.message == 'Failed to stop discovery') {
-          // May happen if also started elsewhere; ignore.
-          return;
-        }
-        console.error(
-            'startDiscovery Error: ' + chrome.runtime.lastError.message);
-      }
-    });
-  },
-
-  /** @private */
-  stopDiscovery_: function() {
-    if (!this.get('adapterState.discovering'))
-      return;
-
-    if (this.bluetoothPrivateOnPairingListener_) {
-      this.bluetoothPrivate.onPairing.removeListener(
-          this.bluetoothPrivateOnPairingListener_);
-      this.bluetoothPrivateOnPairingListener_ = undefined;
-    }
-
-    this.bluetooth.stopDiscovery(function() {
-      if (chrome.runtime.lastError) {
-        console.error(
-            'Error stopping bluetooth discovery: ' +
-            chrome.runtime.lastError.message);
-      }
-    });
-  },
-
-  /**
-   * Process bluetoothPrivate.onPairing events.
-   * @param {!chrome.bluetoothPrivate.PairingEvent} e
-   * @private
-   */
-  onBluetoothPrivateOnPairing_: function(e) {
-    if (!this.dialogId || !this.pairingDevice ||
-        e.device.address != this.pairingDevice.address) {
-      return;
-    }
-    if (e.pairing == chrome.bluetoothPrivate.PairingEventType.KEYS_ENTERED &&
-        e.passkey === undefined && this.pairingEvent) {
-      // 'keysEntered' event might not include the updated passkey so preserve
-      // the current one.
-      e.passkey = this.pairingEvent.passkey;
-    }
-    this.pairingEvent = e;
-  },
-
-  /** @private */
-  onAddDeviceTap_: function() { this.openDialog_('addDevice'); },
-
-  /**
-   * @param {!{detail: {action: string, device: !chrome.bluetooth.Device}}} e
-   * @private
-   */
-  onDeviceEvent_: function(e) {
-    var action = e.detail.action;
-    var device = e.detail.device;
-    if (action == 'connect')
-      this.connectDevice_(device);
-    else if (action == 'disconnect')
-      this.disconnectDevice_(device);
-    else if (action == 'remove')
-      this.forgetDevice_(device);
+    if (!this.bluetoothToggleState_)
+      this.bluetoothToggleState_ = true;
     else
-      console.error('Unexected action: ' + action);
+      this.openSubpage_();
   },
 
   /**
-   * Handle a response sent from the pairing dialog and pass it to the
-   * bluetoothPrivate API.
    * @param {Event} e
    * @private
    */
-  onResponse_: function(e) {
-    var options =
-        /** @type {!chrome.bluetoothPrivate.SetPairingResponseOptions} */ (
-            e.detail);
-    this.bluetoothPrivate.setPairingResponse(options, function() {
-      if (chrome.runtime.lastError) {
-        // TODO(stevenjb): Show error.
-        console.error(
-            'Error setting pairing response: ' + options.device.name +
-            ': Response: ' + options.response + ': Error: ' +
-            chrome.runtime.lastError.message);
-      }
-      this.$$('#deviceDialog').close();
-    }.bind(this));
+  stopTap_: function(e) {
+    e.stopPropagation();
   },
 
   /**
-   * @param {string} address
-   * @return {number} The index of the device associated with |address| or -1.
+   * @param {Event} e
    * @private
    */
-  getDeviceIndex_: function(address) {
-    var len = this.deviceList.length;
-    for (var i = 0; i < len; ++i) {
-      if (this.deviceList[i].address == address)
-        return i;
-    }
-    return -1;
+  onSubpageArrowTap_: function(e) {
+    this.openSubpage_();
+    e.stopPropagation();
   },
 
-  /**
-   * @param {!chrome.bluetooth.Device} device
-   * @return {string} The text to display for |device| in the device list.
-   * @private
-   */
-  getDeviceName_: function(device) { return device.name || device.address; },
-
-  /**
-   * @param {!chrome.bluetooth.Device} device
-   * @return {boolean}
-   * @private
-   */
-  deviceIsPairedOrConnecting_: function(device) {
-    return !!device.paired || !!device.connecting;
-  },
-
-  /**
-   * @param {Object} deviceListChanges Changes to the deviceList Array.
-   * @return {boolean} True if deviceList contains any paired devices.
-   * @private
-   */
-  haveDevices_: function(deviceListChanges) {
-    return this.deviceList.findIndex(function(d) { return !!d.paired; }) != -1;
-  },
-
-  /**
-   * @param {!chrome.bluetooth.Device} device
-   * @private
-   */
-  connectDevice_: function(device) {
-    // If the device is not paired, show the pairing dialog.
-    if (!device.paired) {
-      // Set the pairing device and clear any pairing event.
-      this.pairingDevice = device;
-      this.pairingEvent = null;
-
-      this.openDialog_('pairDevice');
-    }
-
-    this.bluetoothPrivate.connect(device.address, function(result) {
-      var error;
-      if (chrome.runtime.lastError) {
-        error = chrome.runtime.lastError.message;
-      } else {
-        switch (result) {
-          case chrome.bluetoothPrivate.ConnectResultType.ALREADY_CONNECTED:
-          case chrome.bluetoothPrivate.ConnectResultType.AUTH_CANCELED:
-          case chrome.bluetoothPrivate.ConnectResultType.IN_PROGRESS:
-          case chrome.bluetoothPrivate.ConnectResultType.SUCCESS:
-            break;
-          default:
-            error = result;
-        }
-      }
-
-      if (!error) {
-        this.$$('#deviceDialog').close();
-        return;
-      }
-
-      var name = this.getDeviceName_(device);
-      var id = 'bluetooth_connect_' + error;
-      if (this.i18nExists(id)) {
-        this.errorMessage = this.i18n(id, name);
-      } else {
-        this.errorMessage = error;
-        console.error('Unexpected error connecting to: ' + name + ': ' + error);
-      }
-      this.openDialog_('connectError');
-    }.bind(this));
-  },
-
-  /**
-   * @param {!chrome.bluetooth.Device} device
-   * @private
-   */
-  disconnectDevice_: function(device) {
-    this.bluetoothPrivate.disconnectAll(device.address, function() {
-      if (chrome.runtime.lastError) {
-        console.error(
-            'Error disconnecting: ' + device.address +
-            chrome.runtime.lastError.message);
-      }
-    });
-  },
-
-  /**
-   * @param {!chrome.bluetooth.Device} device
-   * @private
-   */
-  forgetDevice_: function(device) {
-    this.bluetoothPrivate.forgetDevice(device.address, function() {
-      if (chrome.runtime.lastError) {
-        console.error(
-            'Error forgetting: ' + device.name + ': ' +
-            chrome.runtime.lastError.message);
-      }
-      this.updateDeviceList_();
-    }.bind(this));
-  },
-
-  /**
-   * @param {string} dialogId
-   * @param {string} dialogToShow The name of the dialog.
-   * @return {boolean}
-   * @private
-   */
-  dialogIsVisible_(dialogId, dialogToShow) { return dialogToShow == dialogId; },
-
-  /**
-   * @param {string} dialogId
-   * @private
-   */
-  openDialog_: function(dialogId) {
-    if (this.dialogId) {
-      // Dialog already opened, just update the contents.
-      this.dialogId = dialogId;
+  /** @private */
+  bluetoothToggleStateChanged_: function() {
+    if (!this.adapterState_ || this.bluetoothToggleDisabled_ ||
+        this.bluetoothToggleState_ == this.adapterState_.powered) {
       return;
     }
-    this.dialogId = dialogId;
-    // Call flush so that the dialog gets sized correctly before it is opened.
-    Polymer.dom.flush();
-    var dialog = this.$$('#deviceDialog');
-    dialog.open();
-    dialog.focus();
+    this.bluetoothToggleDisabled_ = true;
+    this.bluetoothPrivate.setAdapterState(
+        {powered: this.bluetoothToggleState_}, function() {
+          if (chrome.runtime.lastError) {
+            console.error(
+                'Error enabling bluetooth: ' +
+                chrome.runtime.lastError.message);
+          }
+        });
   },
 
   /** @private */
-  onDialogClosed_: function() {
-    this.stopDiscovery_();
-    this.dialogId = '';
-    this.pairingDevice = null;
-    this.pairingEvent = null;
-  },
-
-  /** @private */
-  onDialogOpened_: function() { this.startDiscovery_(); },
+  openSubpage_: function() {
+    settings.navigateTo(settings.Route.BLUETOOTH_DEVICES);
+  }
 });

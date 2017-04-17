@@ -32,20 +32,20 @@
 #define PageVisibilityState_h
 
 #include "core/CoreExport.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 // The enum is not flag protected as it is used in the WebKit chromium API
 // without flag protection.
 enum PageVisibilityState {
-    PageVisibilityStateVisible,
-    PageVisibilityStateHidden,
-    PageVisibilityStatePrerender,
+  kPageVisibilityStateVisible,
+  kPageVisibilityStateHidden,
+  kPageVisibilityStatePrerender,
 };
 
-CORE_EXPORT String pageVisibilityStateString(PageVisibilityState);
+CORE_EXPORT String PageVisibilityStateString(PageVisibilityState);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ifndef PageVisibilityState_h
+#endif  // ifndef PageVisibilityState_h

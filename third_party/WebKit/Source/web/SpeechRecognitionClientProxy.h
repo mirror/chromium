@@ -26,11 +26,11 @@
 #ifndef SpeechRecognitionClientProxy_h
 #define SpeechRecognitionClientProxy_h
 
-#include "modules/speech/SpeechRecognitionClient.h"
-#include "public/web/WebSpeechRecognizerClient.h"
-#include "wtf/Compiler.h"
-#include "wtf/text/WTFString.h"
 #include <memory>
+#include "modules/speech/SpeechRecognitionClient.h"
+#include "platform/wtf/Compiler.h"
+#include "platform/wtf/text/WTFString.h"
+#include "public/web/WebSpeechRecognizerClient.h"
 
 namespace blink {
 
@@ -38,36 +38,51 @@ class MediaStreamTrack;
 class WebSpeechRecognizer;
 class WebString;
 
-class SpeechRecognitionClientProxy final : public SpeechRecognitionClient, public WebSpeechRecognizerClient {
-public:
-    ~SpeechRecognitionClientProxy() override;
+class SpeechRecognitionClientProxy final : public SpeechRecognitionClient,
+                                           public WebSpeechRecognizerClient {
+ public:
+  ~SpeechRecognitionClientProxy() override;
 
-    // Constructing a proxy object with a 0 WebSpeechRecognizer is safe in
-    // itself, but attempting to call start/stop/abort on it will crash.
-    static std::unique_ptr<SpeechRecognitionClientProxy> create(WebSpeechRecognizer*);
+  // Constructing a proxy object with a 0 WebSpeechRecognizer is safe in
+  // itself, but attempting to call start/stop/abort on it will crash.
+  static std::unique_ptr<SpeechRecognitionClientProxy> Create(
+      WebSpeechRecognizer*);
 
-    // SpeechRecognitionClient:
-    void start(SpeechRecognition*, const SpeechGrammarList*, const String& lang, bool continuous, bool interimResults, unsigned long maxAlternatives, MediaStreamTrack*) override;
-    void stop(SpeechRecognition*) override;
-    void abort(SpeechRecognition*) override;
+  // SpeechRecognitionClient:
+  void Start(SpeechRecognition*,
+             const SpeechGrammarList*,
+             const String& lang,
+             bool continuous,
+             bool interim_results,
+             unsigned long max_alternatives,
+             MediaStreamTrack*) override;
+  void Stop(SpeechRecognition*) override;
+  void Abort(SpeechRecognition*) override;
 
-    // WebSpeechRecognizerClient:
-    void didStartAudio(const WebSpeechRecognitionHandle&) override;
-    void didStartSound(const WebSpeechRecognitionHandle&) override;
-    void didEndSound(const WebSpeechRecognitionHandle&) override;
-    void didEndAudio(const WebSpeechRecognitionHandle&) override;
-    void didReceiveResults(const WebSpeechRecognitionHandle&, const WebVector<WebSpeechRecognitionResult>& newFinalResults, const WebVector<WebSpeechRecognitionResult>& currentInterimResults) override;
-    void didReceiveNoMatch(const WebSpeechRecognitionHandle&, const WebSpeechRecognitionResult&) override;
-    void didReceiveError(const WebSpeechRecognitionHandle&, const WebString& message, WebSpeechRecognizerClient::ErrorCode) override;
-    void didStart(const WebSpeechRecognitionHandle&) override;
-    void didEnd(const WebSpeechRecognitionHandle&) override;
+  // WebSpeechRecognizerClient:
+  void DidStartAudio(const WebSpeechRecognitionHandle&) override;
+  void DidStartSound(const WebSpeechRecognitionHandle&) override;
+  void DidEndSound(const WebSpeechRecognitionHandle&) override;
+  void DidEndAudio(const WebSpeechRecognitionHandle&) override;
+  void DidReceiveResults(
+      const WebSpeechRecognitionHandle&,
+      const WebVector<WebSpeechRecognitionResult>& new_final_results,
+      const WebVector<WebSpeechRecognitionResult>& current_interim_results)
+      override;
+  void DidReceiveNoMatch(const WebSpeechRecognitionHandle&,
+                         const WebSpeechRecognitionResult&) override;
+  void DidReceiveError(const WebSpeechRecognitionHandle&,
+                       const WebString& message,
+                       WebSpeechRecognizerClient::ErrorCode) override;
+  void DidStart(const WebSpeechRecognitionHandle&) override;
+  void DidEnd(const WebSpeechRecognitionHandle&) override;
 
-private:
-    SpeechRecognitionClientProxy(WebSpeechRecognizer*);
+ private:
+  SpeechRecognitionClientProxy(WebSpeechRecognizer*);
 
-    WebSpeechRecognizer* m_recognizer;
+  WebSpeechRecognizer* recognizer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SpeechRecognitionClientProxy_h
+#endif  // SpeechRecognitionClientProxy_h

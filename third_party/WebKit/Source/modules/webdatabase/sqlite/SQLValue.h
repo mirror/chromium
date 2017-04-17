@@ -29,32 +29,33 @@
 #ifndef SQLValue_h
 #define SQLValue_h
 
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class SQLValue {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    enum Type { NullValue, NumberValue, StringValue };
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    SQLValue() : m_type(NullValue), m_number(0.0) { }
-    SQLValue(double number) : m_type(NumberValue), m_number(number) { }
-    SQLValue(const String& s) : m_type(StringValue), m_number(0.0), m_string(s) { }
-    SQLValue(const SQLValue&);
+ public:
+  enum Type { kNullValue, kNumberValue, kStringValue };
 
-    Type getType() const { return m_type; }
+  SQLValue() : type_(kNullValue), number_(0.0) {}
+  SQLValue(double number) : type_(kNumberValue), number_(number) {}
+  SQLValue(const String& s) : type_(kStringValue), number_(0.0), string_(s) {}
+  SQLValue(const SQLValue&);
 
-    String string() const;
-    double number() const;
+  Type GetType() const { return type_; }
 
-private:
-    Type m_type;
-    double m_number;
-    String m_string;
+  String GetString() const;
+  double Number() const;
+
+ private:
+  Type type_;
+  double number_;
+  String string_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

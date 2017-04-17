@@ -12,6 +12,7 @@
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
 #include "chrome/browser/browsing_data/browsing_data_remover.h"
 #include "chrome/browser/browsing_data/browsing_data_remover_factory.h"
+#include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/chromeos/base/file_flusher.h"
 #include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/login/signin/oauth2_login_manager_factory.h"
@@ -262,9 +263,10 @@ void ProfileHelper::ClearSigninProfile(const base::Closure& on_clear_callback) {
     browsing_data_remover_ =
         BrowsingDataRemoverFactory::GetForBrowserContext(GetSigninProfile());
     browsing_data_remover_->AddObserver(this);
-    browsing_data_remover_->Remove(BrowsingDataRemover::Unbounded(),
-                                   BrowsingDataRemover::REMOVE_SITE_DATA,
-                                   BrowsingDataHelper::ALL);
+    browsing_data_remover_->RemoveAndReply(
+        base::Time(), base::Time::Max(),
+        ChromeBrowsingDataRemoverDelegate::DATA_TYPE_SITE_DATA,
+        ChromeBrowsingDataRemoverDelegate::ALL_ORIGIN_TYPES, this);
   } else {
     on_clear_profile_stage_finished_.Run();
   }
@@ -316,8 +318,7 @@ Profile* ProfileHelper::GetProfileByUserUnsafe(const user_manager::User* user) {
     LOG(ERROR) << "ProfileHelper::GetProfileByUserUnsafe is called when "
                   "|user|'s profile is not created. It probably means that "
                   "something is wrong with a calling code. Please report in "
-                  "http://crbug.com/361528 if you see this message. user_id: "
-               << user->email();
+                  "http://crbug.com/361528 if you see this message.";
     profile = ProfileManager::GetActiveUserProfile();
   }
 
@@ -367,9 +368,11 @@ const user_manager::User* ProfileHelper::GetUserByProfile(
     return user_manager->GetActiveUser();
   }
 
+  // Finds the matching user in logged-in user list since only a logged-in
+  // user would have a profile.
   const std::string username_hash =
       ProfileHelper::GetUserIdHashFromProfile(profile);
-  const user_manager::UserList& users = user_manager->GetUsers();
+  const user_manager::UserList& users = user_manager->GetLoggedInUsers();
   const user_manager::UserList::const_iterator pos = std::find_if(
       users.begin(), users.end(), UsernameHashMatcher(username_hash));
   if (pos != users.end())

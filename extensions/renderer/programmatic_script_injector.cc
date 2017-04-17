@@ -26,16 +26,9 @@
 namespace extensions {
 
 ProgrammaticScriptInjector::ProgrammaticScriptInjector(
-    const ExtensionMsg_ExecuteCode_Params& params,
-    content::RenderFrame* render_frame)
+    const ExtensionMsg_ExecuteCode_Params& params)
     : params_(new ExtensionMsg_ExecuteCode_Params(params)),
-      url_(
-          ScriptContext::GetDataSourceURLForFrame(render_frame->GetWebFrame())),
       finished_(false) {
-  if (url_.SchemeIs(url::kAboutScheme)) {
-    origin_for_about_error_ =
-        render_frame->GetWebFrame()->getSecurityOrigin().toString().utf8();
-  }
 }
 
 ProgrammaticScriptInjector::~ProgrammaticScriptInjector() {
@@ -59,23 +52,33 @@ bool ProgrammaticScriptInjector::ExpectsResults() const {
 }
 
 bool ProgrammaticScriptInjector::ShouldInjectJs(
-    UserScript::RunLocation run_location) const {
+    UserScript::RunLocation run_location,
+    const std::set<std::string>& executing_scripts) const {
   return GetRunLocation() == run_location && params_->is_javascript;
 }
 
 bool ProgrammaticScriptInjector::ShouldInjectCss(
-    UserScript::RunLocation run_location) const {
+    UserScript::RunLocation run_location,
+    const std::set<std::string>& injected_stylesheets) const {
   return GetRunLocation() == run_location && !params_->is_javascript;
 }
 
 PermissionsData::AccessType ProgrammaticScriptInjector::CanExecuteOnFrame(
     const InjectionHost* injection_host,
     blink::WebLocalFrame* frame,
-    int tab_id) const {
+    int tab_id) {
+  // Note: we calculate url_ now and not in the constructor because with
+  // PlzNavigate we won't have the URL at that point when loads start. The
+  // browser issues the request and only when it has a response does the
+  // renderer see the provisional data source which the method below uses.
+  url_ = ScriptContext::GetDataSourceURLForFrame(frame);
+  if (url_.SchemeIs(url::kAboutScheme)) {
+    origin_for_about_error_ = frame->GetSecurityOrigin().ToString().Utf8();
+  }
   GURL effective_document_url = ScriptContext::GetEffectiveDocumentURL(
-      frame, frame->document().url(), params_->match_about_blank);
+      frame, frame->GetDocument().Url(), params_->match_about_blank);
   if (params_->is_web_view) {
-    if (frame->parent()) {
+    if (frame->Parent()) {
       // This is a subframe inside <webview>, so allow it.
       return PermissionsData::ACCESS_ALLOWED;
     }
@@ -95,28 +98,25 @@ PermissionsData::AccessType ProgrammaticScriptInjector::CanExecuteOnFrame(
 
 std::vector<blink::WebScriptSource> ProgrammaticScriptInjector::GetJsSources(
     UserScript::RunLocation run_location,
-    ScriptsRunInfo* scripts_run_info) const {
+    std::set<std::string>* executing_scripts,
+    size_t* num_injected_js_scripts) const {
   DCHECK_EQ(GetRunLocation(), run_location);
   DCHECK(params_->is_javascript);
 
   return std::vector<blink::WebScriptSource>(
-      1,
-      blink::WebScriptSource(
-          blink::WebString::fromUTF8(params_->code), params_->file_url));
+      1, blink::WebScriptSource(blink::WebString::FromUTF8(params_->code),
+                                params_->file_url));
 }
 
-std::vector<std::string> ProgrammaticScriptInjector::GetCssSources(
+std::vector<blink::WebString> ProgrammaticScriptInjector::GetCssSources(
     UserScript::RunLocation run_location,
-    ScriptsRunInfo* scripts_run_info) const {
+    std::set<std::string>* injected_stylesheets,
+    size_t* num_injected_stylesheets) const {
   DCHECK_EQ(GetRunLocation(), run_location);
   DCHECK(!params_->is_javascript);
 
-  return std::vector<std::string>(1, params_->code);
-}
-
-void ProgrammaticScriptInjector::GetRunInfo(
-    ScriptsRunInfo* scripts_run_info,
-    UserScript::RunLocation run_location) const {
+  return std::vector<blink::WebString>(
+      1, blink::WebString::FromUTF8(params_->code));
 }
 
 void ProgrammaticScriptInjector::OnInjectionComplete(

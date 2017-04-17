@@ -7,15 +7,19 @@
 #include <stddef.h>
 
 #include <memory>
+#include <tuple>
 #include <utility>
 
+#include "base/containers/flat_map.h"
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "build/build_config.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
@@ -27,14 +31,11 @@
 #include "media/base/media_log_event.h"
 #include "media/filters/gpu_video_decoder.h"
 
-#if !defined(OS_ANDROID)
+#if !defined(DISABLE_FFMPEG_VIDEO_DECODERS)
 #include "media/filters/decrypting_video_decoder.h"
 #endif
 
 namespace {
-
-static base::LazyInstance<content::MediaInternals>::Leaky g_media_internals =
-    LAZY_INSTANCE_INITIALIZER;
 
 base::string16 SerializeUpdate(const std::string& function,
                                const base::Value* value) {
@@ -81,12 +82,33 @@ std::string FormatToString(media::AudioParameters::Format format) {
       return "pcm_linear";
     case media::AudioParameters::AUDIO_PCM_LOW_LATENCY:
       return "pcm_low_latency";
+    case media::AudioParameters::AUDIO_BITSTREAM_AC3:
+      return "ac3";
+    case media::AudioParameters::AUDIO_BITSTREAM_EAC3:
+      return "eac3";
     case media::AudioParameters::AUDIO_FAKE:
       return "fake";
   }
 
   NOTREACHED();
   return "unknown";
+}
+
+// Whether the player is in incognito mode or ChromeOS guest mode.
+bool IsIncognito(int render_process_id) {
+  content::RenderProcessHost* render_process_host =
+      content::RenderProcessHost::FromID(render_process_id);
+  if (!render_process_host) {
+    // This could happen in tests.
+    LOG(ERROR) << "Cannot get RenderProcessHost";
+    return false;
+  }
+
+  content::BrowserContext* browser_context =
+      render_process_host->GetBrowserContext();
+  DCHECK(browser_context);
+
+  return browser_context->IsOffTheRecord();
 }
 
 const char kAudioLogStatusKey[] = "status";
@@ -289,16 +311,24 @@ class MediaInternals::MediaInternalsUMAHandler {
                        const media::MediaLogEvent& event);
 
  private:
+  using WatchTimeInfo = base::flat_map<base::StringPiece, base::TimeDelta>;
   struct PipelineInfo {
+    explicit PipelineInfo(bool is_incognito) : is_incognito(is_incognito) {}
+
     bool has_pipeline = false;
+    bool has_ever_played = false;
+    bool has_reached_have_enough = false;
     media::PipelineStatus last_pipeline_status = media::PIPELINE_OK;
     bool has_audio = false;
     bool has_video = false;
     bool video_dds = false;
     bool video_decoder_changed = false;
+    bool has_cdm = false;
+    bool is_incognito = false;
     std::string audio_codec_name;
     std::string video_codec_name;
     std::string video_decoder;
+    WatchTimeInfo watch_time_info;
   };
 
   // Helper function to report PipelineStatus associated with a player to UMA.
@@ -306,6 +336,35 @@ class MediaInternals::MediaInternalsUMAHandler {
 
   // Helper to generate PipelineStatus UMA name for AudioVideo streams.
   std::string GetUMANameForAVStream(const PipelineInfo& player_info);
+
+  void RecordWatchTime(const base::StringPiece& key, base::TimeDelta value) {
+    base::Histogram::FactoryTimeGet(
+        key.as_string(), base::TimeDelta::FromSeconds(7),
+        base::TimeDelta::FromHours(10), 50,
+        base::HistogramBase::kUmaTargetedHistogramFlag)
+        ->AddTime(value);
+  }
+
+  enum class FinalizeType { EVERYTHING, POWER_ONLY };
+  void FinalizeWatchTime(bool has_video,
+                         WatchTimeInfo* watch_time_info,
+                         FinalizeType finalize_type) {
+    if (finalize_type == FinalizeType::EVERYTHING) {
+      for (auto& kv : *watch_time_info)
+        RecordWatchTime(kv.first, kv.second);
+      watch_time_info->clear();
+      return;
+    }
+
+    DCHECK_EQ(finalize_type, FinalizeType::POWER_ONLY);
+    for (auto power_key : watch_time_power_keys_) {
+      auto it = watch_time_info->find(power_key);
+      if (it == watch_time_info->end())
+        continue;
+      RecordWatchTime(it->first, it->second);
+      watch_time_info->erase(it);
+    }
+  }
 
   // Key is player id.
   typedef std::map<int, PipelineInfo> PlayerInfoMap;
@@ -316,59 +375,134 @@ class MediaInternals::MediaInternalsUMAHandler {
   // Stores player information per renderer.
   RendererPlayerMap renderer_info_;
 
+  const base::flat_set<base::StringPiece> watch_time_keys_;
+  const base::flat_set<base::StringPiece> watch_time_power_keys_;
+
   DISALLOW_COPY_AND_ASSIGN(MediaInternalsUMAHandler);
 };
 
-MediaInternals::MediaInternalsUMAHandler::MediaInternalsUMAHandler() {
-}
+MediaInternals::MediaInternalsUMAHandler::MediaInternalsUMAHandler()
+    : watch_time_keys_(media::MediaLog::GetWatchTimeKeys()),
+      watch_time_power_keys_(media::MediaLog::GetWatchTimePowerKeys()) {}
 
 void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
     int render_process_id,
     const media::MediaLogEvent& event) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  PlayerInfoMap& player_info = renderer_info_[render_process_id];
+
+  PlayerInfoMap& player_info_map = renderer_info_[render_process_id];
+
+  auto it = player_info_map.find(event.id);
+  if (it == player_info_map.end()) {
+    bool success = false;
+    std::tie(it, success) = player_info_map.emplace(
+        std::make_pair(event.id, PipelineInfo(IsIncognito(render_process_id))));
+    if (!success) {
+      LOG(ERROR) << "Failed to insert a new PipelineInfo.";
+      return;
+    }
+  }
+
+  PipelineInfo& player_info = it->second;
+
   switch (event.type) {
+    case media::MediaLogEvent::PLAY: {
+      player_info.has_ever_played = true;
+      break;
+    }
     case media::MediaLogEvent::PIPELINE_STATE_CHANGED: {
-      player_info[event.id].has_pipeline = true;
+      player_info.has_pipeline = true;
       break;
     }
     case media::MediaLogEvent::PIPELINE_ERROR: {
       int status;
       event.params.GetInteger("pipeline_error", &status);
-      player_info[event.id].last_pipeline_status =
+      player_info.last_pipeline_status =
           static_cast<media::PipelineStatus>(status);
       break;
     }
     case media::MediaLogEvent::PROPERTY_CHANGE:
       if (event.params.HasKey("found_audio_stream")) {
-        event.params.GetBoolean("found_audio_stream",
-                                &player_info[event.id].has_audio);
+        event.params.GetBoolean("found_audio_stream", &player_info.has_audio);
       }
       if (event.params.HasKey("found_video_stream")) {
-        event.params.GetBoolean("found_video_stream",
-                                &player_info[event.id].has_video);
+        event.params.GetBoolean("found_video_stream", &player_info.has_video);
       }
       if (event.params.HasKey("audio_codec_name")) {
         event.params.GetString("audio_codec_name",
-                               &player_info[event.id].audio_codec_name);
+                               &player_info.audio_codec_name);
       }
       if (event.params.HasKey("video_codec_name")) {
         event.params.GetString("video_codec_name",
-                               &player_info[event.id].video_codec_name);
+                               &player_info.video_codec_name);
       }
       if (event.params.HasKey("video_decoder")) {
-        std::string previous_video_decoder(player_info[event.id].video_decoder);
-        event.params.GetString("video_decoder",
-                               &player_info[event.id].video_decoder);
+        std::string previous_video_decoder(player_info.video_decoder);
+        event.params.GetString("video_decoder", &player_info.video_decoder);
         if (!previous_video_decoder.empty() &&
-            previous_video_decoder != player_info[event.id].video_decoder) {
-          player_info[event.id].video_decoder_changed = true;
+            previous_video_decoder != player_info.video_decoder) {
+          player_info.video_decoder_changed = true;
         }
       }
       if (event.params.HasKey("video_dds")) {
-        event.params.GetBoolean("video_dds", &player_info[event.id].video_dds);
+        event.params.GetBoolean("video_dds", &player_info.video_dds);
+      }
+      if (event.params.HasKey("has_cdm")) {
+        event.params.GetBoolean("has_cdm", &player_info.has_cdm);
+      }
+      if (event.params.HasKey("pipeline_buffering_state")) {
+        std::string buffering_state;
+        event.params.GetString("pipeline_buffering_state", &buffering_state);
+        if (buffering_state == "BUFFERING_HAVE_ENOUGH")
+          player_info.has_reached_have_enough = true;
       }
       break;
+    case media::MediaLogEvent::Type::WATCH_TIME_UPDATE: {
+      DVLOG(2) << "Processing watch time update.";
+
+      for (base::DictionaryValue::Iterator it(event.params); !it.IsAtEnd();
+           it.Advance()) {
+        // Don't log random histogram keys from the untrusted renderer, instead
+        // ensure they are from our list of known keys. Use |key_name| from the
+        // key map, since otherwise we'll end up storing a StringPiece which
+        // points into the soon-to-be-destructed DictionaryValue.
+        auto key_name = watch_time_keys_.find(it.key());
+        if (key_name == watch_time_keys_.end())
+          continue;
+        player_info.watch_time_info[*key_name] =
+            base::TimeDelta::FromSecondsD(it.value().GetDouble());
+      }
+
+      if (event.params.HasKey(media::MediaLog::kWatchTimeFinalize)) {
+        bool should_finalize;
+        DCHECK(event.params.GetBoolean(media::MediaLog::kWatchTimeFinalize,
+                                       &should_finalize) &&
+               should_finalize);
+        FinalizeWatchTime(player_info.has_video, &player_info.watch_time_info,
+                          FinalizeType::EVERYTHING);
+      } else if (event.params.HasKey(
+                     media::MediaLog::kWatchTimeFinalizePower)) {
+        bool should_finalize;
+        DCHECK(event.params.GetBoolean(media::MediaLog::kWatchTimeFinalizePower,
+                                       &should_finalize) &&
+               should_finalize);
+        FinalizeWatchTime(player_info.has_video, &player_info.watch_time_info,
+                          FinalizeType::POWER_ONLY);
+      }
+      break;
+    }
+    case media::MediaLogEvent::Type::WEBMEDIAPLAYER_DESTROYED: {
+      // Upon player destruction report UMA data; if the player is not torn down
+      // before process exit, it will be logged during OnProcessTerminated().
+      auto it = player_info_map.find(event.id);
+      if (it == player_info_map.end())
+        break;
+
+      ReportUMAForPipelineStatus(it->second);
+      FinalizeWatchTime(it->second.has_video, &(it->second.watch_time_info),
+                        FinalizeType::EVERYTHING);
+      player_info_map.erase(it);
+    }
     default:
       break;
   }
@@ -390,7 +524,7 @@ std::string MediaInternals::MediaInternalsUMAHandler::GetUMANameForAVStream(
     return uma_name + "Other";
   }
 
-#if !defined(OS_ANDROID)
+#if !defined(DISABLE_FFMPEG_VIDEO_DECODERS)
   if (player_info.video_decoder ==
       media::DecryptingVideoDecoder::kDecoderName) {
     return uma_name + "DVD";
@@ -409,6 +543,8 @@ std::string MediaInternals::MediaInternalsUMAHandler::GetUMANameForAVStream(
   return uma_name;
 }
 
+// TODO(xhwang): This function reports more metrics than just pipeline status
+// and should be renamed. Similarly, PipelineInfo should be PlayerInfo.
 void MediaInternals::MediaInternalsUMAHandler::ReportUMAForPipelineStatus(
     const PipelineInfo& player_info) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -446,6 +582,16 @@ void MediaInternals::MediaInternalsUMAHandler::ReportUMAForPipelineStatus(
     UMA_HISTOGRAM_BOOLEAN("Media.VideoDecoderFallback",
                           player_info.video_decoder_changed);
   }
+
+  // Report whether this player ever saw a playback event. Used to measure the
+  // effectiveness of efforts to reduce loaded-but-never-used players.
+  if (player_info.has_reached_have_enough)
+    UMA_HISTOGRAM_BOOLEAN("Media.HasEverPlayed", player_info.has_ever_played);
+
+  // Report whether an encrypted playback is in incognito window, excluding
+  // never-used players.
+  if (player_info.has_cdm && player_info.has_ever_played)
+    UMA_HISTOGRAM_BOOLEAN("Media.EME.IsIncognito", player_info.is_incognito);
 }
 
 void MediaInternals::MediaInternalsUMAHandler::OnProcessTerminated(
@@ -458,13 +604,16 @@ void MediaInternals::MediaInternalsUMAHandler::OnProcessTerminated(
   auto it = players_it->second.begin();
   while (it != players_it->second.end()) {
     ReportUMAForPipelineStatus(it->second);
+    FinalizeWatchTime(it->second.has_video, &(it->second.watch_time_info),
+                      FinalizeType::EVERYTHING);
     players_it->second.erase(it++);
   }
   renderer_info_.erase(players_it);
 }
 
 MediaInternals* MediaInternals::GetInstance() {
-  return g_media_internals.Pointer();
+  static content::MediaInternals* internals = new content::MediaInternals();
+  return internals;
 }
 
 MediaInternals::MediaInternals()
@@ -485,7 +634,7 @@ void MediaInternals::Observe(int type,
   RenderProcessHost* process = Source<RenderProcessHost>(source).ptr();
 
   uma_handler_->OnProcessTerminated(process->GetID());
-  pending_events_map_.erase(process->GetID());
+  saved_events_by_process_.erase(process->GetID());
 }
 
 // Converts the |event| to a |update|. Returns whether the conversion succeeded.
@@ -529,13 +678,15 @@ void MediaInternals::OnMediaEvents(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // Notify observers that |event| has occurred.
   for (const auto& event : events) {
-    if (CanUpdate()) {
-      base::string16 update;
-      if (ConvertEventToUpdate(render_process_id, event, &update))
-        SendUpdate(update);
+    // Some events should not be recorded in the UI.
+    if (event.type != media::MediaLogEvent::Type::WATCH_TIME_UPDATE) {
+      if (CanUpdate()) {
+        base::string16 update;
+        if (ConvertEventToUpdate(render_process_id, event, &update))
+          SendUpdate(update);
+      }
+      SaveEvent(render_process_id, event);
     }
-
-    SaveEvent(render_process_id, event);
     uma_handler_->SavePlayerState(render_process_id, event);
   }
 }
@@ -568,10 +719,10 @@ bool MediaInternals::CanUpdate() {
 
 void MediaInternals::SendHistoricalMediaEvents() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  for (const auto& pending_events : pending_events_map_) {
-    for (const auto& event : pending_events.second) {
+  for (const auto& saved_events : saved_events_by_process_) {
+    for (const auto& event : saved_events.second) {
       base::string16 update;
-      if (ConvertEventToUpdate(pending_events.first, event, &update))
+      if (ConvertEventToUpdate(saved_events.first, event, &update))
         SendUpdate(update);
     }
   }
@@ -600,29 +751,33 @@ void MediaInternals::SendVideoCaptureDeviceCapabilities() {
 }
 
 void MediaInternals::UpdateVideoCaptureDeviceCapabilities(
-    const media::VideoCaptureDeviceInfos& video_capture_device_infos) {
+    const std::vector<std::tuple<media::VideoCaptureDeviceDescriptor,
+                                 media::VideoCaptureFormats>>&
+        descriptors_and_formats) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   video_capture_capabilities_cached_data_.Clear();
 
-  for (const auto& video_capture_device_info : video_capture_device_infos) {
+  for (const auto& device_format_pair : descriptors_and_formats) {
     base::ListValue* format_list = new base::ListValue();
     // TODO(nisse): Representing format information as a string, to be
     // parsed by the javascript handler, is brittle. Consider passing
     // a list of mappings instead.
 
-    for (const auto& format : video_capture_device_info.supported_formats)
+    const media::VideoCaptureDeviceDescriptor& descriptor =
+        std::get<0>(device_format_pair);
+    const media::VideoCaptureFormats& supported_formats =
+        std::get<1>(device_format_pair);
+    for (const auto& format : supported_formats)
       format_list->AppendString(media::VideoCaptureFormat::ToString(format));
 
     std::unique_ptr<base::DictionaryValue> device_dict(
         new base::DictionaryValue());
-    device_dict->SetString("id", video_capture_device_info.name.id());
-    device_dict->SetString(
-        "name", video_capture_device_info.name.GetNameAndModel());
+    device_dict->SetString("id", descriptor.device_id);
+    device_dict->SetString("name", descriptor.GetNameAndModel());
     device_dict->Set("formats", format_list);
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX) || \
     defined(OS_ANDROID)
-    device_dict->SetString(
-        "captureApi", video_capture_device_info.name.GetCaptureApiTypeString());
+    device_dict->SetString("captureApi", descriptor.GetCaptureApiTypeString());
 #endif
     video_capture_capabilities_cached_data_.Append(std::move(device_dict));
   }
@@ -646,6 +801,10 @@ void MediaInternals::SetWebContentsTitleForAudioLogEntry(
       ->SendWebContentsTitle(component_id, render_process_id, render_frame_id);
 }
 
+void MediaInternals::OnProcessTerminatedForTesting(int process_id) {
+  uma_handler_->OnProcessTerminated(process_id);
+}
+
 void MediaInternals::SendUpdate(const base::string16& update) {
   // SendUpdate() may be called from any thread, but must run on the UI thread.
   if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
@@ -662,9 +821,6 @@ void MediaInternals::SaveEvent(int process_id,
                                const media::MediaLogEvent& event) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  // Max number of saved updates allowed for one process.
-  const size_t kMaxNumEvents = 128;
-
   // Do not save instantaneous events that happen frequently and have little
   // value in the future.
   if (event.type == media::MediaLogEvent::NETWORK_ACTIVITY_SET ||
@@ -672,12 +828,22 @@ void MediaInternals::SaveEvent(int process_id,
     return;
   }
 
-  auto& pending_events = pending_events_map_[process_id];
-  // TODO(xhwang): Notify user that some old logs could have been truncated.
-  // See http://crbug.com/498520
-  if (pending_events.size() >= kMaxNumEvents)
-    pending_events.pop_front();
-  pending_events.push_back(event);
+  // Save the event and limit the total number per renderer. At the time of
+  // writing, 512 events of the kind: { "property": value } together consume
+  // ~88kb of memory on linux.
+  std::list<media::MediaLogEvent>& saved_events =
+      saved_events_by_process_[process_id];
+  saved_events.push_back(event);
+  if (saved_events.size() > 512) {
+    // Remove all events for a given player as soon as we have to remove a
+    // single event for that player to avoid showing incomplete players.
+    int id_to_remove = saved_events.front().id;
+    auto new_end = std::remove_if(saved_events.begin(), saved_events.end(),
+                                  [&](const media::MediaLogEvent& event) {
+                                    return event.id == id_to_remove;
+                                  });
+    saved_events.erase(new_end, saved_events.end());
+  }
 }
 
 void MediaInternals::UpdateAudioLog(AudioLogUpdateType type,

@@ -6,8 +6,4 @@ tommi@chromium.org
 per-file cast_*=hubbe@chromium.org
 per-file cast_*=miu@chromium.org
 
-# For WebRTC browser tests, etc.
-per-file *webrtc*browsertest*=phoglund@chromium.org
-
-# For changes related to the tab media indicators.
-per-file media_stream_capture_indicator*=miu@chromium.org
+# COMPONENT: Blink>Media

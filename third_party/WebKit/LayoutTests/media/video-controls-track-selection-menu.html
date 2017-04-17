@@ -5,7 +5,8 @@
 <script src="track/track-helpers.js"></script>
 <script src="media-file.js"></script>
 <script src="media-controls.js"></script>
-<video controls>
+<!-- Width should be large enough to display closed captions button. -->
+<video controls style="width: 500px">
     <track src="track/captions-webvtt/captions.vtt" kind="captions" label="Track1">
     <track src="track/captions-webvtt/long-word.vtt" kind="captions" label="Track2">
 </video>
@@ -35,13 +36,13 @@ async_test(function(t) {
             clickTextTrackAtIndex(video, 0);
             assert_equals(video.textTracks[0].mode, "showing");
             assert_equals(video.textTracks[1].mode, "hidden");
-            assert_equals(textTrackCueElementByIndex(video, 0).innerText, "Lorem");
+            assert_equals(textTrackDisplayElement(video).innerText, "Lorem");
 
             // Select track 1 and verify it is displayed.
             clickTextTrackAtIndex(video, 1);
             assert_equals(video.textTracks[0].mode, "disabled");
             assert_equals(video.textTracks[1].mode, "showing");
-            assert_equals(textTrackCueElementByIndex(video, 0).innerText, "first caption");
+            assert_equals(textTrackDisplayElement(video).innerText, "first caption");
         });
 
         video.src = findMediaFile("video", "content/test");

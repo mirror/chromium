@@ -1,141 +1,159 @@
 // Copyright 2014 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-
 /**
- * @constructor
- * @extends {WebInspector.View}
- * @implements {WebInspector.TargetManager.Observer}
+ * @implements {SDK.SDKModelObserver<!SDK.DebuggerModel>}
+ * @implements {UI.ListDelegate<!SDK.DebuggerModel>}
  */
-WebInspector.ThreadsSidebarPane = function()
-{
-    WebInspector.View.call(this, WebInspector.UIString("Threads"));
+Sources.ThreadsSidebarPane = class extends UI.VBox {
+  constructor() {
+    super(true);
+    this.registerRequiredCSS('sources/threadsSidebarPane.css');
 
-    /** @type {!Map.<!WebInspector.DebuggerModel, !WebInspector.UIList.Item>} */
-    this._debuggerModelToListItems = new Map();
-    /** @type {!Map.<!WebInspector.UIList.Item, !WebInspector.Target>} */
-    this._listItemsToTargets = new Map();
-    /** @type {?WebInspector.UIList.Item} */
-    this._selectedListItem = null;
-    this.threadList = new WebInspector.UIList();
-    this.threadList.show(this.element);
-    WebInspector.targetManager.addModelListener(WebInspector.DebuggerModel, WebInspector.DebuggerModel.Events.DebuggerPaused, this._onDebuggerStateChanged, this);
-    WebInspector.targetManager.addModelListener(WebInspector.DebuggerModel, WebInspector.DebuggerModel.Events.DebuggerResumed, this._onDebuggerStateChanged, this);
-    WebInspector.targetManager.addModelListener(WebInspector.RuntimeModel, WebInspector.RuntimeModel.Events.ExecutionContextChanged, this._onExecutionContextChanged, this);
-    WebInspector.context.addFlavorChangeListener(WebInspector.Target, this._targetChanged, this);
-    WebInspector.targetManager.observeTargets(this);
-}
+    /** @type {!UI.ListControl<!SDK.DebuggerModel>} */
+    this._list = new UI.ListControl(this, UI.ListMode.NonViewport);
+    this.contentElement.appendChild(this._list.element);
 
-WebInspector.ThreadsSidebarPane.prototype = {
-    /**
-     * @override
-     * @param {!WebInspector.Target} target
-     */
-    targetAdded: function(target)
-    {
-        var debuggerModel = WebInspector.DebuggerModel.fromTarget(target)
-        if (!debuggerModel)
-            return;
+    this._availableNodeTargetsElement = this.contentElement.createChild('div', 'hidden available-node-targets');
 
-        var executionContext = target.runtimeModel.defaultExecutionContext();
-        var label = executionContext && executionContext.label() ? executionContext.label() : target.name();
-        var listItem = new WebInspector.UIList.Item(label, "");
-        listItem.element.addEventListener("click", this._onListItemClick.bind(this, listItem), false);
-        var currentTarget = WebInspector.context.flavor(WebInspector.Target);
-        if (currentTarget === target)
-            this._selectListItem(listItem);
+    UI.context.addFlavorChangeListener(SDK.Target, this._targetFlavorChanged, this);
 
-        this._debuggerModelToListItems.set(debuggerModel, listItem);
-        this._listItemsToTargets.set(listItem, target);
-        this.threadList.addItem(listItem);
-        this._updateDebuggerState(debuggerModel);
-    },
+    SDK.targetManager.addEventListener(
+        SDK.TargetManager.Events.AvailableNodeTargetsChanged, this._availableNodeTargetsChanged, this);
+    this._availableNodeTargetsChanged();
 
-    /**
-     * @override
-     * @param {!WebInspector.Target} target
-     */
-    targetRemoved: function(target)
-    {
-        var debuggerModel = WebInspector.DebuggerModel.fromTarget(target)
-        if (!debuggerModel)
-            return;
-        var listItem = this._debuggerModelToListItems.remove(debuggerModel);
-        if (listItem) {
-            this._listItemsToTargets.remove(listItem);
-            this.threadList.removeItem(listItem);
-        }
-    },
+    SDK.targetManager.observeModels(SDK.DebuggerModel, this);
+  }
 
-    /**
-     * @param {!WebInspector.Event} event
-     */
-    _targetChanged: function(event)
-    {
-        var newTarget = /** @type {!WebInspector.Target} */(event.data);
-        var debuggerModel = WebInspector.DebuggerModel.fromTarget(newTarget)
-        if (!debuggerModel)
-            return;
-        var listItem =  /** @type {!WebInspector.UIList.Item} */ (this._debuggerModelToListItems.get(debuggerModel));
-        this._selectListItem(listItem);
-    },
+  /**
+   * @return {boolean}
+   */
+  static shouldBeShown() {
+    var minJSTargets = Runtime.queryParam('nodeFrontend') ? 1 : 2;
+    if (SDK.targetManager.models(SDK.DebuggerModel).length >= minJSTargets)
+      return true;
+    return !!SDK.targetManager.availableNodeTargetsCount();
+  }
+
+  _availableNodeTargetsChanged() {
+    var count = SDK.targetManager.availableNodeTargetsCount();
+    if (!count) {
+      this._availableNodeTargetsElement.classList.add('hidden');
+      return;
+    }
+    this._availableNodeTargetsElement.removeChildren();
+    this._availableNodeTargetsElement.createTextChild(
+        count === 1 ? Common.UIString('Node instance available.') :
+                      Common.UIString('%d Node instances available.', count));
+    var link = this._availableNodeTargetsElement.createChild('span', 'link');
+    link.textContent = Common.UIString('Connect');
+    link.addEventListener('click', () => {
+      InspectorFrontendHost.openNodeFrontend();
+    }, false);
+    this._availableNodeTargetsElement.classList.remove('hidden');
+  }
+
+  /**
+   * @override
+   * @param {!SDK.DebuggerModel} debuggerModel
+   * @return {!Element}
+   */
+  createElementForItem(debuggerModel) {
+    var element = createElementWithClass('div', 'thread-item');
+    var title = element.createChild('div', 'thread-item-title');
+    var pausedState = element.createChild('div', 'thread-item-paused-state');
+    element.appendChild(UI.Icon.create('smallicon-thick-right-arrow', 'selected-thread-icon'));
+
+    function updateTitle() {
+      var executionContext = debuggerModel.runtimeModel().defaultExecutionContext();
+      title.textContent =
+          executionContext && executionContext.label() ? executionContext.label() : debuggerModel.target().name();
+    }
+
+    function updatePausedState() {
+      pausedState.textContent = Common.UIString(debuggerModel.isPaused() ? 'paused' : '');
+    }
 
     /**
-     * @param {!WebInspector.Event} event
+     * @param {!Common.Event} event
      */
-    _onDebuggerStateChanged: function(event)
-    {
-        var debuggerModel = /** @type {!WebInspector.DebuggerModel} */ (event.target);
-        this._updateDebuggerState(debuggerModel);
-    },
+    function targetNameChanged(event) {
+      var target = /** @type {!SDK.Target} */ (event.data);
+      if (target === debuggerModel.target())
+        updateTitle();
+    }
 
-    /**
-     * @param {!WebInspector.Event} event
-     */
-    _onExecutionContextChanged: function(event)
-    {
-        var executionContext = /** @type {!WebInspector.ExecutionContext} */ (event.data);
-        if (!executionContext.isDefault)
-            return;
-        var debuggerModel = /** @type {!WebInspector.DebuggerModel} */ (WebInspector.DebuggerModel.fromTarget(executionContext.target()));
-        var listItem = this._debuggerModelToListItems.get(debuggerModel);
-        if (listItem && executionContext.label())
-            listItem.setTitle(executionContext.label());
-    },
+    debuggerModel.addEventListener(SDK.DebuggerModel.Events.DebuggerPaused, updatePausedState);
+    debuggerModel.addEventListener(SDK.DebuggerModel.Events.DebuggerResumed, updatePausedState);
+    debuggerModel.runtimeModel().addEventListener(SDK.RuntimeModel.Events.ExecutionContextChanged, updateTitle);
+    SDK.targetManager.addEventListener(SDK.TargetManager.Events.NameChanged, targetNameChanged);
 
-    /**
-     * @param {!WebInspector.DebuggerModel} debuggerModel
-     */
-    _updateDebuggerState: function(debuggerModel)
-    {
-        var listItem = this._debuggerModelToListItems.get(debuggerModel);
-        listItem.setSubtitle(WebInspector.UIString(debuggerModel.isPaused() ? "paused" : ""));
-    },
+    updatePausedState();
+    updateTitle();
+    return element;
+  }
 
-    /**
-     * @param {!WebInspector.UIList.Item} listItem
-     */
-    _selectListItem: function(listItem)
-    {
-        if (listItem === this._selectedListItem)
-            return;
+  /**
+   * @override
+   * @param {!SDK.DebuggerModel} debuggerModel
+   * @return {number}
+   */
+  heightForItem(debuggerModel) {
+    console.assert(false);  // Should not be called.
+    return 0;
+  }
 
-        if (this._selectedListItem)
-            this._selectedListItem.setSelected(false);
+  /**
+   * @override
+   * @param {!SDK.DebuggerModel} debuggerModel
+   * @return {boolean}
+   */
+  isItemSelectable(debuggerModel) {
+    return true;
+  }
 
-        this._selectedListItem = listItem;
-        listItem.setSelected(true);
-    },
+  /**
+   * @override
+   * @param {?SDK.DebuggerModel} from
+   * @param {?SDK.DebuggerModel} to
+   * @param {?Element} fromElement
+   * @param {?Element} toElement
+   */
+  selectedItemChanged(from, to, fromElement, toElement) {
+    if (fromElement)
+      fromElement.classList.remove('selected');
+    if (toElement)
+      toElement.classList.add('selected');
+    if (to)
+      UI.context.setFlavor(SDK.Target, to.target());
+  }
 
-    /**
-     * @param {!WebInspector.UIList.Item} listItem
-     */
-    _onListItemClick: function(listItem)
-    {
-        WebInspector.context.setFlavor(WebInspector.Target, this._listItemsToTargets.get(listItem));
-        listItem.element.scrollIntoViewIfNeeded();
-    },
+  /**
+   * @override
+   * @param {!SDK.DebuggerModel} debuggerModel
+   */
+  modelAdded(debuggerModel) {
+    this._list.pushItem(debuggerModel);
+    var currentTarget = UI.context.flavor(SDK.Target);
+    if (currentTarget === debuggerModel.target())
+      this._list.selectItem(debuggerModel);
+  }
 
+  /**
+   * @override
+   * @param {!SDK.DebuggerModel} debuggerModel
+   */
+  modelRemoved(debuggerModel) {
+    this._list.removeItem(debuggerModel);
+  }
 
-    __proto__: WebInspector.View.prototype
-}
+  /**
+   * @param {!Common.Event} event
+   */
+  _targetFlavorChanged(event) {
+    var target = /** @type {!SDK.Target} */ (event.data);
+    var debuggerModel = target.model(SDK.DebuggerModel);
+    if (debuggerModel)
+      this._list.selectItem(debuggerModel);
+  }
+};

@@ -6,18 +6,18 @@
 
 namespace blink {
 
-DraggedIsolatedFileSystem::FileSystemIdPreparationCallback DraggedIsolatedFileSystem::s_prepareCallback = nullptr;
+DraggedIsolatedFileSystem::FileSystemIdPreparationCallback
+    DraggedIsolatedFileSystem::prepare_callback_ = nullptr;
 
-void DraggedIsolatedFileSystem::init(DraggedIsolatedFileSystem::FileSystemIdPreparationCallback callback)
-{
-    ASSERT(!s_prepareCallback);
-    s_prepareCallback = callback;
+void DraggedIsolatedFileSystem::Init(
+    DraggedIsolatedFileSystem::FileSystemIdPreparationCallback callback) {
+  ASSERT(!prepare_callback_);
+  prepare_callback_ = callback;
 }
 
-void DraggedIsolatedFileSystem::prepareForDataObject(DataObject* dataObject, const String& filesystemId)
-{
-    ASSERT(s_prepareCallback);
-    (*s_prepareCallback)(dataObject, filesystemId);
+void DraggedIsolatedFileSystem::PrepareForDataObject(DataObject* data_object) {
+  ASSERT(prepare_callback_);
+  (*prepare_callback_)(data_object);
 }
 
-} // namespace blink
+}  // namespace blink

@@ -24,7 +24,7 @@ class BrowserContext;
 namespace extensions {
 
 // Implementation of the chrome.power.requestKeepAwake API.
-class PowerRequestKeepAwakeFunction : public SyncExtensionFunction {
+class PowerRequestKeepAwakeFunction : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("power.requestKeepAwake", POWER_REQUESTKEEPAWAKE)
 
@@ -32,11 +32,11 @@ class PowerRequestKeepAwakeFunction : public SyncExtensionFunction {
   ~PowerRequestKeepAwakeFunction() override {}
 
   // ExtensionFunction:
-  bool RunSync() override;
+  ResponseAction Run() override;
 };
 
 // Implementation of the chrome.power.releaseKeepAwake API.
-class PowerReleaseKeepAwakeFunction : public SyncExtensionFunction {
+class PowerReleaseKeepAwakeFunction : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("power.releaseKeepAwake", POWER_RELEASEKEEPAWAKE)
 
@@ -44,7 +44,7 @@ class PowerReleaseKeepAwakeFunction : public SyncExtensionFunction {
   ~PowerReleaseKeepAwakeFunction() override {}
 
   // ExtensionFunction:
-  bool RunSync() override;
+  ResponseAction Run() override;
 };
 
 // Handles calls made via the chrome.power API. There is a separate instance of
@@ -65,6 +65,13 @@ class PowerAPI : public BrowserContextKeyedAPI,
 
   // BrowserContextKeyedAPI implementation.
   static BrowserContextKeyedAPIFactory<PowerAPI>* GetFactoryInstance();
+
+  // Map from extension ID to the corresponding level for each extension
+  // that has an outstanding request.
+  using ExtensionLevelMap = std::map<std::string, api::power::Level>;
+  const ExtensionLevelMap& extension_levels() const {
+    return extension_levels_;
+  }
 
   // Adds an extension lock at |level| for |extension_id|, replacing the
   // extension's existing lock, if any.
@@ -113,9 +120,7 @@ class PowerAPI : public BrowserContextKeyedAPI,
   // |power_save_blocker_| is NULL.
   api::power::Level current_level_;
 
-  // Map from extension ID to the corresponding level for each extension
-  // that has an outstanding request.
-  typedef std::map<std::string, api::power::Level> ExtensionLevelMap;
+  // Outstanding requests.
   ExtensionLevelMap extension_levels_;
 
   DISALLOW_COPY_AND_ASSIGN(PowerAPI);

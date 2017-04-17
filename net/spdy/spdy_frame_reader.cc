@@ -115,7 +115,7 @@ bool SpdyFrameReader::ReadUInt24(uint32_t* result) {
   return true;
 }
 
-bool SpdyFrameReader::ReadStringPiece16(base::StringPiece* result) {
+bool SpdyFrameReader::ReadStringPiece16(SpdyStringPiece* result) {
   // Read resultant length.
   uint16_t result_len;
   if (!ReadUInt16(&result_len)) {
@@ -130,7 +130,7 @@ bool SpdyFrameReader::ReadStringPiece16(base::StringPiece* result) {
   }
 
   // Set result.
-  result->set(data_ + ofs_, result_len);
+  *result = SpdyStringPiece(data_ + ofs_, result_len);
 
   // Iterate.
   ofs_ += result_len;
@@ -138,7 +138,7 @@ bool SpdyFrameReader::ReadStringPiece16(base::StringPiece* result) {
   return true;
 }
 
-bool SpdyFrameReader::ReadStringPiece32(base::StringPiece* result) {
+bool SpdyFrameReader::ReadStringPiece32(SpdyStringPiece* result) {
   // Read resultant length.
   uint32_t result_len;
   if (!ReadUInt32(&result_len)) {
@@ -153,7 +153,7 @@ bool SpdyFrameReader::ReadStringPiece32(base::StringPiece* result) {
   }
 
   // Set result.
-  result->set(data_ + ofs_, result_len);
+  *result = SpdyStringPiece(data_ + ofs_, result_len);
 
   // Iterate.
   ofs_ += result_len;

@@ -28,45 +28,46 @@
 
 #include "core/layout/api/LineLayoutItem.h"
 #include "platform/fonts/FontBaseline.h"
-#include "wtf/Allocator.h"
-#include "wtf/HashMap.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashMap.h"
 
 namespace blink {
 
-class LayoutObject;
-
 // Values for vertical alignment.
-const int PositionUndefined = 0x80000000;
+const int kPositionUndefined = 0x80000000;
 
 class VerticalPositionCache {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(VerticalPositionCache);
-public:
-    VerticalPositionCache()
-    { }
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(VerticalPositionCache);
 
-    int get(LineLayoutItem layoutObject, FontBaseline baselineType) const
-    {
-        const HashMap<LineLayoutItem, int>& mapToCheck = baselineType == AlphabeticBaseline ? m_alphabeticPositions : m_ideographicPositions;
-        const HashMap<LineLayoutItem, int>::const_iterator it = mapToCheck.find(layoutObject);
-        if (it == mapToCheck.end())
-            return PositionUndefined;
-        return it->value;
-    }
+ public:
+  VerticalPositionCache() {}
 
-    void set(LineLayoutItem layoutObject, FontBaseline baselineType, int position)
-    {
-        if (baselineType == AlphabeticBaseline)
-            m_alphabeticPositions.set(layoutObject, position);
-        else
-            m_ideographicPositions.set(layoutObject, position);
-    }
+  int Get(LineLayoutItem layout_object, FontBaseline baseline_type) const {
+    const HashMap<LineLayoutItem, int>& map_to_check =
+        baseline_type == kAlphabeticBaseline ? alphabetic_positions_
+                                             : ideographic_positions_;
+    const HashMap<LineLayoutItem, int>::const_iterator it =
+        map_to_check.Find(layout_object);
+    if (it == map_to_check.end())
+      return kPositionUndefined;
+    return it->value;
+  }
 
-private:
-    HashMap<LineLayoutItem, int> m_alphabeticPositions;
-    HashMap<LineLayoutItem, int> m_ideographicPositions;
+  void Set(LineLayoutItem layout_object,
+           FontBaseline baseline_type,
+           int position) {
+    if (baseline_type == kAlphabeticBaseline)
+      alphabetic_positions_.Set(layout_object, position);
+    else
+      ideographic_positions_.Set(layout_object, position);
+  }
+
+ private:
+  HashMap<LineLayoutItem, int> alphabetic_positions_;
+  HashMap<LineLayoutItem, int> ideographic_positions_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // VerticalPositionCache_h
+#endif  // VerticalPositionCache_h

@@ -40,12 +40,19 @@ void UpdateMargins(int margins_type, int dpi, PrintMsg_Print_Params* params) {
   }
 }
 
+void UpdatePageSizeAndScaling(const gfx::Size& page_size,
+                              int scale_factor,
+                              PrintMsg_Print_Params* params) {
+  params->page_size = page_size;
+  params->scale_factor = static_cast<double>(scale_factor) / 100.0;
+}
+
 }  // namespace
 
 MockPrinterPage::MockPrinterPage(const void* source_data,
                                  uint32_t source_size,
-                                 const printing::Image& image)
-    : source_size_(source_size), image_(image) {
+                                 printing::Image image)
+    : source_size_(source_size), image_(std::move(image)) {
   // Create copies of the source data
   source_data_.reset(new uint8_t[source_size]);
   if (source_data_.get())
@@ -57,7 +64,6 @@ MockPrinterPage::~MockPrinterPage() {
 
 MockPrinter::MockPrinter()
     : dpi_(printing::kPointsPerInch),
-      desired_dpi_(printing::kPointsPerInch),
       selection_only_(false),
       should_print_backgrounds_(false),
       document_cookie_(-1),
@@ -68,7 +74,7 @@ MockPrinter::MockPrinter()
       is_first_request_(true),
       print_to_pdf_(false),
       preview_request_id_(0),
-      print_scaling_option_(blink::WebPrintScalingOptionSourceSize),
+      print_scaling_option_(blink::kWebPrintScalingOptionSourceSize),
       display_header_footer_(false),
       title_(base::ASCIIToUTF16("title")),
       url_(base::ASCIIToUTF16("url")),
@@ -104,7 +110,6 @@ void MockPrinter::GetDefaultPrintSettings(PrintMsg_Print_Params* params) {
 
 void MockPrinter::SetDefaultPrintSettings(const PrintMsg_Print_Params& params) {
   dpi_ = params.dpi;
-  desired_dpi_ = params.desired_dpi;
   selection_only_ = params.selection_only;
   should_print_backgrounds_ = params.should_print_backgrounds;
   page_size_ = params.page_size;
@@ -141,7 +146,6 @@ void MockPrinter::ScriptedPrint(int cookie,
   settings->Reset();
 
   settings->params.dpi = dpi_;
-  settings->params.desired_dpi = desired_dpi_;
   settings->params.selection_only = selection_only_;
   settings->params.should_print_backgrounds = should_print_backgrounds_;
   settings->params.document_cookie = document_cookie_;
@@ -161,7 +165,9 @@ void MockPrinter::ScriptedPrint(int cookie,
 void MockPrinter::UpdateSettings(int cookie,
                                  PrintMsg_PrintPages_Params* params,
                                  const std::vector<int>& pages,
-                                 int margins_type) {
+                                 int margins_type,
+                                 const gfx::Size& page_size,
+                                 int scale_factor) {
   if (document_cookie_ == -1) {
     document_cookie_ = CreateDocumentCookie();
   }
@@ -169,6 +175,8 @@ void MockPrinter::UpdateSettings(int cookie,
   params->pages = pages;
   SetPrintParams(&(params->params));
   UpdateMargins(margins_type, dpi_, &(params->params));
+  if (!page_size.IsEmpty())
+    UpdatePageSizeAndScaling(page_size, scale_factor, &params->params);
   printer_status_ = PRINTER_PRINTING;
 }
 
@@ -201,16 +209,9 @@ void MockPrinter::PrintPage(const PrintHostMsg_DidPrintPage_Params& params) {
   EXPECT_GT(params.data_size, 0U);
   base::SharedMemory metafile_data(params.metafile_data_handle, true);
   metafile_data.Map(params.data_size);
-#if defined(OS_MACOSX)
-  printing::PdfMetafileCg metafile;
-#else
-  printing::PdfMetafileSkia metafile(printing::PDF_SKIA_DOCUMENT_TYPE);
-#endif
-  metafile.InitFromData(metafile_data.memory(), params.data_size);
-  printing::Image image(metafile);
-  MockPrinterPage* page_data =
-      new MockPrinterPage(metafile_data.memory(), params.data_size, image);
-  scoped_refptr<MockPrinterPage> page(page_data);
+  printing::Image image(metafile_data.memory(), params.data_size);
+  scoped_refptr<MockPrinterPage> page(new MockPrinterPage(
+      metafile_data.memory(), params.data_size, std::move(image)));
   pages_.push_back(page);
 #endif
 
@@ -279,7 +280,6 @@ int MockPrinter::CreateDocumentCookie() {
 
 void MockPrinter::SetPrintParams(PrintMsg_Print_Params* params) {
   params->dpi = dpi_;
-  params->desired_dpi = desired_dpi_;
   params->selection_only = selection_only_;
   params->should_print_backgrounds = should_print_backgrounds_;
   params->document_cookie = document_cookie_;

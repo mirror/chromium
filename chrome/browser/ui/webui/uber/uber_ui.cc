@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/webui/uber/uber_ui.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
@@ -16,24 +17,25 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/chrome_manifest_url_handlers.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/grit/browser_resources.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/extension_set.h"
-#include "grit/browser_resources.h"
-#include "grit/components_strings.h"
 
 using content::NavigationController;
 using content::NavigationEntry;
-using content::RenderViewHost;
+using content::RenderFrameHost;
 using content::WebContents;
 
 namespace {
@@ -72,7 +74,7 @@ bool HasExtensionType(content::BrowserContext* browser_context,
        iter != extension_set.end(); ++iter) {
     const extensions::URLOverrides::URLOverrideMap& map =
         extensions::URLOverrides::GetChromeURLOverrides(iter->get());
-    if (ContainsKey(map, extension_type))
+    if (base::ContainsKey(map, extension_type))
       return true;
   }
 
@@ -96,11 +98,11 @@ content::WebUIDataSource* CreateUberFrameHTMLSource(
   source->AddLocalizedString("shortProductName", IDS_SHORT_PRODUCT_NAME);
 #endif  // defined(OS_CHROMEOS)
 
-  source->AddBoolean("hideExtensions", ::switches::MdExtensionsEnabled());
+  source->AddBoolean("hideExtensions",
+      base::FeatureList::IsEnabled(features::kMaterialDesignExtensions));
   source->AddBoolean("hideSettingsAndHelp",
-                     ::switches::SettingsWindowEnabled() ||
-                         base::FeatureList::IsEnabled(
-                             features::kMaterialDesignSettingsFeature));
+      ::switches::SettingsWindowEnabled() ||
+      base::FeatureList::IsEnabled(features::kMaterialDesignSettings));
   source->AddString("extensionsHost", chrome::kChromeUIExtensionsHost);
   source->AddLocalizedString("extensionsDisplayName",
                              IDS_MANAGE_EXTENSIONS_SETTING_WINDOWS_TITLE);
@@ -113,10 +115,9 @@ content::WebUIDataSource* CreateUberFrameHTMLSource(
   bool overrides_history =
       HasExtensionType(browser_context, chrome::kChromeUIHistoryHost);
   source->AddString("overridesHistory", overrides_history ? "yes" : "no");
-  source->AddBoolean(
-      "hideHistory",
-      MdHistoryUI::IsEnabled(profile)
-      && !overrides_history);
+  source->AddBoolean("hideHistory", base::FeatureList::IsEnabled(
+                                        features::kMaterialDesignHistory) &&
+                                        !overrides_history);
 
   source->DisableDenyXFrameOptions();
   source->OverrideContentSecurityPolicyChildSrc("child-src chrome:;");
@@ -132,8 +133,8 @@ void UpdateHistoryNavigation(content::WebUI* web_ui) {
                        chrome::kChromeUIHistoryHost);
   web_ui->CallJavascriptFunctionUnsafe(
       "uber_frame.setNavigationOverride",
-      base::StringValue(chrome::kChromeUIHistoryHost),
-      base::StringValue(overrides_history ? "yes" : "no"));
+      base::Value(chrome::kChromeUIHistoryHost),
+      base::Value(overrides_history ? "yes" : "no"));
 }
 
 }  // namespace
@@ -143,22 +144,29 @@ SubframeLogger::SubframeLogger(content::WebContents* contents)
 
 SubframeLogger::~SubframeLogger() {}
 
-void SubframeLogger::DidCommitProvisionalLoadForFrame(
-    content::RenderFrameHost* render_frame_host,
-    const GURL& url,
-    ui::PageTransition transition_type) {
-  if (url == GURL(chrome::kChromeUIExtensionsFrameURL) ||
-      url == GURL(chrome::kChromeUIHelpFrameURL) ||
-      url == GURL(chrome::kChromeUIHistoryFrameURL) ||
-      url == GURL(chrome::kChromeUISettingsFrameURL) ||
-      url == GURL(chrome::kChromeUIUberFrameURL)) {
+void SubframeLogger::DidFinishNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->HasCommitted())
+    return;
+
+  const GURL& url = navigation_handle->GetURL();
+  if (url == chrome::kChromeUIExtensionsFrameURL ||
+      url == chrome::kChromeUIHelpFrameURL ||
+      url == chrome::kChromeUIHistoryFrameURL ||
+      url == chrome::kChromeUISettingsFrameURL ||
+      url == chrome::kChromeUIUberFrameURL) {
     webui::LogWebUIUrl(url);
   }
 }
 
-UberUI::UberUI(content::WebUI* web_ui)
-    : WebUIController(web_ui),
-      subframe_logger_(web_ui->GetWebContents()) {
+UberUI::UberUI(content::WebUI* web_ui) : WebUIController(web_ui) {
+  if (!content::IsBrowserSideNavigationEnabled()) {
+    // This isn't needed with PlzNavigate because when
+    // CreateWebUIControllerForURL is called there's always a RenderFrame
+    // and the logging happens there.
+    subframe_logger_ =
+        base::MakeUnique<SubframeLogger>(web_ui->GetWebContents());
+  }
   content::WebUIDataSource::Add(web_ui->GetWebContents()->GetBrowserContext(),
                                 CreateUberHTMLSource());
 
@@ -175,7 +183,6 @@ UberUI::UberUI(content::WebUI* web_ui)
 }
 
 UberUI::~UberUI() {
-  STLDeleteValues(&sub_uis_);
 }
 
 void UberUI::RegisterSubpage(const std::string& page_url,
@@ -185,15 +192,14 @@ void UberUI::RegisterSubpage(const std::string& page_url,
 }
 
 content::WebUI* UberUI::GetSubpage(const std::string& page_url) {
-  if (!ContainsKey(sub_uis_, page_url))
-    return NULL;
-  return sub_uis_[page_url];
+  if (!base::ContainsKey(sub_uis_, page_url))
+    return nullptr;
+  return sub_uis_[page_url].get();
 }
 
-void UberUI::RenderViewCreated(RenderViewHost* render_view_host) {
-  for (SubpageMap::iterator iter = sub_uis_.begin(); iter != sub_uis_.end();
-       ++iter) {
-    iter->second->GetController()->RenderViewCreated(render_view_host);
+void UberUI::RenderFrameCreated(RenderFrameHost* render_frame_host) {
+  for (auto iter = sub_uis_.begin(); iter != sub_uis_.end(); ++iter) {
+    iter->second->GetController()->RenderFrameCreated(render_frame_host);
   }
 }
 
@@ -201,7 +207,7 @@ bool UberUI::OverrideHandleWebUIMessage(const GURL& source_url,
                                         const std::string& message,
                                         const base::ListValue& args) {
   // Find the appropriate subpage and forward the message.
-  SubpageMap::iterator subpage = sub_uis_.find(source_url.GetOrigin().spec());
+  auto subpage = sub_uis_.find(source_url.GetOrigin().spec());
   if (subpage == sub_uis_.end()) {
     // The message was sent from the uber page itself.
     DCHECK_EQ(std::string(chrome::kChromeUIUberHost), source_url.host());

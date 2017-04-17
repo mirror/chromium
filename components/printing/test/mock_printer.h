@@ -31,7 +31,7 @@ class MockPrinterPage : public base::RefCounted<MockPrinterPage> {
  public:
   MockPrinterPage(const void* source_data,
                   uint32_t source_size,
-                  const printing::Image& image);
+                  printing::Image image);
 
   int width() const { return image_.size().width(); }
   int height() const { return image_.size().height(); }
@@ -85,7 +85,9 @@ class MockPrinter {
   void UpdateSettings(int cookie,
                       PrintMsg_PrintPages_Params* params,
                       const std::vector<int>& page_range_array,
-                      int margins_type);
+                      int margins_type,
+                      const gfx::Size& page_size,
+                      int scale_factor);
   void SetPrintedPagesCount(int cookie, int number_pages);
   void PrintPage(const PrintHostMsg_DidPrintPage_Params& params);
 
@@ -121,9 +123,6 @@ class MockPrinter {
 
   // Specifies dots per inch.
   double dpi_;
-
-  // Desired apparent dpi on paper.
-  int desired_dpi_;
 
   // Print selection.
   bool selection_only_;

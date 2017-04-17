@@ -7,38 +7,40 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class USBOutTransferResult final
-    : public GarbageCollectedFinalized<USBOutTransferResult>
-    , public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static USBOutTransferResult* create(const String& status, unsigned bytesWritten)
-    {
-        return new USBOutTransferResult(status, bytesWritten);
-    }
+    : public GarbageCollectedFinalized<USBOutTransferResult>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    USBOutTransferResult(const String& status, unsigned bytesWritten)
-        : m_status(status)
-        , m_bytesWritten(bytesWritten)
-    {
-    }
+ public:
+  static USBOutTransferResult* Create(const String& status) {
+    return new USBOutTransferResult(status, 0);
+  }
 
-    virtual ~USBOutTransferResult() { }
+  static USBOutTransferResult* Create(const String& status,
+                                      unsigned bytes_written) {
+    return new USBOutTransferResult(status, bytes_written);
+  }
 
-    String status() const { return m_status; }
-    unsigned bytesWritten() const { return m_bytesWritten; }
+  USBOutTransferResult(const String& status, unsigned bytes_written)
+      : status_(status), bytes_written_(bytes_written) {}
 
-    DEFINE_INLINE_TRACE() { }
+  virtual ~USBOutTransferResult() {}
 
-private:
-    const String m_status;
-    const unsigned m_bytesWritten;
+  String status() const { return status_; }
+  unsigned bytesWritten() const { return bytes_written_; }
+
+  DEFINE_INLINE_TRACE() {}
+
+ private:
+  const String status_;
+  const unsigned bytes_written_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // USBOutTransferResult_h
+#endif  // USBOutTransferResult_h

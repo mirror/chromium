@@ -33,6 +33,7 @@
 #include "ui/app_list/views/search_result_page_view.h"
 #include "ui/app_list/views/search_result_tile_item_view.h"
 #include "ui/app_list/views/start_page_view.h"
+#include "ui/app_list/views/test/app_list_view_test_api.h"
 #include "ui/app_list/views/test/apps_grid_view_test_api.h"
 #include "ui/app_list/views/tile_item_view.h"
 #include "ui/events/event_utils.h"
@@ -46,14 +47,6 @@ namespace app_list {
 namespace test {
 
 namespace {
-
-enum TestType {
-  TEST_TYPE_START = 0,
-  NORMAL = TEST_TYPE_START,
-  LANDSCAPE,
-  EXPERIMENTAL,
-  TEST_TYPE_END,
-};
 
 template <class T>
 size_t GetVisibleViews(const std::vector<T*>& tiles) {
@@ -91,7 +84,7 @@ class TestStartPageSearchResult : public TestSearchResult {
 // root window or a desktop window tree host.
 class AppListViewTestContext {
  public:
-  AppListViewTestContext(int test_type, gfx::NativeView parent);
+  explicit AppListViewTestContext(gfx::NativeView parent);
   ~AppListViewTestContext();
 
   // Test displaying the app list and performs a standard set of checks on its
@@ -105,14 +98,11 @@ class AppListViewTestContext {
   // Tests that pressing the search box's back button navigates correctly.
   void RunBackTest();
 
-  // Tests displaying of the experimental app list and shows the start page.
+  // Tests displaying of the app list and shows the start page.
   void RunStartPageTest();
 
   // Tests switching rapidly between multiple pages of the launcher.
   void RunPageSwitchingAnimationTest();
-
-  // Tests changing the App List profile.
-  void RunProfileChangeTest();
 
   // Tests displaying of the search results.
   void RunSearchResultsTest();
@@ -129,11 +119,6 @@ class AppListViewTestContext {
   void NativeWidgetClosing() {
     view_ = NULL;
     run_loop_->Quit();
-  }
-
-  // Whether the experimental "landscape" app launcher UI is being tested.
-  bool is_landscape() const {
-    return test_type_ == LANDSCAPE || test_type_ == EXPERIMENTAL;
   }
 
  private:
@@ -158,7 +143,6 @@ class AppListViewTestContext {
   // Gets the PaginationModel owned by |view_|.
   PaginationModel* GetPaginationModel();
 
-  const TestType test_type_;
   std::unique_ptr<base::RunLoop> run_loop_;
   app_list::AppListView* view_;  // Owned by native widget.
   std::unique_ptr<app_list::test::AppListTestViewDelegate> delegate_;
@@ -174,11 +158,6 @@ class UnitTestViewDelegate : public app_list::test::AppListTestViewDelegate {
   explicit UnitTestViewDelegate(AppListViewTestContext* parent)
       : parent_(parent) {}
 
-  // Overridden from app_list::AppListViewDelegate:
-  bool ShouldCenterWindow() const override {
-    return app_list::switches::IsCenteredAppListEnabled();
-  }
-
   // Overridden from app_list::test::AppListTestViewDelegate:
   void ViewClosing() override { parent_->NativeWidgetClosing(); }
 
@@ -188,38 +167,13 @@ class UnitTestViewDelegate : public app_list::test::AppListTestViewDelegate {
   DISALLOW_COPY_AND_ASSIGN(UnitTestViewDelegate);
 };
 
-AppListViewTestContext::AppListViewTestContext(int test_type,
-                                               gfx::NativeView parent)
-    : test_type_(static_cast<TestType>(test_type)) {
-  switch (test_type_) {
-    case NORMAL:
-      base::CommandLine::ForCurrentProcess()->AppendSwitch(
-          switches::kDisableExperimentalAppList);
-      break;
-    case LANDSCAPE:
-      base::CommandLine::ForCurrentProcess()->AppendSwitch(
-          switches::kDisableExperimentalAppList);
-      base::CommandLine::ForCurrentProcess()->AppendSwitch(
-          switches::kEnableCenteredAppList);
-      break;
-    case EXPERIMENTAL:
-      base::CommandLine::ForCurrentProcess()->AppendSwitch(
-          switches::kEnableExperimentalAppList);
-      break;
-    default:
-      NOTREACHED();
-      break;
-  }
-
+AppListViewTestContext::AppListViewTestContext(gfx::NativeView parent) {
   delegate_.reset(new UnitTestViewDelegate(this));
   view_ = new app_list::AppListView(delegate_.get());
 
   // Initialize centered around a point that ensures the window is wholly shown.
-  view_->InitAsBubbleAtFixedLocation(parent,
-                                     0,
-                                     gfx::Point(300, 300),
-                                     views::BubbleBorder::FLOAT,
-                                     false /* border_accepts_events */);
+  view_->InitAsBubble(parent, 0);
+  view_->SetAnchorPoint(gfx::Point(300, 300));
 }
 
 AppListViewTestContext::~AppListViewTestContext() {
@@ -259,7 +213,8 @@ bool AppListViewTestContext::IsStateShown(AppListModel::State state) {
 void AppListViewTestContext::Show() {
   view_->GetWidget()->Show();
   run_loop_.reset(new base::RunLoop);
-  view_->SetNextPaintCallback(run_loop_->QuitClosure());
+  AppListViewTestApi test_api(view_);
+  test_api.SetNextPaintCallback(run_loop_->QuitClosure());
   run_loop_->Run();
 
   EXPECT_TRUE(view_->GetWidget()->IsVisible());
@@ -299,37 +254,12 @@ void AppListViewTestContext::RunDisplayTest() {
 
   Show();
 
-#if defined(OS_CHROMEOS)
   // Explicitly enforce the exact dimensions of the app list. Feel free to
   // change these if you need to (they are just here to prevent against
   // accidental changes to the window size).
-  //
-  // Note: Only test this on Chrome OS; the deprecation banner on other
-  // platforms makes the height variable so we can't reliably test it (nor do we
-  // really need to).
-  switch (test_type_) {
-    case NORMAL:
-      EXPECT_EQ("400x500", view_->bounds().size().ToString());
-      break;
-    case LANDSCAPE:
-      // NOTE: Height should not exceed 402, because otherwise there might not
-      // be enough space to accomodate the virtual keyboard. (LANDSCAPE mode is
-      // enabled by default when the virtual keyboard is enabled.)
-      EXPECT_EQ("576x402", view_->bounds().size().ToString());
-      break;
-    case EXPERIMENTAL:
-      EXPECT_EQ("768x570", view_->bounds().size().ToString());
-      break;
-    default:
-      NOTREACHED();
-      break;
-  }
-#endif  // defined(OS_CHROMEOS)
+  EXPECT_EQ("768x570", view_->bounds().size().ToString());
 
-  if (is_landscape())
-    EXPECT_EQ(2, GetPaginationModel()->total_pages());
-  else
-    EXPECT_EQ(3, GetPaginationModel()->total_pages());
+  EXPECT_EQ(2, GetPaginationModel()->total_pages());
   EXPECT_EQ(0, GetPaginationModel()->selected_page());
 
   // Checks on the main view.
@@ -337,9 +267,7 @@ void AppListViewTestContext::RunDisplayTest() {
   EXPECT_NO_FATAL_FAILURE(CheckView(main_view));
   EXPECT_NO_FATAL_FAILURE(CheckView(main_view->contents_view()));
 
-  AppListModel::State expected = test_type_ == EXPERIMENTAL
-                                     ? AppListModel::STATE_START
-                                     : AppListModel::STATE_APPS;
+  AppListModel::State expected = AppListModel::STATE_START;
   EXPECT_TRUE(main_view->contents_view()->IsStateActive(expected));
   EXPECT_EQ(expected, delegate_->GetTestModel()->state());
 
@@ -391,11 +319,6 @@ void AppListViewTestContext::RunReshowWithOpenFolderTest() {
 }
 
 void AppListViewTestContext::RunBackTest() {
-  if (test_type_ != EXPERIMENTAL) {
-    Close();
-    return;
-  }
-
   EXPECT_FALSE(view_->GetWidget()->IsVisible());
   EXPECT_EQ(-1, GetPaginationModel()->total_pages());
 
@@ -461,130 +384,76 @@ void AppListViewTestContext::RunStartPageTest() {
   // Checks on the main view.
   EXPECT_NO_FATAL_FAILURE(CheckView(main_view));
   EXPECT_NO_FATAL_FAILURE(CheckView(main_view->contents_view()));
-  if (test_type_ == EXPERIMENTAL) {
-    EXPECT_NO_FATAL_FAILURE(CheckView(start_page_view));
+  EXPECT_NO_FATAL_FAILURE(CheckView(start_page_view));
 
-    // Show the start page view.
-    EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
-    gfx::Size view_size(view_->GetPreferredSize());
+  // Show the start page view.
+  EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
+  gfx::Size view_size(view_->GetPreferredSize());
 
-    // The "All apps" button should have its "parent background color" set
-    // to the tiles container's background color.
-    TileItemView* all_apps_button = start_page_view->all_apps_button();
-    EXPECT_TRUE(all_apps_button->visible());
-    EXPECT_EQ(kLabelBackgroundColor,
-              all_apps_button->parent_background_color());
+  // The "All apps" button should have its "parent background color" set
+  // to the tiles container's background color.
+  TileItemView* all_apps_button = start_page_view->all_apps_button();
+  EXPECT_TRUE(all_apps_button->visible());
+  EXPECT_EQ(kLabelBackgroundColor, all_apps_button->parent_background_color());
 
-    // Simulate clicking the "All apps" button. Check that we navigate to the
-    // apps grid view.
-    SimulateClick(all_apps_button);
-    main_view->contents_view()->Layout();
-    EXPECT_TRUE(IsStateShown(AppListModel::STATE_APPS));
+  // Simulate clicking the "All apps" button. Check that we navigate to the
+  // apps grid view.
+  SimulateClick(all_apps_button);
+  main_view->contents_view()->Layout();
+  EXPECT_TRUE(IsStateShown(AppListModel::STATE_APPS));
 
-    // Hiding and showing the search box should not affect the app list's
-    // preferred size. This is a regression test for http://crbug.com/386912.
-    EXPECT_EQ(view_size.ToString(), view_->GetPreferredSize().ToString());
+  // Hiding and showing the search box should not affect the app list's
+  // preferred size. This is a regression test for http://crbug.com/386912.
+  EXPECT_EQ(view_size.ToString(), view_->GetPreferredSize().ToString());
 
-    // Check tiles hide and show on deletion and addition.
-    EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
-    model->results()->Add(new TestStartPageSearchResult());
-    start_page_view->UpdateForTesting();
-    EXPECT_EQ(1u, GetVisibleViews(start_page_view->tile_views()));
-    model->results()->DeleteAll();
-    start_page_view->UpdateForTesting();
-    EXPECT_EQ(0u, GetVisibleViews(start_page_view->tile_views()));
+  // Check tiles hide and show on deletion and addition.
+  EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
+  model->results()->Add(base::MakeUnique<TestStartPageSearchResult>());
+  start_page_view->UpdateForTesting();
+  EXPECT_EQ(1u, GetVisibleViews(start_page_view->tile_views()));
+  model->results()->DeleteAll();
+  start_page_view->UpdateForTesting();
+  EXPECT_EQ(0u, GetVisibleViews(start_page_view->tile_views()));
 
-    // Tiles should not update when the start page is not active but should be
-    // correct once the start page is shown.
-    EXPECT_TRUE(SetAppListState(AppListModel::STATE_APPS));
-    model->results()->Add(new TestStartPageSearchResult());
-    start_page_view->UpdateForTesting();
-    EXPECT_EQ(0u, GetVisibleViews(start_page_view->tile_views()));
-    EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
-    EXPECT_EQ(1u, GetVisibleViews(start_page_view->tile_views()));
-  } else {
-    EXPECT_EQ(NULL, start_page_view);
-  }
+  // Tiles should not update when the start page is not active but should be
+  // correct once the start page is shown.
+  EXPECT_TRUE(SetAppListState(AppListModel::STATE_APPS));
+  model->results()->Add(base::MakeUnique<TestStartPageSearchResult>());
+  start_page_view->UpdateForTesting();
+  EXPECT_EQ(0u, GetVisibleViews(start_page_view->tile_views()));
+  EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
+  EXPECT_EQ(1u, GetVisibleViews(start_page_view->tile_views()));
 
   Close();
 }
 
 void AppListViewTestContext::RunPageSwitchingAnimationTest() {
-  if (test_type_ == EXPERIMENTAL) {
-    Show();
-
-    AppListMainView* main_view = view_->app_list_main_view();
-    // Checks on the main view.
-    EXPECT_NO_FATAL_FAILURE(CheckView(main_view));
-    EXPECT_NO_FATAL_FAILURE(CheckView(main_view->contents_view()));
-
-    ContentsView* contents_view = main_view->contents_view();
-
-    contents_view->SetActiveState(AppListModel::STATE_START);
-    contents_view->Layout();
-
-    IsStateShown(AppListModel::STATE_START);
-
-    // Change pages. View should not have moved without Layout().
-    contents_view->SetActiveState(AppListModel::STATE_SEARCH_RESULTS);
-    IsStateShown(AppListModel::STATE_START);
-
-    // Change to a third page. This queues up the second animation behind the
-    // first.
-    contents_view->SetActiveState(AppListModel::STATE_APPS);
-    IsStateShown(AppListModel::STATE_START);
-
-    // Call Layout(). Should jump to the third page.
-    contents_view->Layout();
-    IsStateShown(AppListModel::STATE_APPS);
-  }
-
-  Close();
-}
-
-void AppListViewTestContext::RunProfileChangeTest() {
-  EXPECT_FALSE(view_->GetWidget()->IsVisible());
-  EXPECT_EQ(-1, GetPaginationModel()->total_pages());
-  delegate_->GetTestModel()->PopulateApps(kInitialItems);
-
   Show();
 
-  if (is_landscape())
-    EXPECT_EQ(2, GetPaginationModel()->total_pages());
-  else
-    EXPECT_EQ(3, GetPaginationModel()->total_pages());
+  AppListMainView* main_view = view_->app_list_main_view();
+  // Checks on the main view.
+  EXPECT_NO_FATAL_FAILURE(CheckView(main_view));
+  EXPECT_NO_FATAL_FAILURE(CheckView(main_view->contents_view()));
 
-  // Change the profile. The original model needs to be kept alive for
-  // observers to unregister themselves.
-  std::unique_ptr<AppListTestModel> original_test_model(
-      delegate_->ReleaseTestModel());
-  delegate_->set_next_profile_app_count(1);
+  ContentsView* contents_view = main_view->contents_view();
 
-  // The original ContentsView is destroyed here.
-  view_->SetProfileByPath(base::FilePath());
-  EXPECT_EQ(1, GetPaginationModel()->total_pages());
+  contents_view->SetActiveState(AppListModel::STATE_START);
+  contents_view->Layout();
 
-  StartPageView* start_page_view =
-      view_->app_list_main_view()->contents_view()->start_page_view();
-  if (test_type_ == EXPERIMENTAL)
-    EXPECT_NO_FATAL_FAILURE(CheckView(start_page_view));
-  else
-    EXPECT_EQ(NULL, start_page_view);
+  IsStateShown(AppListModel::STATE_START);
 
-  // New model updates should be processed by the start page view.
-  delegate_->GetTestModel()->results()->Add(new TestStartPageSearchResult());
-  if (test_type_ == EXPERIMENTAL) {
-    start_page_view->UpdateForTesting();
-    EXPECT_EQ(1u, GetVisibleViews(start_page_view->tile_views()));
-  }
+  // Change pages. View should not have moved without Layout().
+  contents_view->SetActiveState(AppListModel::STATE_SEARCH_RESULTS);
+  IsStateShown(AppListModel::STATE_START);
 
-  // Old model updates should be ignored.
-  original_test_model->results()->Add(new TestStartPageSearchResult());
-  original_test_model->results()->Add(new TestStartPageSearchResult());
-  if (test_type_ == EXPERIMENTAL) {
-    start_page_view->UpdateForTesting();
-    EXPECT_EQ(1u, GetVisibleViews(start_page_view->tile_views()));
-  }
+  // Change to a third page. This queues up the second animation behind the
+  // first.
+  contents_view->SetActiveState(AppListModel::STATE_APPS);
+  IsStateShown(AppListModel::STATE_START);
+
+  // Call Layout(). Should jump to the third page.
+  contents_view->Layout();
+  IsStateShown(AppListModel::STATE_APPS);
 
   Close();
 }
@@ -615,43 +484,37 @@ void AppListViewTestContext::RunSearchResultsTest() {
   // Check that we return to the page that we were on before the search.
   EXPECT_TRUE(IsStateShown(AppListModel::STATE_APPS));
 
-  if (test_type_ == EXPERIMENTAL) {
-    // Check that typing into the search box triggers the search page.
-    EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
-    view_->Layout();
-    EXPECT_TRUE(IsStateShown(AppListModel::STATE_START));
+  // Check that typing into the search box triggers the search page.
+  EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
+  view_->Layout();
+  EXPECT_TRUE(IsStateShown(AppListModel::STATE_START));
 
-    base::string16 search_text = base::UTF8ToUTF16("test");
-    main_view->search_box_view()->search_box()->SetText(base::string16());
-    main_view->search_box_view()->search_box()->InsertText(search_text);
-    // Check that the current search is using |search_text|.
-    EXPECT_EQ(search_text, delegate_->GetTestModel()->search_box()->text());
-    EXPECT_EQ(search_text, main_view->search_box_view()->search_box()->text());
-    contents_view->Layout();
-    EXPECT_TRUE(
-        contents_view->IsStateActive(AppListModel::STATE_SEARCH_RESULTS));
-    EXPECT_TRUE(
-        CheckSearchBoxWidget(contents_view->GetDefaultSearchBoxBounds()));
+  base::string16 search_text = base::UTF8ToUTF16("test");
+  main_view->search_box_view()->search_box()->SetText(base::string16());
+  main_view->search_box_view()->search_box()->InsertText(search_text);
+  // Check that the current search is using |search_text|.
+  EXPECT_EQ(search_text, delegate_->GetTestModel()->search_box()->text());
+  EXPECT_EQ(search_text, main_view->search_box_view()->search_box()->text());
+  contents_view->Layout();
+  EXPECT_TRUE(contents_view->IsStateActive(AppListModel::STATE_SEARCH_RESULTS));
+  EXPECT_TRUE(CheckSearchBoxWidget(contents_view->GetDefaultSearchBoxBounds()));
 
-    // Check that typing into the search box triggers the search page.
-    EXPECT_TRUE(SetAppListState(AppListModel::STATE_APPS));
-    contents_view->Layout();
-    EXPECT_TRUE(IsStateShown(AppListModel::STATE_APPS));
-    EXPECT_TRUE(
-        CheckSearchBoxWidget(contents_view->GetDefaultSearchBoxBounds()));
+  // Check that typing into the search box triggers the search page.
+  EXPECT_TRUE(SetAppListState(AppListModel::STATE_APPS));
+  contents_view->Layout();
+  EXPECT_TRUE(IsStateShown(AppListModel::STATE_APPS));
+  EXPECT_TRUE(CheckSearchBoxWidget(contents_view->GetDefaultSearchBoxBounds()));
 
-    base::string16 new_search_text = base::UTF8ToUTF16("apple");
-    main_view->search_box_view()->search_box()->SetText(base::string16());
-    main_view->search_box_view()->search_box()->InsertText(new_search_text);
-    // Check that the current search is using |new_search_text|.
-    EXPECT_EQ(new_search_text, delegate_->GetTestModel()->search_box()->text());
-    EXPECT_EQ(new_search_text,
-              main_view->search_box_view()->search_box()->text());
-    contents_view->Layout();
-    EXPECT_TRUE(IsStateShown(AppListModel::STATE_SEARCH_RESULTS));
-    EXPECT_TRUE(
-        CheckSearchBoxWidget(contents_view->GetDefaultSearchBoxBounds()));
-  }
+  base::string16 new_search_text = base::UTF8ToUTF16("apple");
+  main_view->search_box_view()->search_box()->SetText(base::string16());
+  main_view->search_box_view()->search_box()->InsertText(new_search_text);
+  // Check that the current search is using |new_search_text|.
+  EXPECT_EQ(new_search_text, delegate_->GetTestModel()->search_box()->text());
+  EXPECT_EQ(new_search_text,
+            main_view->search_box_view()->search_box()->text());
+  contents_view->Layout();
+  EXPECT_TRUE(IsStateShown(AppListModel::STATE_SEARCH_RESULTS));
+  EXPECT_TRUE(CheckSearchBoxWidget(contents_view->GetDefaultSearchBoxBounds()));
 
   Close();
 }
@@ -675,11 +538,10 @@ void AppListViewTestContext::RunAppListOverlayTest() {
   Close();
 }
 
-class AppListViewTestAura : public views::ViewsTestBase,
-                            public ::testing::WithParamInterface<int> {
+class AppListViewTestAura : public views::ViewsTestBase {
  public:
   AppListViewTestAura() {}
-  virtual ~AppListViewTestAura() {}
+  ~AppListViewTestAura() override {}
 
   // testing::Test overrides:
   void SetUp() override {
@@ -690,11 +552,8 @@ class AppListViewTestAura : public views::ViewsTestBase,
     // window as the parent. This only works on aura where the root window is a
     // NativeView as well as a NativeWindow.
     gfx::NativeView container = NULL;
-#if defined(USE_AURA)
     container = GetContext();
-#endif
-
-    test_context_.reset(new AppListViewTestContext(GetParam(), container));
+    test_context_.reset(new AppListViewTestContext(container));
   }
 
   void TearDown() override {
@@ -709,18 +568,16 @@ class AppListViewTestAura : public views::ViewsTestBase,
   DISALLOW_COPY_AND_ASSIGN(AppListViewTestAura);
 };
 
-class AppListViewTestDesktop : public views::ViewsTestBase,
-                               public ::testing::WithParamInterface<int> {
+class AppListViewTestDesktop : public views::ViewsTestBase {
  public:
   AppListViewTestDesktop() {}
-  virtual ~AppListViewTestDesktop() {}
+  ~AppListViewTestDesktop() override {}
 
   // testing::Test overrides:
   void SetUp() override {
-    set_views_delegate(
-        base::WrapUnique(new AppListViewTestViewsDelegate(this)));
+    set_views_delegate(base::MakeUnique<AppListViewTestViewsDelegate>(this));
     views::ViewsTestBase::SetUp();
-    test_context_.reset(new AppListViewTestContext(GetParam(), NULL));
+    test_context_.reset(new AppListViewTestContext(NULL));
   }
 
   void TearDown() override {
@@ -735,9 +592,7 @@ class AppListViewTestDesktop : public views::ViewsTestBase,
   class AppListViewTestViewsDelegate : public views::TestViewsDelegate {
    public:
     explicit AppListViewTestViewsDelegate(AppListViewTestDesktop* parent)
-#if defined(OS_CHROMEOS)
         : parent_(parent)
-#endif
     {
     }
 
@@ -747,9 +602,7 @@ class AppListViewTestDesktop : public views::ViewsTestBase,
         views::internal::NativeWidgetDelegate* delegate) override;
 
    private:
-#if defined(OS_CHROMEOS)
     AppListViewTestDesktop* parent_;
-#endif
 
     DISALLOW_COPY_AND_ASSIGN(AppListViewTestViewsDelegate);
   };
@@ -764,101 +617,77 @@ void AppListViewTestDesktop::AppListViewTestViewsDelegate::OnBeforeWidgetInit(
 // ChromeOS, use the root window from the AuraTestHelper rather than depending
 // on ash::Shell:GetPrimaryRootWindow(). Also assume non-ChromeOS is never the
 // Ash desktop, as that is covered by AppListViewTestAura.
-#if defined(OS_CHROMEOS)
   if (!params->parent && !params->context)
     params->context = parent_->GetContext();
-#elif defined(USE_AURA)
-  if (params->parent == NULL && params->context == NULL && !params->child)
-    params->native_widget = new views::DesktopNativeWidgetAura(delegate);
-#endif
 }
 
 }  // namespace
 
 // Tests showing the app list with basic test model in an ash-style root window.
-TEST_P(AppListViewTestAura, Display) {
+TEST_F(AppListViewTestAura, Display) {
   EXPECT_NO_FATAL_FAILURE(test_context_->RunDisplayTest());
 }
 
 // Tests showing the app list on the desktop. Note on ChromeOS, this will still
 // use the regular root window.
-TEST_P(AppListViewTestDesktop, Display) {
+TEST_F(AppListViewTestDesktop, Display) {
   EXPECT_NO_FATAL_FAILURE(test_context_->RunDisplayTest());
 }
 
 // Tests that the main grid view is shown after hiding and reshowing the app
 // list with a folder view open. This is a regression test for crbug.com/357058.
-TEST_P(AppListViewTestAura, ReshowWithOpenFolder) {
+TEST_F(AppListViewTestAura, ReshowWithOpenFolder) {
   EXPECT_NO_FATAL_FAILURE(test_context_->RunReshowWithOpenFolderTest());
 }
 
-TEST_P(AppListViewTestDesktop, ReshowWithOpenFolder) {
+TEST_F(AppListViewTestDesktop, ReshowWithOpenFolder) {
   EXPECT_NO_FATAL_FAILURE(test_context_->RunReshowWithOpenFolderTest());
 }
 
 // Tests that the start page view operates correctly.
-TEST_P(AppListViewTestAura, StartPageTest) {
+TEST_F(AppListViewTestAura, StartPageTest) {
   EXPECT_NO_FATAL_FAILURE(test_context_->RunStartPageTest());
 }
 
-TEST_P(AppListViewTestDesktop, StartPageTest) {
+TEST_F(AppListViewTestDesktop, StartPageTest) {
   EXPECT_NO_FATAL_FAILURE(test_context_->RunStartPageTest());
 }
 
 // Tests that the start page view operates correctly.
-TEST_P(AppListViewTestAura, PageSwitchingAnimationTest) {
+TEST_F(AppListViewTestAura, PageSwitchingAnimationTest) {
   EXPECT_NO_FATAL_FAILURE(test_context_->RunPageSwitchingAnimationTest());
 }
 
-TEST_P(AppListViewTestDesktop, PageSwitchingAnimationTest) {
+TEST_F(AppListViewTestDesktop, PageSwitchingAnimationTest) {
   EXPECT_NO_FATAL_FAILURE(test_context_->RunPageSwitchingAnimationTest());
-}
-
-// Tests that the profile changes operate correctly.
-TEST_P(AppListViewTestAura, ProfileChangeTest) {
-  EXPECT_NO_FATAL_FAILURE(test_context_->RunProfileChangeTest());
-}
-
-TEST_P(AppListViewTestDesktop, ProfileChangeTest) {
-  EXPECT_NO_FATAL_FAILURE(test_context_->RunProfileChangeTest());
 }
 
 // Tests that the correct views are displayed for showing search results.
-TEST_P(AppListViewTestAura, SearchResultsTest) {
+TEST_F(AppListViewTestAura, SearchResultsTest) {
   EXPECT_NO_FATAL_FAILURE(test_context_->RunSearchResultsTest());
 }
 
-TEST_P(AppListViewTestDesktop, SearchResultsTest) {
+TEST_F(AppListViewTestDesktop, SearchResultsTest) {
   EXPECT_NO_FATAL_FAILURE(test_context_->RunSearchResultsTest());
 }
 
 // Tests that the back button navigates through the app list correctly.
-TEST_P(AppListViewTestAura, BackTest) {
+TEST_F(AppListViewTestAura, BackTest) {
   EXPECT_NO_FATAL_FAILURE(test_context_->RunBackTest());
 }
 
-TEST_P(AppListViewTestDesktop, BackTest) {
+TEST_F(AppListViewTestDesktop, BackTest) {
   EXPECT_NO_FATAL_FAILURE(test_context_->RunBackTest());
 }
 
 // Tests that the correct views are displayed for showing search results.
-TEST_P(AppListViewTestAura, AppListOverlayTest) {
+TEST_F(AppListViewTestAura, AppListOverlayTest) {
   EXPECT_NO_FATAL_FAILURE(test_context_->RunAppListOverlayTest());
 }
 
-TEST_P(AppListViewTestDesktop, AppListOverlayTest) {
+TEST_F(AppListViewTestDesktop, AppListOverlayTest) {
   EXPECT_NO_FATAL_FAILURE(test_context_->RunAppListOverlayTest());
 }
-
-#if defined(USE_AURA)
-INSTANTIATE_TEST_CASE_P(AppListViewTestAuraInstance,
-                        AppListViewTestAura,
-                        ::testing::Range<int>(TEST_TYPE_START, TEST_TYPE_END));
-#endif
-
-INSTANTIATE_TEST_CASE_P(AppListViewTestDesktopInstance,
-                        AppListViewTestDesktop,
-                        ::testing::Range<int>(TEST_TYPE_START, TEST_TYPE_END));
 
 }  // namespace test
 }  // namespace app_list

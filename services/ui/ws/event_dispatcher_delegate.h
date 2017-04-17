@@ -14,10 +14,9 @@ class Point;
 }
 
 namespace ui {
-class Event;
-}
 
-namespace ui {
+class Event;
+
 namespace ws {
 
 class Accelerator;
@@ -41,13 +40,20 @@ class EventDispatcherDelegate {
   // Called when capture should be set on the native display. |window| is the
   // window capture is being set on.
   virtual void SetNativeCapture(ServerWindow* window) = 0;
+
   // Called when the native display is having capture released. There is no
   // longer a ServerWindow holding capture.
   virtual void ReleaseNativeCapture() = 0;
+
+  // Called when EventDispatcher has a new value for the cursor and our
+  // delegate should perform the native updates.
+  virtual void UpdateNativeCursorFromDispatcher() = 0;
+
   // Called when |window| has lost capture. The native display may still be
   // holding capture. The delegate should not change native display capture.
   // ReleaseNativeCapture() is invoked if appropriate.
-  virtual void OnServerWindowCaptureLost(ServerWindow* window) = 0;
+  virtual void OnCaptureChanged(ServerWindow* new_capture,
+                                ServerWindow* old_capture) = 0;
 
   virtual void OnMouseCursorLocationChanged(const gfx::Point& point) = 0;
 
@@ -63,8 +69,10 @@ class EventDispatcherDelegate {
                                                   bool in_nonclient_area) = 0;
 
   // Returns the window to start searching from at the specified location, or
-  // null if there is a no window containing |location|.
-  virtual ServerWindow* GetRootWindowContaining(const gfx::Point& location) = 0;
+  // null if there is a no window containing |location|. |location| should be in
+  // screen coordinates and if a window is returned then |location| will be
+  // updated to be relative to the origin of the window.
+  virtual ServerWindow* GetRootWindowContaining(gfx::Point* location) = 0;
 
   // Called when event dispatch could not find a target. OnAccelerator may still
   // be called.

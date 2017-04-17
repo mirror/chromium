@@ -28,28 +28,28 @@
 namespace blink {
 
 class PLATFORM_EXPORT FEOffset final : public FilterEffect {
-public:
-    static FEOffset* create(Filter*, float dx, float dy);
+ public:
+  static FEOffset* Create(Filter*, float dx, float dy);
 
-    float dx() const;
-    void setDx(float);
+  float Dx() const;
+  void SetDx(float);
 
-    float dy() const;
-    void setDy(float);
+  float Dy() const;
+  void SetDy(float);
 
-    FloatRect mapRect(const FloatRect&, bool forward = true) const final;
+  TextStream& ExternalRepresentation(TextStream&, int indention) const override;
 
-    TextStream& externalRepresentation(TextStream&, int indention) const override;
+ private:
+  FEOffset(Filter*, float dx, float dy);
 
-private:
-    FEOffset(Filter*, float dx, float dy);
+  FloatRect MapEffect(const FloatRect&) const override;
 
-    sk_sp<SkImageFilter> createImageFilter() override;
+  sk_sp<SkImageFilter> CreateImageFilter() override;
 
-    float m_dx;
-    float m_dy;
+  float dx_;
+  float dy_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FEOffset_h
+#endif  // FEOffset_h

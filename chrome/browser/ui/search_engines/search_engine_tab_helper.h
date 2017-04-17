@@ -6,41 +6,39 @@
 #define CHROME_BROWSER_UI_SEARCH_ENGINES_SEARCH_ENGINE_TAB_HELPER_H_
 
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
 #include "chrome/browser/ui/find_bar/find_bar_controller.h"
 #include "chrome/browser/ui/find_bar/find_notification_details.h"
-#include "chrome/common/search_provider.h"
+#include "chrome/common/open_search_description_document_handler.mojom.h"
+#include "content/public/browser/web_contents_binding_set.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
-
-class TemplateURL;
 
 // Per-tab search engine manager. Handles dealing search engine processing
 // functionality.
 class SearchEngineTabHelper
     : public content::WebContentsObserver,
-      public content::WebContentsUserData<SearchEngineTabHelper> {
+      public content::WebContentsUserData<SearchEngineTabHelper>,
+      public chrome::mojom::OpenSearchDescriptionDocumentHandler {
  public:
   ~SearchEngineTabHelper() override;
 
   // content::WebContentsObserver overrides.
-  void DidNavigateMainFrame(
-      const content::LoadCommittedDetails& details,
-      const content::FrameNavigateParams& params) override;
-  bool OnMessageReceived(const IPC::Message& message) override;
-  bool OnMessageReceived(const IPC::Message& message,
-                         content::RenderFrameHost* rfh) override;
+  void DidFinishNavigation(content::NavigationHandle* handle) override;
 
  private:
   explicit SearchEngineTabHelper(content::WebContents* web_contents);
   friend class content::WebContentsUserData<SearchEngineTabHelper>;
 
-  // Handles when a page specifies an OSDD (OpenSearch Description Document).
-  void OnPageHasOSDD(const GURL& page_url, const GURL& osdd_url);
+  // chrome::mojom::OpenSearchDescriptionDocumentHandler overrides.
+  void PageHasOpenSearchDescriptionDocument(const GURL& page_url,
+                                            const GURL& osdd_url) override;
 
   // If params has a searchable form, this tries to create a new keyword.
-  void GenerateKeywordIfNecessary(
-      const content::FrameNavigateParams& params);
+  void GenerateKeywordIfNecessary(content::NavigationHandle* handle);
+
+  content::WebContentsFrameBindingSet<
+      chrome::mojom::OpenSearchDescriptionDocumentHandler>
+      osdd_handler_bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(SearchEngineTabHelper);
 };

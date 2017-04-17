@@ -21,9 +21,6 @@
 #include "ui/gfx/native_widget_types.h"
 #include "ui/views/widget/widget_observer.h"
 
-namespace gfx {
-class Screen;
-}
 namespace ui {
 class EventHandler;
 class ListSelectionModel;
@@ -34,7 +31,6 @@ class View;
 class Browser;
 class Tab;
 class TabDragControllerTest;
-struct TabRendererData;
 class TabStrip;
 class TabStripModel;
 class WindowFinder;
@@ -57,7 +53,7 @@ class TabDragController : public views::WidgetObserver,
   enum MoveBehavior {
     // Only the set of visible tabs should change. This is only applicable when
     // using touch layout.
-    MOVE_VISIBILE_TABS,
+    MOVE_VISIBLE_TABS,
 
     // Typical behavior where tabs are dragged around.
     REORDER
@@ -449,7 +445,7 @@ class TabDragController : public views::WidgetObserver,
 
   // Returns true if moving the mouse only changes the visible tabs.
   bool move_only() const {
-    return (move_behavior_ == MOVE_VISIBILE_TABS) != 0;
+    return (move_behavior_ == MOVE_VISIBLE_TABS) != 0;
   }
 
   // Returns the NativeWindow in |window| at the specified point. If
@@ -584,6 +580,10 @@ class TabDragController : public views::WidgetObserver,
 
   // Non-null for the duration of RunMoveLoop.
   views::Widget* move_loop_widget_;
+
+  // Whether TabDragController has been added an observer to
+  // |move_loop_widget_|. Only meaningful if |move_loop_widget_| is non-null.
+  bool added_observer_to_move_loop_widget_ = false;
 
   // See description above getter.
   bool is_mutating_;

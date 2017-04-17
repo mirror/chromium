@@ -30,67 +30,71 @@
 
 #include "platform/testing/URLTestHelpers.h"
 
+#include <string>
+#include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "platform/testing/UnitTestHelpers.h"
+#include "public/platform/FilePathConversion.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebURL.h"
 #include "public/platform/WebURLError.h"
 #include "public/platform/WebURLLoadTiming.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
-#include "public/platform/WebURLResponse.h"
 
 namespace blink {
 namespace URLTestHelpers {
 
-void registerMockedURLFromBaseURL(const WebString& baseURL, const WebString& fileName, const WebString& mimeType)
-{
-    // fullURL = baseURL + fileName.
-    std::string fullString = std::string(baseURL.utf8().data()) + std::string(fileName.utf8().data());
-    registerMockedURLLoad(toKURL(fullString.c_str()), fileName, WebString::fromUTF8(""), mimeType);
+WebURL RegisterMockedURLLoadFromBase(const WebString& base_url,
+                                     const WebString& base_path,
+                                     const WebString& file_name,
+                                     const WebString& mime_type) {
+  // fullURL = baseURL + fileName.
+  std::string full_url = std::string(base_url.Utf8().data()) +
+                         std::string(file_name.Utf8().data());
+
+  // filePath = basePath + ("/" +) fileName.
+  base::FilePath file_path =
+      WebStringToFilePath(base_path).Append(WebStringToFilePath(file_name));
+
+  KURL url = ToKURL(full_url);
+  RegisterMockedURLLoad(url, FilePathToWebString(file_path), mime_type);
+  return WebURL(url);
 }
 
-void registerMockedURLLoad(const WebURL& fullURL, const WebString& fileName, const WebString& mimeType)
-{
-    registerMockedURLLoad(fullURL, fileName, WebString::fromUTF8(""), mimeType);
+void RegisterMockedURLLoad(const WebURL& full_url,
+                           const WebString& file_path,
+                           const WebString& mime_type) {
+  WebURLLoadTiming timing;
+  timing.Initialize();
+
+  WebURLResponse response(full_url);
+  response.SetMIMEType(mime_type);
+  response.SetHTTPStatusCode(200);
+  response.SetLoadTiming(timing);
+
+  RegisterMockedURLLoadWithCustomResponse(full_url, file_path, response);
 }
 
-void registerMockedURLLoad(const WebURL& fullURL, const WebString& fileName, const WebString& relativeBaseDirectory, const WebString& mimeType)
-{
-    WebURLLoadTiming timing;
-    timing.initialize();
+void RegisterMockedErrorURLLoad(const WebURL& full_url) {
+  WebURLLoadTiming timing;
+  timing.Initialize();
 
-    WebURLResponse response(fullURL);
-    response.setMIMEType(mimeType);
-    response.setHTTPStatusCode(200);
-    response.setLoadTiming(timing);
+  WebURLResponse response;
+  response.SetMIMEType("image/png");
+  response.SetHTTPStatusCode(404);
+  response.SetLoadTiming(timing);
 
-    registerMockedURLLoadWithCustomResponse(fullURL, fileName, relativeBaseDirectory, response);
+  WebURLError error;
+  error.reason = 404;
+  Platform::Current()->GetURLLoaderMockFactory()->RegisterErrorURL(
+      full_url, response, error);
 }
 
-void registerMockedErrorURLLoad(const WebURL& fullURL)
-{
-    WebURLLoadTiming timing;
-    timing.initialize();
-
-    WebURLResponse response;
-    response.setMIMEType("image/png");
-    response.setHTTPStatusCode(404);
-    response.setLoadTiming(timing);
-
-    WebURLError error;
-    error.reason = 404;
-    Platform::current()->getURLLoaderMockFactory()->registerErrorURL(fullURL, response, error);
+void RegisterMockedURLLoadWithCustomResponse(const WebURL& full_url,
+                                             const WebString& file_path,
+                                             WebURLResponse response) {
+  Platform::Current()->GetURLLoaderMockFactory()->RegisterURL(
+      full_url, response, file_path);
 }
 
-void registerMockedURLLoadWithCustomResponse(const WebURL& fullURL, const WebString& fileName, const WebString& relativeBaseDirectory, WebURLResponse response)
-{
-    // Physical file path for the mock = <webkitRootDir> + relativeBaseDirectory + fileName.
-    String filePath = testing::blinkRootDir();
-    filePath.append("/Source/web/tests/data/");
-    filePath.append(relativeBaseDirectory);
-    filePath.append(fileName);
-
-    Platform::current()->getURLLoaderMockFactory()->registerURL(fullURL, response, filePath);
-}
-
-} // namespace URLTestHelpers
-} // namespace blink
+}  // namespace URLTestHelpers
+}  // namespace blink

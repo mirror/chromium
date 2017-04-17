@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_EXTENSIONS_BLACKLIST_STATE_FETCHER_H_
 #define CHROME_BROWSER_EXTENSIONS_BLACKLIST_STATE_FETCHER_H_
 
+#include <algorithm>
 #include <memory>
 #include <set>
 #include <string>
@@ -12,7 +13,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "chrome/browser/safe_browsing/protocol_manager_helper.h"
+#include "components/safe_browsing_db/util.h"
 #include "extensions/browser/blacklist_state.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
@@ -58,8 +59,10 @@ class BlacklistStateFetcher : public net::URLFetcherDelegate {
   scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
   scoped_refptr<net::URLRequestContextGetter> parent_request_context_for_test_;
 
-  // Extension id by URLFetcher.
-  std::map<const net::URLFetcher*, std::string> requests_;
+  // URLFetcher -> (owned fetcher, extension id).
+  std::map<const net::URLFetcher*,
+           std::pair<std::unique_ptr<net::URLFetcher>, std::string>>
+      requests_;
 
   // Callbacks by extension ID.
   CallbackMultiMap callbacks_;

@@ -30,424 +30,445 @@
 
 #include "platform/text/PlatformLocale.h"
 
-#include "platform/text/DateTimeFormat.h"
-#include "public/platform/Platform.h"
-#include "wtf/text/StringBuilder.h"
 #include <memory>
+#include "platform/text/DateTimeFormat.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "public/platform/Platform.h"
 
 namespace blink {
 
 class DateTimeStringBuilder : private DateTimeFormat::TokenHandler {
-    WTF_MAKE_NONCOPYABLE(DateTimeStringBuilder);
-public:
-    // The argument objects must be alive until this object dies.
-    DateTimeStringBuilder(Locale&, const DateComponents&);
+  WTF_MAKE_NONCOPYABLE(DateTimeStringBuilder);
 
-    bool build(const String&);
-    String toString();
+ public:
+  // The argument objects must be alive until this object dies.
+  DateTimeStringBuilder(Locale&, const DateComponents&);
 
-private:
-    // DateTimeFormat::TokenHandler functions.
-    void visitField(DateTimeFormat::FieldType, int) final;
-    void visitLiteral(const String&) final;
+  bool Build(const String&);
+  String ToString();
 
-    String zeroPadString(const String&, size_t width);
-    void appendNumber(int number, size_t width);
+ private:
+  // DateTimeFormat::TokenHandler functions.
+  void VisitField(DateTimeFormat::FieldType, int) final;
+  void VisitLiteral(const String&) final;
 
-    StringBuilder m_builder;
-    Locale& m_localizer;
-    const DateComponents& m_date;
+  String ZeroPadString(const String&, size_t width);
+  void AppendNumber(int number, size_t width);
+
+  StringBuilder builder_;
+  Locale& localizer_;
+  const DateComponents& date_;
 };
 
-DateTimeStringBuilder::DateTimeStringBuilder(Locale& localizer, const DateComponents& date)
-    : m_localizer(localizer)
-    , m_date(date)
-{
+DateTimeStringBuilder::DateTimeStringBuilder(Locale& localizer,
+                                             const DateComponents& date)
+    : localizer_(localizer), date_(date) {}
+
+bool DateTimeStringBuilder::Build(const String& format_string) {
+  builder_.ReserveCapacity(format_string.length());
+  return DateTimeFormat::Parse(format_string, *this);
 }
 
-bool DateTimeStringBuilder::build(const String& formatString)
-{
-    m_builder.reserveCapacity(formatString.length());
-    return DateTimeFormat::parse(formatString, *this);
+String DateTimeStringBuilder::ZeroPadString(const String& string,
+                                            size_t width) {
+  if (string.length() >= width)
+    return string;
+  StringBuilder zero_padded_string_builder;
+  zero_padded_string_builder.ReserveCapacity(width);
+  for (size_t i = string.length(); i < width; ++i)
+    zero_padded_string_builder.Append('0');
+  zero_padded_string_builder.Append(string);
+  return zero_padded_string_builder.ToString();
 }
 
-String DateTimeStringBuilder::zeroPadString(const String& string, size_t width)
-{
-    if (string.length() >= width)
-        return string;
-    StringBuilder zeroPaddedStringBuilder;
-    zeroPaddedStringBuilder.reserveCapacity(width);
-    for (size_t i = string.length(); i < width; ++i)
-        zeroPaddedStringBuilder.append('0');
-    zeroPaddedStringBuilder.append(string);
-    return zeroPaddedStringBuilder.toString();
+void DateTimeStringBuilder::AppendNumber(int number, size_t width) {
+  String zero_padded_number_string =
+      ZeroPadString(String::Number(number), width);
+  builder_.Append(
+      localizer_.ConvertToLocalizedNumber(zero_padded_number_string));
 }
 
-void DateTimeStringBuilder::appendNumber(int number, size_t width)
-{
-    String zeroPaddedNumberString = zeroPadString(String::number(number), width);
-    m_builder.append(m_localizer.convertToLocalizedNumber(zeroPaddedNumberString));
-}
-
-void DateTimeStringBuilder::visitField(DateTimeFormat::FieldType fieldType, int numberOfPatternCharacters)
-{
-    switch (fieldType) {
-    case DateTimeFormat::FieldTypeYear:
-        // Always use padding width of 4 so it matches DateTimeEditElement.
-        appendNumber(m_date.fullYear(), 4);
-        return;
-    case DateTimeFormat::FieldTypeMonth:
-        if (numberOfPatternCharacters == 3) {
-            m_builder.append(m_localizer.shortMonthLabels()[m_date.month()]);
-        } else if (numberOfPatternCharacters == 4) {
-            m_builder.append(m_localizer.monthLabels()[m_date.month()]);
-        } else {
-            // Always use padding width of 2 so it matches DateTimeEditElement.
-            appendNumber(m_date.month() + 1, 2);
-        }
-        return;
-    case DateTimeFormat::FieldTypeMonthStandAlone:
-        if (numberOfPatternCharacters == 3) {
-            m_builder.append(m_localizer.shortStandAloneMonthLabels()[m_date.month()]);
-        } else if (numberOfPatternCharacters == 4) {
-            m_builder.append(m_localizer.standAloneMonthLabels()[m_date.month()]);
-        } else {
-            // Always use padding width of 2 so it matches DateTimeEditElement.
-            appendNumber(m_date.month() + 1, 2);
-        }
-        return;
-    case DateTimeFormat::FieldTypeDayOfMonth:
+void DateTimeStringBuilder::VisitField(DateTimeFormat::FieldType field_type,
+                                       int number_of_pattern_characters) {
+  switch (field_type) {
+    case DateTimeFormat::kFieldTypeYear:
+      // Always use padding width of 4 so it matches DateTimeEditElement.
+      AppendNumber(date_.FullYear(), 4);
+      return;
+    case DateTimeFormat::kFieldTypeMonth:
+      if (number_of_pattern_characters == 3) {
+        builder_.Append(localizer_.ShortMonthLabels()[date_.Month()]);
+      } else if (number_of_pattern_characters == 4) {
+        builder_.Append(localizer_.MonthLabels()[date_.Month()]);
+      } else {
         // Always use padding width of 2 so it matches DateTimeEditElement.
-        appendNumber(m_date.monthDay(), 2);
-        return;
-    case DateTimeFormat::FieldTypeWeekOfYear:
+        AppendNumber(date_.Month() + 1, 2);
+      }
+      return;
+    case DateTimeFormat::kFieldTypeMonthStandAlone:
+      if (number_of_pattern_characters == 3) {
+        builder_.Append(localizer_.ShortStandAloneMonthLabels()[date_.Month()]);
+      } else if (number_of_pattern_characters == 4) {
+        builder_.Append(localizer_.StandAloneMonthLabels()[date_.Month()]);
+      } else {
         // Always use padding width of 2 so it matches DateTimeEditElement.
-        appendNumber(m_date.week(), 2);
-        return;
-    case DateTimeFormat::FieldTypePeriod:
-        m_builder.append(m_localizer.timeAMPMLabels()[(m_date.hour() >= 12 ? 1 : 0)]);
-        return;
-    case DateTimeFormat::FieldTypeHour12: {
-        int hour12 = m_date.hour() % 12;
-        if (!hour12)
-            hour12 = 12;
-        appendNumber(hour12, numberOfPatternCharacters);
-        return;
+        AppendNumber(date_.Month() + 1, 2);
+      }
+      return;
+    case DateTimeFormat::kFieldTypeDayOfMonth:
+      // Always use padding width of 2 so it matches DateTimeEditElement.
+      AppendNumber(date_.MonthDay(), 2);
+      return;
+    case DateTimeFormat::kFieldTypeWeekOfYear:
+      // Always use padding width of 2 so it matches DateTimeEditElement.
+      AppendNumber(date_.Week(), 2);
+      return;
+    case DateTimeFormat::kFieldTypePeriod:
+      builder_.Append(
+          localizer_.TimeAMPMLabels()[(date_.Hour() >= 12 ? 1 : 0)]);
+      return;
+    case DateTimeFormat::kFieldTypeHour12: {
+      int hour12 = date_.Hour() % 12;
+      if (!hour12)
+        hour12 = 12;
+      AppendNumber(hour12, number_of_pattern_characters);
+      return;
     }
-    case DateTimeFormat::FieldTypeHour23:
-        appendNumber(m_date.hour(), numberOfPatternCharacters);
-        return;
-    case DateTimeFormat::FieldTypeHour11:
-        appendNumber(m_date.hour() % 12, numberOfPatternCharacters);
-        return;
-    case DateTimeFormat::FieldTypeHour24: {
-        int hour24 = m_date.hour();
-        if (!hour24)
-            hour24 = 24;
-        appendNumber(hour24, numberOfPatternCharacters);
-        return;
+    case DateTimeFormat::kFieldTypeHour23:
+      AppendNumber(date_.Hour(), number_of_pattern_characters);
+      return;
+    case DateTimeFormat::kFieldTypeHour11:
+      AppendNumber(date_.Hour() % 12, number_of_pattern_characters);
+      return;
+    case DateTimeFormat::kFieldTypeHour24: {
+      int hour24 = date_.Hour();
+      if (!hour24)
+        hour24 = 24;
+      AppendNumber(hour24, number_of_pattern_characters);
+      return;
     }
-    case DateTimeFormat::FieldTypeMinute:
-        appendNumber(m_date.minute(), numberOfPatternCharacters);
-        return;
-    case DateTimeFormat::FieldTypeSecond:
-        if (!m_date.millisecond()) {
-            appendNumber(m_date.second(), numberOfPatternCharacters);
-        } else {
-            double second = m_date.second() + m_date.millisecond() / 1000.0;
-            String zeroPaddedSecondString = zeroPadString(String::format("%.03f", second), numberOfPatternCharacters + 4);
-            m_builder.append(m_localizer.convertToLocalizedNumber(zeroPaddedSecondString));
-        }
-        return;
+    case DateTimeFormat::kFieldTypeMinute:
+      AppendNumber(date_.Minute(), number_of_pattern_characters);
+      return;
+    case DateTimeFormat::kFieldTypeSecond:
+      if (!date_.Millisecond()) {
+        AppendNumber(date_.Second(), number_of_pattern_characters);
+      } else {
+        double second = date_.Second() + date_.Millisecond() / 1000.0;
+        String zero_padded_second_string = ZeroPadString(
+            String::Format("%.03f", second), number_of_pattern_characters + 4);
+        builder_.Append(
+            localizer_.ConvertToLocalizedNumber(zero_padded_second_string));
+      }
+      return;
     default:
-        return;
+      return;
+  }
+}
+
+void DateTimeStringBuilder::VisitLiteral(const String& text) {
+  DCHECK(text.length());
+  builder_.Append(text);
+}
+
+String DateTimeStringBuilder::ToString() {
+  return builder_.ToString();
+}
+
+Locale& Locale::DefaultLocale() {
+  static Locale* locale = Locale::Create(DefaultLanguage()).release();
+  DCHECK(IsMainThread());
+  return *locale;
+}
+
+Locale::~Locale() {}
+
+String Locale::QueryString(WebLocalizedString::Name name) {
+  // FIXME: Returns a string locazlied for this locale.
+  return Platform::Current()->QueryLocalizedString(name);
+}
+
+String Locale::QueryString(WebLocalizedString::Name name,
+                           const String& parameter) {
+  // FIXME: Returns a string locazlied for this locale.
+  return Platform::Current()->QueryLocalizedString(name, parameter);
+}
+
+String Locale::QueryString(WebLocalizedString::Name name,
+                           const String& parameter1,
+                           const String& parameter2) {
+  // FIXME: Returns a string locazlied for this locale.
+  return Platform::Current()->QueryLocalizedString(name, parameter1,
+                                                   parameter2);
+}
+
+String Locale::ValidationMessageTooLongText(unsigned value_length,
+                                            int max_length) {
+  return QueryString(WebLocalizedString::kValidationTooLong,
+                     ConvertToLocalizedNumber(String::Number(value_length)),
+                     ConvertToLocalizedNumber(String::Number(max_length)));
+}
+
+String Locale::ValidationMessageTooShortText(unsigned value_length,
+                                             int min_length) {
+  if (value_length == 1) {
+    return QueryString(WebLocalizedString::kValidationTooShort,
+                       ConvertToLocalizedNumber(String::Number(value_length)),
+                       ConvertToLocalizedNumber(String::Number(min_length)));
+  }
+
+  return QueryString(WebLocalizedString::kValidationTooShortPlural,
+                     ConvertToLocalizedNumber(String::Number(value_length)),
+                     ConvertToLocalizedNumber(String::Number(min_length)));
+}
+
+String Locale::WeekFormatInLDML() {
+  String templ = QueryString(WebLocalizedString::kWeekFormatTemplate);
+  // Converts a string like "Week $2, $1" to an LDML date format pattern like
+  // "'Week 'ww', 'yyyy".
+  StringBuilder builder;
+  unsigned literal_start = 0;
+  unsigned length = templ.length();
+  for (unsigned i = 0; i + 1 < length; ++i) {
+    if (templ[i] == '$' && (templ[i + 1] == '1' || templ[i + 1] == '2')) {
+      if (literal_start < i)
+        DateTimeFormat::QuoteAndappend(
+            templ.Substring(literal_start, i - literal_start), builder);
+      builder.Append(templ[++i] == '1' ? "yyyy" : "ww");
+      literal_start = i + 1;
     }
+  }
+  if (literal_start < length)
+    DateTimeFormat::QuoteAndappend(
+        templ.Substring(literal_start, length - literal_start), builder);
+  return builder.ToString();
 }
 
-void DateTimeStringBuilder::visitLiteral(const String& text)
-{
-    ASSERT(text.length());
-    m_builder.append(text);
+void Locale::SetLocaleData(const Vector<String, kDecimalSymbolsSize>& symbols,
+                           const String& positive_prefix,
+                           const String& positive_suffix,
+                           const String& negative_prefix,
+                           const String& negative_suffix) {
+  for (size_t i = 0; i < symbols.size(); ++i) {
+    DCHECK(!symbols[i].IsEmpty());
+    decimal_symbols_[i] = symbols[i];
+  }
+  positive_prefix_ = positive_prefix;
+  positive_suffix_ = positive_suffix;
+  negative_prefix_ = negative_prefix;
+  negative_suffix_ = negative_suffix;
+  DCHECK(!positive_prefix_.IsEmpty() || !positive_suffix_.IsEmpty() ||
+         !negative_prefix_.IsEmpty() || !negative_suffix_.IsEmpty());
+  has_locale_data_ = true;
+
+  StringBuilder builder;
+  for (size_t i = 0; i < kDecimalSymbolsSize; ++i) {
+    // We don't accept group separatros.
+    if (i != kGroupSeparatorIndex)
+      builder.Append(decimal_symbols_[i]);
+  }
+  builder.Append(positive_prefix_);
+  builder.Append(positive_suffix_);
+  builder.Append(negative_prefix_);
+  builder.Append(negative_suffix_);
+  acceptable_number_characters_ = builder.ToString();
 }
 
-String DateTimeStringBuilder::toString()
-{
-    return m_builder.toString();
-}
+String Locale::ConvertToLocalizedNumber(const String& input) {
+  InitializeLocaleData();
+  if (!has_locale_data_ || input.IsEmpty())
+    return input;
 
-Locale& Locale::defaultLocale()
-{
-    static Locale* locale = Locale::create(defaultLanguage()).release();
-    ASSERT(isMainThread());
-    return *locale;
-}
+  unsigned i = 0;
+  bool is_negative = false;
+  StringBuilder builder;
+  builder.ReserveCapacity(input.length());
 
-Locale::~Locale()
-{
-}
+  if (input[0] == '-') {
+    ++i;
+    is_negative = true;
+    builder.Append(negative_prefix_);
+  } else {
+    builder.Append(positive_prefix_);
+  }
 
-String Locale::queryString(WebLocalizedString::Name name)
-{
-    // FIXME: Returns a string locazlied for this locale.
-    return Platform::current()->queryLocalizedString(name);
-}
-
-String Locale::queryString(WebLocalizedString::Name name, const String& parameter)
-{
-    // FIXME: Returns a string locazlied for this locale.
-    return Platform::current()->queryLocalizedString(name, parameter);
-}
-
-String Locale::queryString(WebLocalizedString::Name name, const String& parameter1, const String& parameter2)
-{
-    // FIXME: Returns a string locazlied for this locale.
-    return Platform::current()->queryLocalizedString(name, parameter1, parameter2);
-}
-
-String Locale::validationMessageTooLongText(unsigned valueLength, int maxLength)
-{
-    return queryString(WebLocalizedString::ValidationTooLong, convertToLocalizedNumber(String::number(valueLength)), convertToLocalizedNumber(String::number(maxLength)));
-}
-
-String Locale::validationMessageTooShortText(unsigned valueLength, int minLength)
-{
-    return queryString(WebLocalizedString::ValidationTooShort, convertToLocalizedNumber(String::number(valueLength)), convertToLocalizedNumber(String::number(minLength)));
-}
-
-String Locale::weekFormatInLDML()
-{
-    String templ = queryString(WebLocalizedString::WeekFormatTemplate);
-    // Converts a string like "Week $2, $1" to an LDML date format pattern like
-    // "'Week 'ww', 'yyyy".
-    StringBuilder builder;
-    unsigned literalStart = 0;
-    unsigned length = templ.length();
-    for (unsigned i = 0; i + 1 < length; ++i) {
-        if (templ[i] == '$' && (templ[i + 1] == '1' || templ[i + 1] == '2')) {
-            if (literalStart < i)
-                DateTimeFormat::quoteAndappend(templ.substring(literalStart, i - literalStart), builder);
-            builder.append(templ[++i] == '1' ? "yyyy" : "ww");
-            literalStart = i + 1;
-        }
+  for (; i < input.length(); ++i) {
+    switch (input[i]) {
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        builder.Append(decimal_symbols_[input[i] - '0']);
+        break;
+      case '.':
+        builder.Append(decimal_symbols_[kDecimalSeparatorIndex]);
+        break;
+      default:
+        NOTREACHED();
     }
-    if (literalStart < length)
-        DateTimeFormat::quoteAndappend(templ.substring(literalStart, length - literalStart), builder);
-    return builder.toString();
+  }
+
+  builder.Append(is_negative ? negative_suffix_ : positive_suffix_);
+
+  return builder.ToString();
 }
 
-void Locale::setLocaleData(const Vector<String, DecimalSymbolsSize>& symbols, const String& positivePrefix, const String& positiveSuffix, const String& negativePrefix, const String& negativeSuffix)
-{
-    for (size_t i = 0; i < symbols.size(); ++i) {
-        ASSERT(!symbols[i].isEmpty());
-        m_decimalSymbols[i] = symbols[i];
-    }
-    m_positivePrefix = positivePrefix;
-    m_positiveSuffix = positiveSuffix;
-    m_negativePrefix = negativePrefix;
-    m_negativeSuffix = negativeSuffix;
-    ASSERT(!m_positivePrefix.isEmpty() || !m_positiveSuffix.isEmpty() || !m_negativePrefix.isEmpty() || !m_negativeSuffix.isEmpty());
-    m_hasLocaleData = true;
-
-    StringBuilder builder;
-    for (size_t i = 0; i < DecimalSymbolsSize; ++i) {
-        // We don't accept group separatros.
-        if (i != GroupSeparatorIndex)
-            builder.append(m_decimalSymbols[i]);
-    }
-    builder.append(m_positivePrefix);
-    builder.append(m_positiveSuffix);
-    builder.append(m_negativePrefix);
-    builder.append(m_negativeSuffix);
-    m_acceptableNumberCharacters = builder.toString();
+static bool Matches(const String& text, unsigned position, const String& part) {
+  if (part.IsEmpty())
+    return true;
+  if (position + part.length() > text.length())
+    return false;
+  for (unsigned i = 0; i < part.length(); ++i) {
+    if (text[position + i] != part[i])
+      return false;
+  }
+  return true;
 }
 
-String Locale::convertToLocalizedNumber(const String& input)
-{
-    initializeLocaleData();
-    if (!m_hasLocaleData || input.isEmpty())
-        return input;
-
-    unsigned i = 0;
-    bool isNegative = false;
-    StringBuilder builder;
-    builder.reserveCapacity(input.length());
-
-    if (input[0] == '-') {
-        ++i;
-        isNegative = true;
-        builder.append(m_negativePrefix);
+bool Locale::DetectSignAndGetDigitRange(const String& input,
+                                        bool& is_negative,
+                                        unsigned& start_index,
+                                        unsigned& end_index) {
+  start_index = 0;
+  end_index = input.length();
+  if (negative_prefix_.IsEmpty() && negative_suffix_.IsEmpty()) {
+    if (input.StartsWith(positive_prefix_) &&
+        input.EndsWith(positive_suffix_)) {
+      is_negative = false;
+      start_index = positive_prefix_.length();
+      end_index -= positive_suffix_.length();
     } else {
-        builder.append(m_positivePrefix);
+      is_negative = true;
     }
-
-    for (; i < input.length(); ++i) {
-        switch (input[i]) {
-        case '0':
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-        case '9':
-            builder.append(m_decimalSymbols[input[i] - '0']);
-            break;
-        case '.':
-            builder.append(m_decimalSymbols[DecimalSeparatorIndex]);
-            break;
-        default:
-            ASSERT_NOT_REACHED();
-        }
-    }
-
-    builder.append(isNegative ? m_negativeSuffix : m_positiveSuffix);
-
-    return builder.toString();
-}
-
-static bool matches(const String& text, unsigned position, const String& part)
-{
-    if (part.isEmpty())
-        return true;
-    if (position + part.length() > text.length())
+  } else {
+    if (input.StartsWith(negative_prefix_) &&
+        input.EndsWith(negative_suffix_)) {
+      is_negative = true;
+      start_index = negative_prefix_.length();
+      end_index -= negative_suffix_.length();
+    } else {
+      is_negative = false;
+      if (input.StartsWith(positive_prefix_) &&
+          input.EndsWith(positive_suffix_)) {
+        start_index = positive_prefix_.length();
+        end_index -= positive_suffix_.length();
+      } else {
         return false;
-    for (unsigned i = 0; i < part.length(); ++i) {
-        if (text[position + i] != part[i])
-            return false;
+      }
     }
-    return true;
+  }
+  return true;
 }
 
-bool Locale::detectSignAndGetDigitRange(const String& input, bool& isNegative, unsigned& startIndex, unsigned& endIndex)
-{
-    startIndex = 0;
-    endIndex = input.length();
-    if (m_negativePrefix.isEmpty() && m_negativeSuffix.isEmpty()) {
-        if (input.startsWith(m_positivePrefix) && input.endsWith(m_positiveSuffix)) {
-            isNegative = false;
-            startIndex = m_positivePrefix.length();
-            endIndex -= m_positiveSuffix.length();
-        } else {
-            isNegative = true;
-        }
-    } else {
-        if (input.startsWith(m_negativePrefix) && input.endsWith(m_negativeSuffix)) {
-            isNegative = true;
-            startIndex = m_negativePrefix.length();
-            endIndex -= m_negativeSuffix.length();
-        } else {
-            isNegative = false;
-            if (input.startsWith(m_positivePrefix) && input.endsWith(m_positiveSuffix)) {
-                startIndex = m_positivePrefix.length();
-                endIndex -= m_positiveSuffix.length();
-            } else {
-                return false;
-            }
-        }
+unsigned Locale::MatchedDecimalSymbolIndex(const String& input,
+                                           unsigned& position) {
+  for (unsigned symbol_index = 0; symbol_index < kDecimalSymbolsSize;
+       ++symbol_index) {
+    if (decimal_symbols_[symbol_index].length() &&
+        Matches(input, position, decimal_symbols_[symbol_index])) {
+      position += decimal_symbols_[symbol_index].length();
+      return symbol_index;
     }
-    return true;
+  }
+  return kDecimalSymbolsSize;
 }
 
-unsigned Locale::matchedDecimalSymbolIndex(const String& input, unsigned& position)
-{
-    for (unsigned symbolIndex = 0; symbolIndex < DecimalSymbolsSize; ++symbolIndex) {
-        if (m_decimalSymbols[symbolIndex].length() && matches(input, position, m_decimalSymbols[symbolIndex])) {
-            position += m_decimalSymbols[symbolIndex].length();
-            return symbolIndex;
-        }
-    }
-    return DecimalSymbolsSize;
+String Locale::ConvertFromLocalizedNumber(const String& localized) {
+  InitializeLocaleData();
+  String input = localized.RemoveCharacters(IsASCIISpace);
+  if (!has_locale_data_ || input.IsEmpty())
+    return input;
+
+  bool is_negative;
+  unsigned start_index;
+  unsigned end_index;
+  if (!DetectSignAndGetDigitRange(input, is_negative, start_index, end_index))
+    return input;
+
+  // Ignore leading '+', but will reject '+'-only string later.
+  if (!is_negative && end_index - start_index >= 2 && input[start_index] == '+')
+    ++start_index;
+
+  StringBuilder builder;
+  builder.ReserveCapacity(input.length());
+  if (is_negative)
+    builder.Append('-');
+  for (unsigned i = start_index; i < end_index;) {
+    unsigned symbol_index = MatchedDecimalSymbolIndex(input, i);
+    if (symbol_index >= kDecimalSymbolsSize)
+      return input;
+    if (symbol_index == kDecimalSeparatorIndex)
+      builder.Append('.');
+    else if (symbol_index == kGroupSeparatorIndex)
+      return input;
+    else
+      builder.Append(static_cast<UChar>('0' + symbol_index));
+  }
+  String converted = builder.ToString();
+  // Ignore trailing '.', but will reject '.'-only string later.
+  if (converted.length() >= 2 && converted[converted.length() - 1] == '.')
+    converted = converted.Left(converted.length() - 1);
+  return converted;
 }
 
-String Locale::convertFromLocalizedNumber(const String& localized)
-{
-    initializeLocaleData();
-    String input = localized.removeCharacters(isASCIISpace);
-    if (!m_hasLocaleData || input.isEmpty())
-        return input;
-
-    bool isNegative;
-    unsigned startIndex;
-    unsigned endIndex;
-    if (!detectSignAndGetDigitRange(input, isNegative, startIndex, endIndex))
-        return input;
-
-    // Ignore leading '+', but will reject '+'-only string later.
-    if (!isNegative && endIndex - startIndex >= 2 && input[startIndex] == '+')
-        ++startIndex;
-
-    StringBuilder builder;
-    builder.reserveCapacity(input.length());
-    if (isNegative)
-        builder.append('-');
-    for (unsigned i = startIndex; i < endIndex;) {
-        unsigned symbolIndex = matchedDecimalSymbolIndex(input, i);
-        if (symbolIndex >= DecimalSymbolsSize)
-            return input;
-        if (symbolIndex == DecimalSeparatorIndex)
-            builder.append('.');
-        else if (symbolIndex == GroupSeparatorIndex)
-            return input;
-        else
-            builder.append(static_cast<UChar>('0' + symbolIndex));
-    }
-    String converted = builder.toString();
-    // Ignore trailing '.', but will reject '.'-only string later.
-    if (converted.length() >= 2 && converted[converted.length() - 1] == '.')
-        converted = converted.left(converted.length() - 1);
-    return converted;
+String Locale::StripInvalidNumberCharacters(const String& input,
+                                            const String& standard_chars) {
+  InitializeLocaleData();
+  StringBuilder builder;
+  builder.ReserveCapacity(input.length());
+  for (unsigned i = 0; i < input.length(); ++i) {
+    UChar ch = input[i];
+    if (standard_chars.Find(ch) != kNotFound)
+      builder.Append(ch);
+    else if (acceptable_number_characters_.Find(ch) != kNotFound)
+      builder.Append(ch);
+  }
+  return builder.ToString();
 }
 
-String Locale::stripInvalidNumberCharacters(const String& input, const String& standardChars) const
-{
-    StringBuilder builder;
-    builder.reserveCapacity(input.length());
-    for (unsigned i = 0; i < input.length(); ++i) {
-        UChar ch = input[i];
-        if (standardChars.find(ch) != kNotFound)
-            builder.append(ch);
-        else if (m_acceptableNumberCharacters.find(ch) != kNotFound)
-            builder.append(ch);
-    }
-    return builder.toString();
+String Locale::LocalizedDecimalSeparator() {
+  InitializeLocaleData();
+  return decimal_symbols_[kDecimalSeparatorIndex];
 }
 
-String Locale::localizedDecimalSeparator()
-{
-    initializeLocaleData();
-    return m_decimalSymbols[DecimalSeparatorIndex];
+String Locale::FormatDateTime(const DateComponents& date,
+                              FormatType format_type) {
+  if (date.GetType() == DateComponents::kInvalid)
+    return String();
+
+  DateTimeStringBuilder builder(*this, date);
+  switch (date.GetType()) {
+    case DateComponents::kTime:
+      builder.Build(format_type == kFormatTypeShort ? ShortTimeFormat()
+                                                    : TimeFormat());
+      break;
+    case DateComponents::kDate:
+      builder.Build(DateFormat());
+      break;
+    case DateComponents::kMonth:
+      builder.Build(format_type == kFormatTypeShort ? ShortMonthFormat()
+                                                    : MonthFormat());
+      break;
+    case DateComponents::kWeek:
+      builder.Build(WeekFormatInLDML());
+      break;
+    case DateComponents::kDateTime:
+    case DateComponents::kDateTimeLocal:
+      builder.Build(format_type == kFormatTypeShort
+                        ? DateTimeFormatWithoutSeconds()
+                        : DateTimeFormatWithSeconds());
+      break;
+    case DateComponents::kInvalid:
+      NOTREACHED();
+      break;
+  }
+  return builder.ToString();
 }
 
-String Locale::formatDateTime(const DateComponents& date, FormatType formatType)
-{
-    if (date.getType() == DateComponents::Invalid)
-        return String();
-
-    DateTimeStringBuilder builder(*this, date);
-    switch (date.getType()) {
-    case DateComponents::Time:
-        builder.build(formatType == FormatTypeShort ? shortTimeFormat() : timeFormat());
-        break;
-    case DateComponents::Date:
-        builder.build(dateFormat());
-        break;
-    case DateComponents::Month:
-        builder.build(formatType == FormatTypeShort ? shortMonthFormat() : monthFormat());
-        break;
-    case DateComponents::Week:
-        builder.build(weekFormatInLDML());
-        break;
-    case DateComponents::DateTime:
-    case DateComponents::DateTimeLocal:
-        builder.build(formatType == FormatTypeShort ? dateTimeFormatWithoutSeconds() : dateTimeFormatWithSeconds());
-        break;
-    case DateComponents::Invalid:
-        ASSERT_NOT_REACHED();
-        break;
-    }
-    return builder.toString();
-}
-
-} // namespace blink
+}  // namespace blink

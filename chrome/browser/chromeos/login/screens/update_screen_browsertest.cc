@@ -44,10 +44,10 @@ const char kStubWifiGuid[] = "wlan0";
 
 class UpdateScreenTest : public WizardInProcessBrowserTest {
  public:
-  UpdateScreenTest() : WizardInProcessBrowserTest("update"),
-                       fake_update_engine_client_(NULL),
-                       network_portal_detector_(NULL) {
-  }
+  UpdateScreenTest()
+      : WizardInProcessBrowserTest(OobeScreen::SCREEN_OOBE_UPDATE),
+        fake_update_engine_client_(nullptr),
+        network_portal_detector_(nullptr) {}
 
  protected:
   void SetUpInProcessBrowserTestFixture() override {
@@ -83,9 +83,10 @@ class UpdateScreenTest : public WizardInProcessBrowserTest {
 
     WizardInProcessBrowserTest::SetUpOnMainThread();
 
-    ASSERT_TRUE(WizardController::default_controller() != NULL);
-    update_screen_ = UpdateScreen::Get(WizardController::default_controller());
-    ASSERT_TRUE(update_screen_ != NULL);
+    ASSERT_TRUE(WizardController::default_controller() != nullptr);
+    update_screen_ = UpdateScreen::Get(
+        WizardController::default_controller()->screen_manager());
+    ASSERT_TRUE(update_screen_ != nullptr);
     ASSERT_EQ(WizardController::default_controller()->current_screen(),
               update_screen_);
     update_screen_->base_screen_delegate_ = mock_base_screen_delegate_.get();
@@ -147,7 +148,8 @@ IN_PROC_BROWSER_TEST_F(UpdateScreenTest, TestNoUpdate) {
   fake_update_engine_client_->set_default_status(status);
 
   EXPECT_CALL(*mock_base_screen_delegate_,
-              OnExit(_, BaseScreenDelegate::UPDATE_NOUPDATE, _)).Times(1);
+              OnExit(_, ScreenExitCode::UPDATE_NOUPDATE, _))
+      .Times(1);
   update_screen_->UpdateStatusChanged(status);
 }
 
@@ -182,21 +184,23 @@ IN_PROC_BROWSER_TEST_F(UpdateScreenTest, TestUpdateAvailable) {
   // Check that OOBE will resume back at this screen.
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(StartupUtils::IsOobeCompleted());
-  EXPECT_EQ(update_screen_->GetName(),
-      g_browser_process->local_state()->GetString(prefs::kOobeScreenPending));
+  EXPECT_EQ(update_screen_->screen_id(),
+            GetOobeScreenFromName(g_browser_process->local_state()->GetString(
+                prefs::kOobeScreenPending)));
 }
 
 IN_PROC_BROWSER_TEST_F(UpdateScreenTest, TestErrorIssuingUpdateCheck) {
   // First, cancel the update that is already in progress.
   EXPECT_CALL(*mock_base_screen_delegate_,
-              OnExit(_, BaseScreenDelegate::UPDATE_NOUPDATE, _)).Times(1);
+              OnExit(_, ScreenExitCode::UPDATE_NOUPDATE, _))
+      .Times(1);
   update_screen_->CancelUpdate();
 
   fake_update_engine_client_->set_update_check_result(
       chromeos::UpdateEngineClient::UPDATE_RESULT_FAILED);
   EXPECT_CALL(*mock_base_screen_delegate_,
-              OnExit(_, BaseScreenDelegate::UPDATE_ERROR_CHECKING_FOR_UPDATE,
-                     _)).Times(1);
+              OnExit(_, ScreenExitCode::UPDATE_ERROR_CHECKING_FOR_UPDATE, _))
+      .Times(1);
   update_screen_->StartNetworkCheck();
 }
 
@@ -208,8 +212,8 @@ IN_PROC_BROWSER_TEST_F(UpdateScreenTest, TestErrorCheckingForUpdate) {
   fake_update_engine_client_->set_default_status(status);
 
   EXPECT_CALL(*mock_base_screen_delegate_,
-              OnExit(_, BaseScreenDelegate::UPDATE_ERROR_CHECKING_FOR_UPDATE,
-                     _)).Times(1);
+              OnExit(_, ScreenExitCode::UPDATE_ERROR_CHECKING_FOR_UPDATE, _))
+      .Times(1);
   update_screen_->UpdateStatusChanged(status);
 }
 
@@ -229,13 +233,15 @@ IN_PROC_BROWSER_TEST_F(UpdateScreenTest, TestErrorUpdating) {
   fake_update_engine_client_->set_default_status(status);
 
   EXPECT_CALL(*mock_base_screen_delegate_,
-              OnExit(_, BaseScreenDelegate::UPDATE_ERROR_UPDATING, _)).Times(1);
+              OnExit(_, ScreenExitCode::UPDATE_ERROR_UPDATING, _))
+      .Times(1);
   update_screen_->UpdateStatusChanged(status);
 }
 
 IN_PROC_BROWSER_TEST_F(UpdateScreenTest, TestTemproraryOfflineNetwork) {
   EXPECT_CALL(*mock_base_screen_delegate_,
-              OnExit(_, BaseScreenDelegate::UPDATE_NOUPDATE, _)).Times(1);
+              OnExit(_, ScreenExitCode::UPDATE_NOUPDATE, _))
+      .Times(1);
   update_screen_->CancelUpdate();
 
   // Change ethernet state to portal.
@@ -278,15 +284,16 @@ IN_PROC_BROWSER_TEST_F(UpdateScreenTest, TestTemproraryOfflineNetwork) {
       chromeos::UpdateEngineClient::UPDATE_RESULT_FAILED);
 
   EXPECT_CALL(*mock_base_screen_delegate_,
-              OnExit(_, BaseScreenDelegate::UPDATE_ERROR_CHECKING_FOR_UPDATE,
-                     _)).Times(1);
+              OnExit(_, ScreenExitCode::UPDATE_ERROR_CHECKING_FOR_UPDATE, _))
+      .Times(1);
 
   NotifyPortalDetectionCompleted();
 }
 
 IN_PROC_BROWSER_TEST_F(UpdateScreenTest, TestTwoOfflineNetworks) {
   EXPECT_CALL(*mock_base_screen_delegate_,
-              OnExit(_, BaseScreenDelegate::UPDATE_NOUPDATE, _)).Times(1);
+              OnExit(_, ScreenExitCode::UPDATE_NOUPDATE, _))
+      .Times(1);
   update_screen_->CancelUpdate();
 
   // Change ethernet state to portal.
@@ -338,7 +345,8 @@ IN_PROC_BROWSER_TEST_F(UpdateScreenTest, TestVoidNetwork) {
 
   // Cancels pending update request.
   EXPECT_CALL(*mock_base_screen_delegate_,
-              OnExit(_, BaseScreenDelegate::UPDATE_NOUPDATE, _)).Times(1);
+              OnExit(_, ScreenExitCode::UPDATE_NOUPDATE, _))
+      .Times(1);
   update_screen_->CancelUpdate();
 
   // First portal detection attempt returns NULL network and undefined
@@ -362,7 +370,8 @@ IN_PROC_BROWSER_TEST_F(UpdateScreenTest, TestVoidNetwork) {
 
 IN_PROC_BROWSER_TEST_F(UpdateScreenTest, TestAPReselection) {
   EXPECT_CALL(*mock_base_screen_delegate_,
-              OnExit(_, BaseScreenDelegate::UPDATE_NOUPDATE, _)).Times(1);
+              OnExit(_, ScreenExitCode::UPDATE_NOUPDATE, _))
+      .Times(1);
   update_screen_->CancelUpdate();
 
   // Change ethernet state to portal.
@@ -400,8 +409,8 @@ IN_PROC_BROWSER_TEST_F(UpdateScreenTest, TestAPReselection) {
   fake_update_engine_client_->set_update_check_result(
       chromeos::UpdateEngineClient::UPDATE_RESULT_FAILED);
   EXPECT_CALL(*mock_base_screen_delegate_,
-              OnExit(_, BaseScreenDelegate::UPDATE_ERROR_CHECKING_FOR_UPDATE,
-                     _)).Times(1);
+              OnExit(_, ScreenExitCode::UPDATE_ERROR_CHECKING_FOR_UPDATE, _))
+      .Times(1);
 
   update_screen_->OnConnectRequested();
   base::RunLoop().RunUntilIdle();

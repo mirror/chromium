@@ -13,9 +13,9 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
-#include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "components/password_manager/core/browser/login_database.h"
 #include "components/password_manager/core/browser/password_manager_test_utils.h"
@@ -39,11 +39,12 @@ namespace {
 class MockPasswordStoreConsumer : public PasswordStoreConsumer {
  public:
   MOCK_METHOD1(OnGetPasswordStoreResultsConstRef,
-               void(const std::vector<PasswordForm*>&));
+               void(const std::vector<std::unique_ptr<PasswordForm>>&));
 
   // GMock cannot mock methods with move-only args.
-  void OnGetPasswordStoreResults(ScopedVector<PasswordForm> results) override {
-    OnGetPasswordStoreResultsConstRef(results.get());
+  void OnGetPasswordStoreResults(
+      std::vector<std::unique_ptr<PasswordForm>> results) override {
+    OnGetPasswordStoreResultsConstRef(results);
   }
 };
 
@@ -106,7 +107,7 @@ class PasswordStoreDefaultTestDelegate {
 PasswordStoreDefaultTestDelegate::PasswordStoreDefaultTestDelegate() {
   SetupTempDir();
   store_ = CreateInitializedStore(
-      base::WrapUnique(new LoginDatabase(test_login_db_file_path())));
+      base::MakeUnique<LoginDatabase>(test_login_db_file_path()));
 }
 
 PasswordStoreDefaultTestDelegate::PasswordStoreDefaultTestDelegate(
@@ -146,7 +147,7 @@ PasswordStoreDefaultTestDelegate::CreateInitializedStore(
 
 base::FilePath PasswordStoreDefaultTestDelegate::test_login_db_file_path()
     const {
-  return temp_dir_.path().Append(FILE_PATH_LITERAL("login_test"));
+  return temp_dir_.GetPath().Append(FILE_PATH_LITERAL("login_test"));
 }
 
 }  // anonymous namespace
@@ -154,10 +155,6 @@ base::FilePath PasswordStoreDefaultTestDelegate::test_login_db_file_path()
 INSTANTIATE_TYPED_TEST_CASE_P(Default,
                               PasswordStoreOriginTest,
                               PasswordStoreDefaultTestDelegate);
-
-ACTION(STLDeleteElements0) {
-  STLDeleteContainerPointers(arg0.begin(), arg0.end());
-}
 
 TEST(PasswordStoreDefaultTest, NonASCIIData) {
   PasswordStoreDefaultTestDelegate delegate;
@@ -171,7 +168,7 @@ TEST(PasswordStoreDefaultTest, NonASCIIData) {
   };
 
   // Build the expected forms vector and add the forms to the store.
-  ScopedVector<PasswordForm> expected_forms;
+  std::vector<std::unique_ptr<PasswordForm>> expected_forms;
   for (unsigned int i = 0; i < arraysize(form_data); ++i) {
     expected_forms.push_back(
         CreatePasswordFormFromDataForTesting(form_data[i]));
@@ -183,9 +180,10 @@ TEST(PasswordStoreDefaultTest, NonASCIIData) {
   MockPasswordStoreConsumer consumer;
 
   // We expect to get the same data back, even though it's not all ASCII.
-  EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(
-                            password_manager::UnorderedPasswordFormElementsAre(
-                                expected_forms.get())));
+  EXPECT_CALL(
+      consumer,
+      OnGetPasswordStoreResultsConstRef(
+          password_manager::UnorderedPasswordFormElementsAre(&expected_forms)));
   store->GetAutofillableLogins(&consumer);
 
   base::RunLoop().RunUntilIdle();

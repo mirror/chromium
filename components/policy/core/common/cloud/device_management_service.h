@@ -22,9 +22,12 @@
 #include "base/threading/thread_checker.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "components/policy/policy_export.h"
+#include "components/policy/proto/device_management_backend.pb.h"
 #include "net/url_request/url_fetcher_delegate.h"
-#include "policy/proto/device_management_backend.pb.h"
 
+namespace base {
+class SequencedTaskRunner;
+}
 
 namespace net {
 class URLRequestContextGetter;
@@ -40,21 +43,25 @@ class DeviceManagementService;
 // canceled by deleting the object.
 class POLICY_EXPORT DeviceManagementRequestJob {
  public:
-  // Describes the job type.
+  // Describes the job type.  (Integer values are stated explicitly to
+  // facilitate reading of logs.)
   enum JobType {
-    TYPE_AUTO_ENROLLMENT,
-    TYPE_REGISTRATION,
-    TYPE_API_AUTH_CODE_FETCH,
-    TYPE_POLICY_FETCH,
-    TYPE_UNREGISTRATION,
-    TYPE_UPLOAD_CERTIFICATE,
-    TYPE_DEVICE_STATE_RETRIEVAL,
-    TYPE_UPLOAD_STATUS,
-    TYPE_REMOTE_COMMANDS,
-    TYPE_ATTRIBUTE_UPDATE_PERMISSION,
-    TYPE_ATTRIBUTE_UPDATE,
-    TYPE_GCM_ID_UPDATE,
-    TYPE_ANDROID_MANAGEMENT_CHECK,
+    TYPE_AUTO_ENROLLMENT = 0,
+    TYPE_REGISTRATION = 1,
+    TYPE_API_AUTH_CODE_FETCH = 2,
+    TYPE_POLICY_FETCH = 3,
+    TYPE_UNREGISTRATION = 4,
+    TYPE_UPLOAD_CERTIFICATE = 5,
+    TYPE_DEVICE_STATE_RETRIEVAL = 6,
+    TYPE_UPLOAD_STATUS = 7,
+    TYPE_REMOTE_COMMANDS = 8,
+    TYPE_ATTRIBUTE_UPDATE_PERMISSION = 9,
+    TYPE_ATTRIBUTE_UPDATE = 10,
+    TYPE_GCM_ID_UPDATE = 11,
+    TYPE_ANDROID_MANAGEMENT_CHECK = 12,
+    TYPE_CERT_BASED_REGISTRATION = 13,
+    TYPE_ACTIVE_DIRECTORY_ENROLL_PLAY_USER = 14,
+    TYPE_ACTIVE_DIRECTORY_PLAY_ACTIVITY = 15,
   };
 
   typedef base::Callback<
@@ -71,6 +78,12 @@ class POLICY_EXPORT DeviceManagementRequestJob {
   void SetOAuthToken(const std::string& oauth_token);
   void SetDMToken(const std::string& dm_token);
   void SetClientID(const std::string& client_id);
+  // Sets the critical request parameter, which is used to differentiate regular
+  // DMServer requests (like scheduled policy fetches) from time-sensitive ones
+  // (like policy fetch during device enrollment). Should only be called before
+  // Start()ing the job, at most once.
+  void SetCritical(bool critical);
+
   enterprise_management::DeviceManagementRequest* GetRequest();
 
   // A job may automatically retry if it fails due to a temporary condition, or
@@ -96,6 +109,7 @@ class POLICY_EXPORT DeviceManagementRequestJob {
   // Fires the job, to be filled in by implementations.
   virtual void Run() = 0;
 
+  JobType type_;
   ParameterMap query_params_;
   std::string gaia_token_;
   std::string dm_token_;

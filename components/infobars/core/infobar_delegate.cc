@@ -10,9 +10,9 @@
 #include "components/infobars/core/infobar_manager.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
-#include "ui/gfx/vector_icons_public.h"
+#include "ui/gfx/vector_icon_types.h"
 
-#if !defined(OS_MACOSX) && !defined(OS_IOS) && !defined(OS_ANDROID)
+#if !defined(OS_IOS) && !defined(OS_ANDROID)
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/paint_vector_icon.h"
 #endif
@@ -37,20 +37,19 @@ int InfoBarDelegate::GetIconId() const {
   return kNoIconID;
 }
 
-gfx::VectorIconId InfoBarDelegate::GetVectorIconId() const {
-  return gfx::VectorIconId::VECTOR_ICON_NONE;
+const gfx::VectorIcon& InfoBarDelegate::GetVectorIcon() const {
+  CR_DEFINE_STATIC_LOCAL(gfx::VectorIcon, empty_icon, ());
+  return empty_icon;
 }
 
 gfx::Image InfoBarDelegate::GetIcon() const {
-#if !defined(OS_MACOSX) && !defined(OS_IOS) && !defined(OS_ANDROID)
-  if (ui::MaterialDesignController::IsModeMaterial()) {
-    gfx::VectorIconId vector_id = GetVectorIconId();
-    if (vector_id != gfx::VectorIconId::VECTOR_ICON_NONE) {
-      return gfx::Image(gfx::CreateVectorIcon(vector_id, 16,
-                                              GetInfoBarType() == WARNING_TYPE
-                                                  ? SkColorSetRGB(0xFF, 0x67, 0)
-                                                  : gfx::kGoogleBlue500));
-    }
+#if !defined(OS_IOS) && !defined(OS_ANDROID)
+  const gfx::VectorIcon& vector_icon = GetVectorIcon();
+  if (!vector_icon.is_empty()) {
+    return gfx::Image(gfx::CreateVectorIcon(vector_icon, 16,
+                                            GetInfoBarType() == WARNING_TYPE
+                                                ? SkColorSetRGB(0xFF, 0x67, 0)
+                                                : gfx::kGoogleBlue500));
   }
 #endif
 
@@ -94,7 +93,7 @@ NativeAppInfoBarDelegate* InfoBarDelegate::AsNativeAppInfoBarDelegate() {
   return nullptr;
 }
 
-PermissionInfobarDelegate* InfoBarDelegate::AsPermissionInfobarDelegate() {
+PermissionInfoBarDelegate* InfoBarDelegate::AsPermissionInfoBarDelegate() {
   return nullptr;
 }
 
@@ -132,8 +131,8 @@ InfoBarDelegate::AsMediaStreamInfoBarDelegateAndroid() {
   return nullptr;
 }
 
-MediaThrottleInfoBarDelegate*
-    InfoBarDelegate::AsMediaThrottleInfoBarDelegate() {
+offline_pages::OfflinePageInfoBarDelegate*
+InfoBarDelegate::AsOfflinePageInfoBarDelegate() {
   return nullptr;
 }
 #endif

@@ -7,11 +7,12 @@
 #include "core/HTMLNames.h"
 #include "core/css/CSSFontSelector.h"
 #include "core/dom/ElementTraversal.h"
-#include "core/dom/ExecutionContextTask.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/StyleEngine.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/events/ScopedEventQueue.h"
 #include "core/frame/FrameView.h"
+#include "core/frame/LocalFrame.h"
 #include "core/html/HTMLHRElement.h"
 #include "core/html/HTMLOptGroupElement.h"
 #include "core/html/HTMLOptionElement.h"
@@ -30,500 +31,555 @@ namespace blink {
 
 namespace {
 
-const char* fontWeightToString(FontWeight weight)
-{
-    switch (weight) {
-    case FontWeight100:
-        return "100";
-    case FontWeight200:
-        return "200";
-    case FontWeight300:
-        return "300";
-    case FontWeight400:
-        return "400";
-    case FontWeight500:
-        return "500";
-    case FontWeight600:
-        return "600";
-    case FontWeight700:
-        return "700";
-    case FontWeight800:
-        return "800";
-    case FontWeight900:
-        return "900";
-    }
-    NOTREACHED();
-    return nullptr;
+const char* FontWeightToString(FontWeight weight) {
+  switch (weight) {
+    case kFontWeight100:
+      return "100";
+    case kFontWeight200:
+      return "200";
+    case kFontWeight300:
+      return "300";
+    case kFontWeight400:
+      return "400";
+    case kFontWeight500:
+      return "500";
+    case kFontWeight600:
+      return "600";
+    case kFontWeight700:
+      return "700";
+    case kFontWeight800:
+      return "800";
+    case kFontWeight900:
+      return "900";
+  }
+  NOTREACHED();
+  return nullptr;
 }
 
 // TODO crbug.com/516675 Add stretch to serialization
 
-const char* fontStyleToString(FontStyle style)
-{
-    switch (style) {
-    case FontStyleNormal:
-        return "normal";
-    case FontStyleOblique:
-        return "oblique";
-    case FontStyleItalic:
-        return "italic";
-    }
-    NOTREACHED();
-    return nullptr;
+const char* FontStyleToString(FontStyle style) {
+  switch (style) {
+    case kFontStyleNormal:
+      return "normal";
+    case kFontStyleOblique:
+      return "oblique";
+    case kFontStyleItalic:
+      return "italic";
+  }
+  NOTREACHED();
+  return nullptr;
 }
 
-const char* textTransformToString(ETextTransform transform)
-{
-    switch (transform) {
-    case CAPITALIZE:
-        return "capitalize";
-    case UPPERCASE:
-        return "uppercase";
-    case LOWERCASE:
-        return "lowercase";
-    case TTNONE:
-        return "none";
-    }
-    NOTREACHED();
-    return "";
+const char* TextTransformToString(ETextTransform transform) {
+  switch (transform) {
+    case ETextTransform::kCapitalize:
+      return "capitalize";
+    case ETextTransform::kUppercase:
+      return "uppercase";
+    case ETextTransform::kLowercase:
+      return "lowercase";
+    case ETextTransform::kNone:
+      return "none";
+  }
+  NOTREACHED();
+  return "";
 }
 
-} // anonymous namespace
+}  // anonymous namespace
 
-class PopupMenuCSSFontSelector : public CSSFontSelector, private CSSFontSelectorClient {
-    USING_GARBAGE_COLLECTED_MIXIN(PopupMenuCSSFontSelector);
-public:
-    static PopupMenuCSSFontSelector* create(Document* document, CSSFontSelector* ownerFontSelector)
-    {
-        return new PopupMenuCSSFontSelector(document, ownerFontSelector);
-    }
+class PopupMenuCSSFontSelector : public CSSFontSelector,
+                                 private CSSFontSelectorClient {
+  USING_GARBAGE_COLLECTED_MIXIN(PopupMenuCSSFontSelector);
 
-    ~PopupMenuCSSFontSelector();
+ public:
+  static PopupMenuCSSFontSelector* Create(
+      Document* document,
+      CSSFontSelector* owner_font_selector) {
+    return new PopupMenuCSSFontSelector(document, owner_font_selector);
+  }
 
-    // We don't override willUseFontData() for now because the old PopupListBox
-    // only worked with fonts loaded when opening the popup.
-    PassRefPtr<FontData> getFontData(const FontDescription&, const AtomicString&) override;
+  ~PopupMenuCSSFontSelector();
 
-    DECLARE_VIRTUAL_TRACE();
+  // We don't override willUseFontData() for now because the old PopupListBox
+  // only worked with fonts loaded when opening the popup.
+  PassRefPtr<FontData> GetFontData(const FontDescription&,
+                                   const AtomicString&) override;
 
-private:
-    PopupMenuCSSFontSelector(Document*, CSSFontSelector*);
+  DECLARE_VIRTUAL_TRACE();
 
-    void fontsNeedUpdate(CSSFontSelector*) override;
+ private:
+  PopupMenuCSSFontSelector(Document*, CSSFontSelector*);
 
-    Member<CSSFontSelector> m_ownerFontSelector;
+  void FontsNeedUpdate(CSSFontSelector*) override;
+
+  Member<CSSFontSelector> owner_font_selector_;
 };
 
-PopupMenuCSSFontSelector::PopupMenuCSSFontSelector(Document* document, CSSFontSelector* ownerFontSelector)
-    : CSSFontSelector(document)
-    , m_ownerFontSelector(ownerFontSelector)
-{
-    m_ownerFontSelector->registerForInvalidationCallbacks(this);
+PopupMenuCSSFontSelector::PopupMenuCSSFontSelector(
+    Document* document,
+    CSSFontSelector* owner_font_selector)
+    : CSSFontSelector(document), owner_font_selector_(owner_font_selector) {
+  owner_font_selector_->RegisterForInvalidationCallbacks(this);
 }
 
-PopupMenuCSSFontSelector::~PopupMenuCSSFontSelector()
-{
+PopupMenuCSSFontSelector::~PopupMenuCSSFontSelector() {}
+
+PassRefPtr<FontData> PopupMenuCSSFontSelector::GetFontData(
+    const FontDescription& description,
+    const AtomicString& name) {
+  return owner_font_selector_->GetFontData(description, name);
 }
 
-PassRefPtr<FontData> PopupMenuCSSFontSelector::getFontData(const FontDescription& description, const AtomicString& name)
-{
-    return m_ownerFontSelector->getFontData(description, name);
+void PopupMenuCSSFontSelector::FontsNeedUpdate(CSSFontSelector* font_selector) {
+  DispatchInvalidationCallbacks();
 }
 
-void PopupMenuCSSFontSelector::fontsNeedUpdate(CSSFontSelector* fontSelector)
-{
-    dispatchInvalidationCallbacks();
-}
-
-DEFINE_TRACE(PopupMenuCSSFontSelector)
-{
-    visitor->trace(m_ownerFontSelector);
-    CSSFontSelector::trace(visitor);
-    CSSFontSelectorClient::trace(visitor);
+DEFINE_TRACE(PopupMenuCSSFontSelector) {
+  visitor->Trace(owner_font_selector_);
+  CSSFontSelector::Trace(visitor);
+  CSSFontSelectorClient::Trace(visitor);
 }
 
 // ----------------------------------------------------------------
 
 class PopupMenuImpl::ItemIterationContext {
-    STACK_ALLOCATED();
-public:
-    ItemIterationContext(const ComputedStyle& style, SharedBuffer* buffer)
-        : m_baseStyle(style)
-        , m_backgroundColor(style.visitedDependentColor(CSSPropertyBackgroundColor))
-        , m_listIndex(0)
-        , m_isInGroup(false)
-        , m_buffer(buffer)
-    {
-        DCHECK(m_buffer);
+  STACK_ALLOCATED();
+
+ public:
+  ItemIterationContext(const ComputedStyle& style, SharedBuffer* buffer)
+      : base_style_(style),
+        background_color_(
+            style.VisitedDependentColor(CSSPropertyBackgroundColor)),
+        list_index_(0),
+        is_in_group_(false),
+        buffer_(buffer) {
+    DCHECK(buffer_);
 #if OS(LINUX)
-        // On other platforms, the <option> background color is the same as the
-        // <select> background color. On Linux, that makes the <option>
-        // background color very dark, so by default, try to use a lighter
-        // background color for <option>s.
-        if (LayoutTheme::theme().systemColor(CSSValueButtonface) == m_backgroundColor)
-            m_backgroundColor = LayoutTheme::theme().systemColor(CSSValueMenu);
+    // On other platforms, the <option> background color is the same as the
+    // <select> background color. On Linux, that makes the <option>
+    // background color very dark, so by default, try to use a lighter
+    // background color for <option>s.
+    if (LayoutTheme::GetTheme().SystemColor(CSSValueButtonface) ==
+        background_color_)
+      background_color_ = LayoutTheme::GetTheme().SystemColor(CSSValueMenu);
 #endif
+  }
+
+  void SerializeBaseStyle() {
+    DCHECK(!is_in_group_);
+    PagePopupClient::AddString("baseStyle: {", buffer_);
+    AddProperty("backgroundColor", background_color_.Serialized(), buffer_);
+    AddProperty(
+        "color",
+        BaseStyle().VisitedDependentColor(CSSPropertyColor).Serialized(),
+        buffer_);
+    AddProperty("textTransform",
+                String(TextTransformToString(BaseStyle().TextTransform())),
+                buffer_);
+    AddProperty("fontSize", BaseFont().ComputedPixelSize(), buffer_);
+    AddProperty("fontStyle", String(FontStyleToString(BaseFont().Style())),
+                buffer_);
+    AddProperty("fontVariant",
+                BaseFont().VariantCaps() == FontDescription::kSmallCaps
+                    ? String("small-caps")
+                    : String(),
+                buffer_);
+
+    PagePopupClient::AddString("fontFamily: [", buffer_);
+    for (const FontFamily* f = &BaseFont().Family(); f; f = f->Next()) {
+      AddJavaScriptString(f->Family().GetString(), buffer_);
+      if (f->Next())
+        PagePopupClient::AddString(",", buffer_);
     }
+    PagePopupClient::AddString("]", buffer_);
+    PagePopupClient::AddString("},\n", buffer_);
+  }
 
-    void serializeBaseStyle()
-    {
-        DCHECK(!m_isInGroup);
-        PagePopupClient::addString("baseStyle: {", m_buffer);
-        addProperty("backgroundColor", m_backgroundColor.serialized(), m_buffer);
-        addProperty("color", baseStyle().visitedDependentColor(CSSPropertyColor).serialized(), m_buffer);
-        addProperty("textTransform", String(textTransformToString(baseStyle().textTransform())), m_buffer);
-        addProperty("fontSize", baseFont().specifiedSize(), m_buffer);
-        addProperty("fontStyle", String(fontStyleToString(baseFont().style())), m_buffer);
-        addProperty("fontVariant", baseFont().variantCaps() == FontDescription::SmallCaps ? String("small-caps") : String(), m_buffer);
+  Color BackgroundColor() const {
+    return is_in_group_
+               ? group_style_->VisitedDependentColor(CSSPropertyBackgroundColor)
+               : background_color_;
+  }
+  // Do not use baseStyle() for background-color, use backgroundColor()
+  // instead.
+  const ComputedStyle& BaseStyle() {
+    return is_in_group_ ? *group_style_ : base_style_;
+  }
+  const FontDescription& BaseFont() {
+    return is_in_group_ ? group_style_->GetFontDescription()
+                        : base_style_.GetFontDescription();
+  }
+  void StartGroupChildren(const ComputedStyle& group_style) {
+    DCHECK(!is_in_group_);
+    PagePopupClient::AddString("children: [", buffer_);
+    is_in_group_ = true;
+    group_style_ = &group_style;
+  }
+  void FinishGroupIfNecessary() {
+    if (!is_in_group_)
+      return;
+    PagePopupClient::AddString("],},\n", buffer_);
+    is_in_group_ = false;
+    group_style_ = nullptr;
+  }
 
-        PagePopupClient::addString("fontFamily: [", m_buffer);
-        for (const FontFamily* f = &baseFont().family(); f; f = f->next()) {
-            addJavaScriptString(f->family().getString(), m_buffer);
-            if (f->next())
-                PagePopupClient::addString(",", m_buffer);
-        }
-        PagePopupClient::addString("]", m_buffer);
-        PagePopupClient::addString("},\n", m_buffer);
-    }
+  const ComputedStyle& base_style_;
+  Color background_color_;
+  const ComputedStyle* group_style_;
 
-    Color backgroundColor() const { return m_isInGroup ? m_groupStyle->visitedDependentColor(CSSPropertyBackgroundColor) : m_backgroundColor; }
-    // Do not use baseStyle() for background-color, use backgroundColor()
-    // instead.
-    const ComputedStyle& baseStyle() { return m_isInGroup ? *m_groupStyle : m_baseStyle; }
-    const FontDescription& baseFont() { return m_isInGroup ? m_groupStyle->getFontDescription() : m_baseStyle.getFontDescription(); }
-    void startGroupChildren(const ComputedStyle& groupStyle)
-    {
-        DCHECK(!m_isInGroup);
-        PagePopupClient::addString("children: [", m_buffer);
-        m_isInGroup = true;
-        m_groupStyle = &groupStyle;
-    }
-    void finishGroupIfNecessary()
-    {
-        if (!m_isInGroup)
-            return;
-        PagePopupClient::addString("],},\n", m_buffer);
-        m_isInGroup = false;
-        m_groupStyle = nullptr;
-    }
-
-    const ComputedStyle& m_baseStyle;
-    Color m_backgroundColor;
-    const ComputedStyle* m_groupStyle;
-
-    unsigned m_listIndex;
-    bool m_isInGroup;
-    SharedBuffer* m_buffer;
+  unsigned list_index_;
+  bool is_in_group_;
+  SharedBuffer* buffer_;
 };
 
 // ----------------------------------------------------------------
 
-PopupMenuImpl* PopupMenuImpl::create(ChromeClientImpl* chromeClient, HTMLSelectElement& ownerElement)
-{
-    return new PopupMenuImpl(chromeClient, ownerElement);
+PopupMenuImpl* PopupMenuImpl::Create(ChromeClientImpl* chrome_client,
+                                     HTMLSelectElement& owner_element) {
+  return new PopupMenuImpl(chrome_client, owner_element);
 }
 
-PopupMenuImpl::PopupMenuImpl(ChromeClientImpl* chromeClient, HTMLSelectElement& ownerElement)
-    : m_chromeClient(chromeClient)
-    , m_ownerElement(ownerElement)
-    , m_popup(nullptr)
-    , m_needsUpdate(false)
-{
+PopupMenuImpl::PopupMenuImpl(ChromeClientImpl* chrome_client,
+                             HTMLSelectElement& owner_element)
+    : chrome_client_(chrome_client),
+      owner_element_(owner_element),
+      popup_(nullptr),
+      needs_update_(false) {}
+
+PopupMenuImpl::~PopupMenuImpl() {
+  DCHECK(!popup_);
 }
 
-PopupMenuImpl::~PopupMenuImpl()
-{
-    DCHECK(!m_popup);
+DEFINE_TRACE(PopupMenuImpl) {
+  visitor->Trace(chrome_client_);
+  visitor->Trace(owner_element_);
+  PopupMenu::Trace(visitor);
 }
 
-DEFINE_TRACE(PopupMenuImpl)
-{
-    visitor->trace(m_chromeClient);
-    visitor->trace(m_ownerElement);
-    PopupMenu::trace(visitor);
+void PopupMenuImpl::WriteDocument(SharedBuffer* data) {
+  HTMLSelectElement& owner_element = *owner_element_;
+  IntRect anchor_rect_in_screen = chrome_client_->ViewportToScreen(
+      owner_element.VisibleBoundsInVisualViewport(),
+      owner_element.GetDocument().View());
+
+  float scale_factor = chrome_client_->WindowToViewportScalar(1.f);
+  PagePopupClient::AddString(
+      "<!DOCTYPE html><head><meta charset='UTF-8'><style>\n", data);
+  data->Append(Platform::Current()->LoadResource("pickerCommon.css"));
+  data->Append(Platform::Current()->LoadResource("listPicker.css"));
+  if (!RuntimeEnabledFeatures::forceTallerSelectPopupEnabled())
+    PagePopupClient::AddString("@media (any-pointer:coarse) {", data);
+  int padding = static_cast<int>(roundf(4 * scale_factor));
+  int min_height = static_cast<int>(roundf(24 * scale_factor));
+  PagePopupClient::AddString(String::Format("option, optgroup {"
+                                            "padding-top: %dpx;"
+                                            "padding-bottom: %dpx;"
+                                            "min-height: %dpx;"
+                                            "display: flex;"
+                                            "align-items: center;"
+                                            "}",
+                                            padding, padding, min_height),
+                             data);
+  if (!RuntimeEnabledFeatures::forceTallerSelectPopupEnabled()) {
+    // Closes @media.
+    PagePopupClient::AddString("}", data);
+  }
+
+  PagePopupClient::AddString(
+      "</style></head><body><div id=main>Loading...</div><script>\n"
+      "window.dialogArguments = {\n",
+      data);
+  AddProperty("selectedIndex", owner_element.SelectedListIndex(), data);
+  const ComputedStyle* owner_style = owner_element.GetComputedStyle();
+  ItemIterationContext context(*owner_style, data);
+  context.SerializeBaseStyle();
+  PagePopupClient::AddString("children: [\n", data);
+  const HeapVector<Member<HTMLElement>>& items = owner_element.GetListItems();
+  for (; context.list_index_ < items.size(); ++context.list_index_) {
+    Element& child = *items[context.list_index_];
+    if (!isHTMLOptGroupElement(child.parentNode()))
+      context.FinishGroupIfNecessary();
+    if (isHTMLOptionElement(child))
+      AddOption(context, toHTMLOptionElement(child));
+    else if (isHTMLOptGroupElement(child))
+      AddOptGroup(context, toHTMLOptGroupElement(child));
+    else if (isHTMLHRElement(child))
+      AddSeparator(context, toHTMLHRElement(child));
+  }
+  context.FinishGroupIfNecessary();
+  PagePopupClient::AddString("],\n", data);
+
+  AddProperty("anchorRectInScreen", anchor_rect_in_screen, data);
+  AddProperty("zoomFactor", 1, data);
+  AddProperty("scaleFactor", scale_factor, data);
+  bool is_rtl = !owner_style->IsLeftToRightDirection();
+  AddProperty("isRTL", is_rtl, data);
+  AddProperty("paddingStart",
+              is_rtl ? owner_element.ClientPaddingRight().ToDouble()
+                     : owner_element.ClientPaddingLeft().ToDouble(),
+              data);
+  PagePopupClient::AddString("};\n", data);
+  data->Append(Platform::Current()->LoadResource("pickerCommon.js"));
+  data->Append(Platform::Current()->LoadResource("listPicker.js"));
+  PagePopupClient::AddString("</script></body>\n", data);
 }
 
-void PopupMenuImpl::writeDocument(SharedBuffer* data)
-{
-    HTMLSelectElement& ownerElement = *m_ownerElement;
-    IntRect anchorRectInScreen = m_chromeClient->viewportToScreen(ownerElement.elementRectRelativeToViewport(), ownerElement.document().view());
-
-    PagePopupClient::addString("<!DOCTYPE html><head><meta charset='UTF-8'><style>\n", data);
-    data->append(Platform::current()->loadResource("pickerCommon.css"));
-    data->append(Platform::current()->loadResource("listPicker.css"));
-    PagePopupClient::addString("</style></head><body><div id=main>Loading...</div><script>\n"
-        "window.dialogArguments = {\n", data);
-    addProperty("selectedIndex", ownerElement.selectedListIndex(), data);
-    const ComputedStyle* ownerStyle = ownerElement.computedStyle();
-    ItemIterationContext context(*ownerStyle, data);
-    context.serializeBaseStyle();
-    PagePopupClient::addString("children: [\n", data);
-    const HeapVector<Member<HTMLElement>>& items = ownerElement.listItems();
-    for (; context.m_listIndex < items.size(); ++context.m_listIndex) {
-        Element& child = *items[context.m_listIndex];
-        if (!isHTMLOptGroupElement(child.parentNode()))
-            context.finishGroupIfNecessary();
-        if (isHTMLOptionElement(child))
-            addOption(context, toHTMLOptionElement(child));
-        else if (isHTMLOptGroupElement(child))
-            addOptGroup(context, toHTMLOptGroupElement(child));
-        else if (isHTMLHRElement(child))
-            addSeparator(context, toHTMLHRElement(child));
+void PopupMenuImpl::AddElementStyle(ItemIterationContext& context,
+                                    HTMLElement& element) {
+  const ComputedStyle* style = owner_element_->ItemComputedStyle(element);
+  DCHECK(style);
+  SharedBuffer* data = context.buffer_;
+  // TODO(tkent): We generate unnecessary "style: {\n},\n" even if no
+  // additional style.
+  PagePopupClient::AddString("style: {\n", data);
+  if (style->Visibility() == EVisibility::kHidden)
+    AddProperty("visibility", String("hidden"), data);
+  if (style->Display() == EDisplay::kNone)
+    AddProperty("display", String("none"), data);
+  const ComputedStyle& base_style = context.BaseStyle();
+  if (base_style.Direction() != style->Direction()) {
+    AddProperty(
+        "direction",
+        String(style->Direction() == TextDirection::kRtl ? "rtl" : "ltr"),
+        data);
+  }
+  if (IsOverride(style->GetUnicodeBidi()))
+    AddProperty("unicodeBidi", String("bidi-override"), data);
+  Color foreground_color = style->VisitedDependentColor(CSSPropertyColor);
+  if (base_style.VisitedDependentColor(CSSPropertyColor) != foreground_color)
+    AddProperty("color", foreground_color.Serialized(), data);
+  Color background_color =
+      style->VisitedDependentColor(CSSPropertyBackgroundColor);
+  if (context.BackgroundColor() != background_color &&
+      background_color != Color::kTransparent)
+    AddProperty("backgroundColor", background_color.Serialized(), data);
+  const FontDescription& base_font = context.BaseFont();
+  const FontDescription& font_description =
+      style->GetFont().GetFontDescription();
+  if (base_font.ComputedPixelSize() != font_description.ComputedPixelSize()) {
+    // We don't use FontDescription::specifiedSize() because this element
+    // might have its own zoom level.
+    AddProperty("fontSize", font_description.ComputedPixelSize(), data);
+  }
+  // Our UA stylesheet has font-weight:normal for OPTION.
+  if (kFontWeightNormal != font_description.Weight())
+    AddProperty("fontWeight",
+                String(FontWeightToString(font_description.Weight())), data);
+  if (base_font.Family() != font_description.Family()) {
+    PagePopupClient::AddString("fontFamily: [\n", data);
+    for (const FontFamily* f = &font_description.Family(); f; f = f->Next()) {
+      AddJavaScriptString(f->Family().GetString(), data);
+      if (f->Next())
+        PagePopupClient::AddString(",\n", data);
     }
-    context.finishGroupIfNecessary();
-    PagePopupClient::addString("],\n", data);
+    PagePopupClient::AddString("],\n", data);
+  }
+  if (base_font.Style() != font_description.Style())
+    AddProperty("fontStyle",
+                String(FontStyleToString(font_description.Style())), data);
 
-    addProperty("anchorRectInScreen", anchorRectInScreen, data);
-    float zoom = zoomFactor();
-    float scaleFactor = m_chromeClient->windowToViewportScalar(1.f);
-    addProperty("zoomFactor", zoom / scaleFactor, data);
-    bool isRTL = !ownerStyle->isLeftToRightDirection();
-    addProperty("isRTL", isRTL, data);
-    addProperty("paddingStart", isRTL ? ownerElement.clientPaddingRight().toDouble() / zoom : ownerElement.clientPaddingLeft().toDouble() / zoom, data);
-    PagePopupClient::addString("};\n", data);
-    data->append(Platform::current()->loadResource("pickerCommon.js"));
-    data->append(Platform::current()->loadResource("listPicker.js"));
-    PagePopupClient::addString("</script></body>\n", data);
+  if (base_font.VariantCaps() != font_description.VariantCaps() &&
+      font_description.VariantCaps() == FontDescription::kSmallCaps)
+    AddProperty("fontVariant", String("small-caps"), data);
+
+  if (base_style.TextTransform() != style->TextTransform())
+    AddProperty("textTransform",
+                String(TextTransformToString(style->TextTransform())), data);
+
+  PagePopupClient::AddString("},\n", data);
 }
 
-void PopupMenuImpl::addElementStyle(ItemIterationContext& context, HTMLElement& element)
-{
-    const ComputedStyle* style = m_ownerElement->itemComputedStyle(element);
-    DCHECK(style);
-    SharedBuffer* data = context.m_buffer;
-    // TODO(tkent): We generate unnecessary "style: {\n},\n" even if no
-    // additional style.
-    PagePopupClient::addString("style: {\n", data);
-    if (style->visibility() == HIDDEN)
-        addProperty("visibility", String("hidden"), data);
-    if (style->display() == NONE)
-        addProperty("display", String("none"), data);
-    const ComputedStyle& baseStyle = context.baseStyle();
-    if (baseStyle.direction() != style->direction())
-        addProperty("direction", String(style->direction() == RTL ? "rtl" : "ltr"), data);
-    if (isOverride(style->unicodeBidi()))
-        addProperty("unicodeBidi", String("bidi-override"), data);
-    Color foregroundColor = style->visitedDependentColor(CSSPropertyColor);
-    if (baseStyle.visitedDependentColor(CSSPropertyColor) != foregroundColor)
-        addProperty("color", foregroundColor.serialized(), data);
-    Color backgroundColor = style->visitedDependentColor(CSSPropertyBackgroundColor);
-    if (context.backgroundColor() != backgroundColor && backgroundColor != Color::transparent)
-        addProperty("backgroundColor", backgroundColor.serialized(), data);
-    const FontDescription& baseFont = context.baseFont();
-    const FontDescription& fontDescription = style->font().getFontDescription();
-    if (baseFont.computedPixelSize() != fontDescription.computedPixelSize()) {
-        // We don't use FontDescription::specifiedSize() because this element
-        // might have its own zoom level.
-        addProperty("fontSize", fontDescription.computedSize() / zoomFactor(), data);
-    }
-    // Our UA stylesheet has font-weight:normal for OPTION.
-    if (FontWeightNormal != fontDescription.weight())
-        addProperty("fontWeight", String(fontWeightToString(fontDescription.weight())), data);
-    if (baseFont.family() != fontDescription.family()) {
-        PagePopupClient::addString("fontFamily: [\n", data);
-        for (const FontFamily* f = &fontDescription.family(); f; f = f->next()) {
-            addJavaScriptString(f->family().getString(), data);
-            if (f->next())
-                PagePopupClient::addString(",\n", data);
-        }
-        PagePopupClient::addString("],\n", data);
-    }
-    if (baseFont.style() != fontDescription.style())
-        addProperty("fontStyle", String(fontStyleToString(fontDescription.style())), data);
-
-    if (baseFont.variantCaps() != fontDescription.variantCaps() && fontDescription.variantCaps() == FontDescription::SmallCaps)
-        addProperty("fontVariant", String("small-caps"), data);
-
-    if (baseStyle.textTransform() != style->textTransform())
-        addProperty("textTransform", String(textTransformToString(style->textTransform())), data);
-
-    PagePopupClient::addString("},\n", data);
+void PopupMenuImpl::AddOption(ItemIterationContext& context,
+                              HTMLOptionElement& element) {
+  SharedBuffer* data = context.buffer_;
+  PagePopupClient::AddString("{", data);
+  AddProperty("label", element.DisplayLabel(), data);
+  AddProperty("value", context.list_index_, data);
+  if (!element.title().IsEmpty())
+    AddProperty("title", element.title(), data);
+  const AtomicString& aria_label =
+      element.FastGetAttribute(HTMLNames::aria_labelAttr);
+  if (!aria_label.IsEmpty())
+    AddProperty("ariaLabel", aria_label, data);
+  if (element.IsDisabledFormControl())
+    AddProperty("disabled", true, data);
+  AddElementStyle(context, element);
+  PagePopupClient::AddString("},", data);
 }
 
-void PopupMenuImpl::addOption(ItemIterationContext& context, HTMLOptionElement& element)
-{
-    SharedBuffer* data = context.m_buffer;
-    PagePopupClient::addString("{", data);
-    addProperty("label", element.displayLabel(), data);
-    addProperty("value", context.m_listIndex, data);
-    if (!element.title().isEmpty())
-        addProperty("title", element.title(), data);
-    const AtomicString& ariaLabel = element.fastGetAttribute(HTMLNames::aria_labelAttr);
-    if (!ariaLabel.isEmpty())
-        addProperty("ariaLabel", ariaLabel, data);
-    if (element.isDisabledFormControl())
-        addProperty("disabled", true, data);
-    addElementStyle(context, element);
-    PagePopupClient::addString("},", data);
+void PopupMenuImpl::AddOptGroup(ItemIterationContext& context,
+                                HTMLOptGroupElement& element) {
+  SharedBuffer* data = context.buffer_;
+  PagePopupClient::AddString("{\n", data);
+  PagePopupClient::AddString("type: \"optgroup\",\n", data);
+  AddProperty("label", element.GroupLabelText(), data);
+  AddProperty("title", element.title(), data);
+  AddProperty("ariaLabel", element.FastGetAttribute(HTMLNames::aria_labelAttr),
+              data);
+  AddProperty("disabled", element.IsDisabledFormControl(), data);
+  AddElementStyle(context, element);
+  context.StartGroupChildren(*owner_element_->ItemComputedStyle(element));
+  // We should call ItemIterationContext::finishGroupIfNecessary() later.
 }
 
-void PopupMenuImpl::addOptGroup(ItemIterationContext& context, HTMLOptGroupElement& element)
-{
-    SharedBuffer* data = context.m_buffer;
-    PagePopupClient::addString("{\n", data);
-    PagePopupClient::addString("type: \"optgroup\",\n", data);
-    addProperty("label", element.groupLabelText(), data);
-    addProperty("title", element.title(), data);
-    addProperty("ariaLabel", element.fastGetAttribute(HTMLNames::aria_labelAttr), data);
-    addProperty("disabled", element.isDisabledFormControl(), data);
-    addElementStyle(context, element);
-    context.startGroupChildren(*m_ownerElement->itemComputedStyle(element));
-    // We should call ItemIterationContext::finishGroupIfNecessary() later.
+void PopupMenuImpl::AddSeparator(ItemIterationContext& context,
+                                 HTMLHRElement& element) {
+  SharedBuffer* data = context.buffer_;
+  PagePopupClient::AddString("{\n", data);
+  PagePopupClient::AddString("type: \"separator\",\n", data);
+  AddProperty("title", element.title(), data);
+  AddProperty("ariaLabel", element.FastGetAttribute(HTMLNames::aria_labelAttr),
+              data);
+  AddProperty("disabled", element.IsDisabledFormControl(), data);
+  AddElementStyle(context, element);
+  PagePopupClient::AddString("},\n", data);
 }
 
-void PopupMenuImpl::addSeparator(ItemIterationContext& context, HTMLHRElement& element)
-{
-    SharedBuffer* data = context.m_buffer;
-    PagePopupClient::addString("{\n", data);
-    PagePopupClient::addString("type: \"separator\",\n", data);
-    addProperty("title", element.title(), data);
-    addProperty("ariaLabel", element.fastGetAttribute(HTMLNames::aria_labelAttr), data);
-    addProperty("disabled", element.isDisabledFormControl(), data);
-    addElementStyle(context, element);
-    PagePopupClient::addString("},\n", data);
+void PopupMenuImpl::SelectFontsFromOwnerDocument(Document& document) {
+  Document& owner_document = OwnerElement().GetDocument();
+  document.GetStyleEngine().SetFontSelector(PopupMenuCSSFontSelector::Create(
+      &document, owner_document.GetStyleEngine().FontSelector()));
 }
 
-void PopupMenuImpl::selectFontsFromOwnerDocument(Document& document)
-{
-    Document& ownerDocument = ownerElement().document();
-    document.styleEngine().setFontSelector(PopupMenuCSSFontSelector::create(&document, ownerDocument.styleEngine().fontSelector()));
-}
-
-void PopupMenuImpl::setValueAndClosePopup(int numValue, const String& stringValue)
-{
-    DCHECK(m_popup);
-    DCHECK(m_ownerElement);
+void PopupMenuImpl::SetValueAndClosePopup(int num_value,
+                                          const String& string_value) {
+  DCHECK(popup_);
+  DCHECK(owner_element_);
+  if (!string_value.IsEmpty()) {
     bool success;
-    int listIndex = stringValue.toInt(&success);
+    int list_index = string_value.ToInt(&success);
     DCHECK(success);
-    {
-        EventQueueScope scope;
-        m_ownerElement->selectOptionByPopup(listIndex);
-        if (m_popup)
-            m_chromeClient->closePagePopup(m_popup);
-        // 'change' event is dispatched here.  For compatbility with
-        // Angular 1.2, we need to dispatch a change event before
-        // mouseup/click events.
-    }
-    // We dispatch events on the owner element to match the legacy behavior.
-    // Other browsers dispatch click events before and after showing the popup.
-    if (m_ownerElement) {
-        PlatformMouseEvent event;
-        Element* owner = &ownerElement();
-        owner->dispatchMouseEvent(event, EventTypeNames::mouseup);
-        owner->dispatchMouseEvent(event, EventTypeNames::click);
-    }
+
+    EventQueueScope scope;
+    owner_element_->SelectOptionByPopup(list_index);
+    if (popup_)
+      chrome_client_->ClosePagePopup(popup_);
+    // 'change' event is dispatched here.  For compatbility with
+    // Angular 1.2, we need to dispatch a change event before
+    // mouseup/click events.
+  } else {
+    if (popup_)
+      chrome_client_->ClosePagePopup(popup_);
+  }
+  // We dispatch events on the owner element to match the legacy behavior.
+  // Other browsers dispatch click events before and after showing the popup.
+  if (owner_element_) {
+    // TODO(dtapuska): Why is this event positionless?
+    WebMouseEvent event;
+    event.SetFrameScale(1);
+    Element* owner = &OwnerElement();
+    owner->DispatchMouseEvent(event, EventTypeNames::mouseup);
+    owner->DispatchMouseEvent(event, EventTypeNames::click);
+  }
 }
 
-void PopupMenuImpl::setValue(const String& value)
-{
-    DCHECK(m_ownerElement);
-    bool success;
-    int listIndex = value.toInt(&success);
-    DCHECK(success);
-    m_ownerElement->provisionalSelectionChanged(listIndex);
+void PopupMenuImpl::SetValue(const String& value) {
+  DCHECK(owner_element_);
+  bool success;
+  int list_index = value.ToInt(&success);
+  DCHECK(success);
+  owner_element_->ProvisionalSelectionChanged(list_index);
 }
 
-void PopupMenuImpl::didClosePopup()
-{
-    // Clearing m_popup first to prevent from trying to close the popup again.
-    m_popup = nullptr;
-    if (m_ownerElement)
-        m_ownerElement->popupDidHide();
+void PopupMenuImpl::DidClosePopup() {
+  // Clearing m_popup first to prevent from trying to close the popup again.
+  popup_ = nullptr;
+  if (owner_element_)
+    owner_element_->PopupDidHide();
 }
 
-Element& PopupMenuImpl::ownerElement()
-{
-    return *m_ownerElement;
+Element& PopupMenuImpl::OwnerElement() {
+  return *owner_element_;
 }
 
-Locale& PopupMenuImpl::locale()
-{
-    return Locale::defaultLocale();
+Locale& PopupMenuImpl::GetLocale() {
+  return Locale::DefaultLocale();
 }
 
-void PopupMenuImpl::closePopup()
-{
-    if (m_popup)
-        m_chromeClient->closePagePopup(m_popup);
-    if (m_ownerElement)
-        m_ownerElement->popupDidCancel();
+void PopupMenuImpl::ClosePopup() {
+  if (popup_)
+    chrome_client_->ClosePagePopup(popup_);
+  if (owner_element_)
+    owner_element_->PopupDidCancel();
 }
 
-void PopupMenuImpl::dispose()
-{
-    if (m_popup)
-        m_chromeClient->closePagePopup(m_popup);
+void PopupMenuImpl::Dispose() {
+  if (popup_)
+    chrome_client_->ClosePagePopup(popup_);
 }
 
-void PopupMenuImpl::show()
-{
-    DCHECK(!m_popup);
-    m_popup = m_chromeClient->openPagePopup(this);
+void PopupMenuImpl::Show() {
+  DCHECK(!popup_);
+  popup_ = chrome_client_->OpenPagePopup(this);
 }
 
-void PopupMenuImpl::hide()
-{
-    if (m_popup)
-        m_chromeClient->closePagePopup(m_popup);
+void PopupMenuImpl::Hide() {
+  ClosePopup();
 }
 
-void PopupMenuImpl::updateFromElement(UpdateReason)
-{
-    if (m_needsUpdate)
-        return;
-    m_needsUpdate = true;
-    ownerElement().document().postTask(BLINK_FROM_HERE, createSameThreadTask(&PopupMenuImpl::update, wrapPersistent(this)));
+void PopupMenuImpl::UpdateFromElement(UpdateReason) {
+  if (needs_update_)
+    return;
+  needs_update_ = true;
+  TaskRunnerHelper::Get(TaskType::kUserInteraction,
+                        &OwnerElement().GetDocument())
+      ->PostTask(BLINK_FROM_HERE,
+                 WTF::Bind(&PopupMenuImpl::Update, WrapPersistent(this)));
 }
 
-void PopupMenuImpl::update()
-{
-    if (!m_popup || !m_ownerElement)
-        return;
-    ownerElement().document().updateStyleAndLayoutTree();
-    // disconnectClient() might have been called.
-    if (!m_ownerElement)
-        return;
-    m_needsUpdate = false;
+void PopupMenuImpl::Update() {
+  if (!popup_ || !owner_element_)
+    return;
+  OwnerElement().GetDocument().UpdateStyleAndLayoutTree();
+  // disconnectClient() might have been called.
+  if (!owner_element_)
+    return;
+  needs_update_ = false;
 
-    if (!ownerElement().document().frame()->view()->visibleContentRect().intersects(ownerElement().pixelSnappedBoundingBox())) {
-        hide();
-        return;
-    }
+  if (!OwnerElement()
+           .GetDocument()
+           .GetFrame()
+           ->View()
+           ->VisibleContentRect()
+           .Intersects(OwnerElement().PixelSnappedBoundingBox())) {
+    Hide();
+    return;
+  }
 
-    RefPtr<SharedBuffer> data = SharedBuffer::create();
-    PagePopupClient::addString("window.updateData = {\n", data.get());
-    PagePopupClient::addString("type: \"update\",\n", data.get());
-    ItemIterationContext context(*m_ownerElement->computedStyle(), data.get());
-    context.serializeBaseStyle();
-    PagePopupClient::addString("children: [", data.get());
-    const HeapVector<Member<HTMLElement>>& items = m_ownerElement->listItems();
-    for (; context.m_listIndex < items.size(); ++context.m_listIndex) {
-        Element& child = *items[context.m_listIndex];
-        if (!isHTMLOptGroupElement(child.parentNode()))
-            context.finishGroupIfNecessary();
-        if (isHTMLOptionElement(child))
-            addOption(context, toHTMLOptionElement(child));
-        else if (isHTMLOptGroupElement(child))
-            addOptGroup(context, toHTMLOptGroupElement(child));
-        else if (isHTMLHRElement(child))
-            addSeparator(context, toHTMLHRElement(child));
-    }
-    context.finishGroupIfNecessary();
-    PagePopupClient::addString("],\n", data.get());
-    IntRect anchorRectInScreen = m_chromeClient->viewportToScreen(m_ownerElement->elementRectRelativeToViewport(), ownerElement().document().view());
-    addProperty("anchorRectInScreen", anchorRectInScreen, data.get());
-    PagePopupClient::addString("}\n", data.get());
-    m_popup->postMessage(String::fromUTF8(data->data(), data->size()));
+  RefPtr<SharedBuffer> data = SharedBuffer::Create();
+  PagePopupClient::AddString("window.updateData = {\n", data.Get());
+  PagePopupClient::AddString("type: \"update\",\n", data.Get());
+  ItemIterationContext context(*owner_element_->GetComputedStyle(), data.Get());
+  context.SerializeBaseStyle();
+  PagePopupClient::AddString("children: [", data.Get());
+  const HeapVector<Member<HTMLElement>>& items = owner_element_->GetListItems();
+  for (; context.list_index_ < items.size(); ++context.list_index_) {
+    Element& child = *items[context.list_index_];
+    if (!isHTMLOptGroupElement(child.parentNode()))
+      context.FinishGroupIfNecessary();
+    if (isHTMLOptionElement(child))
+      AddOption(context, toHTMLOptionElement(child));
+    else if (isHTMLOptGroupElement(child))
+      AddOptGroup(context, toHTMLOptGroupElement(child));
+    else if (isHTMLHRElement(child))
+      AddSeparator(context, toHTMLHRElement(child));
+  }
+  context.FinishGroupIfNecessary();
+  PagePopupClient::AddString("],\n", data.Get());
+  IntRect anchor_rect_in_screen = chrome_client_->ViewportToScreen(
+      owner_element_->VisibleBoundsInVisualViewport(),
+      OwnerElement().GetDocument().View());
+  AddProperty("anchorRectInScreen", anchor_rect_in_screen, data.Get());
+  PagePopupClient::AddString("}\n", data.Get());
+  popup_->PostMessage(String::FromUTF8(data->Data(), data->size()));
 }
 
-
-void PopupMenuImpl::disconnectClient()
-{
-    m_ownerElement = nullptr;
-    // Cannot be done during finalization, so instead done when the
-    // layout object is destroyed and disconnected.
-    dispose();
+void PopupMenuImpl::DisconnectClient() {
+  owner_element_ = nullptr;
+  // Cannot be done during finalization, so instead done when the
+  // layout object is destroyed and disconnected.
+  Dispose();
 }
 
-} // namespace blink
+}  // namespace blink

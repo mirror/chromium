@@ -10,7 +10,7 @@
 <script>
 
     if (window.internals)
-        window.internals.enableMockSpeechSynthesizer(document);
+        window.internals.enableMockSpeechSynthesizer(window);
 
     description("This tests that the basic mechanisms of speaking text work, including sending the job and receving the callback.");
 
@@ -23,11 +23,13 @@
     var u = new SpeechSynthesisUtterance(" ");
 
     u.onstart = function(event) {
-       shouldBeTrue("event.elapsedTime > 0");
+       shouldBeTrue("event.elapsedTime >= 0");
+       shouldBeTrue("event.elapsedTime < 1000");
        shouldBeTrue("speechSynthesis.speaking");
     }
     u.onend = function(event) {
        shouldBeTrue("event.elapsedTime > 0");
+       shouldBeTrue("event.elapsedTime < 10000");
        shouldBeFalse("speechSynthesis.speaking");
        finishJSTest();
     }

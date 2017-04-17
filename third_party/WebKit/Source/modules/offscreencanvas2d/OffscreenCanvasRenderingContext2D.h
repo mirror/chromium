@@ -13,77 +13,110 @@
 
 namespace blink {
 
-class MODULES_EXPORT OffscreenCanvasRenderingContext2D final : public CanvasRenderingContext, public BaseRenderingContext2D {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(OffscreenCanvasRenderingContext2D);
-public:
-    class Factory : public CanvasRenderingContextFactory {
-    public:
-        Factory() {}
-        ~Factory() override {}
+class MODULES_EXPORT OffscreenCanvasRenderingContext2D final
+    : public CanvasRenderingContext,
+      public BaseRenderingContext2D {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(OffscreenCanvasRenderingContext2D);
 
-        CanvasRenderingContext* create(ScriptState* scriptState, OffscreenCanvas* canvas, const CanvasContextCreationAttributes& attrs) override
-        {
-            return new OffscreenCanvasRenderingContext2D(scriptState, canvas, attrs);
-        }
+ public:
+  class Factory : public CanvasRenderingContextFactory {
+   public:
+    Factory() {}
+    ~Factory() override {}
 
-        CanvasRenderingContext::ContextType getContextType() const override
-        {
-            return CanvasRenderingContext::Context2d;
-        }
-    };
+    CanvasRenderingContext* Create(
+        ScriptState* script_state,
+        OffscreenCanvas* canvas,
+        const CanvasContextCreationAttributes& attrs) override {
+      return new OffscreenCanvasRenderingContext2D(script_state, canvas, attrs);
+    }
 
-    // CanvasRenderingContext implementation
-    ~OffscreenCanvasRenderingContext2D() override;
-    ContextType getContextType() const override { return Context2d; }
-    bool is2d() const override { return true; }
-    void setOffscreenCanvasGetContextResult(OffscreenRenderingContext&) final;
-    void setIsHidden(bool) final { ASSERT_NOT_REACHED(); }
-    void stop() final { ASSERT_NOT_REACHED(); }
-    void setCanvasGetContextResult(RenderingContext&) final {}
-    void clearRect(double x, double y, double width, double height) override { BaseRenderingContext2D::clearRect(x, y, width, height); }
+    CanvasRenderingContext::ContextType GetContextType() const override {
+      return CanvasRenderingContext::kContext2d;
+    }
+  };
 
-    // BaseRenderingContext2D implementation
-    bool originClean() const final;
-    void setOriginTainted() final;
-    bool wouldTaintOrigin(CanvasImageSource*, ExecutionContext*) final;
+  ScriptPromise commit(ScriptState*, ExceptionState&);
 
-    int width() const final;
-    int height() const final;
+  // CanvasRenderingContext implementation
+  ~OffscreenCanvasRenderingContext2D() override;
+  ContextType GetContextType() const override { return kContext2d; }
+  bool Is2d() const override { return true; }
+  bool IsComposited() const override { return false; }
+  bool IsAccelerated() const override;
+  void SetOffscreenCanvasGetContextResult(OffscreenRenderingContext&) final;
+  void SetIsHidden(bool) final { NOTREACHED(); }
+  void Stop() final { NOTREACHED(); }
+  void SetCanvasGetContextResult(RenderingContext&) final {}
+  void clearRect(double x, double y, double width, double height) override {
+    BaseRenderingContext2D::clearRect(x, y, width, height);
+  }
+  PassRefPtr<Image> GetImage(AccelerationHint, SnapshotReason) const final;
+  ImageData* ToImageData(SnapshotReason) override;
+  void Reset() override;
 
-    bool hasImageBuffer() const final;
-    ImageBuffer* imageBuffer() const final;
+  // BaseRenderingContext2D implementation
+  bool OriginClean() const final;
+  void SetOriginTainted() final;
+  bool WouldTaintOrigin(CanvasImageSource*, ExecutionContext*) final;
 
-    bool parseColorOrCurrentColor(Color&, const String& colorString) const final;
+  int Width() const final;
+  int Height() const final;
 
-    SkCanvas* drawingCanvas() const final;
-    SkCanvas* existingDrawingCanvas() const final;
-    void disableDeferral(DisableDeferralReason) final;
+  bool HasImageBuffer() const final;
+  ImageBuffer* GetImageBuffer() const final;
 
-    AffineTransform baseTransform() const final;
-    void didDraw(const SkIRect& dirtyRect) final;
+  bool ParseColorOrCurrentColor(Color&, const String& color_string) const final;
 
-    bool stateHasFilter() final;
-    SkImageFilter* stateGetFilter() final;
-    void snapshotStateForFilter() final { }
+  PaintCanvas* DrawingCanvas() const final;
+  PaintCanvas* ExistingDrawingCanvas() const final;
+  void DisableDeferral(DisableDeferralReason) final;
 
-    void validateStateStack() final;
+  AffineTransform BaseTransform() const final;
+  void DidDraw(const SkIRect& dirty_rect) final;  // overrides
+                                                  // BaseRenderingContext2D and
+                                                  // CanvasRenderingContext
 
-    bool hasAlpha() const override { return m_hasAlpha; }
-    bool isContextLost() const override;
+  bool StateHasFilter() final;
+  sk_sp<SkImageFilter> StateGetFilter() final;
+  void SnapshotStateForFilter() final {}
 
-    ImageBitmap* transferToImageBitmap(ExceptionState&) final;
+  void ValidateStateStack() const final;
 
-protected:
-    OffscreenCanvasRenderingContext2D(ScriptState*, OffscreenCanvas*, const CanvasContextCreationAttributes& attrs);
-    DECLARE_VIRTUAL_TRACE();
+  bool HasAlpha() const final { return CreationAttributes().alpha(); }
+  bool isContextLost() const override;
 
-private:
-    bool m_hasAlpha;
-    bool m_needsMatrixClipRestore = false;
-    std::unique_ptr<ImageBuffer> m_imageBuffer;
+  ImageBitmap* TransferToImageBitmap(ScriptState*) final;
+
+  ColorBehavior DrawImageColorBehavior() const final;
+
+ protected:
+  OffscreenCanvasRenderingContext2D(
+      ScriptState*,
+      OffscreenCanvas*,
+      const CanvasContextCreationAttributes& attrs);
+  DECLARE_VIRTUAL_TRACE();
+
+  virtual void NeedsFinalizeFrame() {
+    CanvasRenderingContext::NeedsFinalizeFrame();
+  }
+
+ private:
+  bool needs_matrix_clip_restore_ = false;
+  std::unique_ptr<ImageBuffer> image_buffer_;
+
+  bool IsPaintable() const final;
+
+  RefPtr<StaticBitmapImage> TransferToStaticBitmapImage();
 };
 
-} // namespace blink
+DEFINE_TYPE_CASTS(OffscreenCanvasRenderingContext2D,
+                  CanvasRenderingContext,
+                  context,
+                  context->Is2d() && context->offscreenCanvas(),
+                  context.Is2d() && context.offscreenCanvas());
 
-#endif // OffscreenCanvasRenderingContext2D_h
+}  // namespace blink
+
+#endif  // OffscreenCanvasRenderingContext2D_h

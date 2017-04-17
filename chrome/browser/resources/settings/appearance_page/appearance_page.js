@@ -21,45 +21,18 @@ Polymer({
 
   properties: {
     /**
-     * The current active route.
+     * Dictionary defining page visibility.
+     * @type {!AppearancePageVisibility}
      */
-    currentRoute: {
-      notify: true,
-      type: Object,
-    },
+    pageVisibility: Object,
 
-    /** @private {!settings.AppearanceBrowserProxy} */
-    browserProxy_: Object,
-
-    /**
-     * Preferences state.
-     */
     prefs: {
       type: Object,
       notify: true,
     },
 
-    /**
-     * @private
-     */
-    allowResetTheme_: {
-      notify: true,
-      type: Boolean,
-      value: false,
-    },
-
-    /**
-     * @private
-     */
-    defaultZoomLevel_: {
-      notify: true,
-      type: Object,
-      value: function() {
-        return {
-          type: chrome.settingsPrivate.PrefType.NUMBER,
-        };
-      },
-    },
+    /** @private */
+    defaultZoom_: Number,
 
     /**
      * List of options for the font size drop-down menu.
@@ -81,43 +54,68 @@ Polymer({
 
     /**
      * List of options for the page zoom drop-down menu.
-     * @type {!DropdownMenuOptionList}
+     * @type {!Array<number>}
      */
-    pageZoomOptions_: {
+    pageZoomLevels_: {
       readOnly: true,
       type: Array,
       value: [
-        {value: 25, name: '25%'},
-        {value: 33, name: '33%'},
-        {value: 50, name: '50%'},
-        {value: 67, name: '67%'},
-        {value: 75, name: '75%'},
-        {value: 90, name: '90%'},
-        {value: 100, name: '100%'},
-        {value: 110, name: '110%'},
-        {value: 125, name: '125%'},
-        {value: 150, name: '150%'},
-        {value: 175, name: '175%'},
-        {value: 200, name: '200%'},
-        {value: 300, name: '300%'},
-        {value: 400, name: '400%'},
-        {value: 500, name: '500%'},
+        // TODO(dbeam): get these dynamically from C++ instead.
+        1 / 4,
+        1 / 3,
+        1 / 2,
+        2 / 3,
+        3 / 4,
+        4 / 5,
+        9 / 10,
+        1,
+        11 / 10,
+        5 / 4,
+        3 / 2,
+        7 / 4,
+        2,
+        5 / 2,
+        3,
+        4,
+        5,
       ],
     },
 
     /** @private */
     themeSublabel_: String,
 
-    /**
-     * Dictionary defining page visibility.
-     * @type {!AppearancePageVisibility}
-     */
-    pageVisibility: Object,
+    /** @private */
+    useSystemTheme_: {
+      type: Boolean,
+      value: false,  // Can only be true on Linux, but value exists everywhere.
+    },
+
+    /** @private {!Map<string, string>} */
+    focusConfig_: {
+      type: Object,
+      value: function() {
+        var map = new Map();
+        map.set(
+            settings.Route.FONTS.path,
+            '#customize-fonts-subpage-trigger .subpage-arrow');
+        return map;
+      },
+    },
   },
 
+  /** @private {?settings.AppearanceBrowserProxy} */
+  browserProxy_: null,
+
+  /** @private {string} */
+  themeUrl_: '',
+
   observers: [
-    'themeChanged_(prefs.extensions.theme.id.value)',
-    'zoomLevelChanged_(defaultZoomLevel_.value)',
+    'themeChanged_(prefs.extensions.theme.id.value, useSystemTheme_)',
+
+// <if expr="is_linux and not chromeos">
+    // NOTE: this pref only exists on Linux.
+    'useSystemThemePrefChanged_(prefs.extensions.theme.use_system.value)',
+// </if>
   ],
 
   created: function() {
@@ -126,54 +124,53 @@ Polymer({
 
   ready: function() {
     this.$.defaultFontSize.menuOptions = this.fontSizeOptions_;
-    this.$.pageZoom.menuOptions = this.pageZoomOptions_;
     // TODO(dschuyler): Look into adding a listener for the
     // default zoom percent.
-    chrome.settingsPrivate.getDefaultZoomPercent(
-        this.zoomPrefChanged_.bind(this));
-  },
-
-  /** @override */
-  attached: function() {
-    // Query the initial state.
-    this.browserProxy_.getResetThemeEnabled().then(
-        this.setResetThemeEnabled.bind(this));
-
-    // Set up the change event listener.
-    cr.addWebUIListener('reset-theme-enabled-changed',
-                        this.setResetThemeEnabled.bind(this));
+    this.browserProxy_.getDefaultZoom().then(function(zoom) {
+      this.defaultZoom_ = zoom;
+    }.bind(this));
   },
 
   /**
+   * @param {number} zoom
+   * @return {number} A zoom easier read by users.
+   * @private
+   */
+  formatZoom_: function(zoom) {
+    return Math.round(zoom * 100);
+  },
+
+  /**
+   * @param {boolean} showHomepage Whether to show home page.
    * @param {boolean} isNtp Whether to use the NTP as the home page.
-   * @param {string} homepage If not using NTP, use this URL.
+   * @param {string} homepageValue If not using NTP, use this URL.
    * @return {string} The sub-label.
    * @private
    */
-  getShowHomeSubLabel_: function(isNtp, homepage) {
+  getShowHomeSubLabel_: function(showHomepage, isNtp, homepageValue) {
+    if (!showHomepage)
+      return this.i18n('homeButtonDisabled');
     if (isNtp)
       return this.i18n('homePageNtp');
-    return homepage || this.i18n('exampleDotCom');
-  },
-
-  /**
-   * @param {boolean} enabled Whether the theme reset is available.
-   */
-  setResetThemeEnabled: function(enabled) {
-    this.allowResetTheme_ = enabled;
+    return homepageValue || this.i18n('customWebAddress');
   },
 
   /** @private */
   onCustomizeFontsTap_: function() {
-    this.$.pages.setSubpageChain(['appearance-fonts']);
+    settings.navigateTo(settings.Route.FONTS);
   },
 
   /** @private */
-  openThemesGallery_: function() {
-    window.open(loadTimeData.getString('themesGalleryUrl'));
+  onDisableExtension_: function() {
+    this.fire('refresh-pref', 'homepage');
   },
 
-<if expr="chromeos">
+  /** @private */
+  onThemesTap_: function() {
+    window.open(this.themeUrl_ || loadTimeData.getString('themesGalleryUrl'));
+  },
+
+  // <if expr="chromeos">
   /**
    * ChromeOS only.
    * @private
@@ -181,50 +178,91 @@ Polymer({
   openWallpaperManager_: function() {
     this.browserProxy_.openWallpaperManager();
   },
-</if>
+  // </if>
 
   /** @private */
-  resetTheme_: function() {
-    this.browserProxy_.resetTheme();
+  onUseDefaultTap_: function() {
+    this.browserProxy_.useDefaultTheme();
   },
 
-  /** @private */
-  showFontsPage_: function() {
-    return this.currentRoute.subpage[0] == 'appearance-fonts';
+  // <if expr="is_linux and not chromeos">
+  /**
+   * @param {boolean} useSystemTheme
+   * @private
+   */
+  useSystemThemePrefChanged_: function(useSystemTheme) {
+    this.useSystemTheme_ = useSystemTheme;
   },
 
   /**
-   * @param {string} themeId The theme ID.
+   * @param {string} themeId
+   * @param {boolean} useSystemTheme
+   * @return {boolean} Whether to show the "USE CLASSIC" button.
    * @private
    */
-  themeChanged_: function(themeId) {
+  showUseClassic_: function(themeId, useSystemTheme) {
+    return !!themeId || useSystemTheme;
+  },
+
+  /**
+   * @param {string} themeId
+   * @param {boolean} useSystemTheme
+   * @return {boolean} Whether to show the "USE GTK+" button.
+   * @private
+   */
+  showUseSystem_: function(themeId, useSystemTheme) {
+    return (!!themeId || !useSystemTheme) && !this.browserProxy_.isSupervised();
+  },
+
+  /**
+   * @param {string} themeId
+   * @param {boolean} useSystemTheme
+   * @return {boolean} Whether to show the secondary area where "USE CLASSIC"
+   *     and "USE GTK+" buttons live.
+   * @private
+   */
+  showThemesSecondary_: function(themeId, useSystemTheme) {
+    return this.showUseClassic_(themeId, useSystemTheme) ||
+           this.showUseSystem_(themeId, useSystemTheme);
+  },
+
+  /** @private */
+  onUseSystemTap_: function() {
+    this.browserProxy_.useSystemTheme();
+  },
+  // </if>
+
+  /**
+   * @param {string} themeId
+   * @param {boolean} useSystemTheme
+   * @private
+   */
+  themeChanged_: function(themeId, useSystemTheme) {
     if (themeId) {
-      chrome.management.get(themeId,
-          function(info) {
-            this.themeSublabel_ = info.name;
-          }.bind(this));
-    } else {
-      this.themeSublabel_ = this.i18n('chooseFromWebStore');
-    }
-  },
+      assert(!useSystemTheme);
 
-  /**
-   * @param {number} percent The integer percentage of the page zoom.
-   * @private
-   */
-  zoomPrefChanged_: function(percent) {
-    this.set('defaultZoomLevel_.value', percent);
-  },
+      this.browserProxy_.getThemeInfo(themeId).then(function(info) {
+        this.themeSublabel_ = info.name;
+      }.bind(this));
 
-  /**
-   * @param {number} percent The integer percentage of the page zoom.
-   * @private
-   */
-  zoomLevelChanged_: function(percent) {
-    // The |percent| may be undefined on startup.
-    if (percent === undefined)
+      this.themeUrl_ = 'https://chrome.google.com/webstore/detail/' + themeId;
       return;
-    chrome.settingsPrivate.setDefaultZoomPercent(percent);
+    }
+
+    var i18nId;
+// <if expr="is_linux and not chromeos">
+    i18nId = useSystemTheme ? 'systemTheme' : 'classicTheme';
+// </if>
+// <if expr="not is_linux or chromeos">
+    i18nId = 'chooseFromWebStore';
+// </if>
+    this.themeSublabel_ = this.i18n(i18nId);
+    this.themeUrl_ = '';
+  },
+
+  /** @private */
+  onZoomLevelChange_: function() {
+    chrome.settingsPrivate.setDefaultZoom(parseFloat(this.$.zoomLevel.value));
   },
 
   /**
@@ -234,5 +272,16 @@ Polymer({
    */
   getFirst_: function(bookmarksBarVisible) {
     return !bookmarksBarVisible ? 'first' : '';
-  }
+  },
+
+  /**
+   * @see content::ZoomValuesEqual().
+   * @param {number} zoom1
+   * @param {number} zoom2
+   * @return {boolean}
+   * @private
+   */
+  zoomValuesEqual_: function(zoom1, zoom2) {
+    return Math.abs(zoom1 - zoom2) <= 0.001;
+  },
 });

@@ -9,10 +9,10 @@
 #include "base/path_service.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
-#include "components/test_runner/test_preferences.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/web_preferences.h"
 #include "content/shell/common/layout_test/layout_test_switches.h"
+#include "content/shell/test_runner/test_preferences.h"
 
 namespace content {
 
@@ -26,7 +26,7 @@ void ExportLayoutTestSpecificPreferences(
   to->editing_behavior = static_cast<EditingBehavior>(from.editing_behavior);
   to->default_font_size = from.default_font_size;
   to->minimum_font_size = from.minimum_font_size;
-  to->default_encoding = from.default_text_encoding_name.utf8().data();
+  to->default_encoding = from.default_text_encoding_name.Utf8().data();
   to->javascript_enabled = from.java_script_enabled;
   to->supports_multiple_windows = from.supports_multiple_windows;
   to->loads_images_automatically = from.loads_images_automatically;
@@ -35,9 +35,6 @@ void ExportLayoutTestSpecificPreferences(
   to->experimental_webgl_enabled = from.experimental_webgl_enabled;
   // experimentalCSSRegionsEnabled is deprecated and ignored.
   to->hyperlink_auditing_enabled = from.hyperlink_auditing_enabled;
-  to->caret_browsing_enabled = from.caret_browsing_enabled;
-  to->allow_displaying_insecure_content =
-      from.allow_display_of_insecure_content;
   to->allow_running_insecure_content = from.allow_running_of_insecure_content;
   to->should_respect_image_orientation = from.should_respect_image_orientation;
   to->allow_file_access_from_file_urls = from.allow_file_access_from_file_urls;
@@ -72,7 +69,6 @@ void ApplyLayoutTestDefaultPreferences(WebPreferences* prefs) {
   prefs->application_cache_enabled = true;
   prefs->tabs_to_links = false;
   prefs->hyperlink_auditing_enabled = false;
-  prefs->allow_displaying_insecure_content = true;
   prefs->allow_running_insecure_content = false;
   prefs->disable_reading_from_canvas = false;
   prefs->strict_mixed_content_checking = false;

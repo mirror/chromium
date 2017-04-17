@@ -14,6 +14,13 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
    */
   var MAX_LOGIN_ATTEMPTS_IN_POD = 3;
 
+  /**
+   * Distance between error bubble and user POD.
+   * @type {number}
+   * @const
+   */
+   var BUBBLE_POD_OFFSET = 4;
+
   return {
     EXTERNAL_API: [
       'loadUsers',
@@ -28,7 +35,9 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
       'showBannerMessage',
       'showUserPodCustomIcon',
       'hideUserPodCustomIcon',
-      'disablePinKeyboardForUser',
+      'setUserPodFingerprintIcon',
+      'removeUserPodFingerprintIcon',
+      'setPinEnabledForUser',
       'setAuthType',
       'setTouchViewState',
       'setPublicSessionDisplayName',
@@ -111,6 +120,8 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
       this.showing_ = true;
       chrome.send('loginUIStateChanged', ['account-picker', true]);
       $('login-header-bar').signinUIState = SIGNIN_UI_STATE.ACCOUNT_PICKER;
+      // Header bar should be always visible on Account Picker screen.
+      Oobe.getInstance().headerHidden = false;
       chrome.send('hideCaptivePortal');
       var podRow = $('pod-row');
       podRow.handleBeforeShow();
@@ -177,40 +188,85 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
           chrome.send('firstIncorrectPasswordAttempt',
               [activatedPod.user.emailAddress]);
         }
-        // We want bubble's arrow to point to the first letter of input.
-        /** @const */ var BUBBLE_OFFSET = 7;
-        /** @const */ var BUBBLE_PADDING = 4;
-        $('bubble').showContentForElement(activatedPod.mainInput,
-                                          cr.ui.Bubble.Attachment.BOTTOM,
-                                          error,
-                                          BUBBLE_OFFSET, BUBBLE_PADDING);
-        // Move error bubble up if it overlaps the shelf.
+        // Update the pod row display if incorrect password.
+        $('pod-row').setFocusedPodErrorDisplay(true);
+
+        /** @const */ var BUBBLE_OFFSET = 25;
+        // -8 = 4(BUBBLE_POD_OFFSET) - 2(bubble margin)
+        //      - 10(internal bubble adjustment)
+        var bubblePositioningPadding = -8;
+
+        var bubbleAnchor;
+        var attachment;
+        if (activatedPod.pinContainer) {
+          // Anchor the bubble to the input field.
+          bubbleAnchor = (
+              activatedPod.getElementsByClassName('auth-container'))[0];
+          if (!bubbleAnchor) {
+            console.error('auth-container not found!');
+            bubbleAnchor = activatedPod.mainInput;
+          }
+          attachment = cr.ui.Bubble.Attachment.RIGHT;
+        } else {
+          // Anchor the bubble to the pod instead of the input.
+          bubbleAnchor = activatedPod;
+          attachment = cr.ui.Bubble.Attachment.BOTTOM;
+        }
+
+        var bubble = $('bubble');
+
+        // Cannot use cr.ui.LoginUITools.get* on bubble until it is attached to
+        // the element. getMaxHeight/Width rely on the correct up/left element
+        // side positioning that doesn't happen until bubble is attached.
         var maxHeight =
-            cr.ui.LoginUITools.getMaxHeightBeforeShelfOverlapping($('bubble'));
-        if (maxHeight < $('bubble').offsetHeight) {
-          $('bubble').showContentForElement(activatedPod.mainInput,
-                                            cr.ui.Bubble.Attachment.TOP,
+            cr.ui.LoginUITools.getMaxHeightBeforeShelfOverlapping(bubbleAnchor)
+          - bubbleAnchor.offsetHeight - BUBBLE_POD_OFFSET;
+        var maxWidth = cr.ui.LoginUITools.getMaxWidthToFit(bubbleAnchor)
+          - bubbleAnchor.offsetWidth - BUBBLE_POD_OFFSET;
+
+        // Change bubble visibility temporary to calculate height.
+        var bubbleVisibility = bubble.style.visibility;
+        bubble.style.visibility = 'hidden';
+        bubble.hidden = false;
+        // Now we need the bubble to have the new content before calculating
+        // size. Undefined |error| == reuse old content.
+        if (error !== undefined)
+          bubble.replaceContent(error);
+
+        // Get bubble size.
+        var bubbleOffsetHeight = parseInt(bubble.offsetHeight);
+        var bubbleOffsetWidth = parseInt(bubble.offsetWidth);
+        // Restore attributes.
+        bubble.style.visibility = bubbleVisibility;
+        bubble.hidden = true;
+
+        if (attachment == cr.ui.Bubble.Attachment.BOTTOM) {
+          // Move error bubble if it overlaps the shelf.
+          if (maxHeight < bubbleOffsetHeight)
+            attachment = cr.ui.Bubble.Attachment.TOP;
+        } else {
+          // Move error bubble if it doesn't fit screen.
+          if (maxWidth < bubbleOffsetWidth) {
+            bubblePositioningPadding = 2;
+            attachment = cr.ui.Bubble.Attachment.LEFT;
+          }
+        }
+        var showBubbleCallback = function() {
+          activatedPod.removeEventListener("transitionend",
+              showBubbleCallback);
+          $('bubble').showContentForElement(bubbleAnchor,
+                                            attachment,
                                             error,
-                                            BUBBLE_OFFSET, BUBBLE_PADDING);
-        }
+                                            BUBBLE_OFFSET,
+                                            bubblePositioningPadding, true);
+        };
+        activatedPod.addEventListener("transitionend",
+                                      showBubbleCallback);
+        ensureTransitionEndEvent(activatedPod);
       }
     },
 
-    /**
-     * Loads the PIN keyboard if any of the users can login with a PIN.
-     * @param {array} users Array of user instances.
-     */
-    loadPinKeyboardIfNeeded_: function(users) {
-      for (var i = 0; i < users.length; ++i) {
-        var user = users[i];
-        if (user.showPin) {
-          showPinKeyboardAsync();
-          return;
-        }
-      }
-    },
-
-    /**
+   /**
      * Loads given users in pod row.
      * @param {array} users Array of user.
      * @param {boolean} showGuest Whether to show guest session button.
@@ -221,8 +277,6 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
       // On Desktop, #login-header-bar has a shadow if there are 8+ profiles.
       if (Oobe.getInstance().displayType == DISPLAY_TYPE.DESKTOP_USER_MANAGER)
         $('login-header-bar').classList.toggle('shadow', users.length > 8);
-
-      this.loadPinKeyboardIfNeeded_(users);
     },
 
     /**
@@ -303,12 +357,12 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
      * Displays a banner containing |message|. If the banner is already present
      * this function updates the message in the banner. This function is used
      * by the chrome.screenlockPrivate.showMessage API.
-     * @param {string} message Text to be displayed
+     * @param {string} message Text to be displayed or empty to hide the banner.
      */
     showBannerMessage: function(message) {
       var banner = $('signin-banner');
       banner.textContent = message;
-      banner.classList.toggle('message-set', true);
+      banner.classList.toggle('message-set', !!message);
     },
 
     /**
@@ -336,6 +390,23 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
     },
 
     /**
+     * Set a fingerprint icon in the user pod of |username|.
+     * @param {string} username Username of the selected user
+     * @param {number} state Fingerprint unlock state
+     */
+    setUserPodFingerprintIcon: function(username, state) {
+      $('pod-row').setUserPodFingerprintIcon(username, state);
+    },
+
+    /**
+     * Removes the fingerprint icon in the user pod of |username|.
+     * @param {string} username Username of the selected user.
+     */
+    removeUserPodFingerprintIcon: function(username) {
+      $('pod-row').removeUserPodFingerprintIcon(username);
+    },
+
+    /**
      * Sets the authentication type used to authenticate the user.
      * @param {string} username Username of selected user
      * @param {number} authType Authentication type, must be a valid value in
@@ -355,11 +426,13 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
     },
 
     /**
-     * Hides the PIN keyboard if it's active.
-     * @param {!user} user The user who can no longer enter a PIN.
+     * Enables or disables the pin keyboard for the given user. This may change
+     * pin keyboard visibility.
+     * @param {!string} user
+     * @param {boolean} enabled
      */
-    disablePinKeyboardForUser: function(user) {
-      $('pod-row').setPinVisibility(user, false);
+    setPinEnabledForUser: function(user, enabled) {
+      $('pod-row').setPinEnabled(user, enabled);
     },
 
     /**

@@ -11,6 +11,7 @@
 #include "base/i18n/rtl.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/user_metrics.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/extensions/extension_action.h"
@@ -20,10 +21,10 @@
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/chrome_pages.h"
-#include "chrome/browser/ui/chrome_style.h"
 #include "chrome/browser/ui/cocoa/browser_window_cocoa.h"
 #include "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/bubble_sync_promo_controller.h"
+#include "chrome/browser/ui/cocoa/chrome_style.h"
 #include "chrome/browser/ui/cocoa/extensions/browser_actions_controller.h"
 #include "chrome/browser/ui/cocoa/hover_close_button.h"
 #include "chrome/browser/ui/cocoa/info_bubble_view.h"
@@ -61,7 +62,6 @@ using extensions::Extension;
 - (const Extension*)extension;
 - (void)windowWillClose:(NSNotification*)notification;
 - (void)windowDidResignKey:(NSNotification*)notification;
-- (void)removePageActionPreviewIfNecessary;
 - (NSPoint)calculateArrowPoint;
 - (NSWindow*)initializeWindow;
 - (int)calculateWindowHeight;
@@ -143,7 +143,6 @@ std::unique_ptr<BubbleUi> ExtensionInstalledBubble::BuildBubbleUi() {
 @synthesize manageShortcutLink = manageShortcutLink_;
 @synthesize promoContainer = promoContainer_;
 @synthesize iconImage = iconImage_;
-@synthesize pageActionPreviewShowing = pageActionPreviewShowing_;
 
 - (id)initWithParentWindow:(NSWindow*)parentWindow
            extensionBubble:(ExtensionInstalledBubble*)extensionBubble {
@@ -155,7 +154,6 @@ std::unique_ptr<BubbleUi> ExtensionInstalledBubble::BuildBubbleUi() {
     browser_ = extensionBubble->browser();
     DCHECK(browser_);
     icon_.reset([skia::SkBitmapToNSImage(extensionBubble->icon()) retain]);
-    pageActionPreviewShowing_ = NO;
 
     type_ = extension->is_app() ? extension_installed_bubble::kApp :
         extension_installed_bubble::kExtension;
@@ -174,7 +172,6 @@ std::unique_ptr<BubbleUi> ExtensionInstalledBubble::BuildBubbleUi() {
 - (void)windowWillClose:(NSNotification*)notification {
   // Turn off page action icon preview when the window closes, unless we
   // already removed it when the window resigned key status.
-  [self removePageActionPreviewIfNecessary];
   browser_ = nullptr;
   [closeButton_ setTrackingEnabled:NO];
   [super windowWillClose:notification];
@@ -186,7 +183,6 @@ std::unique_ptr<BubbleUi> ExtensionInstalledBubble::BuildBubbleUi() {
   // If the browser window is closing, we need to remove the page action
   // immediately, otherwise the closing animation may overlap with
   // browser destruction.
-  [self removePageActionPreviewIfNecessary];
   [super windowDidResignKey:notification];
 }
 
@@ -196,25 +192,6 @@ std::unique_ptr<BubbleUi> ExtensionInstalledBubble::BuildBubbleUi() {
   bool didClose =
       [self bubbleReference]->CloseBubble(BUBBLE_CLOSE_USER_DISMISSED);
   DCHECK(didClose);
-}
-
-// Extracted to a function here so that it can be overridden for unit testing.
-- (void)removePageActionPreviewIfNecessary {
-  if (![self extension] || !pageActionPreviewShowing_)
-    return;
-  ExtensionAction* page_action =
-      extensions::ExtensionActionManager::Get(browser_->profile())->
-      GetPageAction(*[self extension]);
-  if (!page_action)
-    return;
-  pageActionPreviewShowing_ = NO;
-
-  BrowserWindowCocoa* window =
-      static_cast<BrowserWindowCocoa*>(browser_->window());
-  LocationBarViewMac* locationBarView =
-      [window->cocoa_controller() locationBarBridge];
-  locationBarView->SetPreviewEnabledPageAction(page_action,
-                                               false);  // disables preview.
 }
 
 // The extension installed bubble points at the browser action icon or the
@@ -248,30 +225,11 @@ std::unique_ptr<BubbleUi> ExtensionInstalledBubble::BuildBubbleUi() {
   } else {
     DCHECK(installedBubble_);
     switch (installedBubble_->anchor_position()) {
-      case ExtensionInstalledBubble::ANCHOR_BROWSER_ACTION: {
+      case ExtensionInstalledBubble::ANCHOR_ACTION: {
         BrowserActionsController* controller =
             [[window->cocoa_controller() toolbarController]
                 browserActionsController];
         arrowPoint = [controller popupPointForId:[self extension]->id()];
-        break;
-      }
-      case ExtensionInstalledBubble::ANCHOR_PAGE_ACTION: {
-        LocationBarViewMac* locationBarView =
-            [window->cocoa_controller() locationBarBridge];
-
-        ExtensionAction* page_action =
-            extensions::ExtensionActionManager::Get(browser_->profile())->
-            GetPageAction(*[self extension]);
-
-        // Tell the location bar to show a preview of the page action icon,
-        // which would ordinarily only be displayed on a page of the appropriate
-        // type. We remove this preview when the extension installed bubble
-        // closes.
-        locationBarView->SetPreviewEnabledPageAction(page_action, true);
-        pageActionPreviewShowing_ = YES;
-
-        // Find the center of the bottom of the page action icon.
-        arrowPoint = locationBarView->GetPageActionBubblePoint(page_action);
         break;
       }
       case ExtensionInstalledBubble::ANCHOR_OMNIBOX: {
@@ -311,6 +269,11 @@ std::unique_ptr<BubbleUi> ExtensionInstalledBubble::BuildBubbleUi() {
 
   // Find window origin, taking into account bubble size and arrow location.
   [self updateAnchorPosition];
+
+  if (syncPromoController_) {
+    base::RecordAction(base::UserMetricsAction(
+        "Signin_Impression_FromExtensionInstallBubble"));
+  }
   [super showWindow:sender];
 }
 
@@ -322,9 +285,9 @@ std::unique_ptr<BubbleUi> ExtensionInstalledBubble::BuildBubbleUi() {
   if (installedBubble_ &&
       installedBubble_->anchor_position() ==
           ExtensionInstalledBubble::ANCHOR_OMNIBOX) {
-    [self.bubble setArrowLocation:info_bubble::kTopLeft];
+    [self.bubble setArrowLocation:info_bubble::kTopLeading];
   } else {
-    [self.bubble setArrowLocation:info_bubble::kTopRight];
+    [self.bubble setArrowLocation:info_bubble::kTopTrailing];
   }
 
   // Set appropriate icon, resizing if necessary.

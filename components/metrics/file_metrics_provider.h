@@ -13,6 +13,7 @@
 #include "base/files/file_path.h"
 #include "base/gtest_prod_util.h"
 #include "base/memory/weak_ptr.h"
+#include "base/metrics/statistics_recorder.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "components/metrics/metrics_provider.h"
@@ -21,8 +22,6 @@ class PrefRegistrySimple;
 class PrefService;
 
 namespace base {
-class MemoryMappedFile;
-class PersistentMemoryAllocator;
 class TaskRunner;
 }
 
@@ -32,7 +31,8 @@ namespace metrics {
 // Any number of files can be registered and will be polled once per upload
 // cycle (at startup and periodically thereafter -- about every 30 minutes
 // for desktop) for data to send.
-class FileMetricsProvider : public MetricsProvider {
+class FileMetricsProvider : public MetricsProvider,
+                            public base::StatisticsRecorder::HistogramProvider {
  public:
   enum SourceType {
     // "Atomic" files are a collection of histograms that are written
@@ -90,8 +90,9 @@ class FileMetricsProvider : public MetricsProvider {
   // within that directory are used. Because some metadata may need to persist
   // across process restarts, preferences entries are used based on the
   // |prefs_key| name. Call RegisterPrefs() with the same name to create the
-  // necessary keys in advance. Set |prefs_key| empty if no persistence is
-  // required.
+  // necessary keys in advance. Set |prefs_key| empty (nullptr will work) if
+  // no persistence is required. ACTIVE files shouldn't have a pref key as
+  // they update internal state about what has been previously sent.
   void RegisterSource(const base::FilePath& path,
                       SourceType type,
                       SourceAssociation source_association,
@@ -128,6 +129,9 @@ class FileMetricsProvider : public MetricsProvider {
 
     // File could not be opened.
     ACCESS_RESULT_NO_OPEN,
+
+    // File contents were internally deleted.
+    ACCESS_RESULT_MEMORY_DELETED,
 
     ACCESS_RESULT_MAX
   };
@@ -174,9 +178,11 @@ class FileMetricsProvider : public MetricsProvider {
   // metrics::MetricsDataProvider:
   void OnDidCreateMetricsLog() override;
   bool HasInitialStabilityMetrics() override;
-  void MergeHistogramDeltas() override;
   void RecordInitialHistogramSnapshots(
       base::HistogramSnapshotManager* snapshot_manager) override;
+
+  // base::StatisticsRecorder::HistogramProvider:
+  void MergeHistogramDeltas() override;
 
   // A task-runner capable of performing I/O.
   scoped_refptr<base::TaskRunner> task_runner_;

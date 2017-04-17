@@ -14,49 +14,46 @@ const int64_t Manifest::kInvalidOrMissingColor =
     static_cast<int64_t>(std::numeric_limits<int32_t>::max()) + 1;
 const size_t Manifest::kMaxIPCStringLength = 4 * 1024;
 
-Manifest::Icon::Icon() { }
+Manifest::Icon::Icon() = default;
 
 Manifest::Icon::Icon(const Icon& other) = default;
 
-Manifest::Icon::~Icon() {
-}
+Manifest::Icon::~Icon() = default;
 
 bool Manifest::Icon::operator==(const Manifest::Icon& other) const {
   return src == other.src && type == other.type && sizes == other.sizes;
 }
 
-Manifest::RelatedApplication::RelatedApplication() {
-}
+Manifest::ShareTarget::ShareTarget() = default;
 
-Manifest::RelatedApplication::~RelatedApplication() {
-}
+Manifest::ShareTarget::~ShareTarget() = default;
+
+Manifest::RelatedApplication::RelatedApplication() = default;
+
+Manifest::RelatedApplication::~RelatedApplication() = default;
 
 Manifest::Manifest()
-    : display(blink::WebDisplayModeUndefined),
-      orientation(blink::WebScreenOrientationLockDefault),
+    : display(blink::kWebDisplayModeUndefined),
+      orientation(blink::kWebScreenOrientationLockDefault),
       prefer_related_applications(false),
       theme_color(Manifest::kInvalidOrMissingColor),
       background_color(Manifest::kInvalidOrMissingColor) {
+  share_target = base::nullopt;
 }
 
 Manifest::Manifest(const Manifest& other) = default;
 
-Manifest::~Manifest() {
-}
+Manifest::~Manifest() = default;
 
 bool Manifest::IsEmpty() const {
-  return name.is_null() &&
-         short_name.is_null() &&
-         start_url.is_empty() &&
-         display == blink::WebDisplayModeUndefined &&
-         orientation == blink::WebScreenOrientationLockDefault &&
-         icons.empty() &&
-         related_applications.empty() &&
-         !prefer_related_applications &&
+  return name.is_null() && short_name.is_null() && start_url.is_empty() &&
+         display == blink::kWebDisplayModeUndefined &&
+         orientation == blink::kWebScreenOrientationLockDefault &&
+         icons.empty() && !share_target.has_value() &&
+         related_applications.empty() && !prefer_related_applications &&
          theme_color == Manifest::kInvalidOrMissingColor &&
          background_color == Manifest::kInvalidOrMissingColor &&
-         gcm_sender_id.is_null() &&
-         scope.is_empty();
+         gcm_sender_id.is_null() && scope.is_empty();
 }
 
 } // namespace content

@@ -13,6 +13,7 @@
 #include "base/android/jni_string.h"
 #include "base/compiler_specific.h"
 #include "base/logging.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "jni/GCMDriver_jni.h"
 
 using base::android::AppendJavaStringArrayToStringVector;
@@ -20,6 +21,7 @@ using base::android::AttachCurrentThread;
 using base::android::ConvertJavaStringToUTF8;
 using base::android::ConvertUTF8ToJavaString;
 using base::android::JavaByteArrayToByteVector;
+using base::android::JavaParamRef;
 
 namespace gcm {
 
@@ -37,7 +39,7 @@ namespace gcm {
 
 GCMDriverAndroid::~GCMDriverAndroid() {
   JNIEnv* env = AttachCurrentThread();
-  Java_GCMDriver_destroy(env, java_ref_.obj());
+  Java_GCMDriver_destroy(env, java_ref_);
 }
 
 void GCMDriverAndroid::OnRegisterFinished(
@@ -105,7 +107,8 @@ void GCMDriverAndroid::OnMessageReceived(
     message_byte_size += message.raw_data.size();
   }
 
-  recorder_.RecordDataMessageReceived(app_id, message_byte_size);
+  recorder_.RecordDataMessageReceived(app_id, message.sender_id,
+                                      message_byte_size);
 
   DispatchMessage(app_id, message);
 }
@@ -113,6 +116,16 @@ void GCMDriverAndroid::OnMessageReceived(
 // static
 bool GCMDriverAndroid::RegisterJni(JNIEnv* env) {
   return RegisterNativesImpl(env);
+}
+
+void GCMDriverAndroid::ValidateRegistration(
+    const std::string& app_id,
+    const std::vector<std::string>& sender_ids,
+    const std::string& registration_id,
+    const ValidateRegistrationCallback& callback) {
+  // gcm_driver doesn't store registration IDs on Android, so assume it's valid.
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(callback, true /* is_valid */));
 }
 
 void GCMDriverAndroid::OnSignedIn() {
@@ -232,9 +245,8 @@ void GCMDriverAndroid::RegisterImpl(
 
   recorder_.RecordRegistrationSent(app_id);
 
-  Java_GCMDriver_register(env, java_ref_.obj(),
-                          ConvertUTF8ToJavaString(env, app_id).obj(),
-                          ConvertUTF8ToJavaString(env, sender_ids[0]).obj());
+  Java_GCMDriver_register(env, java_ref_, ConvertUTF8ToJavaString(env, app_id),
+                          ConvertUTF8ToJavaString(env, sender_ids[0]));
 }
 
 void GCMDriverAndroid::UnregisterImpl(const std::string& app_id) {
@@ -248,9 +260,9 @@ void GCMDriverAndroid::UnregisterWithSenderIdImpl(
 
   recorder_.RecordUnregistrationSent(app_id);
 
-  Java_GCMDriver_unregister(env, java_ref_.obj(),
-                            ConvertUTF8ToJavaString(env, app_id).obj(),
-                            ConvertUTF8ToJavaString(env, sender_id).obj());
+  Java_GCMDriver_unregister(env, java_ref_,
+                            ConvertUTF8ToJavaString(env, app_id),
+                            ConvertUTF8ToJavaString(env, sender_id));
 }
 
 void GCMDriverAndroid::SendImpl(const std::string& app_id,

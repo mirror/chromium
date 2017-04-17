@@ -24,78 +24,79 @@
 #define HTMLDocument_h
 
 #include "core/dom/Document.h"
-#include "core/fetch/ResourceClient.h"
-#include "wtf/HashCountedSet.h"
+#include "platform/loader/fetch/ResourceClient.h"
+#include "platform/wtf/HashCountedSet.h"
 
 namespace blink {
 
 class HTMLBodyElement;
 
 class CORE_EXPORT HTMLDocument : public Document {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static HTMLDocument* create(const DocumentInit& initializer = DocumentInit())
-    {
-        return new HTMLDocument(initializer);
-    }
-    ~HTMLDocument() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    const AtomicString& bgColor() const;
-    void setBgColor(const AtomicString&);
-    const AtomicString& fgColor() const;
-    void setFgColor(const AtomicString&);
-    const AtomicString& alinkColor() const;
-    void setAlinkColor(const AtomicString&);
-    const AtomicString& linkColor() const;
-    void setLinkColor(const AtomicString&);
-    const AtomicString& vlinkColor() const;
-    void setVlinkColor(const AtomicString&);
+ public:
+  static HTMLDocument* Create(
+      const DocumentInit& initializer = DocumentInit()) {
+    return new HTMLDocument(initializer);
+  }
+  ~HTMLDocument() override;
 
-    void clear() { }
+  const AtomicString& bgColor() const;
+  void setBgColor(const AtomicString&);
+  const AtomicString& fgColor() const;
+  void setFgColor(const AtomicString&);
+  const AtomicString& alinkColor() const;
+  void setAlinkColor(const AtomicString&);
+  const AtomicString& linkColor() const;
+  void setLinkColor(const AtomicString&);
+  const AtomicString& vlinkColor() const;
+  void setVlinkColor(const AtomicString&);
 
-    void captureEvents() { }
-    void releaseEvents() { }
+  void clear() {}
 
-    void addNamedItem(const AtomicString& name);
-    void removeNamedItem(const AtomicString& name);
-    bool hasNamedItem(const AtomicString& name);
+  void captureEvents() {}
+  void releaseEvents() {}
 
-    void addExtraNamedItem(const AtomicString& name);
-    void removeExtraNamedItem(const AtomicString& name);
-    bool hasExtraNamedItem(const AtomicString& name);
+  void AddNamedItem(const AtomicString& name);
+  void RemoveNamedItem(const AtomicString& name);
+  bool HasNamedItem(const AtomicString& name);
 
-    static bool isCaseSensitiveAttribute(const QualifiedName&);
+  void AddExtraNamedItem(const AtomicString& name);
+  void RemoveExtraNamedItem(const AtomicString& name);
+  bool HasExtraNamedItem(const AtomicString& name);
 
-    Document* cloneDocumentWithoutChildren() final;
+  static bool IsCaseSensitiveAttribute(const QualifiedName&);
 
-protected:
-    HTMLDocument(const DocumentInit&, DocumentClassFlags extendedDocumentClasses = DefaultDocumentClass);
+  Document* CloneDocumentWithoutChildren() final;
 
-private:
-    HTMLBodyElement* htmlBodyElement() const;
+ protected:
+  HTMLDocument(
+      const DocumentInit&,
+      DocumentClassFlags extended_document_classes = kDefaultDocumentClass);
 
-    const AtomicString& bodyAttributeValue(const QualifiedName&) const;
-    void setBodyAttribute(const QualifiedName&, const AtomicString&);
+ private:
+  HTMLBodyElement* HtmlBodyElement() const;
 
-    void addItemToMap(HashCountedSet<AtomicString>&, const AtomicString&);
-    void removeItemFromMap(HashCountedSet<AtomicString>&, const AtomicString&);
+  const AtomicString& BodyAttributeValue(const QualifiedName&) const;
+  void SetBodyAttribute(const QualifiedName&, const AtomicString&);
 
-    HashCountedSet<AtomicString> m_namedItemCounts;
-    HashCountedSet<AtomicString> m_extraNamedItemCounts;
+  void AddItemToMap(HashCountedSet<AtomicString>&, const AtomicString&);
+  void RemoveItemFromMap(HashCountedSet<AtomicString>&, const AtomicString&);
+
+  HashCountedSet<AtomicString> named_item_counts_;
+  HashCountedSet<AtomicString> extra_named_item_counts_;
 };
 
-inline bool HTMLDocument::hasNamedItem(const AtomicString& name)
-{
-    return m_namedItemCounts.contains(name);
+inline bool HTMLDocument::HasNamedItem(const AtomicString& name) {
+  return named_item_counts_.Contains(name);
 }
 
-inline bool HTMLDocument::hasExtraNamedItem(const AtomicString& name)
-{
-    return m_extraNamedItemCounts.contains(name);
+inline bool HTMLDocument::HasExtraNamedItem(const AtomicString& name) {
+  return extra_named_item_counts_.Contains(name);
 }
 
 DEFINE_DOCUMENT_TYPE_CASTS(HTMLDocument);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLDocument_h
+#endif  // HTMLDocument_h

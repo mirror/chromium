@@ -5,47 +5,85 @@
 #include "platform/graphics/BitmapImageMetrics.h"
 
 #include "platform/Histogram.h"
-#include "wtf/Threading.h"
-#include "wtf/text/WTFString.h"
+#include "platform/graphics/ColorSpace.h"
+#include "platform/wtf/Threading.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-void BitmapImageMetrics::countDecodedImageType(const String& type)
-{
-    DecodedImageType decodedImageType =
-        type == "jpg"  ? ImageJPEG :
-        type == "png"  ? ImagePNG  :
-        type == "gif"  ? ImageGIF  :
-        type == "webp" ? ImageWebP :
-        type == "ico"  ? ImageICO  :
-        type == "bmp"  ? ImageBMP  : DecodedImageType::ImageUnknown;
+void BitmapImageMetrics::CountDecodedImageType(const String& type) {
+  DecodedImageType decoded_image_type =
+      type == "jpg"
+          ? kImageJPEG
+          : type == "png"
+                ? kImagePNG
+                : type == "gif"
+                      ? kImageGIF
+                      : type == "webp"
+                            ? kImageWebP
+                            : type == "ico"
+                                  ? kImageICO
+                                  : type == "bmp"
+                                        ? kImageBMP
+                                        : DecodedImageType::kImageUnknown;
 
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(EnumerationHistogram, decodedImageTypeHistogram, new EnumerationHistogram("Blink.DecodedImageType", DecodedImageTypeEnumEnd));
-    decodedImageTypeHistogram.count(decodedImageType);
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      EnumerationHistogram, decoded_image_type_histogram,
+      new EnumerationHistogram("Blink.DecodedImageType",
+                               kDecodedImageTypeEnumEnd));
+  decoded_image_type_histogram.Count(decoded_image_type);
 }
 
-void BitmapImageMetrics::countImageOrientation(const ImageOrientationEnum orientation)
-{
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(EnumerationHistogram, orientationHistogram, new EnumerationHistogram("Blink.DecodedImage.Orientation", ImageOrientationEnumEnd));
-    orientationHistogram.count(orientation);
+void BitmapImageMetrics::CountImageOrientation(
+    const ImageOrientationEnum orientation) {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      EnumerationHistogram, orientation_histogram,
+      new EnumerationHistogram("Blink.DecodedImage.Orientation",
+                               kImageOrientationEnumEnd));
+  orientation_histogram.Count(orientation);
 }
 
-void BitmapImageMetrics::countGamma(SkColorSpace* colorSpace)
-{
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(EnumerationHistogram, gammaNamedHistogram, new EnumerationHistogram("Blink.ColorSpace.Destination", GammaEnd));
+void BitmapImageMetrics::CountImageGammaAndGamut(SkColorSpace* color_space) {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      EnumerationHistogram, gamma_named_histogram,
+      new EnumerationHistogram("Blink.ColorSpace.Source", kGammaEnd));
+  gamma_named_histogram.Count(GetColorSpaceGamma(color_space));
 
-    if (colorSpace) {
-        SkColorSpace::GammaNamed skGamma = colorSpace->gammaNamed();
-        Gamma gamma =
-            (SkColorSpace::kLinear_GammaNamed == skGamma)      ? GammaLinear :
-            (SkColorSpace::kSRGB_GammaNamed == skGamma)        ? GammaSRGB :
-            (SkColorSpace::k2Dot2Curve_GammaNamed == skGamma)  ? Gamma2Dot2 :
-            (SkColorSpace::kNonStandard_GammaNamed == skGamma) ? GammaNonStandard :
-            GammaFail;
-        gammaNamedHistogram.count(gamma);
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      EnumerationHistogram, gamut_named_histogram,
+      new EnumerationHistogram("Blink.ColorGamut.Source",
+                               static_cast<int>(ColorSpaceGamut::kEnd)));
+  gamut_named_histogram.Count(
+      static_cast<int>(ColorSpaceUtilities::GetColorSpaceGamut(color_space)));
+}
+
+void BitmapImageMetrics::CountOutputGammaAndGamut(SkColorSpace* color_space) {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      EnumerationHistogram, gamma_named_histogram,
+      new EnumerationHistogram("Blink.ColorSpace.Destination", kGammaEnd));
+  gamma_named_histogram.Count(GetColorSpaceGamma(color_space));
+
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      EnumerationHistogram, gamut_named_histogram,
+      new EnumerationHistogram("Blink.ColorGamut.Destination",
+                               static_cast<int>(ColorSpaceGamut::kEnd)));
+  gamut_named_histogram.Count(
+      static_cast<int>(ColorSpaceUtilities::GetColorSpaceGamut(color_space)));
+}
+
+BitmapImageMetrics::Gamma BitmapImageMetrics::GetColorSpaceGamma(
+    SkColorSpace* color_space) {
+  Gamma gamma = kGammaNull;
+  if (color_space) {
+    if (color_space->gammaCloseToSRGB()) {
+      gamma = kGammaSRGB;
+    } else if (color_space->gammaIsLinear()) {
+      gamma = kGammaLinear;
     } else {
-        gammaNamedHistogram.count(GammaNull);
+      gamma = kGammaNonStandard;
     }
+  }
+  return gamma;
 }
 
-} // namespace blink
+}  // namespace blink

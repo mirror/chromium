@@ -7,31 +7,42 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
+#include "core/css/cssom/CSSUnparsedValue.h"
 
 namespace blink {
 
-class CORE_EXPORT CSSStyleVariableReferenceValue final : public GarbageCollectedFinalized<CSSStyleVariableReferenceValue>, public ScriptWrappable {
-    WTF_MAKE_NONCOPYABLE(CSSStyleVariableReferenceValue);
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    virtual ~CSSStyleVariableReferenceValue() { }
+class CORE_EXPORT CSSStyleVariableReferenceValue final
+    : public GarbageCollectedFinalized<CSSStyleVariableReferenceValue>,
+      public ScriptWrappable {
+  WTF_MAKE_NONCOPYABLE(CSSStyleVariableReferenceValue);
+  DEFINE_WRAPPERTYPEINFO();
 
-    // TODO(anthonyhkf): add fallback: create(variable, fallback)
-    static CSSStyleVariableReferenceValue* create(const String& variable)
-    {
-        return new CSSStyleVariableReferenceValue(variable);
-    }
+ public:
+  virtual ~CSSStyleVariableReferenceValue() {}
 
-    DEFINE_INLINE_TRACE() { }
+  static CSSStyleVariableReferenceValue* Create(
+      const String& variable,
+      const CSSUnparsedValue* fallback) {
+    return new CSSStyleVariableReferenceValue(variable, fallback);
+  }
 
-    const String& variable() const { return m_variable; }
+  const String& variable() const { return variable_; }
 
-protected:
-    CSSStyleVariableReferenceValue(String variable): m_variable(variable) { }
+  CSSUnparsedValue* fallback() {
+    return const_cast<CSSUnparsedValue*>(fallback_.Get());
+  }
 
-    String m_variable;
+  DEFINE_INLINE_TRACE() { visitor->Trace(fallback_); }
+
+ protected:
+  CSSStyleVariableReferenceValue(const String& variable,
+                                 const CSSUnparsedValue* fallback)
+      : variable_(variable), fallback_(fallback) {}
+
+  String variable_;
+  Member<const CSSUnparsedValue> fallback_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSStyleVariableReference_h
+#endif  // CSSStyleVariableReference_h

@@ -10,7 +10,9 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/values.h"
 #include "ios/web/public/web_thread.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -51,7 +53,7 @@ class WebResourceUtilTest : public testing::Test {
     EXPECT_FALSE(error_called_);
 
     web::WebThread::GetBlockingPool()->FlushForTesting();
-    loop_.RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
   }
 
   base::MessageLoop loop_;

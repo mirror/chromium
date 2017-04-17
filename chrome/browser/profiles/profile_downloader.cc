@@ -31,10 +31,10 @@
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_client.h"
 #include "components/signin/core/browser/signin_manager.h"
-#include "components/signin/core/common/profile_management_switches.h"
 #include "content/public/browser/browser_thread.h"
 #include "google_apis/gaia/gaia_constants.h"
 #include "net/base/load_flags.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_status.h"
 #include "skia/ext/image_operations.h"
@@ -193,9 +193,8 @@ void ProfileDownloader::StartFetchingOAuth2AccessToken() {
   Profile* profile = delegate_->GetBrowserProfile();
   OAuth2TokenService::ScopeSet scopes;
   scopes.insert(GaiaConstants::kGoogleUserInfoProfile);
-  // Increase scope to get hd attribute to determine if lock should be enabled.
-  if (switches::IsNewProfileManagement())
-    scopes.insert(GaiaConstants::kGoogleUserInfoEmail);
+  // Required to determine if lock should be enabled.
+  scopes.insert(GaiaConstants::kGoogleUserInfoEmail);
   ProfileOAuth2TokenService* token_service =
       ProfileOAuth2TokenServiceFactory::GetForProfile(profile);
   oauth2_access_token_request_ = token_service->StartRequest(
@@ -237,9 +236,33 @@ void ProfileDownloader::FetchImageData() {
     return;
   }
 
+  // Create traffic annotation tag.
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("signed_in_profile_avatar", R"(
+        semantics {
+          sender: "Profile G+ Image Downloader"
+          description:
+            "Signed in users use their G+ profile image as their Chrome "
+            "profile image, unless they explicitly select otherwise. This "
+            "fetcher uses the sign-in token and the image URL provided by GAIA "
+            "to fetch the image."
+          trigger: "User signs into a Profile."
+          data: "Filename of the png to download and Google OAuth bearer token."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: false
+          setting: "This feature cannot be disabled by settings."
+          policy_exception_justification:
+            "Not implemented, considered not useful as no content is being "
+            "uploaded or saved; this request merely downloads the user's G+ "
+            "profile image."
+        })");
+
   VLOG(1) << "Fetching profile image from " << image_url_with_size;
-  profile_image_fetcher_ = net::URLFetcher::Create(
-      GURL(image_url_with_size), net::URLFetcher::GET, this);
+  profile_image_fetcher_ =
+      net::URLFetcher::Create(GURL(image_url_with_size), net::URLFetcher::GET,
+                              this, traffic_annotation);
   data_use_measurement::DataUseUserData::AttachToFetcher(
       profile_image_fetcher_.get(),
       data_use_measurement::DataUseUserData::PROFILE_DOWNLOADER);

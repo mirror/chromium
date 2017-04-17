@@ -14,10 +14,11 @@
 #include "base/json/json_writer.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
+#include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_prefs.h"
-#include "chrome/browser/extensions/api/file_handlers/app_file_handler_util.h"
 #include "chrome/browser/extensions/api/log_private/filter_handler.h"
 #include "chrome/browser/extensions/api/log_private/log_parser.h"
 #include "chrome/browser/extensions/api/log_private/syslog_parser.h"
@@ -30,10 +31,12 @@
 #include "components/net_log/chrome_net_log.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
+#include "extensions/browser/api/file_handlers/app_file_handler_util.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_function.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/granted_file_entry.h"
+#include "net/log/net_log_entry.h"
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/system_logs/debug_log_writer.h"
@@ -61,11 +64,16 @@ scoped_refptr<base::SequencedTaskRunner> GetSequencedTaskRunner() {
       base::SequencedWorkerPool::BLOCK_SHUTDOWN);
 }
 
+#if DCHECK_IS_ON()
+base::LazyInstance<base::SequenceChecker>::Leaky
+    g_file_resource_sequence_checker = LAZY_INSTANCE_INITIALIZER;
+#endif
+
 // Checks if we are running on sequenced task runner thread.
-bool IsRunningOnSequenceThread() {
-  base::SequencedWorkerPool* pool = content::BrowserThread::GetBlockingPool();
-  return pool->IsRunningSequenceOnCurrentThread(
-      pool->GetNamedSequenceToken(FileResource::kSequenceToken));
+void AssertCurrentlyOnFileResourceSequence() {
+#if DCHECK_IS_ON()
+  DCHECK(g_file_resource_sequence_checker.Get().CalledOnValidSequence());
+#endif
 }
 
 std::unique_ptr<LogParser> CreateLogParser(const std::string& log_type) {
@@ -114,7 +122,7 @@ void CleanUpLeftoverLogs(bool is_primary_profile,
   LOG(WARNING) << "Deleting " << app_logs_dir.value();
   LOG(WARNING) << "Deleting " << logs_dumps.value();
 
-  DCHECK(IsRunningOnSequenceThread());
+  AssertCurrentlyOnFileResourceSequence();
   base::DeleteFile(logs_dumps, true);
 
   // App-specific logs are stored in /home/chronos/user/log/apps directory that
@@ -193,21 +201,15 @@ void LogPrivateAPI::StopAllWatches(const std::string& extension_id,
 
 void LogPrivateAPI::RegisterTempFile(const std::string& owner_extension_id,
                                      const base::FilePath& file_path) {
-  if (!IsRunningOnSequenceThread()) {
-    GetSequencedTaskRunner()->PostTask(
-        FROM_HERE,
-        base::Bind(&LogPrivateAPI::RegisterTempFile,
-                   base::Unretained(this),
-                   owner_extension_id,
-                   file_path));
-    return;
-  }
-
-  log_file_resources_.Add(new FileResource(owner_extension_id, file_path));
+  GetSequencedTaskRunner()->PostTask(
+      FROM_HERE,
+      base::Bind(&LogPrivateAPI::RegisterTempFileOnFileResourceSequence,
+                 base::Unretained(this), owner_extension_id, file_path));
 }
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<LogPrivateAPI> >
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<
+    BrowserContextKeyedAPIFactory<LogPrivateAPI>>::DestructorAtExit g_factory =
+    LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<LogPrivateAPI>*
@@ -215,7 +217,7 @@ LogPrivateAPI::GetFactoryInstance() {
   return g_factory.Pointer();
 }
 
-void LogPrivateAPI::OnAddEntry(const net::NetLog::Entry& entry) {
+void LogPrivateAPI::OnAddEntry(const net::NetLogEntry& entry) {
   // We could receive events on whatever thread they happen to be generated,
   // since we are only interested in network events, we should ignore any
   // other thread than BrowserThread::IO.
@@ -244,22 +246,21 @@ void LogPrivateAPI::PostPendingEntries() {
 void LogPrivateAPI::AddEntriesOnUI(std::unique_ptr<base::ListValue> value) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  for (std::set<std::string>::iterator ix = net_internal_watches_.begin();
-       ix != net_internal_watches_.end(); ++ix) {
+  for (const std::string& extension_id : net_internal_watches_) {
     // Create the event's arguments value.
     std::unique_ptr<base::ListValue> event_args(new base::ListValue());
-    event_args->Append(value->DeepCopy());
+    event_args->Append(value->CreateDeepCopy());
     std::unique_ptr<Event> event(
         new Event(::extensions::events::LOG_PRIVATE_ON_CAPTURED_EVENTS,
                   ::events::kOnCapturedEvents, std::move(event_args)));
     EventRouter::Get(browser_context_)
-        ->DispatchEventToExtension(*ix, std::move(event));
+        ->DispatchEventToExtension(extension_id, std::move(event));
   }
 }
 
 void LogPrivateAPI::CreateTempNetLogFile(const std::string& owner_extension_id,
                                          base::ScopedFILE* file) {
-  DCHECK(IsRunningOnSequenceThread());
+  AssertCurrentlyOnFileResourceSequence();
 
   // Create app-specific subdirectory in session logs folder.
   base::FilePath app_log_dir = GetAppLogDirectory().Append(owner_extension_id);
@@ -278,7 +279,7 @@ void LogPrivateAPI::CreateTempNetLogFile(const std::string& owner_extension_id,
     return;
   }
 
-  RegisterTempFile(owner_extension_id, file_path);
+  RegisterTempFileOnFileResourceSequence(owner_extension_id, file_path);
   return file->reset(file_ptr);
 }
 
@@ -386,6 +387,13 @@ void LogPrivateAPI::Initialize() {
                      ProfileManager::GetPrimaryUserProfile(),
                  GetAppLogDirectory(),
                  GetLogDumpDirectory(browser_context_)));
+}
+
+void LogPrivateAPI::RegisterTempFileOnFileResourceSequence(
+    const std::string& owner_extension_id,
+    const base::FilePath& file_path) {
+  AssertCurrentlyOnFileResourceSequence();
+  log_file_resources_.Add(new FileResource(owner_extension_id, file_path));
 }
 
 void LogPrivateAPI::OnExtensionUnloaded(
@@ -531,14 +539,14 @@ void LogPrivateDumpLogsFunction::OnStoreLogsCompleted(
           log_path,
           false);
 
-  base::DictionaryValue* entry = new base::DictionaryValue();
+  auto entry = base::MakeUnique<base::DictionaryValue>();
   entry->SetString("fileSystemId", file_entry.filesystem_id);
   entry->SetString("baseName", file_entry.registered_name);
   entry->SetString("id", file_entry.id);
   entry->SetBoolean("isDirectory", false);
-  base::ListValue* entry_list = new base::ListValue();
-  entry_list->Append(entry);
-  response->Set("entries", entry_list);
+  auto entry_list = base::MakeUnique<base::ListValue>();
+  entry_list->Append(std::move(entry));
+  response->Set("entries", std::move(entry_list));
   response->SetBoolean("multiple", false);
   SetResult(std::move(response));
   SendResponse(succeeded);

@@ -75,11 +75,11 @@ bool CrashReporterClient::GetDeferredUploadsSupported(
   return false;
 }
 
-bool CrashReporterClient::GetIsPerUserInstall(const base::string16& exe_path) {
+bool CrashReporterClient::GetIsPerUserInstall() {
   return true;
 }
 
-bool CrashReporterClient::GetShouldDumpLargerDumps(bool is_per_user_install) {
+bool CrashReporterClient::GetShouldDumpLargerDumps() {
   return false;
 }
 
@@ -110,8 +110,24 @@ bool CrashReporterClient::GetCrashDumpLocation(base::FilePath* crash_dir) {
   return false;
 }
 
+#if defined(OS_WIN)
+bool CrashReporterClient::GetCrashMetricsLocation(base::string16* crash_dir) {
+#else
+bool CrashReporterClient::GetCrashMetricsLocation(base::FilePath* crash_dir) {
+#endif
+  return false;
+}
+
 size_t CrashReporterClient::RegisterCrashKeys() {
   return 0;
+}
+
+bool CrashReporterClient::UseCrashKeysWhiteList() {
+  return false;
+}
+
+const char* const* CrashReporterClient::GetCrashKeyWhiteList() {
+  return nullptr;
 }
 
 bool CrashReporterClient::IsRunningUnattended() {
@@ -120,6 +136,11 @@ bool CrashReporterClient::IsRunningUnattended() {
 
 bool CrashReporterClient::GetCollectStatsConsent() {
   return false;
+}
+
+bool CrashReporterClient::GetCollectStatsInSample() {
+  // By default, clients don't do sampling, so everything will be "in-sample".
+  return true;
 }
 
 #if defined(OS_WIN) || defined(OS_MACOSX)
@@ -131,6 +152,10 @@ bool CrashReporterClient::ReportingIsEnforcedByPolicy(bool* breakpad_enabled) {
 #if defined(OS_ANDROID)
 int CrashReporterClient::GetAndroidMinidumpDescriptor() {
   return 0;
+}
+
+int CrashReporterClient::GetAndroidCrashSignalFD() {
+  return -1;
 }
 
 bool CrashReporterClient::ShouldEnableBreakpadMicrodumps() {
@@ -145,6 +170,12 @@ bool CrashReporterClient::ShouldEnableBreakpadMicrodumps() {
 #else
   return false;
 #endif
+}
+#endif
+
+#if defined(OS_MACOSX) || defined(OS_WIN)
+bool CrashReporterClient::ShouldMonitorCrashHandlerExpensively() {
+  return false;
 }
 #endif
 

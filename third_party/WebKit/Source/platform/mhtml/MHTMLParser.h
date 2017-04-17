@@ -34,8 +34,8 @@
 #include "platform/SharedBufferChunkReader.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/RefPtr.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Vector.h"
 
 namespace WTF {
 class String;
@@ -48,27 +48,32 @@ class MIMEHeader;
 class SharedBuffer;
 
 class PLATFORM_EXPORT MHTMLParser final {
-    STACK_ALLOCATED();
-public:
-    explicit MHTMLParser(PassRefPtr<SharedBuffer>);
+  STACK_ALLOCATED();
 
-    HeapVector<Member<ArchiveResource>> parseArchive();
+ public:
+  explicit MHTMLParser(PassRefPtr<const SharedBuffer>);
 
-    // Translates |contentIDFromMimeHeader| (of the form "<foo@bar.com>")
-    // into a cid-scheme URI (of the form "cid:foo@bar.com").
-    //
-    // Returns KURL() - an invalid URL - if contentID is invalid.
-    //
-    // See rfc2557 - section 8.3 - "Use of the Content-ID header and CID URLs".
-    static KURL convertContentIDToURI(const String& contentID);
+  HeapVector<Member<ArchiveResource>> ParseArchive();
 
-private:
-    bool parseArchiveWithHeader(MIMEHeader*, HeapVector<Member<ArchiveResource>>&);
-    ArchiveResource* parseNextPart(const MIMEHeader&, const String& endOfPartBoundary, const String& endOfDocumentBoundary, bool& endOfArchiveReached);
+  // Translates |contentIDFromMimeHeader| (of the form "<foo@bar.com>")
+  // into a cid-scheme URI (of the form "cid:foo@bar.com").
+  //
+  // Returns KURL() - an invalid URL - if contentID is invalid.
+  //
+  // See rfc2557 - section 8.3 - "Use of the Content-ID header and CID URLs".
+  static KURL ConvertContentIDToURI(const String& content_id);
 
-    SharedBufferChunkReader m_lineReader;
+ private:
+  bool ParseArchiveWithHeader(MIMEHeader*,
+                              HeapVector<Member<ArchiveResource>>&);
+  ArchiveResource* ParseNextPart(const MIMEHeader&,
+                                 const String& end_of_part_boundary,
+                                 const String& end_of_document_boundary,
+                                 bool& end_of_archive_reached);
+
+  SharedBufferChunkReader line_reader_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

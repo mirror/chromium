@@ -10,24 +10,28 @@
 
 namespace blink {
 
-TransformRecorder::TransformRecorder(GraphicsContext& context, const DisplayItemClient& client, const AffineTransform& transform)
-    : m_context(context)
-    , m_client(client)
-{
-    m_skipRecordingForIdentityTransform = transform.isIdentity();
+TransformRecorder::TransformRecorder(GraphicsContext& context,
+                                     const DisplayItemClient& client,
+                                     const AffineTransform& transform)
+    : context_(context), client_(client) {
+  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled())
+    return;
+  skip_recording_for_identity_transform_ = transform.IsIdentity();
 
-    if (m_skipRecordingForIdentityTransform)
-        return;
+  if (skip_recording_for_identity_transform_)
+    return;
 
-    m_context.getPaintController().createAndAppend<BeginTransformDisplayItem>(m_client, transform);
+  context_.GetPaintController().CreateAndAppend<BeginTransformDisplayItem>(
+      client_, transform);
 }
 
-TransformRecorder::~TransformRecorder()
-{
-    if (m_skipRecordingForIdentityTransform)
-        return;
+TransformRecorder::~TransformRecorder() {
+  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled())
+    return;
+  if (skip_recording_for_identity_transform_)
+    return;
 
-    m_context.getPaintController().endItem<EndTransformDisplayItem>(m_client);
+  context_.GetPaintController().EndItem<EndTransformDisplayItem>(client_);
 }
 
-} // namespace blink
+}  // namespace blink

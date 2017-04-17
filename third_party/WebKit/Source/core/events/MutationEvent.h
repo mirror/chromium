@@ -30,51 +30,63 @@
 namespace blink {
 
 class MutationEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~MutationEvent() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    enum AttrChangeType {
-        MODIFICATION    = 1, // NOLINT
-        ADDITION        = 2, // NOLINT
-        REMOVAL         = 3  // NOLINT
-    };
+ public:
+  ~MutationEvent() override;
 
-    static MutationEvent* create()
-    {
-        return new MutationEvent;
-    }
+  enum AttrChangeType { kModification = 1, kAddition = 2, kRemoval = 3 };
 
-    static MutationEvent* create(
-        const AtomicString& type, bool canBubble, Node* relatedNode = nullptr,
-        const String& prevValue = String(), const String& newValue = String(), const String& attrName = String(), unsigned short attrChange = 0)
-    {
-        return new MutationEvent(type, canBubble, false, relatedNode, prevValue, newValue, attrName, attrChange);
-    }
+  static MutationEvent* Create() { return new MutationEvent; }
 
-    void initMutationEvent(const AtomicString& type, bool canBubble, bool cancelable, Node* relatedNode, const String& prevValue, const String& newValue, const String& attrName, unsigned short attrChange);
+  static MutationEvent* Create(const AtomicString& type,
+                               bool can_bubble,
+                               Node* related_node = nullptr,
+                               const String& prev_value = String(),
+                               const String& new_value = String(),
+                               const String& attr_name = String(),
+                               unsigned short attr_change = 0) {
+    return new MutationEvent(type, can_bubble, false, related_node, prev_value,
+                             new_value, attr_name, attr_change);
+  }
 
-    Node* relatedNode() const { return m_relatedNode.get(); }
-    String prevValue() const { return m_prevValue; }
-    String newValue() const { return m_newValue; }
-    String attrName() const { return m_attrName; }
-    unsigned short attrChange() const { return m_attrChange; }
+  void initMutationEvent(const AtomicString& type,
+                         bool can_bubble,
+                         bool cancelable,
+                         Node* related_node,
+                         const String& prev_value,
+                         const String& new_value,
+                         const String& attr_name,
+                         unsigned short attr_change);
 
-    const AtomicString& interfaceName() const override;
+  Node* relatedNode() const { return related_node_.Get(); }
+  String prevValue() const { return prev_value_; }
+  String newValue() const { return new_value_; }
+  String attrName() const { return attr_name_; }
+  unsigned short attrChange() const { return attr_change_; }
 
-    DECLARE_VIRTUAL_TRACE();
+  const AtomicString& InterfaceName() const override;
 
-private:
-    MutationEvent();
-    MutationEvent(const AtomicString& type, bool canBubble, bool cancelable, Node* relatedNode, const String& prevValue, const String& newValue, const String& attrName, unsigned short attrChange);
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<Node> m_relatedNode;
-    String m_prevValue;
-    String m_newValue;
-    String m_attrName;
-    unsigned short m_attrChange;
+ private:
+  MutationEvent();
+  MutationEvent(const AtomicString& type,
+                bool can_bubble,
+                bool cancelable,
+                Node* related_node,
+                const String& prev_value,
+                const String& new_value,
+                const String& attr_name,
+                unsigned short attr_change);
+
+  Member<Node> related_node_;
+  String prev_value_;
+  String new_value_;
+  String attr_name_;
+  unsigned short attr_change_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MutationEvent_h
+#endif  // MutationEvent_h

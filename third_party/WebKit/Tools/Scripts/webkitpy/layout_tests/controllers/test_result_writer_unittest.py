@@ -30,7 +30,7 @@ import optparse
 import unittest
 
 from webkitpy.common.system.filesystem_mock import MockFileSystem
-from webkitpy.common.system.systemhost_mock import MockSystemHost
+from webkitpy.common.system.system_host_mock import MockSystemHost
 from webkitpy.layout_tests.controllers.test_result_writer import baseline_name
 from webkitpy.layout_tests.controllers.test_result_writer import write_test_result
 from webkitpy.layout_tests.port.driver import DriverOutput
@@ -78,6 +78,19 @@ class TestResultWriterTests(unittest.TestCase):
         failure.reference_filename = 'notfound.html'
         written_files = self.run_test(failures=[failure], files={})
         self.assertEqual(written_files, {})
+
+    def test_reftest_image_missing(self):
+        failure = test_failures.FailureReftestNoImageGenerated()
+        failure.reference_filename = '/src/exists-expected.html'
+        files = {'/src/exists-expected.html': 'yup'}
+        written_files = self.run_test(failures=[failure], files=files)
+        self.assertEqual(written_files, {'/tmp/exists-expected.html': 'yup'})
+
+        failure = test_failures.FailureReftestNoReferenceImageGenerated()
+        failure.reference_filename = '/src/exists-expected.html'
+        files = {'/src/exists-expected.html': 'yup'}
+        written_files = self.run_test(failures=[failure], files=files)
+        self.assertEqual(written_files, {'/tmp/exists-expected.html': 'yup'})
 
     def test_baseline_name(self):
         fs = MockFileSystem()

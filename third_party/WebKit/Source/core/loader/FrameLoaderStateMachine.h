@@ -14,7 +14,8 @@
  *     its contributors may be used to endorse or promote products derived
  *     from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
  * DISCLAIMED. IN NO EVENT SHALL APPLE OR ITS CONTRIBUTORS BE LIABLE FOR ANY
@@ -30,42 +31,44 @@
 #define FrameLoaderStateMachine_h
 
 #include "core/CoreExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-// Encapsulates a state machine for FrameLoader. Note that this is different from FrameState,
-// which stores the state of the current load that FrameLoader is executing.
+// Encapsulates a state machine for FrameLoader. Note that this is different
+// from FrameState, which stores the state of the current load that FrameLoader
+// is executing.
 class CORE_EXPORT FrameLoaderStateMachine {
-    DISALLOW_NEW();
-    WTF_MAKE_NONCOPYABLE(FrameLoaderStateMachine);
-public:
-    FrameLoaderStateMachine();
+  DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(FrameLoaderStateMachine);
 
-    // Once a load has been committed, the state may
-    // alternate between CommittedFirstRealLoad and FirstLayoutDone.
-    // Otherwise, the states only go down the list.
-    enum State {
-        CreatingInitialEmptyDocument,
-        DisplayingInitialEmptyDocument,
-        CommittedFirstRealLoad,
-        CommittedMultipleRealLoads
-    };
+ public:
+  FrameLoaderStateMachine();
 
-    bool committedFirstRealDocumentLoad() const;
-    bool creatingInitialEmptyDocument() const;
-    bool isDisplayingInitialEmptyDocument() const;
-    bool committedMultipleRealLoads() const;
-    void advanceTo(State);
+  // Once a load has been committed, the state may alternate between
+  // CommittedFirstRealLoad and FirstLayoutDone. Otherwise, the states only go
+  // down the list.
+  enum State {
+    kCreatingInitialEmptyDocument,
+    kDisplayingInitialEmptyDocument,
+    kCommittedFirstRealLoad,
+    kCommittedMultipleRealLoads
+  };
 
-    String toString() const;
+  bool CommittedFirstRealDocumentLoad() const;
+  bool CreatingInitialEmptyDocument() const;
+  bool IsDisplayingInitialEmptyDocument() const;
+  bool CommittedMultipleRealLoads() const;
+  void AdvanceTo(State);
 
-private:
-    State m_state;
+  String ToString() const;
+
+ private:
+  State state_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FrameLoaderStateMachine_h
+#endif  // FrameLoaderStateMachine_h

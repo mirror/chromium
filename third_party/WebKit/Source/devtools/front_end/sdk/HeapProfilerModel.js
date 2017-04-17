@@ -1,149 +1,210 @@
 /**
- * @constructor
- * @extends {WebInspector.SDKModel}
- * @param {!WebInspector.Target} target
+ * @unrestricted
  */
-WebInspector.HeapProfilerModel = function(target)
-{
-    WebInspector.SDKModel.call(this, WebInspector.HeapProfilerModel, target);
-    target.registerHeapProfilerDispatcher(new WebInspector.HeapProfilerDispatcher(this));
+SDK.HeapProfilerModel = class extends SDK.SDKModel {
+  /**
+   * @param {!SDK.Target} target
+   */
+  constructor(target) {
+    super(target);
+    target.registerHeapProfilerDispatcher(new SDK.HeapProfilerDispatcher(this));
     this._enabled = false;
     this._heapProfilerAgent = target.heapProfilerAgent();
-}
+    this._runtimeModel = /** @type {!SDK.RuntimeModel} */ (target.model(SDK.RuntimeModel));
+  }
 
-WebInspector.HeapProfilerModel.Events = {
-    HeapStatsUpdate: "HeapStatsUpdate",
-    LastSeenObjectId: "LastSeenObjectId",
-    AddHeapSnapshotChunk: "AddHeapSnapshotChunk",
-    ReportHeapSnapshotProgress: "ReportHeapSnapshotProgress",
-    ResetProfiles: "ResetProfiles"
-}
+  /**
+   * @return {!SDK.DebuggerModel}
+   */
+  debuggerModel() {
+    return this._runtimeModel.debuggerModel();
+  }
 
-WebInspector.HeapProfilerModel.prototype = {
-    enable: function()
-    {
-        if (this._enabled)
-            return;
+  /**
+   * @return {!SDK.RuntimeModel}
+   */
+  runtimeModel() {
+    return this._runtimeModel;
+  }
 
-        this._enabled = true;
-        this._heapProfilerAgent.enable();
-    },
+  enable() {
+    if (this._enabled)
+      return;
 
-    startSampling: function()
-    {
-        var defaultSamplingIntervalInBytes = 16384;
-        this._heapProfilerAgent.startSampling(defaultSamplingIntervalInBytes);
-    },
+    this._enabled = true;
+    this._heapProfilerAgent.enable();
+  }
 
-    /**
-     * @return {!Promise.<?ProfilerAgent.CPUProfile>}
-     */
-    stopSampling: function()
-    {
-        this._isRecording = false;
-        var currentProfile = null;
-        return this._heapProfilerAgent.stopSampling((error, profile) => { currentProfile = !error ? profile : null; })
-            .then(() => currentProfile);
-    },
+  startSampling() {
+    var defaultSamplingIntervalInBytes = 16384;
+    this._heapProfilerAgent.startSampling(defaultSamplingIntervalInBytes);
+  }
 
-    /**
-     * @param {!Array.<number>} samples
-     */
-    heapStatsUpdate: function(samples)
-    {
-        this.dispatchEventToListeners(WebInspector.HeapProfilerModel.Events.HeapStatsUpdate, samples);
-    },
+  /**
+   * @return {!Promise.<?Protocol.HeapProfiler.SamplingHeapProfile>}
+   */
+  stopSampling() {
+    this._isRecording = false;
+    return this._heapProfilerAgent.stopSampling((error, profile) => error ? null : profile);
+  }
 
-    /**
-     * @param {number} lastSeenObjectId
-     * @param {number} timestamp
-     */
-    lastSeenObjectId: function(lastSeenObjectId, timestamp)
-    {
-        this.dispatchEventToListeners(WebInspector.HeapProfilerModel.Events.LastSeenObjectId ,{lastSeenObjectId: lastSeenObjectId, timestamp: timestamp});
-    },
+  /**
+   * @return {!Promise}
+   */
+  collectGarbage() {
+    return this._heapProfilerAgent.collectGarbage();
+  }
 
-    /**
-     * @param {string} chunk
-     */
-    addHeapSnapshotChunk: function(chunk)
-    {
-        this.dispatchEventToListeners(WebInspector.HeapProfilerModel.Events.AddHeapSnapshotChunk, chunk);
-    },
+  /**
+   * @param {string} objectId
+   * @return {!Promise<?string>}
+   */
+  snapshotObjectIdForObjectId(objectId) {
+    return this._heapProfilerAgent.getHeapObjectId(objectId, (error, result) => error ? null : result);
+  }
 
-    /**
-     * @param {number} done
-     * @param {number} total
-     * @param {boolean=} finished
-     */
-    reportHeapSnapshotProgress: function(done, total, finished)
-    {
-        this.dispatchEventToListeners(WebInspector.HeapProfilerModel.Events.ReportHeapSnapshotProgress, {done: done, total: total, finished: finished});
-    },
+  /**
+   * @param {string} snapshotObjectId
+   * @param {string} objectGroupName
+   * @return {!Promise<?SDK.RemoteObject>}
+   */
+  objectForSnapshotObjectId(snapshotObjectId, objectGroupName) {
+    return this._heapProfilerAgent.getObjectByHeapObjectId(snapshotObjectId, objectGroupName, (error, result) => {
+      if (error || !result.type)
+        return null;
+      return this._runtimeModel.createRemoteObject(result);
+    });
+  }
 
-    resetProfiles: function()
-    {
-        this.dispatchEventToListeners(WebInspector.HeapProfilerModel.Events.ResetProfiles);
-    },
+  /**
+   * @param {string} snapshotObjectId
+   * @return {!Promise}
+   */
+  addInspectedHeapObject(snapshotObjectId) {
+    return this._heapProfilerAgent.addInspectedHeapObject(snapshotObjectId);
+  }
 
-    __proto__: WebInspector.SDKModel.prototype
-}
+  /**
+   * @param {boolean} reportProgress
+   * @return {!Promise<boolean>}
+   */
+  takeHeapSnapshot(reportProgress) {
+    return this._heapProfilerAgent.takeHeapSnapshot(reportProgress, error => !error);
+  }
 
+  /**
+   * @param {boolean} recordAllocationStacks
+   * @return {!Promise}
+   */
+  startTrackingHeapObjects(recordAllocationStacks) {
+    return this._heapProfilerAgent.startTrackingHeapObjects(recordAllocationStacks);
+  }
+
+  /**
+   * @param {boolean} reportProgress
+   * @return {!Promise<boolean>}
+   */
+  stopTrackingHeapObjects(reportProgress) {
+    return this._heapProfilerAgent.stopTrackingHeapObjects(reportProgress, error => !error);
+  }
+
+  /**
+   * @param {!Array.<number>} samples
+   */
+  heapStatsUpdate(samples) {
+    this.dispatchEventToListeners(SDK.HeapProfilerModel.Events.HeapStatsUpdate, samples);
+  }
+
+  /**
+   * @param {number} lastSeenObjectId
+   * @param {number} timestamp
+   */
+  lastSeenObjectId(lastSeenObjectId, timestamp) {
+    this.dispatchEventToListeners(
+        SDK.HeapProfilerModel.Events.LastSeenObjectId, {lastSeenObjectId: lastSeenObjectId, timestamp: timestamp});
+  }
+
+  /**
+   * @param {string} chunk
+   */
+  addHeapSnapshotChunk(chunk) {
+    this.dispatchEventToListeners(SDK.HeapProfilerModel.Events.AddHeapSnapshotChunk, chunk);
+  }
+
+  /**
+   * @param {number} done
+   * @param {number} total
+   * @param {boolean=} finished
+   */
+  reportHeapSnapshotProgress(done, total, finished) {
+    this.dispatchEventToListeners(
+        SDK.HeapProfilerModel.Events.ReportHeapSnapshotProgress, {done: done, total: total, finished: finished});
+  }
+
+  resetProfiles() {
+    this.dispatchEventToListeners(SDK.HeapProfilerModel.Events.ResetProfiles, this);
+  }
+};
+
+SDK.SDKModel.register(SDK.HeapProfilerModel, SDK.Target.Capability.JS, false);
+
+/** @enum {symbol} */
+SDK.HeapProfilerModel.Events = {
+  HeapStatsUpdate: Symbol('HeapStatsUpdate'),
+  LastSeenObjectId: Symbol('LastSeenObjectId'),
+  AddHeapSnapshotChunk: Symbol('AddHeapSnapshotChunk'),
+  ReportHeapSnapshotProgress: Symbol('ReportHeapSnapshotProgress'),
+  ResetProfiles: Symbol('ResetProfiles')
+};
 
 /**
- * @constructor
- * @implements {HeapProfilerAgent.Dispatcher}
+ * @implements {Protocol.HeapProfilerDispatcher}
+ * @unrestricted
  */
-WebInspector.HeapProfilerDispatcher = function(model)
-{
+SDK.HeapProfilerDispatcher = class {
+  constructor(model) {
     this._heapProfilerModel = model;
-}
+  }
 
-WebInspector.HeapProfilerDispatcher.prototype = {
-    /**
-     * @override
-     * @param {!Array.<number>} samples
-     */
-    heapStatsUpdate: function(samples)
-    {
-        this._heapProfilerModel.heapStatsUpdate(samples);
-    },
+  /**
+   * @override
+   * @param {!Array.<number>} samples
+   */
+  heapStatsUpdate(samples) {
+    this._heapProfilerModel.heapStatsUpdate(samples);
+  }
 
-    /**
-     * @override
-     * @param {number} lastSeenObjectId
-     * @param {number} timestamp
-     */
-    lastSeenObjectId: function(lastSeenObjectId, timestamp)
-    {
-        this._heapProfilerModel.lastSeenObjectId(lastSeenObjectId, timestamp);
-    },
+  /**
+   * @override
+   * @param {number} lastSeenObjectId
+   * @param {number} timestamp
+   */
+  lastSeenObjectId(lastSeenObjectId, timestamp) {
+    this._heapProfilerModel.lastSeenObjectId(lastSeenObjectId, timestamp);
+  }
 
-    /**
-     * @override
-     * @param {string} chunk
-     */
-    addHeapSnapshotChunk: function(chunk)
-    {
-        this._heapProfilerModel.addHeapSnapshotChunk(chunk);
-    },
+  /**
+   * @override
+   * @param {string} chunk
+   */
+  addHeapSnapshotChunk(chunk) {
+    this._heapProfilerModel.addHeapSnapshotChunk(chunk);
+  }
 
-    /**
-     * @override
-     * @param {number} done
-     * @param {number} total
-     * @param {boolean=} finished
-     */
-    reportHeapSnapshotProgress: function(done, total, finished)
-    {
-        this._heapProfilerModel.reportHeapSnapshotProgress(done, total, finished);
-    },
+  /**
+   * @override
+   * @param {number} done
+   * @param {number} total
+   * @param {boolean=} finished
+   */
+  reportHeapSnapshotProgress(done, total, finished) {
+    this._heapProfilerModel.reportHeapSnapshotProgress(done, total, finished);
+  }
 
-    /**
-     * @override
-     */
-    resetProfiles: function()
-    {
-        this._heapProfilerModel.resetProfiles();
-    }
-}
+  /**
+   * @override
+   */
+  resetProfiles() {
+    this._heapProfilerModel.resetProfiles();
+  }
+};

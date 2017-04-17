@@ -146,6 +146,14 @@ public class ContextualSearchUma {
     private static final int RESULTS_NOT_SEEN_FROM_LONG_PRESS = 3;
     private static final int RESULTS_BY_GESTURE_BOUNDARY = 4;
 
+    // Constants used to log UMA "enum" histograms with details about whether search results
+    // were seen, and whether any existing tap suppression heuristics were satisfied.
+    private static final int RESULTS_SEEN_SUPPRESSION_HEURSTIC_SATISFIED = 0;
+    private static final int RESULTS_NOT_SEEN_SUPPRESSION_HEURSTIC_SATISFIED = 1;
+    private static final int RESULTS_SEEN_SUPPRESSION_HEURSTIC_NOT_SATISFIED = 2;
+    private static final int RESULTS_NOT_SEEN_SUPPRESSION_HEURSTIC_NOT_SATISFIED = 3;
+    private static final int RESULTS_SEEN_SUPPRESSION_BOUNDARY = 4;
+
     // Constants used to log UMA "enum" histograms with details about the Peek Promo Outcome.
     private static final int PEEK_PROMO_OUTCOME_SEEN_OPENED = 0;
     private static final int PEEK_PROMO_OUTCOME_SEEN_NOT_OPENED = 1;
@@ -163,12 +171,6 @@ public class ContextualSearchUma {
     private static final int PROMO_UNDECIDED_FROM_LONG_PRESS = 5;
     private static final int PROMO_BY_GESTURE_BOUNDARY = 6;
 
-    // Constants used to log UMA "enum" histograms with summary counts for SERP loading times.
-    private static final int PREFETCHED_PARIALLY_LOADED = 0;
-    private static final int PREFETCHED_FULLY_LOADED = 1;
-    private static final int NOT_PREFETCHED = 2;
-    private static final int PREFETCH_BOUNDARY = 3;
-
     // Constants used to log UMA "enum" histograms for HTTP / HTTPS.
     private static final int PROTOCOL_IS_HTTP = 0;
     private static final int PROTOCOL_NOT_HTTP = 1;
@@ -179,33 +181,10 @@ public class ContextualSearchUma {
     private static final int RESOLVED_MULTI_WORD = 1;
     private static final int RESOLVED_BOUNDARY = 2;
 
-    // Constants used to log UMA "enum" histograms for partially / fully loaded.
-    private static final int PARTIALLY_LOADED = 0;
-    private static final int FULLY_LOADED = 1;
-    private static final int LOADED_BOUNDARY = 2;
-
     // Constants used to log UMA "enum" histograms for triggering the Translate Onebox.
     private static final int DID_FORCE_TRANSLATE = 0;
     private static final int WOULD_FORCE_TRANSLATE = 1;
     private static final int FORCE_TRANSLATE_BOUNDARY = 2;
-
-    // Constants used to log UMA "enum" histograms with details about whether the search
-    // provider sprite icon was animated, whether search results were seen and the triggering
-    // gesture. All new values should be inserted right before ICON_SPRITE_BOUNDARY.
-    private static final int ICON_SPRITE_ANIMATED_RESULTS_SEEN_FROM_TAP = 0;
-    private static final int ICON_SPRITE_ANIMATED_RESULTS_NOT_SEEN_FROM_TAP = 1;
-    private static final int ICON_SPRITE_NOT_ANIMATED_RESULTS_SEEN_FROM_TAP = 2;
-    private static final int ICON_SPRITE_NOT_ANIMATED_RESULTS_NOT_SEEN_FROM_TAP = 3;
-    private static final int ICON_SPRITE_ANIMATED_RESULTS_SEEN_FROM_LONG_PRESS = 4;
-    private static final int ICON_SPRITE_ANIMATED_RESULTS_NOT_SEEN_FROM_LONG_PRESS = 5;
-    private static final int ICON_SPRITE_NOT_ANIMATED_RESULTS_SEEN_FROM_LONG_PRESS = 6;
-    private static final int ICON_SPRITE_NOT_ANIMATED_RESULTS_NOT_SEEN_FROM_LONG_PRESS = 7;
-    private static final int ICON_SPRITE_BOUNDARY = 8;
-
-    // Constants used to log UMA "enum" histograms for any kind of Tap suppression.
-    private static final int TAP_SUPPRESSED = 0;
-    private static final int NOT_TAP_SUPPRESSED = 1;
-    private static final int TAP_SUPPRESSED_BOUNDARY = 2;
 
     // Constants used to log UMA "enum" histograms for Quick Answers.
     private static final int QUICK_ANSWER_ACTIVATED_WAS_AN_ANSWER_SEEN = 0;
@@ -226,6 +205,12 @@ public class ContextualSearchUma {
     private static final int NO_BAR_OVERLAP_RESULTS_SEEN_FROM_LONG_PRESS = 6;
     private static final int NO_BAR_OVERLAP_RESULTS_NOT_SEEN_FROM_LONG_PRESS = 7;
     private static final int BAR_OVERLAP_RESULTS_BOUNDARY = 8;
+
+    // Constants for quick action intent resolution histogram.
+    private static final int QUICK_ACTION_RESOLVE_FAILED = 0;
+    private static final int QUICK_ACTION_RESOLVE_SINGLE = 1;
+    private static final int QUICK_ACTION_RESOLVE_MULTIPLE = 2;
+    private static final int QUICK_ACTION_RESOLVE_BOUNDARY = 3;
 
     /**
      * Key used in maps from {state, reason} to state entry (exit) logging code.
@@ -251,47 +236,6 @@ public class ContextualSearchUma {
             }
             StateChangeKey other = (StateChangeKey) obj;
             return mState.equals(other.mState) && mReason.equals(other.mReason);
-        }
-
-        @Override
-        public int hashCode() {
-            return mHashCode;
-        }
-    }
-
-    static class IconSpriteAnimationKey {
-        final boolean mWasIconSpriteAnimated;
-        final boolean mWasPanelSeen;
-        final boolean mWasTap;
-        final int mHashCode;
-
-        IconSpriteAnimationKey(boolean wasIconSpriteAnimated, boolean wasPanelSeen,
-                boolean wasTap) {
-            mWasIconSpriteAnimated = wasIconSpriteAnimated;
-            mWasPanelSeen = wasPanelSeen;
-            mWasTap = wasTap;
-
-            // HashCode logic generated by Eclipse.
-            final int prime = 31;
-            int result = 1;
-            result = prime * result + (mWasIconSpriteAnimated ? 1231 : 1237);
-            result = prime * result + (mWasPanelSeen ? 1231 : 1237);
-            result = prime * result + (mWasTap ? 1231 : 1237);
-            mHashCode = result;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (!(obj instanceof IconSpriteAnimationKey)) {
-                return false;
-            }
-            if (obj == this) {
-                return true;
-            }
-            IconSpriteAnimationKey other = (IconSpriteAnimationKey) obj;
-            return other.mWasIconSpriteAnimated == mWasIconSpriteAnimated
-                    && other.mWasPanelSeen == mWasPanelSeen
-                    && other.mWasTap == mWasTap;
         }
 
         @Override
@@ -512,29 +456,6 @@ public class ContextualSearchUma {
         PROMO_BY_GESTURE_CODES = Collections.unmodifiableMap(codes);
     }
 
-    // Icon sprite animation code mapped: logged when ending a contextual search.
-    private static final Map<IconSpriteAnimationKey, Integer> ICON_SPRITE_ANIMATION_CODES;
-    static {
-        Map<IconSpriteAnimationKey, Integer> codes = new HashMap<IconSpriteAnimationKey, Integer>();
-        codes.put(new IconSpriteAnimationKey(true, true, true),
-                ICON_SPRITE_ANIMATED_RESULTS_SEEN_FROM_TAP);
-        codes.put(new IconSpriteAnimationKey(true, false, true),
-                ICON_SPRITE_ANIMATED_RESULTS_NOT_SEEN_FROM_TAP);
-        codes.put(new IconSpriteAnimationKey(false, true, true),
-                ICON_SPRITE_NOT_ANIMATED_RESULTS_SEEN_FROM_TAP);
-        codes.put(new IconSpriteAnimationKey(false, false, true),
-                ICON_SPRITE_NOT_ANIMATED_RESULTS_NOT_SEEN_FROM_TAP);
-        codes.put(new IconSpriteAnimationKey(true, true, false),
-                ICON_SPRITE_ANIMATED_RESULTS_SEEN_FROM_LONG_PRESS);
-        codes.put(new IconSpriteAnimationKey(true, false, false),
-                ICON_SPRITE_ANIMATED_RESULTS_NOT_SEEN_FROM_LONG_PRESS);
-        codes.put(new IconSpriteAnimationKey(false, true, false),
-                ICON_SPRITE_NOT_ANIMATED_RESULTS_SEEN_FROM_LONG_PRESS);
-        codes.put(new IconSpriteAnimationKey(false, false, false),
-                ICON_SPRITE_NOT_ANIMATED_RESULTS_NOT_SEEN_FROM_LONG_PRESS);
-        ICON_SPRITE_ANIMATION_CODES = Collections.unmodifiableMap(codes);
-    }
-
     /**
      * Logs the state of the Contextual Search preference. This function should be called if the
      * Contextual Search feature is active, and will track the different preference settings
@@ -718,30 +639,6 @@ public class ContextualSearchUma {
     }
 
     /**
-     * Log the duration of finishing loading the SERP after the panel is opened.
-     * @param wasPrefetch Whether the request was prefetch-enabled or not.
-     * @param durationMs The duration of loading the SERP till completely loaded, in milliseconds.
-     *        Note that this value will be 0 when the SERP is prefetched and the user waits a
-     *        while before opening the panel.
-     */
-    public static void logSearchPanelLoadDuration(boolean wasPrefetch, long durationMs) {
-        if (wasPrefetch) {
-            RecordHistogram.recordMediumTimesHistogram("Search.ContextualSearchDurationPrefetched",
-                    durationMs, TimeUnit.MILLISECONDS);
-        } else {
-            RecordHistogram.recordMediumTimesHistogram(
-                    "Search.ContextualSearchDurationNonPrefetched", durationMs,
-                    TimeUnit.MILLISECONDS);
-        }
-
-       // Also record a summary histogram with counts for each possibility.
-        int code = !wasPrefetch ? NOT_PREFETCHED
-                : (durationMs == 0 ? PREFETCHED_FULLY_LOADED : PREFETCHED_PARIALLY_LOADED);
-        RecordHistogram.recordEnumeratedHistogram("Search.ContextualSearchPrefetchSummary",
-                code, PREFETCH_BOUNDARY);
-    }
-
-    /**
      * Logs the duration from starting a search until the Search Term is resolved.
      * @param durationMs The duration to record.
      */
@@ -846,8 +743,32 @@ public class ContextualSearchUma {
      * @param wasSuppressed Whether showing the UX was suppressed.
      */
     public static void logBarOverlapSuppression(boolean wasSuppressed) {
-        RecordHistogram.recordEnumeratedHistogram("Search.ContextualSearchBarOverlap",
-                wasSuppressed ? TAP_SUPPRESSED : NOT_TAP_SUPPRESSED, TAP_SUPPRESSED_BOUNDARY);
+        RecordHistogram.recordBooleanHistogram("Search.ContextualSearchBarOverlap", wasSuppressed);
+    }
+
+    /**
+     * Logs the length of the selection in two histograms, one when results were seen and one when
+     * results were not seen.
+     * @param wasPanelSeen Whether the panel was seen.
+     * @param selectionLength The length of the triggering selection.
+     */
+    public static void logSelectionLengthResultsSeen(boolean wasPanelSeen, int selectionLength) {
+        if (wasPanelSeen) {
+            RecordHistogram.recordSparseSlowlyHistogram(
+                    "Search.ContextualSearchSelectionLengthSeen", selectionLength);
+        } else {
+            RecordHistogram.recordSparseSlowlyHistogram(
+                    "Search.ContextualSearchSelectionLengthNotSeen", selectionLength);
+        }
+    }
+
+    /**
+     * Log whether the UX was suppressed due to the selection length.
+     * @param wasSuppressed Whether showing the UX was suppressed due to selection length.
+     */
+    public static void logSelectionLengthSuppression(boolean wasSuppressed) {
+        RecordHistogram.recordBooleanHistogram(
+                "Search.ContextualSearchSelectionLengthSuppression", wasSuppressed);
     }
 
     /**
@@ -875,8 +796,8 @@ public class ContextualSearchUma {
      * @param wasSuppressed Whether showing the UX was suppressed.
      */
     public static void logScreenTopTapSuppression(boolean wasSuppressed) {
-        RecordHistogram.recordEnumeratedHistogram("Search.ContextualSearchScreenTopSuppressed",
-                wasSuppressed ? TAP_SUPPRESSED : NOT_TAP_SUPPRESSED, TAP_SUPPRESSED_BOUNDARY);
+        RecordHistogram.recordBooleanHistogram(
+                "Search.ContextualSearchScreenTopSuppressed", wasSuppressed);
     }
 
     /**
@@ -898,19 +819,48 @@ public class ContextualSearchUma {
     }
 
     /**
-     * Logs whether search results were seen, whether the search provider icon sprite was animated
-     * when the panel first appeared, and the triggering gesture.
-     * @param wasIconSpriteAnimated Whether the search provider icon sprite was animated when the
-     *                              the panel first appeared.
-     * @param wasPanelSeen Whether the panel was seen.
-     * @param wasTap Whether the gesture that originally caused the panel to show was a Tap.
+     * Logs whether results were seen when the selected text consisted of all capital letters.
+     * @param wasSearchContentViewSeen If the panel was opened.
      */
-    public static void logIconSpriteAnimated(boolean wasIconSpriteAnimated, boolean wasPanelSeen,
-            boolean wasTap) {
-        RecordHistogram.recordEnumeratedHistogram("Search.ContextualSearchIconSpriteAnimated",
-                ICON_SPRITE_ANIMATION_CODES.get(new IconSpriteAnimationKey(wasIconSpriteAnimated,
-                        wasPanelSeen, wasTap)),
-                ICON_SPRITE_BOUNDARY);
+    public static void logAllCapsResultsSeen(boolean wasSearchContentViewSeen) {
+        RecordHistogram.recordEnumeratedHistogram("Search.ContextualSearchAllCapsResultsSeen",
+                wasSearchContentViewSeen ? RESULTS_SEEN : RESULTS_NOT_SEEN,
+                RESULTS_SEEN_BOUNDARY);
+    }
+
+    /**
+     * Logs whether results were seen when the selected text started with a capital letter but was
+     * not all capital letters.
+     * @param wasSearchContentViewSeen If the panel was opened.
+     */
+    public static void logStartedWithCapitalResultsSeen(boolean wasSearchContentViewSeen) {
+        RecordHistogram.recordEnumeratedHistogram(
+                "Search.ContextualSearchStartedWithCapitalResultsSeen",
+                wasSearchContentViewSeen ? RESULTS_SEEN : RESULTS_NOT_SEEN,
+                RESULTS_SEEN_BOUNDARY);
+    }
+
+    /**
+     * Logs whether results were seen and whether any tap suppression heuristics were satisfied.
+     * @param wasSearchContentViewSeen If the panel was opened.
+     * @param wasAnySuppressionHeuristicSatisfied Whether any of the implemented suppression
+     *                                            heuristics were satisfied.
+     */
+    public static void logAnyTapSuppressionHeuristicSatisfied(boolean wasSearchContentViewSeen,
+            boolean wasAnySuppressionHeuristicSatisfied) {
+        int code;
+        if (wasAnySuppressionHeuristicSatisfied) {
+            code = wasSearchContentViewSeen ? RESULTS_SEEN_SUPPRESSION_HEURSTIC_SATISFIED
+                    : RESULTS_NOT_SEEN_SUPPRESSION_HEURSTIC_SATISFIED;
+        } else {
+            code = wasSearchContentViewSeen ? RESULTS_SEEN_SUPPRESSION_HEURSTIC_NOT_SATISFIED
+                    : RESULTS_NOT_SEEN_SUPPRESSION_HEURSTIC_NOT_SATISFIED;
+        }
+
+        RecordHistogram.recordEnumeratedHistogram(
+                "Search.ContextualSearchTapSuppressionSeen.AnyHeuristicSatisfied",
+                code,
+                RESULTS_SEEN_SUPPRESSION_BOUNDARY);
     }
 
     /**
@@ -953,35 +903,30 @@ public class ContextualSearchUma {
     }
 
     /**
-     * Logs whether the SERP was fully loaded when an opened panel was closed.
-     * @param fullyLoaded Whether the SERP had finished loading before the panel was closed.
-     */
-    public static void logSerpLoadedOnClose(boolean fullyLoaded) {
-        RecordHistogram.recordEnumeratedHistogram("Search.ContextualSearchSerpLoadedOnClose",
-                fullyLoaded ? FULLY_LOADED : PARTIALLY_LOADED, LOADED_BOUNDARY);
-    }
-
-    /**
-     * Logs the duration since a recent scroll.
-     * @param durationSinceRecentScrollMs The amount of time since the most recent scroll.
-     * @param wasSearchContentViewSeen If the panel was opened.
-     */
-    public static void logRecentScrollDuration(
-            int durationSinceRecentScrollMs, boolean wasSearchContentViewSeen) {
-        String histogram = wasSearchContentViewSeen ? "Search.ContextualSearchRecentScrollSeen"
-                                                    : "Search.ContextualSearchRecentScrollNotSeen";
-        if (durationSinceRecentScrollMs < 1000) {
-            RecordHistogram.recordCount1000Histogram(histogram, durationSinceRecentScrollMs);
-        }
-    }
-
-    /**
      * Log whether the UX was suppressed by a recent scroll.
      * @param wasSuppressed Whether showing the UX was suppressed by a recent scroll.
      */
     public static void logRecentScrollSuppression(boolean wasSuppressed) {
-        RecordHistogram.recordEnumeratedHistogram("Search.ContextualSearchRecentScrollSuppression",
-                wasSuppressed ? TAP_SUPPRESSED : NOT_TAP_SUPPRESSED, TAP_SUPPRESSED_BOUNDARY);
+        RecordHistogram.recordBooleanHistogram(
+                "Search.ContextualSearchRecentScrollSuppression", wasSuppressed);
+    }
+
+    /**
+     * Logs the duration between the panel being triggered due to a tap and the panel being
+     * dismissed due to a scroll.
+     * @param durationSincePanelTriggerMs The amount of time between the panel getting triggered and
+     *                                    the panel being dismissed due to a scroll.
+     * @param wasSearchContentViewSeen If the panel was opened.
+     */
+    public static void logDurationBetweenTriggerAndScroll(
+            long durationSincePanelTriggerMs, boolean wasSearchContentViewSeen) {
+        String histogram = wasSearchContentViewSeen
+                ? "Search.ContextualSearchDurationBetweenTriggerAndScrollSeen"
+                : "Search.ContextualSearchDurationBetweenTriggerAndScrollNotSeen";
+        if (durationSincePanelTriggerMs < 2000) {
+            RecordHistogram.recordCustomCountHistogram(
+                    histogram, (int) durationSincePanelTriggerMs, 1, 2000, 200);
+        }
     }
 
     /**
@@ -1140,6 +1085,30 @@ public class ContextualSearchUma {
     }
 
     /**
+     * Logs the number of impressions and CTR for the previous week for the current user.
+     * @param previousWeekImpressions The number of times the user saw the Contextual Search Bar.
+     * @param previousWeekCtr The CTR expressed as a percentage.
+     */
+    public static void logPreviousWeekCtr(int previousWeekImpressions, int previousWeekCtr) {
+        RecordHistogram.recordCountHistogram(
+                "Search.ContextualSearchPreviousWeekImpressions", previousWeekImpressions);
+        RecordHistogram.recordPercentageHistogram(
+                "Search.ContextualSearchPreviousWeekCtr", previousWeekCtr);
+    }
+
+    /**
+     * Logs the number of impressions and CTR for previous 28-day period for the current user.
+     * @param previous28DayImpressions The number of times the user saw the Contextual Search Bar.
+     * @param previous28DayCtr The CTR expressed as a percentage.
+     */
+    public static void logPrevious28DayCtr(int previous28DayImpressions, int previous28DayCtr) {
+        RecordHistogram.recordCountHistogram(
+                "Search.ContextualSearchPrevious28DayImpressions", previous28DayImpressions);
+        RecordHistogram.recordPercentageHistogram(
+                "Search.ContextualSearchPrevious28DayCtr", previous28DayCtr);
+    }
+
+    /**
      * Get the encoded value to use for the Bar Overlap histogram by encoding all the input
      * parameters.
      * @param didBarOverlap Whether the selection overlapped the Bar position.
@@ -1202,7 +1171,82 @@ public class ContextualSearchUma {
         int code = ContextualSearchBlacklist.getBlacklistMetricsCode(reason, wasSeen);
         RecordHistogram.recordEnumeratedHistogram("Search.ContextualSearchBlacklistSeen",
                 code, ContextualSearchBlacklist.BLACKLIST_BOUNDARY);
+    }
 
+    /**
+     * Logs whether Contextual Cards data was shown. Should be logged on tap if Contextual
+     * Cards integration is enabled.
+     * @param shown Whether Contextual Cards data was shown in the Bar.
+     */
+    public static void logContextualCardsDataShown(boolean shown) {
+        RecordHistogram.recordBooleanHistogram(
+                "Search.ContextualSearchContextualCardsIntegration.DataShown", shown);
+    }
+
+    /**
+     * Logs whether results were seen when Contextual Cards data was shown.
+     * @param wasSeen Whether the search results were seen.
+     */
+    public static void logContextualCardsResultsSeen(boolean wasSeen) {
+        RecordHistogram.recordEnumeratedHistogram(
+                "Search.ContextualSearchContextualCardsIntegration.ResultsSeen",
+                wasSeen ? RESULTS_SEEN : RESULTS_NOT_SEEN, RESULTS_SEEN_BOUNDARY);
+    }
+
+    /**
+     * Logs whether a quick action intent resolved to zero, one, or many apps.
+     * @param quickActionCategory The {@link QuickActionCategory} for the quick action.
+     * @param numMatchingAppsApps The number of apps that the resolved intent matched.
+     */
+    public static void logQuickActionIntentResolution(int quickActionCategory,
+            int numMatchingAppsApps) {
+        int code = numMatchingAppsApps == 0 ? QUICK_ACTION_RESOLVE_FAILED
+                : numMatchingAppsApps == 1 ? QUICK_ACTION_RESOLVE_SINGLE
+                        : QUICK_ACTION_RESOLVE_MULTIPLE;
+        RecordHistogram.recordEnumeratedHistogram(
+                "Search.ContextualSearchQuickActions.IntentResolution."
+                        + getLabelForQuickActionCategory(quickActionCategory),
+                code, QUICK_ACTION_RESOLVE_BOUNDARY);
+    }
+
+    /**
+     * Logs whether a quick action was shown, and the quick aciton category if a quick action was
+     * shown. Should be logged on tap if Contextual Search single actions are enabled.
+     * @param quickActionShown Whether a quick action was shown.
+     * @param quickActionCategory The {@link QuickActionCategory} for the quick action.
+     */
+    public static void logQuickActionShown(boolean quickActionShown, int quickActionCategory) {
+        RecordHistogram.recordBooleanHistogram(
+                "Search.ContextualSearchQuickActions.Shown", quickActionShown);
+        if (quickActionShown) {
+            RecordHistogram.recordEnumeratedHistogram(
+                    "Search.ContextualSearchQuickActions.Category",
+                    quickActionCategory, QuickActionCategory.BOUNDARY);
+        }
+    }
+
+    /**
+     * Logs whether results were seen when a quick action was present.
+     * @param wasSeen Whether the search results were seen.
+     * @param quickActionCategory The {@link QuickActionCategory} for the quick action.
+     */
+    public static void logQuickActionResultsSeen(boolean wasSeen, int quickActionCategory) {
+        RecordHistogram.recordEnumeratedHistogram(
+                "Search.ContextualSearchQuickActions.ResultsSeen."
+                        + getLabelForQuickActionCategory(quickActionCategory),
+                wasSeen ? RESULTS_SEEN : RESULTS_NOT_SEEN, RESULTS_SEEN_BOUNDARY);
+    }
+
+    /**
+     * Logs whether a quick action was clicked.
+     * @param wasClicked Whether the quick action was clicked
+     * @param quickActionCategory The {@link QuickActionCategory} for the quick action.
+     */
+    public static void logQuickActionClicked(boolean wasClicked, int quickActionCategory) {
+        RecordHistogram.recordBooleanHistogram(
+                "Search.ContextualSearchQuickActions.Clicked."
+                        + getLabelForQuickActionCategory(quickActionCategory),
+                 wasClicked);
     }
 
     /**
@@ -1300,5 +1344,22 @@ public class ContextualSearchUma {
         RecordHistogram.recordEnumeratedHistogram(histogramName,
                 getPanelSeenByGestureStateCode(wasPanelSeen, wasTap),
                 RESULTS_BY_GESTURE_BOUNDARY);
+    }
+
+    private static String getLabelForQuickActionCategory(int quickActionCategory) {
+        switch(quickActionCategory) {
+            case QuickActionCategory.ADDRESS:
+                return "Address";
+            case QuickActionCategory.EMAIL:
+                return "Email";
+            case QuickActionCategory.EVENT:
+                return "Event";
+            case QuickActionCategory.PHONE:
+                return "Phone";
+            case QuickActionCategory.WEBSITE:
+                return "Website";
+            default:
+                return "None";
+        }
     }
 }

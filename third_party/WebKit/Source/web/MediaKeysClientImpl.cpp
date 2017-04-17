@@ -12,15 +12,14 @@
 
 namespace blink {
 
-MediaKeysClientImpl::MediaKeysClientImpl()
-{
+MediaKeysClientImpl::MediaKeysClientImpl() {}
+
+WebEncryptedMediaClient* MediaKeysClientImpl::EncryptedMediaClient(
+    ExecutionContext* execution_context) {
+  Document* document = ToDocument(execution_context);
+  WebLocalFrameImpl* web_frame =
+      WebLocalFrameImpl::FromFrame(document->GetFrame());
+  return web_frame->Client()->EncryptedMediaClient();
 }
 
-WebEncryptedMediaClient* MediaKeysClientImpl::encryptedMediaClient(ExecutionContext* executionContext)
-{
-    Document* document = toDocument(executionContext);
-    WebLocalFrameImpl* webFrame = WebLocalFrameImpl::fromFrame(document->frame());
-    return webFrame->client()->encryptedMediaClient();
-}
-
-} // namespace blink
+}  // namespace blink

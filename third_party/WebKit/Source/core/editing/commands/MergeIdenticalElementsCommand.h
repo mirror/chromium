@@ -31,25 +31,25 @@
 namespace blink {
 
 class MergeIdenticalElementsCommand final : public SimpleEditCommand {
-public:
-    static MergeIdenticalElementsCommand* create(Element* element1, Element* element2)
-    {
-        return new MergeIdenticalElementsCommand(element1, element2);
-    }
+ public:
+  static MergeIdenticalElementsCommand* Create(Element* element1,
+                                               Element* element2) {
+    return new MergeIdenticalElementsCommand(element1, element2);
+  }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    MergeIdenticalElementsCommand(Element*, Element*);
+ private:
+  MergeIdenticalElementsCommand(Element*, Element*);
 
-    void doApply(EditingState*) override;
-    void doUnapply() override;
+  void DoApply(EditingState*) override;
+  void DoUnapply() override;
 
-    Member<Element> m_element1;
-    Member<Element> m_element2;
-    Member<Node> m_atChild;
+  Member<Element> element1_;
+  Member<Element> element2_;
+  Member<Node> at_child_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MergeIdenticalElementsCommand_h
+#endif  // MergeIdenticalElementsCommand_h

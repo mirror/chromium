@@ -6,30 +6,31 @@
 
 #include <string>
 
+#include "base/memory/ptr_util.h"
 #include "content/public/test/layouttest_support.h"
 #include "content/shell/browser/layout_test/layout_test_bluetooth_adapter_provider.h"
 #include "device/bluetooth/bluetooth_adapter_factory_wrapper.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 
 namespace content {
 
-// static
-void LayoutTestBluetoothFakeAdapterSetterImpl::Create(
-    mojom::LayoutTestBluetoothFakeAdapterSetterRequest request) {
-  new LayoutTestBluetoothFakeAdapterSetterImpl(std::move(request));
-}
-
 LayoutTestBluetoothFakeAdapterSetterImpl::
-    LayoutTestBluetoothFakeAdapterSetterImpl(
-        mojom::LayoutTestBluetoothFakeAdapterSetterRequest request)
-    : binding_(this, std::move(request)) {}
+    LayoutTestBluetoothFakeAdapterSetterImpl() {}
 
 LayoutTestBluetoothFakeAdapterSetterImpl::
     ~LayoutTestBluetoothFakeAdapterSetterImpl() {}
 
-void LayoutTestBluetoothFakeAdapterSetterImpl::Set(
-    const mojo::String& adapter_name,
-    const SetCallback& callback) {
+// static
+void LayoutTestBluetoothFakeAdapterSetterImpl::Create(
+    mojom::LayoutTestBluetoothFakeAdapterSetterRequest request) {
+  mojo::MakeStrongBinding(
+      base::MakeUnique<LayoutTestBluetoothFakeAdapterSetterImpl>(),
+      std::move(request));
+}
 
+void LayoutTestBluetoothFakeAdapterSetterImpl::Set(
+    const std::string& adapter_name,
+    const SetCallback& callback) {
   SetTestBluetoothScanDuration();
 
   device::BluetoothAdapterFactoryWrapper::Get().SetBluetoothAdapterForTesting(

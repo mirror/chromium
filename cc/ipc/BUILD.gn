@@ -3,9 +3,10 @@
 # found in the LICENSE file.
 
 import("//build/config/ui.gni")
+import("//cc/cc.gni")
 import("//mojo/public/tools/bindings/mojom.gni")
 
-component("ipc") {
+cc_component("ipc") {
   output_name = "cc_ipc"
 
   defines = [ "CC_IPC_IMPLEMENTATION" ]
@@ -27,12 +28,12 @@ component("ipc") {
     "//base",
     "//gpu/ipc/common",
     "//ipc",
-    "//ui/events/ipc",
     "//ui/gfx",
     "//ui/gfx/ipc",
     "//ui/gfx/ipc/color",
     "//ui/gfx/ipc/geometry",
     "//ui/gfx/ipc/skia",
+    "//ui/latency/ipc",
   ]
 }
 
@@ -41,32 +42,36 @@ mojom("interfaces") {
     "begin_frame_args.mojom",
     "compositor_frame.mojom",
     "compositor_frame_metadata.mojom",
+    "copy_output_request.mojom",
+    "copy_output_result.mojom",
     "filter_operation.mojom",
     "filter_operations.mojom",
+    "frame_sink_id.mojom",
+    "frame_sink_manager.mojom",
+    "local_surface_id.mojom",
+    "mojo_compositor_frame_sink.mojom",
     "quads.mojom",
     "render_pass.mojom",
-    "render_pass_id.mojom",
     "returned_resource.mojom",
     "selection.mojom",
+    "shared_bitmap_manager.mojom",
     "shared_quad_state.mojom",
+    "surface_id.mojom",
+    "surface_info.mojom",
+    "surface_reference.mojom",
+    "surface_sequence.mojom",
+    "texture_mailbox.mojom",
+    "texture_mailbox_releaser.mojom",
     "transferable_resource.mojom",
   ]
 
   public_deps = [
-    ":interfaces_surfaceid_only",
     "//gpu/ipc/common:interfaces",
     "//mojo/common:common_custom_types",
     "//skia/public/interfaces",
-    "//ui/events/mojo:interfaces",
     "//ui/gfx/geometry/mojo",
     "//ui/gfx/mojo",
-  ]
-}
-
-mojom("interfaces_surfaceid_only") {
-  sources = [
-    "surface_id.mojom",
-    "surface_sequence.mojom",
+    "//ui/latency/mojo:interfaces",
   ]
 }
 
@@ -78,6 +83,5 @@ mojom("test_interfaces") {
 
   public_deps = [
     ":interfaces",
-    ":interfaces_surfaceid_only",
   ]
 }

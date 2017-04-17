@@ -21,27 +21,22 @@
 #include "chrome/browser/ui/views/omnibox/omnibox_view_views.h"
 #include "components/prefs/pref_member.h"
 #include "components/search_engines/template_url_service_observer.h"
-#include "components/security_state/security_state_model.h"
+#include "components/security_state/core/security_state.h"
 #include "components/zoom/zoom_event_manager_observer.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/gfx/font.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/views/controls/button/button.h"
 #include "ui/views/drag_controller.h"
 
-class ActionBoxButtonView;
 class CommandUpdater;
 class ContentSettingBubbleModelDelegate;
 class ContentSettingImageView;
-class ExtensionAction;
 class GURL;
-class InstantController;
 class KeywordHintView;
 class LocationIconView;
-class OpenPDFInReaderView;
 class ManagePasswordsIconViews;
-class PageActionWithBadgeView;
-class PageActionImageView;
 class Profile;
 class SelectedKeywordView;
 class StarView;
@@ -55,7 +50,6 @@ class SaveCardIconView;
 
 namespace views {
 class Label;
-class Widget;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -74,7 +68,8 @@ class LocationBarView : public LocationBar,
                         public ChromeOmniboxEditController,
                         public DropdownBarHostDelegate,
                         public TemplateURLServiceObserver,
-                        public zoom::ZoomEventManagerObserver {
+                        public zoom::ZoomEventManagerObserver,
+                        public views::ButtonListener {
  public:
   class Delegate {
    public:
@@ -84,21 +79,12 @@ class LocationBarView : public LocationBar,
     virtual ToolbarModel* GetToolbarModel() = 0;
     virtual const ToolbarModel* GetToolbarModel() const = 0;
 
-    // Creates PageActionImageView. Caller gets an ownership.
-    virtual PageActionImageView* CreatePageActionImageView(
-        LocationBarView* owner,
-        ExtensionAction* action) = 0;
-
     // Returns ContentSettingBubbleModelDelegate.
     virtual ContentSettingBubbleModelDelegate*
         GetContentSettingBubbleModelDelegate() = 0;
 
     // Shows permissions and settings for the given web contents.
-    virtual void ShowWebsiteSettings(
-        content::WebContents* web_contents,
-        const GURL& virtual_url,
-        const security_state::SecurityStateModel::SecurityInfo&
-            security_info) = 0;
+    virtual void ShowPageInfo(content::WebContents* web_contents) = 0;
 
    protected:
     virtual ~Delegate() {}
@@ -109,8 +95,19 @@ class LocationBarView : public LocationBar,
     TEXT,
     SELECTED_TEXT,
     DEEMPHASIZED_TEXT,
-    EV_BUBBLE_TEXT_AND_BORDER,
+    SECURITY_CHIP_TEXT,
   };
+
+  // Visual width (and height) of icons in location bar.
+  static constexpr int kIconWidth = 16;
+
+  // The amount of padding between the visual edge of an icon and the edge of
+  // its click target, for all all sides of the icon. The total edge length of
+  // each icon view should be kIconWidth + 2 * kIconInteriorPadding.
+  static constexpr int kIconInteriorPadding = 4;
+
+  // The additional vertical padding of a bubble.
+  static constexpr int kBubbleVerticalPadding = 3;
 
   // The location bar view's class name.
   static const char kViewClassName[];
@@ -123,10 +120,6 @@ class LocationBarView : public LocationBar,
 
   ~LocationBarView() override;
 
-  // Returns the color for the location bar border in MD windows and non-MD
-  // popup windows, given the window's |incognito| state.
-  static SkColor GetBorderColor(bool incognito);
-
   // Initializes the LocationBarView.
   void Init();
 
@@ -138,10 +131,14 @@ class LocationBarView : public LocationBar,
   // system theme.
   SkColor GetColor(ColorKind kind) const;
 
+  // Returns the location bar border color blended with the toolbar color.
+  // It's guaranteed to be opaque.
+  SkColor GetOpaqueBorderColor(bool incognito) const;
+
   // Returns the color to be used for security text in the context of
   // |security_level|.
   SkColor GetSecureTextColor(
-      security_state::SecurityStateModel::SecurityLevel security_level) const;
+      security_state::SecurityLevel security_level) const;
 
   // Returns the delegate.
   Delegate* delegate() const { return delegate_; }
@@ -156,17 +153,6 @@ class LocationBarView : public LocationBar,
   ManagePasswordsIconViews* manage_passwords_icon_view() {
     return manage_passwords_icon_view_;
   }
-
-  // Sets |preview_enabled| for the PageAction View associated with this
-  // |page_action|. If |preview_enabled| is true, the view will display the
-  // PageActions icon even though it has not been activated by the extension.
-  // This is used by the ExtensionInstalledBubble to preview what the icon
-  // will look like for the user upon installation of the extension.
-  void SetPreviewEnabledPageAction(ExtensionAction* page_action,
-                                   bool preview_enabled);
-
-  // Retrieves the PageAction View which is associated with |page_action|.
-  PageActionWithBadgeView* GetPageActionView(ExtensionAction* page_action);
 
   // Toggles the star on or off.
   void SetStarToggled(bool on);
@@ -186,19 +172,10 @@ class LocationBarView : public LocationBar,
   // not where the icons are shown).
   gfx::Point GetOmniboxViewOrigin() const;
 
-  // Returns the width of the location icon.
-  int GetLocationIconWidth() const;
-
   // Shows |text| as an inline autocompletion.  This is useful for IMEs, where
   // we can't show the autocompletion inside the actual OmniboxView.  See
   // comments on |ime_inline_autocomplete_view_|.
   void SetImeInlineAutocompletion(const base::string16& text);
-
-  // Invoked from OmniboxViewWin to show gray text autocompletion.
-  void SetGrayTextAutocompletion(const base::string16& text);
-
-  // Returns the current gray text autocompletion.
-  base::string16 GetGrayTextAutocompletion() const;
 
   // Set if we should show a focus rect while the location entry field is
   // focused. Used when the toolbar is in full keyboard accessibility mode.
@@ -211,9 +188,13 @@ class LocationBarView : public LocationBar,
 
   LocationIconView* location_icon_view() { return location_icon_view_; }
 
-  // Return the point suitable for anchoring location-bar-anchored bubbles at.
-  // The point will be returned in the coordinates of the LocationBarView.
-  gfx::Point GetLocationBarAnchorPoint() const;
+  // Where InfoBar arrows should point. The point will be returned in the
+  // coordinates of the LocationBarView.
+  gfx::Point GetInfoBarAnchorPoint() const;
+
+  // The anchor view for security-related bubbles. That is, those anchored to
+  // the leading edge of the Omnibox, under the padlock.
+  views::View* GetSecurityBubbleAnchorView();
 
   OmniboxViewViews* omnibox_view() { return omnibox_view_; }
   const OmniboxViewViews* omnibox_view() const { return omnibox_view_; }
@@ -243,14 +224,13 @@ class LocationBarView : public LocationBar,
 
   // views::View:
   bool HasFocus() const override;
-  void GetAccessibleState(ui::AXViewState* state) override;
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   gfx::Size GetPreferredSize() const override;
   void Layout() override;
   void OnNativeThemeChanged(const ui::NativeTheme* theme) override;
 
   // ChromeOmniboxEditController:
   void UpdateWithoutTabRestore() override;
-  void ShowURL() override;
   ToolbarModel* GetToolbarModel() override;
   content::WebContents* GetWebContents() override;
 
@@ -258,17 +238,18 @@ class LocationBarView : public LocationBar,
   // Updates the view for the zoom icon when default zoom levels change.
   void OnDefaultZoomLevelChanged() override;
 
- private:
-  typedef std::vector<ContentSettingImageView*> ContentSettingViews;
+  // views::ButtonListener:
+  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
-  friend class PageActionImageView;
-  friend class PageActionWithBadgeView;
-  typedef std::vector<ExtensionAction*> PageActions;
-  typedef std::vector<PageActionWithBadgeView*> PageActionViews;
+ private:
+  using ContentSettingViews = std::vector<ContentSettingImageView*>;
 
   // Helper for GetMinimumWidth().  Calculates the incremental minimum width
   // |view| should add to the trailing width after the omnibox.
   int IncrementalMinimumWidth(views::View* view) const;
+
+  // The border color, drawn on top of the toolbar.
+  SkColor GetBorderColor() const;
 
   // Returns the thickness of any visible edge, in pixels.
   int GetHorizontalEdgeThickness() const;
@@ -276,7 +257,7 @@ class LocationBarView : public LocationBar,
 
   // Returns the total amount of space reserved above or below the content,
   // which is the vertical edge thickness plus the padding next to it.
-  int GetVerticalEdgeThicknessWithPadding() const;
+  int GetTotalVerticalPadding() const;
 
   // Updates |location_icon_view_| based on the current state and theme.
   void RefreshLocationIcon();
@@ -285,19 +266,6 @@ class LocationBarView : public LocationBar,
   // is actually blocked on the current page. Returns true if the visibility
   // of at least one of the views in |content_setting_views_| changed.
   bool RefreshContentSettingViews();
-
-  // Clears |page_action_views_| and removes the elements from the view
-  // hierarchy.
-  void DeletePageActionViews();
-
-  // Updates the views for the Page Actions, to reflect state changes for
-  // PageActions. Returns true if the visibility of a PageActionWithBadgeView
-  // changed, or PageActionWithBadgeView were created/destroyed.
-  bool RefreshPageActionViews();
-
-  // Whether the page actions represented by |page_action_views_| differ
-  // in ordering or value from |page_actions|.
-  bool PageActionsDiffer(const PageActions& page_actions) const;
 
   // Updates the view for the zoom icon based on the current tab's zoom. Returns
   // true if the visibility of the view changed.
@@ -315,11 +283,22 @@ class LocationBarView : public LocationBar,
   // Helper to show the first run info bubble.
   void ShowFirstRunBubbleInternal();
 
-  // Returns true if the suggest text is valid.
-  bool HasValidSuggestText() const;
+  // Returns text to be placed in the location icon view.
+  // - For secure/insecure pages, returns text describing the URL's security
+  // level.
+  // - For extension URLs, returns the extension name.
+  // - For chrome:// URLs, returns the short product name (e.g. Chrome).
+  base::string16 GetLocationIconText() const;
 
   bool ShouldShowKeywordBubble() const;
-  bool ShouldShowEVBubble() const;
+
+  // Returns true if any of the following is true:
+  // - the current page is explicitly secure or insecure.
+  // - the current page URL is a chrome-extension:// URL.
+  bool ShouldShowLocationIconText() const;
+
+  // Returns true if the location icon text should be animated.
+  bool ShouldAnimateLocationIconTextVisibilityChange() const;
 
   // Used to "reverse" the URL showing/hiding animations, since we use separate
   // animations whose curves are not true inverses of each other.  Based on the
@@ -341,30 +320,22 @@ class LocationBarView : public LocationBar,
   void UpdateContentSettingsIcons() override;
   void UpdateManagePasswordsIconAndBubble() override;
   void UpdateSaveCreditCardIcon() override;
-  void UpdatePageActions() override;
   void UpdateBookmarkStarVisibility() override;
   void UpdateLocationBarVisibility(bool visible, bool animation) override;
-  bool ShowPageActionPopup(const extensions::Extension* extension,
-                           bool grant_active_tab) override;
-  void UpdateOpenPDFInReaderPrompt() override;
   void SaveStateToContents(content::WebContents* contents) override;
   const OmniboxView* GetOmniboxView() const override;
   LocationBarTesting* GetLocationBarForTesting() override;
 
   // LocationBarTesting:
-  int PageActionCount() override;
-  int PageActionVisibleCount() override;
-  ExtensionAction* GetPageAction(size_t index) override;
-  ExtensionAction* GetVisiblePageAction(size_t index) override;
-  void TestPageActionPressed(size_t index) override;
   bool GetBookmarkStarVisibility() override;
+  bool TestContentSettingImagePressed(size_t index) override;
 
   // views::View:
   const char* GetClassName() const override;
   void OnBoundsChanged(const gfx::Rect& previous_bounds) override;
   void OnFocus() override;
   void OnPaint(gfx::Canvas* canvas) override;
-  void PaintChildren(const ui::PaintContext& context) override;
+  void OnPaintBorder(gfx::Canvas* canvas) override;
 
   // views::DragController:
   void WriteDragDataForView(View* sender,
@@ -399,9 +370,6 @@ class LocationBarView : public LocationBar,
   // Our delegate.
   Delegate* delegate_;
 
-  // Object used to paint the border. Not used for material design.
-  std::unique_ptr<views::Painter> border_painter_;
-
   // An icon to the left of the edit field: the HTTPS lock, blank page icon,
   // search icon, EV HTTPS bubble, etc.
   LocationIconView* location_icon_view_;
@@ -421,10 +389,6 @@ class LocationBarView : public LocationBar,
   // Shown if the user has selected a keyword.
   SelectedKeywordView* selected_keyword_view_;
 
-  // View responsible for showing suggested text. This is NULL when there is no
-  // suggested text.
-  views::Label* suggested_text_view_;
-
   // Shown if the selected url has a corresponding keyword.
   KeywordHintView* keyword_hint_view_;
 
@@ -434,14 +398,8 @@ class LocationBarView : public LocationBar,
   // The zoom icon.
   ZoomView* zoom_view_;
 
-  // The icon to open a PDF in Reader.
-  OpenPDFInReaderView* open_pdf_in_reader_view_;
-
   // The manage passwords icon.
   ManagePasswordsIconViews* manage_passwords_icon_view_;
-
-  // The page action icon views.
-  PageActionViews page_action_views_;
 
   // The save credit card icon.
   autofill::SaveCardIconView* save_credit_card_icon_view_;
@@ -469,10 +427,6 @@ class LocationBarView : public LocationBar,
 
   // Tracks this preference to determine whether bookmark editing is allowed.
   BooleanPrefMember edit_bookmarks_enabled_;
-
-  // This is a debug state variable that stores if the WebContents was null
-  // during the last RefreshPageAction.
-  bool web_contents_null_at_last_refresh_;
 
   DISALLOW_COPY_AND_ASSIGN(LocationBarView);
 };

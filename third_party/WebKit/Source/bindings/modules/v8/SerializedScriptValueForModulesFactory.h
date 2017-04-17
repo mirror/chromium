@@ -6,22 +6,31 @@
 #define SerializedScriptValueForModulesFactory_h
 
 #include "bindings/core/v8/SerializedScriptValueFactory.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
-class SerializedScriptValueForModulesFactory final : public SerializedScriptValueFactory {
-    USING_FAST_MALLOC(SerializedScriptValueForModulesFactory);
-    WTF_MAKE_NONCOPYABLE(SerializedScriptValueForModulesFactory);
-public:
-    SerializedScriptValueForModulesFactory() : SerializedScriptValueFactory() { }
+class SerializedScriptValueForModulesFactory final
+    : public SerializedScriptValueFactory {
+  USING_FAST_MALLOC(SerializedScriptValueForModulesFactory);
+  WTF_MAKE_NONCOPYABLE(SerializedScriptValueForModulesFactory);
 
-    PassRefPtr<SerializedScriptValue> create(v8::Isolate*, v8::Local<v8::Value>, Transferables*, WebBlobInfoArray*, ExceptionState&) override;
+ public:
+  SerializedScriptValueForModulesFactory() : SerializedScriptValueFactory() {}
 
-protected:
-    v8::Local<v8::Value> deserialize(String& data, BlobDataHandleMap& blobDataHandles, ArrayBufferContentsArray*, ImageBitmapContentsArray*, v8::Isolate*, MessagePortArray* messagePorts, const WebBlobInfoArray*) override;
+ protected:
+  PassRefPtr<SerializedScriptValue> Create(
+      v8::Isolate*,
+      v8::Local<v8::Value>,
+      const SerializedScriptValue::SerializeOptions&,
+      ExceptionState&) override;
+
+  v8::Local<v8::Value> Deserialize(
+      SerializedScriptValue*,
+      v8::Isolate*,
+      const SerializedScriptValue::DeserializeOptions&) override;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SerializedScriptValueForModulesFactory_h
+#endif  // SerializedScriptValueForModulesFactory_h

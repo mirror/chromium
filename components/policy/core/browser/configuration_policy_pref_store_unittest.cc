@@ -47,7 +47,7 @@ class ConfigurationPolicyPrefStoreListTest
   void SetUp() override {
     handler_list_.AddHandler(
         base::WrapUnique<ConfigurationPolicyHandler>(new SimplePolicyHandler(
-            kTestPolicy, kTestPref, base::Value::TYPE_LIST)));
+            kTestPolicy, kTestPref, base::Value::Type::LIST)));
   }
 };
 
@@ -75,7 +75,7 @@ class ConfigurationPolicyPrefStoreStringTest
   void SetUp() override {
     handler_list_.AddHandler(
         base::WrapUnique<ConfigurationPolicyHandler>(new SimplePolicyHandler(
-            kTestPolicy, kTestPref, base::Value::TYPE_STRING)));
+            kTestPolicy, kTestPref, base::Value::Type::STRING)));
   }
 };
 
@@ -87,13 +87,12 @@ TEST_F(ConfigurationPolicyPrefStoreStringTest, SetValue) {
   PolicyMap policy;
   policy.Set(kTestPolicy, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
              POLICY_SOURCE_CLOUD,
-             base::WrapUnique(new base::StringValue("http://chromium.org")),
-             nullptr);
+             base::MakeUnique<base::Value>("http://chromium.org"), nullptr);
   UpdateProviderPolicy(policy);
   const base::Value* value = NULL;
   EXPECT_TRUE(store_->GetValue(kTestPref, &value));
   ASSERT_TRUE(value);
-  EXPECT_TRUE(base::StringValue("http://chromium.org").Equals(value));
+  EXPECT_TRUE(base::Value("http://chromium.org").Equals(value));
 }
 
 // Test cases for boolean-valued policy settings.
@@ -102,7 +101,7 @@ class ConfigurationPolicyPrefStoreBooleanTest
   void SetUp() override {
     handler_list_.AddHandler(
         base::WrapUnique<ConfigurationPolicyHandler>(new SimplePolicyHandler(
-            kTestPolicy, kTestPref, base::Value::TYPE_BOOLEAN)));
+            kTestPolicy, kTestPref, base::Value::Type::BOOLEAN)));
   }
 };
 
@@ -113,8 +112,8 @@ TEST_F(ConfigurationPolicyPrefStoreBooleanTest, GetDefault) {
 TEST_F(ConfigurationPolicyPrefStoreBooleanTest, SetValue) {
   PolicyMap policy;
   policy.Set(kTestPolicy, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
-             POLICY_SOURCE_CLOUD,
-             base::WrapUnique(new base::FundamentalValue(false)), nullptr);
+             POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>(false),
+             nullptr);
   UpdateProviderPolicy(policy);
   const base::Value* value = NULL;
   EXPECT_TRUE(store_->GetValue(kTestPref, &value));
@@ -125,8 +124,7 @@ TEST_F(ConfigurationPolicyPrefStoreBooleanTest, SetValue) {
   EXPECT_FALSE(boolean_value);
 
   policy.Set(kTestPolicy, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
-             POLICY_SOURCE_CLOUD,
-             base::WrapUnique(new base::FundamentalValue(true)), nullptr);
+             POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>(true), nullptr);
   UpdateProviderPolicy(policy);
   value = NULL;
   EXPECT_TRUE(store_->GetValue(kTestPref, &value));
@@ -142,7 +140,7 @@ class ConfigurationPolicyPrefStoreIntegerTest
   void SetUp() override {
     handler_list_.AddHandler(
         base::WrapUnique<ConfigurationPolicyHandler>(new SimplePolicyHandler(
-            kTestPolicy, kTestPref, base::Value::TYPE_INTEGER)));
+            kTestPolicy, kTestPref, base::Value::Type::INTEGER)));
   }
 };
 
@@ -153,12 +151,11 @@ TEST_F(ConfigurationPolicyPrefStoreIntegerTest, GetDefault) {
 TEST_F(ConfigurationPolicyPrefStoreIntegerTest, SetValue) {
   PolicyMap policy;
   policy.Set(kTestPolicy, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
-             POLICY_SOURCE_CLOUD,
-             base::WrapUnique(new base::FundamentalValue(2)), nullptr);
+             POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>(2), nullptr);
   UpdateProviderPolicy(policy);
   const base::Value* value = NULL;
   EXPECT_TRUE(store_->GetValue(kTestPref, &value));
-  EXPECT_TRUE(base::FundamentalValue(2).Equals(value));
+  EXPECT_TRUE(base::Value(2).Equals(value));
 }
 
 // Exercises the policy refresh mechanism.
@@ -170,7 +167,7 @@ class ConfigurationPolicyPrefStoreRefreshTest
     store_->AddObserver(&observer_);
     handler_list_.AddHandler(
         base::WrapUnique<ConfigurationPolicyHandler>(new SimplePolicyHandler(
-            kTestPolicy, kTestPref, base::Value::TYPE_STRING)));
+            kTestPolicy, kTestPref, base::Value::Type::STRING)));
   }
 
   void TearDown() override {
@@ -188,12 +185,11 @@ TEST_F(ConfigurationPolicyPrefStoreRefreshTest, Refresh) {
   PolicyMap policy;
   policy.Set(kTestPolicy, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
              POLICY_SOURCE_CLOUD,
-             base::WrapUnique(new base::StringValue("http://www.chromium.org")),
-             nullptr);
+             base::MakeUnique<base::Value>("http://www.chromium.org"), nullptr);
   UpdateProviderPolicy(policy);
   observer_.VerifyAndResetChangedKey(kTestPref);
   EXPECT_TRUE(store_->GetValue(kTestPref, &value));
-  EXPECT_TRUE(base::StringValue("http://www.chromium.org").Equals(value));
+  EXPECT_TRUE(base::Value("http://www.chromium.org").Equals(value));
 
   UpdateProviderPolicy(policy);
   EXPECT_TRUE(observer_.changed_keys.empty());

@@ -4,7 +4,7 @@
 
 #include "net/quic/test_tools/quic_config_peer.h"
 
-#include "net/quic/quic_config.h"
+#include "net/quic/core/quic_config.h"
 
 namespace net {
 namespace test {
@@ -67,12 +67,6 @@ void QuicConfigPeer::SetConnectionOptionsToSend(QuicConfig* config,
 // static
 void QuicConfigPeer::SetReceivedForceHolBlocking(QuicConfig* config) {
   config->force_hol_blocking_.SetReceivedValue(1);
-}
-
-// static
-void QuicConfigPeer::SetReceivedAlternateServerAddress(QuicConfig* config,
-                                                       IPEndPoint addr) {
-  config->alternate_server_address_.SetReceivedValue(addr);
 }
 
 }  // namespace test

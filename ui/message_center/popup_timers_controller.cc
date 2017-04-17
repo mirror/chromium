@@ -52,19 +52,6 @@ void PopupTimersController::StartAll() {
     iter.second->Start();
 }
 
-void PopupTimersController::ResetTimer(const std::string& id,
-                                       const base::TimeDelta& timeout) {
-  CancelTimer(id);
-  StartTimer(id, timeout);
-}
-
-void PopupTimersController::PauseTimer(const std::string& id) {
-  PopupTimerCollection::const_iterator iter = popup_timers_.find(id);
-  if (iter == popup_timers_.end())
-    return;
-  iter->second->Pause();
-}
-
 void PopupTimersController::PauseAll() {
   for (const auto& iter : popup_timers_)
     iter.second->Pause();
@@ -79,7 +66,7 @@ void PopupTimersController::CancelAll() {
 }
 
 void PopupTimersController::TimerFinished(const std::string& id) {
-  if (!ContainsKey(popup_timers_, id))
+  if (!base::ContainsKey(popup_timers_, id))
     return;
 
   CancelTimer(id);
@@ -113,9 +100,20 @@ void PopupTimersController::OnNotificationUpdated(const std::string& id) {
     return;
   }
 
-  // Start the timer if not yet.
-  if (popup_timers_.find(id) == popup_timers_.end())
-    StartTimer(id, GetTimeoutForNotification(*iter));
+  auto timer = popup_timers_.find(id);
+  // The timer must already have been started and not be running. Relies on
+  // the invariant that |popup_timers_| only contains timers that have been
+  // started.
+  bool was_paused = timer != popup_timers_.end() && !timer->second->IsRunning();
+  CancelTimer(id);
+  StartTimer(id, GetTimeoutForNotification(*iter));
+
+  // If a timer was paused before, pause it afterwards as well.
+  // See crbug.com/710298
+  if (was_paused) {
+    auto timer = popup_timers_.find(id);
+    timer->second->Pause();
+  }
 }
 
 void PopupTimersController::OnNotificationRemoved(const std::string& id,

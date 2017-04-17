@@ -10,6 +10,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
@@ -30,6 +31,7 @@ namespace blink {
 class WebFrame;
 class WebRTCAnswerOptions;
 class WebRTCDataChannelHandler;
+class WebRTCLegacyStats;
 class WebRTCOfferOptions;
 class WebRTCPeerConnectionHandlerClient;
 }
@@ -51,10 +53,7 @@ class CONTENT_EXPORT LocalRTCStatsResponse
   }
 
   virtual blink::WebRTCStatsResponse webKitStatsResponse() const;
-  virtual size_t addReport(blink::WebString type, blink::WebString id,
-                           double timestamp);
-  virtual void addStatistic(size_t report,
-                            blink::WebString name, blink::WebString value);
+  virtual void addStats(const blink::WebRTCLegacyStats& stats);
 
  protected:
   ~LocalRTCStatsResponse() override {}
@@ -111,49 +110,51 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
       const base::WeakPtr<PeerConnectionTracker>& peer_connection_tracker);
 
   // blink::WebRTCPeerConnectionHandler implementation
-  bool initialize(const blink::WebRTCConfiguration& server_configuration,
+  bool Initialize(const blink::WebRTCConfiguration& server_configuration,
                   const blink::WebMediaConstraints& options) override;
 
-  void createOffer(const blink::WebRTCSessionDescriptionRequest& request,
+  void CreateOffer(const blink::WebRTCSessionDescriptionRequest& request,
                    const blink::WebMediaConstraints& options) override;
-  void createOffer(const blink::WebRTCSessionDescriptionRequest& request,
+  void CreateOffer(const blink::WebRTCSessionDescriptionRequest& request,
                    const blink::WebRTCOfferOptions& options) override;
 
-  void createAnswer(const blink::WebRTCSessionDescriptionRequest& request,
+  void CreateAnswer(const blink::WebRTCSessionDescriptionRequest& request,
                     const blink::WebMediaConstraints& options) override;
-  void createAnswer(const blink::WebRTCSessionDescriptionRequest& request,
+  void CreateAnswer(const blink::WebRTCSessionDescriptionRequest& request,
                     const blink::WebRTCAnswerOptions& options) override;
 
-  void setLocalDescription(
+  void SetLocalDescription(
       const blink::WebRTCVoidRequest& request,
       const blink::WebRTCSessionDescription& description) override;
-  void setRemoteDescription(
+  void SetRemoteDescription(
       const blink::WebRTCVoidRequest& request,
       const blink::WebRTCSessionDescription& description) override;
 
-  blink::WebRTCSessionDescription localDescription() override;
-  blink::WebRTCSessionDescription remoteDescription() override;
+  blink::WebRTCSessionDescription LocalDescription() override;
+  blink::WebRTCSessionDescription RemoteDescription() override;
 
-  bool updateICE(
-      const blink::WebRTCConfiguration& server_configuration) override;
-  void logSelectedRtcpMuxPolicy(
-      blink::RtcpMuxPolicy selectedRtcpMuxPolicy) override;
-  bool addICECandidate(const blink::WebRTCICECandidate& candidate) override;
-  bool addICECandidate(const blink::WebRTCVoidRequest& request,
+  blink::WebRTCErrorType SetConfiguration(
+      const blink::WebRTCConfiguration& configuration) override;
+  bool AddICECandidate(const blink::WebRTCICECandidate& candidate) override;
+  bool AddICECandidate(const blink::WebRTCVoidRequest& request,
                        const blink::WebRTCICECandidate& candidate) override;
   virtual void OnaddICECandidateResult(const blink::WebRTCVoidRequest& request,
                                        bool result);
 
-  bool addStream(const blink::WebMediaStream& stream,
+  bool AddStream(const blink::WebMediaStream& stream,
                  const blink::WebMediaConstraints& options) override;
-  void removeStream(const blink::WebMediaStream& stream) override;
-  void getStats(const blink::WebRTCStatsRequest& request) override;
-  blink::WebRTCDataChannelHandler* createDataChannel(
+  void RemoveStream(const blink::WebMediaStream& stream) override;
+  void GetStats(const blink::WebRTCStatsRequest& request) override;
+  void GetStats(
+      std::unique_ptr<blink::WebRTCStatsReportCallback> callback) override;
+  blink::WebVector<std::unique_ptr<blink::WebRTCRtpReceiver>> GetReceivers()
+      override;
+  blink::WebRTCDataChannelHandler* CreateDataChannel(
       const blink::WebString& label,
       const blink::WebRTCDataChannelInit& init) override;
-  blink::WebRTCDTMFSenderHandler* createDTMFSender(
+  blink::WebRTCDTMFSenderHandler* CreateDTMFSender(
       const blink::WebMediaStreamTrack& track) override;
-  void stop() override;
+  void Stop() override;
 
   // Delegate functions to allow for mocking of WebKit interfaces.
   // getStats takes ownership of request parameter.
@@ -167,7 +168,8 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
                 blink::WebMediaStreamSource::Type track_type);
 
   // Tells the |client_| to close RTCPeerConnection.
-  void CloseClientPeerConnection();
+  // Make it virtual for testing purpose.
+  virtual void CloseClientPeerConnection();
 
   // Start recording an event log.
   void StartEventLog(IPC::PlatformFileForTransit file,
@@ -233,6 +235,13 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
   void RunSynchronousClosureOnSignalingThread(const base::Closure& closure,
                                               const char* trace_event_name);
 
+  // If a track is not found with the specified id, the returned track's
+  // |isNull| will return true.
+  blink::WebMediaStreamTrack GetRemoteAudioTrack(
+      const std::string& track_id) const;
+  blink::WebMediaStreamTrack GetRemoteVideoTrack(
+      const std::string& track_id) const;
+
   base::ThreadChecker thread_checker_;
 
   // |client_| is a weak pointer to the blink object (blink::RTCPeerConnection)
@@ -250,7 +259,7 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
 
   blink::WebFrame* frame_ = nullptr;
 
-  ScopedVector<WebRtcMediaStreamAdapter> local_streams_;
+  std::vector<std::unique_ptr<WebRtcMediaStreamAdapter>> local_streams_;
 
   base::WeakPtr<PeerConnectionTracker> peer_connection_tracker_;
 
@@ -263,12 +272,18 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
   int num_local_candidates_ipv4_ = 0;
   int num_local_candidates_ipv6_ = 0;
 
-  // To make sure the observer is released after the native_peer_connection_,
-  // it has to come first.
+  // To make sure the observers are released after native_peer_connection_,
+  // they have to come first.
   scoped_refptr<Observer> peer_connection_observer_;
+  scoped_refptr<webrtc::UMAObserver> uma_observer_;
 
   // |native_peer_connection_| is the libjingle native PeerConnection object.
   scoped_refptr<webrtc::PeerConnectionInterface> native_peer_connection_;
+
+  // The last applied configuration. Used so that the constraints
+  // used when constructing the PeerConnection carry over when
+  // SetConfiguration is called.
+  webrtc::PeerConnectionInterface::RTCConfiguration configuration_;
 
   // Record info about the first SessionDescription from the local and
   // remote side to record UMA stats once both are set.  We only check
@@ -277,10 +292,9 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
   std::unique_ptr<FirstSessionDescription> first_local_description_;
   std::unique_ptr<FirstSessionDescription> first_remote_description_;
 
-  typedef std::map<webrtc::MediaStreamInterface*,
-      content::RemoteMediaStreamImpl*> RemoteStreamMap;
-  RemoteStreamMap remote_streams_;
-  scoped_refptr<webrtc::UMAObserver> uma_observer_;
+  std::map<webrtc::MediaStreamInterface*,
+           std::unique_ptr<content::RemoteMediaStreamImpl>>
+      remote_streams_;
   base::TimeTicks ice_connection_checking_start_;
 
   // Track which ICE Connection state that this PeerConnection has gone through.

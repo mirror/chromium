@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "minidump/minidump_simple_string_dictionary_writer.h"
+
 #include <utility>
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "base/stl_util.h"
-#include "minidump/minidump_simple_string_dictionary_writer.h"
 #include "util/file/file_writer.h"
 #include "util/numeric/safe_assignment.h"
 
@@ -33,8 +33,8 @@ MinidumpSimpleStringDictionaryEntryWriter::
 }
 
 const MinidumpSimpleStringDictionaryEntry*
-MinidumpSimpleStringDictionaryEntryWriter::MinidumpSimpleStringDictionaryEntry()
-    const {
+MinidumpSimpleStringDictionaryEntryWriter::
+    GetMinidumpSimpleStringDictionaryEntry() const {
   DCHECK_EQ(state(), kStateWritable);
 
   return &entry_;
@@ -99,7 +99,8 @@ MinidumpSimpleStringDictionaryWriter::MinidumpSimpleStringDictionaryWriter()
 }
 
 MinidumpSimpleStringDictionaryWriter::~MinidumpSimpleStringDictionaryWriter() {
-  STLDeleteContainerPairSecondPointers(entries_.begin(), entries_.end());
+  for (auto& item : entries_)
+    delete item.second;
 }
 
 void MinidumpSimpleStringDictionaryWriter::InitializeFromMap(
@@ -178,7 +179,7 @@ bool MinidumpSimpleStringDictionaryWriter::WriteObject(
   std::vector<WritableIoVec> iovecs(1, iov);
 
   for (const auto& key_entry : entries_) {
-    iov.iov_base = key_entry.second->MinidumpSimpleStringDictionaryEntry();
+    iov.iov_base = key_entry.second->GetMinidumpSimpleStringDictionaryEntry();
     iov.iov_len = sizeof(MinidumpSimpleStringDictionaryEntry);
     iovecs.push_back(iov);
   }

@@ -32,26 +32,29 @@
 namespace blink {
 
 class SetNodeAttributeCommand final : public SimpleEditCommand {
-public:
-    static SetNodeAttributeCommand* create(Element* element, const QualifiedName& attribute, const AtomicString& value)
-    {
-        return new SetNodeAttributeCommand(element, attribute, value);
-    }
+ public:
+  static SetNodeAttributeCommand* Create(Element* element,
+                                         const QualifiedName& attribute,
+                                         const AtomicString& value) {
+    return new SetNodeAttributeCommand(element, attribute, value);
+  }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    SetNodeAttributeCommand(Element*, const QualifiedName& attribute, const AtomicString& value);
+ private:
+  SetNodeAttributeCommand(Element*,
+                          const QualifiedName& attribute,
+                          const AtomicString& value);
 
-    void doApply(EditingState*) override;
-    void doUnapply() override;
+  void DoApply(EditingState*) override;
+  void DoUnapply() override;
 
-    Member<Element> m_element;
-    QualifiedName m_attribute;
-    AtomicString m_value;
-    AtomicString m_oldValue;
+  Member<Element> element_;
+  QualifiedName attribute_;
+  AtomicString value_;
+  AtomicString old_value_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SetNodeAttributeCommand_h
+#endif  // SetNodeAttributeCommand_h

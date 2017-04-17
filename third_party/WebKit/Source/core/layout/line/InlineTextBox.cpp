@@ -1,7 +1,8 @@
 /*
  * (C) 1999 Lars Knoll (knoll@kde.org)
  * (C) 2000 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ *               All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -32,599 +33,699 @@
 #include "core/paint/InlineTextBoxPainter.h"
 #include "platform/fonts/CharacterRange.h"
 #include "platform/fonts/FontCache.h"
-#include "platform/fonts/shaping/SimpleShaper.h"
-#include "wtf/Vector.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 #include <algorithm>
 
 namespace blink {
 
 struct SameSizeAsInlineTextBox : public InlineBox {
-    unsigned variables[1];
-    unsigned short variables2[2];
-    void* pointers[2];
+  unsigned variables[1];
+  unsigned short variables2[2];
+  void* pointers[2];
 };
 
-static_assert(sizeof(InlineTextBox) == sizeof(SameSizeAsInlineTextBox), "InlineTextBox should stay small");
+static_assert(sizeof(InlineTextBox) == sizeof(SameSizeAsInlineTextBox),
+              "InlineTextBox should stay small");
 
 typedef WTF::HashMap<const InlineTextBox*, LayoutRect> InlineTextBoxOverflowMap;
-static InlineTextBoxOverflowMap* gTextBoxesWithOverflow;
+static InlineTextBoxOverflowMap* g_text_boxes_with_overflow;
 
-void InlineTextBox::destroy()
-{
-    AbstractInlineTextBox::willDestroy(this);
+void InlineTextBox::Destroy() {
+  AbstractInlineTextBox::WillDestroy(this);
 
-    if (!knownToHaveNoOverflow() && gTextBoxesWithOverflow)
-        gTextBoxesWithOverflow->remove(this);
-    InlineTextBoxPainter::removeFromTextBlobCache(*this);
-    InlineBox::destroy();
+  if (!KnownToHaveNoOverflow() && g_text_boxes_with_overflow)
+    g_text_boxes_with_overflow->erase(this);
+  InlineBox::Destroy();
 }
 
-void InlineTextBox::offsetRun(int delta)
-{
-    ASSERT(!isDirty());
-    InlineTextBoxPainter::removeFromTextBlobCache(*this);
-    m_start += delta;
+void InlineTextBox::OffsetRun(int delta) {
+  DCHECK(!IsDirty());
+  start_ += delta;
 }
 
-void InlineTextBox::markDirty()
-{
-    // FIXME: Is it actually possible to try and paint a dirty InlineTextBox?
-    InlineTextBoxPainter::removeFromTextBlobCache(*this);
-
-    m_len = 0;
-    m_start = 0;
-    InlineBox::markDirty();
+void InlineTextBox::MarkDirty() {
+  len_ = 0;
+  start_ = 0;
+  InlineBox::MarkDirty();
 }
 
-LayoutRect InlineTextBox::logicalOverflowRect() const
-{
-    if (knownToHaveNoOverflow() || !gTextBoxesWithOverflow)
-        return logicalFrameRect();
+LayoutRect InlineTextBox::LogicalOverflowRect() const {
+  if (KnownToHaveNoOverflow() || !g_text_boxes_with_overflow)
+    return LogicalFrameRect();
 
-    const auto& it = gTextBoxesWithOverflow->find(this);
-    if (it != gTextBoxesWithOverflow->end())
-        return it->value;
+  const auto& it = g_text_boxes_with_overflow->Find(this);
+  if (it != g_text_boxes_with_overflow->end())
+    return it->value;
 
-    return logicalFrameRect();
+  return LogicalFrameRect();
 }
 
-void InlineTextBox::setLogicalOverflowRect(const LayoutRect& rect)
-{
-    ASSERT(!knownToHaveNoOverflow());
-    DCHECK(rect != logicalFrameRect());
-    if (!gTextBoxesWithOverflow)
-        gTextBoxesWithOverflow = new InlineTextBoxOverflowMap;
-    gTextBoxesWithOverflow->set(this, rect);
+void InlineTextBox::SetLogicalOverflowRect(const LayoutRect& rect) {
+  DCHECK(!KnownToHaveNoOverflow());
+  DCHECK(rect != LogicalFrameRect());
+  if (!g_text_boxes_with_overflow)
+    g_text_boxes_with_overflow = new InlineTextBoxOverflowMap;
+  g_text_boxes_with_overflow->Set(this, rect);
 }
 
-void InlineTextBox::move(const LayoutSize& delta)
-{
-    InlineBox::move(delta);
+void InlineTextBox::Move(const LayoutSize& delta) {
+  InlineBox::Move(delta);
 
-    if (!knownToHaveNoOverflow() && gTextBoxesWithOverflow) {
-        const auto& it = gTextBoxesWithOverflow->find(this);
-        if (it != gTextBoxesWithOverflow->end())
-            it->value.move(isHorizontal() ? delta : delta.transposedSize());
-    }
+  if (!KnownToHaveNoOverflow() && g_text_boxes_with_overflow) {
+    const auto& it = g_text_boxes_with_overflow->Find(this);
+    if (it != g_text_boxes_with_overflow->end())
+      it->value.Move(IsHorizontal() ? delta : delta.TransposedSize());
+  }
 }
 
-int InlineTextBox::baselinePosition(FontBaseline baselineType) const
-{
-    if (!isText() || !parent())
-        return 0;
-    if (parent()->getLineLayoutItem() == getLineLayoutItem().parent())
-        return parent()->baselinePosition(baselineType);
-    return LineLayoutBoxModel(getLineLayoutItem().parent()).baselinePosition(baselineType, isFirstLineStyle(), isHorizontal() ? HorizontalLine : VerticalLine, PositionOnContainingLine);
+int InlineTextBox::BaselinePosition(FontBaseline baseline_type) const {
+  if (!IsText() || !Parent())
+    return 0;
+  if (Parent()->GetLineLayoutItem() == GetLineLayoutItem().Parent())
+    return Parent()->BaselinePosition(baseline_type);
+  return LineLayoutBoxModel(GetLineLayoutItem().Parent())
+      .BaselinePosition(baseline_type, IsFirstLineStyle(),
+                        IsHorizontal() ? kHorizontalLine : kVerticalLine,
+                        kPositionOnContainingLine);
 }
 
-LayoutUnit InlineTextBox::lineHeight() const
-{
-    if (!isText() || !getLineLayoutItem().parent())
-        return LayoutUnit();
-    if (getLineLayoutItem().isBR())
-        return LayoutUnit(LineLayoutBR(getLineLayoutItem()).lineHeight(isFirstLineStyle()));
-    if (parent()->getLineLayoutItem() == getLineLayoutItem().parent())
-        return parent()->lineHeight();
-    return LineLayoutBoxModel(getLineLayoutItem().parent()).lineHeight(isFirstLineStyle(), isHorizontal() ? HorizontalLine : VerticalLine, PositionOnContainingLine);
+LayoutUnit InlineTextBox::LineHeight() const {
+  if (!IsText() || !GetLineLayoutItem().Parent())
+    return LayoutUnit();
+  if (GetLineLayoutItem().IsBR())
+    return LayoutUnit(
+        LineLayoutBR(GetLineLayoutItem()).LineHeight(IsFirstLineStyle()));
+  if (Parent()->GetLineLayoutItem() == GetLineLayoutItem().Parent())
+    return Parent()->LineHeight();
+  return LineLayoutBoxModel(GetLineLayoutItem().Parent())
+      .LineHeight(IsFirstLineStyle(),
+                  IsHorizontal() ? kHorizontalLine : kVerticalLine,
+                  kPositionOnContainingLine);
 }
 
-bool InlineTextBox::isSelected(int startPos, int endPos) const
-{
-    int sPos = std::max(startPos - m_start, 0);
+bool InlineTextBox::IsSelected(int start_pos, int end_pos) const {
+  int s_pos = std::max(start_pos - start_, 0);
+  // The position after a hard line break is considered to be past its end.
+  // See the corresponding code in InlineTextBox::getSelectionState.
+  int e_pos = std::min(end_pos - start_, int(len_) + (IsLineBreak() ? 0 : 1));
+  return (s_pos < e_pos);
+}
+
+SelectionState InlineTextBox::GetSelectionState() const {
+  SelectionState state = GetLineLayoutItem().GetSelectionState();
+  if (state == SelectionStart || state == SelectionEnd ||
+      state == SelectionBoth) {
+    int start_pos, end_pos;
+    GetLineLayoutItem().SelectionStartEnd(start_pos, end_pos);
     // The position after a hard line break is considered to be past its end.
-    // See the corresponding code in InlineTextBox::getSelectionState.
-    int ePos = std::min(endPos - m_start, int(m_len) + (isLineBreak() ? 0 : 1));
-    return (sPos < ePos);
-}
+    // See the corresponding code in InlineTextBox::isSelected.
+    int last_selectable = Start() + Len() - (IsLineBreak() ? 1 : 0);
 
-SelectionState InlineTextBox::getSelectionState() const
-{
-    SelectionState state = getLineLayoutItem().getSelectionState();
-    if (state == SelectionStart || state == SelectionEnd || state == SelectionBoth) {
-        int startPos, endPos;
-        getLineLayoutItem().selectionStartEnd(startPos, endPos);
-        // The position after a hard line break is considered to be past its end.
-        // See the corresponding code in InlineTextBox::isSelected.
-        int lastSelectable = start() + len() - (isLineBreak() ? 1 : 0);
+    // FIXME: Remove -webkit-line-break: LineBreakAfterWhiteSpace.
+    int end_of_line_adjustment_for_css_line_break =
+        GetLineLayoutItem().Style()->GetLineBreak() == kLineBreakAfterWhiteSpace
+            ? -1
+            : 0;
+    bool start = (state != SelectionEnd && start_pos >= start_ &&
+                  start_pos <= start_ + len_ +
+                                   end_of_line_adjustment_for_css_line_break);
+    bool end = (state != SelectionStart && end_pos > start_ &&
+                end_pos <= last_selectable);
+    if (start && end)
+      state = SelectionBoth;
+    else if (start)
+      state = SelectionStart;
+    else if (end)
+      state = SelectionEnd;
+    else if ((state == SelectionEnd || start_pos < start_) &&
+             (state == SelectionStart || end_pos > last_selectable))
+      state = SelectionInside;
+    else if (state == SelectionBoth)
+      state = SelectionNone;
+  }
 
-        // FIXME: Remove -webkit-line-break: LineBreakAfterWhiteSpace.
-        int endOfLineAdjustmentForCSSLineBreak = getLineLayoutItem().style()->getLineBreak() == LineBreakAfterWhiteSpace ? -1 : 0;
-        bool start = (state != SelectionEnd && startPos >= m_start && startPos <= m_start + m_len + endOfLineAdjustmentForCSSLineBreak);
-        bool end = (state != SelectionStart && endPos > m_start && endPos <= lastSelectable);
-        if (start && end)
-            state = SelectionBoth;
-        else if (start)
-            state = SelectionStart;
-        else if (end)
-            state = SelectionEnd;
-        else if ((state == SelectionEnd || startPos < m_start)
-            && (state == SelectionStart || endPos > lastSelectable))
-            state = SelectionInside;
-        else if (state == SelectionBoth)
-            state = SelectionNone;
-    }
-
-    // If there are ellipsis following, make sure their selection is updated.
-    if (m_truncation != cNoTruncation && root().ellipsisBox()) {
-        EllipsisBox* ellipsis = root().ellipsisBox();
-        if (state != SelectionNone) {
-            int start, end;
-            selectionStartEnd(start, end);
-            // The ellipsis should be considered to be selected if the end of
-            // the selection is past the beginning of the truncation and the
-            // beginning of the selection is before or at the beginning of the
-            // truncation.
-            ellipsis->setSelectionState(end >= m_truncation && start <= m_truncation ?
-                SelectionInside : SelectionNone);
-        } else {
-            ellipsis->setSelectionState(SelectionNone);
-        }
-    }
-
-    return state;
-}
-
-bool InlineTextBox::hasWrappedSelectionNewline() const
-{
-    // TODO(wkorman): We shouldn't need layout at this point and it should
-    // be enforced by DocumentLifecycle. http://crbug.com/537821
-    // Bail out as currently looking up selection state can cause the editing
-    // code can force a re-layout while scrutinizing the editing position, and
-    // InlineTextBox instances are not guaranteed to survive a re-layout.
-    if (getLineLayoutItem().needsLayout())
-        return false;
-
-    SelectionState state = getSelectionState();
-    return (state == SelectionStart || state == SelectionInside)
-        // Checking last leaf child can be slow, so we make sure to do this only
-        // after the other simple conditionals.
-        && (root().lastLeafChild() == this)
-        // It's possible to have mixed LTR/RTL on a single line, and we only
-        // want to paint a newline when we're the last leaf child and we make
-        // sure there isn't a differently-directioned box following us.
-        && ((!isLeftToRightDirection() && root().firstSelectedBox() == this)
-            || (isLeftToRightDirection() && root().lastSelectedBox() == this));
-}
-
-float InlineTextBox::newlineSpaceWidth() const
-{
-    const ComputedStyle& styleToUse = getLineLayoutItem().styleRef(isFirstLineStyle());
-    return styleToUse.font().spaceWidth();
-}
-
-LayoutRect InlineTextBox::localSelectionRect(int startPos, int endPos) const
-{
-    int sPos = std::max(startPos - m_start, 0);
-    int ePos = std::min(endPos - m_start, (int)m_len);
-
-    if (sPos > ePos)
-        return LayoutRect();
-
-    FontCachePurgePreventer fontCachePurgePreventer;
-
-    LayoutUnit selTop = root().selectionTop();
-    LayoutUnit selHeight = root().selectionHeight();
-    const ComputedStyle& styleToUse = getLineLayoutItem().styleRef(isFirstLineStyle());
-    const Font& font = styleToUse.font();
-
-    StringBuilder charactersWithHyphen;
-    bool respectHyphen = ePos == m_len && hasHyphen();
-    TextRun textRun = constructTextRun(styleToUse, font, respectHyphen ? &charactersWithHyphen : 0);
-
-    LayoutPoint startingPoint = LayoutPoint(logicalLeft(), selTop);
-    LayoutRect r;
-    if (sPos || ePos != static_cast<int>(m_len)) {
-        r = LayoutRect(enclosingIntRect(font.selectionRectForText(textRun, FloatPoint(startingPoint), selHeight, sPos, ePos)));
-    } else { // Avoid computing the font width when the entire line box is selected as an optimization.
-        r = LayoutRect(enclosingIntRect(LayoutRect(startingPoint, LayoutSize(m_logicalWidth, selHeight))));
-    }
-
-    LayoutUnit logicalWidth = r.width();
-    if (r.x() > logicalRight())
-        logicalWidth = LayoutUnit();
-    else if (r.maxX() > logicalRight())
-        logicalWidth = logicalRight() - r.x();
-
-    LayoutPoint topPoint;
-    LayoutUnit width;
-    LayoutUnit height;
-    if (isHorizontal()) {
-        topPoint = LayoutPoint(r.x(), selTop);
-        width = logicalWidth;
-        height = selHeight;
-        if (hasWrappedSelectionNewline()) {
-            if (!isLeftToRightDirection())
-                topPoint.setX(LayoutUnit(topPoint.x() - newlineSpaceWidth()));
-            width += newlineSpaceWidth();
-        }
+  // If there are ellipsis following, make sure their selection is updated.
+  if (truncation_ != kCNoTruncation && Root().GetEllipsisBox()) {
+    EllipsisBox* ellipsis = Root().GetEllipsisBox();
+    if (state != SelectionNone) {
+      int start, end;
+      SelectionStartEnd(start, end);
+      // The ellipsis should be considered to be selected if the end of the
+      // selection is past the beginning of the truncation and the beginning of
+      // the selection is before or at the beginning of the truncation.
+      ellipsis->SetSelectionState(end >= truncation_ && start <= truncation_
+                                      ? SelectionInside
+                                      : SelectionNone);
     } else {
-        topPoint = LayoutPoint(selTop, r.x());
-        width = selHeight;
-        height = logicalWidth;
-        // TODO(wkorman): RTL text embedded in top-to-bottom text can create
-        // bottom-to-top situations. Add tests and ensure we handle correctly.
-        if (hasWrappedSelectionNewline())
-            height += newlineSpaceWidth();
+      ellipsis->SetSelectionState(SelectionNone);
     }
+  }
 
-    return LayoutRect(topPoint, LayoutSize(width, height));
+  return state;
 }
 
-void InlineTextBox::deleteLine()
-{
-    getLineLayoutItem().removeTextBox(this);
-    destroy();
-}
+bool InlineTextBox::HasWrappedSelectionNewline() const {
+  DCHECK(!GetLineLayoutItem().NeedsLayout());
 
-void InlineTextBox::extractLine()
-{
-    if (extracted())
-        return;
-
-    getLineLayoutItem().extractTextBox(this);
-}
-
-void InlineTextBox::attachLine()
-{
-    if (!extracted())
-        return;
-
-    getLineLayoutItem().attachTextBox(this);
-}
-
-void InlineTextBox::setTruncation(unsigned truncation)
-{
-    if (truncation == m_truncation)
-        return;
-
-    m_truncation = truncation;
-    InlineTextBoxPainter::removeFromTextBlobCache(*this);
-}
-
-void InlineTextBox::clearTruncation()
-{
-    setTruncation(cNoTruncation);
-}
-
-LayoutUnit InlineTextBox::placeEllipsisBox(bool flowIsLTR, LayoutUnit visibleLeftEdge, LayoutUnit visibleRightEdge, LayoutUnit ellipsisWidth, LayoutUnit &truncatedWidth, bool& foundBox)
-{
-    if (foundBox) {
-        setTruncation(cFullTruncation);
-        return LayoutUnit(-1);
-    }
-
-    // For LTR this is the left edge of the box, for RTL, the right edge in parent coordinates.
-    LayoutUnit ellipsisX = flowIsLTR ? visibleRightEdge - ellipsisWidth : visibleLeftEdge + ellipsisWidth;
-
-    // Criteria for full truncation:
-    // LTR: the left edge of the ellipsis is to the left of our text run.
-    // RTL: the right edge of the ellipsis is to the right of our text run.
-    bool ltrFullTruncation = flowIsLTR && ellipsisX <= logicalLeft();
-    bool rtlFullTruncation = !flowIsLTR && ellipsisX >= logicalLeft() + logicalWidth();
-    if (ltrFullTruncation || rtlFullTruncation) {
-        // Too far.  Just set full truncation, but return -1 and let the ellipsis just be placed at the edge of the box.
-        setTruncation(cFullTruncation);
-        foundBox = true;
-        return LayoutUnit(-1);
-    }
-
-    bool ltrEllipsisWithinBox = flowIsLTR && (ellipsisX < logicalRight());
-    bool rtlEllipsisWithinBox = !flowIsLTR && (ellipsisX > logicalLeft());
-    if (ltrEllipsisWithinBox || rtlEllipsisWithinBox) {
-        foundBox = true;
-
-        // The inline box may have different directionality than it's parent.  Since truncation
-        // behavior depends both on both the parent and the inline block's directionality, we
-        // must keep track of these separately.
-        bool ltr = isLeftToRightDirection();
-        if (ltr != flowIsLTR) {
-            // Width in pixels of the visible portion of the box, excluding the ellipsis.
-            int visibleBoxWidth = visibleRightEdge - visibleLeftEdge - ellipsisWidth;
-            ellipsisX = flowIsLTR ? logicalLeft() + visibleBoxWidth : logicalRight() - visibleBoxWidth;
-        }
-
-        int offset = offsetForPosition(ellipsisX, false);
-        if (offset == 0) {
-            // No characters should be laid out.  Set ourselves to full truncation and place the ellipsis at the min of our start
-            // and the ellipsis edge.
-            setTruncation(cFullTruncation);
-            truncatedWidth += ellipsisWidth;
-            return std::min(ellipsisX, logicalLeft());
-        }
-
-        // Set the truncation index on the text run.
-        setTruncation(offset);
-
-        // If we got here that means that we were only partially truncated and we need to return the pixel offset at which
-        // to place the ellipsis. Where the text and its flow have opposite directions then our offset into the text is at
-        // the start of the part that will be visible.
-        LayoutUnit widthOfVisibleText(getLineLayoutItem().width(ltr == flowIsLTR ? m_start : offset, ltr == flowIsLTR ? offset : m_len - offset, textPos(), flowIsLTR ? LTR : RTL, isFirstLineStyle()));
-
-        // The ellipsis needs to be placed just after the last visible character.
-        // Where "after" is defined by the flow directionality, not the inline
-        // box directionality.
-        // e.g. In the case of an LTR inline box truncated in an RTL flow then we can
-        // have a situation such as |Hello| -> |...He|
-        truncatedWidth += widthOfVisibleText + ellipsisWidth;
-        if (flowIsLTR)
-            return logicalLeft() + widthOfVisibleText;
-        return logicalRight() - widthOfVisibleText - ellipsisWidth;
-    }
-    truncatedWidth += logicalWidth();
-    return LayoutUnit(-1);
-}
-
-bool InlineTextBox::isLineBreak() const
-{
-    return getLineLayoutItem().isBR() || (getLineLayoutItem().style()->preserveNewline() && len() == 1 && (*getLineLayoutItem().text().impl())[start()] == '\n');
-}
-
-bool InlineTextBox::nodeAtPoint(HitTestResult& result, const HitTestLocation& locationInContainer, const LayoutPoint& accumulatedOffset, LayoutUnit /* lineTop */, LayoutUnit /*lineBottom*/)
-{
-    if (isLineBreak() || m_truncation == cFullTruncation)
-        return false;
-
-    LayoutPoint boxOrigin = locationIncludingFlipping();
-    boxOrigin.moveBy(accumulatedOffset);
-    LayoutRect rect(boxOrigin, size());
-    if (visibleToHitTestRequest(result.hitTestRequest()) && locationInContainer.intersects(rect)) {
-        getLineLayoutItem().updateHitTestResult(result, flipForWritingMode(locationInContainer.point() - toLayoutSize(accumulatedOffset)));
-        if (result.addNodeToListBasedTestResult(getLineLayoutItem().node(), locationInContainer, rect) == StopHitTesting)
-            return true;
-    }
+  SelectionState state = GetSelectionState();
+  if (state != SelectionStart && state != SelectionInside)
     return false;
-}
 
-bool InlineTextBox::getEmphasisMarkPosition(const ComputedStyle& style, TextEmphasisPosition& emphasisPosition) const
-{
-    // This function returns true if there are text emphasis marks and they are suppressed by ruby text.
-    if (style.getTextEmphasisMark() == TextEmphasisMarkNone)
-        return false;
+  // Checking last leaf child can be slow, so we make sure to do this
+  // only after checking selection state.
+  if (Root().LastLeafChild() != this)
+    return false;
 
-    emphasisPosition = style.getTextEmphasisPosition();
-    if (emphasisPosition == TextEmphasisPositionUnder)
-        return true; // Ruby text is always over, so it cannot suppress emphasis marks under.
+  // It's possible to have mixed LTR/RTL on a single line, and we only
+  // want to paint a newline when we're the last leaf child and we make
+  // sure there isn't a differently-directioned box following us.
+  bool is_ltr = IsLeftToRightDirection();
+  if ((!is_ltr && Root().FirstSelectedBox() != this) ||
+      (is_ltr && Root().LastSelectedBox() != this))
+    return false;
 
-    LineLayoutBox containingBlock = getLineLayoutItem().containingBlock();
-    if (!containingBlock.isRubyBase())
-        return true; // This text is not inside a ruby base, so it does not have ruby text over it.
-
-    if (!containingBlock.parent().isRubyRun())
-        return true; // Cannot get the ruby text.
-
-    LineLayoutRubyText rubyText = LineLayoutRubyRun(containingBlock.parent()).rubyText();
-
-    // The emphasis marks over are suppressed only if there is a ruby text box and it not empty.
-    return !rubyText || !rubyText.firstLineBox();
-}
-
-void InlineTextBox::paint(const PaintInfo& paintInfo, const LayoutPoint& paintOffset, LayoutUnit /*lineTop*/, LayoutUnit /*lineBottom*/) const
-{
-    InlineTextBoxPainter(*this).paint(paintInfo, paintOffset);
-}
-
-void InlineTextBox::selectionStartEnd(int& sPos, int& ePos) const
-{
-    int startPos, endPos;
-    if (getLineLayoutItem().getSelectionState() == SelectionInside) {
-        startPos = 0;
-        endPos = getLineLayoutItem().textLength();
-    } else {
-        getLineLayoutItem().selectionStartEnd(startPos, endPos);
-        if (getLineLayoutItem().getSelectionState() == SelectionStart)
-            endPos = getLineLayoutItem().textLength();
-        else if (getLineLayoutItem().getSelectionState() == SelectionEnd)
-            startPos = 0;
-    }
-
-    sPos = std::max(startPos - m_start, 0);
-    ePos = std::min(endPos - m_start, (int)m_len);
-}
-
-void InlineTextBox::paintDocumentMarker(GraphicsContext& pt, const LayoutPoint& boxOrigin, DocumentMarker* marker, const ComputedStyle& style, const Font& font, bool grammar) const
-{
-    InlineTextBoxPainter(*this).paintDocumentMarker(pt, boxOrigin, marker, style, font, grammar);
-}
-
-void InlineTextBox::paintTextMatchMarkerForeground(const PaintInfo& paintInfo, const LayoutPoint& boxOrigin, DocumentMarker* marker, const ComputedStyle& style, const Font& font) const
-{
-    InlineTextBoxPainter(*this).paintTextMatchMarkerForeground(paintInfo, boxOrigin, marker, style, font);
-}
-
-void InlineTextBox::paintTextMatchMarkerBackground(const PaintInfo& paintInfo, const LayoutPoint& boxOrigin, DocumentMarker* marker, const ComputedStyle& style, const Font& font) const
-{
-    InlineTextBoxPainter(*this).paintTextMatchMarkerBackground(paintInfo, boxOrigin, marker, style, font);
-}
-
-int InlineTextBox::caretMinOffset() const
-{
-    return m_start;
-}
-
-int InlineTextBox::caretMaxOffset() const
-{
-    return m_start + m_len;
-}
-
-LayoutUnit InlineTextBox::textPos() const
-{
-    // When computing the width of a text run, LayoutBlock::computeInlineDirectionPositionsForLine() doesn't include the actual offset
-    // from the containing block edge in its measurement. textPos() should be consistent so the text are laid out in the same width.
-    if (logicalLeft() == 0)
-        return LayoutUnit();
-    return logicalLeft() - root().logicalLeft();
-}
-
-int InlineTextBox::offsetForPosition(LayoutUnit lineOffset, bool includePartialGlyphs) const
-{
-    if (isLineBreak())
-        return 0;
-
-    if (lineOffset - logicalLeft() > logicalWidth())
-        return isLeftToRightDirection() ? len() : 0;
-    if (lineOffset - logicalLeft() < 0)
-        return isLeftToRightDirection() ? 0 : len();
-
-    LineLayoutText text = getLineLayoutItem();
-    const ComputedStyle& style = text.styleRef(isFirstLineStyle());
-    const Font& font = style.font();
-    return font.offsetForPosition(constructTextRun(style, font), (lineOffset - logicalLeft()).toFloat(), includePartialGlyphs);
-}
-
-LayoutUnit InlineTextBox::positionForOffset(int offset) const
-{
-    ASSERT(offset >= m_start);
-    ASSERT(offset <= m_start + m_len);
-
-    if (isLineBreak())
-        return logicalLeft();
-
-    LineLayoutText text = getLineLayoutItem();
-    const ComputedStyle& styleToUse = text.styleRef(isFirstLineStyle());
-    const Font& font = styleToUse.font();
-    int from = !isLeftToRightDirection() ? offset - m_start : 0;
-    int to = !isLeftToRightDirection() ? m_len : offset - m_start;
-    // FIXME: Do we need to add rightBearing here?
-    return LayoutUnit(font.selectionRectForText(constructTextRun(styleToUse, font), IntPoint(logicalLeft(), 0), 0, from, to).maxX());
-}
-
-bool InlineTextBox::containsCaretOffset(int offset) const
-{
-    // Offsets before the box are never "in".
-    if (offset < m_start)
-        return false;
-
-    int pastEnd = m_start + m_len;
-
-    // Offsets inside the box (not at either edge) are always "in".
-    if (offset < pastEnd)
-        return true;
-
-    // Offsets outside the box are always "out".
-    if (offset > pastEnd)
-        return false;
-
-    // Offsets at the end are "out" for line breaks (they are on the next line).
-    if (isLineBreak())
-        return false;
-
-    // Offsets at the end are "in" for normal boxes (but the caller has to check affinity).
+  // If we're the last inline text box in containing block, our containing block
+  // is inline, and the selection continues into that block, then rely on the
+  // next inline text box (if any) to paint a wrapped new line as needed.
+  if (NextTextBox())
     return true;
+  auto root_block = Root().Block();
+  if (root_block.IsInline() && root_block.GetSelectionState() != SelectionEnd &&
+      root_block.GetSelectionState() != SelectionBoth &&
+      root_block.InlineBoxWrapper() &&
+      ((is_ltr && root_block.InlineBoxWrapper()->NextOnLine()) ||
+       (!is_ltr && root_block.InlineBoxWrapper()->PrevOnLine()))) {
+    return false;
+  }
+
+  return true;
 }
 
-void InlineTextBox::characterWidths(Vector<float>& widths) const
-{
-    if (!m_len)
-        return;
-
-    FontCachePurgePreventer fontCachePurgePreventer;
-    ASSERT(getLineLayoutItem().text());
-
-    const ComputedStyle& styleToUse = getLineLayoutItem().styleRef(isFirstLineStyle());
-    const Font& font = styleToUse.font();
-
-    TextRun textRun = constructTextRun(styleToUse, font);
-    Vector<CharacterRange> ranges = font.individualCharacterRanges(textRun);
-    DCHECK_EQ(ranges.size(), m_len);
-
-    widths.resize(ranges.size());
-    for (unsigned i = 0; i < ranges.size(); i++)
-        widths[i] = ranges[i].width();
+float InlineTextBox::NewlineSpaceWidth() const {
+  const ComputedStyle& style_to_use =
+      GetLineLayoutItem().StyleRef(IsFirstLineStyle());
+  return style_to_use.GetFont().SpaceWidth();
 }
 
-TextRun InlineTextBox::constructTextRun(const ComputedStyle& style, const Font& font, StringBuilder* charactersWithHyphen) const
-{
-    ASSERT(getLineLayoutItem().text());
+LayoutRect InlineTextBox::LocalSelectionRect(int start_pos, int end_pos) const {
+  int s_pos = std::max(start_pos - start_, 0);
+  int e_pos = std::min(end_pos - start_, (int)len_);
 
-    String string = getLineLayoutItem().text();
-    unsigned startPos = start();
-    unsigned length = len();
-    return constructTextRun(style, font, StringView(string, startPos, length), getLineLayoutItem().textLength() - startPos, charactersWithHyphen);
+  if (s_pos > e_pos)
+    return LayoutRect();
+
+  FontCachePurgePreventer font_cache_purge_preventer;
+
+  LayoutUnit sel_top = Root().SelectionTop();
+  LayoutUnit sel_height = Root().SelectionHeight();
+  const ComputedStyle& style_to_use =
+      GetLineLayoutItem().StyleRef(IsFirstLineStyle());
+  const Font& font = style_to_use.GetFont();
+
+  StringBuilder characters_with_hyphen;
+  bool respect_hyphen = e_pos == len_ && HasHyphen();
+  TextRun text_run = ConstructTextRun(
+      style_to_use, respect_hyphen ? &characters_with_hyphen : 0);
+
+  LayoutPoint starting_point = LayoutPoint(LogicalLeft(), sel_top);
+  LayoutRect r;
+  if (s_pos || e_pos != static_cast<int>(len_)) {
+    r = LayoutRect(EnclosingIntRect(
+        font.SelectionRectForText(text_run, FloatPoint(starting_point),
+                                  sel_height.ToInt(), s_pos, e_pos)));
+  } else {
+    // Avoid computing the font width when the entire line box is selected as an
+    // optimization.
+    r = LayoutRect(EnclosingIntRect(
+        LayoutRect(starting_point, LayoutSize(logical_width_, sel_height))));
+  }
+
+  LayoutUnit logical_width = r.Width();
+  if (r.X() > LogicalRight())
+    logical_width = LayoutUnit();
+  else if (r.MaxX() > LogicalRight())
+    logical_width = LogicalRight() - r.X();
+
+  LayoutPoint top_point;
+  LayoutUnit width;
+  LayoutUnit height;
+  if (IsHorizontal()) {
+    top_point = LayoutPoint(r.X(), sel_top);
+    width = logical_width;
+    height = sel_height;
+    if (HasWrappedSelectionNewline()) {
+      if (!IsLeftToRightDirection())
+        top_point.SetX(LayoutUnit(top_point.X() - NewlineSpaceWidth()));
+      width += NewlineSpaceWidth();
+    }
+  } else {
+    top_point = LayoutPoint(sel_top, r.X());
+    width = sel_height;
+    height = logical_width;
+    // TODO(wkorman): RTL text embedded in top-to-bottom text can create
+    // bottom-to-top situations. Add tests and ensure we handle correctly.
+    if (HasWrappedSelectionNewline())
+      height += NewlineSpaceWidth();
+  }
+
+  return LayoutRect(top_point, LayoutSize(width, height));
 }
 
-TextRun InlineTextBox::constructTextRun(const ComputedStyle& style, const Font& font, StringView string, int maximumLength, StringBuilder* charactersWithHyphen) const
-{
-    if (charactersWithHyphen) {
-        const AtomicString& hyphenString = style.hyphenString();
-        charactersWithHyphen->reserveCapacity(string.length() + hyphenString.length());
-        charactersWithHyphen->append(string);
-        charactersWithHyphen->append(hyphenString);
-        string = charactersWithHyphen->toString();
-        maximumLength = string.length();
+void InlineTextBox::DeleteLine() {
+  GetLineLayoutItem().RemoveTextBox(this);
+  Destroy();
+}
+
+void InlineTextBox::ExtractLine() {
+  if (Extracted())
+    return;
+
+  GetLineLayoutItem().ExtractTextBox(this);
+}
+
+void InlineTextBox::AttachLine() {
+  if (!Extracted())
+    return;
+
+  GetLineLayoutItem().AttachTextBox(this);
+}
+
+void InlineTextBox::SetTruncation(unsigned truncation) {
+  if (truncation == truncation_)
+    return;
+
+  truncation_ = truncation;
+}
+
+void InlineTextBox::ClearTruncation() {
+  SetTruncation(kCNoTruncation);
+}
+
+LayoutUnit InlineTextBox::PlaceEllipsisBox(bool flow_is_ltr,
+                                           LayoutUnit visible_left_edge,
+                                           LayoutUnit visible_right_edge,
+                                           LayoutUnit ellipsis_width,
+                                           LayoutUnit& truncated_width,
+                                           bool& found_box,
+                                           LayoutUnit logical_left_offset) {
+  if (found_box) {
+    SetTruncation(kCFullTruncation);
+    return LayoutUnit(-1);
+  }
+
+  // Criteria for full truncation:
+  // LTR: the left edge of the ellipsis is to the left of our text run.
+  // RTL: the right edge of the ellipsis is to the right of our text run.
+  LayoutUnit adjusted_logical_left = logical_left_offset + LogicalLeft();
+
+  // For LTR this is the left edge of the box, for RTL, the right edge in parent
+  // coordinates.
+  LayoutUnit ellipsis_x = flow_is_ltr ? visible_right_edge - ellipsis_width
+                                      : visible_left_edge + ellipsis_width;
+
+  if (IsLeftToRightDirection() == flow_is_ltr && !flow_is_ltr &&
+      logical_left_offset < 0)
+    ellipsis_x -= logical_left_offset;
+
+  bool ltr_full_truncation = flow_is_ltr && ellipsis_x <= adjusted_logical_left;
+  bool rtl_full_truncation =
+      !flow_is_ltr &&
+      ellipsis_x > adjusted_logical_left + LogicalWidth() + ellipsis_width;
+  if (ltr_full_truncation || rtl_full_truncation) {
+    // Too far.  Just set full truncation, but return -1 and let the ellipsis
+    // just be placed at the edge of the box.
+    SetTruncation(kCFullTruncation);
+    found_box = true;
+    return LayoutUnit(-1);
+  }
+
+  bool ltr_ellipsis_within_box =
+      flow_is_ltr && ellipsis_x < adjusted_logical_left + LogicalWidth();
+  bool rtl_ellipsis_within_box =
+      !flow_is_ltr && ellipsis_x > adjusted_logical_left;
+  if (ltr_ellipsis_within_box || rtl_ellipsis_within_box) {
+    found_box = true;
+
+    // The inline box may have different directionality than it's parent. Since
+    // truncation behavior depends both on both the parent and the inline
+    // block's directionality, we must keep track of these separately.
+    bool ltr = IsLeftToRightDirection();
+    if (ltr != flow_is_ltr) {
+      // Width in pixels of the visible portion of the box, excluding the
+      // ellipsis.
+      LayoutUnit visible_box_width =
+          visible_right_edge - visible_left_edge - ellipsis_width;
+      ellipsis_x = flow_is_ltr ? adjusted_logical_left + visible_box_width
+                               : LogicalRight() - visible_box_width;
     }
 
-    ASSERT(maximumLength >= static_cast<int>(string.length()));
+    // We measure the text using the second half of the previous character and
+    // the first half of the current one when the text is rtl. This gives a
+    // more accurate position in rtl text.
+    int offset = OffsetForPosition(ellipsis_x, !ltr);
+    // Full truncation is only necessary when we're flowing left-to-right.
+    if (flow_is_ltr && offset == 0 && ltr == flow_is_ltr) {
+      // No characters should be laid out.  Set ourselves to full truncation and
+      // place the ellipsis at the min of our start and the ellipsis edge.
+      SetTruncation(kCFullTruncation);
+      truncated_width += ellipsis_width;
+      return std::min(ellipsis_x, LogicalLeft());
+    }
 
-    TextRun run(string, textPos().toFloat(), expansion(), expansionBehavior(), direction(), dirOverride() || style.rtlOrdering() == VisualOrder);
-    run.setTabSize(!style.collapseWhiteSpace(), style.getTabSize());
-    run.setTextJustify(style.getTextJustify());
+    // When the text's direction doesn't match the flow's direction we can
+    // choose an offset that starts outside the visible box: compensate for that
+    // if necessary.
+    if (flow_is_ltr != ltr && LogicalLeft() < 0 && offset >= start_ &&
+        PositionForOffset(offset) < LogicalLeft().Abs())
+      offset++;
 
-    // Propagate the maximum length of the characters buffer to the TextRun, even when we're only processing a substring.
-    run.setCharactersLength(maximumLength);
-    ASSERT(run.charactersLength() >= run.length());
-    return run;
+    // Set the truncation index on the text run.
+    SetTruncation(offset);
+
+    // If we got here that means that we were only partially truncated and we
+    // need to return the pixel offset at which to place the ellipsis. Where the
+    // text and its flow have opposite directions then our offset into the text
+    // is at the start of the part that will be visible.
+    LayoutUnit width_of_visible_text(GetLineLayoutItem().Width(
+        ltr == flow_is_ltr ? start_ : start_ + offset,
+        ltr == flow_is_ltr ? offset : len_ - offset, TextPos(),
+        flow_is_ltr ? TextDirection::kLtr : TextDirection::kRtl,
+        IsFirstLineStyle()));
+
+    // The ellipsis needs to be placed just after the last visible character.
+    // Where "after" is defined by the flow directionality, not the inline
+    // box directionality.
+    // e.g. In the case of an LTR inline box truncated in an RTL flow then we
+    // can have a situation such as |Hello| -> |...He|
+    truncated_width += width_of_visible_text + ellipsis_width;
+    if (flow_is_ltr)
+      return LogicalLeft() + width_of_visible_text;
+    LayoutUnit result = LogicalRight() - width_of_visible_text - ellipsis_width;
+    return result;
+  }
+  truncated_width += LogicalWidth();
+  return LayoutUnit(-1);
 }
 
-TextRun InlineTextBox::constructTextRunForInspector(const ComputedStyle& style, const Font& font) const
-{
-    return InlineTextBox::constructTextRun(style, font);
+bool InlineTextBox::IsLineBreak() const {
+  return GetLineLayoutItem().IsBR() ||
+         (GetLineLayoutItem().Style()->PreserveNewline() && Len() == 1 &&
+          (*GetLineLayoutItem().GetText().Impl())[Start()] == '\n');
 }
 
-const char* InlineTextBox::boxName() const
-{
-    return "InlineTextBox";
+bool InlineTextBox::NodeAtPoint(HitTestResult& result,
+                                const HitTestLocation& location_in_container,
+                                const LayoutPoint& accumulated_offset,
+                                LayoutUnit /* lineTop */,
+                                LayoutUnit /*lineBottom*/) {
+  if (IsLineBreak() || truncation_ == kCFullTruncation)
+    return false;
+
+  LayoutPoint box_origin = PhysicalLocation();
+  box_origin.MoveBy(accumulated_offset);
+  LayoutRect rect(box_origin, Size());
+  if (VisibleToHitTestRequest(result.GetHitTestRequest()) &&
+      location_in_container.Intersects(rect)) {
+    GetLineLayoutItem().UpdateHitTestResult(
+        result, FlipForWritingMode(location_in_container.Point() -
+                                   ToLayoutSize(accumulated_offset)));
+    if (result.AddNodeToListBasedTestResult(GetLineLayoutItem().GetNode(),
+                                            location_in_container,
+                                            rect) == kStopHitTesting)
+      return true;
+  }
+  return false;
 }
 
-String InlineTextBox::debugName() const
-{
-    return String(boxName()) + " '" + text() + "'";
+bool InlineTextBox::GetEmphasisMarkPosition(
+    const ComputedStyle& style,
+    TextEmphasisPosition& emphasis_position) const {
+  // This function returns true if there are text emphasis marks and they are
+  // suppressed by ruby text.
+  if (style.GetTextEmphasisMark() == kTextEmphasisMarkNone)
+    return false;
+
+  emphasis_position = style.GetTextEmphasisPosition();
+  // Ruby text is always over, so it cannot suppress emphasis marks under.
+  if (emphasis_position == kTextEmphasisPositionUnder)
+    return true;
+
+  LineLayoutBox containing_block = GetLineLayoutItem().ContainingBlock();
+  // This text is not inside a ruby base, so it does not have ruby text over it.
+  if (!containing_block.IsRubyBase())
+    return true;
+
+  // Cannot get the ruby text.
+  if (!containing_block.Parent().IsRubyRun())
+    return true;
+
+  LineLayoutRubyText ruby_text =
+      LineLayoutRubyRun(containing_block.Parent()).RubyText();
+
+  // The emphasis marks over are suppressed only if there is a ruby text box and
+  // it not empty.
+  return !ruby_text || !ruby_text.FirstLineBox();
 }
 
-String InlineTextBox::text() const
-{
-    return getLineLayoutItem().text().substring(start(), len());
+void InlineTextBox::Paint(const PaintInfo& paint_info,
+                          const LayoutPoint& paint_offset,
+                          LayoutUnit /*lineTop*/,
+                          LayoutUnit /*lineBottom*/) const {
+  InlineTextBoxPainter(*this).Paint(paint_info, paint_offset);
+}
+
+void InlineTextBox::SelectionStartEnd(int& s_pos, int& e_pos) const {
+  int start_pos, end_pos;
+  if (GetLineLayoutItem().GetSelectionState() == SelectionInside) {
+    start_pos = 0;
+    end_pos = GetLineLayoutItem().TextLength();
+  } else {
+    GetLineLayoutItem().SelectionStartEnd(start_pos, end_pos);
+    if (GetLineLayoutItem().GetSelectionState() == SelectionStart)
+      end_pos = GetLineLayoutItem().TextLength();
+    else if (GetLineLayoutItem().GetSelectionState() == SelectionEnd)
+      start_pos = 0;
+  }
+
+  s_pos = std::max(start_pos - start_, 0);
+  e_pos = std::min(end_pos - start_, (int)len_);
+}
+
+void InlineTextBox::PaintDocumentMarker(GraphicsContext& pt,
+                                        const LayoutPoint& box_origin,
+                                        const DocumentMarker& marker,
+                                        const ComputedStyle& style,
+                                        const Font& font,
+                                        bool grammar) const {
+  InlineTextBoxPainter(*this).PaintDocumentMarker(pt, box_origin, marker, style,
+                                                  font, grammar);
+}
+
+void InlineTextBox::PaintTextMatchMarkerForeground(
+    const PaintInfo& paint_info,
+    const LayoutPoint& box_origin,
+    const DocumentMarker& marker,
+    const ComputedStyle& style,
+    const Font& font) const {
+  InlineTextBoxPainter(*this).PaintTextMatchMarkerForeground(
+      paint_info, box_origin, marker, style, font);
+}
+
+void InlineTextBox::PaintTextMatchMarkerBackground(
+    const PaintInfo& paint_info,
+    const LayoutPoint& box_origin,
+    const DocumentMarker& marker,
+    const ComputedStyle& style,
+    const Font& font) const {
+  InlineTextBoxPainter(*this).PaintTextMatchMarkerBackground(
+      paint_info, box_origin, marker, style, font);
+}
+
+int InlineTextBox::CaretMinOffset() const {
+  return start_;
+}
+
+int InlineTextBox::CaretMaxOffset() const {
+  return start_ + len_;
+}
+
+LayoutUnit InlineTextBox::TextPos() const {
+  // When computing the width of a text run, LayoutBlock::
+  // computeInlineDirectionPositionsForLine() doesn't include the actual offset
+  // from the containing block edge in its measurement. textPos() should be
+  // consistent so the text are laid out in the same width.
+  if (LogicalLeft() == 0)
+    return LayoutUnit();
+  return LogicalLeft() - Root().LogicalLeft();
+}
+
+int InlineTextBox::OffsetForPosition(LayoutUnit line_offset,
+                                     bool include_partial_glyphs) const {
+  if (IsLineBreak())
+    return 0;
+
+  if (line_offset - LogicalLeft() > LogicalWidth())
+    return IsLeftToRightDirection() ? Len() : 0;
+  if (line_offset - LogicalLeft() < 0)
+    return IsLeftToRightDirection() ? 0 : Len();
+
+  LineLayoutText text = GetLineLayoutItem();
+  const ComputedStyle& style = text.StyleRef(IsFirstLineStyle());
+  const Font& font = style.GetFont();
+  return font.OffsetForPosition(ConstructTextRun(style),
+                                (line_offset - LogicalLeft()).ToFloat(),
+                                include_partial_glyphs);
+}
+
+LayoutUnit InlineTextBox::PositionForOffset(int offset) const {
+  DCHECK_GE(offset, start_);
+  DCHECK_LE(offset, start_ + len_);
+
+  if (IsLineBreak())
+    return LogicalLeft();
+
+  LineLayoutText text = GetLineLayoutItem();
+  const ComputedStyle& style_to_use = text.StyleRef(IsFirstLineStyle());
+  const Font& font = style_to_use.GetFont();
+  int from = !IsLeftToRightDirection() ? offset - start_ : 0;
+  int to = !IsLeftToRightDirection() ? len_ : offset - start_;
+  // FIXME: Do we need to add rightBearing here?
+  return LayoutUnit(
+      font.SelectionRectForText(ConstructTextRun(style_to_use),
+                                IntPoint(LogicalLeft().ToInt(), 0), 0, from, to)
+          .MaxX());
+}
+
+bool InlineTextBox::ContainsCaretOffset(int offset) const {
+  // Offsets before the box are never "in".
+  if (offset < start_)
+    return false;
+
+  int past_end = start_ + len_;
+
+  // Offsets inside the box (not at either edge) are always "in".
+  if (offset < past_end)
+    return true;
+
+  // Offsets outside the box are always "out".
+  if (offset > past_end)
+    return false;
+
+  // Offsets at the end are "out" for line breaks (they are on the next line).
+  if (IsLineBreak())
+    return false;
+
+  // Offsets at the end are "in" for normal boxes (but the caller has to check
+  // affinity).
+  return true;
+}
+
+void InlineTextBox::CharacterWidths(Vector<float>& widths) const {
+  if (!len_)
+    return;
+
+  FontCachePurgePreventer font_cache_purge_preventer;
+  DCHECK(GetLineLayoutItem().GetText());
+
+  const ComputedStyle& style_to_use =
+      GetLineLayoutItem().StyleRef(IsFirstLineStyle());
+  const Font& font = style_to_use.GetFont();
+
+  TextRun text_run = ConstructTextRun(style_to_use);
+  Vector<CharacterRange> ranges = font.IndividualCharacterRanges(text_run);
+  DCHECK_EQ(ranges.size(), len_);
+
+  widths.Resize(ranges.size());
+  for (unsigned i = 0; i < ranges.size(); i++)
+    widths[i] = ranges[i].Width();
+}
+
+TextRun InlineTextBox::ConstructTextRun(
+    const ComputedStyle& style,
+    StringBuilder* characters_with_hyphen) const {
+  DCHECK(GetLineLayoutItem().GetText());
+
+  String string = GetLineLayoutItem().GetText();
+  unsigned start_pos = Start();
+  unsigned length = Len();
+  // Ensure |this| is in sync with the corresponding LayoutText. Checking here
+  // has less binary size/perf impact than in StringView().
+  CHECK_LE(start_pos, string.length());
+  CHECK_LE(length, string.length() - start_pos);
+  return ConstructTextRun(style, StringView(string, start_pos, length),
+                          GetLineLayoutItem().TextLength() - start_pos,
+                          characters_with_hyphen);
+}
+
+TextRun InlineTextBox::ConstructTextRun(
+    const ComputedStyle& style,
+    StringView string,
+    int maximum_length,
+    StringBuilder* characters_with_hyphen) const {
+  if (characters_with_hyphen) {
+    const AtomicString& hyphen_string = style.HyphenString();
+    characters_with_hyphen->ReserveCapacity(string.length() +
+                                            hyphen_string.length());
+    characters_with_hyphen->Append(string);
+    characters_with_hyphen->Append(hyphen_string);
+    string = characters_with_hyphen->ToString();
+    maximum_length = string.length();
+  }
+
+  DCHECK_GE(maximum_length, static_cast<int>(string.length()));
+
+  TextRun run(string, TextPos().ToFloat(), Expansion(), GetExpansionBehavior(),
+              Direction(),
+              DirOverride() || style.RtlOrdering() == EOrder::kVisual);
+  run.SetTabSize(!style.CollapseWhiteSpace(), style.GetTabSize());
+  run.SetTextJustify(style.GetTextJustify());
+
+  // Propagate the maximum length of the characters buffer to the TextRun, even
+  // when we're only processing a substring.
+  run.SetCharactersLength(maximum_length);
+  DCHECK_GE(run.CharactersLength(), run.length());
+  return run;
+}
+
+TextRun InlineTextBox::ConstructTextRunForInspector(
+    const ComputedStyle& style) const {
+  return InlineTextBox::ConstructTextRun(style);
+}
+
+const char* InlineTextBox::BoxName() const {
+  return "InlineTextBox";
+}
+
+String InlineTextBox::DebugName() const {
+  return String(BoxName()) + " '" + GetText() + "'";
+}
+
+String InlineTextBox::GetText() const {
+  return GetLineLayoutItem().GetText().Substring(Start(), Len());
 }
 
 #ifndef NDEBUG
 
-void InlineTextBox::showBox(int printedCharacters) const
-{
-    String value = text();
-    value.replace('\\', "\\\\");
-    value.replace('\n', "\\n");
-    printedCharacters += fprintf(stderr, "%s %p", boxName(), this);
-    for (; printedCharacters < showTreeCharacterOffset; printedCharacters++)
-        fputc(' ', stderr);
-    const LineLayoutText obj = getLineLayoutItem();
-    printedCharacters = fprintf(stderr, "\t%s %p", obj.name(), obj.debugPointer());
-    const int layoutObjectCharacterOffset = 75;
-    for (; printedCharacters < layoutObjectCharacterOffset; printedCharacters++)
-        fputc(' ', stderr);
-    fprintf(stderr, "(%d,%d) \"%s\"\n", start(), start() + len(), value.utf8().data());
+void InlineTextBox::ShowBox(int printed_characters) const {
+  String value = GetText();
+  value.Replace('\\', "\\\\");
+  value.Replace('\n', "\\n");
+  printed_characters += fprintf(stderr, "%s %p", BoxName(), this);
+  for (; printed_characters < kShowTreeCharacterOffset; printed_characters++)
+    fputc(' ', stderr);
+  const LineLayoutText obj = GetLineLayoutItem();
+  printed_characters =
+      fprintf(stderr, "\t%s %p", obj.GetName(), obj.DebugPointer());
+  const int kLayoutObjectCharacterOffset = 75;
+  for (; printed_characters < kLayoutObjectCharacterOffset;
+       printed_characters++)
+    fputc(' ', stderr);
+  fprintf(stderr, "(%d,%d) \"%s\"\n", Start(), Start() + Len(),
+          value.Utf8().Data());
 }
 
 #endif
 
-} // namespace blink
+}  // namespace blink

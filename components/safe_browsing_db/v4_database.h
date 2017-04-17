@@ -5,44 +5,92 @@
 #ifndef COMPONENTS_SAFE_BROWSING_DB_V4_DATABASE_H_
 #define COMPONENTS_SAFE_BROWSING_DB_V4_DATABASE_H_
 
+#include <memory>
+#include <string>
+#include <unordered_map>
+#include <vector>
+
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "components/safe_browsing_db/v4_protocol_manager_util.h"
 #include "components/safe_browsing_db/v4_store.h"
 
+namespace subresource_filter {
+class SubresourceFilterBrowserTestImpl;
+}
+
 namespace safe_browsing {
 
 class V4Database;
 
-typedef base::Callback<void(std::unique_ptr<V4Database>)>
-    NewDatabaseReadyCallback;
+// Scheduled when the database has been read from disk and is ready to process
+// resource reputation requests.
+using NewDatabaseReadyCallback =
+    base::Callback<void(std::unique_ptr<V4Database>)>;
+
+// Scheduled when the checksum for all the stores in the database has been
+// verified to match the expected value. Stores for which the checksum did not
+// match are passed as the argument and need to be reset.
+using DatabaseReadyForUpdatesCallback =
+    base::Callback<void(const std::vector<ListIdentifier>&)>;
 
 // This callback is scheduled once the database has finished processing the
 // update requests for all stores and is ready to process the next set of update
 // requests.
-typedef base::Callback<void()> DatabaseUpdatedCallback;
+using DatabaseUpdatedCallback = base::Closure;
 
-// This hash_map maps the UpdateListIdentifiers to their corresponding in-memory
-// stores, which contain the hash prefixes for that UpdateListIdentifier as well
-// as manage their storage on disk.
-typedef base::hash_map<UpdateListIdentifier, std::unique_ptr<V4Store>> StoreMap;
+// Maps the ListIdentifiers to their corresponding in-memory stores, which
+// contain the hash prefixes for that ListIdentifier as well as manage their
+// storage on disk.
+using StoreMap = std::unordered_map<ListIdentifier, std::unique_ptr<V4Store>>;
 
-// Map of identifier for any store that had a hash prefix matching the given
-// full hash to the matching hash prefix.
-typedef base::hash_map<UpdateListIdentifier, HashPrefix> MatchedHashPrefixMap;
+// Associates metadata for a list with its ListIdentifier.
+class ListInfo {
+ public:
+  ListInfo(const bool fetch_updates,
+           const std::string& filename,
+           const ListIdentifier& list_id,
+           const SBThreatType sb_threat_type);
+  ~ListInfo();
+
+  const ListIdentifier& list_id() const { return list_id_; }
+  const std::string& filename() const { return filename_; }
+  SBThreatType sb_threat_type() const { return sb_threat_type_; }
+  bool fetch_updates() const { return fetch_updates_; }
+
+ private:
+  // Whether to fetch and store updates for this list.
+  bool fetch_updates_;
+
+  // The ASCII name of the file on disk. This file is created inside the
+  // user-data directory. For instance, the ListIdentifier could be for URL
+  // expressions for UwS on Windows platform, and the corresponding file on disk
+  // could be named: "UrlUws.store"
+  std::string filename_;
+
+  // The list being read from/written to the disk.
+  ListIdentifier list_id_;
+
+  // The threat type enum value for this store.
+  SBThreatType sb_threat_type_;
+
+  ListInfo() = delete;
+};
+
+using ListInfos = std::vector<ListInfo>;
 
 // Factory for creating V4Database. Tests implement this factory to create fake
 // databases for testing.
 class V4DatabaseFactory {
  public:
   virtual ~V4DatabaseFactory() {}
-  virtual V4Database* CreateV4Database(
+  virtual std::unique_ptr<V4Database> Create(
       const scoped_refptr<base::SequencedTaskRunner>& db_task_runner,
-      const base::FilePath& base_dir_path,
-      const StoreFileNameMap& store_file_name_map) = 0;
+      std::unique_ptr<StoreMap> store_map);
 };
 
 // The on-disk databases are shared among all profiles, as it doesn't contain
@@ -61,8 +109,8 @@ class V4Database {
   static void Create(
       const scoped_refptr<base::SequencedTaskRunner>& db_task_runner,
       const base::FilePath& base_path,
-      const StoreFileNameMap& store_file_name_map,
-      NewDatabaseReadyCallback callback);
+      const ListInfos& list_infos,
+      NewDatabaseReadyCallback new_db_callback);
 
   // Destroys the provided v4_database on its task_runner since this may be a
   // long operation.
@@ -78,23 +126,49 @@ class V4Database {
   // Returns the current state of each of the stores being managed.
   std::unique_ptr<StoreStateMap> GetStoreStateMap();
 
-  // Searches for a hash prefix matching the |full_hash| in stores in the
-  // database, filtered by |stores_to_look|, and returns the identifier of the
-  // store along with the matching hash prefix in |matched_hash_prefix_map|.
-  void GetStoresMatchingFullHash(
-      const FullHash& full_hash,
-      const base::hash_set<UpdateListIdentifier>& stores_to_look,
-      MatchedHashPrefixMap* matched_hash_prefix_map);
+  // Check if all the selected stores are available and populated.
+  // Returns false if any of |stores_to_check| don't have valid data.
+  // A store may be unavailble if either it hasn't yet gotten a proper
+  // full-update (just after install, or corrupted/missing file), or if it's
+  // not supported in this build (i.e. Chromium).
+  virtual bool AreStoresAvailable(const StoresToCheck& stores_to_check) const;
 
-  // Deletes the current database and creates a new one.
-  virtual bool ResetDatabase();
+  // Searches for a hash prefix matching the |full_hash| in stores in the
+  // database, filtered by |stores_to_check|, and returns the identifier of the
+  // store along with the matching hash prefix in |matched_hash_prefix_map|.
+  virtual void GetStoresMatchingFullHash(
+      const FullHash& full_hash,
+      const StoresToCheck& stores_to_check,
+      StoreAndHashPrefixes* matched_store_and_full_hashes);
+
+  // Resets the stores in |stores_to_reset| to an empty state. This is done if
+  // the checksum doesn't match the expected value.
+  void ResetStores(const std::vector<ListIdentifier>& stores_to_reset);
+
+  // Schedules verification of the checksum of each store read from disk on task
+  // runner. If the checksum doesn't match, that store is passed to the
+  // |db_ready_for_updates_callback|. At the end,
+  // |db_ready_for_updates_callback| is scheduled (on the same thread as it was
+  // called) to indicate that the database updates can now be scheduled.
+  void VerifyChecksum(
+      DatabaseReadyForUpdatesCallback db_ready_for_updates_callback);
+
+  // Records the size of each of the stores managed by this database, along
+  // with the combined size of all the stores.
+  void RecordFileSizeHistograms();
 
  protected:
   V4Database(const scoped_refptr<base::SequencedTaskRunner>& db_task_runner,
              std::unique_ptr<StoreMap> store_map);
 
+  // Map of ListIdentifier to the V4Store.
+  const std::unique_ptr<StoreMap> store_map_;
+
  private:
+  friend class subresource_filter::SubresourceFilterBrowserTestImpl;
+  friend class V4DatabaseFactory;
   friend class V4DatabaseTest;
+  friend class V4SafeBrowsingServiceTest;
   FRIEND_TEST_ALL_PREFIXES(V4DatabaseTest, TestSetupDatabaseWithFakeStores);
   FRIEND_TEST_ALL_PREFIXES(V4DatabaseTest,
                            TestSetupDatabaseWithFakeStoresFailsReset);
@@ -104,42 +178,50 @@ class V4Database {
   FRIEND_TEST_ALL_PREFIXES(V4DatabaseTest, TestApplyUpdateWithInvalidUpdate);
   FRIEND_TEST_ALL_PREFIXES(V4DatabaseTest, TestSomeStoresMatchFullHash);
 
-  // Makes the passed |factory| the factory used to instantiate a V4Store. Only
-  // for tests.
-  static void RegisterStoreFactoryForTest(V4StoreFactory* factory) {
-    factory_ = factory;
-  }
-
   // Factory method to create a V4Database. When the database creation is
   // complete, it calls the NewDatabaseReadyCallback on |callback_task_runner|.
   static void CreateOnTaskRunner(
       const scoped_refptr<base::SequencedTaskRunner>& db_task_runner,
       const base::FilePath& base_path,
-      const StoreFileNameMap& store_file_name_map,
+      const ListInfos& list_infos,
       const scoped_refptr<base::SingleThreadTaskRunner>& callback_task_runner,
-      NewDatabaseReadyCallback callback);
+      NewDatabaseReadyCallback callback,
+      const base::TimeTicks create_start_time);
+
+  // Makes the passed |factory| the factory used to instantiate a V4Database.
+  // Only for tests.
+  static void RegisterDatabaseFactoryForTest(
+      std::unique_ptr<V4DatabaseFactory> factory);
+
+  // Makes the passed |factory| the factory used to instantiate a V4Store. Only
+  // for tests.
+  static void RegisterStoreFactoryForTest(
+      std::unique_ptr<V4StoreFactory> factory);
 
   // Callback called when a new store has been created and is ready to be used.
   // This method updates the store_map_ to point to the new store, which causes
   // the old store to get deleted.
-  void UpdatedStoreReady(UpdateListIdentifier identifier,
+  void UpdatedStoreReady(ListIdentifier identifier,
                          std::unique_ptr<V4Store> store);
+
+  // See |VerifyChecksum|.
+  void VerifyChecksumOnTaskRunner(
+      const scoped_refptr<base::SingleThreadTaskRunner>& callback_task_runner,
+      DatabaseReadyForUpdatesCallback db_ready_for_updates_callback);
 
   const scoped_refptr<base::SequencedTaskRunner> db_task_runner_;
 
-  // Map of UpdateListIdentifier to the V4Store.
-  const std::unique_ptr<StoreMap> store_map_;
-
   DatabaseUpdatedCallback db_updated_callback_;
-
-  // The factory that controls the creation of V4Store objects.
-  static V4StoreFactory* factory_;
 
   // The number of stores for which the update request is pending. When this
   // goes down to 0, that indicates that the database has updated all the stores
   // that needed updating and is ready for the next update. It should only be
   // accessed on the IO thread.
   int pending_store_updates_;
+
+  // Only meant to be dereferenced and invalidated on the IO thread and hence
+  // named. For details, see the comment at the top of weak_ptr.h
+  base::WeakPtrFactory<V4Database> weak_factory_on_io_;
 
   DISALLOW_COPY_AND_ASSIGN(V4Database);
 };

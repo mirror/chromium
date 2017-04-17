@@ -11,7 +11,6 @@
 #include "components/arc/ime/arc_ime_bridge_impl.h"
 #include "components/exo/shell_surface.h"
 #include "components/exo/surface.h"
-#include "ui/aura/client/focus_client.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host.h"
@@ -24,15 +23,34 @@ namespace arc {
 
 namespace {
 
-bool IsArcWindow(const aura::Window* window) {
-  return exo::Surface::AsSurface(window);
-}
+class ArcWindowDelegateImpl : public ArcImeService::ArcWindowDelegate {
+ public:
+  explicit ArcWindowDelegateImpl(ArcImeService* ime_service)
+    : ime_service_(ime_service) {}
 
-bool IsArcTopLevelWindow(const aura::Window* window) {
-  return exo::ShellSurface::GetMainSurface(window);
-}
+  ~ArcWindowDelegateImpl() override = default;
 
-}  // namespace
+  bool IsArcWindow(
+      const aura::Window* window) const override {
+    return exo::Surface::AsSurface(window) ||
+           exo::ShellSurface::GetMainSurface(window);
+  }
+
+  void RegisterFocusObserver() override {
+    exo::WMHelper::GetInstance()->AddFocusObserver(ime_service_);
+  }
+
+  void UnregisterFocusObserver() override {
+    exo::WMHelper::GetInstance()->RemoveFocusObserver(ime_service_);
+  }
+
+ private:
+  ArcImeService* const ime_service_;
+
+  DISALLOW_COPY_AND_ASSIGN(ArcWindowDelegateImpl);
+};
+
+}  // anonymous namespace
 
 ////////////////////////////////////////////////////////////////////////////////
 // ArcImeService main implementation:
@@ -40,11 +58,12 @@ bool IsArcTopLevelWindow(const aura::Window* window) {
 ArcImeService::ArcImeService(ArcBridgeService* bridge_service)
     : ArcService(bridge_service),
       ime_bridge_(new ArcImeBridgeImpl(this, bridge_service)),
+      arc_window_delegate_(new ArcWindowDelegateImpl(this)),
       ime_type_(ui::TEXT_INPUT_TYPE_NONE),
       has_composition_text_(false),
-      focus_client_(nullptr),
       keyboard_controller_(nullptr),
-      test_input_method_(nullptr) {
+      test_input_method_(nullptr),
+      is_focus_observer_installed_(false) {
   aura::Env* env = aura::Env::GetInstanceDontCreate();
   if (env)
     env->AddObserver(this);
@@ -55,10 +74,10 @@ ArcImeService::~ArcImeService() {
   if (input_method)
     input_method->DetachTextInputClient(this);
 
-  for (aura::Window* window : arc_windows_.windows())
-    window->RemoveObserver(this);
-  if (focus_client_)
-    focus_client_->RemoveObserver(this);
+  if (focused_arc_window_)
+    focused_arc_window_->RemoveObserver(this);
+  if (is_focus_observer_installed_)
+    arc_window_delegate_->UnregisterFocusObserver();
   aura::Env* env = aura::Env::GetInstanceDontCreate();
   if (env)
     env->RemoveObserver(this);
@@ -80,21 +99,31 @@ void ArcImeService::SetInputMethodForTesting(
   test_input_method_ = test_input_method;
 }
 
+void ArcImeService::SetArcWindowDelegateForTesting(
+    std::unique_ptr<ArcWindowDelegate> delegate) {
+  arc_window_delegate_ = std::move(delegate);
+}
+
 ui::InputMethod* ArcImeService::GetInputMethod() {
+  if (!focused_arc_window_)
+    return nullptr;
+
   if (test_input_method_)
     return test_input_method_;
-  if (focused_arc_window_.windows().empty())
-    return nullptr;
-  return focused_arc_window_.windows().front()->GetHost()->GetInputMethod();
+
+  DCHECK(focused_arc_window_->GetHost());
+  return focused_arc_window_->GetHost()->GetInputMethod();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Overridden from aura::EnvObserver:
 
 void ArcImeService::OnWindowInitialized(aura::Window* new_window) {
-  if (IsArcWindow(new_window)) {
-    arc_windows_.Add(new_window);
-    new_window->AddObserver(this);
+  if (arc_window_delegate_->IsArcWindow(new_window)) {
+    if (!is_focus_observer_installed_) {
+      arc_window_delegate_->RegisterFocusObserver();
+      is_focus_observer_installed_ = true;
+    }
   }
   keyboard::KeyboardController* keyboard_controller =
       keyboard::KeyboardController::GetInstance();
@@ -105,45 +134,64 @@ void ArcImeService::OnWindowInitialized(aura::Window* new_window) {
   }
 }
 
-void ArcImeService::OnWindowAddedToRootWindow(aura::Window* window) {
-  aura::Window* root = window->GetRootWindow();
-  aura::client::FocusClient* focus_client = aura::client::GetFocusClient(root);
-  if (!focus_client)
-    return;
+////////////////////////////////////////////////////////////////////////////////
+// Overridden from aura::WindowObserver:
 
-  if (focus_client_) {
-    // Root windows share the same FocusClient in Ash.
-    DCHECK_EQ(focus_client_, focus_client);
-  } else {
-    focus_client_ = focus_client;
-    focus_client_->AddObserver(this);
-  }
+void ArcImeService::OnWindowDestroying(aura::Window* window) {
+  // This shouldn't be reached on production, since the window lost the focus
+  // and called OnWindowFocused() before destroying.
+  // But we handle this case for testing.
+  DCHECK_EQ(window, focused_arc_window_);
+  OnWindowFocused(nullptr, focused_arc_window_);
+}
+
+void ArcImeService::OnWindowRemovingFromRootWindow(aura::Window* window,
+                                                   aura::Window* new_root) {
+  DCHECK_EQ(window, focused_arc_window_);
+  OnWindowFocused(nullptr, focused_arc_window_);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Overridden from aura::client::FocusChangeObserver:
+// Overridden from exo::WMHelper::FocusChangeObserver:
 
 void ArcImeService::OnWindowFocused(aura::Window* gained_focus,
-                                   aura::Window* lost_focus) {
-  // The Aura focus may or may not be on sub-window of the toplevel ARC++ frame.
-  // To handle all cases, judge the state by always climbing up to the toplevel.
-  gained_focus = gained_focus ? gained_focus->GetToplevelWindow() : nullptr;
-  lost_focus = lost_focus ? lost_focus->GetToplevelWindow() : nullptr;
+                                    aura::Window* lost_focus) {
   if (lost_focus == gained_focus)
     return;
 
-  if (lost_focus && focused_arc_window_.Contains(lost_focus)) {
-    ui::InputMethod* const input_method = GetInputMethod();
-    if (input_method)
-      input_method->DetachTextInputClient(this);
-    focused_arc_window_.Remove(lost_focus);
+  const bool detach = (lost_focus && focused_arc_window_ == lost_focus);
+  const bool attach =
+      (gained_focus && arc_window_delegate_->IsArcWindow(gained_focus));
+
+  // TODO(kinaba): Implicit dependency in GetInputMethod as described below is
+  // confusing. Consider getting InputMethod directly from lost_ or gained_focus
+  // variables. For that, we need to change how to inject testing InputMethod.
+  //
+  // GetInputMethod() retrieves the input method associated to
+  // |forcused_arc_window_|. Hence, to get the object we are detaching from, we
+  // must call the method before updating the forcused ARC window.
+  ui::InputMethod* const detaching_ime = detach ? GetInputMethod() : nullptr;
+
+  if (detach) {
+    focused_arc_window_->RemoveObserver(this);
+    focused_arc_window_ = nullptr;
+  }
+  if (attach) {
+    DCHECK_EQ(nullptr, focused_arc_window_);
+    focused_arc_window_ = gained_focus;
+    focused_arc_window_->AddObserver(this);
   }
 
-  if (gained_focus && IsArcTopLevelWindow(gained_focus)) {
-    focused_arc_window_.Add(gained_focus);
-    ui::InputMethod* const input_method = GetInputMethod();
-    if (input_method)
-      input_method->SetFocusedTextInputClient(this);
+  ui::InputMethod* const attaching_ime = attach ? GetInputMethod() : nullptr;
+
+  // Notify to the input method, either when this service is detached or
+  // attached. Do nothing when the focus is moving between ARC windows,
+  // to avoid unpexpected context reset in ARC.
+  if (detaching_ime != attaching_ime) {
+    if (detaching_ime)
+      detaching_ime->DetachTextInputClient(this);
+    if (attaching_ime)
+      attaching_ime->SetFocusedTextInputClient(this);
   }
 }
 
@@ -156,15 +204,8 @@ void ArcImeService::OnTextInputTypeChanged(ui::TextInputType type) {
   ime_type_ = type;
 
   ui::InputMethod* const input_method = GetInputMethod();
-  if (input_method) {
+  if (input_method)
     input_method->OnTextInputTypeChanged(this);
-    // TODO(crbug.com/581282): Remove this piggyback call when
-    // ImeInstance::ShowImeIfNeeded is wired to ARC.
-    if (input_method->GetTextInputClient() == this &&
-        ime_type_ != ui::TEXT_INPUT_TYPE_NONE) {
-      input_method->ShowImeIfNeeded();
-    }
-  }
 }
 
 void ArcImeService::OnCursorRectChanged(const gfx::Rect& rect) {
@@ -193,14 +234,16 @@ void ArcImeService::ShowImeIfNeeded() {
 ////////////////////////////////////////////////////////////////////////////////
 // Overridden from keyboard::KeyboardControllerObserver
 void ArcImeService::OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) {
-  if (focused_arc_window_.windows().empty())
+  if (!focused_arc_window_)
     return;
-  aura::Window* window = focused_arc_window_.windows().front();
+  aura::Window* window = focused_arc_window_;
   // Multiply by the scale factor. To convert from DPI to physical pixels.
   gfx::Rect bounds_in_px = gfx::ScaleToEnclosingRect(
       new_bounds, window->layer()->device_scale_factor());
   ime_bridge_->SendOnKeyboardBoundsChanging(bounds_in_px);
 }
+
+void ArcImeService::OnKeyboardClosed() {}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Overridden from ui::TextInputClient:
@@ -272,9 +315,9 @@ ui::TextInputType ArcImeService::GetTextInputType() const {
 }
 
 gfx::Rect ArcImeService::GetCaretBounds() const {
-  if (focused_arc_window_.windows().empty())
+  if (!focused_arc_window_)
     return gfx::Rect();
-  aura::Window* window = focused_arc_window_.windows().front();
+  aura::Window* window = focused_arc_window_;
 
   // |cursor_rect_| holds the rectangle reported from ARC apps, in the "screen
   // coordinates" in ARC, counted by physical pixels.
@@ -286,7 +329,11 @@ gfx::Rect ArcImeService::GetCaretBounds() const {
       cursor_rect_, 1 / window->layer()->device_scale_factor());
 
   // Add the offset of the window showing the ARC app.
-  converted.Offset(window->GetBoundsInScreen().OffsetFromOrigin());
+  // TODO(yoshiki): Support for non-arc toplevel window. The following code do
+  // not work correctly with arc windows inside non-arc toplevel window (eg.
+  // notification).
+  converted.Offset(
+      window->GetToplevelWindow()->GetBoundsInScreen().OffsetFromOrigin());
   return converted;
 }
 

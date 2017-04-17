@@ -8,15 +8,18 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/run_loop.h"
 #include "chrome/test/base/in_process_browser_test.h"
+#include "components/password_manager/core/browser/password_store_consumer.h"
 #include "content/public/browser/web_contents_observer.h"
-#include "content/public/test/test_utils.h"
+#include "net/cert/mock_cert_verifier.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
 
 namespace autofill {
 struct PasswordForm;
 }
 
-class PasswordsModelDelegate;
+class ManagePasswordsUIController;
 
 class NavigationObserver : public content::WebContentsObserver {
  public:
@@ -50,7 +53,7 @@ class NavigationObserver : public content::WebContentsObserver {
   std::string wait_for_path_;
   content::RenderFrameHost* render_frame_host_;
   bool quit_on_entry_committed_;
-  scoped_refptr<content::MessageLoopRunner> message_loop_runner_;
+  base::RunLoop run_loop_;
 
   DISALLOW_COPY_AND_ASSIGN(NavigationObserver);
 };
@@ -80,8 +83,19 @@ class BubbleObserver {
   // observed form. Checks that the prompt is no longer visible afterwards.
   void AcceptUpdatePrompt(const autofill::PasswordForm& form) const;
 
+  // Returns once the account chooser pops up or it's already shown.
+  // |web_contents| must be the custom one returned by
+  // PasswordManagerBrowserTestBase.
+  void WaitForAccountChooser() const;
+
+  // Returns once the UI controller is in the management state due to matching
+  // credentials autofilled.
+  // |web_contents| must be the custom one returned by
+  // PasswordManagerBrowserTestBase.
+  void WaitForManagementState() const;
+
  private:
-  PasswordsModelDelegate* const passwords_model_delegate_;
+  ManagePasswordsUIController* const passwords_ui_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(BubbleObserver);
 };
@@ -94,6 +108,8 @@ class PasswordManagerBrowserTestBase : public InProcessBrowserTest {
   // InProcessBrowserTest:
   void SetUpOnMainThread() override;
   void TearDownOnMainThread() override;
+  void SetUpInProcessBrowserTestFixture() override;
+  void TearDownInProcessBrowserTestFixture() override;
 
  protected:
   // Wrapper around ui_test_utils::NavigateToURL that waits until
@@ -122,6 +138,9 @@ class PasswordManagerBrowserTestBase : public InProcessBrowserTest {
   void WaitForElementValue(const std::string& iframe_id,
                            const std::string& element_id,
                            const std::string& expected_value);
+  // Make sure that the password store processed all the previous calls which
+  // are executed on another thread.
+  void WaitForPasswordStore();
   // Checks that the current "value" attribute of the HTML element with
   // |element_id| is equal to |expected_value|.
   void CheckElementValue(const std::string& element_id,
@@ -131,11 +150,22 @@ class PasswordManagerBrowserTestBase : public InProcessBrowserTest {
                          const std::string& element_id,
                          const std::string& expected_value);
 
+  // Synchronoulsy adds the given host to the list of valid HSTS hosts.
+  void AddHSTSHost(const std::string& host);
+
   // Accessors
+  // Return the first created tab with a custom ManagePasswordsUIController.
   content::WebContents* WebContents();
   content::RenderViewHost* RenderViewHost();
+  content::RenderFrameHost* RenderFrameHost();
+  net::EmbeddedTestServer& https_test_server() { return https_test_server_; }
+  net::MockCertVerifier& mock_cert_verifier() { return mock_cert_verifier_; }
 
  private:
+  net::EmbeddedTestServer https_test_server_;
+  net::MockCertVerifier mock_cert_verifier_;
+  // A tab with some hooks injected.
+  content::WebContents* web_contents_;
   DISALLOW_COPY_AND_ASSIGN(PasswordManagerBrowserTestBase);
 };
 

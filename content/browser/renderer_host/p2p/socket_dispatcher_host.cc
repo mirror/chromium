@@ -6,8 +6,10 @@
 
 #include <stddef.h>
 
+#include <algorithm>
+
 #include "base/bind.h"
-#include "base/stl_util.h"
+#include "base/memory/ptr_util.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/renderer_host/p2p/socket_host.h"
 #include "content/common/p2p_messages.h"
@@ -18,10 +20,11 @@
 #include "net/base/net_errors.h"
 #include "net/base/network_interfaces.h"
 #include "net/base/sys_addrinfo.h"
-#include "net/dns/single_request_host_resolver.h"
-#include "net/log/net_log.h"
+#include "net/dns/host_resolver.h"
+#include "net/log/net_log_source.h"
+#include "net/log/net_log_with_source.h"
 #include "net/socket/client_socket_factory.h"
-#include "net/udp/datagram_client_socket.h"
+#include "net/socket/datagram_client_socket.h"
 #include "net/url_request/url_request_context_getter.h"
 
 using content::BrowserMessageFilter;
@@ -69,13 +72,11 @@ class P2PSocketDispatcherHost::DnsRequest {
       host_name_ += '.';
 
     net::HostResolver::RequestInfo info(net::HostPortPair(host_name_, 0));
-    int result = resolver_.Resolve(
-        info,
-        net::DEFAULT_PRIORITY,
-        &addresses_,
+    int result = resolver_->Resolve(
+        info, net::DEFAULT_PRIORITY, &addresses_,
         base::Bind(&P2PSocketDispatcherHost::DnsRequest::OnDone,
                    base::Unretained(this)),
-        net::BoundNetLog());
+        &request_, net::NetLogWithSource());
     if (result != net::ERR_IO_PENDING)
       OnDone(result);
   }
@@ -104,7 +105,8 @@ class P2PSocketDispatcherHost::DnsRequest {
   net::AddressList addresses_;
 
   std::string host_name_;
-  net::SingleRequestHostResolver resolver_;
+  net::HostResolver* resolver_;
+  std::unique_ptr<net::HostResolver::Request> request_;
 
   DoneCallback done_callback_;
 };
@@ -122,10 +124,8 @@ P2PSocketDispatcherHost::P2PSocketDispatcherHost(
 
 void P2PSocketDispatcherHost::OnChannelClosing() {
   // Since the IPC sender is gone, close pending connections.
-  STLDeleteContainerPairSecondPointers(sockets_.begin(), sockets_.end());
   sockets_.clear();
 
-  STLDeleteContainerPointers(dns_requests_.begin(), dns_requests_.end());
   dns_requests_.clear();
 
   if (monitoring_networks_) {
@@ -206,7 +206,7 @@ P2PSocketDispatcherHost::~P2PSocketDispatcherHost() {
 
 P2PSocketHost* P2PSocketDispatcherHost::LookupSocket(int socket_id) {
   SocketsMap::iterator it = sockets_.find(socket_id);
-  return (it == sockets_.end()) ? NULL : it->second;
+  return (it == sockets_.end()) ? nullptr : it->second.get();
 }
 
 void P2PSocketDispatcherHost::OnStartNetworkNotifications() {
@@ -229,12 +229,13 @@ void P2PSocketDispatcherHost::OnStopNetworkNotifications() {
 
 void P2PSocketDispatcherHost::OnGetHostAddress(const std::string& host_name,
                                                int32_t request_id) {
-  DnsRequest* request = new DnsRequest(request_id,
-                                       resource_context_->GetHostResolver());
-  dns_requests_.insert(request);
-  request->Resolve(host_name, base::Bind(
-      &P2PSocketDispatcherHost::OnAddressResolved,
-      base::Unretained(this), request));
+  std::unique_ptr<DnsRequest> request = base::MakeUnique<DnsRequest>(
+      request_id, resource_context_->GetHostResolver());
+  DnsRequest* request_ptr = request.get();
+  dns_requests_.insert(std::move(request));
+  request_ptr->Resolve(host_name,
+                       base::Bind(&P2PSocketDispatcherHost::OnAddressResolved,
+                                  base::Unretained(this), request_ptr));
 }
 
 void P2PSocketDispatcherHost::OnCreateSocket(
@@ -265,7 +266,7 @@ void P2PSocketDispatcherHost::OnCreateSocket(
 
   if (socket->Init(local_address, port_range.min_port, port_range.max_port,
                    remote_address)) {
-    sockets_[socket_id] = socket.release();
+    sockets_[socket_id] = std::move(socket);
 
     if (dump_incoming_rtp_packet_ || dump_outgoing_rtp_packet_) {
       sockets_[socket_id]->StartRtpDump(dump_incoming_rtp_packet_,
@@ -284,16 +285,16 @@ void P2PSocketDispatcherHost::OnAcceptIncomingTcpConnection(
         "for invalid listen_socket_id.";
     return;
   }
-  if (LookupSocket(connected_socket_id) != NULL) {
+  if (LookupSocket(connected_socket_id) != nullptr) {
     LOG(ERROR) << "Received P2PHostMsg_AcceptIncomingTcpConnection "
         "for duplicated connected_socket_id.";
     return;
   }
 
-  P2PSocketHost* accepted_connection =
-      socket->AcceptIncomingTcpConnection(remote_address, connected_socket_id);
+  std::unique_ptr<P2PSocketHost> accepted_connection(
+      socket->AcceptIncomingTcpConnection(remote_address, connected_socket_id));
   if (accepted_connection) {
-    sockets_[connected_socket_id] = accepted_connection;
+    sockets_[connected_socket_id] = std::move(accepted_connection);
   }
 }
 
@@ -312,8 +313,7 @@ void P2PSocketDispatcherHost::OnSend(int socket_id,
     LOG(ERROR) << "Received P2PHostMsg_Send with a packet that is too big: "
                << data.size();
     Send(new P2PMsg_OnError(socket_id));
-    delete socket;
-    sockets_.erase(socket_id);
+    sockets_.erase(socket_id);  // deletes the socket
     return;
   }
 
@@ -335,8 +335,7 @@ void P2PSocketDispatcherHost::OnSetOption(int socket_id,
 void P2PSocketDispatcherHost::OnDestroySocket(int socket_id) {
   SocketsMap::iterator it = sockets_.find(socket_id);
   if (it != sockets_.end()) {
-    delete it->second;
-    sockets_.erase(it);
+    sockets_.erase(it);  // deletes the socket
   } else {
     LOG(ERROR) << "Received P2PHostMsg_DestroySocket for invalid socket_id.";
   }
@@ -372,8 +371,8 @@ net::IPAddress P2PSocketDispatcherHost::GetDefaultLocalAddress(int family) {
 
   std::unique_ptr<net::DatagramClientSocket> socket(
       net::ClientSocketFactory::GetDefaultFactory()->CreateDatagramClientSocket(
-          net::DatagramSocket::DEFAULT_BIND, net::RandIntCallback(), NULL,
-          net::NetLog::Source()));
+          net::DatagramSocket::DEFAULT_BIND, net::RandIntCallback(), nullptr,
+          net::NetLogSource()));
 
   net::IPAddress ip_address;
   if (family == AF_INET) {
@@ -398,8 +397,11 @@ void P2PSocketDispatcherHost::OnAddressResolved(
     const net::IPAddressList& addresses) {
   Send(new P2PMsg_GetHostAddressResult(request->request_id(), addresses));
 
-  dns_requests_.erase(request);
-  delete request;
+  dns_requests_.erase(
+      std::find_if(dns_requests_.begin(), dns_requests_.end(),
+                   [request](const std::unique_ptr<DnsRequest>& ptr) {
+                     return ptr.get() == request;
+                   }));
 }
 
 void P2PSocketDispatcherHost::StopRtpDumpOnIOThread(bool incoming,

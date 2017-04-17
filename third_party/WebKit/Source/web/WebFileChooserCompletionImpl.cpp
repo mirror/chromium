@@ -31,46 +31,46 @@
 #include "web/WebFileChooserCompletionImpl.h"
 
 #include "platform/FileMetadata.h"
-#include "wtf/DateMath.h"
+#include "platform/wtf/DateMath.h"
 
 namespace blink {
 
-WebFileChooserCompletionImpl::WebFileChooserCompletionImpl(PassRefPtr<FileChooser> chooser)
-    : m_fileChooser(chooser)
-{
+WebFileChooserCompletionImpl::WebFileChooserCompletionImpl(
+    PassRefPtr<FileChooser> chooser)
+    : file_chooser_(std::move(chooser)) {}
+
+WebFileChooserCompletionImpl::~WebFileChooserCompletionImpl() {}
+
+void WebFileChooserCompletionImpl::DidChooseFile(
+    const WebVector<WebString>& file_names) {
+  Vector<FileChooserFileInfo> file_info;
+  for (size_t i = 0; i < file_names.size(); ++i)
+    file_info.push_back(FileChooserFileInfo(file_names[i]));
+  file_chooser_->ChooseFiles(file_info);
+  // This object is no longer needed.
+  delete this;
 }
 
-WebFileChooserCompletionImpl::~WebFileChooserCompletionImpl()
-{
-}
-
-void WebFileChooserCompletionImpl::didChooseFile(const WebVector<WebString>& fileNames)
-{
-    Vector<FileChooserFileInfo> fileInfo;
-    for (size_t i = 0; i < fileNames.size(); ++i)
-        fileInfo.append(FileChooserFileInfo(fileNames[i]));
-    m_fileChooser->chooseFiles(fileInfo);
-    // This object is no longer needed.
-    delete this;
-}
-
-void WebFileChooserCompletionImpl::didChooseFile(const WebVector<SelectedFileInfo>& files)
-{
-    Vector<FileChooserFileInfo> fileInfo;
-    for (size_t i = 0; i < files.size(); ++i) {
-        if (files[i].fileSystemURL.isEmpty()) {
-            fileInfo.append(FileChooserFileInfo(files[i].path, files[i].displayName));
-        } else {
-            FileMetadata metadata;
-            metadata.modificationTime = files[i].modificationTime * msPerSecond;
-            metadata.length = files[i].length;
-            metadata.type = files[i].isDirectory ? FileMetadata::TypeDirectory : FileMetadata::TypeFile;
-            fileInfo.append(FileChooserFileInfo(files[i].fileSystemURL, metadata));
-        }
+void WebFileChooserCompletionImpl::DidChooseFile(
+    const WebVector<SelectedFileInfo>& files) {
+  Vector<FileChooserFileInfo> file_info;
+  for (size_t i = 0; i < files.size(); ++i) {
+    if (files[i].file_system_url.IsEmpty()) {
+      file_info.push_back(
+          FileChooserFileInfo(files[i].path, files[i].display_name));
+    } else {
+      FileMetadata metadata;
+      metadata.modification_time = files[i].modification_time * kMsPerSecond;
+      metadata.length = files[i].length;
+      metadata.type = files[i].is_directory ? FileMetadata::kTypeDirectory
+                                            : FileMetadata::kTypeFile;
+      file_info.push_back(
+          FileChooserFileInfo(files[i].file_system_url, metadata));
     }
-    m_fileChooser->chooseFiles(fileInfo);
-    // This object is no longer needed.
-    delete this;
+  }
+  file_chooser_->ChooseFiles(file_info);
+  // This object is no longer needed.
+  delete this;
 }
 
-} // namespace blink
+}  // namespace blink

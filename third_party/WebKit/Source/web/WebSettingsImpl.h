@@ -32,210 +32,249 @@
 #define WebSettingsImpl_h
 
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Compiler.h"
 #include "public/web/WebSettings.h"
 #include "web/WebExport.h"
-#include "wtf/Compiler.h"
 
 namespace blink {
 
 class DevToolsEmulator;
 class Settings;
 
-class WEB_EXPORT WebSettingsImpl final : WTF_NON_EXPORTED_BASE(public WebSettings) {
-public:
-    WebSettingsImpl(Settings*, DevToolsEmulator*);
-    virtual ~WebSettingsImpl() { }
+class WEB_EXPORT WebSettingsImpl final : NON_EXPORTED_BASE(public WebSettings) {
+ public:
+  WebSettingsImpl(Settings*, DevToolsEmulator*);
+  virtual ~WebSettingsImpl() {}
 
-    void setFromStrings(const WebString& name, const WebString& value) override;
+  void SetFromStrings(const WebString& name, const WebString& value) override;
 
-    bool mainFrameResizesAreOrientationChanges() const override;
-    bool shrinksViewportContentToFit() const override;
-    bool viewportEnabled() const override;
-    void setAccelerated2dCanvasEnabled(bool) override;
-    void setAccelerated2dCanvasMSAASampleCount(int) override;
-    void setAcceleratedCompositingEnabled(bool) override;
-    void setPreferCompositingToLCDTextEnabled(bool) override;
-    void setAccessibilityEnabled(bool) override;
-    void setAccessibilityPasswordValuesEnabled(bool) override;
-    void setAllowDisplayOfInsecureContent(bool) override;
-    void setAllowFileAccessFromFileURLs(bool) override;
-    void setAllowCustomScrollbarInMainFrame(bool) override;
-    void setAllowGeolocationOnInsecureOrigins(bool) override;
-    void setAllowRunningOfInsecureContent(bool) override;
-    void setAllowScriptsToCloseWindows(bool) override;
-    void setAllowUniversalAccessFromFileURLs(bool) override;
-    void setAlwaysShowContextMenuOnTouch(bool) override;
-    void setAntialiased2dCanvasEnabled(bool) override;
-    void setAntialiasedClips2dCanvasEnabled(bool) override;
-    void setAutoplayExperimentMode(const WebString&) override;
-    void setAutoZoomFocusedNodeToLegibleScale(bool) override;
-    void setCaretBrowsingEnabled(bool) override;
-    void setClobberUserAgentInitialScaleQuirk(bool) override;
-    void setCookieEnabled(bool) override;
-    void setNavigateOnDragDrop(bool) override;
-    void setCursiveFontFamily(const WebString&, UScriptCode = USCRIPT_COMMON) override;
-    void setDNSPrefetchingEnabled(bool) override;
-    void setDataSaverEnabled(bool) override;
-    void setDOMPasteAllowed(bool) override;
-    void setDefaultFixedFontSize(int) override;
-    void setDefaultFontSize(int) override;
-    void setDefaultTextEncodingName(const WebString&) override;
-    void setDefaultVideoPosterURL(const WebString&) override;
-    void setDeviceScaleAdjustment(float) override;
+  bool ShrinksViewportContentToFit() const override;
+  bool ViewportEnabled() const override;
+  void SetAccelerated2dCanvasMSAASampleCount(int) override;
+  void SetAcceleratedCompositingEnabled(bool) override;
+  void SetPreferCompositingToLCDTextEnabled(bool) override;
+  void SetAccessibilityEnabled(bool) override;
+  void SetAccessibilityPasswordValuesEnabled(bool) override;
+  void SetAllowFileAccessFromFileURLs(bool) override;
+  void SetAllowCustomScrollbarInMainFrame(bool) override;
+  void SetAllowGeolocationOnInsecureOrigins(bool) override;
+  void SetAllowRunningOfInsecureContent(bool) override;
+  void SetAllowScriptsToCloseWindows(bool) override;
+  void SetAllowUniversalAccessFromFileURLs(bool) override;
+  void SetAlwaysShowContextMenuOnTouch(bool) override;
+  void SetAntialiased2dCanvasEnabled(bool) override;
+  void SetAntialiasedClips2dCanvasEnabled(bool) override;
+  void SetAutoZoomFocusedNodeToLegibleScale(bool) override;
+  void SetBrowserSideNavigationEnabled(bool) override;
+  void SetClobberUserAgentInitialScaleQuirk(bool) override;
+  void SetCookieEnabled(bool) override;
+  void SetCrossOriginMediaPlaybackRequiresUserGesture(bool) override;
+  void SetNavigateOnDragDrop(bool) override;
+  void SetCursiveFontFamily(const WebString&,
+                            UScriptCode = USCRIPT_COMMON) override;
+  void SetDNSPrefetchingEnabled(bool) override;
+  void SetDataSaverEnabled(bool) override;
+  void SetDOMPasteAllowed(bool) override;
+  void SetDefaultFixedFontSize(int) override;
+  void SetDefaultFontSize(int) override;
+  void SetDefaultTextEncodingName(const WebString&) override;
+  void SetDefaultVideoPosterURL(const WebString&) override;
+  void SetDeviceScaleAdjustment(float) override;
 
-    // FIXME: Replace these two with pointer/hover queries? crbug.com/441813
-    void setDeviceSupportsMouse(bool) override;
-    void setDeviceSupportsTouch(bool) override;
+  void SetDisableReadingFromCanvas(bool) override;
+  void SetDoubleTapToZoomEnabled(bool) override;
+  void SetDownloadableBinaryFontsEnabled(bool) override;
+  void SetEditingBehavior(EditingBehavior) override;
+  void SetEnableScrollAnimator(bool) override;
+  void SetEnableTouchAdjustment(bool) override;
+  bool MultiTargetTapNotificationEnabled() override;
+  void SetMultiTargetTapNotificationEnabled(bool) override;
+  void SetExperimentalWebGLEnabled(bool) override;
+  void SetFantasyFontFamily(const WebString&,
+                            UScriptCode = USCRIPT_COMMON) override;
+  void SetFixedFontFamily(const WebString&,
+                          UScriptCode = USCRIPT_COMMON) override;
+  void SetForcePreloadNoneForMediaElements(bool) override;
+  void SetForceZeroLayoutHeight(bool) override;
+  void SetFullscreenSupported(bool) override;
+  void SetHideDownloadUI(bool) override;
+  void SetPresentationReceiver(bool) override;
+  void SetHistoryEntryRequiresUserGesture(bool) override;
+  void SetHyperlinkAuditingEnabled(bool) override;
+  void SetIgnoreMainFrameOverflowHiddenQuirk(bool) override;
+  void SetImageAnimationPolicy(ImageAnimationPolicy) override;
+  void SetImagesEnabled(bool) override;
+  void SetInlineTextBoxAccessibilityEnabled(bool) override;
+  void SetInertVisualViewport(bool) override;
+  void SetJavaScriptCanAccessClipboard(bool) override;
+  void SetJavaScriptCanOpenWindowsAutomatically(bool) override;
+  void SetJavaScriptEnabled(bool) override;
+  void SetLoadsImagesAutomatically(bool) override;
+  void SetLoadWithOverviewMode(bool) override;
+  void SetShouldReuseGlobalForUnownedMainFrame(bool) override;
+  void SetProgressBarCompletion(ProgressBarCompletion) override;
+  void SetLocalStorageEnabled(bool) override;
+  void SetMainFrameClipsContent(bool) override;
+  void SetMainFrameResizesAreOrientationChanges(bool) override;
+  void SetMaxTouchPoints(int) override;
+  void SetMediaPlaybackRequiresUserGesture(bool) override;
+  void SetMediaPlaybackGestureWhitelistScope(const WebString&) override;
+  void SetPresentationRequiresUserGesture(bool) override;
+  void SetEmbeddedMediaExperienceEnabled(bool) override;
+  void SetMinimumAccelerated2dCanvasSize(int) override;
+  void SetMinimumFontSize(int) override;
+  void SetMinimumLogicalFontSize(int) override;
+  void SetMockScrollbarsEnabled(bool) override;
+  void SetHideScrollbars(bool) override;
+  void SetOfflineWebApplicationCacheEnabled(bool) override;
+  void SetPassiveEventListenerDefault(PassiveEventListenerDefault) override;
+  void SetPasswordEchoDurationInSeconds(double) override;
+  void SetPasswordEchoEnabled(bool) override;
+  void SetPerTilePaintingEnabled(bool) override;
+  void SetPictographFontFamily(const WebString&,
+                               UScriptCode = USCRIPT_COMMON) override;
+  void SetPluginsEnabled(bool) override;
+  void SetEncryptedMediaEnabled(bool) override;
+  void SetAvailablePointerTypes(int) override;
+  void SetPrimaryPointerType(PointerType) override;
+  void SetAvailableHoverTypes(int) override;
+  void SetPrimaryHoverType(HoverType) override;
+  void SetPreferHiddenVolumeControls(bool) override;
+  void SetRenderVSyncNotificationEnabled(bool) override;
+  void SetReportScreenSizeInPhysicalPixelsQuirk(bool) override;
+  void SetRubberBandingOnCompositorThread(bool) override;
+  void SetSansSerifFontFamily(const WebString&,
+                              UScriptCode = USCRIPT_COMMON) override;
+  void SetSelectTrailingWhitespaceEnabled(bool override);
+  void SetSelectionIncludesAltImageText(bool) override;
+  void SetSelectionStrategy(SelectionStrategyType) override;
+  void SetSerifFontFamily(const WebString&,
+                          UScriptCode = USCRIPT_COMMON) override;
+  void SetShouldPrintBackgrounds(bool) override;
+  void SetShouldClearDocumentBackground(bool) override;
+  void SetShouldRespectImageOrientation(bool) override;
+  void SetShowContextMenuOnMouseUp(bool) override;
+  void SetShowFPSCounter(bool) override;
+  void SetShowPaintRects(bool) override;
+  void SetShrinksViewportContentToFit(bool) override;
+  void SetSmartInsertDeleteEnabled(bool) override;
+  void SetSpatialNavigationEnabled(bool) override;
+  void SetSpellCheckEnabledByDefault(bool) override;
+  void SetStandardFontFamily(const WebString&,
+                             UScriptCode = USCRIPT_COMMON) override;
+  void SetStrictMixedContentChecking(bool) override;
+  void SetStrictMixedContentCheckingForPlugin(bool) override;
+  void SetStrictPowerfulFeatureRestrictions(bool) override;
+  void SetStrictlyBlockBlockableMixedContent(bool) override;
+  void SetSupportDeprecatedTargetDensityDPI(bool) override;
+  void SetSupportsMultipleWindows(bool) override;
+  void SetSyncXHRInDocumentsEnabled(bool) override;
+  void SetTextAreasAreResizable(bool) override;
+  void SetTextAutosizingEnabled(bool) override;
+  void SetAccessibilityFontScaleFactor(float) override;
+  void SetTextTrackKindUserPreference(TextTrackKindUserPreference) override;
+  void SetTextTrackBackgroundColor(const WebString&) override;
+  void SetTextTrackFontFamily(const WebString&) override;
+  void SetTextTrackFontStyle(const WebString&) override;
+  void SetTextTrackFontVariant(const WebString&) override;
+  void SetTextTrackMarginPercentage(float) override;
+  void SetTextTrackTextColor(const WebString&) override;
+  void SetTextTrackTextShadow(const WebString&) override;
+  void SetTextTrackTextSize(const WebString&) override;
+  void SetThreadedScrollingEnabled(bool) override;
+  void SetTouchDragDropEnabled(bool) override;
+  void SetUseLegacyBackgroundSizeShorthandBehavior(bool) override;
+  void SetViewportStyle(WebViewportStyle) override;
+  void SetUseSolidColorScrollbars(bool) override;
+  void SetUseWideViewport(bool) override;
+  void SetV8CacheOptions(V8CacheOptions) override;
+  void SetV8CacheStrategiesForCacheStorage(
+      V8CacheStrategiesForCacheStorage) override;
+  void SetValidationMessageTimerMagnification(int) override;
+  void SetViewportEnabled(bool) override;
+  void SetViewportMetaEnabled(bool) override;
+  void SetViewportMetaLayoutSizeQuirk(bool) override;
+  void SetViewportMetaMergeContentQuirk(bool) override;
+  void SetViewportMetaNonUserScalableQuirk(bool) override;
+  void SetViewportMetaZeroValuesQuirk(bool) override;
+  void SetWebGLErrorsToConsoleEnabled(bool) override;
+  void SetWebSecurityEnabled(bool) override;
+  void SetWideViewportQuirkEnabled(bool) override;
+  void SetXSSAuditorEnabled(bool) override;
+  void SetExpensiveBackgroundThrottlingCPUBudget(float) override;
+  void SetExpensiveBackgroundThrottlingInitialBudget(float) override;
+  void SetExpensiveBackgroundThrottlingMaxBudget(float) override;
+  void SetExpensiveBackgroundThrottlingMaxDelay(float) override;
+  void SetMediaControlsEnabled(bool) override;
+  void SetDoNotUpdateSelectionOnMutatingSelectionRange(bool) override;
 
-    void setDisableReadingFromCanvas(bool) override;
-    void setDoubleTapToZoomEnabled(bool) override;
-    void setDownloadableBinaryFontsEnabled(bool) override;
-    void setEditingBehavior(EditingBehavior) override;
-    void setEnableScrollAnimator(bool) override;
-    void setEnableTouchAdjustment(bool) override;
-    bool multiTargetTapNotificationEnabled() override;
-    void setMultiTargetTapNotificationEnabled(bool) override;
-    void setExperimentalWebGLEnabled(bool) override;
-    void setFantasyFontFamily(const WebString&, UScriptCode = USCRIPT_COMMON) override;
-    void setFixedFontFamily(const WebString&, UScriptCode = USCRIPT_COMMON) override;
-    void setForceZeroLayoutHeight(bool) override;
-    void setFullscreenSupported(bool) override;
-    void setHyperlinkAuditingEnabled(bool) override;
-    void setIgnoreMainFrameOverflowHiddenQuirk(bool) override;
-    void setImageAnimationPolicy(ImageAnimationPolicy) override;
-    void setImagesEnabled(bool) override;
-    void setInlineTextBoxAccessibilityEnabled(bool) override;
-    void setInertVisualViewport(bool) override;
-    void setJavaScriptCanAccessClipboard(bool) override;
-    void setJavaScriptCanOpenWindowsAutomatically(bool) override;
-    void setJavaScriptEnabled(bool) override;
-    void setLoadsImagesAutomatically(bool) override;
-    void setLoadWithOverviewMode(bool) override;
-    void setShouldReuseGlobalForUnownedMainFrame(bool) override;
-    void setProgressBarCompletion(ProgressBarCompletion) override;
-    void setLocalStorageEnabled(bool) override;
-    void setMainFrameClipsContent(bool) override;
-    void setMainFrameResizesAreOrientationChanges(bool) override;
-    void setMaxTouchPoints(int) override;
-    void setMediaControlsOverlayPlayButtonEnabled(bool) override;
-    void setMediaPlaybackRequiresUserGesture(bool) override;
-    void setPresentationRequiresUserGesture(bool) override;
-    void setMinimumAccelerated2dCanvasSize(int) override;
-    void setMinimumFontSize(int) override;
-    void setMinimumLogicalFontSize(int) override;
-    void setMockScrollbarsEnabled(bool) override;
-    void setOfflineWebApplicationCacheEnabled(bool) override;
-    void setPassiveEventListenerDefault(PassiveEventListenerDefault) override;
-    void setPasswordEchoDurationInSeconds(double) override;
-    void setPasswordEchoEnabled(bool) override;
-    void setPerTilePaintingEnabled(bool) override;
-    void setPictographFontFamily(const WebString&, UScriptCode = USCRIPT_COMMON) override;
-    void setPinchOverlayScrollbarThickness(int) override;
-    void setPluginsEnabled(bool) override;
-    void setAvailablePointerTypes(int) override;
-    void setPrimaryPointerType(PointerType) override;
-    void setAvailableHoverTypes(int) override;
-    void setPrimaryHoverType(HoverType) override;
-    void setPreferHiddenVolumeControls(bool) override;
-    void setRenderVSyncNotificationEnabled(bool) override;
-    void setReportScreenSizeInPhysicalPixelsQuirk(bool) override;
-    void setRootLayerScrolls(bool) override;
-    void setRubberBandingOnCompositorThread(bool) override;
-    void setSansSerifFontFamily(const WebString&, UScriptCode = USCRIPT_COMMON) override;
-    void setSelectTrailingWhitespaceEnabled(bool override);
-    void setSelectionIncludesAltImageText(bool) override;
-    void setSelectionStrategy(SelectionStrategyType) override;
-    void setSerifFontFamily(const WebString&, UScriptCode = USCRIPT_COMMON) override;
-    void setShouldPrintBackgrounds(bool) override;
-    void setShouldClearDocumentBackground(bool) override;
-    void setShouldRespectImageOrientation(bool) override;
-    void setShowContextMenuOnMouseUp(bool) override;
-    void setShowFPSCounter(bool) override;
-    void setShowPaintRects(bool) override;
-    void setShrinksViewportContentToFit(bool) override;
-    void setSmartInsertDeleteEnabled(bool) override;
-    void setSpatialNavigationEnabled(bool) override;
-    void setStandardFontFamily(const WebString&, UScriptCode = USCRIPT_COMMON) override;
-    void setStrictMixedContentChecking(bool) override;
-    void setStrictMixedContentCheckingForPlugin(bool) override;
-    void setStrictPowerfulFeatureRestrictions(bool) override;
-    void setStrictlyBlockBlockableMixedContent(bool) override;
-    void setSupportDeprecatedTargetDensityDPI(bool) override;
-    void setSupportsMultipleWindows(bool) override;
-    void setSyncXHRInDocumentsEnabled(bool) override;
-    void setTextAreasAreResizable(bool) override;
-    void setTextAutosizingEnabled(bool) override;
-    void setAccessibilityFontScaleFactor(float) override;
-    void setTextTrackKindUserPreference(TextTrackKindUserPreference) override;
-    void setTextTrackBackgroundColor(const WebString&) override;
-    void setTextTrackFontFamily(const WebString&) override;
-    void setTextTrackFontStyle(const WebString&) override;
-    void setTextTrackFontVariant(const WebString&) override;
-    void setTextTrackMarginPercentage(float) override;
-    void setTextTrackTextColor(const WebString&) override;
-    void setTextTrackTextShadow(const WebString&) override;
-    void setTextTrackTextSize(const WebString&) override;
-    void setThreadedScrollingEnabled(bool) override;
-    void setTouchDragDropEnabled(bool) override;
-    void setUnifiedTextCheckerEnabled(bool) override;
-    void setUsesEncodingDetector(bool) override;
-    void setUseLegacyBackgroundSizeShorthandBehavior(bool) override;
-    void setViewportStyle(WebViewportStyle) override;
-    void setUseSolidColorScrollbars(bool) override;
-    void setUseWideViewport(bool) override;
-    void setV8CacheOptions(V8CacheOptions) override;
-    void setV8CacheStrategiesForCacheStorage(V8CacheStrategiesForCacheStorage) override;
-    void setValidationMessageTimerMagnification(int) override;
-    void setViewportEnabled(bool) override;
-    void setViewportMetaEnabled(bool) override;
-    void setViewportMetaLayoutSizeQuirk(bool) override;
-    void setViewportMetaMergeContentQuirk(bool) override;
-    void setViewportMetaNonUserScalableQuirk(bool) override;
-    void setViewportMetaZeroValuesQuirk(bool) override;
-    void setWebGLErrorsToConsoleEnabled(bool) override;
-    void setWebSecurityEnabled(bool) override;
-    void setWideViewportQuirkEnabled(bool) override;
-    void setXSSAuditorEnabled(bool) override;
+  bool ShowFPSCounter() const { return show_fps_counter_; }
+  bool ShowPaintRects() const { return show_paint_rects_; }
+  bool RenderVSyncNotificationEnabled() const {
+    return render_v_sync_notification_enabled_;
+  }
+  bool AutoZoomFocusedNodeToLegibleScale() const {
+    return auto_zoom_focused_node_to_legible_scale_;
+  }
+  bool DoubleTapToZoomEnabled() const;
+  bool PerTilePaintingEnabled() const { return per_tile_painting_enabled_; }
+  bool SupportDeprecatedTargetDensityDPI() const {
+    return support_deprecated_target_density_dpi_;
+  }
+  bool ViewportMetaEnabled() const;
+  bool ViewportMetaLayoutSizeQuirk() const {
+    return viewport_meta_layout_size_quirk_;
+  }
+  bool ViewportMetaNonUserScalableQuirk() const {
+    return viewport_meta_non_user_scalable_quirk_;
+  }
+  bool ClobberUserAgentInitialScaleQuirk() const {
+    return clobber_user_agent_initial_scale_quirk_;
+  }
+  float ExpensiveBackgroundThrottlingCPUBudget() const {
+    return expensive_background_throttling_cpu_budget_;
+  }
+  float ExpensiveBackgroundThrottlingInitialBudget() const {
+    return expensive_background_throttling_initial_budget_;
+  }
+  float ExpensiveBackgroundThrottlingMaxDelay() const {
+    return expensive_background_throttling_max_delay_;
+  }
+  float ExpensiveBackgroundThrottlingMaxBudget() const {
+    return expensive_background_throttling_max_budget_;
+  }
 
-    bool showFPSCounter() const { return m_showFPSCounter; }
-    bool showPaintRects() const { return m_showPaintRects; }
-    bool renderVSyncNotificationEnabled() const { return m_renderVSyncNotificationEnabled; }
-    bool autoZoomFocusedNodeToLegibleScale() const { return m_autoZoomFocusedNodeToLegibleScale; }
-    bool doubleTapToZoomEnabled() const;
-    bool perTilePaintingEnabled() const { return m_perTilePaintingEnabled; }
-    bool supportDeprecatedTargetDensityDPI() const { return m_supportDeprecatedTargetDensityDPI; }
-    bool viewportMetaEnabled() const;
-    bool viewportMetaLayoutSizeQuirk() const { return m_viewportMetaLayoutSizeQuirk; }
-    bool viewportMetaNonUserScalableQuirk() const { return m_viewportMetaNonUserScalableQuirk; }
-    bool clobberUserAgentInitialScaleQuirk() const { return m_clobberUserAgentInitialScaleQuirk; }
+  void SetMockGestureTapHighlightsEnabled(bool);
+  bool MockGestureTapHighlightsEnabled() const;
 
-    void setMockGestureTapHighlightsEnabled(bool);
-    bool mockGestureTapHighlightsEnabled() const;
-
-private:
-    Settings* m_settings;
-    UntracedMember<DevToolsEmulator> m_devToolsEmulator;
-    bool m_showFPSCounter;
-    bool m_showPaintRects;
-    bool m_renderVSyncNotificationEnabled;
-    bool m_autoZoomFocusedNodeToLegibleScale;
-    bool m_perTilePaintingEnabled;
-    bool m_supportDeprecatedTargetDensityDPI;
-    bool m_shrinksViewportContentToFit;
-    // This quirk is to maintain compatibility with Android apps built on
-    // the Android SDK prior to and including version 18. Presumably, this
-    // can be removed any time after 2015. See http://crbug.com/277369.
-    bool m_viewportMetaLayoutSizeQuirk;
-    // This quirk is to maintain compatibility with Android apps built on
-    // the Android SDK prior to and including version 18. Presumably, this
-    // can be removed any time after 2015. See http://crbug.com/312691.
-    bool m_viewportMetaNonUserScalableQuirk;
-    // This quirk is to maintain compatibility with Android apps built on
-    // the Android SDK prior to and including version 18. Presumably, this
-    // can be removed any time after 2015. See http://crbug.com/313754.
-    bool m_clobberUserAgentInitialScaleQuirk;
+ private:
+  Settings* settings_;
+  UntracedMember<DevToolsEmulator> dev_tools_emulator_;
+  bool show_fps_counter_;
+  bool show_paint_rects_;
+  bool render_v_sync_notification_enabled_;
+  bool auto_zoom_focused_node_to_legible_scale_;
+  bool per_tile_painting_enabled_;
+  bool support_deprecated_target_density_dpi_;
+  bool shrinks_viewport_content_to_fit_;
+  // This quirk is to maintain compatibility with Android apps built on
+  // the Android SDK prior to and including version 18. Presumably, this
+  // can be removed any time after 2015. See http://crbug.com/277369.
+  bool viewport_meta_layout_size_quirk_;
+  // This quirk is to maintain compatibility with Android apps built on
+  // the Android SDK prior to and including version 18. Presumably, this
+  // can be removed any time after 2015. See http://crbug.com/312691.
+  bool viewport_meta_non_user_scalable_quirk_;
+  // This quirk is to maintain compatibility with Android apps built on
+  // the Android SDK prior to and including version 18. Presumably, this
+  // can be removed any time after 2015. See http://crbug.com/313754.
+  bool clobber_user_agent_initial_scale_quirk_;
+  float expensive_background_throttling_cpu_budget_;
+  float expensive_background_throttling_initial_budget_;
+  float expensive_background_throttling_max_budget_;
+  float expensive_background_throttling_max_delay_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

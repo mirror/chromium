@@ -16,6 +16,7 @@
 #include "components/policy/core/common/policy_bundle.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_switches.h"
+#include "components/policy/core/common/schema_registry.h"
 #include "components/prefs/pref_service.h"
 #include "net/url_request/url_request_context_getter.h"
 
@@ -35,7 +36,13 @@ CloudPolicyManager::CloudPolicyManager(
     : core_(policy_type, settings_entity_id, cloud_policy_store, task_runner),
       waiting_for_policy_refresh_(false),
       file_task_runner_(file_task_runner),
-      io_task_runner_(io_task_runner) {
+      io_task_runner_(io_task_runner) {}
+
+CloudPolicyManager::~CloudPolicyManager() {}
+
+void CloudPolicyManager::Init(SchemaRegistry* registry) {
+  ConfigurationPolicyProvider::Init(registry);
+
   store()->AddObserver(this);
 
   // If the underlying store is already initialized, publish the loaded
@@ -45,8 +52,6 @@ CloudPolicyManager::CloudPolicyManager(
   else
     store()->Load();
 }
-
-CloudPolicyManager::~CloudPolicyManager() {}
 
 void CloudPolicyManager::Shutdown() {
   component_policy_service_.reset();
@@ -110,12 +115,14 @@ void CloudPolicyManager::GetChromePolicy(PolicyMap* policy_map) {
 }
 
 void CloudPolicyManager::CreateComponentCloudPolicyService(
+    const std::string& policy_type,
     const base::FilePath& policy_cache_path,
     const scoped_refptr<net::URLRequestContextGetter>& request_context,
-    CloudPolicyClient* client) {
+    CloudPolicyClient* client,
+    SchemaRegistry* schema_registry) {
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
   // Init() must have been called.
-  CHECK(schema_registry());
+  CHECK(schema_registry);
   // Called at most once.
   CHECK(!component_policy_service_);
   // The core can't be connected yet.
@@ -134,8 +141,9 @@ void CloudPolicyManager::CreateComponentCloudPolicyService(
   std::unique_ptr<ResourceCache> resource_cache(
       new ResourceCache(policy_cache_path, file_task_runner_));
   component_policy_service_.reset(new ComponentCloudPolicyService(
-      this, schema_registry(), core(), client, std::move(resource_cache),
-      request_context, file_task_runner_, io_task_runner_));
+      policy_type, this, schema_registry, core(), client,
+      std::move(resource_cache), request_context, file_task_runner_,
+      io_task_runner_));
 #endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
 }
 

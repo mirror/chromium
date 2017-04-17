@@ -65,6 +65,7 @@ class ImeObserver : public input_method::InputMethodEngineBase::Observer {
                                 int cursor_pos,
                                 int anchor_pos,
                                 int offset_pos) override;
+  void OnRequestEngineSwitch() override {};
 
  protected:
   // Helper function used to forward the given event to the |profile_|'s event
@@ -178,6 +179,7 @@ class InputImeAPI : public BrowserContextKeyedAPI,
 
   // BrowserContextKeyedAPI implementation.
   static BrowserContextKeyedAPIFactory<InputImeAPI>* GetFactoryInstance();
+  void Shutdown() override;
 
   // ExtensionRegistryObserver implementation.
   void OnExtensionLoaded(content::BrowserContext* browser_context,

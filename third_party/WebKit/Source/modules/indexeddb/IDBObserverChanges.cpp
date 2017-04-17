@@ -6,6 +6,7 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptState.h"
+#include "bindings/core/v8/ToV8ForCore.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "bindings/modules/v8/ToV8ForModules.h"
 #include "bindings/modules/v8/V8BindingForModules.h"
@@ -15,42 +16,66 @@
 
 namespace blink {
 
-ScriptValue IDBObserverChanges::records(ScriptState* scriptState)
-{
-    v8::Local<v8::Context> context(scriptState->context());
-    v8::Isolate* isolate(scriptState->isolate());
-    v8::Local<v8::Map> map = v8::Map::New(isolate);
-    for (const auto& it : m_records) {
-        v8::Local<v8::String> key = v8String(isolate, m_database->getObjectStoreName(it.key));
-        v8::Local<v8::Value> value = toV8(it.value, context->Global(), isolate);
-        v8CallOrCrash(map->Set(context, key, value));
-    }
-    return ScriptValue::from(scriptState, map);
+ScriptValue IDBObserverChanges::records(ScriptState* script_state) {
+  v8::Local<v8::Context> context(script_state->GetContext());
+  v8::Isolate* isolate(script_state->GetIsolate());
+  v8::Local<v8::Map> map = v8::Map::New(isolate);
+  for (const auto& it : records_) {
+    v8::Local<v8::String> key =
+        V8String(isolate, database_->GetObjectStoreName(it.key));
+    v8::Local<v8::Value> value = ToV8(it.value, context->Global(), isolate);
+    map->Set(context, key, value).ToLocalChecked();
+  }
+  return ScriptValue::From(script_state, map);
 }
 
-IDBObserverChanges* IDBObserverChanges::create(IDBDatabase* database, const WebVector<WebIDBObservation>& observations, const WebVector<int32_t>& observationIndex)
-{
-    return new IDBObserverChanges(database, observations, observationIndex);
+IDBObserverChanges* IDBObserverChanges::Create(
+    IDBDatabase* database,
+    const WebVector<WebIDBObservation>& observations,
+    const WebVector<int32_t>& observation_indices,
+    v8::Isolate* isolate) {
+  return new IDBObserverChanges(database, nullptr, observations,
+                                observation_indices, isolate);
 }
 
-IDBObserverChanges::IDBObserverChanges(IDBDatabase* database, const WebVector<WebIDBObservation>& observations, const WebVector<int32_t>& observationIndex)
-    : m_database(database)
-{
-    extractChanges(observations, observationIndex);
+IDBObserverChanges* IDBObserverChanges::Create(
+    IDBDatabase* database,
+    IDBTransaction* transaction,
+    const WebVector<WebIDBObservation>& observations,
+    const WebVector<int32_t>& observation_indices,
+    v8::Isolate* isolate) {
+  return new IDBObserverChanges(database, transaction, observations,
+                                observation_indices, isolate);
 }
 
-void IDBObserverChanges::extractChanges(const WebVector<WebIDBObservation>& observations, const WebVector<int32_t>& observationIndex)
-{
-    // TODO(dmurph): Avoid getting and setting repeated times.
-    for (const auto& idx : observationIndex)
-        m_records.add(observations[idx].objectStoreId, HeapVector<Member<IDBObservation>>()).storedValue->value.append(IDBObservation::create(observations[idx]));
+IDBObserverChanges::IDBObserverChanges(
+    IDBDatabase* database,
+    IDBTransaction* transaction,
+    const WebVector<WebIDBObservation>& observations,
+    const WebVector<int32_t>& observation_indices,
+    v8::Isolate* isolate)
+    : database_(database), transaction_(transaction) {
+  ExtractChanges(observations, observation_indices, isolate);
 }
 
-DEFINE_TRACE(IDBObserverChanges)
-{
-    visitor->trace(m_database);
-    visitor->trace(m_transaction);
-    visitor->trace(m_records);
+void IDBObserverChanges::ExtractChanges(
+    const WebVector<WebIDBObservation>& observations,
+    const WebVector<int32_t>& observation_indices,
+    v8::Isolate* isolate) {
+  // TODO(dmurph): Avoid getting and setting repeated times.
+  for (const auto& idx : observation_indices) {
+    records_
+        .insert(observations[idx].object_store_id,
+                HeapVector<Member<IDBObservation>>())
+        .stored_value->value.push_back(
+            IDBObservation::Create(observations[idx], isolate));
+  }
 }
 
-} // namespace blink
+DEFINE_TRACE(IDBObserverChanges) {
+  visitor->Trace(database_);
+  visitor->Trace(transaction_);
+  visitor->Trace(records_);
+}
+
+}  // namespace blink

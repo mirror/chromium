@@ -30,30 +30,41 @@
 
 #include "core/dom/NodeListsNodeData.h"
 
+#include "core/dom/LiveNodeList.h"
+
 namespace blink {
 
-void NodeListsNodeData::invalidateCaches(const QualifiedName* attrName)
-{
-    for (const auto& cache : m_atomicNameCaches)
-        cache.value->invalidateCacheForAttribute(attrName);
+void NodeListsNodeData::InvalidateCaches(const QualifiedName* attr_name) {
+  for (const auto& cache : atomic_name_caches_)
+    cache.value->InvalidateCacheForAttribute(attr_name);
 
-    if (attrName)
-        return;
+  if (attr_name)
+    return;
 
-    for (auto& cache : m_tagCollectionCacheNS)
-        cache.value->invalidateCache();
+  for (auto& cache : tag_collection_cache_ns_)
+    cache.value->InvalidateCache();
 }
 
-DEFINE_TRACE(NodeListsNodeData)
-{
-    visitor->trace(m_childNodeList);
-    visitor->trace(m_atomicNameCaches);
-    visitor->trace(m_tagCollectionCacheNS);
+DEFINE_TRACE(NodeListsNodeData) {
+  visitor->Trace(child_node_list_);
+  visitor->Trace(atomic_name_caches_);
+  visitor->Trace(tag_collection_cache_ns_);
 }
 
-DEFINE_TRACE_WRAPPERS(NodeListsNodeData)
-{
-    visitor->traceWrappers(m_childNodeList);
+DEFINE_TRACE_WRAPPERS(NodeListsNodeData) {
+  visitor->TraceWrappersWithManualWriteBarrier(child_node_list_);
+  for (const auto list : atomic_name_caches_.Values()) {
+    if (IsHTMLCollectionType(list->GetType())) {
+      visitor->TraceWrappersWithManualWriteBarrier(
+          static_cast<const HTMLCollection*>(list.Get()));
+    } else {
+      visitor->TraceWrappersWithManualWriteBarrier(
+          static_cast<const LiveNodeList*>(list.Get()));
+    }
+  }
+  for (const auto list : tag_collection_cache_ns_.Values()) {
+    visitor->TraceWrappersWithManualWriteBarrier(list.Get());
+  }
 }
 
-} // namespace blink
+}  // namespace blink

@@ -39,60 +39,71 @@ namespace blink {
 
 class PlatformSpeechSynthesizerClient;
 
-class MODULES_EXPORT SpeechSynthesis final : public EventTargetWithInlineData, public PlatformSpeechSynthesizerClient, public ContextLifecycleObserver {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(SpeechSynthesis);
-public:
-    static SpeechSynthesis* create(ExecutionContext*);
+class MODULES_EXPORT SpeechSynthesis final
+    : public EventTargetWithInlineData,
+      public ContextClient,
+      public PlatformSpeechSynthesizerClient {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(SpeechSynthesis);
 
-    bool pending() const;
-    bool speaking() const;
-    bool paused() const;
+ public:
+  static SpeechSynthesis* Create(ExecutionContext*);
 
-    void speak(SpeechSynthesisUtterance*);
-    void cancel();
-    void pause();
-    void resume();
+  bool pending() const;
+  bool speaking() const;
+  bool paused() const;
 
-    const HeapVector<Member<SpeechSynthesisVoice>>& getVoices();
+  void speak(SpeechSynthesisUtterance*);
+  void cancel();
+  void pause();
+  void resume();
 
-    // Used in testing to use a mock platform synthesizer
-    void setPlatformSynthesizer(PlatformSpeechSynthesizer*);
+  const HeapVector<Member<SpeechSynthesisVoice>>& getVoices();
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(voiceschanged);
+  // Used in testing to use a mock platform synthesizer
+  void SetPlatformSynthesizer(PlatformSpeechSynthesizer*);
 
-    ExecutionContext* getExecutionContext() const override;
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(voiceschanged);
 
-    DECLARE_VIRTUAL_TRACE();
+  ExecutionContext* GetExecutionContext() const override {
+    return ContextClient::GetExecutionContext();
+  }
 
-private:
-    explicit SpeechSynthesis(ExecutionContext*);
+  DECLARE_VIRTUAL_TRACE();
 
-    // PlatformSpeechSynthesizerClient override methods.
-    void voicesDidChange() override;
-    void didStartSpeaking(PlatformSpeechSynthesisUtterance*) override;
-    void didPauseSpeaking(PlatformSpeechSynthesisUtterance*) override;
-    void didResumeSpeaking(PlatformSpeechSynthesisUtterance*) override;
-    void didFinishSpeaking(PlatformSpeechSynthesisUtterance*) override;
-    void speakingErrorOccurred(PlatformSpeechSynthesisUtterance*) override;
-    void boundaryEventOccurred(PlatformSpeechSynthesisUtterance*, SpeechBoundary, unsigned charIndex) override;
+ private:
+  explicit SpeechSynthesis(ExecutionContext*);
 
-    void startSpeakingImmediately();
-    void handleSpeakingCompleted(SpeechSynthesisUtterance*, bool errorOccurred);
-    void fireEvent(const AtomicString& type, SpeechSynthesisUtterance*, unsigned long charIndex, const String& name);
+  // PlatformSpeechSynthesizerClient override methods.
+  void VoicesDidChange() override;
+  void DidStartSpeaking(PlatformSpeechSynthesisUtterance*) override;
+  void DidPauseSpeaking(PlatformSpeechSynthesisUtterance*) override;
+  void DidResumeSpeaking(PlatformSpeechSynthesisUtterance*) override;
+  void DidFinishSpeaking(PlatformSpeechSynthesisUtterance*) override;
+  void SpeakingErrorOccurred(PlatformSpeechSynthesisUtterance*) override;
+  void BoundaryEventOccurred(PlatformSpeechSynthesisUtterance*,
+                             SpeechBoundary,
+                             unsigned char_index) override;
 
-    // Returns the utterance at the front of the queue.
-    SpeechSynthesisUtterance* currentSpeechUtterance() const;
+  void StartSpeakingImmediately();
+  void HandleSpeakingCompleted(SpeechSynthesisUtterance*, bool error_occurred);
+  void FireEvent(const AtomicString& type,
+                 SpeechSynthesisUtterance*,
+                 unsigned long char_index,
+                 const String& name);
 
-    Member<PlatformSpeechSynthesizer> m_platformSpeechSynthesizer;
-    HeapVector<Member<SpeechSynthesisVoice>> m_voiceList;
-    HeapDeque<Member<SpeechSynthesisUtterance>> m_utteranceQueue;
-    bool m_isPaused;
+  // Returns the utterance at the front of the queue.
+  SpeechSynthesisUtterance* CurrentSpeechUtterance() const;
 
-    // EventTarget
-    const AtomicString& interfaceName() const override;
+  Member<PlatformSpeechSynthesizer> platform_speech_synthesizer_;
+  HeapVector<Member<SpeechSynthesisVoice>> voice_list_;
+  HeapDeque<Member<SpeechSynthesisUtterance>> utterance_queue_;
+  bool is_paused_;
+
+  // EventTarget
+  const AtomicString& InterfaceName() const override;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SpeechSynthesisEvent_h
+#endif  // SpeechSynthesis_h

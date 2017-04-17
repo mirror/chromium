@@ -21,12 +21,29 @@ cr.define('settings_search', function() {
       'searchEngineEditStarted',
       'setDefaultSearchEngine',
       'validateSearchEngineInput',
-      'manageExtension',
-      'disableExtension',
+      'getHotwordInfo',
+      'setHotwordSearchEnabled',
+      'getGoogleNowAvailability',
     ]);
+
+    /** @type {boolean} */
+    this.hotwordSearchEnabled = false;
 
     /** @private {!SearchEnginesInfo} */
     this.searchEnginesInfo_ = {defaults: [], others: [], extensions: []};
+
+    /** @private {!SearchPageHotwordInfo} */
+    this.hotwordInfo_ = {
+      allowed: true,
+      enabled: false,
+      alwaysOn: true,
+      errorMessage: '',
+      userName: 'user@test.org',
+      historyEnabled: false,
+    };
+
+    /** @type {boolean} */
+    this.googleNowAvailable = true;
   };
 
   TestSearchEnginesBrowserProxy.prototype = {
@@ -57,14 +74,6 @@ cr.define('settings_search', function() {
       this.methodCalled('searchEngineEditCompleted');
     },
 
-    /**
-     * Sets the response to be returned by |getSearchEnginesList|.
-     * @param {!SearchEnginesInfo}
-     */
-    setSearchEnginesInfo: function(searchEnginesInfo) {
-      this.searchEnginesInfo_ = searchEnginesInfo;
-    },
-
     /** @override */
     getSearchEnginesList: function() {
       this.methodCalled('getSearchEnginesList');
@@ -78,13 +87,40 @@ cr.define('settings_search', function() {
     },
 
     /** @override */
-    manageExtension: function(extensionId) {
-      this.methodCalled('manageExtension', extensionId);
+    getHotwordInfo: function() {
+      this.methodCalled('getHotwordInfo');
+      return Promise.resolve(this.hotwordInfo_);
     },
 
     /** @override */
-    disableExtension: function(extensionId) {
-      this.methodCalled('disableExtension', extensionId);
+    setHotwordSearchEnabled: function(enabled) {
+      this.hotwordSearchEnabled = enabled;
+      this.hotwordInfo_.enabled = true;
+      this.hotwordInfo_.historyEnabled = this.hotwordInfo_.alwaysOn;
+      this.methodCalled('setHotwordSearchEnabled');
+    },
+
+    /** @override */
+    getGoogleNowAvailability: function() {
+      this.methodCalled('getGoogleNowAvailability');
+      return Promise.resolve(this.googleNowAvailable);
+    },
+
+    /**
+     * Sets the response to be returned by |getSearchEnginesList|.
+     * @param {!SearchEnginesInfo} searchEnginesInfo
+     */
+    setSearchEnginesInfo: function(searchEnginesInfo) {
+      this.searchEnginesInfo_ = searchEnginesInfo;
+    },
+
+    /**
+     * Sets the response to be returned by |getSearchEnginesList|.
+     * @param {!SearchPageHotwordInfo} hotwordInfo
+     */
+    setHotwordInfo: function(hotwordInfo) {
+      this.hotwordInfo_ = hotwordInfo;
+      cr.webUIListenerCallback('hotword-info-update', this.hotwordInfo_);
     },
   };
 

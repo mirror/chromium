@@ -18,6 +18,7 @@ class IframeSource : public content::URLDataSource {
  protected:
   // Overridden from content::URLDataSource:
   std::string GetMimeType(const std::string& path_and_query) const override;
+  bool AllowCaching() const override;
   bool ShouldDenyXFrameOptions() const override;
   bool ShouldServiceRequest(const net::URLRequest* request) const override;
 
@@ -32,17 +33,15 @@ class IframeSource : public content::URLDataSource {
   // Sends Javascript with an expected postMessage origin interpolated.
   void SendJSWithOrigin(
       int resource_id,
-      int render_process_id,
-      int render_frame_id,
+      const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
       const content::URLDataSource::GotDataCallback& callback);
 
   // This is exposed for testing and should not be overridden.
-  // Sets |origin| to the URL of the render frame identified by |process_id| and
-  // |render_frame_id|. Returns true if successful and false if not, for example
-  // if the render frame does not exist.
+  // Sets |origin| to the URL of the WebContents identified by |wc_getter|.
+  // Returns true if successful and false if not, for example if the WebContents
+  // does not exist
   virtual bool GetOrigin(
-      int process_id,
-      int render_frame_id,
+      const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
       std::string* origin) const;
 
   DISALLOW_COPY_AND_ASSIGN(IframeSource);

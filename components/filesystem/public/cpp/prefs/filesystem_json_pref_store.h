@@ -31,9 +31,7 @@
 class PrefFilter;
 
 namespace base {
-class Clock;
 class DictionaryValue;
-class FilePath;
 class JsonPrefStoreLossyWriteTest;
 class Value;
 }
@@ -68,6 +66,7 @@ class FilesystemJsonPrefStore
   // PrefStore overrides:
   bool GetValue(const std::string& key,
                 const base::Value** result) const override;
+  std::unique_ptr<base::DictionaryValue> GetValues() const override;
   void AddObserver(PrefStore::Observer* observer) override;
   void RemoveObserver(PrefStore::Observer* observer) override;
   bool HasObservers() const override;
@@ -148,7 +147,7 @@ class FilesystemJsonPrefStore
   // Asynchronous implementation details of ReadPrefsAsync().
   void OnPreferencesReadStart();
   void OnPreferencesFileRead(mojom::FileError err,
-                             mojo::Array<uint8_t> contents);
+                             const std::vector<uint8_t>& contents);
 
   const std::string path_;
   mojo::Binding<filesystem::mojom::FileSystemClient> binding_;

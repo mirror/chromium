@@ -6,7 +6,8 @@
 
 #include <stddef.h>
 
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "chrome/browser/thumbnails/content_analysis.h"
 #include "chrome/browser/thumbnails/simple_thumbnail_crop.h"
@@ -90,17 +91,13 @@ void ContentBasedThumbnailingAlgorithm::ProcessBitmap(
     return;
   }
 
-  if (!BrowserThread::GetBlockingPool()->PostWorkerTaskWithShutdownBehavior(
-          FROM_HERE,
-          base::Bind(&CreateRetargetedThumbnail,
-                     source_bitmap,
-                     target_thumbnail_size,
-                     context,
-                     callback),
-          base::SequencedWorkerPool::SKIP_ON_SHUTDOWN)) {
-    LOG(WARNING) << "PostSequencedWorkerTask failed. The thumbnail for "
-                 << context->url << " will not be created.";
-  }
+  base::PostTaskWithTraits(
+      FROM_HERE,
+      base::TaskTraits()
+          .WithPriority(base::TaskPriority::BACKGROUND)
+          .WithShutdownBehavior(base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN),
+      base::Bind(&CreateRetargetedThumbnail, source_bitmap,
+                 target_thumbnail_size, context, callback));
 }
 
 // static
@@ -136,19 +133,6 @@ SkBitmap ContentBasedThumbnailingAlgorithm::PrepareSourceBitmap(
 
   SkBitmap result_bitmap = SkBitmapOperations::DownsampleByTwoUntilSize(
       clipped_bitmap, resize_target.width(), resize_target.height());
-#if !defined(USE_AURA)
-  // If the bitmap has not been indeed resized, it has to be copied. In that
-  // case resampler simply returns a reference to the original bitmap, sitting
-  // in PlatformCanvas. One does not simply assign these 'magic' bitmaps to
-  // SkBitmap. They cannot be refcounted.
-  //
-  // With Aura, this does not happen since PlatformCanvas is platform
-  // idependent.
-  if (clipped_bitmap.width() == result_bitmap.width() &&
-      clipped_bitmap.height() == result_bitmap.height()) {
-    clipped_bitmap.copyTo(&result_bitmap, kN32_SkColorType);
-  }
-#endif
 
   return result_bitmap;
 }

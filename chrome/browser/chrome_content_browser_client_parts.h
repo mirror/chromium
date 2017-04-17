@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 
-#include "base/memory/scoped_vector.h"
 #include "storage/browser/fileapi/file_system_context.h"
 
 namespace base {
@@ -29,7 +28,6 @@ namespace storage {
 class FileSystemBackend;
 }
 
-class GURL;
 class Profile;
 
 // Implements a platform or feature specific part of ChromeContentBrowserClient.
@@ -52,7 +50,8 @@ class ChromeContentBrowserClientParts {
   virtual void GetAdditionalFileSystemBackends(
       content::BrowserContext* browser_context,
       const base::FilePath& storage_partition_path,
-      ScopedVector<storage::FileSystemBackend>* additional_backends) {}
+      std::vector<std::unique_ptr<storage::FileSystemBackend>>*
+          additional_backends) {}
 
   // Append extra switches to |command_line| for |process|. If |process| is not
   // NULL, then neither is |profile|.
@@ -60,6 +59,9 @@ class ChromeContentBrowserClientParts {
       base::CommandLine* command_line,
       content::RenderProcessHost* process,
       Profile* profile) {}
+
+  // Called when the ResourceDispatcherHost is created.
+  virtual void ResourceDispatcherHostCreated() {}
 };
 
 #endif  // CHROME_BROWSER_CHROME_CONTENT_BROWSER_CLIENT_PARTS_H_

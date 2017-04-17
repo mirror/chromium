@@ -19,13 +19,14 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
+#include "base/files/file_enumerator.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/stringprintf.h"
 #include "build/build_config.h"
 #include "content/common/sandbox_linux/sandbox_bpf_base_policy_linux.h"
 #include "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.h"
-#include "content/common/set_process_title.h"
 #include "content/public/common/content_switches.h"
 #include "sandbox/linux/bpf_dsl/bpf_dsl.h"
 #include "sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions.h"
@@ -33,6 +34,7 @@
 #include "sandbox/linux/syscall_broker/broker_file_permission.h"
 #include "sandbox/linux/syscall_broker/broker_process.h"
 #include "sandbox/linux/system_headers/linux_syscalls.h"
+#include "services/service_manager/embedder/set_process_title.h"
 
 using sandbox::arch_seccomp_data;
 using sandbox::bpf_dsl::Allow;
@@ -131,18 +133,17 @@ intptr_t GpuSIGSYS_Handler(const struct arch_seccomp_data& args,
 #endif  // !defined(__aarch64__)
     case __NR_faccessat:
       if (static_cast<int>(args.args[0]) == AT_FDCWD) {
-        return
-            broker_process->Access(reinterpret_cast<const char*>(args.args[1]),
-                                    static_cast<int>(args.args[2]));
+        return broker_process->Access(
+            reinterpret_cast<const char*>(args.args[1]),
+            static_cast<int>(args.args[2]));
       } else {
         return -EPERM;
       }
     case __NR_openat:
       // Allow using openat() as open().
       if (static_cast<int>(args.args[0]) == AT_FDCWD) {
-        return
-            broker_process->Open(reinterpret_cast<const char*>(args.args[1]),
-                                 static_cast<int>(args.args[2]));
+        return broker_process->Open(reinterpret_cast<const char*>(args.args[1]),
+                                    static_cast<int>(args.args[2]));
       } else {
         return -EPERM;
       }
@@ -154,9 +155,16 @@ intptr_t GpuSIGSYS_Handler(const struct arch_seccomp_data& args,
 
 void AddV4L2GpuWhitelist(std::vector<BrokerFilePermission>* permissions) {
   if (IsAcceleratedVideoDecodeEnabled()) {
-    // Device node for V4L2 video decode accelerator drivers.
-    static const char kDevVideoDecPath[] = "/dev/video-dec";
-    permissions->push_back(BrokerFilePermission::ReadWrite(kDevVideoDecPath));
+    // Device nodes for V4L2 video decode accelerator drivers.
+    static const base::FilePath::CharType kDevicePath[] =
+        FILE_PATH_LITERAL("/dev/");
+    static const base::FilePath::CharType kVideoDecPattern[] = "video-dec[0-9]";
+    base::FileEnumerator enumerator(base::FilePath(kDevicePath), false,
+                                    base::FileEnumerator::FILES,
+                                    base::FilePath(kVideoDecPattern).value());
+    for (base::FilePath name = enumerator.Next(); !name.empty();
+         name = enumerator.Next())
+      permissions->push_back(BrokerFilePermission::ReadWrite(name.value()));
   }
 
   // Device node for V4L2 video encode accelerator drivers.
@@ -216,7 +224,7 @@ void UpdateProcessTypeToGpuBroker() {
   // Update the process title. The argv was already cached by the call to
   // SetProcessTitleFromCommandLine in content_main_runner.cc, so we can pass
   // NULL here (we don't have the original argv at this point).
-  SetProcessTitleFromCommandLine(NULL);
+  service_manager::SetProcessTitleFromCommandLine(nullptr);
 }
 
 bool UpdateProcessTypeAndEnableSandbox(
@@ -229,12 +237,10 @@ bool UpdateProcessTypeAndEnableSandbox(
 
 }  // namespace
 
-GpuProcessPolicy::GpuProcessPolicy() : GpuProcessPolicy(false) {
-}
+GpuProcessPolicy::GpuProcessPolicy() : GpuProcessPolicy(false) {}
 
 GpuProcessPolicy::GpuProcessPolicy(bool allow_mincore)
-    : broker_process_(NULL), allow_mincore_(allow_mincore) {
-}
+    : broker_process_(NULL), allow_mincore_(allow_mincore) {}
 
 GpuProcessPolicy::~GpuProcessPolicy() {}
 
@@ -312,14 +318,14 @@ bool GpuProcessPolicy::PreSandboxHook() {
         I965DrvVideoPath = "/usr/lib/va/drivers/i965_drv_video.so";
       }
 
-      dlopen(I965DrvVideoPath, RTLD_NOW|RTLD_GLOBAL|RTLD_NODELETE);
+      dlopen(I965DrvVideoPath, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
       if (I965HybridDrvVideoPath)
-        dlopen(I965HybridDrvVideoPath, RTLD_NOW|RTLD_GLOBAL|RTLD_NODELETE);
-      dlopen("libva.so.1", RTLD_NOW|RTLD_GLOBAL|RTLD_NODELETE);
+        dlopen(I965HybridDrvVideoPath, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
+      dlopen("libva.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
 #if defined(USE_OZONE)
-      dlopen("libva-drm.so.1", RTLD_NOW|RTLD_GLOBAL|RTLD_NODELETE);
+      dlopen("libva-drm.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
 #elif defined(USE_X11)
-      dlopen("libva-x11.so.1", RTLD_NOW|RTLD_GLOBAL|RTLD_NODELETE);
+      dlopen("libva-x11.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
 #endif
     }
   }
@@ -332,6 +338,12 @@ void GpuProcessPolicy::InitGpuBrokerProcess(
     const std::vector<BrokerFilePermission>& permissions_extra) {
   static const char kDriRcPath[] = "/etc/drirc";
   static const char kDriCard0Path[] = "/dev/dri/card0";
+  static const char kDriCardBasePath[] = "/dev/dri/card";
+
+  static const char kNvidiaCtlPath[] = "/dev/nvidiactl";
+  static const char kNvidiaDeviceBasePath[] = "/dev/nvidia";
+  static const char kNvidiaParamsPath[] = "/proc/driver/nvidia/params";
+
   static const char kDevShm[] = "/dev/shm/";
 
   CHECK(broker_process_ == NULL);
@@ -340,16 +352,30 @@ void GpuProcessPolicy::InitGpuBrokerProcess(
   std::vector<BrokerFilePermission> permissions;
   permissions.push_back(BrokerFilePermission::ReadWrite(kDriCard0Path));
   permissions.push_back(BrokerFilePermission::ReadOnly(kDriRcPath));
+
   if (!IsChromeOS()) {
+    // For shared memory.
     permissions.push_back(
         BrokerFilePermission::ReadWriteCreateUnlinkRecursive(kDevShm));
-  } else if (UseV4L2Codec()){
+    // For multi-card DRI setups. NOTE: /dev/dri/card0 was already added above.
+    for (int i = 1; i <= 9; ++i) {
+      permissions.push_back(BrokerFilePermission::ReadWrite(
+          base::StringPrintf("%s%d", kDriCardBasePath, i)));
+    }
+    // For Nvidia GLX driver.
+    permissions.push_back(BrokerFilePermission::ReadWrite(kNvidiaCtlPath));
+    for (int i = 0; i <= 9; ++i) {
+      permissions.push_back(BrokerFilePermission::ReadWrite(
+          base::StringPrintf("%s%d", kNvidiaDeviceBasePath, i)));
+    }
+    permissions.push_back(BrokerFilePermission::ReadOnly(kNvidiaParamsPath));
+  } else if (UseV4L2Codec()) {
     AddV4L2GpuWhitelist(&permissions);
     if (UseLibV4L2()) {
-      dlopen("/usr/lib/libv4l2.so", RTLD_NOW|RTLD_GLOBAL|RTLD_NODELETE);
+      dlopen("/usr/lib/libv4l2.so", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
       // This is a device-specific encoder plugin.
       dlopen("/usr/lib/libv4l/plugins/libv4l-encplugin.so",
-          RTLD_NOW|RTLD_GLOBAL|RTLD_NODELETE);
+             RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
     }
   }
 

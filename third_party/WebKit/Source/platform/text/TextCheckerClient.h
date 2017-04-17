@@ -30,22 +30,23 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/text/TextChecking.h"
-#include "wtf/Forward.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
+// TODO(xiaochengh): Rename TextCheckerClient to SpellCheckerClient.
 class PLATFORM_EXPORT TextCheckerClient {
-public:
-    virtual ~TextCheckerClient() { }
-
-    virtual void checkSpellingOfString(const String&, int* misspellingLocation, int* misspellingLength) = 0;
-    virtual void checkGrammarOfString(const String&, Vector<GrammarDetail>&, int* badGrammarLocation, int* badGrammarLength) = 0;
-    virtual void requestCheckingOfString(TextCheckingRequest*) = 0;
+ public:
+  virtual void CheckSpellingOfString(const String&,
+                                     int* misspelling_location,
+                                     int* misspelling_length) = 0;
+  virtual void RequestCheckingOfString(TextCheckingRequest*) = 0;
+  virtual void CancelAllPendingRequests() = 0;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TextCheckerClient_h
+#endif  // TextCheckerClient_h

@@ -5,54 +5,43 @@
 #ifndef NET_TOOLS_QUIC_TEST_TOOLS_QUIC_TEST_CLIENT_H_
 #define NET_TOOLS_QUIC_TEST_TOOLS_QUIC_TEST_CLIENT_H_
 
-#include <stddef.h>
-#include <stdint.h>
-
 #include <cstdint>
 #include <memory>
 #include <string>
 
 #include "base/macros.h"
-#include "net/base/ip_address.h"
-#include "net/base/ip_endpoint.h"
-#include "net/quic/proto/cached_network_parameters.pb.h"
-#include "net/quic/quic_framer.h"
-#include "net/quic/quic_packet_creator.h"
-#include "net/quic/quic_protocol.h"
-#include "net/tools/balsa/balsa_frame.h"
-#include "net/tools/epoll_server/epoll_server.h"
+#include "net/quic/core/proto/cached_network_parameters.pb.h"
+#include "net/quic/core/quic_framer.h"
+#include "net/quic/core/quic_packet_creator.h"
+#include "net/quic/core/quic_packets.h"
+#include "net/quic/platform/api/quic_containers.h"
+#include "net/quic/platform/api/quic_map_util.h"
+#include "net/quic/platform/api/quic_string_piece.h"
 #include "net/tools/quic/quic_client.h"
-#include "net/tools/quic/test_tools/simple_client.h"
-
-using base::StringPiece;
+#include "testing/gmock/include/gmock/gmock.h"
 
 namespace net {
-
-class ProofVerifier;
 
 class ProofVerifier;
 class QuicPacketWriterWrapper;
 
 namespace test {
 
-class HTTPMessage;
-class MockableQuicClient;
-
-// A quic client which allows mocking out writes.
+// A quic client which allows mocking out reads and writes.
 class MockableQuicClient : public QuicClient {
  public:
-  MockableQuicClient(IPEndPoint server_address,
+  MockableQuicClient(QuicSocketAddress server_address,
                      const QuicServerId& server_id,
                      const QuicVersionVector& supported_versions,
                      EpollServer* epoll_server);
 
-  MockableQuicClient(IPEndPoint server_address,
+  MockableQuicClient(QuicSocketAddress server_address,
                      const QuicServerId& server_id,
                      const QuicConfig& config,
                      const QuicVersionVector& supported_versions,
                      EpollServer* epoll_server);
 
-  MockableQuicClient(IPEndPoint server_address,
+  MockableQuicClient(QuicSocketAddress server_address,
                      const QuicServerId& server_id,
                      const QuicConfig& config,
                      const QuicVersionVector& supported_versions,
@@ -60,36 +49,47 @@ class MockableQuicClient : public QuicClient {
                      std::unique_ptr<ProofVerifier> proof_verifier);
 
   ~MockableQuicClient() override;
+
+  void ProcessPacket(const QuicSocketAddress& self_address,
+                     const QuicSocketAddress& peer_address,
+                     const QuicReceivedPacket& packet) override;
+
   QuicPacketWriter* CreateQuicPacketWriter() override;
   QuicConnectionId GenerateNewConnectionId() override;
   void UseWriter(QuicPacketWriterWrapper* writer);
   void UseConnectionId(QuicConnectionId connection_id);
-  void SendCachedNetworkParamaters(
-      const CachedNetworkParameters& cached_network_params) {
-    cached_network_paramaters_ = cached_network_params;
+  const QuicReceivedPacket* last_incoming_packet() {
+    return last_incoming_packet_.get();
   }
+  void set_track_last_incoming_packet(bool track) {
+    track_last_incoming_packet_ = track;
+  }
+  void set_peer_address(const QuicSocketAddress& address);
 
  private:
   QuicConnectionId override_connection_id_;  // ConnectionId to use, if nonzero
   QuicPacketWriterWrapper* test_writer_;
   CachedNetworkParameters cached_network_paramaters_;
+  // The last incoming packet, iff |track_last_incoming_packet_| is true.
+  std::unique_ptr<QuicReceivedPacket> last_incoming_packet_;
+  // If true, copy each packet from ProcessPacket into |last_incoming_packet_|
+  bool track_last_incoming_packet_;
 
   DISALLOW_COPY_AND_ASSIGN(MockableQuicClient);
 };
 
-// A toy QUIC client used for testing, mostly following the SimpleClient APIs.
-class QuicTestClient : public test::SimpleClient,
-                       public QuicSpdyStream::Visitor,
+// A toy QUIC client used for testing.
+class QuicTestClient : public QuicSpdyStream::Visitor,
                        public QuicClientPushPromiseIndex::Delegate {
  public:
-  QuicTestClient(IPEndPoint server_address,
+  QuicTestClient(QuicSocketAddress server_address,
                  const std::string& server_hostname,
                  const QuicVersionVector& supported_versions);
-  QuicTestClient(IPEndPoint server_address,
+  QuicTestClient(QuicSocketAddress server_address,
                  const std::string& server_hostname,
                  const QuicConfig& config,
                  const QuicVersionVector& supported_versions);
-  QuicTestClient(IPEndPoint server_address,
+  QuicTestClient(QuicSocketAddress server_address,
                  const std::string& server_hostname,
                  const QuicConfig& config,
                  const QuicVersionVector& supported_versions,
@@ -103,56 +103,95 @@ class QuicTestClient : public test::SimpleClient,
   // Wraps data in a quic packet and sends it.
   ssize_t SendData(const std::string& data, bool last_data);
   // As above, but |delegate| will be notified when |data| is ACKed.
-  ssize_t SendData(const std::string& data,
-                   bool last_data,
-                   QuicAckListenerInterface* delegate);
+  ssize_t SendData(
+      const std::string& data,
+      bool last_data,
+      QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
 
-  // From SimpleClient
   // Clears any outstanding state and sends a simple GET of 'uri' to the
   // server.  Returns 0 if the request failed and no bytes were written.
-  ssize_t SendRequest(const std::string& uri) override;
+  ssize_t SendRequest(const std::string& uri);
   // Sends requests for all the urls and waits for the responses.  To process
   // the individual responses as they are returned, the caller should use the
   // set the response_listener on the client().
   void SendRequestsAndWaitForResponses(
       const std::vector<std::string>& url_list);
-  ssize_t SendMessage(const HTTPMessage& message) override;
-  std::string SendCustomSynchronousRequest(const HTTPMessage& message) override;
-  std::string SendSynchronousRequest(const std::string& uri) override;
-  void Connect() override;
-  void ResetConnection() override;
-  void Disconnect() override;
-  IPEndPoint local_address() const override;
-  void ClearPerRequestState() override;
-  void WaitForResponseForMs(int timeout_ms) override;
-  void WaitForInitialResponseForMs(int timeout_ms) override;
-  ssize_t Send(const void* buffer, size_t size) override;
-  bool response_complete() const override;
-  bool response_headers_complete() const override;
-  const BalsaHeaders* response_headers() const override;
-  int64_t response_size() const override;
-  int response_header_size() const override;
-  int64_t response_body_size() const override;
-  size_t bytes_read() const override;
-  size_t bytes_written() const override;
-  bool buffer_body() const override;
-  void set_buffer_body(bool buffer_body) override;
-  bool ServerInLameDuckMode() const override;
-  const std::string& response_body() override;
-  bool connected() const override;
-  // These functions are all unimplemented functions from SimpleClient, and log
-  // DFATAL if called by users of SimpleClient.
-  ssize_t SendAndWaitForResponse(const void* buffer, size_t size) override;
-  void Bind(IPEndPoint* local_address) override;
-  void MigrateSocket(const IPAddress& new_host) override;
-  std::string SerializeMessage(const HTTPMessage& message) override;
-  IPAddress bind_to_address() const override;
-  void set_bind_to_address(const IPAddress& address) override;
-  const IPEndPoint& address() const override;
-  size_t requests_sent() const override;
+  // Sends a request containing |headers| and |body| and returns the number of
+  // bytes sent (the size of the serialized request headers and body).
+  ssize_t SendMessage(const SpdyHeaderBlock& headers, QuicStringPiece body);
+  // Sends a request containing |headers| and |body| with the fin bit set to
+  // |fin| and returns the number of bytes sent (the size of the serialized
+  // request headers and body).
+  ssize_t SendMessage(const SpdyHeaderBlock& headers,
+                      QuicStringPiece body,
+                      bool fin);
+  // Sends a request containing |headers| and |body|, waits for the response,
+  // and returns the response body.
+  std::string SendCustomSynchronousRequest(const SpdyHeaderBlock& headers,
+                                           const std::string& body);
+  // Sends a GET request for |uri|, waits for the response, and returns the
+  // response body.
+  std::string SendSynchronousRequest(const std::string& uri);
+  void Connect();
+  void ResetConnection();
+  void Disconnect();
+  QuicSocketAddress local_address() const;
+  void ClearPerRequestState();
+  bool WaitUntil(int timeout_ms, std::function<bool()> trigger);
+  ssize_t Send(const void* buffer, size_t size);
+  bool connected() const;
+  bool buffer_body() const;
+  void set_buffer_body(bool buffer_body);
 
-  // Returns the response trailers as received by the |stream_|.
+  // Getters for stream state. Please note, these getters are divided into two
+  // groups. 1) returns state which only get updated once a complete response
+  // is received. 2) returns state of the oldest active stream which have
+  // received partial response (if any).
+  // Group 1.
   const SpdyHeaderBlock& response_trailers() const;
+  bool response_complete() const;
+  int64_t response_body_size() const;
+  const std::string& response_body() const;
+  // Group 2.
+  bool response_headers_complete() const;
+  const SpdyHeaderBlock* response_headers() const;
+  const SpdyHeaderBlock* preliminary_headers() const;
+  int64_t response_size() const;
+  size_t bytes_read() const;
+  size_t bytes_written() const;
+
+  // Returns once at least one complete response or a connection close has been
+  // received from the server. If responses are received for multiple (say 2)
+  // streams, next WaitForResponse will return immediately.
+  void WaitForResponse() { WaitForResponseForMs(-1); }
+
+  // Returns once some data is received on any open streams or at least one
+  // complete response is received from the server.
+  void WaitForInitialResponse() { WaitForInitialResponseForMs(-1); }
+
+  // Returns once at least one complete response or a connection close has been
+  // received from the server, or once the timeout expires. -1 means no timeout.
+  // If responses are received for multiple (say 2) streams, next
+  // WaitForResponseForMs will return immediately.
+  void WaitForResponseForMs(int timeout_ms) {
+    WaitUntil(timeout_ms, [this]() { return !closed_stream_states_.empty(); });
+    if (response_complete()) {
+      VLOG(1) << "Client received response:"
+              << response_headers()->DebugString() << response_body();
+    }
+  }
+
+  // Returns once some data is received on any open streams or at least one
+  // complete response is received from the server, or once the timeout
+  // expires. -1 means no timeout.
+  void WaitForInitialResponseForMs(int timeout_ms) {
+    WaitUntil(timeout_ms, [this]() { return response_size() != 0; });
+  }
+
+  void MigrateSocket(const QuicIpAddress& new_host);
+  QuicIpAddress bind_to_address() const;
+  void set_bind_to_address(QuicIpAddress address);
+  const QuicSocketAddress& address() const;
 
   // From QuicSpdyStream::Visitor
   void OnClose(QuicSpdyStream* stream) override;
@@ -176,10 +215,11 @@ class QuicTestClient : public test::SimpleClient,
   // Calls GetOrCreateStream(), sends the request on the stream, and
   // stores the request in case it needs to be resent.  If |headers| is
   // null, only the body will be sent on the stream.
-  ssize_t GetOrCreateStreamAndSendRequest(const BalsaHeaders* headers,
-                                          StringPiece body,
-                                          bool fin,
-                                          QuicAckListenerInterface* delegate);
+  ssize_t GetOrCreateStreamAndSendRequest(
+      const SpdyHeaderBlock* headers,
+      QuicStringPiece body,
+      bool fin,
+      QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
 
   QuicRstStreamErrorCode stream_error() { return stream_error_; }
   QuicErrorCode connection_error();
@@ -209,14 +249,16 @@ class QuicTestClient : public test::SimpleClient,
     allow_bidirectional_data_ = value;
   }
 
-  bool allow_bidirectional_data() const { return allow_bidirectional_data_; }
-
   size_t num_requests() const { return num_requests_; }
 
   size_t num_responses() const { return num_responses_; }
 
-  void set_server_address(const IPEndPoint& server_address) {
+  void set_server_address(const QuicSocketAddress& server_address) {
     client_->set_server_address(server_address);
+  }
+
+  void set_peer_address(const QuicSocketAddress& address) {
+    client_->set_peer_address(address);
   }
 
   // Explicitly set the SNI value for this client, overriding the default
@@ -226,58 +268,101 @@ class QuicTestClient : public test::SimpleClient,
     override_sni_ = sni;
   }
 
- protected:
-  QuicTestClient();
-
   void Initialize();
 
   void set_client(MockableQuicClient* client) { client_.reset(client); }
 
+  // PerStreamState of a stream is updated when it is closed.
+  struct PerStreamState {
+    PerStreamState(const PerStreamState& other);
+    PerStreamState(QuicRstStreamErrorCode stream_error,
+                   bool response_complete,
+                   bool response_headers_complete,
+                   const SpdyHeaderBlock& response_headers,
+                   const SpdyHeaderBlock& preliminary_headers,
+                   const std::string& response,
+                   const SpdyHeaderBlock& response_trailers,
+                   uint64_t bytes_read,
+                   uint64_t bytes_written,
+                   int64_t response_body_size);
+    ~PerStreamState();
+
+    QuicRstStreamErrorCode stream_error;
+    bool response_complete;
+    bool response_headers_complete;
+    SpdyHeaderBlock response_headers;
+    SpdyHeaderBlock preliminary_headers;
+    std::string response;
+    SpdyHeaderBlock response_trailers;
+    uint64_t bytes_read;
+    uint64_t bytes_written;
+    int64_t response_body_size;
+  };
+
+  // Given |uri|, populates the fields in |headers| for a simple GET
+  // request. If |uri| is a relative URL, the QuicServerId will be
+  // use to specify the authority.
+  bool PopulateHeaderBlockFromUrl(const std::string& uri,
+                                  SpdyHeaderBlock* headers);
+
+ protected:
+  QuicTestClient();
+
  private:
   class TestClientDataToResend : public QuicClient::QuicDataToResend {
    public:
-    TestClientDataToResend(BalsaHeaders* headers,
-                           StringPiece body,
-                           bool fin,
-                           QuicTestClient* test_client,
-                           QuicAckListenerInterface* delegate)
-        : QuicClient::QuicDataToResend(headers, body, fin),
-          test_client_(test_client),
-          delegate_(delegate) {}
+    TestClientDataToResend(
+        std::unique_ptr<SpdyHeaderBlock> headers,
+        QuicStringPiece body,
+        bool fin,
+        QuicTestClient* test_client,
+        QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
 
-    ~TestClientDataToResend() override {}
+    ~TestClientDataToResend() override;
 
     void Resend() override;
 
    protected:
     QuicTestClient* test_client_;
-    QuicAckListenerInterface* delegate_;
+    QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener_;
   };
-
-  // Given a uri, creates a simple HTTPMessage request message for testing.
-  static void FillInRequest(const std::string& uri, HTTPMessage* message);
 
   bool HaveActiveStream();
 
+  // Read oldest received response and remove it from closed_stream_states_.
+  void ReadNextResponse();
+
+  // Clear open_streams_, closed_stream_states_ and reset
+  // latest_created_stream_.
+  void ClearPerConnectionState();
+
+  // Update latest_created_stream_, add |stream| to open_streams_ and starts
+  // tracking its state.
+  void SetLatestCreatedStream(QuicSpdyClientStream* stream);
+
   EpollServer epoll_server_;
   std::unique_ptr<MockableQuicClient> client_;  // The actual client
-  QuicSpdyClientStream* stream_;
+  QuicSpdyClientStream* latest_created_stream_;
+  std::map<QuicStreamId, QuicSpdyClientStream*> open_streams_;
+  // Received responses of closed streams.
+  QuicLinkedHashMap<QuicStreamId, PerStreamState> closed_stream_states_;
 
   QuicRstStreamErrorCode stream_error_;
 
   bool response_complete_;
   bool response_headers_complete_;
-  mutable BalsaHeaders response_headers_;
+  mutable SpdyHeaderBlock preliminary_headers_;
+  mutable SpdyHeaderBlock response_headers_;
 
   // Parsed response trailers (if present), copied from the stream in OnClose.
   SpdyHeaderBlock response_trailers_;
 
   SpdyPriority priority_;
   std::string response_;
+  // bytes_read_ and bytes_written_ are updated only when stream_ is released;
+  // prefer bytes_read() and bytes_written() member functions.
   uint64_t bytes_read_;
   uint64_t bytes_written_;
-  // The number of uncompressed HTTP header bytes received.
-  int response_header_size_;
   // The number of HTTP body bytes received.
   int64_t response_body_size_;
   // True if we tried to connect already since the last call to Disconnect().

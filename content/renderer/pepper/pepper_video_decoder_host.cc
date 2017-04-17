@@ -204,13 +204,10 @@ int32_t PepperVideoDecoderHost::OnHostMsgGetShm(
 
   base::SharedMemoryHandle shm_handle = shm->handle();
   if (shm_id == shm_buffers_.size()) {
-    shm_buffers_.push_back(shm.release());
+    shm_buffers_.push_back(std::move(shm));
     shm_buffer_busy_.push_back(false);
   } else {
-    // Remove the old buffer. Delete manually since ScopedVector won't delete
-    // the existing element if we just assign over it.
-    delete shm_buffers_[shm_id];
-    shm_buffers_[shm_id] = shm.release();
+    shm_buffers_[shm_id] = std::move(shm);
   }
 
   SerializedHandle handle(
@@ -263,6 +260,25 @@ int32_t PepperVideoDecoderHost::OnHostMsgAssignTextures(
   if (!initialized_)
     return PP_ERROR_FAILED;
   DCHECK(decoder_);
+
+  pending_texture_requests_--;
+  DCHECK_GE(pending_texture_requests_, 0);
+
+  // If |assign_textures_messages_to_dismiss_| is not 0 then decrement it and
+  // dismiss the textures. This is necessary to ensure that after SW decoder
+  // fallback the textures that were requested by the failed HW decoder are not
+  // passed to the SW decoder.
+  if (assign_textures_messages_to_dismiss_ > 0) {
+    assign_textures_messages_to_dismiss_--;
+    PictureBufferMap pictures_pending_dismission;
+    for (auto& texture_id : texture_ids) {
+      host()->SendUnsolicitedReply(
+          pp_resource(),
+          PpapiPluginMsg_VideoDecoder_DismissPicture(texture_id));
+    }
+    picture_buffer_map_.swap(pictures_pending_dismission);
+    return PP_OK;
+  }
 
   // Verify that the new texture IDs are unique and store them in
   // |new_textures|.
@@ -465,6 +481,7 @@ void PepperVideoDecoderHost::RequestTextures(
     const gfx::Size& dimensions,
     uint32_t texture_target,
     const std::vector<gpu::Mailbox>& mailboxes) {
+  pending_texture_requests_++;
   host()->SendUnsolicitedReply(
       pp_resource(),
       PpapiPluginMsg_VideoDecoder_RequestTextures(
@@ -504,6 +521,10 @@ bool PepperVideoDecoderHost::TryFallbackToSoftwareDecoder() {
     }
   }
   picture_buffer_map_.swap(pictures_pending_dismission);
+
+  // Dismiss all outstanding texture requests.
+  DCHECK_EQ(assign_textures_messages_to_dismiss_, 0);
+  assign_textures_messages_to_dismiss_ = pending_texture_requests_;
 
   // If there was a pending Reset() it can be finished now.
   if (reset_reply_context_.is_valid()) {

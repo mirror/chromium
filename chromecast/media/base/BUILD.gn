@@ -18,12 +18,14 @@ source_set("key_systems") {
     "//base",
     "//chromecast/public/media",
     "//media",
-    "//third_party/widevine/cdm:version_h",
+    "//third_party/widevine/cdm:headers",
   ]
 }
 
 source_set("base") {
   sources = [
+    "audio_device_ids.cc",
+    "audio_device_ids.h",
     "decrypt_context_impl.cc",
     "decrypt_context_impl.h",
     "decrypt_context_impl_clearkey.cc",
@@ -34,9 +36,20 @@ source_set("base") {
     "media_codec_support.h",
     "media_resource_tracker.cc",
     "media_resource_tracker.h",
+    "supported_codec_profile_levels_memo.cc",
+    "supported_codec_profile_levels_memo.h",
+    "video_mode_switcher.cc",
+    "video_mode_switcher.h",
     "video_plane_controller.cc",
     "video_plane_controller.h",
   ]
+
+  if (!is_android) {
+    sources += [
+      "video_resolution_policy.cc",
+      "video_resolution_policy.h",
+    ]
+  }
 
   public_deps = [
     ":key_systems",
@@ -44,67 +57,11 @@ source_set("base") {
   ]
 
   deps = [
-    ":libcast_media_1.0",
     "//base",
     "//chromecast/base",
     "//crypto",
     "//crypto:platform",
     "//media",
-  ]
-}
-
-# Target for OEM partners to override media shared library, i.e.
-# libcast_media_1.0.so. This target is only used to build executables
-# with correct linkage information.
-shared_library("libcast_media_1.0") {
-  sources = [
-    "cast_media_dummy.cc",
-  ]
-
-  public_deps = [
-    "//chromecast/public",
-  ]
-}
-
-# This target can be statically linked into unittests, but production
-# binaries should not depend on this target.
-source_set("libcast_media_1.0_default_core") {
-  sources = [
-    "cast_media_default.cc",
-  ]
-
-  public_deps = [
-    "//chromecast/public",
-    "//chromecast/public/media",
-  ]
-
-  deps = [
-    "//base",
-    "//build/config/sanitizers:deps",
-    "//chromecast/base",
-    "//chromecast/media/cma/backend",
-  ]
-}
-
-# Default implementation of libcast_media_1.0.so.
-# TODO(slan): Make this target a loadable_module (crbug/380327)
-shared_library("libcast_media_1.0_default") {
-  # Note that it cannot depend on libcast_media_1.0_default_core since a
-  # loadable_module include only symbols necessary for source files.
-  # So, it should include top-level .cc, here cast_media_default.cc explicitly.
-  sources = [
-    "cast_media_default.cc",
-  ]
-
-  public_deps = [
-    "//chromecast/public",
-    "//chromecast/public/media",
-  ]
-
-  deps = [
-    "//base",
-    "//build/config/sanitizers:deps",
-    "//chromecast/base",
-    "//chromecast/media/cma/backend",
+    "//ui/gfx/geometry",
   ]
 }

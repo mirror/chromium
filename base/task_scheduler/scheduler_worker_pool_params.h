@@ -7,66 +7,75 @@
 
 #include <string>
 
-#include "base/macros.h"
+#include "base/task_scheduler/scheduler_worker_params.h"
 #include "base/threading/platform_thread.h"
+#include "base/time/time.h"
 
 namespace base {
 
-class TimeDelta;
-
-namespace internal {
-
 class BASE_EXPORT SchedulerWorkerPoolParams final {
  public:
-  enum class IORestriction {
-    ALLOWED,
-    DISALLOWED,
+  enum class StandbyThreadPolicy {
+    // Create threads as needed on demand, reclaimed as necessary.
+    LAZY,
+    // When possible, keep one idle thread alive on standby, reclaimed as
+    // necessary.
+    ONE,
   };
 
-  // Construct a scheduler worker pool parameter object that instructs a
-  // scheduler worker pool to use the label |name| and create up to
-  // |max_threads| threads of priority |thread_priority|. |io_restriction|
-  // indicates whether Tasks on the scheduler worker pool are allowed to make
-  // I/O calls. |suggested_reclaim_time| sets a suggestion on when to reclaim
-  // idle threads. The worker pool is free to ignore this value for performance
-  // or correctness reasons.
+  // Construct a scheduler worker pool parameter object. |name| will be used to
+  // label the pool's threads ("TaskScheduler" + |name| + index) and histograms
+  // ("TaskScheduler." + histogram name + "." + |name| + extra suffixes). The
+  // pool will contain up to |max_threads|. |priority_hint| is the preferred
+  // thread priority; the actual thread priority depends on shutdown state and
+  // platform capabilities. |standby_thread_policy| indicates whether an idle
+  // thread should be kept alive on standby. |suggested_reclaim_time| sets a
+  // suggestion on when to reclaim idle threads. The pool is free to ignore this
+  // value for performance or correctness reasons. |backward_compatibility|
+  // indicates whether backward compatibility is enabled.
+  //
+  // TODO(fdoray): Remove this constructor. https://crbug.com/690706
   SchedulerWorkerPoolParams(
       const std::string& name,
-      ThreadPriority thread_priority,
-      IORestriction io_restriction,
+      ThreadPriority priority_hint,
+      StandbyThreadPolicy standby_thread_policy,
       int max_threads,
-      const TimeDelta& suggested_reclaim_time);
-  SchedulerWorkerPoolParams(SchedulerWorkerPoolParams&& other);
-  SchedulerWorkerPoolParams& operator=(SchedulerWorkerPoolParams&& other);
+      TimeDelta suggested_reclaim_time,
+      SchedulerBackwardCompatibility backward_compatibility =
+          SchedulerBackwardCompatibility::DISABLED);
 
-  // Name of the pool. Used to label the pool's threads.
+  // Same as above, with no explicit |name| and |priority_hint|.
+  SchedulerWorkerPoolParams(
+      StandbyThreadPolicy standby_thread_policy,
+      int max_threads,
+      TimeDelta suggested_reclaim_time,
+      SchedulerBackwardCompatibility backward_compatibility =
+          SchedulerBackwardCompatibility::DISABLED);
+
+  SchedulerWorkerPoolParams(const SchedulerWorkerPoolParams& other);
+  SchedulerWorkerPoolParams& operator=(const SchedulerWorkerPoolParams& other);
+
   const std::string& name() const { return name_; }
-
-  // Priority of the pool's threads.
-  ThreadPriority thread_priority() const { return thread_priority_; }
-
-  // Whether I/O is allowed in the pool.
-  IORestriction io_restriction() const { return io_restriction_; }
-
-  // Maximum number of threads in the pool.
-  size_t max_threads() const { return max_threads_; }
-
-  // Suggested reclaim time for threads in the worker pool.
-  const TimeDelta& suggested_reclaim_time() const {
-    return suggested_reclaim_time_;
+  ThreadPriority priority_hint() const { return priority_hint_; }
+  StandbyThreadPolicy standby_thread_policy() const {
+    return standby_thread_policy_;
+  }
+  int max_threads() const { return max_threads_; }
+  TimeDelta suggested_reclaim_time() const { return suggested_reclaim_time_; }
+  SchedulerBackwardCompatibility backward_compatibility() const {
+    return backward_compatibility_;
   }
 
  private:
+  // TODO(fdoray): Remove |name_| and |priority_hint_|. https://crbug.com/690706
   std::string name_;
-  ThreadPriority thread_priority_;
-  IORestriction io_restriction_;
-  size_t max_threads_;
+  ThreadPriority priority_hint_;
+  StandbyThreadPolicy standby_thread_policy_;
+  int max_threads_;
   TimeDelta suggested_reclaim_time_;
-
-  DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerPoolParams);
+  SchedulerBackwardCompatibility backward_compatibility_;
 };
 
-}  // namespace internal
 }  // namespace base
 
 #endif  // BASE_TASK_SCHEDULER_SCHEDULER_WORKER_POOL_PARAMS_H_

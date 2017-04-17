@@ -31,60 +31,103 @@
 
 namespace blink {
 
-class PLATFORM_EXPORT RotateTransformOperation final : public TransformOperation {
-public:
-    static PassRefPtr<RotateTransformOperation> create(double angle, OperationType type)
-    {
-        return create(Rotation(FloatPoint3D(0, 0, 1), angle), type);
-    }
+class PLATFORM_EXPORT RotateTransformOperation : public TransformOperation {
+ public:
+  static PassRefPtr<RotateTransformOperation> Create(double angle,
+                                                     OperationType type) {
+    return Create(Rotation(FloatPoint3D(0, 0, 1), angle), type);
+  }
 
-    static PassRefPtr<RotateTransformOperation> create(double x, double y, double z, double angle, OperationType type)
-    {
-        return create(Rotation(FloatPoint3D(x, y, z), angle), type);
-    }
+  static PassRefPtr<RotateTransformOperation> Create(double x,
+                                                     double y,
+                                                     double z,
+                                                     double angle,
+                                                     OperationType type) {
+    return Create(Rotation(FloatPoint3D(x, y, z), angle), type);
+  }
 
-    static PassRefPtr<RotateTransformOperation> create(const Rotation& rotation, OperationType type)
-    {
-        return adoptRef(new RotateTransformOperation(rotation, type));
-    }
+  static PassRefPtr<RotateTransformOperation> Create(const Rotation& rotation,
+                                                     OperationType type) {
+    DCHECK(IsMatchingOperationType(type));
+    return AdoptRef(new RotateTransformOperation(rotation, type));
+  }
 
-    double x() const { return m_rotation.axis.x(); }
-    double y() const { return m_rotation.axis.y(); }
-    double z() const { return m_rotation.axis.z(); }
-    double angle() const { return m_rotation.angle; }
-    const FloatPoint3D& axis() const { return m_rotation.axis; }
+  double X() const { return rotation_.axis.X(); }
+  double Y() const { return rotation_.axis.Y(); }
+  double Z() const { return rotation_.axis.Z(); }
+  double Angle() const { return rotation_.angle; }
+  const FloatPoint3D& Axis() const { return rotation_.axis; }
 
-    static bool getCommonAxis(const RotateTransformOperation*, const RotateTransformOperation*, FloatPoint3D& resultAxis, double& resultAngleA, double& resultAngleB);
+  static bool GetCommonAxis(const RotateTransformOperation*,
+                            const RotateTransformOperation*,
+                            FloatPoint3D& result_axis,
+                            double& result_angle_a,
+                            double& result_angle_b);
 
-    virtual bool canBlendWith(const TransformOperation& other) const;
-    OperationType type() const override { return m_type; }
+  virtual bool CanBlendWith(const TransformOperation& other) const;
+  OperationType GetType() const override { return type_; }
+  OperationType PrimitiveType() const final { return kRotate3D; }
 
-    void apply(TransformationMatrix& transform, const FloatSize& /*borderBoxSize*/) const override
-    {
-        transform.rotate3d(m_rotation);
-    }
+  void Apply(TransformationMatrix& transform,
+             const FloatSize& /*borderBoxSize*/) const override {
+    transform.Rotate3d(rotation_);
+  }
 
-    static bool isMatchingOperationType(OperationType type) { return type == Rotate || type == RotateX || type == RotateY || type == RotateZ || type == Rotate3D; }
+  static bool IsMatchingOperationType(OperationType type) {
+    return type == kRotate || type == kRotateX || type == kRotateY ||
+           type == kRotateZ || type == kRotate3D;
+  }
 
-private:
-    bool operator==(const TransformOperation&) const override;
+ protected:
+  bool operator==(const TransformOperation&) const override;
 
-    PassRefPtr<TransformOperation> blend(const TransformOperation* from, double progress, bool blendToIdentity = false) override;
-    PassRefPtr<TransformOperation> zoom(double factor) final { return this; }
+  PassRefPtr<TransformOperation> Blend(const TransformOperation* from,
+                                       double progress,
+                                       bool blend_to_identity = false) override;
+  PassRefPtr<TransformOperation> Zoom(double factor) override { return this; }
 
-    RotateTransformOperation(const Rotation& rotation, OperationType type)
-        : m_rotation(rotation)
-        , m_type(type)
-    {
-        ASSERT(isMatchingOperationType(type));
-    }
+  RotateTransformOperation(const Rotation& rotation, OperationType type)
+      : rotation_(rotation), type_(type) {}
 
-    const Rotation m_rotation;
-    const OperationType m_type;
+  const Rotation rotation_;
+  const OperationType type_;
 };
 
 DEFINE_TRANSFORM_TYPE_CASTS(RotateTransformOperation);
 
-} // namespace blink
+class PLATFORM_EXPORT RotateAroundOriginTransformOperation final
+    : public RotateTransformOperation {
+ public:
+  static PassRefPtr<RotateAroundOriginTransformOperation>
+  Create(double angle, double origin_x, double origin_y) {
+    return AdoptRef(
+        new RotateAroundOriginTransformOperation(angle, origin_x, origin_y));
+  }
 
-#endif // RotateTransformOperation_h
+  void Apply(TransformationMatrix&, const FloatSize&) const override;
+
+  static bool IsMatchingOperationType(OperationType type) {
+    return type == kRotateAroundOrigin;
+  }
+
+ private:
+  RotateAroundOriginTransformOperation(double angle,
+                                       double origin_x,
+                                       double origin_y);
+
+  bool operator==(const TransformOperation&) const override;
+
+  PassRefPtr<TransformOperation> Blend(const TransformOperation* from,
+                                       double progress,
+                                       bool blend_to_identity = false) override;
+  PassRefPtr<TransformOperation> Zoom(double factor) override;
+
+  double origin_x_;
+  double origin_y_;
+};
+
+DEFINE_TRANSFORM_TYPE_CASTS(RotateAroundOriginTransformOperation);
+
+}  // namespace blink
+
+#endif  // RotateTransformOperation_h

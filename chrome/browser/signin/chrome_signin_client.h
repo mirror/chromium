@@ -17,10 +17,9 @@
 #include "net/base/network_change_notifier.h"
 #endif
 
-namespace content_settings {
-class CookieSettings;
-}
-
+#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
+class ForceSigninVerifier;
+#endif
 class Profile;
 
 class ChromeSigninClient
@@ -57,7 +56,7 @@ class ChromeSigninClient
   void RemoveContentSettingsObserver(
       content_settings::Observer* observer) override;
   void DelayNetworkCall(const base::Closure& callback) override;
-  GaiaAuthFetcher* CreateGaiaAuthFetcher(
+  std::unique_ptr<GaiaAuthFetcher> CreateGaiaAuthFetcher(
       GaiaAuthConsumer* consumer,
       const std::string& source,
       net::URLRequestContextGetter* getter) override;
@@ -77,6 +76,9 @@ class ChromeSigninClient
   void PostSignedIn(const std::string& account_id,
                     const std::string& username,
                     const std::string& password) override;
+  void PreSignOut(
+      const base::Callback<void()>& sign_out,
+      signin_metrics::ProfileSignout signout_source_metric) override;
 
   // SigninErrorController::Observer implementation.
   void OnErrorChanged() override;
@@ -100,14 +102,31 @@ class ChromeSigninClient
       override;
 #endif
 
+  void AfterCredentialsCopied() override;
+
+ protected:
+  virtual void ShowUserManager(const base::FilePath& profile_path);
+  virtual void LockForceSigninProfile(const base::FilePath& profile_path);
+
  private:
   void MaybeFetchSigninTokenHandle();
+  void VerifySyncToken();
+  void OnCloseBrowsersSuccess(
+      const base::Callback<void()>& sign_out,
+      const signin_metrics::ProfileSignout signout_source_metric,
+      const base::FilePath& profile_path);
+  void OnCloseBrowsersAborted(const base::FilePath& profile_path);
 
   Profile* profile_;
 
   SigninErrorController* signin_error_controller_;
 #if !defined(OS_CHROMEOS)
   std::list<base::Closure> delayed_callbacks_;
+#endif
+
+  bool should_display_user_manager_ = true;
+#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
+  std::unique_ptr<ForceSigninVerifier> force_signin_verifier_;
 #endif
 
   std::unique_ptr<gaia::GaiaOAuthClient> oauth_client_;

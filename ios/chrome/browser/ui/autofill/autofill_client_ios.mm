@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "components/autofill/core/browser/autofill_credit_card_filling_infobar_delegate_mobile.h"
 #include "components/autofill/core/browser/autofill_save_card_infobar_delegate_mobile.h"
 #include "components/autofill/core/browser/autofill_save_card_infobar_mobile.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_view.h"
@@ -22,18 +23,30 @@
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/autofill/personal_data_manager_factory.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#include "ios/chrome/browser/infobars/infobar_utils.h"
+#include "ios/chrome/browser/ui/autofill/card_unmask_prompt_view_bridge.h"
 #include "ios/chrome/browser/web_data_service_factory.h"
 #include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
+#import "ios/web/public/navigation_item.h"
+#import "ios/web/public/navigation_manager.h"
+#include "ios/web/public/ssl_status.h"
+#import "ios/web/public/web_state/web_state.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 namespace autofill {
 
 AutofillClientIOS::AutofillClientIOS(
     ios::ChromeBrowserState* browser_state,
+    web::WebState* web_state,
     infobars::InfoBarManager* infobar_manager,
     id<AutofillClientIOSBridge> bridge,
     password_manager::PasswordGenerationManager* password_generation_manager,
     std::unique_ptr<IdentityProvider> identity_provider)
     : browser_state_(browser_state),
+      web_state_(web_state),
       infobar_manager_(infobar_manager),
       bridge_(bridge),
       password_generation_manager_(password_generation_manager),
@@ -46,7 +59,7 @@ AutofillClientIOS::~AutofillClientIOS() {
 }
 
 PersonalDataManager* AutofillClientIOS::GetPersonalDataManager() {
-  return PersonalDataManagerFactory::GetForBrowserState(
+  return autofill::PersonalDataManagerFactory::GetForBrowserState(
       browser_state_->GetOriginalChromeBrowserState());
 }
 
@@ -54,9 +67,8 @@ PrefService* AutofillClientIOS::GetPrefs() {
   return browser_state_->GetPrefs();
 }
 
-// TODO(jdonnelly): Implement this when adding credit card upload.
-sync_driver::SyncService* AutofillClientIOS::GetSyncService() {
-  NOTIMPLEMENTED();
+// TODO(crbug.com/535784): Implement this when adding credit card upload.
+syncer::SyncService* AutofillClientIOS::GetSyncService() {
   return nullptr;
 }
 
@@ -64,8 +76,16 @@ IdentityProvider* AutofillClientIOS::GetIdentityProvider() {
   return identity_provider_.get();
 }
 
-rappor::RapporService* AutofillClientIOS::GetRapporService() {
-  return GetApplicationContext()->GetRapporService();
+rappor::RapporServiceImpl* AutofillClientIOS::GetRapporServiceImpl() {
+  return GetApplicationContext()->GetRapporServiceImpl();
+}
+
+ukm::UkmService* AutofillClientIOS::GetUkmService() {
+  return GetApplicationContext()->GetUkmService();
+}
+
+SaveCardBubbleController* AutofillClientIOS::GetSaveCardBubbleController() {
+  return nullptr;
 }
 
 void AutofillClientIOS::ShowAutofillSettings() {
@@ -76,10 +96,11 @@ void AutofillClientIOS::ShowUnmaskPrompt(
     const CreditCard& card,
     UnmaskCardReason reason,
     base::WeakPtr<CardUnmaskDelegate> delegate) {
-  ios::ChromeBrowserProvider* provider = ios::GetChromeBrowserProvider();
   unmask_controller_.ShowPrompt(
-      provider->CreateCardUnmaskPromptView(&unmask_controller_), card, reason,
-      delegate);
+      // autofill::CardUnmaskPromptViewBridge manages its own lifetime, so
+      // do not use std::unique_ptr<> here.
+      new autofill::CardUnmaskPromptViewBridge(&unmask_controller_), card,
+      reason, delegate);
 }
 
 void AutofillClientIOS::OnUnmaskVerificationResult(PaymentsRpcResult result) {
@@ -95,18 +116,32 @@ void AutofillClientIOS::ConfirmSaveCreditCardLocally(
   // InfoBarService is a WebContentsUserData, it must also be alive at this
   // time.
   infobar_manager_->AddInfoBar(CreateSaveCardInfoBarMobile(
-      base::WrapUnique(new AutofillSaveCardInfoBarDelegateMobile(
+      base::MakeUnique<AutofillSaveCardInfoBarDelegateMobile>(
           false, card, std::unique_ptr<base::DictionaryValue>(nullptr),
-          callback))));
+          callback)));
 }
 
 void AutofillClientIOS::ConfirmSaveCreditCardToCloud(
     const CreditCard& card,
     std::unique_ptr<base::DictionaryValue> legal_message,
+    bool should_cvc_be_requested,
     const base::Closure& callback) {
   infobar_manager_->AddInfoBar(CreateSaveCardInfoBarMobile(
-      base::WrapUnique(new AutofillSaveCardInfoBarDelegateMobile(
-          true, card, std::move(legal_message), callback))));
+      base::MakeUnique<AutofillSaveCardInfoBarDelegateMobile>(
+          true, card, std::move(legal_message), callback)));
+}
+
+void AutofillClientIOS::ConfirmCreditCardFillAssist(
+    const CreditCard& card,
+    const base::Closure& callback) {
+  auto infobar_delegate =
+      base::MakeUnique<AutofillCreditCardFillingInfoBarDelegateMobile>(
+          card, callback);
+  auto* raw_delegate = infobar_delegate.get();
+  if (infobar_manager_->AddInfoBar(
+          ::CreateConfirmInfoBar(std::move(infobar_delegate)))) {
+    raw_delegate->set_was_shown();
+  }
 }
 
 void AutofillClientIOS::LoadRiskData(
@@ -163,16 +198,20 @@ scoped_refptr<AutofillWebDataService> AutofillClientIOS::GetDatabase() {
       browser_state_, ServiceAccessType::EXPLICIT_ACCESS);
 }
 
-bool AutofillClientIOS::IsContextSecure(const GURL& form_origin) {
-  // TODO (sigbjorn): Return if the context is secure, not just
-  // the form_origin. See crbug.com/505388.
-  return form_origin.SchemeIsCryptographic();
-}
+bool AutofillClientIOS::IsContextSecure() {
+  // This implementation differs slightly from other platforms. Other platforms'
+  // implementations check for the presence of active mixed content, but because
+  // the iOS web view blocks active mixed content without an option to run it,
+  // there is no need to check for active mixed conent here.
+  web::NavigationManager* manager = web_state_->GetNavigationManager();
+  web::NavigationItem* nav_item = manager->GetLastCommittedItem();
+  if (!nav_item)
+    return false;
 
-void AutofillClientIOS::OnFirstUserGestureObserved() {
-  // TODO(gcasto): [Merge 306796] http://crbug.com/439425 Verify if this method
-  // needs a real implementation or not.
-  NOTIMPLEMENTED();
+  const web::SSLStatus& ssl = nav_item->GetSSL();
+  return nav_item->GetURL().SchemeIsCryptographic() && ssl.certificate &&
+         (!net::IsCertStatusError(ssl.cert_status) ||
+          net::IsCertStatusMinorError(ssl.cert_status));
 }
 
 bool AutofillClientIOS::ShouldShowSigninPromo() {
@@ -180,6 +219,10 @@ bool AutofillClientIOS::ShouldShowSigninPromo() {
 }
 
 void AutofillClientIOS::StartSigninFlow() {
+  NOTIMPLEMENTED();
+}
+
+void AutofillClientIOS::ShowHttpNotSecureExplanation() {
   NOTIMPLEMENTED();
 }
 

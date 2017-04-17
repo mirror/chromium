@@ -13,32 +13,35 @@
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ *  MA 02110-1301 USA
  */
 
 #include "core/xml/DOMParser.h"
 
 #include "core/dom/DOMImplementation.h"
-#include "wtf/text/WTFString.h"
+#include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-Document* DOMParser::parseFromString(const String& str, const String& type)
-{
-    Document* doc = DOMImplementation::createDocument(type, DocumentInit(KURL(), nullptr, m_contextDocument), false);
-    doc->setContent(str);
-    doc->setSecurityOrigin(m_contextDocument->getSecurityOrigin());
-    return doc;
+Document* DOMParser::parseFromString(const String& str, const String& type) {
+  Document* doc = DOMImplementation::createDocument(
+      type, DocumentInit(KURL(), nullptr, context_document_), false);
+  doc->SetContent(str);
+  doc->SetMimeType(AtomicString(type));
+  if (context_document_) {
+    doc->SetURL(context_document_->Url());
+    doc->SetSecurityOrigin(context_document_->GetSecurityOrigin());
+  }
+  return doc;
 }
 
 DOMParser::DOMParser(Document& document)
-    : m_contextDocument(document.contextDocument())
-{
+    : context_document_(document.ContextDocument()) {}
+
+DEFINE_TRACE(DOMParser) {
+  visitor->Trace(context_document_);
 }
 
-DEFINE_TRACE(DOMParser)
-{
-    visitor->trace(m_contextDocument);
-}
-
-} // namespace blink
+}  // namespace blink

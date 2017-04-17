@@ -8,51 +8,93 @@
 #include <string>
 
 #include "base/macros.h"
+#include "chrome/browser/permissions/permission_request.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
+#include "url/gurl.h"
 
-class GURL;
 class Profile;
 
 namespace content {
 enum class PermissionType;
 }  // namespace content
 
-struct PermissionTypeHash {
-  std::size_t operator()(const content::PermissionType& type) const;
+enum class PermissionSourceUI;
+
+// This enum backs a UMA histogram, so it must be treated as append-only.
+enum class PermissionAction {
+  GRANTED = 0,
+  DENIED = 1,
+  DISMISSED = 2,
+  IGNORED = 3,
+  REVOKED = 4,
+  REENABLED = 5,
+  REQUESTED = 6,
+
+  // Always keep this at the end.
+  NUM,
 };
 
 // A utility class for permissions.
 class PermissionUtil {
  public:
-  // Returns the permission string for the given PermissionType.
-  static std::string GetPermissionString(content::PermissionType permission);
+  // Returns the permission string for the given permission.
+  static std::string GetPermissionString(ContentSettingsType);
 
-  // Limited conversion of ContentSettingsType to PermissionType. Intended for
-  // recording Permission UMA metrics from areas of the codebase which have not
-  // yet been converted to PermissionType. Returns true if the conversion was
-  // performed.
-  // TODO(tsergeant): Remove this function once callsites operate on
-  // PermissionType directly.
+  // Return the stringified version of the ContentSettingsType enum that
+  // Safe Browsing uses for the API Blacklist.
+  static std::string ConvertContentSettingsTypeToSafeBrowsingName(
+      ContentSettingsType permission);
+
+  // Returns the request type corresponding to a permission type.
+  static PermissionRequestType GetRequestType(ContentSettingsType permission);
+
+  // Returns the gesture type corresponding to whether a permission request is
+  // made with or without a user gesture.
+  static PermissionRequestGestureType GetGestureType(bool user_gesture);
+
+  // Limited conversion of ContentSettingsType to PermissionType. Returns true
+  // if the conversion was performed.
+  // TODO(timloh): Try to remove this function. Mainly we need to work out how
+  // to remove the usage in PermissionUmaUtil, which uses PermissionType as a
+  // histogram value to count permission request metrics.
   static bool GetPermissionType(ContentSettingsType type,
                                 content::PermissionType* out);
 
-  // Helper method which proxies
-  // HostContentSettingsMap::SetContentSettingDefaultScope(). Checks the content
-  // setting value before and after the change to determine whether it has gone
-  // from ALLOW to BLOCK or ASK, and records metrics accordingly. Should be
-  // called from UI code when a user changes permissions for a particular origin
-  // pair.
-  // TODO(tsergeant): This is a temporary solution to begin gathering metrics.
-  // We should integrate this better with the permissions layer. See
-  // crbug.com/469221.
-  static void SetContentSettingAndRecordRevocation(
-      Profile* profile,
-      const GURL& primary_url,
-      const GURL& secondary_url,
-      ContentSettingsType content_type,
-      std::string resource_identifier,
-      ContentSetting setting);
+  // Checks whether the given ContentSettingsType is a permission. Use this
+  // to determine whether a specific ContentSettingsType is supported by the
+  // PermissionManager.
+  static bool IsPermission(ContentSettingsType type);
+
+  static bool ShouldShowPersistenceToggle();
+
+  // A scoped class that will check the current resolved content setting on
+  // construction and report a revocation metric accordingly if the revocation
+  // condition is met (from ALLOW to something else).
+  class ScopedRevocationReporter {
+   public:
+    ScopedRevocationReporter(Profile* profile,
+                             const GURL& primary_url,
+                             const GURL& secondary_url,
+                             ContentSettingsType content_type,
+                             PermissionSourceUI source_ui);
+
+    ScopedRevocationReporter(Profile* profile,
+                             const ContentSettingsPattern& primary_pattern,
+                             const ContentSettingsPattern& secondary_pattern,
+                             ContentSettingsType content_type,
+                             PermissionSourceUI source_ui);
+
+    ~ScopedRevocationReporter();
+
+   private:
+    Profile* profile_;
+    const GURL primary_url_;
+    const GURL secondary_url_;
+    ContentSettingsType content_type_;
+    PermissionSourceUI source_ui_;
+    bool is_initially_allowed_;
+  };
 
  private:
   DISALLOW_IMPLICIT_CONSTRUCTORS(PermissionUtil);

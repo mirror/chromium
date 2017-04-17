@@ -12,53 +12,53 @@ namespace blink {
 
 namespace {
 
-DOMException* ToException(WebSetSinkIdError error)
-{
-    switch (error) {
-    case WebSetSinkIdError::NotFound:
-        return DOMException::create(NotFoundError, "Requested device not found");
-    case WebSetSinkIdError::NotAuthorized:
-        return DOMException::create(SecurityError, "No permission to use requested device");
-    case WebSetSinkIdError::Aborted:
-        return DOMException::create(AbortError, "The operation could not be performed and was aborted");
-    case WebSetSinkIdError::NotSupported:
-        return DOMException::create(NotSupportedError, "Operation not supported");
+DOMException* ToException(WebSetSinkIdError error) {
+  switch (error) {
+    case WebSetSinkIdError::kNotFound:
+      return DOMException::Create(kNotFoundError, "Requested device not found");
+    case WebSetSinkIdError::kNotAuthorized:
+      return DOMException::Create(kSecurityError,
+                                  "No permission to use requested device");
+    case WebSetSinkIdError::kAborted:
+      return DOMException::Create(
+          kAbortError, "The operation could not be performed and was aborted");
+    case WebSetSinkIdError::kNotSupported:
+      return DOMException::Create(kNotSupportedError,
+                                  "Operation not supported");
     default:
-        ASSERT_NOT_REACHED();
-        return DOMException::create(AbortError, "Invalid error code");
-    }
+      ASSERT_NOT_REACHED();
+      return DOMException::Create(kAbortError, "Invalid error code");
+  }
 }
 
-} // namespace
+}  // namespace
 
-SetSinkIdCallbacks::SetSinkIdCallbacks(ScriptPromiseResolver* resolver, HTMLMediaElement& element, const String& sinkId)
-    : m_resolver(resolver)
-    , m_element(element)
-    , m_sinkId(sinkId)
-{
-    ASSERT(m_resolver);
+SetSinkIdCallbacks::SetSinkIdCallbacks(ScriptPromiseResolver* resolver,
+                                       HTMLMediaElement& element,
+                                       const String& sink_id)
+    : resolver_(resolver), element_(element), sink_id_(sink_id) {
+  ASSERT(resolver_);
 }
 
-SetSinkIdCallbacks::~SetSinkIdCallbacks()
-{
+SetSinkIdCallbacks::~SetSinkIdCallbacks() {}
+
+void SetSinkIdCallbacks::OnSuccess() {
+  if (!resolver_->GetExecutionContext() ||
+      resolver_->GetExecutionContext()->IsContextDestroyed())
+    return;
+
+  HTMLMediaElementAudioOutputDevice& aod_element =
+      HTMLMediaElementAudioOutputDevice::From(*element_);
+  aod_element.setSinkId(sink_id_);
+  resolver_->Resolve();
 }
 
-void SetSinkIdCallbacks::onSuccess()
-{
-    if (!m_resolver->getExecutionContext() || m_resolver->getExecutionContext()->activeDOMObjectsAreStopped())
-        return;
+void SetSinkIdCallbacks::OnError(WebSetSinkIdError error) {
+  if (!resolver_->GetExecutionContext() ||
+      resolver_->GetExecutionContext()->IsContextDestroyed())
+    return;
 
-    HTMLMediaElementAudioOutputDevice& aodElement = HTMLMediaElementAudioOutputDevice::from(*m_element);
-    aodElement.setSinkId(m_sinkId);
-    m_resolver->resolve();
+  resolver_->Reject(ToException(error));
 }
 
-void SetSinkIdCallbacks::onError(WebSetSinkIdError error)
-{
-    if (!m_resolver->getExecutionContext() || m_resolver->getExecutionContext()->activeDOMObjectsAreStopped())
-        return;
-
-    m_resolver->reject(ToException(error));
-}
-
-} // namespace blink
+}  // namespace blink

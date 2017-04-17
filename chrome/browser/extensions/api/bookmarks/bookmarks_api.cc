@@ -96,7 +96,8 @@ base::FilePath GetDefaultFilepathForBookmarkExport() {
 }  // namespace
 
 bool BookmarksFunction::RunAsync() {
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(GetProfile());
+  BookmarkModel* model =
+      BookmarkModelFactory::GetForBrowserContext(GetProfile());
   if (!model->loaded()) {
     // Bookmarks are not ready yet.  We'll wait.
     model->AddObserver(this);
@@ -109,7 +110,7 @@ bool BookmarksFunction::RunAsync() {
 }
 
 BookmarkModel* BookmarksFunction::GetBookmarkModel() {
-  return BookmarkModelFactory::GetForProfile(GetProfile());
+  return BookmarkModelFactory::GetForBrowserContext(GetProfile());
 }
 
 ManagedBookmarkService* BookmarksFunction::GetManagedBookmarkService() {
@@ -132,7 +133,7 @@ const BookmarkNode* BookmarksFunction::GetBookmarkNodeFromId(
     return NULL;
 
   const BookmarkNode* node = ::bookmarks::GetBookmarkNodeByID(
-      BookmarkModelFactory::GetForProfile(GetProfile()), id);
+      BookmarkModelFactory::GetForBrowserContext(GetProfile()), id);
   if (!node)
     error_ = keys::kNoNodeError;
 
@@ -245,7 +246,7 @@ void BookmarksFunction::RunAndSendResponse() {
 
 BookmarkEventRouter::BookmarkEventRouter(Profile* profile)
     : browser_context_(profile),
-      model_(BookmarkModelFactory::GetForProfile(profile)),
+      model_(BookmarkModelFactory::GetForBrowserContext(profile)),
       managed_(ManagedBookmarkServiceFactory::GetForProfile(profile)) {
   model_->AddObserver(this);
 }
@@ -262,8 +263,8 @@ void BookmarkEventRouter::DispatchEvent(
     std::unique_ptr<base::ListValue> event_args) {
   EventRouter* event_router = EventRouter::Get(browser_context_);
   if (event_router) {
-    event_router->BroadcastEvent(base::WrapUnique(new extensions::Event(
-        histogram_value, event_name, std::move(event_args))));
+    event_router->BroadcastEvent(base::MakeUnique<extensions::Event>(
+        histogram_value, event_name, std::move(event_args)));
   }
 }
 
@@ -402,8 +403,9 @@ void BookmarksAPI::Shutdown() {
   EventRouter::Get(browser_context_)->UnregisterObserver(this);
 }
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<BookmarksAPI> >
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<
+    BrowserContextKeyedAPIFactory<BookmarksAPI>>::DestructorAtExit g_factory =
+    LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<BookmarksAPI>*
@@ -476,9 +478,8 @@ bool BookmarksGetRecentFunction::RunOnReady() {
 
   std::vector<const BookmarkNode*> nodes;
   ::bookmarks::GetMostRecentlyAddedEntries(
-      BookmarkModelFactory::GetForProfile(GetProfile()),
-      params->number_of_items,
-      &nodes);
+      BookmarkModelFactory::GetForBrowserContext(GetProfile()),
+      params->number_of_items, &nodes);
 
   std::vector<BookmarkTreeNode> tree_nodes;
   for (const BookmarkNode* node : nodes) {
@@ -493,7 +494,7 @@ bool BookmarksGetRecentFunction::RunOnReady() {
 bool BookmarksGetTreeFunction::RunOnReady() {
   std::vector<BookmarkTreeNode> nodes;
   const BookmarkNode* node =
-      BookmarkModelFactory::GetForProfile(GetProfile())->root_node();
+      BookmarkModelFactory::GetForBrowserContext(GetProfile())->root_node();
   bookmark_api_helpers::AddNode(GetManagedBookmarkService(), node, &nodes,
                                 true);
   results_ = bookmarks::GetTree::Results::Create(nodes);
@@ -527,10 +528,8 @@ bool BookmarksSearchFunction::RunOnReady() {
     query.word_phrase_query.reset(
         new base::string16(base::UTF8ToUTF16(*params->query.as_string)));
     ::bookmarks::GetBookmarksMatchingProperties(
-        BookmarkModelFactory::GetForProfile(GetProfile()),
-        query,
-        std::numeric_limits<int>::max(),
-        &nodes);
+        BookmarkModelFactory::GetForBrowserContext(GetProfile()), query,
+        std::numeric_limits<int>::max(), &nodes);
   } else {
     DCHECK(params->query.as_object);
     const bookmarks::Search::Params::Query::Object& object =
@@ -545,10 +544,8 @@ bool BookmarksSearchFunction::RunOnReady() {
     if (object.title)
       query.title.reset(new base::string16(base::UTF8ToUTF16(*object.title)));
     ::bookmarks::GetBookmarksMatchingProperties(
-        BookmarkModelFactory::GetForProfile(GetProfile()),
-        query,
-        std::numeric_limits<int>::max(),
-        &nodes);
+        BookmarkModelFactory::GetForBrowserContext(GetProfile()), query,
+        std::numeric_limits<int>::max(), &nodes);
   }
 
   std::vector<BookmarkTreeNode> tree_nodes;
@@ -607,7 +604,8 @@ bool BookmarksCreateFunction::RunOnReady() {
       bookmarks::Create::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params.get());
 
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(GetProfile());
+  BookmarkModel* model =
+      BookmarkModelFactory::GetForBrowserContext(GetProfile());
   const BookmarkNode* node = CreateBookmarkNode(model, params->bookmark, NULL);
   if (!node)
     return false;
@@ -639,7 +637,8 @@ bool BookmarksMoveFunction::RunOnReady() {
   if (!node)
     return false;
 
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(GetProfile());
+  BookmarkModel* model =
+      BookmarkModelFactory::GetForBrowserContext(GetProfile());
   if (model->is_permanent_node(node)) {
     error_ = keys::kModifySpecialError;
     return false;
@@ -717,7 +716,8 @@ bool BookmarksUpdateFunction::RunOnReady() {
   if (!CanBeModified(node))
     return false;
 
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(GetProfile());
+  BookmarkModel* model =
+      BookmarkModelFactory::GetForBrowserContext(GetProfile());
   if (model->is_permanent_node(node)) {
     error_ = keys::kModifySpecialError;
     return false;

@@ -45,6 +45,7 @@ import org.chromium.base.TraceEvent;
 import org.chromium.content.app.ContentApplication;
 import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.WebContents;
+import org.chromium.content_public.common.ContentUrlConstants;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -55,7 +56,7 @@ import java.net.URISyntaxException;
 public class AwShellActivity extends Activity {
     private static final String TAG = "cr.AwShellActivity";
     private static final String PREFERENCES_NAME = "AwShellPrefs";
-    private static final String INITIAL_URL = "about:blank";
+    private static final String INITIAL_URL = ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL;
     private AwBrowserContext mBrowserContext;
     private AwDevToolsServer mDevToolsServer;
     private AwTestContainerView mAwTestContainerView;
@@ -171,10 +172,11 @@ public class AwShellActivity extends Activity {
         if (mBrowserContext == null) {
             mBrowserContext = new AwBrowserContext(sharedPreferences, getApplicationContext());
         }
-        final AwSettings awSettings = new AwSettings(this /* context */,
-                false /* isAccessFromFileURLsGrantedByDefault */, false /* supportsLegacyQuirks */,
-                false /* allowEmptyDocumentPersistence */,
-                true /* allowGeolocationOnInsecureOrigins */);
+        final AwSettings awSettings =
+                new AwSettings(this /* context */, false /* isAccessFromFileURLsGrantedByDefault */,
+                        false /* supportsLegacyQuirks */, false /* allowEmptyDocumentPersistence */,
+                        true /* allowGeolocationOnInsecureOrigins */,
+                        false /* doNotUpdateSelectionOnMutatingSelectionRange */);
         // Required for WebGL conformance tests.
         awSettings.setMediaPlaybackRequiresUserGesture(false);
         // Allow zoom and fit contents to screen

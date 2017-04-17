@@ -31,47 +31,59 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
+#include "core/dom/ExceptionCode.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-typedef int ExceptionCode;
+class CORE_EXPORT DOMException final
+    : public GarbageCollectedFinalized<DOMException>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-class CORE_EXPORT DOMException final : public GarbageCollectedFinalized<DOMException>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static DOMException* create(ExceptionCode, const String& sanitizedMessage = String(), const String& unsanitizedMessage = String());
+ public:
+  static DOMException* Create(ExceptionCode,
+                              const String& sanitized_message = String(),
+                              const String& unsanitized_message = String());
 
-    // Constructor exposed to script.
-    static DOMException* create(const String& message, const String& name);
+  // Constructor exposed to script.
+  static DOMException* Create(const String& message, const String& name);
 
-    unsigned short code() const { return m_code; }
-    String name() const { return m_name; }
+  unsigned short code() const { return code_; }
+  String name() const { return name_; }
 
-    // This is the message that's exposed to JavaScript: never return unsanitized data.
-    String message() const { return m_sanitizedMessage; }
-    String toString() const;
+  // This is the message that's exposed to JavaScript: never return unsanitized
+  // data.
+  String message() const { return sanitized_message_; }
+  String toString() const;
 
-    // This is the message that's exposed to the console: if an unsanitized message is present, we prefer it.
-    String messageForConsole() const { return !m_unsanitizedMessage.isEmpty() ? m_unsanitizedMessage : m_sanitizedMessage; }
-    String toStringForConsole() const;
+  // This is the message that's exposed to the console: if an unsanitized
+  // message is present, we prefer it.
+  String MessageForConsole() const {
+    return !unsanitized_message_.IsEmpty() ? unsanitized_message_
+                                           : sanitized_message_;
+  }
+  String ToStringForConsole() const;
 
-    static String getErrorName(ExceptionCode);
-    static String getErrorMessage(ExceptionCode);
+  static String GetErrorName(ExceptionCode);
+  static String GetErrorMessage(ExceptionCode);
 
-    DEFINE_INLINE_TRACE() { }
+  DEFINE_INLINE_TRACE() {}
 
-private:
-    DOMException(unsigned short m_code, const String& name, const String& sanitizedMessage, const String& unsanitizedMessage);
+ private:
+  DOMException(unsigned short code,
+               const String& name,
+               const String& sanitized_message,
+               const String& unsanitized_message);
 
-    unsigned short m_code;
-    String m_name;
-    String m_sanitizedMessage;
-    String m_unsanitizedMessage;
+  unsigned short code_;
+  String name_;
+  String sanitized_message_;
+  String unsanitized_message_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMException_h
+#endif  // DOMException_h

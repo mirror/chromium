@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_CHOOSER_CONTROLLER_CHOOSER_CONTROLLER_H_
 #define CHROME_BROWSER_CHOOSER_CONTROLLER_CHOOSER_CONTROLLER_H_
 
+#include <vector>
+
 #include "base/macros.h"
 #include "base/strings/string16.h"
 
@@ -46,6 +48,9 @@ class ChooserController {
     // since the options have already been updated.
     virtual void OnOptionRemoved(size_t index) = 0;
 
+    // Called when the option at |index| has been updated.
+    virtual void OnOptionUpdated(size_t index) = 0;
+
     // Called when the device adapter is turned on or off.
     virtual void OnAdapterEnabledChanged(bool enabled) = 0;
 
@@ -59,6 +64,16 @@ class ChooserController {
   // Returns the text to be displayed in the chooser title.
   base::string16 GetTitle() const;
 
+  // Returns if the chooser needs to show an icon before the text.
+  // For WebBluetooth, it is a signal strength icon.
+  virtual bool ShouldShowIconBeforeText() const;
+
+  // Returns if the chooser needs to show a footnote view.
+  virtual bool ShouldShowFootnoteView() const;
+
+  // Returns if the chooser allows multiple items to be selected.
+  virtual bool AllowMultipleSelection() const;
+
   // Returns the text to be displayed in the chooser when there are no options.
   virtual base::string16 GetNoOptionsText() const = 0;
 
@@ -70,8 +85,21 @@ class ChooserController {
   // chooser so that users can grant permission.
   virtual size_t NumOptions() const = 0;
 
+  // The signal strength level (0-4 inclusive) of the device at |index|, which
+  // is used to retrieve the corresponding icon to be displayed before the
+  // text. Returns -1 if no icon should be shown.
+  virtual int GetSignalStrengthLevel(size_t index) const;
+
   // The |index|th option string which is listed in the chooser.
   virtual base::string16 GetOption(size_t index) const = 0;
+
+  // Returns if the |index|th option is connected.
+  // This function returns false by default.
+  virtual bool IsConnected(size_t index) const;
+
+  // Returns if the |index|th option is paired.
+  // This function returns false by default.
+  virtual bool IsPaired(size_t index) const;
 
   // Refresh the list of options.
   virtual void RefreshOptions() = 0;
@@ -81,8 +109,9 @@ class ChooserController {
 
   // These three functions are called just before this object is destroyed:
 
-  // Called when the user selects the |index|th element from the dialog.
-  virtual void Select(size_t index) = 0;
+  // Called when the user selects elements from the dialog. |indices| contains
+  // the indices of the selected elements.
+  virtual void Select(const std::vector<size_t>& indices) = 0;
 
   // Called when the user presses the 'Cancel' button in the dialog.
   virtual void Cancel() = 0;
@@ -94,14 +123,15 @@ class ChooserController {
   // Open help center URL.
   virtual void OpenHelpCenterUrl() const = 0;
 
+  // Provide help information when the adapter is off.
+  virtual void OpenAdapterOffHelpUrl() const;
+
   // Only one view may be registered at a time.
   void set_view(View* view) { view_ = view; }
   View* view() const { return view_; }
 
  private:
-  content::RenderFrameHost* const owning_frame_;
-  const int title_string_id_origin_;
-  const int title_string_id_extension_;
+  base::string16 title_;
   View* view_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(ChooserController);

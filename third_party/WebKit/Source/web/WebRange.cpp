@@ -30,71 +30,44 @@
 
 #include "public/web/WebRange.h"
 
-#include "bindings/core/v8/ExceptionState.h"
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
 #include "core/dom/Document.h"
-#include "core/dom/Element.h"
 #include "core/dom/Range.h"
-#include "core/dom/shadow/ShadowRoot.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/PlainTextRange.h"
-#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "public/platform/WebString.h"
-#include "public/web/WebExceptionCode.h"
-#include "public/web/WebNode.h"
-#include "web/WebLocalFrameImpl.h"
-#include "wtf/PassRefPtr.h"
 
 namespace blink {
 
-void WebRange::reset()
-{
-    m_private.reset();
+WebRange::WebRange(int start, int length)
+    : start_(start), end_(start + length) {
+  DCHECK(start != -1 || length != 0)
+      << "These values are reserved to indicate that the range is null";
 }
 
-void WebRange::assign(const WebRange& other)
-{
-    m_private = other.m_private;
+WebRange::WebRange(const EphemeralRange& range) {
+  if (range.IsNull())
+    return;
+
+  start_ = range.StartPosition().ComputeOffsetInContainerNode();
+  end_ = range.EndPosition().ComputeOffsetInContainerNode();
 }
 
-int WebRange::startOffset() const
-{
-    return m_private->startOffset();
+WebRange::WebRange(const PlainTextRange& range) {
+  if (range.IsNull())
+    return;
+
+  start_ = range.Start();
+  end_ = range.end();
 }
 
-int WebRange::endOffset() const
-{
-    return m_private->endOffset();
+EphemeralRange WebRange::CreateEphemeralRange(LocalFrame* frame) const {
+  Element* selection_root = frame->Selection()
+                                .ComputeVisibleSelectionInDOMTreeDeprecated()
+                                .RootEditableElement();
+  ContainerNode* scope =
+      selection_root ? selection_root : frame->GetDocument()->documentElement();
+
+  return PlainTextRange(start_, end_).CreateRange(*scope);
 }
 
-WebString WebRange::toPlainText() const
-{
-    return m_private->text();
-}
-
-// static
-WebRange WebRange::fromDocumentRange(WebLocalFrame* frame, int start, int length)
-{
-    LocalFrame* webFrame = toWebLocalFrameImpl(frame)->frame();
-    Element* selectionRoot = webFrame->selection().rootEditableElement();
-    ContainerNode* scope = selectionRoot ? selectionRoot : webFrame->document()->documentElement();
-
-    // TODO(dglazkov): The use of updateStyleAndLayoutIgnorePendingStylesheets needs to be audited.
-    // see http://crbug.com/590369 for more details.
-    scope->document().updateStyleAndLayoutIgnorePendingStylesheets();
-
-    return createRange(PlainTextRange(start, start + length).createRange(*scope));
-}
-
-WebRange::WebRange(Range*range)
-    : m_private(range)
-{
-}
-
-WebRange::operator Range*() const
-{
-    return m_private.get();
-}
-
-} // namespace blink
+}  // namespace blink

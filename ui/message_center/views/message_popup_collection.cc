@@ -125,11 +125,36 @@ void MessagePopupCollection::ClickOnSettingsButton(
   message_center_->ClickOnSettingsButton(notification_id);
 }
 
+void MessagePopupCollection::UpdateNotificationSize(
+    const std::string& notification_id) {
+  OnNotificationUpdated(notification_id);
+}
+
 void MessagePopupCollection::MarkAllPopupsShown() {
   std::set<std::string> closed_ids = CloseAllWidgets();
   for (std::set<std::string>::iterator iter = closed_ids.begin();
        iter != closed_ids.end(); iter++) {
     message_center_->MarkSinglePopupAsShown(*iter, false);
+  }
+}
+
+void MessagePopupCollection::PausePopupTimers() {
+  DCHECK(timer_pause_counter_ >= 0);
+  if (timer_pause_counter_ <= 0) {
+    message_center_->PausePopupTimers();
+    timer_pause_counter_ = 1;
+  } else {
+    timer_pause_counter_++;
+  }
+}
+
+void MessagePopupCollection::RestartPopupTimers() {
+  DCHECK(timer_pause_counter_ >= 1);
+  if (timer_pause_counter_ <= 1) {
+    message_center_->RestartPopupTimers();
+    timer_pause_counter_ = 0;
+  } else {
+    timer_pause_counter_--;
   }
 }
 
@@ -174,7 +199,8 @@ void MessagePopupCollection::UpdateWidgets() {
     view->set_context_menu_controller(context_menu_controller_.get());
     int view_height = ToastContentsView::GetToastSizeForView(view).height();
     int height_available =
-        top_down ? alignment_delegate_->GetWorkAreaBottom() - base : base;
+        top_down ? alignment_delegate_->GetWorkArea().bottom() - base
+                 : base - alignment_delegate_->GetWorkArea().y();
 
     if (height_available - view_height - kToastMarginY < 0) {
       delete view;
@@ -223,7 +249,7 @@ void MessagePopupCollection::OnMouseEntered(ToastContentsView* toast_entered) {
   // toasts.  So we need to keep track of which one is the currently active one.
   latest_toast_entered_ = toast_entered;
 
-  message_center_->PausePopupTimers();
+  PausePopupTimers();
 
   if (user_is_closing_toasts_by_clicking_)
     defer_timer_->Stop();
@@ -243,7 +269,7 @@ void MessagePopupCollection::OnMouseExited(ToastContentsView* toast_exited) {
         this,
         &MessagePopupCollection::OnDeferTimerExpired);
   } else {
-    message_center_->RestartPopupTimers();
+    RestartPopupTimers();
   }
 }
 
@@ -295,8 +321,9 @@ void MessagePopupCollection::RepositionWidgets() {
     // load and such notifications should disappear. Do not call
     // CloseWithAnimation, we don't want to show the closing animation, and we
     // don't want to mark such notifications as shown. See crbug.com/233424
-    if ((top_down ? alignment_delegate_->GetWorkAreaBottom() - bounds.bottom()
-                  : bounds.y()) >= 0)
+    if ((top_down
+             ? alignment_delegate_->GetWorkArea().bottom() - bounds.bottom()
+             : bounds.y() - alignment_delegate_->GetWorkArea().y()) >= 0)
       (*curr)->SetBoundsWithAnimation(bounds);
     else
       RemoveToast(*curr, /*mark_as_shown=*/false);
@@ -405,7 +432,7 @@ void MessagePopupCollection::OnDeferTimerExpired() {
   user_is_closing_toasts_by_clicking_ = false;
   DecrementDeferCounter();
 
-  message_center_->RestartPopupTimers();
+  RestartPopupTimers();
 }
 
 void MessagePopupCollection::OnNotificationUpdated(

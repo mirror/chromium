@@ -41,14 +41,13 @@
 #include <algorithm>
 #include <cstddef>
 #include <new>
-#endif // __cplusplus
+#endif  // __cplusplus
 
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <CoreFoundation/CoreFoundation.h>
-#include <CoreServices/CoreServices.h>
 
 #ifdef __OBJC__
 #import <Cocoa/Cocoa.h>

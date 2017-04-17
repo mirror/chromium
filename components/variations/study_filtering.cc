@@ -59,15 +59,19 @@ bool CheckStudyChannel(const Study_Filter& filter, Study_Channel channel) {
 
 bool CheckStudyFormFactor(const Study_Filter& filter,
                           Study_FormFactor form_factor) {
-  // An empty form factor list matches all form factors.
-  if (filter.form_factor_size() == 0)
+  // Empty whitelist and blacklist signifies matching any form factor.
+  if (filter.form_factor_size() == 0 && filter.exclude_form_factor_size() == 0)
     return true;
 
-  for (int i = 0; i < filter.form_factor_size(); ++i) {
-    if (filter.form_factor(i) == form_factor)
-      return true;
-  }
-  return false;
+  // Allow the form_factor if it matches the whitelist.
+  // Note if both a whitelist and blacklist are specified, the blacklist is
+  // ignored. We do not expect both to be present for Chrome due to server-side
+  // checks.
+  if (filter.form_factor_size() > 0)
+    return base::ContainsValue(filter.form_factor(), form_factor);
+
+  // Omit if we match the blacklist.
+  return !base::ContainsValue(filter.exclude_form_factor(), form_factor);
 }
 
 bool CheckStudyHardwareClass(const Study_Filter& filter,
@@ -106,15 +110,18 @@ bool CheckStudyHardwareClass(const Study_Filter& filter,
 }
 
 bool CheckStudyLocale(const Study_Filter& filter, const std::string& locale) {
-  // An empty locale list matches all locales.
-  if (filter.locale_size() == 0)
+  // Empty locale and exclude_locale lists matches all locales.
+  if (filter.locale_size() == 0 && filter.exclude_locale_size() == 0)
     return true;
 
-  for (int i = 0; i < filter.locale_size(); ++i) {
-    if (filter.locale(i) == locale)
-      return true;
-  }
-  return false;
+  // Check if we are supposed to filter for a specified set of countries. Note
+  // that this means this overrides the exclude_locale in case that ever occurs
+  // (which it shouldn't).
+  if (filter.locale_size() > 0)
+    return base::ContainsValue(filter.locale(), locale);
+
+  // Omit if matches any of the exclude entries.
+  return !base::ContainsValue(filter.exclude_locale(), locale);
 }
 
 bool CheckStudyPlatform(const Study_Filter& filter, Study_Platform platform) {
@@ -135,6 +142,16 @@ bool CheckStudyStartDate(const Study_Filter& filter,
     const base::Time start_date =
         ConvertStudyDateToBaseTime(filter.start_date());
     return date_time >= start_date;
+  }
+
+  return true;
+}
+
+bool CheckStudyEndDate(const Study_Filter& filter,
+                       const base::Time& date_time) {
+  if (filter.has_end_date()) {
+    const base::Time end_date = ConvertStudyDateToBaseTime(filter.end_date());
+    return end_date >= date_time;
   }
 
   return true;
@@ -164,10 +181,10 @@ bool CheckStudyCountry(const Study_Filter& filter, const std::string& country) {
   // that this means this overrides the exclude_country in case that ever occurs
   // (which it shouldn't).
   if (filter.country_size() > 0)
-    return ContainsValue(filter.country(), country);
+    return base::ContainsValue(filter.country(), country);
 
   // Omit if matches any of the exclude entries.
-  return !ContainsValue(filter.exclude_country(), country);
+  return !base::ContainsValue(filter.exclude_country(), country);
 }
 
 bool IsStudyExpired(const Study& study, const base::Time& date_time) {
@@ -219,6 +236,11 @@ bool ShouldAddStudy(
     if (!CheckStudyStartDate(study.filter(), reference_date)) {
       DVLOG(1) << "Filtered out study " << study.name() <<
                   " due to start date.";
+      return false;
+    }
+
+    if (!CheckStudyEndDate(study.filter(), reference_date)) {
+      DVLOG(1) << "Filtered out study " << study.name() << " due to end date.";
       return false;
     }
 
@@ -288,14 +310,14 @@ void FilterAndValidateStudies(const VariationsSeed& seed,
 
     if (internal::IsStudyExpired(study, reference_date)) {
       expired_studies.push_back(&study);
-    } else if (!ContainsKey(created_studies, study.name())) {
+    } else if (!base::ContainsKey(created_studies, study.name())) {
       ProcessedStudy::ValidateAndAppendStudy(&study, false, filtered_studies);
       created_studies.insert(study.name());
     }
   }
 
   for (size_t i = 0; i < expired_studies.size(); ++i) {
-    if (!ContainsKey(created_studies, expired_studies[i]->name())) {
+    if (!base::ContainsKey(created_studies, expired_studies[i]->name())) {
       ProcessedStudy::ValidateAndAppendStudy(expired_studies[i], true,
                                              filtered_studies);
     }

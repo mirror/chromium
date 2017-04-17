@@ -6,7 +6,7 @@
 
 #include <limits>
 
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
 #include "content/common/dom_storage/dom_storage_map.h"
 #include "content/renderer/dom_storage/dom_storage_proxy.h"
@@ -48,7 +48,8 @@ bool DOMStorageCachedArea::SetItem(int connection_id,
                                    const GURL& page_url) {
   // A quick check to reject obviously overbudget items to avoid
   // the priming the cache.
-  if (key.length() + value.length() > kPerStorageAreaQuota)
+  if ((key.length() + value.length()) * sizeof(base::char16) >
+      kPerStorageAreaQuota)
     return false;
 
   PrimeIfNeeded(connection_id);
@@ -171,7 +172,7 @@ void DOMStorageCachedArea::Prime(int connection_id) {
   // above what we see in practice, since histograms can't change.
   UMA_HISTOGRAM_CUSTOM_COUNTS("LocalStorage.RendererLocalStorageSizeInKB",
                               local_storage_size_kb,
-                              0, 6 * 1024, 50);
+                              1, 6 * 1024, 50);
   if (local_storage_size_kb < 100) {
     UMA_HISTOGRAM_TIMES(
         "LocalStorage.RendererTimeToPrimeLocalStorageUnder100KB",

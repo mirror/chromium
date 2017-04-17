@@ -4,7 +4,9 @@
 
 #include "chrome/browser/ui/search_engines/edit_search_engine_controller.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/profiles/profile.h"
@@ -12,7 +14,6 @@
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/url_formatter/url_fixer.h"
-#include "content/public/browser/user_metrics.h"
 #include "url/gurl.h"
 
 using base::UserMetricsAction;
@@ -104,10 +105,10 @@ void EditSearchEngineController::AcceptAddOrEdit(
     // Confiming an entry we got from JS. We have a template_url_, but it
     // hasn't yet been added to the model.
     DCHECK(template_url_);
-    // TemplateURLService takes ownership of template_url_.
-    template_url_service->AddWithOverrides(template_url_, title_input,
-                                           keyword_input, url_string);
-    content::RecordAction(UserMetricsAction("KeywordEditor_AddKeywordJS"));
+    template_url_service->AddWithOverrides(base::WrapUnique(template_url_),
+                                           title_input, keyword_input,
+                                           url_string);
+    base::RecordAction(UserMetricsAction("KeywordEditor_AddKeywordJS"));
   } else {
     // Adding or modifying an entry via the Delegate.
     edit_keyword_delegate_->OnEditedKeyword(template_url_, title_input,

@@ -8,12 +8,12 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_editor_controller.h"
-#include "chrome/browser/ui/cocoa/cocoa_profile_test.h"
+#include "chrome/browser/ui/cocoa/test/cocoa_profile_test.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/test/base/test_browser_window.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/bookmarks/browser/bookmark_model.h"
-#include "grit/components_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #import "testing/gtest_mac.h"
 #include "testing/platform_test.h"
@@ -44,7 +44,8 @@ class BookmarkEditorBaseControllerTest : public CocoaProfileTest {
     //             b-30
     //             b-31
     //            b-4
-    BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile());
+    BookmarkModel* model =
+        BookmarkModelFactory::GetForBrowserContext(profile());
     const BookmarkNode* root = model->bookmark_bar_node();
     folder_a_ = model->AddFolder(root, 0, ASCIIToUTF16("a"));
     model->AddURL(folder_a_, 0, ASCIIToUTF16("a-0"), GURL("http://a-0.com"));
@@ -101,13 +102,13 @@ class BookmarkEditorBaseControllerTest : public CocoaProfileTest {
   }
 
   Browser* CreateBrowser() override {
-    Browser::CreateParams params(profile());
+    Browser::CreateParams params(profile(), true);
     return chrome::CreateBrowserWithTestWindowForParams(&params).release();
   }
 };
 
 TEST_F(BookmarkEditorBaseControllerTest, VerifyBookmarkTestModel) {
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile());
+  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile());
   const BookmarkNode* root = model->bookmark_bar_node();
   EXPECT_EQ(4, root->child_count());
   // a
@@ -187,7 +188,7 @@ TEST_F(BookmarkEditorBaseControllerTest, CreateFolder) {
 }
 
 TEST_F(BookmarkEditorBaseControllerTest, CreateTwoFolders) {
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile());
+  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile());
   const BookmarkNode* bar = model->bookmark_bar_node();
   // Create 2 folders which are children of the bar.
   [controller_ selectTestNodeInBrowser:bar];
@@ -201,7 +202,7 @@ TEST_F(BookmarkEditorBaseControllerTest, CreateTwoFolders) {
 }
 
 TEST_F(BookmarkEditorBaseControllerTest, SelectedFolderDeleted) {
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile());
+  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile());
   [controller_ selectTestNodeInBrowser:folder_b_3_];
   EXPECT_EQ(folder_b_3_, [controller_ selectedNode]);
 
@@ -213,7 +214,7 @@ TEST_F(BookmarkEditorBaseControllerTest, SelectedFolderDeleted) {
 }
 
 TEST_F(BookmarkEditorBaseControllerTest, SelectedFoldersParentDeleted) {
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile());
+  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile());
   const BookmarkNode* root = model->bookmark_bar_node();
   [controller_ selectTestNodeInBrowser:folder_b_3_];
   EXPECT_EQ(folder_b_3_, [controller_ selectedNode]);
@@ -226,7 +227,7 @@ TEST_F(BookmarkEditorBaseControllerTest, SelectedFoldersParentDeleted) {
 }
 
 TEST_F(BookmarkEditorBaseControllerTest, FolderAdded) {
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile());
+  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile());
   const BookmarkNode* root = model->bookmark_bar_node();
 
   // Add a folder node to the model, and verify it can be selected in the tree:
@@ -240,7 +241,7 @@ TEST_F(BookmarkEditorBaseControllerTest, FolderAdded) {
 
 // Verifies expandeNodes and getExpandedNodes.
 TEST_F(BookmarkEditorBaseControllerTest, ExpandedState) {
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile());
+  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile());
 
   // Sets up the state we're going to expand.
   BookmarkExpandedStateTracker::Nodes nodes;

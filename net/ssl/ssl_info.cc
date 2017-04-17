@@ -5,10 +5,13 @@
 #include "net/ssl/ssl_info.h"
 
 #include "base/pickle.h"
+#include "base/stl_util.h"
 #include "net/cert/cert_status_flags.h"
 #include "net/cert/ct_policy_status.h"
 #include "net/cert/signed_certificate_timestamp.h"
 #include "net/cert/x509_certificate.h"
+#include "net/ssl/ssl_connection_status_flags.h"
+#include "third_party/boringssl/src/include/openssl/ssl.h"
 
 namespace net {
 
@@ -28,7 +31,7 @@ SSLInfo& SSLInfo::operator=(const SSLInfo& info) {
   unverified_cert = info.unverified_cert;
   cert_status = info.cert_status;
   security_bits = info.security_bits;
-  key_exchange_info = info.key_exchange_info;
+  key_exchange_group = info.key_exchange_group;
   connection_status = info.connection_status;
   is_issued_by_known_root = info.is_issued_by_known_root;
   pkp_bypassed = info.pkp_bypassed;
@@ -52,7 +55,7 @@ void SSLInfo::Reset() {
   unverified_cert = NULL;
   cert_status = 0;
   security_bits = -1;
-  key_exchange_info = 0;
+  key_exchange_group = 0;
   connection_status = 0;
   is_issued_by_known_root = false;
   pkp_bypassed = false;
@@ -61,9 +64,9 @@ void SSLInfo::Reset() {
   token_binding_negotiated = false;
   token_binding_key_param = TB_PARAM_ECDSAP256;
   handshake_type = HANDSHAKE_UNKNOWN;
-  public_key_hashes.clear();
-  pinning_failure_log.clear();
-  signed_certificate_timestamps.clear();
+  base::STLClearObject(&public_key_hashes);
+  base::STLClearObject(&pinning_failure_log);
+  base::STLClearObject(&signed_certificate_timestamps);
   ct_compliance_details_available = false;
   ct_ev_policy_compliance = ct::EVPolicyCompliance::EV_POLICY_DOES_NOT_APPLY;
   ct_cert_policy_compliance =
@@ -77,18 +80,9 @@ void SSLInfo::SetCertError(int error) {
 
 void SSLInfo::UpdateCertificateTransparencyInfo(
     const ct::CTVerifyResult& ct_verify_result) {
-  for (const auto& sct : ct_verify_result.verified_scts) {
-    signed_certificate_timestamps.push_back(
-        SignedCertificateTimestampAndStatus(sct, ct::SCT_STATUS_OK));
-  }
-  for (const auto& sct : ct_verify_result.invalid_scts) {
-    signed_certificate_timestamps.push_back(
-        SignedCertificateTimestampAndStatus(sct, ct::SCT_STATUS_INVALID));
-  }
-  for (const auto& sct : ct_verify_result.unknown_logs_scts) {
-    signed_certificate_timestamps.push_back(
-        SignedCertificateTimestampAndStatus(sct, ct::SCT_STATUS_LOG_UNKNOWN));
-  }
+  signed_certificate_timestamps.insert(signed_certificate_timestamps.end(),
+                                       ct_verify_result.scts.begin(),
+                                       ct_verify_result.scts.end());
 
   ct_compliance_details_available = ct_verify_result.ct_policies_applied;
   ct_cert_policy_compliance = ct_verify_result.cert_policy_compliance;

@@ -23,25 +23,30 @@ import org.chromium.base.ObserverList.RewindableIterator;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.blink_public.platform.WebDisplayMode;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ChromeApplication;
+import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.RepostFormWarningDialog;
 import org.chromium.chrome.browser.document.DocumentUtils;
 import org.chromium.chrome.browser.document.DocumentWebContentsDelegate;
 import org.chromium.chrome.browser.findinpage.FindMatchRectsDetails;
 import org.chromium.chrome.browser.findinpage.FindNotificationDetails;
+import org.chromium.chrome.browser.fullscreen.FullscreenManager;
 import org.chromium.chrome.browser.media.MediaCaptureNotificationService;
+import org.chromium.chrome.browser.media.VideoPersister;
 import org.chromium.chrome.browser.policy.PolicyAuditor;
 import org.chromium.chrome.browser.policy.PolicyAuditor.AuditEvent;
 import org.chromium.chrome.browser.tabmodel.TabCreatorManager.TabCreator;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.TabModelUtils;
-import org.chromium.chrome.browser.util.FeatureUtilities;
+import org.chromium.chrome.browser.tabmodel.TabWindowManager;
 import org.chromium.components.web_contents_delegate_android.WebContentsDelegateAndroid;
+import org.chromium.content.browser.ActivityContentVideoViewEmbedder;
+import org.chromium.content.browser.ContentVideoViewEmbedder;
+import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.InvalidateTypes;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.ResourceRequestBody;
-import org.chromium.ui.WindowOpenDisposition;
+import org.chromium.ui.mojom.WindowOpenDisposition;
 
 /**
  * A basic {@link TabWebContentsDelegateAndroid} that forwards some calls to the registered
@@ -69,11 +74,12 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
 
     private FindResultListener mFindResultListener;
 
-    private FindMatchRectsListener mFindMatchRectsListener = null;
+    private FindMatchRectsListener mFindMatchRectsListener;
 
-    private int mDisplayMode = WebDisplayMode.Browser;
+    private int mDisplayMode = WebDisplayMode.BROWSER;
 
     protected Handler mHandler;
+
     private final Runnable mCloseContentsRunnable = new Runnable() {
         @Override
         public void run() {
@@ -83,11 +89,7 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
             // If the parent Tab belongs to another Activity, fire the Intent to bring it back.
             if (isSelected && mTab.getParentIntent() != null
                     && mTab.getActivity().getIntent() != mTab.getParentIntent()) {
-                boolean mayLaunch = FeatureUtilities.isDocumentMode(mTab.getApplicationContext())
-                        ? isParentInAndroidOverview() : true;
-                if (mayLaunch) {
-                    mTab.getActivity().startActivity(mTab.getParentIntent());
-                }
+                mTab.getActivity().startActivity(mTab.getParentIntent());
             }
         }
 
@@ -186,13 +188,13 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
     }
 
     @Override
-    public void onLoadStarted(boolean toDifferentDocument) {
-        mTab.onLoadStarted(toDifferentDocument);
-    }
-
-    @Override
-    public void onLoadStopped() {
-        mTab.onLoadStopped();
+    public void loadingStateChanged(boolean toDifferentDocument) {
+        boolean isLoading = mTab.getWebContents() != null && mTab.getWebContents().isLoading();
+        if (isLoading) {
+            mTab.onLoadStarted(toDifferentDocument);
+        } else {
+            mTab.onLoadStopped();
+        }
     }
 
     @Override
@@ -213,22 +215,18 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
 
     @Override
     public void toggleFullscreenModeForTab(boolean enableFullscreen) {
-        if (mTab.getFullscreenManager() != null) {
-            mTab.getFullscreenManager().setPersistentFullscreenMode(enableFullscreen);
-        }
-
-        RewindableIterator<TabObserver> observers = mTab.getTabObservers();
-        while (observers.hasNext()) {
-            observers.next().onToggleFullscreenMode(mTab, enableFullscreen);
+        if (!VideoPersister.getInstance().shouldDelayFullscreenModeChange(mTab, enableFullscreen)) {
+            mTab.toggleFullscreenMode(enableFullscreen);
         }
     }
 
     @Override
     public void navigationStateChanged(int flags) {
         if ((flags & InvalidateTypes.TAB) != 0) {
+            int mediaType = MediaCaptureNotificationService.getMediaType(
+                    isCapturingAudio(), isCapturingVideo(), isCapturingScreen());
             MediaCaptureNotificationService.updateMediaNotificationForTab(
-                    mTab.getApplicationContext(), mTab.getId(), isCapturingAudio(),
-                    isCapturingVideo(), mTab.getUrl());
+                    mTab.getApplicationContext(), mTab.getId(), mediaType, mTab.getUrl());
         }
         if ((flags & InvalidateTypes.TITLE) != 0) {
             // Update cached title then notify observers.
@@ -251,12 +249,13 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
     }
 
     @Override
-    public void webContentsCreated(WebContents sourceWebContents, long openerRenderFrameId,
-            String frameName, String targetUrl, WebContents newWebContents) {
+    public void webContentsCreated(WebContents sourceWebContents, long openerRenderProcessId,
+            long openerRenderFrameId, String frameName, String targetUrl,
+            WebContents newWebContents) {
         RewindableIterator<TabObserver> observers = mTab.getTabObservers();
         while (observers.hasNext()) {
-            observers.next().webContentsCreated(mTab, sourceWebContents, openerRenderFrameId,
-                    frameName, targetUrl, newWebContents);
+            observers.next().webContentsCreated(mTab, sourceWebContents, openerRenderProcessId,
+                    openerRenderFrameId, frameName, targetUrl, newWebContents);
         }
         // The URL can't be taken from the WebContents if it's paused.  Save it for later.
         assert mWebContentsUrlMapping == null;
@@ -334,8 +333,7 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
                 webContents, mTab.getId(), TabLaunchType.FROM_LONGPRESS_FOREGROUND, url);
         boolean success = tabCreator.createsTabsAsynchronously() || createdSuccessfully;
         if (success && disposition == WindowOpenDisposition.NEW_POPUP) {
-            PolicyAuditor auditor =
-                    ((ChromeApplication) mTab.getApplicationContext()).getPolicyAuditor();
+            PolicyAuditor auditor = AppHooks.get().getPolicyAuditor();
             auditor.notifyAuditEvent(mTab.getApplicationContext(),
                     AuditEvent.OPEN_POPUP_URL_SUCCESS, url, "");
         }
@@ -396,9 +394,6 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
         if (activity == null) return false;
         if (reverse) {
             View menuButton = activity.findViewById(R.id.menu_button);
-            if (menuButton == null || !menuButton.isShown()) {
-                menuButton = activity.findViewById(R.id.document_menu_button);
-            }
             if (menuButton != null && menuButton.isShown()) {
                 return menuButton.requestFocus();
             }
@@ -475,8 +470,59 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
         return !mTab.isClosing() && nativeIsCapturingVideo(mTab.getWebContents());
     }
 
+    /**
+     * @return Whether screen is being captured.
+     */
+    private boolean isCapturingScreen() {
+        return !mTab.isClosing() && nativeIsCapturingScreen(mTab.getWebContents());
+    }
+
+    /**
+     * When STOP button in the media capture notification is clicked, pass the event to native
+     * to stop the media capture.
+     */
+    public static void notifyStopped(int tabId) {
+        final Tab tab = TabWindowManager.getInstance().getTabById(tabId);
+        if (tab != null) nativeNotifyStopped(tab.getWebContents());
+    }
+
+    @Override
+    public ContentVideoViewEmbedder getContentVideoViewEmbedder() {
+        return new ActivityContentVideoViewEmbedder(mTab.getActivity()) {
+            @Override
+            public void enterFullscreenVideo(View view, boolean isVideoLoaded) {
+                super.enterFullscreenVideo(view, isVideoLoaded);
+                FullscreenManager fullscreenManager = mTab.getFullscreenManager();
+                if (fullscreenManager != null) {
+                    fullscreenManager.setOverlayVideoMode(true);
+                    // Disable double tap for video.
+                    ContentViewCore cvc = mTab.getContentViewCore();
+                    if (cvc != null) {
+                        cvc.updateDoubleTapSupport(false);
+                    }
+                }
+            }
+
+            @Override
+            public void exitFullscreenVideo() {
+                FullscreenManager fullscreenManager = mTab.getFullscreenManager();
+                if (fullscreenManager != null) {
+                    fullscreenManager.setOverlayVideoMode(false);
+                    // Disable double tap for video.
+                    ContentViewCore cvc = mTab.getContentViewCore();
+                    if (cvc != null) {
+                        cvc.updateDoubleTapSupport(true);
+                    }
+                }
+                super.exitFullscreenVideo();
+            }
+        };
+    }
+
     private static native void nativeOnRendererUnresponsive(WebContents webContents);
     private static native void nativeOnRendererResponsive(WebContents webContents);
     private static native boolean nativeIsCapturingAudio(WebContents webContents);
     private static native boolean nativeIsCapturingVideo(WebContents webContents);
+    private static native boolean nativeIsCapturingScreen(WebContents webContents);
+    private static native void nativeNotifyStopped(WebContents webContents);
 }

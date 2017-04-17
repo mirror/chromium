@@ -33,6 +33,7 @@
 #include "chrome/browser/win/app_icon.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/grit/chrome_unscaled_resources.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/product.h"
@@ -40,7 +41,6 @@
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
-#include "grit/chrome_unscaled_resources.h"
 #include "skia/ext/image_operations.h"
 #include "skia/ext/platform_canvas.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -500,11 +500,6 @@ void CreateOrUpdateDesktopShortcutsAndIconForProfile(
     return;
   }
 
-  BrowserDistribution* distribution = BrowserDistribution::GetDistribution();
-  // Ensure that the distribution supports creating shortcuts. If it doesn't,
-  // the following code may result in NOTREACHED() being hit.
-  DCHECK(distribution->CanCreateDesktopShortcuts());
-
   std::set<base::FilePath> desktop_contents = ListUserDesktopContents(nullptr);
 
   const base::string16 command_line =
@@ -527,6 +522,7 @@ void CreateOrUpdateDesktopShortcutsAndIconForProfile(
   }
 
   ShellUtil::ShortcutProperties properties(ShellUtil::CURRENT_USER);
+  BrowserDistribution* distribution = BrowserDistribution::GetDistribution();
   installer::Product product(distribution);
   product.AddDefaultShortcutProperties(chrome_exe, &properties);
 
@@ -620,9 +616,6 @@ void DeleteDesktopShortcuts(const base::FilePath& profile_path,
   if (ensure_shortcuts_remain && had_shortcuts &&
       !ChromeDesktopShortcutsExist(chrome_exe)) {
     BrowserDistribution* distribution = BrowserDistribution::GetDistribution();
-    // Ensure that the distribution supports creating shortcuts. If it doesn't,
-    // the following code may result in NOTREACHED() being hit.
-    DCHECK(distribution->CanCreateDesktopShortcuts());
     installer::Product product(distribution);
 
     ShellUtil::ShortcutProperties properties(ShellUtil::CURRENT_USER);
@@ -785,8 +778,7 @@ base::string16 CreateProfileShortcutFlags(const base::FilePath& profile_path) {
 bool ProfileShortcutManager::IsFeatureEnabled() {
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   return command_line->HasSwitch(switches::kEnableProfileShortcutManager) ||
-         (BrowserDistribution::GetDistribution()->CanCreateDesktopShortcuts() &&
-          !command_line->HasSwitch(switches::kUserDataDir));
+         !command_line->HasSwitch(switches::kUserDataDir);
 }
 
 // static

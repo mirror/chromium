@@ -13,7 +13,10 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.messages.MessageFilter;
+import com.google.android.gms.nearby.messages.MessagesOptions;
+import com.google.android.gms.nearby.messages.NearbyPermissions;
 import com.google.android.gms.nearby.messages.Strategy;
 import com.google.android.gms.nearby.messages.SubscribeOptions;
 
@@ -25,6 +28,8 @@ import org.chromium.base.Log;
  * and unsubscriptions to Nearby.
  */
 abstract class NearbySubscription implements ConnectionCallbacks, OnConnectionFailedListener {
+    public static final int UNSUBSCRIBE = 0;
+    public static final int SUBSCRIBE = 1;
     private static final String TAG = "PhysicalWeb";
     private final GoogleApiClient mGoogleApiClient;
 
@@ -46,8 +51,10 @@ abstract class NearbySubscription implements ConnectionCallbacks, OnConnectionFa
     }
 
     NearbySubscription(Context context) {
-        mGoogleApiClient = PhysicalWebBleClient.getInstance().modifyGoogleApiClientBuilder(
-                new GoogleApiClient.Builder(context))
+        mGoogleApiClient = new GoogleApiClient.Builder(context)
+                .addApi(Nearby.MESSAGES_API, new MessagesOptions.Builder()
+                        .setPermissions(NearbyPermissions.BLE)
+                        .build())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
@@ -92,8 +99,4 @@ abstract class NearbySubscription implements ConnectionCallbacks, OnConnectionFa
     protected GoogleApiClient getGoogleApiClient() {
         return mGoogleApiClient;
     }
-
-    abstract void subscribe();
-
-    abstract void unsubscribe();
 }

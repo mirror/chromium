@@ -8,67 +8,68 @@
 #include "platform/geometry/FloatPoint3D.h"
 #include "platform/graphics/paint/DisplayItem.h"
 #include "platform/transforms/TransformationMatrix.h"
-#include "wtf/Assertions.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
-class PLATFORM_EXPORT BeginTransform3DDisplayItem final : public PairedBeginDisplayItem {
-public:
-    BeginTransform3DDisplayItem(
-        const DisplayItemClient& client,
-        Type type,
-        const TransformationMatrix& transform,
-        const FloatPoint3D& transformOrigin)
-        : PairedBeginDisplayItem(client, type, sizeof(*this))
-        , m_transform(transform)
-        , m_transformOrigin(transformOrigin)
-    {
-        ASSERT(DisplayItem::isTransform3DType(type));
-    }
+class PLATFORM_EXPORT BeginTransform3DDisplayItem final
+    : public PairedBeginDisplayItem {
+ public:
+  BeginTransform3DDisplayItem(const DisplayItemClient& client,
+                              Type type,
+                              const TransformationMatrix& transform,
+                              const FloatPoint3D& transform_origin)
+      : PairedBeginDisplayItem(client, type, sizeof(*this)),
+        transform_(transform),
+        transform_origin_(transform_origin) {
+    DCHECK(DisplayItem::IsTransform3DType(type));
+  }
 
-    void replay(GraphicsContext&) const override;
-    void appendToWebDisplayItemList(const IntRect&, WebDisplayItemList*) const override;
+  void Replay(GraphicsContext&) const override;
+  void AppendToWebDisplayItemList(const IntRect&,
+                                  WebDisplayItemList*) const override;
 
-    const TransformationMatrix& transform() const { return m_transform; }
-    const FloatPoint3D& transformOrigin() const { return m_transformOrigin; }
+  const TransformationMatrix& Transform() const { return transform_; }
+  const FloatPoint3D& TransformOrigin() const { return transform_origin_; }
 
-private:
+ private:
 #ifndef NDEBUG
-    void dumpPropertiesAsDebugString(WTF::StringBuilder&) const final;
+  void DumpPropertiesAsDebugString(WTF::StringBuilder&) const final;
 #endif
-#if ENABLE(ASSERT)
-    bool equals(const DisplayItem& other) const final
-    {
-        return DisplayItem::equals(other)
-            && m_transform == static_cast<const BeginTransform3DDisplayItem&>(other).m_transform
-            && m_transformOrigin == static_cast<const BeginTransform3DDisplayItem&>(other).m_transformOrigin;
-    }
-#endif
+  bool Equals(const DisplayItem& other) const final {
+    return DisplayItem::Equals(other) &&
+           transform_ == static_cast<const BeginTransform3DDisplayItem&>(other)
+                             .transform_ &&
+           transform_origin_ ==
+               static_cast<const BeginTransform3DDisplayItem&>(other)
+                   .transform_origin_;
+  }
 
-    const TransformationMatrix m_transform;
-    const FloatPoint3D m_transformOrigin;
+  const TransformationMatrix transform_;
+  const FloatPoint3D transform_origin_;
 };
 
-class PLATFORM_EXPORT EndTransform3DDisplayItem final : public PairedEndDisplayItem {
-public:
-    EndTransform3DDisplayItem(const DisplayItemClient& client, Type type)
-        : PairedEndDisplayItem(client, type, sizeof(*this))
-    {
-        ASSERT(DisplayItem::isEndTransform3DType(type));
-    }
+class PLATFORM_EXPORT EndTransform3DDisplayItem final
+    : public PairedEndDisplayItem {
+ public:
+  EndTransform3DDisplayItem(const DisplayItemClient& client, Type type)
+      : PairedEndDisplayItem(client, type, sizeof(*this)) {
+    DCHECK(DisplayItem::IsEndTransform3DType(type));
+  }
 
-    void replay(GraphicsContext&) const override;
-    void appendToWebDisplayItemList(const IntRect&, WebDisplayItemList*) const override;
+  void Replay(GraphicsContext&) const override;
+  void AppendToWebDisplayItemList(const IntRect&,
+                                  WebDisplayItemList*) const override;
 
-private:
-#if ENABLE(ASSERT)
-    bool isEndAndPairedWith(DisplayItem::Type otherType) const final
-    {
-        return DisplayItem::transform3DTypeToEndTransform3DType(otherType) == getType();
-    }
+ private:
+#if DCHECK_IS_ON()
+  bool IsEndAndPairedWith(DisplayItem::Type other_type) const final {
+    return DisplayItem::Transform3DTypeToEndTransform3DType(other_type) ==
+           GetType();
+  }
 #endif
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Transform3DDisplayItem_h
+#endif  // Transform3DDisplayItem_h

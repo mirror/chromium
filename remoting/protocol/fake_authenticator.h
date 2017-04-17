@@ -56,7 +56,24 @@ class FakeAuthenticator : public Authenticator {
     REJECT_CHANNEL
   };
 
-  FakeAuthenticator(Type type, int round_trips, Action action, bool async);
+  struct Config {
+    Config();
+    Config(Action action);
+    Config(int round_trips, Action action, bool async);
+
+    int round_trips = 1;
+    Action action = Action::ACCEPT;
+    bool async = true;
+  };
+
+  FakeAuthenticator(Type type,
+                    Config config,
+                    const std::string& local_id,
+                    const std::string& remote_id);
+
+  // Special constructor for authenticators in ACCEPTED or REJECTED state that
+  // don't exchange any messages.
+  FakeAuthenticator(Action action);
 
   ~FakeAuthenticator() override;
 
@@ -67,6 +84,14 @@ class FakeAuthenticator : public Authenticator {
   // Sets auth key to be returned by GetAuthKey(). Must be called when
   // |round_trips| is set to 0.
   void set_auth_key(const std::string& auth_key) { auth_key_ = auth_key; }
+
+  // When pause_message_index is set the authenticator will pause in
+  // PROCESSING_MESSAGE state after that message, until
+  // TakeResumeClosure().Run() is called.
+  void set_pause_message_index(int pause_message_index) {
+    pause_message_index_ = pause_message_index;
+  }
+  void Resume();
 
   // Authenticator interface.
   State state() const override;
@@ -81,15 +106,18 @@ class FakeAuthenticator : public Authenticator {
 
  protected:
   const Type type_;
-  const int round_trips_;
-  const Action action_;
-  const bool async_;
+  const Config config_;
+  const std::string local_id_;
+  const std::string remote_id_;
 
   // Total number of messages that have been processed.
   int messages_ = 0;
   // Number of messages that the authenticator needs to process before started()
   // returns true.  Default to 0.
   int messages_till_started_ = 0;
+
+  int pause_message_index_ = -1;
+  base::Closure resume_closure_;
 
   std::string auth_key_;
 
@@ -98,9 +126,8 @@ class FakeAuthenticator : public Authenticator {
 
 class FakeHostAuthenticatorFactory : public AuthenticatorFactory {
  public:
-  FakeHostAuthenticatorFactory(
-      int round_trips, int messages_till_start,
-      FakeAuthenticator::Action action, bool async);
+  FakeHostAuthenticatorFactory(int messages_till_start,
+                               FakeAuthenticator::Config config);
   ~FakeHostAuthenticatorFactory() override;
 
   // AuthenticatorFactory interface.
@@ -109,10 +136,8 @@ class FakeHostAuthenticatorFactory : public AuthenticatorFactory {
       const std::string& remote_jid) override;
 
  private:
-  const int round_trips_;
   const int messages_till_started_;
-  const FakeAuthenticator::Action action_;
-  const bool async_;
+  const FakeAuthenticator::Config config_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeHostAuthenticatorFactory);
 };

@@ -13,7 +13,9 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
+#include "core/loader/MixedContentChecker.h"
 #include "modules/EventTargetModules.h"
+#include "modules/presentation/ExistingPresentationConnectionCallbacks.h"
 #include "modules/presentation/PresentationAvailability.h"
 #include "modules/presentation/PresentationAvailabilityCallbacks.h"
 #include "modules/presentation/PresentationConnection.h"
@@ -27,132 +29,211 @@ namespace blink {
 namespace {
 
 // TODO(mlamouri): refactor in one common place.
-WebPresentationClient* presentationClient(ExecutionContext* executionContext)
-{
-    DCHECK(executionContext);
+PresentationController* GetPresentationController(
+    ExecutionContext* execution_context) {
+  DCHECK(execution_context);
 
-    Document* document = toDocument(executionContext);
-    if (!document->frame())
-        return nullptr;
-    PresentationController* controller = PresentationController::from(*document->frame());
-    return controller ? controller->client() : nullptr;
+  Document* document = ToDocument(execution_context);
+  if (!document->GetFrame())
+    return nullptr;
+  return PresentationController::From(*document->GetFrame());
 }
 
-Settings* settings(ExecutionContext* executionContext)
-{
-    DCHECK(executionContext);
-
-    Document* document = toDocument(executionContext);
-    return document->settings();
+WebPresentationClient* PresentationClient(ExecutionContext* execution_context) {
+  PresentationController* controller =
+      GetPresentationController(execution_context);
+  return controller ? controller->Client() : nullptr;
 }
 
-} // anonymous namespace
+Settings* GetSettings(ExecutionContext* execution_context) {
+  DCHECK(execution_context);
+
+  Document* document = ToDocument(execution_context);
+  return document->GetSettings();
+}
+
+}  // anonymous namespace
 
 // static
-PresentationRequest* PresentationRequest::create(ExecutionContext* executionContext, const String& url, ExceptionState& exceptionState)
-{
-    KURL parsedUrl = KURL(executionContext->url(), url);
-    if (!parsedUrl.isValid() || parsedUrl.protocolIsAbout()) {
-        exceptionState.throwTypeError("'" + url + "' can't be resolved to a valid URL.");
-        return nullptr;
+PresentationRequest* PresentationRequest::Create(
+    ExecutionContext* execution_context,
+    const String& url,
+    ExceptionState& exception_state) {
+  Vector<String> urls(1);
+  urls[0] = url;
+  return Create(execution_context, urls, exception_state);
+}
+
+PresentationRequest* PresentationRequest::Create(
+    ExecutionContext* execution_context,
+    const Vector<String>& urls,
+    ExceptionState& exception_state) {
+  if (ToDocument(execution_context)->IsSandboxed(kSandboxPresentation)) {
+    exception_state.ThrowSecurityError(
+        "The document is sandboxed and lacks the 'allow-presentation' flag.");
+    return nullptr;
+  }
+
+  if (urls.IsEmpty()) {
+    exception_state.ThrowDOMException(kNotSupportedError,
+                                      "Do not support empty sequence of URLs.");
+    return nullptr;
+  }
+
+  Vector<KURL> parsed_urls(urls.size());
+  for (size_t i = 0; i < urls.size(); ++i) {
+    const KURL& parsed_url = KURL(execution_context->Url(), urls[i]);
+
+    if (!parsed_url.IsValid() || !(parsed_url.ProtocolIsInHTTPFamily() ||
+                                   parsed_url.ProtocolIs("cast"))) {
+      exception_state.ThrowDOMException(
+          kSyntaxError, "'" + urls[i] + "' can't be resolved to a valid URL.");
+      return nullptr;
     }
 
-    PresentationRequest* request = new PresentationRequest(executionContext, parsedUrl);
-    request->suspendIfNeeded();
-    return request;
+    if (MixedContentChecker::IsMixedContent(
+            execution_context->GetSecurityOrigin(), parsed_url)) {
+      exception_state.ThrowSecurityError(
+          "Presentation of an insecure document [" + urls[i] +
+          "] is prohibited from a secure context.");
+      return nullptr;
+    }
+
+    parsed_urls[i] = parsed_url;
+  }
+  return new PresentationRequest(execution_context, parsed_urls);
 }
 
-const AtomicString& PresentationRequest::interfaceName() const
-{
-    return EventTargetNames::PresentationRequest;
+const AtomicString& PresentationRequest::InterfaceName() const {
+  return EventTargetNames::PresentationRequest;
 }
 
-ExecutionContext* PresentationRequest::getExecutionContext() const
-{
-    return ActiveDOMObject::getExecutionContext();
+ExecutionContext* PresentationRequest::GetExecutionContext() const {
+  return ContextClient::GetExecutionContext();
 }
 
-void PresentationRequest::addedEventListener(const AtomicString& eventType, RegisteredEventListener& registeredListener)
-{
-    EventTargetWithInlineData::addedEventListener(eventType, registeredListener);
-    if (eventType == EventTypeNames::connectionavailable)
-        UseCounter::count(getExecutionContext(), UseCounter::PresentationRequestConnectionAvailableEventListener);
+void PresentationRequest::AddedEventListener(
+    const AtomicString& event_type,
+    RegisteredEventListener& registered_listener) {
+  EventTargetWithInlineData::AddedEventListener(event_type,
+                                                registered_listener);
+  if (event_type == EventTypeNames::connectionavailable)
+    UseCounter::Count(
+        GetExecutionContext(),
+        UseCounter::kPresentationRequestConnectionAvailableEventListener);
 }
 
-bool PresentationRequest::hasPendingActivity() const
-{
-    if (!getExecutionContext() || getExecutionContext()->activeDOMObjectsAreStopped())
-        return false;
-
-    // Prevents garbage collecting of this object when not hold by another
-    // object but still has listeners registered.
-    return hasEventListeners();
+bool PresentationRequest::HasPendingActivity() const {
+  // Prevents garbage collecting of this object when not hold by another
+  // object but still has listeners registered.
+  return GetExecutionContext() && HasEventListeners();
 }
 
-ScriptPromise PresentationRequest::start(ScriptState* scriptState)
-{
-    Settings* contextSettings = settings(getExecutionContext());
-    bool isUserGestureRequired = !contextSettings || contextSettings->presentationRequiresUserGesture();
+ScriptPromise PresentationRequest::start(ScriptState* script_state) {
+  Settings* context_settings = GetSettings(GetExecutionContext());
+  bool is_user_gesture_required =
+      !context_settings ||
+      context_settings->GetPresentationRequiresUserGesture();
 
-    if (isUserGestureRequired && !UserGestureIndicator::utilizeUserGesture())
-        return ScriptPromise::rejectWithDOMException(scriptState, DOMException::create(InvalidAccessError, "PresentationRequest::start() requires user gesture."));
+  if (is_user_gesture_required && !UserGestureIndicator::UtilizeUserGesture())
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(
+            kInvalidAccessError,
+            "PresentationRequest::start() requires user gesture."));
 
-    if (toDocument(getExecutionContext())->isSandboxed(SandboxPresentation))
-        return ScriptPromise::rejectWithDOMException(scriptState, DOMException::create(SecurityError, "The document is sandboxed and lacks the 'allow-presentation' flag."));
+  WebPresentationClient* client = PresentationClient(GetExecutionContext());
+  if (!client)
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(
+            kInvalidStateError,
+            "The PresentationRequest is no longer associated to a frame."));
 
-    WebPresentationClient* client = presentationClient(getExecutionContext());
-    if (!client)
-        return ScriptPromise::rejectWithDOMException(scriptState, DOMException::create(InvalidStateError, "The PresentationRequest is no longer associated to a frame."));
-
-    ScriptPromiseResolver* resolver = ScriptPromiseResolver::create(scriptState);
-    client->startSession(m_url.getString(), new PresentationConnectionCallbacks(resolver, this));
-    return resolver->promise();
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  client->StartPresentation(
+      urls_, WTF::MakeUnique<PresentationConnectionCallbacks>(resolver, this));
+  return resolver->Promise();
 }
 
-ScriptPromise PresentationRequest::reconnect(ScriptState* scriptState, const String& id)
-{
-    if (toDocument(getExecutionContext())->isSandboxed(SandboxPresentation))
-        return ScriptPromise::rejectWithDOMException(scriptState, DOMException::create(SecurityError, "The document is sandboxed and lacks the 'allow-presentation' flag."));
+ScriptPromise PresentationRequest::reconnect(ScriptState* script_state,
+                                             const String& id) {
+  WebPresentationClient* client = PresentationClient(GetExecutionContext());
+  if (!client)
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(
+            kInvalidStateError,
+            "The PresentationRequest is no longer associated to a frame."));
 
-    WebPresentationClient* client = presentationClient(getExecutionContext());
-    if (!client)
-        return ScriptPromise::rejectWithDOMException(scriptState, DOMException::create(InvalidStateError, "The PresentationRequest is no longer associated to a frame."));
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
 
-    ScriptPromiseResolver* resolver = ScriptPromiseResolver::create(scriptState);
-    client->joinSession(m_url.getString(), id, new PresentationConnectionCallbacks(resolver, this));
-    return resolver->promise();
+  PresentationController* controller =
+      GetPresentationController(GetExecutionContext());
+  DCHECK(controller);
+
+  PresentationConnection* existing_connection =
+      controller->FindExistingConnection(urls_, id);
+  if (existing_connection) {
+    client->ReconnectPresentation(
+        urls_, id,
+        WTF::MakeUnique<ExistingPresentationConnectionCallbacks>(
+            resolver, existing_connection));
+  } else {
+    client->ReconnectPresentation(
+        urls_, id,
+        WTF::MakeUnique<PresentationConnectionCallbacks>(resolver, this));
+  }
+  return resolver->Promise();
 }
 
-ScriptPromise PresentationRequest::getAvailability(ScriptState* scriptState)
-{
-    if (toDocument(getExecutionContext())->isSandboxed(SandboxPresentation))
-        return ScriptPromise::rejectWithDOMException(scriptState, DOMException::create(SecurityError, "The document is sandboxed and lacks the 'allow-presentation' flag."));
+ScriptPromise PresentationRequest::getAvailability(ScriptState* script_state) {
+  WebPresentationClient* client = PresentationClient(GetExecutionContext());
+  if (!client)
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(
+            kInvalidStateError,
+            "The PresentationRequest is no longer associated to a frame."));
 
-    WebPresentationClient* client = presentationClient(getExecutionContext());
-    if (!client)
-        return ScriptPromise::rejectWithDOMException(scriptState, DOMException::create(InvalidStateError, "The PresentationRequest is no longer associated to a frame."));
+  if (!availability_property_) {
+    availability_property_ = new PresentationAvailabilityProperty(
+        ExecutionContext::From(script_state), this,
+        PresentationAvailabilityProperty::kReady);
 
-    ScriptPromiseResolver* resolver = ScriptPromiseResolver::create(scriptState);
-    client->getAvailability(m_url.getString(), new PresentationAvailabilityCallbacks(resolver, m_url));
-    return resolver->promise();
+    client->GetAvailability(urls_,
+                            WTF::MakeUnique<PresentationAvailabilityCallbacks>(
+                                availability_property_, urls_));
+  }
+  return availability_property_->Promise(script_state->World());
 }
 
-const KURL& PresentationRequest::url() const
-{
-    return m_url;
+const Vector<KURL>& PresentationRequest::Urls() const {
+  return urls_;
 }
 
-DEFINE_TRACE(PresentationRequest)
-{
-    EventTargetWithInlineData::trace(visitor);
-    ActiveDOMObject::trace(visitor);
+DEFINE_TRACE(PresentationRequest) {
+  visitor->Trace(availability_property_);
+  EventTargetWithInlineData::Trace(visitor);
+  ContextClient::Trace(visitor);
 }
 
-PresentationRequest::PresentationRequest(ExecutionContext* executionContext, const KURL& url)
-    : ActiveScriptWrappable(this)
-    , ActiveDOMObject(executionContext)
-    , m_url(url)
-{
+PresentationRequest::PresentationRequest(ExecutionContext* execution_context,
+                                         const Vector<KURL>& urls)
+    : ContextClient(execution_context), urls_(urls) {
+  RecordOriginTypeAccess(execution_context);
 }
 
-} // namespace blink
+void PresentationRequest::RecordOriginTypeAccess(
+    ExecutionContext* execution_context) const {
+  DCHECK(execution_context);
+  if (execution_context->IsSecureContext()) {
+    UseCounter::Count(execution_context,
+                      UseCounter::kPresentationRequestSecureOrigin);
+  } else {
+    UseCounter::Count(execution_context,
+                      UseCounter::kPresentationRequestInsecureOrigin);
+  }
+}
+
+}  // namespace blink

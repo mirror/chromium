@@ -10,21 +10,30 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "chrome/browser/chromeos/login/screens/core_oobe_actor.h"
+#include "chrome/browser/chromeos/login/screens/core_oobe_view.h"
+#include "chrome/browser/chromeos/login/screens/gaia_view.h"
 #include "chrome/browser/ui/webui/chromeos/login/base_screen_handler.h"
 #include "chrome/browser/ui/webui/chromeos/login/network_state_informer.h"
 #include "chromeos/network/portal_detector/network_portal_detector.h"
 #include "net/base/net_errors.h"
+#include "third_party/cros_system_api/dbus/service_constants.h"
 
 class AccountId;
 
+namespace authpolicy {
+class ActiveDirectoryAccountData;
+}
+
 namespace chromeos {
 
+class AuthPolicyLoginHelper;
+class Key;
 class SigninScreenHandler;
 class SigninScreenHandlerDelegate;
 
 // A class that handles WebUI hooks in Gaia screen.
 class GaiaScreenHandler : public BaseScreenHandler,
+                          public GaiaView,
                           public NetworkPortalDetector::Observer {
  public:
   enum FrameState {
@@ -35,15 +44,13 @@ class GaiaScreenHandler : public BaseScreenHandler,
   };
 
   GaiaScreenHandler(
-      CoreOobeActor* core_oobe_actor,
+      CoreOobeView* core_oobe_view,
       const scoped_refptr<NetworkStateInformer>& network_state_informer);
   ~GaiaScreenHandler() override;
 
-  // Decides whether an auth extension should be pre-loaded. If it should,
-  // pre-loads it.
-  void MaybePreloadAuthExtension();
-
-  void DisableRestrictiveProxyCheckForTest();
+  // GaiaView:
+  void MaybePreloadAuthExtension() override;
+  void DisableRestrictiveProxyCheckForTest() override;
 
  private:
   // TODO (antrim@): remove this dependency.
@@ -96,6 +103,15 @@ class GaiaScreenHandler : public BaseScreenHandler,
                            const std::string& password,
                            bool using_saml);
 
+  void HandleCompleteAdAuthentication(const std::string& username,
+                                      const std::string& password);
+
+  void HandleCompleteAdPasswordChange(const std::string& username,
+                                      const std::string& old_password,
+                                      const std::string& new_password);
+
+  void HandleCancelActiveDirectoryAuth();
+
   void HandleUsingSAMLAPI();
   void HandleScrapedPasswordCount(int password_count);
   void HandleScrapedPasswordVerificationFailed();
@@ -126,6 +142,17 @@ class GaiaScreenHandler : public BaseScreenHandler,
   // Kick off DNS cache flushing.
   void StartClearingDnsCache();
   void OnDnsCleared();
+
+  // Callback for AuthPolicyClient.
+  void DoAdAuth(const std::string& username,
+                const Key& key,
+                authpolicy::ErrorType error,
+                const authpolicy::ActiveDirectoryAccountData& account_data);
+
+  // Callback for writing password into pipe.
+  void OnPasswordPipeReady(const std::string& username,
+                           const Key& key,
+                           base::ScopedFD password_fd);
 
   // Show sign-in screen for the given credentials.
   void ShowSigninScreenForTest(const std::string& username,
@@ -179,7 +206,8 @@ class GaiaScreenHandler : public BaseScreenHandler,
   // Returns user canonical e-mail. Finds already used account alias, if
   // user has already signed in.
   AccountId GetAccountId(const std::string& authenticated_email,
-                         const std::string& gaia_id) const;
+                         const std::string& id,
+                         const AccountType& account_type) const;
 
   bool offline_login_is_active() const { return offline_login_is_active_; }
   void set_offline_login_is_active(bool offline_login_is_active) {
@@ -195,7 +223,7 @@ class GaiaScreenHandler : public BaseScreenHandler,
   // Network state informer used to keep signin screen up.
   scoped_refptr<NetworkStateInformer> network_state_informer_;
 
-  CoreOobeActor* core_oobe_actor_ = nullptr;
+  CoreOobeView* core_oobe_view_ = nullptr;
 
   // Email to pre-populate with.
   std::string populated_email_;
@@ -249,6 +277,10 @@ class GaiaScreenHandler : public BaseScreenHandler,
 
   // True if the authentication extension is still loading.
   bool auth_extension_being_loaded_ = false;
+
+  // Helper to call AuthPolicyClient and cancel calls if needed. Used to
+  // authenticate users against Active Directory server.
+  std::unique_ptr<AuthPolicyLoginHelper> authpolicy_login_helper_;
 
   base::WeakPtrFactory<GaiaScreenHandler> weak_factory_;
 

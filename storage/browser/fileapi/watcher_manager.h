@@ -12,11 +12,13 @@
 
 namespace storage {
 
-class FileSystemOperationContext;
 class FileSystemURL;
 
 // An interface for providing entry observing capability for file system
 // backends.
+//
+// All member functions must be called on the IO thread. Callbacks will be
+// called on the IO thread.
 //
 // It is NOT valid to give null callback to this class, and implementors
 // can assume that they don't get any null callbacks.

@@ -13,18 +13,16 @@
 
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
-#include "base/json/json_reader.h"
-#include "base/json/json_writer.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/path_service.h"
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
 #include "chrome/common/chrome_paths.h"
+#include "chrome/common/extensions/extension_features_unittest.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_builder.h"
-#include "extensions/common/features/api_feature.h"
-#include "extensions/common/features/json_feature_provider.h"
+#include "extensions/common/features/feature_session_type.h"
 #include "extensions/common/features/simple_feature.h"
 #include "extensions/common/manifest.h"
 #include "extensions/common/manifest_constants.h"
@@ -34,11 +32,44 @@
 
 namespace extensions {
 
-using test_util::BuildExtension;
+namespace {
 
-SimpleFeature* CreateAPIFeature() {
-  return new APIFeature();
-}
+const char* const kTestFeatures[] = {
+    "test1", "test2", "test3",   "test4",   "test5",
+    "test6", "test7", "parent1", "parent2", "parent3",
+};
+
+const char* const kAliasTestApis[] = {"alias_api_source"};
+
+const char* const kSessionTypeTestFeatures[] = {
+    "test6", "kiosk_only", "non_kiosk", "multiple_session_types",
+    "autolaunched_kiosk"};
+
+struct FeatureSessionTypesTestData {
+  std::string api_name;
+  bool expect_available;
+  FeatureSessionType current_session_type;
+};
+
+class TestExtensionAPI : public ExtensionAPI {
+ public:
+  TestExtensionAPI() {}
+  ~TestExtensionAPI() override {}
+
+  void add_fake_schema(const std::string& name) { fake_schemas_.insert(name); }
+
+ private:
+  bool IsKnownAPI(const std::string& name, ExtensionsClient* client) override {
+    return fake_schemas_.count(name) != 0;
+  }
+
+  std::set<std::string> fake_schemas_;
+  DISALLOW_COPY_AND_ASSIGN(TestExtensionAPI);
+};
+
+}  // namespace
+
+using test_util::BuildExtension;
 
 TEST(ExtensionAPITest, Creation) {
   ExtensionAPI* shared_instance = ExtensionAPI::GetSharedInstance();
@@ -64,7 +95,7 @@ TEST(ExtensionAPITest, Creation) {
 
   for (size_t i = 0; i < arraysize(test_data); ++i) {
     EXPECT_EQ(test_data[i].expect_populated,
-              test_data[i].api->GetSchema("bookmarks.create") != NULL);
+              test_data[i].api->GetSchema("bookmarks.create") != nullptr);
   }
 }
 
@@ -164,37 +195,19 @@ TEST(ExtensionAPITest, APIFeatures) {
         GURL() }
   };
 
-  base::FilePath api_features_path;
-  PathService::Get(chrome::DIR_TEST_DATA, &api_features_path);
-  api_features_path = api_features_path.AppendASCII("extensions")
-      .AppendASCII("extension_api_unittest")
-      .AppendASCII("api_features.json");
-
-  std::string api_features_str;
-  ASSERT_TRUE(base::ReadFileToString(
-      api_features_path, &api_features_str)) << "api_features.json";
-
-  std::unique_ptr<base::DictionaryValue> value(
-      static_cast<base::DictionaryValue*>(
-          base::JSONReader::Read(api_features_str).release()));
-  JSONFeatureProvider api_feature_provider(*value, CreateAPIFeature);
+  UnittestFeatureProvider api_feature_provider;
 
   for (size_t i = 0; i < arraysize(test_data); ++i) {
-    ExtensionAPI api;
+    TestExtensionAPI api;
     api.RegisterDependencyProvider("api", &api_feature_provider);
-    for (base::DictionaryValue::Iterator iter(*value); !iter.IsAtEnd();
-         iter.Advance()) {
-      if (iter.key().find(".") == std::string::npos)
-        api.RegisterSchemaResource(iter.key(), 0);
-    }
-
+    for (auto* key : kTestFeatures)
+      api.add_fake_schema(key);
     ExtensionAPI::OverrideSharedInstanceForTest scope(&api);
+
     bool expected = test_data[i].expect_is_available;
-    Feature::Availability availability =
-        api.IsAvailable(test_data[i].api_full_name,
-                        NULL,
-                        test_data[i].context,
-                        test_data[i].url);
+    Feature::Availability availability = api.IsAvailable(
+        test_data[i].api_full_name, nullptr, test_data[i].context,
+        test_data[i].url, CheckAliasStatus::NOT_ALLOWED);
     EXPECT_EQ(expected, availability.is_available())
         << base::StringPrintf("Test %d: Feature '%s' was %s: %s",
                               static_cast<int>(i),
@@ -202,6 +215,50 @@ TEST(ExtensionAPITest, APIFeatures) {
                               expected ? "not available" : "available",
                               availability.message().c_str());
   }
+}
+
+TEST(ExtensionAPITest, APIFeaturesAlias) {
+  UnittestFeatureProvider api_feature_provider;
+
+  TestExtensionAPI api;
+  api.RegisterDependencyProvider("api", &api_feature_provider);
+  for (auto* key : kAliasTestApis)
+    api.add_fake_schema(key);
+  ExtensionAPI::OverrideSharedInstanceForTest scope(&api);
+
+  ASSERT_FALSE(api.IsAvailable("alias_api_source", nullptr,
+                               Feature::UNBLESSED_EXTENSION_CONTEXT, GURL(),
+                               CheckAliasStatus::NOT_ALLOWED)
+                   .is_available());
+  ASSERT_TRUE(api.IsAvailable("alias_api_source", nullptr,
+                              Feature::UNBLESSED_EXTENSION_CONTEXT, GURL(),
+                              CheckAliasStatus::ALLOWED)
+                  .is_available());
+  ASSERT_TRUE(api.IsAvailable("alias_api_source.bar", nullptr,
+                              Feature::UNBLESSED_EXTENSION_CONTEXT, GURL(),
+                              CheckAliasStatus::ALLOWED)
+                  .is_available());
+  ASSERT_FALSE(api.IsAvailable("alias_api_source.foo", nullptr,
+                               Feature::UNBLESSED_EXTENSION_CONTEXT, GURL(),
+                               CheckAliasStatus::ALLOWED)
+                   .is_available());
+
+  scoped_refptr<const Extension> extension =
+      ExtensionBuilder()
+          .SetManifest(DictionaryBuilder()
+                           .Set("name", "extension")
+                           .Set("version", "1")
+                           .Set("manifest_version", 2)
+                           .Build())
+          .Build();
+  Feature* test_feature = api_feature_provider.GetFeature("alias_api_source");
+  ASSERT_TRUE(test_feature);
+  ASSERT_FALSE(api.IsAnyFeatureAvailableToContext(
+      *test_feature, extension.get(), Feature::UNBLESSED_EXTENSION_CONTEXT,
+      GURL(), CheckAliasStatus::NOT_ALLOWED));
+  EXPECT_TRUE(api.IsAnyFeatureAvailableToContext(
+      *test_feature, extension.get(), Feature::UNBLESSED_EXTENSION_CONTEXT,
+      GURL(), CheckAliasStatus::ALLOWED));
 }
 
 TEST(ExtensionAPITest, IsAnyFeatureAvailableToContext) {
@@ -239,58 +296,105 @@ TEST(ExtensionAPITest, IsAnyFeatureAvailableToContext) {
     const Extension* extension;
     GURL url;
   } test_data[] = {
-    { "test1", false, Feature::WEB_PAGE_CONTEXT, NULL, GURL() },
-    { "test1", true, Feature::UNBLESSED_EXTENSION_CONTEXT, NULL, GURL() },
-    { "test1", false, Feature::UNBLESSED_EXTENSION_CONTEXT, app.get(), GURL() },
-    { "test1", true, Feature::UNBLESSED_EXTENSION_CONTEXT, extension.get(),
-        GURL() },
-    { "test2", true, Feature::CONTENT_SCRIPT_CONTEXT, NULL, GURL() },
-    { "test2", true, Feature::WEB_PAGE_CONTEXT, NULL,
-        GURL("http://google.com") },
-    { "test2.foo", false, Feature::WEB_PAGE_CONTEXT, NULL,
-        GURL("http://google.com") },
-    { "test3", true, Feature::CONTENT_SCRIPT_CONTEXT, NULL, GURL() },
-    { "test3", true, Feature::WEB_PAGE_CONTEXT, NULL, GURL("http://foo.com") },
-    { "test4.foo", true, Feature::CONTENT_SCRIPT_CONTEXT, NULL, GURL() },
-    { "test7", false, Feature::WEB_PAGE_CONTEXT, NULL,
-        GURL("http://google.com") },
-    { "test7", true, Feature::WEB_PAGE_CONTEXT, NULL, GURL("http://foo.com") },
-    { "test7", false, Feature::WEB_PAGE_CONTEXT, NULL, GURL("http://bar.com") }
-  };
+      {"test1", false, Feature::WEB_PAGE_CONTEXT, nullptr, GURL()},
+      {"test1", true, Feature::UNBLESSED_EXTENSION_CONTEXT, nullptr, GURL()},
+      {"test1", false, Feature::UNBLESSED_EXTENSION_CONTEXT, app.get(), GURL()},
+      {"test1", true, Feature::UNBLESSED_EXTENSION_CONTEXT, extension.get(),
+       GURL()},
+      {"test2", true, Feature::CONTENT_SCRIPT_CONTEXT, nullptr, GURL()},
+      {"test2", true, Feature::WEB_PAGE_CONTEXT, nullptr,
+       GURL("http://google.com")},
+      {"test2.foo", false, Feature::WEB_PAGE_CONTEXT, nullptr,
+       GURL("http://google.com")},
+      {"test3", true, Feature::CONTENT_SCRIPT_CONTEXT, nullptr, GURL()},
+      {"test3", true, Feature::WEB_PAGE_CONTEXT, nullptr,
+       GURL("http://foo.com")},
+      {"test4.foo", true, Feature::CONTENT_SCRIPT_CONTEXT, nullptr, GURL()},
+      {"test7", false, Feature::WEB_PAGE_CONTEXT, nullptr,
+       GURL("http://google.com")},
+      {"test7", true, Feature::WEB_PAGE_CONTEXT, nullptr,
+       GURL("http://foo.com")},
+      {"test7", false, Feature::WEB_PAGE_CONTEXT, nullptr,
+       GURL("http://bar.com")}};
 
-  base::FilePath api_features_path;
-  PathService::Get(chrome::DIR_TEST_DATA, &api_features_path);
-  api_features_path = api_features_path.AppendASCII("extensions")
-      .AppendASCII("extension_api_unittest")
-      .AppendASCII("api_features.json");
-
-  std::string api_features_str;
-  ASSERT_TRUE(base::ReadFileToString(
-      api_features_path, &api_features_str)) << "api_features.json";
-
-  std::unique_ptr<base::DictionaryValue> value(
-      static_cast<base::DictionaryValue*>(
-          base::JSONReader::Read(api_features_str).release()));
-  JSONFeatureProvider api_feature_provider(*value, CreateAPIFeature);
+  UnittestFeatureProvider api_feature_provider;
 
   for (size_t i = 0; i < arraysize(test_data); ++i) {
-    ExtensionAPI api;
+    TestExtensionAPI api;
     api.RegisterDependencyProvider("api", &api_feature_provider);
-    for (base::DictionaryValue::Iterator iter(*value); !iter.IsAtEnd();
-         iter.Advance()) {
-      if (iter.key().find(".") == std::string::npos)
-        api.RegisterSchemaResource(iter.key(), 0);
-    }
+    for (auto* key : kTestFeatures)
+      api.add_fake_schema(key);
+    ExtensionAPI::OverrideSharedInstanceForTest scope(&api);
 
     Feature* test_feature =
         api_feature_provider.GetFeature(test_data[i].api_full_name);
     ASSERT_TRUE(test_feature);
     EXPECT_EQ(test_data[i].expect_is_available,
-              api.IsAnyFeatureAvailableToContext(*test_feature,
-                                                 test_data[i].extension,
-                                                 test_data[i].context,
-                                                 test_data[i].url))
+              api.IsAnyFeatureAvailableToContext(
+                  *test_feature, test_data[i].extension, test_data[i].context,
+                  test_data[i].url, CheckAliasStatus::NOT_ALLOWED))
         << i;
+  }
+}
+
+TEST(ExtensionAPITest, SessionTypeFeature) {
+  scoped_refptr<const Extension> app =
+      ExtensionBuilder()
+          .SetManifest(
+              DictionaryBuilder()
+                  .Set("name", "app")
+                  .Set("app",
+                       DictionaryBuilder()
+                           .Set("background",
+                                DictionaryBuilder()
+                                    .Set("scripts", ListBuilder()
+                                                        .Append("background.js")
+                                                        .Build())
+                                    .Build())
+                           .Build())
+                  .Set("version", "1")
+                  .Set("manifest_version", 2)
+                  .Build())
+          .Build();
+
+  const std::vector<FeatureSessionTypesTestData> kTestData(
+      {{"kiosk_only", true, FeatureSessionType::KIOSK},
+       {"kiosk_only", true, FeatureSessionType::AUTOLAUNCHED_KIOSK},
+       {"kiosk_only", false, FeatureSessionType::REGULAR},
+       {"kiosk_only", false, FeatureSessionType::UNKNOWN},
+       {"non_kiosk", false, FeatureSessionType::KIOSK},
+       {"non_kiosk", true, FeatureSessionType::REGULAR},
+       {"non_kiosk", false, FeatureSessionType::UNKNOWN},
+       {"autolaunched_kiosk", true, FeatureSessionType::AUTOLAUNCHED_KIOSK},
+       {"autolaunched_kiosk", false, FeatureSessionType::KIOSK},
+       {"autolaunched_kiosk", false, FeatureSessionType::REGULAR},
+       {"multiple_session_types", true, FeatureSessionType::KIOSK},
+       {"multiple_session_types", true, FeatureSessionType::REGULAR},
+       {"multiple_session_types", false, FeatureSessionType::UNKNOWN},
+       // test6.foo is available to apps and has no session type restrictions.
+       {"test6.foo", true, FeatureSessionType::KIOSK},
+       {"test6.foo", true, FeatureSessionType::AUTOLAUNCHED_KIOSK},
+       {"test6.foo", true, FeatureSessionType::REGULAR},
+       {"test6.foo", true, FeatureSessionType::UNKNOWN}});
+
+  UnittestFeatureProvider api_feature_provider;
+
+  for (const auto& test : kTestData) {
+    TestExtensionAPI api;
+    api.RegisterDependencyProvider("api", &api_feature_provider);
+    for (auto* key : kSessionTypeTestFeatures)
+      api.add_fake_schema(key);
+    ExtensionAPI::OverrideSharedInstanceForTest scope(&api);
+
+    std::unique_ptr<base::AutoReset<FeatureSessionType>> current_session(
+        ScopedCurrentFeatureSessionType(test.current_session_type));
+    EXPECT_EQ(test.expect_available,
+              api.IsAvailable(test.api_name, app.get(),
+                              Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+                              CheckAliasStatus::NOT_ALLOWED)
+                  .is_available())
+        << "Test case (" << test.api_name << ", "
+        << static_cast<int>(test.current_session_type) << ").";
   }
 }
 
@@ -298,12 +402,12 @@ TEST(ExtensionAPITest, LazyGetSchema) {
   std::unique_ptr<ExtensionAPI> apis(
       ExtensionAPI::CreateWithDefaultConfiguration());
 
-  EXPECT_EQ(NULL, apis->GetSchema(std::string()));
-  EXPECT_EQ(NULL, apis->GetSchema(std::string()));
-  EXPECT_EQ(NULL, apis->GetSchema("experimental"));
-  EXPECT_EQ(NULL, apis->GetSchema("experimental"));
-  EXPECT_EQ(NULL, apis->GetSchema("foo"));
-  EXPECT_EQ(NULL, apis->GetSchema("foo"));
+  EXPECT_EQ(nullptr, apis->GetSchema(std::string()));
+  EXPECT_EQ(nullptr, apis->GetSchema(std::string()));
+  EXPECT_EQ(nullptr, apis->GetSchema("experimental"));
+  EXPECT_EQ(nullptr, apis->GetSchema("experimental"));
+  EXPECT_EQ(nullptr, apis->GetSchema("foo"));
+  EXPECT_EQ(nullptr, apis->GetSchema("foo"));
 
   EXPECT_TRUE(apis->GetSchema("dns"));
   EXPECT_TRUE(apis->GetSchema("dns"));
@@ -363,59 +467,45 @@ TEST(ExtensionAPITest, ExtensionWithUnprivilegedAPIs) {
 
   // "storage" is completely unprivileged.
   EXPECT_TRUE(extension_api->IsAnyFeatureAvailableToContext(
-      *api_features.GetFeature("storage"),
-      NULL,
-      Feature::BLESSED_EXTENSION_CONTEXT,
-      GURL()));
+      *api_features.GetFeature("storage"), nullptr,
+      Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+      CheckAliasStatus::NOT_ALLOWED));
   EXPECT_TRUE(extension_api->IsAnyFeatureAvailableToContext(
-      *api_features.GetFeature("storage"),
-      NULL,
-      Feature::UNBLESSED_EXTENSION_CONTEXT,
-      GURL()));
+      *api_features.GetFeature("storage"), nullptr,
+      Feature::UNBLESSED_EXTENSION_CONTEXT, GURL(),
+      CheckAliasStatus::NOT_ALLOWED));
   EXPECT_TRUE(extension_api->IsAnyFeatureAvailableToContext(
-      *api_features.GetFeature("storage"),
-      NULL,
-      Feature::CONTENT_SCRIPT_CONTEXT,
-      GURL()));
+      *api_features.GetFeature("storage"), nullptr,
+      Feature::CONTENT_SCRIPT_CONTEXT, GURL(), CheckAliasStatus::NOT_ALLOWED));
 
   // "extension" is partially unprivileged.
   EXPECT_TRUE(extension_api->IsAnyFeatureAvailableToContext(
-      *api_features.GetFeature("extension"),
-      NULL,
-      Feature::BLESSED_EXTENSION_CONTEXT,
-      GURL()));
+      *api_features.GetFeature("extension"), nullptr,
+      Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+      CheckAliasStatus::NOT_ALLOWED));
   EXPECT_TRUE(extension_api->IsAnyFeatureAvailableToContext(
-      *api_features.GetFeature("extension"),
-      NULL,
-      Feature::UNBLESSED_EXTENSION_CONTEXT,
-      GURL()));
+      *api_features.GetFeature("extension"), nullptr,
+      Feature::UNBLESSED_EXTENSION_CONTEXT, GURL(),
+      CheckAliasStatus::NOT_ALLOWED));
   EXPECT_TRUE(extension_api->IsAnyFeatureAvailableToContext(
-      *api_features.GetFeature("extension"),
-      NULL,
-      Feature::CONTENT_SCRIPT_CONTEXT,
-      GURL()));
+      *api_features.GetFeature("extension"), nullptr,
+      Feature::CONTENT_SCRIPT_CONTEXT, GURL(), CheckAliasStatus::NOT_ALLOWED));
   EXPECT_TRUE(extension_api->IsAnyFeatureAvailableToContext(
-      *api_features.GetFeature("extension.getURL"),
-      NULL,
-      Feature::CONTENT_SCRIPT_CONTEXT,
-      GURL()));
+      *api_features.GetFeature("extension.getURL"), nullptr,
+      Feature::CONTENT_SCRIPT_CONTEXT, GURL(), CheckAliasStatus::NOT_ALLOWED));
 
   // "history" is entirely privileged.
   EXPECT_TRUE(extension_api->IsAnyFeatureAvailableToContext(
-      *api_features.GetFeature("history"),
-      NULL,
-      Feature::BLESSED_EXTENSION_CONTEXT,
-      GURL()));
+      *api_features.GetFeature("history"), nullptr,
+      Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+      CheckAliasStatus::NOT_ALLOWED));
   EXPECT_FALSE(extension_api->IsAnyFeatureAvailableToContext(
-      *api_features.GetFeature("history"),
-      NULL,
-      Feature::UNBLESSED_EXTENSION_CONTEXT,
-      GURL()));
+      *api_features.GetFeature("history"), nullptr,
+      Feature::UNBLESSED_EXTENSION_CONTEXT, GURL(),
+      CheckAliasStatus::NOT_ALLOWED));
   EXPECT_FALSE(extension_api->IsAnyFeatureAvailableToContext(
-      *api_features.GetFeature("history"),
-      NULL,
-      Feature::CONTENT_SCRIPT_CONTEXT,
-      GURL()));
+      *api_features.GetFeature("history"), nullptr,
+      Feature::CONTENT_SCRIPT_CONTEXT, GURL(), CheckAliasStatus::NOT_ALLOWED));
 }
 
 scoped_refptr<Extension> CreateHostedApp() {
@@ -472,26 +562,31 @@ TEST(ExtensionAPITest, HostedAppPermissions) {
       ExtensionAPI::CreateWithDefaultConfiguration());
 
   // "runtime" and "tabs" should not be available in hosted apps.
-  EXPECT_FALSE(extension_api->IsAvailable("runtime",
-                                          extension.get(),
-                                          Feature::BLESSED_EXTENSION_CONTEXT,
-                                          GURL()).is_available());
-  EXPECT_FALSE(extension_api->IsAvailable("runtime.id",
-                                          extension.get(),
-                                          Feature::BLESSED_EXTENSION_CONTEXT,
-                                          GURL()).is_available());
-  EXPECT_FALSE(extension_api->IsAvailable("runtime.sendMessage",
-                                          extension.get(),
-                                          Feature::BLESSED_EXTENSION_CONTEXT,
-                                          GURL()).is_available());
-  EXPECT_FALSE(extension_api->IsAvailable("runtime.sendNativeMessage",
-                                          extension.get(),
-                                          Feature::BLESSED_EXTENSION_CONTEXT,
-                                          GURL()).is_available());
-  EXPECT_FALSE(extension_api->IsAvailable("tabs.create",
-                                          extension.get(),
-                                          Feature::BLESSED_EXTENSION_CONTEXT,
-                                          GURL()).is_available());
+  EXPECT_FALSE(extension_api
+                   ->IsAvailable("runtime", extension.get(),
+                                 Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+                                 CheckAliasStatus::NOT_ALLOWED)
+                   .is_available());
+  EXPECT_FALSE(extension_api
+                   ->IsAvailable("runtime.id", extension.get(),
+                                 Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+                                 CheckAliasStatus::NOT_ALLOWED)
+                   .is_available());
+  EXPECT_FALSE(extension_api
+                   ->IsAvailable("runtime.sendMessage", extension.get(),
+                                 Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+                                 CheckAliasStatus::NOT_ALLOWED)
+                   .is_available());
+  EXPECT_FALSE(extension_api
+                   ->IsAvailable("runtime.sendNativeMessage", extension.get(),
+                                 Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+                                 CheckAliasStatus::NOT_ALLOWED)
+                   .is_available());
+  EXPECT_FALSE(extension_api
+                   ->IsAvailable("tabs.create", extension.get(),
+                                 Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+                                 CheckAliasStatus::NOT_ALLOWED)
+                   .is_available());
 }
 
 TEST(ExtensionAPITest, AppAndFriendsAvailability) {
@@ -506,21 +601,24 @@ TEST(ExtensionAPITest, AppAndFriendsAvailability) {
     permissions.insert("app.window");
     scoped_refptr<Extension> extension =
         CreatePackagedAppWithPermissions(permissions);
-    EXPECT_FALSE(extension_api->IsAvailable(
-        "app",
-        extension.get(),
-        Feature::BLESSED_EXTENSION_CONTEXT,
-        GURL("http://foo.com")).is_available());
-    EXPECT_TRUE(extension_api->IsAvailable(
-        "app.runtime",
-        extension.get(),
-        Feature::BLESSED_EXTENSION_CONTEXT,
-        GURL("http://foo.com")).is_available());
-    EXPECT_TRUE(extension_api->IsAvailable(
-        "app.window",
-        extension.get(),
-        Feature::BLESSED_EXTENSION_CONTEXT,
-        GURL("http://foo.com")).is_available());
+    EXPECT_FALSE(extension_api
+                     ->IsAvailable("app", extension.get(),
+                                   Feature::BLESSED_EXTENSION_CONTEXT,
+                                   GURL("http://foo.com"),
+                                   CheckAliasStatus::NOT_ALLOWED)
+                     .is_available());
+    EXPECT_TRUE(extension_api
+                    ->IsAvailable("app.runtime", extension.get(),
+                                  Feature::BLESSED_EXTENSION_CONTEXT,
+                                  GURL("http://foo.com"),
+                                  CheckAliasStatus::NOT_ALLOWED)
+                    .is_available());
+    EXPECT_TRUE(extension_api
+                    ->IsAvailable("app.window", extension.get(),
+                                  Feature::BLESSED_EXTENSION_CONTEXT,
+                                  GURL("http://foo.com"),
+                                  CheckAliasStatus::NOT_ALLOWED)
+                    .is_available());
   }
   // Make sure chrome.app.runtime and chrome.app.window are not available to
   // extensions, and chrome.app is.
@@ -528,21 +626,24 @@ TEST(ExtensionAPITest, AppAndFriendsAvailability) {
     std::set<std::string> permissions;
     scoped_refptr<Extension> extension =
         CreateExtensionWithPermissions(permissions);
-    EXPECT_TRUE(extension_api->IsAvailable(
-        "app",
-        extension.get(),
-        Feature::BLESSED_EXTENSION_CONTEXT,
-        GURL("http://foo.com")).is_available());
-    EXPECT_FALSE(extension_api->IsAvailable(
-        "app.runtime",
-        extension.get(),
-        Feature::BLESSED_EXTENSION_CONTEXT,
-        GURL("http://foo.com")).is_available());
-    EXPECT_FALSE(extension_api->IsAvailable(
-        "app.window",
-        extension.get(),
-        Feature::BLESSED_EXTENSION_CONTEXT,
-        GURL("http://foo.com")).is_available());
+    EXPECT_TRUE(extension_api
+                    ->IsAvailable("app", extension.get(),
+                                  Feature::BLESSED_EXTENSION_CONTEXT,
+                                  GURL("http://foo.com"),
+                                  CheckAliasStatus::NOT_ALLOWED)
+                    .is_available());
+    EXPECT_FALSE(extension_api
+                     ->IsAvailable("app.runtime", extension.get(),
+                                   Feature::BLESSED_EXTENSION_CONTEXT,
+                                   GURL("http://foo.com"),
+                                   CheckAliasStatus::NOT_ALLOWED)
+                     .is_available());
+    EXPECT_FALSE(extension_api
+                     ->IsAvailable("app.window", extension.get(),
+                                   Feature::BLESSED_EXTENSION_CONTEXT,
+                                   GURL("http://foo.com"),
+                                   CheckAliasStatus::NOT_ALLOWED)
+                     .is_available());
   }
 }
 
@@ -554,14 +655,14 @@ TEST(ExtensionAPITest, ExtensionWithDependencies) {
         CreateExtensionWithPermission("ttsEngine");
     std::unique_ptr<ExtensionAPI> api(
         ExtensionAPI::CreateWithDefaultConfiguration());
-    EXPECT_TRUE(api->IsAvailable("ttsEngine",
-                                 extension.get(),
-                                 Feature::BLESSED_EXTENSION_CONTEXT,
-                                 GURL()).is_available());
-    EXPECT_FALSE(api->IsAvailable("tts",
-                                  extension.get(),
-                                  Feature::BLESSED_EXTENSION_CONTEXT,
-                                  GURL()).is_available());
+    EXPECT_TRUE(api->IsAvailable("ttsEngine", extension.get(),
+                                 Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+                                 CheckAliasStatus::NOT_ALLOWED)
+                    .is_available());
+    EXPECT_FALSE(api->IsAvailable("tts", extension.get(),
+                                  Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+                                  CheckAliasStatus::NOT_ALLOWED)
+                     .is_available());
   }
 
   // Conversely, extension with the "tts" permission but not the "ttsEngine"
@@ -571,21 +672,23 @@ TEST(ExtensionAPITest, ExtensionWithDependencies) {
         CreateExtensionWithPermission("tts");
     std::unique_ptr<ExtensionAPI> api(
         ExtensionAPI::CreateWithDefaultConfiguration());
-    EXPECT_FALSE(api->IsAvailable("ttsEngine",
-                                  extension.get(),
-                                  Feature::BLESSED_EXTENSION_CONTEXT,
-                                  GURL()).is_available());
-    EXPECT_TRUE(api->IsAvailable("tts",
-                                 extension.get(),
-                                 Feature::BLESSED_EXTENSION_CONTEXT,
-                                 GURL()).is_available());
+    EXPECT_FALSE(api->IsAvailable("ttsEngine", extension.get(),
+                                  Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+                                  CheckAliasStatus::NOT_ALLOWED)
+                     .is_available());
+    EXPECT_TRUE(api->IsAvailable("tts", extension.get(),
+                                 Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+                                 CheckAliasStatus::NOT_ALLOWED)
+                    .is_available());
   }
 }
 
 bool MatchesURL(
     ExtensionAPI* api, const std::string& api_name, const std::string& url) {
-  return api->IsAvailable(
-      api_name, NULL, Feature::WEB_PAGE_CONTEXT, GURL(url)).is_available();
+  return api
+      ->IsAvailable(api_name, nullptr, Feature::WEB_PAGE_CONTEXT, GURL(url),
+                    CheckAliasStatus::NOT_ALLOWED)
+      .is_available();
 }
 
 TEST(ExtensionAPITest, URLMatching) {
@@ -649,18 +752,15 @@ TEST(ExtensionAPITest, DefaultConfigurationFeatures) {
   std::unique_ptr<ExtensionAPI> api(
       ExtensionAPI::CreateWithDefaultConfiguration());
 
-  SimpleFeature* bookmarks = static_cast<SimpleFeature*>(
-      api->GetFeatureDependency("api:bookmarks"));
-  SimpleFeature* bookmarks_create = static_cast<SimpleFeature*>(
-      api->GetFeatureDependency("api:bookmarks.create"));
+  SimpleFeature* browser_action = static_cast<SimpleFeature*>(
+      api->GetFeatureDependency("api:browserAction"));
+  SimpleFeature* browser_action_set_title = static_cast<SimpleFeature*>(
+      api->GetFeatureDependency("api:browserAction.setTitle"));
 
   struct {
     SimpleFeature* feature;
     // TODO(aa): More stuff to test over time.
-  } test_data[] = {
-    { bookmarks },
-    { bookmarks_create }
-  };
+  } test_data[] = {{browser_action}, {browser_action_set_title}};
 
   for (size_t i = 0; i < arraysize(test_data); ++i) {
     SimpleFeature* feature = test_data[i].feature;
@@ -676,85 +776,93 @@ TEST(ExtensionAPITest, DefaultConfigurationFeatures) {
   }
 }
 
-TEST(ExtensionAPITest, JSONFeatureProviderDoesNotStoreInvalidFeatures) {
-  base::DictionaryValue features;
-  std::unique_ptr<base::DictionaryValue> feature_value(
-      new base::DictionaryValue());
-  // This feature is invalid (it needs an extension context), so the
-  // JSONFeatureProvider should not store it.
-  feature_value->SetString("channel", "stable");
-  features.Set("test", std::move(feature_value));
-  JSONFeatureProvider api_feature_provider(features, CreateAPIFeature);
-  EXPECT_FALSE(api_feature_provider.GetFeature("test"));
+static const base::DictionaryValue* GetDictChecked(
+    const base::DictionaryValue* dict,
+    const std::string& key) {
+  const base::DictionaryValue* out = nullptr;
+  CHECK(dict->GetDictionary(key, &out)) << key;
+  return out;
 }
 
-static void GetDictionaryFromList(const base::DictionaryValue* schema,
-                                  const std::string& list_name,
-                                  const int list_index,
-                                  const base::DictionaryValue** out) {
-  const base::ListValue* list;
-  EXPECT_TRUE(schema->GetList(list_name, &list));
-  EXPECT_TRUE(list->GetDictionary(list_index, out));
+static std::string GetStringChecked(const base::DictionaryValue* dict,
+                                    const std::string& key) {
+  std::string out;
+  CHECK(dict->GetString(key, &out)) << key;
+  return out;
 }
 
 TEST(ExtensionAPITest, TypesHaveNamespace) {
-  base::FilePath manifest_path;
-  PathService::Get(chrome::DIR_TEST_DATA, &manifest_path);
-  manifest_path = manifest_path.AppendASCII("extensions")
-      .AppendASCII("extension_api_unittest")
-      .AppendASCII("types_have_namespace.json");
+  std::unique_ptr<ExtensionAPI> api(
+      ExtensionAPI::CreateWithDefaultConfiguration());
 
-  std::string manifest_str;
-  ASSERT_TRUE(base::ReadFileToString(manifest_path, &manifest_str))
-      << "Failed to load: " << manifest_path.value();
+  // Returns the dictionary that has |key|: |value|.
+  auto get_dict_from_list = [](
+      const base::ListValue* list, const std::string& key,
+      const std::string& value) -> const base::DictionaryValue* {
+    const base::DictionaryValue* ret = nullptr;
+    for (const auto& val : *list) {
+      const base::DictionaryValue* dict = nullptr;
+      if (!val.GetAsDictionary(&dict))
+        continue;
+      std::string str;
+      if (dict->GetString(key, &str) && str == value) {
+        ret = dict;
+        break;
+      }
+    }
+    return ret;
+  };
 
-  ExtensionAPI api;
-  api.RegisterSchemaResource("test.foo", 0);
-  api.LoadSchema("test.foo", manifest_str);
+  const base::DictionaryValue* schema = api->GetSchema("sessions");
+  ASSERT_TRUE(schema);
 
-  const base::DictionaryValue* schema = api.GetSchema("test.foo");
+  const base::ListValue* types = nullptr;
+  ASSERT_TRUE(schema->GetList("types", &types));
+  {
+    const base::DictionaryValue* session_type =
+        get_dict_from_list(types, "id", "sessions.Session");
+    ASSERT_TRUE(session_type);
+    const base::DictionaryValue* props =
+        GetDictChecked(session_type, "properties");
+    const base::DictionaryValue* tab = GetDictChecked(props, "tab");
+    EXPECT_EQ("tabs.Tab", GetStringChecked(tab, "$ref"));
+    const base::DictionaryValue* window = GetDictChecked(props, "window");
+    EXPECT_EQ("windows.Window", GetStringChecked(window, "$ref"));
+  }
+  {
+    const base::DictionaryValue* device_type =
+        get_dict_from_list(types, "id", "sessions.Device");
+    ASSERT_TRUE(device_type);
+    const base::DictionaryValue* props =
+        GetDictChecked(device_type, "properties");
+    const base::DictionaryValue* sessions = GetDictChecked(props, "sessions");
+    const base::DictionaryValue* items = GetDictChecked(sessions, "items");
+    EXPECT_EQ("sessions.Session", GetStringChecked(items, "$ref"));
+  }
+  const base::ListValue* functions = nullptr;
+  ASSERT_TRUE(schema->GetList("functions", &functions));
+  {
+    const base::DictionaryValue* get_recently_closed =
+        get_dict_from_list(functions, "name", "getRecentlyClosed");
+    ASSERT_TRUE(get_recently_closed);
+    const base::ListValue* parameters = nullptr;
+    ASSERT_TRUE(get_recently_closed->GetList("parameters", &parameters));
+    const base::DictionaryValue* filter =
+        get_dict_from_list(parameters, "name", "filter");
+    ASSERT_TRUE(filter);
+    EXPECT_EQ("sessions.Filter", GetStringChecked(filter, "$ref"));
+  }
 
-  const base::DictionaryValue* dict;
-  const base::DictionaryValue* sub_dict;
-  std::string type;
-
-  GetDictionaryFromList(schema, "types", 0, &dict);
-  EXPECT_TRUE(dict->GetString("id", &type));
-  EXPECT_EQ("test.foo.TestType", type);
-  EXPECT_TRUE(dict->GetString("customBindings", &type));
-  EXPECT_EQ("test.foo.TestType", type);
-  EXPECT_TRUE(dict->GetDictionary("properties", &sub_dict));
-  const base::DictionaryValue* property;
-  EXPECT_TRUE(sub_dict->GetDictionary("foo", &property));
-  EXPECT_TRUE(property->GetString("$ref", &type));
-  EXPECT_EQ("test.foo.OtherType", type);
-  EXPECT_TRUE(sub_dict->GetDictionary("bar", &property));
-  EXPECT_TRUE(property->GetString("$ref", &type));
-  EXPECT_EQ("fully.qualified.Type", type);
-
-  GetDictionaryFromList(schema, "functions", 0, &dict);
-  GetDictionaryFromList(dict, "parameters", 0, &sub_dict);
-  EXPECT_TRUE(sub_dict->GetString("$ref", &type));
-  EXPECT_EQ("test.foo.TestType", type);
-  EXPECT_TRUE(dict->GetDictionary("returns", &sub_dict));
-  EXPECT_TRUE(sub_dict->GetString("$ref", &type));
-  EXPECT_EQ("fully.qualified.Type", type);
-
-  GetDictionaryFromList(schema, "functions", 1, &dict);
-  GetDictionaryFromList(dict, "parameters", 0, &sub_dict);
-  EXPECT_TRUE(sub_dict->GetString("$ref", &type));
-  EXPECT_EQ("fully.qualified.Type", type);
-  EXPECT_TRUE(dict->GetDictionary("returns", &sub_dict));
-  EXPECT_TRUE(sub_dict->GetString("$ref", &type));
-  EXPECT_EQ("test.foo.TestType", type);
-
-  GetDictionaryFromList(schema, "events", 0, &dict);
-  GetDictionaryFromList(dict, "parameters", 0, &sub_dict);
-  EXPECT_TRUE(sub_dict->GetString("$ref", &type));
-  EXPECT_EQ("test.foo.TestType", type);
-  GetDictionaryFromList(dict, "parameters", 1, &sub_dict);
-  EXPECT_TRUE(sub_dict->GetString("$ref", &type));
-  EXPECT_EQ("fully.qualified.Type", type);
+  schema = api->GetSchema("types");
+  ASSERT_TRUE(schema);
+  ASSERT_TRUE(schema->GetList("types", &types));
+  {
+    const base::DictionaryValue* chrome_setting =
+        get_dict_from_list(types, "id", "types.ChromeSetting");
+    ASSERT_TRUE(chrome_setting);
+    EXPECT_EQ("types.ChromeSetting",
+              GetStringChecked(chrome_setting, "customBindings"));
+  }
 }
 
 // Tests API availability with an empty manifest.
@@ -810,10 +918,11 @@ TEST(ExtensionAPITest, NoPermissions) {
 
   for (size_t i = 0; i < arraysize(kTests); ++i) {
     EXPECT_EQ(kTests[i].expect_success,
-              extension_api->IsAvailable(kTests[i].permission_name,
-                                         extension.get(),
-                                         Feature::BLESSED_EXTENSION_CONTEXT,
-                                         GURL()).is_available())
+              extension_api
+                  ->IsAvailable(kTests[i].permission_name, extension.get(),
+                                Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+                                CheckAliasStatus::NOT_ALLOWED)
+                  .is_available())
         << "Permission being tested: " << kTests[i].permission_name;
   }
 }
@@ -831,14 +940,16 @@ TEST(ExtensionAPITest, ManifestKeys) {
                              .Build())
           .Build();
 
-  EXPECT_TRUE(extension_api->IsAvailable("browserAction",
-                                         extension.get(),
-                                         Feature::BLESSED_EXTENSION_CONTEXT,
-                                         GURL()).is_available());
-  EXPECT_FALSE(extension_api->IsAvailable("pageAction",
-                                          extension.get(),
-                                          Feature::BLESSED_EXTENSION_CONTEXT,
-                                          GURL()).is_available());
+  EXPECT_TRUE(extension_api
+                  ->IsAvailable("browserAction", extension.get(),
+                                Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+                                CheckAliasStatus::NOT_ALLOWED)
+                  .is_available());
+  EXPECT_FALSE(extension_api
+                   ->IsAvailable("pageAction", extension.get(),
+                                 Feature::BLESSED_EXTENSION_CONTEXT, GURL(),
+                                 CheckAliasStatus::NOT_ALLOWED)
+                   .is_available());
 }
 
 }  // namespace extensions

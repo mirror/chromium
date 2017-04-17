@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/strings/stringprintf.h"
 #include "components/guest_view/browser/guest_view_base.h"
 #include "components/guest_view/browser/guest_view_manager_delegate.h"
@@ -17,7 +18,6 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
-#include "content/public/browser/user_metrics.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/result_codes.h"
@@ -129,7 +129,7 @@ void GuestViewManager::AttachGuest(int embedder_process_id,
 
     auto* old_guest_view =
         GuestViewBase::From(embedder_process_id, old_guest_instance_id);
-    old_guest_view->Destroy();
+    old_guest_view->Destroy(true);
   }
   instance_id_map_[key] = guest_instance_id;
   reverse_instance_id_map_[guest_instance_id] = key;
@@ -239,7 +239,8 @@ WebContents* GuestViewManager::GetFullPageGuest(
 
 void GuestViewManager::AddGuest(int guest_instance_id,
                                 WebContents* guest_web_contents) {
-  CHECK(!ContainsKey(guest_web_contents_by_instance_id_, guest_instance_id));
+  CHECK(!base::ContainsKey(guest_web_contents_by_instance_id_,
+                           guest_instance_id));
   CHECK(CanUseGuestInstanceID(guest_instance_id));
   guest_web_contents_by_instance_id_[guest_instance_id] = guest_web_contents;
 
@@ -410,8 +411,7 @@ bool GuestViewManager::CanEmbedderAccessInstanceIDMaybeKill(
   if (!CanEmbedderAccessInstanceID(embedder_render_process_id,
                                    guest_instance_id)) {
     // The embedder process is trying to access a guest it does not own.
-    content::RecordAction(
-        base::UserMetricsAction("BadMessageTerminate_BPGM"));
+    base::RecordAction(base::UserMetricsAction("BadMessageTerminate_BPGM"));
     content::RenderProcessHost::FromID(embedder_render_process_id)
         ->Shutdown(content::RESULT_CODE_KILLED_BAD_MESSAGE, false);
     return false;
@@ -422,7 +422,7 @@ bool GuestViewManager::CanEmbedderAccessInstanceIDMaybeKill(
 bool GuestViewManager::CanUseGuestInstanceID(int guest_instance_id) {
   if (guest_instance_id <= last_instance_id_removed_)
     return false;
-  return !ContainsKey(removed_instance_ids_, guest_instance_id);
+  return !base::ContainsKey(removed_instance_ids_, guest_instance_id);
 }
 
 // static
@@ -462,8 +462,16 @@ bool GuestViewManager::CanEmbedderAccessInstanceID(
   if (!guest_view)
     return false;
 
+  if (guest_view->CanBeEmbeddedInsideCrossProcessFrames()) {
+    // MimeHandlerViewGuests (PDF) may be embedded in a cross-process frame.
+    return embedder_render_process_id ==
+           guest_view->GetOwnerSiteInstance()->GetProcess()->GetID();
+  }
+
+  // Other than MimeHandlerViewGuest, all other guest types are only permitted
+  // to run in the main frame.
   return embedder_render_process_id ==
-      guest_view->owner_web_contents()->GetRenderProcessHost()->GetID();
+         guest_view->owner_web_contents()->GetRenderProcessHost()->GetID();
 }
 
 GuestViewManager::ElementInstanceKey::ElementInstanceKey()

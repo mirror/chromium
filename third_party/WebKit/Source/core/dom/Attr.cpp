@@ -3,7 +3,8 @@
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Peter Kelly (pmk@post.com)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2004, 2005, 2006, 2007, 2009, 2010, 2012 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2009, 2010, 2012 Apple Inc. All rights
+ * reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -24,127 +25,102 @@
 #include "core/dom/Attr.h"
 
 #include "bindings/core/v8/ExceptionState.h"
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/Text.h"
 #include "core/events/ScopedEventQueue.h"
-#include "core/frame/UseCounter.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
 Attr::Attr(Element& element, const QualifiedName& name)
-    : Node(&element.document(), CreateOther)
-    , m_element(&element)
-    , m_name(name)
-{
+    : Node(&element.GetDocument(), kCreateOther),
+      element_(this, &element),
+      name_(name) {}
+
+Attr::Attr(Document& document,
+           const QualifiedName& name,
+           const AtomicString& standalone_value)
+    : Node(&document, kCreateOther),
+      element_(this, nullptr),
+      name_(name),
+      standalone_value_or_attached_local_name_(standalone_value) {}
+
+Attr* Attr::Create(Element& element, const QualifiedName& name) {
+  return new Attr(element, name);
 }
 
-Attr::Attr(Document& document, const QualifiedName& name, const AtomicString& standaloneValue)
-    : Node(&document, CreateOther)
-    , m_element(nullptr)
-    , m_name(name)
-    , m_standaloneValueOrAttachedLocalName(standaloneValue)
-{
+Attr* Attr::Create(Document& document,
+                   const QualifiedName& name,
+                   const AtomicString& value) {
+  return new Attr(document, name, value);
 }
 
-Attr* Attr::create(Element& element, const QualifiedName& name)
-{
-    return new Attr(element, name);
+Attr::~Attr() {}
+
+const QualifiedName Attr::GetQualifiedName() const {
+  if (element_ && !standalone_value_or_attached_local_name_.IsNull()) {
+    // In the unlikely case the Element attribute has a local name
+    // that differs by case, construct the qualified name based on
+    // it. This is the qualified name that must be used when
+    // looking up the attribute on the element.
+    return QualifiedName(name_.Prefix(),
+                         standalone_value_or_attached_local_name_,
+                         name_.NamespaceURI());
+  }
+
+  return name_;
 }
 
-Attr* Attr::create(Document& document, const QualifiedName& name, const AtomicString& value)
-{
-    return new Attr(document, name, value);
+const AtomicString& Attr::value() const {
+  if (element_)
+    return element_->getAttribute(GetQualifiedName());
+  return standalone_value_or_attached_local_name_;
 }
 
-Attr::~Attr()
-{
+void Attr::setValue(const AtomicString& value) {
+  // Element::setAttribute will remove the attribute if value is null.
+  DCHECK(!value.IsNull());
+  if (element_)
+    element_->setAttribute(GetQualifiedName(), value);
+  else
+    standalone_value_or_attached_local_name_ = value;
 }
 
-const QualifiedName Attr::getQualifiedName() const
-{
-    if (m_element && !m_standaloneValueOrAttachedLocalName.isNull()) {
-        // In the unlikely case the Element attribute has a local name
-        // that differs by case, construct the qualified name based on
-        // it. This is the qualified name that must be used when
-        // looking up the attribute on the element.
-        return QualifiedName(m_name.prefix(), m_standaloneValueOrAttachedLocalName, m_name.namespaceURI());
-    }
-
-    return m_name;
+void Attr::setNodeValue(const String& v) {
+  // Attr uses AtomicString type for its value to save memory as there
+  // is duplication among Elements' attributes values.
+  setValue(v.IsNull() ? g_empty_atom : AtomicString(v));
 }
 
-const AtomicString& Attr::value() const
-{
-    if (m_element)
-        return m_element->getAttribute(getQualifiedName());
-    return m_standaloneValueOrAttachedLocalName;
+Node* Attr::cloneNode(bool /*deep*/, ExceptionState&) {
+  return new Attr(GetDocument(), name_, value());
 }
 
-void Attr::setValue(const AtomicString& value)
-{
-    if (m_element)
-        m_element->setAttribute(getQualifiedName(), value);
-    else
-        m_standaloneValueOrAttachedLocalName = value;
+void Attr::DetachFromElementWithValue(const AtomicString& value) {
+  DCHECK(element_);
+  standalone_value_or_attached_local_name_ = value;
+  element_ = nullptr;
 }
 
-const AtomicString& Attr::valueForBindings() const
-{
-    UseCounter::count(document(), UseCounter::AttrGetValue);
-    return value();
+void Attr::AttachToElement(Element* element,
+                           const AtomicString& attached_local_name) {
+  DCHECK(!element_);
+  element_ = element;
+  standalone_value_or_attached_local_name_ = attached_local_name;
 }
 
-void Attr::setValueForBindings(const AtomicString& value)
-{
-    UseCounter::count(document(), UseCounter::AttrSetValue);
-    if (m_element)
-        UseCounter::count(document(), UseCounter::AttrSetValueWithElement);
-    setValue(value);
+DEFINE_TRACE(Attr) {
+  visitor->Trace(element_);
+  Node::Trace(visitor);
 }
 
-void Attr::setNodeValue(const String& v)
-{
-    // Attr uses AtomicString type for its value to save memory as there
-    // is duplication among Elements' attributes values.
-    setValue(AtomicString(v));
+DEFINE_TRACE_WRAPPERS(Attr) {
+  visitor->TraceWrappers(element_);
+  Node::TraceWrappers(visitor);
 }
 
-Node* Attr::cloneNode(bool /*deep*/)
-{
-    UseCounter::count(document(), UseCounter::AttrCloneNode);
-    return new Attr(document(), m_name, value());
-}
-
-void Attr::detachFromElementWithValue(const AtomicString& value)
-{
-    DCHECK(m_element);
-    m_standaloneValueOrAttachedLocalName = value;
-    m_element = nullptr;
-}
-
-void Attr::attachToElement(Element* element, const AtomicString& attachedLocalName)
-{
-    DCHECK(!m_element);
-    m_element = element;
-    m_standaloneValueOrAttachedLocalName = attachedLocalName;
-}
-
-DEFINE_TRACE(Attr)
-{
-    visitor->trace(m_element);
-    Node::trace(visitor);
-}
-
-DEFINE_TRACE_WRAPPERS(Attr)
-{
-    visitor->traceWrappers(m_element);
-    Node::traceWrappers(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

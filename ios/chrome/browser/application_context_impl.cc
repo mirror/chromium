@@ -13,28 +13,28 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/path_service.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/time/default_clock.h"
 #include "base/time/default_tick_clock.h"
 #include "base/tracked_objects.h"
-#include "components/component_updater/component_updater_service.h"
 #include "components/component_updater/component_updater_service.h"
 #include "components/gcm_driver/gcm_client_factory.h"
 #include "components/gcm_driver/gcm_desktop_utils.h"
 #include "components/gcm_driver/gcm_driver.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/keyed_service/core/service_access_type.h"
-#include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/metrics_service.h"
 #include "components/metrics_services_manager/metrics_services_manager.h"
 #include "components/net_log/chrome_net_log.h"
 #include "components/network_time/network_time_tracker.h"
+#include "components/physical_web/data_source/physical_web_data_source.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/translate/core/browser/translate_download_manager.h"
+#include "components/ukm/ukm_service.h"
 #include "components/update_client/configurator.h"
 #include "components/update_client/update_query_params.h"
 #include "components/variations/service/variations_service.h"
-#include "components/web_resource/web_resource_pref_names.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state_manager_impl.h"
 #include "ios/chrome/browser/chrome_paths.h"
@@ -43,9 +43,11 @@
 #include "ios/chrome/browser/ios_chrome_io_thread.h"
 #include "ios/chrome/browser/metrics/ios_chrome_metrics_services_manager_client.h"
 #include "ios/chrome/browser/net/crl_set_fetcher.h"
+#include "ios/chrome/browser/physical_web/create_physical_web_data_source.h"
 #include "ios/chrome/browser/pref_names.h"
 #include "ios/chrome/browser/prefs/browser_prefs.h"
 #include "ios/chrome/browser/prefs/ios_chrome_pref_service_factory.h"
+#include "ios/chrome/browser/services/gcm/ios_chrome_gcm_profile_service_factory.h"
 #include "ios/chrome/browser/update_client/ios_chrome_update_query_params_delegate.h"
 #include "ios/chrome/browser/web_resource/web_resource_util.h"
 #include "ios/chrome/common/channel_info.h"
@@ -78,19 +80,6 @@ ApplicationContextImpl::~ApplicationContextImpl() {
   DCHECK_EQ(this, GetApplicationContext());
   tracked_objects::ThreadData::EnsureCleanupWasCalled(4);
   SetApplicationContext(nullptr);
-}
-
-// static
-void ApplicationContextImpl::RegisterPrefs(PrefRegistrySimple* registry) {
-  registry->RegisterStringPref(prefs::kApplicationLocale, std::string());
-  registry->RegisterBooleanPref(prefs::kEulaAccepted, false);
-  registry->RegisterBooleanPref(metrics::prefs::kMetricsReportingEnabled,
-                                false);
-  registry->RegisterBooleanPref(prefs::kLastSessionExitedCleanly, true);
-  registry->RegisterBooleanPref(prefs::kMetricsReportingWifiOnly, true);
-  registry->RegisterBooleanPref(prefs::kLastSessionUsedWKWebViewControlGroup,
-                                false);
-  registry->RegisterBooleanPref(prefs::kDroppedSafeBrowsingCookies, false);
 }
 
 void ApplicationContextImpl::PreCreateThreads() {
@@ -143,16 +132,18 @@ void ApplicationContextImpl::OnAppEnterForeground() {
   PrefService* local_state = GetLocalState();
   local_state->SetBoolean(prefs::kLastSessionExitedCleanly, false);
 
-  // Tell the metrics service that the application resumes.
+  // Tell the metrics services that the application resumes.
   metrics::MetricsService* metrics_service = GetMetricsService();
   if (metrics_service && local_state) {
     metrics_service->OnAppEnterForeground();
     local_state->CommitPendingWrite();
   }
-
   variations::VariationsService* variations_service = GetVariationsService();
   if (variations_service)
     variations_service->OnAppEnterForeground();
+  ukm::UkmService* ukm_service = GetUkmService();
+  if (ukm_service)
+    ukm_service->OnAppEnterForeground();
 }
 
 void ApplicationContextImpl::OnAppEnterBackground() {
@@ -175,10 +166,13 @@ void ApplicationContextImpl::OnAppEnterBackground() {
   PrefService* local_state = GetLocalState();
   local_state->SetBoolean(prefs::kLastSessionExitedCleanly, true);
 
-  // Tell the metrics service it was cleanly shutdown.
+  // Tell the metrics services they were cleanly shutdown.
   metrics::MetricsService* metrics_service = GetMetricsService();
   if (metrics_service && local_state)
     metrics_service->OnAppEnterBackground();
+  ukm::UkmService* ukm_service = GetUkmService();
+  if (ukm_service)
+    ukm_service->OnAppEnterBackground();
 
   // Persisting to disk is protected by a critical task, so no other special
   // handling is necessary on iOS.
@@ -223,8 +217,9 @@ ApplicationContextImpl::GetMetricsServicesManager() {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (!metrics_services_manager_) {
     metrics_services_manager_.reset(
-        new metrics_services_manager::MetricsServicesManager(base::WrapUnique(
-            new IOSChromeMetricsServicesManagerClient(GetLocalState()))));
+        new metrics_services_manager::MetricsServicesManager(
+            base::MakeUnique<IOSChromeMetricsServicesManagerClient>(
+                GetLocalState())));
   }
   return metrics_services_manager_.get();
 }
@@ -234,14 +229,19 @@ metrics::MetricsService* ApplicationContextImpl::GetMetricsService() {
   return GetMetricsServicesManager()->GetMetricsService();
 }
 
+ukm::UkmService* ApplicationContextImpl::GetUkmService() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  return GetMetricsServicesManager()->GetUkmService();
+}
+
 variations::VariationsService* ApplicationContextImpl::GetVariationsService() {
   DCHECK(thread_checker_.CalledOnValidThread());
   return GetMetricsServicesManager()->GetVariationsService();
 }
 
-rappor::RapporService* ApplicationContextImpl::GetRapporService() {
+rappor::RapporServiceImpl* ApplicationContextImpl::GetRapporServiceImpl() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  return GetMetricsServicesManager()->GetRapporService();
+  return GetMetricsServicesManager()->GetRapporServiceImpl();
 }
 
 net_log::ChromeNetLog* ApplicationContextImpl::GetNetLog() {
@@ -297,6 +297,17 @@ CRLSetFetcher* ApplicationContextImpl::GetCRLSetFetcher() {
   return crl_set_fetcher_.get();
 }
 
+physical_web::PhysicalWebDataSource*
+ApplicationContextImpl::GetPhysicalWebDataSource() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  if (!physical_web_data_source_) {
+    physical_web_data_source_ =
+        CreateIOSChromePhysicalWebDataSource(GetLocalState());
+    DCHECK(physical_web_data_source_);
+  }
+  return physical_web_data_source_.get();
+}
+
 void ApplicationContextImpl::SetApplicationLocale(const std::string& locale) {
   DCHECK(thread_checker_.CalledOnValidThread());
   application_locale_ = locale;
@@ -338,6 +349,7 @@ void ApplicationContextImpl::CreateGCMDriver() {
 
   base::FilePath store_path;
   CHECK(PathService::Get(ios::DIR_GLOBAL_GCM_STORE, &store_path));
+
   base::SequencedWorkerPool* worker_pool = web::WebThread::GetBlockingPool();
   scoped_refptr<base::SequencedTaskRunner> blocking_task_runner(
       worker_pool->GetSequencedTaskRunnerWithShutdownBehavior(
@@ -347,6 +359,7 @@ void ApplicationContextImpl::CreateGCMDriver() {
   gcm_driver_ = gcm::CreateGCMDriverDesktop(
       base::WrapUnique(new gcm::GCMClientFactory), GetLocalState(), store_path,
       GetSystemURLRequestContext(), ::GetChannel(),
+      IOSChromeGCMProfileServiceFactory::GetProductCategoryForSubtypes(),
       web::WebThread::GetTaskRunnerForThread(web::WebThread::UI),
       web::WebThread::GetTaskRunnerForThread(web::WebThread::IO),
       blocking_task_runner);

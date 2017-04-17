@@ -9,7 +9,7 @@
 #include "core/html/track/vtt/VTTCue.h"
 #include "platform/PODIntervalTree.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -17,10 +17,10 @@ class HTMLMediaElement;
 class TextTrackCueList;
 
 // TODO(Oilpan): This needs to be PODIntervalTree<double, Member<TextTrackCue>>.
-// However, it is not easy to move PODIntervalTree to the heap (for a C++-template
-// reason) so we leave it as a raw pointer at the moment. This is safe
-// because CueTimeline and TextTrackCue are guaranteed to die at the same time
-// when the owner HTMLMediaElement dies. Thus the raw TextTrackCue* cannot
+// However, it is not easy to move PODIntervalTree to the heap (for a
+// C++-template reason) so we leave it as a raw pointer at the moment. This is
+// safe because CueTimeline and TextTrackCue are guaranteed to die at the same
+// time when the owner HTMLMediaElement dies. Thus the raw TextTrackCue* cannot
 // become stale pointers.
 typedef PODIntervalTree<double, TextTrackCue*> CueIntervalTree;
 typedef CueIntervalTree::IntervalType CueInterval;
@@ -29,79 +29,72 @@ typedef Vector<CueInterval> CueList;
 // This class manages the timeline and rendering updates of cues associated
 // with TextTracks. Owned by a HTMLMediaElement.
 class CueTimeline final : public GarbageCollectedFinalized<CueTimeline> {
-public:
-    CueTimeline(HTMLMediaElement&);
+ public:
+  CueTimeline(HTMLMediaElement&);
 
-    void addCues(TextTrack*, const TextTrackCueList*);
-    void addCue(TextTrack*, TextTrackCue*);
-    void removeCues(TextTrack*, const TextTrackCueList*);
-    void removeCue(TextTrack*, TextTrackCue*);
+  void AddCues(TextTrack*, const TextTrackCueList*);
+  void AddCue(TextTrack*, TextTrackCue*);
+  void RemoveCues(TextTrack*, const TextTrackCueList*);
+  void RemoveCue(TextTrack*, TextTrackCue*);
 
-    void hideCues(TextTrack*, const TextTrackCueList*);
+  void HideCues(TextTrack*, const TextTrackCueList*);
 
-    void updateActiveCues(double);
+  void UpdateActiveCues(double);
 
-    bool ignoreUpdateRequests() const { return m_ignoreUpdate > 0; }
-    void beginIgnoringUpdateRequests();
-    void endIgnoringUpdateRequests();
+  bool IgnoreUpdateRequests() const { return ignore_update_ > 0; }
+  void BeginIgnoringUpdateRequests();
+  void EndIgnoringUpdateRequests();
 
-    const CueList& currentlyActiveCues() const { return m_currentlyActiveCues; }
+  const CueList& CurrentlyActiveCues() const { return currently_active_cues_; }
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    HTMLMediaElement& mediaElement() const { return *m_mediaElement; }
+ private:
+  HTMLMediaElement& MediaElement() const { return *media_element_; }
 
-    void addCueInternal(TextTrackCue*);
-    void removeCueInternal(TextTrackCue*);
+  void AddCueInternal(TextTrackCue*);
+  void RemoveCueInternal(TextTrackCue*);
 
-    Member<HTMLMediaElement> m_mediaElement;
+  Member<HTMLMediaElement> media_element_;
 
-    CueIntervalTree m_cueTree;
+  CueIntervalTree cue_tree_;
 
-    CueList m_currentlyActiveCues;
-    double m_lastUpdateTime;
+  CueList currently_active_cues_;
+  double last_update_time_;
 
-    int m_ignoreUpdate;
+  int ignore_update_;
 };
 
 class TrackDisplayUpdateScope {
-    STACK_ALLOCATED();
-public:
-    TrackDisplayUpdateScope(CueTimeline& cueTimeline)
-    {
-        m_cueTimeline = &cueTimeline;
-        m_cueTimeline->beginIgnoringUpdateRequests();
-    }
-    ~TrackDisplayUpdateScope()
-    {
-        DCHECK(m_cueTimeline);
-        m_cueTimeline->endIgnoringUpdateRequests();
-    }
+  STACK_ALLOCATED();
 
-private:
-    Member<CueTimeline> m_cueTimeline;
+ public:
+  TrackDisplayUpdateScope(CueTimeline& cue_timeline) {
+    cue_timeline_ = &cue_timeline;
+    cue_timeline_->BeginIgnoringUpdateRequests();
+  }
+  ~TrackDisplayUpdateScope() {
+    DCHECK(cue_timeline_);
+    cue_timeline_->EndIgnoringUpdateRequests();
+  }
+
+ private:
+  Member<CueTimeline> cue_timeline_;
 };
 
 #ifndef NDEBUG
 // Template specializations required by PodIntervalTree in debug mode.
 template <>
 struct ValueToString<double> {
-    static String toString(const double value)
-    {
-        return String::number(value);
-    }
+  static String ToString(const double value) { return String::Number(value); }
 };
 
 template <>
 struct ValueToString<TextTrackCue*> {
-    static String toString(TextTrackCue* const& cue)
-    {
-        return cue->toString();
-    }
+  static String ToString(TextTrackCue* const& cue) { return cue->ToString(); }
 };
 #endif
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CueTimeline_h
+#endif  // CueTimeline_h

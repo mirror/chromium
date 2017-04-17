@@ -7,6 +7,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test_utils.h"
 #include "media/base/test_data_util.h"
+#include "media/media_features.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
 #include "net/test/embedded_test_server/http_response.h"
@@ -21,7 +22,7 @@ class MediaRedirectTest : public MediaBrowserTest {
     std::unique_ptr<net::EmbeddedTestServer> http_test_server(
         new net::EmbeddedTestServer());
     http_test_server->ServeFilesFromSourceDirectory(media::GetTestDataPath());
-    CHECK(http_test_server->Start());
+    CHECK(http_test_server->InitializeAndListen());
 
     const GURL player_url =
         http_test_server->GetURL("/player.html?video=" + kHiddenPath);
@@ -30,6 +31,7 @@ class MediaRedirectTest : public MediaBrowserTest {
     http_test_server->RegisterRequestHandler(
         base::Bind(&MediaRedirectTest::RedirectResponseHandler,
                    base::Unretained(this), dest_url));
+    http_test_server->StartAcceptingConnections();
 
     // Run the normal media playback test.
     EXPECT_EQ(kEnded, RunTest(player_url, kEnded));
@@ -58,7 +60,7 @@ IN_PROC_BROWSER_TEST_F(MediaRedirectTest, CanPlayHiddenWebm) {
   RunRedirectTest("bear.webm");
 }
 
-#if defined(OS_ANDROID) && defined(USE_PROPRIETARY_CODECS)
+#if defined(OS_ANDROID) && BUILDFLAG(USE_PROPRIETARY_CODECS)
 // Flaky, see http://crbug.com/624005
 IN_PROC_BROWSER_TEST_F(MediaRedirectTest, DISABLED_CanPlayHiddenHls) {
   RunRedirectTest("bear.m3u8");

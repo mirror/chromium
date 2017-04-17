@@ -42,107 +42,118 @@
 
 namespace blink {
 
-v8::Local<v8::Object> V8DOMWrapper::createWrapper(v8::Isolate* isolate, v8::Local<v8::Object> creationContext, const WrapperTypeInfo* type)
-{
-    ASSERT(!type->equals(&V8Window::wrapperTypeInfo));
-    // According to https://html.spec.whatwg.org/multipage/browsers.html#security-location,
-    // cross-origin script access to a few properties of Location is allowed.
-    // Location already implements the necessary security checks.
-    bool withSecurityCheck = !type->equals(&V8Location::wrapperTypeInfo);
-    V8WrapperInstantiationScope scope(creationContext, isolate, withSecurityCheck);
+v8::Local<v8::Object> V8DOMWrapper::CreateWrapper(
+    v8::Isolate* isolate,
+    v8::Local<v8::Object> creation_context,
+    const WrapperTypeInfo* type) {
+  ASSERT(!type->Equals(&V8Window::wrapperTypeInfo));
+  // According to
+  // https://html.spec.whatwg.org/multipage/browsers.html#security-location,
+  // cross-origin script access to a few properties of Location is allowed.
+  // Location already implements the necessary security checks.
+  bool with_security_check = !type->Equals(&V8Location::wrapperTypeInfo);
+  V8WrapperInstantiationScope scope(creation_context, isolate,
+                                    with_security_check);
 
-    V8PerContextData* perContextData = V8PerContextData::from(scope.context());
-    v8::Local<v8::Object> wrapper;
-    if (perContextData) {
-        wrapper = perContextData->createWrapperFromCache(type);
-    } else {
-        // The context is detached, but still accessible.
-        // TODO(yukishiino): This code does not create a wrapper with
-        // the correct settings.  Should follow the same way as
-        // V8PerContextData::createWrapperFromCache, though there is no need to
-        // cache resulting objects or their constructors.
-        const DOMWrapperWorld& world = DOMWrapperWorld::world(scope.context());
-        if (!type->domTemplate(isolate, world)->InstanceTemplate()->NewInstance(scope.context()).ToLocal(&wrapper)) {
-            // Nothing to do.
-        }
-    }
-
-    return wrapper;
+  V8PerContextData* per_context_data =
+      V8PerContextData::From(scope.GetContext());
+  v8::Local<v8::Object> wrapper;
+  if (per_context_data) {
+    wrapper = per_context_data->CreateWrapperFromCache(type);
+  } else {
+    // The context is detached, but still accessible.
+    // TODO(yukishiino): This code does not create a wrapper with
+    // the correct settings.  Should follow the same way as
+    // V8PerContextData::createWrapperFromCache, though there is no need to
+    // cache resulting objects or their constructors.
+    const DOMWrapperWorld& world = DOMWrapperWorld::World(scope.GetContext());
+    wrapper = type->domTemplate(isolate, world)
+                  ->InstanceTemplate()
+                  ->NewInstance(scope.GetContext())
+                  .ToLocalChecked();
+  }
+  return wrapper;
 }
 
-bool V8DOMWrapper::isWrapper(v8::Isolate* isolate, v8::Local<v8::Value> value)
-{
-    if (value.IsEmpty() || !value->IsObject())
-        return false;
-    v8::Local<v8::Object> object = v8::Local<v8::Object>::Cast(value);
+bool V8DOMWrapper::IsWrapper(v8::Isolate* isolate, v8::Local<v8::Value> value) {
+  if (value.IsEmpty() || !value->IsObject())
+    return false;
+  v8::Local<v8::Object> object = v8::Local<v8::Object>::Cast(value);
 
-    if (object->InternalFieldCount() < v8DefaultWrapperInternalFieldCount)
-        return false;
+  if (object->InternalFieldCount() < kV8DefaultWrapperInternalFieldCount)
+    return false;
 
-    const WrapperTypeInfo* untrustedWrapperTypeInfo = toWrapperTypeInfo(object);
-    V8PerIsolateData* perIsolateData = V8PerIsolateData::from(isolate);
-    if (!(untrustedWrapperTypeInfo && perIsolateData))
-        return false;
-    return perIsolateData->hasInstance(untrustedWrapperTypeInfo, object);
+  const WrapperTypeInfo* untrusted_wrapper_type_info =
+      ToWrapperTypeInfo(object);
+  V8PerIsolateData* per_isolate_data = V8PerIsolateData::From(isolate);
+  if (!(untrusted_wrapper_type_info && per_isolate_data))
+    return false;
+  return per_isolate_data->HasInstance(untrusted_wrapper_type_info, object);
 }
 
-bool V8DOMWrapper::hasInternalFieldsSet(v8::Local<v8::Value> value)
-{
-    if (value.IsEmpty() || !value->IsObject())
-        return false;
-    v8::Local<v8::Object> object = v8::Local<v8::Object>::Cast(value);
+bool V8DOMWrapper::HasInternalFieldsSet(v8::Local<v8::Value> value) {
+  if (value.IsEmpty() || !value->IsObject())
+    return false;
+  v8::Local<v8::Object> object = v8::Local<v8::Object>::Cast(value);
 
-    if (object->InternalFieldCount() < v8DefaultWrapperInternalFieldCount)
-        return false;
+  if (object->InternalFieldCount() < kV8DefaultWrapperInternalFieldCount)
+    return false;
 
-    const ScriptWrappable* untrustedScriptWrappable = toScriptWrappable(object);
-    const WrapperTypeInfo* untrustedWrapperTypeInfo = toWrapperTypeInfo(object);
-    return untrustedScriptWrappable
-        && untrustedWrapperTypeInfo
-        && untrustedWrapperTypeInfo->ginEmbedder == gin::kEmbedderBlink;
+  const ScriptWrappable* untrusted_script_wrappable = ToScriptWrappable(object);
+  const WrapperTypeInfo* untrusted_wrapper_type_info =
+      ToWrapperTypeInfo(object);
+  return untrusted_script_wrappable && untrusted_wrapper_type_info &&
+         untrusted_wrapper_type_info->gin_embedder == gin::kEmbedderBlink;
 }
 
-void V8WrapperInstantiationScope::securityCheck(v8::Isolate* isolate, v8::Local<v8::Context> contextForWrapper)
-{
-    if (m_context.IsEmpty())
-        return;
-    // If the context is different, we need to make sure that the current
-    // context has access to the creation context.
-    Frame* frame = toFrameIfNotDetached(contextForWrapper);
-    if (!frame) {
-        // Sandbox detached frames - they can't create cross origin objects.
-        LocalDOMWindow* callingWindow = currentDOMWindow(isolate);
-        DOMWindow* targetWindow = toDOMWindow(contextForWrapper);
-        if (callingWindow->document()->getSecurityOrigin()->canAccessCheckSuborigins(targetWindow->document()->getSecurityOrigin()))
-            return;
+void V8WrapperInstantiationScope::SecurityCheck(
+    v8::Isolate* isolate,
+    v8::Local<v8::Context> context_for_wrapper) {
+  if (context_.IsEmpty())
+    return;
+  // If the context is different, we need to make sure that the current
+  // context has access to the creation context.
+  LocalFrame* frame = ToLocalFrameIfNotDetached(context_for_wrapper);
+  if (!frame) {
+    // Sandbox detached frames - they can't create cross origin objects.
+    LocalDOMWindow* calling_window = CurrentDOMWindow(isolate);
+    LocalDOMWindow* target_window = ToLocalDOMWindow(context_for_wrapper);
+    // TODO(jochen): Currently, Location is the only object for which we can
+    // reach this code path. Should be generalized.
+    ExceptionState exception_state(
+        isolate, ExceptionState::kConstructionContext, "Location");
+    if (BindingSecurity::ShouldAllowAccessToDetachedWindow(
+            calling_window, target_window, exception_state))
+      return;
 
-        // TODO(jochen): Currently, Location is the only object for which we can reach this code path. Should be generalized.
-        ExceptionState exceptionState(ExceptionState::ConstructionContext, "Location", contextForWrapper->Global(), isolate);
-        // We can't create a better message for a detached frame.
-        exceptionState.throwSecurityError(String(), String());
-        exceptionState.throwIfNeeded();
-        return;
-    }
-    const DOMWrapperWorld& currentWorld = DOMWrapperWorld::world(m_context);
-    RELEASE_ASSERT(currentWorld.worldId() == DOMWrapperWorld::world(contextForWrapper).worldId());
-    if (currentWorld.isMainWorld() && !BindingSecurity::shouldAllowAccessToFrame(isolate, currentDOMWindow(isolate), frame, DoNotReportSecurityError)) {
-        // TODO(jochen): Add the interface name here once this is generalized.
-        ExceptionState exceptionState(ExceptionState::ConstructionContext, nullptr, contextForWrapper->Global(), isolate);
-        exceptionState.throwSecurityError(String(), String());
-        exceptionState.throwIfNeeded();
-        return;
-    }
+    CHECK_EQ(kSecurityError, exception_state.Code());
+    return;
+  }
+  const DOMWrapperWorld& current_world = DOMWrapperWorld::World(context_);
+  RELEASE_ASSERT(current_world.GetWorldId() ==
+                 DOMWrapperWorld::World(context_for_wrapper).GetWorldId());
+  // TODO(jochen): Add the interface name here once this is generalized.
+  ExceptionState exception_state(isolate, ExceptionState::kConstructionContext,
+                                 nullptr);
+  if (current_world.IsMainWorld() &&
+      !BindingSecurity::ShouldAllowAccessToFrame(CurrentDOMWindow(isolate),
+                                                 frame, exception_state)) {
+    CHECK_EQ(kSecurityError, exception_state.Code());
+    return;
+  }
 }
 
-void V8WrapperInstantiationScope::convertException()
-{
-    v8::Isolate* isolate = m_context->GetIsolate();
-    // TODO(jochen): Currently, Location is the only object for which we can reach this code path. Should be generalized.
-    ExceptionState exceptionState(ExceptionState::ConstructionContext, "Location", isolate->GetCurrentContext()->Global(), isolate);
-    LocalDOMWindow* callingWindow = currentDOMWindow(isolate);
-    DOMWindow* targetWindow = toDOMWindow(m_context);
-    exceptionState.throwSecurityError(targetWindow->sanitizedCrossDomainAccessErrorMessage(callingWindow), targetWindow->crossDomainAccessErrorMessage(callingWindow));
-    exceptionState.throwIfNeeded();
+void V8WrapperInstantiationScope::ConvertException() {
+  v8::Isolate* isolate = context_->GetIsolate();
+  // TODO(jochen): Currently, Location is the only object for which we can reach
+  // this code path. Should be generalized.
+  ExceptionState exception_state(isolate, ExceptionState::kConstructionContext,
+                                 "Location");
+  LocalDOMWindow* calling_window = CurrentDOMWindow(isolate);
+  LocalDOMWindow* target_window = ToLocalDOMWindow(context_);
+  exception_state.ThrowSecurityError(
+      target_window->SanitizedCrossDomainAccessErrorMessage(calling_window),
+      target_window->CrossDomainAccessErrorMessage(calling_window));
 }
 
-} // namespace blink
+}  // namespace blink

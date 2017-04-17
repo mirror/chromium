@@ -6,7 +6,6 @@
 #include <fcntl.h>
 #include <linux/videodev2.h>
 
-#include "base/lazy_instance.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/trace_event/trace_event.h"
 #include "media/gpu/tegra_v4l2_device.h"
@@ -52,54 +51,10 @@ TEGRAV4L2_SYM(UseEglImage);
 
 #undef TEGRAV4L2_SYM
 
-class TegraFunctionSymbolFinder {
- public:
-  TegraFunctionSymbolFinder() : initialized_(false) {
-    if (!dlopen("/usr/lib/libtegrav4l2.so",
-                RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE)) {
-      DLOG(ERROR) << "Failed to load libtegrav4l2.so";
-      return;
-    }
-#define TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(name)          \
-  do {                                                    \
-    TegraV4L2_##name = reinterpret_cast<TegraV4L2##name>( \
-        dlsym(RTLD_DEFAULT, "TegraV4L2_" #name));         \
-    if (TegraV4L2_##name == NULL) {                       \
-      LOG(ERROR) << "Failed to dlsym TegraV4L2_" #name;   \
-      return;                                             \
-    }                                                     \
-  } while (0)
-
-    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(Open);
-    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(Close);
-    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(Ioctl);
-    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(Poll);
-    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(SetDevicePollInterrupt);
-    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(ClearDevicePollInterrupt);
-    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(Mmap);
-    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(Munmap);
-    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(UseEglImage);
-#undef TEGRAV4L2_DLSYM
-    initialized_ = true;
-  }
-
-  bool initialized() { return initialized_; }
-
- private:
-  bool initialized_;
-};
-
-base::LazyInstance<TegraFunctionSymbolFinder> g_tegra_function_symbol_finder_ =
-    LAZY_INSTANCE_INITIALIZER;
-
-TegraV4L2Device::TegraV4L2Device(Type type)
-    : V4L2Device(type), device_fd_(-1) {}
+TegraV4L2Device::TegraV4L2Device() {}
 
 TegraV4L2Device::~TegraV4L2Device() {
-  if (device_fd_ != -1) {
-    TegraV4L2_Close(device_fd_);
-    device_fd_ = -1;
-  }
+  Close();
 }
 
 int TegraV4L2Device::Ioctl(int flags, void* arg) {
@@ -144,23 +99,58 @@ bool TegraV4L2Device::ClearDevicePollInterrupt() {
 }
 
 bool TegraV4L2Device::Initialize() {
-  const char* device_path = NULL;
-  switch (type_) {
-    case kDecoder:
+  static bool initialized = []() {
+    if (!dlopen("/usr/lib/libtegrav4l2.so",
+                RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE)) {
+      return false;
+    }
+#define TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(name)          \
+  do {                                                    \
+    TegraV4L2_##name = reinterpret_cast<TegraV4L2##name>( \
+        dlsym(RTLD_DEFAULT, "TegraV4L2_" #name));         \
+    if (TegraV4L2_##name == NULL) {                       \
+      LOG(ERROR) << "Failed to dlsym TegraV4L2_" #name;   \
+      return false;                                       \
+    }                                                     \
+  } while (0)
+
+    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(Open);
+    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(Close);
+    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(Ioctl);
+    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(Poll);
+    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(SetDevicePollInterrupt);
+    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(ClearDevicePollInterrupt);
+    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(Mmap);
+    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(Munmap);
+    TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR(UseEglImage);
+#undef TEGRAV4L2_DLSYM_OR_RETURN_ON_ERROR
+    return true;
+  }();
+
+  return initialized;
+}
+
+bool TegraV4L2Device::Open(Type type, uint32_t /* v4l2_pixfmt */) {
+  return OpenInternal(type);
+}
+
+bool TegraV4L2Device::OpenInternal(Type type) {
+  const char* device_path = nullptr;
+
+  switch (type) {
+    case Type::kDecoder:
       device_path = kDecoderDevice;
       break;
-    case kEncoder:
+    case Type::kEncoder:
       device_path = kEncoderDevice;
       break;
     default:
-      DVLOG(1) << "Device type " << type_ << " not supported on this platform";
+      DVLOG(1) << "Device type " << static_cast<int>(type)
+               << " not supported on this platform";
       return false;
   }
 
-  if (!g_tegra_function_symbol_finder_.Get().initialized()) {
-    DLOG(ERROR) << "Unable to initialize functions";
-    return false;
-  }
+  DCHECK_EQ(device_fd_, -1);
   device_fd_ = HANDLE_EINTR(
       TegraV4L2_Open(device_path, O_RDWR | O_NONBLOCK | O_CLOEXEC));
   if (device_fd_ == -1) {
@@ -170,10 +160,17 @@ bool TegraV4L2Device::Initialize() {
   return true;
 }
 
+void TegraV4L2Device::Close() {
+  if (device_fd_ != -1) {
+    TegraV4L2_Close(device_fd_);
+    device_fd_ = -1;
+  }
+}
+
 std::vector<base::ScopedFD> TegraV4L2Device::GetDmabufsForV4L2Buffer(
     int /* index */,
     size_t num_planes,
-    enum v4l2_buf_type /* type */) {
+    enum v4l2_buf_type /* buf_type */) {
   std::vector<base::ScopedFD> dmabuf_fds;
   // Tegra does not actually provide dmabuf fds currently. Fill the vector with
   // invalid descriptors to prevent the caller from failing on an empty vector
@@ -226,11 +223,48 @@ GLenum TegraV4L2Device::GetTextureTarget() {
   return GL_TEXTURE_2D;
 }
 
-uint32_t TegraV4L2Device::PreferredInputFormat() {
-  // TODO(posciak): We should support "dontcare" returns here once we
-  // implement proper handling (fallback, negotiation) for this in users.
-  CHECK_EQ(type_, kEncoder);
-  return V4L2_PIX_FMT_YUV420M;
+uint32_t TegraV4L2Device::PreferredInputFormat(Type type) {
+  if (type == Type::kEncoder)
+    return V4L2_PIX_FMT_YUV420M;
+
+  return 0;
+}
+
+std::vector<uint32_t> TegraV4L2Device::GetSupportedImageProcessorPixelformats(
+    v4l2_buf_type /* buf_type */) {
+  return std::vector<uint32_t>();
+}
+
+VideoDecodeAccelerator::SupportedProfiles
+TegraV4L2Device::GetSupportedDecodeProfiles(const size_t num_formats,
+                                            const uint32_t pixelformats[]) {
+  if (!OpenInternal(Type::kDecoder))
+    return VideoDecodeAccelerator::SupportedProfiles();
+
+  const auto& profiles =
+      EnumerateSupportedDecodeProfiles(num_formats, pixelformats);
+
+  Close();
+  return profiles;
+}
+
+VideoEncodeAccelerator::SupportedProfiles
+TegraV4L2Device::GetSupportedEncodeProfiles() {
+  if (!OpenInternal(Type::kEncoder))
+    return VideoEncodeAccelerator::SupportedProfiles();
+
+  const auto& profiles = EnumerateSupportedEncodeProfiles();
+
+  Close();
+  return profiles;
+}
+
+bool TegraV4L2Device::IsImageProcessingSupported() {
+  return false;
+}
+
+bool TegraV4L2Device::IsJpegDecodingSupported() {
+  return false;
 }
 
 }  //  namespace media

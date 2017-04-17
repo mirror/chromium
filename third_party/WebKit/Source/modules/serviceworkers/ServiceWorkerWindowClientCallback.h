@@ -12,18 +12,18 @@ namespace blink {
 class ScriptPromiseResolver;
 
 class NavigateClientCallback : public WebServiceWorkerClientCallbacks {
-public:
-    explicit NavigateClientCallback(ScriptPromiseResolver* resolver)
-        : m_resolver(resolver) { }
+ public:
+  explicit NavigateClientCallback(ScriptPromiseResolver* resolver)
+      : resolver_(resolver) {}
 
-    void onSuccess(std::unique_ptr<WebServiceWorkerClientInfo>) override;
-    void onError(const WebServiceWorkerError&) override;
+  void OnSuccess(std::unique_ptr<WebServiceWorkerClientInfo>) override;
+  void OnError(const WebServiceWorkerError&) override;
 
-private:
-    Persistent<ScriptPromiseResolver> m_resolver;
-    WTF_MAKE_NONCOPYABLE(NavigateClientCallback);
+ private:
+  Persistent<ScriptPromiseResolver> resolver_;
+  WTF_MAKE_NONCOPYABLE(NavigateClientCallback);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ServiceWorkerWindowClientCallback_h
+#endif  // ServiceWorkerWindowClientCallback_h

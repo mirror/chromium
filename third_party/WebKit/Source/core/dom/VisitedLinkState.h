@@ -2,10 +2,12 @@
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 2004-2005 Allan Sandfeld Jensen (kde@carewolf.com)
  * Copyright (C) 2006, 2007 Nicholas Shanks (webkit@nickshanks.com)
- * Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights
+ * reserved.
  * Copyright (C) 2007 Alexey Proskuryakov <ap@webkit.org>
  * Copyright (C) 2007, 2008 Eric Seidel <eric@webkit.org>
- * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved.
+ * (http://www.torchmobile.com/)
  * Copyright (c) 2011, Code Aurora Forum. All rights reserved.
  * Copyright (C) Research In Motion Limited 2011. All rights reserved.
  * Copyright (C) 2012 Google Inc. All rights reserved.
@@ -32,42 +34,39 @@
 #include "core/dom/Element.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/LinkHash.h"
-#include "wtf/HashSet.h"
+#include "platform/wtf/HashSet.h"
 
 namespace blink {
 
 class Document;
 
 class VisitedLinkState : public GarbageCollectedFinalized<VisitedLinkState> {
-public:
-    static VisitedLinkState* create(const Document& document)
-    {
-        return new VisitedLinkState(document);
-    }
+ public:
+  static VisitedLinkState* Create(const Document& document) {
+    return new VisitedLinkState(document);
+  }
 
-    void invalidateStyleForAllLinks(bool invalidateVisitedLinkHashes);
-    void invalidateStyleForLink(LinkHash);
+  void InvalidateStyleForAllLinks(bool invalidate_visited_link_hashes);
+  void InvalidateStyleForLink(LinkHash);
 
-    EInsideLink determineLinkState(const Element& element)
-    {
-        if (element.isLink())
-            return determineLinkStateSlowCase(element);
-        return NotInsideLink;
-    }
+  EInsideLink DetermineLinkState(const Element& element) {
+    if (element.IsLink())
+      return DetermineLinkStateSlowCase(element);
+    return EInsideLink::kNotInsideLink;
+  }
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    explicit VisitedLinkState(const Document&);
-    const Document& document() const { return *m_document; }
+ private:
+  explicit VisitedLinkState(const Document&);
+  const Document& GetDocument() const { return *document_; }
 
-    EInsideLink determineLinkStateSlowCase(const Element&);
+  EInsideLink DetermineLinkStateSlowCase(const Element&);
 
-    Member<const Document> m_document;
-    HashSet<LinkHash, LinkHashHash> m_linksCheckedForVisitedState;
+  Member<const Document> document_;
+  HashSet<LinkHash, LinkHashHash> links_checked_for_visited_state_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif
-

@@ -4,8 +4,11 @@
 
 #include "extensions/browser/api/networking_private/networking_private_service_client.h"
 
+#include <utility>
+
 #include "base/base64.h"
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/sequenced_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/threading/worker_pool.h"
@@ -38,11 +41,8 @@ NetworkingPrivateServiceClient::ServiceCallbacks::~ServiceCallbacks() {
 }
 
 NetworkingPrivateServiceClient::NetworkingPrivateServiceClient(
-    std::unique_ptr<WiFiService> wifi_service,
-    std::unique_ptr<VerifyDelegate> verify_delegate)
-    : NetworkingPrivateDelegate(std::move(verify_delegate)),
-      wifi_service_(std::move(wifi_service)),
-      weak_factory_(this) {
+    std::unique_ptr<WiFiService> wifi_service)
+    : wifi_service_(std::move(wifi_service)), weak_factory_(this) {
   sequence_token_ = BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
       kNetworkingPrivateSequenceTokenName);
   task_runner_ =
@@ -106,7 +106,8 @@ void NetworkingPrivateServiceClient::OnNetworkChanged(
 NetworkingPrivateServiceClient::ServiceCallbacks*
 NetworkingPrivateServiceClient::AddServiceCallbacks() {
   ServiceCallbacks* service_callbacks = new ServiceCallbacks();
-  service_callbacks->id = callbacks_map_.Add(service_callbacks);
+  service_callbacks->id =
+      callbacks_map_.Add(base::WrapUnique(service_callbacks));
   return service_callbacks;
 }
 
@@ -183,8 +184,11 @@ void NetworkingPrivateServiceClient::GetState(
 void NetworkingPrivateServiceClient::SetProperties(
     const std::string& guid,
     std::unique_ptr<base::DictionaryValue> properties,
+    bool allow_set_shared_config,
     const VoidCallback& success_callback,
     const FailureCallback& failure_callback) {
+  CHECK(allow_set_shared_config);
+
   ServiceCallbacks* service_callbacks = AddServiceCallbacks();
   service_callbacks->failure_callback = failure_callback;
   service_callbacks->set_properties_callback = success_callback;
@@ -223,6 +227,7 @@ void NetworkingPrivateServiceClient::CreateNetwork(
 
 void NetworkingPrivateServiceClient::ForgetNetwork(
     const std::string& guid,
+    bool allow_forget_shared_config,
     const VoidCallback& success_callback,
     const FailureCallback& failure_callback) {
   // TODO(mef): Implement for Win/Mac
@@ -349,6 +354,11 @@ NetworkingPrivateServiceClient::GetDeviceStateList() {
   return device_state_list;
 }
 
+std::unique_ptr<base::DictionaryValue>
+NetworkingPrivateServiceClient::GetGlobalPolicy() {
+  return base::MakeUnique<base::DictionaryValue>();
+}
+
 bool NetworkingPrivateServiceClient::EnableNetworkType(
     const std::string& type) {
   return false;
@@ -459,17 +469,15 @@ void NetworkingPrivateServiceClient::AfterStartDisconnect(
 void NetworkingPrivateServiceClient::OnNetworksChangedEventOnUIThread(
     const std::vector<std::string>& network_guids) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  FOR_EACH_OBSERVER(NetworkingPrivateDelegateObserver,
-                    network_events_observers_,
-                    OnNetworksChangedEvent(network_guids));
+  for (auto& observer : network_events_observers_)
+    observer.OnNetworksChangedEvent(network_guids);
 }
 
 void NetworkingPrivateServiceClient::OnNetworkListChangedEventOnUIThread(
     const std::vector<std::string>& network_guids) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  FOR_EACH_OBSERVER(NetworkingPrivateDelegateObserver,
-                    network_events_observers_,
-                    OnNetworkListChangedEvent(network_guids));
+  for (auto& observer : network_events_observers_)
+    observer.OnNetworkListChangedEvent(network_guids);
 }
 
 }  // namespace extensions

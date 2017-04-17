@@ -8,8 +8,8 @@
 #include "bindings/core/v8/ScriptValue.h"
 #include "core/dom/DOMTypedArray.h"
 #include "modules/webgl/WebGLObject.h"
-#include "wtf/Forward.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
@@ -30,6 +30,6 @@ ScriptValue WebGLAny(ScriptState*, DOMInt32Array* value);
 ScriptValue WebGLAny(ScriptState*, DOMUint8Array* value);
 ScriptValue WebGLAny(ScriptState*, DOMUint32Array* value);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebGLAny_h
+#endif  // WebGLAny_h

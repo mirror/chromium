@@ -8,13 +8,13 @@
 namespace blink {
 
 enum class SelectionStrategy {
-    // Always using CharacterGranularity
-    Character,
-    // Switches between WordGranularity and CharacterGranularity
-    // Depending on whether the selection or growing or shrinking
-    Direction,
+  // Always using CharacterGranularity
+  kCharacter,
+  // Switches between WordGranularity and CharacterGranularity
+  // Depending on whether the selection or growing or shrinking
+  kDirection,
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SelectionStrategy_h
+#endif  // SelectionStrategy_h

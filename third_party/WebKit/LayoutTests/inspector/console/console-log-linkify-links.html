@@ -15,13 +15,16 @@ function test()
     InspectorTest.dumpConsoleMessages(false, true);
 
     InspectorTest.addResult("Dump urls in messages");
-    var consoleView = WebInspector.ConsoleView.instance();
+    var consoleView = Console.ConsoleView.instance();
     var viewMessages = consoleView._visibleViewMessages;
     for (var i = 0; i < viewMessages.length; ++i) {
         var uiMessage = viewMessages[i];
         var element = uiMessage.contentElement();
-        var href = element.querySelector(".webkit-html-external-link");
-        InspectorTest.addResult("linked url:" + href.href);
+        var links = element.querySelectorAll(".devtools-link");
+        for (var link of links) {
+            var info = Components.Linkifier._linkInfo(link);
+            InspectorTest.addResult("linked url:" + (info && info.url));
+        }
     }
 
     InspectorTest.completeTest();

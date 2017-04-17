@@ -99,12 +99,8 @@ bool DefaultAccessPolicy::CanChangeWindowOpacity(
          delegate_->HasRootForAccessPolicy(window);
 }
 
-bool DefaultAccessPolicy::CanSetWindowSurface(
-    const ServerWindow* window,
-    mojom::SurfaceType surface_type) const {
-  if (surface_type == mojom::SurfaceType::UNDERLAY)
-    return WasCreatedByThisClient(window);
-
+bool DefaultAccessPolicy::CanSetWindowCompositorFrameSink(
+    const ServerWindow* window) const {
   // Once a window embeds another app, the embedder app is no longer able to
   // call SetWindowSurfaceId() - this ability is transferred to the embedded
   // app.
@@ -149,12 +145,38 @@ bool DefaultAccessPolicy::CanSetHitTestMask(const ServerWindow* window) const {
          delegate_->HasRootForAccessPolicy(window);
 }
 
-bool DefaultAccessPolicy::CanSetAcceptEvents(const ServerWindow* window) const {
+bool DefaultAccessPolicy::CanSetAcceptDrops(const ServerWindow* window) const {
+  return (WasCreatedByThisClient(window) &&
+          !delegate_->IsWindowRootOfAnotherTreeForAccessPolicy(window)) ||
+         delegate_->HasRootForAccessPolicy(window);
+}
+
+bool DefaultAccessPolicy::CanSetEventTargetingPolicy(
+    const ServerWindow* window) const {
   return WasCreatedByThisClient(window) ||
          delegate_->HasRootForAccessPolicy(window);
 }
 
+bool DefaultAccessPolicy::CanStackAbove(const ServerWindow* above,
+                                        const ServerWindow* below) const {
+  return delegate_->HasRootForAccessPolicy(above) &&
+         delegate_->IsWindowCreatedByWindowManager(above) &&
+         delegate_->HasRootForAccessPolicy(below) &&
+         delegate_->IsWindowCreatedByWindowManager(below);
+}
+
+bool DefaultAccessPolicy::CanStackAtTop(const ServerWindow* window) const {
+  return delegate_->HasRootForAccessPolicy(window) &&
+         delegate_->IsWindowCreatedByWindowManager(window);
+}
+
 bool DefaultAccessPolicy::CanSetCursorProperties(
+    const ServerWindow* window) const {
+  return WasCreatedByThisClient(window) ||
+         delegate_->HasRootForAccessPolicy(window);
+}
+
+bool DefaultAccessPolicy::CanInitiateDragLoop(
     const ServerWindow* window) const {
   return WasCreatedByThisClient(window) ||
          delegate_->HasRootForAccessPolicy(window);

@@ -2,10 +2,12 @@
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 2004-2005 Allan Sandfeld Jensen (kde@carewolf.com)
  * Copyright (C) 2006, 2007 Nicholas Shanks (webkit@nickshanks.com)
- * Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights
+ * reserved.
  * Copyright (C) 2007 Alexey Proskuryakov <ap@webkit.org>
  * Copyright (C) 2007, 2008 Eric Seidel <eric@webkit.org>
- * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved.
+ * (http://www.torchmobile.com/)
  * Copyright (c) 2011, Code Aurora Forum. All rights reserved.
  * Copyright (C) Research In Motion Limited 2011. All rights reserved.
  * Copyright (C) 2012 Google Inc. All rights reserved.
@@ -29,67 +31,76 @@
 #ifndef SelectorFilter_h
 #define SelectorFilter_h
 
-#include "core/dom/Element.h"
-#include "wtf/BloomFilter.h"
-#include "wtf/Vector.h"
 #include <memory>
+#include "core/dom/Element.h"
+#include "platform/wtf/BloomFilter.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class CSSSelector;
 
 class SelectorFilter {
-    WTF_MAKE_NONCOPYABLE(SelectorFilter);
-    DISALLOW_NEW();
-public:
-    class ParentStackFrame {
-        DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    public:
-        ParentStackFrame() : element(nullptr) { }
-        explicit ParentStackFrame(Element& element) : element(&element) { }
+  WTF_MAKE_NONCOPYABLE(SelectorFilter);
+  DISALLOW_NEW();
 
-        DECLARE_TRACE();
+ public:
+  class ParentStackFrame {
+    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-        Member<Element> element;
-        Vector<unsigned, 4> identifierHashes;
-    };
-
-    SelectorFilter() {}
-
-    void pushParent(Element& parent);
-    void popParent(Element& parent);
-
-    bool parentStackIsConsistent(const ContainerNode* parentNode) const { return !m_parentStack.isEmpty() && m_parentStack.last().element == parentNode; }
-
-    template <unsigned maximumIdentifierCount>
-    inline bool fastRejectSelector(const unsigned* identifierHashes) const;
-    static void collectIdentifierHashes(const CSSSelector&, unsigned* identifierHashes, unsigned maximumIdentifierCount);
+   public:
+    ParentStackFrame() : element(nullptr) {}
+    explicit ParentStackFrame(Element& element) : element(&element) {}
 
     DECLARE_TRACE();
 
-private:
-    void pushParentStackFrame(Element& parent);
-    void popParentStackFrame();
+    Member<Element> element;
+    Vector<unsigned, 4> identifier_hashes;
+  };
 
-    HeapVector<ParentStackFrame> m_parentStack;
+  SelectorFilter() {}
 
-    // With 100 unique strings in the filter, 2^12 slot table has false positive rate of ~0.2%.
-    using IdentifierFilter = BloomFilter<12>;
-    std::unique_ptr<IdentifierFilter> m_ancestorIdentifierFilter;
+  void PushParent(Element& parent);
+  void PopParent(Element& parent);
+
+  bool ParentStackIsConsistent(const ContainerNode* parent_node) const {
+    return !parent_stack_.IsEmpty() &&
+           parent_stack_.back().element == parent_node;
+  }
+
+  template <unsigned maximumIdentifierCount>
+  inline bool FastRejectSelector(const unsigned* identifier_hashes) const;
+  static void CollectIdentifierHashes(const CSSSelector&,
+                                      unsigned* identifier_hashes,
+                                      unsigned maximum_identifier_count);
+
+  DECLARE_TRACE();
+
+ private:
+  void PushParentStackFrame(Element& parent);
+  void PopParentStackFrame();
+
+  HeapVector<ParentStackFrame> parent_stack_;
+
+  // With 100 unique strings in the filter, 2^12 slot table has false positive
+  // rate of ~0.2%.
+  using IdentifierFilter = BloomFilter<12>;
+  std::unique_ptr<IdentifierFilter> ancestor_identifier_filter_;
 };
 
 template <unsigned maximumIdentifierCount>
-inline bool SelectorFilter::fastRejectSelector(const unsigned* identifierHashes) const
-{
-    ASSERT(m_ancestorIdentifierFilter);
-    for (unsigned n = 0; n < maximumIdentifierCount && identifierHashes[n]; ++n) {
-        if (!m_ancestorIdentifierFilter->mayContain(identifierHashes[n]))
-            return true;
-    }
-    return false;
+inline bool SelectorFilter::FastRejectSelector(
+    const unsigned* identifier_hashes) const {
+  DCHECK(ancestor_identifier_filter_);
+  for (unsigned n = 0; n < maximumIdentifierCount && identifier_hashes[n];
+       ++n) {
+    if (!ancestor_identifier_filter_->MayContain(identifier_hashes[n]))
+      return true;
+  }
+  return false;
 }
 
-} // namespace blink
+}  // namespace blink
 
 WTF_ALLOW_INIT_WITH_MEM_FUNCTIONS(blink::SelectorFilter::ParentStackFrame);
 

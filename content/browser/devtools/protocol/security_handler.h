@@ -5,46 +5,72 @@
 #ifndef CONTENT_BROWSER_DEVTOOLS_PROTOCOL_SECURITY_HANDLER_H_
 #define CONTENT_BROWSER_DEVTOOLS_PROTOCOL_SECURITY_HANDLER_H_
 
+#include <unordered_map>
+
 #include "base/macros.h"
-#include "content/browser/devtools/devtools_protocol_handler.h"
-#include "content/browser/devtools/protocol/devtools_protocol_dispatcher.h"
+#include "content/browser/devtools/protocol/devtools_domain_handler.h"
+#include "content/browser/devtools/protocol/security.h"
+#include "content/public/browser/certificate_request_result_type.h"
 #include "content/public/browser/web_contents_observer.h"
-#include "content/public/common/security_style.h"
 
 namespace content {
-namespace devtools {
-namespace security {
 
-class SecurityHandler : public WebContentsObserver {
+class DevToolsAgentHostImpl;
+class RenderFrameHostImpl;
+
+namespace protocol {
+
+class SecurityHandler : public DevToolsDomainHandler,
+                        public Security::Backend,
+                        public WebContentsObserver {
  public:
-  typedef DevToolsProtocolClient::Response Response;
+  using CertErrorCallback =
+      base::Callback<void(content::CertificateRequestResultType)>;
 
   SecurityHandler();
   ~SecurityHandler() override;
 
-  void SetClient(std::unique_ptr<Client> client);
-  void SetRenderFrameHost(RenderFrameHost* host);
+  static SecurityHandler* FromAgentHost(DevToolsAgentHostImpl* host);
 
-  Response Enable();
-  Response Disable();
+  // DevToolsDomainHandler overrides
+  void Wire(UberDispatcher* dispatcher) override;
+  void SetRenderFrameHost(RenderFrameHostImpl* host) override;
+
+  // Security::Backend overrides.
+  Response Enable() override;
+  Response Disable() override;
+  Response ShowCertificateViewer() override;
+  Response HandleCertificateError(int event_id, const String& action) override;
+  Response SetOverrideCertificateErrors(bool override) override;
+
+  // NotifyCertificateError will send a CertificateError event. Returns true if
+  // the error is expected to be handled by a corresponding
+  // HandleCertificateError command, and false otherwise.
+  bool NotifyCertificateError(int cert_error,
+                              const GURL& request_url,
+                              CertErrorCallback callback);
 
  private:
+  using CertErrorCallbackMap = std::unordered_map<int, CertErrorCallback>;
+
   void AttachToRenderFrameHost();
+  void FlushPendingCertificateErrorNotifications();
 
   // WebContentsObserver overrides
-  void SecurityStyleChanged(
-      SecurityStyle security_style,
-      const SecurityStyleExplanations& security_style_explanations) override;
+  void DidChangeVisibleSecurityState() override;
+  void DidFinishNavigation(NavigationHandle* navigation_handle) override;
 
-  std::unique_ptr<Client> client_;
+  std::unique_ptr<Security::Frontend> frontend_;
   bool enabled_;
-  RenderFrameHost* host_;
+  RenderFrameHostImpl* host_;
+  int last_cert_error_id_ = 0;
+  CertErrorCallbackMap cert_error_callbacks_;
+  bool certificate_errors_overriden_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(SecurityHandler);
 };
 
-}  // namespace security
-}  // namespace devtools
+}  // namespace protocol
 }  // namespace content
 
 #endif  // CONTENT_BROWSER_DEVTOOLS_PROTOCOL_SECURITY_HANDLER_H_

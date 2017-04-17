@@ -5,8 +5,6 @@
 #ifndef COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_AFFILIATED_MATCH_HELPER_H_
 #define COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_AFFILIATED_MATCH_HELPER_H_
 
-#include <stdint.h>
-
 #include <memory>
 #include <string>
 #include <vector>
@@ -14,7 +12,7 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/memory/scoped_vector.h"
+#include "base/time/time.h"
 #include "components/password_manager/core/browser/affiliation_utils.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
@@ -22,10 +20,6 @@
 namespace autofill {
 struct PasswordForm;
 }  // namespace autofill
-
-namespace base {
-struct SingleThreadedTaskRunner;
-}  // namespace base
 
 namespace password_manager {
 
@@ -54,7 +48,8 @@ class AffiliatedMatchHelper : public PasswordStore::Observer,
   typedef base::Callback<void(const std::vector<std::string>&)>
       AffiliatedRealmsCallback;
 
-  typedef base::Callback<void(ScopedVector<autofill::PasswordForm>)>
+  typedef base::Callback<void(
+      std::vector<std::unique_ptr<autofill::PasswordForm>>)>
       PasswordFormsCallback;
 
   // The |password_store| must outlive |this|. Both arguments must be non-NULL,
@@ -91,7 +86,7 @@ class AffiliatedMatchHelper : public PasswordStore::Observer,
   // NOTE: This will not issue an on-demand network request. If a request to
   // cache fails, no web realm will be injected into corresponding form.
   virtual void InjectAffiliatedWebRealms(
-      ScopedVector<autofill::PasswordForm> forms,
+      std::vector<std::unique_ptr<autofill::PasswordForm>> forms,
       const PasswordFormsCallback& result_callback);
 
   // Removes cached affiliation data that is no longer needed.
@@ -104,17 +99,13 @@ class AffiliatedMatchHelper : public PasswordStore::Observer,
   // purposes of affiliation-based matching.
   static bool IsValidWebCredential(const PasswordStore::FormDigest& form);
 
-  // Sets the task runner to be used to delay I/O heavy initialization. Should
-  // be called before Initialize(). Used only for testing.
-  void SetTaskRunnerUsedForWaitingForTesting(
-      const scoped_refptr<base::SingleThreadTaskRunner> task_runner);
-
   // I/O heavy initialization on start-up will be delayed by this long.
   // This should be high enough not to exacerbate start-up I/O contention too
   // much, but also low enough that the user be able log-in shortly after
   // browser start-up into web sites using Android credentials.
   // TODO(engedy): See if we can tie this instead to some meaningful event.
-  static const int64_t kInitializationDelayOnStartupInSeconds = 8;
+  static constexpr base::TimeDelta kInitializationDelayOnStartup =
+      base::TimeDelta::FromSeconds(8);
 
  private:
   // Reads all autofillable credentials from the password store and starts
@@ -151,7 +142,7 @@ class AffiliatedMatchHelper : public PasswordStore::Observer,
 
   // PasswordStoreConsumer:
   void OnGetPasswordStoreResults(
-      ScopedVector<autofill::PasswordForm> results) override;
+      std::vector<std::unique_ptr<autofill::PasswordForm>> results) override;
 
   PasswordStore* const password_store_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_for_waiting_;

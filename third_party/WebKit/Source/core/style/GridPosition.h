@@ -31,96 +31,88 @@
 #ifndef GridPosition_h
 #define GridPosition_h
 
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 enum GridPositionType {
-    AutoPosition,
-    ExplicitPosition, // [ <integer> || <string> ]
-    SpanPosition, // span && [ <integer> || <string> ]
-    NamedGridAreaPosition // <ident>
+  kAutoPosition,
+  kExplicitPosition,      // [ <integer> || <string> ]
+  kSpanPosition,          // span && [ <integer> || <string> ]
+  kNamedGridAreaPosition  // <ident>
 };
 
 class GridPosition {
-    DISALLOW_NEW();
-public:
-    GridPosition()
-        : m_type(AutoPosition)
-        , m_integerPosition(0)
-    {
-    }
+  DISALLOW_NEW();
 
-    bool isPositive() const { return integerPosition() > 0; }
+ public:
+  GridPosition() : type_(kAutoPosition), integer_position_(0) {}
 
-    GridPositionType type() const { return m_type; }
-    bool isAuto() const { return m_type == AutoPosition; }
-    bool isSpan() const { return m_type == SpanPosition; }
-    bool isNamedGridArea() const { return m_type == NamedGridAreaPosition; }
+  bool IsPositive() const { return IntegerPosition() > 0; }
 
-    void setExplicitPosition(int position, const String& namedGridLine)
-    {
-        m_type = ExplicitPosition;
-        m_integerPosition = position;
-        m_namedGridLine = namedGridLine;
-    }
+  GridPositionType GetType() const { return type_; }
+  bool IsAuto() const { return type_ == kAutoPosition; }
+  bool IsSpan() const { return type_ == kSpanPosition; }
+  bool IsNamedGridArea() const { return type_ == kNamedGridAreaPosition; }
 
-    void setAutoPosition()
-    {
-        m_type = AutoPosition;
-        m_integerPosition = 0;
-    }
+  void SetExplicitPosition(int position, const AtomicString& named_grid_line) {
+    type_ = kExplicitPosition;
+    integer_position_ = position;
+    named_grid_line_ = named_grid_line;
+  }
 
-    // 'span' values cannot be negative, yet we reuse the <integer> position which can
-    // be. This means that we have to convert the span position to an integer, losing
-    // some precision here. It shouldn't be an issue in practice though.
-    void setSpanPosition(int position, const String& namedGridLine)
-    {
-        m_type = SpanPosition;
-        m_integerPosition = position;
-        m_namedGridLine = namedGridLine;
-    }
+  void SetAutoPosition() {
+    type_ = kAutoPosition;
+    integer_position_ = 0;
+  }
 
-    void setNamedGridArea(const String& namedGridArea)
-    {
-        m_type = NamedGridAreaPosition;
-        m_namedGridLine = namedGridArea;
-    }
+  // 'span' values cannot be negative, yet we reuse the <integer> position which
+  // can be. This means that we have to convert the span position to an integer,
+  // losing some precision here. It shouldn't be an issue in practice though.
+  void SetSpanPosition(int position, const AtomicString& named_grid_line) {
+    type_ = kSpanPosition;
+    integer_position_ = position;
+    named_grid_line_ = named_grid_line;
+  }
 
-    int integerPosition() const
-    {
-        ASSERT(type() == ExplicitPosition);
-        return m_integerPosition;
-    }
+  void SetNamedGridArea(const AtomicString& named_grid_area) {
+    type_ = kNamedGridAreaPosition;
+    named_grid_line_ = named_grid_area;
+  }
 
-    String namedGridLine() const
-    {
-        ASSERT(type() == ExplicitPosition || type() == SpanPosition || type() == NamedGridAreaPosition);
-        return m_namedGridLine;
-    }
+  int IntegerPosition() const {
+    DCHECK_EQ(GetType(), kExplicitPosition);
+    return integer_position_;
+  }
 
-    int spanPosition() const
-    {
-        ASSERT(type() == SpanPosition);
-        return m_integerPosition;
-    }
+  AtomicString NamedGridLine() const {
+    DCHECK(GetType() == kExplicitPosition || GetType() == kSpanPosition ||
+           GetType() == kNamedGridAreaPosition);
+    return named_grid_line_;
+  }
 
-    bool operator==(const GridPosition& other) const
-    {
-        return m_type == other.m_type && m_integerPosition == other.m_integerPosition && m_namedGridLine == other.m_namedGridLine;
-    }
+  int SpanPosition() const {
+    DCHECK_EQ(GetType(), kSpanPosition);
+    return integer_position_;
+  }
 
-    bool shouldBeResolvedAgainstOppositePosition() const
-    {
-        return isAuto() || isSpan();
-    }
-private:
-    GridPositionType m_type;
-    int m_integerPosition;
-    String m_namedGridLine;
+  bool operator==(const GridPosition& other) const {
+    return type_ == other.type_ &&
+           integer_position_ == other.integer_position_ &&
+           named_grid_line_ == other.named_grid_line_;
+  }
+
+  bool ShouldBeResolvedAgainstOppositePosition() const {
+    return IsAuto() || IsSpan();
+  }
+
+ private:
+  GridPositionType type_;
+  int integer_position_;
+  AtomicString named_grid_line_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // GridPosition_h
+#endif  // GridPosition_h

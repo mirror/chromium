@@ -4,6 +4,7 @@
 
 import("//build/config/features.gni")
 import("//build/config/nacl/config.gni")
+import("//services/service_manager/public/service_manifest.gni")
 import("//testing/test.gni")
 
 assert(enable_nacl)
@@ -31,6 +32,7 @@ source_set("minimal") {
     ":minimal_content_dummy",
     "//base",
     "//components/nacl/common:minimal",
+    "//components/nacl/common:mojo_bindings",
     "//crypto",
     "//ipc",
     "//mojo/edk/system",
@@ -38,6 +40,7 @@ source_set("minimal") {
     "//ppapi/c",
     "//ppapi/proxy:ipc",
     "//sandbox",
+    "//services/service_manager/public/cpp",
   ]
 }
 
@@ -48,10 +51,14 @@ source_set("minimal") {
 source_set("minimal_content_dummy") {
   check_includes = false
   sources = [
-    "//content/public/common/child_process_sandbox_support_linux.h",
-    "//content/public/common/content_switches.h",
+    "//content/public/child/child_process_sandbox_support_linux.h",
     "//content/public/common/main_function_params.h",
     "//content/public/common/sandbox_init.h",
+  ]
+
+  # Deps required by the above headers.
+  deps = [
+    "//media:media_features",
   ]
 }
 
@@ -61,8 +68,10 @@ source_set("loader") {
   ]
   deps = [
     "//components/nacl/common",
+    "//content/public/child",
     "//content/public/common",
     "//ppapi/shared_impl",
+    "//services/service_manager/public/cpp",
   ]
 
   data_deps = [
@@ -141,23 +150,25 @@ if (is_linux) {
     ]
   }
 
-  test("nacl_helper_nonsfi_unittests") {
-    sources = [
-      "nonsfi/nacl_helper_nonsfi_unittests.cc",
-    ]
-    deps = [
-      "//base",
-      "//base/test:test_launcher_nacl_nonsfi",
-    ]
-    data_deps = [
-      ":nacl_helper_nonsfi_unittests_main_copy(//build/toolchain/nacl:newlib_pnacl_nonsfi)",
-    ]
-  }
+  if (enable_nacl_nonsfi) {
+    test("nacl_helper_nonsfi_unittests") {
+      sources = [
+        "nonsfi/nacl_helper_nonsfi_unittests.cc",
+      ]
+      deps = [
+        "//base",
+        "//base/test:test_launcher_nacl_nonsfi",
+      ]
+      data_deps = [
+        ":nacl_helper_nonsfi_unittests_main_copy(//build/toolchain/nacl:newlib_pnacl_nonsfi)",
+      ]
+    }
 
-  group("helper_nonsfi") {
-    data_deps = [
-      ":nacl_helper_nonsfi_copy(//build/toolchain/nacl:newlib_pnacl_nonsfi)",
-    ]
+    group("helper_nonsfi") {
+      data_deps = [
+        ":nacl_helper_nonsfi_copy(//build/toolchain/nacl:newlib_pnacl_nonsfi)",
+      ]
+    }
   }
 }
 
@@ -175,6 +186,7 @@ if (is_win && target_cpu == "x86" && current_cpu == "x64") {
       "//components/nacl/broker",
       "//components/nacl/common:switches",
       "//content/public/common:static_switches",
+      "//mojo/edk/system",
       "//sandbox",
     ]
   }
@@ -185,13 +197,6 @@ if (is_nacl_nonsfi) {
     output_name = "nacl_helper_nonsfi"
     set_sources_assignment_filter([])
     sources = [
-      # TODO(brettw) can this just depend on //components/nacl/common?
-      "../common/nacl_messages.cc",
-      "../common/nacl_messages.h",
-      "../common/nacl_types.cc",
-      "../common/nacl_types.h",
-      "../common/nacl_types_param_traits.cc",
-      "../common/nacl_types_param_traits.h",
       "nacl_helper_linux.cc",
       "nacl_helper_linux.h",
       "nacl_trusted_listener.cc",
@@ -204,6 +209,8 @@ if (is_nacl_nonsfi) {
     deps = [
       ":nacl_helper_nonsfi_sandbox",
       "//base",
+      "//components/nacl/common:minimal",
+      "//components/nacl/common:mojo_bindings",
       "//components/nacl/common:switches",
       "//components/tracing",
       "//content",
@@ -220,6 +227,7 @@ if (is_nacl_nonsfi) {
       "//native_client/src/untrusted/nacl",
       "//ppapi/proxy",
       "//sandbox/linux:sandbox",
+      "//services/service_manager/public/cpp",
     ]
   }
 
@@ -233,6 +241,7 @@ if (is_nacl_nonsfi) {
     ]
     deps = [
       "//base",
+      "//components/nacl/common:minimal",
       "//components/nacl/common:switches",
       "//content",
       "//sandbox/linux:sandbox",
@@ -284,4 +293,9 @@ if (is_nacl_nonsfi) {
       ":nacl_helper_nonsfi_unittests_main",
     ]
   }
+}
+
+service_manifest("nacl_loader_manifest") {
+  name = "nacl_loader"
+  source = "nacl_loader_manifest.json"
 }

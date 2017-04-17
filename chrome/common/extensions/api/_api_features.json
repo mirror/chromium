@@ -3,20 +3,11 @@
 // found in the LICENSE file.
 
 // This features file defines extension APIs implemented under src/chrome.
-// See extensions/common/features/* to understand this file, in particular
-// feature.h, simple_feature.h, and base_feature_provider.h.
+// See chrome/common/extensions/api/_features.md to understand this file, as
+// well as feature.h, simple_feature.h, and feature_provider.h.
 //
 // Note that specifying "web_page", "blessed_web_page", or "all" as a context
 // type will require manually updating chrome/renderer/resources/dispatcher.cc.
-
-// To add a new whitelisted ID, SHA-1 it and force it to uppercase. In Bash:
-//
-// $ echo -n "aaaabbbbccccddddeeeeffffgggghhhh" | \
-// sha1sum | tr '[:lower:]' '[:upper:]'
-// 9A0417016F345C934A1A88F55CA17C05014EEEBA  -
-//
-// Google employees: please update http://go/chrome-api-whitelist to map
-// hashes back to ids.
 
 {
   "accessibilityFeatures": [{
@@ -100,7 +91,7 @@
     "dependencies": ["permission:autofillPrivate"],
     "contexts": ["blessed_extension"]
   }, {
-    "channel": "trunk",
+    "channel": "stable",
     "contexts": ["webui"],
     "matches": [
       "chrome://md-settings/*",
@@ -121,28 +112,55 @@
     "dependencies": ["permission:autotestPrivate"],
     "contexts": ["blessed_extension"]
   },
-  "bookmarkManagerPrivate": {
+  "bookmarkManagerPrivate": [{
     "dependencies": ["permission:bookmarkManagerPrivate"],
     "contexts": ["blessed_extension"]
-  },
-  "bookmarks": {
+  }, {
+    "channel": "stable",
+    "contexts": ["webui"],
+    "matches": [
+      "chrome://bookmarks/*"
+    ]
+  }],
+  "bookmarks": [{
     "dependencies": ["permission:bookmarks"],
-    "contexts": ["blessed_extension"]
-  },
-  "bookmarks.export": {
+    "contexts": ["blessed_extension"],
+    "default_parent": true
+  }, {
+    "channel": "stable",
+    "contexts": ["webui"],
+    "matches": [
+      "chrome://bookmarks/*"
+    ]
+  }],
+  "bookmarks.export": [{
     "whitelist": [
       "D5736E4B5CF695CB93A2FB57E4FDC6E5AFAB6FE2", // http://crbug.com/312900
       "D57DE394F36DC1C3220E7604C575D29C51A6C495", // http://crbug.com/319444
       "3F65507A3B39259B38C8173C6FFA3D12DF64CCE9"  // http://crbug.com/371562
     ]
-  },
-  "bookmarks.import": {
+  }, {
+    "channel": "stable",
+    "contexts": ["webui"],
+    "dependencies": [],
+    "matches": [
+      "chrome://bookmarks/*"
+    ]
+  }],
+  "bookmarks.import": [{
     "whitelist": [
       "D5736E4B5CF695CB93A2FB57E4FDC6E5AFAB6FE2", // http://crbug.com/312900
       "D57DE394F36DC1C3220E7604C575D29C51A6C495", // http://crbug.com/319444
       "3F65507A3B39259B38C8173C6FFA3D12DF64CCE9"  // http://crbug.com/371562
     ]
-  },
+  }, {
+    "channel": "stable",
+    "contexts": ["webui"],
+    "dependencies": [],
+    "matches": [
+      "chrome://bookmarks/*"
+    ]
+  }],
   "brailleDisplayPrivate": {
     "dependencies": ["permission:brailleDisplayPrivate"],
     "contexts": ["blessed_extension"]
@@ -167,10 +185,6 @@
     "dependencies": ["manifest:browser_action"],
     "whitelist": [
       "63ED55E43214C211F82122ED56407FF1A807F2A3",  // Dev
-      "FA01E0B81978950F2BC5A50512FD769725F57510",  // Beta
-      "B11A93E7E5B541F8010245EBDE2C74647D6C14B9",  // Canary
-      "F155646B5D1CA545F7E1E4E20D573DFDD44C2540",  // Google Cast Beta
-      "16CA7A47AAE4BE49B1E75A6B960C3875E945B264",  // Google Cast Stable
       // The extensions below here only use openPopup on a user action,
       // so are safe, and can be removed when the whitelist on that
       // capability is lifted. See crbug.com/436489 for context.
@@ -187,11 +201,6 @@
   "cast.channel": {
     "dependencies": ["permission:cast"],
     "contexts": ["blessed_extension"]
-  },
-  "cast.devicesPrivate": {
-    "dependencies": ["permission:cast"],
-    "contexts": ["blessed_extension"],
-    "platforms": ["chromeos"]
   },
   "cast.streaming.rtpStream": {
     "dependencies": ["permission:cast.streaming"],
@@ -218,17 +227,24 @@
     "dependencies": ["permission:certificateProvider"],
     "contexts": ["blessed_extension"]
   },
-  "chromeosInfoPrivate": {
+  "chromeosInfoPrivate": [{
     "dependencies": ["permission:chromeosInfoPrivate"],
     "contexts": ["blessed_extension"]
-  },
+  }, {
+    "channel": "stable",
+    "contexts": ["webui"],
+    "matches": [
+      "chrome://version/*"
+    ],
+    "platforms": ["chromeos"]
+  }],
   "chromeWebViewInternal": [{
     "internal": true,
     "dependencies": ["permission:webview"],
     "contexts": ["blessed_extension"]
   }, {
     "internal": true,
-    "channel": "dev",
+    "channel": "stable",
     "contexts": ["webui"],
     "matches": [
       "chrome://chrome-signin/*",
@@ -298,13 +314,8 @@
   }, {
     "dependencies": ["permission:desktopCapturePrivate"],
     "whitelist": [
-      "63ED55E43214C211F82122ED56407FF1A807F2A3",  // Dev
-      "FA01E0B81978950F2BC5A50512FD769725F57510",  // Beta
-      "B11A93E7E5B541F8010245EBDE2C74647D6C14B9",  // Canary
-      "F155646B5D1CA545F7E1E4E20D573DFDD44C2540",  // Google Cast Beta
-      "16CA7A47AAE4BE49B1E75A6B960C3875E945B264",  // Google Cast Stable
-      "C17CD9E6868D7B9C67926E0EC612EA25C768418F",  // http://crbug.com/457908
-      "226CF815E39A363090A1E547D53063472B8279FA"   // http://crbug.com/574889
+      "63ED55E43214C211F82122ED56407FF1A807F2A3",  // Media Router Dev
+      "226CF815E39A363090A1E547D53063472B8279FA"   // Media Router Stable
     ],
     "contexts": ["blessed_extension"]
   }],
@@ -428,7 +439,7 @@
     "dependencies": ["permission:embeddedExtensionOptions"]
   }, {
     "internal": true,
-    "channel": "trunk",
+    "channel": "stable",
     "contexts": ["webui"],
     "matches": ["chrome://extensions-frame/*", "chrome://extensions/*"]
   }],
@@ -485,10 +496,6 @@
   },
   "fontSettings": {
     "dependencies": ["permission:fontSettings"],
-    "contexts": ["blessed_extension"]
-  },
-  "gcdPrivate": {
-    "dependencies": ["permission:gcdPrivate"],
     "contexts": ["blessed_extension"]
   },
   "gcm": {
@@ -591,18 +598,6 @@
     "dependencies": ["permission:mediaPlayerPrivate"],
     "contexts": ["blessed_extension"]
   },
-  "metricsPrivate": [{
-    "dependencies": ["permission:metricsPrivate"],
-    "contexts": ["blessed_extension"]
-  }, {
-    "channel": "trunk",
-    "contexts": ["webui"],
-    "matches": [
-      "chrome://md-settings/*",
-      "chrome://settings/*",
-      "chrome://settings-frame/*"
-    ]
-  }],
   "mdns": {
     "dependencies": ["permission:mdns"],
     "contexts": ["blessed_extension"]
@@ -617,9 +612,10 @@
     "dependencies": ["permission:musicManagerPrivate"],
     "contexts": ["blessed_extension"]
   },
-  "notificationProvider": {
-    "dependencies": ["permission:notificationProvider"],
-    "contexts": ["blessed_extension"]
+  "networking.castPrivate": {
+    "channel": "stable",
+    "contexts": ["blessed_extension"],
+    "dependencies": ["permission:networking.castPrivate"]
   },
   "notifications": {
     "dependencies": ["permission:notifications"],
@@ -641,7 +637,7 @@
     "dependencies": ["permission:passwordsPrivate"],
     "contexts": ["blessed_extension"]
   }, {
-    "channel": "trunk",
+    "channel": "stable",
     "contexts": ["webui"],
     "matches": [
       "chrome://md-settings/*",
@@ -685,7 +681,6 @@
   },
   "imageWriterPrivate": {
     "dependencies": ["permission:imageWriterPrivate"],
-    "extension_types": ["platform_app"],
     "contexts": ["blessed_extension"]
   },
   "quickUnlockPrivate": {
@@ -693,7 +688,8 @@
     "contexts": ["webui"],
     "matches": [
       "chrome://md-settings/*",
-      "chrome://settings/*"
+      "chrome://settings/*",
+      "chrome://settings-frame/*"
     ],
     "platforms": ["chromeos"]
   },
@@ -719,7 +715,7 @@
     "dependencies": ["permission:settingsPrivate"],
     "contexts": ["blessed_extension"]
   }, {
-    "channel": "trunk",
+    "channel": "stable",
     "contexts": ["webui"],
     "matches": [
       "chrome://md-settings/*",
@@ -751,11 +747,17 @@
     "dependencies": ["permission:tabCapture"],
     "contexts": ["blessed_extension"]
   },
-  "tabs": {
+  "tabs": [{
     "channel": "stable",
     "extension_types": ["extension", "legacy_packaged_app"],
     "contexts": ["blessed_extension", "extension_service_worker"]
-  },
+  }, {
+    "channel": "stable",
+    "contexts": ["webui"],
+    "matches": [
+      "chrome://bookmarks/*"
+    ]
+  }],
   "terminalPrivate": {
     "dependencies": ["permission:terminalPrivate"],
     "contexts": ["blessed_extension"]
@@ -776,7 +778,7 @@
     "dependencies": ["permission:usersPrivate"],
     "contexts": ["blessed_extension"]
   }, {
-    "channel": "trunk",
+    "channel": "stable",
     "contexts": ["webui"],
     "matches": [
       "chrome://md-settings/*",

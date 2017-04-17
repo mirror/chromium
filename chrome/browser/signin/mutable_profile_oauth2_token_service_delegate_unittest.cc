@@ -6,10 +6,13 @@
 
 #include <map>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/command_line.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "components/os_crypt/os_crypt_mocker.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -279,6 +282,18 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
 }
 
 TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
+       LoadCredentialsStateEmptyPrimaryAccountId) {
+  // Ensure DB is clean.
+  oauth2_service_delegate_->RevokeAllCredentials();
+
+  EXPECT_EQ(OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_NOT_STARTED,
+            oauth2_service_delegate_->GetLoadCredentialsState());
+  oauth2_service_delegate_->LoadCredentials("");
+  EXPECT_EQ(OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_FINISHED_WITH_SUCCESS,
+            oauth2_service_delegate_->GetLoadCredentialsState());
+}
+
+TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
        PersistenceLoadCredentials) {
   switches::EnableAccountConsistencyForTesting(
       base::CommandLine::ForCurrentProcess());
@@ -287,8 +302,14 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
   oauth2_service_delegate_->RevokeAllCredentials();
   ResetObserverCounts();
   // Perform a load from an empty DB.
+  EXPECT_EQ(OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_NOT_STARTED,
+            oauth2_service_delegate_->GetLoadCredentialsState());
   oauth2_service_delegate_->LoadCredentials("account_id");
+  EXPECT_EQ(OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_IN_PROGRESS,
+            oauth2_service_delegate_->GetLoadCredentialsState());
   base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_FINISHED_WITH_SUCCESS,
+            oauth2_service_delegate_->GetLoadCredentialsState());
   EXPECT_EQ(1, start_batch_changes_);
   EXPECT_EQ(1, end_batch_changes_);
   ExpectOneTokensLoadedNotification();
@@ -307,7 +328,11 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
   ResetObserverCounts();
 
   oauth2_service_delegate_->LoadCredentials("account_id");
+  EXPECT_EQ(OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_IN_PROGRESS,
+            oauth2_service_delegate_->GetLoadCredentialsState());
   base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_FINISHED_WITH_SUCCESS,
+            oauth2_service_delegate_->GetLoadCredentialsState());
   EXPECT_EQ(2, token_available_count_);
   EXPECT_EQ(0, token_revoked_count_);
   EXPECT_EQ(1, tokens_loaded_count_);
@@ -540,11 +565,11 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest, GaiaIdMigration) {
     ListPrefUpdate update(&pref_service_,
                           AccountTrackerService::kAccountInfoPref);
     update->Clear();
-    base::DictionaryValue* dict = new base::DictionaryValue();
-    update->Append(dict);
+    auto dict = base::MakeUnique<base::DictionaryValue>();
     dict->SetString("account_id", base::UTF8ToUTF16(email));
     dict->SetString("email", base::UTF8ToUTF16(email));
     dict->SetString("gaia", base::UTF8ToUTF16(gaia_id));
+    update->Append(std::move(dict));
     account_tracker_service_.Shutdown();
     account_tracker_service_.Initialize(client_.get());
 
@@ -599,16 +624,16 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
     ListPrefUpdate update(&pref_service_,
                           AccountTrackerService::kAccountInfoPref);
     update->Clear();
-    base::DictionaryValue* dict = new base::DictionaryValue();
-    update->Append(dict);
+    auto dict = base::MakeUnique<base::DictionaryValue>();
     dict->SetString("account_id", base::UTF8ToUTF16(email1));
     dict->SetString("email", base::UTF8ToUTF16(email1));
     dict->SetString("gaia", base::UTF8ToUTF16(gaia_id1));
-    dict = new base::DictionaryValue();
-    update->Append(dict);
+    update->Append(std::move(dict));
+    dict = base::MakeUnique<base::DictionaryValue>();
     dict->SetString("account_id", base::UTF8ToUTF16(email2));
     dict->SetString("email", base::UTF8ToUTF16(email2));
     dict->SetString("gaia", base::UTF8ToUTF16(gaia_id2));
+    update->Append(std::move(dict));
     account_tracker_service_.Shutdown();
     account_tracker_service_.Initialize(client_.get());
 

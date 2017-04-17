@@ -1,16 +1,19 @@
 {
     "extensions": [
         {
-            "type": "@WebInspector.PanelFactory",
-            "name": "audits",
+            "type": "view",
+            "location": "panel",
+            "id": "audits",
             "title": "Audits",
             "order": 90,
-            "className": "WebInspector.AuditsPanelFactory"
+            "className": "Audits.AuditsPanel"
         }
     ],
     "dependencies": [
         "components",
-        "extensions"
+        "extensions",
+        "network_log",
+        "object_ui"
     ],
     "scripts": [
         "AuditsPanel.js",
@@ -25,6 +28,7 @@
     ],
     "resources": [
         "auditsPanel.css",
+        "auditsSidebarTree.css",
         "auditResultTree.css"
     ]
 }

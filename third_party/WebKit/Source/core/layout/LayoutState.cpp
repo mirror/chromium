@@ -31,114 +31,100 @@
 
 namespace blink {
 
-LayoutState::LayoutState(LayoutUnit pageLogicalHeight, bool pageLogicalHeightChanged, LayoutView& view)
-    : m_isPaginated(pageLogicalHeight)
-    , m_pageLogicalHeightChanged(pageLogicalHeightChanged)
-    , m_containingBlockLogicalWidthChanged(false)
-    , m_flowThread(nullptr)
-    , m_next(nullptr)
-    , m_pageLogicalHeight(pageLogicalHeight)
-    , m_layoutObject(view)
-{
-    ASSERT(!view.layoutState());
-    view.pushLayoutState(*this);
+LayoutState::LayoutState(LayoutView& view)
+    : is_paginated_(view.PageLogicalHeight()),
+      containing_block_logical_width_changed_(false),
+      pagination_state_changed_(false),
+      flow_thread_(nullptr),
+      next_(nullptr),
+      layout_object_(view) {
+  DCHECK(!view.GetLayoutState());
+  view.PushLayoutState(*this);
 }
 
-LayoutState::LayoutState(LayoutBox& layoutObject, const LayoutSize& offset, LayoutUnit pageLogicalHeight, bool pageLogicalHeightChanged, bool containingBlockLogicalWidthChanged)
-    : m_containingBlockLogicalWidthChanged(containingBlockLogicalWidthChanged)
-    , m_next(layoutObject.view()->layoutState())
-    , m_layoutObject(layoutObject)
-{
-    if (layoutObject.isLayoutFlowThread())
-        m_flowThread = toLayoutFlowThread(&layoutObject);
-    else if (!layoutObject.isOutOfFlowPositioned())
-        m_flowThread = m_next->flowThread();
-    else
-        m_flowThread = nullptr;
-    layoutObject.view()->pushLayoutState(*this);
-    bool fixed = layoutObject.isOutOfFlowPositioned() && layoutObject.style()->position() == FixedPosition;
-    if (fixed) {
-        // FIXME: This doesn't work correctly with transforms.
-        FloatPoint fixedOffset = layoutObject.view()->localToAbsolute(FloatPoint(), IsFixed);
-        m_layoutOffset = LayoutSize(fixedOffset.x(), fixedOffset.y()) + offset;
-    } else {
-        m_layoutOffset = m_next->m_layoutOffset + offset;
-    }
-    m_heightOffsetForTableHeaders = m_next->heightOffsetForTableHeaders();
+LayoutState::LayoutState(LayoutBox& layout_object,
+                         bool containing_block_logical_width_changed)
+    : containing_block_logical_width_changed_(
+          containing_block_logical_width_changed),
+      next_(layout_object.View()->GetLayoutState()),
+      layout_object_(layout_object) {
+  if (layout_object.IsLayoutFlowThread())
+    flow_thread_ = ToLayoutFlowThread(&layout_object);
+  else
+    flow_thread_ = next_->FlowThread();
+  pagination_state_changed_ = next_->pagination_state_changed_;
+  layout_object.View()->PushLayoutState(*this);
 
-    if (layoutObject.isOutOfFlowPositioned() && !fixed) {
-        if (LayoutObject* container = layoutObject.container()) {
-            if (container->style()->hasInFlowPosition() && container->isLayoutInline())
-                m_layoutOffset += toLayoutInline(container)->offsetForInFlowPositionedInline(layoutObject);
-        }
-    }
-    // If we establish a new page height, then cache the offset to the top of the first page.
-    // We can compare this later on to figure out what part of the page we're actually on,
-    if (pageLogicalHeight || layoutObject.isLayoutFlowThread()) {
-        m_pageLogicalHeight = pageLogicalHeight;
-        bool isFlipped = layoutObject.style()->isFlippedBlocksWritingMode();
-        m_pageOffset = LayoutSize(m_layoutOffset.width() + (!isFlipped ? layoutObject.borderLeft() + layoutObject.paddingLeft() : layoutObject.borderRight() + layoutObject.paddingRight()),
-            m_layoutOffset.height() + (!isFlipped ? layoutObject.borderTop() + layoutObject.paddingTop() : layoutObject.borderBottom() + layoutObject.paddingBottom()));
-        m_pageLogicalHeightChanged = pageLogicalHeightChanged;
-        m_isPaginated = true;
-    } else if (m_layoutObject.isSVG() && !m_layoutObject.isSVGRoot()) {
-        // Pagination inside SVG is not allowed.
-        m_flowThread = nullptr;
-        m_pageLogicalHeightChanged = false;
-        m_isPaginated = false;
-    } else {
-        // If we don't establish a new page height, then propagate the old page height and offset down.
-        m_pageLogicalHeight = m_next->m_pageLogicalHeight;
-        m_pageLogicalHeightChanged = m_next->m_pageLogicalHeightChanged;
-        m_pageOffset = m_next->m_pageOffset;
+  if (layout_object.IsLayoutFlowThread()) {
+    // Entering a new pagination context.
+    pagination_offset_ = LayoutSize();
+    is_paginated_ = true;
+    return;
+  }
 
-        // Disable pagination for objects we don't support. For now this includes overflow:scroll/auto, inline blocks and
-        // writing mode roots.
-        if (layoutObject.getPaginationBreakability() == LayoutBox::ForbidBreaks) {
-            m_flowThread = nullptr;
-            m_pageLogicalHeight = LayoutUnit();
-            m_isPaginated = false;
-        } else {
-            m_isPaginated = m_pageLogicalHeight || m_flowThread;
-        }
-    }
+  // Disable pagination for objects we don't support. For now this includes
+  // overflow:scroll/auto, inline blocks and writing mode roots. Additionally,
+  // pagination inside SVG is not allowed.
+  if (layout_object.GetPaginationBreakability() == LayoutBox::kForbidBreaks ||
+      layout_object_.IsSVGChild()) {
+    flow_thread_ = nullptr;
+    is_paginated_ = false;
+    return;
+  }
 
-    // FIXME: <http://bugs.webkit.org/show_bug.cgi?id=13443> Apply control clip if present.
+  is_paginated_ = next_->is_paginated_;
+  if (!is_paginated_)
+    return;
+
+  // Now adjust the pagination offset, so that we can easily figure out how far
+  // away we are from the start of the pagination context.
+  pagination_offset_ = next_->pagination_offset_;
+  bool fixed = layout_object.IsOutOfFlowPositioned() &&
+               layout_object.Style()->GetPosition() == EPosition::kFixed;
+  if (fixed)
+    return;
+  pagination_offset_ =
+      next_->pagination_offset_ + layout_object.LocationOffset();
+  if (!layout_object.IsOutOfFlowPositioned())
+    return;
+  if (LayoutObject* container = layout_object.Container()) {
+    if (container->Style()->HasInFlowPosition() &&
+        container->IsLayoutInline()) {
+      pagination_offset_ +=
+          ToLayoutInline(container)->OffsetForInFlowPositionedInline(
+              layout_object);
+    }
+  }
+
+  // FIXME: <http://bugs.webkit.org/show_bug.cgi?id=13443> Apply control clip if
+  // present.
 }
 
 LayoutState::LayoutState(LayoutObject& root)
-    : m_isPaginated(false)
-    , m_pageLogicalHeightChanged(false)
-    , m_containingBlockLogicalWidthChanged(false)
-    , m_flowThread(nullptr)
-    , m_next(root.view()->layoutState())
-    , m_layoutObject(root)
-{
-    ASSERT(!m_next);
-    // We'll end up pushing in LayoutView itself, so don't bother adding it.
-    if (root.isLayoutView())
-        return;
-
-    root.view()->pushLayoutState(*this);
-
-    LayoutObject* container = root.container();
-    FloatPoint absContentPoint = container->localToAbsolute(FloatPoint(), UseTransforms);
-    m_layoutOffset = LayoutSize(absContentPoint.x(), absContentPoint.y());
+    : is_paginated_(false),
+      containing_block_logical_width_changed_(false),
+      pagination_state_changed_(false),
+      flow_thread_(nullptr),
+      next_(root.View()->GetLayoutState()),
+      layout_object_(root) {
+  DCHECK(!next_);
+  DCHECK(!root.IsLayoutView());
+  root.View()->PushLayoutState(*this);
 }
 
-LayoutState::~LayoutState()
-{
-    if (m_layoutObject.view()->layoutState()) {
-        ASSERT(m_layoutObject.view()->layoutState() == this);
-        m_layoutObject.view()->popLayoutState();
-    }
+LayoutState::~LayoutState() {
+  if (layout_object_.View()->GetLayoutState()) {
+    DCHECK_EQ(layout_object_.View()->GetLayoutState(), this);
+    layout_object_.View()->PopLayoutState();
+  }
 }
 
-LayoutUnit LayoutState::pageLogicalOffset(const LayoutBox& child, const LayoutUnit& childLogicalOffset) const
-{
-    if (child.isHorizontalWritingMode())
-        return m_layoutOffset.height() + childLogicalOffset - m_pageOffset.height();
-    return m_layoutOffset.width() + childLogicalOffset - m_pageOffset.width();
+LayoutUnit LayoutState::PageLogicalOffset(
+    const LayoutBox& child,
+    const LayoutUnit& child_logical_offset) const {
+  if (child.IsHorizontalWritingMode())
+    return pagination_offset_.Height() + child_logical_offset;
+  return pagination_offset_.Width() + child_logical_offset;
 }
 
-} // namespace blink
+}  // namespace blink

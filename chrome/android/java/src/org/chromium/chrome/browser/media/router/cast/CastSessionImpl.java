@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser.media.router.cast;
 
-import android.content.Context;
 import android.content.Intent;
 
 import com.google.android.gms.cast.ApplicationMetadata;
@@ -16,7 +15,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-import org.chromium.base.ContextUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import org.chromium.base.Log;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.media.ui.MediaNotificationInfo;
@@ -25,8 +26,6 @@ import org.chromium.chrome.browser.media.ui.MediaNotificationManager;
 import org.chromium.chrome.browser.metrics.MediaNotificationUma;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content_public.common.MediaMetadata;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -106,8 +105,6 @@ public class CastSessionImpl implements MediaNotificationListener, CastSession {
         mMessageChannel = new CastMessagingChannel(this);
         updateNamespaces();
 
-        final Context context = ContextUtils.getApplicationContext();
-
         if (mNamespaces.contains(CastMessageHandler.MEDIA_NAMESPACE)) {
             mMediaPlayer = new RemoteMediaPlayer();
             mMediaPlayer.setOnStatusUpdatedListener(
@@ -127,7 +124,7 @@ public class CastSessionImpl implements MediaNotificationListener, CastSession {
                             } else {
                                 mNotificationBuilder.setActions(MediaNotificationInfo.ACTION_STOP);
                             }
-                            MediaNotificationManager.show(context, mNotificationBuilder.build());
+                            MediaNotificationManager.show(mNotificationBuilder.build());
                         }
                     });
             mMediaPlayer.setOnMetadataUpdatedListener(
@@ -135,7 +132,7 @@ public class CastSessionImpl implements MediaNotificationListener, CastSession {
                         @Override
                         public void onMetadataUpdated() {
                             setNotificationMetadata(mNotificationBuilder);
-                            MediaNotificationManager.show(context, mNotificationBuilder.build());
+                            MediaNotificationManager.show(mNotificationBuilder.build());
                         }
                     });
         }
@@ -154,12 +151,12 @@ public class CastSessionImpl implements MediaNotificationListener, CastSession {
                 .setPrivate(isIncognito)
                 .setActions(MediaNotificationInfo.ACTION_STOP)
                 .setContentIntent(contentIntent)
-                .setIcon(R.drawable.ic_notification_media_route)
-                .setDefaultLargeIcon(R.drawable.cast_playing_square)
+                .setNotificationSmallIcon(R.drawable.ic_notification_media_route)
+                .setDefaultNotificationLargeIcon(R.drawable.cast_playing_square)
                 .setId(R.id.presentation_notification)
                 .setListener(this);
         setNotificationMetadata(mNotificationBuilder);
-        MediaNotificationManager.show(context, mNotificationBuilder.build());
+        MediaNotificationManager.show(mNotificationBuilder.build());
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -184,6 +181,9 @@ public class CastSessionImpl implements MediaNotificationListener, CastSession {
         stopApplication();
         mRouteProvider.onSessionStopAction();
     }
+
+    @Override
+    public void onMediaSessionAction(int action) {}
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Utility functions.
@@ -263,7 +263,7 @@ public class CastSessionImpl implements MediaNotificationListener, CastSession {
 
     @Override
     public boolean isApiClientInvalid() {
-        return mApiClient == null || (!mApiClient.isConnected() && !mApiClient.isConnecting());
+        return mApiClient == null || !mApiClient.isConnected();
     }
 
     @Override
@@ -295,39 +295,48 @@ public class CastSessionImpl implements MediaNotificationListener, CastSession {
     public CastSessionInfo getSessionInfo() {
         if (isApiClientInvalid()) return null;
 
-        CastSessionInfo.VolumeInfo.Builder volumeBuilder =
-                new CastSessionInfo.VolumeInfo.Builder()
-                        .setLevel(Cast.CastApi.getVolume(mApiClient))
-                        .setMuted(Cast.CastApi.isMute(mApiClient));
+        // Due to a Google Play Services issue, the api client might still get disconnected so that
+        // calls like {@link Cast.CastApi#getVolume()} will throw an {@link IllegalStateException}.
+        // Until the issue is fixed, catch the exception and return null if it was thrown instead of
+        // crashing. See https://crbug.com/708964 for details.
+        try {
+            CastSessionInfo.VolumeInfo.Builder volumeBuilder =
+                    new CastSessionInfo.VolumeInfo.Builder()
+                            .setLevel(Cast.CastApi.getVolume(mApiClient))
+                            .setMuted(Cast.CastApi.isMute(mApiClient));
 
-        CastSessionInfo.ReceiverInfo.Builder receiverBuilder =
-                new CastSessionInfo.ReceiverInfo.Builder()
-                        .setLabel(mCastDevice.getDeviceId())
-                        .setFriendlyName(mCastDevice.getFriendlyName())
-                        .setVolume(volumeBuilder.build())
-                        .setIsActiveInput(Cast.CastApi.getActiveInputState(mApiClient))
-                        .setDisplayStatus(null)
-                        .setReceiverType("cast")
-                        .addCapabilities(getCapabilities(mCastDevice));
+            CastSessionInfo.ReceiverInfo.Builder receiverBuilder =
+                    new CastSessionInfo.ReceiverInfo.Builder()
+                            .setLabel(mCastDevice.getDeviceId())
+                            .setFriendlyName(mCastDevice.getFriendlyName())
+                            .setVolume(volumeBuilder.build())
+                            .setIsActiveInput(Cast.CastApi.getActiveInputState(mApiClient))
+                            .setDisplayStatus(null)
+                            .setReceiverType("cast")
+                            .addCapabilities(getCapabilities(mCastDevice));
 
-        CastSessionInfo.Builder sessionInfoBuilder =
-                new CastSessionInfo.Builder()
-                        .setSessionId(mSessionId)
-                        .setStatusText(mApplicationStatus)
-                        .setReceiver(receiverBuilder.build())
-                        .setStatus("connected")
-                        .setTransportId("web-4")
-                        .addNamespaces(mNamespaces);
+            CastSessionInfo.Builder sessionInfoBuilder =
+                    new CastSessionInfo.Builder()
+                            .setSessionId(mSessionId)
+                            .setStatusText(mApplicationStatus)
+                            .setReceiver(receiverBuilder.build())
+                            .setStatus("connected")
+                            .setTransportId("web-4")
+                            .addNamespaces(mNamespaces);
 
-        if (mApplicationMetadata != null) {
-            sessionInfoBuilder.setAppId(mApplicationMetadata.getApplicationId())
-                    .setDisplayName(mApplicationMetadata.getName());
-        } else {
-            sessionInfoBuilder.setAppId(mSource.getApplicationId())
-                    .setDisplayName(mCastDevice.getFriendlyName());
+            if (mApplicationMetadata != null) {
+                sessionInfoBuilder.setAppId(mApplicationMetadata.getApplicationId())
+                        .setDisplayName(mApplicationMetadata.getName());
+            } else {
+                sessionInfoBuilder.setAppId(mSource.getApplicationId())
+                        .setDisplayName(mCastDevice.getFriendlyName());
+            }
+
+            return sessionInfoBuilder.build();
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "Couldn't get session info", e);
+            return null;
         }
-
-        return sessionInfoBuilder.build();
     }
 
     @Override

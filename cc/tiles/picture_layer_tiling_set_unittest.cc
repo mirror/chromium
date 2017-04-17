@@ -7,6 +7,7 @@
 #include <map>
 #include <vector>
 
+#include "base/memory/ptr_util.h"
 #include "cc/resources/resource_provider.h"
 #include "cc/test/fake_output_surface.h"
 #include "cc/test/fake_output_surface_client.h"
@@ -28,12 +29,14 @@ class TestablePictureLayerTilingSet : public PictureLayerTilingSet {
       PictureLayerTilingClient* client,
       int tiling_interest_area_padding,
       float skewport_target_time_in_seconds,
-      int skewport_extrapolation_limit_in_screen_pixels)
+      int skewport_extrapolation_limit_in_screen_pixels,
+      float max_preraster_distance)
       : PictureLayerTilingSet(tree,
                               client,
                               tiling_interest_area_padding,
                               skewport_target_time_in_seconds,
-                              skewport_extrapolation_limit_in_screen_pixels) {}
+                              skewport_extrapolation_limit_in_screen_pixels,
+                              max_preraster_distance) {}
 
   using PictureLayerTilingSet::ComputeSkewport;
   using PictureLayerTilingSet::ComputeSoonBorderRect;
@@ -43,10 +46,11 @@ class TestablePictureLayerTilingSet : public PictureLayerTilingSet {
 std::unique_ptr<TestablePictureLayerTilingSet> CreateTilingSetWithSettings(
     PictureLayerTilingClient* client,
     const LayerTreeSettings& settings) {
-  return base::WrapUnique(new TestablePictureLayerTilingSet(
+  return base::MakeUnique<TestablePictureLayerTilingSet>(
       ACTIVE_TREE, client, settings.tiling_interest_area_padding,
       settings.skewport_target_time_in_seconds,
-      settings.skewport_extrapolation_limit_in_screen_pixels));
+      settings.skewport_extrapolation_limit_in_screen_pixels,
+      settings.max_preraster_distance_in_screen_pixels);
 }
 
 std::unique_ptr<TestablePictureLayerTilingSet> CreateTilingSet(
@@ -63,9 +67,9 @@ TEST(PictureLayerTilingSetTest, NoResources) {
   scoped_refptr<FakeRasterSource> raster_source =
       FakeRasterSource::CreateEmpty(layer_bounds);
 
-  set->AddTiling(1.0, raster_source);
-  set->AddTiling(1.5, raster_source);
-  set->AddTiling(2.0, raster_source);
+  set->AddTiling(gfx::AxisTransform2d(), raster_source);
+  set->AddTiling(gfx::AxisTransform2d(1.5, gfx::Vector2dF()), raster_source);
+  set->AddTiling(gfx::AxisTransform2d(2.0, gfx::Vector2dF()), raster_source);
 
   float contents_scale = 2.0;
   gfx::Size content_bounds(
@@ -102,13 +106,14 @@ TEST(PictureLayerTilingSetTest, TilingRange) {
       FakeRasterSource::CreateFilled(layer_bounds);
 
   std::unique_ptr<TestablePictureLayerTilingSet> set = CreateTilingSet(&client);
-  set->AddTiling(2.0, raster_source);
-  high_res_tiling = set->AddTiling(1.0, raster_source);
+  set->AddTiling(gfx::AxisTransform2d(2.0, gfx::Vector2dF()), raster_source);
+  high_res_tiling = set->AddTiling(gfx::AxisTransform2d(), raster_source);
   high_res_tiling->set_resolution(HIGH_RESOLUTION);
-  set->AddTiling(0.5, raster_source);
-  low_res_tiling = set->AddTiling(0.25, raster_source);
+  set->AddTiling(gfx::AxisTransform2d(0.5, gfx::Vector2dF()), raster_source);
+  low_res_tiling = set->AddTiling(gfx::AxisTransform2d(0.25, gfx::Vector2dF()),
+                                  raster_source);
   low_res_tiling->set_resolution(LOW_RESOLUTION);
-  set->AddTiling(0.125, raster_source);
+  set->AddTiling(gfx::AxisTransform2d(0.125, gfx::Vector2dF()), raster_source);
 
   higher_than_high_res_range =
       set->GetTilingRange(PictureLayerTilingSet::HIGHER_THAN_HIGH_RES);
@@ -135,11 +140,15 @@ TEST(PictureLayerTilingSetTest, TilingRange) {
 
   std::unique_ptr<TestablePictureLayerTilingSet> set_without_low_res =
       CreateTilingSet(&client);
-  set_without_low_res->AddTiling(2.0, raster_source);
-  high_res_tiling = set_without_low_res->AddTiling(1.0, raster_source);
+  set_without_low_res->AddTiling(gfx::AxisTransform2d(2.0, gfx::Vector2dF()),
+                                 raster_source);
+  high_res_tiling =
+      set_without_low_res->AddTiling(gfx::AxisTransform2d(), raster_source);
   high_res_tiling->set_resolution(HIGH_RESOLUTION);
-  set_without_low_res->AddTiling(0.5, raster_source);
-  set_without_low_res->AddTiling(0.25, raster_source);
+  set_without_low_res->AddTiling(gfx::AxisTransform2d(0.5, gfx::Vector2dF()),
+                                 raster_source);
+  set_without_low_res->AddTiling(gfx::AxisTransform2d(0.25, gfx::Vector2dF()),
+                                 raster_source);
 
   higher_than_high_res_range = set_without_low_res->GetTilingRange(
       PictureLayerTilingSet::HIGHER_THAN_HIGH_RES);
@@ -166,11 +175,11 @@ TEST(PictureLayerTilingSetTest, TilingRange) {
 
   std::unique_ptr<TestablePictureLayerTilingSet>
       set_with_only_high_and_low_res = CreateTilingSet(&client);
-  high_res_tiling =
-      set_with_only_high_and_low_res->AddTiling(1.0, raster_source);
+  high_res_tiling = set_with_only_high_and_low_res->AddTiling(
+      gfx::AxisTransform2d(), raster_source);
   high_res_tiling->set_resolution(HIGH_RESOLUTION);
-  low_res_tiling =
-      set_with_only_high_and_low_res->AddTiling(0.5, raster_source);
+  low_res_tiling = set_with_only_high_and_low_res->AddTiling(
+      gfx::AxisTransform2d(0.5, gfx::Vector2dF()), raster_source);
   low_res_tiling->set_resolution(LOW_RESOLUTION);
 
   higher_than_high_res_range = set_with_only_high_and_low_res->GetTilingRange(
@@ -200,7 +209,8 @@ TEST(PictureLayerTilingSetTest, TilingRange) {
 
   std::unique_ptr<TestablePictureLayerTilingSet> set_with_only_high_res =
       CreateTilingSet(&client);
-  high_res_tiling = set_with_only_high_res->AddTiling(1.0, raster_source);
+  high_res_tiling =
+      set_with_only_high_res->AddTiling(gfx::AxisTransform2d(), raster_source);
   high_res_tiling->set_resolution(HIGH_RESOLUTION);
 
   higher_than_high_res_range = set_with_only_high_res->GetTilingRange(
@@ -234,15 +244,12 @@ class PictureLayerTilingSetTestWithResources : public testing::Test {
                float scale_increment,
                float ideal_contents_scale,
                float expected_scale) {
-    FakeOutputSurfaceClient output_surface_client;
-    std::unique_ptr<FakeOutputSurface> output_surface =
-        FakeOutputSurface::CreateDelegating3d();
-    CHECK(output_surface->BindToClient(&output_surface_client));
-
-    std::unique_ptr<SharedBitmapManager> shared_bitmap_manager(
-        new TestSharedBitmapManager());
+    scoped_refptr<TestContextProvider> context_provider =
+        TestContextProvider::Create();
+    ASSERT_TRUE(context_provider->BindToCurrentThread());
+    auto shared_bitmap_manager = base::MakeUnique<TestSharedBitmapManager>();
     std::unique_ptr<ResourceProvider> resource_provider =
-        FakeResourceProvider::Create(output_surface.get(),
+        FakeResourceProvider::Create(context_provider.get(),
                                      shared_bitmap_manager.get());
 
     FakePictureLayerTilingClient client(resource_provider.get());
@@ -255,7 +262,8 @@ class PictureLayerTilingSetTestWithResources : public testing::Test {
 
     float scale = min_scale;
     for (int i = 0; i < num_tilings; ++i, scale += scale_increment) {
-      PictureLayerTiling* tiling = set->AddTiling(scale, raster_source);
+      PictureLayerTiling* tiling = set->AddTiling(
+          gfx::AxisTransform2d(scale, gfx::Vector2dF()), raster_source);
       tiling->set_resolution(HIGH_RESOLUTION);
       tiling->CreateAllTilesForTesting();
       std::vector<Tile*> tiles = tiling->AllTilesForTesting();
@@ -276,7 +284,7 @@ class PictureLayerTilingSetTestWithResources : public testing::Test {
       ASSERT_TRUE(remaining.Contains(geometry_rect));
       remaining.Subtract(geometry_rect);
 
-      float scale = iter.CurrentTiling()->contents_scale();
+      float scale = iter.CurrentTiling()->contents_scale_key();
       EXPECT_EQ(expected_scale, scale);
 
       if (num_tilings)
@@ -326,10 +334,10 @@ TEST(PictureLayerTilingSetTest, TileSizeChange) {
   FakePictureLayerTilingClient active_client;
   std::unique_ptr<PictureLayerTilingSet> pending_set =
       PictureLayerTilingSet::Create(PENDING_TREE, &pending_client, 1000, 1.f,
-                                    1000);
+                                    1000, 1000.f);
   std::unique_ptr<PictureLayerTilingSet> active_set =
       PictureLayerTilingSet::Create(ACTIVE_TREE, &active_client, 1000, 1.f,
-                                    1000);
+                                    1000, 1000.f);
 
   gfx::Size layer_bounds(100, 100);
   scoped_refptr<FakeRasterSource> raster_source =
@@ -340,7 +348,7 @@ TEST(PictureLayerTilingSetTest, TileSizeChange) {
   gfx::Size tile_size3(20, 20);
 
   pending_client.SetTileSize(tile_size1);
-  pending_set->AddTiling(1.f, raster_source);
+  pending_set->AddTiling(gfx::AxisTransform2d(), raster_source);
   // New tilings get the correct tile size.
   EXPECT_EQ(tile_size1, pending_set->tiling_at(0)->tile_size());
 
@@ -365,7 +373,7 @@ TEST(PictureLayerTilingSetTest, TileSizeChange) {
   // activation, since we can't set the raster source twice on the pending tree
   // without activating. For test, just remove and add a new tiling instead.
   pending_set->RemoveAllTilings();
-  pending_set->AddTiling(1.f, raster_source);
+  pending_set->AddTiling(gfx::AxisTransform2d(), raster_source);
   pending_set->tiling_at(0)->set_resolution(HIGH_RESOLUTION);
   pending_client.SetTileSize(tile_size2);
   pending_set->UpdateTilingsToCurrentRasterSourceForCommit(raster_source.get(),
@@ -435,19 +443,21 @@ TEST(PictureLayerTilingSetTest, MaxContentScale) {
   FakePictureLayerTilingClient active_client;
   std::unique_ptr<PictureLayerTilingSet> pending_set =
       PictureLayerTilingSet::Create(PENDING_TREE, &pending_client, 1000, 1.f,
-                                    1000);
+                                    1000, 1000.f);
   std::unique_ptr<PictureLayerTilingSet> active_set =
       PictureLayerTilingSet::Create(ACTIVE_TREE, &active_client, 1000, 1.f,
-                                    1000);
+                                    1000, 1000.f);
 
   gfx::Size layer_bounds(100, 105);
   scoped_refptr<FakeRasterSource> raster_source =
       FakeRasterSource::CreateEmpty(layer_bounds);
 
   // Tilings can be added of any scale, the tiling client can controls this.
-  pending_set->AddTiling(1.f, raster_source);
-  pending_set->AddTiling(2.f, raster_source);
-  pending_set->AddTiling(3.f, raster_source);
+  pending_set->AddTiling(gfx::AxisTransform2d(), raster_source);
+  pending_set->AddTiling(gfx::AxisTransform2d(2.f, gfx::Vector2dF()),
+                         raster_source);
+  pending_set->AddTiling(gfx::AxisTransform2d(3.f, gfx::Vector2dF()),
+                         raster_source);
 
   // Set some expected things for the tiling set to function.
   pending_set->tiling_at(0)->set_resolution(HIGH_RESOLUTION);
@@ -502,7 +512,7 @@ TEST(PictureLayerTilingSetTest, SkewportLimits) {
       CreateTilingSetWithSettings(&client, settings);
 
   EXPECT_FALSE(tiling_set->TilingsNeedUpdate(viewport, 1.0));
-  tiling_set->AddTiling(1.f, raster_source);
+  tiling_set->AddTiling(gfx::AxisTransform2d(), raster_source);
   EXPECT_TRUE(tiling_set->TilingsNeedUpdate(viewport, 1.0));
 
   tiling_set->UpdateTilePriorities(viewport, 1.f, 1.0, Occlusion(), true);
@@ -588,7 +598,7 @@ TEST(PictureLayerTilingSetTest, ComputeSkewportExtremeCases) {
       FakeRasterSource::CreateFilled(layer_bounds);
   std::unique_ptr<TestablePictureLayerTilingSet> tiling_set =
       CreateTilingSetWithSettings(&client, settings);
-  tiling_set->AddTiling(1.f, raster_source);
+  tiling_set->AddTiling(gfx::AxisTransform2d(), raster_source);
 
   gfx::Rect viewport1(-1918, 255860, 4010, 2356);
   gfx::Rect viewport2(-7088, -91738, 14212, 8350);
@@ -605,7 +615,8 @@ TEST(PictureLayerTilingSetTest, ComputeSkewportExtremeCases) {
 
   // Use a tiling with a large scale, so the viewport times the scale no longer
   // fits into integers, and the viewport is not anywhere close to the tiling.
-  PictureLayerTiling* tiling = tiling_set->AddTiling(1000.f, raster_source);
+  PictureLayerTiling* tiling = tiling_set->AddTiling(
+      gfx::AxisTransform2d(1000.f, gfx::Vector2dF()), raster_source);
   EXPECT_TRUE(tiling_set->TilingsNeedUpdate(viewport3, time));
   tiling_set->UpdateTilePriorities(viewport3, 1.f, time, Occlusion(), true);
   EXPECT_TRUE(tiling->GetCurrentVisibleRectForTesting().IsEmpty());
@@ -623,7 +634,7 @@ TEST(PictureLayerTilingSetTest, ComputeSkewport) {
       FakeRasterSource::CreateFilled(layer_bounds);
   std::unique_ptr<TestablePictureLayerTilingSet> tiling_set =
       CreateTilingSet(&client);
-  tiling_set->AddTiling(1.f, raster_source);
+  tiling_set->AddTiling(gfx::AxisTransform2d(), raster_source);
 
   tiling_set->UpdateTilePriorities(viewport, 1.f, 1.0, Occlusion(), true);
 
@@ -685,7 +696,7 @@ TEST(PictureLayerTilingSetTest, SkewportThroughUpdateTilePriorities) {
       FakeRasterSource::CreateFilled(layer_bounds);
   std::unique_ptr<TestablePictureLayerTilingSet> tiling_set =
       CreateTilingSet(&client);
-  tiling_set->AddTiling(1.f, raster_source);
+  tiling_set->AddTiling(gfx::AxisTransform2d(), raster_source);
 
   tiling_set->UpdateTilePriorities(viewport, 1.f, 1.0, Occlusion(), true);
 
@@ -759,7 +770,8 @@ TEST(PictureLayerTilingTest, ViewportDistanceWithScale) {
       FakeRasterSource::CreateFilled(layer_bounds);
   std::unique_ptr<TestablePictureLayerTilingSet> tiling_set =
       CreateTilingSet(&client);
-  auto* tiling = tiling_set->AddTiling(0.25f, raster_source);
+  auto* tiling = tiling_set->AddTiling(
+      gfx::AxisTransform2d(0.25f, gfx::Vector2dF()), raster_source);
   tiling->set_resolution(HIGH_RESOLUTION);
   gfx::Rect viewport_in_content_space =
       gfx::ScaleToEnclosedRect(viewport, 0.25f);
@@ -920,7 +932,8 @@ TEST(PictureLayerTilingTest, ViewportDistanceWithScale) {
   EXPECT_FLOAT_EQ(8.f, priority.distance_to_visible);
 
   // Test additional scales.
-  tiling = tiling_set->AddTiling(0.2f, raster_source);
+  tiling = tiling_set->AddTiling(gfx::AxisTransform2d(0.2f, gfx::Vector2dF()),
+                                 raster_source);
   tiling->set_resolution(HIGH_RESOLUTION);
   tiling_set->UpdateTilePriorities(viewport, 1.0f, 4.0, Occlusion(), true);
   prioritized_tiles = tiling->UpdateAndGetAllPrioritizedTilesForTesting();
@@ -955,7 +968,8 @@ TEST(PictureLayerTilingTest, InvalidateAfterComputeTilePriorityRects) {
       FakeRasterSource::CreateFilled(gfx::Size(100, 100));
   std::unique_ptr<TestablePictureLayerTilingSet> tiling_set =
       CreateTilingSet(&pending_client);
-  auto* pending_tiling = tiling_set->AddTiling(1.f, raster_source);
+  auto* pending_tiling =
+      tiling_set->AddTiling(gfx::AxisTransform2d(), raster_source);
   pending_tiling->set_resolution(HIGH_RESOLUTION);
 
   // Ensure that we can compute tile priority rects, invalidate, and compute the
@@ -982,6 +996,119 @@ TEST(PictureLayerTilingTest, InvalidateAfterComputeTilePriorityRects) {
 
   EXPECT_TRUE(
       tiling_set->UpdateTilePriorities(viewport, 1.f, time, Occlusion(), true));
+}
+
+TEST(PictureLayerTilingTest, InvalidateAfterUpdateRasterSourceForCommit) {
+  FakePictureLayerTilingClient pending_client;
+  FakePictureLayerTilingClient active_client;
+  std::unique_ptr<PictureLayerTilingSet> pending_set =
+      PictureLayerTilingSet::Create(PENDING_TREE, &pending_client, 1000, 1.f,
+                                    1000, 1000.f);
+  std::unique_ptr<PictureLayerTilingSet> active_set =
+      PictureLayerTilingSet::Create(ACTIVE_TREE, &active_client, 1000, 1.f,
+                                    1000, 1000.f);
+
+  gfx::Size layer_bounds(100, 100);
+  scoped_refptr<FakeRasterSource> raster_source =
+      FakeRasterSource::CreateFilled(layer_bounds);
+
+  auto* pending_tiling =
+      pending_set->AddTiling(gfx::AxisTransform2d(), raster_source);
+  pending_tiling->set_resolution(HIGH_RESOLUTION);
+  active_client.set_twin_tiling_set(pending_set.get());
+
+  double time = 1.;
+  gfx::Rect viewport(0, 0, 100, 100);
+
+  // The first commit will update the raster source for pending tilings.
+  pending_set->UpdateTilingsToCurrentRasterSourceForCommit(raster_source,
+                                                           Region(), 1.f, 1.f);
+  // UpdateTilePriorities for pending set gets called during UDP in commit.
+  EXPECT_TRUE(pending_set->UpdateTilePriorities(viewport, 1.f, time,
+                                                Occlusion(), true));
+  // The active set doesn't have tilings yet.
+  EXPECT_FALSE(
+      active_set->UpdateTilePriorities(viewport, 1.f, time, Occlusion(), true));
+
+  // On activation tilings are copied from pending set to active set.
+  active_set->UpdateTilingsToCurrentRasterSourceForActivation(
+      raster_source, pending_set.get(), Region(), 1.f, 1.f);
+  // Pending set doesn't have any tilings now.
+  EXPECT_FALSE(pending_set->UpdateTilePriorities(viewport, 1.f, time,
+                                                 Occlusion(), true));
+  // UpdateTilePriorities for active set gets called during UDP in draw.
+  EXPECT_TRUE(
+      active_set->UpdateTilePriorities(viewport, 1.f, time, Occlusion(), true));
+
+  // Even though frame time and viewport haven't changed since last commit we
+  // update tile priorities because of potential invalidations.
+  pending_set->UpdateTilingsToCurrentRasterSourceForCommit(raster_source,
+                                                           Region(), 1.f, 1.f);
+  // UpdateTilePriorities for pending set gets called during UDP in commit.
+  EXPECT_TRUE(pending_set->UpdateTilePriorities(viewport, 1.f, time,
+                                                Occlusion(), true));
+  // No changes for active set until activation.
+  EXPECT_FALSE(
+      active_set->UpdateTilePriorities(viewport, 1.f, time, Occlusion(), true));
+}
+
+TEST(PictureLayerTilingSetTest, TilingTranslationChanges) {
+  gfx::Size tile_size(64, 64);
+  FakePictureLayerTilingClient pending_client;
+  FakePictureLayerTilingClient active_client;
+  pending_client.SetTileSize(tile_size);
+  active_client.SetTileSize(tile_size);
+  std::unique_ptr<PictureLayerTilingSet> pending_set =
+      PictureLayerTilingSet::Create(PENDING_TREE, &pending_client, 0, 1.f, 0,
+                                    0.f);
+  std::unique_ptr<PictureLayerTilingSet> active_set =
+      PictureLayerTilingSet::Create(ACTIVE_TREE, &active_client, 0, 1.f, 0,
+                                    0.f);
+  active_client.set_twin_tiling_set(pending_set.get());
+
+  gfx::Size layer_bounds(100, 100);
+  scoped_refptr<FakeRasterSource> raster_source =
+      FakeRasterSource::CreateFilled(layer_bounds);
+
+  gfx::AxisTransform2d raster_transform1(1.f, gfx::Vector2dF(0.25f, 0.25f));
+  pending_set->AddTiling(raster_transform1, raster_source);
+  pending_set->tiling_at(0)->set_resolution(HIGH_RESOLUTION);
+
+  // Set a priority rect so we get tiles.
+  pending_set->UpdateTilePriorities(gfx::Rect(layer_bounds), 1.f, 1.0,
+                                    Occlusion(), false);
+
+  // Make sure all tiles are generated.
+  EXPECT_EQ(4u, pending_set->tiling_at(0)->AllTilesForTesting().size());
+
+  // Clone from the pending to the active tree.
+  active_set->UpdateTilingsToCurrentRasterSourceForActivation(
+      raster_source.get(), pending_set.get(), Region(), 1.f, 1.f);
+
+  // Verifies active tree cloned the tiling correctly.
+  ASSERT_EQ(1u, active_set->num_tilings());
+  EXPECT_EQ(active_set->tiling_at(0)->raster_transform(), raster_transform1);
+  EXPECT_EQ(4u, active_set->tiling_at(0)->AllTilesForTesting().size());
+
+  // Change raster translation on the pending set.
+  gfx::AxisTransform2d raster_transform2(1.f, gfx::Vector2dF(0.75f, 0.75f));
+  pending_set->RemoveAllTilings();
+  pending_set->AddTiling(raster_transform2, raster_source);
+  pending_set->tiling_at(0)->set_resolution(HIGH_RESOLUTION);
+
+  // Set a different priority rect to get one tile.
+  pending_set->UpdateTilePriorities(gfx::Rect(1, 1), 1.f, 1.0, Occlusion(),
+                                    false);
+  EXPECT_EQ(1u, pending_set->tiling_at(0)->AllTilesForTesting().size());
+
+  // Commit the pending to the active tree again.
+  active_set->UpdateTilingsToCurrentRasterSourceForActivation(
+      raster_source.get(), pending_set.get(), Region(), 1.f, 1.f);
+
+  // Verifies the old tiling with a different translation is dropped.
+  ASSERT_EQ(1u, active_set->num_tilings());
+  EXPECT_EQ(active_set->tiling_at(0)->raster_transform(), raster_transform2);
+  EXPECT_EQ(1u, active_set->tiling_at(0)->AllTilesForTesting().size());
 }
 
 }  // namespace

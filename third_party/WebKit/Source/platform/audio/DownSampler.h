@@ -33,46 +33,50 @@
 
 #include "platform/audio/AudioArray.h"
 #include "platform/audio/DirectConvolver.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 // DownSampler down-samples the source stream by a factor of 2x.
 
 class PLATFORM_EXPORT DownSampler {
-    USING_FAST_MALLOC(DownSampler);
-    WTF_MAKE_NONCOPYABLE(DownSampler);
-public:
-    DownSampler(size_t inputBlockSize);
+  USING_FAST_MALLOC(DownSampler);
+  WTF_MAKE_NONCOPYABLE(DownSampler);
 
-    // The destination buffer |destP| is of size sourceFramesToProcess / 2.
-    void process(const float* sourceP, float* destP, size_t sourceFramesToProcess);
+ public:
+  DownSampler(size_t input_block_size);
 
-    void reset();
+  // The destination buffer |destP| is of size sourceFramesToProcess / 2.
+  void Process(const float* source_p,
+               float* dest_p,
+               size_t source_frames_to_process);
 
-    // Latency based on the destination sample-rate.
-    size_t latencyFrames() const;
+  void Reset();
 
-private:
-    enum { DefaultKernelSize = 256 };
+  // Latency based on the destination sample-rate.
+  size_t LatencyFrames() const;
 
-    size_t m_inputBlockSize;
+ private:
+  enum { kDefaultKernelSize = 256 };
 
-    // Computes ideal band-limited half-band filter coefficients.
-    // In other words, filter out all frequencies higher than 0.25 * Nyquist.
-    void initializeKernel();
-    AudioFloatArray m_reducedKernel;
+  size_t input_block_size_;
 
-    // Half-band filter.
-    DirectConvolver m_convolver;
+  // Computes ideal band-limited half-band filter coefficients.
+  // In other words, filter out all frequencies higher than 0.25 * Nyquist.
+  void InitializeKernel();
+  AudioFloatArray reduced_kernel_;
 
-    AudioFloatArray m_tempBuffer;
+  // Half-band filter.
+  DirectConvolver convolver_;
 
-    // Used as delay-line (FIR filter history) for the input samples to account for the 0.5 term right in the middle of the kernel.
-    AudioFloatArray m_inputBuffer;
+  AudioFloatArray temp_buffer_;
+
+  // Used as delay-line (FIR filter history) for the input samples to account
+  // for the 0.5 term right in the middle of the kernel.
+  AudioFloatArray input_buffer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DownSampler_h
+#endif  // DownSampler_h

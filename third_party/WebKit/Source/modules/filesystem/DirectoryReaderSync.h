@@ -35,7 +35,7 @@
 #include "core/fileapi/FileError.h"
 #include "modules/filesystem/DirectoryReaderBase.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -45,40 +45,37 @@ class ExceptionState;
 typedef HeapVector<Member<EntrySync>> EntrySyncHeapVector;
 
 class DirectoryReaderSync : public DirectoryReaderBase, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static DirectoryReaderSync* create(DOMFileSystemBase* fileSystem, const String& fullPath)
-    {
-        return new DirectoryReaderSync(fileSystem, fullPath);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~DirectoryReaderSync() override;
+ public:
+  static DirectoryReaderSync* Create(DOMFileSystemBase* file_system,
+                                     const String& full_path) {
+    return new DirectoryReaderSync(file_system, full_path);
+  }
 
-    EntrySyncHeapVector readEntries(ExceptionState&);
+  ~DirectoryReaderSync() override;
 
-    void addEntries(const EntrySyncHeapVector& entries)
-    {
-        m_entries.appendVector(entries);
-    }
+  EntrySyncHeapVector readEntries(ExceptionState&);
 
-    void setError(FileError::ErrorCode code)
-    {
-        m_errorCode = code;
-    }
+  void AddEntries(const EntrySyncHeapVector& entries) {
+    entries_.AppendVector(entries);
+  }
 
-    DECLARE_VIRTUAL_TRACE();
+  void SetError(FileError::ErrorCode code) { error_code_ = code; }
 
-private:
-    class EntriesCallbackHelper;
-    class ErrorCallbackHelper;
+  DECLARE_VIRTUAL_TRACE();
 
-    DirectoryReaderSync(DOMFileSystemBase*, const String& fullPath);
+ private:
+  class EntriesCallbackHelper;
+  class ErrorCallbackHelper;
 
-    int m_callbacksId;
-    EntrySyncHeapVector m_entries;
-    FileError::ErrorCode m_errorCode;
+  DirectoryReaderSync(DOMFileSystemBase*, const String& full_path);
+
+  int callbacks_id_;
+  EntrySyncHeapVector entries_;
+  FileError::ErrorCode error_code_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DirectoryReaderSync_h
+#endif  // DirectoryReaderSync_h

@@ -4,301 +4,328 @@
 
 #include "core/editing/FrameSelection.h"
 
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
+#include <memory>
+#include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/Text.h"
 #include "core/editing/EditingTestBase.h"
 #include "core/editing/FrameCaret.h"
+#include "core/editing/SelectionController.h"
 #include "core/frame/FrameView.h"
 #include "core/html/HTMLBodyElement.h"
-#include "core/html/HTMLDocument.h"
-#include "core/layout/LayoutView.h"
+#include "core/input/EventHandler.h"
+#include "core/layout/LayoutBlock.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/graphics/paint/PaintController.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/StdLibExtras.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
-#include "wtf/StdLibExtras.h"
-#include <memory>
 
 namespace blink {
 
 class FrameSelectionTest : public EditingTestBase {
-protected:
-    void setSelection(const VisibleSelection&);
-    FrameSelection& selection() const;
-    const VisibleSelection& visibleSelectionInDOMTree() const { return selection().selection(); }
-    const VisibleSelectionInFlatTree& visibleSelectionInFlatTree() const { return selection().selectionInFlatTree(); }
+ protected:
+  const VisibleSelection& VisibleSelectionInDOMTree() const {
+    return Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
+  }
+  const VisibleSelectionInFlatTree& GetVisibleSelectionInFlatTree() const {
+    return Selection().GetSelectionInFlatTree();
+  }
 
-    Text* appendTextNode(const String& data);
-    int layoutCount() const { return dummyPageHolder().frameView().layoutCount(); }
+  Text* AppendTextNode(const String& data);
+  int LayoutCount() const {
+    return GetDummyPageHolder().GetFrameView().LayoutCount();
+  }
 
-    bool shouldPaintCaretForTesting() const { return selection().shouldPaintCaretForTesting(); }
-    bool isPreviousCaretDirtyForTesting() const { return selection().isPreviousCaretDirtyForTesting(); }
+  PositionWithAffinity CaretPosition() const {
+    return Selection().frame_caret_->CaretPosition();
+  }
 
-    PositionWithAffinity caretPosition() const
-    {
-        return selection().m_frameCaret->caretPosition();
-    }
-
-private:
-    Persistent<Text> m_textNode;
+ private:
+  Persistent<Text> text_node_;
 };
 
-void FrameSelectionTest::setSelection(const VisibleSelection& newSelection)
-{
-    dummyPageHolder().frame().selection().setSelection(newSelection);
+Text* FrameSelectionTest::AppendTextNode(const String& data) {
+  Text* text = GetDocument().createTextNode(data);
+  GetDocument().body()->AppendChild(text);
+  return text;
 }
 
-FrameSelection& FrameSelectionTest::selection() const
-{
-    return dummyPageHolder().frame().selection();
+TEST_F(FrameSelectionTest, FirstEphemeralRangeOf) {
+  SetBodyContent("<div id=sample>0123456789</div>abc");
+  Element* const sample = GetDocument().GetElementById("sample");
+  Node* const text = sample->FirstChild();
+  Selection().SetSelectedRange(
+      EphemeralRange(Position(text, 3), Position(text, 6)), VP_DEFAULT_AFFINITY,
+      SelectionDirectionalMode::kNonDirectional, 0);
+  sample->setAttribute(HTMLNames::styleAttr, "display:none");
+  // Move |VisibleSelection| before "abc".
+  UpdateAllLifecyclePhases();
+  const EphemeralRange& range =
+      FirstEphemeralRangeOf(Selection().ComputeVisibleSelectionInDOMTree());
+  EXPECT_EQ(Position(sample->nextSibling(), 0), range.StartPosition())
+      << "firstRagne() should return current selection value";
+  EXPECT_EQ(Position(sample->nextSibling(), 0), range.EndPosition());
 }
 
-Text* FrameSelectionTest::appendTextNode(const String& data)
-{
-    Text* text = document().createTextNode(data);
-    document().body()->appendChild(text);
-    return text;
+TEST_F(FrameSelectionTest, SetValidSelection) {
+  Text* text = AppendTextNode("Hello, World!");
+  GetDocument().View()->UpdateAllLifecyclePhases();
+  Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(Position(text, 0), Position(text, 5))
+          .Build());
+  EXPECT_FALSE(
+      Selection().ComputeVisibleSelectionInDOMTreeDeprecated().IsNone());
 }
 
-TEST_F(FrameSelectionTest, SetValidSelection)
-{
-    Text* text = appendTextNode("Hello, World!");
-    VisibleSelection validSelection(Position(text, 0), Position(text, 5));
-    EXPECT_FALSE(validSelection.isNone());
-    setSelection(validSelection);
-    EXPECT_FALSE(selection().isNone());
-}
+TEST_F(FrameSelectionTest, PaintCaretShouldNotLayout) {
+  Text* text = AppendTextNode("Hello, World!");
+  GetDocument().View()->UpdateAllLifecyclePhases();
 
-TEST_F(FrameSelectionTest, InvalidateCaretRect)
-{
-    Text* text = appendTextNode("Hello, World!");
-    document().view()->updateAllLifecyclePhases();
+  GetDocument().body()->setContentEditable("true", ASSERT_NO_EXCEPTION);
+  GetDocument().body()->focus();
+  EXPECT_TRUE(GetDocument().body()->IsFocused());
 
-    VisibleSelection validSelection(Position(text, 0), Position(text, 0));
-    setSelection(validSelection);
-    selection().setCaretRectNeedsUpdate();
-    EXPECT_TRUE(selection().isCaretBoundsDirty());
-    selection().invalidateCaretRect();
-    EXPECT_FALSE(selection().isCaretBoundsDirty());
+  Selection().SetCaretVisible(true);
+  Selection().SetSelection(
+      SelectionInDOMTree::Builder().Collapse(Position(text, 0)).Build());
+  GetDocument().View()->UpdateAllLifecyclePhases();
+  EXPECT_TRUE(
+      Selection().ComputeVisibleSelectionInDOMTreeDeprecated().IsCaret());
+  EXPECT_TRUE(ToLayoutBlock(GetDocument().body()->GetLayoutObject())
+                  ->ShouldPaintCursorCaret());
 
-    document().body()->removeChild(text);
-    document().updateStyleAndLayoutIgnorePendingStylesheets();
-    selection().setCaretRectNeedsUpdate();
-    EXPECT_TRUE(selection().isCaretBoundsDirty());
-    selection().invalidateCaretRect();
-    EXPECT_FALSE(selection().isCaretBoundsDirty());
-}
-
-TEST_F(FrameSelectionTest, PaintCaretShouldNotLayout)
-{
-    Text* text = appendTextNode("Hello, World!");
-    document().view()->updateAllLifecyclePhases();
-
-    document().body()->setContentEditable("true", ASSERT_NO_EXCEPTION);
-    document().body()->focus();
-    EXPECT_TRUE(document().body()->focused());
-
-    VisibleSelection validSelection(Position(text, 0), Position(text, 0));
-    selection().setCaretVisible(true);
-    setSelection(validSelection);
-    EXPECT_TRUE(selection().isCaret());
-    EXPECT_TRUE(shouldPaintCaretForTesting());
-
-    int startCount = layoutCount();
-    {
-        // To force layout in next updateLayout calling, widen view.
-        FrameView& frameView = dummyPageHolder().frameView();
-        IntRect frameRect = frameView.frameRect();
-        frameRect.setWidth(frameRect.width() + 1);
-        frameRect.setHeight(frameRect.height() + 1);
-        dummyPageHolder().frameView().setFrameRect(frameRect);
-    }
-    std::unique_ptr<PaintController> paintController = PaintController::create();
-    {
-        GraphicsContext context(*paintController);
-        DrawingRecorder drawingRecorder(context, *dummyPageHolder().frameView().layoutView(), DisplayItem::Caret, LayoutRect::infiniteIntRect());
-        selection().paintCaret(context, LayoutPoint());
-    }
-    paintController->commitNewDisplayItems();
-    EXPECT_EQ(startCount, layoutCount());
-}
-
-TEST_F(FrameSelectionTest, InvalidatePreviousCaretAfterRemovingLastCharacter)
-{
-    Text* text = appendTextNode("Hello, World!");
-    document().view()->updateAllLifecyclePhases();
-
-    document().body()->setContentEditable("true", ASSERT_NO_EXCEPTION);
-    document().body()->focus();
-    EXPECT_TRUE(document().body()->focused());
-
-    selection().setCaretVisible(true);
-    EXPECT_TRUE(selection().isCaret());
-    EXPECT_TRUE(shouldPaintCaretForTesting());
-
-    // Simulate to type "Hello, World!".
-    DisableCompositingQueryAsserts disabler;
-    selection().moveTo(createVisiblePosition(selection().end(), selection().affinity()), NotUserTriggered);
-    selection().setCaretRectNeedsUpdate();
-    EXPECT_TRUE(selection().isCaretBoundsDirty());
-    EXPECT_FALSE(isPreviousCaretDirtyForTesting());
-    selection().invalidateCaretRect();
-    EXPECT_FALSE(selection().isCaretBoundsDirty());
-    EXPECT_TRUE(isPreviousCaretDirtyForTesting());
-
-    // Simulate to remove all except for "H".
-    text->replaceWholeText("H");
-    selection().moveTo(createVisiblePosition(selection().end(), selection().affinity()), NotUserTriggered);
-    selection().setCaretRectNeedsUpdate();
-    EXPECT_TRUE(selection().isCaretBoundsDirty());
-    // "H" remains so early previousCaret invalidation isn't needed.
-    EXPECT_TRUE(isPreviousCaretDirtyForTesting());
-    selection().invalidateCaretRect();
-    EXPECT_FALSE(selection().isCaretBoundsDirty());
-    EXPECT_TRUE(isPreviousCaretDirtyForTesting());
-
-    // Simulate to remove the last character.
-    document().body()->removeChild(text);
-    // This line is the objective of this test.
-    // As removing the last character, early previousCaret invalidation is executed.
-    EXPECT_FALSE(isPreviousCaretDirtyForTesting());
-    document().updateStyleAndLayoutIgnorePendingStylesheets();
-    selection().setCaretRectNeedsUpdate();
-    EXPECT_TRUE(selection().isCaretBoundsDirty());
-    EXPECT_FALSE(isPreviousCaretDirtyForTesting());
-    selection().invalidateCaretRect();
-    EXPECT_FALSE(selection().isCaretBoundsDirty());
-    EXPECT_TRUE(isPreviousCaretDirtyForTesting());
+  int start_count = LayoutCount();
+  {
+    // To force layout in next updateLayout calling, widen view.
+    FrameView& frame_view = GetDummyPageHolder().GetFrameView();
+    IntRect frame_rect = frame_view.FrameRect();
+    frame_rect.SetWidth(frame_rect.Width() + 1);
+    frame_rect.SetHeight(frame_rect.Height() + 1);
+    GetDummyPageHolder().GetFrameView().SetFrameRect(frame_rect);
+  }
+  std::unique_ptr<PaintController> paint_controller = PaintController::Create();
+  {
+    GraphicsContext context(*paint_controller);
+    Selection().PaintCaret(context, LayoutPoint());
+  }
+  paint_controller->CommitNewDisplayItems();
+  EXPECT_EQ(start_count, LayoutCount());
 }
 
 #define EXPECT_EQ_SELECTED_TEXT(text) \
-    EXPECT_EQ(text, WebString(selection().selectedText()).utf8())
+  EXPECT_EQ(text, WebString(Selection().SelectedText()).Utf8())
 
-TEST_F(FrameSelectionTest, SelectWordAroundPosition)
-{
-    // "Foo Bar  Baz,"
-    Text* text = appendTextNode("Foo Bar&nbsp;&nbsp;Baz,");
-    // "Fo|o Bar  Baz,"
-    EXPECT_TRUE(selection().selectWordAroundPosition(createVisiblePosition(Position(text, 2))));
-    EXPECT_EQ_SELECTED_TEXT("Foo");
-    // "Foo| Bar  Baz,"
-    EXPECT_TRUE(selection().selectWordAroundPosition(createVisiblePosition(Position(text, 3))));
-    EXPECT_EQ_SELECTED_TEXT("Foo");
-    // "Foo Bar | Baz,"
-    EXPECT_FALSE(selection().selectWordAroundPosition(createVisiblePosition(Position(text, 13))));
-    // "Foo Bar  Baz|,"
-    EXPECT_TRUE(selection().selectWordAroundPosition(createVisiblePosition(Position(text, 22))));
-    EXPECT_EQ_SELECTED_TEXT("Baz");
+TEST_F(FrameSelectionTest, SelectWordAroundPosition) {
+  // "Foo Bar  Baz,"
+  Text* text = AppendTextNode("Foo Bar&nbsp;&nbsp;Baz,");
+  UpdateAllLifecyclePhases();
+
+  // "Fo|o Bar  Baz,"
+  EXPECT_TRUE(Selection().SelectWordAroundPosition(
+      CreateVisiblePosition(Position(text, 2))));
+  EXPECT_EQ_SELECTED_TEXT("Foo");
+  // "Foo| Bar  Baz,"
+  EXPECT_TRUE(Selection().SelectWordAroundPosition(
+      CreateVisiblePosition(Position(text, 3))));
+  EXPECT_EQ_SELECTED_TEXT("Foo");
+  // "Foo Bar | Baz,"
+  EXPECT_FALSE(Selection().SelectWordAroundPosition(
+      CreateVisiblePosition(Position(text, 13))));
+  // "Foo Bar  Baz|,"
+  EXPECT_TRUE(Selection().SelectWordAroundPosition(
+      CreateVisiblePosition(Position(text, 22))));
+  EXPECT_EQ_SELECTED_TEXT("Baz");
 }
 
-TEST_F(FrameSelectionTest, ModifyExtendWithFlatTree)
-{
-    setBodyContent("<span id=host></span>one");
-    setShadowContent("two<content></content>", "host");
-    Element* host = document().getElementById("host");
-    Node* const two = FlatTreeTraversal::firstChild(*host);
-    // Select "two" for selection in DOM tree
-    // Select "twoone" for selection in Flat tree
-    selection().setSelection(VisibleSelectionInFlatTree(PositionInFlatTree(host, 0), PositionInFlatTree(document().body(), 2)));
-    selection().modify(FrameSelection::AlterationExtend, DirectionForward, WordGranularity);
-    EXPECT_EQ(Position(two, 0), visibleSelectionInDOMTree().start());
-    EXPECT_EQ(Position(two, 3), visibleSelectionInDOMTree().end());
-    EXPECT_EQ(PositionInFlatTree(two, 0), visibleSelectionInFlatTree().start());
-    EXPECT_EQ(PositionInFlatTree(two, 3), visibleSelectionInFlatTree().end());
+// crbug.com/657996
+TEST_F(FrameSelectionTest, SelectWordAroundPosition2) {
+  SetBodyContent(
+      "<p style='width:70px; font-size:14px'>foo bar<em>+</em> baz</p>");
+  // "foo bar
+  //  b|az"
+  Node* const baz = GetDocument().body()->FirstChild()->lastChild();
+  EXPECT_TRUE(Selection().SelectWordAroundPosition(
+      CreateVisiblePosition(Position(baz, 2))));
+  EXPECT_EQ_SELECTED_TEXT("baz");
 }
 
-TEST_F(FrameSelectionTest, MoveRangeSelectionTest)
-{
-    // "Foo Bar Baz,"
-    Text* text = appendTextNode("Foo Bar Baz,");
-    // Itinitializes with "Foo B|a>r Baz," (| means start and > means end).
-    selection().setSelection(VisibleSelection(Position(text, 5), Position(text, 6)));
-    EXPECT_EQ_SELECTED_TEXT("a");
-
-    // "Foo B|ar B>az," with the Character granularity.
-    selection().moveRangeSelection(createVisiblePosition(Position(text, 5)), createVisiblePosition(Position(text, 9)), CharacterGranularity);
-    EXPECT_EQ_SELECTED_TEXT("ar B");
-    // "Foo B|ar B>az," with the Word granularity.
-    selection().moveRangeSelection(createVisiblePosition(Position(text, 5)), createVisiblePosition(Position(text, 9)), WordGranularity);
-    EXPECT_EQ_SELECTED_TEXT("Bar Baz");
-    // "Fo<o B|ar Baz," with the Character granularity.
-    selection().moveRangeSelection(createVisiblePosition(Position(text, 5)), createVisiblePosition(Position(text, 2)), CharacterGranularity);
-    EXPECT_EQ_SELECTED_TEXT("o B");
-    // "Fo<o B|ar Baz," with the Word granularity.
-    selection().moveRangeSelection(createVisiblePosition(Position(text, 5)), createVisiblePosition(Position(text, 2)), WordGranularity);
-    EXPECT_EQ_SELECTED_TEXT("Foo Bar");
+TEST_F(FrameSelectionTest, ModifyExtendWithFlatTree) {
+  SetBodyContent("<span id=host></span>one");
+  SetShadowContent("two<content></content>", "host");
+  Element* host = GetDocument().GetElementById("host");
+  Node* const two = FlatTreeTraversal::FirstChild(*host);
+  // Select "two" for selection in DOM tree
+  // Select "twoone" for selection in Flat tree
+  Selection().SetSelection(
+      SelectionInFlatTree::Builder()
+          .Collapse(PositionInFlatTree(host, 0))
+          .Extend(PositionInFlatTree(GetDocument().body(), 2))
+          .Build());
+  Selection().Modify(FrameSelection::kAlterationExtend, kDirectionForward,
+                     kWordGranularity);
+  EXPECT_EQ(Position(two, 0), VisibleSelectionInDOMTree().Start());
+  EXPECT_EQ(Position(two, 3), VisibleSelectionInDOMTree().end());
+  EXPECT_EQ(PositionInFlatTree(two, 0),
+            GetVisibleSelectionInFlatTree().Start());
+  EXPECT_EQ(PositionInFlatTree(two, 3), GetVisibleSelectionInFlatTree().end());
 }
 
-TEST_F(FrameSelectionTest, setNonDirectionalSelectionIfNeeded)
-{
-    const char* bodyContent = "<span id=top>top</span><span id=host></span>";
-    const char* shadowContent = "<span id=bottom>bottom</span>";
-    setBodyContent(bodyContent);
-    ShadowRoot* shadowRoot = setShadowContent(shadowContent, "host");
+TEST_F(FrameSelectionTest, ModifyWithUserTriggered) {
+  SetBodyContent("<div id=sample>abc</div>");
+  Element* sample = GetDocument().GetElementById("sample");
+  const Position end_of_text(sample->FirstChild(), 3);
+  Selection().SetSelection(
+      SelectionInDOMTree::Builder().Collapse(end_of_text).Build());
 
-    Node* top = document().getElementById("top")->firstChild();
-    Node* bottom = shadowRoot->getElementById("bottom")->firstChild();
-    Node* host = document().getElementById("host");
+  EXPECT_FALSE(Selection().Modify(FrameSelection::kAlterationMove,
+                                  kDirectionForward, kCharacterGranularity,
+                                  kNotUserTriggered))
+      << "Selection.modify() returns false for non-user-triggered call when "
+         "selection isn't modified.";
+  EXPECT_EQ(end_of_text,
+            Selection().ComputeVisibleSelectionInDOMTreeDeprecated().Start())
+      << "Selection isn't modified";
 
-    // top to bottom
-    selection().setNonDirectionalSelectionIfNeeded(VisibleSelectionInFlatTree(PositionInFlatTree(top, 1), PositionInFlatTree(bottom, 3)), CharacterGranularity);
-    EXPECT_EQ(Position(top, 1), visibleSelectionInDOMTree().base());
-    EXPECT_EQ(Position::beforeNode(host), visibleSelectionInDOMTree().extent());
-    EXPECT_EQ(Position(top, 1), visibleSelectionInDOMTree().start());
-    EXPECT_EQ(Position(top, 3), visibleSelectionInDOMTree().end());
-
-    EXPECT_EQ(PositionInFlatTree(top, 1), visibleSelectionInFlatTree().base());
-    EXPECT_EQ(PositionInFlatTree(bottom, 3), visibleSelectionInFlatTree().extent());
-    EXPECT_EQ(PositionInFlatTree(top, 1), visibleSelectionInFlatTree().start());
-    EXPECT_EQ(PositionInFlatTree(bottom, 3), visibleSelectionInFlatTree().end());
-
-    // bottom to top
-    selection().setNonDirectionalSelectionIfNeeded(VisibleSelectionInFlatTree(PositionInFlatTree(bottom, 3), PositionInFlatTree(top, 1)), CharacterGranularity);
-    EXPECT_EQ(Position(bottom, 3), visibleSelectionInDOMTree().base());
-    EXPECT_EQ(Position::beforeNode(bottom->parentNode()), visibleSelectionInDOMTree().extent());
-    EXPECT_EQ(Position(bottom, 0), visibleSelectionInDOMTree().start());
-    EXPECT_EQ(Position(bottom, 3), visibleSelectionInDOMTree().end());
-
-    EXPECT_EQ(PositionInFlatTree(bottom, 3), visibleSelectionInFlatTree().base());
-    EXPECT_EQ(PositionInFlatTree(top, 1), visibleSelectionInFlatTree().extent());
-    EXPECT_EQ(PositionInFlatTree(top, 1), visibleSelectionInFlatTree().start());
-    EXPECT_EQ(PositionInFlatTree(bottom, 3), visibleSelectionInFlatTree().end());
+  EXPECT_TRUE(Selection().Modify(FrameSelection::kAlterationMove,
+                                 kDirectionForward, kCharacterGranularity,
+                                 kUserTriggered))
+      << "Selection.modify() returns true for user-triggered call";
+  EXPECT_EQ(end_of_text,
+            Selection().ComputeVisibleSelectionInDOMTreeDeprecated().Start())
+      << "Selection isn't modified";
 }
 
-TEST_F(FrameSelectionTest, SelectAllWithUnselectableRoot)
-{
-    Element* select = document().createElement("select", ASSERT_NO_EXCEPTION);
-    document().replaceChild(select, document().documentElement());
-    selection().selectAll();
-    EXPECT_TRUE(selection().isNone()) << "Nothing should be selected if the content of the documentElement is not selctable.";
+TEST_F(FrameSelectionTest, MoveRangeSelectionTest) {
+  // "Foo Bar Baz,"
+  Text* text = AppendTextNode("Foo Bar Baz,");
+  UpdateAllLifecyclePhases();
+
+  // Itinitializes with "Foo B|a>r Baz," (| means start and > means end).
+  Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(Position(text, 5), Position(text, 6))
+          .Build());
+  EXPECT_EQ_SELECTED_TEXT("a");
+
+  // "Foo B|ar B>az," with the Character granularity.
+  Selection().MoveRangeSelection(CreateVisiblePosition(Position(text, 5)),
+                                 CreateVisiblePosition(Position(text, 9)),
+                                 kCharacterGranularity);
+  EXPECT_EQ_SELECTED_TEXT("ar B");
+  // "Foo B|ar B>az," with the Word granularity.
+  Selection().MoveRangeSelection(CreateVisiblePosition(Position(text, 5)),
+                                 CreateVisiblePosition(Position(text, 9)),
+                                 kWordGranularity);
+  EXPECT_EQ_SELECTED_TEXT("Bar Baz");
+  // "Fo<o B|ar Baz," with the Character granularity.
+  Selection().MoveRangeSelection(CreateVisiblePosition(Position(text, 5)),
+                                 CreateVisiblePosition(Position(text, 2)),
+                                 kCharacterGranularity);
+  EXPECT_EQ_SELECTED_TEXT("o B");
+  // "Fo<o B|ar Baz," with the Word granularity.
+  Selection().MoveRangeSelection(CreateVisiblePosition(Position(text, 5)),
+                                 CreateVisiblePosition(Position(text, 2)),
+                                 kWordGranularity);
+  EXPECT_EQ_SELECTED_TEXT("Foo Bar");
 }
 
-TEST_F(FrameSelectionTest, updateIfNeededAndFrameCaret)
-{
-    setBodyContent("<style id=sample></style>");
-    document().setDesignMode("on");
-    Element* sample = document().getElementById("sample");
-    setSelection(VisibleSelection(Position(sample, 0)));
-    EXPECT_EQ(Position(document().body(), 0), selection().start());
-    EXPECT_EQ(selection().start(), caretPosition().position());
-    document().body()->remove();
-    // TODO(yosin): Once lazy canonicalization implemented, selection.start
-    // should be Position(HTML, 0).
-    EXPECT_EQ(Position(document().documentElement(), 1), selection().start());
-    EXPECT_EQ(selection().start(), caretPosition().position());
-    selection().updateIfNeeded();
-
-    // TODO(yosin): Once lazy canonicalization implemented, selection.start
-    // should be Position(HTML, 0).
-    EXPECT_EQ(Position(), selection().start())
-        << "updateIfNeeded() makes selection to null.";
-    EXPECT_EQ(selection().start(), caretPosition().position());
+// For http://crbug.com/695317
+TEST_F(FrameSelectionTest, SelectAllWithInputElement) {
+  SetBodyContent("<input>123");
+  Element* const input = GetDocument().QuerySelector("input");
+  Node* const last_child = GetDocument().body()->LastChild();
+  Selection().SelectAll();
+  const SelectionInDOMTree& result_in_dom_tree =
+      Selection().ComputeVisibleSelectionInDOMTree().AsSelection();
+  const SelectionInFlatTree& result_in_flat_tree =
+      Selection().ComputeVisibleSelectionInFlatTree().AsSelection();
+  EXPECT_EQ(SelectionInDOMTree::Builder(result_in_dom_tree)
+                .Collapse(Position::BeforeNode(input))
+                .Extend(Position(last_child, 3))
+                .Build(),
+            result_in_dom_tree);
+  EXPECT_EQ(SelectionInFlatTree::Builder(result_in_flat_tree)
+                .Collapse(PositionInFlatTree::BeforeNode(input))
+                .Extend(PositionInFlatTree(last_child, 3))
+                .Build(),
+            result_in_flat_tree);
 }
 
-} // namespace blink
+TEST_F(FrameSelectionTest, SelectAllWithUnselectableRoot) {
+  Element* select = GetDocument().createElement("select");
+  GetDocument().ReplaceChild(select, GetDocument().documentElement());
+  Selection().SelectAll();
+  EXPECT_TRUE(Selection().ComputeVisibleSelectionInDOMTreeDeprecated().IsNone())
+      << "Nothing should be selected if the "
+         "content of the documentElement is not "
+         "selctable.";
+}
+
+TEST_F(FrameSelectionTest, SelectAllPreservesHandle) {
+  SetBodyContent("<div id=sample>abc</div>");
+  Element* sample = GetDocument().GetElementById("sample");
+  const Position end_of_text(sample->FirstChild(), 3);
+  Selection().SetSelection(SelectionInDOMTree::Builder()
+                               .Collapse(end_of_text)
+                               .SetIsHandleVisible(false)
+                               .Build());
+  EXPECT_FALSE(Selection().IsHandleVisible());
+  Selection().SelectAll();
+  EXPECT_FALSE(Selection().IsHandleVisible())
+      << "If handles weren't present before"
+         "selectAll. Then they shouldn't be present"
+         "after it.";
+
+  Selection().SetSelection(SelectionInDOMTree::Builder()
+                               .Collapse(end_of_text)
+                               .SetIsHandleVisible(true)
+                               .Build());
+  EXPECT_TRUE(Selection().IsHandleVisible());
+  Selection().SelectAll();
+  EXPECT_TRUE(Selection().IsHandleVisible())
+      << "If handles were present before"
+         "selectAll. Then they should be present"
+         "after it.";
+}
+
+TEST_F(FrameSelectionTest, SetSelectedRangePreservesHandle) {
+  Text* text = AppendTextNode("Hello, World!");
+  GetDocument().View()->UpdateAllLifecyclePhases();
+  Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(Position(text, 0), Position(text, 5))
+          .SetIsHandleVisible(false)
+          .Build());
+
+  Selection().SetSelectedRange(
+      EphemeralRange(Position(text, 0), Position(text, 12)),
+      VP_DEFAULT_AFFINITY, SelectionDirectionalMode::kNonDirectional, 0);
+
+  EXPECT_FALSE(Selection().IsHandleVisible())
+      << "If handles weren't present before"
+         "setSelectedRange they shouldn't be present"
+         "after it.";
+
+  Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(Position(text, 0), Position(text, 5))
+          .SetIsHandleVisible(true)
+          .Build());
+
+  Selection().SetSelectedRange(
+      EphemeralRange(Position(text, 0), Position(text, 12)),
+      VP_DEFAULT_AFFINITY, SelectionDirectionalMode::kNonDirectional, 0);
+
+  EXPECT_TRUE(Selection().IsHandleVisible())
+      << "If handles were present before"
+         "selectSetSelectedRange they should be present after it.";
+}
+
+}  // namespace blink

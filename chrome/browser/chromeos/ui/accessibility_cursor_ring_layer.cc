@@ -4,14 +4,15 @@
 
 #include "chrome/browser/chromeos/ui/accessibility_cursor_ring_layer.h"
 
-#include "ash/display/window_tree_host_manager.h"
-#include "ash/shell.h"
-#include "base/bind.h"
+#include "ash/shell_port.h"
+#include "ash/wm_window.h"
 #include "third_party/skia/include/core/SkPaint.h"
 #include "third_party/skia/include/core/SkPath.h"
 #include "ui/aura/window.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/paint_recorder.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 #include "ui/gfx/canvas.h"
 
 namespace chromeos {
@@ -47,9 +48,10 @@ void AccessibilityCursorRingLayer::Set(const gfx::Point& location) {
 
   display::Display display =
       display::Screen::GetScreen()->GetDisplayMatching(bounds);
-  aura::Window* root_window = ash::Shell::GetInstance()
-                                  ->window_tree_host_manager()
-                                  ->GetRootWindowForDisplayId(display.id());
+  ash::WmWindow* root_wm_window =
+      ash::ShellPort::Get()->GetRootWindowForDisplayId(display.id());
+  aura::Window* root_window = root_wm_window->aura_window();
+  bounds = root_wm_window->ConvertRectFromScreen(bounds);
   CreateOrUpdateLayer(root_window, "AccessibilityCursorRing", bounds);
 }
 
@@ -57,22 +59,22 @@ void AccessibilityCursorRingLayer::OnPaintLayer(
     const ui::PaintContext& context) {
   ui::PaintRecorder recorder(context, layer()->size());
 
-  SkPaint paint;
-  paint.setFlags(SkPaint::kAntiAlias_Flag);
-  paint.setStyle(SkPaint::kStroke_Style);
-  paint.setStrokeWidth(2);
+  cc::PaintFlags flags;
+  flags.setAntiAlias(true);
+  flags.setStyle(cc::PaintFlags::kStroke_Style);
+  flags.setStrokeWidth(2);
 
   gfx::Rect r = layer()->bounds();
   r.Offset(-r.OffsetFromOrigin());
   r.Inset(kLayerMargin, kLayerMargin, kLayerMargin, kLayerMargin);
   const int w = kGradientWidth;
   for (int i = 0; i < w; ++i) {
-    paint.setColor(
+    flags.setColor(
         SkColorSetARGBMacro(255 * (i) * (i) / (w * w), red_, green_, blue_));
     SkPath path;
     path.addOval(SkRect::MakeXYWH(r.x(), r.y(), r.width(), r.height()));
     r.Inset(1, 1, 1, 1);
-    recorder.canvas()->DrawPath(path, paint);
+    recorder.canvas()->DrawPath(path, flags);
   }
 }
 

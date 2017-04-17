@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/callback.h"
+#include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
@@ -16,7 +17,7 @@
 #include "content/public/browser/utility_process_host.h"
 #include "content/public/browser/utility_process_host_client.h"
 #include "mojo/public/cpp/bindings/interface_ptr.h"
-#include "services/shell/public/cpp/interface_provider.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace content {
 
@@ -38,8 +39,15 @@ class UtilityProcessMojoClient {
 
   // Sets the error callback. A valid callback must be set before calling
   // Start().
-  void set_error_callback(const base::Closure& on_error_callback) {
-    on_error_callback_ = on_error_callback;
+  void set_error_callback(const base::Closure& error_callback) {
+    error_callback_ = error_callback;
+  }
+
+  // Allows a directory to be opened through the utility process sandbox.
+  void set_exposed_directory(const base::FilePath& directory) {
+    DCHECK(!start_called_);
+    DCHECK(!directory.empty());
+    helper_->set_exposed_directory(directory);
   }
 
   // Disables the sandbox in the utility process.
@@ -48,17 +56,25 @@ class UtilityProcessMojoClient {
     helper_->set_disable_sandbox();
   }
 
-  // Starts the utility process and connect to the remote Mojo service.
+#if defined(OS_WIN)
+  // Allows the utility process to run with elevated privileges.
+  void set_run_elevated() {
+    DCHECK(!start_called_);
+    helper_->set_run_elevated();
+  }
+#endif  // defined(OS_WIN)
+
+  // Starts the utility process and connects to the remote Mojo service.
   void Start() {
     DCHECK(thread_checker_.CalledOnValidThread());
-    DCHECK(!on_error_callback_.is_null());
+    DCHECK(error_callback_);
     DCHECK(!start_called_);
 
     start_called_ = true;
 
-    mojo::InterfaceRequest<MojoInterface> req = mojo::GetProxy(&service_);
-    service_.set_connection_error_handler(on_error_callback_);
-    helper_->Start(MojoInterface::Name_, req.PassMessagePipe());
+    mojo::InterfaceRequest<MojoInterface> request(&service_);
+    service_.set_connection_error_handler(error_callback_);
+    helper_->Start(MojoInterface::Name_, request.PassMessagePipe());
   }
 
   // Returns the Mojo service used to make calls to the utility process.
@@ -94,27 +110,52 @@ class UtilityProcessMojoClient {
                      mojo_interface_name, base::Passed(&interface_pipe)));
     }
 
+    void set_exposed_directory(const base::FilePath& directory) {
+      exposed_directory_ = directory;
+    }
+
     void set_disable_sandbox() { disable_sandbox_ = true; }
 
+#if defined(OS_WIN)
+    void set_run_elevated() {
+      disable_sandbox_ = true;
+      run_elevated_ = true;
+    }
+#endif  // defined(OS_WIN)
+
    private:
-    // Starts the utility process and connects to the remote Mojo service.
-    void StartOnIOThread(const std::string& mojo_interface_name,
+    // Starts the utility process and binds the specified interface.
+    void StartOnIOThread(const std::string& interface_name,
                          mojo::ScopedMessagePipeHandle interface_pipe) {
       DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
       utility_host_ = UtilityProcessHost::Create(nullptr, nullptr)->AsWeakPtr();
       utility_host_->SetName(process_name_);
+
+      if (!exposed_directory_.empty())
+        utility_host_->SetExposedDir(exposed_directory_);
+
       if (disable_sandbox_)
         utility_host_->DisableSandbox();
+#if defined(OS_WIN)
+      if (run_elevated_) {
+        DCHECK(disable_sandbox_);
+        utility_host_->ElevatePrivileges();
+      }
+#endif  // defined(OS_WIN)
 
       utility_host_->Start();
 
-      utility_host_->GetRemoteInterfaces()->GetInterface(
-          mojo_interface_name, std::move(interface_pipe));
+      utility_host_->BindInterface(interface_name, std::move(interface_pipe));
     }
 
     // Properties of the utility process.
     base::string16 process_name_;
+    base::FilePath exposed_directory_;
     bool disable_sandbox_ = false;
+#if defined(OS_WIN)
+    bool run_elevated_ = false;
+#endif  // defined(OS_WIN)
 
     // Must only be accessed on the IO thread.
     base::WeakPtr<UtilityProcessHost> utility_host_;
@@ -125,7 +166,7 @@ class UtilityProcessMojoClient {
   std::unique_ptr<Helper> helper_;
 
   // Called when a connection error happens or if the process didn't start.
-  base::Closure on_error_callback_;
+  base::Closure error_callback_;
 
   mojo::InterfacePtr<MojoInterface> service_;
 

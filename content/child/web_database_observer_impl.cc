@@ -5,7 +5,7 @@
 #include "content/child/web_database_observer_impl.h"
 
 #include "base/bind.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string16.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -76,34 +76,36 @@ WebDatabaseObserverImpl::WebDatabaseObserverImpl(IPC::SyncMessageFilter* sender)
 WebDatabaseObserverImpl::~WebDatabaseObserverImpl() {
 }
 
-void WebDatabaseObserverImpl::databaseOpened(
+void WebDatabaseObserverImpl::DatabaseOpened(
     const WebSecurityOrigin& origin,
     const WebString& database_name,
     const WebString& database_display_name,
     unsigned long estimated_size) {
   open_connections_->AddOpenConnection(GetIdentifierFromOrigin(origin),
-                                       database_name);
-  sender_->Send(new DatabaseHostMsg_Opened(
-      origin, database_name, database_display_name, estimated_size));
+                                       database_name.Utf16());
+  sender_->Send(new DatabaseHostMsg_Opened(origin, database_name.Utf16(),
+                                           database_display_name.Utf16(),
+                                           estimated_size));
 }
 
-void WebDatabaseObserverImpl::databaseModified(const WebSecurityOrigin& origin,
+void WebDatabaseObserverImpl::DatabaseModified(const WebSecurityOrigin& origin,
                                                const WebString& database_name) {
-  sender_->Send(new DatabaseHostMsg_Modified(origin, database_name));
+  sender_->Send(new DatabaseHostMsg_Modified(origin, database_name.Utf16()));
 }
 
-void WebDatabaseObserverImpl::databaseClosed(const WebSecurityOrigin& origin,
+void WebDatabaseObserverImpl::DatabaseClosed(const WebSecurityOrigin& origin,
                                              const WebString& database_name) {
   DCHECK(!main_thread_task_runner_->RunsTasksOnCurrentThread());
+  base::string16 database_name_utf16 = database_name.Utf16();
   main_thread_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(base::IgnoreResult(&IPC::SyncMessageFilter::Send), sender_,
-                 new DatabaseHostMsg_Closed(origin, database_name)));
+                 new DatabaseHostMsg_Closed(origin, database_name_utf16)));
   open_connections_->RemoveOpenConnection(GetIdentifierFromOrigin(origin),
-                                          database_name);
+                                          database_name_utf16);
 }
 
-void WebDatabaseObserverImpl::reportOpenDatabaseResult(
+void WebDatabaseObserverImpl::ReportOpenDatabaseResult(
     const WebSecurityOrigin& origin,
     const WebString& database_name,
     int callsite,
@@ -123,7 +125,7 @@ void WebDatabaseObserverImpl::reportOpenDatabaseResult(
   }
 }
 
-void WebDatabaseObserverImpl::reportChangeVersionResult(
+void WebDatabaseObserverImpl::ReportChangeVersionResult(
     const WebSecurityOrigin& origin,
     const WebString& database_name,
     int callsite,
@@ -134,7 +136,7 @@ void WebDatabaseObserverImpl::reportChangeVersionResult(
   HandleSqliteError(origin, database_name, sqlite_error);
 }
 
-void WebDatabaseObserverImpl::reportStartTransactionResult(
+void WebDatabaseObserverImpl::ReportStartTransactionResult(
     const WebSecurityOrigin& origin,
     const WebString& database_name,
     int callsite,
@@ -145,7 +147,7 @@ void WebDatabaseObserverImpl::reportStartTransactionResult(
   HandleSqliteError(origin, database_name, sqlite_error);
 }
 
-void WebDatabaseObserverImpl::reportCommitTransactionResult(
+void WebDatabaseObserverImpl::ReportCommitTransactionResult(
     const WebSecurityOrigin& origin,
     const WebString& database_name,
     int callsite,
@@ -156,7 +158,7 @@ void WebDatabaseObserverImpl::reportCommitTransactionResult(
   HandleSqliteError(origin, database_name, sqlite_error);
 }
 
-void WebDatabaseObserverImpl::reportExecuteStatementResult(
+void WebDatabaseObserverImpl::ReportExecuteStatementResult(
     const WebSecurityOrigin& origin,
     const WebString& database_name,
     int callsite,
@@ -167,7 +169,7 @@ void WebDatabaseObserverImpl::reportExecuteStatementResult(
   HandleSqliteError(origin, database_name, sqlite_error);
 }
 
-void WebDatabaseObserverImpl::reportVacuumDatabaseResult(
+void WebDatabaseObserverImpl::ReportVacuumDatabaseResult(
     const WebSecurityOrigin& origin,
     const WebString& database_name,
     int sqlite_error) {
@@ -190,8 +192,8 @@ void WebDatabaseObserverImpl::HandleSqliteError(const WebSecurityOrigin& origin,
   // a unnecessary ipc traffic, this method can get called at a fairly
   // high frequency (per-sqlstatement).
   if (error == SQLITE_CORRUPT || error == SQLITE_NOTADB) {
-    sender_->Send(
-        new DatabaseHostMsg_HandleSqliteError(origin, database_name, error));
+    sender_->Send(new DatabaseHostMsg_HandleSqliteError(
+        origin, database_name.Utf16(), error));
   }
 }
 

@@ -10,14 +10,23 @@
 namespace blink {
 
 class NFCMessage;
+class ScriptState;
 
 class MessageCallback : public GarbageCollectedFinalized<MessageCallback> {
-public:
-    virtual ~MessageCallback() { }
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
-    virtual void handleMessage(const NFCMessage&) = 0;
+ public:
+  virtual ~MessageCallback() {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
+  virtual void handleMessage(const NFCMessage&) = 0;
+
+  void SetScriptState(ScriptState* script_state) {
+    script_state_ = script_state;
+  }
+  ScriptState* GetScriptState() const { return script_state_.Get(); }
+
+ private:
+  RefPtr<ScriptState> script_state_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MessageCallback_h
+#endif  // MessageCallback_h

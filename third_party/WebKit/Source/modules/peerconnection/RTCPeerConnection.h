@@ -31,19 +31,20 @@
 #ifndef RTCPeerConnection_h
 #define RTCPeerConnection_h
 
+#include <memory>
 #include "bindings/core/v8/ActiveScriptWrappable.h"
-#include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ScriptPromise.h"
-#include "core/dom/ActiveDOMObject.h"
+#include "core/dom/SuspendableObject.h"
 #include "modules/EventTargetModules.h"
 #include "modules/crypto/NormalizeAlgorithm.h"
 #include "modules/mediastream/MediaStream.h"
 #include "modules/peerconnection/RTCIceCandidate.h"
 #include "platform/AsyncMethodRunner.h"
+#include "platform/WebFrameScheduler.h"
+#include "platform/heap/HeapAllocator.h"
 #include "public/platform/WebMediaConstraints.h"
 #include "public/platform/WebRTCPeerConnectionHandler.h"
 #include "public/platform/WebRTCPeerConnectionHandlerClient.h"
-#include <memory>
 
 namespace blink {
 class ExceptionState;
@@ -55,170 +56,226 @@ class RTCDataChannel;
 class RTCIceCandidateInitOrRTCIceCandidate;
 class RTCOfferOptions;
 class RTCPeerConnectionErrorCallback;
+class RTCRtpReceiver;
 class RTCSessionDescription;
 class RTCSessionDescriptionCallback;
 class RTCSessionDescriptionInit;
 class RTCStatsCallback;
 class ScriptState;
 class VoidCallback;
+struct WebRTCConfiguration;
 
-class RTCPeerConnection final
-    : public EventTargetWithInlineData
-    , public WebRTCPeerConnectionHandlerClient
-    , public ActiveScriptWrappable
-    , public ActiveDOMObject {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(RTCPeerConnection);
-    USING_PRE_FINALIZER(RTCPeerConnection, dispose);
-public:
-    static RTCPeerConnection* create(ExecutionContext*, const Dictionary&, const Dictionary&, ExceptionState&);
-    ~RTCPeerConnection() override;
+class RTCPeerConnection final : public EventTargetWithInlineData,
+                                public WebRTCPeerConnectionHandlerClient,
+                                public ActiveScriptWrappable<RTCPeerConnection>,
+                                public SuspendableObject {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(RTCPeerConnection);
+  USING_PRE_FINALIZER(RTCPeerConnection, Dispose);
 
-    ScriptPromise createOffer(ScriptState*, const RTCOfferOptions&);
-    ScriptPromise createOffer(ScriptState*, RTCSessionDescriptionCallback*, RTCPeerConnectionErrorCallback*, const Dictionary&);
+ public:
+  static RTCPeerConnection* Create(ExecutionContext*,
+                                   const RTCConfiguration&,
+                                   const Dictionary&,
+                                   ExceptionState&);
+  ~RTCPeerConnection() override;
 
-    ScriptPromise createAnswer(ScriptState*, const RTCAnswerOptions&);
-    ScriptPromise createAnswer(ScriptState*, RTCSessionDescriptionCallback*, RTCPeerConnectionErrorCallback*, const Dictionary&);
+  ScriptPromise createOffer(ScriptState*, const RTCOfferOptions&);
+  ScriptPromise createOffer(ScriptState*,
+                            RTCSessionDescriptionCallback*,
+                            RTCPeerConnectionErrorCallback*,
+                            const Dictionary&,
+                            ExceptionState&);
 
-    ScriptPromise setLocalDescription(ScriptState*, const RTCSessionDescriptionInit&);
-    ScriptPromise setLocalDescription(ScriptState*, const RTCSessionDescriptionInit&, VoidCallback*, RTCPeerConnectionErrorCallback*);
-    RTCSessionDescription* localDescription();
+  ScriptPromise createAnswer(ScriptState*, const RTCAnswerOptions&);
+  ScriptPromise createAnswer(ScriptState*,
+                             RTCSessionDescriptionCallback*,
+                             RTCPeerConnectionErrorCallback*,
+                             const Dictionary&);
 
-    ScriptPromise setRemoteDescription(ScriptState*, const RTCSessionDescriptionInit&);
-    ScriptPromise setRemoteDescription(ScriptState*, const RTCSessionDescriptionInit&, VoidCallback*, RTCPeerConnectionErrorCallback*);
-    RTCSessionDescription* remoteDescription();
+  ScriptPromise setLocalDescription(ScriptState*,
+                                    const RTCSessionDescriptionInit&);
+  ScriptPromise setLocalDescription(ScriptState*,
+                                    const RTCSessionDescriptionInit&,
+                                    VoidCallback*,
+                                    RTCPeerConnectionErrorCallback*);
+  RTCSessionDescription* localDescription();
 
-    String signalingState() const;
+  ScriptPromise setRemoteDescription(ScriptState*,
+                                     const RTCSessionDescriptionInit&);
+  ScriptPromise setRemoteDescription(ScriptState*,
+                                     const RTCSessionDescriptionInit&,
+                                     VoidCallback*,
+                                     RTCPeerConnectionErrorCallback*);
+  RTCSessionDescription* remoteDescription();
 
-    void updateIce(ExecutionContext*, const Dictionary& rtcConfiguration, const Dictionary& mediaConstraints, ExceptionState&);
+  String signalingState() const;
 
-    // Certificate management
-    // http://w3c.github.io/webrtc-pc/#sec.cert-mgmt
-    static ScriptPromise generateCertificate(ScriptState*, const AlgorithmIdentifier& keygenAlgorithm, ExceptionState&);
+  void setConfiguration(ScriptState*, const RTCConfiguration&, ExceptionState&);
 
-    ScriptPromise addIceCandidate(ScriptState*, const RTCIceCandidateInitOrRTCIceCandidate&);
-    ScriptPromise addIceCandidate(ScriptState*, const RTCIceCandidateInitOrRTCIceCandidate&, VoidCallback*, RTCPeerConnectionErrorCallback*);
+  // Certificate management
+  // http://w3c.github.io/webrtc-pc/#sec.cert-mgmt
+  static ScriptPromise generateCertificate(
+      ScriptState*,
+      const AlgorithmIdentifier& keygen_algorithm,
+      ExceptionState&);
 
-    String iceGatheringState() const;
+  ScriptPromise addIceCandidate(ScriptState*,
+                                const RTCIceCandidateInitOrRTCIceCandidate&);
+  ScriptPromise addIceCandidate(ScriptState*,
+                                const RTCIceCandidateInitOrRTCIceCandidate&,
+                                VoidCallback*,
+                                RTCPeerConnectionErrorCallback*);
 
-    String iceConnectionState() const;
+  String iceGatheringState() const;
 
-    MediaStreamVector getLocalStreams() const;
+  String iceConnectionState() const;
 
-    MediaStreamVector getRemoteStreams() const;
+  MediaStreamVector getLocalStreams() const;
 
-    MediaStream* getStreamById(const String& streamId);
+  MediaStreamVector getRemoteStreams() const;
 
-    void addStream(ExecutionContext*, MediaStream*, const Dictionary& mediaConstraints, ExceptionState&);
+  MediaStream* getStreamById(const String& stream_id);
 
-    void removeStream(MediaStream*, ExceptionState&);
+  void addStream(ScriptState*,
+                 MediaStream*,
+                 const Dictionary& media_constraints,
+                 ExceptionState&);
 
-    ScriptPromise getStats(ScriptState*, RTCStatsCallback* successCallback, MediaStreamTrack* selector = nullptr);
-    ScriptPromise getStats(ScriptState*, MediaStreamTrack* selector = nullptr);
+  void removeStream(MediaStream*, ExceptionState&);
 
-    RTCDataChannel* createDataChannel(String label, const Dictionary& dataChannelDict, ExceptionState&);
+  ScriptPromise getStats(ScriptState*,
+                         RTCStatsCallback* success_callback,
+                         MediaStreamTrack* selector = nullptr);
+  ScriptPromise getStats(ScriptState*);
 
-    RTCDTMFSender* createDTMFSender(MediaStreamTrack*, ExceptionState&);
+  HeapVector<Member<RTCRtpReceiver>> getReceivers();
 
-    void close(ExceptionState&);
+  RTCDataChannel* createDataChannel(ScriptState*,
+                                    String label,
+                                    const Dictionary& data_channel_dict,
+                                    ExceptionState&);
 
-    // We allow getStats after close, but not other calls or callbacks.
-    bool shouldFireDefaultCallbacks() { return !m_closed && !m_stopped; }
-    bool shouldFireGetStatsCallback() { return !m_stopped; }
+  RTCDTMFSender* createDTMFSender(MediaStreamTrack*, ExceptionState&);
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(negotiationneeded);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(icecandidate);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(signalingstatechange);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(addstream);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(removestream);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(iceconnectionstatechange);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(datachannel);
+  void close(ExceptionState&);
 
-    // WebRTCPeerConnectionHandlerClient
-    void negotiationNeeded() override;
-    void didGenerateICECandidate(const WebRTCICECandidate&) override;
-    void didChangeSignalingState(SignalingState) override;
-    void didChangeICEGatheringState(ICEGatheringState) override;
-    void didChangeICEConnectionState(ICEConnectionState) override;
-    void didAddRemoteStream(const WebMediaStream&) override;
-    void didRemoveRemoteStream(const WebMediaStream&) override;
-    void didAddRemoteDataChannel(WebRTCDataChannelHandler*) override;
-    void releasePeerConnectionHandler() override;
-    void closePeerConnection() override;
+  // We allow getStats after close, but not other calls or callbacks.
+  bool ShouldFireDefaultCallbacks() { return !closed_ && !stopped_; }
+  bool ShouldFireGetStatsCallback() { return !stopped_; }
 
-    // EventTarget
-    const AtomicString& interfaceName() const override;
-    ExecutionContext* getExecutionContext() const override;
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(negotiationneeded);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(icecandidate);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(signalingstatechange);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(addstream);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(removestream);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(iceconnectionstatechange);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(icegatheringstatechange);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(datachannel);
 
-    // ActiveDOMObject
-    void suspend() override;
-    void resume() override;
-    void stop() override;
+  // WebRTCPeerConnectionHandlerClient
+  void NegotiationNeeded() override;
+  void DidGenerateICECandidate(const WebRTCICECandidate&) override;
+  void DidChangeSignalingState(SignalingState) override;
+  void DidChangeICEGatheringState(ICEGatheringState) override;
+  void DidChangeICEConnectionState(ICEConnectionState) override;
+  void DidAddRemoteStream(const WebMediaStream&) override;
+  void DidRemoveRemoteStream(const WebMediaStream&) override;
+  void DidAddRemoteDataChannel(WebRTCDataChannelHandler*) override;
+  void ReleasePeerConnectionHandler() override;
+  void ClosePeerConnection() override;
 
-    // ActiveScriptWrappable
-    // We keep the this object alive until either stopped or closed.
-    bool hasPendingActivity() const final
-    {
-        return !m_closed && !m_stopped;
-    }
+  // EventTarget
+  const AtomicString& InterfaceName() const override;
+  ExecutionContext* GetExecutionContext() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  // SuspendableObject
+  void Suspend() override;
+  void Resume() override;
+  void ContextDestroyed(ExecutionContext*) override;
 
-private:
-    typedef Function<bool()> BoolFunction;
-    class EventWrapper : public GarbageCollectedFinalized<EventWrapper> {
-    public:
-        EventWrapper(Event*, std::unique_ptr<BoolFunction>);
-        // Returns true if |m_setupFunction| returns true or it is null.
-        // |m_event| will only be fired if setup() returns true;
-        bool setup();
+  // ScriptWrappable
+  // We keep the this object alive until either stopped or closed.
+  bool HasPendingActivity() const final { return !closed_ && !stopped_; }
 
-        DECLARE_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-        Member<Event> m_event;
+ private:
+  typedef Function<bool()> BoolFunction;
+  class EventWrapper : public GarbageCollectedFinalized<EventWrapper> {
+   public:
+    EventWrapper(Event*, std::unique_ptr<BoolFunction>);
+    // Returns true if |m_setupFunction| returns true or it is null.
+    // |m_event| will only be fired if setup() returns true;
+    bool Setup();
 
-    private:
-        std::unique_ptr<BoolFunction> m_setupFunction;
-    };
+    DECLARE_TRACE();
 
-    RTCPeerConnection(ExecutionContext*, RTCConfiguration*, WebMediaConstraints, ExceptionState&);
-    void dispose();
+    Member<Event> event_;
 
-    void scheduleDispatchEvent(Event*);
-    void scheduleDispatchEvent(Event*, std::unique_ptr<BoolFunction>);
-    void dispatchScheduledEvent();
-    bool hasLocalStreamWithTrackId(const String& trackId);
+   private:
+    std::unique_ptr<BoolFunction> setup_function_;
+  };
 
-    void changeSignalingState(WebRTCPeerConnectionHandlerClient::SignalingState);
-    void changeIceGatheringState(WebRTCPeerConnectionHandlerClient::ICEGatheringState);
-    // Changes the state immediately; does not fire an event.
-    // Returns true if the state was changed.
-    bool setIceConnectionState(WebRTCPeerConnectionHandlerClient::ICEConnectionState);
-    // Changes the state asynchronously and fires an event immediately after changing the state.
-    void changeIceConnectionState(WebRTCPeerConnectionHandlerClient::ICEConnectionState);
+  RTCPeerConnection(ExecutionContext*,
+                    const WebRTCConfiguration&,
+                    WebMediaConstraints,
+                    ExceptionState&);
+  void Dispose();
 
-    void closeInternal();
+  void ScheduleDispatchEvent(Event*);
+  void ScheduleDispatchEvent(Event*, std::unique_ptr<BoolFunction>);
+  void DispatchScheduledEvent();
+  bool HasLocalStreamWithTrackId(const String& track_id);
+  MediaStreamTrack* GetRemoteTrackById(const String& track_id) const;
+  // Receivers returned by the handler are in use by the peer connection, a
+  // receiver that is no longer in use is permanently inactive and does not need
+  // to be referenced anymore. Removes such receivers from |m_rtpReceivers|.
+  void RemoveInactiveReceivers();
 
-    void recordRapporMetrics();
+  void ChangeSignalingState(WebRTCPeerConnectionHandlerClient::SignalingState);
+  void ChangeIceGatheringState(
+      WebRTCPeerConnectionHandlerClient::ICEGatheringState);
+  // Changes the state immediately; does not fire an event.
+  // Returns true if the state was changed.
+  bool SetIceConnectionState(
+      WebRTCPeerConnectionHandlerClient::ICEConnectionState);
+  // Changes the state asynchronously and fires an event immediately after
+  // changing the state.
+  void ChangeIceConnectionState(
+      WebRTCPeerConnectionHandlerClient::ICEConnectionState);
 
-    SignalingState m_signalingState;
-    ICEGatheringState m_iceGatheringState;
-    ICEConnectionState m_iceConnectionState;
+  void CloseInternal();
 
-    MediaStreamVector m_localStreams;
-    MediaStreamVector m_remoteStreams;
+  void RecordRapporMetrics();
 
-    std::unique_ptr<WebRTCPeerConnectionHandler> m_peerHandler;
+  SignalingState signaling_state_;
+  ICEGatheringState ice_gathering_state_;
+  ICEConnectionState ice_connection_state_;
 
-    Member<AsyncMethodRunner<RTCPeerConnection>> m_dispatchScheduledEventRunner;
-    HeapVector<Member<EventWrapper>> m_scheduledEvents;
+  // TODO(hbos): Move away from "addStream" and "removeStream" in favor of
+  // "addTrack" and "removeTrack". Update tracks, senders and receivers on
+  // relevant events. https://crbug.com/705901
+  MediaStreamVector local_streams_;
+  MediaStreamVector remote_streams_;
+  HeapHashMap<uintptr_t, Member<RTCRtpReceiver>> rtp_receivers_;
 
-    bool m_stopped;
-    bool m_closed;
+  std::unique_ptr<WebRTCPeerConnectionHandler> peer_handler_;
 
-    bool m_hasDataChannels; // For RAPPOR metrics
+  Member<AsyncMethodRunner<RTCPeerConnection>> dispatch_scheduled_event_runner_;
+  HeapVector<Member<EventWrapper>> scheduled_events_;
+
+  // This handle notifies scheduler about an active connection associated
+  // with a frame. Handle should be destroyed when connection is closed.
+  std::unique_ptr<WebFrameScheduler::ActiveConnectionHandle>
+      connection_handle_for_scheduler_;
+
+  bool stopped_;
+  bool closed_;
+
+  bool has_data_channels_;  // For RAPPOR metrics
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RTCPeerConnection_h
+#endif  // RTCPeerConnection_h

@@ -36,6 +36,10 @@
   color: #999;
 }
 
+input[type=checkbox] ~ span {
+  line-height: 1.4em;
+}
+
 .clear-browser-data-counter:not(:empty)::before {
   content: '\00a0–\00a0\00a0';
 }

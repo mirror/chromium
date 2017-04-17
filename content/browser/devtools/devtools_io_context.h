@@ -8,15 +8,14 @@
 
 #include "base/callback.h"
 #include "base/files/file.h"
-#include "base/memory/ref_counted_delete_on_message_loop.h"
+#include "base/memory/ref_counted_delete_on_sequence.h"
 #include "base/memory/ref_counted_memory.h"
 
 namespace content {
-namespace devtools {
 
 class DevToolsIOContext {
  public:
-  class Stream : public base::RefCountedDeleteOnMessageLoop<Stream> {
+  class Stream : public base::RefCountedDeleteOnSequence<Stream> {
    public:
     enum Status {
       StatusSuccess,
@@ -28,18 +27,18 @@ class DevToolsIOContext {
         void(const scoped_refptr<base::RefCountedString>& data, int status)>;
 
     void Read(off_t position, size_t max_size, ReadCallback callback);
-    void Append(const scoped_refptr<base::RefCountedString>& data);
+    void Append(std::unique_ptr<std::string> data);
     const std::string& handle() const { return handle_; }
 
    private:
     Stream();
     ~Stream();
     friend class DevToolsIOContext;
-    friend class base::RefCountedDeleteOnMessageLoop<Stream>;
+    friend class base::RefCountedDeleteOnSequence<Stream>;
     friend class base::DeleteHelper<Stream>;
 
     void ReadOnFileThread(off_t pos, size_t max_size, ReadCallback callback);
-    void AppendOnFileThread(const scoped_refptr<base::RefCountedString>& data);
+    void AppendOnFileThread(std::unique_ptr<std::string> data);
     bool InitOnFileThreadIfNeeded();
 
     const std::string handle_;
@@ -61,5 +60,4 @@ class DevToolsIOContext {
   StreamsMap streams_;
 };
 
-}  // namespace devtools
 }  // namespace content

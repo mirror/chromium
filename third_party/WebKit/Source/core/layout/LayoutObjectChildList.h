@@ -27,40 +27,43 @@
 #define LayoutObjectChildList_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class LayoutObject;
 
 class LayoutObjectChildList {
-    DISALLOW_NEW();
-public:
-    LayoutObjectChildList()
-        : m_firstChild(nullptr)
-        , m_lastChild(nullptr)
-    {
-    }
+  DISALLOW_NEW();
 
-    LayoutObject* firstChild() const { return m_firstChild; }
-    LayoutObject* lastChild() const { return m_lastChild; }
+ public:
+  LayoutObjectChildList() : first_child_(nullptr), last_child_(nullptr) {}
 
-    void destroyLeftoverChildren();
+  LayoutObject* FirstChild() const { return first_child_; }
+  LayoutObject* LastChild() const { return last_child_; }
 
-    LayoutObject* removeChildNode(LayoutObject* owner, LayoutObject*, bool notifyLayoutObject = true);
-    void insertChildNode(LayoutObject* owner, LayoutObject* newChild, LayoutObject* beforeChild, bool notifyLayoutObject = true);
-    void appendChildNode(LayoutObject* owner, LayoutObject* newChild, bool notifyLayoutObject = true)
-    {
-        insertChildNode(owner, newChild, 0, notifyLayoutObject);
-    }
+  void DestroyLeftoverChildren();
 
-private:
-    void invalidatePaintOnRemoval(LayoutObject& oldChild);
+  LayoutObject* RemoveChildNode(LayoutObject* owner,
+                                LayoutObject*,
+                                bool notify_layout_object = true);
+  void InsertChildNode(LayoutObject* owner,
+                       LayoutObject* new_child,
+                       LayoutObject* before_child,
+                       bool notify_layout_object = true);
+  void AppendChildNode(LayoutObject* owner,
+                       LayoutObject* new_child,
+                       bool notify_layout_object = true) {
+    InsertChildNode(owner, new_child, 0, notify_layout_object);
+  }
 
-    LayoutObject* m_firstChild;
-    LayoutObject* m_lastChild;
+ private:
+  void InvalidatePaintOnRemoval(LayoutObject& old_child);
+
+  LayoutObject* first_child_;
+  LayoutObject* last_child_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutObjectChildList_h
+#endif  // LayoutObjectChildList_h

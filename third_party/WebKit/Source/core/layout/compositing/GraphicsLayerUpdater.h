@@ -28,39 +28,44 @@
 #define GraphicsLayerUpdater_h
 
 #include "platform/graphics/GraphicsLayer.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class PaintLayer;
 
 class GraphicsLayerUpdater {
-    STACK_ALLOCATED();
-public:
-    GraphicsLayerUpdater();
-    ~GraphicsLayerUpdater();
+  STACK_ALLOCATED();
 
-    enum UpdateType {
-        DoNotForceUpdate,
-        ForceUpdate,
-    };
+ public:
+  GraphicsLayerUpdater();
+  ~GraphicsLayerUpdater();
 
-    void update(PaintLayer&, Vector<PaintLayer*>& layersNeedingPaintInvalidation);
+  enum UpdateType {
+    kDoNotForceUpdate,
+    kForceUpdate,
+  };
 
-    bool needsRebuildTree() const { return m_needsRebuildTree; }
+  void Update(PaintLayer&,
+              Vector<PaintLayer*>& layers_needing_paint_invalidation);
 
-#if ENABLE(ASSERT)
-    static void assertNeedsToUpdateGraphicsLayerBitsCleared(PaintLayer&);
+  bool NeedsRebuildTree() const { return needs_rebuild_tree_; }
+
+#if DCHECK_IS_ON()
+  static void AssertNeedsToUpdateGraphicsLayerBitsCleared(PaintLayer&);
 #endif
 
-private:
-    class UpdateContext;
+ private:
+  class UpdateContext;
 
-    void updateRecursive(PaintLayer&, UpdateType, const UpdateContext&, Vector<PaintLayer*>& layersNeedingPaintInvalidation);
+  void UpdateRecursive(PaintLayer&,
+                       UpdateType,
+                       const UpdateContext&,
+                       Vector<PaintLayer*>& layers_needing_paint_invalidation);
 
-    bool m_needsRebuildTree;
+  bool needs_rebuild_tree_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // GraphicsLayerUpdater_h
+#endif  // GraphicsLayerUpdater_h

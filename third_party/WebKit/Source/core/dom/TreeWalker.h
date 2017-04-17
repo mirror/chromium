@@ -34,38 +34,42 @@ namespace blink {
 
 class ExceptionState;
 
-class TreeWalker final : public GarbageCollected<TreeWalker>, public ScriptWrappable, public NodeIteratorBase {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(TreeWalker);
-public:
-    static TreeWalker* create(Node* rootNode, unsigned whatToShow, NodeFilter* filter)
-    {
-        return new TreeWalker(rootNode, whatToShow, filter);
-    }
+class TreeWalker final : public GarbageCollected<TreeWalker>,
+                         public ScriptWrappable,
+                         public NodeIteratorBase {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(TreeWalker);
 
-    Node* currentNode() const { return m_current.get(); }
-    void setCurrentNode(Node*);
+ public:
+  static TreeWalker* Create(Node* root_node,
+                            unsigned what_to_show,
+                            NodeFilter* filter) {
+    return new TreeWalker(root_node, what_to_show, filter);
+  }
 
-    Node* parentNode(ExceptionState&);
-    Node* firstChild(ExceptionState&);
-    Node* lastChild(ExceptionState&);
-    Node* previousSibling(ExceptionState&);
-    Node* nextSibling(ExceptionState&);
-    Node* previousNode(ExceptionState&);
-    Node* nextNode(ExceptionState&);
+  Node* currentNode() const { return current_.Get(); }
+  void setCurrentNode(Node*);
 
-    DECLARE_TRACE();
+  Node* parentNode(ExceptionState&);
+  Node* firstChild(ExceptionState&);
+  Node* lastChild(ExceptionState&);
+  Node* previousSibling(ExceptionState&);
+  Node* nextSibling(ExceptionState&);
+  Node* previousNode(ExceptionState&);
+  Node* nextNode(ExceptionState&);
 
-    DECLARE_VIRTUAL_TRACE_WRAPPERS();
+  DECLARE_TRACE();
 
-private:
-    TreeWalker(Node*, unsigned whatToShow, NodeFilter*);
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
-    Node* setCurrent(Node*);
+ private:
+  TreeWalker(Node*, unsigned what_to_show, NodeFilter*);
 
-    Member<Node> m_current;
+  Node* SetCurrent(Node*);
+
+  Member<Node> current_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TreeWalker_h
+#endif  // TreeWalker_h

@@ -20,15 +20,15 @@
 
 #include "core/html/HTMLDetailsElement.h"
 
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
+#include "bindings/core/v8/ExceptionState.h"
 #include "core/CSSPropertyNames.h"
 #include "core/CSSValueKeywords.h"
 #include "core/HTMLNames.h"
 #include "core/dom/ElementTraversal.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/Text.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/events/Event.h"
-#include "core/events/EventSender.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLContentElement.h"
 #include "core/html/HTMLDivElement.h"
@@ -43,138 +43,127 @@ namespace blink {
 using namespace HTMLNames;
 
 class FirstSummarySelectFilter final : public HTMLContentSelectFilter {
-public:
-    virtual ~FirstSummarySelectFilter() { }
+ public:
+  virtual ~FirstSummarySelectFilter() {}
 
-    static FirstSummarySelectFilter* create()
-    {
-        return new FirstSummarySelectFilter();
+  static FirstSummarySelectFilter* Create() {
+    return new FirstSummarySelectFilter();
+  }
+
+  bool CanSelectNode(const HeapVector<Member<Node>, 32>& siblings,
+                     int nth) const override {
+    if (!siblings[nth]->HasTagName(HTMLNames::summaryTag))
+      return false;
+    for (int i = nth - 1; i >= 0; --i) {
+      if (siblings[i]->HasTagName(HTMLNames::summaryTag))
+        return false;
     }
+    return true;
+  }
 
-    bool canSelectNode(const HeapVector<Member<Node>, 32>& siblings, int nth) const override
-    {
-        if (!siblings[nth]->hasTagName(HTMLNames::summaryTag))
-            return false;
-        for (int i = nth - 1; i >= 0; --i) {
-            if (siblings[i]->hasTagName(HTMLNames::summaryTag))
-                return false;
-        }
-        return true;
-    }
+  DEFINE_INLINE_VIRTUAL_TRACE() { HTMLContentSelectFilter::Trace(visitor); }
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        HTMLContentSelectFilter::trace(visitor);
-    }
-
-private:
-    FirstSummarySelectFilter() { }
+ private:
+  FirstSummarySelectFilter() {}
 };
 
-static DetailsEventSender& detailsToggleEventSender()
-{
-    DEFINE_STATIC_LOCAL(DetailsEventSender, sharedToggleEventSender, (DetailsEventSender::create(EventTypeNames::toggle)));
-    return sharedToggleEventSender;
-}
-
-HTMLDetailsElement* HTMLDetailsElement::create(Document& document)
-{
-    HTMLDetailsElement* details = new HTMLDetailsElement(document);
-    details->ensureUserAgentShadowRoot();
-    return details;
+HTMLDetailsElement* HTMLDetailsElement::Create(Document& document) {
+  HTMLDetailsElement* details = new HTMLDetailsElement(document);
+  details->EnsureUserAgentShadowRoot();
+  return details;
 }
 
 HTMLDetailsElement::HTMLDetailsElement(Document& document)
-    : HTMLElement(detailsTag, document)
-    , m_isOpen(false)
-{
-    UseCounter::count(document, UseCounter::DetailsElement);
+    : HTMLElement(detailsTag, document), is_open_(false) {
+  UseCounter::Count(document, UseCounter::kDetailsElement);
 }
 
-HTMLDetailsElement::~HTMLDetailsElement()
-{
+HTMLDetailsElement::~HTMLDetailsElement() {}
+
+void HTMLDetailsElement::DispatchPendingEvent() {
+  DispatchEvent(Event::Create(EventTypeNames::toggle));
 }
 
-void HTMLDetailsElement::dispatchPendingEvent(DetailsEventSender* eventSender)
-{
-    ASSERT_UNUSED(eventSender, eventSender == &detailsToggleEventSender());
-    dispatchEvent(Event::create(EventTypeNames::toggle));
+LayoutObject* HTMLDetailsElement::CreateLayoutObject(const ComputedStyle&) {
+  return new LayoutBlockFlow(this);
 }
 
+void HTMLDetailsElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
+  HTMLSummaryElement* default_summary =
+      HTMLSummaryElement::Create(GetDocument());
+  default_summary->AppendChild(
+      Text::Create(GetDocument(),
+                   GetLocale().QueryString(WebLocalizedString::kDetailsLabel)));
 
-LayoutObject* HTMLDetailsElement::createLayoutObject(const ComputedStyle&)
-{
-    return new LayoutBlockFlow(this);
+  HTMLContentElement* summary = HTMLContentElement::Create(
+      GetDocument(), FirstSummarySelectFilter::Create());
+  summary->SetIdAttribute(ShadowElementNames::DetailsSummary());
+  summary->AppendChild(default_summary);
+  root.AppendChild(summary);
+
+  HTMLDivElement* content = HTMLDivElement::Create(GetDocument());
+  content->SetIdAttribute(ShadowElementNames::DetailsContent());
+  content->AppendChild(HTMLContentElement::Create(GetDocument()));
+  content->SetInlineStyleProperty(CSSPropertyDisplay, CSSValueNone);
+  root.AppendChild(content);
 }
 
-void HTMLDetailsElement::didAddUserAgentShadowRoot(ShadowRoot& root)
-{
-    HTMLSummaryElement* defaultSummary = HTMLSummaryElement::create(document());
-    defaultSummary->appendChild(Text::create(document(), locale().queryString(WebLocalizedString::DetailsLabel)));
+Element* HTMLDetailsElement::FindMainSummary() const {
+  if (HTMLSummaryElement* summary =
+          Traversal<HTMLSummaryElement>::FirstChild(*this))
+    return summary;
 
-    HTMLContentElement* summary = HTMLContentElement::create(document(), FirstSummarySelectFilter::create());
-    summary->setIdAttribute(ShadowElementNames::detailsSummary());
-    summary->appendChild(defaultSummary);
-    root.appendChild(summary);
-
-    HTMLDivElement* content = HTMLDivElement::create(document());
-    content->setIdAttribute(ShadowElementNames::detailsContent());
-    content->appendChild(HTMLContentElement::create(document()));
-    content->setInlineStyleProperty(CSSPropertyDisplay, CSSValueNone);
-    root.appendChild(content);
+  HTMLContentElement* content =
+      toHTMLContentElementOrDie(UserAgentShadowRoot()->FirstChild());
+  DCHECK(content->FirstChild());
+  CHECK(isHTMLSummaryElement(*content->FirstChild()));
+  return ToElement(content->FirstChild());
 }
 
-Element* HTMLDetailsElement::findMainSummary() const
-{
-    if (HTMLSummaryElement* summary = Traversal<HTMLSummaryElement>::firstChild(*this))
-        return summary;
+void HTMLDetailsElement::ParseAttribute(
+    const AttributeModificationParams& params) {
+  if (params.name == openAttr) {
+    bool old_value = is_open_;
+    is_open_ = !params.new_value.IsNull();
+    if (is_open_ == old_value)
+      return;
 
-    HTMLContentElement* content = toHTMLContentElement(userAgentShadowRoot()->firstChild());
-    ASSERT(content->firstChild() && isHTMLSummaryElement(*content->firstChild()));
-    return toElement(content->firstChild());
+    // Dispatch toggle event asynchronously.
+    pending_event_ =
+        TaskRunnerHelper::Get(TaskType::kDOMManipulation, &GetDocument())
+            ->PostCancellableTask(
+                BLINK_FROM_HERE,
+                WTF::Bind(&HTMLDetailsElement::DispatchPendingEvent,
+                          WrapPersistent(this)));
+
+    Element* content = EnsureUserAgentShadowRoot().GetElementById(
+        ShadowElementNames::DetailsContent());
+    DCHECK(content);
+    if (is_open_)
+      content->RemoveInlineStyleProperty(CSSPropertyDisplay);
+    else
+      content->SetInlineStyleProperty(CSSPropertyDisplay, CSSValueNone);
+
+    // Invalidate the LayoutDetailsMarker in order to turn the arrow signifying
+    // if the details element is open or closed.
+    Element* summary = FindMainSummary();
+    DCHECK(summary);
+
+    Element* control = toHTMLSummaryElement(summary)->MarkerControl();
+    if (control && control->GetLayoutObject())
+      control->GetLayoutObject()->SetShouldDoFullPaintInvalidation();
+
+    return;
+  }
+  HTMLElement::ParseAttribute(params);
 }
 
-void HTMLDetailsElement::parseAttribute(const QualifiedName& name, const AtomicString& oldValue, const AtomicString& value)
-{
-    if (name == openAttr) {
-        bool oldValue = m_isOpen;
-        m_isOpen = !value.isNull();
-        if (m_isOpen == oldValue)
-            return;
-
-        // Dispatch toggle event asynchronously.
-        detailsToggleEventSender().cancelEvent(this);
-        detailsToggleEventSender().dispatchEventSoon(this);
-
-        Element* content = ensureUserAgentShadowRoot().getElementById(ShadowElementNames::detailsContent());
-        ASSERT(content);
-        if (m_isOpen)
-            content->removeInlineStyleProperty(CSSPropertyDisplay);
-        else
-            content->setInlineStyleProperty(CSSPropertyDisplay, CSSValueNone);
-
-        // Invalidate the LayoutDetailsMarker in order to turn the arrow signifying if the
-        // details element is open or closed.
-        Element* summary = findMainSummary();
-        ASSERT(summary);
-
-        Element* control = toHTMLSummaryElement(summary)->markerControl();
-        if (control && control->layoutObject())
-            control->layoutObject()->setShouldDoFullPaintInvalidation();
-
-        return;
-    }
-    HTMLElement::parseAttribute(name, oldValue, value);
+void HTMLDetailsElement::ToggleOpen() {
+  setAttribute(openAttr, is_open_ ? g_null_atom : g_empty_atom);
 }
 
-void HTMLDetailsElement::toggleOpen()
-{
-    setAttribute(openAttr, m_isOpen ? nullAtom : emptyAtom);
+bool HTMLDetailsElement::IsInteractiveContent() const {
+  return true;
 }
 
-bool HTMLDetailsElement::isInteractiveContent() const
-{
-    return true;
-}
-
-} // namespace blink
+}  // namespace blink

@@ -6,8 +6,10 @@
 
 #include <stddef.h>
 
+#include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "base/files/file_util.h"
 #include "base/json/json_string_value_serializer.h"
@@ -38,16 +40,16 @@ using google_apis::CancelCallback;
 using google_apis::ChangeList;
 using google_apis::ChangeListCallback;
 using google_apis::ChangeResource;
+using google_apis::DRIVE_FILE_ERROR;
+using google_apis::DRIVE_NO_CONNECTION;
+using google_apis::DRIVE_OTHER_ERROR;
 using google_apis::DownloadActionCallback;
+using google_apis::DriveApiErrorCode;
 using google_apis::EntryActionCallback;
 using google_apis::FileList;
 using google_apis::FileListCallback;
 using google_apis::FileResource;
 using google_apis::FileResourceCallback;
-using google_apis::DRIVE_FILE_ERROR;
-using google_apis::DRIVE_NO_CONNECTION;
-using google_apis::DRIVE_OTHER_ERROR;
-using google_apis::DriveApiErrorCode;
 using google_apis::GetContentCallback;
 using google_apis::GetShareUrlCallback;
 using google_apis::HTTP_BAD_REQUEST;
@@ -61,6 +63,7 @@ using google_apis::HTTP_SUCCESS;
 using google_apis::InitiateUploadCallback;
 using google_apis::ParentReference;
 using google_apis::ProgressCallback;
+using google_apis::TeamDriveResource;
 using google_apis::UploadRangeResponse;
 using google_apis::drive::UploadRangeCallback;
 namespace test_util = google_apis::test_util;
@@ -132,7 +135,8 @@ void FileListCallbackAdapter(const FileListCallback& callback,
   for (size_t i = 0; i < change_list->items().size(); ++i) {
     const ChangeResource& entry = *change_list->items()[i];
     if (entry.file())
-      file_list->mutable_items()->push_back(new FileResource(*entry.file()));
+      file_list->mutable_items()->push_back(
+          base::MakeUnique<FileResource>(*entry.file()));
   }
   callback.Run(error, std::move(file_list));
 }
@@ -252,7 +256,6 @@ FakeDriveService::FakeDriveService()
 
 FakeDriveService::~FakeDriveService() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  STLDeleteValues(&entries_);
 }
 
 bool FakeDriveService::LoadAppListForDriveApi(
@@ -261,7 +264,7 @@ bool FakeDriveService::LoadAppListForDriveApi(
 
   // Load JSON data, which must be a dictionary.
   std::unique_ptr<base::Value> value = test_util::LoadJSONFile(relative_path);
-  CHECK_EQ(base::Value::TYPE_DICTIONARY, value->GetType());
+  CHECK_EQ(base::Value::Type::DICTIONARY, value->GetType());
   app_info_value_.reset(
       static_cast<base::DictionaryValue*>(value.release()));
   return !!app_info_value_;
@@ -289,7 +292,7 @@ void FakeDriveService::AddApp(const std::string& app_id,
   JSONStringValueDeserializer json(app_json);
   std::string error_message;
   std::unique_ptr<base::Value> value(json.Deserialize(NULL, &error_message));
-  CHECK_EQ(base::Value::TYPE_DICTIONARY, value->GetType());
+  CHECK_EQ(base::Value::Type::DICTIONARY, value->GetType());
 
   base::ListValue* item_list;
   CHECK(app_info_value_->GetListWithoutPathExpansion("items", &item_list));
@@ -548,8 +551,8 @@ CancelCallback FakeDriveService::GetFileResource(
   if (entry && entry->change_resource.file()) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::Bind(callback, HTTP_SUCCESS,
-                              base::Passed(base::WrapUnique(new FileResource(
-                                  *entry->change_resource.file())))));
+                              base::Passed(base::MakeUnique<FileResource>(
+                                  *entry->change_resource.file()))));
     return CancelCallback();
   }
 
@@ -835,8 +838,9 @@ CancelCallback FakeDriveService::CopyResource(
   std::unique_ptr<EntryInfo> copied_entry(new EntryInfo);
   copied_entry->content_data = entry->content_data;
   copied_entry->share_url = entry->share_url;
+  copied_entry->change_resource.set_type(ChangeResource::FILE);
   copied_entry->change_resource.set_file(
-      base::WrapUnique(new FileResource(*entry->change_resource.file())));
+      base::MakeUnique<FileResource>(*entry->change_resource.file()));
 
   ChangeResource* new_change = &copied_entry->change_resource;
   FileResource* new_file = new_change->mutable_file();
@@ -858,12 +862,12 @@ CancelCallback FakeDriveService::CopyResource(
   UpdateETag(new_file);
 
   // Add the new entry to the map.
-  entries_[new_resource_id] = copied_entry.release();
+  entries_[new_resource_id] = std::move(copied_entry);
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(callback, HTTP_SUCCESS,
-                 base::Passed(base::WrapUnique(new FileResource(*new_file)))));
+                 base::Passed(base::MakeUnique<FileResource>(*new_file))));
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&FakeDriveService::NotifyObservers,
@@ -932,7 +936,7 @@ CancelCallback FakeDriveService::UpdateResource(
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(callback, HTTP_SUCCESS,
-                 base::Passed(base::WrapUnique(new FileResource(*file)))));
+                 base::Passed(base::MakeUnique<FileResource>(*file))));
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&FakeDriveService::NotifyObservers,
@@ -1219,7 +1223,7 @@ CancelCallback FakeDriveService::ResumeUpload(
 
     completion_callback.Run(
         HTTP_CREATED,
-        base::WrapUnique(new FileResource(*new_entry->change_resource.file())));
+        base::MakeUnique<FileResource>(*new_entry->change_resource.file()));
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
         base::Bind(&FakeDriveService::NotifyObservers,
@@ -1246,8 +1250,7 @@ CancelCallback FakeDriveService::ResumeUpload(
   AddNewChangestamp(change);
   UpdateETag(file);
 
-  completion_callback.Run(HTTP_SUCCESS,
-                          base::WrapUnique(new FileResource(*file)));
+  completion_callback.Run(HTTP_SUCCESS, base::MakeUnique<FileResource>(*file));
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&FakeDriveService::NotifyObservers,
@@ -1409,8 +1412,8 @@ void FakeDriveService::AddNewFileWithResourceId(
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(callback, HTTP_CREATED,
-                            base::Passed(base::WrapUnique(new FileResource(
-                                *new_entry->change_resource.file())))));
+                            base::Passed(base::MakeUnique<FileResource>(
+                                *new_entry->change_resource.file()))));
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&FakeDriveService::NotifyObservers,
@@ -1453,8 +1456,8 @@ CancelCallback FakeDriveService::AddNewDirectoryWithResourceId(
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(callback, HTTP_CREATED,
-                            base::Passed(base::WrapUnique(new FileResource(
-                                *new_entry->change_resource.file())))));
+                            base::Passed(base::MakeUnique<FileResource>(
+                                *new_entry->change_resource.file()))));
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&FakeDriveService::NotifyObservers,
@@ -1491,7 +1494,7 @@ void FakeDriveService::SetLastModifiedTime(
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(callback, HTTP_SUCCESS,
-                 base::Passed(base::WrapUnique(new FileResource(*file)))));
+                 base::Passed(base::MakeUnique<FileResource>(*file))));
 }
 
 google_apis::DriveApiErrorCode FakeDriveService::SetUserPermission(
@@ -1546,10 +1549,11 @@ FakeDriveService::EntryInfo* FakeDriveService::FindEntryByResourceId(
     const std::string& resource_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  EntryInfoMap::iterator it = entries_.find(resource_id);
+  auto it = entries_.find(resource_id);
   // Deleted entries don't have FileResource.
-  return it != entries_.end() && it->second->change_resource.file() ?
-      it->second : NULL;
+  return it != entries_.end() && it->second->change_resource.file()
+             ? it->second.get()
+             : NULL;
 }
 
 std::string FakeDriveService::GetNewResourceId() {
@@ -1594,6 +1598,7 @@ const FakeDriveService::EntryInfo* FakeDriveService::AddNewEntry(
   std::unique_ptr<EntryInfo> new_entry(new EntryInfo);
   ChangeResource* new_change = &new_entry->change_resource;
   FileResource* new_file = new FileResource;
+  new_change->set_type(ChangeResource::FILE);
   new_change->set_file(base::WrapUnique(new_file));
 
   // Set the resource ID and the title
@@ -1641,8 +1646,8 @@ const FakeDriveService::EntryInfo* FakeDriveService::AddNewEntry(
       base::Time() + base::TimeDelta::FromMilliseconds(++published_date_seq_);
   new_file->set_created_date(published_date);
 
-  EntryInfo* raw_new_entry = new_entry.release();
-  entries_[resource_id] = raw_new_entry;
+  EntryInfo* raw_new_entry = new_entry.get();
+  entries_[resource_id] = std::move(new_entry);
   return raw_new_entry;
 }
 
@@ -1663,10 +1668,9 @@ void FakeDriveService::GetChangeListInternal(
 
   // Filter out entries per parameters like |directory_resource_id| and
   // |search_query|.
-  ScopedVector<ChangeResource> entries;
+  std::vector<std::unique_ptr<ChangeResource>> entries;
   int num_entries_matched = 0;
-  for (EntryInfoMap::iterator it = entries_.begin(); it != entries_.end();
-       ++it) {
+  for (auto it = entries_.begin(); it != entries_.end(); ++it) {
     const ChangeResource& entry = it->second->change_resource;
     bool should_exclude = false;
 
@@ -1715,15 +1719,19 @@ void FakeDriveService::GetChangeListInternal(
 
     if (!should_exclude) {
       std::unique_ptr<ChangeResource> entry_copied(new ChangeResource);
+      entry_copied->set_type(entry.type());
       entry_copied->set_change_id(entry.change_id());
       entry_copied->set_file_id(entry.file_id());
       entry_copied->set_deleted(entry.is_deleted());
-      if (entry.file()) {
-        entry_copied->set_file(
-            base::WrapUnique(new FileResource(*entry.file())));
+      if (entry.type() == ChangeResource::FILE && entry.file()) {
+        entry_copied->set_file(base::MakeUnique<FileResource>(*entry.file()));
+      }
+      if (entry.type() == ChangeResource::TEAM_DRIVE && entry.team_drive()) {
+        entry_copied->set_team_drive(
+            base::MakeUnique<TeamDriveResource>(*entry.team_drive()));
       }
       entry_copied->set_modification_date(entry.modification_date());
-      entries.push_back(entry_copied.release());
+      entries.push_back(std::move(entry_copied));
     }
   }
 
@@ -1795,7 +1803,8 @@ FakeDriveService::StartBatchRequest() {
 }
 
 void FakeDriveService::NotifyObservers() {
-  FOR_EACH_OBSERVER(ChangeObserver, change_observers_, OnNewChangeAvailable());
+  for (auto& observer : change_observers_)
+    observer.OnNewChangeAvailable();
 }
 
 }  // namespace drive

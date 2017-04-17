@@ -33,26 +33,23 @@
 
 #include "platform/SharedBuffer.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 struct SerializedResource {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    KURL url;
-    String mimeType;
-    RefPtr<SharedBuffer> data;
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  KURL url;
+  String mime_type;
+  RefPtr<const SharedBuffer> data;
 
-    SerializedResource(const KURL& url, const String& mimeType, PassRefPtr<SharedBuffer> data)
-        : url(url)
-        , mimeType(mimeType)
-        , data(data)
-    {
-    }
+  SerializedResource(const KURL& url,
+                     const String& mime_type,
+                     PassRefPtr<const SharedBuffer> data)
+      : url(url), mime_type(mime_type), data(std::move(data)) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SerializedResource_h
-
+#endif  // SerializedResource_h

@@ -30,12 +30,24 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
     // UI message loop until View#hasWindowFocus() is aligned with what IMMS sees.
     private static final int CHECK_REGISTER_RETRY = 1;
 
-    private final Handler mHandler;
     private final InputMethodManagerWrapper mInputMethodManagerWrapper;
     private final InputMethodUma mInputMethodUma;
     private ThreadedInputConnectionProxyView mProxyView;
     private ThreadedInputConnection mThreadedInputConnection;
     private CheckInvalidator mCheckInvalidator;
+    private boolean mReentrantTriggering;
+
+    // Initialization-on-demand holder for Handler.
+    private static class LazyHandlerHolder {
+        // Note that we never exit this thread to avoid lifetime or thread-safety issues.
+        private static final Handler sHandler;
+        static {
+            HandlerThread handlerThread =
+                    new HandlerThread("InputConnectionHandlerThread", HandlerThread.NORM_PRIORITY);
+            handlerThread.start();
+            sHandler = new Handler(handlerThread.getLooper());
+        }
+    }
 
     // A small class that can be updated to invalidate the check when there is an external event
     // such as window focus loss or view focus loss.
@@ -53,19 +65,14 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
         }
     }
 
-    ThreadedInputConnectionFactory(
-            InputMethodManagerWrapper inputMethodManagerWrapper) {
+    ThreadedInputConnectionFactory(InputMethodManagerWrapper inputMethodManagerWrapper) {
         mInputMethodManagerWrapper = inputMethodManagerWrapper;
-        mHandler = createHandler();
         mInputMethodUma = createInputMethodUma();
     }
 
-    @VisibleForTesting
-    protected Handler createHandler() {
-        HandlerThread thread =
-                new HandlerThread("InputConnectionHandlerThread", HandlerThread.NORM_PRIORITY);
-        thread.start();
-        return new Handler(thread.getLooper());
+    @Override
+    public Handler getHandler() {
+        return LazyHandlerHolder.sHandler;
     }
 
     @VisibleForTesting
@@ -87,6 +94,7 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
         // and we still want to call them for consistency. The setback here is that the only
         // way to distinguish calls from InputMethodManager and from ProxyView is by looking at
         // the call stack.
+        // TODO - avoid using reflection here. See crbug.com/636474
         for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
             String className = ste.getClassName();
             if (className != null
@@ -99,10 +107,18 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
     }
 
     @Override
-    public ThreadedInputConnection initializeAndGet(
-            View view, ImeAdapter imeAdapter, int inputType, int inputFlags, int selectionStart,
-            int selectionEnd, EditorInfo outAttrs) {
+    public ThreadedInputConnection initializeAndGet(View view, ImeAdapter imeAdapter, int inputType,
+            int inputFlags, int inputMode, int selectionStart, int selectionEnd,
+            EditorInfo outAttrs) {
         ImeUtils.checkOnUiThread();
+
+        // Compute outAttrs early in case we early out to prevent reentrancy. (crbug.com/636197)
+        // TODO(changwan): move this up to ImeAdapter once ReplicaInputConnection is deprecated.
+        ImeUtils.computeEditorInfo(
+                inputType, inputFlags, inputMode, selectionStart, selectionEnd, outAttrs);
+        if (DEBUG_LOGS) {
+            Log.i(TAG, "initializeAndGet. outAttr: " + ImeUtils.getEditorInfoDebugString(outAttrs));
+        }
 
         // IMM can internally ignore subsequent activation requests, e.g., by checking
         // mServedConnecting.
@@ -112,36 +128,41 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
             triggerDelayedOnCreateInputConnection(view);
             return null;
         }
-        if (DEBUG_LOGS) Log.w(TAG, "initializeAndGet: called from proxy view");
+        if (DEBUG_LOGS) Log.i(TAG, "initializeAndGet: called from proxy view");
 
         if (mThreadedInputConnection == null) {
-            if (DEBUG_LOGS) Log.w(TAG, "Creating ThreadedInputConnection...");
-            mThreadedInputConnection = new ThreadedInputConnection(view, imeAdapter, mHandler);
+            if (DEBUG_LOGS) Log.i(TAG, "Creating ThreadedInputConnection...");
+            mThreadedInputConnection = new ThreadedInputConnection(view, imeAdapter, getHandler());
+        } else {
+            mThreadedInputConnection.resetOnUiThread();
         }
-        mThreadedInputConnection.initializeOutAttrsOnUiThread(inputType, inputFlags,
-                selectionStart, selectionEnd, outAttrs);
         return mThreadedInputConnection;
     }
 
     private void triggerDelayedOnCreateInputConnection(final View view) {
-        if (DEBUG_LOGS) Log.w(TAG, "triggerDelayedOnCreateInputConnection");
+        if (DEBUG_LOGS) Log.i(TAG, "triggerDelayedOnCreateInputConnection");
+        // Prevent infinite loop when View methods trigger onCreateInputConnection
+        // on some OEM phones. (crbug.com/636197)
+        if (mReentrantTriggering) return;
 
         // We need to check this before creating invalidator.
-        if (!view.hasFocus() || !view.hasWindowFocus()) return;
+        if (!view.hasFocus()) return;
 
         mCheckInvalidator = new CheckInvalidator();
 
-        if (mProxyView == null) {
-            mProxyView = createProxyView(mHandler, view);
-        }
+        if (!view.hasWindowFocus()) mCheckInvalidator.invalidate();
+
+        // We cannot reuse the existing proxy view, if any, due to crbug.com/664402.
+        mProxyView = createProxyView(getHandler(), view);
+
+        mReentrantTriggering = true;
         // This does not affect view focus of the real views.
         mProxyView.requestFocus();
+        mReentrantTriggering = false;
 
         view.getHandler().post(new Runnable() {
             @Override
             public void run() {
-                if (mCheckInvalidator.isInvalid()) return;
-
                 // This is a hack to make InputMethodManager believe that the proxy view
                 // now has a focus. As a result, InputMethodManager will think that mProxyView
                 // is focused, and will call getHandler() of the view when creating input
@@ -159,7 +180,7 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
 
                 // Step 3: Check that the above hack worked.
                 // Do not check until activation finishes inside InputMethodManager (on IME thread).
-                mHandler.post(new Runnable() {
+                getHandler().post(new Runnable() {
                     @Override
                     public void run() {
                         postCheckRegisterResultOnUiThread(view, mCheckInvalidator,
@@ -185,49 +206,59 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
     }
 
     private void checkRegisterResult(View view, CheckInvalidator checkInvalidator, int retry) {
-        if (DEBUG_LOGS) Log.w(TAG, "checkRegisterResult - retry: " + retry);
+        if (DEBUG_LOGS) Log.i(TAG, "checkRegisterResult - retry: " + retry);
         // Success.
         if (mInputMethodManagerWrapper.isActive(mProxyView)) {
-            mInputMethodUma.recordProxyViewSuccess();
+            onRegisterProxyViewSuccess();
             return;
         }
-
-        if (checkInvalidator.isInvalid()) return;
 
         if (retry > 0) {
             postCheckRegisterResultOnUiThread(view, checkInvalidator, retry - 1);
             return;
         }
 
-        onRegisterProxyViewFailed();
+        if (checkInvalidator.isInvalid()) return;
+
+        onRegisterProxyViewFailure();
     }
 
     @VisibleForTesting
-    protected void onRegisterProxyViewFailed() {
-        mInputMethodUma.recordProxyViewFailure();
-        throw new AssertionError("Failed to register proxy view");
+    protected void onRegisterProxyViewSuccess() {
+        Log.d(TAG, "onRegisterProxyViewSuccess");
+        mInputMethodUma.recordProxyViewSuccess();
     }
 
-    @Override
-    public Handler getHandler() {
-        return mHandler;
+    @VisibleForTesting
+    protected void onRegisterProxyViewFailure() {
+        Log.w(TAG, "onRegisterProxyViewFailure");
+        mInputMethodUma.recordProxyViewFailure();
     }
 
     @Override
     public void onWindowFocusChanged(boolean gainFocus) {
         if (DEBUG_LOGS) Log.d(TAG, "onWindowFocusChanged: " + gainFocus);
         if (!gainFocus && mCheckInvalidator != null) mCheckInvalidator.invalidate();
+        if (mProxyView != null) mProxyView.onOriginalViewWindowFocusChanged(gainFocus);
     }
 
     @Override
     public void onViewFocusChanged(boolean gainFocus) {
         if (DEBUG_LOGS) Log.d(TAG, "onViewFocusChanged: " + gainFocus);
         if (!gainFocus && mCheckInvalidator != null) mCheckInvalidator.invalidate();
+        if (mProxyView != null) mProxyView.onOriginalViewFocusChanged(gainFocus);
+    }
+
+    @Override
+    public void onViewAttachedToWindow() {
+        if (DEBUG_LOGS) Log.d(TAG, "onViewAttachedToWindow");
+        if (mProxyView != null) mProxyView.onOriginalViewAttachedToWindow();
     }
 
     @Override
     public void onViewDetachedFromWindow() {
         if (DEBUG_LOGS) Log.d(TAG, "onViewDetachedFromWindow");
         if (mCheckInvalidator != null) mCheckInvalidator.invalidate();
+        if (mProxyView != null) mProxyView.onOriginalViewDetachedFromWindow();
     }
 }

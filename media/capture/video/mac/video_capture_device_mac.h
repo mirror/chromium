@@ -19,8 +19,8 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "media/base/video_capture_types.h"
 #include "media/capture/video/video_capture_device.h"
+#include "media/capture/video_capture_types.h"
 
 @class VideoCaptureDeviceAVFoundation;
 
@@ -54,7 +54,8 @@ namespace media {
 // capture devices.
 class VideoCaptureDeviceMac : public VideoCaptureDevice {
  public:
-  explicit VideoCaptureDeviceMac(const Name& device_name);
+  explicit VideoCaptureDeviceMac(
+      const VideoCaptureDeviceDescriptor& device_descriptor);
   ~VideoCaptureDeviceMac() override;
 
   // VideoCaptureDevice implementation.
@@ -64,7 +65,7 @@ class VideoCaptureDeviceMac : public VideoCaptureDevice {
   void StopAndDeAllocate() override;
   void TakePhoto(TakePhotoCallback callback) override;
 
-  bool Init(VideoCaptureDevice::Name::CaptureApiType capture_api_type);
+  bool Init(VideoCaptureApi capture_api_type);
 
   // Called to deliver captured video frames.  It's safe to call this method
   // from any thread, including those controlled by AVFoundation.
@@ -89,6 +90,10 @@ class VideoCaptureDeviceMac : public VideoCaptureDevice {
   // Forwarder to VideoCaptureDevice::Client::OnLog().
   void LogMessage(const std::string& message);
 
+  static std::string GetDeviceModelId(const std::string& device_id,
+                                      VideoCaptureApi capture_api,
+                                      VideoCaptureTransportType transport_type);
+
  private:
   void SetErrorState(const tracked_objects::Location& from_here,
                      const std::string& reason);
@@ -97,7 +102,7 @@ class VideoCaptureDeviceMac : public VideoCaptureDevice {
   // Flag indicating the internal state.
   enum InternalState { kNotInitialized, kIdle, kCapturing, kError };
 
-  Name device_name_;
+  VideoCaptureDeviceDescriptor device_descriptor_;
   std::unique_ptr<VideoCaptureDevice::Client> client_;
 
   VideoCaptureFormat capture_format_;

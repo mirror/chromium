@@ -9,6 +9,7 @@
 #include <stddef.h>
 
 #include <type_traits>
+#include <utility>
 
 #include "base/base_export.h"
 #include "base/logging.h"
@@ -43,23 +44,23 @@ template<typename T> class JavaRef;
 template<>
 class BASE_EXPORT JavaRef<jobject> {
  public:
+  // Initializes a null reference. Don't add anything else here; it's inlined.
+  JavaRef() : obj_(nullptr) {}
+
   // Allow nullptr to be converted to JavaRef. This avoids having to declare an
-  // empty ScopedJavaLocalRef just to pass null to a function with a JavaRef
-  // parameter, and makes C++ "nullptr" and Java "null" equivalent.
+  // empty JavaRef just to pass null to a function, and makes C++ "nullptr" and
+  // Java "null" equivalent.
   JavaRef(std::nullptr_t) : JavaRef() {}
 
-  // Public to allow destruction of temporary JavaRef objects created by the
-  // nullptr conversion. Don't add anything else here; it's inlined.
+  // Public to allow destruction of null JavaRef objects.
+  // Don't add anything else here; it's inlined.
   ~JavaRef() {}
 
   jobject obj() const { return obj_; }
 
-  bool is_null() const { return obj_ == NULL; }
+  bool is_null() const { return obj_ == nullptr; }
 
  protected:
-  // Initializes a NULL reference. Don't add anything else here; it's inlined.
-  JavaRef() : obj_(NULL) {}
-
   // Takes ownership of the |obj| reference passed; requires it to be a local
   // reference type.
 #if DCHECK_IS_ON()
@@ -69,6 +70,8 @@ class BASE_EXPORT JavaRef<jobject> {
   // Don't add anything else here; it's inlined.
   JavaRef(JNIEnv* env, jobject obj) : obj_(obj) {}
 #endif
+
+  void swap(JavaRef& other) { std::swap(obj_, other.obj_); }
 
   // The following are implementation detail convenience methods, for
   // use by the sub-classes.
@@ -90,14 +93,13 @@ class BASE_EXPORT JavaRef<jobject> {
 template<typename T>
 class JavaRef : public JavaRef<jobject> {
  public:
+  JavaRef() {}
   JavaRef(std::nullptr_t) : JavaRef<jobject>(nullptr) {}
   ~JavaRef() {}
 
   T obj() const { return static_cast<T>(JavaRef<jobject>::obj()); }
 
  protected:
-  JavaRef() {}
-
   JavaRef(JNIEnv* env, T obj) : JavaRef<jobject>(env, obj) {}
 
  private:
@@ -144,7 +146,8 @@ class JavaParamRef : public JavaRef<T> {
 template<typename T>
 class ScopedJavaLocalRef : public JavaRef<T> {
  public:
-  ScopedJavaLocalRef() : env_(NULL) {}
+  ScopedJavaLocalRef() : env_(nullptr) {}
+  ScopedJavaLocalRef(std::nullptr_t) : env_(nullptr) {}
 
   // Non-explicit copy constructor, to allow ScopedJavaLocalRef to be returned
   // by value as this is the normal usage pattern.
@@ -153,14 +156,18 @@ class ScopedJavaLocalRef : public JavaRef<T> {
     this->SetNewLocalRef(env_, other.obj());
   }
 
-  template<typename U>
-  explicit ScopedJavaLocalRef(const U& other)
-      : env_(NULL) {
+  ScopedJavaLocalRef(ScopedJavaLocalRef<T>&& other) : env_(other.env_) {
+    this->swap(other);
+  }
+
+  explicit ScopedJavaLocalRef(const JavaRef<T>& other) : env_(nullptr) {
     this->Reset(other);
   }
 
   // Assumes that |obj| is a local reference to a Java object and takes
   // ownership  of this local reference.
+  // TODO(torne): this shouldn't be used outside of JNI helper functions but
+  // there are currently some cases where there aren't helpers for things.
   ScopedJavaLocalRef(JNIEnv* env, T obj) : JavaRef<T>(env, obj), env_(env) {}
 
   ~ScopedJavaLocalRef() {
@@ -173,31 +180,32 @@ class ScopedJavaLocalRef : public JavaRef<T> {
     this->Reset(other);
   }
 
+  void operator=(ScopedJavaLocalRef<T>&& other) {
+    env_ = other.env_;
+    this->swap(other);
+  }
+
   void Reset() {
     this->ResetLocalRef(env_);
   }
 
-  template<typename U>
-  void Reset(const ScopedJavaLocalRef<U>& other) {
+  void Reset(const ScopedJavaLocalRef<T>& other) {
     // We can copy over env_ here as |other| instance must be from the same
     // thread as |this| local ref. (See class comment for multi-threading
     // limitations, and alternatives).
     this->Reset(other.env_, other.obj());
   }
 
-  template<typename U>
-  void Reset(const U& other) {
-    // If |env_| was not yet set (is still NULL) it will be attached to the
+  void Reset(const JavaRef<T>& other) {
+    // If |env_| was not yet set (is still null) it will be attached to the
     // current thread in SetNewLocalRef().
     this->Reset(env_, other.obj());
   }
 
-  template<typename U>
-  void Reset(JNIEnv* env, U obj) {
-    static_assert(std::is_convertible<U, T>::value,
-                  "U must be convertible to T");
-    env_ = this->SetNewLocalRef(env, obj);
-  }
+  // Creates a new local reference to the Java object, unlike the constructor
+  // with the same parameters that takes ownership of the existing reference.
+  // TODO(torne): these should match as this is confusing.
+  void Reset(JNIEnv* env, T obj) { env_ = this->SetNewLocalRef(env, obj); }
 
   // Releases the local reference to the caller. The caller *must* delete the
   // local reference when it is done with it. Note that calling a Java method
@@ -227,17 +235,17 @@ template<typename T>
 class ScopedJavaGlobalRef : public JavaRef<T> {
  public:
   ScopedJavaGlobalRef() {}
+  ScopedJavaGlobalRef(std::nullptr_t) {}
 
   ScopedJavaGlobalRef(const ScopedJavaGlobalRef<T>& other) {
     this->Reset(other);
   }
 
+  ScopedJavaGlobalRef(ScopedJavaGlobalRef<T>&& other) { this->swap(other); }
+
   ScopedJavaGlobalRef(JNIEnv* env, T obj) { this->Reset(env, obj); }
 
-  template<typename U>
-  explicit ScopedJavaGlobalRef(const U& other) {
-    this->Reset(other);
-  }
+  explicit ScopedJavaGlobalRef(const JavaRef<T>& other) { this->Reset(other); }
 
   ~ScopedJavaGlobalRef() {
     this->Reset();
@@ -249,26 +257,19 @@ class ScopedJavaGlobalRef : public JavaRef<T> {
     this->Reset(other);
   }
 
+  void operator=(ScopedJavaGlobalRef<T>&& other) { this->swap(other); }
+
   void Reset() {
     this->ResetGlobalRef();
   }
 
-  template<typename U>
-  void Reset(const U& other) {
-    this->Reset(NULL, other.obj());
-  }
+  void Reset(const JavaRef<T>& other) { this->Reset(nullptr, other.obj()); }
 
-  template<typename U>
-  void Reset(JNIEnv* env, const JavaParamRef<U>& other) {
+  void Reset(JNIEnv* env, const JavaParamRef<T>& other) {
     this->Reset(env, other.obj());
   }
 
-  template<typename U>
-  void Reset(JNIEnv* env, U obj) {
-    static_assert(std::is_convertible<U, T>::value,
-                  "U must be convertible to T");
-    this->SetNewGlobalRef(env, obj);
-  }
+  void Reset(JNIEnv* env, T obj) { this->SetNewGlobalRef(env, obj); }
 
   // Releases the global reference to the caller. The caller *must* delete the
   // global reference when it is done with it. Note that calling a Java method
@@ -276,6 +277,22 @@ class ScopedJavaGlobalRef : public JavaRef<T> {
   T Release() {
     return static_cast<T>(this->ReleaseInternal());
   }
+};
+
+// Temporary type for parameters to Java functions, to allow incremental
+// migration from bare jobject to JavaRef. Don't use outside JNI generator.
+template <typename T>
+class JavaRefOrBare {
+ public:
+  JavaRefOrBare(std::nullptr_t) : obj_(nullptr) {}
+  JavaRefOrBare(const JavaRef<T>& ref) : obj_(ref.obj()) {}
+  JavaRefOrBare(T obj) : obj_(obj) {}
+  T obj() const { return obj_; }
+
+ private:
+  T obj_;
+
+  DISALLOW_COPY_AND_ASSIGN(JavaRefOrBare);
 };
 
 }  // namespace android

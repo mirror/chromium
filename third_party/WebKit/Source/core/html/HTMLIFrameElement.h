@@ -26,61 +26,76 @@
 
 #include "core/CoreExport.h"
 #include "core/html/HTMLFrameElementBase.h"
-#include "core/html/HTMLIFrameElementPermissions.h"
+#include "core/html/HTMLIFrameElementAllow.h"
 #include "core/html/HTMLIFrameElementSandbox.h"
+#include "platform/Supplementable.h"
+#include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebVector.h"
-#include "public/platform/modules/permissions/WebPermissionType.h"
 
 namespace blink {
 
-class CORE_EXPORT HTMLIFrameElement final : public HTMLFrameElementBase {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(HTMLIFrameElement);
-    DECLARE_VIRTUAL_TRACE();
-    ~HTMLIFrameElement() override;
-    DOMTokenList* sandbox() const;
-    DOMTokenList* permissions() const;
+class CORE_EXPORT HTMLIFrameElement final
+    : public HTMLFrameElementBase,
+      public Supplementable<HTMLIFrameElement> {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(HTMLIFrameElement);
 
-    void sandboxValueWasSet();
-    void permissionsValueWasSet();
+ public:
+  DECLARE_NODE_FACTORY(HTMLIFrameElement);
+  DECLARE_VIRTUAL_TRACE();
+  ~HTMLIFrameElement() override;
+  DOMTokenList* sandbox() const;
+  DOMTokenList* allow() const;
 
-private:
-    explicit HTMLIFrameElement(Document&);
+  void SandboxValueWasSet();
+  void AllowValueWasSet();
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    bool isPresentationAttribute(const QualifiedName&) const override;
-    void collectStyleForPresentationAttribute(const QualifiedName&, const AtomicString&, MutableStylePropertySet*) override;
+ private:
+  explicit HTMLIFrameElement(Document&);
 
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void removedFrom(ContainerNode*) override;
+  void ParseAttribute(const AttributeModificationParams&) override;
+  bool IsPresentationAttribute(const QualifiedName&) const override;
+  void CollectStyleForPresentationAttribute(const QualifiedName&,
+                                            const AtomicString&,
+                                            MutableStylePropertySet*) override;
 
-    bool layoutObjectIsNeeded(const ComputedStyle&) override;
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
 
-    bool loadedNonEmptyDocument() const override { return m_didLoadNonEmptyDocument; }
-    void didLoadNonEmptyDocument() override { m_didLoadNonEmptyDocument = true; }
-    bool isInteractiveContent() const override;
+  bool LayoutObjectIsNeeded(const ComputedStyle&) override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
 
-    ReferrerPolicy referrerPolicyAttribute() override;
+  bool LoadedNonEmptyDocument() const override {
+    return did_load_non_empty_document_;
+  }
+  void DidLoadNonEmptyDocument() override {
+    did_load_non_empty_document_ = true;
+  }
+  bool IsInteractiveContent() const override;
 
-    bool allowFullscreen() const override { return m_allowFullscreen; }
+  ReferrerPolicy ReferrerPolicyAttribute() override;
 
-    const WebVector<WebPermissionType>& delegatedPermissions() const override { return m_delegatedPermissions; }
+  // FrameOwner overrides:
+  bool AllowFullscreen() const override { return allow_fullscreen_; }
+  bool AllowPaymentRequest() const override { return allow_payment_request_; }
+  AtomicString Csp() const override { return csp_; }
+  const WebVector<WebFeaturePolicyFeature>& AllowedFeatures() const override {
+    return allowed_features_;
+  }
 
-    bool initializePermissionsAttribute();
+  AtomicString name_;
+  AtomicString csp_;
+  bool did_load_non_empty_document_;
+  bool allow_fullscreen_;
+  bool allow_payment_request_;
+  Member<HTMLIFrameElementSandbox> sandbox_;
+  Member<HTMLIFrameElementAllow> allow_;
 
-    AtomicString m_name;
-    bool m_didLoadNonEmptyDocument;
-    bool m_allowFullscreen;
-    Member<HTMLIFrameElementSandbox> m_sandbox;
-    Member<HTMLIFrameElementPermissions> m_permissions;
+  WebVector<WebFeaturePolicyFeature> allowed_features_;
 
-    WebVector<WebPermissionType> m_delegatedPermissions;
-
-    ReferrerPolicy m_referrerPolicy;
+  ReferrerPolicy referrer_policy_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLIFrameElement_h
+#endif  // HTMLIFrameElement_h

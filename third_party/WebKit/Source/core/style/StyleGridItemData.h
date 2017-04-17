@@ -31,39 +31,40 @@
 #ifndef StyleGridItemData_h
 #define StyleGridItemData_h
 
-
 #include "core/style/GridPosition.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefCounted.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefCounted.h"
 
 namespace blink {
 
 class StyleGridItemData : public RefCounted<StyleGridItemData> {
-public:
-    static PassRefPtr<StyleGridItemData> create() { return adoptRef(new StyleGridItemData); }
-    PassRefPtr<StyleGridItemData> copy() const { return adoptRef(new StyleGridItemData(*this)); }
+ public:
+  static PassRefPtr<StyleGridItemData> Create() {
+    return AdoptRef(new StyleGridItemData);
+  }
+  PassRefPtr<StyleGridItemData> Copy() const {
+    return AdoptRef(new StyleGridItemData(*this));
+  }
 
-    bool operator==(const StyleGridItemData& o) const
-    {
-        return m_gridColumnStart == o.m_gridColumnStart && m_gridColumnEnd == o.m_gridColumnEnd
-            && m_gridRowStart == o.m_gridRowStart && m_gridRowEnd == o.m_gridRowEnd;
-    }
+  bool operator==(const StyleGridItemData& o) const {
+    return grid_column_start_ == o.grid_column_start_ &&
+           grid_column_end_ == o.grid_column_end_ &&
+           grid_row_start_ == o.grid_row_start_ &&
+           grid_row_end_ == o.grid_row_end_;
+  }
 
-    bool operator!=(const StyleGridItemData& o) const
-    {
-        return !(*this == o);
-    }
+  bool operator!=(const StyleGridItemData& o) const { return !(*this == o); }
 
-    GridPosition m_gridColumnStart;
-    GridPosition m_gridColumnEnd;
-    GridPosition m_gridRowStart;
-    GridPosition m_gridRowEnd;
+  GridPosition grid_column_start_;
+  GridPosition grid_column_end_;
+  GridPosition grid_row_start_;
+  GridPosition grid_row_end_;
 
-private:
-    StyleGridItemData();
-    StyleGridItemData(const StyleGridItemData&);
+ private:
+  StyleGridItemData();
+  StyleGridItemData(const StyleGridItemData&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StyleGridItemData_h
+#endif  // StyleGridItemData_h

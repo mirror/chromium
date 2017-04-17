@@ -27,10 +27,10 @@
 #define TextStream_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Forward.h"
-#include "wtf/Vector.h"
-#include "wtf/text/StringBuilder.h"
-#include "wtf/text/Unicode.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/Unicode.h"
 
 namespace blink {
 
@@ -45,31 +45,32 @@ class LayoutRect;
 class LayoutSize;
 
 class PLATFORM_EXPORT TextStream final {
-    STACK_ALLOCATED();
-public:
-    struct FormatNumberRespectingIntegers {
-        FormatNumberRespectingIntegers(double number) : value(number) { }
-        double value;
-    };
+  STACK_ALLOCATED();
 
-    TextStream& operator<<(bool);
-    TextStream& operator<<(int);
-    TextStream& operator<<(unsigned);
-    TextStream& operator<<(long);
-    TextStream& operator<<(unsigned long);
-    TextStream& operator<<(long long);
-    TextStream& operator<<(unsigned long long);
-    TextStream& operator<<(float);
-    TextStream& operator<<(double);
-    TextStream& operator<<(const char*);
-    TextStream& operator<<(const void*);
-    TextStream& operator<<(const String&);
-    TextStream& operator<<(const FormatNumberRespectingIntegers&);
+ public:
+  struct FormatNumberRespectingIntegers {
+    FormatNumberRespectingIntegers(double number) : value(number) {}
+    double value;
+  };
 
-    String release();
+  TextStream& operator<<(bool);
+  TextStream& operator<<(int);
+  TextStream& operator<<(unsigned);
+  TextStream& operator<<(long);
+  TextStream& operator<<(unsigned long);
+  TextStream& operator<<(long long);
+  TextStream& operator<<(unsigned long long);
+  TextStream& operator<<(float);
+  TextStream& operator<<(double);
+  TextStream& operator<<(const char*);
+  TextStream& operator<<(const void*);
+  TextStream& operator<<(const String&);
+  TextStream& operator<<(const FormatNumberRespectingIntegers&);
 
-private:
-    StringBuilder m_text;
+  String Release();
+
+ private:
+  StringBuilder text_;
 };
 
 PLATFORM_EXPORT TextStream& operator<<(TextStream&, const IntPoint&);
@@ -82,24 +83,23 @@ PLATFORM_EXPORT TextStream& operator<<(TextStream&, const LayoutPoint&);
 PLATFORM_EXPORT TextStream& operator<<(TextStream&, const LayoutRect&);
 PLATFORM_EXPORT TextStream& operator<<(TextStream&, const LayoutSize&);
 
-PLATFORM_EXPORT void writeIndent(TextStream&, int indent);
+PLATFORM_EXPORT void WriteIndent(TextStream&, int indent);
 
-template<typename Item>
-TextStream& operator<<(TextStream& ts, const Vector<Item>& vector)
-{
-    ts << "[";
+template <typename Item>
+TextStream& operator<<(TextStream& ts, const Vector<Item>& vector) {
+  ts << "[";
 
-    unsigned size = vector.size();
-    for (unsigned i = 0; i < size; ++i) {
-        ts << vector[i];
-        if (i < size - 1)
-            ts << ", ";
-    }
+  unsigned size = vector.size();
+  for (unsigned i = 0; i < size; ++i) {
+    ts << vector[i];
+    if (i < size - 1)
+      ts << ", ";
+  }
 
-    ts << "]";
-    return ts;
+  ts << "]";
+  return ts;
 }
 
-} // namespace blink
+}  // namespace blink
 
 #endif

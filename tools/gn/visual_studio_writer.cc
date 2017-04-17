@@ -39,7 +39,7 @@ namespace {
 
 struct SemicolonSeparatedWriter {
   void operator()(const std::string& value, std::ostream& out) const {
-    out << value + ';';
+    out << XmlEscape(value) + ';';
   }
 };
 
@@ -71,12 +71,15 @@ struct SourceFileWriter {
 
 const char kToolsetVersionVs2013[] = "v120";               // Visual Studio 2013
 const char kToolsetVersionVs2015[] = "v140";               // Visual Studio 2015
+const char kToolsetVersionVs2017[] = "v141";               // Visual Studio 2017
 const char kProjectVersionVs2013[] = "12.0";               // Visual Studio 2013
 const char kProjectVersionVs2015[] = "14.0";               // Visual Studio 2015
+const char kProjectVersionVs2017[] = "15.0";               // Visual Studio 2015
 const char kVersionStringVs2013[] = "Visual Studio 2013";  // Visual Studio 2013
 const char kVersionStringVs2015[] = "Visual Studio 2015";  // Visual Studio 2015
+const char kVersionStringVs2017[] = "Visual Studio 2017";  // Visual Studio 2017
 const char kWindowsKitsVersion[] = "10";                   // Windows 10 SDK
-const char kWindowsKitsIncludeVersion[] = "10.0.10586.0";  // Windows 10 SDK
+const char kWindowsKitsIncludeVersion[] = "10.0.14393.0";  // Windows 10 SDK
 
 const char kGuidTypeProject[] = "{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}";
 const char kGuidTypeFolder[] = "{2150E333-8FDC-42A3-9474-1A3956D46DE8}";
@@ -153,6 +156,18 @@ void ParseCompilerOptions(const Target* target, CompilerOptions* options) {
   }
 }
 
+void ParseLinkerOptions(const std::vector<std::string>& ldflags,
+                        LinkerOptions* options) {
+  for (const std::string& flag : ldflags)
+    ParseLinkerOption(flag, options);
+}
+
+void ParseLinkerOptions(const Target* target, LinkerOptions* options) {
+  for (ConfigValuesIterator iter(target); !iter.done(); iter.Next()) {
+    ParseLinkerOptions(iter.cur().ldflags(), options);
+  }
+}
+
 // Returns a string piece pointing into the input string identifying the parent
 // directory path, excluding the last slash. Note that the input pointer must
 // outlive the output.
@@ -167,21 +182,25 @@ base::StringPiece FindParentDir(const std::string* path) {
 
 bool FilterTargets(const BuildSettings* build_settings,
                    const Builder& builder,
-                   const std::string& dir_filters,
+                   const std::string& filters,
+                   bool no_deps,
                    std::vector<const Target*>* targets,
                    Err* err) {
-  if (dir_filters.empty()) {
+  if (filters.empty()) {
     *targets = builder.GetAllResolvedTargets();
     return true;
   }
 
-  std::vector<LabelPattern> filters;
-  if (!commands::FilterPatternsFromString(build_settings, dir_filters, &filters,
+  std::vector<LabelPattern> patterns;
+  if (!commands::FilterPatternsFromString(build_settings, filters, &patterns,
                                           err))
     return false;
 
-  commands::FilterTargetsByPatterns(builder.GetAllResolvedTargets(), filters,
+  commands::FilterTargetsByPatterns(builder.GetAllResolvedTargets(), patterns,
                                     targets);
+
+  if (no_deps)
+    return true;
 
   std::set<Label> labels;
   std::queue<const Target*> to_process;
@@ -257,6 +276,11 @@ VisualStudioWriter::VisualStudioWriter(const BuildSettings* build_settings,
       toolset_version_ = kToolsetVersionVs2015;
       version_string_ = kVersionStringVs2015;
       break;
+    case Version::Vs2017:
+      project_version_ = kProjectVersionVs2017;
+      toolset_version_ = kToolsetVersionVs2017;
+      version_string_ = kVersionStringVs2017;
+      break;
     default:
       NOTREACHED() << "Not a valid Visual Studio Version: " << version;
   }
@@ -272,10 +296,11 @@ bool VisualStudioWriter::RunAndWriteFiles(const BuildSettings* build_settings,
                                           const Builder& builder,
                                           Version version,
                                           const std::string& sln_name,
-                                          const std::string& dir_filters,
+                                          const std::string& filters,
+                                          bool no_deps,
                                           Err* err) {
   std::vector<const Target*> targets;
-  if (!FilterTargets(build_settings, builder, dir_filters, &targets, err))
+  if (!FilterTargets(build_settings, builder, filters, no_deps, &targets, err))
     return false;
 
   const char* config_platform = "Win32";
@@ -337,8 +362,9 @@ bool VisualStudioWriter::WriteProjectFiles(const Target* target, Err* err) {
       project_config_platform = "Win32";
   }
 
-  SourceFile target_file = GetTargetOutputDir(target).ResolveRelativeFile(
-      Value(nullptr, project_name + ".vcxproj"), err);
+  SourceFile target_file =
+      GetBuildDirForTargetAsSourceDir(target, BuildDirType::OBJ)
+          .ResolveRelativeFile(Value(nullptr, project_name + ".vcxproj"), err);
   if (target_file.is_null())
     return false;
 
@@ -377,9 +403,9 @@ bool VisualStudioWriter::WriteProjectFileContents(
     const Target* target,
     SourceFileCompileTypePairs* source_types,
     Err* err) {
-  PathOutput path_output(GetTargetOutputDir(target),
-                         build_settings_->root_path_utf8(),
-                         EscapingMode::ESCAPE_NONE);
+  PathOutput path_output(
+      GetBuildDirForTargetAsSourceDir(target, BuildDirType::OBJ),
+      build_settings_->root_path_utf8(), EscapingMode::ESCAPE_NONE);
 
   out << "<?xml version=\"1.0\" encoding=\"utf-8\"?>" << std::endl;
   XmlElementWriter project(
@@ -533,8 +559,17 @@ bool VisualStudioWriter::WriteProjectFileContents(
         cl_compile->SubElement("WarningLevel")->Text(options.warning_level);
     }
 
-    // We don't include resource compilation and link options as ninja files
-    // are used to generate real build.
+    std::unique_ptr<XmlElementWriter> link =
+        item_definitions->SubElement("Link");
+    {
+      LinkerOptions options;
+      ParseLinkerOptions(target, &options);
+      if (!options.subsystem.empty())
+        link->SubElement("SubSystem")->Text(options.subsystem);
+    }
+
+    // We don't include resource compilation and other link options as ninja
+    // files are used to generate real build.
   }
 
   {
@@ -612,9 +647,9 @@ void VisualStudioWriter::WriteFiltersFileContents(
     // File paths are relative to vcxproj files which are generated to out dirs.
     // Filters tree structure need to reflect source directories and be relative
     // to target file. We need two path outputs then.
-    PathOutput file_path_output(GetTargetOutputDir(target),
-                                build_settings_->root_path_utf8(),
-                                EscapingMode::ESCAPE_NONE);
+    PathOutput file_path_output(
+        GetBuildDirForTargetAsSourceDir(target, BuildDirType::OBJ),
+        build_settings_->root_path_utf8(), EscapingMode::ESCAPE_NONE);
     PathOutput filter_path_output(target->label().dir(),
                                   build_settings_->root_path_utf8(),
                                   EscapingMode::ESCAPE_NONE);

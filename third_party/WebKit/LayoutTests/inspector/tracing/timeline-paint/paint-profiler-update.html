@@ -3,8 +3,10 @@
 <script src="../../../http/tests/inspector/inspector-test.js"></script>
 <script src="../../../http/tests/inspector/timeline-test.js"></script>
 <script>
-function performActions(callback)
+function performActions()
 {
+    var callback;
+    var promise = new Promise((fulfill) => callback = fulfill);
     var square = document.getElementById("square");
     step1();
 
@@ -19,12 +21,12 @@ function performActions(callback)
         square.style.backgroundColor = "black";
         testRunner.layoutAndPaintAsyncThen(callback);
     }
+    return promise;
 }
 
 function test()
 {
-    var panel = WebInspector.panels.timeline;
-
+    const panel = UI.panels.timeline;
     panel._captureLayersAndPicturesSetting.set(true);
     panel._onModeChanged();
 
@@ -34,9 +36,9 @@ function test()
     {
         var events = InspectorTest.timelineModel()._mainThreadEvents;
         for (var event of events) {
-            if (event.name === WebInspector.TimelineModel.RecordType.Paint) {
+            if (event.name === TimelineModel.TimelineModel.RecordType.Paint) {
                 paintEvents.push(event);
-                if (!event.picture) 
+                if (!TimelineModel.TimelineData.forEvent(event).picture)
                     InspectorTest.addResult("Event without picture at " + paintEvents.length);
             }
         }
@@ -44,14 +46,16 @@ function test()
         if (paintEvents.length < 2)
              throw new Error("FAIL: Expect at least two paint events");
 
-        InspectorTest.addSniffer(panel, "_appendDetailsTabsForTraceEventAndShowDetails", onRecordDetailsReady, false);
-        panel.select(WebInspector.TimelineSelection.fromTraceEvent(paintEvents[0]), WebInspector.TimelinePanel.DetailsTab.PaintProfiler);
+        InspectorTest.addSniffer(panel._flameChart._detailsView, "_appendDetailsTabsForTraceEventAndShowDetails", onRecordDetailsReady, false);
+        panel.select(Timeline.TimelineSelection.fromTraceEvent(paintEvents[0]));
     }
 
     function onRecordDetailsReady()
     {
         var updateCount = 0;
-        var paintProfilerView = panel._lazyPaintProfilerView._paintProfilerView;
+
+        panel._flameChart._detailsView._tabbedPane.selectTab(Timeline.TimelineDetailsView.Tab.PaintProfiler, true);
+        var paintProfilerView = panel._flameChart._detailsView._lazyPaintProfilerView._paintProfilerView;
         InspectorTest.addSniffer(paintProfilerView, "_update", onPaintProfilerUpdate, true);
 
         function onPaintProfilerUpdate()
@@ -64,7 +68,7 @@ function test()
             if (updateCount++)
                 InspectorTest.completeTest();
             else
-                panel.select(WebInspector.TimelineSelection.fromTraceEvent(paintEvents[1]), WebInspector.TimelinePanel.DetailsTab.PaintProfiler);
+                panel.select(Timeline.TimelineSelection.fromTraceEvent(paintEvents[1]), Timeline.TimelineDetailsView.Tab.PaintProfiler);
         }
    }
 

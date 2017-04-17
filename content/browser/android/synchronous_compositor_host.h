@@ -11,6 +11,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
 #include "cc/output/compositor_frame.h"
@@ -24,40 +25,36 @@ class Message;
 class Sender;
 }
 
-namespace blink {
-class WebInputEvent;
-}
-
-namespace cc {
-struct BeginFrameArgs;
+namespace ui {
+class WindowAndroid;
+struct DidOverscrollParams;
 }
 
 namespace content {
 
 class RenderWidgetHostViewAndroid;
 class SynchronousCompositorClient;
-class WebContents;
-struct DidOverscrollParams;
+class SynchronousCompositorBrowserFilter;
 struct SyncCompositorCommonRendererParams;
 
 class SynchronousCompositorHost : public SynchronousCompositor {
  public:
   static std::unique_ptr<SynchronousCompositorHost> Create(
-      RenderWidgetHostViewAndroid* rwhva,
-      WebContents* web_contents);
+      RenderWidgetHostViewAndroid* rwhva);
 
   ~SynchronousCompositorHost() override;
 
   // SynchronousCompositor overrides.
   SynchronousCompositor::Frame DemandDrawHw(
-      const gfx::Size& surface_size,
-      const gfx::Transform& transform,
-      const gfx::Rect& viewport,
-      const gfx::Rect& clip,
+      const gfx::Size& viewport_size,
+      const gfx::Rect& viewport_rect_for_tile_priority,
+      const gfx::Transform& transform_for_tile_priority) override;
+  scoped_refptr<FrameFuture> DemandDrawHwAsync(
+      const gfx::Size& viewport_size,
       const gfx::Rect& viewport_rect_for_tile_priority,
       const gfx::Transform& transform_for_tile_priority) override;
   bool DemandDrawSw(SkCanvas* canvas) override;
-  void ReturnResources(uint32_t output_surface_id,
+  void ReturnResources(uint32_t compositor_frame_sink_id,
                        const cc::ReturnedResourceArray& resources) override;
   void SetMemoryPolicy(size_t bytes_limit) override;
   void DidChangeRootLayerScrollOffset(
@@ -65,9 +62,16 @@ class SynchronousCompositorHost : public SynchronousCompositor {
   void SynchronouslyZoomBy(float zoom_delta, const gfx::Point& anchor) override;
   void OnComputeScroll(base::TimeTicks animation_time) override;
 
-  void DidOverscroll(const DidOverscrollParams& over_scroll_params);
-  void DidSendBeginFrame();
+  void DidOverscroll(const ui::DidOverscrollParams& over_scroll_params);
+  void DidSendBeginFrame(ui::WindowAndroid* window_android);
   bool OnMessageReceived(const IPC::Message& message);
+
+  // Called by SynchronousCompositorBrowserFilter.
+  int routing_id() const { return routing_id_; }
+  void UpdateFrameMetaData(cc::CompositorFrameMetadata frame_metadata);
+  void ProcessCommonParams(const SyncCompositorCommonRendererParams& params);
+
+  SynchronousCompositorClient* client() { return client_; }
 
  private:
   class ScopedSendZeroMemory;
@@ -76,14 +80,12 @@ class SynchronousCompositorHost : public SynchronousCompositor {
   friend class SynchronousCompositorBase;
 
   SynchronousCompositorHost(RenderWidgetHostViewAndroid* rwhva,
-                            SynchronousCompositorClient* client,
                             bool use_in_proc_software_draw);
-  void ProcessCommonParams(const SyncCompositorCommonRendererParams& params);
-  void UpdateFrameMetaData(cc::CompositorFrameMetadata frame_metadata);
-  void OutputSurfaceCreated();
+  void CompositorFrameSinkCreated();
   bool DemandDrawSwInProc(SkCanvas* canvas);
   void SetSoftwareDrawSharedMemoryIfNeeded(size_t stride, size_t buffer_size);
   void SendZeroMemory();
+  SynchronousCompositorBrowserFilter* GetFilter();
 
   RenderWidgetHostViewAndroid* const rwhva_;
   SynchronousCompositorClient* const client_;
@@ -93,8 +95,13 @@ class SynchronousCompositorHost : public SynchronousCompositor {
   IPC::Sender* const sender_;
   const bool use_in_process_zero_copy_software_draw_;
 
+  bool registered_with_filter_ = false;
+
   size_t bytes_limit_;
   std::unique_ptr<SharedMemoryWithSize> software_draw_shm_;
+
+  // Indicates the next draw needs to be synchronous
+  bool compute_scroll_needs_synchronous_draw_ = false;
 
   // Updated by both renderer and browser.
   gfx::ScrollOffset root_scroll_offset_;

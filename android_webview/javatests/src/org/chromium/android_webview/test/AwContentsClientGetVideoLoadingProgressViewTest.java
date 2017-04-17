@@ -4,12 +4,12 @@
 
 package org.chromium.android_webview.test;
 
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
 import android.view.View;
 
 import org.chromium.android_webview.AwContents;
+import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.Feature;
-import org.chromium.content.browser.test.util.CallbackHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -28,9 +28,11 @@ import java.util.concurrent.TimeoutException;
 public class AwContentsClientGetVideoLoadingProgressViewTest extends AwTestBase
         implements View.OnAttachStateChangeListener {
     private static final String VIDEO_TEST_URL =
-            "file:///android_asset/full_screen_video_test.html";
-    // This value must be kept in sync with the string in full_screen_video_test.html
+            "file:///android_asset/full_screen_video_test_not_preloaded.html";
+    // These values must be kept in sync with the element ids in the above file.
+    private static final String CUSTOM_PLAY_CONTROL_ID = "playControl";
     private static final String CUSTOM_FULLSCREEN_CONTROL_ID = "fullscreenControl";
+
     private CallbackHelper mViewAttachedCallbackHelper = new CallbackHelper();
 
     @Override
@@ -69,7 +71,9 @@ public class AwContentsClientGetVideoLoadingProgressViewTest extends AwTestBase
         enableJavaScriptOnUiThread(awContents);
         loadUrlSync(awContents, contentsClient.getOnPageFinishedHelper(), VIDEO_TEST_URL);
         Thread.sleep(5 * 1000);
-        DOMUtils.clickNode(this, awContents.getContentViewCore(), CUSTOM_FULLSCREEN_CONTROL_ID);
+        DOMUtils.clickNode(awContents.getContentViewCore(), CUSTOM_FULLSCREEN_CONTROL_ID);
+        Thread.sleep(1 * 1000);
+        DOMUtils.clickNode(awContents.getContentViewCore(), CUSTOM_PLAY_CONTROL_ID);
         waitForViewAttached();
     }
 }

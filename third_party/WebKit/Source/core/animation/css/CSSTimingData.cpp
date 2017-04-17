@@ -8,28 +8,24 @@
 
 namespace blink {
 
-CSSTimingData::CSSTimingData()
-{
-    m_delayList.append(initialDelay());
-    m_durationList.append(initialDuration());
-    m_timingFunctionList.append(initialTimingFunction());
+CSSTimingData::CSSTimingData() {
+  delay_list_.push_back(InitialDelay());
+  duration_list_.push_back(InitialDuration());
+  timing_function_list_.push_back(InitialTimingFunction());
 }
 
 CSSTimingData::CSSTimingData(const CSSTimingData& other)
-    : m_delayList(other.m_delayList)
-    , m_durationList(other.m_durationList)
-    , m_timingFunctionList(other.m_timingFunctionList)
-{
+    : delay_list_(other.delay_list_),
+      duration_list_(other.duration_list_),
+      timing_function_list_(other.timing_function_list_) {}
+
+Timing CSSTimingData::ConvertToTiming(size_t index) const {
+  Timing timing;
+  timing.start_delay = GetRepeated(delay_list_, index);
+  timing.iteration_duration = GetRepeated(duration_list_, index);
+  timing.timing_function = GetRepeated(timing_function_list_, index);
+  timing.AssertValid();
+  return timing;
 }
 
-Timing CSSTimingData::convertToTiming(size_t index) const
-{
-    Timing timing;
-    timing.startDelay = getRepeated(m_delayList, index);
-    timing.iterationDuration = getRepeated(m_durationList, index);
-    timing.timingFunction = getRepeated(m_timingFunctionList, index);
-    timing.assertValid();
-    return timing;
-}
-
-} // namespace blink
+}  // namespace blink

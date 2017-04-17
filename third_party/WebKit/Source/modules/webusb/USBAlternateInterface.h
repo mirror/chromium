@@ -15,32 +15,35 @@ class ExceptionState;
 class USBEndpoint;
 class USBInterface;
 
-class USBAlternateInterface
-    : public GarbageCollected<USBAlternateInterface>
-    , public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static USBAlternateInterface* create(const USBInterface*, size_t alternateIndex);
-    static USBAlternateInterface* create(const USBInterface*, size_t alternateSetting, ExceptionState&);
+class USBAlternateInterface : public GarbageCollected<USBAlternateInterface>,
+                              public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    USBAlternateInterface(const USBInterface*, size_t alternateIndex);
+ public:
+  static USBAlternateInterface* Create(const USBInterface*,
+                                       size_t alternate_index);
+  static USBAlternateInterface* Create(const USBInterface*,
+                                       size_t alternate_setting,
+                                       ExceptionState&);
 
-    const device::usb::blink::AlternateInterfaceInfo& info() const;
+  USBAlternateInterface(const USBInterface*, size_t alternate_index);
 
-    uint8_t alternateSetting() const { return info().alternate_setting; }
-    uint8_t interfaceClass() const { return info().class_code; }
-    uint8_t interfaceSubclass() const { return info().subclass_code; }
-    uint8_t interfaceProtocol() const { return info().protocol_code; }
-    String interfaceName() const { return info().interface_name; }
-    HeapVector<Member<USBEndpoint>> endpoints() const;
+  const device::usb::blink::AlternateInterfaceInfo& Info() const;
 
-    DECLARE_TRACE();
+  uint8_t alternateSetting() const { return Info().alternate_setting; }
+  uint8_t interfaceClass() const { return Info().class_code; }
+  uint8_t interfaceSubclass() const { return Info().subclass_code; }
+  uint8_t interfaceProtocol() const { return Info().protocol_code; }
+  String interfaceName() const { return Info().interface_name; }
+  HeapVector<Member<USBEndpoint>> endpoints() const;
 
-private:
-    Member<const USBInterface> m_interface;
-    const size_t m_alternateIndex;
+  DECLARE_TRACE();
+
+ private:
+  Member<const USBInterface> interface_;
+  const size_t alternate_index_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // USBAlternateInterface_h
+#endif  // USBAlternateInterface_h

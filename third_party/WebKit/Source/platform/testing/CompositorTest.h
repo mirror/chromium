@@ -8,25 +8,25 @@
 #include "base/memory/ref_counted.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "platform/wtf/Noncopyable.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/Noncopyable.h"
 
 namespace blink {
 
 class CompositorTest : public testing::Test {
-    WTF_MAKE_NONCOPYABLE(CompositorTest);
+  WTF_MAKE_NONCOPYABLE(CompositorTest);
 
-public:
-    CompositorTest();
-    virtual ~CompositorTest();
+ public:
+  CompositorTest();
+  virtual ~CompositorTest();
 
-protected:
-    // Mock task runner is initialized here because tests create
-    // WebLayerTreeViewImplForTesting which needs the current task runner handle.
-    scoped_refptr<base::TestMockTimeTaskRunner> m_runner;
-    base::ThreadTaskRunnerHandle m_runnerHandle;
+ protected:
+  // Mock task runner is initialized here because tests create
+  // WebLayerTreeViewImplForTesting which needs the current task runner handle.
+  scoped_refptr<base::TestMockTimeTaskRunner> runner_;
+  base::ThreadTaskRunnerHandle runner_handle_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CompositorTest_h
+#endif  // CompositorTest_h

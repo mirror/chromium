@@ -5,18 +5,20 @@
 #ifndef COMPONENTS_SIGNIN_CORE_BROWSER_SIGNIN_CLIENT_H_
 #define COMPONENTS_SIGNIN_CORE_BROWSER_SIGNIN_CLIENT_H_
 
+#include <memory>
+
 #include "base/callback.h"
 #include "base/callback_list.h"
 #include "base/time/time.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/signin/core/browser/account_info.h"
+#include "components/signin/core/browser/signin_metrics.h"
 #include "components/signin/core/browser/webdata/token_web_data.h"
 #include "google_apis/gaia/gaia_auth_fetcher.h"
 #include "net/cookies/cookie_store.h"
 #include "url/gurl.h"
 
 class PrefService;
-class SigninManagerBase;
 class TokenWebData;
 
 namespace content_settings {
@@ -34,7 +36,7 @@ class SigninClient : public KeyedService {
   // The subcription for cookie changed notifications.
   class CookieChangedSubscription {
    public:
-    virtual ~CookieChangedSubscription() {};
+    virtual ~CookieChangedSubscription() {}
   };
 
   ~SigninClient() override {}
@@ -97,6 +99,11 @@ class SigninClient : public KeyedService {
                             const std::string& username,
                             const std::string& password) {}
 
+  // Called before Google signout started, call |sign_out| to start the sign out
+  // process.
+  virtual void PreSignOut(const base::Callback<void()>& sign_out,
+                          signin_metrics::ProfileSignout signout_source_metric);
+
   virtual bool IsFirstRun() const = 0;
   virtual base::Time GetInstallDate() = 0;
 
@@ -113,12 +120,14 @@ class SigninClient : public KeyedService {
   // Execute |callback| if and when there is a network connection.
   virtual void DelayNetworkCall(const base::Closure& callback) = 0;
 
-  // Creates and returns a new platform-specific GaiaAuthFetcher. It is the
-  // responsability of the caller to delete the returned object.
-  virtual GaiaAuthFetcher* CreateGaiaAuthFetcher(
+  // Creates a new platform-specific GaiaAuthFetcher.
+  virtual std::unique_ptr<GaiaAuthFetcher> CreateGaiaAuthFetcher(
       GaiaAuthConsumer* consumer,
       const std::string& source,
       net::URLRequestContextGetter* getter) = 0;
+
+  // Called once the credentials has been copied to another SigninManager.
+  virtual void AfterCredentialsCopied() {}
 
  protected:
   // Returns device id that is scoped to single signin.

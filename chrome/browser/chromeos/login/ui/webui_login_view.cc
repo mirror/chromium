@@ -4,10 +4,9 @@
 
 #include "chrome/browser/chromeos/login/ui/webui_login_view.h"
 
-#include "ash/common/focus_cycler.h"
-#include "ash/common/system/tray/system_tray.h"
-#include "ash/common/wm_shell.h"
+#include "ash/focus_cycler.h"
 #include "ash/shell.h"
+#include "ash/system/tray/system_tray.h"
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/i18n/rtl.h"
@@ -18,25 +17,28 @@
 #include "base/values.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_util.h"
+#include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host_impl.h"
+#include "chrome/browser/chromeos/login/ui/preloaded_web_view.h"
+#include "chrome/browser/chromeos/login/ui/preloaded_web_view_factory.h"
 #include "chrome/browser/chromeos/login/ui/proxy_settings_dialog.h"
+#include "chrome/browser/chromeos/login/ui/web_contents_forced_title.h"
+#include "chrome/browser/chromeos/login/ui/web_contents_set_background_color.h"
 #include "chrome/browser/chromeos/login/ui/webui_login_display.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
-#include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/extensions/chrome_extension_web_contents_observer.h"
-#include "chrome/browser/media/media_capture_devices_dispatcher.h"
-#include "chrome/browser/media/media_stream_devices_controller.h"
+#include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
 #include "chrome/browser/renderer_preferences_util.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
 #include "chrome/browser/ui/ash/ash_util.h"
+#include "chrome/browser/ui/ash/system_tray_client.h"
 #include "chrome/browser/ui/autofill/chrome_autofill_client.h"
 #include "chrome/browser/ui/webui/chromeos/login/oobe_ui.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
-#include "chromeos/settings/cros_settings_names.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/password_manager/core/browser/password_manager.h"
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
@@ -49,7 +51,7 @@
 #include "content/public/browser/web_ui.h"
 #include "content/public/common/renderer_preferences.h"
 #include "extensions/browser/view_type_utils.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/views/controls/webview/webview.h"
@@ -70,14 +72,13 @@ const char kAccelNameEnrollment[] = "enrollment";
 const char kAccelNameKioskEnable[] = "kiosk_enable";
 const char kAccelNameVersion[] = "version";
 const char kAccelNameReset[] = "reset";
-const char kAccelFocusPrev[] = "focus_prev";
-const char kAccelFocusNext[] = "focus_next";
 const char kAccelNameDeviceRequisition[] = "device_requisition";
 const char kAccelNameDeviceRequisitionRemora[] = "device_requisition_remora";
 const char kAccelNameDeviceRequisitionShark[] = "device_requisition_shark";
 const char kAccelNameAppLaunchBailout[] = "app_launch_bailout";
 const char kAccelNameAppLaunchNetworkConfig[] = "app_launch_network_config";
 const char kAccelNameToggleEasyBootstrap[] = "toggle_easy_bootstrap";
+const char kAccelNameBootstrappingSlave[] = "bootstrapping_slave";
 
 // A class to change arrow key traversal behavior when it's alive.
 class ScopedArrowKeyTraversal {
@@ -108,12 +109,8 @@ const char WebUILoginView::kViewClassName[] =
 
 // WebUILoginView public: ------------------------------------------------------
 
-WebUILoginView::WebUILoginView()
-    : webui_login_(NULL),
-      is_hidden_(false),
-      webui_visible_(false),
-      should_emit_login_prompt_visible_(true),
-      forward_keyboard_event_(true) {
+WebUILoginView::WebUILoginView(const WebViewSettings& settings)
+    : settings_(settings) {
   registrar_.Add(this,
                  chrome::NOTIFICATION_LOGIN_OR_LOCK_WEBUI_VISIBLE,
                  content::NotificationService::AllSources());
@@ -126,9 +123,11 @@ WebUILoginView::WebUILoginView()
   accel_map_[ui::Accelerator(ui::VKEY_E,
                              ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN)] =
       kAccelNameEnrollment;
-  accel_map_[ui::Accelerator(ui::VKEY_K,
-                             ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN)] =
-      kAccelNameKioskEnable;
+  if (KioskAppManager::IsConsumerKioskEnabled()) {
+    accel_map_[ui::Accelerator(ui::VKEY_K,
+                               ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN)] =
+        kAccelNameKioskEnable;
+  }
   accel_map_[ui::Accelerator(ui::VKEY_V, ui::EF_ALT_DOWN)] =
       kAccelNameVersion;
   accel_map_[ui::Accelerator(ui::VKEY_R,
@@ -140,11 +139,6 @@ WebUILoginView::WebUILoginView()
   accel_map_[ui::Accelerator(
       ui::VKEY_B, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
       kAccelNameToggleEasyBootstrap;
-
-  accel_map_[ui::Accelerator(ui::VKEY_LEFT, ui::EF_NONE)] =
-      kAccelFocusPrev;
-  accel_map_[ui::Accelerator(ui::VKEY_RIGHT, ui::EF_NONE)] =
-      kAccelFocusNext;
 
   accel_map_[ui::Accelerator(
       ui::VKEY_D, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
@@ -165,31 +159,42 @@ WebUILoginView::WebUILoginView()
                              ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN)] =
       kAccelNameAppLaunchNetworkConfig;
 
+  accel_map_[ui::Accelerator(
+      ui::VKEY_S, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
+      kAccelNameBootstrappingSlave;
+
   for (AccelMap::iterator i(accel_map_.begin()); i != accel_map_.end(); ++i)
     AddAccelerator(i->first);
 }
 
 WebUILoginView::~WebUILoginView() {
-  FOR_EACH_OBSERVER(web_modal::ModalDialogHostObserver,
-                    observer_list_,
-                    OnHostDestroying());
+  for (auto& observer : observer_list_)
+    observer.OnHostDestroying();
 
-  if (!chrome::IsRunningInMash() &&
-      ash::Shell::GetInstance()->HasPrimaryStatusArea()) {
-    ash::Shell::GetInstance()->GetPrimarySystemTray()->
-        SetNextFocusableView(NULL);
+  if (!ash_util::IsRunningInMash() &&
+      ash::Shell::Get()->HasPrimaryStatusArea()) {
+    ash::Shell::Get()->GetPrimarySystemTray()->SetNextFocusableView(nullptr);
   } else {
     NOTIMPLEMENTED();
   }
+
+  // Clear any delegates we have set on the WebView.
+  WebContents* web_contents = web_view()->GetWebContents();
+  WebContentsModalDialogManager::FromWebContents(web_contents)
+      ->SetDelegate(nullptr);
+  web_contents->SetDelegate(nullptr);
 }
 
-void WebUILoginView::Init() {
-  Profile* signin_profile = ProfileHelper::GetSigninProfile();
-  webui_login_ = new views::WebView(signin_profile);
-  webui_login_->set_allow_accelerators(true);
-  AddChildView(webui_login_);
+// static
+void WebUILoginView::InitializeWebView(views::WebView* web_view,
+                                       const base::string16& title) {
+  WebContents* web_contents = web_view->GetWebContents();
 
-  WebContents* web_contents = webui_login_->GetWebContents();
+  if (!title.empty())
+    WebContentsForcedTitle::CreateForWebContentsWithTitle(web_contents, title);
+
+  WebContentsSetBackgroundColor::CreateForWebContentsWithColor(
+      web_contents, SK_ColorTRANSPARENT);
 
   // Ensure that the login UI has a tab ID, which will allow the GAIA auth
   // extension's background script to tell it apart from a captive portal window
@@ -203,16 +208,43 @@ void WebUILoginView::Init() {
 
   // LoginHandlerViews uses a constrained window for the password manager view.
   WebContentsModalDialogManager::CreateForWebContents(web_contents);
-  WebContentsModalDialogManager::FromWebContents(web_contents)->
-      SetDelegate(this);
 
-  web_contents->SetDelegate(this);
   extensions::SetViewType(web_contents, extensions::VIEW_TYPE_COMPONENT);
   extensions::ChromeExtensionWebContentsObserver::CreateForWebContents(
       web_contents);
   content::RendererPreferences* prefs = web_contents->GetMutableRendererPrefs();
   renderer_preferences_util::UpdateFromSystemSettings(
-      prefs, signin_profile, web_contents);
+      prefs, ProfileHelper::GetSigninProfile(), web_contents);
+}
+
+void WebUILoginView::Init() {
+  Profile* signin_profile = ProfileHelper::GetSigninProfile();
+
+  if (settings_.check_for_preload) {
+    PreloadedWebView* preloaded_web_view =
+        PreloadedWebViewFactory::GetForProfile(signin_profile);
+    // webui_login_ may still be null after this call if there is no preloaded
+    // instance.
+    webui_login_ = preloaded_web_view->TryTake();
+    is_reusing_webview_ = true;
+  }
+
+  if (!webui_login_) {
+    webui_login_ = base::MakeUnique<views::WebView>(signin_profile);
+    webui_login_->set_owned_by_client();
+    is_reusing_webview_ = false;
+  }
+
+  WebContents* web_contents = web_view()->GetWebContents();
+  if (!is_reusing_webview_)
+    InitializeWebView(web_view(), settings_.web_view_title);
+
+  web_view()->set_allow_accelerators(true);
+  AddChildView(web_view());
+
+  WebContentsModalDialogManager::FromWebContents(web_contents)
+      ->SetDelegate(this);
+  web_contents->SetDelegate(this);
 }
 
 const char* WebUILoginView::GetClassName() const {
@@ -220,7 +252,7 @@ const char* WebUILoginView::GetClassName() const {
 }
 
 void WebUILoginView::RequestFocus() {
-  webui_login_->RequestFocus();
+  web_view()->RequestFocus();
 }
 
 web_modal::WebContentsModalDialogHost*
@@ -260,12 +292,12 @@ bool WebUILoginView::AcceleratorPressed(
   if (entry == accel_map_.end())
     return false;
 
-  if (!webui_login_)
+  if (!web_view())
     return true;
 
   content::WebUI* web_ui = GetWebUI();
   if (web_ui) {
-    base::StringValue accel_name(entry->second);
+    base::Value accel_name(entry->second);
     web_ui->CallJavascriptFunctionUnsafe("cr.ui.Oobe.handleAccelerator",
                                          accel_name);
   }
@@ -277,25 +309,29 @@ gfx::NativeWindow WebUILoginView::GetNativeWindow() const {
   return GetWidget()->GetNativeWindow();
 }
 
-void WebUILoginView::LoadURL(const GURL & url) {
-  webui_login_->LoadInitialURL(url);
-  webui_login_->RequestFocus();
+void WebUILoginView::LoadURL(const GURL& url) {
+  if (!is_reusing_webview_)
+    web_view()->LoadInitialURL(url);
+  web_view()->RequestFocus();
 
-  // TODO(nkostylev): Use WebContentsObserver::RenderViewCreated to track
-  // when RenderView is created.
-  GetWebContents()
-      ->GetRenderViewHost()
-      ->GetWidget()
-      ->GetView()
-      ->SetBackgroundColor(SK_ColorTRANSPARENT);
+  // There is no Shell instance while running in mash.
+  if (ash_util::IsRunningInMash())
+    return;
 }
 
 content::WebUI* WebUILoginView::GetWebUI() {
-  return webui_login_->web_contents()->GetWebUI();
+  return web_view()->web_contents()->GetWebUI();
 }
 
 content::WebContents* WebUILoginView::GetWebContents() {
-  return webui_login_->web_contents();
+  return web_view()->web_contents();
+}
+
+OobeUI* WebUILoginView::GetOobeUI() {
+  if (!GetWebUI())
+    return nullptr;
+
+  return static_cast<OobeUI*>(GetWebUI()->GetController());
 }
 
 void WebUILoginView::OpenProxySettings() {
@@ -317,51 +353,23 @@ void WebUILoginView::OnPostponedShow() {
 }
 
 void WebUILoginView::SetStatusAreaVisible(bool visible) {
-  if (!chrome::IsRunningInMash() &&
-      ash::Shell::GetInstance()->HasPrimaryStatusArea()) {
-    ash::SystemTray* tray = ash::Shell::GetInstance()->GetPrimarySystemTray();
-    tray->SetVisible(visible);
-    tray->GetWidget()->SetOpacity(visible ? 1.0 : 0.0);
-    if (visible) {
-      tray->GetWidget()->Show();
-    } else {
-      tray->GetWidget()->Hide();
-    }
-  } else {
-    NOTIMPLEMENTED();
-  }
+  SystemTrayClient::Get()->SetPrimaryTrayVisible(visible);
 }
 
 void WebUILoginView::SetUIEnabled(bool enabled) {
   forward_keyboard_event_ = enabled;
-  if (chrome::IsRunningInMash()) {
-    NOTIMPLEMENTED();
-    return;
-  }
-  ash::SystemTray* tray = ash::Shell::GetInstance()->GetPrimarySystemTray();
 
-  // We disable the UI to prevent user from interracting with UI elements,
-  // particullary with the system tray menu. However, in case if the system tray
-  // bubble is opened at this point, it remains opened and interactictive even
-  // after SystemTray::SetEnabled(false) call, which can be dangerous
-  // (http://crbug.com/497080). Close the menu to fix it. Calling
-  // SystemTray::SetEnabled(false) guarantees, that the menu will not be opened
-  // until the UI is enabled again.
-  if (!enabled && tray->HasSystemBubble())
-    tray->CloseSystemBubble();
-
-  tray->SetEnabled(enabled);
+  SystemTrayClient::Get()->SetPrimaryTrayEnabled(enabled);
 }
 
 // WebUILoginView protected: ---------------------------------------------------
 
 void WebUILoginView::Layout() {
-  DCHECK(webui_login_);
-  webui_login_->SetBoundsRect(bounds());
+  DCHECK(web_view());
+  web_view()->SetBoundsRect(bounds());
 
-  FOR_EACH_OBSERVER(web_modal::ModalDialogHostObserver,
-                    observer_list_,
-                    OnPositionRequiresUpdate());
+  for (auto& observer : observer_list_)
+    observer.OnPositionRequiresUpdate();
 }
 
 void WebUILoginView::OnLocaleChanged() {
@@ -374,9 +382,9 @@ void WebUILoginView::ChildPreferredSizeChanged(View* child) {
 
 void WebUILoginView::AboutToRequestFocusFromTabTraversal(bool reverse) {
   // Return the focus to the web contents.
-  webui_login_->web_contents()->FocusThroughTabTraversal(reverse);
+  web_view()->web_contents()->FocusThroughTabTraversal(reverse);
   GetWidget()->Activate();
-  webui_login_->web_contents()->Focus();
+  web_view()->web_contents()->Focus();
 }
 
 void WebUILoginView::Observe(int type,
@@ -392,6 +400,10 @@ void WebUILoginView::Observe(int type,
     default:
       NOTREACHED() << "Unexpected notification " << type;
   }
+}
+
+views::WebView* WebUILoginView::web_view() {
+  return webui_login_.get();
 }
 
 // WebUILoginView private: -----------------------------------------------------
@@ -420,7 +432,7 @@ void WebUILoginView::HandleKeyboardEvent(content::WebContents* source,
   // Make sure error bubble is cleared on keyboard event. This is needed
   // when the focus is inside an iframe. Only clear on KeyDown to prevent hiding
   // an immediate authentication error (See crbug.com/103643).
-  if (event.type == blink::WebInputEvent::KeyDown) {
+  if (event.GetType() == blink::WebInputEvent::kKeyDown) {
     content::WebUI* web_ui = GetWebUI();
     if (web_ui)
       web_ui->CallJavascriptFunctionUnsafe("cr.ui.Oobe.clearErrors");
@@ -439,14 +451,16 @@ bool WebUILoginView::TakeFocus(content::WebContents* source, bool reverse) {
 
   // Focus is accepted, but the Ash system tray is not available in Mash, so
   // exit early.
-  if (chrome::IsRunningInMash())
+  if (ash_util::IsRunningInMash())
     return true;
 
-  ash::SystemTray* tray = ash::Shell::GetInstance()->GetPrimarySystemTray();
-  if (tray && tray->GetWidget()->IsVisible()) {
+  ash::SystemTray* tray = ash::Shell::Get()->GetPrimarySystemTray();
+  if (tray && tray->GetWidget()->IsVisible() && tray->visible()) {
     tray->SetNextFocusableView(this);
-    ash::WmShell::Get()->focus_cycler()->RotateFocus(
+    ash::Shell::Get()->focus_cycler()->RotateFocus(
         reverse ? ash::FocusCycler::BACKWARD : ash::FocusCycler::FORWARD);
+  } else {
+    AboutToRequestFocusFromTabTraversal(reverse);
   }
 
   return true;
@@ -456,46 +470,10 @@ void WebUILoginView::RequestMediaAccessPermission(
     WebContents* web_contents,
     const content::MediaStreamRequest& request,
     const content::MediaResponseCallback& callback) {
-  MediaStreamDevicesController controller(web_contents, request, callback);
-  if (!controller.IsAskingForAudio() && !controller.IsAskingForVideo())
-    return;
-
-  if (controller.IsAskingForAudio()) {
-    controller.PermissionDenied();
-    return;
-  }
-
-  const CrosSettings* const settings = CrosSettings::Get();
-  if (!settings) {
-    controller.PermissionDenied();
-    return;
-  }
-
-  const base::Value* const raw_list_value =
-      settings->GetPref(kLoginVideoCaptureAllowedUrls);
-  if (!raw_list_value) {
-    controller.PermissionDenied();
-    return;
-  }
-
-  const base::ListValue* list_value;
-  CHECK(raw_list_value->GetAsList(&list_value));
-  for (const auto& base_value : *list_value) {
-    std::string value;
-    if (base_value->GetAsString(&value)) {
-      ContentSettingsPattern pattern =
-          ContentSettingsPattern::FromString(value);
-      if (pattern == ContentSettingsPattern::Wildcard()) {
-        LOG(WARNING) << "Ignoring wildcard URL pattern: " << value;
-        continue;
-      }
-      if (pattern.IsValid() && pattern.Matches(request.security_origin)) {
-        controller.PermissionGranted();
-        return;
-      }
-    }
-  }
-  controller.PermissionDenied();
+  // Note: This is needed for taking photos when selecting new user images
+  // and SAML logins. Must work for all user types (including supervised).
+  MediaCaptureDevicesDispatcher::GetInstance()->ProcessMediaAccessRequest(
+      web_contents, request, callback, nullptr /* extension */);
 }
 
 bool WebUILoginView::CheckMediaAccessPermission(
@@ -510,9 +488,9 @@ bool WebUILoginView::PreHandleGestureEvent(
     content::WebContents* source,
     const blink::WebGestureEvent& event) {
   // Disable pinch zooming.
-  return event.type == blink::WebGestureEvent::GesturePinchBegin ||
-      event.type == blink::WebGestureEvent::GesturePinchUpdate ||
-      event.type == blink::WebGestureEvent::GesturePinchEnd;
+  return event.GetType() == blink::WebGestureEvent::kGesturePinchBegin ||
+         event.GetType() == blink::WebGestureEvent::kGesturePinchUpdate ||
+         event.GetType() == blink::WebGestureEvent::kGesturePinchEnd;
 }
 
 void WebUILoginView::OnLoginPromptVisible() {
@@ -521,7 +499,7 @@ void WebUILoginView::OnLoginPromptVisible() {
     VLOG(1) << "Login WebUI >> not emitting signal, hidden: " << is_hidden_;
     return;
   }
-  TRACE_EVENT0("chromeos", "WebUILoginView::OnLoginPromoptVisible");
+  TRACE_EVENT0("chromeos", "WebUILoginView::OnLoginPromptVisible");
   if (should_emit_login_prompt_visible_) {
     VLOG(1) << "Login WebUI >> login-prompt-visible";
     chromeos::DBusThreadManager::Get()->GetSessionManagerClient()->

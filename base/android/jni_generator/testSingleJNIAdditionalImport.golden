@@ -27,19 +27,20 @@ base::subtle::AtomicWord g_Foo_clazz __attribute__((unused)) = 0;
 
 // Step 2: method stubs.
 
-static void DoSomething(JNIEnv* env, const JavaParamRef<jclass>& jcaller,
-    const JavaParamRef<jobject>& callback);
+static void DoSomething(JNIEnv* env, const base::android::JavaParamRef<jclass>&
+    jcaller,
+    const base::android::JavaParamRef<jobject>& callback);
 
-extern "C" __attribute__((visibility("default")))
-void Java_org_chromium_foo_Foo_nativeDoSomething(JNIEnv* env, jclass jcaller,
+JNI_GENERATOR_EXPORT void Java_org_chromium_foo_Foo_nativeDoSomething(JNIEnv*
+    env, jclass jcaller,
     jobject callback) {
-  return DoSomething(env, JavaParamRef<jclass>(env, jcaller),
-      JavaParamRef<jobject>(env, callback));
+  return DoSomething(env, base::android::JavaParamRef<jclass>(env, jcaller),
+      base::android::JavaParamRef<jobject>(env, callback));
 }
 
 static base::subtle::AtomicWord g_Foo_calledByNative = 0;
-static void Java_Foo_calledByNative(JNIEnv* env, jobject callback) {
-  /* Must call RegisterNativesImpl()  */
+static void Java_Foo_calledByNative(JNIEnv* env, const
+    base::android::JavaRefOrBare<jobject>& callback) {
   CHECK_CLAZZ(env, Foo_clazz(env),
       Foo_clazz(env));
   jmethodID method_id =
@@ -47,7 +48,6 @@ static void Java_Foo_calledByNative(JNIEnv* env, jobject callback) {
       base::android::MethodID::TYPE_STATIC>(
       env, Foo_clazz(env),
       "calledByNative",
-
 "("
 "Lorg/chromium/foo/Bar$Callback;"
 ")"
@@ -55,9 +55,8 @@ static void Java_Foo_calledByNative(JNIEnv* env, jobject callback) {
       &g_Foo_calledByNative);
 
      env->CallStaticVoidMethod(Foo_clazz(env),
-          method_id, callback);
+          method_id, callback.obj());
   jni_generator::CheckException(env);
-
 }
 
 // Step 3: RegisterNatives.
@@ -71,7 +70,8 @@ static const JNINativeMethod kMethodsFoo[] = {
 };
 
 static bool RegisterNativesImpl(JNIEnv* env) {
-  if (base::android::IsManualJniRegistrationDisabled()) return true;
+  if (jni_generator::ShouldSkipJniRegistration(false))
+    return true;
 
   const int kMethodsFooSize = arraysize(kMethodsFoo);
 

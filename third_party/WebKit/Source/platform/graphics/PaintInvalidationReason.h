@@ -5,49 +5,65 @@
 #ifndef PaintInvalidationReason_h
 #define PaintInvalidationReason_h
 
+#include <iosfwd>
 #include "platform/PlatformExport.h"
 
 namespace blink {
 
 enum PaintInvalidationReason {
-    PaintInvalidationNone,
-    PaintInvalidationIncremental,
-    PaintInvalidationRectangle,
-    // The following reasons will all cause full invalidation of the LayoutObject.
-    PaintInvalidationFull, // Any unspecified reason of full invalidation.
-    PaintInvalidationStyleChange,
-    PaintInvalidationForcedByLayout,
-    PaintInvalidationCompositingUpdate,
-    PaintInvalidationBorderBoxChange,
-    PaintInvalidationContentBoxChange,
-    PaintInvalidationLayoutOverflowBoxChange,
-    PaintInvalidationBoundsChange,
-    PaintInvalidationLocationChange,
-    PaintInvalidationBackgroundObscurationChange,
-    PaintInvalidationBecameVisible,
-    PaintInvalidationBecameInvisible,
-    PaintInvalidationScroll,
-    PaintInvalidationSelection,
-    PaintInvalidationOutline,
-    PaintInvalidationSubtree,
-    PaintInvalidationLayoutObjectInsertion,
-    PaintInvalidationLayoutObjectRemoval,
-    PaintInvalidationSVGResourceChange,
-    // PaintInvalidationDelayedFull means that PaintInvalidationFull is needed in order to fully paint
-    // the content, but that painting of the object can be delayed until a future frame.
-    // This can be the case for an object whose content is not visible to the user.
-    PaintInvalidationDelayedFull,
+  kPaintInvalidationNone,
+  kPaintInvalidationIncremental,
+  kPaintInvalidationRectangle,
+  // The following reasons will all cause full invalidation of the LayoutObject.
+  kPaintInvalidationFull,  // Any unspecified reason of full invalidation.
+  kPaintInvalidationStyleChange,
+  kPaintInvalidationForcedByLayout,
+  kPaintInvalidationCompositingUpdate,
+  kPaintInvalidationBorderBoxChange,
+  kPaintInvalidationContentBoxChange,
+  kPaintInvalidationLayoutOverflowBoxChange,
+  kPaintInvalidationBoundsChange,
+  kPaintInvalidationLocationChange,
+  kPaintInvalidationBackgroundObscurationChange,
+  kPaintInvalidationBecameVisible,
+  kPaintInvalidationBecameInvisible,
+  kPaintInvalidationScroll,
+  kPaintInvalidationSelection,
+  kPaintInvalidationOutline,
+  kPaintInvalidationSubtree,
+  kPaintInvalidationLayoutObjectInsertion,
+  kPaintInvalidationLayoutObjectRemoval,
+  kPaintInvalidationSVGResourceChange,
+  kPaintInvalidationBackgroundOnScrollingContentsLayer,
+  kPaintInvalidationCaret,
+  kPaintInvalidationViewBackground,
+  kPaintInvalidationDocumentMarkerChange,
+  kPaintInvalidationForTesting,
+  // PaintInvalidationDelayedFull means that PaintInvalidationFull is needed in
+  // order to fully paint the content, but that painting of the object can be
+  // delayed until a future frame. This can be the case for an object whose
+  // content is not visible to the user.
+  kPaintInvalidationDelayedFull,
 
-    PaintInvalidationReasonMax = PaintInvalidationDelayedFull
+  kPaintInvalidationReasonMax = kPaintInvalidationDelayedFull
 };
 
-PLATFORM_EXPORT const char* paintInvalidationReasonToString(PaintInvalidationReason);
+PLATFORM_EXPORT const char* PaintInvalidationReasonToString(
+    PaintInvalidationReason);
 
-inline bool isFullPaintInvalidationReason(PaintInvalidationReason reason)
-{
-    return reason >= PaintInvalidationFull;
+inline bool IsFullPaintInvalidationReason(PaintInvalidationReason reason) {
+  return reason >= kPaintInvalidationFull;
 }
 
-} // namespace blink
+inline bool IsImmediateFullPaintInvalidationReason(
+    PaintInvalidationReason reason) {
+  return IsFullPaintInvalidationReason(reason) &&
+         reason != kPaintInvalidationDelayedFull;
+}
 
-#endif // PaintInvalidationReason_h
+PLATFORM_EXPORT std::ostream& operator<<(std::ostream&,
+                                         PaintInvalidationReason);
+
+}  // namespace blink
+
+#endif  // PaintInvalidationReason_h

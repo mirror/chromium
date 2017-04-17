@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
@@ -141,8 +142,8 @@ class AutoEnrollmentClientTest : public testing::Test {
   }
 
   void VerifyCachedResult(bool should_enroll, int power_limit) {
-    base::FundamentalValue value_should_enroll(should_enroll);
-    base::FundamentalValue value_power_limit(power_limit);
+    base::Value value_should_enroll(should_enroll);
+    base::Value value_power_limit(power_limit);
     EXPECT_TRUE(base::Value::Equals(
         &value_should_enroll,
         local_state_->GetUserPref(prefs::kShouldAutoEnroll)));
@@ -427,9 +428,9 @@ TEST_F(AutoEnrollmentClientTest, ReuseCachedDecision) {
               CreateJob(DeviceManagementRequestJob::TYPE_AUTO_ENROLLMENT, _))
       .Times(0);
   local_state_->SetUserPref(prefs::kShouldAutoEnroll,
-                            new base::FundamentalValue(true));
+                            base::MakeUnique<base::Value>(true));
   local_state_->SetUserPref(prefs::kAutoEnrollmentPowerLimit,
-                            new base::FundamentalValue(8));
+                            base::MakeUnique<base::Value>(8));
 
   // Note that device state will be retrieved every time, regardless of any
   // cached information. This is intentional, the idea is that device state on
@@ -448,9 +449,9 @@ TEST_F(AutoEnrollmentClientTest, ReuseCachedDecision) {
 
 TEST_F(AutoEnrollmentClientTest, RetryIfPowerLargerThanCached) {
   local_state_->SetUserPref(prefs::kShouldAutoEnroll,
-                            new base::FundamentalValue(false));
+                            base::MakeUnique<base::Value>(false));
   local_state_->SetUserPref(prefs::kAutoEnrollmentPowerLimit,
-                            new base::FundamentalValue(8));
+                            base::MakeUnique<base::Value>(8));
   CreateClient(kStateKey, 5, 10);
   ServerWillReply(-1, true, true);
   ServerWillSendState(

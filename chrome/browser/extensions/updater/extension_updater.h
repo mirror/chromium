@@ -32,15 +32,10 @@ class ExtensionServiceInterface;
 class PrefService;
 class Profile;
 
-namespace content {
-class BrowserContext;
-}
-
 namespace extensions {
 
 class ExtensionCache;
 class ExtensionPrefs;
-class ExtensionRegistry;
 class ExtensionSet;
 class ExtensionUpdaterTest;
 
@@ -73,6 +68,11 @@ class ExtensionUpdater : public ExtensionDownloaderDelegate,
     // Setting this to true causes any updates that are found to be installed
     // right away.
     bool install_immediately;
+
+    // An extension update check can be originated by a user or by a timer.
+    // When the value of |fetch_priority| is FOREGROUND, the update request was
+    // initiated by a user.
+    ManifestFetchData::FetchPriority fetch_priority;
 
     // Callback to call when the update check is complete. Can be null, if
     // you're not interested in when this happens.
@@ -172,7 +172,8 @@ class ExtensionUpdater : public ExtensionDownloaderDelegate,
   // ignoring |pending_ids| so the extension isn't fetched again.
   void AddToDownloader(const ExtensionSet* extensions,
                        const std::list<std::string>& pending_ids,
-                       int request_id);
+                       int request_id,
+                       ManifestFetchData::FetchPriority fetch_priority);
 
   // BaseTimer::ReceiverMethod callback.
   void TimerFired();

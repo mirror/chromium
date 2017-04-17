@@ -8,20 +8,22 @@
 #include <memory>
 
 #include "ash/ash_export.h"
+#include "ash/public/interfaces/window_style.mojom.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/views/window/non_client_view.h"
 
-namespace ash {
-class FrameBorderHitTestController;
-class FrameCaptionButtonContainerView;
-class ImmersiveFullscreenController;
-}
 namespace views {
 class Widget;
 }
 
 namespace ash {
+
+class FrameCaptionButtonContainerView;
+class HeaderView;
+class ImmersiveFullscreenController;
+class ImmersiveFullscreenControllerDelegate;
 
 // A NonClientFrameView used for packaged apps, dialogs and other non-browser
 // windows. It supports immersive fullscreen. When in immersive fullscreen, the
@@ -34,7 +36,17 @@ class ASH_EXPORT CustomFrameViewAsh : public views::NonClientFrameView {
   // Internal class name.
   static const char kViewClassName[];
 
-  explicit CustomFrameViewAsh(views::Widget* frame);
+  // |enable_immersive| controls whether ImmersiveFullscreenController is
+  // created for the CustomFrameViewAsh; if true and a WindowStateDelegate has
+  // not been set on the WindowState associated with |frame|, then an
+  // ImmersiveFullscreenController is created.
+  // If ImmersiveFullscreenControllerDelegate is not supplied, HeaderView is
+  // used as the ImmersiveFullscreenControllerDelegate.
+  explicit CustomFrameViewAsh(
+      views::Widget* frame,
+      ImmersiveFullscreenControllerDelegate* immersive_delegate = nullptr,
+      bool enable_immersive = true,
+      mojom::WindowStyle window_style = mojom::WindowStyle::DEFAULT);
   ~CustomFrameViewAsh() override;
 
   // Inits |immersive_fullscreen_controller| so that the controller reveals
@@ -48,6 +60,12 @@ class ASH_EXPORT CustomFrameViewAsh : public views::NonClientFrameView {
   // will have some transparency added when the frame is drawn.
   void SetFrameColors(SkColor active_frame_color, SkColor inactive_frame_color);
 
+  // Sets the height of the header. If |height| has no value (the default), the
+  // preferred height is used.
+  void SetHeaderHeight(base::Optional<int> height);
+
+  views::View* header_view();
+
   // views::NonClientFrameView:
   gfx::Rect GetBoundsForClientView() const override;
   gfx::Rect GetWindowBoundsForClientBounds(
@@ -58,6 +76,7 @@ class ASH_EXPORT CustomFrameViewAsh : public views::NonClientFrameView {
   void UpdateWindowIcon() override;
   void UpdateWindowTitle() override;
   void SizeConstraintsChanged() override;
+  void ActivationChanged(bool active) override;
 
   // views::View:
   gfx::Size GetPreferredSize() const override;
@@ -92,12 +111,11 @@ class ASH_EXPORT CustomFrameViewAsh : public views::NonClientFrameView {
   views::Widget* frame_;
 
   // View which contains the title and window controls.
-  class HeaderView;
   HeaderView* header_view_;
 
-  // Updates the hittest bounds overrides based on the window state type.
-  std::unique_ptr<FrameBorderHitTestController>
-      frame_border_hit_test_controller_;
+  OverlayView* overlay_view_;
+
+  ImmersiveFullscreenControllerDelegate* immersive_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(CustomFrameViewAsh);
 };

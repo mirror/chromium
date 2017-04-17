@@ -8,7 +8,7 @@
 #include "core/style/ShadowData.h"
 #include "platform/graphics/GraphicsTypes.h"
 #include "platform/text/TextDirection.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -24,31 +24,57 @@ struct PaintInfo;
 class ComputedStyle;
 
 class InlineFlowBoxPainter {
-    STACK_ALLOCATED();
-public:
-    InlineFlowBoxPainter(const InlineFlowBox& inlineFlowBox) : m_inlineFlowBox(inlineFlowBox) { }
-    void paint(const PaintInfo&, const LayoutPoint& paintOffset, const LayoutUnit lineTop, const LayoutUnit lineBottom);
+  STACK_ALLOCATED();
 
-    LayoutRect frameRectClampedToLineTopAndBottomIfNeeded() const;
+ public:
+  InlineFlowBoxPainter(const InlineFlowBox& inline_flow_box)
+      : inline_flow_box_(inline_flow_box) {}
+  void Paint(const PaintInfo&,
+             const LayoutPoint& paint_offset,
+             const LayoutUnit line_top,
+             const LayoutUnit line_bottom);
 
-private:
-    void paintBoxDecorationBackground(const PaintInfo&, const LayoutPoint& paintOffset, const LayoutRect& cullRect);
-    void paintMask(const PaintInfo&, const LayoutPoint& paintOffset);
-    void paintFillLayers(const PaintInfo&, const Color&, const FillLayer&, const LayoutRect&, SkXfermode::Mode op = SkXfermode::kSrcOver_Mode);
-    void paintFillLayer(const PaintInfo&, const Color&, const FillLayer&, const LayoutRect&, SkXfermode::Mode op);
-    void paintBoxShadow(const PaintInfo&, const ComputedStyle&, ShadowStyle, const LayoutRect& paintRect);
-    LayoutRect paintRectForImageStrip(const LayoutPoint& paintOffset, const LayoutSize& frameSize, TextDirection) const;
+  LayoutRect FrameRectClampedToLineTopAndBottomIfNeeded() const;
 
-    enum BorderPaintingType {
-        DontPaintBorders,
-        PaintBordersWithoutClip,
-        PaintBordersWithClip
-    };
-    BorderPaintingType getBorderPaintType(const LayoutRect& adjustedFrameRect, IntRect& adjustedClipRect) const;
+ private:
+  void PaintBoxDecorationBackground(const PaintInfo&,
+                                    const LayoutPoint& paint_offset,
+                                    const LayoutRect& cull_rect);
+  void PaintMask(const PaintInfo&, const LayoutPoint& paint_offset);
+  void PaintFillLayers(const PaintInfo&,
+                       const Color&,
+                       const FillLayer&,
+                       const LayoutRect&,
+                       SkBlendMode op = SkBlendMode::kSrcOver);
+  void PaintFillLayer(const PaintInfo&,
+                      const Color&,
+                      const FillLayer&,
+                      const LayoutRect&,
+                      SkBlendMode op);
+  inline bool ShouldForceIncludeLogicalEdges() const;
+  inline bool IncludeLogicalLeftEdgeForBoxShadow() const;
+  inline bool IncludeLogicalRightEdgeForBoxShadow() const;
+  void PaintNormalBoxShadow(const PaintInfo&,
+                            const ComputedStyle&,
+                            const LayoutRect& paint_rect);
+  void PaintInsetBoxShadow(const PaintInfo&,
+                           const ComputedStyle&,
+                           const LayoutRect& paint_rect);
+  LayoutRect PaintRectForImageStrip(const LayoutPoint& paint_offset,
+                                    const LayoutSize& frame_size,
+                                    TextDirection) const;
 
-    const InlineFlowBox& m_inlineFlowBox;
+  enum BorderPaintingType {
+    kDontPaintBorders,
+    kPaintBordersWithoutClip,
+    kPaintBordersWithClip
+  };
+  BorderPaintingType GetBorderPaintType(const LayoutRect& adjusted_frame_rect,
+                                        IntRect& adjusted_clip_rect) const;
+
+  const InlineFlowBox& inline_flow_box_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // InlineFlowBoxPainter_h
+#endif  // InlineFlowBoxPainter_h

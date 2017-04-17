@@ -11,9 +11,8 @@ namespace cc {
 
 FakeUIResourceLayerTreeHostImpl::FakeUIResourceLayerTreeHostImpl(
     TaskRunnerProvider* task_runner_provider,
-    SharedBitmapManager* manager,
     TaskGraphRunner* task_graph_runner)
-    : FakeLayerTreeHostImpl(task_runner_provider, manager, task_graph_runner) {}
+    : FakeLayerTreeHostImpl(task_runner_provider, task_graph_runner) {}
 
 FakeUIResourceLayerTreeHostImpl::~FakeUIResourceLayerTreeHostImpl() {}
 
@@ -25,9 +24,9 @@ void FakeUIResourceLayerTreeHostImpl::CreateUIResource(
 
   UIResourceData data;
   data.resource_id = resource_provider()->CreateResource(
-      bitmap.GetSize(), ResourceProvider::TEXTURE_HINT_IMMUTABLE, RGBA_8888);
+      bitmap.GetSize(), ResourceProvider::TEXTURE_HINT_IMMUTABLE, RGBA_8888,
+      gfx::ColorSpace());
 
-  data.size = bitmap.GetSize();
   data.opaque = bitmap.GetOpaque();
   fake_ui_resource_map_[uid] = data;
 }

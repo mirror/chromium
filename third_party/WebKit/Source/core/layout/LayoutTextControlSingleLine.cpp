@@ -1,6 +1,7 @@
 /**
  * Copyright (C) 2006, 2007, 2010 Apple Inc. All rights reserved.
- *           (C) 2008 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ *           (C) 2008 Torch Mobile Inc. All rights reserved.
+ *               (http://www.torchmobile.com/)
  * Copyright (C) 2010 Google Inc. All rights reserved.
  * Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
  *
@@ -29,6 +30,7 @@
 #include "core/editing/FrameSelection.h"
 #include "core/frame/LocalFrame.h"
 #include "core/html/shadow/ShadowElementNames.h"
+#include "core/input/KeyboardEventManager.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutTheme.h"
@@ -36,351 +38,380 @@
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/ThemePainter.h"
-#include "platform/PlatformKeyboardEvent.h"
 #include "platform/fonts/SimpleFontData.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
-LayoutTextControlSingleLine::LayoutTextControlSingleLine(HTMLInputElement* element)
-    : LayoutTextControl(element)
-    , m_shouldDrawCapsLockIndicator(false)
-{
+LayoutTextControlSingleLine::LayoutTextControlSingleLine(
+    HTMLInputElement* element)
+    : LayoutTextControl(element), should_draw_caps_lock_indicator_(false) {}
+
+LayoutTextControlSingleLine::~LayoutTextControlSingleLine() {}
+
+inline Element* LayoutTextControlSingleLine::ContainerElement() const {
+  return InputElement()->UserAgentShadowRoot()->GetElementById(
+      ShadowElementNames::TextFieldContainer());
 }
 
-LayoutTextControlSingleLine::~LayoutTextControlSingleLine()
-{
+inline Element* LayoutTextControlSingleLine::EditingViewPortElement() const {
+  return InputElement()->UserAgentShadowRoot()->GetElementById(
+      ShadowElementNames::EditingViewPort());
 }
 
-inline Element* LayoutTextControlSingleLine::containerElement() const
-{
-    return inputElement()->userAgentShadowRoot()->getElementById(ShadowElementNames::textFieldContainer());
+inline HTMLElement* LayoutTextControlSingleLine::InnerSpinButtonElement()
+    const {
+  return ToHTMLElement(InputElement()->UserAgentShadowRoot()->GetElementById(
+      ShadowElementNames::SpinButton()));
 }
 
-inline Element* LayoutTextControlSingleLine::editingViewPortElement() const
-{
-    return inputElement()->userAgentShadowRoot()->getElementById(ShadowElementNames::editingViewPort());
+void LayoutTextControlSingleLine::Paint(const PaintInfo& paint_info,
+                                        const LayoutPoint& paint_offset) const {
+  LayoutTextControl::Paint(paint_info, paint_offset);
+
+  if (ShouldPaintSelfBlockBackground(paint_info.phase) &&
+      should_draw_caps_lock_indicator_) {
+    if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+            paint_info.context, *this, paint_info.phase))
+      return;
+
+    LayoutRect contents_rect = ContentBoxRect();
+
+    // Center in the block progression direction.
+    if (IsHorizontalWritingMode())
+      contents_rect.SetY((Size().Height() - contents_rect.Height()) / 2);
+    else
+      contents_rect.SetX((Size().Width() - contents_rect.Width()) / 2);
+
+    // Convert the rect into the coords used for painting the content
+    contents_rect.MoveBy(paint_offset + Location());
+    IntRect snapped_rect = PixelSnappedIntRect(contents_rect);
+    LayoutObjectDrawingRecorder recorder(paint_info.context, *this,
+                                         paint_info.phase, snapped_rect);
+    LayoutTheme::GetTheme().Painter().PaintCapsLockIndicator(*this, paint_info,
+                                                             snapped_rect);
+  }
 }
 
-inline HTMLElement* LayoutTextControlSingleLine::innerSpinButtonElement() const
-{
-    return toHTMLElement(inputElement()->userAgentShadowRoot()->getElementById(ShadowElementNames::spinButton()));
-}
+void LayoutTextControlSingleLine::UpdateLayout() {
+  LayoutAnalyzer::Scope analyzer(*this);
 
-void LayoutTextControlSingleLine::paint(const PaintInfo& paintInfo, const LayoutPoint& paintOffset) const
-{
-    LayoutTextControl::paint(paintInfo, paintOffset);
+  LayoutBlockFlow::UpdateBlockLayout(true);
 
-    if (shouldPaintSelfBlockBackground(paintInfo.phase) && m_shouldDrawCapsLockIndicator) {
-        if (LayoutObjectDrawingRecorder::useCachedDrawingIfPossible(paintInfo.context, *this, paintInfo.phase))
-            return;
+  LayoutBox* inner_editor_layout_object = InnerEditorElement()->GetLayoutBox();
+  Element* container = ContainerElement();
+  LayoutBox* container_layout_object =
+      container ? container->GetLayoutBox() : nullptr;
+  // Center the child block in the block progression direction (vertical
+  // centering for horizontal text fields).
+  if (!container && inner_editor_layout_object &&
+      inner_editor_layout_object->Size().Height() != ContentLogicalHeight()) {
+    LayoutUnit logical_height_diff =
+        inner_editor_layout_object->LogicalHeight() - ContentLogicalHeight();
+    inner_editor_layout_object->SetLogicalTop(
+        inner_editor_layout_object->LogicalTop() -
+        (logical_height_diff / 2 + LayoutMod(logical_height_diff, 2)));
+  } else if (container && container_layout_object &&
+             container_layout_object->Size().Height() !=
+                 ContentLogicalHeight()) {
+    LayoutUnit logical_height_diff =
+        container_layout_object->LogicalHeight() - ContentLogicalHeight();
+    container_layout_object->SetLogicalTop(
+        container_layout_object->LogicalTop() -
+        (logical_height_diff / 2 + LayoutMod(logical_height_diff, 2)));
+  }
 
-        LayoutRect contentsRect = contentBoxRect();
+  HTMLElement* placeholder_element = InputElement()->PlaceholderElement();
+  if (LayoutBox* placeholder_box =
+          placeholder_element ? placeholder_element->GetLayoutBox() : 0) {
+    LayoutSize inner_editor_size;
 
-        // Center in the block progression direction.
-        if (isHorizontalWritingMode())
-            contentsRect.setY((size().height() - contentsRect.height()) / 2);
-        else
-            contentsRect.setX((size().width() - contentsRect.width()) / 2);
-
-        // Convert the rect into the coords used for painting the content
-        contentsRect.moveBy(paintOffset + location());
-        IntRect snappedRect = pixelSnappedIntRect(contentsRect);
-        LayoutObjectDrawingRecorder recorder(paintInfo.context, *this, paintInfo.phase, snappedRect);
-        LayoutTheme::theme().painter().paintCapsLockIndicator(*this, paintInfo, snappedRect);
+    if (inner_editor_layout_object)
+      inner_editor_size = inner_editor_layout_object->Size();
+    placeholder_box->MutableStyleRef().SetWidth(Length(
+        inner_editor_size.Width() - placeholder_box->BorderAndPaddingWidth(),
+        kFixed));
+    bool needed_layout = placeholder_box->NeedsLayout();
+    placeholder_box->LayoutIfNeeded();
+    LayoutPoint text_offset;
+    if (inner_editor_layout_object)
+      text_offset = inner_editor_layout_object->Location();
+    if (EditingViewPortElement() && EditingViewPortElement()->GetLayoutBox())
+      text_offset +=
+          ToLayoutSize(EditingViewPortElement()->GetLayoutBox()->Location());
+    if (container_layout_object)
+      text_offset += ToLayoutSize(container_layout_object->Location());
+    if (inner_editor_layout_object) {
+      // We use inlineBlockBaseline() for innerEditor because it has no
+      // inline boxes when we show the placeholder.
+      int inner_editor_baseline =
+          inner_editor_layout_object->InlineBlockBaseline(kHorizontalLine);
+      // We use firstLineBoxBaseline() for placeholder.
+      // TODO(tkent): It's inconsistent with innerEditorBaseline. However
+      // placeholderBox->inlineBlockBase() is unexpectedly larger.
+      int placeholder_baseline = placeholder_box->FirstLineBoxBaseline();
+      text_offset +=
+          LayoutSize(0, inner_editor_baseline - placeholder_baseline);
     }
+    placeholder_box->SetLocation(text_offset);
+
+    // The placeholder gets layout last, after the parent text control and its
+    // other children, so in order to get the correct overflow from the
+    // placeholder we need to recompute it now.
+    if (needed_layout)
+      ComputeOverflow(ClientLogicalBottom());
+  }
 }
 
-void LayoutTextControlSingleLine::layout()
-{
-    LayoutAnalyzer::Scope analyzer(*this);
+bool LayoutTextControlSingleLine::NodeAtPoint(
+    HitTestResult& result,
+    const HitTestLocation& location_in_container,
+    const LayoutPoint& accumulated_offset,
+    HitTestAction hit_test_action) {
+  if (!LayoutTextControl::NodeAtPoint(result, location_in_container,
+                                      accumulated_offset, hit_test_action))
+    return false;
 
-    LayoutBlockFlow::layoutBlock(true);
-
-    LayoutBox* innerEditorLayoutObject = innerEditorElement()->layoutBox();
-    Element* container = containerElement();
-    LayoutBox* containerLayoutObject = container ? container->layoutBox() : nullptr;
-    // Center the child block in the block progression direction (vertical
-    // centering for horizontal text fields).
-    if (!container && innerEditorLayoutObject && innerEditorLayoutObject->size().height() != contentLogicalHeight()) {
-        LayoutUnit logicalHeightDiff = innerEditorLayoutObject->logicalHeight() - contentLogicalHeight();
-        innerEditorLayoutObject->setLogicalTop(innerEditorLayoutObject->logicalTop() - (logicalHeightDiff / 2 + layoutMod(logicalHeightDiff, 2)));
-    } else if (container && containerLayoutObject && containerLayoutObject->size().height() != contentLogicalHeight()) {
-        LayoutUnit logicalHeightDiff = containerLayoutObject->logicalHeight() - contentLogicalHeight();
-        containerLayoutObject->setLogicalTop(containerLayoutObject->logicalTop() - (logicalHeightDiff / 2 + layoutMod(logicalHeightDiff, 2)));
+  // Say that we hit the inner text element if
+  //  - we hit a node inside the inner text element,
+  //  - we hit the <input> element (e.g. we're over the border or padding), or
+  //  - we hit regions not in any decoration buttons.
+  Element* container = ContainerElement();
+  if (result.InnerNode()->IsDescendantOf(InnerEditorElement()) ||
+      result.InnerNode() == GetNode() ||
+      (container && container == result.InnerNode())) {
+    LayoutPoint point_in_parent = location_in_container.Point();
+    if (container && EditingViewPortElement()) {
+      if (EditingViewPortElement()->GetLayoutBox())
+        point_in_parent -=
+            ToLayoutSize(EditingViewPortElement()->GetLayoutBox()->Location());
+      if (container->GetLayoutBox())
+        point_in_parent -= ToLayoutSize(container->GetLayoutBox()->Location());
     }
+    HitInnerEditorElement(result, point_in_parent, accumulated_offset);
+  }
+  return true;
+}
 
-    HTMLElement* placeholderElement = inputElement()->placeholderElement();
-    if (LayoutBox* placeholderBox = placeholderElement ? placeholderElement->layoutBox() : 0) {
-        LayoutSize innerEditorSize;
+void LayoutTextControlSingleLine::StyleDidChange(
+    StyleDifference diff,
+    const ComputedStyle* old_style) {
+  LayoutTextControl::StyleDidChange(diff, old_style);
+  if (HTMLElement* placeholder = InputElement()->PlaceholderElement())
+    placeholder->SetInlineStyleProperty(
+        CSSPropertyTextOverflow,
+        TextShouldBeTruncated() ? CSSValueEllipsis : CSSValueClip);
+}
 
-        if (innerEditorLayoutObject)
-            innerEditorSize = innerEditorLayoutObject->size();
-        placeholderBox->mutableStyleRef().setWidth(Length(innerEditorSize.width() - placeholderBox->borderAndPaddingWidth(), Fixed));
-        bool neededLayout = placeholderBox->needsLayout();
-        placeholderBox->layoutIfNeeded();
-        LayoutPoint textOffset;
-        if (innerEditorLayoutObject)
-            textOffset = innerEditorLayoutObject->location();
-        if (editingViewPortElement() && editingViewPortElement()->layoutBox())
-            textOffset += toLayoutSize(editingViewPortElement()->layoutBox()->location());
-        if (containerLayoutObject)
-            textOffset += toLayoutSize(containerLayoutObject->location());
-        if (innerEditorLayoutObject) {
-            // We use inlineBlockBaseline() for innerEditor because it has no
-            // inline boxes when we show the placeholder.
-            int innerEditorBaseline = innerEditorLayoutObject->inlineBlockBaseline(HorizontalLine);
-            // We use firstLineBoxBaseline() for placeholder.
-            // TODO(tkent): It's inconsistent with innerEditorBaseline. However
-            // placeholderBox->inlineBlockBase() is unexpectedly larger.
-            int placeholderBaseline = placeholderBox->firstLineBoxBaseline();
-            textOffset += LayoutSize(0, innerEditorBaseline - placeholderBaseline);
-        }
-        placeholderBox->setLocation(textOffset);
+void LayoutTextControlSingleLine::CapsLockStateMayHaveChanged() {
+  if (!GetNode())
+    return;
 
-        // The placeholder gets layout last, after the parent text control and its other children,
-        // so in order to get the correct overflow from the placeholder we need to recompute it now.
-        if (neededLayout)
-            computeOverflow(clientLogicalBottom());
+  // Only draw the caps lock indicator if these things are true:
+  // 1) The field is a password field
+  // 2) The frame is active
+  // 3) The element is focused
+  // 4) The caps lock is on
+  bool should_draw_caps_lock_indicator = false;
+
+  if (LocalFrame* frame = GetDocument().GetFrame())
+    should_draw_caps_lock_indicator =
+        InputElement()->type() == InputTypeNames::password &&
+        frame->Selection().IsFocusedAndActive() &&
+        GetDocument().FocusedElement() == GetNode() &&
+        KeyboardEventManager::CurrentCapsLockState();
+
+  if (should_draw_caps_lock_indicator != should_draw_caps_lock_indicator_) {
+    should_draw_caps_lock_indicator_ = should_draw_caps_lock_indicator;
+    SetShouldDoFullPaintInvalidation();
+  }
+}
+
+bool LayoutTextControlSingleLine::HasControlClip() const {
+  return true;
+}
+
+LayoutRect LayoutTextControlSingleLine::ControlClipRect(
+    const LayoutPoint& additional_offset) const {
+  LayoutRect clip_rect = PaddingBoxRect();
+  clip_rect.MoveBy(additional_offset);
+  return clip_rect;
+}
+
+float LayoutTextControlSingleLine::GetAvgCharWidth(
+    const AtomicString& family) const {
+  // Match the default system font to the width of MS Shell Dlg, the default
+  // font for textareas in Firefox, Safari Win and IE for some encodings (in
+  // IE, the default font is encoding specific). 901 is the avgCharWidth value
+  // in the OS/2 table for MS Shell Dlg.
+  if (LayoutTheme::GetTheme().NeedsHackForTextControlWithFontFamily(family))
+    return ScaleEmToUnits(901);
+
+  return LayoutTextControl::GetAvgCharWidth(family);
+}
+
+LayoutUnit LayoutTextControlSingleLine::PreferredContentLogicalWidth(
+    float char_width) const {
+  int factor;
+  bool includes_decoration =
+      InputElement()->SizeShouldIncludeDecoration(factor);
+  if (factor <= 0)
+    factor = 20;
+
+  LayoutUnit result = LayoutUnit::FromFloatCeil(char_width * factor);
+
+  float max_char_width = 0.f;
+  const Font& font = Style()->GetFont();
+  AtomicString family = font.GetFontDescription().Family().Family();
+  // Match the default system font to the width of MS Shell Dlg, the default
+  // font for textareas in Firefox, Safari Win and IE for some encodings (in
+  // IE, the default font is encoding specific). 4027 is the (xMax - xMin)
+  // value in the "head" font table for MS Shell Dlg.
+  if (LayoutTheme::GetTheme().NeedsHackForTextControlWithFontFamily(family))
+    max_char_width = ScaleEmToUnits(4027);
+  else if (HasValidAvgCharWidth(font.PrimaryFont(), family))
+    max_char_width = roundf(font.PrimaryFont()->MaxCharWidth());
+
+  // For text inputs, IE adds some extra width.
+  if (max_char_width > 0.f)
+    result += max_char_width - char_width;
+
+  if (includes_decoration) {
+    HTMLElement* spin_button = InnerSpinButtonElement();
+    if (LayoutBox* spin_layout_object =
+            spin_button ? spin_button->GetLayoutBox() : 0) {
+      result += spin_layout_object->BorderAndPaddingLogicalWidth();
+      // Since the width of spinLayoutObject is not calculated yet,
+      // spinLayoutObject->logicalWidth() returns 0.
+      // So ensureComputedStyle()->logicalWidth() is used instead.
+      result += spin_button->EnsureComputedStyle()->LogicalWidth().Value();
     }
+  }
+
+  return result;
 }
 
-bool LayoutTextControlSingleLine::nodeAtPoint(HitTestResult& result, const HitTestLocation& locationInContainer, const LayoutPoint& accumulatedOffset, HitTestAction hitTestAction)
-{
-    if (!LayoutTextControl::nodeAtPoint(result, locationInContainer, accumulatedOffset, hitTestAction))
-        return false;
-
-    // Say that we hit the inner text element if
-    //  - we hit a node inside the inner text element,
-    //  - we hit the <input> element (e.g. we're over the border or padding), or
-    //  - we hit regions not in any decoration buttons.
-    Element* container = containerElement();
-    if (result.innerNode()->isDescendantOf(innerEditorElement()) || result.innerNode() == node() || (container && container == result.innerNode())) {
-        LayoutPoint pointInParent = locationInContainer.point();
-        if (container && editingViewPortElement()) {
-            if (editingViewPortElement()->layoutBox())
-                pointInParent -= toLayoutSize(editingViewPortElement()->layoutBox()->location());
-            if (container->layoutBox())
-                pointInParent -= toLayoutSize(container->layoutBox()->location());
-        }
-        hitInnerEditorElement(result, pointInParent, accumulatedOffset);
-    }
-    return true;
+LayoutUnit LayoutTextControlSingleLine::ComputeControlLogicalHeight(
+    LayoutUnit line_height,
+    LayoutUnit non_content_height) const {
+  return line_height + non_content_height;
 }
 
-void LayoutTextControlSingleLine::styleDidChange(StyleDifference diff, const ComputedStyle* oldStyle)
-{
-    LayoutTextControl::styleDidChange(diff, oldStyle);
-    if (HTMLElement* placeholder = inputElement()->placeholderElement())
-        placeholder->setInlineStyleProperty(CSSPropertyTextOverflow, textShouldBeTruncated() ? CSSValueEllipsis : CSSValueClip);
+PassRefPtr<ComputedStyle> LayoutTextControlSingleLine::CreateInnerEditorStyle(
+    const ComputedStyle& start_style) const {
+  RefPtr<ComputedStyle> text_block_style = ComputedStyle::Create();
+  text_block_style->InheritFrom(start_style);
+  AdjustInnerEditorStyle(*text_block_style);
+
+  text_block_style->SetWhiteSpace(EWhiteSpace::kPre);
+  text_block_style->SetOverflowWrap(kNormalOverflowWrap);
+  text_block_style->SetTextOverflow(
+      TextShouldBeTruncated() ? kTextOverflowEllipsis : kTextOverflowClip);
+
+  int computed_line_height =
+      LineHeight(true, kHorizontalLine, kPositionOfInteriorLineBoxes).ToInt();
+  // Do not allow line-height to be smaller than our default.
+  if (text_block_style->FontSize() >= computed_line_height)
+    text_block_style->SetLineHeight(ComputedStyle::InitialLineHeight());
+
+  // We'd like to remove line-height if it's unnecessary because
+  // overflow:scroll clips editing text by line-height.
+  Length logical_height = start_style.LogicalHeight();
+  // Here, we remove line-height if the INPUT fixed height is taller than the
+  // line-height.  It's not the precise condition because logicalHeight
+  // includes border and padding if box-sizing:border-box, and there are cases
+  // in which we don't want to remove line-height with percent or calculated
+  // length.
+  // TODO(tkent): This should be done during layout.
+  if (logical_height.IsPercentOrCalc() ||
+      (logical_height.IsFixed() &&
+       logical_height.GetFloatValue() > computed_line_height))
+    text_block_style->SetLineHeight(ComputedStyle::InitialLineHeight());
+
+  text_block_style->SetDisplay(EDisplay::kBlock);
+  text_block_style->SetUnique();
+
+  if (InputElement()->ShouldRevealPassword())
+    text_block_style->SetTextSecurity(TSNONE);
+
+  text_block_style->SetOverflowX(EOverflow::kScroll);
+  // overflow-y:visible doesn't work because overflow-x:scroll makes a layer.
+  text_block_style->SetOverflowY(EOverflow::kScroll);
+  RefPtr<ComputedStyle> no_scrollbar_style = ComputedStyle::Create();
+  no_scrollbar_style->SetStyleType(kPseudoIdScrollbar);
+  no_scrollbar_style->SetDisplay(EDisplay::kNone);
+  text_block_style->AddCachedPseudoStyle(no_scrollbar_style);
+  text_block_style->SetHasPseudoStyle(kPseudoIdScrollbar);
+
+  return text_block_style.Release();
 }
 
-void LayoutTextControlSingleLine::capsLockStateMayHaveChanged()
-{
-    if (!node())
-        return;
-
-    // Only draw the caps lock indicator if these things are true:
-    // 1) The field is a password field
-    // 2) The frame is active
-    // 3) The element is focused
-    // 4) The caps lock is on
-    bool shouldDrawCapsLockIndicator = false;
-
-    if (LocalFrame* frame = document().frame())
-        shouldDrawCapsLockIndicator = inputElement()->type() == InputTypeNames::password && frame->selection().isFocusedAndActive() && document().focusedElement() == node() && PlatformKeyboardEvent::currentCapsLockState();
-
-    if (shouldDrawCapsLockIndicator != m_shouldDrawCapsLockIndicator) {
-        m_shouldDrawCapsLockIndicator = shouldDrawCapsLockIndicator;
-        setShouldDoFullPaintInvalidation();
-    }
+bool LayoutTextControlSingleLine::TextShouldBeTruncated() const {
+  return GetDocument().FocusedElement() != GetNode() &&
+         StyleRef().GetTextOverflow() == kTextOverflowEllipsis;
 }
 
-bool LayoutTextControlSingleLine::hasControlClip() const
-{
-    return true;
+void LayoutTextControlSingleLine::Autoscroll(const IntPoint& position) {
+  LayoutBox* layout_object = InnerEditorElement()->GetLayoutBox();
+  if (!layout_object)
+    return;
+
+  layout_object->Autoscroll(position);
 }
 
-LayoutRect LayoutTextControlSingleLine::controlClipRect(const LayoutPoint& additionalOffset) const
-{
-    LayoutRect clipRect = paddingBoxRect();
-    clipRect.moveBy(additionalOffset);
-    return clipRect;
+LayoutUnit LayoutTextControlSingleLine::ScrollWidth() const {
+  if (LayoutBox* inner =
+          InnerEditorElement() ? InnerEditorElement()->GetLayoutBox() : 0) {
+    // Adjust scrollWidth to inculde input element horizontal paddings and
+    // decoration width
+    LayoutUnit adjustment = ClientWidth() - inner->ClientWidth();
+    return inner->ScrollWidth() + adjustment;
+  }
+  return LayoutBlockFlow::ScrollWidth();
 }
 
-float LayoutTextControlSingleLine::getAvgCharWidth(const AtomicString& family) const
-{
-    // Match the default system font to the width of MS Shell Dlg, the default
-    // font for textareas in Firefox, Safari Win and IE for some encodings (in
-    // IE, the default font is encoding specific). 901 is the avgCharWidth value
-    // in the OS/2 table for MS Shell Dlg.
-    if (LayoutTheme::theme().needsHackForTextControlWithFontFamily(family))
-        return scaleEmToUnits(901);
-
-    return LayoutTextControl::getAvgCharWidth(family);
+LayoutUnit LayoutTextControlSingleLine::ScrollHeight() const {
+  if (LayoutBox* inner =
+          InnerEditorElement() ? InnerEditorElement()->GetLayoutBox() : 0) {
+    // Adjust scrollHeight to include input element vertical paddings and
+    // decoration height
+    LayoutUnit adjustment = ClientHeight() - inner->ClientHeight();
+    return inner->ScrollHeight() + adjustment;
+  }
+  return LayoutBlockFlow::ScrollHeight();
 }
 
-LayoutUnit LayoutTextControlSingleLine::preferredContentLogicalWidth(float charWidth) const
-{
-    int factor;
-    bool includesDecoration = inputElement()->sizeShouldIncludeDecoration(factor);
-    if (factor <= 0)
-        factor = 20;
-
-    LayoutUnit result = LayoutUnit::fromFloatCeil(charWidth * factor);
-
-    float maxCharWidth = 0.f;
-    const Font& font = style()->font();
-    AtomicString family = font.getFontDescription().family().family();
-    // Match the default system font to the width of MS Shell Dlg, the default
-    // font for textareas in Firefox, Safari Win and IE for some encodings (in
-    // IE, the default font is encoding specific). 4027 is the (xMax - xMin)
-    // value in the "head" font table for MS Shell Dlg.
-    if (LayoutTheme::theme().needsHackForTextControlWithFontFamily(family))
-        maxCharWidth = scaleEmToUnits(4027);
-    else if (hasValidAvgCharWidth(font.primaryFont(), family))
-        maxCharWidth = roundf(font.primaryFont()->maxCharWidth());
-
-    // For text inputs, IE adds some extra width.
-    if (maxCharWidth > 0.f)
-        result += maxCharWidth - charWidth;
-
-    if (includesDecoration) {
-        HTMLElement* spinButton = innerSpinButtonElement();
-        if (LayoutBox* spinLayoutObject = spinButton ? spinButton->layoutBox() : 0) {
-            result += spinLayoutObject->borderAndPaddingLogicalWidth();
-            // Since the width of spinLayoutObject is not calculated yet, spinLayoutObject->logicalWidth() returns 0.
-            // So ensureComputedStyle()->logicalWidth() is used instead.
-            result += spinButton->ensureComputedStyle()->logicalWidth().value();
-        }
-    }
-
-    return result;
+LayoutUnit LayoutTextControlSingleLine::ScrollLeft() const {
+  if (InnerEditorElement())
+    return LayoutUnit(InnerEditorElement()->scrollLeft());
+  return LayoutBlockFlow::ScrollLeft();
 }
 
-LayoutUnit LayoutTextControlSingleLine::computeControlLogicalHeight(LayoutUnit lineHeight, LayoutUnit nonContentHeight) const
-{
-    return lineHeight + nonContentHeight;
+LayoutUnit LayoutTextControlSingleLine::ScrollTop() const {
+  if (InnerEditorElement())
+    return LayoutUnit(InnerEditorElement()->scrollTop());
+  return LayoutBlockFlow::ScrollTop();
 }
 
-PassRefPtr<ComputedStyle> LayoutTextControlSingleLine::createInnerEditorStyle(const ComputedStyle& startStyle) const
-{
-    RefPtr<ComputedStyle> textBlockStyle = ComputedStyle::create();
-    textBlockStyle->inheritFrom(startStyle);
-    adjustInnerEditorStyle(*textBlockStyle);
-
-    textBlockStyle->setWhiteSpace(PRE);
-    textBlockStyle->setOverflowWrap(NormalOverflowWrap);
-    textBlockStyle->setTextOverflow(textShouldBeTruncated() ? TextOverflowEllipsis : TextOverflowClip);
-
-    int computedLineHeight = lineHeight(true, HorizontalLine, PositionOfInteriorLineBoxes);
-    // Do not allow line-height to be smaller than our default.
-    if (textBlockStyle->fontSize() >= computedLineHeight)
-        textBlockStyle->setLineHeight(ComputedStyle::initialLineHeight());
-
-    // We'd like to remove line-height if it's unnecessary because
-    // overflow:scroll clips editing text by line-height.
-    Length logicalHeight = startStyle.logicalHeight();
-    // Here, we remove line-height if the INPUT fixed height is taller than the
-    // line-height.  It's not the precise condition because logicalHeight
-    // includes border and padding if box-sizing:border-box, and there are cases
-    // in which we don't want to remove line-height with percent or calculated
-    // length.
-    // TODO(tkent): This should be done during layout.
-    if (logicalHeight.hasPercent() || (logicalHeight.isFixed() && logicalHeight.getFloatValue() > computedLineHeight))
-        textBlockStyle->setLineHeight(ComputedStyle::initialLineHeight());
-
-    textBlockStyle->setDisplay(BLOCK);
-    textBlockStyle->setUnique();
-
-    if (inputElement()->shouldRevealPassword())
-        textBlockStyle->setTextSecurity(TSNONE);
-
-    textBlockStyle->setOverflowX(OverflowScroll);
-    // overflow-y:visible doesn't work because overflow-x:scroll makes a layer.
-    textBlockStyle->setOverflowY(OverflowScroll);
-    RefPtr<ComputedStyle> noScrollbarStyle = ComputedStyle::create();
-    noScrollbarStyle->setStyleType(PseudoIdScrollbar);
-    noScrollbarStyle->setDisplay(NONE);
-    textBlockStyle->addCachedPseudoStyle(noScrollbarStyle);
-    textBlockStyle->setHasPseudoStyle(PseudoIdScrollbar);
-
-    return textBlockStyle.release();
+void LayoutTextControlSingleLine::SetScrollLeft(LayoutUnit new_left) {
+  if (InnerEditorElement())
+    InnerEditorElement()->setScrollLeft(new_left);
 }
 
-bool LayoutTextControlSingleLine::textShouldBeTruncated() const
-{
-    return document().focusedElement() != node() && styleRef().getTextOverflow() == TextOverflowEllipsis;
+void LayoutTextControlSingleLine::SetScrollTop(LayoutUnit new_top) {
+  if (InnerEditorElement())
+    InnerEditorElement()->setScrollTop(new_top);
 }
 
-void LayoutTextControlSingleLine::autoscroll(const IntPoint& position)
-{
-    LayoutBox* layoutObject = innerEditorElement()->layoutBox();
-    if (!layoutObject)
-        return;
-
-    layoutObject->autoscroll(position);
+void LayoutTextControlSingleLine::AddOverflowFromChildren() {
+  // If the INPUT content height is smaller than the font height, the
+  // inner-editor element overflows the INPUT box intentionally, however it
+  // shouldn't affect outside of the INPUT box.  So we ignore child overflow.
 }
 
-LayoutUnit LayoutTextControlSingleLine::scrollWidth() const
-{
-    if (LayoutBox* inner = innerEditorElement() ? innerEditorElement()->layoutBox() : 0) {
-        // Adjust scrollWidth to inculde input element horizontal paddings and
-        // decoration width
-        LayoutUnit adjustment = clientWidth() - inner->clientWidth();
-        return inner->scrollWidth() + adjustment;
-    }
-    return LayoutBlockFlow::scrollWidth();
+HTMLInputElement* LayoutTextControlSingleLine::InputElement() const {
+  return toHTMLInputElement(GetNode());
 }
 
-LayoutUnit LayoutTextControlSingleLine::scrollHeight() const
-{
-    if (LayoutBox* inner = innerEditorElement() ? innerEditorElement()->layoutBox() : 0) {
-        // Adjust scrollHeight to include input element vertical paddings and
-        // decoration height
-        LayoutUnit adjustment = clientHeight() - inner->clientHeight();
-        return inner->scrollHeight() + adjustment;
-    }
-    return LayoutBlockFlow::scrollHeight();
-}
-
-LayoutUnit LayoutTextControlSingleLine::scrollLeft() const
-{
-    if (innerEditorElement())
-        return LayoutUnit(innerEditorElement()->scrollLeft());
-    return LayoutBlockFlow::scrollLeft();
-}
-
-LayoutUnit LayoutTextControlSingleLine::scrollTop() const
-{
-    if (innerEditorElement())
-        return LayoutUnit(innerEditorElement()->scrollTop());
-    return LayoutBlockFlow::scrollTop();
-}
-
-void LayoutTextControlSingleLine::setScrollLeft(LayoutUnit newLeft)
-{
-    if (innerEditorElement())
-        innerEditorElement()->setScrollLeft(newLeft);
-}
-
-void LayoutTextControlSingleLine::setScrollTop(LayoutUnit newTop)
-{
-    if (innerEditorElement())
-        innerEditorElement()->setScrollTop(newTop);
-}
-
-void LayoutTextControlSingleLine::addOverflowFromChildren()
-{
-    // If the INPUT content height is smaller than the font height, the
-    // inner-editor element overflows the INPUT box intentionally, however it
-    // shouldn't affect outside of the INPUT box.  So we ignore child overflow.
-}
-
-HTMLInputElement* LayoutTextControlSingleLine::inputElement() const
-{
-    return toHTMLInputElement(node());
-}
-
-} // namespace blink
+}  // namespace blink

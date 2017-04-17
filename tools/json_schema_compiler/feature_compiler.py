@@ -5,7 +5,9 @@
 import argparse
 import copy
 from datetime import datetime
+from functools import partial
 import os
+import re
 
 from code import Code
 import json_parse
@@ -23,11 +25,11 @@ HEADER_FILE_TEMPLATE = """
 #ifndef %(header_guard)s
 #define %(header_guard)s
 
-#include "extensions/common/features/base_feature_provider.h"
+#include "extensions/common/features/feature_provider.h"
 
 namespace extensions {
 
-class %(provider_class)s : public BaseFeatureProvider {
+class %(provider_class)s : public FeatureProvider {
  public:
   %(provider_class)s();
   ~%(provider_class)s() override;
@@ -53,8 +55,6 @@ CC_FILE_BEGIN = """
 
 #include "%(header_file_path)s"
 
-#include "extensions/common/features/api_feature.h"
-#include "extensions/common/features/behavior_feature.h"
 #include "extensions/common/features/complex_feature.h"
 #include "extensions/common/features/manifest_feature.h"
 #include "extensions/common/features/permission_feature.h"
@@ -97,10 +97,18 @@ CC_FILE_END = """
 #                Feature::BLESSED_WEB_PAGE_CONTEXT et al for contexts. If not
 #                specified, defaults to false.
 #   'values': A list of all possible allowed values for a given key.
+#   'shared': Boolean that, if set, ensures that only one of the associated
+#       features has the feature property set. Used primarily for complex
+#       features - for simple features, there is always at most one feature
+#       setting an option.
 # If a type definition does not have any restrictions (beyond the type itself),
 # an empty definition ({}) is used.
 FEATURE_GRAMMAR = (
   {
+    'alias': {
+      unicode: {},
+      'shared': True
+    },
     'blacklist': {
       list: {'subtype': unicode}
     },
@@ -188,10 +196,129 @@ FEATURE_GRAMMAR = (
         }
       }
     },
+    'session_types': {
+      list: {
+        'enum_map': {
+          'regular': 'FeatureSessionType::REGULAR',
+          'kiosk': 'FeatureSessionType::KIOSK',
+          'kiosk.autolaunched': 'FeatureSessionType::AUTOLAUNCHED_KIOSK',
+        }
+      }
+    },
+    'source': {
+      unicode: {},
+      'shared': True
+    },
     'whitelist': {
       list: {'subtype': unicode}
     },
   })
+
+FEATURE_TYPES = ['APIFeature', 'BehaviorFeature',
+                 'ManifestFeature', 'PermissionFeature']
+
+def HasProperty(property_name, value):
+  return property_name in value
+
+def HasAtLeastOneProperty(property_names, value):
+  return any([HasProperty(name, value) for name in property_names])
+
+def DoesNotHaveAllProperties(property_names, value):
+  return not all([HasProperty(name, value) for name in property_names])
+
+def DoesNotHaveProperty(property_name, value):
+  return property_name not in value
+
+def IsFeatureCrossReference(property_name, reverse_property_name, feature,
+                            all_features):
+  """ Verifies that |property_name| on |feature| references a feature that
+  references |feature| back using |reverse_property_name| property.
+  |property_name| and |reverse_property_name| are expected to have string
+  values.
+  """
+  value = feature.GetValue(property_name)
+  if not value:
+    return True
+  # String property values will be wrapped in "", strip those.
+  value_regex = re.compile('^"(.+)"$')
+  parsed_value = value_regex.match(value)
+  assert parsed_value, (
+      'IsFeatureCrossReference should only be used on unicode properties')
+
+  referenced_feature = all_features.get(parsed_value.group(1))
+  if not referenced_feature:
+    return False
+  reverse_reference_value = referenced_feature.GetValue(reverse_property_name)
+  if not reverse_reference_value:
+    return False
+  # Don't validate reverse reference value for child features - chances are that
+  # the value was inherited from a feature parent, in which case it won't match
+  # current feature name.
+  if feature.has_parent:
+    return True
+  return reverse_reference_value == ('"%s"' % feature.name)
+
+SIMPLE_FEATURE_CPP_CLASSES = ({
+  'APIFeature': 'SimpleFeature',
+  'ManifestFeature': 'ManifestFeature',
+  'PermissionFeature': 'PermissionFeature',
+  'BehaviorFeature': 'SimpleFeature',
+})
+
+VALIDATION = ({
+  'all': [
+    (partial(HasAtLeastOneProperty, ['channel', 'dependencies']),
+     'Features must specify either a channel or dependencies'),
+  ],
+  'APIFeature': [
+    (partial(HasProperty, 'contexts'),
+     'APIFeatures must specify at least one context'),
+    (partial(DoesNotHaveAllProperties, ['alias', 'source']),
+     'Features cannot specify both alias and source.')
+  ],
+  'ManifestFeature': [
+    (partial(HasProperty, 'extension_types'),
+     'ManifestFeatures must specify at least one extension type'),
+    (partial(DoesNotHaveProperty, 'contexts'),
+     'ManifestFeatures do not support contexts.'),
+    (partial(DoesNotHaveProperty, 'alias'),
+     'ManifestFeatures do not support alias.'),
+    (partial(DoesNotHaveProperty, 'source'),
+     'ManifestFeatures do not support source.'),
+  ],
+  'BehaviorFeature': [
+    (partial(DoesNotHaveProperty, 'alias'),
+     'BehaviorFeatures do not support alias.'),
+    (partial(DoesNotHaveProperty, 'source'),
+     'BehaviorFeatures do not support source.'),
+   ],
+  'PermissionFeature': [
+    (partial(HasProperty, 'extension_types'),
+     'PermissionFeatures must specify at least one extension type'),
+    (partial(DoesNotHaveProperty, 'contexts'),
+     'PermissionFeatures do not support contexts.'),
+    (partial(DoesNotHaveProperty, 'alias'),
+     'PermissionFeatures do not support alias.'),
+    (partial(DoesNotHaveProperty, 'source'),
+     'PermissionFeatures do not support source.'),
+  ],
+})
+
+FINAL_VALIDATION = ({
+  'all': [],
+  'APIFeature': [
+    (partial(IsFeatureCrossReference, 'alias', 'source'),
+     'A feature alias property should reference a feature whose source '
+     'property references it back.'),
+    (partial(IsFeatureCrossReference, 'source', 'alias'),
+     'A feature source property should reference a feature whose alias '
+     'property references it back.')
+
+  ],
+  'ManifestFeature': [],
+  'BehaviorFeature': [],
+  'PermissionFeature': []
+})
 
 # These keys are used to find the parents of different features, but are not
 # compiled into the features themselves.
@@ -206,6 +333,15 @@ ENABLE_ASSERTIONS = True
 # everywhere.
 STRINGS_TO_UNICODE = False
 
+def GetCodeForFeatureValues(feature_values):
+  """ Gets the Code object for setting feature values for this object. """
+  c = Code()
+  for key in sorted(feature_values.keys()):
+    if key in IGNORED_KEYS:
+      continue;
+    c.Append('feature->set_%s(%s);' % (key, feature_values[key]))
+  return c
+
 class Feature(object):
   """A representation of a single simple feature that can handle all parsing,
   validation, and code generation.
@@ -215,6 +351,7 @@ class Feature(object):
     self.has_parent = False
     self.errors = []
     self.feature_values = {}
+    self.shared_values = {}
 
   def _GetType(self, value):
     """Returns the type of the given value. This can be different than type() if
@@ -227,16 +364,20 @@ class Feature(object):
       return unicode
     return t
 
-  def _AddError(self, key, error):
+  def AddError(self, error):
     """Adds an error to the feature. If ENABLE_ASSERTIONS is active, this will
     also assert to stop the compilation process (since errors should never be
     found in production).
     """
-    error = 'Error parsing feature "%s" at key "%s": %s' % (
-                self.name, key, error)
     self.errors.append(error)
     if ENABLE_ASSERTIONS:
       assert False, error
+
+  def _AddKeyError(self, key, error):
+    """Adds an error relating to a particular key in the feature.
+    """
+    self.AddError('Error parsing feature "%s" at key "%s": %s' %
+                      (self.name, key, error))
 
   def _GetCheckedValue(self, key, expected_type, expected_values,
                        enum_map, value):
@@ -255,12 +396,12 @@ class Feature(object):
     """
     valid = True
     if expected_values and value not in expected_values:
-      self._AddError(key, 'Illegal value: "%s"' % value)
+      self._AddKeyError(key, 'Illegal value: "%s"' % value)
       valid = False
 
     t = self._GetType(value)
     if expected_type and t is not expected_type:
-      self._AddError(key, 'Illegal value: "%s"' % value)
+      self._AddKeyError(key, 'Illegal value: "%s"' % value)
       valid = False
 
     if not valid:
@@ -277,11 +418,12 @@ class Feature(object):
       return 'true' if value else 'false'
     assert False, 'Unsupported type: %s' % value
 
-  def _ParseKey(self, key, value, grammar):
+  def _ParseKey(self, key, value, shared_values, grammar):
     """Parses the specific key according to the grammar rule for that key if it
     is present in the json value.
       key: The key to parse.
       value: The full value for this feature.
+      shared_values: Set of shared vfalues associated with this feature.
       grammar: The rule for the specific key.
     """
     if key not in value:
@@ -293,9 +435,13 @@ class Feature(object):
       v = []
       is_all = True
 
+    if 'shared' in grammar and key in shared_values:
+      self._AddKeyError(key, 'Key can be set at most once per feature.')
+      return
+
     value_type = self._GetType(v)
     if value_type not in grammar:
-      self._AddError(key, 'Illegal value: "%s"' % v)
+      self._AddKeyError(key, 'Illegal value: "%s"' % v)
       return
 
     expected = grammar[value_type]
@@ -332,7 +478,10 @@ class Feature(object):
                                         enum_map, v)
 
     if cpp_value:
-      self.feature_values[key] = cpp_value
+      if 'shared' in grammar:
+        shared_values[key] = cpp_value
+      else:
+        self.feature_values[key] = cpp_value
     elif key in self.feature_values:
       # If the key is empty and this feature inherited a value from its parent,
       # remove the inherited value.
@@ -346,35 +495,102 @@ class Feature(object):
     self.feature_values = copy.deepcopy(parent.feature_values)
     self.has_parent = True
 
-  def Parse(self, parsed_json):
+  def SetSharedValues(self, values):
+    self.shared_values = values
+
+  def Parse(self, parsed_json, shared_values):
     """Parses the feature from the given json value."""
     for key in parsed_json.keys():
       if key not in FEATURE_GRAMMAR:
-        self._AddError(key, 'Unrecognized key')
+        self._AddKeyError(key, 'Unrecognized key')
     for key, key_grammar in FEATURE_GRAMMAR.iteritems():
-      self._ParseKey(key, parsed_json, key_grammar)
+      self._ParseKey(key, parsed_json, shared_values, key_grammar)
 
-  def GetCode(self, feature_class):
+  def Validate(self, feature_type, shared_values):
+    feature_values = self.feature_values.copy()
+    feature_values.update(shared_values)
+    for validator, error in (VALIDATION[feature_type] + VALIDATION['all']):
+      if not validator(feature_values):
+        self.AddError(error)
+
+  def GetCode(self, feature_type):
     """Returns the Code object for generating this feature."""
     c = Code()
-    c.Append('std::unique_ptr<%s> feature(new %s());' %
-                 (feature_class, feature_class))
+    cpp_feature_class = SIMPLE_FEATURE_CPP_CLASSES[feature_type]
+    c.Append('%s* feature = new %s();' % (cpp_feature_class, cpp_feature_class))
     c.Append('feature->set_name("%s");' % self.name)
-    for key in sorted(self.feature_values.keys()):
-      if key in IGNORED_KEYS:
-        continue;
-      c.Append('feature->set_%s(%s);' % (key, self.feature_values[key]))
+    c.Concat(GetCodeForFeatureValues(self.GetAllFeatureValues()))
     return c
+
+  def AsParent(self):
+    """ Returns the feature values that should be inherited by children features
+    when this feature is set as parent.
+    """
+    return self
+
+  def GetValue(self, key):
+    """ Gets feature value for the specified key """
+    value = self.feature_values.get(key)
+    return value if value else self.shared_values.get(key)
+
+  def GetAllFeatureValues(self):
+    """ Gets all values set for this feature. """
+    values = self.feature_values.copy()
+    values.update(self.shared_values)
+    return values
+
+  def GetErrors(self):
+    return self.errors;
+
+class ComplexFeature(Feature):
+  """ Complex feature - feature that is comprised of list of features.
+  Overall complex feature is available if any of contained
+  feature is available.
+  """
+  def __init__(self, name):
+    Feature.__init__(self, name)
+    self.feature_list = []
+
+  def GetCode(self, feature_type):
+    c = Code()
+    c.Append('std::vector<Feature*> features;')
+    for f in self.feature_list:
+      # Sanity check that components of complex features have no shared values
+      # set.
+      assert not f.shared_values
+      c.Sblock('{')
+      c.Concat(f.GetCode(feature_type))
+      c.Append('features.push_back(feature);')
+      c.Eblock('}')
+    c.Append('ComplexFeature* feature(new ComplexFeature(&features));')
+    c.Append('feature->set_name("%s");' % self.name)
+    c.Concat(GetCodeForFeatureValues(self.shared_values))
+    return c
+
+  def AsParent(self):
+    parent = None
+    for p in self.feature_list:
+      if 'default_parent' in p.feature_values:
+        parent = p
+        break
+    assert parent, 'No default parent found for %s' % self.name
+    return parent
+
+  def GetErrors(self):
+    errors = copy.copy(self.errors)
+    for feature in self.feature_list:
+      errors.extend(feature.GetErrors())
+    return errors
 
 class FeatureCompiler(object):
   """A compiler to load, parse, and generate C++ code for a number of
   features.json files."""
-  def __init__(self, chrome_root, source_files, feature_class,
+  def __init__(self, chrome_root, source_files, feature_type,
                provider_class, out_root, out_base_filename):
     # See __main__'s ArgumentParser for documentation on these properties.
     self._chrome_root = chrome_root
     self._source_files = source_files
-    self._feature_class = feature_class
+    self._feature_type = feature_type
     self._provider_class = provider_class
     self._out_root = out_root
     self._out_base_filename = out_base_filename
@@ -384,7 +600,7 @@ class FeatureCompiler(object):
     # The parsed features.
     self._features = {}
 
-  def _Load(self):
+  def Load(self):
     """Loads and parses the source from each input file and puts the result in
     self._json."""
     for f in self._source_files:
@@ -415,8 +631,17 @@ class FeatureCompiler(object):
     sep = feature_name.rfind('.')
     if sep is -1 or no_parent:
       return None
+
     parent_name = feature_name[:sep]
-    if parent_name not in self._features:
+    while sep != -1 and parent_name not in self._features:
+      # This recursion allows for a feature to have a parent that isn't a direct
+      # ancestor. For instance, we could have feature 'alpha', and feature
+      # 'alpha.child.child', where 'alpha.child.child' inherits from 'alpha'.
+      # TODO(devlin): Is this useful? Or logical?
+      sep = feature_name.rfind('.', 0, sep)
+      parent_name = feature_name[:sep]
+
+    if sep == -1:
       # TODO(devlin): It'd be kind of nice to be able to assert that the
       # deduced parent name is in our features, but some dotted features don't
       # have parents and also don't have noparent, e.g. system.cpu. We should
@@ -424,15 +649,7 @@ class FeatureCompiler(object):
       #   raise KeyError('Could not find parent "%s" for feature "%s".' %
       #                      (parent_name, feature_name))
       return None
-    parent_value = self._features[parent_name]
-    parent = parent_value
-    if type(parent_value) is list:
-      for p in parent_value:
-        if 'default_parent' in p.feature_values:
-          parent = p
-          break
-      assert parent, 'No default parent found for %s' % parent_name
-    return parent
+    return self._features[parent_name].AsParent()
 
   def _CompileFeature(self, feature_name, feature_value):
     """Parses a single feature."""
@@ -440,41 +657,58 @@ class FeatureCompiler(object):
       assert feature_value['nocompile'], (
           'nocompile should only be true; otherwise omit this key.')
       return
+
+    def parse_and_validate(name, value, parent, shared_values):
+      try:
+        feature = Feature(name)
+        if parent:
+          feature.SetParent(parent)
+        feature.Parse(value, shared_values)
+        feature.Validate(self._feature_type, shared_values)
+        return feature
+      except:
+        print('Failure to parse feature "%s"' % feature_name)
+        raise
+
     parent = self._FindParent(feature_name, feature_value)
+    shared_values = {}
+
     # Handle complex features, which are lists of simple features.
     if type(feature_value) is list:
-      feature_list = []
+      feature = ComplexFeature(feature_name)
+
       # This doesn't handle nested complex features. I think that's probably for
       # the best.
       for v in feature_value:
-        try:
-          feature = Feature(feature_name)
-          if parent:
-            feature.SetParent(parent)
-          feature.Parse(v)
-          feature_list.append(feature)
-        except:
-          print('Failure to parse feature "%s"' % feature_name)
-          raise
-      self._features[feature_name] = feature_list
-      return
-
-    try:
-      feature = Feature(feature_name)
-      if parent:
-        feature.SetParent(parent)
-      feature.Parse(feature_value)
+        feature.feature_list.append(
+            parse_and_validate(feature_name, v, parent, shared_values))
       self._features[feature_name] = feature
-    except:
-      print('Failure to parse feature "%s"' % feature_name)
-      raise
+    else:
+      self._features[feature_name] = parse_and_validate(
+          feature_name, feature_value, parent, shared_values)
+
+    # Apply parent shared values at the end to enable child features to
+    # override parent shared value - if parent shared values are added to
+    # shared value set before a child feature is parsed, the child feature
+    # overriding shared values set by its parent would cause an error due to
+    # shared values being set twice.
+    final_shared_values = copy.deepcopy(parent.shared_values) if parent else {}
+    final_shared_values.update(shared_values)
+    self._features[feature_name].SetSharedValues(final_shared_values)
+
+  def _FinalValidation(self):
+    validators = FINAL_VALIDATION['all'] + FINAL_VALIDATION[self._feature_type]
+    for name, feature in self._features.items():
+      for validator, error in validators:
+        if not validator(feature, self._features):
+          feature.AddError(error)
 
   def Compile(self):
     """Parses all features after loading the input files."""
-    self._Load();
     # Iterate over in sorted order so that parents come first.
     for k in sorted(self._json.keys()):
       self._CompileFeature(k, self._json[k])
+    self._FinalValidation()
 
   def Render(self):
     """Returns the Code object for the body of the .cc file, which handles the
@@ -485,20 +719,8 @@ class FeatureCompiler(object):
     for k in sorted(self._features.keys()):
       c.Sblock('{')
       feature = self._features[k]
-      if type(feature) is list:
-        c.Append('std::unique_ptr<ComplexFeature::FeatureList> features(')
-        c.Append('    new ComplexFeature::FeatureList());')
-        for f in feature:
-          c.Sblock('{')
-          c.Concat(f.GetCode(self._feature_class))
-          c.Append('features->push_back(std::move(feature));')
-          c.Eblock('}')
-        c.Append('std::unique_ptr<ComplexFeature> feature(')
-        c.Append('    new ComplexFeature(std::move(features)));')
-        c.Append('feature->set_name("%s");' % k)
-      else:
-        c.Concat(feature.GetCode(self._feature_class))
-      c.Append('features_["%s"] = std::move(feature);' % k)
+      c.Concat(feature.GetCode(self._feature_type))
+      c.Append('AddFeature("%s", feature);' % k)
       c.Eblock('}')
     c.Eblock('}')
     return c
@@ -540,7 +762,7 @@ if __name__ == '__main__':
   parser.add_argument('chrome_root', type=str,
                       help='The root directory of the chrome checkout')
   parser.add_argument(
-      'feature_class', type=str,
+      'feature_type', type=str,
       help='The name of the class to use in feature generation ' +
                '(e.g. APIFeature, PermissionFeature)')
   parser.add_argument('provider_class', type=str,
@@ -553,8 +775,11 @@ if __name__ == '__main__':
   parser.add_argument('source_files', type=str, nargs='+',
                       help='The source features.json files')
   args = parser.parse_args()
-  c = FeatureCompiler(args.chrome_root, args.source_files, args.feature_class,
+  if args.feature_type not in FEATURE_TYPES:
+    raise NameError('Unknown feature type: %s' % args.feature_type)
+  c = FeatureCompiler(args.chrome_root, args.source_files, args.feature_type,
                       args.provider_class, args.out_root,
                       args.out_base_filename)
+  c.Load()
   c.Compile()
   c.Write()

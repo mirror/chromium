@@ -10,15 +10,16 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/sequenced_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/common/render_widget_window_tree_client_factory.mojom.h"
 #include "content/public/common/connection_filter.h"
-#include "content/public/common/mojo_shell_connection.h"
-#include "content/renderer/mus/render_widget_mus_connection.h"
+#include "content/public/common/service_manager_connection.h"
+#include "content/renderer/mus/renderer_window_tree_client.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
-#include "services/shell/public/cpp/interface_factory.h"
-#include "services/shell/public/cpp/service.h"
+#include "services/service_manager/public/cpp/interface_factory.h"
+#include "services/service_manager/public/cpp/service.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
 #include "url/gurl.h"
 
@@ -29,17 +30,14 @@ namespace {
 void BindMusConnectionOnMainThread(
     uint32_t routing_id,
     ui::mojom::WindowTreeClientRequest request) {
-  RenderWidgetMusConnection* connection =
-      RenderWidgetMusConnection::GetOrCreate(routing_id);
-  connection->Bind(std::move(request));
+  RendererWindowTreeClient::CreateIfNecessary(routing_id);
+  RendererWindowTreeClient::Get(routing_id)->Bind(std::move(request));
 }
 
-// This object's lifetime is managed by MojoShellConnection because it's a
+// This object's lifetime is managed by ServiceManagerConnection because it's a
 // registered with it.
 class RenderWidgetWindowTreeClientFactoryImpl
     : public ConnectionFilter,
-      public shell::InterfaceFactory<
-          mojom::RenderWidgetWindowTreeClientFactory>,
       public mojom::RenderWidgetWindowTreeClientFactory {
  public:
   RenderWidgetWindowTreeClientFactoryImpl() {
@@ -50,17 +48,15 @@ class RenderWidgetWindowTreeClientFactoryImpl
 
  private:
   // ConnectionFilter implementation:
-  bool OnConnect(shell::Connection* connection,
-                 shell::Connector* connector) override {
-    connection->AddInterface<mojom::RenderWidgetWindowTreeClientFactory>(this);
-    return true;
-  }
-
-  // shell::InterfaceFactory<mojom::RenderWidgetWindowTreeClientFactory>:
-  void Create(const shell::Identity& remote_identity,
-              mojo::InterfaceRequest<mojom::RenderWidgetWindowTreeClientFactory>
-                  request) override {
-    bindings_.AddBinding(this, std::move(request));
+  void OnBindInterface(const service_manager::ServiceInfo& source_info,
+                       const std::string& interface_name,
+                       mojo::ScopedMessagePipeHandle* interface_pipe,
+                       service_manager::Connector* connector) override {
+    if (interface_name == mojom::RenderWidgetWindowTreeClientFactory::Name_) {
+      bindings_.AddBinding(
+          this, mojo::MakeRequest<mojom::RenderWidgetWindowTreeClientFactory>(
+                    std::move(*interface_pipe)));
+    }
   }
 
   // mojom::RenderWidgetWindowTreeClientFactory implementation.
@@ -81,7 +77,7 @@ class RenderWidgetWindowTreeClientFactoryImpl
 }  // namespace
 
 void CreateRenderWidgetWindowTreeClientFactory(
-    MojoShellConnection* connection) {
+    ServiceManagerConnection* connection) {
   connection->AddConnectionFilter(
       base::MakeUnique<RenderWidgetWindowTreeClientFactoryImpl>());
 }

@@ -4,6 +4,9 @@
 
 #include "chromecast/media/audio/cast_audio_output_stream.h"
 
+#include <algorithm>
+#include <string>
+
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "chromecast/base/metrics/cast_metrics_helper.h"
@@ -13,6 +16,8 @@
 #include "chromecast/public/media/decoder_config.h"
 #include "chromecast/public/media/media_pipeline_backend.h"
 #include "chromecast/public/media/media_pipeline_device_params.h"
+#include "chromecast/public/volume_control.h"
+#include "media/audio/audio_device_description.h"
 #include "media/base/decoder_buffer.h"
 
 namespace {
@@ -45,7 +50,8 @@ class CastAudioOutputStream::Backend
     MediaPipelineDeviceParams device_params(
         MediaPipelineDeviceParams::kModeIgnorePts,
         MediaPipelineDeviceParams::kAudioStreamSoundEffects,
-        backend_task_runner_.get());
+        backend_task_runner_.get(), AudioContentType::kMedia,
+        ::media::AudioDeviceDescription::kDefaultDeviceId);
     backend_ = audio_manager->CreateMediaPipelineBackend(device_params);
     if (!backend_)
       return false;
@@ -117,6 +123,12 @@ class CastAudioOutputStream::Backend
     DCHECK(thread_checker_.CalledOnValidThread());
     DCHECK(decoder_);
     decoder_->SetVolume(volume);
+  }
+
+  MediaPipelineBackend::AudioDecoder::RenderingDelay GetRenderingDelay() {
+    DCHECK(thread_checker_.CalledOnValidThread());
+    DCHECK(decoder_);
+    return decoder_->GetRenderingDelay();
   }
 
  private:
@@ -267,14 +279,16 @@ void CastAudioOutputStream::PushBuffer() {
     return;
   }
 
-  const base::TimeTicks now = base::TimeTicks::Now();
-  base::TimeDelta queue_delay =
-      std::max(base::TimeDelta(), next_push_time_ - now);
-  uint32_t bytes_delay = queue_delay.InMicroseconds() *
-                         audio_params_.GetBytesPerSecond() / 1000000;
+  MediaPipelineBackend::AudioDecoder::RenderingDelay rendering_delay =
+      backend_->GetRenderingDelay();
+  base::TimeDelta delay =
+      base::TimeDelta::FromMicroseconds(rendering_delay.delay_microseconds);
+  base::TimeTicks delay_timestamp =
+      base::TimeTicks() +
+      base::TimeDelta::FromMicroseconds(rendering_delay.timestamp_microseconds);
   int frame_count =
-      source_callback_->OnMoreData(audio_bus_.get(), bytes_delay, 0);
-  VLOG(3) << "frames_filled=" << frame_count << " with latency=" << bytes_delay;
+      source_callback_->OnMoreData(delay, delay_timestamp, 0, audio_bus_.get());
+  VLOG(3) << "frames_filled=" << frame_count << " with latency=" << delay;
 
   DCHECK_EQ(frame_count, audio_bus_->frames());
   DCHECK_EQ(static_cast<int>(decoder_buffer_->data_size()),

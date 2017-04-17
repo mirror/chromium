@@ -26,38 +26,35 @@
 #define CounterContent_h
 
 #include "core/style/ComputedStyleConstants.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
 class CounterContent {
-    USING_FAST_MALLOC(CounterContent);
-public:
-    CounterContent(const AtomicString& identifier, EListStyleType style, const AtomicString& separator)
-        : m_identifier(identifier)
-        , m_listStyle(style)
-        , m_separator(separator)
-    {
-    }
+  USING_FAST_MALLOC(CounterContent);
 
-    const AtomicString& identifier() const { return m_identifier; }
-    EListStyleType listStyle() const { return m_listStyle; }
-    const AtomicString& separator() const { return m_separator; }
+ public:
+  CounterContent(const AtomicString& identifier,
+                 EListStyleType style,
+                 const AtomicString& separator)
+      : identifier_(identifier), list_style_(style), separator_(separator) {}
 
-private:
-    AtomicString m_identifier;
-    EListStyleType m_listStyle;
-    AtomicString m_separator;
+  const AtomicString& Identifier() const { return identifier_; }
+  EListStyleType ListStyle() const { return list_style_; }
+  const AtomicString& Separator() const { return separator_; }
+
+ private:
+  AtomicString identifier_;
+  EListStyleType list_style_;
+  AtomicString separator_;
 };
 
-static inline bool operator==(const CounterContent& a, const CounterContent& b)
-{
-    return a.identifier() == b.identifier()
-        && a.listStyle() == b.listStyle()
-        && a.separator() == b.separator();
+static inline bool operator==(const CounterContent& a,
+                              const CounterContent& b) {
+  return a.Identifier() == b.Identifier() && a.ListStyle() == b.ListStyle() &&
+         a.Separator() == b.Separator();
 }
 
+}  // namespace blink
 
-} // namespace blink
-
-#endif // CounterContent_h
+#endif  // CounterContent_h

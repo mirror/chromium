@@ -29,6 +29,12 @@ class TestDownloadService : public DownloadServiceImpl {
       : DownloadServiceImpl(profile), profile_(profile) {}
   ~TestDownloadService() override {}
 
+  void Shutdown() override {
+    DownloadServiceImpl::Shutdown();
+    download_history_.reset();
+    router_.reset();
+  }
+
   void set_download_history(std::unique_ptr<DownloadHistory> download_history) {
     download_history_.swap(download_history);
   }
@@ -109,8 +115,8 @@ class DownloadsApiUnitTest : public ExtensionApiUnittest {
 std::unique_ptr<KeyedService>
 DownloadsApiUnitTest::TestingDownloadServiceFactory(
     content::BrowserContext* browser_context) {
-  return base::WrapUnique(
-      new TestDownloadService(Profile::FromBrowserContext(browser_context)));
+  return base::MakeUnique<TestDownloadService>(
+      Profile::FromBrowserContext(browser_context));
 }
 
 // Tests that Number/double properties in query are parsed correctly.

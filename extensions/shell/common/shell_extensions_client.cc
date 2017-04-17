@@ -4,40 +4,34 @@
 
 #include "extensions/shell/common/shell_extensions_client.h"
 
+#include <memory>
+#include <string>
+
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "extensions/common/api/generated_schemas.h"
 #include "extensions/common/common_manifest_handlers.h"
 #include "extensions/common/extension_urls.h"
-#include "extensions/common/features/api_feature.h"
-#include "extensions/common/features/behavior_feature.h"
-#include "extensions/common/features/json_feature_provider.h"
+#include "extensions/common/extensions_aliases.h"
 #include "extensions/common/features/json_feature_provider_source.h"
-#include "extensions/common/features/manifest_feature.h"
-#include "extensions/common/features/permission_feature.h"
 #include "extensions/common/features/simple_feature.h"
 #include "extensions/common/manifest_handler.h"
 #include "extensions/common/permissions/permission_message_provider.h"
 #include "extensions/common/permissions/permissions_info.h"
 #include "extensions/common/permissions/permissions_provider.h"
 #include "extensions/common/url_pattern_set.h"
+#include "extensions/grit/extensions_resources.h"
 #include "extensions/shell/common/api/generated_schemas.h"
 #include "extensions/shell/common/api/shell_api_features.h"
 #include "extensions/shell/common/api/shell_behavior_features.h"
 #include "extensions/shell/common/api/shell_manifest_features.h"
 #include "extensions/shell/common/api/shell_permission_features.h"
-#include "grit/app_shell_resources.h"
-#include "grit/extensions_resources.h"
+#include "extensions/shell/grit/app_shell_resources.h"
 
 namespace extensions {
 
 namespace {
-
-template <class FeatureClass>
-SimpleFeature* CreateFeature() {
-  return new FeatureClass;
-}
 
 // TODO(jamescook): Refactor ChromePermissionsMessageProvider so we can share
 // code. For now, this implementation does nothing.
@@ -70,14 +64,15 @@ class ShellPermissionMessageProvider : public PermissionMessageProvider {
   DISALLOW_COPY_AND_ASSIGN(ShellPermissionMessageProvider);
 };
 
-base::LazyInstance<ShellPermissionMessageProvider>
+base::LazyInstance<ShellPermissionMessageProvider>::DestructorAtExit
     g_permission_message_provider = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
 ShellExtensionsClient::ShellExtensionsClient()
-    : extensions_api_permissions_(ExtensionsAPIPermissions()) {
-}
+    : extensions_api_permissions_(ExtensionsAPIPermissions()),
+      webstore_base_url_(extension_urls::kChromeWebstoreBaseURL),
+      webstore_update_url_(extension_urls::kChromeWebstoreUpdateURL) {}
 
 ShellExtensionsClient::~ShellExtensionsClient() {
 }
@@ -87,7 +82,8 @@ void ShellExtensionsClient::Initialize() {
   ManifestHandler::FinalizeRegistration();
   // TODO(jamescook): Do we need to whitelist any extensions?
 
-  PermissionsInfo::GetInstance()->AddProvider(extensions_api_permissions_);
+  PermissionsInfo::GetInstance()->AddProvider(extensions_api_permissions_,
+                                              GetExtensionsPermissionAliases());
 }
 
 const PermissionMessageProvider&
@@ -173,10 +169,6 @@ base::StringPiece ShellExtensionsClient::GetAPISchema(
   return api::GeneratedSchemas::Get(name);
 }
 
-void ShellExtensionsClient::RegisterAPISchemaResources(
-    ExtensionAPI* api) const {
-}
-
 bool ShellExtensionsClient::ShouldSuppressFatalErrors() const {
   return true;
 }
@@ -184,12 +176,12 @@ bool ShellExtensionsClient::ShouldSuppressFatalErrors() const {
 void ShellExtensionsClient::RecordDidSuppressFatalError() {
 }
 
-std::string ShellExtensionsClient::GetWebstoreBaseURL() const {
-  return extension_urls::kChromeWebstoreBaseURL;
+const GURL& ShellExtensionsClient::GetWebstoreBaseURL() const {
+  return webstore_base_url_;
 }
 
-std::string ShellExtensionsClient::GetWebstoreUpdateURL() const {
-  return extension_urls::kChromeWebstoreUpdateURL;
+const GURL& ShellExtensionsClient::GetWebstoreUpdateURL() const {
+  return webstore_update_url_;
 }
 
 bool ShellExtensionsClient::IsBlacklistUpdateURL(const GURL& url) const {

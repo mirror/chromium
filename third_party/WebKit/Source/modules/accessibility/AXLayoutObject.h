@@ -32,7 +32,7 @@
 #include "modules/ModulesExport.h"
 #include "modules/accessibility/AXNodeObject.h"
 #include "platform/geometry/LayoutRect.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -43,185 +43,183 @@ class FrameView;
 class HTMLAreaElement;
 class IntPoint;
 class Node;
-class Widget;
 
 class MODULES_EXPORT AXLayoutObject : public AXNodeObject {
-    WTF_MAKE_NONCOPYABLE(AXLayoutObject);
+  WTF_MAKE_NONCOPYABLE(AXLayoutObject);
 
-protected:
-    AXLayoutObject(LayoutObject*, AXObjectCacheImpl&);
+ protected:
+  AXLayoutObject(LayoutObject*, AXObjectCacheImpl&);
 
-public:
-    static AXLayoutObject* create(LayoutObject*, AXObjectCacheImpl&);
-    ~AXLayoutObject() override;
+ public:
+  static AXLayoutObject* Create(LayoutObject*, AXObjectCacheImpl&);
+  ~AXLayoutObject() override;
 
-    // Public, overridden from AXObject.
-    LayoutObject* getLayoutObject() const final { return m_layoutObject; }
-    LayoutRect elementRect() const override;
-    LayoutBoxModelObject* getLayoutBoxModelObject() const;
-    SkMatrix44 transformFromLocalParentFrame() const override;
-    ScrollableArea* getScrollableAreaIfScrollable() const final;
-    void getRelativeBounds(AXObject** container, FloatRect& boundsInContainer, SkMatrix44& containerTransform) const override;
-    AccessibilityRole determineAccessibilityRole() override;
-    AccessibilityRole nativeAccessibilityRoleIgnoringAria() const override;
-    void checkCachedElementRect() const;
-    void updateCachedElementRect() const;
+  // Public, overridden from AXObject.
+  LayoutObject* GetLayoutObject() const final { return layout_object_; }
+  LayoutBoxModelObject* GetLayoutBoxModelObject() const;
+  ScrollableArea* GetScrollableAreaIfScrollable() const final;
+  AccessibilityRole DetermineAccessibilityRole() override;
+  AccessibilityRole NativeAccessibilityRoleIgnoringAria() const override;
 
-protected:
-    LayoutObject* m_layoutObject;
-    mutable LayoutRect m_cachedElementRect;
-    mutable LayoutRect m_cachedFrameRect;
-    mutable IntPoint m_cachedScrollPosition;
-    mutable bool m_cachedElementRectDirty;
+ protected:
+  LayoutObject* layout_object_;
 
-    //
-    // Overridden from AXObject.
-    //
+  LayoutObject* LayoutObjectForRelativeBounds() const override {
+    return layout_object_;
+  }
 
-    void init() override;
-    void detach() override;
-    bool isDetached() const override { return !m_layoutObject; }
-    bool isAXLayoutObject() const override { return true; }
+  //
+  // Overridden from AXObject.
+  //
 
-    // Check object role or purpose.
-    bool isEditable() const override;
-    bool isRichlyEditable() const override;
-    bool isLinked() const override;
-    bool isLoaded() const override;
-    bool isOffScreen() const override;
-    bool isReadOnly() const override;
-    bool isVisited() const override;
+  void Init() override;
+  void Detach() override;
+  bool IsDetached() const override { return !layout_object_; }
+  bool IsAXLayoutObject() const override { return true; }
 
-    // Check object state.
-    bool isFocused() const override;
-    bool isSelected() const override;
+  // Check object role or purpose.
+  bool IsEditable() const override;
+  bool IsRichlyEditable() const override;
+  bool IsLinked() const override;
+  bool IsLoaded() const override;
+  bool IsOffScreen() const override;
+  bool IsReadOnly() const override;
+  bool IsVisited() const override;
 
-    // Whether objects are ignored, i.e. not included in the tree.
-    AXObjectInclusion defaultObjectInclusion(IgnoredReasons* = nullptr) const override;
-    bool computeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const override;
+  // Check object state.
+  bool IsFocused() const override;
+  bool IsSelected() const override;
 
-    // Properties of static elements.
-    const AtomicString& accessKey() const override;
-    RGBA32 computeBackgroundColor() const final;
-    RGBA32 color() const final;
-    String fontFamily() const final;
-    // Font size is in pixels.
-    float fontSize() const final;
-    String text() const override;
-    AccessibilityTextDirection textDirection() const final;
-    int textLength() const override;
-    TextStyle getTextStyle() const final;
-    KURL url() const override;
+  // Whether objects are ignored, i.e. not included in the tree.
+  AXObjectInclusion DefaultObjectInclusion(
+      IgnoredReasons* = nullptr) const override;
+  bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const override;
 
-    // Inline text boxes.
-    void loadInlineTextBoxes() override;
-    AXObject* nextOnLine() const override;
-    AXObject* previousOnLine() const override;
+  // Properties of static elements.
+  const AtomicString& AccessKey() const override;
+  RGBA32 ComputeBackgroundColor() const final;
+  RGBA32 GetColor() const final;
+  String FontFamily() const final;
+  // Font size is in pixels.
+  float FontSize() const final;
+  String ImageDataUrl(const IntSize& max_size) const final;
+  String GetText() const override;
+  AccessibilityTextDirection GetTextDirection() const final;
+  int TextLength() const override;
+  TextStyle GetTextStyle() const final;
+  KURL Url() const override;
 
-    // Properties of interactive elements.
-    String stringValue() const override;
+  // Inline text boxes.
+  void LoadInlineTextBoxes() override;
+  AXObject* NextOnLine() const override;
+  AXObject* PreviousOnLine() const override;
 
-    // ARIA attributes.
-    void ariaFlowToElements(AXObjectVector&) const override;
-    void ariaControlsElements(AXObjectVector&) const override;
-    void ariaDescribedbyElements(AXObjectVector&) const override;
-    void ariaLabelledbyElements(AXObjectVector&) const override;
-    void ariaOwnsElements(AXObjectVector&) const override;
+  // Properties of interactive elements.
+  String StringValue() const override;
 
-    bool ariaHasPopup() const override;
-    bool ariaRoleHasPresentationalChildren() const override;
-    AXObject* ancestorForWhichThisIsAPresentationalChild() const override;
-    bool supportsARIADragging() const override;
-    bool supportsARIADropping() const override;
-    bool supportsARIAFlowTo() const override;
-    bool supportsARIAOwns() const override;
+  // ARIA attributes.
+  void AriaDescribedbyElements(AXObjectVector&) const override;
+  void AriaLabelledbyElements(AXObjectVector&) const override;
+  void AriaOwnsElements(AXObjectVector&) const override;
 
-    // ARIA live-region features.
-    const AtomicString& liveRegionStatus() const override;
-    const AtomicString& liveRegionRelevant() const override;
-    bool liveRegionAtomic() const override;
-    bool liveRegionBusy() const override;
+  bool AriaHasPopup() const override;
+  bool AriaRoleHasPresentationalChildren() const override;
+  AXObject* AncestorForWhichThisIsAPresentationalChild() const override;
+  bool SupportsARIADragging() const override;
+  bool SupportsARIADropping() const override;
+  bool SupportsARIAFlowTo() const override;
+  bool SupportsARIAOwns() const override;
 
-    // AX name calc.
-    String textAlternative(bool recursive, bool inAriaLabelledByTraversal, AXObjectSet& visited, AXNameFrom&, AXRelatedObjectVector*, NameSources*) const override;
+  // ARIA live-region features.
+  const AtomicString& LiveRegionStatus() const override;
+  const AtomicString& LiveRegionRelevant() const override;
+  bool LiveRegionAtomic() const override;
+  bool LiveRegionBusy() const override;
 
-    // Methods that retrieve or manipulate the current selection.
+  // AX name calc.
+  String TextAlternative(bool recursive,
+                         bool in_aria_labelled_by_traversal,
+                         AXObjectSet& visited,
+                         AXNameFrom&,
+                         AXRelatedObjectVector*,
+                         NameSources*) const override;
 
-    AXRange selection() const override;
-    AXRange selectionUnderObject() const override;
-    void setSelection(const AXRange&) override;
+  // Methods that retrieve or manipulate the current selection.
 
-    // Location and click point in frame-relative coordinates.
-    void markCachedElementRectDirty() const override;
-    IntPoint clickPoint() override;
+  AXRange Selection() const override;
+  AXRange SelectionUnderObject() const override;
+  void SetSelection(const AXRange&) override;
 
-    // Hit testing.
-    AXObject* accessibilityHitTest(const IntPoint&) const override;
-    AXObject* elementAccessibilityHitTest(const IntPoint&) const override;
+  // Hit testing.
+  AXObject* AccessibilityHitTest(const IntPoint&) const override;
+  AXObject* ElementAccessibilityHitTest(const IntPoint&) const override;
 
-    // High-level accessibility tree access. Other modules should only use these functions.
-    AXObject* computeParent() const override;
-    AXObject* computeParentIfExists() const override;
+  // High-level accessibility tree access. Other modules should only use these
+  // functions.
+  AXObject* ComputeParent() const override;
+  AXObject* ComputeParentIfExists() const override;
 
-    // Low-level accessibility tree exploration, only for use within the accessibility module.
-    AXObject* rawFirstChild() const override;
-    AXObject* rawNextSibling() const override;
-    void addChildren() override;
-    bool canHaveChildren() const override;
-    void updateChildrenIfNecessary() override;
-    bool needsToUpdateChildren() const override { return m_childrenDirty; }
-    void setNeedsToUpdateChildren() override { m_childrenDirty = true; }
-    void clearChildren() override;
+  // Low-level accessibility tree exploration, only for use within the
+  // accessibility module.
+  AXObject* RawFirstChild() const override;
+  AXObject* RawNextSibling() const override;
+  void AddChildren() override;
+  bool CanHaveChildren() const override;
+  void UpdateChildrenIfNecessary() override;
+  bool NeedsToUpdateChildren() const override { return children_dirty_; }
+  void SetNeedsToUpdateChildren() override { children_dirty_ = true; }
+  void ClearChildren() override;
 
-    // Properties of the object's owning document or page.
-    double estimatedLoadingProgress() const override;
+  // Properties of the object's owning document or page.
+  double EstimatedLoadingProgress() const override;
 
-    // DOM and layout tree access.
-    Node* getNode() const override;
-    Document* getDocument() const override;
-    FrameView* documentFrameView() const override;
-    Element* anchorElement() const override;
+  // DOM and layout tree access.
+  Node* GetNode() const override;
+  Document* GetDocument() const override;
+  FrameView* DocumentFrameView() const override;
+  Element* AnchorElement() const override;
 
-    void setValue(const String&) override;
+  void SetValue(const String&) override;
 
-    // Notifications that this object may have changed.
-    void handleActiveDescendantChanged() override;
-    void handleAriaExpandedChanged() override;
-    void textChanged() override;
+  // Notifications that this object may have changed.
+  void HandleActiveDescendantChanged() override;
+  void HandleAriaExpandedChanged() override;
+  void TextChanged() override;
 
-    // Text metrics. Most of these should be deprecated, needs major cleanup.
-    int index(const VisiblePosition&) const override;
-    VisiblePosition visiblePositionForIndex(int) const override;
-    void lineBreaks(Vector<int>&) const final;
+  // Text metrics. Most of these should be deprecated, needs major cleanup.
+  int Index(const VisiblePosition&) const override;
+  VisiblePosition VisiblePositionForIndex(int) const override;
+  void LineBreaks(Vector<int>&) const final;
 
-private:
-    AXObject* treeAncestorDisallowingChild() const;
-    bool isTabItemSelected() const;
-    bool isValidSelectionBound(const AXObject*) const;
-    AXObject* accessibilityImageMapHitTest(HTMLAreaElement*, const IntPoint&) const;
-    LayoutObject* layoutParentObject() const;
-    bool isSVGImage() const;
-    void detachRemoteSVGRoot();
-    AXSVGRoot* remoteSVGRootElement() const;
-    AXObject* remoteSVGElementHitTest(const IntPoint&) const;
-    void offsetBoundingBoxForRemoteSVGElement(LayoutRect&) const;
-    void addHiddenChildren();
-    void addTextFieldChildren();
-    void addImageMapChildren();
-    void addCanvasChildren();
-    void addPopupChildren();
-    void addRemoteSVGChildren();
-    void addInlineTextBoxChildren(bool force);
+ private:
+  AXObject* TreeAncestorDisallowingChild() const;
+  bool IsTabItemSelected() const;
+  bool IsValidSelectionBound(const AXObject*) const;
+  AXObject* AccessibilityImageMapHitTest(HTMLAreaElement*,
+                                         const IntPoint&) const;
+  LayoutObject* LayoutParentObject() const;
+  bool IsSVGImage() const;
+  void DetachRemoteSVGRoot();
+  AXSVGRoot* RemoteSVGRootElement() const;
+  AXObject* RemoteSVGElementHitTest(const IntPoint&) const;
+  void OffsetBoundingBoxForRemoteSVGElement(LayoutRect&) const;
+  void AddHiddenChildren();
+  void AddTextFieldChildren();
+  void AddImageMapChildren();
+  void AddCanvasChildren();
+  void AddPopupChildren();
+  void AddRemoteSVGChildren();
+  void AddInlineTextBoxChildren(bool force);
 
-    bool elementAttributeValue(const QualifiedName&) const;
-    LayoutRect computeElementRect() const;
-    AXRange textControlSelection() const;
-    int indexForVisiblePosition(const VisiblePosition&) const;
-    AXLayoutObject* getUnignoredObjectFromNode(Node&) const;
+  bool ElementAttributeValue(const QualifiedName&) const;
+  LayoutRect ComputeElementRect() const;
+  AXRange TextControlSelection() const;
+  int IndexForVisiblePosition(const VisiblePosition&) const;
+  AXLayoutObject* GetUnignoredObjectFromNode(Node&) const;
 };
 
-DEFINE_AX_OBJECT_TYPE_CASTS(AXLayoutObject, isAXLayoutObject());
+DEFINE_AX_OBJECT_TYPE_CASTS(AXLayoutObject, IsAXLayoutObject());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AXLayoutObject_h
+#endif  // AXLayoutObject_h

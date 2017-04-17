@@ -27,8 +27,9 @@
 #ifndef XPathValue_h
 #define XPathValue_h
 
+#include "core/CoreExport.h"
 #include "core/xml/XPathNodeSet.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -37,80 +38,111 @@ namespace XPath {
 struct EvaluationContext;
 
 class ValueData : public GarbageCollectedFinalized<ValueData> {
-public:
-    static ValueData* create() { return new ValueData; }
-    static ValueData* create(const NodeSet& nodeSet) { return new ValueData(nodeSet); }
-    static ValueData* create(NodeSet* nodeSet) { return new ValueData(nodeSet); }
-    static ValueData* create(const String& string) { return new ValueData(string); }
-    DECLARE_TRACE();
-    NodeSet& nodeSet() { return *m_nodeSet; }
+ public:
+  static ValueData* Create() { return new ValueData; }
+  static ValueData* Create(const NodeSet& node_set) {
+    return new ValueData(node_set);
+  }
+  static ValueData* Create(NodeSet* node_set) {
+    return new ValueData(node_set);
+  }
+  static ValueData* Create(const String& string) {
+    return new ValueData(string);
+  }
+  DECLARE_TRACE();
+  NodeSet& GetNodeSet() { return *node_set_; }
 
-    String m_string;
+  String string_;
 
-private:
-    ValueData() : m_nodeSet(NodeSet::create()) { }
-    explicit ValueData(const NodeSet& nodeSet) : m_nodeSet(NodeSet::create(nodeSet)) { }
-    explicit ValueData(NodeSet* nodeSet) : m_nodeSet(nodeSet) { }
-    explicit ValueData(const String& string) : m_string(string), m_nodeSet(NodeSet::create()) { }
+ private:
+  ValueData() : node_set_(NodeSet::Create()) {}
+  explicit ValueData(const NodeSet& node_set)
+      : node_set_(NodeSet::Create(node_set)) {}
+  explicit ValueData(NodeSet* node_set) : node_set_(node_set) {}
+  explicit ValueData(const String& string)
+      : string_(string), node_set_(NodeSet::Create()) {}
 
-    Member<NodeSet> m_nodeSet;
+  Member<NodeSet> node_set_;
 };
 
-// Copying Value objects makes their data partially shared, so care has to be taken when dealing with copies.
-class Value {
-    DISALLOW_NEW();
-public:
-    enum Type { NodeSetValue, BooleanValue, NumberValue, StringValue };
+// Copying Value objects makes their data partially shared, so care has to be
+// taken when dealing with copies.
+class CORE_EXPORT Value {
+  DISALLOW_NEW();
 
-    Value(unsigned value) : m_type(NumberValue), m_bool(false), m_number(value) { }
-    Value(unsigned long value) : m_type(NumberValue), m_bool(false), m_number(value) { }
-    Value(double value) : m_type(NumberValue), m_bool(false), m_number(value) { }
+ public:
+  enum Type { kNodeSetValue, kBooleanValue, kNumberValue, kStringValue };
 
-    Value(const char* value) : m_type(StringValue), m_bool(false), m_number(0), m_data(ValueData::create(value)) { }
-    Value(const String& value) : m_type(StringValue), m_bool(false), m_number(0), m_data(ValueData::create(value)) { }
-    Value(const NodeSet& value) : m_type(NodeSetValue), m_bool(false), m_number(0), m_data(ValueData::create(value)) { }
-    Value(Node* value) : m_type(NodeSetValue), m_bool(false), m_number(0), m_data(ValueData::create()) { m_data->nodeSet().append(value); }
-    DECLARE_TRACE();
+  Value(unsigned value) : type_(kNumberValue), bool_(false), number_(value) {}
+  Value(unsigned long value)
+      : type_(kNumberValue), bool_(false), number_(value) {}
+  Value(double value) : type_(kNumberValue), bool_(false), number_(value) {}
 
-    // This is needed to safely implement constructing from bool - with normal
-    // function overloading, any pointer type would match.
-    template<typename T> Value(T);
+  Value(const char* value)
+      : type_(kStringValue),
+        bool_(false),
+        number_(0),
+        data_(ValueData::Create(value)) {}
+  Value(const String& value)
+      : type_(kStringValue),
+        bool_(false),
+        number_(0),
+        data_(ValueData::Create(value)) {}
+  Value(const NodeSet& value)
+      : type_(kNodeSetValue),
+        bool_(false),
+        number_(0),
+        data_(ValueData::Create(value)) {}
+  Value(Node* value)
+      : type_(kNodeSetValue),
+        bool_(false),
+        number_(0),
+        data_(ValueData::Create()) {
+    data_->GetNodeSet().Append(value);
+  }
+  DECLARE_TRACE();
 
-    static const struct AdoptTag { } adopt;
-    Value(NodeSet* value, const AdoptTag&) : m_type(NodeSetValue), m_bool(false), m_number(0),  m_data(ValueData::create(value)) { }
+  // This is needed to safely implement constructing from bool - with normal
+  // function overloading, any pointer type would match.
+  template <typename T>
+  Value(T);
 
-    Type getType() const { return m_type; }
+  static const struct AdoptTag {
+  } kAdopt;
+  Value(NodeSet* value, const AdoptTag&)
+      : type_(kNodeSetValue),
+        bool_(false),
+        number_(0),
+        data_(ValueData::Create(value)) {}
 
-    bool isNodeSet() const { return m_type == NodeSetValue; }
-    bool isBoolean() const { return m_type == BooleanValue; }
-    bool isNumber() const { return m_type == NumberValue; }
-    bool isString() const { return m_type == StringValue; }
+  Type GetType() const { return type_; }
 
-    // If this is called during XPathExpression::evaluate(), EvaluationContext
-    // should be passed.
-    const NodeSet& toNodeSet(EvaluationContext*) const;
-    NodeSet& modifiableNodeSet(EvaluationContext&);
-    bool toBoolean() const;
-    double toNumber() const;
-    String toString() const;
+  bool IsNodeSet() const { return type_ == kNodeSetValue; }
+  bool IsBoolean() const { return type_ == kBooleanValue; }
+  bool IsNumber() const { return type_ == kNumberValue; }
+  bool IsString() const { return type_ == kStringValue; }
 
-private:
-    Type m_type;
-    bool m_bool;
-    double m_number;
-    Member<ValueData> m_data;
+  // If this is called during XPathExpression::evaluate(), EvaluationContext
+  // should be passed.
+  const NodeSet& ToNodeSet(EvaluationContext*) const;
+  NodeSet& ModifiableNodeSet(EvaluationContext&);
+  bool ToBoolean() const;
+  double ToNumber() const;
+  String ToString() const;
+
+ private:
+  Type type_;
+  bool bool_;
+  double number_;
+  Member<ValueData> data_;
 };
 
-template<>
+template <>
 inline Value::Value(bool value)
-    : m_type(BooleanValue)
-    , m_bool(value)
-    , m_number(0)
-{
-}
+    : type_(kBooleanValue), bool_(value), number_(0) {}
 
-} // namespace XPath
+}  // namespace XPath
 
-} // namespace blink
+}  // namespace blink
 
-#endif // XPathValue_h
+#endif  // XPathValue_h

@@ -32,77 +32,62 @@
 #ifndef PingLoader_h
 #define PingLoader_h
 
+#include <memory>
 #include "core/CoreExport.h"
-#include "core/fetch/ResourceLoaderOptions.h"
-#include "core/frame/LocalFrameLifecycleObserver.h"
 #include "platform/Timer.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/SelfKeepAlive.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Noncopyable.h"
 #include "public/platform/WebURLLoaderClient.h"
-#include "wtf/Forward.h"
-#include "wtf/Noncopyable.h"
-#include <memory>
 
 namespace blink {
 
+class Blob;
+class DOMArrayBufferView;
 class EncodedFormData;
+class FormData;
 class LocalFrame;
 class KURL;
-class ResourceRequest;
 
 // Issue an asynchronous, one-directional request at some resources, ignoring
-// any response. The request is made independent of any LocalFrame staying alive,
-// and must only stay alive until the transmission has completed successfully
-// (or not -- errors are not propagated back either.) Upon transmission, the
-// the load is cancelled and the loader cancels itself.
+// any response. The request is made independent of any LocalFrame staying
+// alive, and must only stay alive until the transmission has completed
+// successfully (or not -- errors are not propagated back either.) Upon
+// transmission, the the load is cancelled and the loader cancels itself.
 //
 // The ping loader is used by audit pings, beacon transmissions and image loads
 // during page unloading.
-//
-class CORE_EXPORT PingLoader : public GarbageCollectedFinalized<PingLoader>, public LocalFrameLifecycleObserver, private WebURLLoaderClient {
-    USING_GARBAGE_COLLECTED_MIXIN(PingLoader);
-    WTF_MAKE_NONCOPYABLE(PingLoader);
-public:
-    ~PingLoader() override;
+class CORE_EXPORT PingLoader {
+ public:
+  enum ViolationReportType {
+    kContentSecurityPolicyViolationReport,
+    kXSSAuditorViolationReport
+  };
 
-    enum ViolationReportType {
-        ContentSecurityPolicyViolationReport,
-        XSSAuditorViolationReport
-    };
+  static void LoadImage(LocalFrame*, const KURL&);
+  static void SendLinkAuditPing(LocalFrame*,
+                                const KURL& ping_url,
+                                const KURL& destination_url);
+  static void SendViolationReport(LocalFrame*,
+                                  const KURL& report_url,
+                                  PassRefPtr<EncodedFormData> report,
+                                  ViolationReportType);
 
-    static void loadImage(LocalFrame*, const KURL&);
-    static void sendLinkAuditPing(LocalFrame*, const KURL& pingURL, const KURL& destinationURL);
-    static void sendViolationReport(LocalFrame*, const KURL& reportURL, PassRefPtr<EncodedFormData> report, ViolationReportType);
-
-    DECLARE_VIRTUAL_TRACE();
-
-    // Promptly finalize m_loader.
-    EAGERLY_FINALIZE();
-
-protected:
-    PingLoader(LocalFrame*, ResourceRequest&, const FetchInitiatorInfo&, StoredCredentials);
-
-    static void start(LocalFrame*, ResourceRequest&, const FetchInitiatorInfo&, StoredCredentials = AllowStoredCredentials);
-
-    void dispose();
-
-private:
-    void didReceiveResponse(WebURLLoader*, const WebURLResponse&) final;
-    void didReceiveData(WebURLLoader*, const char*, int, int, int) final;
-    void didFinishLoading(WebURLLoader*, double, int64_t) final;
-    void didFail(WebURLLoader*, const WebURLError&) final;
-
-    void timeout(Timer<PingLoader>*);
-
-    void didFailLoading(LocalFrame*);
-
-    std::unique_ptr<WebURLLoader> m_loader;
-    Timer<PingLoader> m_timeout;
-    String m_url;
-    unsigned long m_identifier;
-    SelfKeepAlive<PingLoader> m_keepAlive;
+  // The last argument is guaranteed to be set to the size of payload if
+  // these method return true. If these method returns false, the value
+  // shouldn't be used.
+  static bool SendBeacon(LocalFrame*, int, const KURL&, const String&, size_t&);
+  static bool SendBeacon(LocalFrame*,
+                         int,
+                         const KURL&,
+                         DOMArrayBufferView*,
+                         size_t&);
+  static bool SendBeacon(LocalFrame*, int, const KURL&, Blob*, size_t&);
+  static bool SendBeacon(LocalFrame*, int, const KURL&, FormData*, size_t&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PingLoader_h
+#endif  // PingLoader_h

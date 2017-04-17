@@ -6,19 +6,19 @@
 #define CHROME_BROWSER_CHROMEOS_LOGIN_SCREENS_UPDATE_VIEW_H_
 
 #include "base/strings/string16.h"
+#include "chrome/browser/chromeos/login/oobe_screen.h"
 
 namespace chromeos {
 
-class UpdateModel;
+class UpdateScreen;
 
 // Interface for dependency injection between NetworkScreen and its actual
 // representation. Owned by UpdateScreen.
 class UpdateView {
  public:
-  virtual ~UpdateView() {}
+  constexpr static OobeScreen kScreenId = OobeScreen::SCREEN_OOBE_UPDATE;
 
-  // Prepare the contents to showing.
-  virtual void PrepareToShow() = 0;
+  virtual ~UpdateView() {}
 
   // Shows the contents of the screen.
   virtual void Show() = 0;
@@ -26,10 +26,10 @@ class UpdateView {
   // Hides the contents of the screen.
   virtual void Hide() = 0;
 
-  // Binds |model| to the view.
-  virtual void Bind(UpdateModel& model) = 0;
+  // Binds |screen| to the view.
+  virtual void Bind(UpdateScreen* screen) = 0;
 
-  // Unbinds model from the view.
+  // Unbinds the screen from the view.
   virtual void Unbind() = 0;
 };
 

@@ -2,169 +2,180 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "core/loader/DocumentLoader.h"
+
+#include <queue>
+#include "core/page/Page.h"
 #include "platform/testing/URLTestHelpers.h"
+#include "platform/testing/UnitTestHelpers.h"
+#include "platform/wtf/AutoReset.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderClient.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
-#include "public/web/WebCache.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "web/WebLocalFrameImpl.h"
 #include "web/tests/FrameTestHelpers.h"
-#include "wtf/AutoReset.h"
-#include <queue>
 
 namespace blink {
 
 // TODO(dcheng): Ideally, enough of FrameTestHelpers would be in core/ that
 // placing a test for a core/ class in web/ wouldn't be necessary.
 class DocumentLoaderTest : public ::testing::Test {
-protected:
-    void SetUp() override
-    {
-        m_webViewHelper.initialize();
-        URLTestHelpers::registerMockedURLLoad(URLTestHelpers::toKURL(
-            "https://example.com/foo.html"), "foo.html");
-    }
+ protected:
+  void SetUp() override {
+    web_view_helper_.Initialize();
+    URLTestHelpers::RegisterMockedURLLoad(
+        URLTestHelpers::ToKURL("https://example.com/foo.html"),
+        testing::WebTestDataPath("foo.html"));
+  }
 
-    void TearDown() override
-    {
-        Platform::current()->getURLLoaderMockFactory()->unregisterAllURLs();
-        WebCache::clear();
-    }
+  void TearDown() override {
+    Platform::Current()
+        ->GetURLLoaderMockFactory()
+        ->UnregisterAllURLsAndClearMemoryCache();
+  }
 
-    WebLocalFrameImpl* mainFrame()
-    {
-        return m_webViewHelper.webView()->mainFrameImpl();
-    }
+  WebLocalFrameImpl* MainFrame() {
+    return web_view_helper_.WebView()->MainFrameImpl();
+  }
 
-    FrameTestHelpers::WebViewHelper m_webViewHelper;
+  FrameTestHelpers::WebViewHelper web_view_helper_;
 };
 
-TEST_F(DocumentLoaderTest, SingleChunk)
-{
-    class TestDelegate : public WebURLLoaderTestDelegate {
-    public:
-        void didReceiveData(WebURLLoaderClient* originalClient, WebURLLoader* loader, const char* data, int dataLength, int encodedDataLength) override
-        {
-            EXPECT_EQ(34, dataLength) << "foo.html was not served in a single chunk";
-            originalClient->didReceiveData(loader, data, dataLength, encodedDataLength, dataLength);
-        }
-    } delegate;
+TEST_F(DocumentLoaderTest, SingleChunk) {
+  class TestDelegate : public WebURLLoaderTestDelegate {
+   public:
+    void DidReceiveData(WebURLLoaderClient* original_client,
+                        const char* data,
+                        int data_length) override {
+      EXPECT_EQ(34, data_length) << "foo.html was not served in a single chunk";
+      original_client->DidReceiveData(data, data_length);
+    }
+  } delegate;
 
-    Platform::current()->getURLLoaderMockFactory()->setLoaderDelegate(&delegate);
-    FrameTestHelpers::loadFrame(mainFrame(), "https://example.com/foo.html");
-    Platform::current()->getURLLoaderMockFactory()->setLoaderDelegate(nullptr);
+  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(&delegate);
+  FrameTestHelpers::LoadFrame(MainFrame(), "https://example.com/foo.html");
+  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(nullptr);
 
-    // TODO(dcheng): How should the test verify that the original callback is
-    // invoked? The test currently still passes even if the test delegate
-    // forgets to invoke the callback.
+  // TODO(dcheng): How should the test verify that the original callback is
+  // invoked? The test currently still passes even if the test delegate
+  // forgets to invoke the callback.
 }
 
 // Test normal case of DocumentLoader::dataReceived(): data in multiple chunks,
 // with no reentrancy.
-TEST_F(DocumentLoaderTest, MultiChunkNoReentrancy)
-{
-    class TestDelegate : public WebURLLoaderTestDelegate {
-    public:
-        void didReceiveData(WebURLLoaderClient* originalClient, WebURLLoader* loader, const char* data, int dataLength, int encodedDataLength) override
-        {
-            EXPECT_EQ(34, dataLength) << "foo.html was not served in a single chunk";
-            // Chunk the reply into one byte chunks.
-            for (int i = 0; i < dataLength; ++i)
-                originalClient->didReceiveData(loader, &data[i], 1, 1, 1);
-        }
-    } delegate;
+TEST_F(DocumentLoaderTest, MultiChunkNoReentrancy) {
+  class TestDelegate : public WebURLLoaderTestDelegate {
+   public:
+    void DidReceiveData(WebURLLoaderClient* original_client,
+                        const char* data,
+                        int data_length) override {
+      EXPECT_EQ(34, data_length) << "foo.html was not served in a single chunk";
+      // Chunk the reply into one byte chunks.
+      for (int i = 0; i < data_length; ++i)
+        original_client->DidReceiveData(&data[i], 1);
+    }
+  } delegate;
 
-    Platform::current()->getURLLoaderMockFactory()->setLoaderDelegate(&delegate);
-    FrameTestHelpers::loadFrame(mainFrame(), "https://example.com/foo.html");
-    Platform::current()->getURLLoaderMockFactory()->setLoaderDelegate(nullptr);
+  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(&delegate);
+  FrameTestHelpers::LoadFrame(MainFrame(), "https://example.com/foo.html");
+  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(nullptr);
 }
 
 // Finally, test reentrant callbacks to DocumentLoader::dataReceived().
-TEST_F(DocumentLoaderTest, MultiChunkWithReentrancy)
-{
-    // This test delegate chunks the response stage into three distinct stages:
-    // 1. The first dataReceived() callback, which triggers frame detach due to
-    //    commiting a provisional load.
-    // 2.  The middle part of the response, which is dispatched to
-    //    dataReceived() reentrantly.
-    // 3. The final chunk, which is dispatched normally at the top-level.
-    class TestDelegate
-        : public WebURLLoaderTestDelegate, public FrameTestHelpers::TestWebFrameClient {
-    public:
-        TestDelegate() : m_loaderClient(nullptr), m_loader(nullptr), m_dispatchingDidReceiveData(false), m_servedReentrantly(false) { }
+TEST_F(DocumentLoaderTest, MultiChunkWithReentrancy) {
+  // This test delegate chunks the response stage into three distinct stages:
+  // 1. The first dataReceived() callback, which triggers frame detach due to
+  //    commiting a provisional load.
+  // 2.  The middle part of the response, which is dispatched to
+  //    dataReceived() reentrantly.
+  // 3. The final chunk, which is dispatched normally at the top-level.
+  class TestDelegate : public WebURLLoaderTestDelegate,
+                       public FrameTestHelpers::TestWebFrameClient {
+   public:
+    TestDelegate()
+        : loader_client_(nullptr),
+          dispatching_did_receive_data_(false),
+          served_reentrantly_(false) {}
 
-        // WebURLLoaderTestDelegate overrides:
-        void didReceiveData(WebURLLoaderClient* originalClient, WebURLLoader* loader, const char* data, int dataLength, int encodedDataLength) override
-        {
-            EXPECT_EQ(34, dataLength) << "foo.html was not served in a single chunk";
+    // WebURLLoaderTestDelegate overrides:
+    void DidReceiveData(WebURLLoaderClient* original_client,
+                        const char* data,
+                        int data_length) override {
+      EXPECT_EQ(34, data_length) << "foo.html was not served in a single chunk";
 
-            m_loaderClient = originalClient;
-            m_loader = loader;
-            for (int i = 0; i < dataLength; ++i)
-                m_data.push(data[i]);
+      loader_client_ = original_client;
+      for (int i = 0; i < data_length; ++i)
+        data_.push(data[i]);
 
-            {
-                // Serve the first byte to the real WebURLLoaderCLient, which
-                // should trigger frameDetach() due to committing a provisional
-                // load.
-                AutoReset<bool> dispatching(&m_dispatchingDidReceiveData, true);
-                dispatchOneByte();
-            }
-            // Serve the remaining bytes to complete the load.
-            EXPECT_FALSE(m_data.empty());
-            while (!m_data.empty())
-                dispatchOneByte();
-        }
+      {
+        // Serve the first byte to the real WebURLLoaderCLient, which
+        // should trigger frameDetach() due to committing a provisional
+        // load.
+        AutoReset<bool> dispatching(&dispatching_did_receive_data_, true);
+        DispatchOneByte();
+      }
+      // Serve the remaining bytes to complete the load.
+      EXPECT_FALSE(data_.empty());
+      while (!data_.empty())
+        DispatchOneByte();
+    }
 
-        // WebFrameClient overrides:
-        void frameDetached(WebLocalFrame* frame, DetachType detachType) override
-        {
-            if (m_dispatchingDidReceiveData) {
-                // This should be called by the first didReceiveData() call, since
-                // it should commit the provisional load.
-                EXPECT_GT(m_data.size(), 10u);
-                // Dispatch dataReceived() callbacks for part of the remaining
-                // data, saving the rest to be dispatched at the top-level as
-                // normal.
-                while (m_data.size() > 10)
-                    dispatchOneByte();
-                m_servedReentrantly = true;
-            }
-            TestWebFrameClient::frameDetached(frame, detachType);
-        }
+    // WebFrameClient overrides:
+    void FrameDetached(WebLocalFrame* frame, DetachType detach_type) override {
+      if (dispatching_did_receive_data_) {
+        // This should be called by the first didReceiveData() call, since
+        // it should commit the provisional load.
+        EXPECT_GT(data_.size(), 10u);
+        // Dispatch dataReceived() callbacks for part of the remaining
+        // data, saving the rest to be dispatched at the top-level as
+        // normal.
+        while (data_.size() > 10)
+          DispatchOneByte();
+        served_reentrantly_ = true;
+      }
+      TestWebFrameClient::FrameDetached(frame, detach_type);
+    }
 
-        void dispatchOneByte()
-        {
-            char c = m_data.front();
-            m_data.pop();
-            m_loaderClient->didReceiveData(m_loader, &c, 1, 1, 1);
-        }
+    void DispatchOneByte() {
+      char c = data_.front();
+      data_.pop();
+      loader_client_->DidReceiveData(&c, 1);
+    }
 
-        bool servedReentrantly() const { return m_servedReentrantly; }
+    bool ServedReentrantly() const { return served_reentrantly_; }
 
-    private:
-        WebURLLoaderClient* m_loaderClient;
-        WebURLLoader* m_loader;
-        std::queue<char> m_data;
-        bool m_dispatchingDidReceiveData;
-        bool m_servedReentrantly;
-    } delegate;
-    m_webViewHelper.initialize(false, &delegate);
+   private:
+    WebURLLoaderClient* loader_client_;
+    std::queue<char> data_;
+    bool dispatching_did_receive_data_;
+    bool served_reentrantly_;
+  } delegate;
+  web_view_helper_.Initialize(false, &delegate);
 
-    // This doesn't go through the mocked URL load path: it's just intended to
-    // setup a situation where didReceiveData() can be invoked reentrantly.
-    FrameTestHelpers::loadHTMLString(mainFrame(), "<iframe></iframe>", URLTestHelpers::toKURL("about:blank"));
+  // This doesn't go through the mocked URL load path: it's just intended to
+  // setup a situation where didReceiveData() can be invoked reentrantly.
+  FrameTestHelpers::LoadHTMLString(MainFrame(), "<iframe></iframe>",
+                                   URLTestHelpers::ToKURL("about:blank"));
 
-    Platform::current()->getURLLoaderMockFactory()->setLoaderDelegate(&delegate);
-    FrameTestHelpers::loadFrame(mainFrame(), "https://example.com/foo.html");
-    Platform::current()->getURLLoaderMockFactory()->setLoaderDelegate(nullptr);
+  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(&delegate);
+  FrameTestHelpers::LoadFrame(MainFrame(), "https://example.com/foo.html");
+  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(nullptr);
 
-    EXPECT_TRUE(delegate.servedReentrantly());
+  EXPECT_TRUE(delegate.ServedReentrantly());
 
-    // delegate is a WebFrameClient and stack-allocated, so manually reset() the
-    // WebViewHelper here.
-    m_webViewHelper.reset();
+  // delegate is a WebFrameClient and stack-allocated, so manually reset() the
+  // WebViewHelper here.
+  web_view_helper_.Reset();
 }
 
-} // namespace blink
+TEST_F(DocumentLoaderTest, isCommittedButEmpty) {
+  WebViewImpl* web_view_impl =
+      web_view_helper_.InitializeAndLoad("about:blank", true);
+  EXPECT_TRUE(ToLocalFrame(web_view_impl->GetPage()->MainFrame())
+                  ->Loader()
+                  .GetDocumentLoader()
+                  ->IsCommittedButEmpty());
+}
+
+}  // namespace blink

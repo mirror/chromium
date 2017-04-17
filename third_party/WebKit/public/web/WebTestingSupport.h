@@ -26,20 +26,18 @@
 #ifndef WebTestingSupport_h
 #define WebTestingSupport_h
 
-#include "../platform/WebCommon.h"
 #include "WebFrame.h"
-#include <v8.h>
+#include "public/platform/WebCommon.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
 class WebTestingSupport {
-public:
-    static v8::Local<v8::Value> createInternalsObject(v8::Local<v8::Context>);
-    static void injectInternalsObject(WebLocalFrame*);
-    static void resetInternalsObject(WebLocalFrame*);
-    static void injectInternalsObject(v8::Local<v8::Context>);
+ public:
+  static void InjectInternalsObject(WebLocalFrame*);
+  static void ResetInternalsObject(WebLocalFrame*);
+  static void InjectInternalsObject(v8::Local<v8::Context>);
 };
-
 }
 
 #endif

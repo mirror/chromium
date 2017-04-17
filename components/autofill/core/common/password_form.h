@@ -17,6 +17,12 @@
 
 namespace autofill {
 
+// Pair of possible username value and field name that contained this value.
+using PossibleUsernamePair = std::pair<base::string16, base::string16>;
+
+// Vector of possible username values and corresponding field names.
+using PossibleUsernamesVector = std::vector<PossibleUsernamePair>;
+
 // The PasswordForm struct encapsulates information about a login form,
 // which can be an HTML form or a dialog with username/password text fields.
 //
@@ -141,7 +147,7 @@ struct PasswordForm {
   // determining the username are incorrect. Optional.
   //
   // When parsing an HTML form, this is typically empty.
-  std::vector<base::string16> other_possible_usernames;
+  PossibleUsernamesVector other_possible_usernames;
 
   // The name of the input element corresponding to the current password.
   // Optional (improves scoring).
@@ -164,6 +170,10 @@ struct PasswordForm {
   // If the form was a sign-up or a change password form, the name of the input
   // element corresponding to the new password. Optional, and not persisted.
   base::string16 new_password_element;
+
+  // The confirmation password element. Optional, only set on form parsing, and
+  // not persisted.
+  base::string16 confirmation_password_element;
 
   // The new password. Optional, and not persisted.
   base::string16 new_password_value;
@@ -293,14 +303,13 @@ bool ArePasswordFormUniqueKeyEqual(const PasswordForm& left,
 
 // A comparator for the unique key.
 struct LessThanUniqueKey {
-  bool operator()(const PasswordForm* left, const PasswordForm* right) const;
+  bool operator()(const std::unique_ptr<PasswordForm>& left,
+                  const std::unique_ptr<PasswordForm>& right) const;
 };
 
-// Map username to PasswordForm* for convenience. See password_form_manager.h.
-using PasswordFormMap = std::map<base::string16, std::unique_ptr<PasswordForm>>;
-
-// Like PasswordFormMap, but with weak (not owned) pointers.
-using ConstPasswordFormMap = std::map<base::string16, const PasswordForm*>;
+// Converts a vector of possible usernames to string.
+base::string16 OtherPossibleUsernamesToString(
+    const PossibleUsernamesVector& possible_usernames);
 
 // For testing.
 std::ostream& operator<<(std::ostream& os, PasswordForm::Layout layout);

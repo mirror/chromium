@@ -4,22 +4,32 @@
 
 package org.chromium.chrome.browser.download;
 
-import org.chromium.chrome.browser.widget.DateDividedAdapter.TimedItem;
+import org.chromium.base.annotations.CalledByNative;
+import org.chromium.components.offline_items_collection.ContentId;
 
 /**
  * A generic class representing a download item. The item can be either downloaded through the
- * Android DownloadManager, or through Chrome's network stack
+ * Android DownloadManager, or through Chrome's network stack.
+ *
+ * This represents the native DownloadItem at a specific point in time -- the native side
+ * DownloadManager must be queried for the correct status.
  */
-public class DownloadItem implements TimedItem {
+public class DownloadItem {
+    public static final int INDETERMINATE_DOWNLOAD_PERCENTAGE = -1;
     static final long INVALID_DOWNLOAD_ID = -1L;
+
+    private final ContentId mContentId = new ContentId();
     private boolean mUseAndroidDownloadManager;
     private DownloadInfo mDownloadInfo;
     private long mDownloadId = INVALID_DOWNLOAD_ID;
     private long mStartTime;
+    private boolean mHasBeenExternallyRemoved;
 
     public DownloadItem(boolean useAndroidDownloadManager, DownloadInfo info) {
         mUseAndroidDownloadManager = useAndroidDownloadManager;
         mDownloadInfo = info;
+        if (mDownloadInfo != null) mContentId.namespace = mDownloadInfo.getContentId().namespace;
+        mContentId.id = getId();
     }
 
     /**
@@ -29,6 +39,9 @@ public class DownloadItem implements TimedItem {
      */
     public void setSystemDownloadId(long downloadId) {
         mDownloadId = downloadId;
+
+        // Update our ContentId in case it changed.
+        mContentId.id = getId();
     }
 
     /**
@@ -43,6 +56,14 @@ public class DownloadItem implements TimedItem {
      */
     public long getSystemDownloadId() {
         return mDownloadId;
+    }
+
+    /**
+     * @return A {@link ContentId} that represents this downloaded item.  The id will match
+     *         {@link #getId()}.
+     */
+    public ContentId getContentId() {
+        return mContentId;
     }
 
     /**
@@ -85,8 +106,43 @@ public class DownloadItem implements TimedItem {
      *
      * @return Download start time from System.currentTimeMillis().
      */
-    @Override
     public long getStartTime() {
         return mStartTime;
+    }
+
+    /**
+     * Sets whether the file associated with this item has been removed through an external
+     * action.
+     *
+     * @param hasBeenExternallyRemoved Whether the file associated with this item has been removed
+     *                                 from the file system through a means other than the browser
+     *                                 download ui.
+     */
+    public void setHasBeenExternallyRemoved(boolean hasBeenExternallyRemoved) {
+        mHasBeenExternallyRemoved = hasBeenExternallyRemoved;
+    }
+
+    /**
+     * @return Whether the file associated with this item has been removed from the file system
+     *         through a means other than the browser download ui.
+     */
+    public boolean hasBeenExternallyRemoved() {
+        return mHasBeenExternallyRemoved;
+    }
+
+    @CalledByNative
+    private static DownloadItem createDownloadItem(
+            DownloadInfo downloadInfo, long startTimestamp, boolean hasBeenExternallyRemoved) {
+        DownloadItem downloadItem = new DownloadItem(false, downloadInfo);
+        downloadItem.setStartTime(startTimestamp);
+        downloadItem.setHasBeenExternallyRemoved(hasBeenExternallyRemoved);
+        return downloadItem;
+    }
+
+    /**
+     * @return Whether or not the download has an indeterminate percentage.
+     */
+    public boolean isIndeterminate() {
+        return getDownloadInfo().getPercentCompleted() == INDETERMINATE_DOWNLOAD_PERCENTAGE;
     }
 }

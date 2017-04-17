@@ -26,22 +26,23 @@
 #ifndef FontWidthVariant_h
 #define FontWidthVariant_h
 
-#include "wtf/Assertions.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
 enum FontWidthVariant {
-    RegularWidth,
-    HalfWidth,
-    ThirdWidth,
-    QuarterWidth,
-    LastFontWidthVariant = QuarterWidth
+  kRegularWidth,
+  kHalfWidth,
+  kThirdWidth,
+  kQuarterWidth,
+  kLastFontWidthVariant = kQuarterWidth
 };
 
-const unsigned FontWidthVariantWidth = 2;
+const unsigned kFontWidthVariantWidth = 2;
 
-static_assert(LastFontWidthVariant >> FontWidthVariantWidth == 0, "FontWidthVariantWidth must be correct");
+static_assert(kLastFontWidthVariant >> kFontWidthVariantWidth == 0,
+              "FontWidthVariantWidth must be correct");
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FontWidthVariant_h
+#endif  // FontWidthVariant_h

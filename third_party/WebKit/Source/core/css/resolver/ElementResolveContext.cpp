@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ * All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -30,29 +31,40 @@
 namespace blink {
 
 ElementResolveContext::ElementResolveContext(const Document& document)
-    : m_element(nullptr)
-    , m_parentNode(nullptr)
-    , m_rootElementStyle(document.documentElement() ? document.documentElement()->computedStyle() : document.computedStyle())
-    , m_elementLinkState(NotInsideLink)
-    , m_distributedToInsertionPoint(false)
-{
-}
+    : element_(nullptr),
+      parent_node_(nullptr),
+      layout_parent_(nullptr),
+      root_element_style_(document.documentElement()
+                              ? document.documentElement()->GetComputedStyle()
+                              : document.GetComputedStyle()),
+      element_link_state_(EInsideLink::kNotInsideLink),
+      distributed_to_insertion_point_(false) {}
 
 ElementResolveContext::ElementResolveContext(Element& element)
-    : m_element(&element)
-    , m_elementLinkState(element.document().visitedLinkState().determineLinkState(element))
-    , m_distributedToInsertionPoint(false)
-{
-    LayoutTreeBuilderTraversal::ParentDetails parentDetails;
-    m_parentNode = element.isSlotOrActiveInsertionPoint() ? nullptr : LayoutTreeBuilderTraversal::parent(element, &parentDetails);
-    m_distributedToInsertionPoint = parentDetails.insertionPoint();
+    : element_(&element),
+      element_link_state_(
+          element.GetDocument().GetVisitedLinkState().DetermineLinkState(
+              element)),
+      distributed_to_insertion_point_(false) {
+  LayoutTreeBuilderTraversal::ParentDetails parent_details;
+  if (element.IsActiveSlotOrActiveInsertionPoint()) {
+    parent_node_ = nullptr;
+    layout_parent_ = nullptr;
+  } else {
+    parent_node_ = LayoutTreeBuilderTraversal::Parent(element);
+    layout_parent_ =
+        LayoutTreeBuilderTraversal::LayoutParent(element, &parent_details);
+  }
+  distributed_to_insertion_point_ = parent_details.GetInsertionPoint();
 
-    const Document& document = element.document();
-    Node* documentElement = document.documentElement();
-    const ComputedStyle* documentStyle = document.computedStyle();
-    m_rootElementStyle = documentElement && element != documentElement ? documentElement->computedStyle() : documentStyle;
-    if (!m_rootElementStyle)
-        m_rootElementStyle = documentStyle;
+  const Document& document = element.GetDocument();
+  Node* document_element = document.documentElement();
+  const ComputedStyle* document_style = document.GetComputedStyle();
+  root_element_style_ = document_element && element != document_element
+                            ? document_element->GetComputedStyle()
+                            : document_style;
+  if (!root_element_style_)
+    root_element_style_ = document_style;
 }
 
-} // namespace blink
+}  // namespace blink

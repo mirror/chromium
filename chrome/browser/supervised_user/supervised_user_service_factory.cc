@@ -10,8 +10,9 @@
 #include "chrome/browser/supervised_user/supervised_user_service.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
+#include "extensions/features/features.h"
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "extensions/browser/extension_system_provider.h"
 #include "extensions/browser/extensions_browser_client.h"
 #endif
@@ -37,11 +38,13 @@ SupervisedUserServiceFactory::SupervisedUserServiceFactory()
     : BrowserContextKeyedServiceFactory(
         "SupervisedUserService",
         BrowserContextDependencyManager::GetInstance()) {
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   DependsOn(
       extensions::ExtensionsBrowserClient::Get()->GetExtensionSystemFactory());
 #endif
   DependsOn(ProfileOAuth2TokenServiceFactory::GetInstance());
+
+  // TODO(skym, crbug.com/705545): Fix this circular dependency.
   DependsOn(ProfileSyncServiceFactory::GetInstance());
 }
 

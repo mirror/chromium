@@ -16,7 +16,13 @@ import "omnibox_input_type.proto";
 
 // Next tag: 17
 message OmniboxEventProto {
-  // The timestamp for the event, in seconds since the epoch.
+  // The timestamp for the event, in seconds.
+  // This value comes from Chromium's TimeTicks::Now(), which is an abstract
+  // time value that is guaranteed to always be non-decreasing (regardless of
+  // Daylight Saving Time or any other changes to the system clock).
+  // These numbers are only comparable within a session.  To sequence events
+  // across sessions, order by the |session_id| from the
+  // ChromeUserMetricsExtension message.
   optional int64 time = 1;
 
   // The id of the originating tab for this omnibox interaction.
@@ -111,10 +117,8 @@ message OmniboxEventProto {
     // The instant new tab page enum value was deprecated on August 2, 2013.
     OBSOLETE_INSTANT_NTP = 5;
 
-    // The user is on a search result page that's doing search term
-    // replacement, meaning the search terms should've appeared in the omnibox
-    // before the user started editing it, not the URL of the page.
-    SEARCH_RESULT_PAGE_DOING_SEARCH_TERM_REPLACEMENT = 6;
+    // The search term replacement enum value was deprecated in August 2016.
+    OBSOLETE_SEARCH_RESULT_PAGE_DOING_SEARCH_TERM_REPLACEMENT = 6;
 
     // The new tab page in which this omnibox interaction first started
     // with the user having focus in the omnibox.
@@ -167,11 +171,13 @@ message OmniboxEventProto {
     // This enum value is currently only used by Android GSA. It represents
     // a suggestion powered by a Chrome content provider.
     ON_DEVICE_CHROME = 13;
-    CLIPBOARD_URL = 14;  // Suggestion coming from clipboard (iOS only).
+    CLIPBOARD_URL = 14;    // Suggestion coming from clipboard (iOS only).
+    PHYSICAL_WEB = 15;     // Suggestions triggered by URLs broadcast by nearby
+                           // devices (iOS and Android).
   }
 
   // The result set displayed on the completion popup
-  // Next tag: 7
+  // Next tag: 8
   message Suggestion {
     // Where does this result come from?
     optional ProviderType provider = 1;
@@ -190,6 +196,14 @@ message OmniboxEventProto {
       HISTORY_KEYWORD = 5;        // A past page whose keyword contains the
                                   // input
       NAVSUGGEST = 6;             // A suggested URL
+                                  //
+                                  // result_subtype_identifier is currently used
+                                  // for contextual zero-suggest suggestions
+                                  // provided by the experimental service (note
+                                  // that not all NAVSUUGGEST suggestions come
+                                  // from the experimental service).
+                                  // For subtype definitions, please contact
+                                  // gcomanici@chromium.org.
       SEARCH_WHAT_YOU_TYPED = 7;  // The input as a search query (with the
                                   // default engine)
       SEARCH_HISTORY = 8;         // A past search (with the default engine)
@@ -200,7 +214,8 @@ message OmniboxEventProto {
       EXTENSION_APP = 11;         // DEPRECATED. An Extension App with a
                                   // title/url that contains the input.
       CONTACT = 12;               // One of the user's contacts
-      BOOKMARK_TITLE = 13;        // A bookmark whose title contains the input.
+      BOOKMARK_TITLE = 13;        // A bookmark with a title/url that contains
+                                  // the input.
       SEARCH_SUGGEST_ENTITY = 14; // A suggested search for an entity.
       SEARCH_SUGGEST_TAIL = 15;   // A suggested search to complete the tail
                                   // of the query.
@@ -226,6 +241,9 @@ message OmniboxEventProto {
                                     // suggestions of any type.
       CALCULATOR              = 23; // A calculator answer.
       CLIPBOARD               = 24; // An URL based on the clipboard.
+      PHYSICAL_WEB            = 25; // A Physical Web nearby URL.
+      PHYSICAL_WEB_OVERFLOW   = 26; // An item representing multiple Physical
+                                    // Web nearby URLs.
     }
     optional ResultType result_type = 2;
 
@@ -243,6 +261,12 @@ message OmniboxEventProto {
 
     // Whether this item is disabled in the UI (not clickable).
     optional bool is_disabled = 6;
+
+    // Used to identify the specific source / type for suggestions by the
+    // suggest server. The meaning of individual values is determined by the
+    // provider of each suggestion type and is different for every suggestion
+    // type. See enum ResultType above for more details.
+    optional int32 result_subtype_identifier = 7;
   }
   repeated Suggestion suggestion = 9;
 

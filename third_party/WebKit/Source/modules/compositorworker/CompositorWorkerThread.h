@@ -5,40 +5,40 @@
 #ifndef CompositorWorkerThread_h
 #define CompositorWorkerThread_h
 
-#include "core/workers/WorkerThread.h"
 #include "modules/ModulesExport.h"
+#include "modules/compositorworker/AbstractAnimationWorkletThread.h"
 #include <memory>
 
 namespace blink {
 
 class InProcessWorkerObjectProxy;
 
-class MODULES_EXPORT CompositorWorkerThread final : public WorkerThread {
-public:
-    static std::unique_ptr<CompositorWorkerThread> create(PassRefPtr<WorkerLoaderProxy>, InProcessWorkerObjectProxy&, double timeOrigin);
-    ~CompositorWorkerThread() override;
+class MODULES_EXPORT CompositorWorkerThread final
+    : public AbstractAnimationWorkletThread {
+ public:
+  static std::unique_ptr<CompositorWorkerThread> Create(
+      PassRefPtr<WorkerLoaderProxy>,
+      InProcessWorkerObjectProxy&,
+      double time_origin);
+  ~CompositorWorkerThread() override;
 
-    InProcessWorkerObjectProxy& workerObjectProxy() const { return m_workerObjectProxy; }
-    WorkerBackingThread& workerBackingThread() override;
-    ConsoleMessageStorage* consoleMessageStorage() final;
-    bool shouldAttachThreadDebugger() const override { return false; }
+  InProcessWorkerObjectProxy& WorkerObjectProxy() const {
+    return worker_object_proxy_;
+  }
 
-    static void ensureSharedBackingThread();
-    static void createSharedBackingThreadForTest();
+ protected:
+  WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
+      std::unique_ptr<WorkerThreadStartupData>) override;
 
-    static void clearSharedBackingThread();
+ private:
+  CompositorWorkerThread(PassRefPtr<WorkerLoaderProxy>,
+                         InProcessWorkerObjectProxy&,
+                         double time_origin);
 
-protected:
-    CompositorWorkerThread(PassRefPtr<WorkerLoaderProxy>, InProcessWorkerObjectProxy&, double timeOrigin);
-
-    WorkerOrWorkletGlobalScope* createWorkerGlobalScope(std::unique_ptr<WorkerThreadStartupData>) override;
-    bool isOwningBackingThread() const override { return false; }
-
-private:
-    InProcessWorkerObjectProxy& m_workerObjectProxy;
-    double m_timeOrigin;
+  InProcessWorkerObjectProxy& worker_object_proxy_;
+  double time_origin_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CompositorWorkerThread_h
+#endif  // CompositorWorkerThread_h

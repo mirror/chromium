@@ -17,7 +17,6 @@
 #include "content/browser/site_instance_impl.h"
 #include "content/common/dom_storage/dom_storage_types.h"
 #include "content/common/frame_messages.h"
-#include "content/common/site_isolation_policy.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -36,12 +35,10 @@
 namespace content {
 
 void InitNavigateParams(FrameHostMsg_DidCommitProvisionalLoad_Params* params,
-                        int page_id,
                         int nav_entry_id,
                         bool did_create_new_entry,
                         const GURL& url,
                         ui::PageTransition transition) {
-  params->page_id = page_id;
   params->nav_entry_id = nav_entry_id;
   params->url = url;
   params->referrer = Referrer();
@@ -51,9 +48,8 @@ void InitNavigateParams(FrameHostMsg_DidCommitProvisionalLoad_Params* params,
   params->searchable_form_url = GURL();
   params->searchable_form_encoding = std::string();
   params->did_create_new_entry = did_create_new_entry;
-  params->security_info = std::string();
   params->gesture = NavigationGestureUser;
-  params->was_within_same_page = false;
+  params->was_within_same_document = false;
   params->method = "GET";
   params->page_state = PageState::CreateFromURL(url);
 }
@@ -62,19 +58,16 @@ TestRenderWidgetHostView::TestRenderWidgetHostView(RenderWidgetHost* rwh)
     : rwh_(RenderWidgetHostImpl::From(rwh)),
       is_showing_(false),
       is_occluded_(false),
-      did_swap_compositor_frame_(false) {
+      did_swap_compositor_frame_(false),
+      background_color_(SK_ColorWHITE) {
 #if defined(OS_ANDROID)
-  surface_id_allocator_.reset(
-      new cc::SurfaceIdAllocator(AllocateSurfaceClientId()));
-  GetSurfaceManager()->RegisterSurfaceClientId(
-      surface_id_allocator_->client_id());
+  frame_sink_id_ = AllocateFrameSinkId();
+  GetSurfaceManager()->RegisterFrameSinkId(frame_sink_id_);
 #else
   // Not all tests initialize or need an image transport factory.
   if (ImageTransportFactory::GetInstance()) {
-    surface_id_allocator_.reset(
-        new cc::SurfaceIdAllocator(AllocateSurfaceClientId()));
-    GetSurfaceManager()->RegisterSurfaceClientId(
-        surface_id_allocator_->client_id());
+    frame_sink_id_ = AllocateFrameSinkId();
+    GetSurfaceManager()->RegisterFrameSinkId(frame_sink_id_);
   }
 #endif
 
@@ -82,9 +75,9 @@ TestRenderWidgetHostView::TestRenderWidgetHostView(RenderWidgetHost* rwh)
 }
 
 TestRenderWidgetHostView::~TestRenderWidgetHostView() {
-  if (GetSurfaceManager()) {
-    GetSurfaceManager()->InvalidateSurfaceClientId(
-        surface_id_allocator_->client_id());
+  cc::SurfaceManager* manager = GetSurfaceManager();
+  if (manager) {
+    manager->InvalidateFrameSinkId(frame_sink_id_);
   }
 }
 
@@ -109,10 +102,6 @@ ui::TextInputClient* TestRenderWidgetHostView::GetTextInputClient() {
 }
 
 bool TestRenderWidgetHostView::HasFocus() const {
-  return true;
-}
-
-bool TestRenderWidgetHostView::IsSurfaceAvailableForCopy() const {
   return true;
 }
 
@@ -148,23 +137,12 @@ gfx::Rect TestRenderWidgetHostView::GetViewBounds() const {
   return gfx::Rect();
 }
 
-void TestRenderWidgetHostView::CopyFromCompositingSurface(
-    const gfx::Rect& src_subrect,
-    const gfx::Size& dst_size,
-    const ReadbackRequestCallback& callback,
-    const SkColorType preferred_color_type) {
-  callback.Run(SkBitmap(), content::READBACK_FAILED);
+void TestRenderWidgetHostView::SetBackgroundColor(SkColor color) {
+  background_color_ = color;
 }
 
-void TestRenderWidgetHostView::CopyFromCompositingSurfaceToVideoFrame(
-    const gfx::Rect& src_subrect,
-    const scoped_refptr<media::VideoFrame>& target,
-    const base::Callback<void(const gfx::Rect&, bool)>& callback) {
-  callback.Run(gfx::Rect(), false);
-}
-
-bool TestRenderWidgetHostView::CanCopyToVideoFrame() const {
-  return false;
+SkColor TestRenderWidgetHostView::background_color() const {
+  return background_color_;
 }
 
 bool TestRenderWidgetHostView::HasAcceleratedSurface(
@@ -194,8 +172,7 @@ bool TestRenderWidgetHostView::IsSpeaking() const {
   return false;
 }
 
-void TestRenderWidgetHostView::StopSpeaking() {
-}
+void TestRenderWidgetHostView::StopSpeaking() {}
 
 #endif
 
@@ -203,8 +180,13 @@ gfx::Rect TestRenderWidgetHostView::GetBoundsInRootWindow() {
   return gfx::Rect();
 }
 
-void TestRenderWidgetHostView::OnSwapCompositorFrame(
-    uint32_t output_surface_id,
+void TestRenderWidgetHostView::DidCreateNewRendererCompositorFrameSink(
+    cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink) {
+  did_change_compositor_frame_sink_ = true;
+}
+
+void TestRenderWidgetHostView::SubmitCompositorFrame(
+    const cc::LocalSurfaceId& local_surface_id,
     cc::CompositorFrame frame) {
   did_swap_compositor_frame_ = true;
 }
@@ -216,11 +198,8 @@ bool TestRenderWidgetHostView::LockMouse() {
 void TestRenderWidgetHostView::UnlockMouse() {
 }
 
-uint32_t TestRenderWidgetHostView::GetSurfaceClientId() {
-  // See constructor.  If a test needs this, its harness needs to construct an
-  // ImageTransportFactory.
-  DCHECK(surface_id_allocator_);
-  return surface_id_allocator_->client_id();
+cc::FrameSinkId TestRenderWidgetHostView::GetFrameSinkId() {
+  return frame_sink_id_;
 }
 
 TestRenderViewHost::TestRenderViewHost(
@@ -236,6 +215,7 @@ TestRenderViewHost::TestRenderViewHost(
                          swapped_out,
                          false /* has_initialized_audio_host */),
       delete_counter_(nullptr),
+      webkit_preferences_changed_counter_(nullptr),
       opener_frame_route_id_(MSG_ROUTING_NONE) {
   // TestRenderWidgetHostView installs itself into this->view_ in its
   // constructor, and deletes itself when TestRenderWidgetHostView::Destroy() is
@@ -252,18 +232,16 @@ bool TestRenderViewHost::CreateTestRenderView(
     const base::string16& frame_name,
     int opener_frame_route_id,
     int proxy_route_id,
-    int32_t max_page_id,
     bool window_was_created_with_opener) {
   FrameReplicationState replicated_state;
   replicated_state.name = base::UTF16ToUTF8(frame_name);
-  return CreateRenderView(opener_frame_route_id, proxy_route_id, max_page_id,
+  return CreateRenderView(opener_frame_route_id, proxy_route_id,
                           replicated_state, window_was_created_with_opener);
 }
 
 bool TestRenderViewHost::CreateRenderView(
     int opener_frame_route_id,
     int proxy_route_id,
-    int32_t max_page_id,
     const FrameReplicationState& replicated_frame_state,
     bool window_was_created_with_opener) {
   DCHECK(!IsRenderViewLive());
@@ -293,24 +271,25 @@ WebPreferences TestRenderViewHost::TestComputeWebkitPrefs() {
   return ComputeWebkitPrefs();
 }
 
+void TestRenderViewHost::OnWebkitPreferencesChanged() {
+  RenderViewHostImpl::OnWebkitPreferencesChanged();
+  if (webkit_preferences_changed_counter_)
+    ++*webkit_preferences_changed_counter_;
+}
+
 void TestRenderViewHost::TestOnStartDragging(
     const DropData& drop_data) {
-  blink::WebDragOperationsMask drag_operation = blink::WebDragOperationEvery;
+  blink::WebDragOperationsMask drag_operation = blink::kWebDragOperationEvery;
   DragEventSourceInfo event_info;
-  OnStartDragging(drop_data, drag_operation, SkBitmap(), gfx::Vector2d(),
-                  event_info);
+  GetWidget()->OnStartDragging(drop_data, drag_operation, SkBitmap(),
+                               gfx::Vector2d(), event_info);
 }
 
 void TestRenderViewHost::TestOnUpdateStateWithFile(
-    int page_id,
     const base::FilePath& file_path) {
   PageState state = PageState::CreateForTesting(GURL("http://www.google.com"),
                                                 false, "data", &file_path);
-  if (SiteIsolationPolicy::UseSubframeNavigationEntries()) {
-    static_cast<RenderFrameHostImpl*>(GetMainFrame())->OnUpdateState(state);
-  } else {
-    OnUpdateState(page_id, state);
-  }
+  static_cast<RenderFrameHostImpl*>(GetMainFrame())->OnUpdateState(state);
 }
 
 RenderViewHostImplTestHarness::RenderViewHostImplTestHarness() {

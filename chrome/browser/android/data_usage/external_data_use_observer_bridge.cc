@@ -7,14 +7,15 @@
 #include <memory>
 #include <vector>
 
-#include "base/android/context_utils.h"
 #include "base/android/jni_string.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/time/time.h"
 #include "chrome/browser/android/data_usage/data_use_tab_model.h"
 #include "chrome/browser/android/data_usage/external_data_use_observer.h"
+#include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/browser_thread.h"
 #include "jni/ExternalDataUseObserver_jni.h"
@@ -23,12 +24,32 @@ using base::android::ConvertUTF8ToJavaString;
 
 namespace {
 
+// Name of the external data use observer synthetic field trial, enabled and
+// disabled groups.
+const char kSyntheticFieldTrial[] = "SyntheticExternalDataUseObserver";
+const char kSyntheticFieldTrialEnabledGroup[] = "Enabled";
+const char kSyntheticFieldTrialDisabledGroup[] = "Disabled";
+
 // Returns the package name of the control app from the field trial.
 const std::string GetControlAppPackageName() {
   return variations::GetVariationParamValue(
       chrome::android::ExternalDataUseObserver::
           kExternalDataUseObserverFieldTrial,
       "control_app_package_name");
+}
+
+// Returns the google variation ID from the field trial.
+variations::VariationID GetGoogleVariationID() {
+  variations::VariationID variation_id;
+  std::string variation_value = variations::GetVariationParamValue(
+      chrome::android::ExternalDataUseObserver::
+          kExternalDataUseObserverFieldTrial,
+      "variation_id");
+  if (!variation_value.empty() &&
+      base::StringToInt(variation_value, &variation_id)) {
+    return variation_id;
+  }
+  return variations::EMPTY_ID;
 }
 
 }  // namespace
@@ -39,7 +60,8 @@ namespace android {
 
 ExternalDataUseObserverBridge::ExternalDataUseObserverBridge()
     : construct_time_(base::TimeTicks::Now()),
-      is_first_matching_rule_fetch_(true) {
+      is_first_matching_rule_fetch_(true),
+      register_google_variation_id_(false) {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::IO));
 
   // Detach from IO thread since rest of ExternalDataUseObserverBridge lives on
@@ -52,8 +74,7 @@ ExternalDataUseObserverBridge::~ExternalDataUseObserverBridge() {
   if (j_external_data_use_observer_.is_null())
     return;
   JNIEnv* env = base::android::AttachCurrentThread();
-  Java_ExternalDataUseObserver_onDestroy(env,
-                                         j_external_data_use_observer_.obj());
+  Java_ExternalDataUseObserver_onDestroy(env, j_external_data_use_observer_);
 }
 
 void ExternalDataUseObserverBridge::Init(
@@ -74,13 +95,12 @@ void ExternalDataUseObserverBridge::Init(
 
   JNIEnv* env = base::android::AttachCurrentThread();
   j_external_data_use_observer_.Reset(Java_ExternalDataUseObserver_create(
-      env, base::android::GetApplicationContext(),
-      reinterpret_cast<intptr_t>(this)));
+      env, reinterpret_cast<intptr_t>(this)));
   DCHECK(!j_external_data_use_observer_.is_null());
 
   Java_ExternalDataUseObserver_initControlAppManager(
-      env, j_external_data_use_observer_.obj(),
-      ConvertUTF8ToJavaString(env, GetControlAppPackageName()).obj());
+      env, j_external_data_use_observer_,
+      ConvertUTF8ToJavaString(env, GetControlAppPackageName()));
 }
 
 void ExternalDataUseObserverBridge::FetchMatchingRules() const {
@@ -88,7 +108,7 @@ void ExternalDataUseObserverBridge::FetchMatchingRules() const {
 
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_ExternalDataUseObserver_fetchMatchingRules(
-      env, j_external_data_use_observer_.obj());
+      env, j_external_data_use_observer_);
 }
 
 void ExternalDataUseObserverBridge::FetchMatchingRulesDone(
@@ -151,10 +171,9 @@ void ExternalDataUseObserverBridge::ReportDataUse(
     start_time_milliseconds = end_time_milliseconds - 1;
 
   Java_ExternalDataUseObserver_reportDataUse(
-      env, j_external_data_use_observer_.obj(),
-      ConvertUTF8ToJavaString(env, label).obj(),
-      ConvertUTF8ToJavaString(env, tag).obj(), connection_type,
-      ConvertUTF8ToJavaString(env, mcc_mnc).obj(), start_time_milliseconds,
+      env, j_external_data_use_observer_, ConvertUTF8ToJavaString(env, label),
+      ConvertUTF8ToJavaString(env, tag), connection_type,
+      ConvertUTF8ToJavaString(env, mcc_mnc), start_time_milliseconds,
       end_time_milliseconds, bytes_downloaded, bytes_uploaded);
 }
 
@@ -183,10 +202,37 @@ void ExternalDataUseObserverBridge::OnControlAppInstallStateChange(
 void ExternalDataUseObserverBridge::ShouldRegisterAsDataUseObserver(
     bool should_register) const {
   DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(!j_external_data_use_observer_.is_null());
+
   io_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&ExternalDataUseObserver::ShouldRegisterAsDataUseObserver,
                  external_data_use_observer_, should_register));
+
+  if (!register_google_variation_id_)
+    return;
+
+  variations::VariationID variation_id = GetGoogleVariationID();
+
+  if (variation_id != variations::EMPTY_ID) {
+    // Set variation id for the enabled group if |should_register| is true.
+    // Otherwise clear the variation id for the enabled group by setting to
+    // EMPTY_ID.
+    variations::AssociateGoogleVariationID(
+        variations::GOOGLE_WEB_PROPERTIES, kSyntheticFieldTrial,
+        kSyntheticFieldTrialEnabledGroup,
+        should_register ? variation_id : variations::EMPTY_ID);
+    ChromeMetricsServiceAccessor::RegisterSyntheticFieldTrial(
+        kSyntheticFieldTrial, should_register
+                                  ? kSyntheticFieldTrialEnabledGroup
+                                  : kSyntheticFieldTrialDisabledGroup);
+  }
+}
+
+void ExternalDataUseObserverBridge::SetRegisterGoogleVariationID(
+    bool register_google_variation_id) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  register_google_variation_id_ = register_google_variation_id;
 }
 
 bool RegisterExternalDataUseObserver(JNIEnv* env) {

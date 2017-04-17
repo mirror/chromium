@@ -6,47 +6,39 @@
 
 #include "core/css/CSSMarkup.h"
 #include "core/css/StyleRuleNamespace.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-CSSNamespaceRule::CSSNamespaceRule(StyleRuleNamespace* namespaceRule, CSSStyleSheet* parent)
-    : CSSRule(parent)
-    , m_namespaceRule(namespaceRule)
-{
+CSSNamespaceRule::CSSNamespaceRule(StyleRuleNamespace* namespace_rule,
+                                   CSSStyleSheet* parent)
+    : CSSRule(parent), namespace_rule_(namespace_rule) {}
+
+CSSNamespaceRule::~CSSNamespaceRule() {}
+
+String CSSNamespaceRule::cssText() const {
+  StringBuilder result;
+  result.Append("@namespace ");
+  SerializeIdentifier(prefix(), result);
+  if (!prefix().IsEmpty())
+    result.Append(' ');
+  result.Append("url(");
+  result.Append(SerializeString(namespaceURI()));
+  result.Append(");");
+  return result.ToString();
 }
 
-CSSNamespaceRule::~CSSNamespaceRule()
-{
+AtomicString CSSNamespaceRule::namespaceURI() const {
+  return namespace_rule_->Uri();
 }
 
-String CSSNamespaceRule::cssText() const
-{
-    StringBuilder result;
-    result.append("@namespace ");
-    serializeIdentifier(prefix(), result);
-    if (!prefix().isEmpty())
-        result.append(' ');
-    result.append("url(");
-    result.append(serializeString(namespaceURI()));
-    result.append(");");
-    return result.toString();
+AtomicString CSSNamespaceRule::prefix() const {
+  return namespace_rule_->Prefix();
 }
 
-AtomicString CSSNamespaceRule::namespaceURI() const
-{
-    return m_namespaceRule->uri();
+DEFINE_TRACE(CSSNamespaceRule) {
+  visitor->Trace(namespace_rule_);
+  CSSRule::Trace(visitor);
 }
 
-AtomicString CSSNamespaceRule::prefix() const
-{
-    return m_namespaceRule->prefix();
-}
-
-DEFINE_TRACE(CSSNamespaceRule)
-{
-    visitor->trace(m_namespaceRule);
-    CSSRule::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

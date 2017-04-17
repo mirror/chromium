@@ -4,7 +4,7 @@
 
 #include "chrome/browser/chromeos/ui/kiosk_external_update_notification.h"
 
-#include "ash/common/shell_window_ids.h"
+#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
 #include "base/macros.h"
 #include "ui/aura/window.h"
@@ -57,10 +57,10 @@ class KioskExternalUpdateNotificationView : public views::WidgetDelegateView {
 
   // views::WidgetDelegateView overrides:
   void OnPaint(gfx::Canvas* canvas) override {
-    SkPaint paint;
-    paint.setStyle(SkPaint::kFill_Style);
-    paint.setColor(kWindowBackgroundColor);
-    canvas->DrawRoundRect(GetLocalBounds(), kWindowCornerRadius, paint);
+    cc::PaintFlags flags;
+    flags.setStyle(cc::PaintFlags::kFill_Style);
+    flags.setColor(kWindowBackgroundColor);
+    canvas->DrawRoundRect(GetLocalBounds(), kWindowCornerRadius, flags);
     views::WidgetDelegateView::OnPaint(canvas);
   }
 
@@ -121,7 +121,7 @@ void KioskExternalUpdateNotification::CreateAndShowNotificationView(
   view_ = new KioskExternalUpdateNotificationView(this);
   view_->SetMessage(message);
 
-  aura::Window* root_window = ash::Shell::GetTargetRootWindow();
+  aura::Window* root_window = ash::Shell::GetRootWindowForNewWindows();
   gfx::Size rs = root_window->bounds().size();
   gfx::Size ps = view_->GetPreferredSize();
   gfx::Rect bounds((rs.width() - ps.width()) / 2,
@@ -141,7 +141,6 @@ void KioskExternalUpdateNotification::CreateAndShowNotificationView(
       root_window, ash::kShellWindowId_SettingBubbleContainer);
   views::Widget* widget = new views::Widget;
   widget->Init(params);
-  widget->SetContentsView(view_);
   gfx::NativeView native_view = widget->GetNativeView();
   native_view->SetName("KioskExternalUpdateNotification");
   widget->Show();

@@ -161,10 +161,23 @@ class CONTENT_EXPORT StoragePartition {
                          const base::Time end,
                          const base::Closure& callback) = 0;
 
+  // Clears the HTTP and media caches associated with this StoragePartition's
+  // request contexts. If |begin| and |end| are not null, only entries with
+  // timestamps inbetween are deleted. If |url_matcher| is not null, only
+  // entries with matching URLs are deleted.
+  virtual void ClearHttpAndMediaCaches(
+      const base::Time begin,
+      const base::Time end,
+      const base::Callback<bool(const GURL&)>& url_matcher,
+      const base::Closure& callback) = 0;
+
   // Write any unwritten data to disk.
   // Note: this method does not sync the data - it only ensures that any
   // unwritten data has been written out to the filesystem.
   virtual void Flush() = 0;
+
+  // Clear the bluetooth allowed devices map. For test use only.
+  virtual void ClearBluetoothAllowedDevicesMapForTesting() = 0;
 
  protected:
   virtual ~StoragePartition() {}

@@ -31,49 +31,54 @@
 #ifndef HTMLImportState_h
 #define HTMLImportState_h
 
-#include "wtf/Allocator.h"
-#include "wtf/Assertions.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
 class HTMLImportState {
-    DISALLOW_NEW();
-public:
-    enum Value {
-        BlockingScriptExecution = 0,
-        Active,
-        Ready,
-        Invalid
-    };
+  DISALLOW_NEW();
 
-    explicit HTMLImportState(Value value = BlockingScriptExecution)
-        : m_value(value)
-    { }
+ public:
+  enum Value { kBlockingScriptExecution = 0, kActive, kReady, kInvalid };
 
-    bool shouldBlockScriptExecution() const { return checkedValue() <= BlockingScriptExecution; }
-    bool isReady() const { return checkedValue() == Ready; }
-    bool isValid() const { return m_value != Invalid; }
-    bool operator==(const HTMLImportState& other) const { return m_value == other.m_value; }
-    bool operator!=(const HTMLImportState& other) const { return !(*this == other); }
-    bool operator<=(const HTMLImportState& other) const { return m_value <= other.m_value; }
+  explicit HTMLImportState(Value value = kBlockingScriptExecution)
+      : value_(value) {}
+
+  bool ShouldBlockScriptExecution() const {
+    return CheckedValue() <= kBlockingScriptExecution;
+  }
+  bool IsReady() const { return CheckedValue() == kReady; }
+  bool IsValid() const { return value_ != kInvalid; }
+  bool operator==(const HTMLImportState& other) const {
+    return value_ == other.value_;
+  }
+  bool operator!=(const HTMLImportState& other) const {
+    return !(*this == other);
+  }
+  bool operator<=(const HTMLImportState& other) const {
+    return value_ <= other.value_;
+  }
 
 #if !defined(NDEBUG)
-    Value peekValueForDebug() const { return m_value; }
+  Value PeekValueForDebug() const { return value_; }
 #endif
 
-    static HTMLImportState invalidState() { return HTMLImportState(Invalid); }
-    static HTMLImportState blockedState() { return HTMLImportState(BlockingScriptExecution); }
-private:
-    Value checkedValue() const;
-    Value m_value;
+  static HTMLImportState InvalidState() { return HTMLImportState(kInvalid); }
+  static HTMLImportState BlockedState() {
+    return HTMLImportState(kBlockingScriptExecution);
+  }
+
+ private:
+  Value CheckedValue() const;
+  Value value_;
 };
 
-inline HTMLImportState::Value HTMLImportState::checkedValue() const
-{
-    ASSERT(isValid());
-    return m_value;
+inline HTMLImportState::Value HTMLImportState::CheckedValue() const {
+  DCHECK(IsValid());
+  return value_;
 }
 
-} // namespace blink
+}  // namespace blink
 
 #endif

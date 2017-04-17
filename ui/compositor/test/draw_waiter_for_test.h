@@ -38,7 +38,7 @@ class DrawWaiterForTest : public CompositorObserver {
     WAIT_FOR_COMPOSITING_ENDED,
   };
   DrawWaiterForTest(WaitEvent wait_event);
-  ~DrawWaiterForTest();
+  ~DrawWaiterForTest() override;
 
   void WaitImpl(Compositor* compositor);
 
@@ -47,7 +47,6 @@ class DrawWaiterForTest : public CompositorObserver {
   void OnCompositingStarted(Compositor* compositor,
                             base::TimeTicks start_time) override;
   void OnCompositingEnded(Compositor* compositor) override;
-  void OnCompositingAborted(Compositor* compositor) override;
   void OnCompositingLockStateChanged(Compositor* compositor) override;
   void OnCompositingShuttingDown(Compositor* compositor) override;
 

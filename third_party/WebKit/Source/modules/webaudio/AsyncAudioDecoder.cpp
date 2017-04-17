@@ -10,68 +10,99 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
-#include "core/dom/DOMArrayBuffer.h"
 #include "modules/webaudio/AsyncAudioDecoder.h"
+#include "core/dom/DOMArrayBuffer.h"
 #include "modules/webaudio/AudioBuffer.h"
 #include "modules/webaudio/AudioBufferCallback.h"
 #include "modules/webaudio/BaseAudioContext.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/audio/AudioBus.h"
 #include "platform/audio/AudioFileReader.h"
+#include "platform/threading/BackgroundTaskRunner.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebTraceLocation.h"
-#include "wtf/PtrUtil.h"
 
 namespace blink {
 
-AsyncAudioDecoder::AsyncAudioDecoder()
-    : m_thread(wrapUnique(Platform::current()->createThread("Audio Decoder")))
-{
+void AsyncAudioDecoder::DecodeAsync(DOMArrayBuffer* audio_data,
+                                    float sample_rate,
+                                    AudioBufferCallback* success_callback,
+                                    AudioBufferCallback* error_callback,
+                                    ScriptPromiseResolver* resolver,
+                                    BaseAudioContext* context) {
+  DCHECK(IsMainThread());
+  DCHECK(audio_data);
+  if (!audio_data)
+    return;
+
+  BackgroundTaskRunner::PostOnBackgroundThread(
+      BLINK_FROM_HERE,
+      CrossThreadBind(&AsyncAudioDecoder::DecodeOnBackgroundThread,
+                      WrapCrossThreadPersistent(audio_data), sample_rate,
+                      WrapCrossThreadPersistent(success_callback),
+                      WrapCrossThreadPersistent(error_callback),
+                      WrapCrossThreadPersistent(resolver),
+                      WrapCrossThreadPersistent(context)));
 }
 
-AsyncAudioDecoder::~AsyncAudioDecoder()
-{
+void AsyncAudioDecoder::DecodeOnBackgroundThread(
+    DOMArrayBuffer* audio_data,
+    float sample_rate,
+    AudioBufferCallback* success_callback,
+    AudioBufferCallback* error_callback,
+    ScriptPromiseResolver* resolver,
+    BaseAudioContext* context) {
+  DCHECK(!IsMainThread());
+  RefPtr<AudioBus> bus = CreateBusFromInMemoryAudioFile(
+      audio_data->Data(), audio_data->ByteLength(), false, sample_rate);
+
+  // Decoding is finished, but we need to do the callbacks on the main thread.
+  // A reference to |*bus| is retained by WTF::Function and will be removed
+  // after notifyComplete() is done.
+  //
+  // We also want to avoid notifying the main thread if AudioContext does not
+  // exist any more.
+  if (context) {
+    Platform::Current()->MainThread()->GetWebTaskRunner()->PostTask(
+        BLINK_FROM_HERE,
+        CrossThreadBind(&AsyncAudioDecoder::NotifyComplete,
+                        WrapCrossThreadPersistent(audio_data),
+                        WrapCrossThreadPersistent(success_callback),
+                        WrapCrossThreadPersistent(error_callback),
+                        bus.Release(), WrapCrossThreadPersistent(resolver),
+                        WrapCrossThreadPersistent(context)));
+  }
 }
 
-void AsyncAudioDecoder::decodeAsync(DOMArrayBuffer* audioData, float sampleRate, AudioBufferCallback* successCallback, AudioBufferCallback* errorCallback, ScriptPromiseResolver* resolver, BaseAudioContext* context)
-{
-    ASSERT(isMainThread());
-    ASSERT(audioData);
-    if (!audioData)
-        return;
+void AsyncAudioDecoder::NotifyComplete(DOMArrayBuffer*,
+                                       AudioBufferCallback* success_callback,
+                                       AudioBufferCallback* error_callback,
+                                       AudioBus* audio_bus,
+                                       ScriptPromiseResolver* resolver,
+                                       BaseAudioContext* context) {
+  DCHECK(IsMainThread());
 
-    m_thread->getWebTaskRunner()->postTask(BLINK_FROM_HERE, crossThreadBind(&AsyncAudioDecoder::decode, wrapCrossThreadPersistent(audioData), sampleRate, wrapCrossThreadPersistent(successCallback), wrapCrossThreadPersistent(errorCallback), wrapCrossThreadPersistent(resolver), wrapCrossThreadPersistent(context)));
+  AudioBuffer* audio_buffer = AudioBuffer::CreateFromAudioBus(audio_bus);
+
+  // If the context is available, let the context finish the notification.
+  if (context) {
+    context->HandleDecodeAudioData(audio_buffer, resolver, success_callback,
+                                   error_callback);
+  }
 }
 
-void AsyncAudioDecoder::decode(DOMArrayBuffer* audioData, float sampleRate, AudioBufferCallback* successCallback, AudioBufferCallback* errorCallback, ScriptPromiseResolver* resolver, BaseAudioContext* context)
-{
-    RefPtr<AudioBus> bus = createBusFromInMemoryAudioFile(audioData->data(), audioData->byteLength(), false, sampleRate);
-
-    // Decoding is finished, but we need to do the callbacks on the main thread.
-    // A reference to |*bus| is retained by WTF::Function and will be removed after notifyComplete() is done.
-    Platform::current()->mainThread()->getWebTaskRunner()->postTask(BLINK_FROM_HERE, crossThreadBind(&AsyncAudioDecoder::notifyComplete, wrapCrossThreadPersistent(audioData), wrapCrossThreadPersistent(successCallback), wrapCrossThreadPersistent(errorCallback), bus.release(), wrapCrossThreadPersistent(resolver), wrapCrossThreadPersistent(context)));
-}
-
-void AsyncAudioDecoder::notifyComplete(DOMArrayBuffer*, AudioBufferCallback* successCallback, AudioBufferCallback* errorCallback, AudioBus* audioBus, ScriptPromiseResolver* resolver, BaseAudioContext* context)
-{
-    ASSERT(isMainThread());
-
-    AudioBuffer* audioBuffer = AudioBuffer::createFromAudioBus(audioBus);
-
-    // Let the context finish the notification.
-    context->handleDecodeAudioData(audioBuffer, resolver, successCallback, errorCallback);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -11,9 +11,9 @@
 #include "components/bookmarks/managed/managed_bookmarks_tracker.h"
 #include "components/policy/core/browser/policy_error_map.h"
 #include "components/policy/core/common/policy_map.h"
+#include "components/policy/policy_constants.h"
 #include "components/prefs/pref_value_map.h"
 #include "components/url_formatter/url_fixer.h"
-#include "policy/policy_constants.h"
 #include "url/gurl.h"
 
 using bookmarks::ManagedBookmarksTracker;
@@ -51,7 +51,8 @@ ManagedBookmarksPolicyHandler::GetFolderName(const base::ListValue& list) {
   // Iterate over the list, and try to find the FolderName.
   for (const auto& el : list) {
     const base::DictionaryValue* dict = NULL;
-    if (!el || !el->GetAsDictionary(&dict)) continue;
+    if (!el.GetAsDictionary(&dict))
+      continue;
 
     std::string name;
     if (dict->GetString(ManagedBookmarksTracker::kFolderName, &name)) {
@@ -68,7 +69,7 @@ void ManagedBookmarksPolicyHandler::FilterBookmarks(base::ListValue* list) {
   base::ListValue::iterator it = list->begin();
   while (it != list->end()) {
     base::DictionaryValue* dict = NULL;
-    if (!*it || !(*it)->GetAsDictionary(&dict)) {
+    if (!it->GetAsDictionary(&dict)) {
       it = list->Erase(it, NULL);
       continue;
     }

@@ -29,14 +29,13 @@
 #ifndef AXObjectCacheImpl_h
 #define AXObjectCacheImpl_h
 
+#include <memory>
 #include "core/dom/AXObjectCache.h"
 #include "modules/ModulesExport.h"
 #include "modules/accessibility/AXObject.h"
-#include "platform/Timer.h"
-#include "wtf/Forward.h"
-#include "wtf/HashMap.h"
-#include "wtf/HashSet.h"
-#include <memory>
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/HashSet.h"
 
 namespace blink {
 
@@ -46,211 +45,225 @@ class FrameView;
 
 // This class should only be used from inside the accessibility directory.
 class MODULES_EXPORT AXObjectCacheImpl : public AXObjectCache {
-    WTF_MAKE_NONCOPYABLE(AXObjectCacheImpl);
-public:
-    static AXObjectCache* create(Document&);
+  WTF_MAKE_NONCOPYABLE(AXObjectCacheImpl);
 
-    explicit AXObjectCacheImpl(Document&);
-    ~AXObjectCacheImpl();
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  static AXObjectCache* Create(Document&);
 
-    AXObject* focusedObject();
+  explicit AXObjectCacheImpl(Document&);
+  ~AXObjectCacheImpl();
+  DECLARE_VIRTUAL_TRACE();
 
-    void dispose() override;
+  AXObject* FocusedObject();
 
-    void selectionChanged(Node*) override;
-    void childrenChanged(Node*) override;
-    void childrenChanged(LayoutObject*) override;
-    void checkedStateChanged(Node*) override;
-    virtual void listboxOptionStateChanged(HTMLOptionElement*);
-    virtual void listboxSelectedChildrenChanged(HTMLSelectElement*);
-    virtual void listboxActiveIndexChanged(HTMLSelectElement*);
-    virtual void radiobuttonRemovedFromGroup(HTMLInputElement*);
+  void Dispose() override;
 
-    void remove(LayoutObject*) override;
-    void remove(Node*) override;
-    void remove(AbstractInlineTextBox*) override;
+  void SelectionChanged(Node*) override;
+  void ChildrenChanged(Node*) override;
+  void ChildrenChanged(LayoutObject*) override;
+  void CheckedStateChanged(Node*) override;
+  virtual void ListboxOptionStateChanged(HTMLOptionElement*);
+  virtual void ListboxSelectedChildrenChanged(HTMLSelectElement*);
+  virtual void ListboxActiveIndexChanged(HTMLSelectElement*);
+  virtual void RadiobuttonRemovedFromGroup(HTMLInputElement*);
 
-    const Element* rootAXEditableElement(const Node*) override;
+  void Remove(LayoutObject*) override;
+  void Remove(Node*) override;
+  void Remove(AbstractInlineTextBox*) override;
 
-    // Called by a node when text or a text equivalent (e.g. alt) attribute is changed.
-    void textChanged(LayoutObject*) override;
-    // Called when a node has just been attached, so we can make sure we have the right subclass of AXObject.
-    void updateCacheAfterNodeIsAttached(Node*) override;
+  const Element* RootAXEditableElement(const Node*) override;
 
-    void handleAttributeChanged(const QualifiedName& attrName, Element*) override;
-    void handleFocusedUIElementChanged(Node* oldFocusedNode, Node* newFocusedNode) override;
-    void handleInitialFocus() override;
-    void handleTextFormControlChanged(Node*) override;
-    void handleEditableTextContentChanged(Node*) override;
-    void handleValueChanged(Node*) override;
-    void handleUpdateActiveMenuOption(LayoutMenuList*, int optionIndex) override;
-    void didShowMenuListPopup(LayoutMenuList*) override;
-    void didHideMenuListPopup(LayoutMenuList*) override;
-    void handleLoadComplete(Document*) override;
-    void handleLayoutComplete(Document*) override;
-    void handleClicked(Node*) override;
+  // Called by a node when text or a text equivalent (e.g. alt) attribute is
+  // changed.
+  void TextChanged(LayoutObject*) override;
+  void TextChanged(AXObject*);
+  // Called when a node has just been attached, so we can make sure we have the
+  // right subclass of AXObject.
+  void UpdateCacheAfterNodeIsAttached(Node*) override;
 
-    void setCanvasObjectBounds(Element*, const LayoutRect&) override;
+  void HandleAttributeChanged(const QualifiedName& attr_name,
+                              Element*) override;
+  void HandleFocusedUIElementChanged(Node* old_focused_node,
+                                     Node* new_focused_node) override;
+  void HandleInitialFocus() override;
+  void HandleTextFormControlChanged(Node*) override;
+  void HandleEditableTextContentChanged(Node*) override;
+  void HandleValueChanged(Node*) override;
+  void HandleUpdateActiveMenuOption(LayoutMenuList*, int option_index) override;
+  void DidShowMenuListPopup(LayoutMenuList*) override;
+  void DidHideMenuListPopup(LayoutMenuList*) override;
+  void HandleLoadComplete(Document*) override;
+  void HandleLayoutComplete(Document*) override;
+  void HandleClicked(Node*) override;
 
-    void inlineTextBoxesUpdated(LineLayoutItem) override;
+  void SetCanvasObjectBounds(HTMLCanvasElement*,
+                             Element*,
+                             const LayoutRect&) override;
 
-    // Called when the scroll offset changes.
-    void handleScrollPositionChanged(FrameView*) override;
-    void handleScrollPositionChanged(LayoutObject*) override;
+  void InlineTextBoxesUpdated(LineLayoutItem) override;
 
-    // Called when scroll bars are added / removed (as the view resizes).
-    void handleLayoutComplete(LayoutObject*) override;
-    void handleScrolledToAnchor(const Node* anchorNode) override;
+  // Called when the scroll offset changes.
+  void HandleScrollPositionChanged(FrameView*) override;
+  void HandleScrollPositionChanged(LayoutObject*) override;
 
-    const AtomicString& computedRoleForNode(Node*) override;
-    String computedNameForNode(Node*) override;
+  // Called when scroll bars are added / removed (as the view resizes).
+  void HandleLayoutComplete(LayoutObject*) override;
+  void HandleScrolledToAnchor(const Node* anchor_node) override;
 
-    void onTouchAccessibilityHover(const IntPoint&) override;
+  const AtomicString& ComputedRoleForNode(Node*) override;
+  String ComputedNameForNode(Node*) override;
 
-    // Returns the root object for the entire document.
-    AXObject* rootObject();
+  void OnTouchAccessibilityHover(const IntPoint&) override;
 
-    AXObject* objectFromAXID(AXID id) const { return m_objects.get(id); }
-    AXObject* root();
+  // Returns the root object for the entire document.
+  AXObject* RootObject();
 
-    // used for objects without backing elements
-    AXObject* getOrCreate(AccessibilityRole);
-    AXObject* getOrCreate(LayoutObject*);
-    AXObject* getOrCreate(Node*);
-    AXObject* getOrCreate(AbstractInlineTextBox*);
+  AXObject* ObjectFromAXID(AXID id) const { return objects_.at(id); }
+  AXObject* Root();
 
-    // will only return the AXObject if it already exists
-    AXObject* get(Node*);
-    AXObject* get(LayoutObject*);
-    AXObject* get(AbstractInlineTextBox*);
+  // used for objects without backing elements
+  AXObject* GetOrCreate(AccessibilityRole);
+  AXObject* GetOrCreate(LayoutObject*);
+  AXObject* GetOrCreate(Node*);
+  AXObject* GetOrCreate(AbstractInlineTextBox*);
 
-    AXObject* firstAccessibleObjectFromNode(const Node*);
+  // will only return the AXObject if it already exists
+  AXObject* Get(Node*);
+  AXObject* Get(LayoutObject*);
+  AXObject* Get(AbstractInlineTextBox*);
 
-    void remove(AXID);
+  AXObject* FirstAccessibleObjectFromNode(const Node*);
 
-    void childrenChanged(AXObject*);
+  void Remove(AXID);
 
-    void handleActiveDescendantChanged(Node*);
-    void handleAriaRoleChanged(Node*);
-    void handleAriaExpandedChange(Node*);
-    void handleAriaSelectedChanged(Node*);
+  void ChildrenChanged(AXObject*);
 
-    bool accessibilityEnabled();
-    bool inlineTextBoxAccessibilityEnabled();
+  void HandleActiveDescendantChanged(Node*);
+  void HandleAriaRoleChanged(Node*);
+  void HandleAriaExpandedChange(Node*);
+  void HandleAriaSelectedChanged(Node*);
 
-    void removeAXID(AXObject*);
+  bool AccessibilityEnabled();
+  bool InlineTextBoxAccessibilityEnabled();
 
-    AXID platformGenerateAXID() const;
+  void RemoveAXID(AXObject*);
 
-    // Counts the number of times the document has been modified. Some attribute values are cached
-    // as long as the modification count hasn't changed.
-    int modificationCount() const { return m_modificationCount; }
+  AXID GenerateAXID() const;
 
-    void postNotification(LayoutObject*, AXNotification);
-    void postNotification(Node*, AXNotification);
-    void postNotification(AXObject*, AXNotification);
+  // Counts the number of times the document has been modified. Some attribute
+  // values are cached as long as the modification count hasn't changed.
+  int ModificationCount() const { return modification_count_; }
 
-    //
-    // Aria-owns support.
-    //
+  void PostNotification(LayoutObject*, AXNotification);
+  void PostNotification(Node*, AXNotification);
+  void PostNotification(AXObject*, AXNotification);
 
-    // Returns true if the given object's position in the tree was due to aria-owns.
-    bool isAriaOwned(const AXObject*) const;
+  //
+  // Aria-owns support.
+  //
 
-    // Returns the parent of the given object due to aria-owns.
-    AXObject* getAriaOwnedParent(const AXObject*) const;
+  // Returns true if the given object's position in the tree was due to
+  // aria-owns.
+  bool IsAriaOwned(const AXObject*) const;
 
-    // Given an object that has an aria-owns attributes, and a vector of ids from the value of
-    // that attribute, updates the internal state to reflect the new set of children owned by
-    // this object, returning the result in |ownedChildren|. The result is validated - illegal,
-    // duplicate, or cyclical references have been removed.
-    //
-    // If one or more ids aren't found, they're added to a lookup table so that if an
-    // element with that id appears later, it can be added when you call updateTreeIfElementIdIsAriaOwned.
-    void updateAriaOwns(const AXObject* owner, const Vector<String>& idVector, HeapVector<Member<AXObject>>& ownedChildren);
+  // Returns the parent of the given object due to aria-owns.
+  AXObject* GetAriaOwnedParent(const AXObject*) const;
 
-    // Given an element in the DOM tree that was either just added or whose id just changed,
-    // check to see if another object wants to be its parent due to aria-owns. If so, update
-    // the tree by calling childrenChanged() on the potential owner, possibly reparenting
-    // this element.
-    void updateTreeIfElementIdIsAriaOwned(Element*);
+  // Given an object that has an aria-owns attributes, and a vector of ids from
+  // the value of that attribute, updates the internal state to reflect the new
+  // set of children owned by this object, returning the result in
+  // |ownedChildren|. The result is validated - illegal, duplicate, or cyclical
+  // references have been removed.
+  //
+  // If one or more ids aren't found, they're added to a lookup table so that if
+  // an element with that id appears later, it can be added when you call
+  // updateTreeIfElementIdIsAriaOwned.
+  void UpdateAriaOwns(const AXObject* owner,
+                      const Vector<String>& id_vector,
+                      HeapVector<Member<AXObject>>& owned_children);
 
-protected:
-    void postPlatformNotification(AXObject*, AXNotification);
-    void textChanged(AXObject*);
-    void labelChanged(Element*);
+  // Given an element in the DOM tree that was either just added or whose id
+  // just changed, check to see if another object wants to be its parent due to
+  // aria-owns. If so, update the tree by calling childrenChanged() on the
+  // potential owner, possibly reparenting this element.
+  void UpdateTreeIfElementIdIsAriaOwned(Element*);
 
-    AXObject* createFromRenderer(LayoutObject*);
-    AXObject* createFromNode(Node*);
-    AXObject* createFromInlineTextBox(AbstractInlineTextBox*);
+ protected:
+  void PostPlatformNotification(AXObject*, AXNotification);
+  void LabelChanged(Element*);
 
-private:
+  AXObject* CreateFromRenderer(LayoutObject*);
+  AXObject* CreateFromNode(Node*);
+  AXObject* CreateFromInlineTextBox(AbstractInlineTextBox*);
 
-    Member<Document> m_document;
-    HeapHashMap<AXID, Member<AXObject>> m_objects;
-    // LayoutObject and AbstractInlineTextBox are not on the Oilpan heap so we
-    // do not use HeapHashMap for those mappings.
-    HashMap<LayoutObject*, AXID> m_layoutObjectMapping;
-    HeapHashMap<Member<Node>, AXID> m_nodeObjectMapping;
-    HashMap<AbstractInlineTextBox*, AXID> m_inlineTextBoxObjectMapping;
-    int m_modificationCount;
+ private:
+  Member<Document> document_;
+  HeapHashMap<AXID, Member<AXObject>> objects_;
+  // LayoutObject and AbstractInlineTextBox are not on the Oilpan heap so we
+  // do not use HeapHashMap for those mappings.
+  HashMap<LayoutObject*, AXID> layout_object_mapping_;
+  HeapHashMap<Member<Node>, AXID> node_object_mapping_;
+  HashMap<AbstractInlineTextBox*, AXID> inline_text_box_object_mapping_;
+  int modification_count_;
 
-    HashSet<AXID> m_idsInUse;
+  HashSet<AXID> ids_in_use_;
 
-#if ENABLE(ASSERT)
-    // Verified when finalizing.
-    bool m_hasBeenDisposed;
+#if DCHECK_IS_ON()
+  // Verified when finalizing.
+  bool has_been_disposed_ = false;
 #endif
 
-    //
-    // Aria-owns
-    //
+  //
+  // Aria-owns
+  //
 
-    // Map from the AXID of the owner to the AXIDs of the children.
-    // This is a validated map, it doesn't contain illegal, duplicate,
-    // or cyclical matches, or references to IDs that don't exist.
-    HashMap<AXID, Vector<AXID>> m_ariaOwnerToChildrenMapping;
+  // Map from the AXID of the owner to the AXIDs of the children.
+  // This is a validated map, it doesn't contain illegal, duplicate,
+  // or cyclical matches, or references to IDs that don't exist.
+  HashMap<AXID, Vector<AXID>> aria_owner_to_children_mapping_;
 
-    // Map from the AXID of a child to the AXID of the parent that owns it.
-    HashMap<AXID, AXID> m_ariaOwnedChildToOwnerMapping;
+  // Map from the AXID of a child to the AXID of the parent that owns it.
+  HashMap<AXID, AXID> aria_owned_child_to_owner_mapping_;
 
-    // Map from the AXID of a child to the AXID of its real parent in the tree if
-    // we ignored aria-owns. This is needed in case the owner no longer wants to own it.
-    HashMap<AXID, AXID> m_ariaOwnedChildToRealParentMapping;
+  // Map from the AXID of a child to the AXID of its real parent in the tree if
+  // we ignored aria-owns. This is needed in case the owner no longer wants to
+  // own it.
+  HashMap<AXID, AXID> aria_owned_child_to_real_parent_mapping_;
 
-    // Map from the AXID of any object with an aria-owns attribute to the set of ids
-    // of its children. This is *unvalidated*, it includes ids that may not currently
-    // exist in the tree.
-    HashMap<AXID, HashSet<String>> m_ariaOwnerToIdsMapping;
+  // Map from the AXID of any object with an aria-owns attribute to the set of
+  // ids of its children. This is *unvalidated*, it includes ids that may not
+  // currently exist in the tree.
+  HashMap<AXID, HashSet<String>> aria_owner_to_ids_mapping_;
 
-    // Map from an ID (the ID attribute of a DOM element) to the set of elements that
-    // want to own that ID. This is *unvalidated*, it includes possible duplicates.
-    // This is used so that when an element with an ID is added to the tree or changes
-    // its ID, we can quickly determine if it affects an aria-owns relationship.
-    HashMap<String, std::unique_ptr<HashSet<AXID>>> m_idToAriaOwnersMapping;
+  // Map from an ID (the ID attribute of a DOM element) to the set of elements
+  // that want to own that ID. This is *unvalidated*, it includes possible
+  // duplicates.  This is used so that when an element with an ID is added to
+  // the tree or changes its ID, we can quickly determine if it affects an
+  // aria-owns relationship.
+  HashMap<String, std::unique_ptr<HashSet<AXID>>> id_to_aria_owners_mapping_;
 
-    Timer<AXObjectCacheImpl> m_notificationPostTimer;
-    HeapVector<std::pair<Member<AXObject>, AXNotification>> m_notificationsToPost;
-    void notificationPostTimerFired(Timer<AXObjectCacheImpl>*);
+  TaskRunnerTimer<AXObjectCacheImpl> notification_post_timer_;
+  HeapVector<std::pair<Member<AXObject>, AXNotification>>
+      notifications_to_post_;
+  void NotificationPostTimerFired(TimerBase*);
 
-    AXObject* focusedImageMapUIElement(HTMLAreaElement*);
+  AXObject* FocusedImageMapUIElement(HTMLAreaElement*);
 
-    AXID getAXID(AXObject*);
+  AXID GetOrCreateAXID(AXObject*);
 
-    void textChanged(Node*);
-    bool nodeIsTextControl(const Node*);
+  void TextChanged(Node*);
+  bool NodeIsTextControl(const Node*);
 
-    Settings* settings();
+  Settings* GetSettings();
 };
 
 // This is the only subclass of AXObjectCache.
 DEFINE_TYPE_CASTS(AXObjectCacheImpl, AXObjectCache, cache, true, true);
 
-bool nodeHasRole(Node*, const String& role);
+bool NodeHasRole(Node*, const String& role);
 // This will let you know if aria-hidden was explicitly set to false.
-bool isNodeAriaVisible(Node*);
+bool IsNodeAriaVisible(Node*);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

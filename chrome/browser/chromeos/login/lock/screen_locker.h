@@ -15,7 +15,6 @@
 #include "base/sequenced_task_runner_helpers.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/login/help_app_launcher.h"
-#include "chrome/browser/chromeos/login/lock/screen_locker_delegate.h"
 #include "chrome/browser/chromeos/login/ui/login_display.h"
 #include "chromeos/login/auth/auth_status_consumer.h"
 #include "chromeos/login/auth/user_context.h"
@@ -23,20 +22,13 @@
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 
-namespace content {
-class WebUI;
-}
-
-namespace gfx {
-class Image;
-}
-
 namespace chromeos {
 
 class Authenticator;
 class ExtendedAuthenticator;
 class AuthFailure;
 class ScreenlockIconProvider;
+class WebUIScreenLocker;
 
 namespace test {
 class ScreenLockerTester;
@@ -44,7 +36,7 @@ class ScreenLockerViewsTester;
 class WebUIScreenLockerTester;
 }  // namespace test
 
-// ScreenLocker creates a ScreenLockerDelegate which will display the lock UI.
+// ScreenLocker creates a WebUIScreenLocker which will display the lock UI.
 // As well, it takes care of authenticating the user and managing a global
 // instance of itself which will be deleted when the system is unlocked.
 class ScreenLocker : public AuthStatusConsumer {
@@ -92,8 +84,8 @@ class ScreenLocker : public AuthStatusConsumer {
                         HelpAppLauncher::HelpTopic help_topic_id,
                         bool sign_out_only);
 
-  // Returns the screen locker's delegate.
-  ScreenLockerDelegate* delegate() const { return delegate_.get(); }
+  // Returns the WebUIScreenLocker used to lock the screen.
+  WebUIScreenLocker* web_ui() { return web_ui_.get(); }
 
   // Returns the users to authenticate.
   const user_manager::UserList& users() const { return users_; }
@@ -101,10 +93,6 @@ class ScreenLocker : public AuthStatusConsumer {
   // Allow a AuthStatusConsumer to listen for
   // the same login events that ScreenLocker does.
   void SetLoginStatusConsumer(chromeos::AuthStatusConsumer* consumer);
-
-  // Returns WebUI associated with screen locker implementation or NULL if
-  // there isn't one.
-  content::WebUI* GetAssociatedWebUI();
 
   // Initialize or uninitialize the ScreenLocker class. It listens to
   // NOTIFICATION_SESSION_STARTED so that the screen locker accepts lock
@@ -129,7 +117,12 @@ class ScreenLocker : public AuthStatusConsumer {
   friend class test::ScreenLockerTester;
   friend class test::ScreenLockerViewsTester;
   friend class test::WebUIScreenLockerTester;
-  friend class ScreenLockerDelegate;
+  friend class WebUIScreenLocker;
+
+  // Track whether the user used pin or password to unlock the lock screen.
+  // Values corrospond to UMA histograms, do not modify, or add or delete other
+  // than directly before AUTH_COUNT.
+  enum UnlockType { AUTH_PASSWORD = 0, AUTH_PIN, AUTH_COUNT };
 
   struct AuthenticationParametersCapture {
     UserContext user_context;
@@ -152,8 +145,8 @@ class ScreenLocker : public AuthStatusConsumer {
   // Looks up user in unlock user list.
   const user_manager::User* FindUnlockUser(const AccountId& account_id);
 
-  // ScreenLockerDelegate instance in use.
-  std::unique_ptr<ScreenLockerDelegate> delegate_;
+  // WebUIScreenLocker instance in use.
+  std::unique_ptr<WebUIScreenLocker> web_ui_;
 
   // Users that can unlock the device.
   user_manager::UserList users_;
@@ -167,23 +160,26 @@ class ScreenLocker : public AuthStatusConsumer {
   // True if the screen is locked, or false otherwise.  This changes
   // from false to true, but will never change from true to
   // false. Instead, ScreenLocker object gets deleted when unlocked.
-  bool locked_;
+  bool locked_ = false;
 
   // Reference to the single instance of the screen locker object.
   // This is used to make sure there is only one screen locker instance.
   static ScreenLocker* screen_locker_;
 
   // The time when the screen locker object is created.
-  base::Time start_time_;
+  base::Time start_time_ = base::Time::Now();
   // The time when the authentication is started.
   base::Time authentication_start_time_;
 
   // Delegate to forward all login status events to.
   // Tests can use this to receive login status events.
-  AuthStatusConsumer* auth_status_consumer_;
+  AuthStatusConsumer* auth_status_consumer_ = nullptr;
 
   // Number of bad login attempts in a row.
-  int incorrect_passwords_count_;
+  int incorrect_passwords_count_ = 0;
+
+  // Whether the last password entered was a pin or not.
+  bool is_pin_attempt_ = false;
 
   // Copy of parameters passed to last call of OnLoginSuccess for usage in
   // UnlockOnLoginSuccess().

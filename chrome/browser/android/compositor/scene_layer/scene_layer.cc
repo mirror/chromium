@@ -8,12 +8,14 @@
 #include "content/public/browser/android/compositor.h"
 #include "jni/SceneLayer_jni.h"
 
-namespace chrome {
+using base::android::JavaParamRef;
+using base::android::ScopedJavaLocalRef;
+
 namespace android {
 
 // static
 SceneLayer* SceneLayer::FromJavaObject(JNIEnv* env, jobject jobj) {
-  if (jobj == nullptr)
+  if (!jobj)
     return nullptr;
   return reinterpret_cast<SceneLayer*>(Java_SceneLayer_getNativePtr(env, jobj));
 }
@@ -35,8 +37,7 @@ SceneLayer::~SceneLayer() {
     return;
 
   Java_SceneLayer_setNativePtr(
-      env, jobj.obj(),
-      reinterpret_cast<intptr_t>(static_cast<SceneLayer*>(NULL)));
+      env, jobj, reinterpret_cast<intptr_t>(static_cast<SceneLayer*>(NULL)));
 }
 
 void SceneLayer::OnDetach() {
@@ -66,4 +67,3 @@ bool RegisterSceneLayer(JNIEnv* env) {
 }
 
 }  // namespace android
-}  // namespace chrome

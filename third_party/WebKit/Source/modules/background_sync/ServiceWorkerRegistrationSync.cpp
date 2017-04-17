@@ -9,47 +9,44 @@
 
 namespace blink {
 
-ServiceWorkerRegistrationSync::ServiceWorkerRegistrationSync(ServiceWorkerRegistration* registration)
-    : m_registration(registration)
-{
+ServiceWorkerRegistrationSync::ServiceWorkerRegistrationSync(
+    ServiceWorkerRegistration* registration)
+    : registration_(registration) {}
+
+ServiceWorkerRegistrationSync::~ServiceWorkerRegistrationSync() {}
+
+const char* ServiceWorkerRegistrationSync::SupplementName() {
+  return "ServiceWorkerRegistrationSync";
 }
 
-ServiceWorkerRegistrationSync::~ServiceWorkerRegistrationSync()
-{
+ServiceWorkerRegistrationSync& ServiceWorkerRegistrationSync::From(
+    ServiceWorkerRegistration& registration) {
+  ServiceWorkerRegistrationSync* supplement =
+      static_cast<ServiceWorkerRegistrationSync*>(
+          Supplement<ServiceWorkerRegistration>::From(registration,
+                                                      SupplementName()));
+  if (!supplement) {
+    supplement = new ServiceWorkerRegistrationSync(&registration);
+    ProvideTo(registration, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
-const char* ServiceWorkerRegistrationSync::supplementName()
-{
-    return "ServiceWorkerRegistrationSync";
+SyncManager* ServiceWorkerRegistrationSync::sync(
+    ServiceWorkerRegistration& registration) {
+  return ServiceWorkerRegistrationSync::From(registration).sync();
 }
 
-ServiceWorkerRegistrationSync& ServiceWorkerRegistrationSync::from(ServiceWorkerRegistration& registration)
-{
-    ServiceWorkerRegistrationSync* supplement = static_cast<ServiceWorkerRegistrationSync*>(Supplement<ServiceWorkerRegistration>::from(registration, supplementName()));
-    if (!supplement) {
-        supplement = new ServiceWorkerRegistrationSync(&registration);
-        provideTo(registration, supplementName(), supplement);
-    }
-    return *supplement;
+SyncManager* ServiceWorkerRegistrationSync::sync() {
+  if (!sync_manager_)
+    sync_manager_ = SyncManager::Create(registration_);
+  return sync_manager_.Get();
 }
 
-SyncManager* ServiceWorkerRegistrationSync::sync(ServiceWorkerRegistration& registration)
-{
-    return ServiceWorkerRegistrationSync::from(registration).sync();
+DEFINE_TRACE(ServiceWorkerRegistrationSync) {
+  visitor->Trace(registration_);
+  visitor->Trace(sync_manager_);
+  Supplement<ServiceWorkerRegistration>::Trace(visitor);
 }
 
-SyncManager* ServiceWorkerRegistrationSync::sync()
-{
-    if (!m_syncManager)
-        m_syncManager = SyncManager::create(m_registration);
-    return m_syncManager.get();
-}
-
-DEFINE_TRACE(ServiceWorkerRegistrationSync)
-{
-    visitor->trace(m_registration);
-    visitor->trace(m_syncManager);
-    Supplement<ServiceWorkerRegistration>::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

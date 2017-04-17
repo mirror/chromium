@@ -37,11 +37,16 @@ class MockDiskMountManager : public DiskMountManager {
                      const DiskMountManager::MountPointMap&(void));
   MOCK_METHOD2(EnsureMountInfoRefreshed,
                void(const EnsureMountInfoRefreshedCallback&, bool));
-  MOCK_METHOD4(MountPath, void(const std::string&, const std::string&,
-                               const std::string&, MountType));
+  MOCK_METHOD5(MountPath,
+               void(const std::string&,
+                    const std::string&,
+                    const std::string&,
+                    MountType,
+                    MountAccessMode));
   MOCK_METHOD3(UnmountPath, void(const std::string&,
                                  UnmountOptions,
                                  const DiskMountManager::UnmountPathCallback&));
+  MOCK_METHOD1(RemountAllRemovableDrives, void(MountAccessMode));
   MOCK_METHOD1(FormatMountedDevice, void(const std::string&));
   MOCK_METHOD2(
       UnmountDeviceRecursively,

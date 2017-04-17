@@ -4,29 +4,49 @@
 
 #include "remoting/client/plugin/pepper_main_thread_task_runner.h"
 
+#include <memory>
+#include <utility>
+
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
+#include "ppapi/cpp/completion_callback.h"
 #include "ppapi/cpp/core.h"
+#include "ppapi/cpp/module.h"
 
 namespace remoting {
+namespace {
+
+void RunAndDestroy(void* task_ptr, int32_t) {
+  std::unique_ptr<base::OnceClosure> task(
+      static_cast<base::OnceClosure*>(task_ptr));
+  std::move(*task).Run();
+}
+
+}  // namespace
 
 PepperMainThreadTaskRunner::PepperMainThreadTaskRunner()
-    : core_(pp::Module::Get()->core()), callback_factory_(this) {}
+    : core_(pp::Module::Get()->core()), weak_ptr_factory_(this) {
+  DCHECK(core_->IsMainThread());
+  weak_ptr_ = weak_ptr_factory_.GetWeakPtr();
+}
 
 bool PepperMainThreadTaskRunner::PostDelayedTask(
     const tracked_objects::Location& from_here,
-    const base::Closure& task,
+    base::OnceClosure task,
     base::TimeDelta delay) {
-  core_->CallOnMainThread(delay.InMillisecondsRoundedUp(),
-                          callback_factory_.NewCallback(
-                              &PepperMainThreadTaskRunner::RunTask, task));
+  auto task_ptr = base::MakeUnique<base::OnceClosure>(base::Bind(
+      &PepperMainThreadTaskRunner::RunTask, weak_ptr_, base::Passed(&task)));
+  core_->CallOnMainThread(
+      delay.InMillisecondsRoundedUp(),
+      pp::CompletionCallback(&RunAndDestroy, task_ptr.release()));
   return true;
 }
 
 bool PepperMainThreadTaskRunner::PostNonNestableDelayedTask(
     const tracked_objects::Location& from_here,
-    const base::Closure& task,
+    base::OnceClosure task,
     base::TimeDelta delay) {
-  return PostDelayedTask(from_here, task, delay);
+  return PostDelayedTask(from_here, std::move(task), delay);
 }
 
 bool PepperMainThreadTaskRunner::RunsTasksOnCurrentThread() const {
@@ -35,9 +55,8 @@ bool PepperMainThreadTaskRunner::RunsTasksOnCurrentThread() const {
 
 PepperMainThreadTaskRunner::~PepperMainThreadTaskRunner() {}
 
-void PepperMainThreadTaskRunner::RunTask(int32_t result,
-                                         const base::Closure& task) {
-  task.Run();
+void PepperMainThreadTaskRunner::RunTask(base::OnceClosure task) {
+  std::move(task).Run();
 }
 
 }  // namespace remoting

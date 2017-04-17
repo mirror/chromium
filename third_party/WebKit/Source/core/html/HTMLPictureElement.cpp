@@ -8,6 +8,7 @@
 #include "core/dom/ElementTraversal.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLImageElement.h"
+#include "core/html/HTMLSourceElement.h"
 #include "core/loader/ImageLoader.h"
 
 namespace blink {
@@ -15,23 +16,43 @@ namespace blink {
 using namespace HTMLNames;
 
 inline HTMLPictureElement::HTMLPictureElement(Document& document)
-    : HTMLElement(pictureTag, document)
-{
-}
+    : HTMLElement(pictureTag, document) {}
 
 DEFINE_NODE_FACTORY(HTMLPictureElement)
 
-void HTMLPictureElement::sourceOrMediaChanged()
-{
-    for (HTMLImageElement* imageElement = Traversal<HTMLImageElement>::firstChild(*this); imageElement; imageElement = Traversal<HTMLImageElement>::nextSibling(*imageElement)) {
-        imageElement->selectSourceURL(ImageLoader::UpdateNormal);
-    }
+void HTMLPictureElement::SourceOrMediaChanged() {
+  for (HTMLImageElement* image_element =
+           Traversal<HTMLImageElement>::FirstChild(*this);
+       image_element; image_element = Traversal<HTMLImageElement>::NextSibling(
+                          *image_element)) {
+    image_element->SelectSourceURL(ImageLoader::kUpdateNormal);
+  }
 }
 
-Node::InsertionNotificationRequest HTMLPictureElement::insertedInto(ContainerNode* insertionPoint)
-{
-    UseCounter::count(document(), UseCounter::Picture);
-    return HTMLElement::insertedInto(insertionPoint);
+void HTMLPictureElement::RemoveListenerFromSourceChildren() {
+  for (HTMLSourceElement* source_element =
+           Traversal<HTMLSourceElement>::FirstChild(*this);
+       source_element;
+       source_element =
+           Traversal<HTMLSourceElement>::NextSibling(*source_element)) {
+    source_element->RemoveMediaQueryListListener();
+  }
 }
 
-} // namespace blink
+void HTMLPictureElement::AddListenerToSourceChildren() {
+  for (HTMLSourceElement* source_element =
+           Traversal<HTMLSourceElement>::FirstChild(*this);
+       source_element;
+       source_element =
+           Traversal<HTMLSourceElement>::NextSibling(*source_element)) {
+    source_element->AddMediaQueryListListener();
+  }
+}
+
+Node::InsertionNotificationRequest HTMLPictureElement::InsertedInto(
+    ContainerNode* insertion_point) {
+  UseCounter::Count(GetDocument(), UseCounter::kPicture);
+  return HTMLElement::InsertedInto(insertion_point);
+}
+
+}  // namespace blink

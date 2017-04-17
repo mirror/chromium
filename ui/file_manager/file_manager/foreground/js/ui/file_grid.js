@@ -82,9 +82,6 @@ FileGrid.decorate = function(
   /** @private {function(!Event)} */
   self.onThumbnailLoadedBound_ = self.onThumbnailLoaded_.bind(self);
 
-  self.scrollBar_ = new ScrollBar();
-  self.scrollBar_.initialize(self.parentElement, self);
-
   self.itemConstructor = function(entry) {
     var item = self.ownerDocument.createElement('li');
     FileGrid.Item.decorate(
@@ -684,7 +681,7 @@ FileGrid.setThumbnailImage_ = function(
     thumbnail.style.backgroundSize = 'cover';
 
   thumbnail.style.backgroundImage = 'url(' + dataUrl + ')';
-  thumbnail.addEventListener('webkitAnimationEnd', function() {
+  thumbnail.addEventListener('animationend', function() {
     // Remove animation css once animation is completed in order not to animate
     // again when an item is attached to the dom again.
     thumbnail.classList.remove('animate');

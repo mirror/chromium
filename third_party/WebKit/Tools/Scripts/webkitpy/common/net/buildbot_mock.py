@@ -27,11 +27,23 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from webkitpy.common.net.buildbot import BuildBot
-from webkitpy.common.net.layouttestresults import LayoutTestResults
-from webkitpy.common.net.layouttestresults_unittest import LayoutTestResultsTest
 
 
 class MockBuildBot(BuildBot):
 
-    def fetch_layout_test_results(self, _):
-        return LayoutTestResults.results_from_string(LayoutTestResultsTest.example_full_results_json)
+    def __init__(self):
+        super(MockBuildBot, self).__init__()
+        self._canned_results = {}
+        self._canned_retry_summary_json = {}
+
+    def set_results(self, build, results):
+        self._canned_results[build] = results
+
+    def fetch_results(self, build):
+        return self._canned_results.get(build)
+
+    def set_retry_sumary_json(self, build, content):
+        self._canned_retry_summary_json[build] = content
+
+    def fetch_retry_summary_json(self, build):
+        return self._canned_retry_summary_json.get(build)

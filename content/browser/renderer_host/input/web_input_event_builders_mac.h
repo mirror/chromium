@@ -6,7 +6,10 @@
 #define CONTENT_BROWSER_RENDERER_HOST_INPUT_WEB_INPUT_EVENT_BUILDERS_MAC_H_
 
 #include "content/common/content_export.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
+#include "third_party/WebKit/public/platform/WebGestureEvent.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
+#include "third_party/WebKit/public/platform/WebMouseWheelEvent.h"
 
 @class NSEvent;
 @class NSView;
@@ -20,15 +23,17 @@ class CONTENT_EXPORT WebKeyboardEventBuilder {
 
 class CONTENT_EXPORT WebMouseEventBuilder {
  public:
-  static blink::WebMouseEvent Build(NSEvent* event, NSView* view);
+  static blink::WebMouseEvent Build(
+      NSEvent* event,
+      NSView* view,
+      blink::WebPointerProperties::PointerType pointerType =
+          blink::WebPointerProperties::PointerType::kMouse);
 };
 
 class CONTENT_EXPORT WebMouseWheelEventBuilder {
  public:
   static blink::WebMouseWheelEvent Build(NSEvent* event,
-                                         NSView* view,
-                                         bool can_rubberband_left,
-                                         bool can_rubberband_right);
+                                         NSView* view);
 };
 
 class CONTENT_EXPORT WebGestureEventBuilder {

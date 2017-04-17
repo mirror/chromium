@@ -6,28 +6,24 @@
 #define NET_QUIC_TEST_TOOLS_MOCK_QUIC_SPDY_CLIENT_STREAM_H_
 
 #include "base/macros.h"
-#include "net/quic/quic_protocol.h"
+#include "net/quic/core/quic_header_list.h"
+#include "net/quic/core/quic_packets.h"
 #include "net/tools/quic/quic_spdy_client_stream.h"
 #include "testing/gmock/include/gmock/gmock.h"
-// #include "testing/gtest/include/gtest/gtest.h"
 
 namespace net {
 namespace test {
 
-class MockQuicSpdyClientStream : public net::QuicSpdyClientStream {
+class MockQuicSpdyClientStream : public QuicSpdyClientStream {
  public:
-  MockQuicSpdyClientStream(QuicStreamId id, net::QuicClientSession* session);
+  MockQuicSpdyClientStream(QuicStreamId id, QuicClientSession* session);
   ~MockQuicSpdyClientStream() override;
 
   MOCK_METHOD1(OnStreamFrame, void(const QuicStreamFrame& frame));
-  MOCK_METHOD2(OnInitialHeadersComplete, void(bool fin, size_t frame_len));
-  MOCK_METHOD3(OnTrailingHeadersComplete,
-               void(bool fin,
+  MOCK_METHOD3(OnPromiseHeaderList,
+               void(QuicStreamId promised_stream_id,
                     size_t frame_len,
-                    const QuicHeaderList& header_list));
-  MOCK_METHOD1(OnPromiseHeaders, void(base::StringPiece headers_data));
-  MOCK_METHOD2(OnPromiseHeadersComplete,
-               void(QuicStreamId promised_stream_id, size_t frame_len));
+                    const QuicHeaderList& list));
   MOCK_METHOD0(OnDataAvailable, void());
 };
 

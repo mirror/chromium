@@ -6,7 +6,9 @@
 
 #include <utility>
 
+#include "base/strings/string_util.h"
 #include "jingle/glue/thread_wrapper.h"
+#include "remoting/base/constants.h"
 #include "remoting/protocol/client_control_dispatcher.h"
 #include "remoting/protocol/client_event_dispatcher.h"
 #include "remoting/protocol/client_stub.h"
@@ -14,6 +16,8 @@
 #include "remoting/protocol/message_pipe.h"
 #include "remoting/protocol/transport_context.h"
 #include "remoting/protocol/video_renderer.h"
+#include "remoting/protocol/webrtc_audio_module.h"
+#include "remoting/protocol/webrtc_audio_sink_adapter.h"
 #include "remoting/protocol/webrtc_transport.h"
 #include "remoting/protocol/webrtc_video_renderer_adapter.h"
 
@@ -32,6 +36,9 @@ void WebrtcConnectionToHost::Connect(
 
   transport_.reset(new WebrtcTransport(
       jingle_glue::JingleThreadWrapper::current(), transport_context, this));
+
+  if (audio_decode_task_runner_)
+    transport_->audio_module()->SetAudioTaskRunner(audio_decode_task_runner_);
 
   session_ = std::move(session);
   session_->SetEventHandler(this);
@@ -70,8 +77,11 @@ void WebrtcConnectionToHost::set_video_renderer(VideoRenderer* video_renderer) {
   video_renderer_ = video_renderer;
 }
 
-void WebrtcConnectionToHost::set_audio_stub(AudioStub* audio_stub) {
-  NOTIMPLEMENTED();
+void WebrtcConnectionToHost::InitializeAudio(
+    scoped_refptr<base::SingleThreadTaskRunner> audio_decode_task_runner,
+    base::WeakPtr<AudioStub> audio_consumer) {
+  audio_decode_task_runner_ = audio_decode_task_runner;
+  audio_consumer_ = audio_consumer;
 }
 
 void WebrtcConnectionToHost::OnSessionStateChange(Session::State state) {
@@ -121,21 +131,32 @@ void WebrtcConnectionToHost::OnWebrtcTransportIncomingDataChannel(
     std::unique_ptr<MessagePipe> pipe) {
   if (!control_dispatcher_)
     control_dispatcher_.reset(new ClientControlDispatcher());
+
   if (name == control_dispatcher_->channel_name() &&
       !control_dispatcher_->is_connected()) {
     control_dispatcher_->set_client_stub(client_stub_);
     control_dispatcher_->set_clipboard_stub(clipboard_stub_);
     control_dispatcher_->Init(std::move(pipe), this);
+  } else if (base::StartsWith(name, kVideoStatsChannelNamePrefix,
+                              base::CompareCase::SENSITIVE)) {
+    std::string video_stream_label =
+        name.substr(strlen(kVideoStatsChannelNamePrefix));
+    GetOrCreateVideoAdapter(video_stream_label)
+        ->SetVideoStatsChannel(std::move(pipe));
+  } else {
+    LOG(WARNING) << "Received unknown incoming data channel " << name;
   }
 }
 
 void WebrtcConnectionToHost::OnWebrtcTransportMediaStreamAdded(
     scoped_refptr<webrtc::MediaStreamInterface> stream) {
-  if (video_adapter_) {
-    LOG(WARNING)
-        << "Received multiple media streams. Ignoring all except the last one.";
+  if (stream->GetVideoTracks().size() > 0) {
+    GetOrCreateVideoAdapter(stream->label())->SetMediaStream(stream);
+  } else if (stream->GetAudioTracks().size() > 0) {
+    audio_adapter_.reset(new WebrtcAudioSinkAdapter(stream, audio_consumer_));
+  } else {
+    LOG(ERROR) << "Received MediaStream with no video or audio tracks.";
   }
-  video_adapter_.reset(new WebrtcVideoRendererAdapter(stream, video_renderer_));
 }
 
 void WebrtcConnectionToHost::OnWebrtcTransportMediaStreamRemoved(
@@ -170,6 +191,19 @@ void WebrtcConnectionToHost::NotifyIfChannelsReady() {
   clipboard_forwarder_.set_clipboard_stub(control_dispatcher_.get());
   event_forwarder_.set_input_stub(event_dispatcher_.get());
   SetState(CONNECTED, OK);
+}
+
+WebrtcVideoRendererAdapter* WebrtcConnectionToHost::GetOrCreateVideoAdapter(
+    const std::string& label) {
+  if (!video_adapter_ || video_adapter_->label() != label) {
+    if (video_adapter_) {
+      LOG(WARNING) << "Received multiple media streams. Ignoring all except "
+                      "the last one.";
+    }
+    video_adapter_.reset(
+        new WebrtcVideoRendererAdapter(label, video_renderer_));
+  }
+  return video_adapter_.get();
 }
 
 void WebrtcConnectionToHost::CloseChannels() {

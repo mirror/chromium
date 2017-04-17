@@ -4,11 +4,19 @@
 
 #include "modules/cachestorage/InspectorCacheStorageAgent.h"
 
+#include <algorithm>
+#include <memory>
+#include <utility>
 #include "platform/heap/Handle.h"
-#include "platform/inspector_protocol/DispatcherBase.h"
-#include "platform/inspector_protocol/Values.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/StringBuilder.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebString.h"
@@ -19,448 +27,469 @@
 #include "public/platform/modules/serviceworker/WebServiceWorkerCacheStorage.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/RefCounted.h"
-#include "wtf/RefPtr.h"
-#include "wtf/Vector.h"
-#include "wtf/text/StringBuilder.h"
-#include <algorithm>
-#include <memory>
 
 using blink::protocol::Array;
 using blink::protocol::CacheStorage::Cache;
 using blink::protocol::CacheStorage::DataEntry;
+using blink::protocol::Response;
 
-typedef blink::protocol::CacheStorage::Backend::DeleteCacheCallback DeleteCacheCallback;
-typedef blink::protocol::CacheStorage::Backend::DeleteEntryCallback DeleteEntryCallback;
-typedef blink::protocol::CacheStorage::Backend::RequestCacheNamesCallback RequestCacheNamesCallback;
-typedef blink::protocol::CacheStorage::Backend::RequestEntriesCallback RequestEntriesCallback;
+typedef blink::protocol::CacheStorage::Backend::DeleteCacheCallback
+    DeleteCacheCallback;
+typedef blink::protocol::CacheStorage::Backend::DeleteEntryCallback
+    DeleteEntryCallback;
+typedef blink::protocol::CacheStorage::Backend::RequestCacheNamesCallback
+    RequestCacheNamesCallback;
+typedef blink::protocol::CacheStorage::Backend::RequestEntriesCallback
+    RequestEntriesCallback;
 typedef blink::WebServiceWorkerCache::BatchOperation BatchOperation;
 
 namespace blink {
 
 namespace {
 
-String buildCacheId(const String& securityOrigin, const String& cacheName)
-{
-    String id(securityOrigin);
-    id.append('|');
-    id.append(cacheName);
-    return id;
+String BuildCacheId(const String& security_origin, const String& cache_name) {
+  String id(security_origin);
+  id.Append('|');
+  id.Append(cache_name);
+  return id;
 }
 
-bool parseCacheId(ErrorString* errorString, const String& id, String* securityOrigin, String* cacheName)
-{
-    size_t pipe = id.find('|');
-    if (pipe == WTF::kNotFound) {
-        *errorString = "Invalid cache id.";
-        return false;
-    }
-    *securityOrigin = id.substring(0, pipe);
-    *cacheName = id.substring(pipe + 1);
-    return true;
+Response ParseCacheId(const String& id,
+                      String* security_origin,
+                      String* cache_name) {
+  size_t pipe = id.Find('|');
+  if (pipe == WTF::kNotFound)
+    return Response::Error("Invalid cache id.");
+  *security_origin = id.Substring(0, pipe);
+  *cache_name = id.Substring(pipe + 1);
+  return Response::OK();
 }
 
-std::unique_ptr<WebServiceWorkerCacheStorage> assertCacheStorage(ErrorString* errorString, const String& securityOrigin)
-{
-    RefPtr<SecurityOrigin> secOrigin = SecurityOrigin::createFromString(securityOrigin);
+Response AssertCacheStorage(
+    const String& security_origin,
+    std::unique_ptr<WebServiceWorkerCacheStorage>& result) {
+  RefPtr<SecurityOrigin> sec_origin =
+      SecurityOrigin::CreateFromString(security_origin);
 
-    // Cache Storage API is restricted to trustworthy origins.
-    if (!secOrigin->isPotentiallyTrustworthy()) {
-        *errorString = secOrigin->isPotentiallyTrustworthyErrorMessage();
-        return nullptr;
-    }
+  // Cache Storage API is restricted to trustworthy origins.
+  if (!sec_origin->IsPotentiallyTrustworthy())
+    return Response::Error(sec_origin->IsPotentiallyTrustworthyErrorMessage());
 
-    std::unique_ptr<WebServiceWorkerCacheStorage> cache = wrapUnique(Platform::current()->cacheStorage(WebSecurityOrigin(secOrigin)));
-    if (!cache)
-        *errorString = "Could not find cache storage.";
-    return cache;
+  std::unique_ptr<WebServiceWorkerCacheStorage> cache = WTF::WrapUnique(
+      Platform::Current()->CacheStorage(WebSecurityOrigin(sec_origin)));
+  if (!cache)
+    return Response::Error("Could not find cache storage.");
+  result = std::move(cache);
+  return Response::OK();
 }
 
-std::unique_ptr<WebServiceWorkerCacheStorage> assertCacheStorageAndNameForId(ErrorString* errorString, const String& cacheId, String* cacheName)
-{
-    String securityOrigin;
-    if (!parseCacheId(errorString, cacheId, &securityOrigin, cacheName)) {
-        return nullptr;
-    }
-    return assertCacheStorage(errorString, securityOrigin);
+Response AssertCacheStorageAndNameForId(
+    const String& cache_id,
+    String* cache_name,
+    std::unique_ptr<WebServiceWorkerCacheStorage>& result) {
+  String security_origin;
+  Response response = ParseCacheId(cache_id, &security_origin, cache_name);
+  if (!response.isSuccess())
+    return response;
+  return AssertCacheStorage(security_origin, result);
 }
 
-CString serviceWorkerCacheErrorString(WebServiceWorkerCacheError error)
-{
-    switch (error) {
-    case WebServiceWorkerCacheErrorNotImplemented:
-        return CString("not implemented.");
-        break;
-    case WebServiceWorkerCacheErrorNotFound:
-        return CString("not found.");
-        break;
-    case WebServiceWorkerCacheErrorExists:
-        return CString("cache already exists.");
-        break;
-    default:
-        return CString("unknown error.");
-        break;
-    }
+CString ServiceWorkerCacheErrorString(WebServiceWorkerCacheError error) {
+  switch (error) {
+    case kWebServiceWorkerCacheErrorNotImplemented:
+      return CString("not implemented.");
+      break;
+    case kWebServiceWorkerCacheErrorNotFound:
+      return CString("not found.");
+      break;
+    case kWebServiceWorkerCacheErrorExists:
+      return CString("cache already exists.");
+      break;
+    case kWebServiceWorkerCacheErrorQuotaExceeded:
+      return CString("quota exceeded.");
+    case kWebServiceWorkerCacheErrorCacheNameNotFound:
+      return CString("cache not found.");
+    case kWebServiceWorkerCacheErrorTooLarge:
+      return CString("operation too large.");
+  }
+  NOTREACHED();
+  return "";
 }
 
 class RequestCacheNames
     : public WebServiceWorkerCacheStorage::CacheStorageKeysCallbacks {
-    WTF_MAKE_NONCOPYABLE(RequestCacheNames);
+  WTF_MAKE_NONCOPYABLE(RequestCacheNames);
 
-public:
-    RequestCacheNames(const String& securityOrigin, std::unique_ptr<RequestCacheNamesCallback> callback)
-        : m_securityOrigin(securityOrigin)
-        , m_callback(std::move(callback))
-    {
+ public:
+  RequestCacheNames(const String& security_origin,
+                    std::unique_ptr<RequestCacheNamesCallback> callback)
+      : security_origin_(security_origin), callback_(std::move(callback)) {}
+
+  ~RequestCacheNames() override {}
+
+  void OnSuccess(const WebVector<WebString>& caches) override {
+    std::unique_ptr<Array<Cache>> array = Array<Cache>::create();
+    for (size_t i = 0; i < caches.size(); i++) {
+      String name = String(caches[i]);
+      std::unique_ptr<Cache> entry =
+          Cache::create()
+              .setSecurityOrigin(security_origin_)
+              .setCacheName(name)
+              .setCacheId(BuildCacheId(security_origin_, name))
+              .build();
+      array->addItem(std::move(entry));
     }
+    callback_->sendSuccess(std::move(array));
+  }
 
-    ~RequestCacheNames() override { }
+  void OnError(WebServiceWorkerCacheError error) override {
+    callback_->sendFailure(Response::Error(
+        String::Format("Error requesting cache names: %s",
+                       ServiceWorkerCacheErrorString(error).Data())));
+  }
 
-    void onSuccess(const WebVector<WebString>& caches) override
-    {
-        std::unique_ptr<Array<Cache>> array = Array<Cache>::create();
-        for (size_t i = 0; i < caches.size(); i++) {
-            String name = String(caches[i]);
-            std::unique_ptr<Cache> entry = Cache::create()
-                .setSecurityOrigin(m_securityOrigin)
-                .setCacheName(name)
-                .setCacheId(buildCacheId(m_securityOrigin, name)).build();
-            array->addItem(std::move(entry));
-        }
-        m_callback->sendSuccess(std::move(array));
-    }
-
-    void onError(WebServiceWorkerCacheError error) override
-    {
-        m_callback->sendFailure(String::format("Error requesting cache names: %s", serviceWorkerCacheErrorString(error).data()));
-    }
-
-private:
-    String m_securityOrigin;
-    std::unique_ptr<RequestCacheNamesCallback> m_callback;
+ private:
+  String security_origin_;
+  std::unique_ptr<RequestCacheNamesCallback> callback_;
 };
 
 struct DataRequestParams {
-    String cacheName;
-    int skipCount;
-    int pageSize;
+  String cache_name;
+  int skip_count;
+  int page_size;
 };
 
 struct RequestResponse {
-    RequestResponse() { }
-    RequestResponse(const String& request, const String& response)
-        : request(request)
-        , response(response)
-    {
-    }
-    String request;
-    String response;
+  RequestResponse() {}
+  RequestResponse(const String& request, const String& response)
+      : request(request), response(response) {}
+  String request;
+  String response;
 };
 
 class ResponsesAccumulator : public RefCounted<ResponsesAccumulator> {
-    WTF_MAKE_NONCOPYABLE(ResponsesAccumulator);
+  WTF_MAKE_NONCOPYABLE(ResponsesAccumulator);
 
-public:
-    ResponsesAccumulator(int numResponses, const DataRequestParams& params, std::unique_ptr<RequestEntriesCallback> callback)
-        : m_params(params)
-        , m_numResponsesLeft(numResponses)
-        , m_responses(static_cast<size_t>(numResponses))
-        , m_callback(std::move(callback))
-    {
+ public:
+  ResponsesAccumulator(int num_responses,
+                       const DataRequestParams& params,
+                       std::unique_ptr<RequestEntriesCallback> callback)
+      : params_(params),
+        num_responses_left_(num_responses),
+        responses_(static_cast<size_t>(num_responses)),
+        callback_(std::move(callback)) {}
+
+  void AddRequestResponsePair(const WebServiceWorkerRequest& request,
+                              const WebServiceWorkerResponse& response) {
+    ASSERT(num_responses_left_ > 0);
+    RequestResponse& request_response =
+        responses_.at(responses_.size() - num_responses_left_);
+    request_response.request = request.Url().GetString();
+    request_response.response = response.StatusText();
+
+    if (--num_responses_left_ != 0)
+      return;
+
+    std::sort(responses_.begin(), responses_.end(),
+              [](const RequestResponse& a, const RequestResponse& b) {
+                return WTF::CodePointCompareLessThan(a.request, b.request);
+              });
+    if (params_.skip_count > 0)
+      responses_.erase(0, params_.skip_count);
+    bool has_more = false;
+    if (static_cast<size_t>(params_.page_size) < responses_.size()) {
+      responses_.erase(params_.page_size,
+                       responses_.size() - params_.page_size);
+      has_more = true;
     }
-
-    void addRequestResponsePair(const WebServiceWorkerRequest& request, const WebServiceWorkerResponse& response)
-    {
-        ASSERT(m_numResponsesLeft > 0);
-        RequestResponse& requestResponse = m_responses.at(m_responses.size() - m_numResponsesLeft);
-        requestResponse.request = request.url().string();
-        requestResponse.response = response.statusText();
-
-        if (--m_numResponsesLeft != 0)
-            return;
-
-        std::sort(m_responses.begin(), m_responses.end(),
-            [](const RequestResponse& a, const RequestResponse& b)
-            {
-                return WTF::codePointCompareLessThan(a.request, b.request);
-            });
-        if (m_params.skipCount > 0)
-            m_responses.remove(0, m_params.skipCount);
-        bool hasMore = false;
-        if (static_cast<size_t>(m_params.pageSize) < m_responses.size()) {
-            m_responses.remove(m_params.pageSize, m_responses.size() - m_params.pageSize);
-            hasMore = true;
-        }
-        std::unique_ptr<Array<DataEntry>> array = Array<DataEntry>::create();
-        for (const auto& requestResponse : m_responses) {
-            std::unique_ptr<DataEntry> entry = DataEntry::create()
-                .setRequest(requestResponse.request)
-                .setResponse(requestResponse.response).build();
-            array->addItem(std::move(entry));
-        }
-        m_callback->sendSuccess(std::move(array), hasMore);
+    std::unique_ptr<Array<DataEntry>> array = Array<DataEntry>::create();
+    for (const auto& request_response : responses_) {
+      std::unique_ptr<DataEntry> entry =
+          DataEntry::create()
+              .setRequest(request_response.request)
+              .setResponse(request_response.response)
+              .build();
+      array->addItem(std::move(entry));
     }
+    callback_->sendSuccess(std::move(array), has_more);
+  }
 
-    void sendFailure(const String& error)
-    {
-        m_callback->sendFailure(error);
-    }
+  void SendFailure(const Response& error) { callback_->sendFailure(error); }
 
-private:
-    DataRequestParams m_params;
-    int m_numResponsesLeft;
-    Vector<RequestResponse> m_responses;
-    std::unique_ptr<RequestEntriesCallback> m_callback;
+ private:
+  DataRequestParams params_;
+  int num_responses_left_;
+  Vector<RequestResponse> responses_;
+  std::unique_ptr<RequestEntriesCallback> callback_;
 };
 
-class GetCacheResponsesForRequestData : public WebServiceWorkerCache::CacheMatchCallbacks {
-    WTF_MAKE_NONCOPYABLE(GetCacheResponsesForRequestData);
+class GetCacheResponsesForRequestData
+    : public WebServiceWorkerCache::CacheMatchCallbacks {
+  WTF_MAKE_NONCOPYABLE(GetCacheResponsesForRequestData);
 
-public:
-    GetCacheResponsesForRequestData(const DataRequestParams& params, const WebServiceWorkerRequest& request, PassRefPtr<ResponsesAccumulator> accum)
-        : m_params(params)
-        , m_request(request)
-        , m_accumulator(accum)
-    {
-    }
-    ~GetCacheResponsesForRequestData() override { }
+ public:
+  GetCacheResponsesForRequestData(const DataRequestParams& params,
+                                  const WebServiceWorkerRequest& request,
+                                  PassRefPtr<ResponsesAccumulator> accum)
+      : params_(params), request_(request), accumulator_(std::move(accum)) {}
+  ~GetCacheResponsesForRequestData() override {}
 
-    void onSuccess(const WebServiceWorkerResponse& response) override
-    {
-        m_accumulator->addRequestResponsePair(m_request, response);
-    }
+  void OnSuccess(const WebServiceWorkerResponse& response) override {
+    accumulator_->AddRequestResponsePair(request_, response);
+  }
 
-    void onError(WebServiceWorkerCacheError error) override
-    {
-        m_accumulator->sendFailure(String::format("Error requesting responses for cache  %s: %s", m_params.cacheName.utf8().data(), serviceWorkerCacheErrorString(error).data()));
-    }
+  void OnError(WebServiceWorkerCacheError error) override {
+    accumulator_->SendFailure(Response::Error(
+        String::Format("Error requesting responses for cache  %s: %s",
+                       params_.cache_name.Utf8().Data(),
+                       ServiceWorkerCacheErrorString(error).Data())));
+  }
 
-private:
-    DataRequestParams m_params;
-    WebServiceWorkerRequest m_request;
-    RefPtr<ResponsesAccumulator> m_accumulator;
+ private:
+  DataRequestParams params_;
+  WebServiceWorkerRequest request_;
+  RefPtr<ResponsesAccumulator> accumulator_;
 };
 
-class GetCacheKeysForRequestData : public WebServiceWorkerCache::CacheWithRequestsCallbacks {
-    WTF_MAKE_NONCOPYABLE(GetCacheKeysForRequestData);
+class GetCacheKeysForRequestData
+    : public WebServiceWorkerCache::CacheWithRequestsCallbacks {
+  WTF_MAKE_NONCOPYABLE(GetCacheKeysForRequestData);
 
-public:
-    GetCacheKeysForRequestData(const DataRequestParams& params, std::unique_ptr<WebServiceWorkerCache> cache, std::unique_ptr<RequestEntriesCallback> callback)
-        : m_params(params)
-        , m_cache(std::move(cache))
-        , m_callback(std::move(callback))
-    {
+ public:
+  GetCacheKeysForRequestData(const DataRequestParams& params,
+                             std::unique_ptr<WebServiceWorkerCache> cache,
+                             std::unique_ptr<RequestEntriesCallback> callback)
+      : params_(params),
+        cache_(std::move(cache)),
+        callback_(std::move(callback)) {}
+  ~GetCacheKeysForRequestData() override {}
+
+  WebServiceWorkerCache* Cache() { return cache_.get(); }
+  void OnSuccess(const WebVector<WebServiceWorkerRequest>& requests) override {
+    if (requests.IsEmpty()) {
+      std::unique_ptr<Array<DataEntry>> array = Array<DataEntry>::create();
+      callback_->sendSuccess(std::move(array), false);
+      return;
     }
-    ~GetCacheKeysForRequestData() override { }
+    RefPtr<ResponsesAccumulator> accumulator =
+        AdoptRef(new ResponsesAccumulator(requests.size(), params_,
+                                          std::move(callback_)));
 
-    WebServiceWorkerCache* cache() { return m_cache.get(); }
-    void onSuccess(const WebVector<WebServiceWorkerRequest>& requests) override
-    {
-        if (requests.isEmpty()) {
-            std::unique_ptr<Array<DataEntry>> array = Array<DataEntry>::create();
-            m_callback->sendSuccess(std::move(array), false);
-            return;
-        }
-        RefPtr<ResponsesAccumulator> accumulator = adoptRef(new ResponsesAccumulator(requests.size(), m_params, std::move(m_callback)));
-
-        for (size_t i = 0; i < requests.size(); i++) {
-            const auto& request = requests[i];
-            auto* cacheRequest = new GetCacheResponsesForRequestData(m_params, request, accumulator);
-            m_cache->dispatchMatch(cacheRequest, request, WebServiceWorkerCache::QueryParams());
-        }
+    for (size_t i = 0; i < requests.size(); i++) {
+      const auto& request = requests[i];
+      auto cache_request = WTF::MakeUnique<GetCacheResponsesForRequestData>(
+          params_, request, accumulator);
+      cache_->DispatchMatch(std::move(cache_request), request,
+                            WebServiceWorkerCache::QueryParams());
     }
+  }
 
-    void onError(WebServiceWorkerCacheError error) override
-    {
-        m_callback->sendFailure(String::format("Error requesting requests for cache %s: %s", m_params.cacheName.utf8().data(), serviceWorkerCacheErrorString(error).data()));
-    }
+  void OnError(WebServiceWorkerCacheError error) override {
+    callback_->sendFailure(Response::Error(
+        String::Format("Error requesting requests for cache %s: %s",
+                       params_.cache_name.Utf8().Data(),
+                       ServiceWorkerCacheErrorString(error).Data())));
+  }
 
-private:
-    DataRequestParams m_params;
-    std::unique_ptr<WebServiceWorkerCache> m_cache;
-    std::unique_ptr<RequestEntriesCallback> m_callback;
+ private:
+  DataRequestParams params_;
+  std::unique_ptr<WebServiceWorkerCache> cache_;
+  std::unique_ptr<RequestEntriesCallback> callback_;
 };
 
 class GetCacheForRequestData
     : public WebServiceWorkerCacheStorage::CacheStorageWithCacheCallbacks {
-    WTF_MAKE_NONCOPYABLE(GetCacheForRequestData);
+  WTF_MAKE_NONCOPYABLE(GetCacheForRequestData);
 
-public:
-    GetCacheForRequestData(const DataRequestParams& params, std::unique_ptr<RequestEntriesCallback> callback)
-        : m_params(params)
-        , m_callback(std::move(callback))
-    {
-    }
-    ~GetCacheForRequestData() override { }
+ public:
+  GetCacheForRequestData(const DataRequestParams& params,
+                         std::unique_ptr<RequestEntriesCallback> callback)
+      : params_(params), callback_(std::move(callback)) {}
+  ~GetCacheForRequestData() override {}
 
-    void onSuccess(std::unique_ptr<WebServiceWorkerCache> cache) override
-    {
-        auto* cacheRequest = new GetCacheKeysForRequestData(m_params, wrapUnique(cache.release()), std::move(m_callback));
-        cacheRequest->cache()->dispatchKeys(cacheRequest, nullptr, WebServiceWorkerCache::QueryParams());
-    }
+  void OnSuccess(std::unique_ptr<WebServiceWorkerCache> cache) override {
+    auto cache_request = WTF::MakeUnique<GetCacheKeysForRequestData>(
+        params_, std::move(cache), std::move(callback_));
+    cache_request->Cache()->DispatchKeys(std::move(cache_request),
+                                         WebServiceWorkerRequest(),
+                                         WebServiceWorkerCache::QueryParams());
+  }
 
-    void onError(WebServiceWorkerCacheError error) override
-    {
-        m_callback->sendFailure(String::format("Error requesting cache %s: %s", m_params.cacheName.utf8().data(), serviceWorkerCacheErrorString(error).data()));
-    }
+  void OnError(WebServiceWorkerCacheError error) override {
+    callback_->sendFailure(Response::Error(String::Format(
+        "Error requesting cache %s: %s", params_.cache_name.Utf8().Data(),
+        ServiceWorkerCacheErrorString(error).Data())));
+  }
 
-private:
-    DataRequestParams m_params;
-    std::unique_ptr<RequestEntriesCallback> m_callback;
+ private:
+  DataRequestParams params_;
+  std::unique_ptr<RequestEntriesCallback> callback_;
 };
 
 class DeleteCache : public WebServiceWorkerCacheStorage::CacheStorageCallbacks {
-    WTF_MAKE_NONCOPYABLE(DeleteCache);
+  WTF_MAKE_NONCOPYABLE(DeleteCache);
 
-public:
-    DeleteCache(std::unique_ptr<DeleteCacheCallback> callback)
-        : m_callback(std::move(callback))
-    {
-    }
-    ~DeleteCache() override { }
+ public:
+  DeleteCache(std::unique_ptr<DeleteCacheCallback> callback)
+      : callback_(std::move(callback)) {}
+  ~DeleteCache() override {}
 
-    void onSuccess() override
-    {
-        m_callback->sendSuccess();
-    }
+  void OnSuccess() override { callback_->sendSuccess(); }
 
-    void onError(WebServiceWorkerCacheError error) override
-    {
-        m_callback->sendFailure(String::format("Error requesting cache names: %s", serviceWorkerCacheErrorString(error).data()));
-    }
+  void OnError(WebServiceWorkerCacheError error) override {
+    callback_->sendFailure(Response::Error(
+        String::Format("Error requesting cache names: %s",
+                       ServiceWorkerCacheErrorString(error).Data())));
+  }
 
-private:
-    std::unique_ptr<DeleteCacheCallback> m_callback;
+ private:
+  std::unique_ptr<DeleteCacheCallback> callback_;
 };
 
 class DeleteCacheEntry : public WebServiceWorkerCache::CacheBatchCallbacks {
-    WTF_MAKE_NONCOPYABLE(DeleteCacheEntry);
-public:
+  WTF_MAKE_NONCOPYABLE(DeleteCacheEntry);
 
-    DeleteCacheEntry(std::unique_ptr<DeleteEntryCallback> callback)
-        : m_callback(std::move(callback))
-    {
-    }
-    ~DeleteCacheEntry() override { }
+ public:
+  DeleteCacheEntry(std::unique_ptr<DeleteEntryCallback> callback)
+      : callback_(std::move(callback)) {}
+  ~DeleteCacheEntry() override {}
 
-    void onSuccess() override
-    {
-        m_callback->sendSuccess();
-    }
+  void OnSuccess() override { callback_->sendSuccess(); }
 
-    void onError(WebServiceWorkerCacheError error) override
-    {
-        m_callback->sendFailure(String::format("Error requesting cache names: %s", serviceWorkerCacheErrorString(error).data()));
-    }
+  void OnError(WebServiceWorkerCacheError error) override {
+    callback_->sendFailure(Response::Error(
+        String::Format("Error requesting cache names: %s",
+                       ServiceWorkerCacheErrorString(error).Data())));
+  }
 
-private:
-    std::unique_ptr<DeleteEntryCallback> m_callback;
+ private:
+  std::unique_ptr<DeleteEntryCallback> callback_;
 };
 
 class GetCacheForDeleteEntry
     : public WebServiceWorkerCacheStorage::CacheStorageWithCacheCallbacks {
-    WTF_MAKE_NONCOPYABLE(GetCacheForDeleteEntry);
+  WTF_MAKE_NONCOPYABLE(GetCacheForDeleteEntry);
 
-public:
-    GetCacheForDeleteEntry(const String& requestSpec, const String& cacheName, std::unique_ptr<DeleteEntryCallback> callback)
-        : m_requestSpec(requestSpec)
-        , m_cacheName(cacheName)
-        , m_callback(std::move(callback))
-    {
-    }
-    ~GetCacheForDeleteEntry() override { }
+ public:
+  GetCacheForDeleteEntry(const String& request_spec,
+                         const String& cache_name,
+                         std::unique_ptr<DeleteEntryCallback> callback)
+      : request_spec_(request_spec),
+        cache_name_(cache_name),
+        callback_(std::move(callback)) {}
+  ~GetCacheForDeleteEntry() override {}
 
-    void onSuccess(std::unique_ptr<WebServiceWorkerCache> cache) override
-    {
-        auto* deleteRequest = new DeleteCacheEntry(std::move(m_callback));
-        BatchOperation deleteOperation;
-        deleteOperation.operationType = WebServiceWorkerCache::OperationTypeDelete;
-        deleteOperation.request.setURL(KURL(ParsedURLString, m_requestSpec));
-        Vector<BatchOperation> operations;
-        operations.append(deleteOperation);
-        cache.release()->dispatchBatch(deleteRequest, WebVector<BatchOperation>(operations));
-    }
+  void OnSuccess(std::unique_ptr<WebServiceWorkerCache> cache) override {
+    auto delete_request =
+        WTF::MakeUnique<DeleteCacheEntry>(std::move(callback_));
+    BatchOperation delete_operation;
+    delete_operation.operation_type =
+        WebServiceWorkerCache::kOperationTypeDelete;
+    delete_operation.request.SetURL(KURL(kParsedURLString, request_spec_));
+    Vector<BatchOperation> operations;
+    operations.push_back(delete_operation);
+    cache.release()->DispatchBatch(std::move(delete_request),
+                                   WebVector<BatchOperation>(operations));
+  }
 
-    void onError(WebServiceWorkerCacheError error) override
-    {
-        m_callback->sendFailure(String::format("Error requesting cache %s: %s", m_cacheName.utf8().data(), serviceWorkerCacheErrorString(error).data()));
-    }
+  void OnError(WebServiceWorkerCacheError error) override {
+    callback_->sendFailure(Response::Error(String::Format(
+        "Error requesting cache %s: %s", cache_name_.Utf8().Data(),
+        ServiceWorkerCacheErrorString(error).Data())));
+  }
 
-private:
-    String m_requestSpec;
-    String m_cacheName;
-    std::unique_ptr<DeleteEntryCallback> m_callback;
+ private:
+  String request_spec_;
+  String cache_name_;
+  std::unique_ptr<DeleteEntryCallback> callback_;
 };
 
-} // namespace
+}  // namespace
 
 InspectorCacheStorageAgent::InspectorCacheStorageAgent() = default;
 
 InspectorCacheStorageAgent::~InspectorCacheStorageAgent() = default;
 
-DEFINE_TRACE(InspectorCacheStorageAgent)
-{
-    InspectorBaseAgent::trace(visitor);
+DEFINE_TRACE(InspectorCacheStorageAgent) {
+  InspectorBaseAgent::Trace(visitor);
 }
 
-void InspectorCacheStorageAgent::requestCacheNames(ErrorString* errorString, const String& securityOrigin, std::unique_ptr<RequestCacheNamesCallback> callback)
-{
-    RefPtr<SecurityOrigin> secOrigin = SecurityOrigin::createFromString(securityOrigin);
+void InspectorCacheStorageAgent::requestCacheNames(
+    const String& security_origin,
+    std::unique_ptr<RequestCacheNamesCallback> callback) {
+  RefPtr<SecurityOrigin> sec_origin =
+      SecurityOrigin::CreateFromString(security_origin);
 
-    // Cache Storage API is restricted to trustworthy origins.
-    if (!secOrigin->isPotentiallyTrustworthy()) {
-        // Don't treat this as an error, just don't attempt to open and enumerate the caches.
-        callback->sendSuccess(Array<protocol::CacheStorage::Cache>::create());
-        return;
-    }
+  // Cache Storage API is restricted to trustworthy origins.
+  if (!sec_origin->IsPotentiallyTrustworthy()) {
+    // Don't treat this as an error, just don't attempt to open and enumerate
+    // the caches.
+    callback->sendSuccess(Array<protocol::CacheStorage::Cache>::create());
+    return;
+  }
 
-    std::unique_ptr<WebServiceWorkerCacheStorage> cache = assertCacheStorage(errorString, securityOrigin);
-    if (!cache) {
-        callback->sendFailure(*errorString);
-        return;
-    }
-    cache->dispatchKeys(new RequestCacheNames(securityOrigin, std::move(callback)));
+  std::unique_ptr<WebServiceWorkerCacheStorage> cache;
+  Response response = AssertCacheStorage(security_origin, cache);
+  if (!response.isSuccess()) {
+    callback->sendFailure(response);
+    return;
+  }
+  cache->DispatchKeys(
+      WTF::MakeUnique<RequestCacheNames>(security_origin, std::move(callback)));
 }
 
-void InspectorCacheStorageAgent::requestEntries(ErrorString* errorString, const String& cacheId, int skipCount, int pageSize, std::unique_ptr<RequestEntriesCallback> callback)
-{
-    String cacheName;
-    std::unique_ptr<WebServiceWorkerCacheStorage> cache = assertCacheStorageAndNameForId(errorString, cacheId, &cacheName);
-    if (!cache) {
-        callback->sendFailure(*errorString);
-        return;
-    }
-    DataRequestParams params;
-    params.cacheName = cacheName;
-    params.pageSize = pageSize;
-    params.skipCount = skipCount;
-    cache->dispatchOpen(new GetCacheForRequestData(params, std::move(callback)), WebString(cacheName));
+void InspectorCacheStorageAgent::requestEntries(
+    const String& cache_id,
+    int skip_count,
+    int page_size,
+    std::unique_ptr<RequestEntriesCallback> callback) {
+  String cache_name;
+  std::unique_ptr<WebServiceWorkerCacheStorage> cache;
+  Response response =
+      AssertCacheStorageAndNameForId(cache_id, &cache_name, cache);
+  if (!response.isSuccess()) {
+    callback->sendFailure(response);
+    return;
+  }
+  DataRequestParams params;
+  params.cache_name = cache_name;
+  params.page_size = page_size;
+  params.skip_count = skip_count;
+  cache->DispatchOpen(
+      WTF::MakeUnique<GetCacheForRequestData>(params, std::move(callback)),
+      WebString(cache_name));
 }
 
-void InspectorCacheStorageAgent::deleteCache(ErrorString* errorString, const String& cacheId, std::unique_ptr<DeleteCacheCallback> callback)
-{
-    String cacheName;
-    std::unique_ptr<WebServiceWorkerCacheStorage> cache = assertCacheStorageAndNameForId(errorString, cacheId, &cacheName);
-    if (!cache) {
-        callback->sendFailure(*errorString);
-        return;
-    }
-    cache->dispatchDelete(new DeleteCache(std::move(callback)), WebString(cacheName));
+void InspectorCacheStorageAgent::deleteCache(
+    const String& cache_id,
+    std::unique_ptr<DeleteCacheCallback> callback) {
+  String cache_name;
+  std::unique_ptr<WebServiceWorkerCacheStorage> cache;
+  Response response =
+      AssertCacheStorageAndNameForId(cache_id, &cache_name, cache);
+  if (!response.isSuccess()) {
+    callback->sendFailure(response);
+    return;
+  }
+  cache->DispatchDelete(WTF::MakeUnique<DeleteCache>(std::move(callback)),
+                        WebString(cache_name));
 }
 
-void InspectorCacheStorageAgent::deleteEntry(ErrorString* errorString, const String& cacheId, const String& request, std::unique_ptr<DeleteEntryCallback> callback)
-{
-    String cacheName;
-    std::unique_ptr<WebServiceWorkerCacheStorage> cache = assertCacheStorageAndNameForId(errorString, cacheId, &cacheName);
-    if (!cache) {
-        callback->sendFailure(*errorString);
-        return;
-    }
-    cache->dispatchOpen(new GetCacheForDeleteEntry(request, cacheName, std::move(callback)), WebString(cacheName));
+void InspectorCacheStorageAgent::deleteEntry(
+    const String& cache_id,
+    const String& request,
+    std::unique_ptr<DeleteEntryCallback> callback) {
+  String cache_name;
+  std::unique_ptr<WebServiceWorkerCacheStorage> cache;
+  Response response =
+      AssertCacheStorageAndNameForId(cache_id, &cache_name, cache);
+  if (!response.isSuccess()) {
+    callback->sendFailure(response);
+    return;
+  }
+  cache->DispatchOpen(WTF::MakeUnique<GetCacheForDeleteEntry>(
+                          request, cache_name, std::move(callback)),
+                      WebString(cache_name));
 }
 
-
-} // namespace blink
+}  // namespace blink

@@ -37,21 +37,26 @@
 
 namespace blink {
 
-VideoPlaybackQuality* VideoPlaybackQuality::create(
-    const Document& document, unsigned totalVideoFrames, unsigned droppedVideoFrames, unsigned corruptedVideoFrames)
-{
-    return new VideoPlaybackQuality(document, totalVideoFrames, droppedVideoFrames, corruptedVideoFrames);
+VideoPlaybackQuality* VideoPlaybackQuality::Create(
+    const Document& document,
+    unsigned total_video_frames,
+    unsigned dropped_video_frames,
+    unsigned corrupted_video_frames) {
+  return new VideoPlaybackQuality(document, total_video_frames,
+                                  dropped_video_frames, corrupted_video_frames);
 }
 
-VideoPlaybackQuality::VideoPlaybackQuality(
-    const Document& document, unsigned totalVideoFrames, unsigned droppedVideoFrames, unsigned corruptedVideoFrames)
-    : m_creationTime(0)
-    , m_totalVideoFrames(totalVideoFrames)
-    , m_droppedVideoFrames(droppedVideoFrames)
-    , m_corruptedVideoFrames(corruptedVideoFrames)
-{
-    if (document.domWindow())
-        m_creationTime = DOMWindowPerformance::performance(*(document.domWindow()))->now();
+VideoPlaybackQuality::VideoPlaybackQuality(const Document& document,
+                                           unsigned total_video_frames,
+                                           unsigned dropped_video_frames,
+                                           unsigned corrupted_video_frames)
+    : creation_time_(0),
+      total_video_frames_(total_video_frames),
+      dropped_video_frames_(dropped_video_frames),
+      corrupted_video_frames_(corrupted_video_frames) {
+  if (document.domWindow())
+    creation_time_ =
+        DOMWindowPerformance::performance(*(document.domWindow()))->now();
 }
 
-} // namespace blink
+}  // namespace blink

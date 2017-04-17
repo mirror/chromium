@@ -4,6 +4,8 @@
 
 #include "net/nqe/network_quality_store.h"
 
+#include "base/location.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "net/base/network_change_notifier.h"
 
 namespace net {
@@ -12,7 +14,8 @@ namespace nqe {
 
 namespace internal {
 
-NetworkQualityStore::NetworkQualityStore() {
+NetworkQualityStore::NetworkQualityStore()
+    : disable_offline_check_(false), weak_ptr_factory_(this) {
   static_assert(kMaximumNetworkQualityCacheSize > 0,
                 "Size of the network quality cache must be > 0");
   // This limit should not be increased unless the logic for removing the
@@ -32,11 +35,8 @@ void NetworkQualityStore::Add(
   DCHECK_LE(cached_network_qualities_.size(),
             static_cast<size_t>(kMaximumNetworkQualityCacheSize));
 
-  // If the network name is unavailable, caching should not be performed.
-  if (network_id.type != net::NetworkChangeNotifier::CONNECTION_ETHERNET &&
-      network_id.id.empty()) {
+  if (!EligibleForCaching(network_id))
     return;
-  }
 
   // Remove the entry from the map, if it is already present.
   cached_network_qualities_.erase(network_id);
@@ -59,6 +59,9 @@ void NetworkQualityStore::Add(
       std::make_pair(network_id, cached_network_quality));
   DCHECK_LE(cached_network_qualities_.size(),
             static_cast<size_t>(kMaximumNetworkQualityCacheSize));
+
+  for (auto& observer : network_qualities_cache_observer_list_)
+    observer.OnChangeInCachedNetworkQuality(network_id, cached_network_quality);
 }
 
 bool NetworkQualityStore::GetById(
@@ -74,6 +77,52 @@ bool NetworkQualityStore::GetById(
 
   *cached_network_quality = it->second;
   return true;
+}
+
+void NetworkQualityStore::AddNetworkQualitiesCacheObserver(
+    NetworkQualitiesCacheObserver* observer) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  network_qualities_cache_observer_list_.AddObserver(observer);
+
+  // Notify the |observer| on the next message pump since |observer| may not
+  // be completely set up for receiving the callbacks.
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&NetworkQualityStore::NotifyCacheObserverIfPresent,
+                            weak_ptr_factory_.GetWeakPtr(), observer));
+}
+
+void NetworkQualityStore::RemoveNetworkQualitiesCacheObserver(
+    NetworkQualitiesCacheObserver* observer) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  network_qualities_cache_observer_list_.RemoveObserver(observer);
+}
+
+bool NetworkQualityStore::EligibleForCaching(
+    const NetworkID& network_id) const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  // |disable_offline_check_| forces caching of the network quality even if
+  // the network is set to offline.
+  return network_id.type == NetworkChangeNotifier::CONNECTION_ETHERNET ||
+         !network_id.id.empty() ||
+         (network_id.type == NetworkChangeNotifier::CONNECTION_NONE &&
+          disable_offline_check_);
+}
+
+void NetworkQualityStore::DisableOfflineCheckForTesting(
+    bool disable_offline_check) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  disable_offline_check_ = disable_offline_check;
+}
+
+void NetworkQualityStore::NotifyCacheObserverIfPresent(
+    NetworkQualitiesCacheObserver* observer) const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (!network_qualities_cache_observer_list_.HasObserver(observer))
+    return;
+  for (const auto it : cached_network_qualities_)
+    observer->OnChangeInCachedNetworkQuality(it.first, it.second);
 }
 
 }  // namespace internal

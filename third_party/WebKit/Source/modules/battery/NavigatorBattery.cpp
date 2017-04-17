@@ -4,47 +4,45 @@
 
 #include "modules/battery/NavigatorBattery.h"
 
+#include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalFrame.h"
 #include "modules/battery/BatteryManager.h"
 
 namespace blink {
 
-NavigatorBattery::NavigatorBattery()
-{
+NavigatorBattery::NavigatorBattery(Navigator& navigator)
+    : Supplement<Navigator>(navigator) {}
+
+ScriptPromise NavigatorBattery::getBattery(ScriptState* script_state,
+                                           Navigator& navigator) {
+  return NavigatorBattery::From(navigator).getBattery(script_state);
 }
 
-ScriptPromise NavigatorBattery::getBattery(ScriptState* scriptState, Navigator& navigator)
-{
-    return NavigatorBattery::from(navigator).getBattery(scriptState);
+ScriptPromise NavigatorBattery::getBattery(ScriptState* script_state) {
+  if (!battery_manager_) {
+    battery_manager_ =
+        BatteryManager::Create(ExecutionContext::From(script_state));
+  }
+  return battery_manager_->StartRequest(script_state);
 }
 
-ScriptPromise NavigatorBattery::getBattery(ScriptState* scriptState)
-{
-    if (!m_batteryManager)
-        m_batteryManager = BatteryManager::create(scriptState->getExecutionContext());
-
-    return m_batteryManager->startRequest(scriptState);
+const char* NavigatorBattery::SupplementName() {
+  return "NavigatorBattery";
 }
 
-const char* NavigatorBattery::supplementName()
-{
-    return "NavigatorBattery";
+NavigatorBattery& NavigatorBattery::From(Navigator& navigator) {
+  NavigatorBattery* supplement = static_cast<NavigatorBattery*>(
+      Supplement<Navigator>::From(navigator, SupplementName()));
+  if (!supplement) {
+    supplement = new NavigatorBattery(navigator);
+    ProvideTo(navigator, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
-NavigatorBattery& NavigatorBattery::from(Navigator& navigator)
-{
-    NavigatorBattery* supplement = static_cast<NavigatorBattery*>(Supplement<Navigator>::from(navigator, supplementName()));
-    if (!supplement) {
-        supplement = new NavigatorBattery();
-        provideTo(navigator, supplementName(), supplement);
-    }
-    return *supplement;
+DEFINE_TRACE(NavigatorBattery) {
+  visitor->Trace(battery_manager_);
+  Supplement<Navigator>::Trace(visitor);
 }
 
-DEFINE_TRACE(NavigatorBattery)
-{
-    visitor->trace(m_batteryManager);
-    Supplement<Navigator>::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

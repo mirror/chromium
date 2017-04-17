@@ -25,30 +25,41 @@ will be removed since there's no Crash results.
 
 import argparse
 import logging
+import webbrowser
 
 from webkitpy.layout_tests.models.test_expectations import TestExpectations
+from webkitpy.tool.commands.flaky_tests import FlakyTests
 
 _log = logging.getLogger(__name__)
 
 
 def main(host, bot_test_expectations_factory, argv):
     parser = argparse.ArgumentParser(epilog=__doc__, formatter_class=argparse.RawTextHelpFormatter)
-    parser.parse_args(argv)
+    parser.add_argument('--verbose', '-v', action='store_true', default=False, help='enable more verbose logging')
+    parser.add_argument('--show-results',
+                        '-s',
+                        action='store_true',
+                        default=False,
+                        help='Open results dashboard for all removed lines')
+    args = parser.parse_args(argv)
+
+    logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO, format='%(levelname)s: %(message)s')
 
     port = host.port_factory.get()
-
-    logging.basicConfig(level=logging.INFO, format="%(message)s")
-
     expectations_file = port.path_to_generic_test_expectations_file()
     if not host.filesystem.isfile(expectations_file):
-        _log.warn("Didn't find generic expectations file at: " + expectations_file)
+        _log.warning("Didn't find generic expectations file at: " + expectations_file)
         return 1
 
     remove_flakes_o_matic = RemoveFlakesOMatic(host,
                                                port,
-                                               bot_test_expectations_factory)
+                                               bot_test_expectations_factory,
+                                               webbrowser)
 
     test_expectations = remove_flakes_o_matic.get_updated_test_expectations()
+
+    if args.show_results:
+        remove_flakes_o_matic.show_removed_results()
 
     remove_flakes_o_matic.write_test_expectations(test_expectations,
                                                   expectations_file)
@@ -56,11 +67,14 @@ def main(host, bot_test_expectations_factory, argv):
 
 
 class RemoveFlakesOMatic(object):
-    def __init__(self, host, port, bot_test_expectations_factory):
+
+    def __init__(self, host, port, bot_test_expectations_factory, browser):
         self._host = host
         self._port = port
         self._expectations_factory = bot_test_expectations_factory
         self._builder_results_by_path = {}
+        self._browser = browser
+        self._expectations_to_remove_list = None
 
     def _can_delete_line(self, test_expectation_line):
         """Returns whether a given line in the expectations can be removed.
@@ -90,26 +104,34 @@ class RemoveFlakesOMatic(object):
         if not self._has_pass_expectation(expectations):
             return False
 
+        # Don't check lines that have expectations for directories, since
+        # the flakiness of all sub-tests isn't as easy to check.
+        if self._port.test_isdir(test_expectation_line.name):
+            return False
+
         # The line can be deleted if the only expectation on the line that appears in the actual
         # results is the PASS expectation.
+        builders_checked = []
         for config in test_expectation_line.matching_configurations:
             builder_name = self._host.builders.builder_name_for_specifiers(config.version, config.build_type)
 
             if not builder_name:
-                _log.error('Failed to get builder for config [%s, %s, %s]',
-                           config.version, config.architecture, config.build_type)
-                # TODO(bokan): Matching configurations often give us bots that don't have a
-                # builder in builders.py's exact_matches. Should we ignore those or be conservative
-                # and assume we need these expectations to make a decision?
-                return False
+                _log.debug('No builder with config %s', config)
+                # For many configurations, there is no matching builder in
+                # webkitpy/common/config/builders.py. We ignore these
+                # configurations and make decisions based only on configurations
+                # with actual builders.
+                continue
+
+            builders_checked.append(builder_name)
 
             if builder_name not in self._builder_results_by_path.keys():
-                _log.error('Failed to find results for builder "%s"' % builder_name)
+                _log.error('Failed to find results for builder "%s"', builder_name)
                 return False
 
             results_by_path = self._builder_results_by_path[builder_name]
 
-            # No results means the tests were all skipped or all results are passing.
+            # No results means the tests were all skipped, or all results are passing.
             if test_expectation_line.path not in results_by_path.keys():
                 continue
 
@@ -118,6 +140,11 @@ class RemoveFlakesOMatic(object):
             if self._expectations_that_were_met(test_expectation_line, results_for_single_test) != set(['PASS']):
                 return False
 
+        if builders_checked:
+            _log.debug('Checked builders:\n  %s', '\n  '.join(builders_checked))
+        else:
+            _log.warning('No matching builders for line, deleting line.')
+        _log.info('Deleting line "%s"', test_expectation_line.original_string.strip())
         return True
 
     def _has_pass_expectation(self, expectations):
@@ -137,7 +164,7 @@ class RemoveFlakesOMatic(object):
                 e.g. ['IMAGE', 'IMAGE', 'PASS']
 
         Returns:
-            A set containing expectations that occured in the results.
+            A set containing expectations that occurred in the results.
         """
         # TODO(bokan): Does this not exist in a more central place?
         def replace_failing_with_fail(expectation):
@@ -176,7 +203,7 @@ class RemoveFlakesOMatic(object):
         the distinct results for each test. E.g.
 
         {
-            'WebKit Linux': {
+            'WebKit Linux Precise': {
                   'test1.html': ['PASS', 'IMAGE'],
                   'test2.html': ['PASS'],
             },
@@ -187,7 +214,7 @@ class RemoveFlakesOMatic(object):
         }
         """
         builder_results_by_path = {}
-        for builder_name in self._host.builders.all_builder_names():
+        for builder_name in self._host.builders.all_continuous_builder_names():
             expectations_for_builder = (
                 self._expectations_factory.expectations_for_builder(builder_name)
             )
@@ -196,7 +223,7 @@ class RemoveFlakesOMatic(object):
                 # This is not fatal since we may not need to check these
                 # results. If we do need these results we'll log an error later
                 # when trying to check against them.
-                _log.warn('Downloaded results are missing results for builder "%s"' % builder_name)
+                _log.warning('Downloaded results are missing results for builder "%s"', builder_name)
                 continue
 
             builder_results_by_path[builder_name] = (
@@ -247,6 +274,27 @@ class RemoveFlakesOMatic(object):
             removed_index -= 1
             expectations.pop(removed_index)
 
+    def _expectations_to_remove(self):
+        """Computes and returns the expectation lines that should be removed.
+
+        Returns:
+            A list of TestExpectationLine objects for lines that can be removed
+            from the test expectations file. The result is memoized so that
+            subsequent calls will not recompute the result.
+        """
+        if self._expectations_to_remove_list is not None:
+            return self._expectations_to_remove_list
+
+        self._builder_results_by_path = self._get_builder_results_by_path()
+        self._expectations_to_remove_list = []
+        test_expectations = TestExpectations(self._port, include_overrides=False).expectations()
+
+        for expectation in test_expectations:
+            if self._can_delete_line(expectation):
+                self._expectations_to_remove_list.append(expectation)
+
+        return self._expectations_to_remove_list
+
     def get_updated_test_expectations(self):
         """Filters out passing lines from TestExpectations file.
 
@@ -258,16 +306,8 @@ class RemoveFlakesOMatic(object):
             A TestExpectations object with the passing lines filtered out.
         """
 
-        self._builder_results_by_path = self._get_builder_results_by_path()
-
-        expectations_to_remove = []
         test_expectations = TestExpectations(self._port, include_overrides=False).expectations()
-
-        for expectation in test_expectations:
-            if self._can_delete_line(expectation):
-                expectations_to_remove.append(expectation)
-
-        for expectation in expectations_to_remove:
+        for expectation in self._expectations_to_remove():
             index = test_expectations.index(expectation)
             test_expectations.remove(expectation)
 
@@ -277,6 +317,19 @@ class RemoveFlakesOMatic(object):
             self._remove_associated_comments_and_whitespace(test_expectations, index)
 
         return test_expectations
+
+    def show_removed_results(self):
+        """Opens removed lines in the results dashboard.
+
+        Opens the results dashboard in the browser, showing all the tests for lines that the script
+        removed from the TestExpectations file and allowing the user to manually confirm the
+        results.
+        """
+        removed_test_names = ','.join(x.name for x in self._expectations_to_remove())
+        url = FlakyTests.FLAKINESS_DASHBOARD_URL % removed_test_names
+
+        _log.info('Opening results dashboard: ' + url)
+        self._browser.open(url)
 
     def write_test_expectations(self, test_expectations, test_expectations_file):
         """Writes the given TestExpectations object to the filesystem.

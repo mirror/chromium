@@ -12,13 +12,14 @@
 
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/password_manager/core/browser/mock_password_store.h"
-#include "sync/api/sync_change_processor.h"
-#include "sync/api/sync_error.h"
-#include "sync/api/sync_error_factory_mock.h"
+#include "components/sync/model/sync_change_processor.h"
+#include "components/sync/model/sync_error.h"
+#include "components/sync/model/sync_error_factory_mock.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -119,7 +120,7 @@ MATCHER_P2(SyncChangeIs, change_type, password, "") {
 // The argument is std::vector<autofill::PasswordForm*>*. The caller is
 // responsible for the lifetime of all the password forms.
 ACTION_P(AppendForm, form) {
-  arg0->push_back(new autofill::PasswordForm(form));
+  arg0->push_back(base::MakeUnique<autofill::PasswordForm>(form));
   return true;
 }
 

@@ -9,16 +9,17 @@
 #define CONTENT_COMMON_CONTENT_PARAM_TRAITS_MACROS_H_
 
 #include "content/common/content_export.h"
+#include "content/common/download/mhtml_save_status.h"
 #include "content/common/input/input_event_ack_state.h"
 #include "content/public/common/request_context_frame_type.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/resource_type.h"
 #include "ipc/ipc_message_macros.h"
 #include "third_party/WebKit/public/platform/WebAddressSpace.h"
+#include "third_party/WebKit/public/platform/WebContentSecurityPolicy.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebPageVisibilityState.h"
 #include "third_party/WebKit/public/web/WebCompositionUnderline.h"
-#include "third_party/WebKit/public/web/WebContentSecurityPolicy.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
 #include "third_party/WebKit/public/web/WebSharedWorkerCreationContextType.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 
@@ -33,25 +34,27 @@ IPC_ENUM_TRAITS_MAX_VALUE(content::RequestContextType,
                           content::REQUEST_CONTEXT_TYPE_LAST)
 IPC_ENUM_TRAITS_MAX_VALUE(content::RequestContextFrameType,
                           content::REQUEST_CONTEXT_FRAME_TYPE_LAST)
+IPC_ENUM_TRAITS_MAX_VALUE(content::MhtmlSaveStatus,
+                          content::MhtmlSaveStatus::LAST)
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebContentSecurityPolicySource,
-                          blink::WebContentSecurityPolicySourceLast)
+                          blink::kWebContentSecurityPolicySourceLast)
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebContentSecurityPolicyType,
-                          blink::WebContentSecurityPolicyTypeLast)
-IPC_ENUM_TRAITS_MAX_VALUE(blink::WebAddressSpace, blink::WebAddressSpaceLast)
+                          blink::kWebContentSecurityPolicyTypeLast)
+IPC_ENUM_TRAITS_MAX_VALUE(blink::WebAddressSpace, blink::kWebAddressSpaceLast)
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebSharedWorkerCreationContextType,
-                          blink::WebSharedWorkerCreationContextTypeLast)
+                          blink::kWebSharedWorkerCreationContextTypeLast)
 IPC_ENUM_TRAITS_MIN_MAX_VALUE(blink::WebInputEvent::Type,
-                              blink::WebInputEvent::TypeFirst,
-                              blink::WebInputEvent::TypeLast)
+                              blink::WebInputEvent::kTypeFirst,
+                              blink::WebInputEvent::kTypeLast)
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebPageVisibilityState,
-                          blink::WebPageVisibilityStateLast)
+                          blink::kWebPageVisibilityStateLast)
 
 IPC_STRUCT_TRAITS_BEGIN(blink::WebCompositionUnderline)
-  IPC_STRUCT_TRAITS_MEMBER(startOffset)
-  IPC_STRUCT_TRAITS_MEMBER(endOffset)
+  IPC_STRUCT_TRAITS_MEMBER(start_offset)
+  IPC_STRUCT_TRAITS_MEMBER(end_offset)
   IPC_STRUCT_TRAITS_MEMBER(color)
   IPC_STRUCT_TRAITS_MEMBER(thick)
-  IPC_STRUCT_TRAITS_MEMBER(backgroundColor)
+  IPC_STRUCT_TRAITS_MEMBER(background_color)
 IPC_STRUCT_TRAITS_END()
 
 #endif  // CONTENT_COMMON_CONTENT_PARAM_TRAITS_MACROS_H_

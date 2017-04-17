@@ -1,15 +1,11 @@
 include_rules = [
-    "+bindings",
-    "+core",
-    "+heap",
     "-modules",
     "+modules/EventModules.h",
     "+modules/EventTargetModules.h",
     "+modules/ModulesExport.h",
     "+modules/notifications",
+    "+modules/permissions",
     "+modules/serviceworkers",
     "+modules/vibration",
-    "+platform",
-    "+public/platform",
-    "-web",
+    "+skia/ext",
 ]

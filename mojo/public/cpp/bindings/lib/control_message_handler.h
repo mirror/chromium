@@ -7,7 +7,9 @@
 
 #include <stdint.h>
 
+#include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "mojo/public/cpp/bindings/bindings_export.h"
 #include "mojo/public/cpp/bindings/lib/serialization_context.h"
 #include "mojo/public/cpp/bindings/message.h"
 
@@ -15,7 +17,8 @@ namespace mojo {
 namespace internal {
 
 // Handlers for request messages defined in interface_control_messages.mojom.
-class ControlMessageHandler : public MessageReceiverWithResponderStatus {
+class MOJO_CPP_BINDINGS_EXPORT ControlMessageHandler
+    : NON_EXPORTED_BASE(public MessageReceiverWithResponderStatus) {
  public:
   static bool IsControlMessage(const Message* message);
 
@@ -24,12 +27,13 @@ class ControlMessageHandler : public MessageReceiverWithResponderStatus {
 
   // Call the following methods only if IsControlMessage() returned true.
   bool Accept(Message* message) override;
-  // Takes ownership of |responder|.
-  bool AcceptWithResponder(Message* message,
-                           MessageReceiverWithStatus* responder) override;
+  bool AcceptWithResponder(
+      Message* message,
+      std::unique_ptr<MessageReceiverWithStatus> responder) override;
 
  private:
-  bool Run(Message* message, MessageReceiverWithStatus* responder);
+  bool Run(Message* message,
+           std::unique_ptr<MessageReceiverWithStatus> responder);
   bool RunOrClosePipe(Message* message);
 
   uint32_t interface_version_;

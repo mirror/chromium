@@ -22,29 +22,31 @@ bool InitializeGLOneOff() {
 
   DCHECK_EQ(kGLImplementationNone, GetGLImplementation());
 
-  std::vector<GLImplementation> allowed_impls;
-  GetAllowedGLImplementations(&allowed_impls);
+  std::vector<GLImplementation> allowed_impls = GetAllowedGLImplementations();
   DCHECK(!allowed_impls.empty());
 
   base::CommandLine* cmd = base::CommandLine::ForCurrentProcess();
 
   // The default implementation is always the first one in list.
   GLImplementation impl = allowed_impls[0];
-  bool fallback_to_osmesa = false;
-  if (cmd->HasSwitch(switches::kOverrideUseGLWithOSMesaForTests)) {
-    impl = kGLImplementationOSMesaGL;
+  bool fallback_to_software_gl = false;
+  if (cmd->HasSwitch(switches::kOverrideUseSoftwareGLForTests)) {
+    impl = GetSoftwareGLImplementation();
   } else if (cmd->HasSwitch(switches::kUseGL)) {
     std::string requested_implementation_name =
         cmd->GetSwitchValueASCII(switches::kUseGL);
     if (requested_implementation_name == "any") {
-      fallback_to_osmesa = true;
+      fallback_to_software_gl = true;
     } else if (requested_implementation_name ==
-                   kGLImplementationSwiftShaderName ||
+               kGLImplementationSwiftShaderName) {
+      impl = kGLImplementationSwiftShaderGL;
+    } else if (requested_implementation_name ==
+                   kGLImplementationSwiftShaderForWebGLName ||
                requested_implementation_name == kGLImplementationANGLEName) {
       impl = kGLImplementationEGLGLES2;
     } else {
       impl = GetNamedGLImplementation(requested_implementation_name);
-      if (!ContainsValue(allowed_impls, impl)) {
+      if (!base::ContainsValue(allowed_impls, impl)) {
         LOG(ERROR) << "Requested GL implementation is not available.";
         return false;
       }
@@ -55,22 +57,22 @@ bool InitializeGLOneOff() {
   bool disable_gl_drawing = cmd->HasSwitch(switches::kDisableGLDrawingForTests);
 
   return InitializeGLOneOffImplementation(
-      impl, fallback_to_osmesa, gpu_service_logging, disable_gl_drawing);
+      impl, fallback_to_software_gl, gpu_service_logging, disable_gl_drawing);
 }
 
 bool InitializeGLOneOffImplementation(GLImplementation impl,
-                                      bool fallback_to_osmesa,
+                                      bool fallback_to_software_gl,
                                       bool gpu_service_logging,
                                       bool disable_gl_drawing) {
   bool initialized =
       InitializeStaticGLBindings(impl) && InitializeGLOneOffPlatform();
-  if (!initialized && fallback_to_osmesa) {
-    ClearGLBindings();
-    initialized = InitializeStaticGLBindings(kGLImplementationOSMesaGL) &&
+  if (!initialized && fallback_to_software_gl) {
+    ShutdownGL();
+    initialized = InitializeStaticGLBindings(GetSoftwareGLImplementation()) &&
                   InitializeGLOneOffPlatform();
   }
   if (!initialized)
-    ClearGLBindings();
+    ShutdownGL();
 
   if (initialized) {
     DVLOG(1) << "Using " << GetGLImplementationName(GetGLImplementation())
@@ -83,11 +85,15 @@ bool InitializeGLOneOffImplementation(GLImplementation impl,
   return initialized;
 }
 
-void ClearGLBindings() {
-  ClearGLBindingsPlatform();
+void ShutdownGL() {
+  ShutdownGLPlatform();
 
   SetGLImplementation(kGLImplementationNone);
   UnloadGLNativeLibraries();
+}
+
+scoped_refptr<GLSurface> CreateOffscreenGLSurface(const gfx::Size& size) {
+  return CreateOffscreenGLSurfaceWithFormat(size, GLSurfaceFormat());
 }
 
 }  // namespace init

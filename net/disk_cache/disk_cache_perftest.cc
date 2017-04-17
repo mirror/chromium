@@ -11,6 +11,7 @@
 #include "base/files/file_path.h"
 #include "base/hash.h"
 #include "base/process/process_metrics.h"
+#include "base/rand_util.h"
 #include "base/run_loop.h"
 #include "base/strings/string_util.h"
 #include "base/test/perf_time_logger.h"
@@ -26,6 +27,8 @@
 #include "net/disk_cache/disk_cache_test_base.h"
 #include "net/disk_cache/disk_cache_test_util.h"
 #include "net/disk_cache/simple/simple_backend_impl.h"
+#include "net/disk_cache/simple/simple_index.h"
+#include "net/disk_cache/simple/simple_index_file.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 
@@ -61,7 +64,7 @@ class DiskCachePerfTest : public DiskCacheTestWithCache {
 
   ~DiskCachePerfTest() override {
     if (saved_fd_limit_ < kFdLimitForCacheTests)
-      MaybeSetFdLimit(kFdLimitForCacheTests);
+      MaybeSetFdLimit(saved_fd_limit_);
   }
 
  protected:
@@ -114,7 +117,7 @@ bool DiskCachePerfTest::TimeWrite() {
   for (int i = 0; i < kNumEntries; i++) {
     TestEntry entry;
     entry.key = GenerateKey(true);
-    entry.data_len = rand() % kBodySize;
+    entry.data_len = base::RandInt(0, kBodySize);
     entries_.push_back(entry);
 
     disk_cache::Entry* cache_entry;
@@ -196,9 +199,6 @@ bool DiskCachePerfTest::TimeRead(WhatToRead what_to_read,
 }
 
 TEST_F(DiskCachePerfTest, BlockfileHashes) {
-  int seed = static_cast<int>(Time::Now().ToInternalValue());
-  srand(seed);
-
   base::PerfTimeLogger timer("Hash disk cache keys");
   for (int i = 0; i < 300000; i++) {
     std::string key = GenerateKey(true);
@@ -268,11 +268,6 @@ TEST_F(DiskCachePerfTest, SimpleCacheBackendPerformance) {
   CacheBackendPerformance();
 }
 
-int BlockSize() {
-  // We can use form 1 to 4 blocks.
-  return (rand() & 0x3) + 1;
-}
-
 // Creating and deleting "entries" on a block-file is something quite frequent
 // (after all, almost everything is stored on block files). The operation is
 // almost free when the file is empty, but can be expensive if the file gets
@@ -284,9 +279,6 @@ TEST_F(DiskCachePerfTest, BlockFilesPerformance) {
   disk_cache::BlockFiles files(cache_path_);
   ASSERT_TRUE(files.Init(true));
 
-  int seed = static_cast<int>(Time::Now().ToInternalValue());
-  srand(seed);
-
   const int kNumBlocks = 60000;
   disk_cache::Addr address[kNumBlocks];
 
@@ -294,25 +286,63 @@ TEST_F(DiskCachePerfTest, BlockFilesPerformance) {
 
   // Fill up the 32-byte block file (use three files).
   for (int i = 0; i < kNumBlocks; i++) {
+    int block_size = base::RandInt(1, 4);
     EXPECT_TRUE(
-        files.CreateBlock(disk_cache::RANKINGS, BlockSize(), &address[i]));
+        files.CreateBlock(disk_cache::RANKINGS, block_size, &address[i]));
   }
 
   timer1.Done();
   base::PerfTimeLogger timer2("Create and delete blocks");
 
   for (int i = 0; i < 200000; i++) {
-    int entry = rand() * (kNumBlocks / RAND_MAX + 1);
-    if (entry >= kNumBlocks)
-      entry = 0;
+    int block_size = base::RandInt(1, 4);
+    int entry = base::RandInt(0, kNumBlocks - 1);
 
     files.DeleteBlock(address[entry], false);
     EXPECT_TRUE(
-        files.CreateBlock(disk_cache::RANKINGS, BlockSize(), &address[entry]));
+        files.CreateBlock(disk_cache::RANKINGS, block_size, &address[entry]));
   }
 
   timer2.Done();
   base::RunLoop().RunUntilIdle();
+}
+
+// Measures how quickly SimpleIndex can compute which entries to evict.
+TEST(SimpleIndexPerfTest, EvictionPerformance) {
+  const int kEntries = 10000;
+
+  class NoOpDelegate : public disk_cache::SimpleIndexDelegate {
+    void DoomEntries(std::vector<uint64_t>* entry_hashes,
+                     const net::CompletionCallback& callback) override {}
+  };
+
+  NoOpDelegate delegate;
+  base::Time start(base::Time::Now());
+
+  double evict_elapsed_ms = 0;
+  int iterations = 0;
+  while (iterations < 61000) {
+    ++iterations;
+    disk_cache::SimpleIndex index(nullptr, &delegate, net::DISK_CACHE, nullptr);
+
+    // Make sure large enough to not evict on insertion.
+    index.SetMaxSize(kEntries * 2);
+
+    for (int i = 0; i < kEntries; ++i) {
+      index.InsertEntryForTesting(
+          i, disk_cache::EntryMetadata(start + base::TimeDelta::FromSeconds(i),
+                                       1u));
+    }
+
+    // Trigger an eviction.
+    base::ElapsedTimer timer;
+    index.SetMaxSize(kEntries);
+    index.UpdateEntrySize(0, 1u);
+    evict_elapsed_ms += timer.Elapsed().InMillisecondsF();
+  }
+
+  LOG(ERROR) << "Average time to evict:" << (evict_elapsed_ms / iterations)
+             << "ms";
 }
 
 }  // namespace

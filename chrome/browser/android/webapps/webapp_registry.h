@@ -5,10 +5,10 @@
 #ifndef CHROME_BROWSER_ANDROID_WEBAPPS_WEBAPP_REGISTRY_H_
 #define CHROME_BROWSER_ANDROID_WEBAPPS_WEBAPP_REGISTRY_H_
 
-#include "base/android/jni_android.h"
-#include "base/android/scoped_java_ref.h"
 #include "base/callback_forward.h"
 #include "base/macros.h"
+
+class GURL;
 
 // WebappRegistry is the C++ counterpart of
 // org.chromium.chrome.browser.webapp's WebappRegistry in Java.
@@ -20,15 +20,14 @@ class WebappRegistry {
   WebappRegistry() { }
   virtual ~WebappRegistry() { }
 
-  // Registers JNI hooks.
-  static bool RegisterWebappRegistry(JNIEnv* env);
+  // Cleans up data stored by web apps on URLs matching |url_filter|.
+  virtual void UnregisterWebappsForUrls(
+      const base::Callback<bool(const GURL&)>& url_filter);
 
-  // Cleans up data stored by web apps.
-  virtual void UnregisterWebapps(const base::Closure& callback);
-
-  // Removes history data (last used time and URLs) stored by web apps, whilst
-  // leaving other data intact.
-  virtual void ClearWebappHistory(const base::Closure& callback);
+  // Removes history data (last used time and URLs) stored by web apps with
+  // URLs matching |url_filter|, whilst leaving other data intact.
+  virtual void ClearWebappHistoryForUrls(
+      const base::Callback<bool(const GURL&)>& url_filter);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WebappRegistry);

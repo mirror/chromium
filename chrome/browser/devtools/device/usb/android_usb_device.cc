@@ -21,7 +21,7 @@
 #include "chrome/browser/devtools/device/usb/android_usb_socket.h"
 #include "content/public/browser/browser_thread.h"
 #include "crypto/rsa_private_key.h"
-#include "device/core/device_client.h"
+#include "device/base/device_client.h"
 #include "device/usb/usb_descriptors.h"
 #include "device/usb/usb_device.h"
 #include "device/usb/usb_service.h"
@@ -59,7 +59,7 @@ typedef std::vector<scoped_refptr<UsbDevice> > UsbDevices;
 typedef std::set<scoped_refptr<UsbDevice> > UsbDeviceSet;
 
 // Stores android wrappers around claimed usb devices on caller thread.
-base::LazyInstance<std::vector<AndroidUsbDevice*> >::Leaky g_devices =
+base::LazyInstance<std::vector<AndroidUsbDevice*>>::Leaky g_devices =
     LAZY_INSTANCE_INITIALIZER;
 
 bool IsAndroidInterface(const UsbInterfaceDescriptor& interface) {
@@ -360,8 +360,8 @@ void AndroidUsbDevice::InitOnCallerThread() {
   if (task_runner_)
     return;
   task_runner_ = base::ThreadTaskRunnerHandle::Get();
-  Queue(base::WrapUnique(new AdbMessage(AdbMessage::kCommandCNXN, kVersion,
-                                        kMaxPayload, kHostConnectMessage)));
+  Queue(base::MakeUnique<AdbMessage>(AdbMessage::kCommandCNXN, kVersion,
+                                     kMaxPayload, kHostConnectMessage));
   ReadHeader();
 }
 
@@ -379,11 +379,10 @@ void AndroidUsbDevice::Send(uint32_t command,
                             uint32_t arg0,
                             uint32_t arg1,
                             const std::string& body) {
-  std::unique_ptr<AdbMessage> message(
-      new AdbMessage(command, arg0, arg1, body));
+  auto message = base::MakeUnique<AdbMessage>(command, arg0, arg1, body);
   // Delay open request if not yet connected.
   if (!is_connected_) {
-    pending_messages_.push_back(message.release());
+    pending_messages_.push_back(std::move(message));
     return;
   }
   Queue(std::move(message));
@@ -577,20 +576,20 @@ void AndroidUsbDevice::HandleIncoming(std::unique_ptr<AdbMessage> message) {
       {
       DCHECK_EQ(message->arg0, static_cast<uint32_t>(AdbMessage::kAuthToken));
         if (signature_sent_) {
-          Queue(base::WrapUnique(new AdbMessage(
+          Queue(base::MakeUnique<AdbMessage>(
               AdbMessage::kCommandAUTH, AdbMessage::kAuthRSAPublicKey, 0,
-              AndroidRSAPublicKey(rsa_key_.get()))));
+              AndroidRSAPublicKey(rsa_key_.get())));
         } else {
           signature_sent_ = true;
           std::string signature = AndroidRSASign(rsa_key_.get(), message->body);
           if (!signature.empty()) {
-            Queue(base::WrapUnique(new AdbMessage(AdbMessage::kCommandAUTH,
-                                                  AdbMessage::kAuthSignature, 0,
-                                                  signature)));
+            Queue(base::MakeUnique<AdbMessage>(AdbMessage::kCommandAUTH,
+                                               AdbMessage::kAuthSignature, 0,
+                                               signature));
           } else {
-            Queue(base::WrapUnique(new AdbMessage(
+            Queue(base::MakeUnique<AdbMessage>(
                 AdbMessage::kCommandAUTH, AdbMessage::kAuthRSAPublicKey, 0,
-                AndroidRSAPublicKey(rsa_key_.get()))));
+                AndroidRSAPublicKey(rsa_key_.get())));
           }
         }
       }
@@ -600,10 +599,8 @@ void AndroidUsbDevice::HandleIncoming(std::unique_ptr<AdbMessage> message) {
         is_connected_ = true;
         PendingMessages pending;
         pending.swap(pending_messages_);
-        for (PendingMessages::iterator it = pending.begin();
-             it != pending.end(); ++it) {
-          Queue(base::WrapUnique(*it));
-        }
+        for (auto& msg : pending)
+          Queue(std::move(msg));
       }
       break;
     case AdbMessage::kCommandOKAY:

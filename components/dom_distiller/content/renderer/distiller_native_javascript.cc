@@ -12,7 +12,7 @@
 #include "content/public/renderer/render_frame.h"
 #include "gin/arguments.h"
 #include "gin/function_template.h"
-#include "services/shell/public/cpp/interface_provider.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "v8/include/v8.h"
@@ -29,7 +29,7 @@ DistillerNativeJavaScript::~DistillerNativeJavaScript() {}
 
 void DistillerNativeJavaScript::AddJavaScriptObjectToFrame(
     v8::Local<v8::Context> context) {
-  v8::Isolate* isolate = blink::mainThreadIsolate();
+  v8::Isolate* isolate = blink::MainThreadIsolate();
   v8::HandleScope handle_scope(isolate);
   if (context.IsEmpty())
     return;
@@ -41,23 +41,9 @@ void DistillerNativeJavaScript::AddJavaScriptObjectToFrame(
 
   EnsureServiceConnected();
 
-  // Some of the JavaScript functions require extra work to be done when it is
-  // called, so they have wrapper functions maintained in this class.
-  BindFunctionToObject(
-      distiller_obj,
-      "echo",
-      base::Bind(
-          &DistillerNativeJavaScript::DistillerEcho, base::Unretained(this)));
-
   // Many functions can simply call the Mojo interface directly and have no
   // wrapper function for binding. Note that calling distiller_js_service.get()
   // does not transfer ownership of the interface.
-  BindFunctionToObject(
-      distiller_obj, "sendFeedback",
-      base::Bind(
-          &mojom::DistillerJavaScriptService::HandleDistillerFeedbackCall,
-          base::Unretained(distiller_js_service_.get())));
-
   BindFunctionToObject(
       distiller_obj, "closePanel",
       base::Bind(
@@ -88,17 +74,6 @@ void DistillerNativeJavaScript::EnsureServiceConnected() {
     render_frame_->GetRemoteInterfaces()->GetInterface(
         &distiller_js_service_);
   }
-}
-
-std::string DistillerNativeJavaScript::DistillerEcho(
-    const std::string& message) {
-  EnsureServiceConnected();
-  // TODO(mdjones): It is possible and beneficial to have information
-  // returned from the browser process with these calls. The problem
-  // is waiting blocks this process.
-  distiller_js_service_->HandleDistillerEchoCall(message);
-
-  return message;
 }
 
 v8::Local<v8::Object> GetOrCreateDistillerObject(v8::Isolate* isolate,

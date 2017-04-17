@@ -10,28 +10,29 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- *  THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- *  EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- *  ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *  THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
 
 #ifndef ScriptedAnimationController_h
 #define ScriptedAnimationController_h
 
+#include "core/CoreExport.h"
 #include "core/dom/FrameRequestCallbackCollection.h"
 #include "platform/heap/Handle.h"
-#include "wtf/ListHashSet.h"
-#include "wtf/Vector.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/StringImpl.h"
+#include "platform/wtf/ListHashSet.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/StringImpl.h"
 
 namespace blink {
 
@@ -41,50 +42,66 @@ class EventTarget;
 class FrameRequestCallback;
 class MediaQueryListListener;
 
-class ScriptedAnimationController : public GarbageCollected<ScriptedAnimationController> {
-public:
-    static ScriptedAnimationController* create(Document* document)
-    {
-        return new ScriptedAnimationController(document);
-    }
+class CORE_EXPORT ScriptedAnimationController
+    : public GarbageCollectedFinalized<ScriptedAnimationController> {
+ public:
+  static ScriptedAnimationController* Create(Document* document) {
+    return new ScriptedAnimationController(document);
+  }
 
-    DECLARE_TRACE();
-    void clearDocumentPointer() { m_document = nullptr; }
+  DECLARE_TRACE();
+  void ClearDocumentPointer() { document_ = nullptr; }
 
-    typedef int CallbackId;
+  // Animation frame callbacks are used for requestAnimationFrame().
+  typedef int CallbackId;
+  CallbackId RegisterCallback(FrameRequestCallback*);
+  void CancelCallback(CallbackId);
 
-    int registerCallback(FrameRequestCallback*);
-    void cancelCallback(CallbackId);
-    void serviceScriptedAnimations(double monotonicTimeNow);
+  // Animation frame events are used for resize events, scroll events, etc.
+  void EnqueueEvent(Event*);
+  void EnqueuePerFrameEvent(Event*);
 
-    void enqueueEvent(Event*);
-    void enqueuePerFrameEvent(Event*);
-    void enqueueMediaQueryChangeListeners(HeapVector<Member<MediaQueryListListener>>&);
+  // Animation frame tasks are used for Fullscreen.
+  void EnqueueTask(std::unique_ptr<WTF::Closure>);
 
-    void suspend();
-    void resume();
+  // Used for the MediaQueryList change event.
+  void EnqueueMediaQueryChangeListeners(
+      HeapVector<Member<MediaQueryListListener>>&);
 
-    void dispatchEventsAndCallbacksForPrinting();
-private:
-    explicit ScriptedAnimationController(Document*);
+  // Invokes callbacks, dispatches events, etc. The order is defined by HTML:
+  // https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model
+  void ServiceScriptedAnimations(double monotonic_time_now);
 
-    void scheduleAnimationIfNeeded();
+  void Suspend();
+  void Resume();
 
-    void dispatchEvents(const AtomicString& eventInterfaceFilter = AtomicString());
-    void executeCallbacks(double monotonicTimeNow);
-    void callMediaQueryListListeners();
+  void DispatchEventsAndCallbacksForPrinting();
 
-    bool hasScheduledItems() const;
+ private:
+  explicit ScriptedAnimationController(Document*);
 
-    Member<Document> m_document;
-    FrameRequestCallbackCollection m_callbackCollection;
-    int m_suspendCount;
-    HeapVector<Member<Event>> m_eventQueue;
-    HeapListHashSet<std::pair<Member<const EventTarget>, const StringImpl*>> m_perFrameEvents;
-    using MediaQueryListListeners = HeapListHashSet<Member<MediaQueryListListener>>;
-    MediaQueryListListeners m_mediaQueryListListeners;
+  void ScheduleAnimationIfNeeded();
+
+  void RunTasks();
+  void DispatchEvents(
+      const AtomicString& event_interface_filter = AtomicString());
+  void ExecuteCallbacks(double monotonic_time_now);
+  void CallMediaQueryListListeners();
+
+  bool HasScheduledItems() const;
+
+  Member<Document> document_;
+  FrameRequestCallbackCollection callback_collection_;
+  int suspend_count_;
+  Vector<std::unique_ptr<WTF::Closure>> task_queue_;
+  HeapVector<Member<Event>> event_queue_;
+  HeapListHashSet<std::pair<Member<const EventTarget>, const StringImpl*>>
+      per_frame_events_;
+  using MediaQueryListListeners =
+      HeapListHashSet<Member<MediaQueryListListener>>;
+  MediaQueryListListeners media_query_list_listeners_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScriptedAnimationController_h
+#endif  // ScriptedAnimationController_h

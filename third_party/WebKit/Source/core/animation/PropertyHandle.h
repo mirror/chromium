@@ -8,103 +8,143 @@
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
 #include "core/dom/QualifiedName.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 // Represents the property of a PropertySpecificKeyframe.
 class CORE_EXPORT PropertyHandle {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    explicit PropertyHandle(CSSPropertyID property, bool isPresentationAttribute = false)
-        : m_handleType(isPresentationAttribute ? HandlePresentationAttribute : HandleCSSProperty)
-        , m_cssProperty(property)
-    {
-        ASSERT(property != CSSPropertyInvalid);
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    explicit PropertyHandle(const QualifiedName& attributeName)
-        : m_handleType(HandleSVGAttribute)
-        , m_svgAttribute(&attributeName)
-    {
-    }
+ public:
+  explicit PropertyHandle(CSSPropertyID property,
+                          bool is_presentation_attribute = false)
+      : handle_type_(is_presentation_attribute ? kHandlePresentationAttribute
+                                               : kHandleCSSProperty),
+        css_property_(property) {
+    DCHECK_NE(property, CSSPropertyInvalid);
+    DCHECK_NE(property, CSSPropertyVariable);
+  }
 
-    bool operator==(const PropertyHandle&) const;
-    bool operator!=(const PropertyHandle& other) const { return !(*this == other); }
+  explicit PropertyHandle(const AtomicString& property_name)
+      : handle_type_(kHandleCSSCustomProperty),
+        svg_attribute_(nullptr),
+        property_name_(property_name) {}
 
-    unsigned hash() const;
+  explicit PropertyHandle(const QualifiedName& attribute_name)
+      : handle_type_(kHandleSVGAttribute), svg_attribute_(&attribute_name) {}
 
-    bool isCSSProperty() const { return m_handleType == HandleCSSProperty; }
-    CSSPropertyID cssProperty() const { ASSERT(isCSSProperty()); return m_cssProperty; }
+  bool operator==(const PropertyHandle&) const;
+  bool operator!=(const PropertyHandle& other) const {
+    return !(*this == other);
+  }
 
-    bool isPresentationAttribute() const { return m_handleType == HandlePresentationAttribute; }
-    CSSPropertyID presentationAttribute() const { ASSERT(isPresentationAttribute()); return m_cssProperty; }
+  unsigned GetHash() const;
 
-    bool isSVGAttribute() const { return m_handleType == HandleSVGAttribute; }
-    const QualifiedName& svgAttribute() const { ASSERT(isSVGAttribute()); return *m_svgAttribute; }
+  bool IsCSSProperty() const {
+    return handle_type_ == kHandleCSSProperty || IsCSSCustomProperty();
+  }
+  CSSPropertyID CssProperty() const {
+    DCHECK(IsCSSProperty());
+    return handle_type_ == kHandleCSSProperty ? css_property_
+                                              : CSSPropertyVariable;
+  }
 
-private:
-    enum HandleType {
-        HandleEmptyValueForHashTraits,
-        HandleDeletedValueForHashTraits,
-        HandleCSSProperty,
-        HandlePresentationAttribute,
-        HandleSVGAttribute,
-    };
+  bool IsCSSCustomProperty() const {
+    return handle_type_ == kHandleCSSCustomProperty;
+  }
+  const AtomicString& CustomPropertyName() const {
+    DCHECK(IsCSSCustomProperty());
+    return property_name_;
+  }
 
-    explicit PropertyHandle(HandleType handleType)
-        : m_handleType(handleType)
-        , m_svgAttribute(nullptr)
-    {
-    }
+  bool IsPresentationAttribute() const {
+    return handle_type_ == kHandlePresentationAttribute;
+  }
+  CSSPropertyID PresentationAttribute() const {
+    DCHECK(IsPresentationAttribute());
+    return css_property_;
+  }
 
-    static PropertyHandle emptyValueForHashTraits() { return PropertyHandle(HandleEmptyValueForHashTraits); }
+  bool IsSVGAttribute() const { return handle_type_ == kHandleSVGAttribute; }
+  const QualifiedName& SvgAttribute() const {
+    DCHECK(IsSVGAttribute());
+    return *svg_attribute_;
+  }
 
-    static PropertyHandle deletedValueForHashTraits() { return PropertyHandle(HandleDeletedValueForHashTraits); }
+ private:
+  enum HandleType {
+    kHandleEmptyValueForHashTraits,
+    kHandleDeletedValueForHashTraits,
+    kHandleCSSProperty,
+    kHandleCSSCustomProperty,
+    kHandlePresentationAttribute,
+    kHandleSVGAttribute,
+  };
 
-    bool isDeletedValueForHashTraits() { return m_handleType == HandleDeletedValueForHashTraits; }
+  explicit PropertyHandle(HandleType handle_type)
+      : handle_type_(handle_type), svg_attribute_(nullptr) {}
 
-    HandleType m_handleType;
-    union {
-        CSSPropertyID m_cssProperty;
-        const QualifiedName* m_svgAttribute;
-    };
+  static PropertyHandle EmptyValueForHashTraits() {
+    return PropertyHandle(kHandleEmptyValueForHashTraits);
+  }
 
-    friend struct ::WTF::HashTraits<blink::PropertyHandle>;
+  static PropertyHandle DeletedValueForHashTraits() {
+    return PropertyHandle(kHandleDeletedValueForHashTraits);
+  }
+
+  bool IsDeletedValueForHashTraits() {
+    return handle_type_ == kHandleDeletedValueForHashTraits;
+  }
+
+  HandleType handle_type_;
+  union {
+    CSSPropertyID css_property_;
+    const QualifiedName* svg_attribute_;
+  };
+  AtomicString property_name_;
+
+  friend struct ::WTF::HashTraits<blink::PropertyHandle>;
 };
 
-} // namespace blink
+}  // namespace blink
 
 namespace WTF {
 
-template<> struct DefaultHash<blink::PropertyHandle> {
-    struct Hash {
-        STATIC_ONLY(Hash);
-        static unsigned hash(const blink::PropertyHandle& handle) { return handle.hash(); }
+template <>
+struct DefaultHash<blink::PropertyHandle> {
+  struct Hash {
+    STATIC_ONLY(Hash);
+    static unsigned GetHash(const blink::PropertyHandle& handle) {
+      return handle.GetHash();
+    }
 
-        static bool equal(const blink::PropertyHandle& a, const blink::PropertyHandle& b) { return a == b; }
+    static bool Equal(const blink::PropertyHandle& a,
+                      const blink::PropertyHandle& b) {
+      return a == b;
+    }
 
-        static const bool safeToCompareToEmptyOrDeleted = true;
-    };
+    static const bool safe_to_compare_to_empty_or_deleted = true;
+  };
 };
 
-template<> struct HashTraits<blink::PropertyHandle> : SimpleClassHashTraits<blink::PropertyHandle> {
-    static const bool needsDestruction = false;
-    static void constructDeletedValue(blink::PropertyHandle& slot, bool)
-    {
-        new (NotNull, &slot) blink::PropertyHandle(blink::PropertyHandle::deletedValueForHashTraits());
-    }
-    static bool isDeletedValue(blink::PropertyHandle value)
-    {
-        return value.isDeletedValueForHashTraits();
-    }
+template <>
+struct HashTraits<blink::PropertyHandle>
+    : SimpleClassHashTraits<blink::PropertyHandle> {
+  static const bool kNeedsDestruction = true;
+  static void ConstructDeletedValue(blink::PropertyHandle& slot, bool) {
+    new (NotNull, &slot) blink::PropertyHandle(
+        blink::PropertyHandle::DeletedValueForHashTraits());
+  }
+  static bool IsDeletedValue(blink::PropertyHandle value) {
+    return value.IsDeletedValueForHashTraits();
+  }
 
-    static blink::PropertyHandle emptyValue()
-    {
-        return blink::PropertyHandle::emptyValueForHashTraits();
-    }
+  static blink::PropertyHandle EmptyValue() {
+    return blink::PropertyHandle::EmptyValueForHashTraits();
+  }
 };
 
-} // namespace WTF
+}  // namespace WTF
 
-#endif // PropertyHandle_h
+#endif  // PropertyHandle_h

@@ -27,30 +27,29 @@
 #define BitStack_h
 
 #include "core/CoreExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-class Node;
-
 class CORE_EXPORT BitStack {
-    STACK_ALLOCATED();
-public:
-    BitStack();
-    ~BitStack();
+  STACK_ALLOCATED();
 
-    void push(bool);
-    void pop();
+ public:
+  BitStack();
+  ~BitStack();
 
-    bool top() const;
-    unsigned size() const;
+  void Push(bool);
+  void Pop();
 
-private:
-    unsigned m_size;
-    Vector<unsigned, 1> m_words;
+  bool Top() const;
+  unsigned size() const;
+
+ private:
+  unsigned size_;
+  Vector<unsigned, 1> words_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BitStack_h
+#endif  // BitStack_h

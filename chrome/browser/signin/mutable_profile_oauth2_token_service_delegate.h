@@ -5,9 +5,11 @@
 #ifndef CHROME_BROWSER_SIGNIN_MUTABLE_PROFILE_OAUTH2_TOKEN_SERVICE_DELEGATE_H_
 #define CHROME_BROWSER_SIGNIN_MUTABLE_PROFILE_OAUTH2_TOKEN_SERVICE_DELEGATE_H_
 
+#include <memory>
+#include <vector>
+
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/threading/thread_checker.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
@@ -54,6 +56,7 @@ class MutableProfileOAuth2TokenServiceDelegate
 
   // Overridden from OAuth2TokenServiceDelegate.
   void Shutdown() override;
+  LoadCredentialsState GetLoadCredentialsState() const override;
 
   // Overridden from NetworkChangeObserver.
   void OnNetworkChanged(net::NetworkChangeNotifier::ConnectionType type)
@@ -113,8 +116,9 @@ class MutableProfileOAuth2TokenServiceDelegate
                            ShutdownService);
 
   // WebDataServiceConsumer implementation:
-  void OnWebDataServiceRequestDone(WebDataServiceBase::Handle handle,
-                                   const WDTypedResult* result) override;
+  void OnWebDataServiceRequestDone(
+      WebDataServiceBase::Handle handle,
+      std::unique_ptr<WDTypedResult> result) override;
 
   // Loads credentials into in memory stucture.
   void LoadAllCredentialsIntoMemory(
@@ -150,7 +154,10 @@ class MutableProfileOAuth2TokenServiceDelegate
   // credentials.  This member is empty otherwise.
   std::string loading_primary_account_id_;
 
-  ScopedVector<RevokeServerRefreshToken> server_revokes_;
+  // The state of the load credentials operation.
+  LoadCredentialsState load_credentials_state_;
+
+  std::vector<std::unique_ptr<RevokeServerRefreshToken>> server_revokes_;
 
   // Used to verify that certain methods are called only on the thread on which
   // this instance was created.

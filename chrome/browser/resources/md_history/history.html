@@ -12,10 +12,12 @@
     body {
       height: 100%;
       margin: 0;
+      overflow: hidden;
     }
 
     body {
       background: var(--md-background-color);
+      cursor: default;
     }
 
     /* Minimal styling required to display app shim. */
@@ -53,7 +55,7 @@
 
     #loading-message {
       align-items: center;
-      color: #b4b4b4;
+      color: var(--md-loading-message-color);
       flex: 1;
       font-weight: 500;
       justify-content: center;
@@ -78,7 +80,6 @@
   <command id="delete-command" shortcut="Delete Backspace">
   <command id="slash-command" shortcut="/">
 
-  <link rel="import" href="chrome://resources/html/cr.html">
   <link rel="import" href="chrome://resources/html/util.html">
   <link rel="import" href="chrome://resources/html/load_time_data.html">
   <link rel="import" href="chrome://history/constants.html">

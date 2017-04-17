@@ -9,7 +9,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_checker.h"
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
 #include "cc/layers/video_frame_provider.h"
 #include "cc/scheduler/video_frame_controller.h"
 #include "ui/gfx/transform.h"
@@ -44,8 +44,6 @@ class CC_EXPORT VideoFrameProviderClientImpl
   void PutCurrentFrame();
   void ReleaseLock();
   bool HasCurrentFrame();
-
-  const gfx::Transform& StreamTextureMatrix() const;
 
   // VideoFrameController implementation.
   void OnBeginFrame(const BeginFrameArgs& args) override;
@@ -83,8 +81,6 @@ class CC_EXPORT VideoFrameProviderClientImpl
   // from returning until the frame controller is done using the frame.
   base::Lock provider_lock_;
   base::ThreadChecker thread_checker_;
-
-  gfx::Transform stream_texture_matrix_;
 
   DISALLOW_COPY_AND_ASSIGN(VideoFrameProviderClientImpl);
 };

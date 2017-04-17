@@ -10,7 +10,7 @@
 #include "media/capture/video/video_capture_device_factory.h"
 
 #include "base/macros.h"
-#include "media/base/video_capture_types.h"
+#include "media/capture/video_capture_types.h"
 
 namespace media {
 
@@ -23,14 +23,17 @@ class CAPTURE_EXPORT VideoCaptureDeviceFactoryLinux
       scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner);
   ~VideoCaptureDeviceFactoryLinux() override;
 
-  std::unique_ptr<VideoCaptureDevice> Create(
-      const VideoCaptureDevice::Name& device_name) override;
-  void GetDeviceNames(VideoCaptureDevice::Names* device_names) override;
-  void GetDeviceSupportedFormats(
-      const VideoCaptureDevice::Name& device,
+  std::unique_ptr<VideoCaptureDevice> CreateDevice(
+      const VideoCaptureDeviceDescriptor& device_descriptor) override;
+  void GetDeviceDescriptors(
+      VideoCaptureDeviceDescriptors* device_descriptors) override;
+  void GetSupportedFormats(
+      const VideoCaptureDeviceDescriptor& device_descriptor,
       VideoCaptureFormats* supported_formats) override;
 
  private:
+  std::string GetDeviceModelId(const std::string& device_id);
+
   scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner_;
   DISALLOW_COPY_AND_ASSIGN(VideoCaptureDeviceFactoryLinux);
 };

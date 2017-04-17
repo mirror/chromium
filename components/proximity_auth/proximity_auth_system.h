@@ -10,7 +10,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "components/proximity_auth/remote_device.h"
+#include "components/cryptauth/remote_device.h"
 #include "components/proximity_auth/remote_device_life_cycle.h"
 #include "components/proximity_auth/screenlock_bridge.h"
 #include "components/signin/core/account_id/account_id.h"
@@ -45,13 +45,15 @@ class ProximityAuthSystem : public RemoteDeviceLifeCycle::Observer,
   // Registers a list of |remote_devices| for |account_id| that can be used for
   // sign-in/unlock. If devices were previously registered for the user, then
   // they will be replaced.
-  void SetRemoteDevicesForUser(const AccountId& account_id,
-                               const RemoteDeviceList& remote_devices);
+  void SetRemoteDevicesForUser(
+      const AccountId& account_id,
+      const cryptauth::RemoteDeviceList& remote_devices);
 
   // Returns the RemoteDevices registered for |account_id|. Returns an empty
   // list
   // if no devices are registered for |account_id|.
-  RemoteDeviceList GetRemoteDevicesForUser(const AccountId& account_id) const;
+  cryptauth::RemoteDeviceList GetRemoteDevicesForUser(
+      const AccountId& account_id) const;
 
   // Called when the user clicks the user pod and attempts to unlock/sign-in.
   void OnAuthAttempted(const AccountId& account_id);
@@ -62,7 +64,18 @@ class ProximityAuthSystem : public RemoteDeviceLifeCycle::Observer,
   // Called when the system wakes up from a suspended state.
   void OnSuspendDone();
 
- private:
+ protected:
+  // Constructor which allows passing in a custom |unlock_manager_|.
+  // Exposed for testing.
+  ProximityAuthSystem(ScreenlockType screenlock_type,
+                      ProximityAuthClient* proximity_auth_client,
+                      std::unique_ptr<UnlockManager> unlock_manager);
+
+  // Creates the RemoteDeviceLifeCycle for |remote_device|.
+  // Exposed for testing.
+  virtual std::unique_ptr<RemoteDeviceLifeCycle> CreateRemoteDeviceLifeCycle(
+      const cryptauth::RemoteDevice& remote_device);
+
   // RemoteDeviceLifeCycle::Observer:
   void OnLifeCycleStateChanged(RemoteDeviceLifeCycle::State old_state,
                                RemoteDeviceLifeCycle::State new_state) override;
@@ -74,12 +87,13 @@ class ProximityAuthSystem : public RemoteDeviceLifeCycle::Observer,
       ScreenlockBridge::LockHandler::ScreenType screen_type) override;
   void OnFocusedUserChanged(const AccountId& account_id) override;
 
+ private:
   // Resumes |remote_device_life_cycle_| after device wakes up and waits a
   // timeout.
   void ResumeAfterWakeUpTimeout();
 
   // Lists of remote devices, keyed by user account id.
-  std::map<AccountId, RemoteDeviceList> remote_devices_map_;
+  std::map<AccountId, cryptauth::RemoteDeviceList> remote_devices_map_;
 
   // Delegate for Chrome dependent functionality.
   ProximityAuthClient* proximity_auth_client_;

@@ -10,13 +10,14 @@
 #include <tuple>
 
 #include "base/location.h"
+#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_view.h"
 #include "content/public/test/render_view_test.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
-#include "services/shell/public/cpp/interface_provider.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebCredential.h"
 #include "third_party/WebKit/public/platform/WebCredentialManagerClient.h"
@@ -42,7 +43,7 @@ class FakeCredentialManager : public mojom::CredentialManager {
 
  private:
   // mojom::CredentialManager methods:
-  void Store(mojom::CredentialInfoPtr credential,
+  void Store(const CredentialInfo& credential,
              const StoreCallback& callback) override {
     callback.Run();
   }
@@ -54,20 +55,19 @@ class FakeCredentialManager : public mojom::CredentialManager {
 
   void Get(bool zero_click_only,
            bool include_passwords,
-           mojo::Array<GURL> federations,
+           const std::vector<GURL>& federations,
            const GetCallback& callback) override {
     const std::string& url = federations[0].spec();
 
     if (url == kTestCredentialPassword) {
-      mojom::CredentialInfoPtr info = mojom::CredentialInfo::New();
-      info->type = mojom::CredentialType::PASSWORD;
-      callback.Run(mojom::CredentialManagerError::SUCCESS, std::move(info));
+      CredentialInfo info;
+      info.type = CredentialType::CREDENTIAL_TYPE_PASSWORD;
+      callback.Run(mojom::CredentialManagerError::SUCCESS, info);
     } else if (url == kTestCredentialEmpty) {
-      callback.Run(mojom::CredentialManagerError::SUCCESS,
-                   mojom::CredentialInfo::New());
+      callback.Run(mojom::CredentialManagerError::SUCCESS, CredentialInfo());
     } else if (url == kTestCredentialReject) {
       callback.Run(mojom::CredentialManagerError::PASSWORDSTOREUNAVAILABLE,
-                   nullptr);
+                   base::nullopt);
     }
   }
 
@@ -84,9 +84,9 @@ class CredentialManagerClientTest : public content::RenderViewTest {
     content::RenderViewTest::SetUp();
     client_.reset(new CredentialManagerClient(view_));
 
-    shell::InterfaceProvider* remote_interfaces =
+    service_manager::InterfaceProvider* remote_interfaces =
         view_->GetMainRenderFrame()->GetRemoteInterfaces();
-    shell::InterfaceProvider::TestApi test_api(remote_interfaces);
+    service_manager::InterfaceProvider::TestApi test_api(remote_interfaces);
     test_api.SetBinderForName(
         mojom::CredentialManager::Name_,
         base::Bind(&CredentialManagerClientTest::BindCredentialManager,
@@ -134,9 +134,9 @@ class TestNotificationCallbacks
 
   ~TestNotificationCallbacks() override {}
 
-  void onSuccess() override { test_->set_callback_succeeded(true); }
+  void OnSuccess() override { test_->set_callback_succeeded(true); }
 
-  void onError(blink::WebCredentialManagerError reason) override {
+  void OnError(blink::WebCredentialManagerError reason) override {
     test_->set_callback_errored(true);
   }
 
@@ -152,14 +152,14 @@ class TestRequestCallbacks
 
   ~TestRequestCallbacks() override {}
 
-  void onSuccess(std::unique_ptr<blink::WebCredential> credential) override {
+  void OnSuccess(std::unique_ptr<blink::WebCredential> credential) override {
     test_->set_callback_succeeded(true);
 
     blink::WebCredential* ptr = credential.release();
     test_->credential_.reset(static_cast<blink::WebPasswordCredential*>(ptr));
   }
 
-  void onError(blink::WebCredentialManagerError reason) override {
+  void OnError(blink::WebCredentialManagerError reason) override {
     test_->set_callback_errored(true);
     test_->credential_.reset();
     test_->error_ = reason;
@@ -182,7 +182,7 @@ TEST_F(CredentialManagerClientTest, SendStore) {
   credential_.reset(new blink::WebPasswordCredential("", "", "", GURL()));
   std::unique_ptr<TestNotificationCallbacks> callbacks(
       new TestNotificationCallbacks(this));
-  client_->dispatchStore(*credential_, callbacks.release());
+  client_->DispatchStore(*credential_, callbacks.release());
 
   RunAllPendingTasks();
 
@@ -193,7 +193,7 @@ TEST_F(CredentialManagerClientTest, SendStore) {
 TEST_F(CredentialManagerClientTest, SendRequestUserMediation) {
   std::unique_ptr<TestNotificationCallbacks> callbacks(
       new TestNotificationCallbacks(this));
-  client_->dispatchRequireUserMediation(callbacks.release());
+  client_->DispatchRequireUserMediation(callbacks.release());
 
   RunAllPendingTasks();
 
@@ -206,14 +206,14 @@ TEST_F(CredentialManagerClientTest, SendRequestCredential) {
       new TestRequestCallbacks(this));
   std::vector<GURL> federations;
   federations.push_back(GURL(kTestCredentialPassword));
-  client_->dispatchGet(false, true, federations, callbacks.release());
+  client_->DispatchGet(false, true, federations, callbacks.release());
 
   RunAllPendingTasks();
 
   EXPECT_TRUE(callback_succeeded());
   EXPECT_FALSE(callback_errored());
   EXPECT_TRUE(credential_);
-  EXPECT_EQ("password", credential_->type());
+  EXPECT_EQ("password", credential_->GetType());
 }
 
 TEST_F(CredentialManagerClientTest, SendRequestCredentialEmpty) {
@@ -221,7 +221,7 @@ TEST_F(CredentialManagerClientTest, SendRequestCredentialEmpty) {
       new TestRequestCallbacks(this));
   std::vector<GURL> federations;
   federations.push_back(GURL(kTestCredentialEmpty));
-  client_->dispatchGet(false, true, federations, callbacks.release());
+  client_->DispatchGet(false, true, federations, callbacks.release());
 
   RunAllPendingTasks();
 
@@ -235,7 +235,7 @@ TEST_F(CredentialManagerClientTest, SendRequestCredentialReject) {
       new TestRequestCallbacks(this));
   std::vector<GURL> federations;
   federations.push_back(GURL(kTestCredentialReject));
-  client_->dispatchGet(false, true, federations, callbacks.release());
+  client_->DispatchGet(false, true, federations, callbacks.release());
 
   RunAllPendingTasks();
 
@@ -243,7 +243,7 @@ TEST_F(CredentialManagerClientTest, SendRequestCredentialReject) {
   EXPECT_TRUE(callback_errored());
   EXPECT_FALSE(credential_);
   EXPECT_EQ(blink::WebCredentialManagerError::
-                WebCredentialManagerPasswordStoreUnavailableError,
+                kWebCredentialManagerPasswordStoreUnavailableError,
             error_);
 }
 

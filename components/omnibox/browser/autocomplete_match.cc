@@ -4,7 +4,9 @@
 
 #include "components/omnibox/browser/autocomplete_match.h"
 
-#include "base/i18n/time_formatting.h"
+#include <algorithm>
+#include <utility>
+
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
@@ -12,7 +14,7 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
-#include "base/strings/utf_string_conversions.h"
+#include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "components/omnibox/browser/autocomplete_provider.h"
@@ -20,8 +22,12 @@
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/url_formatter/url_formatter.h"
-#include "grit/components_scaled_resources.h"
-#include "ui/gfx/vector_icons_public.h"
+#include "ui/gfx/vector_icon_types.h"
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+#include "components/omnibox/browser/vector_icons.h"  // nogncheck
+#include "ui/vector_icons/vector_icons.h"             // nogncheck
+#endif
 
 namespace {
 
@@ -79,8 +85,8 @@ AutocompleteMatch::AutocompleteMatch()
       swap_contents_and_description(false),
       transition(ui::PAGE_TRANSITION_GENERATED),
       type(AutocompleteMatchType::SEARCH_WHAT_YOU_TYPED),
-      from_previous(false) {
-}
+      subtype_identifier(0),
+      from_previous(false) {}
 
 AutocompleteMatch::AutocompleteMatch(AutocompleteProvider* provider,
                                      int relevance,
@@ -94,8 +100,8 @@ AutocompleteMatch::AutocompleteMatch(AutocompleteProvider* provider,
       swap_contents_and_description(false),
       transition(ui::PAGE_TRANSITION_TYPED),
       type(type),
-      from_previous(false) {
-}
+      subtype_identifier(0),
+      from_previous(false) {}
 
 AutocompleteMatch::AutocompleteMatch(const AutocompleteMatch& match)
     : provider(match.provider),
@@ -117,16 +123,18 @@ AutocompleteMatch::AutocompleteMatch(const AutocompleteMatch& match)
       answer(SuggestionAnswer::copy(match.answer.get())),
       transition(match.transition),
       type(match.type),
-      associated_keyword(match.associated_keyword.get() ?
-          new AutocompleteMatch(*match.associated_keyword) : NULL),
+      subtype_identifier(match.subtype_identifier),
+      associated_keyword(match.associated_keyword.get()
+                             ? new AutocompleteMatch(*match.associated_keyword)
+                             : NULL),
       keyword(match.keyword),
       from_previous(match.from_previous),
-      search_terms_args(match.search_terms_args.get() ?
-          new TemplateURLRef::SearchTermsArgs(*match.search_terms_args) :
-          NULL),
+      search_terms_args(
+          match.search_terms_args.get()
+              ? new TemplateURLRef::SearchTermsArgs(*match.search_terms_args)
+              : NULL),
       additional_info(match.additional_info),
-      duplicate_matches(match.duplicate_matches) {
-}
+      duplicate_matches(match.duplicate_matches) {}
 
 AutocompleteMatch::~AutocompleteMatch() {
 }
@@ -155,6 +163,7 @@ AutocompleteMatch& AutocompleteMatch::operator=(
   answer = SuggestionAnswer::copy(match.answer.get());
   transition = match.transition;
   type = match.type;
+  subtype_identifier = match.subtype_identifier;
   associated_keyword.reset(match.associated_keyword.get() ?
       new AutocompleteMatch(*match.associated_keyword) : NULL);
   keyword = match.keyword;
@@ -167,93 +176,50 @@ AutocompleteMatch& AutocompleteMatch::operator=(
 }
 
 // static
-int AutocompleteMatch::TypeToIcon(Type type) {
-#if !defined(OS_IOS)
-  static const int kIcons[] = {
-      IDR_OMNIBOX_HTTP,           // URL_WHAT_YOU_TYPE
-      IDR_OMNIBOX_HTTP,           // HISTORY_URL
-      IDR_OMNIBOX_HTTP,           // HISTORY_TITLE
-      IDR_OMNIBOX_HTTP,           // HISTORY_BODY
-      IDR_OMNIBOX_HTTP,           // HISTORY_KEYWORD
-      IDR_OMNIBOX_HTTP,           // NAVSUGGEST
-      IDR_OMNIBOX_SEARCH,         // SEARCH_WHAT_YOU_TYPED
-      IDR_OMNIBOX_SEARCH,         // SEARCH_HISTORY
-      IDR_OMNIBOX_SEARCH,         // SEARCH_SUGGEST
-      IDR_OMNIBOX_SEARCH,         // SEARCH_SUGGEST_ENTITY
-      IDR_OMNIBOX_SEARCH,         // SEARCH_SUGGEST_TAIL
-      IDR_OMNIBOX_SEARCH,         // SEARCH_SUGGEST_PERSONALIZED
-      IDR_OMNIBOX_SEARCH,         // SEARCH_SUGGEST_PROFILE
-      IDR_OMNIBOX_SEARCH,         // SEARCH_OTHER_ENGINE
-      IDR_OMNIBOX_EXTENSION_APP,  // EXTENSION_APP
-      IDR_OMNIBOX_SEARCH,         // CONTACT_DEPRECATED
-      IDR_OMNIBOX_HTTP,           // BOOKMARK_TITLE
-      IDR_OMNIBOX_HTTP,           // NAVSUGGEST_PERSONALIZED
-      IDR_OMNIBOX_CALCULATOR,     // CALCULATOR
-      IDR_OMNIBOX_HTTP,           // CLIPBOARD
-      IDR_OMNIBOX_SEARCH,         // VOICE_SEARCH
-  };
-#else
-  static const int kIcons[] = {
-      IDR_OMNIBOX_HTTP,           // URL_WHAT_YOU_TYPE
-      IDR_OMNIBOX_HISTORY,        // HISTORY_URL
-      IDR_OMNIBOX_HISTORY,        // HISTORY_TITLE
-      IDR_OMNIBOX_HISTORY,        // HISTORY_BODY
-      IDR_OMNIBOX_HISTORY,        // HISTORY_KEYWORD
-      IDR_OMNIBOX_HTTP,           // NAVSUGGEST
-      IDR_OMNIBOX_SEARCH,         // SEARCH_WHAT_YOU_TYPED
-      IDR_OMNIBOX_HISTORY,        // SEARCH_HISTORY
-      IDR_OMNIBOX_SEARCH,         // SEARCH_SUGGEST
-      IDR_OMNIBOX_SEARCH,         // SEARCH_SUGGEST_ENTITY
-      IDR_OMNIBOX_SEARCH,         // SEARCH_SUGGEST_TAIL
-      IDR_OMNIBOX_SEARCH,         // SEARCH_SUGGEST_PERSONALIZED
-      IDR_OMNIBOX_SEARCH,         // SEARCH_SUGGEST_PROFILE
-      IDR_OMNIBOX_SEARCH,         // SEARCH_OTHER_ENGINE
-      IDR_OMNIBOX_EXTENSION_APP,  // EXTENSION_APP
-      IDR_OMNIBOX_SEARCH,         // CONTACT_DEPRECATED
-      IDR_OMNIBOX_HTTP,           // BOOKMARK_TITLE
-      IDR_OMNIBOX_HTTP,           // NAVSUGGEST_PERSONALIZED
-      IDR_OMNIBOX_CALCULATOR,     // CALCULATOR
-      IDR_OMNIBOX_HTTP,           // CLIPBOARD
-      IDR_OMNIBOX_SEARCH,         // VOICE_SEARCH
-  };
-#endif
-  static_assert(arraysize(kIcons) == AutocompleteMatchType::NUM_TYPES,
-                "icons array must have NUM_TYPES elements");
-  return kIcons[type];
-}
-
-// static
-gfx::VectorIconId AutocompleteMatch::TypeToVectorIcon(Type type) {
+const gfx::VectorIcon& AutocompleteMatch::TypeToVectorIcon(Type type) {
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
-  static const gfx::VectorIconId kIcons[] = {
-      gfx::VectorIconId::OMNIBOX_HTTP,           // URL_WHAT_YOU_TYPE
-      gfx::VectorIconId::OMNIBOX_HTTP,           // HISTORY_URL
-      gfx::VectorIconId::OMNIBOX_HTTP,           // HISTORY_TITLE
-      gfx::VectorIconId::OMNIBOX_HTTP,           // HISTORY_BODY
-      gfx::VectorIconId::OMNIBOX_HTTP,           // HISTORY_KEYWORD
-      gfx::VectorIconId::OMNIBOX_HTTP,           // NAVSUGGEST
-      gfx::VectorIconId::OMNIBOX_SEARCH,         // SEARCH_WHAT_YOU_TYPED
-      gfx::VectorIconId::OMNIBOX_SEARCH,         // SEARCH_HISTORY
-      gfx::VectorIconId::OMNIBOX_SEARCH,         // SEARCH_SUGGEST
-      gfx::VectorIconId::OMNIBOX_SEARCH,         // SEARCH_SUGGEST_ENTITY
-      gfx::VectorIconId::OMNIBOX_SEARCH,         // SEARCH_SUGGEST_TAIL
-      gfx::VectorIconId::OMNIBOX_SEARCH,         // SEARCH_SUGGEST_PERSONALIZED
-      gfx::VectorIconId::OMNIBOX_SEARCH,         // SEARCH_SUGGEST_PROFILE
-      gfx::VectorIconId::OMNIBOX_SEARCH,         // SEARCH_OTHER_ENGINE
-      gfx::VectorIconId::OMNIBOX_EXTENSION_APP,  // EXTENSION_APP
-      gfx::VectorIconId::OMNIBOX_SEARCH,         // CONTACT_DEPRECATED
-      gfx::VectorIconId::OMNIBOX_HTTP,           // BOOKMARK_TITLE
-      gfx::VectorIconId::OMNIBOX_HTTP,           // NAVSUGGEST_PERSONALIZED
-      gfx::VectorIconId::OMNIBOX_CALCULATOR,     // CALCULATOR
-      gfx::VectorIconId::OMNIBOX_HTTP,           // CLIPBOARD
-      gfx::VectorIconId::OMNIBOX_SEARCH,         // VOICE_SEARCH
-  };
-  static_assert(arraysize(kIcons) == AutocompleteMatchType::NUM_TYPES,
-                "icons array must have NUM_TYPES elements");
-  return kIcons[type];
+  switch (type) {
+    case Type::URL_WHAT_YOU_TYPED:
+    case Type::HISTORY_URL:
+    case Type::HISTORY_TITLE:
+    case Type::HISTORY_BODY:
+    case Type::HISTORY_KEYWORD:
+    case Type::NAVSUGGEST:
+    case Type::BOOKMARK_TITLE:
+    case Type::NAVSUGGEST_PERSONALIZED:
+    case Type::CLIPBOARD:
+    case Type::PHYSICAL_WEB:
+    case Type::PHYSICAL_WEB_OVERFLOW:
+      return omnibox::kHttpIcon;
+
+    case Type::SEARCH_WHAT_YOU_TYPED:
+    case Type::SEARCH_HISTORY:
+    case Type::SEARCH_SUGGEST:
+    case Type::SEARCH_SUGGEST_ENTITY:
+    case Type::SEARCH_SUGGEST_TAIL:
+    case Type::SEARCH_SUGGEST_PERSONALIZED:
+    case Type::SEARCH_SUGGEST_PROFILE:
+    case Type::SEARCH_OTHER_ENGINE:
+    case Type::CONTACT_DEPRECATED:
+    case Type::VOICE_SUGGEST:
+      return ui::kSearchIcon;
+
+    case Type::EXTENSION_APP:
+      return omnibox::kExtensionAppIcon;
+
+    case Type::CALCULATOR:
+      return omnibox::kCalculatorIcon;
+
+    case Type::NUM_TYPES:
+      NOTREACHED();
+      break;
+  }
+  NOTREACHED();
+  return omnibox::kHttpIcon;
 #else
   NOTREACHED();
-  return gfx::VectorIconId::VECTOR_ICON_NONE;
+  static const gfx::VectorIcon dummy = {};
+  return dummy;
 #endif
 }
 
@@ -585,10 +551,10 @@ void AutocompleteMatch::RecordAdditionalInfo(const std::string& property,
 }
 
 void AutocompleteMatch::RecordAdditionalInfo(const std::string& property,
-                                             const base::Time& value) {
-  RecordAdditionalInfo(property,
-                       base::UTF16ToUTF8(
-                           base::TimeFormatShortDateAndTime(value)));
+                                             base::Time value) {
+  RecordAdditionalInfo(
+      property, base::StringPrintf("%d hours ago",
+                                   (base::Time::Now() - value).InHours()));
 }
 
 std::string AutocompleteMatch::GetAdditionalInfo(

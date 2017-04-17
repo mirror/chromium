@@ -13,33 +13,37 @@ namespace blink {
 
 class Event;
 
-class MODULES_EXPORT DeviceMotionController final : public DeviceSingleWindowEventController, public Supplement<Document> {
-    USING_GARBAGE_COLLECTED_MIXIN(DeviceMotionController);
-public:
-    ~DeviceMotionController() override;
+class MODULES_EXPORT DeviceMotionController final
+    : public DeviceSingleWindowEventController,
+      public Supplement<Document> {
+  USING_GARBAGE_COLLECTED_MIXIN(DeviceMotionController);
 
-    static const char* supplementName();
-    static DeviceMotionController& from(Document&);
+ public:
+  ~DeviceMotionController() override;
 
-    // DeviceSingleWindowEventController
-    void didAddEventListener(LocalDOMWindow*, const AtomicString& eventType) override;
+  static const char* SupplementName();
+  static DeviceMotionController& From(Document&);
 
-    DECLARE_VIRTUAL_TRACE();
+  // DeviceSingleWindowEventController
+  void DidAddEventListener(LocalDOMWindow*,
+                           const AtomicString& event_type) override;
 
-private:
-    explicit DeviceMotionController(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    // Inherited from DeviceEventControllerBase.
-    void registerWithDispatcher() override;
-    void unregisterWithDispatcher() override;
-    bool hasLastData() override;
+ private:
+  explicit DeviceMotionController(Document&);
 
-    // Inherited from DeviceSingleWindowEventController.
-    Event* lastEvent() const override;
-    const AtomicString& eventTypeName() const override;
-    bool isNullEvent(Event*) const override;
+  // Inherited from DeviceEventControllerBase.
+  void RegisterWithDispatcher() override;
+  void UnregisterWithDispatcher() override;
+  bool HasLastData() override;
+
+  // Inherited from DeviceSingleWindowEventController.
+  Event* LastEvent() const override;
+  const AtomicString& EventTypeName() const override;
+  bool IsNullEvent(Event*) const override;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DeviceMotionController_h
+#endif  // DeviceMotionController_h

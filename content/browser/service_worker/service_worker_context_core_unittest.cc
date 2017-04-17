@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "content/browser/service_worker/embedded_worker_test_helper.h"
+#include "content/browser/service_worker/service_worker_test_utils.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -55,7 +56,7 @@ TEST_F(ServiceWorkerContextCoreTest, FailureInfo) {
 
   context()->UpdateVersionFailureCount(kVersionId, SERVICE_WORKER_OK);
   EXPECT_EQ(0, context()->GetVersionFailureCount(kVersionId));
-  EXPECT_FALSE(ContainsKey(context()->failure_counts_, kVersionId));
+  EXPECT_FALSE(base::ContainsKey(context()->failure_counts_, kVersionId));
 }
 
 }  // namespace content

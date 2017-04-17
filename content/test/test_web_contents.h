@@ -7,6 +7,8 @@
 
 #include <stdint.h>
 
+#include <list>
+#include <map>
 #include <string>
 
 #include "content/browser/web_contents/web_contents_impl.h"
@@ -17,7 +19,11 @@
 
 class GURL;
 class Referrer;
-class SiteInstanceImpl;
+class SkBitmap;
+
+namespace gfx {
+class Size;
+}
 
 namespace content {
 
@@ -54,19 +60,32 @@ class TestWebContents : public WebContentsImpl, public WebContentsTester {
   void TestSetIsLoading(bool value) override;
   void ProceedWithCrossSiteNavigation() override;
   void TestDidNavigate(RenderFrameHost* render_frame_host,
-                       int page_id,
                        int nav_entry_id,
                        bool did_create_new_entry,
                        const GURL& url,
                        ui::PageTransition transition) override;
   void TestDidNavigateWithReferrer(RenderFrameHost* render_frame_host,
-                                   int page_id,
                                    int nav_entry_id,
                                    bool did_create_new_entry,
                                    const GURL& url,
                                    const Referrer& referrer,
                                    ui::PageTransition transition) override;
+  void TestDidNavigateWithSequenceNumber(RenderFrameHost* render_frame_host,
+                                         int nav_entry_id,
+                                         bool did_create_new_entry,
+                                         const GURL& url,
+                                         const Referrer& referrer,
+                                         ui::PageTransition transition,
+                                         bool was_within_same_document,
+                                         int item_sequence_number,
+                                         int document_sequence_number);
   const std::string& GetSaveFrameHeaders() override;
+  bool HasPendingDownloadImage(const GURL& url) override;
+  bool TestDidDownloadImage(
+      const GURL& url,
+      int http_status_code,
+      const std::vector<SkBitmap>& bitmaps,
+      const std::vector<gfx::Size>& original_bitmap_sizes) override;
 
   // True if a cross-site navigation is pending.
   bool CrossProcessNavigationPending();
@@ -128,7 +147,7 @@ class TestWebContents : public WebContentsImpl, public WebContentsTester {
       int32_t route_id,
       int32_t main_frame_route_id,
       int32_t main_frame_widget_route_id,
-      const ViewHostMsg_CreateWindow_Params& params,
+      const mojom::CreateNewWindowParams& params,
       SessionStorageNamespace* session_storage_namespace) override;
   void CreateNewWidget(int32_t render_process_id,
                        int32_t route_id,
@@ -155,6 +174,9 @@ class TestWebContents : public WebContentsImpl, public WebContentsTester {
   int expect_set_history_offset_and_length_history_offset_;
   int expect_set_history_offset_and_length_history_length_;
   std::string save_frame_headers_;
+  // Map keyed by image URL. Values are <id, callback> pairs.
+  std::map<GURL, std::list<std::pair<int, ImageDownloadCallback>>>
+      pending_image_downloads_;
 };
 
 }  // namespace content

@@ -16,10 +16,8 @@
 #include "net/base/upload_file_element_reader.h"
 #include "net/url_request/url_request.h"
 
-using base::BinaryValue;
 using base::DictionaryValue;
 using base::ListValue;
-using base::StringValue;
 using base::Value;
 
 namespace keys = extension_web_request_api_constants;
@@ -30,10 +28,10 @@ namespace {
 // for |key|, creating it if necessary.
 base::ListValue* GetOrCreateList(base::DictionaryValue* dictionary,
                                  const std::string& key) {
-  base::ListValue* list = NULL;
+  base::ListValue* list = nullptr;
   if (!dictionary->GetList(key, &list)) {
     list = new base::ListValue();
-    dictionary->SetWithoutPathExpansion(key, list);
+    dictionary->SetWithoutPathExpansion(key, base::WrapUnique(list));
   }
   return list;
 }
@@ -91,14 +89,14 @@ std::unique_ptr<base::Value> RawDataPresenter::Result() {
 
 void RawDataPresenter::FeedNextBytes(const char* bytes, size_t size) {
   subtle::AppendKeyValuePair(keys::kRequestBodyRawBytesKey,
-                             BinaryValue::CreateWithCopiedBuffer(bytes, size),
+                             Value::CreateWithCopiedBuffer(bytes, size),
                              list_.get());
 }
 
 void RawDataPresenter::FeedNextFile(const std::string& filename) {
   // Insert the file path instead of the contents, which may be too large.
   subtle::AppendKeyValuePair(keys::kRequestBodyRawFileKey,
-                             base::MakeUnique<base::StringValue>(filename),
+                             base::MakeUnique<base::Value>(filename),
                              list_.get());
 }
 

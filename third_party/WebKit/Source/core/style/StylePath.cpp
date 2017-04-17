@@ -4,66 +4,58 @@
 
 #include "core/style/StylePath.h"
 
+#include <memory>
 #include "core/css/CSSPathValue.h"
 #include "core/svg/SVGPathByteStream.h"
 #include "core/svg/SVGPathUtilities.h"
 #include "platform/graphics/Path.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-StylePath::StylePath(std::unique_ptr<SVGPathByteStream> pathByteStream)
-    : m_byteStream(std::move(pathByteStream))
-    , m_pathLength(std::numeric_limits<float>::quiet_NaN())
-{
-    ASSERT(m_byteStream);
+StylePath::StylePath(std::unique_ptr<SVGPathByteStream> path_byte_stream)
+    : byte_stream_(std::move(path_byte_stream)),
+      path_length_(std::numeric_limits<float>::quiet_NaN()) {
+  DCHECK(byte_stream_);
 }
 
-StylePath::~StylePath()
-{
+StylePath::~StylePath() {}
+
+PassRefPtr<StylePath> StylePath::Create(
+    std::unique_ptr<SVGPathByteStream> path_byte_stream) {
+  return AdoptRef(new StylePath(std::move(path_byte_stream)));
 }
 
-PassRefPtr<StylePath> StylePath::create(std::unique_ptr<SVGPathByteStream> pathByteStream)
-{
-    return adoptRef(new StylePath(std::move(pathByteStream)));
+StylePath* StylePath::EmptyPath() {
+  DEFINE_STATIC_REF(StylePath, empty_path,
+                    StylePath::Create(SVGPathByteStream::Create()));
+  return empty_path;
 }
 
-StylePath* StylePath::emptyPath()
-{
-    DEFINE_STATIC_REF(StylePath, emptyPath, StylePath::create(SVGPathByteStream::create()));
-    return emptyPath;
+const Path& StylePath::GetPath() const {
+  if (!path_) {
+    path_ = WTF::WrapUnique(new Path);
+    BuildPathFromByteStream(*byte_stream_, *path_);
+  }
+  return *path_;
 }
 
-const Path& StylePath::path() const
-{
-    if (!m_path) {
-        m_path = wrapUnique(new Path);
-        buildPathFromByteStream(*m_byteStream, *m_path);
-    }
-    return *m_path;
+float StylePath::length() const {
+  if (std::isnan(path_length_))
+    path_length_ = GetPath().length();
+  return path_length_;
 }
 
-float StylePath::length() const
-{
-    if (std::isnan(m_pathLength))
-        m_pathLength = path().length();
-    return m_pathLength;
+bool StylePath::IsClosed() const {
+  return GetPath().IsClosed();
 }
 
-bool StylePath::isClosed() const
-{
-    return path().isClosed();
+CSSValue* StylePath::ComputedCSSValue() const {
+  return CSSPathValue::Create(const_cast<StylePath*>(this));
 }
 
-CSSValue* StylePath::computedCSSValue() const
-{
-    return CSSPathValue::create(const_cast<StylePath*>(this));
+bool StylePath::operator==(const StylePath& other) const {
+  return *byte_stream_ == *other.byte_stream_;
 }
 
-bool StylePath::operator==(const StylePath& other) const
-{
-    return *m_byteStream == *other.m_byteStream;
-}
-
-} // namespace blink
+}  // namespace blink

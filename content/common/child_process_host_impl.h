@@ -20,18 +20,9 @@
 #include "build/build_config.h"
 #include "content/public/common/child_process_host.h"
 #include "ipc/ipc_listener.h"
-#include "ui/gfx/gpu_memory_buffer.h"
-
-namespace base {
-class FilePath;
-}
 
 namespace IPC {
 class MessageFilter;
-}
-
-namespace gpu {
-struct SyncToken;
 }
 
 namespace content {
@@ -44,11 +35,6 @@ class CONTENT_EXPORT ChildProcessHostImpl : public ChildProcessHost,
                                             public IPC::Listener {
  public:
   ~ChildProcessHostImpl() override;
-
-  // Public and static for reuse by RenderMessageFilter.
-  static void AllocateSharedMemory(
-      size_t buffer_size, base::ProcessHandle child_process,
-      base::SharedMemoryHandle* handle);
 
   // Returns a unique ID to identify a child process. On construction, this
   // function will be used to generate the id_, but it is also used to generate
@@ -71,20 +57,20 @@ class CONTENT_EXPORT ChildProcessHostImpl : public ChildProcessHost,
   // process.
   //
   // Never returns MemoryDumpManager::kInvalidTracingProcessId.
-  // Returns only ChildProcessHost::kBrowserTracingProcessId in single-process
-  // mode.
+  // Returns only memory_instrumentation::mojom::kServiceTracingProcessId in
+  // single-process mode.
   static uint64_t ChildProcessUniqueIdToTracingProcessId(int child_process_id);
 
   // ChildProcessHost implementation
   bool Send(IPC::Message* message) override;
   void ForceShutdown() override;
-  std::string CreateChannel() override;
-  std::string CreateChannelMojo(const std::string& child_token) override;
+  std::string CreateChannelMojo(
+      mojo::edk::PendingProcessConnection* connection) override;
+  void CreateChannelMojo() override;
   bool IsChannelOpening() override;
   void AddFilter(IPC::MessageFilter* filter) override;
-#if defined(OS_POSIX)
-  base::ScopedFD TakeClientFileDescriptor() override;
-#endif
+  void BindInterface(const std::string& interface_name,
+                     mojo::ScopedMessagePipeHandle interface_pipe) override;
 
  private:
   friend class ChildProcessHost;
@@ -99,16 +85,6 @@ class CONTENT_EXPORT ChildProcessHostImpl : public ChildProcessHost,
 
   // Message handlers:
   void OnShutdownRequest();
-  void OnAllocateSharedMemory(uint32_t buffer_size,
-                              base::SharedMemoryHandle* handle);
-  void OnAllocateGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
-                                 uint32_t width,
-                                 uint32_t height,
-                                 gfx::BufferFormat format,
-                                 gfx::BufferUsage usage,
-                                 gfx::GpuMemoryBufferHandle* handle);
-  void OnDeletedGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
-                                const gpu::SyncToken& sync_token);
 
   // Initializes the IPC channel and returns true on success. |channel_| must be
   // non-null.

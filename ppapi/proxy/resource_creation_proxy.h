@@ -22,8 +22,6 @@ struct PP_Size;
 
 namespace ppapi {
 
-class HostResource;
-
 namespace proxy {
 
 struct Connection;
@@ -165,6 +163,7 @@ class ResourceCreationProxy : public InterfaceProxy,
   PP_Resource CreateX509CertificatePrivate(PP_Instance instance) override;
 #if !defined(OS_NACL)
   PP_Resource CreateAudioInput(PP_Instance instance) override;
+  PP_Resource CreateAudioOutput(PP_Instance instance) override;
   PP_Resource CreateBroker(PP_Instance instance) override;
   PP_Resource CreateBrowserFont(
       PP_Instance instance,

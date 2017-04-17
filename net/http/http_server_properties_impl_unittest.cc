@@ -29,7 +29,13 @@ class HttpServerPropertiesImplPeer {
       base::TimeTicks when) {
     impl.broken_alternative_services_.insert(
         std::make_pair(alternative_service, when));
-    ++impl.recently_broken_alternative_services_[alternative_service];
+    auto it =
+        impl.recently_broken_alternative_services_.Get(alternative_service);
+    if (it == impl.recently_broken_alternative_services_.end()) {
+      impl.recently_broken_alternative_services_.Put(alternative_service, 1);
+    } else {
+      it->second++;
+    }
   }
 
   static void ExpireBrokenAlternateProtocolMappings(
@@ -38,20 +44,9 @@ class HttpServerPropertiesImplPeer {
   }
 };
 
-void PrintTo(const AlternativeService& alternative_service, std::ostream* os) {
-  *os << alternative_service.ToString();
-}
-
 namespace {
 
 const int kMaxSupportsSpdyServerHosts = 500;
-const SpdySettingsIds kSpdySettingsId = SETTINGS_UPLOAD_BANDWIDTH;
-const SpdySettingsFlags kSpdySettingsFlags = SETTINGS_FLAG_PERSISTED;
-
-struct SpdySettingsDataToVerify {
-  url::SchemeHostPort spdy_server;
-  uint32_t value;
-};
 
 class HttpServerPropertiesImplTest : public testing::Test {
  protected:
@@ -68,42 +63,12 @@ class HttpServerPropertiesImplTest : public testing::Test {
     return impl_.SetAlternativeService(origin, alternative_service, expiration);
   }
 
-  void InitializeSpdySettingsUploadBandwidth(
-      SpdySettingsMap* spdy_settings_map,
-      const url::SchemeHostPort& spdy_server,
-      uint32_t value) {
-    SettingsMap settings_map;
-    settings_map[kSpdySettingsId] =
-        SettingsFlagsAndValue(kSpdySettingsFlags, value);
-    spdy_settings_map->Put(spdy_server, settings_map);
-  }
-
-  void VerifySpdySettingsUploadBandwidth(
-      const SpdySettingsDataToVerify* data_to_verify) {
-    const SpdySettingsMap& spdy_settings_map = impl_.spdy_settings_map();
-    int count = 0;
-    for (SpdySettingsMap::const_iterator map_it = spdy_settings_map.begin();
-         map_it != spdy_settings_map.end(); ++map_it, ++count) {
-      const SpdySettingsDataToVerify& data = data_to_verify[count];
-      EXPECT_TRUE(data.spdy_server.Equals(map_it->first));
-      const SettingsMap& settings_map_memory = map_it->second;
-
-      EXPECT_EQ(1U, settings_map_memory.size());
-      SettingsMap::const_iterator it =
-          settings_map_memory.find(kSpdySettingsId);
-      EXPECT_TRUE(it != settings_map_memory.end());
-      SettingsFlagsAndValue flags_and_value_memory = it->second;
-      EXPECT_EQ(kSpdySettingsFlags, flags_and_value_memory.first);
-      EXPECT_EQ(data.value, flags_and_value_memory.second);
-    }
-  }
-
   HttpServerPropertiesImpl impl_;
 };
 
 typedef HttpServerPropertiesImplTest SpdyServerPropertiesTest;
 
-TEST_F(SpdyServerPropertiesTest, InitializeWithSchemeHostPort) {
+TEST_F(SpdyServerPropertiesTest, SetWithSchemeHostPort) {
   // Check spdy servers are correctly set with SchemeHostPort key.
   url::SchemeHostPort https_www_server("https", "www.google.com", 443);
   url::SchemeHostPort http_photo_server("http", "photos.google.com", 80);
@@ -121,7 +86,7 @@ TEST_F(SpdyServerPropertiesTest, InitializeWithSchemeHostPort) {
   std::vector<std::string> spdy_servers1;
   spdy_servers1.push_back(spdy_server_g);  // Will be 0th index.
   spdy_servers1.push_back(spdy_server_p);  // Will be 1st index.
-  impl_.InitializeSpdyServers(&spdy_servers1, true);
+  impl_.SetSpdyServers(&spdy_servers1, true);
   EXPECT_TRUE(impl_.SupportsRequestPriority(http_photo_server));
   EXPECT_TRUE(impl_.SupportsRequestPriority(https_www_server));
   EXPECT_FALSE(impl_.SupportsRequestPriority(http_google_server));
@@ -129,7 +94,7 @@ TEST_F(SpdyServerPropertiesTest, InitializeWithSchemeHostPort) {
   EXPECT_TRUE(impl_.SupportsRequestPriority(valid_google_server));
 }
 
-TEST_F(SpdyServerPropertiesTest, Initialize) {
+TEST_F(SpdyServerPropertiesTest, Set) {
   url::SchemeHostPort spdy_server_google("https", "www.google.com", 443);
   std::string spdy_server_g = spdy_server_google.Serialize();
 
@@ -143,12 +108,12 @@ TEST_F(SpdyServerPropertiesTest, Initialize) {
   std::string spdy_server_m = spdy_server_mail.Serialize();
 
   // Check by initializing NULL spdy servers.
-  impl_.InitializeSpdyServers(NULL, true);
+  impl_.SetSpdyServers(NULL, true);
   EXPECT_FALSE(impl_.SupportsRequestPriority(spdy_server_google));
 
   // Check by initializing empty spdy servers.
   std::vector<std::string> spdy_servers;
-  impl_.InitializeSpdyServers(&spdy_servers, true);
+  impl_.SetSpdyServers(&spdy_servers, true);
   EXPECT_FALSE(impl_.SupportsRequestPriority(spdy_server_google));
 
   // Check by initializing www.google.com:443 and photos.google.com:443 as spdy
@@ -156,7 +121,7 @@ TEST_F(SpdyServerPropertiesTest, Initialize) {
   std::vector<std::string> spdy_servers1;
   spdy_servers1.push_back(spdy_server_g);  // Will be 0th index.
   spdy_servers1.push_back(spdy_server_p);  // Will be 1st index.
-  impl_.InitializeSpdyServers(&spdy_servers1, true);
+  impl_.SetSpdyServers(&spdy_servers1, true);
   EXPECT_TRUE(impl_.SupportsRequestPriority(spdy_server_photos));
   EXPECT_TRUE(impl_.SupportsRequestPriority(spdy_server_google));
 
@@ -176,7 +141,7 @@ TEST_F(SpdyServerPropertiesTest, Initialize) {
   std::vector<std::string> spdy_servers2;
   spdy_servers2.push_back(spdy_server_m);  // Will be 2nd index.
   spdy_servers2.push_back(spdy_server_d);  // Will be 3rd index.
-  impl_.InitializeSpdyServers(&spdy_servers2, true);
+  impl_.SetSpdyServers(&spdy_servers2, true);
 
   // Verify all the servers are in the list in the same order.
   spdy_server_list.Clear();
@@ -207,7 +172,7 @@ TEST_F(SpdyServerPropertiesTest, Initialize) {
   std::vector<std::string> spdy_servers3;
   spdy_servers3.push_back(spdy_server_m);
   spdy_servers3.push_back(spdy_server_p);
-  impl_.InitializeSpdyServers(&spdy_servers3, false);
+  impl_.SetSpdyServers(&spdy_servers3, false);
 
   // Verify the entries are in the same order.
   ASSERT_TRUE(spdy_server_list.GetString(0, &string_value_g));
@@ -247,13 +212,14 @@ TEST_F(SpdyServerPropertiesTest, SupportsRequestPriorityTest) {
 
   // Add www.youtube.com:443 as supporting QUIC.
   url::SchemeHostPort youtube_server("https", "www.youtube.com", 443);
-  const AlternativeService alternative_service1(QUIC, "www.youtube.com", 443);
+  const AlternativeService alternative_service1(kProtoQUIC, "www.youtube.com",
+                                                443);
   SetAlternativeService(youtube_server, alternative_service1);
   EXPECT_TRUE(impl_.SupportsRequestPriority(youtube_server));
 
   // Add www.example.com:443 with two alternative services, one supporting QUIC.
   url::SchemeHostPort example_server("https", "www.example.com", 443);
-  const AlternativeService alternative_service2(NPN_HTTP_2, "", 443);
+  const AlternativeService alternative_service2(kProtoHTTP2, "", 443);
   SetAlternativeService(example_server, alternative_service2);
   SetAlternativeService(example_server, alternative_service1);
   EXPECT_TRUE(impl_.SupportsRequestPriority(example_server));
@@ -382,7 +348,7 @@ TEST_F(AlternateProtocolServerPropertiesTest, Basic) {
   url::SchemeHostPort test_server("http", "foo", 80);
   EXPECT_FALSE(HasAlternativeService(test_server));
 
-  AlternativeService alternative_service(NPN_HTTP_2, "foo", 443);
+  AlternativeService alternative_service(kProtoHTTP2, "foo", 443);
   SetAlternativeService(test_server, alternative_service);
   const AlternativeServiceVector alternative_service_vector =
       impl_.GetAlternativeServices(test_server);
@@ -397,19 +363,19 @@ TEST_F(AlternateProtocolServerPropertiesTest, ExcludeOrigin) {
   AlternativeServiceInfoVector alternative_service_info_vector;
   base::Time expiration = base::Time::Now() + base::TimeDelta::FromDays(1);
   // Same hostname, same port, TCP: should be ignored.
-  AlternativeService alternative_service1(NPN_HTTP_2, "foo", 443);
+  AlternativeService alternative_service1(kProtoHTTP2, "foo", 443);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service1, expiration));
   // Different hostname: GetAlternativeServices should return this one.
-  AlternativeService alternative_service2(NPN_HTTP_2, "bar", 443);
+  AlternativeService alternative_service2(kProtoHTTP2, "bar", 443);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service2, expiration));
   // Different port: GetAlternativeServices should return this one too.
-  AlternativeService alternative_service3(NPN_HTTP_2, "foo", 80);
+  AlternativeService alternative_service3(kProtoHTTP2, "foo", 80);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service3, expiration));
   // QUIC: GetAlternativeServices should return this one too.
-  AlternativeService alternative_service4(QUIC, "foo", 443);
+  AlternativeService alternative_service4(kProtoQUIC, "foo", 443);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service4, expiration));
 
@@ -424,24 +390,24 @@ TEST_F(AlternateProtocolServerPropertiesTest, ExcludeOrigin) {
   EXPECT_EQ(alternative_service4, alternative_service_vector[2]);
 }
 
-TEST_F(AlternateProtocolServerPropertiesTest, Initialize) {
+TEST_F(AlternateProtocolServerPropertiesTest, Set) {
   // |test_server1| has an alternative service, which will not be
-  // affected by InitializeAlternativeServiceServers(), because
+  // affected by SetAlternativeServiceServers(), because
   // |alternative_service_map| does not have an entry for
   // |test_server1|.
   url::SchemeHostPort test_server1("http", "foo1", 80);
-  const AlternativeService alternative_service1(NPN_HTTP_2, "bar1", 443);
+  const AlternativeService alternative_service1(kProtoHTTP2, "bar1", 443);
   const base::Time now = base::Time::Now();
   base::Time expiration1 = now + base::TimeDelta::FromDays(1);
   // 1st entry in the memory.
   impl_.SetAlternativeService(test_server1, alternative_service1, expiration1);
 
   // |test_server2| has an alternative service, which will be
-  // overwritten by InitializeAlternativeServiceServers(), because
+  // overwritten by SetAlternativeServiceServers(), because
   // |alternative_service_map| has an entry for
   // |test_server2|.
   AlternativeServiceInfoVector alternative_service_info_vector;
-  const AlternativeService alternative_service2(NPN_SPDY_3_1, "bar2", 443);
+  const AlternativeService alternative_service2(kProtoHTTP2, "bar2", 443);
   base::Time expiration2 = now + base::TimeDelta::FromDays(2);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service2, expiration2));
@@ -450,10 +416,10 @@ TEST_F(AlternateProtocolServerPropertiesTest, Initialize) {
   impl_.SetAlternativeServices(test_server2, alternative_service_info_vector);
 
   // Prepare |alternative_service_map| to be loaded by
-  // InitializeAlternativeServiceServers().
+  // SetAlternativeServiceServers().
   AlternativeServiceMap alternative_service_map(
       AlternativeServiceMap::NO_AUTO_EVICT);
-  const AlternativeService alternative_service3(NPN_HTTP_2, "bar3", 123);
+  const AlternativeService alternative_service3(kProtoHTTP2, "bar3", 123);
   base::Time expiration3 = now + base::TimeDelta::FromDays(3);
   const AlternativeServiceInfo alternative_service_info1(alternative_service3,
                                                          expiration3);
@@ -463,7 +429,7 @@ TEST_F(AlternateProtocolServerPropertiesTest, Initialize) {
       AlternativeServiceInfoVector(/*size=*/1, alternative_service_info1));
 
   url::SchemeHostPort test_server3("http", "foo3", 80);
-  const AlternativeService alternative_service4(NPN_HTTP_2, "bar4", 1234);
+  const AlternativeService alternative_service4(kProtoHTTP2, "bar4", 1234);
   base::Time expiration4 = now + base::TimeDelta::FromDays(4);
   const AlternativeServiceInfo alternative_service_info2(alternative_service4,
                                                          expiration4);
@@ -474,7 +440,7 @@ TEST_F(AlternateProtocolServerPropertiesTest, Initialize) {
       AlternativeServiceInfoVector(/*size=*/1, alternative_service_info2));
 
   // MRU list will be test_server2, test_server1, test_server3.
-  impl_.InitializeAlternativeServiceServers(&alternative_service_map);
+  impl_.SetAlternativeServiceServers(&alternative_service_map);
 
   // Verify alternative_service_map.
   const AlternativeServiceMap& map = impl_.alternative_service_map();
@@ -498,20 +464,20 @@ TEST_F(AlternateProtocolServerPropertiesTest, Initialize) {
 }
 
 // Regression test for https://crbug.com/504032:
-// InitializeAlternativeServiceServers() should not crash if there is an empty
+// SetAlternativeServiceServers() should not crash if there is an empty
 // hostname is the mapping.
-TEST_F(AlternateProtocolServerPropertiesTest, InitializeWithEmptyHostname) {
+TEST_F(AlternateProtocolServerPropertiesTest, SetWithEmptyHostname) {
   url::SchemeHostPort server("https", "foo", 443);
-  const AlternativeService alternative_service_with_empty_hostname(NPN_HTTP_2,
+  const AlternativeService alternative_service_with_empty_hostname(kProtoHTTP2,
                                                                    "", 1234);
-  const AlternativeService alternative_service_with_foo_hostname(NPN_HTTP_2,
+  const AlternativeService alternative_service_with_foo_hostname(kProtoHTTP2,
                                                                  "foo", 1234);
   SetAlternativeService(server, alternative_service_with_empty_hostname);
   impl_.MarkAlternativeServiceBroken(alternative_service_with_foo_hostname);
 
   AlternativeServiceMap alternative_service_map(
       AlternativeServiceMap::NO_AUTO_EVICT);
-  impl_.InitializeAlternativeServiceServers(&alternative_service_map);
+  impl_.SetAlternativeServiceServers(&alternative_service_map);
 
   EXPECT_TRUE(
       impl_.IsAlternativeServiceBroken(alternative_service_with_foo_hostname));
@@ -527,7 +493,7 @@ TEST_F(AlternateProtocolServerPropertiesTest, InitializeWithEmptyHostname) {
 // with empty value.
 TEST_F(AlternateProtocolServerPropertiesTest, EmptyVector) {
   url::SchemeHostPort server("https", "foo", 443);
-  const AlternativeService alternative_service(NPN_HTTP_2, "bar", 443);
+  const AlternativeService alternative_service(kProtoHTTP2, "bar", 443);
   base::Time expiration = base::Time::Now() - base::TimeDelta::FromDays(1);
   const AlternativeServiceInfo alternative_service_info(alternative_service,
                                                         expiration);
@@ -539,7 +505,7 @@ TEST_F(AlternateProtocolServerPropertiesTest, EmptyVector) {
 
   // Prepare |alternative_service_map_| with a single key that has a single
   // AlternativeServiceInfo with identical hostname and port.
-  impl_.InitializeAlternativeServiceServers(&alternative_service_map);
+  impl_.SetAlternativeServiceServers(&alternative_service_map);
 
   // GetAlternativeServices() should remove such AlternativeServiceInfo from
   // |alternative_service_map_|, emptying the AlternativeServiceInfoVector
@@ -563,7 +529,7 @@ TEST_F(AlternateProtocolServerPropertiesTest, EmptyVector) {
 TEST_F(AlternateProtocolServerPropertiesTest, EmptyVectorForCanonical) {
   url::SchemeHostPort server("https", "foo.c.youtube.com", 443);
   url::SchemeHostPort canonical_server("https", "bar.c.youtube.com", 443);
-  const AlternativeService alternative_service(NPN_HTTP_2, "", 443);
+  const AlternativeService alternative_service(kProtoHTTP2, "", 443);
   base::Time expiration = base::Time::Now() - base::TimeDelta::FromDays(1);
   const AlternativeServiceInfo alternative_service_info(alternative_service,
                                                         expiration);
@@ -575,7 +541,7 @@ TEST_F(AlternateProtocolServerPropertiesTest, EmptyVectorForCanonical) {
 
   // Prepare |alternative_service_map_| with a single key that has a single
   // AlternativeServiceInfo with identical hostname and port.
-  impl_.InitializeAlternativeServiceServers(&alternative_service_map);
+  impl_.SetAlternativeServiceServers(&alternative_service_map);
 
   // GetAlternativeServices() should remove such AlternativeServiceInfo from
   // |alternative_service_map_|, emptying the AlternativeServiceInfoVector
@@ -600,7 +566,7 @@ TEST_F(AlternateProtocolServerPropertiesTest, EmptyVectorForCanonical) {
 TEST_F(AlternateProtocolServerPropertiesTest, ClearServerWithCanonical) {
   url::SchemeHostPort server("https", "foo.c.youtube.com", 443);
   url::SchemeHostPort canonical_server("https", "bar.c.youtube.com", 443);
-  const AlternativeService alternative_service(QUIC, "", 443);
+  const AlternativeService alternative_service(kProtoQUIC, "", 443);
   base::Time expiration = base::Time::Now() + base::TimeDelta::FromDays(1);
   const AlternativeServiceInfo alternative_service_info(alternative_service,
                                                         expiration);
@@ -613,7 +579,7 @@ TEST_F(AlternateProtocolServerPropertiesTest, ClearServerWithCanonical) {
   const AlternativeServiceVector alternative_service_vector =
       impl_.GetAlternativeServices(server);
   ASSERT_EQ(1u, alternative_service_vector.size());
-  EXPECT_EQ(QUIC, alternative_service_vector[0].protocol);
+  EXPECT_EQ(kProtoQUIC, alternative_service_vector[0].protocol);
   EXPECT_EQ(443, alternative_service_vector[0].port);
 
   // Now clear the alternatives for the other server and make sure it stays
@@ -627,10 +593,10 @@ TEST_F(AlternateProtocolServerPropertiesTest, ClearServerWithCanonical) {
 
 TEST_F(AlternateProtocolServerPropertiesTest, MRUOfGetAlternativeServices) {
   url::SchemeHostPort test_server1("http", "foo1", 80);
-  const AlternativeService alternative_service1(NPN_SPDY_3_1, "foo1", 443);
+  const AlternativeService alternative_service1(kProtoHTTP2, "foo1", 443);
   SetAlternativeService(test_server1, alternative_service1);
   url::SchemeHostPort test_server2("http", "foo2", 80);
-  const AlternativeService alternative_service2(NPN_HTTP_2, "foo2", 1234);
+  const AlternativeService alternative_service2(kProtoHTTP2, "foo2", 1234);
   SetAlternativeService(test_server2, alternative_service2);
 
   const AlternativeServiceMap& map = impl_.alternative_service_map();
@@ -653,7 +619,7 @@ TEST_F(AlternateProtocolServerPropertiesTest, MRUOfGetAlternativeServices) {
 
 TEST_F(AlternateProtocolServerPropertiesTest, SetBroken) {
   url::SchemeHostPort test_server("http", "foo", 80);
-  const AlternativeService alternative_service1(NPN_HTTP_2, "foo", 443);
+  const AlternativeService alternative_service1(kProtoHTTP2, "foo", 443);
   SetAlternativeService(test_server, alternative_service1);
   AlternativeServiceVector alternative_service_vector =
       impl_.GetAlternativeServices(test_server);
@@ -673,7 +639,7 @@ TEST_F(AlternateProtocolServerPropertiesTest, SetBroken) {
   base::Time expiration = base::Time::Now() + base::TimeDelta::FromDays(1);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service1, expiration));
-  const AlternativeService alternative_service2(NPN_HTTP_2, "foo", 1234);
+  const AlternativeService alternative_service2(kProtoHTTP2, "foo", 1234);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service2, expiration));
   impl_.SetAlternativeServices(test_server, alternative_service_info_vector);
@@ -699,13 +665,13 @@ TEST_F(AlternateProtocolServerPropertiesTest, MaxAge) {
 
   // First alternative service expired one day ago, should not be returned by
   // GetAlternativeServices().
-  const AlternativeService alternative_service1(NPN_SPDY_3_1, "foo", 443);
+  const AlternativeService alternative_service1(kProtoHTTP2, "foo", 443);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service1, now - one_day));
 
   // Second alterrnative service will expire one day from now, should be
   // returned by GetAlternativeSerices().
-  const AlternativeService alternative_service2(NPN_HTTP_2, "bar", 1234);
+  const AlternativeService alternative_service2(kProtoHTTP2, "bar", 1234);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service2, now + one_day));
 
@@ -725,13 +691,13 @@ TEST_F(AlternateProtocolServerPropertiesTest, MaxAgeCanonical) {
 
   // First alternative service expired one day ago, should not be returned by
   // GetAlternativeServices().
-  const AlternativeService alternative_service1(NPN_SPDY_3_1, "foo", 443);
+  const AlternativeService alternative_service1(kProtoHTTP2, "foo", 443);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service1, now - one_day));
 
   // Second alterrnative service will expire one day from now, should be
   // returned by GetAlternativeSerices().
-  const AlternativeService alternative_service2(NPN_HTTP_2, "bar", 1234);
+  const AlternativeService alternative_service2(kProtoHTTP2, "bar", 1234);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service2, now + one_day));
 
@@ -748,11 +714,11 @@ TEST_F(AlternateProtocolServerPropertiesTest, MaxAgeCanonical) {
 
 TEST_F(AlternateProtocolServerPropertiesTest, AlternativeServiceWithScheme) {
   AlternativeServiceInfoVector alternative_service_info_vector;
-  const AlternativeService alternative_service1(NPN_SPDY_3_1, "foo", 443);
+  const AlternativeService alternative_service1(kProtoHTTP2, "foo", 443);
   base::Time expiration = base::Time::Now() + base::TimeDelta::FromDays(1);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service1, expiration));
-  const AlternativeService alternative_service2(NPN_HTTP_2, "bar", 1234);
+  const AlternativeService alternative_service2(kProtoHTTP2, "bar", 1234);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service2, expiration));
   // Set Alt-Svc list for |http_server|.
@@ -784,11 +750,11 @@ TEST_F(AlternateProtocolServerPropertiesTest, AlternativeServiceWithScheme) {
 
 TEST_F(AlternateProtocolServerPropertiesTest, ClearAlternativeServices) {
   AlternativeServiceInfoVector alternative_service_info_vector;
-  const AlternativeService alternative_service1(NPN_SPDY_3_1, "foo", 443);
+  const AlternativeService alternative_service1(kProtoHTTP2, "foo", 443);
   base::Time expiration = base::Time::Now() + base::TimeDelta::FromDays(1);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service1, expiration));
-  const AlternativeService alternative_service2(NPN_HTTP_2, "bar", 1234);
+  const AlternativeService alternative_service2(kProtoHTTP2, "bar", 1234);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(alternative_service2, expiration));
   url::SchemeHostPort test_server("http", "foo", 80);
@@ -812,15 +778,15 @@ TEST_F(AlternateProtocolServerPropertiesTest, ClearAlternativeServices) {
 TEST_F(AlternateProtocolServerPropertiesTest, BrokenShadowsCanonical) {
   url::SchemeHostPort test_server("https", "foo.c.youtube.com", 443);
   url::SchemeHostPort canonical_server("https", "bar.c.youtube.com", 443);
-  AlternativeService canonical_alternative_service(QUIC, "bar.c.youtube.com",
-                                                   1234);
+  AlternativeService canonical_alternative_service(kProtoQUIC,
+                                                   "bar.c.youtube.com", 1234);
   SetAlternativeService(canonical_server, canonical_alternative_service);
   AlternativeServiceVector alternative_service_vector =
       impl_.GetAlternativeServices(test_server);
   ASSERT_EQ(1u, alternative_service_vector.size());
   EXPECT_EQ(canonical_alternative_service, alternative_service_vector[0]);
 
-  const AlternativeService broken_alternative_service(NPN_HTTP_2, "foo", 443);
+  const AlternativeService broken_alternative_service(kProtoHTTP2, "foo", 443);
   impl_.MarkAlternativeServiceBroken(broken_alternative_service);
   EXPECT_TRUE(impl_.IsAlternativeServiceBroken(broken_alternative_service));
 
@@ -833,7 +799,7 @@ TEST_F(AlternateProtocolServerPropertiesTest, BrokenShadowsCanonical) {
 
 TEST_F(AlternateProtocolServerPropertiesTest, ClearBroken) {
   url::SchemeHostPort test_server("http", "foo", 80);
-  const AlternativeService alternative_service(NPN_HTTP_2, "foo", 443);
+  const AlternativeService alternative_service(kProtoHTTP2, "foo", 443);
   SetAlternativeService(test_server, alternative_service);
   impl_.MarkAlternativeServiceBroken(alternative_service);
   ASSERT_TRUE(HasAlternativeService(test_server));
@@ -846,7 +812,7 @@ TEST_F(AlternateProtocolServerPropertiesTest, ClearBroken) {
 
 TEST_F(AlternateProtocolServerPropertiesTest, MarkRecentlyBroken) {
   url::SchemeHostPort server("http", "foo", 80);
-  const AlternativeService alternative_service(NPN_HTTP_2, "foo", 443);
+  const AlternativeService alternative_service(kProtoHTTP2, "foo", 443);
   SetAlternativeService(server, alternative_service);
 
   EXPECT_FALSE(impl_.IsAlternativeServiceBroken(alternative_service));
@@ -870,11 +836,11 @@ TEST_F(AlternateProtocolServerPropertiesTest, Canonical) {
 
   AlternativeServiceInfoVector alternative_service_info_vector;
   const AlternativeService canonical_alternative_service1(
-      QUIC, "bar.c.youtube.com", 1234);
+      kProtoQUIC, "bar.c.youtube.com", 1234);
   base::Time expiration = base::Time::Now() + base::TimeDelta::FromDays(1);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(canonical_alternative_service1, expiration));
-  const AlternativeService canonical_alternative_service2(NPN_HTTP_2, "", 443);
+  const AlternativeService canonical_alternative_service2(kProtoHTTP2, "", 443);
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo(canonical_alternative_service2, expiration));
   impl_.SetAlternativeServices(canonical_server,
@@ -905,8 +871,8 @@ TEST_F(AlternateProtocolServerPropertiesTest, Canonical) {
 TEST_F(AlternateProtocolServerPropertiesTest, ClearCanonical) {
   url::SchemeHostPort test_server("https", "foo.c.youtube.com", 443);
   url::SchemeHostPort canonical_server("https", "bar.c.youtube.com", 443);
-  AlternativeService canonical_alternative_service(QUIC, "bar.c.youtube.com",
-                                                   1234);
+  AlternativeService canonical_alternative_service(kProtoQUIC,
+                                                   "bar.c.youtube.com", 1234);
 
   SetAlternativeService(canonical_server, canonical_alternative_service);
   impl_.SetAlternativeServices(canonical_server,
@@ -917,8 +883,8 @@ TEST_F(AlternateProtocolServerPropertiesTest, ClearCanonical) {
 TEST_F(AlternateProtocolServerPropertiesTest, CanonicalBroken) {
   url::SchemeHostPort test_server("https", "foo.c.youtube.com", 443);
   url::SchemeHostPort canonical_server("https", "bar.c.youtube.com", 443);
-  AlternativeService canonical_alternative_service(QUIC, "bar.c.youtube.com",
-                                                   1234);
+  AlternativeService canonical_alternative_service(kProtoQUIC,
+                                                   "bar.c.youtube.com", 1234);
 
   SetAlternativeService(canonical_server, canonical_alternative_service);
   impl_.MarkAlternativeServiceBroken(canonical_alternative_service);
@@ -929,7 +895,8 @@ TEST_F(AlternateProtocolServerPropertiesTest, CanonicalBroken) {
 TEST_F(AlternateProtocolServerPropertiesTest, CanonicalOverride) {
   url::SchemeHostPort foo_server("https", "foo.c.youtube.com", 443);
   url::SchemeHostPort bar_server("https", "bar.c.youtube.com", 443);
-  AlternativeService bar_alternative_service(QUIC, "bar.c.youtube.com", 1234);
+  AlternativeService bar_alternative_service(kProtoQUIC, "bar.c.youtube.com",
+                                             1234);
   SetAlternativeService(bar_server, bar_alternative_service);
   AlternativeServiceVector alternative_service_vector =
       impl_.GetAlternativeServices(foo_server);
@@ -937,7 +904,8 @@ TEST_F(AlternateProtocolServerPropertiesTest, CanonicalOverride) {
   EXPECT_EQ(bar_alternative_service, alternative_service_vector[0]);
 
   url::SchemeHostPort qux_server("https", "qux.c.youtube.com", 443);
-  AlternativeService qux_alternative_service(QUIC, "qux.c.youtube.com", 443);
+  AlternativeService qux_alternative_service(kProtoQUIC, "qux.c.youtube.com",
+                                             443);
   SetAlternativeService(qux_server, qux_alternative_service);
   alternative_service_vector = impl_.GetAlternativeServices(foo_server);
   ASSERT_EQ(1u, alternative_service_vector.size());
@@ -947,8 +915,8 @@ TEST_F(AlternateProtocolServerPropertiesTest, CanonicalOverride) {
 TEST_F(AlternateProtocolServerPropertiesTest, ClearWithCanonical) {
   url::SchemeHostPort test_server("https", "foo.c.youtube.com", 443);
   url::SchemeHostPort canonical_server("https", "bar.c.youtube.com", 443);
-  AlternativeService canonical_alternative_service(QUIC, "bar.c.youtube.com",
-                                                   1234);
+  AlternativeService canonical_alternative_service(kProtoQUIC,
+                                                   "bar.c.youtube.com", 1234);
 
   SetAlternativeService(canonical_server, canonical_alternative_service);
   impl_.Clear();
@@ -958,7 +926,7 @@ TEST_F(AlternateProtocolServerPropertiesTest, ClearWithCanonical) {
 TEST_F(AlternateProtocolServerPropertiesTest,
        ExpireBrokenAlternateProtocolMappings) {
   url::SchemeHostPort server("https", "foo", 443);
-  AlternativeService alternative_service(QUIC, "foo", 443);
+  AlternativeService alternative_service(kProtoQUIC, "foo", 443);
   SetAlternativeService(server, alternative_service);
   EXPECT_TRUE(HasAlternativeService(server));
   EXPECT_FALSE(impl_.IsAlternativeServiceBroken(alternative_service));
@@ -979,17 +947,17 @@ TEST_F(AlternateProtocolServerPropertiesTest,
 // Regression test for https://crbug.com/505413.
 TEST_F(AlternateProtocolServerPropertiesTest, RemoveExpiredBrokenAltSvc) {
   url::SchemeHostPort foo_server("https", "foo", 443);
-  AlternativeService bar_alternative_service(QUIC, "bar", 443);
+  AlternativeService bar_alternative_service(kProtoQUIC, "bar", 443);
   SetAlternativeService(foo_server, bar_alternative_service);
   EXPECT_TRUE(HasAlternativeService(foo_server));
 
   url::SchemeHostPort bar_server1("http", "bar", 80);
-  AlternativeService nohost_alternative_service(QUIC, "", 443);
+  AlternativeService nohost_alternative_service(kProtoQUIC, "", 443);
   SetAlternativeService(bar_server1, nohost_alternative_service);
   EXPECT_TRUE(HasAlternativeService(bar_server1));
 
   url::SchemeHostPort bar_server2("https", "bar", 443);
-  AlternativeService baz_alternative_service(QUIC, "baz", 1234);
+  AlternativeService baz_alternative_service(kProtoQUIC, "baz", 1234);
   SetAlternativeService(bar_server2, baz_alternative_service);
   EXPECT_TRUE(HasAlternativeService(bar_server2));
 
@@ -1015,295 +983,14 @@ TEST_F(AlternateProtocolServerPropertiesTest, RemoveExpiredBrokenAltSvc) {
       impl_.WasAlternativeServiceRecentlyBroken(baz_alternative_service));
 }
 
-typedef HttpServerPropertiesImplTest SpdySettingsServerPropertiesTest;
-
-TEST_F(SpdySettingsServerPropertiesTest, Initialize) {
-  url::SchemeHostPort spdy_server_google("https", "www.google.com", 443);
-  url::SchemeHostPort spdy_server_photos("https", "photos.google.com", 443);
-  url::SchemeHostPort spdy_server_docs("https", "docs.google.com", 443);
-  url::SchemeHostPort spdy_server_mail("https", "mail.google.com", 443);
-
-  // Check by initializing empty spdy settings.
-  SpdySettingsMap spdy_settings_map(SpdySettingsMap::NO_AUTO_EVICT);
-  impl_.InitializeSpdySettingsServers(&spdy_settings_map);
-  EXPECT_TRUE(impl_.GetSpdySettings(spdy_server_google).empty());
-
-  // Check by initializing spdy server settings for www.google.com:443 and
-  // photos.google.com:443.
-  const SpdySettingsDataToVerify data_to_verify1[] = {
-      {spdy_server_google, 10000}, {spdy_server_photos, 20000},
-  };
-  // Insert them in reverse order to make spdy_server_google as MRU.
-  SpdySettingsMap spdy_settings_map1(SpdySettingsMap::NO_AUTO_EVICT);
-  InitializeSpdySettingsUploadBandwidth(&spdy_settings_map1,
-                                        data_to_verify1[1].spdy_server,
-                                        data_to_verify1[1].value);
-  InitializeSpdySettingsUploadBandwidth(&spdy_settings_map1,
-                                        data_to_verify1[0].spdy_server,
-                                        data_to_verify1[0].value);
-  impl_.InitializeSpdySettingsServers(&spdy_settings_map1);
-  VerifySpdySettingsUploadBandwidth(data_to_verify1);
-
-  // Check by initializing mail.google.com:443 and docs.google.com:443 as spdy
-  // servers.
-  const SpdySettingsDataToVerify data_to_verify2[] = {
-      {spdy_server_google, 10000},
-      {spdy_server_photos, 20000},
-      {spdy_server_mail, 30000},
-      {spdy_server_docs, 40000},
-  };
-  SpdySettingsMap spdy_settings_map2(SpdySettingsMap::NO_AUTO_EVICT);
-  InitializeSpdySettingsUploadBandwidth(&spdy_settings_map2,
-                                        data_to_verify2[3].spdy_server,
-                                        data_to_verify2[3].value);
-  InitializeSpdySettingsUploadBandwidth(&spdy_settings_map2,
-                                        data_to_verify2[2].spdy_server,
-                                        data_to_verify2[2].value);
-  impl_.InitializeSpdySettingsServers(&spdy_settings_map2);
-  VerifySpdySettingsUploadBandwidth(data_to_verify2);
-
-  // Verify new data that is being initialized overwrites what is already in the
-  // memory and also verify the recency list order by updating 3rd and 1st
-  // element's data.
-  const SpdySettingsDataToVerify data_to_verify3[] = {
-      {spdy_server_google, 10000},
-      {spdy_server_photos, 60000},  // Change the value of photos.
-      {spdy_server_mail, 30000},
-      {spdy_server_docs, 50000},  // Change the value of docs.
-  };
-  SpdySettingsMap spdy_settings_map3(SpdySettingsMap::NO_AUTO_EVICT);
-  InitializeSpdySettingsUploadBandwidth(&spdy_settings_map3,
-                                        data_to_verify3[3].spdy_server,
-                                        data_to_verify3[3].value);
-  InitializeSpdySettingsUploadBandwidth(&spdy_settings_map3,
-                                        data_to_verify3[1].spdy_server,
-                                        data_to_verify3[1].value);
-  impl_.InitializeSpdySettingsServers(&spdy_settings_map3);
-  VerifySpdySettingsUploadBandwidth(data_to_verify3);
-}
-
-TEST_F(SpdySettingsServerPropertiesTest, SetSpdySetting) {
-  url::SchemeHostPort spdy_server_empty("https", std::string(), 443);
-  const SettingsMap& settings_map0 = impl_.GetSpdySettings(spdy_server_empty);
-  EXPECT_EQ(0U, settings_map0.size());  // Returns kEmptySettingsMap.
-
-  // Add www.google.com:443 as persisting.
-  url::SchemeHostPort spdy_server_google("https", "www.google.com", 443);
-  const SpdySettingsIds id1 = SETTINGS_UPLOAD_BANDWIDTH;
-  const SpdySettingsFlags flags1 = SETTINGS_FLAG_PLEASE_PERSIST;
-  const uint32_t value1 = 31337;
-  EXPECT_TRUE(impl_.SetSpdySetting(spdy_server_google, id1, flags1, value1));
-  // Check the values.
-  const SettingsMap& settings_map1_ret =
-      impl_.GetSpdySettings(spdy_server_google);
-  ASSERT_EQ(1U, settings_map1_ret.size());
-  SettingsMap::const_iterator it1_ret = settings_map1_ret.find(id1);
-  EXPECT_TRUE(it1_ret != settings_map1_ret.end());
-  SettingsFlagsAndValue flags_and_value1_ret = it1_ret->second;
-  EXPECT_EQ(SETTINGS_FLAG_PERSISTED, flags_and_value1_ret.first);
-  EXPECT_EQ(value1, flags_and_value1_ret.second);
-
-  // Add mail.google.com:443 as not persisting.
-  url::SchemeHostPort spdy_server_mail("https", "mail.google.com", 443);
-  const SpdySettingsIds id2 = SETTINGS_DOWNLOAD_BANDWIDTH;
-  const SpdySettingsFlags flags2 = SETTINGS_FLAG_NONE;
-  const uint32_t value2 = 62667;
-  EXPECT_FALSE(impl_.SetSpdySetting(spdy_server_mail, id2, flags2, value2));
-  const SettingsMap& settings_map2_ret =
-      impl_.GetSpdySettings(spdy_server_mail);
-  EXPECT_EQ(0U, settings_map2_ret.size());  // Returns kEmptySettingsMap.
-
-  // Add docs.google.com:443 as persisting
-  url::SchemeHostPort spdy_server_docs("https", "docs.google.com", 443);
-  const SpdySettingsIds id3 = SETTINGS_ROUND_TRIP_TIME;
-  const SpdySettingsFlags flags3 = SETTINGS_FLAG_PLEASE_PERSIST;
-  const uint32_t value3 = 93997;
-  SettingsFlagsAndValue flags_and_value3(flags3, value3);
-  EXPECT_TRUE(impl_.SetSpdySetting(spdy_server_docs, id3, flags3, value3));
-  // Check the values.
-  const SettingsMap& settings_map3_ret =
-      impl_.GetSpdySettings(spdy_server_docs);
-  ASSERT_EQ(1U, settings_map3_ret.size());
-  SettingsMap::const_iterator it3_ret = settings_map3_ret.find(id3);
-  EXPECT_TRUE(it3_ret != settings_map3_ret.end());
-  SettingsFlagsAndValue flags_and_value3_ret = it3_ret->second;
-  EXPECT_EQ(SETTINGS_FLAG_PERSISTED, flags_and_value3_ret.first);
-  EXPECT_EQ(value3, flags_and_value3_ret.second);
-
-  // Check data for www.google.com:443 (id1).
-  const SettingsMap& settings_map4_ret =
-      impl_.GetSpdySettings(spdy_server_google);
-  ASSERT_EQ(1U, settings_map4_ret.size());
-  SettingsMap::const_iterator it4_ret = settings_map4_ret.find(id1);
-  EXPECT_TRUE(it4_ret != settings_map4_ret.end());
-  SettingsFlagsAndValue flags_and_value4_ret = it4_ret->second;
-  EXPECT_EQ(SETTINGS_FLAG_PERSISTED, flags_and_value4_ret.first);
-  EXPECT_EQ(value1, flags_and_value1_ret.second);
-
-  // Clear www.google.com:443 as persisting.
-  impl_.ClearSpdySettings(spdy_server_google);
-  // Check the values.
-  const SettingsMap& settings_map5_ret =
-      impl_.GetSpdySettings(spdy_server_google);
-  ASSERT_EQ(0U, settings_map5_ret.size());
-
-  // Clear all settings.
-  ASSERT_GT(impl_.spdy_settings_map().size(), 0U);
-  impl_.ClearAllSpdySettings();
-  ASSERT_EQ(0U, impl_.spdy_settings_map().size());
-}
-
-TEST_F(SpdySettingsServerPropertiesTest, SpdySettingWithSchemeHostPort) {
-  // Test SpdySettingMap is correctly maintained with setting and
-  // clearing method.
-  // Add https://www.google.com:443 as persisting.
-  url::SchemeHostPort https_www_server("https", "www.google.com", 443);
-  url::SchemeHostPort http_www_server("http", "www.google.com", 443);
-  const SpdySettingsIds id1 = SETTINGS_UPLOAD_BANDWIDTH;
-  const SpdySettingsFlags flags1 = SETTINGS_FLAG_PLEASE_PERSIST;
-  const uint32_t value1 = 31337;
-  EXPECT_TRUE(impl_.SetSpdySetting(https_www_server, id1, flags1, value1));
-  // Check the values.
-  const SettingsMap& settings_map1_ret =
-      impl_.GetSpdySettings(https_www_server);
-  ASSERT_EQ(1U, settings_map1_ret.size());
-  SettingsMap::const_iterator it1_ret = settings_map1_ret.find(id1);
-  EXPECT_TRUE(it1_ret != settings_map1_ret.end());
-  SettingsFlagsAndValue flags_and_value1_ret = it1_ret->second;
-  EXPECT_EQ(SETTINGS_FLAG_PERSISTED, flags_and_value1_ret.first);
-  EXPECT_EQ(value1, flags_and_value1_ret.second);
-  // Check the values is not set for http server.
-  const SettingsMap& settings_map1_ret2 =
-      impl_.GetSpdySettings(http_www_server);
-  ASSERT_EQ(0U, settings_map1_ret2.size());
-
-  // Add http://www.google.com:443 as persisting
-  const SpdySettingsIds id2 = SETTINGS_ROUND_TRIP_TIME;
-  const SpdySettingsFlags flags2 = SETTINGS_FLAG_PLEASE_PERSIST;
-  const uint32_t value2 = 93997;
-  SettingsFlagsAndValue flags_and_value2(flags2, value2);
-  EXPECT_TRUE(impl_.SetSpdySetting(http_www_server, id2, flags2, value2));
-  // Check the values.
-  const SettingsMap& settings_map2_ret = impl_.GetSpdySettings(http_www_server);
-  ASSERT_EQ(1U, settings_map2_ret.size());
-  SettingsMap::const_iterator it2_ret = settings_map2_ret.find(id2);
-  EXPECT_TRUE(it2_ret != settings_map2_ret.end());
-  SettingsFlagsAndValue flags_and_value2_ret = it2_ret->second;
-  EXPECT_EQ(SETTINGS_FLAG_PERSISTED, flags_and_value2_ret.first);
-  EXPECT_EQ(value2, flags_and_value2_ret.second);
-
-  // Clear https://www.google.com:443 as persisting.
-  impl_.ClearSpdySettings(https_www_server);
-  // Check the values.
-  const SettingsMap& settings_map3_ret =
-      impl_.GetSpdySettings(https_www_server);
-  ASSERT_EQ(0U, settings_map3_ret.size());
-  // Check the setting is not cleared for http server.
-  const SettingsMap& settings_map3_ret2 =
-      impl_.GetSpdySettings(http_www_server);
-  ASSERT_EQ(1U, settings_map3_ret2.size());
-
-  // Clear all settings.
-  ASSERT_GT(impl_.spdy_settings_map().size(), 0U);
-  impl_.ClearAllSpdySettings();
-  ASSERT_EQ(0U, impl_.spdy_settings_map().size());
-}
-
-TEST_F(SpdySettingsServerPropertiesTest, Clear) {
-  // Add www.google.com:443 as persisting.
-  url::SchemeHostPort spdy_server_google("https", "www.google.com", 443);
-  const SpdySettingsIds id1 = SETTINGS_UPLOAD_BANDWIDTH;
-  const SpdySettingsFlags flags1 = SETTINGS_FLAG_PLEASE_PERSIST;
-  const uint32_t value1 = 31337;
-  EXPECT_TRUE(impl_.SetSpdySetting(spdy_server_google, id1, flags1, value1));
-  // Check the values.
-  const SettingsMap& settings_map1_ret =
-      impl_.GetSpdySettings(spdy_server_google);
-  ASSERT_EQ(1U, settings_map1_ret.size());
-  SettingsMap::const_iterator it1_ret = settings_map1_ret.find(id1);
-  EXPECT_TRUE(it1_ret != settings_map1_ret.end());
-  SettingsFlagsAndValue flags_and_value1_ret = it1_ret->second;
-  EXPECT_EQ(SETTINGS_FLAG_PERSISTED, flags_and_value1_ret.first);
-  EXPECT_EQ(value1, flags_and_value1_ret.second);
-
-  // Add docs.google.com:443 as persisting
-  url::SchemeHostPort spdy_server_docs("https", "docs.google.com", 443);
-  const SpdySettingsIds id3 = SETTINGS_ROUND_TRIP_TIME;
-  const SpdySettingsFlags flags3 = SETTINGS_FLAG_PLEASE_PERSIST;
-  const uint32_t value3 = 93997;
-  EXPECT_TRUE(impl_.SetSpdySetting(spdy_server_docs, id3, flags3, value3));
-  // Check the values.
-  const SettingsMap& settings_map3_ret =
-      impl_.GetSpdySettings(spdy_server_docs);
-  ASSERT_EQ(1U, settings_map3_ret.size());
-  SettingsMap::const_iterator it3_ret = settings_map3_ret.find(id3);
-  EXPECT_TRUE(it3_ret != settings_map3_ret.end());
-  SettingsFlagsAndValue flags_and_value3_ret = it3_ret->second;
-  EXPECT_EQ(SETTINGS_FLAG_PERSISTED, flags_and_value3_ret.first);
-  EXPECT_EQ(value3, flags_and_value3_ret.second);
-
-  impl_.Clear();
-  EXPECT_EQ(0U, impl_.GetSpdySettings(spdy_server_google).size());
-  EXPECT_EQ(0U, impl_.GetSpdySettings(spdy_server_docs).size());
-}
-
-TEST_F(SpdySettingsServerPropertiesTest, MRUOfGetSpdySettings) {
-  // Add www.google.com:443 as persisting.
-  url::SchemeHostPort spdy_server_google("https", "www.google.com", 443);
-  const SpdySettingsIds id1 = SETTINGS_UPLOAD_BANDWIDTH;
-  const SpdySettingsFlags flags1 = SETTINGS_FLAG_PLEASE_PERSIST;
-  const uint32_t value1 = 31337;
-  EXPECT_TRUE(impl_.SetSpdySetting(spdy_server_google, id1, flags1, value1));
-
-  // Add docs.google.com:443 as persisting
-  url::SchemeHostPort spdy_server_docs("https", "docs.google.com", 443);
-  const SpdySettingsIds id2 = SETTINGS_ROUND_TRIP_TIME;
-  const SpdySettingsFlags flags2 = SETTINGS_FLAG_PLEASE_PERSIST;
-  const uint32_t value2 = 93997;
-  EXPECT_TRUE(impl_.SetSpdySetting(spdy_server_docs, id2, flags2, value2));
-
-  // Verify the first element is docs.google.com:443.
-  const SpdySettingsMap& map = impl_.spdy_settings_map();
-  SpdySettingsMap::const_iterator it = map.begin();
-  EXPECT_TRUE(it->first.Equals(spdy_server_docs));
-  const SettingsMap& settings_map2_ret = it->second;
-  ASSERT_EQ(1U, settings_map2_ret.size());
-  SettingsMap::const_iterator it2_ret = settings_map2_ret.find(id2);
-  EXPECT_TRUE(it2_ret != settings_map2_ret.end());
-  SettingsFlagsAndValue flags_and_value2_ret = it2_ret->second;
-  EXPECT_EQ(SETTINGS_FLAG_PERSISTED, flags_and_value2_ret.first);
-  EXPECT_EQ(value2, flags_and_value2_ret.second);
-
-  // GetSpdySettings should reorder the SpdySettingsMap.
-  const SettingsMap& settings_map1_ret =
-      impl_.GetSpdySettings(spdy_server_google);
-  ASSERT_EQ(1U, settings_map1_ret.size());
-  SettingsMap::const_iterator it1_ret = settings_map1_ret.find(id1);
-  EXPECT_TRUE(it1_ret != settings_map1_ret.end());
-  SettingsFlagsAndValue flags_and_value1_ret = it1_ret->second;
-  EXPECT_EQ(SETTINGS_FLAG_PERSISTED, flags_and_value1_ret.first);
-  EXPECT_EQ(value1, flags_and_value1_ret.second);
-
-  // Check the first entry is spdy_server_google by accessing it via iterator.
-  it = map.begin();
-  EXPECT_TRUE(it->first.Equals(spdy_server_google));
-  const SettingsMap& settings_map1_it_ret = it->second;
-  ASSERT_EQ(1U, settings_map1_it_ret.size());
-  it1_ret = settings_map1_it_ret.find(id1);
-  EXPECT_TRUE(it1_ret != settings_map1_it_ret.end());
-  flags_and_value1_ret = it1_ret->second;
-  EXPECT_EQ(SETTINGS_FLAG_PERSISTED, flags_and_value1_ret.first);
-  EXPECT_EQ(value1, flags_and_value1_ret.second);
-}
-
 typedef HttpServerPropertiesImplTest SupportsQuicServerPropertiesTest;
 
-TEST_F(SupportsQuicServerPropertiesTest, Initialize) {
+TEST_F(SupportsQuicServerPropertiesTest, Set) {
   HostPortPair quic_server_google("www.google.com", 443);
 
   // Check by initializing empty address.
   IPAddress initial_address;
-  impl_.InitializeSupportsQuic(&initial_address);
+  impl_.SetSupportsQuic(&initial_address);
 
   IPAddress address;
   EXPECT_FALSE(impl_.GetSupportsQuic(&address));
@@ -1311,7 +998,7 @@ TEST_F(SupportsQuicServerPropertiesTest, Initialize) {
 
   // Check by initializing with a valid address.
   initial_address = IPAddress::IPv4Localhost();
-  impl_.InitializeSupportsQuic(&initial_address);
+  impl_.SetSupportsQuic(&initial_address);
 
   EXPECT_TRUE(impl_.GetSupportsQuic(&address));
   EXPECT_EQ(initial_address, address);
@@ -1335,13 +1022,13 @@ TEST_F(SupportsQuicServerPropertiesTest, SetSupportsQuic) {
 
 typedef HttpServerPropertiesImplTest ServerNetworkStatsServerPropertiesTest;
 
-TEST_F(ServerNetworkStatsServerPropertiesTest, Initialize) {
+TEST_F(ServerNetworkStatsServerPropertiesTest, Set) {
   url::SchemeHostPort google_server("https", "www.google.com", 443);
 
   // Check by initializing empty ServerNetworkStats.
   ServerNetworkStatsMap init_server_network_stats_map(
       ServerNetworkStatsMap::NO_AUTO_EVICT);
-  impl_.InitializeServerNetworkStats(&init_server_network_stats_map);
+  impl_.SetServerNetworkStats(&init_server_network_stats_map);
   const ServerNetworkStats* stats = impl_.GetServerNetworkStats(google_server);
   EXPECT_EQ(NULL, stats);
 
@@ -1350,7 +1037,7 @@ TEST_F(ServerNetworkStatsServerPropertiesTest, Initialize) {
   stats_google.srtt = base::TimeDelta::FromMicroseconds(10);
   stats_google.bandwidth_estimate = QuicBandwidth::FromBitsPerSecond(100);
   init_server_network_stats_map.Put(google_server, stats_google);
-  impl_.InitializeServerNetworkStats(&init_server_network_stats_map);
+  impl_.SetServerNetworkStats(&init_server_network_stats_map);
 
   // Verify data for www.google.com:443.
   ASSERT_EQ(1u, impl_.server_network_stats_map().size());
@@ -1359,7 +1046,7 @@ TEST_F(ServerNetworkStatsServerPropertiesTest, Initialize) {
   // Test recency order and overwriting of data.
   //
   // |docs_server| has a ServerNetworkStats, which will be overwritten by
-  // InitializeServerNetworkStats(), because |server_network_stats_map| has an
+  // SetServerNetworkStats(), because |server_network_stats_map| has an
   // entry for |docs_server|.
   url::SchemeHostPort docs_server("https", "docs.google.com", 443);
   ServerNetworkStats stats_docs;
@@ -1369,7 +1056,7 @@ TEST_F(ServerNetworkStatsServerPropertiesTest, Initialize) {
   impl_.SetServerNetworkStats(docs_server, stats_docs);
 
   // Prepare |server_network_stats_map| to be loaded by
-  // InitializeServerNetworkStats().
+  // SetServerNetworkStats().
   ServerNetworkStatsMap server_network_stats_map(
       ServerNetworkStatsMap::NO_AUTO_EVICT);
 
@@ -1386,7 +1073,7 @@ TEST_F(ServerNetworkStatsServerPropertiesTest, Initialize) {
   server_network_stats_map.Put(mail_server, stats_mail);
 
   // Recency order will be |docs_server|, |google_server| and |mail_server|.
-  impl_.InitializeServerNetworkStats(&server_network_stats_map);
+  impl_.SetServerNetworkStats(&server_network_stats_map);
 
   const ServerNetworkStatsMap& map = impl_.server_network_stats_map();
   ASSERT_EQ(3u, map.size());
@@ -1425,9 +1112,20 @@ TEST_F(ServerNetworkStatsServerPropertiesTest, SetServerNetworkStats) {
   EXPECT_EQ(NULL, impl_.GetServerNetworkStats(foo_https_server));
 }
 
+TEST_F(ServerNetworkStatsServerPropertiesTest, ClearServerNetworkStats) {
+  ServerNetworkStats stats;
+  stats.srtt = base::TimeDelta::FromMicroseconds(10);
+  stats.bandwidth_estimate = QuicBandwidth::FromBitsPerSecond(100);
+  url::SchemeHostPort foo_https_server("https", "foo", 443);
+  impl_.SetServerNetworkStats(foo_https_server, stats);
+
+  impl_.ClearServerNetworkStats(foo_https_server);
+  EXPECT_EQ(nullptr, impl_.GetServerNetworkStats(foo_https_server));
+}
+
 typedef HttpServerPropertiesImplTest QuicServerInfoServerPropertiesTest;
 
-TEST_F(QuicServerInfoServerPropertiesTest, Initialize) {
+TEST_F(QuicServerInfoServerPropertiesTest, Set) {
   HostPortPair google_server("www.google.com", 443);
   QuicServerId google_quic_server_id(google_server, PRIVACY_MODE_ENABLED);
 
@@ -1438,13 +1136,13 @@ TEST_F(QuicServerInfoServerPropertiesTest, Initialize) {
 
   // Check empty map.
   QuicServerInfoMap init_quic_server_info_map(QuicServerInfoMap::NO_AUTO_EVICT);
-  impl_.InitializeQuicServerInfoMap(&init_quic_server_info_map);
+  impl_.SetQuicServerInfoMap(&init_quic_server_info_map);
   EXPECT_EQ(0u, impl_.quic_server_info_map().size());
 
   // Check by initializing with www.google.com:443.
   std::string google_server_info("google_quic_server_info");
   init_quic_server_info_map.Put(google_quic_server_id, google_server_info);
-  impl_.InitializeQuicServerInfoMap(&init_quic_server_info_map);
+  impl_.SetQuicServerInfoMap(&init_quic_server_info_map);
 
   // Verify data for www.google.com:443.
   EXPECT_EQ(1u, impl_.quic_server_info_map().size());
@@ -1454,7 +1152,7 @@ TEST_F(QuicServerInfoServerPropertiesTest, Initialize) {
   // Test recency order and overwriting of data.
   //
   // |docs_server| has a QuicServerInfo, which will be overwritten by
-  // InitializeQuicServerInfoMap(), because |quic_server_info_map| has an
+  // SetQuicServerInfoMap(), because |quic_server_info_map| has an
   // entry for |docs_server|.
   HostPortPair docs_server("docs.google.com", 443);
   QuicServerId docs_quic_server_id(docs_server, PRIVACY_MODE_ENABLED);
@@ -1472,7 +1170,7 @@ TEST_F(QuicServerInfoServerPropertiesTest, Initialize) {
   EXPECT_EQ(google_server_info, map_it->second);
 
   // Prepare |quic_server_info_map| to be loaded by
-  // InitializeQuicServerInfoMap().
+  // SetQuicServerInfoMap().
   QuicServerInfoMap quic_server_info_map(QuicServerInfoMap::NO_AUTO_EVICT);
   // Change the values for |docs_server|.
   std::string new_docs_server_info("new_docs_quic_server_info");
@@ -1482,7 +1180,7 @@ TEST_F(QuicServerInfoServerPropertiesTest, Initialize) {
   QuicServerId mail_quic_server_id(mail_server, PRIVACY_MODE_ENABLED);
   std::string mail_server_info("mail_quic_server_info");
   quic_server_info_map.Put(mail_quic_server_id, mail_server_info);
-  impl_.InitializeQuicServerInfoMap(&quic_server_info_map);
+  impl_.SetQuicServerInfoMap(&quic_server_info_map);
 
   // Recency order will be |docs_server|, |google_server| and |mail_server|.
   const QuicServerInfoMap& memory_map = impl_.quic_server_info_map();

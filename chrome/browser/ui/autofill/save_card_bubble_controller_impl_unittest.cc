@@ -18,7 +18,7 @@
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "components/autofill/core/browser/autofill_metrics.h"
 #include "components/autofill/core/browser/credit_card.h"
-#include "content/public/browser/navigation_details.h"
+#include "content/public/browser/navigation_handle.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -39,7 +39,13 @@ class TestSaveCardBubbleControllerImpl : public SaveCardBubbleControllerImpl {
 
   void set_elapsed(base::TimeDelta elapsed) { elapsed_ = elapsed; }
 
-  using SaveCardBubbleControllerImpl::DidNavigateMainFrame;
+  void SimulateNavigation() {
+    content::RenderFrameHost* rfh = web_contents()->GetMainFrame();
+    std::unique_ptr<content::NavigationHandle> navigation_handle =
+        content::NavigationHandle::CreateNavigationHandleForTesting(
+            GURL(), rfh, true);
+    // Destructor calls DidFinishNavigation.
+  }
 
  protected:
   base::TimeDelta Elapsed() const override { return elapsed_; }
@@ -63,7 +69,8 @@ class SaveCardBubbleControllerImplTest : public BrowserWithTestWindowTest {
     return new SaveCardBubbleTestBrowserWindow();
   }
 
-  void SetLegalMessage(const std::string& message_json) {
+  void SetLegalMessage(const std::string& message_json,
+                       bool should_cvc_be_requested = false) {
     std::unique_ptr<base::Value> value(base::JSONReader::Read(message_json));
     ASSERT_TRUE(value);
     base::DictionaryValue* dictionary;
@@ -71,6 +78,7 @@ class SaveCardBubbleControllerImplTest : public BrowserWithTestWindowTest {
     std::unique_ptr<base::DictionaryValue> legal_message =
         dictionary->CreateDeepCopy();
     controller()->ShowBubbleForUpload(CreditCard(), std::move(legal_message),
+                                      should_cvc_be_requested,
                                       base::Bind(&SaveCardCallback));
   }
 
@@ -79,13 +87,14 @@ class SaveCardBubbleControllerImplTest : public BrowserWithTestWindowTest {
                                          base::Bind(&SaveCardCallback));
   }
 
-  void ShowUploadBubble() {
+  void ShowUploadBubble(bool should_cvc_be_requested = false) {
     SetLegalMessage(
         "{"
         "  \"line\" : [ {"
         "     \"template\": \"This is the entire message.\""
         "  } ]"
-        "}");
+        "}",
+        should_cvc_be_requested);
   }
 
   void CloseAndReshowBubble() {
@@ -125,6 +134,27 @@ class SaveCardBubbleControllerImplTest : public BrowserWithTestWindowTest {
   DISALLOW_COPY_AND_ASSIGN(SaveCardBubbleControllerImplTest);
 };
 
+// Tests that the legal message lines vector is empty when doing a local save so
+// that no legal messages will be shown to the user in that case.
+TEST_F(SaveCardBubbleControllerImplTest, LegalMessageLinesEmptyOnLocalSave) {
+  ShowUploadBubble();
+  controller()->OnBubbleClosed();
+  ShowLocalBubble();
+  EXPECT_TRUE(controller()->GetLegalMessageLines().empty());
+}
+
+TEST_F(SaveCardBubbleControllerImplTest,
+       PropagateShouldRequestCvcFromUserWhenFalse) {
+  ShowUploadBubble();
+  EXPECT_FALSE(controller()->ShouldRequestCvcFromUser());
+}
+
+TEST_F(SaveCardBubbleControllerImplTest,
+       PropagateShouldRequestCvcFromUserWhenTrue) {
+  ShowUploadBubble(true /* should_cvc_be_requested */);
+  EXPECT_TRUE(controller()->ShouldRequestCvcFromUser());
+}
+
 TEST_F(SaveCardBubbleControllerImplTest, Metrics_Local_FirstShow_ShowBubble) {
   base::HistogramTester histogram_tester;
   ShowLocalBubble();
@@ -149,9 +179,22 @@ TEST_F(SaveCardBubbleControllerImplTest, Metrics_Local_Reshows_ShowBubble) {
                   Bucket(AutofillMetrics::SAVE_CARD_PROMPT_SHOWN, 1)));
 }
 
-TEST_F(SaveCardBubbleControllerImplTest, Metrics_Upload_FirstShow_ShowBubble) {
+TEST_F(SaveCardBubbleControllerImplTest,
+       Metrics_Upload_FirstShow_ShowBubble_NotRequestCvc) {
   base::HistogramTester histogram_tester;
   ShowUploadBubble();
+
+  EXPECT_THAT(
+      histogram_tester.GetAllSamples(
+          "Autofill.SaveCreditCardPrompt.Upload.FirstShow"),
+      ElementsAre(Bucket(AutofillMetrics::SAVE_CARD_PROMPT_SHOW_REQUESTED, 1),
+                  Bucket(AutofillMetrics::SAVE_CARD_PROMPT_SHOWN, 1)));
+}
+
+TEST_F(SaveCardBubbleControllerImplTest,
+       Metrics_Upload_FirstShow_ShowBubble_RequestCvc) {
+  base::HistogramTester histogram_tester;
+  ShowUploadBubble(true /* should_cvc_be_requested */);
 
   EXPECT_THAT(
       histogram_tester.GetAllSamples(
@@ -230,8 +273,8 @@ TEST_F(SaveCardBubbleControllerImplTest,
   base::HistogramTester histogram_tester;
   // Fake-navigate after bubble has been visible for a long time.
   controller()->set_elapsed(base::TimeDelta::FromMinutes(1));
-  controller()->DidNavigateMainFrame(content::LoadCommittedDetails(),
-                                     content::FrameNavigateParams());
+
+  controller()->SimulateNavigation();
 
   histogram_tester.ExpectUniqueSample(
       "Autofill.SaveCreditCardPrompt.Local.FirstShow",
@@ -246,8 +289,7 @@ TEST_F(SaveCardBubbleControllerImplTest,
   base::HistogramTester histogram_tester;
   // Fake-navigate after bubble has been visible for a long time.
   controller()->set_elapsed(base::TimeDelta::FromMinutes(1));
-  controller()->DidNavigateMainFrame(content::LoadCommittedDetails(),
-                                     content::FrameNavigateParams());
+  controller()->SimulateNavigation();
 
   histogram_tester.ExpectUniqueSample(
       "Autofill.SaveCreditCardPrompt.Local.Reshows",
@@ -262,8 +304,7 @@ TEST_F(SaveCardBubbleControllerImplTest,
   controller()->OnBubbleClosed();
   // Fake-navigate after bubble has been visible for a long time.
   controller()->set_elapsed(base::TimeDelta::FromMinutes(1));
-  controller()->DidNavigateMainFrame(content::LoadCommittedDetails(),
-                                     content::FrameNavigateParams());
+  controller()->SimulateNavigation();
 
   histogram_tester.ExpectUniqueSample(
       "Autofill.SaveCreditCardPrompt.Local.FirstShow",
@@ -279,8 +320,7 @@ TEST_F(SaveCardBubbleControllerImplTest,
   controller()->OnBubbleClosed();
   // Fake-navigate after bubble has been visible for a long time.
   controller()->set_elapsed(base::TimeDelta::FromMinutes(1));
-  controller()->DidNavigateMainFrame(content::LoadCommittedDetails(),
-                                     content::FrameNavigateParams());
+  controller()->SimulateNavigation();
 
   histogram_tester.ExpectUniqueSample(
       "Autofill.SaveCreditCardPrompt.Local.Reshows",

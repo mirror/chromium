@@ -9,10 +9,11 @@
 
 #include <vector>
 
-#include "cc/base/cc_export.h"
 #include "cc/base/resource_id.h"
+#include "cc/cc_export.h"
 #include "cc/resources/resource_format.h"
 #include "gpu/command_buffer/common/mailbox_holder.h"
+#include "ui/gfx/buffer_types.h"
 #include "ui/gfx/color_space.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -33,12 +34,18 @@ struct CC_EXPORT TransferableResource {
                               ReturnedResourceArray* output);
 
   ResourceId id;
+  // Refer to ResourceProvider::Resource for the meaning of the following data.
   ResourceFormat format;
+  gfx::BufferFormat buffer_format;
   uint32_t filter;
   gfx::Size size;
   gpu::MailboxHolder mailbox_holder;
   bool read_lock_fences_enabled;
   bool is_software;
+#if defined(OS_ANDROID)
+  bool is_backed_by_surface_texture;
+  bool wants_promotion_hint;
+#endif
   bool is_overlay_candidate;
   gfx::ColorSpace color_space;
 };

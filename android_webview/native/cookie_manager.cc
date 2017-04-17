@@ -11,8 +11,6 @@
 #include "android_webview/browser/aw_browser_context.h"
 #include "android_webview/browser/aw_cookie_access_policy.h"
 #include "android_webview/browser/net/init_native_callback.h"
-#include "android_webview/browser/scoped_allow_wait_for_legacy_web_view_api.h"
-#include "android_webview/native/aw_browser_dependency_factory.h"
 #include "base/android/jni_string.h"
 #include "base/android/path_utils.h"
 #include "base/bind.h"
@@ -37,6 +35,7 @@
 #include "net/cookies/cookie_monster.h"
 #include "net/cookies/cookie_options.h"
 #include "net/cookies/cookie_store.h"
+#include "net/cookies/parsed_cookie.h"
 #include "net/extras/sqlite/cookie_crypto_delegate.h"
 #include "net/url_request/url_request_context.h"
 #include "url/url_constants.h"
@@ -45,7 +44,9 @@ using base::FilePath;
 using base::WaitableEvent;
 using base::android::ConvertJavaStringToUTF8;
 using base::android::ConvertJavaStringToUTF16;
+using base::android::JavaParamRef;
 using base::android::ScopedJavaGlobalRef;
+using base::android::ScopedJavaLocalRef;
 using content::BrowserThread;
 using net::CookieList;
 
@@ -77,8 +78,7 @@ class BoolCookieCallbackHolder {
   void Invoke(bool result) {
     if (!callback_.is_null()) {
       JNIEnv* env = base::android::AttachCurrentThread();
-      Java_AwCookieManager_invokeBooleanCookieCallback(env, callback_.obj(),
-                                                       result);
+      Java_AwCookieManager_invokeBooleanCookieCallback(env, callback_, result);
     }
   }
 
@@ -147,6 +147,8 @@ void GetUserDataDir(FilePath* user_data_dir) {
   }
 }
 
+}  // namespace
+
 // CookieManager creates and owns Webview's CookieStore, in addition to handling
 // calls into the CookieStore from Java.
 //
@@ -181,7 +183,7 @@ class CookieManager {
   void SetAcceptFileSchemeCookies(bool accept);
 
  private:
-  friend struct base::DefaultLazyInstanceTraits<CookieManager>;
+  friend struct base::LazyInstanceTraitsBase<CookieManager>;
 
   CookieManager();
   ~CookieManager();
@@ -231,9 +233,9 @@ class CookieManager {
   DISALLOW_COPY_AND_ASSIGN(CookieManager);
 };
 
+namespace {
 base::LazyInstance<CookieManager>::Leaky g_lazy_instance;
-
-}  // namespace
+}
 
 // static
 CookieManager* CookieManager::GetInstance() {
@@ -270,7 +272,7 @@ void CookieManager::ExecCookieTaskSync(
                            base::WaitableEvent::InitialState::NOT_SIGNALED);
   ExecCookieTask(
       base::Bind(task, BoolCallbackAdapter(SignalEventClosure(&completion))));
-  ScopedAllowWaitForLegacyWebViewApi wait;
+  base::ThreadRestrictions::ScopedAllowWait wait;
   completion.Wait();
 }
 
@@ -281,7 +283,7 @@ void CookieManager::ExecCookieTaskSync(
                            base::WaitableEvent::InitialState::NOT_SIGNALED);
   ExecCookieTask(
       base::Bind(task, IntCallbackAdapter(SignalEventClosure(&completion))));
-  ScopedAllowWaitForLegacyWebViewApi wait;
+  base::ThreadRestrictions::ScopedAllowWait wait;
   completion.Wait();
 }
 
@@ -292,7 +294,7 @@ void CookieManager::ExecCookieTaskSync(
   WaitableEvent completion(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                            base::WaitableEvent::InitialState::NOT_SIGNALED);
   ExecCookieTask(base::Bind(task, SignalEventClosure(&completion)));
-  ScopedAllowWaitForLegacyWebViewApi wait;
+  base::ThreadRestrictions::ScopedAllowWait wait;
   completion.Wait();
 }
 
@@ -384,6 +386,24 @@ void CookieManager::SetCookieHelper(
     const BoolCallback callback) {
   net::CookieOptions options;
   options.set_include_httponly();
+
+  // Log message for catching strict secure cookies related bugs.
+  // TODO(sgurun) temporary. Add UMA stats to monitor, and remove afterwards.
+  if (host.is_valid() &&
+      (!host.has_scheme() || host.SchemeIs(url::kHttpScheme))) {
+    net::ParsedCookie parsed_cookie(value);
+    if (parsed_cookie.IsValid() && parsed_cookie.IsSecure()) {
+      LOG(WARNING) << "Strict Secure Cookie policy does not allow setting a "
+                      "secure cookie for "
+                   << host.spec();
+      GURL::Replacements replace_host;
+      replace_host.SetSchemeStr("https");
+      GURL new_host = host.ReplaceComponents(replace_host);
+      GetCookieStore()->SetCookieWithOptionsAsync(new_host, value, options,
+                                                  callback);
+      return;
+    }
+  }
 
   GetCookieStore()->SetCookieWithOptionsAsync(host, value, options, callback);
 }

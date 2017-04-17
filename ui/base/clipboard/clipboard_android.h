@@ -11,13 +11,19 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
+#include "base/time/time.h"
 
 namespace ui {
 
-bool RegisterClipboardAndroid(JNIEnv* env);
-
 class ClipboardAndroid : public Clipboard {
+ public:
+  // Called by Java when the Java Clipboard is notified that the clipboard has
+  // changed.
+  void OnPrimaryClipChanged(JNIEnv* env,
+                            const base::android::JavaParamRef<jobject>& obj);
+
  private:
   friend class Clipboard;
 
@@ -25,6 +31,7 @@ class ClipboardAndroid : public Clipboard {
   ~ClipboardAndroid() override;
 
   // Clipboard overrides:
+  void OnPreShutdown() override;
   uint64_t GetSequenceNumber(ClipboardType type) const override;
   bool IsFormatAvailable(const FormatType& format,
                          ClipboardType type) const override;
@@ -46,6 +53,8 @@ class ClipboardAndroid : public Clipboard {
                       base::string16* result) const override;
   void ReadBookmark(base::string16* title, std::string* url) const override;
   void ReadData(const FormatType& format, std::string* result) const override;
+  base::Time GetLastModifiedTime() const override;
+  void ClearLastModifiedTime() override;
   void WriteObjects(ClipboardType type, const ObjectMap& objects) override;
   void WriteText(const char* text_data, size_t text_len) override;
   void WriteHTML(const char* markup_data,
@@ -65,6 +74,9 @@ class ClipboardAndroid : public Clipboard {
 
   DISALLOW_COPY_AND_ASSIGN(ClipboardAndroid);
 };
+
+// Registers the ClipboardAndroid native method.
+bool RegisterClipboardAndroid(JNIEnv* env);
 
 }  // namespace ui
 

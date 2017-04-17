@@ -12,6 +12,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/callback.h"
@@ -57,8 +58,8 @@
 #include "ppapi/thunk/resource_creation_api.h"
 #include "third_party/WebKit/public/platform/WebCanvas.h"
 #include "third_party/WebKit/public/platform/WebString.h"
-#include "third_party/WebKit/public/platform/WebURLLoaderClient.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
+#include "third_party/WebKit/public/web/WebAssociatedURLLoaderClient.h"
 #include "third_party/WebKit/public/web/WebPlugin.h"
 #include "third_party/WebKit/public/web/WebUserGestureToken.h"
 #include "ui/base/ime/text_input_type.h"
@@ -67,23 +68,20 @@
 #include "v8/include/v8.h"
 
 struct PP_Point;
-struct _NPP;
 
 class SkBitmap;
-class TransportDIB;
 
 namespace blink {
 class WebInputEvent;
 class WebLayer;
 class WebMouseEvent;
 class WebPluginContainer;
-class WebURLLoader;
 class WebURLResponse;
 struct WebCompositionUnderline;
 struct WebCursorInfo;
 struct WebURLError;
 struct WebPrintParams;
-}
+}  // namespace blink
 
 namespace cc {
 class TextureLayer;
@@ -98,7 +96,12 @@ namespace ppapi {
 class Resource;
 struct InputEventData;
 struct PPP_Instance_Combined;
+struct URLResponseInfoData;
 class ScopedPPVar;
+}
+
+namespace printing {
+class PdfMetafileSkia;
 }
 
 namespace content {
@@ -114,9 +117,7 @@ class PluginModule;
 class PluginObject;
 class PPB_Graphics3D_Impl;
 class PPB_ImageData_Impl;
-class PPB_URLLoader_Impl;
 class RenderFrameImpl;
-class RenderViewImpl;
 
 // Represents one time a plugin appears on one web page.
 //
@@ -266,7 +267,7 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   base::string16 GetSelectedText(bool html);
   base::string16 GetLinkAtPosition(const gfx::Point& point);
   void RequestSurroundingText(size_t desired_number_of_characters);
-  bool StartFind(const base::string16& search_text,
+  bool StartFind(const std::string& search_text,
                  bool case_sensitive,
                  int identifier);
   void SelectFindResult(bool forward, int identifier);
@@ -373,10 +374,10 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // case is non-NULL as long as the corresponding loader resource is alive.
   // This pointer is non-owning, so the loader must use set_document_loader to
   // clear itself when it is destroyed.
-  blink::WebURLLoaderClient* document_loader() const {
+  blink::WebAssociatedURLLoaderClient* document_loader() const {
     return document_loader_;
   }
-  void set_document_loader(blink::WebURLLoaderClient* loader) {
+  void set_document_loader(blink::WebAssociatedURLLoaderClient* loader) {
     document_loader_ = loader;
   }
 
@@ -387,7 +388,6 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
 
   // PluginInstance implementation
   RenderFrame* GetRenderFrame() override;
-  RenderView* GetRenderView() override;
   blink::WebPluginContainer* GetContainer() override;
   v8::Isolate* GetIsolate() const override;
   ppapi::VarTracker* GetVarTracker() override;
@@ -549,8 +549,7 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // cc::TextureLayerClient implementation.
   bool PrepareTextureMailbox(
       cc::TextureMailbox* mailbox,
-      std::unique_ptr<cc::SingleReleaseCallback>* release_callback,
-      bool use_shared_memory) override;
+      std::unique_ptr<cc::SingleReleaseCallback>* release_callback) override;
 
   // RenderFrameObserver
   void AccessibilityModeChanged() override;
@@ -564,6 +563,9 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
     return *audio_controller_;
   }
 
+  // Should be used only for logging.
+  bool is_flash_plugin() const { return is_flash_plugin_; }
+
  private:
   friend class base::RefCounted<PepperPluginInstanceImpl>;
   friend class PpapiPluginInstanceTest;
@@ -574,24 +576,17 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
 
   // Class to record document load notifications and play them back once the
   // real document loader becomes available. Used only by external instances.
-  class ExternalDocumentLoader : public blink::WebURLLoaderClient {
+  class ExternalDocumentLoader : public blink::WebAssociatedURLLoaderClient {
    public:
     ExternalDocumentLoader();
     ~ExternalDocumentLoader() override;
 
-    void ReplayReceivedData(WebURLLoaderClient* document_loader);
+    void ReplayReceivedData(WebAssociatedURLLoaderClient* document_loader);
 
-    // blink::WebURLLoaderClient implementation.
-    void didReceiveData(blink::WebURLLoader* loader,
-                        const char* data,
-                        int data_length,
-                        int encoded_data_length,
-                        int encoded_body_length) override;
-    void didFinishLoading(blink::WebURLLoader* loader,
-                          double finish_time,
-                          int64_t total_encoded_data_length) override;
-    void didFail(blink::WebURLLoader* loader,
-                 const blink::WebURLError& error) override;
+    // blink::WebAssociatedURLLoaderClient implementation.
+    void DidReceiveData(const char* data, int data_length) override;
+    void DidFinishLoading(double finish_time) override;
+    void DidFail(const blink::WebURLError& error) override;
 
    private:
     std::list<std::string> data_;
@@ -640,9 +635,7 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   void SendFocusChangeNotification();
 
   void UpdateTouchEventRequest();
-
-  // Returns true if the plugin has registered to accept wheel events.
-  bool IsAcceptingWheelEvents() const;
+  void UpdateWheelEventRequest();
 
   void ScheduleAsyncDidChangeView();
   void SendAsyncDidChangeView();
@@ -655,8 +648,10 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // Queries the plugin for supported print formats and sets |format| to the
   // best format to use. Returns false if the plugin does not support any
   // print format that we can handle (we can handle only PDF).
-  bool GetPreferredPrintOutputFormat(PP_PrintOutputFormat_Dev* format);
-  bool PrintPDFOutput(PP_Resource print_output, blink::WebCanvas* canvas);
+  bool GetPreferredPrintOutputFormat(PP_PrintOutputFormat_Dev* format,
+                                     const blink::WebPrintParams& params);
+  bool PrintPDFOutput(PP_Resource print_output,
+                      printing::PdfMetafileSkia* metafile);
 
   // Updates the layer for compositing. This creates a layer and attaches to the
   // container if:
@@ -672,7 +667,7 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // Internal helper function for PrintPage().
   void PrintPageHelper(PP_PrintPageNumberRange_Dev* page_ranges,
                        int num_ranges,
-                       blink::WebCanvas* canvas);
+                       printing::PdfMetafileSkia* metafile);
 
   void DoSetCursor(blink::WebCursorInfo* cursor);
 
@@ -712,8 +707,6 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   void DidDataFromWebURLResponse(const blink::WebURLResponse& response,
                                  int pending_host_id,
                                  const ppapi::URLResponseInfoData& data);
-
-  void RecordFlashJavaScriptUse();
 
   // Converts the PP_Rect between DIP and Viewport.
   void ConvertRectToDIP(PP_Rect* rect) const;
@@ -774,9 +767,6 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
 
   // Set to true the first time the plugin is clicked. Used to collect metrics.
   bool has_been_clicked_;
-
-  // Used to track if JavaScript has ever been used for this plugin instance.
-  bool javascript_used_;
 
   // Responsible for turning on throttling if Power Saver is on.
   std::unique_ptr<PluginInstanceThrottlerImpl> throttler_;
@@ -846,12 +836,12 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // and Win, the entire document goes into one metafile.  However, when users
   // print only a subset of all the pages, it is impossible to know if a call
   // to PrintPage() is the last call. Thus in PrintPage(), just store the page
-  // number in |ranges_|. The hack is in PrintEnd(), where a valid |canvas_|
+  // number in |ranges_|. The hack is in PrintEnd(), where a valid |metafile_|
   // is preserved in PrintWebViewHelper::PrintPages. This makes it possible
   // to generate the entire PDF given the variables below:
   //
-  // The most recently used WebCanvas, guaranteed to be valid.
-  sk_sp<blink::WebCanvas> canvas_;
+  // The most recently used metafile_, guaranteed to be valid.
+  printing::PdfMetafileSkia* metafile_;
   // An array of page ranges.
   std::vector<PP_PrintPageNumberRange_Dev> ranges_;
 
@@ -943,7 +933,7 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   std::vector<std::string> argv_;
 
   // Non-owning pointer to the document loader, if any.
-  blink::WebURLLoaderClient* document_loader_;
+  blink::WebAssociatedURLLoaderClient* document_loader_;
   // State for deferring document loads. Used only by external instances.
   blink::WebURLResponse external_document_response_;
   std::unique_ptr<ExternalDocumentLoader> external_document_loader_;

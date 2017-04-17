@@ -3,14 +3,17 @@
 
 # Reviewers (comments indicate areas of expertise):
 ager@chromium.org
+# alancutter reviews changes in core/animation, core/css and core/style.
+alancutter@chromium.org
 alexis.menard@intel.com
 # bokan reviews changes around viewport behavior, scrolling, cc/blink interaction, co-ordinate spaces and input events
 bokan@chromium.org
 cbiesinger@chromium.org
 chrishtr@chromium.org
-davve@opera.com
 dcheng@chromium.org
 dglazkov@chromium.org
+# dtapuska reviews input-related changes
+dtapuska@chromium.org
 dgozman@chromium.org
 dominicc@chromium.org
 dpranke@chromium.org
@@ -28,6 +31,7 @@ hayato@chromium.org
 inferno@chromium.org
 japhet@chromium.org
 jbroman@chromium.org
+jfernandez@igalia.com
 jianli@chromium.org
 jochen@chromium.org
 junov@chromium.org
@@ -35,24 +39,28 @@ kbr@chromium.org
 keishi@chromium.org
 kenneth.r.christiansen@intel.com
 kinuko@chromium.org
+kojii@chromium.org
 kouhei@chromium.org
+meade@chromium.org
 mkwst@chromium.org
-morrita@chromium.org
 mstensho@opera.com
 ojan@chromium.org
 # pdr reviews many svg and text autosizing patches.
 pdr@chromium.org
 pfeldman@chromium.org
 pkasting@chromium.org
-# rbyers reviews input related changes (eg. event handling, mouse cursors, touch hit testing, scrolling coordinator)
+rego@igalia.com
 rbyers@chromium.org
 rob.buis@samsung.com
+robhogan@gmail.com
 # rune reviews core/css and parts of core/rendering
 rune@opera.com
 schenney@chromium.org
 senorblanco@chromium.org
+sashab@chromium.org
 sigbjornf@opera.com
 skobes@chromium.org
+svillar@igalia.com
 thakis@chromium.org
 timloh@chromium.org
 tkent@chromium.org
@@ -61,5 +69,7 @@ tonyg@chromium.org
 vollick@chromium.org
 wangxianzhu@chromium.org
 yoav@yoav.ws
-yurys@chromium.org
 yutak@chromium.org
+
+# TEAM: blink-dev@chromium.org
+# COMPONENT: Blink

@@ -11,7 +11,6 @@
 #include "base/files/file_path.h"
 #include "ui/app_list/app_list_model.h"
 #include "ui/app_list/app_list_switches.h"
-#include "ui/app_list/app_list_view_delegate_observer.h"
 #include "ui/app_list/test/app_list_test_model.h"
 #include "ui/gfx/image/image_skia.h"
 
@@ -35,27 +34,12 @@ int AppListTestViewDelegate::GetStopSpeechRecognitionCountAndReset() {
   return count;
 }
 
-bool AppListTestViewDelegate::ForceNativeDesktop() const {
-  return false;
-}
-
-void AppListTestViewDelegate::SetProfileByPath(
-    const base::FilePath& profile_path) {
-  ReplaceTestModel(next_profile_app_count_);
-}
-
 AppListModel* AppListTestViewDelegate::GetModel() {
   return model_.get();
 }
 
 SpeechUIModel* AppListTestViewDelegate::GetSpeechUI() {
   return &speech_ui_;
-}
-
-void AppListTestViewDelegate::GetShortcutPathForApp(
-    const std::string& app_id,
-    const base::Callback<void(const base::FilePath&)>& callback) {
-  callback.Run(base::FilePath());
 }
 
 void AppListTestViewDelegate::OpenSearchResult(SearchResult* result,
@@ -87,7 +71,6 @@ void AppListTestViewDelegate::StopSpeechRecognition() {
   ++stop_speech_recognition_count_;
 }
 
-#if defined(TOOLKIT_VIEWS)
 views::View* AppListTestViewDelegate::CreateStartPageWebView(
     const gfx::Size& size) {
   return NULL;
@@ -96,33 +79,14 @@ std::vector<views::View*> AppListTestViewDelegate::CreateCustomPageWebViews(
     const gfx::Size& size) {
   return std::vector<views::View*>();
 }
-#endif
 
 bool AppListTestViewDelegate::IsSpeechRecognitionEnabled() {
   return false;
 }
 
-const AppListViewDelegate::Users& AppListTestViewDelegate::GetUsers() const {
-  return users_;
-}
-
-bool AppListTestViewDelegate::ShouldCenterWindow() const {
-  return app_list::switches::IsCenteredAppListEnabled();
-}
-
 void AppListTestViewDelegate::ReplaceTestModel(int item_count) {
   model_.reset(new AppListTestModel);
   model_->PopulateApps(item_count);
-}
-
-void AppListTestViewDelegate::AddObserver(
-    AppListViewDelegateObserver* observer) {
-  observers_.AddObserver(observer);
-}
-
-void AppListTestViewDelegate::RemoveObserver(
-    AppListViewDelegateObserver* observer) {
-  observers_.RemoveObserver(observer);
 }
 
 }  // namespace test

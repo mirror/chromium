@@ -20,7 +20,6 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
-#include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
@@ -49,7 +48,7 @@ void ExecuteGetStatus(
   info.Set("build", build.DeepCopy());
   info.Set("os", os.DeepCopy());
   callback.Run(Status(kOk), std::unique_ptr<base::Value>(info.DeepCopy()),
-               std::string());
+               std::string(), false);
 }
 
 void ExecuteCreateSession(
@@ -66,7 +65,8 @@ void ExecuteCreateSession(
   if (!thread->Start()) {
     callback.Run(
         Status(kUnknownError, "failed to start a thread for the new session"),
-        std::unique_ptr<base::Value>(), std::string());
+        std::unique_ptr<base::Value>(), std::string(),
+        session->w3c_compliant);
     return;
   }
 
@@ -84,14 +84,15 @@ void OnGetSession(const base::WeakPtr<size_t>& session_remaining_count,
                   base::ListValue* session_list,
                   const Status& status,
                   std::unique_ptr<base::Value> value,
-                  const std::string& session_id) {
+                  const std::string& session_id,
+                  bool w3c_compliant) {
   if (!session_remaining_count)
     return;
 
   (*session_remaining_count)--;
 
   std::unique_ptr<base::DictionaryValue> session(new base::DictionaryValue());
-  session->Set("id", new base::StringValue(session_id));
+  session->Set("id", new base::Value(session_id));
   session->Set("capabilities", value->DeepCopy());
   session_list->Append(std::move(session));
 
@@ -107,13 +108,12 @@ void ExecuteGetSessions(const Command& session_capabilities_command,
                         const base::DictionaryValue& params,
                         const std::string& session_id,
                         const CommandCallback& callback) {
-
   size_t get_remaining_count = session_thread_map->size();
   base::WeakPtrFactory<size_t> weak_ptr_factory(&get_remaining_count);
   std::unique_ptr<base::ListValue> session_list(new base::ListValue());
 
   if (!get_remaining_count) {
-    callback.Run(Status(kOk), std::move(session_list), session_id);
+    callback.Run(Status(kOk), std::move(session_list), session_id, false);
     return;
   }
 
@@ -135,7 +135,7 @@ void ExecuteGetSessions(const Command& session_capabilities_command,
   base::MessageLoop::current()->SetNestableTasksAllowed(true);
   run_loop.Run();
 
-  callback.Run(Status(kOk), std::move(session_list), session_id);
+  callback.Run(Status(kOk), std::move(session_list), session_id, false);
 }
 
 namespace {
@@ -144,7 +144,8 @@ void OnSessionQuit(const base::WeakPtr<size_t>& quit_remaining_count,
                    const base::Closure& all_quit_func,
                    const Status& status,
                    std::unique_ptr<base::Value> value,
-                   const std::string& session_id) {
+                   const std::string& session_id,
+                   bool w3c_compliant) {
   // |quit_remaining_count| may no longer be valid if a timeout occurred.
   if (!quit_remaining_count)
     return;
@@ -165,7 +166,8 @@ void ExecuteQuitAll(
   size_t quit_remaining_count = session_thread_map->size();
   base::WeakPtrFactory<size_t> weak_ptr_factory(&quit_remaining_count);
   if (!quit_remaining_count) {
-    callback.Run(Status(kOk), std::unique_ptr<base::Value>(), session_id);
+    callback.Run(Status(kOk), std::unique_ptr<base::Value>(),
+                 session_id, false);
     return;
   }
   base::RunLoop run_loop;
@@ -184,7 +186,8 @@ void ExecuteQuitAll(
   // commands have executed, or the timeout expires.
   base::MessageLoop::current()->SetNestableTasksAllowed(true);
   run_loop.Run();
-  callback.Run(Status(kOk), std::unique_ptr<base::Value>(), session_id);
+  callback.Run(Status(kOk), std::unique_ptr<base::Value>(),
+               session_id, false);
 }
 
 namespace {
@@ -209,7 +212,8 @@ void ExecuteSessionCommandOnSessionThread(
         base::Bind(callback_on_cmd,
                    Status(return_ok_without_session ? kOk : kNoSuchSession),
                    base::Passed(std::unique_ptr<base::Value>()),
-                   std::string()));
+                   std::string(),
+                   false));
     return;
   }
 
@@ -247,11 +251,12 @@ void ExecuteSessionCommandOnSessionThread(
         // Some commands, like clicking a button or link which closes the
         // window, may result in a kDisconnected error code.
         std::list<std::string> web_view_ids;
-        Status status_tmp = session->chrome->GetWebViewIds(&web_view_ids);
+        Status status_tmp = session->chrome->GetWebViewIds(
+          &web_view_ids, session->w3c_compliant);
         if (status_tmp.IsError() && status_tmp.code() != kChromeNotReachable) {
           status.AddDetails(
               "failed to check if window was closed: " + status_tmp.message());
-        } else if (!ContainsValue(web_view_ids, session->window)) {
+        } else if (!base::ContainsValue(web_view_ids, session->window)) {
           status = Status(kOk);
         }
       }
@@ -285,7 +290,8 @@ void ExecuteSessionCommandOnSessionThread(
 
   cmd_task_runner->PostTask(
       FROM_HERE,
-      base::Bind(callback_on_cmd, status, base::Passed(&value), session->id));
+      base::Bind(callback_on_cmd, status, base::Passed(&value), session->id,
+                 session->w3c_compliant));
 
   if (session->quit) {
     SetThreadLocalSession(std::unique_ptr<Session>());
@@ -307,7 +313,7 @@ void ExecuteSessionCommand(
   SessionThreadMap::iterator iter = session_thread_map->find(session_id);
   if (iter == session_thread_map->end()) {
     Status status(return_ok_without_session ? kOk : kNoSuchSession);
-    callback.Run(status, std::unique_ptr<base::Value>(), session_id);
+    callback.Run(status, std::unique_ptr<base::Value>(), session_id, false);
   } else {
     iter->second->task_runner()->PostTask(
         FROM_HERE, base::Bind(&ExecuteSessionCommandOnSessionThread,
@@ -322,7 +328,7 @@ void ExecuteSessionCommand(
 namespace internal {
 
 void CreateSessionOnSessionThreadForTesting(const std::string& id) {
-  SetThreadLocalSession(base::WrapUnique(new Session(id)));
+  SetThreadLocalSession(base::MakeUnique<Session>(id));
 }
 
 }  // namespace internal

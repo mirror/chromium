@@ -25,10 +25,10 @@
 namespace gl {
 
 namespace {
-base::LazyInstance<base::ThreadLocalPointer<GLContext> >::Leaky
+base::LazyInstance<base::ThreadLocalPointer<GLContext>>::Leaky
     current_context_ = LAZY_INSTANCE_INITIALIZER;
 
-base::LazyInstance<base::ThreadLocalPointer<GLContext> >::Leaky
+base::LazyInstance<base::ThreadLocalPointer<GLContext>>::Leaky
     current_real_context_ = LAZY_INSTANCE_INITIALIZER;
 }  // namespace
 
@@ -45,13 +45,15 @@ void GLContext::ScopedReleaseCurrent::Cancel() {
 }
 
 GLContext::GLContext(GLShareGroup* share_group)
-    : share_group_(share_group),
+    : static_bindings_initialized_(false),
+      dynamic_bindings_initialized_(false),
+      share_group_(share_group),
       current_virtual_context_(nullptr),
       state_dirtied_externally_(false),
       swap_interval_(1),
       force_swap_interval_zero_(false) {
   if (!share_group_.get())
-    share_group_ = new GLShareGroup;
+    share_group_ = new gl::GLShareGroup();
 
   share_group_->AddContext(this);
 }
@@ -60,7 +62,14 @@ GLContext::~GLContext() {
   share_group_->RemoveContext(this);
   if (GetCurrent() == this) {
     SetCurrent(nullptr);
+    SetCurrentGL(nullptr);
   }
+}
+
+GLApi* GLContext::CreateGLApi(DriverGL* driver) {
+  real_gl_api_ = new RealGLApi;
+  real_gl_api_->Initialize(driver);
+  return real_gl_api_;
 }
 
 void GLContext::SetSafeToForceGpuSwitch() {
@@ -76,25 +85,63 @@ void GLContext::SetUnbindFboOnMakeCurrent() {
 
 std::string GLContext::GetExtensions() {
   DCHECK(IsCurrent(nullptr));
-  return GetGLExtensionsFromCurrentContext();
+  return GetGLExtensionsFromCurrentContext(gl_api_.get());
 }
 
 std::string GLContext::GetGLVersion() {
   DCHECK(IsCurrent(nullptr));
-  const char *version =
-      reinterpret_cast<const char*>(glGetString(GL_VERSION));
+  DCHECK(gl_api_ != nullptr);
+  const char* version =
+      reinterpret_cast<const char*>(gl_api_->glGetStringFn(GL_VERSION));
   return std::string(version ? version : "");
 }
 
 std::string GLContext::GetGLRenderer() {
   DCHECK(IsCurrent(nullptr));
-  const char *renderer =
-      reinterpret_cast<const char*>(glGetString(GL_RENDERER));
+  DCHECK(gl_api_ != nullptr);
+  const char* renderer =
+      reinterpret_cast<const char*>(gl_api_->glGetStringFn(GL_RENDERER));
   return std::string(renderer ? renderer : "");
 }
 
 YUVToRGBConverter* GLContext::GetYUVToRGBConverter() {
   return nullptr;
+}
+
+CurrentGL* GLContext::GetCurrentGL() {
+  if (!static_bindings_initialized_) {
+    driver_gl_.reset(new DriverGL);
+    driver_gl_->InitializeStaticBindings();
+
+    gl_api_.reset(CreateGLApi(driver_gl_.get()));
+    GLApi* final_api = gl_api_.get();
+
+    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kEnableGPUServiceTracing)) {
+      trace_gl_api_.reset(new TraceGLApi(final_api));
+      final_api = trace_gl_api_.get();
+    }
+
+    if (GetDebugGLBindingsInitializedGL()) {
+      debug_gl_api_.reset(new DebugGLApi(final_api));
+      final_api = debug_gl_api_.get();
+    }
+
+    current_gl_.reset(new CurrentGL);
+    current_gl_->Driver = driver_gl_.get();
+    current_gl_->Api = final_api;
+    current_gl_->Version = version_info_.get();
+
+    static_bindings_initialized_ = true;
+  }
+
+  return current_gl_.get();
+}
+
+void GLContext::ReinitializeDynamicBindings() {
+  DCHECK(IsCurrent(nullptr));
+  dynamic_bindings_initialized_ = false;
+  InitializeDynamicBindings();
 }
 
 bool GLContext::HasExtension(const char* name) {
@@ -109,10 +156,12 @@ bool GLContext::HasExtension(const char* name) {
 
 const GLVersionInfo* GLContext::GetVersionInfo() {
   if (!version_info_) {
-    std::string version = GetGLVersion();
-    std::string renderer = GetGLRenderer();
-    version_info_ = base::WrapUnique(new GLVersionInfo(
-        version.c_str(), renderer.c_str(), GetExtensions().c_str()));
+    version_info_ = GenerateGLVersionInfo();
+
+    // current_gl_ may be null for virtual contexts
+    if (current_gl_) {
+      current_gl_->Version = version_info_.get();
+    }
   }
   return version_info_.get();
 }
@@ -126,11 +175,13 @@ bool GLContext::LosesAllContextsOnContextLost() {
     case kGLImplementationDesktopGL:
       return false;
     case kGLImplementationEGLGLES2:
+    case kGLImplementationSwiftShaderGL:
       return true;
     case kGLImplementationOSMesaGL:
     case kGLImplementationAppleGL:
       return false;
     case kGLImplementationMockGL:
+    case kGLImplementationStubGL:
       return false;
     default:
       NOTREACHED();
@@ -146,14 +197,20 @@ GLContext* GLContext::GetRealCurrent() {
   return current_real_context_.Pointer()->Get();
 }
 
+std::unique_ptr<gl::GLVersionInfo> GLContext::GenerateGLVersionInfo() {
+  return base::MakeUnique<GLVersionInfo>(
+      GetGLVersion().c_str(), GetGLRenderer().c_str(), GetExtensions().c_str());
+}
+
 void GLContext::SetCurrent(GLSurface* surface) {
   current_context_.Pointer()->Set(surface ? this : nullptr);
   GLSurface::SetCurrent(surface);
   // Leave the real GL api current so that unit tests work correctly.
   // TODO(sievers): Remove this, but needs all gpu_unittest classes
   // to create and make current a context.
-  if (!surface && GetGLImplementation() != kGLImplementationMockGL) {
-    SetGLApiToNoContext();
+  if (!surface && GetGLImplementation() != kGLImplementationMockGL &&
+      GetGLImplementation() != kGLImplementationStubGL) {
+    SetCurrentGL(nullptr);
   }
 }
 
@@ -181,7 +238,16 @@ bool GLContext::WasAllocatedUsingRobustnessExtension() {
 
 void GLContext::InitializeDynamicBindings() {
   DCHECK(IsCurrent(nullptr));
-  InitializeDynamicGLBindingsGL(this);
+  DCHECK(static_bindings_initialized_);
+  if (!dynamic_bindings_initialized_) {
+    if (real_gl_api_) {
+      real_gl_api_->InitializeFilteredExtensions();
+      real_gl_api_->set_version(GenerateGLVersionInfo());
+    }
+
+    driver_gl_->InitializeDynamicBindings(GetVersionInfo(), GetExtensions());
+    dynamic_bindings_initialized_ = true;
+  }
 }
 
 bool GLContext::MakeVirtuallyCurrent(
@@ -247,8 +313,8 @@ void GLContext::OnReleaseVirtuallyCurrent(GLContext* virtual_context) {
     current_virtual_context_ = nullptr;
 }
 
-void GLContext::SetRealGLApi() {
-  SetGLToRealGLApi();
+void GLContext::BindGLApi() {
+  SetCurrentGL(GetCurrentGL());
 }
 
 GLContextReal::GLContextReal(GLShareGroup* share_group)
@@ -273,8 +339,8 @@ void GLContextReal::SetCurrent(GLSurface* surface) {
 
 scoped_refptr<GLContext> InitializeGLContext(scoped_refptr<GLContext> context,
                                              GLSurface* compatible_surface,
-                                             GpuPreference gpu_preference) {
-  if (!context->Initialize(compatible_surface, gpu_preference))
+                                             const GLContextAttribs& attribs) {
+  if (!context->Initialize(compatible_surface, attribs))
     return nullptr;
   return context;
 }

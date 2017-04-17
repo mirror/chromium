@@ -119,12 +119,12 @@ bool DeltaFileBackend::EnsureInitialized() {
 
 void DeltaFileBackend::PageAdded(const GURL& url) {
   if (!EnsureInitialized()) return;
-  SaveChange(db_.get(), url.spec().c_str(), "add");
+  SaveChange(db_.get(), url.spec(), "add");
 }
 
 void DeltaFileBackend::PageDeleted(const GURL& url) {
   if (!EnsureInitialized()) return;
-  SaveChange(db_.get(), url.spec().c_str(), "del");
+  SaveChange(db_.get(), url.spec(), "del");
 }
 
 int64_t DeltaFileBackend::Trim(int64_t lower_bound) {
@@ -196,7 +196,7 @@ std::unique_ptr<std::vector<DeltaFileEntryWithData>> DeltaFileBackend::Query(
     int64_t last_seq_no,
     int32_t limit) {
   if (!EnsureInitialized())
-    return base::WrapUnique(new std::vector<DeltaFileEntryWithData>());
+    return base::MakeUnique<std::vector<DeltaFileEntryWithData>>();
   std::string start;
   base::SStringPrintf(&start, "%" PRId64, last_seq_no + 1);
   leveldb::ReadOptions options;

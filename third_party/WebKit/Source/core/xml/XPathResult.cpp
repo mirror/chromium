@@ -37,183 +37,184 @@ namespace blink {
 using namespace XPath;
 
 XPathResult::XPathResult(EvaluationContext& context, const Value& value)
-    : m_value(value)
-    , m_nodeSetPosition(0)
-    , m_domTreeVersion(0)
-{
-    switch (m_value.getType()) {
-    case Value::BooleanValue:
-        m_resultType = BOOLEAN_TYPE;
-        return;
-    case Value::NumberValue:
-        m_resultType = NUMBER_TYPE;
-        return;
-    case Value::StringValue:
-        m_resultType = STRING_TYPE;
-        return;
-    case Value::NodeSetValue:
-        m_resultType = UNORDERED_NODE_ITERATOR_TYPE;
-        m_nodeSetPosition = 0;
-        m_nodeSet = NodeSet::create(m_value.toNodeSet(&context));
-        m_document = &context.node->document();
-        m_domTreeVersion = m_document->domTreeVersion();
-        return;
-    }
-    ASSERT_NOT_REACHED();
+    : value_(value), node_set_position_(0), dom_tree_version_(0) {
+  switch (value_.GetType()) {
+    case Value::kBooleanValue:
+      result_type_ = kBooleanType;
+      return;
+    case Value::kNumberValue:
+      result_type_ = kNumberType;
+      return;
+    case Value::kStringValue:
+      result_type_ = kStringType;
+      return;
+    case Value::kNodeSetValue:
+      result_type_ = kUnorderedNodeIteratorType;
+      node_set_position_ = 0;
+      node_set_ = NodeSet::Create(value_.ToNodeSet(&context));
+      document_ = &context.node->GetDocument();
+      dom_tree_version_ = document_->DomTreeVersion();
+      return;
+  }
+  NOTREACHED();
 }
 
-DEFINE_TRACE(XPathResult)
-{
-    visitor->trace(m_value);
-    visitor->trace(m_nodeSet);
-    visitor->trace(m_document);
+DEFINE_TRACE(XPathResult) {
+  visitor->Trace(value_);
+  visitor->Trace(node_set_);
+  visitor->Trace(document_);
 }
 
-void XPathResult::convertTo(unsigned short type, ExceptionState& exceptionState)
-{
-    switch (type) {
-    case ANY_TYPE:
-        break;
-    case NUMBER_TYPE:
-        m_resultType = type;
-        m_value = m_value.toNumber();
-        break;
-    case STRING_TYPE:
-        m_resultType = type;
-        m_value = m_value.toString();
-        break;
-    case BOOLEAN_TYPE:
-        m_resultType = type;
-        m_value = m_value.toBoolean();
-        break;
-    case UNORDERED_NODE_ITERATOR_TYPE:
-    case UNORDERED_NODE_SNAPSHOT_TYPE:
-    case ANY_UNORDERED_NODE_TYPE:
+void XPathResult::ConvertTo(unsigned short type,
+                            ExceptionState& exception_state) {
+  switch (type) {
+    case kAnyType:
+      break;
+    case kNumberType:
+      result_type_ = type;
+      value_ = value_.ToNumber();
+      break;
+    case kStringType:
+      result_type_ = type;
+      value_ = value_.ToString();
+      break;
+    case kBooleanType:
+      result_type_ = type;
+      value_ = value_.ToBoolean();
+      break;
+    case kUnorderedNodeIteratorType:
+    case kUnorderedNodeSnapshotType:
+    case kAnyUnorderedNodeType:
     // This is correct - singleNodeValue() will take care of ordering.
-    case FIRST_ORDERED_NODE_TYPE:
-        if (!m_value.isNodeSet()) {
-            exceptionState.throwTypeError("The result is not a node set, and therefore cannot be converted to the desired type.");
-            return;
-        }
-        m_resultType = type;
-        break;
-    case ORDERED_NODE_ITERATOR_TYPE:
-        if (!m_value.isNodeSet()) {
-            exceptionState.throwTypeError("The result is not a node set, and therefore cannot be converted to the desired type.");
-            return;
-        }
-        nodeSet().sort();
-        m_resultType = type;
-        break;
-    case ORDERED_NODE_SNAPSHOT_TYPE:
-        if (!m_value.isNodeSet()) {
-            exceptionState.throwTypeError("The result is not a node set, and therefore cannot be converted to the desired type.");
-            return;
-        }
-        m_value.toNodeSet(0).sort();
-        m_resultType = type;
-        break;
-    }
+    case kFirstOrderedNodeType:
+      if (!value_.IsNodeSet()) {
+        exception_state.ThrowTypeError(
+            "The result is not a node set, and therefore cannot be converted "
+            "to the desired type.");
+        return;
+      }
+      result_type_ = type;
+      break;
+    case kOrderedNodeIteratorType:
+      if (!value_.IsNodeSet()) {
+        exception_state.ThrowTypeError(
+            "The result is not a node set, and therefore cannot be converted "
+            "to the desired type.");
+        return;
+      }
+      GetNodeSet().Sort();
+      result_type_ = type;
+      break;
+    case kOrderedNodeSnapshotType:
+      if (!value_.IsNodeSet()) {
+        exception_state.ThrowTypeError(
+            "The result is not a node set, and therefore cannot be converted "
+            "to the desired type.");
+        return;
+      }
+      value_.ToNodeSet(0).Sort();
+      result_type_ = type;
+      break;
+  }
 }
 
-unsigned short XPathResult::resultType() const
-{
-    return m_resultType;
+unsigned short XPathResult::resultType() const {
+  return result_type_;
 }
 
-double XPathResult::numberValue(ExceptionState& exceptionState) const
-{
-    if (resultType() != NUMBER_TYPE) {
-        exceptionState.throwTypeError("The result type is not a number.");
-        return 0.0;
-    }
-    return m_value.toNumber();
+double XPathResult::numberValue(ExceptionState& exception_state) const {
+  if (resultType() != kNumberType) {
+    exception_state.ThrowTypeError("The result type is not a number.");
+    return 0.0;
+  }
+  return value_.ToNumber();
 }
 
-String XPathResult::stringValue(ExceptionState& exceptionState) const
-{
-    if (resultType() != STRING_TYPE) {
-        exceptionState.throwTypeError("The result type is not a string.");
-        return String();
-    }
-    return m_value.toString();
+String XPathResult::stringValue(ExceptionState& exception_state) const {
+  if (resultType() != kStringType) {
+    exception_state.ThrowTypeError("The result type is not a string.");
+    return String();
+  }
+  return value_.ToString();
 }
 
-bool XPathResult::booleanValue(ExceptionState& exceptionState) const
-{
-    if (resultType() != BOOLEAN_TYPE) {
-        exceptionState.throwTypeError("The result type is not a boolean.");
-        return false;
-    }
-    return m_value.toBoolean();
+bool XPathResult::booleanValue(ExceptionState& exception_state) const {
+  if (resultType() != kBooleanType) {
+    exception_state.ThrowTypeError("The result type is not a boolean.");
+    return false;
+  }
+  return value_.ToBoolean();
 }
 
-Node* XPathResult::singleNodeValue(ExceptionState& exceptionState) const
-{
-    if (resultType() != ANY_UNORDERED_NODE_TYPE && resultType() != FIRST_ORDERED_NODE_TYPE) {
-        exceptionState.throwTypeError("The result type is not a single node.");
-        return nullptr;
-    }
+Node* XPathResult::singleNodeValue(ExceptionState& exception_state) const {
+  if (resultType() != kAnyUnorderedNodeType &&
+      resultType() != kFirstOrderedNodeType) {
+    exception_state.ThrowTypeError("The result type is not a single node.");
+    return nullptr;
+  }
 
-    const NodeSet& nodes = m_value.toNodeSet(0);
-    if (resultType() == FIRST_ORDERED_NODE_TYPE)
-        return nodes.firstNode();
-    return nodes.anyNode();
+  const NodeSet& nodes = value_.ToNodeSet(0);
+  if (resultType() == kFirstOrderedNodeType)
+    return nodes.FirstNode();
+  return nodes.AnyNode();
 }
 
-bool XPathResult::invalidIteratorState() const
-{
-    if (resultType() != UNORDERED_NODE_ITERATOR_TYPE && resultType() != ORDERED_NODE_ITERATOR_TYPE)
-        return false;
+bool XPathResult::invalidIteratorState() const {
+  if (resultType() != kUnorderedNodeIteratorType &&
+      resultType() != kOrderedNodeIteratorType)
+    return false;
 
-    ASSERT(m_document);
-    return m_document->domTreeVersion() != m_domTreeVersion;
+  DCHECK(document_);
+  return document_->DomTreeVersion() != dom_tree_version_;
 }
 
-unsigned XPathResult::snapshotLength(ExceptionState& exceptionState) const
-{
-    if (resultType() != UNORDERED_NODE_SNAPSHOT_TYPE && resultType() != ORDERED_NODE_SNAPSHOT_TYPE) {
-        exceptionState.throwTypeError("The result type is not a snapshot.");
-        return 0;
-    }
+unsigned XPathResult::snapshotLength(ExceptionState& exception_state) const {
+  if (resultType() != kUnorderedNodeSnapshotType &&
+      resultType() != kOrderedNodeSnapshotType) {
+    exception_state.ThrowTypeError("The result type is not a snapshot.");
+    return 0;
+  }
 
-    return m_value.toNodeSet(0).size();
+  return value_.ToNodeSet(0).size();
 }
 
-Node* XPathResult::iterateNext(ExceptionState& exceptionState)
-{
-    if (resultType() != UNORDERED_NODE_ITERATOR_TYPE && resultType() != ORDERED_NODE_ITERATOR_TYPE) {
-        exceptionState.throwTypeError("The result type is not an iterator.");
-        return nullptr;
-    }
+Node* XPathResult::iterateNext(ExceptionState& exception_state) {
+  if (resultType() != kUnorderedNodeIteratorType &&
+      resultType() != kOrderedNodeIteratorType) {
+    exception_state.ThrowTypeError("The result type is not an iterator.");
+    return nullptr;
+  }
 
-    if (invalidIteratorState()) {
-        exceptionState.throwDOMException(InvalidStateError, "The document has mutated since the result was returned.");
-        return nullptr;
-    }
+  if (invalidIteratorState()) {
+    exception_state.ThrowDOMException(
+        kInvalidStateError,
+        "The document has mutated since the result was returned.");
+    return nullptr;
+  }
 
-    if (m_nodeSetPosition + 1 > nodeSet().size())
-        return nullptr;
+  if (node_set_position_ + 1 > GetNodeSet().size())
+    return nullptr;
 
-    Node* node = nodeSet()[m_nodeSetPosition];
+  Node* node = GetNodeSet()[node_set_position_];
 
-    m_nodeSetPosition++;
+  node_set_position_++;
 
-    return node;
+  return node;
 }
 
-Node* XPathResult::snapshotItem(unsigned index, ExceptionState& exceptionState)
-{
-    if (resultType() != UNORDERED_NODE_SNAPSHOT_TYPE && resultType() != ORDERED_NODE_SNAPSHOT_TYPE) {
-        exceptionState.throwTypeError("The result type is not a snapshot.");
-        return nullptr;
-    }
+Node* XPathResult::snapshotItem(unsigned index,
+                                ExceptionState& exception_state) {
+  if (resultType() != kUnorderedNodeSnapshotType &&
+      resultType() != kOrderedNodeSnapshotType) {
+    exception_state.ThrowTypeError("The result type is not a snapshot.");
+    return nullptr;
+  }
 
-    const NodeSet& nodes = m_value.toNodeSet(0);
-    if (index >= nodes.size())
-        return nullptr;
+  const NodeSet& nodes = value_.ToNodeSet(0);
+  if (index >= nodes.size())
+    return nullptr;
 
-    return nodes[index];
+  return nodes[index];
 }
 
-} // namespace blink
+}  // namespace blink

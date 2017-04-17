@@ -6,248 +6,115 @@
 
 #include "core/dom/ElementRareData.h"
 #include "core/dom/IntersectionObserver.h"
-#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/layout/LayoutBox.h"
-#include "core/layout/LayoutView.h"
-#include "core/paint/PaintLayer.h"
+#include "core/layout/IntersectionGeometry.h"
 
 namespace blink {
 
-IntersectionObservation::IntersectionObservation(IntersectionObserver& observer, Element& target, bool shouldReportRootBounds)
-    : m_observer(observer)
-    , m_target(&target)
-    , m_shouldReportRootBounds(shouldReportRootBounds)
-    , m_lastThresholdIndex(0)
-{
+IntersectionObservation::IntersectionObservation(IntersectionObserver& observer,
+                                                 Element& target)
+    : observer_(observer),
+      target_(&target),
+      // Note that the spec says the initial value of m_lastThresholdIndex
+      // should be -1, but since m_lastThresholdIndex is unsigned, we use a
+      // different sentinel value.
+      last_threshold_index_(kMaxThresholdIndex - 1) {
+  UpdateShouldReportRootBoundsAfterDomChange();
 }
 
-void IntersectionObservation::applyRootMargin(LayoutRect& rect) const
-{
-    if (m_shouldReportRootBounds)
-        m_observer->applyRootMargin(rect);
-}
+void IntersectionObservation::ComputeIntersectionObservations(
+    DOMHighResTimeStamp timestamp) {
+  DCHECK(Observer());
+  if (!target_)
+    return;
+  Vector<Length> root_margin(4);
+  root_margin[0] = observer_->TopMargin();
+  root_margin[1] = observer_->RightMargin();
+  root_margin[2] = observer_->BottomMargin();
+  root_margin[3] = observer_->LeftMargin();
+  IntersectionGeometry geometry(observer_->root(), *Target(), root_margin,
+                                should_report_root_bounds_);
+  geometry.ComputeGeometry();
 
-void IntersectionObservation::initializeGeometry(IntersectionGeometry& geometry) const
-{
-    initializeTargetRect(geometry.targetRect);
-    geometry.intersectionRect = geometry.targetRect;
-    initializeRootRect(geometry.rootRect);
-    geometry.doesIntersect = true;
-}
-
-void IntersectionObservation::initializeTargetRect(LayoutRect& rect) const
-{
-    DCHECK(m_target);
-    LayoutObject* targetLayoutObject = target()->layoutObject();
-    DCHECK(targetLayoutObject && targetLayoutObject->isBoxModelObject());
-    rect = LayoutRect(toLayoutBoxModelObject(targetLayoutObject)->borderBoundingBox());
-}
-
-void IntersectionObservation::initializeRootRect(LayoutRect& rect) const
-{
-    LayoutObject* rootLayoutObject = m_observer->rootLayoutObject();
-    if (rootLayoutObject->isLayoutView())
-        rect = LayoutRect(toLayoutView(rootLayoutObject)->frameView()->visibleContentRect());
-    else if (rootLayoutObject->isBox() && rootLayoutObject->hasOverflowClip())
-        rect = LayoutRect(toLayoutBox(rootLayoutObject)->contentBoxRect());
-    else
-        rect = LayoutRect(toLayoutBoxModelObject(rootLayoutObject)->borderBoundingBox());
-    applyRootMargin(rect);
-}
-
-void IntersectionObservation::clipToRoot(IntersectionGeometry& geometry) const
-{
-    // Map and clip rect into root element coordinates.
-    // TODO(szager): the writing mode flipping needs a test.
-    DCHECK(m_target);
-    LayoutObject* rootLayoutObject = m_observer->rootLayoutObject();
-    LayoutObject* targetLayoutObject = target()->layoutObject();
-
-    geometry.doesIntersect = targetLayoutObject->mapToVisualRectInAncestorSpace(toLayoutBoxModelObject(rootLayoutObject), geometry.intersectionRect, EdgeInclusive);
-    if (!geometry.doesIntersect)
-        return;
-    LayoutRect rootClipRect(geometry.rootRect);
-    toLayoutBox(rootLayoutObject)->flipForWritingMode(rootClipRect);
-    geometry.doesIntersect &= geometry.intersectionRect.inclusiveIntersect(rootClipRect);
-}
-
-static void mapRectUpToDocument(LayoutRect& rect, const LayoutObject& layoutObject, const Document& document)
-{
-    FloatQuad mappedQuad = layoutObject.localToAbsoluteQuad(
-        FloatQuad(FloatRect(rect)),
-        UseTransforms | ApplyContainerFlip);
-    rect = LayoutRect(mappedQuad.boundingBox());
-}
-
-static void mapRectDownToDocument(LayoutRect& rect, LayoutBoxModelObject& layoutObject, const Document& document)
-{
-    FloatQuad mappedQuad = document.layoutView()->ancestorToLocalQuad(
-        &layoutObject,
-        FloatQuad(FloatRect(rect)),
-        UseTransforms | ApplyContainerFlip | TraverseDocumentBoundaries);
-    rect = LayoutRect(mappedQuad.boundingBox());
-}
-
-void IntersectionObservation::mapTargetRectToTargetFrameCoordinates(LayoutRect& rect) const
-{
-    LayoutObject& targetLayoutObject = *target()->layoutObject();
-    Document& targetDocument = target()->document();
-    LayoutSize scrollPosition = LayoutSize(targetDocument.view()->scrollOffset());
-    mapRectUpToDocument(rect, targetLayoutObject, targetDocument);
-    rect.move(-scrollPosition);
-}
-
-void IntersectionObservation::mapRootRectToRootFrameCoordinates(LayoutRect& rect) const
-{
-    LayoutObject& rootLayoutObject = *m_observer->rootLayoutObject();
-    Document& rootDocument = rootLayoutObject.document();
-    LayoutSize scrollPosition = LayoutSize(rootDocument.view()->scrollOffset());
-    mapRectUpToDocument(rect, rootLayoutObject, rootLayoutObject.document());
-    rect.move(-scrollPosition);
-}
-
-void IntersectionObservation::mapRootRectToTargetFrameCoordinates(LayoutRect& rect) const
-{
-    LayoutObject& rootLayoutObject = *m_observer->rootLayoutObject();
-    Document& targetDocument = target()->document();
-    LayoutSize scrollPosition = LayoutSize(targetDocument.view()->scrollOffset());
-
-    if (&targetDocument == &rootLayoutObject.document())
-        mapRectUpToDocument(rect, rootLayoutObject, targetDocument);
-    else
-        mapRectDownToDocument(rect, toLayoutBoxModelObject(rootLayoutObject), targetDocument);
-
-    rect.move(-scrollPosition);
-}
-
-static bool isContainingBlockChainDescendant(LayoutObject* descendant, LayoutObject* ancestor)
-{
-    LocalFrame* ancestorFrame = ancestor->document().frame();
-    LocalFrame* descendantFrame = descendant->document().frame();
-
-    if (ancestor->isLayoutView())
-        return descendantFrame && descendantFrame->tree().top() == ancestorFrame;
-
-    if (ancestorFrame != descendantFrame)
-        return false;
-
-    while (descendant && descendant != ancestor)
-        descendant = descendant->containingBlock();
-    return descendant;
-}
-
-bool IntersectionObservation::computeGeometry(IntersectionGeometry& geometry) const
-{
-    // In the first few lines here, before initializeGeometry is called, "return true"
-    // effectively means "if the previous observed state was that root and target were
-    // intersecting, then generate a notification indicating that they are no longer
-    // intersecting."  This happens, for example, when root or target is removed from the
-    // DOM tree and not reinserted before the next frame is generated, or display:none
-    // is set on the root or target.
-    Element* targetElement = target();
-    if (!targetElement)
-        return false;
-    if (!targetElement->isConnected())
-        return true;
-    DCHECK(m_observer);
-    Element* rootElement = m_observer->root();
-    if (rootElement && !rootElement->isConnected())
-        return true;
-
-    LayoutObject* rootLayoutObject = m_observer->rootLayoutObject();
-    if (!rootLayoutObject || !rootLayoutObject->isBoxModelObject())
-        return true;
-    // TODO(szager): Support SVG
-    LayoutObject* targetLayoutObject = targetElement->layoutObject();
-    if (!targetLayoutObject)
-        return true;
-    if (!targetLayoutObject->isBoxModelObject() && !targetLayoutObject->isText())
-        return true;
-    if (!isContainingBlockChainDescendant(targetLayoutObject, rootLayoutObject))
-        return true;
-
-    initializeGeometry(geometry);
-
-    clipToRoot(geometry);
-
-    mapTargetRectToTargetFrameCoordinates(geometry.targetRect);
-
-    if (geometry.doesIntersect)
-        mapRootRectToTargetFrameCoordinates(geometry.intersectionRect);
-    else
-        geometry.intersectionRect = LayoutRect();
-
-    // Small optimization: if we're not going to report root bounds, don't bother
-    // transforming them to the frame.
-    if (m_shouldReportRootBounds)
-        mapRootRectToRootFrameCoordinates(geometry.rootRect);
-
-    return true;
-}
-
-void IntersectionObservation::computeIntersectionObservations(DOMHighResTimeStamp timestamp)
-{
-    IntersectionGeometry geometry;
-    if (!computeGeometry(geometry))
-        return;
-
-    // Some corner cases for threshold index:
-    //   - If target rect is zero area, because it has zero width and/or zero height,
-    //     only two states are recognized:
-    //     - 0 means not intersecting.
-    //     - 1 means intersecting.
-    //     No other threshold crossings are possible.
-    //   - Otherwise:
-    //     - If root and target do not intersect, the threshold index is 0.
-    //     - If root and target intersect but the intersection has zero-area (i.e., they
-    //       have a coincident edge or corner), we consider the intersection to have
-    //       "crossed" a zero threshold, but not crossed any non-zero threshold.
-    unsigned newThresholdIndex;
-    float newVisibleRatio = 0;
-    if (geometry.targetRect.isEmpty()) {
-        newThresholdIndex = geometry.doesIntersect ? 1 : 0;
-    } else if (!geometry.doesIntersect) {
-        newThresholdIndex = 0;
+  // Some corner cases for threshold index:
+  //   - If target rect is zero area, because it has zero width and/or zero
+  //     height,
+  //     only two states are recognized:
+  //     - 0 means not intersecting.
+  //     - 1 means intersecting.
+  //     No other threshold crossings are possible.
+  //   - Otherwise:
+  //     - If root and target do not intersect, the threshold index is 0.
+  //     - If root and target intersect but the intersection has zero-area
+  //       (i.e., they have a coincident edge or corner), we consider the
+  //       intersection to have "crossed" a zero threshold, but not crossed
+  //       any non-zero threshold.
+  unsigned new_threshold_index;
+  float new_visible_ratio;
+  if (geometry.DoesIntersect()) {
+    if (geometry.TargetRect().IsEmpty()) {
+      new_visible_ratio = 1;
     } else {
-        float intersectionArea = geometry.intersectionRect.size().width().toFloat() * geometry.intersectionRect.size().height().toFloat();
-        float targetArea = geometry.targetRect.size().width().toFloat() * geometry.targetRect.size().height().toFloat();
-        newVisibleRatio = intersectionArea / targetArea;
-        newThresholdIndex = observer().firstThresholdGreaterThan(newVisibleRatio);
+      float intersection_area =
+          geometry.IntersectionRect().Size().Width().ToFloat() *
+          geometry.IntersectionRect().Size().Height().ToFloat();
+      float target_area = geometry.TargetRect().Size().Width().ToFloat() *
+                          geometry.TargetRect().Size().Height().ToFloat();
+      new_visible_ratio = intersection_area / target_area;
     }
-    if (m_lastThresholdIndex != newThresholdIndex) {
-        IntRect snappedRootBounds = pixelSnappedIntRect(geometry.rootRect);
-        IntRect* rootBoundsPointer = m_shouldReportRootBounds ? &snappedRootBounds : nullptr;
-        IntersectionObserverEntry* newEntry = new IntersectionObserverEntry(
-            timestamp,
-            newVisibleRatio,
-            pixelSnappedIntRect(geometry.targetRect),
-            rootBoundsPointer,
-            pixelSnappedIntRect(geometry.intersectionRect),
-            target());
-        observer().enqueueIntersectionObserverEntry(*newEntry);
-        setLastThresholdIndex(newThresholdIndex);
-    }
+    new_threshold_index =
+        Observer()->FirstThresholdGreaterThan(new_visible_ratio);
+  } else {
+    new_visible_ratio = 0;
+    new_threshold_index = 0;
+  }
+
+  // TODO(tkent): We can't use CHECK_LT due to a compile error.
+  CHECK(new_threshold_index < kMaxThresholdIndex);
+
+  if (last_threshold_index_ != new_threshold_index) {
+    IntRect snapped_root_bounds = geometry.RootIntRect();
+    IntRect* root_bounds_pointer =
+        should_report_root_bounds_ ? &snapped_root_bounds : nullptr;
+    IntersectionObserverEntry* new_entry = new IntersectionObserverEntry(
+        timestamp, new_visible_ratio, geometry.TargetIntRect(),
+        root_bounds_pointer, geometry.IntersectionIntRect(),
+        geometry.DoesIntersect(), Target());
+    Observer()->EnqueueIntersectionObserverEntry(*new_entry);
+    SetLastThresholdIndex(new_threshold_index);
+  }
 }
 
-void IntersectionObservation::disconnect()
-{
-    IntersectionObserver* observer = m_observer;
-    clearRootAndRemoveFromTarget();
-    observer->removeObservation(*this);
+void IntersectionObservation::Disconnect() {
+  DCHECK(Observer());
+  if (target_)
+    Target()->EnsureIntersectionObserverData().RemoveObservation(*Observer());
+  observer_.Clear();
 }
 
-void IntersectionObservation::clearRootAndRemoveFromTarget()
-{
-    if (m_target)
-        target()->ensureIntersectionObserverData().removeObservation(observer());
-    m_observer.clear();
+void IntersectionObservation::UpdateShouldReportRootBoundsAfterDomChange() {
+  if (!Observer()->RootIsImplicit()) {
+    should_report_root_bounds_ = true;
+    return;
+  }
+  should_report_root_bounds_ = false;
+  LocalFrame* target_frame = Target()->GetDocument().GetFrame();
+  if (!target_frame)
+    return;
+  Frame* root_frame = target_frame->Tree().Top();
+  DCHECK(root_frame);
+  if (root_frame == target_frame) {
+    should_report_root_bounds_ = true;
+  } else {
+    should_report_root_bounds_ =
+        target_frame->GetSecurityContext()->GetSecurityOrigin()->CanAccess(
+            root_frame->GetSecurityContext()->GetSecurityOrigin());
+  }
 }
 
-DEFINE_TRACE(IntersectionObservation)
-{
-    visitor->trace(m_observer);
-    visitor->trace(m_target);
+DEFINE_TRACE(IntersectionObservation) {
+  visitor->Trace(observer_);
+  visitor->Trace(target_);
 }
 
-} // namespace blink
+}  // namespace blink

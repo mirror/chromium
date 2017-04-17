@@ -37,32 +37,34 @@ namespace blink {
 
 class ExceptionState;
 
-class SQLResultSet final : public GarbageCollected<SQLResultSet>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SQLResultSet* create() { return new SQLResultSet; }
-    DECLARE_TRACE();
+class SQLResultSet final : public GarbageCollected<SQLResultSet>,
+                           public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    SQLResultSetRowList* rows() const;
+ public:
+  static SQLResultSet* Create() { return new SQLResultSet; }
+  DECLARE_TRACE();
 
-    int64_t insertId(ExceptionState&) const;
-    int rowsAffected() const;
+  SQLResultSetRowList* rows() const;
 
-    // For internal (non-JS) use
-    void setInsertId(int64_t);
-    void setRowsAffected(int);
-    bool isValid() { return m_isValid; }
+  int64_t insertId(ExceptionState&) const;
+  int rowsAffected() const;
 
-private:
-    SQLResultSet();
+  // For internal (non-JS) use
+  void SetInsertId(int64_t);
+  void SetRowsAffected(int);
+  bool IsValid() { return is_valid_; }
 
-    Member<SQLResultSetRowList> m_rows;
-    int64_t m_insertId;
-    int m_rowsAffected;
-    bool m_insertIdSet;
-    bool m_isValid;
+ private:
+  SQLResultSet();
+
+  Member<SQLResultSetRowList> rows_;
+  int64_t insert_id_;
+  int rows_affected_;
+  bool insert_id_set_;
+  bool is_valid_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SQLResultSet_h
+#endif  // SQLResultSet_h

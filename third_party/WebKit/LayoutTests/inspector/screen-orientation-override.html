@@ -3,8 +3,10 @@
 <script src="../http/tests/inspector/inspector-test.js"></script>
 <script>
 
-if (window.testRunner)
+if (window.testRunner) {
     window.testRunner.disableMockScreenOrientation();
+    window.testRunner.setDumpConsoleMessages(false);
+}
 
 var windowOrientationChangeEvent = false;
 var screenOrientationChangeEvent = false;
@@ -28,6 +30,7 @@ function maybeLog()
 
 function test()
 {
+    Protocol.InspectorBackend.Options.suppressRequestErrors = false;
     function addDumpResult(next)
     {
         InspectorTest.evaluateInPage("dump()", dumpCallback);

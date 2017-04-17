@@ -26,8 +26,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-[
-] interface AudioParam {
+// See https://webaudio.github.io/web-audio-api/#AudioParam
+interface AudioParam {
     attribute float value;
     readonly attribute float defaultValue;
 
@@ -45,9 +45,12 @@
 
     // Sets an array of arbitrary parameter values starting at time for the given duration.
     // The number of values will be scaled to fit into the desired duration.
-    [RaisesException, MeasureAs=AudioParamSetValueCurveAtTime] AudioParam setValueCurveAtTime(Float32Array values, double time, double duration);
+    [RaisesException, MeasureAs=AudioParamSetValueCurveAtTime] AudioParam setValueCurveAtTime(sequence<float> values, double time, double duration);
 
     // Cancels all scheduled parameter changes with times greater than or equal to startTime.
     [RaisesException, MeasureAs=AudioParamCancelScheduledValues] AudioParam cancelScheduledValues(double startTime);
+
+    // Cancel scheduled parameter changes and hold the last value
+    [RaisesException, MeasureAs=AudioParamCancelAndHoldAtTime] AudioParam cancelAndHoldAtTime(double startTime);
 
 };

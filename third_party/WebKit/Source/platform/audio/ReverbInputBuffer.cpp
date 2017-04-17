@@ -31,54 +31,51 @@
 namespace blink {
 
 ReverbInputBuffer::ReverbInputBuffer(size_t length)
-    : m_buffer(length)
-    , m_writeIndex(0)
-{
+    : buffer_(length), write_index_(0) {}
+
+void ReverbInputBuffer::Write(const float* source_p, size_t number_of_frames) {
+  size_t buffer_length = buffer_.size();
+  bool is_copy_safe = write_index_ + number_of_frames <= buffer_length;
+  DCHECK(is_copy_safe);
+  if (!is_copy_safe)
+    return;
+
+  memcpy(buffer_.Data() + write_index_, source_p,
+         sizeof(float) * number_of_frames);
+
+  write_index_ += number_of_frames;
+  DCHECK_LE(write_index_, buffer_length);
+
+  if (write_index_ >= buffer_length)
+    write_index_ = 0;
 }
 
-void ReverbInputBuffer::write(const float* sourceP, size_t numberOfFrames)
-{
-    size_t bufferLength = m_buffer.size();
-    bool isCopySafe = m_writeIndex + numberOfFrames <= bufferLength;
-    ASSERT(isCopySafe);
-    if (!isCopySafe)
-        return;
+float* ReverbInputBuffer::DirectReadFrom(int* read_index,
+                                         size_t number_of_frames) {
+  size_t buffer_length = buffer_.size();
+  bool is_pointer_good = read_index && *read_index >= 0 &&
+                         *read_index + number_of_frames <= buffer_length;
+  DCHECK(is_pointer_good);
+  if (!is_pointer_good) {
+    // Should never happen in practice but return pointer to start of buffer
+    // (avoid crash)
+    if (read_index)
+      *read_index = 0;
+    return buffer_.Data();
+  }
 
-    memcpy(m_buffer.data() + m_writeIndex, sourceP, sizeof(float) * numberOfFrames);
+  float* source_p = buffer_.Data();
+  float* p = source_p + *read_index;
 
-    m_writeIndex += numberOfFrames;
-    ASSERT(m_writeIndex <= bufferLength);
+  // Update readIndex
+  *read_index = (*read_index + number_of_frames) % buffer_length;
 
-    if (m_writeIndex >= bufferLength)
-        m_writeIndex = 0;
+  return p;
 }
 
-float* ReverbInputBuffer::directReadFrom(int* readIndex, size_t numberOfFrames)
-{
-    size_t bufferLength = m_buffer.size();
-    bool isPointerGood = readIndex && *readIndex >= 0 && *readIndex + numberOfFrames <= bufferLength;
-    ASSERT(isPointerGood);
-    if (!isPointerGood) {
-        // Should never happen in practice but return pointer to start of buffer (avoid crash)
-        if (readIndex)
-            *readIndex = 0;
-        return m_buffer.data();
-    }
-
-    float* sourceP = m_buffer.data();
-    float* p = sourceP + *readIndex;
-
-    // Update readIndex
-    *readIndex = (*readIndex + numberOfFrames) % bufferLength;
-
-    return p;
+void ReverbInputBuffer::Reset() {
+  buffer_.Zero();
+  write_index_ = 0;
 }
 
-void ReverbInputBuffer::reset()
-{
-    m_buffer.zero();
-    m_writeIndex = 0;
-}
-
-} // namespace blink
-
+}  // namespace blink

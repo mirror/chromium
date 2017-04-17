@@ -99,8 +99,11 @@ CrashHandlerHostLinux::CrashHandlerHostLinux(const std::string& process_type,
 #if !defined(OS_ANDROID)
       upload_(upload),
 #endif
+      file_descriptor_watcher_(FROM_HERE),
       shutting_down_(false),
       worker_pool_token_(base::SequencedWorkerPool::GetSequenceToken()) {
+  write_dump_file_sequence_checker_.DetachFromSequence();
+
   int fds[2];
   // We use SOCK_SEQPACKET rather than SOCK_DGRAM to prevent the process from
   // sending datagrams to other sockets on the system. The sandbox may prevent
@@ -401,8 +404,7 @@ void CrashHandlerHostLinux::WriteDumpFile(std::unique_ptr<BreakpadInfo> info,
                                           std::unique_ptr<char[]> crash_context,
                                           pid_t crashing_pid,
                                           int signal_fd) {
-  DCHECK(BrowserThread::GetBlockingPool()->IsRunningSequenceOnCurrentThread(
-      worker_pool_token_));
+  DCHECK(write_dump_file_sequence_checker_.CalledOnValidSequence());
 
   // Set |info->distro| here because base::GetLinuxDistro() needs to run on a
   // blocking thread.

@@ -10,9 +10,8 @@
 #include "base/bind.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
-#include "base/metrics/histogram.h"
-#include "base/strings/stringprintf.h"
+#include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
@@ -23,7 +22,6 @@
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/extensions/install_tracker.h"
-#include "chrome/browser/gpu/gpu_feature_checker.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/ui/app_list/app_list_service.h"
@@ -33,6 +31,7 @@
 #include "components/crx_file/id_util.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/signin_manager.h"
+#include "content/public/browser/gpu_feature_checker.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/extension_registry.h"
@@ -41,6 +40,11 @@
 #include "net/base/load_flags.h"
 #include "net/url_request/url_request.h"
 #include "url/gurl.h"
+
+#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+#include "chrome/browser/supervised_user/supervised_user_service.h"
+#include "chrome/browser/supervised_user/supervised_user_service_factory.h"
+#endif
 
 namespace extensions {
 
@@ -73,7 +77,8 @@ class PendingApprovals {
       const std::string& id);
 
  private:
-  typedef ScopedVector<WebstoreInstaller::Approval> ApprovalList;
+  using ApprovalList =
+      std::vector<std::unique_ptr<WebstoreInstaller::Approval>>;
 
   ApprovalList approvals_;
 
@@ -85,18 +90,19 @@ PendingApprovals::~PendingApprovals() {}
 
 void PendingApprovals::PushApproval(
     std::unique_ptr<WebstoreInstaller::Approval> approval) {
-  approvals_.push_back(approval.release());
+  approvals_.push_back(std::move(approval));
 }
 
 std::unique_ptr<WebstoreInstaller::Approval> PendingApprovals::PopApproval(
     Profile* profile,
     const std::string& id) {
-  for (size_t i = 0; i < approvals_.size(); ++i) {
-    WebstoreInstaller::Approval* approval = approvals_[i];
-    if (approval->extension_id == id &&
-        profile->IsSameProfile(approval->profile)) {
-      approvals_.weak_erase(approvals_.begin() + i);
-      return std::unique_ptr<WebstoreInstaller::Approval>(approval);
+  for (ApprovalList::iterator iter = approvals_.begin();
+       iter != approvals_.end(); ++iter) {
+    if (iter->get()->extension_id == id &&
+        profile->IsSameProfile(iter->get()->profile)) {
+      std::unique_ptr<WebstoreInstaller::Approval> approval = std::move(*iter);
+      approvals_.erase(iter);
+      return approval;
     }
   }
   return std::unique_ptr<WebstoreInstaller::Approval>();
@@ -116,8 +122,8 @@ api::webstore_private::Result WebstoreInstallHelperResultToApiResult(
   return api::webstore_private::RESULT_NONE;
 }
 
-static base::LazyInstance<PendingApprovals> g_pending_approvals =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<PendingApprovals>::DestructorAtExit
+    g_pending_approvals = LAZY_INSTANCE_INITIALIZER;
 
 // A preference set by the web store to indicate login information for
 // purchased apps.
@@ -262,13 +268,32 @@ void WebstorePrivateBeginInstallWithManifest3Function::OnWebstoreParseSuccess(
     return;
   }
 
-  // Check the management policy before the installation process begins
+  // Check the management policy before the installation process begins.
+  Profile* profile = chrome_details_.GetProfile();
   base::string16 policy_error;
-  bool allow = ExtensionSystem::Get(chrome_details_.GetProfile())->
+  bool allow = ExtensionSystem::Get(profile)->
       management_policy()->UserMayLoad(dummy_extension_.get(), &policy_error);
   if (!allow) {
-    Respond(BuildResponse(api::webstore_private::RESULT_BLOCKED_BY_POLICY,
-                          base::UTF16ToUTF8(policy_error)));
+    bool blocked_for_child = false;
+#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+    // If the installation was blocked because the user is a child, we send a
+    // different error code so that the Web Store can adjust the UI accordingly.
+    // In that case, the CWS will not show the |policy_error|.
+    if (profile->IsChild()) {
+      SupervisedUserService* service =
+          SupervisedUserServiceFactory::GetForProfile(profile);
+      // Hack: Check that the message matches to make sure installation was
+      // actually blocked due to the user being a child, as opposed to, say,
+      // device policy.
+      if (policy_error == service->GetExtensionsLockedMessage())
+        blocked_for_child = true;
+    }
+#endif  // BUILDFLAG(ENABLE_SUPERVISED_USERS)
+    api::webstore_private::Result code =
+        blocked_for_child
+            ? api::webstore_private::RESULT_BLOCKED_FOR_CHILD_ACCOUNT
+            : api::webstore_private::RESULT_BLOCKED_BY_POLICY;
+    Respond(BuildResponse(code, base::UTF16ToUTF8(policy_error)));
     // Matches the AddRef in Run().
     Release();
     return;
@@ -519,17 +544,16 @@ ExtensionFunction::ResponseAction WebstorePrivateSetStoreLoginFunction::Run() {
 }
 
 WebstorePrivateGetWebGLStatusFunction::WebstorePrivateGetWebGLStatusFunction()
-  : feature_checker_(new GPUFeatureChecker(
-        gpu::GPU_FEATURE_TYPE_WEBGL,
-        base::Bind(&WebstorePrivateGetWebGLStatusFunction::OnFeatureCheck,
-                   base::Unretained(this)))) {
-}
+    : feature_checker_(content::GpuFeatureChecker::Create(
+          gpu::GPU_FEATURE_TYPE_ACCELERATED_WEBGL,
+          base::Bind(&WebstorePrivateGetWebGLStatusFunction::OnFeatureCheck,
+                     base::Unretained(this)))) {}
 
 WebstorePrivateGetWebGLStatusFunction::
     ~WebstorePrivateGetWebGLStatusFunction() {}
 
 ExtensionFunction::ResponseAction WebstorePrivateGetWebGLStatusFunction::Run() {
-  feature_checker_->CheckGPUFeatureAvailability();
+  feature_checker_->CheckGpuFeatureAvailability();
   return RespondLater();
 }
 
@@ -618,8 +642,7 @@ WebstorePrivateIsPendingCustodianApprovalFunction::Run() {
 
   ExtensionPrefs* extensions_prefs = ExtensionPrefs::Get(browser_context());
 
-  if (extensions::util::NeedCustodianApprovalForPermissionIncrease(profile) &&
-      extensions_prefs->HasDisableReason(
+  if (extensions_prefs->HasDisableReason(
           params->id, Extension::DISABLE_PERMISSIONS_INCREASE)) {
     return RespondNow(BuildResponse(true));
   }
@@ -632,7 +655,7 @@ WebstorePrivateIsPendingCustodianApprovalFunction::Run() {
 
 ExtensionFunction::ResponseValue
 WebstorePrivateIsPendingCustodianApprovalFunction::BuildResponse(bool result) {
-  return OneArgument(base::MakeUnique<base::FundamentalValue>(result));
+  return OneArgument(base::MakeUnique<base::Value>(result));
 }
 
 }  // namespace extensions

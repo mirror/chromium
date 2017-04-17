@@ -8,19 +8,16 @@
 #include <string.h>
 
 #include "mojo/public/cpp/bindings/array_traits_carray.h"
-#include "mojo/public/cpp/bindings/array_traits_standard.h"
 #include "mojo/public/cpp/bindings/array_traits_stl.h"
 #include "mojo/public/cpp/bindings/lib/array_serialization.h"
-#include "mojo/public/cpp/bindings/lib/fixed_buffer.h"
+#include "mojo/public/cpp/bindings/lib/buffer.h"
 #include "mojo/public/cpp/bindings/lib/handle_interface_serialization.h"
 #include "mojo/public/cpp/bindings/lib/map_serialization.h"
 #include "mojo/public/cpp/bindings/lib/native_enum_serialization.h"
 #include "mojo/public/cpp/bindings/lib/native_struct_serialization.h"
 #include "mojo/public/cpp/bindings/lib/string_serialization.h"
 #include "mojo/public/cpp/bindings/lib/template_util.h"
-#include "mojo/public/cpp/bindings/map_traits_standard.h"
 #include "mojo/public/cpp/bindings/map_traits_stl.h"
-#include "mojo/public/cpp/bindings/string_traits_standard.h"
 #include "mojo/public/cpp/bindings/string_traits_stl.h"
 #include "mojo/public/cpp/bindings/string_traits_string16.h"
 #include "mojo/public/cpp/bindings/string_traits_string_piece.h"
@@ -44,7 +41,7 @@ DataArrayType StructSerializeImpl(UserType* input) {
   void* result_buffer = &result.front();
   // The serialization logic requires that the buffer is 8-byte aligned. If the
   // result buffer is not properly aligned, we have to do an extra copy. In
-  // practice, this should never happen for mojo::Array (backed by std::vector).
+  // practice, this should never happen for std::vector.
   bool need_copy = !IsAligned(result_buffer);
 
   if (need_copy) {
@@ -53,9 +50,9 @@ DataArrayType StructSerializeImpl(UserType* input) {
     DCHECK(IsAligned(result_buffer));
   }
 
-  FixedBuffer buffer;
+  Buffer buffer;
   buffer.Initialize(result_buffer, size);
-  typename MojomType::Struct::Data_* data = nullptr;
+  typename MojomTypeTraits<MojomType>::Data* data = nullptr;
   Serialize<MojomType>(*input, &buffer, &data, &context);
 
   if (need_copy) {
@@ -67,16 +64,17 @@ DataArrayType StructSerializeImpl(UserType* input) {
 }
 
 template <typename MojomType, typename DataArrayType, typename UserType>
-bool StructDeserializeImpl(const DataArrayType& input, UserType* output) {
+bool StructDeserializeImpl(const DataArrayType& input,
+                           UserType* output,
+                           bool (*validate_func)(const void*,
+                                                 ValidationContext*)) {
   static_assert(BelongsTo<MojomType, MojomTypeCategory::STRUCT>::value,
                 "Unexpected type.");
-  using DataType = typename MojomType::Struct::Data_;
+  using DataType = typename MojomTypeTraits<MojomType>::Data;
 
-  if (input.is_null())
-    return false;
-
+  // TODO(sammc): Use DataArrayType::empty() once WTF::Vector::empty() exists.
   void* input_buffer =
-      input.empty()
+      input.size() == 0
           ? nullptr
           : const_cast<void*>(reinterpret_cast<const void*>(&input.front()));
 
@@ -89,9 +87,9 @@ bool StructDeserializeImpl(const DataArrayType& input, UserType* output) {
     memcpy(input_buffer, &input.front(), input.size());
   }
 
-  ValidationContext validation_context(input_buffer, input.size(), 0);
+  ValidationContext validation_context(input_buffer, input.size(), 0, 0);
   bool result = false;
-  if (DataType::Validate(input_buffer, &validation_context)) {
+  if (validate_func(input_buffer, &validation_context)) {
     auto data = reinterpret_cast<DataType*>(input_buffer);
     SerializationContext context;
     result = Deserialize<MojomType>(data, output, &context);

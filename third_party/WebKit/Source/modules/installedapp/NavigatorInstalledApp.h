@@ -5,10 +5,10 @@
 #ifndef NavigatorInstalledApp_h
 #define NavigatorInstalledApp_h
 
-#include "core/frame/DOMWindowProperty.h"
+#include "core/frame/Navigator.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -18,24 +18,27 @@ class ScriptPromise;
 class ScriptState;
 class InstalledAppController;
 
-class NavigatorInstalledApp final : public GarbageCollected<NavigatorInstalledApp>, public Supplement<Navigator>, public DOMWindowProperty {
-    USING_GARBAGE_COLLECTED_MIXIN(NavigatorInstalledApp);
-public:
-    static NavigatorInstalledApp* from(Document&);
-    static NavigatorInstalledApp& from(Navigator&);
+class NavigatorInstalledApp final
+    : public GarbageCollected<NavigatorInstalledApp>,
+      public Supplement<Navigator> {
+  USING_GARBAGE_COLLECTED_MIXIN(NavigatorInstalledApp);
 
-    static ScriptPromise getInstalledRelatedApps(ScriptState*, Navigator&);
-    ScriptPromise getInstalledRelatedApps(ScriptState*);
+ public:
+  static NavigatorInstalledApp* From(Document&);
+  static NavigatorInstalledApp& From(Navigator&);
 
-    InstalledAppController* controller();
+  static ScriptPromise getInstalledRelatedApps(ScriptState*, Navigator&);
+  ScriptPromise getInstalledRelatedApps(ScriptState*);
 
-    DECLARE_VIRTUAL_TRACE();
+  InstalledAppController* Controller();
 
-private:
-    explicit NavigatorInstalledApp(LocalFrame*);
-    static const char* supplementName();
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  explicit NavigatorInstalledApp(Navigator&);
+  static const char* SupplementName();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NavigatorInstalledApp_h
+#endif  // NavigatorInstalledApp_h

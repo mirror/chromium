@@ -218,15 +218,28 @@ class UpdateEngineClientImpl : public UpdateEngineClient {
                    weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
+  void SetUpdateOverCellularPermission(bool allowed,
+                                       const base::Closure& callback) override {
+    dbus::MethodCall method_call(
+        update_engine::kUpdateEngineInterface,
+        update_engine::kSetUpdateOverCellularPermission);
+    dbus::MessageWriter writer(&method_call);
+    writer.AppendBool(allowed);
+
+    VLOG(1) << "Requesting UpdateEngine to " << (allowed ? "allow" : "prohibit")
+            << " updates over cellular.";
+
+    return update_engine_proxy_->CallMethod(
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        base::Bind(&UpdateEngineClientImpl::OnSetUpdateOverCellularPermission,
+                   weak_ptr_factory_.GetWeakPtr(), callback));
+  }
+
  protected:
   void Init(dbus::Bus* bus) override {
     update_engine_proxy_ = bus->GetObjectProxy(
         update_engine::kUpdateEngineServiceName,
         dbus::ObjectPath(update_engine::kUpdateEngineServicePath));
-
-    // Monitor the D-Bus signal for brightness changes. Only the power
-    // manager knows the actual brightness level. We don't cache the
-    // brightness level in Chrome as it will make things less reliable.
     update_engine_proxy_->ConnectToSignal(
         update_engine::kUpdateEngineInterface,
         update_engine::kStatusUpdate,
@@ -234,15 +247,24 @@ class UpdateEngineClientImpl : public UpdateEngineClient {
                    weak_ptr_factory_.GetWeakPtr()),
         base::Bind(&UpdateEngineClientImpl::StatusUpdateConnected,
                    weak_ptr_factory_.GetWeakPtr()));
-
-    // Get update engine status for the initial status. Update engine won't
-    // send StatusUpdate signal unless there is a status change. If chrome
-    // crashes after UPDATE_STATUS_UPDATED_NEED_REBOOT status is set,
-    // restarted chrome would not get this status. See crbug.com/154104.
-    GetUpdateEngineStatus();
+    update_engine_proxy_->WaitForServiceToBeAvailable(
+        base::Bind(&UpdateEngineClientImpl::OnServiceInitiallyAvailable,
+                   weak_ptr_factory_.GetWeakPtr()));
   }
 
  private:
+  void OnServiceInitiallyAvailable(bool service_is_available) {
+    if (service_is_available) {
+      // Get update engine status for the initial status. Update engine won't
+      // send StatusUpdate signal unless there is a status change. If chrome
+      // crashes after UPDATE_STATUS_UPDATED_NEED_REBOOT status is set,
+      // restarted chrome would not get this status. See crbug.com/154104.
+      GetUpdateEngineStatus();
+    } else {
+      LOG(ERROR) << "Failed to wait for D-Bus service to become available";
+    }
+  }
+
   void GetUpdateEngineStatus() {
     dbus::MethodCall method_call(
         update_engine::kUpdateEngineInterface,
@@ -323,7 +345,8 @@ class UpdateEngineClientImpl : public UpdateEngineClient {
     }
     status.status = UpdateStatusFromString(current_operation);
     last_status_ = status;
-    FOR_EACH_OBSERVER(Observer, observers_, UpdateStatusChanged(status));
+    for (auto& observer : observers_)
+      observer.UpdateStatusChanged(status);
   }
 
   // Called when GetStatus call failed.
@@ -388,6 +411,35 @@ class UpdateEngineClientImpl : public UpdateEngineClient {
     callback.Run(static_cast<update_engine::EndOfLifeStatus>(status));
   }
 
+  // Called when a response for SetUpdateOverCellularPermission() is received.
+  void OnSetUpdateOverCellularPermission(const base::Closure& callback,
+                                         dbus::Response* response) {
+    constexpr char kFailureMessage[] =
+        "Failed to set UpdateEngine to allow updates over cellular: ";
+
+    if (response) {
+      switch (response->GetMessageType()) {
+        case dbus::Message::MESSAGE_ERROR:
+          LOG(ERROR) << kFailureMessage
+                     << "DBus responded with error: " << response->ToString();
+          break;
+        case dbus::Message::MESSAGE_INVALID:
+          LOG(ERROR) << kFailureMessage
+                     << "Invalid response from DBus (cannot be parsed).";
+          break;
+        default:
+          VLOG(1) << "Successfully set UpdateEngine to allow update over cell.";
+          break;
+      }
+    } else {
+      LOG(ERROR) << kFailureMessage << "No response from DBus.";
+    }
+
+    // Callback should run anyway, regardless of whether DBus call to enable
+    // update over cellular succeeded or failed.
+    callback.Run();
+  }
+
   // Called when a status update signal is received.
   void StatusUpdateReceived(dbus::Signal* signal) {
     VLOG(1) << "Status update signal received: " << signal->ToString();
@@ -414,7 +466,8 @@ class UpdateEngineClientImpl : public UpdateEngineClient {
     status.new_size = new_size;
 
     last_status_ = status;
-    FOR_EACH_OBSERVER(Observer, observers_, UpdateStatusChanged(status));
+    for (auto& observer : observers_)
+      observer.UpdateStatusChanged(status);
   }
 
   // Called when the status update signal is initially connected.
@@ -478,6 +531,11 @@ class UpdateEngineClientStubImpl : public UpdateEngineClient {
 
   void GetEolStatus(const GetEolStatusCallback& callback) override {
     callback.Run(update_engine::EndOfLifeStatus::kSupported);
+  }
+
+  void SetUpdateOverCellularPermission(bool allowed,
+                                       const base::Closure& callback) override {
+    callback.Run();
   }
 
   std::string current_channel_;
@@ -561,7 +619,8 @@ class UpdateEngineClientFakeImpl : public UpdateEngineClientStubImpl {
         break;
     }
     last_status_.status = next_status;
-    FOR_EACH_OBSERVER(Observer, observers_, UpdateStatusChanged(last_status_));
+    for (auto& observer : observers_)
+      observer.UpdateStatusChanged(last_status_);
     if (last_status_.status != UPDATE_STATUS_IDLE) {
       base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
           FROM_HERE, base::Bind(&UpdateEngineClientFakeImpl::StateTransition,
@@ -595,7 +654,7 @@ UpdateEngineClient* UpdateEngineClient::Create(
     DBusClientImplementationType type) {
   if (type == REAL_DBUS_CLIENT_IMPLEMENTATION)
     return new UpdateEngineClientImpl();
-  DCHECK_EQ(STUB_DBUS_CLIENT_IMPLEMENTATION, type);
+  DCHECK_EQ(FAKE_DBUS_CLIENT_IMPLEMENTATION, type);
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kTestAutoUpdateUI))
     return new UpdateEngineClientFakeImpl();
@@ -607,12 +666,12 @@ UpdateEngineClient* UpdateEngineClient::Create(
 bool UpdateEngineClient::IsTargetChannelMoreStable(
     const std::string& current_channel,
     const std::string& target_channel) {
-  auto cix = std::find(kReleaseChannelsList,
-                       kReleaseChannelsList + arraysize(kReleaseChannelsList),
-                       current_channel);
-  auto tix = std::find(kReleaseChannelsList,
-                       kReleaseChannelsList + arraysize(kReleaseChannelsList),
-                       target_channel);
+  const char** cix = std::find(
+      kReleaseChannelsList,
+      kReleaseChannelsList + arraysize(kReleaseChannelsList), current_channel);
+  const char** tix = std::find(
+      kReleaseChannelsList,
+      kReleaseChannelsList + arraysize(kReleaseChannelsList), target_channel);
   return tix > cix;
 }
 

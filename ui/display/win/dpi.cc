@@ -35,12 +35,6 @@ gfx::Size GetDPI() {
   return gfx::Size(dpi_x, dpi_y);
 }
 
-float GetUnforcedDeviceScaleFactor() {
-  return g_device_scale_factor
-      ? g_device_scale_factor
-      : GetScalingFactorFromDPI(GetDPI().width());
-}
-
 }  // namespace
 
 void SetDefaultDeviceScaleFactor(float scale) {
@@ -49,9 +43,14 @@ void SetDefaultDeviceScaleFactor(float scale) {
 }
 
 float GetDPIScale() {
-  if (display::Display::HasForceDeviceScaleFactor())
-    return display::Display::GetForcedDeviceScaleFactor();
+  if (Display::HasForceDeviceScaleFactor())
+    return Display::GetForcedDeviceScaleFactor();
   return GetUnforcedDeviceScaleFactor();
+}
+
+float GetUnforcedDeviceScaleFactor() {
+  return g_device_scale_factor ? g_device_scale_factor
+                               : GetScalingFactorFromDPI(GetDPI().width());
 }
 
 int GetDPIFromScalingFactor(float device_scaling_factor) {
@@ -60,13 +59,6 @@ int GetDPIFromScalingFactor(float device_scaling_factor) {
 
 float GetScalingFactorFromDPI(int dpi) {
   return static_cast<float>(dpi) / kDefaultDPI;
-}
-
-int GetSystemMetricsInDIP(int metric) {
-  // The system metrics always reflect the system DPI, not whatever scale we've
-  // forced or decided to use.
-  return static_cast<int>(
-      std::round(GetSystemMetrics(metric) / GetUnforcedDeviceScaleFactor()));
 }
 
 }  // namespace win

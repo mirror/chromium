@@ -7,56 +7,59 @@
 
 #include "platform/geometry/IntSize.h"
 #include "platform/graphics/paint/DisplayItem.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
-class PLATFORM_EXPORT BeginScrollDisplayItem final : public PairedBeginDisplayItem {
-public:
-    BeginScrollDisplayItem(const DisplayItemClient& client, Type type, const IntSize& currentOffset)
-        : PairedBeginDisplayItem(client, type, sizeof(*this))
-        , m_currentOffset(currentOffset)
-    {
-        ASSERT(isScrollType(type));
-    }
+class PLATFORM_EXPORT BeginScrollDisplayItem final
+    : public PairedBeginDisplayItem {
+ public:
+  BeginScrollDisplayItem(const DisplayItemClient& client,
+                         Type type,
+                         const IntSize& current_offset)
+      : PairedBeginDisplayItem(client, type, sizeof(*this)),
+        current_offset_(current_offset) {
+    DCHECK(IsScrollType(type));
+  }
 
-    void replay(GraphicsContext&) const override;
-    void appendToWebDisplayItemList(const IntRect&, WebDisplayItemList*) const override;
+  void Replay(GraphicsContext&) const override;
+  void AppendToWebDisplayItemList(const IntRect&,
+                                  WebDisplayItemList*) const override;
 
-    const IntSize& currentOffset() const { return m_currentOffset; }
+  const IntSize& CurrentOffset() const { return current_offset_; }
 
-private:
+ private:
 #ifndef NDEBUG
-    void dumpPropertiesAsDebugString(WTF::StringBuilder&) const final;
+  void DumpPropertiesAsDebugString(WTF::StringBuilder&) const final;
 #endif
-#if ENABLE(ASSERT)
-    bool equals(const DisplayItem& other) const final
-    {
-        return DisplayItem::equals(other)
-            && m_currentOffset == static_cast<const BeginScrollDisplayItem&>(other).m_currentOffset;
-    }
-#endif
+  bool Equals(const DisplayItem& other) const final {
+    return DisplayItem::Equals(other) &&
+           current_offset_ == static_cast<const BeginScrollDisplayItem&>(other)
+                                  .current_offset_;
+  }
 
-    const IntSize m_currentOffset;
+  const IntSize current_offset_;
 };
 
 class PLATFORM_EXPORT EndScrollDisplayItem final : public PairedEndDisplayItem {
-public:
-    EndScrollDisplayItem(const DisplayItemClient& client, Type type)
-        : PairedEndDisplayItem(client, type, sizeof(*this))
-    {
-        ASSERT(isEndScrollType(type));
-    }
+ public:
+  EndScrollDisplayItem(const DisplayItemClient& client, Type type)
+      : PairedEndDisplayItem(client, type, sizeof(*this)) {
+    DCHECK(IsEndScrollType(type));
+  }
 
-    void replay(GraphicsContext&) const override;
-    void appendToWebDisplayItemList(const IntRect&, WebDisplayItemList*) const override;
+  void Replay(GraphicsContext&) const override;
+  void AppendToWebDisplayItemList(const IntRect&,
+                                  WebDisplayItemList*) const override;
 
-private:
-#if ENABLE(ASSERT)
-    bool isEndAndPairedWith(DisplayItem::Type otherType) const final { return DisplayItem::isScrollType(otherType); }
+ private:
+#if DCHECK_IS_ON()
+  bool IsEndAndPairedWith(DisplayItem::Type other_type) const final {
+    return DisplayItem::IsScrollType(other_type);
+  }
 #endif
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScrollDisplayItem_h
+#endif  // ScrollDisplayItem_h

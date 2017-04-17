@@ -4,54 +4,19 @@
 
 #include "platform/testing/TransformPrinters.h"
 
+#include <ostream>  // NOLINT
 #include "platform/transforms/AffineTransform.h"
 #include "platform/transforms/TransformationMatrix.h"
-#include <ostream> // NOLINT
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-void PrintTo(const AffineTransform& transform, std::ostream* os)
-{
-    AffineTransform::DecomposedType decomposition;
-    if (!transform.decompose(decomposition)) {
-        *os << "AffineTransform(degenerate)";
-        return;
-    }
-
-    if (transform.isIdentityOrTranslation()) {
-        *os << "AffineTransform(translation=(" << decomposition.translateX << "," << decomposition.translateY << "))";
-        return;
-    }
-
-    *os << "AffineTransform("
-        << "translation=(" << decomposition.translateX << "," << decomposition.translateY << ")"
-        << ", scale=(" << decomposition.scaleX << "," << decomposition.scaleY << ")"
-        << ", angle=(" << decomposition.angle << ")"
-        << ", remainder=(" << decomposition.remainderA << "," << decomposition.remainderB << "," << decomposition.remainderC << "," << decomposition.remainderD << ")"
-        << ", translate=(" << decomposition.translateX << "," << decomposition.translateY << ")"
-        << ")";
+void PrintTo(const AffineTransform& transform, std::ostream* os) {
+  *os << transform.ToString();
 }
 
-void PrintTo(const TransformationMatrix& matrix, std::ostream* os)
-{
-    TransformationMatrix::DecomposedType decomposition;
-    if (!matrix.decompose(decomposition)) {
-        *os << "TransformationMatrix(degenerate)";
-        return;
-    }
-
-    if (matrix.isIdentityOrTranslation()) {
-        *os << "TransformationMatrix(translation=(" << decomposition.translateX << "," << decomposition.translateY << "," << decomposition.translateZ << "))";
-        return;
-    }
-
-    *os << "TransformationMatrix("
-        << "translation=(" << decomposition.translateX << "," << decomposition.translateY << "," << decomposition.translateZ << ")"
-        << ", scale=(" << decomposition.scaleX << "," << decomposition.scaleY << "," << decomposition.scaleZ << ")"
-        << ", skew=(" << decomposition.skewXY << "," << decomposition.skewXZ << "," << decomposition.skewYZ << ")"
-        << ", quaternion=(" << decomposition.quaternionX << "," << decomposition.quaternionY << "," << decomposition.quaternionZ << "," << decomposition.quaternionW << ")"
-        << ", perspective=(" << decomposition.perspectiveX << "," << decomposition.perspectiveY << "," << decomposition.perspectiveZ << "," << decomposition.perspectiveW << ")"
-        << ")";
+void PrintTo(const TransformationMatrix& matrix, std::ostream* os) {
+  *os << matrix.ToString();
 }
 
-} // namespace blink
+}  // namespace blink

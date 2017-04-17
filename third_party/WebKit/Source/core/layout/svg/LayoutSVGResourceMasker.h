@@ -24,8 +24,7 @@
 #include "core/svg/SVGMaskElement.h"
 #include "core/svg/SVGUnitTypes.h"
 #include "platform/geometry/FloatRect.h"
-
-class SkPicture;
+#include "third_party/skia/include/core/SkRefCnt.h"
 
 namespace blink {
 
@@ -33,34 +32,48 @@ class AffineTransform;
 class GraphicsContext;
 
 class LayoutSVGResourceMasker final : public LayoutSVGResourceContainer {
-public:
-    explicit LayoutSVGResourceMasker(SVGMaskElement*);
-    ~LayoutSVGResourceMasker() override;
+ public:
+  explicit LayoutSVGResourceMasker(SVGMaskElement*);
+  ~LayoutSVGResourceMasker() override;
 
-    const char* name() const override { return "LayoutSVGResourceMasker"; }
+  const char* GetName() const override { return "LayoutSVGResourceMasker"; }
 
-    void removeAllClientsFromCache(bool markForInvalidation = true) override;
-    void removeClientFromCache(LayoutObject*, bool markForInvalidation = true) override;
+  void RemoveAllClientsFromCache(bool mark_for_invalidation = true) override;
+  void RemoveClientFromCache(LayoutObject*,
+                             bool mark_for_invalidation = true) override;
 
-    FloatRect resourceBoundingBox(const LayoutObject*);
+  FloatRect ResourceBoundingBox(const LayoutObject*);
 
-    SVGUnitTypes::SVGUnitType maskUnits() const { return toSVGMaskElement(element())->maskUnits()->currentValue()->enumValue(); }
-    SVGUnitTypes::SVGUnitType maskContentUnits() const { return toSVGMaskElement(element())->maskContentUnits()->currentValue()->enumValue(); }
+  SVGUnitTypes::SVGUnitType MaskUnits() const {
+    return toSVGMaskElement(GetElement())
+        ->maskUnits()
+        ->CurrentValue()
+        ->EnumValue();
+  }
+  SVGUnitTypes::SVGUnitType MaskContentUnits() const {
+    return toSVGMaskElement(GetElement())
+        ->maskContentUnits()
+        ->CurrentValue()
+        ->EnumValue();
+  }
 
-    static const LayoutSVGResourceType s_resourceType = MaskerResourceType;
-    LayoutSVGResourceType resourceType() const override { return s_resourceType; }
+  static const LayoutSVGResourceType kResourceType = kMaskerResourceType;
+  LayoutSVGResourceType ResourceType() const override { return kResourceType; }
 
-    PassRefPtr<const SkPicture> createContentPicture(AffineTransform&, const FloatRect&, GraphicsContext&);
+  sk_sp<const PaintRecord> CreatePaintRecord(AffineTransform&,
+                                             const FloatRect&,
+                                             GraphicsContext&);
 
-private:
-    void calculateMaskContentPaintInvalidationRect();
+ private:
+  void CalculateMaskContentVisualRect();
 
-    RefPtr<const SkPicture> m_maskContentPicture;
-    FloatRect m_maskContentBoundaries;
+  sk_sp<const PaintRecord> cached_paint_record_;
+  FloatRect mask_content_boundaries_;
 };
 
-DEFINE_LAYOUT_SVG_RESOURCE_TYPE_CASTS(LayoutSVGResourceMasker, MaskerResourceType);
+DEFINE_LAYOUT_SVG_RESOURCE_TYPE_CASTS(LayoutSVGResourceMasker,
+                                      kMaskerResourceType);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -53,24 +53,13 @@ public class TitleBitmapFactory {
         int textColor = ApiCompatibilityUtils.getColor(res, incognito
                 ? R.color.compositor_tab_title_bar_text_incognito
                 : R.color.compositor_tab_title_bar_text);
-        int shadowColor = ApiCompatibilityUtils.getColor(res, incognito
-                ? R.color.compositor_tab_title_bar_shadow_incognito
-                : R.color.compositor_tab_title_bar_shadow);
-        int shadowXOffset = res.getDimensionPixelOffset(incognito
-                ? R.dimen.compositor_tab_title_bar_shadow_x_offset_incognito
-                : R.dimen.compositor_tab_title_bar_shadow_x_offset);
-        int shadowYOffset = res.getDimensionPixelOffset(incognito
-                ? R.dimen.compositor_tab_title_bar_shadow_y_offset_incognito
-                : R.dimen.compositor_tab_title_bar_shadow_y_offset);
         float textSize = res.getDimension(R.dimen.compositor_tab_title_text_size);
 
         boolean fakeBoldText = res.getBoolean(R.bool.compositor_tab_title_fake_bold_text);
 
         mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(textColor);
-        if (shadowXOffset != 0 && shadowYOffset != 0) {
-            mTextPaint.setShadowLayer(0.001f, shadowXOffset, shadowYOffset, shadowColor);
-        }
+
         mTextPaint.setTextSize(textSize);
         mTextPaint.setFakeBoldText(fakeBoldText);
         mTextPaint.density = res.getDisplayMetrics().density;
@@ -115,7 +104,7 @@ public class TitleBitmapFactory {
             }
             return b;
         } catch (OutOfMemoryError ex) {
-            Log.w(TAG, "OutOfMemoryError while building favicon texture.");
+            Log.e(TAG, "OutOfMemoryError while building favicon texture.");
         } catch (InflateException ex) {
             Log.w(TAG, "InflateException while building favicon texture.");
         }
@@ -146,7 +135,7 @@ public class TitleBitmapFactory {
             }
             return b;
         } catch (OutOfMemoryError ex) {
-            Log.w(TAG, "OutOfMemoryError while building title texture.");
+            Log.e(TAG, "OutOfMemoryError while building title texture.");
         } catch (InflateException ex) {
             Log.w(TAG, "InflateException while building title texture.");
         }

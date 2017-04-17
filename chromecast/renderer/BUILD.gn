@@ -8,12 +8,8 @@ source_set("renderer") {
   sources = [
     "cast_content_renderer_client.cc",
     "cast_content_renderer_client.h",
-    "cast_media_load_deferrer.cc",
-    "cast_media_load_deferrer.h",
-    "cast_render_thread_observer.cc",
-    "cast_render_thread_observer.h",
-    "key_systems_cast.cc",
-    "key_systems_cast.h",
+    "cast_render_frame_action_deferrer.cc",
+    "cast_render_frame_action_deferrer.h",
   ]
 
   public_deps = [
@@ -34,13 +30,13 @@ source_set("renderer") {
     "//chromecast/common/media",
     "//chromecast/crash",
     "//chromecast/media",
-    "//components/cdm/renderer",
+    "//chromecast/media",
     "//components/network_hints/renderer",
     "//content/public/common",
     "//content/public/renderer",
     "//crypto",
     "//ipc",
     "//media",
-    "//third_party/widevine/cdm:version_h",
+    "//services/service_manager/public/cpp",
   ]
 }

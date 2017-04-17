@@ -7,6 +7,8 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/LayoutBox.h"
+#include "core/paint/PaintResult.h"
+#include "platform/graphics/paint/CullRect.h"
 
 namespace blink {
 
@@ -14,48 +16,58 @@ class LayoutTable;
 
 // Common super class for LayoutTableCol, LayoutTableSection and LayoutTableRow.
 class CORE_EXPORT LayoutTableBoxComponent : public LayoutBox {
-public:
-    bool backgroundChangedSinceLastPaintInvalidation() const { return m_backgroundChangedSinceLastPaintInvalidation; }
-    void clearBackgroundChangedSinceLastPaintInvalidation() { m_backgroundChangedSinceLastPaintInvalidation = false; }
-    static bool doCellsHaveDirtyWidth(const LayoutObject& tablePart, const LayoutTable&, const StyleDifference&, const ComputedStyle& oldStyle);
-protected:
-    explicit LayoutTableBoxComponent(Element* element)
-        : LayoutBox(element)
-        , m_backgroundChangedSinceLastPaintInvalidation(false)
-    {
-    }
+ public:
+  static bool DoCellsHaveDirtyWidth(const LayoutObject& table_part,
+                                    const LayoutTable&,
+                                    const StyleDifference&,
+                                    const ComputedStyle& old_style);
 
-    const LayoutObjectChildList* children() const { return &m_children; }
-    LayoutObjectChildList* children() { return &m_children; }
+  class MutableForPainting : public LayoutObject::MutableForPainting {
+   public:
+    void UpdatePaintResult(PaintResult, const CullRect& paint_rect);
 
-    LayoutObject* firstChild() const { DCHECK(children() == virtualChildren()); return children()->firstChild(); }
-    LayoutObject* lastChild() const { DCHECK(children() == virtualChildren()); return children()->lastChild(); }
+   private:
+    friend class LayoutTableBoxComponent;
+    MutableForPainting(const LayoutTableBoxComponent& box)
+        : LayoutObject::MutableForPainting(box) {}
+  };
+  MutableForPainting GetMutableForPainting() const {
+    return MutableForPainting(*this);
+  }
 
-    void styleDidChange(StyleDifference, const ComputedStyle* oldStyle) override;
-    void imageChanged(WrappedImagePtr, const IntRect* = nullptr) override;
+ protected:
+  explicit LayoutTableBoxComponent(Element* element)
+      : LayoutBox(element), last_paint_result_(kFullyPainted) {}
 
-    void clearPaintInvalidationFlags(const PaintInvalidationState& paintInvalidationState) override
-    {
-        LayoutBox::clearPaintInvalidationFlags(paintInvalidationState);
-        m_backgroundChangedSinceLastPaintInvalidation = false;
-    }
+  const LayoutObjectChildList* Children() const { return &children_; }
+  LayoutObjectChildList* Children() { return &children_; }
 
-#if ENABLE(ASSERT)
-    bool paintInvalidationStateIsDirty() const override { return m_backgroundChangedSinceLastPaintInvalidation || LayoutBox::paintInvalidationStateIsDirty(); }
-#endif
+  LayoutObject* FirstChild() const {
+    DCHECK_EQ(Children(), VirtualChildren());
+    return Children()->FirstChild();
+  }
+  LayoutObject* LastChild() const {
+    DCHECK_EQ(Children(), VirtualChildren());
+    return Children()->LastChild();
+  }
 
-private:
-    // If you have a LayoutTableBoxComponent, use firstChild or lastChild instead.
-    void slowFirstChild() const = delete;
-    void slowLastChild() const = delete;
+ private:
+  // If you have a LayoutTableBoxComponent, use firstChild or lastChild instead.
+  void SlowFirstChild() const = delete;
+  void SlowLastChild() const = delete;
 
-    LayoutObjectChildList* virtualChildren() override { return children(); }
-    const LayoutObjectChildList* virtualChildren() const override { return children(); }
+  LayoutObjectChildList* VirtualChildren() override { return Children(); }
+  const LayoutObjectChildList* VirtualChildren() const override {
+    return Children();
+  }
 
-    LayoutObjectChildList m_children;
-    bool m_backgroundChangedSinceLastPaintInvalidation;
+  LayoutObjectChildList children_;
+
+  friend class MutableForPainting;
+  PaintResult last_paint_result_;
+  CullRect last_paint_rect_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutTableBoxComponent_h
+#endif  // LayoutTableBoxComponent_h

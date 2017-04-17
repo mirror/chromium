@@ -13,19 +13,18 @@ namespace internal {
 // specified by the ".Background" suffix. For these events, we put them into the
 // background histogram if the web contents was ever in the background from
 // navigation start to the event in question.
-extern const char kHistogramCommit[];
 extern const char kHistogramFirstLayout[];
+extern const char kHistogramFirstPaint[];
 extern const char kHistogramFirstTextPaint[];
 extern const char kHistogramDomContentLoaded[];
-extern const char kHistogramDomLoadingToDomContentLoaded[];
 extern const char kHistogramLoad[];
 extern const char kHistogramFirstContentfulPaint[];
-extern const char kHistogramFirstContentfulPaintImmediate[];
-extern const char kHistogramDomLoadingToFirstContentfulPaint[];
+extern const char kHistogramFirstMeaningfulPaint[];
 extern const char kHistogramParseDuration[];
 extern const char kHistogramParseBlockedOnScriptLoad[];
+extern const char kHistogramParseBlockedOnScriptExecution[];
+extern const char kHistogramParseStartToFirstMeaningfulPaint[];
 
-extern const char kBackgroundHistogramCommit[];
 extern const char kBackgroundHistogramFirstLayout[];
 extern const char kBackgroundHistogramFirstTextPaint[];
 extern const char kBackgroundHistogramDomContentLoaded[];
@@ -40,10 +39,45 @@ extern const char kHistogramLoadTypeParseStartReload[];
 extern const char kHistogramLoadTypeParseStartForwardBack[];
 extern const char kHistogramLoadTypeParseStartNewNavigation[];
 
-extern const char kHistogramBackgroundBeforePaint[];
 extern const char kHistogramFailedProvisionalLoad[];
 
+extern const char kHistogramPageTimingForegroundDuration[];
+extern const char kHistogramPageTimingForegroundDurationNoCommit[];
+
 extern const char kRapporMetricsNameCoarseTiming[];
+extern const char kHistogramFirstMeaningfulPaintStatus[];
+
+extern const char kHistogramFirstNonScrollInputAfterFirstPaint[];
+extern const char kHistogramFirstScrollInputAfterFirstPaint[];
+
+extern const char kHistogramTotalBytes[];
+extern const char kHistogramNetworkBytes[];
+extern const char kHistogramCacheBytes[];
+
+extern const char kHistogramLoadTypeTotalBytesForwardBack[];
+extern const char kHistogramLoadTypeNetworkBytesForwardBack[];
+extern const char kHistogramLoadTypeCacheBytesForwardBack[];
+
+extern const char kHistogramLoadTypeTotalBytesReload[];
+extern const char kHistogramLoadTypeNetworkBytesReload[];
+extern const char kHistogramLoadTypeCacheBytesReload[];
+
+extern const char kHistogramLoadTypeTotalBytesNewNavigation[];
+extern const char kHistogramLoadTypeNetworkBytesNewNavigation[];
+extern const char kHistogramLoadTypeCacheBytesNewNavigation[];
+
+extern const char kHistogramTotalCompletedResources[];
+extern const char kHistogramNetworkCompletedResources[];
+extern const char kHistogramCacheCompletedResources[];
+
+enum FirstMeaningfulPaintStatus {
+  FIRST_MEANINGFUL_PAINT_RECORDED,
+  FIRST_MEANINGFUL_PAINT_BACKGROUNDED,
+  FIRST_MEANINGFUL_PAINT_DID_NOT_REACH_NETWORK_STABLE,
+  FIRST_MEANINGFUL_PAINT_USER_INTERACTION_BEFORE_FMP,
+  FIRST_MEANINGFUL_PAINT_DID_NOT_REACH_FIRST_CONTENTFUL_PAINT,
+  FIRST_MEANINGFUL_PAINT_LAST_ENTRY
+};
 
 }  // namespace internal
 
@@ -57,7 +91,7 @@ class CorePageLoadMetricsObserver
   ~CorePageLoadMetricsObserver() override;
 
   // page_load_metrics::PageLoadMetricsObserver:
-  void OnCommit(content::NavigationHandle* navigation_handle) override;
+  ObservePolicy OnCommit(content::NavigationHandle* navigation_handle) override;
   void OnDomContentLoadedEventStart(
       const page_load_metrics::PageLoadTiming& timing,
       const page_load_metrics::PageLoadExtraInfo& extra_info) override;
@@ -79,6 +113,9 @@ class CorePageLoadMetricsObserver
   void OnFirstContentfulPaint(
       const page_load_metrics::PageLoadTiming& timing,
       const page_load_metrics::PageLoadExtraInfo& extra_info) override;
+  void OnFirstMeaningfulPaint(
+      const page_load_metrics::PageLoadTiming& timing,
+      const page_load_metrics::PageLoadExtraInfo& extra_info) override;
   void OnParseStart(
       const page_load_metrics::PageLoadTiming& timing,
       const page_load_metrics::PageLoadExtraInfo& extra_info) override;
@@ -90,15 +127,49 @@ class CorePageLoadMetricsObserver
   void OnFailedProvisionalLoad(
       const page_load_metrics::FailedProvisionalLoadInfo& failed_load_info,
       const page_load_metrics::PageLoadExtraInfo& extra_info) override;
+  ObservePolicy FlushMetricsOnAppEnterBackground(
+      const page_load_metrics::PageLoadTiming& timing,
+      const page_load_metrics::PageLoadExtraInfo& info) override;
+  void OnUserInput(const blink::WebInputEvent& event) override;
+  void OnLoadedResource(
+      const page_load_metrics::ExtraRequestInfo& extra_request_info) override;
 
  private:
   void RecordTimingHistograms(const page_load_metrics::PageLoadTiming& timing,
                               const page_load_metrics::PageLoadExtraInfo& info);
+  void RecordByteAndResourceHistograms(
+      const page_load_metrics::PageLoadTiming& timing,
+      const page_load_metrics::PageLoadExtraInfo& info);
   void RecordRappor(const page_load_metrics::PageLoadTiming& timing,
                     const page_load_metrics::PageLoadExtraInfo& info);
+  void RecordForegroundDurationHistograms(
+      const page_load_metrics::PageLoadTiming& timing,
+      const page_load_metrics::PageLoadExtraInfo& info,
+      base::TimeTicks app_background_time);
 
   ui::PageTransition transition_;
-  bool initiated_by_user_gesture_;
+  bool was_no_store_main_resource_;
+
+  // Note: these are only approximations, based on WebContents attribution from
+  // ResourceRequestInfo objects while this is the currently committed load in
+  // the WebContents.
+  int num_cache_resources_;
+  int num_network_resources_;
+
+  // The number of body (not header) prefilter bytes consumed by requests for
+  // the page.
+  int64_t cache_bytes_;
+  int64_t network_bytes_;
+
+  // True if we've received a non-scroll input (touch tap or mouse up)
+  // after first paint has happened.
+  bool received_non_scroll_input_after_first_paint_ = false;
+
+  // True if we've received a scroll input after first paint has happened.
+  bool received_scroll_input_after_first_paint_ = false;
+
+  base::TimeTicks first_user_interaction_after_first_paint_;
+  base::TimeTicks first_paint_;
 
   DISALLOW_COPY_AND_ASSIGN(CorePageLoadMetricsObserver);
 };

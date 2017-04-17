@@ -10,166 +10,167 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #include "platform/audio/AudioDelayDSPKernel.h"
-#include "platform/audio/AudioUtilities.h"
-#include "wtf/MathExtras.h"
+
 #include <cmath>
+#include "platform/audio/AudioUtilities.h"
+#include "platform/wtf/MathExtras.h"
 
 namespace blink {
 
-const float SmoothingTimeConstant = 0.020f; // 20ms
+const float kSmoothingTimeConstant = 0.020f;  // 20ms
 
-AudioDelayDSPKernel::AudioDelayDSPKernel(AudioDSPKernelProcessor* processor, size_t processingSizeInFrames)
-    : AudioDSPKernel(processor)
-    , m_writeIndex(0)
-    , m_firstTime(true)
-    , m_delayTimes(processingSizeInFrames)
-{
+AudioDelayDSPKernel::AudioDelayDSPKernel(AudioDSPKernelProcessor* processor,
+                                         size_t processing_size_in_frames)
+    : AudioDSPKernel(processor),
+      write_index_(0),
+      first_time_(true),
+      delay_times_(processing_size_in_frames) {}
+
+AudioDelayDSPKernel::AudioDelayDSPKernel(double max_delay_time,
+                                         float sample_rate)
+    : AudioDSPKernel(sample_rate),
+      max_delay_time_(max_delay_time),
+      write_index_(0),
+      first_time_(true) {
+  DCHECK_GT(max_delay_time, 0.0);
+  DCHECK(!std::isnan(max_delay_time));
+  if (max_delay_time <= 0.0 || std::isnan(max_delay_time))
+    return;
+
+  size_t buffer_length = BufferLengthForDelay(max_delay_time, sample_rate);
+  DCHECK(buffer_length);
+  if (!buffer_length)
+    return;
+
+  buffer_.Allocate(buffer_length);
+  buffer_.Zero();
+
+  smoothing_rate_ = AudioUtilities::DiscreteTimeConstantForSampleRate(
+      kSmoothingTimeConstant, sample_rate);
 }
 
-AudioDelayDSPKernel::AudioDelayDSPKernel(double maxDelayTime, float sampleRate)
-    : AudioDSPKernel(sampleRate)
-    , m_maxDelayTime(maxDelayTime)
-    , m_writeIndex(0)
-    , m_firstTime(true)
-{
-    ASSERT(maxDelayTime > 0.0 && !std::isnan(maxDelayTime));
-    if (maxDelayTime <= 0.0 || std::isnan(maxDelayTime))
-        return;
-
-    size_t bufferLength = bufferLengthForDelay(maxDelayTime, sampleRate);
-    ASSERT(bufferLength);
-    if (!bufferLength)
-        return;
-
-    m_buffer.allocate(bufferLength);
-    m_buffer.zero();
-
-    m_smoothingRate = AudioUtilities::discreteTimeConstantForSampleRate(SmoothingTimeConstant, sampleRate);
+size_t AudioDelayDSPKernel::BufferLengthForDelay(double max_delay_time,
+                                                 double sample_rate) const {
+  // Compute the length of the buffer needed to handle a max delay of
+  // |maxDelayTime|. One is added to handle the case where the actual delay
+  // equals the maximum delay.
+  return 1 + AudioUtilities::TimeToSampleFrame(max_delay_time, sample_rate);
 }
 
-size_t AudioDelayDSPKernel::bufferLengthForDelay(double maxDelayTime, double sampleRate) const
-{
-    // Compute the length of the buffer needed to handle a max delay of |maxDelayTime|. One is
-    // added to handle the case where the actual delay equals the maximum delay.
-    return 1 + AudioUtilities::timeToSampleFrame(maxDelayTime, sampleRate);
+bool AudioDelayDSPKernel::HasSampleAccurateValues() {
+  return false;
 }
 
-bool AudioDelayDSPKernel::hasSampleAccurateValues()
-{
-    return false;
+void AudioDelayDSPKernel::CalculateSampleAccurateValues(float*, size_t) {
+  NOTREACHED();
 }
 
-void AudioDelayDSPKernel::calculateSampleAccurateValues(float*, size_t)
-{
-    ASSERT_NOT_REACHED();
+double AudioDelayDSPKernel::DelayTime(float sample_rate) {
+  return desired_delay_frames_ / sample_rate;
 }
 
-double AudioDelayDSPKernel::delayTime(float sampleRate)
-{
-    return m_desiredDelayFrames / sampleRate;
-}
+void AudioDelayDSPKernel::Process(const float* source,
+                                  float* destination,
+                                  size_t frames_to_process) {
+  size_t buffer_length = buffer_.size();
+  float* buffer = buffer_.Data();
 
-void AudioDelayDSPKernel::process(const float* source, float* destination, size_t framesToProcess)
-{
-    size_t bufferLength = m_buffer.size();
-    float* buffer = m_buffer.data();
+  DCHECK(buffer_length);
+  if (!buffer_length)
+    return;
 
-    ASSERT(bufferLength);
-    if (!bufferLength)
-        return;
+  DCHECK(source);
+  DCHECK(destination);
+  if (!source || !destination)
+    return;
 
-    ASSERT(source && destination);
-    if (!source || !destination)
-        return;
+  float sample_rate = this->SampleRate();
+  double delay_time = 0;
+  float* delay_times = delay_times_.Data();
+  double max_time = MaxDelayTime();
 
-    float sampleRate = this->sampleRate();
-    double delayTime = 0;
-    float* delayTimes = m_delayTimes.data();
-    double maxTime = maxDelayTime();
+  bool sample_accurate = HasSampleAccurateValues();
 
-    bool sampleAccurate = hasSampleAccurateValues();
+  if (sample_accurate) {
+    CalculateSampleAccurateValues(delay_times, frames_to_process);
+  } else {
+    delay_time = this->DelayTime(sample_rate);
 
-    if (sampleAccurate) {
-        calculateSampleAccurateValues(delayTimes, framesToProcess);
+    // Make sure the delay time is in a valid range.
+    delay_time = clampTo(delay_time, 0.0, max_time);
+
+    if (first_time_) {
+      current_delay_time_ = delay_time;
+      first_time_ = false;
+    }
+  }
+
+  for (unsigned i = 0; i < frames_to_process; ++i) {
+    if (sample_accurate) {
+      delay_time = delay_times[i];
+      if (std::isnan(delay_time))
+        delay_time = max_time;
+      else
+        delay_time = clampTo(delay_time, 0.0, max_time);
+      current_delay_time_ = delay_time;
     } else {
-        delayTime = this->delayTime(sampleRate);
-
-        // Make sure the delay time is in a valid range.
-        delayTime = clampTo(delayTime, 0.0, maxTime);
-
-        if (m_firstTime) {
-            m_currentDelayTime = delayTime;
-            m_firstTime = false;
-        }
+      // Approach desired delay time.
+      current_delay_time_ +=
+          (delay_time - current_delay_time_) * smoothing_rate_;
     }
 
-    for (unsigned i = 0; i < framesToProcess; ++i) {
-        if (sampleAccurate) {
-            delayTime = delayTimes[i];
-            if (std::isnan(delayTime))
-                delayTime = maxTime;
-            else
-                delayTime = clampTo(delayTime, 0.0, maxTime);
-            m_currentDelayTime = delayTime;
-        } else {
-            // Approach desired delay time.
-            m_currentDelayTime += (delayTime - m_currentDelayTime) * m_smoothingRate;
-        }
+    double desired_delay_frames = current_delay_time_ * sample_rate;
 
-        double desiredDelayFrames = m_currentDelayTime * sampleRate;
+    double read_position = write_index_ + buffer_length - desired_delay_frames;
+    if (read_position >= buffer_length)
+      read_position -= buffer_length;
 
-        double readPosition = m_writeIndex + bufferLength - desiredDelayFrames;
-        if (readPosition >= bufferLength)
-            readPosition -= bufferLength;
+    // Linearly interpolate in-between delay times.
+    int read_index1 = static_cast<int>(read_position);
+    int read_index2 = (read_index1 + 1) % buffer_length;
+    double interpolation_factor = read_position - read_index1;
 
-        // Linearly interpolate in-between delay times.
-        int readIndex1 = static_cast<int>(readPosition);
-        int readIndex2 = (readIndex1 + 1) % bufferLength;
-        double interpolationFactor = readPosition - readIndex1;
+    double input = static_cast<float>(*source++);
+    buffer[write_index_] = static_cast<float>(input);
+    write_index_ = (write_index_ + 1) % buffer_length;
 
-        double input = static_cast<float>(*source++);
-        buffer[m_writeIndex] = static_cast<float>(input);
-        m_writeIndex = (m_writeIndex + 1) % bufferLength;
+    double sample1 = buffer[read_index1];
+    double sample2 = buffer[read_index2];
 
-        double sample1 = buffer[readIndex1];
-        double sample2 = buffer[readIndex2];
+    double output =
+        (1.0 - interpolation_factor) * sample1 + interpolation_factor * sample2;
 
-        double output = (1.0 - interpolationFactor) * sample1 + interpolationFactor * sample2;
-
-        *destination++ = static_cast<float>(output);
-    }
+    *destination++ = static_cast<float>(output);
+  }
 }
 
-void AudioDelayDSPKernel::reset()
-{
-    m_firstTime = true;
-    m_buffer.zero();
+void AudioDelayDSPKernel::Reset() {
+  first_time_ = true;
+  buffer_.Zero();
 }
 
-double AudioDelayDSPKernel::tailTime() const
-{
-    // Account for worst case delay.
-    // Don't try to track actual delay time which can change dynamically.
-    return m_maxDelayTime;
+double AudioDelayDSPKernel::TailTime() const {
+  // Account for worst case delay.
+  // Don't try to track actual delay time which can change dynamically.
+  return max_delay_time_;
 }
 
-double AudioDelayDSPKernel::latencyTime() const
-{
-    return 0;
+double AudioDelayDSPKernel::LatencyTime() const {
+  return 0;
 }
 
-} // namespace blink
-
+}  // namespace blink

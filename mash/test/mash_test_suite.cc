@@ -4,11 +4,24 @@
 
 #include "mash/test/mash_test_suite.h"
 
+#include "ash/public/cpp/config.h"
+#include "ash/test/ash_test_helper.h"
+#include "base/command_line.h"
 #include "base/files/file_path.h"
+#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
+#include "cc/output/context_provider.h"
+#include "cc/surfaces/frame_sink_id_allocator.h"
+#include "cc/surfaces/surface_manager.h"
 #include "ui/aura/env.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/ui_base_paths.h"
+#include "ui/compositor/compositor.h"
+#include "ui/compositor/reflector.h"
+#include "ui/compositor/test/fake_context_factory.h"
+#include "ui/gl/gl_bindings.h"
+#include "ui/gl/gl_switches.h"
+#include "ui/gl/test/gl_surface_test_support.h"
 
 namespace mash {
 namespace test {
@@ -19,6 +32,10 @@ MashTestSuite::~MashTestSuite() {}
 
 void MashTestSuite::Initialize() {
   base::TestSuite::Initialize();
+  gl::GLSurfaceTestSupport::InitializeOneOff();
+
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kOverrideUseSoftwareGLForTests);
 
   // Load ash mus strings and resources; not 'common' (Chrome) resources.
   base::FilePath resources;
@@ -26,8 +43,14 @@ void MashTestSuite::Initialize() {
   resources = resources.Append(FILE_PATH_LITERAL("ash_mus_resources.pak"));
   ui::ResourceBundle::InitSharedInstanceWithPakPath(resources);
 
+  ash::test::AshTestHelper::config_ = ash::Config::MASH;
+
   base::DiscardableMemoryAllocator::SetInstance(&discardable_memory_allocator_);
-  env_ = aura::Env::CreateInstance();
+  env_ = aura::Env::CreateInstance(aura::Env::Mode::MUS);
+
+  context_factory_ = base::MakeUnique<ui::FakeContextFactory>();
+  env_->set_context_factory(context_factory_.get());
+  env_->set_context_factory_private(nullptr);
 }
 
 void MashTestSuite::Shutdown() {

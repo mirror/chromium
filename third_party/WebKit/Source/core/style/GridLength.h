@@ -32,57 +32,61 @@
 #define GridLength_h
 
 #include "platform/Length.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
-// This class wraps the <track-breadth> which can be either a <percentage>, <length>, min-content, max-content
-// or <flex>. This class avoids spreading the knowledge of <flex> throughout the layout directory by adding
-// an new unit to Length.h.
+// This class wraps the <track-breadth> which can be either a <percentage>,
+// <length>, min-content, max-content or <flex>. This class avoids spreading the
+// knowledge of <flex> throughout the layout directory by adding an new unit to
+// Length.h.
 class GridLength {
-    DISALLOW_NEW();
-public:
-    GridLength(const Length& length)
-        : m_length(length)
-        , m_flex(0)
-        , m_type(LengthType)
-    {
-    }
+  DISALLOW_NEW();
 
-    explicit GridLength(double flex)
-        : m_flex(flex)
-        , m_type(FlexType)
-    {
-    }
+ public:
+  GridLength(const Length& length)
+      : length_(length), flex_(0), type_(kLengthType) {}
 
-    bool isLength() const { return m_type == LengthType; }
-    bool isFlex() const { return m_type == FlexType; }
+  explicit GridLength(double flex) : flex_(flex), type_(kFlexType) {}
 
-    const Length& length() const { ASSERT(isLength()); return m_length; }
+  bool IsLength() const { return type_ == kLengthType; }
+  bool IsFlex() const { return type_ == kFlexType; }
 
-    double flex() const { ASSERT(isFlex()); return m_flex; }
+  const Length& length() const {
+    DCHECK(IsLength());
+    return length_;
+  }
 
-    bool hasPercentage() const { return m_type == LengthType && m_length.hasPercent(); }
+  double Flex() const {
+    DCHECK(IsFlex());
+    return flex_;
+  }
 
-    bool operator==(const GridLength& o) const
-    {
-        return m_length == o.m_length && m_flex == o.m_flex && m_type == o.m_type;
-    }
+  bool HasPercentage() const {
+    return type_ == kLengthType && length_.IsPercentOrCalc();
+  }
 
-    bool isContentSized() const { return m_type == LengthType && (m_length.isAuto() || m_length.isMinContent() || m_length.isMaxContent()); }
+  bool operator==(const GridLength& o) const {
+    return length_ == o.length_ && flex_ == o.flex_ && type_ == o.type_;
+  }
 
-private:
-    // Ideally we would put the 2 following fields in a union, but Length has a constructor,
-    // a destructor and a copy assignment which isn't allowed.
-    Length m_length;
-    double m_flex;
-    enum GridLengthType {
-        LengthType,
-        FlexType
-    };
-    GridLengthType m_type;
+  bool IsContentSized() const {
+    return type_ == kLengthType &&
+           (length_.IsAuto() || length_.IsMinContent() ||
+            length_.IsMaxContent());
+  }
+
+  bool IsAuto() const { return type_ == kLengthType && length_.IsAuto(); }
+
+ private:
+  // Ideally we would put the 2 following fields in a union, but Length has a
+  // constructor, a destructor and a copy assignment which isn't allowed.
+  Length length_;
+  double flex_;
+  enum GridLengthType { kLengthType, kFlexType };
+  GridLengthType type_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // GridLength_h
+#endif  // GridLength_h

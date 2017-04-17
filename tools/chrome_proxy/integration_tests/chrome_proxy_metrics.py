@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import json
 import logging
 import os
 import time
@@ -9,7 +10,7 @@ import time
 from common import chrome_proxy_metrics
 from common import network_metrics
 from common.chrome_proxy_metrics import ChromeProxyMetricException
-from telemetry.page import page_test
+from telemetry.page import legacy_page_test
 from telemetry.value import scalar
 from telemetry.value import histogram_util
 from metrics import Metric
@@ -303,10 +304,10 @@ class ChromeProxyMetric(network_metrics.NetworkMetric):
 
     super(ChromeProxyMetric, self).AddResults(tab, results)
 
-  def AddResultsForLoFiPreview(self, tab, results):
-    lo_fi_preview_request_count = 0
-    lo_fi_preview_exp_request_count = 0
-    lo_fi_preview_response_count = 0
+  def AddResultsForLitePage(self, tab, results):
+    lite_page_request_count = 0
+    lite_page_exp_request_count = 0
+    lite_page_response_count = 0
 
     for resp in self.IterResponses(tab):
       if '/csi?' in resp.response.url:
@@ -316,45 +317,45 @@ class ChromeProxyMetric(network_metrics.NetworkMetric):
       if resp.response.url.startswith('data:'):
         continue
 
-      if resp.HasChromeProxyLoFiPreviewRequest():
-        lo_fi_preview_request_count += 1
+      if resp.HasChromeProxyLitePageRequest():
+        lite_page_request_count += 1
 
-      if resp.HasChromeProxyLoFiPreviewExpRequest():
-        lo_fi_preview_exp_request_count += 1
+      if resp.HasChromeProxyLitePageExpRequest():
+        lite_page_exp_request_count += 1
 
-      if resp.HasChromeProxyLoFiPreviewResponse():
-        lo_fi_preview_response_count += 1
+      if resp.HasChromeProxyLitePageResponse():
+        lite_page_response_count += 1
 
       if resp.HasChromeProxyLoFiRequest():
         raise ChromeProxyMetricException, (
-        '%s: Lo-Fi directive should not be in preview request header.' %
+        '%s: Lo-Fi directive should not be in lite page request header.' %
         (resp.response.url))
 
-    if lo_fi_preview_request_count == 0:
+    if lite_page_request_count == 0:
       raise ChromeProxyMetricException, (
-          'Expected at least one LoFi preview request, but zero such requests '
-          'were sent.')
-    if lo_fi_preview_exp_request_count == 0:
+          'Expected at least one lite page request, but zero such requests were'
+          ' sent.')
+    if lite_page_exp_request_count == 0:
       raise ChromeProxyMetricException, (
-          'Expected at least one LoFi preview exp=ignore_preview_blacklist '
-          'request, but zero such requests were sent.')
-    if lo_fi_preview_response_count == 0:
+          'Expected at least one lite page exp=ignore_preview_blacklist request'
+          ', but zero such requests were sent.')
+    if lite_page_response_count == 0:
       raise ChromeProxyMetricException, (
-          'Expected at least one LoFi preview response, but zero such '
-          'responses were received.')
+          'Expected at least one lite page response, but zero such responses '
+          'were received.')
 
     results.AddValue(
         scalar.ScalarValue(
-            results.current_page, 'lo_fi_preview_request',
-            'count', lo_fi_preview_request_count))
+            results.current_page, 'lite_page_request',
+            'count', lite_page_request_count))
     results.AddValue(
         scalar.ScalarValue(
-            results.current_page, 'lo_fi_preview_exp_request',
-            'count', lo_fi_preview_exp_request_count))
+            results.current_page, 'lite_page_exp_request',
+            'count', lite_page_exp_request_count))
     results.AddValue(
         scalar.ScalarValue(
-            results.current_page, 'lo_fi_preview_response',
-            'count', lo_fi_preview_response_count))
+            results.current_page, 'lite_page_response',
+            'count', lite_page_response_count))
     super(ChromeProxyMetric, self).AddResults(tab, results)
 
   def AddResultsForPassThrough(self, tab, results):
@@ -380,8 +381,8 @@ class ChromeProxyMetric(network_metrics.NetworkMetric):
 
     if pass_through_count != 1:
       raise ChromeProxyMetricException, (
-          'Expected exactly one Chrome-Proxy pass-through request, but %d '
-          'such requests were sent.' % (pass_through_count))
+          'Expected exactly one Chrome-Proxy-Accept-Transform identity request,'
+          ' but %d such requests were sent.' % (pass_through_count))
 
     if compressed_count != 1:
       raise ChromeProxyMetricException, (
@@ -390,8 +391,8 @@ class ChromeProxyMetric(network_metrics.NetworkMetric):
 
     if compressed_size >= pass_through_size:
       raise ChromeProxyMetricException, (
-          'Compressed image is %d bytes and pass-through image is %d. '
-          'Expecting compressed image size to be less than pass-through '
+          'Compressed image is %d bytes and identity image is %d. '
+          'Expecting compressed image size to be less than identity '
           'image.' % (compressed_size, pass_through_size))
 
     results.AddValue(scalar.ScalarValue(
@@ -430,13 +431,13 @@ class ChromeProxyMetric(network_metrics.NetworkMetric):
   def AddResultsForHTML5Test(self, tab, results):
     # Wait for the number of "points" of HTML5 compatibility to appear to verify
     # the HTML5 elements have loaded successfully.
-    tab.WaitForJavaScriptExpression(
-        'document.getElementsByClassName("pointsPanel")', 15)
+    tab.WaitForJavaScriptCondition(
+        'document.getElementsByClassName("pointsPanel")', timeout=15)
 
   def AddResultsForYouTube(self, tab, results):
     # Wait for the video to begin playing.
-    tab.WaitForJavaScriptExpression(
-        'window.playerState == YT.PlayerState.PLAYING', 30)
+    tab.WaitForJavaScriptCondition(
+        'window.playerState == YT.PlayerState.PLAYING', timeout=30)
 
   def AddResultsForBypass(self, tab, results, url_pattern=""):
     bypass_count = 0
@@ -670,7 +671,8 @@ class ChromeProxyMetric(network_metrics.NetworkMetric):
     before_metrics = ChromeProxyMetric()
     before_metrics.Start(results.current_page, tab)
     tab.Navigate('http://chromeproxy-test.appspot.com/default')
-    tab.WaitForJavaScriptExpression('performance.timing.loadEventStart', 10)
+    tab.WaitForJavaScriptCondition(
+        'performance.timing.loadEventStart', timeout=10)
     before_metrics.Stop(results.current_page, tab)
 
     for resp in before_metrics.IterResponses(tab):
@@ -695,7 +697,8 @@ class ChromeProxyMetric(network_metrics.NetworkMetric):
     after_metrics = ChromeProxyMetric()
     after_metrics.Start(results.current_page, tab)
     tab.Navigate('http://chromeproxy-test.appspot.com/default')
-    tab.WaitForJavaScriptExpression('performance.timing.loadEventStart', 10)
+    tab.WaitForJavaScriptCondition(
+        'performance.timing.loadEventStart', timeout=10)
     after_metrics.Stop(results.current_page, tab)
 
     for resp in after_metrics.IterResponses(tab):
@@ -745,7 +748,8 @@ class ChromeProxyMetric(network_metrics.NetworkMetric):
     before_metrics = ChromeProxyMetric()
     before_metrics.Start(results.current_page, tab)
     tab.Navigate('http://chromeproxy-test.appspot.com/default')
-    tab.WaitForJavaScriptExpression('performance.timing.loadEventStart', 10)
+    tab.WaitForJavaScriptCondition(
+        'performance.timing.loadEventStart', timeout=10)
     before_metrics.Stop(results.current_page, tab)
 
     for resp in before_metrics.IterResponses(tab):
@@ -772,7 +776,8 @@ class ChromeProxyMetric(network_metrics.NetworkMetric):
     after_metrics = ChromeProxyMetric()
     after_metrics.Start(results.current_page, tab)
     tab.Navigate('http://chromeproxy-test.appspot.com/default')
-    tab.WaitForJavaScriptExpression('performance.timing.loadEventStart', 10)
+    tab.WaitForJavaScriptCondition(
+        'performance.timing.loadEventStart', timeout=10)
     after_metrics.Stop(results.current_page, tab)
 
     for resp in after_metrics.IterResponses(tab):
@@ -872,6 +877,93 @@ class ChromeProxyMetric(network_metrics.NetworkMetric):
     results.AddValue(scalar.ScalarValue(
         results.current_page, 'succeeded_sum', 'count', succeeded))
 
+  def AddResultsForQuicTransaction(self, tab, results):
+    histogram_type = histogram_util.BROWSER_HISTOGRAM
+    # This histogram should be synchronously created when the Navigate occurs.
+    # Verify that histogram DataReductionProxy.Quic.ProxyStatus has no samples
+    # in bucket >=1.
+    fail_counts_proxy_status = histogram_util.GetHistogramSum(
+        histogram_type,
+        'DataReductionProxy.Quic.ProxyStatus',
+        tab)
+    if fail_counts_proxy_status != 0:
+      raise ChromeProxyMetricException, (
+          'fail_counts_proxy_status is %d.' % fail_counts_proxy_status)
+
+    # Verify that histogram DataReductionProxy.Quic.ProxyStatus has at least 1
+    # sample. This sample must be in bucket 0 (QUIC_PROXY_STATUS_AVAILABLE).
+    success_counts_proxy_status = histogram_util.GetHistogramCount(
+        histogram_type,
+        'DataReductionProxy.Quic.ProxyStatus',
+        tab)
+    if success_counts_proxy_status <= 0:
+      raise ChromeProxyMetricException, (
+          'success_counts_proxy_status is %d.' % success_counts_proxy_status)
+
+    # Navigate to one more page to ensure that established QUIC connection
+    # is used for the next request. Give 1 second extra headroom for the QUIC
+    # connection to be established.
+    time.sleep(1)
+    tab.Navigate('http://check.googlezip.net/test.html')
+
+    proxy_usage_histogram_json = histogram_util.GetHistogram(histogram_type,
+        'Net.QuicAlternativeProxy.Usage',
+        tab)
+    proxy_usage_histogram = json.loads(proxy_usage_histogram_json)
+
+    # Bucket ALTERNATIVE_PROXY_USAGE_NO_RACE should have at least one sample.
+    if proxy_usage_histogram['buckets'][0]['count'] <= 0:
+      raise ChromeProxyMetricException, (
+          'Number of samples in ALTERNATIVE_PROXY_USAGE_NO_RACE bucket is %d.'
+             % proxy_usage_histogram['buckets'][0]['count'])
+
+    results.AddValue(scalar.ScalarValue(
+        results.current_page, 'fail_counts_proxy_status', 'count',
+        fail_counts_proxy_status))
+    results.AddValue(scalar.ScalarValue(
+        results.current_page, 'success_counts_proxy_status', 'count',
+        success_counts_proxy_status))
+
+  def AddResultsForBypassOnTimeout(self, tab, results):
+    bypass_count = 0
+    # Wait maximum of 120 seconds for test to complete. Should complete soon
+    # after 90 second test server delay in case of failure, and much sooner in
+    # case of success.
+    tab.WaitForDocumentReadyStateToBeComplete(timeout=120)
+    for resp in self.IterResponses(tab):
+      if resp.HasChromeProxyViaHeader() and not resp.response.url.endswith(
+          'favicon.ico'):
+        r = resp.response
+        raise ChromeProxyMetricException, (
+            'Response for %s should not have via header after HTTP timeout.\n'
+            'Reponse: status=(%d)\nHeaders:\n %s' % (
+                r.url, r.status, r.headers))
+      elif not resp.response.url.endswith('favicon.ico'):
+        bypass_count += 1
+    if bypass_count == 0:
+      raise ChromeProxyMetricException('No pages were tested!')
+    results.AddValue(scalar.ScalarValue(
+        results.current_page, 'bypass', 'count', bypass_count))
+
+  def AddResultsForBadHTTPSFallback(self, tab, results):
+    via_count = 0
+    tab.WaitForDocumentReadyStateToBeComplete(timeout=30)
+    for resp in self.IterResponses(tab):
+      if resp.HasChromeProxyViaHeader() and (resp.remote_port == 80
+          or resp.remote_port == None):
+        via_count += 1
+      else:
+        r = resp.response
+        raise ChromeProxyMetricException, (
+            'Response for %s should have via header and be on port 80 after '
+            'bad proxy HTTPS response.\nReponse: status=(%d)\nport=(%d)\n'
+            'Headers:\n %s' % (
+                r.url, r.status, resp.remote_port, r.headers))
+    if via_count == 0:
+      raise ChromeProxyMetricException('No pages were tested!')
+    results.AddValue(scalar.ScalarValue(
+        results.current_page, 'via', 'count', via_count))
+
 PROXIED = 'proxied'
 DIRECT = 'direct'
 
@@ -896,13 +988,15 @@ class ChromeProxyVideoMetric(network_metrics.NetworkMetric):
     super(ChromeProxyVideoMetric, self).Start(page, tab)
 
   def Stop(self, page, tab):
-    tab.WaitForJavaScriptExpression('window.__chromeProxyVideoLoaded', 30)
+    tab.WaitForJavaScriptCondition(
+        'window.__chromeProxyVideoLoaded', timeout=30)
     m = tab.EvaluateJavaScript('window.__chromeProxyVideoMetrics')
 
     # Now wait for the video to stop playing.
     # Give it 2x the total duration to account for buffering.
     waitTime = 2 * m['video_duration']
-    tab.WaitForJavaScriptExpression('window.__chromeProxyVideoEnded', waitTime)
+    tab.WaitForJavaScriptCondition(
+        'window.__chromeProxyVideoEnded', timeout=waitTime)
 
     # Load the final metrics.
     m = tab.EvaluateJavaScript('window.__chromeProxyVideoMetrics')
@@ -980,7 +1074,7 @@ class ChromeProxyInstrumentedVideoMetric(Metric):
 
   def Stop(self, page, tab):
     waitTime = tab.EvaluateJavaScript('test.waitTime')
-    tab.WaitForJavaScriptExpression('test.metrics.complete', waitTime)
+    tab.WaitForJavaScriptCondition('test.metrics.complete', timeout=waitTime)
     super(ChromeProxyInstrumentedVideoMetric, self).Stop(page, tab)
 
   def AddResults(self, tab, results):

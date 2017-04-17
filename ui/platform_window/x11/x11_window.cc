@@ -17,13 +17,17 @@
 
 namespace ui {
 
-X11Window::X11Window(PlatformWindowDelegate* delegate)
-    : X11WindowBase(delegate) {
+X11Window::X11Window(PlatformWindowDelegate* delegate, const gfx::Rect& bounds)
+    : X11WindowBase(delegate, bounds) {
   DCHECK(PlatformEventSource::GetInstance());
   PlatformEventSource::GetInstance()->AddPlatformEventDispatcher(this);
 }
 
 X11Window::~X11Window() {
+  X11Window::PrepareForShutdown();
+}
+
+void X11Window::PrepareForShutdown() {
   PlatformEventSource::GetInstance()->RemovePlatformEventDispatcher(this);
 }
 

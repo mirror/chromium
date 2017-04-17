@@ -28,88 +28,94 @@
 
 namespace blink {
 
-LayoutSVGTransformableContainer::LayoutSVGTransformableContainer(SVGGraphicsElement* node)
-    : LayoutSVGContainer(node)
-    , m_needsTransformUpdate(true)
-{
+LayoutSVGTransformableContainer::LayoutSVGTransformableContainer(
+    SVGGraphicsElement* node)
+    : LayoutSVGContainer(node), needs_transform_update_(true) {}
+
+static bool HasValidPredecessor(const Node* node) {
+  DCHECK(node);
+  for (node = node->previousSibling(); node; node = node->previousSibling()) {
+    if (node->IsSVGElement() && ToSVGElement(node)->IsValid())
+      return true;
+  }
+  return false;
 }
 
-static bool hasValidPredecessor(const Node* node)
-{
-    ASSERT(node);
-    for (node = node->previousSibling(); node; node = node->previousSibling()) {
-        if (node->isSVGElement() && toSVGElement(node)->isValid())
-            return true;
-    }
-    return false;
+bool LayoutSVGTransformableContainer::IsChildAllowed(
+    LayoutObject* child,
+    const ComputedStyle& style) const {
+  DCHECK(GetElement());
+  if (isSVGSwitchElement(*GetElement())) {
+    Node* node = child->GetNode();
+    // Reject non-SVG/non-valid elements.
+    if (!node->IsSVGElement() || !ToSVGElement(node)->IsValid())
+      return false;
+    // Reject this child if it isn't the first valid node.
+    if (HasValidPredecessor(node))
+      return false;
+  } else if (isSVGAElement(*GetElement())) {
+    // http://www.w3.org/2003/01/REC-SVG11-20030114-errata#linking-text-environment
+    // The 'a' element may contain any element that its parent may contain,
+    // except itself.
+    if (isSVGAElement(*child->GetNode()))
+      return false;
+    if (Parent() && Parent()->IsSVG())
+      return Parent()->IsChildAllowed(child, style);
+  }
+  return LayoutSVGContainer::IsChildAllowed(child, style);
 }
 
-bool LayoutSVGTransformableContainer::isChildAllowed(LayoutObject* child, const ComputedStyle& style) const
-{
-    ASSERT(element());
-    if (isSVGSwitchElement(*element())) {
-        Node* node = child->node();
-        // Reject non-SVG/non-valid elements.
-        if (!node->isSVGElement() || !toSVGElement(node)->isValid())
-            return false;
-        // Reject this child if it isn't the first valid node.
-        if (hasValidPredecessor(node))
-            return false;
-    } else if (isSVGAElement(*element())) {
-        // http://www.w3.org/2003/01/REC-SVG11-20030114-errata#linking-text-environment
-        // The 'a' element may contain any element that its parent may contain, except itself.
-        if (isSVGAElement(*child->node()))
-            return false;
-        if (parent() && parent()->isSVG())
-            return parent()->isChildAllowed(child, style);
-    }
-    return LayoutSVGContainer::isChildAllowed(child, style);
+void LayoutSVGTransformableContainer::SetNeedsTransformUpdate() {
+  SetMayNeedPaintInvalidationSubtree();
+  if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled()) {
+    // The transform paint property relies on the SVG transform being up-to-date
+    // (see: PaintPropertyTreeBuilder::updateTransformForNonRootSVG).
+    SetNeedsPaintPropertyUpdate();
+  }
+  needs_transform_update_ = true;
 }
 
-void LayoutSVGTransformableContainer::setNeedsTransformUpdate()
-{
-    setMayNeedPaintInvalidationSubtree();
-    m_needsTransformUpdate = true;
+SVGTransformChange LayoutSVGTransformableContainer::CalculateLocalTransform() {
+  SVGGraphicsElement* element = ToSVGGraphicsElement(this->GetElement());
+  DCHECK(element);
+
+  // If we're either the layoutObject for a <use> element, or for any <g>
+  // element inside the shadow tree, that was created during the use/symbol/svg
+  // expansion in SVGUseElement. These containers need to respect the
+  // translations induced by their corresponding use elements x/y attributes.
+  SVGUseElement* use_element = nullptr;
+  if (isSVGUseElement(*element)) {
+    use_element = toSVGUseElement(element);
+  } else if (isSVGGElement(*element) &&
+             toSVGGElement(element)->InUseShadowTree()) {
+    SVGElement* corresponding_element = element->CorrespondingElement();
+    if (isSVGUseElement(corresponding_element))
+      use_element = toSVGUseElement(corresponding_element);
+  }
+
+  if (use_element) {
+    SVGLengthContext length_context(element);
+    FloatSize translation(
+        use_element->x()->CurrentValue()->Value(length_context),
+        use_element->y()->CurrentValue()->Value(length_context));
+    // TODO(fs): Signal this on style update instead. (Since these are
+    // suppose to be presentation attributes now, this does feel a bit
+    // broken...)
+    if (translation != additional_translation_)
+      SetNeedsTransformUpdate();
+    additional_translation_ = translation;
+  }
+
+  if (!needs_transform_update_)
+    return SVGTransformChange::kNone;
+
+  SVGTransformChangeDetector change_detector(local_transform_);
+  local_transform_ =
+      element->CalculateTransform(SVGElement::kIncludeMotionTransform);
+  local_transform_.Translate(additional_translation_.Width(),
+                             additional_translation_.Height());
+  needs_transform_update_ = false;
+  return change_detector.ComputeChange(local_transform_);
 }
 
-SVGTransformChange LayoutSVGTransformableContainer::calculateLocalTransform()
-{
-    SVGGraphicsElement* element = toSVGGraphicsElement(this->element());
-    ASSERT(element);
-
-    // If we're either the layoutObject for a <use> element, or for any <g> element inside the shadow
-    // tree, that was created during the use/symbol/svg expansion in SVGUseElement. These containers
-    // need to respect the translations induced by their corresponding use elements x/y attributes.
-    SVGUseElement* useElement = nullptr;
-    if (isSVGUseElement(*element)) {
-        useElement = toSVGUseElement(element);
-    } else if (isSVGGElement(*element) && toSVGGElement(element)->inUseShadowTree()) {
-        SVGElement* correspondingElement = element->correspondingElement();
-        if (isSVGUseElement(correspondingElement))
-            useElement = toSVGUseElement(correspondingElement);
-    }
-
-    if (useElement) {
-        SVGLengthContext lengthContext(useElement);
-        FloatSize translation(
-            useElement->x()->currentValue()->value(lengthContext),
-            useElement->y()->currentValue()->value(lengthContext));
-        // TODO(fs): Signal this on style update instead. (Since these are
-        // suppose to be presentation attributes now, this does feel a bit
-        // broken...)
-        if (translation != m_additionalTranslation)
-            setNeedsTransformUpdate();
-        m_additionalTranslation = translation;
-    }
-
-    if (!m_needsTransformUpdate)
-        return SVGTransformChange::None;
-
-    SVGTransformChangeDetector changeDetector(m_localTransform);
-    m_localTransform = element->calculateAnimatedLocalTransform();
-    m_localTransform.translate(m_additionalTranslation.width(), m_additionalTranslation.height());
-    m_needsTransformUpdate = false;
-    return changeDetector.computeChange(m_localTransform);
-}
-
-} // namespace blink
+}  // namespace blink

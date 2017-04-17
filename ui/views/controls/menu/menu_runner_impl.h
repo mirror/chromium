@@ -23,6 +23,12 @@ class MenuController;
 class MenuDelegate;
 class MenuItemView;
 
+namespace test {
+
+class MenuRunnerDestructionTest;
+
+}  // namespace test
+
 namespace internal {
 
 // A menu runner implementation that uses views::MenuItemView to show a menu.
@@ -49,6 +55,8 @@ class VIEWS_EXPORT MenuRunnerImpl
   void SiblingMenuCreated(MenuItemView* menu) override;
 
  private:
+  friend class ::views::test::MenuRunnerDestructionTest;
+
   ~MenuRunnerImpl() override;
 
   // Cleans up after the menu is no longer showing. |result| is the menu that
@@ -79,14 +87,11 @@ class VIEWS_EXPORT MenuRunnerImpl
   // Set if |running_| and Release() has been invoked.
   bool delete_after_run_;
 
-  // Are we running asynchronously?
-  bool async_;
-
   // Are we running for a drop?
   bool for_drop_;
 
   // The controller.
-  MenuController* controller_;
+  base::WeakPtr<MenuController> controller_;
 
   // Do we own the controller?
   bool owns_controller_;

@@ -14,6 +14,7 @@
 #include "base/threading/non_thread_safe.h"
 #include "net/base/auth.h"
 #include "net/base/completion_callback.h"
+#include "net/base/net_export.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/proxy/proxy_retry_info.h"
 
@@ -80,9 +81,13 @@ class NET_EXPORT NetworkDelegate : public base::NonThreadSafe {
       GURL* allowed_unsafe_redirect_url);
   void NotifyBeforeRedirect(URLRequest* request,
                             const GURL& new_location);
+  void NotifyResponseStarted(URLRequest* request, int net_error);
+  // Deprecated.
   void NotifyResponseStarted(URLRequest* request);
   void NotifyNetworkBytesReceived(URLRequest* request, int64_t bytes_received);
   void NotifyNetworkBytesSent(URLRequest* request, int64_t bytes_sent);
+  void NotifyCompleted(URLRequest* request, bool started, int net_error);
+  // Deprecated.
   void NotifyCompleted(URLRequest* request, bool started);
   void NotifyURLRequestDestroyed(URLRequest* request);
   void NotifyPACScriptError(int line_number, const base::string16& error);
@@ -102,10 +107,6 @@ class NET_EXPORT NetworkDelegate : public base::NonThreadSafe {
 
   bool AreExperimentalCookieFeaturesEnabled() const;
 
-  // TODO(jww): Remove this once we ship strict secure cookies:
-  // https://crbug.com/546820
-  bool AreStrictSecureCookiesEnabled() const;
-
   bool CancelURLRequestWithPolicyViolatingReferrerHeader(
       const URLRequest& request,
       const GURL& target_url,
@@ -115,6 +116,10 @@ class NET_EXPORT NetworkDelegate : public base::NonThreadSafe {
   // This is the interface for subclasses of NetworkDelegate to implement. These
   // member functions will be called by the respective public notification
   // member function, which will perform basic sanity checking.
+  //
+  // (NetworkDelegateImpl has default implementations of these member functions.
+  // NetworkDelegate implementations should consider subclassing
+  // NetworkDelegateImpl.)
 
   // Called before a request is sent. Allows the delegate to rewrite the URL
   // being fetched by modifying |new_url|. If set, the URL must be valid. The
@@ -185,7 +190,9 @@ class NET_EXPORT NetworkDelegate : public base::NonThreadSafe {
                                 const GURL& new_location) = 0;
 
   // This corresponds to URLRequestDelegate::OnResponseStarted.
-  virtual void OnResponseStarted(URLRequest* request) = 0;
+  virtual void OnResponseStarted(URLRequest* request, int net_error);
+  // Deprecated.
+  virtual void OnResponseStarted(URLRequest* request);
 
   // Called when bytes are received from the network, such as after receiving
   // headers or reading raw response bytes. This includes localhost requests.
@@ -210,7 +217,9 @@ class NET_EXPORT NetworkDelegate : public base::NonThreadSafe {
   // Indicates that the URL request has been completed or failed.
   // |started| indicates whether the request has been started. If false,
   // some information like the socket address is not available.
-  virtual void OnCompleted(URLRequest* request, bool started) = 0;
+  virtual void OnCompleted(URLRequest* request, bool started, int net_error);
+  // Deprecated.
+  virtual void OnCompleted(URLRequest* request, bool started);
 
   // Called when an URLRequest is being destroyed. Note that the request is
   // being deleted, so it's not safe to call any methods that may result in
@@ -273,13 +282,6 @@ class NET_EXPORT NetworkDelegate : public base::NonThreadSafe {
   // Returns true if the embedder has enabled the experimental features, and
   // false otherwise.
   virtual bool OnAreExperimentalCookieFeaturesEnabled() const = 0;
-
-  // Returns true if the embedder has enabled experimental features or
-  // specifically strict secure cookies, and false otherwise.
-  //
-  // TODO(jww): Remove this once we ship strict secure cookies:
-  // https://crbug.com/546820.
-  virtual bool OnAreStrictSecureCookiesEnabled() const = 0;
 
   // Called when the |referrer_url| for requesting |target_url| during handling
   // of the |request| is does not comply with the referrer policy (e.g. a

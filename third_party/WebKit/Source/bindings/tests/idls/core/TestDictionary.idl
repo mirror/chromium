@@ -17,6 +17,7 @@ dictionary TestDictionary {
     DOMString[] stringArrayMember;
     sequence<DOMString> stringSequenceMember = [];
     sequence<TestInterface> testInterfaceSequenceMember = [];
+    sequence<TestObject> testObjectSequenceMember;
     sequence<TestInterfaceGarbageCollected> testInterfaceGarbageCollectedSequenceMember = [];
     TestEnum enumMember = "foo";
     sequence<TestEnum> enumSequenceMember;
@@ -35,4 +36,10 @@ dictionary TestDictionary {
     any anyMember = null;
     Dictionary dictionaryMember;
     [RuntimeEnabled=runtimeFeature] boolean runtimeMember;
+    [PrefixGet] object prefixGetMember;
+    record<ByteString, byte> recordMember;
+    record<USVString, TestObject> garbageCollectedRecordMember;
+    record<ByteString, (long or boolean)> unionInRecordMember;
+    record<DOMString, any> anyInRecordMember;
+    (Float or BooleanType) unionWithTypedefs;
 };

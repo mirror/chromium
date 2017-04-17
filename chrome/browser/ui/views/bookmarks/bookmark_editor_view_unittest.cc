@@ -10,6 +10,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/test/bookmark_test_helpers.h"
@@ -17,6 +18,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/controls/tree/tree_view.h"
+#include "ui/views/test/test_views_delegate.h"
 
 using base::ASCIIToUTF16;
 using base::UTF8ToUTF16;
@@ -35,7 +37,10 @@ class BookmarkEditorViewTest : public testing::Test {
     profile_.reset(new TestingProfile());
     profile_->CreateBookmarkModel(true);
 
-    model_ = BookmarkModelFactory::GetForProfile(profile_.get());
+    views_delegate_.set_layout_provider(
+        ChromeLayoutProvider::CreateLayoutProvider());
+
+    model_ = BookmarkModelFactory::GetForBrowserContext(profile_.get());
     bookmarks::test::WaitForBookmarkModelToLoad(model_);
 
     AddTestData();
@@ -73,6 +78,13 @@ class BookmarkEditorViewTest : public testing::Test {
       editor_->url_tf_->SetText(text);
   }
 
+  base::string16 GetURLText() const {
+    if (editor_->details_.type != BookmarkEditor::EditDetails::NEW_FOLDER)
+      return editor_->url_tf_->text();
+
+    return base::string16();
+  }
+
   void ApplyEdits() {
     editor_->ApplyEdits();
   }
@@ -105,6 +117,7 @@ class BookmarkEditorViewTest : public testing::Test {
   content::TestBrowserThreadBundle thread_bundle_;
 
   BookmarkModel* model_;
+  views::TestViewsDelegate views_delegate_;
   std::unique_ptr<TestingProfile> profile_;
 
  private:
@@ -330,6 +343,34 @@ TEST_F(BookmarkEditorViewTest, ChangeTitleNoTree) {
   const BookmarkNode* new_node = other_node->GetChild(0);
 
   EXPECT_EQ(ASCIIToUTF16("new_a"), new_node->GetTitle());
+}
+
+// Edits the bookmark and ensures resulting URL keeps the same scheme, even
+// when userinfo is present in the URL
+TEST_F(BookmarkEditorViewTest, EditKeepsScheme) {
+  const BookmarkNode* kBBNode = model_->bookmark_bar_node();
+
+  const GURL kUrl = GURL("http://javascript:scripttext@example.com/");
+
+  CreateEditor(profile_.get(), kBBNode,
+               BookmarkEditor::EditDetails::AddNodeInFolder(kBBNode, 1, kUrl,
+                                                            base::string16()),
+               BookmarkEditorView::SHOW_TREE);
+
+  // We expect only the trailing / to be trimmed when userinfo is present
+  EXPECT_EQ(ASCIIToUTF16(kUrl.spec()), GetURLText() + ASCIIToUTF16("/"));
+
+  const base::string16& kTitle = ASCIIToUTF16("EditingKeepsScheme");
+  SetTitleText(kTitle);
+
+  ApplyEdits(editor_tree_model()->GetRoot()->GetChild(0));
+
+  ASSERT_EQ(4, kBBNode->child_count());
+
+  const BookmarkNode* kNewNode = kBBNode->GetChild(1);
+
+  EXPECT_EQ(kTitle, kNewNode->GetTitle());
+  EXPECT_EQ(kUrl, kNewNode->url());
 }
 
 // Creates a new folder.

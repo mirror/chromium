@@ -75,6 +75,7 @@ iframe.fill {
 .widget {
     position: relative;
     flex: auto;
+    contain: layout style;
 }
 
 .hbox {
@@ -165,7 +166,7 @@ input {
     background-color: white;
 }
 
-:host-context(.-theme-with-dark-background) input[type="checkbox"] {
+:host-context(.-theme-with-dark-background) input[type="checkbox"]::not(.-theme-preserve) {
     -webkit-filter: invert(80%);
 }
 
@@ -173,7 +174,6 @@ input[type="search"]:focus,
 input[type="text"]:focus {
     outline: auto rgb(56, 121, 217);
 }
-
 
 .highlighted-search-result.current-search-result {
     border-radius: 1px;
@@ -188,8 +188,9 @@ input[type="text"]:focus {
 
 .editing {
     -webkit-user-select: text;
-    box-shadow: rgba(0, 0, 0, .5) 3px 3px 4px;
-    outline: 1px solid rgb(66%, 66%, 66%) !important;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2),
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                0 2px 6px rgba(0, 0, 0, 0.1);
     background-color: white;
     -webkit-user-modify: read-write-plaintext-only;
     text-overflow: clip !important;
@@ -265,6 +266,12 @@ body.inactive select.chrome-select,
     color: #aaa;
 }
 
+.chrome-select optgroup,
+.chrome-select option {
+    background-color: #EEEEEE;
+    color: #222;
+}
+
 :not(.platform-mac).-theme-with-dark-background ::-webkit-scrollbar,
 :host-context(:not(.platform-mac).-theme-with-dark-background) ::-webkit-scrollbar {
     width: 14px;
@@ -276,7 +283,7 @@ body.inactive select.chrome-select,
 }
 
 :not(.platform-mac).-theme-with-dark-background ::-webkit-scrollbar-thumb,
-:host-context(:not(.platform-mac).-theme-with-dark-background) .-theme-with-dark-background ::-webkit-scrollbar-thumb {
+:host-context(:not(.platform-mac).-theme-with-dark-background) ::-webkit-scrollbar-thumb {
     border-radius: 2px;
     background-color: #333;
     -webkit-box-shadow: inset 0 0 1px rgba(255,255,255,0.5);
@@ -287,8 +294,91 @@ body.inactive select.chrome-select,
     font-style: italic;
     padding: 6px;
     color: #888;
+    white-space: nowrap;
 }
 
 label[is=dt-icon-label] {
     flex: none;
+}
+
+.full-widget-dimmed-banner a {
+    color: inherit;
+}
+
+.full-widget-dimmed-banner {
+    color: #777;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    font-size: 13px;
+    overflow: auto;
+    z-index: 500;
+}
+
+[is=ui-icon] {
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+[is=ui-icon].icon-mask {
+    background-color: rgb(110, 110, 110);
+    -webkit-mask-position: var(--spritesheet-position);
+}
+
+[is=ui-icon]:not(.icon-mask) {
+    background-position: var(--spritesheet-position);
+}
+
+.spritesheet-smallicons:not(.icon-mask) {
+    background-image: -webkit-image-set(url(Images/smallIcons.png) 1x, url(Images/smallIcons_2x.png) 2x);
+}
+
+.spritesheet-smallicons.icon-mask {
+    -webkit-mask-image: -webkit-image-set(url(Images/smallIcons.png) 1x, url(Images/smallIcons_2x.png) 2x);
+}
+
+.spritesheet-largeicons:not(.icon-mask) {
+    background-image: -webkit-image-set(url(Images/largeIcons.png) 1x, url(Images/largeIcons_2x.png) 2x);
+}
+
+.spritesheet-largeicons.icon-mask {
+    -webkit-mask-image: -webkit-image-set(url(Images/largeIcons.png) 1x, url(Images/largeIcons_2x.png) 2x);
+}
+
+.spritesheet-mediumicons:not(.icon-mask) {
+    background-image: -webkit-image-set(url(Images/mediumIcons.png) 1x, url(Images/mediumIcons_2x.png) 2x);
+}
+
+.spritesheet-mediumicons.icon-mask {
+    -webkit-mask-image: -webkit-image-set(url(Images/mediumIcons.png) 1x, url(Images/mediumIcons_2x.png) 2x);
+}
+
+.spritesheet-arrowicons {
+    background-image: url(Images/popoverArrows.png);
+}
+
+.force-white-icons [is=ui-icon].spritesheet-smallicons, [is=ui-icon].force-white-icons.spritesheet-smallicons {
+    -webkit-mask-image: -webkit-image-set(url(Images/smallIcons.png) 1x, url(Images/smallIcons_2x.png) 2x);
+    -webkit-mask-position: var(--spritesheet-position);
+    background: white !important;
+}
+
+.force-white-icons [is=ui-icon].spritesheet-largeicons, [is=ui-icon].force-white-icons.spritesheet-largeicons {
+    -webkit-mask-image: -webkit-image-set(url(Images/largeIcons.png) 1x, url(Images/largeIcons_2x.png) 2x);
+    -webkit-mask-position: var(--spritesheet-position);
+    background: white !important;
+}
+
+.force-white-icons [is=ui-icon].spritesheet-mediumicons, [is=ui-icon].force-white-icons.spritesheet-mediumicons {
+    -webkit-mask-image: -webkit-image-set(url(Images/mediumIcons.png) 1x, url(Images/mediumIcons_2x.png) 2x);
+    -webkit-mask-position: var(--spritesheet-position);
+    background: white !important;
 }

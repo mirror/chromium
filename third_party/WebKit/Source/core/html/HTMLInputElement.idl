@@ -43,7 +43,6 @@ interface HTMLInputElement : HTMLElement {
     [CEReactions, Reflect] attribute DOMString formTarget;
     [CEReactions, CustomElementCallbacks] attribute unsigned long height;
     attribute boolean indeterminate;
-    [RuntimeEnabled=InputModeAttribute, CEReactions, Reflect] attribute DOMString inputMode;
     readonly attribute HTMLElement? list;
     [CEReactions, Reflect] attribute DOMString max;
     [CEReactions, RaisesException=Setter, CustomElementCallbacks] attribute long maxLength;
@@ -80,19 +79,17 @@ interface HTMLInputElement : HTMLElement {
     readonly attribute NodeList labels;
 
     void select();
-    // FIXME: selectionStart and selectionEnd should be unsigned long.
-    [RaisesException, ImplementedAs=selectionStartForBinding] attribute long selectionStart;
-    [RaisesException, ImplementedAs=selectionEndForBinding] attribute long selectionEnd;
-    [RaisesException, ImplementedAs=selectionDirectionForBinding] attribute DOMString selectionDirection;
+    [RaisesException, ImplementedAs=selectionStartForBinding] attribute unsigned long? selectionStart;
+    [RaisesException, ImplementedAs=selectionEndForBinding] attribute unsigned long? selectionEnd;
+    [RaisesException, ImplementedAs=selectionDirectionForBinding] attribute DOMString? selectionDirection;
     [RaisesException] void setRangeText(DOMString replacement);
     [RaisesException] void setRangeText(DOMString replacement,
                                         unsigned long start,
                                         unsigned long end,
                                         optional SelectionMode selectionMode = "preserve");
-    // FIXME: The start and end arguments should be unsigned long and should not have [Default=Undefined].
     [RaisesException, ImplementedAs=setSelectionRangeForBinding]
-    void setSelectionRange([Default=Undefined] optional long start,
-                           [Default=Undefined] optional long end,
+    void setSelectionRange(unsigned long start,
+                           unsigned long end,
                            optional DOMString direction);
 
     // obsolete members
@@ -105,8 +102,10 @@ interface HTMLInputElement : HTMLElement {
     [Measure] attribute DOMString autocapitalize;
 
     // HTML Media Capture
-    // http://www.w3.org/TR/html-media-capture/
-    [RuntimeEnabled=MediaCapture, Reflect] attribute boolean capture;
+    // https://w3c.github.io/html-media-capture/#the-capture-attribute
+    // TODO(mcasas): |capture| is a |CaptureFacingMode| enum in the spec.
+    // https://crbug.com/698853
+    [Measure, RuntimeEnabled=MediaCapture, Reflect] attribute boolean capture;
 
     // Non-standard APIs
     [Reflect, MeasureAs=PrefixedDirectoryAttribute] attribute boolean webkitdirectory;

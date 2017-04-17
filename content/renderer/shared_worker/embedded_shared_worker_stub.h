@@ -13,15 +13,14 @@
 #include "content/child/scoped_child_process_reference.h"
 #include "ipc/ipc_listener.h"
 #include "third_party/WebKit/public/platform/WebAddressSpace.h"
+#include "third_party/WebKit/public/platform/WebContentSecurityPolicy.h"
 #include "third_party/WebKit/public/platform/WebString.h"
-#include "third_party/WebKit/public/web/WebContentSecurityPolicy.h"
 #include "third_party/WebKit/public/web/WebSharedWorkerClient.h"
 #include "url/gurl.h"
 
 namespace blink {
 class WebApplicationCacheHost;
 class WebApplicationCacheHostClient;
-class WebMessagePortChannel;
 class WebNotificationPresenter;
 class WebSecurityOrigin;
 class WebSharedWorker;
@@ -29,6 +28,7 @@ class WebWorkerContentSettingsClientProxy;
 }
 
 namespace content {
+class MessagePort;
 class SharedWorkerDevToolsAgent;
 class WebApplicationCacheHostImpl;
 class WebMessagePortChannelImpl;
@@ -60,26 +60,27 @@ class EmbeddedSharedWorkerStub : public IPC::Listener,
   void OnChannelError() override;
 
   // blink::WebSharedWorkerClient implementation.
-  void workerContextClosed() override;
-  void workerContextDestroyed() override;
-  void workerReadyForInspection() override;
-  void workerScriptLoaded() override;
-  void workerScriptLoadFailed() override;
-  void selectAppCacheID(long long) override;
-  blink::WebNotificationPresenter* notificationPresenter() override;
-  blink::WebApplicationCacheHost* createApplicationCacheHost(
+  void CountFeature(uint32_t feature) override;
+  void WorkerContextClosed() override;
+  void WorkerContextDestroyed() override;
+  void WorkerReadyForInspection() override;
+  void WorkerScriptLoaded() override;
+  void WorkerScriptLoadFailed() override;
+  void SelectAppCacheID(long long) override;
+  blink::WebNotificationPresenter* NotificationPresenter() override;
+  blink::WebApplicationCacheHost* CreateApplicationCacheHost(
       blink::WebApplicationCacheHostClient*) override;
   blink::WebWorkerContentSettingsClientProxy*
-  createWorkerContentSettingsClientProxy(
+  CreateWorkerContentSettingsClientProxy(
       const blink::WebSecurityOrigin& origin) override;
-  blink::WebServiceWorkerNetworkProvider* createServiceWorkerNetworkProvider(
-      blink::WebDataSource*) override;
-  void sendDevToolsMessage(int session_id,
+  blink::WebServiceWorkerNetworkProvider* CreateServiceWorkerNetworkProvider()
+      override;
+  void SendDevToolsMessage(int session_id,
                            int call_id,
                            const blink::WebString& message,
                            const blink::WebString& state) override;
   blink::WebDevToolsAgentClient::WebKitClientMessageLoop*
-      createDevToolsMessageLoop() override;
+  CreateDevToolsMessageLoop() override;
 
  private:
   ~EmbeddedSharedWorkerStub() override;
@@ -88,9 +89,11 @@ class EmbeddedSharedWorkerStub : public IPC::Listener,
   bool Send(IPC::Message* message);
 
   // WebSharedWorker will own |channel|.
-  void ConnectToChannel(WebMessagePortChannelImpl* channel);
+  void ConnectToChannel(int connection_request_id,
+                        std::unique_ptr<WebMessagePortChannelImpl> channel);
 
-  void OnConnect(int sent_message_port_id, int routing_id);
+  void OnConnect(int connection_request_id,
+                 const MessagePort& sent_message_port);
   void OnTerminateWorkerContext();
 
   int route_id_;
@@ -100,8 +103,9 @@ class EmbeddedSharedWorkerStub : public IPC::Listener,
   blink::WebSharedWorker* impl_ = nullptr;
   std::unique_ptr<SharedWorkerDevToolsAgent> worker_devtools_agent_;
 
-  typedef std::vector<WebMessagePortChannelImpl*> PendingChannelList;
-  PendingChannelList pending_channels_;
+  using PendingChannel = std::pair<int /* connection_request_id */,
+                                   std::unique_ptr<WebMessagePortChannelImpl>>;
+  std::vector<PendingChannel> pending_channels_;
 
   ScopedChildProcessReference process_ref_;
   WebApplicationCacheHostImpl* app_cache_host_ = nullptr;

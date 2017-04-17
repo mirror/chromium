@@ -30,7 +30,7 @@ enum BitmapFormat {
 // various JNI methods.
 class GFX_EXPORT JavaBitmap {
  public:
-  explicit JavaBitmap(jobject bitmap);
+  explicit JavaBitmap(const base::android::JavaRef<jobject>& bitmap);
   ~JavaBitmap();
 
   inline void* pixels() { return pixels_; }
@@ -41,11 +41,8 @@ class GFX_EXPORT JavaBitmap {
   inline uint32_t stride() const { return stride_; }
   inline int byte_count() const { return byte_count_; }
 
-  // Registers methods with JNI and returns true if succeeded.
-  static bool RegisterJavaBitmap(JNIEnv* env);
-
  private:
-  jobject bitmap_;
+  base::android::ScopedJavaGlobalRef<jobject> bitmap_;
   void* pixels_;
   gfx::Size size_;
   int format_;
@@ -73,7 +70,8 @@ GFX_EXPORT base::android::ScopedJavaLocalRef<jobject> ConvertToJavaBitmap(
 GFX_EXPORT SkBitmap CreateSkBitmapFromJavaBitmap(const JavaBitmap& jbitmap);
 
 // Returns a Skia color type value for the requested input java Bitmap.Config.
-GFX_EXPORT SkColorType ConvertToSkiaColorType(jobject jbitmap_config);
+GFX_EXPORT SkColorType
+ConvertToSkiaColorType(const base::android::JavaRef<jobject>& jbitmap_config);
 
 }  // namespace gfx
 

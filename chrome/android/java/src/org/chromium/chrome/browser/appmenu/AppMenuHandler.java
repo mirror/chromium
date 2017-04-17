@@ -4,11 +4,13 @@
 
 package org.chromium.chrome.browser.appmenu;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.IdRes;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +36,13 @@ public class AppMenuHandler {
 
     private final AppMenuPropertiesDelegate mDelegate;
     private final Activity mActivity;
+
+    /**
+     * The resource id of the menu item to highlight when the menu next opens. A value of 0 means
+     * no item will be highlighted.  This value will be cleared after the menu is opened.
+     */
+    @IdRes
+    private int mHighlightMenuId;
 
     /**
      * Constructs an AppMenuHandler object.
@@ -65,18 +74,33 @@ public class AppMenuHandler {
     }
 
     /**
-     * Show the app menu.
-     * @param anchorView         Anchor view (usually a menu button) to be used for the popup, if
-     *                           null is passed then hardware menu button anchor will be used.
-     * @param startDragging      Whether dragging is started. For example, if the app menu is
-     *                           showed by tapping on a button, this should be false. If it is
-     *                           showed by start dragging down on the menu button, this should
-     *                           be true. Note that if anchorView is null, this must
-     *                           be false since we no longer support hardware menu button
-     *                           dragging.
-     * @return True, if the menu is shown, false, if menu is not shown, example reasons:
-     *         the menu is not yet available to be shown, or the menu is already showing.
+     * Calls attention to this menu and a particular item in it.  The menu will only stay
+     * highlighted for one menu usage.  After that the highlight will be cleared.
+     * @param highlightItemId The id of a menu item to highlight or {@code 0} to turn off the
+     *                        highlight.
      */
+    public void setMenuHighlight(@IdRes int highlightItemId) {
+        if (mHighlightMenuId == highlightItemId) return;
+        mHighlightMenuId = highlightItemId;
+        boolean highlighting = mHighlightMenuId != 0;
+        for (AppMenuObserver observer : mObservers) observer.onMenuHighlightChanged(highlighting);
+    }
+
+    /**
+     * Show the app menu.
+     * @param anchorView    Anchor view (usually a menu button) to be used for the popup, if null is
+     *                      passed then hardware menu button anchor will be used.
+     * @param startDragging Whether dragging is started. For example, if the app menu is showed by
+     *                      tapping on a button, this should be false. If it is showed by start
+     *                      dragging down on the menu button, this should be true. Note that if
+     *                      anchorView is null, this must be false since we no longer support
+     *                      hardware menu button dragging.
+     * @return              True, if the menu is shown, false, if menu is not shown, example
+     *                      reasons: the menu is not yet available to be shown, or the menu is
+     *                      already showing.
+     */
+    // TODO(crbug.com/635567): Fix this properly.
+    @SuppressLint("ResourceType")
     public boolean showAppMenu(View anchorView, boolean startDragging) {
         if (!mDelegate.shouldShowAppMenu() || isAppMenuShowing()) return false;
         boolean isByPermanentButton = false;
@@ -133,9 +157,15 @@ public class AppMenuHandler {
         }
         Point pt = new Point();
         mActivity.getWindowManager().getDefaultDisplay().getSize(pt);
-        mAppMenu.show(wrapper, anchorView, isByPermanentButton,
-                rotation, appRect, pt.y, mDelegate.getFooterResourceId());
+
+        int footerResourceId = 0;
+        if (mDelegate.shouldShowFooter(appRect.height())) {
+            footerResourceId = mDelegate.getFooterResourceId();
+        }
+        mAppMenu.show(wrapper, anchorView, isByPermanentButton, rotation, appRect, pt.y,
+                footerResourceId, mHighlightMenuId);
         mAppMenuDragHelper.onShow(startDragging);
+        setMenuHighlight(0);
         RecordUserAction.record("MobileMenuShow");
         return true;
     }

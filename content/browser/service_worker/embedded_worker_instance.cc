@@ -12,6 +12,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/threading/non_thread_safe.h"
 #include "base/trace_event/trace_event.h"
+#include "content/browser/bad_message.h"
 #include "content/browser/devtools/service_worker_devtools_manager.h"
 #include "content/browser/service_worker/embedded_worker_registry.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
@@ -19,15 +20,16 @@
 #include "content/common/content_switches_internal.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
 #include "content/common/service_worker/embedded_worker_settings.h"
-#include "content/common/service_worker/embedded_worker_setup.mojom.h"
+#include "content/common/service_worker/embedded_worker_start_params.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/child_process_host.h"
+#include "content/public/common/content_switches.h"
 #include "ipc/ipc_message.h"
-#include "services/shell/public/cpp/interface_provider.h"
-#include "services/shell/public/cpp/interface_registry.h"
+#include "third_party/WebKit/public/web/WebConsoleMessage.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -39,6 +41,10 @@ namespace {
 // new process.
 const int kMaxSameProcessFailureCount = 2;
 
+const char kServiceWorkerTerminationCanceledMesage[] =
+    "Service Worker termination by a timeout timer was canceled because "
+    "DevTools is attached.";
+
 void NotifyWorkerReadyForInspectionOnUI(int worker_process_id,
                                         int worker_route_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -49,12 +55,6 @@ void NotifyWorkerReadyForInspectionOnUI(int worker_process_id,
 void NotifyWorkerDestroyedOnUI(int worker_process_id, int worker_route_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   ServiceWorkerDevToolsManager::GetInstance()->WorkerDestroyed(
-      worker_process_id, worker_route_id);
-}
-
-void NotifyWorkerStopIgnoredOnUI(int worker_process_id, int worker_route_id) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  ServiceWorkerDevToolsManager::GetInstance()->WorkerStopIgnored(
       worker_process_id, worker_route_id);
 }
 
@@ -71,7 +71,7 @@ void NotifyWorkerVersionDoomedOnUI(int worker_process_id, int worker_route_id) {
       worker_process_id, worker_route_id);
 }
 
-void RegisterToWorkerDevToolsManagerOnUI(
+void SetupOnUI(
     int process_id,
     const ServiceWorkerContextCore* service_worker_context,
     const base::WeakPtr<ServiceWorkerContextCore>& service_worker_context_weak,
@@ -79,6 +79,7 @@ void RegisterToWorkerDevToolsManagerOnUI(
     const GURL& url,
     const GURL& scope,
     bool is_installed,
+    mojom::EmbeddedWorkerInstanceClientRequest request,
     const base::Callback<void(int worker_devtools_agent_route_id,
                               bool wait_for_debugger)>& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -94,6 +95,8 @@ void RegisterToWorkerDevToolsManagerOnUI(
                 service_worker_context, service_worker_context_weak,
                 service_worker_version_id, url, scope),
             is_installed);
+    if (request.is_pending())
+      BindInterface(rph, std::move(request));
   }
   BrowserThread::PostTask(
       BrowserThread::IO,
@@ -101,20 +104,35 @@ void RegisterToWorkerDevToolsManagerOnUI(
       base::Bind(callback, worker_devtools_agent_route_id, wait_for_debugger));
 }
 
-void SetupMojoOnUIThread(
-    int process_id,
-    int thread_id,
-    shell::mojom::InterfaceProviderRequest remote_interfaces,
-    shell::mojom::InterfaceProviderPtrInfo exposed_interfaces) {
-  RenderProcessHost* rph = RenderProcessHost::FromID(process_id);
-  // |rph| or its InterfaceProvider may be NULL in unit tests.
-  if (!rph || !rph->GetRemoteInterfaces())
+void CallDetach(EmbeddedWorkerInstance* instance) {
+  // This could be called on the UI thread if |client_| still be valid when the
+  // message loop on the UI thread gets destructed.
+  // TODO(shimazu): Remove this after https://crbug.com/604762 is fixed
+  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
+    DCHECK(ServiceWorkerUtils::IsMojoForServiceWorkerEnabled());
     return;
-  mojom::EmbeddedWorkerSetupPtr setup;
-  rph->GetRemoteInterfaces()->GetInterface(&setup);
-  setup->ExchangeInterfaceProviders(
-      thread_id, std::move(remote_interfaces),
-      mojo::MakeProxy(std::move(exposed_interfaces)));
+  }
+  instance->Detach();
+}
+
+bool HasSentStartWorker(EmbeddedWorkerInstance::StartingPhase phase) {
+  switch (phase) {
+    case EmbeddedWorkerInstance::NOT_STARTING:
+    case EmbeddedWorkerInstance::ALLOCATING_PROCESS:
+    case EmbeddedWorkerInstance::REGISTERING_TO_DEVTOOLS:
+      return false;
+    case EmbeddedWorkerInstance::SENT_START_WORKER:
+    case EmbeddedWorkerInstance::SCRIPT_DOWNLOADING:
+    case EmbeddedWorkerInstance::SCRIPT_READ_STARTED:
+    case EmbeddedWorkerInstance::SCRIPT_READ_FINISHED:
+    case EmbeddedWorkerInstance::SCRIPT_LOADED:
+    case EmbeddedWorkerInstance::SCRIPT_EVALUATED:
+    case EmbeddedWorkerInstance::THREAD_STARTED:
+      return true;
+    case EmbeddedWorkerInstance::STARTING_PHASE_MAX_VALUE:
+      NOTREACHED();
+  }
+  return false;
 }
 
 }  // namespace
@@ -142,14 +160,6 @@ class EmbeddedWorkerInstance::DevToolsProxy : public base::NonThreadSafe {
                                        process_id_, agent_route_id_));
   }
 
-  void NotifyWorkerStopIgnored() {
-    DCHECK(CalledOnValidThread());
-    BrowserThread::PostTask(BrowserThread::UI,
-                            FROM_HERE,
-                            base::Bind(NotifyWorkerStopIgnoredOnUI,
-                                       process_id_, agent_route_id_));
-  }
-
   void NotifyWorkerVersionInstalled() {
     DCHECK(CalledOnValidThread());
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
@@ -164,11 +174,18 @@ class EmbeddedWorkerInstance::DevToolsProxy : public base::NonThreadSafe {
                                        process_id_, agent_route_id_));
   }
 
+  bool ShouldNotifyWorkerStopIgnored() const {
+    return !worker_stop_ignored_notified_;
+  }
+
+  void WorkerStopIgnoredNotified() { worker_stop_ignored_notified_ = true; }
+
   int agent_route_id() const { return agent_route_id_; }
 
  private:
   const int process_id_;
   const int agent_route_id_;
+  bool worker_stop_ignored_notified_ = false;
   DISALLOW_COPY_AND_ASSIGN(DevToolsProxy);
 };
 
@@ -214,8 +231,11 @@ class EmbeddedWorkerInstance::StartTask {
  public:
   enum class ProcessAllocationState { NOT_ALLOCATED, ALLOCATING, ALLOCATED };
 
-  StartTask(EmbeddedWorkerInstance* instance, const GURL& script_url)
+  StartTask(EmbeddedWorkerInstance* instance,
+            const GURL& script_url,
+            mojom::EmbeddedWorkerInstanceClientRequest request)
       : instance_(instance),
+        request_(std::move(request)),
         state_(ProcessAllocationState::NOT_ALLOCATED),
         is_installed_(false),
         started_during_browser_startup_(false),
@@ -257,7 +277,7 @@ class EmbeddedWorkerInstance::StartTask {
     // TODO(nhiroki): Reconsider this bizarre layering.
   }
 
-  void Start(std::unique_ptr<EmbeddedWorkerMsg_StartWorker_Params> params,
+  void Start(std::unique_ptr<EmbeddedWorkerStartParams> params,
              const StatusCallback& callback) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     state_ = ProcessAllocationState::ALLOCATING;
@@ -292,12 +312,11 @@ class EmbeddedWorkerInstance::StartTask {
   bool is_installed() const { return is_installed_; }
 
  private:
-  void OnProcessAllocated(
-      std::unique_ptr<EmbeddedWorkerMsg_StartWorker_Params> params,
-      ServiceWorkerStatusCode status,
-      int process_id,
-      bool is_new_process,
-      const EmbeddedWorkerSettings& settings) {
+  void OnProcessAllocated(std::unique_ptr<EmbeddedWorkerStartParams> params,
+                          ServiceWorkerStatusCode status,
+                          int process_id,
+                          bool is_new_process,
+                          const EmbeddedWorkerSettings& settings) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
     if (status != SERVICE_WORKER_OK) {
@@ -330,9 +349,9 @@ class EmbeddedWorkerInstance::StartTask {
     // Notify the instance that a process is allocated.
     state_ = ProcessAllocationState::ALLOCATED;
     instance_->OnProcessAllocated(
-        base::WrapUnique(new WorkerProcessHandle(
-            instance_->context_, instance_->embedded_worker_id(), process_id,
-            is_new_process)),
+        base::MakeUnique<WorkerProcessHandle>(instance_->context_,
+                                              instance_->embedded_worker_id(),
+                                              process_id, is_new_process),
         start_situation);
 
     // TODO(bengr): Support changes to this setting while the worker
@@ -345,23 +364,22 @@ class EmbeddedWorkerInstance::StartTask {
     GURL script_url(params->script_url);
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::Bind(RegisterToWorkerDevToolsManagerOnUI, process_id,
-                   instance_->context_.get(), instance_->context_,
-                   service_worker_version_id, script_url, scope, is_installed_,
-                   base::Bind(&StartTask::OnRegisteredToDevToolsManager,
+        base::Bind(&SetupOnUI, process_id, instance_->context_.get(),
+                   instance_->context_, service_worker_version_id, script_url,
+                   scope, is_installed_, base::Passed(&request_),
+                   base::Bind(&StartTask::OnSetupOnUICompleted,
                               weak_factory_.GetWeakPtr(), base::Passed(&params),
                               is_new_process)));
   }
 
-  void OnRegisteredToDevToolsManager(
-      std::unique_ptr<EmbeddedWorkerMsg_StartWorker_Params> params,
-      bool is_new_process,
-      int worker_devtools_agent_route_id,
-      bool wait_for_debugger) {
+  void OnSetupOnUICompleted(std::unique_ptr<EmbeddedWorkerStartParams> params,
+                            bool is_new_process,
+                            int worker_devtools_agent_route_id,
+                            bool wait_for_debugger) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     TRACE_EVENT_ASYNC_STEP_PAST0("ServiceWorker",
                                  "EmbeddedWorkerInstance::Start", this,
-                                 "OnRegisteredToDevToolsManager");
+                                 "OnSetupOnUICompleted");
 
     // Notify the instance that it is registered to the devtools manager.
     instance_->OnRegisteredToDevToolsManager(
@@ -369,32 +387,23 @@ class EmbeddedWorkerInstance::StartTask {
 
     params->worker_devtools_agent_route_id = worker_devtools_agent_route_id;
     params->wait_for_debugger = wait_for_debugger;
-    SendStartWorker(std::move(params));
-  }
 
-  void SendStartWorker(
-      std::unique_ptr<EmbeddedWorkerMsg_StartWorker_Params> params) {
-    DCHECK_CURRENTLY_ON(BrowserThread::IO);
-    ServiceWorkerStatusCode status = instance_->registry_->SendStartWorker(
-        std::move(params), instance_->process_id());
-    TRACE_EVENT_ASYNC_STEP_PAST1(
-        "ServiceWorker", "EmbeddedWorkerInstance::Start", this,
-        "SendStartWorker", "Status", ServiceWorkerStatusToString(status));
+    ServiceWorkerStatusCode status =
+        instance_->SendStartWorker(std::move(params));
     if (status != SERVICE_WORKER_OK) {
       StatusCallback callback = start_callback_;
       start_callback_.Reset();
       instance_->OnStartFailed(callback, status);
       // |this| may be destroyed.
-      return;
     }
-    instance_->OnStartWorkerMessageSent();
-
-    // |start_callback_| will be called via RunStartCallback() when the script
-    // is evaluated.
   }
 
   // |instance_| must outlive |this|.
   EmbeddedWorkerInstance* instance_;
+
+  // Ownership is transferred by base::Passed() to a task after process
+  // allocation.
+  mojom::EmbeddedWorkerInstanceClientRequest request_;
 
   StatusCallback start_callback_;
   ProcessAllocationState state_;
@@ -424,8 +433,10 @@ EmbeddedWorkerInstance::~EmbeddedWorkerInstance() {
 }
 
 void EmbeddedWorkerInstance::Start(
-    std::unique_ptr<EmbeddedWorkerMsg_StartWorker_Params> params,
+    std::unique_ptr<EmbeddedWorkerStartParams> params,
+    mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
     const StatusCallback& callback) {
+  restart_count_++;
   if (!context_) {
     callback.Run(SERVICE_WORKER_ERROR_ABORT);
     // |this| may be destroyed by the callback.
@@ -439,20 +450,27 @@ void EmbeddedWorkerInstance::Start(
   status_ = EmbeddedWorkerStatus::STARTING;
   starting_phase_ = ALLOCATING_PROCESS;
   network_accessed_for_script_ = false;
-  interface_registry_.reset(new shell::InterfaceRegistry(nullptr));
-  remote_interfaces_.reset(new shell::InterfaceProvider);
-  FOR_EACH_OBSERVER(Listener, listener_list_, OnStarting());
+  for (auto& observer : listener_list_)
+    observer.OnStarting();
 
   params->embedded_worker_id = embedded_worker_id_;
   params->worker_devtools_agent_route_id = MSG_ROUTING_NONE;
   params->wait_for_debugger = false;
   params->settings.v8_cache_options = GetV8CacheOptions();
 
-  inflight_start_task_.reset(new StartTask(this, params->script_url));
+  mojom::EmbeddedWorkerInstanceClientRequest request =
+      mojo::MakeRequest(&client_);
+  client_.set_connection_error_handler(
+      base::Bind(&CallDetach, base::Unretained(this)));
+
+  pending_dispatcher_request_ = std::move(dispatcher_request);
+
+  inflight_start_task_.reset(
+      new StartTask(this, params->script_url, std::move(request)));
   inflight_start_task_->Start(std::move(params), callback);
 }
 
-ServiceWorkerStatusCode EmbeddedWorkerInstance::Stop() {
+bool EmbeddedWorkerInstance::Stop() {
   DCHECK(status_ == EmbeddedWorkerStatus::STARTING ||
          status_ == EmbeddedWorkerStatus::RUNNING)
       << static_cast<int>(status_);
@@ -460,26 +478,34 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::Stop() {
   // Abort an inflight start task.
   inflight_start_task_.reset();
 
-  ServiceWorkerStatusCode status =
-      registry_->StopWorker(process_id(), embedded_worker_id_);
-  UMA_HISTOGRAM_ENUMERATION("ServiceWorker.SendStopWorker.Status", status,
-                            SERVICE_WORKER_ERROR_MAX_VALUE);
-  // StopWorker could fail if we were starting up and don't have a process yet,
-  // or we can no longer communicate with the process. So just detach.
-  if (status != SERVICE_WORKER_OK) {
-    OnDetached();
-    return status;
-  }
+    if (status_ == EmbeddedWorkerStatus::STARTING &&
+        !HasSentStartWorker(starting_phase())) {
+      // Don't send the StopWorker message when the StartWorker message hasn't
+      // been sent.
+      // TODO(shimazu): Invoke OnStopping/OnStopped after the legacy IPC path is
+      // removed.
+      OnDetached();
+      return false;
+    }
+    client_->StopWorker();
 
-  status_ = EmbeddedWorkerStatus::STOPPING;
-  FOR_EACH_OBSERVER(Listener, listener_list_, OnStopping());
-  return status;
+    status_ = EmbeddedWorkerStatus::STOPPING;
+    for (auto& observer : listener_list_)
+      observer.OnStopping();
+    return true;
 }
 
 void EmbeddedWorkerInstance::StopIfIdle() {
   if (devtools_attached_) {
-    if (devtools_proxy_)
-      devtools_proxy_->NotifyWorkerStopIgnored();
+    if (devtools_proxy_) {
+      // Check ShouldNotifyWorkerStopIgnored not to show the same message
+      // multiple times in DevTools.
+      if (devtools_proxy_->ShouldNotifyWorkerStopIgnored()) {
+        AddMessageToConsole(blink::WebConsoleMessage::kLevelVerbose,
+                            kServiceWorkerTerminationCanceledMesage);
+        devtools_proxy_->WorkerStopIgnoredNotified();
+      }
+    }
     return;
   }
   Stop();
@@ -502,22 +528,8 @@ void EmbeddedWorkerInstance::ResumeAfterDownload() {
       status_ != EmbeddedWorkerStatus::STARTING) {
     return;
   }
-  registry_->Send(process_id(), new EmbeddedWorkerMsg_ResumeAfterDownload(
-                                    embedded_worker_id_));
-}
-
-shell::InterfaceRegistry* EmbeddedWorkerInstance::GetInterfaceRegistry() {
-  DCHECK(status_ == EmbeddedWorkerStatus::STARTING ||
-         status_ == EmbeddedWorkerStatus::RUNNING)
-      << static_cast<int>(status_);
-  return interface_registry_.get();
-}
-
-shell::InterfaceProvider* EmbeddedWorkerInstance::GetRemoteInterfaces() {
-  DCHECK(status_ == EmbeddedWorkerStatus::STARTING ||
-         status_ == EmbeddedWorkerStatus::RUNNING)
-      << static_cast<int>(status_);
-  return remote_interfaces_.get();
+  DCHECK(client_.is_bound());
+  client_->ResumeAfterDownload();
 }
 
 EmbeddedWorkerInstance::EmbeddedWorkerInstance(
@@ -528,7 +540,9 @@ EmbeddedWorkerInstance::EmbeddedWorkerInstance(
       embedded_worker_id_(embedded_worker_id),
       status_(EmbeddedWorkerStatus::STOPPED),
       starting_phase_(NOT_STARTING),
+      restart_count_(0),
       thread_id_(kInvalidEmbeddedWorkerThreadId),
+      instance_host_binding_(this),
       devtools_attached_(false),
       network_accessed_for_script_(false),
       weak_factory_(this) {}
@@ -542,7 +556,8 @@ void EmbeddedWorkerInstance::OnProcessAllocated(
   process_handle_ = std::move(handle);
   starting_phase_ = REGISTERING_TO_DEVTOOLS;
   start_situation_ = start_situation;
-  FOR_EACH_OBSERVER(Listener, listener_list_, OnProcessAllocated());
+  for (auto& observer : listener_list_)
+    observer.OnProcessAllocated();
 }
 
 void EmbeddedWorkerInstance::OnRegisteredToDevToolsManager(
@@ -559,6 +574,27 @@ void EmbeddedWorkerInstance::OnRegisteredToDevToolsManager(
     // we set the NULL time here.
     step_time_ = base::TimeTicks();
   }
+  for (auto& observer : listener_list_)
+    observer.OnRegisteredToDevToolsManager();
+}
+
+ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
+    std::unique_ptr<EmbeddedWorkerStartParams> params) {
+  if (!context_)
+    return SERVICE_WORKER_ERROR_ABORT;
+
+  DCHECK(!instance_host_binding_.is_bound());
+  mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo host_ptr_info;
+  instance_host_binding_.Bind(&host_ptr_info);
+
+  DCHECK(pending_dispatcher_request_.is_pending());
+  client_->StartWorker(*params, std::move(pending_dispatcher_request_),
+                       std::move(host_ptr_info));
+  registry_->BindWorkerToProcess(process_id(), embedded_worker_id());
+  TRACE_EVENT_ASYNC_STEP_PAST0("ServiceWorker", "EmbeddedWorkerInstance::Start",
+                               this, "SendStartWorker");
+  OnStartWorkerMessageSent();
+  return SERVICE_WORKER_OK;
 }
 
 void EmbeddedWorkerInstance::OnStartWorkerMessageSent() {
@@ -571,10 +607,12 @@ void EmbeddedWorkerInstance::OnStartWorkerMessageSent() {
   }
 
   starting_phase_ = SENT_START_WORKER;
-  FOR_EACH_OBSERVER(Listener, listener_list_, OnStartWorkerMessageSent());
+  for (auto& observer : listener_list_)
+    observer.OnStartWorkerMessageSent();
 }
 
 void EmbeddedWorkerInstance::OnReadyForInspection() {
+  TRACE_EVENT0("ServiceWorker", "EmbeddedWorkerInstance::OnReadyForInspection");
   if (devtools_proxy_)
     devtools_proxy_->NotifyWorkerReadyForInspection();
 }
@@ -589,6 +627,8 @@ void EmbeddedWorkerInstance::OnScriptReadFinished() {
 
 void EmbeddedWorkerInstance::OnScriptLoaded() {
   using LoadSource = ServiceWorkerMetrics::LoadSource;
+
+  TRACE_EVENT0("ServiceWorker", "EmbeddedWorkerInstance::OnScriptLoaded");
 
   if (!inflight_start_task_)
     return;
@@ -612,7 +652,8 @@ void EmbeddedWorkerInstance::OnScriptLoaded() {
   }
 
   starting_phase_ = SCRIPT_LOADED;
-  FOR_EACH_OBSERVER(Listener, listener_list_, OnScriptLoaded());
+  for (auto& observer : listener_list_)
+    observer.OnScriptLoaded();
   // |this| may be destroyed by the callback.
 }
 
@@ -638,7 +679,21 @@ void EmbeddedWorkerInstance::OnWorkerVersionDoomed() {
     devtools_proxy_->NotifyWorkerVersionDoomed();
 }
 
-void EmbeddedWorkerInstance::OnThreadStarted(int thread_id) {
+void EmbeddedWorkerInstance::OnThreadStarted(int thread_id, int provider_id) {
+  TRACE_EVENT0("ServiceWorker", "EmbeddedWorkerInstance::OnThreadStarted");
+  if (!context_)
+    return;
+
+  ServiceWorkerProviderHost* provider_host =
+      context_->GetProviderHost(process_id(), provider_id);
+  if (!provider_host) {
+    bad_message::ReceivedBadMessage(
+        process_id(), bad_message::SWDH_WORKER_SCRIPT_LOAD_NO_HOST);
+    return;
+  }
+
+  provider_host->SetReadyToSendMessagesToWorker(thread_id);
+
   if (!inflight_start_task_)
     return;
   TRACE_EVENT_ASYNC_STEP_PAST0("ServiceWorker", "EmbeddedWorkerInstance::Start",
@@ -652,30 +707,23 @@ void EmbeddedWorkerInstance::OnThreadStarted(int thread_id) {
   }
 
   thread_id_ = thread_id;
-  FOR_EACH_OBSERVER(Listener, listener_list_, OnThreadStarted());
-
-  shell::mojom::InterfaceProviderPtr exposed_interfaces;
-  interface_registry_->Bind(GetProxy(&exposed_interfaces));
-  shell::mojom::InterfaceProviderPtr remote_interfaces;
-  shell::mojom::InterfaceProviderRequest request = GetProxy(&remote_interfaces);
-  remote_interfaces_->Bind(std::move(remote_interfaces));
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::Bind(SetupMojoOnUIThread, process_id(), thread_id_,
-                 base::Passed(&request),
-                 base::Passed(exposed_interfaces.PassInterface())));
+  for (auto& observer : listener_list_)
+    observer.OnThreadStarted();
 }
 
 void EmbeddedWorkerInstance::OnScriptLoadFailed() {
+  TRACE_EVENT0("ServiceWorker", "EmbeddedWorkerInstance::OnScriptLoadFailed");
   if (!inflight_start_task_)
     return;
   TRACE_EVENT_ASYNC_STEP_PAST0("ServiceWorker", "EmbeddedWorkerInstance::Start",
                                inflight_start_task_.get(),
                                "OnScriptLoadFailed");
-  FOR_EACH_OBSERVER(Listener, listener_list_, OnScriptLoadFailed());
+  for (auto& observer : listener_list_)
+    observer.OnScriptLoadFailed();
 }
 
 void EmbeddedWorkerInstance::OnScriptEvaluated(bool success) {
+  TRACE_EVENT0("ServiceWorker", "EmbeddedWorkerInstance::OnScriptEvaluated");
   if (!inflight_start_task_)
     return;
   DCHECK_EQ(EmbeddedWorkerStatus::STARTING, status_);
@@ -700,29 +748,37 @@ void EmbeddedWorkerInstance::OnScriptEvaluated(bool success) {
 }
 
 void EmbeddedWorkerInstance::OnStarted() {
+  TRACE_EVENT0("ServiceWorker", "EmbeddedWorkerInstance::OnStarted");
+  if (!registry_->OnWorkerStarted(process_id(), embedded_worker_id_))
+    return;
   // Stop is requested before OnStarted is sent back from the worker.
   if (status_ == EmbeddedWorkerStatus::STOPPING)
     return;
   DCHECK(status_ == EmbeddedWorkerStatus::STARTING);
   status_ = EmbeddedWorkerStatus::RUNNING;
   inflight_start_task_.reset();
-  FOR_EACH_OBSERVER(Listener, listener_list_, OnStarted());
+  for (auto& observer : listener_list_)
+    observer.OnStarted();
 }
 
 void EmbeddedWorkerInstance::OnStopped() {
+  registry_->OnWorkerStopped(process_id(), embedded_worker_id_);
+
   EmbeddedWorkerStatus old_status = status_;
   ReleaseProcess();
-  FOR_EACH_OBSERVER(Listener, listener_list_, OnStopped(old_status));
+  for (auto& observer : listener_list_)
+    observer.OnStopped(old_status);
 }
 
 void EmbeddedWorkerInstance::OnDetached() {
   EmbeddedWorkerStatus old_status = status_;
   ReleaseProcess();
-  FOR_EACH_OBSERVER(Listener, listener_list_, OnDetached(old_status));
+  for (auto& observer : listener_list_)
+    observer.OnDetached(old_status);
 }
 
 void EmbeddedWorkerInstance::Detach() {
-  registry_->RemoveWorker(process_id(), embedded_worker_id_);
+  registry_->DetachWorker(process_id(), embedded_worker_id());
   OnDetached();
 }
 
@@ -731,9 +787,8 @@ base::WeakPtr<EmbeddedWorkerInstance> EmbeddedWorkerInstance::AsWeakPtr() {
 }
 
 bool EmbeddedWorkerInstance::OnMessageReceived(const IPC::Message& message) {
-  ListenerList::Iterator it(&listener_list_);
-  while (Listener* listener = it.GetNext()) {
-    if (listener->OnMessageReceived(message))
+  for (auto& listener : listener_list_) {
+    if (listener.OnMessageReceived(message))
       return true;
   }
   return false;
@@ -744,10 +799,10 @@ void EmbeddedWorkerInstance::OnReportException(
     int line_number,
     int column_number,
     const GURL& source_url) {
-  FOR_EACH_OBSERVER(
-      Listener,
-      listener_list_,
-      OnReportException(error_message, line_number, column_number, source_url));
+  for (auto& observer : listener_list_) {
+    observer.OnReportException(error_message, line_number, column_number,
+                               source_url);
+  }
 }
 
 void EmbeddedWorkerInstance::OnReportConsoleMessage(
@@ -756,11 +811,10 @@ void EmbeddedWorkerInstance::OnReportConsoleMessage(
     const base::string16& message,
     int line_number,
     const GURL& source_url) {
-  FOR_EACH_OBSERVER(
-      Listener,
-      listener_list_,
-      OnReportConsoleMessage(
-          source_identifier, message_level, message, line_number, source_url));
+  for (auto& observer : listener_list_) {
+    observer.OnReportConsoleMessage(source_identifier, message_level, message,
+                                    line_number, source_url);
+  }
 }
 
 int EmbeddedWorkerInstance::process_id() const {
@@ -780,17 +834,18 @@ int EmbeddedWorkerInstance::worker_devtools_agent_route_id() const {
   return MSG_ROUTING_NONE;
 }
 
-MessagePortMessageFilter* EmbeddedWorkerInstance::message_port_message_filter()
-    const {
-  return registry_->MessagePortMessageFilterForProcess(process_id());
-}
-
 void EmbeddedWorkerInstance::AddListener(Listener* listener) {
   listener_list_.AddObserver(listener);
 }
 
 void EmbeddedWorkerInstance::RemoveListener(Listener* listener) {
   listener_list_.RemoveObserver(listener);
+}
+
+void EmbeddedWorkerInstance::SetDevToolsAttached(bool attached) {
+  devtools_attached_ = attached;
+  if (attached)
+    registry_->OnDevToolsAttached(embedded_worker_id_);
 }
 
 void EmbeddedWorkerInstance::OnNetworkAccessedForScriptLoad() {
@@ -802,12 +857,13 @@ void EmbeddedWorkerInstance::ReleaseProcess() {
   // Abort an inflight start task.
   inflight_start_task_.reset();
 
+  client_.reset();
+  instance_host_binding_.Close();
   devtools_proxy_.reset();
   process_handle_.reset();
   status_ = EmbeddedWorkerStatus::STOPPED;
+  starting_phase_ = NOT_STARTING;
   thread_id_ = kInvalidEmbeddedWorkerThreadId;
-  interface_registry_.reset();
-  remote_interfaces_.reset();
 }
 
 void EmbeddedWorkerInstance::OnStartFailed(const StatusCallback& callback,
@@ -816,9 +872,10 @@ void EmbeddedWorkerInstance::OnStartFailed(const StatusCallback& callback,
   ReleaseProcess();
   base::WeakPtr<EmbeddedWorkerInstance> weak_this = weak_factory_.GetWeakPtr();
   callback.Run(status);
-  if (weak_this && old_status != EmbeddedWorkerStatus::STOPPED)
-    FOR_EACH_OBSERVER(Listener, weak_this->listener_list_,
-                      OnStopped(old_status));
+  if (weak_this && old_status != EmbeddedWorkerStatus::STOPPED) {
+    for (auto& observer : weak_this->listener_list_)
+      observer.OnStopped(old_status);
+  }
 }
 
 base::TimeDelta EmbeddedWorkerInstance::UpdateStepTime() {
@@ -830,14 +887,13 @@ base::TimeDelta EmbeddedWorkerInstance::UpdateStepTime() {
   return duration;
 }
 
-void EmbeddedWorkerInstance::AddMessageToConsole(ConsoleMessageLevel level,
-                                                 const std::string& message) {
-  if (status_ != EmbeddedWorkerStatus::RUNNING &&
-      status_ != EmbeddedWorkerStatus::STARTING) {
+void EmbeddedWorkerInstance::AddMessageToConsole(
+    blink::WebConsoleMessage::Level level,
+    const std::string& message) {
+  if (process_id() == ChildProcessHost::kInvalidUniqueID)
     return;
-  }
-  registry_->Send(process_id(), new EmbeddedWorkerMsg_AddMessageToConsole(
-                                    embedded_worker_id_, level, message));
+  DCHECK(client_.is_bound());
+  client_->AddMessageToConsole(level, message);
 }
 
 // static

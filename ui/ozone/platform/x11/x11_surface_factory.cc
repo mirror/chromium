@@ -6,11 +6,15 @@
 
 #include <X11/Xlib.h>
 
+#include "base/memory/ptr_util.h"
 #include "third_party/khronos/EGL/egl.h"
 #include "ui/gfx/x/x11_types.h"
 #include "ui/gl/egl_util.h"
 #include "ui/gl/gl_surface_egl.h"
 #include "ui/ozone/common/egl_util.h"
+#include "ui/ozone/common/gl_ozone_egl.h"
+#include "ui/ozone/common/gl_ozone_osmesa.h"
+#include "ui/ozone/platform/x11/gl_ozone_glx.h"
 
 namespace ui {
 
@@ -34,7 +38,7 @@ class GLSurfaceEGLOzoneX11 : public gl::NativeViewGLSurfaceEGL {
 };
 
 GLSurfaceEGLOzoneX11::GLSurfaceEGLOzoneX11(EGLNativeWindowType window)
-    : NativeViewGLSurfaceEGL(window) {}
+    : NativeViewGLSurfaceEGL(window, nullptr) {}
 
 EGLConfig GLSurfaceEGLOzoneX11::GetConfig() {
   // Try matching the window depth with an alpha channel, because we're worried
@@ -119,46 +123,60 @@ GLSurfaceEGLOzoneX11::~GLSurfaceEGLOzoneX11() {
   Destroy();
 }
 
+class GLOzoneEGLX11 : public GLOzoneEGL {
+ public:
+  GLOzoneEGLX11() {}
+  ~GLOzoneEGLX11() override {}
+
+  scoped_refptr<gl::GLSurface> CreateViewGLSurface(
+      gfx::AcceleratedWidget window) override {
+    return gl::InitializeGLSurface(new GLSurfaceEGLOzoneX11(window));
+  }
+
+  scoped_refptr<gl::GLSurface> CreateOffscreenGLSurface(
+      const gfx::Size& size) override {
+    return gl::InitializeGLSurface(new gl::PbufferGLSurfaceEGL(size));
+  }
+
+ protected:
+  intptr_t GetNativeDisplay() override {
+    return reinterpret_cast<intptr_t>(gfx::GetXDisplay());
+  }
+
+  bool LoadGLES2Bindings() override { return LoadDefaultEGLGLES2Bindings(); }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(GLOzoneEGLX11);
+};
+
 }  // namespace
 
-X11SurfaceFactory::X11SurfaceFactory() {}
+X11SurfaceFactory::X11SurfaceFactory()
+    : glx_implementation_(base::MakeUnique<GLOzoneGLX>()),
+      egl_implementation_(base::MakeUnique<GLOzoneEGLX11>()),
+      osmesa_implementation_(base::MakeUnique<GLOzoneOSMesa>()) {}
 
 X11SurfaceFactory::~X11SurfaceFactory() {}
 
-bool X11SurfaceFactory::UseNewSurfaceAPI() {
-  return true;
+std::vector<gl::GLImplementation>
+X11SurfaceFactory::GetAllowedGLImplementations() {
+  // DesktopGL (GLX) should be the first option when crbug.com/646982 is fixed.
+  return std::vector<gl::GLImplementation>{gl::kGLImplementationEGLGLES2,
+                                           gl::kGLImplementationDesktopGL,
+                                           gl::kGLImplementationOSMesaGL};
 }
 
-scoped_refptr<gl::GLSurface> X11SurfaceFactory::CreateViewGLSurface(
-    gl::GLImplementation implementation,
-    gfx::AcceleratedWidget widget) {
-  if (implementation != gl::kGLImplementationEGLGLES2) {
-    NOTREACHED();
-    return nullptr;
+GLOzone* X11SurfaceFactory::GetGLOzone(gl::GLImplementation implementation) {
+  switch (implementation) {
+    case gl::kGLImplementationDesktopGL:
+      return glx_implementation_.get();
+    case gl::kGLImplementationEGLGLES2:
+      return egl_implementation_.get();
+    case gl::kGLImplementationOSMesaGL:
+      return osmesa_implementation_.get();
+    default:
+      return nullptr;
   }
-
-  return gl::InitializeGLSurface(new GLSurfaceEGLOzoneX11(widget));
-}
-
-scoped_refptr<gl::GLSurface> X11SurfaceFactory::CreateOffscreenGLSurface(
-    gl::GLImplementation implementation,
-    const gfx::Size& size) {
-  if (implementation != gl::kGLImplementationEGLGLES2) {
-    NOTREACHED();
-    return nullptr;
-  }
-
-  return gl::InitializeGLSurface(new gl::PbufferGLSurfaceEGL(size));
-}
-
-bool X11SurfaceFactory::LoadEGLGLES2Bindings(
-    AddGLLibraryCallback add_gl_library,
-    SetGLGetProcAddressProcCallback set_gl_get_proc_address) {
-  return LoadDefaultEGLGLES2Bindings(add_gl_library, set_gl_get_proc_address);
-}
-
-intptr_t X11SurfaceFactory::GetNativeDisplay() {
-  return reinterpret_cast<intptr_t>(gfx::GetXDisplay());
 }
 
 }  // namespace ui

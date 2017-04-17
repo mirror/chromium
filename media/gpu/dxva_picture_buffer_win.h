@@ -17,6 +17,7 @@
 #include "third_party/angle/include/EGL/egl.h"
 #include "third_party/angle/include/EGL/eglext.h"
 #include "ui/gl/gl_fence.h"
+#include "ui/gl/gl_image.h"
 
 interface IMFSample;
 
@@ -27,6 +28,7 @@ class DXVAVideoDecodeAccelerator;
 // available for rendering, the texture information, etc.
 class DXVAPictureBuffer {
  public:
+  enum State { UNUSED, BOUND, COPYING, IN_CLIENT, WAITING_TO_REUSE };
   static linked_ptr<DXVAPictureBuffer> Create(
       const DXVAVideoDecodeAccelerator& decoder,
       const PictureBuffer& buffer,
@@ -44,15 +46,27 @@ class DXVAPictureBuffer {
       ID3D11Texture2D* dx11_texture,
       int input_buffer_id);
 
-  bool available() const { return available_; }
-
-  void set_available(bool available) { available_ = available; }
+  bool available() const { return state_ == UNUSED; }
+  State state() const { return state_; }
 
   int id() const { return picture_buffer_.id(); }
 
   gfx::Size size() const { return picture_buffer_.size(); }
+  void set_bound();
 
-  virtual bool waiting_to_reuse() const;
+  scoped_refptr<gl::GLImage> gl_image() { return gl_image_; }
+
+  const gfx::ColorSpace& color_space() const { return color_space_; }
+  void set_color_space(const gfx::ColorSpace& color_space) {
+    color_space_ = color_space;
+  }
+
+  // Returns true if these could in theory be used as an overlay. May
+  // still be drawn using GL depending on the scene and precise hardware
+  // support.
+  virtual bool AllowOverlay() const = 0;
+
+  bool waiting_to_reuse() const { return state_ == WAITING_TO_REUSE; }
   virtual gl::GLFence* reuse_fence();
 
   // Called when the source surface |src_surface| is copied to the destination
@@ -64,8 +78,10 @@ class DXVAPictureBuffer {
  protected:
   explicit DXVAPictureBuffer(const PictureBuffer& buffer);
 
-  bool available_;
+  State state_ = UNUSED;
   PictureBuffer picture_buffer_;
+  gfx::ColorSpace color_space_;
+  scoped_refptr<gl::GLImage> gl_image_;
 
   DISALLOW_COPY_AND_ASSIGN(DXVAPictureBuffer);
 };
@@ -79,7 +95,8 @@ class PbufferPictureBuffer : public DXVAPictureBuffer {
   bool Initialize(const DXVAVideoDecodeAccelerator& decoder,
                   EGLConfig egl_config);
   bool InitializeTexture(const DXVAVideoDecodeAccelerator& decoder,
-                         bool use_rgb);
+                         bool use_rgb,
+                         bool use_fp16);
 
   bool ReusePictureBuffer() override;
   void ResetReuseFence() override;
@@ -87,15 +104,12 @@ class PbufferPictureBuffer : public DXVAPictureBuffer {
                                            IDirect3DSurface9* dest_surface,
                                            ID3D11Texture2D* dx11_texture,
                                            int input_buffer_id) override;
-  bool waiting_to_reuse() const override;
   gl::GLFence* reuse_fence() override;
   bool CopySurfaceComplete(IDirect3DSurface9* src_surface,
                            IDirect3DSurface9* dest_surface) override;
+  bool AllowOverlay() const override;
 
  protected:
-  // This is true if the decoder is currently waiting on the fence before
-  // reusing the buffer.
-  bool waiting_to_reuse_;
   EGLSurface decoding_surface_;
 
   std::unique_ptr<gl::GLFence> reuse_fence_;
@@ -136,6 +150,7 @@ class EGLStreamPictureBuffer : public DXVAPictureBuffer {
   bool Initialize();
   bool ReusePictureBuffer() override;
   bool BindSampleToTexture(base::win::ScopedComPtr<IMFSample> sample) override;
+  bool AllowOverlay() const override;
 
  private:
   EGLStreamKHR stream_;
@@ -159,13 +174,10 @@ class EGLStreamCopyPictureBuffer : public DXVAPictureBuffer {
                                            int input_buffer_id) override;
   bool CopySurfaceComplete(IDirect3DSurface9* src_surface,
                            IDirect3DSurface9* dest_surface) override;
+  bool AllowOverlay() const override;
 
  private:
   EGLStreamKHR stream_;
-
-  // True if the copy has been completed and it has not been set for reuse
-  // yet.
-  bool frame_in_consumer_ = false;
 
   // This ID3D11Texture2D interface pointer is used to hold a reference to the
   // MFT decoder texture during the course of a copy operation. This reference

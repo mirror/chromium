@@ -5,6 +5,7 @@
 package org.chromium.base;
 
 import android.content.Context;
+import android.net.Uri;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -12,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 /**
  * Helper methods for dealing with Files.
@@ -34,6 +36,18 @@ public class FileUtils {
         }
 
         if (!currentFile.delete()) Log.e(TAG, "Failed to delete: " + currentFile);
+    }
+
+    /**
+     * Delete the given files or directories by calling {@link #recursivelyDeleteFile(File)}.
+     * @param files The files to delete.
+     */
+    public static void batchDeleteFiles(List<File> files) {
+        assert !ThreadUtils.runningOnUiThread();
+
+        for (File file : files) {
+            if (file.exists()) recursivelyDeleteFile(file);
+        }
     }
 
     /**
@@ -72,5 +86,28 @@ public class FileUtils {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns a URI that points at the file.
+     * @param file File to get a URI for.
+     * @return URI that points at that file, either as a content:// URI or a file:// URI.
+     */
+    public static Uri getUriForFile(File file) {
+        // TODO(crbug/709584): Uncomment this when http://crbug.com/709584 has been fixed.
+        // assert !ThreadUtils.runningOnUiThread();
+        Uri uri = null;
+
+        try {
+            // Try to obtain a content:// URI, which is preferred to a file:// URI so that
+            // receiving apps don't attempt to determine the file's mime type (which often fails).
+            uri = ContentUriUtils.getContentUriFromFile(file);
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Could not create content uri: " + e);
+        }
+
+        if (uri == null) uri = Uri.fromFile(file);
+
+        return uri;
     }
 }

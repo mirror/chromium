@@ -4,7 +4,7 @@
 
 package org.chromium.chrome.browser.download;
 
-import android.content.Intent;
+import org.chromium.components.offline_items_collection.ContentId;
 
 /**
  * Class for reporting the status of a download.
@@ -15,10 +15,10 @@ public interface DownloadNotifier {
      * @param downloadInfo info about the successful download.
      * @param systemDownloadId The system download ID assigned to the download.
      * @param canResolve Whether the download can be resolved to any activity.
-     * @param intent Intent to launch when clicking the download notification.
+     * @param isSupportedMimeType Whether the MIME type can be viewed inside browser.
      */
     void notifyDownloadSuccessful(DownloadInfo downloadInfo, long systemDownloadId,
-            boolean canResolve, Intent intent);
+            boolean canResolve, boolean isSupportedMimeType);
 
     /**
      * Add a download failed notification.
@@ -52,9 +52,16 @@ public interface DownloadNotifier {
 
     /**
      * Cancel the notification for a download.
-     * @param downloadGuid The GUID of the cancelled download.
+     * @param id The {@link ContentId} of the download.
      */
-    void notifyDownloadCanceled(String downloadGuid);
+    void notifyDownloadCanceled(ContentId id);
+
+    /**
+     * Remove the download notification for an already finished download.
+     * @param notificationId The id of the download notification.
+     * @param downloadInfo   Info about the removed download.
+     */
+    void removeDownloadNotification(int notificationId, DownloadInfo downloadInfo);
 
     /**
      * Called to resume all the pending download entries in SharedPreferences.

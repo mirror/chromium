@@ -30,21 +30,22 @@
 
 #include "public/web/WebPepperSocket.h"
 
-#include "web/WebPepperSocketImpl.h"
-#include "wtf/PtrUtil.h"
 #include <memory>
+#include "platform/wtf/PtrUtil.h"
+#include "web/WebPepperSocketImpl.h"
 
 namespace blink {
 
-WebPepperSocket* WebPepperSocket::create(const WebDocument& document, WebPepperSocketClient* client)
-{
-    if (!client)
-        return 0;
+WebPepperSocket* WebPepperSocket::Create(const WebDocument& document,
+                                         WebPepperSocketClient* client) {
+  if (!client)
+    return 0;
 
-    std::unique_ptr<WebPepperSocketImpl> websocket = wrapUnique(new WebPepperSocketImpl(document, client));
-    if (websocket && websocket->isNull())
-        return 0;
-    return websocket.release();
+  std::unique_ptr<WebPepperSocketImpl> websocket =
+      WTF::MakeUnique<WebPepperSocketImpl>(document, client);
+  if (websocket && websocket->IsNull())
+    return 0;
+  return websocket.release();
 }
 
-} // namespace blink
+}  // namespace blink

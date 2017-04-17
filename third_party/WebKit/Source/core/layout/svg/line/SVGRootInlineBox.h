@@ -28,38 +28,40 @@
 namespace blink {
 
 class SVGRootInlineBox final : public RootInlineBox {
-public:
-    SVGRootInlineBox(LineLayoutItem block)
-        : RootInlineBox(block)
-    {
-    }
+ public:
+  SVGRootInlineBox(LineLayoutItem block) : RootInlineBox(block) {}
 
-    bool isSVGRootInlineBox() const override { return true; }
+  bool IsSVGRootInlineBox() const override { return true; }
 
-    LayoutUnit virtualLogicalHeight() const override { return m_logicalHeight; }
-    void setLogicalHeight(LayoutUnit height) { m_logicalHeight = height; }
+  LayoutUnit VirtualLogicalHeight() const override { return logical_height_; }
+  void SetLogicalHeight(LayoutUnit height) { logical_height_ = height; }
 
-    void paint(const PaintInfo&, const LayoutPoint&, LayoutUnit lineTop, LayoutUnit lineBottom) const override;
+  void Paint(const PaintInfo&,
+             const LayoutPoint&,
+             LayoutUnit line_top,
+             LayoutUnit line_bottom) const override;
 
-    void markDirty() override;
+  void MarkDirty() override;
 
-    void computePerCharacterLayoutInformation();
+  void ComputePerCharacterLayoutInformation();
 
-    InlineBox* closestLeafChildForPosition(const LayoutPoint&);
+  InlineBox* ClosestLeafChildForPosition(const LayoutPoint&);
 
-    bool nodeAtPoint(HitTestResult&, const HitTestLocation& locationInContainer, const LayoutPoint& accumulatedOffset, LayoutUnit lineTop, LayoutUnit lineBottom) final;
+  bool NodeAtPoint(HitTestResult&,
+                   const HitTestLocation& location_in_container,
+                   const LayoutPoint& accumulated_offset,
+                   LayoutUnit line_top,
+                   LayoutUnit line_bottom) final;
 
-private:
-    void reorderValueLists();
-    void layoutChildBoxes(InlineFlowBox*, LayoutRect* = nullptr);
-    void layoutRootBox(const LayoutRect&);
+ private:
+  void ReorderValueLists();
+  LayoutRect LayoutInlineBoxes(InlineBox&);
 
-private:
-    LayoutUnit m_logicalHeight;
+  LayoutUnit logical_height_;
 };
 
 DEFINE_INLINE_BOX_TYPE_CASTS(SVGRootInlineBox);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGRootInlineBox_h
+#endif  // SVGRootInlineBox_h

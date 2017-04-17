@@ -34,21 +34,20 @@
 
 namespace blink {
 
-void V0CustomElementAsyncImportMicrotaskQueue::enqueue(V0CustomElementMicrotaskStep* step)
-{
-    m_queue.append(step);
+void V0CustomElementAsyncImportMicrotaskQueue::Enqueue(
+    V0CustomElementMicrotaskStep* step) {
+  queue_.push_back(step);
 }
 
-void V0CustomElementAsyncImportMicrotaskQueue::doDispatch()
-{
-    HeapVector<Member<V0CustomElementMicrotaskStep>> remaining;
+void V0CustomElementAsyncImportMicrotaskQueue::DoDispatch() {
+  HeapVector<Member<V0CustomElementMicrotaskStep>> remaining;
 
-    for (unsigned i = 0; i < m_queue.size(); ++i) {
-        if (V0CustomElementMicrotaskStep::Processing == m_queue[i]->process())
-            remaining.append(m_queue[i].release());
-    }
+  for (auto& step : queue_) {
+    if (V0CustomElementMicrotaskStep::kProcessing == step->Process())
+      remaining.push_back(step.Release());
+  }
 
-    m_queue.swap(remaining);
+  queue_.Swap(remaining);
 }
 
-} // namespace blink
+}  // namespace blink

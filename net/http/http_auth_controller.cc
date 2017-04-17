@@ -142,9 +142,11 @@ HttpAuthController::~HttpAuthController() {
 }
 
 int HttpAuthController::MaybeGenerateAuthToken(
-    const HttpRequestInfo* request, const CompletionCallback& callback,
-    const BoundNetLog& net_log) {
+    const HttpRequestInfo* request,
+    const CompletionCallback& callback,
+    const NetLogWithSource& net_log) {
   DCHECK(CalledOnValidThread());
+  DCHECK(!auth_info_);
   bool needs_auth = HaveAuth() || SelectPreemptiveAuth(net_log);
   if (!needs_auth)
     return OK;
@@ -155,18 +157,19 @@ int HttpAuthController::MaybeGenerateAuthToken(
   DCHECK(callback_.is_null());
   int rv = handler_->GenerateAuthToken(
       credentials, request,
-      base::Bind(&HttpAuthController::OnIOComplete, base::Unretained(this)),
+      base::Bind(&HttpAuthController::OnGenerateAuthTokenDone,
+                 base::Unretained(this)),
       &auth_token_);
-  if (DisableOnAuthHandlerResult(rv))
-    rv = OK;
-  if (rv == ERR_IO_PENDING)
+
+  if (rv == ERR_IO_PENDING) {
     callback_ = callback;
-  else
-    OnIOComplete(rv);
-  return rv;
+    return rv;
+  }
+
+  return HandleGenerateTokenResult(rv);
 }
 
-bool HttpAuthController::SelectPreemptiveAuth(const BoundNetLog& net_log) {
+bool HttpAuthController::SelectPreemptiveAuth(const NetLogWithSource& net_log) {
   DCHECK(CalledOnValidThread());
   DCHECK(!HaveAuth());
   DCHECK(identity_.invalid);
@@ -221,10 +224,11 @@ int HttpAuthController::HandleAuthChallenge(
     const SSLInfo& ssl_info,
     bool do_not_send_server_auth,
     bool establishing_tunnel,
-    const BoundNetLog& net_log) {
+    const NetLogWithSource& net_log) {
   DCHECK(CalledOnValidThread());
   DCHECK(headers.get());
   DCHECK(auth_origin_.is_valid());
+  DCHECK(!auth_info_);
 
   // Give the existing auth handler first try at the authentication headers.
   // This will also evict the entry in the HttpAuthCache if the previous
@@ -275,7 +279,6 @@ int HttpAuthController::HandleAuthChallenge(
   }
 
   identity_.invalid = true;
-
   bool can_send_auth = (target_ != HttpAuth::AUTH_SERVER ||
                         !do_not_send_server_auth);
 
@@ -324,8 +327,6 @@ int HttpAuthController::HandleAuthChallenge(
         // Pass the challenge information back to the client.
         PopulateAuthChallenge();
       }
-    } else {
-      auth_info_ = NULL;
     }
 
     // If we get here and we don't have a handler_, that's because we
@@ -346,6 +347,9 @@ void HttpAuthController::ResetAuth(const AuthCredentials& credentials) {
     identity_.source = HttpAuth::IDENT_SRC_EXTERNAL;
     identity_.invalid = false;
     identity_.credentials = credentials;
+
+    // auth_info_ is no longer necessary.
+    auth_info_ = nullptr;
   }
 
   DCHECK(identity_.source != HttpAuth::IDENT_SRC_PATH_LOOKUP);
@@ -470,10 +474,29 @@ void HttpAuthController::PopulateAuthChallenge() {
   auth_info_->realm = handler_->realm();
 }
 
-bool HttpAuthController::DisableOnAuthHandlerResult(int result) {
+int HttpAuthController::HandleGenerateTokenResult(int result) {
   DCHECK(CalledOnValidThread());
-
   switch (result) {
+    // Occurs if the credential handle is found to be invalid at the point it is
+    // exercised (i.e. GenerateAuthToken stage). We are going to consider this
+    // to be an error that invalidates the identity but not necessarily the
+    // scheme. Doing so allows a different identity to be used with the same
+    // scheme. See https://crbug.com/648366.
+    case ERR_INVALID_HANDLE:
+
+    // If the GenerateAuthToken call fails with this error, this means that the
+    // handler can no longer be used. However, the authentication scheme is
+    // considered still usable. This allows a scheme that attempted and failed
+    // to use default credentials to recover and use explicit credentials.
+    //
+    // The current handler may be tied to external state that is no longer
+    // valid, hence should be discarded. Since the scheme is still valid, a new
+    // handler can be created for the current scheme.
+    case ERR_INVALID_AUTH_CREDENTIALS:
+      InvalidateCurrentHandler(INVALIDATE_HANDLER_AND_CACHED_CREDENTIALS);
+      auth_token_.clear();
+      return OK;
+
     // Occurs with GSSAPI, if the user has not already logged in.
     case ERR_MISSING_AUTH_CREDENTIALS:
 
@@ -491,19 +514,18 @@ bool HttpAuthController::DisableOnAuthHandlerResult(int result) {
 
       // In these cases, disable the current scheme as it cannot
       // succeed.
-      DisableAuthScheme(handler_->auth_scheme());
+      InvalidateCurrentHandler(INVALIDATE_HANDLER_AND_DISABLE_SCHEME);
       auth_token_.clear();
-      return true;
+      return OK;
 
     default:
-      return false;
+      return result;
   }
 }
 
-void HttpAuthController::OnIOComplete(int result) {
+void HttpAuthController::OnGenerateAuthTokenDone(int result) {
   DCHECK(CalledOnValidThread());
-  if (DisableOnAuthHandlerResult(result))
-    result = OK;
+  result = HandleGenerateTokenResult(result);
   if (!callback_.is_null()) {
     CompletionCallback c = callback_;
     callback_.Reset();

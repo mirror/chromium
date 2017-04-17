@@ -5,72 +5,64 @@
 #include "modules/geolocation/GeolocationWatchers.h"
 
 #include "modules/geolocation/GeoNotifier.h"
-#include "wtf/Assertions.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
-DEFINE_TRACE(GeolocationWatchers)
-{
-    visitor->trace(m_idToNotifierMap);
-    visitor->trace(m_notifierToIdMap);
+DEFINE_TRACE(GeolocationWatchers) {
+  visitor->Trace(id_to_notifier_map_);
+  visitor->Trace(notifier_to_id_map_);
 }
 
-bool GeolocationWatchers::add(int id, GeoNotifier* notifier)
-{
-    DCHECK_GT(id, 0);
-    if (!m_idToNotifierMap.add(id, notifier).isNewEntry)
-        return false;
-    m_notifierToIdMap.set(notifier, id);
-    return true;
+bool GeolocationWatchers::Add(int id, GeoNotifier* notifier) {
+  DCHECK_GT(id, 0);
+  if (!id_to_notifier_map_.insert(id, notifier).is_new_entry)
+    return false;
+  notifier_to_id_map_.Set(notifier, id);
+  return true;
 }
 
-GeoNotifier* GeolocationWatchers::find(int id)
-{
-    DCHECK_GT(id, 0);
-    IdToNotifierMap::iterator iter = m_idToNotifierMap.find(id);
-    if (iter == m_idToNotifierMap.end())
-        return 0;
-    return iter->value;
+GeoNotifier* GeolocationWatchers::Find(int id) {
+  DCHECK_GT(id, 0);
+  IdToNotifierMap::iterator iter = id_to_notifier_map_.Find(id);
+  if (iter == id_to_notifier_map_.end())
+    return 0;
+  return iter->value;
 }
 
-void GeolocationWatchers::remove(int id)
-{
-    DCHECK_GT(id, 0);
-    IdToNotifierMap::iterator iter = m_idToNotifierMap.find(id);
-    if (iter == m_idToNotifierMap.end())
-        return;
-    m_notifierToIdMap.remove(iter->value);
-    m_idToNotifierMap.remove(iter);
+void GeolocationWatchers::Remove(int id) {
+  DCHECK_GT(id, 0);
+  IdToNotifierMap::iterator iter = id_to_notifier_map_.Find(id);
+  if (iter == id_to_notifier_map_.end())
+    return;
+  notifier_to_id_map_.erase(iter->value);
+  id_to_notifier_map_.erase(iter);
 }
 
-void GeolocationWatchers::remove(GeoNotifier* notifier)
-{
-    NotifierToIdMap::iterator iter = m_notifierToIdMap.find(notifier);
-    if (iter == m_notifierToIdMap.end())
-        return;
-    m_idToNotifierMap.remove(iter->value);
-    m_notifierToIdMap.remove(iter);
+void GeolocationWatchers::Remove(GeoNotifier* notifier) {
+  NotifierToIdMap::iterator iter = notifier_to_id_map_.Find(notifier);
+  if (iter == notifier_to_id_map_.end())
+    return;
+  id_to_notifier_map_.erase(iter->value);
+  notifier_to_id_map_.erase(iter);
 }
 
-bool GeolocationWatchers::contains(GeoNotifier* notifier) const
-{
-    return m_notifierToIdMap.contains(notifier);
+bool GeolocationWatchers::Contains(GeoNotifier* notifier) const {
+  return notifier_to_id_map_.Contains(notifier);
 }
 
-void GeolocationWatchers::clear()
-{
-    m_idToNotifierMap.clear();
-    m_notifierToIdMap.clear();
+void GeolocationWatchers::Clear() {
+  id_to_notifier_map_.Clear();
+  notifier_to_id_map_.Clear();
 }
 
-bool GeolocationWatchers::isEmpty() const
-{
-    return m_idToNotifierMap.isEmpty();
+bool GeolocationWatchers::IsEmpty() const {
+  return id_to_notifier_map_.IsEmpty();
 }
 
-void GeolocationWatchers::getNotifiersVector(HeapVector<Member<GeoNotifier>>& copy) const
-{
-    copyValuesToVector(m_idToNotifierMap, copy);
+void GeolocationWatchers::GetNotifiersVector(
+    HeapVector<Member<GeoNotifier>>& copy) const {
+  CopyValuesToVector(id_to_notifier_map_, copy);
 }
 
-} // namespace blink
+}  // namespace blink

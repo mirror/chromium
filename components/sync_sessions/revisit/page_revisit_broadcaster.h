@@ -5,8 +5,10 @@
 #ifndef COMPONENTS_SYNC_SESSIONS_REVISIT_PAGE_REVISIT_BROADCASTER_H_
 #define COMPONENTS_SYNC_SESSIONS_REVISIT_PAGE_REVISIT_BROADCASTER_H_
 
+#include <memory>
+#include <vector>
+
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "components/sync_sessions/revisit/page_visit_observer.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
@@ -15,7 +17,7 @@ namespace sync_sessions {
 class SyncSessionsClient;
 }
 
-namespace browser_sync {
+namespace sync_sessions {
 
 class SessionsSyncManager;
 
@@ -25,7 +27,7 @@ class SessionsSyncManager;
 class PageRevisitBroadcaster {
  public:
   PageRevisitBroadcaster(SessionsSyncManager* manager,
-                         sync_sessions::SyncSessionsClient* sessions_client);
+                         SyncSessionsClient* sessions_client);
   ~PageRevisitBroadcaster();
 
   // Broadcasts to all observers the given page visit event. Should only be
@@ -39,17 +41,17 @@ class PageRevisitBroadcaster {
   // observers to depend on ui/, and the high bit masks don't work for emitting
   // histograms. Some of the high bit masks correspond to cases we're
   // particularly interested in and want to treat as first class values.
-  static sync_sessions::PageVisitObserver::TransitionType ConvertTransitionEnum(
+  static PageVisitObserver::TransitionType ConvertTransitionEnum(
       const ui::PageTransition original);
 
   // The client of this sync sessions datatype.
-  sync_sessions::SyncSessionsClient* const sessions_client_;
+  SyncSessionsClient* const sessions_client_;
 
-  ScopedVector<sync_sessions::PageVisitObserver> revisit_observers_;
+  std::vector<std::unique_ptr<PageVisitObserver>> revisit_observers_;
 
   DISALLOW_COPY_AND_ASSIGN(PageRevisitBroadcaster);
 };
 
-}  // namespace browser_sync
+}  // namespace sync_sessions
 
 #endif  // COMPONENTS_SYNC_SESSIONS_REVISIT_PAGE_REVISIT_BROADCASTER_H_

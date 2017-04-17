@@ -5,7 +5,6 @@
 #ifndef CHROME_BROWSER_FIRST_RUN_FIRST_RUN_INTERNAL_H_
 #define CHROME_BROWSER_FIRST_RUN_FIRST_RUN_INTERNAL_H_
 
-class MasterPrefs;
 class Profile;
 
 namespace base {
@@ -17,6 +16,8 @@ class MasterPreferences;
 }
 
 namespace first_run {
+
+struct MasterPrefs;
 
 namespace internal {
 
@@ -42,7 +43,6 @@ bool CreateSentinel();
 void DoPostImportPlatformSpecificTasks(Profile* profile);
 
 // Returns true if the sentinel file exists (or the path cannot be obtained).
-// Migrates Windows legacy sentinel files to the corrent location, if needed.
 bool IsFirstRunSentinelPresent();
 
 // This function has a common implementationin for all non-linux platforms, and
@@ -56,6 +56,11 @@ bool ShowPostInstallEULAIfNeeded(installer::MasterPreferences* install_prefs);
 
 // Returns the path for the master preferences file.
 base::FilePath MasterPrefsPath();
+
+// Helper for IsChromeFirstRun. Exposed for testing.
+FirstRunState DetermineFirstRunState(bool has_sentinel,
+                                     bool force_first_run,
+                                     bool no_first_run);
 
 }  // namespace internal
 }  // namespace first_run

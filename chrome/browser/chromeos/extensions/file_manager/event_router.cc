@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include <set>
 #include <utility>
 
 #include "base/bind.h"
@@ -13,11 +14,11 @@
 #include "base/files/file_util.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/stl_util.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "chrome/browser/app_mode/app_mode_utils.h"
+#include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/chromeos/drive/drive_integration_service.h"
 #include "chrome/browser/chromeos/drive/file_system_util.h"
 #include "chrome/browser/chromeos/extensions/file_manager/private_api_util.h"
@@ -38,6 +39,7 @@
 #include "chromeos/login/login_state.h"
 #include "chromeos/network/network_handler.h"
 #include "chromeos/network/network_state_handler.h"
+#include "components/arc/intent_helper/arc_intent_helper_bridge.h"
 #include "components/drive/chromeos/file_system_interface.h"
 #include "components/drive/drive_pref_names.h"
 #include "components/drive/file_change.h"
@@ -105,8 +107,8 @@ void BroadcastEvent(Profile* profile,
                     const std::string& event_name,
                     std::unique_ptr<base::ListValue> event_args) {
   extensions::EventRouter::Get(profile)->BroadcastEvent(
-      base::WrapUnique(new extensions::Event(histogram_value, event_name,
-                                             std::move(event_args))));
+      base::MakeUnique<extensions::Event>(histogram_value, event_name,
+                                          std::move(event_args)));
 }
 
 // Sends an event named |event_name| with arguments |event_args| to an extension
@@ -118,8 +120,8 @@ void DispatchEventToExtension(
     const std::string& event_name,
     std::unique_ptr<base::ListValue> event_args) {
   extensions::EventRouter::Get(profile)->DispatchEventToExtension(
-      extension_id, base::WrapUnique(new extensions::Event(
-                        histogram_value, event_name, std::move(event_args))));
+      extension_id, base::MakeUnique<extensions::Event>(
+                        histogram_value, event_name, std::move(event_args)));
 }
 
 file_manager_private::MountCompletedStatus
@@ -255,7 +257,7 @@ bool ShouldSendProgressEvent(bool always, base::Time* last_time) {
   }
 }
 
-// Obtains whether the Files.app should handle the volume or not.
+// Obtains whether the Files app should handle the volume or not.
 bool ShouldShowNotificationForVolume(
     Profile* profile,
     const DeviceEventRouter& device_event_router,
@@ -282,11 +284,22 @@ bool ShouldShowNotificationForVolume(
   if (IsRecoveryToolRunning(profile))
     return false;
 
-  // If the disable-default-apps flag is on, Files.app is not opened
+  // If the disable-default-apps flag is on, the Files app is not opened
   // automatically on device mount not to obstruct the manual test.
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableDefaultApps)) {
     return false;
+  }
+
+  // We suppress notifications about HP Elite USB-C Dock's internal storage.
+  // chrome-os-partner:58309.
+  // TODO(fukino): Remove this workaround when the root cause is fixed.
+  if (volume.type() == VOLUME_TYPE_REMOVABLE_DISK_PARTITION) {
+    const DiskMountManager::Disk* disk =
+        DiskMountManager::GetInstance()->FindDiskBySourcePath(
+            volume.source_path().AsUTF8Unsafe());
+    if (disk && disk->vendor_id() == "0ea0" && disk->product_id() == "2272")
+      return false;
   }
 
   return true;
@@ -342,7 +355,7 @@ class JobEventRouterImpl : public JobEventRouter {
 
     std::set<std::string> extension_ids;
 
-    for (const auto listener : listeners) {
+    for (const auto& listener : listeners) {
       extension_ids.insert(listener->extension_id());
     }
 
@@ -387,17 +400,30 @@ EventRouter::EventRouter(Profile* profile)
   ObserveEvents();
 }
 
-EventRouter::~EventRouter() {
+EventRouter::~EventRouter() = default;
+
+void EventRouter::OnIntentFiltersUpdated() {
+  DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
+  BroadcastEvent(profile_,
+                 extensions::events::FILE_MANAGER_PRIVATE_ON_APPS_UPDATED,
+                 file_manager_private::OnAppsUpdated::kEventName,
+                 file_manager_private::OnAppsUpdated::Create());
 }
 
 void EventRouter::Shutdown() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  auto* intent_helper =
+      arc::ArcServiceManager::GetGlobalService<arc::ArcIntentHelperBridge>();
+  if (intent_helper)
+    intent_helper->RemoveObserver(this);
+
   chromeos::system::TimezoneSettings::GetInstance()->RemoveObserver(this);
 
   DLOG_IF(WARNING, !file_watchers_.empty())
       << "Not all file watchers are "
-      << "removed. This can happen when Files.app is open during shutdown.";
-  STLDeleteValues(&file_watchers_);
+      << "removed. This can happen when the Files app is open during shutdown.";
+  file_watchers_.clear();
   if (!profile_) {
     NOTREACHED();
     return;
@@ -482,6 +508,13 @@ void EventRouter::ObserveEvents() {
   pref_change_registrar_->Add(prefs::kUse24HourClock, callback);
 
   chromeos::system::TimezoneSettings::GetInstance()->AddObserver(this);
+
+  if (arc::IsArcAllowedForProfile(profile_)) {
+    auto* intent_helper =
+        arc::ArcServiceManager::GetGlobalService<arc::ArcIntentHelperBridge>();
+    if (intent_helper)
+      intent_helper->AddObserver(this);
+  }
 }
 
 // File watch setup routines.
@@ -500,7 +533,7 @@ void EventRouter::AddFileWatch(const base::FilePath& local_path,
   if (is_on_drive)
     watch_path = drive::util::ExtractDrivePath(watch_path);
 
-  WatcherMap::iterator iter = file_watchers_.find(watch_path);
+  auto iter = file_watchers_.find(watch_path);
   if (iter == file_watchers_.end()) {
     std::unique_ptr<FileWatcher> watcher(new FileWatcher(virtual_path));
     watcher->AddExtension(extension_id);
@@ -519,7 +552,7 @@ void EventRouter::AddFileWatch(const base::FilePath& local_path,
           callback);
     }
 
-    file_watchers_[watch_path] = watcher.release();
+    file_watchers_[watch_path] = std::move(watcher);
   } else {
     iter->second->AddExtension(extension_id);
     base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
@@ -538,15 +571,13 @@ void EventRouter::RemoveFileWatch(const base::FilePath& local_path,
   if (drive::util::IsUnderDriveMountPoint(watch_path)) {
     watch_path = drive::util::ExtractDrivePath(watch_path);
   }
-  WatcherMap::iterator iter = file_watchers_.find(watch_path);
+  auto iter = file_watchers_.find(watch_path);
   if (iter == file_watchers_.end())
     return;
   // Remove the watcher if |watch_path| is no longer watched by any extensions.
   iter->second->RemoveExtension(extension_id);
-  if (iter->second->GetExtensionIds().empty()) {
-    delete iter->second;
+  if (iter->second->GetExtensionIds().empty())
     file_watchers_.erase(iter);
-  }
 }
 
 void EventRouter::OnCopyCompleted(int copy_id,
@@ -691,12 +722,11 @@ void EventRouter::OnFileChanged(const drive::FileChange& changed_files) {
     // 1. /a/b DELETE:DIRECTORY
     // 2. /a DELETE:DIRECTORY
     //
-    // /a/b is watched, and /a is deleted from Files.app.
+    // /a/b is watched, and /a is deleted from the Files app.
     // 1. /a DELETE:DIRECTORY
     if (contains_directory_deletion) {
       // Expand the deleted directory path with watched paths.
-      for (WatcherMap::const_iterator file_watchers_it =
-               file_watchers_.lower_bound(path);
+      for (auto file_watchers_it = file_watchers_.lower_bound(path);
            file_watchers_it != file_watchers_.end(); ++file_watchers_it) {
         if (path == file_watchers_it->first ||
             path.IsParent(file_watchers_it->first)) {
@@ -770,7 +800,7 @@ void EventRouter::HandleFileWatchNotification(const drive::FileChange* list,
                                               bool got_error) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  WatcherMap::const_iterator iter = file_watchers_.find(local_path);
+  auto iter = file_watchers_.find(local_path);
   if (iter == file_watchers_.end()) {
     return;
   }
@@ -779,7 +809,7 @@ void EventRouter::HandleFileWatchNotification(const drive::FileChange* list,
     // Removes the detailed information, if the list size is more than
     // kDirectoryChangeEventMaxDetailInfoSize, since passing large list
     // and processing it may cause more itme.
-    // This will be invoked full-refresh in Files.app.
+    // This will be invoked full-refresh in the Files app.
     list = NULL;
   }
 

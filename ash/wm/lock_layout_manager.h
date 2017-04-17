@@ -6,24 +6,15 @@
 #define ASH_WM_LOCK_LAYOUT_MANAGER_H_
 
 #include "ash/ash_export.h"
-#include "ash/common/shell_observer.h"
-#include "ash/common/wm/wm_types.h"
-#include "ash/snap_to_pixel_layout_manager.h"
+#include "ash/shell_observer.h"
+#include "ash/wm/wm_snap_to_pixel_layout_manager.h"
+#include "ash/wm/wm_types.h"
 #include "base/macros.h"
-#include "ui/aura/layout_manager.h"
+#include "base/scoped_observer.h"
 #include "ui/aura/window_observer.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
-
-namespace aura {
-class RootWindow;
-class Window;
-}
-
-namespace ui {
-class Layer;
-}
 
 namespace ash {
 namespace wm {
@@ -34,8 +25,8 @@ class WMEvent;
 // LockLayoutManager is used for the windows created in LockScreenContainer.
 // For Chrome OS this includes out-of-box/login/lock/multi-profile login use
 // cases. LockScreenContainer does not use default work area definition.
-// By default work area is defined as display area minus shelf, docked windows
-// and minus virtual keyboard bounds.
+// By default work area is defined as display area minus shelf, and minus
+// virtual keyboard bounds.
 // For windows in LockScreenContainer work area is display area minus virtual
 // keyboard bounds (only if keyboard overscroll is disabled). If keyboard
 // overscroll is enabled then work area always equals to display area size since
@@ -43,52 +34,48 @@ class WMEvent;
 // For all windows in LockScreenContainer default wm::WindowState is replaced
 // with LockWindowState.
 class ASH_EXPORT LockLayoutManager
-    : public SnapToPixelLayoutManager,
+    : public wm::WmSnapToPixelLayoutManager,
       public aura::WindowObserver,
       public ShellObserver,
       public keyboard::KeyboardControllerObserver {
  public:
-  explicit LockLayoutManager(aura::Window* window);
+  explicit LockLayoutManager(WmWindow* window);
   ~LockLayoutManager() override;
 
-  // Overridden from aura::LayoutManager:
+  // Overridden from WmSnapToPixelLayoutManager:
   void OnWindowResized() override;
-  void OnWindowAddedToLayout(aura::Window* child) override;
-  void OnWillRemoveWindowFromLayout(aura::Window* child) override;
-  void OnWindowRemovedFromLayout(aura::Window* child) override;
-  void OnChildWindowVisibilityChanged(aura::Window* child,
-                                      bool visibile) override;
-  void SetChildBounds(aura::Window* child,
+  void OnWindowAddedToLayout(WmWindow* child) override;
+  void OnWillRemoveWindowFromLayout(WmWindow* child) override;
+  void OnWindowRemovedFromLayout(WmWindow* child) override;
+  void OnChildWindowVisibilityChanged(WmWindow* child, bool visibile) override;
+  void SetChildBounds(WmWindow* child,
                       const gfx::Rect& requested_bounds) override;
 
   // Overriden from aura::WindowObserver:
-  void OnWindowHierarchyChanged(
-      const WindowObserver::HierarchyChangeParams& params) override;
-  void OnWindowPropertyChanged(aura::Window* window,
-                               const void* key,
-                               intptr_t old) override;
-  void OnWindowStackingChanged(aura::Window* window) override;
   void OnWindowDestroying(aura::Window* window) override;
   void OnWindowBoundsChanged(aura::Window* window,
                              const gfx::Rect& old_bounds,
                              const gfx::Rect& new_bounds) override;
 
   // ShellObserver:
-  void OnVirtualKeyboardStateChanged(bool activated) override;
+  void OnVirtualKeyboardStateChanged(bool activated,
+                                     WmWindow* root_window) override;
 
   // keyboard::KeyboardControllerObserver overrides:
   void OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) override;
+  void OnKeyboardClosed() override;
 
  private:
   // Adjusts the bounds of all managed windows when the display area changes.
   // This happens when the display size, work area insets has changed.
   void AdjustWindowsForWorkAreaChange(const wm::WMEvent* event);
 
-  aura::Window* window_;
-  aura::Window* root_window_;
+  WmWindow* window_;
+  WmWindow* root_window_;
 
-  // True is subscribed as keyboard controller observer.
-  bool is_observing_keyboard_;
+  ScopedObserver<keyboard::KeyboardController,
+                 keyboard::KeyboardControllerObserver>
+      keyboard_observer_;
 
   // The bounds of the keyboard.
   gfx::Rect keyboard_bounds_;

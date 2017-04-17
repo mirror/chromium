@@ -5,7 +5,7 @@
 #ifndef DetailsMarkerPainter_h
 #define DetailsMarkerPainter_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -15,19 +15,21 @@ class LayoutPoint;
 class LayoutDetailsMarker;
 
 class DetailsMarkerPainter {
-    STACK_ALLOCATED();
-public:
-    DetailsMarkerPainter(const LayoutDetailsMarker& layoutDetailsMarker) : m_layoutDetailsMarker(layoutDetailsMarker) { }
+  STACK_ALLOCATED();
 
-    void paint(const PaintInfo&, const LayoutPoint& paintOffset);
+ public:
+  DetailsMarkerPainter(const LayoutDetailsMarker& layout_details_marker)
+      : layout_details_marker_(layout_details_marker) {}
 
-private:
-    Path getCanonicalPath() const;
-    Path getPath(const LayoutPoint& origin) const;
+  void Paint(const PaintInfo&, const LayoutPoint& paint_offset);
 
-    const LayoutDetailsMarker& m_layoutDetailsMarker;
+ private:
+  Path GetCanonicalPath() const;
+  Path GetPath(const LayoutPoint& origin) const;
+
+  const LayoutDetailsMarker& layout_details_marker_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DetailsMarkerPainter_h
+#endif  // DetailsMarkerPainter_h

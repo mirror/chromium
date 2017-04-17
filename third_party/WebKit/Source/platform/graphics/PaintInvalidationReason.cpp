@@ -4,62 +4,75 @@
 
 #include "platform/graphics/PaintInvalidationReason.h"
 
-#include "wtf/Assertions.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
-const char* paintInvalidationReasonToString(PaintInvalidationReason reason)
-{
-    switch (reason) {
-    case PaintInvalidationNone:
-        return "none";
-    case PaintInvalidationIncremental:
-        return "incremental";
-    case PaintInvalidationRectangle:
-        return "invalidate paint rectangle";
-    case PaintInvalidationFull:
-        return "full";
-    case PaintInvalidationStyleChange:
-        return "style change";
-    case PaintInvalidationForcedByLayout:
-        return "forced by layout";
-    case PaintInvalidationCompositingUpdate:
-        return "compositing update";
-    case PaintInvalidationBorderBoxChange:
-        return "border box change";
-    case PaintInvalidationContentBoxChange:
-        return "content box change";
-    case PaintInvalidationLayoutOverflowBoxChange:
-        return "layout overflow box change";
-    case PaintInvalidationBoundsChange:
-        return "bounds change";
-    case PaintInvalidationLocationChange:
-        return "location change";
-    case PaintInvalidationBackgroundObscurationChange:
-        return "background obscuration change";
-    case PaintInvalidationBecameVisible:
-        return "became visible";
-    case PaintInvalidationBecameInvisible:
-        return "became invisible";
-    case PaintInvalidationScroll:
-        return "scroll";
-    case PaintInvalidationSelection:
-        return "selection";
-    case PaintInvalidationOutline:
-        return "outline";
-    case PaintInvalidationSubtree:
-        return "subtree";
-    case PaintInvalidationLayoutObjectInsertion:
-        return "layoutObject insertion";
-    case PaintInvalidationLayoutObjectRemoval:
-        return "layoutObject removal";
-    case PaintInvalidationSVGResourceChange:
-        return "SVG resource change";
-    case PaintInvalidationDelayedFull:
-        return "delayed full";
-    }
-    ASSERT_NOT_REACHED();
-    return "";
+const char* PaintInvalidationReasonToString(PaintInvalidationReason reason) {
+  switch (reason) {
+    case kPaintInvalidationNone:
+      return "none";
+    case kPaintInvalidationIncremental:
+      return "incremental";
+    case kPaintInvalidationRectangle:
+      return "invalidate paint rectangle";
+    case kPaintInvalidationFull:
+      return "full";
+    case kPaintInvalidationStyleChange:
+      return "style change";
+    case kPaintInvalidationForcedByLayout:
+      return "forced by layout";
+    case kPaintInvalidationCompositingUpdate:
+      return "compositing update";
+    case kPaintInvalidationBorderBoxChange:
+      return "border box change";
+    case kPaintInvalidationContentBoxChange:
+      return "content box change";
+    case kPaintInvalidationLayoutOverflowBoxChange:
+      return "layout overflow box change";
+    case kPaintInvalidationBoundsChange:
+      return "bounds change";
+    case kPaintInvalidationLocationChange:
+      return "location change";
+    case kPaintInvalidationBackgroundObscurationChange:
+      return "background obscuration change";
+    case kPaintInvalidationBecameVisible:
+      return "became visible";
+    case kPaintInvalidationBecameInvisible:
+      return "became invisible";
+    case kPaintInvalidationScroll:
+      return "scroll";
+    case kPaintInvalidationSelection:
+      return "selection";
+    case kPaintInvalidationOutline:
+      return "outline";
+    case kPaintInvalidationSubtree:
+      return "subtree";
+    case kPaintInvalidationLayoutObjectInsertion:
+      return "layoutObject insertion";
+    case kPaintInvalidationLayoutObjectRemoval:
+      return "layoutObject removal";
+    case kPaintInvalidationSVGResourceChange:
+      return "SVG resource change";
+    case kPaintInvalidationBackgroundOnScrollingContentsLayer:
+      return "background on scrolling contents layer";
+    case kPaintInvalidationCaret:
+      return "caret";
+    case kPaintInvalidationViewBackground:
+      return "view background";
+    case kPaintInvalidationDocumentMarkerChange:
+      return "DocumentMarker change";
+    case kPaintInvalidationForTesting:
+      return "for testing";
+    case kPaintInvalidationDelayedFull:
+      return "delayed full";
+  }
+  NOTREACHED();
+  return "";
 }
 
-} // namespace blink
+std::ostream& operator<<(std::ostream& out, PaintInvalidationReason reason) {
+  return out << PaintInvalidationReasonToString(reason);
+}
+
+}  // namespace blink

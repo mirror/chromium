@@ -25,202 +25,135 @@
 
 #include "bindings/core/v8/V8ValueCache.h"
 
-#include "bindings/core/v8/V8Binding.h"
-#include "wtf/text/StringHash.h"
 #include <utility>
+#include "bindings/core/v8/V8Binding.h"
+#include "platform/wtf/text/StringHash.h"
 
 namespace blink {
 
 StringCacheMapTraits::MapType* StringCacheMapTraits::MapFromWeakCallbackInfo(
-    const v8::WeakCallbackInfo<WeakCallbackDataType>& data)
-{
-    return &(V8PerIsolateData::from(data.GetIsolate())->getStringCache()->m_stringCache);
+    const v8::WeakCallbackInfo<WeakCallbackDataType>& data) {
+  return &(V8PerIsolateData::From(data.GetIsolate())
+               ->GetStringCache()
+               ->string_cache_);
 }
 
-void StringCacheMapTraits::Dispose(
-    v8::Isolate* isolate, v8::Global<v8::String> value, StringImpl* key)
-{
-    V8PerIsolateData::from(isolate)->getStringCache()->InvalidateLastString();
-    key->deref();
+void StringCacheMapTraits::Dispose(v8::Isolate* isolate,
+                                   v8::Global<v8::String> value,
+                                   StringImpl* key) {
+  V8PerIsolateData::From(isolate)->GetStringCache()->InvalidateLastString();
+  key->Deref();
 }
 
-void StringCacheMapTraits::DisposeWeak(const v8::WeakCallbackInfo<WeakCallbackDataType>& data)
-{
-    V8PerIsolateData::from(data.GetIsolate())->getStringCache()->InvalidateLastString();
-    data.GetParameter()->deref();
+void StringCacheMapTraits::DisposeWeak(
+    const v8::WeakCallbackInfo<WeakCallbackDataType>& data) {
+  V8PerIsolateData::From(data.GetIsolate())
+      ->GetStringCache()
+      ->InvalidateLastString();
+  data.GetParameter()->Deref();
 }
 
-void StringCacheMapTraits::OnWeakCallback(const v8::WeakCallbackInfo<WeakCallbackDataType>& data)
-{
-    V8PerIsolateData::from(data.GetIsolate())->getStringCache()->InvalidateLastString();
+void StringCacheMapTraits::OnWeakCallback(
+    const v8::WeakCallbackInfo<WeakCallbackDataType>& data) {
+  V8PerIsolateData::From(data.GetIsolate())
+      ->GetStringCache()
+      ->InvalidateLastString();
 }
 
-
-CompressibleStringCacheMapTraits::MapType* CompressibleStringCacheMapTraits::MapFromWeakCallbackInfo(
-    const v8::WeakCallbackInfo<WeakCallbackDataType>& data)
-{
-    return &(V8PerIsolateData::from(data.GetIsolate())->getStringCache()->m_compressibleStringCache);
+void StringCache::Dispose() {
+  // The MapType::Dispose callback calls StringCache::InvalidateLastString,
+  // which will only work while the destructor has not yet finished. Thus,
+  // we need to clear the map before the destructor has completed.
+  string_cache_.Clear();
 }
 
-void CompressibleStringCacheMapTraits::Dispose(
-    v8::Isolate* isolate, v8::Global<v8::String> value, CompressibleStringImpl* key)
-{
-    key->deref();
-}
-
-void CompressibleStringCacheMapTraits::DisposeWeak(const v8::WeakCallbackInfo<WeakCallbackDataType>& data)
-{
-    data.GetParameter()->deref();
-}
-
-void CompressibleStringCacheMapTraits::OnWeakCallback(const v8::WeakCallbackInfo<WeakCallbackDataType>& data)
-{
-}
-
-
-void StringCache::dispose()
-{
-    // The MapType::Dispose callback calls StringCache::InvalidateLastString,
-    // which will only work while the destructor has not yet finished. Thus,
-    // we need to clear the map before the destructor has completed.
-    m_stringCache.Clear();
-}
-
-static v8::Local<v8::String> makeExternalString(v8::Isolate* isolate, const String& string)
-{
-    if (string.is8Bit()) {
-        WebCoreStringResource8* stringResource = new WebCoreStringResource8(string);
-        v8::Local<v8::String> newString;
-        if (!v8::String::NewExternalOneByte(isolate, stringResource).ToLocal(&newString)) {
-            delete stringResource;
-            return v8::String::Empty(isolate);
-        }
-        return newString;
+static v8::Local<v8::String> MakeExternalString(v8::Isolate* isolate,
+                                                const String& string) {
+  if (string.Is8Bit()) {
+    WebCoreStringResource8* string_resource =
+        new WebCoreStringResource8(string);
+    v8::Local<v8::String> new_string;
+    if (!v8::String::NewExternalOneByte(isolate, string_resource)
+             .ToLocal(&new_string)) {
+      delete string_resource;
+      return v8::String::Empty(isolate);
     }
+    return new_string;
+  }
 
-    WebCoreStringResource16* stringResource = new WebCoreStringResource16(string);
-    v8::Local<v8::String> newString;
-    if (!v8::String::NewExternalTwoByte(isolate, stringResource).ToLocal(&newString)) {
-        delete stringResource;
-        return v8::String::Empty(isolate);
-    }
-    return newString;
+  WebCoreStringResource16* string_resource =
+      new WebCoreStringResource16(string);
+  v8::Local<v8::String> new_string;
+  if (!v8::String::NewExternalTwoByte(isolate, string_resource)
+           .ToLocal(&new_string)) {
+    delete string_resource;
+    return v8::String::Empty(isolate);
+  }
+  return new_string;
 }
 
-static v8::Local<v8::String> makeExternalString(v8::Isolate* isolate, const CompressibleString& string)
-{
-    if (string.is8Bit()) {
-        WebCoreCompressibleStringResource8* stringResource = new WebCoreCompressibleStringResource8(string);
-        v8::Local<v8::String> newString;
-        if (!v8::String::NewExternalOneByte(isolate, stringResource).ToLocal(&newString)) {
-            delete stringResource;
-            return v8::String::Empty(isolate);
-        }
-        return newString;
-    }
+v8::Local<v8::String> StringCache::V8ExternalStringSlow(
+    v8::Isolate* isolate,
+    StringImpl* string_impl) {
+  if (!string_impl->length())
+    return v8::String::Empty(isolate);
 
-    WebCoreCompressibleStringResource16* stringResource = new WebCoreCompressibleStringResource16(string);
-    v8::Local<v8::String> newString;
-    if (!v8::String::NewExternalTwoByte(isolate, stringResource).ToLocal(&newString)) {
-        delete stringResource;
-        return v8::String::Empty(isolate);
-    }
-    return newString;
+  StringCacheMapTraits::MapType::PersistentValueReference cached_v8_string =
+      string_cache_.GetReference(string_impl);
+  if (!cached_v8_string.IsEmpty()) {
+    last_string_impl_ = string_impl;
+    last_v8_string_ = cached_v8_string;
+    return last_v8_string_.NewLocal(isolate);
+  }
+
+  return CreateStringAndInsertIntoCache(isolate, string_impl);
 }
 
-v8::Local<v8::String> StringCache::v8ExternalStringSlow(v8::Isolate* isolate, StringImpl* stringImpl)
-{
-    if (!stringImpl->length())
-        return v8::String::Empty(isolate);
+void StringCache::SetReturnValueFromStringSlow(
+    v8::ReturnValue<v8::Value> return_value,
+    StringImpl* string_impl) {
+  if (!string_impl->length()) {
+    return_value.SetEmptyString();
+    return;
+  }
 
-    StringCacheMapTraits::MapType::PersistentValueReference cachedV8String = m_stringCache.GetReference(stringImpl);
-    if (!cachedV8String.IsEmpty()) {
-        m_lastStringImpl = stringImpl;
-        m_lastV8String = cachedV8String;
-        return m_lastV8String.NewLocal(isolate);
-    }
+  StringCacheMapTraits::MapType::PersistentValueReference cached_v8_string =
+      string_cache_.GetReference(string_impl);
+  if (!cached_v8_string.IsEmpty()) {
+    last_string_impl_ = string_impl;
+    last_v8_string_ = cached_v8_string;
+    last_v8_string_.SetReturnValue(return_value);
+    return;
+  }
 
-    return createStringAndInsertIntoCache(isolate, stringImpl);
+  return_value.Set(
+      CreateStringAndInsertIntoCache(return_value.GetIsolate(), string_impl));
 }
 
-v8::Local<v8::String> StringCache::v8ExternalStringSlow(v8::Isolate* isolate, const CompressibleString& string)
-{
-    if (!string.length())
-        return v8::String::Empty(isolate);
+v8::Local<v8::String> StringCache::CreateStringAndInsertIntoCache(
+    v8::Isolate* isolate,
+    StringImpl* string_impl) {
+  ASSERT(!string_cache_.Contains(string_impl));
+  ASSERT(string_impl->length());
 
-    CompressibleStringCacheMapTraits::MapType::PersistentValueReference cachedV8String = m_compressibleStringCache.GetReference(string.impl());
-    if (!cachedV8String.IsEmpty())
-        return cachedV8String.NewLocal(isolate);
+  v8::Local<v8::String> new_string =
+      MakeExternalString(isolate, String(string_impl));
+  ASSERT(!new_string.IsEmpty());
+  ASSERT(new_string->Length());
 
-    return createStringAndInsertIntoCache(isolate, string);
+  v8::UniquePersistent<v8::String> wrapper(isolate, new_string);
+
+  string_impl->Ref();
+  wrapper.MarkIndependent();
+  string_cache_.Set(string_impl, std::move(wrapper), &last_v8_string_);
+  last_string_impl_ = string_impl;
+
+  return new_string;
 }
 
-void StringCache::setReturnValueFromStringSlow(v8::ReturnValue<v8::Value> returnValue, StringImpl* stringImpl)
-{
-    if (!stringImpl->length()) {
-        returnValue.SetEmptyString();
-        return;
-    }
-
-    StringCacheMapTraits::MapType::PersistentValueReference cachedV8String = m_stringCache.GetReference(stringImpl);
-    if (!cachedV8String.IsEmpty()) {
-        m_lastStringImpl = stringImpl;
-        m_lastV8String = cachedV8String;
-        m_lastV8String.SetReturnValue(returnValue);
-        return;
-    }
-
-    returnValue.Set(createStringAndInsertIntoCache(returnValue.GetIsolate(), stringImpl));
+void StringCache::InvalidateLastString() {
+  last_string_impl_ = nullptr;
+  last_v8_string_.Reset();
 }
 
-v8::Local<v8::String> StringCache::createStringAndInsertIntoCache(v8::Isolate* isolate, StringImpl* stringImpl)
-{
-    ASSERT(!m_stringCache.Contains(stringImpl));
-    ASSERT(stringImpl->length());
-
-    v8::Local<v8::String> newString = makeExternalString(isolate, String(stringImpl));
-    ASSERT(!newString.IsEmpty());
-    ASSERT(newString->Length());
-
-    v8::UniquePersistent<v8::String> wrapper(isolate, newString);
-
-    stringImpl->ref();
-    wrapper.MarkIndependent();
-    m_stringCache.Set(stringImpl, std::move(wrapper), &m_lastV8String);
-    m_lastStringImpl = stringImpl;
-
-    return newString;
-}
-
-v8::Local<v8::String> StringCache::createStringAndInsertIntoCache(v8::Isolate* isolate, const CompressibleString& string)
-{
-    CompressibleStringImpl* stringImpl = string.impl();
-
-    ASSERT(!m_compressibleStringCache.Contains(stringImpl));
-    ASSERT(stringImpl->originalLength());
-
-    v8::Local<v8::String> newString = makeExternalString(isolate, string);
-    ASSERT(!newString.IsEmpty());
-    ASSERT(newString->Length());
-
-    v8::UniquePersistent<v8::String> wrapper(isolate, newString);
-
-    stringImpl->ref();
-    wrapper.MarkIndependent();
-    // CompressibleStringImpl objects are NOT cached on |m_stringCache| or
-    // |m_lastStringImpl|. It's because if even one objects holds a StringImpl
-    // object in a CompressibleStringImpl, uncompressed string will exists even
-    // when compressing the string.
-    CompressibleStringCacheMapTraits::MapType::PersistentValueReference unused;
-    m_compressibleStringCache.Set(stringImpl, std::move(wrapper), &unused);
-
-    return newString;
-}
-
-void StringCache::InvalidateLastString()
-{
-    m_lastStringImpl = nullptr;
-    m_lastV8String.Reset();
-}
-
-} // namespace blink
+}  // namespace blink

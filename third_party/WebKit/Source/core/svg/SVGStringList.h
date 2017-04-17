@@ -43,57 +43,64 @@ class SVGStringListTearOff;
 // Implementation of SVGStringList spec:
 // http://www.w3.org/TR/SVG/single-page.html#types-InterfaceSVGStringList
 // See SVGStringListTearOff for actual Javascript interface.
-// Unlike other SVG*List implementations, SVGStringList is NOT tied to SVGString.
+// Unlike other SVG*List implementations, SVGStringList is NOT tied to
+// SVGString.
 // SVGStringList operates directly on DOMString.
 //
 // In short:
 //   SVGStringList has_a Vector<String>.
-//   SVGStringList items are exposed to Javascript as DOMString (not SVGString) as in the spec.
-//   SVGString is used only for boxing values for non-list string property SVGAnimatedString,
+//   SVGStringList items are exposed to Javascript as DOMString (not SVGString)
+//   as in the spec.
+//   SVGString is used only for boxing values for non-list string property
+//   SVGAnimatedString,
 //   and not used for SVGStringList.
 class SVGStringList final : public SVGPropertyHelper<SVGStringList> {
-public:
-    typedef SVGStringListTearOff TearOffType;
+ public:
+  typedef SVGStringListTearOff TearOffType;
 
-    static SVGStringList* create()
-    {
-        return new SVGStringList();
-    }
+  static SVGStringList* Create() { return new SVGStringList(); }
 
-    ~SVGStringList() override;
+  ~SVGStringList() override;
 
-    const Vector<String>& values() const { return m_values; }
+  const Vector<String>& Values() const { return values_; }
 
-    // SVGStringList DOM Spec implementation. These are only to be called from SVGStringListTearOff:
-    unsigned long length() { return m_values.size(); }
-    void clear() { m_values.clear(); }
-    void initialize(const String&);
-    String getItem(size_t, ExceptionState&);
-    void insertItemBefore(const String&, size_t);
-    String removeItem(size_t, ExceptionState&);
-    void appendItem(const String&);
-    void replaceItem(const String&, size_t, ExceptionState&);
+  // SVGStringList DOM Spec implementation. These are only to be called from
+  // SVGStringListTearOff:
+  unsigned long length() { return values_.size(); }
+  void Clear() { values_.Clear(); }
+  void Initialize(const String&);
+  String GetItem(size_t, ExceptionState&);
+  void InsertItemBefore(const String&, size_t);
+  String RemoveItem(size_t, ExceptionState&);
+  void AppendItem(const String&);
+  void ReplaceItem(const String&, size_t, ExceptionState&);
 
-    // SVGPropertyBase:
-    SVGParsingError setValueAsString(const String&);
-    String valueAsString() const override;
+  // SVGPropertyBase:
+  SVGParsingError SetValueAsString(const String&);
+  String ValueAsString() const override;
 
-    void add(SVGPropertyBase*, SVGElement*) override;
-    void calculateAnimatedValue(SVGAnimationElement*, float percentage, unsigned repeatCount, SVGPropertyBase* fromValue, SVGPropertyBase* toValue, SVGPropertyBase* toAtEndOfDurationValue, SVGElement*) override;
-    float calculateDistance(SVGPropertyBase* to, SVGElement*) override;
+  void Add(SVGPropertyBase*, SVGElement*) override;
+  void CalculateAnimatedValue(SVGAnimationElement*,
+                              float percentage,
+                              unsigned repeat_count,
+                              SVGPropertyBase* from_value,
+                              SVGPropertyBase* to_value,
+                              SVGPropertyBase* to_at_end_of_duration_value,
+                              SVGElement*) override;
+  float CalculateDistance(SVGPropertyBase* to, SVGElement*) override;
 
-    static AnimatedPropertyType classType() { return AnimatedStringList; }
+  static AnimatedPropertyType ClassType() { return kAnimatedStringList; }
 
-private:
-    SVGStringList();
+ private:
+  SVGStringList();
 
-    template <typename CharType>
-    void parseInternal(const CharType*& ptr, const CharType* end);
-    bool checkIndexBound(size_t, ExceptionState&);
+  template <typename CharType>
+  void ParseInternal(const CharType*& ptr, const CharType* end);
+  bool CheckIndexBound(size_t, ExceptionState&);
 
-    Vector<String> m_values;
+  Vector<String> values_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGStringList_h
+#endif  // SVGStringList_h

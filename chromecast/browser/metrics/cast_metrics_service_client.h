@@ -14,6 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "build/build_config.h"
 #include "components/metrics/enabled_state_provider.h"
+#include "components/metrics/metrics_log_uploader.h"
 #include "components/metrics/metrics_service_client.h"
 
 class PrefRegistrySimple;
@@ -69,19 +70,21 @@ class CastMetricsServiceClient : public ::metrics::MetricsServiceClient,
   // ::metrics::MetricsServiceClient:
   ::metrics::MetricsService* GetMetricsService() override;
   void SetMetricsClientId(const std::string& client_id) override;
-  void OnRecordingDisabled() override;
-  bool IsOffTheRecordSessionActive() override;
   int32_t GetProduct() override;
   std::string GetApplicationLocale() override;
   bool GetBrand(std::string* brand_code) override;
   ::metrics::SystemProfileProto::Channel GetChannel() override;
   std::string GetVersionString() override;
-  void OnLogUploadComplete() override;
   void InitializeSystemProfileMetrics(
       const base::Closure& done_callback) override;
   void CollectFinalMetricsForLog(const base::Closure& done_callback) override;
+  std::string GetMetricsServerUrl() override;
   std::unique_ptr<::metrics::MetricsLogUploader> CreateUploader(
-      const base::Callback<void(int)>& on_upload_complete) override;
+      base::StringPiece server_url,
+      base::StringPiece mime_type,
+      ::metrics::MetricsLogUploader::MetricServiceType service_type,
+      const ::metrics::MetricsLogUploader::UploadCallback& on_upload_complete)
+      override;
   base::TimeDelta GetStandardUploadInterval() override;
 
   // ::metrics::EnabledStateProvider:

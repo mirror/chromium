@@ -12,20 +12,14 @@ function test()
 
     function onSourceFrame(sourceFrame)
     {
-        InspectorTest.addSniffer(WebInspector.JavaScriptCompiler.prototype, "_compilationFinishedForTest", onCompilationFinished.bind(null, sourceFrame));
-        sourceFrame.textEditor.setSelection(WebInspector.TextRange.createFromLocation(0, 0));
+        InspectorTest.addSniffer(Sources.JavaScriptCompiler.prototype, "_compilationFinishedForTest", onCompilationFinished.bind(null, sourceFrame));
+        sourceFrame.textEditor.setSelection(TextUtils.TextRange.createFromLocation(0, 0));
         InspectorTest.typeIn(sourceFrame.textEditor, "test!");
     }
 
     function onCompilationFinished(sourceFrame)
     {
-        for (var line in sourceFrame._rowMessageBuckets) {
-            var bubble = sourceFrame._rowMessageBuckets[line];
-            for (var rowMessage of bubble._messages) {
-                var message = rowMessage.message();
-                InspectorTest.addResult(String.sprintf("%d:%d [%s] %s", message.lineNumber(), message.columnNumber(), message.level(), message.text()));
-            }
-        }
+        InspectorTest.dumpSourceFrameMessages(sourceFrame);
         InspectorTest.completeTest();
     }
 }

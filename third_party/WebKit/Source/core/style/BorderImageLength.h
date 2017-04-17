@@ -32,7 +32,7 @@
 #define BorderImageLength_h
 
 #include "platform/Length.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -41,54 +41,52 @@ namespace blink {
 // http://www.w3.org/TR/css3-background/#border-image-width
 // http://www.w3.org/TR/css3-background/#border-image-outset
 class BorderImageLength {
-    DISALLOW_NEW();
-public:
-    BorderImageLength(double number)
-        : m_number(number)
-        , m_type(NumberType)
-    {
-    }
+  DISALLOW_NEW();
 
-    BorderImageLength(const Length& length)
-        : m_length(length)
-        , m_number(0)
-        , m_type(LengthType)
-    {
-    }
+ public:
+  BorderImageLength(double number) : number_(number), type_(kNumberType) {}
 
-    bool isNumber() const { return m_type == NumberType; }
-    bool isLength() const { return m_type == LengthType; }
+  BorderImageLength(const Length& length)
+      : length_(length), number_(0), type_(kLengthType) {}
 
-    const Length& length() const { ASSERT(isLength()); return m_length; }
-    Length& length() { ASSERT(isLength()); return m_length; }
+  bool IsNumber() const { return type_ == kNumberType; }
+  bool IsLength() const { return type_ == kLengthType; }
 
-    double number() const { ASSERT(isNumber()); return m_number; }
+  const Length& length() const {
+    DCHECK(IsLength());
+    return length_;
+  }
+  Length& length() {
+    DCHECK(IsLength());
+    return length_;
+  }
 
-    bool operator==(const BorderImageLength& other) const
-    {
-        return m_type == other.m_type && m_length == other.m_length && m_number == other.m_number;
-    }
+  double Number() const {
+    DCHECK(IsNumber());
+    return number_;
+  }
 
-    bool isZero() const
-    {
-        if (isLength())
-            return m_length.isZero();
+  bool operator==(const BorderImageLength& other) const {
+    return type_ == other.type_ && length_ == other.length_ &&
+           number_ == other.number_;
+  }
 
-        ASSERT(isNumber());
-        return !m_number;
-    }
+  bool IsZero() const {
+    if (IsLength())
+      return length_.IsZero();
 
-private:
-    // Ideally we would put the 2 following fields in a union, but Length has a constructor,
-    // a destructor and a copy assignment which isn't allowed.
-    Length m_length;
-    double m_number;
-    enum {
-        LengthType,
-        NumberType
-    } m_type;
+    DCHECK(IsNumber());
+    return !number_;
+  }
+
+ private:
+  // Ideally we would put the 2 following fields in a union, but Length has a
+  // constructor, a destructor and a copy assignment which isn't allowed.
+  Length length_;
+  double number_;
+  enum { kLengthType, kNumberType } type_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BorderImageLength_h
+#endif  // BorderImageLength_h

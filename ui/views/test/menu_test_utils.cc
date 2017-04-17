@@ -20,6 +20,15 @@ TestMenuDelegate::TestMenuDelegate()
 
 TestMenuDelegate::~TestMenuDelegate() {}
 
+bool TestMenuDelegate::ShowContextMenu(MenuItemView* source,
+                                       int id,
+                                       const gfx::Point& p,
+                                       ui::MenuSourceType source_type) {
+  show_context_menu_count_++;
+  show_context_menu_source_ = source;
+  return true;
+}
+
 void TestMenuDelegate::ExecuteCommand(int id) {
   execute_command_id_ = id;
 }
@@ -38,17 +47,35 @@ int TestMenuDelegate::OnPerformDrop(MenuItemView* menu,
   return ui::DragDropTypes::DRAG_COPY;
 }
 
+int TestMenuDelegate::GetDragOperations(MenuItemView* sender) {
+  return ui::DragDropTypes::DRAG_COPY;
+}
+
+void TestMenuDelegate::WriteDragData(MenuItemView* sender,
+                                     OSExchangeData* data) {}
+
+void TestMenuDelegate::WillHideMenu(MenuItemView* menu) {
+  will_hide_menu_count_++;
+  will_hide_menu_ = menu;
+}
+
 // MenuControllerTestApi ------------------------------------------------------
 
-MenuControllerTestApi::MenuControllerTestApi() {}
+MenuControllerTestApi::MenuControllerTestApi()
+    : controller_(MenuController::GetActiveInstance()->AsWeakPtr()) {}
 
 MenuControllerTestApi::~MenuControllerTestApi() {}
 
-void MenuControllerTestApi::Hide() {
-  MenuController* controller = MenuController::GetActiveInstance();
-  if (!controller)
+void MenuControllerTestApi::ClearState() {
+  if (!controller_)
     return;
-  controller->showing_ = false;
+  controller_->ClearStateForTest();
+}
+
+void MenuControllerTestApi::SetShowing(bool showing) {
+  if (!controller_)
+    return;
+  controller_->showing_ = showing;
 }
 
 }  // namespace test

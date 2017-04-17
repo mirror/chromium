@@ -10,19 +10,19 @@
 namespace blink {
 
 class EXTColorBufferFloat final : public WebGLExtension {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static EXTColorBufferFloat* create(WebGLRenderingContextBase*);
-    static bool supported(WebGLRenderingContextBase*);
-    static const char* extensionName();
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~EXTColorBufferFloat() override;
-    WebGLExtensionName name() const override;
+ public:
+  static EXTColorBufferFloat* Create(WebGLRenderingContextBase*);
+  static bool Supported(WebGLRenderingContextBase*);
+  static const char* ExtensionName();
 
-private:
-    explicit EXTColorBufferFloat(WebGLRenderingContextBase*);
+  WebGLExtensionName GetName() const override;
+
+ private:
+  explicit EXTColorBufferFloat(WebGLRenderingContextBase*);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // EXTColorBufferFloat_h
+#endif  // EXTColorBufferFloat_h

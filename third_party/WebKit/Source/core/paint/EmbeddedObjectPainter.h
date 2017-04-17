@@ -5,29 +5,27 @@
 #ifndef EmbeddedObjectPainter_h
 #define EmbeddedObjectPainter_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 struct PaintInfo;
-class FloatRect;
-class Font;
 class LayoutEmbeddedObject;
 class LayoutPoint;
-class Path;
-class TextRun;
 
 class EmbeddedObjectPainter {
-    STACK_ALLOCATED();
-public:
-    EmbeddedObjectPainter(const LayoutEmbeddedObject& layoutEmbeddedObject) : m_layoutEmbeddedObject(layoutEmbeddedObject) { }
+  STACK_ALLOCATED();
 
-    void paintReplaced(const PaintInfo&, const LayoutPoint& paintOffset);
+ public:
+  EmbeddedObjectPainter(const LayoutEmbeddedObject& layout_embedded_object)
+      : layout_embedded_object_(layout_embedded_object) {}
 
-private:
-    const LayoutEmbeddedObject& m_layoutEmbeddedObject;
+  void PaintReplaced(const PaintInfo&, const LayoutPoint& paint_offset);
+
+ private:
+  const LayoutEmbeddedObject& layout_embedded_object_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // EmbeddedObjectPainter_h
+#endif  // EmbeddedObjectPainter_h

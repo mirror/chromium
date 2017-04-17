@@ -19,13 +19,15 @@ function convertTemplatesToShadowRootsWithin(node) {
     for (var i = 0; i < nodes.length; ++i) {
         var template = nodes[i];
         var mode = template.getAttribute("data-mode");
+        var delegatesFocus = template.hasAttribute("data-delegatesFocus");
         var parent = template.parentNode;
         parent.removeChild(template);
         var shadowRoot;
         if (!mode || mode == 'v0'){
             shadowRoot = parent.createShadowRoot();
         } else {
-            shadowRoot = parent.attachShadow({'mode': mode});
+            shadowRoot = parent.attachShadow({'mode': mode,
+                                              'delegatesFocus': delegatesFocus});
         }
         var expose = template.getAttribute("data-expose-as");
         if (expose)
@@ -136,39 +138,6 @@ function dispatchEventWithLog(nodes, target, event) {
   return log;
 }
 
-// TODO(hayato): Merge this into dispatchEventWithLog
-function dispatchUAEventWithLog(nodes, target, eventType, callback) {
-
-  function labelFor(e) {
-    return e.id || e.tagName;
-  }
-
-  let log = [];
-  let attachedNodes = [];
-  for (let label in nodes) {
-    let startingNode = nodes[label];
-    for (let node = startingNode; node; node = node.parentNode) {
-      if (attachedNodes.indexOf(node) >= 0)
-        continue;
-      let id = node.id;
-      if (!id)
-        continue;
-      attachedNodes.push(node);
-      node.addEventListener(eventType, (e) => {
-        // Record [currentTarget, target, relatedTarget, composedPath()]
-        log.push([id,
-                  labelFor(e.target),
-                  e.relatedTarget ? labelFor(e.relatedTarget) : null,
-                  e.composedPath().map((n) => {
-                    return labelFor(n);
-                  })]);
-      });
-    }
-  }
-  callback(target);
-  return log;
-}
-
 function debugEventLog(log) {
   for (let i = 0; i < log.length; i++) {
     console.log('[' + i + '] currentTarget: ' + log[i][0] + ' target: ' + log[i][1] + ' relatedTarget: ' + log[i][2] + ' composedPath(): ' + log[i][3]);
@@ -190,4 +159,10 @@ function assert_event_path_equals(actual, expected) {
     assert_equals(actual[i][2], expected[i][2], 'relatedTarget at ' + i + ' should be same');
     assert_array_equals(actual[i][3], expected[i][3], 'composedPath at ' + i + ' should be same');
   }
+}
+
+function assert_background_color(path, color)
+{
+  assert_equals(window.getComputedStyle(getNodeInComposedTree(path)).backgroundColor, color,
+                'backgroundColor for ' + path + ' should be ' + color);
 }

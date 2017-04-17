@@ -5,7 +5,7 @@
 #ifndef PartPainter_h
 #define PartPainter_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -14,19 +14,20 @@ class LayoutPoint;
 class LayoutPart;
 
 class PartPainter {
-    STACK_ALLOCATED();
-public:
-    PartPainter(const LayoutPart& layoutPart) : m_layoutPart(layoutPart) { }
+  STACK_ALLOCATED();
 
-    void paint(const PaintInfo&, const LayoutPoint&);
-    void paintContents(const PaintInfo&, const LayoutPoint&);
+ public:
+  PartPainter(const LayoutPart& layout_part) : layout_part_(layout_part) {}
 
-private:
-    bool isSelected() const;
+  void Paint(const PaintInfo&, const LayoutPoint&);
+  void PaintContents(const PaintInfo&, const LayoutPoint&);
 
-    const LayoutPart& m_layoutPart;
+ private:
+  bool IsSelected() const;
+
+  const LayoutPart& layout_part_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PartPainter_h
+#endif  // PartPainter_h

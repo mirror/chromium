@@ -6,7 +6,12 @@
 
 #import <Foundation/Foundation.h>
 
+#import "base/strings/sys_string_conversions.h"
 #include "url/gurl.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 namespace web {
 
@@ -24,7 +29,7 @@ bool UrlHasWebScheme(NSURL* url) {
   // Use the GURL implementation, but with a scheme-only URL to avoid
   // unnecessary parsing in GURL construction.
   NSString* schemeURLString = [scheme stringByAppendingString:@":"];
-  GURL gurl([schemeURLString UTF8String]);
+  GURL gurl(base::SysNSStringToUTF8(schemeURLString));
   return UrlHasWebScheme(gurl);
 }
 

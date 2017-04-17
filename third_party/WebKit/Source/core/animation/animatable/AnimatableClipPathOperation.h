@@ -37,33 +37,28 @@
 
 namespace blink {
 
-class CORE_EXPORT AnimatableClipPathOperation final : public AnimatableValue {
-public:
-    ~AnimatableClipPathOperation() override { }
-    static PassRefPtr<AnimatableClipPathOperation> create(ClipPathOperation* operation)
-    {
-        return adoptRef(new AnimatableClipPathOperation(operation));
-    }
-    ClipPathOperation* getClipPathOperation() const { return m_operation.get(); }
+class AnimatableClipPathOperation final : public AnimatableValue {
+ public:
+  ~AnimatableClipPathOperation() override {}
+  static PassRefPtr<AnimatableClipPathOperation> Create(
+      ClipPathOperation* operation) {
+    return AdoptRef(new AnimatableClipPathOperation(operation));
+  }
 
-protected:
-    PassRefPtr<AnimatableValue> interpolateTo(const AnimatableValue*, double fraction) const override;
-    bool usesDefaultInterpolationWith(const AnimatableValue*) const override;
+ private:
+  AnimatableClipPathOperation(ClipPathOperation* operation)
+      : operation_(operation) {
+    DCHECK(operation_);
+  }
+  AnimatableType GetType() const override { return kTypeClipPathOperation; }
+  bool EqualTo(const AnimatableValue*) const override;
 
-private:
-    AnimatableClipPathOperation(ClipPathOperation* operation)
-        : m_operation(operation)
-    {
-        ASSERT(m_operation);
-    }
-    AnimatableType type() const override { return TypeClipPathOperation; }
-    bool equalTo(const AnimatableValue*) const override;
-
-    RefPtr<ClipPathOperation> m_operation;
+  RefPtr<ClipPathOperation> operation_;
 };
 
-DEFINE_ANIMATABLE_VALUE_TYPE_CASTS(AnimatableClipPathOperation, isClipPathOperation());
+DEFINE_ANIMATABLE_VALUE_TYPE_CASTS(AnimatableClipPathOperation,
+                                   IsClipPathOperation());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AnimatableClipPathOperation_h
+#endif  // AnimatableClipPathOperation_h

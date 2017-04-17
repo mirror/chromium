@@ -9,7 +9,7 @@
 #include <string>
 
 #include "base/memory/ref_counted.h"
-#include "components/pref_registry/testing_pref_service_syncable.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "extensions/browser/extensions_test.h"
 
 namespace base {
@@ -19,7 +19,6 @@ class ListValue;
 }
 
 namespace content {
-class NotificationService;
 class TestBrowserThreadBundle;
 class WebContents;
 }
@@ -87,10 +86,8 @@ class ApiUnitTest : public ExtensionsTest {
                    const std::string& args);
 
  private:
-  std::unique_ptr<content::NotificationService> notification_service_;
-
   std::unique_ptr<content::TestBrowserThreadBundle> thread_bundle_;
-  user_prefs::TestingPrefServiceSyncable testing_pref_service_;
+  sync_preferences::TestingPrefServiceSyncable testing_pref_service_;
 
   // The WebContents used to associate a RenderViewHost with API function calls,
   // or null.

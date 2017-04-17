@@ -37,11 +37,13 @@ InputEventAckState MockInputRouterClient::FilterInputEvent(
   return filter_state_;
 }
 
-void MockInputRouterClient::IncrementInFlightEventCount() {
+void MockInputRouterClient::IncrementInFlightEventCount(
+    blink::WebInputEvent::Type event_type) {
   ++in_flight_event_count_;
 }
 
-void MockInputRouterClient::DecrementInFlightEventCount() {
+void MockInputRouterClient::DecrementInFlightEventCount(
+    InputEventAckSource ack_source) {
   --in_flight_event_count_;
 }
 
@@ -54,7 +56,8 @@ void MockInputRouterClient::DidFlush() {
   ++did_flush_called_count_;
 }
 
-void MockInputRouterClient::DidOverscroll(const DidOverscrollParams& params) {
+void MockInputRouterClient::DidOverscroll(
+    const ui::DidOverscrollParams& params) {
   overscroll_ = params;
 }
 
@@ -81,8 +84,8 @@ size_t MockInputRouterClient::GetAndResetDidFlushCount() {
   return did_flush_called_count;
 }
 
-DidOverscrollParams MockInputRouterClient::GetAndResetOverscroll() {
-  DidOverscrollParams overscroll;
+ui::DidOverscrollParams MockInputRouterClient::GetAndResetOverscroll() {
+  ui::DidOverscrollParams overscroll;
   std::swap(overscroll_, overscroll);
   return overscroll;
 }

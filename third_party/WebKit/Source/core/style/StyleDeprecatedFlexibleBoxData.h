@@ -25,36 +25,40 @@
 #ifndef StyleDeprecatedFlexibleBoxData_h
 #define StyleDeprecatedFlexibleBoxData_h
 
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefCounted.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefCounted.h"
 
 namespace blink {
 
-class StyleDeprecatedFlexibleBoxData : public RefCounted<StyleDeprecatedFlexibleBoxData> {
-public:
-    static PassRefPtr<StyleDeprecatedFlexibleBoxData> create() { return adoptRef(new StyleDeprecatedFlexibleBoxData); }
-    PassRefPtr<StyleDeprecatedFlexibleBoxData> copy() const { return adoptRef(new StyleDeprecatedFlexibleBoxData(*this)); }
+class StyleDeprecatedFlexibleBoxData
+    : public RefCounted<StyleDeprecatedFlexibleBoxData> {
+ public:
+  static PassRefPtr<StyleDeprecatedFlexibleBoxData> Create() {
+    return AdoptRef(new StyleDeprecatedFlexibleBoxData);
+  }
+  PassRefPtr<StyleDeprecatedFlexibleBoxData> Copy() const {
+    return AdoptRef(new StyleDeprecatedFlexibleBoxData(*this));
+  }
 
-    bool operator==(const StyleDeprecatedFlexibleBoxData&) const;
-    bool operator!=(const StyleDeprecatedFlexibleBoxData& o) const
-    {
-        return !(*this == o);
-    }
+  bool operator==(const StyleDeprecatedFlexibleBoxData&) const;
+  bool operator!=(const StyleDeprecatedFlexibleBoxData& o) const {
+    return !(*this == o);
+  }
 
-    float flex;
-    unsigned flexGroup;
-    unsigned ordinalGroup;
+  float flex;
+  unsigned flex_group;
+  unsigned ordinal_group;
 
-    unsigned align : 3; // EBoxAlignment
-    unsigned pack: 2; // EBoxPack
-    unsigned orient: 1; // EBoxOrient
-    unsigned lines : 1; // EBoxLines
+  unsigned align : 3;   // EBoxAlignment
+  unsigned pack : 2;    // EBoxPack
+  unsigned orient : 1;  // EBoxOrient
+  unsigned lines : 1;   // EBoxLines
 
-private:
-    StyleDeprecatedFlexibleBoxData();
-    StyleDeprecatedFlexibleBoxData(const StyleDeprecatedFlexibleBoxData&);
+ private:
+  StyleDeprecatedFlexibleBoxData();
+  StyleDeprecatedFlexibleBoxData(const StyleDeprecatedFlexibleBoxData&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StyleDeprecatedFlexibleBoxData_h
+#endif  // StyleDeprecatedFlexibleBoxData_h

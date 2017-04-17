@@ -5,6 +5,9 @@
 #ifndef CHROME_BROWSER_UI_TOOLBAR_MEDIA_ROUTER_ACTION_H_
 #define CHROME_BROWSER_UI_TOOLBAR_MEDIA_ROUTER_ACTION_H_
 
+#include <memory>
+#include <string>
+
 #include "base/macros.h"
 #include "base/scoped_observer.h"
 #include "chrome/browser/media/router/issues_observer.h"
@@ -13,11 +16,15 @@
 #include "chrome/browser/ui/toolbar/media_router_contextual_menu.h"
 #include "chrome/browser/ui/toolbar/toolbar_action_view_controller.h"
 #include "chrome/browser/ui/toolbar/toolbar_actions_bar.h"
-#include "ui/gfx/vector_icons_public.h"
+#include "chrome/browser/ui/toolbar/toolbar_actions_bar_observer.h"
 
 class Browser;
 class MediaRouterActionPlatformDelegate;
 class TabStripModel;
+
+namespace gfx {
+struct VectorIcon;
+}
 
 namespace media_router {
 class MediaRouterDialogControllerImpl;
@@ -28,10 +35,13 @@ class MediaRouterDialogControllerImpl;
 class MediaRouterAction : public ToolbarActionViewController,
                           public media_router::IssuesObserver,
                           public media_router::MediaRoutesObserver,
-                          public TabStripModelObserver {
+                          public TabStripModelObserver,
+                          public ToolbarActionsBarObserver {
  public:
   MediaRouterAction(Browser* browser, ToolbarActionsBar* toolbar_actions_bar);
   ~MediaRouterAction() override;
+
+  static SkColor GetIconColor(const gfx::VectorIcon& icon_id);
 
   // ToolbarActionViewController implementation.
   std::string GetId() const override;
@@ -49,12 +59,14 @@ class MediaRouterAction : public ToolbarActionViewController,
   void HidePopup() override;
   gfx::NativeView GetPopupNativeView() override;
   ui::MenuModel* GetContextMenu() override;
+  void OnContextMenuClosed() override;
   bool ExecuteAction(bool by_user) override;
   void UpdateState() override;
   bool DisabledClickOpensMenu() const override;
 
   // media_router::IssuesObserver:
-  void OnIssueUpdated(const media_router::Issue* issue) override;
+  void OnIssue(const media_router::Issue& issue) override;
+  void OnIssuesCleared() override;
 
   // media_router::MediaRoutesObserver:
   void OnRoutesUpdated(const std::vector<media_router::MediaRoute>& routes,
@@ -67,16 +79,22 @@ class MediaRouterAction : public ToolbarActionViewController,
                         int index,
                         int reason) override;
 
-  void OnPopupHidden();
-  void OnPopupShown();
+  // ToolbarActionsBarObserver:
+  void OnToolbarActionsBarAnimationEnded() override;
+
+  void OnDialogHidden();
+  void OnDialogShown();
 
  private:
-  // Called when a new browser window is opened, the user switches tabs in the
-  // browser window, or when |delegate_| is swapped out to be non-null and has
-  // a valid WebContents.
+  // Registers |this| with the MediaRouterDialogControllerImpl associated with
+  // |delegate_|'s current WebContents if |this| is not shown in overflow mode.
+  void RegisterWithDialogController();
+
+  // Called when a new browser window is opened or when |delegate_| is swapped
+  // out to be non-null and has a valid WebContents.
   // This updates the pressed/unpressed state of the icon, which is different
   // on a per-tab basis.
-  void UpdatePopupState();
+  void UpdateDialogState();
 
   // Returns a reference to the MediaRouterDialogControllerImpl associated with
   // |delegate_|'s current WebContents. Guaranteed to be non-null.
@@ -92,18 +110,22 @@ class MediaRouterAction : public ToolbarActionViewController,
   // updates |current_icon_|.
   void MaybeUpdateIcon();
 
-  gfx::VectorIconId GetCurrentIcon() const;
+  const gfx::VectorIcon& GetCurrentIcon() const;
 
   // The current icon to show. This is updated based on the current issues and
   // routes since |this| is an IssueObserver and MediaRoutesObserver.
-  gfx::VectorIconId current_icon_;
+  const gfx::VectorIcon* current_icon_;
 
-  // The current issue shown in the Media Router WebUI. Can be null. It is set
-  // in OnIssueUpdated(), which is called by the IssueManager.
-  std::unique_ptr<media_router::Issue> issue_;
+  // The current issue shown in the Media Router WebUI, set in OnIssue() and
+  // cleared in OnIssuesCleared().
+  std::unique_ptr<media_router::IssueInfo> current_issue_;
 
   // Whether a local displayable active route exists.
   bool has_local_display_route_;
+
+  // Whether the Media Router dialog is shown in the current tab.
+  // This should only be updated in OnDialogShown() and OnDialogHidden().
+  bool has_dialog_;
 
   ToolbarActionViewDelegate* delegate_;
 
@@ -113,10 +135,12 @@ class MediaRouterAction : public ToolbarActionViewController,
   // The delegate to handle platform-specific implementations.
   std::unique_ptr<MediaRouterActionPlatformDelegate> platform_delegate_;
 
-  MediaRouterContextualMenu contextual_menu_;
+  std::unique_ptr<MediaRouterContextualMenu> contextual_menu_;
 
   ScopedObserver<TabStripModel, TabStripModelObserver>
       tab_strip_model_observer_;
+  ScopedObserver<ToolbarActionsBar, ToolbarActionsBarObserver>
+      toolbar_actions_bar_observer_;
 
   base::WeakPtrFactory<MediaRouterAction> weak_ptr_factory_;
 

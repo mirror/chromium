@@ -11,6 +11,7 @@
 #include <utility>
 
 #include "base/format_macros.h"
+#include "base/memory/memory_coordinator_client_registry.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
@@ -19,13 +20,12 @@
 #include "cc/resources/resource_util.h"
 #include "cc/resources/scoped_resource.h"
 
+using base::trace_event::MemoryAllocatorDump;
+using base::trace_event::MemoryDumpLevelOfDetail;
+
 namespace cc {
-namespace {
-
-// Delay before a resource is considered expired.
-const int kResourceExpirationDelayMs = 1000;
-
-}  // namespace
+base::TimeDelta ResourcePool::kDefaultExpirationDelay =
+    base::TimeDelta::FromSeconds(1);
 
 void ResourcePool::PoolResource::OnMemoryDump(
     base::trace_event::ProcessMemoryDump* pmd,
@@ -40,46 +40,58 @@ void ResourcePool::PoolResource::OnMemoryDump(
   std::string dump_name =
       base::StringPrintf("cc/tile_memory/provider_%d/resource_%d",
                          resource_provider->tracing_id(), id());
-  base::trace_event::MemoryAllocatorDump* dump =
-      pmd->CreateAllocatorDump(dump_name);
-
+  MemoryAllocatorDump* dump = pmd->CreateAllocatorDump(dump_name);
   pmd->AddSuballocation(dump->guid(), parent_node);
 
   uint64_t total_bytes =
       ResourceUtil::UncheckedSizeInBytesAligned<size_t>(size(), format());
-  dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
-                  base::trace_event::MemoryAllocatorDump::kUnitsBytes,
-                  total_bytes);
+  dump->AddScalar(MemoryAllocatorDump::kNameSize,
+                  MemoryAllocatorDump::kUnitsBytes, total_bytes);
 
   if (is_free) {
-    dump->AddScalar("free_size",
-                    base::trace_event::MemoryAllocatorDump::kUnitsBytes,
-                    total_bytes);
+    dump->AddScalar("free_size", MemoryAllocatorDump::kUnitsBytes, total_bytes);
   }
 }
 
 ResourcePool::ResourcePool(ResourceProvider* resource_provider,
                            base::SingleThreadTaskRunner* task_runner,
-                           bool use_gpu_memory_buffers)
+                           gfx::BufferUsage usage,
+                           const base::TimeDelta& expiration_delay)
     : resource_provider_(resource_provider),
-      use_gpu_memory_buffers_(use_gpu_memory_buffers),
-      max_memory_usage_bytes_(0),
-      max_resource_count_(0),
-      in_use_memory_usage_bytes_(0),
-      total_memory_usage_bytes_(0),
-      total_resource_count_(0),
+      use_gpu_memory_buffers_(true),
+      usage_(usage),
       task_runner_(task_runner),
-      evict_expired_resources_pending_(false),
-      resource_expiration_delay_(
-          base::TimeDelta::FromMilliseconds(kResourceExpirationDelayMs)),
+      resource_expiration_delay_(expiration_delay),
       weak_ptr_factory_(this) {
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
       this, "cc::ResourcePool", task_runner_.get());
+
+  // Register this component with base::MemoryCoordinatorClientRegistry.
+  base::MemoryCoordinatorClientRegistry::GetInstance()->Register(this);
+}
+
+ResourcePool::ResourcePool(ResourceProvider* resource_provider,
+                           base::SingleThreadTaskRunner* task_runner,
+                           ResourceProvider::TextureHint hint,
+                           const base::TimeDelta& expiration_delay)
+    : resource_provider_(resource_provider),
+      use_gpu_memory_buffers_(false),
+      hint_(hint),
+      task_runner_(task_runner),
+      resource_expiration_delay_(expiration_delay),
+      weak_ptr_factory_(this) {
+  base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+      this, "cc::ResourcePool", task_runner_.get());
+
+  // Register this component with base::MemoryCoordinatorClientRegistry.
+  base::MemoryCoordinatorClientRegistry::GetInstance()->Register(this);
 }
 
 ResourcePool::~ResourcePool() {
   base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
       this);
+  // Unregister this component with memory_coordinator::ClientRegistry.
+  base::MemoryCoordinatorClientRegistry::GetInstance()->Unregister(this);
 
   DCHECK_EQ(0u, in_use_resources_.size());
 
@@ -94,8 +106,9 @@ ResourcePool::~ResourcePool() {
   DCHECK_EQ(0u, total_resource_count_);
 }
 
-Resource* ResourcePool::AcquireResource(const gfx::Size& size,
-                                        ResourceFormat format) {
+Resource* ResourcePool::ReuseResource(const gfx::Size& size,
+                                      ResourceFormat format,
+                                      const gfx::ColorSpace& color_space) {
   // Finding resources in |unused_resources_| from MRU to LRU direction, touches
   // LRU resources only if needed, which increases possibility of expiring more
   // LRU resources within kResourceExpirationDelayMs.
@@ -108,6 +121,8 @@ Resource* ResourcePool::AcquireResource(const gfx::Size& size,
       continue;
     if (resource->size() != size)
       continue;
+    if (resource->color_space() != color_space)
+      continue;
 
     // Transfer resource to |in_use_resources_|.
     in_use_resources_[resource->id()] = std::move(*it);
@@ -116,15 +131,20 @@ Resource* ResourcePool::AcquireResource(const gfx::Size& size,
         resource->size(), resource->format());
     return resource;
   }
+  return nullptr;
+}
 
+Resource* ResourcePool::CreateResource(const gfx::Size& size,
+                                       ResourceFormat format,
+                                       const gfx::ColorSpace& color_space) {
   std::unique_ptr<PoolResource> pool_resource =
       PoolResource::Create(resource_provider_);
 
   if (use_gpu_memory_buffers_) {
-    pool_resource->AllocateWithGpuMemoryBuffer(size, format, usage_);
+    pool_resource->AllocateWithGpuMemoryBuffer(size, format, usage_,
+                                               color_space);
   } else {
-    pool_resource->Allocate(size, ResourceProvider::TEXTURE_HINT_IMMUTABLE,
-                            format);
+    pool_resource->Allocate(size, hint_, format, color_space);
   }
 
   DCHECK(ResourceUtil::VerifySizeInBytes<size_t>(pool_resource->size(),
@@ -144,6 +164,16 @@ Resource* ResourcePool::AcquireResource(const gfx::Size& size,
       resource->size(), resource->format());
 
   return resource;
+}
+
+Resource* ResourcePool::AcquireResource(const gfx::Size& size,
+                                        ResourceFormat format,
+                                        const gfx::ColorSpace& color_space) {
+  Resource* reused_resource = ReuseResource(size, format, color_space);
+  if (reused_resource)
+    return reused_resource;
+
+  return CreateResource(size, format, color_space);
 }
 
 // Iterate over all three resource lists (unused, in-use, and busy), updating
@@ -367,10 +397,11 @@ void ResourcePool::ScheduleEvictExpiredResourcesIn(
 
   evict_expired_resources_pending_ = true;
 
-  task_runner_->PostDelayedTask(FROM_HERE,
-                                base::Bind(&ResourcePool::EvictExpiredResources,
-                                           weak_ptr_factory_.GetWeakPtr()),
-                                time_from_now);
+  task_runner_->PostDelayedTask(
+      FROM_HERE,
+      base::BindOnce(&ResourcePool::EvictExpiredResources,
+                     weak_ptr_factory_.GetWeakPtr()),
+      time_from_now);
 }
 
 void ResourcePool::EvictExpiredResources() {
@@ -380,7 +411,10 @@ void ResourcePool::EvictExpiredResources() {
   EvictResourcesNotUsedSince(current_time - resource_expiration_delay_);
 
   if (unused_resources_.empty() && busy_resources_.empty()) {
-    // Nothing is evictable.
+    // If nothing is evictable, we have deleted one (and possibly more)
+    // resources without any new activity. Flush to ensure these deletions are
+    // processed.
+    resource_provider_->FlushPendingDeletions();
     return;
   }
 
@@ -426,16 +460,30 @@ base::TimeTicks ResourcePool::GetUsageTimeForLRUResource() const {
 
 bool ResourcePool::OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
                                 base::trace_event::ProcessMemoryDump* pmd) {
-  for (const auto& resource : unused_resources_) {
-    resource->OnMemoryDump(pmd, resource_provider_, true /* is_free */);
-  }
-  for (const auto& resource : busy_resources_) {
-    resource->OnMemoryDump(pmd, resource_provider_, false /* is_free */);
-  }
-  for (const auto& entry : in_use_resources_) {
-    entry.second->OnMemoryDump(pmd, resource_provider_, false /* is_free */);
+  if (args.level_of_detail == MemoryDumpLevelOfDetail::BACKGROUND) {
+    std::string dump_name = base::StringPrintf(
+        "cc/tile_memory/provider_%d", resource_provider_->tracing_id());
+    MemoryAllocatorDump* dump = pmd->CreateAllocatorDump(dump_name);
+    dump->AddScalar(MemoryAllocatorDump::kNameSize,
+                    MemoryAllocatorDump::kUnitsBytes,
+                    total_memory_usage_bytes_);
+  } else {
+    for (const auto& resource : unused_resources_) {
+      resource->OnMemoryDump(pmd, resource_provider_, true /* is_free */);
+    }
+    for (const auto& resource : busy_resources_) {
+      resource->OnMemoryDump(pmd, resource_provider_, false /* is_free */);
+    }
+    for (const auto& entry : in_use_resources_) {
+      entry.second->OnMemoryDump(pmd, resource_provider_, false /* is_free */);
+    }
   }
   return true;
+}
+
+void ResourcePool::OnPurgeMemory() {
+  // Release all resources, regardless of how recently they were used.
+  EvictResourcesNotUsedSince(base::TimeTicks() + base::TimeDelta::Max());
 }
 
 }  // namespace cc

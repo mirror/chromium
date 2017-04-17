@@ -13,42 +13,35 @@
 namespace blink {
 
 NavigatorCredentials::NavigatorCredentials(Navigator& navigator)
-    : DOMWindowProperty(navigator.frame())
-{
+    : Supplement<Navigator>(navigator) {}
+
+NavigatorCredentials& NavigatorCredentials::From(Navigator& navigator) {
+  NavigatorCredentials* supplement = static_cast<NavigatorCredentials*>(
+      Supplement<Navigator>::From(navigator, SupplementName()));
+  if (!supplement) {
+    supplement = new NavigatorCredentials(navigator);
+    ProvideTo(navigator, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
-NavigatorCredentials& NavigatorCredentials::from(Navigator& navigator)
-{
-    NavigatorCredentials* supplement = static_cast<NavigatorCredentials*>(Supplement<Navigator>::from(navigator, supplementName()));
-    if (!supplement) {
-        supplement = new NavigatorCredentials(navigator);
-        provideTo(navigator, supplementName(), supplement);
-    }
-    return *supplement;
+const char* NavigatorCredentials::SupplementName() {
+  return "NavigatorCredentials";
 }
 
-const char* NavigatorCredentials::supplementName()
-{
-    return "NavigatorCredentials";
+CredentialsContainer* NavigatorCredentials::credentials(Navigator& navigator) {
+  return NavigatorCredentials::From(navigator).credentials();
 }
 
-CredentialsContainer* NavigatorCredentials::credentials(Navigator& navigator)
-{
-    return NavigatorCredentials::from(navigator).credentials();
+CredentialsContainer* NavigatorCredentials::credentials() {
+  if (!credentials_container_)
+    credentials_container_ = CredentialsContainer::Create();
+  return credentials_container_.Get();
 }
 
-CredentialsContainer* NavigatorCredentials::credentials()
-{
-    if (!m_credentialsContainer && frame())
-        m_credentialsContainer = CredentialsContainer::create();
-    return m_credentialsContainer.get();
+DEFINE_TRACE(NavigatorCredentials) {
+  visitor->Trace(credentials_container_);
+  Supplement<Navigator>::Trace(visitor);
 }
 
-DEFINE_TRACE(NavigatorCredentials)
-{
-    visitor->trace(m_credentialsContainer);
-    Supplement<Navigator>::trace(visitor);
-    DOMWindowProperty::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

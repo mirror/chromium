@@ -16,8 +16,8 @@
 #include "chrome/browser/ui/browser_window.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.h"
 #include "chrome/browser/ui/cocoa/browser_window_controller.h"
-#include "chrome/browser/ui/cocoa/cocoa_profile_test.h"
 #import "chrome/browser/ui/cocoa/info_bubble_window.h"
+#include "chrome/browser/ui/cocoa/test/cocoa_profile_test.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/managed/managed_bookmark_service.h"
@@ -82,7 +82,8 @@ class BookmarkBubbleControllerTest : public CocoaProfileTest {
       [controller_ close];
       controller_ = nil;
     }
-    BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile());
+    BookmarkModel* model =
+        BookmarkModelFactory::GetForBrowserContext(profile());
     bookmarks::ManagedBookmarkService* managed =
         ManagedBookmarkServiceFactory::GetForProfile(profile());
     controller_ = [[BookmarkBubbleController alloc]
@@ -101,7 +102,7 @@ class BookmarkBubbleControllerTest : public CocoaProfileTest {
   }
 
   BookmarkModel* GetBookmarkModel() {
-    return BookmarkModelFactory::GetForProfile(profile());
+    return BookmarkModelFactory::GetForBrowserContext(profile());
   }
 
   const BookmarkNode* CreateTestBookmark() {
@@ -129,12 +130,9 @@ TEST_F(BookmarkBubbleControllerTest, TestBubbleWindow) {
   NSWindow* window = [controller window];
   EXPECT_TRUE(window);
   NSRect browser_window_frame = [browser()->window()->GetNativeWindow() frame];
-  // The metrics have changed slightly under Material Design, so that in this
-  // test case the bookmarks bubble's window frame extendeds slightly beyond its
-  // parent window's frame.
-  if (ui::MaterialDesignController::IsModeMaterial()) {
-    browser_window_frame.size.width += 1;
-  }
+  // In this test case the bookmarks bubble's window frame extendeds slightly
+  // beyond its parent window's frame.
+  browser_window_frame.size.width += 1;
   EXPECT_TRUE(NSContainsRect(browser_window_frame, [window frame]));
 }
 
@@ -391,7 +389,7 @@ TEST_F(BookmarkBubbleControllerTest, PopUpSelectionChanged) {
 // the user clicking the star, then sending the "cancel" command to represent
 // them pressing escape. The bookmark should not be there.
 TEST_F(BookmarkBubbleControllerTest, EscapeRemovesNewBookmark) {
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile());
+  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile());
   bookmarks::ManagedBookmarkService* managed =
       ManagedBookmarkServiceFactory::GetForProfile(profile());
   const BookmarkNode* node = CreateTestBookmark();

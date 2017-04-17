@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "third_party/webrtc/api/peerconnectioninterface.h"
+#include "third_party/webrtc/api/stats/rtcstatsreport.h"
 
 namespace content {
 
@@ -33,25 +34,36 @@ class MockPeerConnectionImpl : public webrtc::PeerConnectionInterface {
       webrtc::MediaStreamInterface* local_stream) override;
   void RemoveStream(
       webrtc::MediaStreamInterface* local_stream) override;
+  rtc::scoped_refptr<webrtc::RtpSenderInterface> AddTrack(
+      webrtc::MediaStreamTrackInterface* track,
+      std::vector<webrtc::MediaStreamInterface*> streams) override {
+    NOTIMPLEMENTED();
+    return nullptr;
+  }
+  bool RemoveTrack(webrtc::RtpSenderInterface* sender) override {
+    NOTIMPLEMENTED();
+    return false;
+  }
   rtc::scoped_refptr<webrtc::DtmfSenderInterface>
       CreateDtmfSender(webrtc::AudioTrackInterface* track) override;
+  std::vector<rtc::scoped_refptr<webrtc::RtpReceiverInterface>> GetReceivers()
+      const override;
   rtc::scoped_refptr<webrtc::DataChannelInterface>
       CreateDataChannel(const std::string& label,
                         const webrtc::DataChannelInit* config) override;
   bool GetStats(webrtc::StatsObserver* observer,
                 webrtc::MediaStreamTrackInterface* track,
                 StatsOutputLevel level) override;
+  void GetStats(webrtc::RTCStatsCollectorCallback* callback) override;
 
-  // Set Call this function to make sure next call to GetStats fail.
+  // Call this function to make sure next call to legacy GetStats fail.
   void SetGetStatsResult(bool result) { getstats_result_ = result; }
+  // Set the report that |GetStats(RTCStatsCollectorCallback*)| returns.
+  void SetGetStatsReport(webrtc::RTCStatsReport* report);
 
   SignalingState signaling_state() override {
     NOTIMPLEMENTED();
     return PeerConnectionInterface::kStable;
-  }
-  IceState ice_state() override {
-    NOTIMPLEMENTED();
-    return PeerConnectionInterface::kIceNew;
   }
   IceConnectionState ice_connection_state() override {
     NOTIMPLEMENTED();
@@ -92,7 +104,8 @@ class MockPeerConnectionImpl : public webrtc::PeerConnectionInterface {
   void SetRemoteDescriptionWorker(
       webrtc::SetSessionDescriptionObserver* observer,
       webrtc::SessionDescriptionInterface* desc);
-  bool UpdateIce(const IceServers& configuration) override;
+  bool SetConfiguration(const RTCConfiguration& configuration,
+                        webrtc::RTCError* error) override;
   bool AddIceCandidate(const webrtc::IceCandidateInterface* candidate) override;
   void RegisterUMAObserver(webrtc::UMAObserver* observer) override;
 
@@ -110,6 +123,9 @@ class MockPeerConnectionImpl : public webrtc::PeerConnectionInterface {
   }
   webrtc::PeerConnectionObserver* observer() {
     return observer_;
+  }
+  void set_setconfiguration_error_type(webrtc::RTCErrorType error_type) {
+    setconfiguration_error_type_ = error_type;
   }
   static const char kDummyOffer[];
   static const char kDummyAnswer[];
@@ -136,6 +152,9 @@ class MockPeerConnectionImpl : public webrtc::PeerConnectionInterface {
   int sdp_mline_index_;
   std::string ice_sdp_;
   webrtc::PeerConnectionObserver* observer_;
+  webrtc::RTCErrorType setconfiguration_error_type_ =
+      webrtc::RTCErrorType::NONE;
+  rtc::scoped_refptr<webrtc::RTCStatsReport> stats_report_;
 
   DISALLOW_COPY_AND_ASSIGN(MockPeerConnectionImpl);
 };

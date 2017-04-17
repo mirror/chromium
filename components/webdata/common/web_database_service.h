@@ -16,7 +16,7 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/memory/ref_counted_delete_on_message_loop.h"
+#include "base/memory/ref_counted_delete_on_sequence.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/single_thread_task_runner.h"
@@ -25,11 +25,6 @@
 #include "components/webdata/common/webdata_export.h"
 
 class WebDatabaseBackend;
-class WebDataRequestManager;
-
-namespace content {
-class BrowserContext;
-}
 
 namespace tracked_objects {
 class Location;
@@ -48,14 +43,15 @@ class WebDataServiceConsumer;
 ////////////////////////////////////////////////////////////////////////////////
 
 class WEBDATA_EXPORT WebDatabaseService
-    : public base::RefCountedDeleteOnMessageLoop<WebDatabaseService> {
+    : public base::RefCountedDeleteOnSequence<WebDatabaseService> {
  public:
-  typedef base::Callback<std::unique_ptr<WDTypedResult>(WebDatabase*)> ReadTask;
-  typedef base::Callback<WebDatabase::State(WebDatabase*)> WriteTask;
+  using ReadTask = base::Callback<std::unique_ptr<WDTypedResult>(WebDatabase*)>;
+  using WriteTask = base::Callback<WebDatabase::State(WebDatabase*)>;
 
   // Types for managing DB loading callbacks.
-  typedef base::Closure DBLoadedCallback;
-  typedef base::Callback<void(sql::InitStatus)> DBLoadErrorCallback;
+  using DBLoadedCallback = base::Closure;
+  using DBLoadErrorCallback =
+      base::Callback<void(sql::InitStatus, const std::string&)>;
 
   // Takes the path to the WebDatabase file.
   // WebDatabaseService lives on |ui_thread| and posts tasks to |db_thread|.
@@ -116,15 +112,16 @@ class WEBDATA_EXPORT WebDatabaseService
  private:
   class BackendDelegate;
   friend class BackendDelegate;
-  friend class base::RefCountedDeleteOnMessageLoop<WebDatabaseService>;
+  friend class base::RefCountedDeleteOnSequence<WebDatabaseService>;
   friend class base::DeleteHelper<WebDatabaseService>;
 
-  typedef std::vector<DBLoadedCallback> LoadedCallbacks;
-  typedef std::vector<DBLoadErrorCallback> ErrorCallbacks;
+  using LoadedCallbacks = std::vector<DBLoadedCallback>;
+  using ErrorCallbacks = std::vector<DBLoadErrorCallback>;
 
   virtual ~WebDatabaseService();
 
-  void OnDatabaseLoadDone(sql::InitStatus status);
+  void OnDatabaseLoadDone(sql::InitStatus status,
+                          const std::string& diagnostics);
 
   base::FilePath path_;
 

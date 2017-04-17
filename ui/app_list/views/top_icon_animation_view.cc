@@ -26,7 +26,7 @@ TopIconAnimationView::TopIconAnimationView(const gfx::ImageSkia& icon,
   icon_->SetImage(resized);
   AddChildView(icon_);
 
-  SetPaintToLayer(true);
+  SetPaintToLayer();
   layer()->SetFillsBoundsOpaquely(false);
 }
 
@@ -82,9 +82,8 @@ void TopIconAnimationView::Layout() {
 
 void TopIconAnimationView::OnImplicitAnimationsCompleted() {
   SetVisible(false);
-  FOR_EACH_OBSERVER(TopIconAnimationObserver,
-                    observers_,
-                    OnTopIconAnimationsComplete());
+  for (auto& observer : observers_)
+    observer.OnTopIconAnimationsComplete();
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
 }
 

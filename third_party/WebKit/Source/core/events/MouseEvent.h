@@ -27,124 +27,250 @@
 #include "core/CoreExport.h"
 #include "core/events/EventDispatchMediator.h"
 #include "core/events/MouseEventInit.h"
-#include "core/events/MouseRelatedEvent.h"
-#include "platform/PlatformMouseEvent.h"
+#include "core/events/UIEventWithKeyState.h"
+#include "public/platform/WebMouseEvent.h"
 
 namespace blink {
 class DataTransfer;
 class EventDispatcher;
 
-class CORE_EXPORT MouseEvent : public MouseRelatedEvent {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static MouseEvent* create()
-    {
-        return new MouseEvent;
-    }
+class CORE_EXPORT MouseEvent : public UIEventWithKeyState {
+  DEFINE_WRAPPERTYPEINFO();
 
-    // TODO(mustaq): Should replace most/all of these params with a MouseEventInit.
-    static MouseEvent* create(const AtomicString& type, bool canBubble, bool cancelable, AbstractView*,
-        int detail, int screenX, int screenY, int windowX, int windowY,
-        int movementX, int movementY, PlatformEvent::Modifiers,
-        short button, unsigned short buttons,
-        EventTarget* relatedTarget,
-        double platformTimeStamp,
-        PlatformMouseEvent::SyntheticEventType,
-        const String& region);
+ public:
+  enum SyntheticEventType {
+    // Real mouse input events or synthetic events that behave just like real
+    // events
+    kRealOrIndistinguishable,
+    // Synthetic mouse events derived from touch input
+    kFromTouch,
+    // Synthetic mouse events generated without a position, for example those
+    // generated from keyboard input.
+    kPositionless,
+  };
 
-    static MouseEvent* create(const AtomicString& eventType, AbstractView*, const PlatformMouseEvent&, int detail, Node* relatedTarget);
+  static MouseEvent* Create() { return new MouseEvent; }
 
-    static MouseEvent* create(ScriptState*, const AtomicString& eventType, const MouseEventInit&);
+  static MouseEvent* Create(const AtomicString& event_type,
+                            AbstractView*,
+                            const WebMouseEvent&,
+                            int detail,
+                            const String& canvas_region_id,
+                            Node* related_target);
 
-    static MouseEvent* create(const AtomicString& eventType, AbstractView*, Event* underlyingEvent, SimulatedClickCreationScope);
+  static MouseEvent* Create(ScriptState*,
+                            const AtomicString& event_type,
+                            const MouseEventInit&);
 
-    ~MouseEvent() override;
+  static MouseEvent* Create(const AtomicString& event_type,
+                            AbstractView*,
+                            Event* underlying_event,
+                            SimulatedClickCreationScope);
 
-    static unsigned short platformModifiersToButtons(unsigned modifiers);
-    static unsigned short buttonToButtons(short button);
+  ~MouseEvent() override;
 
-    void initMouseEvent(ScriptState*, const AtomicString& type, bool canBubble, bool cancelable, AbstractView*,
-        int detail, int screenX, int screenY, int clientX, int clientY,
-        bool ctrlKey, bool altKey, bool shiftKey, bool metaKey,
-        short button, EventTarget* relatedTarget, unsigned short buttons = 0);
+  static unsigned short WebInputEventModifiersToButtons(unsigned modifiers);
 
-    // WinIE uses 1,4,2 for left/middle/right but not for click (just for mousedown/up, maybe others),
-    // but we will match the standard DOM.
-    virtual short button() const { return m_button == -1 ? 0 : m_button; }
-    unsigned short buttons() const { return m_buttons; }
-    bool buttonDown() const { return m_button != -1; }
-    EventTarget* relatedTarget() const { return m_relatedTarget.get(); }
-    void setRelatedTarget(EventTarget* relatedTarget) { m_relatedTarget = relatedTarget; }
-    PlatformMouseEvent::SyntheticEventType getSyntheticEventType() const { return m_syntheticEventType; }
-    const String& region() const { return m_region; }
-    void setRegion(const String& region) { m_region = region; }
+  void initMouseEvent(ScriptState*,
+                      const AtomicString& type,
+                      bool can_bubble,
+                      bool cancelable,
+                      AbstractView*,
+                      int detail,
+                      int screen_x,
+                      int screen_y,
+                      int client_x,
+                      int client_y,
+                      bool ctrl_key,
+                      bool alt_key,
+                      bool shift_key,
+                      bool meta_key,
+                      short button,
+                      EventTarget* related_target,
+                      unsigned short buttons = 0);
 
-    Node* toElement() const;
-    Node* fromElement() const;
+  // WinIE uses 1,4,2 for left/middle/right but not for click (just for
+  // mousedown/up, maybe others), but we will match the standard DOM.
+  virtual short button() const { return button_ == -1 ? 0 : button_; }
+  unsigned short buttons() const { return buttons_; }
+  bool ButtonDown() const { return button_ != -1; }
+  EventTarget* relatedTarget() const { return related_target_.Get(); }
+  void SetRelatedTarget(EventTarget* related_target) {
+    related_target_ = related_target;
+  }
+  SyntheticEventType GetSyntheticEventType() const {
+    return synthetic_event_type_;
+  }
+  const String& region() const { return region_; }
 
-    virtual DataTransfer* getDataTransfer() const { return nullptr; }
+  Node* toElement() const;
+  Node* fromElement() const;
 
-    bool fromTouch() const { return m_syntheticEventType == PlatformMouseEvent::FromTouch; }
+  virtual DataTransfer* getDataTransfer() const { return nullptr; }
 
-    const AtomicString& interfaceName() const override;
+  bool FromTouch() const { return synthetic_event_type_ == kFromTouch; }
 
-    bool isMouseEvent() const override;
-    int which() const final;
+  const AtomicString& InterfaceName() const override;
 
-    EventDispatchMediator* createMediator() override;
+  bool IsMouseEvent() const override;
+  int which() const final;
 
-    enum class Buttons : unsigned {
-        None = 0,
-        Left = 1 << 0,
-        Right = 1 << 1,
-        Middle = 1 << 2
-    };
+  EventDispatchMediator* CreateMediator() override;
 
-    DECLARE_VIRTUAL_TRACE();
+  int ClickCount() { return detail(); }
 
-protected:
-    MouseEvent(const AtomicString& type, bool canBubble, bool cancelable, AbstractView*,
-        int detail, int screenX, int screenY, int windowX, int windowY,
-        int movementX, int movementY,
-        PlatformEvent::Modifiers, short button, unsigned short buttons,
-        EventTarget* relatedTarget,
-        double platformTimeStamp,
-        PlatformMouseEvent::SyntheticEventType,
-        const String& region);
+  const WebMouseEvent* NativeEvent() const { return native_event_.get(); }
 
-    MouseEvent(const AtomicString& type, const MouseEventInit&);
+  enum class PositionType {
+    kPosition,
+    // Positionless mouse events are used, for example, for 'click' events from
+    // keyboard input.  It's kind of surprising for a mouse event not to have a
+    // position.
+    kPositionless
+  };
 
-    MouseEvent();
+  // Note that these values are adjusted to counter the effects of zoom, so that
+  // values exposed via DOM APIs are invariant under zooming.
+  // TODO(mustaq): Remove the PointerEvent specific code when mouse has
+  // fractional coordinates. See crbug.com/655786.
+  double screenX() const {
+    return IsPointerEvent() ? screen_location_.X()
+                            : static_cast<int>(screen_location_.X());
+  }
+  double screenY() const {
+    return IsPointerEvent() ? screen_location_.Y()
+                            : static_cast<int>(screen_location_.Y());
+  }
 
-    short rawButton() const { return m_button; }
+  double clientX() const {
+    return IsPointerEvent() ? client_location_.X()
+                            : static_cast<int>(client_location_.X());
+  }
+  double clientY() const {
+    return IsPointerEvent() ? client_location_.Y()
+                            : static_cast<int>(client_location_.Y());
+  }
 
-private:
-    friend class MouseEventDispatchMediator;
-    void initMouseEventInternal(const AtomicString& type, bool canBubble, bool cancelable, AbstractView*,
-        int detail, int screenX, int screenY, int clientX, int clientY,
-        PlatformEvent::Modifiers,
-        short button, EventTarget* relatedTarget, InputDeviceCapabilities* sourceCapabilities, unsigned short buttons = 0);
+  int movementX() const { return movement_delta_.X(); }
+  int movementY() const { return movement_delta_.Y(); }
 
-    short m_button;
-    unsigned short m_buttons;
-    Member<EventTarget> m_relatedTarget;
-    PlatformMouseEvent::SyntheticEventType m_syntheticEventType;
-    String m_region;
+  int layerX();
+  int layerY();
+
+  int offsetX();
+  int offsetY();
+
+  double pageX() const {
+    return IsPointerEvent() ? page_location_.X()
+                            : static_cast<int>(page_location_.X());
+  }
+  double pageY() const {
+    return IsPointerEvent() ? page_location_.Y()
+                            : static_cast<int>(page_location_.Y());
+  }
+
+  double x() const { return clientX(); }
+  double y() const { return clientY(); }
+
+  bool HasPosition() const { return position_type_ == PositionType::kPosition; }
+
+  // Page point in "absolute" coordinates (i.e. post-zoomed, page-relative
+  // coords, usable with LayoutObject::absoluteToLocal) relative to view(), i.e.
+  // the local frame.
+  const DoublePoint& AbsoluteLocation() const { return absolute_location_; }
+
+  DECLARE_VIRTUAL_TRACE();
+
+ protected:
+  MouseEvent(const AtomicString& type,
+             bool can_bubble,
+             bool cancelable,
+             AbstractView*,
+             const WebMouseEvent&,
+             int detail,
+             const String& region,
+             EventTarget* related_target);
+
+  MouseEvent(const AtomicString& type,
+             bool can_bubble,
+             bool cancelable,
+             AbstractView*,
+             int detail,
+             int screen_x,
+             int screen_y,
+             int window_x,
+             int window_y,
+             int movement_x,
+             int movement_y,
+             WebInputEvent::Modifiers,
+             short button,
+             unsigned short buttons,
+             EventTarget* related_target,
+             TimeTicks platform_time_stamp,
+             SyntheticEventType,
+             const String& region);
+
+  MouseEvent(const AtomicString& type, const MouseEventInit&);
+
+  MouseEvent();
+
+  short RawButton() const { return button_; }
+
+ private:
+  friend class MouseEventDispatchMediator;
+  void InitMouseEventInternal(const AtomicString& type,
+                              bool can_bubble,
+                              bool cancelable,
+                              AbstractView*,
+                              int detail,
+                              int screen_x,
+                              int screen_y,
+                              int client_x,
+                              int client_y,
+                              WebInputEvent::Modifiers,
+                              short button,
+                              EventTarget* related_target,
+                              InputDeviceCapabilities* source_capabilities,
+                              unsigned short buttons = 0);
+
+  void InitCoordinates(const double client_x, const double client_y);
+  void InitCoordinatesFromRootFrame(int window_x, int window_y);
+  void ReceivedTarget() final;
+
+  void ComputePageLocation();
+  void ComputeRelativePosition();
+
+  DoublePoint screen_location_;
+  DoublePoint client_location_;
+  DoublePoint movement_delta_;
+
+  DoublePoint page_location_;
+  DoublePoint layer_location_;
+  DoublePoint offset_location_;
+  DoublePoint absolute_location_;
+  PositionType position_type_;
+  bool has_cached_relative_position_;
+  short button_;
+  unsigned short buttons_;
+  Member<EventTarget> related_target_;
+  SyntheticEventType synthetic_event_type_;
+  String region_;
+  std::unique_ptr<WebMouseEvent> native_event_;
 };
 
 class MouseEventDispatchMediator final : public EventDispatchMediator {
-public:
-    static MouseEventDispatchMediator* create(MouseEvent*);
+ public:
+  static MouseEventDispatchMediator* Create(MouseEvent*);
 
-private:
-    explicit MouseEventDispatchMediator(MouseEvent*);
-    MouseEvent& event() const;
+ private:
+  explicit MouseEventDispatchMediator(MouseEvent*);
+  MouseEvent& Event() const;
 
-    DispatchEventResult dispatchEvent(EventDispatcher&) const override;
+  DispatchEventResult DispatchEvent(EventDispatcher&) const override;
 };
 
 DEFINE_EVENT_TYPE_CASTS(MouseEvent);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MouseEvent_h
+#endif  // MouseEvent_h

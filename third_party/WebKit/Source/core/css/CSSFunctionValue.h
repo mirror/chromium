@@ -11,32 +11,31 @@
 namespace blink {
 
 class CSSFunctionValue : public CSSValueList {
-public:
-    static CSSFunctionValue* create(CSSValueID id)
-    {
-        return new CSSFunctionValue(id);
-    }
+ public:
+  static CSSFunctionValue* Create(CSSValueID id) {
+    return new CSSFunctionValue(id);
+  }
 
-    String customCSSText() const;
+  String CustomCSSText() const;
 
-    bool equals(const CSSFunctionValue& other) const { return m_valueID == other.m_valueID && CSSValueList::equals(other); }
-    CSSValueID functionType() const { return m_valueID; }
+  bool Equals(const CSSFunctionValue& other) const {
+    return value_id_ == other.value_id_ && CSSValueList::Equals(other);
+  }
+  CSSValueID FunctionType() const { return value_id_; }
 
-    DEFINE_INLINE_TRACE_AFTER_DISPATCH() { CSSValueList::traceAfterDispatch(visitor); }
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
+    CSSValueList::TraceAfterDispatch(visitor);
+  }
 
-private:
-    CSSFunctionValue(CSSValueID id)
-        : CSSValueList(FunctionClass, CommaSeparator)
-        , m_valueID(id)
-    {
-    }
+ private:
+  CSSFunctionValue(CSSValueID id)
+      : CSSValueList(kFunctionClass, kCommaSeparator), value_id_(id) {}
 
-    const CSSValueID m_valueID;
+  const CSSValueID value_id_;
 };
 
-DEFINE_CSS_VALUE_TYPE_CASTS(CSSFunctionValue, isFunctionValue());
+DEFINE_CSS_VALUE_TYPE_CASTS(CSSFunctionValue, IsFunctionValue());
 
-} // namespace blink
+}  // namespace blink
 
 #endif
-

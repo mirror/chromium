@@ -33,10 +33,10 @@ void ReadBestMonitorICCProfile(std::vector<char>* profile) {
   profile->assign(profile_data.data(), profile_data.data() + length);
 }
 
-base::LazyInstance<base::Lock> g_best_monitor_color_space_lock =
-    LAZY_INSTANCE_INITIALIZER;
-base::LazyInstance<gfx::ICCProfile> g_best_monitor_color_space =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<base::Lock>::DestructorAtExit
+    g_best_monitor_color_space_lock = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<gfx::ICCProfile>::DestructorAtExit
+    g_best_monitor_color_space = LAZY_INSTANCE_INITIALIZER;
 bool g_has_initialized_best_monitor_color_space = false;
 
 }  // namespace
@@ -57,7 +57,8 @@ bool ICCProfile::CachedProfilesNeedUpdate() {
 void ICCProfile::UpdateCachedProfilesOnBackgroundThread() {
   std::vector<char> icc_profile;
   ReadBestMonitorICCProfile(&icc_profile);
-  gfx::ICCProfile color_space = FromData(icc_profile);
+  gfx::ICCProfile color_space = FromData(
+      icc_profile.data(), icc_profile.size());
 
   base::AutoLock lock(g_best_monitor_color_space_lock.Get());
   g_best_monitor_color_space.Get() = color_space;

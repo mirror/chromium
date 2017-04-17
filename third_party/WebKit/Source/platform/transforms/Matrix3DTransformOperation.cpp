@@ -29,33 +29,33 @@
 
 namespace blink {
 
-PassRefPtr<TransformOperation> Matrix3DTransformOperation::blend(const TransformOperation* from, double progress, bool blendToIdentity)
-{
-    if (from && !from->isSameType(*this))
-        return this;
+PassRefPtr<TransformOperation> Matrix3DTransformOperation::Blend(
+    const TransformOperation* from,
+    double progress,
+    bool blend_to_identity) {
+  if (from && !from->IsSameType(*this))
+    return this;
 
-    // Convert the TransformOperations into matrices
-    FloatSize size;
-    TransformationMatrix fromT;
-    TransformationMatrix toT;
-    if (from)
-        from->apply(fromT, size);
+  // Convert the TransformOperations into matrices
+  FloatSize size;
+  TransformationMatrix from_t;
+  TransformationMatrix to_t;
+  if (from)
+    from->Apply(from_t, size);
 
-    apply(toT, size);
+  Apply(to_t, size);
 
-    if (blendToIdentity)
-        std::swap(fromT, toT);
+  if (blend_to_identity)
+    std::swap(from_t, to_t);
 
-    toT.blend(fromT, progress);
-    return Matrix3DTransformOperation::create(toT);
+  to_t.Blend(from_t, progress);
+  return Matrix3DTransformOperation::Create(to_t);
 }
 
-PassRefPtr<TransformOperation> Matrix3DTransformOperation::zoom(double factor)
-{
-    TransformationMatrix result = m_matrix;
-    result.setM41(result.m41() * factor);
-    result.setM42(result.m42() * factor);
-    return create(result);
+PassRefPtr<TransformOperation> Matrix3DTransformOperation::Zoom(double factor) {
+  TransformationMatrix result = matrix_;
+  result.Zoom(factor);
+  return Create(result);
 }
 
-} // namespace blink
+}  // namespace blink

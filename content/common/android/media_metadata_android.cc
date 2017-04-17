@@ -12,6 +12,8 @@
 #include "content/public/common/media_metadata.h"
 #include "jni/MediaMetadata_jni.h"
 
+using base::android::ScopedJavaLocalRef;
+
 namespace content {
 
 namespace {
@@ -39,31 +41,23 @@ MediaMetadataAndroid::CreateJavaObject(
   ScopedJavaLocalRef<jstring> j_album(
       base::android::ConvertUTF16ToJavaString(env, metadata.album));
 
-  ScopedJavaLocalRef<jobject> j_metadata = Java_MediaMetadata_create(
-      env, j_title.obj(), j_artist.obj(), j_album.obj());
+  ScopedJavaLocalRef<jobject> j_metadata =
+      Java_MediaMetadata_create(env, j_title, j_artist, j_album);
 
-  for (const auto& artwork : metadata.artwork) {
-    std::string src = artwork.src.spec();
-    base::string16 type = artwork.type.is_null() ?
-        base::string16() : artwork.type.string();
+  for (const auto& image : metadata.artwork) {
+    std::string src = image.src.spec();
     ScopedJavaLocalRef<jstring> j_src(
         base::android::ConvertUTF8ToJavaString(env, src));
     ScopedJavaLocalRef<jstring> j_type(
-        base::android::ConvertUTF16ToJavaString(env, type));
+        base::android::ConvertUTF16ToJavaString(env, image.type));
     ScopedJavaLocalRef<jintArray> j_sizes(
-        base::android::ToJavaIntArray(
-            env, GetFlattenedSizeArray(artwork.sizes)));
+        base::android::ToJavaIntArray(env, GetFlattenedSizeArray(image.sizes)));
 
-    Java_MediaMetadata_createAndAddArtwork(
-        env, j_metadata.obj(), j_src.obj(), j_type.obj(), j_sizes.obj());
+    Java_MediaMetadata_createAndAddMediaImage(env, j_metadata, j_src, j_type,
+                                              j_sizes);
   }
 
   return j_metadata;
-}
-
-// static
-bool MediaMetadataAndroid::Register(JNIEnv* env) {
-  return RegisterNativesImpl(env);
 }
 
 }  // namespace content

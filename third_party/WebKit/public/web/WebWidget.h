@@ -31,6 +31,7 @@
 #ifndef WebWidget_h
 #define WebWidget_h
 
+#include "../platform/WebBrowserControlsState.h"
 #include "../platform/WebCanvas.h"
 #include "../platform/WebCommon.h"
 #include "../platform/WebFloatSize.h"
@@ -38,223 +39,195 @@
 #include "../platform/WebPoint.h"
 #include "../platform/WebRect.h"
 #include "../platform/WebSize.h"
-#include "../platform/WebTopControlsState.h"
+#include "../platform/WebTextInputInfo.h"
 #include "WebCompositionUnderline.h"
+#include "WebRange.h"
 #include "WebTextDirection.h"
-#include "WebTextInputInfo.h"
 
 namespace blink {
 
 class WebCompositeAndReadbackAsyncCallback;
-class WebInputEvent;
+class WebCoalescedInputEvent;
 class WebLayoutAndPaintAsyncCallback;
 class WebPagePopup;
-class WebString;
 struct WebPoint;
-template <typename T> class WebVector;
+template <typename T>
+class WebVector;
 
 class WebWidget {
-public:
-    // This method closes and deletes the WebWidget.
-    virtual void close() { }
+ public:
+  // This method closes and deletes the WebWidget.
+  virtual void Close() {}
 
-    // Returns the current size of the WebWidget.
-    virtual WebSize size() { return WebSize(); }
+  // Returns the current size of the WebWidget.
+  virtual WebSize Size() { return WebSize(); }
 
-    // Called to resize the WebWidget.
-    virtual void resize(const WebSize&) { }
+  // Called to resize the WebWidget.
+  virtual void Resize(const WebSize&) {}
 
-    // Resizes the unscaled visual viewport. Normally the unscaled visual
-    // viewport is the same size as the main frame. The passed size becomes the
-    // size of the viewport when unscaled (i.e. scale = 1). This is used to
-    // shrink the visible viewport to allow things like the ChromeOS virtual
-    // keyboard to overlay over content but allow scrolling it into view.
-    virtual void resizeVisualViewport(const WebSize&) { }
+  // Resizes the unscaled visual viewport. Normally the unscaled visual
+  // viewport is the same size as the main frame. The passed size becomes the
+  // size of the viewport when unscaled (i.e. scale = 1). This is used to
+  // shrink the visible viewport to allow things like the ChromeOS virtual
+  // keyboard to overlay over content but allow scrolling it into view.
+  virtual void ResizeVisualViewport(const WebSize&) {}
 
-    // Called to notify the WebWidget of entering/exiting fullscreen mode.
-    virtual void didEnterFullscreen() { }
-    virtual void didExitFullscreen() { }
+  // Called to notify the WebWidget of entering/exiting fullscreen mode.
+  virtual void DidEnterFullscreen() {}
+  virtual void DidExitFullscreen() {}
 
-    // Called to update imperative animation state. This should be called before
-    // paint, although the client can rate-limit these calls.
-    // |lastFrameTimeMonotonic| is in seconds.
-    virtual void beginFrame(double lastFrameTimeMonotonic) { }
+  // TODO(crbug.com/704763): Remove the need for this.
+  virtual void SetSuppressFrameRequestsWorkaroundFor704763Only(bool) {}
 
-    // Called to run through the entire set of document lifecycle phases needed
-    // to render a frame of the web widget. This MUST be called before Paint,
-    // and it may result in calls to WebWidgetClient::didInvalidateRect.
-    virtual void updateAllLifecyclePhases() { }
+  // Called to update imperative animation state. This should be called before
+  // paint, although the client can rate-limit these calls.
+  // |lastFrameTimeMonotonic| is in seconds.
+  virtual void BeginFrame(double last_frame_time_monotonic) {}
 
-    // Called to paint the rectangular region within the WebWidget
-    // onto the specified canvas at (viewPort.x,viewPort.y). You MUST call
-    // Layout before calling this method. It is okay to call paint
-    // multiple times once layout has been called, assuming no other
-    // changes are made to the WebWidget (e.g., once events are
-    // processed, it should be assumed that another call to layout is
-    // warranted before painting again).
-    virtual void paint(WebCanvas*, const WebRect& viewPort) { }
+  // Called to run through the entire set of document lifecycle phases needed
+  // to render a frame of the web widget. This MUST be called before Paint,
+  // and it may result in calls to WebWidgetClient::didInvalidateRect.
+  virtual void UpdateAllLifecyclePhases() {}
 
-    // Similar to paint() but ignores compositing decisions, squashing all
-    // contents of the WebWidget into the output given to the WebCanvas.
-    virtual void paintIgnoringCompositing(WebCanvas*, const WebRect&) {}
+  // Called to paint the rectangular region within the WebWidget
+  // onto the specified canvas at (viewPort.x,viewPort.y). You MUST call
+  // Layout before calling this method. It is okay to call paint
+  // multiple times once layout has been called, assuming no other
+  // changes are made to the WebWidget (e.g., once events are
+  // processed, it should be assumed that another call to layout is
+  // warranted before painting again).
+  virtual void Paint(WebCanvas*, const WebRect& view_port) {}
 
-    // Run layout and paint of all pending document changes asynchronously.
-    // The caller is resposible for keeping the WebLayoutAndPaintAsyncCallback
-    // object alive until it is called.
-    virtual void layoutAndPaintAsync(WebLayoutAndPaintAsyncCallback*) { }
+  // Similar to paint() but ignores compositing decisions, squashing all
+  // contents of the WebWidget into the output given to the WebCanvas.
+  virtual void PaintIgnoringCompositing(WebCanvas*, const WebRect&) {}
 
-    // The caller is responsible for keeping the WebCompositeAndReadbackAsyncCallback
-    // object alive until it is called. This should only be called when
-    // isAcceleratedCompositingActive() is true.
-    virtual void compositeAndReadbackAsync(WebCompositeAndReadbackAsyncCallback*) { }
+  // Run layout and paint of all pending document changes asynchronously.
+  // The caller is resposible for keeping the WebLayoutAndPaintAsyncCallback
+  // object alive until it is called.
+  virtual void LayoutAndPaintAsync(WebLayoutAndPaintAsyncCallback*) {}
 
-    // Called to inform the WebWidget of a change in theme.
-    // Implementors that cache rendered copies of widgets need to re-render
-    // on receiving this message
-    virtual void themeChanged() { }
+  // The caller is responsible for keeping the
+  // WebCompositeAndReadbackAsyncCallback object alive until it is called. This
+  // should only be called when isAcceleratedCompositingActive() is true.
+  virtual void CompositeAndReadbackAsync(
+      WebCompositeAndReadbackAsyncCallback*) {}
 
-    // Called to inform the WebWidget of an input event.
-    virtual WebInputEventResult handleInputEvent(const WebInputEvent&) { return WebInputEventResult::NotHandled; }
+  // Called to inform the WebWidget of a change in theme.
+  // Implementors that cache rendered copies of widgets need to re-render
+  // on receiving this message
+  virtual void ThemeChanged() {}
 
-    // Called to inform the WebWidget of the mouse cursor's visibility.
-    virtual void setCursorVisibilityState(bool isVisible) { }
+  // Called to inform the WebWidget of an input event.
+  virtual WebInputEventResult HandleInputEvent(const WebCoalescedInputEvent&) {
+    return WebInputEventResult::kNotHandled;
+  }
 
-    // Check whether the given point hits any registered touch event handlers.
-    virtual bool hasTouchEventHandlersAt(const WebPoint&) { return true; }
+  // Called to inform the WebWidget of the mouse cursor's visibility.
+  virtual void SetCursorVisibilityState(bool is_visible) {}
 
-    // Applies viewport related properties during a commit from the compositor
-    // thread.
-    virtual void applyViewportDeltas(
-        const WebFloatSize& visualViewportDelta,
-        const WebFloatSize& layoutViewportDelta,
-        const WebFloatSize& elasticOverscrollDelta,
-        float scaleFactor,
-        float topControlsShownRatioDelta) { }
+  // Check whether the given point hits any registered touch event handlers.
+  virtual bool HasTouchEventHandlersAt(const WebPoint&) { return true; }
 
-    // Called to inform the WebWidget that mouse capture was lost.
-    virtual void mouseCaptureLost() { }
+  // Applies viewport related properties during a commit from the compositor
+  // thread.
+  virtual void ApplyViewportDeltas(const WebFloatSize& visual_viewport_delta,
+                                   const WebFloatSize& layout_viewport_delta,
+                                   const WebFloatSize& elastic_overscroll_delta,
+                                   float scale_factor,
+                                   float browser_controls_shown_ratio_delta) {}
 
-    // Called to inform the WebWidget that it has gained or lost keyboard focus.
-    virtual void setFocus(bool) { }
+  virtual void RecordWheelAndTouchScrollingCount(bool has_scrolled_by_wheel,
+                                                 bool has_scrolled_by_touch) {}
 
-    // Called to inform the WebWidget of a new composition text.
-    // If selectionStart and selectionEnd has the same value, then it indicates
-    // the input caret position. If the text is empty, then the existing
-    // composition text will be cancelled.
-    // Returns true if the composition text was set successfully.
-    virtual bool setComposition(
-        const WebString& text,
-        const WebVector<WebCompositionUnderline>& underlines,
-        int selectionStart,
-        int selectionEnd) { return false; }
+  // Called to inform the WebWidget that mouse capture was lost.
+  virtual void MouseCaptureLost() {}
 
-    enum ConfirmCompositionBehavior {
-        DoNotKeepSelection,
-        KeepSelection,
-    };
+  // Called to inform the WebWidget that it has gained or lost keyboard focus.
+  virtual void SetFocus(bool) {}
 
-    // Called to inform the WebWidget to confirm an ongoing composition.
-    // This method is same as confirmComposition(WebString());
-    // Returns true if there is an ongoing composition.
-    virtual bool confirmComposition() { return false; } // Deprecated
-    virtual bool confirmComposition(ConfirmCompositionBehavior selectionBehavior) { return false; }
+  // Fetches the character range of the current composition, also called the
+  // "marked range."
+  virtual WebRange CompositionRange() { return WebRange(); }
 
-    // Called to inform the WebWidget to confirm an ongoing composition with a
-    // new composition text. If the text is empty then the current composition
-    // text is confirmed. If there is no ongoing composition, then deletes the
-    // current selection and inserts the text. This method has no effect if
-    // there is no ongoing composition and the text is empty.
-    // Returns true if there is an ongoing composition or the text is inserted.
-    virtual bool confirmComposition(const WebString& text) { return false; }
+  // Returns the anchor and focus bounds of the current selection.
+  // If the selection range is empty, it returns the caret bounds.
+  virtual bool SelectionBounds(WebRect& anchor, WebRect& focus) const {
+    return false;
+  }
 
-    // Fetches the character range of the current composition, also called the
-    // "marked range." Returns true and fills the out-paramters on success;
-    // returns false on failure.
-    virtual bool compositionRange(size_t* location, size_t* length) { return false; }
+  // Returns the text direction at the start and end bounds of the current
+  // selection.  If the selection range is empty, it returns false.
+  virtual bool SelectionTextDirection(WebTextDirection& start,
+                                      WebTextDirection& end) const {
+    return false;
+  }
 
-    // Returns information about the current text input of this WebWidget.
-    // Note that this query can be expensive for long fields, as it returns the
-    // plain-text representation of the current editable element. Consider using
-    // the lighter-weight textInputType() when appropriate.
-    virtual WebTextInputInfo textInputInfo() { return WebTextInputInfo(); }
+  // Returns true if the selection range is nonempty and its anchor is first
+  // (i.e its anchor is its start).
+  virtual bool IsSelectionAnchorFirst() const { return false; }
 
-    // Returns the type of current text input of this WebWidget.
-    virtual WebTextInputType textInputType() { return WebTextInputTypeNone; }
+  // Fetch the current selection range of this WebWidget.
+  virtual WebRange CaretOrSelectionRange() { return WebRange(); }
 
-    // Returns the anchor and focus bounds of the current selection.
-    // If the selection range is empty, it returns the caret bounds.
-    virtual bool selectionBounds(WebRect& anchor, WebRect& focus) const { return false; }
+  // Changes the text direction of the selected input node.
+  virtual void SetTextDirection(WebTextDirection) {}
 
-    // Returns the text direction at the start and end bounds of the current selection.
-    // If the selection range is empty, it returns false.
-    virtual bool selectionTextDirection(WebTextDirection& start, WebTextDirection& end) const { return false; }
+  // Returns true if the WebWidget uses GPU accelerated compositing
+  // to render its contents.
+  virtual bool IsAcceleratedCompositingActive() const { return false; }
 
-    // Returns true if the selection range is nonempty and its anchor is first
-    // (i.e its anchor is its start).
-    virtual bool isSelectionAnchorFirst() const { return false; }
+  // Returns true if the WebWidget created is of type WebView.
+  virtual bool IsWebView() const { return false; }
 
-    // Fetch the current selection range of this WebWidget. If there is no
-    // selection, it will output a 0-length range with the location at the
-    // caret. Returns true and fills the out-paramters on success; returns false
-    // on failure.
-    virtual bool caretOrSelectionRange(size_t* location, size_t* length) { return false; }
+  // Returns true if the WebWidget created is of type WebFrameWidget.
+  virtual bool IsWebFrameWidget() const { return false; }
 
-    // Changes the text direction of the selected input node.
-    virtual void setTextDirection(WebTextDirection) { }
+  // Returns true if the WebWidget created is of type WebPagePopup.
+  virtual bool IsPagePopup() const { return false; }
 
-    // Returns true if the WebWidget uses GPU accelerated compositing
-    // to render its contents.
-    virtual bool isAcceleratedCompositingActive() const { return false; }
+  // The WebLayerTreeView initialized on this WebWidgetClient will be going away
+  // and is no longer safe to access.
+  virtual void WillCloseLayerTreeView() {}
 
-    // Returns true if the WebWidget created is of type WebView.
-    virtual bool isWebView() const { return false; }
-    // Returns true if the WebWidget created is of type WebPagePopup.
-    virtual bool isPagePopup() const { return false; }
+  // Calling WebWidgetClient::requestPointerLock() will result in one
+  // return call to didAcquirePointerLock() or didNotAcquirePointerLock().
+  virtual void DidAcquirePointerLock() {}
+  virtual void DidNotAcquirePointerLock() {}
 
-    // The WebLayerTreeView initialized on this WebWidgetClient will be going away and
-    // is no longer safe to access.
-    virtual void willCloseLayerTreeView() { }
+  // Pointer lock was held, but has been lost. This may be due to a
+  // request via WebWidgetClient::requestPointerUnlock(), or for other
+  // reasons such as the user exiting lock, window focus changing, etc.
+  virtual void DidLosePointerLock() {}
 
-    // Calling WebWidgetClient::requestPointerLock() will result in one
-    // return call to didAcquirePointerLock() or didNotAcquirePointerLock().
-    virtual void didAcquirePointerLock() { }
-    virtual void didNotAcquirePointerLock() { }
+  // The page background color. Can be used for filling in areas without
+  // content.
+  virtual WebColor BackgroundColor() const {
+    return 0xFFFFFFFF; /* SK_ColorWHITE */
+  }
 
-    // Pointer lock was held, but has been lost. This may be due to a
-    // request via WebWidgetClient::requestPointerUnlock(), or for other
-    // reasons such as the user exiting lock, window focus changing, etc.
-    virtual void didLosePointerLock() { }
+  // The currently open page popup, which are calendar and datalist pickers
+  // but not the select popup.
+  virtual WebPagePopup* GetPagePopup() const { return 0; }
 
-    // Informs the WebWidget that the resizer rect changed. Happens for example
-    // on mac, when a widget appears below the WebWidget without changing the
-    // WebWidget's size (WebWidget::resize() automatically checks the resizer
-    // rect.)
-    virtual void didChangeWindowResizerRect() { }
+  // Updates browser controls constraints and current state. Allows embedder to
+  // control what are valid states for browser controls and if it should
+  // animate.
+  virtual void UpdateBrowserControlsState(WebBrowserControlsState constraints,
+                                          WebBrowserControlsState current,
+                                          bool animate) {}
 
-    // The page background color. Can be used for filling in areas without
-    // content.
-    virtual WebColor backgroundColor() const { return 0xFFFFFFFF; /* SK_ColorWHITE */ }
+  // Populate |bounds| with the composition character bounds for the ongoing
+  // composition. Returns false if there is no focused input or any ongoing
+  // composition.
+  virtual bool GetCompositionCharacterBounds(WebVector<WebRect>& bounds) {
+    return false;
+  }
 
-    // The currently open page popup, which are calendar and datalist pickers
-    // but not the select popup.
-    virtual WebPagePopup* pagePopup() const { return 0; }
-
-    // Updates top controls constraints and current state. Allows embedder to
-    // control what are valid states for top controls and if it should animate.
-    virtual void updateTopControlsState(WebTopControlsState constraints, WebTopControlsState current, bool animate) { }
-
-    // Populate |bounds| with the composition character bounds for the ongoing
-    // composition. Returns false if there is no focused input or any ongoing
-    // composition.
-    virtual bool getCompositionCharacterBounds(WebVector<WebRect>& bounds) { return false; }
-
-    // Applies the range from |start| to |start + length| on the foucsed frame so that the text will later be replaced.
-    virtual void applyReplacementRange(int start, int length) {}
-
-protected:
-    ~WebWidget() { }
+ protected:
+  ~WebWidget() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -7,6 +7,8 @@
 #include "core/frame/FrameView.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutBoxModelObject.h"
+#include "core/layout/LayoutTableCell.h"
+#include "core/layout/LayoutTableCol.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/compositing/CompositedLayerMapping.h"
 #include "core/paint/PaintLayer.h"
@@ -17,408 +19,639 @@ namespace blink {
 
 namespace {
 
-// Return the amount of space to leave between image tiles for the background-repeat: space property.
-inline LayoutUnit getSpaceBetweenImageTiles(LayoutUnit areaSize, LayoutUnit tileSize)
-{
-    int numberOfTiles = areaSize / tileSize;
-    LayoutUnit space(-1);
+// Return the amount of space to leave between image tiles for the
+// background-repeat: space property.
+inline LayoutUnit GetSpaceBetweenImageTiles(LayoutUnit area_size,
+                                            LayoutUnit tile_size) {
+  int number_of_tiles = (area_size / tile_size).ToInt();
+  LayoutUnit space(-1);
 
-    if (numberOfTiles > 1) {
-        // Spec doesn't specify rounding, so use the same method as for background-repeat: round.
-        space = (areaSize - numberOfTiles * tileSize) / (numberOfTiles - 1);
-    }
+  if (number_of_tiles > 1) {
+    // Spec doesn't specify rounding, so use the same method as for
+    // background-repeat: round.
+    space = (area_size - number_of_tiles * tile_size) / (number_of_tiles - 1);
+  }
 
-    return space;
+  return space;
 }
 
-bool fixedBackgroundPaintsInLocalCoordinates(const LayoutObject& obj, const GlobalPaintFlags globalPaintFlags)
-{
-    if (!obj.isLayoutView())
-        return false;
+bool FixedBackgroundPaintsInLocalCoordinates(
+    const LayoutObject& obj,
+    const GlobalPaintFlags global_paint_flags) {
+  if (!obj.IsLayoutView())
+    return false;
 
-    const LayoutView& view = toLayoutView(obj);
+  const LayoutView& view = ToLayoutView(obj);
 
-    if (globalPaintFlags & GlobalPaintFlattenCompositingLayers)
-        return false;
+  if (global_paint_flags & kGlobalPaintFlattenCompositingLayers)
+    return false;
 
-    PaintLayer* rootLayer = view.layer();
-    if (!rootLayer || rootLayer->compositingState() == NotComposited)
-        return false;
+  PaintLayer* root_layer = view.Layer();
+  if (!root_layer || root_layer->GetCompositingState() == kNotComposited)
+    return false;
 
-    return rootLayer->compositedLayerMapping()->backgroundLayerPaintsFixedRootBackground();
+  return root_layer->GetCompositedLayerMapping()
+      ->BackgroundLayerPaintsFixedRootBackground();
 }
 
-LayoutSize calculateFillTileSize(const LayoutBoxModelObject& obj, const FillLayer& fillLayer, const LayoutSize& positioningAreaSize)
-{
-    StyleImage* image = fillLayer.image();
-    EFillSizeType type = fillLayer.size().type;
+LayoutSize CalculateFillTileSize(const LayoutBoxModelObject& obj,
+                                 const FillLayer& fill_layer,
+                                 const LayoutSize& positioning_area_size) {
+  StyleImage* image = fill_layer.GetImage();
+  EFillSizeType type = fill_layer.Size().type;
 
-    LayoutSize imageIntrinsicSize = image->imageSize(obj, obj.style()->effectiveZoom(), positioningAreaSize);
-    switch (type) {
-    case SizeLength: {
-        LayoutSize tileSize(positioningAreaSize);
+  LayoutSize image_intrinsic_size = image->ImageSize(
+      obj, obj.Style()->EffectiveZoom(), positioning_area_size);
+  switch (type) {
+    case kSizeLength: {
+      LayoutSize tile_size(positioning_area_size);
 
-        Length layerWidth = fillLayer.size().size.width();
-        Length layerHeight = fillLayer.size().size.height();
+      Length layer_width = fill_layer.Size().size.Width();
+      Length layer_height = fill_layer.Size().size.Height();
 
-        if (layerWidth.isFixed())
-            tileSize.setWidth(LayoutUnit(layerWidth.value()));
-        else if (layerWidth.hasPercent())
-            tileSize.setWidth(valueForLength(layerWidth, positioningAreaSize.width()));
+      if (layer_width.IsFixed())
+        tile_size.SetWidth(LayoutUnit(layer_width.Value()));
+      else if (layer_width.IsPercentOrCalc())
+        tile_size.SetWidth(
+            ValueForLength(layer_width, positioning_area_size.Width()));
 
-        if (layerHeight.isFixed())
-            tileSize.setHeight(LayoutUnit(layerHeight.value()));
-        else if (layerHeight.hasPercent())
-            tileSize.setHeight(valueForLength(layerHeight, positioningAreaSize.height()));
+      if (layer_height.IsFixed())
+        tile_size.SetHeight(LayoutUnit(layer_height.Value()));
+      else if (layer_height.IsPercentOrCalc())
+        tile_size.SetHeight(
+            ValueForLength(layer_height, positioning_area_size.Height()));
 
-        // If one of the values is auto we have to use the appropriate
-        // scale to maintain our aspect ratio.
-        if (layerWidth.isAuto() && !layerHeight.isAuto()) {
-            if (imageIntrinsicSize.height()) {
-                LayoutUnit adjustedWidth = imageIntrinsicSize.width() * tileSize.height() / imageIntrinsicSize.height();
-                if (imageIntrinsicSize.width() >= 1 && adjustedWidth < 1)
-                    adjustedWidth = LayoutUnit(1);
-                tileSize.setWidth(adjustedWidth);
-            }
-        } else if (!layerWidth.isAuto() && layerHeight.isAuto()) {
-            if (imageIntrinsicSize.width()) {
-                LayoutUnit adjustedHeight = imageIntrinsicSize.height() * tileSize.width() / imageIntrinsicSize.width();
-                if (imageIntrinsicSize.height() >= 1 && adjustedHeight < 1)
-                    adjustedHeight = LayoutUnit(1);
-                tileSize.setHeight(adjustedHeight);
-            }
-        } else if (layerWidth.isAuto() && layerHeight.isAuto()) {
-            // If both width and height are auto, use the image's intrinsic size.
-            tileSize = imageIntrinsicSize;
+      // If one of the values is auto we have to use the appropriate
+      // scale to maintain our aspect ratio.
+      if (layer_width.IsAuto() && !layer_height.IsAuto()) {
+        if (image_intrinsic_size.Height()) {
+          LayoutUnit adjusted_width = image_intrinsic_size.Width() *
+                                      tile_size.Height() /
+                                      image_intrinsic_size.Height();
+          if (image_intrinsic_size.Width() >= 1 && adjusted_width < 1)
+            adjusted_width = LayoutUnit(1);
+          tile_size.SetWidth(adjusted_width);
         }
-
-        tileSize.clampNegativeToZero();
-        return tileSize;
-    }
-    case SizeNone: {
-        // If both values are 'auto' then the intrinsic width and/or height of the image should be used, if any.
-        if (!imageIntrinsicSize.isEmpty())
-            return imageIntrinsicSize;
-
-        // If the image has neither an intrinsic width nor an intrinsic height, its size is determined as for 'contain'.
-        type = Contain;
-    }
-    case Contain:
-    case Cover: {
-        float horizontalScaleFactor = imageIntrinsicSize.width()
-            ? positioningAreaSize.width().toFloat() / imageIntrinsicSize.width() : 1.0f;
-        float verticalScaleFactor = imageIntrinsicSize.height()
-            ? positioningAreaSize.height().toFloat() / imageIntrinsicSize.height() : 1.0f;
-        // Force the dimension that determines the size to exactly match the
-        // positioningAreaSize in that dimension, so that rounding of floating point
-        // approximation to LayoutUnit do not shrink the image to smaller than the
-        // positioningAreaSize.
-        if (type == Contain) {
-            if (horizontalScaleFactor < verticalScaleFactor)
-                return LayoutSize(positioningAreaSize.width(), LayoutUnit(std::max(1.0f, imageIntrinsicSize.height() * horizontalScaleFactor)));
-            return LayoutSize(LayoutUnit(std::max(1.0f, imageIntrinsicSize.width() * verticalScaleFactor)), positioningAreaSize.height());
+      } else if (!layer_width.IsAuto() && layer_height.IsAuto()) {
+        if (image_intrinsic_size.Width()) {
+          LayoutUnit adjusted_height = image_intrinsic_size.Height() *
+                                       tile_size.Width() /
+                                       image_intrinsic_size.Width();
+          if (image_intrinsic_size.Height() >= 1 && adjusted_height < 1)
+            adjusted_height = LayoutUnit(1);
+          tile_size.SetHeight(adjusted_height);
         }
-        if (horizontalScaleFactor > verticalScaleFactor)
-            return LayoutSize(positioningAreaSize.width(), LayoutUnit(std::max(1.0f, imageIntrinsicSize.height() * horizontalScaleFactor)));
-        return LayoutSize(LayoutUnit(std::max(1.0f, imageIntrinsicSize.width() * verticalScaleFactor)), positioningAreaSize.height());
-    }
-    }
+      } else if (layer_width.IsAuto() && layer_height.IsAuto()) {
+        // If both width and height are auto, use the image's intrinsic size.
+        tile_size = image_intrinsic_size;
+      }
 
-    NOTREACHED();
-    return LayoutSize();
+      tile_size.ClampNegativeToZero();
+      return tile_size;
+    }
+    case kSizeNone: {
+      // If both values are 'auto' then the intrinsic width and/or height of the
+      // image should be used, if any.
+      if (!image_intrinsic_size.IsEmpty())
+        return image_intrinsic_size;
+
+      // If the image has neither an intrinsic width nor an intrinsic height,
+      // its size is determined as for 'contain'.
+      type = kContain;
+    }
+    case kContain:
+    case kCover: {
+      float horizontal_scale_factor =
+          image_intrinsic_size.Width()
+              ? positioning_area_size.Width().ToFloat() /
+                    image_intrinsic_size.Width()
+              : 1.0f;
+      float vertical_scale_factor =
+          image_intrinsic_size.Height()
+              ? positioning_area_size.Height().ToFloat() /
+                    image_intrinsic_size.Height()
+              : 1.0f;
+      // Force the dimension that determines the size to exactly match the
+      // positioningAreaSize in that dimension, so that rounding of floating
+      // point approximation to LayoutUnit do not shrink the image to smaller
+      // than the positioningAreaSize.
+      if (type == kContain) {
+        if (horizontal_scale_factor < vertical_scale_factor)
+          return LayoutSize(
+              positioning_area_size.Width(),
+              LayoutUnit(std::max(1.0f, image_intrinsic_size.Height() *
+                                            horizontal_scale_factor)));
+        return LayoutSize(
+            LayoutUnit(std::max(
+                1.0f, image_intrinsic_size.Width() * vertical_scale_factor)),
+            positioning_area_size.Height());
+      }
+      if (horizontal_scale_factor > vertical_scale_factor)
+        return LayoutSize(
+            positioning_area_size.Width(),
+            LayoutUnit(std::max(1.0f, image_intrinsic_size.Height() *
+                                          horizontal_scale_factor)));
+      return LayoutSize(LayoutUnit(std::max(1.0f, image_intrinsic_size.Width() *
+                                                      vertical_scale_factor)),
+                        positioning_area_size.Height());
+    }
+  }
+
+  NOTREACHED();
+  return LayoutSize();
 }
 
-IntPoint accumulatedScrollOffsetForFixedBackground(const LayoutBoxModelObject& object, const LayoutBoxModelObject* container)
-{
-    IntPoint result;
-    if (&object == container)
-        return result;
-    for (const LayoutBlock* block = object.containingBlock(); block; block = block->containingBlock()) {
-        if (block->hasOverflowClip())
-            result += block->scrolledContentOffset();
-        if (block == container)
-            break;
-    }
+IntPoint AccumulatedScrollOffsetForFixedBackground(
+    const LayoutBoxModelObject& object,
+    const LayoutBoxModelObject* container) {
+  IntPoint result;
+  if (&object == container)
     return result;
+  for (const LayoutBlock* block = object.ContainingBlock(); block;
+       block = block->ContainingBlock()) {
+    if (block->HasOverflowClip())
+      result += block->ScrolledContentOffset();
+    if (block == container)
+      break;
+  }
+  return result;
 }
 
-// When we match the sub-pixel fraction of the destination rect in a dimension, we
-// snap the same way. This commonly occurs when the background is meant to fill the
-// padding box but there's a border (which in Blink is always stored as an integer).
-// Otherwise we floor to avoid growing our tile size. Often these tiles are from a
-// sprite map, and bleeding adjacent sprites is visually worse than clipping the
-// intended one.
-LayoutSize applySubPixelHeuristicToImageSize(const LayoutSize& size, const LayoutRect& destination)
-{
-    LayoutSize snappedSize = LayoutSize(
-        size.width().fraction() == destination.width().fraction() ? snapSizeToPixel(size.width(), destination.x()) : size.width().floor(),
-        size.height().fraction() == destination.height().fraction() ? snapSizeToPixel(size.height(), destination.y()) : size.height().floor());
-    return snappedSize;
+// When we match the sub-pixel fraction of the destination rect in a dimension,
+// we snap the same way. This commonly occurs when the background is meant to
+// fill the padding box but there's a border (which in Blink is always stored as
+// an integer).  Otherwise we floor to avoid growing our tile size. Often these
+// tiles are from a sprite map, and bleeding adjacent sprites is visually worse
+// than clipping the intended one.
+LayoutSize ApplySubPixelHeuristicToImageSize(const LayoutSize& size,
+                                             const LayoutRect& destination) {
+  LayoutSize snapped_size =
+      LayoutSize(size.Width().Fraction() == destination.Width().Fraction()
+                     ? SnapSizeToPixel(size.Width(), destination.X())
+                     : size.Width().Floor(),
+                 size.Height().Fraction() == destination.Height().Fraction()
+                     ? SnapSizeToPixel(size.Height(), destination.Y())
+                     : size.Height().Floor());
+  return snapped_size;
 }
 
-} // anonymous namespace
+}  // anonymous namespace
 
-void BackgroundImageGeometry::setNoRepeatX(LayoutUnit xOffset)
-{
-    int roundedOffset = roundToInt(xOffset);
-    m_destRect.move(std::max(roundedOffset, 0), LayoutUnit());
-    setPhaseX(LayoutUnit(-std::min(roundedOffset, 0)));
-    m_destRect.setWidth(m_tileSize.width() + std::min(roundedOffset, 0));
-    setSpaceSize(LayoutSize(LayoutUnit(), spaceSize().height()));
+void BackgroundImageGeometry::SetNoRepeatX(LayoutUnit x_offset) {
+  int rounded_offset = RoundToInt(x_offset);
+  dest_rect_.Move(std::max(rounded_offset, 0), 0);
+  SetPhaseX(LayoutUnit(-std::min(rounded_offset, 0)));
+  dest_rect_.SetWidth(tile_size_.Width() + std::min(rounded_offset, 0));
+  SetSpaceSize(LayoutSize(LayoutUnit(), SpaceSize().Height()));
 }
 
-void BackgroundImageGeometry::setNoRepeatY(LayoutUnit yOffset)
-{
-    int roundedOffset = roundToInt(yOffset);
-    m_destRect.move(LayoutUnit(), std::max(roundedOffset, 0));
-    setPhaseY(LayoutUnit(-std::min(roundedOffset, 0)));
-    m_destRect.setHeight(m_tileSize.height() + std::min(roundedOffset, 0));
-    setSpaceSize(LayoutSize(spaceSize().width(), LayoutUnit()));
+void BackgroundImageGeometry::SetNoRepeatY(LayoutUnit y_offset) {
+  int rounded_offset = RoundToInt(y_offset);
+  dest_rect_.Move(0, std::max(rounded_offset, 0));
+  SetPhaseY(LayoutUnit(-std::min(rounded_offset, 0)));
+  dest_rect_.SetHeight(tile_size_.Height() + std::min(rounded_offset, 0));
+  SetSpaceSize(LayoutSize(SpaceSize().Width(), LayoutUnit()));
 }
 
-void BackgroundImageGeometry::setRepeatX(
-    const FillLayer& fillLayer,
-    LayoutUnit unsnappedTileWidth,
-    LayoutUnit snappedAvailableWidth,
-    LayoutUnit unsnappedAvailableWidth,
-    LayoutUnit extraOffset)
-{
-    // We would like to identify the phase as a fraction of the image size in the absence of snapping,
-    // then re-apply it to the snapped values. This is to handle large positions.
-    if (unsnappedTileWidth) {
-        LayoutUnit computedXPosition = roundedMinimumValueForLength(fillLayer.xPosition(), unsnappedAvailableWidth);
-        if (fillLayer.backgroundXOrigin() == RightEdge) {
-            float numberOfTilesInPosition = (snappedAvailableWidth - computedXPosition + extraOffset).toFloat() / unsnappedTileWidth.toFloat();
-            float fractionalPositionWithinTile = numberOfTilesInPosition - truncf(numberOfTilesInPosition);
-            setPhaseX(LayoutUnit(roundf(fractionalPositionWithinTile * tileSize().width())));
-        } else {
-            float numberOfTilesInPosition = (computedXPosition + extraOffset).toFloat() / unsnappedTileWidth.toFloat();
-            float fractionalPositionWithinTile = 1.0f - (numberOfTilesInPosition - truncf(numberOfTilesInPosition));
-            setPhaseX(LayoutUnit(roundf(fractionalPositionWithinTile * tileSize().width())));
-        }
+void BackgroundImageGeometry::SetRepeatX(const FillLayer& fill_layer,
+                                         LayoutUnit unsnapped_tile_width,
+                                         LayoutUnit snapped_available_width,
+                                         LayoutUnit unsnapped_available_width,
+                                         LayoutUnit extra_offset,
+                                         LayoutUnit offset_for_cell) {
+  // We would like to identify the phase as a fraction of the image size in the
+  // absence of snapping, then re-apply it to the snapped values. This is to
+  // handle large positions.
+  if (unsnapped_tile_width) {
+    LayoutUnit computed_x_position =
+        RoundedMinimumValueForLength(fill_layer.XPosition(),
+                                     unsnapped_available_width) -
+        offset_for_cell;
+    float number_of_tiles_in_position;
+    if (fill_layer.BackgroundXOrigin() == kRightEdge) {
+      number_of_tiles_in_position =
+          (snapped_available_width - computed_x_position + extra_offset)
+              .ToFloat() /
+          unsnapped_tile_width.ToFloat();
     } else {
-        setPhaseX(LayoutUnit());
+      number_of_tiles_in_position =
+          (computed_x_position + extra_offset).ToFloat() /
+          unsnapped_tile_width.ToFloat();
     }
-    setSpaceSize(LayoutSize(LayoutUnit(), spaceSize().height()));
+    float fractional_position_within_tile =
+        1.0f -
+        (number_of_tiles_in_position - truncf(number_of_tiles_in_position));
+    SetPhaseX(LayoutUnit(
+        roundf(fractional_position_within_tile * TileSize().Width())));
+  } else {
+    SetPhaseX(LayoutUnit());
+  }
+  SetSpaceSize(LayoutSize(LayoutUnit(), SpaceSize().Height()));
 }
 
-void BackgroundImageGeometry::setRepeatY(
-    const FillLayer& fillLayer,
-    LayoutUnit unsnappedTileHeight,
-    LayoutUnit snappedAvailableHeight,
-    LayoutUnit unsnappedAvailableHeight,
-    LayoutUnit extraOffset)
-{
-    // We would like to identify the phase as a fraction of the image size in the absence of snapping,
-    // then re-apply it to the snapped values. This is to handle large positions.
-    if (unsnappedTileHeight) {
-        LayoutUnit computedYPosition = roundedMinimumValueForLength(fillLayer.yPosition(), unsnappedAvailableHeight);
-        if (fillLayer.backgroundYOrigin() == BottomEdge) {
-            float numberOfTilesInPosition = (snappedAvailableHeight - computedYPosition + extraOffset).toFloat() / unsnappedTileHeight.toFloat();
-            float fractionalPositionWithinTile = numberOfTilesInPosition - truncf(numberOfTilesInPosition);
-            setPhaseY(LayoutUnit(roundf(fractionalPositionWithinTile * tileSize().height())));
-        } else {
-            float numberOfTilesInPosition = (computedYPosition + extraOffset).toFloat() / unsnappedTileHeight.toFloat();
-            float fractionalPositionWithinTile = 1.0f - (numberOfTilesInPosition - truncf(numberOfTilesInPosition));
-            setPhaseY(LayoutUnit(roundf(fractionalPositionWithinTile * tileSize().height())));
-        }
+void BackgroundImageGeometry::SetRepeatY(const FillLayer& fill_layer,
+                                         LayoutUnit unsnapped_tile_height,
+                                         LayoutUnit snapped_available_height,
+                                         LayoutUnit unsnapped_available_height,
+                                         LayoutUnit extra_offset,
+                                         LayoutUnit offset_for_cell) {
+  // We would like to identify the phase as a fraction of the image size in the
+  // absence of snapping, then re-apply it to the snapped values. This is to
+  // handle large positions.
+  if (unsnapped_tile_height) {
+    LayoutUnit computed_y_position =
+        RoundedMinimumValueForLength(fill_layer.YPosition(),
+                                     unsnapped_available_height) -
+        offset_for_cell;
+    float number_of_tiles_in_position;
+    if (fill_layer.BackgroundYOrigin() == kBottomEdge) {
+      number_of_tiles_in_position =
+          (snapped_available_height - computed_y_position + extra_offset)
+              .ToFloat() /
+          unsnapped_tile_height.ToFloat();
     } else {
-        setPhaseY(LayoutUnit());
+      number_of_tiles_in_position =
+          (computed_y_position + extra_offset).ToFloat() /
+          unsnapped_tile_height.ToFloat();
     }
-    setSpaceSize(LayoutSize(spaceSize().width(), LayoutUnit()));
+    float fractional_position_within_tile =
+        1.0f -
+        (number_of_tiles_in_position - truncf(number_of_tiles_in_position));
+    SetPhaseY(LayoutUnit(
+        roundf(fractional_position_within_tile * TileSize().Height())));
+  } else {
+    SetPhaseY(LayoutUnit());
+  }
+  SetSpaceSize(LayoutSize(SpaceSize().Width(), LayoutUnit()));
 }
 
-void BackgroundImageGeometry::setSpaceX(LayoutUnit space, LayoutUnit availableWidth, LayoutUnit extraOffset)
-{
-    LayoutUnit computedXPosition = roundedMinimumValueForLength(Length(), availableWidth);
-    setSpaceSize(LayoutSize(space.round(), spaceSize().height()));
-    LayoutUnit actualWidth = tileSize().width() + space;
-    setPhaseX(actualWidth ? LayoutUnit(roundf(actualWidth - fmodf((computedXPosition + extraOffset), actualWidth))) : LayoutUnit());
+void BackgroundImageGeometry::SetSpaceX(LayoutUnit space,
+                                        LayoutUnit available_width,
+                                        LayoutUnit extra_offset) {
+  LayoutUnit computed_x_position =
+      RoundedMinimumValueForLength(Length(), available_width);
+  SetSpaceSize(LayoutSize(space.Round(), SpaceSize().Height().ToInt()));
+  LayoutUnit actual_width = TileSize().Width() + space;
+  SetPhaseX(actual_width
+                ? LayoutUnit(roundf(actual_width -
+                                    fmodf((computed_x_position + extra_offset),
+                                          actual_width)))
+                : LayoutUnit());
 }
 
-void BackgroundImageGeometry::setSpaceY(LayoutUnit space, LayoutUnit availableHeight, LayoutUnit extraOffset)
-{
-    LayoutUnit computedYPosition = roundedMinimumValueForLength(Length(), availableHeight);
-    setSpaceSize(LayoutSize(spaceSize().width(), space.round()));
-    LayoutUnit actualHeight = tileSize().height() + space;
-    setPhaseY(actualHeight ? LayoutUnit(roundf(actualHeight - fmodf((computedYPosition + extraOffset), actualHeight))) : LayoutUnit());
+void BackgroundImageGeometry::SetSpaceY(LayoutUnit space,
+                                        LayoutUnit available_height,
+                                        LayoutUnit extra_offset) {
+  LayoutUnit computed_y_position =
+      RoundedMinimumValueForLength(Length(), available_height);
+  SetSpaceSize(LayoutSize(SpaceSize().Width().ToInt(), space.Round()));
+  LayoutUnit actual_height = TileSize().Height() + space;
+  SetPhaseY(actual_height
+                ? LayoutUnit(roundf(actual_height -
+                                    fmodf((computed_y_position + extra_offset),
+                                          actual_height)))
+                : LayoutUnit());
 }
 
-void BackgroundImageGeometry::useFixedAttachment(const LayoutPoint& attachmentPoint)
-{
-    LayoutPoint alignedPoint = attachmentPoint;
-    m_phase.move(std::max(alignedPoint.x() - m_destRect.x(), LayoutUnit()), std::max(alignedPoint.y() - m_destRect.y(), LayoutUnit()));
-    setPhase(LayoutPoint(roundedIntPoint(m_phase)));
+void BackgroundImageGeometry::UseFixedAttachment(
+    const LayoutPoint& attachment_point) {
+  LayoutPoint aligned_point = attachment_point;
+  phase_.Move(std::max(aligned_point.X() - dest_rect_.X(), LayoutUnit()),
+              std::max(aligned_point.Y() - dest_rect_.Y(), LayoutUnit()));
+  SetPhase(LayoutPoint(RoundedIntPoint(phase_)));
 }
 
-void BackgroundImageGeometry::calculate(const LayoutBoxModelObject& obj, const LayoutBoxModelObject* paintContainer,
-    const GlobalPaintFlags globalPaintFlags, const FillLayer& fillLayer, const LayoutRect& paintRect)
-{
-    LayoutUnit left;
-    LayoutUnit top;
-    LayoutSize positioningAreaSize;
-    bool isLayoutView = obj.isLayoutView();
-    const LayoutBox* rootBox = nullptr;
-    if (isLayoutView) {
-        // It is only possible reach here when root element has a box.
-        Element* documentElement = obj.document().documentElement();
-        DCHECK(documentElement);
-        DCHECK(documentElement->layoutObject());
-        DCHECK(documentElement->layoutObject()->isBox());
-        rootBox = toLayoutBox(documentElement->layoutObject());
+enum ColumnGroupDirection { kColumnGroupStart, kColumnGroupEnd };
+
+static void ExpandToTableColumnGroup(const LayoutTableCell& cell,
+                                     const LayoutTableCol& column_group,
+                                     LayoutUnit& value,
+                                     ColumnGroupDirection column_direction) {
+  auto sibling_cell = column_direction == kColumnGroupStart
+                          ? &LayoutTableCell::PreviousCell
+                          : &LayoutTableCell::NextCell;
+  for (const auto* sibling = (cell.*sibling_cell)(); sibling;
+       sibling = (sibling->*sibling_cell)()) {
+    LayoutTableCol* innermost_col =
+        cell.Table()
+            ->ColElementAtAbsoluteColumn(sibling->AbsoluteColumnIndex())
+            .InnermostColOrColGroup();
+    if (!innermost_col || innermost_col->EnclosingColumnGroup() != column_group)
+      break;
+    value += sibling->Size().Width();
+  }
+}
+
+LayoutPoint BackgroundImageGeometry::GetOffsetForCell(
+    const LayoutTableCell& cell,
+    const LayoutBox& positioning_box) {
+  LayoutSize border_spacing = LayoutSize(cell.Table()->HBorderSpacing(),
+                                         cell.Table()->VBorderSpacing());
+  if (positioning_box.IsTableSection())
+    return cell.Location() - border_spacing;
+  if (positioning_box.IsTableRow()) {
+    return LayoutPoint(cell.Location().X(), LayoutUnit()) -
+           LayoutSize(border_spacing.Width(), LayoutUnit());
+  }
+
+  LayoutRect sections_rect(LayoutPoint(), cell.Table()->Size());
+  cell.Table()->SubtractCaptionRect(sections_rect);
+  LayoutUnit height_of_captions =
+      cell.Table()->Size().Height() - sections_rect.Height();
+  LayoutPoint offset_in_background = LayoutPoint(
+      LayoutUnit(), (cell.Section()->Location().Y() -
+                     cell.Table()->BorderBefore() - height_of_captions) +
+                        cell.Location().Y());
+
+  DCHECK(positioning_box.IsLayoutTableCol());
+  if (ToLayoutTableCol(positioning_box).IsTableColumn()) {
+    return offset_in_background -
+           LayoutSize(LayoutUnit(), border_spacing.Height());
+  }
+
+  DCHECK(ToLayoutTableCol(positioning_box).IsTableColumnGroup());
+  LayoutUnit offset = offset_in_background.X();
+  ExpandToTableColumnGroup(cell, ToLayoutTableCol(positioning_box), offset,
+                           kColumnGroupStart);
+  offset_in_background.Move(offset, LayoutUnit());
+  return offset_in_background -
+         LayoutSize(LayoutUnit(), border_spacing.Height());
+}
+
+LayoutSize BackgroundImageGeometry::GetBackgroundObjectDimensions(
+    const LayoutTableCell& cell,
+    const LayoutBox& positioning_box) {
+  LayoutSize border_spacing = LayoutSize(cell.Table()->HBorderSpacing(),
+                                         cell.Table()->VBorderSpacing());
+  if (positioning_box.IsTableSection())
+    return positioning_box.Size() - border_spacing - border_spacing;
+
+  if (positioning_box.IsTableRow()) {
+    return positioning_box.Size() -
+           LayoutSize(border_spacing.Width(), LayoutUnit()) -
+           LayoutSize(border_spacing.Width(), LayoutUnit());
+  }
+
+  DCHECK(positioning_box.IsLayoutTableCol());
+  LayoutRect sections_rect(LayoutPoint(), cell.Table()->Size());
+  cell.Table()->SubtractCaptionRect(sections_rect);
+  LayoutUnit column_height = sections_rect.Height() -
+                             cell.Table()->BorderBefore() -
+                             border_spacing.Height() - border_spacing.Height();
+  if (ToLayoutTableCol(positioning_box).IsTableColumn())
+    return LayoutSize(cell.Size().Width(), column_height);
+
+  DCHECK(ToLayoutTableCol(positioning_box).IsTableColumnGroup());
+  LayoutUnit width = cell.Size().Width();
+  ExpandToTableColumnGroup(cell, ToLayoutTableCol(positioning_box), width,
+                           kColumnGroupStart);
+  ExpandToTableColumnGroup(cell, ToLayoutTableCol(positioning_box), width,
+                           kColumnGroupEnd);
+
+  return LayoutSize(width, column_height);
+}
+
+void BackgroundImageGeometry::Calculate(
+    const LayoutBoxModelObject& obj,
+    const LayoutObject* background_object,
+    const LayoutBoxModelObject* paint_container,
+    const GlobalPaintFlags global_paint_flags,
+    const FillLayer& fill_layer,
+    const LayoutRect& paint_rect) {
+  LayoutUnit left;
+  LayoutUnit top;
+  LayoutRect positioning_area;
+  bool is_layout_view = obj.IsLayoutView();
+  const LayoutBox* root_box = nullptr;
+  if (is_layout_view) {
+    // It is only possible reach here when root element has a box.
+    Element* document_element = obj.GetDocument().documentElement();
+    DCHECK(document_element);
+    DCHECK(document_element->GetLayoutObject());
+    DCHECK(document_element->GetLayoutObject()->IsBox());
+    root_box = ToLayoutBox(document_element->GetLayoutObject());
+  }
+
+  bool cell_using_container_background = obj.IsTableCell() &&
+                                         background_object &&
+                                         !background_object->IsTableCell();
+  const LayoutBoxModelObject& positioning_box =
+      is_layout_view ? *root_box
+                     : cell_using_container_background
+                           ? ToLayoutBoxModelObject(*background_object)
+                           : obj;
+  LayoutPoint offset_in_background =
+      cell_using_container_background
+          ? GetOffsetForCell(ToLayoutTableCell(obj),
+                             ToLayoutBox(positioning_box))
+          : LayoutPoint();
+  // Determine the background positioning area and set destRect to the
+  // background painting area.  destRect will be adjusted later if the
+  // background is non-repeating.
+  // FIXME: transforms spec says that fixed backgrounds behave like scroll
+  // inside transforms.
+  bool fixed_attachment = fill_layer.Attachment() == kFixedBackgroundAttachment;
+
+  if (RuntimeEnabledFeatures::fastMobileScrollingEnabled()) {
+    // As a side effect of an optimization to blit on scroll, we do not honor
+    // the CSS property "background-attachment: fixed" because it may result in
+    // rendering artifacts. Note, these artifacts only appear if we are blitting
+    // on scroll of a page that has fixed background images.
+    fixed_attachment = false;
+  }
+
+  if (!fixed_attachment) {
+    SetDestRect(paint_rect);
+
+    LayoutUnit right;
+    LayoutUnit bottom;
+    // Scroll and Local.
+    if (fill_layer.Origin() != kBorderFillBox) {
+      left = LayoutUnit(positioning_box.BorderLeft());
+      right = LayoutUnit(positioning_box.BorderRight());
+      top = LayoutUnit(positioning_box.BorderTop());
+      bottom = LayoutUnit(positioning_box.BorderBottom());
+      if (fill_layer.Origin() == kContentFillBox) {
+        left += positioning_box.PaddingLeft();
+        right += positioning_box.PaddingRight();
+        top += positioning_box.PaddingTop();
+        bottom += positioning_box.PaddingBottom();
+      }
     }
-    const LayoutBoxModelObject& positioningBox = isLayoutView ? static_cast<const LayoutBoxModelObject&>(*rootBox) : obj;
 
-    // Determine the background positioning area and set destRect to the background painting area.
-    // destRect will be adjusted later if the background is non-repeating.
-    // FIXME: transforms spec says that fixed backgrounds behave like scroll inside transforms.
-    bool fixedAttachment = fillLayer.attachment() == FixedBackgroundAttachment;
+    if (is_layout_view) {
+      // The background of the box generated by the root element covers the
+      // entire canvas and will be painted by the view object, but the we should
+      // still use the root element box for positioning.
+      positioning_area.SetSize(root_box->Size());
+      positioning_area.ContractEdges(top, right, bottom, left);
 
-    if (RuntimeEnabledFeatures::fastMobileScrollingEnabled()) {
-        // As a side effect of an optimization to blit on scroll, we do not honor the CSS
-        // property "background-attachment: fixed" because it may result in rendering
-        // artifacts. Note, these artifacts only appear if we are blitting on scroll of
-        // a page that has fixed background images.
-        fixedAttachment = false;
-    }
-
-    if (!fixedAttachment) {
-        setDestRect(paintRect);
-
-        LayoutUnit right;
-        LayoutUnit bottom;
-        // Scroll and Local.
-        if (fillLayer.origin() != BorderFillBox) {
-            left = LayoutUnit(positioningBox.borderLeft());
-            right = LayoutUnit(positioningBox.borderRight());
-            top = LayoutUnit(positioningBox.borderTop());
-            bottom = LayoutUnit(positioningBox.borderBottom());
-            if (fillLayer.origin() == ContentFillBox) {
-                left += positioningBox.paddingLeft();
-                right += positioningBox.paddingRight();
-                top += positioningBox.paddingTop();
-                bottom += positioningBox.paddingBottom();
-            }
-        }
-
-        if (isLayoutView) {
-            // The background of the box generated by the root element covers the entire canvas and will
-            // be painted by the view object, but the we should still use the root element box for
-            // positioning.
-            positioningAreaSize = rootBox->size() - LayoutSize(left + right, top + bottom), rootBox->location();
-            // The input paint rect is specified in root element local coordinate (i.e. a transform
-            // is applied on the context for painting), and is expanded to cover the whole canvas.
-            // Since left/top is relative to the paint rect, we need to offset them back.
-            left -= paintRect.x();
-            top -= paintRect.y();
-        } else {
-            positioningAreaSize = paintRect.size() - LayoutSize(left + right, top + bottom);
-        }
+      // The input paint rect is specified in root element local coordinate
+      // (i.e. a transform is applied on the context for painting), and is
+      // expanded to cover the whole canvas.  Since left/top is relative to the
+      // paint rect, we need to offset them back.
+      left -= paint_rect.X();
+      top -= paint_rect.Y();
     } else {
-        setHasNonLocalGeometry();
+      if (cell_using_container_background) {
+        positioning_area.SetSize(GetBackgroundObjectDimensions(
+            ToLayoutTableCell(obj), ToLayoutBox(positioning_box)));
+      } else {
+        positioning_area = paint_rect;
+      }
 
-        LayoutRect viewportRect = obj.viewRect();
-        if (fixedBackgroundPaintsInLocalCoordinates(obj, globalPaintFlags)) {
-            viewportRect.setLocation(LayoutPoint());
-        } else {
-            if (FrameView* frameView = obj.view()->frameView())
-                viewportRect.setLocation(frameView->scrollPosition());
-            // Compensate the translations created by ScrollRecorders.
-            // TODO(trchen): Fix this for SP phase 2. crbug.com/529963.
-            viewportRect.moveBy(accumulatedScrollOffsetForFixedBackground(obj, paintContainer));
-        }
+      positioning_area.ContractEdges(top, right, bottom, left);
+    }
+  } else {
+    SetHasNonLocalGeometry();
 
-        if (paintContainer)
-            viewportRect.moveBy(LayoutPoint(-paintContainer->localToAbsolute(FloatPoint())));
-
-        setDestRect(viewportRect);
-        positioningAreaSize = destRect().size();
+    LayoutRect viewport_rect = obj.ViewRect();
+    if (FixedBackgroundPaintsInLocalCoordinates(obj, global_paint_flags)) {
+      viewport_rect.SetLocation(LayoutPoint());
+    } else {
+      if (FrameView* frame_view = obj.View()->GetFrameView())
+        viewport_rect.SetLocation(IntPoint(frame_view->ScrollOffsetInt()));
+      // Compensate the translations created by ScrollRecorders.
+      // TODO(trchen): Fix this for SP phase 2. crbug.com/529963.
+      viewport_rect.MoveBy(
+          AccumulatedScrollOffsetForFixedBackground(obj, paint_container));
     }
 
-    LayoutSize fillTileSize(calculateFillTileSize(positioningBox, fillLayer, positioningAreaSize));
-    // It's necessary to apply the heuristic here prior to any further calculations to avoid
-    // incorrectly using sub-pixel values that won't be present in the painted tile.
-    setTileSize(applySubPixelHeuristicToImageSize(fillTileSize, m_destRect));
+    if (paint_container)
+      viewport_rect.MoveBy(
+          LayoutPoint(-paint_container->LocalToAbsolute(FloatPoint())));
 
-    EFillRepeat backgroundRepeatX = fillLayer.repeatX();
-    EFillRepeat backgroundRepeatY = fillLayer.repeatY();
-    LayoutUnit unsnappedAvailableWidth = positioningAreaSize.width() - fillTileSize.width();
-    LayoutUnit unsnappedAvailableHeight = positioningAreaSize.height() - fillTileSize.height();
-    positioningAreaSize = LayoutSize(snapSizeToPixel(positioningAreaSize.width(), m_destRect.x()), snapSizeToPixel(positioningAreaSize.height(), m_destRect.y()));
-    LayoutUnit availableWidth = positioningAreaSize.width() - tileSize().width();
-    LayoutUnit availableHeight = positioningAreaSize.height() - tileSize().height();
+    SetDestRect(viewport_rect);
+    positioning_area = viewport_rect;
+  }
 
-    LayoutUnit computedXPosition = roundedMinimumValueForLength(fillLayer.xPosition(), availableWidth);
-    if (backgroundRepeatX == RoundFill && positioningAreaSize.width() > LayoutUnit() && fillTileSize.width() > LayoutUnit()) {
-        int nrTiles = std::max(1, roundToInt(positioningAreaSize.width() / fillTileSize.width()));
-        LayoutUnit roundedWidth = positioningAreaSize.width() / nrTiles;
+  LayoutSize fill_tile_size(CalculateFillTileSize(positioning_box, fill_layer,
+                                                  positioning_area.Size()));
+  // It's necessary to apply the heuristic here prior to any further
+  // calculations to avoid incorrectly using sub-pixel values that won't be
+  // present in the painted tile.
+  SetTileSize(
+      ApplySubPixelHeuristicToImageSize(fill_tile_size, positioning_area));
 
-        // Maintain aspect ratio if background-size: auto is set
-        if (fillLayer.size().size.height().isAuto() && backgroundRepeatY != RoundFill) {
-            fillTileSize.setHeight(fillTileSize.height() * roundedWidth / fillTileSize.width());
-        }
-        fillTileSize.setWidth(roundedWidth);
+  EFillRepeat background_repeat_x = fill_layer.RepeatX();
+  EFillRepeat background_repeat_y = fill_layer.RepeatY();
+  LayoutUnit unsnapped_available_width =
+      positioning_area.Width() - fill_tile_size.Width();
+  LayoutUnit unsnapped_available_height =
+      positioning_area.Height() - fill_tile_size.Height();
+  LayoutSize positioning_area_size =
+      LayoutSize(SnapSizeToPixel(positioning_area.Width(), dest_rect_.X()),
+                 SnapSizeToPixel(positioning_area.Height(), dest_rect_.Y()));
+  LayoutUnit available_width =
+      positioning_area_size.Width() - TileSize().Width();
+  LayoutUnit available_height =
+      positioning_area_size.Height() - TileSize().Height();
 
-        setTileSize(applySubPixelHeuristicToImageSize(fillTileSize, m_destRect));
-        setPhaseX(tileSize().width()
-            ? LayoutUnit(roundf(tileSize().width() - fmodf((computedXPosition + left), tileSize().width())))
-            : LayoutUnit());
-        setSpaceSize(LayoutSize());
+  LayoutUnit computed_x_position =
+      RoundedMinimumValueForLength(fill_layer.XPosition(), available_width) -
+      offset_in_background.X();
+  if (background_repeat_x == kRoundFill &&
+      positioning_area_size.Width() > LayoutUnit() &&
+      fill_tile_size.Width() > LayoutUnit()) {
+    int nr_tiles = std::max(
+        1, RoundToInt(positioning_area_size.Width() / fill_tile_size.Width()));
+    LayoutUnit rounded_width = positioning_area_size.Width() / nr_tiles;
+
+    // Maintain aspect ratio if background-size: auto is set
+    if (fill_layer.Size().size.Height().IsAuto() &&
+        background_repeat_y != kRoundFill) {
+      fill_tile_size.SetHeight(fill_tile_size.Height() * rounded_width /
+                               fill_tile_size.Width());
     }
+    fill_tile_size.SetWidth(rounded_width);
 
-    LayoutUnit computedYPosition = roundedMinimumValueForLength(fillLayer.yPosition(), availableHeight);
-    if (backgroundRepeatY == RoundFill && positioningAreaSize.height() > LayoutUnit() && fillTileSize.height() > LayoutUnit()) {
-        int nrTiles = std::max(1, roundToInt(positioningAreaSize.height() / fillTileSize.height()));
-        LayoutUnit roundedHeight = positioningAreaSize.height() / nrTiles;
-        // Maintain aspect ratio if background-size: auto is set
-        if (fillLayer.size().size.width().isAuto() && backgroundRepeatX != RoundFill) {
-            fillTileSize.setWidth(fillTileSize.width() * roundedHeight / fillTileSize.height());
-        }
-        fillTileSize.setHeight(roundedHeight);
+    SetTileSize(
+        ApplySubPixelHeuristicToImageSize(fill_tile_size, positioning_area));
+    SetPhaseX(TileSize().Width()
+                  ? LayoutUnit(roundf(TileSize().Width() -
+                                      fmodf((computed_x_position + left),
+                                            TileSize().Width())))
+                  : LayoutUnit());
+    SetSpaceSize(LayoutSize());
+  }
 
-        setTileSize(applySubPixelHeuristicToImageSize(fillTileSize, m_destRect));
-        setPhaseY(tileSize().height()
-            ? LayoutUnit(roundf(tileSize().height() - fmodf((computedYPosition + top), tileSize().height())))
-            : LayoutUnit());
-        setSpaceSize(LayoutSize());
+  LayoutUnit computed_y_position =
+      RoundedMinimumValueForLength(fill_layer.YPosition(), available_height) -
+      offset_in_background.Y();
+  if (background_repeat_y == kRoundFill &&
+      positioning_area_size.Height() > LayoutUnit() &&
+      fill_tile_size.Height() > LayoutUnit()) {
+    int nr_tiles = std::max(1, RoundToInt(positioning_area_size.Height() /
+                                          fill_tile_size.Height()));
+    LayoutUnit rounded_height = positioning_area_size.Height() / nr_tiles;
+    // Maintain aspect ratio if background-size: auto is set
+    if (fill_layer.Size().size.Width().IsAuto() &&
+        background_repeat_x != kRoundFill) {
+      fill_tile_size.SetWidth(fill_tile_size.Width() * rounded_height /
+                              fill_tile_size.Height());
     }
+    fill_tile_size.SetHeight(rounded_height);
 
-    if (backgroundRepeatX == RepeatFill) {
-        setRepeatX(fillLayer, fillTileSize.width(), availableWidth, unsnappedAvailableWidth, left);
-    } else if (backgroundRepeatX == SpaceFill && tileSize().width() > LayoutUnit()) {
-        LayoutUnit space = getSpaceBetweenImageTiles(positioningAreaSize.width(), tileSize().width());
-        if (space >= LayoutUnit())
-            setSpaceX(space, availableWidth, left);
-        else
-            backgroundRepeatX = NoRepeatFill;
-    }
-    if (backgroundRepeatX == NoRepeatFill) {
-        LayoutUnit xOffset = fillLayer.backgroundXOrigin() == RightEdge ? availableWidth - computedXPosition : computedXPosition;
-        setNoRepeatX(left + xOffset);
-    }
+    SetTileSize(
+        ApplySubPixelHeuristicToImageSize(fill_tile_size, positioning_area));
+    SetPhaseY(TileSize().Height()
+                  ? LayoutUnit(roundf(TileSize().Height() -
+                                      fmodf((computed_y_position + top),
+                                            TileSize().Height())))
+                  : LayoutUnit());
+    SetSpaceSize(LayoutSize());
+  }
 
-    if (backgroundRepeatY == RepeatFill) {
-        setRepeatY(fillLayer, fillTileSize.height(), availableHeight, unsnappedAvailableHeight, top);
-    } else if (backgroundRepeatY == SpaceFill && tileSize().height() > LayoutUnit()) {
-        LayoutUnit space = getSpaceBetweenImageTiles(positioningAreaSize.height(), tileSize().height());
-        if (space >= LayoutUnit())
-            setSpaceY(space, availableHeight, top);
-        else
-            backgroundRepeatY = NoRepeatFill;
-    }
-    if (backgroundRepeatY == NoRepeatFill) {
-        LayoutUnit yOffset = fillLayer.backgroundYOrigin() == BottomEdge ? availableHeight - computedYPosition : computedYPosition;
-        setNoRepeatY(top + yOffset);
-    }
+  if (background_repeat_x == kRepeatFill) {
+    SetRepeatX(fill_layer, fill_tile_size.Width(), available_width,
+               unsnapped_available_width, left, offset_in_background.X());
+  } else if (background_repeat_x == kSpaceFill &&
+             TileSize().Width() > LayoutUnit()) {
+    LayoutUnit space = GetSpaceBetweenImageTiles(positioning_area_size.Width(),
+                                                 TileSize().Width());
+    if (space >= LayoutUnit())
+      SetSpaceX(space, available_width, left);
+    else
+      background_repeat_x = kNoRepeatFill;
+  }
+  if (background_repeat_x == kNoRepeatFill) {
+    LayoutUnit x_offset = fill_layer.BackgroundXOrigin() == kRightEdge
+                              ? available_width - computed_x_position
+                              : computed_x_position;
+    SetNoRepeatX(left + x_offset);
+    if (offset_in_background.X() > TileSize().Width())
+      SetDestRect(LayoutRect());
+  }
 
-    if (fixedAttachment)
-        useFixedAttachment(paintRect.location());
+  if (background_repeat_y == kRepeatFill) {
+    SetRepeatY(fill_layer, fill_tile_size.Height(), available_height,
+               unsnapped_available_height, top, offset_in_background.Y());
+  } else if (background_repeat_y == kSpaceFill &&
+             TileSize().Height() > LayoutUnit()) {
+    LayoutUnit space = GetSpaceBetweenImageTiles(positioning_area_size.Height(),
+                                                 TileSize().Height());
+    if (space >= LayoutUnit())
+      SetSpaceY(space, available_height, top);
+    else
+      background_repeat_y = kNoRepeatFill;
+  }
+  if (background_repeat_y == kNoRepeatFill) {
+    LayoutUnit y_offset = fill_layer.BackgroundYOrigin() == kBottomEdge
+                              ? available_height - computed_y_position
+                              : computed_y_position;
+    SetNoRepeatY(top + y_offset);
+    if (offset_in_background.Y() > TileSize().Height())
+      SetDestRect(LayoutRect());
+  }
 
-    // Clip the final output rect to the paint rect
-    m_destRect.intersect(paintRect);
+  if (fixed_attachment)
+    UseFixedAttachment(paint_rect.Location());
 
-    // Snap as-yet unsnapped values.
-    setDestRect(LayoutRect(pixelSnappedIntRect(m_destRect)));
+  // Clip the final output rect to the paint rect
+  dest_rect_.Intersect(paint_rect);
+
+  // Snap as-yet unsnapped values.
+  SetDestRect(LayoutRect(PixelSnappedIntRect(dest_rect_)));
 }
 
-} // namespace blink
+}  // namespace blink

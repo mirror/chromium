@@ -11,7 +11,7 @@
 
 #include "base/memory/ref_counted.h"
 #include "cc/layers/picture_layer.h"
-#include "cc/playback/recording_source.h"
+#include "cc/layers/recording_source.h"
 
 namespace cc {
 class FakePictureLayer : public PictureLayer {
@@ -26,21 +26,21 @@ class FakePictureLayer : public PictureLayer {
     return make_scoped_refptr(new FakePictureLayer(client, std::move(source)));
   }
 
+  // Layer implementation.
   std::unique_ptr<LayerImpl> CreateLayerImpl(LayerTreeImpl* tree_impl) override;
+  bool Update() override;
+  bool IsSuitableForGpuRasterization() const override;
 
   int update_count() const { return update_count_; }
   void reset_update_count() { update_count_ = 0; }
-
-  size_t push_properties_count() const { return push_properties_count_; }
-  void reset_push_properties_count() { push_properties_count_ = 0; }
 
   void set_always_update_resources(bool always_update_resources) {
     always_update_resources_ = always_update_resources;
   }
 
-  bool Update() override;
-
-  void PushPropertiesTo(LayerImpl* layer) override;
+  void set_force_unsuitable_for_gpu_rasterization(bool flag) {
+    force_unsuitable_for_gpu_rasterization_ = flag;
+  }
 
  private:
   explicit FakePictureLayer(ContentLayerClient* client);
@@ -49,8 +49,9 @@ class FakePictureLayer : public PictureLayer {
   ~FakePictureLayer() override;
 
   int update_count_;
-  size_t push_properties_count_;
   bool always_update_resources_;
+
+  bool force_unsuitable_for_gpu_rasterization_;
 };
 
 }  // namespace cc

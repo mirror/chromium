@@ -20,287 +20,287 @@
 
 #include "core/dom/ProcessingInstruction.h"
 
+#include <memory>
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/MediaList.h"
 #include "core/css/StyleSheetContents.h"
 #include "core/dom/Document.h"
 #include "core/dom/IncrementLoadEventDelayCount.h"
 #include "core/dom/StyleEngine.h"
-#include "core/fetch/CSSStyleSheetResource.h"
-#include "core/fetch/FetchInitiatorTypeNames.h"
-#include "core/fetch/FetchRequest.h"
-#include "core/fetch/ResourceFetcher.h"
-#include "core/fetch/XSLStyleSheetResource.h"
+#include "core/loader/resource/CSSStyleSheetResource.h"
+#include "core/loader/resource/XSLStyleSheetResource.h"
 #include "core/xml/DocumentXSLT.h"
 #include "core/xml/XSLStyleSheet.h"
-#include "core/xml/parser/XMLDocumentParser.h" // for parseAttributes()
-#include <memory>
+#include "core/xml/parser/XMLDocumentParser.h"  // for parseAttributes()
+#include "platform/loader/fetch/FetchInitiatorTypeNames.h"
+#include "platform/loader/fetch/FetchParameters.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
 
 namespace blink {
 
-inline ProcessingInstruction::ProcessingInstruction(Document& document, const String& target, const String& data)
-    : CharacterData(document, data, CreateOther)
-    , m_target(target)
-    , m_loading(false)
-    , m_alternate(false)
-    , m_isCSS(false)
-    , m_isXSL(false)
-    , m_listenerForXSLT(nullptr)
-{
+inline ProcessingInstruction::ProcessingInstruction(Document& document,
+                                                    const String& target,
+                                                    const String& data)
+    : CharacterData(document, data, kCreateOther),
+      target_(target),
+      loading_(false),
+      alternate_(false),
+      is_css_(false),
+      is_xsl_(false),
+      listener_for_xslt_(nullptr) {}
+
+ProcessingInstruction* ProcessingInstruction::Create(Document& document,
+                                                     const String& target,
+                                                     const String& data) {
+  return new ProcessingInstruction(document, target, data);
 }
 
-ProcessingInstruction* ProcessingInstruction::create(Document& document, const String& target, const String& data)
-{
-    return new ProcessingInstruction(document, target, data);
+ProcessingInstruction::~ProcessingInstruction() {}
+
+EventListener* ProcessingInstruction::EventListenerForXSLT() {
+  if (!listener_for_xslt_)
+    return 0;
+
+  return listener_for_xslt_->ToEventListener();
 }
 
-ProcessingInstruction::~ProcessingInstruction()
-{
+void ProcessingInstruction::ClearEventListenerForXSLT() {
+  if (listener_for_xslt_) {
+    listener_for_xslt_->Detach();
+    listener_for_xslt_.Clear();
+  }
 }
 
-EventListener* ProcessingInstruction::eventListenerForXSLT()
-{
-    if (!m_listenerForXSLT)
-        return 0;
-
-    return m_listenerForXSLT->toEventListener();
+String ProcessingInstruction::nodeName() const {
+  return target_;
 }
 
-void ProcessingInstruction::clearEventListenerForXSLT()
-{
-    if (m_listenerForXSLT) {
-        m_listenerForXSLT->detach();
-        m_listenerForXSLT.clear();
-    }
+Node::NodeType ProcessingInstruction::getNodeType() const {
+  return kProcessingInstructionNode;
 }
 
-String ProcessingInstruction::nodeName() const
-{
-    return m_target;
+Node* ProcessingInstruction::cloneNode(bool /*deep*/, ExceptionState&) {
+  // FIXME: Is it a problem that this does not copy m_localHref?
+  // What about other data members?
+  return Create(GetDocument(), target_, data_);
 }
 
-Node::NodeType ProcessingInstruction::getNodeType() const
-{
-    return PROCESSING_INSTRUCTION_NODE;
+void ProcessingInstruction::DidAttributeChanged() {
+  if (sheet_)
+    ClearSheet();
+
+  String href;
+  String charset;
+  if (!CheckStyleSheet(href, charset))
+    return;
+  Process(href, charset);
 }
 
-Node* ProcessingInstruction::cloneNode(bool /*deep*/)
-{
-    // FIXME: Is it a problem that this does not copy m_localHref?
-    // What about other data members?
-    return create(document(), m_target, m_data);
-}
-
-void ProcessingInstruction::didAttributeChanged()
-{
-    if (m_sheet)
-        clearSheet();
-
-    String href;
-    String charset;
-    if (!checkStyleSheet(href, charset))
-        return;
-    process(href, charset);
-}
-
-bool ProcessingInstruction::checkStyleSheet(String& href, String& charset)
-{
-    if (m_target != "xml-stylesheet" || !document().frame() || parentNode() != document())
-        return false;
-
-    // see http://www.w3.org/TR/xml-stylesheet/
-    // ### support stylesheet included in a fragment of this (or another) document
-    // ### make sure this gets called when adding from javascript
-    bool attrsOk;
-    const HashMap<String, String> attrs = parseAttributes(m_data, attrsOk);
-    if (!attrsOk)
-        return false;
-    HashMap<String, String>::const_iterator i = attrs.find("type");
-    String type;
-    if (i != attrs.end())
-        type = i->value;
-
-    m_isCSS = type.isEmpty() || type == "text/css";
-    m_isXSL = (type == "text/xml" || type == "text/xsl" || type == "application/xml" || type == "application/xhtml+xml" || type == "application/rss+xml" || type == "application/atom+xml");
-    if (!m_isCSS && !m_isXSL)
-        return false;
-
-    href = attrs.get("href");
-    charset = attrs.get("charset");
-    String alternate = attrs.get("alternate");
-    m_alternate = alternate == "yes";
-    m_title = attrs.get("title");
-    m_media = attrs.get("media");
-
-    return !m_alternate || !m_title.isEmpty();
-}
-
-void ProcessingInstruction::process(const String& href, const String& charset)
-{
-    if (href.length() > 1 && href[0] == '#') {
-        m_localHref = href.substring(1);
-        // We need to make a synthetic XSLStyleSheet that is embedded.
-        // It needs to be able to kick off import/include loads that
-        // can hang off some parent sheet.
-        if (m_isXSL && RuntimeEnabledFeatures::xsltEnabled()) {
-            KURL finalURL(ParsedURLString, m_localHref);
-            m_sheet = XSLStyleSheet::createEmbedded(this, finalURL);
-            m_loading = false;
-        }
-        return;
-    }
-
-    clearResource();
-
-    String url = document().completeURL(href).getString();
-
-    StyleSheetResource* resource = nullptr;
-    FetchRequest request(ResourceRequest(document().completeURL(href)), FetchInitiatorTypeNames::processinginstruction);
-    if (m_isXSL) {
-        if (RuntimeEnabledFeatures::xsltEnabled())
-            resource = XSLStyleSheetResource::fetch(request, document().fetcher());
-    } else {
-        request.setCharset(charset.isEmpty() ? document().characterSet() : charset);
-        resource = CSSStyleSheetResource::fetch(request, document().fetcher());
-    }
-
-    if (resource) {
-        m_loading = true;
-        if (!m_isXSL)
-            document().styleEngine().addPendingSheet(m_styleEngineContext);
-        setResource(resource);
-    }
-}
-
-bool ProcessingInstruction::isLoading() const
-{
-    if (m_loading)
-        return true;
-    if (!m_sheet)
-        return false;
-    return m_sheet->isLoading();
-}
-
-bool ProcessingInstruction::sheetLoaded()
-{
-    if (!isLoading()) {
-        if (!DocumentXSLT::sheetLoaded(document(), this))
-            document().styleEngine().removePendingSheet(this, m_styleEngineContext);
-        return true;
-    }
+bool ProcessingInstruction::CheckStyleSheet(String& href, String& charset) {
+  if (target_ != "xml-stylesheet" || !GetDocument().GetFrame() ||
+      parentNode() != GetDocument())
     return false;
+
+  // see http://www.w3.org/TR/xml-stylesheet/
+  // ### support stylesheet included in a fragment of this (or another) document
+  // ### make sure this gets called when adding from javascript
+  bool attrs_ok;
+  const HashMap<String, String> attrs = ParseAttributes(data_, attrs_ok);
+  if (!attrs_ok)
+    return false;
+  HashMap<String, String>::const_iterator i = attrs.Find("type");
+  String type;
+  if (i != attrs.end())
+    type = i->value;
+
+  is_css_ = type.IsEmpty() || type == "text/css";
+  is_xsl_ = (type == "text/xml" || type == "text/xsl" ||
+             type == "application/xml" || type == "application/xhtml+xml" ||
+             type == "application/rss+xml" || type == "application/atom+xml");
+  if (!is_css_ && !is_xsl_)
+    return false;
+
+  href = attrs.at("href");
+  charset = attrs.at("charset");
+  String alternate = attrs.at("alternate");
+  alternate_ = alternate == "yes";
+  title_ = attrs.at("title");
+  media_ = attrs.at("media");
+
+  return !alternate_ || !title_.IsEmpty();
 }
 
-void ProcessingInstruction::setCSSStyleSheet(const String& href, const KURL& baseURL, const String& charset, const CSSStyleSheetResource* sheet)
-{
-    if (!isConnected()) {
-        DCHECK(!m_sheet);
-        return;
+void ProcessingInstruction::Process(const String& href, const String& charset) {
+  if (href.length() > 1 && href[0] == '#') {
+    local_href_ = href.Substring(1);
+    // We need to make a synthetic XSLStyleSheet that is embedded.
+    // It needs to be able to kick off import/include loads that
+    // can hang off some parent sheet.
+    if (is_xsl_ && RuntimeEnabledFeatures::xsltEnabled()) {
+      KURL final_url(kParsedURLString, local_href_);
+      sheet_ = XSLStyleSheet::CreateEmbedded(this, final_url);
+      loading_ = false;
     }
+    return;
+  }
 
-    DCHECK(m_isCSS);
-    CSSParserContext parserContext(document(), nullptr, baseURL, charset);
+  ClearResource();
 
-    StyleSheetContents* newSheet = StyleSheetContents::create(href, parserContext);
+  String url = GetDocument().CompleteURL(href).GetString();
 
-    CSSStyleSheet* cssSheet = CSSStyleSheet::create(newSheet, this);
-    cssSheet->setDisabled(m_alternate);
-    cssSheet->setTitle(m_title);
-    if (!m_alternate && !m_title.isEmpty())
-        document().styleEngine().setPreferredStylesheetSetNameIfNotSet(m_title);
-    cssSheet->setMediaQueries(MediaQuerySet::create(m_media));
+  StyleSheetResource* resource = nullptr;
+  FetchParameters params(ResourceRequest(GetDocument().CompleteURL(href)),
+                         FetchInitiatorTypeNames::processinginstruction);
+  if (is_xsl_) {
+    if (RuntimeEnabledFeatures::xsltEnabled())
+      resource = XSLStyleSheetResource::Fetch(params, GetDocument().Fetcher());
+  } else {
+    params.SetCharset(charset.IsEmpty() ? GetDocument().characterSet()
+                                        : charset);
+    resource = CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher());
+  }
 
-    m_sheet = cssSheet;
-
-    // We don't need the cross-origin security check here because we are
-    // getting the sheet text in "strict" mode. This enforces a valid CSS MIME
-    // type.
-    parseStyleSheet(sheet->sheetText());
+  if (resource) {
+    loading_ = true;
+    if (!is_xsl_)
+      GetDocument().GetStyleEngine().AddPendingSheet(style_engine_context_);
+    SetResource(resource);
+  }
 }
 
-void ProcessingInstruction::setXSLStyleSheet(const String& href, const KURL& baseURL, const String& sheet)
-{
-    if (!isConnected()) {
-        DCHECK(!m_sheet);
-        return;
-    }
-
-    DCHECK(m_isXSL);
-    m_sheet = XSLStyleSheet::create(this, href, baseURL);
-    std::unique_ptr<IncrementLoadEventDelayCount> delay = IncrementLoadEventDelayCount::create(document());
-    parseStyleSheet(sheet);
+bool ProcessingInstruction::IsLoading() const {
+  if (loading_)
+    return true;
+  if (!sheet_)
+    return false;
+  return sheet_->IsLoading();
 }
 
-void ProcessingInstruction::parseStyleSheet(const String& sheet)
-{
-    if (m_isCSS)
-        toCSSStyleSheet(m_sheet.get())->contents()->parseString(sheet);
-    else if (m_isXSL)
-        toXSLStyleSheet(m_sheet.get())->parseString(sheet);
-
-    clearResource();
-    m_loading = false;
-
-    if (m_isCSS)
-        toCSSStyleSheet(m_sheet.get())->contents()->checkLoaded();
-    else if (m_isXSL)
-        toXSLStyleSheet(m_sheet.get())->checkLoaded();
+bool ProcessingInstruction::SheetLoaded() {
+  if (!IsLoading()) {
+    if (!DocumentXSLT::SheetLoaded(GetDocument(), this))
+      GetDocument().GetStyleEngine().RemovePendingSheet(*this,
+                                                        style_engine_context_);
+    return true;
+  }
+  return false;
 }
 
-Node::InsertionNotificationRequest ProcessingInstruction::insertedInto(ContainerNode* insertionPoint)
-{
-    CharacterData::insertedInto(insertionPoint);
-    if (!insertionPoint->isConnected())
-        return InsertionDone;
+void ProcessingInstruction::SetCSSStyleSheet(
+    const String& href,
+    const KURL& base_url,
+    ReferrerPolicy referrer_policy,
+    const String& charset,
+    const CSSStyleSheetResource* sheet) {
+  if (!isConnected()) {
+    DCHECK(!sheet_);
+    return;
+  }
 
-    String href;
-    String charset;
-    bool isValid = checkStyleSheet(href, charset);
-    if (!DocumentXSLT::processingInstructionInsertedIntoDocument(document(), this))
-        document().styleEngine().addStyleSheetCandidateNode(this);
-    if (isValid)
-        process(href, charset);
-    return InsertionDone;
+  DCHECK(is_css_);
+  CSSParserContext* parser_context = CSSParserContext::Create(
+      GetDocument(), base_url, referrer_policy, charset);
+
+  StyleSheetContents* new_sheet =
+      StyleSheetContents::Create(href, parser_context);
+
+  CSSStyleSheet* css_sheet = CSSStyleSheet::Create(new_sheet, *this);
+  css_sheet->setDisabled(alternate_);
+  css_sheet->SetTitle(title_);
+  if (!alternate_ && !title_.IsEmpty())
+    GetDocument().GetStyleEngine().SetPreferredStylesheetSetNameIfNotSet(
+        title_);
+  css_sheet->SetMediaQueries(MediaQuerySet::Create(media_));
+
+  sheet_ = css_sheet;
+
+  // We don't need the cross-origin security check here because we are
+  // getting the sheet text in "strict" mode. This enforces a valid CSS MIME
+  // type.
+  ParseStyleSheet(sheet->SheetText());
 }
 
-void ProcessingInstruction::removedFrom(ContainerNode* insertionPoint)
-{
-    CharacterData::removedFrom(insertionPoint);
-    if (!insertionPoint->isConnected())
-        return;
+void ProcessingInstruction::SetXSLStyleSheet(const String& href,
+                                             const KURL& base_url,
+                                             const String& sheet) {
+  if (!isConnected()) {
+    DCHECK(!sheet_);
+    return;
+  }
 
-    // No need to remove XSLStyleSheet from StyleEngine.
-    if (!DocumentXSLT::processingInstructionRemovedFromDocument(document(), this))
-        document().styleEngine().removeStyleSheetCandidateNode(this);
-
-    StyleSheet* removedSheet = m_sheet;
-    if (m_sheet) {
-        DCHECK_EQ(m_sheet->ownerNode(), this);
-        clearSheet();
-    }
-
-    // No need to remove pending sheets.
-    clearResource();
-
-    // If we're in document teardown, then we don't need to do any notification of our sheet's removal.
-    if (document().isActive())
-        document().styleEngine().setNeedsActiveStyleUpdate(removedSheet, FullStyleUpdate);
+  DCHECK(is_xsl_);
+  sheet_ = XSLStyleSheet::Create(this, href, base_url);
+  std::unique_ptr<IncrementLoadEventDelayCount> delay =
+      IncrementLoadEventDelayCount::Create(GetDocument());
+  ParseStyleSheet(sheet);
 }
 
-void ProcessingInstruction::clearSheet()
-{
-    DCHECK(m_sheet);
-    if (m_sheet->isLoading())
-        document().styleEngine().removePendingSheet(this, m_styleEngineContext);
-    m_sheet.release()->clearOwnerNode();
+void ProcessingInstruction::ParseStyleSheet(const String& sheet) {
+  if (is_css_)
+    ToCSSStyleSheet(sheet_.Get())->Contents()->ParseString(sheet);
+  else if (is_xsl_)
+    ToXSLStyleSheet(sheet_.Get())->ParseString(sheet);
+
+  ClearResource();
+  loading_ = false;
+
+  if (is_css_)
+    ToCSSStyleSheet(sheet_.Get())->Contents()->CheckLoaded();
+  else if (is_xsl_)
+    ToXSLStyleSheet(sheet_.Get())->CheckLoaded();
 }
 
-DEFINE_TRACE(ProcessingInstruction)
-{
-    visitor->trace(m_sheet);
-    visitor->trace(m_listenerForXSLT);
-    CharacterData::trace(visitor);
-    ResourceOwner<StyleSheetResource>::trace(visitor);
+Node::InsertionNotificationRequest ProcessingInstruction::InsertedInto(
+    ContainerNode* insertion_point) {
+  CharacterData::InsertedInto(insertion_point);
+  if (!insertion_point->isConnected())
+    return kInsertionDone;
+
+  String href;
+  String charset;
+  bool is_valid = CheckStyleSheet(href, charset);
+  if (!DocumentXSLT::ProcessingInstructionInsertedIntoDocument(GetDocument(),
+                                                               this))
+    GetDocument().GetStyleEngine().AddStyleSheetCandidateNode(*this);
+  if (is_valid)
+    Process(href, charset);
+  return kInsertionDone;
 }
 
-} // namespace blink
+void ProcessingInstruction::RemovedFrom(ContainerNode* insertion_point) {
+  CharacterData::RemovedFrom(insertion_point);
+  if (!insertion_point->isConnected())
+    return;
+
+  // No need to remove XSLStyleSheet from StyleEngine.
+  if (!DocumentXSLT::ProcessingInstructionRemovedFromDocument(GetDocument(),
+                                                              this)) {
+    GetDocument().GetStyleEngine().RemoveStyleSheetCandidateNode(
+        *this, *insertion_point);
+  }
+
+  if (sheet_) {
+    DCHECK_EQ(sheet_->ownerNode(), this);
+    ClearSheet();
+  }
+
+  // No need to remove pending sheets.
+  ClearResource();
+}
+
+void ProcessingInstruction::ClearSheet() {
+  DCHECK(sheet_);
+  if (sheet_->IsLoading())
+    GetDocument().GetStyleEngine().RemovePendingSheet(*this,
+                                                      style_engine_context_);
+  sheet_.Release()->ClearOwnerNode();
+}
+
+DEFINE_TRACE(ProcessingInstruction) {
+  visitor->Trace(sheet_);
+  visitor->Trace(listener_for_xslt_);
+  CharacterData::Trace(visitor);
+  ResourceOwner<StyleSheetResource>::Trace(visitor);
+}
+
+}  // namespace blink

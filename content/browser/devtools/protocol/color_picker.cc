@@ -9,17 +9,16 @@
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/common/cursors/webcursor.h"
+#include "content/public/common/screen_info.h"
 #include "third_party/WebKit/public/platform/WebCursorInfo.h"
-#include "third_party/WebKit/public/platform/WebScreenInfo.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkPaint.h"
 #include "third_party/skia/include/core/SkPath.h"
 #include "ui/gfx/geometry/size_conversions.h"
 
 namespace content {
-namespace devtools {
-namespace page {
+namespace protocol {
 
 ColorPicker::ColorPicker(ColorPickedCallback callback)
     : callback_(callback),
@@ -64,8 +63,8 @@ void ColorPicker::SetEnabled(bool enabled) {
     ResetFrame();
 
     WebCursor pointer_cursor;
-    WebCursor::CursorInfo cursor_info;
-    cursor_info.type = blink::WebCursorInfo::TypePointer;
+    CursorInfo cursor_info;
+    cursor_info.type = blink::WebCursorInfo::kTypePointer;
     pointer_cursor.InitFromCursorInfo(cursor_info);
     host_->SetCursor(pointer_cursor);
   }
@@ -84,11 +83,14 @@ void ColorPicker::UpdateFrame() {
   if (!view)
     return;
 
-  gfx::Size size = view->GetViewBounds().size();
-  view->CopyFromCompositingSurface(
-      gfx::Rect(size), size,
-      base::Bind(&ColorPicker::FrameUpdated,
-                 weak_factory_.GetWeakPtr()),
+  // TODO(miu): This is the wrong size. It's the size of the view on-screen, and
+  // not the rendering size of the view. The latter is what is wanted here, so
+  // that the resulting bitmap's pixel coordinates line-up with the
+  // blink::WebMouseEvent coordinates. http://crbug.com/73362
+  gfx::Size should_be_rendering_size = view->GetViewBounds().size();
+  view->CopyFromSurface(
+      gfx::Rect(), should_be_rendering_size,
+      base::Bind(&ColorPicker::FrameUpdated, weak_factory_.GetWeakPtr()),
       kN32_SkColorType);
 }
 
@@ -110,13 +112,14 @@ void ColorPicker::FrameUpdated(const SkBitmap& bitmap,
 }
 
 bool ColorPicker::HandleMouseEvent(const blink::WebMouseEvent& event) {
-  last_cursor_x_ = event.x;
-  last_cursor_y_ = event.y;
+  last_cursor_x_ = event.PositionInWidget().x;
+  last_cursor_y_ = event.PositionInWidget().y;
   if (frame_.drawsNothing())
     return true;
 
-  if (event.button == blink::WebMouseEvent::ButtonLeft &&
-      event.type == blink::WebInputEvent::MouseDown) {
+  if (event.button == blink::WebMouseEvent::Button::kLeft &&
+      (event.GetType() == blink::WebInputEvent::kMouseDown ||
+       event.GetType() == blink::WebInputEvent::kMouseMove)) {
     if (last_cursor_x_ < 0 || last_cursor_x_ >= frame_.width() ||
         last_cursor_y_ < 0 || last_cursor_y_ >= frame_.height()) {
       return true;
@@ -165,9 +168,9 @@ void ColorPicker::UpdateCursor() {
   const float kPixelSize = 10;
 #endif
 
-  blink::WebScreenInfo screen_info;
-  view->GetScreenInfo(&screen_info);
-  double device_scale_factor = screen_info.deviceScaleFactor;
+  content::ScreenInfo screen_info;
+  host_->GetScreenInfo(&screen_info);
+  double device_scale_factor = screen_info.device_scale_factor;
 
   SkBitmap result;
   result.allocN32Pixels(kCursorSize * device_scale_factor,
@@ -210,7 +213,7 @@ void ColorPicker::UpdateCursor() {
   SkPath clip_path;
   clip_path.addOval(SkRect::MakeXYWH(padding, padding, kDiameter, kDiameter));
   clip_path.close();
-  canvas.clipPath(clip_path, SkRegion::kIntersect_Op, true);
+  canvas.clipPath(clip_path, SkClipOp::kIntersect, true);
 
   // Project pixels.
   int pixel_count = kDiameter / kPixelSize;
@@ -246,8 +249,8 @@ void ColorPicker::UpdateCursor() {
   canvas.drawCircle(kCursorSize / 2, kCursorSize / 2, kDiameter / 2, paint);
 
   WebCursor cursor;
-  WebCursor::CursorInfo cursor_info;
-  cursor_info.type = blink::WebCursorInfo::TypeCustom;
+  CursorInfo cursor_info;
+  cursor_info.type = blink::WebCursorInfo::kTypeCustom;
   cursor_info.image_scale_factor = device_scale_factor;
   cursor_info.custom_image = result;
   cursor_info.hotspot =
@@ -259,6 +262,5 @@ void ColorPicker::UpdateCursor() {
   host_->SetCursor(cursor);
 }
 
-}  // namespace page
-}  // namespace devtools
+}  // namespace protocol
 }  // namespace content

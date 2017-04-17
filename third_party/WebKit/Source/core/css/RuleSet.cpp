@@ -2,10 +2,12 @@
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 2004-2005 Allan Sandfeld Jensen (kde@carewolf.com)
  * Copyright (C) 2006, 2007 Nicholas Shanks (webkit@nickshanks.com)
- * Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012 Apple Inc. All rights reserved.
+ * Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012 Apple Inc. All
+ * rights reserved.
  * Copyright (C) 2007 Alexey Proskuryakov <ap@webkit.org>
  * Copyright (C) 2007, 2008 Eric Seidel <eric@webkit.org>
- * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved.
+ * (http://www.torchmobile.com/)
  * Copyright (c) 2011, Code Aurora Forum. All rights reserved.
  * Copyright (C) Research In Motion Limited 2011. All rights reserved.
  * Copyright (C) 2012 Google Inc. All rights reserved.
@@ -37,11 +39,11 @@
 #include "core/css/StyleSheetContents.h"
 #include "core/html/track/TextTrackCue.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "platform/TraceEvent.h"
 #include "platform/heap/HeapTerminatedArrayBuilder.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/weborigin/SecurityOrigin.h"
 
-#include "wtf/TerminatedArrayBuilder.h"
+#include "platform/wtf/TerminatedArrayBuilder.h"
 
 namespace blink {
 
@@ -49,355 +51,392 @@ using namespace HTMLNames;
 
 // -----------------------------------------------------------------
 
-static bool containsUncommonAttributeSelector(const CSSSelector&);
+static bool ContainsUncommonAttributeSelector(const CSSSelector&);
 
-static inline bool selectorListContainsUncommonAttributeSelector(const CSSSelector* selector)
-{
-    const CSSSelectorList* selectorList = selector->selectorList();
-    if (!selectorList)
-        return false;
-    for (const CSSSelector* selector = selectorList->first(); selector; selector = CSSSelectorList::next(*selector)) {
-        if (containsUncommonAttributeSelector(*selector))
-            return true;
-    }
+static inline bool SelectorListContainsUncommonAttributeSelector(
+    const CSSSelector* selector) {
+  const CSSSelectorList* selector_list = selector->SelectorList();
+  if (!selector_list)
     return false;
+  for (const CSSSelector* selector = selector_list->First(); selector;
+       selector = CSSSelectorList::Next(*selector)) {
+    if (ContainsUncommonAttributeSelector(*selector))
+      return true;
+  }
+  return false;
 }
 
-static inline bool isCommonAttributeSelectorAttribute(const QualifiedName& attribute)
-{
-    // These are explicitly tested for equality in canShareStyleWithElement.
-    return attribute == typeAttr || attribute == readonlyAttr;
+static inline bool IsCommonAttributeSelectorAttribute(
+    const QualifiedName& attribute) {
+  // These are explicitly tested for equality in canShareStyleWithElement.
+  return attribute == typeAttr || attribute == readonlyAttr;
 }
 
-static bool containsUncommonAttributeSelector(const CSSSelector& selector)
-{
-    const CSSSelector* current = &selector;
-    for (; current; current = current->tagHistory()) {
-        // Allow certain common attributes (used in the default style) in the selectors that match the current element.
-        if (current->isAttributeSelector() && !isCommonAttributeSelectorAttribute(current->attribute()))
-            return true;
-        if (selectorListContainsUncommonAttributeSelector(current))
-            return true;
-        if (current->relationIsAffectedByPseudoContent() || current->getPseudoType() == CSSSelector::PseudoSlotted)
-            return false;
-        if (current->relation() != CSSSelector::SubSelector) {
-            current = current->tagHistory();
-            break;
-        }
+static bool ContainsUncommonAttributeSelector(const CSSSelector& selector) {
+  const CSSSelector* current = &selector;
+  for (; current; current = current->TagHistory()) {
+    // Allow certain common attributes (used in the default style) in the
+    // selectors that match the current element.
+    if (current->IsAttributeSelector() &&
+        !IsCommonAttributeSelectorAttribute(current->Attribute()))
+      return true;
+    if (SelectorListContainsUncommonAttributeSelector(current))
+      return true;
+    if (current->RelationIsAffectedByPseudoContent() ||
+        current->GetPseudoType() == CSSSelector::kPseudoSlotted)
+      return false;
+    if (current->Relation() != CSSSelector::kSubSelector) {
+      current = current->TagHistory();
+      break;
     }
+  }
 
-    for (; current; current = current->tagHistory()) {
-        if (current->isAttributeSelector())
-            return true;
-        if (selectorListContainsUncommonAttributeSelector(current))
-            return true;
-    }
-    return false;
+  for (; current; current = current->TagHistory()) {
+    if (current->IsAttributeSelector())
+      return true;
+    if (SelectorListContainsUncommonAttributeSelector(current))
+      return true;
+  }
+  return false;
 }
 
-static inline PropertyWhitelistType determinePropertyWhitelistType(const AddRuleFlags addRuleFlags, const CSSSelector& selector)
-{
-    for (const CSSSelector* component = &selector; component; component = component->tagHistory()) {
-        if (component->getPseudoType() == CSSSelector::PseudoCue || (component->match() == CSSSelector::PseudoElement && component->value() == TextTrackCue::cueShadowPseudoId()))
-            return PropertyWhitelistCue;
-        if (component->getPseudoType() == CSSSelector::PseudoFirstLetter)
-            return PropertyWhitelistFirstLetter;
-    }
-    return PropertyWhitelistNone;
+static inline PropertyWhitelistType DeterminePropertyWhitelistType(
+    const AddRuleFlags add_rule_flags,
+    const CSSSelector& selector) {
+  for (const CSSSelector* component = &selector; component;
+       component = component->TagHistory()) {
+    if (component->GetPseudoType() == CSSSelector::kPseudoCue ||
+        (component->Match() == CSSSelector::kPseudoElement &&
+         component->Value() == TextTrackCue::CueShadowPseudoId()))
+      return kPropertyWhitelistCue;
+    if (component->GetPseudoType() == CSSSelector::kPseudoFirstLetter)
+      return kPropertyWhitelistFirstLetter;
+  }
+  return kPropertyWhitelistNone;
 }
 
-RuleData::RuleData(StyleRule* rule, unsigned selectorIndex, unsigned position, AddRuleFlags addRuleFlags)
-    : m_rule(rule)
-    , m_selectorIndex(selectorIndex)
-    , m_isLastInArray(false)
-    , m_position(position)
-    , m_specificity(selector().specificity())
-    , m_containsUncommonAttributeSelector(blink::containsUncommonAttributeSelector(selector()))
-    , m_linkMatchType(selector().computeLinkMatchType())
-    , m_hasDocumentSecurityOrigin(addRuleFlags & RuleHasDocumentSecurityOrigin)
-    , m_propertyWhitelist(determinePropertyWhitelistType(addRuleFlags, selector()))
-{
-    SelectorFilter::collectIdentifierHashes(selector(), m_descendantSelectorIdentifierHashes, maximumIdentifierCount);
+RuleData::RuleData(StyleRule* rule,
+                   unsigned selector_index,
+                   unsigned position,
+                   AddRuleFlags add_rule_flags)
+    : rule_(rule),
+      selector_index_(selector_index),
+      is_last_in_array_(false),
+      position_(position),
+      specificity_(Selector().Specificity()),
+      contains_uncommon_attribute_selector_(
+          blink::ContainsUncommonAttributeSelector(Selector())),
+      link_match_type_(Selector().ComputeLinkMatchType()),
+      has_document_security_origin_(add_rule_flags &
+                                    kRuleHasDocumentSecurityOrigin),
+      property_whitelist_(
+          DeterminePropertyWhitelistType(add_rule_flags, Selector())),
+      descendant_selector_identifier_hashes_() {
+  SelectorFilter::CollectIdentifierHashes(
+      Selector(), descendant_selector_identifier_hashes_,
+      kMaximumIdentifierCount);
 }
 
-void RuleSet::addToRuleSet(const AtomicString& key, PendingRuleMap& map, const RuleData& ruleData)
-{
-    Member<HeapLinkedStack<RuleData>>& rules = map.add(key, nullptr).storedValue->value;
-    if (!rules)
-        rules = new HeapLinkedStack<RuleData>;
-    rules->push(ruleData);
+void RuleSet::AddToRuleSet(const AtomicString& key,
+                           PendingRuleMap& map,
+                           const RuleData& rule_data) {
+  Member<HeapLinkedStack<RuleData>>& rules =
+      map.insert(key, nullptr).stored_value->value;
+  if (!rules)
+    rules = new HeapLinkedStack<RuleData>;
+  rules->Push(rule_data);
 }
 
-static void extractValuesforSelector(const CSSSelector* selector, AtomicString& id, AtomicString& className, AtomicString& customPseudoElementName, AtomicString& tagName)
-{
-    switch (selector->match()) {
-    case CSSSelector::Id:
-        id = selector->value();
-        break;
-    case CSSSelector::Class:
-        className = selector->value();
-        break;
-    case CSSSelector::Tag:
-        if (selector->tagQName().localName() != starAtom)
-            tagName = selector->tagQName().localName();
-        break;
+static void ExtractValuesforSelector(const CSSSelector* selector,
+                                     AtomicString& id,
+                                     AtomicString& class_name,
+                                     AtomicString& custom_pseudo_element_name,
+                                     AtomicString& tag_name) {
+  switch (selector->Match()) {
+    case CSSSelector::kId:
+      id = selector->Value();
+      break;
+    case CSSSelector::kClass:
+      class_name = selector->Value();
+      break;
+    case CSSSelector::kTag:
+      if (selector->TagQName().LocalName() != g_star_atom)
+        tag_name = selector->TagQName().LocalName();
+      break;
     default:
-        break;
-    }
-    if (selector->getPseudoType() == CSSSelector::PseudoWebKitCustomElement || selector->getPseudoType() == CSSSelector::PseudoBlinkInternalElement)
-        customPseudoElementName = selector->value();
+      break;
+  }
+  if (selector->GetPseudoType() == CSSSelector::kPseudoWebKitCustomElement ||
+      selector->GetPseudoType() == CSSSelector::kPseudoBlinkInternalElement)
+    custom_pseudo_element_name = selector->Value();
 }
 
-bool RuleSet::findBestRuleSetAndAdd(const CSSSelector& component, RuleData& ruleData)
-{
-    AtomicString id;
-    AtomicString className;
-    AtomicString customPseudoElementName;
-    AtomicString tagName;
+bool RuleSet::FindBestRuleSetAndAdd(const CSSSelector& component,
+                                    RuleData& rule_data) {
+  AtomicString id;
+  AtomicString class_name;
+  AtomicString custom_pseudo_element_name;
+  AtomicString tag_name;
 
 #ifndef NDEBUG
-    m_allRules.append(ruleData);
+  all_rules_.push_back(rule_data);
 #endif
 
-    const CSSSelector* it = &component;
-    for (; it && it->relation() == CSSSelector::SubSelector; it = it->tagHistory())
-        extractValuesforSelector(it, id, className, customPseudoElementName, tagName);
-    if (it)
-        extractValuesforSelector(it, id, className, customPseudoElementName, tagName);
+  const CSSSelector* it = &component;
+  for (; it && it->Relation() == CSSSelector::kSubSelector;
+       it = it->TagHistory())
+    ExtractValuesforSelector(it, id, class_name, custom_pseudo_element_name,
+                             tag_name);
+  if (it)
+    ExtractValuesforSelector(it, id, class_name, custom_pseudo_element_name,
+                             tag_name);
 
-    // Prefer rule sets in order of most likely to apply infrequently.
-    if (!id.isEmpty()) {
-        addToRuleSet(id, ensurePendingRules()->idRules, ruleData);
-        return true;
-    }
-    if (!className.isEmpty()) {
-        addToRuleSet(className, ensurePendingRules()->classRules, ruleData);
-        return true;
-    }
-    if (!customPseudoElementName.isEmpty()) {
-        // Custom pseudos come before ids and classes in the order of tagHistory, and have a relation of
-        // ShadowPseudo between them. Therefore we should never be a situation where extractValuesforSelector
-        // finsd id and className in addition to custom pseudo.
-        ASSERT(id.isEmpty() && className.isEmpty());
-        addToRuleSet(customPseudoElementName, ensurePendingRules()->shadowPseudoElementRules, ruleData);
-        return true;
-    }
+  // Prefer rule sets in order of most likely to apply infrequently.
+  if (!id.IsEmpty()) {
+    AddToRuleSet(id, EnsurePendingRules()->id_rules, rule_data);
+    return true;
+  }
+  if (!class_name.IsEmpty()) {
+    AddToRuleSet(class_name, EnsurePendingRules()->class_rules, rule_data);
+    return true;
+  }
+  if (!custom_pseudo_element_name.IsEmpty()) {
+    // Custom pseudos come before ids and classes in the order of tagHistory,
+    // and have a relation of ShadowPseudo between them. Therefore we should
+    // never be a situation where extractValuesforSelector finsd id and
+    // className in addition to custom pseudo.
+    DCHECK(id.IsEmpty());
+    DCHECK(class_name.IsEmpty());
+    AddToRuleSet(custom_pseudo_element_name,
+                 EnsurePendingRules()->shadow_pseudo_element_rules, rule_data);
+    return true;
+  }
 
-    switch (component.getPseudoType()) {
-    case CSSSelector::PseudoCue:
-        m_cuePseudoRules.append(ruleData);
-        return true;
-    case CSSSelector::PseudoLink:
-    case CSSSelector::PseudoVisited:
-    case CSSSelector::PseudoAnyLink:
-        m_linkPseudoClassRules.append(ruleData);
-        return true;
-    case CSSSelector::PseudoFocus:
-        m_focusPseudoClassRules.append(ruleData);
-        return true;
+  switch (component.GetPseudoType()) {
+    case CSSSelector::kPseudoCue:
+      cue_pseudo_rules_.push_back(rule_data);
+      return true;
+    case CSSSelector::kPseudoLink:
+    case CSSSelector::kPseudoVisited:
+    case CSSSelector::kPseudoAnyLink:
+      link_pseudo_class_rules_.push_back(rule_data);
+      return true;
+    case CSSSelector::kPseudoFocus:
+      focus_pseudo_class_rules_.push_back(rule_data);
+      return true;
+    case CSSSelector::kPseudoPlaceholder:
+      placeholder_pseudo_rules_.push_back(rule_data);
+      return true;
     default:
-        break;
-    }
+      break;
+  }
 
-    if (!tagName.isEmpty()) {
-        addToRuleSet(tagName, ensurePendingRules()->tagRules, ruleData);
-        return true;
-    }
+  if (!tag_name.IsEmpty()) {
+    AddToRuleSet(tag_name, EnsurePendingRules()->tag_rules, rule_data);
+    return true;
+  }
 
-    if (component.isHostPseudoClass()) {
-        m_shadowHostRules.append(ruleData);
-        return true;
-    }
+  if (component.IsHostPseudoClass()) {
+    shadow_host_rules_.push_back(rule_data);
+    return true;
+  }
 
-    return false;
+  return false;
 }
 
-void RuleSet::addRule(StyleRule* rule, unsigned selectorIndex, AddRuleFlags addRuleFlags)
-{
-    RuleData ruleData(rule, selectorIndex, m_ruleCount++, addRuleFlags);
-    if (m_features.collectFeaturesFromRuleData(ruleData) == RuleFeatureSet::SelectorNeverMatches)
-        return;
+void RuleSet::AddRule(StyleRule* rule,
+                      unsigned selector_index,
+                      AddRuleFlags add_rule_flags) {
+  RuleData rule_data(rule, selector_index, rule_count_++, add_rule_flags);
+  if (features_.CollectFeaturesFromRuleData(rule_data) ==
+      RuleFeatureSet::kSelectorNeverMatches)
+    return;
 
-    if (!findBestRuleSetAndAdd(ruleData.selector(), ruleData)) {
-        // If we didn't find a specialized map to stick it in, file under universal rules.
-        m_universalRules.append(ruleData);
-    }
+  if (!FindBestRuleSetAndAdd(rule_data.Selector(), rule_data)) {
+    // If we didn't find a specialized map to stick it in, file under universal
+    // rules.
+    universal_rules_.push_back(rule_data);
+  }
 }
 
-void RuleSet::addPageRule(StyleRulePage* rule)
-{
-    ensurePendingRules(); // So that m_pageRules.shrinkToFit() gets called.
-    m_pageRules.append(rule);
+void RuleSet::AddPageRule(StyleRulePage* rule) {
+  EnsurePendingRules();  // So that page_rules_.ShrinkToFit() gets called.
+  page_rules_.push_back(rule);
 }
 
-void RuleSet::addViewportRule(StyleRuleViewport* rule)
-{
-    ensurePendingRules(); // So that m_viewportRules.shrinkToFit() gets called.
-    m_viewportRules.append(rule);
+void RuleSet::AddFontFaceRule(StyleRuleFontFace* rule) {
+  EnsurePendingRules();  // So that font_face_rules_.ShrinkToFit() gets called.
+  font_face_rules_.push_back(rule);
 }
 
-void RuleSet::addFontFaceRule(StyleRuleFontFace* rule)
-{
-    ensurePendingRules(); // So that m_fontFaceRules.shrinkToFit() gets called.
-    m_fontFaceRules.append(rule);
+void RuleSet::AddKeyframesRule(StyleRuleKeyframes* rule) {
+  EnsurePendingRules();  // So that keyframes_rules_.ShrinkToFit() gets called.
+  keyframes_rules_.push_back(rule);
 }
 
-void RuleSet::addKeyframesRule(StyleRuleKeyframes* rule)
-{
-    ensurePendingRules(); // So that m_keyframesRules.shrinkToFit() gets called.
-    m_keyframesRules.append(rule);
-}
+void RuleSet::AddChildRules(const HeapVector<Member<StyleRuleBase>>& rules,
+                            const MediaQueryEvaluator& medium,
+                            AddRuleFlags add_rule_flags) {
+  for (unsigned i = 0; i < rules.size(); ++i) {
+    StyleRuleBase* rule = rules[i].Get();
 
-void RuleSet::addChildRules(const HeapVector<Member<StyleRuleBase>>& rules, const MediaQueryEvaluator& medium, AddRuleFlags addRuleFlags)
-{
-    for (unsigned i = 0; i < rules.size(); ++i) {
-        StyleRuleBase* rule = rules[i].get();
+    if (rule->IsStyleRule()) {
+      StyleRule* style_rule = ToStyleRule(rule);
 
-        if (rule->isStyleRule()) {
-            StyleRule* styleRule = toStyleRule(rule);
-
-            const CSSSelectorList& selectorList = styleRule->selectorList();
-            for (size_t selectorIndex = 0; selectorIndex != kNotFound; selectorIndex = selectorList.indexOfNextSelectorAfter(selectorIndex)) {
-                if (selectorList.selectorUsesDeepCombinatorOrShadowPseudo(selectorIndex)) {
-                    m_deepCombinatorOrShadowPseudoRules.append(MinimalRuleData(styleRule, selectorIndex, addRuleFlags));
-                } else if (selectorList.selectorHasContentPseudo(selectorIndex)) {
-                    m_contentPseudoElementRules.append(MinimalRuleData(styleRule, selectorIndex, addRuleFlags));
-                } else if (selectorList.selectorHasSlottedPseudo(selectorIndex)) {
-                    m_slottedPseudoElementRules.append(MinimalRuleData(styleRule, selectorIndex, addRuleFlags));
-                } else {
-                    addRule(styleRule, selectorIndex, addRuleFlags);
-                }
-            }
-        } else if (rule->isPageRule()) {
-            addPageRule(toStyleRulePage(rule));
-        } else if (rule->isMediaRule()) {
-            StyleRuleMedia* mediaRule = toStyleRuleMedia(rule);
-            if ((!mediaRule->mediaQueries() || medium.eval(mediaRule->mediaQueries(), &m_viewportDependentMediaQueryResults, &m_deviceDependentMediaQueryResults)))
-                addChildRules(mediaRule->childRules(), medium, addRuleFlags);
-        } else if (rule->isFontFaceRule()) {
-            addFontFaceRule(toStyleRuleFontFace(rule));
-        } else if (rule->isKeyframesRule()) {
-            addKeyframesRule(toStyleRuleKeyframes(rule));
-        } else if (rule->isViewportRule()) {
-            addViewportRule(toStyleRuleViewport(rule));
-        } else if (rule->isSupportsRule() && toStyleRuleSupports(rule)->conditionIsSupported()) {
-            addChildRules(toStyleRuleSupports(rule)->childRules(), medium, addRuleFlags);
+      const CSSSelectorList& selector_list = style_rule->SelectorList();
+      for (const CSSSelector* selector = selector_list.First(); selector;
+           selector = selector_list.Next(*selector)) {
+        size_t selector_index = selector_list.SelectorIndex(*selector);
+        if (selector->HasDeepCombinatorOrShadowPseudo()) {
+          deep_combinator_or_shadow_pseudo_rules_.push_back(
+              MinimalRuleData(style_rule, selector_index, add_rule_flags));
+        } else if (selector->HasContentPseudo()) {
+          content_pseudo_element_rules_.push_back(
+              MinimalRuleData(style_rule, selector_index, add_rule_flags));
+        } else if (selector->HasSlottedPseudo()) {
+          slotted_pseudo_element_rules_.push_back(
+              MinimalRuleData(style_rule, selector_index, add_rule_flags));
+        } else {
+          AddRule(style_rule, selector_index, add_rule_flags);
         }
+      }
+    } else if (rule->IsPageRule()) {
+      AddPageRule(ToStyleRulePage(rule));
+    } else if (rule->IsMediaRule()) {
+      StyleRuleMedia* media_rule = ToStyleRuleMedia(rule);
+      if (!media_rule->MediaQueries() ||
+          medium.Eval(media_rule->MediaQueries(),
+                      &features_.ViewportDependentMediaQueryResults(),
+                      &features_.DeviceDependentMediaQueryResults()))
+        AddChildRules(media_rule->ChildRules(), medium, add_rule_flags);
+    } else if (rule->IsFontFaceRule()) {
+      AddFontFaceRule(ToStyleRuleFontFace(rule));
+    } else if (rule->IsKeyframesRule()) {
+      AddKeyframesRule(ToStyleRuleKeyframes(rule));
+    } else if (rule->IsSupportsRule() &&
+               ToStyleRuleSupports(rule)->ConditionIsSupported()) {
+      AddChildRules(ToStyleRuleSupports(rule)->ChildRules(), medium,
+                    add_rule_flags);
     }
+  }
 }
 
-void RuleSet::addRulesFromSheet(StyleSheetContents* sheet, const MediaQueryEvaluator& medium, AddRuleFlags addRuleFlags)
-{
-    TRACE_EVENT0("blink", "RuleSet::addRulesFromSheet");
+void RuleSet::AddRulesFromSheet(StyleSheetContents* sheet,
+                                const MediaQueryEvaluator& medium,
+                                AddRuleFlags add_rule_flags) {
+  TRACE_EVENT0("blink", "RuleSet::addRulesFromSheet");
 
-    ASSERT(sheet);
+  DCHECK(sheet);
 
-    const HeapVector<Member<StyleRuleImport>>& importRules = sheet->importRules();
-    for (unsigned i = 0; i < importRules.size(); ++i) {
-        StyleRuleImport* importRule = importRules[i].get();
-        if (importRule->styleSheet() && (!importRule->mediaQueries() || medium.eval(importRule->mediaQueries(), &m_viewportDependentMediaQueryResults, &m_deviceDependentMediaQueryResults)))
-            addRulesFromSheet(importRule->styleSheet(), medium, addRuleFlags);
+  const HeapVector<Member<StyleRuleImport>>& import_rules =
+      sheet->ImportRules();
+  for (unsigned i = 0; i < import_rules.size(); ++i) {
+    StyleRuleImport* import_rule = import_rules[i].Get();
+    // TODO(sof): CHECK() added for crbug.com/699269 diagnosis, remove sooner.
+    CHECK_EQ(import_rules.Data(), sheet->ImportRules().Data());
+    if (import_rule->GetStyleSheet() &&
+        (!import_rule->MediaQueries() ||
+         medium.Eval(import_rule->MediaQueries(),
+                     &features_.ViewportDependentMediaQueryResults(),
+                     &features_.DeviceDependentMediaQueryResults())))
+      AddRulesFromSheet(import_rule->GetStyleSheet(), medium, add_rule_flags);
+  }
+
+  AddChildRules(sheet->ChildRules(), medium, add_rule_flags);
+}
+
+void RuleSet::AddStyleRule(StyleRule* rule, AddRuleFlags add_rule_flags) {
+  for (size_t selector_index = 0; selector_index != kNotFound;
+       selector_index =
+           rule->SelectorList().IndexOfNextSelectorAfter(selector_index))
+    AddRule(rule, selector_index, add_rule_flags);
+}
+
+void RuleSet::CompactPendingRules(PendingRuleMap& pending_map,
+                                  CompactRuleMap& compact_map) {
+  for (auto& item : pending_map) {
+    HeapLinkedStack<RuleData>* pending_rules = item.value.Release();
+    CompactRuleMap::ValueType* compact_rules =
+        compact_map.insert(item.key, nullptr).stored_value;
+
+    HeapTerminatedArrayBuilder<RuleData> builder(
+        compact_rules->value.Release());
+    builder.Grow(pending_rules->size());
+    while (!pending_rules->IsEmpty()) {
+      builder.Append(pending_rules->Peek());
+      pending_rules->Pop();
     }
 
-    addChildRules(sheet->childRules(), medium, addRuleFlags);
+    compact_rules->value = builder.Release();
+  }
 }
 
-void RuleSet::addStyleRule(StyleRule* rule, AddRuleFlags addRuleFlags)
-{
-    for (size_t selectorIndex = 0; selectorIndex != kNotFound; selectorIndex = rule->selectorList().indexOfNextSelectorAfter(selectorIndex))
-        addRule(rule, selectorIndex, addRuleFlags);
+void RuleSet::CompactRules() {
+  ASSERT(pending_rules_);
+  PendingRuleMaps* pending_rules = pending_rules_.Release();
+  CompactPendingRules(pending_rules->id_rules, id_rules_);
+  CompactPendingRules(pending_rules->class_rules, class_rules_);
+  CompactPendingRules(pending_rules->tag_rules, tag_rules_);
+  CompactPendingRules(pending_rules->shadow_pseudo_element_rules,
+                      shadow_pseudo_element_rules_);
+  link_pseudo_class_rules_.ShrinkToFit();
+  cue_pseudo_rules_.ShrinkToFit();
+  focus_pseudo_class_rules_.ShrinkToFit();
+  placeholder_pseudo_rules_.ShrinkToFit();
+  universal_rules_.ShrinkToFit();
+  shadow_host_rules_.ShrinkToFit();
+  page_rules_.ShrinkToFit();
+  font_face_rules_.ShrinkToFit();
+  keyframes_rules_.ShrinkToFit();
+  deep_combinator_or_shadow_pseudo_rules_.ShrinkToFit();
+  content_pseudo_element_rules_.ShrinkToFit();
+  slotted_pseudo_element_rules_.ShrinkToFit();
 }
 
-void RuleSet::compactPendingRules(PendingRuleMap& pendingMap, CompactRuleMap& compactMap)
-{
-    for (auto& item : pendingMap) {
-        HeapLinkedStack<RuleData>* pendingRules = item.value.release();
-        CompactRuleMap::ValueType* compactRules = compactMap.add(item.key, nullptr).storedValue;
-
-        HeapTerminatedArrayBuilder<RuleData> builder(compactRules->value.release());
-        builder.grow(pendingRules->size());
-        while (!pendingRules->isEmpty()) {
-            builder.append(pendingRules->peek());
-            pendingRules->pop();
-        }
-
-        compactRules->value = builder.release();
-    }
+DEFINE_TRACE(MinimalRuleData) {
+  visitor->Trace(rule_);
 }
 
-void RuleSet::compactRules()
-{
-    ASSERT(m_pendingRules);
-    PendingRuleMaps* pendingRules = m_pendingRules.release();
-    compactPendingRules(pendingRules->idRules, m_idRules);
-    compactPendingRules(pendingRules->classRules, m_classRules);
-    compactPendingRules(pendingRules->tagRules, m_tagRules);
-    compactPendingRules(pendingRules->shadowPseudoElementRules, m_shadowPseudoElementRules);
-    m_linkPseudoClassRules.shrinkToFit();
-    m_cuePseudoRules.shrinkToFit();
-    m_focusPseudoClassRules.shrinkToFit();
-    m_universalRules.shrinkToFit();
-    m_shadowHostRules.shrinkToFit();
-    m_pageRules.shrinkToFit();
-    m_viewportRules.shrinkToFit();
-    m_fontFaceRules.shrinkToFit();
-    m_keyframesRules.shrinkToFit();
-    m_deepCombinatorOrShadowPseudoRules.shrinkToFit();
-    m_contentPseudoElementRules.shrinkToFit();
-    m_slottedPseudoElementRules.shrinkToFit();
+DEFINE_TRACE(RuleData) {
+  visitor->Trace(rule_);
 }
 
-DEFINE_TRACE(MinimalRuleData)
-{
-    visitor->trace(m_rule);
+DEFINE_TRACE(RuleSet::PendingRuleMaps) {
+  visitor->Trace(id_rules);
+  visitor->Trace(class_rules);
+  visitor->Trace(tag_rules);
+  visitor->Trace(shadow_pseudo_element_rules);
 }
 
-DEFINE_TRACE(RuleData)
-{
-    visitor->trace(m_rule);
-}
-
-DEFINE_TRACE(RuleSet::PendingRuleMaps)
-{
-    visitor->trace(idRules);
-    visitor->trace(classRules);
-    visitor->trace(tagRules);
-    visitor->trace(shadowPseudoElementRules);
-}
-
-DEFINE_TRACE(RuleSet)
-{
-    visitor->trace(m_idRules);
-    visitor->trace(m_classRules);
-    visitor->trace(m_tagRules);
-    visitor->trace(m_shadowPseudoElementRules);
-    visitor->trace(m_linkPseudoClassRules);
-    visitor->trace(m_cuePseudoRules);
-    visitor->trace(m_focusPseudoClassRules);
-    visitor->trace(m_universalRules);
-    visitor->trace(m_shadowHostRules);
-    visitor->trace(m_features);
-    visitor->trace(m_pageRules);
-    visitor->trace(m_viewportRules);
-    visitor->trace(m_fontFaceRules);
-    visitor->trace(m_keyframesRules);
-    visitor->trace(m_deepCombinatorOrShadowPseudoRules);
-    visitor->trace(m_contentPseudoElementRules);
-    visitor->trace(m_slottedPseudoElementRules);
-    visitor->trace(m_viewportDependentMediaQueryResults);
-    visitor->trace(m_deviceDependentMediaQueryResults);
-    visitor->trace(m_pendingRules);
+DEFINE_TRACE(RuleSet) {
+  visitor->Trace(id_rules_);
+  visitor->Trace(class_rules_);
+  visitor->Trace(tag_rules_);
+  visitor->Trace(shadow_pseudo_element_rules_);
+  visitor->Trace(link_pseudo_class_rules_);
+  visitor->Trace(cue_pseudo_rules_);
+  visitor->Trace(focus_pseudo_class_rules_);
+  visitor->Trace(placeholder_pseudo_rules_);
+  visitor->Trace(universal_rules_);
+  visitor->Trace(shadow_host_rules_);
+  visitor->Trace(features_);
+  visitor->Trace(page_rules_);
+  visitor->Trace(font_face_rules_);
+  visitor->Trace(keyframes_rules_);
+  visitor->Trace(deep_combinator_or_shadow_pseudo_rules_);
+  visitor->Trace(content_pseudo_element_rules_);
+  visitor->Trace(slotted_pseudo_element_rules_);
+  visitor->Trace(pending_rules_);
 #ifndef NDEBUG
-    visitor->trace(m_allRules);
+  visitor->Trace(all_rules_);
 #endif
 }
 
 #ifndef NDEBUG
-void RuleSet::show() const
-{
-    for (const auto& rule: m_allRules)
-        rule.selector().show();
+void RuleSet::Show() const {
+  for (const auto& rule : all_rules_)
+    rule.Selector().Show();
 }
 #endif
 
-} // namespace blink
+}  // namespace blink

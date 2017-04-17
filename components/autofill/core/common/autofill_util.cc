@@ -5,7 +5,6 @@
 #include "components/autofill/core/common/autofill_util.h"
 
 #include <algorithm>
-#include <vector>
 
 #include "base/command_line.h"
 #include "base/i18n/case_conversion.h"
@@ -41,6 +40,11 @@ struct Compare : base::CaseInsensitiveCompareASCII<Char> {
 bool IsFeatureSubstringMatchEnabled() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kEnableSuggestionsWithSubstringMatch);
+}
+
+bool IsShowAutofillSignaturesEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kShowAutofillSignatures);
 }
 
 bool IsKeyboardAccessoryEnabled() {
@@ -103,6 +107,40 @@ bool IsDesktopPlatform() {
 #else
   return true;
 #endif
+}
+
+bool ShouldSkipField(const FormFieldData& field) {
+  return IsCheckable(field.check_status);
+}
+
+bool IsCheckable(const FormFieldData::CheckStatus& check_status) {
+  return check_status != FormFieldData::CheckStatus::NOT_CHECKABLE;
+}
+
+bool IsChecked(const FormFieldData::CheckStatus& check_status) {
+  return check_status == FormFieldData::CheckStatus::CHECKED;
+}
+
+void SetCheckStatus(FormFieldData* form_field_data,
+                    bool isCheckable,
+                    bool isChecked) {
+  if (isChecked) {
+    form_field_data->check_status = FormFieldData::CheckStatus::CHECKED;
+  } else {
+    if (isCheckable) {
+      form_field_data->check_status =
+          FormFieldData::CheckStatus::CHECKABLE_BUT_UNCHECKED;
+    } else {
+      form_field_data->check_status = FormFieldData::CheckStatus::NOT_CHECKABLE;
+    }
+  }
+}
+
+std::vector<std::string> LowercaseAndTokenizeAttributeString(
+    const std::string& attribute) {
+  return base::SplitString(base::ToLowerASCII(attribute),
+                           base::kWhitespaceASCII, base::TRIM_WHITESPACE,
+                           base::SPLIT_WANT_NONEMPTY);
 }
 
 }  // namespace autofill

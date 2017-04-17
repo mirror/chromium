@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_RENDERER_HOST_CHROME_RENDER_WIDGET_HOST_VIEW_MAC_HISTORY_SWIPER_
-#define CHROME_BROWSER_RENDERER_HOST_CHROME_RENDER_WIDGET_HOST_VIEW_MAC_HISTORY_SWIPER_
+#ifndef CHROME_BROWSER_RENDERER_HOST_CHROME_RENDER_WIDGET_HOST_VIEW_MAC_HISTORY_SWIPER_H_
+#define CHROME_BROWSER_RENDERER_HOST_CHROME_RENDER_WIDGET_HOST_VIEW_MAC_HISTORY_SWIPER_H_
 
 #import <Cocoa/Cocoa.h>
 
@@ -198,12 +198,6 @@ enum RecognitionState {
 - (void)beginGestureWithEvent:(NSEvent*)event;
 - (void)endGestureWithEvent:(NSEvent*)event;
 
-// These methods control whether a given view is allowed to rubberband in the
-// given direction. This is inversely related to whether the view is allowed to
-// 2-finger history swipe in the given direction.
-- (BOOL)canRubberbandLeft:(NSView*)view;
-- (BOOL)canRubberbandRight:(NSView*)view;
-
 // Designated initializer.
 - (id)initWithDelegate:(id<HistorySwiperDelegate>)delegate;
 
@@ -216,4 +210,4 @@ enum RecognitionState {
 + (void)resetMagicMouseState;
 @end
 
-#endif // CHROME_BROWSER_RENDERER_HOST_CHROME_RENDER_WIDGET_HOST_VIEW_MAC_HISTORY_SWIPER_
+#endif // CHROME_BROWSER_RENDERER_HOST_CHROME_RENDER_WIDGET_HOST_VIEW_MAC_HISTORY_SWIPER_H_

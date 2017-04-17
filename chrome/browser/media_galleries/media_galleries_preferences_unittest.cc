@@ -31,12 +31,12 @@
 #include "components/storage_monitor/media_storage_util.h"
 #include "components/storage_monitor/storage_monitor.h"
 #include "components/storage_monitor/test_storage_monitor.h"
+#include "components/sync/model/string_ordinal.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest_handlers/background_info.h"
 #include "extensions/common/permissions/media_galleries_permission.h"
-#include "sync/api/string_ordinal.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -191,7 +191,7 @@ class MediaGalleriesPreferencesTest : public testing::Test {
          ++iter) {
       base::DictionaryValue* dict;
 
-      if ((*iter)->GetAsDictionary(&dict)) {
+      if (iter->GetAsDictionary(&dict)) {
         // Setting the prefs version to 2 which is the version before
         // default_gallery_type was added.
         dict->SetInteger(kMediaGalleriesPrefsVersionKey, 2);
@@ -211,8 +211,8 @@ class MediaGalleriesPreferencesTest : public testing::Test {
       VerifyGalleryInfo(it->second, it->first);
       if (it->second.type != MediaGalleryPrefInfo::kAutoDetected &&
           it->second.type != MediaGalleryPrefInfo::kBlackListed) {
-        if (!ContainsKey(expected_galleries_for_all, it->first) &&
-            !ContainsKey(expected_galleries_for_regular, it->first)) {
+        if (!base::ContainsKey(expected_galleries_for_all, it->first) &&
+            !base::ContainsKey(expected_galleries_for_regular, it->first)) {
           EXPECT_FALSE(gallery_prefs_->NonAutoGalleryHasPermission(it->first));
         } else {
           EXPECT_TRUE(gallery_prefs_->NonAutoGalleryHasPermission(it->first));

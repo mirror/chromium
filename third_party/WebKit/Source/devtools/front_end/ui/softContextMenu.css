@@ -4,11 +4,10 @@
  * found in the LICENSE file.
  */
 
-:host {
-    position: absolute;
+.soft-context-menu {
     border: 1px solid rgba(196, 196, 196, 0.9);
     border-top: 1px solid rgba(196, 196, 196, 0.5);
-    /* NOTE: Keep padding top in sync with topPadding in SoftContextMenu.js */
+    /* NOTE: Keep padding in sync with padding adjustment in SoftContextMenu.js */
     padding: 4px 0 4px 0;
     border-radius: 4px;
     background-color: rgb(240, 240, 240);
@@ -97,19 +96,11 @@
 }
 
 .checkmark {
-    background-image: url(Images/toolbarButtonGlyphs.png);
-    background-size: 352px 168px;
     opacity: 0.7;
-    width: 10px;
-    height: 10px;
-    background-position: -128px -109px;
-    display: inline-block;
     pointer-events: none;
     margin: auto 5px auto 0px;
 }
 
-@media (-webkit-min-device-pixel-ratio: 1.5) {
-.checkmark {
-    background-image: url(Images/toolbarButtonGlyphs_2x.png);
-}
+.soft-context-menu-item-mouse-over .checkmark {
+    opacity: 1;
 }

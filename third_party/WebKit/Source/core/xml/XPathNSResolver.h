@@ -29,22 +29,24 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class XPathNSResolver : public GarbageCollectedFinalized<XPathNSResolver>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    virtual ~XPathNSResolver() { }
-    virtual AtomicString lookupNamespaceURI(const String& prefix) = 0;
+class XPathNSResolver : public GarbageCollectedFinalized<XPathNSResolver>,
+                        public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+ public:
+  virtual ~XPathNSResolver() {}
+  virtual AtomicString lookupNamespaceURI(const String& prefix) = 0;
 
-protected:
-    XPathNSResolver() { }
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
+
+ protected:
+  XPathNSResolver() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // XPathNSResolver_h
+#endif  // XPathNSResolver_h

@@ -32,83 +32,94 @@ namespace blink {
 namespace {
 
 class LayoutTableRowDeathTest : public RenderingTest {
-protected:
-    virtual void SetUp()
-    {
-        RenderingTest::SetUp();
-        m_row = LayoutTableRow::createAnonymous(&document());
-    }
+ protected:
+  virtual void SetUp() {
+    RenderingTest::SetUp();
+    row_ = LayoutTableRow::CreateAnonymous(&GetDocument());
+  }
 
-    virtual void TearDown()
-    {
-        m_row->destroy();
-    }
+  virtual void TearDown() { row_->Destroy(); }
 
-    LayoutTableRow* m_row;
+  LayoutTableRow* row_;
 };
 
-TEST_F(LayoutTableRowDeathTest, CanSetRow)
-{
-    static const unsigned rowIndex = 10;
-    m_row->setRowIndex(rowIndex);
-    EXPECT_EQ(rowIndex, m_row->rowIndex());
+TEST_F(LayoutTableRowDeathTest, CanSetRow) {
+  static const unsigned kRowIndex = 10;
+  row_->SetRowIndex(kRowIndex);
+  EXPECT_EQ(kRowIndex, row_->RowIndex());
 }
 
-TEST_F(LayoutTableRowDeathTest, CanSetRowToMaxRowIndex)
-{
-    m_row->setRowIndex(maxRowIndex);
-    EXPECT_EQ(maxRowIndex, m_row->rowIndex());
+TEST_F(LayoutTableRowDeathTest, CanSetRowToMaxRowIndex) {
+  row_->SetRowIndex(kMaxRowIndex);
+  EXPECT_EQ(kMaxRowIndex, row_->RowIndex());
 }
 
 // FIXME: Re-enable these tests once ASSERT_DEATH is supported for Android.
 // See: https://bugs.webkit.org/show_bug.cgi?id=74089
-#if !OS(ANDROID)
+// TODO(dgrogan): These tests started flaking on Mac try bots around 2016-07-28.
+// https://crbug.com/632816
+#if !OS(ANDROID) && !OS(MACOSX)
 
-TEST_F(LayoutTableRowDeathTest, CrashIfRowOverflowOnSetting)
-{
-    ASSERT_DEATH(m_row->setRowIndex(maxRowIndex + 1), "");
+TEST_F(LayoutTableRowDeathTest, CrashIfRowOverflowOnSetting) {
+  ASSERT_DEATH(row_->SetRowIndex(kMaxRowIndex + 1), "");
 }
 
-TEST_F(LayoutTableRowDeathTest, CrashIfSettingUnsetRowIndex)
-{
-    ASSERT_DEATH(m_row->setRowIndex(unsetRowIndex), "");
+TEST_F(LayoutTableRowDeathTest, CrashIfSettingUnsetRowIndex) {
+  ASSERT_DEATH(row_->SetRowIndex(kUnsetRowIndex), "");
 }
 
 #endif
 
 using LayoutTableRowTest = RenderingTest;
 
-TEST_F(LayoutTableRowTest, BackgroundIsKnownToBeOpaqueWithLayerAndCollapsedBorder)
-{
-    setBodyInnerHTML("<table style='border-collapse: collapse'>"
-        "<tr style='will-change: transform; background-color: blue'><td>Cell</td></tr>"
-        "</table>");
+TEST_F(LayoutTableRowTest,
+       BackgroundIsKnownToBeOpaqueWithLayerAndCollapsedBorder) {
+  SetBodyInnerHTML(
+      "<table style='border-collapse: collapse'>"
+      "<tr style='will-change: transform; background-color: "
+      "blue'><td>Cell</td></tr>"
+      "</table>");
 
-    LayoutTableRow* row = toLayoutTableRow(document().body()->firstChild()->firstChild()->firstChild()->layoutObject());
-    EXPECT_FALSE(row->backgroundIsKnownToBeOpaqueInRect(LayoutRect(0, 0, 1, 1)));
+  LayoutTableRow* row = ToLayoutTableRow(GetDocument()
+                                             .body()
+                                             ->FirstChild()
+                                             ->firstChild()
+                                             ->firstChild()
+                                             ->GetLayoutObject());
+  EXPECT_FALSE(row->BackgroundIsKnownToBeOpaqueInRect(LayoutRect(0, 0, 1, 1)));
 }
 
-TEST_F(LayoutTableRowTest, BackgroundIsKnownToBeOpaqueWithBorderSpacing)
-{
-    setBodyInnerHTML("<table style='border-spacing: 10px'>"
-        "<tr style='background-color: blue'><td>Cell</td></tr>"
-        "</table>");
+TEST_F(LayoutTableRowTest, BackgroundIsKnownToBeOpaqueWithBorderSpacing) {
+  SetBodyInnerHTML(
+      "<table style='border-spacing: 10px'>"
+      "<tr style='background-color: blue'><td>Cell</td></tr>"
+      "</table>");
 
-    LayoutTableRow* row = toLayoutTableRow(document().body()->firstChild()->firstChild()->firstChild()->layoutObject());
-    EXPECT_FALSE(row->backgroundIsKnownToBeOpaqueInRect(LayoutRect(0, 0, 1, 1)));
+  LayoutTableRow* row = ToLayoutTableRow(GetDocument()
+                                             .body()
+                                             ->FirstChild()
+                                             ->firstChild()
+                                             ->firstChild()
+                                             ->GetLayoutObject());
+  EXPECT_FALSE(row->BackgroundIsKnownToBeOpaqueInRect(LayoutRect(0, 0, 1, 1)));
 }
 
-TEST_F(LayoutTableRowTest, BackgroundIsKnownToBeOpaqueWithEmptyCell)
-{
-    setBodyInnerHTML("<table style='border-spacing: 10px'>"
-        "<tr style='background-color: blue'><td>Cell</td></tr>"
-        "<tr style='background-color: blue'><td>Cell</td><td>Cell</td></tr>"
-        "</table>");
+TEST_F(LayoutTableRowTest, BackgroundIsKnownToBeOpaqueWithEmptyCell) {
+  SetBodyInnerHTML(
+      "<table style='border-spacing: 10px'>"
+      "<tr style='background-color: blue'><td>Cell</td></tr>"
+      "<tr style='background-color: blue'><td>Cell</td><td>Cell</td></tr>"
+      "</table>");
 
-    LayoutTableRow* row = toLayoutTableRow(document().body()->firstChild()->firstChild()->firstChild()->layoutObject());
-    EXPECT_FALSE(row->backgroundIsKnownToBeOpaqueInRect(LayoutRect(0, 0, 1, 1)));
+  LayoutTableRow* row = ToLayoutTableRow(GetDocument()
+                                             .body()
+                                             ->FirstChild()
+                                             ->firstChild()
+                                             ->firstChild()
+                                             ->GetLayoutObject());
+  EXPECT_FALSE(row->BackgroundIsKnownToBeOpaqueInRect(LayoutRect(0, 0, 1, 1)));
 }
 
-} // anonymous namespace
+}  // anonymous namespace
 
-} // namespace blink
+}  // namespace blink

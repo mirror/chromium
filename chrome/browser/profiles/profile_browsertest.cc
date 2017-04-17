@@ -14,9 +14,11 @@
 #include "base/json/json_reader.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/values.h"
 #include "base/version.h"
 #include "build/build_config.h"
@@ -29,6 +31,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_constants.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
@@ -43,7 +46,12 @@
 #include "extensions/common/extension_builder.h"
 #include "extensions/common/value_builder.h"
 #include "net/base/net_errors.h"
+#include "net/dns/mock_host_resolver.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
+#include "net/test/embedded_test_server/http_request.h"
+#include "net/test/embedded_test_server/http_response.h"
 #include "net/test/url_request/url_request_failed_job.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -72,7 +80,10 @@ class TestURLFetcherDelegate : public net::URLFetcherDelegate {
       net::URLRequestStatus expected_request_status)
       : expected_request_status_(expected_request_status),
         is_complete_(false),
-        fetcher_(net::URLFetcher::Create(url, net::URLFetcher::GET, this)) {
+        fetcher_(net::URLFetcher::Create(url,
+                                         net::URLFetcher::GET,
+                                         this,
+                                         TRAFFIC_ANNOTATION_FOR_TESTS)) {
     fetcher_->SetRequestContext(context_getter.get());
     fetcher_->Start();
   }
@@ -112,7 +123,8 @@ class MockProfileDelegate : public Profile::Delegate {
 void CreatePrefsFileInDirectory(const base::FilePath& directory_path) {
   base::FilePath pref_path(directory_path.Append(chrome::kPreferencesFilename));
   std::string data("{}");
-  ASSERT_TRUE(base::WriteFile(pref_path, data.c_str(), data.size()));
+  ASSERT_EQ(static_cast<int>(data.size()),
+            base::WriteFile(pref_path, data.c_str(), data.size()));
 }
 
 void CheckChromeVersion(Profile *profile, bool is_new) {
@@ -147,6 +159,62 @@ void SpinThreads() {
   content::RunAllPendingInMessageLoop();
   content::RunAllPendingInMessageLoop(content::BrowserThread::DB);
   content::RunAllPendingInMessageLoop(content::BrowserThread::FILE);
+
+  // This prevents HistoryBackend from accessing its databases after the
+  // directory that contains them has been deleted.
+  base::TaskScheduler::GetInstance()->FlushForTesting();
+}
+
+// Sends an HttpResponse for requests for "/" that result in sending an HPKP
+// report.  Ignores other paths to avoid catching the subsequent favicon
+// request.
+std::unique_ptr<net::test_server::HttpResponse> SendReportHttpResponse(
+    const GURL& report_url,
+    const net::test_server::HttpRequest& request) {
+  if (request.relative_url == "/") {
+    std::unique_ptr<net::test_server::BasicHttpResponse> response(
+        new net::test_server::BasicHttpResponse());
+    std::string header_value = base::StringPrintf(
+        "max-age=50000;"
+        "pin-sha256=\"9999999999999999999999999999999999999999999=\";"
+        "pin-sha256=\"9999999999999999999999999999999999999999998=\";"
+        "report-uri=\"%s\"",
+        report_url.spec().c_str());
+    response->AddCustomHeader("Public-Key-Pins-Report-Only", header_value);
+    return std::move(response);
+  }
+
+  return nullptr;
+}
+
+// Runs |quit_callback| on the UI thread once a URL request has been seen.
+// If |hung_response| is true, returns a request that hangs.
+std::unique_ptr<net::test_server::HttpResponse> WaitForRequest(
+    const base::Closure& quit_closure,
+    bool hung_response,
+    const net::test_server::HttpRequest& request) {
+  // Basic sanity checks on the request.
+  EXPECT_EQ("/", request.relative_url);
+  EXPECT_EQ("POST", request.method_string);
+  base::JSONReader json_reader;
+  std::unique_ptr<base::Value> value = json_reader.ReadToValue(request.content);
+  EXPECT_TRUE(value);
+
+  content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
+                                   quit_closure);
+
+  if (hung_response)
+    return base::MakeUnique<net::test_server::HungResponse>();
+  return nullptr;
+}
+
+// Disables logic to ignore HPKP.  Must be run on IO thread.
+void DisablePinningBypass(
+    const scoped_refptr<net::URLRequestContextGetter>& getter) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  getter->GetURLRequestContext()
+      ->transport_security_state()
+      ->SetEnablePublicKeyPinningBypassForLocalTrustAnchors(false);
 }
 
 }  // namespace
@@ -282,8 +350,15 @@ IN_PROC_BROWSER_TEST_F(ProfileBrowserTest, CreateNewProfileSynchronous) {
 
   {
     std::unique_ptr<Profile> profile(CreateProfile(
-        temp_dir.path(), &delegate, Profile::CREATE_MODE_SYNCHRONOUS));
+        temp_dir.GetPath(), &delegate, Profile::CREATE_MODE_SYNCHRONOUS));
     CheckChromeVersion(profile.get(), true);
+
+#if defined(OS_CHROMEOS)
+    // Make sure session is marked as initialized.
+    user_manager::User* user =
+        chromeos::ProfileHelper::Get()->GetUserByProfile(profile.get());
+    EXPECT_TRUE(user->profile_ever_initialized());
+#endif
   }
 
   FlushIoTaskRunnerAndSpinThreads();
@@ -294,14 +369,14 @@ IN_PROC_BROWSER_TEST_F(ProfileBrowserTest, CreateNewProfileSynchronous) {
 IN_PROC_BROWSER_TEST_F(ProfileBrowserTest, CreateOldProfileSynchronous) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  CreatePrefsFileInDirectory(temp_dir.path());
+  CreatePrefsFileInDirectory(temp_dir.GetPath());
 
   MockProfileDelegate delegate;
   EXPECT_CALL(delegate, OnProfileCreated(testing::NotNull(), true, false));
 
   {
     std::unique_ptr<Profile> profile(CreateProfile(
-        temp_dir.path(), &delegate, Profile::CREATE_MODE_SYNCHRONOUS));
+        temp_dir.GetPath(), &delegate, Profile::CREATE_MODE_SYNCHRONOUS));
     CheckChromeVersion(profile.get(), false);
   }
 
@@ -325,11 +400,17 @@ IN_PROC_BROWSER_TEST_F(ProfileBrowserTest,
         content::NotificationService::AllSources());
 
     std::unique_ptr<Profile> profile(CreateProfile(
-        temp_dir.path(), &delegate, Profile::CREATE_MODE_ASYNCHRONOUS));
+        temp_dir.GetPath(), &delegate, Profile::CREATE_MODE_ASYNCHRONOUS));
 
     // Wait for the profile to be created.
     observer.Wait();
     CheckChromeVersion(profile.get(), true);
+#if defined(OS_CHROMEOS)
+    // Make sure session is marked as initialized.
+    user_manager::User* user =
+        chromeos::ProfileHelper::Get()->GetUserByProfile(profile.get());
+    EXPECT_TRUE(user->profile_ever_initialized());
+#endif
   }
 
   FlushIoTaskRunnerAndSpinThreads();
@@ -343,7 +424,7 @@ IN_PROC_BROWSER_TEST_F(ProfileBrowserTest,
                        DISABLED_CreateOldProfileAsynchronous) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  CreatePrefsFileInDirectory(temp_dir.path());
+  CreatePrefsFileInDirectory(temp_dir.GetPath());
 
   MockProfileDelegate delegate;
   EXPECT_CALL(delegate, OnProfileCreated(testing::NotNull(), true, false));
@@ -354,7 +435,7 @@ IN_PROC_BROWSER_TEST_F(ProfileBrowserTest,
         content::NotificationService::AllSources());
 
     std::unique_ptr<Profile> profile(CreateProfile(
-        temp_dir.path(), &delegate, Profile::CREATE_MODE_ASYNCHRONOUS));
+        temp_dir.GetPath(), &delegate, Profile::CREATE_MODE_ASYNCHRONOUS));
 
     // Wait for the profile to be created.
     observer.Wait();
@@ -379,14 +460,14 @@ IN_PROC_BROWSER_TEST_F(ProfileBrowserTest, DISABLED_ProfileReadmeCreated) {
         content::NotificationService::AllSources());
 
     std::unique_ptr<Profile> profile(CreateProfile(
-        temp_dir.path(), &delegate, Profile::CREATE_MODE_ASYNCHRONOUS));
+        temp_dir.GetPath(), &delegate, Profile::CREATE_MODE_ASYNCHRONOUS));
 
     // Wait for the profile to be created.
     observer.Wait();
 
     // Verify that README exists.
-    EXPECT_TRUE(base::PathExists(
-        temp_dir.path().Append(chrome::kReadmeFilename)));
+    EXPECT_TRUE(
+        base::PathExists(temp_dir.GetPath().Append(chrome::kReadmeFilename)));
   }
 
   FlushIoTaskRunnerAndSpinThreads();
@@ -401,7 +482,7 @@ IN_PROC_BROWSER_TEST_F(ProfileBrowserTest, ExitType) {
   EXPECT_CALL(delegate, OnProfileCreated(testing::NotNull(), true, true));
   {
     std::unique_ptr<Profile> profile(CreateProfile(
-        temp_dir.path(), &delegate, Profile::CREATE_MODE_SYNCHRONOUS));
+        temp_dir.GetPath(), &delegate, Profile::CREATE_MODE_SYNCHRONOUS));
 
     PrefService* prefs = profile->GetPrefs();
     // The initial state is crashed; store for later reference.
@@ -493,7 +574,7 @@ IN_PROC_BROWSER_TEST_F(ProfileBrowserTest, URLRequestContextIsolation) {
 
   {
     std::unique_ptr<Profile> profile(CreateProfile(
-        temp_dir.path(), &delegate, Profile::CREATE_MODE_SYNCHRONOUS));
+        temp_dir.GetPath(), &delegate, Profile::CREATE_MODE_SYNCHRONOUS));
 
     scoped_refptr<const extensions::Extension> app =
         BuildTestApp(profile.get());
@@ -528,7 +609,7 @@ IN_PROC_BROWSER_TEST_F(ProfileBrowserTest,
 
   {
     std::unique_ptr<Profile> profile(CreateProfile(
-        temp_dir.path(), &delegate, Profile::CREATE_MODE_SYNCHRONOUS));
+        temp_dir.GetPath(), &delegate, Profile::CREATE_MODE_SYNCHRONOUS));
     Profile* otr_profile = profile->GetOffTheRecordProfile();
 
     scoped_refptr<const extensions::Extension> app = BuildTestApp(otr_profile);
@@ -596,7 +677,7 @@ IN_PROC_BROWSER_TEST_F(ProfileBrowserTest,
   Profile* profile = loaded_profiles[0];
 
 #if defined(OS_CHROMEOS)
-  for (const auto& loaded_profile : loaded_profiles) {
+  for (auto* loaded_profile : loaded_profiles) {
     if (!chromeos::ProfileHelper::IsSigninProfile(loaded_profile)) {
       profile = loaded_profile;
       break;
@@ -611,6 +692,11 @@ IN_PROC_BROWSER_TEST_F(ProfileBrowserTest,
     // Flush the profile data to disk for all loaded profiles.
     profile->SetExitType(Profile::EXIT_CRASHED);
     profile->GetPrefs()->CommitPendingWrite();
+    if (base::FeatureList::IsEnabled(features::kPrefService)) {
+      FlushTaskRunner(content::BrowserThread::GetTaskRunnerForThread(
+                          content::BrowserThread::IO)
+                          .get());
+    }
     FlushTaskRunner(profile->GetIOTaskRunner().get());
 
     // Make sure that the prefs file was written with the expected key/value.
@@ -696,7 +782,8 @@ IN_PROC_BROWSER_TEST_F(ProfileBrowserTest, DiskCacheDirOverride) {
       FILE_PATH_LITERAL("Profile 1");
   base::ScopedTempDir mock_user_data_dir;
   ASSERT_TRUE(mock_user_data_dir.CreateUniqueTempDir());
-  base::FilePath profile_path = mock_user_data_dir.path().Append(profile_name);
+  base::FilePath profile_path =
+      mock_user_data_dir.GetPath().Append(profile_name);
   ProfileImpl* profile_impl = static_cast<ProfileImpl*>(browser()->profile());
 
   {
@@ -712,10 +799,77 @@ IN_PROC_BROWSER_TEST_F(ProfileBrowserTest, DiskCacheDirOverride) {
     base::ScopedTempDir temp_disk_cache_dir;
     ASSERT_TRUE(temp_disk_cache_dir.CreateUniqueTempDir());
     profile_impl->GetPrefs()->SetFilePath(prefs::kDiskCacheDir,
-                                          temp_disk_cache_dir.path());
+                                          temp_disk_cache_dir.GetPath());
 
     base::FilePath cache_path = profile_path;
     profile_impl->GetCacheParameters(false, &cache_path, &size);
-    EXPECT_EQ(temp_disk_cache_dir.path().Append(profile_name), cache_path);
+    EXPECT_EQ(temp_disk_cache_dir.GetPath().Append(profile_name), cache_path);
   }
+}
+
+// Test case where an HPKP report is sent.
+IN_PROC_BROWSER_TEST_F(ProfileBrowserTest, SendHPKPReport) {
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::Bind(
+          &DisablePinningBypass,
+          make_scoped_refptr(browser()->profile()->GetRequestContext())));
+
+  base::RunLoop wait_for_report_loop;
+  // Server that HPKP reports are sent to.
+  embedded_test_server()->RegisterRequestHandler(
+      base::Bind(&WaitForRequest, wait_for_report_loop.QuitClosure(), false));
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // Server that sends an HPKP report when its root document is fetched.
+  net::EmbeddedTestServer hpkp_test_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  hpkp_test_server.SetSSLConfig(
+      net::EmbeddedTestServer::CERT_COMMON_NAME_IS_DOMAIN);
+  hpkp_test_server.RegisterRequestHandler(
+      base::Bind(&SendReportHttpResponse, embedded_test_server()->base_url()));
+  ASSERT_TRUE(hpkp_test_server.Start());
+
+  // To send a report, must use a non-numeric host name for the original
+  // request.  This must not match the host name of the server that reports are
+  // sent to.
+  ui_test_utils::NavigateToURL(browser(),
+                               hpkp_test_server.GetURL("localhost", "/"));
+  wait_for_report_loop.Run();
+
+  // Shut down the test server, to make it unlikely this will end up in the same
+  // situation as the next test, though it's still theoretically possible.
+  ASSERT_TRUE(embedded_test_server()->ShutdownAndWaitUntilComplete());
+}
+
+// Test case where an HPKP report is sent, and the server hasn't replied by the
+// time the profile is torn down.  Test will crash if the URLRequestContext is
+// torn down before the request is torn down.
+IN_PROC_BROWSER_TEST_F(ProfileBrowserTest, SendHPKPReportServerHangs) {
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::Bind(
+          &DisablePinningBypass,
+          make_scoped_refptr(browser()->profile()->GetRequestContext())));
+
+  base::RunLoop wait_for_report_loop;
+  // Server that HPKP reports are sent to.  Have to use a class member to make
+  // sure that the test server outlives the IO thread.
+  embedded_test_server()->RegisterRequestHandler(
+      base::Bind(&WaitForRequest, wait_for_report_loop.QuitClosure(), true));
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // Server that sends an  HPKP report when its root document is fetched.
+  net::EmbeddedTestServer hpkp_test_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  hpkp_test_server.SetSSLConfig(
+      net::EmbeddedTestServer::CERT_COMMON_NAME_IS_DOMAIN);
+  hpkp_test_server.RegisterRequestHandler(
+      base::Bind(&SendReportHttpResponse, embedded_test_server()->base_url()));
+  ASSERT_TRUE(hpkp_test_server.Start());
+
+  // To send a report, must use a non-numeric host name for the original
+  // request.  This must not match the host name of the server that reports are
+  // sent to.
+  ui_test_utils::NavigateToURL(browser(),
+                               hpkp_test_server.GetURL("localhost", "/"));
+  wait_for_report_loop.Run();
 }

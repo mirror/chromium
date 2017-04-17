@@ -22,18 +22,17 @@ class BrowserContext;
 class WebContents;
 }  // namespace content
 
-namespace test {
-class ScopedCLDDynamicDataHarness;
-}  // namespace test
-
 class PrefService;
 
 namespace translate {
+class LanguageModel;
 class LanguageState;
 class TranslateAcceptLanguages;
 class TranslatePrefs;
 class TranslateManager;
 }  // namespace translate
+
+enum class ShowTranslateBubbleResult;
 
 class ChromeTranslateClient
     : public translate::TranslateClient,
@@ -70,6 +69,10 @@ class ChromeTranslateClient
   static void GetTranslateLanguages(content::WebContents* web_contents,
                                     std::string* source,
                                     std::string* target);
+
+  static void BindContentTranslateDriver(
+      content::RenderFrameHost* render_frame_host,
+      translate::mojom::ContentTranslateDriverRequest request);
 
   // Gets the associated TranslateManager.
   translate::TranslateManager* GetTranslateManager();
@@ -112,11 +115,16 @@ class ChromeTranslateClient
   void WebContentsDestroyed() override;
 
   // Shows the translate bubble.
-  void ShowBubble(translate::TranslateStep step,
-                  translate::TranslateErrors::Type error_type);
+  ShowTranslateBubbleResult ShowBubble(
+      translate::TranslateStep step,
+      translate::TranslateErrors::Type error_type);
 
   translate::ContentTranslateDriver translate_driver_;
   std::unique_ptr<translate::TranslateManager> translate_manager_;
+
+  // Model to be notified about detected language of every page visited. Not
+  // owned here.
+  translate::LanguageModel* language_model_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeTranslateClient);
 };

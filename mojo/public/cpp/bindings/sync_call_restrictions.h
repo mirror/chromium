@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/threading/thread_restrictions.h"
+#include "mojo/public/cpp/bindings/bindings_export.h"
 
 #if (!defined(NDEBUG) || defined(DCHECK_ALWAYS_ON))
 #define ENABLE_SYNC_CALL_RESTRICTIONS 1
@@ -14,8 +15,16 @@
 #define ENABLE_SYNC_CALL_RESTRICTIONS 0
 #endif
 
+namespace leveldb {
+class LevelDBMojoProxy;
+}
+
+namespace prefs {
+class PersistentPrefStoreClient;
+}
+
 namespace ui {
-class GpuService;
+class Gpu;
 }
 
 namespace views {
@@ -36,7 +45,7 @@ namespace mojo {
 // a very compelling reason to disregard that (which should be very very rare),
 // you can override it by constructing a ScopedAllowSyncCall object, which
 // allows making sync calls on the current thread during its lifetime.
-class SyncCallRestrictions {
+class MOJO_CPP_BINDINGS_EXPORT SyncCallRestrictions {
  public:
 #if ENABLE_SYNC_CALL_RESTRICTIONS
   // Checks whether the current thread is allowed to make sync calls, and causes
@@ -50,7 +59,12 @@ class SyncCallRestrictions {
  private:
   // DO NOT ADD ANY OTHER FRIEND STATEMENTS, talk to mojo/OWNERS first.
   // BEGIN ALLOWED USAGE.
-  friend class ui::GpuService;  // http://crbug.com/620058
+  friend class ui::Gpu;  // http://crbug.com/620058
+  // LevelDBMojoProxy makes same-process sync calls from the DB thread.
+  friend class leveldb::LevelDBMojoProxy;
+  // Pref service connection is sync at startup.
+  friend class prefs::PersistentPrefStoreClient;
+
   // END ALLOWED USAGE.
 
   // BEGIN USAGE THAT NEEDS TO BE FIXED.

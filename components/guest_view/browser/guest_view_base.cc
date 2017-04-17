@@ -16,16 +16,17 @@
 #include "components/guest_view/common/guest_view_messages.h"
 #include "components/zoom/page_zoom.h"
 #include "components/zoom/zoom_controller.h"
-#include "content/public/browser/navigation_details.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
+#include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/render_widget_host_view.h"
+#include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/browser_plugin_guest_mode.h"
 #include "content/public/common/page_zoom.h"
 #include "content/public/common/url_constants.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
+#include "third_party/WebKit/public/platform/WebGestureEvent.h"
 
 using content::WebContents;
 
@@ -38,8 +39,8 @@ namespace guest_view {
 namespace {
 
 using WebContentsGuestViewMap = std::map<const WebContents*, GuestViewBase*>;
-static base::LazyInstance<WebContentsGuestViewMap> webcontents_guestview_map =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<WebContentsGuestViewMap>::DestructorAtExit
+    webcontents_guestview_map = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
@@ -69,12 +70,16 @@ class GuestViewBase::OwnerContentsObserver : public WebContentsObserver {
     Destroy();
   }
 
-  void DidNavigateMainFrame(
-      const content::LoadCommittedDetails& details,
-      const content::FrameNavigateParams& params) override {
+  void DidFinishNavigation(
+      content::NavigationHandle* navigation_handle) override {
     // If the embedder navigates to a different page then destroy the guest.
-    if (details.is_navigation_to_different_page())
-      Destroy();
+    if (!navigation_handle->IsInMainFrame() ||
+        !navigation_handle->HasCommitted() ||
+        navigation_handle->IsSameDocument()) {
+      return;
+    }
+
+    Destroy();
   }
 
   void RenderProcessGone(base::TerminationStatus status) override {
@@ -120,6 +125,11 @@ class GuestViewBase::OwnerContentsObserver : public WebContentsObserver {
     guest_->web_contents()->SetAudioMuted(muted);
   }
 
+  void RenderFrameDeleted(content::RenderFrameHost* rfh) override {
+    guest_->OnRenderFrameHostDeleted(rfh->GetProcess()->GetID(),
+                                     rfh->GetRoutingID());
+  }
+
  private:
   bool is_fullscreen_;
   bool destroyed_;
@@ -129,7 +139,7 @@ class GuestViewBase::OwnerContentsObserver : public WebContentsObserver {
     if (destroyed_)
       return;
     destroyed_ = true;
-    guest_->Destroy();
+    guest_->Destroy(true);
   }
 
   DISALLOW_COPY_AND_ASSIGN(OwnerContentsObserver);
@@ -151,7 +161,7 @@ class GuestViewBase::OpenerLifetimeObserver : public WebContentsObserver {
       return;
 
     // If the opener is destroyed then destroy the guest.
-    guest_->Destroy();
+    guest_->Destroy(true);
   }
 
  private:
@@ -215,9 +225,9 @@ void GuestViewBase::InitWithWebContents(
   // after the latter has handled WebContentsObserver events (observers are
   // notified of events in the same order they are added as observers). For
   // example, GuestViewBase may wish to put its guest into isolated zoom mode
-  // in DidNavigateMainFrame, but since ZoomController always resets to default
+  // in DidFinishNavigation, but since ZoomController always resets to default
   // zoom mode on this event, GuestViewBase would need to do so after
-  // ZoomController::DidNavigateMainFrame has completed.
+  // ZoomController::DidFinishNavigation has completed.
   zoom::ZoomController::CreateForWebContents(guest_web_contents);
 
   // At this point, we have just created the guest WebContents, we need to add
@@ -267,7 +277,7 @@ void GuestViewBase::DispatchOnResizeEvent(const gfx::Size& old_size,
   args->SetInteger(kNewWidth, new_size.width());
   args->SetInteger(kNewHeight, new_size.height());
   DispatchEventToGuestProxy(
-      base::WrapUnique(new GuestViewEvent(kEventResize, std::move(args))));
+      base::MakeUnique<GuestViewEvent>(kEventResize, std::move(args)));
 }
 
 gfx::Size GuestViewBase::GetDefaultSize() const {
@@ -401,6 +411,8 @@ WebContents* GuestViewBase::CreateNewGuestWindow(
       create_params);
 }
 
+void GuestViewBase::OnRenderFrameHostDeleted(int process_id, int routing_id) {}
+
 void GuestViewBase::DidAttach(int guest_proxy_routing_id) {
   DCHECK(guest_proxy_routing_id_ == MSG_ROUTING_NONE ||
          guest_proxy_routing_id == guest_proxy_routing_id_);
@@ -417,9 +429,8 @@ void GuestViewBase::DidAttach(int guest_proxy_routing_id) {
   DidAttachToEmbedder();
 
   // Inform the associated GuestViewContainer that the contentWindow is ready.
-  embedder_web_contents()->Send(new GuestViewMsg_GuestAttached(
-      element_instance_id_,
-      guest_proxy_routing_id));
+  GetOwnerRenderWidgetHost()->Send(new GuestViewMsg_GuestAttached(
+      element_instance_id_, guest_proxy_routing_id));
 
   SendQueuedEvents();
 }
@@ -431,7 +442,7 @@ void GuestViewBase::DidDetach() {
       element_instance_id_));
   element_instance_id_ = kInstanceIDNone;
   if (!CanRunInDetachedState())
-    Destroy();
+    Destroy(true);
 }
 
 bool GuestViewBase::HandleFindForEmbedder(
@@ -466,7 +477,7 @@ const GURL& GuestViewBase::GetOwnerSiteURL() const {
   return owner_web_contents()->GetLastCommittedURL();
 }
 
-void GuestViewBase::Destroy() {
+void GuestViewBase::Destroy(bool also_delete) {
   if (is_being_destroyed_)
     return;
 
@@ -477,6 +488,8 @@ void GuestViewBase::Destroy() {
   // the statements in this function.
   StopTrackingEmbedderZoomLevel();
   owner_web_contents_ = nullptr;
+
+  element_instance_id_ = kInstanceIDNone;
 
   DCHECK(web_contents());
 
@@ -497,7 +510,8 @@ void GuestViewBase::Destroy() {
       RemoveGuest(guest_instance_id_);
   pending_events_.clear();
 
-  delete web_contents();
+  if (also_delete)
+    delete web_contents();
 }
 
 void GuestViewBase::SetAttachParams(const base::DictionaryValue& params) {
@@ -585,6 +599,8 @@ void GuestViewBase::RenderViewReady() {
 }
 
 void GuestViewBase::WebContentsDestroyed() {
+  Destroy(false);
+
   // Let the derived class know that its WebContents is in the process of
   // being destroyed. web_contents() is still valid at this point.
   // TODO(fsamuel): This allows for reentrant code into WebContents during
@@ -596,9 +612,11 @@ void GuestViewBase::WebContentsDestroyed() {
   delete this;
 }
 
-void GuestViewBase::DidNavigateMainFrame(
-    const content::LoadCommittedDetails& details,
-    const content::FrameNavigateParams& params) {
+void GuestViewBase::DidFinishNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->IsInMainFrame() || !navigation_handle->HasCommitted())
+    return;
+
   if (attached() && ZoomPropagatesFromEmbedderToGuest())
     SetGuestZoomLevelToMatchEmbedder();
 }
@@ -680,9 +698,9 @@ bool GuestViewBase::ShouldFocusPageAfterCrash() {
 
 bool GuestViewBase::PreHandleGestureEvent(WebContents* source,
                                           const blink::WebGestureEvent& event) {
-  return event.type == blink::WebGestureEvent::GesturePinchBegin ||
-      event.type == blink::WebGestureEvent::GesturePinchUpdate ||
-      event.type == blink::WebGestureEvent::GesturePinchEnd;
+  return event.GetType() == blink::WebGestureEvent::kGesturePinchBegin ||
+         event.GetType() == blink::WebGestureEvent::kGesturePinchUpdate ||
+         event.GetType() == blink::WebGestureEvent::kGesturePinchEnd;
 }
 
 void GuestViewBase::UpdatePreferredSize(WebContents* target_web_contents,
@@ -723,6 +741,32 @@ void GuestViewBase::FindReply(WebContents* source,
                                                       active_match_ordinal,
                                                       final_update);
   }
+}
+
+content::RenderWidgetHost* GuestViewBase::GetOwnerRenderWidgetHost() {
+  // We assume guests live inside an owner RenderFrame but the RenderFrame may
+  // not be cross-process. In case a type of guest should be allowed to be
+  // embedded in a cross-process frame, this method should be overrode for that
+  // specific guest type. For all other guests, the owner RenderWidgetHost is
+  // that of the owner WebContents.
+  if (GetOwnerWebContents() &&
+      GetOwnerWebContents()->GetRenderWidgetHostView()) {
+    return GetOwnerWebContents()
+        ->GetRenderWidgetHostView()
+        ->GetRenderWidgetHost();
+  }
+  return nullptr;
+}
+
+content::SiteInstance* GuestViewBase::GetOwnerSiteInstance() {
+  // We assume guests live inside an owner RenderFrame but the RenderFrame may
+  // not be cross-process. In case a type of guest should be allowed to be
+  // embedded in a cross-process frame, this method should be overrode for that
+  // specific guest type. For all other guests, the owner site instance can be
+  // from the owner WebContents.
+  if (auto* owner_contents = GetOwnerWebContents())
+    return owner_contents->GetSiteInstance();
+  return nullptr;
 }
 
 void GuestViewBase::OnZoomChanged(

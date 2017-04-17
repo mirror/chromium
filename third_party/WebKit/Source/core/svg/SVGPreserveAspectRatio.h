@@ -30,76 +30,95 @@ class AffineTransform;
 class FloatRect;
 class SVGPreserveAspectRatioTearOff;
 
-class SVGPreserveAspectRatio final : public SVGPropertyHelper<SVGPreserveAspectRatio> {
-public:
-    enum SVGPreserveAspectRatioType {
-        SVG_PRESERVEASPECTRATIO_UNKNOWN = 0,
-        SVG_PRESERVEASPECTRATIO_NONE = 1,
-        SVG_PRESERVEASPECTRATIO_XMINYMIN = 2,
-        SVG_PRESERVEASPECTRATIO_XMIDYMIN = 3,
-        SVG_PRESERVEASPECTRATIO_XMAXYMIN = 4,
-        SVG_PRESERVEASPECTRATIO_XMINYMID = 5,
-        SVG_PRESERVEASPECTRATIO_XMIDYMID = 6,
-        SVG_PRESERVEASPECTRATIO_XMAXYMID = 7,
-        SVG_PRESERVEASPECTRATIO_XMINYMAX = 8,
-        SVG_PRESERVEASPECTRATIO_XMIDYMAX = 9,
-        SVG_PRESERVEASPECTRATIO_XMAXYMAX = 10
-    };
+class SVGPreserveAspectRatio final
+    : public SVGPropertyHelper<SVGPreserveAspectRatio> {
+ public:
+  enum SVGPreserveAspectRatioType {
+    kSvgPreserveaspectratioUnknown = 0,
+    kSvgPreserveaspectratioNone = 1,
+    kSvgPreserveaspectratioXminymin = 2,
+    kSvgPreserveaspectratioXmidymin = 3,
+    kSvgPreserveaspectratioXmaxymin = 4,
+    kSvgPreserveaspectratioXminymid = 5,
+    kSvgPreserveaspectratioXmidymid = 6,
+    kSvgPreserveaspectratioXmaxymid = 7,
+    kSvgPreserveaspectratioXminymax = 8,
+    kSvgPreserveaspectratioXmidymax = 9,
+    kSvgPreserveaspectratioXmaxymax = 10
+  };
 
-    enum SVGMeetOrSliceType {
-        SVG_MEETORSLICE_UNKNOWN = 0,
-        SVG_MEETORSLICE_MEET = 1,
-        SVG_MEETORSLICE_SLICE = 2
-    };
+  enum SVGMeetOrSliceType {
+    kSvgMeetorsliceUnknown = 0,
+    kSvgMeetorsliceMeet = 1,
+    kSvgMeetorsliceSlice = 2
+  };
 
-    typedef SVGPreserveAspectRatioTearOff TearOffType;
+  typedef SVGPreserveAspectRatioTearOff TearOffType;
 
-    static SVGPreserveAspectRatio* create()
-    {
-        return new SVGPreserveAspectRatio();
-    }
+  static SVGPreserveAspectRatio* Create() {
+    return new SVGPreserveAspectRatio();
+  }
 
-    virtual SVGPreserveAspectRatio* clone() const;
+  virtual SVGPreserveAspectRatio* Clone() const;
 
-    bool operator==(const SVGPreserveAspectRatio&) const;
-    bool operator!=(const SVGPreserveAspectRatio& other) const { return !operator==(other); }
+  bool operator==(const SVGPreserveAspectRatio&) const;
+  bool operator!=(const SVGPreserveAspectRatio& other) const {
+    return !operator==(other);
+  }
 
-    void setAlign(SVGPreserveAspectRatioType align) { m_align = align; }
-    SVGPreserveAspectRatioType align() const { return m_align; }
+  void SetAlign(SVGPreserveAspectRatioType align) { align_ = align; }
+  SVGPreserveAspectRatioType Align() const { return align_; }
 
-    void setMeetOrSlice(SVGMeetOrSliceType meetOrSlice) { m_meetOrSlice = meetOrSlice; }
-    SVGMeetOrSliceType meetOrSlice() const { return m_meetOrSlice; }
+  void SetMeetOrSlice(SVGMeetOrSliceType meet_or_slice) {
+    meet_or_slice_ = meet_or_slice;
+  }
+  SVGMeetOrSliceType MeetOrSlice() const { return meet_or_slice_; }
 
-    void transformRect(FloatRect& destRect, FloatRect& srcRect);
+  void TransformRect(FloatRect& dest_rect, FloatRect& src_rect);
 
-    AffineTransform getCTM(float logicX, float logicY,
-                           float logicWidth, float logicHeight,
-                           float physWidth, float physHeight) const;
+  AffineTransform GetCTM(float logic_x,
+                         float logic_y,
+                         float logic_width,
+                         float logic_height,
+                         float phys_width,
+                         float phys_height) const;
 
-    String valueAsString() const override;
-    SVGParsingError setValueAsString(const String&);
-    bool parse(const UChar*& ptr, const UChar* end, bool validate);
-    bool parse(const LChar*& ptr, const LChar* end, bool validate);
+  String ValueAsString() const override;
+  SVGParsingError SetValueAsString(const String&);
+  bool Parse(const UChar*& ptr, const UChar* end, bool validate);
+  bool Parse(const LChar*& ptr, const LChar* end, bool validate);
 
-    void add(SVGPropertyBase*, SVGElement*) override;
-    void calculateAnimatedValue(SVGAnimationElement*, float percentage, unsigned repeatCount, SVGPropertyBase* from, SVGPropertyBase* to, SVGPropertyBase* toAtEndOfDurationValue, SVGElement* contextElement) override;
-    float calculateDistance(SVGPropertyBase* to, SVGElement* contextElement) override;
+  void Add(SVGPropertyBase*, SVGElement*) override;
+  void CalculateAnimatedValue(SVGAnimationElement*,
+                              float percentage,
+                              unsigned repeat_count,
+                              SVGPropertyBase* from,
+                              SVGPropertyBase* to,
+                              SVGPropertyBase* to_at_end_of_duration_value,
+                              SVGElement* context_element) override;
+  float CalculateDistance(SVGPropertyBase* to,
+                          SVGElement* context_element) override;
 
-    static AnimatedPropertyType classType() { return AnimatedPreserveAspectRatio; }
+  static AnimatedPropertyType ClassType() {
+    return kAnimatedPreserveAspectRatio;
+  }
 
-private:
-    SVGPreserveAspectRatio();
+  void SetDefault();
 
-    void setDefault();
-    template<typename CharType>
-    SVGParsingError parseInternal(const CharType*& ptr, const CharType* end, bool validate);
+ private:
+  SVGPreserveAspectRatio();
 
-    SVGPreserveAspectRatioType m_align;
-    SVGMeetOrSliceType m_meetOrSlice;
+  template <typename CharType>
+  SVGParsingError ParseInternal(const CharType*& ptr,
+                                const CharType* end,
+                                bool validate);
+
+  SVGPreserveAspectRatioType align_;
+  SVGMeetOrSliceType meet_or_slice_;
 };
 
 DEFINE_SVG_PROPERTY_TYPE_CASTS(SVGPreserveAspectRatio);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGPreserveAspectRatio_h
+#endif  // SVGPreserveAspectRatio_h

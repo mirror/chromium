@@ -4,14 +4,14 @@
 /* Define to 1 if you have the <ansidecl.h> header file. */
 /* #undef HAVE_ANSIDECL_H */
 
-/* Define to 1 if you have the `asctime' function. */
-#define HAVE_ASCTIME 1
-
 /* Define to 1 if you have the `clock_gettime' function. */
-/* #undef HAVE_CLOCK_GETTIME */
+
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
+
+/* Define to 1 if you have the <errno.h> header file. */
+#define HAVE_ERRNO_H 1
 
 /* Define if fabs is there */
 /* #undef HAVE_FABS */
@@ -66,9 +66,6 @@
 
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
-
-/* Define to 1 if you have the `mktime' function. */
-#define HAVE_MKTIME 1
 
 /* Define to 1 if you have the <nan.h> header file. */
 /* #undef HAVE_NAN_H */
@@ -198,7 +195,7 @@
 
 
 /* Version number of package */
-#define VERSION "1.1.28"
+#define VERSION "1.1.29"
 
 /* Define if debugging support is enabled */
 /* #undef WITH_DEBUGGER */

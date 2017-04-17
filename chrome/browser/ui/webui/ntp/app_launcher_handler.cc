@@ -6,6 +6,8 @@
 
 #include <stddef.h>
 
+#include <string>
+#include <utility>
 #include <vector>
 
 #include "apps/metrics_names.h"
@@ -14,8 +16,9 @@
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/i18n/rtl.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
@@ -44,6 +47,7 @@
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/extensions/extension_metrics.h"
 #include "chrome/common/extensions/manifest_handlers/app_launch_info.h"
+#include "chrome/common/features.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/common/web_application_info.h"
@@ -66,6 +70,7 @@
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_icon_set.h"
 #include "extensions/common/extension_set.h"
+#include "net/base/url_util.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/webui/web_ui_util.h"
 #include "url/gurl.h"
@@ -158,25 +163,12 @@ void AppLauncherHandler::CreateAppInfo(
       service->profile())->management_policy()->UserMayModifySettings(
       extension, NULL));
 
-  bool icon_big_exists = true;
   // Instead of setting grayscale here, we do it in apps_page.js.
-  GURL icon_big = extensions::ExtensionIconSource::GetIconURL(
-      extension,
-      extension_misc::EXTENSION_ICON_LARGE,
-      ExtensionIconSet::MATCH_BIGGER,
-      false,
-      &icon_big_exists);
-  value->SetString("icon_big", icon_big.spec());
-  value->SetBoolean("icon_big_exists", icon_big_exists);
-  bool icon_small_exists = true;
-  GURL icon_small = extensions::ExtensionIconSource::GetIconURL(
-      extension,
-      extension_misc::EXTENSION_ICON_BITTY,
-      ExtensionIconSet::MATCH_BIGGER,
-      false,
-      &icon_small_exists);
-  value->SetString("icon_small", icon_small.spec());
-  value->SetBoolean("icon_small_exists", icon_small_exists);
+  GURL icon = extensions::ExtensionIconSource::GetIconURL(
+      extension, extension_misc::EXTENSION_ICON_LARGE,
+      ExtensionIconSet::MATCH_BIGGER, false);
+  DCHECK_NE(GURL(), icon);
+  value->SetString("icon", icon.spec());
   value->SetInteger("launch_container",
                     extensions::AppLaunchInfo::GetLaunchContainer(extension));
   ExtensionPrefs* prefs = ExtensionPrefs::Get(service->profile());
@@ -232,7 +224,7 @@ void AppLauncherHandler::RegisterMessages() {
       content::Source<WebContents>(web_ui()->GetWebContents()));
 
   // Some tests don't have a local state.
-#if defined(ENABLE_APP_LIST)
+#if BUILDFLAG(ENABLE_APP_LIST)
   if (g_browser_process->local_state()) {
     local_state_pref_change_registrar_.Init(g_browser_process->local_state());
     local_state_pref_change_registrar_.Add(
@@ -346,8 +338,8 @@ void AppLauncherHandler::OnExtensionLoaded(
 
   visible_apps_.insert(extension->id());
   ExtensionPrefs* prefs = ExtensionPrefs::Get(extension_service_->profile());
-  base::FundamentalValue highlight(prefs->IsFromBookmark(extension->id()) &&
-                                   attempted_bookmark_app_install_);
+  base::Value highlight(prefs->IsFromBookmark(extension->id()) &&
+                        attempted_bookmark_app_install_);
   attempted_bookmark_app_install_ = false;
   web_ui()->CallJavascriptFunctionUnsafe("ntp.appAdded", *app_info, highlight);
 }
@@ -370,7 +362,7 @@ void AppLauncherHandler::FillAppDictionary(base::DictionaryValue* dictionary) {
   // CreateAppInfo and ClearOrdinals can change the extension prefs.
   base::AutoReset<bool> auto_reset(&ignore_changes_, true);
 
-  base::ListValue* list = new base::ListValue();
+  auto installed_extensions = base::MakeUnique<base::ListValue>();
   Profile* profile = Profile::FromWebUI(web_ui());
   PrefService* prefs = profile->GetPrefs();
 
@@ -379,24 +371,23 @@ void AppLauncherHandler::FillAppDictionary(base::DictionaryValue* dictionary) {
     const Extension* extension = extension_service_->GetInstalledExtension(*it);
     if (extension && extensions::ui_util::ShouldDisplayInNewTabPage(
             extension, profile)) {
-      list->Append(GetAppInfo(extension));
+      installed_extensions->Append(GetAppInfo(extension));
     }
   }
 
-  dictionary->Set("apps", list);
+  dictionary->Set("apps", std::move(installed_extensions));
 
   const base::ListValue* app_page_names =
       prefs->GetList(prefs::kNtpAppPageNames);
   if (!app_page_names || !app_page_names->GetSize()) {
     ListPrefUpdate update(prefs, prefs::kNtpAppPageNames);
     base::ListValue* list = update.Get();
-    list->Set(0, new base::StringValue(
-        l10n_util::GetStringUTF16(IDS_APP_DEFAULT_PAGE_NAME)));
-    dictionary->Set("appPageNames",
-                    static_cast<base::ListValue*>(list->DeepCopy()));
+    list->Set(0, base::MakeUnique<base::Value>(
+                     l10n_util::GetStringUTF16(IDS_APP_DEFAULT_PAGE_NAME)));
+    dictionary->Set("appPageNames", base::MakeUnique<base::Value>(*list));
   } else {
     dictionary->Set("appPageNames",
-                    static_cast<base::ListValue*>(app_page_names->DeepCopy()));
+                    base::MakeUnique<base::Value>(*app_page_names));
   }
 }
 
@@ -481,9 +472,7 @@ void AppLauncherHandler::HandleLaunchApp(const base::ListValue* args) {
   CHECK(args->GetString(0, &extension_id));
   double source = -1.0;
   CHECK(args->GetDouble(1, &source));
-  std::string url;
-  if (args->GetSize() > 2)
-    CHECK(args->GetString(2, &url));
+  GURL override_url;
 
   extension_misc::AppLaunchBucket launch_bucket =
       static_cast<extension_misc::AppLaunchBucket>(
@@ -502,24 +491,36 @@ void AppLauncherHandler::HandleLaunchApp(const base::ListValue* args) {
 
   Profile* profile = extension_service_->profile();
 
-  WindowOpenDisposition disposition = args->GetSize() > 3 ?
-        webui::GetDispositionFromClick(args, 3) : CURRENT_TAB;
+  WindowOpenDisposition disposition =
+      args->GetSize() > 3 ? webui::GetDispositionFromClick(args, 3)
+                          : WindowOpenDisposition::CURRENT_TAB;
   if (extension_id != extensions::kWebStoreAppId) {
     CHECK_NE(launch_bucket, extension_misc::APP_LAUNCH_BUCKET_INVALID);
     extensions::RecordAppLaunchType(launch_bucket, extension->GetType());
   } else {
     extensions::RecordWebStoreLaunch();
+
+    if (args->GetSize() > 2) {
+      std::string source_value;
+      CHECK(args->GetString(2, &source_value));
+      if (!source_value.empty()) {
+        override_url = net::AppendQueryParameter(
+            extensions::AppLaunchInfo::GetFullLaunchURL(extension),
+            extension_urls::kWebstoreSourceField, source_value);
+      }
+    }
   }
 
-  if (disposition == NEW_FOREGROUND_TAB || disposition == NEW_BACKGROUND_TAB ||
-      disposition == NEW_WINDOW) {
+  if (disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB ||
+      disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB ||
+      disposition == WindowOpenDisposition::NEW_WINDOW) {
     // TODO(jamescook): Proper support for background tabs.
     AppLaunchParams params(profile, extension,
-                           disposition == NEW_WINDOW
+                           disposition == WindowOpenDisposition::NEW_WINDOW
                                ? extensions::LAUNCH_CONTAINER_WINDOW
                                : extensions::LAUNCH_CONTAINER_TAB,
                            disposition, extensions::SOURCE_NEW_TAB_PAGE);
-    params.override_url = GURL(url);
+    params.override_url = override_url;
     OpenApplication(params);
   } else {
     // To give a more "launchy" experience when using the NTP launcher, we close
@@ -531,9 +532,11 @@ void AppLauncherHandler::HandleLaunchApp(const base::ListValue* args) {
       old_contents = browser->tab_strip_model()->GetActiveWebContents();
 
     AppLaunchParams params = CreateAppLaunchParamsUserContainer(
-        profile, extension, old_contents ? CURRENT_TAB : NEW_FOREGROUND_TAB,
+        profile, extension,
+        old_contents ? WindowOpenDisposition::CURRENT_TAB
+                     : WindowOpenDisposition::NEW_FOREGROUND_TAB,
         extensions::SOURCE_NEW_TAB_PAGE);
-    params.override_url = GURL(url);
+    params.override_url = override_url;
     WebContents* new_contents = OpenApplication(params);
 
     // This will also destroy the handler, so do not perform any actions after.
@@ -680,7 +683,7 @@ void AppLauncherHandler::HandleSetPageIndex(const base::ListValue* args) {
 }
 
 void AppLauncherHandler::HandleSaveAppPageName(const base::ListValue* args) {
-  base::string16 name;
+  std::string name;
   CHECK(args->GetString(0, &name));
 
   double page_index;
@@ -690,7 +693,8 @@ void AppLauncherHandler::HandleSaveAppPageName(const base::ListValue* args) {
   PrefService* prefs = Profile::FromWebUI(web_ui())->GetPrefs();
   ListPrefUpdate update(prefs, prefs::kNtpAppPageNames);
   base::ListValue* list = update.Get();
-  list->Set(static_cast<size_t>(page_index), new base::StringValue(name));
+  list->Set(static_cast<size_t>(page_index),
+            base::MakeUnique<base::Value>(name));
 }
 
 void AppLauncherHandler::HandleGenerateAppForLink(const base::ListValue* args) {
@@ -733,7 +737,7 @@ void AppLauncherHandler::HandleGenerateAppForLink(const base::ListValue* args) {
 
 void AppLauncherHandler::HandleStopShowingAppLauncherPromo(
     const base::ListValue* args) {
-#if defined(ENABLE_APP_LIST)
+#if BUILDFLAG(ENABLE_APP_LIST)
   g_browser_process->local_state()->SetBoolean(
       prefs::kShowAppLauncherPromo, false);
   RecordAppLauncherPromoHistogram(apps::APP_LAUNCHER_PROMO_DISMISSED);
@@ -780,7 +784,7 @@ void AppLauncherHandler::SetAppToBeHighlighted() {
   if (highlight_app_id_.empty())
     return;
 
-  base::StringValue app_id(highlight_app_id_);
+  base::Value app_id(highlight_app_id_);
   web_ui()->CallJavascriptFunctionUnsafe("ntp.setAppToBeHighlighted", app_id);
   highlight_app_id_.clear();
 }
@@ -793,10 +797,10 @@ void AppLauncherHandler::OnExtensionPreferenceChanged() {
 }
 
 void AppLauncherHandler::OnLocalStatePreferenceChanged() {
-#if defined(ENABLE_APP_LIST)
+#if BUILDFLAG(ENABLE_APP_LIST)
   web_ui()->CallJavascriptFunctionUnsafe(
       "ntp.appLauncherPromoPrefChangeCallback",
-      base::FundamentalValue(g_browser_process->local_state()->GetBoolean(
+      base::Value(g_browser_process->local_state()->GetBoolean(
           prefs::kShowAppLauncherPromo)));
 #endif
 }
@@ -828,7 +832,7 @@ void AppLauncherHandler::ExtensionEnableFlowFinished() {
   // If we don't launch the app asynchronously, then the app's disabled
   // icon disappears but isn't replaced by the enabled icon, making a poor
   // visual experience.
-  base::StringValue app_id(extension_id_prompting_);
+  base::Value app_id(extension_id_prompting_);
   web_ui()->CallJavascriptFunctionUnsafe("ntp.launchAppAfterEnable", app_id);
 
   extension_enable_flow_.reset();
@@ -875,8 +879,8 @@ void AppLauncherHandler::AppRemoved(const Extension* extension,
     return;
 
   web_ui()->CallJavascriptFunctionUnsafe(
-      "ntp.appRemoved", *app_info, base::FundamentalValue(is_uninstall),
-      base::FundamentalValue(!extension_id_prompting_.empty()));
+      "ntp.appRemoved", *app_info, base::Value(is_uninstall),
+      base::Value(!extension_id_prompting_.empty()));
 }
 
 bool AppLauncherHandler::ShouldShow(const Extension* extension) const {

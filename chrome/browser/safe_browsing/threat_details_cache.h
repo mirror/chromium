@@ -15,13 +15,11 @@
 #include "base/containers/hash_tables.h"
 #include "base/memory/linked_ptr.h"
 #include "base/memory/ref_counted.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
 #include "net/base/completion_callback.h"
 #include "net/url_request/url_fetcher_delegate.h"
 
 namespace net {
 class URLFetcher;
-class URLRequestContext;
 }
 
 namespace safe_browsing {
@@ -29,7 +27,7 @@ namespace safe_browsing {
 // Maps a URL to its Resource.
 typedef base::hash_map<
     std::string,
-    linked_ptr<ClientSafeBrowsingReportRequest::Resource>>
+    std::unique_ptr<ClientSafeBrowsingReportRequest::Resource>>
     ResourceMap;
 
 class ThreatDetailsCacheCollector

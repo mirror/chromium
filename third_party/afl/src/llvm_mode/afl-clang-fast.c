@@ -99,7 +99,7 @@ static void edit_params(u32 argc, char** argv) {
   u8 fortify_set = 0, asan_set = 0, x_set = 0, maybe_linking = 1, bit_mode = 0;
   u8 *name;
 
-  cc_params = ck_alloc((argc + 64) * sizeof(u8*));
+  cc_params = ck_alloc((argc + 128) * sizeof(u8*));
 
   name = strrchr(argv[0], '/');
   if (!name) name = argv[0]; else name++;
@@ -114,13 +114,15 @@ static void edit_params(u32 argc, char** argv) {
 
   /* There are two ways to compile afl-clang-fast. In the traditional mode, we
      use afl-llvm-pass.so to inject instrumentation. In the experimental
-     'trace-pc' mode, we use native LLVM instrumentation callbacks instead.
-     The latter is a very recent addition - see:
+     'trace-pc-guard' mode, we use native LLVM instrumentation callbacks
+     instead. The latter is a very recent addition - see:
 
-     http://clang.llvm.org/docs/SanitizerCoverage.html#tracing-pcs */
+     http://clang.llvm.org/docs/SanitizerCoverage.html#tracing-pcs-with-guards */
 
 #ifdef USE_TRACE_PC
-  cc_params[cc_par_cnt++] = "-fsanitize-coverage=bb,trace-pc";
+  cc_params[cc_par_cnt++] = "-fsanitize-coverage=trace-pc-guard";
+  cc_params[cc_par_cnt++] = "-mllvm";
+  cc_params[cc_par_cnt++] = "-sanitizer-coverage-block-threshold=0";
 #else
   cc_params[cc_par_cnt++] = "-Xclang";
   cc_params[cc_par_cnt++] = "-load";
@@ -130,6 +132,10 @@ static void edit_params(u32 argc, char** argv) {
 
   cc_params[cc_par_cnt++] = "-Qunused-arguments";
 
+  /* Detect stray -v calls from ./configure scripts. */
+
+  if (argc == 1 && !strcmp(argv[1], "-v")) maybe_linking = 0;
+
   while (--argc) {
     u8* cur = *(++argv);
 
@@ -138,8 +144,8 @@ static void edit_params(u32 argc, char** argv) {
 
     if (!strcmp(cur, "-x")) x_set = 1;
 
-    if (!strcmp(cur, "-c") || !strcmp(cur, "-S") || !strcmp(cur, "-E") ||
-        !strcmp(cur, "-v")) maybe_linking = 0;
+    if (!strcmp(cur, "-c") || !strcmp(cur, "-S") || !strcmp(cur, "-E"))
+      maybe_linking = 0;
 
     if (!strcmp(cur, "-fsanitize=address") ||
         !strcmp(cur, "-fsanitize=memory")) asan_set = 1;
@@ -147,6 +153,9 @@ static void edit_params(u32 argc, char** argv) {
     if (strstr(cur, "FORTIFY_SOURCE")) fortify_set = 1;
 
     if (!strcmp(cur, "-shared")) maybe_linking = 0;
+
+    if (!strcmp(cur, "-Wl,-z,defs") ||
+        !strcmp(cur, "-Wl,--no-undefined")) continue;
 
     cc_params[cc_par_cnt++] = cur;
 
@@ -165,17 +174,25 @@ static void edit_params(u32 argc, char** argv) {
 
     if (getenv("AFL_USE_ASAN")) {
 
-      cc_params[cc_par_cnt++] = "-fsanitize=address";
-
       if (getenv("AFL_USE_MSAN"))
         FATAL("ASAN and MSAN are mutually exclusive");
 
-    } else if (getenv("AFL_USE_MSAN")) {
+      if (getenv("AFL_HARDEN"))
+        FATAL("ASAN and AFL_HARDEN are mutually exclusive");
 
-      cc_params[cc_par_cnt++] = "-fsanitize=memory";
+      cc_params[cc_par_cnt++] = "-U_FORTIFY_SOURCE";
+      cc_params[cc_par_cnt++] = "-fsanitize=address";
+
+    } else if (getenv("AFL_USE_MSAN")) {
 
       if (getenv("AFL_USE_ASAN"))
         FATAL("ASAN and MSAN are mutually exclusive");
+
+      if (getenv("AFL_HARDEN"))
+        FATAL("MSAN and AFL_HARDEN are mutually exclusive");
+
+      cc_params[cc_par_cnt++] = "-U_FORTIFY_SOURCE";
+      cc_params[cc_par_cnt++] = "-fsanitize=memory";
 
     }
 
@@ -193,6 +210,16 @@ static void edit_params(u32 argc, char** argv) {
     cc_params[cc_par_cnt++] = "-g";
     cc_params[cc_par_cnt++] = "-O3";
     cc_params[cc_par_cnt++] = "-funroll-loops";
+
+  }
+
+  if (getenv("AFL_NO_BUILTIN")) {
+
+    cc_params[cc_par_cnt++] = "-fno-builtin-strcmp";
+    cc_params[cc_par_cnt++] = "-fno-builtin-strncmp";
+    cc_params[cc_par_cnt++] = "-fno-builtin-strcasecmp";
+    cc_params[cc_par_cnt++] = "-fno-builtin-strncasecmp";
+    cc_params[cc_par_cnt++] = "-fno-builtin-memcmp";
 
   }
 

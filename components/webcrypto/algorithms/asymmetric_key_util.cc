@@ -4,8 +4,6 @@
 
 #include "components/webcrypto/algorithms/asymmetric_key_util.h"
 
-#include <openssl/bytestring.h>
-#include <openssl/evp.h>
 #include <stdint.h>
 #include <utility>
 
@@ -14,9 +12,10 @@
 #include "components/webcrypto/crypto_data.h"
 #include "components/webcrypto/generate_key_result.h"
 #include "components/webcrypto/status.h"
-#include "crypto/auto_cbb.h"
 #include "crypto/openssl_util.h"
-#include "crypto/scoped_openssl_types.h"
+#include "third_party/boringssl/src/include/openssl/bytestring.h"
+#include "third_party/boringssl/src/include/openssl/evp.h"
+#include "third_party/boringssl/src/include/openssl/mem.h"
 
 namespace webcrypto {
 
@@ -28,7 +27,7 @@ Status ExportPKeySpki(EVP_PKEY* key, std::vector<uint8_t>* buffer) {
 
   uint8_t* der;
   size_t der_len;
-  crypto::AutoCBB cbb;
+  bssl::ScopedCBB cbb;
   if (!CBB_init(cbb.get(), 0) || !EVP_marshal_public_key(cbb.get(), key) ||
       !CBB_finish(cbb.get(), &der, &der_len)) {
     return Status::ErrorUnexpected();
@@ -46,7 +45,7 @@ Status ExportPKeyPkcs8(EVP_PKEY* key, std::vector<uint8_t>* buffer) {
   //               http://crbug.com/373545
   uint8_t* der;
   size_t der_len;
-  crypto::AutoCBB cbb;
+  bssl::ScopedCBB cbb;
   if (!CBB_init(cbb.get(), 0) || !EVP_marshal_private_key(cbb.get(), key) ||
       !CBB_finish(cbb.get(), &der, &der_len)) {
     return Status::ErrorUnexpected();
@@ -58,7 +57,7 @@ Status ExportPKeyPkcs8(EVP_PKEY* key, std::vector<uint8_t>* buffer) {
 
 }  // namespace
 
-Status CreateWebCryptoPublicKey(crypto::ScopedEVP_PKEY public_key,
+Status CreateWebCryptoPublicKey(bssl::UniquePtr<EVP_PKEY> public_key,
                                 const blink::WebCryptoKeyAlgorithm& algorithm,
                                 bool extractable,
                                 blink::WebCryptoKeyUsageMask usages,
@@ -70,13 +69,13 @@ Status CreateWebCryptoPublicKey(crypto::ScopedEVP_PKEY public_key,
   if (status.IsError())
     return status;
 
-  *key = blink::WebCryptoKey::create(
+  *key = blink::WebCryptoKey::Create(
       CreateAsymmetricKeyHandle(std::move(public_key), spki_data),
-      blink::WebCryptoKeyTypePublic, extractable, algorithm, usages);
+      blink::kWebCryptoKeyTypePublic, extractable, algorithm, usages);
   return Status::Success();
 }
 
-Status CreateWebCryptoPrivateKey(crypto::ScopedEVP_PKEY private_key,
+Status CreateWebCryptoPrivateKey(bssl::UniquePtr<EVP_PKEY> private_key,
                                  const blink::WebCryptoKeyAlgorithm& algorithm,
                                  bool extractable,
                                  blink::WebCryptoKeyUsageMask usages,
@@ -88,34 +87,20 @@ Status CreateWebCryptoPrivateKey(crypto::ScopedEVP_PKEY private_key,
   if (status.IsError())
     return status;
 
-  *key = blink::WebCryptoKey::create(
+  *key = blink::WebCryptoKey::Create(
       CreateAsymmetricKeyHandle(std::move(private_key), pkcs8_data),
-      blink::WebCryptoKeyTypePrivate, extractable, algorithm, usages);
+      blink::kWebCryptoKeyTypePrivate, extractable, algorithm, usages);
   return Status::Success();
-}
-
-Status CheckPrivateKeyCreationUsages(
-    blink::WebCryptoKeyUsageMask all_possible_usages,
-    blink::WebCryptoKeyUsageMask actual_usages) {
-  return CheckKeyCreationUsages(all_possible_usages, actual_usages,
-                                EmptyUsagePolicy::REJECT_EMPTY);
-}
-
-Status CheckPublicKeyCreationUsages(
-    blink::WebCryptoKeyUsageMask all_possible_usages,
-    blink::WebCryptoKeyUsageMask actual_usages) {
-  return CheckKeyCreationUsages(all_possible_usages, actual_usages,
-                                EmptyUsagePolicy::ALLOW_EMPTY);
 }
 
 Status ImportUnverifiedPkeyFromSpki(const CryptoData& key_data,
                                     int expected_pkey_id,
-                                    crypto::ScopedEVP_PKEY* out_pkey) {
+                                    bssl::UniquePtr<EVP_PKEY>* out_pkey) {
   crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
 
   CBS cbs;
   CBS_init(&cbs, key_data.bytes(), key_data.byte_length());
-  crypto::ScopedEVP_PKEY pkey(EVP_parse_public_key(&cbs));
+  bssl::UniquePtr<EVP_PKEY> pkey(EVP_parse_public_key(&cbs));
   if (!pkey || CBS_len(&cbs) != 0)
     return Status::DataError();
 
@@ -128,12 +113,12 @@ Status ImportUnverifiedPkeyFromSpki(const CryptoData& key_data,
 
 Status ImportUnverifiedPkeyFromPkcs8(const CryptoData& key_data,
                                      int expected_pkey_id,
-                                     crypto::ScopedEVP_PKEY* out_pkey) {
+                                     bssl::UniquePtr<EVP_PKEY>* out_pkey) {
   crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
 
   CBS cbs;
   CBS_init(&cbs, key_data.bytes(), key_data.byte_length());
-  crypto::ScopedEVP_PKEY pkey(EVP_parse_private_key(&cbs));
+  bssl::UniquePtr<EVP_PKEY> pkey(EVP_parse_private_key(&cbs));
   if (!pkey || CBS_len(&cbs) != 0)
     return Status::DataError();
 
@@ -144,33 +129,6 @@ Status ImportUnverifiedPkeyFromPkcs8(const CryptoData& key_data,
   return Status::Success();
 }
 
-Status VerifyUsagesBeforeImportAsymmetricKey(
-    blink::WebCryptoKeyFormat format,
-    blink::WebCryptoKeyUsageMask all_public_key_usages,
-    blink::WebCryptoKeyUsageMask all_private_key_usages,
-    blink::WebCryptoKeyUsageMask usages) {
-  switch (format) {
-    case blink::WebCryptoKeyFormatSpki:
-      return CheckPublicKeyCreationUsages(all_public_key_usages, usages);
-    case blink::WebCryptoKeyFormatPkcs8:
-      return CheckPrivateKeyCreationUsages(all_private_key_usages, usages);
-    case blink::WebCryptoKeyFormatJwk: {
-      // The JWK could represent either a public key or private key. The usages
-      // must make sense for one of the two. The usages will be checked again by
-      // ImportKeyJwk() once the key type has been determined.
-      if (CheckPublicKeyCreationUsages(all_public_key_usages, usages)
-              .IsError() &&
-          CheckPrivateKeyCreationUsages(all_private_key_usages, usages)
-              .IsError()) {
-        return Status::ErrorCreateKeyBadUsages();
-      }
-      return Status::Success();
-    }
-    default:
-      return Status::ErrorUnsupportedImportKeyFormat();
-  }
-}
-
 Status GetUsagesForGenerateAsymmetricKey(
     blink::WebCryptoKeyUsageMask combined_usages,
     blink::WebCryptoKeyUsageMask all_public_usages,
@@ -178,17 +136,18 @@ Status GetUsagesForGenerateAsymmetricKey(
     blink::WebCryptoKeyUsageMask* public_usages,
     blink::WebCryptoKeyUsageMask* private_usages) {
   // Ensure that the combined usages is a subset of the total possible usages.
-  Status status =
-      CheckKeyCreationUsages(all_public_usages | all_private_usages,
-                             combined_usages, EmptyUsagePolicy::ALLOW_EMPTY);
+  Status status = CheckKeyCreationUsages(all_public_usages | all_private_usages,
+                                         combined_usages);
   if (status.IsError())
     return status;
 
   *public_usages = combined_usages & all_public_usages;
   *private_usages = combined_usages & all_private_usages;
 
-  // Ensure that the private key has non-empty usages.
-  return CheckPrivateKeyCreationUsages(all_private_usages, *private_usages);
+  // NOTE: empty private_usages is allowed at this layer. Such keys will be
+  // rejected at a higher layer.
+
+  return Status::Success();
 }
 
 }  // namespace webcrypto

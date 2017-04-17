@@ -7,7 +7,7 @@
 
 #include "core/html/track/TextTrackKindUserPreference.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -15,32 +15,34 @@ class TextTrackList;
 class TrackGroup;
 
 class AutomaticTrackSelection {
-    STACK_ALLOCATED();
-public:
-    struct Configuration {
-        DISALLOW_NEW();
-        Configuration()
-            : disableCurrentlyEnabledTracks(false)
-            , forceEnableSubtitleOrCaptionTrack(false)
-            , textTrackKindUserPreference(TextTrackKindUserPreference::Default) { }
+  STACK_ALLOCATED();
 
-        bool disableCurrentlyEnabledTracks;
-        bool forceEnableSubtitleOrCaptionTrack;
-        TextTrackKindUserPreference textTrackKindUserPreference;
-    };
+ public:
+  struct Configuration {
+    DISALLOW_NEW();
+    Configuration()
+        : disable_currently_enabled_tracks(false),
+          force_enable_subtitle_or_caption_track(false),
+          text_track_kind_user_preference(
+              TextTrackKindUserPreference::kDefault) {}
 
-    AutomaticTrackSelection(const Configuration&);
+    bool disable_currently_enabled_tracks;
+    bool force_enable_subtitle_or_caption_track;
+    TextTrackKindUserPreference text_track_kind_user_preference;
+  };
 
-    void perform(TextTrackList&);
+  AutomaticTrackSelection(const Configuration&);
 
-private:
-    void performAutomaticTextTrackSelection(const TrackGroup&);
-    void enableDefaultMetadataTextTracks(const TrackGroup&);
-    const AtomicString& preferredTrackKind() const;
+  void Perform(TextTrackList&);
 
-    const Configuration m_configuration;
+ private:
+  void PerformAutomaticTextTrackSelection(const TrackGroup&);
+  void EnableDefaultMetadataTextTracks(const TrackGroup&);
+  const AtomicString& PreferredTrackKind() const;
+
+  const Configuration configuration_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AutomaticTrackSelection_h
+#endif  // AutomaticTrackSelection_h

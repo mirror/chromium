@@ -8,7 +8,6 @@ import android.view.View;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.ui.base.ViewAndroidDelegate;
 
 import java.lang.ref.WeakReference;
 
@@ -25,22 +24,21 @@ class PowerSaveBlocker {
     private PowerSaveBlocker() {}
 
     @CalledByNative
-    private void applyBlock(ViewAndroidDelegate delegate) {
+    private void applyBlock(View view) {
         assert mKeepScreenOnView == null;
-        View anchorView = delegate.acquireAnchorView();
-        mKeepScreenOnView = new WeakReference<>(anchorView);
-        delegate.setAnchorViewPosition(anchorView, 0, 0, 0, 0);
-        anchorView.setKeepScreenOn(true);
+        mKeepScreenOnView = new WeakReference<>(view);
+        view.setKeepScreenOn(true);
     }
 
     @CalledByNative
-    private void removeBlock(ViewAndroidDelegate delegate) {
-        assert mKeepScreenOnView != null;
-        View anchorView = mKeepScreenOnView.get();
+    private void removeBlock() {
+        // mKeepScreenOnView may be null since it's possible that |applyBlock()| was
+        // not invoked due to having failed to get a view to call |setKeepScrenOn| on.
+        if (mKeepScreenOnView == null) return;
+        View view = mKeepScreenOnView.get();
         mKeepScreenOnView = null;
-        if (anchorView == null) return;
+        if (view == null) return;
 
-        anchorView.setKeepScreenOn(false);
-        delegate.releaseAnchorView(anchorView);
+        view.setKeepScreenOn(false);
     }
 }

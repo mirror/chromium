@@ -18,9 +18,9 @@ AppListPresenterDelegateFactory::~AppListPresenterDelegateFactory() {}
 
 std::unique_ptr<app_list::AppListPresenterDelegate>
 AppListPresenterDelegateFactory::GetDelegate(
-    app_list::AppListPresenter* presenter) {
-  return base::WrapUnique(
-      new AppListPresenterDelegate(presenter, view_delegate_factory_.get()));
+    app_list::AppListPresenterImpl* presenter) {
+  return base::MakeUnique<AppListPresenterDelegate>(
+      presenter, view_delegate_factory_.get());
 }
 
 }  // namespace ash

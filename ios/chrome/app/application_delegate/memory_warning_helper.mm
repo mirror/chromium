@@ -5,9 +5,13 @@
 #import "ios/chrome/app/application_delegate/memory_warning_helper.h"
 
 #include "base/memory/memory_pressure_listener.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "ios/chrome/browser/crash_report/breakpad_helper.h"
 #import "ios/chrome/browser/metrics/previous_session_info.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 namespace {
 // The number of seconds to wait after a memory warning to clear the flag used

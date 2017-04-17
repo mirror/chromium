@@ -12,7 +12,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
@@ -50,9 +50,13 @@ typedef extensions::ExtensionDownloaderDelegate::PingResult PingResult;
 
 namespace {
 
-// Wait at least 5 minutes after browser startup before we do any checks. If you
-// change this value, make sure to update comments where it is used.
-const int kStartupWaitSeconds = 60 * 5;
+// Wait at least 60 seconds after browser startup before we do any checks. If
+// you change this value, make sure to update comments where it is used.
+const int kStartupWaitSeconds = 60;
+
+// The minimum number of seconds there should be for the delay passed to
+// ScheduleNextCheck.
+const int kScheduleNextCheckMinGapSecs = 1;
 
 // For sanity checking on update frequency - enforced in release mode only.
 #if defined(NDEBUG)
@@ -93,7 +97,8 @@ int CalculateActivePingDays(const Time& last_active_ping_day,
 namespace extensions {
 
 ExtensionUpdater::CheckParams::CheckParams()
-    : install_immediately(false) {}
+    : install_immediately(false),
+      fetch_priority(ManifestFetchData::FetchPriority::BACKGROUND) {}
 
 ExtensionUpdater::CheckParams::~CheckParams() {}
 
@@ -172,42 +177,28 @@ TimeDelta ExtensionUpdater::DetermineFirstCheckDelay() {
   if (frequency_seconds_ < kStartupWaitSeconds)
     return TimeDelta::FromSeconds(frequency_seconds_);
 
-  // If we've never scheduled a check before, start at frequency_seconds_.
+  // If we've never scheduled a check before, start at a random time up to
+  // frequency_seconds_ away.
   if (!prefs_->HasPrefPath(pref_names::kNextUpdateCheck))
-    return TimeDelta::FromSeconds(frequency_seconds_);
+    return TimeDelta::FromSeconds(
+        RandInt(kStartupWaitSeconds, frequency_seconds_));
 
-  // If it's been a long time since our last actual check, we want to do one
-  // relatively soon.
-  Time now = Time::Now();
-  Time last = Time::FromInternalValue(prefs_->GetInt64(
-      pref_names::kLastUpdateCheck));
-  int days = (now - last).InDays();
-  if (days >= 30) {
-    // Wait 5-10 minutes.
-    return TimeDelta::FromSeconds(RandInt(kStartupWaitSeconds,
-                                          kStartupWaitSeconds * 2));
-  } else if (days >= 14) {
-    // Wait 10-20 minutes.
-    return TimeDelta::FromSeconds(RandInt(kStartupWaitSeconds * 2,
-                                          kStartupWaitSeconds * 4));
-  } else if (days >= 3) {
-    // Wait 20-40 minutes.
-    return TimeDelta::FromSeconds(RandInt(kStartupWaitSeconds * 4,
-                                          kStartupWaitSeconds * 8));
-  }
-
-  // Read the persisted next check time, and use that if it isn't too soon
-  // or too late. Otherwise pick something random.
+  // Read the persisted next check time, and use that if it isn't in the past
+  // or too far in the future (this can happen with system clock changes).
   Time saved_next = Time::FromInternalValue(prefs_->GetInt64(
       pref_names::kNextUpdateCheck));
-  Time earliest = now + TimeDelta::FromSeconds(kStartupWaitSeconds);
-  Time latest = now + TimeDelta::FromSeconds(frequency_seconds_);
-  if (saved_next >= earliest && saved_next <= latest) {
+  Time now = Time::Now();
+  base::Time earliest =
+      now + TimeDelta::FromSeconds(kScheduleNextCheckMinGapSecs);
+  base::Time latest = now + TimeDelta::FromSeconds(frequency_seconds_);
+  if (saved_next > earliest && saved_next < latest) {
     return saved_next - now;
-  } else {
-    return TimeDelta::FromSeconds(RandInt(kStartupWaitSeconds,
-                                          frequency_seconds_));
   }
+
+  // In most cases we'll get here because the persisted next check time passed
+  // while we weren't running, so pick something soon.
+  return TimeDelta::FromSeconds(
+      RandInt(kStartupWaitSeconds, kStartupWaitSeconds * 5));
 }
 
 void ExtensionUpdater::Start() {
@@ -239,7 +230,7 @@ void ExtensionUpdater::Stop() {
 void ExtensionUpdater::ScheduleNextCheck(const TimeDelta& target_delay) {
   DCHECK(alive_);
   DCHECK(!timer_.IsRunning());
-  DCHECK(target_delay >= TimeDelta::FromSeconds(1));
+  DCHECK(target_delay >= TimeDelta::FromSeconds(kScheduleNextCheckMinGapSecs));
 
   // Add +/- 10% random jitter.
   double delay_ms = target_delay.InMillisecondsF();
@@ -316,7 +307,8 @@ void ExtensionUpdater::DoCheckSoon() {
 void ExtensionUpdater::AddToDownloader(
     const ExtensionSet* extensions,
     const std::list<std::string>& pending_ids,
-    int request_id) {
+    int request_id,
+    ManifestFetchData::FetchPriority fetch_priority) {
   InProgressCheck& request = requests_in_progress_[request_id];
   for (ExtensionSet::const_iterator extension_iter = extensions->begin();
        extension_iter != extensions->end(); ++extension_iter) {
@@ -331,7 +323,7 @@ void ExtensionUpdater::AddToDownloader(
     std::list<std::string>::const_iterator pending_id_iter = std::find(
         pending_ids.begin(), pending_ids.end(), extension.id());
     if (pending_id_iter == pending_ids.end()) {
-      if (downloader_->AddExtension(extension, request_id))
+      if (downloader_->AddExtension(extension, request_id, fetch_priority))
         request.in_progress_ids_.push_back(extension.id());
     }
   }
@@ -372,19 +364,25 @@ void ExtensionUpdater::CheckNow(const CheckParams& params) {
         VLOG(2) << "Extension " << *iter << " is not auto updateable";
         continue;
       }
-      if (downloader_->AddPendingExtension(*iter, info->update_url(),
-                                           request_id))
+      if (downloader_->AddPendingExtension(
+              *iter, info->update_url(),
+              pending_extension_manager->IsPolicyReinstallForCorruptionExpected(
+                  *iter),
+              request_id, params.fetch_priority))
         request.in_progress_ids_.push_back(*iter);
     }
 
     ExtensionRegistry* registry = ExtensionRegistry::Get(profile_);
-    AddToDownloader(&registry->enabled_extensions(), pending_ids, request_id);
-    AddToDownloader(&registry->disabled_extensions(), pending_ids, request_id);
+    AddToDownloader(&registry->enabled_extensions(), pending_ids, request_id,
+                    params.fetch_priority);
+    AddToDownloader(&registry->disabled_extensions(), pending_ids, request_id,
+                    params.fetch_priority);
   } else {
     for (std::list<std::string>::const_iterator it = params.ids.begin();
          it != params.ids.end(); ++it) {
       const Extension* extension = service_->GetExtensionById(*it, true);
-      if (extension && downloader_->AddExtension(*extension, request_id))
+      if (extension && downloader_->AddExtension(*extension, request_id,
+                                                 params.fetch_priority))
         request.in_progress_ids_.push_back(extension->id());
     }
   }
@@ -605,7 +603,7 @@ void ExtensionUpdater::NotifyStarted() {
 }
 
 void ExtensionUpdater::NotifyIfFinished(int request_id) {
-  DCHECK(ContainsKey(requests_in_progress_, request_id));
+  DCHECK(base::ContainsKey(requests_in_progress_, request_id));
   const InProgressCheck& request = requests_in_progress_[request_id];
   if (request.in_progress_ids_.empty()) {
     VLOG(2) << "Finished update check " << request_id;

@@ -9,40 +9,36 @@
 
 namespace blink {
 
-NavigatorNFC::NavigatorNFC()
-{
+NavigatorNFC::NavigatorNFC(Navigator& navigator)
+    : Supplement<Navigator>(navigator) {}
+
+const char* NavigatorNFC::SupplementName() {
+  return "NavigatorNFC";
 }
 
-const char* NavigatorNFC::supplementName()
-{
-    return "NavigatorNFC";
+NavigatorNFC& NavigatorNFC::From(Navigator& navigator) {
+  NavigatorNFC* supplement = static_cast<NavigatorNFC*>(
+      Supplement<Navigator>::From(navigator, SupplementName()));
+  if (!supplement) {
+    supplement = new NavigatorNFC(navigator);
+    ProvideTo(navigator, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
-NavigatorNFC& NavigatorNFC::from(Navigator& navigator)
-{
-    NavigatorNFC* supplement = static_cast<NavigatorNFC*>(Supplement<Navigator>::from(navigator, supplementName()));
-    if (!supplement) {
-        supplement = new NavigatorNFC();
-        provideTo(navigator, supplementName(), supplement);
-    }
-    return *supplement;
+NFC* NavigatorNFC::nfc(Navigator& navigator) {
+  NavigatorNFC& self = NavigatorNFC::From(navigator);
+  if (!self.nfc_) {
+    if (!navigator.GetFrame())
+      return nullptr;
+    self.nfc_ = NFC::Create(navigator.GetFrame());
+  }
+  return self.nfc_.Get();
 }
 
-NFC* NavigatorNFC::nfc(Navigator& navigator)
-{
-    NavigatorNFC& self = NavigatorNFC::from(navigator);
-    if (!self.m_nfc) {
-        if (!navigator.frame())
-            return nullptr;
-        self.m_nfc = NFC::create(navigator.frame());
-    }
-    return self.m_nfc.get();
+DEFINE_TRACE(NavigatorNFC) {
+  visitor->Trace(nfc_);
+  Supplement<Navigator>::Trace(visitor);
 }
 
-DEFINE_TRACE(NavigatorNFC)
-{
-    visitor->trace(m_nfc);
-    Supplement<Navigator>::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -32,60 +32,72 @@
 #include "platform/PlatformExport.h"
 #include "platform/audio/AudioArray.h"
 #include "platform/audio/AudioSourceProvider.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 // SincResampler is a high-quality sample-rate converter.
 
 class PLATFORM_EXPORT SincResampler {
-    USING_FAST_MALLOC(SincResampler);
-    WTF_MAKE_NONCOPYABLE(SincResampler);
-public:
-    // scaleFactor == sourceSampleRate / destinationSampleRate
-    // kernelSize can be adjusted for quality (higher is better)
-    // numberOfKernelOffsets is used for interpolation and is the number of sub-sample kernel shifts.
-    SincResampler(double scaleFactor, unsigned kernelSize = 32, unsigned numberOfKernelOffsets = 32);
+  USING_FAST_MALLOC(SincResampler);
+  WTF_MAKE_NONCOPYABLE(SincResampler);
 
-    // Processes numberOfSourceFrames from source to produce numberOfSourceFrames / scaleFactor frames in destination.
-    void process(const float* source, float* destination, unsigned numberOfSourceFrames);
+ public:
+  // scaleFactor == sourceSampleRate / destinationSampleRate
+  // kernelSize can be adjusted for quality (higher is better)
+  // numberOfKernelOffsets is used for interpolation and is the number of
+  // sub-sample kernel shifts.
+  SincResampler(double scale_factor,
+                unsigned kernel_size = 32,
+                unsigned number_of_kernel_offsets = 32);
 
-    // Process with input source callback function for streaming applications.
-    void process(AudioSourceProvider*, float* destination, size_t framesToProcess);
+  // Processes numberOfSourceFrames from source to produce numberOfSourceFrames
+  // / scaleFactor frames in destination.
+  void Process(const float* source,
+               float* destination,
+               unsigned number_of_source_frames);
 
-protected:
-    void initializeKernel();
-    void consumeSource(float* buffer, unsigned numberOfSourceFrames);
+  // Process with input source callback function for streaming applications.
+  void Process(AudioSourceProvider*,
+               float* destination,
+               size_t frames_to_process);
 
-    double m_scaleFactor;
-    unsigned m_kernelSize;
-    unsigned m_numberOfKernelOffsets;
+ protected:
+  void InitializeKernel();
+  void ConsumeSource(float* buffer, unsigned number_of_source_frames);
 
-    // m_kernelStorage has m_numberOfKernelOffsets kernels back-to-back, each of size m_kernelSize.
-    // The kernel offsets are sub-sample shifts of a windowed sinc() shifted from 0.0 to 1.0 sample.
-    AudioFloatArray m_kernelStorage;
+  double scale_factor_;
+  unsigned kernel_size_;
+  unsigned number_of_kernel_offsets_;
 
-    // m_virtualSourceIndex is an index on the source input buffer with sub-sample precision.
-    // It must be double precision to avoid drift.
-    double m_virtualSourceIndex;
+  // m_kernelStorage has m_numberOfKernelOffsets kernels back-to-back, each of
+  // size m_kernelSize.  The kernel offsets are sub-sample shifts of a windowed
+  // sinc() shifted from 0.0 to 1.0 sample.
+  AudioFloatArray kernel_storage_;
 
-    // This is the number of destination frames we generate per processing pass on the buffer.
-    unsigned m_blockSize;
+  // m_virtualSourceIndex is an index on the source input buffer with sub-sample
+  // precision.  It must be double precision to avoid drift.
+  double virtual_source_index_;
 
-    // Source is copied into this buffer for each processing pass.
-    AudioFloatArray m_inputBuffer;
+  // This is the number of destination frames we generate per processing pass on
+  // the buffer.
+  unsigned block_size_;
 
-    const float* m_source;
-    unsigned m_sourceFramesAvailable;
+  // Source is copied into this buffer for each processing pass.
+  AudioFloatArray input_buffer_;
 
-    // m_sourceProvider is used to provide the audio input stream to the resampler.
-    AudioSourceProvider* m_sourceProvider;
+  const float* source_;
+  unsigned source_frames_available_;
 
-    // The buffer is primed once at the very beginning of processing.
-    bool m_isBufferPrimed;
+  // m_sourceProvider is used to provide the audio input stream to the
+  // resampler.
+  AudioSourceProvider* source_provider_;
+
+  // The buffer is primed once at the very beginning of processing.
+  bool is_buffer_primed_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SincResampler_h
+#endif  // SincResampler_h

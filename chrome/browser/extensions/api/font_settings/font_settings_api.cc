@@ -15,6 +15,7 @@
 #include "base/command_line.h"
 #include "base/json/json_writer.h"
 #include "base/lazy_instance.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -26,6 +27,7 @@
 #include "chrome/browser/extensions/api/preference/preference_helpers.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/webui/options/font_settings_utils.h"
 #include "chrome/common/extensions/api/font_settings.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_names_util.h"
@@ -36,14 +38,10 @@
 #include "extensions/browser/extension_system.h"
 #include "extensions/common/error_utils.h"
 
-#if defined(OS_WIN)
-#include "ui/gfx/font.h"
-#include "ui/gfx/platform_font_win.h"
-#endif
-
 namespace extensions {
 
 namespace fonts = api::font_settings;
+using options::FontSettingsUtilities;
 
 namespace {
 
@@ -71,20 +69,6 @@ std::string GetFontNamePrefPath(fonts::GenericFamily generic_family_enum,
   return base::StringPrintf(kWebKitFontPrefFormat,
                             generic_family.c_str(),
                             script.c_str());
-}
-
-// Returns the localized name of a font so that it can be matched within the
-// list of system fonts. On Windows, the list of system fonts has names only
-// for the system locale, but the pref value may be in the English name.
-std::string MaybeGetLocalizedFontName(const std::string& font_name) {
-#if defined(OS_WIN)
-  if (!font_name.empty()) {
-    gfx::Font font(font_name, 12);  // dummy font size
-    return static_cast<gfx::PlatformFontWin*>(font.platform_font())->
-        GetLocalizedFontName();
-  }
-#endif
-  return font_name;
 }
 
 // Registers |obs| to observe per-script font prefs under the path |map_name|.
@@ -177,14 +161,14 @@ void FontSettingsEventRouter::OnFontNamePrefChanged(
     NOTREACHED();
     return;
   }
-  font_name = MaybeGetLocalizedFontName(font_name);
+  font_name = FontSettingsUtilities::MaybeGetLocalizedFontName(font_name);
 
   base::ListValue args;
-  base::DictionaryValue* dict = new base::DictionaryValue();
-  args.Append(dict);
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
   dict->SetString(kFontIdKey, font_name);
   dict->SetString(kGenericFamilyKey, generic_family);
   dict->SetString(kScriptKey, script);
+  args.Append(std::move(dict));
 
   extensions::preference_helpers::DispatchEventToExtensions(
       profile_, events::FONT_SETTINGS_ON_FONT_CHANGED,
@@ -202,9 +186,9 @@ void FontSettingsEventRouter::OnFontPrefChanged(
   CHECK(pref);
 
   base::ListValue args;
-  base::DictionaryValue* dict = new base::DictionaryValue();
-  args.Append(dict);
-  dict->Set(key, pref->GetValue()->DeepCopy());
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  dict->Set(key, pref->GetValue()->CreateDeepCopy());
+  args.Append(std::move(dict));
 
   extensions::preference_helpers::DispatchEventToExtensions(
       profile_, histogram_value, event_name, &args,
@@ -218,8 +202,8 @@ FontSettingsAPI::FontSettingsAPI(content::BrowserContext* context)
 FontSettingsAPI::~FontSettingsAPI() {
 }
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<FontSettingsAPI> >
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<BrowserContextKeyedAPIFactory<FontSettingsAPI>>::
+    DestructorAtExit g_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<FontSettingsAPI>*
@@ -227,11 +211,10 @@ FontSettingsAPI::GetFactoryInstance() {
   return g_factory.Pointer();
 }
 
-bool FontSettingsClearFontFunction::RunSync() {
-  if (GetProfile()->IsOffTheRecord()) {
-    error_ = kSetFromIncognitoError;
-    return false;
-  }
+ExtensionFunction::ResponseAction FontSettingsClearFontFunction::Run() {
+  Profile* profile = Profile::FromBrowserContext(browser_context());
+  if (profile->IsOffTheRecord())
+    return RespondNow(Error(kSetFromIncognitoError));
 
   std::unique_ptr<fonts::ClearFont::Params> params(
       fonts::ClearFont::Params::Create(*args_));
@@ -241,15 +224,14 @@ bool FontSettingsClearFontFunction::RunSync() {
                                               params->details.script);
 
   // Ensure |pref_path| really is for a registered per-script font pref.
-  EXTENSION_FUNCTION_VALIDATE(
-      GetProfile()->GetPrefs()->FindPreference(pref_path));
+  EXTENSION_FUNCTION_VALIDATE(profile->GetPrefs()->FindPreference(pref_path));
 
-  PreferenceAPI::Get(GetProfile())->RemoveExtensionControlledPref(
+  PreferenceAPI::Get(profile)->RemoveExtensionControlledPref(
       extension_id(), pref_path, kExtensionPrefsScopeRegular);
-  return true;
+  return RespondNow(NoArguments());
 }
 
-bool FontSettingsGetFontFunction::RunSync() {
+ExtensionFunction::ResponseAction FontSettingsGetFontFunction::Run() {
   std::unique_ptr<fonts::GetFont::Params> params(
       fonts::GetFont::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params.get());
@@ -257,34 +239,33 @@ bool FontSettingsGetFontFunction::RunSync() {
   std::string pref_path = GetFontNamePrefPath(params->details.generic_family,
                                               params->details.script);
 
-  PrefService* prefs = GetProfile()->GetPrefs();
+  Profile* profile = Profile::FromBrowserContext(browser_context());
+  PrefService* prefs = profile->GetPrefs();
   const PrefService::Preference* pref =
       prefs->FindPreference(pref_path);
 
   std::string font_name;
   EXTENSION_FUNCTION_VALIDATE(
       pref && pref->GetValue()->GetAsString(&font_name));
-  font_name = MaybeGetLocalizedFontName(font_name);
+  font_name = FontSettingsUtilities::MaybeGetLocalizedFontName(font_name);
 
   // We don't support incognito-specific font prefs, so don't consider them when
   // getting level of control.
   const bool kIncognito = false;
   std::string level_of_control =
-      extensions::preference_helpers::GetLevelOfControl(
-          GetProfile(), extension_id(), pref_path, kIncognito);
+      extensions::preference_helpers::GetLevelOfControl(profile, extension_id(),
+                                                        pref_path, kIncognito);
 
   std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue());
   result->SetString(kFontIdKey, font_name);
   result->SetString(kLevelOfControlKey, level_of_control);
-  SetResult(std::move(result));
-  return true;
+  return RespondNow(OneArgument(std::move(result)));
 }
 
-bool FontSettingsSetFontFunction::RunSync() {
-  if (GetProfile()->IsOffTheRecord()) {
-    error_ = kSetFromIncognitoError;
-    return false;
-  }
+ExtensionFunction::ResponseAction FontSettingsSetFontFunction::Run() {
+  Profile* profile = Profile::FromBrowserContext(browser_context());
+  if (profile->IsOffTheRecord())
+    return RespondNow(Error(kSetFromIncognitoError));
 
   std::unique_ptr<fonts::SetFont::Params> params(
       fonts::SetFont::Params::Create(*args_));
@@ -294,15 +275,12 @@ bool FontSettingsSetFontFunction::RunSync() {
                                               params->details.script);
 
   // Ensure |pref_path| really is for a registered font pref.
-  EXTENSION_FUNCTION_VALIDATE(
-      GetProfile()->GetPrefs()->FindPreference(pref_path));
+  EXTENSION_FUNCTION_VALIDATE(profile->GetPrefs()->FindPreference(pref_path));
 
-  PreferenceAPI::Get(GetProfile())->SetExtensionControlledPref(
-      extension_id(),
-      pref_path,
-      kExtensionPrefsScopeRegular,
-      new base::StringValue(params->details.font_id));
-  return true;
+  PreferenceAPI::Get(profile)->SetExtensionControlledPref(
+      extension_id(), pref_path, kExtensionPrefsScopeRegular,
+      new base::Value(params->details.font_id));
+  return RespondNow(NoArguments());
 }
 
 bool FontSettingsGetFontListFunction::RunAsync() {
@@ -323,7 +301,7 @@ bool FontSettingsGetFontListFunction::CopyFontsToResult(
   for (base::ListValue::iterator it = fonts->begin();
        it != fonts->end(); ++it) {
     base::ListValue* font_list_value;
-    if (!(*it)->GetAsList(&font_list_value)) {
+    if (!it->GetAsList(&font_list_value)) {
       NOTREACHED();
       return false;
     }
@@ -342,8 +320,9 @@ bool FontSettingsGetFontListFunction::CopyFontsToResult(
 
     std::unique_ptr<base::DictionaryValue> font_name(
         new base::DictionaryValue());
-    font_name->Set(kFontIdKey, new base::StringValue(name));
-    font_name->Set(kDisplayNameKey, new base::StringValue(localized_name));
+    font_name->Set(kFontIdKey, base::MakeUnique<base::Value>(name));
+    font_name->Set(kDisplayNameKey,
+                   base::MakeUnique<base::Value>(localized_name));
     result->Append(std::move(font_name));
   }
 
@@ -351,19 +330,19 @@ bool FontSettingsGetFontListFunction::CopyFontsToResult(
   return true;
 }
 
-bool ClearFontPrefExtensionFunction::RunSync() {
-  if (GetProfile()->IsOffTheRecord()) {
-    error_ = kSetFromIncognitoError;
-    return false;
-  }
+ExtensionFunction::ResponseAction ClearFontPrefExtensionFunction::Run() {
+  Profile* profile = Profile::FromBrowserContext(browser_context());
+  if (profile->IsOffTheRecord())
+    return RespondNow(Error(kSetFromIncognitoError));
 
-  PreferenceAPI::Get(GetProfile())->RemoveExtensionControlledPref(
+  PreferenceAPI::Get(profile)->RemoveExtensionControlledPref(
       extension_id(), GetPrefName(), kExtensionPrefsScopeRegular);
-  return true;
+  return RespondNow(NoArguments());
 }
 
-bool GetFontPrefExtensionFunction::RunSync() {
-  PrefService* prefs = GetProfile()->GetPrefs();
+ExtensionFunction::ResponseAction GetFontPrefExtensionFunction::Run() {
+  Profile* profile = Profile::FromBrowserContext(browser_context());
+  PrefService* prefs = profile->GetPrefs();
   const PrefService::Preference* pref = prefs->FindPreference(GetPrefName());
   EXTENSION_FUNCTION_VALIDATE(pref);
 
@@ -373,20 +352,18 @@ bool GetFontPrefExtensionFunction::RunSync() {
 
   std::string level_of_control =
       extensions::preference_helpers::GetLevelOfControl(
-          GetProfile(), extension_id(), GetPrefName(), kIncognito);
+          profile, extension_id(), GetPrefName(), kIncognito);
 
   std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue());
-  result->Set(GetKey(), pref->GetValue()->DeepCopy());
+  result->Set(GetKey(), pref->GetValue()->CreateDeepCopy());
   result->SetString(kLevelOfControlKey, level_of_control);
-  SetResult(std::move(result));
-  return true;
+  return RespondNow(OneArgument(std::move(result)));
 }
 
-bool SetFontPrefExtensionFunction::RunSync() {
-  if (GetProfile()->IsOffTheRecord()) {
-    error_ = kSetFromIncognitoError;
-    return false;
-  }
+ExtensionFunction::ResponseAction SetFontPrefExtensionFunction::Run() {
+  Profile* profile = Profile::FromBrowserContext(browser_context());
+  if (profile->IsOffTheRecord())
+    return RespondNow(Error(kSetFromIncognitoError));
 
   base::DictionaryValue* details = NULL;
   EXTENSION_FUNCTION_VALIDATE(args_->GetDictionary(0, &details));
@@ -394,12 +371,10 @@ bool SetFontPrefExtensionFunction::RunSync() {
   base::Value* value;
   EXTENSION_FUNCTION_VALIDATE(details->Get(GetKey(), &value));
 
-  PreferenceAPI::Get(GetProfile())
-      ->SetExtensionControlledPref(extension_id(),
-                                   GetPrefName(),
-                                   kExtensionPrefsScopeRegular,
-                                   value->DeepCopy());
-  return true;
+  PreferenceAPI::Get(profile)->SetExtensionControlledPref(
+      extension_id(), GetPrefName(), kExtensionPrefsScopeRegular,
+      value->DeepCopy());
+  return RespondNow(NoArguments());
 }
 
 const char* FontSettingsClearDefaultFontSizeFunction::GetPrefName() {

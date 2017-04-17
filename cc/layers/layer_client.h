@@ -7,7 +7,7 @@
 
 #include <memory>
 
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
 
 namespace base {
 namespace trace_event {
@@ -31,6 +31,7 @@ class CC_EXPORT LayerClient {
   virtual std::unique_ptr<base::trace_event::ConvertableToTraceFormat>
   TakeDebugInfo(Layer* layer) = 0;
   virtual void didUpdateMainThreadScrollingReasons() = 0;
+  virtual void didChangeScrollbarsHidden(bool) = 0;
 
  protected:
   virtual ~LayerClient() {}

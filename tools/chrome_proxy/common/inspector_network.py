@@ -4,8 +4,8 @@
 import logging
 
 from telemetry.core import exceptions
-from telemetry.timeline import trace_data
 from telemetry.timeline import model
+from tracing.trace_data import trace_data
 
 
 class InspectorNetworkException(Exception):
@@ -239,7 +239,9 @@ class InspectorNetwork(object):
         logging.warning('HTTP Response missing required field: %s', field)
         return
     request_id = params['requestId']
-    assert request_id in self._initiators
+    if request_id not in self._initiators:
+      logging.warning('Dropped a message with no initiator.')
+      return
     initiator = self._initiators[request_id]
     self._http_responses.append(
         InspectorNetworkResponseData(self, params, initiator))
@@ -289,5 +291,5 @@ class TimelineRecorder(object):
     if len(events) == 0:
       return None
     builder = trace_data.TraceDataBuilder()
-    builder.AddEventsTo(trace_data.INSPECTOR_TRACE_PART, events)
+    builder.AddTraceFor(trace_data.INSPECTOR_TRACE_PART, events)
     return model.TimelineModel(builder.AsData(), shift_world_to_zero=False)

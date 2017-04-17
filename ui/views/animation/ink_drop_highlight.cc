@@ -43,10 +43,10 @@ InkDropHighlight::InkDropHighlight(
       layer_delegate_(std::move(layer_delegate)),
       layer_(new ui::Layer()),
       observer_(nullptr) {
-  const gfx::Rect layer_bounds = layer_delegate_->GetPaintedBounds();
-  size_ = explode_size_ = layer_bounds.size();
+  const gfx::RectF painted_bounds = layer_delegate_->GetPaintedBounds();
+  size_ = explode_size_ = painted_bounds.size();
 
-  layer_->SetBounds(layer_bounds);
+  layer_->SetBounds(gfx::ToEnclosingRect(painted_bounds));
   layer_->SetFillsBoundsOpaquely(false);
   layer_->set_delegate(layer_delegate_.get());
   layer_->SetVisible(false);
@@ -54,7 +54,7 @@ InkDropHighlight::InkDropHighlight(
   layer_->set_name("InkDropHighlight:layer");
 }
 
-InkDropHighlight::InkDropHighlight(const gfx::Size& size,
+InkDropHighlight::InkDropHighlight(const gfx::SizeF& size,
                                    int corner_radius,
                                    const gfx::PointF& center_point,
                                    SkColor color)
@@ -66,7 +66,17 @@ InkDropHighlight::InkDropHighlight(const gfx::Size& size,
   layer_->SetOpacity(visible_opacity_);
 }
 
-InkDropHighlight::~InkDropHighlight() {}
+InkDropHighlight::InkDropHighlight(const gfx::Size& size,
+                                   int corner_radius,
+                                   const gfx::PointF& center_point,
+                                   SkColor color)
+    : InkDropHighlight(gfx::SizeF(size), corner_radius, center_point, color) {}
+
+InkDropHighlight::~InkDropHighlight() {
+  // Explicitly aborting all the animations ensures all callbacks are invoked
+  // while this instance still exists.
+  layer_->GetAnimator()->AbortAllAnimations();
+}
 
 bool InkDropHighlight::IsFadingInOrVisible() const {
   return last_animation_initiated_was_fade_in_;
@@ -88,8 +98,8 @@ test::InkDropHighlightTestApi* InkDropHighlight::GetTestApi() {
 
 void InkDropHighlight::AnimateFade(AnimationType animation_type,
                                    const base::TimeDelta& duration,
-                                   const gfx::Size& initial_size,
-                                   const gfx::Size& target_size) {
+                                   const gfx::SizeF& initial_size,
+                                   const gfx::SizeF& target_size) {
   last_animation_initiated_was_fade_in_ = animation_type == FADE_IN;
 
   layer_->SetTransform(CalculateTransform(initial_size));
@@ -109,21 +119,23 @@ void InkDropHighlight::AnimateFade(AnimationType animation_type,
   animation.SetPreemptionStrategy(
       ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
 
-  ui::LayerAnimationElement* opacity_element =
+  std::unique_ptr<ui::LayerAnimationElement> opacity_element =
       ui::LayerAnimationElement::CreateOpacityElement(
           animation_type == FADE_IN ? visible_opacity_ : kHiddenOpacity,
           duration);
   ui::LayerAnimationSequence* opacity_sequence =
-      new ui::LayerAnimationSequence(opacity_element);
+      new ui::LayerAnimationSequence(std::move(opacity_element));
   opacity_sequence->AddObserver(animation_observer);
   animator->StartAnimation(opacity_sequence);
 
   if (initial_size != target_size) {
-    ui::LayerAnimationElement* transform_element =
+    std::unique_ptr<ui::LayerAnimationElement> transform_element =
         ui::LayerAnimationElement::CreateTransformElement(
             CalculateTransform(target_size), duration);
+
     ui::LayerAnimationSequence* transform_sequence =
-        new ui::LayerAnimationSequence(transform_element);
+        new ui::LayerAnimationSequence(std::move(transform_element));
+
     transform_sequence->AddObserver(animation_observer);
     animator->StartAnimation(transform_sequence);
   }
@@ -132,10 +144,13 @@ void InkDropHighlight::AnimateFade(AnimationType animation_type,
 }
 
 gfx::Transform InkDropHighlight::CalculateTransform(
-    const gfx::Size& size) const {
+    const gfx::SizeF& size) const {
   gfx::Transform transform;
   transform.Translate(center_point_.x(), center_point_.y());
-  transform.Scale(size.width() / size_.width(), size.height() / size_.height());
+  // TODO(bruthig): Fix the InkDropHighlight to work well when initialized with
+  // a (0x0) size. See https://crbug.com/661618.
+  transform.Scale(size_.width() == 0 ? 0 : size.width() / size_.width(),
+                  size_.height() == 0 ? 0 : size.height() / size_.height());
   gfx::Vector2dF layer_offset = layer_delegate_->GetCenteringOffset();
   transform.Translate(-layer_offset.x(), -layer_offset.y());
   return transform;

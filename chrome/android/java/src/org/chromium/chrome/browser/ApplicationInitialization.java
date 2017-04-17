@@ -25,7 +25,7 @@ public final class ApplicationInitialization {
     /**
      * Enable fullscreen related startup flags.
      * @param resources Resources to use while calculating initialization constants.
-     * @param resControlContainerHeight The resource id for the height of the top controls.
+     * @param resControlContainerHeight The resource id for the height of the browser controls.
      */
     public static void enableFullscreenFlags(
             Resources resources, Context context, int resControlContainerHeight) {
@@ -35,10 +35,10 @@ public final class ApplicationInitialization {
         if (commandLine.hasSwitch(ChromeSwitches.DISABLE_FULLSCREEN)) return;
 
         TypedValue threshold = new TypedValue();
-        resources.getValue(R.floats.top_controls_show_threshold, threshold, true);
+        resources.getValue(R.dimen.top_controls_show_threshold, threshold, true);
         commandLine.appendSwitchWithValue(
                 ContentSwitches.TOP_CONTROLS_SHOW_THRESHOLD, threshold.coerceToString().toString());
-        resources.getValue(R.floats.top_controls_hide_threshold, threshold, true);
+        resources.getValue(R.dimen.top_controls_hide_threshold, threshold, true);
         commandLine.appendSwitchWithValue(
                 ContentSwitches.TOP_CONTROLS_HIDE_THRESHOLD, threshold.coerceToString().toString());
     }

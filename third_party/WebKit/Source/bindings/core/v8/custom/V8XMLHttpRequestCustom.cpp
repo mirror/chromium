@@ -39,92 +39,81 @@
 #include "bindings/core/v8/V8Document.h"
 #include "bindings/core/v8/V8FormData.h"
 #include "bindings/core/v8/V8HTMLDocument.h"
-#include "bindings/core/v8/V8Stream.h"
 #include "core/dom/Document.h"
-#include "core/inspector/InspectorInstrumentation.h"
-#include "core/streams/Stream.h"
+#include "core/probe/CoreProbes.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/xmlhttprequest/XMLHttpRequest.h"
-#include <v8.h>
+#include "v8/include/v8.h"
 
 namespace blink {
 
-void V8XMLHttpRequest::responseTextAttributeGetterCustom(const v8::FunctionCallbackInfo<v8::Value>& info)
-{
-    XMLHttpRequest* xmlHttpRequest = V8XMLHttpRequest::toImpl(info.Holder());
-    ExceptionState exceptionState(ExceptionState::GetterContext, "responseText", "XMLHttpRequest", info.Holder(), info.GetIsolate());
-    ScriptString text = xmlHttpRequest->responseText(exceptionState);
-    if (exceptionState.throwIfNeeded())
-        return;
-    if (text.isEmpty()) {
-        v8SetReturnValueString(info, emptyString(), info.GetIsolate());
-        return;
-    }
-    v8SetReturnValue(info, text.v8Value());
+void V8XMLHttpRequest::responseTextAttributeGetterCustom(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
+  XMLHttpRequest* xml_http_request = V8XMLHttpRequest::toImpl(info.Holder());
+  ExceptionState exception_state(info.GetIsolate(),
+                                 ExceptionState::kGetterContext,
+                                 "XMLHttpRequest", "responseText");
+  ScriptString text = xml_http_request->responseText(exception_state);
+  if (text.IsEmpty()) {
+    V8SetReturnValueString(info, g_empty_string, info.GetIsolate());
+    return;
+  }
+  V8SetReturnValue(info, text.V8Value());
 }
 
-void V8XMLHttpRequest::responseAttributeGetterCustom(const v8::FunctionCallbackInfo<v8::Value>& info)
-{
-    XMLHttpRequest* xmlHttpRequest = V8XMLHttpRequest::toImpl(info.Holder());
+void V8XMLHttpRequest::responseAttributeGetterCustom(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
+  XMLHttpRequest* xml_http_request = V8XMLHttpRequest::toImpl(info.Holder());
+  ExceptionState exception_state(info.GetIsolate(),
+                                 ExceptionState::kGetterContext,
+                                 "XMLHttpRequest", "response");
 
-    switch (xmlHttpRequest->getResponseTypeCode()) {
-    case XMLHttpRequest::ResponseTypeDefault:
-    case XMLHttpRequest::ResponseTypeText:
-        responseTextAttributeGetterCustom(info);
+  switch (xml_http_request->GetResponseTypeCode()) {
+    case XMLHttpRequest::kResponseTypeDefault:
+    case XMLHttpRequest::kResponseTypeText:
+      responseTextAttributeGetterCustom(info);
+      return;
+
+    case XMLHttpRequest::kResponseTypeJSON: {
+      v8::Isolate* isolate = info.GetIsolate();
+
+      ScriptString json_source = xml_http_request->ResponseJSONSource();
+      if (json_source.IsEmpty()) {
+        V8SetReturnValue(info, v8::Null(isolate));
         return;
+      }
 
-    case XMLHttpRequest::ResponseTypeJSON:
-        {
-            v8::Isolate* isolate = info.GetIsolate();
-
-            ScriptString jsonSource = xmlHttpRequest->responseJSONSource();
-            if (jsonSource.isEmpty()) {
-                v8SetReturnValue(info, v8::Null(isolate));
-                return;
-            }
-
-            // Catch syntax error. Swallows an exception (when thrown) as the
-            // spec says. https://xhr.spec.whatwg.org/#response-body
-            v8::TryCatch exceptionCatcher(isolate);
-            v8::Local<v8::Value> json;
-            if (v8Call(v8::JSON::Parse(isolate, jsonSource.v8Value()), json, exceptionCatcher))
-                v8SetReturnValue(info, json);
-            else
-                v8SetReturnValue(info, v8::Null(isolate));
-            return;
-        }
-
-    case XMLHttpRequest::ResponseTypeDocument:
-        {
-            ExceptionState exceptionState(ExceptionState::GetterContext, "response", "XMLHttpRequest", info.Holder(), info.GetIsolate());
-            Document* document = xmlHttpRequest->responseXML(exceptionState);
-            if (exceptionState.throwIfNeeded())
-                return;
-            v8SetReturnValueFast(info, document, xmlHttpRequest);
-            return;
-        }
-
-    case XMLHttpRequest::ResponseTypeBlob:
-        {
-            Blob* blob = xmlHttpRequest->responseBlob();
-            v8SetReturnValueFast(info, blob, xmlHttpRequest);
-            return;
-        }
-
-    case XMLHttpRequest::ResponseTypeLegacyStream:
-        {
-            Stream* stream = xmlHttpRequest->responseLegacyStream();
-            v8SetReturnValueFast(info, stream, xmlHttpRequest);
-            return;
-        }
-
-    case XMLHttpRequest::ResponseTypeArrayBuffer:
-        {
-            DOMArrayBuffer* arrayBuffer = xmlHttpRequest->responseArrayBuffer();
-            v8SetReturnValueFast(info, arrayBuffer, xmlHttpRequest);
-            return;
-        }
+      // Catch syntax error. Swallows an exception (when thrown) as the
+      // spec says. https://xhr.spec.whatwg.org/#response-body
+      v8::Local<v8::Value> json = FromJSONString(
+          isolate, ToCoreString(json_source.V8Value()), exception_state);
+      if (exception_state.HadException()) {
+        exception_state.ClearException();
+        V8SetReturnValue(info, v8::Null(isolate));
+      } else {
+        V8SetReturnValue(info, json);
+      }
+      return;
     }
+
+    case XMLHttpRequest::kResponseTypeDocument: {
+      Document* document = xml_http_request->responseXML(exception_state);
+      V8SetReturnValueFast(info, document, xml_http_request);
+      return;
+    }
+
+    case XMLHttpRequest::kResponseTypeBlob: {
+      Blob* blob = xml_http_request->ResponseBlob();
+      V8SetReturnValueFast(info, blob, xml_http_request);
+      return;
+    }
+
+    case XMLHttpRequest::kResponseTypeArrayBuffer: {
+      DOMArrayBuffer* array_buffer = xml_http_request->ResponseArrayBuffer();
+      V8SetReturnValueFast(info, array_buffer, xml_http_request);
+      return;
+    }
+  }
 }
 
-} // namespace blink
+}  // namespace blink

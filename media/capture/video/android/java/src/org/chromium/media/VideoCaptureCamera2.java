@@ -15,6 +15,7 @@ import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
+import android.hardware.camera2.params.MeteringRectangle;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
@@ -23,6 +24,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Range;
 import android.util.Size;
+import android.util.SparseIntArray;
 import android.view.Surface;
 
 import org.chromium.base.Log;
@@ -30,6 +32,7 @@ import org.chromium.base.annotations.JNINamespace;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -88,11 +91,13 @@ public class VideoCaptureCamera2 extends VideoCapture {
                 // time a downloaded image is ready. Since |handler| is null, we'll work on the
                 // current Thread Looper.
                 mPreviewSession.setRepeatingRequest(mPreviewRequest, null, null);
-            } catch (CameraAccessException | IllegalArgumentException | SecurityException ex) {
+            } catch (CameraAccessException | SecurityException | IllegalStateException
+                    | IllegalArgumentException ex) {
                 Log.e(TAG, "setRepeatingRequest: ", ex);
                 return;
             }
             // Now wait for trigger on CrImageReaderListener.onImageAvailable();
+            nativeOnStarted(mNativeVideoCaptureDeviceAndroid);
             changeCameraStateAndNotify(CameraState.STARTED);
         }
 
@@ -132,7 +137,8 @@ public class VideoCaptureCamera2 extends VideoCapture {
                         image.getPlanes()[0].getBuffer(), image.getPlanes()[0].getRowStride(),
                         image.getPlanes()[1].getBuffer(), image.getPlanes()[2].getBuffer(),
                         image.getPlanes()[1].getRowStride(), image.getPlanes()[1].getPixelStride(),
-                        image.getWidth(), image.getHeight(), getCameraRotation());
+                        image.getWidth(), image.getHeight(), getCameraRotation(),
+                        image.getTimestamp());
             } catch (IllegalStateException ex) {
                 Log.e(TAG, "acquireLatestImage():", ex);
             }
@@ -196,7 +202,6 @@ public class VideoCaptureCamera2 extends VideoCapture {
 
         @Override
         public void onImageAvailable(ImageReader reader) {
-            Log.d(TAG, "CrPhotoReaderListener.mCallbackId " + mCallbackId);
             try (Image image = reader.acquireLatestImage()) {
                 if (image == null) {
                     throw new IllegalStateException();
@@ -221,8 +226,32 @@ public class VideoCaptureCamera2 extends VideoCapture {
         }
     };
 
+    // Inner Runnable to restart capture, must be run on |mContext| looper.
+    private final Runnable mRestartCapture = new Runnable() {
+        @Override
+        public void run() {
+            mPreviewSession.close(); // Asynchronously kill the CaptureSession.
+            createPreviewObjects();
+        }
+    };
+
     private static final double kNanoSecondsToFps = 1.0E-9;
     private static final String TAG = "VideoCapture";
+
+    // Map of the equivalent color temperature in Kelvin for the White Balance setting. The
+    // values are a mixture of educated guesses and data from Android's Camera2 API. The
+    // temperatures must be ordered increasingly.
+    private static final SparseIntArray COLOR_TEMPERATURES_MAP;
+    static {
+        COLOR_TEMPERATURES_MAP = new SparseIntArray();
+        COLOR_TEMPERATURES_MAP.append(2850, CameraMetadata.CONTROL_AWB_MODE_INCANDESCENT);
+        COLOR_TEMPERATURES_MAP.append(2940, CameraMetadata.CONTROL_AWB_MODE_WARM_FLUORESCENT);
+        COLOR_TEMPERATURES_MAP.append(3000, CameraMetadata.CONTROL_AWB_MODE_TWILIGHT);
+        COLOR_TEMPERATURES_MAP.append(4230, CameraMetadata.CONTROL_AWB_MODE_FLUORESCENT);
+        COLOR_TEMPERATURES_MAP.append(6000, CameraMetadata.CONTROL_AWB_MODE_CLOUDY_DAYLIGHT);
+        COLOR_TEMPERATURES_MAP.append(6504, CameraMetadata.CONTROL_AWB_MODE_DAYLIGHT);
+        COLOR_TEMPERATURES_MAP.append(7000, CameraMetadata.CONTROL_AWB_MODE_SHADE);
+    };
 
     private static enum CameraState { OPENING, CONFIGURING, STARTED, STOPPED }
 
@@ -231,10 +260,25 @@ public class VideoCaptureCamera2 extends VideoCapture {
     private CameraDevice mCameraDevice;
     private CameraCaptureSession mPreviewSession;
     private CaptureRequest mPreviewRequest;
+    private Handler mMainHandler;
+    private ImageReader mImageReader = null;
 
+    private Range<Integer> mAeFpsRange;
     private CameraState mCameraState = CameraState.STOPPED;
     private final float mMaxZoom;
     private Rect mCropRect = new Rect();
+    private int mPhotoWidth;
+    private int mPhotoHeight;
+    private int mFocusMode = AndroidMeteringMode.CONTINUOUS;
+    private int mExposureMode = AndroidMeteringMode.CONTINUOUS;
+    private MeteringRectangle mAreaOfInterest;
+    private int mExposureCompensation;
+    private int mWhiteBalanceMode = AndroidMeteringMode.CONTINUOUS;
+    private int mColorTemperature = -1;
+    private int mIso;
+    private boolean mRedEyeReduction;
+    private int mFillLightMode = AndroidFillLightMode.OFF;
+    private boolean mTorch;
 
     // Service function to grab CameraCharacteristics and handle exceptions.
     private static CameraCharacteristics getCameraCharacteristics(Context appContext, int id) {
@@ -260,13 +304,13 @@ public class VideoCaptureCamera2 extends VideoCapture {
 
         // Create an ImageReader and plug a thread looper into it to have
         // readback take place on its own thread.
-        final ImageReader imageReader = ImageReader.newInstance(mCaptureFormat.getWidth(),
+        mImageReader = ImageReader.newInstance(mCaptureFormat.getWidth(),
                 mCaptureFormat.getHeight(), mCaptureFormat.getPixelFormat(), 2 /* maxImages */);
         HandlerThread thread = new HandlerThread("CameraPreview");
         thread.start();
         final Handler backgroundHandler = new Handler(thread.getLooper());
         final CrImageReaderListener imageReaderListener = new CrImageReaderListener();
-        imageReader.setOnImageAvailableListener(imageReaderListener, backgroundHandler);
+        mImageReader.setOnImageAvailableListener(imageReaderListener, backgroundHandler);
 
         // The Preview template specifically means "high frame rate is given
         // priority over the highest-quality post-processing".
@@ -283,7 +327,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
             return false;
         }
         // Construct an ImageReader Surface and plug it into our CaptureRequest.Builder.
-        previewRequestBuilder.addTarget(imageReader.getSurface());
+        previewRequestBuilder.addTarget(mImageReader.getSurface());
 
         // A series of configuration options in the PreviewBuilder
         previewRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
@@ -292,13 +336,12 @@ public class VideoCaptureCamera2 extends VideoCapture {
         previewRequestBuilder.set(CaptureRequest.EDGE_MODE, CameraMetadata.EDGE_MODE_FAST);
         previewRequestBuilder.set(CaptureRequest.CONTROL_VIDEO_STABILIZATION_MODE,
                 CameraMetadata.CONTROL_VIDEO_STABILIZATION_MODE_ON);
-        // SENSOR_EXPOSURE_TIME ?
-        if (!mCropRect.isEmpty()) {
-            previewRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, mCropRect);
-        }
+
+        configureCommonCaptureSettings(previewRequestBuilder);
 
         List<Surface> surfaceList = new ArrayList<Surface>(1);
-        surfaceList.add(imageReader.getSurface());
+        // TODO(mcasas): release this Surface when not needed, https://crbug.com/643884.
+        surfaceList.add(mImageReader.getSurface());
 
         mPreviewRequest = previewRequestBuilder.build();
         final CrPreviewSessionListener captureSessionListener =
@@ -311,6 +354,90 @@ public class VideoCaptureCamera2 extends VideoCapture {
         }
         // Wait for trigger on CrPreviewSessionListener.onConfigured();
         return true;
+    }
+
+    private void configureCommonCaptureSettings(CaptureRequest.Builder requestBuilder) {
+        // |mFocusMode| indicates if we're in auto/continuous, single-shot or manual mode.
+        if (mFocusMode == AndroidMeteringMode.CONTINUOUS) {
+            requestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
+                    CameraMetadata.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+        } else if (mFocusMode == AndroidMeteringMode.SINGLE_SHOT) {
+            requestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
+                    CameraMetadata.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+            requestBuilder.set(
+                    CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata.CONTROL_AF_TRIGGER_START);
+        } else if (mFocusMode == AndroidMeteringMode.FIXED) {
+            requestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CameraMetadata.CONTROL_AF_MODE_OFF);
+            // TODO(mcasas): Support controlling LENS_FOCUS_DISTANCE in this mode,
+            // https://crbug.com/518807.
+        }
+
+        // |mExposureMode|, |mFillLightMode| and |mTorch| interact to configure the AE and Flash
+        // modes. In a nutshell, FLASH_MODE is only effective if the auto-exposure is ON/OFF,
+        // otherwise the auto-exposure related flash control (ON_{AUTO,ALWAYS}_FLASH{_REDEYE) takes
+        // priority.  |mTorch| mode overrides any previous |mFillLightMode| flash control.
+        if (mExposureMode == AndroidMeteringMode.NONE
+                || mExposureMode == AndroidMeteringMode.FIXED) {
+            requestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CameraMetadata.CONTROL_AE_MODE_OFF);
+        } else {
+            requestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CameraMetadata.CONTROL_AE_MODE_ON);
+            requestBuilder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, mAeFpsRange);
+        }
+        switch (mFillLightMode) {
+            case AndroidFillLightMode.OFF:
+                requestBuilder.set(CaptureRequest.FLASH_MODE, CameraMetadata.FLASH_MODE_OFF);
+                break;
+            case AndroidFillLightMode.AUTO:
+                // Setting the AE to CONTROL_AE_MODE_ON_AUTO_FLASH[_REDEYE] overrides FLASH_MODE.
+                requestBuilder.set(CaptureRequest.CONTROL_AE_MODE, mRedEyeReduction
+                                ? CameraMetadata.CONTROL_AE_MODE_ON_AUTO_FLASH_REDEYE
+                                : CameraMetadata.CONTROL_AE_MODE_ON_AUTO_FLASH);
+                break;
+            case AndroidFillLightMode.FLASH:
+                // Setting the AE to CONTROL_AE_MODE_ON_ALWAYS_FLASH overrides FLASH_MODE.
+                requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
+                        CameraMetadata.CONTROL_AE_MODE_ON_ALWAYS_FLASH);
+                break;
+            default:
+        }
+        if (mTorch) requestBuilder.set(CaptureRequest.FLASH_MODE, CameraMetadata.FLASH_MODE_TORCH);
+
+        requestBuilder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, mExposureCompensation);
+
+        // White Balance mode AndroidMeteringMode.SINGLE_SHOT is not supported.
+        if (mWhiteBalanceMode == AndroidMeteringMode.CONTINUOUS) {
+            requestBuilder.set(CaptureRequest.CONTROL_AWB_LOCK, false);
+            requestBuilder.set(
+                    CaptureRequest.CONTROL_AWB_MODE, CameraMetadata.CONTROL_AWB_MODE_AUTO);
+            // TODO(mcasas): support different luminant color temperatures, e.g. DAYLIGHT, SHADE.
+            // https://crbug.com/518807
+        } else if (mWhiteBalanceMode == AndroidMeteringMode.NONE) {
+            requestBuilder.set(CaptureRequest.CONTROL_AWB_LOCK, false);
+            requestBuilder.set(
+                    CaptureRequest.CONTROL_AWB_MODE, CameraMetadata.CONTROL_AWB_MODE_OFF);
+        } else if (mWhiteBalanceMode == AndroidMeteringMode.FIXED) {
+            requestBuilder.set(CaptureRequest.CONTROL_AWB_LOCK, true);
+            if (mColorTemperature > 0) {
+                final int colorSetting = getClosestWhiteBalance(mColorTemperature);
+                if (colorSetting != -1) {
+                    requestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, colorSetting);
+                }
+            }
+        }
+
+        if (mAreaOfInterest != null) {
+            MeteringRectangle[] array = {mAreaOfInterest};
+            Log.d(TAG, "Area of interest %s", mAreaOfInterest.toString());
+            requestBuilder.set(CaptureRequest.CONTROL_AF_REGIONS, array);
+            requestBuilder.set(CaptureRequest.CONTROL_AE_REGIONS, array);
+            requestBuilder.set(CaptureRequest.CONTROL_AWB_REGIONS, array);
+        }
+
+        if (!mCropRect.isEmpty()) {
+            requestBuilder.set(CaptureRequest.SCALER_CROP_REGION, mCropRect);
+        }
+
+        if (mIso > 0) requestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, mIso);
     }
 
     private void changeCameraStateAndNotify(CameraState state) {
@@ -341,6 +468,19 @@ public class VideoCaptureCamera2 extends VideoCapture {
         return closestSize;
     }
 
+    private int getClosestWhiteBalance(int colorTemperature) {
+        int minDiff = Integer.MAX_VALUE;
+        int matchedTemperature = -1;
+
+        for (int i = 0; i < COLOR_TEMPERATURES_MAP.size(); ++i) {
+            final int diff = Math.abs(colorTemperature - COLOR_TEMPERATURES_MAP.keyAt(i));
+            if (diff >= minDiff) continue;
+            minDiff = diff;
+            matchedTemperature = COLOR_TEMPERATURES_MAP.valueAt(i);
+        }
+        return matchedTemperature;
+    }
+
     static boolean isLegacyDevice(Context appContext, int id) {
         final CameraCharacteristics cameraCharacteristics =
                 getCameraCharacteristics(appContext, id);
@@ -355,8 +495,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
         try {
             return manager.getCameraIdList().length;
         } catch (CameraAccessException | SecurityException ex) {
-            // SecurityException is an undocumented exception, but has been seen in
-            // http://crbug/605424.
+            // SecurityException is undocumented but seen in the wild: https://crbug/605424.
             Log.e(TAG, "getNumberOfCameras: getCameraIdList(): ", ex);
             return 0;
         }
@@ -366,20 +505,20 @@ public class VideoCaptureCamera2 extends VideoCapture {
         final CameraCharacteristics cameraCharacteristics =
                 getCameraCharacteristics(appContext, id);
         if (cameraCharacteristics == null) {
-            return CaptureApiType.API_TYPE_UNKNOWN;
+            return VideoCaptureApi.UNKNOWN;
         }
 
         final int supportedHWLevel =
                 cameraCharacteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
         switch (supportedHWLevel) {
             case CameraMetadata.INFO_SUPPORTED_HARDWARE_LEVEL_LEGACY:
-                return CaptureApiType.API2_LEGACY;
+                return VideoCaptureApi.ANDROID_API2_LEGACY;
             case CameraMetadata.INFO_SUPPORTED_HARDWARE_LEVEL_FULL:
-                return CaptureApiType.API2_FULL;
+                return VideoCaptureApi.ANDROID_API2_FULL;
             case CameraMetadata.INFO_SUPPORTED_HARDWARE_LEVEL_LIMITED:
-                return CaptureApiType.API2_LIMITED;
+                return VideoCaptureApi.ANDROID_API2_LIMITED;
             default:
-                return CaptureApiType.API2_LEGACY;
+                return VideoCaptureApi.ANDROID_API2_LEGACY;
         }
     }
 
@@ -462,8 +601,28 @@ public class VideoCaptureCamera2 extends VideoCapture {
             Log.e(TAG, "No supported resolutions.");
             return false;
         }
-        Log.d(TAG, "allocate: matched (%d x %d)", closestSupportedSize.getWidth(),
-                closestSupportedSize.getHeight());
+        final List<Range<Integer>> fpsRanges = Arrays.asList(cameraCharacteristics.get(
+                CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES));
+        if (fpsRanges.isEmpty()) {
+            Log.e(TAG, "No supported framerate ranges.");
+            return false;
+        }
+        final List<FramerateRange> framerateRanges =
+                new ArrayList<FramerateRange>(fpsRanges.size());
+        // On some legacy implementations FPS values are multiplied by 1000. Multiply by 1000
+        // everywhere for consistency. Set fpsUnitFactor to 1 if fps ranges are already multiplied
+        // by 1000.
+        final int fpsUnitFactor = fpsRanges.get(0).getUpper() > 1000 ? 1 : 1000;
+        for (Range<Integer> range : fpsRanges) {
+            framerateRanges.add(new FramerateRange(
+                    range.getLower() * fpsUnitFactor, range.getUpper() * fpsUnitFactor));
+        }
+        final FramerateRange aeFramerateRange =
+                getClosestFramerateRange(framerateRanges, frameRate * 1000);
+        mAeFpsRange = new Range<Integer>(
+                aeFramerateRange.min / fpsUnitFactor, aeFramerateRange.max / fpsUnitFactor);
+        Log.d(TAG, "allocate: matched (%d x %d) @[%d - %d]", closestSupportedSize.getWidth(),
+                closestSupportedSize.getHeight(), mAeFpsRange.getLower(), mAeFpsRange.getUpper());
 
         // |mCaptureFormat| is also used to configure the ImageReader.
         mCaptureFormat = new VideoCaptureFormat(closestSupportedSize.getWidth(),
@@ -484,10 +643,20 @@ public class VideoCaptureCamera2 extends VideoCapture {
         changeCameraStateAndNotify(CameraState.OPENING);
         final CameraManager manager =
                 (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
-        final Handler mainHandler = new Handler(mContext.getMainLooper());
+
+        if (!mUseBackgroundThreadForTesting) {
+            mMainHandler = new Handler(mContext.getMainLooper());
+        } else {
+            // Usually we deliver frames on |mContext|s thread, but unit tests
+            // occupy its Looper; deliver frames on a background thread instead.
+            HandlerThread thread = new HandlerThread("CameraPicture");
+            thread.start();
+            mMainHandler = new Handler(thread.getLooper());
+        }
+
         final CrStateListener stateListener = new CrStateListener();
         try {
-            manager.openCamera(Integer.toString(mId), stateListener, mainHandler);
+            manager.openCamera(Integer.toString(mId), stateListener, mMainHandler);
         } catch (CameraAccessException | IllegalArgumentException | SecurityException ex) {
             Log.e(TAG, "allocate: manager.openCamera: ", ex);
             return false;
@@ -517,18 +686,23 @@ public class VideoCaptureCamera2 extends VideoCapture {
         try {
             mPreviewSession.abortCaptures();
         } catch (CameraAccessException | IllegalStateException ex) {
-            Log.e(TAG, "abortCaptures: ", ex);
-            return false;
+            // Stopping a device whose CameraCaptureSession is closed is not an error: ignore this.
+            Log.w(TAG, "abortCaptures: ", ex);
         }
         if (mCameraDevice == null) return false;
         mCameraDevice.close();
+
+        if (mUseBackgroundThreadForTesting) mMainHandler.getLooper().quit();
+
         changeCameraStateAndNotify(CameraState.STOPPED);
         mCropRect = new Rect();
         return true;
     }
 
+    @Override
     public PhotoCapabilities getPhotoCapabilities() {
         final CameraCharacteristics cameraCharacteristics = getCameraCharacteristics(mContext, mId);
+        PhotoCapabilities.Builder builder = new PhotoCapabilities.Builder();
 
         int minIso = 0;
         int maxIso = 0;
@@ -538,7 +712,8 @@ public class VideoCaptureCamera2 extends VideoCapture {
             minIso = iso_range.getLower();
             maxIso = iso_range.getUpper();
         }
-        final int currentIso = mPreviewRequest.get(CaptureRequest.SENSOR_SENSITIVITY);
+        builder.setMinIso(minIso).setMaxIso(maxIso).setStepIso(1);
+        builder.setCurrentIso(mPreviewRequest.get(CaptureRequest.SENSOR_SENSITIVITY));
 
         final StreamConfigurationMap streamMap =
                 cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
@@ -553,65 +728,252 @@ public class VideoCaptureCamera2 extends VideoCapture {
             if (size.getWidth() > maxWidth) maxWidth = size.getWidth();
             if (size.getHeight() > maxHeight) maxHeight = size.getHeight();
         }
-        final int currentHeight = mCaptureFormat.getHeight();
-        final int currentWidth = mCaptureFormat.getWidth();
+        builder.setMinHeight(minHeight).setMaxHeight(maxHeight).setStepHeight(1);
+        builder.setMinWidth(minWidth).setMaxWidth(maxWidth).setStepWidth(1);
+        builder.setCurrentHeight((mPhotoHeight > 0) ? mPhotoHeight : mCaptureFormat.getHeight());
+        builder.setCurrentWidth((mPhotoWidth > 0) ? mPhotoWidth : mCaptureFormat.getWidth());
 
-        // The Min and Max zoom are returned as x100 by the API to avoid using floating point. There
-        // is no min-zoom per se, so clamp it to always 100 (TODO(mcasas): make const member).
-        final int minZoom = 100;
-        final int maxZoom = Math.round(mMaxZoom * 100);
-        // Width Ratio x100 is used as measure of current zoom.
-        final int currentZoom = 100 * mPreviewRequest.get(CaptureRequest.SCALER_CROP_REGION).width()
-                / cameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE)
-                          .width();
+        final float currentZoom =
+                cameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE)
+                        .width()
+                / (float) mPreviewRequest.get(CaptureRequest.SCALER_CROP_REGION).width();
+        // There is no min-zoom per se, so clamp it to always 1.
+        builder.setMinZoom(1.0).setMaxZoom(mMaxZoom);
+        builder.setCurrentZoom(currentZoom).setStepZoom(0.1);
+
+        // Classify the Focus capabilities. In CONTINUOUS and SINGLE_SHOT, we can call
+        // autoFocus(AutoFocusCallback) to configure region(s) to focus onto.
+        final int[] jniFocusModes =
+                cameraCharacteristics.get(CameraCharacteristics.CONTROL_AF_AVAILABLE_MODES);
+        ArrayList<Integer> focusModes = new ArrayList<Integer>(3);
+        for (int mode : jniFocusModes) {
+            if (mode == CameraMetadata.CONTROL_AF_MODE_OFF) {
+                focusModes.add(Integer.valueOf(AndroidMeteringMode.FIXED));
+            } else if (mode == CameraMetadata.CONTROL_AF_MODE_AUTO
+                    || mode == CameraMetadata.CONTROL_AF_MODE_MACRO) {
+                // CONTROL_AF_MODE_{AUTO,MACRO} do not imply continuously focusing.
+                if (!focusModes.contains(Integer.valueOf(AndroidMeteringMode.SINGLE_SHOT))) {
+                    focusModes.add(Integer.valueOf(AndroidMeteringMode.SINGLE_SHOT));
+                }
+            } else if (mode == CameraMetadata.CONTROL_AF_MODE_CONTINUOUS_VIDEO
+                    || mode == CameraMetadata.CONTROL_AF_MODE_CONTINUOUS_PICTURE
+                    || mode == CameraMetadata.CONTROL_AF_MODE_EDOF) {
+                if (!focusModes.contains(Integer.valueOf(AndroidMeteringMode.CONTINUOUS))) {
+                    focusModes.add(Integer.valueOf(AndroidMeteringMode.CONTINUOUS));
+                }
+            }
+        }
+        builder.setFocusModes(integerArrayListToArray(focusModes));
 
         final int focusMode = mPreviewRequest.get(CaptureRequest.CONTROL_AF_MODE);
-        Log.d(TAG, "focusMode " + focusMode);
-        final boolean isFocusManual = (focusMode == CameraMetadata.CONTROL_AF_MODE_OFF)
-                || (focusMode == CameraMetadata.CONTROL_AF_MODE_EDOF);
+        int jniFocusMode = AndroidMeteringMode.NONE;
+        if (focusMode == CameraMetadata.CONTROL_AF_MODE_CONTINUOUS_VIDEO
+                || focusMode == CameraMetadata.CONTROL_AF_MODE_CONTINUOUS_PICTURE) {
+            jniFocusMode = AndroidMeteringMode.CONTINUOUS;
+        } else if (focusMode == CameraMetadata.CONTROL_AF_MODE_AUTO
+                || focusMode == CameraMetadata.CONTROL_AF_MODE_MACRO) {
+            jniFocusMode = AndroidMeteringMode.SINGLE_SHOT;
+        } else if (focusMode == CameraMetadata.CONTROL_AF_MODE_OFF) {
+            jniFocusMode = AndroidMeteringMode.FIXED;
+        } else {
+            assert jniFocusMode == CameraMetadata.CONTROL_AF_MODE_EDOF;
+        }
+        builder.setFocusMode(jniFocusMode);
 
-        return new PhotoCapabilities(minIso, maxIso, currentIso, maxHeight, minHeight,
-                currentHeight, maxWidth, minWidth, currentWidth, maxZoom, minZoom, currentZoom,
-                !isFocusManual);
+        // Auto Exposure is the usual capability and state, unless AE is not available at all, which
+        // is signalled by an empty CONTROL_AE_AVAILABLE_MODES list. Exposure Compensation can also
+        // support or be locked, this is equivalent to AndroidMeteringMode.FIXED.
+        final int[] jniExposureModes =
+                cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_MODES);
+        ArrayList<Integer> exposureModes = new ArrayList<Integer>(1);
+        for (int mode : jniExposureModes) {
+            if (mode == CameraMetadata.CONTROL_AE_MODE_ON
+                    || mode == CameraMetadata.CONTROL_AE_MODE_ON_AUTO_FLASH
+                    || mode == CameraMetadata.CONTROL_AE_MODE_ON_ALWAYS_FLASH
+                    || mode == CameraMetadata.CONTROL_AE_MODE_ON_AUTO_FLASH_REDEYE) {
+                exposureModes.add(Integer.valueOf(AndroidMeteringMode.CONTINUOUS));
+                break;
+            }
+        }
+        // TODO(mcasas): query |cameraCharacteristics| for CONTROL_AE_LOCK_AVAILABLE (API 23)
+        builder.setExposureModes(integerArrayListToArray(exposureModes));
+
+        int jniExposureMode = AndroidMeteringMode.CONTINUOUS;
+        if (mPreviewRequest.get(CaptureRequest.CONTROL_AE_MODE)
+                == CameraMetadata.CONTROL_AE_MODE_OFF) {
+            jniExposureMode = AndroidMeteringMode.NONE;
+        }
+        if (mPreviewRequest.get(CaptureRequest.CONTROL_AE_LOCK)) {
+            jniExposureMode = AndroidMeteringMode.FIXED;
+        }
+        builder.setExposureMode(jniExposureMode);
+
+        final float step =
+                cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_STEP)
+                        .floatValue();
+        builder.setStepExposureCompensation(step);
+        final Range<Integer> exposureCompensationRange =
+                cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE);
+        builder.setMinExposureCompensation(exposureCompensationRange.getLower() * step);
+        builder.setMaxExposureCompensation(exposureCompensationRange.getUpper() * step);
+        builder.setCurrentExposureCompensation(
+                mPreviewRequest.get(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION) * step);
+
+        final int[] jniWhiteBalanceMode =
+                cameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES);
+        ArrayList<Integer> whiteBalanceModes = new ArrayList<Integer>(1);
+        for (int mode : jniWhiteBalanceMode) {
+            if (mode == CameraMetadata.CONTROL_AWB_MODE_AUTO) {
+                whiteBalanceModes.add(Integer.valueOf(AndroidMeteringMode.CONTINUOUS));
+                break;
+            }
+        }
+        // TODO(mcasas): query |cameraCharacteristics| for CONTROL_AWE_LOCK_AVAILABLE (API 23)
+        builder.setWhiteBalanceModes(integerArrayListToArray(whiteBalanceModes));
+
+        final int whiteBalanceMode = mPreviewRequest.get(CaptureRequest.CONTROL_AWB_MODE);
+        if (whiteBalanceMode == CameraMetadata.CONTROL_AWB_MODE_OFF) {
+            builder.setWhiteBalanceMode(AndroidMeteringMode.NONE);
+        } else if (whiteBalanceMode == CameraMetadata.CONTROL_AWB_MODE_AUTO) {
+            builder.setWhiteBalanceMode(AndroidMeteringMode.CONTINUOUS);
+        } else {
+            builder.setWhiteBalanceMode(AndroidMeteringMode.FIXED);
+        }
+        builder.setMinColorTemperature(COLOR_TEMPERATURES_MAP.keyAt(0));
+        builder.setMaxColorTemperature(
+                COLOR_TEMPERATURES_MAP.keyAt(COLOR_TEMPERATURES_MAP.size() - 1));
+        final int index = COLOR_TEMPERATURES_MAP.indexOfValue(whiteBalanceMode);
+        if (index >= 0) {
+            builder.setCurrentColorTemperature(COLOR_TEMPERATURES_MAP.keyAt(index));
+        }
+        builder.setStepColorTemperature(1);
+
+        if (!cameraCharacteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE)) {
+            builder.setSupportsTorch(false);
+            builder.setRedEyeReduction(false);
+        } else {
+            // There's no way to query if torch and/or red eye reduction modes are available using
+            // Camera2 API but since there's a Flash unit, we assume so.
+            builder.setSupportsTorch(true);
+            builder.setTorch(mPreviewRequest.get(CaptureRequest.FLASH_MODE)
+                    == CameraMetadata.FLASH_MODE_TORCH);
+
+            builder.setRedEyeReduction(true);
+
+            final int[] flashModes =
+                    cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_MODES);
+            ArrayList<Integer> modes = new ArrayList<Integer>(0);
+            for (int flashMode : flashModes) {
+                if (flashMode == CameraMetadata.FLASH_MODE_OFF) {
+                    modes.add(Integer.valueOf(AndroidFillLightMode.OFF));
+                } else if (flashMode == CameraMetadata.CONTROL_AE_MODE_ON_AUTO_FLASH) {
+                    modes.add(Integer.valueOf(AndroidFillLightMode.AUTO));
+                } else if (flashMode == CameraMetadata.CONTROL_AE_MODE_ON_ALWAYS_FLASH) {
+                    modes.add(Integer.valueOf(AndroidFillLightMode.FLASH));
+                }
+            }
+            builder.setFillLightModes(integerArrayListToArray(modes));
+        }
+
+        return builder.build();
     }
 
     @Override
-    public void setZoom(int zoom) {
+    public void setPhotoOptions(double zoom, int focusMode, int exposureMode, double width,
+            double height, float[] pointsOfInterest2D, boolean hasExposureCompensation,
+            double exposureCompensation, int whiteBalanceMode, double iso,
+            boolean hasRedEyeReduction, boolean redEyeReduction, int fillLightMode,
+            boolean hasTorch, boolean torch, double colorTemperature) {
         final CameraCharacteristics cameraCharacteristics = getCameraCharacteristics(mContext, mId);
         final Rect canvas =
                 cameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE);
 
-        final float normalizedZoom = Math.max(100, Math.min(zoom, mMaxZoom * 100)) / 100;
-        final float cropFactor = (normalizedZoom - 1) / (2 * normalizedZoom);
+        if (zoom != 0) {
+            final float normalizedZoom = Math.max(1.0f, Math.min((float) zoom, mMaxZoom));
+            final float cropFactor = (normalizedZoom - 1) / (2 * normalizedZoom);
 
-        mCropRect = new Rect(Math.round(canvas.width() * cropFactor),
-                Math.round(canvas.height() * cropFactor),
-                Math.round(canvas.width() * (1 - cropFactor)),
-                Math.round(canvas.height() * (1 - cropFactor)));
-        Log.d(TAG, "zoom level " + normalizedZoom + ", rectangle: " + mCropRect.toString());
+            mCropRect = new Rect(Math.round(canvas.width() * cropFactor),
+                    Math.round(canvas.height() * cropFactor),
+                    Math.round(canvas.width() * (1 - cropFactor)),
+                    Math.round(canvas.height() * (1 - cropFactor)));
+            Log.d(TAG, "zoom level %f, rectangle: %s", normalizedZoom, mCropRect.toString());
+        }
+
+        if (focusMode != AndroidMeteringMode.NOT_SET) mFocusMode = focusMode;
+        if (exposureMode != AndroidMeteringMode.NOT_SET) mExposureMode = exposureMode;
+        if (whiteBalanceMode != AndroidMeteringMode.NOT_SET) mWhiteBalanceMode = whiteBalanceMode;
+
+        if (width > 0) mPhotoWidth = (int) Math.round(width);
+        if (height > 0) mPhotoHeight = (int) Math.round(height);
+
+        // Upon new |zoom| configuration, clear up the previous |mAreaOfInterest| if any.
+        if (mAreaOfInterest != null && !mAreaOfInterest.getRect().isEmpty() && zoom > 0) {
+            mAreaOfInterest = null;
+        }
+        // Also clear |mAreaOfInterest| if the user sets it as NONE.
+        if (mFocusMode == AndroidMeteringMode.NONE || mExposureMode == AndroidMeteringMode.NONE) {
+            mAreaOfInterest = null;
+        }
+        // Update |mAreaOfInterest| if the camera supports and there are |pointsOfInterest2D|.
+        final boolean pointsOfInterestSupported =
+                cameraCharacteristics.get(CameraCharacteristics.CONTROL_MAX_REGIONS_AF) > 0
+                || cameraCharacteristics.get(CameraCharacteristics.CONTROL_MAX_REGIONS_AE) > 0
+                || cameraCharacteristics.get(CameraCharacteristics.CONTROL_MAX_REGIONS_AWB) > 0;
+        if (pointsOfInterestSupported && pointsOfInterest2D.length > 0) {
+            assert pointsOfInterest2D.length == 2 : "Only 1 point of interest supported";
+            assert pointsOfInterest2D[0] <= 1.0 && pointsOfInterest2D[0] >= 0.0;
+            assert pointsOfInterest2D[1] <= 1.0 && pointsOfInterest2D[1] >= 0.0;
+            // Calculate a Rect of 1/8 the |visibleRect| dimensions, and center it w.r.t. |canvas|.
+            final Rect visibleRect = (mCropRect.isEmpty()) ? canvas : mCropRect;
+            int centerX = Math.round(pointsOfInterest2D[0] * visibleRect.width());
+            int centerY = Math.round(pointsOfInterest2D[1] * visibleRect.height());
+            if (visibleRect.equals(mCropRect)) {
+                centerX += (canvas.width() - visibleRect.width()) / 2;
+                centerY += (canvas.height() - visibleRect.height()) / 2;
+            }
+            final int regionWidth = visibleRect.width() / 8;
+            final int regionHeight = visibleRect.height() / 8;
+
+            mAreaOfInterest = new MeteringRectangle(Math.max(0, centerX - regionWidth / 2),
+                    Math.max(0, centerY - regionHeight / 2), regionWidth, regionHeight,
+                    MeteringRectangle.METERING_WEIGHT_MAX);
+
+            Log.d(TAG, "Calculating (%.2fx%.2f) wrt to %s (canvas being %s)", pointsOfInterest2D[0],
+                    pointsOfInterest2D[1], visibleRect.toString(), canvas.toString());
+            Log.d(TAG, "Area of interest %s", mAreaOfInterest.toString());
+        }
+
+        if (hasExposureCompensation) {
+            mExposureCompensation = (int) Math.round(exposureCompensation
+                    / cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_STEP)
+                              .floatValue());
+        }
+        if (iso > 0) mIso = (int) Math.round(iso);
+        if (mWhiteBalanceMode == AndroidMeteringMode.FIXED && colorTemperature > 0) {
+            mColorTemperature = (int) Math.round(colorTemperature);
+        }
+
+        if (hasRedEyeReduction) mRedEyeReduction = redEyeReduction;
+        if (fillLightMode != AndroidFillLightMode.NOT_SET) mFillLightMode = fillLightMode;
+        if (hasTorch) mTorch = torch;
 
         final Handler mainHandler = new Handler(mContext.getMainLooper());
-        mainHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mPreviewSession.close(); // Asynchronously kill the CaptureSession.
-                createPreviewObjects();
-            }
-        });
+        mainHandler.removeCallbacks(mRestartCapture);
+        mainHandler.post(mRestartCapture);
     }
 
     @Override
-    public boolean takePhoto(final long callbackId, int width, int height) {
-        Log.d(TAG, "takePhoto " + callbackId);
+    public boolean takePhoto(final long callbackId) {
+        Log.d(TAG, "takePhoto");
         if (mCameraDevice == null || mCameraState != CameraState.STARTED) return false;
 
         final CameraCharacteristics cameraCharacteristics = getCameraCharacteristics(mContext, mId);
         final StreamConfigurationMap streamMap =
                 cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
         final Size[] supportedSizes = streamMap.getOutputSizes(ImageFormat.JPEG);
-        final Size closestSize = findClosestSizeInArray(supportedSizes, width, height);
+        final Size closestSize = findClosestSizeInArray(supportedSizes, mPhotoWidth, mPhotoHeight);
 
-        Log.d(TAG, "requested resolution: (%dx%d)", width, height);
+        Log.d(TAG, "requested resolution: (%dx%d)", mPhotoWidth, mPhotoHeight);
         if (closestSize != null) {
             Log.d(TAG, " matched (%dx%d)", closestSize.getWidth(), closestSize.getHeight());
         }
@@ -628,6 +990,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
         imageReader.setOnImageAvailableListener(photoReaderListener, backgroundHandler);
 
         final List<Surface> surfaceList = new ArrayList<Surface>(1);
+        // TODO(mcasas): release this Surface when not needed, https://crbug.com/643884.
         surfaceList.add(imageReader.getSurface());
 
         CaptureRequest.Builder photoRequestBuilder = null;
@@ -644,9 +1007,8 @@ public class VideoCaptureCamera2 extends VideoCapture {
         }
         photoRequestBuilder.addTarget(imageReader.getSurface());
         photoRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, getCameraRotation());
-        if (!mCropRect.isEmpty()) {
-            photoRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, mCropRect);
-        }
+
+        configureCommonCaptureSettings(photoRequestBuilder);
 
         final CaptureRequest photoRequest = photoRequestBuilder.build();
         final CrPhotoSessionListener sessionListener =

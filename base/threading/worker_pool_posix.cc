@@ -6,6 +6,8 @@
 
 #include <stddef.h>
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/lazy_instance.h"
@@ -30,13 +32,24 @@ base::LazyInstance<ThreadLocalBoolean>::Leaky
 
 const int kIdleSecondsBeforeExit = 10 * 60;
 
+#if defined(OS_MACOSX)
+// On Mac OS X a background thread's default stack size is 512Kb. We need at
+// least 1MB for compilation tasks in V8, so increase this default.
+const int kStackSize = 1 * 1024 * 1024;
+#else
+const int kStackSize = 0;
+#endif
+
 class WorkerPoolImpl {
  public:
   WorkerPoolImpl();
-  ~WorkerPoolImpl();
+
+  // WorkerPoolImpl is only instantiated as a leaky LazyInstance, so the
+  // destructor is never called.
+  ~WorkerPoolImpl() = delete;
 
   void PostTask(const tracked_objects::Location& from_here,
-                const base::Closure& task,
+                base::OnceClosure task,
                 bool task_is_slow);
 
  private:
@@ -47,17 +60,13 @@ WorkerPoolImpl::WorkerPoolImpl()
     : pool_(new base::PosixDynamicThreadPool("WorkerPool",
                                              kIdleSecondsBeforeExit)) {}
 
-WorkerPoolImpl::~WorkerPoolImpl() {
-  pool_->Terminate();
-}
-
 void WorkerPoolImpl::PostTask(const tracked_objects::Location& from_here,
-                              const base::Closure& task,
+                              base::OnceClosure task,
                               bool task_is_slow) {
-  pool_->PostTask(from_here, task);
+  pool_->PostTask(from_here, std::move(task));
 }
 
-base::LazyInstance<WorkerPoolImpl> g_lazy_worker_pool =
+base::LazyInstance<WorkerPoolImpl>::Leaky g_lazy_worker_pool =
     LAZY_INSTANCE_INITIALIZER;
 
 class WorkerThread : public PlatformThread::Delegate {
@@ -90,7 +99,7 @@ void WorkerThread::ThreadMain() {
 
     tracked_objects::TaskStopwatch stopwatch;
     stopwatch.Start();
-    pending_task.task.Run();
+    std::move(pending_task.task).Run();
     stopwatch.Stop();
 
     tracked_objects::ThreadData::TallyRunOnWorkerThreadIfTracking(
@@ -105,9 +114,10 @@ void WorkerThread::ThreadMain() {
 
 // static
 bool WorkerPool::PostTask(const tracked_objects::Location& from_here,
-                          const base::Closure& task,
+                          base::OnceClosure task,
                           bool task_is_slow) {
-  g_lazy_worker_pool.Pointer()->PostTask(from_here, task, task_is_slow);
+  g_lazy_worker_pool.Pointer()->PostTask(from_here, std::move(task),
+                                         task_is_slow);
   return true;
 }
 
@@ -121,34 +131,28 @@ PosixDynamicThreadPool::PosixDynamicThreadPool(const std::string& name_prefix,
     : name_prefix_(name_prefix),
       idle_seconds_before_exit_(idle_seconds_before_exit),
       pending_tasks_available_cv_(&lock_),
-      num_idle_threads_(0),
-      terminated_(false) {}
+      num_idle_threads_(0) {}
 
 PosixDynamicThreadPool::~PosixDynamicThreadPool() {
   while (!pending_tasks_.empty())
     pending_tasks_.pop();
 }
 
-void PosixDynamicThreadPool::Terminate() {
-  {
-    AutoLock locked(lock_);
-    DCHECK(!terminated_) << "Thread pool is already terminated.";
-    terminated_ = true;
-  }
-  pending_tasks_available_cv_.Broadcast();
-}
-
 void PosixDynamicThreadPool::PostTask(
     const tracked_objects::Location& from_here,
-    const base::Closure& task) {
-  PendingTask pending_task(from_here, task);
+    base::OnceClosure task) {
+  PendingTask pending_task(from_here, std::move(task));
   AddTask(&pending_task);
 }
 
 void PosixDynamicThreadPool::AddTask(PendingTask* pending_task) {
+  DCHECK(pending_task);
+
+  // Use CHECK instead of DCHECK to crash earlier. See http://crbug.com/711167
+  // for details.
+  CHECK(pending_task->task);
+
   AutoLock locked(lock_);
-  DCHECK(!terminated_)
-      << "This thread pool is already terminated.  Do not post new tasks.";
 
   pending_tasks_.push(std::move(*pending_task));
 
@@ -159,15 +163,12 @@ void PosixDynamicThreadPool::AddTask(PendingTask* pending_task) {
     // The new PlatformThread will take ownership of the WorkerThread object,
     // which will delete itself on exit.
     WorkerThread* worker = new WorkerThread(name_prefix_, this);
-    PlatformThread::CreateNonJoinable(0, worker);
+    PlatformThread::CreateNonJoinable(kStackSize, worker);
   }
 }
 
 PendingTask PosixDynamicThreadPool::WaitForTask() {
   AutoLock locked(lock_);
-
-  if (terminated_)
-    return PendingTask(FROM_HERE, base::Closure());
 
   if (pending_tasks_.empty()) {  // No work available, wait for work.
     num_idle_threads_++;

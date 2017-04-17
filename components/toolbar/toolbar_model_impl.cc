@@ -8,9 +8,8 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
-#include "components/grit/components_scaled_resources.h"
 #include "components/prefs/pref_service.h"
-#include "components/security_state/security_state_model.h"
+#include "components/security_state/core/security_state.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/toolbar/toolbar_model_delegate.h"
 #include "components/url_formatter/elide_url.h"
@@ -20,9 +19,12 @@
 #include "net/ssl/ssl_connection_status_flags.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/text_elider.h"
-#include "ui/gfx/vector_icons_public.h"
+#include "ui/gfx/vector_icon_types.h"
 
-using security_state::SecurityStateModel;
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+#include "components/toolbar/vector_icons.h"  // nogncheck
+#include "ui/vector_icons/vector_icons.h"     // nogncheck
+#endif
 
 ToolbarModelImpl::ToolbarModelImpl(ToolbarModelDelegate* delegate,
                                    size_t max_url_display_chars)
@@ -34,14 +36,6 @@ ToolbarModelImpl::~ToolbarModelImpl() {
 }
 
 // ToolbarModelImpl Implementation.
-base::string16 ToolbarModelImpl::GetText() const {
-  base::string16 search_terms(GetSearchTerms(false));
-  if (!search_terms.empty())
-    return search_terms;
-
-  return GetFormattedURL(NULL);
-}
-
 base::string16 ToolbarModelImpl::GetFormattedURL(size_t* prefix_end) const {
   GURL url(GetURL());
   // Note that we can't unescape spaces here, because if the user copies this
@@ -70,63 +64,46 @@ GURL ToolbarModelImpl::GetURL() const {
   return delegate_->GetURL(&url) ? url : GURL(url::kAboutBlankURL);
 }
 
-bool ToolbarModelImpl::WouldPerformSearchTermReplacement(
-    bool ignore_editing) const {
-  return !GetSearchTerms(ignore_editing).empty();
-}
-
-SecurityStateModel::SecurityLevel ToolbarModelImpl::GetSecurityLevel(
+security_state::SecurityLevel ToolbarModelImpl::GetSecurityLevel(
     bool ignore_editing) const {
   // When editing or empty, assume no security style.
   return ((input_in_progress() && !ignore_editing) || !ShouldDisplayURL())
-             ? SecurityStateModel::NONE
+             ? security_state::NONE
              : delegate_->GetSecurityLevel();
 }
 
-int ToolbarModelImpl::GetIcon() const {
-  switch (GetSecurityLevel(false)) {
-    case SecurityStateModel::NONE:
-      return IDR_LOCATION_BAR_HTTP;
-    case SecurityStateModel::EV_SECURE:
-    case SecurityStateModel::SECURE:
-      return IDR_OMNIBOX_HTTPS_VALID;
-    case SecurityStateModel::SECURITY_WARNING:
-      // Surface Dubious as Neutral.
-      return IDR_LOCATION_BAR_HTTP;
-    case SecurityStateModel::SECURITY_POLICY_WARNING:
-      return IDR_OMNIBOX_HTTPS_POLICY_WARNING;
-    case SecurityStateModel::SECURITY_ERROR:
-      return IDR_OMNIBOX_HTTPS_INVALID;
-  }
-
-  NOTREACHED();
-  return IDR_LOCATION_BAR_HTTP;
-}
-
-gfx::VectorIconId ToolbarModelImpl::GetVectorIcon() const {
+const gfx::VectorIcon& ToolbarModelImpl::GetVectorIcon() const {
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
-  switch (GetSecurityLevel(false)) {
-    case SecurityStateModel::NONE:
-      return gfx::VectorIconId::LOCATION_BAR_HTTP;
-    case SecurityStateModel::EV_SECURE:
-    case SecurityStateModel::SECURE:
-      return gfx::VectorIconId::LOCATION_BAR_HTTPS_VALID;
-    case SecurityStateModel::SECURITY_WARNING:
-      // Surface Dubious as Neutral.
-      return gfx::VectorIconId::LOCATION_BAR_HTTP;
-    case SecurityStateModel::SECURITY_POLICY_WARNING:
-      return gfx::VectorIconId::BUSINESS;
-    case SecurityStateModel::SECURITY_ERROR:
-      return gfx::VectorIconId::LOCATION_BAR_HTTPS_INVALID;
-  }
-#endif
+  auto* const icon_override = delegate_->GetVectorIconOverride();
+  if (icon_override)
+    return *icon_override;
 
+  switch (GetSecurityLevel(false)) {
+    case security_state::NONE:
+    case security_state::HTTP_SHOW_WARNING:
+      return toolbar::kHttpIcon;
+    case security_state::EV_SECURE:
+    case security_state::SECURE:
+      return toolbar::kHttpsValidIcon;
+    case security_state::SECURITY_WARNING:
+      // Surface Dubious as Neutral.
+      return toolbar::kHttpIcon;
+    case security_state::SECURE_WITH_POLICY_INSTALLED_CERT:
+      return ui::kBusinessIcon;
+    case security_state::DANGEROUS:
+      return toolbar::kHttpsInvalidIcon;
+  }
   NOTREACHED();
-  return gfx::VectorIconId::VECTOR_ICON_NONE;
+  return toolbar::kHttpIcon;
+#else
+  NOTREACHED();
+  static const gfx::VectorIcon dummy = {};
+  return dummy;
+#endif
 }
 
 base::string16 ToolbarModelImpl::GetEVCertName() const {
-  if (GetSecurityLevel(false) != SecurityStateModel::EV_SECURE)
+  if (GetSecurityLevel(false) != security_state::EV_SECURE)
     return base::string16();
 
   // Note: cert is guaranteed non-NULL or the security level would be NONE.
@@ -142,13 +119,21 @@ base::string16 ToolbarModelImpl::GetEVCertName() const {
       base::UTF8ToUTF16(cert->subject().country_name));
 }
 
-bool ToolbarModelImpl::ShouldDisplayURL() const {
-  return delegate_->ShouldDisplayURL();
+base::string16 ToolbarModelImpl::GetSecureVerboseText() const {
+  switch (GetSecurityLevel(false)) {
+    case security_state::HTTP_SHOW_WARNING:
+      return l10n_util::GetStringUTF16(IDS_NOT_SECURE_VERBOSE_STATE);
+    case security_state::SECURE:
+      return l10n_util::GetStringUTF16(IDS_SECURE_VERBOSE_STATE);
+    case security_state::DANGEROUS:
+      return l10n_util::GetStringUTF16(delegate_->FailsMalwareCheck()
+                                           ? IDS_DANGEROUS_VERBOSE_STATE
+                                           : IDS_NOT_SECURE_VERBOSE_STATE);
+    default:
+      return base::string16();
+  }
 }
 
-base::string16 ToolbarModelImpl::GetSearchTerms(bool ignore_editing) const {
-  if (!url_replacement_enabled() || (input_in_progress() && !ignore_editing))
-    return base::string16();
-
-  return delegate_->GetSearchTerms(GetSecurityLevel(ignore_editing));
+bool ToolbarModelImpl::ShouldDisplayURL() const {
+  return delegate_->ShouldDisplayURL();
 }

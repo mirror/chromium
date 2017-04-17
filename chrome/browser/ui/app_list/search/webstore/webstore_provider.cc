@@ -96,8 +96,7 @@ void WebstoreProvider::Start(bool /*is_voice_query*/,
 
   // Add a placeholder result which when clicked will run the user's query in a
   // browser. This placeholder is removed when the search results arrive.
-  Add(std::unique_ptr<SearchResult>(
-      new SearchWebstoreResult(profile_, controller_, query_)));
+  Add(base::MakeUnique<SearchWebstoreResult>(profile_, controller_, query_));
 }
 
 void WebstoreProvider::Stop() {
@@ -140,7 +139,7 @@ void WebstoreProvider::ProcessWebstoreSearchResults(
        it != result_list->end();
        ++it) {
     const base::DictionaryValue* dict;
-    if (!(*it)->GetAsDictionary(&dict))
+    if (!it->GetAsDictionary(&dict))
       continue;
 
     std::unique_ptr<SearchResult> result(CreateResult(query, *dict));
@@ -192,8 +191,8 @@ std::unique_ptr<SearchResult> WebstoreProvider::CreateResult(
   if (!match.Calculate(query, title))
     return std::unique_ptr<SearchResult>();
 
-  std::unique_ptr<SearchResult> result(new WebstoreResult(
-      profile_, app_id, icon_url, is_paid, item_type, controller_));
+  std::unique_ptr<SearchResult> result = base::MakeUnique<WebstoreResult>(
+      profile_, app_id, icon_url, is_paid, item_type, controller_);
   result->UpdateFromMatch(title, match);
   return result;
 }

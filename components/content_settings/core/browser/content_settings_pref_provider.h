@@ -18,11 +18,6 @@
 
 class PrefService;
 
-namespace base {
-class Clock;
-class DictionaryValue;
-}
-
 namespace user_prefs {
 class PrefRegistrySyncable;
 }
@@ -58,19 +53,7 @@ class PrefProvider : public ObservableProvider {
 
   void ClearPrefs();
 
-  // Records the last time the given pattern has used a certain content setting.
-  void UpdateLastUsage(const ContentSettingsPattern& primary_pattern,
-                       const ContentSettingsPattern& secondary_pattern,
-                       ContentSettingsType content_type);
-
-  base::Time GetLastUsage(const ContentSettingsPattern& primary_pattern,
-                          const ContentSettingsPattern& secondary_pattern,
-                          ContentSettingsType content_type);
-
   ContentSettingsPref* GetPref(ContentSettingsType type) const;
-
-  // Gains ownership of |clock|.
-  void SetClockForTesting(std::unique_ptr<base::Clock> clock);
 
  private:
   friend class DeadlockCheckerObserver;  // For testing.
@@ -86,10 +69,7 @@ class PrefProvider : public ObservableProvider {
   // Weak; owned by the Profile and reset in ShutdownOnUIThread.
   PrefService* prefs_;
 
-  // Can be set for testing.
-  std::unique_ptr<base::Clock> clock_;
-
-  bool is_incognito_;
+  const bool is_incognito_;
 
   PrefChangeRegistrar pref_change_registrar_;
 

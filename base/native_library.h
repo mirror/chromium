@@ -65,21 +65,31 @@ struct BASE_EXPORT NativeLibraryLoadError {
 #endif  // OS_WIN
 };
 
+struct BASE_EXPORT NativeLibraryOptions {
+  NativeLibraryOptions() = default;
+  NativeLibraryOptions(const NativeLibraryOptions& options) = default;
+
+  // If |true|, a loaded library is required to prefer local symbol resolution
+  // before considering global symbols. Note that this is already the default
+  // behavior on most systems. Setting this to |false| does not guarantee the
+  // inverse, i.e., it does not force a preference for global symbols over local
+  // ones.
+  bool prefer_own_symbols = false;
+};
+
 // Loads a native library from disk.  Release it with UnloadNativeLibrary when
 // you're done.  Returns NULL on failure.
 // If |error| is not NULL, it may be filled in on load error.
 BASE_EXPORT NativeLibrary LoadNativeLibrary(const FilePath& library_path,
                                             NativeLibraryLoadError* error);
 
-#if defined(OS_WIN)
 // Loads a native library from disk.  Release it with UnloadNativeLibrary when
-// you're done.
-// This function retrieves the LoadLibrary function exported from kernel32.dll
-// and calls it instead of directly calling the LoadLibrary function via the
-// import table.
-BASE_EXPORT NativeLibrary LoadNativeLibraryDynamically(
-    const FilePath& library_path);
-#endif  // OS_WIN
+// you're done.  Returns NULL on failure.
+// If |error| is not NULL, it may be filled in on load error.
+BASE_EXPORT NativeLibrary LoadNativeLibraryWithOptions(
+    const FilePath& library_path,
+    const NativeLibraryOptions& options,
+    NativeLibraryLoadError* error);
 
 // Unloads a native library.
 BASE_EXPORT void UnloadNativeLibrary(NativeLibrary library);

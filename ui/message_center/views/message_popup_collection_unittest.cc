@@ -11,6 +11,7 @@
 #include <numeric>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/optional.h"
 #include "base/strings/string_number_conversions.h"
@@ -37,13 +38,13 @@ namespace {
 std::unique_ptr<message_center::Notification> CreateTestNotification(
     std::string id,
     std::string text) {
-  return base::WrapUnique(new message_center::Notification(
+  return base::MakeUnique<message_center::Notification>(
       message_center::NOTIFICATION_TYPE_BASE_FORMAT, id,
       base::UTF8ToUTF16("test title"), base::ASCIIToUTF16(text), gfx::Image(),
       base::string16() /* display_source */, GURL(),
       message_center::NotifierId(message_center::NotifierId::APPLICATION, id),
       message_center::RichNotificationData(),
-      new message_center::NotificationDelegate()));
+      new message_center::NotificationDelegate());
 }
 
 // Provides an aura window context for widget creation.
@@ -269,7 +270,7 @@ void MessagePopupCollectionTest::CheckedAnimationDelegate::
     return;
   auto poorly_aligned = std::adjacent_find(
       toasts_->begin(), toasts_->end(),
-      [this](ToastContentsView* top, ToastContentsView* bottom) {
+      [](ToastContentsView* top, ToastContentsView* bottom) {
         return ComputeYDistance(*top, *bottom) != kMarginBetweenItems;
       });
   if (poorly_aligned != toasts_->end())
@@ -288,7 +289,7 @@ void MessagePopupCollectionTest::CheckedAnimationDelegate::
     return;
   auto poorly_aligned = std::adjacent_find(
       toasts_->begin(), toasts_->end(),
-      [this](ToastContentsView* top, ToastContentsView* bottom) {
+      [](ToastContentsView* top, ToastContentsView* bottom) {
         return ComputeYDistance(*top, *bottom) < 0;
       });
   if (poorly_aligned != toasts_->end())

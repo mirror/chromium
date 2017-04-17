@@ -7,7 +7,6 @@ package org.chromium.chrome.browser.tab;
 import android.graphics.Bitmap;
 import android.view.ContextMenu;
 
-import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.WebContents;
 
@@ -30,12 +29,6 @@ public class EmptyTabObserver implements TabObserver {
 
     @Override
     public void onContentChanged(Tab tab) { }
-
-    @Override
-    public void onOverlayContentViewCoreAdded(Tab tab, ContentViewCore content) { }
-
-    @Override
-    public void onOverlayContentViewCoreRemoved(Tab tab, ContentViewCore content) { }
 
     @Override
     public void onLoadUrl(Tab tab, LoadUrlParams params, int loadType) { }
@@ -74,9 +67,6 @@ public class EmptyTabObserver implements TabObserver {
     public void onContextualActionBarVisibilityChanged(Tab tab, boolean visible) { }
 
     @Override
-    public void onWebContentsInstantSupportDisabled() { }
-
-    @Override
     public void onLoadStarted(Tab tab, boolean toDifferentDocument) { }
 
     @Override
@@ -92,24 +82,21 @@ public class EmptyTabObserver implements TabObserver {
     public void onToggleFullscreenMode(Tab tab, boolean enable) { }
 
     @Override
-    public void onDidFailLoad(Tab tab, boolean isProvisionalLoad, boolean isMainFrame,
-            int errorCode, String description, String failingUrl) { }
+    public void onDidFailLoad(
+            Tab tab, boolean isMainFrame, int errorCode, String description, String failingUrl) {}
 
     @Override
-    public void onDidStartProvisionalLoadForFrame(Tab tab, long frameId, long parentFrameId,
-            boolean isMainFrame, String validatedUrl, boolean isErrorPage,
-            boolean isIframeSrcdoc) { }
+    public void onDidStartNavigation(Tab tab, String url, boolean isInMainFrame,
+            boolean isSameDocument, boolean isErrorPage) {}
 
     @Override
-    public void onDidCommitProvisionalLoadForFrame(Tab tab, long frameId, boolean isMainFrame,
-            String url, int transitionType) { }
+    public void onDidFinishNavigation(Tab tab, String url, boolean isInMainFrame,
+            boolean isErrorPage, boolean hasCommitted, boolean isSameDocument,
+            boolean isFragmentNavigation, Integer pageTransition, int errorCode,
+            int httpStatusCode) {}
 
     @Override
-    public void onDidNavigateMainFrame(Tab tab, String url, String baseUrl,
-            boolean isNavigationToDifferentPage, boolean isFragmentNavigation, int statusCode) { }
-
-    @Override
-    public void didFirstVisuallyNonEmptyPaint(Tab tab) { }
+    public void didFirstVisuallyNonEmptyPaint(Tab tab) {}
 
     @Override
     public void onDidChangeThemeColor(Tab tab, int color) { }
@@ -121,14 +108,12 @@ public class EmptyTabObserver implements TabObserver {
     public void onDidDetachInterstitialPage(Tab tab) { }
 
     @Override
-    public void onDidStartNavigationToPendingEntry(Tab tab, String url) { }
-
-    @Override
     public void onBackgroundColorChanged(Tab tab, int color) { }
 
     @Override
-    public void webContentsCreated(Tab tab, WebContents sourceWebContents, long openerRenderFrameId,
-            String frameName, String targetUrl, WebContents newWebContents) { }
+    public void webContentsCreated(Tab tab, WebContents sourceWebContents,
+            long openerRenderProcessId, long openerRenderFrameId, String frameName,
+            String targetUrl, WebContents newWebContents) {}
 
     @Override
     public void onReparentingFinished(Tab tab) { }

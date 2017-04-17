@@ -36,62 +36,77 @@
 #include "platform/SharedBuffer.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class Blob;
+class CORE_EXPORT DataObjectItem
+    : public GarbageCollectedFinalized<DataObjectItem> {
+ public:
+  enum ItemKind { kStringKind, kFileKind };
 
-class CORE_EXPORT DataObjectItem : public GarbageCollectedFinalized<DataObjectItem> {
-public:
-    enum ItemKind {
-        StringKind,
-        FileKind
-    };
+  static DataObjectItem* CreateFromString(const String& type,
+                                          const String& data);
+  static DataObjectItem* CreateFromFile(File*);
+  // File with non-empty filesystem ID can be converted into FileEntry by using
+  // webkitGetAsEntry.
+  static DataObjectItem* CreateFromFileWithFileSystemId(
+      File*,
+      const String& file_system_id);
+  static DataObjectItem* CreateFromURL(const String& url, const String& title);
+  static DataObjectItem* CreateFromHTML(const String& html,
+                                        const KURL& base_url);
+  static DataObjectItem* CreateFromSharedBuffer(
+      PassRefPtr<SharedBuffer>,
+      const KURL&,
+      const String& file_extension,
+      const AtomicString& content_disposition);
+  static DataObjectItem* CreateFromPasteboard(const String& type,
+                                              uint64_t sequence_number);
 
-    static DataObjectItem* createFromString(const String& type, const String& data);
-    static DataObjectItem* createFromFile(File*);
-    static DataObjectItem* createFromURL(const String& url, const String& title);
-    static DataObjectItem* createFromHTML(const String& html, const KURL& baseURL);
-    static DataObjectItem* createFromSharedBuffer(const String& filename, PassRefPtr<SharedBuffer>);
-    static DataObjectItem* createFromPasteboard(const String& type, uint64_t sequenceNumber);
+  ItemKind Kind() const { return kind_; }
+  String GetType() const { return type_; }
+  String GetAsString() const;
+  File* GetAsFile() const;
 
-    ItemKind kind() const { return m_kind; }
-    String type() const { return m_type; }
-    String getAsString() const;
-    Blob* getAsFile() const;
+  // Used to support legacy DataTransfer APIs and renderer->browser
+  // serialization.
+  PassRefPtr<SharedBuffer> GetSharedBuffer() const { return shared_buffer_; }
+  String FilenameExtension() const { return filename_extension_; }
+  String Title() const { return title_; }
+  KURL BaseURL() const { return base_url_; }
+  bool IsFilename() const;
 
-    // Used to support legacy DataTransfer APIs and renderer->browser serialization.
-    PassRefPtr<SharedBuffer> sharedBuffer() const { return m_sharedBuffer; }
-    String title() const { return m_title; }
-    KURL baseURL() const { return m_baseURL; }
-    bool isFilename() const;
+  bool HasFileSystemId() const;
+  String FileSystemId() const;
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    enum DataSource {
-        PasteboardSource,
-        InternalSource,
-    };
+ private:
+  enum DataSource {
+    kPasteboardSource,
+    kInternalSource,
+  };
 
-    DataObjectItem(ItemKind, const String& type);
-    DataObjectItem(ItemKind, const String& type, uint64_t sequenceNumber);
+  DataObjectItem(ItemKind, const String& type);
+  DataObjectItem(ItemKind, const String& type, uint64_t sequence_number);
 
-    DataSource m_source;
-    ItemKind m_kind;
-    String m_type;
+  DataSource source_;
+  ItemKind kind_;
+  String type_;
 
-    String m_data;
-    Member<File> m_file;
-    RefPtr<SharedBuffer> m_sharedBuffer;
-    // Optional metadata. Currently used for URL, HTML, and dragging files in.
-    String m_title;
-    KURL m_baseURL;
+  String data_;
+  Member<File> file_;
+  RefPtr<SharedBuffer> shared_buffer_;
+  // Optional metadata. Currently used for URL, HTML, and dragging files in.
+  String filename_extension_;
+  String title_;
+  KURL base_url_;
 
-    uint64_t m_sequenceNumber; // Only valid when m_source == PasteboardSource
+  uint64_t sequence_number_;  // Only valid when m_source == PasteboardSource
+  String file_system_id_;     // Only valid when m_file is backed by FileEntry.
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DataObjectItem_h
+#endif  // DataObjectItem_h

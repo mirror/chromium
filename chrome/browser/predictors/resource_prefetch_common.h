@@ -7,7 +7,9 @@
 
 #include <stddef.h>
 
+#include "base/feature_list.h"
 #include "base/time/time.h"
+#include "components/sessions/core/session_id.h"
 #include "url/gurl.h"
 
 class Profile;
@@ -17,6 +19,16 @@ class WebContents;
 }
 
 namespace predictors {
+
+extern const char kSpeculativeResourcePrefetchingFeatureName[];
+extern const char kModeParamName[];
+extern const char kLearningMode[];
+extern const char kExternalPrefetchingMode[];
+extern const char kPrefetchingMode[];
+extern const char kEnableUrlLearningParamName[];
+extern const char kEnableManifestsParamName[];
+extern const char kEnableOriginLearningParamName[];
+extern const base::Feature kSpeculativeResourcePrefetchingFeature;
 
 struct ResourcePrefetchPredictorConfig;
 
@@ -32,24 +44,25 @@ enum PrefetchKeyType {
   PREFETCH_KEY_TYPE_URL
 };
 
+// Indicates what caused the prefetch request.
+enum class PrefetchOrigin { NAVIGATION, EXTERNAL };
+
 // Represents a single navigation for a render frame.
 struct NavigationID {
-  // TODO(shishir): Maybe take process_id, frame_id and url as input in
-  // constructor.
   NavigationID();
-  NavigationID(const NavigationID& other);
   explicit NavigationID(content::WebContents* web_contents);
+  NavigationID(content::WebContents* web_contents,
+               const GURL& main_frame_url,
+               const base::TimeTicks& creation_time);
+  NavigationID(const NavigationID& other);
+
   bool operator<(const NavigationID& rhs) const;
   bool operator==(const NavigationID& rhs) const;
 
-  bool IsSameRenderer(const NavigationID& other) const;
-
-  // Returns true iff the render_process_id_, render_frame_id_ and
-  // frame_url_ has been set correctly.
+  // Returns true iff the tab_id is valid and the Main frame URL is set.
   bool is_valid() const;
 
-  int render_process_id;
-  int render_frame_id;
+  SessionID::id_type tab_id;
   GURL main_frame_url;
 
   // NOTE: Even though we store the creation time here, it is not used during
@@ -58,8 +71,7 @@ struct NavigationID {
   base::TimeTicks creation_time;
 };
 
-// Represents the config for the resource prefetch prediction algorithm. It is
-// useful for running experiments.
+// Represents the config for the resource prefetch prediction algorithm.
 struct ResourcePrefetchPredictorConfig {
   // Initializes the config with default values.
   ResourcePrefetchPredictorConfig();
@@ -68,20 +80,17 @@ struct ResourcePrefetchPredictorConfig {
 
   // The mode the prefetcher is running in. Forms a bit map.
   enum Mode {
-    URL_LEARNING    = 1 << 0,
-    HOST_LEARNING   = 1 << 1,
-    URL_PREFETCHING = 1 << 2,  // Should also turn on URL_LEARNING.
-    HOST_PRFETCHING = 1 << 3   // Should also turn on HOST_LEARNING.
+    LEARNING = 1 << 0,
+    PREFETCHING_FOR_NAVIGATION = 1 << 2,  // Should also turn on LEARNING.
+    PREFETCHING_FOR_EXTERNAL = 1 << 3     // Should also turn on LEARNING.
   };
   int mode;
 
   // Helpers to deal with mode.
   bool IsLearningEnabled() const;
-  bool IsPrefetchingEnabled(Profile* profile) const;
-  bool IsURLLearningEnabled() const;
-  bool IsHostLearningEnabled() const;
-  bool IsURLPrefetchingEnabled(Profile* profile) const;
-  bool IsHostPrefetchingEnabled(Profile* profile) const;
+  bool IsPrefetchingEnabledForSomeOrigin(Profile* profile) const;
+  bool IsPrefetchingEnabledForOrigin(Profile* profile,
+                                     PrefetchOrigin origin) const;
 
   bool IsLowConfidenceForTest() const;
   bool IsHighConfidenceForTest() const;
@@ -103,8 +112,14 @@ struct ResourcePrefetchPredictorConfig {
 
   // The maximum number of resources to store per entry.
   size_t max_resources_per_entry;
-  // The number of consecutive misses after we stop tracking a resource URL.
+  // The maximum number of origins to store per entry.
+  size_t max_origins_per_entry;
+  // The number of consecutive misses after which we stop tracking a resource
+  // URL.
   size_t max_consecutive_misses;
+  // The number of consecutive misses after which we stop tracking a redirect
+  // endpoint.
+  size_t max_redirect_consecutive_misses;
 
   // The minimum confidence (accuracy of hits) required for a resource to be
   // prefetched.
@@ -117,6 +132,12 @@ struct ResourcePrefetchPredictorConfig {
   // Maximum number of prefetches that can be inflight for a host for a single
   // navigation.
   size_t max_prefetches_inflight_per_host_per_navigation;
+  // True iff the predictor could use a url-based database.
+  bool is_url_learning_enabled;
+  // True iff the predictor could use manifests.
+  bool is_manifests_enabled;
+  // True iff origin-based learning is enabled.
+  bool is_origin_learning_enabled;
 };
 
 }  // namespace predictors

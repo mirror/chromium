@@ -13,6 +13,7 @@
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/string_util.h"
 #include "base/threading/thread.h"
@@ -25,7 +26,6 @@
 #include "content/browser/streams/stream_registry.h"
 #include "content/common/fileapi/file_system_messages.h"
 #include "content/common/fileapi/webblob_messages.h"
-#include "content/public/browser/user_metrics.h"
 #include "ipc/ipc_platform_file.h"
 #include "net/base/mime_util.h"
 #include "net/url_request/url_request_context.h"
@@ -145,7 +145,6 @@ bool FileAPIMessageFilter::OnMessageReceived(const IPC::Message& message) {
   IPC_BEGIN_MESSAGE_MAP(FileAPIMessageFilter, message)
     IPC_MESSAGE_HANDLER(FileSystemHostMsg_OpenFileSystem, OnOpenFileSystem)
     IPC_MESSAGE_HANDLER(FileSystemHostMsg_ResolveURL, OnResolveURL)
-    IPC_MESSAGE_HANDLER(FileSystemHostMsg_DeleteFileSystem, OnDeleteFileSystem)
     IPC_MESSAGE_HANDLER(FileSystemHostMsg_Move, OnMove)
     IPC_MESSAGE_HANDLER(FileSystemHostMsg_Copy, OnCopy)
     IPC_MESSAGE_HANDLER(FileSystemHostMsg_Remove, OnRemove)
@@ -210,14 +209,6 @@ void FileAPIMessageFilter::OnResolveURL(
 
   context_->ResolveURL(url, base::Bind(
       &FileAPIMessageFilter::DidResolveURL, this, request_id));
-}
-
-void FileAPIMessageFilter::OnDeleteFileSystem(int request_id,
-                                              const GURL& origin_url,
-                                              storage::FileSystemType type) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  context_->DeleteFileSystem(origin_url, type, base::Bind(
-      &FileAPIMessageFilter::DidDeleteFileSystem, this, request_id));
 }
 
 void FileAPIMessageFilter::OnMove(
@@ -565,7 +556,7 @@ void FileAPIMessageFilter::OnFinishBuildingStream(const GURL& url) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   scoped_refptr<Stream> stream(GetStreamForURL(url));
   if (stream.get())
-    stream->Finalize();
+    stream->Finalize(net::OK);
 }
 
 void FileAPIMessageFilter::OnAbortBuildingStream(const GURL& url) {
@@ -699,17 +690,6 @@ void FileAPIMessageFilter::DidResolveURL(
     Send(new FileSystemMsg_DidFail(request_id, result));
   }
   // For ResolveURL we do not create a new operation, so no unregister here.
-}
-
-void FileAPIMessageFilter::DidDeleteFileSystem(
-    int request_id,
-    base::File::Error result) {
-  if (result == base::File::FILE_OK)
-    Send(new FileSystemMsg_DidSucceed(request_id));
-  else
-    Send(new FileSystemMsg_DidFail(request_id, result));
-  // For DeleteFileSystem we do not create a new operation,
-  // so no unregister here.
 }
 
 void FileAPIMessageFilter::DidCreateSnapshot(

@@ -28,32 +28,34 @@
 
 #include "core/editing/iterators/TextIterator.h"
 #include "platform/heap/Heap.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-// Very similar to the TextIterator, except that the chunks of text returned are "well behaved",
-// meaning they never end split up a word.  This is useful for spellcheck or (perhaps one day) searching.
+// Very similar to the TextIterator, except that the chunks of text returned are
+// "well behaved", meaning they never end split up a word.  This is useful for
+// spellcheck or (perhaps one day) searching.
 class WordAwareIterator {
-    STACK_ALLOCATED();
-public:
-    explicit WordAwareIterator(const Position& start, const Position& end);
-    ~WordAwareIterator();
+  STACK_ALLOCATED();
 
-    bool atEnd() const { return !m_didLookAhead && m_textIterator.atEnd(); }
-    void advance();
+ public:
+  explicit WordAwareIterator(const Position& start, const Position& end);
+  ~WordAwareIterator();
 
-    String substring(unsigned position, unsigned length) const;
-    UChar characterAt(unsigned index) const;
-    int length() const;
+  bool AtEnd() const { return !did_look_ahead_ && text_iterator_.AtEnd(); }
+  void Advance();
 
-private:
-    ForwardsTextBuffer m_buffer;
-    // Did we have to look ahead in the textIterator to confirm the current chunk?
-    bool m_didLookAhead;
-    TextIterator m_textIterator;
+  String Substring(unsigned position, unsigned length) const;
+  UChar CharacterAt(unsigned index) const;
+  int length() const;
+
+ private:
+  ForwardsTextBuffer buffer_;
+  // Did we have to look ahead in the textIterator to confirm the current chunk?
+  bool did_look_ahead_;
+  TextIterator text_iterator_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WordAwareIterator_h
+#endif  // WordAwareIterator_h

@@ -37,46 +37,65 @@
 
 namespace blink {
 
-class SVGAngleTearOff final : public SVGPropertyTearOff<SVGAngle>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SVGAngleTearOff* create(SVGAngle* target, SVGElement* contextElement, PropertyIsAnimValType propertyIsAnimVal, const QualifiedName& attributeName = QualifiedName::null())
-    {
-        return new SVGAngleTearOff(target, contextElement, propertyIsAnimVal, attributeName);
-    }
+class SVGAngleTearOff final : public SVGPropertyTearOff<SVGAngle>,
+                              public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    enum {
-        SVG_ANGLETYPE_UNKNOWN = SVGAngle::SVG_ANGLETYPE_UNKNOWN,
-        SVG_ANGLETYPE_UNSPECIFIED = SVGAngle::SVG_ANGLETYPE_UNSPECIFIED,
-        SVG_ANGLETYPE_DEG = SVGAngle::SVG_ANGLETYPE_DEG,
-        SVG_ANGLETYPE_RAD = SVGAngle::SVG_ANGLETYPE_RAD,
-        SVG_ANGLETYPE_GRAD = SVGAngle::SVG_ANGLETYPE_GRAD
-    };
+ public:
+  static SVGAngleTearOff* Create(
+      SVGAngle* target,
+      SVGElement* context_element,
+      PropertyIsAnimValType property_is_anim_val,
+      const QualifiedName& attribute_name = QualifiedName::Null()) {
+    return new SVGAngleTearOff(target, context_element, property_is_anim_val,
+                               attribute_name);
+  }
 
-    ~SVGAngleTearOff() override;
+  enum {
+    kSvgAngletypeUnknown = SVGAngle::kSvgAngletypeUnknown,
+    kSvgAngletypeUnspecified = SVGAngle::kSvgAngletypeUnspecified,
+    kSvgAngletypeDeg = SVGAngle::kSvgAngletypeDeg,
+    kSvgAngletypeRad = SVGAngle::kSvgAngletypeRad,
+    kSvgAngletypeGrad = SVGAngle::kSvgAngletypeGrad
+  };
 
-    unsigned short unitType() { return hasExposedAngleUnit() ? target()->unitType() : SVGAngle::SVG_ANGLETYPE_UNKNOWN; }
+  ~SVGAngleTearOff() override;
 
-    void setValue(float, ExceptionState&);
-    float value() { return target()->value(); }
+  unsigned short unitType() {
+    return HasExposedAngleUnit() ? Target()->UnitType()
+                                 : SVGAngle::kSvgAngletypeUnknown;
+  }
 
-    void setValueInSpecifiedUnits(float, ExceptionState&);
-    float valueInSpecifiedUnits() { return target()->valueInSpecifiedUnits(); }
+  void setValue(float, ExceptionState&);
+  float value() { return Target()->Value(); }
 
-    void newValueSpecifiedUnits(unsigned short unitType, float valueInSpecifiedUnits, ExceptionState&);
-    void convertToSpecifiedUnits(unsigned short unitType, ExceptionState&);
+  void setValueInSpecifiedUnits(float, ExceptionState&);
+  float valueInSpecifiedUnits() { return Target()->ValueInSpecifiedUnits(); }
 
-    String valueAsString() { return hasExposedAngleUnit() ? target()->valueAsString() : String::number(0); }
-    void setValueAsString(const String&, ExceptionState&);
+  void newValueSpecifiedUnits(unsigned short unit_type,
+                              float value_in_specified_units,
+                              ExceptionState&);
+  void convertToSpecifiedUnits(unsigned short unit_type, ExceptionState&);
 
-    DECLARE_VIRTUAL_TRACE_WRAPPERS();
+  String valueAsString() {
+    return HasExposedAngleUnit() ? Target()->ValueAsString()
+                                 : String::Number(0);
+  }
+  void setValueAsString(const String&, ExceptionState&);
 
-private:
-    SVGAngleTearOff(SVGAngle*, SVGElement*, PropertyIsAnimValType, const QualifiedName&);
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
-    bool hasExposedAngleUnit() { return target()->unitType() <= SVGAngle::SVG_ANGLETYPE_GRAD; }
+ private:
+  SVGAngleTearOff(SVGAngle*,
+                  SVGElement*,
+                  PropertyIsAnimValType,
+                  const QualifiedName&);
+
+  bool HasExposedAngleUnit() {
+    return Target()->UnitType() <= SVGAngle::kSvgAngletypeGrad;
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGAngleTearOff_h
+#endif  // SVGAngleTearOff_h

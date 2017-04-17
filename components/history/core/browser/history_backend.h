@@ -14,6 +14,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/cancelable_callback.h"
 #include "base/containers/hash_tables.h"
 #include "base/containers/mru_cache.h"
 #include "base/files/file_path.h"
@@ -34,19 +35,14 @@
 #include "components/history/core/browser/visit_tracker.h"
 #include "sql/init_status.h"
 
-class HistoryURLProvider;
-struct HistoryURLProviderParams;
 class SkBitmap;
 class TestingProfile;
-struct ThumbnailScore;
 
 namespace base {
-class MessageLoop;
 class SingleThreadTaskRunner;
 }
 
 namespace history {
-class CommitLaterTask;
 struct DownloadRow;
 class HistoryBackendClient;
 class HistoryBackendDBBaseTest;
@@ -54,11 +50,12 @@ class HistoryBackendObserver;
 class HistoryBackendTest;
 class HistoryDatabase;
 struct HistoryDatabaseParams;
-struct HistoryDetails;
 class HistoryDBTask;
 class InMemoryHistoryBackend;
 class TypedUrlSyncableService;
+class TypedURLSyncBridge;
 class HistoryBackendHelper;
+class URLDatabase;
 
 // The maximum number of icons URLs per page which can be stored in the
 // thumbnail database.
@@ -113,7 +110,10 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
     virtual ~Delegate() {}
 
     // Called when the database cannot be read correctly for some reason.
-    virtual void NotifyProfileError(sql::InitStatus init_status) = 0;
+    // |diagnostics| contains information about the underlying database
+    // which can help in identifying the cause of the profile error.
+    virtual void NotifyProfileError(sql::InitStatus init_status,
+                                    const std::string& diagnostics) = 0;
 
     // Sets the in-memory history backend. The in-memory backend is created by
     // the main backend. For non-unit tests, this happens on the background
@@ -326,6 +326,11 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
                    const GURL& icon_url,
                    const std::vector<SkBitmap>& bitmaps);
 
+  bool SetLastResortFavicons(const GURL& page_url,
+                             favicon_base::IconType icon_type,
+                             const GURL& icon_url,
+                             const std::vector<SkBitmap>& bitmaps);
+
   void SetFaviconsOutOfDateForPage(const GURL& page_url);
 
   void SetImportedFavicons(
@@ -335,7 +340,7 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
 
   uint32_t GetNextDownloadId();
   void QueryDownloads(std::vector<DownloadRow>* rows);
-  void UpdateDownload(const DownloadRow& data);
+  void UpdateDownload(const DownloadRow& data, bool should_commit_immediately);
   bool CreateDownload(const DownloadRow& history_info);
   void RemoveDownloads(const std::set<uint32_t>& ids);
 
@@ -396,6 +401,10 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   // is owned by |this| object.
   virtual TypedUrlSyncableService* GetTypedUrlSyncableService() const;
 
+  // Returns the sync bridge for syncing typed urls. The returned service
+  // is owned by |this| object.
+  TypedURLSyncBridge* GetTypedURLSyncBridge() const;
+
   // Deleting ------------------------------------------------------------------
 
   virtual void DeleteURLs(const std::vector<GURL>& urls);
@@ -454,8 +463,9 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   // Sets the task to run and the message loop to run it on when this object
   // is destroyed. See HistoryService::SetOnBackendDestroyTask for a more
   // complete description.
-  void SetOnBackendDestroyTask(base::MessageLoop* message_loop,
-                               const base::Closure& task);
+  void SetOnBackendDestroyTask(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+      const base::Closure& task);
 
   // Adds the given rows to the database if it doesn't exist. A visit will be
   // added for each given URL at the last visit time in the URLRow if the
@@ -480,7 +490,6 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
 
  private:
   friend class base::RefCountedThreadSafe<HistoryBackend>;
-  friend class CommitLaterTask;  // The commit task needs to call Commit().
   friend class HistoryBackendTest;
   friend class HistoryBackendDBBaseTest;  // So the unit tests can poke our
                                           // innards.
@@ -515,6 +524,11 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, SetFaviconsReplaceBitmapData);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest,
                            SetFaviconsSameFaviconURLForTwoPages);
+  FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, SetLastResortFaviconsForEmptyDB);
+  FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest,
+                           SetLastResortFaviconsForPageInDB);
+  FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest,
+                           SetLastResortFaviconsForIconInDB);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest,
                            UpdateFaviconMappingsAndFetchNoChange);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, MergeFaviconPageURLNotInDB);
@@ -607,8 +621,11 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   // at |cur_visit|.
   void GetRedirectsToSpecificVisit(VisitID cur_visit, RedirectList* redirects);
 
-  // Update the visit_duration information in visits table.
+  // Updates the visit_duration information in visits table.
   void UpdateVisitDuration(VisitID visit_id, const base::Time end_ts);
+
+  // Returns whether |url| is on an untyped intranet host.
+  bool IsUntypedIntranetHost(const GURL& url);
 
   // Querying ------------------------------------------------------------------
 
@@ -656,6 +673,16 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
                            const base::Time ts);
 
   // Favicons ------------------------------------------------------------------
+
+  // If |bitmaps_are_expired| is true, the icon for |icon_url| will be modified
+  // only if it's not present in the database. In that case, it will be
+  // initially set as expired. Returns whether the new bitmaps were actually
+  // written.
+  bool SetFaviconsImpl(const GURL& page_url,
+                       favicon_base::IconType icon_type,
+                       const GURL& icon_url,
+                       const std::vector<SkBitmap>& bitmaps,
+                       bool bitmaps_are_expired);
 
   // Used by both UpdateFaviconMappingsAndFetch and GetFavicons.
   // If |page_url| is non-null, the icon urls for |page_url| (and all
@@ -828,10 +855,11 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   ExpireHistoryBackend expirer_;
 
   // A commit has been scheduled to occur sometime in the future. We can check
-  // non-null-ness to see if there is a commit scheduled in the future, and we
-  // can use the pointer to cancel the scheduled commit. There can be only one
+  // !IsCancelled() to see if there is a commit scheduled in the future (note
+  // that CancelableClosure starts cancelled with the default constructor), and
+  // we can use Cancel() to cancel the scheduled commit. There can be only one
   // scheduled commit at a time (see ScheduleCommit).
-  scoped_refptr<CommitLaterTask> scheduled_commit_;
+  base::CancelableClosure scheduled_commit_;
 
   // Maps recent redirect destination pages to the chain of redirects that
   // brought us to there. Pages that did not have redirects or were not the
@@ -849,7 +877,7 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   base::Time first_recorded_time_;
 
   // When set, this is the task that should be invoked on destruction.
-  base::MessageLoop* backend_destroy_message_loop_;
+  scoped_refptr<base::SingleThreadTaskRunner> backend_destroy_task_runner_;
   base::Closure backend_destroy_task_;
 
   // Tracks page transition types.
@@ -860,7 +888,7 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   bool segment_queried_;
 
   // List of QueuedHistoryDBTasks to run;
-  std::list<QueuedHistoryDBTask*> queued_history_db_tasks_;
+  std::list<std::unique_ptr<QueuedHistoryDBTask>> queued_history_db_tasks_;
 
   // Used to determine if a URL is bookmarked; may be null.
   std::unique_ptr<HistoryBackendClient> backend_client_;
@@ -872,12 +900,12 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   // of inheritance from base::SupportsUserData).
   std::unique_ptr<HistoryBackendHelper> supports_user_data_helper_;
 
-  // Used to manage syncing of the typed urls datatype. This will be null before
-  // Init is called.
-  std::unique_ptr<TypedUrlSyncableService> typed_url_syncable_service_;
-
   // Listens for the system being under memory pressure.
   std::unique_ptr<base::MemoryPressureListener> memory_pressure_listener_;
+
+  // Contains diagnostic information about the sql database that is non-empty
+  // when a catastrophic error occurs.
+  std::string db_diagnostics_;
 
   // Map from host to index in the TopHosts list. It is updated only by
   // TopHosts(), so it's usually stale.
@@ -885,6 +913,13 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
 
   // List of observers
   base::ObserverList<HistoryBackendObserver> observers_;
+
+  // Used to manage syncing of the typed urls datatype. They will be null before
+  // Init is called, and only one will be instantiated after Init is called
+  // depending on switches::kSyncUSSTypedURL. Defined after observers_ because
+  // it unregisters itself as observer during destruction.
+  std::unique_ptr<TypedUrlSyncableService> typed_url_syncable_service_;
+  std::unique_ptr<TypedURLSyncBridge> typed_url_sync_bridge_;
 
   DISALLOW_COPY_AND_ASSIGN(HistoryBackend);
 };

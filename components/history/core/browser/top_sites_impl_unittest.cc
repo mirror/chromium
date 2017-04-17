@@ -25,14 +25,18 @@
 #include "components/history/core/browser/top_sites_cache.h"
 #include "components/history/core/browser/top_sites_observer.h"
 #include "components/history/core/browser/visit_delegate.h"
+#include "components/history/core/test/history_service_test_util.h"
 #include "components/history/core/test/history_unittest_base.h"
 #include "components/history/core/test/test_history_database.h"
 #include "components/history/core/test/wait_top_sites_loaded_observer.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/testing_pref_service.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "url/gurl.h"
+
+using testing::ContainerEq;
 
 namespace history {
 
@@ -46,25 +50,6 @@ const char kPrepopulatedPageURL[] =
 bool MockCanAddURLToHistory(const GURL& url) {
   return url.is_valid() && !url.SchemeIs(kApplicationScheme);
 }
-
-// Used by WaitForHistory, see it for details.
-class WaitForHistoryTask : public HistoryDBTask {
- public:
-  WaitForHistoryTask() {}
-
-  bool RunOnDBThread(HistoryBackend* backend, HistoryDatabase* db) override {
-    return true;
-  }
-
-  void DoneRunOnMainThread() override {
-    base::MessageLoop::current()->QuitWhenIdle();
-  }
-
- private:
-  ~WaitForHistoryTask() override {}
-
-  DISALLOW_COPY_AND_ASSIGN(WaitForHistoryTask);
-};
 
 // Used for querying top sites. Either runs sequentially, or runs a nested
 // nested message loop until the response is complete. The later is used when
@@ -145,7 +130,7 @@ class TopSitesImplTest : public HistoryUnitTestBase {
     history_service_.reset(
         new HistoryService(nullptr, std::unique_ptr<VisitDelegate>()));
     ASSERT_TRUE(history_service_->Init(
-        TestHistoryDatabaseParamsForPath(scoped_temp_dir_.path())));
+        TestHistoryDatabaseParamsForPath(scoped_temp_dir_.GetPath())));
     ResetTopSites();
     WaitTopSitesLoaded();
   }
@@ -177,10 +162,7 @@ class TopSitesImplTest : public HistoryUnitTestBase {
   // Blocks the caller until history processes a task. This is useful if you
   // need to wait until you know history has processed a task.
   void WaitForHistory() {
-    history_service()->ScheduleDBTask(
-        std::unique_ptr<history::HistoryDBTask>(new WaitForHistoryTask()),
-        &history_tracker_);
-    base::RunLoop().Run();
+    BlockUntilHistoryProcessesPendingRequests(history_service());
   }
 
   // Waits for top sites to finish processing a task. This is useful if you need
@@ -316,7 +298,7 @@ class TopSitesImplTest : public HistoryUnitTestBase {
     top_sites_impl_ = new TopSitesImpl(
         pref_service_.get(), history_service_.get(),
         prepopulated_pages, base::Bind(MockCanAddURLToHistory));
-    top_sites_impl_->Init(scoped_temp_dir_.path().Append(kTopSitesFilename),
+    top_sites_impl_->Init(scoped_temp_dir_.GetPath().Append(kTopSitesFilename),
                           message_loop_.task_runner());
   }
 
@@ -655,6 +637,42 @@ TEST_F(TopSitesImplTest, GetMostVisited) {
   EXPECT_EQ(news, querier.urls()[0].url);
   EXPECT_EQ(google, querier.urls()[1].url);
   ASSERT_NO_FATAL_FAILURE(ContainsPrepopulatePages(querier, 2));
+}
+
+// Tests GetMostVisitedURLs with a redirect.
+TEST_F(TopSitesImplTest, GetMostVisitedWithRedirect) {
+  GURL bare("http://cnn.com/");
+  GURL www("https://www.cnn.com/");
+  GURL edition("https://edition.cnn.com/");
+
+  AddPageToHistory(edition, base::ASCIIToUTF16("CNN"),
+                   history::RedirectList{bare, www, edition},
+                   base::Time::Now());
+  AddPageToHistory(edition);
+
+  StartQueryForMostVisited();
+  WaitForHistory();
+
+  TopSitesQuerier querier;
+  querier.QueryTopSites(top_sites(), false);
+
+  ASSERT_EQ(1, querier.number_of_callbacks());
+
+  // This behavior is not desirable: even though edition.cnn.com is in the list
+  // of top sites, and the the bare URL cnn.com is just a redirect to it, we're
+  // returning both. Even worse, the NTP will show the same title, icon, and
+  // thumbnail for the site, so to the user it looks like we just have the same
+  // thing twice.  (https://crbug.com/567132)
+  std::vector<GURL> expected_urls = {bare, edition};  // should be {edition}.
+
+  for (const auto& prepopulated : GetPrepopulatedPages()) {
+    expected_urls.push_back(prepopulated.most_visited.url);
+  }
+  std::vector<GURL> actual_urls;
+  for (const auto& actual : querier.urls()) {
+    actual_urls.push_back(actual.url);
+  }
+  EXPECT_THAT(actual_urls, ContainerEq(expected_urls));
 }
 
 // Makes sure changes done to top sites get mirrored to the db.

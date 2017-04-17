@@ -24,6 +24,14 @@ class Transform;
 
 namespace ui {
 
+// Return true if |attr| should be interpreted as the id of another node
+// in the same tree.
+AX_EXPORT bool IsNodeIdIntAttribute(AXIntAttribute attr);
+
+// Return true if |attr| should be interpreted as a list of ids of
+// nodes in the same tree.
+AX_EXPORT bool IsNodeIdIntListAttribute(AXIntListAttribute attr);
+
 // A compact representation of the accessibility information for a
 // single accessible object, in a form that can be serialized and sent from
 // one process to another.
@@ -93,8 +101,17 @@ struct AX_EXPORT AXNodeData {
   // Convenience functions, mainly for writing unit tests.
   // Equivalent to AddStringAttribute(ATTR_NAME, name).
   void SetName(const std::string& name);
+  void SetName(const base::string16& name);
   // Equivalent to AddStringAttribute(ATTR_VALUE, value).
   void SetValue(const std::string& value);
+  void SetValue(const base::string16& value);
+
+  // Helper to check whether |state_flag| is set in the given |state|.
+  static bool IsFlagSet(uint32_t state, ui::AXState state_flag);
+
+  // Set or check bits in |state_|.
+  void AddStateFlag(ui::AXState state_flag);
+  bool HasStateFlag(ui::AXState state_flag) const;
 
   // Return a string representation of this data, for debugging.
   virtual std::string ToString() const;
@@ -113,7 +130,14 @@ struct AX_EXPORT AXNodeData {
   base::StringPairs html_attributes;
   std::vector<int32_t> child_ids;
 
-  // The object's location relative to its window or frame.
+  // TODO(dmazzoni): replace the following three members with a single
+  // instance of AXRelativeBounds.
+
+  // The id of an ancestor node in the same AXTree that this object's
+  // bounding box is relative to, or -1 if there's no offset container.
+  int offset_container_id;
+
+  // The relative bounding box of this node.
   gfx::RectF location;
 
   // An additional transform to apply to position this object and its subtree.

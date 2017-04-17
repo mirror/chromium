@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import json
 import math
 import os
 
@@ -32,36 +33,36 @@ class _DromaeoMeasurement(legacy_page_test.LegacyPageTest):
     self._power_metric.Start(page, tab)
 
   def ValidateAndMeasurePage(self, page, tab, results):
-    tab.WaitForJavaScriptExpression(
+    tab.WaitForJavaScriptCondition(
         'window.document.getElementById("pause") &&' +
         'window.document.getElementById("pause").value == "Run"',
-        120)
+        timeout=120)
 
     # Start spying on POST request that will report benchmark results, and
     # intercept result data.
-    tab.ExecuteJavaScript('(function() {' +
-                          '  var real_jquery_ajax_ = window.jQuery;' +
-                          '  window.results_ = "";' +
-                          '  window.jQuery.ajax = function(request) {' +
-                          '    if (request.url == "store.php") {' +
-                          '      window.results_ =' +
-                          '          decodeURIComponent(request.data);' +
-                          '      window.results_ = window.results_.substring(' +
-                          '          window.results_.indexOf("=") + 1, ' +
-                          '          window.results_.lastIndexOf("&"));' +
-                          '      real_jquery_ajax_(request);' +
-                          '    }' +
-                          '  };' +
-                          '})();')
+    tab.ExecuteJavaScript("""
+        (function() {
+          var real_jquery_ajax_ = window.jQuery;
+          window.results_ = "";
+          window.jQuery.ajax = function(request) {
+            if (request.url == "store.php") {
+              window.results_ = decodeURIComponent(request.data);
+              window.results_ = window.results_.substring(
+                window.results_.indexOf("=") + 1,
+                window.results_.lastIndexOf("&"));
+              real_jquery_ajax_(request);
+            }
+          };
+        })();""")
     # Starts benchmark.
     tab.ExecuteJavaScript('window.document.getElementById("pause").click();')
 
-    tab.WaitForJavaScriptExpression('!!window.results_', 600)
+    tab.WaitForJavaScriptCondition('!!window.results_', timeout=600)
 
     self._power_metric.Stop(page, tab)
     self._power_metric.AddResults(tab, results)
 
-    score = eval(tab.EvaluateJavaScript('window.results_ || "[]"'))
+    score = json.loads(tab.EvaluateJavaScript('window.results_ || "[]"'))
 
     def Escape(k):
       chars = [' ', '.', '-', '/', '(', ')', '*']
@@ -124,6 +125,9 @@ class _DromaeoBenchmark(perf_benchmark.PerfBenchmark):
     return ps
 
 
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoDomCoreAttr(_DromaeoBenchmark):
   """Dromaeo DOMCore attr JavaScript benchmark.
 
@@ -137,6 +141,9 @@ class DromaeoDomCoreAttr(_DromaeoBenchmark):
     return 'dromaeo.domcoreattr'
 
 
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoDomCoreModify(_DromaeoBenchmark):
   """Dromaeo DOMCore modify JavaScript benchmark.
 
@@ -150,6 +157,9 @@ class DromaeoDomCoreModify(_DromaeoBenchmark):
     return 'dromaeo.domcoremodify'
 
 
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoDomCoreQuery(_DromaeoBenchmark):
   """Dromaeo DOMCore query JavaScript benchmark.
 
@@ -163,6 +173,9 @@ class DromaeoDomCoreQuery(_DromaeoBenchmark):
     return 'dromaeo.domcorequery'
 
 
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoDomCoreTraverse(_DromaeoBenchmark):
   """Dromaeo DOMCore traverse JavaScript benchmark.
 
@@ -176,7 +189,9 @@ class DromaeoDomCoreTraverse(_DromaeoBenchmark):
     return 'dromaeo.domcoretraverse'
 
 
-@benchmark.Disabled('win')  # crbug.com/523276
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoJslibAttrJquery(_DromaeoBenchmark):
   """Dromaeo JSLib attr jquery JavaScript benchmark.
 
@@ -190,7 +205,14 @@ class DromaeoJslibAttrJquery(_DromaeoBenchmark):
   def Name(cls):
     return 'dromaeo.jslibattrjquery'
 
+  @classmethod
+  def ShouldDisable(cls, possible_browser):
+    # http://crbug.com/634055 (Android One).
+    return cls.IsSvelte(possible_browser)
 
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoJslibAttrPrototype(_DromaeoBenchmark):
   """Dromaeo JSLib attr prototype JavaScript benchmark.
 
@@ -205,7 +227,9 @@ class DromaeoJslibAttrPrototype(_DromaeoBenchmark):
     return 'dromaeo.jslibattrprototype'
 
 
-@benchmark.Disabled('win')  # crbug.com/523276
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoJslibEventJquery(_DromaeoBenchmark):
   """Dromaeo JSLib event jquery JavaScript benchmark.
 
@@ -220,6 +244,9 @@ class DromaeoJslibEventJquery(_DromaeoBenchmark):
     return 'dromaeo.jslibeventjquery'
 
 
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoJslibEventPrototype(_DromaeoBenchmark):
   """Dromaeo JSLib event prototype JavaScript benchmark.
 
@@ -234,10 +261,13 @@ class DromaeoJslibEventPrototype(_DromaeoBenchmark):
     return 'dromaeo.jslibeventprototype'
 
 
-# win: http://crbug.com/479796, http://crbug.com/529330, http://crbug.com/598705
+# win-ref: http://crbug.com/598705
 # android: http://crbug.com/503138
 # linux: http://crbug.com/583075
 @benchmark.Disabled('win-reference', 'android', 'linux')
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoJslibModifyJquery(_DromaeoBenchmark):
   """Dromaeo JSLib modify jquery JavaScript benchmark.
 
@@ -252,6 +282,9 @@ class DromaeoJslibModifyJquery(_DromaeoBenchmark):
     return 'dromaeo.jslibmodifyjquery'
 
 
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoJslibModifyPrototype(_DromaeoBenchmark):
   """Dromaeo JSLib modify prototype JavaScript benchmark.
 
@@ -266,7 +299,9 @@ class DromaeoJslibModifyPrototype(_DromaeoBenchmark):
     return 'dromaeo.jslibmodifyprototype'
 
 
-@benchmark.Disabled('win')  # crbug.com/523276
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoJslibStyleJquery(_DromaeoBenchmark):
   """Dromaeo JSLib style jquery JavaScript benchmark.
 
@@ -281,6 +316,9 @@ class DromaeoJslibStyleJquery(_DromaeoBenchmark):
     return 'dromaeo.jslibstylejquery'
 
 
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoJslibStylePrototype(_DromaeoBenchmark):
   """Dromaeo JSLib style prototype JavaScript benchmark.
 
@@ -295,6 +333,9 @@ class DromaeoJslibStylePrototype(_DromaeoBenchmark):
     return 'dromaeo.jslibstyleprototype'
 
 
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoJslibTraverseJquery(_DromaeoBenchmark):
   """Dromaeo JSLib traverse jquery JavaScript benchmark.
 
@@ -310,6 +351,9 @@ class DromaeoJslibTraverseJquery(_DromaeoBenchmark):
     return 'dromaeo.jslibtraversejquery'
 
 
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoJslibTraversePrototype(_DromaeoBenchmark):
   """Dromaeo JSLib traverse prototype JavaScript benchmark.
 
@@ -323,6 +367,9 @@ class DromaeoJslibTraversePrototype(_DromaeoBenchmark):
     return 'dromaeo.jslibtraverseprototype'
 
 
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class DromaeoCSSQueryJquery(_DromaeoBenchmark):
   """Dromaeo CSS Query jquery JavaScript benchmark.
 

@@ -35,7 +35,7 @@
 #include "modules/ModulesExport.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -44,30 +44,38 @@ class ExecutionContext;
 class InspectorDatabaseAgent;
 class Page;
 
-class MODULES_EXPORT DatabaseClient : public Supplement<Page> {
-    WTF_MAKE_NONCOPYABLE(DatabaseClient);
-public:
-    DatabaseClient();
-    virtual ~DatabaseClient() { }
+class MODULES_EXPORT DatabaseClient : public GarbageCollected<DatabaseClient>,
+                                      public Supplement<Page> {
+  USING_GARBAGE_COLLECTED_MIXIN(DatabaseClient);
+  WTF_MAKE_NONCOPYABLE(DatabaseClient);
 
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  DatabaseClient();
 
-    virtual bool allowDatabase(ExecutionContext*, const String& name, const String& displayName, unsigned estimatedSize) = 0;
+  DECLARE_VIRTUAL_TRACE();
 
-    void didOpenDatabase(Database*, const String& domain, const String& name, const String& version);
+  bool AllowDatabase(ExecutionContext*,
+                     const String& name,
+                     const String& display_name,
+                     unsigned estimated_size);
 
-    static DatabaseClient* fromPage(Page*);
-    static DatabaseClient* from(ExecutionContext*);
-    static const char* supplementName();
+  void DidOpenDatabase(Database*,
+                       const String& domain,
+                       const String& name,
+                       const String& version);
 
-    void setInspectorAgent(InspectorDatabaseAgent*);
+  static DatabaseClient* FromPage(Page*);
+  static DatabaseClient* From(ExecutionContext*);
+  static const char* SupplementName();
 
-private:
-    Member<InspectorDatabaseAgent> m_inspectorAgent;
+  void SetInspectorAgent(InspectorDatabaseAgent*);
+
+ private:
+  Member<InspectorDatabaseAgent> inspector_agent_;
 };
 
-MODULES_EXPORT void provideDatabaseClientTo(Page&, DatabaseClient*);
+MODULES_EXPORT void ProvideDatabaseClientTo(Page&, DatabaseClient*);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DatabaseClient_h
+#endif  // DatabaseClient_h

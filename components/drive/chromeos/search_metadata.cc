@@ -11,7 +11,7 @@
 #include "base/bind.h"
 #include "base/i18n/string_search.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -123,8 +123,8 @@ class HiddenEntryClassifier {
 FileError MaybeAddEntryToResult(
     ResourceMetadata* resource_metadata,
     ResourceMetadata::Iterator* it,
-    const ScopedVector<
-        base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>& queries,
+    const std::vector<std::unique_ptr<
+        base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>>& queries,
     const SearchMetadataPredicate& predicate,
     size_t at_most_num_matches,
     HiddenEntryClassifier* hidden_entry_classifier,
@@ -158,7 +158,7 @@ FileError MaybeAddEntryToResult(
   if (result_candidates->size() == at_most_num_matches)
     result_candidates->pop();
   result_candidates->push(
-      base::WrapUnique(new ResultCandidate(it->GetID(), entry, highlighted)));
+      base::MakeUnique<ResultCandidate>(it->GetID(), entry, highlighted));
   return FILE_ERROR_OK;
 }
 
@@ -176,11 +176,13 @@ FileError SearchMetadataOnBlockingPool(ResourceMetadata* resource_metadata,
                         base::StringPiece16(base::kWhitespaceUTF16),
                         base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
 
-  ScopedVector<base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>
+  std::vector<std::unique_ptr<
+      base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>>
       queries;
   for (const auto& keyword : keywords) {
     queries.push_back(
-        new base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents(
+        base::MakeUnique<
+            base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>(
             keyword));
   }
 
@@ -312,8 +314,8 @@ bool MatchesType(int options, const ResourceEntry& entry) {
 
 bool FindAndHighlight(
     const std::string& text,
-    const ScopedVector<
-        base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>& queries,
+    const std::vector<std::unique_ptr<
+        base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>>& queries,
     std::string* highlighted_text) {
   DCHECK(highlighted_text);
   highlighted_text->clear();
@@ -324,7 +326,7 @@ bool FindAndHighlight(
 
   base::string16 text16 = base::UTF8ToUTF16(text);
   std::vector<bool> highlights(text16.size(), false);
-  for (auto* query : queries) {
+  for (const auto& query : queries) {
     if (!query->Search(text16, &match_start, &match_length))
       return false;
 

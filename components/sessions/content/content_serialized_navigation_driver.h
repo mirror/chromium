@@ -5,8 +5,13 @@
 #ifndef COMPONENTS_SESSIONS_CONTENT_CONTENT_SERIALIZED_NAVIGATION_DRIVER_H_
 #define COMPONENTS_SESSIONS_CONTENT_CONTENT_SERIALIZED_NAVIGATION_DRIVER_H_
 
-#include "components/sessions/core/serialized_navigation_driver.h"
+#include <map>
+#include <memory>
+#include <string>
 
+#include "base/macros.h"
+#include "components/sessions/content/extended_info_handler.h"
+#include "components/sessions/core/serialized_navigation_driver.h"
 #include "components/sessions/core/sessions_export.h"
 
 namespace base {
@@ -26,6 +31,9 @@ class SESSIONS_EXPORT ContentSerializedNavigationDriver
   // callers should use SerializedNavigationDriver::Get() instead.
   static ContentSerializedNavigationDriver* GetInstance();
 
+  // Allows an embedder to override the instance returned by GetInstance().
+  static void SetInstance(ContentSerializedNavigationDriver* instance);
+
   // SerializedNavigationDriver implementation.
   int GetDefaultReferrerPolicy() const override;
   bool MapReferrerPolicyToOldValues(int referrer_policy,
@@ -38,9 +46,30 @@ class SESSIONS_EXPORT ContentSerializedNavigationDriver
   std::string StripReferrerFromPageState(
       const std::string& page_state) const override;
 
- private:
+  // Registers a handler that is used to read and write the extended
+  // info stored in SerializedNavigationEntry. As part of serialization |key|
+  // is written to disk, as such once a handler is registered it should always
+  // be registered to the same key.
+  void RegisterExtendedInfoHandler(
+      const std::string& key,
+      std::unique_ptr<ExtendedInfoHandler> handler);
+
+  using ExtendedInfoHandlerMap =
+      std::map<std::string, std::unique_ptr<ExtendedInfoHandler>>;
+
+  // Returns all the registered handlers to deal with the extended info.
+  const ExtendedInfoHandlerMap& GetAllExtendedInfoHandlers() const;
+
+ protected:
   ContentSerializedNavigationDriver();
+
+ private:
   friend struct base::DefaultSingletonTraits<ContentSerializedNavigationDriver>;
+  friend class ContentSerializedNavigationBuilderTest;
+
+  ExtendedInfoHandlerMap extended_info_handler_map_;
+
+  DISALLOW_COPY_AND_ASSIGN(ContentSerializedNavigationDriver);
 };
 
 }  // namespace sessions

@@ -4,48 +4,73 @@
 
 #include "modules/payments/PaymentResponse.h"
 
-#include "bindings/core/v8/JSONValuesForV8.h"
+#include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/V8ObjectBuilder.h"
 #include "modules/payments/PaymentAddress.h"
 #include "modules/payments/PaymentCompleter.h"
-#include "wtf/Assertions.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
-PaymentResponse::PaymentResponse(mojom::blink::PaymentResponsePtr response, PaymentCompleter* paymentCompleter)
-    : m_methodName(response->method_name)
-    , m_stringifiedDetails(response->stringified_details)
-    , m_shippingAddress(response->shipping_address ? new PaymentAddress(std::move(response->shipping_address)) : nullptr)
-    , m_shippingOption(response->shipping_option)
-    , m_payerEmail(response->payer_email)
-    , m_payerPhone(response->payer_phone)
-    , m_paymentCompleter(paymentCompleter)
-{
-    DCHECK(m_paymentCompleter);
+PaymentResponse::PaymentResponse(
+    payments::mojom::blink::PaymentResponsePtr response,
+    PaymentCompleter* payment_completer)
+    : method_name_(response->method_name),
+      stringified_details_(response->stringified_details),
+      shipping_address_(
+          response->shipping_address
+              ? new PaymentAddress(std::move(response->shipping_address))
+              : nullptr),
+      shipping_option_(response->shipping_option),
+      payer_name_(response->payer_name),
+      payer_email_(response->payer_email),
+      payer_phone_(response->payer_phone),
+      payment_completer_(payment_completer) {
+  DCHECK(payment_completer_);
 }
 
-PaymentResponse::~PaymentResponse()
-{
+PaymentResponse::~PaymentResponse() {}
+
+ScriptValue PaymentResponse::toJSONForBinding(ScriptState* script_state) const {
+  V8ObjectBuilder result(script_state);
+  result.AddString("methodName", methodName());
+  result.Add("details", details(script_state, ASSERT_NO_EXCEPTION));
+
+  if (shippingAddress())
+    result.Add("shippingAddress",
+               shippingAddress()->toJSONForBinding(script_state));
+  else
+    result.AddNull("shippingAddress");
+
+  result.AddStringOrNull("shippingOption", shippingOption())
+      .AddStringOrNull("payerName", payerName())
+      .AddStringOrNull("payerEmail", payerEmail())
+      .AddStringOrNull("payerPhone", payerPhone());
+
+  return result.GetScriptValue();
 }
 
-ScriptValue PaymentResponse::details(ScriptState* scriptState, ExceptionState& exceptionState) const
-{
-    return ScriptValue(scriptState, fromJSONString(scriptState, m_stringifiedDetails, exceptionState));
+ScriptValue PaymentResponse::details(ScriptState* script_state,
+                                     ExceptionState& exception_state) const {
+  return ScriptValue(script_state,
+                     FromJSONString(script_state->GetIsolate(),
+                                    stringified_details_, exception_state));
 }
 
-ScriptPromise PaymentResponse::complete(ScriptState* scriptState, const String& result)
-{
-    PaymentComplete convertedResult = Unknown;
-    if (result == "success")
-        convertedResult = Success;
-    if (result == "fail")
-        convertedResult = Fail;
-    return m_paymentCompleter->complete(scriptState, convertedResult);
+ScriptPromise PaymentResponse::complete(ScriptState* script_state,
+                                        const String& result) {
+  PaymentCompleter::PaymentComplete converted_result =
+      PaymentCompleter::kUnknown;
+  if (result == "success")
+    converted_result = PaymentCompleter::kSuccess;
+  else if (result == "fail")
+    converted_result = PaymentCompleter::kFail;
+  return payment_completer_->Complete(script_state, converted_result);
 }
 
-DEFINE_TRACE(PaymentResponse)
-{
-    visitor->trace(m_shippingAddress);
-    visitor->trace(m_paymentCompleter);
+DEFINE_TRACE(PaymentResponse) {
+  visitor->Trace(shipping_address_);
+  visitor->Trace(payment_completer_);
 }
 
-} // namespace blink
+}  // namespace blink

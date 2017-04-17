@@ -2,7 +2,8 @@
  * Copyright (C) 2000 Lars Knoll (knoll@kde.org)
  *           (C) 2000 Antti Koivisto (koivisto@kde.org)
  *           (C) 2000 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights
+ * reserved.
  * Copyright (C) 2007 Nicholas Shanks <webkit@nickshanks.com>
  *
  * This library is free software; you can redistribute it and/or
@@ -30,7 +31,6 @@
 #include "platform/LayoutLocale.h"
 #include "platform/fonts/FontCacheKey.h"
 #include "platform/fonts/FontFamily.h"
-#include "platform/fonts/FontFeatureSettings.h"
 #include "platform/fonts/FontOrientation.h"
 #include "platform/fonts/FontSmoothingMode.h"
 #include "platform/fonts/FontTraits.h"
@@ -38,293 +38,362 @@
 #include "platform/fonts/FontWidthVariant.h"
 #include "platform/fonts/TextRenderingMode.h"
 #include "platform/fonts/TypesettingFeatures.h"
-#include "platform/text/LocaleToScriptMapping.h"
-#include "wtf/Allocator.h"
-#include "wtf/MathExtras.h"
+#include "platform/fonts/opentype/FontSettings.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/MathExtras.h"
 
-#include "wtf/RefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 #include <unicode/uscript.h>
 
 namespace blink {
 
-const float FontSizeAdjustNone = -1;
-typedef struct {
-    uint32_t parts[2];
-} FieldsAsUnsignedType;
+const float kFontSizeAdjustNone = -1;
+typedef struct { uint32_t parts[2]; } FieldsAsUnsignedType;
 
 class PLATFORM_EXPORT FontDescription {
-    USING_FAST_MALLOC(FontDescription);
-public:
-    enum GenericFamilyType { NoFamily, StandardFamily, SerifFamily, SansSerifFamily,
-                             MonospaceFamily, CursiveFamily, FantasyFamily, PictographFamily };
+  USING_FAST_MALLOC(FontDescription);
 
-    enum Kerning { AutoKerning, NormalKerning, NoneKerning };
+ public:
+  enum GenericFamilyType {
+    kNoFamily,
+    kStandardFamily,
+    kSerifFamily,
+    kSansSerifFamily,
+    kMonospaceFamily,
+    kCursiveFamily,
+    kFantasyFamily,
+    kPictographFamily
+  };
 
-    enum LigaturesState { NormalLigaturesState, DisabledLigaturesState, EnabledLigaturesState };
+  enum Kerning { kAutoKerning, kNormalKerning, kNoneKerning };
 
-    enum FontVariantCaps { CapsNormal, SmallCaps, AllSmallCaps, PetiteCaps, AllPetiteCaps, Unicase, TitlingCaps };
+  enum LigaturesState {
+    kNormalLigaturesState,
+    kDisabledLigaturesState,
+    kEnabledLigaturesState
+  };
 
-    FontDescription()
-        : m_specifiedSize(0)
-        , m_computedSize(0)
-        , m_adjustedSize(0)
-        , m_sizeAdjust(FontSizeAdjustNone)
-        , m_letterSpacing(0)
-        , m_wordSpacing(0)
-    {
-        m_fieldsAsUnsigned.parts[0] = 0;
-        m_fieldsAsUnsigned.parts[1] = 0;
-        m_fields.m_orientation = static_cast<unsigned>(FontOrientation::Horizontal);
-        m_fields.m_widthVariant = RegularWidth;
-        m_fields.m_style = FontStyleNormal;
-        m_fields.m_variantCaps = CapsNormal;
-        m_fields.m_isAbsoluteSize = false;
-        m_fields.m_weight = FontWeightNormal;
-        m_fields.m_stretch = FontStretchNormal;
-        m_fields.m_genericFamily = NoFamily;
-        m_fields.m_kerning = AutoKerning;
-        m_fields.m_commonLigaturesState = NormalLigaturesState;
-        m_fields.m_discretionaryLigaturesState = NormalLigaturesState;
-        m_fields.m_historicalLigaturesState = NormalLigaturesState;
-        m_fields.m_contextualLigaturesState = NormalLigaturesState;
-        m_fields.m_keywordSize = 0;
-        m_fields.m_fontSmoothing = AutoSmoothing;
-        m_fields.m_textRendering = AutoTextRendering;
-        m_fields.m_syntheticBold = false;
-        m_fields.m_syntheticItalic = false;
-        m_fields.m_subpixelTextPosition = s_useSubpixelTextPositioning;
-        m_fields.m_typesettingFeatures = s_defaultTypesettingFeatures;
-        m_fields.m_variantNumeric = FontVariantNumeric().m_fieldsAsUnsigned;
-    }
+  enum FontVariantCaps {
+    kCapsNormal,
+    kSmallCaps,
+    kAllSmallCaps,
+    kPetiteCaps,
+    kAllPetiteCaps,
+    kUnicase,
+    kTitlingCaps
+  };
 
-    bool operator==(const FontDescription&) const;
-    bool operator!=(const FontDescription& other) const { return !(*this == other); }
+  FontDescription();
+  FontDescription(const FontDescription&);
 
-    struct VariantLigatures {
-        STACK_ALLOCATED();
-        VariantLigatures(LigaturesState state = NormalLigaturesState)
-            : common(state)
-            , discretionary(state)
-            , historical(state)
-            , contextual(state)
-        {
-        }
+  FontDescription& operator=(const FontDescription&);
 
-        unsigned common : 2;
-        unsigned discretionary : 2;
-        unsigned historical : 2;
-        unsigned contextual : 2;
-    };
+  bool operator==(const FontDescription&) const;
+  bool operator!=(const FontDescription& other) const {
+    return !(*this == other);
+  }
 
-    struct Size {
-        STACK_ALLOCATED();
-        Size(unsigned keyword, float value, bool isAbsolute)
-            : keyword(keyword)
-            , isAbsolute(isAbsolute)
-            , value(value)
-        {
-        }
-        unsigned keyword : 4; // FontDescription::keywordSize
-        unsigned isAbsolute : 1; // FontDescription::isAbsoluteSize
-        float value;
-    };
+  struct VariantLigatures {
+    STACK_ALLOCATED();
+    VariantLigatures(LigaturesState state = kNormalLigaturesState)
+        : common(state),
+          discretionary(state),
+          historical(state),
+          contextual(state) {}
 
-    struct FamilyDescription {
-        STACK_ALLOCATED();
-        FamilyDescription(GenericFamilyType genericFamily) : genericFamily(genericFamily) { }
-        FamilyDescription(GenericFamilyType genericFamily, const FontFamily& family)
-            : genericFamily(genericFamily)
-            , family(family)
-        {
-        }
-        GenericFamilyType genericFamily;
-        FontFamily family;
-    };
+    unsigned common : 2;
+    unsigned discretionary : 2;
+    unsigned historical : 2;
+    unsigned contextual : 2;
+  };
 
-    const FontFamily& family() const { return m_familyList; }
-    FamilyDescription getFamilyDescription() const { return FamilyDescription(genericFamily(), family()); }
-    FontFamily& firstFamily() { return m_familyList; }
-    Size getSize() const { return Size(keywordSize(), specifiedSize(), isAbsoluteSize()); }
-    float specifiedSize() const { return m_specifiedSize; }
-    float computedSize() const { return m_computedSize; }
-    float adjustedSize() const { return m_adjustedSize; }
-    float sizeAdjust() const { return m_sizeAdjust; }
-    bool hasSizeAdjust() const { return m_sizeAdjust != FontSizeAdjustNone; }
-    FontStyle style() const { return static_cast<FontStyle>(m_fields.m_style); }
-    int computedPixelSize() const { return int(m_computedSize + 0.5f); }
-    FontVariantCaps variantCaps() const { return static_cast<FontVariantCaps>(m_fields.m_variantCaps); }
-    bool isAbsoluteSize() const { return m_fields.m_isAbsoluteSize; }
-    FontWeight weight() const { return static_cast<FontWeight>(m_fields.m_weight); }
-    FontStretch stretch() const { return static_cast<FontStretch>(m_fields.m_stretch); }
-    static FontWeight lighterWeight(FontWeight);
-    static FontWeight bolderWeight(FontWeight);
-    static Size largerSize(const Size&);
-    static Size smallerSize(const Size&);
-    GenericFamilyType genericFamily() const { return static_cast<GenericFamilyType>(m_fields.m_genericFamily); }
+  struct Size {
+    STACK_ALLOCATED();
+    Size(unsigned keyword, float value, bool is_absolute)
+        : keyword(keyword), is_absolute(is_absolute), value(value) {}
+    unsigned keyword : 4;     // FontDescription::keywordSize
+    unsigned is_absolute : 1;  // FontDescription::isAbsoluteSize
+    float value;
+  };
 
-    // only use fixed default size when there is only one font family, and that family is "monospace"
-    bool isMonospace() const
-    {
-        return genericFamily() == MonospaceFamily && !family().next() && family().family() == FontFamilyNames::webkit_monospace;
-    }
-    Kerning getKerning() const { return static_cast<Kerning>(m_fields.m_kerning); }
-    VariantLigatures getVariantLigatures() const;
-    FontVariantNumeric variantNumeric() const  { return FontVariantNumeric::initializeFromUnsigned(m_fields.m_variantNumeric); };
-    LigaturesState commonLigaturesState() const { return static_cast<LigaturesState>(m_fields.m_commonLigaturesState); }
-    LigaturesState discretionaryLigaturesState() const { return static_cast<LigaturesState>(m_fields.m_discretionaryLigaturesState); }
-    LigaturesState historicalLigaturesState() const { return static_cast<LigaturesState>(m_fields.m_historicalLigaturesState); }
-    LigaturesState contextualLigaturesState() const { return static_cast<LigaturesState>(m_fields.m_contextualLigaturesState); }
-    unsigned keywordSize() const { return m_fields.m_keywordSize; }
-    FontSmoothingMode fontSmoothing() const { return static_cast<FontSmoothingMode>(m_fields.m_fontSmoothing); }
-    TextRenderingMode textRendering() const { return static_cast<TextRenderingMode>(m_fields.m_textRendering); }
-    const LayoutLocale* locale() const { return m_locale.get(); }
-    const LayoutLocale& localeOrDefault() const { return LayoutLocale::valueOrDefault(m_locale.get()); }
-    UScriptCode script() const { return localeOrDefault().script(); }
-    bool isSyntheticBold() const { return m_fields.m_syntheticBold; }
-    bool isSyntheticItalic() const { return m_fields.m_syntheticItalic; }
-    bool useSubpixelPositioning() const { return m_fields.m_subpixelTextPosition; }
+  struct FamilyDescription {
+    STACK_ALLOCATED();
+    FamilyDescription(GenericFamilyType generic_family)
+        : generic_family(generic_family) {}
+    FamilyDescription(GenericFamilyType generic_family,
+                      const FontFamily& family)
+        : generic_family(generic_family), family(family) {}
+    GenericFamilyType generic_family;
+    FontFamily family;
+  };
 
-    FontTraits traits() const;
-    float wordSpacing() const { return m_wordSpacing; }
-    float letterSpacing() const { return m_letterSpacing; }
-    FontOrientation orientation() const { return static_cast<FontOrientation>(m_fields.m_orientation); }
-    bool isVerticalAnyUpright() const { return blink::isVerticalAnyUpright(orientation()); }
-    bool isVerticalNonCJKUpright() const { return blink::isVerticalNonCJKUpright(orientation()); }
-    bool isVerticalUpright(UChar32 character) const { return blink::isVerticalUpright(orientation(), character); }
-    bool isVerticalBaseline() const { return blink::isVerticalBaseline(orientation()); }
-    FontWidthVariant widthVariant() const { return static_cast<FontWidthVariant>(m_fields.m_widthVariant); }
-    FontFeatureSettings* featureSettings() const { return m_featureSettings.get(); }
+  const FontFamily& Family() const { return family_list_; }
+  FamilyDescription GetFamilyDescription() const {
+    return FamilyDescription(GenericFamily(), Family());
+  }
+  FontFamily& FirstFamily() { return family_list_; }
+  Size GetSize() const {
+    return Size(KeywordSize(), SpecifiedSize(), IsAbsoluteSize());
+  }
+  float SpecifiedSize() const { return specified_size_; }
+  float ComputedSize() const { return computed_size_; }
+  float AdjustedSize() const { return adjusted_size_; }
+  float SizeAdjust() const { return size_adjust_; }
+  bool HasSizeAdjust() const { return size_adjust_ != kFontSizeAdjustNone; }
+  FontStyle Style() const { return static_cast<FontStyle>(fields_.style_); }
+  int ComputedPixelSize() const { return int(computed_size_ + 0.5f); }
+  FontVariantCaps VariantCaps() const {
+    return static_cast<FontVariantCaps>(fields_.variant_caps_);
+  }
+  bool IsAbsoluteSize() const { return fields_.is_absolute_size_; }
+  FontWeight Weight() const { return static_cast<FontWeight>(fields_.weight_); }
+  FontStretch Stretch() const {
+    return static_cast<FontStretch>(fields_.stretch_);
+  }
+  static FontWeight LighterWeight(FontWeight);
+  static FontWeight BolderWeight(FontWeight);
+  static Size LargerSize(const Size&);
+  static Size SmallerSize(const Size&);
+  GenericFamilyType GenericFamily() const {
+    return static_cast<GenericFamilyType>(fields_.generic_family_);
+  }
 
-    float effectiveFontSize() const; // Returns either the computedSize or the computedPixelSize
-    FontCacheKey cacheKey(const FontFaceCreationParams&, FontTraits desiredTraits = FontTraits(0)) const;
+  // only use fixed default size when there is only one font family, and that
+  // family is "monospace"
+  bool IsMonospace() const {
+    return GenericFamily() == kMonospaceFamily && !Family().Next() &&
+           Family().Family() == FontFamilyNames::webkit_monospace;
+  }
+  Kerning GetKerning() const { return static_cast<Kerning>(fields_.kerning_); }
+  VariantLigatures GetVariantLigatures() const;
+  FontVariantNumeric VariantNumeric() const {
+    return FontVariantNumeric::InitializeFromUnsigned(fields_.variant_numeric_);
+  };
+  LigaturesState CommonLigaturesState() const {
+    return static_cast<LigaturesState>(fields_.common_ligatures_state_);
+  }
+  LigaturesState DiscretionaryLigaturesState() const {
+    return static_cast<LigaturesState>(fields_.discretionary_ligatures_state_);
+  }
+  LigaturesState HistoricalLigaturesState() const {
+    return static_cast<LigaturesState>(fields_.historical_ligatures_state_);
+  }
+  LigaturesState ContextualLigaturesState() const {
+    return static_cast<LigaturesState>(fields_.contextual_ligatures_state_);
+  }
+  unsigned KeywordSize() const { return fields_.keyword_size_; }
+  FontSmoothingMode FontSmoothing() const {
+    return static_cast<FontSmoothingMode>(fields_.font_smoothing_);
+  }
+  TextRenderingMode TextRendering() const {
+    return static_cast<TextRenderingMode>(fields_.text_rendering_);
+  }
+  const LayoutLocale* Locale() const { return locale_.Get(); }
+  const LayoutLocale& LocaleOrDefault() const {
+    return LayoutLocale::ValueOrDefault(locale_.Get());
+  }
+  UScriptCode GetScript() const { return LocaleOrDefault().GetScript(); }
+  bool IsSyntheticBold() const { return fields_.synthetic_bold_; }
+  bool IsSyntheticItalic() const { return fields_.synthetic_italic_; }
+  bool UseSubpixelPositioning() const {
+    return fields_.subpixel_text_position_;
+  }
 
-    void setFamily(const FontFamily& family) { m_familyList = family; }
-    void setComputedSize(float s) { m_computedSize = clampTo<float>(s); }
-    void setSpecifiedSize(float s) { m_specifiedSize = clampTo<float>(s); }
-    void setAdjustedSize(float s) { m_adjustedSize = clampTo<float>(s); }
-    void setSizeAdjust(float aspect) { m_sizeAdjust = clampTo<float>(aspect); }
-    void setStyle(FontStyle i) { m_fields.m_style = i; }
-    void setVariantCaps(FontVariantCaps);
-    void setVariantLigatures(const VariantLigatures&);
-    void setVariantNumeric(const FontVariantNumeric&);
-    void setIsAbsoluteSize(bool s) { m_fields.m_isAbsoluteSize = s; }
-    void setWeight(FontWeight w) { m_fields.m_weight = w; }
-    void setStretch(FontStretch s) { m_fields.m_stretch = s; }
-    void setGenericFamily(GenericFamilyType genericFamily) { m_fields.m_genericFamily = genericFamily; }
-    void setKerning(Kerning kerning) { m_fields.m_kerning = kerning; updateTypesettingFeatures(); }
-    void setKeywordSize(unsigned s) { m_fields.m_keywordSize = s; }
-    void setFontSmoothing(FontSmoothingMode smoothing) { m_fields.m_fontSmoothing = smoothing; }
-    void setTextRendering(TextRenderingMode rendering) { m_fields.m_textRendering = rendering; updateTypesettingFeatures(); }
-    void setOrientation(FontOrientation orientation) { m_fields.m_orientation = static_cast<unsigned>(orientation); }
-    void setWidthVariant(FontWidthVariant widthVariant) { m_fields.m_widthVariant = widthVariant; }
-    void setLocale(PassRefPtr<const LayoutLocale> locale) { m_locale = locale; }
-    void setSyntheticBold(bool syntheticBold) { m_fields.m_syntheticBold = syntheticBold; }
-    void setSyntheticItalic(bool syntheticItalic) { m_fields.m_syntheticItalic = syntheticItalic; }
-    void setFeatureSettings(PassRefPtr<FontFeatureSettings> settings) { m_featureSettings = settings; }
-    void setTraits(FontTraits);
-    void setWordSpacing(float s) { m_wordSpacing = s; }
-    void setLetterSpacing(float s) { m_letterSpacing = s; updateTypesettingFeatures(); }
+  FontTraits Traits() const;
+  float WordSpacing() const { return word_spacing_; }
+  float LetterSpacing() const { return letter_spacing_; }
+  FontOrientation Orientation() const {
+    return static_cast<FontOrientation>(fields_.orientation_);
+  }
+  bool IsVerticalAnyUpright() const {
+    return blink::IsVerticalAnyUpright(Orientation());
+  }
+  bool IsVerticalNonCJKUpright() const {
+    return blink::IsVerticalNonCJKUpright(Orientation());
+  }
+  bool IsVerticalUpright(UChar32 character) const {
+    return blink::IsVerticalUpright(Orientation(), character);
+  }
+  bool IsVerticalBaseline() const {
+    return blink::IsVerticalBaseline(Orientation());
+  }
+  FontWidthVariant WidthVariant() const {
+    return static_cast<FontWidthVariant>(fields_.width_variant_);
+  }
+  FontFeatureSettings* FeatureSettings() const {
+    return feature_settings_.Get();
+  }
+  FontVariationSettings* VariationSettings() const {
+    return variation_settings_.Get();
+  }
 
-    TypesettingFeatures getTypesettingFeatures() const { return static_cast<TypesettingFeatures>(m_fields.m_typesettingFeatures); }
+  float EffectiveFontSize()
+      const;  // Returns either the computedSize or the computedPixelSize
+  FontCacheKey CacheKey(const FontFaceCreationParams&,
+                        FontTraits desired_traits = FontTraits(0)) const;
 
-    static void setSubpixelPositioning(bool b) { s_useSubpixelTextPositioning = b; }
-    static bool subpixelPositioning() { return s_useSubpixelTextPositioning; }
+  void SetFamily(const FontFamily& family) { family_list_ = family; }
+  void SetComputedSize(float s) { computed_size_ = clampTo<float>(s); }
+  void SetSpecifiedSize(float s) { specified_size_ = clampTo<float>(s); }
+  void SetAdjustedSize(float s) { adjusted_size_ = clampTo<float>(s); }
+  void SetSizeAdjust(float aspect) { size_adjust_ = clampTo<float>(aspect); }
+  void SetStyle(FontStyle i) { fields_.style_ = i; }
+  void SetVariantCaps(FontVariantCaps);
+  void SetVariantLigatures(const VariantLigatures&);
+  void SetVariantNumeric(const FontVariantNumeric&);
+  void SetIsAbsoluteSize(bool s) { fields_.is_absolute_size_ = s; }
+  void SetWeight(FontWeight w) { fields_.weight_ = w; }
+  void SetStretch(FontStretch s) { fields_.stretch_ = s; }
+  void SetGenericFamily(GenericFamilyType generic_family) {
+    fields_.generic_family_ = generic_family;
+  }
+  void SetKerning(Kerning kerning) {
+    fields_.kerning_ = kerning;
+    UpdateTypesettingFeatures();
+  }
+  void SetKeywordSize(unsigned s) { fields_.keyword_size_ = s; }
+  void SetFontSmoothing(FontSmoothingMode smoothing) {
+    fields_.font_smoothing_ = smoothing;
+  }
+  void SetTextRendering(TextRenderingMode rendering) {
+    fields_.text_rendering_ = rendering;
+    UpdateTypesettingFeatures();
+  }
+  void SetOrientation(FontOrientation orientation) {
+    fields_.orientation_ = static_cast<unsigned>(orientation);
+  }
+  void SetWidthVariant(FontWidthVariant width_variant) {
+    fields_.width_variant_ = width_variant;
+  }
+  void SetLocale(PassRefPtr<const LayoutLocale> locale) {
+    locale_ = std::move(locale);
+  }
+  void SetSyntheticBold(bool synthetic_bold) {
+    fields_.synthetic_bold_ = synthetic_bold;
+  }
+  void SetSyntheticItalic(bool synthetic_italic) {
+    fields_.synthetic_italic_ = synthetic_italic;
+  }
+  void SetFeatureSettings(PassRefPtr<FontFeatureSettings> settings) {
+    feature_settings_ = std::move(settings);
+  }
+  void SetVariationSettings(PassRefPtr<FontVariationSettings> settings) {
+    variation_settings_ = std::move(settings);
+  }
+  void SetTraits(FontTraits);
+  void SetWordSpacing(float s) { word_spacing_ = s; }
+  void SetLetterSpacing(float s) {
+    letter_spacing_ = s;
+    UpdateTypesettingFeatures();
+  }
 
-    static void setDefaultTypesettingFeatures(TypesettingFeatures);
-    static TypesettingFeatures defaultTypesettingFeatures();
+  TypesettingFeatures GetTypesettingFeatures() const {
+    return static_cast<TypesettingFeatures>(fields_.typesetting_features_);
+  }
 
-    unsigned styleHashWithoutFamilyList() const;
-    // TODO(drott): We should not expose internal structure here, but rather introduce
-    // a hash function here.
-    unsigned bitmapFields() const { return m_fieldsAsUnsigned.parts[0]; }
-    unsigned auxiliaryBitmapFields() const { return m_fieldsAsUnsigned.parts[1]; }
+  static void SetSubpixelPositioning(bool b) {
+    use_subpixel_text_positioning_ = b;
+  }
+  static bool SubpixelPositioning() { return use_subpixel_text_positioning_; }
 
-    SkFontStyle skiaFontStyle() const;
+  void SetSubpixelAscentDescent(bool sp) const {
+    fields_.subpixel_ascent_descent_ = sp;
+  }
 
-private:
-    FontFamily m_familyList; // The list of font families to be used.
-    RefPtr<FontFeatureSettings> m_featureSettings;
-    RefPtr<const LayoutLocale> m_locale;
+  bool SubpixelAscentDescent() const {
+    return fields_.subpixel_ascent_descent_;
+  }
 
-    void updateTypesettingFeatures();
+  static void SetDefaultTypesettingFeatures(TypesettingFeatures);
+  static TypesettingFeatures DefaultTypesettingFeatures();
 
-    float m_specifiedSize;   // Specified CSS value. Independent of rendering issues such as integer
-                             // rounding, minimum font sizes, and zooming.
-    float m_computedSize;    // Computed size adjusted for the minimum font size and the zoom factor.
+  unsigned StyleHashWithoutFamilyList() const;
+  // TODO(drott): We should not expose internal structure here, but rather
+  // introduce a hash function here.
+  unsigned BitmapFields() const { return fields_as_unsigned_.parts[0]; }
+  unsigned AuxiliaryBitmapFields() const {
+    return fields_as_unsigned_.parts[1];
+  }
 
-    // (Given aspect value / aspect value of a font family) * specifiedSize.
-    // This value is adjusted for the minimum font size and the zoom factor
-    // as well as a computed size is.
-    float m_adjustedSize;
+  SkFontStyle SkiaFontStyle() const;
 
-    // Given aspect value, i.e. font-size-adjust.
-    float m_sizeAdjust;
+ private:
+  FontFamily family_list_;  // The list of font families to be used.
+  RefPtr<FontFeatureSettings> feature_settings_;
+  RefPtr<FontVariationSettings> variation_settings_;
+  RefPtr<const LayoutLocale> locale_;
 
-    float m_letterSpacing;
-    float m_wordSpacing;
+  void UpdateTypesettingFeatures();
 
-    struct BitFields {
-        DISALLOW_NEW();
-        unsigned m_orientation : static_cast<unsigned>(FontOrientation::BitCount);
+  // Specified CSS value. Independent of rendering issues such as integer
+  // rounding, minimum font sizes, and zooming.
+  float specified_size_;
+  // Computed size adjusted for the minimum font size and the zoom factor.
+  float computed_size_;
 
-        unsigned m_widthVariant : 2; // FontWidthVariant
+  // (Given aspect value / aspect value of a font family) * specifiedSize.
+  // This value is adjusted for the minimum font size and the zoom factor
+  // as well as a computed size is.
+  float adjusted_size_;
 
-        unsigned m_style : 2; // FontStyle
-        unsigned m_variantCaps : 3; // FontVariantCaps
-        unsigned m_isAbsoluteSize : 1; // Whether or not CSS specified an explicit size
-        // (logical sizes like "medium" don't count).
-        unsigned m_weight : 4; // FontWeight
-        unsigned m_stretch : 4; // FontStretch
-        unsigned m_genericFamily : 3; // GenericFamilyType
+  // Given aspect value, i.e. font-size-adjust.
+  float size_adjust_;
 
-        unsigned m_kerning : 2; // Kerning
+  float letter_spacing_;
+  float word_spacing_;
 
-        unsigned m_commonLigaturesState : 2;
-        unsigned m_discretionaryLigaturesState : 2;
-        unsigned m_historicalLigaturesState : 2;
-        unsigned m_contextualLigaturesState : 2;
+  struct BitFields {
+    DISALLOW_NEW();
+    unsigned orientation_ : static_cast<unsigned>(FontOrientation::kBitCount);
 
-        unsigned m_keywordSize : 4; // We cache whether or not a font is currently represented by a CSS keyword (e.g., medium).  If so,
-        // then we can accurately translate across different generic families to adjust for different preference settings
-        // (e.g., 13px monospace vs. 16px everything else).  Sizes are 1-8 (like the HTML size values for <font>).
+    unsigned width_variant_ : 2;  // FontWidthVariant
 
-        unsigned m_fontSmoothing : 2; // FontSmoothingMode
-        unsigned m_textRendering : 2; // TextRenderingMode
-        unsigned m_syntheticBold : 1;
-        unsigned m_syntheticItalic : 1;
-        unsigned m_subpixelTextPosition : 1;
-        unsigned m_typesettingFeatures : 3;
-        unsigned m_variantNumeric : 8;
-    };
+    unsigned style_ : 2;         // FontStyle
+    unsigned variant_caps_ : 3;  // FontVariantCaps
+    unsigned
+        is_absolute_size_ : 1;  // Whether or not CSS specified an explicit size
+    // (logical sizes like "medium" don't count).
+    unsigned weight_ : 4;          // FontWeight
+    unsigned stretch_ : 4;         // FontStretch
+    unsigned generic_family_ : 3;  // GenericFamilyType
 
-    static_assert(sizeof(BitFields) == sizeof(FieldsAsUnsignedType),
-        "Mapped bitfield datatypes must have identical size.");
-    union {
-        BitFields m_fields;
-        FieldsAsUnsignedType m_fieldsAsUnsigned;
-    };
+    unsigned kerning_ : 2;  // Kerning
 
-    static TypesettingFeatures s_defaultTypesettingFeatures;
+    unsigned common_ligatures_state_ : 2;
+    unsigned discretionary_ligatures_state_ : 2;
+    unsigned historical_ligatures_state_ : 2;
+    unsigned contextual_ligatures_state_ : 2;
 
-    static bool s_useSubpixelTextPositioning;
+    // We cache whether or not a font is currently represented by a CSS keyword
+    // (e.g., medium).  If so, then we can accurately translate across different
+    // generic families to adjust for different preference settings (e.g., 13px
+    // monospace vs. 16px everything else).  Sizes are 1-8 (like the HTML size
+    // values for <font>).
+    unsigned keyword_size_ : 4;
+
+    unsigned font_smoothing_ : 2;  // FontSmoothingMode
+    unsigned text_rendering_ : 2;  // TextRenderingMode
+    unsigned synthetic_bold_ : 1;
+    unsigned synthetic_italic_ : 1;
+    unsigned subpixel_text_position_ : 1;
+    unsigned typesetting_features_ : 3;
+    unsigned variant_numeric_ : 8;
+    mutable unsigned subpixel_ascent_descent_ : 1;
+  };
+
+  static_assert(sizeof(BitFields) == sizeof(FieldsAsUnsignedType),
+                "Mapped bitfield datatypes must have identical size.");
+  union {
+    BitFields fields_;
+    FieldsAsUnsignedType fields_as_unsigned_;
+  };
+
+  static TypesettingFeatures default_typesetting_features_;
+
+  static bool use_subpixel_text_positioning_;
 };
 
-inline bool FontDescription::operator==(const FontDescription& other) const
-{
-    return m_familyList == other.m_familyList
-        && m_locale == other.m_locale
-        && m_specifiedSize == other.m_specifiedSize
-        && m_computedSize == other.m_computedSize
-        && m_adjustedSize == other.m_adjustedSize
-        && m_sizeAdjust == other.m_sizeAdjust
-        && m_letterSpacing == other.m_letterSpacing
-        && m_wordSpacing == other.m_wordSpacing
-        && m_fieldsAsUnsigned.parts[0] == other.m_fieldsAsUnsigned.parts[0]
-        && m_fieldsAsUnsigned.parts[1] == other.m_fieldsAsUnsigned.parts[1]
-        && (m_featureSettings == other.m_featureSettings || (m_featureSettings && other.m_featureSettings && *m_featureSettings == *other.m_featureSettings));
-}
-
-} // namespace blink
+}  // namespace blink
 
 #endif

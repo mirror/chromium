@@ -106,17 +106,14 @@ base::string16 JavaScriptBrowserTest::BuildRunTestJSCall(
     const std::string& function_name,
     const ConstValueVector& test_func_args) {
   ConstValueVector arguments;
-  base::FundamentalValue* is_async_arg = new base::FundamentalValue(is_async);
+  base::Value* is_async_arg = new base::Value(is_async);
   arguments.push_back(is_async_arg);
-  base::StringValue* function_name_arg = new base::StringValue(function_name);
+  base::Value* function_name_arg = new base::Value(function_name);
   arguments.push_back(function_name_arg);
   base::ListValue* baked_argument_list = new base::ListValue();
   ConstValueVector::const_iterator arguments_iterator;
-  for (arguments_iterator = test_func_args.begin();
-       arguments_iterator != test_func_args.end();
-       ++arguments_iterator) {
-    baked_argument_list->Append((*arguments_iterator)->DeepCopy());
-  }
+  for (auto* arg : test_func_args)
+    baked_argument_list->Append(arg->CreateDeepCopy());
   arguments.push_back(baked_argument_list);
   return content::WebUI::GetJavascriptCall(std::string("runTest"),
                                            arguments.get());

@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2000 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All right reserved.
+ * Copyright (C) 2003, 2004, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ *               All right reserved.
  * Copyright (C) 2010 Google Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -26,41 +27,44 @@
 #include "core/layout/api/LineLayoutBlockFlow.h"
 #include "core/layout/line/InlineIterator.h"
 #include "core/layout/line/LineInfo.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-enum WhitespacePosition { LeadingWhitespace, TrailingWhitespace };
+enum WhitespacePosition { kLeadingWhitespace, kTrailingWhitespace };
 
 struct LayoutTextInfo;
 
 class LineBreaker {
-    STACK_ALLOCATED();
-public:
-    friend class BreakingContext;
-    LineBreaker(LineLayoutBlockFlow block)
-        : m_block(block)
-    {
-        reset();
-    }
+  STACK_ALLOCATED();
 
-    InlineIterator nextLineBreak(InlineBidiResolver&, LineInfo&, LayoutTextInfo&, WordMeasurements&);
+ public:
+  friend class BreakingContext;
+  LineBreaker(LineLayoutBlockFlow block) : block_(block) { Reset(); }
 
-    bool lineWasHyphenated() { return m_hyphenated; }
-    const Vector<LineLayoutBox>& positionedObjects() { return m_positionedObjects; }
-    EClear clear() { return m_clear; }
-private:
-    void reset();
+  InlineIterator NextLineBreak(InlineBidiResolver&,
+                               LineInfo&,
+                               LayoutTextInfo&,
+                               WordMeasurements&);
 
-    void skipLeadingWhitespace(InlineBidiResolver&, LineInfo&, LineWidth&);
+  bool LineWasHyphenated() { return hyphenated_; }
+  const Vector<LineLayoutBox>& PositionedObjects() {
+    return positioned_objects_;
+  }
+  EClear Clear() { return clear_; }
 
-    LineLayoutBlockFlow m_block;
-    bool m_hyphenated;
-    EClear m_clear;
-    Vector<LineLayoutBox> m_positionedObjects;
+ private:
+  void Reset();
+
+  void SkipLeadingWhitespace(InlineBidiResolver&, LineInfo&, LineWidth&);
+
+  LineLayoutBlockFlow block_;
+  bool hyphenated_;
+  EClear clear_;
+  Vector<LineLayoutBox> positioned_objects_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LineBreaker_h
+#endif  // LineBreaker_h

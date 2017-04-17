@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 1999 Antti Koivisto (koivisto@kde.org)
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights
+ * reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,23 +26,25 @@
 
 namespace blink {
 
-bool ShadowData::operator==(const ShadowData& o) const
-{
-    return m_location == o.m_location
-        && m_blur == o.m_blur
-        && m_spread == o.m_spread
-        && m_style == o.m_style
-        && m_color == o.m_color;
+bool ShadowData::operator==(const ShadowData& o) const {
+  return location_ == o.location_ && blur_ == o.blur_ && spread_ == o.spread_ &&
+         style_ == o.style_ && color_ == o.color_;
 }
 
-ShadowData ShadowData::blend(const ShadowData& from, double progress, const Color& currentColor) const
-{
-    ASSERT(style() == from.style());
-    return ShadowData(blink::blend(from.location(), location(), progress),
-        clampTo(blink::blend(from.blur(), blur(), progress), 0.0f),
-        blink::blend(from.spread(), spread(), progress),
-        style(),
-        blink::blend(from.color().resolve(currentColor), color().resolve(currentColor), progress));
+ShadowData ShadowData::Blend(const ShadowData& from,
+                             double progress,
+                             const Color& current_color) const {
+  DCHECK_EQ(Style(), from.Style());
+  return ShadowData(blink::Blend(from.Location(), Location(), progress),
+                    clampTo(blink::Blend(from.Blur(), Blur(), progress), 0.0f),
+                    blink::Blend(from.Spread(), Spread(), progress), Style(),
+                    blink::Blend(from.GetColor().Resolve(current_color),
+                                 GetColor().Resolve(current_color), progress));
 }
 
-} // namespace blink
+ShadowData ShadowData::NeutralValue() {
+  return ShadowData(FloatPoint(0, 0), 0, 0, kNormal,
+                    StyleColor(Color::kTransparent));
+}
+
+}  // namespace blink

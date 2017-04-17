@@ -5,6 +5,7 @@
 #include "ios/web/web_thread_impl.h"
 
 #include <string>
+#include <utility>
 
 #include "base/atomicops.h"
 #include "base/bind.h"
@@ -48,15 +49,16 @@ class WebThreadTaskRunner : public base::SingleThreadTaskRunner {
 
   // SingleThreadTaskRunner implementation.
   bool PostDelayedTask(const tracked_objects::Location& from_here,
-                       const base::Closure& task,
+                       base::OnceClosure task,
                        base::TimeDelta delay) override {
-    return WebThread::PostDelayedTask(id_, from_here, task, delay);
+    return WebThread::PostDelayedTask(id_, from_here, std::move(task), delay);
   }
 
   bool PostNonNestableDelayedTask(const tracked_objects::Location& from_here,
-                                  const base::Closure& task,
+                                  base::OnceClosure task,
                                   base::TimeDelta delay) override {
-    return WebThread::PostNonNestableDelayedTask(id_, from_here, task, delay);
+    return WebThread::PostNonNestableDelayedTask(id_, from_here,
+                                                 std::move(task), delay);
   }
 
   bool RunsTasksOnCurrentThread() const override {
@@ -126,7 +128,7 @@ WebThreadImpl::WebThreadImpl(ID identifier)
 
 WebThreadImpl::WebThreadImpl(ID identifier, base::MessageLoop* message_loop)
     : Thread(GetThreadName(identifier)), identifier_(identifier) {
-  set_message_loop(message_loop);
+  SetMessageLoop(message_loop);
   Initialize();
 }
 
@@ -289,7 +291,7 @@ WebThreadImpl::~WebThreadImpl() {
 // static
 bool WebThreadImpl::PostTaskHelper(WebThread::ID identifier,
                                    const tracked_objects::Location& from_here,
-                                   const base::Closure& task,
+                                   base::OnceClosure task,
                                    base::TimeDelta delay,
                                    bool nestable) {
   DCHECK(identifier >= 0 && identifier < ID_COUNT);
@@ -313,10 +315,11 @@ bool WebThreadImpl::PostTaskHelper(WebThread::ID identifier,
                                   : nullptr;
   if (message_loop) {
     if (nestable) {
-      message_loop->task_runner()->PostDelayedTask(from_here, task, delay);
+      message_loop->task_runner()->PostDelayedTask(from_here, std::move(task),
+                                                   delay);
     } else {
-      message_loop->task_runner()->PostNonNestableDelayedTask(from_here, task,
-                                                              delay);
+      message_loop->task_runner()->PostNonNestableDelayedTask(
+          from_here, std::move(task), delay);
     }
   }
 
@@ -328,26 +331,27 @@ bool WebThreadImpl::PostTaskHelper(WebThread::ID identifier,
 
 // static
 bool WebThread::PostBlockingPoolTask(const tracked_objects::Location& from_here,
-                                     const base::Closure& task) {
-  return g_globals.Get().blocking_pool->PostWorkerTask(from_here, task);
+                                     base::OnceClosure task) {
+  return g_globals.Get().blocking_pool->PostWorkerTask(from_here,
+                                                       std::move(task));
 }
 
 // static
 bool WebThread::PostBlockingPoolTaskAndReply(
     const tracked_objects::Location& from_here,
-    const base::Closure& task,
-    const base::Closure& reply) {
-  return g_globals.Get().blocking_pool->PostTaskAndReply(from_here, task,
-                                                         reply);
+    base::OnceClosure task,
+    base::OnceClosure reply) {
+  return g_globals.Get().blocking_pool->PostTaskAndReply(
+      from_here, std::move(task), std::move(reply));
 }
 
 // static
 bool WebThread::PostBlockingPoolSequencedTask(
     const std::string& sequence_token_name,
     const tracked_objects::Location& from_here,
-    const base::Closure& task) {
+    base::OnceClosure task) {
   return g_globals.Get().blocking_pool->PostNamedSequencedWorkerTask(
-      sequence_token_name, from_here, task);
+      sequence_token_name, from_here, std::move(task));
 }
 
 // static
@@ -368,16 +372,12 @@ bool WebThread::IsThreadInitialized(ID identifier) {
 
 // static
 bool WebThread::CurrentlyOn(ID identifier) {
-  // This shouldn't use MessageLoop::current() since it uses LazyInstance which
-  // may be deleted by ~AtExitManager when a WorkerPool thread calls this
-  // function.
-  // http://crbug.com/63678
-  base::ThreadRestrictions::ScopedAllowSingleton allow_singleton;
   WebThreadGlobals& globals = g_globals.Get();
   base::AutoLock lock(globals.lock);
   DCHECK(identifier >= 0 && identifier < ID_COUNT);
   return globals.threads[identifier] &&
-         globals.threads[identifier]->task_runner()->BelongsToCurrentThread();
+         globals.threads[identifier]->message_loop() ==
+             base::MessageLoop::current();
 }
 
 // static
@@ -409,25 +409,25 @@ bool WebThread::IsMessageLoopValid(ID identifier) {
 // static
 bool WebThread::PostTask(ID identifier,
                          const tracked_objects::Location& from_here,
-                         const base::Closure& task) {
-  return WebThreadImpl::PostTaskHelper(identifier, from_here, task,
+                         base::OnceClosure task) {
+  return WebThreadImpl::PostTaskHelper(identifier, from_here, std::move(task),
                                        base::TimeDelta(), true);
 }
 
 // static
 bool WebThread::PostDelayedTask(ID identifier,
                                 const tracked_objects::Location& from_here,
-                                const base::Closure& task,
+                                base::OnceClosure task,
                                 base::TimeDelta delay) {
-  return WebThreadImpl::PostTaskHelper(identifier, from_here, task, delay,
-                                       true);
+  return WebThreadImpl::PostTaskHelper(identifier, from_here, std::move(task),
+                                       delay, true);
 }
 
 // static
 bool WebThread::PostNonNestableTask(ID identifier,
                                     const tracked_objects::Location& from_here,
-                                    const base::Closure& task) {
-  return WebThreadImpl::PostTaskHelper(identifier, from_here, task,
+                                    base::OnceClosure task) {
+  return WebThreadImpl::PostTaskHelper(identifier, from_here, std::move(task),
                                        base::TimeDelta(), false);
 }
 
@@ -435,19 +435,19 @@ bool WebThread::PostNonNestableTask(ID identifier,
 bool WebThread::PostNonNestableDelayedTask(
     ID identifier,
     const tracked_objects::Location& from_here,
-    const base::Closure& task,
+    base::OnceClosure task,
     base::TimeDelta delay) {
-  return WebThreadImpl::PostTaskHelper(identifier, from_here, task, delay,
-                                       false);
+  return WebThreadImpl::PostTaskHelper(identifier, from_here, std::move(task),
+                                       delay, false);
 }
 
 // static
 bool WebThread::PostTaskAndReply(ID identifier,
                                  const tracked_objects::Location& from_here,
-                                 const base::Closure& task,
-                                 const base::Closure& reply) {
+                                 base::OnceClosure task,
+                                 base::OnceClosure reply) {
   return GetTaskRunnerForThread(identifier)
-      ->PostTaskAndReply(from_here, task, reply);
+      ->PostTaskAndReply(from_here, std::move(task), std::move(reply));
 }
 
 // static
@@ -455,11 +455,6 @@ bool WebThread::GetCurrentThreadIdentifier(ID* identifier) {
   if (g_globals == nullptr)
     return false;
 
-  // This shouldn't use MessageLoop::current() since it uses LazyInstance which
-  // may be deleted by ~AtExitManager when a WorkerPool thread calls this
-  // function.
-  // http://crbug.com/63678
-  base::ThreadRestrictions::ScopedAllowSingleton allow_singleton;
   base::MessageLoop* cur_message_loop = base::MessageLoop::current();
   WebThreadGlobals& globals = g_globals.Get();
   for (int i = 0; i < ID_COUNT; ++i) {
@@ -477,19 +472,6 @@ bool WebThread::GetCurrentThreadIdentifier(ID* identifier) {
 scoped_refptr<base::SingleThreadTaskRunner> WebThread::GetTaskRunnerForThread(
     ID identifier) {
   return g_task_runners.Get().task_runners[identifier];
-}
-
-// static
-base::MessageLoop* WebThread::UnsafeGetMessageLoopForThread(ID identifier) {
-  if (g_globals == nullptr)
-    return nullptr;
-
-  WebThreadGlobals& globals = g_globals.Get();
-  base::AutoLock lock(globals.lock);
-  base::Thread* thread = globals.threads[identifier];
-  DCHECK(thread);
-  base::MessageLoop* loop = thread->message_loop();
-  return loop;
 }
 
 // static

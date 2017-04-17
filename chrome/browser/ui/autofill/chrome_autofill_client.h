@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_UI_AUTOFILL_CHROME_AUTOFILL_CLIENT_H_
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "base/callback.h"
@@ -20,16 +21,12 @@
 #include "content/public/browser/web_contents_user_data.h"
 
 namespace content {
-struct FrameNavigateParams;
-struct LoadCommittedDetails;
 class WebContents;
 }
 
 namespace autofill {
 
 class AutofillPopupControllerImpl;
-class CreditCardScannerController;
-struct FormData;
 
 // Chrome implementation of AutofillClient.
 class ChromeAutofillClient
@@ -44,9 +41,11 @@ class ChromeAutofillClient
   PersonalDataManager* GetPersonalDataManager() override;
   scoped_refptr<AutofillWebDataService> GetDatabase() override;
   PrefService* GetPrefs() override;
-  sync_driver::SyncService* GetSyncService() override;
+  syncer::SyncService* GetSyncService() override;
   IdentityProvider* GetIdentityProvider() override;
-  rappor::RapporService* GetRapporService() override;
+  rappor::RapporServiceImpl* GetRapporServiceImpl() override;
+  ukm::UkmService* GetUkmService() override;
+  SaveCardBubbleController* GetSaveCardBubbleController() override;
   void ShowAutofillSettings() override;
   void ShowUnmaskPrompt(const CreditCard& card,
                         UnmaskCardReason reason,
@@ -57,7 +56,10 @@ class ChromeAutofillClient
   void ConfirmSaveCreditCardToCloud(
       const CreditCard& card,
       std::unique_ptr<base::DictionaryValue> legal_message,
+      bool should_cvc_be_requested,
       const base::Closure& callback) override;
+  void ConfirmCreditCardFillAssist(const CreditCard& card,
+                                   const base::Closure& callback) override;
   void LoadRiskData(
       const base::Callback<void(const std::string&)>& callback) override;
   bool HasCreditCardScanFeature() override;
@@ -77,10 +79,10 @@ class ChromeAutofillClient
       const std::vector<autofill::FormStructure*>& forms) override;
   void DidFillOrPreviewField(const base::string16& autofilled_value,
                              const base::string16& profile_full_name) override;
-  void OnFirstUserGestureObserved() override;
-  bool IsContextSecure(const GURL& form_origin) override;
+  bool IsContextSecure() override;
   bool ShouldShowSigninPromo() override;
   void StartSigninFlow() override;
+  void ShowHttpNotSecureExplanation() override;
 
   // content::WebContentsObserver implementation.
   void MainFrameWasResized(bool width_changed) override;

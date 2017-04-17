@@ -18,6 +18,7 @@
 #include "base/logging.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/test/gtest_util.h"
 #include "base/test/launcher/test_launcher.h"
 #include "base/values.h"
 
@@ -29,11 +30,56 @@ namespace {
 const FilePath::CharType kDefaultOutputFile[] = FILE_PATH_LITERAL(
     "test_detail.xml");
 
-std::string TestNameWithoutDisabledPrefix(const std::string& test_name) {
-  std::string test_name_no_disabled(test_name);
-  ReplaceSubstringsAfterOffset(&test_name_no_disabled, 0, "DISABLED_", "");
-  return test_name_no_disabled;
+// Converts the given epoch time in milliseconds to a date string in the ISO
+// 8601 format, without the timezone information.
+// TODO(xyzzyz): Find a good place in Chromium to put it and refactor all uses
+// to point to it.
+std::string FormatTimeAsIso8601(base::Time time) {
+  base::Time::Exploded exploded;
+  time.UTCExplode(&exploded);
+  return StringPrintf("%04d-%02d-%02dT%02d:%02d:%02d",
+                      exploded.year,
+                      exploded.month,
+                      exploded.day_of_month,
+                      exploded.hour,
+                      exploded.minute,
+                      exploded.second);
 }
+
+struct TestSuiteResultsAggregator {
+  TestSuiteResultsAggregator()
+      : tests(0), failures(0), disabled(0), errors(0) {}
+
+  void Add(const TestResult& result) {
+    tests++;
+    elapsed_time += result.elapsed_time;
+
+    switch (result.status) {
+      case TestResult::TEST_SUCCESS:
+        break;
+      case TestResult::TEST_FAILURE:
+        failures++;
+        break;
+      case TestResult::TEST_EXCESSIVE_OUTPUT:
+      case TestResult::TEST_FAILURE_ON_EXIT:
+      case TestResult::TEST_TIMEOUT:
+      case TestResult::TEST_CRASH:
+      case TestResult::TEST_UNKNOWN:
+        errors++;
+        break;
+      case TestResult::TEST_SKIPPED:
+        disabled++;
+        break;
+    }
+  }
+
+  int tests;
+  int failures;
+  int disabled;
+  int errors;
+
+  base::TimeDelta elapsed_time;
+};
 
 }  // namespace
 
@@ -45,41 +91,64 @@ TestResultsTracker::~TestResultsTracker() {
 
   if (!out_)
     return;
-  fprintf(out_, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-  fprintf(out_, "<testsuites name=\"AllTests\" tests=\"\" failures=\"\""
-          " disabled=\"\" errors=\"\" time=\"\">\n");
 
   // Maps test case names to test results.
   typedef std::map<std::string, std::vector<TestResult> > TestCaseMap;
   TestCaseMap test_case_map;
 
-  for (PerIterationData::ResultsMap::iterator i =
-           per_iteration_data_[iteration_].results.begin();
-       i != per_iteration_data_[iteration_].results.end();
-       ++i) {
+  TestSuiteResultsAggregator all_tests_aggregator;
+  for (const PerIterationData::ResultsMap::value_type& i
+           : per_iteration_data_[iteration_].results) {
     // Use the last test result as the final one.
-    TestResult result = i->second.test_results.back();
+    TestResult result = i.second.test_results.back();
     test_case_map[result.GetTestCaseName()].push_back(result);
+    all_tests_aggregator.Add(result);
   }
-  for (TestCaseMap::iterator i = test_case_map.begin();
-       i != test_case_map.end();
-       ++i) {
-    fprintf(out_, "  <testsuite name=\"%s\" tests=\"%" PRIuS "\" failures=\"\""
-            " disabled=\"\" errors=\"\" time=\"\">\n",
-            i->first.c_str(), i->second.size());
-    for (size_t j = 0; j < i->second.size(); ++j) {
-      const TestResult& result = i->second[j];
+
+  fprintf(out_, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+  fprintf(out_, "<testsuites name=\"AllTests\" tests=\"%d\" failures=\"%d\""
+          " disabled=\"%d\" errors=\"%d\" time=\"%.3f\" timestamp=\"%s\">\n",
+          all_tests_aggregator.tests,
+          all_tests_aggregator.failures,
+          all_tests_aggregator.disabled,
+          all_tests_aggregator.errors,
+          all_tests_aggregator.elapsed_time.InSecondsF(),
+          FormatTimeAsIso8601(base::Time::Now()).c_str());
+
+  for (const TestCaseMap::value_type& i : test_case_map) {
+    const std::string testsuite_name = i.first;
+    const std::vector<TestResult>& results = i.second;
+
+    TestSuiteResultsAggregator aggregator;
+    for (const TestResult& result : results) {
+      aggregator.Add(result);
+    }
+    fprintf(out_, "  <testsuite name=\"%s\" tests=\"%d\" "
+            "failures=\"%d\" disabled=\"%d\" errors=\"%d\" time=\"%.3f\" "
+            "timestamp=\"%s\">\n",
+            testsuite_name.c_str(),
+            aggregator.tests, aggregator.failures,
+            aggregator.disabled, aggregator.errors,
+            aggregator.elapsed_time.InSecondsF(),
+            FormatTimeAsIso8601(base::Time::Now()).c_str());
+
+    for (const TestResult& result : results) {
       fprintf(out_, "    <testcase name=\"%s\" status=\"run\" time=\"%.3f\""
               " classname=\"%s\">\n",
               result.GetTestName().c_str(),
               result.elapsed_time.InSecondsF(),
               result.GetTestCaseName().c_str());
-      if (result.status != TestResult::TEST_SUCCESS)
+      if (result.status != TestResult::TEST_SUCCESS) {
+        // The actual failure message is not propagated up to here, as it's too
+        // much work to escape it properly, and in case of failure, almost
+        // always one needs to look into full log anyway.
         fprintf(out_, "      <failure message=\"\" type=\"\"></failure>\n");
+      }
       fprintf(out_, "    </testcase>\n");
     }
     fprintf(out_, "  </testsuite>\n");
   }
+
   fprintf(out_, "</testsuites>\n");
   fclose(out_);
 }
@@ -161,8 +230,11 @@ void TestResultsTracker::AddDisabledTest(const std::string& test_name) {
 void TestResultsTracker::AddTestResult(const TestResult& result) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+  // Record disabled test names without DISABLED_ prefix so that they are easy
+  // to compare with regular test names, e.g. before or after disabling.
   per_iteration_data_[iteration_].results[
-      result.full_name].test_results.push_back(result);
+      TestNameWithoutDisabledPrefix(result.full_name)].test_results.push_back(
+          result);
 }
 
 void TestResultsTracker::PrintSummaryOfCurrentIteration() const {
@@ -174,6 +246,9 @@ void TestResultsTracker::PrintSummaryOfCurrentIteration() const {
   PrintTests(tests_by_status[TestResult::TEST_FAILURE_ON_EXIT].begin(),
              tests_by_status[TestResult::TEST_FAILURE_ON_EXIT].end(),
              "failed on exit");
+  PrintTests(tests_by_status[TestResult::TEST_EXCESSIVE_OUTPUT].begin(),
+             tests_by_status[TestResult::TEST_EXCESSIVE_OUTPUT].end(),
+             "produced excessive output");
   PrintTests(tests_by_status[TestResult::TEST_TIMEOUT].begin(),
              tests_by_status[TestResult::TEST_TIMEOUT].end(),
              "timed out");
@@ -202,6 +277,9 @@ void TestResultsTracker::PrintSummaryOfAllIterations() const {
   PrintTests(tests_by_status[TestResult::TEST_FAILURE_ON_EXIT].begin(),
              tests_by_status[TestResult::TEST_FAILURE_ON_EXIT].end(),
              "failed on exit");
+  PrintTests(tests_by_status[TestResult::TEST_EXCESSIVE_OUTPUT].begin(),
+             tests_by_status[TestResult::TEST_EXCESSIVE_OUTPUT].end(),
+             "produced excessive output");
   PrintTests(tests_by_status[TestResult::TEST_TIMEOUT].begin(),
              tests_by_status[TestResult::TEST_TIMEOUT].end(),
              "timed out");
@@ -223,12 +301,17 @@ void TestResultsTracker::AddGlobalTag(const std::string& tag) {
   global_tags_.insert(tag);
 }
 
-bool TestResultsTracker::SaveSummaryAsJSON(const FilePath& path) const {
+bool TestResultsTracker::SaveSummaryAsJSON(
+    const FilePath& path,
+    const std::vector<std::string>& additional_tags) const {
   std::unique_ptr<DictionaryValue> summary_root(new DictionaryValue);
 
   std::unique_ptr<ListValue> global_tags(new ListValue);
   for (const auto& global_tag : global_tags_) {
     global_tags->AppendString(global_tag);
+  }
+  for (const auto& tag : additional_tags) {
+    global_tags->AppendString(tag);
   }
   summary_root->Set("global_tags", std::move(global_tags));
 
@@ -289,6 +372,46 @@ bool TestResultsTracker::SaveSummaryAsJSON(const FilePath& path) const {
         Base64Encode(test_result.output_snippet, &base64_output_snippet);
         test_result_value->SetString("output_snippet_base64",
                                      base64_output_snippet);
+
+        std::unique_ptr<ListValue> test_result_parts(new ListValue);
+        for (const TestResultPart& result_part :
+             test_result.test_result_parts) {
+          std::unique_ptr<DictionaryValue> result_part_value(
+              new DictionaryValue);
+          result_part_value->SetString("type", result_part.TypeAsString());
+          result_part_value->SetString("file", result_part.file_name);
+          result_part_value->SetInteger("line", result_part.line_number);
+
+          bool lossless_summary = IsStringUTF8(result_part.summary);
+          if (lossless_summary) {
+            result_part_value->SetString("summary", result_part.summary);
+          } else {
+            result_part_value->SetString(
+                "summary", "<non-UTF-8 snippet, see summary_base64>");
+          }
+          result_part_value->SetBoolean("lossless_summary", lossless_summary);
+
+          std::string encoded_summary;
+          Base64Encode(result_part.summary, &encoded_summary);
+          result_part_value->SetString("summary_base64", encoded_summary);
+
+          bool lossless_message = IsStringUTF8(result_part.message);
+          if (lossless_message) {
+            result_part_value->SetString("message", result_part.message);
+          } else {
+            result_part_value->SetString(
+                "message", "<non-UTF-8 snippet, see message_base64>");
+          }
+          result_part_value->SetBoolean("lossless_message", lossless_message);
+
+          std::string encoded_message;
+          Base64Encode(result_part.message, &encoded_message);
+          result_part_value->SetString("message_base64", encoded_message);
+
+          test_result_parts->Append(std::move(result_part_value));
+        }
+        test_result_value->Set("result_parts", std::move(test_result_parts));
+
         test_results->Append(std::move(test_result_value));
       }
 
@@ -298,6 +421,18 @@ bool TestResultsTracker::SaveSummaryAsJSON(const FilePath& path) const {
     per_iteration_data->Append(std::move(current_iteration_data));
   }
   summary_root->Set("per_iteration_data", std::move(per_iteration_data));
+
+  std::unique_ptr<DictionaryValue> test_locations(new DictionaryValue);
+  for (const auto& item : test_locations_) {
+    std::string test_name = item.first;
+    CodeLocation location = item.second;
+    std::unique_ptr<DictionaryValue> location_value(new DictionaryValue);
+    location_value->SetString("file", location.file);
+    location_value->SetInteger("line", location.line);
+    test_locations->SetWithoutPathExpansion(test_name,
+                                            std::move(location_value));
+  }
+  summary_root->Set("test_locations", std::move(test_locations));
 
   JSONFileValueSerializer serializer(path);
   return serializer.Serialize(*summary_root);

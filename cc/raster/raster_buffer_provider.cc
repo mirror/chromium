@@ -7,12 +7,13 @@
 #include <stddef.h>
 
 #include "base/trace_event/trace_event.h"
-#include "cc/playback/raster_source.h"
+#include "cc/raster/raster_source.h"
 #include "cc/raster/texture_compressor.h"
 #include "cc/resources/platform_color.h"
 #include "cc/resources/resource_format_utils.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkSurface.h"
+#include "ui/gfx/geometry/axis_transform2d.h"
 
 namespace cc {
 
@@ -34,6 +35,7 @@ bool IsSupportedPlaybackToMemoryFormat(ResourceFormat format) {
     case RGB_565:
     case RED_8:
     case LUMINANCE_F16:
+    case RGBA_F16:
       return false;
   }
   NOTREACHED();
@@ -51,9 +53,10 @@ void RasterBufferProvider::PlaybackToMemory(
     const RasterSource* raster_source,
     const gfx::Rect& canvas_bitmap_rect,
     const gfx::Rect& canvas_playback_rect,
-    float scale,
+    const gfx::AxisTransform2d& transform,
+    const gfx::ColorSpace& target_color_space,
     const RasterSource::PlaybackSettings& playback_settings) {
-  TRACE_EVENT0("disabled-by-default-cc.debug",
+  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                "RasterBufferProvider::PlaybackToMemory");
 
   DCHECK(IsSupportedPlaybackToMemoryFormat(format)) << format;
@@ -75,12 +78,13 @@ void RasterBufferProvider::PlaybackToMemory(
 
   switch (format) {
     case RGBA_8888:
-    case BGRA_8888: {
+    case BGRA_8888:
+    case RGBA_F16: {
       sk_sp<SkSurface> surface =
           SkSurface::MakeRasterDirect(info, memory, stride, &surface_props);
-      raster_source->PlaybackToCanvas(surface->getCanvas(), canvas_bitmap_rect,
-                                      canvas_playback_rect, scale,
-                                      playback_settings);
+      raster_source->PlaybackToCanvas(surface->getCanvas(), target_color_space,
+                                      canvas_bitmap_rect, canvas_playback_rect,
+                                      transform, playback_settings);
       return;
     }
     case RGBA_4444:
@@ -88,9 +92,9 @@ void RasterBufferProvider::PlaybackToMemory(
       sk_sp<SkSurface> surface = SkSurface::MakeRaster(info, &surface_props);
       // TODO(reveman): Improve partial raster support by reducing the size of
       // playback rect passed to PlaybackToCanvas. crbug.com/519070
-      raster_source->PlaybackToCanvas(surface->getCanvas(), canvas_bitmap_rect,
-                                      canvas_bitmap_rect, scale,
-                                      playback_settings);
+      raster_source->PlaybackToCanvas(surface->getCanvas(), target_color_space,
+                                      canvas_bitmap_rect, canvas_bitmap_rect,
+                                      transform, playback_settings);
 
       if (format == ETC1) {
         TRACE_EVENT0("cc",
@@ -142,6 +146,7 @@ bool RasterBufferProvider::ResourceFormatRequiresSwizzle(
     case RGB_565:
     case RED_8:
     case LUMINANCE_F16:
+    case RGBA_F16:
       return false;
   }
   NOTREACHED();

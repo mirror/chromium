@@ -22,9 +22,9 @@
 #define RadioButtonGroupScope_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/HashMap.h"
-#include "wtf/text/StringHash.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/text/StringHash.h"
 
 namespace blink {
 
@@ -32,24 +32,25 @@ class HTMLInputElement;
 class RadioButtonGroup;
 
 class RadioButtonGroupScope {
-    DISALLOW_NEW();
-public:
-    RadioButtonGroupScope();
-    ~RadioButtonGroupScope();
-    DECLARE_TRACE();
-    void addButton(HTMLInputElement*);
-    void updateCheckedState(HTMLInputElement*);
-    void requiredAttributeChanged(HTMLInputElement*);
-    void removeButton(HTMLInputElement*);
-    HTMLInputElement* checkedButtonForGroup(const AtomicString& groupName) const;
-    bool isInRequiredGroup(HTMLInputElement*) const;
-    unsigned groupSizeFor(const HTMLInputElement*) const;
+  DISALLOW_NEW();
 
-private:
-    using NameToGroupMap = HeapHashMap<AtomicString, Member<RadioButtonGroup>, CaseFoldingHash>;
-    Member<NameToGroupMap> m_nameToGroupMap;
+ public:
+  RadioButtonGroupScope();
+  ~RadioButtonGroupScope();
+  DECLARE_TRACE();
+  void AddButton(HTMLInputElement*);
+  void UpdateCheckedState(HTMLInputElement*);
+  void RequiredAttributeChanged(HTMLInputElement*);
+  void RemoveButton(HTMLInputElement*);
+  HTMLInputElement* CheckedButtonForGroup(const AtomicString& group_name) const;
+  bool IsInRequiredGroup(HTMLInputElement*) const;
+  unsigned GroupSizeFor(const HTMLInputElement*) const;
+
+ private:
+  using NameToGroupMap = HeapHashMap<AtomicString, Member<RadioButtonGroup>>;
+  Member<NameToGroupMap> name_to_group_map_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RadioButtonGroupScope_h
+#endif  // RadioButtonGroupScope_h

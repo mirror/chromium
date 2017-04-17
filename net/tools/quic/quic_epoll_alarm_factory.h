@@ -2,11 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef NET_QUIC_QUIC_EPOLL_ALARM_FACTORY_H_
-#define NET_QUIC_QUIC_EPOLL_ALARM_FACTORY_H_
+#ifndef NET_TOOLS_QUIC_QUIC_EPOLL_ALARM_FACTORY_H_
+#define NET_TOOLS_QUIC_QUIC_EPOLL_ALARM_FACTORY_H_
 
-#include "net/quic/quic_alarm.h"
-#include "net/quic/quic_alarm_factory.h"
+#include "net/quic/core/quic_alarm.h"
+#include "net/quic/core/quic_alarm_factory.h"
 
 namespace net {
 
@@ -32,4 +32,4 @@ class QuicEpollAlarmFactory : public QuicAlarmFactory {
 
 }  // namespace net
 
-#endif  // NET_QUIC_QUIC_EPOLL_ALARM_FACTORY_H_
+#endif  // NET_TOOLS_QUIC_QUIC_EPOLL_ALARM_FACTORY_H_

@@ -7,34 +7,53 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
+#include "public/platform/modules/background_sync/background_sync.mojom-blink.h"
 
 namespace blink {
 
-class ExecutionContext;
 class ScriptPromise;
+class ScriptPromiseResolver;
 class ScriptState;
 class ServiceWorkerRegistration;
 
-class SyncManager final : public GarbageCollected<SyncManager> , public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SyncManager* create(ServiceWorkerRegistration* registration)
-    {
-        return new SyncManager(registration);
-    }
+class SyncManager final : public GarbageCollectedFinalized<SyncManager>,
+                          public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    ScriptPromise registerFunction(ScriptState*, ExecutionContext*, const String&);
-    ScriptPromise getTags(ScriptState*);
+ public:
+  static SyncManager* Create(ServiceWorkerRegistration* registration) {
+    return new SyncManager(registration);
+  }
 
-    DECLARE_TRACE();
+  ScriptPromise registerFunction(ScriptState*, const String& tag);
+  ScriptPromise getTags(ScriptState*);
 
-private:
-    explicit SyncManager(ServiceWorkerRegistration*);
+  DECLARE_TRACE();
 
-    Member<ServiceWorkerRegistration> m_registration;
+  enum { kUnregisteredSyncID = -1 };
+
+ private:
+  explicit SyncManager(ServiceWorkerRegistration*);
+
+  // Returns an initialized BackgroundSyncServicePtr. A connection with the
+  // the browser's BackgroundSyncService is created the first time this method
+  // is called.
+  const mojom::blink::BackgroundSyncServicePtr& GetBackgroundSyncServicePtr();
+
+  // Callbacks
+  static void RegisterCallback(ScriptPromiseResolver*,
+                               mojom::blink::BackgroundSyncError,
+                               mojom::blink::SyncRegistrationPtr options);
+  static void GetRegistrationsCallback(
+      ScriptPromiseResolver*,
+      mojom::blink::BackgroundSyncError,
+      WTF::Vector<mojom::blink::SyncRegistrationPtr> registrations);
+
+  Member<ServiceWorkerRegistration> registration_;
+  mojom::blink::BackgroundSyncServicePtr background_sync_service_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SyncManager_h
+#endif  // SyncManager_h

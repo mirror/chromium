@@ -12,10 +12,10 @@
 #include "chrome/browser/profiles/profile_attributes_storage.h"
 #include "chrome/browser/ui/webui/options/options_ui.h"
 #include "components/prefs/pref_change_registrar.h"
-#include "components/sync_driver/sync_service_observer.h"
+#include "components/sync/driver/sync_service_observer.h"
 
 namespace base {
-class StringValue;
+class Value;
 }
 
 namespace options {
@@ -23,7 +23,7 @@ namespace options {
 // Chrome personal stuff profiles manage overlay UI handler.
 class ManageProfileHandler : public OptionsPageUIHandler,
                              public ProfileAttributesStorage::Observer,
-                             public sync_driver::SyncServiceObserver {
+                             public syncer::SyncServiceObserver {
  public:
   ManageProfileHandler();
   ~ManageProfileHandler() override;
@@ -45,8 +45,8 @@ class ManageProfileHandler : public OptionsPageUIHandler,
                             const base::string16& old_profile_name) override;
   void OnProfileAvatarChanged(const base::FilePath& profile_path) override;
 
-  // sync_driver::SyncServiceObserver:
-  void OnStateChanged() override;
+  // syncer::SyncServiceObserver:
+  void OnStateChanged(syncer::SyncService* sync) override;
 
  private:
   // This function creates signed in user specific strings in loadTimeData.
@@ -64,7 +64,7 @@ class ManageProfileHandler : public OptionsPageUIHandler,
 
   // Send all profile icons and their default names to the overlay.
   // |mode| is the dialog mode, i.e. "create" or "manage".
-  void SendProfileIconsAndNames(const base::StringValue& mode);
+  void SendProfileIconsAndNames(const base::Value& mode);
 
   // Sends an object to WebUI of the form:
   //   profileNames = {

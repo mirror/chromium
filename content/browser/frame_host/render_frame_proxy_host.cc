@@ -14,7 +14,6 @@
 #include "content/browser/frame_host/navigator.h"
 #include "content/browser/frame_host/render_frame_host_delegate.h"
 #include "content/browser/frame_host/render_widget_host_view_child_frame.h"
-#include "content/browser/message_port_message_filter.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/site_instance_impl.h"
@@ -31,9 +30,8 @@ namespace {
 typedef std::pair<int32_t, int32_t> RenderFrameProxyHostID;
 typedef base::hash_map<RenderFrameProxyHostID, RenderFrameProxyHost*>
     RoutingIDFrameProxyMap;
-base::LazyInstance<RoutingIDFrameProxyMap> g_routing_id_frame_proxy_map =
-  LAZY_INSTANCE_INITIALIZER;
-
+base::LazyInstance<RoutingIDFrameProxyMap>::DestructorAtExit
+    g_routing_id_frame_proxy_map = LAZY_INSTANCE_INITIALIZER;
 }
 
 // static
@@ -184,14 +182,11 @@ bool RenderFrameProxyHost::InitRenderFrameProxy() {
         site_instance_.get());
   }
 
-  Send(new FrameMsg_NewFrameProxy(routing_id_,
-                                  frame_tree_node_->frame_tree()
-                                      ->GetRenderViewHost(site_instance_.get())
-                                      ->GetRoutingID(),
-                                  opener_routing_id,
-                                  parent_routing_id,
-                                  frame_tree_node_
-                                      ->current_replication_state()));
+  int view_routing_id = frame_tree_node_->frame_tree()
+      ->GetRenderViewHost(site_instance_.get())->GetRoutingID();
+  GetProcess()->GetRendererInterface()->CreateFrameProxy(
+      routing_id_, view_routing_id, opener_routing_id, parent_routing_id,
+      frame_tree_node_->current_replication_state());
 
   render_frame_proxy_created_ = true;
 
@@ -257,15 +252,19 @@ void RenderFrameProxyHost::OnOpenURL(
 
   // Since this navigation targeted a specific RenderFrameProxy, it should stay
   // in the current tab.
-  DCHECK_EQ(CURRENT_TAB, params.disposition);
+  DCHECK_EQ(WindowOpenDisposition::CURRENT_TAB, params.disposition);
 
   // TODO(alexmos, creis): Figure out whether |params.user_gesture| needs to be
   // passed in as well.
+  // TODO(lfg, lukasza): Remove |extra_headers| parameter from
+  // RequestTransferURL method once both RenderFrameProxyHost and
+  // RenderFrameHostImpl call RequestOpenURL from their OnOpenURL handlers.
+  // See also https://crbug.com/647772.
   frame_tree_node_->navigator()->RequestTransferURL(
       current_rfh, validated_url, site_instance_.get(), std::vector<GURL>(),
       params.referrer, ui::PAGE_TRANSITION_LINK, GlobalRequestID(),
       params.should_replace_current_entry, params.uses_post ? "POST" : "GET",
-      params.resource_request_body);
+      params.resource_request_body, params.extra_headers);
 }
 
 void RenderFrameProxyHost::OnRouteMessageEvent(
@@ -318,26 +317,8 @@ void RenderFrameProxyHost::OnRouteMessageEvent(
     }
   }
 
-  if (!params.message_ports.empty()) {
-    // Updating the message port information has to be done in the IO thread;
-    // MessagePortMessageFilter::RouteMessageEventWithMessagePorts will send
-    // FrameMsg_PostMessageEvent after it's done. Note that a trivial solution
-    // would've been to post a task on the IO thread to do the IO-thread-bound
-    // work, and make that post a task back to WebContentsImpl in the UI
-    // thread. But we cannot do that, since there's nothing to guarantee that
-    // WebContentsImpl stays alive during the round trip.
-    scoped_refptr<MessagePortMessageFilter> message_port_message_filter(
-        static_cast<RenderProcessHostImpl*>(target_rfh->GetProcess())
-            ->message_port_message_filter());
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::Bind(&MessagePortMessageFilter::RouteMessageEventWithMessagePorts,
-                   message_port_message_filter, target_rfh->GetRoutingID(),
-                   new_params));
-  } else {
-    target_rfh->Send(
-        new FrameMsg_PostMessageEvent(target_rfh->GetRoutingID(), new_params));
-  }
+  target_rfh->Send(
+      new FrameMsg_PostMessageEvent(target_rfh->GetRoutingID(), new_params));
 }
 
 void RenderFrameProxyHost::OnDidChangeOpener(int32_t opener_routing_id) {
@@ -356,23 +337,19 @@ void RenderFrameProxyHost::OnAdvanceFocus(blink::WebFocusType type,
   // child frames finishes its traversal.
   RenderFrameHostImpl* source_rfh =
       RenderFrameHostImpl::FromID(GetProcess()->GetID(), source_routing_id);
-  int32_t source_proxy_routing_id = MSG_ROUTING_NONE;
-  if (source_rfh) {
-    RenderFrameProxyHost* source_proxy =
-        source_rfh->frame_tree_node()
-            ->render_manager()
-            ->GetRenderFrameProxyHost(target_rfh->GetSiteInstance());
-    if (source_proxy)
-      source_proxy_routing_id = source_proxy->GetRoutingID();
-  }
+  RenderFrameProxyHost* source_proxy =
+      source_rfh
+          ? source_rfh->frame_tree_node()
+                ->render_manager()
+                ->GetRenderFrameProxyHost(target_rfh->GetSiteInstance())
+          : nullptr;
 
-  target_rfh->Send(new FrameMsg_AdvanceFocus(target_rfh->GetRoutingID(), type,
-                                             source_proxy_routing_id));
+  target_rfh->AdvanceFocus(type, source_proxy);
 }
 
 void RenderFrameProxyHost::OnFrameFocused() {
-  frame_tree_node_->frame_tree()->SetFocusedFrame(frame_tree_node_,
-                                                  GetSiteInstance());
+  frame_tree_node_->current_frame_host()->delegate()->SetFocusedFrame(
+      frame_tree_node_, GetSiteInstance());
 }
 
 }  // namespace content

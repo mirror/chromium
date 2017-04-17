@@ -25,37 +25,33 @@ function test()
          InspectorTest.evaluateWithTimeline("performActions()", onTimelineRecorded);
     });
 
-    function clickValueLink(record, row)
+    async function clickValueLink(event, row)
     {
-        var panel = WebInspector.panels.timeline;
-        WebInspector.TimelineUIUtils.buildTraceEventDetails(record.traceEvent(), panel._model, new WebInspector.Linkifier(), true, onDetailsContentReady);
-
-        function onDetailsContentReady(element)
-        {
-            var rows = element.querySelectorAll(".timeline-details-view-row");
-            for (var i = 0; i < rows.length; ++i) {
-                if (rows[i].firstChild.textContent.indexOf(row) !== -1) {
-                    rows[i].lastChild.firstChild.shadowRoot.lastChild.click();
-                    return;
-                }
-            }
+        var model = UI.panels.timeline._performanceModel.timelineModel();
+        var element = await Timeline.TimelineUIUtils.buildTraceEventDetails(event, model, new Components.Linkifier(), true);
+        var rows = element.querySelectorAll(".timeline-details-view-row");
+        for (var i = 0; i < rows.length; ++i) {
+            if (rows[i].firstChild.textContent.indexOf(row) !== -1) {
+	        rows[i].lastChild.firstChild.shadowRoot.lastChild.click();
+	        return;
+	    }
         }
     }
 
     function onTimelineRecorded(records)
     {
-        var layoutRecord = InspectorTest.findFirstTimelineRecord("Layout");
-        WebInspector.notifications.addEventListener(WebInspector.NotificationService.Events.SelectedNodeChanged, onSelectedNodeChanged);
-        clickValueLink(layoutRecord, "Layout root");
+        var layoutEvent = InspectorTest.findTimelineEvent(TimelineModel.TimelineModel.RecordType.Layout);
+        UI.context.addFlavorChangeListener(SDK.DOMNode, onSelectedNodeChanged);
+        clickValueLink(layoutEvent, "Layout root");
     }
 
     function onSelectedNodeChanged()
     {
-        var node = WebInspector.panels.elements.selectedDOMNode();
+        var node = UI.panels.elements.selectedDOMNode();
         // We may first get an old selected node while switching to the Elements panel.
         if (node.nodeName() === "BODY")
             return;
-        WebInspector.notifications.removeEventListener(WebInspector.NotificationService.Events.SelectedNodeChanged, onSelectedNodeChanged);
+        UI.context.removeFlavorChangeListener(SDK.DOMNode, onSelectedNodeChanged);
         InspectorTest.addResult("Layout root node id: " + node.getAttribute("id"));
         InspectorTest.completeTest();
     }

@@ -105,7 +105,8 @@ class ZoomController : public content::WebContentsObserver,
   }
 
   // Convenience method to quickly check if the tab's at default zoom.
-  bool IsAtDefaultZoom() const;
+  // Virtual for testing.
+  virtual bool IsAtDefaultZoom() const;
 
   // Returns which image should be loaded for the current zoom level.
   RelativeZoom GetZoomRelativeToDefault() const;
@@ -148,9 +149,8 @@ class ZoomController : public content::WebContentsObserver,
   bool PageScaleFactorIsOne() const;
 
   // content::WebContentsObserver overrides:
-  void DidNavigateMainFrame(
-      const content::LoadCommittedDetails& details,
-      const content::FrameNavigateParams& params) override;
+  void DidFinishNavigation(
+      content::NavigationHandle* navigation_handle) override;
   void WebContentsDestroyed() override;
   void RenderFrameHostChanged(content::RenderFrameHost* old_host,
                               content::RenderFrameHost* new_host) override;

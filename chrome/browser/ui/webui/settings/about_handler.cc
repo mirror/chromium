@@ -8,7 +8,7 @@
 
 #include <string>
 
-#include "ash/common/system/chromeos/devicetype_utils.h"
+#include "ash/system/devicetype_utils.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
@@ -17,10 +17,11 @@
 #include "base/i18n/message_formatter.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "build/build_config.h"
@@ -39,6 +40,9 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/policy/core/common/policy_namespace.h"
+#include "components/policy/policy_constants.h"
+#include "components/strings/grit/components_chromium_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
@@ -46,13 +50,8 @@
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "content/public/common/user_agent.h"
-#include "grit/components_chromium_strings.h"
-#include "grit/components_google_chrome_strings.h"
-#include "grit/components_strings.h"
-#include "grit/generated_resources.h"
-#include "policy/policy_constants.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "v8/include/v8.h"
+#include "v8/include/v8-version-string.h"
 
 #if defined(OS_CHROMEOS)
 #include "base/files/file_util_proxy.h"
@@ -115,44 +114,40 @@ bool IsEnterpriseManaged() {
 
 // Returns true if current user can change channel, false otherwise.
 bool CanChangeChannel(Profile* profile) {
-  bool value = false;
-  chromeos::CrosSettings::Get()->GetBoolean(chromeos::kReleaseChannelDelegated,
-                                            &value);
-
   // On a managed machine we delegate this setting to the users of the same
   // domain only if the policy value is "domain".
   if (IsEnterpriseManaged()) {
+    bool value = false;
+    chromeos::CrosSettings::Get()->GetBoolean(
+        chromeos::kReleaseChannelDelegated, &value);
     if (!value)
       return false;
-    // Get the currently logged in user and strip the domain part only.
+
+    // Get the currently logged-in user and strip the domain part only.
     std::string domain = "";
     const user_manager::User* user =
         profile ? chromeos::ProfileHelper::Get()->GetUserByProfile(profile)
                 : nullptr;
-    std::string email = user ? user->email() : std::string();
+    std::string email =
+        user ? user->GetAccountId().GetUserEmail() : std::string();
     size_t at_pos = email.find('@');
     if (at_pos != std::string::npos && at_pos + 1 < email.length())
       domain = email.substr(email.find('@') + 1);
     policy::BrowserPolicyConnectorChromeOS* connector =
         g_browser_process->platform_part()->browser_policy_connector_chromeos();
     return domain == connector->GetEnterpriseDomain();
-  } else {
-    chromeos::OwnerSettingsServiceChromeOS* service =
-        chromeos::OwnerSettingsServiceChromeOSFactory::GetInstance()
-            ->GetForBrowserContext(profile);
-    // On non managed machines we have local owner who is the only one to change
-    // anything. Ensure that ReleaseChannelDelegated is false.
-    if (service && service->IsOwner())
-      return !value;
   }
-  return false;
+
+  // On non-managed machines, only the local owner can change the channel.
+  chromeos::OwnerSettingsServiceChromeOS* service =
+      chromeos::OwnerSettingsServiceChromeOSFactory::GetInstance()
+          ->GetForBrowserContext(profile);
+  return service && service->IsOwner();
 }
 
 // Returns the path of the regulatory labels directory for a given region, if
 // found. Must be called from the blocking pool.
 base::FilePath GetRegulatoryLabelDirForRegion(const std::string& region) {
-  DCHECK(BrowserThread::GetBlockingPool()->RunsTasksOnCurrentThread());
-
   // Generate the path under the asset dir or URL host to the regulatory files
   // for the region, e.g., "regulatory_labels/us/".
   const base::FilePath region_path =
@@ -172,8 +167,6 @@ base::FilePath GetRegulatoryLabelDirForRegion(const std::string& region) {
 // Finds the directory for the regulatory label, using the VPD region code.
 // Also tries "us" as a fallback region. Must be called from the blocking pool.
 base::FilePath FindRegulatoryLabelDir() {
-  DCHECK(BrowserThread::GetBlockingPool()->RunsTasksOnCurrentThread());
-
   std::string region;
   base::FilePath region_path;
   // Use the VPD region code to find the label dir.
@@ -193,7 +186,6 @@ base::FilePath FindRegulatoryLabelDir() {
 // Reads the file containing the regulatory label text, if found, relative to
 // the asset directory. Must be called from the blocking pool.
 std::string ReadRegulatoryLabelText(const base::FilePath& label_dir_path) {
-  DCHECK(BrowserThread::GetBlockingPool()->RunsTasksOnCurrentThread());
   base::FilePath text_path(chrome::kChromeOSAssetPath);
   text_path = text_path.Append(label_dir_path);
   text_path = text_path.AppendASCII(kRegulatoryLabelTextFilename);
@@ -264,8 +256,18 @@ AboutHandler* AboutHandler::Create(content::WebUIDataSource* html_source,
                                    Profile* profile) {
   html_source->AddString(
       "aboutBrowserVersion",
-      l10n_util::GetStringFUTF16(IDS_ABOUT_PRODUCT_VERSION,
-                                 BuildBrowserVersionString()));
+      l10n_util::GetStringFUTF16(
+          IDS_SETTINGS_ABOUT_PAGE_BROWSER_VERSION,
+          base::UTF8ToUTF16(version_info::GetVersionNumber()),
+          l10n_util::GetStringUTF16(version_info::IsOfficialBuild()
+                                        ? IDS_VERSION_UI_OFFICIAL
+                                        : IDS_VERSION_UI_UNOFFICIAL),
+          base::UTF8ToUTF16(chrome::GetChannelString()),
+#if defined(ARCH_CPU_64_BITS)
+          l10n_util::GetStringUTF16(IDS_VERSION_UI_64BIT)));
+#else
+          l10n_util::GetStringUTF16(IDS_VERSION_UI_32BIT)));
+#endif
 
   html_source->AddString(
       "aboutProductCopyright",
@@ -299,8 +301,6 @@ AboutHandler* AboutHandler::Create(content::WebUIDataSource* html_source,
       IDS_ABOUT_CROS_VERSION_LICENSE,
       base::ASCIIToUTF16(chrome::kChromeUIOSCreditsURL));
   html_source->AddString("aboutProductOsLicense", os_license);
-
-  html_source->AddBoolean("aboutCanChangeChannel", CanChangeChannel(profile));
   html_source->AddBoolean("aboutEnterpriseManaged", IsEnterpriseManaged());
 
   base::Time build_time = base::SysInfo::GetLsbReleaseTime();
@@ -312,7 +312,7 @@ AboutHandler* AboutHandler::Create(content::WebUIDataSource* html_source,
   html_source->AddString("aboutCommandLine", command_line);
 
   html_source->AddString("aboutUserAgent", GetUserAgent());
-  html_source->AddString("aboutJsEngineVersion", v8::V8::GetVersion());
+  html_source->AddString("aboutJsEngineVersion", V8_VERSION_STRING);
   html_source->AddString("aboutBlinkVersion", content::GetWebKitVersion());
 #endif
 
@@ -348,11 +348,8 @@ void AboutHandler::RegisterMessages() {
       "getRegulatoryInfo", base::Bind(&AboutHandler::HandleGetRegulatoryInfo,
                                       base::Unretained(this)));
   web_ui()->RegisterMessageCallback(
-      "getCurrentChannel", base::Bind(&AboutHandler::HandleGetCurrentChannel,
-                                      base::Unretained(this)));
-  web_ui()->RegisterMessageCallback(
-      "getTargetChannel", base::Bind(&AboutHandler::HandleGetTargetChannel,
-                                     base::Unretained(this)));
+      "getChannelInfo", base::Bind(&AboutHandler::HandleGetChannelInfo,
+                                   base::Unretained(this)));
 #endif
 #if defined(OS_MACOSX)
   web_ui()->RegisterMessageCallback(
@@ -395,21 +392,6 @@ void AboutHandler::Observe(int type,
   // A version update is installed and ready to go. Refresh the UI so the
   // correct state will be shown.
   RequestUpdate();
-}
-
-// static
-base::string16 AboutHandler::BuildBrowserVersionString() {
-  std::string version = version_info::GetVersionNumber();
-
-  std::string modifier = chrome::GetChannelString();
-  if (!modifier.empty())
-    version += " " + modifier;
-
-#if defined(ARCH_CPU_64_BITS)
-  version += " (64-bit)";
-#endif
-
-  return base::UTF8ToUTF16(version);
 }
 
 void AboutHandler::OnDeviceAutoUpdatePolicyChanged(
@@ -501,8 +483,9 @@ void AboutHandler::HandleGetVersionInfo(const base::ListValue* args) {
   std::string callback_id;
   CHECK(args->GetString(0, &callback_id));
 
-  base::PostTaskAndReplyWithResult(
-      content::BrowserThread::GetBlockingPool(), FROM_HERE,
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
+                     base::TaskPriority::USER_VISIBLE),
       base::Bind(&GetVersionInfo),
       base::Bind(&AboutHandler::OnGetVersionInfoReady,
                  weak_factory_.GetWeakPtr(), callback_id));
@@ -511,7 +494,7 @@ void AboutHandler::HandleGetVersionInfo(const base::ListValue* args) {
 void AboutHandler::OnGetVersionInfoReady(
     std::string callback_id,
     std::unique_ptr<base::DictionaryValue> version_info) {
-  ResolveJavascriptCallback(base::StringValue(callback_id), *version_info);
+  ResolveJavascriptCallback(base::Value(callback_id), *version_info);
 }
 
 void AboutHandler::HandleGetRegulatoryInfo(const base::ListValue* args) {
@@ -519,38 +502,43 @@ void AboutHandler::HandleGetRegulatoryInfo(const base::ListValue* args) {
   std::string callback_id;
   CHECK(args->GetString(0, &callback_id));
 
-  base::PostTaskAndReplyWithResult(
-      content::BrowserThread::GetBlockingPool(), FROM_HERE,
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
+                     base::TaskPriority::USER_VISIBLE),
       base::Bind(&FindRegulatoryLabelDir),
       base::Bind(&AboutHandler::OnRegulatoryLabelDirFound,
                  weak_factory_.GetWeakPtr(), callback_id));
 }
 
-void AboutHandler::HandleGetCurrentChannel(const base::ListValue* args) {
-  CHECK_EQ(1U, args->GetSize());
-  std::string callback_id;
-  CHECK(args->GetString(0, &callback_id));
-  // First argument to GetChannel() is a flag that indicates whether
-  // current channel should be returned (if true) or target channel
-  // (otherwise).
-  version_updater_->GetChannel(
-      true, base::Bind(&AboutHandler::OnGetChannelReady,
-                       weak_factory_.GetWeakPtr(), callback_id));
-}
-
-void AboutHandler::HandleGetTargetChannel(const base::ListValue* args) {
+void AboutHandler::HandleGetChannelInfo(const base::ListValue* args) {
   CHECK_EQ(1U, args->GetSize());
   std::string callback_id;
   CHECK(args->GetString(0, &callback_id));
   version_updater_->GetChannel(
-      false, base::Bind(&AboutHandler::OnGetChannelReady,
-                        weak_factory_.GetWeakPtr(), callback_id));
+      true /* get current channel */,
+      base::Bind(&AboutHandler::OnGetCurrentChannel, weak_factory_.GetWeakPtr(),
+                 callback_id));
 }
 
-void AboutHandler::OnGetChannelReady(std::string callback_id,
-                                     const std::string& channel) {
-  ResolveJavascriptCallback(base::StringValue(callback_id),
-                            base::StringValue(channel));
+void AboutHandler::OnGetCurrentChannel(std::string callback_id,
+                                       const std::string& current_channel) {
+  version_updater_->GetChannel(
+      false /* get target channel */,
+      base::Bind(&AboutHandler::OnGetTargetChannel, weak_factory_.GetWeakPtr(),
+                 callback_id, current_channel));
+}
+
+void AboutHandler::OnGetTargetChannel(std::string callback_id,
+                                      const std::string& current_channel,
+                                      const std::string& target_channel) {
+  std::unique_ptr<base::DictionaryValue> channel_info(
+      new base::DictionaryValue);
+  channel_info->SetString("currentChannel", current_channel);
+  channel_info->SetString("targetChannel", target_channel);
+  channel_info->SetBoolean("canChangeChannel",
+                           CanChangeChannel(Profile::FromWebUI(web_ui())));
+
+  ResolveJavascriptCallback(base::Value(callback_id), *channel_info);
 }
 
 void AboutHandler::HandleRequestUpdate(const base::ListValue* args) {
@@ -587,34 +575,42 @@ void AboutHandler::SetUpdateStatus(VersionUpdater::Status status,
     if (!types_msg.empty())
       event->SetString("connectionTypes", types_msg);
     else
-      event->Set("connectionTypes", base::Value::CreateNullValue());
+      event->Set("connectionTypes", base::MakeUnique<base::Value>());
   } else {
-    event->Set("connectionTypes", base::Value::CreateNullValue());
+    event->Set("connectionTypes", base::MakeUnique<base::Value>());
   }
 #endif  // defined(OS_CHROMEOS)
 
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue("update-status-changed"), *event);
+                         base::Value("update-status-changed"), *event);
 }
 
 #if defined(OS_MACOSX)
 void AboutHandler::SetPromotionState(VersionUpdater::PromotionState state) {
-  std::string state_str;
-  switch (state) {
-    case VersionUpdater::PROMOTE_HIDDEN:
-      state_str = "hidden";
-      break;
-    case VersionUpdater::PROMOTE_ENABLED:
-      state_str = "enabled";
-      break;
-    case VersionUpdater::PROMOTE_DISABLED:
-      state_str = "disabled";
-      break;
-  }
+  // Worth noting: PROMOTE_DISABLED indicates that promotion is possible,
+  // there's just something else going on right now (e.g. checking for update).
+  bool hidden = state == VersionUpdater::PROMOTE_HIDDEN;
+  bool disabled = state == VersionUpdater::PROMOTE_HIDDEN ||
+                  state == VersionUpdater::PROMOTE_DISABLED ||
+                  state == VersionUpdater::PROMOTED;
+  bool actionable = state == VersionUpdater::PROMOTE_DISABLED ||
+                    state == VersionUpdater::PROMOTE_ENABLED;
+
+  base::string16 text = base::string16();
+  if (actionable)
+    text = l10n_util::GetStringUTF16(IDS_ABOUT_CHROME_AUTOUPDATE_ALL);
+  else if (state == VersionUpdater::PROMOTED)
+    text = l10n_util::GetStringUTF16(IDS_ABOUT_CHROME_AUTOUPDATE_ALL_IS_ON);
+
+  base::DictionaryValue promo_state;
+  promo_state.SetBoolean("hidden", hidden);
+  promo_state.SetBoolean("disabled", disabled);
+  promo_state.SetBoolean("actionable", actionable);
+  if (!text.empty())
+    promo_state.SetString("text", text);
 
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue("promotion-state-changed"),
-                         base::StringValue(state_str));
+                         base::Value("promotion-state-changed"), promo_state);
 }
 #endif  // defined(OS_MACOSX)
 
@@ -623,13 +619,13 @@ void AboutHandler::OnRegulatoryLabelDirFound(
     std::string callback_id,
     const base::FilePath& label_dir_path) {
   if (label_dir_path.empty()) {
-    ResolveJavascriptCallback(base::StringValue(callback_id),
-                              *base::Value::CreateNullValue());
+    ResolveJavascriptCallback(base::Value(callback_id), base::Value());
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      content::BrowserThread::GetBlockingPool(), FROM_HERE,
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
+                     base::TaskPriority::USER_VISIBLE),
       base::Bind(&ReadRegulatoryLabelText, label_dir_path),
       base::Bind(&AboutHandler::OnRegulatoryLabelTextRead,
                  weak_factory_.GetWeakPtr(), callback_id, label_dir_path));
@@ -650,9 +646,8 @@ void AboutHandler::OnRegulatoryLabelTextRead(
       std::string("chrome://") + chrome::kChromeOSAssetHost + "/" + image_path;
   regulatory_info->SetString("url", url);
 
-  ResolveJavascriptCallback(base::StringValue(callback_id), *regulatory_info);
+  ResolveJavascriptCallback(base::Value(callback_id), *regulatory_info);
 }
-
 #endif  // defined(OS_CHROMEOS)
 
 }  // namespace settings

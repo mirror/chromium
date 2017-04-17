@@ -2,31 +2,32 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/common/system/web_notification/web_notification_tray.h"
+#include "ash/system/web_notification/web_notification_tray.h"
 
 #include <utility>
 #include <vector>
 
-#include "ash/common/shelf/wm_shelf.h"
-#include "ash/common/shell_window_ids.h"
-#include "ash/common/system/status_area_widget.h"
-#include "ash/common/system/tray/system_tray.h"
-#include "ash/common/system/tray/system_tray_item.h"
-#include "ash/common/system/web_notification/ash_popup_alignment_delegate.h"
-#include "ash/common/wm/window_state.h"
-#include "ash/common/wm_lookup.h"
-#include "ash/common/wm_window.h"
-#include "ash/display/display_manager.h"
+#include "ash/public/cpp/config.h"
+#include "ash/public/cpp/shell_window_ids.h"
+#include "ash/shelf/shelf_layout_manager.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
+#include "ash/system/screen_layout_observer.h"
+#include "ash/system/status_area_widget.h"
+#include "ash/system/tray/system_tray.h"
+#include "ash/system/tray/system_tray_item.h"
+#include "ash/system/web_notification/ash_popup_alignment_delegate.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/status_area_widget_test_helper.h"
 #include "ash/test/test_system_tray_delegate.h"
+#include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/display/display.h"
+#include "ui/display/manager/display_manager.h"
 #include "ui/display/screen.h"
-#include "ui/events/base_event_utils.h"
-#include "ui/events/event.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
@@ -78,17 +79,12 @@ class TestItem : public SystemTrayItem {
     return default_view;
   }
 
-  views::View* CreateNotificationView(LoginStatus status) override {
-    return new views::View;
-  }
-
  private:
   DISALLOW_COPY_AND_ASSIGN(TestItem);
 };
 
 }  // namespace
 
-// TODO(jamescook): Move this to //ash/common. http://crbug.com/620955
 class WebNotificationTrayTest : public test::AshTestBase {
  public:
   WebNotificationTrayTest() {}
@@ -137,7 +133,7 @@ class WebNotificationTrayTest : public test::AshTestBase {
   }
 
   int GetPopupWorkAreaBottomForTray(WebNotificationTray* tray) {
-    return tray->popup_alignment_delegate_->GetWorkAreaBottom();
+    return tray->popup_alignment_delegate_->GetWorkArea().bottom();
   }
 
   bool IsPopupVisible() { return GetTray()->IsPopupVisible(); }
@@ -145,6 +141,10 @@ class WebNotificationTrayTest : public test::AshTestBase {
   static std::unique_ptr<views::Widget> CreateTestWidget() {
     return AshTestBase::CreateTestWidget(
         nullptr, kShellWindowId_DefaultContainer, gfx::Rect(1, 2, 3, 4));
+  }
+
+  static void UpdateAutoHideStateNow() {
+    GetPrimaryShelf()->shelf_layout_manager()->UpdateAutoHideStateNow();
   }
 
  private:
@@ -251,25 +251,14 @@ TEST_F(WebNotificationTrayTest, DISABLED_ManyPopupNotifications) {
   EXPECT_EQ(message_center::kMaxVisiblePopupNotifications, popups.size());
 }
 
-#if defined(OS_CHROMEOS)
-// Display notification is ChromeOS only.
-#define MAYBE_PopupShownOnBothDisplays PopupShownOnBothDisplays
-#define MAYBE_PopupAndSystemTrayMultiDisplay PopupAndSystemTrayMultiDisplay
-#else
-#define MAYBE_PopupShownOnBothDisplays DISABLED_PopupShownOnBothDisplays
-#define MAYBE_PopupAndSystemTrayMultiDisplay \
-  DISABLED_PopupAndSystemTrayMultiDisplay
-#endif
-
 // Verifies if the notification appears on both displays when extended mode.
-TEST_F(WebNotificationTrayTest, MAYBE_PopupShownOnBothDisplays) {
-  if (!SupportsMultipleDisplays())
+TEST_F(WebNotificationTrayTest, PopupShownOnBothDisplays) {
+  // TODO: needs ScreenLayoutObserver, http://crbug.com/696752.
+  if (Shell::GetAshConfig() == Config::MASH)
     return;
 
-  // Enables to appear the notification for display changes.
-  test::TestSystemTrayDelegate* tray_delegate = GetSystemTrayDelegate();
-  tray_delegate->set_should_show_display_notification(true);
-
+  Shell::Get()->screen_layout_observer()->set_show_notifications_for_testing(
+      true);
   UpdateDisplay("400x400,200x200");
   // UpdateDisplay() creates the display notifications, so popup is visible.
   EXPECT_TRUE(GetTray()->IsPopupVisible());
@@ -281,14 +270,13 @@ TEST_F(WebNotificationTrayTest, MAYBE_PopupShownOnBothDisplays) {
   // root window controller and shelf with having notifications. This code
   // verifies it doesn't cause crash and popups are still visible. See
   // http://crbug.com/263664
-  DisplayManager* display_manager = Shell::GetInstance()->display_manager();
 
-  display_manager->SetMultiDisplayMode(DisplayManager::MIRRORING);
+  display_manager()->SetMultiDisplayMode(display::DisplayManager::MIRRORING);
   UpdateDisplay("400x400,200x200");
   EXPECT_TRUE(GetTray()->IsPopupVisible());
   EXPECT_FALSE(GetSecondaryTray());
 
-  display_manager->SetMultiDisplayMode(DisplayManager::EXTENDED);
+  display_manager()->SetMultiDisplayMode(display::DisplayManager::EXTENDED);
   UpdateDisplay("400x400,200x200");
   EXPECT_TRUE(GetTray()->IsPopupVisible());
   secondary_tray = GetSecondaryTray();
@@ -296,22 +284,12 @@ TEST_F(WebNotificationTrayTest, MAYBE_PopupShownOnBothDisplays) {
   EXPECT_TRUE(secondary_tray->IsPopupVisible());
 }
 
-#if defined(OS_CHROMEOS)
 // PopupAndSystemTray may fail in platforms other than ChromeOS because the
 // RootWindow's bound can be bigger than display::Display's work area so that
 // openingsystem tray doesn't affect at all the work area of popups.
-#define MAYBE_PopupAndSystemTray PopupAndSystemTray
-#define MAYBE_PopupAndAutoHideShelf PopupAndAutoHideShelf
-#define MAYBE_PopupAndFullscreen PopupAndFullscreen
-#else
-#define MAYBE_PopupAndSystemTray DISABLED_PopupAndSystemTray
-#define MAYBE_PopupAndAutoHideShelf DISABLED_PopupAndAutoHideShelf
-#define MAYBE_PopupAndFullscreen DISABLED_PopupAndFullscreen
-#endif
-
-TEST_F(WebNotificationTrayTest, MAYBE_PopupAndSystemTray) {
+TEST_F(WebNotificationTrayTest, PopupAndSystemTray) {
   TestItem* test_item = new TestItem;
-  GetSystemTray()->AddTrayItem(test_item);
+  GetSystemTray()->AddTrayItem(base::WrapUnique(test_item));
 
   AddNotification("test_id");
   EXPECT_TRUE(GetTray()->IsPopupVisible());
@@ -323,29 +301,9 @@ TEST_F(WebNotificationTrayTest, MAYBE_PopupAndSystemTray) {
   EXPECT_TRUE(GetTray()->IsPopupVisible());
   int bottom_with_tray = GetPopupWorkAreaBottom();
   EXPECT_GT(bottom, bottom_with_tray);
-
-  // System tray notification is also created, the popup's work area is narrowed
-  // even more, but still visible.
-  GetSystemTray()->ShowNotificationView(test_item);
-  EXPECT_TRUE(GetTray()->IsPopupVisible());
-  int bottom_with_tray_notification = GetPopupWorkAreaBottom();
-  EXPECT_GT(bottom, bottom_with_tray_notification);
-  EXPECT_GT(bottom_with_tray, bottom_with_tray_notification);
-
-  // Close system tray, only system tray notifications.
-  GetSystemTray()->ClickedOutsideBubble();
-  EXPECT_TRUE(GetTray()->IsPopupVisible());
-  int bottom_with_notification = GetPopupWorkAreaBottom();
-  EXPECT_GT(bottom, bottom_with_notification);
-  EXPECT_LT(bottom_with_tray_notification, bottom_with_notification);
-
-  // Close the system tray notifications.
-  GetSystemTray()->HideNotificationView(test_item);
-  EXPECT_TRUE(GetTray()->IsPopupVisible());
-  EXPECT_EQ(bottom, GetPopupWorkAreaBottom());
 }
 
-TEST_F(WebNotificationTrayTest, MAYBE_PopupAndAutoHideShelf) {
+TEST_F(WebNotificationTrayTest, PopupAndAutoHideShelf) {
   AddNotification("test_id");
   EXPECT_TRUE(GetTray()->IsPopupVisible());
   int bottom = GetPopupWorkAreaBottom();
@@ -368,40 +326,17 @@ TEST_F(WebNotificationTrayTest, MAYBE_PopupAndAutoHideShelf) {
   // Create the system tray during auto-hide.
   widget = CreateTestWidget();
   TestItem* test_item = new TestItem;
-  GetSystemTray()->AddTrayItem(test_item);
+  GetSystemTray()->AddTrayItem(base::WrapUnique(test_item));
   GetSystemTray()->ShowDefaultView(BUBBLE_CREATE_NEW);
+  UpdateAutoHideStateNow();
 
   EXPECT_EQ(SHELF_AUTO_HIDE_SHOWN, shelf->GetAutoHideState());
   EXPECT_TRUE(GetTray()->IsPopupVisible());
   int bottom_with_tray = GetPopupWorkAreaBottom();
   EXPECT_GT(bottom_auto_shown, bottom_with_tray);
-
-  // Create tray notification.
-  GetSystemTray()->ShowNotificationView(test_item);
-  EXPECT_EQ(SHELF_AUTO_HIDE_SHOWN, shelf->GetAutoHideState());
-  int bottom_with_tray_notification = GetPopupWorkAreaBottom();
-  EXPECT_GT(bottom_with_tray, bottom_with_tray_notification);
-
-  // Close the system tray.
-  GetSystemTray()->ClickedOutsideBubble();
-  shelf->UpdateAutoHideState();
-  RunAllPendingInMessageLoop();
-  EXPECT_EQ(SHELF_AUTO_HIDE_HIDDEN, shelf->GetAutoHideState());
-  int bottom_hidden_with_tray_notification = GetPopupWorkAreaBottom();
-  EXPECT_LT(bottom_with_tray_notification,
-            bottom_hidden_with_tray_notification);
-  EXPECT_GT(bottom_auto_hidden, bottom_hidden_with_tray_notification);
-
-  // Close the window again, which shows the shelf.
-  widget.reset();
-  EXPECT_EQ(SHELF_AUTO_HIDE_SHOWN, shelf->GetAutoHideState());
-  int bottom_shown_with_tray_notification = GetPopupWorkAreaBottom();
-  EXPECT_GT(bottom_hidden_with_tray_notification,
-            bottom_shown_with_tray_notification);
-  EXPECT_GT(bottom_auto_shown, bottom_shown_with_tray_notification);
 }
 
-TEST_F(WebNotificationTrayTest, MAYBE_PopupAndFullscreen) {
+TEST_F(WebNotificationTrayTest, PopupAndFullscreen) {
   AddNotification("test_id");
   EXPECT_TRUE(IsPopupVisible());
   int bottom = GetPopupWorkAreaBottom();
@@ -417,8 +352,7 @@ TEST_F(WebNotificationTrayTest, MAYBE_PopupAndFullscreen) {
   // Put |widget| into fullscreen without forcing the shelf to hide. Currently,
   // this is used by immersive fullscreen and forces the shelf to be auto
   // hidden.
-  WmLookup::Get()
-      ->GetWindowForWidget(widget.get())
+  WmWindow::Get(widget->GetNativeWindow())
       ->GetWindowState()
       ->set_hide_shelf_when_fullscreen(false);
   widget->SetFullscreen(true);
@@ -447,7 +381,7 @@ TEST_F(WebNotificationTrayTest, MAYBE_PopupAndFullscreen) {
   EXPECT_EQ(bottom_auto_hidden, GetPopupWorkAreaBottom());
 }
 
-TEST_F(WebNotificationTrayTest, MAYBE_PopupAndSystemTrayMultiDisplay) {
+TEST_F(WebNotificationTrayTest, PopupAndSystemTrayMultiDisplay) {
   UpdateDisplay("800x600,600x400");
 
   AddNotification("test_id");
@@ -460,72 +394,5 @@ TEST_F(WebNotificationTrayTest, MAYBE_PopupAndSystemTrayMultiDisplay) {
   EXPECT_GT(bottom, GetPopupWorkAreaBottom());
   EXPECT_EQ(bottom_second, GetPopupWorkAreaBottomForTray(GetSecondaryTray()));
 }
-
-// TODO(jonross): Replace manually creating TouchEvent with
-// EventGenerator.PressTouch/ReleaseTouch. Currently they set a width on the
-// touch event causing the gesture recognizer to target a different view.
-#if defined(OS_CHROMEOS)
-// Tests that there is visual feedback for touch presses.
-TEST_F(WebNotificationTrayTest, TouchFeedback) {
-  AddNotification("test_id");
-  RunAllPendingInMessageLoop();
-  WebNotificationTray* tray = GetTray();
-  EXPECT_TRUE(tray->visible());
-
-  ui::test::EventGenerator& generator = GetEventGenerator();
-  const int touch_id = 0;
-  gfx::Point center_point = tray->GetBoundsInScreen().CenterPoint();
-
-  ui::TouchEvent press(ui::ET_TOUCH_PRESSED, center_point, touch_id,
-                       ui::EventTimeForNow());
-  generator.Dispatch(&press);
-  EXPECT_TRUE(tray->draw_background_as_active());
-
-  ui::TouchEvent release(
-      ui::ET_TOUCH_RELEASED, center_point, touch_id,
-      press.time_stamp() + base::TimeDelta::FromMilliseconds(50));
-  generator.Dispatch(&release);
-  EXPECT_TRUE(tray->draw_background_as_active());
-  EXPECT_TRUE(tray->IsMessageCenterBubbleVisible());
-
-  generator.GestureTapAt(center_point);
-  EXPECT_FALSE(tray->draw_background_as_active());
-  EXPECT_FALSE(tray->IsMessageCenterBubbleVisible());
-}
-
-// Tests that while touch presses trigger visual feedback, that subsequent non
-// tap gestures cancel the feedback without triggering the message center.
-TEST_F(WebNotificationTrayTest, TouchFeedbackCancellation) {
-  AddNotification("test_id");
-  RunAllPendingInMessageLoop();
-  WebNotificationTray* tray = GetTray();
-  EXPECT_TRUE(tray->visible());
-
-  ui::test::EventGenerator& generator = GetEventGenerator();
-  const int touch_id = 0;
-  gfx::Rect bounds = tray->GetBoundsInScreen();
-  gfx::Point center_point = bounds.CenterPoint();
-
-  ui::TouchEvent press(ui::ET_TOUCH_PRESSED, center_point, touch_id,
-                       ui::EventTimeForNow());
-  generator.Dispatch(&press);
-  EXPECT_TRUE(tray->draw_background_as_active());
-
-  gfx::Point out_of_bounds(bounds.x() - 1, center_point.y());
-  ui::TouchEvent move(
-      ui::ET_TOUCH_MOVED, out_of_bounds, touch_id,
-      press.time_stamp() + base::TimeDelta::FromMilliseconds(50));
-  generator.Dispatch(&move);
-  EXPECT_FALSE(tray->draw_background_as_active());
-
-  ui::TouchEvent release(
-      ui::ET_TOUCH_RELEASED, out_of_bounds, touch_id,
-      move.time_stamp() + base::TimeDelta::FromMilliseconds(50));
-  generator.Dispatch(&release);
-  EXPECT_FALSE(tray->draw_background_as_active());
-  EXPECT_FALSE(tray->IsMessageCenterBubbleVisible());
-}
-
-#endif  // OS_CHROMEOS
 
 }  // namespace ash

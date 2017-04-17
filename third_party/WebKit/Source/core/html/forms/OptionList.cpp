@@ -10,31 +10,31 @@
 
 namespace blink {
 
-void OptionListIterator::advance(HTMLOptionElement* previous)
-{
-    // This function returns only
-    // - An OPTION child of m_select, or
-    // - An OPTION child of an OPTGROUP child of m_select.
+void OptionListIterator::Advance(HTMLOptionElement* previous) {
+  // This function returns only
+  // - An OPTION child of m_select, or
+  // - An OPTION child of an OPTGROUP child of m_select.
 
-    Element* current;
-    if (previous) {
-        DCHECK_EQ(previous->ownerSelectElement(), m_select);
-        current = ElementTraversal::nextSkippingChildren(*previous, m_select);
-    } else {
-        current = ElementTraversal::firstChild(*m_select);
+  Element* current;
+  if (previous) {
+    DCHECK_EQ(previous->OwnerSelectElement(), select_);
+    current = ElementTraversal::NextSkippingChildren(*previous, select_);
+  } else {
+    current = ElementTraversal::FirstChild(*select_);
+  }
+  while (current) {
+    if (isHTMLOptionElement(current)) {
+      current_ = toHTMLOptionElement(current);
+      return;
     }
-    while (current) {
-        if (isHTMLOptionElement(current)) {
-            m_current = toHTMLOptionElement(current);
-            return;
-        }
-        if (isHTMLOptGroupElement(current) && current->parentNode() == m_select.get()) {
-            if ((m_current = Traversal<HTMLOptionElement>::firstChild(*current)))
-                return;
-        }
-        current = ElementTraversal::nextSkippingChildren(*current, m_select);
+    if (isHTMLOptGroupElement(current) &&
+        current->parentNode() == select_.Get()) {
+      if ((current_ = Traversal<HTMLOptionElement>::FirstChild(*current)))
+        return;
     }
-    m_current = nullptr;
+    current = ElementTraversal::NextSkippingChildren(*current, select_);
+  }
+  current_ = nullptr;
 }
 
-} // namespace blink
+}  // namespace blink

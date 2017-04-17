@@ -20,12 +20,11 @@
 #include "net/http/http_request_info.h"
 #include "net/http/http_response_info.h"
 #include "net/http/proxy_client_socket.h"
-#include "net/log/net_log.h"
+#include "net/log/net_log_with_source.h"
 #include "net/socket/ssl_client_socket.h"
 
 namespace net {
 
-class AddressList;
 class ClientSocketHandle;
 class GrowableIOBuffer;
 class HttpStream;
@@ -45,7 +44,7 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocket : public ProxyClientSocket {
                         HttpAuthController* http_auth_controller,
                         bool tunnel,
                         bool using_spdy,
-                        NextProto protocol_negotiated,
+                        NextProto negotiated_protocol,
                         ProxyDelegate* proxy_delegate,
                         bool is_https_proxy);
 
@@ -58,18 +57,18 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocket : public ProxyClientSocket {
   int RestartWithAuth(const CompletionCallback& callback) override;
   const scoped_refptr<HttpAuthController>& GetAuthController() const override;
   bool IsUsingSpdy() const override;
-  NextProto GetProtocolNegotiated() const override;
+  NextProto GetProxyNegotiatedProtocol() const override;
 
   // StreamSocket implementation.
   int Connect(const CompletionCallback& callback) override;
   void Disconnect() override;
   bool IsConnected() const override;
   bool IsConnectedAndIdle() const override;
-  const BoundNetLog& NetLog() const override;
+  const NetLogWithSource& NetLog() const override;
   void SetSubresourceSpeculation() override;
   void SetOmniboxSpeculation() override;
   bool WasEverUsed() const override;
-  bool WasNpnNegotiated() const override;
+  bool WasAlpnNegotiated() const override;
   NextProto GetNegotiatedProtocol() const override;
   bool GetSSLInfo(SSLInfo* ssl_info) override;
   void GetConnectionAttempts(ConnectionAttempts* out) const override;
@@ -150,7 +149,7 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocket : public ProxyClientSocket {
   // If true, then the connection to the proxy is a SPDY connection.
   const bool using_spdy_;
   // Protocol negotiated with the server.
-  NextProto protocol_negotiated_;
+  NextProto negotiated_protocol_;
   // If true, then SSL is used to communicate with this proxy
   const bool is_https_proxy_;
 
@@ -166,7 +165,7 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocket : public ProxyClientSocket {
   // This delegate must outlive this proxy client socket.
   ProxyDelegate* proxy_delegate_;
 
-  const BoundNetLog net_log_;
+  const NetLogWithSource net_log_;
 
   DISALLOW_COPY_AND_ASSIGN(HttpProxyClientSocket);
 };

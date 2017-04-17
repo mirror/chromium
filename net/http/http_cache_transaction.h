@@ -24,14 +24,13 @@
 #include "net/base/load_states.h"
 #include "net/base/net_error_details.h"
 #include "net/base/request_priority.h"
-#include "net/base/upload_progress.h"
 #include "net/http/http_cache.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_response_info.h"
 #include "net/http/http_transaction.h"
 #include "net/http/partial_data.h"
-#include "net/log/net_log.h"
+#include "net/log/net_log_with_source.h"
 #include "net/socket/connection_attempts.h"
 #include "net/websockets/websocket_handshake_stream_base.h"
 
@@ -118,7 +117,7 @@ class HttpCache::Transaction : public HttpTransaction {
 
   const CompletionCallback& io_callback() { return io_callback_; }
 
-  const BoundNetLog& net_log() const;
+  const NetLogWithSource& net_log() const;
 
   // Bypasses the cache lock whenever there is lock contention.
   void BypassLockForTest() {
@@ -133,7 +132,7 @@ class HttpCache::Transaction : public HttpTransaction {
   // HttpTransaction methods:
   int Start(const HttpRequestInfo* request_info,
             const CompletionCallback& callback,
-            const BoundNetLog& net_log) override;
+            const NetLogWithSource& net_log) override;
   int RestartIgnoringLastError(const CompletionCallback& callback) override;
   int RestartWithCertificate(X509Certificate* client_cert,
                              SSLPrivateKey* client_private_key,
@@ -151,7 +150,6 @@ class HttpCache::Transaction : public HttpTransaction {
   void DoneReading() override;
   const HttpResponseInfo* GetResponseInfo() const override;
   LoadState GetLoadState() const override;
-  UploadProgress GetUploadProgress(void) const override;
   void SetQuicServerInfo(QuicServerInfo* quic_server_info) override;
   bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const override;
   bool GetRemoteEndpoint(IPEndPoint* endpoint) const override;
@@ -166,6 +164,9 @@ class HttpCache::Transaction : public HttpTransaction {
   int ResumeNetworkStart() override;
   void GetConnectionAttempts(ConnectionAttempts* out) const override;
 
+  // Returns the estimate of dynamically allocated memory in bytes.
+  size_t EstimateMemoryUsage() const;
+
  private:
   static const size_t kNumValidationHeaders = 2;
   // Helper struct to pair a header name with its value, for
@@ -178,6 +179,8 @@ class HttpCache::Transaction : public HttpTransaction {
   };
 
   enum State {
+    STATE_UNSET,
+
     // Normally, states are traversed in approximately this order.
     STATE_NONE,
     STATE_GET_BACKEND,
@@ -295,7 +298,8 @@ class HttpCache::Transaction : public HttpTransaction {
   int DoCacheWriteTruncatedResponseComplete(int result);
 
   // Sets request_ and fields derived from it.
-  void SetRequest(const BoundNetLog& net_log, const HttpRequestInfo* request);
+  void SetRequest(const NetLogWithSource& net_log,
+                  const HttpRequestInfo* request);
 
   // Returns true if the request should be handled exclusively by the network
   // layer (skipping the cache entirely).
@@ -334,9 +338,8 @@ class HttpCache::Transaction : public HttpTransaction {
   // Returns network error code.
   int RestartNetworkRequestWithAuth(const AuthCredentials& credentials);
 
-  // Called to determine if we need to validate the cache entry before using it,
-  // and whether the validation should be synchronous or asynchronous.
-  ValidationType RequiresValidation();
+  // Called to determine if we need to validate the cache entry before using it.
+  bool RequiresValidation();
 
   // Called to make the request conditional (to ask the server if the cached
   // copy is valid).  Returns true if able to make the request conditional.
@@ -430,10 +433,14 @@ class HttpCache::Transaction : public HttpTransaction {
   // Called to signal completion of asynchronous IO.
   void OnIOComplete(int result);
 
+  // When in a DoLoop, use this to set the next state as it verifies that the
+  // state isn't set twice.
+  void TransitionToState(State state);
+
   State next_state_;
   const HttpRequestInfo* request_;
   RequestPriority priority_;
-  BoundNetLog net_log_;
+  NetLogWithSource net_log_;
   std::unique_ptr<HttpRequestInfo> custom_request_;
   HttpRequestHeaders request_headers_copy_;
   // If extra_headers specified a "if-modified-since" or "if-none-match",
@@ -467,7 +474,6 @@ class HttpCache::Transaction : public HttpTransaction {
   int effective_load_flags_;
   int write_len_;
   std::unique_ptr<PartialData> partial_;  // We are dealing with range requests.
-  UploadProgress final_upload_progress_;
   CompletionCallback io_callback_;
 
   // Members used to track data for histograms.
@@ -504,6 +510,9 @@ class HttpCache::Transaction : public HttpTransaction {
 
   BeforeNetworkStartCallback before_network_start_callback_;
   BeforeHeadersSentCallback before_headers_sent_callback_;
+
+  // True if the Transaction is currently processing the DoLoop.
+  bool in_do_loop_;
 
   base::WeakPtrFactory<Transaction> weak_factory_;
 

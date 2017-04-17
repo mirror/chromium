@@ -7,9 +7,10 @@
 
 #include "base/compiler_specific.h"
 #include "base/strings/string16.h"
+#include "base/time/time.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
+#include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
 #include "ui/gfx/native_widget_types.h"
 
 #if defined(OS_ANDROID)
@@ -26,18 +27,16 @@ namespace content {
 // platform independent code.
 struct CONTENT_EXPORT NativeWebKeyboardEvent :
   NON_EXPORTED_BASE(public blink::WebKeyboardEvent) {
-  NativeWebKeyboardEvent();
+  NativeWebKeyboardEvent(blink::WebInputEvent::Type type,
+                         int modifiers,
+                         base::TimeTicks timestamp);
+  NativeWebKeyboardEvent(blink::WebInputEvent::Type type,
+                         int modifiers,
+                         double timestampSeconds);
 
   explicit NativeWebKeyboardEvent(gfx::NativeEvent native_event);
 #if defined(OS_ANDROID)
-  NativeWebKeyboardEvent(blink::WebInputEvent::Type type,
-                         int modifiers,
-                         double time_secs,
-                         int keycode,
-                         int scancode,
-                         int unicode_character,
-                         bool is_system_key);
-  // Takes ownership of android_key_event.
+  // Holds a global ref to android_key_event (allowed to be null).
   NativeWebKeyboardEvent(
       JNIEnv* env,
       const base::android::JavaRef<jobject>& android_key_event,

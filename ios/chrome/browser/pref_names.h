@@ -22,9 +22,8 @@ extern const char kEnableDoNotTrack[];
 extern const char kHttpServerProperties[];
 extern const char kIosBookmarkFolderDefault[];
 extern const char kIosBookmarkPromoAlreadySeen[];
-extern const char kIosHandoffToOtherDevices[];
+extern const char kIosPhysicalWebEnabled[];
 extern const char kLastSessionExitedCleanly[];
-extern const char kLastSessionUsedWKWebViewControlGroup[];
 extern const char kMetricsReportingWifiOnly[];
 extern const char kNtpShownPage[];
 extern const char kSavingBrowserHistoryDisabled[];
@@ -38,9 +37,6 @@ extern const char kNetworkPredictionWifiOnly[];
 extern const char kNtpShownBookmarksFolder[];
 extern const char kShowMemoryDebuggingTools[];
 
-extern const char kVoiceSearchLocale[];
-extern const char kVoiceSearchTTS[];
-
 extern const char kSigninLastAccounts[];
 extern const char kSigninLastAccountsMigrated[];
 extern const char kSigninSharedAuthenticationUserId[];
@@ -51,7 +47,12 @@ extern const char kOmniboxGeolocationLastAuthorizationAlertVersion[];
 
 extern const char kRateThisAppDialogLastShownTime[];
 
-extern const char kDroppedSafeBrowsingCookies[];
+extern const char kDesktopIOSPromotionSMSEntryPoint[];
+extern const char kDesktopIOSPromotionShownEntryPoints[];
+extern const char kDesktopIOSPromotionLastImpression[];
+extern const char kDesktopIOSPromotionDone[];
+extern const char kDesktopIOSPromotionEligible[];
+extern const char kDesktopIOSPromotionVariationId[];
 
 }  // namespace prefs
 

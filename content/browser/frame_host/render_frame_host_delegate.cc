@@ -15,7 +15,7 @@
 namespace content {
 
 bool RenderFrameHostDelegate::OnMessageReceived(
-    RenderFrameHost* render_view_host,
+    RenderFrameHostImpl* render_frame_host,
     const IPC::Message& message) {
   return false;
 }
@@ -24,7 +24,7 @@ const GURL& RenderFrameHostDelegate::GetMainFrameLastCommittedURL() const {
   return GURL::EmptyGURL();
 }
 
-bool RenderFrameHostDelegate::AddMessageToConsole(
+bool RenderFrameHostDelegate::DidAddMessageToConsole(
     int32_t level,
     const base::string16& message,
     int32_t line_no,
@@ -57,8 +57,13 @@ bool RenderFrameHostDelegate::CheckMediaAccessPermission(
   return false;
 }
 
+std::string RenderFrameHostDelegate::GetDefaultMediaDeviceID(
+    MediaStreamType type) {
+  return std::string();
+}
+
 AccessibilityMode RenderFrameHostDelegate::GetAccessibilityMode() const {
-  return AccessibilityModeOff;
+  return AccessibilityMode();
 }
 
 RenderFrameHost* RenderFrameHostDelegate::GetGuestByInstanceID(
@@ -72,7 +77,8 @@ RenderFrameHostDelegate::GetGeolocationServiceContext() {
   return nullptr;
 }
 
-WakeLockServiceContext* RenderFrameHostDelegate::GetWakeLockServiceContext() {
+device::mojom::WakeLockContext*
+RenderFrameHostDelegate::GetWakeLockServiceContext() {
   return nullptr;
 }
 
@@ -86,5 +92,20 @@ std::unique_ptr<WebUIImpl>
 RenderFrameHostDelegate::CreateWebUIForRenderFrameHost(const GURL& url) {
   return nullptr;
 }
+
+bool RenderFrameHostDelegate::ShouldAllowRunningInsecureContent(
+    WebContents* web_contents,
+    bool allowed_per_prefs,
+    const url::Origin& origin,
+    const GURL& resource_url) {
+  return false;
+}
+
+#if defined(OS_ANDROID)
+base::android::ScopedJavaLocalRef<jobject>
+RenderFrameHostDelegate::GetJavaRenderFrameHostDelegate() {
+  return nullptr;
+}
+#endif
 
 }  // namespace content

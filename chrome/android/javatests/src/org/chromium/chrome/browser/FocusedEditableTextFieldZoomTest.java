@@ -6,7 +6,6 @@ package org.chromium.chrome.browser;
 
 import static org.chromium.content.browser.test.util.CriteriaHelper.DEFAULT_POLLING_INTERVAL;
 
-import android.os.Environment;
 import android.view.KeyEvent;
 
 import org.chromium.base.test.util.DisabledTest;
@@ -37,8 +36,7 @@ public class FocusedEditableTextFieldZoomTest extends ChromeActivityTestCaseBase
 
     @Override
     protected void setUp() throws Exception {
-        mTestServer = EmbeddedTestServer.createAndStartFileServer(
-                getInstrumentation().getContext(), Environment.getExternalStorageDirectory());
+        mTestServer = EmbeddedTestServer.createAndStartServer(getInstrumentation().getContext());
         super.setUp();
     }
 
@@ -48,7 +46,7 @@ public class FocusedEditableTextFieldZoomTest extends ChromeActivityTestCaseBase
         super.tearDown();
     }
 
-    void waitForInitialZoom() throws InterruptedException {
+    void waitForInitialZoom() {
         // The zoom level sometimes changes immediately after the page loads which makes grabbing
         // the initial value problematic. We solve this by explicitly specifying the initial zoom
         // level via the viewport tag and waiting for the zoom level to reach that value before we
@@ -62,8 +60,8 @@ public class FocusedEditableTextFieldZoomTest extends ChromeActivityTestCaseBase
         }, TEST_TIMEOUT, DEFAULT_POLLING_INTERVAL);
     }
 
-    private void waitForZoomIn(final ContentViewCore contentViewCore, final float initialZoomLevel)
-            throws InterruptedException {
+    private void waitForZoomIn(final ContentViewCore contentViewCore,
+            final float initialZoomLevel) {
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -72,37 +70,35 @@ public class FocusedEditableTextFieldZoomTest extends ChromeActivityTestCaseBase
         }, TEST_TIMEOUT, DEFAULT_POLLING_INTERVAL);
     }
 
-    @DisabledTest
-    @Feature({"TabContents"})
     /*
      * @LargeTest
-     * Broken by subpixel precision changes crbug.com/371119
      */
+    @DisabledTest(message = "Broken by subpixel precision changes crbug.com/371119")
+    @Feature({"TabContents"})
     public void testZoomInToSelected() throws Throwable {
         // This should focus the text field and initiate a zoom in.
         Tab tab = getActivity().getActivityTab();
         final ContentViewCore contentViewCore = tab.getContentViewCore();
         float initialZoomLevel = contentViewCore.getScale();
 
-        DOMUtils.clickNode(this, contentViewCore, TEXTFIELD_DOM_ID);
+        DOMUtils.clickNode(contentViewCore, TEXTFIELD_DOM_ID);
 
         // Wait for the zoom in to complete.
         waitForZoomIn(contentViewCore, initialZoomLevel);
     }
 
-    @DisabledTest
-    @Feature({"TabContents"})
     /*
      * @LargeTest
-     * Broken by subpixel precision changes crbug.com/371119
      */
+    @DisabledTest(message = "Broken by subpixel precision changes crbug.com/371119")
+    @Feature({"TabContents"})
     public void testZoomOutOfSelectedIfOnlyBackPressed() throws Throwable {
         final Tab tab = getActivity().getActivityTab();
         final ContentViewCore contentViewCore = tab.getContentViewCore();
         final float initialZoomLevel = contentViewCore.getScale();
 
         // This should focus the text field and initiate a zoom in.
-        DOMUtils.clickNode(this, contentViewCore, TEXTFIELD_DOM_ID);
+        DOMUtils.clickNode(contentViewCore, TEXTFIELD_DOM_ID);
 
         // Wait for the zoom in to complete.
         waitForZoomIn(contentViewCore, initialZoomLevel);

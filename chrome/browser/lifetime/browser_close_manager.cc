@@ -23,6 +23,7 @@
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/scoped_tabbed_browser_displayer.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/common/features.h"
 #include "content/public/browser/web_contents.h"
 
 namespace {
@@ -60,9 +61,8 @@ void BrowserCloseManager::StartClosingBrowsers() {
 
 void BrowserCloseManager::CancelBrowserClose() {
   browser_shutdown::SetTryingToQuit(false);
-  for (auto* browser : *BrowserList::GetInstance()) {
-    browser->ResetBeforeUnloadHandlers();
-  }
+  for (auto* browser : *BrowserList::GetInstance())
+    browser->ResetTryToCloseWindow();
 }
 
 void BrowserCloseManager::TryToCloseBrowsers() {
@@ -72,7 +72,8 @@ void BrowserCloseManager::TryToCloseBrowsers() {
   // OnBrowserReportCloseable with the result. If the user confirms the close,
   // this will trigger TryToCloseBrowsers to try again.
   for (auto* browser : *BrowserList::GetInstance()) {
-    if (browser->CallBeforeUnloadHandlers(
+    if (browser->TryToCloseWindow(
+            false,
             base::Bind(&BrowserCloseManager::OnBrowserReportCloseable, this))) {
       current_browser_ = browser;
       return;
@@ -142,7 +143,7 @@ void BrowserCloseManager::OnReportDownloadsCancellable(bool proceed) {
 }
 
 void BrowserCloseManager::CloseBrowsers() {
-#if defined(ENABLE_SESSION_SERVICE)
+#if BUILDFLAG(ENABLE_SESSION_SERVICE)
   // Before we close the browsers shutdown all session services. That way an
   // exit can restore all browsers open before exiting.
   ProfileManager::ShutdownSessionServices();

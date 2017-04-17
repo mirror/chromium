@@ -12,6 +12,48 @@ namespace blink {
 class Document;
 class Range;
 
+// We should restrict access to the unwanted version of |TraversalRange::end()|
+// function.
+template <class Iterator>
+class TraversalRangeNodes : private TraversalRange<Iterator> {
+  STACK_ALLOCATED();
+
+ public:
+  using StartNodeType = typename TraversalRange<Iterator>::StartNodeType;
+  TraversalRangeNodes(const StartNodeType* start,
+                      const StartNodeType* past_end_node)
+      : TraversalRange<Iterator>(start), past_end_node_(past_end_node) {}
+
+  using TraversalRange<Iterator>::begin;
+
+  Iterator end() { return Iterator(past_end_node_); }
+
+ private:
+  const Member<const StartNodeType> past_end_node_;
+};
+
+// This class acts like |TraversalNextIterator| but in addition
+// it allows to set current position and checks |m_current| pointer before
+// dereferencing.
+template <class TraversalNext>
+class CheckedTraversalNextIterator
+    : public TraversalIteratorBase<TraversalNext> {
+  STACK_ALLOCATED();
+
+  using TraversalIteratorBase<TraversalNext>::current_;
+
+ public:
+  using StartNodeType = typename TraversalNext::TraversalNodeType;
+  explicit CheckedTraversalNextIterator(const StartNodeType* start)
+      : TraversalIteratorBase<TraversalNext>(
+            const_cast<StartNodeType*>(start)) {}
+
+  void operator++() {
+    DCHECK(current_);
+    current_ = TraversalNext::Next(*current_);
+  }
+};
+
 // Unlike |Range| objects, |EphemeralRangeTemplate| objects aren't relocated.
 // You should not use |EphemeralRangeTemplate| objects after DOM modification.
 //
@@ -36,65 +78,73 @@ class Range;
 //
 template <typename Strategy>
 class CORE_TEMPLATE_CLASS_EXPORT EphemeralRangeTemplate final {
-    STACK_ALLOCATED();
-public:
-    EphemeralRangeTemplate(const PositionTemplate<Strategy>& start, const PositionTemplate<Strategy>& end);
-    EphemeralRangeTemplate(const EphemeralRangeTemplate& other);
-    // |position| should be |Position::isNull()| or in-document.
-    explicit EphemeralRangeTemplate(const PositionTemplate<Strategy>& /* position */);
-    // When |range| is nullptr, |EphemeralRangeTemplate| is |isNull()|.
-    explicit EphemeralRangeTemplate(const Range* /* range */);
-    EphemeralRangeTemplate();
-    ~EphemeralRangeTemplate();
+  STACK_ALLOCATED();
 
-    EphemeralRangeTemplate<Strategy>& operator=(const EphemeralRangeTemplate<Strategy>& other);
+ public:
+  using RangeTraversal =
+      TraversalRangeNodes<CheckedTraversalNextIterator<Strategy>>;
 
-    bool operator==(const EphemeralRangeTemplate<Strategy>& other) const;
-    bool operator!=(const EphemeralRangeTemplate<Strategy>& other) const;
+  EphemeralRangeTemplate(const PositionTemplate<Strategy>& start,
+                         const PositionTemplate<Strategy>& end);
+  EphemeralRangeTemplate(const EphemeralRangeTemplate& other);
+  // |position| should be |Position::isNull()| or in-document.
+  explicit EphemeralRangeTemplate(
+      const PositionTemplate<Strategy>& /* position */);
+  // When |range| is nullptr, |EphemeralRangeTemplate| is |isNull()|.
+  explicit EphemeralRangeTemplate(const Range* /* range */);
+  EphemeralRangeTemplate();
+  ~EphemeralRangeTemplate();
 
-    Document& document() const;
-    PositionTemplate<Strategy> startPosition() const;
-    PositionTemplate<Strategy> endPosition() const;
+  EphemeralRangeTemplate<Strategy>& operator=(
+      const EphemeralRangeTemplate<Strategy>& other);
 
-    // Returns true if |m_startPositoin| == |m_endPosition| or |isNull()|.
-    bool isCollapsed() const;
-    bool isNull() const
-    {
-        DCHECK(isValid());
-        return m_startPosition.isNull();
-    }
-    bool isNotNull() const { return !isNull(); }
+  bool operator==(const EphemeralRangeTemplate<Strategy>& other) const;
+  bool operator!=(const EphemeralRangeTemplate<Strategy>& other) const;
 
-    DEFINE_INLINE_TRACE()
-    {
-        visitor->trace(m_startPosition);
-        visitor->trace(m_endPosition);
-    }
+  Document& GetDocument() const;
+  PositionTemplate<Strategy> StartPosition() const;
+  PositionTemplate<Strategy> EndPosition() const;
 
-    // |node| should be in-document and valid for anchor node of
-    // |PositionTemplate<Strategy>|.
-    static EphemeralRangeTemplate<Strategy> rangeOfContents(const Node& /* node */);
+  Node* CommonAncestorContainer() const;
 
-private:
-    bool isValid() const;
+  // Returns true if |m_startPositoin| == |m_endPosition| or |isNull()|.
+  bool IsCollapsed() const;
+  bool IsNull() const {
+    DCHECK(IsValid());
+    return start_position_.IsNull();
+  }
+  bool IsNotNull() const { return !IsNull(); }
 
-    PositionTemplate<Strategy> m_startPosition;
-    PositionTemplate<Strategy> m_endPosition;
+  RangeTraversal Nodes() const;
+
+  // |node| should be in-document and valid for anchor node of
+  // |PositionTemplate<Strategy>|.
+  static EphemeralRangeTemplate<Strategy> RangeOfContents(
+      const Node& /* node */);
+
+ private:
+  bool IsValid() const;
+
+  PositionTemplate<Strategy> start_position_;
+  PositionTemplate<Strategy> end_position_;
 #if DCHECK_IS_ON()
-    uint64_t m_domTreeVersion;
+  uint64_t dom_tree_version_;
 #endif
 };
 
-extern template class CORE_EXTERN_TEMPLATE_EXPORT EphemeralRangeTemplate<EditingStrategy>;
+extern template class CORE_EXTERN_TEMPLATE_EXPORT
+    EphemeralRangeTemplate<EditingStrategy>;
 using EphemeralRange = EphemeralRangeTemplate<EditingStrategy>;
 
-extern template class CORE_EXTERN_TEMPLATE_EXPORT EphemeralRangeTemplate<EditingInFlatTreeStrategy>;
-using EphemeralRangeInFlatTree = EphemeralRangeTemplate<EditingInFlatTreeStrategy>;
+extern template class CORE_EXTERN_TEMPLATE_EXPORT
+    EphemeralRangeTemplate<EditingInFlatTreeStrategy>;
+using EphemeralRangeInFlatTree =
+    EphemeralRangeTemplate<EditingInFlatTreeStrategy>;
 
 // Returns a newly created |Range| object from |range| or |nullptr| if
 // |range.isNull()| returns true.
-CORE_EXPORT Range* createRange(const EphemeralRange& /* range */);
+CORE_EXPORT Range* CreateRange(const EphemeralRange& /* range */);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

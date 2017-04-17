@@ -14,7 +14,7 @@
 #include "chrome/browser/safe_browsing/incident_reporting/binary_integrity_incident.h"
 #include "chrome/browser/safe_browsing/incident_reporting/incident_receiver.h"
 #include "chrome/browser/safe_browsing/signature_evaluator_mac.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
+#include "components/safe_browsing/csd.pb.h"
 
 #define DEVELOPER_ID_APPLICATION_OID "field.1.2.840.113635.100.6.1.13"
 #define DEVELOPER_ID_INTERMEDIATE_OID "field.1.2.840.113635.100.6.2.6"
@@ -36,7 +36,7 @@ void VerifyBinaryIntegrityHelper(IncidentReceiver* incident_receiver,
       incident(new ClientIncidentReport_IncidentData_BinaryIntegrityIncident());
   if (!evaluator.PerformEvaluation(incident.get())) {
     incident_receiver->AddIncidentForProcess(
-        base::WrapUnique(new BinaryIntegrityIncident(std::move(incident))));
+        base::MakeUnique<BinaryIntegrityIncident>(std::move(incident)));
   } else {
     // Clear past incidents involving this bundle if the signature is
     // now valid.

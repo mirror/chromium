@@ -16,27 +16,41 @@ class HTMLCanvasElement;
 class WebCanvasCaptureHandler;
 
 class CanvasCaptureMediaStreamTrack final : public MediaStreamTrack {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static CanvasCaptureMediaStreamTrack* create(MediaStreamComponent*, HTMLCanvasElement*, std::unique_ptr<WebCanvasCaptureHandler>);
-    static CanvasCaptureMediaStreamTrack* create(MediaStreamComponent*, HTMLCanvasElement*, std::unique_ptr<WebCanvasCaptureHandler>, double frameRate);
+  DEFINE_WRAPPERTYPEINFO();
 
-    HTMLCanvasElement* canvas() const;
-    void requestFrame();
+ public:
+  static CanvasCaptureMediaStreamTrack* Create(
+      MediaStreamComponent*,
+      HTMLCanvasElement*,
+      std::unique_ptr<WebCanvasCaptureHandler>);
+  static CanvasCaptureMediaStreamTrack* Create(
+      MediaStreamComponent*,
+      HTMLCanvasElement*,
+      std::unique_ptr<WebCanvasCaptureHandler>,
+      double frame_rate);
 
-    CanvasCaptureMediaStreamTrack* clone(ExecutionContext*) override;
+  HTMLCanvasElement* canvas() const;
+  void requestFrame();
 
-    DECLARE_VIRTUAL_TRACE();
+  CanvasCaptureMediaStreamTrack* clone(ScriptState*) override;
 
-private:
-    CanvasCaptureMediaStreamTrack(const CanvasCaptureMediaStreamTrack&, MediaStreamComponent*);
-    CanvasCaptureMediaStreamTrack(MediaStreamComponent*, HTMLCanvasElement*, std::unique_ptr<WebCanvasCaptureHandler>);
-    CanvasCaptureMediaStreamTrack(MediaStreamComponent*, HTMLCanvasElement*, std::unique_ptr<WebCanvasCaptureHandler>, double frameRate);
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<HTMLCanvasElement> m_canvasElement;
-    Member<CanvasDrawListener> m_drawListener;
+ private:
+  CanvasCaptureMediaStreamTrack(const CanvasCaptureMediaStreamTrack&,
+                                MediaStreamComponent*);
+  CanvasCaptureMediaStreamTrack(MediaStreamComponent*,
+                                HTMLCanvasElement*,
+                                std::unique_ptr<WebCanvasCaptureHandler>);
+  CanvasCaptureMediaStreamTrack(MediaStreamComponent*,
+                                HTMLCanvasElement*,
+                                std::unique_ptr<WebCanvasCaptureHandler>,
+                                double frame_rate);
+
+  Member<HTMLCanvasElement> canvas_element_;
+  Member<CanvasDrawListener> draw_listener_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

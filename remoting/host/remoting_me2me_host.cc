@@ -20,29 +20,34 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringize_macros.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "build/build_config.h"
-#include "ipc/attachment_broker_unprivileged.h"
+#include "components/policy/policy_constants.h"
 #include "ipc/ipc_channel.h"
 #include "ipc/ipc_channel_proxy.h"
 #include "ipc/ipc_listener.h"
 #include "jingle/glue/thread_wrapper.h"
+#include "mojo/edk/embedder/embedder.h"
+#include "mojo/edk/embedder/platform_channel_pair.h"
+#include "mojo/edk/embedder/scoped_ipc_support.h"
 #include "net/base/network_change_notifier.h"
 #include "net/base/url_util.h"
 #include "net/socket/client_socket_factory.h"
-#include "net/socket/ssl_server_socket.h"
 #include "net/url_request/url_fetcher.h"
-#include "policy/policy_constants.h"
 #include "remoting/base/auto_thread_task_runner.h"
 #include "remoting/base/breakpad.h"
 #include "remoting/base/chromium_url_request.h"
 #include "remoting/base/constants.h"
 #include "remoting/base/logging.h"
+#include "remoting/base/oauth_token_getter_impl.h"
 #include "remoting/base/rsa_key_pair.h"
+#include "remoting/base/service_urls.h"
 #include "remoting/base/util.h"
 #include "remoting/host/branding.h"
 #include "remoting/host/chromoting_host.h"
@@ -51,6 +56,7 @@
 #include "remoting/host/config_file_watcher.h"
 #include "remoting/host/config_watcher.h"
 #include "remoting/host/desktop_environment.h"
+#include "remoting/host/desktop_environment_options.h"
 #include "remoting/host/desktop_session_connector.h"
 #include "remoting/host/dns_blackhole_checker.h"
 #include "remoting/host/gcd_rest_client.h"
@@ -68,13 +74,11 @@
 #include "remoting/host/ipc_host_event_logger.h"
 #include "remoting/host/logging.h"
 #include "remoting/host/me2me_desktop_environment.h"
-#include "remoting/host/oauth_token_getter_impl.h"
 #include "remoting/host/pairing_registry_delegate.h"
 #include "remoting/host/pin_hash.h"
 #include "remoting/host/policy_watcher.h"
 #include "remoting/host/security_key/security_key_auth_handler.h"
 #include "remoting/host/security_key/security_key_extension.h"
-#include "remoting/host/service_urls.h"
 #include "remoting/host/shutdown_watchdog.h"
 #include "remoting/host/signaling_connector.h"
 #include "remoting/host/single_window_desktop_environment.h"
@@ -130,9 +134,16 @@
 using remoting::protocol::PairingRegistry;
 using remoting::protocol::NetworkSettings;
 
-#if defined(USE_REMOTING_MACOSX_INTERNAL)
-#include "remoting/tools/internal/internal_mac-inl.h"
-#endif
+#if defined(OS_MACOSX)
+
+// The following creates a section that tells Mac OS X that it is OK to let us
+// inject input in the login screen. Just the name of the section is important,
+// not its contents.
+__attribute__((used))
+__attribute__((section ("__CGPreLoginApp,__cgpreloginapp")))
+static const char magic_section[] = "";
+
+#endif  // defined(OS_MACOSX)
 
 namespace {
 
@@ -149,11 +160,13 @@ const char kStdinConfigPath[] = "-";
 // The command line switch used to pass name of the pipe to capture audio on
 // linux.
 const char kAudioPipeSwitchName[] = "audio-pipe-name";
+#endif  // defined(OS_LINUX)
 
+#if defined(OS_POSIX)
 // The command line switch used to pass name of the unix domain socket used to
 // listen for security key requests.
 const char kAuthSocknameSwitchName[] = "ssh-auth-sockname";
-#endif  // defined(OS_LINUX)
+#endif  // defined(OS_POSIX)
 
 // The command line switch used by the parent to request the host to signal it
 // when it is successfully started.
@@ -372,10 +385,10 @@ class HostProcess : public ConfigWatcher::Delegate,
   std::string talkgadget_prefix_;
   bool allow_pairing_ = true;
 
-  bool curtain_required_ = false;
+  DesktopEnvironmentOptions desktop_environment_options_;
   ThirdPartyAuthConfig third_party_auth_config_;
   bool security_key_auth_policy_enabled_ = false;
-  bool security_key_extension_supported_ = false;
+  bool security_key_extension_supported_ = true;
 
   // Boolean to change flow, where necessary, if we're
   // capturing a window instead of the entire desktop.
@@ -410,6 +423,8 @@ class HostProcess : public ConfigWatcher::Delegate,
   scoped_refptr<HostProcess> self_;
 
 #if defined(REMOTING_MULTI_PROCESS)
+  std::unique_ptr<mojo::edk::ScopedIPCSupport> ipc_support_;
+
   // Accessed on the UI thread.
   std::unique_ptr<IPC::ChannelProxy> daemon_channel_;
 
@@ -431,9 +446,14 @@ HostProcess::HostProcess(std::unique_ptr<ChromotingHostContext> context,
                          int* exit_code_out,
                          ShutdownWatchdog* shutdown_watchdog)
     : context_(std::move(context)),
+      desktop_environment_options_(DesktopEnvironmentOptions::CreateDefault()),
       self_(this),
       exit_code_out_(exit_code_out),
       shutdown_watchdog_(shutdown_watchdog) {
+  // TODO(zijiehe):
+  // desktop_environment_options_.desktop_capture_options()
+  //     ->set_use_update_notifications(true);
+  // And remove the same line from me2me_desktop_environment.cc.
   StartOnUiThread();
 }
 
@@ -454,35 +474,22 @@ HostProcess::~HostProcess() {
 
 bool HostProcess::InitWithCommandLine(const base::CommandLine* cmd_line) {
 #if defined(REMOTING_MULTI_PROCESS)
-  // Parse the handle value and convert it to a handle/file descriptor.
-  std::string channel_name =
-      cmd_line->GetSwitchValueASCII(kDaemonPipeSwitchName);
-
-  int pipe_handle = 0;
-  if (channel_name.empty() ||
-      !base::StringToInt(channel_name, &pipe_handle)) {
-    LOG(ERROR) << "Invalid '" << kDaemonPipeSwitchName
-               << "' value: " << channel_name;
-    return false;
-  }
-
-#if defined(OS_WIN)
-  base::win::ScopedHandle pipe(reinterpret_cast<HANDLE>(pipe_handle));
-  IPC::ChannelHandle channel_handle(pipe.Get());
-#elif defined(OS_POSIX)
-  base::FileDescriptor pipe(pipe_handle, true);
-  IPC::ChannelHandle channel_handle(channel_name, pipe);
-#endif  // defined(OS_POSIX)
+  // Mojo keeps the task runner passed to it alive forever, so an
+  // AutoThreadTaskRunner should not be passed to it. Otherwise, the process may
+  // never shut down cleanly.
+  ipc_support_ = base::MakeUnique<mojo::edk::ScopedIPCSupport>(
+      context_->network_task_runner()->task_runner(),
+      mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST);
+  mojo::edk::SetParentPipeHandle(
+      mojo::edk::PlatformChannelPair::PassClientHandleFromParentProcess(
+          *cmd_line));
 
   // Connect to the daemon process.
-  daemon_channel_.reset(
-      new IPC::ChannelProxy(this, context_->network_task_runner()));
-  IPC::AttachmentBrokerUnprivileged::CreateBrokerIfNeeded();
-  IPC::AttachmentBroker* broker = IPC::AttachmentBroker::GetGlobal();
-  if (broker && !broker->IsPrivilegedBroker())
-    broker->RegisterBrokerCommunicationChannel(daemon_channel_.get());
-  daemon_channel_->Init(channel_handle, IPC::Channel::MODE_CLIENT,
-                        /*create_pipe_now=*/true);
+  daemon_channel_ = IPC::ChannelProxy::Create(
+      mojo::edk::CreateChildMessagePipe(
+          cmd_line->GetSwitchValueASCII(kMojoPipeToken))
+          .release(),
+      IPC::Channel::MODE_CLIENT, this, context_->network_task_runner());
 
 #else  // !defined(REMOTING_MULTI_PROCESS)
   if (cmd_line->HasSwitch(kHostConfigSwitchName)) {
@@ -815,19 +822,19 @@ void HostProcess::StartOnUiThread() {
     remoting::AudioCapturerLinux::InitializePipeReader(
         context_->audio_task_runner(), audio_pipe_name);
   }
+#endif  // defined(OS_LINUX)
 
+#if defined(OS_POSIX)
   base::FilePath security_key_socket_name =
       base::CommandLine::ForCurrentProcess()->GetSwitchValuePath(
           kAuthSocknameSwitchName);
   if (!security_key_socket_name.empty()) {
     remoting::SecurityKeyAuthHandler::SetSecurityKeySocketName(
         security_key_socket_name);
-    security_key_extension_supported_ = true;
+  } else {
+    security_key_extension_supported_ = false;
   }
-#elif defined(OS_WIN)
-  // TODO(joedow): Remove the conditional once this is supported on OSX.
-  security_key_extension_supported_ = true;
-#endif  // defined(OS_WIN)
+#endif  // defined(OS_POSIX)
 
   // Create a desktop environment factory appropriate to the build type &
   // platform.
@@ -849,8 +856,6 @@ void HostProcess::StartOnUiThread() {
         context_->input_task_runner(), context_->ui_task_runner());
   }
 #endif  // !defined(REMOTING_MULTI_PROCESS)
-  desktop_environment_factory->set_supports_touch_events(
-      InputInjector::SupportsTouchEvents());
 
   desktop_environment_factory_.reset(desktop_environment_factory);
 
@@ -867,10 +872,6 @@ void HostProcess::ShutdownOnUiThread() {
   policy_watcher_.reset();
 
 #if defined(REMOTING_MULTI_PROCESS)
-  IPC::AttachmentBroker* broker = IPC::AttachmentBroker::GetGlobal();
-  if (broker && !broker->IsPrivilegedBroker()) {
-    broker->DeregisterBrokerCommunicationChannel(daemon_channel_.get());
-  }
   daemon_channel_.reset();
 #endif  // defined(REMOTING_MULTI_PROCESS)
 
@@ -1147,7 +1148,7 @@ void HostProcess::ApplyUsernamePolicy() {
     // for each connection, removing the need for an explicit user-name matching
     // check.
 #if defined(OS_WIN) && defined(REMOTING_RDP_SESSION)
-    if (curtain_required_)
+    if (desktop_environment_options_.enable_curtaining())
       return;
 #endif  // defined(OS_WIN) && defined(REMOTING_RDP_SESSION)
 
@@ -1231,13 +1232,15 @@ bool HostProcess::OnCurtainPolicyUpdate(base::DictionaryValue* policies) {
   // Returns true if the host has to be restarted after this policy update.
   DCHECK(context_->network_task_runner()->BelongsToCurrentThread());
 
+  bool curtain_required;
   if (!policies->GetBoolean(policy::key::kRemoteAccessHostRequireCurtain,
-                            &curtain_required_)) {
+                            &curtain_required)) {
     return false;
   }
+  desktop_environment_options_.set_enable_curtaining(curtain_required);
 
 #if defined(OS_MACOSX)
-  if (curtain_required_) {
+  if (curtain_required) {
     // When curtain mode is in effect on Mac, the host process runs in the
     // user's switched-out session, but launchd will also run an instance at
     // the console login screen.  Even if no user is currently logged-on, we
@@ -1248,7 +1251,7 @@ bool HostProcess::OnCurtainPolicyUpdate(base::DictionaryValue* policies) {
     // TODO(jamiewalch): Fix this once we have implemented the multi-process
     // daemon architecture (crbug.com/134894)
     if (getuid() == 0) {
-      LOG(ERROR) << "Running the host in the console login session is yet not "
+      LOG(ERROR) << "Running the host in the console login session is not yet "
                     "supported.";
       ShutdownHost(kLoginScreenNotSupportedExitCode);
       return false;
@@ -1256,15 +1259,13 @@ bool HostProcess::OnCurtainPolicyUpdate(base::DictionaryValue* policies) {
   }
 #endif
 
-  if (curtain_required_) {
+  if (curtain_required) {
     HOST_LOG << "Policy requires curtain-mode.";
   } else {
     HOST_LOG << "Policy does not require curtain-mode.";
   }
 
-  if (host_)
-    host_->SetEnableCurtaining(curtain_required_);
-  return false;
+  return true;
 }
 
 bool HostProcess::OnHostTalkGadgetPrefixPolicyUpdate(
@@ -1354,10 +1355,10 @@ void HostProcess::InitializeSignaling() {
   std::unique_ptr<DnsBlackholeChecker> dns_blackhole_checker(
       new DnsBlackholeChecker(context_->url_request_context_getter(),
                               talkgadget_prefix_));
-  std::unique_ptr<OAuthTokenGetter::OAuthCredentials> oauth_credentials(
-      new OAuthTokenGetter::OAuthCredentials(xmpp_server_config_.username,
-                                             oauth_refresh_token_,
-                                             use_service_account_));
+  std::unique_ptr<OAuthTokenGetter::OAuthAuthorizationCredentials>
+      oauth_credentials(new OAuthTokenGetter::OAuthAuthorizationCredentials(
+          xmpp_server_config_.username, oauth_refresh_token_,
+          use_service_account_));
   oauth_token_getter_.reset(
       new OAuthTokenGetterImpl(std::move(oauth_credentials),
                                context_->url_request_context_getter(), false));
@@ -1436,9 +1437,9 @@ void HostProcess::StartHost() {
   scoped_refptr<protocol::TransportContext> transport_context =
       new protocol::TransportContext(
           signal_strategy_.get(),
-          base::WrapUnique(new protocol::ChromiumPortAllocatorFactory()),
-          base::WrapUnique(new ChromiumUrlRequestFactory(
-              context_->url_request_context_getter())),
+          base::MakeUnique<protocol::ChromiumPortAllocatorFactory>(),
+          base::MakeUnique<ChromiumUrlRequestFactory>(
+              context_->url_request_context_getter()),
           network_settings, protocol::TransportRole::SERVER);
   transport_context->set_ice_config_url(
       ServiceUrls::GetInstance()->ice_config_url());
@@ -1458,11 +1459,12 @@ void HostProcess::StartHost() {
   host_.reset(new ChromotingHost(desktop_environment_factory_.get(),
                                  std::move(session_manager), transport_context,
                                  context_->audio_task_runner(),
-                                 context_->video_encode_task_runner()));
+                                 context_->video_encode_task_runner(),
+                                 desktop_environment_options_));
 
   if (security_key_auth_policy_enabled_ && security_key_extension_supported_) {
-    host_->AddExtension(base::WrapUnique(
-        new SecurityKeyExtension(context_->file_task_runner())));
+    host_->AddExtension(
+        base::MakeUnique<SecurityKeyExtension>(context_->file_task_runner()));
   }
 
   // TODO(simonmorris): Get the maximum session duration from a policy.
@@ -1491,7 +1493,6 @@ void HostProcess::StartHost() {
       HostEventLogger::Create(host_->AsWeakPtr(), kApplicationName);
 #endif  // !defined(REMOTING_MULTI_PROCESS)
 
-  host_->SetEnableCurtaining(curtain_required_);
   host_->Start(host_owner_email_);
 
   CreateAuthenticatorFactory();
@@ -1641,9 +1642,7 @@ int HostProcessMain() {
   base::GetLinuxDistro();
 #endif
 
-  // Enable support for SSL server sockets, which must be done while still
-  // single-threaded.
-  net::EnableSSLServerSockets();
+  base::TaskScheduler::CreateAndSetSimpleTaskScheduler("Me2Me");
 
   // Create the main message loop and start helper threads.
   base::MessageLoopForUI message_loop;
@@ -1667,7 +1666,10 @@ int HostProcessMain() {
   new HostProcess(std::move(context), &exit_code, &shutdown_watchdog);
 
   // Run the main (also UI) message loop until the host no longer needs it.
-  message_loop.Run();
+  base::RunLoop().Run();
+
+  // Block until tasks blocking shutdown have completed their execution.
+  base::TaskScheduler::GetInstance()->Shutdown();
 
   return exit_code;
 }

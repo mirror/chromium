@@ -14,6 +14,7 @@
 #include "content/public/browser/native_web_keyboard_event.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_navigation_observer.h"
+#include "ui/events/base_event_utils.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 
 using content::WebContents;
@@ -46,8 +47,10 @@ void FullscreenControllerTest::LostMouseLock() {
 }
 
 bool FullscreenControllerTest::SendEscapeToFullscreenController() {
-  content::NativeWebKeyboardEvent event;
-  event.windowsKeyCode = ui::VKEY_ESCAPE;
+  content::NativeWebKeyboardEvent event(
+      blink::WebInputEvent::kKeyDown, blink::WebInputEvent::kNoModifiers,
+      blink::WebInputEvent::kTimeStampForTesting);
+  event.windows_key_code = ui::VKEY_ESCAPE;
   return GetExclusiveAccessManager()->HandleUserKeyPress(event);
 }
 
@@ -71,14 +74,14 @@ bool FullscreenControllerTest::IsFullscreenBubbleDisplayed() {
 void FullscreenControllerTest::GoBack() {
   content::TestNavigationObserver observer(
       browser()->tab_strip_model()->GetActiveWebContents(), 1);
-  chrome::GoBack(browser(), CURRENT_TAB);
+  chrome::GoBack(browser(), WindowOpenDisposition::CURRENT_TAB);
   observer.Wait();
 }
 
 void FullscreenControllerTest::Reload() {
   content::TestNavigationObserver observer(
       browser()->tab_strip_model()->GetActiveWebContents(), 1);
-  chrome::Reload(browser(), CURRENT_TAB);
+  chrome::Reload(browser(), WindowOpenDisposition::CURRENT_TAB);
   observer.Wait();
 }
 

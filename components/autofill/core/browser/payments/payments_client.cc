@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <utility>
+#include <vector>
 
 #include "base/command_line.h"
 #include "base/json/json_reader.h"
@@ -27,6 +28,7 @@
 #include "net/base/escape.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_status_code.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_context_getter.h"
 
@@ -110,14 +112,21 @@ void AppendStringIfNotEmpty(const AutofillProfile& profile,
     list->AppendString(value);
 }
 
+// Returns a dictionary with the structure expected by Payments RPCs, containing
+// each of the fields in |profile|, formatted according to |app_locale|. If
+// |include_non_location_data| is false, the name and phone number in |profile|
+// are not included.
 std::unique_ptr<base::DictionaryValue> BuildAddressDictionary(
     const AutofillProfile& profile,
-    const std::string& app_locale) {
+    const std::string& app_locale,
+    bool include_non_location_data) {
   std::unique_ptr<base::DictionaryValue> postal_address(
       new base::DictionaryValue());
 
-  SetStringIfNotEmpty(profile, NAME_FULL, app_locale, "recipient_name",
-                      postal_address.get());
+  if (include_non_location_data) {
+    SetStringIfNotEmpty(profile, NAME_FULL, app_locale,
+                        PaymentsClient::kRecipientName, postal_address.get());
+  }
 
   std::unique_ptr<base::ListValue> address_lines(new base::ListValue());
   AppendStringIfNotEmpty(profile, ADDRESS_HOME_LINE1, app_locale,
@@ -143,8 +152,11 @@ std::unique_ptr<base::DictionaryValue> BuildAddressDictionary(
 
   std::unique_ptr<base::DictionaryValue> address(new base::DictionaryValue());
   address->Set("postal_address", std::move(postal_address));
-  SetStringIfNotEmpty(profile, PHONE_HOME_WHOLE_NUMBER, app_locale,
-                      "phone_number", address.get());
+
+  if (include_non_location_data) {
+    SetStringIfNotEmpty(profile, PHONE_HOME_WHOLE_NUMBER, app_locale,
+                        PaymentsClient::kPhoneNumber, address.get());
+  }
 
   return address;
 }
@@ -171,7 +183,7 @@ class UnmaskCardRequest : public PaymentsRequest {
     request_dict.SetString("credit_card_id", request_details_.card.server_id());
     request_dict.Set("risk_data_encoded",
                      BuildRiskDictionary(request_details_.risk_data));
-    request_dict.Set("context", base::WrapUnique(new base::DictionaryValue()));
+    request_dict.Set("context", base::MakeUnique<base::DictionaryValue>());
 
     int value = 0;
     if (base::StringToInt(request_details_.user_response.exp_month, &value))
@@ -209,8 +221,9 @@ class UnmaskCardRequest : public PaymentsRequest {
 
 class GetUploadDetailsRequest : public PaymentsRequest {
  public:
-  GetUploadDetailsRequest(const std::string& app_locale)
-      : app_locale_(app_locale) {}
+  GetUploadDetailsRequest(const std::vector<AutofillProfile>& addresses,
+                          const std::string& app_locale)
+      : addresses_(addresses), app_locale_(app_locale) {}
   ~GetUploadDetailsRequest() override {}
 
   std::string GetRequestUrlPath() override {
@@ -224,6 +237,18 @@ class GetUploadDetailsRequest : public PaymentsRequest {
     std::unique_ptr<base::DictionaryValue> context(new base::DictionaryValue());
     context->SetString("language_code", app_locale_);
     request_dict.Set("context", std::move(context));
+
+    std::unique_ptr<base::ListValue> addresses(new base::ListValue());
+    for (const AutofillProfile& profile : addresses_) {
+      // These addresses are used by Payments to (1) accurately determine the
+      // user's country in order to show the correct legal documents and (2) to
+      // verify that the addresses are valid for their purposes so that we don't
+      // offer save in a case where it would definitely fail (e.g. P.O. boxes).
+      // The final parameter directs BuildAddressDictionary to omit names and
+      // phone numbers, which aren't useful for these purposes.
+      addresses->Append(BuildAddressDictionary(profile, app_locale_, false));
+    }
+    request_dict.Set("address", std::move(addresses));
 
     std::string request_content;
     base::JSONWriter::Write(request_dict, &request_content);
@@ -249,6 +274,7 @@ class GetUploadDetailsRequest : public PaymentsRequest {
   }
 
  private:
+  std::vector<AutofillProfile> addresses_;
   std::string app_locale_;
   base::string16 context_token_;
   std::unique_ptr<base::DictionaryValue> legal_message_;
@@ -283,7 +309,7 @@ class UploadCardRequest : public PaymentsRequest {
 
     std::unique_ptr<base::ListValue> addresses(new base::ListValue());
     for (const AutofillProfile& profile : request_details_.profiles) {
-      addresses->Append(BuildAddressDictionary(profile, app_locale));
+      addresses->Append(BuildAddressDictionary(profile, app_locale, true));
     }
     request_dict.Set("address", std::move(addresses));
 
@@ -330,6 +356,9 @@ class UploadCardRequest : public PaymentsRequest {
 
 }  // namespace
 
+const char PaymentsClient::kRecipientName[] = "recipient_name";
+const char PaymentsClient::kPhoneNumber[] = "phone_number";
+
 PaymentsClient::UnmaskRequestDetails::UnmaskRequestDetails() {}
 PaymentsClient::UnmaskRequestDetails::~UnmaskRequestDetails() {}
 
@@ -357,17 +386,19 @@ void PaymentsClient::Prepare() {
 
 void PaymentsClient::UnmaskCard(
     const PaymentsClient::UnmaskRequestDetails& request_details) {
-  IssueRequest(base::WrapUnique(new UnmaskCardRequest(request_details)), true);
+  IssueRequest(base::MakeUnique<UnmaskCardRequest>(request_details), true);
 }
 
-void PaymentsClient::GetUploadDetails(const std::string& app_locale) {
-  IssueRequest(base::WrapUnique(new GetUploadDetailsRequest(app_locale)),
+void PaymentsClient::GetUploadDetails(
+    const std::vector<AutofillProfile>& addresses,
+    const std::string& app_locale) {
+  IssueRequest(base::MakeUnique<GetUploadDetailsRequest>(addresses, app_locale),
                false);
 }
 
 void PaymentsClient::UploadCard(
     const PaymentsClient::UploadRequestDetails& request_details) {
-  IssueRequest(base::WrapUnique(new UploadCardRequest(request_details)), true);
+  IssueRequest(base::MakeUnique<UploadCardRequest>(request_details), true);
 }
 
 void PaymentsClient::IssueRequest(std::unique_ptr<PaymentsRequest> request,
@@ -385,9 +416,44 @@ void PaymentsClient::IssueRequest(std::unique_ptr<PaymentsRequest> request,
 }
 
 void PaymentsClient::InitializeUrlFetcher() {
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("payments_sync_cards", R"(
+        semantics {
+          sender: "Payments"
+          description:
+            "This service communicates with Google Payments servers to upload "
+            "(save) or receive the user's credit card info."
+          trigger:
+            "Requests are triggered by a user action, such as selecting a "
+            "masked server card from Chromium's credit card autofill dropdown, "
+            "submitting a form which has credit card information, or accepting "
+            "the prompt to save a credit card to Payments servers."
+          data:
+            "In case of save, a protocol buffer containing relevant address "
+            "and credit card information which should be saved in Google "
+            "Payments servers, along with user credentials. In case of load, a "
+            "protocol buffer containing the id of the credit card to unmask, "
+            "an encrypted cvc value, an optional updated card expiration date, "
+            "and user credentials."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: false
+          setting:
+            "Users can enable or disable this feature in Chromium settings by "
+            "toggling 'Credit cards and addresses using Google Payments', "
+            "under 'Advanced sync settings...'. This feature is enabled by "
+            "default."
+          chrome_policy {
+            AutoFillEnabled {
+              policy_options {mode: MANDATORY}
+              AutoFillEnabled: false
+            }
+          }
+        })");
   url_fetcher_ =
       net::URLFetcher::Create(0, GetRequestUrl(request_->GetRequestUrlPath()),
-                              net::URLFetcher::POST, this);
+                              net::URLFetcher::POST, this, traffic_annotation);
 
   data_use_measurement::DataUseUserData::AttachToFetcher(
       url_fetcher_.get(), data_use_measurement::DataUseUserData::AUTOFILL);
@@ -428,7 +494,7 @@ void PaymentsClient::OnURLFetchComplete(const net::URLFetcher* source) {
       std::string error_code;
       std::unique_ptr<base::Value> message_value = base::JSONReader::Read(data);
       if (message_value.get() &&
-          message_value->IsType(base::Value::TYPE_DICTIONARY)) {
+          message_value->IsType(base::Value::Type::DICTIONARY)) {
         response_dict.reset(
             static_cast<base::DictionaryValue*>(message_value.release()));
         response_dict->GetString("error.code", &error_code);

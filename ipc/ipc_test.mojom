@@ -5,6 +5,35 @@
 module IPC.mojom;
 
 interface SimpleTestDriver {
-  ExpectString(string str);
+  ExpectValue(int32 value);
+
+  [Sync]
+  GetExpectedValue() => (int32 value);
+
+  [Sync]
+  RequestValue() => (int32 value);
+
   RequestQuit() => ();
+};
+
+interface SimpleTestClient {
+  [Sync]
+  RequestValue() => (int32 value);
+};
+
+interface PingReceiver {
+  Ping() => ();
+};
+
+interface IndirectTestDriver {
+  GetPingReceiver(associated PingReceiver& request);
+};
+
+interface Reflector {
+  Ping(string value) => (string value);
+  Quit();
+};
+
+interface AssociatedInterfaceVendor {
+  GetTestInterface(associated SimpleTestDriver& interface_reqest);
 };

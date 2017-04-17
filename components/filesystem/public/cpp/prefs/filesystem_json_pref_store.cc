@@ -23,7 +23,6 @@
 #include "base/time/default_clock.h"
 #include "base/values.h"
 #include "components/prefs/pref_filter.h"
-#include "mojo/common/common_type_converters.h"
 
 namespace filesystem {
 
@@ -48,7 +47,7 @@ FilesystemJsonPrefStore::ReadResult::~ReadResult() {}
 namespace {
 
 PersistentPrefStore::PrefReadError HandleReadErrors(const base::Value* value) {
-  if (!value->IsType(base::Value::TYPE_DICTIONARY))
+  if (!value->IsType(base::Value::Type::DICTIONARY))
     return PersistentPrefStore::PREF_READ_ERROR_JSON_TYPE;
   return PersistentPrefStore::PREF_READ_ERROR_NONE;
 }
@@ -83,6 +82,11 @@ bool FilesystemJsonPrefStore::GetValue(const std::string& key,
   if (result)
     *result = tmp;
   return true;
+}
+
+std::unique_ptr<base::DictionaryValue> FilesystemJsonPrefStore::GetValues()
+    const {
+  return prefs_->CreateDeepCopy();
 }
 
 void FilesystemJsonPrefStore::AddObserver(PrefStore::Observer* observer) {
@@ -229,7 +233,8 @@ void FilesystemJsonPrefStore::ReportValueChanged(const std::string& key,
   if (pref_filter_)
     pref_filter_->FilterUpdate(key);
 
-  FOR_EACH_OBSERVER(PrefStore::Observer, observers_, OnPrefValueChanged(key));
+  for (PrefStore::Observer& observer : observers_)
+    observer.OnPrefValueChanged(key);
 
   ScheduleWrite(flags);
 }
@@ -308,10 +313,8 @@ void FilesystemJsonPrefStore::FinalizeFileRead(
   if (error_delegate_ && read_error_ != PREF_READ_ERROR_NONE)
     error_delegate_->OnError(read_error_);
 
-  FOR_EACH_OBSERVER(PrefStore::Observer, observers_,
-                    OnInitializationCompleted(true));
-
-  return;
+  for (PrefStore::Observer& observer : observers_)
+    observer.OnInitializationCompleted(true);
 }
 
 void FilesystemJsonPrefStore::ScheduleWrite(uint32_t flags) {
@@ -335,10 +338,10 @@ void FilesystemJsonPrefStore::PerformWrite() {
 
 void FilesystemJsonPrefStore::OpenFilesystem(base::Closure callback) {
   filesystem::mojom::FileSystemClientPtr client;
-  binding_.Bind(GetProxy(&client));
+  binding_.Bind(MakeRequest(&client));
 
   filesystem_->OpenFileSystem(
-      "origin", GetProxy(&directory_), std::move(client),
+      "origin", MakeRequest(&directory_), std::move(client),
       base::Bind(&FilesystemJsonPrefStore::OnOpenFilesystem, AsWeakPtr(),
                  callback));
 }
@@ -367,8 +370,7 @@ void FilesystemJsonPrefStore::OnTempFileWriteStart() {
   serializer.Serialize(*prefs_);
 
   directory_->WriteFile(
-      "tmp",
-      mojo::Array<uint8_t>::From(output),
+      "tmp", std::vector<uint8_t>(output.begin(), output.end()),
       Bind(&FilesystemJsonPrefStore::OnTempFileWrite, AsWeakPtr()));
 }
 
@@ -392,7 +394,7 @@ void FilesystemJsonPrefStore::OnPreferencesReadStart() {
 
 void FilesystemJsonPrefStore::OnPreferencesFileRead(
     mojom::FileError err,
-    mojo::Array<uint8_t> contents) {
+    const std::vector<uint8_t>& contents) {
   std::unique_ptr<FilesystemJsonPrefStore::ReadResult> read_result(
       new FilesystemJsonPrefStore::ReadResult);
   // TODO(erg): Needs even better error handling.

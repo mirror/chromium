@@ -33,49 +33,43 @@
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "modules/quota/DeprecatedStorageInfo.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
 DOMWindowQuota::DOMWindowQuota(LocalDOMWindow& window)
-    : DOMWindowProperty(window.frame())
-{
-}
+    : Supplement<LocalDOMWindow>(window) {}
 
-const char* DOMWindowQuota::supplementName()
-{
-    return "DOMWindowQuota";
+const char* DOMWindowQuota::SupplementName() {
+  return "DOMWindowQuota";
 }
 
 // static
-DOMWindowQuota& DOMWindowQuota::from(LocalDOMWindow& window)
-{
-    DOMWindowQuota* supplement = static_cast<DOMWindowQuota*>(Supplement<LocalDOMWindow>::from(window, supplementName()));
-    if (!supplement) {
-        supplement = new DOMWindowQuota(window);
-        provideTo(window, supplementName(), supplement);
-    }
-    return *supplement;
+DOMWindowQuota& DOMWindowQuota::From(LocalDOMWindow& window) {
+  DOMWindowQuota* supplement = static_cast<DOMWindowQuota*>(
+      Supplement<LocalDOMWindow>::From(window, SupplementName()));
+  if (!supplement) {
+    supplement = new DOMWindowQuota(window);
+    ProvideTo(window, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
 // static
-DeprecatedStorageInfo* DOMWindowQuota::webkitStorageInfo(DOMWindow& window)
-{
-    return DOMWindowQuota::from(toLocalDOMWindow(window)).webkitStorageInfo();
+DeprecatedStorageInfo* DOMWindowQuota::webkitStorageInfo(
+    LocalDOMWindow& window) {
+  return DOMWindowQuota::From(window).webkitStorageInfo();
 }
 
-DeprecatedStorageInfo* DOMWindowQuota::webkitStorageInfo() const
-{
-    if (!m_storageInfo && frame())
-        m_storageInfo = DeprecatedStorageInfo::create();
-    return m_storageInfo.get();
+DeprecatedStorageInfo* DOMWindowQuota::webkitStorageInfo() const {
+  if (!storage_info_)
+    storage_info_ = DeprecatedStorageInfo::Create();
+  return storage_info_.Get();
 }
 
-DEFINE_TRACE(DOMWindowQuota)
-{
-    visitor->trace(m_storageInfo);
-    Supplement<LocalDOMWindow>::trace(visitor);
-    DOMWindowProperty::trace(visitor);
+DEFINE_TRACE(DOMWindowQuota) {
+  visitor->Trace(storage_info_);
+  Supplement<LocalDOMWindow>::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

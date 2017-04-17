@@ -17,7 +17,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/path_service.h"
-#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/test_timeouts.h"
 #include "base/time/time.h"
@@ -42,6 +41,7 @@
 #include "chrome/test/base/find_in_page_observer.h"
 #include "components/app_modal/app_modal_dialog.h"
 #include "components/app_modal/app_modal_dialog_queue.h"
+#include "components/app_modal/javascript_app_modal_dialog.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/history/core/browser/history_service_observer.h"
 #include "components/omnibox/browser/autocomplete_controller.h"
@@ -52,6 +52,7 @@
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
@@ -97,18 +98,15 @@ Browser* WaitForBrowserNotInSet(std::set<Browser*> excluded_browsers) {
     BrowserAddedObserver observer;
     new_browser = observer.WaitForSingleNewBrowser();
     // The new browser should never be in |excluded_browsers|.
-    DCHECK(!ContainsKey(excluded_browsers, new_browser));
+    DCHECK(!base::ContainsKey(excluded_browsers, new_browser));
   }
   return new_browser;
 }
 
 class AppModalDialogWaiter : public app_modal::AppModalDialogObserver {
  public:
-  AppModalDialogWaiter()
-      : dialog_(NULL) {
-  }
-  ~AppModalDialogWaiter() override {
-  }
+  AppModalDialogWaiter() : dialog_(nullptr) {}
+  ~AppModalDialogWaiter() override {}
 
   app_modal::AppModalDialog* Wait() {
     if (dialog_)
@@ -119,12 +117,40 @@ class AppModalDialogWaiter : public app_modal::AppModalDialogObserver {
     return dialog_;
   }
 
-  // AppModalDialogWaiter:
+  // AppModalDialogObserver:
   void Notify(app_modal::AppModalDialog* dialog) override {
     DCHECK(!dialog_);
     dialog_ = dialog;
+    CheckForHangMonitorDisabling(dialog);
     if (message_loop_runner_.get() && message_loop_runner_->loop_running())
       message_loop_runner_->Quit();
+  }
+
+  static void CheckForHangMonitorDisabling(app_modal::AppModalDialog* dialog) {
+    // If a test waits for a beforeunload dialog but hasn't disabled the
+    // beforeunload hang timer before triggering it, there will be a race
+    // between the dialog and the timer and the test will be flaky. We can't
+    // disable the timer here, as it's too late, but we can tell when we've won
+    // a race that we shouldn't have been in.
+    if (!dialog->IsJavaScriptModalDialog())
+      return;
+
+    auto* js_dialog = static_cast<app_modal::JavaScriptAppModalDialog*>(dialog);
+    if (!js_dialog->is_before_unload_dialog())
+      return;
+
+    // Unfortunately we don't know which frame spawned this dialog and should
+    // have the hang monitor disabled, so we cheat a bit and search for *a*
+    // frame with the hang monitor disabled. The failure case that's worrisome
+    // is someone who doesn't know the requirement to disable the hang monitor,
+    // and this will catch that case.
+    auto* contents = dialog->web_contents();
+    for (auto* frame : contents->GetAllFrames())
+      if (frame->IsBeforeUnloadHangMonitorDisabledForTesting())
+        return;
+
+    FAIL() << "If waiting for a beforeunload dialog, the beforeunload timer "
+              "must be disabled on the spawning frame to avoid flakiness.";
   }
 
  private:
@@ -166,7 +192,7 @@ void NavigateToURLWithPost(Browser* browser, const GURL& url) {
 }
 
 void NavigateToURL(Browser* browser, const GURL& url) {
-  NavigateToURLWithDisposition(browser, url, CURRENT_TAB,
+  NavigateToURLWithDisposition(browser, url, WindowOpenDisposition::CURRENT_TAB,
                                BROWSER_TEST_WAIT_FOR_NAVIGATION);
 }
 
@@ -177,11 +203,12 @@ void NavigateToURLWithDispositionBlockUntilNavigationsComplete(
     WindowOpenDisposition disposition,
     int browser_test_flags) {
   TabStripModel* tab_strip = browser->tab_strip_model();
-  if (disposition == CURRENT_TAB && tab_strip->GetActiveWebContents())
-      content::WaitForLoadStop(tab_strip->GetActiveWebContents());
+  if (disposition == WindowOpenDisposition::CURRENT_TAB &&
+      tab_strip->GetActiveWebContents())
+    content::WaitForLoadStop(tab_strip->GetActiveWebContents());
   content::TestNavigationObserver same_tab_observer(
-      tab_strip->GetActiveWebContents(),
-      number_of_navigations);
+      tab_strip->GetActiveWebContents(), number_of_navigations,
+      content::MessageLoopRunner::QuitMode::DEFERRED);
 
   std::set<Browser*> initial_browsers;
   for (auto* browser : *BrowserList::GetInstance())
@@ -202,7 +229,7 @@ void NavigateToURLWithDispositionBlockUntilNavigationsComplete(
     return;
   }
   WebContents* web_contents = NULL;
-  if (disposition == NEW_BACKGROUND_TAB) {
+  if (disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB) {
     // We've opened up a new tab, but not selected it.
     TabStripModel* tab_strip = browser->tab_strip_model();
     web_contents = tab_strip->GetWebContentsAt(tab_strip->active_index() + 1);
@@ -211,18 +238,19 @@ void NavigateToURLWithDispositionBlockUntilNavigationsComplete(
         << "\" because the new tab is not available yet";
     if (!web_contents)
       return;
-  } else if ((disposition == CURRENT_TAB) ||
-      (disposition == NEW_FOREGROUND_TAB) ||
-      (disposition == SINGLETON_TAB)) {
+  } else if ((disposition == WindowOpenDisposition::CURRENT_TAB) ||
+             (disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB) ||
+             (disposition == WindowOpenDisposition::SINGLETON_TAB)) {
     // The currently selected tab is the right one.
     web_contents = browser->tab_strip_model()->GetActiveWebContents();
   }
-  if (disposition == CURRENT_TAB) {
+  if (disposition == WindowOpenDisposition::CURRENT_TAB) {
     same_tab_observer.Wait();
     return;
   } else if (web_contents) {
-    content::TestNavigationObserver observer(web_contents,
-                                             number_of_navigations);
+    content::TestNavigationObserver observer(
+        web_contents, number_of_navigations,
+        content::MessageLoopRunner::QuitMode::DEFERRED);
     observer.Wait();
     return;
   }
@@ -247,10 +275,7 @@ void NavigateToURLBlockUntilNavigationsComplete(Browser* browser,
                                                 const GURL& url,
                                                 int number_of_navigations) {
   NavigateToURLWithDispositionBlockUntilNavigationsComplete(
-      browser,
-      url,
-      number_of_navigations,
-      CURRENT_TAB,
+      browser, url, number_of_navigations, WindowOpenDisposition::CURRENT_TAB,
       BROWSER_TEST_WAIT_FOR_NAVIGATION);
 }
 
@@ -311,8 +336,11 @@ bool GetRelativeBuildDirectory(base::FilePath* build_dir) {
 app_modal::AppModalDialog* WaitForAppModalDialog() {
   app_modal::AppModalDialogQueue* dialog_queue =
       app_modal::AppModalDialogQueue::GetInstance();
-  if (dialog_queue->HasActiveDialog())
+  if (dialog_queue->HasActiveDialog()) {
+    AppModalDialogWaiter::CheckForHangMonitorDisabling(
+        dialog_queue->active_dialog());
     return dialog_queue->active_dialog();
+  }
   AppModalDialogWaiter waiter;
   return waiter.Wait();
 }
@@ -337,8 +365,8 @@ int FindInPage(WebContents* tab,
 void DownloadURL(Browser* browser, const GURL& download_url) {
   base::ScopedTempDir downloads_directory;
   ASSERT_TRUE(downloads_directory.CreateUniqueTempDir());
-  browser->profile()->GetPrefs()->SetFilePath(
-      prefs::kDownloadDefaultDirectory, downloads_directory.path());
+  browser->profile()->GetPrefs()->SetFilePath(prefs::kDownloadDefaultDirectory,
+                                              downloads_directory.GetPath());
 
   content::DownloadManager* download_manager =
       content::BrowserContext::GetDownloadManager(browser->profile());
@@ -540,6 +568,34 @@ void WaitForHistoryToLoad(history::HistoryService* history_service) {
     scoped_observer.Add(history_service);
     runner->Run();
   }
+}
+
+BrowserActivationWaiter::BrowserActivationWaiter(const Browser* browser)
+    : browser_(browser), observed_(false) {
+  if (chrome::FindLastActive() == browser_) {
+    observed_ = true;
+    return;
+  }
+  BrowserList::AddObserver(this);
+}
+
+BrowserActivationWaiter::~BrowserActivationWaiter() {}
+
+void BrowserActivationWaiter::WaitForActivation() {
+  if (observed_)
+    return;
+  message_loop_runner_ = new content::MessageLoopRunner;
+  message_loop_runner_->Run();
+}
+
+void BrowserActivationWaiter::OnBrowserSetLastActive(Browser* browser) {
+  if (browser != browser_)
+    return;
+
+  observed_ = true;
+  BrowserList::RemoveObserver(this);
+  if (message_loop_runner_.get() && message_loop_runner_->loop_running())
+    message_loop_runner_->Quit();
 }
 
 }  // namespace ui_test_utils

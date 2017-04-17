@@ -19,6 +19,14 @@
 
 namespace net {
 
+namespace {
+
+const size_t kHeaderSize = sizeof(dns_protocol::Header);
+
+const uint8_t kRcodeMask = 0xf;
+
+}  // namespace
+
 DnsResourceRecord::DnsResourceRecord() {
 }
 
@@ -179,30 +187,25 @@ bool DnsResponse::InitParse(int nbytes, const DnsQuery& query) {
     return false;
 
   // Match the question section.
-  const size_t hdr_size = sizeof(dns_protocol::Header);
   const base::StringPiece question = query.question();
-  if (question != base::StringPiece(io_buffer_->data() + hdr_size,
-                                    question.size())) {
+  if (question !=
+      base::StringPiece(io_buffer_->data() + kHeaderSize, question.size())) {
     return false;
   }
 
   // Construct the parser.
-  parser_ = DnsRecordParser(io_buffer_->data(),
-                            nbytes,
-                            hdr_size + question.size());
+  parser_ = DnsRecordParser(io_buffer_->data(), nbytes,
+                            kHeaderSize + question.size());
   return true;
 }
 
 bool DnsResponse::InitParseWithoutQuery(int nbytes) {
   DCHECK_GE(nbytes, 0);
 
-  size_t hdr_size = sizeof(dns_protocol::Header);
-
-  if (nbytes < static_cast<int>(hdr_size) || nbytes >= io_buffer_->size())
+  if (nbytes < static_cast<int>(kHeaderSize) || nbytes >= io_buffer_->size())
     return false;
 
-  parser_ = DnsRecordParser(
-      io_buffer_->data(), nbytes, hdr_size);
+  parser_ = DnsRecordParser(io_buffer_->data(), nbytes, kHeaderSize);
 
   unsigned qdcount = base::NetToHost16(header()->qdcount);
   for (unsigned i = 0; i < qdcount; ++i) {
@@ -221,12 +224,12 @@ bool DnsResponse::IsValid() const {
 
 uint16_t DnsResponse::flags() const {
   DCHECK(parser_.IsValid());
-  return base::NetToHost16(header()->flags) & ~(dns_protocol::kRcodeMask);
+  return base::NetToHost16(header()->flags) & ~(kRcodeMask);
 }
 
 uint8_t DnsResponse::rcode() const {
   DCHECK(parser_.IsValid());
-  return base::NetToHost16(header()->flags) & dns_protocol::kRcodeMask;
+  return base::NetToHost16(header()->flags) & kRcodeMask;
 }
 
 unsigned DnsResponse::answer_count() const {
@@ -244,10 +247,9 @@ base::StringPiece DnsResponse::qname() const {
   // The response is HEADER QNAME QTYPE QCLASS ANSWER.
   // |parser_| is positioned at the beginning of ANSWER, so the end of QNAME is
   // two uint16_ts before it.
-  const size_t hdr_size = sizeof(dns_protocol::Header);
   const size_t qname_size =
-      parser_.GetOffset() - 2 * sizeof(uint16_t) - hdr_size;
-  return base::StringPiece(io_buffer_->data() + hdr_size, qname_size);
+      parser_.GetOffset() - 2 * sizeof(uint16_t) - kHeaderSize;
+  return base::StringPiece(io_buffer_->data() + kHeaderSize, qname_size);
 }
 
 uint16_t DnsResponse::qtype() const {

@@ -31,35 +31,38 @@
 #ifndef WebSocketChannelClient_h
 #define WebSocketChannelClient_h
 
+#include <stdint.h>
+#include <memory>
 #include "modules/ModulesExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/Vector.h"
-#include <memory>
-#include <stdint.h>
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class MODULES_EXPORT WebSocketChannelClient : public GarbageCollectedMixin {
-public:
-    virtual ~WebSocketChannelClient() { }
-    virtual void didConnect(const String& subprotocol, const String& extensions) { }
-    virtual void didReceiveTextMessage(const String&) { }
-    virtual void didReceiveBinaryMessage(std::unique_ptr<Vector<char>>) { }
-    virtual void didError() { }
-    virtual void didConsumeBufferedAmount(uint64_t consumed) { }
-    virtual void didStartClosingHandshake() { }
-    enum ClosingHandshakeCompletionStatus {
-        ClosingHandshakeIncomplete,
-        ClosingHandshakeComplete
-    };
-    virtual void didClose(ClosingHandshakeCompletionStatus, unsigned short /* code */, const String& /* reason */) { }
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+ public:
+  virtual ~WebSocketChannelClient() {}
+  virtual void DidConnect(const String& subprotocol, const String& extensions) {
+  }
+  virtual void DidReceiveTextMessage(const String&) {}
+  virtual void DidReceiveBinaryMessage(std::unique_ptr<Vector<char>>) {}
+  virtual void DidError() {}
+  virtual void DidConsumeBufferedAmount(uint64_t consumed) {}
+  virtual void DidStartClosingHandshake() {}
+  enum ClosingHandshakeCompletionStatus {
+    kClosingHandshakeIncomplete,
+    kClosingHandshakeComplete
+  };
+  virtual void DidClose(ClosingHandshakeCompletionStatus,
+                        unsigned short /* code */,
+                        const String& /* reason */) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
-protected:
-    WebSocketChannelClient() { }
+ protected:
+  WebSocketChannelClient() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebSocketChannelClient_h
+#endif  // WebSocketChannelClient_h

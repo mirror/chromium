@@ -17,10 +17,10 @@ namespace message_center {
 MessageCenterFrameView::MessageCenterFrameView() {
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
   const int kBorderWidth = 1;
-  SetBorder(views::Border::CreateSolidBorder(
+  SetBorder(views::CreateSolidBorder(
       kBorderWidth, message_center::kMessageCenterBorderColor));
 #else
-  const int kShadowBlur = 8;
+  const int kShadowBlur = 16;
   SetBorder(std::unique_ptr<views::Border>(new views::ShadowBorder(
       gfx::ShadowValue(gfx::Vector2d(0, 0), kShadowBlur,
                        message_center::kMessageCenterShadowColor))));

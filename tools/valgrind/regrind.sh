@@ -14,7 +14,7 @@
 # TODO: extend script to handle more kinds of errors and more tests
 
 # where the valgrind layout bot results live
-LAYOUT_URL="http://build.chromium.org/p/chromium.memory.fyi/builders/Webkit%20Linux%20(valgrind%20layout)"
+LAYOUT_URL="http://build.chromium.org/p/chromium.memory.full/builders/Webkit%20Linux%20(valgrind%20layout)"
 # how many builds back to check
 LAYOUT_COUNT=250
 
@@ -42,7 +42,8 @@ layout_list_failed_tests() {
 }
 
 # Generate a list of failed tests in regrind-failed.txt by scraping bot.
-# Scrape most recent first, so if user interrupts, he is left with fresh-ish data.
+# Scrape most recent first, so if user interrupts, they are left with fresh-ish
+# data.
 scrape_layout() {
   rm -f regrind-*.tmp* regrind-failed.txt regrind-failed-map.txt
   touch regrind-failed.txt

@@ -8,16 +8,15 @@
 #import "base/mac/foundation_util.h"
 #include "chrome/app/chrome_command_ids.h"
 #import "chrome/browser/app_controller_mac.h"
+#include "chrome/browser/media/router/media_router_feature.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/bookmarks/bookmark_utils.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller_private.h"
-#include "chrome/browser/ui/toolbar/encoding_menu_controller.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/generated_resources.h"
-#include "content/public/browser/user_metrics.h"
 #include "content/public/browser/web_contents.h"
 #import "ui/base/cocoa/cocoa_base_utils.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -57,25 +56,6 @@ void UpdateToggleStateWithTag(NSInteger tag, id item, NSWindow* window) {
     SetToggleState(prefs->GetBoolean(prefs::kShowFullscreenToolbar), item);
     return;
   }
-
-  // Update the checked/unchecked state of items in the encoding menu.
-  // On Windows, this logic is part of |EncodingMenuModel| in
-  // browser/ui/views/toolbar_view.h.
-  EncodingMenuController encoding_controller;
-  if (!encoding_controller.DoesCommandBelongToEncodingMenu(tag))
-    return;
-
-  Profile* profile = browser->profile();
-  DCHECK(profile);
-  content::WebContents* current_tab =
-      browser->tab_strip_model()->GetActiveWebContents();
-  if (!current_tab)
-    return;
-
-  const std::string encoding = current_tab->GetEncoding();
-
-  SetToggleState(encoding_controller.IsItemChecked(profile, encoding, tag),
-                 item);
 }
 
 NSString* GetTitleForViewsFullscreenMenuItem(Browser* browser) {
@@ -153,15 +133,6 @@ Browser* FindBrowserForSender(id sender, NSWindow* window) {
         [menuItem setTitle:GetTitleForFullscreenMenuItem(browser)];
       break;
     }
-    case IDC_SHOW_SIGNIN: {
-      Profile* original_profile = browser->profile()->GetOriginalProfile();
-      [AppController updateSigninItem:item
-                           shouldShow:enable
-                       currentProfile:original_profile];
-      content::RecordAction(
-          base::UserMetricsAction("Signin_Impression_FromMenu"));
-      break;
-    }
     case IDC_BOOKMARK_PAGE: {
       // Extensions have the ability to hide the bookmark page menu item.
       // This only affects the bookmark page menu item under the main menu.
@@ -191,13 +162,15 @@ Browser* FindBrowserForSender(id sender, NSWindow* window) {
       [menuItem setHidden:browser->is_type_tabbed() || browser->is_devtools()];
       break;
     }
+    case IDC_ROUTE_MEDIA: {
+      // Hide this menu option if Media Router is disabled.
+      NSMenuItem* menuItem = base::mac::ObjCCast<NSMenuItem>(item);
+      [menuItem
+          setHidden:!media_router::MediaRouterEnabled(browser->profile())];
+      break;
+    }
     default:
-      // Special handling for the contents of the Text Encoding submenu. On
-      // Mac OS, instead of enabling/disabling the top-level menu item, we
-      // enable/disable the submenu's contents (per Apple's HIG).
-      EncodingMenuController encoding_controller;
-      if (encoding_controller.DoesCommandBelongToEncodingMenu(tag))
-        enable &= chrome::IsCommandEnabled(browser, IDC_ENCODING_MENU);
+      break;
   }
 
   // If the item is toggleable, find its toggle state and

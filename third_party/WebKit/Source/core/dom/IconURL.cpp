@@ -32,29 +32,26 @@
 
 namespace blink {
 
-IconURL IconURL::defaultFavicon(const KURL& documentURL)
-{
-    DCHECK(documentURL.protocolIsInHTTPFamily());
-    KURL url;
-    bool couldSetProtocol = url.setProtocol(documentURL.protocol());
-    ASSERT_UNUSED(couldSetProtocol, couldSetProtocol);
-    url.setHost(documentURL.host());
-    if (documentURL.hasPort())
-        url.setPort(documentURL.port());
-    url.setPath("/favicon.ico");
+IconURL IconURL::DefaultFavicon(const KURL& document_url) {
+  DCHECK(document_url.ProtocolIsInHTTPFamily());
+  KURL url;
+  bool could_set_protocol = url.SetProtocol(document_url.Protocol());
+  DCHECK(could_set_protocol);
+  url.SetHost(document_url.Host());
+  if (document_url.HasPort())
+    url.SetPort(document_url.Port());
+  url.SetPath("/favicon.ico");
 
-    IconURL result(url, Vector<IntSize>(), emptyString(), Favicon);
-    result.m_isDefaultIcon = true;
-    return result;
+  IconURL result(url, Vector<IntSize>(), g_empty_string, kFavicon);
+  result.is_default_icon_ = true;
+  return result;
 }
 
-bool operator==(const IconURL& lhs, const IconURL& rhs)
-{
-    return lhs.m_iconType == rhs.m_iconType
-        && lhs.m_isDefaultIcon == rhs.m_isDefaultIcon
-        && lhs.m_iconURL == rhs.m_iconURL
-        && lhs.m_sizes == rhs.m_sizes
-        && lhs.m_mimeType == rhs.m_mimeType;
+bool operator==(const IconURL& lhs, const IconURL& rhs) {
+  return lhs.icon_type_ == rhs.icon_type_ &&
+         lhs.is_default_icon_ == rhs.is_default_icon_ &&
+         lhs.icon_url_ == rhs.icon_url_ && lhs.sizes_ == rhs.sizes_ &&
+         lhs.mime_type_ == rhs.mime_type_;
 }
 
-} // namespace blink
+}  // namespace blink

@@ -15,7 +15,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/files/file_path.h"
-#include "chrome/browser/android/download/android_download_manager_overwrite_infobar_delegate.h"
+#include "chrome/browser/android/download/android_download_manager_duplicate_infobar_delegate.h"
 #include "chrome/browser/android/download/download_controller_base.h"
 #include "chrome/browser/android/tab_android.h"
 #include "chrome/browser/infobars/infobar_service.h"
@@ -27,6 +27,7 @@
 #include "ui/base/l10n/l10n_util.h"
 
 using base::android::ConvertUTF8ToJavaString;
+using base::android::JavaParamRef;
 using base::android::ScopedJavaLocalRef;
 using content::WebContents;
 
@@ -41,29 +42,6 @@ static ScopedJavaLocalRef<jstring> GetDownloadWarningText(
                base::android::ConvertJavaStringToUTF16(env, filename)));
 }
 
-// Returns true if a file name is dangerous, or false otherwise.
-static jboolean IsDownloadDangerous(JNIEnv* env,
-                                    const JavaParamRef<jclass>& clazz,
-                                    const JavaParamRef<jstring>& filename) {
-  base::FilePath path(base::android::ConvertJavaStringToUTF8(env, filename));
-  return safe_browsing::FileTypePolicies::GetInstance()->GetFileDangerLevel(
-             path) != safe_browsing::DownloadFileType::NOT_DANGEROUS;
-}
-
-// Called when a dangerous download is validated.
-static void DangerousDownloadValidated(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jobject>& tab,
-    const JavaParamRef<jstring>& jdownload_guid,
-    jboolean accept) {
-  std::string download_guid =
-      base::android::ConvertJavaStringToUTF8(env, jdownload_guid);
-  TabAndroid* tab_android = TabAndroid::GetNativeTab(env, tab);
-  DownloadControllerBase::Get()->DangerousDownloadValidated(
-      tab_android->web_contents(), download_guid, accept);
-}
-
 // static
 bool ChromeDownloadDelegate::EnqueueDownloadManagerRequest(
     jobject chrome_download_delegate,
@@ -75,28 +53,24 @@ bool ChromeDownloadDelegate::EnqueueDownloadManagerRequest(
       env, chrome_download_delegate, overwrite, download_info);
 }
 
-// Called when we need to interrupt download and ask users whether to overwrite
-// an existing file.
-static void LaunchDownloadOverwriteInfoBar(
+// Called when we need to interrupt download and ask user whether to proceed
+// as there is already an existing file.
+static void LaunchDuplicateDownloadInfoBar(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& delegate,
     const JavaParamRef<jobject>& tab,
     const JavaParamRef<jobject>& download_info,
-    const JavaParamRef<jstring>& jfile_name,
-    const JavaParamRef<jstring>& jdir_name,
-    const JavaParamRef<jstring>& jdir_full_path) {
+    const JavaParamRef<jstring>& jfile_path,
+    jboolean is_incognito) {
   TabAndroid* tab_android = TabAndroid::GetNativeTab(env, tab);
 
-  std::string file_name =
-      base::android::ConvertJavaStringToUTF8(env, jfile_name);
-  std::string dir_name = base::android::ConvertJavaStringToUTF8(env, jdir_name);
-  std::string dir_full_path =
-      base::android::ConvertJavaStringToUTF8(env, jdir_full_path);
+  std::string file_path =
+      base::android::ConvertJavaStringToUTF8(env, jfile_path);
 
-  chrome::android::AndroidDownloadManagerOverwriteInfoBarDelegate::Create(
-      InfoBarService::FromWebContents(tab_android->web_contents()), file_name,
-      dir_name, dir_full_path, delegate, download_info);
+  chrome::android::AndroidDownloadManagerDuplicateInfoBarDelegate::Create(
+      InfoBarService::FromWebContents(tab_android->web_contents()), file_path,
+      delegate, download_info, is_incognito);
 }
 
 static void LaunchPermissionUpdateInfoBar(
@@ -141,66 +115,42 @@ void ChromeDownloadDelegate::SetJavaRef(JNIEnv* env, jobject jobj) {
   java_ref_ = env->NewGlobalRef(jobj);
 }
 
-void ChromeDownloadDelegate::RequestHTTPGetDownload(
-    const std::string& url,
-    const std::string& user_agent,
-    const std::string& content_disposition,
-    const std::string& mime_type,
-    const std::string& cookie,
-    const std::string& referer,
-    const base::string16& file_name,
-    int64_t content_length,
-    bool has_user_gesture,
-    bool must_download) {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  ScopedJavaLocalRef<jstring> jurl =
-      ConvertUTF8ToJavaString(env, url);
-  ScopedJavaLocalRef<jstring> juser_agent =
-      ConvertUTF8ToJavaString(env, user_agent);
-  ScopedJavaLocalRef<jstring> jcontent_disposition =
-      ConvertUTF8ToJavaString(env, content_disposition);
-  ScopedJavaLocalRef<jstring> jmime_type =
-      ConvertUTF8ToJavaString(env, mime_type);
-  ScopedJavaLocalRef<jstring> jcookie =
-      ConvertUTF8ToJavaString(env, cookie);
-  ScopedJavaLocalRef<jstring> jreferer =
-      ConvertUTF8ToJavaString(env, referer);
-
-  // net::GetSuggestedFilename will fallback to "download" as filename.
-  ScopedJavaLocalRef<jstring> jfilename =
-      base::android::ConvertUTF16ToJavaString(env, file_name);
-  Java_ChromeDownloadDelegate_requestHttpGetDownload(
-      env, java_ref_,
-      jurl.obj(), juser_agent.obj(), jcontent_disposition.obj(),
-      jmime_type.obj(), jcookie.obj(), jreferer.obj(), has_user_gesture,
-      jfilename.obj(), content_length, must_download);
-}
-
-void ChromeDownloadDelegate::OnDownloadStarted(const std::string& filename,
-                                               const std::string& mime_type) {
+void ChromeDownloadDelegate::OnDownloadStarted(const std::string& filename) {
   JNIEnv* env = base::android::AttachCurrentThread();
   ScopedJavaLocalRef<jstring> jfilename = ConvertUTF8ToJavaString(
       env, filename);
-  ScopedJavaLocalRef<jstring> jmime_type =
-      ConvertUTF8ToJavaString(env, mime_type);
-  Java_ChromeDownloadDelegate_onDownloadStarted(
-      env, java_ref_, jfilename.obj(), jmime_type.obj());
-}
-
-void ChromeDownloadDelegate::OnDangerousDownload(const std::string& filename,
-                                                 const std::string& guid) {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  ScopedJavaLocalRef<jstring> jfilename = ConvertUTF8ToJavaString(
-      env, filename);
-  ScopedJavaLocalRef<jstring> jguid = ConvertUTF8ToJavaString(env, guid);
-  Java_ChromeDownloadDelegate_onDangerousDownload(
-      env, java_ref_, jfilename.obj(), jguid.obj());
+  Java_ChromeDownloadDelegate_onDownloadStarted(env, java_ref_, jfilename);
 }
 
 void ChromeDownloadDelegate::RequestFileAccess(intptr_t callback_id) {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_ChromeDownloadDelegate_requestFileAccess(
       env, java_ref_, callback_id);
+}
+
+void ChromeDownloadDelegate::EnqueueDownloadManagerRequest(
+    const std::string& url,
+    const std::string& user_agent,
+    const base::string16& file_name,
+    const std::string& mime_type,
+    const std::string& cookie,
+    const std::string& referer) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  ScopedJavaLocalRef<jstring> jurl =
+      ConvertUTF8ToJavaString(env, url);
+  ScopedJavaLocalRef<jstring> juser_agent =
+      ConvertUTF8ToJavaString(env, user_agent);
+  ScopedJavaLocalRef<jstring> jmime_type =
+      ConvertUTF8ToJavaString(env, mime_type);
+  ScopedJavaLocalRef<jstring> jcookie =
+      ConvertUTF8ToJavaString(env, cookie);
+  ScopedJavaLocalRef<jstring> jreferer =
+      ConvertUTF8ToJavaString(env, referer);
+  ScopedJavaLocalRef<jstring> jfile_name =
+      base::android::ConvertUTF16ToJavaString(env, file_name);
+  Java_ChromeDownloadDelegate_enqueueAndroidDownloadManagerRequest(
+      env, java_ref_, jurl, juser_agent, jfile_name, jmime_type, jcookie,
+      jreferer);
 }
 
 void Init(JNIEnv* env,

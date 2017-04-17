@@ -7,9 +7,8 @@
 
 #include <set>
 
-#include "ash/common/accessibility_types.h"
-#include "ash/common/session/session_state_observer.h"
-#include "ash/common/shell_observer.h"
+#include "ash/accessibility_types.h"
+#include "ash/shell_observer.h"
 #include "base/callback_forward.h"
 #include "base/callback_list.h"
 #include "base/macros.h"
@@ -20,30 +19,40 @@
 #include "chrome/browser/chromeos/accessibility/chromevox_panel.h"
 #include "chrome/browser/extensions/api/braille_display_private/braille_controller.h"
 #include "components/prefs/pref_change_registrar.h"
+#include "components/session_manager/core/session_manager_observer.h"
+#include "components/user_manager/user_manager.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_system.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 
-namespace content {
-class RenderViewHost;
-}
-
 class Profile;
+
+namespace gfx {
+class Rect;
+}  // namespace gfx
 
 namespace chromeos {
 
+class AccessibilityExtensionLoader;
 class AccessibilityHighlightManager;
+class SelectToSpeakEventHandler;
+class SwitchAccessEventHandler;
 
 enum AccessibilityNotificationType {
   ACCESSIBILITY_MANAGER_SHUTDOWN,
   ACCESSIBILITY_TOGGLE_HIGH_CONTRAST_MODE,
   ACCESSIBILITY_TOGGLE_LARGE_CURSOR,
+  ACCESSIBILITY_TOGGLE_STICKY_KEYS,
   ACCESSIBILITY_TOGGLE_SCREEN_MAGNIFIER,
   ACCESSIBILITY_TOGGLE_SPOKEN_FEEDBACK,
   ACCESSIBILITY_TOGGLE_VIRTUAL_KEYBOARD,
   ACCESSIBILITY_TOGGLE_MONO_AUDIO,
+  ACCESSIBILITY_TOGGLE_CARET_HIGHLIGHT,
+  ACCESSIBILITY_TOGGLE_CURSOR_HIGHLIGHT,
+  ACCESSIBILITY_TOGGLE_FOCUS_HIGHLIGHT,
+  ACCESSIBILITY_TOGGLE_TAP_DRAGGING,
   ACCESSIBILITY_BRAILLE_DISPLAY_CONNECTION_STATE_CHANGED
 };
 
@@ -90,7 +99,8 @@ class AccessibilityManager
     : public content::NotificationObserver,
       public extensions::api::braille_display_private::BrailleObserver,
       public extensions::ExtensionRegistryObserver,
-      public ash::SessionStateObserver,
+      public user_manager::UserManager::UserSessionStateObserver,
+      public session_manager::SessionManagerObserver,
       public ash::ShellObserver,
       public input_method::InputMethodManager::Observer {
  public:
@@ -130,7 +140,7 @@ class AccessibilityManager
   // Enables or disables the large cursor.
   void EnableLargeCursor(bool enabled);
   // Returns true if the large cursor is enabled, or false if not.
-  bool IsLargeCursorEnabled();
+  bool IsLargeCursorEnabled() const;
 
   // Enables or disable Sticky Keys.
   void EnableStickyKeys(bool enabled);
@@ -139,7 +149,7 @@ class AccessibilityManager
   bool IsIncognitoAllowed();
 
   // Returns true if the Sticky Keys is enabled, or false if not.
-  bool IsStickyKeysEnabled();
+  bool IsStickyKeysEnabled() const;
 
   // Enables or disables spoken feedback. Enabling spoken feedback installs the
   // ChromeVox component extension.
@@ -147,7 +157,7 @@ class AccessibilityManager
                             ash::AccessibilityNotificationVisibility notify);
 
   // Returns true if spoken feedback is enabled, or false if not.
-  bool IsSpokenFeedbackEnabled();
+  bool IsSpokenFeedbackEnabled() const;
 
   // Toggles whether Chrome OS spoken feedback is on or off.
   void ToggleSpokenFeedback(ash::AccessibilityNotificationVisibility notify);
@@ -156,13 +166,13 @@ class AccessibilityManager
   void EnableHighContrast(bool enabled);
 
   // Returns true if High Contrast is enabled, or false if not.
-  bool IsHighContrastEnabled();
+  bool IsHighContrastEnabled() const;
 
   // Enables or disables autoclick.
   void EnableAutoclick(bool enabled);
 
   // Returns true if autoclick is enabled.
-  bool IsAutoclickEnabled();
+  bool IsAutoclickEnabled() const;
 
   // Set the delay for autoclicking after stopping the cursor in milliseconds.
   void SetAutoclickDelay(int delay_ms);
@@ -173,12 +183,12 @@ class AccessibilityManager
   // Enables or disables the virtual keyboard.
   void EnableVirtualKeyboard(bool enabled);
   // Returns true if the virtual keyboard is enabled, otherwise false.
-  bool IsVirtualKeyboardEnabled();
+  bool IsVirtualKeyboardEnabled() const;
 
   // Enables or disables mono audio output.
   void EnableMonoAudio(bool enabled);
   // Returns true if mono audio output is enabled, otherwise false.
-  bool IsMonoAudioEnabled();
+  bool IsMonoAudioEnabled() const;
 
   // Invoked to enable or disable caret highlighting.
   void SetCaretHighlightEnabled(bool enabled);
@@ -198,6 +208,12 @@ class AccessibilityManager
   // Returns if focus highlighting is enabled.
   bool IsFocusHighlightEnabled() const;
 
+  // Enables or disables tap dragging.
+  void EnableTapDragging(bool enabled);
+
+  // Returns true if the tap dragging is enabled, or false if not.
+  bool IsTapDraggingEnabled() const;
+
   // Invoked to enable or disable select-to-speak.
   void SetSelectToSpeakEnabled(bool enabled);
 
@@ -214,11 +230,10 @@ class AccessibilityManager
   // false.
   bool IsBrailleDisplayConnected() const;
 
-  // SessionStateObserver overrides:
-  void ActiveUserChanged(const AccountId& account_id) override;
+  // user_manager::UserManager::UserSessionStateObserver overrides:
+  void ActiveUserChanged(const user_manager::User* active_user) override;
 
   // ShellObserver overrides:
-  void OnAppTerminating() override;
   void OnFullscreenStateChanged(bool is_fullscreen,
                                 ash::WmWindow* root_window) override;
 
@@ -233,9 +248,6 @@ class AccessibilityManager
   // Initiates play of shutdown sound and returns it's duration.
   base::TimeDelta PlayShutdownSound();
 
-  // Injects ChromeVox scripts into given |render_view_host|.
-  void InjectChromeVox(content::RenderViewHost* render_view_host);
-
   // Register a callback to be notified when the status of an accessibility
   // option changes.
   std::unique_ptr<AccessibilityStatusSubscription> RegisterCallback(
@@ -247,6 +259,24 @@ class AccessibilityManager
 
   // Notify accessibility when locale changes occur.
   void OnLocaleChanged();
+
+  // Called when we first detect two fingers are held down, which can be
+  // used to toggle spoken feedback on some touch-only devices.
+  void OnTwoFingerTouchStart();
+
+  // Called when the user is no longer holding down two fingers (including
+  // releasing one, holding down three, or moving them).
+  void OnTwoFingerTouchStop();
+
+  // Whether or not to enable toggling spoken feedback via holding down
+  // two fingers on the screen.
+  bool ShouldToggleSpokenFeedbackViaTouch();
+
+  // Play tick sound indicating spoken feedback will be toggled after countdown.
+  bool PlaySpokenFeedbackToggleCountdown(int tick_count);
+
+  // Notify that a view is focused in arc.
+  void OnViewFocusedInArc(const gfx::Rect& bounds_in_screen);
 
   // Plays an earcon. Earcons are brief and distinctive sounds that indicate
   // when their mapped event has occurred. The sound key enums can be found in
@@ -286,13 +316,10 @@ class AccessibilityManager
   ~AccessibilityManager() override;
 
  private:
-  void LoadChromeVox();
-  void LoadChromeVoxToUserScreen(const base::Closure& done_cb);
-  void LoadChromeVoxToLockScreen(const base::Closure& done_cb);
-  void UnloadChromeVox();
-  void UnloadChromeVoxFromLockScreen();
-  void PostLoadChromeVox(Profile* profile);
-  void PostUnloadChromeVox(Profile* profile);
+  void PostLoadChromeVox();
+  void PostUnloadChromeVox();
+  void PostSwitchChromeVoxProfile();
+  void ReloadChromeVoxPanel();
 
   void UpdateLargeCursorFromPref();
   void UpdateStickyKeysFromPref();
@@ -305,6 +332,7 @@ class AccessibilityManager
   void UpdateCaretHighlightFromPref();
   void UpdateCursorHighlightFromPref();
   void UpdateFocusHighlightFromPref();
+  void UpdateTapDraggingFromPref();
   void UpdateSelectToSpeakFromPref();
   void UpdateSwitchAccessFromPref();
   void UpdateAccessibilityHighlightingFromPrefs();
@@ -344,20 +372,20 @@ class AccessibilityManager
                           Profile* profile,
                           bool show_message) override;
 
+  // session_manager::SessionManagerObserver
+  void OnSessionStateChanged() override;
+
   // Profile which has the current a11y context.
   Profile* profile_;
-
-  // Profile which ChromeVox is currently loaded to. If NULL, ChromeVox is not
-  // loaded to any profile.
-  bool chrome_vox_loaded_on_lock_screen_;
-  bool chrome_vox_loaded_on_user_screen_;
 
   content::NotificationRegistrar notification_registrar_;
   std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
   std::unique_ptr<PrefChangeRegistrar> local_state_pref_change_registrar_;
-  std::unique_ptr<ash::ScopedSessionStateObserver> session_state_observer_;
+  std::unique_ptr<user_manager::ScopedUserSessionStateObserver>
+      session_state_observer_;
 
   PrefHandler large_cursor_pref_handler_;
+  PrefHandler sticky_keys_pref_handler_;
   PrefHandler spoken_feedback_pref_handler_;
   PrefHandler high_contrast_pref_handler_;
   PrefHandler autoclick_pref_handler_;
@@ -367,10 +395,12 @@ class AccessibilityManager
   PrefHandler caret_highlight_pref_handler_;
   PrefHandler cursor_highlight_pref_handler_;
   PrefHandler focus_highlight_pref_handler_;
+  PrefHandler tap_dragging_pref_handler_;
   PrefHandler select_to_speak_pref_handler_;
   PrefHandler switch_access_pref_handler_;
 
   bool large_cursor_enabled_;
+  int large_cursor_size_in_dip_;
   bool sticky_keys_enabled_;
   bool spoken_feedback_enabled_;
   bool high_contrast_enabled_;
@@ -381,12 +411,11 @@ class AccessibilityManager
   bool caret_highlight_enabled_;
   bool cursor_highlight_enabled_;
   bool focus_highlight_enabled_;
+  bool tap_dragging_enabled_;
   bool select_to_speak_enabled_;
   bool switch_access_enabled_;
 
   ash::AccessibilityNotificationVisibility spoken_feedback_notification_;
-
-  bool should_speak_chrome_vox_announcements_on_user_screen_;
 
   bool system_sounds_enabled_;
 
@@ -412,6 +441,18 @@ class AccessibilityManager
 
   std::unique_ptr<AccessibilityHighlightManager>
       accessibility_highlight_manager_;
+
+  std::unique_ptr<AccessibilityExtensionLoader> chromevox_loader_;
+
+  std::unique_ptr<AccessibilityExtensionLoader> select_to_speak_loader_;
+
+  std::unique_ptr<chromeos::SelectToSpeakEventHandler>
+      select_to_speak_event_handler_;
+
+  std::unique_ptr<AccessibilityExtensionLoader> switch_access_loader_;
+
+  std::unique_ptr<chromeos::SwitchAccessEventHandler>
+      switch_access_event_handler_;
 
   base::WeakPtrFactory<AccessibilityManager> weak_ptr_factory_;
 

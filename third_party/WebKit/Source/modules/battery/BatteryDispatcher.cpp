@@ -5,60 +5,54 @@
 #include "modules/battery/BatteryDispatcher.h"
 
 #include "platform/mojo/MojoHelper.h"
+#include "platform/wtf/Assertions.h"
 #include "public/platform/Platform.h"
-#include "public/platform/ServiceRegistry.h"
-#include "wtf/Assertions.h"
+#include "services/device/public/interfaces/constants.mojom-blink.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace blink {
 
-BatteryDispatcher& BatteryDispatcher::instance()
-{
-    DEFINE_STATIC_LOCAL(BatteryDispatcher, batteryDispatcher, (new BatteryDispatcher));
-    return batteryDispatcher;
+BatteryDispatcher& BatteryDispatcher::Instance() {
+  DEFINE_STATIC_LOCAL(BatteryDispatcher, battery_dispatcher,
+                      (new BatteryDispatcher));
+  return battery_dispatcher;
 }
 
-BatteryDispatcher::BatteryDispatcher()
-    : m_hasLatestData(false)
-{
+BatteryDispatcher::BatteryDispatcher() : has_latest_data_(false) {}
+
+void BatteryDispatcher::QueryNextStatus() {
+  monitor_->QueryNextStatus(ConvertToBaseCallback(
+      WTF::Bind(&BatteryDispatcher::OnDidChange, WrapPersistent(this))));
 }
 
-void BatteryDispatcher::queryNextStatus()
-{
-    m_monitor->QueryNextStatus(convertToBaseCallback(WTF::bind(&BatteryDispatcher::onDidChange, wrapPersistent(this))));
+void BatteryDispatcher::OnDidChange(
+    device::mojom::blink::BatteryStatusPtr battery_status) {
+  QueryNextStatus();
+
+  DCHECK(battery_status);
+
+  UpdateBatteryStatus(
+      BatteryStatus(battery_status->charging, battery_status->charging_time,
+                    battery_status->discharging_time, battery_status->level));
 }
 
-void BatteryDispatcher::onDidChange(device::blink::BatteryStatusPtr batteryStatus)
-{
-    queryNextStatus();
-
-    DCHECK(batteryStatus);
-
-    updateBatteryStatus(BatteryStatus(
-        batteryStatus->charging,
-        batteryStatus->charging_time,
-        batteryStatus->discharging_time,
-        batteryStatus->level));
+void BatteryDispatcher::UpdateBatteryStatus(
+    const BatteryStatus& battery_status) {
+  battery_status_ = battery_status;
+  has_latest_data_ = true;
+  NotifyControllers();
 }
 
-void BatteryDispatcher::updateBatteryStatus(const BatteryStatus& batteryStatus)
-{
-    m_batteryStatus = batteryStatus;
-    m_hasLatestData = true;
-    notifyControllers();
+void BatteryDispatcher::StartListening() {
+  DCHECK(!monitor_.is_bound());
+  Platform::Current()->GetConnector()->BindInterface(
+      device::mojom::blink::kServiceName, mojo::MakeRequest(&monitor_));
+  QueryNextStatus();
 }
 
-void BatteryDispatcher::startListening()
-{
-    DCHECK(!m_monitor.is_bound());
-    Platform::current()->serviceRegistry()->connectToRemoteService(
-        mojo::GetProxy(&m_monitor));
-    queryNextStatus();
+void BatteryDispatcher::StopListening() {
+  monitor_.reset();
+  has_latest_data_ = false;
 }
 
-void BatteryDispatcher::stopListening()
-{
-    m_monitor.reset();
-    m_hasLatestData = false;
-}
-
-} // namespace blink
+}  // namespace blink

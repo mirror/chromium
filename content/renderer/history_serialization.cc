@@ -34,31 +34,34 @@ void ToNullableString16Vector(const WebVector<WebString>& input,
                               std::vector<base::NullableString16>* output) {
   output->reserve(output->size() + input.size());
   for (size_t i = 0; i < input.size(); ++i)
-    output->push_back(input[i]);
+    output->push_back(WebString::ToNullableString16(input[i]));
 }
 
 void GenerateFrameStateFromItem(const WebHistoryItem& item,
                                 ExplodedFrameState* state) {
-  state->url_string = item.urlString();
-  state->referrer = item.referrer();
-  state->referrer_policy = item.referrerPolicy();
-  state->target = item.target();
-  if (!item.stateObject().isNull())
-    state->state_object = item.stateObject().toString();
-  state->scroll_restoration_type = item.scrollRestorationType();
-  state->visual_viewport_scroll_offset = item.visualViewportScrollOffset();
-  state->scroll_offset = item.scrollOffset();
-  state->item_sequence_number = item.itemSequenceNumber();
-  state->document_sequence_number =
-      item.documentSequenceNumber();
-  state->page_scale_factor = item.pageScaleFactor();
-  ToNullableString16Vector(item.documentState(), &state->document_state);
+  state->url_string = WebString::ToNullableString16(item.UrlString());
+  state->referrer = WebString::ToNullableString16(item.GetReferrer());
+  state->referrer_policy = item.GetReferrerPolicy();
+  state->target = WebString::ToNullableString16(item.Target());
+  if (!item.StateObject().IsNull()) {
+    state->state_object =
+        WebString::ToNullableString16(item.StateObject().ToString());
+  }
+  state->scroll_restoration_type = item.ScrollRestorationType();
+  state->visual_viewport_scroll_offset = item.VisualViewportScrollOffset();
+  state->scroll_offset = item.GetScrollOffset();
+  state->item_sequence_number = item.ItemSequenceNumber();
+  state->document_sequence_number = item.DocumentSequenceNumber();
+  state->page_scale_factor = item.PageScaleFactor();
+  state->did_save_scroll_or_scale_state = item.DidSaveScrollOrScaleState();
+  ToNullableString16Vector(item.GetDocumentState(), &state->document_state);
 
-  state->http_body.http_content_type = item.httpContentType();
-  const WebHTTPBody& http_body = item.httpBody();
-  if (!http_body.isNull()) {
+  state->http_body.http_content_type =
+      WebString::ToNullableString16(item.HttpContentType());
+  const WebHTTPBody& http_body = item.HttpBody();
+  if (!http_body.IsNull()) {
     state->http_body.request_body = GetRequestBodyForWebHTTPBody(http_body);
-    state->http_body.contains_passwords = http_body.containsPasswordData();
+    state->http_body.contains_passwords = http_body.ContainsPasswordData();
   }
 }
 
@@ -67,10 +70,10 @@ void RecursivelyGenerateFrameState(
     ExplodedFrameState* state,
     std::vector<base::NullableString16>* referenced_files) {
   GenerateFrameStateFromItem(node->item(), state);
-  ToNullableString16Vector(node->item().getReferencedFilePaths(),
+  ToNullableString16Vector(node->item().GetReferencedFilePaths(),
                            referenced_files);
 
-  std::vector<HistoryEntry::HistoryNode*>& children = node->children();
+  std::vector<HistoryEntry::HistoryNode*> children = node->children();
   state->children.resize(children.size());
   for (size_t i = 0; i < children.size(); ++i) {
     RecursivelyGenerateFrameState(children[i], &state->children[i],
@@ -81,31 +84,38 @@ void RecursivelyGenerateFrameState(
 void RecursivelyGenerateHistoryItem(const ExplodedFrameState& state,
                                     HistoryEntry::HistoryNode* node) {
   WebHistoryItem item;
-  item.initialize();
-  item.setURLString(state.url_string);
-  item.setReferrer(state.referrer, state.referrer_policy);
-  item.setTarget(state.target);
+  item.Initialize();
+  item.SetURLString(WebString::FromUTF16(state.url_string));
+  item.SetReferrer(WebString::FromUTF16(state.referrer), state.referrer_policy);
+  item.SetTarget(WebString::FromUTF16(state.target));
   if (!state.state_object.is_null()) {
-    item.setStateObject(
-        WebSerializedScriptValue::fromString(state.state_object));
+    item.SetStateObject(WebSerializedScriptValue::FromString(
+        WebString::FromUTF16(state.state_object)));
   }
-  item.setDocumentState(state.document_state);
-  item.setScrollRestorationType(state.scroll_restoration_type);
-  item.setVisualViewportScrollOffset(state.visual_viewport_scroll_offset);
-  item.setScrollOffset(state.scroll_offset);
-  item.setPageScaleFactor(state.page_scale_factor);
+  WebVector<WebString> document_state(state.document_state.size());
+  std::transform(state.document_state.begin(), state.document_state.end(),
+                 document_state.begin(), [](const base::NullableString16& s) {
+                   return WebString::FromUTF16(s);
+                 });
+  item.SetDocumentState(document_state);
+  item.SetScrollRestorationType(state.scroll_restoration_type);
+  item.SetVisualViewportScrollOffset(state.visual_viewport_scroll_offset);
+  item.SetScrollOffset(state.scroll_offset);
+  item.SetPageScaleFactor(state.page_scale_factor);
+  item.SetDidSaveScrollOrScaleState(state.did_save_scroll_or_scale_state);
 
   // These values are generated at WebHistoryItem construction time, and we
   // only want to override those new values with old values if the old values
   // are defined.  A value of 0 means undefined in this context.
   if (state.item_sequence_number)
-    item.setItemSequenceNumber(state.item_sequence_number);
+    item.SetItemSequenceNumber(state.item_sequence_number);
   if (state.document_sequence_number)
-    item.setDocumentSequenceNumber(state.document_sequence_number);
+    item.SetDocumentSequenceNumber(state.document_sequence_number);
 
-  item.setHTTPContentType(state.http_body.http_content_type);
+  item.SetHTTPContentType(
+      WebString::FromUTF16(state.http_body.http_content_type));
   if (state.http_body.request_body != nullptr) {
-    item.setHTTPBody(
+    item.SetHTTPBody(
         GetWebHTTPBodyForRequestBody(state.http_body.request_body));
   }
   node->set_item(item);
@@ -128,7 +138,7 @@ PageState HistoryEntryToPageState(HistoryEntry* entry) {
 
 PageState SingleHistoryItemToPageState(const WebHistoryItem& item) {
   ExplodedPageState state;
-  ToNullableString16Vector(item.getReferencedFilePaths(),
+  ToNullableString16Vector(item.GetReferencedFilePaths(),
                            &state.referenced_files);
   GenerateFrameStateFromItem(item, &state.top);
 

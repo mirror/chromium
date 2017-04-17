@@ -4,9 +4,14 @@
 
 #include "chrome/browser/ui/webui/chromeos/login/network_dropdown.h"
 
+#include <memory>
 #include <string>
+#include <utility>
 
+#include "ash/system/network/network_icon.h"
+#include "ash/system/network/network_icon_animation.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
@@ -16,8 +21,6 @@
 #include "content/public/browser/web_ui.h"
 #include "ui/base/models/menu_model.h"
 #include "ui/base/webui/web_ui_util.h"
-#include "ui/chromeos/network/network_icon.h"
-#include "ui/chromeos/network/network_icon_animation.h"
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/image/image_skia.h"
@@ -45,7 +48,7 @@ class NetworkMenuWebUI : public NetworkMenu {
 
  private:
   // Converts menu model into the ListValue, ready for passing to WebUI.
-  base::ListValue* ConvertMenuModel(ui::MenuModel* model);
+  std::unique_ptr<base::ListValue> ConvertMenuModel(ui::MenuModel* model);
 
   // WebUI where network menu is located.
   content::WebUI* web_ui_;
@@ -78,8 +81,9 @@ void NetworkMenuWebUI::OnItemChosen(int id) {
   model->ActivatedAt(index);
 }
 
-base::ListValue* NetworkMenuWebUI::ConvertMenuModel(ui::MenuModel* model) {
-  base::ListValue* list = new base::ListValue();
+std::unique_ptr<base::ListValue> NetworkMenuWebUI::ConvertMenuModel(
+    ui::MenuModel* model) {
+  auto list = base::MakeUnique<base::ListValue>();
   for (int i = 0; i < model->GetItemCount(); ++i) {
     ui::MenuModel::ItemType type = model->GetTypeAt(i);
     int id;
@@ -87,7 +91,7 @@ base::ListValue* NetworkMenuWebUI::ConvertMenuModel(ui::MenuModel* model) {
       id = -2;
     else
       id = model->GetCommandIdAt(i);
-    base::DictionaryValue* item = new base::DictionaryValue();
+    auto item = base::MakeUnique<base::DictionaryValue>();
     item->SetInteger("id", id);
     base::string16 label = model->GetLabelAt(i);
     base::ReplaceSubstringsAfterOffset(&label, 0, base::ASCIIToUTF16("&&"),
@@ -108,20 +112,16 @@ base::ListValue* NetworkMenuWebUI::ConvertMenuModel(ui::MenuModel* model) {
     }
     if (type == ui::MenuModel::TYPE_SUBMENU)
       item->Set("sub", ConvertMenuModel(model->GetSubmenuModelAt(i)));
-    list->Append(item);
+    list->Append(std::move(item));
   }
   return list;
 }
 
 // NetworkDropdown -------------------------------------------------------------
 
-NetworkDropdown::NetworkDropdown(Actor* actor,
-                                 content::WebUI* web_ui,
-                                 bool oobe)
-    : actor_(actor),
-      web_ui_(web_ui),
-      oobe_(oobe) {
-  DCHECK(actor_);
+NetworkDropdown::NetworkDropdown(View* view, content::WebUI* web_ui, bool oobe)
+    : view_(view), web_ui_(web_ui), oobe_(oobe) {
+  DCHECK(view_);
   network_menu_.reset(new NetworkMenuWebUI(this, web_ui));
   DCHECK(NetworkHandler::IsInitialized());
   NetworkStateHandler* handler = NetworkHandler::Get()->network_state_handler();
@@ -135,7 +135,7 @@ NetworkDropdown::NetworkDropdown(Actor* actor,
 }
 
 NetworkDropdown::~NetworkDropdown() {
-  ui::network_icon::NetworkIconAnimation::GetInstance()->RemoveObserver(this);
+  ash::network_icon::NetworkIconAnimation::GetInstance()->RemoveObserver(this);
   if (NetworkHandler::IsInitialized()) {
     NetworkHandler::Get()->network_state_handler()->RemoveObserver(
         this, FROM_HERE);
@@ -159,7 +159,7 @@ bool NetworkDropdown::ShouldOpenButtonOptions() const {
 }
 
 void NetworkDropdown::OnConnectToNetworkRequested() {
-  actor_->OnConnectToNetworkRequested();
+  view_->OnConnectToNetworkRequested();
 }
 
 void NetworkDropdown::DefaultNetworkChanged(const NetworkState* network) {
@@ -188,20 +188,21 @@ void NetworkDropdown::SetNetworkIconAndText() {
   base::string16 text;
   gfx::ImageSkia icon_image;
   bool animating = false;
-  ui::network_icon::GetDefaultNetworkImageAndLabel(
-      ui::network_icon::ICON_TYPE_LIST, &icon_image, &text, &animating);
+  ash::network_icon::GetDefaultNetworkImageAndLabel(
+      ash::network_icon::ICON_TYPE_LIST, &icon_image, &text, &animating);
   if (animating) {
-    ui::network_icon::NetworkIconAnimation::GetInstance()->AddObserver(this);
+    ash::network_icon::NetworkIconAnimation::GetInstance()->AddObserver(this);
   } else {
-    ui::network_icon::NetworkIconAnimation::GetInstance()->RemoveObserver(this);
+    ash::network_icon::NetworkIconAnimation::GetInstance()->RemoveObserver(
+        this);
   }
   SkBitmap icon_bitmap = icon_image.GetRepresentation(
       web_ui_->GetDeviceScaleFactor()).sk_bitmap();
   std::string icon_str;
   if (!icon_image.isNull())
     icon_str = webui::GetBitmapDataUrl(icon_bitmap);
-  base::StringValue title(text);
-  base::StringValue icon(icon_str);
+  base::Value title(text);
+  base::Value icon(icon_str);
   web_ui_->CallJavascriptFunctionUnsafe("cr.ui.DropDown.updateNetworkTitle",
                                         title, icon);
 }

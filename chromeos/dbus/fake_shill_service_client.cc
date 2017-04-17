@@ -7,8 +7,8 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/location.h"
+#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
-#include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
@@ -55,8 +55,6 @@ FakeShillServiceClient::FakeShillServiceClient() : weak_ptr_factory_(this) {
 }
 
 FakeShillServiceClient::~FakeShillServiceClient() {
-  STLDeleteContainerPairSecondPointers(
-      observer_list_.begin(), observer_list_.end());
 }
 
 
@@ -192,7 +190,7 @@ void FakeShillServiceClient::Connect(const dbus::ObjectPath& service_path,
   service_properties->SetStringWithoutPathExpansion(shill::kErrorProperty, "");
 
   // Set Associating.
-  base::StringValue associating_value(shill::kStateAssociation);
+  base::Value associating_value(shill::kStateAssociation);
   SetServiceProperty(service_path.value(), shill::kStateProperty,
                      associating_value);
 
@@ -215,7 +213,7 @@ void FakeShillServiceClient::Disconnect(const dbus::ObjectPath& service_path,
     return;
   }
   // Set Idle after a delay
-  base::StringValue idle_value(shill::kStateIdle);
+  base::Value idle_value(shill::kStateIdle);
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, base::Bind(&FakeShillServiceClient::SetProperty,
                             weak_ptr_factory_.GetWeakPtr(), service_path,
@@ -242,9 +240,8 @@ void FakeShillServiceClient::ActivateCellularModem(
     LOG(ERROR) << "Service not found: " << service_path.value();
     error_callback.Run("Error.InvalidService", "Invalid Service");
   }
-  SetServiceProperty(service_path.value(),
-                     shill::kActivationStateProperty,
-                     base::StringValue(shill::kActivationStateActivating));
+  SetServiceProperty(service_path.value(), shill::kActivationStateProperty,
+                     base::Value(shill::kActivationStateActivating));
   // Set Activated after a delay
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
@@ -265,21 +262,19 @@ void FakeShillServiceClient::CompleteCellularActivation(
 void FakeShillServiceClient::GetLoadableProfileEntries(
     const dbus::ObjectPath& service_path,
     const DictionaryValueCallback& callback) {
-  // Provide a dictionary with a single { profile_path, service_path } entry
-  // if the Profile property is set, or an empty dictionary.
+  ShillProfileClient::TestInterface* profile_client =
+      DBusThreadManager::Get()->GetShillProfileClient()->GetTestInterface();
+  std::vector<std::string> profiles;
+  profile_client->GetProfilePathsContainingService(service_path.value(),
+                                                   &profiles);
+
+  // Provide a dictionary with  {profile_path: service_path} entries for
+  // profile_paths that contain the service.
   std::unique_ptr<base::DictionaryValue> result_properties(
       new base::DictionaryValue);
-  base::DictionaryValue* service_properties =
-      GetModifiableServiceProperties(service_path.value(), false);
-  if (service_properties) {
-    std::string profile_path;
-    if (service_properties->GetStringWithoutPathExpansion(
-            shill::kProfileProperty, &profile_path)) {
-      result_properties->SetStringWithoutPathExpansion(
-          profile_path, service_path.value());
-    }
-  } else {
-    LOG(WARNING) << "Service not in profile: " << service_path.value();
+  for (const auto& profile : profiles) {
+    result_properties->SetStringWithoutPathExpansion(profile,
+                                                     service_path.value());
   }
 
   DBusMethodCallStatus call_status = DBUS_METHOD_CALL_SUCCESS;
@@ -325,9 +320,8 @@ void FakeShillServiceClient::AddServiceWithIPConfig(
   }
 
   if (!ipconfig_path.empty()) {
-    properties->SetWithoutPathExpansion(
-        shill::kIPConfigProperty,
-        new base::StringValue(ipconfig_path));
+    properties->SetWithoutPathExpansion(shill::kIPConfigProperty,
+                                        new base::Value(ipconfig_path));
   }
 
   DBusThreadManager::Get()->GetShillManagerClient()->GetTestInterface()->
@@ -422,7 +416,7 @@ bool FakeShillServiceClient::SetServiceProperty(const std::string& service_path,
     provider->SetWithoutPathExpansion(key, value.DeepCopy());
     new_properties.SetWithoutPathExpansion(shill::kProviderProperty, provider);
     changed_property = shill::kProviderProperty;
-  } else if (value.GetType() == base::Value::TYPE_DICTIONARY) {
+  } else if (value.GetType() == base::Value::Type::DICTIONARY) {
     const base::DictionaryValue* new_dict = NULL;
     value.GetAsDictionary(&new_dict);
     CHECK(new_dict);
@@ -523,9 +517,8 @@ void FakeShillServiceClient::NotifyObserversPropertyChanged(
                << path << " : " << property;
     return;
   }
-  FOR_EACH_OBSERVER(ShillPropertyChangedObserver,
-                    GetObserverList(service_path),
-                    OnPropertyChanged(property, *value));
+  for (auto& observer : GetObserverList(service_path))
+    observer.OnPropertyChanged(property, *value);
 }
 
 base::DictionaryValue* FakeShillServiceClient::GetModifiableServiceProperties(
@@ -542,12 +535,11 @@ base::DictionaryValue* FakeShillServiceClient::GetModifiableServiceProperties(
 
 FakeShillServiceClient::PropertyObserverList&
 FakeShillServiceClient::GetObserverList(const dbus::ObjectPath& device_path) {
-  std::map<dbus::ObjectPath, PropertyObserverList*>::iterator iter =
-      observer_list_.find(device_path);
+  auto iter = observer_list_.find(device_path);
   if (iter != observer_list_.end())
     return *(iter->second);
   PropertyObserverList* observer_list = new PropertyObserverList();
-  observer_list_[device_path] = observer_list;
+  observer_list_[device_path] = base::WrapUnique(observer_list);
   return *observer_list;
 }
 
@@ -575,25 +567,19 @@ void FakeShillServiceClient::SetOtherServicesOffline(
     properties->GetString(shill::kTypeProperty, &type);
     if (type != service_type)
       continue;
-    properties->SetWithoutPathExpansion(
-        shill::kStateProperty,
-        new base::StringValue(shill::kStateIdle));
+    properties->SetWithoutPathExpansion(shill::kStateProperty,
+                                        new base::Value(shill::kStateIdle));
   }
 }
 
 void FakeShillServiceClient::SetCellularActivated(
     const dbus::ObjectPath& service_path,
     const ErrorCallback& error_callback) {
-  SetProperty(service_path,
-              shill::kActivationStateProperty,
-              base::StringValue(shill::kActivationStateActivated),
-              base::Bind(&base::DoNothing),
-              error_callback);
-  SetProperty(service_path,
-              shill::kConnectableProperty,
-              base::FundamentalValue(true),
-              base::Bind(&base::DoNothing),
-              error_callback);
+  SetProperty(service_path, shill::kActivationStateProperty,
+              base::Value(shill::kActivationStateActivated),
+              base::Bind(&base::DoNothing), error_callback);
+  SetProperty(service_path, shill::kConnectableProperty, base::Value(true),
+              base::Bind(&base::DoNothing), error_callback);
 }
 
 void FakeShillServiceClient::ContinueConnect(const std::string& service_path) {
@@ -604,7 +590,7 @@ void FakeShillServiceClient::ContinueConnect(const std::string& service_path) {
     return;
   }
 
-  if (ContainsKey(connect_behavior_, service_path)) {
+  if (base::ContainsKey(connect_behavior_, service_path)) {
     const base::Closure& custom_connect_behavior =
         connect_behavior_[service_path];
     VLOG(1) << "Running custom connect behavior for " << service_path;
@@ -619,20 +605,20 @@ void FakeShillServiceClient::ContinueConnect(const std::string& service_path) {
   if (passphrase == "failure") {
     // Simulate a password failure.
     SetServiceProperty(service_path, shill::kErrorProperty,
-                       base::StringValue(shill::kErrorBadPassphrase));
+                       base::Value(shill::kErrorBadPassphrase));
     SetServiceProperty(service_path, shill::kStateProperty,
-                       base::StringValue(shill::kStateFailure));
+                       base::Value(shill::kStateFailure));
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
         base::Bind(
             base::IgnoreResult(&FakeShillServiceClient::SetServiceProperty),
             weak_ptr_factory_.GetWeakPtr(), service_path, shill::kErrorProperty,
-            base::StringValue(shill::kErrorBadPassphrase)));
+            base::Value(shill::kErrorBadPassphrase)));
   } else {
     // Set Online.
     VLOG(1) << "Setting state to Online " << service_path;
     SetServiceProperty(service_path, shill::kStateProperty,
-                       base::StringValue(shill::kStateOnline));
+                       base::Value(shill::kStateOnline));
   }
 }
 

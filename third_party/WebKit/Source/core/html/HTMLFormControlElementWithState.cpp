@@ -24,74 +24,67 @@
 
 #include "core/html/HTMLFormControlElementWithState.h"
 
-#include "core/frame/FrameHost.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/html/HTMLFormElement.h"
 #include "core/html/forms/FormController.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/page/ChromeClient.h"
 
 namespace blink {
 
-HTMLFormControlElementWithState::HTMLFormControlElementWithState(const QualifiedName& tagName, Document& doc, HTMLFormElement* f)
-    : HTMLFormControlElement(tagName, doc, f)
-{
+HTMLFormControlElementWithState::HTMLFormControlElementWithState(
+    const QualifiedName& tag_name,
+    Document& doc)
+    : HTMLFormControlElement(tag_name, doc) {}
+
+HTMLFormControlElementWithState::~HTMLFormControlElementWithState() {}
+
+Node::InsertionNotificationRequest
+HTMLFormControlElementWithState::InsertedInto(ContainerNode* insertion_point) {
+  if (insertion_point->isConnected() && !ContainingShadowRoot())
+    GetDocument().GetFormController().RegisterStatefulFormControl(*this);
+  return HTMLFormControlElement::InsertedInto(insertion_point);
 }
 
-HTMLFormControlElementWithState::~HTMLFormControlElementWithState()
-{
+void HTMLFormControlElementWithState::RemovedFrom(
+    ContainerNode* insertion_point) {
+  if (insertion_point->isConnected() && !ContainingShadowRoot() &&
+      !insertion_point->ContainingShadowRoot())
+    GetDocument().GetFormController().UnregisterStatefulFormControl(*this);
+  HTMLFormControlElement::RemovedFrom(insertion_point);
 }
 
-Node::InsertionNotificationRequest HTMLFormControlElementWithState::insertedInto(ContainerNode* insertionPoint)
-{
-    if (insertionPoint->isConnected() && !containingShadowRoot())
-        document().formController().registerStatefulFormControl(*this);
-    return HTMLFormControlElement::insertedInto(insertionPoint);
-}
-
-void HTMLFormControlElementWithState::removedFrom(ContainerNode* insertionPoint)
-{
-    if (insertionPoint->isConnected() && !containingShadowRoot() && !insertionPoint->containingShadowRoot())
-        document().formController().unregisterStatefulFormControl(*this);
-    HTMLFormControlElement::removedFrom(insertionPoint);
-}
-
-bool HTMLFormControlElementWithState::shouldAutocomplete() const
-{
-    if (!form())
-        return true;
-    return form()->shouldAutocomplete();
-}
-
-void HTMLFormControlElementWithState::notifyFormStateChanged()
-{
-    // This can be called during fragment parsing as a result of option
-    // selection before the document is active (or even in a frame).
-    if (!document().isActive())
-        return;
-    document().frame()->loader().client()->didUpdateCurrentHistoryItem();
-}
-
-bool HTMLFormControlElementWithState::shouldSaveAndRestoreFormControlState() const
-{
-    // We don't save/restore control state in a form with autocomplete=off.
-    return isConnected() && shouldAutocomplete();
-}
-
-FormControlState HTMLFormControlElementWithState::saveFormControlState() const
-{
-    return FormControlState();
-}
-
-void HTMLFormControlElementWithState::finishParsingChildren()
-{
-    HTMLFormControlElement::finishParsingChildren();
-    document().formController().restoreControlStateFor(*this);
-}
-
-bool HTMLFormControlElementWithState::isFormControlElementWithState() const
-{
+bool HTMLFormControlElementWithState::ShouldAutocomplete() const {
+  if (!Form())
     return true;
+  return Form()->ShouldAutocomplete();
 }
 
-} // namespace blink
+void HTMLFormControlElementWithState::NotifyFormStateChanged() {
+  // This can be called during fragment parsing as a result of option
+  // selection before the document is active (or even in a frame).
+  if (!GetDocument().IsActive())
+    return;
+  GetDocument().GetFrame()->Loader().Client()->DidUpdateCurrentHistoryItem();
+}
+
+bool HTMLFormControlElementWithState::ShouldSaveAndRestoreFormControlState()
+    const {
+  // We don't save/restore control state in a form with autocomplete=off.
+  return isConnected() && ShouldAutocomplete();
+}
+
+FormControlState HTMLFormControlElementWithState::SaveFormControlState() const {
+  return FormControlState();
+}
+
+void HTMLFormControlElementWithState::FinishParsingChildren() {
+  HTMLFormControlElement::FinishParsingChildren();
+  GetDocument().GetFormController().RestoreControlStateFor(*this);
+}
+
+bool HTMLFormControlElementWithState::IsFormControlElementWithState() const {
+  return true;
+}
+
+}  // namespace blink

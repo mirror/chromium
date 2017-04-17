@@ -31,7 +31,7 @@
 
 #include "modules/ModulesExport.h"
 #include "modules/accessibility/AXLayoutObject.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -39,57 +39,60 @@ class AXObjectCacheImpl;
 class AXTableCell;
 
 class MODULES_EXPORT AXTable : public AXLayoutObject {
-    WTF_MAKE_NONCOPYABLE(AXTable);
+  WTF_MAKE_NONCOPYABLE(AXTable);
 
-protected:
-    AXTable(LayoutObject*, AXObjectCacheImpl&);
+ protected:
+  AXTable(LayoutObject*, AXObjectCacheImpl&);
 
-public:
-    static AXTable* create(LayoutObject*, AXObjectCacheImpl&);
-    ~AXTable() override;
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  static AXTable* Create(LayoutObject*, AXObjectCacheImpl&);
+  ~AXTable() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    void init() final;
+  void Init() final;
 
-    bool isAXTable() const final;
-    bool isDataTable() const final;
+  bool IsAXTable() const final;
+  bool IsDataTable() const final;
 
-    AccessibilityRole roleValue() const final;
+  AccessibilityRole RoleValue() const final;
 
-    void addChildren() override;
-    void clearChildren() final;
+  void AddChildren() override;
+  void ClearChildren() final;
 
-    // To be overridden by AXARIAGrid.
-    virtual bool isAriaTable() const { return false; }
-    virtual bool supportsSelectedRows() { return false; }
+  // To be overridden by AXARIAGrid.
+  virtual bool IsAriaTable() const { return false; }
+  virtual bool SupportsSelectedRows() { return false; }
 
-    const AXObjectVector& columns();
-    const AXObjectVector& rows();
+  const AXObjectVector& Columns();
+  const AXObjectVector& Rows();
 
-    unsigned columnCount();
-    unsigned rowCount();
-    AXTableCell* cellForColumnAndRow(unsigned column, unsigned row);
+  unsigned ColumnCount();
+  unsigned RowCount();
+  AXTableCell* CellForColumnAndRow(unsigned column, unsigned row);
 
-    void columnHeaders(AXObjectVector&);
-    void rowHeaders(AXObjectVector&);
+  int AriaColumnCount();
+  int AriaRowCount();
 
-    // an object that contains, as children, all the objects that act as headers
-    AXObject* headerContainer();
+  void ColumnHeaders(AXObjectVector&);
+  void RowHeaders(AXObjectVector&);
 
-protected:
-    AXObjectVector m_rows;
-    AXObjectVector m_columns;
+  // an object that contains, as children, all the objects that act as headers
+  AXObject* HeaderContainer();
 
-    Member<AXObject> m_headerContainer;
-    bool m_isAXTable;
+ protected:
+  AXObjectVector rows_;
+  AXObjectVector columns_;
 
-    bool hasARIARole() const;
-    virtual bool isTableExposableThroughAccessibility() const;
-    bool computeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const final;
+  Member<AXObject> header_container_;
+  bool is_ax_table_;
+
+  bool HasARIARole() const;
+  virtual bool IsTableExposableThroughAccessibility() const;
+  bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const final;
 };
 
-DEFINE_AX_OBJECT_TYPE_CASTS(AXTable, isAXTable());
+DEFINE_AX_OBJECT_TYPE_CASTS(AXTable, IsAXTable());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AXTable_h
+#endif  // AXTable_h

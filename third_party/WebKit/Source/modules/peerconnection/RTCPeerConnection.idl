@@ -63,11 +63,9 @@ enum RTCIceConnectionState {
 [
     ActiveScriptWrappable,
     DependentLifetime,
-    // TODO(guidou): There should only be one constructor argument, and it
-    // should be optional.
-    Constructor(Dictionary rtcConfiguration, optional Dictionary mediaConstraints),
+    // TODO(guidou): There should only be one constructor argument.
+    Constructor(optional RTCConfiguration configuration, optional Dictionary mediaConstraints),
     ConstructorCallWith=ExecutionContext,
-    NoInterfaceObject,
     RaisesException=Constructor,
 ] interface RTCPeerConnection : EventTarget {
     [CallWith=ScriptState] Promise<RTCSessionDescription> createOffer(optional RTCOfferOptions options);
@@ -86,18 +84,18 @@ enum RTCIceConnectionState {
     readonly attribute RTCIceConnectionState iceConnectionState;
     // readonly attribute boolean? canTrickleIceCandidates;
     // RTCConfiguration getConfiguration();
-    // void setConfiguration(RTCConfiguration configuration);
+    [CallWith=ScriptState, RaisesException] void setConfiguration(RTCConfiguration configuration);
     // TODO(guidou): close() should never throw an exception.
     [RaisesException] void close();
     attribute EventHandler onnegotiationneeded;
     attribute EventHandler onicecandidate;
     attribute EventHandler onsignalingstatechange;
     attribute EventHandler oniceconnectionstatechange;
-    // attribute EventHandler onicegatheringstatechange;
+    attribute EventHandler onicegatheringstatechange;
 
     // https://w3c.github.io/webrtc-pc/#legacy-interface-extensions
     // These methods return Promise<void> because having Promise-based versions requires that all overloads return Promises.
-    [CallWith=ScriptState] Promise<void> createOffer(RTCSessionDescriptionCallback successCallback, RTCPeerConnectionErrorCallback failureCallback, optional Dictionary rtcOfferOptions);
+    [CallWith=ScriptState, RaisesException] Promise<void> createOffer(RTCSessionDescriptionCallback successCallback, RTCPeerConnectionErrorCallback failureCallback, optional Dictionary rtcOfferOptions);
     // TODO(guidou): There should be no mediaConstraints argument.
     [CallWith=ScriptState] Promise<void> createAnswer(RTCSessionDescriptionCallback successCallback, RTCPeerConnectionErrorCallback failureCallback, optional Dictionary mediaConstraints);
     [CallWith=ScriptState] Promise<void> setLocalDescription(RTCSessionDescriptionInit description, VoidCallback successCallback, [Default=Undefined] optional RTCPeerConnectionErrorCallback failureCallback);
@@ -108,27 +106,32 @@ enum RTCIceConnectionState {
     // TODO(guidou): The selector argument should the first (nullable,
     // non-optional) argument, and there should be a third failureCallback
     // argument.
-    [CallWith=ScriptState] Promise<void> getStats(RTCStatsCallback successCallback, optional MediaStreamTrack? selector);
-    [CallWith=ScriptState, RuntimeEnabled=RTCPeerConnectionNewGetStats] Promise<RTCStatsReport> getStats(optional MediaStreamTrack? selector);
+    [CallWith=ScriptState, LegacyInterfaceTypeChecking] Promise<void> getStats(RTCStatsCallback successCallback, optional MediaStreamTrack? selector);
+    // TODO(hbos): The spec has an optional |selector| argument that is not
+    // supported yet. There is a discussion about what to do with it (clarify
+    // spec, remove it or change it?): https://github.com/w3c/webrtc-stats/issues/116
+    [CallWith=ScriptState] Promise<RTCStatsReport> getStats();
+
+    // https://w3c.github.io/webrtc-pc/#dom-rtcpeerconnection-getreceivers
+    sequence<RTCRtpReceiver> getReceivers();
 
     // https://w3c.github.io/webrtc-pc/#peer-to-peer-data-api
     // TODO(guidou): The label argument should have [TreatNullAs=EmptyString]
     // and be non-nullable.
-    [RaisesException] RTCDataChannel createDataChannel([TreatUndefinedAs=NullString] DOMString? label, optional Dictionary options);
+    [CallWith=ScriptState, RaisesException] RTCDataChannel createDataChannel(DOMString? label, optional Dictionary options);
     attribute EventHandler ondatachannel;
 
+    // Certificate management
+    // https://w3c.github.io/webrtc-pc/#sec.cert-mgmt
+    [RaisesException, CallWith=ScriptState] static Promise<RTCCertificate> generateCertificate(AlgorithmIdentifier keygenAlgorithm);
+
     // Non-standard or removed from the spec:
-    [CallWith=ExecutionContext, RaisesException] void updateIce(optional Dictionary configuration, optional Dictionary mediaConstraints);
-    sequence<MediaStream> getLocalStreams();
-    sequence<MediaStream> getRemoteStreams();
-    MediaStream getStreamById(DOMString streamId);
-    [CallWith=ExecutionContext, RaisesException] void addStream(MediaStream? stream, optional Dictionary mediaConstraints);
-    [RaisesException] void removeStream(MediaStream? stream);
-    [RaisesException] RTCDTMFSender createDTMFSender(MediaStreamTrack track);
+    [Measure] sequence<MediaStream> getLocalStreams();
+    [Measure] sequence<MediaStream> getRemoteStreams();
+    [Measure] MediaStream getStreamById(DOMString streamId);
+    [Measure, CallWith=ScriptState, RaisesException] void addStream(MediaStream? stream, optional Dictionary mediaConstraints);
+    [Measure, RaisesException] void removeStream(MediaStream? stream);
+    [Measure, RaisesException] RTCDTMFSender createDTMFSender(MediaStreamTrack track);
     attribute EventHandler onaddstream;
     attribute EventHandler onremovestream;
-
-    // Certificate management
-    // http://w3c.github.io/webrtc-pc/#sec.cert-mgmt
-    [RaisesException, CallWith=ScriptState] static Promise<RTCCertificate> generateCertificate(AlgorithmIdentifier keygenAlgorithm);
 };

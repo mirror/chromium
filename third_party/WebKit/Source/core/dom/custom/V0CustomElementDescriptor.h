@@ -32,8 +32,8 @@
 #define V0CustomElementDescriptor_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/HashTableDeletedValueType.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/HashTableDeletedValueType.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
@@ -42,59 +42,59 @@ struct V0CustomElementDescriptorHash;
 // A Custom Element descriptor is everything necessary to match a
 // Custom Element instance to a definition.
 class V0CustomElementDescriptor {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    V0CustomElementDescriptor(const AtomicString& type, const AtomicString& namespaceURI, const AtomicString& localName)
-        : m_type(type)
-        , m_namespaceURI(namespaceURI)
-        , m_localName(localName)
-    {
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    ~V0CustomElementDescriptor() { }
+ public:
+  V0CustomElementDescriptor(const AtomicString& type,
+                            const AtomicString& namespace_uri,
+                            const AtomicString& local_name)
+      : type_(type), namespace_uri_(namespace_uri), local_name_(local_name) {}
 
-    // Specifies whether the custom element is in the HTML or SVG
-    // namespace.
-    const AtomicString& namespaceURI() const { return m_namespaceURI; }
+  ~V0CustomElementDescriptor() {}
 
-    // The tag name.
-    const AtomicString& localName() const { return m_localName; }
+  // Specifies whether the custom element is in the HTML or SVG
+  // namespace.
+  const AtomicString& NamespaceURI() const { return namespace_uri_; }
 
-    // The name of the definition. For custom tags, this is the tag
-    // name and the same as "localName". For type extensions, this is
-    // the value of the "is" attribute.
-    const AtomicString& type() const { return m_type; }
+  // The tag name.
+  const AtomicString& LocalName() const { return local_name_; }
 
-    bool isTypeExtension() const { return m_type != m_localName; }
+  // The name of the definition. For custom tags, this is the tag
+  // name and the same as "localName". For type extensions, this is
+  // the value of the "is" attribute.
+  const AtomicString& GetType() const { return type_; }
 
-    // Stuff for hashing.
+  bool IsTypeExtension() const { return type_ != local_name_; }
 
-    V0CustomElementDescriptor() { }
-    explicit V0CustomElementDescriptor(WTF::HashTableDeletedValueType value)
-        : m_type(value) { }
-    bool isHashTableDeletedValue() const { return m_type.isHashTableDeletedValue(); }
+  // Stuff for hashing.
 
-    bool operator==(const V0CustomElementDescriptor& other) const
-    {
-        return m_type == other.m_type
-            && m_localName == other.m_localName
-            && m_namespaceURI == other.m_namespaceURI;
-    }
+  V0CustomElementDescriptor() {}
+  explicit V0CustomElementDescriptor(WTF::HashTableDeletedValueType value)
+      : type_(value) {}
+  bool IsHashTableDeletedValue() const {
+    return type_.IsHashTableDeletedValue();
+  }
 
-private:
-    AtomicString m_type;
-    AtomicString m_namespaceURI;
-    AtomicString m_localName;
+  bool operator==(const V0CustomElementDescriptor& other) const {
+    return type_ == other.type_ && local_name_ == other.local_name_ &&
+           namespace_uri_ == other.namespace_uri_;
+  }
+
+ private:
+  AtomicString type_;
+  AtomicString namespace_uri_;
+  AtomicString local_name_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 namespace WTF {
 
-template<> struct DefaultHash<blink::V0CustomElementDescriptor> {
-    typedef blink::V0CustomElementDescriptorHash Hash;
+template <>
+struct DefaultHash<blink::V0CustomElementDescriptor> {
+  typedef blink::V0CustomElementDescriptorHash Hash;
 };
 
-} // namespace WTF
+}  // namespace WTF
 
-#endif // V0CustomElementDescriptor_h
+#endif  // V0CustomElementDescriptor_h

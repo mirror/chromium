@@ -7,18 +7,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OmahaXMLParser : NSObject<NSXMLParserDelegate> {
-  NSMutableArray* chromeIncompleteDownloadURLs_;
-  NSString* chromeImageFilename_;
-}
+@interface OmahaXMLParser : NSObject
 
-- (NSMutableArray*)chromeIncompleteDownloadURLs;
-
-- (NSString*)chromeImageFilename;
-
-// Parses an XML document and extracts all the URL's it finds as well as the
-// filename. Adds each URL into the array chromeIncompleteDownloadURLs_.
-- (NSArray*)parseXML:(NSData*)omahaResponseXML error:(NSError**)error;
+// Parses the XML body from Omaha's HTTP response and extracts the URLs and name
+// of the Chrome disk image. Then, returns an array with all the URLs
+// concatenated with the filename.
++ (NSArray*)parseXML:(NSData*)omahaResponseXML error:(NSError**)error;
 
 @end
 

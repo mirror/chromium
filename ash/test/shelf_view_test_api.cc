@@ -4,12 +4,13 @@
 
 #include "ash/test/shelf_view_test_api.h"
 
-#include "ash/common/shelf/overflow_button.h"
-#include "ash/common/shelf/shelf_constants.h"
-#include "ash/common/shelf/shelf_model.h"
+#include "ash/shelf/overflow_button.h"
 #include "ash/shelf/shelf_button.h"
+#include "ash/shelf/shelf_constants.h"
+#include "ash/shelf/shelf_model.h"
 #include "ash/shelf/shelf_view.h"
 #include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
 #include "ui/views/animation/bounds_animator.h"
 #include "ui/views/controls/menu/menu_runner.h"
 #include "ui/views/view_model.h"
@@ -49,9 +50,13 @@ int ShelfViewTestAPI::GetButtonCount() {
 ShelfButton* ShelfViewTestAPI::GetButton(int index) {
   // App list button is not a ShelfButton.
   if (shelf_view_->model_->items()[index].type == ash::TYPE_APP_LIST)
-    return NULL;
+    return nullptr;
 
-  return static_cast<ShelfButton*>(shelf_view_->view_model_->view_at(index));
+  return static_cast<ShelfButton*>(GetViewAt(index));
+}
+
+views::View* ShelfViewTestAPI::GetViewAt(int index) {
+  return shelf_view_->view_model_->view_at(index);
 }
 
 int ShelfViewTestAPI::GetFirstVisibleIndex() {
@@ -67,8 +72,17 @@ bool ShelfViewTestAPI::IsOverflowButtonVisible() {
 }
 
 void ShelfViewTestAPI::ShowOverflowBubble() {
-  if (!shelf_view_->IsShowingOverflowBubble())
-    shelf_view_->ToggleOverflowBubble();
+  DCHECK(!shelf_view_->IsShowingOverflowBubble());
+  shelf_view_->ToggleOverflowBubble();
+}
+
+void ShelfViewTestAPI::HideOverflowBubble() {
+  DCHECK(shelf_view_->IsShowingOverflowBubble());
+  shelf_view_->ToggleOverflowBubble();
+}
+
+bool ShelfViewTestAPI::IsShowingOverflowBubble() const {
+  return shelf_view_->IsShowingOverflowBubble();
 }
 
 const gfx::Rect& ShelfViewTestAPI::GetBoundsByIndex(int index) {
@@ -93,7 +107,7 @@ void ShelfViewTestAPI::RunMessageLoopUntilAnimationsDone() {
 
   // This nested loop will quit when TestAPIAnimationObserver's
   // OnBoundsAnimatorDone is called.
-  base::MessageLoop::current()->Run();
+  base::RunLoop().Run();
 
   shelf_view_->bounds_animator_->RemoveObserver(observer.get());
 }
@@ -109,20 +123,16 @@ OverflowBubble* ShelfViewTestAPI::overflow_bubble() {
   return shelf_view_->overflow_bubble_.get();
 }
 
+OverflowButton* ShelfViewTestAPI::overflow_button() const {
+  return shelf_view_->overflow_button_;
+}
+
 ShelfTooltipManager* ShelfViewTestAPI::tooltip_manager() {
   return &shelf_view_->tooltip_;
 }
 
 gfx::Size ShelfViewTestAPI::GetPreferredSize() {
   return shelf_view_->GetPreferredSize();
-}
-
-int ShelfViewTestAPI::GetButtonSize() {
-  return GetShelfConstant(SHELF_BUTTON_SIZE);
-}
-
-int ShelfViewTestAPI::GetButtonSpacing() {
-  return GetShelfConstant(SHELF_BUTTON_SPACING);
 }
 
 int ShelfViewTestAPI::GetMinimumDragDistance() const {

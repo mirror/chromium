@@ -7,44 +7,42 @@
 
 #include <string>
 
+#include "ash/public/cpp/shelf_item_delegate.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
-#include "chrome/browser/ui/ash/launcher/launcher_item_controller.h"
 
 class ArcAppDeferredLauncherController;
-class ChromeLauncherController;
 
-class ArcAppDeferredLauncherItemController : public LauncherItemController {
+// ArcAppDeferredLauncherItemController displays the icon of the ARC app that
+// cannot be launched immediately (due to ARC not being ready) on Chrome OS'
+// shelf, with an overlaid spinner to provide visual feedback.
+class ArcAppDeferredLauncherItemController : public ash::ShelfItemDelegate {
  public:
   ArcAppDeferredLauncherItemController(
       const std::string& arc_app_id,
-      ChromeLauncherController* controller,
+      int event_flags,
       const base::WeakPtr<ArcAppDeferredLauncherController>& host);
 
   ~ArcAppDeferredLauncherItemController() override;
 
   base::TimeDelta GetActiveTime() const;
 
-  // ash::ShelfItemDelegate
-  ash::ShelfItemDelegate::PerformedAction ItemSelected(
-      const ui::Event& event) override;
-  base::string16 GetTitle() override;
-  bool CanPin() const override;
-  ash::ShelfMenuModel* CreateApplicationMenu(int event_flags) override;
-  bool IsDraggable() override;
-  bool ShouldShowTooltip() override;
+  int event_flags() const { return event_flags_; }
+
+  // ash::ShelfItemDelegate:
+  void ItemSelected(std::unique_ptr<ui::Event> event,
+                    int64_t display_id,
+                    ash::ShelfLaunchSource source,
+                    const ItemSelectedCallback& callback) override;
+  void ExecuteCommand(uint32_t command_id, int32_t event_flags) override;
   void Close() override;
 
-  // LauncherItemController overrides:
-  bool IsOpen() const override;
-  bool IsVisible() const override;
-  void Launch(ash::LaunchSource source, int event_flags) override;
-  ash::ShelfItemDelegate::PerformedAction Activate(
-      ash::LaunchSource source) override;
-  ChromeLauncherAppMenuItems GetApplicationList(int event_flags) override;
-
  private:
+  // The flags of the event that caused the ARC app to be activated. These will
+  // be propagated to the launch event once the app is actually launched.
+  const int event_flags_;
+
   base::WeakPtr<ArcAppDeferredLauncherController> host_;
   const base::Time start_time_;
 

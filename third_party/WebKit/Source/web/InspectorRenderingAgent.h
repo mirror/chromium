@@ -14,34 +14,35 @@ class InspectorOverlay;
 class WebLocalFrameImpl;
 class WebViewImpl;
 
-class InspectorRenderingAgent final : public InspectorBaseAgent<protocol::Rendering::Metainfo> {
-    WTF_MAKE_NONCOPYABLE(InspectorRenderingAgent);
-public:
-    static InspectorRenderingAgent* create(WebLocalFrameImpl*, InspectorOverlay*);
+class InspectorRenderingAgent final
+    : public InspectorBaseAgent<protocol::Rendering::Metainfo> {
+  WTF_MAKE_NONCOPYABLE(InspectorRenderingAgent);
 
-    // protocol::Dispatcher::PageCommandHandler implementation.
-    void setShowPaintRects(ErrorString*, bool show) override;
-    void setShowDebugBorders(ErrorString*, bool show) override;
-    void setShowFPSCounter(ErrorString*, bool show) override;
-    void setShowScrollBottleneckRects(ErrorString*, bool show) override;
-    void setShowViewportSizeOnResize(ErrorString*, bool show) override;
+ public:
+  static InspectorRenderingAgent* Create(WebLocalFrameImpl*, InspectorOverlay*);
 
-    // InspectorBaseAgent overrides.
-    void disable(ErrorString*) override;
-    void restore() override;
+  // protocol::Dispatcher::PageCommandHandler implementation.
+  protocol::Response setShowPaintRects(bool) override;
+  protocol::Response setShowDebugBorders(bool) override;
+  protocol::Response setShowFPSCounter(bool) override;
+  protocol::Response setShowScrollBottleneckRects(bool) override;
+  protocol::Response setShowViewportSizeOnResize(bool) override;
 
-    DECLARE_VIRTUAL_TRACE();
+  // InspectorBaseAgent overrides.
+  protocol::Response disable() override;
+  void Restore() override;
 
-private:
-    InspectorRenderingAgent(WebLocalFrameImpl*, InspectorOverlay*);
-    bool compositingEnabled(ErrorString*);
-    WebViewImpl* webViewImpl();
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<WebLocalFrameImpl> m_webLocalFrameImpl;
-    Member<InspectorOverlay> m_overlay;
+ private:
+  InspectorRenderingAgent(WebLocalFrameImpl*, InspectorOverlay*);
+  protocol::Response CompositingEnabled();
+  WebViewImpl* GetWebViewImpl();
+
+  Member<WebLocalFrameImpl> web_local_frame_impl_;
+  Member<InspectorOverlay> overlay_;
 };
 
+}  // namespace blink
 
-} // namespace blink
-
-#endif // !defined(InspectorRenderingAgent_h)
+#endif  // !defined(InspectorRenderingAgent_h)

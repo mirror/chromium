@@ -49,7 +49,7 @@ class AccountChooserDialogAndroidTest : public ChromeRenderViewHostTestHarness {
   AccountChooserDialogAndroid* CreateDialogManyAccounts();
 
   AccountChooserDialogAndroid* CreateDialog(
-      ScopedVector<autofill::PasswordForm> credentials);
+      std::vector<std::unique_ptr<autofill::PasswordForm>> credentials);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(AccountChooserDialogAndroidTest);
@@ -62,25 +62,23 @@ void AccountChooserDialogAndroidTest::SetUp() {
 }
 
 AccountChooserDialogAndroid* AccountChooserDialogAndroidTest::CreateDialog(
-    ScopedVector<autofill::PasswordForm> credentials) {
-  ScopedVector<autofill::PasswordForm> deprecated_federated;
+    std::vector<std::unique_ptr<autofill::PasswordForm>> credentials) {
   return new AccountChooserDialogAndroid(
-      web_contents(), std::move(credentials), std::move(deprecated_federated),
-      GURL("https://example.com"),
+      web_contents(), std::move(credentials), GURL("https://example.com"),
       base::Bind(&AccountChooserDialogAndroidTest::OnChooseCredential,
                  base::Unretained(this)));
 }
 
 AccountChooserDialogAndroid*
 AccountChooserDialogAndroidTest::CreateDialogOneAccount() {
-  ScopedVector<autofill::PasswordForm> credentials;
+  std::vector<std::unique_ptr<autofill::PasswordForm>> credentials;
   credentials.push_back(CreatePasswordFormFromDataForTesting(kFormData));
   return CreateDialog(std::move(credentials));
 }
 
 AccountChooserDialogAndroid*
 AccountChooserDialogAndroidTest::CreateDialogManyAccounts() {
-  ScopedVector<autofill::PasswordForm> credentials;
+  std::vector<std::unique_ptr<autofill::PasswordForm>> credentials;
   credentials.push_back(CreatePasswordFormFromDataForTesting(kFormData));
   credentials.push_back(CreatePasswordFormFromDataForTesting(kFormData));
   return CreateDialog(std::move(credentials));
@@ -93,14 +91,9 @@ TEST_F(AccountChooserDialogAndroidTest,
   dialog->OnCredentialClicked(
       base::android::AttachCurrentThread(), nullptr /* obj */,
       0 /* credential_item */,
-      static_cast<int>(
-          password_manager::CredentialType::CREDENTIAL_TYPE_PASSWORD),
       false /* signin_button_clicked */);
   dialog->Destroy(base::android::AttachCurrentThread(), nullptr);
 
-  histogram_tester.ExpectUniqueSample(
-      "PasswordManager.AccountChooserDialog",
-      password_manager::metrics_util::ACCOUNT_CHOOSER_CREDENTIAL_CHOSEN, 1);
   histogram_tester.ExpectUniqueSample(
       "PasswordManager.AccountChooserDialogOneAccount",
       password_manager::metrics_util::ACCOUNT_CHOOSER_CREDENTIAL_CHOSEN, 1);
@@ -115,13 +108,8 @@ TEST_F(AccountChooserDialogAndroidTest,
   dialog->OnCredentialClicked(
       base::android::AttachCurrentThread(), nullptr /* obj */,
       0 /* credential_item */,
-      static_cast<int>(
-          password_manager::CredentialType::CREDENTIAL_TYPE_PASSWORD),
       true /* signin_button_clicked */);
   dialog->Destroy(base::android::AttachCurrentThread(), nullptr);
-  histogram_tester.ExpectUniqueSample(
-      "PasswordManager.AccountChooserDialog",
-      password_manager::metrics_util::ACCOUNT_CHOOSER_SIGN_IN, 1);
   histogram_tester.ExpectUniqueSample(
       "PasswordManager.AccountChooserDialogOneAccount",
       password_manager::metrics_util::ACCOUNT_CHOOSER_SIGN_IN, 1);
@@ -135,14 +123,9 @@ TEST_F(AccountChooserDialogAndroidTest, CheckHistogramsReportingManyAccounts) {
   dialog->OnCredentialClicked(
       base::android::AttachCurrentThread(), nullptr /* obj */,
       0 /* credential_item */,
-      static_cast<int>(
-          password_manager::CredentialType::CREDENTIAL_TYPE_PASSWORD),
       false /* signin_button_clicked */);
   dialog->Destroy(base::android::AttachCurrentThread(), nullptr);
 
-  histogram_tester.ExpectUniqueSample(
-      "PasswordManager.AccountChooserDialog",
-      password_manager::metrics_util::ACCOUNT_CHOOSER_CREDENTIAL_CHOSEN, 1);
   histogram_tester.ExpectUniqueSample(
       "PasswordManager.AccountChooserDialogMultipleAccounts",
       password_manager::metrics_util::ACCOUNT_CHOOSER_CREDENTIAL_CHOSEN, 1);

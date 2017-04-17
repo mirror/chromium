@@ -2,14 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/command_line.h"
+#include "ui/ozone/public/ozone_platform.h"
+
 #include "base/logging.h"
 #include "base/trace_event/trace_event.h"
 #include "ui/events/devices/device_data_manager.h"
 #include "ui/ozone/platform_object.h"
 #include "ui/ozone/platform_selection.h"
-#include "ui/ozone/public/ozone_platform.h"
-#include "ui/ozone/public/ozone_switches.h"
 
 namespace ui {
 
@@ -18,7 +17,7 @@ namespace {
 bool g_platform_initialized_ui = false;
 bool g_platform_initialized_gpu = false;
 
-}
+}  // namespace
 
 OzonePlatform::OzonePlatform() {
   DCHECK(!instance_) << "There should only be a single OzonePlatform.";
@@ -40,7 +39,7 @@ void OzonePlatform::InitializeForUI() {
 
 // static
 void OzonePlatform::InitializeForUI(const InitParams& args) {
-  CreateInstance();
+  EnsureInstance();
   if (g_platform_initialized_ui)
     return;
   g_platform_initialized_ui = true;
@@ -51,18 +50,18 @@ void OzonePlatform::InitializeForUI(const InitParams& args) {
 }
 
 // static
-void OzonePlatform::InitializeForGPU() {
-  const InitParams params;
-  OzonePlatform::InitializeForGPU(params);
-}
-
-// static
 void OzonePlatform::InitializeForGPU(const InitParams& args) {
-  CreateInstance();
+  EnsureInstance();
   if (g_platform_initialized_gpu)
     return;
   g_platform_initialized_gpu = true;
   instance_->InitializeGPU(args);
+}
+
+// static
+void OzonePlatform::Shutdown() {
+  delete instance_;
+  // Destructor resets pointer.
 }
 
 // static
@@ -72,7 +71,7 @@ OzonePlatform* OzonePlatform::GetInstance() {
 }
 
 // static
-void OzonePlatform::CreateInstance() {
+OzonePlatform* OzonePlatform::EnsureInstance() {
   if (!instance_) {
     TRACE_EVENT1("ozone",
                  "OzonePlatform::Initialize",
@@ -85,19 +84,20 @@ void OzonePlatform::CreateInstance() {
     OzonePlatform* pl = platform.release();
     DCHECK_EQ(instance_, pl);
   }
+  return instance_;
 }
 
 // static
-OzonePlatform* OzonePlatform::instance_;
+OzonePlatform* OzonePlatform::instance_ = nullptr;
 
-// Convenience methods to facilitate transitionning to new API.
-void OzonePlatform::InitializeUI(const InitParams& args) {
-  InitializeUI();
-}
-void OzonePlatform::InitializeGPU(const InitParams& args) {
-  InitializeGPU();
+IPC::MessageFilter* OzonePlatform::GetGpuMessageFilter() {
+  return nullptr;
 }
 
-void OzonePlatform::AddInterfaces(shell::Connection* connection) {}
+base::MessageLoop::Type OzonePlatform::GetMessageLoopTypeForGpu() {
+  return base::MessageLoop::TYPE_DEFAULT;
+}
+
+void OzonePlatform::AddInterfaces(service_manager::BinderRegistry* registry) {}
 
 }  // namespace ui

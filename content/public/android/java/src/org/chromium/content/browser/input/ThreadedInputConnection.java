@@ -4,16 +4,17 @@
 
 package org.chromium.content.browser.input;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.CorrectionInfo;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
@@ -36,8 +37,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * so 'extends' here should have no functional effect at all. See crbug.com/616334 for more
  * details.
  */
-public class ThreadedInputConnection extends BaseInputConnection
-        implements ChromiumBaseInputConnection {
+class ThreadedInputConnection extends BaseInputConnection implements ChromiumBaseInputConnection {
     private static final String TAG = "cr_Ime";
     private static final boolean DEBUG_LOGS = false;
 
@@ -54,16 +54,6 @@ public class ThreadedInputConnection extends BaseInputConnection
         @Override
         public void run() {
             processPendingInputStates();
-        }
-    };
-
-    private final Runnable mMoveCursorSelectionEndRunnable = new Runnable() {
-        @Override
-        public void run() {
-            TextInputState textInputState = requestAndWaitForTextInputState();
-            if (textInputState == null) return;
-            Range selection = textInputState.selection();
-            setSelection(selection.end(), selection.end());
         }
     };
 
@@ -85,7 +75,7 @@ public class ThreadedInputConnection extends BaseInputConnection
     private final Runnable mFinishComposingTextRunnable = new Runnable() {
         @Override
         public void run() {
-            mImeAdapter.finishComposingText();
+            finishComposingTextOnUiThread();
         }
     };
 
@@ -97,39 +87,34 @@ public class ThreadedInputConnection extends BaseInputConnection
     // a bunch of new objects for each key stroke.
     private final BlockingQueue<TextInputState> mQueue = new LinkedBlockingQueue<>();
     private int mPendingAccent;
+    private TextInputState mCachedTextInputState;
 
     ThreadedInputConnection(View view, ImeAdapter imeAdapter, Handler handler) {
         super(view, true);
-        if (DEBUG_LOGS) Log.w(TAG, "constructor");
+        if (DEBUG_LOGS) Log.i(TAG, "constructor");
         ImeUtils.checkOnUiThread();
         mImeAdapter = imeAdapter;
         mHandler = handler;
     }
 
-    void initializeOutAttrsOnUiThread(int inputType, int inputFlags, int selectionStart,
-            int selectionEnd, EditorInfo outAttrs) {
+    void resetOnUiThread() {
         ImeUtils.checkOnUiThread();
         mNumNestedBatchEdits = 0;
         mPendingAccent = 0;
-        ImeUtils.computeEditorInfo(inputType, inputFlags, selectionStart, selectionEnd, outAttrs);
-        if (DEBUG_LOGS) {
-            Log.w(TAG, "initializeOutAttrs: " + ImeUtils.getEditorInfoDebugString(outAttrs));
-        }
     }
 
     @Override
-    public void updateStateOnUiThread(final String text, final int selectionStart,
-            final int selectionEnd, final int compositionStart, final int compositionEnd,
-            boolean singleLine, final boolean isNonImeChange) {
+    public void updateStateOnUiThread(String text, final int selectionStart, final int selectionEnd,
+            final int compositionStart, final int compositionEnd, boolean singleLine,
+            final boolean replyToRequest) {
         ImeUtils.checkOnUiThread();
 
-        final TextInputState newState =
-                new TextInputState(text, new Range(selectionStart, selectionEnd),
-                        new Range(compositionStart, compositionEnd), singleLine, !isNonImeChange);
-        if (DEBUG_LOGS) Log.w(TAG, "updateState: %s", newState);
+        mCachedTextInputState = new TextInputState(text, new Range(selectionStart, selectionEnd),
+                new Range(compositionStart, compositionEnd), singleLine, replyToRequest);
+        if (DEBUG_LOGS) Log.i(TAG, "updateState: %s", mCachedTextInputState);
 
-        addToQueueOnUiThread(newState);
-        if (isNonImeChange) {
+        addToQueueOnUiThread(mCachedTextInputState);
+        if (!replyToRequest) {
             mHandler.post(mProcessPendingInputStatesRunnable);
         }
     }
@@ -163,39 +148,31 @@ public class ThreadedInputConnection extends BaseInputConnection
         return true;
     }
 
-    /**
-     * @see ChromiumBaseInputConnection#moveCursorToSelectionEndOnUiThread()
-     */
-    @Override
-    public void moveCursorToSelectionEndOnUiThread() {
-        mHandler.post(mMoveCursorSelectionEndRunnable);
-    }
-
     @Override
     @VisibleForTesting
     public void unblockOnUiThread() {
-        if (DEBUG_LOGS) Log.w(TAG, "unblockOnUiThread");
+        if (DEBUG_LOGS) Log.i(TAG, "unblockOnUiThread");
         ImeUtils.checkOnUiThread();
         addToQueueOnUiThread(UNBLOCKER);
         mHandler.post(mProcessPendingInputStatesRunnable);
     }
 
     private void processPendingInputStates() {
-        if (DEBUG_LOGS) Log.w(TAG, "checkQueue");
+        if (DEBUG_LOGS) Log.i(TAG, "checkQueue");
         assertOnImeThread();
         // Handle all the remaining states in the queue.
         while (true) {
             TextInputState state = mQueue.poll();
             if (state == null) {
-                if (DEBUG_LOGS) Log.w(TAG, "checkQueue - finished");
+                if (DEBUG_LOGS) Log.i(TAG, "checkQueue - finished");
                 return;
             }
             // Unblocker was not used. Ignore.
             if (state.shouldUnblock()) {
-                if (DEBUG_LOGS) Log.w(TAG, "checkQueue - ignoring one unblocker");
+                if (DEBUG_LOGS) Log.i(TAG, "checkQueue - ignoring one unblocker");
                 continue;
             }
-            if (DEBUG_LOGS) Log.w(TAG, "checkQueue: " + state);
+            if (DEBUG_LOGS) Log.i(TAG, "checkQueue: " + state);
             updateSelection(state);
         }
     }
@@ -211,7 +188,13 @@ public class ThreadedInputConnection extends BaseInputConnection
     }
 
     private TextInputState requestAndWaitForTextInputState() {
-        if (DEBUG_LOGS) Log.w(TAG, "requestAndWaitForTextInputState");
+        if (DEBUG_LOGS) Log.i(TAG, "requestAndWaitForTextInputState");
+        if (runningOnUiThread()) {
+            Log.w(TAG, "InputConnection API is not called on IME thread. Returning cached result.");
+            // Returning cached result is a workaround for existing webview apps. (crbug.com/643477)
+            return mCachedTextInputState;
+        }
+        assertOnImeThread();
         ThreadUtils.postOnUiThread(mRequestTextInputStateUpdate);
         return blockAndGetStateUpdate();
     }
@@ -223,7 +206,7 @@ public class ThreadedInputConnection extends BaseInputConnection
         } catch (InterruptedException e) {
             Log.e(TAG, "addToQueueOnUiThread interrupted", e);
         }
-        if (DEBUG_LOGS) Log.w(TAG, "addToQueueOnUiThread finished: %d", mQueue.size());
+        if (DEBUG_LOGS) Log.i(TAG, "addToQueueOnUiThread finished: %d", mQueue.size());
     }
 
     /**
@@ -231,6 +214,11 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     BlockingQueue<TextInputState> getQueueForTest() {
         return mQueue;
+    }
+
+    @VisibleForTesting
+    protected boolean runningOnUiThread() {
+        return ThreadUtils.runningOnUiThread();
     }
 
     private void assertOnImeThread() {
@@ -242,7 +230,7 @@ public class ThreadedInputConnection extends BaseInputConnection
      * @return TextInputState if we get it successfully. null otherwise.
      */
     private TextInputState blockAndGetStateUpdate() {
-        if (DEBUG_LOGS) Log.w(TAG, "blockAndGetStateUpdate");
+        if (DEBUG_LOGS) Log.i(TAG, "blockAndGetStateUpdate");
         assertOnImeThread();
         boolean shouldUpdateSelection = false;
         while (true) {
@@ -257,11 +245,11 @@ public class ThreadedInputConnection extends BaseInputConnection
                 return null;
             }
             if (state.shouldUnblock()) {
-                if (DEBUG_LOGS) Log.w(TAG, "blockAndGetStateUpdate: unblocked");
+                if (DEBUG_LOGS) Log.i(TAG, "blockAndGetStateUpdate: unblocked");
                 return null;
-            } else if (state.fromIme()) {
+            } else if (state.replyToRequest()) {
                 if (shouldUpdateSelection) updateSelection(state);
-                if (DEBUG_LOGS) Log.w(TAG, "blockAndGetStateUpdate done: %d", mQueue.size());
+                if (DEBUG_LOGS) Log.i(TAG, "blockAndGetStateUpdate done: %d", mQueue.size());
                 return state;
             }
             // Ignore when state is not from IME, but make sure to update state when we handle
@@ -279,7 +267,8 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean setComposingText(final CharSequence text, final int newCursorPosition) {
-        if (DEBUG_LOGS) Log.w(TAG, "setComposingText [%s] [%d]", text, newCursorPosition);
+        if (DEBUG_LOGS) Log.i(TAG, "setComposingText [%s] [%d]", text, newCursorPosition);
+        if (text == null) return false;
         return updateComposingText(text, newCursorPosition, false);
     }
 
@@ -289,18 +278,22 @@ public class ThreadedInputConnection extends BaseInputConnection
     @VisibleForTesting
     public boolean updateComposingText(
             final CharSequence text, final int newCursorPosition, final boolean isPendingAccent) {
-        final int accentToSend =
-                isPendingAccent ? (mPendingAccent | KeyCharacterMap.COMBINING_ACCENT) : 0;
-        assertOnImeThread();
-        cancelCombiningAccent();
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mImeAdapter.sendCompositionToNative(text, newCursorPosition, false, accentToSend);
+                updateComposingTextOnUiThread(text, newCursorPosition, isPendingAccent);
             }
         });
         notifyUserAction();
         return true;
+    }
+
+    private void updateComposingTextOnUiThread(
+            CharSequence text, int newCursorPosition, boolean isPendingAccent) {
+        int accentToSend =
+                isPendingAccent ? (mPendingAccent | KeyCharacterMap.COMBINING_ACCENT) : 0;
+        cancelCombiningAccentOnUiThread();
+        mImeAdapter.sendCompositionToNative(text, newCursorPosition, false, accentToSend);
     }
 
     /**
@@ -308,13 +301,13 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean commitText(final CharSequence text, final int newCursorPosition) {
-        if (DEBUG_LOGS) Log.w(TAG, "commitText [%s] [%d]", text, newCursorPosition);
-        assertOnImeThread();
-        cancelCombiningAccent();
+        if (DEBUG_LOGS) Log.i(TAG, "commitText [%s] [%d]", text, newCursorPosition);
+        if (text == null) return false;
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mImeAdapter.sendCompositionToNative(text, newCursorPosition, text.length() > 0, 0);
+                cancelCombiningAccentOnUiThread();
+                mImeAdapter.sendCompositionToNative(text, newCursorPosition, true, 0);
             }
         });
         notifyUserAction();
@@ -326,8 +319,7 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean performEditorAction(final int actionCode) {
-        if (DEBUG_LOGS) Log.w(TAG, "performEditorAction [%d]", actionCode);
-        assertOnImeThread();
+        if (DEBUG_LOGS) Log.i(TAG, "performEditorAction [%d]", actionCode);
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -342,8 +334,7 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean performContextMenuAction(final int id) {
-        if (DEBUG_LOGS) Log.w(TAG, "performContextMenuAction [%d]", id);
-        assertOnImeThread();
+        if (DEBUG_LOGS) Log.i(TAG, "performContextMenuAction [%d]", id);
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -358,8 +349,7 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public ExtractedText getExtractedText(ExtractedTextRequest request, int flags) {
-        if (DEBUG_LOGS) Log.w(TAG, "getExtractedText");
-        assertOnImeThread();
+        if (DEBUG_LOGS) Log.i(TAG, "getExtractedText");
         TextInputState textInputState = requestAndWaitForTextInputState();
         if (textInputState == null) return null;
         ExtractedText extractedText = new ExtractedText();
@@ -376,7 +366,8 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean beginBatchEdit() {
-        if (DEBUG_LOGS) Log.w(TAG, "beginBatchEdit [%b]", (mNumNestedBatchEdits == 0));
+        assertOnImeThread();
+        if (DEBUG_LOGS) Log.i(TAG, "beginBatchEdit [%b]", (mNumNestedBatchEdits == 0));
         assertOnImeThread();
         mNumNestedBatchEdits++;
         return true;
@@ -390,7 +381,7 @@ public class ThreadedInputConnection extends BaseInputConnection
         assertOnImeThread();
         if (mNumNestedBatchEdits == 0) return false;
         --mNumNestedBatchEdits;
-        if (DEBUG_LOGS) Log.w(TAG, "endBatchEdit [%b]", (mNumNestedBatchEdits == 0));
+        if (DEBUG_LOGS) Log.i(TAG, "endBatchEdit [%b]", (mNumNestedBatchEdits == 0));
         if (mNumNestedBatchEdits == 0) {
             updateSelection(requestAndWaitForTextInputState());
         }
@@ -402,14 +393,13 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean deleteSurroundingText(final int beforeLength, final int afterLength) {
-        if (DEBUG_LOGS) Log.w(TAG, "deleteSurroundingText [%d %d]", beforeLength, afterLength);
-        assertOnImeThread();
-        if (mPendingAccent != 0) {
-            finishComposingText();
-        }
+        if (DEBUG_LOGS) Log.i(TAG, "deleteSurroundingText [%d %d]", beforeLength, afterLength);
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (mPendingAccent != 0) {
+                    finishComposingTextOnUiThread();
+                }
                 mImeAdapter.deleteSurroundingText(beforeLength, afterLength);
             }
         });
@@ -419,9 +409,22 @@ public class ThreadedInputConnection extends BaseInputConnection
     /**
      * @see InputConnection#deleteSurroundingTextInCodePoints(int, int)
      */
-    public boolean deleteSurroundingTextInCodePoints(int beforeLength, int afterLength) {
-        // TODO(changwan): Implement this. http://crbug.com/595525
-        return false;
+    @Override
+    public boolean deleteSurroundingTextInCodePoints(
+            final int beforeLength, final int afterLength) {
+        if (DEBUG_LOGS) {
+            Log.i(TAG, "deleteSurroundingTextInCodePoints [%d %d]", beforeLength, afterLength);
+        }
+        ThreadUtils.postOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mPendingAccent != 0) {
+                    finishComposingTextOnUiThread();
+                }
+                mImeAdapter.deleteSurroundingTextInCodePoints(beforeLength, afterLength);
+            }
+        });
+        return true;
     }
 
     /**
@@ -429,14 +432,11 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean sendKeyEvent(final KeyEvent event) {
-        if (DEBUG_LOGS) Log.w(TAG, "sendKeyEvent [%d %d]", event.getAction(), event.getKeyCode());
-        assertOnImeThread();
-
-        if (handleCombiningAccent(event)) return true;
-
+        if (DEBUG_LOGS) Log.i(TAG, "sendKeyEvent [%d %d]", event.getAction(), event.getKeyCode());
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (handleCombiningAccentOnUiThread(event)) return;
                 mImeAdapter.sendKeyEvent(event);
             }
         });
@@ -444,7 +444,7 @@ public class ThreadedInputConnection extends BaseInputConnection
         return true;
     }
 
-    private boolean handleCombiningAccent(final KeyEvent event) {
+    private boolean handleCombiningAccentOnUiThread(final KeyEvent event) {
         // TODO(changwan): this will break the current composition. check if we can
         // implement it in the renderer instead.
         int action = event.getAction();
@@ -455,30 +455,31 @@ public class ThreadedInputConnection extends BaseInputConnection
             int pendingAccent = unicodeChar & KeyCharacterMap.COMBINING_ACCENT_MASK;
             StringBuilder builder = new StringBuilder();
             builder.appendCodePoint(pendingAccent);
-            updateComposingText(builder.toString(), 1, true);
-            setCombiningAccent(pendingAccent);
+            updateComposingTextOnUiThread(builder.toString(), 1, true);
+            setCombiningAccentOnUiThread(pendingAccent);
             return true;
         } else if (mPendingAccent != 0 && unicodeChar != 0) {
             int combined = KeyEvent.getDeadChar(mPendingAccent, unicodeChar);
             if (combined != 0) {
                 StringBuilder builder = new StringBuilder();
                 builder.appendCodePoint(combined);
-                commitText(builder.toString(), 1);
+                String text = builder.toString();
+                mImeAdapter.sendCompositionToNative(text, 1, text.length() > 0, 0);
                 return true;
             }
             // Noncombinable character; commit the accent character and fall through to sending
             // the key event for the character afterwards.
-            finishComposingText();
+            finishComposingTextOnUiThread();
         }
         return false;
     }
 
     @VisibleForTesting
-    public void setCombiningAccent(int pendingAccent) {
+    public void setCombiningAccentOnUiThread(int pendingAccent) {
         mPendingAccent = pendingAccent;
     }
 
-    private void cancelCombiningAccent() {
+    private void cancelCombiningAccentOnUiThread() {
         mPendingAccent = 0;
     }
 
@@ -487,12 +488,16 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean finishComposingText() {
-        if (DEBUG_LOGS) Log.w(TAG, "finishComposingText");
-        cancelCombiningAccent();
+        if (DEBUG_LOGS) Log.i(TAG, "finishComposingText");
         // This is the only function that may be called on UI thread because
         // of direct calls from InputMethodManager.
         ThreadUtils.postOnUiThread(mFinishComposingTextRunnable);
         return true;
+    }
+
+    private void finishComposingTextOnUiThread() {
+        cancelCombiningAccentOnUiThread();
+        mImeAdapter.finishComposingText();
     }
 
     /**
@@ -500,8 +505,7 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean setSelection(final int start, final int end) {
-        if (DEBUG_LOGS) Log.w(TAG, "setSelection [%d %d]", start, end);
-        assertOnImeThread();
+        if (DEBUG_LOGS) Log.i(TAG, "setSelection [%d %d]", start, end);
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -516,8 +520,7 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean setComposingRegion(final int start, final int end) {
-        if (DEBUG_LOGS) Log.w(TAG, "setComposingRegion [%d %d]", start, end);
-        assertOnImeThread();
+        if (DEBUG_LOGS) Log.i(TAG, "setComposingRegion [%d %d]", start, end);
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -532,8 +535,7 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public CharSequence getTextBeforeCursor(int maxChars, int flags) {
-        if (DEBUG_LOGS) Log.w(TAG, "getTextBeforeCursor [%d %x]", maxChars, flags);
-        assertOnImeThread();
+        if (DEBUG_LOGS) Log.i(TAG, "getTextBeforeCursor [%d %x]", maxChars, flags);
         TextInputState textInputState = requestAndWaitForTextInputState();
         if (textInputState == null) return null;
         return textInputState.getTextBeforeSelection(maxChars);
@@ -544,8 +546,7 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public CharSequence getTextAfterCursor(int maxChars, int flags) {
-        if (DEBUG_LOGS) Log.w(TAG, "getTextAfterCursor [%d %x]", maxChars, flags);
-        assertOnImeThread();
+        if (DEBUG_LOGS) Log.i(TAG, "getTextAfterCursor [%d %x]", maxChars, flags);
         TextInputState textInputState = requestAndWaitForTextInputState();
         if (textInputState == null) return null;
         return textInputState.getTextAfterSelection(maxChars);
@@ -556,8 +557,7 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public CharSequence getSelectedText(int flags) {
-        if (DEBUG_LOGS) Log.w(TAG, "getSelectedText [%x]", flags);
-        assertOnImeThread();
+        if (DEBUG_LOGS) Log.i(TAG, "getSelectedText [%x]", flags);
         TextInputState textInputState = requestAndWaitForTextInputState();
         if (textInputState == null) return null;
         return textInputState.getSelectedText();
@@ -568,10 +568,14 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public int getCursorCapsMode(int reqModes) {
-        if (DEBUG_LOGS) Log.w(TAG, "getCursorCapsMode [%x]", reqModes);
-        assertOnImeThread();
-        // TODO(changwan): implement this.
-        return 0;
+        TextInputState textInputState = requestAndWaitForTextInputState();
+        int result = 0;
+        if (textInputState != null) {
+            result = TextUtils.getCapsMode(
+                    textInputState.text(), textInputState.selection().start(), reqModes);
+        }
+        if (DEBUG_LOGS) Log.i(TAG, "getCursorCapsMode [%x]: %x", reqModes, result);
+        return result;
     }
 
     /**
@@ -579,8 +583,7 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean commitCompletion(CompletionInfo text) {
-        if (DEBUG_LOGS) Log.w(TAG, "commitCompletion [%s]", text);
-        assertOnImeThread();
+        if (DEBUG_LOGS) Log.i(TAG, "commitCompletion [%s]", text);
         return false;
     }
 
@@ -590,10 +593,9 @@ public class ThreadedInputConnection extends BaseInputConnection
     @Override
     public boolean commitCorrection(CorrectionInfo correctionInfo) {
         if (DEBUG_LOGS) {
-            Log.w(TAG, "commitCorrection [%s]",
+            Log.i(TAG, "commitCorrection [%s]",
                     ImeUtils.getCorrectionInfoDebugString(correctionInfo));
         }
-        assertOnImeThread();
         return false;
     }
 
@@ -602,8 +604,7 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean clearMetaKeyStates(int states) {
-        if (DEBUG_LOGS) Log.w(TAG, "clearMetaKeyStates [%x]", states);
-        assertOnImeThread();
+        if (DEBUG_LOGS) Log.i(TAG, "clearMetaKeyStates [%x]", states);
         return false;
     }
 
@@ -612,7 +613,7 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean reportFullscreenMode(boolean enabled) {
-        if (DEBUG_LOGS) Log.w(TAG, "reportFullscreenMode [%b]", enabled);
+        if (DEBUG_LOGS) Log.i(TAG, "reportFullscreenMode [%b]", enabled);
         // We ignore fullscreen mode for now. That's why we set
         // EditorInfo.IME_FLAG_NO_FULLSCREEN in constructor.
         // Note that this may be called on UI thread.
@@ -624,8 +625,7 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean performPrivateCommand(String action, Bundle data) {
-        if (DEBUG_LOGS) Log.w(TAG, "performPrivateCommand [%s]", action);
-        assertOnImeThread();
+        if (DEBUG_LOGS) Log.i(TAG, "performPrivateCommand [%s]", action);
         return false;
     }
 
@@ -634,8 +634,7 @@ public class ThreadedInputConnection extends BaseInputConnection
      */
     @Override
     public boolean requestCursorUpdates(final int cursorUpdateMode) {
-        if (DEBUG_LOGS) Log.w(TAG, "requestCursorUpdates [%x]", cursorUpdateMode);
-        assertOnImeThread();
+        if (DEBUG_LOGS) Log.i(TAG, "requestCursorUpdates [%x]", cursorUpdateMode);
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -648,7 +647,11 @@ public class ThreadedInputConnection extends BaseInputConnection
     /**
      * @see InputConnection#closeConnection()
      */
+    // TODO(crbug.com/635567): Fix this properly.
+    @Override
+    @SuppressLint("MissingSuperCall")
     public void closeConnection() {
+        if (DEBUG_LOGS) Log.i(TAG, "closeConnection");
         // TODO(changwan): Implement this. http://crbug.com/595525
     }
 }

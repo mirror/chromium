@@ -5,12 +5,15 @@
 <script src="../resources-test.js"></script>
 <script>
 
-function loadIframe(resolve, reject, url)
+function loadIframe(url)
 {
+    var callback;
+    var promise = new Promise((fulfill) => callback = fulfill);
     var frame = document.createElement('iframe');
     frame.src = url;
-    frame.onload = resolve;
+    frame.onload = callback;
     document.body.appendChild(frame);
+    return promise;
 }
 
 function test()
@@ -20,7 +23,7 @@ function test()
 
     function waitForWorkerActivated(scope) {
         return new Promise(function(resolve) {
-            InspectorTest.addSniffer(WebInspector.ServiceWorkersView.prototype, "_updateRegistration", updateRegistration, false);
+            InspectorTest.addSniffer(Resources.ServiceWorkersView.prototype, "_updateRegistration", updateRegistration, false);
             function updateRegistration(registration)
             {
                 if (registration.scopeURL == scope) {
@@ -31,12 +34,12 @@ function test()
                         }
                     }
                 }
-                InspectorTest.addSniffer(WebInspector.ServiceWorkersView.prototype, "_updateRegistration", updateRegistration, false);
+                InspectorTest.addSniffer(Resources.ServiceWorkersView.prototype, "_updateRegistration", updateRegistration, false);
             }});
     }
     function installNewWorkerDetector(scope) {
         var workerIdSet = {};
-        InspectorTest.addSniffer(WebInspector.ServiceWorkersView.prototype, "_updateRegistration", updateRegistration, true);
+        InspectorTest.addSniffer(Resources.ServiceWorkersView.prototype, "_updateRegistration", updateRegistration, true);
         function updateRegistration(registration)
         {
             if (registration.scopeURL == scope) {
@@ -50,33 +53,31 @@ function test()
         }
     }
     installNewWorkerDetector(scope);
-    WebInspector.inspectorView.showPanel("sources")
-        .then(function(){
-            return waitForWorkerActivated(scope);
-        })
+    UI.inspectorView.showPanel("sources")
+        .then(() => waitForWorkerActivated(scope))
         .then(function(){
             InspectorTest.addResult("The first ServiceWorker is activated.");
-            return InspectorTest.invokePageFunctionPromise("loadIframe", [scope])
+            return InspectorTest.callFunctionInPageAsync("loadIframe", [ scope ]);
         })
         .then(function() {
             InspectorTest.addResult("The first frame loaded.");
-            return InspectorTest.invokePageFunctionPromise("loadIframe", [scope]);
+            return InspectorTest.callFunctionInPageAsync("loadIframe", [ scope ]);
         })
         .then(function() {
             InspectorTest.addResult("The second frame loaded.");
             InspectorTest.addResult("Check \"Force update on page load\" check box");
-            WebInspector.settings.settingForTest("serviceWorkerUpdateOnReload").set(true);
-            return InspectorTest.invokePageFunctionPromise("loadIframe", [scope]);
+            Common.settings.settingForTest("serviceWorkerUpdateOnReload").set(true);
+            return InspectorTest.callFunctionInPageAsync("loadIframe", [ scope ]);
         })
         .then(function() {
             InspectorTest.addResult("The third frame loaded. The second worker must be activated before here.");
-            return InspectorTest.invokePageFunctionPromise("loadIframe", [scope]);
+            return InspectorTest.callFunctionInPageAsync("loadIframe", [ scope ]);
         })
         .then(function() {
             InspectorTest.addResult("The fourth frame loaded.  The third worker must be activated before here.");
             InspectorTest.addResult("Uncheck \"Force update on page load\" check box");
-            WebInspector.settings.settingForTest("serviceWorkerUpdateOnReload").set(false);
-            return InspectorTest.invokePageFunctionPromise("loadIframe", [scope]);
+            Common.settings.settingForTest("serviceWorkerUpdateOnReload").set(false);
+            return InspectorTest.callFunctionInPageAsync("loadIframe", [ scope ]);
         })
         .then(function() {
             InspectorTest.addResult("The fifth frame loaded.");
@@ -89,7 +90,7 @@ function test()
             InspectorTest.deleteServiceWorkerRegistration(scope);
             InspectorTest.completeTest();
         });
-    WebInspector.panels.resources.serviceWorkersTreeElement.select();
+    UI.panels.resources._sidebar.serviceWorkersTreeElement.select();
     InspectorTest.registerServiceWorker(scriptURL, scope);
 }
 

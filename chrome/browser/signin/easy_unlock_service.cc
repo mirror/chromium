@@ -13,6 +13,7 @@
 #include "base/guid.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/sys_info.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -31,14 +32,14 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/pref_names.h"
+#include "components/cryptauth/cryptauth_client_impl.h"
+#include "components/cryptauth/cryptauth_device_manager.h"
+#include "components/cryptauth/cryptauth_enrollment_manager.h"
+#include "components/cryptauth/secure_message_delegate.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
-#include "components/proximity_auth/cryptauth/cryptauth_client_impl.h"
-#include "components/proximity_auth/cryptauth/cryptauth_device_manager.h"
-#include "components/proximity_auth/cryptauth/cryptauth_enrollment_manager.h"
-#include "components/proximity_auth/cryptauth/secure_message_delegate.h"
 #include "components/proximity_auth/logging/logging.h"
 #include "components/proximity_auth/proximity_auth_pref_manager.h"
 #include "components/proximity_auth/proximity_auth_system.h"
@@ -60,24 +61,13 @@
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager_client.h"
+#include "components/session_manager/core/session_manager.h"
 #include "components/signin/core/account_id/account_id.h"
-#include "components/user_manager/user_manager.h"
-#endif
-
-#if defined(OS_WIN)
-#include "base/win/windows_version.h"
 #endif
 
 using proximity_auth::ScreenlockState;
 
 namespace {
-
-enum BluetoothType {
-  BT_NO_ADAPTER,
-  BT_NORMAL,
-  BT_LOW_ENERGY_CAPABLE,
-  BT_MAX_TYPE
-};
 
 PrefService* GetLocalState() {
   return g_browser_process ? g_browser_process->local_state() : NULL;
@@ -117,14 +107,14 @@ class EasyUnlockService::BluetoothDetector
   explicit BluetoothDetector(EasyUnlockService* service)
       : service_(service),
         weak_ptr_factory_(this) {
-    apps::AppLifetimeMonitorFactory::GetForProfile(service_->profile())
+    apps::AppLifetimeMonitorFactory::GetForBrowserContext(service_->profile())
         ->AddObserver(this);
   }
 
   ~BluetoothDetector() override {
     if (adapter_.get())
       adapter_->RemoveObserver(this);
-    apps::AppLifetimeMonitorFactory::GetForProfile(service_->profile())
+    apps::AppLifetimeMonitorFactory::GetForBrowserContext(service_->profile())
         ->RemoveObserver(this);
   }
 
@@ -145,42 +135,29 @@ class EasyUnlockService::BluetoothDetector
     service_->OnBluetoothAdapterPresentChanged();
   }
 
-  device::BluetoothAdapter* getAdapter() {
-    return adapter_.get();
-  }
-
  private:
   void OnAdapterInitialized(scoped_refptr<device::BluetoothAdapter> adapter) {
     adapter_ = adapter;
     adapter_->AddObserver(this);
     service_->OnBluetoothAdapterPresentChanged();
 
-#if !defined(OS_CHROMEOS)
-    // Bluetooth detection causes serious performance degradations on Mac
-    // and possibly other platforms as well: http://crbug.com/467316
-    // Since this feature is currently only offered for ChromeOS we just
-    // turn it off on other platforms once the inforamtion about the
-    // adapter has been gathered and reported.
-    // TODO(bcwhite,xiyuan): Revisit when non-chromeos platforms are supported.
-    adapter_->RemoveObserver(this);
-    adapter_ = NULL;
-#else
     // TODO(tengs): At the moment, there is no way for Bluetooth discoverability
     // to be turned on except through the Easy Unlock setup. If we step on any
     // toes in the future then we need to revisit this guard.
     if (adapter_->IsDiscoverable())
       TurnOffBluetoothDiscoverability();
-#endif  // !defined(OS_CHROMEOS)
   }
 
   // apps::AppLifetimeMonitor::Observer:
-  void OnAppDeactivated(Profile* profile, const std::string& app_id) override {
+  void OnAppDeactivated(content::BrowserContext* context,
+                        const std::string& app_id) override {
     // TODO(tengs): Refactor the lifetime management to EasyUnlockAppManager.
     if (app_id == extension_misc::kEasyUnlockAppId)
       TurnOffBluetoothDiscoverability();
   }
 
-  void OnAppStop(Profile* profile, const std::string& app_id) override {
+  void OnAppStop(content::BrowserContext* context,
+                 const std::string& app_id) override {
     // TODO(tengs): Refactor the lifetime management to EasyUnlockAppManager.
     if (app_id == extension_misc::kEasyUnlockAppId)
       TurnOffBluetoothDiscoverability();
@@ -281,15 +258,11 @@ void EasyUnlockService::RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kEasyUnlockAllowed, true);
   registry->RegisterBooleanPref(prefs::kEasyUnlockEnabled, false);
   registry->RegisterDictionaryPref(prefs::kEasyUnlockPairing,
-                                   new base::DictionaryValue());
+                                   base::MakeUnique<base::DictionaryValue>());
   registry->RegisterBooleanPref(
       prefs::kEasyUnlockProximityRequired,
       false,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
-
-  proximity_auth::CryptAuthGCMManager::RegisterPrefs(registry);
-  proximity_auth::CryptAuthDeviceManager::RegisterPrefs(registry);
-  proximity_auth::CryptAuthEnrollmentManager::RegisterPrefs(registry);
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           proximity_auth::switches::kEnableBluetoothLowEnergyDiscovery))
@@ -494,8 +467,8 @@ bool EasyUnlockService::UpdateScreenlockState(ScreenlockState state) {
       HandleAuthFailure(GetAccountId());
   }
 
-  FOR_EACH_OBSERVER(
-      EasyUnlockServiceObserver, observers_, OnScreenlockStateChanged(state));
+  for (EasyUnlockServiceObserver& observer : observers_)
+    observer.OnScreenlockStateChanged(state);
   return true;
 }
 
@@ -723,8 +696,8 @@ void EasyUnlockService::NotifyUserUpdated() {
 }
 
 void EasyUnlockService::NotifyTurnOffOperationStatusChanged() {
-  FOR_EACH_OBSERVER(
-      EasyUnlockServiceObserver, observers_, OnTurnOffOperationStatusChanged());
+  for (EasyUnlockServiceObserver& observer : observers_)
+    observer.OnTurnOffOperationStatusChanged();
 }
 
 void EasyUnlockService::ResetScreenlockState() {
@@ -744,31 +717,20 @@ void EasyUnlockService::InitializeOnAppManagerReady() {
   CHECK(app_manager_.get());
 
   InitializeInternal();
+
+#if defined(OS_CHROMEOS)
+  // Only start Bluetooth detection for ChromeOS since the feature is
+  // only offered on ChromeOS. Enabling this on non-ChromeOS platforms
+  // previously introduced a performance regression: http://crbug.com/404482
+  // Make sure not to reintroduce a performance regression if re-enabling on
+  // additional platforms.
+  // TODO(xiyuan): Revisit when non-chromeos platforms are supported.
   bluetooth_detector_->Initialize();
+#endif  // defined(OS_CHROMEOS)
 }
 
 void EasyUnlockService::OnBluetoothAdapterPresentChanged() {
   UpdateAppState();
-
-  // Whether we've already passed Bluetooth availability information to UMA.
-  // This is static because there may be multiple instances and we want to
-  // report this system-level stat only once per run of Chrome.
-  static bool bluetooth_adapter_has_been_reported = false;
-
-  if (!bluetooth_adapter_has_been_reported) {
-    bluetooth_adapter_has_been_reported = true;
-    int bttype = BT_NO_ADAPTER;
-    if (bluetooth_detector_->IsPresent()) {
-      bttype = BT_LOW_ENERGY_CAPABLE;
-#if defined(OS_WIN)
-      if (base::win::GetVersion() < base::win::VERSION_WIN8) {
-        bttype = BT_NORMAL;
-      }
-#endif
-    }
-    UMA_HISTOGRAM_ENUMERATION(
-      "EasyUnlock.BluetoothAvailability", bttype, BT_MAX_TYPE);
-  }
 }
 
 void EasyUnlockService::SetHardlockStateForUser(
@@ -844,7 +806,7 @@ EasyUnlockAuthEvent EasyUnlockService::GetPasswordAuthEvent() const {
 
 void EasyUnlockService::SetProximityAuthDevices(
     const AccountId& account_id,
-    const proximity_auth::RemoteDeviceList& remote_devices) {
+    const cryptauth::RemoteDeviceList& remote_devices) {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           proximity_auth::switches::kEnableBluetoothLowEnergyDiscovery))
     return;
@@ -913,8 +875,8 @@ void EasyUnlockService::EnsureTpmKeyPresentIfNeeded() {
   // If this is called before the session is started, the chances are Chrome
   // is restarting in order to apply user flags. Don't check TPM keys in this
   // case.
-  if (!user_manager::UserManager::Get() ||
-      !user_manager::UserManager::Get()->IsSessionStarted())
+  if (!session_manager::SessionManager::Get() ||
+      !session_manager::SessionManager::Get()->IsSessionStarted())
     return;
 
   // TODO(tbarzic): Set check_private_key only if previous sign-in attempt

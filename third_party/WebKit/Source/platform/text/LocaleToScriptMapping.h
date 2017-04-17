@@ -32,19 +32,26 @@
 #define LocaleToScriptMapping_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Forward.h"
-#include "wtf/text/Unicode.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/text/Unicode.h"
 
 #include <unicode/uscript.h>
 
 namespace blink {
 
-PLATFORM_EXPORT UScriptCode localeToScriptCodeForFontSelection(const String&);
-PLATFORM_EXPORT UScriptCode scriptNameToCode(const String&);
+PLATFORM_EXPORT UScriptCode LocaleToScriptCodeForFontSelection(const String&);
+PLATFORM_EXPORT UScriptCode ScriptNameToCode(const String&);
 
-PLATFORM_EXPORT UScriptCode scriptCodeForHanFromLocale(const String&, char delimiter = '-');
-PLATFORM_EXPORT UScriptCode scriptCodeForHanFromLocale(UScriptCode, const String&, char delimiter = '-');
+PLATFORM_EXPORT UScriptCode ScriptCodeForHanFromSubtags(const String&,
+                                                        char delimiter = '-');
 
+inline bool IsUnambiguousHanScript(UScriptCode script) {
+  // localeToScriptCodeForFontSelection() does not return these values.
+  DCHECK(script != USCRIPT_HIRAGANA && script != USCRIPT_KATAKANA);
+  return script == USCRIPT_KATAKANA_OR_HIRAGANA ||
+         script == USCRIPT_SIMPLIFIED_HAN ||
+         script == USCRIPT_TRADITIONAL_HAN || script == USCRIPT_HANGUL;
+}
 }
 
 #endif

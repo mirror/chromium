@@ -5,71 +5,79 @@
 #ifndef URLSearchParams_h
 #define URLSearchParams_h
 
-#include "bindings/core/v8/Iterable.h"
-#include "bindings/core/v8/ScriptWrappable.h"
-#include "bindings/core/v8/USVStringOrURLSearchParams.h"
-#include "platform/heap/Handle.h"
-#include "platform/network/EncodedFormData.h"
-#include "wtf/Forward.h"
-#include "wtf/text/WTFString.h"
 #include <base/gtest_prod_util.h>
 #include <utility>
+#include "bindings/core/v8/Iterable.h"
+#include "bindings/core/v8/ScriptWrappable.h"
+#include "bindings/core/v8/USVStringSequenceSequenceOrUSVStringOrURLSearchParams.h"
+#include "platform/heap/Handle.h"
+#include "platform/network/EncodedFormData.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class ExceptionState;
 class DOMURL;
 
-typedef USVStringOrURLSearchParams URLSearchParamsInit;
+typedef USVStringSequenceSequenceOrUSVStringOrURLSearchParams
+    URLSearchParamsInit;
 
-class CORE_EXPORT URLSearchParams final : public GarbageCollectedFinalized<URLSearchParams>, public ScriptWrappable, public PairIterable<String, String> {
-    DEFINE_WRAPPERTYPEINFO();
+class CORE_EXPORT URLSearchParams final
+    : public GarbageCollectedFinalized<URLSearchParams>,
+      public ScriptWrappable,
+      public PairIterable<String, String> {
+  DEFINE_WRAPPERTYPEINFO();
 
-public:
-    static URLSearchParams* create(const URLSearchParamsInit&);
+ public:
+  static URLSearchParams* Create(const URLSearchParamsInit&, ExceptionState&);
+  static URLSearchParams* Create(const Vector<Vector<String>>&,
+                                 ExceptionState&);
 
-    static URLSearchParams* create(const String& queryString, DOMURL* urlObject = nullptr)
-    {
-        return new URLSearchParams(queryString, urlObject);
-    }
+  static URLSearchParams* Create(const String& query_string,
+                                 DOMURL* url_object = nullptr) {
+    return new URLSearchParams(query_string, url_object);
+  }
 
-    ~URLSearchParams();
+  ~URLSearchParams();
 
-    // URLSearchParams interface methods
-    String toString() const;
-    void append(const String& name, const String& value);
-    void deleteAllWithName(const String&);
-    String get(const String&) const;
-    Vector<String> getAll(const String&) const;
-    bool has(const String&) const;
-    void set(const String& name, const String& value);
-    void setInput(const String&);
+  // URLSearchParams interface methods
+  String toString() const;
+  void append(const String& name, const String& value);
+  void deleteAllWithName(const String&);
+  String get(const String&) const;
+  Vector<String> getAll(const String&) const;
+  bool has(const String&) const;
+  void set(const String& name, const String& value);
+  void SetInput(const String&);
 
-    // Internal helpers
-    PassRefPtr<EncodedFormData> toEncodedFormData() const;
-    const Vector<std::pair<String, String>>& params() const { return m_params; }
+  // Internal helpers
+  PassRefPtr<EncodedFormData> ToEncodedFormData() const;
+  const Vector<std::pair<String, String>>& Params() const { return params_; }
 
-#if ENABLE(ASSERT)
-    DOMURL* urlObject() const;
+#if DCHECK_IS_ON()
+  DOMURL* UrlObject() const;
 #endif
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    FRIEND_TEST_ALL_PREFIXES(URLSearchParamsTest, EncodedFormData);
+ private:
+  FRIEND_TEST_ALL_PREFIXES(URLSearchParamsTest, EncodedFormData);
 
-    explicit URLSearchParams(const String&, DOMURL* = nullptr);
-    explicit URLSearchParams(URLSearchParams*);
+  explicit URLSearchParams(const String&, DOMURL* = nullptr);
+  explicit URLSearchParams(URLSearchParams*);
 
-    void runUpdateSteps();
-    IterationSource* startIteration(ScriptState*, ExceptionState&) override;
-    void encodeAsFormData(Vector<char>&) const;
+  void RunUpdateSteps();
+  IterationSource* StartIteration(ScriptState*, ExceptionState&) override;
+  void EncodeAsFormData(Vector<char>&) const;
 
-    Vector<std::pair<String, String>> m_params;
+  void AppendWithoutUpdate(const String& name, const String& value);
 
-    WeakMember<DOMURL> m_urlObject;
+  Vector<std::pair<String, String>> params_;
+
+  WeakMember<DOMURL> url_object_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // URLSearchParams_h
+#endif  // URLSearchParams_h

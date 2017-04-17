@@ -13,7 +13,6 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/browser/fileapi/mock_url_request_delegate.h"
 #include "content/browser/service_worker/embedded_worker_test_helper.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_context_request_handler.h"
@@ -124,6 +123,11 @@ class SSLCertificateErrorJob : public net::URLRequestTestJob {
     net::SSLInfo info;
     info.cert_status = net::CERT_STATUS_DATE_INVALID;
     NotifySSLCertificateError(info, true);
+  }
+  void ContinueDespiteLastError() override {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::Bind(&SSLCertificateErrorJob::StartAsync,
+                              weak_factory_.GetWeakPtr()));
   }
 
  protected:
@@ -271,7 +275,13 @@ class ResponseVerifier : public base::RefCounted<ResponseVerifier> {
 class ServiceWorkerWriteToCacheJobTest : public testing::Test {
  public:
   ServiceWorkerWriteToCacheJobTest()
-      : browser_thread_bundle_(TestBrowserThreadBundle::IO_MAINLOOP),
+      : ServiceWorkerWriteToCacheJobTest("https://host/scope/",
+                                         "https://host/script.js") {}
+  ServiceWorkerWriteToCacheJobTest(const std::string& scope,
+                                   const std::string& script_url)
+      : scope_(scope),
+        script_url_(script_url),
+        browser_thread_bundle_(TestBrowserThreadBundle::IO_MAINLOOP),
         mock_protocol_handler_(nullptr) {}
   ~ServiceWorkerWriteToCacheJobTest() override {}
 
@@ -279,12 +289,10 @@ class ServiceWorkerWriteToCacheJobTest : public testing::Test {
       int process_id,
       int provider_id,
       const scoped_refptr<ServiceWorkerVersion>& version) {
-    std::unique_ptr<ServiceWorkerProviderHost> host(
-        new ServiceWorkerProviderHost(
-            process_id, MSG_ROUTING_NONE, provider_id,
-            SERVICE_WORKER_PROVIDER_FOR_WORKER,
-            ServiceWorkerProviderHost::FrameSecurityLevel::SECURE,
-            context()->AsWeakPtr(), nullptr));
+    std::unique_ptr<ServiceWorkerProviderHost> host =
+        CreateProviderHostForServiceWorkerContext(
+            process_id, provider_id, true /* is_parent_frame_secure */,
+            context()->AsWeakPtr());
     base::WeakPtr<ServiceWorkerProviderHost> provider_host = host->AsWeakPtr();
     context()->AddProviderHost(std::move(host));
     provider_host->running_hosted_version_ = version;
@@ -324,8 +332,6 @@ class ServiceWorkerWriteToCacheJobTest : public testing::Test {
     helper_.reset(new EmbeddedWorkerTestHelper(base::FilePath()));
 
     // A new unstored registration/version.
-    scope_ = GURL("https://host/scope/");
-    script_url_ = GURL("https://host/script.js");
     registration_ =
         new ServiceWorkerRegistration(scope_, 1L, context()->AsWeakPtr());
     version_ =
@@ -418,6 +424,9 @@ class ServiceWorkerWriteToCacheJobTest : public testing::Test {
   void DisableCache() { context()->storage()->disk_cache()->Disable(); }
 
  protected:
+  const GURL scope_;
+  const GURL script_url_;
+
   TestBrowserThreadBundle browser_thread_bundle_;
   std::unique_ptr<EmbeddedWorkerTestHelper> helper_;
   scoped_refptr<ServiceWorkerRegistration> registration_;
@@ -431,10 +440,7 @@ class ServiceWorkerWriteToCacheJobTest : public testing::Test {
   storage::BlobStorageContext blob_storage_context_;
   content::MockResourceContext resource_context_;
 
-  MockURLRequestDelegate url_request_delegate_;
-  GURL scope_;
-  GURL script_url_;
-
+  net::TestDelegate url_request_delegate_;
   int next_provider_id_ = 1;
   int64_t next_version_id_ = 1L;
 };
@@ -463,6 +469,67 @@ TEST_F(ServiceWorkerWriteToCacheJobTest, InvalidMimeType) {
 TEST_F(ServiceWorkerWriteToCacheJobTest, SSLCertificateError) {
   mock_protocol_handler_->SetCreateJobCallback(
       base::Bind(&CreateSSLCertificateErrorJob));
+  request_->Start();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(net::URLRequestStatus::FAILED, request_->status().status());
+  EXPECT_EQ(net::ERR_INSECURE_RESPONSE, request_->status().error());
+  EXPECT_EQ(kInvalidServiceWorkerResourceId,
+            version_->script_cache_map()->LookupResourceId(script_url_));
+}
+
+class ServiceWorkerWriteToCacheLocalhostTest
+    : public ServiceWorkerWriteToCacheJobTest {
+ public:
+  ServiceWorkerWriteToCacheLocalhostTest()
+      : ServiceWorkerWriteToCacheJobTest("https://localhost/scope/",
+                                         "https://localhost/script.js") {}
+  ~ServiceWorkerWriteToCacheLocalhostTest() override {}
+};
+
+TEST_F(ServiceWorkerWriteToCacheLocalhostTest,
+       SSLCertificateError_AllowInsecureLocalhost) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAllowInsecureLocalhost);
+
+  mock_protocol_handler_->SetCreateJobCallback(
+      base::Bind(&CreateSSLCertificateErrorJob));
+  request_->Start();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(net::URLRequestStatus::SUCCESS, request_->status().status());
+  EXPECT_EQ(net::OK, request_->status().error());
+  EXPECT_NE(kInvalidServiceWorkerResourceId,
+            version_->script_cache_map()->LookupResourceId(script_url_));
+}
+
+TEST_F(ServiceWorkerWriteToCacheLocalhostTest, SSLCertificateError) {
+  mock_protocol_handler_->SetCreateJobCallback(
+      base::Bind(&CreateSSLCertificateErrorJob));
+  request_->Start();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(net::URLRequestStatus::FAILED, request_->status().status());
+  EXPECT_EQ(net::ERR_INSECURE_RESPONSE, request_->status().error());
+  EXPECT_EQ(kInvalidServiceWorkerResourceId,
+            version_->script_cache_map()->LookupResourceId(script_url_));
+}
+
+TEST_F(ServiceWorkerWriteToCacheLocalhostTest,
+       CertStatusError_AllowInsecureLocalhost) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAllowInsecureLocalhost);
+
+  mock_protocol_handler_->SetCreateJobCallback(
+      base::Bind(&CreateCertStatusErrorJob));
+  request_->Start();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(net::URLRequestStatus::SUCCESS, request_->status().status());
+  EXPECT_EQ(net::OK, request_->status().error());
+  EXPECT_NE(kInvalidServiceWorkerResourceId,
+            version_->script_cache_map()->LookupResourceId(script_url_));
+}
+
+TEST_F(ServiceWorkerWriteToCacheLocalhostTest, CertStatusError) {
+  mock_protocol_handler_->SetCreateJobCallback(
+      base::Bind(&CreateCertStatusErrorJob));
   request_->Start();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(net::URLRequestStatus::FAILED, request_->status().status());

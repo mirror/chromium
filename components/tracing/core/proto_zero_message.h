@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "base/template_util.h"
 #include "build/build_config.h"
+#include "components/tracing/core/proto_utils.h"
 #include "components/tracing/core/scattered_stream_writer.h"
 #include "components/tracing/tracing_export.h"
 
@@ -29,6 +30,8 @@ class ProtoZeroMessageHandleBase;
 // performance. None of the methods require any dynamic memory allocation.
 class TRACING_EXPORT ProtoZeroMessage {
  public:
+  ProtoZeroMessage();
+
   // Clears up the state, allowing the message to be reused as a fresh one.
   void Reset(ScatteredStreamWriter*);
 
@@ -59,15 +62,60 @@ class TRACING_EXPORT ProtoZeroMessage {
 #endif
 
  protected:
-  ProtoZeroMessage();
+  // Proto types: uint64, uint32, int64, int32, bool, enum.
+  template <typename T>
+  void AppendVarInt(uint32_t field_id, T value) {
+    if (nested_message_)
+      EndNestedMessage();
 
-  void AppendVarIntU64(uint32_t field_id, uint64_t value);
-  void AppendVarIntU32(uint32_t field_id, uint32_t value);
-  void AppendFloat(uint32_t field_id, float value);
-  void AppendDouble(uint32_t field_id, double value);
+    uint8_t buffer[proto::kMaxSimpleFieldEncodedSize];
+    uint8_t* pos = buffer;
+
+    pos = proto::WriteVarInt(proto::MakeTagVarInt(field_id), pos);
+    // WriteVarInt encodes signed values in two's complement form.
+    pos = proto::WriteVarInt(value, pos);
+    WriteToStream(buffer, pos);
+  }
+
+  // Proto types: sint64, sint32.
+  template <typename T>
+  void AppendSignedVarInt(uint32_t field_id, T value) {
+    AppendVarInt(field_id, proto::ZigZagEncode(value));
+  }
+
+  // Proto types: bool, enum (small).
+  // Faster version of AppendVarInt for tiny numbers.
+  void AppendTinyVarInt(uint32_t field_id, int32_t value) {
+    DCHECK(0 <= value && value < 0x80);
+    if (nested_message_)
+      EndNestedMessage();
+
+    uint8_t buffer[proto::kMaxSimpleFieldEncodedSize];
+    uint8_t* pos = buffer;
+    // MakeTagVarInt gets super optimized here for constexpr.
+    pos = proto::WriteVarInt(proto::MakeTagVarInt(field_id), pos);
+    *pos++ = static_cast<uint8_t>(value);
+    WriteToStream(buffer, pos);
+  }
+
+  // Proto types: fixed64, sfixed64, fixed32, sfixed32, double, float.
+  template <typename T>
+  void AppendFixed(uint32_t field_id, T value) {
+    if (nested_message_)
+      EndNestedMessage();
+
+    uint8_t buffer[proto::kMaxSimpleFieldEncodedSize];
+    uint8_t* pos = buffer;
+
+    pos = proto::WriteVarInt(proto::MakeTagFixed<T>(field_id), pos);
+    memcpy(pos, &value, sizeof(T));
+    pos += sizeof(T);
+    // TODO(kraynov): Optimize memcpy performance, see http://crbug.com/624311 .
+    WriteToStream(buffer, pos);
+  }
+
   void AppendString(uint32_t field_id, const char* str);
   void AppendBytes(uint32_t field_id, const void* value, size_t size);
-  // TODO(kraynov): implement AppendVarIntS32/64(...) w/ zig-zag encoding.
 
   // Begins a nested message, using the static storage provided by the parent
   // class (see comment in |nested_messages_arena_|). The nested message ends

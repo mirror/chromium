@@ -1,7 +1,8 @@
 /*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights
+ * reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,62 +27,59 @@
 namespace blink {
 
 enum CollectionType {
-    // Unnamed HTMLCollection types cached in the document.
-    DocImages,    // all <img> elements in the document
-    DocApplets,   // all <object> and <applet> elements
-    DocEmbeds,    // all <embed> elements
-    DocForms,     // all <form> elements
-    DocLinks,     // all <a> _and_ <area> elements with a value for href
-    DocAnchors,   // all <a> elements with a value for name
-    DocScripts,   // all <script> elements
-    DocAll,       // "all" elements (IE)
+  // Unnamed HTMLCollection types cached in the document.
+  kDocImages,   // all <img> elements in the document
+  kDocApplets,  // all <object> and <applet> elements
+  kDocEmbeds,   // all <embed> elements
+  kDocForms,    // all <form> elements
+  kDocLinks,    // all <a> _and_ <area> elements with a value for href
+  kDocAnchors,  // all <a> elements with a value for name
+  kDocScripts,  // all <script> elements
+  kDocAll,      // "all" elements (IE)
 
-    // Unnamed HTMLCollection types cached in elements.
-    NodeChildren, // first-level children (ParentNode DOM interface)
-    TableTBodies, // all <tbody> elements in this table
-    TSectionRows, // all row elements in this table section
-    TableRows,
-    TRCells,      // all cells in this row
-    SelectOptions,
-    SelectedOptions,
-    DataListOptions,
-    MapAreas,
-    FormControls,
+  // Unnamed HTMLCollection types cached in elements.
+  kNodeChildren,  // first-level children (ParentNode DOM interface)
+  kTableTBodies,  // all <tbody> elements in this table
+  kTSectionRows,  // all row elements in this table section
+  kTableRows,
+  kTRCells,  // all cells in this row
+  kSelectOptions,
+  kSelectedOptions,
+  kDataListOptions,
+  kMapAreas,
+  kFormControls,
 
-    // Named HTMLCollection types cached in the document.
-    WindowNamedItems,
-    DocumentNamedItems,
+  // Named HTMLCollection types cached in the document.
+  kWindowNamedItems,
+  kDocumentNamedItems,
 
-    // Named HTMLCollection types cached in elements.
-    ClassCollectionType,
-    TagCollectionType,
-    HTMLTagCollectionType,
+  // Named HTMLCollection types cached in elements.
+  kClassCollectionType,
+  kTagCollectionType,
+  kHTMLTagCollectionType,
 
-    // Live NodeList.
-    NameNodeListType,
-    RadioNodeListType,
-    RadioImgNodeListType,
-    LabelsNodeListType,
+  // Live NodeList.
+  kNameNodeListType,
+  kRadioNodeListType,
+  kRadioImgNodeListType,
+  kLabelsNodeListType,
 };
 
-static const CollectionType FirstNamedCollectionType = WindowNamedItems;
-static const CollectionType FirstLiveNodeListType = NameNodeListType;
+static const CollectionType kFirstNamedCollectionType = kWindowNamedItems;
+static const CollectionType kFirstLiveNodeListType = kNameNodeListType;
 
-inline bool isUnnamedHTMLCollectionType(CollectionType type)
-{
-    return type < FirstNamedCollectionType;
+inline bool IsUnnamedHTMLCollectionType(CollectionType type) {
+  return type < kFirstNamedCollectionType;
 }
 
-inline bool isHTMLCollectionType(CollectionType type)
-{
-    return type < FirstLiveNodeListType;
+inline bool IsHTMLCollectionType(CollectionType type) {
+  return type < kFirstLiveNodeListType;
 }
 
-inline bool isLiveNodeListType(CollectionType type)
-{
-    return type >= FirstLiveNodeListType;
+inline bool IsLiveNodeListType(CollectionType type) {
+  return type >= kFirstLiveNodeListType;
 }
 
-} // namespace blink
+}  // namespace blink
 
 #endif

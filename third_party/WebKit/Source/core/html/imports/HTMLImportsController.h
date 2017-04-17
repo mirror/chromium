@@ -31,14 +31,15 @@
 #ifndef HTMLImportsController_h
 #define HTMLImportsController_h
 
+#include "bindings/core/v8/ScriptWrappable.h"
 #include "core/dom/Document.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-class FetchRequest;
+class FetchParameters;
 class HTMLImport;
 class HTMLImportChild;
 class HTMLImportChildClient;
@@ -46,43 +47,48 @@ class HTMLImportLoader;
 class HTMLImportTreeRoot;
 class KURL;
 
-class HTMLImportsController final : public GarbageCollected<HTMLImportsController> {
-public:
-    static HTMLImportsController* create(Document& master)
-    {
-        return new HTMLImportsController(master);
-    }
+class HTMLImportsController final
+    : public GarbageCollected<HTMLImportsController>,
+      public TraceWrapperBase {
+ public:
+  static HTMLImportsController* Create(Document& master) {
+    return new HTMLImportsController(master);
+  }
 
-    HTMLImportTreeRoot* root() const { return m_root; }
+  HTMLImportTreeRoot* Root() const { return root_; }
 
-    bool shouldBlockScriptExecution(const Document&) const;
-    HTMLImportChild* load(HTMLImport* parent, HTMLImportChildClient*, FetchRequest);
+  bool ShouldBlockScriptExecution(const Document&) const;
+  HTMLImportChild* Load(HTMLImport* parent,
+                        HTMLImportChildClient*,
+                        FetchParameters);
 
-    Document* master() const;
+  Document* Master() const;
 
-    HTMLImportLoader* createLoader();
+  HTMLImportLoader* CreateLoader();
 
-    size_t loaderCount() const { return m_loaders.size(); }
-    HTMLImportLoader* loaderAt(size_t i) const { return m_loaders[i]; }
-    Document* loaderDocumentAt(size_t) const;
-    HTMLImportLoader* loaderFor(const Document&) const;
+  size_t LoaderCount() const { return loaders_.size(); }
+  HTMLImportLoader* LoaderAt(size_t i) const { return loaders_[i]; }
+  HTMLImportLoader* LoaderFor(const Document&) const;
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-    void dispose();
+  void Dispose();
 
-    DECLARE_TRACE_WRAPPERS();
+  DECLARE_TRACE_WRAPPERS();
 
-private:
-    explicit HTMLImportsController(Document&);
+ private:
+  explicit HTMLImportsController(Document&);
 
-    HTMLImportChild* createChild(const KURL&, HTMLImportLoader*, HTMLImport* parent, HTMLImportChildClient*);
+  HTMLImportChild* CreateChild(const KURL&,
+                               HTMLImportLoader*,
+                               HTMLImport* parent,
+                               HTMLImportChildClient*);
 
-    Member<HTMLImportTreeRoot> m_root;
-    using LoaderList = HeapVector<Member<HTMLImportLoader>>;
-    LoaderList m_loaders;
+  Member<HTMLImportTreeRoot> root_;
+  using LoaderList = HeapVector<Member<HTMLImportLoader>>;
+  LoaderList loaders_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLImportsController_h
+#endif  // HTMLImportsController_h

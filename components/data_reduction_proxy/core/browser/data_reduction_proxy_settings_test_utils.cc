@@ -8,8 +8,8 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
-#include "base/time/time.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_config_test_utils.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.h"
@@ -54,17 +54,17 @@ void DataReductionProxySettingsTestBase::SetUp() {
   pref_service->registry()->RegisterDictionaryPref(kProxy);
   pref_service->SetBoolean(prefs::kDataReductionProxyWasEnabledBefore, false);
 
-  //AddProxyToCommandLine();
-  ResetSettings(true, true, true, false);
+  ResetSettings(nullptr, true, false);
 
   ListPrefUpdate original_update(test_context_->pref_service(),
                                  prefs::kDailyHttpOriginalContentLength);
   ListPrefUpdate received_update(test_context_->pref_service(),
                                  prefs::kDailyHttpReceivedContentLength);
   for (int64_t i = 0; i < kNumDaysInHistory; i++) {
-    original_update->Insert(0,
-                            new base::StringValue(base::Int64ToString(2 * i)));
-    received_update->Insert(0, new base::StringValue(base::Int64ToString(i)));
+    original_update->Insert(
+        0, base::MakeUnique<base::Value>(base::Int64ToString(2 * i)));
+    received_update->Insert(
+        0, base::MakeUnique<base::Value>(base::Int64ToString(i)));
   }
   last_update_time_ = base::Time::Now().LocalMidnight();
   pref_service->SetInt64(prefs::kDailyHttpContentLengthLastUpdateDate,
@@ -72,15 +72,11 @@ void DataReductionProxySettingsTestBase::SetUp() {
 }
 
 template <class C>
-void DataReductionProxySettingsTestBase::ResetSettings(bool allowed,
-                                                       bool fallback_allowed,
-                                                       bool promo_allowed,
-                                                       bool holdback) {
+void DataReductionProxySettingsTestBase::ResetSettings(
+    std::unique_ptr<base::Clock> clock,
+    bool promo_allowed,
+    bool holdback) {
   int flags = 0;
-  if (allowed)
-    flags |= DataReductionProxyParams::kAllowed;
-  if (fallback_allowed)
-    flags |= DataReductionProxyParams::kFallbackAllowed;
   if (promo_allowed)
     flags |= DataReductionProxyParams::kPromoAllowed;
   if (holdback)
@@ -91,6 +87,8 @@ void DataReductionProxySettingsTestBase::ResetSettings(bool allowed,
   settings->prefs_ = test_context_->pref_service();
   settings->data_reduction_proxy_service_ =
       test_context_->CreateDataReductionProxyService(settings);
+  if (clock)
+    settings->clock_ = std::move(clock);
   test_context_->config()->ResetParamFlagsForTest(flags);
   settings->UpdateConfigValues();
   EXPECT_CALL(*settings, GetOriginalProfilePrefs())
@@ -103,12 +101,10 @@ void DataReductionProxySettingsTestBase::ResetSettings(bool allowed,
 }
 
 // Explicitly generate required instantiations.
-template void
-DataReductionProxySettingsTestBase::ResetSettings<DataReductionProxySettings>(
-    bool allowed,
-    bool fallback_allowed,
-    bool promo_allowed,
-    bool holdback);
+template void DataReductionProxySettingsTestBase::ResetSettings<
+    DataReductionProxySettings>(std::unique_ptr<base::Clock> clock,
+                                bool promo_allowed,
+                                bool holdback);
 
 void DataReductionProxySettingsTestBase::ExpectSetProxyPrefs(
     bool expected_enabled,
@@ -128,7 +124,7 @@ void DataReductionProxySettingsTestBase::CheckOnPrefChange(
   if (managed) {
     test_context_->pref_service()->SetManagedPref(
         test_context_->GetDataReductionProxyEnabledPrefName(),
-        new base::FundamentalValue(enabled));
+        base::MakeUnique<base::Value>(enabled));
   } else {
     test_context_->SetDataReductionProxyEnabled(enabled);
   }
@@ -144,10 +140,9 @@ void DataReductionProxySettingsTestBase::InitDataReductionProxy(
       test_context_->CreateDataReductionProxyService(settings_.get()));
   settings_->data_reduction_proxy_service()->SetIOData(
       test_context_->io_data()->GetWeakPtr());
-  settings_->SetCallbackToRegisterSyntheticFieldTrial(
-      base::Bind(&DataReductionProxySettingsTestBase::
-                 SyntheticFieldTrialRegistrationCallback,
-                 base::Unretained(this)));
+  settings_->SetCallbackToRegisterSyntheticFieldTrial(base::Bind(
+      &DataReductionProxySettingsTestBase::OnSyntheticFieldTrialRegistration,
+      base::Unretained(this)));
 
   test_context_->RunUntilIdle();
 }
@@ -156,6 +151,13 @@ void DataReductionProxySettingsTestBase::CheckDataReductionProxySyntheticTrial(
     bool enabled) {
   EXPECT_EQ(enabled ? "Enabled" : "Disabled",
       synthetic_field_trials_["SyntheticDataReductionProxySetting"]);
+}
+
+bool DataReductionProxySettingsTestBase::OnSyntheticFieldTrialRegistration(
+    base::StringPiece trial_name,
+    base::StringPiece group_name) {
+  synthetic_field_trials_[trial_name.as_string()] = group_name.as_string();
+  return true;
 }
 
 }  // namespace data_reduction_proxy

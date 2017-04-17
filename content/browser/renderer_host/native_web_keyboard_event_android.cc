@@ -6,17 +6,18 @@
 
 #include "base/android/jni_android.h"
 #include "content/browser/renderer_host/input/web_input_event_builders_android.h"
+#include "ui/events/base_event_utils.h"
 #include "ui/gfx/native_widget_types.h"
 
 namespace {
 
 jobject NewGlobalRefForKeyEvent(jobject key_event) {
-  if (key_event == NULL) return NULL;
+  if (key_event == nullptr) return nullptr;
   return base::android::AttachCurrentThread()->NewGlobalRef(key_event);
 }
 
 void DeleteGlobalRefForKeyEvent(jobject key_event) {
-  if (key_event != NULL)
+  if (key_event != nullptr)
     base::android::AttachCurrentThread()->DeleteGlobalRef(key_event);
 }
 
@@ -24,30 +25,19 @@ void DeleteGlobalRefForKeyEvent(jobject key_event) {
 
 namespace content {
 
-NativeWebKeyboardEvent::NativeWebKeyboardEvent()
-    : os_event(NULL),
-      skip_in_browser(false) {
-}
+NativeWebKeyboardEvent::NativeWebKeyboardEvent(blink::WebInputEvent::Type type,
+                                               int modifiers,
+                                               base::TimeTicks timestamp)
+    : NativeWebKeyboardEvent(type,
+                             modifiers,
+                             ui::EventTimeStampToSeconds(timestamp)) {}
 
 NativeWebKeyboardEvent::NativeWebKeyboardEvent(blink::WebInputEvent::Type type,
                                                int modifiers,
-                                               double time_secs,
-                                               int keycode,
-                                               int scancode,
-                                               int unicode_character,
-                                               bool is_system_key)
-    : WebKeyboardEvent(WebKeyboardEventBuilder::Build(nullptr,
-                                                      nullptr,
-                                                      type,
-                                                      modifiers,
-                                                      time_secs,
-                                                      keycode,
-                                                      scancode,
-                                                      unicode_character,
-                                                      is_system_key)) {
-  os_event = NULL;
-  skip_in_browser = false;
-}
+                                               double timestampSeconds)
+    : WebKeyboardEvent(type, modifiers, timestampSeconds),
+      os_event(nullptr),
+      skip_in_browser(false) {}
 
 NativeWebKeyboardEvent::NativeWebKeyboardEvent(
     JNIEnv* env,
@@ -67,9 +57,11 @@ NativeWebKeyboardEvent::NativeWebKeyboardEvent(
                                                       keycode,
                                                       scancode,
                                                       unicode_character,
-                                                      is_system_key)) {
-  os_event = NewGlobalRefForKeyEvent(android_key_event.obj());
-  skip_in_browser = false;
+                                                      is_system_key)),
+      os_event(nullptr),
+      skip_in_browser(false) {
+  if (!android_key_event.is_null())
+    os_event = NewGlobalRefForKeyEvent(android_key_event.obj());
 }
 
 NativeWebKeyboardEvent::NativeWebKeyboardEvent(

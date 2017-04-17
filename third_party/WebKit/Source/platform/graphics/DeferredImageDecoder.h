@@ -26,14 +26,15 @@
 #ifndef DeferredImageDecoder_h
 #define DeferredImageDecoder_h
 
+#include <memory>
 #include "platform/PlatformExport.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/image-decoders/ImageDecoder.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Vector.h"
 #include "third_party/skia/include/core/SkRWBuffer.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/Vector.h"
-#include <memory>
+#include "third_party/skia/include/core/SkRefCnt.h"
 
 class SkImage;
 
@@ -44,66 +45,76 @@ class SharedBuffer;
 struct DeferredFrameData;
 
 class PLATFORM_EXPORT DeferredImageDecoder final {
-    WTF_MAKE_NONCOPYABLE(DeferredImageDecoder);
-    USING_FAST_MALLOC(DeferredImageDecoder);
-public:
-    static std::unique_ptr<DeferredImageDecoder> create(ImageDecoder::SniffResult, ImageDecoder::AlphaOption, ImageDecoder::GammaAndColorProfileOption);
+  WTF_MAKE_NONCOPYABLE(DeferredImageDecoder);
+  USING_FAST_MALLOC(DeferredImageDecoder);
 
-    static std::unique_ptr<DeferredImageDecoder> createForTesting(std::unique_ptr<ImageDecoder>);
+ public:
+  static std::unique_ptr<DeferredImageDecoder> Create(RefPtr<SharedBuffer> data,
+                                                      bool data_complete,
+                                                      ImageDecoder::AlphaOption,
+                                                      const ColorBehavior&);
 
-    ~DeferredImageDecoder();
+  static std::unique_ptr<DeferredImageDecoder> CreateForTesting(
+      std::unique_ptr<ImageDecoder>);
 
-    String filenameExtension() const;
+  ~DeferredImageDecoder();
 
-    PassRefPtr<SkImage> createFrameAtIndex(size_t);
+  String FilenameExtension() const;
 
-    PassRefPtr<SharedBuffer> data();
-    void setData(SharedBuffer& data, bool allDataReceived);
+  sk_sp<SkImage> CreateFrameAtIndex(size_t);
 
-    bool isSizeAvailable();
-    bool hasColorProfile() const;
-    IntSize size() const;
-    IntSize frameSizeAtIndex(size_t index) const;
-    size_t frameCount();
-    int repetitionCount() const;
-    size_t clearCacheExceptFrame(size_t index);
-    bool frameHasAlphaAtIndex(size_t index) const;
-    bool frameIsCompleteAtIndex(size_t index) const;
-    float frameDurationAtIndex(size_t index) const;
-    size_t frameBytesAtIndex(size_t index) const;
-    ImageOrientation orientationAtIndex(size_t index) const;
-    bool hotSpot(IntPoint&) const;
+  PassRefPtr<SharedBuffer> Data();
+  void SetData(PassRefPtr<SharedBuffer> data, bool all_data_received);
 
-private:
-    explicit DeferredImageDecoder(std::unique_ptr<ImageDecoder> actualDecoder);
+  bool IsSizeAvailable();
+  bool HasEmbeddedColorSpace() const;
+  IntSize Size() const;
+  IntSize FrameSizeAtIndex(size_t index) const;
+  size_t FrameCount();
+  int RepetitionCount() const;
+  size_t ClearCacheExceptFrame(size_t index);
+  bool FrameHasAlphaAtIndex(size_t index) const;
+  bool FrameIsCompleteAtIndex(size_t index) const;
+  float FrameDurationAtIndex(size_t index) const;
+  size_t FrameBytesAtIndex(size_t index) const;
+  ImageOrientation OrientationAtIndex(size_t index) const;
+  bool HotSpot(IntPoint&) const;
 
-    friend class DeferredImageDecoderTest;
-    ImageFrameGenerator* frameGenerator() { return m_frameGenerator.get(); }
+ private:
+  explicit DeferredImageDecoder(std::unique_ptr<ImageDecoder> actual_decoder);
 
-    void activateLazyDecoding();
-    void prepareLazyDecodedFrames();
+  friend class DeferredImageDecoderTest;
+  ImageFrameGenerator* FrameGenerator() { return frame_generator_.Get(); }
 
-    PassRefPtr<SkImage> createFrameImageAtIndex(size_t index, bool knownToBeOpaque);
+  void ActivateLazyDecoding();
+  void PrepareLazyDecodedFrames();
 
-    // Copy of the data that is passed in, used by deferred decoding.
-    // Allows creating readonly snapshots that may be read in another thread.
-    std::unique_ptr<SkRWBuffer> m_rwBuffer;
-    bool m_allDataReceived;
-    std::unique_ptr<ImageDecoder> m_actualDecoder;
+  sk_sp<SkImage> CreateFrameImageAtIndex(size_t index, bool known_to_be_opaque);
 
-    String m_filenameExtension;
-    IntSize m_size;
-    int m_repetitionCount;
-    bool m_hasColorProfile;
-    bool m_canYUVDecode;
-    bool m_hasHotSpot;
-    IntPoint m_hotSpot;
+  void SetDataInternal(RefPtr<SharedBuffer> data,
+                       bool all_data_received,
+                       bool push_data_to_decoder);
 
-    // Caches frame state information.
-    Vector<DeferredFrameData> m_frameData;
-    RefPtr<ImageFrameGenerator> m_frameGenerator;
+  // Copy of the data that is passed in, used by deferred decoding.
+  // Allows creating readonly snapshots that may be read in another thread.
+  std::unique_ptr<SkRWBuffer> rw_buffer_;
+  bool all_data_received_;
+  std::unique_ptr<ImageDecoder> actual_decoder_;
+
+  String filename_extension_;
+  IntSize size_;
+  int repetition_count_;
+  bool has_embedded_color_space_ = false;
+  sk_sp<SkColorSpace> color_space_for_sk_images_;
+  bool can_yuv_decode_;
+  bool has_hot_spot_;
+  IntPoint hot_spot_;
+
+  // Caches frame state information.
+  Vector<DeferredFrameData> frame_data_;
+  RefPtr<ImageFrameGenerator> frame_generator_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

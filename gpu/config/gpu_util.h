@@ -10,6 +10,7 @@
 
 #include "base/command_line.h"
 #include "build/build_config.h"
+#include "gpu/config/gpu_feature_info.h"
 #include "gpu/gpu_export.h"
 
 namespace base {
@@ -19,10 +20,6 @@ class CommandLine;
 namespace gpu {
 
 struct GPUInfo;
-
-// Merge features in src into dst.
-GPU_EXPORT void MergeFeatureSets(
-    std::set<int>* dst, const std::set<int>& src);
 
 // With provided GPUInfo, compute the driver bug workarounds and disabled
 // extensions for the current system, and append the |command_line|.
@@ -39,6 +36,18 @@ GPU_EXPORT void StringToFeatureSet(
 GPU_EXPORT void ParseSecondaryGpuDevicesFromCommandLine(
     const base::CommandLine& command_line,
     GPUInfo* gpu_info);
+
+GPU_EXPORT void InitializeDualGpusIfSupported(
+    const std::set<int>& driver_bug_workarounds);
+
+// This function should only be called from the GPU process, or the Browser
+// process while using in-process GPU. This function is safe to call at any
+// point, and is not dependent on sandbox initialization.
+GPU_EXPORT GpuFeatureInfo
+GetGpuFeatureInfo(const GPUInfo& gpu_info,
+                  const base::CommandLine& command_line);
+
+GPU_EXPORT void SetKeysForCrashLogging(const GPUInfo& gpu_info);
 
 }  // namespace gpu
 

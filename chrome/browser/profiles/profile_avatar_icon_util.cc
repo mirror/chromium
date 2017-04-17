@@ -16,15 +16,15 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
+#include "cc/paint/paint_flags.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/grit/generated_resources.h"
-#include "grit/theme_resources.h"
+#include "chrome/grit/theme_resources.h"
 #include "skia/ext/image_operations.h"
 #include "third_party/skia/include/core/SkPaint.h"
 #include "third_party/skia/include/core/SkPath.h"
 #include "third_party/skia/include/core/SkScalar.h"
-#include "third_party/skia/include/core/SkXfermode.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/canvas.h"
@@ -189,21 +189,21 @@ void AvatarImageSource::Draw(gfx::Canvas* canvas) {
                  SkFloatToScalar(x + border_size - 0.5f),   // right
                  SkFloatToScalar(y + border_size - 0.5f));  // bottom
 
-    SkPaint paint;
-    paint.setColor(border_color);
-    paint.setStyle(SkPaint::kStroke_Style);
-    paint.setStrokeWidth(SkIntToScalar(1));
+    cc::PaintFlags flags;
+    flags.setColor(border_color);
+    flags.setStyle(cc::PaintFlags::kStroke_Style);
+    flags.setStrokeWidth(SkIntToScalar(1));
 
-    canvas->DrawPath(path, paint);
+    canvas->DrawPath(path, flags);
   } else if (border_ == BORDER_ETCHED) {
     // Give the avatar an etched look by drawing a highlight on the bottom and
     // right edges.
     SkColor shadow_color = SkColorSetARGB(83, 0, 0, 0);
     SkColor highlight_color = SkColorSetARGB(96, 255, 255, 255);
 
-    SkPaint paint;
-    paint.setStyle(SkPaint::kStroke_Style);
-    paint.setStrokeWidth(SkIntToScalar(1));
+    cc::PaintFlags flags;
+    flags.setStyle(cc::PaintFlags::kStroke_Style);
+    flags.setStrokeWidth(SkIntToScalar(1));
 
     SkPath path;
 
@@ -218,8 +218,8 @@ void AvatarImageSource::Draw(gfx::Canvas* canvas) {
     // Draw right to the top-right, stopping within the last pixel.
     path.rLineTo(SkFloatToScalar(width_ - 0.5f), SkIntToScalar(0));
 
-    paint.setColor(shadow_color);
-    canvas->DrawPath(path, paint);
+    flags.setColor(shadow_color);
+    canvas->DrawPath(path, flags);
 
     path.reset();
 
@@ -233,8 +233,8 @@ void AvatarImageSource::Draw(gfx::Canvas* canvas) {
     // Draw up to the top-right.
     path.rLineTo(SkIntToScalar(0), SkFloatToScalar(-height_ + 1.5f));
 
-    paint.setColor(highlight_color);
-    canvas->DrawPath(path, paint);
+    flags.setColor(highlight_color);
+    canvas->DrawPath(path, flags);
   }
 }
 
@@ -369,6 +369,10 @@ int GetPlaceholderAvatarIconResourceID() {
   return IDR_PROFILE_AVATAR_PLACEHOLDER_LARGE;
 }
 
+std::string GetPlaceholderAvatarIconUrl() {
+  return "chrome://theme/IDR_PROFILE_AVATAR_PLACEHOLDER_LARGE";
+}
+
 const IconResourceInfo* GetDefaultAvatarIconResourceInfo(size_t index) {
   CHECK_LT(index, kDefaultAvatarIconsCount);
   static const IconResourceInfo resource_info[kDefaultAvatarIconsCount] = {
@@ -415,7 +419,7 @@ const IconResourceInfo* GetDefaultAvatarIconResourceInfo(size_t index) {
        "avatar_alien.png",
        IDS_DEFAULT_AVATAR_LABEL_13},
       {IDR_PROFILE_AVATAR_14,
-       "avatar_smiley.png",
+       "avatar_awesome.png",
        IDS_DEFAULT_AVATAR_LABEL_14},
       {IDR_PROFILE_AVATAR_15,
        "avatar_flower.png",
@@ -541,7 +545,7 @@ bool GetImageURLWithThumbnailSize(
     std::string new_path = old_path.substr(0, pos) + new_size_component +
                            old_path.substr(end);
     GURL::Replacements replacement;
-    replacement.SetPathStr(new_path.c_str());
+    replacement.SetPathStr(new_path);
     *new_url = old_url.ReplaceComponents(replacement);
     return new_url->is_valid();
   }

@@ -262,7 +262,7 @@ void DispatchGesture(ui::EventType gesture_type, gfx::Point location) {
       Shell::GetPrimaryRootWindow()->GetHost()->GetEventSource();
   ui::EventSourceTestApi event_source_test(event_source);
   ui::EventDispatchDetails details =
-      event_source_test.SendEventToProcessor(&gesture_event);
+      event_source_test.SendEventToSink(&gesture_event);
   CHECK(!details.dispatcher_destroyed);
 }
 
@@ -327,13 +327,7 @@ class DragDropControllerTest : public AshTestBase {
   DISALLOW_COPY_AND_ASSIGN(DragDropControllerTest);
 };
 
-// TODO(win_aura) http://crbug.com/154081
-#if defined(OS_WIN)
-#define MAYBE_DragDropInSingleViewTest DISABLED_DragDropInSingleViewTest
-#else
-#define MAYBE_DragDropInSingleViewTest DragDropInSingleViewTest
-#endif
-TEST_F(DragDropControllerTest, MAYBE_DragDropInSingleViewTest) {
+TEST_F(DragDropControllerTest, DragDropInSingleViewTest) {
   std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view);
@@ -417,15 +411,7 @@ TEST_F(DragDropControllerTest, DragDropWithZeroDragUpdates) {
   EXPECT_TRUE(drag_view->drag_done_received_);
 }
 
-// TODO(win_aura) http://crbug.com/154081
-#if defined(OS_WIN)
-#define MAYBE_DragDropInMultipleViewsSingleWidgetTest \
-  DISABLED_DragDropInMultipleViewsSingleWidgetTest
-#else
-#define MAYBE_DragDropInMultipleViewsSingleWidgetTest \
-  DragDropInMultipleViewsSingleWidgetTest
-#endif
-TEST_F(DragDropControllerTest, MAYBE_DragDropInMultipleViewsSingleWidgetTest) {
+TEST_F(DragDropControllerTest, DragDropInMultipleViewsSingleWidgetTest) {
   std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view1 = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view1);
@@ -480,16 +466,7 @@ TEST_F(DragDropControllerTest, MAYBE_DragDropInMultipleViewsSingleWidgetTest) {
   EXPECT_FALSE(drag_view2->drag_done_received_);
 }
 
-// TODO(win_aura) http://crbug.com/154081
-#if defined(OS_WIN)
-#define MAYBE_DragDropInMultipleViewsMultipleWidgetsTest \
-  DISABLED_DragDropInMultipleViewsMultipleWidgetsTest
-#else
-#define MAYBE_DragDropInMultipleViewsMultipleWidgetsTest \
-  DragDropInMultipleViewsMultipleWidgetsTest
-#endif
-TEST_F(DragDropControllerTest,
-       MAYBE_DragDropInMultipleViewsMultipleWidgetsTest) {
+TEST_F(DragDropControllerTest, DragDropInMultipleViewsMultipleWidgetsTest) {
   std::unique_ptr<views::Widget> widget1(CreateNewWidget());
   DragTestView* drag_view1 = new DragTestView;
   AddViewToWidgetAndResize(widget1.get(), drag_view1);
@@ -549,14 +526,7 @@ TEST_F(DragDropControllerTest,
   EXPECT_FALSE(drag_view2->drag_done_received_);
 }
 
-// TODO(win_aura) http://crbug.com/154081
-#if defined(OS_WIN)
-#define MAYBE_ViewRemovedWhileInDragDropTest \
-  DISABLED_ViewRemovedWhileInDragDropTest
-#else
-#define MAYBE_ViewRemovedWhileInDragDropTest ViewRemovedWhileInDragDropTest
-#endif
-TEST_F(DragDropControllerTest, MAYBE_ViewRemovedWhileInDragDropTest) {
+TEST_F(DragDropControllerTest, ViewRemovedWhileInDragDropTest) {
   std::unique_ptr<views::Widget> widget(CreateNewWidget());
   std::unique_ptr<DragTestView> drag_view(new DragTestView);
   AddViewToWidgetAndResize(widget.get(), drag_view.get());
@@ -721,7 +691,7 @@ TEST_F(DragDropControllerTest, SyntheticEventsDuringDragDrop) {
                               mouse_move_location, ui::EventTimeForNow(), 0, 0);
     ui::EventDispatchDetails details = Shell::GetPrimaryRootWindow()
                                            ->GetHost()
-                                           ->event_processor()
+                                           ->event_sink()
                                            ->OnEventFromSource(&mouse_move);
     ASSERT_FALSE(details.dispatcher_destroyed);
   }
@@ -743,16 +713,7 @@ TEST_F(DragDropControllerTest, SyntheticEventsDuringDragDrop) {
   EXPECT_TRUE(drag_view->drag_done_received_);
 }
 
-// TODO(win_aura) http://crbug.com/154081
-#if defined(OS_WIN)
-#define MAYBE_PressingEscapeCancelsDragDrop \
-  DISABLED_PressingEscapeCancelsDragDrop
-#define MAYBE_CaptureLostCancelsDragDrop DISABLED_CaptureLostCancelsDragDrop
-#else
-#define MAYBE_PressingEscapeCancelsDragDrop PressingEscapeCancelsDragDrop
-#define MAYBE_CaptureLostCancelsDragDrop CaptureLostCancelsDragDrop
-#endif
-TEST_F(DragDropControllerTest, MAYBE_PressingEscapeCancelsDragDrop) {
+TEST_F(DragDropControllerTest, PressingEscapeCancelsDragDrop) {
   std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view);
@@ -794,7 +755,7 @@ TEST_F(DragDropControllerTest, MAYBE_PressingEscapeCancelsDragDrop) {
   EXPECT_TRUE(drag_view->drag_done_received_);
 }
 
-TEST_F(DragDropControllerTest, MAYBE_CaptureLostCancelsDragDrop) {
+TEST_F(DragDropControllerTest, CaptureLostCancelsDragDrop) {
   std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view);
@@ -822,7 +783,6 @@ TEST_F(DragDropControllerTest, MAYBE_CaptureLostCancelsDragDrop) {
   ASSERT_TRUE(capture_window);
   EXPECT_EQ("0x0", capture_window->bounds().size().ToString());
   EXPECT_EQ(NULL, capture_window->GetEventHandlerForPoint(gfx::Point()));
-  EXPECT_EQ(NULL, capture_window->GetTopWindowContainingPoint(gfx::Point()));
 
   aura::client::GetCaptureClient(widget->GetNativeView()->GetRootWindow())
       ->SetCapture(NULL);
@@ -975,12 +935,8 @@ class DragImageWindowObserver : public aura::WindowObserver {
 // Verifies the drag image moves back to the position where drag is started
 // across displays when drag is cancelled.
 TEST_F(DragDropControllerTest, DragCancelAcrossDisplays) {
-  if (!SupportsMultipleDisplays())
-    return;
-
   UpdateDisplay("400x400,400x400");
-  aura::Window::Windows root_windows =
-      Shell::GetInstance()->GetAllRootWindows();
+  aura::Window::Windows root_windows = Shell::Get()->GetAllRootWindows();
   for (aura::Window::Windows::iterator iter = root_windows.begin();
        iter != root_windows.end(); ++iter) {
     aura::client::SetDragDropClient(*iter, drag_drop_controller_.get());
@@ -1054,6 +1010,44 @@ TEST_F(DragDropControllerTest, DragCancelAcrossDisplays) {
   }
 }
 
+// Verifies that a drag is aborted if a display is disconnected during the drag.
+TEST_F(DragDropControllerTest, DragCancelOnDisplayDisconnect) {
+  UpdateDisplay("400x400,400x400");
+  for (aura::Window* root : Shell::Get()->GetAllRootWindows()) {
+    aura::client::SetDragDropClient(root, drag_drop_controller_.get());
+  }
+
+  ui::OSExchangeData data;
+  data.SetString(base::UTF8ToUTF16("I am being dragged"));
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
+  aura::Window* window = widget->GetNativeWindow();
+  drag_drop_controller_->StartDragAndDrop(
+      data, window->GetRootWindow(), window, gfx::Point(5, 5),
+      ui::DragDropTypes::DRAG_MOVE, ui::DragDropTypes::DRAG_EVENT_SOURCE_MOUSE);
+
+  // Start dragging.
+  ui::MouseEvent e1(ui::ET_MOUSE_DRAGGED, gfx::Point(200, 0),
+                    gfx::Point(200, 0), ui::EventTimeForNow(), ui::EF_NONE,
+                    ui::EF_NONE);
+  drag_drop_controller_->DragUpdate(window, e1);
+  EXPECT_TRUE(drag_drop_controller_->drag_start_received_);
+  EXPECT_TRUE(drag_drop_controller_->IsDragDropInProgress());
+
+  // Drag onto the secondary display.
+  ui::MouseEvent e2(ui::ET_MOUSE_DRAGGED, gfx::Point(600, 0),
+                    gfx::Point(600, 0), ui::EventTimeForNow(), ui::EF_NONE,
+                    ui::EF_NONE);
+  drag_drop_controller_->DragUpdate(window, e2);
+  EXPECT_TRUE(drag_drop_controller_->IsDragDropInProgress());
+
+  // Disconnect the secondary display.
+  UpdateDisplay("800x600");
+
+  // The drag is canceled.
+  EXPECT_TRUE(drag_drop_controller_->drag_canceled_);
+  EXPECT_FALSE(drag_drop_controller_->IsDragDropInProgress());
+}
+
 TEST_F(DragDropControllerTest, TouchDragDropCompletesOnFling) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kEnableTouchDragDrop);
@@ -1072,20 +1066,28 @@ TEST_F(DragDropControllerTest, TouchDragDropCompletesOnFling) {
   gfx::Point end = start + gfx::Vector2d(drag_view->bounds().width() / 3, 0);
 
   base::TimeTicks timestamp = ui::EventTimeForNow();
-  ui::TouchEvent press(ui::ET_TOUCH_PRESSED, start, 0, timestamp);
+  ui::TouchEvent press(
+      ui::ET_TOUCH_PRESSED, start, timestamp,
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH, 0));
   generator.Dispatch(&press);
 
   DispatchGesture(ui::ET_GESTURE_LONG_PRESS, start);
   UpdateDragData(&data);
   timestamp += base::TimeDelta::FromMilliseconds(10);
-  ui::TouchEvent move1(ui::ET_TOUCH_MOVED, mid, 0, timestamp);
+  ui::TouchEvent move1(
+      ui::ET_TOUCH_MOVED, mid, timestamp,
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH, 0));
   generator.Dispatch(&move1);
   // Doing two moves instead of one will guarantee to generate a fling at the
   // end.
   timestamp += base::TimeDelta::FromMilliseconds(10);
-  ui::TouchEvent move2(ui::ET_TOUCH_MOVED, end, 0, timestamp);
+  ui::TouchEvent move2(
+      ui::ET_TOUCH_MOVED, end, timestamp,
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH, 0));
   generator.Dispatch(&move2);
-  ui::TouchEvent release(ui::ET_TOUCH_RELEASED, end, 0, timestamp);
+  ui::TouchEvent release(
+      ui::ET_TOUCH_RELEASED, end, timestamp,
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH, 0));
   generator.Dispatch(&release);
 
   EXPECT_TRUE(drag_drop_controller_->drag_start_received_);

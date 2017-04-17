@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-<include src="../uber/uber_utils.js">
-<include src="history_focus_manager.js">
+// <include src="../uber/uber_utils.js">
+// <include src="history_focus_manager.js">
 
 ///////////////////////////////////////////////////////////////////////////////
 // Globals:
@@ -462,7 +462,7 @@ Visit.prototype.loadFavicon_ = function(faviconDiv) {
     img.onload = this.onLargeFaviconLoadedAndroid_.bind(this, faviconDiv);
     img.src = 'chrome://large-icon/' + desiredPixelSize + '/' + this.url_;
   } else {
-    faviconDiv.style.backgroundImage = cr.icon.getFaviconImageSet(this.url_);
+    faviconDiv.style.backgroundImage = cr.icon.getFavicon(this.url_);
   }
 };
 
@@ -631,8 +631,7 @@ HistoryModel.prototype.addResults = function(info, results) {
   $('loading-spinner').hidden = true;
   this.inFlight_ = false;
   this.isQueryFinished_ = info.finished;
-  this.queryStartTime = info.queryStartTime;
-  this.queryEndTime = info.queryEndTime;
+  this.queryInterval = info.queryInterval;
 
   var lastVisit = this.visits_.slice(-1)[0];
   var lastDay = lastVisit ? lastVisit.dateRelativeDay : null;
@@ -939,6 +938,7 @@ function HistoryView(model) {
   this.model_ = model;
   this.pageIndex_ = 0;
   this.lastDisplayed_ = [];
+  this.hasRenderedResults_ = false;
 
   this.model_.setView(this);
 
@@ -1121,6 +1121,15 @@ HistoryView.prototype.onModelReady = function(doneLoading) {
     // Hide the search field if it is empty and there are no results.
     var isSearch = this.model_.getSearchText().length > 0;
     $('search-field').hidden = !(hasResults || isSearch);
+  }
+
+  if (!this.hasRenderedResults_) {
+    this.hasRenderedResults_ = true;
+    setTimeout(function() {
+      chrome.send(
+          'metricsHandler:recordTime',
+          ['History.ResultsRenderedTime', window.performance.now()]);
+    });
   }
 };
 
@@ -1569,10 +1578,8 @@ HistoryView.prototype.addTimeframeInterval_ = function(resultsFragment) {
       createElementWithClassName('h2', 'timeframe'));
   // TODO(sergiu): Figure the best way to show this for the first day of
   // the month.
-  timeFrame.appendChild(document.createTextNode(loadTimeData.getStringF(
-      'historyInterval',
-      this.model_.queryStartTime,
-      this.model_.queryEndTime)));
+  timeFrame.appendChild(
+      document.createTextNode(this.model_.queryInterval));
 };
 
 /**
@@ -1765,7 +1772,7 @@ HistoryView.prototype.toggleGroupedVisits_ = function(e) {
   } else {
     innerResultList.setAttribute('aria-hidden', 'false');
     innerResultList.style.height = 'auto';
-    // -webkit-transition does not work on height:auto elements so first set
+    // transition does not work on height:auto elements so first set
     // the height to auto so that it is computed and then set it to the
     // computed value in pixels so the transition works properly.
     var height = innerResultList.clientHeight;
@@ -1977,7 +1984,7 @@ function load() {
     window.addEventListener(
         'resize', historyView.updateClearBrowsingDataButton_);
 
-<if expr="is_ios">
+// <if expr="is_ios">
     // Trigger window resize event when search field is focused to force update
     // of the clear browsing button, which should disappear when search field
     // is active. The window is not resized when the virtual keyboard is shown
@@ -1985,7 +1992,7 @@ function load() {
     searchField.addEventListener('focus', function() {
       cr.dispatchSimpleEvent(window, 'resize');
     });
-</if>  /* is_ios */
+// </if>  /* is_ios */
 
     // When the search field loses focus, add a delay before updating the
     // visibility, otherwise the button will flash on the screen before the
@@ -2005,7 +2012,7 @@ function load() {
     searchField.focus();
   }
 
-<if expr="is_ios">
+// <if expr="is_ios">
   function checkKeyboardVisibility() {
     // Figure out the real height based on the orientation, becauase
     // screen.width and screen.height don't update after rotation.
@@ -2019,7 +2026,7 @@ function load() {
   }
   window.addEventListener('orientationchange', checkKeyboardVisibility);
   window.addEventListener('resize', checkKeyboardVisibility);
-</if> /* is_ios */
+// </if> /* is_ios */
 }
 
 /**
@@ -2324,7 +2331,7 @@ function removeNode(node, onRemove, opt_scope) {
   node.classList.add('fade-out'); // Trigger CSS fade out animation.
 
   // Delete the node when the animation is complete.
-  node.addEventListener('webkitTransitionEnd', function(e) {
+  node.addEventListener('transitionend', function(e) {
     node.parentNode.removeChild(node);
 
     // In case there is nested deletion happening, prevent this event from

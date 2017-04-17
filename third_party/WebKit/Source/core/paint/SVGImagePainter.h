@@ -6,7 +6,7 @@
 #define SVGImagePainter_h
 
 #include "platform/geometry/FloatSize.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -14,20 +14,22 @@ struct PaintInfo;
 class LayoutSVGImage;
 
 class SVGImagePainter {
-    STACK_ALLOCATED();
-public:
-    SVGImagePainter(const LayoutSVGImage& layoutSVGImage) : m_layoutSVGImage(layoutSVGImage) { }
+  STACK_ALLOCATED();
 
-    void paint(const PaintInfo&);
+ public:
+  SVGImagePainter(const LayoutSVGImage& layout_svg_image)
+      : layout_svg_image_(layout_svg_image) {}
 
-private:
-    // Assumes the PaintInfo context has had all local transforms applied.
-    void paintForeground(const PaintInfo&);
-    FloatSize computeImageViewportSize() const;
+  void Paint(const PaintInfo&);
 
-    const LayoutSVGImage& m_layoutSVGImage;
+ private:
+  // Assumes the PaintInfo context has had all local transforms applied.
+  void PaintForeground(const PaintInfo&);
+  FloatSize ComputeImageViewportSize() const;
+
+  const LayoutSVGImage& layout_svg_image_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGImagePainter_h
+#endif  // SVGImagePainter_h

@@ -4,10 +4,10 @@
 
 #include "chrome/browser/ui/webui/chromeos/login/error_screen_handler.h"
 
-#include "ash/common/system/chromeos/devicetype_utils.h"
+#include "ash/system/devicetype_utils.h"
 #include "base/message_loop/message_loop.h"
 #include "base/time/time.h"
-#include "chrome/browser/chromeos/login/screens/network_error_model.h"
+#include "chrome/browser/chromeos/login/screens/error_screen.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/login/localized_values_builder.h"
@@ -22,19 +22,13 @@ const char kJsScreenPath[] = "login.ErrorMessageScreen";
 namespace chromeos {
 
 ErrorScreenHandler::ErrorScreenHandler()
-    : BaseScreenHandler(kJsScreenPath),
-      model_(nullptr),
-      show_on_init_(false),
-      showing_(false),
-      weak_ptr_factory_(this) {
+    : BaseScreenHandler(kScreenId), weak_ptr_factory_(this) {
+  set_call_js_prefix(kJsScreenPath);
 }
 
 ErrorScreenHandler::~ErrorScreenHandler() {
-  if (model_)
-    model_->OnViewDestroyed(this);
-}
-
-void ErrorScreenHandler::PrepareToShow() {
+  if (screen_)
+    screen_->OnViewDestroyed(this);
 }
 
 void ErrorScreenHandler::Show() {
@@ -42,35 +36,30 @@ void ErrorScreenHandler::Show() {
     show_on_init_ = true;
     return;
   }
-  BaseScreenHandler::ShowScreen(OobeScreen::SCREEN_ERROR_MESSAGE);
-  if (model_)
-    model_->OnShow();
+  BaseScreenHandler::ShowScreen(kScreenId);
+  if (screen_)
+    screen_->OnShow();
   showing_ = true;
 }
 
 void ErrorScreenHandler::Hide() {
   showing_ = false;
-  if (model_)
-   model_->OnHide();
+  if (screen_)
+    screen_->OnHide();
 }
 
-void ErrorScreenHandler::Bind(NetworkErrorModel& model) {
-  model_ = &model;
-  BaseScreenHandler::SetBaseScreen(model_);
+void ErrorScreenHandler::Bind(ErrorScreen* screen) {
+  screen_ = screen;
+  BaseScreenHandler::SetBaseScreen(screen_);
 }
 
 void ErrorScreenHandler::Unbind() {
-  model_ = nullptr;
+  screen_ = nullptr;
   BaseScreenHandler::SetBaseScreen(nullptr);
 }
 
 void ErrorScreenHandler::ShowOobeScreen(OobeScreen screen) {
   ShowScreen(screen);
-}
-
-void ErrorScreenHandler::HandleHideCaptivePortal() {
-  if (model_)
-    model_->HideCaptivePortal();
 }
 
 void ErrorScreenHandler::RegisterMessages() {
@@ -130,8 +119,13 @@ void ErrorScreenHandler::Initialize() {
 }
 
 void ErrorScreenHandler::OnConnectToNetworkRequested() {
-  if (showing_ && model_)
-    model_->OnUserAction(NetworkErrorModel::kUserActionConnectRequested);
+  if (showing_ && screen_)
+    screen_->OnUserAction(ErrorScreen::kUserActionConnectRequested);
+}
+
+void ErrorScreenHandler::HandleHideCaptivePortal() {
+  if (screen_)
+    screen_->HideCaptivePortal();
 }
 
 }  // namespace chromeos

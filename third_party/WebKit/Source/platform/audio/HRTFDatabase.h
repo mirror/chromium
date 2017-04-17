@@ -29,59 +29,73 @@
 #ifndef HRTFDatabase_h
 #define HRTFDatabase_h
 
-#include "platform/audio/HRTFElevation.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/Vector.h"
 #include <memory>
+#include "platform/audio/HRTFElevation.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class HRTFKernel;
 
 class PLATFORM_EXPORT HRTFDatabase {
-    USING_FAST_MALLOC(HRTFDatabase);
-    WTF_MAKE_NONCOPYABLE(HRTFDatabase);
-public:
-    static std::unique_ptr<HRTFDatabase> create(float sampleRate);
+  USING_FAST_MALLOC(HRTFDatabase);
+  WTF_MAKE_NONCOPYABLE(HRTFDatabase);
 
-    // getKernelsFromAzimuthElevation() returns a left and right ear kernel, and an interpolated left and right frame delay for the given azimuth and elevation.
-    // azimuthBlend must be in the range 0 -> 1.
-    // Valid values for azimuthIndex are 0 -> HRTFElevation::NumberOfTotalAzimuths - 1 (corresponding to angles of 0 -> 360).
-    // Valid values for elevationAngle are MinElevation -> MaxElevation.
-    void getKernelsFromAzimuthElevation(double azimuthBlend, unsigned azimuthIndex, double elevationAngle, HRTFKernel* &kernelL, HRTFKernel* &kernelR, double& frameDelayL, double& frameDelayR);
+ public:
+  static std::unique_ptr<HRTFDatabase> Create(float sample_rate);
 
-    // Returns the number of different azimuth angles.
-    static unsigned numberOfAzimuths() { return HRTFElevation::NumberOfTotalAzimuths; }
+  // getKernelsFromAzimuthElevation() returns a left and right ear kernel, and
+  // an interpolated left and right frame delay for the given azimuth and
+  // elevation.
+  // azimuthBlend must be in the range 0 -> 1.
+  // Valid values for azimuthIndex are
+  //     0 -> HRTFElevation::NumberOfTotalAzimuths - 1
+  //     (corresponding to angles of 0 -> 360).
+  // Valid values for elevationAngle are MinElevation -> MaxElevation.
+  void GetKernelsFromAzimuthElevation(double azimuth_blend,
+                                      unsigned azimuth_index,
+                                      double elevation_angle,
+                                      HRTFKernel*& kernel_l,
+                                      HRTFKernel*& kernel_r,
+                                      double& frame_delay_l,
+                                      double& frame_delay_r);
 
-    float sampleRate() const { return m_sampleRate; }
+  // Returns the number of different azimuth angles.
+  static unsigned NumberOfAzimuths() {
+    return HRTFElevation::kNumberOfTotalAzimuths;
+  }
 
-    // Number of elevations loaded from resource.
-    static const unsigned NumberOfRawElevations;
+  float SampleRate() const { return sample_rate_; }
 
-private:
-    explicit HRTFDatabase(float sampleRate);
+  // Number of elevations loaded from resource.
+  static const unsigned kNumberOfRawElevations;
 
-    // Minimum and maximum elevation angles (inclusive) for a HRTFDatabase.
-    static const int MinElevation;
-    static const int MaxElevation;
-    static const unsigned RawElevationAngleSpacing;
+ private:
+  explicit HRTFDatabase(float sample_rate);
 
-    // Interpolates by this factor to get the total number of elevations from every elevation loaded from resource.
-    static const unsigned InterpolationFactor;
+  // Minimum and maximum elevation angles (inclusive) for a HRTFDatabase.
+  static const int kMinElevation;
+  static const int kMaxElevation;
+  static const unsigned kRawElevationAngleSpacing;
 
-    // Total number of elevations after interpolation.
-    static const unsigned NumberOfTotalElevations;
+  // Interpolates by this factor to get the total number of elevations from
+  // every elevation loaded from resource.
+  static const unsigned kInterpolationFactor;
 
-    // Returns the index for the correct HRTFElevation given the elevation angle.
-    static unsigned indexFromElevationAngle(double);
+  // Total number of elevations after interpolation.
+  static const unsigned kNumberOfTotalElevations;
 
-    Vector<std::unique_ptr<HRTFElevation>> m_elevations;
-    float m_sampleRate;
+  // Returns the index for the correct HRTFElevation given the elevation angle.
+  static unsigned IndexFromElevationAngle(double);
+
+  Vector<std::unique_ptr<HRTFElevation>> elevations_;
+  float sample_rate_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HRTFDatabase_h
+#endif  // HRTFDatabase_h

@@ -32,53 +32,44 @@
 
 namespace blink {
 
-void WebArrayBufferView::assign(const WebArrayBufferView& other)
-{
-    m_private = other.m_private;
+void WebArrayBufferView::Assign(const WebArrayBufferView& other) {
+  private_ = other.private_;
 }
 
-void WebArrayBufferView::reset()
-{
-    m_private.reset();
+void WebArrayBufferView::Reset() {
+  private_.Reset();
 }
 
-void* WebArrayBufferView::baseAddress() const
-{
-    return m_private->baseAddress();
+void* WebArrayBufferView::BaseAddress() const {
+  return private_->BaseAddress();
 }
 
-unsigned WebArrayBufferView::byteOffset() const
-{
-    return m_private->byteOffset();
+unsigned WebArrayBufferView::ByteOffset() const {
+  return private_->byteOffset();
 }
 
-unsigned WebArrayBufferView::byteLength() const
-{
-    return m_private->byteLength();
+unsigned WebArrayBufferView::ByteLength() const {
+  return private_->byteLength();
 }
 
-WebArrayBufferView* WebArrayBufferView::createFromV8Value(v8::Local<v8::Value> value)
-{
-    if (!value->IsArrayBufferView())
-        return 0;
-    DOMArrayBufferView* view = V8ArrayBufferView::toImpl(value.As<v8::Object>());
-    return new WebArrayBufferView(view);
+WebArrayBufferView* WebArrayBufferView::CreateFromV8Value(
+    v8::Local<v8::Value> value) {
+  if (!value->IsArrayBufferView())
+    return 0;
+  DOMArrayBufferView* view = V8ArrayBufferView::toImpl(value.As<v8::Object>());
+  return new WebArrayBufferView(view);
 }
 
 WebArrayBufferView::WebArrayBufferView(DOMArrayBufferView* value)
-    : m_private(value)
-{
+    : private_(value) {}
+
+WebArrayBufferView& WebArrayBufferView::operator=(DOMArrayBufferView* value) {
+  private_ = value;
+  return *this;
 }
 
-WebArrayBufferView& WebArrayBufferView::operator=(DOMArrayBufferView* value)
-{
-    m_private = value;
-    return *this;
+WebArrayBufferView::operator DOMArrayBufferView*() const {
+  return private_.Get();
 }
 
-WebArrayBufferView::operator DOMArrayBufferView*() const
-{
-    return m_private.get();
-}
-
-} // namespace blink
+}  // namespace blink

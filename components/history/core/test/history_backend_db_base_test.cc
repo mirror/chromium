@@ -30,7 +30,8 @@ class BackendDelegate : public HistoryBackend::Delegate {
       : history_test_(history_test) {}
 
   // HistoryBackend::Delegate implementation.
-  void NotifyProfileError(sql::InitStatus init_status) override {
+  void NotifyProfileError(sql::InitStatus init_status,
+                          const std::string& diagnostics) override {
     history_test_->last_profile_error_ = init_status;
   }
   void SetInMemoryBackend(
@@ -70,7 +71,7 @@ HistoryBackendDBBaseTest::~HistoryBackendDBBaseTest() {
 
 void HistoryBackendDBBaseTest::SetUp() {
   ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
-  history_dir_ = temp_dir_.path().AppendASCII("HistoryBackendDBBaseTest");
+  history_dir_ = temp_dir_.GetPath().AppendASCII("HistoryBackendDBBaseTest");
   ASSERT_TRUE(base::CreateDirectory(history_dir_));
 }
 
@@ -134,7 +135,8 @@ bool HistoryBackendDBBaseTest::AddDownload(uint32_t id,
       "application/vnd.oasis.opendocument.text", "application/octet-stream",
       time, time, std::string(), std::string(), 0, 512, state,
       DownloadDangerType::NOT_DANGEROUS, kTestDownloadInterruptReasonNone,
-      std::string(), id, guid, false, "by_ext_id", "by_ext_name");
+      std::string(), id, guid, false, time, true, "by_ext_id", "by_ext_name",
+      std::vector<DownloadSliceInfo>());
   return db_->CreateDownload(download);
 }
 

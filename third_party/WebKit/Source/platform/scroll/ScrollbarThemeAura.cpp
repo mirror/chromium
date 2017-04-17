@@ -31,10 +31,8 @@
 #include "platform/scroll/ScrollbarThemeAura.h"
 
 #include "platform/LayoutTestSupport.h"
-#include "platform/PlatformMouseEvent.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/graphics/GraphicsContext.h"
-#include "platform/graphics/GraphicsContextStateSaver.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/scroll/ScrollableArea.h"
 #include "platform/scroll/Scrollbar.h"
@@ -47,9 +45,8 @@ namespace blink {
 
 namespace {
 
-static bool useMockTheme()
-{
-    return LayoutTestSupport::isRunningLayoutTest();
+static bool UseMockTheme() {
+  return LayoutTestSupport::IsRunningLayoutTest();
 }
 
 // Contains a flag indicating whether WebThemeEngine should paint a UI widget
@@ -58,293 +55,310 @@ static bool useMockTheme()
 // If the PartPaintingParams are not affected by a change in the scrollbar
 // state, then the corresponding scrollbar part does not need to be repainted.
 struct PartPaintingParams {
-    PartPaintingParams()
-        : shouldPaint(false)
-        , part(WebThemeEngine::PartScrollbarDownArrow)
-        , state(WebThemeEngine::StateNormal) {}
-    PartPaintingParams(WebThemeEngine::Part part, WebThemeEngine::State state)
-        : shouldPaint(true)
-        , part(part)
-        , state(state) {}
+  PartPaintingParams()
+      : should_paint(false),
+        part(WebThemeEngine::kPartScrollbarDownArrow),
+        state(WebThemeEngine::kStateNormal) {}
+  PartPaintingParams(WebThemeEngine::Part part, WebThemeEngine::State state)
+      : should_paint(true), part(part), state(state) {}
 
-    bool shouldPaint;
-    WebThemeEngine::Part part;
-    WebThemeEngine::State state;
+  bool should_paint;
+  WebThemeEngine::Part part;
+  WebThemeEngine::State state;
 };
 
-bool operator==(const PartPaintingParams& a, const PartPaintingParams& b)
-{
-    return (!a.shouldPaint && !b.shouldPaint) || std::tie(a.shouldPaint, a.part, a.state) == std::tie(b.shouldPaint, b.part, b.state);
+bool operator==(const PartPaintingParams& a, const PartPaintingParams& b) {
+  return (!a.should_paint && !b.should_paint) ||
+         std::tie(a.should_paint, a.part, a.state) ==
+             std::tie(b.should_paint, b.part, b.state);
 }
 
-bool operator!=(const PartPaintingParams& a, const PartPaintingParams& b)
-{
-    return !(a == b);
+bool operator!=(const PartPaintingParams& a, const PartPaintingParams& b) {
+  return !(a == b);
 }
 
-PartPaintingParams buttonPartPaintingParams(const ScrollbarThemeClient& scrollbar, float position, ScrollbarPart part)
-{
-    WebThemeEngine::Part paintPart;
-    WebThemeEngine::State state = WebThemeEngine::StateNormal;
-    bool checkMin = false;
-    bool checkMax = false;
+PartPaintingParams ButtonPartPaintingParams(
+    const ScrollbarThemeClient& scrollbar,
+    float position,
+    ScrollbarPart part) {
+  WebThemeEngine::Part paint_part;
+  WebThemeEngine::State state = WebThemeEngine::kStateNormal;
+  bool check_min = false;
+  bool check_max = false;
 
-    if (scrollbar.orientation() == HorizontalScrollbar) {
-        if (part == BackButtonStartPart) {
-            paintPart = WebThemeEngine::PartScrollbarLeftArrow;
-            checkMin = true;
-        } else if (useMockTheme() && part != ForwardButtonEndPart) {
-            return PartPaintingParams();
-        } else {
-            paintPart = WebThemeEngine::PartScrollbarRightArrow;
-            checkMax = true;
-        }
+  if (scrollbar.Orientation() == kHorizontalScrollbar) {
+    if (part == kBackButtonStartPart) {
+      paint_part = WebThemeEngine::kPartScrollbarLeftArrow;
+      check_min = true;
+    } else if (UseMockTheme() && part != kForwardButtonEndPart) {
+      return PartPaintingParams();
     } else {
-        if (part == BackButtonStartPart) {
-            paintPart = WebThemeEngine::PartScrollbarUpArrow;
-            checkMin = true;
-        } else if (useMockTheme() && part != ForwardButtonEndPart) {
-            return PartPaintingParams();
-        } else {
-            paintPart = WebThemeEngine::PartScrollbarDownArrow;
-            checkMax = true;
-        }
+      paint_part = WebThemeEngine::kPartScrollbarRightArrow;
+      check_max = true;
     }
-
-    if (useMockTheme() && !scrollbar.enabled()) {
-        state = WebThemeEngine::StateDisabled;
-    } else if (!useMockTheme() && ((checkMin && (position <= 0))
-        || (checkMax && position >= scrollbar.maximum()))) {
-        state = WebThemeEngine::StateDisabled;
+  } else {
+    if (part == kBackButtonStartPart) {
+      paint_part = WebThemeEngine::kPartScrollbarUpArrow;
+      check_min = true;
+    } else if (UseMockTheme() && part != kForwardButtonEndPart) {
+      return PartPaintingParams();
     } else {
-        if (part == scrollbar.pressedPart())
-            state = WebThemeEngine::StatePressed;
-        else if (part == scrollbar.hoveredPart())
-            state = WebThemeEngine::StateHover;
+      paint_part = WebThemeEngine::kPartScrollbarDownArrow;
+      check_max = true;
     }
+  }
 
-    return PartPaintingParams(paintPart, state);
+  if (UseMockTheme() && !scrollbar.Enabled()) {
+    state = WebThemeEngine::kStateDisabled;
+  } else if (!UseMockTheme() &&
+             ((check_min && (position <= 0)) ||
+              (check_max && position >= scrollbar.Maximum()))) {
+    state = WebThemeEngine::kStateDisabled;
+  } else {
+    if (part == scrollbar.PressedPart())
+      state = WebThemeEngine::kStatePressed;
+    else if (part == scrollbar.HoveredPart())
+      state = WebThemeEngine::kStateHover;
+  }
+
+  return PartPaintingParams(paint_part, state);
 }
 
-} // namespace
+static int GetScrollbarThickness() {
+  return Platform::Current()
+      ->ThemeEngine()
+      ->GetSize(WebThemeEngine::kPartScrollbarVerticalThumb)
+      .width;
+}
 
-ScrollbarTheme& ScrollbarTheme::nativeTheme()
-{
-    if (RuntimeEnabledFeatures::overlayScrollbarsEnabled()) {
-        DEFINE_STATIC_LOCAL(ScrollbarThemeOverlay, theme, (10, 0, ScrollbarThemeOverlay::AllowHitTest));
-        return theme;
-    }
+}  // namespace
 
-    DEFINE_STATIC_LOCAL(ScrollbarThemeAura, theme, ());
+ScrollbarTheme& ScrollbarTheme::NativeTheme() {
+  if (RuntimeEnabledFeatures::overlayScrollbarsEnabled()) {
+    DEFINE_STATIC_LOCAL(
+        ScrollbarThemeOverlay, theme,
+        (GetScrollbarThickness(), 0, ScrollbarThemeOverlay::kAllowHitTest));
     return theme;
+  }
+
+  DEFINE_STATIC_LOCAL(ScrollbarThemeAura, theme, ());
+  return theme;
 }
 
-int ScrollbarThemeAura::scrollbarThickness(ScrollbarControlSize controlSize)
-{
-    // Horiz and Vert scrollbars are the same thickness.
-    // In unit tests we don't have the mock theme engine (because of layering violations), so we hard code the size (see bug 327470).
-    if (useMockTheme())
-        return 15;
-    IntSize scrollbarSize = Platform::current()->themeEngine()->getSize(WebThemeEngine::PartScrollbarVerticalTrack);
-    return scrollbarSize.width();
+int ScrollbarThemeAura::ScrollbarThickness(ScrollbarControlSize control_size) {
+  // Horiz and Vert scrollbars are the same thickness.
+  // In unit tests we don't have the mock theme engine (because of layering
+  // violations), so we hard code the size (see bug 327470).
+  if (UseMockTheme())
+    return 15;
+  IntSize scrollbar_size = Platform::Current()->ThemeEngine()->GetSize(
+      WebThemeEngine::kPartScrollbarVerticalTrack);
+  return scrollbar_size.Width();
 }
 
-bool ScrollbarThemeAura::hasThumb(const ScrollbarThemeClient& scrollbar)
-{
-    // This method is just called as a paint-time optimization to see if
-    // painting the thumb can be skipped. We don't have to be exact here.
-    return thumbLength(scrollbar) > 0;
+bool ScrollbarThemeAura::HasThumb(const ScrollbarThemeClient& scrollbar) {
+  // This method is just called as a paint-time optimization to see if
+  // painting the thumb can be skipped. We don't have to be exact here.
+  return ThumbLength(scrollbar) > 0;
 }
 
-IntRect ScrollbarThemeAura::backButtonRect(const ScrollbarThemeClient& scrollbar, ScrollbarPart part, bool)
-{
-    // Windows and Linux just have single arrows.
-    if (part == BackButtonEndPart)
-        return IntRect();
+IntRect ScrollbarThemeAura::BackButtonRect(
+    const ScrollbarThemeClient& scrollbar,
+    ScrollbarPart part,
+    bool) {
+  // Windows and Linux just have single arrows.
+  if (part == kBackButtonEndPart)
+    return IntRect();
 
-    IntSize size = buttonSize(scrollbar);
-    return IntRect(scrollbar.x(), scrollbar.y(), size.width(), size.height());
+  IntSize size = ButtonSize(scrollbar);
+  return IntRect(scrollbar.X(), scrollbar.Y(), size.Width(), size.Height());
 }
 
-IntRect ScrollbarThemeAura::forwardButtonRect(const ScrollbarThemeClient& scrollbar, ScrollbarPart part, bool)
-{
-    // Windows and Linux just have single arrows.
-    if (part == ForwardButtonStartPart)
-        return IntRect();
+IntRect ScrollbarThemeAura::ForwardButtonRect(
+    const ScrollbarThemeClient& scrollbar,
+    ScrollbarPart part,
+    bool) {
+  // Windows and Linux just have single arrows.
+  if (part == kForwardButtonStartPart)
+    return IntRect();
 
-    IntSize size = buttonSize(scrollbar);
-    int x, y;
-    if (scrollbar.orientation() == HorizontalScrollbar) {
-        x = scrollbar.x() + scrollbar.width() - size.width();
-        y = scrollbar.y();
-    } else {
-        x = scrollbar.x();
-        y = scrollbar.y() + scrollbar.height() - size.height();
-    }
-    return IntRect(x, y, size.width(), size.height());
+  IntSize size = ButtonSize(scrollbar);
+  int x, y;
+  if (scrollbar.Orientation() == kHorizontalScrollbar) {
+    x = scrollbar.X() + scrollbar.Width() - size.Width();
+    y = scrollbar.Y();
+  } else {
+    x = scrollbar.X();
+    y = scrollbar.Y() + scrollbar.Height() - size.Height();
+  }
+  return IntRect(x, y, size.Width(), size.Height());
 }
 
-IntRect ScrollbarThemeAura::trackRect(const ScrollbarThemeClient& scrollbar, bool)
-{
-    // The track occupies all space between the two buttons.
-    IntSize bs = buttonSize(scrollbar);
-    if (scrollbar.orientation() == HorizontalScrollbar) {
-        if (scrollbar.width() <= 2 * bs.width())
-            return IntRect();
-        return IntRect(scrollbar.x() + bs.width(), scrollbar.y(), scrollbar.width() - 2 * bs.width(), scrollbar.height());
-    }
-    if (scrollbar.height() <= 2 * bs.height())
-        return IntRect();
-    return IntRect(scrollbar.x(), scrollbar.y() + bs.height(), scrollbar.width(), scrollbar.height() - 2 * bs.height());
+IntRect ScrollbarThemeAura::TrackRect(const ScrollbarThemeClient& scrollbar,
+                                      bool) {
+  // The track occupies all space between the two buttons.
+  IntSize bs = ButtonSize(scrollbar);
+  if (scrollbar.Orientation() == kHorizontalScrollbar) {
+    if (scrollbar.Width() <= 2 * bs.Width())
+      return IntRect();
+    return IntRect(scrollbar.X() + bs.Width(), scrollbar.Y(),
+                   scrollbar.Width() - 2 * bs.Width(), scrollbar.Height());
+  }
+  if (scrollbar.Height() <= 2 * bs.Height())
+    return IntRect();
+  return IntRect(scrollbar.X(), scrollbar.Y() + bs.Height(), scrollbar.Width(),
+                 scrollbar.Height() - 2 * bs.Height());
 }
 
-int ScrollbarThemeAura::minimumThumbLength(const ScrollbarThemeClient& scrollbar)
-{
-    if (scrollbar.orientation() == VerticalScrollbar) {
-        IntSize size = Platform::current()->themeEngine()->getSize(WebThemeEngine::PartScrollbarVerticalThumb);
-        return size.height();
-    }
+int ScrollbarThemeAura::MinimumThumbLength(
+    const ScrollbarThemeClient& scrollbar) {
+  if (scrollbar.Orientation() == kVerticalScrollbar) {
+    return Platform::Current()
+        ->ThemeEngine()
+        ->GetSize(WebThemeEngine::kPartScrollbarVerticalThumb)
+        .height;
+  }
 
-    IntSize size = Platform::current()->themeEngine()->getSize(WebThemeEngine::PartScrollbarHorizontalThumb);
-    return size.width();
+  return Platform::Current()
+      ->ThemeEngine()
+      ->GetSize(WebThemeEngine::kPartScrollbarHorizontalThumb)
+      .width;
 }
 
-void ScrollbarThemeAura::paintTickmarks(GraphicsContext& context, const Scrollbar& scrollbar, const IntRect& rect)
-{
-    if (scrollbar.orientation() != VerticalScrollbar)
-        return;
-
-    if (rect.height() <= 0 || rect.width() <= 0)
-        return;
-
-    // Get the tickmarks for the frameview.
-    Vector<IntRect> tickmarks;
-    scrollbar.getTickmarks(tickmarks);
-    if (!tickmarks.size())
-        return;
-
-    if (DrawingRecorder::useCachedDrawingIfPossible(context, scrollbar, DisplayItem::ScrollbarTickmarks))
-        return;
-
-    DrawingRecorder recorder(context, scrollbar, DisplayItem::ScrollbarTickmarks, rect);
-    GraphicsContextStateSaver stateSaver(context);
-    context.setShouldAntialias(false);
-
-    for (Vector<IntRect>::const_iterator i = tickmarks.begin(); i != tickmarks.end(); ++i) {
-        // Calculate how far down (in %) the tick-mark should appear.
-        const float percent = static_cast<float>(i->y()) / scrollbar.totalSize();
-
-        // Calculate how far down (in pixels) the tick-mark should appear.
-        const int yPos = rect.y() + (rect.height() * percent);
-
-        FloatRect tickRect(rect.x(), yPos, rect.width(), 3);
-        context.fillRect(tickRect, Color(0xCC, 0xAA, 0x00, 0xFF));
-
-        FloatRect tickStroke(rect.x(), yPos + 1, rect.width(), 1);
-        context.fillRect(tickStroke, Color(0xFF, 0xDD, 0x00, 0xFF));
-    }
+void ScrollbarThemeAura::PaintTrackBackground(GraphicsContext& context,
+                                              const Scrollbar& scrollbar,
+                                              const IntRect& rect) {
+  // Just assume a forward track part. We only paint the track as a single piece
+  // when there is no thumb.
+  if (!HasThumb(scrollbar) && !rect.IsEmpty())
+    PaintTrackPiece(context, scrollbar, rect, kForwardTrackPart);
 }
 
-void ScrollbarThemeAura::paintTrackBackground(GraphicsContext& context, const Scrollbar& scrollbar, const IntRect& rect)
-{
-    // Just assume a forward track part. We only paint the track as a single piece when there is no thumb.
-    if (!hasThumb(scrollbar) && !rect.isEmpty())
-        paintTrackPiece(context, scrollbar, rect, ForwardTrackPart);
+void ScrollbarThemeAura::PaintTrackPiece(GraphicsContext& gc,
+                                         const Scrollbar& scrollbar,
+                                         const IntRect& rect,
+                                         ScrollbarPart part_type) {
+  DisplayItem::Type display_item_type =
+      TrackPiecePartToDisplayItemType(part_type);
+  if (DrawingRecorder::UseCachedDrawingIfPossible(gc, scrollbar,
+                                                  display_item_type))
+    return;
+
+  DrawingRecorder recorder(gc, scrollbar, display_item_type, rect);
+
+  WebThemeEngine::State state = scrollbar.HoveredPart() == part_type
+                                    ? WebThemeEngine::kStateHover
+                                    : WebThemeEngine::kStateNormal;
+
+  if (UseMockTheme() && !scrollbar.Enabled())
+    state = WebThemeEngine::kStateDisabled;
+
+  IntRect align_rect = TrackRect(scrollbar, false);
+  WebThemeEngine::ExtraParams extra_params;
+  extra_params.scrollbar_track.is_back = (part_type == kBackTrackPart);
+  extra_params.scrollbar_track.track_x = align_rect.X();
+  extra_params.scrollbar_track.track_y = align_rect.Y();
+  extra_params.scrollbar_track.track_width = align_rect.Width();
+  extra_params.scrollbar_track.track_height = align_rect.Height();
+  Platform::Current()->ThemeEngine()->Paint(
+      gc.Canvas(),
+      scrollbar.Orientation() == kHorizontalScrollbar
+          ? WebThemeEngine::kPartScrollbarHorizontalTrack
+          : WebThemeEngine::kPartScrollbarVerticalTrack,
+      state, WebRect(rect), &extra_params);
 }
 
-void ScrollbarThemeAura::paintTrackPiece(GraphicsContext& gc, const Scrollbar& scrollbar, const IntRect& rect, ScrollbarPart partType)
-{
-    DisplayItem::Type displayItemType = trackPiecePartToDisplayItemType(partType);
-    if (DrawingRecorder::useCachedDrawingIfPossible(gc, scrollbar, displayItemType))
-        return;
-
-    DrawingRecorder recorder(gc, scrollbar, displayItemType, rect);
-
-    WebThemeEngine::State state = scrollbar.hoveredPart() == partType ? WebThemeEngine::StateHover : WebThemeEngine::StateNormal;
-
-    if (useMockTheme() && !scrollbar.enabled())
-        state = WebThemeEngine::StateDisabled;
-
-    IntRect alignRect = trackRect(scrollbar, false);
-    WebThemeEngine::ExtraParams extraParams;
-    extraParams.scrollbarTrack.isBack = (partType == BackTrackPart);
-    extraParams.scrollbarTrack.trackX = alignRect.x();
-    extraParams.scrollbarTrack.trackY = alignRect.y();
-    extraParams.scrollbarTrack.trackWidth = alignRect.width();
-    extraParams.scrollbarTrack.trackHeight = alignRect.height();
-    Platform::current()->themeEngine()->paint(gc.canvas(), scrollbar.orientation() == HorizontalScrollbar ? WebThemeEngine::PartScrollbarHorizontalTrack : WebThemeEngine::PartScrollbarVerticalTrack, state, WebRect(rect), &extraParams);
+void ScrollbarThemeAura::PaintButton(GraphicsContext& gc,
+                                     const Scrollbar& scrollbar,
+                                     const IntRect& rect,
+                                     ScrollbarPart part) {
+  DisplayItem::Type display_item_type = ButtonPartToDisplayItemType(part);
+  if (DrawingRecorder::UseCachedDrawingIfPossible(gc, scrollbar,
+                                                  display_item_type))
+    return;
+  PartPaintingParams params =
+      ButtonPartPaintingParams(scrollbar, scrollbar.CurrentPos(), part);
+  if (!params.should_paint)
+    return;
+  DrawingRecorder recorder(gc, scrollbar, display_item_type, rect);
+  Platform::Current()->ThemeEngine()->Paint(
+      gc.Canvas(), params.part, params.state, WebRect(rect), nullptr);
 }
 
-void ScrollbarThemeAura::paintButton(GraphicsContext& gc, const Scrollbar& scrollbar, const IntRect& rect, ScrollbarPart part)
-{
-    DisplayItem::Type displayItemType = buttonPartToDisplayItemType(part);
-    if (DrawingRecorder::useCachedDrawingIfPossible(gc, scrollbar, displayItemType))
-        return;
-    PartPaintingParams params = buttonPartPaintingParams(scrollbar, scrollbar.currentPos(), part);
-    if (!params.shouldPaint)
-        return;
-    DrawingRecorder recorder(gc, scrollbar, displayItemType, rect);
-    Platform::current()->themeEngine()->paint(gc.canvas(), params.part, params.state, WebRect(rect), 0);
+void ScrollbarThemeAura::PaintThumb(GraphicsContext& gc,
+                                    const Scrollbar& scrollbar,
+                                    const IntRect& rect) {
+  if (DrawingRecorder::UseCachedDrawingIfPossible(gc, scrollbar,
+                                                  DisplayItem::kScrollbarThumb))
+    return;
+
+  DrawingRecorder recorder(gc, scrollbar, DisplayItem::kScrollbarThumb, rect);
+
+  WebThemeEngine::State state;
+  WebCanvas* canvas = gc.Canvas();
+  if (scrollbar.PressedPart() == kThumbPart)
+    state = WebThemeEngine::kStatePressed;
+  else if (scrollbar.HoveredPart() == kThumbPart)
+    state = WebThemeEngine::kStateHover;
+  else
+    state = WebThemeEngine::kStateNormal;
+
+  Platform::Current()->ThemeEngine()->Paint(
+      canvas,
+      scrollbar.Orientation() == kHorizontalScrollbar
+          ? WebThemeEngine::kPartScrollbarHorizontalThumb
+          : WebThemeEngine::kPartScrollbarVerticalThumb,
+      state, WebRect(rect), nullptr);
 }
 
-void ScrollbarThemeAura::paintThumb(GraphicsContext& gc, const Scrollbar& scrollbar, const IntRect& rect)
-{
-    if (DrawingRecorder::useCachedDrawingIfPossible(gc, scrollbar, DisplayItem::ScrollbarThumb))
-        return;
-
-    DrawingRecorder recorder(gc, scrollbar, DisplayItem::ScrollbarThumb, rect);
-
-    WebThemeEngine::State state;
-    WebCanvas* canvas = gc.canvas();
-    if (scrollbar.pressedPart() == ThumbPart)
-        state = WebThemeEngine::StatePressed;
-    else if (scrollbar.hoveredPart() == ThumbPart)
-        state = WebThemeEngine::StateHover;
-    else
-        state = WebThemeEngine::StateNormal;
-    Platform::current()->themeEngine()->paint(canvas, scrollbar.orientation() == HorizontalScrollbar ? WebThemeEngine::PartScrollbarHorizontalThumb : WebThemeEngine::PartScrollbarVerticalThumb, state, WebRect(rect), 0);
+bool ScrollbarThemeAura::ShouldRepaintAllPartsOnInvalidation() const {
+  // This theme can separately handle thumb invalidation.
+  return false;
 }
 
-bool ScrollbarThemeAura::shouldRepaintAllPartsOnInvalidation() const
-{
-    // This theme can separately handle thumb invalidation.
-    return false;
+ScrollbarPart ScrollbarThemeAura::InvalidateOnThumbPositionChange(
+    const ScrollbarThemeClient& scrollbar,
+    float old_position,
+    float new_position) const {
+  ScrollbarPart invalid_parts = kNoPart;
+  ASSERT(ButtonsPlacement() == kWebScrollbarButtonsPlacementSingle);
+  static const ScrollbarPart kButtonParts[] = {kBackButtonStartPart,
+                                               kForwardButtonEndPart};
+  for (ScrollbarPart part : kButtonParts) {
+    if (ButtonPartPaintingParams(scrollbar, old_position, part) !=
+        ButtonPartPaintingParams(scrollbar, new_position, part))
+      invalid_parts = static_cast<ScrollbarPart>(invalid_parts | part);
+  }
+  return invalid_parts;
 }
 
-ScrollbarPart ScrollbarThemeAura::invalidateOnThumbPositionChange(const ScrollbarThemeClient& scrollbar, float oldPosition, float newPosition) const
-{
-    ScrollbarPart invalidParts = NoPart;
-    ASSERT(buttonsPlacement() == WebScrollbarButtonsPlacementSingle);
-    static const ScrollbarPart kButtonParts[] = {BackButtonStartPart, ForwardButtonEndPart};
-    for (ScrollbarPart part : kButtonParts) {
-        if (buttonPartPaintingParams(scrollbar, oldPosition, part) != buttonPartPaintingParams(scrollbar, newPosition, part))
-            invalidParts = static_cast<ScrollbarPart>(invalidParts | part);
-    }
-    return invalidParts;
-}
-
-bool ScrollbarThemeAura::hasScrollbarButtons(ScrollbarOrientation orientation) const
-{
-    WebThemeEngine* themeEngine = Platform::current()->themeEngine();
-    if (orientation == VerticalScrollbar) {
-        return !themeEngine->getSize(WebThemeEngine::PartScrollbarDownArrow).isEmpty();
-    }
-    return !themeEngine->getSize(WebThemeEngine::PartScrollbarLeftArrow).isEmpty();
+bool ScrollbarThemeAura::HasScrollbarButtons(
+    ScrollbarOrientation orientation) const {
+  WebThemeEngine* theme_engine = Platform::Current()->ThemeEngine();
+  if (orientation == kVerticalScrollbar) {
+    return !theme_engine->GetSize(WebThemeEngine::kPartScrollbarDownArrow)
+                .IsEmpty();
+  }
+  return !theme_engine->GetSize(WebThemeEngine::kPartScrollbarLeftArrow)
+              .IsEmpty();
 };
 
-IntSize ScrollbarThemeAura::buttonSize(const ScrollbarThemeClient& scrollbar)
-{
-    if (!hasScrollbarButtons(scrollbar.orientation()))
-        return IntSize(0, 0);
+IntSize ScrollbarThemeAura::ButtonSize(const ScrollbarThemeClient& scrollbar) {
+  if (!HasScrollbarButtons(scrollbar.Orientation()))
+    return IntSize(0, 0);
 
-    if (scrollbar.orientation() == VerticalScrollbar) {
-        int squareSize = scrollbar.width();
-        return IntSize(squareSize, scrollbar.height() < 2 * squareSize ? scrollbar.height() / 2 : squareSize);
-    }
+  if (scrollbar.Orientation() == kVerticalScrollbar) {
+    int square_size = scrollbar.Width();
+    return IntSize(square_size, scrollbar.Height() < 2 * square_size
+                                    ? scrollbar.Height() / 2
+                                    : square_size);
+  }
 
-    // HorizontalScrollbar
-    int squareSize = scrollbar.height();
-    return IntSize(scrollbar.width() < 2 * squareSize ? scrollbar.width() / 2 : squareSize, squareSize);
+  // HorizontalScrollbar
+  int square_size = scrollbar.Height();
+  return IntSize(
+      scrollbar.Width() < 2 * square_size ? scrollbar.Width() / 2 : square_size,
+      square_size);
 }
 
-} // namespace blink
+}  // namespace blink

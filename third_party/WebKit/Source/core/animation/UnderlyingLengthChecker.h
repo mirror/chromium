@@ -5,40 +5,38 @@
 #ifndef UnderlyingLengthChecker_h
 #define UnderlyingLengthChecker_h
 
+#include <memory>
 #include "core/animation/InterpolableValue.h"
 #include "core/animation/InterpolationType.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
 class UnderlyingLengthChecker : public InterpolationType::ConversionChecker {
-public:
-    static std::unique_ptr<UnderlyingLengthChecker> create(size_t underlyingLength)
-    {
-        return wrapUnique(new UnderlyingLengthChecker(underlyingLength));
-    }
+ public:
+  static std::unique_ptr<UnderlyingLengthChecker> Create(
+      size_t underlying_length) {
+    return WTF::WrapUnique(new UnderlyingLengthChecker(underlying_length));
+  }
 
-    static size_t getUnderlyingLength(const InterpolationValue& underlying)
-    {
-        if (!underlying)
-            return 0;
-        return toInterpolableList(*underlying.interpolableValue).length();
-    }
+  static size_t GetUnderlyingLength(const InterpolationValue& underlying) {
+    if (!underlying)
+      return 0;
+    return ToInterpolableList(*underlying.interpolable_value).length();
+  }
 
-    bool isValid(const InterpolationEnvironment&, const InterpolationValue& underlying) const final
-    {
-        return m_underlyingLength == getUnderlyingLength(underlying);
-    }
+  bool IsValid(const InterpolationEnvironment&,
+               const InterpolationValue& underlying) const final {
+    return underlying_length_ == GetUnderlyingLength(underlying);
+  }
 
-private:
-    UnderlyingLengthChecker(size_t underlyingLength)
-        : m_underlyingLength(underlyingLength)
-    {}
+ private:
+  UnderlyingLengthChecker(size_t underlying_length)
+      : underlying_length_(underlying_length) {}
 
-    size_t m_underlyingLength;
+  size_t underlying_length_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // UnderlyingLengthChecker_h
+#endif  // UnderlyingLengthChecker_h

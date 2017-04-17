@@ -41,11 +41,8 @@ class PopupTimer {
   // subsequent calls to Start the timer will continue where it left off.
   void Pause();
 
-  // Stops the timer, and resets the amount of time that has passed so that
-  // calling Start results in a timeout equal to the initial timeout setting.
-  void Reset();
-
-  base::TimeDelta get_timeout() const { return timeout_; }
+  // Returns whether the underlying timer is running or not.
+  bool IsRunning() { return timer_->IsRunning(); }
 
  private:
   // Notification ID for which this timer applies.

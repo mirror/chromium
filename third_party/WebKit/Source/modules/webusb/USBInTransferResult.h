@@ -9,42 +9,50 @@
 #include "core/dom/DOMArrayBuffer.h"
 #include "core/dom/DOMDataView.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class USBInTransferResult final
-    : public GarbageCollectedFinalized<USBInTransferResult>
-    , public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static USBInTransferResult* create(const String& status, const Vector<uint8_t>& data)
-    {
-        return new USBInTransferResult(status, data);
+    : public GarbageCollectedFinalized<USBInTransferResult>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
+
+ public:
+  static USBInTransferResult* Create(const String& status,
+                                     const Optional<Vector<uint8_t>>& data) {
+    DOMDataView* data_view = nullptr;
+    if (data) {
+      data_view = DOMDataView::Create(
+          DOMArrayBuffer::Create(data->Data(), data->size()), 0, data->size());
     }
+    return new USBInTransferResult(status, data_view);
+  }
 
-    USBInTransferResult(const String& status, const Vector<uint8_t>& data)
-        : m_status(status)
-        , m_data(DOMDataView::create(DOMArrayBuffer::create(data.data(), data.size()), 0, data.size()))
-    {
-    }
+  static USBInTransferResult* Create(const String& status) {
+    return new USBInTransferResult(status, nullptr);
+  }
 
-    virtual ~USBInTransferResult() { }
+  static USBInTransferResult* Create(const String& status, DOMDataView* data) {
+    return new USBInTransferResult(status, data);
+  }
 
-    String status() const { return m_status; }
-    DOMDataView* data() const { return m_data; }
+  USBInTransferResult(const String& status, DOMDataView* data)
+      : status_(status), data_(data) {}
 
-    DEFINE_INLINE_TRACE()
-    {
-        visitor->trace(m_data);
-    }
+  virtual ~USBInTransferResult() {}
 
-private:
-    const String m_status;
-    const Member<DOMDataView> m_data;
+  String status() const { return status_; }
+  DOMDataView* data() const { return data_; }
+
+  DEFINE_INLINE_TRACE() { visitor->Trace(data_); }
+
+ private:
+  const String status_;
+  const Member<DOMDataView> data_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // USBInTransferResult_h
+#endif  // USBInTransferResult_h

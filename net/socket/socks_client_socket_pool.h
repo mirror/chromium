@@ -13,6 +13,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
 #include "net/base/host_port_pair.h"
+#include "net/base/net_export.h"
 #include "net/dns/host_resolver.h"
 #include "net/socket/client_socket_pool.h"
 #include "net/socket/client_socket_pool_base.h"
@@ -124,12 +125,16 @@ class NET_EXPORT_PRIVATE SOCKSClientSocketPool
                     RespectLimits respect_limits,
                     ClientSocketHandle* handle,
                     const CompletionCallback& callback,
-                    const BoundNetLog& net_log) override;
+                    const NetLogWithSource& net_log) override;
 
   void RequestSockets(const std::string& group_name,
                       const void* params,
                       int num_sockets,
-                      const BoundNetLog& net_log) override;
+                      const NetLogWithSource& net_log) override;
+
+  void SetPriority(const std::string& group_name,
+                   ClientSocketHandle* handle,
+                   RequestPriority priority) override;
 
   void CancelRequest(const std::string& group_name,
                      ClientSocketHandle* handle) override;
@@ -141,6 +146,8 @@ class NET_EXPORT_PRIVATE SOCKSClientSocketPool
   void FlushWithError(int error) override;
 
   void CloseIdleSockets() override;
+
+  void CloseIdleSocketsInGroup(const std::string& group_name) override;
 
   int IdleSocketCount() const override;
 

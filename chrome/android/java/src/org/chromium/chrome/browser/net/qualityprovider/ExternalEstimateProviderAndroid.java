@@ -4,12 +4,10 @@
 
 package org.chromium.chrome.browser.net.qualityprovider;
 
-import android.content.Context;
-
+import org.chromium.base.NonThreadSafe;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.chrome.browser.ChromeApplication;
-import org.chromium.chrome.browser.util.NonThreadSafe;
+import org.chromium.chrome.browser.AppHooks;
 
 /**
  * This class provides a base class implementation and may be overridden on operating systems that
@@ -29,9 +27,8 @@ public class ExternalEstimateProviderAndroid {
     private long mNativePtr;
 
     @CalledByNative
-    private static ExternalEstimateProviderAndroid create(Context context, long nativePtr) {
-        return ((ChromeApplication) context)
-                .createExternalEstimateProviderAndroid(nativePtr);
+    private static ExternalEstimateProviderAndroid create(long nativePtr) {
+        return AppHooks.get().createExternalEstimateProviderAndroid(nativePtr);
     }
 
     /**

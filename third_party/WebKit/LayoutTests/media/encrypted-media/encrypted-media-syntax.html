@@ -7,7 +7,6 @@
         <script src="../../resources/testharnessreport.js"></script>
     </head>
     <body>
-        <div id="log"></div>
         <script>
             // Since promises catch any exception and convert it into a
             // rejected Promise, there is no current way to have the W3C
@@ -73,11 +72,11 @@
                     func: function() { return navigator.requestMediaKeySystemAccess(1, [{}]); }
                 },
                 {
-                    exception: 'InvalidAccessError',
+                    exception: 'TypeError',
                     func: function() { return navigator.requestMediaKeySystemAccess(new Uint8Array(0), [{}]); }
                 },
                 {
-                    exception: 'InvalidAccessError',
+                    exception: 'TypeError',
                     func: function() { return navigator.requestMediaKeySystemAccess('', [{}]); }
                 },
                 {
@@ -91,7 +90,7 @@
                 },
                 // Empty sequence of MediaKeySystemConfiguration.
                 {
-                    exception: 'InvalidAccessError',
+                    exception: 'TypeError',
                     func: function() { return navigator.requestMediaKeySystemAccess('org.w3.clearkey', []); }
                 },
                 // Invalid sequences of MediaKeySystemConfigurations.
@@ -129,7 +128,7 @@
             async_test(function(test)
             {
                 assert_equals(typeof navigator.requestMediaKeySystemAccess, 'function');
-                navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]).then(function(access) {
+                navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration()).then(function(access) {
                     assert_not_equals(access, null);
                     assert_equals(typeof access, 'object');
                     assert_equals(access.keySystem, 'org.w3.clearkey');
@@ -145,7 +144,7 @@
             {
                 var access;
 
-                navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]).then(function(result) {
+                navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration()).then(function(result) {
                     access = result;
                     assert_equals(access.keySystem, 'org.w3.clearkey');
                     return access.createMediaKeys();
@@ -167,7 +166,7 @@
                 }).catch(function(error) {
                     forceTestFailureFromPromise(test, error, 'create() tests failed');
                 });
-            }, 'Test MediaKeys create().');
+            }, 'Test MediaKeySystemAccess createMediaKeys().');
 
             var kCreateSessionExceptionsTestCases = [
                 // Tests in this set use a shortened parameter name due to
@@ -229,7 +228,7 @@
 
             async_test(function(test)
             {
-                navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]).then(function(access) {
+                navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration()).then(function(access) {
                     return access.createMediaKeys();
                 }).then(function(mediaKeys) {
                     var sessionPromises = kCreateSessionExceptionsTestCases.map(function(testCase) {
@@ -284,7 +283,7 @@
                 },
                 // Invalid parameters.
                 {
-                    exception: 'InvalidAccessError',
+                    exception: 'TypeError',
                     func: function(mk8, _, initData) { return mk8.createSession().generateRequest('', initData); }
                 },
                 // Not supported initDataTypes.
@@ -301,7 +300,7 @@
                     func: function(mk11, _, initData) { return mk11.createSession().generateRequest(1, initData); }
                 },
                 {
-                    exception: 'InvalidAccessError',
+                    exception: 'TypeError',
                     func: function(mk12, _, initData) { return mk12.createSession().generateRequest(new Uint8Array(0), initData); }
                 },
                 {
@@ -357,7 +356,7 @@
                     func: function(mk5, type) { return mk5.createSession().generateRequest(type, 1); }
                 },
                 {
-                    exception: 'InvalidAccessError',
+                    exception: 'TypeError',
                     func: function(mk6, type) { return mk6.createSession().generateRequest(type, new Uint8Array(0)); }
                 }
             ];
@@ -372,7 +371,7 @@
                     return isInitDataTypeSupported('cenc');
                 }).then(function(result) {
                     isCencSupported = result;
-                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]);
+                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration());
                 }).then(function(access) {
                     return access.createMediaKeys();
                 }).then(function(mediaKeys) {
@@ -414,28 +413,28 @@
                     func: function(mk1) { return mk1.createSession('temporary').load(); }
                 },
                 // 'temporary' sessions are never allowed, so always return
-                // 'InvalidAccessError'.
+                // 'TypeError'.
                 {
-                    exception: 'InvalidAccessError',
+                    exception: 'TypeError',
                     func: function(mk3) { return mk3.createSession('temporary').load(''); }
                 },
                 {
-                    exception: 'InvalidAccessError',
+                    exception: 'TypeError',
                     func: function(mk4) { return mk4.createSession('temporary').load(1); }
                 },
                 {
-                    exception: 'InvalidAccessError',
+                    exception: 'TypeError',
                     func: function(mk5) { return mk5.createSession('temporary').load('!@#$%^&*()'); }
                 },
                 {
-                    exception: 'InvalidAccessError',
+                    exception: 'TypeError',
                     func: function(mk6) { return mk6.createSession('temporary').load('1234'); }
                 }
             ];
 
             async_test(function(test)
             {
-                navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]).then(function(access) {
+                navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration()).then(function(access) {
                     return access.createMediaKeys();
                 }).then(function(mediaKeys) {
                     var initData = stringToUint8Array('init data');
@@ -501,25 +500,25 @@
                     return;
                 }
 
-                // FIXME: Update this set of tests when done
-                // implementing the latest spec.
                 assert_equals(typeof mediaKeySession, 'object');
                 assert_equals(typeof mediaKeySession.addEventListener, 'function');
+                assert_equals(typeof mediaKeySession.sessionId, 'string');
+                assert_equals(typeof mediaKeySession.expiration, 'number');
+                assert_equals(typeof mediaKeySession.closed, 'object');
+                assert_equals(typeof mediaKeySession.keyStatuses, 'object');
+                assert_equals(typeof mediaKeySession.onkeystatuseschange, 'object');
+                assert_equals(typeof mediaKeySession.onmessage, 'object');
                 assert_equals(typeof mediaKeySession.generateRequest, 'function');
+                assert_equals(typeof mediaKeySession.load, 'function');
                 assert_equals(typeof mediaKeySession.update, 'function');
                 assert_equals(typeof mediaKeySession.close, 'function');
                 assert_equals(typeof mediaKeySession.remove, 'function');
                 assert_equals(mediaKeySession.sessionId, '');
-                assert_equals(typeof mediaKeySession.sessionId, 'string');
-                assert_equals(typeof mediaKeySession.onopen, 'undefined');
-                assert_equals(typeof mediaKeySession.onmessage, 'undefined');
-                assert_equals(typeof mediaKeySession.onclose, 'undefined');
-                assert_equals(typeof mediaKeySession.onerror, 'undefined');
             }
 
             async_test(function(test)
             {
-                navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]).then(function(access) {
+                navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration()).then(function(access) {
                     return access.createMediaKeys();
                 }).then(function(mediaKeys) {
                     kCreateSessionTestCases.map(function(testCase) {
@@ -556,7 +555,7 @@
                     return isInitDataTypeSupported('cenc');
                 }).then(function(result) {
                     isCencSupported = result;
-                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]);
+                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration());
                 }).then(function(access) {
                     return access.createMediaKeys();
                 }).then(function(mediaKeys) {
@@ -617,7 +616,7 @@
                     func: function(s) { return s.update(1); }
                 },
                 {
-                    exception: 'InvalidAccessError',
+                    exception: 'TypeError',
                     func: function(s) { return s.update(new Uint8Array(0)); }
                 }
             ];
@@ -632,7 +631,7 @@
                     return isInitDataTypeSupported('cenc');
                 }).then(function(result) {
                     isCencSupported = result;
-                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]);
+                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration());
                 }).then(function(access) {
                     return access.createMediaKeys();
                 }).then(function(mediaKeys) {
@@ -692,7 +691,7 @@
                     return isInitDataTypeSupported('cenc');
                 }).then(function(result) {
                     isCencSupported = result;
-                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]);
+                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration());
                 }).then(function(access) {
                     return access.createMediaKeys();
                 }).then(function(mediaKeys) {
@@ -737,7 +736,7 @@
                     return isInitDataTypeSupported('cenc');
                 }).then(function(result) {
                     isCencSupported = result;
-                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]);
+                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration());
                 }).then(function(access) {
                     return access.createMediaKeys();
                 }).then(function(mediaKeys) {
@@ -784,7 +783,7 @@
                     return isInitDataTypeSupported('cenc');
                 }).then(function(result) {
                     isCencSupported = result;
-                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]);
+                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration());
                 }).then(function(access) {
                     return access.createMediaKeys();
                 }).then(function(mediaKeys) {
@@ -823,7 +822,7 @@
                 }).then(function(result) {
                     assert_unreached('remove() should not succeed for temporary sessions');
                 }, function(error) {
-                    assert_equals(error.name, 'InvalidAccessError');
+                    assert_equals(error.name, 'TypeError');
                 });
             }
 
@@ -837,7 +836,7 @@
                     return isInitDataTypeSupported('cenc');
                 }).then(function(result) {
                     isCencSupported = result;
-                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]);
+                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration());
                 }).then(function(access) {
                     return access.createMediaKeys();
                 }).then(function(mediaKeys) {
@@ -886,7 +885,7 @@
                     return isInitDataTypeSupported('cenc');
                 }).then(function(result) {
                     isCencSupported = result;
-                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]);
+                    return navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration());
                 }).then(function(access) {
                     return access.createMediaKeys();
                 }).then(function(mediaKeys) {
@@ -934,14 +933,14 @@
                 },
                 // Empty array.
                 {
-                    exception: 'InvalidAccessError',
+                    exception: 'TypeError',
                     func: function(mk) { return mk.setServerCertificate(new Uint8Array(0)); }
                 }
             ];
 
             async_test(function(test)
             {
-                navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]).then(function(access) {
+                navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration()).then(function(access) {
                     return access.createMediaKeys();
                 }).then(function(mediaKeys) {
                     var promises = kSetServerCertificateExceptionsTestCases.map(function(testCase) {
@@ -982,7 +981,7 @@
             async_test(function(test)
             {
                 var expected_result;
-                navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{}]).then(function(access) {
+                navigator.requestMediaKeySystemAccess('org.w3.clearkey', getSimpleConfiguration()).then(function(access) {
                     return access.createMediaKeys();
                 }).then(function(mediaKeys) {
                     var promises = kSetServerCertificateTestCases.map(function(testCase) {
@@ -1002,6 +1001,34 @@
                 });
             }, 'Test MediaKeys setServerCertificate().');
 
+            function test_valid_message_type(message_type)
+            {
+                var event = new MediaKeyMessageEvent('eventType', { messageType: message_type, message: new ArrayBuffer(0) } );
+                assert_equals(event.messageType, message_type);
+            }
+
+            test(function(test)
+            {
+                // Valid MediaKeyMessageType values.
+                test_valid_message_type('license-request');
+                test_valid_message_type('license-renewal');
+                test_valid_message_type('license-release');
+                // TODO(jrummell): Add 'individualization-request' if the final
+                // spec includes it. http://crbug.com/628437.
+
+                // Invalid MediaKeyMessageType values should throw a TypeError.
+                assert_throws(new TypeError, function() {
+                    new MediaKeyMessageEvent('eventType', { messageType: 'something-else', message: new ArrayBuffer(0) } );
+                });
+
+                // Missing required values should throw a TypeError.
+                assert_throws(new TypeError, function() {
+                    new MediaKeyMessageEvent('eventType', { message: new ArrayBuffer(0) } );
+                });
+                assert_throws(new TypeError, function() {
+                    new MediaKeyMessageEvent('eventType', { messageType: 'license-request' } );
+                });
+            }, 'Test MediaKeyMessageEvent.');
 
             // FIXME: Add syntax checks for MediaKeys.IsTypeSupported().
             // FIXME: Add syntax checks for MediaKeyError and MediaKeySession events.

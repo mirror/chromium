@@ -7,32 +7,47 @@
 namespace blink {
 
 // static
-PhotoCapabilities* PhotoCapabilities::create()
-{
-    return new PhotoCapabilities();
+PhotoCapabilities* PhotoCapabilities::Create() {
+  return new PhotoCapabilities();
 }
 
-String PhotoCapabilities::focusMode() const
-{
-    switch (m_focusMode) {
-    case media::mojom::blink::FocusMode::UNAVAILABLE:
-        return "unavailable";
-    case media::mojom::blink::FocusMode::AUTO:
-        return "auto";
-    case media::mojom::blink::FocusMode::MANUAL:
-        return "manual";
-    default:
+Vector<String> PhotoCapabilities::fillLightMode() const {
+  Vector<String> fill_light_modes;
+  for (const auto& mode : fill_light_modes_) {
+    switch (mode) {
+      case media::mojom::blink::FillLightMode::OFF:
+        fill_light_modes.push_back("off");
+        break;
+      case media::mojom::blink::FillLightMode::AUTO:
+        fill_light_modes.push_back("auto");
+        break;
+      case media::mojom::blink::FillLightMode::FLASH:
+        fill_light_modes.push_back("flash");
+        break;
+      default:
         NOTREACHED();
     }
-    return emptyString();
+  }
+  return fill_light_modes;
 }
 
-DEFINE_TRACE(PhotoCapabilities)
-{
-    visitor->trace(m_iso);
-    visitor->trace(m_imageHeight);
-    visitor->trace(m_imageWidth);
-    visitor->trace(m_zoom);
+String PhotoCapabilities::redEyeReduction() const {
+  switch (red_eye_reduction_) {
+    case media::mojom::blink::RedEyeReduction::NEVER:
+      return "never";
+    case media::mojom::blink::RedEyeReduction::ALWAYS:
+      return "always";
+    case media::mojom::blink::RedEyeReduction::CONTROLLABLE:
+      return "controllable";
+    default:
+      NOTREACHED();
+  }
+  return "";
 }
 
-} // namespace blink
+DEFINE_TRACE(PhotoCapabilities) {
+  visitor->Trace(image_height_);
+  visitor->Trace(image_width_);
+}
+
+}  // namespace blink

@@ -26,131 +26,163 @@
 
 #include "platform/Timer.h"
 
-#include "platform/TraceEvent.h"
+#include <limits.h>
+#include <math.h>
+#include <algorithm>
+#include <limits>
+#include "platform/instrumentation/tracing/TraceEvent.h"
+#include "platform/wtf/AddressSanitizer.h"
+#include "platform/wtf/Atomics.h"
+#include "platform/wtf/CurrentTime.h"
+#include "platform/wtf/HashSet.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebScheduler.h"
-#include "wtf/AddressSanitizer.h"
-#include "wtf/Atomics.h"
-#include "wtf/CurrentTime.h"
-#include "wtf/HashSet.h"
-#include <algorithm>
-#include <limits.h>
-#include <limits>
-#include <math.h>
 
 namespace blink {
 
-TimerBase::TimerBase() : TimerBase(Platform::current()->currentThread()->scheduler()->timerTaskRunner()) { }
-
-TimerBase::TimerBase(WebTaskRunner* webTaskRunner)
-    : m_nextFireTime(0)
-    , m_repeatInterval(0)
-    , m_cancellableTimerTask(nullptr)
-    , m_webTaskRunner(webTaskRunner)
+TimerBase::TimerBase(RefPtr<WebTaskRunner> web_task_runner)
+    : next_fire_time_(0),
+      repeat_interval_(0),
+      web_task_runner_(std::move(web_task_runner)),
 #if DCHECK_IS_ON()
-    , m_thread(currentThread())
+      thread_(CurrentThread()),
 #endif
-{
-    ASSERT(m_webTaskRunner);
+      weak_ptr_factory_(this) {
+  ASSERT(web_task_runner_);
 }
 
-TimerBase::~TimerBase()
-{
-    stop();
+TimerBase::~TimerBase() {
+  Stop();
 }
 
-void TimerBase::start(double nextFireInterval, double repeatInterval, const WebTraceLocation& caller)
-{
-    ASSERT(m_thread == currentThread());
-
-    m_location = caller;
-    m_repeatInterval = repeatInterval;
-    setNextFireTime(timerMonotonicallyIncreasingTime(), nextFireInterval);
-}
-
-void TimerBase::stop()
-{
-    ASSERT(m_thread == currentThread());
-
-    m_repeatInterval = 0;
-    m_nextFireTime = 0;
-    if (m_cancellableTimerTask)
-        m_cancellableTimerTask->cancel();
-    m_cancellableTimerTask = nullptr;
-}
-
-double TimerBase::nextFireInterval() const
-{
-    ASSERT(isActive());
-    double current = timerMonotonicallyIncreasingTime();
-    if (m_nextFireTime < current)
-        return 0;
-    return m_nextFireTime - current;
-}
-
-WebTaskRunner* TimerBase::timerTaskRunner() const
-{
-    return m_webTaskRunner;
-}
-
-void TimerBase::setNextFireTime(double now, double delay)
-{
-    ASSERT(m_thread == currentThread());
-
-    double newTime = now + delay;
-
-    if (m_nextFireTime != newTime) {
-        m_nextFireTime = newTime;
-        if (m_cancellableTimerTask)
-            m_cancellableTimerTask->cancel();
-        m_cancellableTimerTask = new CancellableTimerTask(this);
-
-        double delayMs = 1000.0 * (newTime - now);
-        timerTaskRunner()->postDelayedTask(m_location, m_cancellableTimerTask, delayMs);
-    }
-}
-
-NO_LAZY_SWEEP_SANITIZE_ADDRESS
-void TimerBase::runInternal()
-{
-    if (!canFire())
-        return;
-
-    TRACE_EVENT0("blink", "TimerBase::run");
+void TimerBase::Start(double next_fire_interval,
+                      double repeat_interval,
+                      const WebTraceLocation& caller) {
 #if DCHECK_IS_ON()
-    DCHECK_EQ(m_thread, currentThread()) << "Timer posted by " << m_location.function_name() << " " << m_location.file_name() << " was run on a different thread";
+  DCHECK_EQ(thread_, CurrentThread());
 #endif
-    TRACE_EVENT_SET_SAMPLING_STATE("blink", "BlinkInternal");
 
-    if (m_repeatInterval) {
-        double now = timerMonotonicallyIncreasingTime();
-        // This computation should be drift free, and it will cope if we miss a beat,
-        // which can easily happen if the thread is busy.  It will also cope if we get
-        // called slightly before m_unalignedNextFireTime, which can happen due to lack
-        // of timer precision.
-        double intervalToNextFireTime = m_repeatInterval - fmod(now - m_nextFireTime, m_repeatInterval);
-        setNextFireTime(timerMonotonicallyIncreasingTime(), intervalToNextFireTime);
-    } else {
-        m_nextFireTime = 0;
-    }
-    fired();
-    TRACE_EVENT_SET_SAMPLING_STATE("blink", "Sleeping");
+  location_ = caller;
+  repeat_interval_ = repeat_interval;
+  SetNextFireTime(TimerMonotonicallyIncreasingTime(), next_fire_interval);
 }
 
-bool TimerBase::Comparator::operator()(const TimerBase* a, const TimerBase* b) const
-{
-    return a->m_nextFireTime < b->m_nextFireTime;
+void TimerBase::Stop() {
+#if DCHECK_IS_ON()
+  DCHECK_EQ(thread_, CurrentThread());
+#endif
+
+  repeat_interval_ = 0;
+  next_fire_time_ = 0;
+  weak_ptr_factory_.RevokeAll();
+}
+
+double TimerBase::NextFireInterval() const {
+  ASSERT(IsActive());
+  double current = TimerMonotonicallyIncreasingTime();
+  if (next_fire_time_ < current)
+    return 0;
+  return next_fire_time_ - current;
+}
+
+void TimerBase::MoveToNewTaskRunner(RefPtr<WebTaskRunner> task_runner) {
+#if DCHECK_IS_ON()
+  DCHECK_EQ(thread_, CurrentThread());
+  DCHECK(task_runner->RunsTasksOnCurrentThread());
+#endif
+  // If the underlying task runner stays the same, ignore it.
+  if (web_task_runner_->ToSingleThreadTaskRunner() ==
+      task_runner->ToSingleThreadTaskRunner()) {
+    return;
+  }
+
+  bool active = IsActive();
+  weak_ptr_factory_.RevokeAll();
+  web_task_runner_ = std::move(task_runner);
+
+  if (!active)
+    return;
+
+  double now = TimerMonotonicallyIncreasingTime();
+  double next_fire_time = std::max(next_fire_time_, now);
+  next_fire_time_ = 0;
+
+  SetNextFireTime(now, next_fire_time - now);
 }
 
 // static
-WebTaskRunner* TimerBase::UnthrottledWebTaskRunner()
-{
-    return Platform::current()->currentThread()->getWebTaskRunner();
+RefPtr<WebTaskRunner> TimerBase::GetTimerTaskRunner() {
+  return Platform::Current()->CurrentThread()->Scheduler()->TimerTaskRunner();
 }
 
-double TimerBase::timerMonotonicallyIncreasingTime() const
-{
-    return timerTaskRunner()->monotonicallyIncreasingVirtualTimeSeconds();
+// static
+RefPtr<WebTaskRunner> TimerBase::GetUnthrottledTaskRunner() {
+  return Platform::Current()->CurrentThread()->GetWebTaskRunner();
 }
 
-} // namespace blink
+RefPtr<WebTaskRunner> TimerBase::TimerTaskRunner() const {
+  return web_task_runner_;
+}
+
+void TimerBase::SetNextFireTime(double now, double delay) {
+#if DCHECK_IS_ON()
+  DCHECK_EQ(thread_, CurrentThread());
+#endif
+
+  double new_time = now + delay;
+
+  if (next_fire_time_ != new_time) {
+    next_fire_time_ = new_time;
+
+    // Cancel any previously posted task.
+    weak_ptr_factory_.RevokeAll();
+
+    double delay_ms = 1000.0 * (new_time - now);
+    TimerTaskRunner()->PostDelayedTask(
+        location_,
+        base::Bind(&TimerBase::RunInternal, weak_ptr_factory_.CreateWeakPtr()),
+        delay_ms);
+  }
+}
+
+NO_SANITIZE_ADDRESS
+void TimerBase::RunInternal() {
+  if (!CanFire())
+    return;
+
+  weak_ptr_factory_.RevokeAll();
+
+  TRACE_EVENT0("blink", "TimerBase::run");
+#if DCHECK_IS_ON()
+  DCHECK_EQ(thread_, CurrentThread())
+      << "Timer posted by " << location_.function_name() << " "
+      << location_.file_name() << " was run on a different thread";
+#endif
+
+  if (repeat_interval_) {
+    double now = TimerMonotonicallyIncreasingTime();
+    // This computation should be drift free, and it will cope if we miss a
+    // beat, which can easily happen if the thread is busy.  It will also cope
+    // if we get called slightly before m_unalignedNextFireTime, which can
+    // happen due to lack of timer precision.
+    double interval_to_next_fire_time =
+        repeat_interval_ - fmod(now - next_fire_time_, repeat_interval_);
+    SetNextFireTime(TimerMonotonicallyIncreasingTime(),
+                    interval_to_next_fire_time);
+  } else {
+    next_fire_time_ = 0;
+  }
+  Fired();
+}
+
+bool TimerBase::Comparator::operator()(const TimerBase* a,
+                                       const TimerBase* b) const {
+  return a->next_fire_time_ < b->next_fire_time_;
+}
+
+// static
+double TimerBase::TimerMonotonicallyIncreasingTime() const {
+  return TimerTaskRunner()->MonotonicallyIncreasingVirtualTimeSeconds();
+}
+
+}  // namespace blink

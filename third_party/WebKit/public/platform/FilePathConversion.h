@@ -15,8 +15,10 @@ namespace blink {
 
 class WebString;
 
-BLINK_COMMON_EXPORT base::FilePath WebStringToFilePath(const WebString&);
+BLINK_PLATFORM_EXPORT base::FilePath WebStringToFilePath(const WebString&);
 
-} // namespace blink
+BLINK_PLATFORM_EXPORT WebString FilePathToWebString(const base::FilePath&);
 
-#endif // FilePathConversion_h
+}  // namespace blink
+
+#endif  // FilePathConversion_h

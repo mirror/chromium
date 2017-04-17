@@ -4,9 +4,7 @@
 
 #include "chrome/browser/sync/sync_error_notifier_ash.h"
 
-#include "ash/common/system/system_notifier.h"
-#include "base/macros.h"
-#include "base/strings/string16.h"
+#include "ash/system/system_notifier.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -20,8 +18,8 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
 #include "components/signin/core/account_id/account_id.h"
-#include "grit/theme_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/message_center/notification.h"
@@ -96,12 +94,13 @@ void SyncNotificationDelegate::ShowSyncSetup() {
   chrome::ShowSettingsSubPageForProfile(profile_, chrome::kSyncSetupSubPage);
 }
 
-} // namespace
+}  // namespace
 
-SyncErrorNotifier::SyncErrorNotifier(SyncErrorController* controller,
+SyncErrorNotifier::SyncErrorNotifier(syncer::SyncErrorController* controller,
                                      Profile* profile)
     : error_controller_(controller),
-      profile_(profile) {
+      profile_(profile),
+      notification_displayed_(false) {
   // Create a unique notification ID for this profile.
   notification_id_ =
       kProfileSyncNotificationId + profile_->GetProfileUserName();
@@ -117,18 +116,22 @@ SyncErrorNotifier::~SyncErrorNotifier() {
 
 void SyncErrorNotifier::Shutdown() {
   error_controller_->RemoveObserver(this);
-  error_controller_ = NULL;
+  error_controller_ = nullptr;
 }
 
 void SyncErrorNotifier::OnErrorChanged() {
   NotificationUIManager* notification_ui_manager =
       g_browser_process->notification_ui_manager();
 
-  // notification_ui_manager() may return NULL when shutting down.
+  // notification_ui_manager() may return null when shutting down.
   if (!notification_ui_manager)
     return;
 
+  if (error_controller_->HasError() == notification_displayed_)
+    return;
+
   if (!error_controller_->HasError()) {
+    notification_displayed_ = false;
     g_browser_process->notification_ui_manager()->CancelById(
         notification_id_, NotificationUIManager::GetProfileID(profile_));
     return;
@@ -147,10 +150,12 @@ void SyncErrorNotifier::OnErrorChanged() {
   }
 #endif
 
-  // Keep the existing notification if there is one.
-  if (notification_ui_manager->FindById(
-          notification_id_, NotificationUIManager::GetProfileID(profile_)))
-    return;
+  // Error state just got triggered. There shouldn't be previous notification.
+  // Let's display one.
+  DCHECK(!notification_displayed_ && error_controller_->HasError());
+  DCHECK(notification_ui_manager->FindById(
+             notification_id_, NotificationUIManager::GetProfileID(profile_)) ==
+         nullptr);
 
   // Add an accept button to launch the sync setup settings subpage.
   message_center::RichNotificationData data;
@@ -180,4 +185,5 @@ void SyncErrorNotifier::OnErrorChanged() {
       base::string16(),  // display_source
       GURL(notification_id_), notification_id_, data, delegate);
   notification_ui_manager->Add(notification, profile_);
+  notification_displayed_ = true;
 }

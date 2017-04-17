@@ -21,8 +21,8 @@ SynchronousTaskGraphRunner::~SynchronousTaskGraphRunner() {
   DCHECK(!work_queue_.HasReadyToRunTasks());
 }
 
-NamespaceToken SynchronousTaskGraphRunner::GetNamespaceToken() {
-  return work_queue_.GetNamespaceToken();
+NamespaceToken SynchronousTaskGraphRunner::GenerateNamespaceToken() {
+  return work_queue_.GenerateNamespaceToken();
 }
 
 void SynchronousTaskGraphRunner::ScheduleTasks(NamespaceToken token,
@@ -67,6 +67,9 @@ void SynchronousTaskGraphRunner::RunUntilIdle() {
 }
 
 bool SynchronousTaskGraphRunner::RunTask() {
+  // Since we do not have posted from location for tasks, record the context for
+  // tasks as "cc" in heap profiler.
+  TRACE_HEAP_PROFILER_API_SCOPED_TASK_EXECUTION scoped_event("cc");
   TRACE_EVENT0("toplevel", "SynchronousTaskGraphRunner::RunTask");
 
   // Find the first category with any tasks to run. This task graph runner
@@ -85,11 +88,9 @@ bool SynchronousTaskGraphRunner::RunTask() {
 
   const uint16_t category = found->first;
   auto prioritized_task = work_queue_.GetNextTaskToRun(category);
+  prioritized_task.task->RunOnWorkerThread();
 
-  Task* task = prioritized_task.task;
-  task->RunOnWorkerThread();
-
-  work_queue_.CompleteTask(prioritized_task);
+  work_queue_.CompleteTask(std::move(prioritized_task));
 
   return true;
 }

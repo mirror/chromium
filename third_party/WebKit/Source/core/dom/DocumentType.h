@@ -29,34 +29,40 @@
 namespace blink {
 
 class DocumentType final : public Node {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static DocumentType* create(Document* document, const String& name, const String& publicId, const String& systemId)
-    {
-        return new DocumentType(document, name, publicId, systemId);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    const String& name() const { return m_name; }
-    const String& publicId() const { return m_publicId; }
-    const String& systemId() const { return m_systemId; }
+ public:
+  static DocumentType* Create(Document* document,
+                              const String& name,
+                              const String& public_id,
+                              const String& system_id) {
+    return new DocumentType(document, name, public_id, system_id);
+  }
 
-private:
-    DocumentType(Document*, const String& name, const String& publicId, const String& systemId);
+  const String& name() const { return name_; }
+  const String& publicId() const { return public_id_; }
+  const String& systemId() const { return system_id_; }
 
-    String nodeName() const override;
-    NodeType getNodeType() const override;
-    Node* cloneNode(bool deep) override;
+ private:
+  DocumentType(Document*,
+               const String& name,
+               const String& public_id,
+               const String& system_id);
 
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void removedFrom(ContainerNode*) override;
+  String nodeName() const override;
+  NodeType getNodeType() const override;
+  Node* cloneNode(bool deep, ExceptionState&) override;
 
-    String m_name;
-    String m_publicId;
-    String m_systemId;
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
+
+  String name_;
+  String public_id_;
+  String system_id_;
 };
 
-DEFINE_NODE_TYPE_CASTS(DocumentType, isDocumentTypeNode());
+DEFINE_NODE_TYPE_CASTS(DocumentType, IsDocumentTypeNode());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DocumentType_h
+#endif  // DocumentType_h

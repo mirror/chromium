@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
@@ -26,26 +27,29 @@ class WebView;
 
 class ChromeDesktopImpl : public ChromeImpl {
  public:
-  ChromeDesktopImpl(
-      std::unique_ptr<DevToolsHttpClient> http_client,
-      std::unique_ptr<DevToolsClient> websocket_client,
-      ScopedVector<DevToolsEventListener>& devtools_event_listeners,
-      std::unique_ptr<PortReservation> port_reservation,
-      base::Process process,
-      const base::CommandLine& command,
-      base::ScopedTempDir* user_data_dir,
-      base::ScopedTempDir* extension_dir,
-      bool network_emulation_enabled);
+  ChromeDesktopImpl(std::unique_ptr<DevToolsHttpClient> http_client,
+                    std::unique_ptr<DevToolsClient> websocket_client,
+                    std::vector<std::unique_ptr<DevToolsEventListener>>
+                        devtools_event_listeners,
+                    std::unique_ptr<PortReservation> port_reservation,
+                    std::string page_load_strategy,
+                    base::Process process,
+                    const base::CommandLine& command,
+                    base::ScopedTempDir* user_data_dir,
+                    base::ScopedTempDir* extension_dir,
+                    bool network_emulation_enabled);
   ~ChromeDesktopImpl() override;
 
   // Waits for a page with the given URL to appear and finish loading.
   // Returns an error if the timeout is exceeded.
   Status WaitForPageToLoad(const std::string& url,
                            const base::TimeDelta& timeout,
-                           std::unique_ptr<WebView>* web_view);
+                           std::unique_ptr<WebView>* web_view,
+                           bool w3c_compliant);
 
   // Gets the installed automation extension.
-  Status GetAutomationExtension(AutomationExtension** extension);
+  Status GetAutomationExtension(AutomationExtension** extension,
+                                bool w3c_compliant);
 
   // Overridden from Chrome:
   Status GetAsDesktop(ChromeDesktopImpl** desktop) override;

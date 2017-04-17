@@ -6,7 +6,7 @@ PASS
 Running: testLocalFrame
 paint invalidations[
     {
-        cause : {reason: Inline CSS style declaration was mutated, stackTrace: .../inspector/tracing/timeline-paint/timeline-paint-with-layout-invalidations.html:10}
+        cause : {reason: Inline CSS style declaration was mutated, stackTrace: .../inspector/tracing/timeline-paint/timeline-paint-with-layout-invalidations.html:9}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined
@@ -16,34 +16,12 @@ paint invalidations[
         selectorPart : undefined
         type : "StyleRecalcInvalidationTracking"
     }
-    {
-        cause : {reason: Inline CSS style declaration was mutated, stackTrace: .../inspector/tracing/timeline-paint/timeline-paint-with-layout-invalidations.html:11}
-        changedAttribute : undefined
-        changedClass : undefined
-        changedId : undefined
-        changedPseudo : undefined
-        extraData : ""
-        nodeName : "DIV id='testElement'"
-        selectorPart : undefined
-        type : "StyleRecalcInvalidationTracking"
-    }
-    {
-        cause : {reason: Style changed, stackTrace: .../inspector/tracing/timeline-paint/timeline-paint-with-layout-invalidations.html:12}
-        changedAttribute : undefined
-        changedClass : undefined
-        changedId : undefined
-        changedPseudo : undefined
-        extraData : undefined
-        nodeName : "DIV id='testElement'"
-        selectorPart : undefined
-        type : "LayoutInvalidationTracking"
-    }
 ]
 
 Running: testSubframe
 second paint invalidations[
     {
-        cause : {reason: Inline CSS style declaration was mutated, stackTrace: .../inspector/tracing/timeline-paint/timeline-paint-with-layout-invalidations.html:21}
+        cause : {reason: Inline CSS style declaration was mutated, stackTrace: .../inspector/tracing/timeline-paint/timeline-paint-with-layout-invalidations.html:17}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined
@@ -54,7 +32,7 @@ second paint invalidations[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Style changed, stackTrace: .../inspector/tracing/timeline-paint/timeline-paint-with-layout-invalidations.html:22}
+        cause : {reason: Style changed, stackTrace: .../inspector/tracing/timeline-paint/timeline-paint-with-layout-invalidations.html:18}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined
@@ -65,7 +43,7 @@ second paint invalidations[
         type : "LayoutInvalidationTracking"
     }
     {
-        cause : {reason: Unknown, stackTrace: .../inspector/tracing/timeline-paint/timeline-paint-with-layout-invalidations.html:22}
+        cause : {reason: Unknown, stackTrace: .../inspector/tracing/timeline-paint/timeline-paint-with-layout-invalidations.html:18}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined

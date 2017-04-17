@@ -4,10 +4,13 @@
 
 package org.chromium.content.browser;
 
-import android.os.Bundle;
+import android.os.IBinder;
 
-import org.chromium.content.common.IChildProcessCallback;
-import org.chromium.content.common.IChildProcessService;
+import org.chromium.base.process_launcher.ChildProcessCreationParams;
+import org.chromium.base.process_launcher.FileDescriptorInfo;
+import org.chromium.base.process_launcher.IChildProcessService;
+
+import javax.annotation.Nullable;
 
 /**
  * Manages a connection between the browser activity and a child service. ChildProcessConnection is
@@ -23,6 +26,24 @@ public interface ChildProcessConnection {
      */
     interface DeathCallback {
         void onChildProcessDied(ChildProcessConnection connection);
+    }
+
+    /**
+     * Used to notify the consumer about the process start. These callbacks will be invoked before
+     * the ConnectionCallbacks.
+     */
+    interface StartCallback {
+        /**
+         * Called when the child process has successfully started and is ready for connection
+         * setup.
+         */
+        void onChildStarted();
+
+        /**
+         * Called when the child process failed to start. This can happen if the process is already
+         * in use by another client.
+         */
+        void onChildStartFailed();
     }
 
     /**
@@ -42,6 +63,8 @@ public interface ChildProcessConnection {
 
     String getPackageName();
 
+    ChildProcessCreationParams getCreationParams();
+
     IChildProcessService getService();
 
     /**
@@ -54,25 +77,21 @@ public interface ChildProcessConnection {
      * setupConnection() to setup the connection parameters. start() and setupConnection() are
      * separate to allow to pass whatever parameters are available in start(), and complete the
      * remainder later while reducing the connection setup latency.
-     * @param commandLine (optional) command line for the child process. If omitted, then
-     *                    the command line parameters must instead be passed to setupConnection().
+     * @param startCallback (optional) callback when the child process starts or fails to start.
      */
-    void start(String[] commandLine);
+    void start(StartCallback startCallback);
 
     /**
      * Setups the connection after it was started with start().
      * @param commandLine (optional) will be ignored if the command line was already sent in start()
      * @param filesToBeMapped a list of file descriptors that should be registered
-     * @param processCallback used for status updates regarding this process connection
+     * @param callback optional client specified callbacks that the child can use to communicate
+     *                 with the parent process
      * @param connectionCallback will be called exactly once after the connection is set up or the
      *                           setup fails
      */
-    void setupConnection(
-            String[] commandLine,
-            FileDescriptorInfo[] filesToBeMapped,
-            IChildProcessCallback processCallback,
-            ConnectionCallback connectionCallback,
-            Bundle sharedRelros);
+    void setupConnection(String[] commandLine, FileDescriptorInfo[] filesToBeMapped,
+            @Nullable IBinder callback, ConnectionCallback connectionCallback);
 
     /**
      * Terminates the connection to IChildProcessService, closing all bindings. It is safe to call

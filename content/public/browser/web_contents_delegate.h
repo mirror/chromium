@@ -16,16 +16,19 @@
 #include "content/common/content_export.h"
 #include "content/public/browser/bluetooth_chooser.h"
 #include "content/public/browser/invalidate_type.h"
-#include "content/public/browser/navigation_type.h"
 #include "content/public/common/media_stream_request.h"
-#include "content/public/common/security_style.h"
-#include "content/public/common/window_container_type.h"
+#include "content/public/common/window_container_type.mojom.h"
 #include "third_party/WebKit/public/platform/WebDisplayMode.h"
 #include "third_party/WebKit/public/platform/WebDragOperation.h"
+#include "third_party/WebKit/public/platform/WebSecurityStyle.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/base/window_open_disposition.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/native_widget_types.h"
+
+#if defined(OS_ANDROID)
+#include "base/android/scoped_java_ref.h"
+#endif
 
 class GURL;
 
@@ -35,14 +38,13 @@ class ListValue;
 }
 
 namespace content {
-class BrowserContext;
 class ColorChooser;
-class DownloadItem;
 class JavaScriptDialogManager;
 class PageState;
 class RenderFrameHost;
-class RenderViewHost;
+class RenderWidgetHost;
 class SessionStorageNamespace;
+class SiteInstance;
 class WebContents;
 class WebContentsImpl;
 struct ColorSuggestion;
@@ -52,13 +54,16 @@ struct FileChooserParams;
 struct NativeWebKeyboardEvent;
 struct Referrer;
 struct SecurityStyleExplanations;
-struct SSLStatus;
-}
+}  // namespace content
 
 namespace gfx {
 class Point;
 class Rect;
 class Size;
+}
+
+namespace net {
+class X509Certificate;
 }
 
 namespace url {
@@ -70,9 +75,11 @@ class WebGestureEvent;
 }
 
 namespace content {
-class RenderWidgetHost;
 
 struct OpenURLParams;
+struct WebContentsUnresponsiveState;
+
+enum class KeyboardEventProcessingResult;
 
 // Objects implement this interface to get notified about changes in the
 // WebContents and to provide necessary functionality.
@@ -95,7 +102,7 @@ class CONTENT_EXPORT WebContentsDelegate {
   // Allows the delegate to optionally cancel navigations that attempt to
   // transfer to a different process between the start of the network load and
   // commit.  Defaults to true.
-  virtual bool ShouldTransferNavigation();
+  virtual bool ShouldTransferNavigation(bool is_main_frame_navigation);
 
   // Called to inform the delegate that the WebContents's navigation state
   // changed. The |changed_flags| indicates the parts of the navigation state
@@ -103,9 +110,9 @@ class CONTENT_EXPORT WebContentsDelegate {
   virtual void NavigationStateChanged(WebContents* source,
                                       InvalidateTypes changed_flags) {}
 
-  // Called to inform the delegate that the WebContent's visible SSL state (as
-  // defined by SSLStatus) changed.
-  virtual void VisibleSSLStateChanged(const WebContents* source) {}
+  // Called to inform the delegate that the WebContent's visible
+  // security state changed and that security UI should be updated.
+  virtual void VisibleSecurityStateChanged(WebContents* source) {}
 
   // Creates a new tab with the already-created WebContents 'new_contents'.
   // The window for the added contents should be reparented correctly when this
@@ -176,10 +183,6 @@ class CONTENT_EXPORT WebContentsDelegate {
   // Invoked when a vertical overscroll completes.
   virtual void OverscrollComplete() {}
 
-  // Return the rect where to display the resize corner, if any, otherwise
-  // an empty rect.
-  virtual gfx::Rect GetRootWindowResizerRect() const;
-
   // Invoked prior to showing before unload handler confirmation dialog.
   virtual void WillRunBeforeUnloadConfirm() {}
 
@@ -192,14 +195,14 @@ class CONTENT_EXPORT WebContentsDelegate {
   // Defaults to false.
   virtual bool ShouldPreserveAbortedURLs(WebContents* source);
 
-  // Add a message to the console. Returning true indicates that the delegate
-  // handled the message. If false is returned the default logging mechanism
-  // will be used for the message.
-  virtual bool AddMessageToConsole(WebContents* source,
-                                   int32_t level,
-                                   const base::string16& message,
-                                   int32_t line_no,
-                                   const base::string16& source_id);
+  // A message was added to the console of a frame of the page. Returning true
+  // indicates that the delegate handled the message. If false is returned the
+  // default logging mechanism will be used for the message.
+  virtual bool DidAddMessageToConsole(WebContents* source,
+                                      int32_t level,
+                                      const base::string16& message,
+                                      int32_t line_no,
+                                      const base::string16& source_id);
 
   // Tells us that we've finished firing this tab's beforeunload event.
   // The proceed bool tells us whether the user chose to proceed closing the
@@ -258,12 +261,10 @@ class CONTENT_EXPORT WebContentsDelegate {
                                   const PageState& page_state);
 
   // Allows delegates to handle keyboard events before sending to the renderer.
-  // Returns true if the |event| was handled. Otherwise, if the |event| would be
-  // handled in HandleKeyboardEvent() method as a normal keyboard shortcut,
-  // |*is_keyboard_shortcut| should be set to true.
-  virtual bool PreHandleKeyboardEvent(WebContents* source,
-                                      const NativeWebKeyboardEvent& event,
-                                      bool* is_keyboard_shortcut);
+  // See enum for description of return values.
+  virtual KeyboardEventProcessingResult PreHandleKeyboardEvent(
+      WebContents* source,
+      const NativeWebKeyboardEvent& event);
 
   // Allows delegates to handle unhandled keyboard messages coming back from
   // the renderer.
@@ -293,17 +294,36 @@ class CONTENT_EXPORT WebContentsDelegate {
   // Returns true to allow WebContents to continue with the default processing.
   virtual bool OnGoToEntryOffset(int offset);
 
-  // Allows delegate to control whether a WebContents will be created. Returns
-  // true to allow the creation. Default is to allow it. In cases where the
-  // delegate handles the creation/navigation itself, it will use |target_url|.
-  // The embedder has to synchronously adopt |route_id| or else the view will
-  // be destroyed.
+  // Allows delegate to control whether a new WebContents can be created by
+  // |web_contents|.
+  //
+  // The route ID parameters passed to this method are associated with the
+  // |source_site_instance|'s RenderProcessHost. They may also be
+  // MSG_ROUTING_NONE. If they are valid, they correspond to a trio of
+  // RenderView, RenderFrame, and RenderWidget objects that have been created in
+  // the renderer, but not yet assigned a WebContents, RenderViewHost,
+  // RenderFrameHost, or RenderWidgetHost.
+  //
+  // The return value is interpreted as follows:
+  //
+  //   Return true: |web_contents| should create a WebContents.
+  //   Return false: |web_contents| should not create a WebContents. The
+  //       provisionally-created RenderView (if it exists) in the renderer
+  //       process will be destroyed, UNLESS the delegate, during this method,
+  //       itself creates a WebContents using |source_site_instance|,
+  //       |route_id|, |main_frame_route_id|, and |main_frame_widget_route_id|
+  //       as creation parameters. If this happens, the delegate assumes
+  //       ownership of the corresponding RenderView, etc. |web_contents| will
+  //       detect that this has happened by looking for the existence of a
+  //       RenderViewHost in |source_site_instance| with |route_id|.
   virtual bool ShouldCreateWebContents(
       WebContents* web_contents,
+      SiteInstance* source_site_instance,
       int32_t route_id,
       int32_t main_frame_route_id,
       int32_t main_frame_widget_route_id,
-      WindowContainerType window_container_type,
+      content::mojom::WindowContainerType window_container_type,
+      const GURL& opener_url,
       const std::string& frame_name,
       const GURL& target_url,
       const std::string& partition_id,
@@ -312,13 +332,16 @@ class CONTENT_EXPORT WebContentsDelegate {
   // Notifies the delegate about the creation of a new WebContents. This
   // typically happens when popups are created.
   virtual void WebContentsCreated(WebContents* source_contents,
+                                  int opener_render_process_id,
                                   int opener_render_frame_id,
                                   const std::string& frame_name,
                                   const GURL& target_url,
                                   WebContents* new_contents) {}
 
   // Notification that the tab is hung.
-  virtual void RendererUnresponsive(WebContents* source) {}
+  virtual void RendererUnresponsive(
+      WebContents* source,
+      const WebContentsUnresponsiveState& unresponsive_state) {}
 
   // Notification that the tab is no longer hung.
   virtual void RendererResponsive(WebContents* source) {}
@@ -460,12 +483,19 @@ class CONTENT_EXPORT WebContentsDelegate {
                                           const GURL& security_origin,
                                           MediaStreamType type);
 
+  // Returns the ID of the default device for the given media device |type|.
+  // If the returned value is an empty string, it means that there is no
+  // default device for the given |type|.
+  virtual std::string GetDefaultMediaDeviceID(WebContents* web_contents,
+                                              MediaStreamType type);
+
 #if defined(OS_ANDROID)
-  // Asks permission to decode media stream. After permission is determined,
-  // |callback| will be called with the result.
-  virtual void RequestMediaDecodePermission(
-      WebContents* web_contents,
-      const base::Callback<void(bool)>& callback);
+  // Creates a view embedding the video view.
+  virtual base::android::ScopedJavaLocalRef<jobject>
+      GetContentVideoViewEmbedder();
+
+  // Returns true if the given media should be blocked to load.
+  virtual bool ShouldBlockMediaRequest(const GURL& url);
 #endif
 
   // Requests permission to access the PPAPI broker. The delegate should return
@@ -510,24 +540,28 @@ class CONTENT_EXPORT WebContentsDelegate {
   // Can be overridden by a delegate to return the security style of the
   // given |web_contents|, populating |security_style_explanations| to
   // explain why the SecurityStyle was downgraded. Returns
-  // SECURITY_STYLE_UNKNOWN if not overriden.
-  virtual SecurityStyle GetSecurityStyle(
+  // WebSecurityStyleUnknown if not overriden.
+  virtual blink::WebSecurityStyle GetSecurityStyle(
       WebContents* web_contents,
       SecurityStyleExplanations* security_style_explanations);
 
   // Displays platform-specific (OS) dialog with the certificate details.
   virtual void ShowCertificateViewerInDevTools(
       WebContents* web_contents,
-      int cert_id);
-
-  // Called when the active render widget is forwarding a RemoteChannel
-  // compositor proto.  This is used in Blimp mode.
-  virtual void ForwardCompositorProto(
-      RenderWidgetHost* render_widget_host,
-      const std::vector<uint8_t>& proto) {}
+      scoped_refptr<net::X509Certificate> certificate);
 
   // Requests the app banner. This method is called from the DevTools.
   virtual void RequestAppBannerFromDevTools(content::WebContents* web_contents);
+
+  // Reports that passive mixed content was found at the specified url.
+  virtual void PassiveInsecureContentFound(const GURL& resource_url) {}
+
+  // Checks if running of active mixed content is allowed for the specified
+  // WebContents/tab.
+  virtual bool ShouldAllowRunningInsecureContent(WebContents* web_contents,
+                                                 bool allowed_per_prefs,
+                                                 const url::Origin& origin,
+                                                 const GURL& resource_url);
 
  protected:
   virtual ~WebContentsDelegate();

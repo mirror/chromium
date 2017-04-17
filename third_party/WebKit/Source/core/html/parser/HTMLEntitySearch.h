@@ -26,49 +26,51 @@
 #ifndef HTMLEntitySearch_h
 #define HTMLEntitySearch_h
 
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 struct HTMLEntityTableEntry;
 
 class HTMLEntitySearch {
-    STACK_ALLOCATED();
-public:
-    HTMLEntitySearch();
+  STACK_ALLOCATED();
 
-    void advance(UChar);
+ public:
+  HTMLEntitySearch();
 
-    bool isEntityPrefix() const { return !!m_first; }
-    int currentLength() const { return m_currentLength; }
+  void Advance(UChar);
 
-    const HTMLEntityTableEntry* mostRecentMatch() const { return m_mostRecentMatch; }
+  bool IsEntityPrefix() const { return !!first_; }
+  int CurrentLength() const { return current_length_; }
 
-private:
-    enum CompareResult {
-        Before,
-        Prefix,
-        After,
-    };
+  const HTMLEntityTableEntry* MostRecentMatch() const {
+    return most_recent_match_;
+  }
 
-    CompareResult compare(const HTMLEntityTableEntry*, UChar) const;
-    const HTMLEntityTableEntry* findFirst(UChar) const;
-    const HTMLEntityTableEntry* findLast(UChar) const;
+ private:
+  enum CompareResult {
+    kBefore,
+    kPrefix,
+    kAfter,
+  };
 
-    void fail()
-    {
-        m_first = 0;
-        m_last = 0;
-    }
+  CompareResult Compare(const HTMLEntityTableEntry*, UChar) const;
+  const HTMLEntityTableEntry* FindFirst(UChar) const;
+  const HTMLEntityTableEntry* FindLast(UChar) const;
 
-    int m_currentLength;
+  void Fail() {
+    first_ = 0;
+    last_ = 0;
+  }
 
-    const HTMLEntityTableEntry* m_mostRecentMatch;
-    const HTMLEntityTableEntry* m_first;
-    const HTMLEntityTableEntry* m_last;
+  int current_length_;
+
+  const HTMLEntityTableEntry* most_recent_match_;
+  const HTMLEntityTableEntry* first_;
+  const HTMLEntityTableEntry* last_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

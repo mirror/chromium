@@ -37,21 +37,22 @@
 
 namespace blink {
 
-class CORE_EXPORT InspectorMemoryAgent final : public InspectorBaseAgent<protocol::Memory::Metainfo> {
-    WTF_MAKE_NONCOPYABLE(InspectorMemoryAgent);
-public:
-    static InspectorMemoryAgent* create()
-    {
-        return new InspectorMemoryAgent();
-    }
-    ~InspectorMemoryAgent() override;
+class CORE_EXPORT InspectorMemoryAgent final
+    : public InspectorBaseAgent<protocol::Memory::Metainfo> {
+  WTF_MAKE_NONCOPYABLE(InspectorMemoryAgent);
 
-    void getDOMCounters(ErrorString*, int* documents, int* nodes, int* jsEventListeners) override;
+ public:
+  static InspectorMemoryAgent* Create() { return new InspectorMemoryAgent(); }
+  ~InspectorMemoryAgent() override;
 
-private:
-    InspectorMemoryAgent();
+  protocol::Response getDOMCounters(int* documents,
+                                    int* nodes,
+                                    int* js_event_listeners) override;
+
+ private:
+  InspectorMemoryAgent();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // !defined(InspectorMemoryAgent_h)
+#endif  // !defined(InspectorMemoryAgent_h)

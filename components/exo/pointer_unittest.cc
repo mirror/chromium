@@ -2,13 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/aura/wm_window_aura.h"
-#include "ash/common/shell_window_ids.h"
-#include "ash/common/wm/window_positioning_utils.h"
-#include "ash/common/wm_shell.h"
-#include "ash/shell.h"
-#include "components/exo/buffer.h"
 #include "components/exo/pointer.h"
+
+#include "ash/public/cpp/shell_window_ids.h"
+#include "ash/shell.h"
+#include "ash/shell_port.h"
+#include "ash/wm/window_positioning_utils.h"
+#include "ash/wm_window.h"
+#include "components/exo/buffer.h"
 #include "components/exo/pointer_delegate.h"
 #include "components/exo/shell_surface.h"
 #include "components/exo/surface.h"
@@ -175,8 +176,8 @@ TEST_F(PointerTest, OnPointerMotion) {
 
   std::unique_ptr<Surface> child_surface(new Surface);
   std::unique_ptr<ShellSurface> child_shell_surface(new ShellSurface(
-      child_surface.get(), shell_surface.get(), gfx::Rect(9, 9, 1, 1), true,
-      ash::kShellWindowId_DefaultContainer));
+      child_surface.get(), shell_surface.get(), ShellSurface::BoundsMode::FIXED,
+      gfx::Point(9, 9), true, false, ash::kShellWindowId_DefaultContainer));
   gfx::Size child_buffer_size(15, 15);
   std::unique_ptr<Buffer> child_buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(child_buffer_size)));
@@ -307,20 +308,21 @@ TEST_F(PointerTest, IgnorePointerEventDuringModal) {
 
   // Create surface for modal window.
   std::unique_ptr<Surface> surface2(new Surface);
-  std::unique_ptr<ShellSurface> shell_surface2(
-      new ShellSurface(surface2.get(), nullptr, gfx::Rect(0, 0, 5, 5), true,
-                       ash::kShellWindowId_SystemModalContainer));
+  std::unique_ptr<ShellSurface> shell_surface2(new ShellSurface(
+      surface2.get(), nullptr, ShellSurface::BoundsMode::FIXED, gfx::Point(),
+      true, false, ash::kShellWindowId_SystemModalContainer));
   std::unique_ptr<Buffer> buffer2(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(gfx::Size(5, 5))));
   surface2->Attach(buffer2.get());
   surface2->Commit();
-  ash::wm::CenterWindow(ash::WmWindowAura::Get(surface2->window()));
+  ash::wm::CenterWindow(ash::WmWindow::Get(surface2->window()));
   gfx::Point location2 = surface2->window()->GetBoundsInScreen().origin();
 
   // Make the window modal.
   shell_surface2->SetSystemModal(true);
-  EXPECT_TRUE(ash::WmShell::Get()->IsSystemModalWindowOpen());
+  EXPECT_TRUE(ash::ShellPort::Get()->IsSystemModalWindowOpen());
 
+  EXPECT_CALL(delegate, OnPointerFrame()).Times(testing::AnyNumber());
   EXPECT_CALL(delegate, CanAcceptPointerEventsForSurface(surface.get()))
       .WillRepeatedly(testing::Return(true));
   EXPECT_CALL(delegate, CanAcceptPointerEventsForSurface(surface2.get()))
@@ -407,7 +409,7 @@ TEST_F(PointerTest, IgnorePointerEventDuringModal) {
 
   // Make the window non-modal.
   shell_surface2->SetSystemModal(false);
-  EXPECT_FALSE(ash::WmShell::Get()->IsSystemModalWindowOpen());
+  EXPECT_FALSE(ash::ShellPort::Get()->IsSystemModalWindowOpen());
 
   // Check if pointer events on non-modal window are registered.
   {

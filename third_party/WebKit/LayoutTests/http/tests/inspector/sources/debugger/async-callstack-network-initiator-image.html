@@ -14,19 +14,19 @@ function testFunction()
 
 function test()
 {
-    WebInspector.settingForTest("enableAsyncStackTraces").set(true);
+    Common.settingForTest("enableAsyncStackTraces").set(true);
     InspectorTest.evaluateInPage("testFunction()");
-    InspectorTest.networkManager.addEventListener(WebInspector.NetworkManager.EventTypes.RequestFinished, reuestFinished);
+    InspectorTest.networkManager.addEventListener(SDK.NetworkManager.Events.RequestFinished, requestFinished);
 
-    function reuestFinished(event)
+    function requestFinished(event)
     {
-        if (!event.data.url.endsWith("resources/image.png"))
+        if (!event.data.url().endsWith("resources/image.png"))
             return;
 
-        var initiatorInfo = event.data.initiatorInfo();
-        var element = new WebInspector.Linkifier().linkifyScriptLocation(InspectorTest.mainTarget, initiatorInfo.scriptId, initiatorInfo.url, initiatorInfo.lineNumber - 1, initiatorInfo.columnNumber - 1);
+        var initiatorInfo = NetworkLog.networkLog.initiatorInfoForRequest(event.data);
+        var element = new Components.Linkifier().linkifyScriptLocation(InspectorTest.mainTarget, initiatorInfo.scriptId, initiatorInfo.url, initiatorInfo.lineNumber - 1, initiatorInfo.columnNumber - 1);
         InspectorTest.addResult(element.textContent);
-        WebInspector.settingForTest("enableAsyncStackTraces").set(false);
+        Common.settingForTest("enableAsyncStackTraces").set(false);
         InspectorTest.completeTest();
     }
 }

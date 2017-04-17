@@ -13,7 +13,8 @@ shouldBeDefined("navigator.requestMIDIAccess");
 
 window.jsTestIsAsync = true;
 
-PermissionsHelper.setPermission('midi-sysex', 'granted').then(function() {
+Promise.all([PermissionsHelper.setPermission('midi', 'granted'),
+             PermissionsHelper.setPermission('midi-sysex', 'granted')]).then(function() {
     return navigator.requestMIDIAccess({sysex: true});
 }).then(function(a) {
     output = a.outputs.values().next().value;
@@ -96,6 +97,11 @@ PermissionsHelper.setPermission('midi-sysex', 'granted').then(function() {
     shouldThrow('output.send([], Infinity)');
     shouldThrow('output.send(new Uint8Array(), NaN)');
     shouldThrow('output.send(new Uint8Array(), Infinity)');
+
+    if (window.SharedArrayBuffer) {
+        shouldThrow('output.send(new Uint8Array(new SharedArrayBuffer(4)))');
+        shouldThrow('output.send(new Uint8Array(new SharedArrayBuffer(4), 0))');
+    }
 
     finishJSTest();
 }).catch(function () {

@@ -5,6 +5,7 @@
 package org.chromium.android_webview;
 
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.UsedByReflection;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.io.IOException;
  * the client of WebView.
  */
 @JNINamespace("android_webview")
+@UsedByReflection("")
 public class AwDebug {
     /**
      * Dump webview state (predominantly a minidump for all threads,
@@ -29,6 +31,7 @@ public class AwDebug {
      * be able to be re-opened for reading and writing via its
      * canonical path. The file will be truncated upon re-opening.
      */
+    @UsedByReflection("")
     public static boolean dumpWithoutCrashing(File dumpFile) {
         String dumpPath;
         try {
@@ -39,5 +42,15 @@ public class AwDebug {
         return nativeDumpWithoutCrashing(dumpPath);
     }
 
+    public static void initCrashKeysForTesting() {
+        nativeInitCrashKeysForWebViewTesting();
+    }
+
+    public static void setCrashKeyValue(String key, String value) {
+        nativeSetCrashKeyValue(key, value);
+    }
+
     private static native boolean nativeDumpWithoutCrashing(String dumpPath);
+    private static native void nativeInitCrashKeysForWebViewTesting();
+    private static native void nativeSetCrashKeyValue(String key, String value);
 }

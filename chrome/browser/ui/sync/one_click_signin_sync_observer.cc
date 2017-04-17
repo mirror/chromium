@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/sync/one_click_signin_sync_observer.h"
 
+#include <string>
+
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
@@ -11,7 +13,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/signin_promo.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
-#include "components/browser_sync/browser/profile_sync_service.h"
+#include "components/browser_sync/profile_sync_service.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
 
@@ -34,7 +36,7 @@ OneClickSigninSyncObserver::OneClickSigninSyncObserver(
       weak_ptr_factory_(this) {
   DCHECK(!continue_url_.is_empty());
 
-  ProfileSyncService* sync_service = GetSyncService(web_contents);
+  browser_sync::ProfileSyncService* sync_service = GetSyncService(web_contents);
   if (sync_service) {
     sync_service->AddObserver(this);
   } else {
@@ -53,15 +55,17 @@ OneClickSigninSyncObserver::OneClickSigninSyncObserver(
 OneClickSigninSyncObserver::~OneClickSigninSyncObserver() {}
 
 void OneClickSigninSyncObserver::WebContentsDestroyed() {
-  ProfileSyncService* sync_service = GetSyncService(web_contents());
+  browser_sync::ProfileSyncService* sync_service =
+      GetSyncService(web_contents());
   if (sync_service)
     sync_service->RemoveObserver(this);
 
   delete this;
 }
 
-void OneClickSigninSyncObserver::OnStateChanged() {
-  ProfileSyncService* sync_service = GetSyncService(web_contents());
+void OneClickSigninSyncObserver::OnStateChanged(syncer::SyncService* sync) {
+  browser_sync::ProfileSyncService* sync_service =
+      GetSyncService(web_contents());
 
   // At this point, the sign-in process is complete, and control has been handed
   // back to the sync engine. Close the gaia sign in tab if the |continue_url_|
@@ -99,7 +103,7 @@ void OneClickSigninSyncObserver::LoadContinueUrl() {
       std::string());
 }
 
-ProfileSyncService* OneClickSigninSyncObserver::GetSyncService(
+browser_sync::ProfileSyncService* OneClickSigninSyncObserver::GetSyncService(
     content::WebContents* web_contents) {
   Profile* profile =
       Profile::FromBrowserContext(web_contents->GetBrowserContext());

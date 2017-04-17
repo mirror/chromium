@@ -8,9 +8,9 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/memory/scoped_vector.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "ui/display/types/display_snapshot.h"
 #include "ui/display/types/native_display_delegate.h"
@@ -75,7 +75,7 @@ class RendererFactory {
   DISALLOW_COPY_AND_ASSIGN(RendererFactory);
 };
 
-class WindowManager : public ui::NativeDisplayObserver {
+class WindowManager : public display::NativeDisplayObserver {
  public:
   WindowManager(const base::Closure& quit_closure);
   ~WindowManager() override;
@@ -86,13 +86,15 @@ class WindowManager : public ui::NativeDisplayObserver {
   void RemoveWindow(DemoWindow* window);
 
  private:
-  void OnDisplaysAquired(const std::vector<ui::DisplaySnapshot*>& displays);
+  void OnDisplaysAquired(
+      const std::vector<display::DisplaySnapshot*>& displays);
   void OnDisplayConfigured(const gfx::Rect& bounds, bool success);
 
-  // ui::NativeDisplayDelegate:
+  // display::NativeDisplayDelegate:
   void OnConfigurationChanged() override;
+  void OnDisplaySnapshotsInvalidated() override;
 
-  std::unique_ptr<ui::NativeDisplayDelegate> delegate_;
+  std::unique_ptr<display::NativeDisplayDelegate> delegate_;
   base::Closure quit_closure_;
   RendererFactory renderer_factory_;
   std::vector<std::unique_ptr<DemoWindow>> windows_;
@@ -217,14 +219,16 @@ std::unique_ptr<ui::Renderer> RendererFactory::CreateRenderer(
       scoped_refptr<gl::GLSurface> surface = CreateGLSurface(widget);
       if (!surface)
         LOG(FATAL) << "Failed to create GL surface";
+      if (!surface->SupportsAsyncSwap())
+        LOG(FATAL) << "GL surface must support SwapBuffersAsync";
       if (surface->IsSurfaceless())
-        return base::WrapUnique(
-            new ui::SurfacelessGlRenderer(widget, surface, size));
+        return base::MakeUnique<ui::SurfacelessGlRenderer>(widget, surface,
+                                                           size);
       else
-        return base::WrapUnique(new ui::GlRenderer(widget, surface, size));
+        return base::MakeUnique<ui::GlRenderer>(widget, surface, size);
     }
     case SOFTWARE:
-      return base::WrapUnique(new ui::SoftwareRenderer(widget, size));
+      return base::MakeUnique<ui::SoftwareRenderer>(widget, size);
   }
 
   return nullptr;
@@ -280,12 +284,14 @@ void WindowManager::OnConfigurationChanged() {
       base::Bind(&WindowManager::OnDisplaysAquired, base::Unretained(this)));
 }
 
+void WindowManager::OnDisplaySnapshotsInvalidated() {}
+
 void WindowManager::OnDisplaysAquired(
-    const std::vector<ui::DisplaySnapshot*>& displays) {
+    const std::vector<display::DisplaySnapshot*>& displays) {
   windows_.clear();
 
   gfx::Point origin;
-  for (auto display : displays) {
+  for (auto* display : displays) {
     if (!display->native_mode()) {
       LOG(ERROR) << "Display " << display->display_id()
                  << " doesn't have a native mode";
@@ -331,6 +337,7 @@ int main(int argc, char** argv) {
   // Build UI thread message loop. This is used by platform
   // implementations for event polling & running background tasks.
   base::MessageLoopForUI message_loop;
+  base::TaskScheduler::CreateAndSetSimpleTaskScheduler("OzoneDemo");
 
   ui::OzonePlatform::InitializeForUI();
   ui::KeyboardLayoutEngineManager::GetKeyboardLayoutEngine()

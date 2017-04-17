@@ -18,7 +18,8 @@
 #include "base/json/json_writer.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "chrome/browser/android/preferences/important_sites_util.h"
+#include "chrome/browser/android/search_geolocation/search_geolocation_service.h"
+#include "chrome/browser/browsing_data/browsing_data_flash_lso_helper.h"
 #include "chrome/browser/browsing_data/browsing_data_local_storage_helper.h"
 #include "chrome/browser/browsing_data/browsing_data_quota_helper.h"
 #include "chrome/browser/browsing_data/cookies_tree_model.h"
@@ -27,7 +28,11 @@
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/content_settings/web_site_settings_uma_util.h"
+#include "chrome/browser/engagement/important_sites_util.h"
 #include "chrome/browser/notifications/desktop_notification_profile_util.h"
+#include "chrome/browser/permissions/permission_decision_auto_blocker.h"
+#include "chrome/browser/permissions/permission_manager.h"
+#include "chrome/browser/permissions/permission_uma_util.h"
 #include "chrome/browser/permissions/permission_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -42,10 +47,12 @@
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "storage/browser/quota/quota_manager.h"
 #include "storage/common/quota/quota_status_code.h"
+#include "url/origin.h"
 #include "url/url_constants.h"
 
 using base::android::ConvertJavaStringToUTF8;
 using base::android::ConvertUTF8ToJavaString;
+using base::android::JavaParamRef;
 using base::android::JavaRef;
 using base::android::ScopedJavaGlobalRef;
 using base::android::ScopedJavaLocalRef;
@@ -57,6 +64,9 @@ namespace {
 // to the user, we're just using them for our 'clear unimportant' feature in
 // ManageSpaceActivity.java.
 const int kMaxImportantSites = 10;
+
+const char* kHttpPortSuffix = ":80";
+const char* kHttpsPortSuffix = ":443";
 
 Profile* GetActiveUserProfile(bool is_incognito) {
   Profile* profile = ProfileManager::GetActiveUserProfile();
@@ -70,20 +80,63 @@ HostContentSettingsMap* GetHostContentSettingsMap(bool is_incognito) {
       GetActiveUserProfile(is_incognito));
 }
 
-typedef void (*InfoListInsertionFunction)(JNIEnv*, jobject, jstring, jstring);
+ScopedJavaLocalRef<jstring> ConvertOriginToJavaString(
+    JNIEnv* env,
+    const std::string& origin) {
+  // The string |jorigin| is used to group permissions together in the Site
+  // Settings list. In order to group sites with the same origin, remove any
+  // standard port from the end of the URL if it's present (i.e. remove :443
+  // for HTTPS sites and :80 for HTTP sites).
+  // TODO(sashab,lgarron): Find out which settings are being saved with the
+  // port and omit it if it's the standard port.
+  // TODO(mvanouwerkerk): Remove all this logic and take two passes through
+  // HostContentSettingsMap: once to get all the 'interesting' hosts, and once
+  // (on SingleWebsitePreferences) to find permission patterns which match
+  // each of these hosts.
+  if (base::StartsWith(origin, url::kHttpsScheme,
+                       base::CompareCase::INSENSITIVE_ASCII) &&
+      base::EndsWith(origin, kHttpsPortSuffix,
+                     base::CompareCase::INSENSITIVE_ASCII)) {
+    return ConvertUTF8ToJavaString(
+        env, origin.substr(0, origin.size() - strlen(kHttpsPortSuffix)));
+  } else if (base::StartsWith(origin, url::kHttpScheme,
+                              base::CompareCase::INSENSITIVE_ASCII) &&
+             base::EndsWith(origin, kHttpPortSuffix,
+                            base::CompareCase::INSENSITIVE_ASCII)) {
+    return ConvertUTF8ToJavaString(
+        env, origin.substr(0, origin.size() - strlen(kHttpPortSuffix)));
+  } else {
+    return ConvertUTF8ToJavaString(env, origin);
+  }
+}
+
+typedef void (*InfoListInsertionFunction)(
+    JNIEnv*,
+    const base::android::JavaRefOrBare<jobject>&,
+    const base::android::JavaRefOrBare<jstring>&,
+    const base::android::JavaRefOrBare<jstring>&);
 
 void GetOrigins(JNIEnv* env,
                 ContentSettingsType content_type,
                 InfoListInsertionFunction insertionFunc,
                 jobject list,
                 jboolean managedOnly) {
-  ContentSettingsForOneType all_settings;
   HostContentSettingsMap* content_settings_map =
       GetHostContentSettingsMap(false);  // is_incognito
+  ContentSettingsForOneType all_settings;
+  ContentSettingsForOneType embargo_settings;
+
   content_settings_map->GetSettingsForOneType(
       content_type, std::string(), &all_settings);
+  content_settings_map->GetSettingsForOneType(
+      CONTENT_SETTINGS_TYPE_PERMISSION_AUTOBLOCKER_DATA, std::string(),
+      &embargo_settings);
   ContentSetting default_content_setting = content_settings_map->
       GetDefaultContentSetting(content_type, NULL);
+
+  // Use a vector since the overall number of origins should be small.
+  std::vector<std::string> seen_origins;
+
   // Now add all origins that have a non-default setting to the list.
   for (const auto& settings_it : all_settings) {
     if (settings_it.setting == default_content_setting)
@@ -96,40 +149,35 @@ void GetOrigins(JNIEnv* env,
     const std::string origin = settings_it.primary_pattern.ToString();
     const std::string embedder = settings_it.secondary_pattern.ToString();
 
-    // The string |jorigin| is used to group permissions together in the Site
-    // Settings list. In order to group sites with the same origin, remove any
-    // standard port from the end of the URL if it's present (i.e. remove :443
-    // for HTTPS sites and :80 for HTTP sites).
-    // TODO(sashab,lgarron): Find out which settings are being saved with the
-    // port and omit it if it's the standard port.
-    // TODO(mvanouwerkerk): Remove all this logic and take two passes through
-    // HostContentSettingsMap: once to get all the 'interesting' hosts, and once
-    // (on SingleWebsitePreferences) to find permission patterns which match
-    // each of these hosts.
-    const char* kHttpPortSuffix = ":80";
-    const char* kHttpsPortSuffix = ":443";
-    ScopedJavaLocalRef<jstring> jorigin;
-    if (base::StartsWith(origin, url::kHttpsScheme,
-                         base::CompareCase::INSENSITIVE_ASCII) &&
-        base::EndsWith(origin, kHttpsPortSuffix,
-                       base::CompareCase::INSENSITIVE_ASCII)) {
-      jorigin = ConvertUTF8ToJavaString(
-          env, origin.substr(0, origin.size() - strlen(kHttpsPortSuffix)));
-    } else if (base::StartsWith(origin, url::kHttpScheme,
-                                base::CompareCase::INSENSITIVE_ASCII) &&
-               base::EndsWith(origin, kHttpPortSuffix,
-                              base::CompareCase::INSENSITIVE_ASCII)) {
-      jorigin = ConvertUTF8ToJavaString(
-          env, origin.substr(0, origin.size() - strlen(kHttpPortSuffix)));
-    } else {
-      jorigin = ConvertUTF8ToJavaString(env, origin);
-    }
-
     ScopedJavaLocalRef<jstring> jembedder;
     if (embedder != origin)
       jembedder = ConvertUTF8ToJavaString(env, embedder);
 
-    insertionFunc(env, list, jorigin.obj(), jembedder.obj());
+    seen_origins.push_back(origin);
+    insertionFunc(env, list, ConvertOriginToJavaString(env, origin), jembedder);
+  }
+
+  // Add any origins which have a default content setting value (thus skipped
+  // above), but have been automatically blocked for this permission type.
+  // We use an empty embedder since embargo doesn't care about it.
+  PermissionDecisionAutoBlocker* auto_blocker =
+      PermissionDecisionAutoBlocker::GetForProfile(
+          GetActiveUserProfile(false /* is_incognito */));
+  ScopedJavaLocalRef<jstring> jembedder;
+
+  for (const auto& settings_it : embargo_settings) {
+    const std::string origin = settings_it.primary_pattern.ToString();
+    if (std::find(seen_origins.begin(), seen_origins.end(), origin) !=
+        seen_origins.end()) {
+      // This origin has already been added to the list, so don't add it again.
+      continue;
+    }
+
+    if (auto_blocker->GetEmbargoResult(GURL(origin), content_type)
+            .content_setting == CONTENT_SETTING_BLOCK) {
+      insertionFunc(env, list, ConvertOriginToJavaString(env, origin),
+                    jembedder);
+    }
   }
 }
 
@@ -140,10 +188,9 @@ ContentSetting GetSettingForOrigin(JNIEnv* env,
                                    jboolean is_incognito) {
   GURL url(ConvertJavaStringToUTF8(env, origin));
   GURL embedder_url(ConvertJavaStringToUTF8(env, embedder));
-  ContentSetting setting =
-      GetHostContentSettingsMap(is_incognito)
-          ->GetContentSetting(url, embedder_url, content_type, std::string());
-  return setting;
+  return PermissionManager::Get(GetActiveUserProfile(is_incognito))
+      ->GetPermissionStatus(content_type, url, embedder_url)
+      .content_setting;
 }
 
 void SetSettingForOrigin(JNIEnv* env,
@@ -155,41 +202,25 @@ void SetSettingForOrigin(JNIEnv* env,
   GURL origin_url(ConvertJavaStringToUTF8(env, origin));
   GURL embedder_url =
       embedder ? GURL(ConvertJavaStringToUTF8(env, embedder)) : GURL();
-  PermissionUtil::SetContentSettingAndRecordRevocation(
-      GetActiveUserProfile(is_incognito), origin_url, embedder_url,
-      content_type, std::string(), setting);
+  Profile* profile = GetActiveUserProfile(is_incognito);
+
+  // The permission may have been blocked due to being under embargo, so if it
+  // was changed away from BLOCK, clear embargo status if it exists.
+  if (setting != CONTENT_SETTING_BLOCK) {
+    PermissionDecisionAutoBlocker::GetForProfile(profile)->RemoveEmbargoByUrl(
+        origin_url, content_type);
+  }
+
+  PermissionUtil::ScopedRevocationReporter scoped_revocation_reporter(
+      profile, origin_url, embedder_url, content_type,
+      PermissionSourceUI::SITE_SETTINGS);
+  HostContentSettingsMapFactory::GetForProfile(profile)
+      ->SetContentSettingDefaultScope(origin_url, embedder_url, content_type,
+                                      std::string(), setting);
   WebSiteSettingsUmaUtil::LogPermissionChange(content_type, setting);
 }
 
 }  // anonymous namespace
-
-static void GetFullscreenOrigins(JNIEnv* env,
-                                 const JavaParamRef<jclass>& clazz,
-                                 const JavaParamRef<jobject>& list,
-                                 jboolean managedOnly) {
-  GetOrigins(env, CONTENT_SETTINGS_TYPE_FULLSCREEN,
-             &Java_WebsitePreferenceBridge_insertFullscreenInfoIntoList, list,
-             managedOnly);
-}
-
-static jint GetFullscreenSettingForOrigin(JNIEnv* env,
-                                          const JavaParamRef<jclass>& clazz,
-                                          const JavaParamRef<jstring>& origin,
-                                          const JavaParamRef<jstring>& embedder,
-                                          jboolean is_incognito) {
-  return GetSettingForOrigin(env, CONTENT_SETTINGS_TYPE_FULLSCREEN, origin,
-                             embedder, is_incognito);
-}
-
-static void SetFullscreenSettingForOrigin(JNIEnv* env,
-                                          const JavaParamRef<jclass>& clazz,
-                                          const JavaParamRef<jstring>& origin,
-                                          const JavaParamRef<jstring>& embedder,
-                                          jint value,
-                                          jboolean is_incognito) {
-  SetSettingForOrigin(env, CONTENT_SETTINGS_TYPE_FULLSCREEN, origin, embedder,
-                      static_cast<ContentSetting>(value), is_incognito);
-}
 
 static void GetGeolocationOrigins(JNIEnv* env,
                                   const JavaParamRef<jclass>& clazz,
@@ -219,42 +250,6 @@ static void SetGeolocationSettingForOrigin(
     jboolean is_incognito) {
   SetSettingForOrigin(env, CONTENT_SETTINGS_TYPE_GEOLOCATION, origin, embedder,
                       static_cast<ContentSetting>(value), is_incognito);
-}
-
-static void GetKeygenOrigins(JNIEnv* env,
-                             const JavaParamRef<jclass>& clazz,
-                             const JavaParamRef<jobject>& list) {
-  GetOrigins(env, CONTENT_SETTINGS_TYPE_KEYGEN,
-             &Java_WebsitePreferenceBridge_insertKeygenInfoIntoList, list,
-             false);
-}
-
-static jint GetKeygenSettingForOrigin(JNIEnv* env,
-                                      const JavaParamRef<jclass>& clazz,
-                                      const JavaParamRef<jstring>& origin,
-                                      const JavaParamRef<jstring>& embedder,
-                                      jboolean is_incognito) {
-  return GetSettingForOrigin(env, CONTENT_SETTINGS_TYPE_KEYGEN, origin,
-                             embedder, is_incognito);
-}
-
-static void SetKeygenSettingForOrigin(JNIEnv* env,
-                                      const JavaParamRef<jclass>& clazz,
-                                      const JavaParamRef<jstring>& origin,
-                                      jint value,
-                                      jboolean is_incognito) {
-  // Here 'nullptr' indicates that keygen uses wildcard for embedder.
-  SetSettingForOrigin(env, CONTENT_SETTINGS_TYPE_KEYGEN, origin, nullptr,
-                      static_cast<ContentSetting>(value), is_incognito);
-}
-
-static jboolean GetKeygenBlocked(JNIEnv* env,
-                             const JavaParamRef<jclass>& clazz,
-                             const JavaParamRef<jobject>& java_web_contents) {
-  content::WebContents* web_contents =
-      content::WebContents::FromJavaWebContents(java_web_contents);
-  return TabSpecificContentSettings::FromWebContents(
-      web_contents)->IsContentBlocked(CONTENT_SETTINGS_TYPE_KEYGEN);
 }
 
 static void GetMidiOrigins(JNIEnv* env,
@@ -344,6 +339,12 @@ static void SetNotificationSettingForOrigin(
   Profile* profile = GetActiveUserProfile(is_incognito);
   GURL url = GURL(ConvertJavaStringToUTF8(env, origin));
   ContentSetting setting = static_cast<ContentSetting>(value);
+
+  if (setting != CONTENT_SETTING_BLOCK) {
+    PermissionDecisionAutoBlocker::GetForProfile(profile)->RemoveEmbargoByUrl(
+        url, CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
+  }
+
   switch (setting) {
     case CONTENT_SETTING_DEFAULT:
       DesktopNotificationProfileUtil::ClearSetting(profile, url);
@@ -450,11 +451,12 @@ static void GetUsbOrigins(JNIEnv* env,
     origin.pop_back();
     ScopedJavaLocalRef<jstring> jorigin = ConvertUTF8ToJavaString(env, origin);
 
-    std::string embedder = object->requesting_origin.spec();
+    std::string embedder = object->embedding_origin.spec();
     DCHECK_EQ('/', embedder.back());
     embedder.pop_back();
-    ScopedJavaLocalRef<jstring> jembedder =
-        ConvertUTF8ToJavaString(env, embedder);
+    ScopedJavaLocalRef<jstring> jembedder;
+    if (embedder != origin)
+      jembedder = ConvertUTF8ToJavaString(env, embedder);
 
     std::string name;
     bool found = object->object.GetString("name", &name);
@@ -468,8 +470,7 @@ static void GetUsbOrigins(JNIEnv* env,
         ConvertUTF8ToJavaString(env, serialized);
 
     Java_WebsitePreferenceBridge_insertUsbInfoIntoList(
-        env, list, jorigin.obj(), jembedder.obj(), jname.obj(),
-        jserialized.obj());
+        env, list, jorigin, jembedder, jname, jserialized);
   }
 }
 
@@ -482,7 +483,10 @@ static void RevokeUsbPermission(JNIEnv* env,
   UsbChooserContext* context = UsbChooserContextFactory::GetForProfile(profile);
   GURL origin(ConvertJavaStringToUTF8(env, jorigin));
   DCHECK(origin.is_valid());
-  GURL embedder(ConvertJavaStringToUTF8(env, jembedder));
+  // If embedder == origin above then a null embedder was sent to Java instead
+  // of a duplicated string.
+  GURL embedder(
+      ConvertJavaStringToUTF8(env, jembedder.is_null() ? jorigin : jembedder));
   DCHECK(embedder.is_valid());
   std::unique_ptr<base::DictionaryValue> object = base::DictionaryValue::From(
       base::JSONReader::Read(ConvertJavaStringToUTF8(env, jobject)));
@@ -517,7 +521,7 @@ class SiteDataDeleteHelper :
         new BrowsingDataCookieHelper(profile_->GetRequestContext()),
         new BrowsingDataDatabaseHelper(profile_),
         new BrowsingDataLocalStorageHelper(profile_),
-        NULL,
+        nullptr,
         new BrowsingDataAppCacheHelper(profile_),
         new BrowsingDataIndexedDBHelper(indexed_db_context),
         BrowsingDataFileSystemHelper::Create(file_system_context),
@@ -525,7 +529,8 @@ class SiteDataDeleteHelper :
         BrowsingDataChannelIDHelper::Create(profile_->GetRequestContext()),
         new BrowsingDataServiceWorkerHelper(service_worker_context),
         new BrowsingDataCacheStorageHelper(cache_storage_context),
-        NULL);
+        nullptr,
+        nullptr);
 
     cookies_tree_model_.reset(new CookiesTreeModel(
         container, profile_->GetExtensionSpecialStoragePolicy()));
@@ -566,8 +571,7 @@ class SiteDataDeleteHelper :
       RecursivelyFindSiteAndDelete(node->GetChild(i - 1));
 
     if (info.node_type == CookieTreeNode::DetailedInfo::TYPE_COOKIE &&
-        info.cookie &&
-        domain_.DomainIs(info.cookie->Domain().c_str()))
+        info.cookie && domain_.DomainIs(info.cookie->Domain()))
       cookies_tree_model_->DeleteCookieNode(node);
   }
 
@@ -606,8 +610,8 @@ class StorageInfoReadyCallback {
       ScopedJavaLocalRef<jstring> host =
           ConvertUTF8ToJavaString(env_, i->host);
 
-      Java_WebsitePreferenceBridge_insertStorageInfoIntoList(
-          env_, list.obj(), host.obj(), i->type, i->usage);
+      Java_WebsitePreferenceBridge_insertStorageInfoIntoList(env_, list, host,
+                                                             i->type, i->usage);
     }
 
     base::android::RunCallbackAndroid(java_callback_, list);
@@ -629,8 +633,7 @@ class StorageInfoClearedCallback {
   void OnStorageInfoCleared(storage::QuotaStatusCode code) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-    Java_StorageInfoClearedCallback_onStorageInfoCleared(
-        env_, java_callback_.obj());
+    Java_StorageInfoClearedCallback_onStorageInfoCleared(env_, java_callback_);
 
     delete this;
   }
@@ -654,9 +657,9 @@ class LocalStorageInfoReadyCallback {
     ScopedJavaLocalRef<jobject> map =
         Java_WebsitePreferenceBridge_createLocalStorageInfoMap(env_);
 
-    std::vector<std::string> important_domains =
-        ImportantSitesUtil::GetImportantRegisterableDomains(
-            profile, kMaxImportantSites, nullptr);
+    std::vector<ImportantSitesUtil::ImportantDomainInfo> important_domains =
+        ImportantSitesUtil::GetImportantRegisterableDomains(profile,
+                                                            kMaxImportantSites);
 
     std::list<BrowsingDataLocalStorageHelper::LocalStorageInfo>::const_iterator
         i;
@@ -674,8 +677,12 @@ class LocalStorageInfoReadyCallback {
                 i->origin_url,
                 net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES);
       }
-      if (std::find(important_domains.begin(), important_domains.end(),
-                    registerable_domain) != important_domains.end()) {
+      auto important_domain_search = [&registerable_domain](
+          const ImportantSitesUtil::ImportantDomainInfo& item) {
+        return item.registerable_domain == registerable_domain;
+      };
+      if (std::find_if(important_domains.begin(), important_domains.end(),
+                       important_domain_search) != important_domains.end()) {
         important = true;
       }
       // Remove the trailing slash so the origin is matched correctly in
@@ -685,7 +692,7 @@ class LocalStorageInfoReadyCallback {
       ScopedJavaLocalRef<jstring> origin =
           ConvertUTF8ToJavaString(env_, origin_str);
       Java_WebsitePreferenceBridge_insertLocalStorageInfoIntoMap(
-          env_, map.obj(), origin.obj(), full_origin.obj(), i->size, important);
+          env_, map, origin, full_origin, i->size, important);
     }
 
     base::android::RunCallbackAndroid(java_callback_, map);
@@ -776,6 +783,44 @@ static void ClearCookieData(JNIEnv* env,
   scoped_refptr<SiteDataDeleteHelper> site_data_deleter(
       new SiteDataDeleteHelper(profile, url));
   site_data_deleter->Run();
+}
+
+static void ClearBannerData(JNIEnv* env,
+                            const JavaParamRef<jclass>& clazz,
+                            const JavaParamRef<jstring>& jorigin) {
+  GetHostContentSettingsMap(false)->SetWebsiteSettingDefaultScope(
+      GURL(ConvertJavaStringToUTF8(env, jorigin)), GURL(),
+      CONTENT_SETTINGS_TYPE_APP_BANNER, std::string(), nullptr);
+}
+
+static jboolean ShouldUseDSEGeolocationSetting(
+    JNIEnv* env,
+    const JavaParamRef<jclass>& clazz,
+    const JavaParamRef<jstring>& jorigin,
+    jboolean is_incognito) {
+  SearchGeolocationService* search_helper =
+      SearchGeolocationService::Factory::GetForBrowserContext(
+          GetActiveUserProfile(is_incognito));
+  return search_helper &&
+         search_helper->UseDSEGeolocationSetting(
+             url::Origin(GURL(ConvertJavaStringToUTF8(env, jorigin))));
+}
+
+static jboolean GetDSEGeolocationSetting(JNIEnv* env,
+                                         const JavaParamRef<jclass>& clazz) {
+  SearchGeolocationService* search_helper =
+      SearchGeolocationService::Factory::GetForBrowserContext(
+          GetActiveUserProfile(false /* is_incognito */));
+  return search_helper->GetDSEGeolocationSetting();
+}
+
+static void SetDSEGeolocationSetting(JNIEnv* env,
+                                     const JavaParamRef<jclass>& clazz,
+                                     jboolean setting) {
+  SearchGeolocationService* search_helper =
+      SearchGeolocationService::Factory::GetForBrowserContext(
+          GetActiveUserProfile(false /* is_incognito */));
+  return search_helper->SetDSEGeolocationSetting(setting);
 }
 
 // Register native methods

@@ -4,10 +4,10 @@
 
 #include "components/arc/audio/arc_audio_bridge.h"
 
-#include "ash/common/system/tray/system_tray_notifier.h"
-#include "ash/common/wm_shell.h"
+#include "ash/system/audio/tray_audio.h"
 #include "base/logging.h"
 #include "chromeos/audio/audio_device.h"
+#include "components/arc/arc_bridge_service.h"
 
 namespace arc {
 
@@ -29,23 +29,14 @@ ArcAudioBridge::~ArcAudioBridge() {
 
 void ArcAudioBridge::OnInstanceReady() {
   mojom::AudioInstance* audio_instance =
-      arc_bridge_service()->audio()->instance();
-  if (!audio_instance) {
-    LOG(ERROR) << "OnAudioInstanceReady called, "
-               << "but no audio instance found";
-    return;
-  }
-  if (arc_bridge_service()->audio()->version() < 1) {
-    LOG(WARNING) << "Audio instance is too old and does not support Init()";
-    return;
-  }
+      ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service()->audio(), Init);
+  DCHECK(audio_instance);  // the instance on ARC side is too old.
   audio_instance->Init(binding_.CreateInterfacePtrAndBind());
 }
 
 void ArcAudioBridge::ShowVolumeControls() {
-  VLOG(2) << "ArcAudioBridge::ShowVolumeControls";
-  ash::WmShell::Get()->system_tray_notifier()->NotifyAudioOutputVolumeChanged(
-      0, 0);
+  DVLOG(2) << "ArcAudioBridge::ShowVolumeControls";
+  ash::TrayAudio::ShowPopUpVolumeView();
 }
 
 void ArcAudioBridge::OnAudioNodesChanged() {
@@ -63,9 +54,21 @@ void ArcAudioBridge::OnAudioNodesChanged() {
       (input_device &&
        input_device->type == chromeos::AudioDeviceType::AUDIO_TYPE_MIC);
 
-  VLOG(1) << "HEADPHONE " << headphone_inserted << " MICROPHONE "
-          << microphone_inserted;
+  DVLOG(1) << "HEADPHONE " << headphone_inserted << " MICROPHONE "
+           << microphone_inserted;
   SendSwitchState(headphone_inserted, microphone_inserted);
+}
+
+void ArcAudioBridge::OnOutputNodeVolumeChanged(uint64_t node_id, int volume) {
+  DVLOG(1) << "Output node " << node_id << " volume " << volume;
+  volume_ = volume;
+  SendVolumeState();
+}
+
+void ArcAudioBridge::OnOutputMuteChanged(bool mute_on, bool system_adjust) {
+  DVLOG(1) << "Output mute " << mute_on << " by system " << system_adjust;
+  muted_ = mute_on;
+  SendVolumeState();
 }
 
 void ArcAudioBridge::SendSwitchState(bool headphone_inserted,
@@ -80,11 +83,19 @@ void ArcAudioBridge::SendSwitchState(bool headphone_inserted,
         (1 << static_cast<uint32_t>(mojom::AudioSwitch::SW_MICROPHONE_INSERT));
   }
 
-  VLOG(1) << "Send switch state " << switch_state;
-  mojom::AudioInstance* audio_instance =
-      arc_bridge_service()->audio()->instance();
+  DVLOG(1) << "Send switch state " << switch_state;
+  mojom::AudioInstance* audio_instance = ARC_GET_INSTANCE_FOR_METHOD(
+      arc_bridge_service()->audio(), NotifySwitchState);
   if (audio_instance)
     audio_instance->NotifySwitchState(switch_state);
+}
+
+void ArcAudioBridge::SendVolumeState() {
+  DVLOG(1) << "Send volume " << volume_ << " muted " << muted_;
+  mojom::AudioInstance* audio_instance = ARC_GET_INSTANCE_FOR_METHOD(
+      arc_bridge_service()->audio(), NotifyVolumeState);
+  if (audio_instance)
+    audio_instance->NotifyVolumeState(volume_, muted_);
 }
 
 }  // namespace arc

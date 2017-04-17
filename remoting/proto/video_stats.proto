@@ -11,9 +11,10 @@ option optimize_for = LITE_RUNTIME;
 
 package remoting;
 
+// Next Id: 13
 message FrameStatsMessage {
   // Frame ID.
-  optional int32 frame_id = 1;
+  optional uint32 frame_id = 1;
 
   // Frame size.
   optional int32 frame_size = 2;
@@ -37,6 +38,16 @@ message FrameStatsMessage {
   optional int32 encode_time_ms = 8;
 
   // Time for which the frame is blocked until it's sent to the client.
-  optional int64 send_pending_time_ms = 9;
+  optional int32 send_pending_time_ms = 9;
+
+  // Current network RTT estimate.
+  optional int32 rtt_estimate_ms = 10;
+
+  // Current bandwidth estimate in kb/s.
+  optional int32 bandwidth_estimate_kbps = 11;
+
+  // The capturer Id to indicate the implementation of ScreenCapturer that
+  // generates this frame.
+  optional uint32 capturer_id = 12;
 }
 

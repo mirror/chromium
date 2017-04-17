@@ -79,7 +79,7 @@ function test()
         {
             var inlineStyle;
             InspectorTest.cssModel.inlineStylesPromise(nodeId).then(stylesCallback);
-            InspectorTest.cssModel.addEventListener(WebInspector.CSSModel.Events.StyleSheetChanged, onStyleSheetChanged);
+            InspectorTest.cssModel.addEventListener(SDK.CSSModel.Events.StyleSheetChanged, onStyleSheetChanged);
             function onStyleSheetChanged(event)
             {
                 if (event.data && event.data.edit)
@@ -115,7 +115,7 @@ function test()
     {
        if (!style)
            return;
-       var allProperties = style.allProperties;
+       var allProperties = style.allProperties();
        for (var i = 0; i < allProperties.length; ++i)
            InspectorTest.addResult(allProperties[i].text);
     }

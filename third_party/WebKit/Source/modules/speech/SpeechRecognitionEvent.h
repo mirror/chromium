@@ -37,36 +37,42 @@ namespace blink {
 class Document;
 
 class SpeechRecognitionEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SpeechRecognitionEvent* create();
-    static SpeechRecognitionEvent* create(const AtomicString&, const SpeechRecognitionEventInit&);
-    ~SpeechRecognitionEvent() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    static SpeechRecognitionEvent* createResult(unsigned long resultIndex, const HeapVector<Member<SpeechRecognitionResult>>& results);
-    static SpeechRecognitionEvent* createNoMatch(SpeechRecognitionResult*);
+ public:
+  static SpeechRecognitionEvent* Create(const AtomicString&,
+                                        const SpeechRecognitionEventInit&);
+  ~SpeechRecognitionEvent() override;
 
-    unsigned long resultIndex() const { return m_resultIndex; }
-    SpeechRecognitionResultList* results() const { return m_results; }
+  static SpeechRecognitionEvent* CreateResult(
+      unsigned long result_index,
+      const HeapVector<Member<SpeechRecognitionResult>>& results);
+  static SpeechRecognitionEvent* CreateNoMatch(SpeechRecognitionResult*);
 
-    // These two methods are here to satisfy the specification which requires these attributes to exist.
-    Document* interpretation() { return nullptr; }
-    Document* emma() { return nullptr; }
+  unsigned long resultIndex() const { return result_index_; }
+  SpeechRecognitionResultList* results() const { return results_; }
 
-    // Event
-    const AtomicString& interfaceName() const override;
+  // These two methods are here to satisfy the specification which requires
+  // these attributes to exist.
+  Document* interpretation() { return nullptr; }
+  Document* emma() { return nullptr; }
 
-    DECLARE_VIRTUAL_TRACE();
+  // Event
+  const AtomicString& InterfaceName() const override;
 
-private:
-    SpeechRecognitionEvent();
-    SpeechRecognitionEvent(const AtomicString&, const SpeechRecognitionEventInit&);
-    SpeechRecognitionEvent(const AtomicString& eventName, unsigned long resultIndex, SpeechRecognitionResultList* results);
+  DECLARE_VIRTUAL_TRACE();
 
-    unsigned long m_resultIndex;
-    Member<SpeechRecognitionResultList> m_results;
+ private:
+  SpeechRecognitionEvent(const AtomicString&,
+                         const SpeechRecognitionEventInit&);
+  SpeechRecognitionEvent(const AtomicString& event_name,
+                         unsigned long result_index,
+                         SpeechRecognitionResultList* results);
+
+  unsigned long result_index_;
+  Member<SpeechRecognitionResultList> results_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SpeechRecognitionEvent_h
+#endif  // SpeechRecognitionEvent_h

@@ -20,7 +20,6 @@ namespace cc {
 class SolidColorLayer;
 }
 
-namespace chrome {
 namespace android {
 
 class LayerTitleCache;
@@ -112,6 +111,9 @@ class TabStripSceneLayer : public SceneLayer {
       const base::android::JavaParamRef<jobject>& jlayer_title_cache,
       const base::android::JavaParamRef<jobject>& jresource_manager);
 
+  bool ShouldShowBackground() override;
+  SkColor GetBackgroundColor() override;
+
  private:
   scoped_refptr<TabHandleLayer> GetNextLayer(
       LayerTitleCache* layer_title_cache);
@@ -137,6 +139,5 @@ class TabStripSceneLayer : public SceneLayer {
 bool RegisterTabStripSceneLayer(JNIEnv* env);
 
 }  // namespace android
-}  // namespace chrome
 
 #endif  // CHROME_BROWSER_ANDROID_COMPOSITOR_SCENE_LAYER_TAB_STRIP_SCENE_LAYER_H_

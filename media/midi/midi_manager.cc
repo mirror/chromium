@@ -12,16 +12,17 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 
-namespace media {
 namespace midi {
 
 namespace {
 
 using Sample = base::HistogramBase::Sample;
+using midi::mojom::PortState;
+using midi::mojom::Result;
 
 // If many users have more devices, this number will be increased.
 // But the number is expected to be big enough for now.
-const Sample kMaxUmaDevices = 31;
+constexpr Sample kMaxUmaDevices = 31;
 
 // Used to count events for usage histogram.
 enum class Usage {
@@ -34,14 +35,7 @@ enum class Usage {
   OUTPUT_PORT_ADDED,
 
   // New items should be inserted here, and |MAX| should point the last item.
-  MAX = INITIALIZED,
-};
-
-// Used in StartSession.
-enum class Completion {
-  COMPLETE_SYNCHRONOUSLY,
-  INVOKE_INITIALIZATION,
-  COMPLETE_ASYNCHRONOUSLY,
+  MAX = OUTPUT_PORT_ADDED,
 };
 
 void ReportUsage(Usage usage) {
@@ -52,8 +46,11 @@ void ReportUsage(Usage usage) {
 
 }  // namespace
 
-MidiManager::MidiManager()
-    : initialized_(false), finalized_(false), result_(Result::NOT_INITIALIZED) {
+MidiManager::MidiManager(MidiService* service)
+    : initialization_state_(InitializationState::NOT_STARTED),
+      finalized_(false),
+      result_(Result::NOT_INITIALIZED),
+      service_(service) {
   ReportUsage(Usage::CREATED);
 }
 
@@ -66,9 +63,9 @@ MidiManager::~MidiManager() {
 
 #if !defined(OS_MACOSX) && !defined(OS_WIN) && \
     !(defined(USE_ALSA) && defined(USE_UDEV)) && !defined(OS_ANDROID)
-MidiManager* MidiManager::Create() {
+MidiManager* MidiManager::Create(MidiService* service) {
   ReportUsage(Usage::CREATED_ON_UNSUPPORTED_PLATFORMS);
-  return new MidiManager;
+  return new MidiManager(service);
 }
 #endif
 
@@ -76,22 +73,30 @@ void MidiManager::Shutdown() {
   UMA_HISTOGRAM_ENUMERATION("Media.Midi.ResultOnShutdown",
                             static_cast<int>(result_),
                             static_cast<int>(Result::MAX) + 1);
-  base::AutoLock auto_lock(lock_);
-  if (session_thread_runner_) {
-    session_thread_runner_->PostTask(
-        FROM_HERE, base::Bind(&MidiManager::ShutdownOnSessionThread,
-                              base::Unretained(this)));
-    session_thread_runner_ = nullptr;
-  } else {
-    finalized_ = true;
+  bool shutdown_synchronously = false;
+  {
+    base::AutoLock auto_lock(lock_);
+    if (session_thread_runner_) {
+      if (session_thread_runner_->BelongsToCurrentThread()) {
+        shutdown_synchronously = true;
+      } else {
+        session_thread_runner_->PostTask(
+            FROM_HERE, base::Bind(&MidiManager::ShutdownOnSessionThread,
+                                  base::Unretained(this)));
+      }
+      session_thread_runner_ = nullptr;
+    } else {
+      finalized_ = true;
+    }
   }
+  if (shutdown_synchronously)
+    ShutdownOnSessionThread();
 }
 
 void MidiManager::StartSession(MidiManagerClient* client) {
   ReportUsage(Usage::SESSION_STARTED);
 
-  Completion completion = Completion::COMPLETE_SYNCHRONOUSLY;
-  Result result = Result::NOT_INITIALIZED;
+  bool needs_initialization = false;
 
   {
     base::AutoLock auto_lock(lock_);
@@ -102,7 +107,13 @@ void MidiManager::StartSession(MidiManagerClient* client) {
       return;
     }
 
-    if (initialized_) {
+    // Do not accept a new request if Shutdown() was already called.
+    if (finalized_) {
+      client->CompleteStartSession(Result::INITIALIZATION_ERROR);
+      return;
+    }
+
+    if (initialization_state_ == InitializationState::COMPLETED) {
       // Platform dependent initialization was already finished for previously
       // initialized clients.
       if (result_ == Result::OK) {
@@ -110,33 +121,29 @@ void MidiManager::StartSession(MidiManagerClient* client) {
         clients_.insert(client);
       }
       // Complete synchronously with |result_|;
-      result = result_;
-    } else {
-      bool too_many_pending_clients_exist =
-          pending_clients_.size() >= kMaxPendingClientCount;
-      // Do not accept a new request if the pending client list contains too
-      // many clients, or Shutdown() was already called.
-      if (too_many_pending_clients_exist || finalized_) {
-        result = Result::INITIALIZATION_ERROR;
-      } else {
-        // Call StartInitialization() only for the first request.
-        if (pending_clients_.empty()) {
-          completion = Completion::INVOKE_INITIALIZATION;
-          session_thread_runner_ = base::ThreadTaskRunnerHandle::Get();
-        } else {
-          completion = Completion::COMPLETE_ASYNCHRONOUSLY;
-        }
-        pending_clients_.insert(client);
-      }
-    }
-
-    if (completion == Completion::COMPLETE_SYNCHRONOUSLY) {
-      client->CompleteStartSession(result);
+      client->CompleteStartSession(result_);
       return;
     }
+
+    // Do not accept a new request if the pending client list contains too
+    // many clients.
+    if (pending_clients_.size() >= kMaxPendingClientCount) {
+      client->CompleteStartSession(Result::INITIALIZATION_ERROR);
+      return;
+    }
+
+    if (initialization_state_ == InitializationState::NOT_STARTED) {
+      // Set fields protected by |lock_| here and call StartInitialization()
+      // later.
+      needs_initialization = true;
+      session_thread_runner_ = base::ThreadTaskRunnerHandle::Get();
+      initialization_state_ = InitializationState::STARTED;
+    }
+
+    pending_clients_.insert(client);
   }
 
-  if (completion == Completion::INVOKE_INITIALIZATION) {
+  if (needs_initialization) {
     // Lazily initialize the MIDI back-end.
     TRACE_EVENT0("midi", "MidiManager::StartInitialization");
     // CompleteInitialization() will be called asynchronously when platform
@@ -178,12 +185,21 @@ void MidiManager::StartInitialization() {
 }
 
 void MidiManager::CompleteInitialization(Result result) {
-  base::AutoLock auto_lock(lock_);
-  if (session_thread_runner_) {
-    session_thread_runner_->PostTask(
-        FROM_HERE, base::Bind(&MidiManager::CompleteInitializationInternal,
-                              base::Unretained(this), result));
+  bool complete_asynchronously = false;
+  {
+    base::AutoLock auto_lock(lock_);
+    if (session_thread_runner_) {
+      if (session_thread_runner_->BelongsToCurrentThread()) {
+        complete_asynchronously = true;
+      } else {
+        session_thread_runner_->PostTask(
+            FROM_HERE, base::Bind(&MidiManager::CompleteInitializationInternal,
+                                  base::Unretained(this), result));
+      }
+    }
   }
+  if (complete_asynchronously)
+    CompleteInitializationInternal(result);
 }
 
 void MidiManager::AddInputPort(const MidiPortInfo& info) {
@@ -202,7 +218,7 @@ void MidiManager::AddOutputPort(const MidiPortInfo& info) {
     client->AddOutputPort(info);
 }
 
-void MidiManager::SetInputPortState(uint32_t port_index, MidiPortState state) {
+void MidiManager::SetInputPortState(uint32_t port_index, PortState state) {
   base::AutoLock auto_lock(lock_);
   DCHECK_LT(port_index, input_ports_.size());
   input_ports_[port_index].state = state;
@@ -210,7 +226,7 @@ void MidiManager::SetInputPortState(uint32_t port_index, MidiPortState state) {
     client->SetInputPortState(port_index, state);
 }
 
-void MidiManager::SetOutputPortState(uint32_t port_index, MidiPortState state) {
+void MidiManager::SetOutputPortState(uint32_t port_index, PortState state) {
   base::AutoLock auto_lock(lock_);
   DCHECK_LT(port_index, output_ports_.size());
   output_ports_[port_index].state = state;
@@ -240,8 +256,8 @@ void MidiManager::CompleteInitializationInternal(Result result) {
 
   base::AutoLock auto_lock(lock_);
   DCHECK(clients_.empty());
-  DCHECK(!initialized_);
-  initialized_ = true;
+  DCHECK_EQ(initialization_state_, InitializationState::STARTED);
+  initialization_state_ = InitializationState::COMPLETED;
   result_ = result;
 
   for (auto* client : pending_clients_) {
@@ -274,4 +290,3 @@ void MidiManager::ShutdownOnSessionThread() {
 }
 
 }  // namespace midi
-}  // namespace media

@@ -31,27 +31,31 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/audio/AudioArray.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT DirectConvolver {
-    USING_FAST_MALLOC(DirectConvolver);
-    WTF_MAKE_NONCOPYABLE(DirectConvolver);
-public:
-    DirectConvolver(size_t inputBlockSize);
+  USING_FAST_MALLOC(DirectConvolver);
+  WTF_MAKE_NONCOPYABLE(DirectConvolver);
 
-    void process(AudioFloatArray* convolutionKernel, const float* sourceP, float* destP, size_t framesToProcess);
+ public:
+  DirectConvolver(size_t input_block_size);
 
-    void reset();
+  void Process(AudioFloatArray* convolution_kernel,
+               const float* source_p,
+               float* dest_p,
+               size_t frames_to_process);
 
-private:
-    size_t m_inputBlockSize;
+  void Reset();
 
-    AudioFloatArray m_buffer;
+ private:
+  size_t input_block_size_;
+
+  AudioFloatArray buffer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DirectConvolver_h
+#endif  // DirectConvolver_h

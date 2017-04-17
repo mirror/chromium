@@ -2,18 +2,23 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-component("gl") {
+import("//testing/test.gni")
+
+test("ozone_gl_unittests") {
   sources = [
-    "gl_image_ozone_native_pixmap.cc",
-    "gl_image_ozone_native_pixmap.h",
-    "ozone_gl_export.h",
+    "gl_image_ozone_native_pixmap_unittest.cc",
   ]
 
-  defines = [ "OZONE_GL_IMPLEMENTATION" ]
-
   deps = [
+    "//base/test:test_support",
+    "//testing/gtest",
     "//ui/gfx",
-    "//ui/gl",
-    "//ui/ozone:ozone_base",
+    "//ui/gl:run_all_unittests",
+    "//ui/gl:test_support",
+    "//ui/ozone",
+  ]
+
+  data_deps = [
+    "//third_party/mesa:osmesa",
   ]
 }

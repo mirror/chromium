@@ -28,28 +28,35 @@ namespace blink {
 class SVGGraphicsElement;
 
 class LayoutSVGTransformableContainer final : public LayoutSVGContainer {
-public:
-    explicit LayoutSVGTransformableContainer(SVGGraphicsElement*);
+ public:
+  explicit LayoutSVGTransformableContainer(SVGGraphicsElement*);
 
-    bool isChildAllowed(LayoutObject*, const ComputedStyle&) const override;
+  bool IsChildAllowed(LayoutObject*, const ComputedStyle&) const override;
 
-    bool isOfType(LayoutObjectType type) const override { return type == LayoutObjectSVGTransformableContainer || LayoutSVGContainer::isOfType(type); }
-    const AffineTransform& localToSVGParentTransform() const override { return m_localTransform; }
-    const FloatSize& additionalTranslation() const { return m_additionalTranslation; }
+  bool IsOfType(LayoutObjectType type) const override {
+    return type == kLayoutObjectSVGTransformableContainer ||
+           LayoutSVGContainer::IsOfType(type);
+  }
+  const FloatSize& AdditionalTranslation() const {
+    return additional_translation_;
+  }
 
-    void setNeedsTransformUpdate() override;
+  void SetNeedsTransformUpdate() override;
 
-private:
-    SVGTransformChange calculateLocalTransform() override;
-    AffineTransform localSVGTransform() const override { return m_localTransform; }
+ private:
+  SVGTransformChange CalculateLocalTransform() override;
+  AffineTransform LocalSVGTransform() const override {
+    return local_transform_;
+  }
 
-    bool m_needsTransformUpdate : 1;
-    AffineTransform m_localTransform;
-    FloatSize m_additionalTranslation;
+  bool needs_transform_update_ : 1;
+  AffineTransform local_transform_;
+  FloatSize additional_translation_;
 };
 
-DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutSVGTransformableContainer, isSVGTransformableContainer());
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutSVGTransformableContainer,
+                                IsSVGTransformableContainer());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutSVGTransformableContainer_h
+#endif  // LayoutSVGTransformableContainer_h

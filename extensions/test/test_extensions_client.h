@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "extensions/common/extensions_client.h"
+#include "url/gurl.h"
 
 namespace extensions {
 
@@ -46,11 +47,10 @@ class TestExtensionsClient : public ExtensionsClient {
   bool IsScriptableURL(const GURL& url, std::string* error) const override;
   bool IsAPISchemaGenerated(const std::string& name) const override;
   base::StringPiece GetAPISchema(const std::string& name) const override;
-  void RegisterAPISchemaResources(ExtensionAPI* api) const override;
   bool ShouldSuppressFatalErrors() const override;
   void RecordDidSuppressFatalError() override;
-  std::string GetWebstoreBaseURL() const override;
-  std::string GetWebstoreUpdateURL() const override;
+  const GURL& GetWebstoreBaseURL() const override;
+  const GURL& GetWebstoreUpdateURL() const override;
   bool IsBlacklistUpdateURL(const GURL& url) const override;
   std::set<base::FilePath> GetBrowserImagePaths(
       const Extension* extension) override;
@@ -62,6 +62,9 @@ class TestExtensionsClient : public ExtensionsClient {
   ScriptingWhitelist scripting_whitelist_;
 
   std::set<BrowserImagePathsFilter*> browser_image_filters_;
+
+  const GURL webstore_base_url_;
+  const GURL webstore_update_url_;
 
   DISALLOW_COPY_AND_ASSIGN(TestExtensionsClient);
 };

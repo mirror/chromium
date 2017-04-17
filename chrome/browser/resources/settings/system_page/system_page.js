@@ -15,6 +15,45 @@ Polymer({
       type: Object,
       notify: true,
     },
+
+    /** @private */
+    isProxyEnforcedByPolicy_: {
+      type: Boolean,
+      computed: 'computeIsProxyEnforcedByPolicy_(prefs.proxy.*)',
+    },
+  },
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  computeIsProxyEnforcedByPolicy_: function() {
+    var pref = this.get('prefs.proxy');
+    // TODO(dbeam): do types of policy other than USER apply on ChromeOS?
+    return pref.enforcement == chrome.settingsPrivate.Enforcement.ENFORCED &&
+        pref.controlledBy == chrome.settingsPrivate.ControlledBy.USER_POLICY;
+  },
+
+  /** @private */
+  onExtensionDisable_: function() {
+    // TODO(dbeam): this is a pretty huge bummer. It means there are things
+    // (inputs) that our prefs system is not observing. And that changes from
+    // other sources (i.e. disabling/enabling an extension from
+    // chrome://extensions or from the omnibox directly) will not update
+    // |this.prefs.proxy| directly (nor the UI). We should fix this eventually.
+    this.fire('refresh-pref', 'proxy');
+  },
+
+  /** @private */
+  onProxyTap_: function() {
+    if (!this.isProxyEnforcedByPolicy_)
+      settings.SystemPageBrowserProxyImpl.getInstance().showProxySettings();
+  },
+
+  /** @private */
+  onRestartTap_: function() {
+    // TODO(dbeam): we should prompt before restarting the browser.
+    settings.LifetimeBrowserProxyImpl.getInstance().restart();
   },
 
   /**
@@ -25,16 +64,5 @@ Polymer({
   shouldShowRestart_: function(enabled) {
     var proxy = settings.SystemPageBrowserProxyImpl.getInstance();
     return enabled != proxy.wasHardwareAccelerationEnabledAtStartup();
-  },
-
-  /** @private */
-  onChangeProxySettingsTap_: function() {
-    settings.SystemPageBrowserProxyImpl.getInstance().changeProxySettings();
-  },
-
-  /** @private */
-  onRestartTap_: function() {
-    // TODO(dbeam): we should prompt before restarting the browser.
-    settings.LifetimeBrowserProxyImpl.getInstance().restart();
   },
 });

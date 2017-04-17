@@ -8,11 +8,10 @@
 
 namespace android_webview {
 
-AwPrintWebViewHelperDelegate::~AwPrintWebViewHelperDelegate(){
-}
+AwPrintWebViewHelperDelegate::~AwPrintWebViewHelperDelegate() {}
 
 bool AwPrintWebViewHelperDelegate::CancelPrerender(
-    content::RenderView* render_view, int routing_id) {
+    content::RenderFrame* render_frame) {
   return false;
 }
 
@@ -22,10 +21,6 @@ blink::WebElement AwPrintWebViewHelperDelegate::GetPdfElement(
 }
 
 bool AwPrintWebViewHelperDelegate::IsPrintPreviewEnabled() {
-  return false;
-}
-
-bool AwPrintWebViewHelperDelegate::IsAskPrintSettingsEnabled() {
   return false;
 }
 

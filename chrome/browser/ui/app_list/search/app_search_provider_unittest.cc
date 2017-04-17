@@ -20,22 +20,18 @@
 #include "chrome/browser/ui/app_list/test/test_app_list_controller_delegate.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/sync/model/string_ordinal.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/uninstall_reason.h"
 #include "extensions/common/extension_set.h"
-#include "sync/api/string_ordinal.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/app_list/app_list_folder_item.h"
 #include "ui/app_list/app_list_item.h"
 #include "ui/app_list/app_list_model.h"
 #include "ui/app_list/search_result.h"
-
-#if defined(OS_CHROMEOS)
 #include "chrome/browser/ui/app_list/arc/arc_app_item.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_test.h"
 #include "components/arc/test/fake_app_instance.h"
-#include "components/arc/test/fake_arc_bridge_service.h"
-#endif
 
 namespace app_list {
 namespace test {
@@ -74,9 +70,8 @@ class AppSearchProviderTest : public AppListTestBase {
 
     // Sort results by relevance.
     std::vector<SearchResult*> sorted_results;
-    std::copy(app_search_->results().begin(),
-              app_search_->results().end(),
-              std::back_inserter(sorted_results));
+    for (const auto& result : app_search_->results())
+      sorted_results.emplace_back(result.get());
     std::sort(sorted_results.begin(), sorted_results.end(), &MoreRelevant);
 
     std::string result_str;
@@ -102,14 +97,12 @@ class AppSearchProviderTest : public AppListTestBase {
 };
 
 TEST_F(AppSearchProviderTest, Basic) {
-#if defined(OS_CHROMEOS)
   ArcAppTest arc_test;
   arc_test.SetUp(profile());
   arc_test.app_instance()->RefreshAppList();
   std::vector<arc::mojom::AppInfo> arc_apps(arc_test.fake_apps().begin(),
                                             arc_test.fake_apps().begin() + 2);
   arc_test.app_instance()->SendRefreshAppList(arc_apps);
-#endif
 
   CreateSearch();
 
@@ -128,14 +121,12 @@ TEST_F(AppSearchProviderTest, Basic) {
   EXPECT_EQ("Packaged App 1", RunQuery("papp1"));
   EXPECT_EQ("Hosted App", RunQuery("host"));
 
-#if defined(OS_CHROMEOS)
   result = RunQuery("fake");
   EXPECT_TRUE(result == "Fake App 0,Fake App 1" ||
               result == "Fake App 1,Fake App 0");
   result = RunQuery("app1");
   EXPECT_TRUE(result == "Packaged App 1,Fake App 1" ||
               result == "Fake App 1,Packaged App 1");
-#endif
 }
 
 TEST_F(AppSearchProviderTest, DisableAndEnable) {
@@ -175,7 +166,6 @@ TEST_F(AppSearchProviderTest, UninstallExtension) {
   base::RunLoop().RunUntilIdle();
 }
 
-#if defined(OS_CHROMEOS)
 TEST_F(AppSearchProviderTest, InstallUninstallArc) {
   ArcAppTest arc_test;
   arc_test.SetUp(profile());
@@ -211,7 +201,6 @@ TEST_F(AppSearchProviderTest, InstallUninstallArc) {
   // Let uninstall code to clean up.
   base::RunLoop().RunUntilIdle();
 }
-#endif
 
 TEST_F(AppSearchProviderTest, FetchRecommendations) {
   CreateSearch();
@@ -244,30 +233,29 @@ TEST_F(AppSearchProviderTest, FetchUnlaunchedRecommendations) {
   extensions::ExtensionPrefs* prefs =
       extensions::ExtensionPrefs::Get(profile_.get());
 
-  // The order of unlaunched recommendations should be based on the app list
-  // order and be sorted below launched items.
-  prefs->SetLastLaunchTime(kHostedAppId,
-                           kTestCurrentTime - base::TimeDelta::FromSeconds(5));
+  // The order of unlaunched recommendations should be based on the install time
+  // order.
+  prefs->SetLastLaunchTime(kHostedAppId, base::Time::Now());
   prefs->SetLastLaunchTime(kPackagedApp1Id, base::Time::FromInternalValue(0));
   prefs->SetLastLaunchTime(kPackagedApp2Id, base::Time::FromInternalValue(0));
   EXPECT_EQ("Hosted App,Packaged App 1,Packaged App 2", RunQuery(""));
 
-  // Switching the app list order should change the query result.
+  // Switching the app list order should not change the query result.
   model()->SetItemPosition(
       model()->FindItem(kPackagedApp2Id),
       model()->FindItem(kPackagedApp1Id)->position().CreateBefore());
-  EXPECT_EQ("Hosted App,Packaged App 2,Packaged App 1", RunQuery(""));
+  EXPECT_EQ("Hosted App,Packaged App 1,Packaged App 2", RunQuery(""));
 
-  // Moving an app into a folder deprioritizes it.
+  // Moving an app into a folder should not deprioritize it.
   model()->AddItem(std::unique_ptr<AppListFolderItem>(
       new AppListFolderItem(kFolderId, AppListFolderItem::FOLDER_TYPE_NORMAL)));
-  model()->MoveItemToFolder(model()->FindItem(kPackagedApp2Id), kFolderId);
+  model()->MoveItemToFolder(model()->FindItem(kPackagedApp1Id), kFolderId);
   EXPECT_EQ("Hosted App,Packaged App 1,Packaged App 2", RunQuery(""));
 
   // The position of the folder shouldn't matter.
   model()->SetItemPosition(
       model()->FindItem(kFolderId),
-      model()->FindItem(kPackagedApp1Id)->position().CreateBefore());
+      model()->FindItem(kPackagedApp2Id)->position().CreateBefore());
   EXPECT_EQ("Hosted App,Packaged App 1,Packaged App 2", RunQuery(""));
 }
 

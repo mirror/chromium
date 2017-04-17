@@ -5,42 +5,43 @@
 #ifndef RequestInit_h
 #define RequestInit_h
 
-#include "bindings/core/v8/Dictionary.h"
 #include "platform/heap/Handle.h"
 #include "platform/network/EncodedFormData.h"
 #include "platform/weborigin/Referrer.h"
-#include "wtf/RefPtr.h"
-#include "wtf/text/WTFString.h"
-#include <memory>
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
+class BytesConsumer;
+class Dictionary;
+class ExecutionContext;
 class ExceptionState;
-class FetchDataConsumerHandle;
 class Headers;
 
 // FIXME: Use IDL dictionary instead of this class.
 class RequestInit {
-    STACK_ALLOCATED();
-public:
-    explicit RequestInit(ExecutionContext*, const Dictionary&, ExceptionState&);
+  STACK_ALLOCATED();
 
-    String method;
-    Member<Headers> headers;
-    Dictionary headersDictionary;
-    String contentType;
-    std::unique_ptr<FetchDataConsumerHandle> body;
-    Referrer referrer;
-    String mode;
-    String credentials;
-    String redirect;
-    String integrity;
-    RefPtr<EncodedFormData> attachedCredential;
-    // True if any members in RequestInit are set and hence the referrer member
-    // should be used in the Request constructor.
-    bool areAnyMembersSet;
+ public:
+  explicit RequestInit(ExecutionContext*, const Dictionary&, ExceptionState&);
+
+  String method;
+  Member<Headers> headers;
+  String content_type;
+  Member<BytesConsumer> body;
+  Referrer referrer;
+  String mode;
+  String credentials;
+  String cache;
+  String redirect;
+  String integrity;
+  RefPtr<EncodedFormData> attached_credential;
+  // True if any members in RequestInit are set and hence the referrer member
+  // should be used in the Request constructor.
+  bool are_any_members_set;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RequestInit_h
+#endif  // RequestInit_h

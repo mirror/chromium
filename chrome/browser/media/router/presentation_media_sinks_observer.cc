@@ -14,13 +14,12 @@ PresentationMediaSinksObserver::PresentationMediaSinksObserver(
     MediaRouter* router,
     content::PresentationScreenAvailabilityListener* listener,
     const MediaSource& source,
-    const GURL& origin)
+    const url::Origin& origin)
     : MediaSinksObserver(router, source, origin),
       listener_(listener),
       previous_availablity_(UNKNOWN) {
   DCHECK(router);
   DCHECK(listener_);
-  DCHECK(!source.Empty());
 }
 
 PresentationMediaSinksObserver::~PresentationMediaSinksObserver() {

@@ -6,43 +6,31 @@
 
 namespace blink {
 
-WebMediaPlayerSource::WebMediaPlayerSource()
-{
+WebMediaPlayerSource::WebMediaPlayerSource() {}
+
+WebMediaPlayerSource::WebMediaPlayerSource(const WebURL& url) : url_(url) {}
+
+WebMediaPlayerSource::WebMediaPlayerSource(const WebMediaStream& media_stream)
+    : media_stream_(media_stream) {}
+
+WebMediaPlayerSource::~WebMediaPlayerSource() {
+  media_stream_.Reset();
 }
 
-WebMediaPlayerSource::WebMediaPlayerSource(const WebURL& url)
-    : m_url(url)
-{
+bool WebMediaPlayerSource::IsURL() const {
+  return !url_.IsEmpty();
 }
 
-WebMediaPlayerSource::WebMediaPlayerSource(const WebMediaStream& mediaStream)
-    : m_mediaStream(mediaStream)
-{
+WebURL WebMediaPlayerSource::GetAsURL() const {
+  return url_;
 }
 
-WebMediaPlayerSource::~WebMediaPlayerSource()
-{
-    m_mediaStream.reset();
+bool WebMediaPlayerSource::IsMediaStream() const {
+  return !media_stream_.IsNull();
 }
 
-bool WebMediaPlayerSource::isURL() const
-{
-    return !m_url.isEmpty();
+WebMediaStream WebMediaPlayerSource::GetAsMediaStream() const {
+  return media_stream_;
 }
 
-WebURL WebMediaPlayerSource::getAsURL() const
-{
-    return m_url;
-}
-
-bool WebMediaPlayerSource::isMediaStream() const
-{
-    return !m_mediaStream.isNull();
-}
-
-WebMediaStream WebMediaPlayerSource::getAsMediaStream() const
-{
-    return m_mediaStream;
-}
-
-} // namespace blink
+}  // namespace blink

@@ -5,7 +5,7 @@
 if (window.testRunner) {
     testRunner.waitUntilDone();
     testRunner.dumpAsText();
-    internals.settings.setUnifiedTextCheckerEnabled(true);
+    testRunner.setMockSpellCheckerEnabled(true);
 }
 
 function runTest() {

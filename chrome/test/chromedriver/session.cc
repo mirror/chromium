@@ -17,7 +17,7 @@
 
 namespace {
 
-base::LazyInstance<base::ThreadLocalPointer<Session> >
+base::LazyInstance<base::ThreadLocalPointer<Session>>::DestructorAtExit
     lazy_tls_session = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
@@ -34,6 +34,7 @@ const base::TimeDelta Session::kDefaultPageLoadTimeout =
 
 Session::Session(const std::string& id)
     : id(id),
+      w3c_compliant(false),
       quit(false),
       detach(false),
       force_devtools_screenshot(false),
@@ -44,6 +45,7 @@ Session::Session(const std::string& id)
 
 Session::Session(const std::string& id, std::unique_ptr<Chrome> chrome)
     : id(id),
+      w3c_compliant(false),
       quit(false),
       detach(false),
       force_devtools_screenshot(false),
@@ -90,22 +92,17 @@ std::string Session::GetCurrentFrameId() const {
 
 std::vector<WebDriverLog*> Session::GetAllLogs() const {
   std::vector<WebDriverLog*> logs;
-  for (ScopedVector<WebDriverLog>::const_iterator log = devtools_logs.begin();
-       log != devtools_logs.end();
-       ++log) {
-    logs.push_back(*log);
-  }
+  for (const auto& log : devtools_logs)
+    logs.push_back(log.get());
   if (driver_log)
     logs.push_back(driver_log.get());
   return logs;
 }
 
 std::string Session::GetFirstBrowserError() const {
-  for (ScopedVector<WebDriverLog>::const_iterator it = devtools_logs.begin();
-       it != devtools_logs.end();
-       ++it) {
-    if ((*it)->type() == WebDriverLog::kBrowserType) {
-      std::string message = (*it)->GetFirstErrorMessage();
+  for (const auto& log : devtools_logs) {
+    if (log->type() == WebDriverLog::kBrowserType) {
+      std::string message = log->GetFirstErrorMessage();
       if (!message.empty())
         return message;
     }

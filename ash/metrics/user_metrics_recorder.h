@@ -8,14 +8,15 @@
 #include <memory>
 
 #include "ash/ash_export.h"
-#include "ash/common/metrics/user_metrics_action.h"
 #include "ash/metrics/task_switch_metrics_recorder.h"
+#include "ash/metrics/user_metrics_action.h"
 #include "base/macros.h"
 #include "base/timer/timer.h"
 
 namespace ash {
 
 class DesktopTaskSwitchMetricRecorder;
+class PointerMetricsRecorder;
 
 namespace test {
 class UserMetricsRecorderTestAPI;
@@ -77,6 +78,9 @@ class ASH_EXPORT UserMetricsRecorder {
   // clicks or touchscreen taps.
   std::unique_ptr<DesktopTaskSwitchMetricRecorder>
       desktop_task_switch_metric_recorder_;
+
+  // Metric recorder to track pointer down events.
+  std::unique_ptr<PointerMetricsRecorder> pointer_metrics_recorder_;
 
   DISALLOW_COPY_AND_ASSIGN(UserMetricsRecorder);
 };

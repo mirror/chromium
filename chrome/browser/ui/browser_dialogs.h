@@ -10,14 +10,15 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/optional.h"
+#include "base/strings/string16.h"
 #include "build/build_config.h"
 #include "chrome/browser/ui/bookmarks/bookmark_editor.h"
-#include "components/security_state/security_state_model.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/native_widget_types.h"
 
 #if defined(OS_CHROMEOS)
-#include "chrome/browser/chromeos/arc/arc_navigation_throttle.h"
+#include "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h"
 #endif  // OS_CHROMEOS
 
 class Browser;
@@ -25,10 +26,6 @@ class ContentSettingBubbleModel;
 class GURL;
 class LoginHandler;
 class Profile;
-
-namespace base {
-struct Feature;
-}
 
 namespace bookmarks {
 class BookmarkBubbleObserver;
@@ -45,7 +42,6 @@ class Extension;
 }
 
 namespace gfx {
-class Image;
 class Point;
 }
 
@@ -54,7 +50,20 @@ class AuthChallengeInfo;
 class URLRequest;
 }
 
-namespace task_management {
+namespace payments {
+class PaymentRequest;
+class PaymentRequestDialog;
+}
+
+namespace safe_browsing {
+class SRTPromptController;
+}
+
+namespace security_state {
+struct SecurityInfo;
+}  // namespace security_state
+
+namespace task_manager {
 class TaskManagerTableModel;
 }
 
@@ -64,18 +73,10 @@ class WebDialogDelegate;
 
 namespace chrome {
 
-#if defined(OS_MACOSX)
-// Makes ToolkitViewsDialogsEnabled() available to chrome://flags.
-extern const base::Feature kMacViewsNativeDialogs;
-
-// Makes ToolkitViewsWebUIDialogsEnabled() available to chrome://flags.
-extern const base::Feature kMacViewsWebUIDialogs;
-#endif  // OS_MACOSX
-
 // Shows or hides the Task Manager. |browser| can be NULL when called from Ash.
 // Returns a pointer to the underlying TableModel, which can be ignored, or used
 // for testing.
-task_management::TaskManagerTableModel* ShowTaskManager(Browser* browser);
+task_manager::TaskManagerTableModel* ShowTaskManager(Browser* browser);
 void HideTaskManager();
 
 #if !defined(OS_MACOSX)
@@ -88,11 +89,17 @@ void HideTaskManager();
 gfx::NativeWindow ShowWebDialog(gfx::NativeView parent,
                                 content::BrowserContext* context,
                                 ui::WebDialogDelegate* delegate);
+#endif  // !defined(OS_MACOSX)
 
-// Shows the create web app shortcut dialog box.
-void ShowCreateWebAppShortcutsDialog(gfx::NativeWindow parent_window,
-                                     content::WebContents* web_contents);
-#endif
+#if defined(USE_ASH)
+// Creates and shows an HTML dialog with the given delegate and browser context.
+// The dialog is placed in the ash window hierarchy in the given container.
+// See ash/public/cpp/shell_window_ids.h for |container_id| values. The window
+// is destroyed when it is closed. See also chrome::ShowWebDialog().
+void ShowWebDialogInContainer(int container_id,
+                              content::BrowserContext* context,
+                              ui::WebDialogDelegate* delegate);
+#endif  // defined(USE_ASH)
 
 // Shows the create chrome app shortcut dialog box.
 // |close_callback| may be null.
@@ -108,21 +115,13 @@ content::ColorChooser* ShowColorChooser(content::WebContents* web_contents,
 
 #if defined(OS_MACOSX)
 
-// For Mac, returns true if Chrome should show an equivalent toolkit-views based
-// dialog instead of a native-looking Cocoa dialog.
-bool ToolkitViewsDialogsEnabled();
-
-// For Mac, returns true if Chrome should show an equivalent toolkit-views based
-// dialog instead of a WebUI-styled Cocoa dialog.
-bool ToolkitViewsWebUIDialogsEnabled();
-
-// Shows a Views website settings bubble at the given anchor point.
-void ShowWebsiteSettingsBubbleViewsAtPoint(
+// Shows a Views page info bubble at the given anchor point.
+void ShowPageInfoBubbleViewsAtPoint(
     const gfx::Point& anchor_point,
     Profile* profile,
     content::WebContents* web_contents,
     const GURL& virtual_url,
-    const security_state::SecurityStateModel::SecurityInfo& security_info);
+    const security_state::SecurityInfo& security_info);
 
 // Show a Views bookmark bubble at the given point. This occurs when the
 // bookmark star is clicked or "Bookmark This Page..." is selected from a menu
@@ -135,13 +134,11 @@ void ShowBookmarkBubbleViewsAtPoint(const gfx::Point& anchor_point,
                                     bool newly_bookmarked);
 
 // Bridging methods that show/hide the toolkit-views based Task Manager on Mac.
-task_management::TaskManagerTableModel* ShowTaskManagerViews(Browser* browser);
+task_manager::TaskManagerTableModel* ShowTaskManagerViews(Browser* browser);
 void HideTaskManagerViews();
 
-// Notifies the old task manager with network bytes read events when the Mac
-// views are not used.
-bool NotifyOldTaskManagerBytesRead(const net::URLRequest& request,
-                                   int64_t bytes_read);
+// Show the Views "Chrome Update" dialog.
+void ShowUpdateChromeDialogViews(gfx::NativeWindow parent);
 
 #endif  // OS_MACOSX
 
@@ -156,6 +153,18 @@ void ShowBookmarkEditorViews(gfx::NativeWindow parent_window,
                              Profile* profile,
                              const BookmarkEditor::EditDetails& details,
                              BookmarkEditor::Configuration configuration);
+
+payments::PaymentRequestDialog* CreatePaymentRequestDialog(
+    payments::PaymentRequest* request);
+
+// Shows the dialog to choose a share target app. |targets| is a list of app
+// title and manifest URL pairs that will be shown in a list. If the user picks
+// a target, this calls |callback| with the manifest URL of the chosen target,
+// or supplies null if the user cancelled the share.
+void ShowWebShareTargetPickerDialog(
+    gfx::NativeWindow parent_window,
+    const std::vector<std::pair<base::string16, GURL>>& targets,
+    const base::Callback<void(base::Optional<std::string>)>& callback);
 
 #if defined(OS_MACOSX)
 
@@ -175,16 +184,43 @@ class ContentSettingBubbleViewsBridge {
 
 #endif  // TOOLKIT_VIEWS
 
+// Values used in the Dialog.Creation UMA metric. Each value represents a
+// different type of dialog box.
+// These values are written to logs. New enum values can be added, but existing
+// enums must never be renumbered or deleted and reused.
+enum class DialogIdentifier { UNKNOWN = 0, TRANSLATE = 1, MAX_VALUE };
+
+// Record an UMA metric counting the creation of a dialog box of this type.
+void RecordDialogCreation(DialogIdentifier identifier);
+
+#if defined(OS_WIN)
+
+// Shows the Chrome Cleanup dialog asking the user if they want to clean their
+// system from unwanted software. This is called when unwanted software has been
+// detected on the system.
+void ShowSRTPrompt(Browser* browser,
+                   safe_browsing::SRTPromptController* controller);
+
+#endif  // OS_WIN
+
 }  // namespace chrome
 
 #if defined(OS_CHROMEOS)
 
+// This callback informs the package name of the app selected by the user, along
+// with the reason why the Bubble was closed. The string param must have a valid
+// package name, except when the CloseReason is ERROR or DIALOG_DEACTIVATED, for
+// these cases we return a dummy value which won't be used at all and has no
+// significance.
+using IntentPickerResponse =
+    base::Callback<void(const std::string&,
+                        arc::ArcNavigationThrottle::CloseReason)>;
+
 // Return a pointer to the IntentPickerBubbleView::ShowBubble method.
 using BubbleShowPtr =
-void(*)(content::NavigationHandle*,
-        const std::vector<std::pair<std::basic_string<char>, gfx::Image> >&,
-        const base::Callback<void(size_t,
-                                  arc::ArcNavigationThrottle::CloseReason)>&);
+    void (*)(content::WebContents*,
+             const std::vector<arc::ArcNavigationThrottle::AppInfo>&,
+             const IntentPickerResponse&);
 
 BubbleShowPtr ShowIntentPickerBubble();
 

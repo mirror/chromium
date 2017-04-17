@@ -25,7 +25,6 @@ class Rect;
 class RectF;
 }
 
-namespace chrome {
 namespace android {
 
 // Chromium Android specific WebContentsDelegate.
@@ -68,9 +67,6 @@ class TabWebContentsDelegateAndroid
   bool CheckMediaAccessPermission(content::WebContents* web_contents,
                                   const GURL& security_origin,
                                   content::MediaStreamType type) override;
-  void RequestMediaDecodePermission(
-      content::WebContents* web_contents,
-      const base::Callback<void(bool)>& callback) override;
   bool RequestPpapiBrokerPermission(
       content::WebContents* web_contents,
       const GURL& url,
@@ -105,6 +101,5 @@ class TabWebContentsDelegateAndroid
 bool RegisterTabWebContentsDelegateAndroid(JNIEnv* env);
 
 }  // namespace android
-}  // namespace chrome
 
 #endif  // CHROME_BROWSER_ANDROID_TAB_WEB_CONTENTS_DELEGATE_ANDROID_H_

@@ -18,17 +18,17 @@ function test()
 {
     InspectorTest.cpuProfilerModel.startRecording();
     InspectorTest.cpuProfilerModel.stopRecording();
-    InspectorTest.domModel.setInspectMode(DOMAgent.InspectMode.SearchForNode, clickAtInspected);
+    InspectorTest.domModel.setInspectMode(Protocol.DOM.InspectMode.SearchForNode, clickAtInspected);
 
     function clickAtInspected()
     {
-        InspectorTest.firstElementsTreeOutline().addEventListener(WebInspector.ElementsTreeOutline.Events.SelectedNodeChanged, dumpAndFinish);
+        InspectorTest.firstElementsTreeOutline().addEventListener(Elements.ElementsTreeOutline.Events.SelectedNodeChanged, dumpAndFinish);
         InspectorTest.evaluateInPage("click()");
     }
 
     function dumpAndFinish()
     {
-        InspectorTest.firstElementsTreeOutline().removeEventListener(WebInspector.ElementsTreeOutline.Events.SelectedNodeChanged, dumpAndFinish);
+        InspectorTest.firstElementsTreeOutline().removeEventListener(Elements.ElementsTreeOutline.Events.SelectedNodeChanged, dumpAndFinish);
         var selectedElement = InspectorTest.firstElementsTreeOutline().selectedTreeElement;
         InspectorTest.addResult("Node selected: " + selectedElement.node().getAttribute("id"));
         InspectorTest.completeTest();

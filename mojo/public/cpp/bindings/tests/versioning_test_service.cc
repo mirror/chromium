@@ -8,12 +8,13 @@
 #include <utility>
 
 #include "base/macros.h"
-#include "mojo/public/c/system/main.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/interfaces/bindings/tests/versioning_test_service.mojom.h"
-#include "services/shell/public/cpp/interface_factory.h"
-#include "services/shell/public/cpp/service.h"
-#include "services/shell/public/cpp/service_runner.h"
+#include "services/service_manager/public/c/main.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/cpp/interface_factory.h"
+#include "services/service_manager/public/cpp/service.h"
+#include "services/service_manager/public/cpp/service_runner.h"
 
 namespace mojo {
 namespace test {
@@ -95,15 +96,19 @@ class HumanResourceDatabaseImpl : public HumanResourceDatabase {
 };
 
 class HumanResourceSystemServer
-    : public shell::Service,
+    : public service_manager::Service,
       public InterfaceFactory<HumanResourceDatabase> {
  public:
-  HumanResourceSystemServer() {}
+  HumanResourceSystemServer() {
+    registry_.AddInterface<HumanResourceDatabase>(this);
+  }
 
-  // shell::Service implementation.
-  bool OnConnect(Connection* connection) override {
-    connection->AddInterface<HumanResourceDatabase>(this);
-    return true;
+  // service_manager::Service implementation.
+  void OnBindInterface(const service_manager::ServiceInfo& source_info,
+                       const std::string& interface_name,
+                       mojo::ScopedMessagePipeHandle interface_pipe) override {
+    registry_.BindInterface(source_info.identity, interface_name,
+                            std::move(interface_pipe));
   }
 
   // InterfaceFactory<HumanResourceDatabase> implementation.
@@ -113,14 +118,17 @@ class HumanResourceSystemServer
     // connection error.
     new HumanResourceDatabaseImpl(std::move(request));
   }
+
+ private:
+  service_manager::BinderRegistry registry_;
 };
 
 }  // namespace versioning
 }  // namespace test
 }  // namespace mojo
 
-MojoResult MojoMain(MojoHandle request) {
-  mojo::ApplicationRunner runner(
+MojoResult ServiceMain(MojoHandle request) {
+  mojo::ServiceRunner runner(
       new mojo::test::versioning::HumanResourceSystemServer());
 
   return runner.Run(request);

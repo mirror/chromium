@@ -12,32 +12,28 @@
 namespace blink {
 
 class LayoutSliderItem : public LayoutBlockItem {
-public:
-    explicit LayoutSliderItem(LayoutSlider* layoutSlider)
-        : LayoutBlockItem(layoutSlider)
-    {
-    }
+ public:
+  explicit LayoutSliderItem(LayoutSlider* layout_slider)
+      : LayoutBlockItem(layout_slider) {}
 
-    explicit LayoutSliderItem(const LayoutBlockItem& item)
-        : LayoutBlockItem(item)
-    {
-        ASSERT_WITH_SECURITY_IMPLICATION(!item || item.isSlider());
-    }
+  explicit LayoutSliderItem(const LayoutBlockItem& item)
+      : LayoutBlockItem(item) {
+    SECURITY_DCHECK(!item || item.IsSlider());
+  }
 
-    explicit LayoutSliderItem(std::nullptr_t) : LayoutBlockItem(nullptr) { }
+  explicit LayoutSliderItem(std::nullptr_t) : LayoutBlockItem(nullptr) {}
 
-    LayoutSliderItem() { }
+  LayoutSliderItem() {}
 
-    bool inDragMode() const
-    {
-        return toSlider()->inDragMode();
-    }
+  bool InDragMode() const { return ToSlider()->InDragMode(); }
 
-private:
-    LayoutSlider* toSlider() { return toLayoutSlider(layoutObject()); }
-    const LayoutSlider* toSlider() const { return toLayoutSlider(layoutObject()); }
+ private:
+  LayoutSlider* ToSlider() { return ToLayoutSlider(GetLayoutObject()); }
+  const LayoutSlider* ToSlider() const {
+    return ToLayoutSlider(GetLayoutObject());
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutSliderItem_h
+#endif  // LayoutSliderItem_h

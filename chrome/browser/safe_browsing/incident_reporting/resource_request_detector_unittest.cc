@@ -12,14 +12,16 @@
 #include "chrome/browser/safe_browsing/incident_reporting/incident.h"
 #include "chrome/browser/safe_browsing/incident_reporting/incident_receiver.h"
 #include "chrome/browser/safe_browsing/incident_reporting/mock_incident_receiver.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "components/safe_browsing_db/test_database_manager.h"
 #include "content/public/browser/resource_request_info.h"
+#include "content/public/common/previews_state.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "crypto/sha2.h"
 #include "ipc/ipc_message.h"
 #include "net/base/request_priority.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -85,20 +87,19 @@ class ResourceRequestDetectorTest : public testing::Test {
   std::unique_ptr<net::URLRequest> GetTestURLRequest(
       const std::string& url,
       content::ResourceType resource_type) const {
-    std::unique_ptr<net::URLRequest> url_request(
-        context_.CreateRequest(GURL(url), net::DEFAULT_PRIORITY, NULL));
+    std::unique_ptr<net::URLRequest> url_request(context_.CreateRequest(
+        GURL(url), net::DEFAULT_PRIORITY, NULL, TRAFFIC_ANNOTATION_FOR_TESTS));
 
     content::ResourceRequestInfo::AllocateForTesting(
         url_request.get(), resource_type,
-        NULL,              // resource_context
-        0,                 // render_process_id
-        0,                 // render_view_id
-        MSG_ROUTING_NONE,  // render_frame_id
-        true,              // is_main_frame
-        false,             // parent_is_main_frame
-        true,              // allow_download
-        false,             // is_async
-        false);            // is_using_lofi
+        /*resource_context=*/NULL,
+        /*render_process_id=*/0,
+        /*render_view_id=*/0,
+        /*render_frame_id=*/MSG_ROUTING_NONE,
+        /*is_main_frame=*/true,
+        /*parent_is_main_frame=*/false,
+        /*allow_download=*/true,
+        /*is_async=*/false, content::PREVIEWS_OFF);
 
     return url_request;
   }

@@ -32,11 +32,13 @@
 
 #include "core/dom/Document.h"
 #include "core/layout/LayoutBox.h"
+#include "core/layout/LayoutView.h"
 #include "core/paint/PaintLayer.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/URLTestHelpers.h"
+#include "platform/testing/UnitTestHelpers.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
-#include "public/web/WebCache.h"
 #include "public/web/WebFrameClient.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "web/WebLocalFrameImpl.h"
@@ -44,331 +46,492 @@
 
 namespace blink {
 
-class LayoutGeometryMapTest : public testing::Test {
-public:
-    LayoutGeometryMapTest()
-        : m_baseURL("http://www.test.com/")
-    {
-    }
+typedef bool TestParamRootLayerScrolling;
+class LayoutGeometryMapTest
+    : public ::testing::Test,
+      public ::testing::WithParamInterface<TestParamRootLayerScrolling>,
+      private ScopedRootLayerScrollingForTest {
+ public:
+  LayoutGeometryMapTest()
+      : ScopedRootLayerScrollingForTest(GetParam()),
+        base_url_("http://www.test.com/") {}
 
-    void TearDown() override
-    {
-        Platform::current()->getURLLoaderMockFactory()->unregisterAllURLs();
-        WebCache::clear();
-    }
+  void TearDown() override {
+    Platform::Current()
+        ->GetURLLoaderMockFactory()
+        ->UnregisterAllURLsAndClearMemoryCache();
+  }
 
-protected:
-    static LayoutBox* getFrameElement(const char* iframeName, WebView* webView, const WTF::AtomicString& elementId)
-    {
-        WebLocalFrameImpl* iframe = toWebLocalFrameImpl(webView->findFrameByName(WebString::fromUTF8(iframeName)));
-        if (!iframe)
-            return nullptr;
-        LocalFrame* frame = iframe->frame();
-        Document* doc = frame->document();
-        Element* element = doc->getElementById(elementId);
-        if (!element)
-            return nullptr;
-        return element->layoutBox();
-    }
+ protected:
+  static LayoutBox* GetFrameElement(const char* iframe_name,
+                                    WebView* web_view,
+                                    const WTF::AtomicString& element_id) {
+    WebLocalFrameImpl* iframe = ToWebLocalFrameImpl(
+        web_view->FindFrameByName(WebString::FromUTF8(iframe_name)));
+    if (!iframe)
+      return nullptr;
+    LocalFrame* frame = iframe->GetFrame();
+    Document* doc = frame->GetDocument();
+    Element* element = doc->GetElementById(element_id);
+    if (!element)
+      return nullptr;
+    return element->GetLayoutBox();
+  }
 
-    static LayoutBox* getLayoutBox(WebView* webView, const WTF::AtomicString& elementId)
-    {
-        WebViewImpl* webViewImpl = toWebViewImpl(webView);
-        if (!webViewImpl)
-            return nullptr;
-        LocalFrame* frame = webViewImpl->mainFrameImpl()->frame();
-        Document* doc = frame->document();
-        Element* element = doc->getElementById(elementId);
-        if (!element)
-            return nullptr;
-        return element->layoutBox();
-    }
+  static Element* GetElement(WebView* web_view,
+                             const WTF::AtomicString& element_id) {
+    WebViewImpl* web_view_impl = ToWebViewImpl(web_view);
+    if (!web_view_impl)
+      return nullptr;
+    LocalFrame* frame = web_view_impl->MainFrameImpl()->GetFrame();
+    Document* doc = frame->GetDocument();
+    return doc->GetElementById(element_id);
+  }
 
-    static const LayoutBoxModelObject* getLayoutContainer(WebView* webView, const WTF::AtomicString &elementId)
-    {
-        LayoutBox* rb = getLayoutBox(webView, elementId);
-        if (!rb)
-            return nullptr;
-        PaintLayer* compositingLayer = rb->enclosingLayer()->enclosingLayerForPaintInvalidation();
-        if (!compositingLayer)
-            return nullptr;
-        return compositingLayer->layoutObject();
-    }
+  static LayoutBox* GetLayoutBox(WebView* web_view,
+                                 const WTF::AtomicString& element_id) {
+    Element* element = GetElement(web_view, element_id);
+    if (!element)
+      return nullptr;
+    return element->GetLayoutBox();
+  }
 
-    static const LayoutBoxModelObject* getFrameLayoutContainer(const char* frameId, WebView* webView, const WTF::AtomicString &elementId)
-    {
-        LayoutBox* rb = getFrameElement(frameId, webView, elementId);
-        if (!rb)
-            return nullptr;
-        PaintLayer* compositingLayer = rb->enclosingLayer()->enclosingLayerForPaintInvalidation();
-        if (!compositingLayer)
-            return nullptr;
-        return compositingLayer->layoutObject();
-    }
+  static const LayoutBoxModelObject* GetLayoutContainer(
+      WebView* web_view,
+      const WTF::AtomicString& element_id) {
+    LayoutBox* rb = GetLayoutBox(web_view, element_id);
+    if (!rb)
+      return nullptr;
+    PaintLayer* compositing_layer =
+        rb->EnclosingLayer()->EnclosingLayerForPaintInvalidation();
+    if (!compositing_layer)
+      return nullptr;
+    return &compositing_layer->GetLayoutObject();
+  }
 
-    static const FloatRect rectFromQuad(const FloatQuad& quad)
-    {
-        FloatRect rect;
-        rect.setX(std::min(quad.p1().x(), std::min(quad.p2().x(), std::min(quad.p3().x(), quad.p4().x()))));
-        rect.setY(std::min(quad.p1().y(), std::min(quad.p2().y(), std::min(quad.p3().y(), quad.p4().y()))));
+  static const LayoutBoxModelObject* GetFrameLayoutContainer(
+      const char* frame_id,
+      WebView* web_view,
+      const WTF::AtomicString& element_id) {
+    LayoutBox* rb = GetFrameElement(frame_id, web_view, element_id);
+    if (!rb)
+      return nullptr;
+    PaintLayer* compositing_layer =
+        rb->EnclosingLayer()->EnclosingLayerForPaintInvalidation();
+    if (!compositing_layer)
+      return nullptr;
+    return &compositing_layer->GetLayoutObject();
+  }
 
-        rect.setWidth(std::max(quad.p1().x(), std::max(quad.p2().x(), std::max(quad.p3().x(), quad.p4().x()))) - rect.x());
-        rect.setHeight(std::max(quad.p1().y(), std::max(quad.p2().y(), std::max(quad.p3().y(), quad.p4().y()))) - rect.y());
-        return rect;
-    }
+  static const FloatRect RectFromQuad(const FloatQuad& quad) {
+    FloatRect rect;
+    rect.SetX(std::min(
+        quad.P1().X(),
+        std::min(quad.P2().X(), std::min(quad.P3().X(), quad.P4().X()))));
+    rect.SetY(std::min(
+        quad.P1().Y(),
+        std::min(quad.P2().Y(), std::min(quad.P3().Y(), quad.P4().Y()))));
 
-    void registerMockedHttpURLLoad(const std::string& fileName)
-    {
-        URLTestHelpers::registerMockedURLFromBaseURL(WebString::fromUTF8(m_baseURL.c_str()), WebString::fromUTF8(fileName.c_str()));
-    }
+    rect.SetWidth(std::max(quad.P1().X(),
+                           std::max(quad.P2().X(),
+                                    std::max(quad.P3().X(), quad.P4().X()))) -
+                  rect.X());
+    rect.SetHeight(std::max(quad.P1().Y(),
+                            std::max(quad.P2().Y(),
+                                     std::max(quad.P3().Y(), quad.P4().Y()))) -
+                   rect.Y());
+    return rect;
+  }
 
-    const std::string m_baseURL;
-    FrameTestHelpers::TestWebFrameClient m_mockWebViewClient;
+  // Adjust rect by the scroll offset of the LayoutView.  This only has an
+  // effect if root layer scrolling is enabled.  The only reason for doing
+  // this here is so the test expected values can be the same whether or not
+  // root layer scrolling is enabled.  For more context, see:
+  // https://codereview.chromium.org/2417103002/#msg11
+  static FloatRect AdjustForFrameScroll(WebView* web_view,
+                                        const FloatRect& rect) {
+    FloatRect result(rect);
+    LocalFrame* frame = ToWebViewImpl(web_view)->MainFrameImpl()->GetFrame();
+    LayoutView* layout_view = frame->GetDocument()->GetLayoutView();
+    if (layout_view->HasOverflowClip())
+      result.Move(layout_view->ScrolledContentOffset());
+    return result;
+  }
+
+  void RegisterMockedHttpURLLoad(const std::string& file_name) {
+    URLTestHelpers::RegisterMockedURLLoadFromBase(
+        WebString::FromUTF8(base_url_), testing::WebTestDataPath(),
+        WebString::FromUTF8(file_name));
+  }
+
+  const std::string base_url_;
+  FrameTestHelpers::TestWebFrameClient mock_web_view_client_;
 };
 
-TEST_F(LayoutGeometryMapTest, SimpleGeometryMapTest)
-{
-    registerMockedHttpURLLoad("rgm_test.html");
-    FrameTestHelpers::WebViewHelper webViewHelper;
-    WebView* webView = webViewHelper.initializeAndLoad(m_baseURL + "rgm_test.html", true, 0, 0);
-    webView->resize(WebSize(1000, 1000));
-    webView->updateAllLifecyclePhases();
+INSTANTIATE_TEST_CASE_P(All, LayoutGeometryMapTest, ::testing::Bool());
 
-    // We are going test everything twice. Once with FloatPoints and once with
-    // FloatRects. This is because LayoutGeometryMap treats both slightly
-    // differently
-    LayoutGeometryMap rgm;
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "InitialDiv"), 0);
-    FloatRect rect(0.0f, 0.0f, 1.0f, 2.0f);
-    EXPECT_EQ(FloatQuad(FloatRect(8.0f, 8.0f, 1.0f, 2.0f)), rgm.mapToAncestor(rect, nullptr));
+TEST_P(LayoutGeometryMapTest, SimpleGeometryMapTest) {
+  RegisterMockedHttpURLLoad("rgm_test.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebView* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "rgm_test.html", true, 0, 0);
+  web_view->Resize(WebSize(1000, 1000));
+  web_view->UpdateAllLifecyclePhases();
 
-    rgm.popMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
-    EXPECT_EQ(FloatQuad(FloatRect(0.0f, 0.0f, 1.0f, 2.0f)), rgm.mapToAncestor(rect, nullptr));
+  // We are going test everything twice. Once with FloatPoints and once with
+  // FloatRects. This is because LayoutGeometryMap treats both slightly
+  // differently
+  LayoutGeometryMap rgm;
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "InitialDiv"), 0);
+  FloatRect rect(0.0f, 0.0f, 1.0f, 2.0f);
+  EXPECT_EQ(FloatQuad(FloatRect(8.0f, 8.0f, 1.0f, 2.0f)),
+            rgm.MapToAncestor(rect, nullptr));
 
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "InnerDiv"), 0);
-    EXPECT_EQ(FloatQuad(FloatRect(21.0f, 6.0f, 1.0f, 2.0f)), rgm.mapToAncestor(rect, getLayoutBox(webView, "CenterDiv")));
+  rgm.PopMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
+  EXPECT_EQ(FloatQuad(FloatRect(0.0f, 0.0f, 1.0f, 2.0f)),
+            rgm.MapToAncestor(rect, nullptr));
 
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "OtherDiv"), getLayoutBox(webView, "InnerDiv"));
-    EXPECT_EQ(FloatQuad(FloatRect(22.0f, 12.0f, 1.0f, 2.0f)), rgm.mapToAncestor(rect, getLayoutBox(webView, "CenterDiv")));
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "InnerDiv"), 0);
+  EXPECT_EQ(FloatQuad(FloatRect(21.0f, 6.0f, 1.0f, 2.0f)),
+            rgm.MapToAncestor(rect, GetLayoutBox(web_view, "CenterDiv")));
 
-    EXPECT_EQ(FloatQuad(FloatRect(1.0f, 6.0f, 1.0f, 2.0f)), rgm.mapToAncestor(rect, getLayoutBox(webView, "InnerDiv")));
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "OtherDiv"),
+                             GetLayoutBox(web_view, "InnerDiv"));
+  EXPECT_EQ(FloatQuad(FloatRect(22.0f, 12.0f, 1.0f, 2.0f)),
+            rgm.MapToAncestor(rect, GetLayoutBox(web_view, "CenterDiv")));
 
-    EXPECT_EQ(FloatQuad(FloatRect(50.0f, 44.0f, 1.0f, 2.0f)), rgm.mapToAncestor(rect, nullptr));
+  EXPECT_EQ(FloatQuad(FloatRect(1.0f, 6.0f, 1.0f, 2.0f)),
+            rgm.MapToAncestor(rect, GetLayoutBox(web_view, "InnerDiv")));
+
+  EXPECT_EQ(FloatQuad(FloatRect(50.0f, 44.0f, 1.0f, 2.0f)),
+            rgm.MapToAncestor(rect, nullptr));
 }
 
 // Fails on Windows due to crbug.com/391457. When run through the transform the
 // position on windows differs by a pixel
 #if OS(WIN)
-TEST_F(LayoutGeometryMapTest, DISABLED_TransformedGeometryTest)
+TEST_P(LayoutGeometryMapTest, DISABLED_TransformedGeometryTest)
 #else
-TEST_F(LayoutGeometryMapTest, TransformedGeometryTest)
+TEST_P(LayoutGeometryMapTest, TransformedGeometryTest)
 #endif
 {
-    registerMockedHttpURLLoad("rgm_transformed_test.html");
-    FrameTestHelpers::WebViewHelper webViewHelper;
-    WebView* webView = webViewHelper.initializeAndLoad(m_baseURL + "rgm_transformed_test.html", true, 0, 0);
-    webView->resize(WebSize(1000, 1000));
-    webView->updateAllLifecyclePhases();
+  RegisterMockedHttpURLLoad("rgm_transformed_test.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebView* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "rgm_transformed_test.html", true, 0, 0);
+  web_view->Resize(WebSize(1000, 1000));
+  web_view->UpdateAllLifecyclePhases();
 
-    LayoutGeometryMap rgm;
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "InitialDiv"), 0);
-    const float rectWidth = 15.0f;
-    const float scaleWidth = 2.0f;
-    const float scaleHeight = 3.0f;
-    FloatRect rect(0.0f, 0.0f, 15.0f, 25.0f);
-    EXPECT_EQ(FloatQuad(FloatRect(8.0f, 8.0f, 15.0f, 25.0f)), rgm.mapToAncestor(rect, nullptr));
+  LayoutGeometryMap rgm;
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "InitialDiv"), 0);
+  const float kRectWidth = 15.0f;
+  const float kScaleWidth = 2.0f;
+  const float kScaleHeight = 3.0f;
+  FloatRect rect(0.0f, 0.0f, 15.0f, 25.0f);
+  EXPECT_EQ(FloatQuad(FloatRect(8.0f, 8.0f, 15.0f, 25.0f)),
+            rgm.MapToAncestor(rect, nullptr));
 
-    rgm.popMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
-    EXPECT_EQ(FloatQuad(FloatRect(0.0f, 0.0f, 15.0f, 25.0f)).boundingBox(), rgm.mapToAncestor(rect, nullptr).boundingBox());
+  rgm.PopMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
+  EXPECT_EQ(FloatQuad(FloatRect(0.0f, 0.0f, 15.0f, 25.0f)).BoundingBox(),
+            rgm.MapToAncestor(rect, nullptr).BoundingBox());
 
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "InnerDiv"), 0);
-    EXPECT_EQ(FloatQuad(FloatRect(523.0f - rectWidth, 6.0f, 15.0f, 25.0f)).boundingBox(), rgm.mapToAncestor(rect, getLayoutBox(webView, "CenterDiv")).boundingBox());
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "InnerDiv"), 0);
+  EXPECT_EQ(FloatQuad(FloatRect(523.0f - kRectWidth, 6.0f, 15.0f, 25.0f))
+                .BoundingBox(),
+            rgm.MapToAncestor(rect, GetLayoutBox(web_view, "CenterDiv"))
+                .BoundingBox());
 
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "OtherDiv"), getLayoutBox(webView, "InnerDiv"));
-    EXPECT_EQ(FloatQuad(FloatRect(522.0f - rectWidth, 12.0f, 15.0f, 25.0f)).boundingBox(), rgm.mapToAncestor(rect, getLayoutBox(webView, "CenterDiv")).boundingBox());
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "OtherDiv"),
+                             GetLayoutBox(web_view, "InnerDiv"));
+  EXPECT_EQ(FloatQuad(FloatRect(522.0f - kRectWidth, 12.0f, 15.0f, 25.0f))
+                .BoundingBox(),
+            rgm.MapToAncestor(rect, GetLayoutBox(web_view, "CenterDiv"))
+                .BoundingBox());
 
-    EXPECT_EQ(FloatQuad(FloatRect(1.0f, 6.0f, 15.0f, 25.0f)).boundingBox(), rgm.mapToAncestor(rect, getLayoutBox(webView, "InnerDiv")).boundingBox());
+  EXPECT_EQ(FloatQuad(FloatRect(1.0f, 6.0f, 15.0f, 25.0f)).BoundingBox(),
+            rgm.MapToAncestor(rect, GetLayoutBox(web_view, "InnerDiv"))
+                .BoundingBox());
 
-    EXPECT_EQ(FloatQuad(FloatRect(821.0f - rectWidth * scaleWidth, 31.0f, 15.0f * scaleWidth, 25.0f * scaleHeight)).boundingBox(), rgm.mapToAncestor(rect, nullptr).boundingBox());
+  EXPECT_EQ(FloatQuad(FloatRect(821.0f - kRectWidth * kScaleWidth, 31.0f,
+                                15.0f * kScaleWidth, 25.0f * kScaleHeight))
+                .BoundingBox(),
+            rgm.MapToAncestor(rect, nullptr).BoundingBox());
 
-    rect = FloatRect(10.0f, 25.0f, 15.0f, 25.0f);
-    EXPECT_EQ(FloatQuad(FloatRect(512.0f - rectWidth, 37.0f, 15.0f, 25.0f)).boundingBox(), rgm.mapToAncestor(rect, getLayoutBox(webView, "CenterDiv")).boundingBox());
+  rect = FloatRect(10.0f, 25.0f, 15.0f, 25.0f);
+  EXPECT_EQ(FloatQuad(FloatRect(512.0f - kRectWidth, 37.0f, 15.0f, 25.0f))
+                .BoundingBox(),
+            rgm.MapToAncestor(rect, GetLayoutBox(web_view, "CenterDiv"))
+                .BoundingBox());
 
-    EXPECT_EQ(FloatQuad(FloatRect(11.0f, 31.0f, 15.0f, 25.0f)).boundingBox(), rgm.mapToAncestor(rect, getLayoutBox(webView, "InnerDiv")).boundingBox());
+  EXPECT_EQ(FloatQuad(FloatRect(11.0f, 31.0f, 15.0f, 25.0f)).BoundingBox(),
+            rgm.MapToAncestor(rect, GetLayoutBox(web_view, "InnerDiv"))
+                .BoundingBox());
 
-    EXPECT_EQ(FloatQuad(FloatRect(801.0f - rectWidth * scaleWidth, 106.0f, 15.0f * scaleWidth, 25.0f * scaleHeight)).boundingBox(), rgm.mapToAncestor(rect, nullptr).boundingBox());
+  EXPECT_EQ(FloatQuad(FloatRect(801.0f - kRectWidth * kScaleWidth, 106.0f,
+                                15.0f * kScaleWidth, 25.0f * kScaleHeight))
+                .BoundingBox(),
+            rgm.MapToAncestor(rect, nullptr).BoundingBox());
 }
 
-TEST_F(LayoutGeometryMapTest, FixedGeometryTest)
-{
-    registerMockedHttpURLLoad("rgm_fixed_position_test.html");
-    FrameTestHelpers::WebViewHelper webViewHelper;
-    WebView* webView = webViewHelper.initializeAndLoad(m_baseURL + "rgm_fixed_position_test.html", true, 0, 0);
-    webView->resize(WebSize(1000, 1000));
-    webView->updateAllLifecyclePhases();
+TEST_P(LayoutGeometryMapTest, FixedGeometryTest) {
+  RegisterMockedHttpURLLoad("rgm_fixed_position_test.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebView* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "rgm_fixed_position_test.html", true, 0, 0);
+  web_view->Resize(WebSize(1000, 1000));
+  web_view->UpdateAllLifecyclePhases();
 
-    LayoutGeometryMap rgm;
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "InitialDiv"), 0);
-    FloatRect rect(0.0f, 0.0f, 15.0f, 25.0f);
-    EXPECT_EQ(FloatQuad(FloatRect(8.0f, 8.0f, 15.0f, 25.0f)), rgm.mapToAncestor(rect, nullptr));
+  LayoutGeometryMap rgm;
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "InitialDiv"), 0);
+  FloatRect rect(0.0f, 0.0f, 15.0f, 25.0f);
+  EXPECT_EQ(FloatQuad(FloatRect(8.0f, 8.0f, 15.0f, 25.0f)),
+            rgm.MapToAncestor(rect, nullptr));
 
-    rgm.popMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
-    EXPECT_EQ(FloatQuad(FloatRect(0.0f, 0.0f, 15.0f, 25.0f)), rgm.mapToAncestor(rect, nullptr));
+  rgm.PopMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
+  EXPECT_EQ(FloatQuad(FloatRect(0.0f, 0.0f, 15.0f, 25.0f)),
+            rgm.MapToAncestor(rect, nullptr));
 
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "InnerDiv"), 0);
-    EXPECT_EQ(FloatQuad(FloatRect(20.0f, 14.0f, 15.0f, 25.0f)), rgm.mapToAncestor(rect, nullptr));
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "InnerDiv"), 0);
+  EXPECT_EQ(FloatQuad(FloatRect(20.0f, 14.0f, 15.0f, 25.0f)),
+            rgm.MapToAncestor(rect, nullptr));
 
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "OtherDiv"), getLayoutBox(webView, "InnerDiv"));
-    EXPECT_EQ(FloatQuad(FloatRect(21.0f, 20.0f, 15.0f, 25.0f)), rgm.mapToAncestor(rect, getLayoutContainer(webView, "CenterDiv")));
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "OtherDiv"),
+                             GetLayoutBox(web_view, "InnerDiv"));
+  EXPECT_EQ(FloatQuad(FloatRect(21.0f, 20.0f, 15.0f, 25.0f)),
+            rgm.MapToAncestor(rect, GetLayoutContainer(web_view, "CenterDiv")));
 
-    rect = FloatRect(22.0f, 15.2f, 15.3f, 0.0f);
-    EXPECT_EQ(FloatQuad(FloatRect(43.0f, 35.2f, 15.3f, 0.0f)), rgm.mapToAncestor(rect, getLayoutContainer(webView, "CenterDiv")));
+  rect = FloatRect(22.0f, 15.2f, 15.3f, 0.0f);
+  EXPECT_EQ(FloatQuad(FloatRect(43.0f, 35.2f, 15.3f, 0.0f)),
+            rgm.MapToAncestor(rect, GetLayoutContainer(web_view, "CenterDiv")));
 
-    EXPECT_EQ(FloatQuad(FloatRect(43.0f, 35.2f, 15.3f, 0.0f)), rgm.mapToAncestor(rect, getLayoutContainer(webView, "InnerDiv")));
+  EXPECT_EQ(FloatQuad(FloatRect(43.0f, 35.2f, 15.3f, 0.0f)),
+            rgm.MapToAncestor(rect, GetLayoutContainer(web_view, "InnerDiv")));
 
-    EXPECT_EQ(FloatQuad(FloatRect(43.0f, 35.2f, 15.3f, 0.0f)), rgm.mapToAncestor(rect, nullptr));
+  EXPECT_EQ(FloatQuad(FloatRect(43.0f, 35.2f, 15.3f, 0.0f)),
+            rgm.MapToAncestor(rect, nullptr));
 }
 
-TEST_F(LayoutGeometryMapTest, ContainsFixedPositionTest)
-{
-    registerMockedHttpURLLoad("rgm_contains_fixed_position_test.html");
-    FrameTestHelpers::WebViewHelper webViewHelper;
-    WebView* webView = webViewHelper.initializeAndLoad(m_baseURL + "rgm_contains_fixed_position_test.html", true, 0, 0);
-    webView->resize(WebSize(1000, 1000));
-    webView->updateAllLifecyclePhases();
+TEST_P(LayoutGeometryMapTest, ContainsFixedPositionTest) {
+  RegisterMockedHttpURLLoad("rgm_contains_fixed_position_test.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebView* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "rgm_contains_fixed_position_test.html", true, 0, 0);
+  web_view->Resize(WebSize(1000, 1000));
+  web_view->UpdateAllLifecyclePhases();
 
-    FloatRect rect(0.0f, 0.0f, 100.0f, 100.0f);
-    LayoutGeometryMap rgm;
+  FloatRect rect(0.0f, 0.0f, 100.0f, 100.0f);
+  LayoutGeometryMap rgm;
 
-    // This fixed position element is not contained and so is attached at the top of the viewport.
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "simple-container"), 0);
-    EXPECT_EQ(FloatQuad(FloatRect(8.0f, 100.0f, 100.0f, 100.0f)), rgm.mapToAncestor(rect, nullptr));
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "fixed1"), getLayoutBox(webView, "simple-container"));
-    EXPECT_EQ(FloatQuad(FloatRect(8.0f, 50.0f, 100.0f, 100.0f)), rgm.mapToAncestor(rect, nullptr));
-    rgm.popMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
+  // This fixed position element is not contained and so is attached at the top
+  // of the viewport.
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "simple-container"), 0);
+  EXPECT_EQ(FloatRect(8.0f, 100.0f, 100.0f, 100.0f),
+            AdjustForFrameScroll(web_view, rgm.AbsoluteRect(rect)));
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "fixed1"),
+                             GetLayoutBox(web_view, "simple-container"));
+  EXPECT_EQ(FloatRect(8.0f, 50.0f, 100.0f, 100.0f),
+            AdjustForFrameScroll(web_view, rgm.AbsoluteRect(rect)));
+  rgm.PopMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
 
-    // Transforms contain fixed position descendants.
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "has-transform"), 0);
-    EXPECT_EQ(FloatQuad(FloatRect(8.0f, 100.0f, 100.0f, 100.0f)), rgm.mapToAncestor(rect, nullptr));
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "fixed2"), getLayoutBox(webView, "has-transform"));
-    EXPECT_EQ(FloatQuad(FloatRect(8.0f, 100.0f, 100.0f, 100.0f)), rgm.mapToAncestor(rect, nullptr));
-    rgm.popMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
+  // Transforms contain fixed position descendants.
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "has-transform"), 0);
+  EXPECT_EQ(FloatRect(8.0f, 100.0f, 100.0f, 100.0f),
+            AdjustForFrameScroll(web_view, rgm.AbsoluteRect(rect)));
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "fixed2"),
+                             GetLayoutBox(web_view, "has-transform"));
+  EXPECT_EQ(FloatRect(8.0f, 100.0f, 100.0f, 100.0f),
+            AdjustForFrameScroll(web_view, rgm.AbsoluteRect(rect)));
+  rgm.PopMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
 
-    // Paint containment contains fixed position descendants.
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "contains-paint"), 0);
-    EXPECT_EQ(FloatQuad(FloatRect(8.0f, 100.0f, 100.0f, 100.0f)), rgm.mapToAncestor(rect, nullptr));
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "fixed3"), getLayoutBox(webView, "contains-paint"));
-    EXPECT_EQ(FloatQuad(FloatRect(8.0f, 100.0f, 100.0f, 100.0f)), rgm.mapToAncestor(rect, nullptr));
-    rgm.popMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
+  // Paint containment contains fixed position descendants.
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "contains-paint"), 0);
+  EXPECT_EQ(FloatRect(8.0f, 100.0f, 100.0f, 100.0f),
+            AdjustForFrameScroll(web_view, rgm.AbsoluteRect(rect)));
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "fixed3"),
+                             GetLayoutBox(web_view, "contains-paint"));
+  EXPECT_EQ(FloatRect(8.0f, 100.0f, 100.0f, 100.0f),
+            AdjustForFrameScroll(web_view, rgm.AbsoluteRect(rect)));
+  rgm.PopMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
 }
 
-TEST_F(LayoutGeometryMapTest, IframeTest)
-{
-    registerMockedHttpURLLoad("rgm_iframe_test.html");
-    registerMockedHttpURLLoad("rgm_test.html");
-    FrameTestHelpers::WebViewHelper webViewHelper;
-    WebView* webView = webViewHelper.initializeAndLoad(m_baseURL + "rgm_iframe_test.html", true, 0, 0);
-    webView->resize(WebSize(1000, 1000));
-    webView->updateAllLifecyclePhases();
+TEST_P(LayoutGeometryMapTest, IframeTest) {
+  RegisterMockedHttpURLLoad("rgm_iframe_test.html");
+  RegisterMockedHttpURLLoad("rgm_test.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebView* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "rgm_iframe_test.html", true, 0, 0);
+  web_view->Resize(WebSize(1000, 1000));
+  web_view->UpdateAllLifecyclePhases();
 
-    LayoutGeometryMap rgm(TraverseDocumentBoundaries);
-    LayoutGeometryMap rgmNoFrame;
+  LayoutGeometryMap rgm(kTraverseDocumentBoundaries);
+  LayoutGeometryMap rgm_no_frame;
 
-    rgmNoFrame.pushMappingsToAncestor(getFrameElement("test_frame", webView, "InitialDiv"), 0);
-    rgm.pushMappingsToAncestor(getFrameElement("test_frame", webView, "InitialDiv"), 0);
-    FloatRect rect(0.0f, 0.0f, 1.0f, 2.0f);
+  rgm_no_frame.PushMappingsToAncestor(
+      GetFrameElement("test_frame", web_view, "InitialDiv"), 0);
+  rgm.PushMappingsToAncestor(
+      GetFrameElement("test_frame", web_view, "InitialDiv"), 0);
+  FloatRect rect(0.0f, 0.0f, 1.0f, 2.0f);
 
-    EXPECT_EQ(FloatQuad(FloatRect(8.0f, 8.0f, 1.0f, 2.0f)), rgmNoFrame.mapToAncestor(rect, nullptr));
+  EXPECT_EQ(FloatQuad(FloatRect(8.0f, 8.0f, 1.0f, 2.0f)),
+            rgm_no_frame.MapToAncestor(rect, nullptr));
 
-    // Our initial rect looks like: (0, 0, 1, 2)
-    //        p0_____
-    //          |   |
-    //          |   |
-    //          |   |
-    //          |___|
-    // When we rotate we get a rect of the form:
-    //         p0_
-    //          / -_
-    //         /   /
-    //        /   /
-    //         -_/
-    // So it is sensible that the minimum y is the same as for a point at 0, 0.
-    // The minimum x should be p0.x - 2 * sin(30deg) = p0.x - 1.
-    // That maximum x should likewise be p0.x + cos(30deg) = p0.x + 0.866.
-    // And the maximum y should be p0.x + sin(30deg) + 2*cos(30deg)
-    //      = p0.y + 2.232.
-    EXPECT_NEAR(69.5244f, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).x(), 0.0001f);
-    EXPECT_NEAR(-44.0237, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).y(), 0.0001f);
-    EXPECT_NEAR(1.866, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).width(), 0.0001f);
-    EXPECT_NEAR(2.232, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).height(), 0.0001f);
+  // Our initial rect looks like: (0, 0, 1, 2)
+  //        p0_____
+  //          |   |
+  //          |   |
+  //          |   |
+  //          |___|
+  // When we rotate we get a rect of the form:
+  //         p0_
+  //          / -_
+  //         /   /
+  //        /   /
+  //         -_/
+  // So it is sensible that the minimum y is the same as for a point at 0, 0.
+  // The minimum x should be p0.x - 2 * sin(30deg) = p0.x - 1.
+  // That maximum x should likewise be p0.x + cos(30deg) = p0.x + 0.866.
+  // And the maximum y should be p0.x + sin(30deg) + 2*cos(30deg)
+  //      = p0.y + 2.232.
+  EXPECT_NEAR(69.5244f, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).X(),
+              0.0001f);
+  EXPECT_NEAR(-44.0237, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).Y(),
+              0.0001f);
+  EXPECT_NEAR(1.866, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).Width(),
+              0.0001f);
+  EXPECT_NEAR(2.232, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).Height(),
+              0.0001f);
 
-    rgm.popMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
-    rgmNoFrame.popMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
+  rgm.PopMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
+  rgm_no_frame.PopMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
 
-    rgm.pushMappingsToAncestor(getFrameElement("test_frame", webView, "InnerDiv"), 0);
-    rgmNoFrame.pushMappingsToAncestor(getFrameElement("test_frame", webView, "InnerDiv"), 0);
-    EXPECT_EQ(FloatQuad(FloatRect(21.0f, 6.0f, 1.0f, 2.0f)), rgm.mapToAncestor(rect, getFrameLayoutContainer("test_frame", webView, "CenterDiv")));
-    EXPECT_EQ(FloatQuad(FloatRect(21.0f, 6.0f, 1.0f, 2.0f)), rgmNoFrame.mapToAncestor(rect, getFrameLayoutContainer("test_frame", webView, "CenterDiv")));
+  rgm.PushMappingsToAncestor(
+      GetFrameElement("test_frame", web_view, "InnerDiv"), 0);
+  rgm_no_frame.PushMappingsToAncestor(
+      GetFrameElement("test_frame", web_view, "InnerDiv"), 0);
+  EXPECT_EQ(FloatQuad(FloatRect(21.0f, 6.0f, 1.0f, 2.0f)),
+            rgm.MapToAncestor(rect, GetFrameLayoutContainer(
+                                        "test_frame", web_view, "CenterDiv")));
+  EXPECT_EQ(
+      FloatQuad(FloatRect(21.0f, 6.0f, 1.0f, 2.0f)),
+      rgm_no_frame.MapToAncestor(
+          rect, GetFrameLayoutContainer("test_frame", web_view, "CenterDiv")));
 
-    rgm.pushMappingsToAncestor(getFrameElement("test_frame", webView, "OtherDiv"), getFrameLayoutContainer("test_frame", webView, "InnerDiv"));
-    rgmNoFrame.pushMappingsToAncestor(getFrameElement("test_frame", webView, "OtherDiv"), getFrameLayoutContainer("test_frame", webView, "InnerDiv"));
-    EXPECT_EQ(FloatQuad(FloatRect(22.0f, 12.0f, 1.0f, 2.0f)), rgm.mapToAncestor(rect, getFrameLayoutContainer("test_frame", webView, "CenterDiv")));
-    EXPECT_EQ(FloatQuad(FloatRect(22.0f, 12.0f, 1.0f, 2.0f)), rgmNoFrame.mapToAncestor(rect, getFrameLayoutContainer("test_frame", webView, "CenterDiv")));
+  rgm.PushMappingsToAncestor(
+      GetFrameElement("test_frame", web_view, "OtherDiv"),
+      GetFrameLayoutContainer("test_frame", web_view, "InnerDiv"));
+  rgm_no_frame.PushMappingsToAncestor(
+      GetFrameElement("test_frame", web_view, "OtherDiv"),
+      GetFrameLayoutContainer("test_frame", web_view, "InnerDiv"));
+  EXPECT_EQ(FloatQuad(FloatRect(22.0f, 12.0f, 1.0f, 2.0f)),
+            rgm.MapToAncestor(rect, GetFrameLayoutContainer(
+                                        "test_frame", web_view, "CenterDiv")));
+  EXPECT_EQ(
+      FloatQuad(FloatRect(22.0f, 12.0f, 1.0f, 2.0f)),
+      rgm_no_frame.MapToAncestor(
+          rect, GetFrameLayoutContainer("test_frame", web_view, "CenterDiv")));
 
-    EXPECT_EQ(FloatQuad(FloatRect(1.0f, 6.0f, 1.0f, 2.0f)), rgm.mapToAncestor(rect, getFrameLayoutContainer("test_frame", webView, "InnerDiv")));
-    EXPECT_EQ(FloatQuad(FloatRect(1.0f, 6.0f, 1.0f, 2.0f)), rgmNoFrame.mapToAncestor(rect, getFrameLayoutContainer("test_frame", webView, "InnerDiv")));
+  EXPECT_EQ(FloatQuad(FloatRect(1.0f, 6.0f, 1.0f, 2.0f)),
+            rgm.MapToAncestor(rect, GetFrameLayoutContainer(
+                                        "test_frame", web_view, "InnerDiv")));
+  EXPECT_EQ(
+      FloatQuad(FloatRect(1.0f, 6.0f, 1.0f, 2.0f)),
+      rgm_no_frame.MapToAncestor(
+          rect, GetFrameLayoutContainer("test_frame", web_view, "InnerDiv")));
 
-    EXPECT_NEAR(87.8975f, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).x(), 0.0001f);
-    EXPECT_NEAR(8.1532f, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).y(), 0.0001f);
-    EXPECT_NEAR(1.866, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).width(), 0.0001f);
-    EXPECT_NEAR(2.232, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).height(), 0.0001f);
+  EXPECT_NEAR(87.8975f, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).X(),
+              0.0001f);
+  EXPECT_NEAR(8.1532f, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).Y(),
+              0.0001f);
+  EXPECT_NEAR(1.866, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).Width(),
+              0.0001f);
+  EXPECT_NEAR(2.232, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).Height(),
+              0.0001f);
 
-    EXPECT_EQ(FloatQuad(FloatRect(50.0f, 44.0f, 1.0f, 2.0f)), rgmNoFrame.mapToAncestor(rect, nullptr));
+  EXPECT_EQ(FloatQuad(FloatRect(50.0f, 44.0f, 1.0f, 2.0f)),
+            rgm_no_frame.MapToAncestor(rect, nullptr));
 }
 
-TEST_F(LayoutGeometryMapTest, ColumnTest)
-{
-    registerMockedHttpURLLoad("rgm_column_test.html");
-    FrameTestHelpers::WebViewHelper webViewHelper;
-    WebView* webView = webViewHelper.initializeAndLoad(m_baseURL + "rgm_column_test.html", true, 0, 0);
-    webView->resize(WebSize(1000, 1000));
-    webView->updateAllLifecyclePhases();
+TEST_P(LayoutGeometryMapTest, ColumnTest) {
+  RegisterMockedHttpURLLoad("rgm_column_test.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebView* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "rgm_column_test.html", true, 0, 0);
+  web_view->Resize(WebSize(1000, 1000));
+  web_view->UpdateAllLifecyclePhases();
 
-    // The document is 1000f wide (we resized to that size).
-    // We have a 8px margin on either side of the document.
-    // Between each column we have a 10px gap, and we have 3 columns.
-    // The width of a given column is (1000 - 16 - 20)/3.
-    // The total offset between any column and it's neighbour is width + 10px
-    // (for the gap).
-    float offset = (1000.0f - 16.0f - 20.0f) / 3.0f + 10.0f;
+  // The document is 1000f wide (we resized to that size).
+  // We have a 8px margin on either side of the document.
+  // Between each column we have a 10px gap, and we have 3 columns.
+  // The width of a given column is (1000 - 16 - 20)/3.
+  // The total offset between any column and it's neighbour is width + 10px
+  // (for the gap).
+  float offset = (1000.0f - 16.0f - 20.0f) / 3.0f + 10.0f;
 
-    LayoutGeometryMap rgm;
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "A"), 0);
-    FloatPoint point;
-    FloatRect rect(0.0f, 0.0f, 5.0f, 3.0f);
+  LayoutGeometryMap rgm;
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "A"), 0);
+  FloatPoint point;
+  FloatRect rect(0.0f, 0.0f, 5.0f, 3.0f);
 
-    EXPECT_EQ(FloatQuad(FloatRect(8.0f, 8.0f, 5.0f, 3.0f)), rgm.mapToAncestor(rect, nullptr));
+  EXPECT_EQ(FloatQuad(FloatRect(8.0f, 8.0f, 5.0f, 3.0f)),
+            rgm.MapToAncestor(rect, nullptr));
 
-    rgm.popMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
-    EXPECT_EQ(FloatQuad(FloatRect(0.0f, 0.0f, 5.0f, 3.0f)), rgm.mapToAncestor(rect, nullptr));
+  rgm.PopMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
+  EXPECT_EQ(FloatQuad(FloatRect(0.0f, 0.0f, 5.0f, 3.0f)),
+            rgm.MapToAncestor(rect, nullptr));
 
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "Col1"), 0);
-    EXPECT_EQ(FloatQuad(FloatRect(8.0f, 8.0f, 5.0f, 3.0f)), rgm.mapToAncestor(rect, nullptr));
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "Col1"), 0);
+  EXPECT_EQ(FloatQuad(FloatRect(8.0f, 8.0f, 5.0f, 3.0f)),
+            rgm.MapToAncestor(rect, nullptr));
 
-    rgm.popMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "Col2"), nullptr);
-    EXPECT_NEAR(8.0f + offset, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).x(), 0.1f);
-    EXPECT_NEAR(8.0f, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).y(), 0.1f);
-    EXPECT_EQ(5.0f, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).width());
-    EXPECT_EQ(3.0f, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).height());
+  rgm.PopMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "Col2"), nullptr);
+  EXPECT_NEAR(8.0f + offset, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).X(),
+              0.1f);
+  EXPECT_NEAR(8.0f, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).Y(), 0.1f);
+  EXPECT_EQ(5.0f, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).Width());
+  EXPECT_EQ(3.0f, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).Height());
 
-    rgm.popMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
-    rgm.pushMappingsToAncestor(getLayoutBox(webView, "Col3"), nullptr);
-    EXPECT_NEAR(8.0f + offset * 2.0f, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).x(), 0.1f);
-    EXPECT_NEAR(8.0f, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).y(), 0.1f);
-    EXPECT_EQ(5.0f, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).width());
-    EXPECT_EQ(3.0f, rectFromQuad(rgm.mapToAncestor(rect, nullptr)).height());
-
+  rgm.PopMappingsToAncestor(static_cast<PaintLayer*>(nullptr));
+  rgm.PushMappingsToAncestor(GetLayoutBox(web_view, "Col3"), nullptr);
+  EXPECT_NEAR(8.0f + offset * 2.0f,
+              RectFromQuad(rgm.MapToAncestor(rect, nullptr)).X(), 0.1f);
+  EXPECT_NEAR(8.0f, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).Y(), 0.1f);
+  EXPECT_EQ(5.0f, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).Width());
+  EXPECT_EQ(3.0f, RectFromQuad(rgm.MapToAncestor(rect, nullptr)).Height());
 }
 
-} // namespace blink
+TEST_P(LayoutGeometryMapTest, FloatUnderInlineLayer) {
+  RegisterMockedHttpURLLoad("rgm_float_under_inline.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebView* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "rgm_float_under_inline.html", true, 0, 0);
+  web_view->Resize(WebSize(1000, 1000));
+  web_view->UpdateAllLifecyclePhases();
+
+  LayoutGeometryMap rgm;
+  auto* layer_under_float = GetLayoutBox(web_view, "layer-under-float");
+  auto* span = GetElement(web_view, "span")->GetLayoutBoxModelObject();
+  auto* floating = GetLayoutBox(web_view, "float");
+  auto* container = GetLayoutBox(web_view, "container");
+  FloatRect rect(3.0f, 4.0f, 10.0f, 8.0f);
+
+  rgm.PushMappingsToAncestor(container->Layer(), nullptr);
+  rgm.PushMappingsToAncestor(span->Layer(), container->Layer());
+  rgm.PushMappingsToAncestor(layer_under_float->Layer(), span->Layer());
+  EXPECT_EQ(rect, RectFromQuad(rgm.MapToAncestor(rect, container)));
+  EXPECT_EQ(FloatRect(63.0f, 54.0f, 10.0f, 8.0f),
+            RectFromQuad(rgm.MapToAncestor(rect, nullptr)));
+
+  rgm.PopMappingsToAncestor(span->Layer());
+  EXPECT_EQ(FloatRect(203.0f, 104.0f, 10.0f, 8.0f),
+            RectFromQuad(rgm.MapToAncestor(rect, container)));
+  EXPECT_EQ(FloatRect(263.0f, 154.0f, 10.0f, 8.0f),
+            RectFromQuad(rgm.MapToAncestor(rect, nullptr)));
+
+  rgm.PushMappingsToAncestor(floating, span);
+  EXPECT_EQ(rect, RectFromQuad(rgm.MapToAncestor(rect, container)));
+  EXPECT_EQ(FloatRect(63.0f, 54.0f, 10.0f, 8.0f),
+            RectFromQuad(rgm.MapToAncestor(rect, nullptr)));
+}
+
+}  // namespace blink

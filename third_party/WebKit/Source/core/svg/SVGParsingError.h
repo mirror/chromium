@@ -27,86 +27,91 @@
 #ifndef SVGParsingError_h
 #define SVGParsingError_h
 
-#include "wtf/MathExtras.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/MathExtras.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class QualifiedName;
 
 enum class SVGParseStatus {
-    NoError,
+  kNoError,
 
-    // Syntax errors
-    TrailingGarbage,
-    ExpectedAngle,
-    ExpectedArcFlag,
-    ExpectedBoolean,
-    ExpectedEndOfArguments,
-    ExpectedEnumeration,
-    ExpectedInteger,
-    ExpectedLength,
-    ExpectedMoveToCommand,
-    ExpectedNumber,
-    ExpectedNumberOrPercentage,
-    ExpectedPathCommand,
-    ExpectedStartOfArguments,
-    ExpectedTransformFunction,
+  // Syntax errors
+  kTrailingGarbage,
+  kExpectedAngle,
+  kExpectedArcFlag,
+  kExpectedBoolean,
+  kExpectedEndOfArguments,
+  kExpectedEnumeration,
+  kExpectedInteger,
+  kExpectedLength,
+  kExpectedMoveToCommand,
+  kExpectedNumber,
+  kExpectedNumberOrPercentage,
+  kExpectedPathCommand,
+  kExpectedStartOfArguments,
+  kExpectedTransformFunction,
 
-    // Semantic errors
-    NegativeValue,
-    ZeroValue,
+  // Semantic errors
+  kNegativeValue,
+  kZeroValue,
 
-    // Generic error
-    ParsingFailed,
+  // Generic error
+  kParsingFailed,
 };
 
 class SVGParsingError {
-    STACK_ALLOCATED();
-public:
-    SVGParsingError(SVGParseStatus status = SVGParseStatus::NoError, size_t locus = 0)
-        : m_status(static_cast<unsigned>(status))
-        , m_locus(checkLocus(locus))
-    {
-        ASSERT(this->status() == status);
-    }
+  STACK_ALLOCATED();
 
-    SVGParseStatus status() const { return static_cast<SVGParseStatus>(m_status); }
+ public:
+  SVGParsingError(SVGParseStatus status = SVGParseStatus::kNoError,
+                  size_t locus = 0)
+      : status_(static_cast<unsigned>(status)), locus_(CheckLocus(locus)) {
+    DCHECK_EQ(this->Status(), status);
+  }
 
-    bool hasLocus() const { return m_locus != kNoLocus; }
-    unsigned locus() const { return m_locus; }
+  SVGParseStatus Status() const { return static_cast<SVGParseStatus>(status_); }
 
-    // Move the locus of this error by |offset|, returning in a new error.
-    SVGParsingError offsetWith(size_t offset) const { return SVGParsingError(status(), offset + locus()); }
+  bool HasLocus() const { return locus_ != kNoLocus; }
+  unsigned Locus() const { return locus_; }
 
-    // Generates a string describing this error for |value| in the context of
-    // an <element, attribute>-name pair.
-    String format(const String& tagName, const QualifiedName&, const AtomicString& value) const;
+  // Move the locus of this error by |offset|, returning in a new error.
+  SVGParsingError OffsetWith(size_t offset) const {
+    return SVGParsingError(Status(), offset + Locus());
+  }
 
-private:
-    static const int kLocusBits = 24;
-    static const unsigned kNoLocus = (1u << kLocusBits) - 1;
+  // Generates a string describing this error for |value| in the context of
+  // an <element, attribute>-name pair.
+  String Format(const String& tag_name,
+                const QualifiedName&,
+                const AtomicString& value) const;
 
-    static unsigned checkLocus(size_t locus)
-    {
-        // Clamp to fit in the number of bits available. If the character index
-        // encoded by the locus does not fit in the number of bits allocated
-        // for it, the locus will be disabled (set to kNoLocus). This means
-        // that very long values will be output in their entirety. That should
-        // however be rather uncommon.
-        return clampTo<unsigned>(locus, 0, kNoLocus);
-    }
+ private:
+  static const int kLocusBits = 24;
+  static const unsigned kNoLocus = (1u << kLocusBits) - 1;
 
-    unsigned m_status : 8;
-    unsigned m_locus : kLocusBits; // The locus (character index) of the error within the parsed string.
+  static unsigned CheckLocus(size_t locus) {
+    // Clamp to fit in the number of bits available. If the character index
+    // encoded by the locus does not fit in the number of bits allocated
+    // for it, the locus will be disabled (set to kNoLocus). This means
+    // that very long values will be output in their entirety. That should
+    // however be rather uncommon.
+    return clampTo<unsigned>(locus, 0, kNoLocus);
+  }
+
+  unsigned status_ : 8;
+  unsigned locus_ : kLocusBits;  // The locus (character index) of the error
+                                 // within the parsed string.
 };
 
-inline bool operator==(const SVGParsingError& error, SVGParseStatus status)
-{
-    return error.status() == status;
+inline bool operator==(const SVGParsingError& error, SVGParseStatus status) {
+  return error.Status() == status;
 }
-inline bool operator!=(const SVGParsingError& error, SVGParseStatus status) { return !(error == status); }
+inline bool operator!=(const SVGParsingError& error, SVGParseStatus status) {
+  return !(error == status);
+}
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGParsingError_h
+#endif  // SVGParsingError_h

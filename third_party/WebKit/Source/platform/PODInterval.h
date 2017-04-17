@@ -28,7 +28,7 @@
 
 #include "platform/heap/Handle.h"
 #ifndef NDEBUG
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/text/StringBuilder.h"
 #endif
 
 namespace blink {
@@ -71,98 +71,83 @@ namespace blink {
 // Note that this class requires a copy constructor and assignment
 // operator in order to be stored in the red-black tree.
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 #ifndef NDEBUG
-template<class T>
+template <class T>
 struct ValueToString;
 #endif
 
-template<class T, class UserData = void*>
+template <class T, class UserData = void*>
 class PODInterval {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    // Constructor from endpoints. This constructor only works when the
-    // UserData type is a pointer or other type which can be initialized
-    // with 0.
-    PODInterval(const T& low, const T& high)
-        : m_low(low)
-        , m_high(high)
-        , m_data(0)
-        , m_maxHigh(high)
-    {
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    // Constructor from two endpoints plus explicit user data.
-    PODInterval(const T& low, const T& high, const UserData data)
-        : m_low(low)
-        , m_high(high)
-        , m_data(data)
-        , m_maxHigh(high)
-    {
-    }
+ public:
+  // Constructor from endpoints. This constructor only works when the
+  // UserData type is a pointer or other type which can be initialized
+  // with 0.
+  PODInterval(const T& low, const T& high)
+      : low_(low), high_(high), data_(0), max_high_(high) {}
 
-    const T& low() const { return m_low; }
-    const T& high() const { return m_high; }
-    const UserData& data() const { return m_data; }
+  // Constructor from two endpoints plus explicit user data.
+  PODInterval(const T& low, const T& high, const UserData data)
+      : low_(low), high_(high), data_(data), max_high_(high) {}
 
-    bool overlaps(const T& low, const T& high) const
-    {
-        if (this->high() < low)
-            return false;
-        if (high < this->low())
-            return false;
-        return true;
-    }
+  const T& Low() const { return low_; }
+  const T& High() const { return high_; }
+  const UserData& Data() const { return data_; }
 
-    bool overlaps(const PODInterval& other) const
-    {
-        return overlaps(other.low(), other.high());
-    }
+  bool Overlaps(const T& low, const T& high) const {
+    if (this->High() < low)
+      return false;
+    if (high < this->Low())
+      return false;
+    return true;
+  }
 
-    // Returns true if this interval is "less" than the other. The
-    // comparison is performed on the low endpoints of the intervals.
-    bool operator<(const PODInterval& other) const
-    {
-        return low() < other.low();
-    }
+  bool Overlaps(const PODInterval& other) const {
+    return Overlaps(other.Low(), other.High());
+  }
 
-    // Returns true if this interval is strictly equal to the other,
-    // including comparison of the user data.
-    bool operator==(const PODInterval& other) const
-    {
-        return (low() == other.low() && high() == other.high() && data() == other.data());
-    }
+  // Returns true if this interval is "less" than the other. The
+  // comparison is performed on the low endpoints of the intervals.
+  bool operator<(const PODInterval& other) const { return Low() < other.Low(); }
 
-    const T& maxHigh() const { return m_maxHigh; }
-    void setMaxHigh(const T& maxHigh) { m_maxHigh = maxHigh; }
+  // Returns true if this interval is strictly equal to the other,
+  // including comparison of the user data.
+  bool operator==(const PODInterval& other) const {
+    return (Low() == other.Low() && High() == other.High() &&
+            Data() == other.Data());
+  }
+
+  const T& MaxHigh() const { return max_high_; }
+  void SetMaxHigh(const T& max_high) { max_high_ = max_high; }
 
 #ifndef NDEBUG
-    // Support for printing PODIntervals.
-    String toString() const
-    {
-        StringBuilder builder;
-        builder.append("[PODInterval (");
-        builder.append(ValueToString<T>::toString(low()));
-        builder.append(", ");
-        builder.append(ValueToString<T>::toString(high()));
-        builder.append("), data=");
-        builder.append(ValueToString<UserData>::toString(data()));
-        builder.append(", maxHigh=");
-        builder.append(ValueToString<T>::toString(maxHigh()));
-        builder.append(']');
-        return builder.toString();
-    }
+  // Support for printing PODIntervals.
+  String ToString() const {
+    StringBuilder builder;
+    builder.Append("[PODInterval (");
+    builder.Append(ValueToString<T>::ToString(Low()));
+    builder.Append(", ");
+    builder.Append(ValueToString<T>::ToString(High()));
+    builder.Append("), data=");
+    builder.Append(ValueToString<UserData>::ToString(Data()));
+    builder.Append(", maxHigh=");
+    builder.Append(ValueToString<T>::ToString(MaxHigh()));
+    builder.Append(']');
+    return builder.ToString();
+  }
 #endif
 
-private:
-    T m_low;
-    T m_high;
-    GC_PLUGIN_IGNORE("crbug.com/513116")
-    UserData m_data;
-    T m_maxHigh;
+ private:
+  T low_;
+  T high_;
+  GC_PLUGIN_IGNORE("crbug.com/513116")
+  UserData data_;
+  T max_high_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PODInterval_h
+#endif  // PODInterval_h

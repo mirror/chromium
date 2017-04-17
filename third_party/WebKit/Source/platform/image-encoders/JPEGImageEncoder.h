@@ -31,47 +31,59 @@
 #ifndef JPEGImageEncoder_h
 #define JPEGImageEncoder_h
 
-#include "platform/geometry/IntSize.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
 #include <memory>
+#include "platform/geometry/IntSize.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 struct ImageDataBuffer;
 
 class PLATFORM_EXPORT JPEGImageEncoderState {
-    USING_FAST_MALLOC(JPEGImageEncoderState);
-    WTF_MAKE_NONCOPYABLE(JPEGImageEncoderState);
-public:
-    static std::unique_ptr<JPEGImageEncoderState> create(const IntSize& imageSize, const double& quality, Vector<unsigned char>* output);
-    JPEGImageEncoderState() {}
-    virtual ~JPEGImageEncoderState() {}
+  USING_FAST_MALLOC(JPEGImageEncoderState);
+  WTF_MAKE_NONCOPYABLE(JPEGImageEncoderState);
+
+ public:
+  static std::unique_ptr<JPEGImageEncoderState> Create(
+      const IntSize& image_size,
+      const double& quality,
+      Vector<unsigned char>* output);
+  JPEGImageEncoderState() {}
+  virtual ~JPEGImageEncoderState() {}
 };
 
 class PLATFORM_EXPORT JPEGImageEncoder {
-    STATIC_ONLY(JPEGImageEncoder);
-public:
-    enum {
-        ProgressiveEncodeFailed = -1
-    };
+  STATIC_ONLY(JPEGImageEncoder);
 
-    // Encode the image data with a compression quality in [0-100].
-    // Warning: Calling this method off the main thread may result in data race
-    // problems; instead, call JPEGImageEncoderState::create on main thread
-    // first followed by encodeWithPreInitializedState off the main thread will
-    // be safer.
-    static bool encode(const ImageDataBuffer&, const double& quality, Vector<unsigned char>*);
+ public:
+  enum { kProgressiveEncodeFailed = -1 };
 
-    static bool encodeWithPreInitializedState(std::unique_ptr<JPEGImageEncoderState>, const unsigned char*, int numRowsCompleted = 0);
-    static int progressiveEncodeRowsJpegHelper(JPEGImageEncoderState*, unsigned char*, int, const double, double);
-    static int computeCompressionQuality(const double& quality);
+  // Encode the image data with a compression quality in [0-100].
+  // Warning: Calling this method off the main thread may result in data race
+  // problems; instead, call JPEGImageEncoderState::create on main thread
+  // first followed by encodeWithPreInitializedState off the main thread will
+  // be safer.
+  static bool Encode(const ImageDataBuffer&,
+                     const double& quality,
+                     Vector<unsigned char>*);
 
-private:
-    // For callers: provide a reasonable compression quality default.
-    enum Quality { DefaultCompressionQuality = 92 };
+  static bool EncodeWithPreInitializedState(
+      std::unique_ptr<JPEGImageEncoderState>,
+      const unsigned char*,
+      int num_rows_completed = 0);
+  static int ProgressiveEncodeRowsJpegHelper(JPEGImageEncoderState*,
+                                             unsigned char*,
+                                             int,
+                                             const double,
+                                             double);
+  static int ComputeCompressionQuality(const double& quality);
+
+ private:
+  // For callers: provide a reasonable compression quality default.
+  enum Quality { kDefaultCompressionQuality = 92 };
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

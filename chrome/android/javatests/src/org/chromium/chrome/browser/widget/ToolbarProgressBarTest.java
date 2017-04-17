@@ -6,17 +6,18 @@ package org.chromium.chrome.browser.widget;
 
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
-import android.os.Environment;
-import android.test.suitebuilder.annotation.MediumTest;
+import android.support.test.filters.MediumTest;
 import android.view.View;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.Restriction;
-import org.chromium.chrome.R;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.test.ChromeActivityTestCaseBase;
 import org.chromium.chrome.test.util.ChromeRestriction;
+import org.chromium.content.browser.test.util.Criteria;
+import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.JavaScriptUtils;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer.OnPageFinishedHelper;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer.OnPageStartedHelper;
@@ -31,6 +32,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Tests related to the ToolbarProgressBar.
  */
+@RetryOnFailure
 public class ToolbarProgressBarTest extends ChromeActivityTestCaseBase<ChromeTabbedActivity> {
 
     static final int TEST_WAIT_TIME_MS = 60000;
@@ -54,8 +56,8 @@ public class ToolbarProgressBarTest extends ChromeActivityTestCaseBase<ChromeTab
     public void testToolbarTraversesScreenOnce()
             throws InterruptedException, TimeoutException {
 
-        EmbeddedTestServer testServer = EmbeddedTestServer.createAndStartFileServer(
-                getInstrumentation().getContext(), Environment.getExternalStorageDirectory());
+        EmbeddedTestServer testServer = EmbeddedTestServer.createAndStartServer(
+                getInstrumentation().getContext());
 
         final WebContents webContents =
                 getActivity().getActivityTab().getWebContents();
@@ -67,7 +69,7 @@ public class ToolbarProgressBarTest extends ChromeActivityTestCaseBase<ChromeTab
         OnPageFinishedHelper finishHelper = observer.getOnPageFinishedHelper();
 
         ToolbarProgressBar progressBar =
-                (ToolbarProgressBar) getActivity().findViewById(R.id.progress);
+                getActivity().getToolbarManager().getToolbarLayout().getProgressBar();
 
         // Reset progress bar start count in case anything else triggered it.
         progressBar.resetStartCountForTesting();
@@ -116,11 +118,12 @@ public class ToolbarProgressBarTest extends ChromeActivityTestCaseBase<ChromeTab
         final Object onAnimationEnd = new Object();
         final AtomicBoolean animationEnded = new AtomicBoolean(false);
         final AtomicReference<ToolbarProgressBar> progressBar =
-                new AtomicReference<ToolbarProgressBar>();
+                new AtomicReference<>();
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                progressBar.set((ToolbarProgressBar) getActivity().findViewById(R.id.progress));
+                progressBar.set(
+                        getActivity().getToolbarManager().getToolbarLayout().getProgressBar());
                 progressBar.get().setAlphaAnimationDuration(10);
                 progressBar.get().setHidingDelay(10);
                 progressBar.get().animate().setListener(new AnimatorListener() {
@@ -147,8 +150,12 @@ public class ToolbarProgressBarTest extends ChromeActivityTestCaseBase<ChromeTab
             }
         });
 
-        // Before the actual test, ensure that the progress bar is hidden.
-        assertNotSame(View.VISIBLE, progressBar.get().getVisibility());
+        CriteriaHelper.pollUiThread(new Criteria("Progress bar not hidden at start") {
+            @Override
+            public boolean isSatisfied() {
+                return progressBar.get().getVisibility() == View.INVISIBLE;
+            }
+        });
 
         // Make some progress and check that the progress bar is fully visible.
         animationEnded.set(false);

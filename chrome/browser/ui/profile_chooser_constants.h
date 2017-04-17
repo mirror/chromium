@@ -5,7 +5,11 @@
 #ifndef CHROME_BROWSER_UI_PROFILE_CHOOSER_CONSTANTS_H_
 #define CHROME_BROWSER_UI_PROFILE_CHOOSER_CONSTANTS_H_
 
+#include "third_party/skia/include/core/SkColor.h"
+
 namespace profiles {
+
+static const SkColor kHoverColor = SkColorSetRGB(0xEA, 0xEA, 0xEA);
 
 // Different views that can be displayed in the profile chooser bubble.
 enum BubbleViewMode {
@@ -23,8 +27,6 @@ enum BubbleViewMode {
   BUBBLE_VIEW_MODE_ACCOUNT_REMOVAL,
   // Shows a view for switching user.
   BUBBLE_VIEW_MODE_SWITCH_USER,
-  // Shows a "fast profile switcher" view.
-  BUBBLE_VIEW_MODE_FAST_PROFILE_CHOOSER,
 };
 
 // Tutorial modes that can be displayed in the profile chooser bubble.
@@ -37,8 +39,6 @@ enum TutorialMode {
   TUTORIAL_MODE_WELCOME_UPGRADE,
   // A tutorial card shown to display the signin errors.
   TUTORIAL_MODE_SHOW_ERROR,
-  // A tutorial card shown to inform users about right-click user switching.
-  TUTORIAL_MODE_RIGHT_CLICK_SWITCHING,
 };
 
 };  // namespace profiles

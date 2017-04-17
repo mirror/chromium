@@ -38,7 +38,9 @@ def _GetHeader(filename):
 
 
 def _CppHeader(filename):
-  guard = filename.replace('/', '_').replace('.', '_').upper() + '_'
+  guard = filename.upper() + '_'
+  for char in '/.+':
+    guard = guard.replace(char, '_')
   return '\n'.join([
     '',
     '#ifndef ' + guard,
@@ -49,16 +51,37 @@ def _CppHeader(filename):
   ])
 
 
-def _CppImplementation(filename):
+def _RemoveTestSuffix(filename):
   base, _ = os.path.splitext(filename)
-  include = '#include "' + base + '.h"'
-  return '\n'.join(['', include])
+  suffixes = [ '_test', '_unittest', '_browsertest' ]
+  for suffix in suffixes:
+    l = len(suffix)
+    if base[-l:] == suffix:
+      return base[:-l]
+  return base
+
+
+def _IsIOSFile(filename):
+  if os.path.splitext(os.path.basename(filename))[0].endswith('_ios'):
+    return True
+  if 'ios' in filename.split(os.path.sep):
+    return True
+  return False
+
+
+def _CppImplementation(filename):
+  return '\n#include "' + _RemoveTestSuffix(filename) + '.h"\n'
 
 
 def _ObjCppImplementation(filename):
-  base, _ = os.path.splitext(filename)
-  include = '#import "' + base + '.h"'
-  return '\n'.join(['', include])
+  implementation = '\n#import "' + _RemoveTestSuffix(filename) + '.h"\n'
+  if not _IsIOSFile(filename):
+    return implementation
+  implementation += '\n'
+  implementation += '#if !defined(__has_feature) || !__has_feature(objc_arc)\n'
+  implementation += '#error "This file requires ARC support."\n'
+  implementation += '#endif\n'
+  return implementation
 
 
 def _CreateFile(filename):

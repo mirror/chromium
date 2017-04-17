@@ -34,24 +34,24 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "modules/crypto/KeyAlgorithm.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class AesKeyAlgorithm : public KeyAlgorithm {
-public:
-    static AesKeyAlgorithm* create(const WebCryptoKeyAlgorithm&);
+ public:
+  static AesKeyAlgorithm* create(const WebCryptoKeyAlgorithm&);
 
-    unsigned short length();
+  unsigned short length();
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    explicit AesKeyAlgorithm(const WebCryptoKeyAlgorithm&);
+ private:
+  explicit AesKeyAlgorithm(const WebCryptoKeyAlgorithm&);
 };
 
 DEFINE_KEY_ALGORITHM_TYPE_CASTS(AesKeyAlgorithm);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

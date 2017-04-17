@@ -38,28 +38,28 @@ namespace blink {
 class HTMLElement;
 class HTMLSpanElement;
 
-// More accurately, this is ReplaceElementWithSpanPreservingChildrenAndAttributesCommand
+// More accurately, this is
+// ReplaceElementWithSpanPreservingChildrenAndAttributesCommand
 class ReplaceNodeWithSpanCommand final : public SimpleEditCommand {
-public:
-    static ReplaceNodeWithSpanCommand* create(HTMLElement* element)
-    {
-        return new ReplaceNodeWithSpanCommand(element);
-    }
+ public:
+  static ReplaceNodeWithSpanCommand* Create(HTMLElement* element) {
+    return new ReplaceNodeWithSpanCommand(element);
+  }
 
-    HTMLSpanElement* spanElement() { return m_spanElement.get(); }
+  HTMLSpanElement* SpanElement() { return span_element_.Get(); }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    explicit ReplaceNodeWithSpanCommand(HTMLElement*);
+ private:
+  explicit ReplaceNodeWithSpanCommand(HTMLElement*);
 
-    void doApply(EditingState*) override;
-    void doUnapply() override;
+  void DoApply(EditingState*) override;
+  void DoUnapply() override;
 
-    Member<HTMLElement> m_elementToReplace;
-    Member<HTMLSpanElement> m_spanElement;
+  Member<HTMLElement> element_to_replace_;
+  Member<HTMLSpanElement> span_element_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ReplaceNodeWithSpanCommand
+#endif  // ReplaceNodeWithSpanCommand

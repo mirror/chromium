@@ -14,18 +14,17 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
-#include "grit/components_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/models/simple_menu_model.h"
 
 #if defined(OS_CHROMEOS)
-#include "ash/common/session/session_state_delegate.h"
-#include "ash/common/wm_shell.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user_info.h"
+#include "components/user_manager/user_manager.h"
 #include "ui/base/l10n/l10n_util.h"
 #endif
 
@@ -115,10 +114,6 @@ void SystemMenuModelBuilder::BuildSystemMenuForAppOrPopupWindow(
   zoom_menu_contents_.reset(new ZoomMenuModel(&menu_delegate_));
   model->AddSubMenuWithStringId(IDC_ZOOM_MENU, IDS_ZOOM_MENU,
                                 zoom_menu_contents_.get());
-  encoding_menu_contents_.reset(new EncodingMenuModel(browser()));
-  model->AddSubMenuWithStringId(IDC_ENCODING_MENU,
-                                IDS_ENCODING_MENU,
-                                encoding_menu_contents_.get());
   if (browser()->is_app() && chrome::CanOpenTaskManager()) {
     model->AddSeparator(ui::NORMAL_SEPARATOR);
     model->AddItemWithStringId(IDC_TASK_MANAGER, IDS_TASK_MANAGER);
@@ -159,10 +154,10 @@ void SystemMenuModelBuilder::AppendTeleportMenu(ui::SimpleMenuModel* model) {
     return;
 
   // To show the menu we need at least two logged in users.
-  ash::SessionStateDelegate* delegate =
-      ash::WmShell::Get()->GetSessionStateDelegate();
-  int logged_in_users = delegate->NumberOfLoggedInUsers();
-  if (logged_in_users <= 1)
+  user_manager::UserManager* user_manager = user_manager::UserManager::Get();
+  const user_manager::UserList logged_in_users =
+      user_manager->GetLRULoggedInUsers();
+  if (logged_in_users.size() <= 1u)
     return;
 
   // If this does not belong to a profile or there is no window, or the window
@@ -177,15 +172,16 @@ void SystemMenuModelBuilder::AppendTeleportMenu(ui::SimpleMenuModel* model) {
     return;
 
   model->AddSeparator(ui::NORMAL_SEPARATOR);
-  DCHECK(logged_in_users <= 3);
-  for (int user_index = 1; user_index < logged_in_users; ++user_index) {
-    const user_manager::UserInfo* user_info = delegate->GetUserInfo(user_index);
+  DCHECK_LE(logged_in_users.size(), 3u);
+  for (size_t user_index = 1; user_index < logged_in_users.size();
+       ++user_index) {
+    const user_manager::UserInfo* user_info = logged_in_users[user_index];
     model->AddItem(
         user_index == 1 ? IDC_VISIT_DESKTOP_OF_LRU_USER_2
                         : IDC_VISIT_DESKTOP_OF_LRU_USER_3,
-        l10n_util::GetStringFUTF16(IDS_VISIT_DESKTOP_OF_LRU_USER,
-                                   user_info->GetDisplayName(),
-                                   base::ASCIIToUTF16(user_info->GetEmail())));
+        l10n_util::GetStringFUTF16(
+            IDS_VISIT_DESKTOP_OF_LRU_USER, user_info->GetDisplayName(),
+            base::ASCIIToUTF16(user_info->GetDisplayEmail())));
   }
 #endif
 }

@@ -9,16 +9,18 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/message_loop/message_loop.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/test_simple_task_runner.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/indexed_db/indexed_db_connection.h"
 #include "content/browser/indexed_db/indexed_db_context_impl.h"
 #include "content/browser/indexed_db/indexed_db_factory_impl.h"
 #include "content/browser/indexed_db/mock_indexed_db_callbacks.h"
 #include "content/browser/indexed_db/mock_indexed_db_database_callbacks.h"
-#include "content/browser/quota/mock_quota_manager_proxy.h"
+#include "content/public/test/test_browser_thread_bundle.h"
+#include "storage/browser/test/mock_quota_manager_proxy.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBDatabaseException.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBTypes.h"
@@ -43,9 +45,9 @@ class MockIDBFactory : public IndexedDBFactoryImpl {
     bool disk_full;
     leveldb::Status s;
     scoped_refptr<IndexedDBBackingStore> backing_store =
-        OpenBackingStore(origin, data_directory, NULL /* request_context */,
+        OpenBackingStore(origin, data_directory, nullptr /* request_context */,
                          &data_loss_info, &disk_full, &s);
-    EXPECT_EQ(blink::WebIDBDataLossNone, data_loss_info.status);
+    EXPECT_EQ(blink::kWebIDBDataLossNone, data_loss_info.status);
     return backing_store;
   }
 
@@ -72,7 +74,7 @@ class IndexedDBFactoryTest : public testing::Test {
     task_runner_ = new base::TestSimpleTaskRunner();
     quota_manager_proxy_ = new MockQuotaManagerProxy(nullptr, nullptr);
     context_ = new IndexedDBContextImpl(
-        base::FilePath(), NULL /* special_storage_policy */,
+        base::FilePath(), nullptr /* special_storage_policy */,
         quota_manager_proxy_.get(), task_runner_.get());
     idb_factory_ = new MockIDBFactory(context_.get());
   }
@@ -81,11 +83,8 @@ class IndexedDBFactoryTest : public testing::Test {
   }
 
  protected:
-  // For timers to post events.
-  base::MessageLoop loop_;
-
   MockIDBFactory* factory() const { return idb_factory_.get(); }
-  void clear_factory() { idb_factory_ = NULL; }
+  void clear_factory() { idb_factory_ = nullptr; }
   IndexedDBContextImpl* context() const { return context_.get(); }
 
  private:
@@ -93,6 +92,8 @@ class IndexedDBFactoryTest : public testing::Test {
   scoped_refptr<IndexedDBContextImpl> context_;
   scoped_refptr<MockIDBFactory> idb_factory_;
   scoped_refptr<MockQuotaManagerProxy> quota_manager_proxy_;
+  TestBrowserThreadBundle thread_bundle_;
+
   DISALLOW_COPY_AND_ASSIGN(IndexedDBFactoryTest);
 };
 
@@ -103,14 +104,14 @@ TEST_F(IndexedDBFactoryTest, BackingStoreLifetime) {
   base::ScopedTempDir temp_directory;
   ASSERT_TRUE(temp_directory.CreateUniqueTempDir());
   scoped_refptr<IndexedDBBackingStore> disk_store1 =
-      factory()->TestOpenBackingStore(origin1, temp_directory.path());
+      factory()->TestOpenBackingStore(origin1, temp_directory.GetPath());
 
   scoped_refptr<IndexedDBBackingStore> disk_store2 =
-      factory()->TestOpenBackingStore(origin1, temp_directory.path());
+      factory()->TestOpenBackingStore(origin1, temp_directory.GetPath());
   EXPECT_EQ(disk_store1.get(), disk_store2.get());
 
   scoped_refptr<IndexedDBBackingStore> disk_store3 =
-      factory()->TestOpenBackingStore(origin2, temp_directory.path());
+      factory()->TestOpenBackingStore(origin2, temp_directory.GetPath());
 
   factory()->TestCloseBackingStore(disk_store1.get());
   factory()->TestCloseBackingStore(disk_store3.get());
@@ -119,7 +120,7 @@ TEST_F(IndexedDBFactoryTest, BackingStoreLifetime) {
   EXPECT_FALSE(disk_store2->HasOneRef());
   EXPECT_TRUE(disk_store3->HasOneRef());
 
-  disk_store2 = NULL;
+  disk_store2 = nullptr;
   EXPECT_TRUE(disk_store1->HasOneRef());
 }
 
@@ -129,17 +130,17 @@ TEST_F(IndexedDBFactoryTest, BackingStoreLazyClose) {
   base::ScopedTempDir temp_directory;
   ASSERT_TRUE(temp_directory.CreateUniqueTempDir());
   scoped_refptr<IndexedDBBackingStore> store =
-      factory()->TestOpenBackingStore(origin, temp_directory.path());
+      factory()->TestOpenBackingStore(origin, temp_directory.GetPath());
 
   // Give up the local refptr so that the factory has the only
   // outstanding reference.
   IndexedDBBackingStore* store_ptr = store.get();
-  store = NULL;
+  store = nullptr;
   EXPECT_FALSE(store_ptr->close_timer()->IsRunning());
   factory()->TestReleaseBackingStore(store_ptr, false);
   EXPECT_TRUE(store_ptr->close_timer()->IsRunning());
 
-  factory()->TestOpenBackingStore(origin, temp_directory.path());
+  factory()->TestOpenBackingStore(origin, temp_directory.GetPath());
   EXPECT_FALSE(store_ptr->close_timer()->IsRunning());
   factory()->TestReleaseBackingStore(store_ptr, false);
   EXPECT_TRUE(store_ptr->close_timer()->IsRunning());
@@ -177,14 +178,14 @@ TEST_F(IndexedDBFactoryTest, MemoryBackingStoreLifetime) {
   EXPECT_FALSE(mem_store2->HasOneRef());  // mem_store1 and 2
   EXPECT_TRUE(mem_store3->HasOneRef());
 
-  mem_store2 = NULL;
+  mem_store2 = nullptr;
   EXPECT_TRUE(mem_store1->HasOneRef());
 }
 
 TEST_F(IndexedDBFactoryTest, RejectLongOrigins) {
   base::ScopedTempDir temp_directory;
   ASSERT_TRUE(temp_directory.CreateUniqueTempDir());
-  const base::FilePath base_path = temp_directory.path();
+  const base::FilePath base_path = temp_directory.GetPath();
 
   int limit = base::GetMaximumPathComponentLength(base_path);
   EXPECT_GT(limit, 0);
@@ -213,7 +214,7 @@ class DiskFullFactory : public IndexedDBFactoryImpl {
   scoped_refptr<IndexedDBBackingStore> OpenBackingStore(
       const Origin& origin,
       const base::FilePath& data_directory,
-      net::URLRequestContext* request_context,
+      scoped_refptr<net::URLRequestContextGetter> request_context_getter,
       IndexedDBDataLossInfo* data_loss_info,
       bool* disk_full,
       leveldb::Status* s) override {
@@ -228,10 +229,14 @@ class DiskFullFactory : public IndexedDBFactoryImpl {
 class LookingForQuotaErrorMockCallbacks : public IndexedDBCallbacks {
  public:
   LookingForQuotaErrorMockCallbacks()
-      : IndexedDBCallbacks(NULL, 0, 0), error_called_(false) {}
+      : IndexedDBCallbacks(nullptr,
+                           url::Origin(),
+                           nullptr,
+                           base::ThreadTaskRunnerHandle::Get()),
+        error_called_(false) {}
   void OnError(const IndexedDBDatabaseError& error) override {
     error_called_ = true;
-    EXPECT_EQ(blink::WebIDBDatabaseExceptionQuotaError, error.code());
+    EXPECT_EQ(blink::kWebIDBDatabaseExceptionQuotaError, error.code());
   }
   bool error_called() const { return error_called_; }
 
@@ -251,15 +256,14 @@ TEST_F(IndexedDBFactoryTest, QuotaErrorOnDiskFull) {
   scoped_refptr<LookingForQuotaErrorMockCallbacks> callbacks =
       new LookingForQuotaErrorMockCallbacks;
   scoped_refptr<IndexedDBDatabaseCallbacks> dummy_database_callbacks =
-      new IndexedDBDatabaseCallbacks(NULL, 0, 0);
+      new IndexedDBDatabaseCallbacks(nullptr, nullptr);
   const base::string16 name(ASCIIToUTF16("name"));
   std::unique_ptr<IndexedDBPendingConnection> connection(
-      new IndexedDBPendingConnection(callbacks, dummy_database_callbacks,
-                                     0, /* child_process_id */
-                                     2, /* transaction_id */
-                                     1 /* version */));
-  factory->Open(name, std::move(connection), NULL /* request_context */, origin,
-                temp_directory.path());
+      base::MakeUnique<IndexedDBPendingConnection>(
+          callbacks, dummy_database_callbacks, 0 /* child_process_id */,
+          2 /* transaction_id */, 1 /* version */));
+  factory->Open(name, std::move(connection), nullptr /* request_context */,
+                origin, temp_directory.GetPath());
   EXPECT_TRUE(callbacks->error_called());
 }
 
@@ -274,11 +278,12 @@ TEST_F(IndexedDBFactoryTest, BackingStoreReleasedOnForcedClose) {
       new MockIndexedDBDatabaseCallbacks());
   const int64_t transaction_id = 1;
   std::unique_ptr<IndexedDBPendingConnection> connection(
-      new IndexedDBPendingConnection(
-          callbacks, db_callbacks, 0, /* child_process_id */
-          transaction_id, IndexedDBDatabaseMetadata::DEFAULT_VERSION));
+      base::MakeUnique<IndexedDBPendingConnection>(
+          callbacks, db_callbacks, 0 /* child_process_id */, transaction_id,
+          IndexedDBDatabaseMetadata::DEFAULT_VERSION));
   factory()->Open(ASCIIToUTF16("db"), std::move(connection),
-                  NULL /* request_context */, origin, temp_directory.path());
+                  nullptr /* request_context */, origin,
+                  temp_directory.GetPath());
 
   EXPECT_TRUE(callbacks->connection());
 
@@ -302,11 +307,12 @@ TEST_F(IndexedDBFactoryTest, BackingStoreReleaseDelayedOnClose) {
       new MockIndexedDBDatabaseCallbacks());
   const int64_t transaction_id = 1;
   std::unique_ptr<IndexedDBPendingConnection> connection(
-      new IndexedDBPendingConnection(
-          callbacks, db_callbacks, 0, /* child_process_id */
-          transaction_id, IndexedDBDatabaseMetadata::DEFAULT_VERSION));
+      base::MakeUnique<IndexedDBPendingConnection>(
+          callbacks, db_callbacks, 0 /* child_process_id */, transaction_id,
+          IndexedDBDatabaseMetadata::DEFAULT_VERSION));
   factory()->Open(ASCIIToUTF16("db"), std::move(connection),
-                  NULL /* request_context */, origin, temp_directory.path());
+                  nullptr /* request_context */, origin,
+                  temp_directory.GetPath());
 
   EXPECT_TRUE(callbacks->connection());
   IndexedDBBackingStore* store =
@@ -341,8 +347,9 @@ TEST_F(IndexedDBFactoryTest, DeleteDatabaseClosesBackingStore) {
   const bool expect_connection = false;
   scoped_refptr<MockIndexedDBCallbacks> callbacks(
       new MockIndexedDBCallbacks(expect_connection));
-  factory()->DeleteDatabase(ASCIIToUTF16("db"), NULL /* request_context */,
-                            callbacks, origin, temp_directory.path());
+  factory()->DeleteDatabase(ASCIIToUTF16("db"), nullptr /* request_context */,
+                            callbacks, origin, temp_directory.GetPath(),
+                            false /* force_close */);
 
   EXPECT_TRUE(factory()->IsBackingStoreOpen(origin));
   EXPECT_TRUE(factory()->IsBackingStorePendingClose(origin));
@@ -365,8 +372,8 @@ TEST_F(IndexedDBFactoryTest, GetDatabaseNamesClosesBackingStore) {
   const bool expect_connection = false;
   scoped_refptr<MockIndexedDBCallbacks> callbacks(
       new MockIndexedDBCallbacks(expect_connection));
-  factory()->GetDatabaseNames(callbacks, origin, temp_directory.path(),
-                              NULL /* request_context */);
+  factory()->GetDatabaseNames(callbacks, origin, temp_directory.GetPath(),
+                              nullptr /* request_context */);
 
   EXPECT_TRUE(factory()->IsBackingStoreOpen(origin));
   EXPECT_TRUE(factory()->IsBackingStorePendingClose(origin));
@@ -389,11 +396,12 @@ TEST_F(IndexedDBFactoryTest, ForceCloseReleasesBackingStore) {
       new MockIndexedDBDatabaseCallbacks());
   const int64_t transaction_id = 1;
   std::unique_ptr<IndexedDBPendingConnection> connection(
-      new IndexedDBPendingConnection(
-          callbacks, db_callbacks, 0, /* child_process_id */
-          transaction_id, IndexedDBDatabaseMetadata::DEFAULT_VERSION));
+      base::MakeUnique<IndexedDBPendingConnection>(
+          callbacks, db_callbacks, 0 /* child_process_id */, transaction_id,
+          IndexedDBDatabaseMetadata::DEFAULT_VERSION));
   factory()->Open(ASCIIToUTF16("db"), std::move(connection),
-                  NULL /* request_context */, origin, temp_directory.path());
+                  nullptr /* request_context */, origin,
+                  temp_directory.GetPath());
 
   EXPECT_TRUE(callbacks->connection());
   EXPECT_TRUE(factory()->IsBackingStoreOpen(origin));
@@ -467,20 +475,22 @@ TEST_F(IndexedDBFactoryTest, DatabaseFailedOpen) {
 
   // Open at version 2, then close.
   {
-    scoped_refptr<MockIndexedDBCallbacks> callbacks(
+    scoped_refptr<UpgradeNeededCallbacks> callbacks(
         new UpgradeNeededCallbacks());
     std::unique_ptr<IndexedDBPendingConnection> connection(
-        new IndexedDBPendingConnection(callbacks, db_callbacks,
-                                       0, /* child_process_id */
-                                       transaction_id, db_version));
-    factory()->Open(db_name, std::move(connection), NULL /* request_context */,
-                    origin, temp_directory.path());
+        base::MakeUnique<IndexedDBPendingConnection>(
+            callbacks, db_callbacks, 0 /* child_process_id */, transaction_id,
+            db_version));
+    factory()->Open(db_name, std::move(connection),
+                    nullptr /* request_context */, origin,
+                    temp_directory.GetPath());
     EXPECT_TRUE(factory()->IsDatabaseOpen(origin, db_name));
 
     // Pump the message loop so the upgrade transaction can run.
     base::RunLoop().RunUntilIdle();
     EXPECT_TRUE(callbacks->connection());
-    callbacks->connection()->database()->Commit(transaction_id);
+    callbacks->connection()->database()->Commit(
+        callbacks->connection()->GetTransaction(transaction_id));
 
     callbacks->connection()->Close();
     EXPECT_FALSE(factory()->IsDatabaseOpen(origin, db_name));
@@ -491,11 +501,12 @@ TEST_F(IndexedDBFactoryTest, DatabaseFailedOpen) {
   {
     scoped_refptr<ErrorCallbacks> callbacks(new ErrorCallbacks());
     std::unique_ptr<IndexedDBPendingConnection> connection(
-        new IndexedDBPendingConnection(callbacks, db_callbacks,
-                                       0, /* child_process_id */
-                                       transaction_id, db_version - 1));
-    factory()->Open(db_name, std::move(connection), NULL /* request_context */,
-                    origin, temp_directory.path());
+        base::MakeUnique<IndexedDBPendingConnection>(
+            callbacks, db_callbacks, 0 /* child_process_id */, transaction_id,
+            db_version - 1));
+    factory()->Open(db_name, std::move(connection),
+                    nullptr /* request_context */, origin,
+                    temp_directory.GetPath());
     EXPECT_TRUE(callbacks->saw_error());
     EXPECT_FALSE(factory()->IsDatabaseOpen(origin, db_name));
   }

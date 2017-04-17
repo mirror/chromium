@@ -15,15 +15,17 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "gin/array_buffer.h"
 #include "gin/public/isolate_holder.h"
 #include "gin/v8_initializer.h"
 #include "mojo/common/data_pipe_utils.h"
 #include "mojo/edk/js/mojo_runner_delegate.h"
 #include "mojo/edk/js/tests/js_to_cpp.mojom.h"
-#include "mojo/edk/test/test_utils.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/lib/validation_errors.h"
 #include "mojo/public/cpp/system/core.h"
+#include "mojo/public/cpp/system/wait.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace mojo {
@@ -75,9 +77,7 @@ void CheckDataPipe(ScopedDataPipeConsumerHandle data_pipe_handle) {
 void CheckMessagePipe(MessagePipeHandle message_pipe_handle) {
   unsigned char buffer[100];
   uint32_t buffer_size = static_cast<uint32_t>(sizeof(buffer));
-  MojoResult result = Wait(
-      message_pipe_handle, MOJO_HANDLE_SIGNAL_READABLE,
-      MOJO_DEADLINE_INDEFINITE, nullptr);
+  MojoResult result = Wait(message_pipe_handle, MOJO_HANDLE_SIGNAL_READABLE);
   EXPECT_EQ(MOJO_RESULT_OK, result);
   result = ReadMessageRaw(
       message_pipe_handle, buffer, &buffer_size, 0, 0, 0);
@@ -387,11 +387,11 @@ class JsToCppTest : public testing::Test {
     cpp_side->set_run_loop(&run_loop_);
 
     js_to_cpp::JsSidePtr js_side;
-    auto js_side_proxy = GetProxy(&js_side);
+    auto js_side_proxy = MakeRequest(&js_side);
 
     cpp_side->set_js_side(js_side.get());
     js_to_cpp::CppSidePtr cpp_side_ptr;
-    cpp_side->Bind(GetProxy(&cpp_side_ptr));
+    cpp_side->Bind(MakeRequest(&cpp_side_ptr));
 
     js_side->SetCppSide(std::move(cpp_side_ptr));
 
@@ -403,7 +403,7 @@ class JsToCppTest : public testing::Test {
     gin::IsolateHolder::Initialize(gin::IsolateHolder::kStrictMode,
                                    gin::IsolateHolder::kStableV8Extras,
                                    gin::ArrayBufferAllocator::SharedInstance());
-    gin::IsolateHolder instance;
+    gin::IsolateHolder instance(base::ThreadTaskRunnerHandle::Get());
     MojoRunnerDelegate delegate;
     gin::ShellRunner runner(&delegate, instance.isolate());
     delegate.Start(&runner, js_side_proxy.PassMessagePipe().release().value(),
@@ -433,12 +433,18 @@ TEST_F(JsToCppTest, Echo) {
 }
 
 TEST_F(JsToCppTest, BitFlip) {
+  // These tests generate a lot of expected validation errors. Suppress logging.
+  mojo::internal::ScopedSuppressValidationErrorLoggingForTests log_suppression;
+
   BitFlipCppSideConnection cpp_side_connection;
   RunTest("mojo/edk/js/tests/js_to_cpp_tests", &cpp_side_connection);
   EXPECT_TRUE(cpp_side_connection.DidSucceed());
 }
 
 TEST_F(JsToCppTest, BackPointer) {
+  // These tests generate a lot of expected validation errors. Suppress logging.
+  mojo::internal::ScopedSuppressValidationErrorLoggingForTests log_suppression;
+
   BackPointerCppSideConnection cpp_side_connection;
   RunTest("mojo/edk/js/tests/js_to_cpp_tests", &cpp_side_connection);
   EXPECT_TRUE(cpp_side_connection.DidSucceed());

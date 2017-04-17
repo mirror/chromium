@@ -11,18 +11,16 @@
 namespace blink {
 
 class NonDocumentTypeChildNode {
-public:
-    static Element* previousElementSibling(Node& node)
-    {
-        return ElementTraversal::previousSibling(node);
-    }
+ public:
+  static Element* previousElementSibling(Node& node) {
+    return ElementTraversal::PreviousSibling(node);
+  }
 
-    static Element* nextElementSibling(Node& node)
-    {
-        return ElementTraversal::nextSibling(node);
-    }
+  static Element* nextElementSibling(Node& node) {
+    return ElementTraversal::NextSibling(node);
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NonDocumentTypeChildNode_h
+#endif  // NonDocumentTypeChildNode_h

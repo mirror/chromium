@@ -26,6 +26,12 @@
 
 namespace google_apis {
 
+// Callback used for requests that the server returns TeamDrive data
+// formatted into JSON value.
+typedef base::Callback<void(DriveApiErrorCode error,
+                            std::unique_ptr<TeamDriveList> entry)>
+    TeamDriveListCallback;
+
 // Callback used for requests that the server returns FileList data
 // formatted into JSON value.
 typedef base::Callback<void(DriveApiErrorCode error,
@@ -82,7 +88,7 @@ struct MultipartHttpResponse {
 
 // Splits multipart |response| into |parts|. Each part must be HTTP sub-response
 // of drive batch request. |content_type| is a value of Content-Type response
-// header. Returns true on succcess.
+// header. Returns true on success.
 bool ParseMultipartResponse(const std::string& content_type,
                             const std::string& response,
                             std::vector<MultipartHttpResponse>* parts);
@@ -464,6 +470,42 @@ class FilesCopyRequest : public DriveApiDataRequest<FileResource> {
   std::string title_;
 
   DISALLOW_COPY_AND_ASSIGN(FilesCopyRequest);
+};
+
+//========================== TeamDriveListRequest =============================
+
+// This class performs the request for fetching TeamDrive list.
+// The result may contain only first part of the result. The remaining result
+// should be able to be fetched by ContinueGetFileListRequest defined below,
+// or by TeamDriveListRequest with setting page token.
+// This request is mapped to
+// https://developers.google.com/drive/v2/teamdrives/
+class TeamDriveListRequest : public DriveApiDataRequest<TeamDriveList> {
+ public:
+  TeamDriveListRequest(RequestSender* sender,
+                       const DriveApiUrlGenerator& url_generator,
+                       const TeamDriveListCallback& callback);
+  ~TeamDriveListRequest() override;
+
+  // Optional parameter
+  int max_results() const { return max_results_; }
+  void set_max_results(int max_results) { max_results_ = max_results; }
+
+  const std::string& page_token() const { return page_token_; }
+  void set_page_token(const std::string& page_token) {
+    page_token_ = page_token;
+  }
+
+ protected:
+  // Overridden from DriveApiDataRequest.
+  GURL GetURLInternal() const override;
+
+ private:
+  const DriveApiUrlGenerator url_generator_;
+  int max_results_;
+  std::string page_token_;
+
+  DISALLOW_COPY_AND_ASSIGN(TeamDriveListRequest);
 };
 
 //============================= FilesListRequest =============================
@@ -1140,9 +1182,8 @@ class PermissionsInsertRequest : public EntryActionRequest {
 // Request that is operated by single BatchableDelegate.
 class SingleBatchableDelegateRequest : public UrlFetchRequestBase {
  public:
-  // The instance takes ownership of |delegate|.
   SingleBatchableDelegateRequest(RequestSender* sender,
-                                 BatchableDelegate* delegate);
+                                 std::unique_ptr<BatchableDelegate> delegate);
   ~SingleBatchableDelegateRequest() override;
 
  private:
@@ -1227,7 +1268,7 @@ class BatchUploadRequest : public UrlFetchRequestBase {
   typedef void* RequestID;
   // Obtains corresponding child entry of |request_id|. Returns NULL if the
   // entry is not found.
-  ScopedVector<BatchUploadChildEntry>::iterator GetChildEntry(
+  std::vector<std::unique_ptr<BatchUploadChildEntry>>::iterator GetChildEntry(
       RequestID request_id);
 
   // Called after child requests' |Prepare| method.
@@ -1241,7 +1282,7 @@ class BatchUploadRequest : public UrlFetchRequestBase {
 
   RequestSender* const sender_;
   const DriveApiUrlGenerator url_generator_;
-  ScopedVector<BatchUploadChildEntry> child_requests_;
+  std::vector<std::unique_ptr<BatchUploadChildEntry>> child_requests_;
 
   PrepareCallback prepare_callback_;
   bool committed_;

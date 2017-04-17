@@ -9,6 +9,7 @@
 
 #include <memory>
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/memory/ref_counted.h"
@@ -94,15 +95,18 @@ class TestBluetoothAdapter : public BluetoothAdapter {
       const CreateServiceCallback& callback,
       const CreateServiceErrorCallback& error_callback) override {}
 
-  void RegisterAudioSink(
-      const BluetoothAudioSink::Options& options,
-      const AcquiredCallback& callback,
-      const BluetoothAudioSink::ErrorCallback& error_callback) override {}
-
   void RegisterAdvertisement(
       std::unique_ptr<BluetoothAdvertisement::Data> advertisement_data,
       const CreateAdvertisementCallback& callback,
-      const CreateAdvertisementErrorCallback& error_callback) override {}
+      const AdvertisementErrorCallback& error_callback) override {}
+
+#if defined(OS_CHROMEOS) || defined(OS_LINUX)
+  void SetAdvertisingInterval(
+      const base::TimeDelta& min,
+      const base::TimeDelta& max,
+      const base::Closure& callback,
+      const AdvertisementErrorCallback& error_callback) override {}
+#endif
 
   BluetoothLocalGattService* GetGattService(
       const std::string& identifier) const override {
@@ -111,7 +115,7 @@ class TestBluetoothAdapter : public BluetoothAdapter {
 
   void TestErrorCallback() {}
 
-  ScopedVector<BluetoothDiscoverySession> discovery_sessions_;
+  std::vector<std::unique_ptr<BluetoothDiscoverySession>> discovery_sessions_;
 
   void TestOnStartDiscoverySession(
       std::unique_ptr<device::BluetoothDiscoverySession> discovery_session) {
@@ -430,8 +434,16 @@ TEST_F(BluetoothTest, ConstructDefaultAdapter) {
     LOG(WARNING) << "Bluetooth adapter not present; skipping unit test.";
     return;
   }
-  EXPECT_GT(adapter_->GetAddress().length(), 0u);
-  EXPECT_GT(adapter_->GetName().length(), 0u);
+
+  bool expected = false;
+// MacOS returns empty for name and address if the adapter is off.
+#if defined(OS_MACOSX)
+  expected = !adapter_->IsPowered();
+#endif  // defined(OS_MACOSX)
+
+  EXPECT_EQ(expected, adapter_->GetAddress().empty());
+  EXPECT_EQ(expected, adapter_->GetName().empty());
+
   EXPECT_TRUE(adapter_->IsPresent());
   // Don't know on test machines if adapter will be powered or not, but
   // the call should be safe to make and consistent.
@@ -621,6 +633,8 @@ TEST_F(BluetoothTest, DiscoverLowEnergyDeviceTwice) {
 
 #if defined(OS_ANDROID) || defined(OS_MACOSX)
 // Discovers a device, and then again with new Service UUIDs.
+// Makes sure we don't create another device when we've found the
+// device in the past.
 TEST_F(BluetoothTest, DiscoverLowEnergyDeviceWithUpdatedUUIDs) {
   if (!PlatformSupportsLowEnergy()) {
     LOG(WARNING) << "Low Energy Bluetooth unavailable, skipping unit test.";
@@ -633,12 +647,6 @@ TEST_F(BluetoothTest, DiscoverLowEnergyDeviceWithUpdatedUUIDs) {
   StartLowEnergyDiscoverySession();
   BluetoothDevice* device = SimulateLowEnergyDevice(1);
 
-  // Check the initial UUIDs:
-  EXPECT_TRUE(
-      ContainsValue(device->GetUUIDs(), BluetoothUUID(kTestUUIDGenericAccess)));
-  EXPECT_FALSE(ContainsValue(device->GetUUIDs(),
-                             BluetoothUUID(kTestUUIDImmediateAlert)));
-
   // Discover same device again with updated UUIDs:
   observer.Reset();
   SimulateLowEnergyDevice(2);
@@ -647,26 +655,12 @@ TEST_F(BluetoothTest, DiscoverLowEnergyDeviceWithUpdatedUUIDs) {
   EXPECT_EQ(1u, adapter_->GetDevices().size());
   EXPECT_EQ(device, observer.last_device());
 
-  // Expect new AND old UUIDs:
-  EXPECT_TRUE(
-      ContainsValue(device->GetUUIDs(), BluetoothUUID(kTestUUIDGenericAccess)));
-  EXPECT_TRUE(ContainsValue(device->GetUUIDs(),
-                            BluetoothUUID(kTestUUIDImmediateAlert)));
-
   // Discover same device again with empty UUIDs:
   observer.Reset();
   SimulateLowEnergyDevice(3);
   EXPECT_EQ(0, observer.device_added_count());
-#if defined(OS_MACOSX)
-  // TODO(scheib): Call DeviceChanged only if UUIDs change. crbug.com/547106
   EXPECT_EQ(1, observer.device_changed_count());
-#else
-  EXPECT_EQ(0, observer.device_changed_count());
-#endif
   EXPECT_EQ(1u, adapter_->GetDevices().size());
-
-  // Expect all UUIDs:
-  EXPECT_EQ(4u, device->GetUUIDs().size());
 }
 #endif  // defined(OS_ANDROID) || defined(OS_MACOSX)
 
@@ -689,7 +683,7 @@ TEST_F(BluetoothTest, DiscoverMultipleLowEnergyDevices) {
 }
 #endif  // defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
 
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) || defined(OS_LINUX) || defined(OS_CHROMEOS)
 TEST_F(BluetoothTest, TogglePowerFakeAdapter) {
   InitWithFakeAdapter();
   TestBluetoothAdapterObserver observer(adapter_);
@@ -710,7 +704,7 @@ TEST_F(BluetoothTest, TogglePowerFakeAdapter) {
   EXPECT_TRUE(adapter_->IsPowered());
   EXPECT_EQ(2, observer.powered_changed_count());
 }
-#endif  // defined(OS_ANDROID)
+#endif  // defined(OS_ANDROID) || defined(OS_LINUX) || defined(OS_CHROMEOS)
 
 #if defined(OS_ANDROID)
 TEST_F(BluetoothTest, TogglePowerBeforeScan) {
@@ -865,11 +859,197 @@ TEST_F(BluetoothTest, RemoveOutdatedDeviceGattConnect) {
   device->CreateGattConnection(GetGattConnectionCallback(Call::EXPECTED),
                                GetConnectErrorCallback(Call::NOT_EXPECTED));
   SimulateGattConnection(device);
+  base::RunLoop().RunUntilIdle();
   EXPECT_EQ(1u, adapter_->GetDevices().size());
   RemoveTimedOutDevices();
   EXPECT_EQ(0, observer.device_removed_count());
   EXPECT_EQ(1u, adapter_->GetDevices().size());
 }
 #endif  // defined(OS_ANDROID) || defined(OS_MACOSX)
+
+#if defined(OS_MACOSX)
+// Simulate two devices being connected before calling
+// RetrieveGattConnectedDevicesWithDiscoveryFilter() with no service filter.
+TEST_F(BluetoothTest, DiscoverConnectedLowEnergyDeviceWithNoFilter) {
+  if (!PlatformSupportsLowEnergy()) {
+    LOG(WARNING) << "Low Energy Bluetooth unavailable, skipping unit test.";
+    return;
+  }
+  InitWithFakeAdapter();
+  TestBluetoothAdapterObserver observer(adapter_);
+
+  SimulateConnectedLowEnergyDevice(ConnectedDeviceType::GENERIC_DEVICE);
+  SimulateConnectedLowEnergyDevice(ConnectedDeviceType::HEART_RATE_DEVICE);
+  BluetoothDiscoveryFilter discovery_filter(BLUETOOTH_TRANSPORT_LE);
+  std::unordered_map<BluetoothDevice*, BluetoothDevice::UUIDSet> result =
+      adapter_->RetrieveGattConnectedDevicesWithDiscoveryFilter(
+          discovery_filter);
+
+  EXPECT_EQ(2u, result.size());
+  for (const auto& pair : result) {
+    EXPECT_TRUE(adapter_->GetDevice(pair.first->GetAddress()));
+    EXPECT_TRUE(pair.second.empty());
+  }
+  EXPECT_EQ(BluetoothDevice::UUIDSet({BluetoothUUID(kTestUUIDGenericAccess)}),
+            RetrieveConnectedPeripheralServiceUUIDs());
+  EXPECT_EQ(2, observer.device_added_count());
+  EXPECT_EQ(2u, adapter_->GetDevices().size());
+}
+
+// Simulate two devices being connected before calling
+// RetrieveGattConnectedDevicesWithDiscoveryFilter() with one service filter.
+TEST_F(BluetoothTest, DiscoverConnectedLowEnergyDeviceWithFilter) {
+  if (!PlatformSupportsLowEnergy()) {
+    LOG(WARNING) << "Low Energy Bluetooth unavailable, skipping unit test.";
+    return;
+  }
+  InitWithFakeAdapter();
+  TestBluetoothAdapterObserver observer(adapter_);
+
+  SimulateConnectedLowEnergyDevice(ConnectedDeviceType::GENERIC_DEVICE);
+  SimulateConnectedLowEnergyDevice(ConnectedDeviceType::HEART_RATE_DEVICE);
+  BluetoothDiscoveryFilter discovery_filter(BLUETOOTH_TRANSPORT_LE);
+  device::BluetoothUUID heart_service_uuid =
+      device::BluetoothUUID(kTestUUIDHeartRate);
+  discovery_filter.AddUUID(heart_service_uuid);
+  std::unordered_map<BluetoothDevice*, BluetoothDevice::UUIDSet> result =
+      adapter_->RetrieveGattConnectedDevicesWithDiscoveryFilter(
+          discovery_filter);
+
+  EXPECT_EQ(1u, result.size());
+  for (const auto& pair : result) {
+    EXPECT_EQ(kTestDeviceAddress2, pair.first->GetAddress());
+    EXPECT_TRUE(adapter_->GetDevice(pair.first->GetAddress()));
+    EXPECT_EQ(BluetoothDevice::UUIDSet({heart_service_uuid}), pair.second);
+  }
+  EXPECT_EQ(BluetoothDevice::UUIDSet({heart_service_uuid}),
+            RetrieveConnectedPeripheralServiceUUIDs());
+  EXPECT_EQ(1, observer.device_added_count());
+  EXPECT_EQ(1u, adapter_->GetDevices().size());
+}
+
+// Simulate two devices being connected before calling
+// RetrieveGattConnectedDevicesWithDiscoveryFilter() with one service filter
+// that doesn't match.
+TEST_F(BluetoothTest, DiscoverConnectedLowEnergyDeviceWithWrongFilter) {
+  if (!PlatformSupportsLowEnergy()) {
+    LOG(WARNING) << "Low Energy Bluetooth unavailable, skipping unit test.";
+    return;
+  }
+  InitWithFakeAdapter();
+  TestBluetoothAdapterObserver observer(adapter_);
+
+  SimulateConnectedLowEnergyDevice(ConnectedDeviceType::GENERIC_DEVICE);
+  SimulateConnectedLowEnergyDevice(ConnectedDeviceType::HEART_RATE_DEVICE);
+  BluetoothDiscoveryFilter discovery_filter(BLUETOOTH_TRANSPORT_LE);
+  discovery_filter.AddUUID(device::BluetoothUUID(kTestUUIDLinkLoss));
+  std::unordered_map<BluetoothDevice*, BluetoothDevice::UUIDSet> result =
+      adapter_->RetrieveGattConnectedDevicesWithDiscoveryFilter(
+          discovery_filter);
+
+  EXPECT_TRUE(result.empty());
+  EXPECT_EQ(
+      BluetoothDevice::UUIDSet({device::BluetoothUUID(kTestUUIDLinkLoss)}),
+      RetrieveConnectedPeripheralServiceUUIDs());
+  EXPECT_EQ(0, observer.device_added_count());
+  EXPECT_EQ(0u, adapter_->GetDevices().size());
+}
+
+// Simulate two devices being connected before calling
+// RetrieveGattConnectedDevicesWithDiscoveryFilter() with two service filters
+// that both match.
+TEST_F(BluetoothTest, DiscoverConnectedLowEnergyDeviceWithTwoFilters) {
+  if (!PlatformSupportsLowEnergy()) {
+    LOG(WARNING) << "Low Energy Bluetooth unavailable, skipping unit test.";
+    return;
+  }
+  InitWithFakeAdapter();
+  TestBluetoothAdapterObserver observer(adapter_);
+
+  SimulateConnectedLowEnergyDevice(ConnectedDeviceType::GENERIC_DEVICE);
+  SimulateConnectedLowEnergyDevice(ConnectedDeviceType::HEART_RATE_DEVICE);
+  BluetoothDiscoveryFilter discovery_filter(BLUETOOTH_TRANSPORT_LE);
+  device::BluetoothUUID heart_service_uuid =
+      device::BluetoothUUID(kTestUUIDHeartRate);
+  discovery_filter.AddUUID(heart_service_uuid);
+  device::BluetoothUUID generic_service_uuid =
+      device::BluetoothUUID(kTestUUIDGenericAccess);
+  discovery_filter.AddUUID(generic_service_uuid);
+  std::unordered_map<BluetoothDevice*, BluetoothDevice::UUIDSet> result =
+      adapter_->RetrieveGattConnectedDevicesWithDiscoveryFilter(
+          discovery_filter);
+
+  EXPECT_EQ(2u, result.size());
+  for (const auto& pair : result) {
+    EXPECT_TRUE(adapter_->GetDevice(pair.first->GetAddress()));
+    if (pair.first->GetAddress() == kTestDeviceAddress2) {
+      EXPECT_EQ(
+          BluetoothDevice::UUIDSet({heart_service_uuid, generic_service_uuid}),
+          pair.second);
+    } else if (pair.first->GetAddress() == kTestDeviceAddress1) {
+      EXPECT_EQ(BluetoothDevice::UUIDSet({generic_service_uuid}), pair.second);
+    } else {
+      // Unknown device.
+      EXPECT_TRUE(false);
+    }
+  }
+  EXPECT_EQ(
+      BluetoothDevice::UUIDSet({generic_service_uuid, heart_service_uuid}),
+      RetrieveConnectedPeripheralServiceUUIDs());
+  EXPECT_EQ(2, observer.device_added_count());
+  EXPECT_EQ(2u, adapter_->GetDevices().size());
+}
+
+// Simulate two devices being connected before calling
+// RetrieveGattConnectedDevicesWithDiscoveryFilter() with one service filter
+// that one match device, and then
+// RetrieveGattConnectedDevicesWithDiscoveryFilter() again.
+TEST_F(BluetoothTest, DiscoverConnectedLowEnergyDeviceTwice) {
+  if (!PlatformSupportsLowEnergy()) {
+    LOG(WARNING) << "Low Energy Bluetooth unavailable, skipping unit test.";
+    return;
+  }
+  InitWithFakeAdapter();
+  TestBluetoothAdapterObserver observer(adapter_);
+
+  SimulateConnectedLowEnergyDevice(ConnectedDeviceType::GENERIC_DEVICE);
+  SimulateConnectedLowEnergyDevice(ConnectedDeviceType::HEART_RATE_DEVICE);
+  BluetoothDiscoveryFilter discovery_filter(BLUETOOTH_TRANSPORT_LE);
+  device::BluetoothUUID heart_service_uuid =
+      device::BluetoothUUID(kTestUUIDHeartRate);
+  discovery_filter.AddUUID(heart_service_uuid);
+  std::unordered_map<BluetoothDevice*, BluetoothDevice::UUIDSet> result =
+      adapter_->RetrieveGattConnectedDevicesWithDiscoveryFilter(
+          discovery_filter);
+
+  EXPECT_EQ(1u, result.size());
+  for (const auto& pair : result) {
+    EXPECT_EQ(kTestDeviceAddress2, pair.first->GetAddress());
+    EXPECT_TRUE(adapter_->GetDevice(pair.first->GetAddress()));
+    EXPECT_EQ(BluetoothDevice::UUIDSet({heart_service_uuid}), pair.second);
+  }
+  EXPECT_EQ(BluetoothDevice::UUIDSet({heart_service_uuid}),
+            RetrieveConnectedPeripheralServiceUUIDs());
+  EXPECT_EQ(1, observer.device_added_count());
+  EXPECT_EQ(1u, adapter_->GetDevices().size());
+
+  observer.Reset();
+  ResetRetrieveConnectedPeripheralServiceUUIDs();
+  result = adapter_->RetrieveGattConnectedDevicesWithDiscoveryFilter(
+      discovery_filter);
+
+  EXPECT_EQ(1u, result.size());
+  for (const auto& pair : result) {
+    EXPECT_EQ(kTestDeviceAddress2, pair.first->GetAddress());
+    EXPECT_TRUE(adapter_->GetDevice(pair.first->GetAddress()));
+    EXPECT_EQ(BluetoothDevice::UUIDSet({heart_service_uuid}), pair.second);
+  }
+  EXPECT_EQ(BluetoothDevice::UUIDSet({heart_service_uuid}),
+            RetrieveConnectedPeripheralServiceUUIDs());
+
+  EXPECT_EQ(0, observer.device_added_count());
+  EXPECT_EQ(1u, adapter_->GetDevices().size());
+}
+#endif  // defined(OS_MACOSX)
 
 }  // namespace device

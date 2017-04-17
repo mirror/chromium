@@ -9,13 +9,14 @@
 #include "core/CoreExport.h"
 #include "core/dom/custom/CustomElementDescriptor.h"
 #include "platform/heap/Handle.h"
-#include "wtf/HashSet.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/AtomicStringHash.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicStringHash.h"
 
 namespace blink {
 
+class Document;
 class Element;
 class ExceptionState;
 class HTMLElement;
@@ -23,67 +24,93 @@ class QualifiedName;
 
 class CORE_EXPORT CustomElementDefinition
     : public GarbageCollectedFinalized<CustomElementDefinition> {
-    WTF_MAKE_NONCOPYABLE(CustomElementDefinition);
-public:
-    CustomElementDefinition(const CustomElementDescriptor&);
-    CustomElementDefinition(const CustomElementDescriptor&,
-        const HashSet<AtomicString>&);
-    virtual ~CustomElementDefinition();
+  WTF_MAKE_NONCOPYABLE(CustomElementDefinition);
 
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  CustomElementDefinition(const CustomElementDescriptor&);
+  CustomElementDefinition(const CustomElementDescriptor&,
+                          const HashSet<AtomicString>&);
+  virtual ~CustomElementDefinition();
 
-    const CustomElementDescriptor& descriptor() { return m_descriptor; }
+  DECLARE_VIRTUAL_TRACE();
 
-    // TODO(yosin): To support Web Modules, introduce an abstract
-    // class |CustomElementConstructor| to allow us to have JavaScript
-    // and C++ constructors and ask the binding layer to convert
-    // |CustomElementConstructor| to |ScriptValue|. Replace
-    // |getConstructorForScript()| by |getConstructor() ->
-    // CustomElementConstructor|.
-    virtual ScriptValue getConstructorForScript() = 0;
+  const CustomElementDescriptor& Descriptor() { return descriptor_; }
 
-    using ConstructionStack = HeapVector<Member<Element>, 1>;
-    ConstructionStack& constructionStack()
-    {
-        return m_constructionStack;
-    }
+  // TODO(yosin): To support Web Modules, introduce an abstract
+  // class |CustomElementConstructor| to allow us to have JavaScript
+  // and C++ constructors and ask the binding layer to convert
+  // |CustomElementConstructor| to |ScriptValue|. Replace
+  // |getConstructorForScript()| by |getConstructor() ->
+  // CustomElementConstructor|.
+  virtual ScriptValue GetConstructorForScript() = 0;
 
-    virtual HTMLElement* createElementSync(Document&, const QualifiedName&) = 0;
-    virtual HTMLElement* createElementSync(Document&, const QualifiedName&, ExceptionState&) = 0;
-    HTMLElement* createElementAsync(Document&, const QualifiedName&);
+  using ConstructionStack = HeapVector<Member<Element>, 1>;
+  ConstructionStack& GetConstructionStack() { return construction_stack_; }
 
-    void upgrade(Element*);
+  HTMLElement* CreateElementForConstructor(Document&);
+  virtual HTMLElement* CreateElementSync(Document&, const QualifiedName&) = 0;
+  HTMLElement* CreateElementAsync(Document&, const QualifiedName&);
 
-    virtual bool hasConnectedCallback() const = 0;
-    virtual bool hasDisconnectedCallback() const = 0;
-    bool hasAttributeChangedCallback(const QualifiedName&) const;
-    bool hasStyleAttributeChangedCallback() const;
+  void Upgrade(Element*);
 
-    virtual void runConnectedCallback(Element*) = 0;
-    virtual void runDisconnectedCallback(Element*) = 0;
-    virtual void runAttributeChangedCallback(Element*, const QualifiedName&,
-        const AtomicString& oldValue, const AtomicString& newValue) = 0;
+  virtual bool HasConnectedCallback() const = 0;
+  virtual bool HasDisconnectedCallback() const = 0;
+  virtual bool HasAdoptedCallback() const = 0;
+  bool HasAttributeChangedCallback(const QualifiedName&) const;
+  bool HasStyleAttributeChangedCallback() const;
 
-    void enqueueUpgradeReaction(Element*);
-    void enqueueConnectedCallback(Element*);
-    void enqueueDisconnectedCallback(Element*);
-    void enqueueAttributeChangedCallback(Element*, const QualifiedName&,
-        const AtomicString& oldValue, const AtomicString& newValue);
+  virtual void RunConnectedCallback(Element*) = 0;
+  virtual void RunDisconnectedCallback(Element*) = 0;
+  virtual void RunAdoptedCallback(Element*,
+                                  Document* old_owner,
+                                  Document* new_owner) = 0;
+  virtual void RunAttributeChangedCallback(Element*,
+                                           const QualifiedName&,
+                                           const AtomicString& old_value,
+                                           const AtomicString& new_value) = 0;
 
-protected:
-    virtual bool runConstructor(Element*) = 0;
+  void EnqueueUpgradeReaction(Element*);
+  void EnqueueConnectedCallback(Element*);
+  void EnqueueDisconnectedCallback(Element*);
+  void EnqueueAdoptedCallback(Element*,
+                              Document* old_owner,
+                              Document* new_owner);
+  void EnqueueAttributeChangedCallback(Element*,
+                                       const QualifiedName&,
+                                       const AtomicString& old_value,
+                                       const AtomicString& new_value);
 
-    static void checkConstructorResult(Element*, Document&, const QualifiedName&, ExceptionState&);
+  class CORE_EXPORT ConstructionStackScope final {
+    STACK_ALLOCATED();
+    DISALLOW_COPY_AND_ASSIGN(ConstructionStackScope);
 
-private:
-    const CustomElementDescriptor m_descriptor;
-    ConstructionStack m_constructionStack;
-    HashSet<AtomicString> m_observedAttributes;
-    bool m_hasStyleAttributeChangedCallback;
+   public:
+    ConstructionStackScope(CustomElementDefinition*, Element*);
+    ~ConstructionStackScope();
 
-    void enqueueAttributeChangedCallbackForAllAttributes(Element*);
+   private:
+    ConstructionStack& construction_stack_;
+    Member<Element> element_;
+    size_t depth_;
+  };
+
+ protected:
+  virtual bool RunConstructor(Element*) = 0;
+
+  static void CheckConstructorResult(Element*,
+                                     Document&,
+                                     const QualifiedName&,
+                                     ExceptionState&);
+
+ private:
+  const CustomElementDescriptor descriptor_;
+  ConstructionStack construction_stack_;
+  HashSet<AtomicString> observed_attributes_;
+  bool has_style_attribute_changed_callback_;
+
+  void EnqueueAttributeChangedCallbackForAllAttributes(Element*);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CustomElementDefinition_h
+#endif  // CustomElementDefinition_h

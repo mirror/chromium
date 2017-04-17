@@ -21,12 +21,12 @@
 #include "ui/gfx/geometry/size.h"
 
 @class FocusTracker;
-class SkBitmap;
 @class WebDragDest;
 @class WebDragSource;
 
 namespace content {
 class PopupMenuHelper;
+class RenderWidgetHostViewMac;
 class WebContentsImpl;
 class WebContentsViewDelegate;
 class WebContentsViewMac;
@@ -75,6 +75,7 @@ class WebContentsViewMac : public WebContentsView,
   gfx::NativeView GetNativeView() const override;
   gfx::NativeView GetContentNativeView() const override;
   gfx::NativeWindow GetTopLevelNativeWindow() const override;
+  void GetScreenInfo(ScreenInfo* screen_info) const override;
   void GetContainerBounds(gfx::Rect* out) const override;
   void SizeContents(const gfx::Size& size) override;
   void Focus() override;
@@ -115,7 +116,8 @@ class WebContentsViewMac : public WebContentsView,
                      blink::WebDragOperationsMask allowed_operations,
                      const gfx::ImageSkia& image,
                      const gfx::Vector2d& image_offset,
-                     const DragEventSourceInfo& event_info) override;
+                     const DragEventSourceInfo& event_info,
+                     RenderWidgetHostImpl* source_rwh) override;
   void UpdateDragCursor(blink::WebDragOperation operation) override;
   void GotFocus() override;
   void TakeFocus(bool reverse) override;
@@ -126,6 +128,13 @@ class WebContentsViewMac : public WebContentsView,
 
   WebContentsImpl* web_contents() { return web_contents_; }
   WebContentsViewDelegate* delegate() { return delegate_.get(); }
+
+  using RenderWidgetHostViewCreateFunction =
+      RenderWidgetHostViewMac* (*)(RenderWidgetHost*, bool);
+
+  // Used to override the creation of RenderWidgetHostViews in tests.
+  CONTENT_EXPORT static void InstallCreateHookForTests(
+      RenderWidgetHostViewCreateFunction create_render_widget_host_view);
 
  private:
   // Returns the fullscreen view, if one exists; otherwise, returns the content

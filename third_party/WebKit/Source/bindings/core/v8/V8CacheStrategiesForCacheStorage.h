@@ -8,12 +8,12 @@
 namespace blink {
 
 enum class V8CacheStrategiesForCacheStorage {
-    Default,
-    None,
-    Normal,
-    Aggressive,
+  kDefault,
+  kNone,
+  kNormal,
+  kAggressive,
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V8CacheStrategiesForCacheStorage_h
+#endif  // V8CacheStrategiesForCacheStorage_h

@@ -11,21 +11,25 @@
 
 namespace blink {
 
-DOMException* CacheStorageError::createException(WebServiceWorkerCacheError webError)
-{
-    switch (webError) {
-    case WebServiceWorkerCacheErrorNotImplemented:
-        return DOMException::create(NotSupportedError, "Method is not implemented.");
-    case WebServiceWorkerCacheErrorNotFound:
-        return DOMException::create(NotFoundError, "Entry was not found.");
-    case WebServiceWorkerCacheErrorExists:
-        return DOMException::create(InvalidAccessError, "Entry already exists.");
-    case WebServiceWorkerCacheErrorQuotaExceeded:
-        return DOMException::create(QuotaExceededError, "Quota exceeded.");
-    default:
-        ASSERT_NOT_REACHED();
-        return DOMException::create(NotSupportedError, "Unknown error.");
-    }
+DOMException* CacheStorageError::CreateException(
+    WebServiceWorkerCacheError web_error) {
+  switch (web_error) {
+    case kWebServiceWorkerCacheErrorNotImplemented:
+      return DOMException::Create(kNotSupportedError,
+                                  "Method is not implemented.");
+    case kWebServiceWorkerCacheErrorNotFound:
+      return DOMException::Create(kNotFoundError, "Entry was not found.");
+    case kWebServiceWorkerCacheErrorExists:
+      return DOMException::Create(kInvalidAccessError, "Entry already exists.");
+    case kWebServiceWorkerCacheErrorQuotaExceeded:
+      return DOMException::Create(kQuotaExceededError, "Quota exceeded.");
+    case kWebServiceWorkerCacheErrorCacheNameNotFound:
+      return DOMException::Create(kNotFoundError, "Cache was not found.");
+    case kWebServiceWorkerCacheErrorTooLarge:
+      return DOMException::Create(kAbortError, "Operation too large.");
+  }
+  NOTREACHED();
+  return nullptr;
 }
 
-} // namespace blink
+}  // namespace blink

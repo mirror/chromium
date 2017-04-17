@@ -5,20 +5,56 @@
 #include "components/autofill/core/browser/autofill_metrics.h"
 
 #include <algorithm>
+#include <utility>
+#include <vector>
 
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/metrics/user_metrics.h"
 #include "base/time/time.h"
+#include "components/autofill/core/browser/autofill_experiments.h"
+#include "components/autofill/core/browser/autofill_field.h"
 #include "components/autofill/core/browser/autofill_type.h"
 #include "components/autofill/core/browser/form_structure.h"
 #include "components/autofill/core/common/form_data.h"
+#include "components/ukm/ukm_entry_builder.h"
+
+namespace internal {
+const char kUKMCardUploadDecisionEntryName[] = "Autofill.CardUploadDecision";
+const char kUKMCardUploadDecisionMetricName[] = "UploadDecision";
+const char kUKMDeveloperEngagementEntryName[] = "Autofill.DeveloperEngagement";
+const char kUKMDeveloperEngagementMetricName[] = "DeveloperEngagement";
+const char kUKMMillisecondsSinceFormLoadedMetricName[] =
+    "MillisecondsSinceFormLoaded";
+const char kUKMInteractedWithFormEntryName[] = "Autofill.InteractedWithForm";
+const char kUKMIsForCreditCardMetricName[] = "IsForCreditCard";
+const char kUKMLocalRecordTypeCountMetricName[] = "LocalRecordTypeCount";
+const char kUKMServerRecordTypeCountMetricName[] = "ServerRecordTypeCount";
+const char kUKMSuggestionsShownEntryName[] = "Autofill.SuggestionsShown";
+const char kUKMSelectedMaskedServerCardEntryName[] =
+    "Autofill.SelectedMaskedServerCard";
+const char kUKMSuggestionFilledEntryName[] = "Autofill.SuggestionFilled";
+const char kUKMRecordTypeMetricName[] = "RecordType";
+const char kUKMTextFieldDidChangeEntryName[] = "Autofill.TextFieldDidChange";
+const char kUKMFieldTypeGroupMetricName[] = "FieldTypeGroup";
+const char kUKMHeuristicTypeMetricName[] = "HeuristicType";
+const char kUKMServerTypeMetricName[] = "ServerType";
+const char kUKMHtmlFieldTypeMetricName[] = "HtmlFieldType";
+const char kUKMHtmlFieldModeMetricName[] = "HtmlFieldMode";
+const char kUKMIsAutofilledMetricName[] = "IsAutofilled";
+const char kUKMIsEmptyMetricName[] = "IsEmpty";
+const char kUKMFormSubmittedEntryName[] = "Autofill.AutofillFormSubmitted";
+const char kUKMAutofillFormSubmittedStateMetricName[] =
+    "AutofillFormSubmittedState";
+}  // namespace internal
 
 namespace autofill {
 
 namespace {
 
+// Note: if adding an enum value here, update the corresponding description for
+// AutofillTypeQualityByFieldType in histograms.xml.
 enum FieldTypeGroupForMetrics {
   GROUP_AMBIGUOUS = 0,
   GROUP_NAME,
@@ -40,6 +76,7 @@ enum FieldTypeGroupForMetrics {
   GROUP_ADDRESS_LINE_3,
   GROUP_USERNAME,
   GROUP_STREET_ADDRESS,
+  GROUP_CREDIT_CARD_VERIFICATION,
   NUM_FIELD_TYPE_GROUPS_FOR_METRICS
 };
 
@@ -116,7 +153,7 @@ int GetFieldTypeGroupMetric(ServerFieldType field_type,
           group = GROUP_ADDRESS_COUNTRY;
           break;
         default:
-          NOTREACHED();
+          NOTREACHED() << field_type << " has no group assigned (ambiguous)";
           group = GROUP_AMBIGUOUS;
           break;
       }
@@ -151,8 +188,11 @@ int GetFieldTypeGroupMetric(ServerFieldType field_type,
         case CREDIT_CARD_EXP_DATE_4_DIGIT_YEAR:
           group = GROUP_CREDIT_CARD_DATE;
           break;
+        case CREDIT_CARD_VERIFICATION_CODE:
+          group = GROUP_CREDIT_CARD_VERIFICATION;
+          break;
         default:
-          NOTREACHED();
+          NOTREACHED() << field_type << " has no group assigned (ambiguous)";
           group = GROUP_AMBIGUOUS;
           break;
       }
@@ -258,9 +298,22 @@ void AutofillMetrics::LogCardUploadDecisionMetric(
 }
 
 // static
-void AutofillMetrics::LogCreditCardInfoBarMetric(InfoBarMetric metric) {
+void AutofillMetrics::LogCreditCardInfoBarMetric(InfoBarMetric metric,
+                                                 bool is_uploading) {
   DCHECK_LT(metric, NUM_INFO_BAR_METRICS);
-  UMA_HISTOGRAM_ENUMERATION("Autofill.CreditCardInfoBar", metric,
+  if (is_uploading) {
+    UMA_HISTOGRAM_ENUMERATION("Autofill.CreditCardInfoBar.Server", metric,
+                              NUM_INFO_BAR_METRICS);
+  } else {
+    UMA_HISTOGRAM_ENUMERATION("Autofill.CreditCardInfoBar.Local", metric,
+                              NUM_INFO_BAR_METRICS);
+  }
+}
+
+// static
+void AutofillMetrics::LogCreditCardFillingInfoBarMetric(InfoBarMetric metric) {
+  DCHECK_LT(metric, NUM_INFO_BAR_METRICS);
+  UMA_HISTOGRAM_ENUMERATION("Autofill.CreditCardFillingInfoBar", metric,
                             NUM_INFO_BAR_METRICS);
 }
 
@@ -522,6 +575,16 @@ void AutofillMetrics::LogStoredLocalCreditCardCount(size_t num_local_cards) {
 }
 
 // static
+void AutofillMetrics::LogStoredServerCreditCardCounts(
+    size_t num_masked_cards,
+    size_t num_unmasked_cards) {
+  UMA_HISTOGRAM_COUNTS_1000("Autofill.StoredServerCreditCardCount.Masked",
+                            num_masked_cards);
+  UMA_HISTOGRAM_COUNTS_1000("Autofill.StoredServerCreditCardCount.Unmasked",
+                            num_unmasked_cards);
+}
+
+// static
 void AutofillMetrics::LogNumberOfProfilesAtAutofillableFormSubmission(
     size_t num_profiles) {
   UMA_HISTOGRAM_COUNTS(
@@ -578,7 +641,8 @@ void AutofillMetrics::LogProfileActionOnFormSubmitted(
 
 // static
 void AutofillMetrics::LogAutofillFormSubmittedState(
-    AutofillFormSubmittedState state) {
+    AutofillFormSubmittedState state,
+    AutofillMetrics::FormInteractionsUkmLogger* form_interactions_ukm_logger) {
   UMA_HISTOGRAM_ENUMERATION("Autofill.FormSubmittedState", state,
                             AUTOFILL_FORM_SUBMITTED_STATE_ENUM_SIZE);
 
@@ -612,6 +676,7 @@ void AutofillMetrics::LogAutofillFormSubmittedState(
       NOTREACHED();
       break;
   }
+  form_interactions_ukm_logger->LogFormSubmitted(state);
 }
 
 // static
@@ -646,10 +711,78 @@ void AutofillMetrics::LogIsQueriedCreditCardFormSecure(bool is_secure) {
   UMA_HISTOGRAM_BOOLEAN("Autofill.QueriedCreditCardFormIsSecure", is_secure);
 }
 
-AutofillMetrics::FormEventLogger::FormEventLogger(bool is_for_credit_card)
+// static
+void AutofillMetrics::LogWalletAddressConversionType(
+    WalletAddressConversionType type) {
+  DCHECK_LT(type, NUM_CONVERTED_ADDRESS_CONVERSION_TYPES);
+  UMA_HISTOGRAM_ENUMERATION("Autofill.WalletAddressConversionType", type,
+                            NUM_CONVERTED_ADDRESS_CONVERSION_TYPES);
+}
+
+// static
+void AutofillMetrics::LogShowedHttpNotSecureExplanation() {
+  base::RecordAction(
+      base::UserMetricsAction("Autofill_ShowedHttpNotSecureExplanation"));
+}
+
+// static
+void AutofillMetrics::LogCardUploadDecisionUkm(
+    ukm::UkmService* ukm_service,
+    const GURL& url,
+    AutofillMetrics::CardUploadDecisionMetric upload_decision) {
+  if (upload_decision >= AutofillMetrics::NUM_CARD_UPLOAD_DECISION_METRICS)
+    return;
+
+  const std::vector<std::pair<const char*, int>> metrics = {
+      {internal::kUKMCardUploadDecisionMetricName,
+       static_cast<int>(upload_decision)}};
+  LogUkm(ukm_service, url, internal::kUKMCardUploadDecisionEntryName, metrics);
+}
+
+// static
+void AutofillMetrics::LogDeveloperEngagementUkm(
+    ukm::UkmService* ukm_service,
+    const GURL& url,
+    std::vector<AutofillMetrics::DeveloperEngagementMetric> metrics) {
+  std::vector<std::pair<const char*, int>> form_structure_metrics;
+  for (const auto it : metrics)
+    form_structure_metrics.push_back(
+        {internal::kUKMDeveloperEngagementMetricName, static_cast<int>(it)});
+
+  LogUkm(ukm_service, url, internal::kUKMDeveloperEngagementEntryName,
+         form_structure_metrics);
+}
+
+// static
+bool AutofillMetrics::LogUkm(
+    ukm::UkmService* ukm_service,
+    const GURL& url,
+    const std::string& ukm_entry_name,
+    const std::vector<std::pair<const char*, int>>& metrics) {
+  if (!IsUkmLoggingEnabled() || !ukm_service || !url.is_valid() ||
+      metrics.empty()) {
+    return false;
+  }
+
+  int32_t source_id = ukm_service->GetNewSourceID();
+  ukm_service->UpdateSourceURL(source_id, url);
+  std::unique_ptr<ukm::UkmEntryBuilder> builder =
+      ukm_service->GetEntryBuilder(source_id, ukm_entry_name.c_str());
+
+  for (auto it = metrics.begin(); it != metrics.end(); ++it) {
+    builder->AddMetric(it->first, it->second);
+  }
+
+  return true;
+}
+
+AutofillMetrics::FormEventLogger::FormEventLogger(
+    bool is_for_credit_card,
+    AutofillMetrics::FormInteractionsUkmLogger* form_interactions_ukm_logger)
     : is_for_credit_card_(is_for_credit_card),
-      is_server_data_available_(false),
-      is_local_data_available_(false),
+      server_record_type_count_(0),
+      local_record_type_count_(0),
+      is_context_secure_(false),
       has_logged_interacted_(false),
       has_logged_suggestions_shown_(false),
       has_logged_masked_server_card_suggestion_selected_(false),
@@ -657,12 +790,15 @@ AutofillMetrics::FormEventLogger::FormEventLogger(bool is_for_credit_card)
       has_logged_will_submit_(false),
       has_logged_submitted_(false),
       logged_suggestion_filled_was_server_data_(false),
-      logged_suggestion_filled_was_masked_server_card_(false) {
-}
+      logged_suggestion_filled_was_masked_server_card_(false),
+      form_interactions_ukm_logger_(form_interactions_ukm_logger) {}
 
 void AutofillMetrics::FormEventLogger::OnDidInteractWithAutofillableForm() {
   if (!has_logged_interacted_) {
     has_logged_interacted_ = true;
+    form_interactions_ukm_logger_->LogInteractedWithForm(
+        is_for_credit_card_, local_record_type_count_,
+        server_record_type_count_);
     Log(AutofillMetrics::FORM_EVENT_INTERACTED_ONCE);
   }
 }
@@ -687,6 +823,8 @@ void AutofillMetrics::FormEventLogger::OnDidPollSuggestions(
 }
 
 void AutofillMetrics::FormEventLogger::OnDidShowSuggestions() {
+  form_interactions_ukm_logger_->LogSuggestionsShown();
+
   Log(AutofillMetrics::FORM_EVENT_SUGGESTIONS_SHOWN);
   if (!has_logged_suggestions_shown_) {
     has_logged_suggestions_shown_ = true;
@@ -704,17 +842,22 @@ void AutofillMetrics::FormEventLogger::OnDidShowSuggestions() {
 
 void AutofillMetrics::FormEventLogger::OnDidSelectMaskedServerCardSuggestion() {
   DCHECK(is_for_credit_card_);
+  form_interactions_ukm_logger_->LogSelectedMaskedServerCard();
+
   Log(AutofillMetrics::FORM_EVENT_MASKED_SERVER_CARD_SUGGESTION_SELECTED);
   if (!has_logged_masked_server_card_suggestion_selected_) {
     has_logged_masked_server_card_suggestion_selected_ = true;
-    Log(AutofillMetrics
-            ::FORM_EVENT_MASKED_SERVER_CARD_SUGGESTION_SELECTED_ONCE);
+    Log(AutofillMetrics::
+            FORM_EVENT_MASKED_SERVER_CARD_SUGGESTION_SELECTED_ONCE);
   }
 }
 
 void AutofillMetrics::FormEventLogger::OnDidFillSuggestion(
     const CreditCard& credit_card) {
   DCHECK(is_for_credit_card_);
+  form_interactions_ukm_logger_->LogDidFillSuggestion(
+      static_cast<int>(credit_card.record_type()));
+
   if (credit_card.record_type() == CreditCard::MASKED_SERVER_CARD)
     Log(AutofillMetrics::FORM_EVENT_MASKED_SERVER_CARD_SUGGESTION_FILLED);
   else if (credit_card.record_type() == CreditCard::FULL_SERVER_CARD)
@@ -730,8 +873,8 @@ void AutofillMetrics::FormEventLogger::OnDidFillSuggestion(
     logged_suggestion_filled_was_masked_server_card_ =
         credit_card.record_type() == CreditCard::MASKED_SERVER_CARD;
     if (credit_card.record_type() == CreditCard::MASKED_SERVER_CARD) {
-      Log(AutofillMetrics
-              ::FORM_EVENT_MASKED_SERVER_CARD_SUGGESTION_FILLED_ONCE);
+      Log(AutofillMetrics::
+              FORM_EVENT_MASKED_SERVER_CARD_SUGGESTION_FILLED_ONCE);
     } else if (credit_card.record_type() == CreditCard::FULL_SERVER_CARD) {
       Log(AutofillMetrics::FORM_EVENT_SERVER_SUGGESTION_FILLED_ONCE);
     } else {
@@ -746,6 +889,9 @@ void AutofillMetrics::FormEventLogger::OnDidFillSuggestion(
 void AutofillMetrics::FormEventLogger::OnDidFillSuggestion(
     const AutofillProfile& profile) {
   DCHECK(!is_for_credit_card_);
+  form_interactions_ukm_logger_->LogDidFillSuggestion(
+      static_cast<int>(profile.record_type()));
+
   if (profile.record_type() == AutofillProfile::SERVER_PROFILE)
     Log(AutofillMetrics::FORM_EVENT_SERVER_SUGGESTION_FILLED);
   else
@@ -756,8 +902,8 @@ void AutofillMetrics::FormEventLogger::OnDidFillSuggestion(
     logged_suggestion_filled_was_server_data_ =
         profile.record_type() == AutofillProfile::SERVER_PROFILE;
     Log(profile.record_type() == AutofillProfile::SERVER_PROFILE
-        ? AutofillMetrics::FORM_EVENT_SERVER_SUGGESTION_FILLED_ONCE
-        : AutofillMetrics::FORM_EVENT_LOCAL_SUGGESTION_FILLED_ONCE);
+            ? AutofillMetrics::FORM_EVENT_SERVER_SUGGESTION_FILLED_ONCE
+            : AutofillMetrics::FORM_EVENT_LOCAL_SUGGESTION_FILLED_ONCE);
   }
 
   base::RecordAction(
@@ -785,6 +931,10 @@ void AutofillMetrics::FormEventLogger::OnWillSubmitForm() {
     Log(AutofillMetrics::FORM_EVENT_LOCAL_SUGGESTION_WILL_SUBMIT_ONCE);
   }
 
+  if (has_logged_suggestions_shown_) {
+    Log(AutofillMetrics::FORM_EVENT_SUGGESTION_SHOWN_WILL_SUBMIT_ONCE);
+  }
+
   base::RecordAction(base::UserMetricsAction("Autofill_OnWillSubmitForm"));
 }
 
@@ -801,12 +951,16 @@ void AutofillMetrics::FormEventLogger::OnFormSubmitted() {
   if (!has_logged_suggestion_filled_) {
     Log(AutofillMetrics::FORM_EVENT_NO_SUGGESTION_SUBMITTED_ONCE);
   } else if (logged_suggestion_filled_was_masked_server_card_) {
-    Log(AutofillMetrics
-            ::FORM_EVENT_MASKED_SERVER_CARD_SUGGESTION_SUBMITTED_ONCE);
+    Log(AutofillMetrics::
+            FORM_EVENT_MASKED_SERVER_CARD_SUGGESTION_SUBMITTED_ONCE);
   } else if (logged_suggestion_filled_was_server_data_) {
     Log(AutofillMetrics::FORM_EVENT_SERVER_SUGGESTION_SUBMITTED_ONCE);
   } else {
     Log(AutofillMetrics::FORM_EVENT_LOCAL_SUGGESTION_SUBMITTED_ONCE);
+  }
+
+  if (has_logged_suggestions_shown_) {
+    Log(AutofillMetrics::FORM_EVENT_SUGGESTION_SHOWN_SUBMITTED_ONCE);
   }
 }
 
@@ -819,18 +973,165 @@ void AutofillMetrics::FormEventLogger::Log(FormEvent event) const {
     name += "Address";
   LogUMAHistogramEnumeration(name, event, NUM_FORM_EVENTS);
 
+  // Log again in a different histogram for credit card forms on nonsecure
+  // pages, so that form interactions on nonsecure pages can be analyzed on
+  // their own.
+  if (is_for_credit_card_ && !is_context_secure_) {
+    LogUMAHistogramEnumeration(name + ".OnNonsecurePage", event,
+                               NUM_FORM_EVENTS);
+  }
+
   // Logging again in a different histogram for segmentation purposes.
   // TODO(waltercacau): Re-evaluate if we still need such fine grained
   // segmentation. http://crbug.com/454018
-  if (!is_server_data_available_ && !is_local_data_available_)
+  if (server_record_type_count_ == 0 && local_record_type_count_ == 0)
     name += ".WithNoData";
-  else if (is_server_data_available_ && !is_local_data_available_)
+  else if (server_record_type_count_ > 0 && local_record_type_count_ == 0)
     name += ".WithOnlyServerData";
-  else if (!is_server_data_available_ && is_local_data_available_)
+  else if (server_record_type_count_ == 0 && local_record_type_count_ > 0)
     name += ".WithOnlyLocalData";
   else
     name += ".WithBothServerAndLocalData";
   LogUMAHistogramEnumeration(name, event, NUM_FORM_EVENTS);
+}
+
+AutofillMetrics::FormInteractionsUkmLogger::FormInteractionsUkmLogger(
+    ukm::UkmService* ukm_service)
+    : ukm_service_(ukm_service) {}
+
+void AutofillMetrics::FormInteractionsUkmLogger::OnFormsLoaded(
+    const GURL& url) {
+  if (!IsUkmLoggingEnabled() || ukm_service_ == nullptr)
+    return;
+
+  url_ = url;
+  form_loaded_timestamp_ = base::TimeTicks::Now();
+}
+
+void AutofillMetrics::FormInteractionsUkmLogger::LogInteractedWithForm(
+    bool is_for_credit_card,
+    size_t local_record_type_count,
+    size_t server_record_type_count) {
+  if (!CanLog())
+    return;
+
+  if (source_id_ == -1)
+    GetNewSourceID();
+
+  std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_service_->GetEntryBuilder(
+      source_id_, internal::kUKMInteractedWithFormEntryName);
+  builder->AddMetric(internal::kUKMIsForCreditCardMetricName,
+                     is_for_credit_card);
+  builder->AddMetric(internal::kUKMLocalRecordTypeCountMetricName,
+                     local_record_type_count);
+  builder->AddMetric(internal::kUKMServerRecordTypeCountMetricName,
+                     server_record_type_count);
+}
+
+void AutofillMetrics::FormInteractionsUkmLogger::LogSuggestionsShown() {
+  if (!CanLog())
+    return;
+
+  if (source_id_ == -1)
+    GetNewSourceID();
+
+  std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_service_->GetEntryBuilder(
+      source_id_, internal::kUKMSuggestionsShownEntryName);
+  builder->AddMetric(internal::kUKMMillisecondsSinceFormLoadedMetricName,
+                     MillisecondsSinceFormLoaded());
+}
+
+void AutofillMetrics::FormInteractionsUkmLogger::LogSelectedMaskedServerCard() {
+  if (!CanLog())
+    return;
+
+  if (source_id_ == -1)
+    GetNewSourceID();
+
+  std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_service_->GetEntryBuilder(
+      source_id_, internal::kUKMSelectedMaskedServerCardEntryName);
+  builder->AddMetric(internal::kUKMMillisecondsSinceFormLoadedMetricName,
+                     MillisecondsSinceFormLoaded());
+}
+
+void AutofillMetrics::FormInteractionsUkmLogger::LogDidFillSuggestion(
+    int record_type) {
+  if (!CanLog())
+    return;
+
+  if (source_id_ == -1)
+    GetNewSourceID();
+
+  std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_service_->GetEntryBuilder(
+      source_id_, internal::kUKMSuggestionFilledEntryName);
+  builder->AddMetric(internal::kUKMRecordTypeMetricName, record_type);
+  builder->AddMetric(internal::kUKMMillisecondsSinceFormLoadedMetricName,
+                     MillisecondsSinceFormLoaded());
+}
+
+void AutofillMetrics::FormInteractionsUkmLogger::LogTextFieldDidChange(
+    const AutofillField& field) {
+  if (!CanLog())
+    return;
+
+  if (source_id_ == -1)
+    GetNewSourceID();
+
+  std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_service_->GetEntryBuilder(
+      source_id_, internal::kUKMTextFieldDidChangeEntryName);
+  builder->AddMetric(internal::kUKMFieldTypeGroupMetricName,
+                     static_cast<int>(field.Type().group()));
+  builder->AddMetric(internal::kUKMHeuristicTypeMetricName,
+                     static_cast<int>(field.heuristic_type()));
+  builder->AddMetric(internal::kUKMServerTypeMetricName,
+                     static_cast<int>(field.server_type()));
+  builder->AddMetric(internal::kUKMHtmlFieldTypeMetricName,
+                     static_cast<int>(field.html_type()));
+  builder->AddMetric(internal::kUKMHtmlFieldModeMetricName,
+                     static_cast<int>(field.html_mode()));
+  builder->AddMetric(internal::kUKMIsAutofilledMetricName, field.is_autofilled);
+  builder->AddMetric(internal::kUKMIsEmptyMetricName, field.IsEmpty());
+  builder->AddMetric(internal::kUKMMillisecondsSinceFormLoadedMetricName,
+                     MillisecondsSinceFormLoaded());
+}
+
+void AutofillMetrics::FormInteractionsUkmLogger::LogFormSubmitted(
+    AutofillFormSubmittedState state) {
+  if (!CanLog())
+    return;
+
+  if (source_id_ == -1)
+    GetNewSourceID();
+
+  std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_service_->GetEntryBuilder(
+      source_id_, internal::kUKMFormSubmittedEntryName);
+  builder->AddMetric(internal::kUKMAutofillFormSubmittedStateMetricName,
+                     static_cast<int>(state));
+  builder->AddMetric(internal::kUKMMillisecondsSinceFormLoadedMetricName,
+                     MillisecondsSinceFormLoaded());
+}
+
+void AutofillMetrics::FormInteractionsUkmLogger::UpdateSourceURL(
+    const GURL& url) {
+  url_ = url;
+  if (CanLog())
+    ukm_service_->UpdateSourceURL(source_id_, url_);
+}
+
+bool AutofillMetrics::FormInteractionsUkmLogger::CanLog() const {
+  return IsUkmLoggingEnabled() && ukm_service_ && url_.is_valid();
+}
+
+int64_t
+AutofillMetrics::FormInteractionsUkmLogger::MillisecondsSinceFormLoaded()
+    const {
+  DCHECK(!form_loaded_timestamp_.is_null());
+  return (base::TimeTicks::Now() - form_loaded_timestamp_).InMilliseconds();
+}
+
+void AutofillMetrics::FormInteractionsUkmLogger::GetNewSourceID() {
+  source_id_ = ukm_service_->GetNewSourceID();
+  ukm_service_->UpdateSourceURL(source_id_, url_);
 }
 
 }  // namespace autofill

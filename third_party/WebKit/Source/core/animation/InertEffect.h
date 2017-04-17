@@ -32,38 +32,49 @@
 #define InertEffect_h
 
 #include "core/CoreExport.h"
-#include "core/animation/AnimationEffect.h"
+#include "core/animation/AnimationEffectReadOnly.h"
 #include "core/animation/EffectModel.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
 // Lightweight subset of KeyframeEffect.
-// Used to transport data for deferred KeyframeEffect construction and one off Interpolation sampling.
-class CORE_EXPORT InertEffect final : public AnimationEffect {
-public:
-    static InertEffect* create(EffectModel*, const Timing&, bool paused, double inheritedTime);
-    void sample(Vector<RefPtr<Interpolation>>&) const;
-    EffectModel* model() const { return m_model.get(); }
-    bool paused() const { return m_paused; }
+// Used to transport data for deferred KeyframeEffect construction and one off
+// Interpolation sampling.
+class CORE_EXPORT InertEffect final : public AnimationEffectReadOnly {
+ public:
+  static InertEffect* Create(EffectModel*,
+                             const Timing&,
+                             bool paused,
+                             double inherited_time);
+  void Sample(Vector<RefPtr<Interpolation>>&) const;
+  EffectModel* Model() const { return model_.Get(); }
+  bool Paused() const { return paused_; }
 
-    bool isInertEffect() const final { return true; }
+  bool IsInertEffect() const final { return true; }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    void updateChildrenAndEffects() const override { }
-    double calculateTimeToEffectChange(bool forwards, double inheritedTime, double timeToNextIteration) const override;
+ protected:
+  void UpdateChildrenAndEffects() const override {}
+  double CalculateTimeToEffectChange(
+      bool forwards,
+      double inherited_time,
+      double time_to_next_iteration) const override;
 
-private:
-    InertEffect(EffectModel*, const Timing&, bool paused, double inheritedTime);
-    Member<EffectModel> m_model;
-    bool m_paused;
-    double m_inheritedTime;
+ private:
+  InertEffect(EffectModel*, const Timing&, bool paused, double inherited_time);
+  Member<EffectModel> model_;
+  bool paused_;
+  double inherited_time_;
 };
 
-DEFINE_TYPE_CASTS(InertEffect, AnimationEffect, animationEffect, animationEffect->isInertEffect(), animationEffect.isInertEffect());
+DEFINE_TYPE_CASTS(InertEffect,
+                  AnimationEffectReadOnly,
+                  animationEffect,
+                  animationEffect->IsInertEffect(),
+                  animationEffect.IsInertEffect());
 
-} // namespace blink
+}  // namespace blink
 
 #endif

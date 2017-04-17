@@ -10,9 +10,11 @@
 #include <utility>
 
 #include "base/json/json_writer.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/time/time.h"
 #include "base/values.h"
+#include "chrome/browser/extensions/api/web_navigation/web_navigation_api.h"
 #include "chrome/browser/extensions/api/web_navigation/web_navigation_api_constants.h"
 #include "chrome/browser/extensions/extension_tab_util.h"
 #include "chrome/browser/profiles/profile.h"
@@ -61,11 +63,10 @@ void DispatchEvent(content::BrowserContext* browser_context,
 
 }  // namespace
 
-// Constructs and dispatches an onBeforeNavigate event.
-void DispatchOnBeforeNavigate(content::NavigationHandle* navigation_handle) {
+// Constructs an onBeforeNavigate event.
+std::unique_ptr<Event> CreateOnBeforeNavigateEvent(
+    content::NavigationHandle* navigation_handle) {
   GURL url(navigation_handle->GetURL());
-  if (navigation_handle->IsSrcdoc())
-    url = GURL(content::kAboutSrcDocURL);
 
   web_navigation::OnBeforeNavigate::Details details;
   details.tab_id =
@@ -81,8 +82,15 @@ void DispatchOnBeforeNavigate(content::NavigationHandle* navigation_handle) {
       new Event(events::WEB_NAVIGATION_ON_BEFORE_NAVIGATE,
                 web_navigation::OnBeforeNavigate::kEventName,
                 web_navigation::OnBeforeNavigate::Create(details)));
-  DispatchEvent(navigation_handle->GetWebContents()->GetBrowserContext(),
-                std::move(event), url);
+
+  EventFilteringInfo info;
+  info.SetURL(navigation_handle->GetURL());
+
+  event->restrict_to_browser_context =
+      navigation_handle->GetWebContents()->GetBrowserContext();
+  event->filter_info = info;
+
+  return event;
 }
 
 // Constructs and dispatches an onCommitted or onReferenceFragmentUpdated
@@ -95,9 +103,6 @@ void DispatchOnCommitted(events::HistogramValue histogram_value,
   content::RenderFrameHost* frame_host =
       navigation_handle->GetRenderFrameHost();
   ui::PageTransition transition_type = navigation_handle->GetPageTransition();
-
-  if (navigation_handle->IsSrcdoc())
-    url = GURL(content::kAboutSrcDocURL);
 
   std::unique_ptr<base::ListValue> args(new base::ListValue());
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
@@ -120,7 +125,7 @@ void DispatchOnCommitted(events::HistogramValue histogram_value,
                                    ui::PAGE_TRANSITION_AUTO_TOPLEVEL))
     transition_type_string = "start_page";
   dict->SetString(keys::kTransitionTypeKey, transition_type_string);
-  base::ListValue* qualifiers = new base::ListValue();
+  auto qualifiers = base::MakeUnique<base::ListValue>();
   if (transition_type & ui::PAGE_TRANSITION_CLIENT_REDIRECT)
     qualifiers->AppendString("client_redirect");
   if (transition_type & ui::PAGE_TRANSITION_SERVER_REDIRECT)
@@ -129,7 +134,7 @@ void DispatchOnCommitted(events::HistogramValue histogram_value,
     qualifiers->AppendString("forward_back");
   if (transition_type & ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)
     qualifiers->AppendString("from_address_bar");
-  dict->Set(keys::kTransitionQualifiersKey, qualifiers);
+  dict->Set(keys::kTransitionQualifiersKey, std::move(qualifiers));
   dict->SetDouble(keys::kTimeStampKey, MilliSecondsFromTime(base::Time::Now()));
   args->Append(std::move(dict));
 
@@ -203,6 +208,12 @@ void DispatchOnCreatedNavigationTarget(
                 web_navigation::OnCreatedNavigationTarget::kEventName,
                 web_navigation::OnCreatedNavigationTarget::Create(details)));
   DispatchEvent(browser_context, std::move(event), target_url);
+
+  // If the target WebContents already received the onBeforeNavigate event,
+  // send it immediately after the onCreatedNavigationTarget above.
+  WebNavigationTabObserver* target_observer =
+      WebNavigationTabObserver::Get(target_web_contents);
+  target_observer->DispatchCachedOnBeforeNavigate();
 }
 
 // Constructs and dispatches an onErrorOccurred event.

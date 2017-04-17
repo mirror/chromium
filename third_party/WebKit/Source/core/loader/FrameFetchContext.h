@@ -32,109 +32,178 @@
 #define FrameFetchContext_h
 
 #include "core/CoreExport.h"
-#include "core/fetch/FetchContext.h"
-#include "core/fetch/ResourceFetcher.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/loader/LinkLoader.h"
 #include "platform/heap/Handle.h"
-#include "platform/network/ResourceRequest.h"
+#include "platform/loader/fetch/FetchContext.h"
+#include "platform/loader/fetch/FetchParameters.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
+class ClientHintsPreferences;
+class ContentSettingsClient;
 class Document;
 class DocumentLoader;
 class LocalFrame;
+class LocalFrameClient;
 class ResourceError;
-class ResourceLoader;
 class ResourceResponse;
-class ResourceRequest;
 
 class CORE_EXPORT FrameFetchContext final : public FetchContext {
-public:
-    static ResourceFetcher* createContextAndFetcher(DocumentLoader* loader, Document* document)
-    {
-        return ResourceFetcher::create(new FrameFetchContext(loader, document));
-    }
+ public:
+  static ResourceFetcher* CreateFetcherFromDocumentLoader(
+      DocumentLoader* loader) {
+    return ResourceFetcher::Create(new FrameFetchContext(loader, nullptr));
+  }
+  static ResourceFetcher* CreateFetcherFromDocument(Document* document) {
+    return ResourceFetcher::Create(new FrameFetchContext(nullptr, document));
+  }
 
-    static void provideDocumentToContext(FetchContext& context, Document* document)
-    {
-        ASSERT(document);
-        RELEASE_ASSERT(context.isLiveContext());
-        static_cast<FrameFetchContext&>(context).m_document = document;
-    }
+  static void ProvideDocumentToContext(FetchContext& context,
+                                       Document* document) {
+    DCHECK(document);
+    CHECK(context.IsLiveContext());
+    static_cast<FrameFetchContext&>(context).document_ = document;
+  }
 
-    ~FrameFetchContext();
+  ~FrameFetchContext();
 
-    bool isLiveContext() { return true; }
+  bool IsLiveContext() { return true; }
 
-    void addAdditionalRequestHeaders(ResourceRequest&, FetchResourceType) override;
-    CachePolicy getCachePolicy() const override;
-    WebCachePolicy resourceRequestCachePolicy(const ResourceRequest&, Resource::Type, FetchRequest::DeferOption) const override;
-    void dispatchDidChangeResourcePriority(unsigned long identifier, ResourceLoadPriority, int intraPriorityValue) override;
-    void dispatchWillSendRequest(unsigned long identifier, ResourceRequest&, const ResourceResponse& redirectResponse, const FetchInitiatorInfo& = FetchInitiatorInfo()) override;
-    void dispatchDidLoadResourceFromMemoryCache(unsigned long identifier, Resource*, WebURLRequest::FrameType, WebURLRequest::RequestContext) override;
-    void dispatchDidReceiveResponse(unsigned long identifier, const ResourceResponse&, WebURLRequest::FrameType, WebURLRequest::RequestContext, Resource*) override;
-    void dispatchDidReceiveData(unsigned long identifier, const char* data, int dataLength, int encodedDataLength) override;
-    void dispatchDidDownloadData(unsigned long identifier, int dataLength, int encodedDataLength)  override;
-    void dispatchDidFinishLoading(unsigned long identifier, double finishTime, int64_t encodedDataLength) override;
-    void dispatchDidFail(unsigned long identifier, const ResourceError&, bool isInternalRequest) override;
+  void AddAdditionalRequestHeaders(ResourceRequest&,
+                                   FetchResourceType) override;
+  WebCachePolicy ResourceRequestCachePolicy(
+      ResourceRequest&,
+      Resource::Type,
+      FetchParameters::DeferOption) const override;
+  void DispatchDidChangeResourcePriority(unsigned long identifier,
+                                         ResourceLoadPriority,
+                                         int intra_priority_value) override;
+  void PrepareRequest(ResourceRequest&, RedirectType) override;
+  void DispatchWillSendRequest(
+      unsigned long identifier,
+      ResourceRequest&,
+      const ResourceResponse& redirect_response,
+      const FetchInitiatorInfo& = FetchInitiatorInfo()) override;
+  void DispatchDidLoadResourceFromMemoryCache(unsigned long identifier,
+                                              const ResourceRequest&,
+                                              const ResourceResponse&) override;
+  void DispatchDidReceiveResponse(unsigned long identifier,
+                                  const ResourceResponse&,
+                                  WebURLRequest::FrameType,
+                                  WebURLRequest::RequestContext,
+                                  Resource*,
+                                  ResourceResponseType) override;
+  void DispatchDidReceiveData(unsigned long identifier,
+                              const char* data,
+                              int data_length) override;
+  void DispatchDidReceiveEncodedData(unsigned long identifier,
+                                     int encoded_data_length) override;
+  void DispatchDidDownloadData(unsigned long identifier,
+                               int data_length,
+                               int encoded_data_length) override;
+  void DispatchDidFinishLoading(unsigned long identifier,
+                                double finish_time,
+                                int64_t encoded_data_length,
+                                int64_t decoded_body_length) override;
+  void DispatchDidFail(unsigned long identifier,
+                       const ResourceError&,
+                       int64_t encoded_data_length,
+                       bool is_internal_request) override;
 
-    bool shouldLoadNewResource(Resource::Type) const override;
-    void willStartLoadingResource(unsigned long identifier, ResourceRequest&, Resource::Type) override;
-    void didLoadResource(Resource*) override;
+  bool ShouldLoadNewResource(Resource::Type) const override;
+  void RecordLoadingActivity(unsigned long identifier,
+                             const ResourceRequest&,
+                             Resource::Type,
+                             const AtomicString& fetch_initiator_name) override;
+  void DidLoadResource(Resource*) override;
 
-    void addResourceTiming(const ResourceTimingInfo&) override;
-    bool allowImage(bool imagesEnabled, const KURL&) const override;
-    bool canRequest(Resource::Type, const ResourceRequest&, const KURL&, const ResourceLoaderOptions&, bool forPreload, FetchRequest::OriginRestriction) const override;
-    bool allowResponse(Resource::Type, const ResourceRequest&, const KURL&, const ResourceLoaderOptions&) const override;
+  void AddResourceTiming(const ResourceTimingInfo&) override;
+  bool AllowImage(bool images_enabled, const KURL&) const override;
+  ResourceRequestBlockedReason CanRequest(
+      Resource::Type,
+      const ResourceRequest&,
+      const KURL&,
+      const ResourceLoaderOptions&,
+      SecurityViolationReportingPolicy,
+      FetchParameters::OriginRestriction) const override;
+  ResourceRequestBlockedReason AllowResponse(
+      Resource::Type,
+      const ResourceRequest&,
+      const KURL&,
+      const ResourceLoaderOptions&) const override;
 
-    bool isControlledByServiceWorker() const override;
-    int64_t serviceWorkerID() const override;
+  bool IsControlledByServiceWorker() const override;
+  int64_t ServiceWorkerID() const override;
 
-    bool isMainFrame() const override;
-    bool defersLoading() const override;
-    bool isLoadComplete() const override;
-    bool pageDismissalEventBeingDispatched() const override;
-    bool updateTimingInfoForIFrameNavigation(ResourceTimingInfo*) override;
-    void sendImagePing(const KURL&) override;
-    void addConsoleMessage(const String&) const override;
-    SecurityOrigin* getSecurityOrigin() const override;
-    void upgradeInsecureRequest(ResourceRequest&) override;
-    void addClientHintsIfNecessary(FetchRequest&) override;
-    void addCSPHeaderIfNecessary(Resource::Type, FetchRequest&) override;
-    void populateRequestData(ResourceRequest&) override;
+  bool IsMainFrame() const override;
+  bool DefersLoading() const override;
+  bool IsLoadComplete() const override;
+  bool PageDismissalEventBeingDispatched() const override;
+  bool UpdateTimingInfoForIFrameNavigation(ResourceTimingInfo*) override;
+  void SendImagePing(const KURL&) override;
+  void AddConsoleMessage(const String&,
+                         LogMessageType = kLogErrorMessage) const override;
+  SecurityOrigin* GetSecurityOrigin() const override;
 
-    MHTMLArchive* archive() const override;
+  void PopulateResourceRequest(Resource::Type,
+                               const ClientHintsPreferences&,
+                               const FetchParameters::ResourceWidth&,
+                               ResourceRequest&) override;
+  void SetFirstPartyCookieAndRequestorOrigin(ResourceRequest&) override;
 
-    ResourceLoadPriority modifyPriorityForExperiments(ResourceLoadPriority) override;
+  // Exposed for testing.
+  void ModifyRequestForCSP(ResourceRequest&);
+  void AddClientHintsIfNecessary(const ClientHintsPreferences&,
+                                 const FetchParameters::ResourceWidth&,
+                                 ResourceRequest&);
 
-    void countClientHintsDPR() override;
-    void countClientHintsResourceWidth() override;
-    void countClientHintsViewportWidth() override;
+  MHTMLArchive* Archive() const override;
 
-    WebTaskRunner* loadingTaskRunner() const override;
+  ResourceLoadPriority ModifyPriorityForExperiments(
+      ResourceLoadPriority) override;
 
-    DECLARE_VIRTUAL_TRACE();
+  RefPtr<WebTaskRunner> LoadingTaskRunner() const override;
 
-private:
-    explicit FrameFetchContext(DocumentLoader*, Document*);
-    inline DocumentLoader* masterDocumentLoader() const;
+  DECLARE_VIRTUAL_TRACE();
 
-    LocalFrame* frame() const; // Can be null
-    void printAccessDeniedMessage(const KURL&) const;
-    ResourceRequestBlockedReason canRequestInternal(Resource::Type, const ResourceRequest&, const KURL&, const ResourceLoaderOptions&, bool forPreload, FetchRequest::OriginRestriction, ResourceRequest::RedirectStatus) const;
+ private:
+  FrameFetchContext(DocumentLoader*, Document*);
 
-    void prepareRequest(unsigned long identifier, ResourceRequest&, const ResourceResponse&);
+  // m_documentLoader is null when loading resources from an HTML import
+  // and in such cases we use the document loader of the importing frame.
+  // Convenient accessors below can be used to transparently access the
+  // relevant document loader or frame in either cases without null-checks.
+  // TODO(kinuko): Remove constness, these return non-const members.
+  DocumentLoader* MasterDocumentLoader() const;
+  LocalFrame* GetFrame() const;
+  LocalFrameClient* GetLocalFrameClient() const;
 
-    void dispatchDidReceiveResponseInternal(unsigned long identifier, const ResourceResponse&, WebURLRequest::FrameType, WebURLRequest::RequestContext, Resource*, LinkLoader::CanLoadResources);
+  ContentSettingsClient* GetContentSettingsClient() const;
 
-    // FIXME: Oilpan: Ideally this should just be a traced Member but that will
-    // currently leak because ComputedStyle and its data are not on the heap.
-    // See crbug.com/383860 for details.
-    WeakMember<Document> m_document;
-    Member<DocumentLoader> m_documentLoader;
+  LocalFrame* FrameOfImportsController() const;
+
+  void PrintAccessDeniedMessage(const KURL&) const;
+  ResourceRequestBlockedReason CanRequestInternal(
+      Resource::Type,
+      const ResourceRequest&,
+      const KURL&,
+      const ResourceLoaderOptions&,
+      SecurityViolationReportingPolicy,
+      FetchParameters::OriginRestriction,
+      ResourceRequest::RedirectStatus) const;
+
+  void AddCSPHeaderIfNecessary(Resource::Type, ResourceRequest&);
+
+  // FIXME: Oilpan: Ideally this should just be a traced Member but that will
+  // currently leak because ComputedStyle and its data are not on the heap.
+  // See crbug.com/383860 for details.
+  WeakMember<Document> document_;
+  Member<DocumentLoader> document_loader_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

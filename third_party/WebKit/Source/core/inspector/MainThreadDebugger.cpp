@@ -30,19 +30,25 @@
 
 #include "core/inspector/MainThreadDebugger.h"
 
+#include <memory>
+
 #include "bindings/core/v8/BindingSecurity.h"
 #include "bindings/core/v8/DOMWrapperWorld.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/SourceLocation.h"
+#include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8ErrorHandler.h"
 #include "bindings/core/v8/V8Node.h"
 #include "bindings/core/v8/V8Window.h"
+#include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/dom/ContainerNode.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/StaticNodeList.h"
+#include "core/events/ErrorEvent.h"
+#include "core/frame/Deprecation.h"
 #include "core/frame/FrameConsole.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
@@ -52,312 +58,417 @@
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/inspector/InspectedFrames.h"
 #include "core/inspector/InspectorTaskRunner.h"
+#include "core/inspector/V8InspectorString.h"
+#include "core/page/Page.h"
 #include "core/timing/MemoryInfo.h"
 #include "core/workers/MainThreadWorkletGlobalScope.h"
 #include "core/xml/XPathEvaluator.h"
 #include "core/xml/XPathResult.h"
 #include "platform/UserGestureIndicator.h"
-#include "platform/v8_inspector/public/V8Debugger.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/ThreadingPrimitives.h"
-#include <memory>
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/ThreadingPrimitives.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
 namespace {
 
-int frameId(LocalFrame* frame)
-{
-    ASSERT(frame);
-    return WeakIdentifierMap<LocalFrame>::identifier(frame);
+int FrameId(LocalFrame* frame) {
+  ASSERT(frame);
+  return WeakIdentifierMap<LocalFrame>::Identifier(frame);
 }
 
-Mutex& creationMutex()
-{
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(Mutex, mutex, (new Mutex));
-    return mutex;
+Mutex& CreationMutex() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(Mutex, mutex, (new Mutex));
+  return mutex;
 }
 
-LocalFrame* toFrame(ExecutionContext* context)
-{
-    if (!context)
-        return nullptr;
-    if (context->isDocument())
-        return toDocument(context)->frame();
-    if (context->isMainThreadWorkletGlobalScope())
-        return toMainThreadWorkletGlobalScope(context)->frame();
+LocalFrame* ToFrame(ExecutionContext* context) {
+  if (!context)
     return nullptr;
+  if (context->IsDocument())
+    return ToDocument(context)->GetFrame();
+  if (context->IsMainThreadWorkletGlobalScope())
+    return ToMainThreadWorkletGlobalScope(context)->GetFrame();
+  return nullptr;
+}
 }
 
-}
-
-MainThreadDebugger* MainThreadDebugger::s_instance = nullptr;
+MainThreadDebugger* MainThreadDebugger::instance_ = nullptr;
 
 MainThreadDebugger::MainThreadDebugger(v8::Isolate* isolate)
-    : ThreadDebugger(isolate)
-    , m_taskRunner(wrapUnique(new InspectorTaskRunner()))
-    , m_paused(false)
-{
-    MutexLocker locker(creationMutex());
-    ASSERT(!s_instance);
-    s_instance = this;
+    : ThreadDebugger(isolate),
+      task_runner_(WTF::MakeUnique<InspectorTaskRunner>()),
+      paused_(false) {
+  MutexLocker locker(CreationMutex());
+  ASSERT(!instance_);
+  instance_ = this;
 }
 
-MainThreadDebugger::~MainThreadDebugger()
-{
-    MutexLocker locker(creationMutex());
-    ASSERT(s_instance == this);
-    s_instance = nullptr;
+MainThreadDebugger::~MainThreadDebugger() {
+  MutexLocker locker(CreationMutex());
+  ASSERT(instance_ == this);
+  instance_ = nullptr;
 }
 
-void MainThreadDebugger::reportConsoleMessage(ExecutionContext* context, ConsoleMessage* message)
-{
-    if (LocalFrame* frame = toFrame(context))
-        frame->console().reportMessageToClient(message);
+void MainThreadDebugger::ReportConsoleMessage(ExecutionContext* context,
+                                              MessageSource source,
+                                              MessageLevel level,
+                                              const String& message,
+                                              SourceLocation* location) {
+  if (LocalFrame* frame = ToFrame(context))
+    frame->Console().ReportMessageToClient(source, level, message, location);
 }
 
-int MainThreadDebugger::contextGroupId(ExecutionContext* context)
-{
-    LocalFrame* frame = toFrame(context);
-    return frame ? contextGroupId(frame) : 0;
+int MainThreadDebugger::ContextGroupId(ExecutionContext* context) {
+  LocalFrame* frame = ToFrame(context);
+  return frame ? ContextGroupId(frame) : 0;
 }
 
-void MainThreadDebugger::setClientMessageLoop(std::unique_ptr<ClientMessageLoop> clientMessageLoop)
-{
-    ASSERT(!m_clientMessageLoop);
-    ASSERT(clientMessageLoop);
-    m_clientMessageLoop = std::move(clientMessageLoop);
+void MainThreadDebugger::SetClientMessageLoop(
+    std::unique_ptr<ClientMessageLoop> client_message_loop) {
+  ASSERT(!client_message_loop_);
+  ASSERT(client_message_loop);
+  client_message_loop_ = std::move(client_message_loop);
 }
 
-void MainThreadDebugger::didClearContextsForFrame(LocalFrame* frame)
-{
-    DCHECK(isMainThread());
-    if (frame->localFrameRoot() == frame)
-        debugger()->resetContextGroup(contextGroupId(frame));
+void MainThreadDebugger::DidClearContextsForFrame(LocalFrame* frame) {
+  DCHECK(IsMainThread());
+  if (frame->LocalFrameRoot() == frame)
+    GetV8Inspector()->resetContextGroup(ContextGroupId(frame));
 }
 
-void MainThreadDebugger::contextCreated(ScriptState* scriptState, LocalFrame* frame, SecurityOrigin* origin)
-{
-    ASSERT(isMainThread());
-    v8::HandleScope handles(scriptState->isolate());
-    DOMWrapperWorld& world = scriptState->world();
-    debugger()->contextCreated(V8ContextInfo(scriptState->context(), contextGroupId(frame), world.isMainWorld(), origin ? origin->toRawString() : "", world.isIsolatedWorld() ? world.isolatedWorldHumanReadableName() : "", IdentifiersFactory::frameId(frame), scriptState->getExecutionContext()->isDocument()));
+void MainThreadDebugger::ContextCreated(ScriptState* script_state,
+                                        LocalFrame* frame,
+                                        SecurityOrigin* origin) {
+  ASSERT(IsMainThread());
+  v8::HandleScope handles(script_state->GetIsolate());
+  DOMWrapperWorld& world = script_state->World();
+  StringBuilder aux_data_builder;
+  aux_data_builder.Append("{\"isDefault\":");
+  aux_data_builder.Append(world.IsMainWorld() ? "true" : "false");
+  aux_data_builder.Append(",\"frameId\":\"");
+  aux_data_builder.Append(IdentifiersFactory::FrameId(frame));
+  aux_data_builder.Append("\"}");
+  String aux_data = aux_data_builder.ToString();
+  String human_readable_name = world.IsIsolatedWorld()
+                                   ? world.IsolatedWorldHumanReadableName()
+                                   : String();
+  String origin_string = origin ? origin->ToRawString() : String();
+  v8_inspector::V8ContextInfo context_info(
+      script_state->GetContext(), ContextGroupId(frame),
+      ToV8InspectorStringView(human_readable_name));
+  context_info.origin = ToV8InspectorStringView(origin_string);
+  context_info.auxData = ToV8InspectorStringView(aux_data);
+  context_info.hasMemoryOnConsole =
+      ExecutionContext::From(script_state) &&
+      ExecutionContext::From(script_state)->IsDocument();
+  GetV8Inspector()->contextCreated(context_info);
 }
 
-void MainThreadDebugger::contextWillBeDestroyed(ScriptState* scriptState)
-{
-    v8::HandleScope handles(scriptState->isolate());
-    debugger()->contextDestroyed(scriptState->context());
+void MainThreadDebugger::ContextWillBeDestroyed(ScriptState* script_state) {
+  v8::HandleScope handles(script_state->GetIsolate());
+  GetV8Inspector()->contextDestroyed(script_state->GetContext());
 }
 
-void MainThreadDebugger::exceptionThrown(LocalFrame* frame, const String& errorMessage, std::unique_ptr<SourceLocation> location)
-{
-    if (frame->host() && frame->host()->consoleMessageStorage().isMuted())
-        return;
-    debugger()->exceptionThrown(contextGroupId(frame), errorMessage, location->url(), location->lineNumber(), location->columnNumber(), location->cloneStackTrace(), location->scriptId());
-    frame->console().reportMessageToClient(ConsoleMessage::create(JSMessageSource, ErrorMessageLevel, errorMessage, std::move(location)));
-}
-
-int MainThreadDebugger::contextGroupId(LocalFrame* frame)
-{
-    LocalFrame* localFrameRoot = frame->localFrameRoot();
-    return frameId(localFrameRoot);
-}
-
-MainThreadDebugger* MainThreadDebugger::instance()
-{
-    ASSERT(isMainThread());
-    V8PerIsolateData* data = V8PerIsolateData::from(V8PerIsolateData::mainThreadIsolate());
-    ASSERT(data->threadDebugger() && !data->threadDebugger()->isWorker());
-    return static_cast<MainThreadDebugger*>(data->threadDebugger());
-}
-
-void MainThreadDebugger::interruptMainThreadAndRun(std::unique_ptr<InspectorTaskRunner::Task> task)
-{
-    MutexLocker locker(creationMutex());
-    if (s_instance) {
-        s_instance->m_taskRunner->appendTask(std::move(task));
-        s_instance->m_taskRunner->interruptAndRunAllTasksDontWait(s_instance->m_isolate);
-    }
-}
-
-void MainThreadDebugger::runMessageLoopOnPause(int contextGroupId)
-{
-    LocalFrame* pausedFrame = WeakIdentifierMap<LocalFrame>::lookup(contextGroupId);
-    // Do not pause in Context of detached frame.
-    if (!pausedFrame)
-        return;
-    ASSERT(pausedFrame == pausedFrame->localFrameRoot());
-    m_paused = true;
-
-    if (UserGestureToken* token = UserGestureIndicator::currentToken())
-        token->setPauseInDebugger();
-    // Wait for continue or step command.
-    if (m_clientMessageLoop)
-        m_clientMessageLoop->run(pausedFrame);
-}
-
-void MainThreadDebugger::quitMessageLoopOnPause()
-{
-    m_paused = false;
-    if (m_clientMessageLoop)
-        m_clientMessageLoop->quitNow();
-}
-
-void MainThreadDebugger::muteWarningsAndDeprecations(int contextGroupId)
-{
-    UseCounter::muteForInspector();
-    LocalFrame* frame = WeakIdentifierMap<LocalFrame>::lookup(contextGroupId);
-    if (frame && frame->host())
-        frame->host()->consoleMessageStorage().mute();
-}
-
-void MainThreadDebugger::unmuteWarningsAndDeprecations(int contextGroupId)
-{
-    UseCounter::unmuteForInspector();
-    LocalFrame* frame = WeakIdentifierMap<LocalFrame>::lookup(contextGroupId);
-    if (frame && frame->host())
-        frame->host()->consoleMessageStorage().unmute();
-}
-
-v8::Local<v8::Context> MainThreadDebugger::ensureDefaultContextInGroup(int contextGroupId)
-{
-    LocalFrame* frame = WeakIdentifierMap<LocalFrame>::lookup(contextGroupId);
-    ScriptState* scriptState = frame ? ScriptState::forMainWorld(frame) : nullptr;
-    return scriptState ? scriptState->context() : v8::Local<v8::Context>();
-}
-
-void MainThreadDebugger::beginEnsureAllContextsInGroup(int contextGroupId)
-{
-    LocalFrame* frame = WeakIdentifierMap<LocalFrame>::lookup(contextGroupId);
-    frame->settings()->setForceMainWorldInitialization(true);
-}
-
-void MainThreadDebugger::endEnsureAllContextsInGroup(int contextGroupId)
-{
-    LocalFrame* frame = WeakIdentifierMap<LocalFrame>::lookup(contextGroupId);
-    frame->settings()->setForceMainWorldInitialization(false);
-}
-
-void MainThreadDebugger::consoleAPIMessage(int contextGroupId, MessageLevel level, const String16& message, const String16& url, unsigned lineNumber, unsigned columnNumber, V8StackTrace* stackTrace)
-{
-    LocalFrame* frame = WeakIdentifierMap<LocalFrame>::lookup(contextGroupId);
+void MainThreadDebugger::ExceptionThrown(ExecutionContext* context,
+                                         ErrorEvent* event) {
+  LocalFrame* frame = nullptr;
+  ScriptState* script_state = nullptr;
+  if (context->IsDocument()) {
+    frame = ToDocument(context)->GetFrame();
     if (!frame)
-        return;
-    // TODO(dgozman): maybe not wrap with ConsoleMessage.
-    ConsoleMessage* consoleMessage = ConsoleMessage::create(ConsoleAPIMessageSource, level, message, SourceLocation::create(url, lineNumber, columnNumber, stackTrace ? stackTrace->clone() : nullptr, 0));
-    frame->console().reportMessageToClient(consoleMessage);
+      return;
+    script_state =
+        event->World() ? ToScriptState(frame, *event->World()) : nullptr;
+  } else if (context->IsMainThreadWorkletGlobalScope()) {
+    frame = ToMainThreadWorkletGlobalScope(context)->GetFrame();
+    if (!frame)
+      return;
+    script_state = ToMainThreadWorkletGlobalScope(context)
+                       ->ScriptController()
+                       ->GetScriptState();
+  } else {
+    NOTREACHED();
+  }
+
+  frame->Console().ReportMessageToClient(kJSMessageSource, kErrorMessageLevel,
+                                         event->MessageForConsole(),
+                                         event->Location());
+
+  const String default_message = "Uncaught";
+  if (script_state && script_state->ContextIsValid()) {
+    ScriptState::Scope scope(script_state);
+    v8::Local<v8::Value> exception =
+        V8ErrorHandler::LoadExceptionFromErrorEventWrapper(
+            script_state, event, script_state->GetContext()->Global());
+    SourceLocation* location = event->Location();
+    String message = event->MessageForConsole();
+    String url = location->Url();
+    GetV8Inspector()->exceptionThrown(
+        script_state->GetContext(), ToV8InspectorStringView(default_message),
+        exception, ToV8InspectorStringView(message),
+        ToV8InspectorStringView(url), location->LineNumber(),
+        location->ColumnNumber(), location->TakeStackTrace(),
+        location->ScriptId());
+  }
 }
 
-v8::MaybeLocal<v8::Value> MainThreadDebugger::memoryInfo(v8::Isolate* isolate, v8::Local<v8::Context> context)
-{
-    ExecutionContext* executionContext = toExecutionContext(context);
-    ASSERT_UNUSED(executionContext, executionContext);
-    ASSERT(executionContext->isDocument());
-    return toV8(MemoryInfo::create(), context->Global(), isolate);
+int MainThreadDebugger::ContextGroupId(LocalFrame* frame) {
+  LocalFrame* local_frame_root = frame->LocalFrameRoot();
+  return FrameId(local_frame_root);
 }
 
-void MainThreadDebugger::installAdditionalCommandLineAPI(v8::Local<v8::Context> context, v8::Local<v8::Object> object)
-{
-    ThreadDebugger::installAdditionalCommandLineAPI(context, object);
-    createFunctionProperty(context, object, "$", MainThreadDebugger::querySelectorCallback, "function $(selector, [startNode]) { [Command Line API] }");
-    createFunctionProperty(context, object, "$$", MainThreadDebugger::querySelectorAllCallback, "function $$(selector, [startNode]) { [Command Line API] }");
-    createFunctionProperty(context, object, "$x", MainThreadDebugger::xpathSelectorCallback, "function $x(xpath, [startNode]) { [Command Line API] }");
+MainThreadDebugger* MainThreadDebugger::Instance() {
+  DCHECK(IsMainThread());
+  ThreadDebugger* debugger =
+      ThreadDebugger::From(V8PerIsolateData::MainThreadIsolate());
+  DCHECK(debugger && !debugger->IsWorker());
+  return static_cast<MainThreadDebugger*>(debugger);
 }
 
-static Node* secondArgumentAsNode(const v8::FunctionCallbackInfo<v8::Value>& info)
-{
-    if (info.Length() > 1) {
-        if (Node* node = V8Node::toImplWithTypeCheck(info.GetIsolate(), info[1]))
-            return node;
-    }
-    ExecutionContext* executionContext = toExecutionContext(info.GetIsolate()->GetCurrentContext());
-    if (executionContext->isDocument())
-        return toDocument(executionContext);
-    return nullptr;
+void MainThreadDebugger::InterruptMainThreadAndRun(
+    std::unique_ptr<InspectorTaskRunner::Task> task) {
+  MutexLocker locker(CreationMutex());
+  if (instance_) {
+    instance_->task_runner_->AppendTask(std::move(task));
+    instance_->task_runner_->InterruptAndRunAllTasksDontWait(
+        instance_->isolate_);
+  }
 }
 
-void MainThreadDebugger::querySelectorCallback(const v8::FunctionCallbackInfo<v8::Value>& info)
-{
-    if (info.Length() < 1)
-        return;
-    String selector = toCoreStringWithUndefinedOrNullCheck(info[0]);
-    if (selector.isEmpty())
-        return;
-    Node* node = secondArgumentAsNode(info);
-    if (!node || !node->isContainerNode())
-        return;
-    ExceptionState exceptionState(ExceptionState::ExecutionContext, "$", "CommandLineAPI", info.Holder(), info.GetIsolate());
-    Element* element = toContainerNode(node)->querySelector(AtomicString(selector), exceptionState);
-    if (exceptionState.throwIfNeeded())
-        return;
-    if (element)
-        info.GetReturnValue().Set(toV8(element, info.Holder(), info.GetIsolate()));
-    else
-        info.GetReturnValue().Set(v8::Null(info.GetIsolate()));
+void MainThreadDebugger::runMessageLoopOnPause(int context_group_id) {
+  LocalFrame* paused_frame =
+      WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
+  // Do not pause in Context of detached frame.
+  if (!paused_frame)
+    return;
+  ASSERT(paused_frame == paused_frame->LocalFrameRoot());
+  paused_ = true;
+
+  if (UserGestureToken* token = UserGestureIndicator::CurrentToken())
+    token->SetTimeoutPolicy(UserGestureToken::kHasPaused);
+  // Wait for continue or step command.
+  if (client_message_loop_)
+    client_message_loop_->Run(paused_frame);
 }
 
-void MainThreadDebugger::querySelectorAllCallback(const v8::FunctionCallbackInfo<v8::Value>& info)
-{
-    if (info.Length() < 1)
-        return;
-    String selector = toCoreStringWithUndefinedOrNullCheck(info[0]);
-    if (selector.isEmpty())
-        return;
-    Node* node = secondArgumentAsNode(info);
-    if (!node || !node->isContainerNode())
-        return;
-    ExceptionState exceptionState(ExceptionState::ExecutionContext, "$$", "CommandLineAPI", info.Holder(), info.GetIsolate());
-    // toV8(elementList) doesn't work here, since we need a proper Array instance, not NodeList.
-    StaticElementList* elementList = toContainerNode(node)->querySelectorAll(AtomicString(selector), exceptionState);
-    if (exceptionState.throwIfNeeded() || !elementList)
-        return;
+void MainThreadDebugger::quitMessageLoopOnPause() {
+  paused_ = false;
+  if (client_message_loop_)
+    client_message_loop_->QuitNow();
+}
+
+void MainThreadDebugger::muteMetrics(int context_group_id) {
+  LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
+  if (frame && frame->GetPage()) {
+    frame->GetPage()->GetUseCounter().MuteForInspector();
+    frame->GetPage()->GetDeprecation().MuteForInspector();
+  }
+}
+
+void MainThreadDebugger::unmuteMetrics(int context_group_id) {
+  LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
+  if (frame && frame->GetPage()) {
+    frame->GetPage()->GetUseCounter().UnmuteForInspector();
+    frame->GetPage()->GetDeprecation().UnmuteForInspector();
+  }
+}
+
+v8::Local<v8::Context> MainThreadDebugger::ensureDefaultContextInGroup(
+    int context_group_id) {
+  LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
+  ScriptState* script_state =
+      frame ? ToScriptStateForMainWorld(frame) : nullptr;
+  return script_state ? script_state->GetContext() : v8::Local<v8::Context>();
+}
+
+void MainThreadDebugger::beginEnsureAllContextsInGroup(int context_group_id) {
+  LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
+  frame->GetSettings()->SetForceMainWorldInitialization(true);
+}
+
+void MainThreadDebugger::endEnsureAllContextsInGroup(int context_group_id) {
+  LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
+  frame->GetSettings()->SetForceMainWorldInitialization(false);
+}
+
+bool MainThreadDebugger::canExecuteScripts(int context_group_id) {
+  LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
+  return frame->GetDocument()->CanExecuteScripts(kNotAboutToExecuteScript);
+}
+
+void MainThreadDebugger::runIfWaitingForDebugger(int context_group_id) {
+  LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
+  if (client_message_loop_)
+    client_message_loop_->RunIfWaitingForDebugger(frame);
+}
+
+void MainThreadDebugger::consoleAPIMessage(
+    int context_group_id,
+    v8::Isolate::MessageErrorLevel level,
+    const v8_inspector::StringView& message,
+    const v8_inspector::StringView& url,
+    unsigned line_number,
+    unsigned column_number,
+    v8_inspector::V8StackTrace* stack_trace) {
+  LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
+  if (!frame)
+    return;
+  // TODO(dgozman): we can save a copy of message and url here by making
+  // FrameConsole work with StringView.
+  std::unique_ptr<SourceLocation> location =
+      SourceLocation::Create(ToCoreString(url), line_number, column_number,
+                             stack_trace ? stack_trace->clone() : nullptr, 0);
+  frame->Console().ReportMessageToClient(kConsoleAPIMessageSource,
+                                         V8MessageLevelToMessageLevel(level),
+                                         ToCoreString(message), location.get());
+}
+
+void MainThreadDebugger::consoleClear(int context_group_id) {
+  LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
+  if (!frame)
+    return;
+  if (frame->GetPage())
+    frame->GetPage()->GetConsoleMessageStorage().Clear();
+}
+
+v8::MaybeLocal<v8::Value> MainThreadDebugger::memoryInfo(
+    v8::Isolate* isolate,
+    v8::Local<v8::Context> context) {
+  ExecutionContext* execution_context = ToExecutionContext(context);
+  DCHECK(execution_context);
+  ASSERT(execution_context->IsDocument());
+  return ToV8(MemoryInfo::Create(), context->Global(), isolate);
+}
+
+void MainThreadDebugger::installAdditionalCommandLineAPI(
+    v8::Local<v8::Context> context,
+    v8::Local<v8::Object> object) {
+  ThreadDebugger::installAdditionalCommandLineAPI(context, object);
+  CreateFunctionProperty(
+      context, object, "$", MainThreadDebugger::QuerySelectorCallback,
+      "function $(selector, [startNode]) { [Command Line API] }");
+  CreateFunctionProperty(
+      context, object, "$$", MainThreadDebugger::QuerySelectorAllCallback,
+      "function $$(selector, [startNode]) { [Command Line API] }");
+  CreateFunctionProperty(
+      context, object, "$x", MainThreadDebugger::XpathSelectorCallback,
+      "function $x(xpath, [startNode]) { [Command Line API] }");
+}
+
+static Node* SecondArgumentAsNode(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
+  if (info.Length() > 1) {
+    if (Node* node = V8Node::toImplWithTypeCheck(info.GetIsolate(), info[1]))
+      return node;
+  }
+  ExecutionContext* execution_context =
+      ToExecutionContext(info.GetIsolate()->GetCurrentContext());
+  if (execution_context->IsDocument())
+    return ToDocument(execution_context);
+  return nullptr;
+}
+
+void MainThreadDebugger::QuerySelectorCallback(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
+  if (info.Length() < 1)
+    return;
+  String selector = ToCoreStringWithUndefinedOrNullCheck(info[0]);
+  if (selector.IsEmpty())
+    return;
+  Node* node = SecondArgumentAsNode(info);
+  if (!node || !node->IsContainerNode())
+    return;
+  ExceptionState exception_state(info.GetIsolate(),
+                                 ExceptionState::kExecutionContext,
+                                 "CommandLineAPI", "$");
+  Element* element = ToContainerNode(node)->QuerySelector(
+      AtomicString(selector), exception_state);
+  if (exception_state.HadException())
+    return;
+  if (element)
+    info.GetReturnValue().Set(ToV8(element, info.Holder(), info.GetIsolate()));
+  else
+    info.GetReturnValue().Set(v8::Null(info.GetIsolate()));
+}
+
+void MainThreadDebugger::QuerySelectorAllCallback(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
+  if (info.Length() < 1)
+    return;
+  String selector = ToCoreStringWithUndefinedOrNullCheck(info[0]);
+  if (selector.IsEmpty())
+    return;
+  Node* node = SecondArgumentAsNode(info);
+  if (!node || !node->IsContainerNode())
+    return;
+  ExceptionState exception_state(info.GetIsolate(),
+                                 ExceptionState::kExecutionContext,
+                                 "CommandLineAPI", "$$");
+  // ToV8(elementList) doesn't work here, since we need a proper Array instance,
+  // not NodeList.
+  StaticElementList* element_list = ToContainerNode(node)->QuerySelectorAll(
+      AtomicString(selector), exception_state);
+  if (exception_state.HadException() || !element_list)
+    return;
+  v8::Isolate* isolate = info.GetIsolate();
+  v8::Local<v8::Context> context = isolate->GetCurrentContext();
+  v8::Local<v8::Array> nodes = v8::Array::New(isolate, element_list->length());
+  for (size_t i = 0; i < element_list->length(); ++i) {
+    Element* element = element_list->item(i);
+    if (!CreateDataPropertyInArray(
+             context, nodes, i, ToV8(element, info.Holder(), info.GetIsolate()))
+             .FromMaybe(false))
+      return;
+  }
+  info.GetReturnValue().Set(nodes);
+}
+
+void MainThreadDebugger::XpathSelectorCallback(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
+  if (info.Length() < 1)
+    return;
+  String selector = ToCoreStringWithUndefinedOrNullCheck(info[0]);
+  if (selector.IsEmpty())
+    return;
+  Node* node = SecondArgumentAsNode(info);
+  if (!node || !node->IsContainerNode())
+    return;
+
+  ExceptionState exception_state(info.GetIsolate(),
+                                 ExceptionState::kExecutionContext,
+                                 "CommandLineAPI", "$x");
+  XPathResult* result = XPathEvaluator::Create()->evaluate(
+      selector, node, nullptr, XPathResult::kAnyType, ScriptValue(),
+      exception_state);
+  if (exception_state.HadException() || !result)
+    return;
+  if (result->resultType() == XPathResult::kNumberType) {
+    info.GetReturnValue().Set(ToV8(result->numberValue(exception_state),
+                                   info.Holder(), info.GetIsolate()));
+  } else if (result->resultType() == XPathResult::kStringType) {
+    info.GetReturnValue().Set(ToV8(result->stringValue(exception_state),
+                                   info.Holder(), info.GetIsolate()));
+  } else if (result->resultType() == XPathResult::kBooleanType) {
+    info.GetReturnValue().Set(ToV8(result->booleanValue(exception_state),
+                                   info.Holder(), info.GetIsolate()));
+  } else {
     v8::Isolate* isolate = info.GetIsolate();
     v8::Local<v8::Context> context = isolate->GetCurrentContext();
-    v8::Local<v8::Array> nodes = v8::Array::New(isolate, elementList->length());
-    for (size_t i = 0; i < elementList->length(); ++i) {
-        Element* element = elementList->item(i);
-        if (!nodes->Set(context, i, toV8(element, info.Holder(), info.GetIsolate())).FromMaybe(false))
-            return;
+    v8::Local<v8::Array> nodes = v8::Array::New(isolate);
+    size_t index = 0;
+    while (Node* node = result->iterateNext(exception_state)) {
+      if (exception_state.HadException())
+        return;
+      if (!CreateDataPropertyInArray(
+               context, nodes, index++,
+               ToV8(node, info.Holder(), info.GetIsolate()))
+               .FromMaybe(false))
+        return;
     }
     info.GetReturnValue().Set(nodes);
+  }
 }
 
-void MainThreadDebugger::xpathSelectorCallback(const v8::FunctionCallbackInfo<v8::Value>& info)
-{
-    if (info.Length() < 1)
-        return;
-    String selector = toCoreStringWithUndefinedOrNullCheck(info[0]);
-    if (selector.isEmpty())
-        return;
-    Node* node = secondArgumentAsNode(info);
-    if (!node || !node->isContainerNode())
-        return;
-
-    ExceptionState exceptionState(ExceptionState::ExecutionContext, "$x", "CommandLineAPI", info.Holder(), info.GetIsolate());
-    XPathResult* result = XPathEvaluator::create()->evaluate(selector, node, nullptr, XPathResult::ANY_TYPE, ScriptValue(), exceptionState);
-    if (exceptionState.throwIfNeeded() || !result)
-        return;
-    if (result->resultType() == XPathResult::NUMBER_TYPE) {
-        info.GetReturnValue().Set(toV8(result->numberValue(exceptionState), info.Holder(), info.GetIsolate()));
-    } else if (result->resultType() == XPathResult::STRING_TYPE) {
-        info.GetReturnValue().Set(toV8(result->stringValue(exceptionState), info.Holder(), info.GetIsolate()));
-    } else if (result->resultType() == XPathResult::BOOLEAN_TYPE) {
-        info.GetReturnValue().Set(toV8(result->booleanValue(exceptionState), info.Holder(), info.GetIsolate()));
-    } else {
-        v8::Isolate* isolate = info.GetIsolate();
-        v8::Local<v8::Context> context = isolate->GetCurrentContext();
-        v8::Local<v8::Array> nodes = v8::Array::New(isolate);
-        size_t index = 0;
-        while (Node* node = result->iterateNext(exceptionState)) {
-            if (exceptionState.throwIfNeeded())
-                return;
-            if (!nodes->Set(context, index++, toV8(node, info.Holder(), info.GetIsolate())).FromMaybe(false))
-                return;
-        }
-        info.GetReturnValue().Set(nodes);
-    }
-    exceptionState.throwIfNeeded();
-}
-
-} // namespace blink
+}  // namespace blink

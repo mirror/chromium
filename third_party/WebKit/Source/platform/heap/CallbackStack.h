@@ -6,160 +6,154 @@
 #define CallbackStack_h
 
 #include "platform/heap/BlinkGC.h"
-#include "wtf/Allocator.h"
-#include "wtf/Assertions.h"
-#include "wtf/Threading.h"
-#include "wtf/ThreadingPrimitives.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/Threading.h"
+#include "platform/wtf/ThreadingPrimitives.h"
 
 namespace blink {
 
 // The CallbackStack contains all the visitor callbacks used to trace and mark
-// objects. A specific CallbackStack instance contains at most bufferSize elements.
+// objects. A specific CallbackStack instance contains at most bufferSize
+// elements.
 // If more space is needed a new CallbackStack instance is created and chained
-// together with the former instance. I.e. a logical CallbackStack can be made of
-// multiple chained CallbackStack object instances.
+// together with the former instance. I.e. a logical CallbackStack can be made
+// of multiple chained CallbackStack object instances.
 class CallbackStack final {
-    USING_FAST_MALLOC(CallbackStack);
-public:
-    class Item {
-        DISALLOW_NEW();
-    public:
-        Item() { }
-        Item(void* object, VisitorCallback callback)
-            : m_object(object)
-            , m_callback(callback)
-        {
-        }
-        void* object() { return m_object; }
-        VisitorCallback callback() { return m_callback; }
-        void call(Visitor* visitor) { m_callback(visitor, m_object); }
+  USING_FAST_MALLOC(CallbackStack);
 
-    private:
-        void* m_object;
-        VisitorCallback m_callback;
-    };
+ public:
+  class Item {
+    DISALLOW_NEW();
 
-    static std::unique_ptr<CallbackStack> create();
-    ~CallbackStack();
+   public:
+    Item() {}
+    Item(void* object, VisitorCallback callback)
+        : object_(object), callback_(callback) {}
+    void* Object() { return object_; }
+    VisitorCallback Callback() { return callback_; }
+    void Call(Visitor* visitor) { callback_(visitor, object_); }
 
-    void commit();
-    void decommit();
+   private:
+    void* object_;
+    VisitorCallback callback_;
+  };
 
-    Item* allocateEntry();
-    Item* pop();
+  static std::unique_ptr<CallbackStack> Create();
+  ~CallbackStack();
 
-    bool isEmpty() const;
+  void Commit();
+  void Decommit();
 
-    void invokeEphemeronCallbacks(Visitor*);
+  Item* AllocateEntry();
+  Item* Pop();
 
-#if ENABLE(ASSERT)
-    bool hasCallbackForObject(const void*);
+  bool IsEmpty() const;
+
+  void InvokeEphemeronCallbacks(Visitor*);
+
+#if DCHECK_IS_ON()
+  bool HasCallbackForObject(const void*);
 #endif
-    bool hasJustOneBlock() const;
+  bool HasJustOneBlock() const;
 
-    static const size_t kMinimalBlockSize;
-    static const size_t kDefaultBlockSize = (1 << 13);
+  static const size_t kMinimalBlockSize;
+  static const size_t kDefaultBlockSize = (1 << 13);
 
-private:
-    class Block {
-        USING_FAST_MALLOC(Block);
-    public:
-        explicit Block(Block* next);
-        ~Block();
+ private:
+  class Block {
+    USING_FAST_MALLOC(Block);
 
-#if ENABLE(ASSERT)
-        void clear();
+   public:
+    explicit Block(Block* next);
+    ~Block();
+
+#if DCHECK_IS_ON()
+    void Clear();
 #endif
-        Block* next() const { return m_next; }
-        void setNext(Block* next) { m_next = next; }
+    Block* Next() const { return next_; }
+    void SetNext(Block* next) { next_ = next; }
 
-        bool isEmptyBlock() const
-        {
-            return m_current == &(m_buffer[0]);
-        }
+    bool IsEmptyBlock() const { return current_ == &(buffer_[0]); }
 
-        size_t blockSize() const { return m_blockSize; }
+    size_t BlockSize() const { return block_size_; }
 
-        Item* allocateEntry()
-        {
-            if (LIKELY(m_current < m_limit))
-                return m_current++;
-            return nullptr;
-        }
+    Item* AllocateEntry() {
+      if (LIKELY(current_ < limit_))
+        return current_++;
+      return nullptr;
+    }
 
-        Item* pop()
-        {
-            if (UNLIKELY(isEmptyBlock()))
-                return nullptr;
-            return --m_current;
-        }
+    Item* Pop() {
+      if (UNLIKELY(IsEmptyBlock()))
+        return nullptr;
+      return --current_;
+    }
 
-        void invokeEphemeronCallbacks(Visitor*);
+    void InvokeEphemeronCallbacks(Visitor*);
 
-#if ENABLE(ASSERT)
-        bool hasCallbackForObject(const void*);
+#if DCHECK_IS_ON()
+    bool HasCallbackForObject(const void*);
 #endif
 
-    private:
-        size_t m_blockSize;
+   private:
+    size_t block_size_;
 
-        Item* m_buffer;
-        Item* m_limit;
-        Item* m_current;
-        Block* m_next;
-    };
+    Item* buffer_;
+    Item* limit_;
+    Item* current_;
+    Block* next_;
+  };
 
-    CallbackStack();
-    Item* popSlow();
-    Item* allocateEntrySlow();
-    void invokeOldestCallbacks(Block*, Block*, Visitor*);
+  CallbackStack();
+  Item* PopSlow();
+  Item* AllocateEntrySlow();
+  void InvokeOldestCallbacks(Block*, Block*, Visitor*);
 
-    Block* m_first;
-    Block* m_last;
+  Block* first_;
+  Block* last_;
 };
 
 class CallbackStackMemoryPool final {
-    USING_FAST_MALLOC(CallbackStackMemoryPool);
-public:
-    // 2048 * 8 * sizeof(Item) = 256 KB (64bit) is pre-allocated for the
-    // underlying buffer of CallbackStacks.
-    static const size_t kBlockSize = 2048;
-    static const size_t kPooledBlockCount = 8;
-    static const size_t kBlockBytes = kBlockSize * sizeof(CallbackStack::Item);
+  USING_FAST_MALLOC(CallbackStackMemoryPool);
 
-    static CallbackStackMemoryPool& instance();
+ public:
+  // 2048 * 8 * sizeof(Item) = 256 KB (64bit) is pre-allocated for the
+  // underlying buffer of CallbackStacks.
+  static const size_t kBlockSize = 2048;
+  static const size_t kPooledBlockCount = 8;
+  static const size_t kBlockBytes = kBlockSize * sizeof(CallbackStack::Item);
 
-    void initialize();
-    void shutdown();
-    CallbackStack::Item* allocate();
-    void free(CallbackStack::Item*);
+  static CallbackStackMemoryPool& Instance();
 
-private:
-    Mutex m_mutex;
-    int m_freeListFirst;
-    int m_freeListNext[kPooledBlockCount];
-    CallbackStack::Item* m_pooledMemory;
+  void Initialize();
+  CallbackStack::Item* Allocate();
+  void Free(CallbackStack::Item*);
+
+ private:
+  Mutex mutex_;
+  int free_list_first_;
+  int free_list_next_[kPooledBlockCount];
+  CallbackStack::Item* pooled_memory_;
 };
 
-ALWAYS_INLINE CallbackStack::Item* CallbackStack::allocateEntry()
-{
-    DCHECK(m_first);
-    Item* item = m_first->allocateEntry();
-    if (LIKELY(!!item))
-        return item;
+ALWAYS_INLINE CallbackStack::Item* CallbackStack::AllocateEntry() {
+  DCHECK(first_);
+  Item* item = first_->AllocateEntry();
+  if (LIKELY(!!item))
+    return item;
 
-    return allocateEntrySlow();
+  return AllocateEntrySlow();
 }
 
-ALWAYS_INLINE CallbackStack::Item* CallbackStack::pop()
-{
-    Item* item = m_first->pop();
-    if (LIKELY(!!item))
-        return item;
+ALWAYS_INLINE CallbackStack::Item* CallbackStack::Pop() {
+  Item* item = first_->Pop();
+  if (LIKELY(!!item))
+    return item;
 
-    return popSlow();
+  return PopSlow();
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CallbackStack_h
+#endif  // CallbackStack_h

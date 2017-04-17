@@ -5,18 +5,20 @@
 #ifndef COMPONENTS_BROWSING_DATA_CORE_COUNTERS_HISTORY_COUNTER_H_
 #define COMPONENTS_BROWSING_DATA_CORE_COUNTERS_HISTORY_COUNTER_H_
 
+#include <memory>
+
 #include "base/task/cancelable_task_tracker.h"
 #include "base/timer/timer.h"
 #include "components/browsing_data/core/counters/browsing_data_counter.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/history/core/browser/web_history_service.h"
-#include "components/sync_driver/sync_service.h"
-#include "components/sync_driver/sync_service_observer.h"
+#include "components/sync/driver/sync_service.h"
+#include "components/sync/driver/sync_service_observer.h"
 
 namespace browsing_data {
 
 class HistoryCounter : public browsing_data::BrowsingDataCounter,
-                       public sync_driver::SyncServiceObserver {
+                       public syncer::SyncServiceObserver {
  public:
   typedef base::Callback<history::WebHistoryService*()>
       GetUpdatedWebHistoryServiceCallback;
@@ -36,7 +38,7 @@ class HistoryCounter : public browsing_data::BrowsingDataCounter,
 
   explicit HistoryCounter(history::HistoryService* history_service,
                           const GetUpdatedWebHistoryServiceCallback& callback,
-                          sync_driver::SyncService* sync_service);
+                          syncer::SyncService* sync_service);
   ~HistoryCounter() override;
 
   void OnInitialized() override;
@@ -56,13 +58,13 @@ class HistoryCounter : public browsing_data::BrowsingDataCounter,
   void MergeResults();
 
   // SyncServiceObserver implementation.
-  void OnStateChanged() override;
+  void OnStateChanged(syncer::SyncService* sync) override;
 
   history::HistoryService* history_service_;
 
   GetUpdatedWebHistoryServiceCallback web_history_service_callback_;
 
-  sync_driver::SyncService* sync_service_;
+  syncer::SyncService* sync_service_;
 
   bool has_synced_visits_;
 

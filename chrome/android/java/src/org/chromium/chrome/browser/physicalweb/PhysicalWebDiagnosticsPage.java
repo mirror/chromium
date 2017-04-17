@@ -4,8 +4,7 @@
 
 package org.chromium.chrome.browser.physicalweb;
 
-import android.content.Context;
-import android.content.Intent;
+import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Build;
 import android.text.Html;
@@ -17,7 +16,8 @@ import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.NativePage;
+import org.chromium.chrome.browser.BasicNativePage;
+import org.chromium.chrome.browser.NativePageHost;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.components.location.LocationUtils;
 
@@ -27,23 +27,27 @@ import java.util.Set;
 /**
  * Provides diagnostic information about the Physical Web feature.
  */
-public class PhysicalWebDiagnosticsPage implements NativePage {
-    private final Context mContext;
-    private final int mBackgroundColor;
-    private final int mThemeColor;
-    private final String mSuccessColor;
-    private final String mFailureColor;
-    private final String mIndeterminateColor;
-    private final View mPageView;
-    private final Button mLaunchButton;
-    private final TextView mDiagnosticsText;
+public class PhysicalWebDiagnosticsPage extends BasicNativePage {
+    private String mSuccessColor;
+    private String mFailureColor;
+    private String mIndeterminateColor;
+    private View mPageView;
+    private Button mLaunchButton;
+    private TextView mDiagnosticsText;
 
-    public PhysicalWebDiagnosticsPage(Context context) {
-        mContext = context;
+    /**
+     * Create a new instance of the Physical Web diagnostics page.
+     * @param activity The activity to get context and manage fragments.
+     * @param host A NativePageHost to load urls.
+     */
+    public PhysicalWebDiagnosticsPage(Activity activity, NativePageHost host) {
+        super(activity, host);
+    }
 
-        Resources resources = mContext.getResources();
-        mBackgroundColor = ApiCompatibilityUtils.getColor(resources, R.color.ntp_bg);
-        mThemeColor = ApiCompatibilityUtils.getColor(resources, R.color.default_primary_color);
+    @Override
+    @SuppressWarnings("deprecation") // Update usage of Html.fromHtml when API min is 24
+    protected void initialize(final Activity activity, NativePageHost host) {
+        Resources resources = activity.getResources();
         mSuccessColor = colorToHexValue(ApiCompatibilityUtils.getColor(resources,
                 R.color.physical_web_diags_success_color));
         mFailureColor = colorToHexValue(ApiCompatibilityUtils.getColor(resources,
@@ -51,20 +55,36 @@ public class PhysicalWebDiagnosticsPage implements NativePage {
         mIndeterminateColor = colorToHexValue(ApiCompatibilityUtils.getColor(resources,
                 R.color.physical_web_diags_indeterminate_color));
 
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        LayoutInflater inflater = LayoutInflater.from(activity);
         mPageView = inflater.inflate(R.layout.physical_web_diagnostics, null);
 
         mLaunchButton = (Button) mPageView.findViewById(R.id.physical_web_launch);
         mLaunchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startActivity(createListUrlsIntent(mContext));
+                PhysicalWebUma.onActivityReferral(PhysicalWebUma.DIAGNOSTICS_REFERER);
+                PhysicalWeb.showUrlList();
             }
         });
 
         mDiagnosticsText = (TextView) mPageView.findViewById(R.id.physical_web_diagnostics_text);
         mDiagnosticsText.setAutoLinkMask(Linkify.WEB_URLS);
         mDiagnosticsText.setText(Html.fromHtml(createDiagnosticsReportHtml()));
+    }
+
+    @Override
+    public String getTitle() {
+        return "Physical Web Diagnostics";
+    }
+
+    @Override
+    public String getHost() {
+        return UrlConstants.PHYSICAL_WEB_DIAGNOSTICS_HOST;
+    }
+
+    @Override
+    public View getView() {
+        return mPageView;
     }
 
     private void appendResult(StringBuilder sb, boolean success, String successMessage,
@@ -99,11 +119,11 @@ public class PhysicalWebDiagnosticsPage implements NativePage {
 
     private void appendPrerequisitesReport(StringBuilder sb) {
         boolean isSdkVersionCorrect = isSdkVersionCorrect();
-        boolean isDataConnectionActive = Utils.isDataConnectionActive(mContext);
-        int bluetoothStatus = Utils.getBluetoothEnabledStatus(mContext);
+        boolean isDataConnectionActive = Utils.isDataConnectionActive();
+        int bluetoothStatus = Utils.getBluetoothEnabledStatus();
         LocationUtils locationUtils = LocationUtils.getInstance();
-        boolean isLocationServicesEnabled = locationUtils.isSystemLocationSettingEnabled(mContext);
-        boolean isLocationPermissionGranted = locationUtils.hasAndroidLocationPermission(mContext);
+        boolean isLocationServicesEnabled = locationUtils.isSystemLocationSettingEnabled();
+        boolean isLocationPermissionGranted = locationUtils.hasAndroidLocationPermission();
         boolean isPreferenceEnabled = PhysicalWeb.isPhysicalWebPreferenceEnabled();
         boolean isOnboarding = PhysicalWeb.isOnboarding();
 
@@ -115,8 +135,10 @@ public class PhysicalWebDiagnosticsPage implements NativePage {
                 || !isLocationPermissionGranted
                 || !isPreferenceEnabled) {
             prerequisitesResult = Utils.RESULT_FAILURE;
+            mLaunchButton.setEnabled(false);
         } else if (bluetoothStatus == Utils.RESULT_INDETERMINATE) {
             prerequisitesResult = Utils.RESULT_INDETERMINATE;
+            mLaunchButton.setEnabled(false);
         }
 
         sb.append("<h2>Status</h2>");
@@ -195,60 +217,7 @@ public class PhysicalWebDiagnosticsPage implements NativePage {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT);
     }
 
-    private static Intent createListUrlsIntent(Context context) {
-        Intent intent = new Intent(context, ListUrlsActivity.class);
-        intent.putExtra(ListUrlsActivity.REFERER_KEY, ListUrlsActivity.DIAGNOSTICS_REFERER);
-        return intent;
-    }
-
     private static String colorToHexValue(int color) {
         return "#" + Integer.toHexString(color & 0x00ffffff);
-    }
-
-    // NativePage overrides
-
-    @Override
-    public void destroy() {
-        // nothing to do
-    }
-
-    @Override
-    public String getUrl() {
-        return UrlConstants.PHYSICAL_WEB_URL;
-    }
-
-    @Override
-    public String getTitle() {
-        return "Physical Web Diagnostics";
-    }
-
-    @Override
-    public int getBackgroundColor() {
-        return mBackgroundColor;
-    }
-
-    @Override
-    public int getThemeColor() {
-        return mThemeColor;
-    }
-
-    @Override
-    public boolean needsToolbarShadow() {
-        return true;
-    }
-
-    @Override
-    public View getView() {
-        return mPageView;
-    }
-
-    @Override
-    public String getHost() {
-        return UrlConstants.PHYSICAL_WEB_HOST;
-    }
-
-    @Override
-    public void updateForUrl(String url) {
-        // nothing to do
     }
 }

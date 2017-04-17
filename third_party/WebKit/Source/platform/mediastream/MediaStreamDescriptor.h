@@ -32,83 +32,104 @@
 #ifndef MediaStreamDescriptor_h
 #define MediaStreamDescriptor_h
 
+#include <memory>
 #include "platform/mediastream/MediaStreamComponent.h"
 #include "platform/mediastream/MediaStreamSource.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/Vector.h"
-#include <memory>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-class PLATFORM_EXPORT MediaStreamDescriptorClient : public GarbageCollectedMixin {
-public:
-    virtual ~MediaStreamDescriptorClient() { }
+class PLATFORM_EXPORT MediaStreamDescriptorClient
+    : public GarbageCollectedMixin {
+ public:
+  virtual ~MediaStreamDescriptorClient() {}
 
-    virtual void streamEnded() = 0;
-    virtual void addRemoteTrack(MediaStreamComponent*) = 0;
-    virtual void removeRemoteTrack(MediaStreamComponent*) = 0;
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+  virtual void StreamEnded() = 0;
+  virtual void AddTrackByComponent(MediaStreamComponent*) = 0;
+  virtual void RemoveTrackByComponent(MediaStreamComponent*) = 0;
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
-class PLATFORM_EXPORT MediaStreamDescriptor final : public GarbageCollectedFinalized<MediaStreamDescriptor> {
-public:
-    class ExtraData {
-        USING_FAST_MALLOC(ExtraData);
-    public:
-        virtual ~ExtraData() { }
-    };
+class PLATFORM_EXPORT MediaStreamDescriptor final
+    : public GarbageCollectedFinalized<MediaStreamDescriptor> {
+ public:
+  class ExtraData {
+    USING_FAST_MALLOC(ExtraData);
 
-    // Only used for AudioDestinationNode.
-    static MediaStreamDescriptor* create(const MediaStreamSourceVector& audioSources, const MediaStreamSourceVector& videoSources);
+   public:
+    virtual ~ExtraData() {}
+  };
 
-    static MediaStreamDescriptor* create(const MediaStreamComponentVector& audioComponents, const MediaStreamComponentVector& videoComponents);
+  // Only used for AudioDestinationNode.
+  static MediaStreamDescriptor* Create(
+      const MediaStreamSourceVector& audio_sources,
+      const MediaStreamSourceVector& video_sources);
 
-    static MediaStreamDescriptor* create(const String& id, const MediaStreamComponentVector& audioComponents, const MediaStreamComponentVector& videoComponents);
+  static MediaStreamDescriptor* Create(
+      const MediaStreamComponentVector& audio_components,
+      const MediaStreamComponentVector& video_components);
 
-    MediaStreamDescriptorClient* client() const { return m_client; }
-    void setClient(MediaStreamDescriptorClient* client) { m_client = client; }
+  static MediaStreamDescriptor* Create(
+      const String& id,
+      const MediaStreamComponentVector& audio_components,
+      const MediaStreamComponentVector& video_components);
 
-    String id() const { return m_id; }
+  MediaStreamDescriptorClient* Client() const { return client_; }
+  void SetClient(MediaStreamDescriptorClient* client) { client_ = client; }
 
-    unsigned numberOfAudioComponents() const { return m_audioComponents.size(); }
-    MediaStreamComponent* audioComponent(unsigned index) const { return m_audioComponents[index].get(); }
+  String Id() const { return id_; }
 
-    unsigned numberOfVideoComponents() const { return m_videoComponents.size(); }
-    MediaStreamComponent* videoComponent(unsigned index) const { return m_videoComponents[index].get(); }
+  unsigned NumberOfAudioComponents() const { return audio_components_.size(); }
+  MediaStreamComponent* AudioComponent(unsigned index) const {
+    return audio_components_[index].Get();
+  }
 
-    void addComponent(MediaStreamComponent*);
-    void removeComponent(MediaStreamComponent*);
+  unsigned NumberOfVideoComponents() const { return video_components_.size(); }
+  MediaStreamComponent* VideoComponent(unsigned index) const {
+    return video_components_[index].Get();
+  }
 
-    void addRemoteTrack(MediaStreamComponent*);
-    void removeRemoteTrack(MediaStreamComponent*);
+  void AddComponent(MediaStreamComponent*);
+  void RemoveComponent(MediaStreamComponent*);
 
-    bool active() const { return m_active; }
-    void setActive(bool active) { m_active = active; }
+  void AddRemoteTrack(MediaStreamComponent*);
+  void RemoveRemoteTrack(MediaStreamComponent*);
 
-    ExtraData* getExtraData() const { return m_extraData.get(); }
-    void setExtraData(std::unique_ptr<ExtraData> extraData) { m_extraData = std::move(extraData); }
+  bool Active() const { return active_; }
+  void SetActive(bool active) { active_ = active; }
 
-    // |m_extraData| may hold pointers to GC objects, and it may touch them in destruction.
-    // So this class is eagerly finalized to finalize |m_extraData| promptly.
-    EAGERLY_FINALIZE();
-    DECLARE_TRACE();
+  ExtraData* GetExtraData() const { return extra_data_.get(); }
+  void SetExtraData(std::unique_ptr<ExtraData> extra_data) {
+    extra_data_ = std::move(extra_data);
+  }
 
-private:
-    MediaStreamDescriptor(const String& id, const MediaStreamSourceVector& audioSources, const MediaStreamSourceVector& videoSources);
-    MediaStreamDescriptor(const String& id, const MediaStreamComponentVector& audioComponents, const MediaStreamComponentVector& videoComponents);
+  // |m_extraData| may hold pointers to GC objects, and it may touch them in
+  // destruction.  So this class is eagerly finalized to finalize |m_extraData|
+  // promptly.
+  EAGERLY_FINALIZE();
+  DECLARE_TRACE();
 
-    Member<MediaStreamDescriptorClient> m_client;
-    String m_id;
-    HeapVector<Member<MediaStreamComponent>> m_audioComponents;
-    HeapVector<Member<MediaStreamComponent>> m_videoComponents;
-    bool m_active;
+ private:
+  MediaStreamDescriptor(const String& id,
+                        const MediaStreamSourceVector& audio_sources,
+                        const MediaStreamSourceVector& video_sources);
+  MediaStreamDescriptor(const String& id,
+                        const MediaStreamComponentVector& audio_components,
+                        const MediaStreamComponentVector& video_components);
 
-    std::unique_ptr<ExtraData> m_extraData;
+  Member<MediaStreamDescriptorClient> client_;
+  String id_;
+  HeapVector<Member<MediaStreamComponent>> audio_components_;
+  HeapVector<Member<MediaStreamComponent>> video_components_;
+  bool active_;
+
+  std::unique_ptr<ExtraData> extra_data_;
 };
 
 typedef HeapVector<Member<MediaStreamDescriptor>> MediaStreamDescriptorVector;
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MediaStreamDescriptor_h
+#endif  // MediaStreamDescriptor_h

@@ -2,15 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/ui/cocoa/autofill/card_unmask_prompt_view_bridge.h"
+
 #include "base/bind.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/ui/autofill/autofill_dialog_models.h"
-#include "chrome/browser/ui/chrome_style.h"
+#import "chrome/browser/ui/cocoa/autofill/autofill_dialog_constants.h"
 #import "chrome/browser/ui/cocoa/autofill/autofill_pop_up_button.h"
 #import "chrome/browser/ui/cocoa/autofill/autofill_textfield.h"
 #import "chrome/browser/ui/cocoa/autofill/autofill_tooltip_controller.h"
-#include "chrome/browser/ui/cocoa/autofill/card_unmask_prompt_view_bridge.h"
+#include "chrome/browser/ui/cocoa/chrome_style.h"
 #import "chrome/browser/ui/cocoa/constrained_window/constrained_window_button.h"
 #import "chrome/browser/ui/cocoa/constrained_window/constrained_window_control_utils.h"
 #import "chrome/browser/ui/cocoa/constrained_window/constrained_window_custom_sheet.h"
@@ -19,17 +21,20 @@
 #import "chrome/browser/ui/cocoa/l10n_util.h"
 #import "chrome/browser/ui/cocoa/spinner_view.h"
 #include "chrome/browser/ui/cocoa/themed_window.h"
+#include "chrome/grit/generated_resources.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_controller.h"
+#include "components/grit/components_scaled_resources.h"
+#include "components/strings/grit/components_strings.h"
 #include "content/public/browser/web_contents.h"
-#include "grit/components_scaled_resources.h"
-#include "grit/components_strings.h"
-#include "grit/generated_resources.h"
 #include "skia/ext/skia_utils_mac.h"
 #import "ui/base/cocoa/controls/hyperlink_button_cell.h"
 #include "ui/base/cocoa/window_size_constants.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/color_palette.h"
-#include "ui/native_theme/native_theme_mac.h"
+#include "ui/gfx/image/image_skia_util_mac.h"
+#include "ui/gfx/paint_vector_icon.h"
+#include "ui/native_theme/native_theme.h"
+#include "ui/vector_icons/vector_icons.h"
 
 namespace {
 
@@ -492,12 +497,14 @@ void CardUnmaskPromptViewBridge::PerformClose() {
   [storageCheckbox_ sizeToFit];
   [box addSubview:storageCheckbox_];
 
-  // Add "?" icon with tooltip.
+  // Add "i" icon with tooltip.
   storageTooltip_.reset([[AutofillTooltipController alloc]
-      initWithArrowLocation:info_bubble::kTopRight]);
-  [storageTooltip_ setImage:ui::ResourceBundle::GetSharedInstance()
-                                .GetNativeImageNamed(IDR_AUTOFILL_TOOLTIP_ICON)
-                                .ToNSImage()];
+      initWithArrowLocation:info_bubble::kTopTrailing]);
+  [storageTooltip_ setMaxTooltipWidth:2 * autofill::kFieldWidth +
+                                      autofill::kHorizontalFieldPadding];
+  [storageTooltip_ setImage:gfx::NSImageFromImageSkia(gfx::CreateVectorIcon(
+                                ui::kInfoOutlineIcon, autofill::kInfoIconSize,
+                                gfx::kChromeIconGrey))];
   [storageTooltip_
       setMessage:base::SysUTF16ToNSString(l10n_util::GetStringUTF16(
                      IDS_AUTOFILL_CARD_UNMASK_PROMPT_STORAGE_TOOLTIP))];
@@ -653,7 +660,7 @@ void CardUnmaskPromptViewBridge::PerformClose() {
 
   progressOverlayLabel_.reset([constrained_window::CreateLabel() retain]);
   NSColor* throbberBlueColor = skia::SkColorToCalibratedNSColor(
-      ui::NativeThemeMac::instance()->GetSystemColor(
+      ui::NativeTheme::GetInstanceForNativeUi()->GetSystemColor(
           ui::NativeTheme::kColorId_ThrobberSpinningColor));
   [progressOverlayLabel_ setTextColor:throbberBlueColor];
   [progressOverlayView_ addSubview:progressOverlayLabel_];

@@ -35,13 +35,13 @@
 #include "net/http/http_server_properties_manager.h"
 #include "net/http/transport_security_persister.h"
 #include "net/http/transport_security_state.h"
-#include "net/quic/quic_stream_factory.h"
+#include "net/net_features.h"
+#include "net/quic/chromium/quic_stream_factory.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/default_channel_id_store.h"
 #include "net/ssl/ssl_config_service_defaults.h"
 #include "net/url_request/data_protocol_handler.h"
 #include "net/url_request/static_http_user_agent_settings.h"
-#include "net/url_request/url_request_backoff_manager.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_storage.h"
 #include "net/url_request/url_request_intercepting_job_factory.h"
@@ -49,11 +49,11 @@
 #include "net/url_request/url_request_job_factory_impl.h"
 #include "net/url_request/url_request_throttler_manager.h"
 
-#if !defined(DISABLE_FILE_SUPPORT)
+#if !BUILDFLAG(DISABLE_FILE_SUPPORT)
 #include "net/url_request/file_protocol_handler.h"  // nogncheck
 #endif
 
-#if !defined(DISABLE_FTP_SUPPORT)
+#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
 #include "net/ftp/ftp_network_layer.h"             // nogncheck
 #include "net/url_request/ftp_protocol_handler.h"  // nogncheck
 #endif
@@ -95,9 +95,9 @@ class BasicNetworkDelegate : public NetworkDelegateImpl {
   void OnBeforeRedirect(URLRequest* request,
                         const GURL& new_location) override {}
 
-  void OnResponseStarted(URLRequest* request) override {}
+  void OnResponseStarted(URLRequest* request, int net_error) override {}
 
-  void OnCompleted(URLRequest* request, bool started) override {}
+  void OnCompleted(URLRequest* request, bool started, int net_error) override {}
 
   void OnURLRequestDestroyed(URLRequest* request) override {}
 
@@ -189,29 +189,27 @@ URLRequestContextBuilder::HttpNetworkSessionParams::HttpNetworkSessionParams()
       enable_quic(false),
       quic_max_server_configs_stored_in_properties(0),
       quic_delay_tcp_race(true),
-      quic_max_number_of_lossy_connections(0),
       quic_prefer_aes(false),
-      quic_packet_loss_threshold(1.0f),
       quic_idle_connection_timeout_seconds(kIdleConnectionTimeoutSeconds),
       quic_close_sessions_on_ip_change(false),
       quic_migrate_sessions_on_network_change(false),
       quic_migrate_sessions_early(false),
-      quic_disable_bidirectional_streams(false) {}
+      quic_disable_bidirectional_streams(false),
+      quic_race_cert_verification(false) {}
 
 URLRequestContextBuilder::HttpNetworkSessionParams::~HttpNetworkSessionParams()
 {}
 
 URLRequestContextBuilder::URLRequestContextBuilder()
     : data_enabled_(false),
-#if !defined(DISABLE_FILE_SUPPORT)
+#if !BUILDFLAG(DISABLE_FILE_SUPPORT)
       file_enabled_(false),
 #endif
-#if !defined(DISABLE_FTP_SUPPORT)
+#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
       ftp_enabled_(false),
 #endif
       http_cache_enabled_(true),
       throttling_enabled_(false),
-      backoff_enabled_(false),
       sdch_enabled_(false),
       cookie_store_set_by_client_(false),
       net_log_(nullptr),
@@ -305,8 +303,9 @@ std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
       new ContainerURLRequestContext(file_task_runner_));
   URLRequestContextStorage* storage = context->storage();
 
-  storage->set_http_user_agent_settings(base::WrapUnique(
-      new StaticHttpUserAgentSettings(accept_language_, user_agent_)));
+  storage->set_http_user_agent_settings(
+      base::MakeUnique<StaticHttpUserAgentSettings>(accept_language_,
+                                                    user_agent_));
 
   if (!network_delegate_)
     network_delegate_.reset(new BasicNetworkDelegate);
@@ -357,10 +356,8 @@ std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
   } else {
     std::unique_ptr<CookieStore> cookie_store(
         new CookieMonster(nullptr, nullptr));
-    // TODO(mmenke):  This always creates a file thread, even when it ends up
-    // not being used.  Consider lazily creating the thread.
-    std::unique_ptr<ChannelIDService> channel_id_service(new ChannelIDService(
-        new DefaultChannelIDStore(NULL), context->GetFileTaskRunner()));
+    std::unique_ptr<ChannelIDService> channel_id_service(
+        new ChannelIDService(new DefaultChannelIDStore(NULL)));
     cookie_store->SetChannelIDServiceID(channel_id_service->GetUniqueID());
     storage->set_cookie_store(std::move(cookie_store));
     storage->set_channel_id_service(std::move(channel_id_service));
@@ -372,7 +369,7 @@ std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
   }
 
   storage->set_transport_security_state(
-      base::WrapUnique(new TransportSecurityState()));
+      base::MakeUnique<TransportSecurityState>());
   if (!transport_security_persister_path_.empty()) {
     context->set_transport_security_persister(
         base::WrapUnique<TransportSecurityPersister>(
@@ -407,12 +404,7 @@ std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
 
   if (throttling_enabled_) {
     storage->set_throttler_manager(
-        base::WrapUnique(new URLRequestThrottlerManager()));
-  }
-
-  if (backoff_enabled_) {
-    storage->set_backoff_manager(
-        base::WrapUnique(new URLRequestBackoffManager()));
+        base::MakeUnique<URLRequestThrottlerManager>());
   }
 
   HttpNetworkSession::Params network_session_params;
@@ -433,10 +425,6 @@ std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
       http_network_session_params_.quic_max_server_configs_stored_in_properties;
   network_session_params.quic_delay_tcp_race =
       http_network_session_params_.quic_delay_tcp_race;
-  network_session_params.quic_max_number_of_lossy_connections =
-      http_network_session_params_.quic_max_number_of_lossy_connections;
-  network_session_params.quic_packet_loss_threshold =
-      http_network_session_params_.quic_packet_loss_threshold;
   network_session_params.quic_idle_connection_timeout_seconds =
       http_network_session_params_.quic_idle_connection_timeout_seconds;
   network_session_params.quic_connection_options =
@@ -455,6 +443,8 @@ std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
       http_network_session_params_.quic_migrate_sessions_early;
   network_session_params.quic_disable_bidirectional_streams =
       http_network_session_params_.quic_disable_bidirectional_streams;
+  network_session_params.quic_race_cert_verification =
+      http_network_session_params_.quic_race_cert_verification;
   if (proxy_delegate_) {
     network_session_params.proxy_delegate = proxy_delegate_.get();
     storage->set_proxy_delegate(std::move(proxy_delegate_));
@@ -465,7 +455,7 @@ std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
   }
 
   storage->set_http_network_session(
-      base::WrapUnique(new HttpNetworkSession(network_session_params)));
+      base::MakeUnique<HttpNetworkSession>(network_session_params));
 
   std::unique_ptr<HttpTransactionFactory> http_transaction_factory;
   if (http_cache_enabled_) {
@@ -504,23 +494,20 @@ std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
     job_factory->SetProtocolHandler("data",
                                     base::WrapUnique(new DataProtocolHandler));
 
-#if !defined(DISABLE_FILE_SUPPORT)
+#if !BUILDFLAG(DISABLE_FILE_SUPPORT)
   if (file_enabled_) {
     job_factory->SetProtocolHandler(
-        "file", base::WrapUnique(
-                    new FileProtocolHandler(context->GetFileTaskRunner())));
+        "file",
+        base::MakeUnique<FileProtocolHandler>(context->GetFileTaskRunner()));
   }
-#endif  // !defined(DISABLE_FILE_SUPPORT)
+#endif  // !BUILDFLAG(DISABLE_FILE_SUPPORT)
 
-#if !defined(DISABLE_FTP_SUPPORT)
+#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
   if (ftp_enabled_) {
-    ftp_transaction_factory_.reset(
-        new FtpNetworkLayer(context->host_resolver()));
     job_factory->SetProtocolHandler(
-        "ftp", base::WrapUnique(
-                   new FtpProtocolHandler(ftp_transaction_factory_.get())));
+        "ftp", FtpProtocolHandler::Create(context->host_resolver()));
   }
-#endif  // !defined(DISABLE_FTP_SUPPORT)
+#endif  // !BUILDFLAG(DISABLE_FTP_SUPPORT)
 
   std::unique_ptr<net::URLRequestJobFactory> top_job_factory(job_factory);
   if (!url_request_interceptors_.empty()) {

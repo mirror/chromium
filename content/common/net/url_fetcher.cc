@@ -12,23 +12,23 @@ namespace content {
 
 namespace {
 
-base::SupportsUserData::Data* CreateURLRequestUserData(
-    int render_process_id,
-    int render_view_id) {
-  return new URLRequestUserData(render_process_id, render_view_id);
+base::SupportsUserData::Data* CreateURLRequestUserData(int render_process_id,
+                                                       int render_frame_id) {
+  return new URLRequestUserData(render_process_id, render_frame_id);
 }
 
 }  // namespace
 
-void AssociateURLFetcherWithRenderFrame(net::URLFetcher* url_fetcher,
-                                        const GURL& initiator,
-                                        int render_process_id,
-                                        int render_frame_id) {
-  url_fetcher->SetInitiatorURL(initiator);
+void AssociateURLFetcherWithRenderFrame(
+    net::URLFetcher* url_fetcher,
+    const base::Optional<url::Origin>& initiator,
+    int render_process_id,
+    int render_frame_id) {
+  url_fetcher->SetInitiator(initiator);
   url_fetcher->SetURLRequestUserData(
       URLRequestUserData::kUserDataKey,
-      base::Bind(&CreateURLRequestUserData,
-                 render_process_id, render_frame_id));
+      base::Bind(&CreateURLRequestUserData, render_process_id,
+                 render_frame_id));
 }
 
 }  // namespace content

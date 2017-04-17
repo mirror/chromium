@@ -8,43 +8,48 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/typed_arrays/ArrayBuffer.h"
+#include "platform/wtf/typed_arrays/ArrayBuffer.h"
 
 namespace blink {
 
-class CORE_EXPORT DOMArrayBufferBase : public GarbageCollectedFinalized<DOMArrayBufferBase>, public ScriptWrappable {
-public:
-    virtual ~DOMArrayBufferBase() { }
+class CORE_EXPORT DOMArrayBufferBase
+    : public GarbageCollectedFinalized<DOMArrayBufferBase>,
+      public ScriptWrappable {
+ public:
+  virtual ~DOMArrayBufferBase() {}
 
-    const WTF::ArrayBuffer* buffer() const { return m_buffer.get(); }
-    WTF::ArrayBuffer* buffer() { return m_buffer.get(); }
+  const WTF::ArrayBuffer* Buffer() const { return buffer_.Get(); }
+  WTF::ArrayBuffer* Buffer() { return buffer_.Get(); }
 
-    const void* data() const { return buffer()->data(); }
-    void* data() { return buffer()->data(); }
-    unsigned byteLength() const { return buffer()->byteLength(); }
-    bool transfer(WTF::ArrayBufferContents& result) { return buffer()->transfer(result); }
-    bool shareContentsWith(WTF::ArrayBufferContents& result) { return buffer()->shareContentsWith(result); }
-    bool isNeutered() const { return buffer()->isNeutered(); }
-    bool isShared() const { return buffer()->isShared(); }
+  const void* Data() const { return Buffer()->Data(); }
+  void* Data() { return Buffer()->Data(); }
+  unsigned ByteLength() const { return Buffer()->ByteLength(); }
+  bool Transfer(WTF::ArrayBufferContents& result) {
+    return Buffer()->Transfer(result);
+  }
+  bool ShareContentsWith(WTF::ArrayBufferContents& result) {
+    return Buffer()->ShareContentsWith(result);
+  }
+  bool IsNeutered() const { return Buffer()->IsNeutered(); }
+  bool IsShared() const { return Buffer()->IsShared(); }
 
-    v8::Local<v8::Object> wrap(v8::Isolate*, v8::Local<v8::Object> creationContext) override
-    {
-        ASSERT_NOT_REACHED();
-        return v8::Local<v8::Object>();
-    }
+  v8::Local<v8::Object> Wrap(v8::Isolate*,
+                             v8::Local<v8::Object> creation_context) override {
+    NOTREACHED();
+    return v8::Local<v8::Object>();
+  }
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
-protected:
-    explicit DOMArrayBufferBase(PassRefPtr<WTF::ArrayBuffer> buffer)
-        : m_buffer(buffer)
-    {
-        DCHECK(m_buffer);
-    }
+ protected:
+  explicit DOMArrayBufferBase(PassRefPtr<WTF::ArrayBuffer> buffer)
+      : buffer_(std::move(buffer)) {
+    DCHECK(buffer_);
+  }
 
-    RefPtr<WTF::ArrayBuffer> m_buffer;
+  RefPtr<WTF::ArrayBuffer> buffer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMArrayBufferBase_h
+#endif  // DOMArrayBufferBase_h

@@ -27,29 +27,29 @@
 #define IdTargetObserver_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
 class IdTargetObserverRegistry;
 
 class IdTargetObserver : public GarbageCollectedFinalized<IdTargetObserver> {
-public:
-    virtual ~IdTargetObserver();
-    DECLARE_VIRTUAL_TRACE();
-    virtual void idTargetChanged() = 0;
-    virtual void unregister();
+ public:
+  virtual ~IdTargetObserver();
+  DECLARE_VIRTUAL_TRACE();
+  virtual void IdTargetChanged() = 0;
+  virtual void Unregister();
 
-protected:
-    IdTargetObserver(IdTargetObserverRegistry&, const AtomicString& id);
+ protected:
+  IdTargetObserver(IdTargetObserverRegistry&, const AtomicString& id);
 
-private:
-    IdTargetObserverRegistry& registry() { return *m_registry; }
+ private:
+  IdTargetObserverRegistry& Registry() { return *registry_; }
 
-    Member<IdTargetObserverRegistry> m_registry;
-    AtomicString m_id;
+  Member<IdTargetObserverRegistry> registry_;
+  AtomicString id_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // IdTargetObserver_h
+#endif  // IdTargetObserver_h

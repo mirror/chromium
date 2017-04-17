@@ -8,7 +8,7 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace safe_browsing {
@@ -25,8 +25,8 @@ std::unique_ptr<Incident> MakeIncident(bool changed, bool is_personal) {
       changed
           ? ClientIncidentReport_IncidentData_TrackedPreferenceIncident_ValueState_CHANGED
           : ClientIncidentReport_IncidentData_TrackedPreferenceIncident_ValueState_CLEARED);
-  return base::WrapUnique(
-      new TrackedPreferenceIncident(std::move(incident), is_personal));
+  return base::MakeUnique<TrackedPreferenceIncident>(std::move(incident),
+                                                     is_personal);
 }
 
 }  // namespace

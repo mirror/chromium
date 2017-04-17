@@ -7,7 +7,7 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "device/geolocation/geolocation_service_context.h"
 
 namespace device {
@@ -52,8 +52,7 @@ void RecordGeopositionErrorCode(Geoposition::ErrorCode error_code) {
       code = GEOPOSITION_ERROR_CODE_TIMEOUT;
       break;
   }
-  UMA_HISTOGRAM_ENUMERATION("Geolocation.LocationUpdate.ErrorCode",
-                            code,
+  UMA_HISTOGRAM_ENUMERATION("Geolocation.LocationUpdate.ErrorCode", code,
                             GEOPOSITION_ERROR_CODE_COUNT);
 }
 
@@ -61,26 +60,23 @@ void RecordGeopositionErrorCode(Geoposition::ErrorCode error_code) {
 
 GeolocationServiceImpl::GeolocationServiceImpl(
     mojo::InterfaceRequest<GeolocationService> request,
-    GeolocationServiceContext* context,
-    const base::Closure& update_callback)
+    GeolocationServiceContext* context)
     : binding_(this, std::move(request)),
       context_(context),
-      update_callback_(update_callback),
       high_accuracy_(false),
       has_position_to_report_(false) {
   DCHECK(context_);
-  binding_.set_connection_error_handler(
-      base::Bind(&GeolocationServiceImpl::OnConnectionError,
-                 base::Unretained(this)));
+  binding_.set_connection_error_handler(base::Bind(
+      &GeolocationServiceImpl::OnConnectionError, base::Unretained(this)));
 }
 
 GeolocationServiceImpl::~GeolocationServiceImpl() {
   // Make sure to respond to any pending callback even without a valid position.
   if (!position_callback_.is_null()) {
     if (!current_position_.valid) {
-      current_position_.error_code = blink::mojom::Geoposition::ErrorCode(
+      current_position_.error_code = mojom::Geoposition::ErrorCode(
           GEOPOSITION_ERROR_CODE_POSITION_UNAVAILABLE);
-      current_position_.error_message = mojo::String("");
+      current_position_.error_message.clear();
     }
     ReportCurrentPosition();
   }
@@ -162,11 +158,6 @@ void GeolocationServiceImpl::OnLocationUpdate(const Geoposition& position) {
   RecordGeopositionErrorCode(position.error_code);
   DCHECK(context_);
 
-  if (context_->paused())
-    return;
-
-  update_callback_.Run();
-
   current_position_.valid = position.Validate();
   current_position_.latitude = position.latitude;
   current_position_.longitude = position.longitude;
@@ -177,7 +168,7 @@ void GeolocationServiceImpl::OnLocationUpdate(const Geoposition& position) {
   current_position_.speed = position.speed;
   current_position_.timestamp = position.timestamp.ToDoubleT();
   current_position_.error_code =
-      blink::mojom::Geoposition::ErrorCode(position.error_code);
+      mojom::Geoposition::ErrorCode(position.error_code);
   current_position_.error_message = position.error_message;
 
   has_position_to_report_ = true;

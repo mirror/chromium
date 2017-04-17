@@ -1,13 +1,11 @@
 # For Blink API usage
 esprehn@chromium.org
 
+# For resource loading
+yhirano@chromium.org
+
 # AppCache
 per-file appcache*=michaeln@chromium.org
-
-# WebSocket
-per-file *websocket*=ricea@chromium.org
-per-file *websocket*=tyoshino@chromium.org
-per-file *websocket*=yhirano@chromium.org
 
 # WebSQL
 per-file database_*=jsbell@chromium.org

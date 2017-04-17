@@ -4,11 +4,14 @@
 
 #include "components/dom_distiller/content/browser/distillability_driver.h"
 
+#include "base/memory/ptr_util.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
-#include "services/shell/public/cpp/interface_registry.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
+#include "services/service_manager/public/cpp/interface_registry.h"
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(
     dom_distiller::DistillabilityDriver);
@@ -19,11 +22,9 @@ namespace dom_distiller {
 // renderer to notify the browser that a page is distillable.
 class DistillabilityServiceImpl : public mojom::DistillabilityService {
  public:
-  DistillabilityServiceImpl(
-      mojo::InterfaceRequest<mojom::DistillabilityService> request,
+  explicit DistillabilityServiceImpl(
       base::WeakPtr<DistillabilityDriver> distillability_driver)
-      : binding_(this, std::move(request)),
-        distillability_driver_(distillability_driver) {}
+      : distillability_driver_(distillability_driver) {}
 
   ~DistillabilityServiceImpl() override {
     if (!distillability_driver_) return;
@@ -36,7 +37,6 @@ class DistillabilityServiceImpl : public mojom::DistillabilityService {
   }
 
  private:
-  mojo::StrongBinding<mojom::DistillabilityService> binding_;
   base::WeakPtr<DistillabilityDriver> distillability_driver_;
 };
 
@@ -55,7 +55,9 @@ DistillabilityDriver::~DistillabilityDriver() {
 
 void DistillabilityDriver::CreateDistillabilityService(
     mojo::InterfaceRequest<mojom::DistillabilityService> request) {
-  new DistillabilityServiceImpl(std::move(request), weak_factory_.GetWeakPtr());
+  mojo::MakeStrongBinding(
+      base::MakeUnique<DistillabilityServiceImpl>(weak_factory_.GetWeakPtr()),
+      std::move(request));
 }
 
 void DistillabilityDriver::SetDelegate(
@@ -85,16 +87,12 @@ void DistillabilityDriver::RenderFrameHostChanged(
   // or from a native page), the service needs to be attached to that host.
   mojo_needs_setup_ = true;
   SetupMojoService(new_host);
-  // Clean up the service on the old host if possible.
-  if (!old_host || !old_host->GetInterfaceRegistry()) return;
-  old_host->GetInterfaceRegistry()
-      ->RemoveInterface<mojom::DistillabilityService>();
 }
 
-void DistillabilityDriver::DidStartProvisionalLoadForFrame(
-    content::RenderFrameHost* render_frame_host, const GURL& validated_url,
-    bool is_error_page, bool is_iframe_srcdoc) {
-  SetupMojoService(render_frame_host);
+void DistillabilityDriver::ReadyToCommitNavigation(
+      content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->IsSameDocument())
+    SetupMojoService(navigation_handle->GetRenderFrameHost());
 }
 
 void DistillabilityDriver::SetupMojoService(

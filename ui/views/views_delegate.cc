@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "build/build_config.h"
+#include "ui/views/layout/layout_constants.h"
 #include "ui/views/views_touch_selection_controller_factory.h"
 #include "ui/views/widget/native_widget_private.h"
 
@@ -18,6 +19,20 @@ namespace {
 
 ViewsDelegate* views_delegate = nullptr;
 
+}
+
+ViewsDelegate::ViewsDelegate()
+    : editing_controller_factory_(new ViewsTouchEditingControllerFactory) {
+  DCHECK(!views_delegate);
+  views_delegate = this;
+
+  ui::TouchEditingControllerFactory::SetInstance(
+      editing_controller_factory_.get());
+
+#if defined(USE_AURA)
+  touch_selection_menu_runner_ =
+      base::MakeUnique<TouchSelectionMenuRunnerViews>();
+#endif
 }
 
 ViewsDelegate::~ViewsDelegate() {
@@ -93,7 +108,7 @@ content::WebContents* ViewsDelegate::CreateWebContents(
   return nullptr;
 }
 
-base::TimeDelta ViewsDelegate::GetDefaultTextfieldObscuredRevealDuration() {
+base::TimeDelta ViewsDelegate::GetTextfieldPasswordRevealDuration() {
   return base::TimeDelta();
 }
 
@@ -102,6 +117,10 @@ bool ViewsDelegate::WindowManagerProvidesTitleBar(bool maximized) {
 }
 
 ui::ContextFactory* ViewsDelegate::GetContextFactory() {
+  return nullptr;
+}
+
+ui::ContextFactoryPrivate* ViewsDelegate::GetContextFactoryPrivate() {
   return nullptr;
 }
 
@@ -119,18 +138,6 @@ int ViewsDelegate::GetAppbarAutohideEdges(HMONITOR monitor,
 
 scoped_refptr<base::TaskRunner> ViewsDelegate::GetBlockingPoolTaskRunner() {
   return nullptr;
-}
-
-ViewsDelegate::ViewsDelegate()
-    : views_tsc_factory_(new ViewsTouchEditingControllerFactory) {
-  DCHECK(!views_delegate);
-  views_delegate = this;
-
-  ui::TouchEditingControllerFactory::SetInstance(views_tsc_factory_.get());
-
-#if defined(USE_AURA)
-  touch_selection_menu_runner_.reset(new TouchSelectionMenuRunnerViews());
-#endif
 }
 
 }  // namespace views

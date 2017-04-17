@@ -24,16 +24,17 @@
 
 namespace blink {
 
-WebSocketFrame::WebSocketFrame(OpCode opCode, const char* payload, size_t payloadLength, Flags flags)
-    : opCode(opCode)
-    , final(flags & Final)
-    , compress(flags & Compress)
-    , reserved2(flags & Reserved2)
-    , reserved3(flags & Reserved3)
-    , masked(flags & Masked)
-    , payload(payload)
-    , payloadLength(payloadLength)
-{
-}
+WebSocketFrame::WebSocketFrame(OpCode op_code,
+                               const char* payload,
+                               size_t payload_length,
+                               Flags flags)
+    : op_code(op_code),
+      final(flags & kFinal),
+      compress(flags & kCompress),
+      reserved2(flags & kReserved2),
+      reserved3(flags & kReserved3),
+      masked(flags & kMasked),
+      payload(payload),
+      payload_length(payload_length) {}
 
-} // namespace blink
+}  // namespace blink

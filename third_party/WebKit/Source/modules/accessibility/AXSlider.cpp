@@ -38,125 +38,119 @@ namespace blink {
 
 using namespace HTMLNames;
 
-AXSlider::AXSlider(LayoutObject* layoutObject, AXObjectCacheImpl& axObjectCache)
-    : AXLayoutObject(layoutObject, axObjectCache)
-{
+AXSlider::AXSlider(LayoutObject* layout_object,
+                   AXObjectCacheImpl& ax_object_cache)
+    : AXLayoutObject(layout_object, ax_object_cache) {}
+
+AXSlider* AXSlider::Create(LayoutObject* layout_object,
+                           AXObjectCacheImpl& ax_object_cache) {
+  return new AXSlider(layout_object, ax_object_cache);
 }
 
-AXSlider* AXSlider::create(LayoutObject* layoutObject, AXObjectCacheImpl& axObjectCache)
-{
-    return new AXSlider(layoutObject, axObjectCache);
+AccessibilityRole AXSlider::DetermineAccessibilityRole() {
+  if ((aria_role_ = DetermineAriaRoleAttribute()) != kUnknownRole)
+    return aria_role_;
+
+  return kSliderRole;
 }
 
-AccessibilityRole AXSlider::determineAccessibilityRole()
-{
-    if ((m_ariaRole = determineAriaRoleAttribute()) != UnknownRole)
-        return m_ariaRole;
+AccessibilityOrientation AXSlider::Orientation() const {
+  // Default to horizontal in the unknown case.
+  if (!layout_object_)
+    return kAccessibilityOrientationHorizontal;
 
-    return SliderRole;
-}
+  const ComputedStyle* style = layout_object_->Style();
+  if (!style)
+    return kAccessibilityOrientationHorizontal;
 
-AccessibilityOrientation AXSlider::orientation() const
-{
-    // Default to horizontal in the unknown case.
-    if (!m_layoutObject)
-        return AccessibilityOrientationHorizontal;
+  ControlPart style_appearance = style->Appearance();
+  switch (style_appearance) {
+    case kSliderThumbHorizontalPart:
+    case kSliderHorizontalPart:
+    case kMediaSliderPart:
+      return kAccessibilityOrientationHorizontal;
 
-    const ComputedStyle* style = m_layoutObject->style();
-    if (!style)
-        return AccessibilityOrientationHorizontal;
-
-    ControlPart styleAppearance = style->appearance();
-    switch (styleAppearance) {
-    case SliderThumbHorizontalPart:
-    case SliderHorizontalPart:
-    case MediaSliderPart:
-    case MediaFullScreenVolumeSliderPart:
-        return AccessibilityOrientationHorizontal;
-
-    case SliderThumbVerticalPart:
-    case SliderVerticalPart:
-    case MediaVolumeSliderPart:
-        return AccessibilityOrientationVertical;
+    case kSliderThumbVerticalPart:
+    case kSliderVerticalPart:
+    case kMediaVolumeSliderPart:
+      return kAccessibilityOrientationVertical;
 
     default:
-        return AccessibilityOrientationHorizontal;
-    }
+      return kAccessibilityOrientationHorizontal;
+  }
 }
 
-void AXSlider::addChildren()
-{
-    ASSERT(!isDetached());
-    ASSERT(!m_haveChildren);
+void AXSlider::AddChildren() {
+  DCHECK(!IsDetached());
+  DCHECK(!have_children_);
 
-    m_haveChildren = true;
+  have_children_ = true;
 
-    AXObjectCacheImpl& cache = axObjectCache();
+  AXObjectCacheImpl& cache = AxObjectCache();
 
-    AXSliderThumb* thumb = static_cast<AXSliderThumb*>(cache.getOrCreate(SliderThumbRole));
-    thumb->setParent(this);
+  AXSliderThumb* thumb =
+      static_cast<AXSliderThumb*>(cache.GetOrCreate(kSliderThumbRole));
+  thumb->SetParent(this);
 
-    // Before actually adding the value indicator to the hierarchy,
-    // allow the platform to make a final decision about it.
-    if (thumb->accessibilityIsIgnored())
-        cache.remove(thumb->axObjectID());
-    else
-        m_children.append(thumb);
+  // Before actually adding the value indicator to the hierarchy,
+  // allow the platform to make a final decision about it.
+  if (thumb->AccessibilityIsIgnored())
+    cache.Remove(thumb->AxObjectID());
+  else
+    children_.push_back(thumb);
 }
 
-AXObject* AXSlider::elementAccessibilityHitTest(const IntPoint& point) const
-{
-    if (m_children.size()) {
-        ASSERT(m_children.size() == 1);
-        if (m_children[0]->elementRect().contains(point))
-            return m_children[0].get();
-    }
+AXObject* AXSlider::ElementAccessibilityHitTest(const IntPoint& point) const {
+  if (children_.size()) {
+    DCHECK(children_.size() == 1);
+    if (children_[0]->GetBoundsInFrameCoordinates().Contains(point))
+      return children_[0].Get();
+  }
 
-    return axObjectCache().getOrCreate(m_layoutObject);
+  return AxObjectCache().GetOrCreate(layout_object_);
 }
 
-void AXSlider::setValue(const String& value)
-{
-    HTMLInputElement* input = element();
+void AXSlider::SetValue(const String& value) {
+  HTMLInputElement* input = GetElement();
 
-    if (input->value() == value)
-        return;
+  if (input->value() == value)
+    return;
 
-    input->setValue(value, DispatchInputAndChangeEvent);
+  input->setValue(value, kDispatchInputAndChangeEvent);
 
-    // Fire change event manually, as LayoutSlider::setValueForPosition does.
-    input->dispatchFormControlChangeEvent();
+  // Fire change event manually, as LayoutSlider::setValueForPosition does.
+  input->DispatchFormControlChangeEvent();
 }
 
-HTMLInputElement* AXSlider::element() const
-{
-    return toHTMLInputElement(m_layoutObject->node());
+HTMLInputElement* AXSlider::GetElement() const {
+  return toHTMLInputElement(layout_object_->GetNode());
 }
 
-AXSliderThumb::AXSliderThumb(AXObjectCacheImpl& axObjectCache)
-    : AXMockObject(axObjectCache)
-{
+AXSliderThumb::AXSliderThumb(AXObjectCacheImpl& ax_object_cache)
+    : AXMockObject(ax_object_cache) {}
+
+AXSliderThumb* AXSliderThumb::Create(AXObjectCacheImpl& ax_object_cache) {
+  return new AXSliderThumb(ax_object_cache);
 }
 
-AXSliderThumb* AXSliderThumb::create(AXObjectCacheImpl& axObjectCache)
-{
-    return new AXSliderThumb(axObjectCache);
+LayoutObject* AXSliderThumb::LayoutObjectForRelativeBounds() const {
+  if (!parent_)
+    return nullptr;
+
+  LayoutObject* slider_layout_object = parent_->GetLayoutObject();
+  if (!slider_layout_object || !slider_layout_object->IsSlider())
+    return nullptr;
+  Element* thumb_element =
+      ToElement(slider_layout_object->GetNode())
+          ->UserAgentShadowRoot()
+          ->GetElementById(ShadowElementNames::SliderThumb());
+  DCHECK(thumb_element);
+  return thumb_element->GetLayoutObject();
 }
 
-LayoutRect AXSliderThumb::elementRect() const
-{
-    if (!m_parent)
-        return LayoutRect();
-
-    LayoutObject* sliderLayoutObject = m_parent->getLayoutObject();
-    if (!sliderLayoutObject || !sliderLayoutObject->isSlider())
-        return LayoutRect();
-    return toElement(sliderLayoutObject->node())->userAgentShadowRoot()->getElementById(ShadowElementNames::sliderThumb())->boundingBox();
+bool AXSliderThumb::ComputeAccessibilityIsIgnored(
+    IgnoredReasons* ignored_reasons) const {
+  return AccessibilityIsIgnoredByDefault(ignored_reasons);
 }
 
-bool AXSliderThumb::computeAccessibilityIsIgnored(IgnoredReasons* ignoredReasons) const
-{
-    return accessibilityIsIgnoredByDefault(ignoredReasons);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -13,10 +13,12 @@
 #include "base/location.h"
 #include "base/metrics/histogram_base.h"
 #include "base/metrics/histogram_delta_serialization.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/process/kill.h"
 #include "base/process/launch.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -28,8 +30,28 @@
 #include "chrome/common/service_process_util.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
+#include "ipc/ipc_channel_mojo.h"
+#include "mojo/edk/embedder/embedder.h"
+#include "mojo/edk/embedder/named_platform_handle.h"
+#include "mojo/edk/embedder/named_platform_handle_utils.h"
 
 using content::BrowserThread;
+
+namespace {
+
+void ConnectAsync(mojo::ScopedMessagePipeHandle handle,
+                  mojo::edk::NamedPlatformHandle os_pipe) {
+  mojo::edk::ScopedPlatformHandle os_pipe_handle =
+      mojo::edk::CreateClientHandle(os_pipe);
+  if (!os_pipe_handle.is_valid())
+    return;
+
+  mojo::FuseMessagePipes(
+      mojo::edk::ConnectToPeerProcess(std::move(os_pipe_handle)),
+      std::move(handle));
+}
+
+}  // namespace
 
 // ServiceProcessControl implementation.
 ServiceProcessControl::ServiceProcessControl() {
@@ -49,11 +71,19 @@ void ServiceProcessControl::ConnectInternal() {
   // Actually going to connect.
   DVLOG(1) << "Connecting to Service Process IPC Server";
 
+  mojo::MessagePipe pipe;
+  base::PostTaskWithTraits(
+      FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
+                     base::TaskPriority::BACKGROUND),
+      base::Bind(&ConnectAsync, base::Passed(&pipe.handle1),
+                 GetServiceProcessChannel()));
   // TODO(hclam): Handle error connecting to channel.
-  const IPC::ChannelHandle channel_id = GetServiceProcessChannel();
-  SetChannel(IPC::ChannelProxy::Create(
-      channel_id, IPC::Channel::MODE_NAMED_CLIENT, this,
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO).get()));
+  auto io_task_runner =
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
+  SetChannel(
+      IPC::ChannelProxy::Create(IPC::ChannelMojo::CreateClientFactory(
+                                    std::move(pipe.handle0), io_task_runner),
+                                this, io_task_runner));
 }
 
 void ServiceProcessControl::SetChannel(

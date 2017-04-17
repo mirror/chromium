@@ -31,138 +31,362 @@
 #include "public/web/WebFrameSerializer.h"
 
 #include "platform/testing/URLTestHelpers.h"
+#include "platform/testing/UnitTestHelpers.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/wtf/text/StringBuilder.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCString.h"
+#include "public/platform/WebCache.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
-#include "public/web/WebCache.h"
 #include "public/web/WebFrameSerializerClient.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "web/WebLocalFrameImpl.h"
 #include "web/WebViewImpl.h"
 #include "web/tests/FrameTestHelpers.h"
-#include "wtf/text/StringBuilder.h"
 
 namespace blink {
 
 namespace {
 class SimpleWebFrameSerializerClient final : public WebFrameSerializerClient {
-public:
-    String toString() { return m_builder.toString(); }
+ public:
+  String ToString() { return builder_.ToString(); }
 
-private:
-    void didSerializeDataForFrame(const WebCString& data, FrameSerializationStatus) final
-    {
-        m_builder.append(data.data(), data.length());
-    }
+ private:
+  void DidSerializeDataForFrame(const WebCString& data,
+                                FrameSerializationStatus) final {
+    builder_.Append(data.Data(), data.length());
+  }
 
-    StringBuilder m_builder;
+  StringBuilder builder_;
 };
 
-} // namespace
+class SimpleMHTMLPartsGenerationDelegate
+    : public WebFrameSerializer::MHTMLPartsGenerationDelegate {
+ public:
+  SimpleMHTMLPartsGenerationDelegate() : remove_popup_overlay_(false) {}
 
-class WebFrameSerializerTest : public testing::Test {
-protected:
-    WebFrameSerializerTest()
-    {
-        m_helper.initialize();
-    }
+  void SetRemovePopupOverlay(bool remove_popup_overlay) {
+    remove_popup_overlay_ = remove_popup_overlay;
+  }
 
-    ~WebFrameSerializerTest() override
-    {
-        Platform::current()->getURLLoaderMockFactory()->unregisterAllURLs();
-        WebCache::clear();
-    }
+ private:
+  bool ShouldSkipResource(const WebURL&) final { return false; }
 
-    void registerMockedImageURL(const String& url)
-    {
-        // Image resources need to be mocked, but irrelevant here what image they map to.
-        URLTestHelpers::registerMockedURLLoad(KURL(ParsedURLString, url), "frameserialization/awesome.png");
-    }
+  WebString GetContentID(WebFrame*) final { return WebString("<cid>"); }
 
-    class SingleLinkRewritingDelegate : public WebFrameSerializer::LinkRewritingDelegate {
-    public:
-        SingleLinkRewritingDelegate(const WebURL& url, const WebString& localPath)
-            : m_url(url)
-            , m_localPath(localPath)
-        {
-        }
+  WebFrameSerializerCacheControlPolicy CacheControlPolicy() final {
+    return WebFrameSerializerCacheControlPolicy::kNone;
+  }
 
-        bool rewriteFrameSource(WebFrame* frame, WebString* rewrittenLink) override
-        {
-            return false;
-        }
+  bool UseBinaryEncoding() final { return false; }
+  bool RemovePopupOverlay() final { return remove_popup_overlay_; }
 
-        bool rewriteLink(const WebURL& url, WebString* rewrittenLink) override
-        {
-            if (url != m_url)
-                return false;
-
-            *rewrittenLink = m_localPath;
-            return true;
-        }
-
-    private:
-        const WebURL m_url;
-        const WebString m_localPath;
-    };
-
-    String serializeFile(const String& url, const String& fileName)
-    {
-        KURL parsedURL(ParsedURLString, url);
-        URLTestHelpers::registerMockedURLLoad(parsedURL, fileName, "frameserialization/", "text/html");
-        FrameTestHelpers::loadFrame(mainFrameImpl(), url.utf8().data());
-        SingleLinkRewritingDelegate delegate(parsedURL, WebString("local"));
-        SimpleWebFrameSerializerClient serializerClient;
-        WebFrameSerializer::serialize(
-            mainFrameImpl(), &serializerClient, &delegate);
-        return serializerClient.toString();
-    }
-
-    WebLocalFrameImpl* mainFrameImpl()
-    {
-        return m_helper.webView()->mainFrameImpl();
-    }
-
-private:
-    FrameTestHelpers::WebViewHelper m_helper;
+  bool remove_popup_overlay_;
 };
 
-TEST_F(WebFrameSerializerTest, URLAttributeValues)
-{
-    registerMockedImageURL("javascript:\"");
-
-    const char* expectedHTML =
-        "\n<!-- saved from url=(0020)http://www.test.com/ -->\n"
-        "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n"
-        "</head><body><img src=\"javascript:&quot;\">\n"
-        "<a href=\"http://www.test.com/local#&quot;\">local</a>\n"
-        "<a href=\"http://www.example.com/#&quot;&gt;&lt;script&gt;alert(0)&lt;/script&gt;\">external</a>\n"
-        "</body></html>";
-    String actualHTML = serializeFile("http://www.test.com", "url_attribute_values.html");
-    EXPECT_EQ(expectedHTML, actualHTML);
+// Returns the count of match for substring |pattern| in string |str|.
+int MatchSubstring(const String& str, const char* pattern, size_t size) {
+  int matches = 0;
+  size_t start = 0;
+  while (true) {
+    size_t pos = str.Find(pattern, start);
+    if (pos == WTF::kNotFound)
+      break;
+    matches++;
+    start = pos + size;
+  }
+  return matches;
 }
 
-TEST_F(WebFrameSerializerTest, EncodingAndNormalization)
-{
-    const char* expectedHTML =
-        "<!DOCTYPE html>\n"
-        "<!-- saved from url=(0020)http://www.test.com/ -->\n"
-        "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=EUC-KR\">\n"
-        "<title>Ensure NFC normalization is not performed by frame serializer</title>\n"
-        "</head><body>\n"
-        "\xe4\xc5\xd1\xe2\n"
-        "\n</body></html>";
-    String actualHTML = serializeFile("http://www.test.com", "encoding_normalization.html");
-    EXPECT_EQ(expectedHTML, actualHTML);
+}  // namespace
+
+class WebFrameSerializerTest : public ::testing::Test {
+ protected:
+  WebFrameSerializerTest() { helper_.Initialize(); }
+
+  ~WebFrameSerializerTest() override {
+    Platform::Current()
+        ->GetURLLoaderMockFactory()
+        ->UnregisterAllURLsAndClearMemoryCache();
+  }
+
+  void RegisterMockedImageURLLoad(const String& url) {
+    // Image resources need to be mocked, but irrelevant here what image they
+    // map to.
+    RegisterMockedFileURLLoad(URLTestHelpers::ToKURL(url.Utf8().Data()),
+                              "frameserialization/awesome.png");
+  }
+  void RegisterMockedFileURLLoad(const KURL& url,
+                                 const String& file_path,
+                                 const String& mime_type = "image/png") {
+    URLTestHelpers::RegisterMockedURLLoad(
+        url, testing::WebTestDataPath(file_path.Utf8().Data()), mime_type);
+  }
+
+  class SingleLinkRewritingDelegate
+      : public WebFrameSerializer::LinkRewritingDelegate {
+   public:
+    SingleLinkRewritingDelegate(const WebURL& url, const WebString& local_path)
+        : url_(url), local_path_(local_path) {}
+
+    bool RewriteFrameSource(WebFrame* frame,
+                            WebString* rewritten_link) override {
+      return false;
+    }
+
+    bool RewriteLink(const WebURL& url, WebString* rewritten_link) override {
+      if (url != url_)
+        return false;
+
+      *rewritten_link = local_path_;
+      return true;
+    }
+
+   private:
+    const WebURL url_;
+    const WebString local_path_;
+  };
+
+  String SerializeFile(const String& url, const String& file_name) {
+    KURL parsed_url(kParsedURLString, url);
+    String file_path("frameserialization/" + file_name);
+    RegisterMockedFileURLLoad(parsed_url, file_path, "text/html");
+    FrameTestHelpers::LoadFrame(MainFrameImpl(), url.Utf8().Data());
+    SingleLinkRewritingDelegate delegate(parsed_url, WebString("local"));
+    SimpleWebFrameSerializerClient serializer_client;
+    WebFrameSerializer::Serialize(MainFrameImpl(), &serializer_client,
+                                  &delegate);
+    return serializer_client.ToString();
+  }
+
+  WebViewImpl* WebView() { return helper_.WebView(); }
+
+  WebLocalFrameImpl* MainFrameImpl() {
+    return helper_.WebView()->MainFrameImpl();
+  }
+
+ private:
+  FrameTestHelpers::WebViewHelper helper_;
+};
+
+TEST_F(WebFrameSerializerTest, URLAttributeValues) {
+  RegisterMockedImageURLLoad("javascript:\"");
+
+  const char* expected_html =
+      "\n<!-- saved from url=(0020)http://www.test.com/ -->\n"
+      "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; "
+      "charset=UTF-8\">\n"
+      "</head><body><img src=\"javascript:&quot;\">\n"
+      "<a href=\"http://www.test.com/local#&quot;\">local</a>\n"
+      "<a "
+      "href=\"http://www.example.com/#&quot;&gt;&lt;script&gt;alert(0)&lt;/"
+      "script&gt;\">external</a>\n"
+      "</body></html>";
+  String actual_html =
+      SerializeFile("http://www.test.com", "url_attribute_values.html");
+  EXPECT_EQ(expected_html, actual_html);
 }
 
-TEST_F(WebFrameSerializerTest, FromUrlWithMinusMinus)
-{
-    String actualHTML = serializeFile("http://www.test.com?--x--", "text_only_page.html");
-    EXPECT_EQ("<!-- saved from url=(0030)http://www.test.com/?-%2Dx-%2D -->", actualHTML.substring(1, 60));
+TEST_F(WebFrameSerializerTest, EncodingAndNormalization) {
+  const char* expected_html =
+      "<!DOCTYPE html>\n"
+      "<!-- saved from url=(0020)http://www.test.com/ -->\n"
+      "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; "
+      "charset=EUC-KR\">\n"
+      "<title>Ensure NFC normalization is not performed by frame "
+      "serializer</title>\n"
+      "</head><body>\n"
+      "\xe4\xc5\xd1\xe2\n"
+      "\n</body></html>";
+  String actual_html =
+      SerializeFile("http://www.test.com", "encoding_normalization.html");
+  EXPECT_EQ(expected_html, actual_html);
 }
 
-} // namespace blink
+TEST_F(WebFrameSerializerTest, FromUrlWithMinusMinus) {
+  String actual_html =
+      SerializeFile("http://www.test.com?--x--", "text_only_page.html");
+  EXPECT_EQ("<!-- saved from url=(0030)http://www.test.com/?-%2Dx-%2D -->",
+            actual_html.Substring(1, 60));
+}
+
+class WebFrameSerializerSanitizationTest : public WebFrameSerializerTest {
+ protected:
+  WebFrameSerializerSanitizationTest() {}
+
+  ~WebFrameSerializerSanitizationTest() override {}
+
+  String GenerateMHTMLParts(const String& url,
+                            const String& file_name,
+                            const String& mime_type = "text/html") {
+    KURL parsed_url(kParsedURLString, url);
+    String file_path("frameserialization/" + file_name);
+    RegisterMockedFileURLLoad(parsed_url, file_path, mime_type);
+    FrameTestHelpers::LoadFrame(MainFrameImpl(), url.Utf8().Data());
+    WebThreadSafeData result = WebFrameSerializer::GenerateMHTMLParts(
+        WebString("boundary"), MainFrameImpl(), &mhtml_delegate_);
+    return String(result.Data(), result.size());
+  }
+
+  void SetRemovePopupOverlay(bool remove_popup_overlay) {
+    mhtml_delegate_.SetRemovePopupOverlay(remove_popup_overlay);
+  }
+
+ private:
+  SimpleMHTMLPartsGenerationDelegate mhtml_delegate_;
+};
+
+TEST_F(WebFrameSerializerSanitizationTest, RemoveInlineScriptInAttributes) {
+  String mhtml =
+      GenerateMHTMLParts("http://www.test.com", "script_in_attributes.html");
+
+  // These scripting attributes should be removed.
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("onload="));
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("ONLOAD="));
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("onclick="));
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("href="));
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("from="));
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("to="));
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("javascript:"));
+
+  // These non-scripting attributes should remain intact.
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("class="));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("id="));
+
+  // srcdoc attribute of frame element should be replaced with src attribute.
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("srcdoc="));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("src="));
+}
+
+TEST_F(WebFrameSerializerSanitizationTest, DisableFormElements) {
+  String mhtml = GenerateMHTMLParts("http://www.test.com", "form.html");
+
+  const char kDisabledAttr[] = "disabled=3D\"\"";
+  int matches =
+      MatchSubstring(mhtml, kDisabledAttr, arraysize(kDisabledAttr) - 1);
+  EXPECT_EQ(21, matches);
+}
+
+TEST_F(WebFrameSerializerSanitizationTest, RemoveHiddenElements) {
+  String mhtml =
+      GenerateMHTMLParts("http://www.test.com", "hidden_elements.html");
+
+  // The element with hidden attribute should be removed.
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("<p id=3D\"hidden_id\""));
+
+  // The hidden form element should be removed.
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("<input type=3D\"hidden\""));
+
+  // All other hidden elements should not be removed.
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("<html"));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("<head"));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("<style"));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("<title"));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("<h1"));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("<h2"));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("<datalist"));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("<option"));
+  // One for meta in head and another for meta in body.
+  EXPECT_EQ(2, MatchSubstring(mhtml, "<meta", 5));
+  // One for style in head and another for style in body.
+  EXPECT_EQ(2, MatchSubstring(mhtml, "<style", 6));
+  // One for link in head and another for link in body.
+  EXPECT_EQ(2, MatchSubstring(mhtml, "<link", 5));
+
+  // These visible elements should remain intact.
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("<p id=3D\"visible_id\""));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("<form"));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("<input type=3D\"text\""));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("<div"));
+}
+
+// Regression test for crbug.com/678893, where in some cases serializing an
+// image document could cause code to pick an element from an empty container.
+TEST_F(WebFrameSerializerSanitizationTest, FromBrokenImageDocument) {
+  String mhtml = GenerateMHTMLParts("http://www.test.com", "broken-image.png",
+                                    "image/png");
+  EXPECT_TRUE(mhtml.IsEmpty());
+}
+
+TEST_F(WebFrameSerializerSanitizationTest, ImageLoadedFromSrcsetForHiDPI) {
+  RegisterMockedFileURLLoad(
+      KURL(kParsedURLString, "http://www.test.com/1x.png"),
+      "frameserialization/1x.png");
+  RegisterMockedFileURLLoad(
+      KURL(kParsedURLString, "http://www.test.com/2x.png"),
+      "frameserialization/2x.png");
+
+  // Set high DPR in order to load image from srcset, instead of src.
+  WebView()->SetDeviceScaleFactor(2.0f);
+
+  String mhtml = GenerateMHTMLParts("http://www.test.com", "img_srcset.html");
+
+  // srcset attribute should be skipped.
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("srcset="));
+
+  // Width and height attributes should be set when none is present in <img>.
+  EXPECT_NE(WTF::kNotFound,
+            mhtml.Find("id=3D\"i1\" width=3D\"6\" height=3D\"6\">"));
+
+  // Height attribute should not be set if width attribute is already present in
+  // <img>
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("id=3D\"i2\" width=3D\"8\">"));
+}
+
+TEST_F(WebFrameSerializerSanitizationTest, ImageLoadedFromSrcForNormalDPI) {
+  RegisterMockedFileURLLoad(
+      KURL(kParsedURLString, "http://www.test.com/1x.png"),
+      "frameserialization/1x.png");
+  RegisterMockedFileURLLoad(
+      KURL(kParsedURLString, "http://www.test.com/2x.png"),
+      "frameserialization/2x.png");
+
+  String mhtml = GenerateMHTMLParts("http://www.test.com", "img_srcset.html");
+
+  // srcset attribute should be skipped.
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("srcset="));
+
+  // New width and height attributes should not be set.
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("id=3D\"i1\">"));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("id=3D\"i2\" width=3D\"8\">"));
+}
+
+TEST_F(WebFrameSerializerSanitizationTest, RemovePopupOverlayIfRequested) {
+  WebView()->Resize(WebSize(500, 500));
+  SetRemovePopupOverlay(true);
+  String mhtml = GenerateMHTMLParts("http://www.test.com", "popup.html");
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("class=3D\"overlay"));
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("class=3D\"modal"));
+}
+
+TEST_F(WebFrameSerializerSanitizationTest, KeepPopupOverlayIfNotRequested) {
+  WebView()->Resize(WebSize(500, 500));
+  SetRemovePopupOverlay(false);
+  String mhtml = GenerateMHTMLParts("http://www.test.com", "popup.html");
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("class=3D\"overlay"));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("class=3D\"modal"));
+}
+
+TEST_F(WebFrameSerializerSanitizationTest, RemoveElements) {
+  String mhtml =
+      GenerateMHTMLParts("http://www.test.com", "remove_elements.html");
+  LOG(ERROR) << mhtml;
+
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("<script"));
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("<noscript"));
+
+  // Only the meta element containing "Content-Security-Policy" is removed.
+  // Other meta elements should be preserved.
+  EXPECT_EQ(WTF::kNotFound,
+            mhtml.Find("<meta http-equiv=3D\"Content-Security-Policy"));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("<meta name=3D\"description"));
+  EXPECT_NE(WTF::kNotFound, mhtml.Find("<meta http-equiv=3D\"refresh"));
+
+  // If an element is removed, its children should also be skipped.
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("<select"));
+  EXPECT_EQ(WTF::kNotFound, mhtml.Find("<option"));
+}
+
+}  // namespace blink

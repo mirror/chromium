@@ -11,6 +11,7 @@
 #include "base/location.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/sequenced_task_runner.h"
+#include "base/single_thread_task_runner.h"
 #include "base/task_runner_util.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data.h"
@@ -18,6 +19,7 @@
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_service_observer.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_settings.h"
 #include "components/data_reduction_proxy/core/browser/data_store.h"
+#include "components/data_reduction_proxy/core/browser/data_use_group.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_event_store.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_pref_names.h"
@@ -67,8 +69,8 @@ void DataReductionProxyService::SetIOData(
   DCHECK(CalledOnValidThread());
   io_data_ = io_data;
   initialized_ = true;
-  FOR_EACH_OBSERVER(DataReductionProxyServiceObserver,
-                    observer_list_, OnServiceInitialized());
+  for (DataReductionProxyServiceObserver& observer : observer_list_)
+    observer.OnServiceInitialized();
 
   // Load the Data Reduction Proxy configuration from |prefs_| and apply it.
   if (prefs_) {
@@ -89,30 +91,18 @@ void DataReductionProxyService::Shutdown() {
   weak_factory_.InvalidateWeakPtrs();
 }
 
-void DataReductionProxyService::EnableCompressionStatisticsLogging(
-    PrefService* prefs,
-    const scoped_refptr<base::SequencedTaskRunner>& ui_task_runner,
-    const base::TimeDelta& commit_delay) {
-  DCHECK(CalledOnValidThread());
-  DCHECK(!compression_stats_);
-  DCHECK(!prefs_);
-  prefs_ = prefs;
-  compression_stats_.reset(
-      new DataReductionProxyCompressionStats(this, prefs_, commit_delay));
-}
-
 void DataReductionProxyService::UpdateContentLengths(
     int64_t data_used,
     int64_t original_size,
     bool data_reduction_proxy_enabled,
     DataReductionProxyRequestType request_type,
-    const std::string& data_usage_host,
+    scoped_refptr<DataUseGroup> data_use_group,
     const std::string& mime_type) {
   DCHECK(CalledOnValidThread());
   if (compression_stats_) {
     compression_stats_->UpdateContentLengths(
         data_used, original_size, data_reduction_proxy_enabled, request_type,
-        data_usage_host, mime_type);
+        data_use_group, mime_type);
   }
 }
 
@@ -222,15 +212,16 @@ void DataReductionProxyService::InitializeLoFiPrefs() {
     SetLoFiModeOff();
   } else if (prefs_->GetInteger(prefs::kLoFiLoadImagesPerSession) <
                  lo_fi_user_requests_for_images_per_session &&
-             prefs_->GetInteger(prefs::kLoFiSnackbarsShownPerSession) >=
+             prefs_->GetInteger(prefs::kLoFiUIShownPerSession) >=
                  lo_fi_user_requests_for_images_per_session) {
     // If the last session didn't have
     // |lo_fi_user_requests_for_images_per_session|, but the user saw at least
-    // that many "Load image" snackbars, reset the consecutive sessions count.
+    // that many "Load image" UI notifications, reset the consecutive sessions
+    // count.
     prefs_->SetInteger(prefs::kLoFiConsecutiveSessionDisables, 0);
   }
   prefs_->SetInteger(prefs::kLoFiLoadImagesPerSession, 0);
-  prefs_->SetInteger(prefs::kLoFiSnackbarsShownPerSession, 0);
+  prefs_->SetInteger(prefs::kLoFiUIShownPerSession, 0);
   prefs_->SetBoolean(prefs::kLoFiWasUsedThisSession, false);
 }
 

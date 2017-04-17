@@ -21,6 +21,7 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/test/test_utils.h"
 #include "extensions/browser/extension_system.h"
+#include "extensions/browser/notification_types.h"
 #include "net/base/network_change_notifier.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gmock_mutant.h"
@@ -410,7 +411,13 @@ IN_PROC_BROWSER_TEST_F(TtsApiTest, RegisterEngine) {
   ASSERT_TRUE(RunExtensionTest("tts_engine/register_engine")) << message_;
 }
 
-IN_PROC_BROWSER_TEST_F(TtsApiTest, EngineError) {
+// https://crbug.com/709115 tracks test flakiness.
+#if defined(OS_POSIX)
+#define MAYBE_EngineError DISABLED_EngineError
+#else
+#define MAYBE_EngineError EngineError
+#endif
+IN_PROC_BROWSER_TEST_F(TtsApiTest, MAYBE_EngineError) {
   EXPECT_CALL(mock_platform_impl_, IsSpeaking());
   EXPECT_CALL(mock_platform_impl_, StopSpeaking())
       .WillRepeatedly(Return(true));

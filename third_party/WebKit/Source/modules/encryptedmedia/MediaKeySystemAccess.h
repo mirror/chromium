@@ -5,33 +5,36 @@
 #ifndef MediaKeySystemAccess_h
 #define MediaKeySystemAccess_h
 
+#include <memory>
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "modules/encryptedmedia/MediaKeySystemConfiguration.h"
+#include "platform/wtf/Forward.h"
 #include "public/platform/WebContentDecryptionModuleAccess.h"
-#include "wtf/Forward.h"
-#include <memory>
 
 namespace blink {
 
-class MediaKeySystemAccess final : public GarbageCollectedFinalized<MediaKeySystemAccess>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
+class MediaKeySystemAccess final
+    : public GarbageCollectedFinalized<MediaKeySystemAccess>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-public:
-    MediaKeySystemAccess(const String& keySystem, std::unique_ptr<WebContentDecryptionModuleAccess>);
-    virtual ~MediaKeySystemAccess();
+ public:
+  MediaKeySystemAccess(const String& key_system,
+                       std::unique_ptr<WebContentDecryptionModuleAccess>);
+  virtual ~MediaKeySystemAccess();
 
-    const String& keySystem() const { return m_keySystem; }
-    void getConfiguration(MediaKeySystemConfiguration& result);
-    ScriptPromise createMediaKeys(ScriptState*);
+  const String& keySystem() const { return key_system_; }
+  void getConfiguration(MediaKeySystemConfiguration& result);
+  ScriptPromise createMediaKeys(ScriptState*);
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    const String m_keySystem;
-    std::unique_ptr<WebContentDecryptionModuleAccess> m_access;
+ private:
+  const String key_system_;
+  std::unique_ptr<WebContentDecryptionModuleAccess> access_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MediaKeySystemAccess_h
+#endif  // MediaKeySystemAccess_h

@@ -10,21 +10,20 @@
 #include "base/guid.h"
 #include "base/location.h"
 #include "base/logging.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chromeos/policy/server_backed_device_state.h"
 #include "chrome/common/chrome_content_client.h"
 #include "chrome/common/pref_names.h"
 #include "components/policy/core/common/cloud/device_management_service.h"
-#include "components/policy/core/common/cloud/system_policy_request_context.h"
+#include "components/policy/proto/device_management_backend.pb.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "content/public/browser/browser_thread.h"
 #include "crypto/sha2.h"
 #include "net/url_request/url_request_context_getter.h"
-#include "policy/proto/device_management_backend.pb.h"
 #include "url/gurl.h"
 
 using content::BrowserThread;
@@ -56,10 +55,9 @@ int NextPowerOf2(int64_t value) {
 void UpdateDict(base::DictionaryValue* dict,
                 const char* pref_path,
                 bool set_or_clear,
-                base::Value* value) {
-  std::unique_ptr<base::Value> scoped_value(value);
+                std::unique_ptr<base::Value> value) {
   if (set_or_clear)
-    dict->Set(pref_path, scoped_value.release());
+    dict->Set(pref_path, std::move(value));
   else
     dict->Remove(pref_path, NULL);
 }
@@ -104,10 +102,8 @@ AutoEnrollmentClient::AutoEnrollmentClient(
       power_limit_(power_limit),
       modulus_updates_received_(0),
       device_management_service_(service),
-      local_state_(local_state) {
-  request_context_ = new SystemPolicyRequestContext(
-      system_request_context, GetUserAgent());
-
+      local_state_(local_state),
+      request_context_(system_request_context) {
   DCHECK_LE(current_power_, power_limit_);
   DCHECK(!progress_callback_.is_null());
   CHECK(!server_backed_state_key_.empty());
@@ -379,22 +375,19 @@ bool AutoEnrollmentClient::OnDeviceStateRequestCompletion(
         response.device_state_retrieval_response();
     {
       DictionaryPrefUpdate dict(local_state_, prefs::kServerBackedDeviceState);
-      UpdateDict(dict.Get(),
-                 kDeviceStateManagementDomain,
-                 state_response.has_management_domain(),
-                 new base::StringValue(state_response.management_domain()));
+      UpdateDict(
+          dict.Get(), kDeviceStateManagementDomain,
+          state_response.has_management_domain(),
+          base::MakeUnique<base::Value>(state_response.management_domain()));
 
       std::string restore_mode =
           ConvertRestoreMode(state_response.restore_mode());
-      UpdateDict(dict.Get(),
-                 kDeviceStateRestoreMode,
-                 !restore_mode.empty(),
-                 new base::StringValue(restore_mode));
+      UpdateDict(dict.Get(), kDeviceStateRestoreMode, !restore_mode.empty(),
+                 base::MakeUnique<base::Value>(restore_mode));
 
-      UpdateDict(dict.Get(),
-                 kDeviceStateDisabledMessage,
+      UpdateDict(dict.Get(), kDeviceStateDisabledMessage,
                  state_response.has_disabled_state(),
-                 new base::StringValue(
+                 base::MakeUnique<base::Value>(
                      state_response.disabled_state().message()));
 
       // Logging as "WARNING" to make sure it's preserved in the logs.

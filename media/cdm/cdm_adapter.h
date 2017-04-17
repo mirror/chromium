@@ -19,13 +19,14 @@
 #include "base/memory/weak_ptr.h"
 #include "base/scoped_native_library.h"
 #include "base/threading/thread.h"
+#include "media/base/audio_buffer.h"
 #include "media/base/cdm_config.h"
 #include "media/base/cdm_context.h"
 #include "media/base/cdm_factory.h"
 #include "media/base/cdm_promise_adapter.h"
+#include "media/base/content_decryption_module.h"
 #include "media/base/decryptor.h"
 #include "media/base/media_export.h"
-#include "media/base/media_keys.h"
 #include "media/cdm/api/content_decryption_module.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -44,10 +45,9 @@ class CdmWrapper;
 using CreateCdmFileIOCB =
     base::Callback<std::unique_ptr<CdmFileIO>(cdm::FileIOClient* client)>;
 
-class MEDIA_EXPORT CdmAdapter : public MediaKeys,
+class MEDIA_EXPORT CdmAdapter : public ContentDecryptionModule,
                                 public CdmContext,
                                 public Decryptor,
-                                NON_EXPORTED_BASE(public cdm::Host_7),
                                 NON_EXPORTED_BASE(public cdm::Host_8) {
  public:
   // Create the CDM using |cdm_path| and initialize it using |key_system| and
@@ -64,20 +64,19 @@ class MEDIA_EXPORT CdmAdapter : public MediaKeys,
       const CreateCdmFileIOCB& create_cdm_file_io_cb,
       const SessionMessageCB& session_message_cb,
       const SessionClosedCB& session_closed_cb,
-      const LegacySessionErrorCB& legacy_session_error_cb,
       const SessionKeysChangeCB& session_keys_change_cb,
       const SessionExpirationUpdateCB& session_expiration_update_cb,
       const CdmCreatedCB& cdm_created_cb);
 
-  // MediaKeys implementation.
+  // ContentDecryptionModule implementation.
   void SetServerCertificate(const std::vector<uint8_t>& certificate,
                             std::unique_ptr<SimpleCdmPromise> promise) final;
   void CreateSessionAndGenerateRequest(
-      SessionType session_type,
+      CdmSessionType session_type,
       EmeInitDataType init_data_type,
       const std::vector<uint8_t>& init_data,
       std::unique_ptr<NewSessionCdmPromise> promise) final;
-  void LoadSession(SessionType session_type,
+  void LoadSession(CdmSessionType session_type,
                    const std::string& session_id,
                    std::unique_ptr<NewSessionCdmPromise> promise) final;
   void UpdateSession(const std::string& session_id,
@@ -111,7 +110,7 @@ class MEDIA_EXPORT CdmAdapter : public MediaKeys,
   void ResetDecoder(StreamType stream_type) final;
   void DeinitializeDecoder(StreamType stream_type) final;
 
-  // cdm::Host_7 and cdm::Host_8 implementation.
+  // cdm::Host_8 implementation.
   cdm::Buffer* Allocate(uint32_t capacity) override;
   void SetTimer(int64_t delay_ms, void* context) override;
   cdm::Time GetCurrentWallTime() override;
@@ -164,7 +163,6 @@ class MEDIA_EXPORT CdmAdapter : public MediaKeys,
              const CreateCdmFileIOCB& create_cdm_file_io_cb,
              const SessionMessageCB& session_message_cb,
              const SessionClosedCB& session_closed_cb,
-             const LegacySessionErrorCB& legacy_session_error_cb,
              const SessionKeysChangeCB& session_keys_change_cb,
              const SessionExpirationUpdateCB& session_expiration_update_cb);
   ~CdmAdapter() final;
@@ -203,7 +201,6 @@ class MEDIA_EXPORT CdmAdapter : public MediaKeys,
   // Callbacks for firing session events.
   SessionMessageCB session_message_cb_;
   SessionClosedCB session_closed_cb_;
-  LegacySessionErrorCB legacy_session_error_cb_;
   SessionKeysChangeCB session_keys_change_cb_;
   SessionExpirationUpdateCB session_expiration_update_cb_;
 
@@ -227,6 +224,8 @@ class MEDIA_EXPORT CdmAdapter : public MediaKeys,
   CreateCdmFileIOCB create_cdm_file_io_cb_;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
+  scoped_refptr<AudioBufferMemoryPool> pool_;
 
   // NOTE: Weak pointers must be invalidated before all other member variables.
   base::WeakPtrFactory<CdmAdapter> weak_factory_;

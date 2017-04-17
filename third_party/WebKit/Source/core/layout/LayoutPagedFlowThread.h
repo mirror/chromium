@@ -9,29 +9,37 @@
 
 namespace blink {
 
-// A flow thread for paged overflow. FIXME: The current implementation relies on the multicol
-// implementation, but it in the long run it would be better to have what's common between
-// LayoutMultiColumnFlowThread and LayoutPagedFlowThread in LayoutFlowThread, and have both of them
-// inherit from that one.
+// A flow thread for paged overflow. FIXME: The current implementation relies on
+// the multicol implementation, but it in the long run it would be better to
+// have what's common between LayoutMultiColumnFlowThread and
+// LayoutPagedFlowThread in LayoutFlowThread, and have both of them inherit
+// from that one.
 class LayoutPagedFlowThread : public LayoutMultiColumnFlowThread {
-public:
-    static LayoutPagedFlowThread* createAnonymous(Document&, const ComputedStyle& parentStyle);
+ public:
+  static LayoutPagedFlowThread* CreateAnonymous(
+      Document&,
+      const ComputedStyle& parent_style);
 
-    LayoutBlockFlow* pagedBlockFlow() const { return toLayoutBlockFlow(parent()); }
+  LayoutBlockFlow* PagedBlockFlow() const {
+    return ToLayoutBlockFlow(Parent());
+  }
 
-    // Return the number of pages. Will never be less than 1.
-    int pageCount();
+  // Return the number of pages. Will never be less than 1.
+  int PageCount();
 
-    bool isLayoutPagedFlowThread() const override { return true; }
-    const char* name() const override { return "LayoutPagedFlowThread"; }
-    bool needsNewWidth() const override;
-    void updateLogicalWidth() override;
-    virtual void layout();
+  bool IsLayoutPagedFlowThread() const override { return true; }
+  const char* GetName() const override { return "LayoutPagedFlowThread"; }
+  bool NeedsNewWidth() const override;
+  void UpdateLogicalWidth() override;
+  void UpdateLayout() override;
 
-private:
-    bool descendantIsValidColumnSpanner(LayoutObject* /*descendant*/) const override { return false; }
+ private:
+  bool DescendantIsValidColumnSpanner(
+      LayoutObject* /*descendant*/) const override {
+    return false;
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutPagedFlowThread_h
+#endif  // LayoutPagedFlowThread_h

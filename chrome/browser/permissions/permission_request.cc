@@ -4,10 +4,11 @@
 
 #include "chrome/browser/permissions/permission_request.h"
 
-#include "ui/gfx/vector_icons_public.h"
 
-gfx::VectorIconId PermissionRequest::GetVectorIconId() const {
-  return gfx::VectorIconId::VECTOR_ICON_NONE;
+PermissionRequest::PermissionRequest() : persist_(true) {}
+
+bool PermissionRequest::ShouldShowPersistenceToggle() const {
+  return false;
 }
 
 PermissionRequestType PermissionRequest::GetPermissionRequestType() const {
@@ -16,4 +17,8 @@ PermissionRequestType PermissionRequest::GetPermissionRequestType() const {
 
 PermissionRequestGestureType PermissionRequest::GetGestureType() const {
   return PermissionRequestGestureType::UNKNOWN;
+}
+
+ContentSettingsType PermissionRequest::GetContentSettingsType() const {
+  return CONTENT_SETTINGS_TYPE_DEFAULT;
 }

@@ -17,7 +17,7 @@ TestAutofillDriver::TestAutofillDriver()
 
 TestAutofillDriver::~TestAutofillDriver() {}
 
-bool TestAutofillDriver::IsOffTheRecord() const {
+bool TestAutofillDriver::IsIncognito() const {
   return false;
 }
 
@@ -76,5 +76,7 @@ gfx::RectF TestAutofillDriver::TransformBoundingBoxToViewportCoordinates(
     const gfx::RectF& bounding_box) {
   return bounding_box;
 }
+
+void TestAutofillDriver::DidInteractWithCreditCardForm() {}
 
 }  // namespace autofill

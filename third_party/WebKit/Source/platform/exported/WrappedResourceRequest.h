@@ -31,30 +31,28 @@
 #ifndef WrappedResourceRequest_h
 #define WrappedResourceRequest_h
 
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 #include "public/platform/WebURLRequest.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
 
 namespace blink {
 
 // WrappedResourceRequest doesn't take ownership of given ResourceRequest,
 // but just holds a pointer to it. It is not copyable.
 class WrappedResourceRequest : public WebURLRequest {
-    WTF_MAKE_NONCOPYABLE(WrappedResourceRequest);
-public:
-    ~WrappedResourceRequest() {}
+  WTF_MAKE_NONCOPYABLE(WrappedResourceRequest);
 
-    explicit WrappedResourceRequest(ResourceRequest& resourceRequest)
-        : WebURLRequest(resourceRequest)
-    {
-    }
+ public:
+  ~WrappedResourceRequest() {}
 
-    explicit WrappedResourceRequest(const ResourceRequest& resourceRequest)
-        : WrappedResourceRequest(const_cast<ResourceRequest&>(resourceRequest))
-    {
-    }
+  explicit WrappedResourceRequest(ResourceRequest& resource_request)
+      : WebURLRequest(resource_request) {}
+
+  explicit WrappedResourceRequest(const ResourceRequest& resource_request)
+      : WrappedResourceRequest(const_cast<ResourceRequest&>(resource_request)) {
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

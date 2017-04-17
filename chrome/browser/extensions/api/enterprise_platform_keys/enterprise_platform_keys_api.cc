@@ -119,12 +119,12 @@ void EnterprisePlatformKeysGetCertificatesFunction::OnGotCertificates(
        ++it) {
     std::string der_encoding;
     net::X509Certificate::GetDEREncoded((*it)->os_cert_handle(), &der_encoding);
-    client_certs->Append(base::BinaryValue::CreateWithCopiedBuffer(
+    client_certs->Append(base::Value::CreateWithCopiedBuffer(
         der_encoding.data(), der_encoding.size()));
   }
 
   std::unique_ptr<base::ListValue> results(new base::ListValue());
-  results->Append(client_certs.release());
+  results->Append(std::move(client_certs));
   Respond(ArgumentList(std::move(results)));
 }
 
@@ -269,7 +269,8 @@ EnterprisePlatformKeysChallengeMachineKeyFunction::Run() {
   base::Closure task = base::Bind(
       &EPKPChallengeMachineKey::Run, base::Unretained(impl_),
       scoped_refptr<UIThreadExtensionFunction>(AsUIThreadExtensionFunction()),
-      callback, StringFromVector(params->challenge));
+      callback, StringFromVector(params->challenge),
+      params->register_key ? *params->register_key : false);
   content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE, task);
   return RespondLater();
 }

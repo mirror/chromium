@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2012 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2012 Apple Inc. All
+ * rights reserved.
  * Copyright (C) 2005 Alexey Proskuryakov.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,76 +30,74 @@
 namespace blink {
 
 WordAwareIterator::WordAwareIterator(const Position& start, const Position& end)
-    : m_didLookAhead(true) // So we consider the first chunk from the text iterator.
-    , m_textIterator(start, end)
-{
-    advance(); // Get in position over the first chunk of text.
+    // So we consider the first chunk from the text iterator.
+    : did_look_ahead_(true), text_iterator_(start, end) {
+  Advance();  // Get in position over the first chunk of text.
 }
 
-WordAwareIterator::~WordAwareIterator()
-{
-}
+WordAwareIterator::~WordAwareIterator() {}
 
-// FIXME: Performance could be bad for huge spans next to each other that don't fall on word boundaries.
+// FIXME: Performance could be bad for huge spans next to each other that don't
+// fall on word boundaries.
 
-void WordAwareIterator::advance()
-{
-    m_buffer.clear();
+void WordAwareIterator::Advance() {
+  buffer_.Clear();
 
-    // If last time we did a look-ahead, start with that looked-ahead chunk now
-    if (!m_didLookAhead) {
-        DCHECK(!m_textIterator.atEnd());
-        m_textIterator.advance();
+  // If last time we did a look-ahead, start with that looked-ahead chunk now
+  if (!did_look_ahead_) {
+    DCHECK(!text_iterator_.AtEnd());
+    text_iterator_.Advance();
+  }
+  did_look_ahead_ = false;
+
+  // Go to next non-empty chunk.
+  while (!text_iterator_.AtEnd() && !text_iterator_.length())
+    text_iterator_.Advance();
+
+  if (text_iterator_.AtEnd())
+    return;
+
+  while (1) {
+    // If this chunk ends in whitespace we can just use it as our chunk.
+    if (IsSpaceOrNewline(
+            text_iterator_.CharacterAt(text_iterator_.length() - 1)))
+      return;
+
+    // If this is the first chunk that failed, save it in m_buffer before look
+    // ahead.
+    if (buffer_.IsEmpty())
+      text_iterator_.CopyTextTo(&buffer_);
+
+    // Look ahead to next chunk. If it is whitespace or a break, we can use the
+    // previous stuff
+    text_iterator_.Advance();
+    if (text_iterator_.AtEnd() || !text_iterator_.length() ||
+        IsSpaceOrNewline(text_iterator_.GetText().CharacterAt(0))) {
+      did_look_ahead_ = true;
+      return;
     }
-    m_didLookAhead = false;
 
-    // Go to next non-empty chunk.
-    while (!m_textIterator.atEnd() && !m_textIterator.length())
-        m_textIterator.advance();
-
-    if (m_textIterator.atEnd())
-        return;
-
-    while (1) {
-        // If this chunk ends in whitespace we can just use it as our chunk.
-        if (isSpaceOrNewline(m_textIterator.characterAt(m_textIterator.length() - 1)))
-            return;
-
-        // If this is the first chunk that failed, save it in m_buffer before look ahead.
-        if (m_buffer.isEmpty())
-            m_textIterator.copyTextTo(&m_buffer);
-
-        // Look ahead to next chunk. If it is whitespace or a break, we can use the previous stuff
-        m_textIterator.advance();
-        if (m_textIterator.atEnd() || !m_textIterator.length() || isSpaceOrNewline(m_textIterator.text().characterAt(0))) {
-            m_didLookAhead = true;
-            return;
-        }
-
-        // Start gobbling chunks until we get to a suitable stopping point
-        m_textIterator.copyTextTo(&m_buffer);
-    }
+    // Start gobbling chunks until we get to a suitable stopping point
+    text_iterator_.CopyTextTo(&buffer_);
+  }
 }
 
-int WordAwareIterator::length() const
-{
-    if (!m_buffer.isEmpty())
-        return m_buffer.size();
-    return m_textIterator.length();
+int WordAwareIterator::length() const {
+  if (!buffer_.IsEmpty())
+    return buffer_.Size();
+  return text_iterator_.length();
 }
 
-String WordAwareIterator::substring(unsigned position, unsigned length) const
-{
-    if (!m_buffer.isEmpty())
-        return String(m_buffer.data() + position, length);
-    return m_textIterator.text().substring(position, length);
+String WordAwareIterator::Substring(unsigned position, unsigned length) const {
+  if (!buffer_.IsEmpty())
+    return String(buffer_.Data() + position, length);
+  return text_iterator_.GetText().Substring(position, length);
 }
 
-UChar WordAwareIterator::characterAt(unsigned index) const
-{
-    if (!m_buffer.isEmpty())
-        return m_buffer[index];
-    return m_textIterator.text().characterAt(index);
+UChar WordAwareIterator::CharacterAt(unsigned index) const {
+  if (!buffer_.IsEmpty())
+    return buffer_[index];
+  return text_iterator_.GetText().CharacterAt(index);
 }
 
-} // namespace blink
+}  // namespace blink

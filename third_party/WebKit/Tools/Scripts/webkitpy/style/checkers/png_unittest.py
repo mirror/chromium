@@ -25,9 +25,9 @@
 
 import unittest
 
-from png import PNGChecker
+from webkitpy.style.checkers.png import PNGChecker
 from webkitpy.common.system.filesystem_mock import MockFileSystem
-from webkitpy.common.system.systemhost_mock import MockSystemHost
+from webkitpy.common.system.system_host_mock import MockSystemHost
 
 
 class PNGCheckerTest(unittest.TestCase):
@@ -65,5 +65,6 @@ class PNGCheckerTest(unittest.TestCase):
         checker = PNGChecker(file_path, mock_handle_style_error, MockSystemHost(os_name='linux', filesystem=fs))
         checker.check()
         self.assertEqual(len(errors), 1)
-        self.assertEqual(errors[0], (0, 'image/png', 5,
-                                     'Image lacks a checksum. Generate pngs using run-webkit-tests to ensure they have a checksum.'))
+        self.assertEqual(
+            errors[0],
+            (0, 'image/png', 5, 'Image lacks a checksum. Generate pngs using run-webkit-tests to ensure they have a checksum.'))

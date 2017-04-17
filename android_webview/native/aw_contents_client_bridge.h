@@ -29,21 +29,24 @@ namespace android_webview {
 // any references.
 class AwContentsClientBridge : public AwContentsClientBridgeBase {
  public:
-  AwContentsClientBridge(JNIEnv* env, jobject obj);
+  AwContentsClientBridge(JNIEnv* env,
+                         const base::android::JavaRef<jobject>& obj);
   ~AwContentsClientBridge() override;
 
   // AwContentsClientBridgeBase implementation
-  void AllowCertificateError(int cert_error,
-                             net::X509Certificate* cert,
-                             const GURL& request_url,
-                             const base::Callback<void(bool)>& callback,
-                             bool* cancel_request) override;
+  void AllowCertificateError(
+      int cert_error,
+      net::X509Certificate* cert,
+      const GURL& request_url,
+      const base::Callback<void(content::CertificateRequestResultType)>&
+          callback,
+      bool* cancel_request) override;
   void SelectClientCertificate(
       net::SSLCertRequestInfo* cert_request_info,
       std::unique_ptr<content::ClientCertificateDelegate> delegate) override;
 
   void RunJavaScriptDialog(
-      content::JavaScriptMessageType message_type,
+      content::JavaScriptDialogType dialog_type,
       const GURL& origin_url,
       const base::string16& message_text,
       const base::string16& default_prompt_text,
@@ -57,6 +60,23 @@ class AwContentsClientBridge : public AwContentsClientBridgeBase {
                                 bool has_user_gesture,
                                 bool is_redirect,
                                 bool is_main_frame) override;
+
+  void NewDownload(const GURL& url,
+                   const std::string& user_agent,
+                   const std::string& content_disposition,
+                   const std::string& mime_type,
+                   int64_t content_length) override;
+
+  void NewLoginRequest(const std::string& realm,
+                       const std::string& account,
+                       const std::string& args) override;
+
+  void OnReceivedError(const AwWebResourceRequest& request,
+                       int error_code) override;
+
+  void OnReceivedHttpError(const AwWebResourceRequest& request,
+                           const scoped_refptr<const net::HttpResponseHeaders>&
+                               response_headers) override;
 
   // Methods called from Java.
   void ProceedSslError(JNIEnv* env,
@@ -80,13 +100,14 @@ class AwContentsClientBridge : public AwContentsClientBridgeBase {
 
   JavaObjectWeakGlobalRef java_ref_;
 
-  typedef const base::Callback<void(bool)> CertErrorCallback;
-  IDMap<CertErrorCallback, IDMapOwnPointer> pending_cert_error_callbacks_;
-  IDMap<content::JavaScriptDialogManager::DialogClosedCallback, IDMapOwnPointer>
+  typedef const base::Callback<void(content::CertificateRequestResultType)>
+      CertErrorCallback;
+  IDMap<std::unique_ptr<CertErrorCallback>> pending_cert_error_callbacks_;
+  IDMap<std::unique_ptr<content::JavaScriptDialogManager::DialogClosedCallback>>
       pending_js_dialog_callbacks_;
   // |pending_client_cert_request_delegates_| owns its pointers, but IDMap
   // doesn't provide Release, so ownership is managed manually.
-  IDMap<content::ClientCertificateDelegate>
+  IDMap<content::ClientCertificateDelegate*>
       pending_client_cert_request_delegates_;
 };
 

@@ -31,50 +31,69 @@
 #ifndef WorkerReportingProxy_h
 #define WorkerReportingProxy_h
 
-#include "core/CoreExport.h"
-#include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
 #include <memory>
+#include "core/CoreExport.h"
+#include "core/frame/UseCounter.h"
+#include "core/inspector/ConsoleTypes.h"
+#include "platform/heap/Handle.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class ConsoleMessage;
 class SourceLocation;
 class WorkerOrWorkletGlobalScope;
 
 // APIs used by workers to report console and worker activity.
 class CORE_EXPORT WorkerReportingProxy {
-public:
-    virtual ~WorkerReportingProxy() { }
+ public:
+  virtual ~WorkerReportingProxy() {}
 
-    virtual void reportException(const String& errorMessage, std::unique_ptr<SourceLocation>) = 0;
-    virtual void reportConsoleMessage(ConsoleMessage*) = 0;
-    virtual void postMessageToPageInspector(const String&) = 0;
+  virtual void CountFeature(UseCounter::Feature) {}
+  virtual void CountDeprecation(UseCounter::Feature) {}
+  virtual void ReportException(const String& error_message,
+                               std::unique_ptr<SourceLocation>,
+                               int exception_id) {}
+  virtual void ReportConsoleMessage(MessageSource,
+                                    MessageLevel,
+                                    const String& message,
+                                    SourceLocation*) {}
+  virtual void PostMessageToPageInspector(const String&) {}
 
-    // Invoked when the worker script is evaluated. |success| is true if the
-    // evaluation completed with no uncaught exception.
-    virtual void didEvaluateWorkerScript(bool success) = 0;
+  // Invoked when the new WorkerGlobalScope is created. This is called after
+  // didLoadWorkerScript().
+  virtual void DidCreateWorkerGlobalScope(WorkerOrWorkletGlobalScope*) {}
 
-    // Invoked when the thread creates a worker script context.
-    virtual void didInitializeWorkerContext() { }
+  // Invoked when the WorkerGlobalScope is initialized. This is called after
+  // didCreateWorkerGlobalScope().
+  virtual void DidInitializeWorkerContext() {}
 
-    // Invoked when the new WorkerGlobalScope is started.
-    virtual void workerGlobalScopeStarted(WorkerOrWorkletGlobalScope*) = 0;
+  // Invoked when the worker script is about to be evaluated. This is called
+  // after didInitializeWorkerContext().
+  virtual void WillEvaluateWorkerScript(size_t script_size,
+                                        size_t cached_metadata_size) {}
 
-    // Invoked when close() is invoked on the worker context.
-    virtual void workerGlobalScopeClosed() = 0;
+  // Invoked when an imported script is about to be evaluated. This is called
+  // after willEvaluateWorkerScript().
+  virtual void WillEvaluateImportedScript(size_t script_size,
+                                          size_t cached_metadata_size) {}
 
-    // Invoked when the thread is stopped and WorkerGlobalScope is being
-    // destructed. (This is be the last method that is called on this
-    // interface)
-    virtual void workerThreadTerminated() = 0;
+  // Invoked when the worker script is evaluated. |success| is true if the
+  // evaluation completed with no uncaught exception.
+  virtual void DidEvaluateWorkerScript(bool success) {}
 
-    // Invoked when the thread is about to be stopped and WorkerGlobalScope
-    // is to be destructed. (When this is called it is guaranteed that
-    // WorkerGlobalScope is still alive)
-    virtual void willDestroyWorkerGlobalScope() = 0;
+  // Invoked when close() is invoked on the worker context.
+  virtual void DidCloseWorkerGlobalScope() {}
+
+  // Invoked when the thread is about to be stopped and WorkerGlobalScope
+  // is to be destructed. When this is called, it is guaranteed that
+  // WorkerGlobalScope is still alive.
+  virtual void WillDestroyWorkerGlobalScope() {}
+
+  // Invoked when the thread is stopped and WorkerGlobalScope is being
+  // destructed. This is the last method that is called on this interface.
+  virtual void DidTerminateWorkerThread() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WorkerReportingProxy_h
+#endif  // WorkerReportingProxy_h

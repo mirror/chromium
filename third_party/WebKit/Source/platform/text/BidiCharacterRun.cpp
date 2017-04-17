@@ -23,19 +23,18 @@
 
 #include "platform/text/BidiCharacterRun.h"
 
-#include "wtf/allocator/Partitions.h"
+#include "platform/wtf/allocator/Partitions.h"
 
 using namespace WTF;
 
 namespace blink {
-void* BidiCharacterRun::operator new(size_t sz)
-{
-    return partitionAlloc(Partitions::layoutPartition(), sz, WTF_HEAP_PROFILER_TYPE_NAME(BidiCharacterRun));
+void* BidiCharacterRun::operator new(size_t sz) {
+  return PartitionAlloc(Partitions::LayoutPartition(), sz,
+                        WTF_HEAP_PROFILER_TYPE_NAME(BidiCharacterRun));
 }
 
-void BidiCharacterRun::operator delete(void* ptr)
-{
-    partitionFree(ptr);
+void BidiCharacterRun::operator delete(void* ptr) {
+  PartitionFree(ptr);
 }
 
-} // namespace blink
+}  // namespace blink

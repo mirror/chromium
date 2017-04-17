@@ -72,15 +72,48 @@ void ScreenCaptureDeviceCore::RequestRefreshFrame() {
   if (state_ != kCapturing)
     return;
 
+  // Try to use the less resource-intensive "passive" refresh mechanism, unless
+  // this is the first refresh following a Resume().
+  if (force_active_refresh_once_) {
+    capture_machine_->MaybeCaptureForRefresh();
+    force_active_refresh_once_ = false;
+    return;
+  }
+
+  // Make a best-effort attempt at a passive refresh, but fall-back to an active
+  // refresh if that fails.
   if (oracle_proxy_->AttemptPassiveRefresh())
     return;
   capture_machine_->MaybeCaptureForRefresh();
 }
 
-void ScreenCaptureDeviceCore::StopAndDeAllocate() {
+void ScreenCaptureDeviceCore::Suspend() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (state_ != kCapturing)
+    return;
+
+  TransitionStateTo(kSuspended);
+
+  capture_machine_->Suspend();
+}
+
+void ScreenCaptureDeviceCore::Resume() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (state_ != kSuspended)
+    return;
+
+  force_active_refresh_once_ = true;
+  TransitionStateTo(kCapturing);
+
+  capture_machine_->Resume();
+}
+
+void ScreenCaptureDeviceCore::StopAndDeAllocate() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (state_ != kCapturing && state_ != kSuspended)
     return;
 
   oracle_proxy_->Stop();
@@ -91,21 +124,33 @@ void ScreenCaptureDeviceCore::StopAndDeAllocate() {
   capture_machine_->Stop(base::Bind(&base::DoNothing));
 }
 
+void ScreenCaptureDeviceCore::OnConsumerReportingUtilization(
+    int frame_feedback_id,
+    double utilization) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(oracle_proxy_);
+  oracle_proxy_->OnConsumerReportingUtilization(frame_feedback_id, utilization);
+}
+
 void ScreenCaptureDeviceCore::CaptureStarted(bool success) {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (!success)
     Error(FROM_HERE, "Failed to start capture machine.");
+  else if (oracle_proxy_)
+    oracle_proxy_->ReportStarted();
 }
 
 ScreenCaptureDeviceCore::ScreenCaptureDeviceCore(
     std::unique_ptr<VideoCaptureMachine> capture_machine)
-    : state_(kIdle), capture_machine_(std::move(capture_machine)) {
+    : state_(kIdle),
+      capture_machine_(std::move(capture_machine)),
+      force_active_refresh_once_(false) {
   DCHECK(capture_machine_.get());
 }
 
 ScreenCaptureDeviceCore::~ScreenCaptureDeviceCore() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK_NE(state_, kCapturing);
+  DCHECK(state_ != kCapturing && state_ != kSuspended);
   if (capture_machine_) {
     capture_machine_->Stop(
         base::Bind(&DeleteCaptureMachine, base::Passed(&capture_machine_)));
@@ -117,7 +162,8 @@ void ScreenCaptureDeviceCore::TransitionStateTo(State next_state) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
 #ifndef NDEBUG
-  static const char* kStateNames[] = {"Idle", "Capturing", "Error"};
+  static const char* kStateNames[] = {"Idle", "Capturing", "Suspended",
+                                      "Error"};
   static_assert(arraysize(kStateNames) == kLastCaptureState,
                 "Different number of states and textual descriptions");
   DVLOG(1) << "State change: " << kStateNames[state_] << " --> "
@@ -134,7 +180,7 @@ void ScreenCaptureDeviceCore::Error(const tracked_objects::Location& from_here,
   if (state_ == kIdle)
     return;
 
-  if (oracle_proxy_.get())
+  if (oracle_proxy_)
     oracle_proxy_->ReportError(from_here, reason);
 
   StopAndDeAllocate();

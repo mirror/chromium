@@ -2,8 +2,14 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  *
- * This contains common styling for all the OOBE screens.
- */
+ * This contains common styling for all the OOBE screens. */
+
+:root {
+  --oobe-roboto-medium: 500 12px Roboto;
+  --oobe-roboto-bold: 700 12px Roboto;
+  --oobe-text-button-focused-border-color:
+      rgba(66, 133, 244, 0.4); /* #4284f4 */
+}
 
 .step {
   box-sizing: border-box;
@@ -11,9 +17,9 @@
 }
 
 .step.animated:not(.faded) {
-  -webkit-transition: -webkit-transform 200ms ease-in-out,
-                      opacity 200ms ease-in-out,
-                      visibility 200ms ease-in-out;
+  transition: transform 200ms ease-in-out,
+              opacity 200ms ease-in-out,
+              visibility 200ms ease-in-out;
 }
 
 .step.hidden {
@@ -27,11 +33,11 @@
 }
 
 .step.right {
-  -webkit-transform: translateX(50px);
+  transform: translateX(50px);
 }
 
 .step.left {
-  -webkit-transform: translateX(-50px)
+  transform: translateX(-50px)
 }
 
 .step.fullscreen {
@@ -118,9 +124,9 @@ html[dir=rtl] .step-controls {
 #security-info a:focus,
 #eula a:focus,
 .step-extra-controls a:focus {
-  -webkit-transition: outline-color 200ms;
   /* Note: May use 1px solid here. */
   outline-color: rgb(77, 144, 254);
+  transition: outline-color 200ms;
 }
 
 .step-extra-controls > *:not(:first-child) {

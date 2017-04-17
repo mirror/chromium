@@ -14,14 +14,9 @@
 namespace ui {
 namespace ws {
 
-class ServerWindow;
 class WindowManagerWindowTreeFactorySet;
 class WindowServer;
 class WindowTree;
-
-namespace test {
-class WindowManagerWindowTreeFactorySetTestApi;
-}
 
 // Implementation of mojom::WindowManagerWindowTreeFactory.
 class WindowManagerWindowTreeFactory
@@ -39,11 +34,10 @@ class WindowManagerWindowTreeFactory
 
   // mojom::WindowManagerWindowTreeFactory:
   void CreateWindowTree(mojom::WindowTreeRequest window_tree_request,
-                        mojom::WindowTreeClientPtr window_tree_client) override;
+                        mojom::WindowTreeClientPtr window_tree_client,
+                        bool window_manager_creates_roots) override;
 
  private:
-  friend class test::WindowManagerWindowTreeFactorySetTestApi;
-
   // Used by tests.
   WindowManagerWindowTreeFactory(WindowManagerWindowTreeFactorySet* registry,
                                  const UserId& user_id);
@@ -57,7 +51,7 @@ class WindowManagerWindowTreeFactory
   mojo::Binding<mojom::WindowManagerWindowTreeFactory> binding_;
 
   // Owned by WindowServer.
-  WindowTree* window_tree_;
+  WindowTree* window_tree_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(WindowManagerWindowTreeFactory);
 };

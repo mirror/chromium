@@ -17,7 +17,7 @@ Polymer({
      */
     editable: {
       type: Boolean,
-      value: false
+      value: false,
     },
 
     /**
@@ -25,7 +25,7 @@ Polymer({
      */
     label: {
       type: String,
-      value: 'Proxy'
+      value: 'Proxy',
     },
 
     /**
@@ -34,8 +34,10 @@ Polymer({
      */
     value: {
       type: Object,
-      value: function() { return {Host: '', Port: 80}; },
-      notify: true
+      value: function() {
+        return {Host: '', Port: 80};
+      },
+      notify: true,
     },
   },
 

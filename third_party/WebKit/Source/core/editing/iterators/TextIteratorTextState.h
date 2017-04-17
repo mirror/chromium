@@ -26,66 +26,91 @@
 #ifndef TextIteratorTextState_h
 #define TextIteratorTextState_h
 
+#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/dom/Range.h"
 #include "core/editing/iterators/ForwardsTextBuffer.h"
-#include "wtf/text/WTFString.h"
+#include "core/editing/iterators/TextIteratorBehavior.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class LayoutText;
+class TextIteratorBehavior;
 
 class CORE_EXPORT TextIteratorTextState {
-    STACK_ALLOCATED();
-public:
-    explicit TextIteratorTextState(bool emitsOriginalText);
-    ~TextIteratorTextState() { }
+  STACK_ALLOCATED();
 
-    const String& string() const { return m_text; }
+ public:
+  explicit TextIteratorTextState(const TextIteratorBehavior&);
+  ~TextIteratorTextState() {}
 
-    int length() const { return m_textLength; }
-    UChar characterAt(unsigned index) const;
-    String substring(unsigned position, unsigned length) const;
-    void appendTextToStringBuilder(StringBuilder&, unsigned position = 0, unsigned maxLength = UINT_MAX) const;
+  const String& GetString() const { return text_; }
 
-    void spliceBuffer(UChar, Node* textNode, Node* offsetBaseNode, int textStartOffset, int textEndOffset);
-    void emitText(Node* textNode, LayoutText* layoutObject, int textStartOffset, int textEndOffset);
-    void emitAltText(Node*);
-    void updateForReplacedElement(Node* baseNode);
-    void flushPositionOffsets() const;
-    int positionStartOffset() const { return m_positionStartOffset; }
-    int positionEndOffset() const { return m_positionEndOffset; }
-    Node* positionNode() const { return m_positionNode; }
-    bool hasEmitted() const { return m_hasEmitted; }
-    UChar lastCharacter() const { return m_lastCharacter; }
-    void resetRunInformation()
-    {
-        m_positionNode = nullptr;
-        m_textLength = 0;
-    }
+  int length() const { return text_length_; }
+  UChar CharacterAt(unsigned index) const;
+  String Substring(unsigned position, unsigned length) const;
+  void AppendTextToStringBuilder(StringBuilder&,
+                                 unsigned position = 0,
+                                 unsigned max_length = UINT_MAX) const;
 
-    void appendTextTo(ForwardsTextBuffer* output, unsigned position, unsigned lengthToAppend) const;
+  void SpliceBuffer(UChar,
+                    Node* text_node,
+                    Node* offset_base_node,
+                    int text_start_offset,
+                    int text_end_offset);
+  void EmitText(Node* text_node,
+                LayoutText* layout_object,
+                int text_start_offset,
+                int text_end_offset);
+  void EmitAltText(Node*);
+  void UpdateForReplacedElement(Node* base_node);
+  void FlushPositionOffsets() const;
+  int PositionStartOffset() const { return position_start_offset_; }
+  int PositionEndOffset() const { return position_end_offset_; }
+  Node* PositionNode() const { return position_node_; }
+  bool HasEmitted() const { return has_emitted_; }
+  UChar LastCharacter() const { return last_character_; }
+  int TextStartOffset() const { return text_start_offset_; }
+  void ResetRunInformation() {
+    position_node_ = nullptr;
+    text_length_ = 0;
+  }
 
-private:
-    int m_textLength;
-    String m_text;
+  void AppendTextTo(ForwardsTextBuffer* output,
+                    unsigned position,
+                    unsigned length_to_append) const;
 
-    // Used for whitespace characters that aren't in the DOM, so we can point at them.
-    // If non-zero, overrides m_text.
-    UChar m_singleCharacterBuffer;
+ private:
+  int text_length_;
+  String text_;
 
-    // The current text and its position, in the form to be returned from the iterator.
-    Member<Node> m_positionNode;
-    mutable Member<Node> m_positionOffsetBaseNode;
-    mutable int m_positionStartOffset;
-    mutable int m_positionEndOffset;
+  // Used for whitespace characters that aren't in the DOM, so we can point at
+  // them.
+  // If non-zero, overrides m_text.
+  UChar single_character_buffer_;
 
-    // Used when deciding whether to emit a "positioning" (e.g. newline) before any other content
-    bool m_hasEmitted;
-    UChar m_lastCharacter;
-    bool m_emitsOriginalText;
+  // The current text and its position, in the form to be returned from the
+  // iterator.
+  Member<Node> position_node_;
+  mutable Member<Node> position_offset_base_node_;
+  mutable int position_start_offset_;
+  mutable int position_end_offset_;
+
+  // Used when deciding whether to emit a "positioning" (e.g. newline) before
+  // any other content
+  bool has_emitted_;
+  UChar last_character_;
+
+  const TextIteratorBehavior behavior_;
+
+  // Stores the length of :first-letter when we are at the remaining text.
+  // Equals to 0 in all other cases.
+  int text_start_offset_;
+
+  DISALLOW_COPY_AND_ASSIGN(TextIteratorTextState);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TextIteratorTextState_h
+#endif  // TextIteratorTextState_h

@@ -20,6 +20,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "skia/ext/skia_utils_mac.h"
 #include "third_party/skia/include/ports/SkTypeface_mac.h"
+#include "ui/gfx/decorated_text.h"
 
 namespace {
 
@@ -29,7 +30,7 @@ namespace {
 // 10.10.
 base::ScopedCFTypeRef<CTFontRef> CopyFontWithSymbolicTraits(CTFontRef font,
                                                             int sym_traits) {
-  if (base::mac::IsOSElCapitanOrLater()) {
+  if (base::mac::IsAtLeastOS10_11()) {
     return base::ScopedCFTypeRef<CTFontRef>(CTFontCreateCopyWithSymbolicTraits(
         font, 0, nullptr, sym_traits, sym_traits));
   }
@@ -58,6 +59,30 @@ base::ScopedCFTypeRef<CTFontRef> CopyFontWithSymbolicTraits(CTFontRef font,
       CTFontDescriptorCreateWithAttributes(attributes));
   return base::ScopedCFTypeRef<CTFontRef>(
       CTFontCreateWithFontDescriptor(desc, 0.0, nullptr));
+}
+
+// Returns whether |font_list| has a valid primary native font.
+bool HasValidPrimaryNativeFont(const gfx::FontList& font_list) {
+  return font_list.GetPrimaryFont().GetNativeFont();
+}
+
+// Checks whether |font_list| is valid. If it isn't, returns the default font
+// list (or a font list derived from it). The returned font list will have a
+// valid primary native font.
+gfx::FontList GetValidFontList(const gfx::FontList& font_list) {
+  if (HasValidPrimaryNativeFont(font_list))
+    return font_list;
+
+  const gfx::FontList default_font_list;
+  const int size_delta =
+      font_list.GetFontSize() - default_font_list.GetFontSize();
+  const gfx::FontList derived_font_list = default_font_list.Derive(
+      size_delta, font_list.GetFontStyle(), font_list.GetFontWeight());
+  if (HasValidPrimaryNativeFont(derived_font_list))
+    return derived_font_list;
+
+  DCHECK(HasValidPrimaryNativeFont(default_font_list));
+  return default_font_list;
 }
 
 }  // namespace
@@ -89,6 +114,11 @@ std::unique_ptr<RenderText> RenderTextMac::CreateInstanceOfSameType() const {
   return base::WrapUnique(new RenderTextMac);
 }
 
+void RenderTextMac::SetFontList(const FontList& font_list) {
+  // Ensure the font list used has a valid native font.
+  RenderText::SetFontList(GetValidFontList(font_list));
+}
+
 bool RenderTextMac::MultilineSupported() const {
   return false;
 }
@@ -110,6 +140,10 @@ SizeF RenderTextMac::GetStringSizeF() {
 SelectionModel RenderTextMac::FindCursorPosition(const Point& point) {
   // TODO(asvitkine): Implement this. http://crbug.com/131618
   return SelectionModel();
+}
+
+bool RenderTextMac::IsSelectionSupported() const {
+  return false;
 }
 
 std::vector<RenderText::FontSpan> RenderTextMac::GetFontSpansForTesting() {
@@ -278,6 +312,7 @@ base::ScopedCFTypeRef<CTLineRef> RenderTextMac::EnsureLayoutInternal(
     base::ScopedCFTypeRef<CFMutableArrayRef>* attributes_owner) {
   CTFontRef ct_font =
       base::mac::NSToCFCast(font_list().GetPrimaryFont().GetNativeFont());
+  DCHECK(ct_font);
 
   const void* keys[] = {kCTFontAttributeName};
   const void* values[] = {ct_font};
@@ -393,14 +428,6 @@ void RenderTextMac::ComputeRuns() {
     run->width = run_width;
     run->glyphs.resize(glyph_count);
     CTRunGetGlyphs(ct_run, empty_cf_range, &run->glyphs[0]);
-    // CTRunGetGlyphs() sometimes returns glyphs with value 65535 and zero
-    // width (this has been observed at the beginning of a string containing
-    // Arabic content). Passing these to Skia will trigger an assertion;
-    // instead set their values to 0.
-    for (size_t glyph = 0; glyph < glyph_count; glyph++) {
-      if (run->glyphs[glyph] == 65535)
-        run->glyphs[glyph] = 0;
-    }
 
     run->glyph_positions.resize(glyph_count);
     const CGPoint* positions_ptr = CTRunGetPositionsPtr(ct_run);
@@ -446,6 +473,17 @@ void RenderTextMac::InvalidateStyle() {
   attributes_.reset();
   runs_.clear();
   runs_valid_ = false;
+}
+
+bool RenderTextMac::GetDecoratedTextForRange(const Range& range,
+                                             DecoratedText* decorated_text) {
+  // TODO(karandeepb): This is not invoked on any codepath currently. Style the
+  // returned text if need be.
+  if (obscured())
+    return false;
+
+  decorated_text->text = GetTextFromRange(range);
+  return true;
 }
 
 }  // namespace gfx

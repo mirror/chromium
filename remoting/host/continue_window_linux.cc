@@ -70,10 +70,14 @@ void ContinueWindowGtk::CreateWindow() {
   DCHECK(CalledOnValidThread());
   DCHECK(!continue_window_);
 
+  GtkDialogFlags flags = GTK_DIALOG_MODAL;
+#if GTK_MAJOR_VERSION == 2
+  flags = static_cast<GtkDialogFlags>(flags | GTK_DIALOG_NO_SEPARATOR);
+#endif
   continue_window_ = gtk_dialog_new_with_buttons(
       l10n_util::GetStringUTF8(IDS_PRODUCT_NAME).c_str(),
       nullptr,
-      static_cast<GtkDialogFlags>(GTK_DIALOG_MODAL | GTK_DIALOG_NO_SEPARATOR),
+      flags,
       l10n_util::GetStringUTF8(IDS_STOP_SHARING_BUTTON).c_str(),
       GTK_RESPONSE_CANCEL,
       l10n_util::GetStringUTF8(IDS_CONTINUE_BUTTON).c_str(),
@@ -98,7 +102,9 @@ void ContinueWindowGtk::CreateWindow() {
       gtk_label_new(l10n_util::GetStringUTF8(IDS_CONTINUE_PROMPT).c_str());
   gtk_label_set_line_wrap(GTK_LABEL(text_label), TRUE);
   // TODO(lambroslambrou): Fix magic numbers, as in disconnect_window_gtk.cc.
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS;
   gtk_misc_set_padding(GTK_MISC(text_label), 12, 12);
+  G_GNUC_END_IGNORE_DEPRECATIONS;
   gtk_container_add(GTK_CONTAINER(content_area), text_label);
 
   gtk_widget_show_all(content_area);
@@ -118,7 +124,7 @@ void ContinueWindowGtk::OnResponse(GtkDialog* dialog, int response_id) {
 
 // static
 std::unique_ptr<HostWindow> HostWindow::CreateContinueWindow() {
-  return base::WrapUnique(new ContinueWindowGtk());
+  return base::MakeUnique<ContinueWindowGtk>();
 }
 
 }  // namespace remoting

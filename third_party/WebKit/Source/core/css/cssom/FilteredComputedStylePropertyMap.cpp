@@ -4,84 +4,92 @@
 
 #include "core/css/cssom/FilteredComputedStylePropertyMap.h"
 
-#include "core/css/parser/CSSVariableParser.h"
-
 namespace blink {
 
-FilteredComputedStylePropertyMap::FilteredComputedStylePropertyMap(CSSComputedStyleDeclaration* computedStyleDeclaration, const Vector<CSSPropertyID>& nativeProperties, const Vector<AtomicString>& customProperties)
-    : ComputedStylePropertyMap(computedStyleDeclaration)
-{
-    for (const auto& nativeProperty : nativeProperties) {
-        m_nativeProperties.add(nativeProperty);
-    }
+FilteredComputedStylePropertyMap::FilteredComputedStylePropertyMap(
+    CSSComputedStyleDeclaration* computed_style_declaration,
+    const Vector<CSSPropertyID>& native_properties,
+    const Vector<AtomicString>& custom_properties,
+    Node* node)
+    : ComputedStylePropertyMap(node) {
+  for (const auto& native_property : native_properties) {
+    native_properties_.insert(native_property);
+  }
 
-    for (const auto& customProperty: customProperties) {
-        m_customProperties.add(customProperty);
-    }
+  for (const auto& custom_property : custom_properties) {
+    custom_properties_.insert(custom_property);
+  }
 }
 
+CSSStyleValue* FilteredComputedStylePropertyMap::get(
+    const String& property_name,
+    ExceptionState& exception_state) {
+  CSSPropertyID property_id = cssPropertyID(property_name);
+  if (property_id >= firstCSSProperty &&
+      native_properties_.Contains(property_id)) {
+    CSSStyleValueVector style_vector = GetAllInternal(property_id);
+    if (style_vector.IsEmpty())
+      return nullptr;
 
-CSSStyleValue* FilteredComputedStylePropertyMap::get(const String& propertyName, ExceptionState& exceptionState)
-{
-    CSSPropertyID propertyID = cssPropertyID(propertyName);
-    if (propertyID != CSSPropertyInvalid && m_nativeProperties.contains(propertyID)) {
-        CSSStyleValueVector styleVector = getAllInternal(propertyID);
-        if (styleVector.isEmpty())
-            return nullptr;
+    return style_vector[0];
+  }
 
-        return styleVector[0];
-    }
+  if (property_id == CSSPropertyVariable &&
+      custom_properties_.Contains(AtomicString(property_name))) {
+    CSSStyleValueVector style_vector =
+        GetAllInternal(AtomicString(property_name));
+    if (style_vector.IsEmpty())
+      return nullptr;
 
-    if (propertyID == CSSPropertyInvalid && CSSVariableParser::isValidVariableName(propertyName) && m_customProperties.contains(AtomicString(propertyName))) {
-        CSSStyleValueVector styleVector = getAllInternal(AtomicString(propertyName));
-        if (styleVector.isEmpty())
-            return nullptr;
+    return style_vector[0];
+  }
 
-        return styleVector[0];
-    }
-
-    exceptionState.throwTypeError("Invalid propertyName: " + propertyName);
-    return nullptr;
+  exception_state.ThrowTypeError("Invalid propertyName: " + property_name);
+  return nullptr;
 }
 
-CSSStyleValueVector FilteredComputedStylePropertyMap::getAll(const String& propertyName, ExceptionState& exceptionState)
-{
-    CSSPropertyID propertyID = cssPropertyID(propertyName);
-    if (propertyID != CSSPropertyInvalid && m_nativeProperties.contains(propertyID))
-        return getAllInternal(propertyID);
+CSSStyleValueVector FilteredComputedStylePropertyMap::getAll(
+    const String& property_name,
+    ExceptionState& exception_state) {
+  CSSPropertyID property_id = cssPropertyID(property_name);
+  if (property_id >= firstCSSProperty &&
+      native_properties_.Contains(property_id))
+    return GetAllInternal(property_id);
 
-    if (propertyID == CSSPropertyInvalid && CSSVariableParser::isValidVariableName(propertyName) && m_customProperties.contains(AtomicString(propertyName)))
-        return getAllInternal(AtomicString(propertyName));
+  if (property_id == CSSPropertyVariable &&
+      custom_properties_.Contains(AtomicString(property_name)))
+    return GetAllInternal(AtomicString(property_name));
 
-    exceptionState.throwTypeError("Invalid propertyName: " + propertyName);
-    return CSSStyleValueVector();
+  exception_state.ThrowTypeError("Invalid propertyName: " + property_name);
+  return CSSStyleValueVector();
 }
 
-bool FilteredComputedStylePropertyMap::has(const String& propertyName, ExceptionState& exceptionState)
-{
-    CSSPropertyID propertyID = cssPropertyID(propertyName);
-    if (propertyID != CSSPropertyInvalid && m_nativeProperties.contains(propertyID))
-        return !getAllInternal(propertyID).isEmpty();
+bool FilteredComputedStylePropertyMap::has(const String& property_name,
+                                           ExceptionState& exception_state) {
+  CSSPropertyID property_id = cssPropertyID(property_name);
+  if (property_id >= firstCSSProperty &&
+      native_properties_.Contains(property_id))
+    return !GetAllInternal(property_id).IsEmpty();
 
-    if (propertyID == CSSPropertyInvalid && CSSVariableParser::isValidVariableName(propertyName) && m_customProperties.contains(AtomicString(propertyName)))
-        return !getAllInternal(AtomicString(propertyName)).isEmpty();
+  if (property_id == CSSPropertyVariable &&
+      custom_properties_.Contains(AtomicString(property_name)))
+    return !GetAllInternal(AtomicString(property_name)).IsEmpty();
 
-    exceptionState.throwTypeError("Invalid propertyName: " + propertyName);
-    return false;
+  exception_state.ThrowTypeError("Invalid propertyName: " + property_name);
+  return false;
 }
 
-Vector<String> FilteredComputedStylePropertyMap::getProperties()
-{
-    Vector<String> result;
-    for (const auto& nativeProperty : m_nativeProperties) {
-        result.append(getPropertyNameString(nativeProperty));
-    }
+Vector<String> FilteredComputedStylePropertyMap::getProperties() {
+  Vector<String> result;
+  for (const auto& native_property : native_properties_) {
+    result.push_back(getPropertyNameString(native_property));
+  }
 
-    for (const auto& customProperty : m_customProperties) {
-        result.append(customProperty);
-    }
+  for (const auto& custom_property : custom_properties_) {
+    result.push_back(custom_property);
+  }
 
-    return result;
+  return result;
 }
 
-} // namespace blink
+}  // namespace blink

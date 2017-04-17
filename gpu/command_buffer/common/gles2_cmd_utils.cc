@@ -26,7 +26,7 @@ enum GLErrorBit {
   kInvalidValue = (1 << 1),
   kInvalidOperation = (1 << 2),
   kOutOfMemory = (1 << 3),
-  kInvalidFrameBufferOperation = (1 << 4),
+  kInvalidFramebufferOperation = (1 << 4),
   kContextLost = (1 << 5)
 };
 }  // namespace gl_error_bit
@@ -212,6 +212,54 @@ int GLES2Util::GLGetNumValuesReturned(int id) const {
       return 1;
     case GL_COPY_WRITE_BUFFER_BINDING:
       return 1;
+    case GL_MAX_3D_TEXTURE_SIZE:
+      return 1;
+    case GL_MAX_ARRAY_TEXTURE_LAYERS:
+      return 1;
+    case GL_MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS:
+      return 1;
+    case GL_MAX_COMBINED_UNIFORM_BLOCKS:
+      return 1;
+    case GL_MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS:
+      return 1;
+    case GL_MAX_ELEMENT_INDEX:
+      return 1;
+    case GL_MAX_ELEMENTS_INDICES:
+      return 1;
+    case GL_MAX_ELEMENTS_VERTICES:
+      return 1;
+    case GL_MAX_FRAGMENT_INPUT_COMPONENTS:
+      return 1;
+    case GL_MAX_FRAGMENT_UNIFORM_BLOCKS:
+      return 1;
+    case GL_MAX_FRAGMENT_UNIFORM_COMPONENTS:
+      return 1;
+    case GL_MAX_PROGRAM_TEXEL_OFFSET:
+      return 1;
+    case GL_MAX_SERVER_WAIT_TIMEOUT:
+      return 1;
+    case GL_MAX_TEXTURE_LOD_BIAS:
+      return 1;
+    case GL_MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS:
+      return 1;
+    case GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS:
+      return 1;
+    case GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS:
+      return 1;
+    case GL_MAX_UNIFORM_BLOCK_SIZE:
+      return 1;
+    case GL_MAX_UNIFORM_BUFFER_BINDINGS:
+      return 1;
+    case GL_MAX_VARYING_COMPONENTS:
+      return 1;
+    case GL_MAX_VERTEX_OUTPUT_COMPONENTS:
+      return 1;
+    case GL_MAX_VERTEX_UNIFORM_BLOCKS:
+      return 1;
+    case GL_MAX_VERTEX_UNIFORM_COMPONENTS:
+      return 1;
+    case GL_MIN_PROGRAM_TEXEL_OFFSET:
+      return 1;
     case GL_PIXEL_PACK_BUFFER_BINDING:
       return 1;
     case GL_PIXEL_UNPACK_BUFFER_BINDING:
@@ -229,6 +277,8 @@ int GLES2Util::GLGetNumValuesReturned(int id) const {
     case GL_UNIFORM_BUFFER_SIZE:
       return 1;
     case GL_UNIFORM_BUFFER_START:
+      return 1;
+    case GL_UNIFORM_BUFFER_OFFSET_ALIGNMENT:
       return 1;
 
     // -- glGetBooleanv, glGetFloatv, glGetIntergerv with
@@ -378,6 +428,14 @@ int GLES2Util::GLGetNumValuesReturned(int id) const {
       return 1;
     case GL_TEXTURE_MAX_ANISOTROPY_EXT:
       return 1;
+    case GL_TEXTURE_SWIZZLE_R:
+      return 1;
+    case GL_TEXTURE_SWIZZLE_G:
+      return 1;
+    case GL_TEXTURE_SWIZZLE_B:
+      return 1;
+    case GL_TEXTURE_SWIZZLE_A:
+      return 1;
 
     // -- glGetVertexAttrib
     case GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING:
@@ -425,8 +483,39 @@ int GLES2Util::GLGetNumValuesReturned(int id) const {
 
 namespace {
 
+// Return the number of bytes per element, based on the element type.
+int BytesPerElement(int type) {
+  switch (type) {
+    case GL_FLOAT_32_UNSIGNED_INT_24_8_REV:
+      return 8;
+    case GL_FLOAT:
+    case GL_UNSIGNED_INT_24_8_OES:
+    case GL_UNSIGNED_INT:
+    case GL_INT:
+    case GL_UNSIGNED_INT_2_10_10_10_REV:
+    case GL_UNSIGNED_INT_10F_11F_11F_REV:
+    case GL_UNSIGNED_INT_5_9_9_9_REV:
+      return 4;
+    case GL_HALF_FLOAT:
+    case GL_HALF_FLOAT_OES:
+    case GL_UNSIGNED_SHORT:
+    case GL_SHORT:
+    case GL_UNSIGNED_SHORT_5_6_5:
+    case GL_UNSIGNED_SHORT_4_4_4_4:
+    case GL_UNSIGNED_SHORT_5_5_5_1:
+      return 2;
+    case GL_UNSIGNED_BYTE:
+    case GL_BYTE:
+      return 1;
+    default:
+      return 0;
+  }
+}
+
+}  // anonymous namespace
+
 // Return the number of elements per group of a specified format.
-int ElementsPerGroup(int format, int type) {
+int GLES2Util::ElementsPerGroup(int format, int type) {
   switch (type) {
     case GL_UNSIGNED_SHORT_5_6_5:
     case GL_UNSIGNED_SHORT_4_4_4_4:
@@ -470,37 +559,6 @@ int ElementsPerGroup(int format, int type) {
        return 0;
   }
 }
-
-// Return the number of bytes per element, based on the element type.
-int BytesPerElement(int type) {
-  switch (type) {
-    case GL_FLOAT_32_UNSIGNED_INT_24_8_REV:
-      return 8;
-    case GL_FLOAT:
-    case GL_UNSIGNED_INT_24_8_OES:
-    case GL_UNSIGNED_INT:
-    case GL_INT:
-    case GL_UNSIGNED_INT_2_10_10_10_REV:
-    case GL_UNSIGNED_INT_10F_11F_11F_REV:
-    case GL_UNSIGNED_INT_5_9_9_9_REV:
-      return 4;
-    case GL_HALF_FLOAT:
-    case GL_HALF_FLOAT_OES:
-    case GL_UNSIGNED_SHORT:
-    case GL_SHORT:
-    case GL_UNSIGNED_SHORT_5_6_5:
-    case GL_UNSIGNED_SHORT_4_4_4_4:
-    case GL_UNSIGNED_SHORT_5_5_5_1:
-       return 2;
-    case GL_UNSIGNED_BYTE:
-    case GL_BYTE:
-       return 1;
-    default:
-       return 0;
-  }
-}
-
-}  // anonymous namespace
 
 uint32_t GLES2Util::ComputeImageGroupSize(int format, int type) {
   int bytes_per_element = BytesPerElement(type);
@@ -921,7 +979,7 @@ uint32_t GLES2Util::GLErrorToErrorBit(uint32_t error) {
     case GL_OUT_OF_MEMORY:
       return gl_error_bit::kOutOfMemory;
     case GL_INVALID_FRAMEBUFFER_OPERATION:
-      return gl_error_bit::kInvalidFrameBufferOperation;
+      return gl_error_bit::kInvalidFramebufferOperation;
     case GL_CONTEXT_LOST_KHR:
       return gl_error_bit::kContextLost;
     default:
@@ -940,7 +998,7 @@ uint32_t GLES2Util::GLErrorBitToGLError(uint32_t error_bit) {
       return GL_INVALID_OPERATION;
     case gl_error_bit::kOutOfMemory:
       return GL_OUT_OF_MEMORY;
-    case gl_error_bit::kInvalidFrameBufferOperation:
+    case gl_error_bit::kInvalidFramebufferOperation:
       return GL_INVALID_FRAMEBUFFER_OPERATION;
     case gl_error_bit::kContextLost:
       return GL_CONTEXT_LOST_KHR;
@@ -1251,6 +1309,18 @@ bool GLES2Util::IsSizedColorFormat(uint32_t internal_format) {
   }
 }
 
+GLint GLES2Util::GetColorEncodingFromInternalFormat(uint32_t internalformat) {
+  switch (internalformat) {
+    case GL_SRGB_EXT:
+    case GL_SRGB_ALPHA_EXT:
+    case GL_SRGB8:
+    case GL_SRGB8_ALPHA8:
+      return GL_SRGB;
+    default:
+      return GL_LINEAR;
+  }
+}
+
 void GLES2Util::GetColorFormatComponentSizes(
     uint32_t internal_format, uint32_t type, int* r, int* g, int* b, int* a) {
   DCHECK(r && g && b && a);
@@ -1441,8 +1511,6 @@ uint32_t GLES2Util::GetChannelsNeededForAttachmentType(
       return kDepth;
     case GL_STENCIL_ATTACHMENT:
       return kStencil;
-    case GL_DEPTH_STENCIL_ATTACHMENT:
-      return kDepth | kStencil;
     default:
       if (type >= GL_COLOR_ATTACHMENT0 &&
           type < static_cast<int>(
@@ -1583,6 +1651,9 @@ bool GLES2Util::IsUnsignedIntegerFormat(uint32_t internal_format) {
     case GL_RG8UI:
     case GL_RG16UI:
     case GL_RG32UI:
+    case GL_RGB8UI:
+    case GL_RGB16UI:
+    case GL_RGB32UI:
     case GL_RGBA8UI:
     case GL_RGB10_A2UI:
     case GL_RGBA16UI:
@@ -1602,6 +1673,9 @@ bool GLES2Util::IsSignedIntegerFormat(uint32_t internal_format) {
     case GL_RG8I:
     case GL_RG16I:
     case GL_RG32I:
+    case GL_RGB8I:
+    case GL_RGB16I:
+    case GL_RGB32I:
     case GL_RGBA8I:
     case GL_RGBA16I:
     case GL_RGBA32I:
@@ -1789,6 +1863,51 @@ const int32_t kContextType = 0x10004;
 
 }  // namespace
 
+bool IsWebGLContextType(ContextType context_type) {
+  // Switch statement to cause a compile-time error if we miss a case.
+  switch (context_type) {
+    case CONTEXT_TYPE_WEBGL1:
+    case CONTEXT_TYPE_WEBGL2:
+      return true;
+    case CONTEXT_TYPE_OPENGLES2:
+    case CONTEXT_TYPE_OPENGLES3:
+      return false;
+  }
+
+  NOTREACHED();
+  return false;
+}
+
+bool IsWebGL1OrES2ContextType(ContextType context_type) {
+  // Switch statement to cause a compile-time error if we miss a case.
+  switch (context_type) {
+    case CONTEXT_TYPE_WEBGL1:
+    case CONTEXT_TYPE_OPENGLES2:
+      return true;
+    case CONTEXT_TYPE_WEBGL2:
+    case CONTEXT_TYPE_OPENGLES3:
+      return false;
+  }
+
+  NOTREACHED();
+  return false;
+}
+
+bool IsWebGL2OrES3ContextType(ContextType context_type) {
+  // Switch statement to cause a compile-time error if we miss a case.
+  switch (context_type) {
+    case CONTEXT_TYPE_OPENGLES3:
+    case CONTEXT_TYPE_WEBGL2:
+      return true;
+    case CONTEXT_TYPE_WEBGL1:
+    case CONTEXT_TYPE_OPENGLES2:
+      return false;
+  }
+
+  NOTREACHED();
+  return false;
+}
+
 ContextCreationAttribHelper::ContextCreationAttribHelper()
     : gpu_preference(gl::PreferIntegratedGpu),
       alpha_size(-1),
@@ -1804,6 +1923,7 @@ ContextCreationAttribHelper::ContextCreationAttribHelper()
       fail_if_major_perf_caveat(false),
       lose_context_when_out_of_memory(false),
       should_use_native_gmb_for_backbuffer(false),
+      own_offscreen_surface(false),
       context_type(CONTEXT_TYPE_OPENGLES2) {}
 
 ContextCreationAttribHelper::ContextCreationAttribHelper(
@@ -1882,4 +2002,3 @@ bool ContextCreationAttribHelper::Parse(const std::vector<int32_t>& attribs) {
 
 }  // namespace gles2
 }  // namespace gpu
-

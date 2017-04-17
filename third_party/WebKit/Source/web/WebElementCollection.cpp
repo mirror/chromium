@@ -33,49 +33,41 @@
 
 #include "core/dom/Element.h"
 #include "core/html/HTMLCollection.h"
+#include "platform/wtf/PassRefPtr.h"
 #include "public/web/WebElement.h"
-#include "wtf/PassRefPtr.h"
 
 namespace blink {
 
-void WebElementCollection::reset()
-{
-    m_private.reset();
+void WebElementCollection::Reset() {
+  private_.Reset();
 }
 
-void WebElementCollection::assign(const WebElementCollection& other)
-{
-    m_private = other.m_private;
+void WebElementCollection::Assign(const WebElementCollection& other) {
+  private_ = other.private_;
 }
 
-WebElementCollection::WebElementCollection(HTMLCollection*col)
-    : m_private(col)
-{
+WebElementCollection::WebElementCollection(HTMLCollection* col)
+    : private_(col) {}
+
+WebElementCollection& WebElementCollection::operator=(HTMLCollection* col) {
+  private_ = col;
+  return *this;
 }
 
-WebElementCollection& WebElementCollection::operator=(HTMLCollection*col)
-{
-    m_private = col;
-    return *this;
+unsigned WebElementCollection::length() const {
+  return private_->length();
 }
 
-unsigned WebElementCollection::length() const
-{
-    return m_private->length();
+WebElement WebElementCollection::NextItem() const {
+  Element* element = private_->item(current_);
+  if (element)
+    current_++;
+  return WebElement(element);
 }
 
-WebElement WebElementCollection::nextItem() const
-{
-    Element* element = m_private->item(m_current);
-    if (element)
-        m_current++;
-    return WebElement(element);
+WebElement WebElementCollection::FirstItem() const {
+  current_ = 0;
+  return NextItem();
 }
 
-WebElement WebElementCollection::firstItem() const
-{
-    m_current = 0;
-    return nextItem();
-}
-
-} // namespace blink
+}  // namespace blink

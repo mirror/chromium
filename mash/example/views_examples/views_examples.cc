@@ -3,69 +3,73 @@
 // found in the LICENSE file.
 
 #include <memory>
+#include <vector>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "mash/public/interfaces/launchable.mojom.h"
-#include "mojo/public/c/system/main.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
-#include "services/shell/public/cpp/connection.h"
-#include "services/shell/public/cpp/connector.h"
-#include "services/shell/public/cpp/service.h"
-#include "services/shell/public/cpp/service_runner.h"
-#include "services/tracing/public/cpp/tracing_impl.h"
+#include "services/service_manager/public/c/main.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/interface_factory.h"
+#include "services/service_manager/public/cpp/interface_registry.h"
+#include "services/service_manager/public/cpp/service.h"
+#include "services/service_manager/public/cpp/service_context.h"
+#include "services/service_manager/public/cpp/service_runner.h"
+#include "services/tracing/public/cpp/provider.h"
 #include "ui/views/examples/example_base.h"
 #include "ui/views/examples/examples_window.h"
 #include "ui/views/mus/aura_init.h"
-#include "ui/views/mus/window_manager_connection.h"
-
-namespace views {
-class AuraInit;
-class WindowManagerConnection;
-}
 
 class ViewsExamples
-    : public shell::Service,
+    : public service_manager::Service,
       public mash::mojom::Launchable,
-      public shell::InterfaceFactory<mash::mojom::Launchable> {
+      public service_manager::InterfaceFactory<mash::mojom::Launchable> {
  public:
-  ViewsExamples() {}
+  ViewsExamples() {
+    registry_.AddInterface<mash::mojom::Launchable>(this);
+  }
   ~ViewsExamples() override {}
 
  private:
-  // shell::Service:
-  void OnStart(const shell::Identity& identity) override {
-    tracing_.Initialize(connector(), identity.name());
-    aura_init_.reset(
-        new views::AuraInit(connector(), "views_mus_resources.pak"));
-    window_manager_connection_ =
-        views::WindowManagerConnection::Create(connector(), identity);
+  // service_manager::Service:
+  void OnStart() override {
+    tracing_.Initialize(context()->connector(), context()->identity().name());
+    aura_init_ = base::MakeUnique<views::AuraInit>(
+        context()->connector(), context()->identity(),
+        "views_mus_resources.pak", std::string(), nullptr,
+        views::AuraInit::Mode::AURA_MUS);
   }
-  bool OnConnect(shell::Connection* connection) override {
-    connection->AddInterface<mash::mojom::Launchable>(this);
-    return true;
+  void OnBindInterface(const service_manager::ServiceInfo& source_info,
+                       const std::string& interface_name,
+                       mojo::ScopedMessagePipeHandle interface_pipe) override {
+    registry_.BindInterface(source_info.identity, interface_name,
+                            std::move(interface_pipe));
   }
 
   // mash::mojom::Launchable:
   void Launch(uint32_t what, mash::mojom::LaunchMode how) override {
-    views::examples::ShowExamplesWindow(views::examples::QUIT_ON_CLOSE,
-                                        nullptr, nullptr);
+    views::examples::ShowExamplesWindow(views::examples::QUIT_ON_CLOSE);
   }
 
-  // shell::InterfaceFactory<mash::mojom::Launchable>:
-  void Create(const shell::Identity& remote_identity,
+  // service_manager::InterfaceFactory<mash::mojom::Launchable>:
+  void Create(const service_manager::Identity& remote_identity,
               mash::mojom::LaunchableRequest request) override {
     bindings_.AddBinding(this, std::move(request));
   }
 
   mojo::BindingSet<mash::mojom::Launchable> bindings_;
 
-  mojo::TracingImpl tracing_;
+  service_manager::BinderRegistry registry_;
+
+  tracing::Provider tracing_;
   std::unique_ptr<views::AuraInit> aura_init_;
-  std::unique_ptr<views::WindowManagerConnection> window_manager_connection_;
 
   DISALLOW_COPY_AND_ASSIGN(ViewsExamples);
 };
 
-MojoResult MojoMain(MojoHandle shell_handle) {
-  return shell::ServiceRunner(new ViewsExamples).Run(shell_handle);
+MojoResult ServiceMain(MojoHandle service_request_handle) {
+  return service_manager::ServiceRunner(new ViewsExamples)
+      .Run(service_request_handle);
 }

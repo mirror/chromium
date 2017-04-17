@@ -23,12 +23,30 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
       LoadExtension(test_data_dir_.AppendASCII("simple_with_file"));
   ASSERT_TRUE(extension);
   GURL url = extension->GetResourceURL("file.html");
-  browser()->OpenURL(content::OpenURLParams(url, content::Referrer(),
-                                            NEW_FOREGROUND_TAB,
-                                            ui::PAGE_TRANSITION_TYPED, false));
+  browser()->OpenURL(content::OpenURLParams(
+      url, content::Referrer(), WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui::PAGE_TRANSITION_TYPED, false));
   // Without waiting for the tab to finish, unload the extension.
   extension_service()->UnloadExtension(extension->id(),
                                        UnloadedExtensionInfo::REASON_TERMINATE);
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  // Wait for the web contents to stop loading.
+  content::WaitForLoadStop(web_contents);
+  EXPECT_EQ(url, web_contents->GetLastCommittedURL());
+  ASSERT_FALSE(web_contents->IsCrashed());
+}
+
+// Tests that loading a file from a theme in a tab doesn't crash anything.
+// Another part of crbug.com/528026 and related.
+IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
+                       TestRendererInitializationWithThemesTab) {
+  const Extension* extension = LoadExtensionWithFlags(
+      test_data_dir_.AppendASCII("theme"), kFlagAllowOldManifestVersions);
+  ASSERT_TRUE(extension);
+  ASSERT_TRUE(extension->is_theme());
+  GURL url = extension->GetResourceURL("manifest.json");
+  ui_test_utils::NavigateToURL(browser(), url);
   content::WebContents* web_contents =
       browser()->tab_strip_model()->GetActiveWebContents();
   // Wait for the web contents to stop loading.

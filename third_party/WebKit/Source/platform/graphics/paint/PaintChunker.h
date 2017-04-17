@@ -9,9 +9,9 @@
 #include "platform/graphics/paint/DisplayItem.h"
 #include "platform/graphics/paint/PaintChunk.h"
 #include "platform/graphics/paint/PaintChunkProperties.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -19,43 +19,61 @@ namespace blink {
 // accumulated, and produces a series of paint chunks: contiguous ranges of the
 // display list with identical |PaintChunkProperties|.
 class PLATFORM_EXPORT PaintChunker final {
-    DISALLOW_NEW();
-    WTF_MAKE_NONCOPYABLE(PaintChunker);
-public:
-    PaintChunker();
-    ~PaintChunker();
+  DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(PaintChunker);
 
-    bool isInInitialState() const { return m_chunks.isEmpty() && m_currentProperties == PaintChunkProperties(); }
+ public:
+  PaintChunker();
+  ~PaintChunker();
 
-    const PaintChunkProperties& currentPaintChunkProperties() const { return m_currentProperties; }
-    void updateCurrentPaintChunkProperties(const PaintChunk::Id*, const PaintChunkProperties&);
+  bool IsInInitialState() const {
+    return chunks_.IsEmpty() && current_properties_ == PaintChunkProperties();
+  }
 
-    void incrementDisplayItemIndex(const DisplayItem&);
-    void decrementDisplayItemIndex();
+  const PaintChunkProperties& CurrentPaintChunkProperties() const {
+    return current_properties_;
+  }
+  void UpdateCurrentPaintChunkProperties(const PaintChunk::Id*,
+                                         const PaintChunkProperties&);
 
-    const PaintChunk& lastChunk() const { return m_chunks.last(); }
+  // Returns true if a new chunk is created.
+  bool IncrementDisplayItemIndex(const DisplayItem&);
 
-    void clear();
+  void DecrementDisplayItemIndex();
 
-    // Releases the generated paint chunk list and resets the state of this
-    // object.
-    Vector<PaintChunk> releasePaintChunks();
+  PaintChunk& PaintChunkAt(size_t i) { return chunks_[i]; }
+  size_t LastChunkIndex() const {
+    return chunks_.IsEmpty() ? kNotFound : chunks_.size() - 1;
+  }
+  PaintChunk& LastChunk() { return chunks_.back(); }
 
-private:
-    enum ItemBehavior {
-        // Can be combined with adjacent items when building chunks.
-        DefaultBehavior = 0,
+  PaintChunk& FindChunkByDisplayItemIndex(size_t index) {
+    auto chunk = FindChunkInVectorByDisplayItemIndex(chunks_, index);
+    DCHECK(chunk != chunks_.end());
+    return *chunk;
+  }
 
-        // Item requires its own paint chunk.
-        RequiresSeparateChunk,
-    };
+  void Clear();
 
-    Vector<PaintChunk> m_chunks;
-    Vector<ItemBehavior> m_chunkBehavior;
-    Optional<PaintChunk::Id> m_currentChunkId;
-    PaintChunkProperties m_currentProperties;
+  // Releases the generated paint chunk list and resets the state of this
+  // object.
+  Vector<PaintChunk> ReleasePaintChunks();
+
+ private:
+  enum ItemBehavior {
+    // Can be combined with adjacent items when building chunks.
+    kDefaultBehavior = 0,
+
+    // Item requires its own paint chunk.
+    kRequiresSeparateChunk,
+  };
+
+  Vector<PaintChunk> chunks_;
+  Vector<ItemBehavior> chunk_behavior_;
+  Optional<PaintChunk::Id> current_chunk_id_;
+  PaintChunkProperties current_properties_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PaintChunker_h
+#endif  // PaintChunker_h

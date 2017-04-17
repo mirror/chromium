@@ -23,34 +23,35 @@
 
 #include "core/svg/SVGAnimatedNumberOptionalNumber.h"
 #include "core/svg/SVGFilterPrimitiveStandardAttributes.h"
-#include "platform/graphics/filters/FEGaussianBlur.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
-class SVGFEGaussianBlurElement final : public SVGFilterPrimitiveStandardAttributes {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(SVGFEGaussianBlurElement);
+class SVGFEGaussianBlurElement final
+    : public SVGFilterPrimitiveStandardAttributes {
+  DEFINE_WRAPPERTYPEINFO();
 
-    void setStdDeviation(float stdDeviationX, float stdDeviationY);
+ public:
+  DECLARE_NODE_FACTORY(SVGFEGaussianBlurElement);
 
-    SVGAnimatedNumber* stdDeviationX() { return m_stdDeviation->firstNumber(); }
-    SVGAnimatedNumber* stdDeviationY() { return m_stdDeviation->secondNumber(); }
-    SVGAnimatedString* in1() { return m_in1.get(); }
+  void setStdDeviation(float std_deviation_x, float std_deviation_y);
 
-    DECLARE_VIRTUAL_TRACE();
+  SVGAnimatedNumber* stdDeviationX() { return std_deviation_->FirstNumber(); }
+  SVGAnimatedNumber* stdDeviationY() { return std_deviation_->SecondNumber(); }
+  SVGAnimatedString* in1() { return in1_.Get(); }
 
-private:
-    explicit SVGFEGaussianBlurElement(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    void svgAttributeChanged(const QualifiedName&) override;
-    FilterEffect* build(SVGFilterBuilder*, Filter*) override;
+ private:
+  explicit SVGFEGaussianBlurElement(Document&);
 
-    Member<SVGAnimatedNumberOptionalNumber> m_stdDeviation;
-    Member<SVGAnimatedString> m_in1;
+  void SvgAttributeChanged(const QualifiedName&) override;
+  FilterEffect* Build(SVGFilterBuilder*, Filter*) override;
+
+  Member<SVGAnimatedNumberOptionalNumber> std_deviation_;
+  Member<SVGAnimatedString> in1_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGFEGaussianBlurElement_h
+#endif  // SVGFEGaussianBlurElement_h

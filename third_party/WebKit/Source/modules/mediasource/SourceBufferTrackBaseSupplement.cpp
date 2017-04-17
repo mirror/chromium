@@ -9,44 +9,43 @@
 
 namespace blink {
 
-static const char* kSupplementName = "SourceBufferTrackBaseSupplement";
+static const char kSupplementName[] = "SourceBufferTrackBaseSupplement";
 
 // static
-SourceBufferTrackBaseSupplement* SourceBufferTrackBaseSupplement::fromIfExists(TrackBase& track)
-{
-    return static_cast<SourceBufferTrackBaseSupplement*>(Supplement<TrackBase>::from(track, kSupplementName));
-}
-
-// static
-SourceBufferTrackBaseSupplement& SourceBufferTrackBaseSupplement::from(TrackBase& track)
-{
-    SourceBufferTrackBaseSupplement* supplement = fromIfExists(track);
-    if (!supplement) {
-        supplement = new SourceBufferTrackBaseSupplement();
-        Supplement<TrackBase>::provideTo(track, kSupplementName, supplement);
-    }
-    return *supplement;
+SourceBufferTrackBaseSupplement* SourceBufferTrackBaseSupplement::FromIfExists(
+    TrackBase& track) {
+  return static_cast<SourceBufferTrackBaseSupplement*>(
+      Supplement<TrackBase>::From(track, kSupplementName));
 }
 
 // static
-SourceBuffer* SourceBufferTrackBaseSupplement::sourceBuffer(TrackBase& track)
-{
-    SourceBufferTrackBaseSupplement* supplement = fromIfExists(track);
-    if (supplement)
-        return supplement->m_sourceBuffer;
-    return nullptr;
+SourceBufferTrackBaseSupplement& SourceBufferTrackBaseSupplement::From(
+    TrackBase& track) {
+  SourceBufferTrackBaseSupplement* supplement = FromIfExists(track);
+  if (!supplement) {
+    supplement = new SourceBufferTrackBaseSupplement();
+    Supplement<TrackBase>::ProvideTo(track, kSupplementName, supplement);
+  }
+  return *supplement;
 }
 
-void SourceBufferTrackBaseSupplement::setSourceBuffer(TrackBase& track, SourceBuffer* sourceBuffer)
-{
-    from(track).m_sourceBuffer = sourceBuffer;
+// static
+SourceBuffer* SourceBufferTrackBaseSupplement::sourceBuffer(TrackBase& track) {
+  SourceBufferTrackBaseSupplement* supplement = FromIfExists(track);
+  if (supplement)
+    return supplement->source_buffer_;
+  return nullptr;
 }
 
-DEFINE_TRACE(SourceBufferTrackBaseSupplement)
-{
-    visitor->trace(m_sourceBuffer);
-    Supplement<TrackBase>::trace(visitor);
+void SourceBufferTrackBaseSupplement::SetSourceBuffer(
+    TrackBase& track,
+    SourceBuffer* source_buffer) {
+  From(track).source_buffer_ = source_buffer;
 }
 
-} // namespace blink
+DEFINE_TRACE(SourceBufferTrackBaseSupplement) {
+  visitor->Trace(source_buffer_);
+  Supplement<TrackBase>::Trace(visitor);
+}
 
+}  // namespace blink

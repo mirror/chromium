@@ -2,14 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/chromeos/login/quick_unlock/pin_storage.h"
-#include "chrome/browser/chromeos/login/quick_unlock/pin_storage_factory.h"
+#include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_factory.h"
+#include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_storage.h"
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_utils.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/prefs/pref_service.h"
+#include "components/prefs/scoped_user_pref_update.h"
+#include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+namespace chromeos {
 namespace {
 
 class PinStorageUnitTest : public testing::Test {
@@ -18,8 +21,9 @@ class PinStorageUnitTest : public testing::Test {
   ~PinStorageUnitTest() override {}
 
   // testing::Test:
-  void SetUp() override { chromeos::EnableQuickUnlockForTesting(); }
+  void SetUp() override { quick_unlock::EnableForTesting(); }
 
+  content::TestBrowserThreadBundle thread_bundle_;
   std::unique_ptr<TestingProfile> profile_;
 
   DISALLOW_COPY_AND_ASSIGN(PinStorageUnitTest);
@@ -31,20 +35,22 @@ class PinStorageUnitTest : public testing::Test {
 class PinStorageTestApi {
  public:
   // Does *not* take ownership over |pin_storage|.
-  explicit PinStorageTestApi(chromeos::PinStorage* pin_storage)
+  explicit PinStorageTestApi(quick_unlock::PinStorage* pin_storage)
       : pin_storage_(pin_storage) {}
-
-  // Reduces the amount of strong auth time available by |time_delta|.
-  void ReduceRemainingStrongAuthTimeBy(const base::TimeDelta& time_delta) {
-    pin_storage_->last_strong_auth_ -= time_delta;
-  }
 
   std::string PinSalt() const { return pin_storage_->PinSalt(); }
 
   std::string PinSecret() const { return pin_storage_->PinSecret(); }
 
+  bool IsPinAuthenticationAvailable() const {
+    return pin_storage_->IsPinAuthenticationAvailable();
+  }
+  bool TryAuthenticatePin(const std::string& pin) {
+    return pin_storage_->TryAuthenticatePin(pin);
+  }
+
  private:
-  chromeos::PinStorage* pin_storage_;
+  quick_unlock::PinStorage* pin_storage_;
 
   DISALLOW_COPY_AND_ASSIGN(PinStorageTestApi);
 };
@@ -59,8 +65,9 @@ TEST_F(PinStorageUnitTest, PinStorageWritesToPrefs) {
   EXPECT_EQ("", prefs->GetString(prefs::kQuickUnlockPinSalt));
   EXPECT_EQ("", prefs->GetString(prefs::kQuickUnlockPinSecret));
 
-  chromeos::PinStorage* pin_storage =
-      chromeos::PinStorageFactory::GetForProfile(profile_.get());
+  quick_unlock::PinStorage* pin_storage =
+      quick_unlock::QuickUnlockFactory::GetForProfile(profile_.get())
+          ->pin_storage();
   PinStorageTestApi pin_storage_test(pin_storage);
 
   pin_storage->SetPin("1111");
@@ -83,8 +90,9 @@ TEST_F(PinStorageUnitTest, PinStorageWritesToPrefs) {
 // 2. Attempting unlock attempts correctly increases unlock attempt count.
 // 3. Resetting unlock attempt count correctly sets attempt count to 0.
 TEST_F(PinStorageUnitTest, UnlockAttemptCount) {
-  chromeos::PinStorage* pin_storage =
-      chromeos::PinStorageFactory::GetForProfile(profile_.get());
+  quick_unlock::PinStorage* pin_storage =
+      quick_unlock::QuickUnlockFactory::GetForProfile(profile_.get())
+          ->pin_storage();
 
   EXPECT_EQ(0, pin_storage->unlock_attempt_count());
 
@@ -97,69 +105,36 @@ TEST_F(PinStorageUnitTest, UnlockAttemptCount) {
   EXPECT_EQ(0, pin_storage->unlock_attempt_count());
 }
 
-// Verifies that marking the strong auth makes TimeSinceLastStrongAuth a > zero
-// value.
-TEST_F(PinStorageUnitTest, TimeSinceLastStrongAuthReturnsPositiveValue) {
-  chromeos::PinStorage* pin_storage =
-      chromeos::PinStorageFactory::GetForProfile(profile_.get());
-  PinStorageTestApi pin_storage_test(pin_storage);
-
-  EXPECT_FALSE(pin_storage->HasStrongAuth());
-
-  pin_storage->MarkStrongAuth();
-
-  EXPECT_TRUE(pin_storage->HasStrongAuth());
-  pin_storage_test.ReduceRemainingStrongAuthTimeBy(
-      base::TimeDelta::FromSeconds(60));
-
-  EXPECT_TRUE(pin_storage->TimeSinceLastStrongAuth() >=
-              base::TimeDelta::FromSeconds(30));
-}
-
 // Verifies that the correct pin can be used to authenticate.
 TEST_F(PinStorageUnitTest, AuthenticationSucceedsWithRightPin) {
-  chromeos::PinStorage* pin_storage =
-      chromeos::PinStorageFactory::GetForProfile(profile_.get());
+  quick_unlock::PinStorage* pin_storage =
+      quick_unlock::QuickUnlockFactory::GetForProfile(profile_.get())
+          ->pin_storage();
+  PinStorageTestApi pin_storage_test(pin_storage);
 
   pin_storage->SetPin("1111");
 
-  pin_storage->MarkStrongAuth();
-  EXPECT_TRUE(pin_storage->TryAuthenticatePin("1111"));
+  EXPECT_TRUE(pin_storage_test.TryAuthenticatePin("1111"));
 }
 
 // Verifies that the correct pin will fail to authenticate if too many
 // authentication attempts have been made.
 TEST_F(PinStorageUnitTest, AuthenticationFailsFromTooManyAttempts) {
-  chromeos::PinStorage* pin_storage =
-      chromeos::PinStorageFactory::GetForProfile(profile_.get());
+  quick_unlock::PinStorage* pin_storage =
+      quick_unlock::QuickUnlockFactory::GetForProfile(profile_.get())
+          ->pin_storage();
+  PinStorageTestApi pin_storage_test(pin_storage);
 
   pin_storage->SetPin("1111");
 
   // Use up all of the authentication attempts so authentication fails.
-  pin_storage->MarkStrongAuth();
-  EXPECT_TRUE(pin_storage->IsPinAuthenticationAvailable());
-  for (int i = 0; i < chromeos::PinStorage::kMaximumUnlockAttempts; ++i)
-    EXPECT_FALSE(pin_storage->TryAuthenticatePin("foobar"));
+  EXPECT_TRUE(pin_storage_test.IsPinAuthenticationAvailable());
+  for (int i = 0; i < quick_unlock::PinStorage::kMaximumUnlockAttempts; ++i)
+    EXPECT_FALSE(pin_storage_test.TryAuthenticatePin("foobar"));
 
   // We used up all of the attempts, so entering the right PIN will still fail.
-  EXPECT_FALSE(pin_storage->IsPinAuthenticationAvailable());
-  EXPECT_FALSE(pin_storage->TryAuthenticatePin("1111"));
+  EXPECT_FALSE(pin_storage_test.IsPinAuthenticationAvailable());
+  EXPECT_FALSE(pin_storage_test.TryAuthenticatePin("1111"));
 }
 
-// Verifies that the correct pin will fail to authenticate if it has been too
-// long since a strong-auth/password authentication.
-TEST_F(PinStorageUnitTest, AuthenticationFailsFromTimeout) {
-  chromeos::PinStorage* pin_storage =
-      chromeos::PinStorageFactory::GetForProfile(profile_.get());
-  PinStorageTestApi pin_storage_test(pin_storage);
-
-  pin_storage->SetPin("1111");
-  pin_storage->MarkStrongAuth();
-  EXPECT_TRUE(pin_storage->IsPinAuthenticationAvailable());
-
-  // Remove all of the strong auth time so that we have a strong auth timeout.
-  pin_storage_test.ReduceRemainingStrongAuthTimeBy(
-      chromeos::PinStorage::kStrongAuthTimeout + base::TimeDelta::FromHours(1));
-
-  EXPECT_FALSE(pin_storage->IsPinAuthenticationAvailable());
-}
+}  // namespace chromeos

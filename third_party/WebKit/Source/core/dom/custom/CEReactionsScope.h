@@ -7,50 +7,44 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/StdLibExtras.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/StdLibExtras.h"
 
 namespace blink {
 
 class CustomElementReaction;
 class Element;
-class FrameHost;
 
 // https://html.spec.whatwg.org/multipage/scripting.html#cereactions
 class CORE_EXPORT CEReactionsScope final {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(CEReactionsScope);
-public:
-    static CEReactionsScope* current()
-    {
-        return s_topOfStack;
-    }
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(CEReactionsScope);
 
-    CEReactionsScope()
-        : m_prev(s_topOfStack)
-    {
-        s_topOfStack = this;
-    }
+ public:
+  static CEReactionsScope* Current() { return top_of_stack_; }
 
-    ~CEReactionsScope()
-    {
-        if (m_frameHost.get())
-            invokeReactions();
-        s_topOfStack = s_topOfStack->m_prev;
-    }
+  CEReactionsScope() : prev_(top_of_stack_), work_to_do_(false) {
+    top_of_stack_ = this;
+  }
 
-    void enqueueToCurrentQueue(Element*, CustomElementReaction*);
+  ~CEReactionsScope() {
+    if (work_to_do_)
+      InvokeReactions();
+    top_of_stack_ = top_of_stack_->prev_;
+  }
 
-private:
-    static CEReactionsScope* s_topOfStack;
+  void EnqueueToCurrentQueue(Element*, CustomElementReaction*);
 
-    void invokeReactions();
+ private:
+  static CEReactionsScope* top_of_stack_;
 
-    CEReactionsScope* m_prev;
-    Member<FrameHost> m_frameHost;
+  void InvokeReactions();
+
+  CEReactionsScope* prev_;
+  bool work_to_do_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CEReactionsScope_h
+#endif  // CEReactionsScope_h

@@ -4,9 +4,9 @@
 
 package org.chromium.chrome.browser.translate;
 
-import android.os.Environment;
-import android.test.suitebuilder.annotation.MediumTest;
+import android.support.test.filters.MediumTest;
 
+import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.Restriction;
@@ -20,6 +20,8 @@ import org.chromium.chrome.test.util.InfoBarUtil;
 import org.chromium.chrome.test.util.TranslateUtil;
 import org.chromium.net.test.EmbeddedTestServer;
 
+import java.util.concurrent.TimeoutException;
+
 /**
  * Tests for the translate infobar, assumes it runs on a system with language
  * preferences set to English.
@@ -30,6 +32,8 @@ import org.chromium.net.test.EmbeddedTestServer;
 public class TranslateInfoBarTest extends ChromeActivityTestCaseBase<ChromeActivity> {
 
     private static final String TRANSLATE_PAGE = "/chrome/test/data/translate/fr_test.html";
+    private static final String ENABLE_COMPACT_UI_FEATURE = "enable-features=TranslateCompactUI";
+    private static final String DISABLE_COMPACT_UI_FEATURE = "disable-features=TranslateCompactUI";
     private static final String NEVER_TRANSLATE_MESSAGE =
             "Would you like Google Chrome to offer to translate French pages from this"
                     + " site next time?";
@@ -53,8 +57,7 @@ public class TranslateInfoBarTest extends ChromeActivityTestCaseBase<ChromeActiv
         mInfoBarContainer = getActivity().getActivityTab().getInfoBarContainer();
         mListener =  new InfoBarTestAnimationListener();
         mInfoBarContainer.setAnimationListener(mListener);
-        mTestServer = EmbeddedTestServer.createAndStartFileServer(
-                getInstrumentation().getContext(), Environment.getExternalStorageDirectory());
+        mTestServer = EmbeddedTestServer.createAndStartServer(getInstrumentation().getContext());
     }
 
     @Override
@@ -64,14 +67,29 @@ public class TranslateInfoBarTest extends ChromeActivityTestCaseBase<ChromeActiv
     }
 
     /**
+     * Test the new translate compact UI.
+     */
+    @MediumTest
+    @Feature({"Browser", "Main"})
+    @Restriction(ChromeRestriction.RESTRICTION_TYPE_GOOGLE_PLAY_SERVICES)
+    @CommandLineFlags.Add(ENABLE_COMPACT_UI_FEATURE)
+    public void testTranslateCompactInfoBarAppears() throws InterruptedException, TimeoutException {
+        loadUrl(mTestServer.getURL(TRANSLATE_PAGE));
+        mListener.addInfoBarAnimationFinished("InfoBar not opened.");
+        InfoBar infoBar = mInfoBarContainer.getInfoBarsForTesting().get(0);
+        TranslateUtil.assertCompactTranslateInfoBar(infoBar);
+    }
+
+    /**
      * Test the translate language panel.
      */
     @MediumTest
     @Feature({"Browser", "Main"})
     @Restriction(ChromeRestriction.RESTRICTION_TYPE_GOOGLE_PLAY_SERVICES)
-    public void testTranslateLanguagePanel() throws InterruptedException {
+    @CommandLineFlags.Add(DISABLE_COMPACT_UI_FEATURE)
+    public void testTranslateLanguagePanel() throws InterruptedException, TimeoutException {
         loadUrl(mTestServer.getURL(TRANSLATE_PAGE));
-        assertTrue("InfoBar not opened.", mListener.addInfoBarAnimationFinished());
+        mListener.addInfoBarAnimationFinished("InfoBar not opened.");
         InfoBar infoBar = mInfoBarContainer.getInfoBarsForTesting().get(0);
         assertTrue(InfoBarUtil.hasPrimaryButton(infoBar));
         assertTrue(InfoBarUtil.hasSecondaryButton(infoBar));
@@ -84,20 +102,21 @@ public class TranslateInfoBarTest extends ChromeActivityTestCaseBase<ChromeActiv
     @MediumTest
     @Feature({"Browser", "Main"})
     @Restriction(ChromeRestriction.RESTRICTION_TYPE_GOOGLE_PLAY_SERVICES)
-    public void testTranslateNeverPanel() throws InterruptedException {
+    @CommandLineFlags.Add(DISABLE_COMPACT_UI_FEATURE)
+    public void testTranslateNeverPanel() throws InterruptedException, TimeoutException {
         loadUrl(mTestServer.getURL(TRANSLATE_PAGE));
-        assertTrue("InfoBar not opened.", mListener.addInfoBarAnimationFinished());
+        mListener.addInfoBarAnimationFinished("InfoBar not opened.");
         InfoBar infoBar = mInfoBarContainer.getInfoBarsForTesting().get(0);
 
         assertTrue(InfoBarUtil.clickCloseButton(infoBar));
-        assertTrue(mListener.removeInfoBarAnimationFinished());
+        mListener.removeInfoBarAnimationFinished("Infobar not removed.");
 
         // Reload the page so the infobar shows again
         loadUrl(mTestServer.getURL(TRANSLATE_PAGE));
-        assertTrue("InfoBar not opened", mListener.addInfoBarAnimationFinished());
+        mListener.addInfoBarAnimationFinished("InfoBar not opened");
         infoBar = mInfoBarContainer.getInfoBarsForTesting().get(0);
         assertTrue(InfoBarUtil.clickCloseButton(infoBar));
-        assertTrue("InfoBar not swapped", mListener.swapInfoBarAnimationFinished());
+        mListener.swapInfoBarAnimationFinished("InfoBar not swapped");
 
         TranslateUtil.assertInfoBarText(infoBar, NEVER_TRANSLATE_MESSAGE);
     }
@@ -105,21 +124,18 @@ public class TranslateInfoBarTest extends ChromeActivityTestCaseBase<ChromeActiv
     /**
      * Test infobar transitions.
      *
-     * Bug http://crbug.com/514449
      * @MediumTest
      * @Feature({"Browser", "Main"})
      */
-    @DisabledTest
-    public void testTranslateTransitions() throws InterruptedException {
+    @DisabledTest(message = "crbug.com/514449")
+    public void testTranslateTransitions() throws InterruptedException, TimeoutException {
         loadUrl(mTestServer.getURL(TRANSLATE_PAGE));
-        assertTrue("InfoBar not Added", mListener.addInfoBarAnimationFinished());
+        mListener.addInfoBarAnimationFinished("InfoBar not Added");
         InfoBar infoBar = getInfoBars().get(0);
         assertTrue(InfoBarUtil.hasPrimaryButton(infoBar));
         assertTrue(InfoBarUtil.hasSecondaryButton(infoBar));
         assertTrue(InfoBarUtil.clickPrimaryButton(infoBar));
-        assertTrue("BEFORE -> TRANSLATING transition not Swapped.",
-                mListener.swapInfoBarAnimationFinished());
-        assertTrue("TRANSLATING -> ERROR transition not Swapped.",
-                mListener.swapInfoBarAnimationFinished());
+        mListener.swapInfoBarAnimationFinished("BEFORE -> TRANSLATING transition not Swapped.");
+        mListener.swapInfoBarAnimationFinished("TRANSLATING -> ERROR transition not Swapped.");
     }
 }

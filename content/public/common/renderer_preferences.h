@@ -102,20 +102,17 @@ struct CONTENT_EXPORT RendererPreferences {
   // in webrtc_ip_handling_policy.h.
   std::string webrtc_ip_handling_policy;
 
+  // This is the range of UDP ports allowed to be used by WebRTC. A value of
+  // zero in both fields means all ports are allowed.
+  uint16_t webrtc_udp_min_port;
+  uint16_t webrtc_udp_max_port;
+
   // The user agent given to WebKit when it requests one and the user agent is
   // being overridden for the current navigation.
   std::string user_agent_override;
 
   // The accept-languages of the browser, comma-separated.
   std::string accept_languages;
-
-  // Specifies whether the renderer reports frame name changes to the browser
-  // process.
-  // TODO(fsamuel): This is a short-term workaround to avoid regressing
-  // Sunspider. We need to find an efficient way to report changes to frame
-  // names to the browser process. See http://crbug.com/169110 for more
-  // information.
-  bool report_frame_name_changes;
 
   // How to handle a tap gesture touching multiple targets
   TapMultipleTargetsStrategy tap_multiple_targets_strategy;
@@ -131,12 +128,12 @@ struct CONTENT_EXPORT RendererPreferences {
   // encrypted video.  Currently only used by Android.
   bool use_video_overlay_for_embedded_encrypted_video;
 
-  // Use video-overlay (hole-punching) should be used for all video, not just
-  // encrypted video.  Currently only used by Android.
-  bool use_view_overlay_for_all_video;
-
   // Country iso of the mobile network for content detection purpose.
   std::string network_contry_iso;
+
+#if defined(OS_LINUX)
+  std::string system_font_family_name;
+#endif
 
 #if defined(OS_WIN)
   // The default system font settings for caption, small caption, menu and

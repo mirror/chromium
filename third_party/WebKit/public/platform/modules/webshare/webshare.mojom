@@ -2,10 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+[JavaPackage="org.chromium.webshare.mojom"]
 module blink.mojom;
 
+import "url/mojo/url.mojom";
+
+enum ShareError {
+  // Share successful.
+  OK,
+  // Something went wrong in the implementation.
+  INTERNAL_ERROR,
+  // Share was canceled by user.
+  CANCELED,
+};
+
 interface ShareService {
-  // The web contents has requested to send a share text action. Returns null on
-  // success, or an error message on failure.
-  Share(string title, string text) => (string? error);
+  // The web contents has requested to send a share text action.
+  Share(string title, string text, url.mojom.Url url) => (ShareError error);
 };

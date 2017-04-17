@@ -8,28 +8,24 @@
 #include <utility>
 
 #include "base/values.h"
-#include "net/log/net_log.h"
+#include "net/log/net_log_capture_mode.h"
 #include "net/spdy/spdy_test_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using std::make_pair;
-using std::string;
 using ::testing::ElementsAre;
 
 namespace net {
 namespace test {
 
-class StringPieceProxyPeer {
+class ValueProxyPeer {
  public:
-  static base::StringPiece key(SpdyHeaderBlock::StringPieceProxy* p) {
-    return p->key_;
-  }
+  static SpdyStringPiece key(SpdyHeaderBlock::ValueProxy* p) { return p->key_; }
 };
 
-std::pair<base::StringPiece, base::StringPiece> Pair(base::StringPiece k,
-                                                     base::StringPiece v) {
-  return make_pair(k, v);
+std::pair<SpdyStringPiece, SpdyStringPiece> Pair(SpdyStringPiece k,
+                                                 SpdyStringPiece v) {
+  return std::make_pair(k, v);
 }
 
 // This test verifies that SpdyHeaderBlock behaves correctly when empty.
@@ -38,7 +34,6 @@ TEST(SpdyHeaderBlockTest, EmptyBlock) {
   EXPECT_TRUE(block.empty());
   EXPECT_EQ(0u, block.size());
   EXPECT_EQ(block.end(), block.find("foo"));
-  EXPECT_EQ("", block.GetHeader("foo"));
   EXPECT_TRUE(block.end() == block.begin());
 
   // Should have no effect.
@@ -47,19 +42,19 @@ TEST(SpdyHeaderBlockTest, EmptyBlock) {
 
 TEST(SpdyHeaderBlockTest, KeyMemoryReclaimedOnLookup) {
   SpdyHeaderBlock block;
-  base::StringPiece copied_key1;
+  SpdyStringPiece copied_key1;
   {
     auto proxy1 = block["some key name"];
-    copied_key1 = StringPieceProxyPeer::key(&proxy1);
+    copied_key1 = ValueProxyPeer::key(&proxy1);
   }
-  base::StringPiece copied_key2;
+  SpdyStringPiece copied_key2;
   {
     auto proxy2 = block["some other key name"];
-    copied_key2 = StringPieceProxyPeer::key(&proxy2);
+    copied_key2 = ValueProxyPeer::key(&proxy2);
   }
   // Because proxy1 was never used to modify the block, the memory used for the
   // key could be reclaimed and used for the second call to operator[].
-  // Therefore, we expect the pointers of the two StringPieces to be equal.
+  // Therefore, we expect the pointers of the two SpdyStringPieces to be equal.
   EXPECT_EQ(copied_key1.data(), copied_key2.data());
 
   {
@@ -69,39 +64,37 @@ TEST(SpdyHeaderBlockTest, KeyMemoryReclaimedOnLookup) {
   // Nothing should blow up when proxy1 is destructed, and we should be able to
   // modify and access the SpdyHeaderBlock.
   block["key"] = "value";
-  EXPECT_EQ(base::StringPiece("value"), block["key"]);
-  EXPECT_EQ(base::StringPiece("some value"), block["some other key name"]);
+  EXPECT_EQ("value", block["key"]);
+  EXPECT_EQ("some value", block["some other key name"]);
   EXPECT_TRUE(block.find("some key name") == block.end());
 }
 
 // This test verifies that headers can be set in a variety of ways.
 TEST(SpdyHeaderBlockTest, AddHeaders) {
   SpdyHeaderBlock block;
-  block["foo"] = string(300, 'x');
+  block["foo"] = SpdyString(300, 'x');
   block["bar"] = "baz";
-  block.ReplaceOrAppendHeader("qux", "qux1");
+  block["qux"] = "qux1";
   block["qux"] = "qux2";
   block.insert(std::make_pair("key", "value"));
 
-  EXPECT_EQ(Pair("foo", string(300, 'x')), *block.find("foo"));
+  EXPECT_EQ(Pair("foo", SpdyString(300, 'x')), *block.find("foo"));
   EXPECT_EQ("baz", block["bar"]);
-  EXPECT_EQ("baz", block.GetHeader("bar"));
-  string qux("qux");
+  SpdyString qux("qux");
   EXPECT_EQ("qux2", block[qux]);
-  EXPECT_EQ("qux2", block.GetHeader(qux));
+  ASSERT_NE(block.end(), block.find("key"));
   EXPECT_EQ(Pair("key", "value"), *block.find("key"));
 
   block.erase("key");
   EXPECT_EQ(block.end(), block.find("key"));
-  EXPECT_EQ("", block.GetHeader("key"));
 }
 
 // This test verifies that SpdyHeaderBlock can be copied using Clone().
 TEST(SpdyHeaderBlockTest, CopyBlocks) {
   SpdyHeaderBlock block1;
-  block1["foo"] = string(300, 'x');
+  block1["foo"] = SpdyString(300, 'x');
   block1["bar"] = "baz";
-  block1.ReplaceOrAppendHeader("qux", "qux1");
+  block1.insert(std::make_pair("qux", "qux1"));
 
   SpdyHeaderBlock block2 = block1.Clone();
   SpdyHeaderBlock block3(block1.Clone());
@@ -149,15 +142,15 @@ TEST(SpdyHeaderBlockTest, MovedFromIsValid) {
   SpdyHeaderBlock block2(std::move(block1));
   EXPECT_THAT(block2, ElementsAre(Pair("foo", "bar")));
 
-  block1.ReplaceOrAppendHeader("baz", "qux");
+  block1["baz"] = "qux";  // NOLINT  testing post-move behavior
 
   SpdyHeaderBlock block3(std::move(block1));
 
-  block1["foo"] = "bar";
+  block1["foo"] = "bar";  // NOLINT  testing post-move behavior
 
   SpdyHeaderBlock block4(std::move(block1));
 
-  block1.clear();
+  block1.clear();  // NOLINT  testing post-move behavior
   EXPECT_TRUE(block1.empty());
 
   block1["foo"] = "bar";
@@ -170,7 +163,7 @@ TEST(SpdyHeaderBlockTest, AppendHeaders) {
   SpdyHeaderBlock block;
   block["foo"] = "foo";
   block.AppendValueOrAddHeader("foo", "bar");
-  EXPECT_EQ(Pair("foo", string("foo\0bar", 7)), *block.find("foo"));
+  EXPECT_EQ(Pair("foo", SpdyString("foo\0bar", 7)), *block.find("foo"));
 
   block.insert(std::make_pair("foo", "baz"));
   EXPECT_EQ("baz", block["foo"]);
@@ -180,26 +173,50 @@ TEST(SpdyHeaderBlockTest, AppendHeaders) {
   block["cookie"] = "key1=value1";
   block.AppendValueOrAddHeader("h1", "h1v1");
   block.insert(std::make_pair("h2", "h2v1"));
-  block.ReplaceOrAppendHeader("h3", "h3v1");
 
   block.AppendValueOrAddHeader("h3", "h3v2");
   block.AppendValueOrAddHeader("h2", "h2v2");
   block.AppendValueOrAddHeader("h1", "h1v2");
   block.AppendValueOrAddHeader("cookie", "key2=value2");
 
-  block.ReplaceOrAppendHeader("h4", "h4v1");
-
   block.AppendValueOrAddHeader("cookie", "key3=value3");
   block.AppendValueOrAddHeader("h1", "h1v3");
   block.AppendValueOrAddHeader("h2", "h2v3");
   block.AppendValueOrAddHeader("h3", "h3v3");
+  block.AppendValueOrAddHeader("h4", "singleton");
 
   EXPECT_EQ("key1=value1; key2=value2; key3=value3", block["cookie"]);
   EXPECT_EQ("baz", block["foo"]);
-  EXPECT_EQ(string("h1v1\0h1v2\0h1v3", 14), block["h1"]);
-  EXPECT_EQ(string("h2v1\0h2v2\0h2v3", 14), block["h2"]);
-  EXPECT_EQ(string("h3v1\0h3v2\0h3v3", 14), block["h3"]);
-  EXPECT_EQ("h4v1", block["h4"]);
+  EXPECT_EQ(SpdyString("h1v1\0h1v2\0h1v3", 14), block["h1"]);
+  EXPECT_EQ(SpdyString("h2v1\0h2v2\0h2v3", 14), block["h2"]);
+  EXPECT_EQ(SpdyString("h3v2\0h3v3", 9), block["h3"]);
+  EXPECT_EQ("singleton", block["h4"]);
+}
+
+TEST(JoinTest, JoinEmpty) {
+  std::vector<SpdyStringPiece> empty;
+  SpdyStringPiece separator = ", ";
+  char buf[10] = "";
+  size_t written = Join(buf, empty, separator);
+  EXPECT_EQ(0u, written);
+}
+
+TEST(JoinTest, JoinOne) {
+  std::vector<SpdyStringPiece> v = {"one"};
+  SpdyStringPiece separator = ", ";
+  char buf[15];
+  size_t written = Join(buf, v, separator);
+  EXPECT_EQ(3u, written);
+  EXPECT_EQ("one", SpdyStringPiece(buf, written));
+}
+
+TEST(JoinTest, JoinMultiple) {
+  std::vector<SpdyStringPiece> v = {"one", "two", "three"};
+  SpdyStringPiece separator = ", ";
+  char buf[15];
+  size_t written = Join(buf, v, separator);
+  EXPECT_EQ(15u, written);
+  EXPECT_EQ("one, two, three", SpdyStringPiece(buf, written));
 }
 
 }  // namespace test

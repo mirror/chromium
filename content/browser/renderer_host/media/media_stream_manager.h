@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// MediaStreamManager is used to open/enumerate media capture devices (video
-// supported now). Call flow:
+// MediaStreamManager is used to open media capture devices (video supported
+// now). Call flow:
 // 1. GenerateStream is called when a render process wants to use a capture
 //    device.
 // 2. MediaStreamManager will ask MediaStreamUIController for permission to
@@ -37,18 +37,18 @@
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/power_monitor/power_observer.h"
-#include "base/system_monitor/system_monitor.h"
 #include "base/threading/thread.h"
 #include "build/build_config.h"
-#include "content/browser/renderer_host/media/audio_output_device_enumerator.h"
+#include "content/browser/renderer_host/media/media_devices_manager.h"
 #include "content/browser/renderer_host/media/media_stream_provider.h"
 #include "content/common/content_export.h"
+#include "content/common/media/media_devices.h"
 #include "content/common/media/media_stream_options.h"
 #include "content/public/browser/media_request_state.h"
-#include "content/public/browser/resource_context.h"
+#include "media/base/video_facing.h"
 
 namespace media {
-class AudioManager;
+class AudioSystem;
 }
 
 namespace url {
@@ -58,13 +58,11 @@ class Origin;
 namespace content {
 
 class AudioInputDeviceManager;
-class AudioOutputDeviceEnumerator;
-class BrowserContext;
 class FakeMediaStreamUIProxy;
-class MediaStreamDeviceSettings;
 class MediaStreamRequester;
 class MediaStreamUIProxy;
 class VideoCaptureManager;
+class VideoCaptureProvider;
 
 // MediaStreamManager is used to generate and close new media devices, not to
 // start the media flow. The classes requesting new media streams are answered
@@ -72,20 +70,29 @@ class VideoCaptureManager;
 class CONTENT_EXPORT MediaStreamManager
     : public MediaStreamProviderListener,
       public base::MessageLoop::DestructionObserver,
-      public base::PowerObserver,
-      public base::SystemMonitor::DevicesChangedObserver {
+      public base::PowerObserver {
  public:
   // Callback to deliver the result of a media request.
   typedef base::Callback<void(const MediaStreamDevices& devices,
                               std::unique_ptr<MediaStreamUIProxy> ui)>
       MediaRequestResponseCallback;
 
+  // Callback for testing.
+  typedef base::Callback<bool(const StreamControls&)>
+      GenerateStreamTestCallback;
+
   // Adds |message| to native logs for outstanding device requests, for use by
   // render processes hosts whose corresponding render processes are requesting
   // logging from webrtcLoggingPrivate API. Safe to call from any thread.
   static void SendMessageToNativeLog(const std::string& message);
 
-  explicit MediaStreamManager(media::AudioManager* audio_manager);
+  explicit MediaStreamManager(media::AudioSystem* audio_system);
+
+  // |audio_system| is required but defaults will be used if either
+  // |video_capture_system| or |device_task_runner| are null.
+  explicit MediaStreamManager(
+      media::AudioSystem* audio_system,
+      std::unique_ptr<VideoCaptureProvider> video_capture_provider);
 
   ~MediaStreamManager() override;
 
@@ -95,8 +102,18 @@ class CONTENT_EXPORT MediaStreamManager
   // Used to access AudioInputDeviceManager.
   AudioInputDeviceManager* audio_input_device_manager();
 
-  // Used to access AudioOutputDeviceEnumerator.
-  AudioOutputDeviceEnumerator* audio_output_device_enumerator();
+  // Used to access MediaDevicesManager.
+  MediaDevicesManager* media_devices_manager();
+
+  // AddVideoCaptureObserver() and RemoveAllVideoCaptureObservers() must be
+  // called after InitializeDeviceManagersOnIOThread() and before
+  // WillDestroyCurrentMessageLoop(). They can be called more than once and it's
+  // ok to not call at all if the client is not interested in receiving
+  // media::VideoCaptureObserver callbacks.
+  // The methods must be called on BrowserThread::IO threads. The callbacks of
+  // media::VideoCaptureObserver also arrive on BrowserThread::IO threads.
+  void AddVideoCaptureObserver(media::VideoCaptureObserver* capture_observer);
+  void RemoveAllVideoCaptureObservers();
 
   // Creates a new media access request which is identified by a unique string
   // that's returned to the caller. This will trigger the infobar and ask users
@@ -141,21 +158,6 @@ class CONTENT_EXPORT MediaStreamManager
                         int render_frame_id,
                         const std::string& device_id);
 
-  // Gets a list of devices of |type|, which must be MEDIA_DEVICE_AUDIO_CAPTURE
-  // or MEDIA_DEVICE_VIDEO_CAPTURE.
-  // The request is identified using the string returned to the caller.
-  // When the |requester| is NULL, MediaStreamManager will enumerate both audio
-  // and video devices and also start monitoring device changes, such as
-  // plug/unplug. The new device lists will be delivered via media observer to
-  // MediaCaptureDevicesDispatcher.
-  virtual std::string EnumerateDevices(MediaStreamRequester* requester,
-                                       int render_process_id,
-                                       int render_frame_id,
-                                       const std::string& salt,
-                                       int page_request_id,
-                                       MediaStreamType type,
-                                       const url::Origin& security_origin);
-
   // Open a device identified by |device_id|.  |type| must be either
   // MEDIA_DEVICE_AUDIO_CAPTURE or MEDIA_DEVICE_VIDEO_CAPTURE.
   // The request is identified using string returned to the caller.
@@ -171,6 +173,8 @@ class CONTENT_EXPORT MediaStreamManager
   // Finds and returns the device id corresponding to the given
   // |source_id|. Returns true if there was a raw device id that matched the
   // given |source_id|, false if nothing matched it.
+  // TODO(guidou): Update to provide a callback-based interface.
+  // See http://crbug.com/648155.
   bool TranslateSourceIdToDeviceId(MediaStreamType stream_type,
                                    const std::string& salt,
                                    const url::Origin& security_origin,
@@ -188,12 +192,7 @@ class CONTENT_EXPORT MediaStreamManager
   // Implements MediaStreamProviderListener.
   void Opened(MediaStreamType stream_type, int capture_session_id) override;
   void Closed(MediaStreamType stream_type, int capture_session_id) override;
-  void DevicesEnumerated(MediaStreamType stream_type,
-                         const StreamDeviceInfoArray& devices) override;
   void Aborted(MediaStreamType stream_type, int capture_session_id) override;
-
-  // Implements base::SystemMonitor::DevicesChangedObserver.
-  void OnDevicesChanged(base::SystemMonitor::DeviceType device_type) override;
 
   // Returns all devices currently opened by a request with label |label|.
   // If no request with |label| exist, an empty array is returned.
@@ -231,15 +230,6 @@ class CONTENT_EXPORT MediaStreamManager
       const base::Callback<void(const std::string&)>& callback);
   void UnregisterNativeLogCallback(int renderer_host_id);
 
-  // Register and unregister subscribers for device-change notifications.
-  // It is an error to try to subscribe a |subscriber| that is already
-  // subscribed or to cancel the subscription of a |subscriber| that is not
-  // subscribed. Also, subscribers must make sure to invoke
-  // CancelDeviceChangeNotifications() before destruction. Otherwise, dangling
-  // pointers and use-after-destruction problems will occur.
-  void SubscribeToDeviceChangeNotifications(MediaStreamRequester* subscriber);
-  void CancelDeviceChangeNotifications(MediaStreamRequester* subscriber);
-
   // Generates a hash of a device's unique ID usable by one
   // particular security origin.
   static std::string GetHMACForMediaDeviceID(const std::string& salt,
@@ -264,18 +254,25 @@ class CONTENT_EXPORT MediaStreamManager
                                content::MediaStreamType type,
                                bool is_secure);
 
+  // Helper for sending up-to-date device lists to media observer when a
+  // capture device is plugged in or unplugged.
+  void NotifyDevicesChanged(MediaDeviceType stream_type,
+                            const MediaDeviceInfoArray& devices);
+
+  // This method is called when an audio or video device is removed. It makes
+  // sure all MediaStreams that use a removed device are stopped and that the
+  // render process is notified.
+  void StopRemovedDevice(MediaDeviceType type, const MediaDeviceInfo& device);
+
+  void SetGenerateStreamCallbackForTesting(
+      GenerateStreamTestCallback test_callback);
+
+  // This method is called when all tracks are started.
+  void OnStreamStarted(const std::string& label);
+
  private:
   // Contains all data needed to keep track of requests.
   class DeviceRequest;
-
-  // Cache enumerated device list.
-  struct EnumerationCache {
-    EnumerationCache();
-    ~EnumerationCache();
-
-    bool valid;
-    StreamDeviceInfoArray devices;
-  };
 
   // |DeviceRequests| is a list to ensure requests are processed in the order
   // they arrive. The first member of the pair is the label of the
@@ -283,14 +280,8 @@ class CONTENT_EXPORT MediaStreamManager
   using LabeledDeviceRequest = std::pair<std::string, DeviceRequest*>;
   using DeviceRequests = std::list<LabeledDeviceRequest>;
 
-  // Initializes the device managers on IO thread.  Auto-starts the device
-  // thread and registers this as a listener with the device managers.
-  void InitializeDeviceManagersOnIOThread();
-
-  // Helper for sending up-to-date device lists to media observer when a
-  // capture device is plugged in or unplugged.
-  void NotifyDevicesChanged(MediaStreamType stream_type,
-                            const StreamDeviceInfoArray& devices);
+  void InitializeMaybeAsync(
+      std::unique_ptr<VideoCaptureProvider> video_capture_provider);
 
   // |output_parameters| contains real values only if the request requires it.
   void HandleAccessRequestResponse(
@@ -299,11 +290,6 @@ class CONTENT_EXPORT MediaStreamManager
       const MediaStreamDevices& devices,
       content::MediaStreamRequestResult result);
   void StopMediaStreamFromBrowser(const std::string& label);
-
-  void DoEnumerateDevices(const std::string& label);
-
-  void AudioOutputDevicesEnumerated(
-      const AudioOutputDeviceEnumeration& device_enumeration);
 
   // Helpers.
   // Checks if all devices that was requested in the request identififed by
@@ -321,24 +307,18 @@ class CONTENT_EXPORT MediaStreamManager
   // has either been opened or an error has occurred.
   bool RequestDone(const DeviceRequest& request) const;
   MediaStreamProvider* GetDeviceManager(MediaStreamType stream_type);
-  void StartEnumeration(DeviceRequest* request);
+  void StartEnumeration(DeviceRequest* request, const std::string& label);
   std::string AddRequest(DeviceRequest* request);
   DeviceRequest* FindRequest(const std::string& label) const;
   void DeleteRequest(const std::string& label);
-  void ClearEnumerationCache(EnumerationCache* cache);
-  // Returns true if the |cache| is invalid, false if it's invalid or if
-  // the |stream_type| is MEDIA_NO_SERVICE.
-  // On Android, this function will always return true for
-  // MEDIA_DEVICE_AUDIO_CAPTURE since we don't have a SystemMonitor to tell
-  // us about audio device changes.
-  bool EnumerationRequired(EnumerationCache* cache, MediaStreamType type);
   // Prepare the request with label |label| by starting device enumeration if
   // needed.
   void SetupRequest(const std::string& label);
   // Prepare |request| of type MEDIA_DEVICE_AUDIO_CAPTURE and/or
   // MEDIA_DEVICE_VIDEO_CAPTURE for being posted to the UI by parsing
   // StreamControls for requested device IDs.
-  bool SetupDeviceCaptureRequest(DeviceRequest* request);
+  bool SetupDeviceCaptureRequest(DeviceRequest* request,
+                                 const MediaDeviceEnumeration& enumeration);
   // Prepare |request| of type MEDIA_TAB_AUDIO_CAPTURE and/or
   // MEDIA_TAB_VIDEO_CAPTURE for being posted to the UI by parsing
   // StreamControls for requested tab capture IDs.
@@ -349,11 +329,14 @@ class CONTENT_EXPORT MediaStreamManager
   bool SetupScreenCaptureRequest(DeviceRequest* request);
   // Called when a request has been setup and devices have been enumerated if
   // needed.
-  void ReadOutputParamsAndPostRequestToUI(const std::string& label,
-                                          DeviceRequest* request);
+  void ReadOutputParamsAndPostRequestToUI(
+      const std::string& label,
+      DeviceRequest* request,
+      const MediaDeviceEnumeration& enumeration);
   // Called when audio output parameters have been read if needed.
   void PostRequestToUI(const std::string& label,
                        DeviceRequest* request,
+                       const MediaDeviceEnumeration& enumeration,
                        const media::AudioParameters& output_parameters);
   // Returns true if a device with |device_id| has already been requested with
   // a render procecss_id and render_frame_id and type equal to the the values
@@ -373,28 +356,8 @@ class CONTENT_EXPORT MediaStreamManager
   void FinalizeMediaAccessRequest(const std::string& label,
                                   DeviceRequest* request,
                                   const MediaStreamDevices& devices);
-  void FinalizeEnumerateDevices(const std::string& label,
-                                DeviceRequest* request);
   void HandleCheckMediaAccessResponse(const std::string& label,
                                       bool have_access);
-
-  // This method is called when an audio or video device is plugged in or
-  // removed. It make sure all MediaStreams that use a removed device is
-  // stopped and that the render process is notified. |old_devices| is the list
-  // of previously available devices. |new_devices| is the new
-  // list of currently available devices.
-  void StopRemovedDevices(const StreamDeviceInfoArray& old_devices,
-                          const StreamDeviceInfoArray& new_devices);
-  // Helper method used by StopRemovedDevices to stop the use of a certain
-  // device.
-  void StopRemovedDevice(const MediaStreamDevice& device);
-
-  // Helpers to start and stop monitoring devices.
-  void StartMonitoring();
-  void StopMonitoring();
-#if defined(OS_MACOSX)
-  void StartMonitoringOnUIThread();
-#endif
 
   // Picks a device ID from a list of required and alternate device IDs,
   // presented as part of a TrackControls structure.
@@ -402,16 +365,17 @@ class CONTENT_EXPORT MediaStreamManager
   // valid alternate device ID.
   // Returns false if the required device ID is present and invalid.
   // Otherwise, if no valid device is found, device_id is unchanged.
-  bool PickDeviceId(MediaStreamType type,
-                    const std::string& salt,
+  bool PickDeviceId(const std::string& salt,
                     const url::Origin& security_origin,
                     const TrackControls& controls,
+                    const MediaDeviceInfoArray& devices,
                     std::string* device_id) const;
 
   // Finds the requested device id from request. The requested device type
   // must be MEDIA_DEVICE_AUDIO_CAPTURE or MEDIA_DEVICE_VIDEO_CAPTURE.
   bool GetRequestedDeviceCaptureId(const DeviceRequest* request,
                                    MediaStreamType type,
+                                   const MediaDeviceInfoArray& devices,
                                    std::string* device_id) const;
 
   void TranslateDeviceIdToSourceId(DeviceRequest* request,
@@ -428,33 +392,27 @@ class CONTENT_EXPORT MediaStreamManager
       const base::Callback<void(const std::string&)>& callback);
   void DoNativeLogCallbackUnregistration(int renderer_host_id);
 
-  void NotifyDeviceChangeSubscribers(MediaStreamType type);
+  // Callback to handle the reply to a low-level enumeration request.
+  void DevicesEnumerated(bool requested_audio_input,
+                         bool requested_video_input,
+                         const std::string& label,
+                         const MediaDeviceEnumeration& enumeration);
 
-  // Task runner shared by VideoCaptureManager and AudioInputDeviceManager and
-  // used for enumerating audio output devices.
-  // Note: Enumeration tasks may take seconds to complete so must never be run
-  // on any of the BrowserThreads (UI, IO, etc).  See http://crbug.com/256945.
-  scoped_refptr<base::SingleThreadTaskRunner> device_task_runner_;
+  // Creates MediaStreamDevices for |devices_infos| of |stream_type|. For video
+  // capture device it also uses cached content from |video_capture_manager_| to
+  // set the MediaStreamDevice fields.
+  MediaStreamDevices ConvertToMediaStreamDevices(
+      MediaStreamType stream_type,
+      const MediaDeviceInfoArray& device_infos);
 
-  media::AudioManager* const audio_manager_;  // not owned
+  media::AudioSystem* const audio_system_;  // not owned
   scoped_refptr<AudioInputDeviceManager> audio_input_device_manager_;
   scoped_refptr<VideoCaptureManager> video_capture_manager_;
-  std::unique_ptr<AudioOutputDeviceEnumerator> audio_output_device_enumerator_;
 #if defined(OS_WIN)
   base::Thread video_capture_thread_;
 #endif
 
-  // Indicator of device monitoring state.
-  bool monitoring_started_;
-
-  // Stores most recently enumerated device lists. The cache is cleared when
-  // monitoring is stopped or there is no request for that type of device.
-  EnumerationCache audio_enumeration_cache_;
-  EnumerationCache video_enumeration_cache_;
-
-  // Keeps track of live enumeration commands sent to VideoCaptureManager or
-  // AudioInputDeviceManager, in order to only enumerate when necessary.
-  int active_enumeration_ref_count_[NUM_MEDIA_TYPES];
+  std::unique_ptr<MediaDevicesManager> media_devices_manager_;
 
   // All non-closed request. Must be accessed on IO thread.
   DeviceRequests requests_;
@@ -465,8 +423,7 @@ class CONTENT_EXPORT MediaStreamManager
   // Maps render process hosts to log callbacks. Used on the IO thread.
   std::map<int, base::Callback<void(const std::string&)>> log_callbacks_;
 
-  // Objects subscribed to changes in the set of media devices.
-  std::vector<MediaStreamRequester*> device_change_subscribers_;
+  GenerateStreamTestCallback generate_stream_test_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaStreamManager);
 };

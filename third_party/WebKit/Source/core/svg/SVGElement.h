@@ -28,23 +28,19 @@
 #include "core/svg/SVGParsingError.h"
 #include "core/svg/properties/SVGPropertyInfo.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Allocator.h"
-#include "wtf/HashMap.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashMap.h"
 
 namespace blink {
 
 class AffineTransform;
-class CSSCursorImageValue;
 class Document;
 class SVGAnimatedPropertyBase;
 class SubtreeLayoutScope;
 class SVGAnimatedString;
-class SVGCursorElement;
-class SVGDocumentExtensions;
 class SVGElement;
+class SVGElementProxySet;
 class SVGElementRareData;
-class SVGFitToViewBox;
-class SVGLength;
 class SVGPropertyBase;
 class SVGSVGElement;
 class SVGUseElement;
@@ -52,238 +48,302 @@ class SVGUseElement;
 typedef HeapHashSet<Member<SVGElement>> SVGElementSet;
 
 class CORE_EXPORT SVGElement : public Element {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~SVGElement() override;
-    void attachLayoutTree(const AttachContext&) override;
-    void detachLayoutTree(const AttachContext&) override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    short tabIndex() const override;
-    bool supportsFocus() const override { return false; }
+ public:
+  ~SVGElement() override;
+  void AttachLayoutTree(const AttachContext&) override;
+  void DetachLayoutTree(const AttachContext&) override;
 
-    bool isOutermostSVGSVGElement() const;
+  int tabIndex() const override;
+  bool SupportsFocus() const override { return false; }
 
-    bool hasTagName(const SVGQualifiedName& name) const { return hasLocalName(name.localName()); }
+  // The TreeScope this element should resolve id's against. This differs from
+  // the regular Node::treeScope() by taking <use> into account.
+  TreeScope& TreeScopeForIdResolution() const;
 
-    String title() const override;
-    bool hasRelativeLengths() const { return !m_elementsWithRelativeLengths.isEmpty(); }
-    static bool isAnimatableCSSProperty(const QualifiedName&);
+  bool IsOutermostSVGSVGElement() const;
 
-    enum CTMScope {
-        NearestViewportScope, // Used by SVGGraphicsElement::getCTM()
-        ScreenScope, // Used by SVGGraphicsElement::getScreenCTM()
-        AncestorScope // Used by SVGSVGElement::get{Enclosure|Intersection}List()
-    };
-    virtual AffineTransform localCoordinateSpaceTransform(CTMScope) const;
-    virtual bool needsPendingResourceHandling() const { return true; }
+  bool HasTagName(const SVGQualifiedName& name) const {
+    return HasLocalName(name.LocalName());
+  }
 
-    bool instanceUpdatesBlocked() const;
-    void setInstanceUpdatesBlocked(bool);
+  String title() const override;
+  bool HasRelativeLengths() const {
+    return !elements_with_relative_lengths_.IsEmpty();
+  }
+  static bool IsAnimatableCSSProperty(const QualifiedName&);
 
-    // Records the SVG element as having a Web Animation on an SVG attribute that needs applying.
-    void setWebAnimationsPending();
-    void applyActiveWebAnimations();
+  enum ApplyMotionTransform {
+    kExcludeMotionTransform,
+    kIncludeMotionTransform
+  };
+  bool HasTransform(ApplyMotionTransform) const;
+  AffineTransform CalculateTransform(ApplyMotionTransform) const;
 
-    void ensureAttributeAnimValUpdated();
+  enum CTMScope {
+    kNearestViewportScope,  // Used by SVGGraphicsElement::getCTM()
+    kAncestorScope  // Used by SVGSVGElement::get{Enclosure|Intersection}List()
+  };
+  virtual AffineTransform LocalCoordinateSpaceTransform() const;
+  virtual bool NeedsPendingResourceHandling() const { return true; }
 
-    void setWebAnimatedAttribute(const QualifiedName& attribute, SVGPropertyBase*);
-    void clearWebAnimatedAttributes();
+  bool InstanceUpdatesBlocked() const;
+  void SetInstanceUpdatesBlocked(bool);
 
-    SVGSVGElement* ownerSVGElement() const;
-    SVGElement* viewportElement() const;
+  // Records the SVG element as having a Web Animation on an SVG attribute that
+  // needs applying.
+  void SetWebAnimationsPending();
+  void ApplyActiveWebAnimations();
 
-    SVGDocumentExtensions& accessDocumentSVGExtensions();
+  void EnsureAttributeAnimValUpdated();
 
-    virtual bool isSVGGeometryElement() const { return false; }
-    virtual bool isSVGGraphicsElement() const { return false; }
-    virtual bool isFilterEffect() const { return false; }
-    virtual bool isTextContent() const { return false; }
-    virtual bool isTextPositioning() const { return false; }
-    virtual bool isStructurallyExternal() const { return false; }
+  void SetWebAnimatedAttribute(const QualifiedName& attribute,
+                               SVGPropertyBase*);
+  void ClearWebAnimatedAttributes();
 
-    // For SVGTests
-    virtual bool isValid() const { return true; }
+  void SetAnimatedAttribute(const QualifiedName&, SVGPropertyBase*);
+  void InvalidateAnimatedAttribute(const QualifiedName&);
+  void ClearAnimatedAttribute(const QualifiedName&);
 
-    virtual void svgAttributeChanged(const QualifiedName&);
-    void svgAttributeBaseValChanged(const QualifiedName&);
+  SVGSVGElement* ownerSVGElement() const;
+  SVGElement* viewportElement() const;
 
-    SVGAnimatedPropertyBase* propertyFromAttribute(const QualifiedName& attributeName) const;
-    static AnimatedPropertyType animatedPropertyTypeForCSSAttribute(const QualifiedName& attributeName);
+  virtual bool IsSVGGeometryElement() const { return false; }
+  virtual bool IsSVGGraphicsElement() const { return false; }
+  virtual bool IsFilterEffect() const { return false; }
+  virtual bool IsTextContent() const { return false; }
+  virtual bool IsTextPositioning() const { return false; }
+  virtual bool IsStructurallyExternal() const { return false; }
 
-    void sendSVGLoadEventToSelfAndAncestorChainIfPossible();
-    bool sendSVGLoadEventIfPossible();
+  // For SVGTests
+  virtual bool IsValid() const { return true; }
 
-    virtual AffineTransform* animateMotionTransform() { return nullptr; }
+  virtual void SvgAttributeChanged(const QualifiedName&);
+  void SvgAttributeBaseValChanged(const QualifiedName&);
 
-    void invalidateSVGAttributes() { ensureUniqueElementData().m_animatedSVGAttributesAreDirty = true; }
-    void invalidateSVGPresentationAttributeStyle() { ensureUniqueElementData().m_presentationAttributeStyleIsDirty = true; }
+  SVGAnimatedPropertyBase* PropertyFromAttribute(
+      const QualifiedName& attribute_name) const;
+  static AnimatedPropertyType AnimatedPropertyTypeForCSSAttribute(
+      const QualifiedName& attribute_name);
 
-    const HeapHashSet<WeakMember<SVGElement>>& instancesForElement() const;
-    void mapInstanceToElement(SVGElement*);
-    void removeInstanceMapping(SVGElement*);
+  void SendSVGLoadEventToSelfAndAncestorChainIfPossible();
+  bool SendSVGLoadEventIfPossible();
 
-    void setCursorElement(SVGCursorElement*);
-    void setCursorImageValue(const CSSCursorImageValue*);
+  virtual AffineTransform* AnimateMotionTransform() { return nullptr; }
 
-    SVGElement* correspondingElement() const;
-    void setCorrespondingElement(SVGElement*);
-    SVGUseElement* correspondingUseElement() const;
+  void InvalidateSVGAttributes() {
+    EnsureUniqueElementData().animated_svg_attributes_are_dirty_ = true;
+  }
+  void InvalidateSVGPresentationAttributeStyle() {
+    EnsureUniqueElementData().presentation_attribute_style_is_dirty_ = true;
+  }
 
-    void synchronizeAnimatedSVGAttribute(const QualifiedName&) const;
+  const HeapHashSet<WeakMember<SVGElement>>& InstancesForElement() const;
+  void MapInstanceToElement(SVGElement*);
+  void RemoveInstanceMapping(SVGElement*);
 
-    PassRefPtr<ComputedStyle> customStyleForLayoutObject() final;
+  SVGElement* CorrespondingElement() const;
+  void SetCorrespondingElement(SVGElement*);
+  SVGUseElement* CorrespondingUseElement() const;
+
+  void SynchronizeAnimatedSVGAttribute(const QualifiedName&) const;
+
+  PassRefPtr<ComputedStyle> CustomStyleForLayoutObject() final;
+  bool LayoutObjectIsNeeded(const ComputedStyle&) override;
 
 #if DCHECK_IS_ON()
-    virtual bool isAnimatableAttribute(const QualifiedName&) const;
+  virtual bool IsAnimatableAttribute(const QualifiedName&) const;
 #endif
 
-    MutableStylePropertySet* animatedSMILStyleProperties() const;
-    MutableStylePropertySet* ensureAnimatedSMILStyleProperties();
-    void setUseOverrideComputedStyle(bool);
+  MutableStylePropertySet* AnimatedSMILStyleProperties() const;
+  MutableStylePropertySet* EnsureAnimatedSMILStyleProperties();
+  void SetUseOverrideComputedStyle(bool);
 
-    virtual bool haveLoadedRequiredResources();
+  virtual bool HaveLoadedRequiredResources();
 
-    void invalidateRelativeLengthClients(SubtreeLayoutScope* = 0);
+  void InvalidateRelativeLengthClients(SubtreeLayoutScope* = 0);
 
-    void addToPropertyMap(SVGAnimatedPropertyBase*);
+  void AddToPropertyMap(SVGAnimatedPropertyBase*);
 
-    SVGAnimatedString* className() { return m_className.get(); }
+  SVGAnimatedString* className() { return class_name_.Get(); }
 
-    bool inUseShadowTree() const;
+  bool InUseShadowTree() const;
 
-    SVGElementSet* setOfIncomingReferences() const;
-    void addReferenceTo(SVGElement*);
-    void rebuildAllIncomingReferences();
-    void removeAllIncomingReferences();
-    void removeAllOutgoingReferences();
+  SVGElementProxySet* ElementProxySet();
 
-    class InvalidationGuard {
-        STACK_ALLOCATED();
-        WTF_MAKE_NONCOPYABLE(InvalidationGuard);
-    public:
-        InvalidationGuard(SVGElement* element) : m_element(element) { }
-        ~InvalidationGuard() { m_element->invalidateInstances(); }
+  SVGElementSet* SetOfIncomingReferences() const;
+  void AddReferenceTo(SVGElement*);
+  void RebuildAllIncomingReferences();
+  void RemoveAllIncomingReferences();
+  void RemoveAllOutgoingReferences();
 
-    private:
-        Member<SVGElement> m_element;
-    };
+  class InvalidationGuard {
+    STACK_ALLOCATED();
+    WTF_MAKE_NONCOPYABLE(InvalidationGuard);
 
-    class InstanceUpdateBlocker {
-        STACK_ALLOCATED();
-        WTF_MAKE_NONCOPYABLE(InstanceUpdateBlocker);
-    public:
-        InstanceUpdateBlocker(SVGElement* targetElement);
-        ~InstanceUpdateBlocker();
+   public:
+    InvalidationGuard(SVGElement* element) : element_(element) {}
+    ~InvalidationGuard() { element_->InvalidateInstances(); }
 
-    private:
-        Member<SVGElement> m_targetElement;
-    };
+   private:
+    Member<SVGElement> element_;
+  };
 
-    void invalidateInstances();
+  class InstanceUpdateBlocker {
+    STACK_ALLOCATED();
+    WTF_MAKE_NONCOPYABLE(InstanceUpdateBlocker);
 
-    DECLARE_VIRTUAL_TRACE();
+   public:
+    InstanceUpdateBlocker(SVGElement* target_element);
+    ~InstanceUpdateBlocker();
 
-    static const AtomicString& eventParameterName();
+   private:
+    Member<SVGElement> target_element_;
+  };
 
-    bool isPresentationAttribute(const QualifiedName&) const override;
-    virtual bool isPresentationAttributeWithSVGDOM(const QualifiedName&) const { return false; }
+  void InvalidateInstances();
+  void SetNeedsStyleRecalcForInstances(StyleChangeType,
+                                       const StyleChangeReasonForTracing&);
 
-protected:
-    SVGElement(const QualifiedName&, Document&, ConstructionType = CreateSVGElement);
+  DECLARE_VIRTUAL_TRACE();
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
+  static const AtomicString& EventParameterName();
 
-    void attributeChanged(const QualifiedName&, const AtomicString&, const AtomicString&, AttributeModificationReason = ModifiedDirectly) override;
+  bool IsPresentationAttribute(const QualifiedName&) const override;
+  virtual bool IsPresentationAttributeWithSVGDOM(const QualifiedName&) const;
 
-    void collectStyleForPresentationAttribute(const QualifiedName&, const AtomicString&, MutableStylePropertySet*) override;
+ protected:
+  SVGElement(const QualifiedName&,
+             Document&,
+             ConstructionType = kCreateSVGElement);
 
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void removedFrom(ContainerNode*) override;
-    void childrenChanged(const ChildrenChange&) override;
+  void ParseAttribute(const AttributeModificationParams&) override;
+  void AttributeChanged(const AttributeModificationParams&) override;
 
-    static CSSPropertyID cssPropertyIdForSVGAttributeName(const QualifiedName&);
-    void updateRelativeLengthsInformation() { updateRelativeLengthsInformation(selfHasRelativeLengths(), this); }
-    void updateRelativeLengthsInformation(bool hasRelativeLengths, SVGElement*);
-    static void markForLayoutAndParentResourceInvalidation(LayoutObject*);
+  void CollectStyleForPresentationAttribute(const QualifiedName&,
+                                            const AtomicString&,
+                                            MutableStylePropertySet*) override;
 
-    virtual bool selfHasRelativeLengths() const { return false; }
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
+  void ChildrenChanged(const ChildrenChange&) override;
 
-    SVGElementRareData* ensureSVGRareData();
-    inline bool hasSVGRareData() const { return m_SVGRareData; }
-    inline SVGElementRareData* svgRareData() const
-    {
-        ASSERT(m_SVGRareData);
-        return m_SVGRareData.get();
-    }
+  static CSSPropertyID CssPropertyIdForSVGAttributeName(const QualifiedName&);
+  void UpdateRelativeLengthsInformation() {
+    UpdateRelativeLengthsInformation(SelfHasRelativeLengths(), this);
+  }
+  void UpdateRelativeLengthsInformation(bool has_relative_lengths, SVGElement*);
+  static void MarkForLayoutAndParentResourceInvalidation(LayoutObject*);
 
-    // SVGFitToViewBox::parseAttribute uses reportAttributeParsingError.
-    friend class SVGFitToViewBox;
-    void reportAttributeParsingError(SVGParsingError, const QualifiedName&, const AtomicString&);
-    bool hasFocusEventListeners() const;
+  virtual bool SelfHasRelativeLengths() const { return false; }
 
-    void addedEventListener(const AtomicString& eventType, RegisteredEventListener&) final;
-    void removedEventListener(const AtomicString& eventType, const RegisteredEventListener&) final;
+  bool HasSVGParent() const;
 
-private:
-    bool isSVGElement() const = delete; // This will catch anyone doing an unnecessary check.
-    bool isStyledElement() const = delete; // This will catch anyone doing an unnecessary check.
+  SVGElementRareData* EnsureSVGRareData();
+  inline bool HasSVGRareData() const { return svg_rare_data_; }
+  inline SVGElementRareData* SvgRareData() const {
+    DCHECK(svg_rare_data_);
+    return svg_rare_data_.Get();
+  }
 
-    const ComputedStyle* ensureComputedStyle(PseudoId = PseudoIdNone);
-    const ComputedStyle* virtualEnsureComputedStyle(PseudoId pseudoElementSpecifier = PseudoIdNone) final { return ensureComputedStyle(pseudoElementSpecifier); }
-    void willRecalcStyle(StyleRecalcChange) override;
+  void ReportAttributeParsingError(SVGParsingError,
+                                   const QualifiedName&,
+                                   const AtomicString&);
+  bool HasFocusEventListeners() const;
 
-    void buildPendingResourcesIfNeeded();
+  void AddedEventListener(const AtomicString& event_type,
+                          RegisteredEventListener&) final;
+  void RemovedEventListener(const AtomicString& event_type,
+                            const RegisteredEventListener&) final;
 
-    HeapHashSet<WeakMember<SVGElement>> m_elementsWithRelativeLengths;
+ private:
+  bool IsSVGElement() const =
+      delete;  // This will catch anyone doing an unnecessary check.
+  bool IsStyledElement() const =
+      delete;  // This will catch anyone doing an unnecessary check.
 
-    typedef HeapHashMap<QualifiedName, Member<SVGAnimatedPropertyBase>> AttributeToPropertyMap;
-    AttributeToPropertyMap m_attributeToPropertyMap;
+  const ComputedStyle* EnsureComputedStyle(PseudoId = kPseudoIdNone);
+  const ComputedStyle* VirtualEnsureComputedStyle(
+      PseudoId pseudo_element_specifier = kPseudoIdNone) final {
+    return EnsureComputedStyle(pseudo_element_specifier);
+  }
+  void WillRecalcStyle(StyleRecalcChange) override;
 
-#if ENABLE(ASSERT)
-    bool m_inRelativeLengthClientsInvalidation;
+  void BuildPendingResourcesIfNeeded();
+
+  HeapHashSet<WeakMember<SVGElement>> elements_with_relative_lengths_;
+
+  typedef HeapHashMap<QualifiedName, Member<SVGAnimatedPropertyBase>>
+      AttributeToPropertyMap;
+  AttributeToPropertyMap attribute_to_property_map_;
+
+#if DCHECK_IS_ON()
+  bool in_relative_length_clients_invalidation_ = false;
 #endif
 
-    Member<SVGElementRareData> m_SVGRareData;
-    Member<SVGAnimatedString> m_className;
+  Member<SVGElementRareData> svg_rare_data_;
+  Member<SVGAnimatedString> class_name_;
 };
 
 struct SVGAttributeHashTranslator {
-    STATIC_ONLY(SVGAttributeHashTranslator);
-    static unsigned hash(const QualifiedName& key)
-    {
-        if (key.hasPrefix()) {
-            QualifiedNameComponents components = { nullAtom.impl(), key.localName().impl(), key.namespaceURI().impl() };
-            return hashComponents(components);
-        }
-        return DefaultHash<QualifiedName>::Hash::hash(key);
+  STATIC_ONLY(SVGAttributeHashTranslator);
+  static unsigned GetHash(const QualifiedName& key) {
+    if (key.HasPrefix()) {
+      QualifiedNameComponents components = {g_null_atom.Impl(),
+                                            key.LocalName().Impl(),
+                                            key.NamespaceURI().Impl()};
+      return HashComponents(components);
     }
-    static bool equal(const QualifiedName& a, const QualifiedName& b) { return a.matches(b); }
+    return DefaultHash<QualifiedName>::Hash::GetHash(key);
+  }
+  static bool Equal(const QualifiedName& a, const QualifiedName& b) {
+    return a.Matches(b);
+  }
 };
 
-DEFINE_ELEMENT_TYPE_CASTS(SVGElement, isSVGElement());
+DEFINE_ELEMENT_TYPE_CASTS(SVGElement, IsSVGElement());
 
-template <typename T> bool isElementOfType(const SVGElement&);
-template <> inline bool isElementOfType<const SVGElement>(const SVGElement&) { return true; }
+template <typename T>
+bool IsElementOfType(const SVGElement&);
+template <>
+inline bool IsElementOfType<const SVGElement>(const SVGElement&) {
+  return true;
+}
 
-inline bool Node::hasTagName(const SVGQualifiedName& name) const
-{
-    return isSVGElement() && toSVGElement(*this).hasTagName(name);
+inline bool Node::HasTagName(const SVGQualifiedName& name) const {
+  return IsSVGElement() && ToSVGElement(*this).HasTagName(name);
 }
 
 // This requires isSVG*Element(const SVGElement&).
-#define DEFINE_SVGELEMENT_TYPE_CASTS_WITH_FUNCTION(thisType) \
-    inline bool is##thisType(const thisType* element); \
-    inline bool is##thisType(const thisType& element); \
-    inline bool is##thisType(const SVGElement* element) { return element && is##thisType(*element); } \
-    inline bool is##thisType(const Node& node) { return node.isSVGElement() ? is##thisType(toSVGElement(node)) : false; } \
-    inline bool is##thisType(const Node* node) { return node && is##thisType(*node); } \
-    template<typename T> inline bool is##thisType(const T* node) { return is##thisType(node); } \
-    template<typename T> inline bool is##thisType(const Member<T>& node) { return is##thisType(node.get()); } \
-    template <> inline bool isElementOfType<const thisType>(const SVGElement& element) { return is##thisType(element); } \
-    DEFINE_ELEMENT_TYPE_CASTS_WITH_FUNCTION(thisType)
+#define DEFINE_SVGELEMENT_TYPE_CASTS_WITH_FUNCTION(thisType)               \
+  inline bool Is##thisType(const thisType* element);                       \
+  inline bool Is##thisType(const thisType& element);                       \
+  inline bool Is##thisType(const SVGElement* element) {                    \
+    return element && Is##thisType(*element);                              \
+  }                                                                        \
+  inline bool Is##thisType(const Node& node) {                             \
+    return node.IsSVGElement() ? Is##thisType(ToSVGElement(node)) : false; \
+  }                                                                        \
+  inline bool Is##thisType(const Node* node) {                             \
+    return node && Is##thisType(*node);                                    \
+  }                                                                        \
+  template <typename T>                                                    \
+  inline bool Is##thisType(const T* node) {                                \
+    return Is##thisType(node);                                             \
+  }                                                                        \
+  template <typename T>                                                    \
+  inline bool Is##thisType(const Member<T>& node) {                        \
+    return Is##thisType(node.Get());                                       \
+  }                                                                        \
+  template <>                                                              \
+  inline bool IsElementOfType<const thisType>(const SVGElement& element) { \
+    return Is##thisType(element);                                          \
+  }                                                                        \
+  DEFINE_ELEMENT_TYPE_CASTS_WITH_FUNCTION(thisType)
 
-} // namespace blink
+}  // namespace blink
 
 #include "core/SVGElementTypeHelpers.h"
 
-#endif // SVGElement_h
+#endif  // SVGElement_h

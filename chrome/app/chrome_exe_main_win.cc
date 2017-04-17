@@ -14,12 +14,12 @@
 #include "base/at_exit.h"
 #include "base/command_line.h"
 #include "base/files/file_path.h"
-#include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/path_service.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "base/win/registry.h"
 #include "base/win/windows_version.h"
@@ -28,13 +28,13 @@
 #include "chrome/browser/win/chrome_process_finder.h"
 #include "chrome/common/chrome_paths_internal.h"
 #include "chrome/common/chrome_switches.h"
-#include "chrome/installer/util/browser_distribution.h"
+#include "chrome/install_static/initialize_from_primary_module.h"
+#include "chrome/install_static/install_util.h"
 #include "chrome_elf/chrome_elf_main.h"
 #include "components/crash/content/app/crash_switches.h"
 #include "components/crash/content/app/crashpad.h"
+#include "components/crash/content/app/fallback_crash_handling_win.h"
 #include "components/crash/content/app/run_as_crashpad_handler_win.h"
-#include "components/startup_metric_utils/browser/startup_metric_utils.h"
-#include "components/startup_metric_utils/common/pre_read_field_trial_utils_win.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/result_codes.h"
 
@@ -198,6 +198,24 @@ bool RemoveAppCompatFlagsEntry() {
   return false;
 }
 
+int RunFallbackCrashHandler(const base::CommandLine& cmd_line) {
+  // Retrieve the product & version details we need to report the crash
+  // correctly.
+  wchar_t exe_file[MAX_PATH] = {};
+  CHECK(::GetModuleFileName(nullptr, exe_file, arraysize(exe_file)));
+
+  base::string16 product_name;
+  base::string16 version;
+  base::string16 channel_name;
+  base::string16 special_build;
+  install_static::GetExecutableVersionDetails(exe_file, &product_name, &version,
+                                              &special_build, &channel_name);
+
+  return crash_reporter::RunAsFallbackCrashHandler(
+      cmd_line, base::UTF16ToUTF8(product_name), base::UTF16ToUTF8(version),
+      base::UTF16ToUTF8(channel_name));
+}
+
 }  // namespace
 
 #if !defined(WIN_CONSOLE_APP)
@@ -206,6 +224,9 @@ int APIENTRY wWinMain(HINSTANCE instance, HINSTANCE prev, wchar_t*, int) {
 int main() {
   HINSTANCE instance = GetModuleHandle(nullptr);
 #endif
+  install_static::InitializeFromPrimaryModule();
+  SignalInitializeCrashReporting();
+
   // Initialize the CommandLine singleton from the environment.
   base::CommandLine::Init(0, nullptr);
   const base::CommandLine* command_line =
@@ -213,9 +234,6 @@ int main() {
 
   const std::string process_type =
       command_line->GetSwitchValueASCII(switches::kProcessType);
-
-  startup_metric_utils::InitializePreReadOptions(
-      BrowserDistribution::GetDistribution()->GetRegistryPath());
 
   // Confirm that an explicit prefetch profile is used for all process types
   // except for the browser process. Any new process type will have to assign
@@ -225,11 +243,14 @@ int main() {
          HasValidWindowsPrefetchArgument(*command_line));
 
   if (process_type == crash_reporter::switches::kCrashpadHandler) {
+    crash_reporter::SetupFallbackCrashHandling(*command_line);
     return crash_reporter::RunAsCrashpadHandler(
-        *base::CommandLine::ForCurrentProcess());
+        *base::CommandLine::ForCurrentProcess(), switches::kProcessType);
+  } else if (process_type == crash_reporter::switches::kFallbackCrashHandler) {
+    return RunFallbackCrashHandler(*command_line);
   }
 
-  startup_metric_utils::RecordExeMainEntryPointTime(base::Time::Now());
+  const base::TimeTicks exe_entry_point_ticks = base::TimeTicks::Now();
 
   // Signal Chrome Elf that Chrome has begun to start.
   SignalChromeElf();
@@ -247,7 +268,7 @@ int main() {
   // Load and launch the chrome dll. *Everything* happens inside.
   VLOG(1) << "About to load main DLL.";
   MainDllLoader* loader = MakeMainDllLoader();
-  int rc = loader->Launch(instance);
+  int rc = loader->Launch(instance, exe_entry_point_ticks);
   loader->RelaunchChromeBrowserWithNewCommandLineIfNeeded();
   delete loader;
   return rc;

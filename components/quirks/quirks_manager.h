@@ -65,13 +65,9 @@ class QUIRKS_EXPORT QuirksManager {
     // Provides Chrome API key for quirks server.
     virtual std::string GetApiKey() const = 0;
 
-    // Returns the read-only directory where icc files were added before the
-    // Quirks Client provided them.
-    virtual base::FilePath GetBuiltInDisplayProfileDirectory() const = 0;
-
     // Returns the path to the writable display profile directory.
     // This directory must already exist.
-    virtual base::FilePath GetDownloadDisplayProfileDirectory() const = 0;
+    virtual base::FilePath GetDisplayProfileDirectory() const = 0;
 
     // Whether downloads are allowed by enterprise device policy.
     virtual bool DevicePolicyEnabled() const = 0;
@@ -96,6 +92,7 @@ class QUIRKS_EXPORT QuirksManager {
   // Entry point into manager.  Finds or downloads icc file.
   void RequestIccProfilePath(
       int64_t product_id,
+      const std::string& display_name,
       const RequestFinishedCallback& on_request_finished);
 
   void ClientFinished(QuirksClient* client);
@@ -129,6 +126,7 @@ class QUIRKS_EXPORT QuirksManager {
   // Callback after checking for existing icc file; proceed if not found.
   void OnIccFilePathRequestCompleted(
       int64_t product_id,
+      const std::string& display_name,
       const RequestFinishedCallback& on_request_finished,
       base::FilePath path);
 

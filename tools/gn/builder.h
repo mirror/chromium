@@ -5,15 +5,15 @@
 #ifndef TOOLS_GN_BUILDER_H_
 #define TOOLS_GN_BUILDER_H_
 
+#include <map>
+
 #include "base/callback.h"
-#include "base/containers/hash_tables.h"
 #include "base/macros.h"
 #include "tools/gn/builder_record.h"
 #include "tools/gn/label.h"
 #include "tools/gn/label_ptr.h"
 #include "tools/gn/unique_vector.h"
 
-class Config;
 class Err;
 class Loader;
 class ParseNode;
@@ -22,15 +22,16 @@ class ParseNode;
 // the main thread only. See also BuilderRecord.
 class Builder {
  public:
-  typedef base::Callback<void(const BuilderRecord*)> ResolvedCallback;
+  typedef base::Callback<void(const BuilderRecord*)> ResolvedGeneratedCallback;
 
   explicit Builder(Loader* loader);
   ~Builder();
 
-  // The resolved callback is called whenever a target has been resolved. This
-  // will be executed only on the main thread.
-  void set_resolved_callback(const ResolvedCallback& cb) {
-    resolved_callback_ = cb;
+  // The resolved callback is called when a target has been both resolved and
+  // marked generated. This will be executed only on the main thread.
+  void set_resolved_and_generated_callback(
+      const ResolvedGeneratedCallback& cb) {
+    resolved_and_generated_callback_ = cb;
   }
 
   Loader* loader() const { return loader_; }
@@ -129,10 +130,10 @@ class Builder {
   Loader* loader_;
 
   // Owning pointers.
-  typedef base::hash_map<Label, BuilderRecord*> RecordMap;
+  typedef std::map<Label, BuilderRecord*> RecordMap;
   RecordMap records_;
 
-  ResolvedCallback resolved_callback_;
+  ResolvedGeneratedCallback resolved_and_generated_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(Builder);
 };

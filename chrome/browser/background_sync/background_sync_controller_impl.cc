@@ -8,7 +8,8 @@
 #include "base/strings/string_util.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
-#include "components/rappor/rappor_utils.h"
+#include "components/rappor/public/rappor_utils.h"
+#include "components/rappor/rappor_service_impl.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/background_sync_parameters.h"
 
@@ -54,7 +55,7 @@ void BackgroundSyncControllerImpl::GetParameterOverrides(
     parameters->disable = true;
   }
 
-  if (ContainsKey(field_params, kMaxAttemptsParameterName)) {
+  if (base::ContainsKey(field_params, kMaxAttemptsParameterName)) {
     int max_attempts;
     if (base::StringToInt(field_params[kMaxAttemptsParameterName],
                           &max_attempts)) {
@@ -62,7 +63,7 @@ void BackgroundSyncControllerImpl::GetParameterOverrides(
     }
   }
 
-  if (ContainsKey(field_params, kInitialRetryParameterName)) {
+  if (base::ContainsKey(field_params, kInitialRetryParameterName)) {
     int initial_retry_delay_sec;
     if (base::StringToInt(field_params[kInitialRetryParameterName],
                           &initial_retry_delay_sec)) {
@@ -71,7 +72,7 @@ void BackgroundSyncControllerImpl::GetParameterOverrides(
     }
   }
 
-  if (ContainsKey(field_params, kRetryDelayFactorParameterName)) {
+  if (base::ContainsKey(field_params, kRetryDelayFactorParameterName)) {
     int retry_delay_factor;
     if (base::StringToInt(field_params[kRetryDelayFactorParameterName],
                           &retry_delay_factor)) {
@@ -79,7 +80,7 @@ void BackgroundSyncControllerImpl::GetParameterOverrides(
     }
   }
 
-  if (ContainsKey(field_params, kMinSyncRecoveryTimeName)) {
+  if (base::ContainsKey(field_params, kMinSyncRecoveryTimeName)) {
     int min_sync_recovery_time_sec;
     if (base::StringToInt(field_params[kMinSyncRecoveryTimeName],
                           &min_sync_recovery_time_sec)) {
@@ -88,7 +89,7 @@ void BackgroundSyncControllerImpl::GetParameterOverrides(
     }
   }
 
-  if (ContainsKey(field_params, kMaxSyncEventDurationName)) {
+  if (base::ContainsKey(field_params, kMaxSyncEventDurationName)) {
     int max_sync_event_duration_sec;
     if (base::StringToInt(field_params[kMaxSyncEventDurationName],
                           &max_sync_event_duration_sec)) {
@@ -109,7 +110,7 @@ void BackgroundSyncControllerImpl::NotifyBackgroundSyncRegistered(
     return;
 
   rappor::SampleDomainAndRegistryFromGURL(
-      GetRapporService(), "BackgroundSync.Register.Origin", origin);
+      GetRapporServiceImpl(), "BackgroundSync.Register.Origin", origin);
 }
 
 void BackgroundSyncControllerImpl::RunInBackground(bool enabled,
@@ -126,6 +127,7 @@ void BackgroundSyncControllerImpl::RunInBackground(bool enabled,
 #endif
 }
 
-rappor::RapporService* BackgroundSyncControllerImpl::GetRapporService() {
+rappor::RapporServiceImpl*
+BackgroundSyncControllerImpl::GetRapporServiceImpl() {
   return g_browser_process->rappor_service();
 }

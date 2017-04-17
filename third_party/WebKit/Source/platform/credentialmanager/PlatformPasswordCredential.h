@@ -7,26 +7,34 @@
 
 #include "platform/credentialmanager/PlatformCredential.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class PLATFORM_EXPORT PlatformPasswordCredential final : public PlatformCredential {
-    WTF_MAKE_NONCOPYABLE(PlatformPasswordCredential);
-public:
-    static PlatformPasswordCredential* create(const String& id, const String& password, const String& name, const KURL& iconURL);
-    ~PlatformPasswordCredential() override;
+class PLATFORM_EXPORT PlatformPasswordCredential final
+    : public PlatformCredential {
+  WTF_MAKE_NONCOPYABLE(PlatformPasswordCredential);
 
-    const String& password() const { return m_password; }
+ public:
+  static PlatformPasswordCredential* Create(const String& id,
+                                            const String& password,
+                                            const String& name,
+                                            const KURL& icon_url);
+  ~PlatformPasswordCredential() override;
 
-    bool isPassword() override { return true; }
+  const String& Password() const { return password_; }
 
-private:
-    PlatformPasswordCredential(const String& id, const String& password, const String& name, const KURL& iconURL);
+  bool IsPassword() override { return true; }
 
-    String m_password;
+ private:
+  PlatformPasswordCredential(const String& id,
+                             const String& password,
+                             const String& name,
+                             const KURL& icon_url);
+
+  String password_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PlatformPasswordCredential_h
+#endif  // PlatformPasswordCredential_h

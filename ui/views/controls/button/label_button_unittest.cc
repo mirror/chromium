@@ -6,9 +6,10 @@
 
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "third_party/skia/include/core/SkBitmap.h"
-#include "ui/accessibility/ax_view_state.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/test/material_design_controller_test_api.h"
 #include "ui/base/ui_base_switches.h"
@@ -43,9 +44,12 @@ namespace views {
 // Testing button that exposes protected methods.
 class TestLabelButton : public LabelButton {
  public:
-  TestLabelButton() : LabelButton(nullptr, base::string16()) {}
+  explicit TestLabelButton(const base::string16& text = base::string16())
+      : LabelButton(nullptr, text) {}
 
   using LabelButton::label;
+  using LabelButton::image;
+  using LabelButton::ResetColorsFromNativeTheme;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestLabelButton);
@@ -80,20 +84,22 @@ class LabelButtonTest : public test::WidgetTest {
 
     // Establish the expected text colors for testing changes due to state.
     themed_normal_text_color_ = button_->GetNativeTheme()->GetSystemColor(
-        ui::NativeTheme::kColorId_ButtonEnabledColor);
-#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
-    // The Linux theme provides a non-black highlight text color, but it's not
-    // used for styled buttons.
-    styled_highlight_text_color_ = themed_normal_text_color_;
-    styled_normal_text_color_ = themed_normal_text_color_;
-#else
-    styled_highlight_text_color_ = button_->GetNativeTheme()->GetSystemColor(
-        ui::NativeTheme::kColorId_ButtonHighlightColor);
+        ui::NativeTheme::kColorId_LabelEnabledColor);
 
     // For styled buttons only, platforms other than Desktop Linux either ignore
     // NativeTheme and use a hardcoded black or (on Mac) have a NativeTheme that
     // reliably returns black.
     styled_normal_text_color_ = SK_ColorBLACK;
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+    // The Linux theme provides a non-black highlight text color, but it's not
+    // used for styled buttons.
+    styled_highlight_text_color_ = styled_normal_text_color_ =
+        button_->GetNativeTheme()->GetSystemColor(
+            ui::NativeTheme::kColorId_ButtonEnabledColor);
+#elif defined(OS_MACOSX)
+    styled_highlight_text_color_ = SK_ColorWHITE;
+#else
+    styled_highlight_text_color_ = styled_normal_text_color_;
 #endif
   }
 
@@ -117,7 +123,7 @@ class LabelButtonTest : public test::WidgetTest {
 
 TEST_F(LabelButtonTest, Init) {
   const base::string16 text(ASCIIToUTF16("abc"));
-  LabelButton button(NULL, text);
+  TestLabelButton button(text);
 
   EXPECT_TRUE(button.GetImage(Button::STATE_NORMAL).isNull());
   EXPECT_TRUE(button.GetImage(Button::STATE_HOVERED).isNull());
@@ -126,17 +132,17 @@ TEST_F(LabelButtonTest, Init) {
 
   EXPECT_EQ(text, button.GetText());
 
-  ui::AXViewState accessible_state;
-  button.GetAccessibleState(&accessible_state);
-  EXPECT_EQ(ui::AX_ROLE_BUTTON, accessible_state.role);
-  EXPECT_EQ(text, accessible_state.name);
+  ui::AXNodeData accessible_node_data;
+  button.GetAccessibleNodeData(&accessible_node_data);
+  EXPECT_EQ(ui::AX_ROLE_BUTTON, accessible_node_data.role);
+  EXPECT_EQ(text, accessible_node_data.GetString16Attribute(ui::AX_ATTR_NAME));
 
   EXPECT_FALSE(button.is_default());
   EXPECT_EQ(button.style(), Button::STYLE_TEXTBUTTON);
   EXPECT_EQ(Button::STATE_NORMAL, button.state());
 
-  EXPECT_EQ(button.image_->parent(), &button);
-  EXPECT_EQ(button.label_->parent(), &button);
+  EXPECT_EQ(button.image()->parent(), &button);
+  EXPECT_EQ(button.label()->parent(), &button);
 }
 
 TEST_F(LabelButtonTest, Label) {
@@ -169,27 +175,31 @@ TEST_F(LabelButtonTest, Label) {
   EXPECT_LT(button_->GetPreferredSize().width(), long_text_width);
 }
 
-// Test behavior of View::GetAccessibleState() for buttons when setting a label.
+// Test behavior of View::GetAccessibleNodeData() for buttons when setting a
+// label.
 TEST_F(LabelButtonTest, AccessibleState) {
-  ui::AXViewState accessible_state;
+  ui::AXNodeData accessible_node_data;
 
-  button_->GetAccessibleState(&accessible_state);
-  EXPECT_EQ(ui::AX_ROLE_BUTTON, accessible_state.role);
-  EXPECT_EQ(base::string16(), accessible_state.name);
+  button_->GetAccessibleNodeData(&accessible_node_data);
+  EXPECT_EQ(ui::AX_ROLE_BUTTON, accessible_node_data.role);
+  EXPECT_EQ(base::string16(),
+            accessible_node_data.GetString16Attribute(ui::AX_ATTR_NAME));
 
   // Without a label (e.g. image-only), the accessible name should automatically
   // be set from the tooltip.
   const base::string16 tooltip_text = ASCIIToUTF16("abc");
   button_->SetTooltipText(tooltip_text);
-  button_->GetAccessibleState(&accessible_state);
-  EXPECT_EQ(tooltip_text, accessible_state.name);
+  button_->GetAccessibleNodeData(&accessible_node_data);
+  EXPECT_EQ(tooltip_text,
+            accessible_node_data.GetString16Attribute(ui::AX_ATTR_NAME));
   EXPECT_EQ(base::string16(), button_->GetText());
 
   // Setting a label overrides the tooltip text.
   const base::string16 label_text = ASCIIToUTF16("def");
   button_->SetText(label_text);
-  button_->GetAccessibleState(&accessible_state);
-  EXPECT_EQ(label_text, accessible_state.name);
+  button_->GetAccessibleNodeData(&accessible_node_data);
+  EXPECT_EQ(label_text,
+            accessible_node_data.GetString16Attribute(ui::AX_ATTR_NAME));
   EXPECT_EQ(label_text, button_->GetText());
 
   base::string16 tooltip;
@@ -256,16 +266,17 @@ TEST_F(LabelButtonTest, LabelAndImage) {
   button_size.Enlarge(50, 0);
   button_->SetSize(button_size);
   button_->Layout();
-  EXPECT_LT(button_->image_->bounds().right(), button_->label_->bounds().x());
-  int left_align_label_midpoint = button_->label_->bounds().CenterPoint().x();
+  EXPECT_LT(button_->image()->bounds().right(), button_->label()->bounds().x());
+  int left_align_label_midpoint = button_->label()->bounds().CenterPoint().x();
   button_->SetHorizontalAlignment(gfx::ALIGN_CENTER);
   button_->Layout();
-  EXPECT_LT(button_->image_->bounds().right(), button_->label_->bounds().x());
-  int center_align_label_midpoint = button_->label_->bounds().CenterPoint().x();
+  EXPECT_LT(button_->image()->bounds().right(), button_->label()->bounds().x());
+  int center_align_label_midpoint =
+      button_->label()->bounds().CenterPoint().x();
   EXPECT_LT(left_align_label_midpoint, center_align_label_midpoint);
   button_->SetHorizontalAlignment(gfx::ALIGN_RIGHT);
   button_->Layout();
-  EXPECT_LT(button_->label_->bounds().right(), button_->image_->bounds().x());
+  EXPECT_LT(button_->label()->bounds().right(), button_->image()->bounds().x());
 
   button_->SetText(base::string16());
   EXPECT_GT(button_->GetPreferredSize().width(), text_width + image_size);
@@ -285,24 +296,21 @@ TEST_F(LabelButtonTest, LabelAndImage) {
   EXPECT_LT(button_->GetPreferredSize().height(), image_size);
 }
 
-TEST_F(LabelButtonTest, FontList) {
+TEST_F(LabelButtonTest, AdjustFontSize) {
   button_->SetText(base::ASCIIToUTF16("abc"));
 
-  const gfx::FontList original_font_list = button_->GetFontList();
-  const gfx::FontList large_font_list =
-      original_font_list.DeriveWithSizeDelta(100);
   const int original_width = button_->GetPreferredSize().width();
   const int original_height = button_->GetPreferredSize().height();
 
   // The button size increases when the font size is increased.
-  button_->SetFontList(large_font_list);
+  button_->AdjustFontSize(100);
   EXPECT_GT(button_->GetPreferredSize().width(), original_width);
   EXPECT_GT(button_->GetPreferredSize().height(), original_height);
 
   // The button returns to its original size when the minimal size is cleared
   // and the original font size is restored.
   button_->SetMinSize(gfx::Size());
-  button_->SetFontList(original_font_list);
+  button_->AdjustFontSize(-100);
   EXPECT_EQ(original_width, button_->GetPreferredSize().width());
   EXPECT_EQ(original_height, button_->GetPreferredSize().height());
 }

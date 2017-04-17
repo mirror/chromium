@@ -8,12 +8,13 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.ConditionVariable;
+import android.support.test.filters.SmallTest;
 import android.test.ActivityInstrumentationTestCase2;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.TextView;
 
-import org.chromium.base.test.util.FlakyTest;
+import org.chromium.base.test.util.Feature;
 import org.chromium.net.test.EmbeddedTestServer;
 
 /**
@@ -31,8 +32,7 @@ public class CronetSampleTest extends
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mTestServer =
-                EmbeddedTestServer.createAndStartDefaultServer(getInstrumentation().getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(getInstrumentation().getContext());
         mUrl = mTestServer.getURL("/echo?status=200");
     }
 
@@ -42,11 +42,8 @@ public class CronetSampleTest extends
         super.tearDown();
     }
 
-    /*
     @SmallTest
     @Feature({"Cronet"})
-    */
-    @FlakyTest(message = "https://crbug.com/592444")
     public void testLoadUrl() throws Exception {
         CronetSampleActivity activity = launchCronetSampleWithUrl(mUrl);
 
@@ -65,7 +62,7 @@ public class CronetSampleTest extends
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.equals("Completed " + mUrl + " (200)")) {
+                if (s.toString().equals("Completed " + mUrl + " (200)")) {
                     done.open();
                 }
             }

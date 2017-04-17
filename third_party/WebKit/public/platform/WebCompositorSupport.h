@@ -32,8 +32,11 @@
 #include "WebScrollbar.h"
 #include "WebScrollbarThemePainter.h"
 
+#include <memory>
+
 namespace cc {
 class Layer;
+class TextureLayerClient;
 }
 
 namespace blink {
@@ -41,36 +44,46 @@ namespace blink {
 class WebContentLayer;
 class WebContentLayerClient;
 class WebExternalTextureLayer;
-class WebExternalTextureLayerClient;
 class WebImageLayer;
 class WebLayer;
 class WebScrollbarLayer;
 class WebScrollbarThemeGeometry;
 
 class WebCompositorSupport {
-public:
+ public:
+  // Layers -------------------------------------------------------
 
-    // Layers -------------------------------------------------------
+  virtual std::unique_ptr<WebLayer> CreateLayer() = 0;
 
-    virtual WebLayer* createLayer() { return nullptr; }
+  virtual std::unique_ptr<WebLayer> CreateLayerFromCCLayer(cc::Layer*) = 0;
 
-    virtual WebLayer* createLayerFromCCLayer(cc::Layer*) { return nullptr; }
+  virtual std::unique_ptr<WebContentLayer> CreateContentLayer(
+      WebContentLayerClient*) = 0;
 
-    virtual WebContentLayer* createContentLayer(WebContentLayerClient*) { return nullptr; }
+  virtual std::unique_ptr<WebExternalTextureLayer> CreateExternalTextureLayer(
+      cc::TextureLayerClient*) = 0;
 
-    virtual WebExternalTextureLayer* createExternalTextureLayer(WebExternalTextureLayerClient*) { return nullptr; }
+  virtual std::unique_ptr<WebImageLayer> CreateImageLayer() = 0;
 
-    virtual WebImageLayer* createImageLayer() { return nullptr; }
+  virtual std::unique_ptr<WebScrollbarLayer> CreateScrollbarLayer(
+      std::unique_ptr<WebScrollbar>,
+      WebScrollbarThemePainter,
+      std::unique_ptr<WebScrollbarThemeGeometry>) = 0;
 
-    // The ownership of the WebScrollbarThemeGeometry pointer is passed to Chromium.
-    virtual WebScrollbarLayer* createScrollbarLayer(WebScrollbar*, WebScrollbarThemePainter, WebScrollbarThemeGeometry*) { return nullptr; }
+  virtual std::unique_ptr<WebScrollbarLayer> CreateOverlayScrollbarLayer(
+      std::unique_ptr<WebScrollbar>,
+      WebScrollbarThemePainter,
+      std::unique_ptr<WebScrollbarThemeGeometry>) = 0;
 
-    virtual WebScrollbarLayer* createSolidColorScrollbarLayer(WebScrollbar::Orientation, int thumbThickness, int trackStart, bool isLeftSideVerticalScrollbar) { return nullptr; }
+  virtual std::unique_ptr<WebScrollbarLayer> CreateSolidColorScrollbarLayer(
+      WebScrollbar::Orientation,
+      int thumb_thickness,
+      int track_start,
+      bool is_left_side_vertical_scrollbar) = 0;
 
-protected:
-    virtual ~WebCompositorSupport() { }
+ protected:
+  virtual ~WebCompositorSupport() {}
 };
-
 }
 
-#endif // WebCompositorSupport_h
+#endif  // WebCompositorSupport_h

@@ -67,11 +67,11 @@ SoundLevelIndicator::SoundLevelIndicator() {}
 SoundLevelIndicator::~SoundLevelIndicator() {}
 
 void SoundLevelIndicator::OnPaint(gfx::Canvas* canvas) {
-  SkPaint paint;
-  paint.setStyle(SkPaint::kFill_Style);
-  paint.setColor(kSoundLevelIndicatorColor);
-  paint.setAntiAlias(true);
-  canvas->DrawCircle(bounds().CenterPoint(), width() / 2, paint);
+  cc::PaintFlags flags;
+  flags.setStyle(cc::PaintFlags::kFill_Style);
+  flags.setColor(kSoundLevelIndicatorColor);
+  flags.setAntiAlias(true);
+  canvas->DrawCircle(bounds().CenterPoint(), width() / 2, flags);
 }
 
 // MicButton is an image button with a circular hit test mask.
@@ -144,7 +144,7 @@ SpeechView::SpeechView(AppListViewDelegate* delegate)
   // TODO(mukai): use BoundedLabel to cap 2 lines.
   ui::ResourceBundle& bundle = ui::ResourceBundle::GetSharedInstance();
   speech_result_ = new views::Label(
-      base::string16(), bundle.GetFontList(ui::ResourceBundle::LargeFont));
+      base::string16(), {bundle.GetFontList(ui::ResourceBundle::LargeFont)});
   speech_result_->SetMultiLine(true);
   speech_result_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
 

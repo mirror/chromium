@@ -10,16 +10,17 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #ifndef AudioDestinationNode_h
@@ -37,71 +38,93 @@ class AudioBus;
 class BaseAudioContext;
 
 class AudioDestinationHandler : public AudioHandler, public AudioIOCallback {
-public:
-    AudioDestinationHandler(AudioNode&, float sampleRate);
-    ~AudioDestinationHandler() override;
+ public:
+  AudioDestinationHandler(AudioNode&);
+  ~AudioDestinationHandler() override;
 
-    // AudioHandler
-    void process(size_t) final { } // we're pulled by hardware so this is never called
+  // AudioHandler
+  void Process(size_t) final {
+  }  // we're pulled by hardware so this is never called
 
-    // The audio hardware calls render() to get the next render quantum of audio into destinationBus.
-    // It will optionally give us local/live audio input in sourceBus (if it's not 0).
-    void render(AudioBus* sourceBus, AudioBus* destinationBus, size_t numberOfFrames) final;
+  // The audio hardware calls render() to get the next render quantum of audio
+  // into destinationBus.  It will optionally give us local/live audio input in
+  // sourceBus (if it's not 0).
+  void Render(AudioBus* source_bus,
+              AudioBus* destination_bus,
+              size_t number_of_frames,
+              const AudioIOPosition& output_position) final;
 
-    size_t currentSampleFrame() const { return acquireLoad(&m_currentSampleFrame); }
-    double currentTime() const { return currentSampleFrame() / static_cast<double>(sampleRate()); }
+  size_t CurrentSampleFrame() const {
+    return AcquireLoad(&current_sample_frame_);
+  }
+  double CurrentTime() const {
+    return CurrentSampleFrame() / static_cast<double>(SampleRate());
+  }
 
-    virtual unsigned long maxChannelCount() const { return 0; }
+  virtual unsigned long MaxChannelCount() const { return 0; }
 
-    virtual void startRendering() = 0;
-    virtual void stopRendering() = 0;
+  virtual void StartRendering() = 0;
+  virtual void StopRendering() = 0;
 
-protected:
-    // LocalAudioInputProvider allows us to expose an AudioSourceProvider for local/live audio input.
-    // If there is local/live audio input, we call set() with the audio input data every render quantum.
-    class LocalAudioInputProvider final : public AudioSourceProvider {
-    public:
-        LocalAudioInputProvider()
-            : m_sourceBus(AudioBus::create(2, ProcessingSizeInFrames)) // FIXME: handle non-stereo local input.
-        {
-        }
+  // Returns the rendering callback buffer size.
+  virtual size_t CallbackBufferSize() const = 0;
+  virtual double SampleRate() const = 0;
 
-        void set(AudioBus* bus)
-        {
-            if (bus)
-                m_sourceBus->copyFrom(*bus);
-        }
+  // Returns the audio buffer size in frames used by the AudioContext.
+  virtual int FramesPerBuffer() const = 0;
 
-        // AudioSourceProvider.
-        void provideInput(AudioBus* destinationBus, size_t numberOfFrames) override
-        {
-            bool isGood = destinationBus && destinationBus->length() == numberOfFrames && m_sourceBus->length() == numberOfFrames;
-            ASSERT(isGood);
-            if (isGood)
-                destinationBus->copyFrom(*m_sourceBus);
-        }
+ protected:
+  // LocalAudioInputProvider allows us to expose an AudioSourceProvider for
+  // local/live audio input.  If there is local/live audio input, we call set()
+  // with the audio input data every render quantum.
+  class LocalAudioInputProvider final : public AudioSourceProvider {
+   public:
+    LocalAudioInputProvider()
+        : source_bus_(AudioBus::Create(
+              2,
+              AudioUtilities::kRenderQuantumFrames))  // FIXME: handle
+                                                      // non-stereo local input.
+    {}
 
-    private:
-        RefPtr<AudioBus> m_sourceBus;
-    };
+    void Set(AudioBus* bus) {
+      if (bus)
+        source_bus_->CopyFrom(*bus);
+    }
 
-    // Counts the number of sample-frames processed by the destination.
-    size_t m_currentSampleFrame;
+    // AudioSourceProvider.
+    void ProvideInput(AudioBus* destination_bus,
+                      size_t number_of_frames) override {
+      bool is_good = destination_bus &&
+                     destination_bus->length() == number_of_frames &&
+                     source_bus_->length() == number_of_frames;
+      DCHECK(is_good);
+      if (is_good)
+        destination_bus->CopyFrom(*source_bus_);
+    }
 
-    LocalAudioInputProvider m_localAudioInputProvider;
+   private:
+    RefPtr<AudioBus> source_bus_;
+  };
+
+  // Counts the number of sample-frames processed by the destination.
+  size_t current_sample_frame_;
+
+  LocalAudioInputProvider local_audio_input_provider_;
 };
 
 class AudioDestinationNode : public AudioNode {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    AudioDestinationHandler& audioDestinationHandler() const;
+  DEFINE_WRAPPERTYPEINFO();
 
-    unsigned long maxChannelCount() const;
+ public:
+  AudioDestinationHandler& GetAudioDestinationHandler() const;
 
-protected:
-    AudioDestinationNode(BaseAudioContext&);
+  unsigned long maxChannelCount() const;
+  size_t CallbackBufferSize() const { return Handler().CallbackBufferSize(); }
+
+ protected:
+  AudioDestinationNode(BaseAudioContext&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AudioDestinationNode_h
+#endif  // AudioDestinationNode_h

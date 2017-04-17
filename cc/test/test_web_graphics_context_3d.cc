@@ -73,7 +73,7 @@ TestWebGraphicsContext3D::TestWebGraphicsContext3D()
       bound_buffer_(0),
       weak_ptr_factory_(this) {
   CreateNamespace();
-  set_support_image(true);
+  set_have_extension_egl_image(true);  // For stream textures.
 }
 
 TestWebGraphicsContext3D::~TestWebGraphicsContext3D() {
@@ -184,13 +184,13 @@ void TestWebGraphicsContext3D::genTextures(GLsizei count, GLuint* ids) {
     namespace_->textures.Append(ids[i], new TestTexture());
 }
 
-void TestWebGraphicsContext3D::deleteBuffers(GLsizei count, GLuint* ids) {
+void TestWebGraphicsContext3D::deleteBuffers(GLsizei count, const GLuint* ids) {
   for (int i = 0; i < count; ++i)
     RetireBufferId(ids[i]);
 }
 
-void TestWebGraphicsContext3D::deleteFramebuffers(
-    GLsizei count, GLuint* ids) {
+void TestWebGraphicsContext3D::deleteFramebuffers(GLsizei count,
+                                                  const GLuint* ids) {
   for (int i = 0; i < count; ++i) {
     if (ids[i]) {
       RetireFramebufferId(ids[i]);
@@ -200,13 +200,14 @@ void TestWebGraphicsContext3D::deleteFramebuffers(
   }
 }
 
-void TestWebGraphicsContext3D::deleteRenderbuffers(
-    GLsizei count, GLuint* ids) {
+void TestWebGraphicsContext3D::deleteRenderbuffers(GLsizei count,
+                                                   const GLuint* ids) {
   for (int i = 0; i < count; ++i)
     RetireRenderbufferId(ids[i]);
 }
 
-void TestWebGraphicsContext3D::deleteTextures(GLsizei count, GLuint* ids) {
+void TestWebGraphicsContext3D::deleteTextures(GLsizei count,
+                                              const GLuint* ids) {
   for (int i = 0; i < count; ++i)
     RetireTextureId(ids[i]);
   base::AutoLock lock(namespace_->lock);
@@ -608,7 +609,7 @@ GLuint TestWebGraphicsContext3D::createImageCHROMIUM(ClientBuffer buffer,
                                                      GLsizei width,
                                                      GLsizei height,
                                                      GLenum internalformat) {
-  DCHECK_EQ(GL_RGBA, static_cast<int>(internalformat));
+  DCHECK(internalformat == GL_RGB || internalformat == GL_RGBA);
   GLuint image_id = NextImageId();
   base::AutoLock lock(namespace_->lock);
   std::unordered_set<unsigned>& images = namespace_->images;
@@ -631,7 +632,7 @@ GLuint TestWebGraphicsContext3D::createGpuMemoryBufferImageCHROMIUM(
     GLsizei height,
     GLenum internalformat,
     GLenum usage) {
-  DCHECK_EQ(GL_RGBA, static_cast<int>(internalformat));
+  DCHECK(internalformat == GL_RGB || internalformat == GL_RGBA);
   GLuint image_id = NextImageId();
   base::AutoLock lock(namespace_->lock);
   std::unordered_set<unsigned>& images = namespace_->images;
@@ -645,6 +646,10 @@ GLuint64 TestWebGraphicsContext3D::insertFenceSync() {
 
 void TestWebGraphicsContext3D::genSyncToken(GLuint64 fence_sync,
                                             GLbyte* sync_token) {
+  // Don't return a valid sync token if context is lost. This matches behavior
+  // of CommandBufferProxyImpl.
+  if (context_lost_)
+    return;
   gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO, 0,
                                  gpu::CommandBufferId(), fence_sync);
   sync_token_data.SetVerifyFlush();

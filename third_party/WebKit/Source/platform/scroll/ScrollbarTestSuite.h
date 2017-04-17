@@ -5,104 +5,93 @@
 #ifndef ScrollbarTestSuite_h
 #define ScrollbarTestSuite_h
 
+#include <memory>
 #include "platform/heap/GarbageCollected.h"
 #include "platform/scroll/ScrollableArea.h"
 #include "platform/scroll/Scrollbar.h"
 #include "platform/scroll/ScrollbarThemeMock.h"
-#include "platform/testing/TestingPlatformSupport.h"
+#include "platform/wtf/PtrUtil.h"
+#include "public/platform/Platform.h"
+#include "public/platform/WebScheduler.h"
+#include "public/platform/WebThread.h"
 #include "testing/gmock/include/gmock/gmock.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
 
 namespace blink {
 
-class MockScrollableArea : public GarbageCollectedFinalized<MockScrollableArea>, public ScrollableArea {
-    USING_GARBAGE_COLLECTED_MIXIN(MockScrollableArea);
+class MockScrollableArea : public GarbageCollectedFinalized<MockScrollableArea>,
+                           public ScrollableArea {
+  USING_GARBAGE_COLLECTED_MIXIN(MockScrollableArea);
 
-public:
-    static MockScrollableArea* create()
-    {
-        return new MockScrollableArea();
-    }
+ public:
+  static MockScrollableArea* Create() { return new MockScrollableArea(); }
 
-    static MockScrollableArea* create(const IntPoint& maximumScrollPosition)
-    {
-        MockScrollableArea* mock = create();
-        mock->setMaximumScrollPosition(maximumScrollPosition);
-        return mock;
-    }
+  static MockScrollableArea* Create(const ScrollOffset& maximum_scroll_offset) {
+    MockScrollableArea* mock = Create();
+    mock->SetMaximumScrollOffset(maximum_scroll_offset);
+    return mock;
+  }
 
-    MOCK_CONST_METHOD0(visualRectForScrollbarParts, LayoutRect());
-    MOCK_CONST_METHOD0(isActive, bool());
-    MOCK_CONST_METHOD1(scrollSize, int(ScrollbarOrientation));
-    MOCK_CONST_METHOD0(isScrollCornerVisible, bool());
-    MOCK_CONST_METHOD0(scrollCornerRect, IntRect());
-    MOCK_CONST_METHOD0(horizontalScrollbar, Scrollbar*());
-    MOCK_CONST_METHOD0(verticalScrollbar, Scrollbar*());
-    MOCK_CONST_METHOD0(enclosingScrollableArea, ScrollableArea*());
-    MOCK_CONST_METHOD1(visibleContentRect, IntRect(IncludeScrollbarsInRect));
-    MOCK_CONST_METHOD0(contentsSize, IntSize());
-    MOCK_CONST_METHOD0(scrollableAreaBoundingBox, IntRect());
-    MOCK_CONST_METHOD0(layerForHorizontalScrollbar, GraphicsLayer*());
-    MOCK_CONST_METHOD0(layerForVerticalScrollbar, GraphicsLayer*());
+  MOCK_CONST_METHOD0(VisualRectForScrollbarParts, LayoutRect());
+  MOCK_CONST_METHOD0(IsActive, bool());
+  MOCK_CONST_METHOD1(ScrollSize, int(ScrollbarOrientation));
+  MOCK_CONST_METHOD0(IsScrollCornerVisible, bool());
+  MOCK_CONST_METHOD0(ScrollCornerRect, IntRect());
+  MOCK_CONST_METHOD0(EnclosingScrollableArea, ScrollableArea*());
+  MOCK_CONST_METHOD1(VisibleContentRect, IntRect(IncludeScrollbarsInRect));
+  MOCK_CONST_METHOD0(ContentsSize, IntSize());
+  MOCK_CONST_METHOD0(ScrollableAreaBoundingBox, IntRect());
+  MOCK_CONST_METHOD0(LayerForHorizontalScrollbar, GraphicsLayer*());
+  MOCK_CONST_METHOD0(LayerForVerticalScrollbar, GraphicsLayer*());
+  MOCK_CONST_METHOD0(HorizontalScrollbar, Scrollbar*());
+  MOCK_CONST_METHOD0(VerticalScrollbar, Scrollbar*());
 
-    bool userInputScrollable(ScrollbarOrientation) const override { return true; }
-    bool scrollbarsCanBeActive() const override { return true; }
-    bool shouldPlaceVerticalScrollbarOnLeft() const override { return false; }
-    void setScrollOffset(const DoublePoint& offset, ScrollType) override { m_scrollPosition = flooredIntPoint(offset).shrunkTo(m_maximumScrollPosition); }
-    IntPoint scrollPosition() const override { return m_scrollPosition; }
-    IntPoint minimumScrollPosition() const override { return IntPoint(); }
-    IntPoint maximumScrollPosition() const override { return m_maximumScrollPosition; }
-    int visibleHeight() const override { return 768; }
-    int visibleWidth() const override { return 1024; }
-    bool scrollAnimatorEnabled() const override { return false; }
-    int pageStep(ScrollbarOrientation) const override { return 0; }
-    void scrollControlWasSetNeedsPaintInvalidation() {}
+  bool UserInputScrollable(ScrollbarOrientation) const override { return true; }
+  bool ScrollbarsCanBeActive() const override { return true; }
+  bool ShouldPlaceVerticalScrollbarOnLeft() const override { return false; }
+  void UpdateScrollOffset(const ScrollOffset& offset, ScrollType) override {
+    scroll_offset_ = offset.ShrunkTo(maximum_scroll_offset_);
+  }
+  IntSize ScrollOffsetInt() const override {
+    return FlooredIntSize(scroll_offset_);
+  }
+  IntSize MinimumScrollOffsetInt() const override { return IntSize(); }
+  IntSize MaximumScrollOffsetInt() const override {
+    return ExpandedIntSize(maximum_scroll_offset_);
+  }
+  int VisibleHeight() const override { return 768; }
+  int VisibleWidth() const override { return 1024; }
+  bool ScrollAnimatorEnabled() const override { return false; }
+  int PageStep(ScrollbarOrientation) const override { return 0; }
+  void ScrollControlWasSetNeedsPaintInvalidation() {}
+  void SetScrollOrigin(const IntPoint& origin) {
+    ScrollableArea::SetScrollOrigin(origin);
+  }
 
-    using ScrollableArea::horizontalScrollbarNeedsPaintInvalidation;
-    using ScrollableArea::verticalScrollbarNeedsPaintInvalidation;
-    using ScrollableArea::clearNeedsPaintInvalidationForScrollControls;
+  RefPtr<WebTaskRunner> GetTimerTaskRunner() const final {
+    return Platform::Current()->CurrentThread()->Scheduler()->TimerTaskRunner();
+  }
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        ScrollableArea::trace(visitor);
-    }
+  using ScrollableArea::HorizontalScrollbarNeedsPaintInvalidation;
+  using ScrollableArea::VerticalScrollbarNeedsPaintInvalidation;
+  using ScrollableArea::ClearNeedsPaintInvalidationForScrollControls;
 
-private:
-    void setMaximumScrollPosition(const IntPoint& maximumScrollPosition)
-    {
-        m_maximumScrollPosition = maximumScrollPosition;
-    }
+  DEFINE_INLINE_VIRTUAL_TRACE() { ScrollableArea::Trace(visitor); }
 
-    explicit MockScrollableArea()
-        : m_maximumScrollPosition(IntPoint(0, 100))
-    {
-    }
+ protected:
+  explicit MockScrollableArea()
+      : maximum_scroll_offset_(ScrollOffset(0, 100)) {}
+  explicit MockScrollableArea(const ScrollOffset& offset)
+      : maximum_scroll_offset_(offset) {}
 
-    IntPoint m_scrollPosition;
-    IntPoint m_maximumScrollPosition;
+ private:
+  void SetMaximumScrollOffset(const ScrollOffset& maximum_scroll_offset) {
+    maximum_scroll_offset_ = maximum_scroll_offset;
+  }
+
+  ScrollOffset scroll_offset_;
+  ScrollOffset maximum_scroll_offset_;
 };
 
-class ScrollbarTestSuite : public testing::Test {
-public:
-    ScrollbarTestSuite() {}
-
-    void SetUp() override
-    {
-        TestingPlatformSupport::Config config;
-        config.compositorSupport = Platform::current()->compositorSupport();
-        m_fakePlatform = wrapUnique(new TestingPlatformSupportWithMockScheduler(config));
-    }
-
-    void TearDown() override
-    {
-        m_fakePlatform = nullptr;
-    }
-
-private:
-    std::unique_ptr<TestingPlatformSupportWithMockScheduler> m_fakePlatform;
-};
-
-} // namespace blink
+}  // namespace blink
 
 #endif

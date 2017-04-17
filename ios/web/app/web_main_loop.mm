@@ -12,21 +12,55 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/message_loop/message_loop.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "base/power_monitor/power_monitor.h"
 #include "base/power_monitor/power_monitor_device_source.h"
 #include "base/process/process_metrics.h"
 #include "base/system_monitor/system_monitor.h"
+#include "base/task_scheduler/initialization_util.h"
+#include "base/task_scheduler/scheduler_worker_pool_params.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/threading/thread_restrictions.h"
-#include "ios/web/net/cookie_notification_bridge.h"
+#import "ios/web/net/cookie_notification_bridge.h"
 #include "ios/web/public/app/web_main_parts.h"
-#include "ios/web/public/web_client.h"
+#import "ios/web/public/web_client.h"
 #include "ios/web/web_thread_impl.h"
 #include "ios/web/webui/url_data_manager_ios.h"
 #include "net/base/network_change_notifier.h"
 
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
+
 namespace web {
+
+namespace {
+
+std::unique_ptr<base::TaskScheduler::InitParams>
+GetDefaultTaskSchedulerInitParams() {
+  using StandbyThreadPolicy =
+      base::SchedulerWorkerPoolParams::StandbyThreadPolicy;
+  return base::MakeUnique<base::TaskScheduler::InitParams>(
+      base::SchedulerWorkerPoolParams(
+          StandbyThreadPolicy::ONE,
+          base::RecommendedMaxNumberOfThreadsInPool(2, 8, 0.1, 0),
+          base::TimeDelta::FromSeconds(30)),
+      base::SchedulerWorkerPoolParams(
+          StandbyThreadPolicy::ONE,
+          base::RecommendedMaxNumberOfThreadsInPool(2, 8, 0.1, 0),
+          base::TimeDelta::FromSeconds(30)),
+      base::SchedulerWorkerPoolParams(
+          StandbyThreadPolicy::ONE,
+          base::RecommendedMaxNumberOfThreadsInPool(3, 8, 0.3, 0),
+          base::TimeDelta::FromSeconds(30)),
+      base::SchedulerWorkerPoolParams(
+          StandbyThreadPolicy::ONE,
+          base::RecommendedMaxNumberOfThreadsInPool(3, 8, 0.3, 0),
+          base::TimeDelta::FromSeconds(30)));
+}
+
+}  // namespace
 
 // The currently-running WebMainLoop.  There can be one or zero.
 // TODO(rohitrao): Desktop uses this to implement
@@ -111,6 +145,17 @@ int WebMainLoop::PreCreateThreads() {
 }
 
 int WebMainLoop::CreateThreads() {
+  auto task_scheduler_init_params =
+      GetWebClient()->GetTaskSchedulerInitParams();
+  if (!task_scheduler_init_params)
+    task_scheduler_init_params = GetDefaultTaskSchedulerInitParams();
+  DCHECK(task_scheduler_init_params);
+
+  base::TaskScheduler::CreateAndSetDefaultTaskScheduler(
+      "", *task_scheduler_init_params.get());
+
+  GetWebClient()->PerformExperimentalTaskSchedulerRedirections();
+
   base::Thread::Options io_message_loop_options;
   io_message_loop_options.message_loop_type = base::MessageLoop::TYPE_IO;
 
@@ -245,6 +290,7 @@ void WebMainLoop::ShutdownThreadsAndCleanUp() {
   // it here (which will block until required operations are complete) gives
   // more head start for those operations to finish.
   WebThreadImpl::ShutdownThreadPool();
+  base::TaskScheduler::GetInstance()->Shutdown();
 
   URLDataManagerIOS::DeleteDataSources();
 

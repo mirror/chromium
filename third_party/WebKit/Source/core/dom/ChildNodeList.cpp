@@ -28,45 +28,46 @@
 
 namespace blink {
 
-ChildNodeList::ChildNodeList(ContainerNode& parent)
-    : m_parent(parent)
-{
+ChildNodeList::ChildNodeList(ContainerNode& parent) : parent_(parent) {}
+
+Node* ChildNodeList::VirtualOwnerNode() const {
+  return &OwnerNode();
 }
 
-Node* ChildNodeList::virtualOwnerNode() const
-{
-    return &ownerNode();
+ChildNodeList::~ChildNodeList() {}
+
+Node* ChildNodeList::TraverseForwardToOffset(unsigned offset,
+                                             Node& current_node,
+                                             unsigned& current_offset) const {
+  DCHECK_LT(current_offset, offset);
+  DCHECK_EQ(OwnerNode().childNodes(), this);
+  DCHECK_EQ(&OwnerNode(), current_node.parentNode());
+  for (Node* next = current_node.nextSibling(); next;
+       next = next->nextSibling()) {
+    if (++current_offset == offset)
+      return next;
+  }
+  return 0;
 }
 
-ChildNodeList::~ChildNodeList()
-{
+Node* ChildNodeList::TraverseBackwardToOffset(unsigned offset,
+                                              Node& current_node,
+                                              unsigned& current_offset) const {
+  DCHECK_GT(current_offset, offset);
+  DCHECK_EQ(OwnerNode().childNodes(), this);
+  DCHECK_EQ(&OwnerNode(), current_node.parentNode());
+  for (Node* previous = current_node.previousSibling(); previous;
+       previous = previous->previousSibling()) {
+    if (--current_offset == offset)
+      return previous;
+  }
+  return 0;
 }
 
-Node* ChildNodeList::traverseForwardToOffset(unsigned offset, Node& currentNode, unsigned& currentOffset) const
-{
-    DCHECK_LT(currentOffset, offset);
-    for (Node* next = currentNode.nextSibling(); next; next = next->nextSibling()) {
-        if (++currentOffset == offset)
-            return next;
-    }
-    return 0;
+DEFINE_TRACE(ChildNodeList) {
+  visitor->Trace(parent_);
+  visitor->Trace(collection_index_cache_);
+  NodeList::Trace(visitor);
 }
 
-Node* ChildNodeList::traverseBackwardToOffset(unsigned offset, Node& currentNode, unsigned& currentOffset) const
-{
-    DCHECK_GT(currentOffset, offset);
-    for (Node* previous = currentNode.previousSibling(); previous; previous = previous->previousSibling()) {
-        if (--currentOffset == offset)
-            return previous;
-    }
-    return 0;
-}
-
-DEFINE_TRACE(ChildNodeList)
-{
-    visitor->trace(m_parent);
-    visitor->trace(m_collectionIndexCache);
-    NodeList::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -38,120 +38,113 @@
 #include "modules/filesystem/DOMFileSystem.h"
 #include "modules/filesystem/DirectoryEntry.h"
 #include "modules/filesystem/FileEntry.h"
+#include "v8/include/v8.h"
 #include "web/WebLocalFrameImpl.h"
-#include <v8.h>
 
 namespace blink {
 
-WebDOMFileSystem WebDOMFileSystem::fromV8Value(v8::Local<v8::Value> value)
-{
-    if (!V8DOMFileSystem::hasInstance(value, v8::Isolate::GetCurrent()))
-        return WebDOMFileSystem();
-    v8::Local<v8::Object> object = v8::Local<v8::Object>::Cast(value);
-    DOMFileSystem* domFileSystem = V8DOMFileSystem::toImpl(object);
-    DCHECK(domFileSystem);
-    return WebDOMFileSystem(domFileSystem);
+WebDOMFileSystem WebDOMFileSystem::FromV8Value(v8::Local<v8::Value> value) {
+  if (!V8DOMFileSystem::hasInstance(value, v8::Isolate::GetCurrent()))
+    return WebDOMFileSystem();
+  v8::Local<v8::Object> object = v8::Local<v8::Object>::Cast(value);
+  DOMFileSystem* dom_file_system = V8DOMFileSystem::toImpl(object);
+  DCHECK(dom_file_system);
+  return WebDOMFileSystem(dom_file_system);
 }
 
-WebURL WebDOMFileSystem::createFileSystemURL(v8::Local<v8::Value> value)
-{
-    const Entry* const entry = V8Entry::toImplWithTypeCheck(v8::Isolate::GetCurrent(), value);
-    if (entry)
-        return entry->filesystem()->createFileSystemURL(entry);
-    return WebURL();
+WebURL WebDOMFileSystem::CreateFileSystemURL(v8::Local<v8::Value> value) {
+  const Entry* const entry =
+      V8Entry::toImplWithTypeCheck(v8::Isolate::GetCurrent(), value);
+  if (entry)
+    return entry->filesystem()->CreateFileSystemURL(entry);
+  return WebURL();
 }
 
-WebDOMFileSystem WebDOMFileSystem::create(
-    WebLocalFrame* frame,
-    WebFileSystemType type,
-    const WebString& name,
-    const WebURL& rootURL,
-    SerializableType serializableType)
-{
-    DCHECK(frame);
-    DCHECK(toWebLocalFrameImpl(frame)->frame());
-    DOMFileSystem* domFileSystem = DOMFileSystem::create(toWebLocalFrameImpl(frame)->frame()->document(), name, static_cast<FileSystemType>(type), rootURL);
-    if (serializableType == SerializableTypeSerializable)
-        domFileSystem->makeClonable();
-    return WebDOMFileSystem(domFileSystem);
+WebDOMFileSystem WebDOMFileSystem::Create(WebLocalFrame* frame,
+                                          WebFileSystemType type,
+                                          const WebString& name,
+                                          const WebURL& root_url,
+                                          SerializableType serializable_type) {
+  DCHECK(frame);
+  DCHECK(ToWebLocalFrameImpl(frame)->GetFrame());
+  DOMFileSystem* dom_file_system = DOMFileSystem::Create(
+      ToWebLocalFrameImpl(frame)->GetFrame()->GetDocument(), name,
+      static_cast<FileSystemType>(type), root_url);
+  if (serializable_type == kSerializableTypeSerializable)
+    dom_file_system->MakeClonable();
+  return WebDOMFileSystem(dom_file_system);
 }
 
-void WebDOMFileSystem::reset()
-{
-    m_private.reset();
+void WebDOMFileSystem::Reset() {
+  private_.Reset();
 }
 
-void WebDOMFileSystem::assign(const WebDOMFileSystem& other)
-{
-    m_private = other.m_private;
+void WebDOMFileSystem::Assign(const WebDOMFileSystem& other) {
+  private_ = other.private_;
 }
 
-WebString WebDOMFileSystem::name() const
-{
-    DCHECK(m_private.get());
-    return m_private->name();
+WebString WebDOMFileSystem::GetName() const {
+  DCHECK(private_.Get());
+  return private_->name();
 }
 
-WebFileSystem::Type WebDOMFileSystem::type() const
-{
-    DCHECK(m_private.get());
-    switch (m_private->type()) {
-    case FileSystemTypeTemporary:
-        return WebFileSystem::TypeTemporary;
-    case FileSystemTypePersistent:
-        return WebFileSystem::TypePersistent;
-    case FileSystemTypeIsolated:
-        return WebFileSystem::TypeIsolated;
-    case FileSystemTypeExternal:
-        return WebFileSystem::TypeExternal;
+WebFileSystem::Type WebDOMFileSystem::GetType() const {
+  DCHECK(private_.Get());
+  switch (private_->GetType()) {
+    case kFileSystemTypeTemporary:
+      return WebFileSystem::kTypeTemporary;
+    case kFileSystemTypePersistent:
+      return WebFileSystem::kTypePersistent;
+    case kFileSystemTypeIsolated:
+      return WebFileSystem::kTypeIsolated;
+    case kFileSystemTypeExternal:
+      return WebFileSystem::kTypeExternal;
     default:
-        NOTREACHED();
-        return WebFileSystem::TypeTemporary;
-    }
+      NOTREACHED();
+      return WebFileSystem::kTypeTemporary;
+  }
 }
 
-WebURL WebDOMFileSystem::rootURL() const
-{
-    DCHECK(m_private.get());
-    return m_private->rootURL();
+WebURL WebDOMFileSystem::RootURL() const {
+  DCHECK(private_.Get());
+  return private_->RootURL();
 }
 
-v8::Local<v8::Value> WebDOMFileSystem::toV8Value(v8::Local<v8::Object> creationContext, v8::Isolate* isolate)
-{
-    // We no longer use |creationContext| because it's often misused and points
-    // to a context faked by user script.
-    DCHECK(creationContext->CreationContext() == isolate->GetCurrentContext());
-    if (!m_private.get())
-        return v8::Local<v8::Value>();
-    return toV8(m_private.get(), isolate->GetCurrentContext()->Global(), isolate);
+v8::Local<v8::Value> WebDOMFileSystem::ToV8Value(
+    v8::Local<v8::Object> creation_context,
+    v8::Isolate* isolate) {
+  // We no longer use |creationContext| because it's often misused and points
+  // to a context faked by user script.
+  DCHECK(creation_context->CreationContext() == isolate->GetCurrentContext());
+  if (!private_.Get())
+    return v8::Local<v8::Value>();
+  return ToV8(private_.Get(), isolate->GetCurrentContext()->Global(), isolate);
 }
 
-v8::Local<v8::Value> WebDOMFileSystem::createV8Entry(
+v8::Local<v8::Value> WebDOMFileSystem::CreateV8Entry(
     const WebString& path,
-    EntryType entryType,
-    v8::Local<v8::Object> creationContext,
-    v8::Isolate* isolate)
-{
-    // We no longer use |creationContext| because it's often misused and points
-    // to a context faked by user script.
-    DCHECK(creationContext->CreationContext() == isolate->GetCurrentContext());
-    if (!m_private.get())
-        return v8::Local<v8::Value>();
-    if (entryType == EntryTypeDirectory)
-        return toV8(DirectoryEntry::create(m_private.get(), path), isolate->GetCurrentContext()->Global(), isolate);
-    DCHECK_EQ(entryType, EntryTypeFile);
-    return toV8(FileEntry::create(m_private.get(), path), isolate->GetCurrentContext()->Global(), isolate);
+    EntryType entry_type,
+    v8::Local<v8::Object> creation_context,
+    v8::Isolate* isolate) {
+  // We no longer use |creationContext| because it's often misused and points
+  // to a context faked by user script.
+  DCHECK(creation_context->CreationContext() == isolate->GetCurrentContext());
+  if (!private_.Get())
+    return v8::Local<v8::Value>();
+  if (entry_type == kEntryTypeDirectory)
+    return ToV8(DirectoryEntry::Create(private_.Get(), path),
+                isolate->GetCurrentContext()->Global(), isolate);
+  DCHECK_EQ(entry_type, kEntryTypeFile);
+  return ToV8(FileEntry::Create(private_.Get(), path),
+              isolate->GetCurrentContext()->Global(), isolate);
 }
 
-WebDOMFileSystem::WebDOMFileSystem(DOMFileSystem* domFileSystem)
-    : m_private(domFileSystem)
-{
+WebDOMFileSystem::WebDOMFileSystem(DOMFileSystem* dom_file_system)
+    : private_(dom_file_system) {}
+
+WebDOMFileSystem& WebDOMFileSystem::operator=(DOMFileSystem* dom_file_system) {
+  private_ = dom_file_system;
+  return *this;
 }
 
-WebDOMFileSystem& WebDOMFileSystem::operator=(DOMFileSystem* domFileSystem)
-{
-    m_private = domFileSystem;
-    return *this;
-}
-
-} // namespace blink
+}  // namespace blink

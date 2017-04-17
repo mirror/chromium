@@ -28,45 +28,48 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/geometry/FloatPoint.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT PathTraversalState final {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(PathTraversalState);
-public:
-    enum PathTraversalAction {
-        TraversalTotalLength,
-        TraversalPointAtLength,
-        TraversalSegmentAtLength,
-        TraversalNormalAngleAtLength
-    };
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(PathTraversalState);
 
-    PathTraversalState(PathTraversalAction);
+ public:
+  enum PathTraversalAction {
+    kTraversalTotalLength,
+    kTraversalPointAtLength,
+    kTraversalSegmentAtLength,
+    kTraversalNormalAngleAtLength
+  };
 
-    float closeSubpath();
-    float moveTo(const FloatPoint&);
-    float lineTo(const FloatPoint&);
-    float cubicBezierTo(const FloatPoint& newControl1, const FloatPoint& newControl2, const FloatPoint& newEnd);
+  PathTraversalState(PathTraversalAction);
 
-    void processSegment();
+  float CloseSubpath();
+  float MoveTo(const FloatPoint&);
+  float LineTo(const FloatPoint&);
+  float CubicBezierTo(const FloatPoint& new_control1,
+                      const FloatPoint& new_control2,
+                      const FloatPoint& new_end);
 
-public:
-    PathTraversalAction m_action;
-    bool m_success;
+  void ProcessSegment();
 
-    FloatPoint m_current;
-    FloatPoint m_start;
+ public:
+  PathTraversalAction action_;
+  bool success_;
 
-    float m_totalLength;
-    float m_desiredLength;
+  FloatPoint current_;
+  FloatPoint start_;
 
-    // For normal calculations
-    FloatPoint m_previous;
-    float m_normalAngle; // degrees
+  float total_length_;
+  float desired_length_;
+
+  // For normal calculations
+  FloatPoint previous_;
+  float normal_angle_;  // degrees
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

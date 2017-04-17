@@ -12,57 +12,74 @@
 #include "public/platform/modules/serviceworker/WebServiceWorkerCacheError.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
+#include <memory>
+#include <utility>
 
 namespace blink {
 
-// The Service Worker Cache API. The embedder provides the implementation of the Cache to Blink. Blink uses the interface
-// to operate on entries.
-// This object is owned by Blink, and should be destroyed as each Cache instance is no longer in use.
+// The Service Worker Cache API. The embedder provides the implementation of the
+// Cache to Blink. Blink uses the interface to operate on entries. This object
+// is owned by Blink, and should be destroyed as each Cache instance is no
+// longer in use.
 class WebServiceWorkerCache {
-public:
-    using CacheMatchCallbacks = WebCallbacks<const WebServiceWorkerResponse&, WebServiceWorkerCacheError>;
-    using CacheWithResponsesCallbacks = WebCallbacks<const WebVector<WebServiceWorkerResponse>&, WebServiceWorkerCacheError>;
-    using CacheWithRequestsCallbacks = WebCallbacks<const WebVector<WebServiceWorkerRequest>&, WebServiceWorkerCacheError>;
-    using CacheBatchCallbacks = WebCallbacks<void, WebServiceWorkerCacheError>;
+ public:
+  using CacheMatchCallbacks =
+      WebCallbacks<const WebServiceWorkerResponse&, WebServiceWorkerCacheError>;
+  using CacheWithResponsesCallbacks =
+      WebCallbacks<const WebVector<WebServiceWorkerResponse>&,
+                   WebServiceWorkerCacheError>;
+  using CacheWithRequestsCallbacks =
+      WebCallbacks<const WebVector<WebServiceWorkerRequest>&,
+                   WebServiceWorkerCacheError>;
+  using CacheBatchCallbacks = WebCallbacks<void, WebServiceWorkerCacheError>;
 
-    virtual ~WebServiceWorkerCache() { }
+  virtual ~WebServiceWorkerCache() {}
 
-    // Options that affect the scope of searches.
-    struct QueryParams {
-        QueryParams() : ignoreSearch(false), ignoreMethod(false), ignoreVary(false) { }
+  // Options that affect the scope of searches.
+  struct QueryParams {
+    QueryParams()
+        : ignore_search(false), ignore_method(false), ignore_vary(false) {}
 
-        bool ignoreSearch;
-        bool ignoreMethod;
-        bool ignoreVary;
-        WebString cacheName;
-    };
+    bool ignore_search;
+    bool ignore_method;
+    bool ignore_vary;
+    WebString cache_name;
+  };
 
-    enum OperationType {
-        OperationTypeUndefined,
-        OperationTypePut,
-        OperationTypeDelete,
-        OperationTypeLast = OperationTypeDelete
-    };
+  enum OperationType {
+    kOperationTypeUndefined,
+    kOperationTypePut,
+    kOperationTypeDelete,
+    kOperationTypeLast = kOperationTypeDelete
+  };
 
-    struct BatchOperation {
-        BatchOperation() : operationType(OperationTypeUndefined) { }
+  struct BatchOperation {
+    BatchOperation() : operation_type(kOperationTypeUndefined) {}
 
-        OperationType operationType;
-        WebServiceWorkerRequest request;
-        WebServiceWorkerResponse response;
-        QueryParams matchParams;
-    };
+    OperationType operation_type;
+    WebServiceWorkerRequest request;
+    WebServiceWorkerResponse response;
+    QueryParams match_params;
+  };
 
-    WebServiceWorkerCache() { }
+  WebServiceWorkerCache() {}
 
-    // Ownership of the Cache*Callbacks methods passes to the WebServiceWorkerCache instance, which will delete it after
-    // calling onSuccess or onFailure.
-    virtual void dispatchMatch(CacheMatchCallbacks*, const WebServiceWorkerRequest&, const QueryParams&) = 0;
-    virtual void dispatchMatchAll(CacheWithResponsesCallbacks*, const WebServiceWorkerRequest&, const QueryParams&) = 0;
-    virtual void dispatchKeys(CacheWithRequestsCallbacks*, const WebServiceWorkerRequest*, const QueryParams&) = 0;
-    virtual void dispatchBatch(CacheBatchCallbacks*, const WebVector<BatchOperation>&) = 0;
+  // Ownership of the Cache*Callbacks methods passes to the
+  // WebServiceWorkerCache instance, which will delete it after calling
+  // onSuccess or onFailure.
+  virtual void DispatchMatch(std::unique_ptr<CacheMatchCallbacks>,
+                             const WebServiceWorkerRequest&,
+                             const QueryParams&) = 0;
+  virtual void DispatchMatchAll(std::unique_ptr<CacheWithResponsesCallbacks>,
+                                const WebServiceWorkerRequest&,
+                                const QueryParams&) = 0;
+  virtual void DispatchKeys(std::unique_ptr<CacheWithRequestsCallbacks>,
+                            const WebServiceWorkerRequest&,
+                            const QueryParams&) = 0;
+  virtual void DispatchBatch(std::unique_ptr<CacheBatchCallbacks>,
+                             const WebVector<BatchOperation>&) = 0;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebServiceWorkerCache_h
+#endif  // WebServiceWorkerCache_h

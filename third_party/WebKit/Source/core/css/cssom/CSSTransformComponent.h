@@ -8,51 +8,59 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
 #include "core/css/CSSFunctionValue.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class CSSMatrixTransformComponent;
+class CSSMatrixComponent;
 
-class CORE_EXPORT CSSTransformComponent : public GarbageCollectedFinalized<CSSTransformComponent>, public ScriptWrappable {
-    WTF_MAKE_NONCOPYABLE(CSSTransformComponent);
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    enum TransformComponentType {
-        MatrixType, PerspectiveType, RotationType, ScaleType, SkewType, TranslationType,
-        Matrix3DType, Rotation3DType, Scale3DType, Translation3DType
-    };
+class CORE_EXPORT CSSTransformComponent
+    : public GarbageCollectedFinalized<CSSTransformComponent>,
+      public ScriptWrappable {
+  WTF_MAKE_NONCOPYABLE(CSSTransformComponent);
+  DEFINE_WRAPPERTYPEINFO();
 
-    static CSSTransformComponent* fromCSSValue(const CSSValue&);
+ public:
+  enum TransformComponentType {
+    kMatrixType,
+    kPerspectiveType,
+    kRotationType,
+    kScaleType,
+    kSkewType,
+    kTranslationType,
+    kMatrix3DType,
+    kRotation3DType,
+    kScale3DType,
+    kTranslation3DType
+  };
 
-    static bool is2DComponentType(TransformComponentType transformType)
-    {
-        return transformType != Matrix3DType
-            && transformType != PerspectiveType
-            && transformType != Rotation3DType
-            && transformType != Scale3DType
-            && transformType != Translation3DType;
-    }
+  static CSSTransformComponent* FromCSSValue(const CSSValue&);
 
-    virtual ~CSSTransformComponent() { }
+  static bool Is2DComponentType(TransformComponentType transform_type) {
+    return transform_type != kMatrix3DType &&
+           transform_type != kPerspectiveType &&
+           transform_type != kRotation3DType &&
+           transform_type != kScale3DType &&
+           transform_type != kTranslation3DType;
+  }
 
-    virtual TransformComponentType type() const = 0;
+  virtual ~CSSTransformComponent() {}
 
-    bool is2D() const { return is2DComponentType(type()); }
+  virtual TransformComponentType GetType() const = 0;
 
-    String cssText() const
-    {
-        return toCSSValue()->cssText();
-    }
+  bool is2D() const { return Is2DComponentType(GetType()); }
 
-    virtual CSSFunctionValue* toCSSValue() const = 0;
-    virtual CSSMatrixTransformComponent* asMatrix() const = 0;
+  String cssText() const { return ToCSSValue()->CssText(); }
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+  virtual CSSFunctionValue* ToCSSValue() const = 0;
+  virtual CSSMatrixComponent* asMatrix() const = 0;
 
-protected:
-    CSSTransformComponent() = default;
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
+
+ protected:
+  CSSTransformComponent() = default;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -4,31 +4,30 @@
 
 #include "platform/ScopedOrientationChangeIndicator.h"
 
-#include "wtf/Assertions.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
-ScopedOrientationChangeIndicator::State ScopedOrientationChangeIndicator::s_state = ScopedOrientationChangeIndicator::State::NotProcessing;
+ScopedOrientationChangeIndicator::State
+    ScopedOrientationChangeIndicator::state_ =
+        ScopedOrientationChangeIndicator::State::kNotProcessing;
 
-ScopedOrientationChangeIndicator::ScopedOrientationChangeIndicator()
-{
-    DCHECK(isMainThread());
+ScopedOrientationChangeIndicator::ScopedOrientationChangeIndicator() {
+  DCHECK(IsMainThread());
 
-    m_previousState = s_state;
-    s_state = State::Processing;
+  previous_state_ = state_;
+  state_ = State::kProcessing;
 }
 
-ScopedOrientationChangeIndicator::~ScopedOrientationChangeIndicator()
-{
-    DCHECK(isMainThread());
-    s_state = m_previousState;
+ScopedOrientationChangeIndicator::~ScopedOrientationChangeIndicator() {
+  DCHECK(IsMainThread());
+  state_ = previous_state_;
 }
 
 // static
-bool ScopedOrientationChangeIndicator::processingOrientationChange()
-{
-    DCHECK(isMainThread());
-    return s_state == State::Processing;
+bool ScopedOrientationChangeIndicator::ProcessingOrientationChange() {
+  DCHECK(IsMainThread());
+  return state_ == State::kProcessing;
 }
 
-} // namespace blink
+}  // namespace blink

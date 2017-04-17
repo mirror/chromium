@@ -23,8 +23,8 @@
 // user attributes that Omaha actually looks at. The other parameters are useful
 // for logging purposes but otherwise not directly used.
 + (NSXMLDocument*)createXMLRequestBody {
-  // NOTE: might be a good idea in the future to add a version# for this
-  // installer
+  // TODO: This protocol version number probably shouldn't be hard-coded. Check
+  // with borisv@ regarding changing protocol verions.
   NSString* protocol = @"3.0";
 
   NSString* platform = @"mac";

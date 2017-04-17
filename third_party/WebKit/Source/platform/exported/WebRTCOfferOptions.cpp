@@ -9,49 +9,43 @@
 namespace blink {
 
 WebRTCOfferOptions::WebRTCOfferOptions(RTCOfferOptionsPlatform* options)
-    : m_private(options)
-{
+    : private_(options) {}
+
+WebRTCOfferOptions::WebRTCOfferOptions(int32_t offer_to_receive_audio,
+                                       int32_t offer_to_receive_video,
+                                       bool voice_activity_detection,
+                                       bool ice_restart)
+    : private_(RTCOfferOptionsPlatform::Create(offer_to_receive_audio,
+                                               offer_to_receive_video,
+                                               voice_activity_detection,
+                                               ice_restart)) {}
+
+void WebRTCOfferOptions::Assign(const WebRTCOfferOptions& other) {
+  private_ = other.private_;
 }
 
-WebRTCOfferOptions::WebRTCOfferOptions(int32_t offerToReceiveAudio,
-    int32_t offerToReceiveVideo, bool voiceActivityDetection,
-    bool iceRestart)
-    : m_private(RTCOfferOptionsPlatform::create(offerToReceiveAudio, offerToReceiveVideo, voiceActivityDetection, iceRestart))
-{
+void WebRTCOfferOptions::Reset() {
+  private_.Reset();
 }
 
-void WebRTCOfferOptions::assign(const WebRTCOfferOptions& other)
-{
-    m_private = other.m_private;
+int32_t WebRTCOfferOptions::OfferToReceiveVideo() const {
+  DCHECK(!IsNull());
+  return private_->OfferToReceiveVideo();
 }
 
-void WebRTCOfferOptions::reset()
-{
-    m_private.reset();
+int32_t WebRTCOfferOptions::OfferToReceiveAudio() const {
+  DCHECK(!IsNull());
+  return private_->OfferToReceiveAudio();
 }
 
-int32_t WebRTCOfferOptions::offerToReceiveVideo() const
-{
-    ASSERT(!isNull());
-    return m_private->offerToReceiveVideo();
+bool WebRTCOfferOptions::VoiceActivityDetection() const {
+  DCHECK(!IsNull());
+  return private_->VoiceActivityDetection();
 }
 
-int32_t WebRTCOfferOptions::offerToReceiveAudio() const
-{
-    ASSERT(!isNull());
-    return m_private->offerToReceiveAudio();
+bool WebRTCOfferOptions::IceRestart() const {
+  DCHECK(!IsNull());
+  return private_->IceRestart();
 }
 
-bool WebRTCOfferOptions::voiceActivityDetection() const
-{
-    ASSERT(!isNull());
-    return m_private->voiceActivityDetection();
-}
-
-bool WebRTCOfferOptions::iceRestart() const
-{
-    ASSERT(!isNull());
-    return m_private->iceRestart();
-}
-
-} // namespace blink
+}  // namespace blink

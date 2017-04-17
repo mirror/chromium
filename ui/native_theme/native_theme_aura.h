@@ -12,49 +12,54 @@ namespace ui {
 
 // Aura implementation of native theme support.
 class NATIVE_THEME_EXPORT NativeThemeAura : public NativeThemeBase {
- public:
-  static NativeThemeAura* instance();
-
  protected:
-  NativeThemeAura();
+  friend class NativeTheme;
+  friend class NativeThemeAuraTest;
+
+  explicit NativeThemeAura(bool use_overlay_scrollbars);
   ~NativeThemeAura() override;
+
+  static NativeThemeAura* instance();
+  static NativeThemeAura* web_instance();
 
   // Overridden from NativeThemeBase:
   SkColor GetSystemColor(ColorId color_id) const override;
   void PaintMenuPopupBackground(
-      SkCanvas* canvas,
+      cc::PaintCanvas* canvas,
       const gfx::Size& size,
       const MenuBackgroundExtraParams& menu_background) const override;
   void PaintMenuItemBackground(
-      SkCanvas* canvas,
+      cc::PaintCanvas* canvas,
       State state,
       const gfx::Rect& rect,
       const MenuItemExtraParams& menu_item) const override;
-  void PaintArrowButton(SkCanvas* gc,
+  void PaintArrowButton(cc::PaintCanvas* gc,
                         const gfx::Rect& rect,
                         Part direction,
                         State state) const override;
-  void PaintScrollbarTrack(SkCanvas* canvas,
+  void PaintScrollbarTrack(cc::PaintCanvas* canvas,
                            Part part,
                            State state,
                            const ScrollbarTrackExtraParams& extra_params,
                            const gfx::Rect& rect) const override;
-  void PaintScrollbarThumb(SkCanvas* canvas,
+  void PaintScrollbarThumb(cc::PaintCanvas* canvas,
                            Part part,
                            State state,
-                           const gfx::Rect& rect) const override;
-  void PaintScrollbarCorner(SkCanvas* canvas,
+                           const gfx::Rect& rect,
+                           ScrollbarOverlayColorTheme theme) const override;
+  void PaintScrollbarCorner(cc::PaintCanvas* canvas,
                             State state,
                             const gfx::Rect& rect) const override;
-
-  void PaintScrollbarThumbStateTransition(SkCanvas* canvas,
-                                          Part part,
-                                          State startState,
-                                          State endState,
-                                          double progress,
-                                          const gfx::Rect& rect) const override;
+  gfx::Size GetPartSize(Part part,
+                        State state,
+                        const ExtraParams& extra) const override;
+  bool SupportsNinePatch(Part part) const override;
+  gfx::Size GetNinePatchCanvasSize(Part part) const override;
+  gfx::Rect GetNinePatchAperture(Part part) const override;
 
  private:
+  bool use_overlay_scrollbars_;
+
   DISALLOW_COPY_AND_ASSIGN(NativeThemeAura);
 };
 

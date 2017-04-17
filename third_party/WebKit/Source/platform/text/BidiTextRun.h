@@ -33,14 +33,19 @@
 
 #include "platform/text/TextDirection.h"
 #include "platform/text/TextRun.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-PLATFORM_EXPORT TextDirection directionForRun(TextRun&, bool* hasStrongDirectionality = nullptr);
-PLATFORM_EXPORT TextDirection determineDirectionality(const String& value, bool* hasStrongDirectionality = nullptr);
-PLATFORM_EXPORT TextRun textRunWithDirectionality(const String& value, bool* hasStrongDirectionality = nullptr);
+PLATFORM_EXPORT TextDirection
+DirectionForRun(TextRun&, bool* has_strong_directionality = nullptr);
+PLATFORM_EXPORT TextDirection
+DetermineDirectionality(const String& value,
+                        bool* has_strong_directionality = nullptr);
+PLATFORM_EXPORT TextRun
+TextRunWithDirectionality(const String& value,
+                          bool* has_strong_directionality = nullptr);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BidiTextRun_h
+#endif  // BidiTextRun_h

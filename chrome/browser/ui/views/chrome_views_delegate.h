@@ -31,34 +31,31 @@ class ChromeViewsDelegate : public views::ViewsDelegate {
                                ui::WindowShowState* show_state) const override;
   void NotifyAccessibilityEvent(views::View* view,
                                 ui::AXEvent event_type) override;
+#if defined(OS_CHROMEOS)
   ProcessMenuAcceleratorResult ProcessAcceleratorWhileMenuShowing(
       const ui::Accelerator& accelerator) override;
+  views::NonClientFrameView* CreateDefaultNonClientFrameView(
+      views::Widget* widget) override;
+#endif
 
 #if defined(OS_WIN)
   HICON GetDefaultWindowIcon() const override;
   HICON GetSmallWindowIcon() const override;
+  int GetAppbarAutohideEdges(HMONITOR monitor,
+                             const base::Closure& callback) override;
 #elif defined(OS_LINUX) && !defined(OS_CHROMEOS)
   gfx::ImageSkia* GetDefaultWindowIcon() const override;
+  bool WindowManagerProvidesTitleBar(bool maximized) override;
 #endif
 
-#if defined(USE_ASH)
-  views::NonClientFrameView* CreateDefaultNonClientFrameView(
-      views::Widget* widget) override;
-#endif
   void AddRef() override;
   void ReleaseRef() override;
   void OnBeforeWidgetInit(
       views::Widget::InitParams* params,
       views::internal::NativeWidgetDelegate* delegate) override;
-#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
-  bool WindowManagerProvidesTitleBar(bool maximized) override;
-#endif
   ui::ContextFactory* GetContextFactory() override;
+  ui::ContextFactoryPrivate* GetContextFactoryPrivate() override;
   std::string GetApplicationName() override;
-#if defined(OS_WIN)
-  int GetAppbarAutohideEdges(HMONITOR monitor,
-                             const base::Closure& callback) override;
-#endif
   scoped_refptr<base::TaskRunner> GetBlockingPoolTaskRunner() override;
 
  private:
@@ -73,10 +70,20 @@ class ChromeViewsDelegate : public views::ViewsDelegate {
                                 int edges);
 #endif
 
+#if defined(OS_CHROMEOS)
+  // Called from GetSavedWindowPlacement() on ChromeOS to adjust the bounds.
+  void AdjustSavedWindowPlacementChromeOS(const views::Widget* widget,
+                                          gfx::Rect* bounds) const;
+#endif
+
   // Function to retrieve default opacity value mainly based on platform
   // and desktop context.
   views::Widget::InitParams::WindowOpacity GetOpacityForInitParams(
       const views::Widget::InitParams& params);
+
+  views::NativeWidget* CreateNativeWidget(
+      views::Widget::InitParams* params,
+      views::internal::NativeWidgetDelegate* delegate);
 
   // |ChromeViewsDelegate| exposes a |RefCounted|-like interface, but //chrome
   // uses |ScopedKeepAlive|s to manage lifetime. We manage an internal counter
@@ -89,9 +96,9 @@ class ChromeViewsDelegate : public views::ViewsDelegate {
   AppbarAutohideEdgeMap appbar_autohide_edge_map_;
   // If true we're in the process of notifying a callback from
   // GetAutohideEdges().start a new query.
-  bool in_autohide_edges_callback_;
+  bool in_autohide_edges_callback_ = false;
 
-  base::WeakPtrFactory<ChromeViewsDelegate> weak_factory_;
+  base::WeakPtrFactory<ChromeViewsDelegate> weak_factory_{this};
 #endif
 
   DISALLOW_COPY_AND_ASSIGN(ChromeViewsDelegate);

@@ -23,7 +23,7 @@
 #include "remoting/protocol/transport_context.h"
 #include "remoting/signaling/fake_signal_strategy.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/webrtc/libjingle/xmllite/xmlelement.h"
+#include "third_party/libjingle_xmpp/xmllite/xmlelement.h"
 
 namespace remoting {
 namespace protocol {
@@ -183,16 +183,15 @@ class WebrtcTransportTest : public testing::Test {
         new WebrtcTransport(jingle_glue::JingleThreadWrapper::current(),
                             TransportContext::ForTests(TransportRole::SERVER),
                             &host_event_handler_));
-    host_authenticator_.reset(new FakeAuthenticator(
-        FakeAuthenticator::HOST, 0, FakeAuthenticator::ACCEPT, false));
+    host_authenticator_.reset(new FakeAuthenticator(FakeAuthenticator::ACCEPT));
     host_authenticator_->set_auth_key(kAuthKey);
 
     client_transport_.reset(
         new WebrtcTransport(jingle_glue::JingleThreadWrapper::current(),
                             TransportContext::ForTests(TransportRole::CLIENT),
                             &client_event_handler_));
-    client_authenticator_.reset(new FakeAuthenticator(
-        FakeAuthenticator::CLIENT, 0, FakeAuthenticator::ACCEPT, false));
+    client_authenticator_.reset(
+        new FakeAuthenticator(FakeAuthenticator::ACCEPT));
     client_authenticator_->set_auth_key(kAuthKey);
   }
 

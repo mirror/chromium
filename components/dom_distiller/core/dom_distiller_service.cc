@@ -8,6 +8,7 @@
 
 #include "base/guid.h"
 #include "base/location.h"
+#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/dom_distiller/core/distilled_content_store.h"
@@ -55,6 +56,9 @@ DomDistillerService::~DomDistillerService() {
 }
 
 syncer::SyncableService* DomDistillerService::GetSyncableService() const {
+  if (!store_) {
+    return nullptr;
+  }
   return store_->GetSyncableService();
 }
 
@@ -75,7 +79,7 @@ const std::string DomDistillerService::AddToList(
     std::unique_ptr<DistillerPage> distiller_page,
     const ArticleAvailableCallback& article_cb) {
   ArticleEntry entry;
-  const bool is_already_added = store_->GetEntryByUrl(url, &entry);
+  const bool is_already_added = store_ && store_->GetEntryByUrl(url, &entry);
 
   TaskTracker* task_tracker = nullptr;
   if (is_already_added) {
@@ -112,18 +116,21 @@ const std::string DomDistillerService::AddToList(
 }
 
 bool DomDistillerService::HasEntry(const std::string& entry_id) {
-  return store_->GetEntryById(entry_id, NULL);
+  return store_ && store_->GetEntryById(entry_id, NULL);
 }
 
 std::string DomDistillerService::GetUrlForEntry(const std::string& entry_id) {
   ArticleEntry entry;
-  if (store_->GetEntryById(entry_id, &entry)) {
+  if (store_ && store_->GetEntryById(entry_id, &entry)) {
     return entry.pages().Get(0).url();
   }
   return "";
 }
 
 std::vector<ArticleEntry> DomDistillerService::GetEntries() const {
+  if (!store_) {
+    return std::vector<ArticleEntry>();
+  }
   return store_->GetEntries();
 }
 
@@ -136,7 +143,7 @@ std::unique_ptr<ArticleEntry> DomDistillerService::RemoveEntry(
     task_tracker->CancelSaveCallbacks();
   }
 
-  if (!store_->GetEntryById(entry_id, entry.get())) {
+  if (!store_ || !store_->GetEntryById(entry_id, entry.get())) {
     return std::unique_ptr<ArticleEntry>();
   }
 
@@ -151,7 +158,7 @@ std::unique_ptr<ViewerHandle> DomDistillerService::ViewEntry(
     std::unique_ptr<DistillerPage> distiller_page,
     const std::string& entry_id) {
   ArticleEntry entry;
-  if (!store_->GetEntryById(entry_id, &entry)) {
+  if (!store_ || !store_->GetEntryById(entry_id, &entry)) {
     return std::unique_ptr<ViewerHandle>();
   }
 
@@ -194,7 +201,7 @@ bool DomDistillerService::GetOrCreateTaskTrackerForUrl(
     const GURL& url,
     TaskTracker** task_tracker) {
   ArticleEntry entry;
-  if (store_->GetEntryByUrl(url, &entry)) {
+  if (store_ && store_->GetEntryByUrl(url, &entry)) {
     return GetOrCreateTaskTrackerForEntry(entry, task_tracker);
   }
 
@@ -209,9 +216,9 @@ bool DomDistillerService::GetOrCreateTaskTrackerForUrl(
 }
 
 TaskTracker* DomDistillerService::GetTaskTrackerForUrl(const GURL& url) const {
-  for (TaskList::const_iterator it = tasks_.begin(); it != tasks_.end(); ++it) {
+  for (auto it = tasks_.begin(); it != tasks_.end(); ++it) {
     if ((*it)->HasUrl(url)) {
-      return *it;
+      return (*it).get();
     }
   }
   return nullptr;
@@ -220,9 +227,9 @@ TaskTracker* DomDistillerService::GetTaskTrackerForUrl(const GURL& url) const {
 TaskTracker* DomDistillerService::GetTaskTrackerForEntry(
     const ArticleEntry& entry) const {
   const std::string& entry_id = entry.entry_id();
-  for (TaskList::const_iterator it = tasks_.begin(); it != tasks_.end(); ++it) {
+  for (auto it = tasks_.begin(); it != tasks_.end(); ++it) {
     if ((*it)->HasEntryId(entry_id)) {
-      return *it;
+      return (*it).get();
     }
   }
   return nullptr;
@@ -242,16 +249,19 @@ bool DomDistillerService::GetOrCreateTaskTrackerForEntry(
 TaskTracker* DomDistillerService::CreateTaskTracker(const ArticleEntry& entry) {
   TaskTracker::CancelCallback cancel_callback =
       base::Bind(&DomDistillerService::CancelTask, base::Unretained(this));
-  TaskTracker* tracker =
-      new TaskTracker(entry, cancel_callback, content_store_.get());
-  tasks_.push_back(tracker);
-  return tracker;
+  tasks_.push_back(base::MakeUnique<TaskTracker>(entry, cancel_callback,
+                                                 content_store_.get()));
+  return tasks_.back().get();
 }
 
 void DomDistillerService::CancelTask(TaskTracker* task) {
-  TaskList::iterator it = std::find(tasks_.begin(), tasks_.end(), task);
+  auto it = std::find_if(tasks_.begin(), tasks_.end(),
+                         [task](const std::unique_ptr<TaskTracker>& t) {
+                           return task == t.get();
+                         });
   if (it != tasks_.end()) {
-    tasks_.weak_erase(it);
+    it->release();
+    tasks_.erase(it);
     base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, task);
   }
 }
@@ -261,7 +271,7 @@ void DomDistillerService::AddDistilledPageToList(
     const DistilledArticleProto* article_proto,
     bool distillation_succeeded) {
   DCHECK(IsEntryValid(entry));
-  if (distillation_succeeded) {
+  if (store_ && distillation_succeeded) {
     DCHECK(article_proto);
     DCHECK_GT(article_proto->pages_size(), 0);
     store_->AddEntry(entry);
@@ -271,12 +281,16 @@ void DomDistillerService::AddDistilledPageToList(
 
 void DomDistillerService::AddObserver(DomDistillerObserver* observer) {
   DCHECK(observer);
-  store_->AddObserver(observer);
+  if (store_) {
+    store_->AddObserver(observer);
+  }
 }
 
 void DomDistillerService::RemoveObserver(DomDistillerObserver* observer) {
   DCHECK(observer);
-  store_->RemoveObserver(observer);
+  if (store_) {
+    store_->RemoveObserver(observer);
+  }
 }
 
 DistilledPagePrefs* DomDistillerService::GetDistilledPagePrefs() {

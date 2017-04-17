@@ -28,72 +28,79 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Deque.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Noncopyable.h"
 #include "public/platform/WebTraceLocation.h"
-#include "wtf/Deque.h"
-#include "wtf/HashMap.h"
-#include "wtf/Noncopyable.h"
 
 namespace blink {
 
-class CancellableTaskFactory;
 class Document;
 class ScriptLoader;
 class WebTaskRunner;
 
-class CORE_EXPORT ScriptRunner final : public GarbageCollected<ScriptRunner> {
-    WTF_MAKE_NONCOPYABLE(ScriptRunner);
-public:
-    static ScriptRunner* create(Document* document)
-    {
-        return new ScriptRunner(document);
-    }
+class CORE_EXPORT ScriptRunner final
+    : public GarbageCollectedFinalized<ScriptRunner> {
+  WTF_MAKE_NONCOPYABLE(ScriptRunner);
 
-    enum ExecutionType { ASYNC_EXECUTION, IN_ORDER_EXECUTION };
-    void queueScriptForExecution(ScriptLoader*, ExecutionType);
-    bool hasPendingScripts() const { return !m_pendingInOrderScripts.isEmpty() || !m_pendingAsyncScripts.isEmpty(); }
-    void suspend();
-    void resume();
-    void notifyScriptReady(ScriptLoader*, ExecutionType);
-    void notifyScriptLoadError(ScriptLoader*, ExecutionType);
+ public:
+  static ScriptRunner* Create(Document* document) {
+    return new ScriptRunner(document);
+  }
 
-    static void movePendingScript(Document&, Document&, ScriptLoader*);
+  // Async scripts may either execute asynchronously (as their load
+  // completes), or 'in order'. See
+  // http://www.html5rocks.com/en/tutorials/speed/script-loading/ for more
+  // information.
+  enum AsyncExecutionType { kNone, kAsync, kInOrder };
+  void QueueScriptForExecution(ScriptLoader*, AsyncExecutionType);
+  bool HasPendingScripts() const {
+    return !pending_in_order_scripts_.IsEmpty() ||
+           !pending_async_scripts_.IsEmpty();
+  }
+  void Suspend();
+  void Resume();
+  void NotifyScriptReady(ScriptLoader*, AsyncExecutionType);
+  void NotifyScriptLoadError(ScriptLoader*, AsyncExecutionType);
 
-    DECLARE_TRACE();
+  static void MovePendingScript(Document&, Document&, ScriptLoader*);
 
-private:
-    class Task;
+  DECLARE_TRACE();
 
-    explicit ScriptRunner(Document*);
+ private:
+  class Task;
 
-    void movePendingScript(ScriptRunner*, ScriptLoader*);
-    bool removePendingInOrderScript(ScriptLoader*);
-    void scheduleReadyInOrderScripts();
+  explicit ScriptRunner(Document*);
 
-    void postTask(const WebTraceLocation&);
+  void MovePendingScript(ScriptRunner*, ScriptLoader*);
+  bool RemovePendingInOrderScript(ScriptLoader*);
+  void ScheduleReadyInOrderScripts();
 
-    bool executeTaskFromQueue(HeapDeque<Member<ScriptLoader>>*);
+  void PostTask(const WebTraceLocation&);
 
-    void executeTask();
+  bool ExecuteTaskFromQueue(HeapDeque<Member<ScriptLoader>>*);
 
-    Member<Document> m_document;
+  void ExecuteTask();
 
-    HeapDeque<Member<ScriptLoader>> m_pendingInOrderScripts;
-    HeapHashSet<Member<ScriptLoader>> m_pendingAsyncScripts;
+  Member<Document> document_;
 
-    // http://www.whatwg.org/specs/web-apps/current-work/#set-of-scripts-that-will-execute-as-soon-as-possible
-    HeapDeque<Member<ScriptLoader>> m_asyncScriptsToExecuteSoon;
-    HeapDeque<Member<ScriptLoader>> m_inOrderScriptsToExecuteSoon;
+  HeapDeque<Member<ScriptLoader>> pending_in_order_scripts_;
+  HeapHashSet<Member<ScriptLoader>> pending_async_scripts_;
 
-    WebTaskRunner* m_taskRunner;
+  // http://www.whatwg.org/specs/web-apps/current-work/#set-of-scripts-that-will-execute-as-soon-as-possible
+  HeapDeque<Member<ScriptLoader>> async_scripts_to_execute_soon_;
+  HeapDeque<Member<ScriptLoader>> in_order_scripts_to_execute_soon_;
 
-    int m_numberOfInOrderScriptsWithPendingNotification;
+  RefPtr<WebTaskRunner> task_runner_;
 
-    bool m_isSuspended;
+  int number_of_in_order_scripts_with_pending_notification_;
+
+  bool is_suspended_;
 #ifndef NDEBUG
-    bool m_hasEverBeenSuspended;
+  bool has_ever_been_suspended_;
 #endif
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScriptRunner_h
+#endif  // ScriptRunner_h

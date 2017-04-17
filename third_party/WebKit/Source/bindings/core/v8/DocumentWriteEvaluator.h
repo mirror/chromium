@@ -5,14 +5,14 @@
 #ifndef DocumentWriteEvaluator_h
 #define DocumentWriteEvaluator_h
 
+#include <memory>
 #include "bindings/core/v8/V8Binding.h"
 #include "core/dom/Document.h"
 #include "core/frame/Navigator.h"
 #include "core/html/parser/CompactHTMLToken.h"
 #include "core/html/parser/HTMLToken.h"
 #include "core/html/parser/HTMLTokenizer.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -21,48 +21,51 @@ namespace blink {
 // by document.write(). It takes a script string and outputs a vector of start
 // tag tokens.
 class CORE_EXPORT DocumentWriteEvaluator {
-    WTF_MAKE_NONCOPYABLE(DocumentWriteEvaluator);
-    USING_FAST_MALLOC(DocumentWriteEvaluator);
+  WTF_MAKE_NONCOPYABLE(DocumentWriteEvaluator);
+  USING_FAST_MALLOC(DocumentWriteEvaluator);
 
-public:
-    // For unit testing.
-    DocumentWriteEvaluator(const String& pathName, const String& hostName, const String& protocol, const String& userAgent);
+ public:
+  // For unit testing.
+  DocumentWriteEvaluator(const String& path_name,
+                         const String& host_name,
+                         const String& protocol,
+                         const String& user_agent);
 
-    static std::unique_ptr<DocumentWriteEvaluator> create(const Document& document)
-    {
-        return wrapUnique(new DocumentWriteEvaluator(document));
-    }
-    virtual ~DocumentWriteEvaluator();
+  static std::unique_ptr<DocumentWriteEvaluator> Create(
+      const Document& document) {
+    return WTF::WrapUnique(new DocumentWriteEvaluator(document));
+  }
+  virtual ~DocumentWriteEvaluator();
 
-    // Initializes the V8 context for this document. Returns whether
-    // initialization was needed.
-    bool ensureEvaluationContext();
-    String evaluateAndEmitWrittenSource(const String& scriptSource);
-    bool shouldEvaluate(const String& scriptSource);
+  // Initializes the V8 context for this document. Returns whether
+  // initialization was needed.
+  bool EnsureEvaluationContext();
+  String EvaluateAndEmitWrittenSource(const String& script_source);
+  bool ShouldEvaluate(const String& script_source);
 
-    void recordDocumentWrite(const String& documentWrittenString);
+  void RecordDocumentWrite(const String& document_written_string);
 
-private:
-    explicit DocumentWriteEvaluator(const Document&);
-    // Returns true if the evaluation succeeded with no errors.
-    bool evaluate(const String& scriptSource);
+ private:
+  explicit DocumentWriteEvaluator(const Document&);
+  // Returns true if the evaluation succeeded with no errors.
+  bool Evaluate(const String& script_source);
 
-    // All the strings that are document.written in the script tag that is being
-    // scanned.
-    StringBuilder m_documentWrittenStrings;
+  // All the strings that are document.written in the script tag that is being
+  // scanned.
+  StringBuilder document_written_strings_;
 
-    ScopedPersistent<v8::Context> m_persistentContext;
-    ScopedPersistent<v8::Object> m_window;
-    ScopedPersistent<v8::Object> m_document;
-    ScopedPersistent<v8::Object> m_location;
-    ScopedPersistent<v8::Object> m_navigator;
+  ScopedPersistent<v8::Context> persistent_context_;
+  ScopedPersistent<v8::Object> window_;
+  ScopedPersistent<v8::Object> document_;
+  ScopedPersistent<v8::Object> location_;
+  ScopedPersistent<v8::Object> navigator_;
 
-    String m_pathName;
-    String m_hostName;
-    String m_protocol;
-    String m_userAgent;
+  String path_name_;
+  String host_name_;
+  String protocol_;
+  String user_agent_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DocumentWriteEvaluator_h
+#endif  // DocumentWriteEvaluator_h

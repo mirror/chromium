@@ -2,24 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "content/browser/net/quota_policy_cookie_store.h"
 #include "base/bind.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
-#include "base/stl_util.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/test/sequenced_worker_pool_owner.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/time/time.h"
-#include "content/browser/net/quota_policy_cookie_store.h"
-#include "content/public/test/mock_special_storage_policy.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "net/cookies/cookie_util.h"
 #include "net/ssl/ssl_client_cert_type.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/test_data_directory.h"
 #include "sql/statement.h"
+#include "storage/browser/test/mock_special_storage_policy.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -31,7 +30,8 @@ const base::FilePath::CharType kTestCookiesFilename[] =
 namespace content {
 namespace {
 
-typedef std::vector<net::CanonicalCookie*> CanonicalCookieVector;
+using CanonicalCookieVector =
+    std::vector<std::unique_ptr<net::CanonicalCookie>>;
 
 class QuotaPolicyCookieStoreTest : public testing::Test {
  public:
@@ -42,8 +42,8 @@ class QuotaPolicyCookieStoreTest : public testing::Test {
         destroy_event_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                        base::WaitableEvent::InitialState::NOT_SIGNALED) {}
 
-  void OnLoaded(const CanonicalCookieVector& cookies) {
-    cookies_ = cookies;
+  void OnLoaded(CanonicalCookieVector cookies) {
+    cookies_.swap(cookies);
     loaded_event_.Signal();
   }
 
@@ -52,7 +52,7 @@ class QuotaPolicyCookieStoreTest : public testing::Test {
     store_->Load(base::Bind(&QuotaPolicyCookieStoreTest::OnLoaded,
                             base::Unretained(this)));
     loaded_event_.Wait();
-    *cookies = cookies_;
+    cookies->swap(cookies_);
   }
 
   void ReleaseStore() {
@@ -84,10 +84,8 @@ class QuotaPolicyCookieStoreTest : public testing::Test {
                      CanonicalCookieVector* cookies) {
     scoped_refptr<net::SQLitePersistentCookieStore> sqlite_store(
         new net::SQLitePersistentCookieStore(
-            temp_dir_.path().Append(kTestCookiesFilename),
-            client_task_runner(),
-            background_task_runner(),
-            true, nullptr));
+            temp_dir_.GetPath().Append(kTestCookiesFilename),
+            client_task_runner(), background_task_runner(), true, nullptr));
     store_ = new QuotaPolicyCookieStore(sqlite_store.get(), storage_policy);
     Load(cookies);
   }
@@ -101,8 +99,7 @@ class QuotaPolicyCookieStoreTest : public testing::Test {
                  const base::Time& creation) {
     store_->AddCookie(*net::CanonicalCookie::Create(
         url, name, value, domain, path, creation, creation, false, false,
-        net::CookieSameSite::DEFAULT_MODE, false,
-        net::COOKIE_PRIORITY_DEFAULT));
+        net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT));
   }
 
   void DestroyStore() {
@@ -150,12 +147,12 @@ TEST_F(QuotaPolicyCookieStoreTest, TestPersistence) {
   DestroyStore();
 
   // Reload and test for persistence.
-  STLDeleteElements(&cookies);
+  cookies.clear();
   CreateAndLoad(nullptr, &cookies);
   EXPECT_EQ(2U, cookies.size());
   bool found_foo_cookie = false;
   bool found_persistent_cookie = false;
-  for (auto* cookie : cookies) {
+  for (const auto& cookie : cookies) {
     if (cookie->Domain() == "foo.com")
       found_foo_cookie = true;
     else if (cookie->Domain() == "persistent.com")
@@ -170,10 +167,10 @@ TEST_F(QuotaPolicyCookieStoreTest, TestPersistence) {
   DestroyStore();
 
   // Reload and check if the cookies have been removed.
-  STLDeleteElements(&cookies);
+  cookies.clear();
   CreateAndLoad(nullptr, &cookies);
   EXPECT_EQ(0U, cookies.size());
-  STLDeleteElements(&cookies);
+  cookies.clear();
 }
 
 // Test if data is stored as expected in the QuotaPolicy database.
@@ -201,7 +198,7 @@ TEST_F(QuotaPolicyCookieStoreTest, TestPolicy) {
       net::cookie_util::CookieOriginToURL("nonpersistent.com", false));
 
   // Reload and test for persistence.
-  STLDeleteElements(&cookies);
+  cookies.clear();
   CreateAndLoad(storage_policy.get(), &cookies);
   EXPECT_EQ(3U, cookies.size());
 
@@ -212,14 +209,14 @@ TEST_F(QuotaPolicyCookieStoreTest, TestPolicy) {
   // Now close the store, and "nonpersistent.com" should be deleted according to
   // policy.
   DestroyStore();
-  STLDeleteElements(&cookies);
+  cookies.clear();
   CreateAndLoad(nullptr, &cookies);
 
   EXPECT_EQ(2U, cookies.size());
-  for (auto* cookie : cookies) {
+  for (const auto& cookie : cookies) {
     EXPECT_NE("nonpersistent.com", cookie->Domain());
   }
-  STLDeleteElements(&cookies);
+  cookies.clear();
 }
 
 TEST_F(QuotaPolicyCookieStoreTest, ForceKeepSessionState) {
@@ -239,7 +236,7 @@ TEST_F(QuotaPolicyCookieStoreTest, ForceKeepSessionState) {
       net::cookie_util::CookieOriginToURL("nonpersistent.com", false));
 
   // Reload and test for persistence
-  STLDeleteElements(&cookies);
+  cookies.clear();
   CreateAndLoad(storage_policy.get(), &cookies);
   EXPECT_EQ(1U, cookies.size());
 
@@ -252,11 +249,11 @@ TEST_F(QuotaPolicyCookieStoreTest, ForceKeepSessionState) {
   // deleted.
   store_->SetForceKeepSessionState();
   DestroyStore();
-  STLDeleteElements(&cookies);
+  cookies.clear();
   CreateAndLoad(nullptr, &cookies);
 
   EXPECT_EQ(3U, cookies.size());
-  STLDeleteElements(&cookies);
+  cookies.clear();
 }
 
 // Tests that the special storage policy is properly applied even when the store
@@ -282,11 +279,11 @@ TEST_F(QuotaPolicyCookieStoreTest, TestDestroyOnBackgroundThread) {
   DestroyStoreOnBackgroundThread();
 
   // Reload and test for persistence.
-  STLDeleteElements(&cookies);
+  cookies.clear();
   CreateAndLoad(storage_policy.get(), &cookies);
   EXPECT_EQ(0U, cookies.size());
 
-  STLDeleteElements(&cookies);
+  cookies.clear();
 }
 
 }  // namespace

@@ -28,6 +28,8 @@
 #ifndef BitmapImage_h
 #define BitmapImage_h
 
+#include <memory>
+#include "platform/Timer.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/graphics/Color.h"
 #include "platform/graphics/FrameData.h"
@@ -36,158 +38,187 @@
 #include "platform/graphics/ImageOrientation.h"
 #include "platform/graphics/ImageSource.h"
 #include "platform/image-decoders/ImageAnimation.h"
-#include "wtf/Forward.h"
-#include <memory>
+#include "platform/wtf/Forward.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
 
 namespace blink {
 
-template <typename T> class Timer;
-
 class PLATFORM_EXPORT BitmapImage final : public Image {
-    friend class BitmapImageTest;
-    friend class CrossfadeGeneratedImage;
-    friend class GeneratedImage;
-    friend class GradientGeneratedImage;
-    friend class GraphicsContext;
-public:
-    static PassRefPtr<BitmapImage> create(ImageObserver* observer = 0)
-    {
-        return adoptRef(new BitmapImage(observer));
-    }
+  friend class BitmapImageTest;
+  friend class CrossfadeGeneratedImage;
+  friend class GeneratedImage;
+  friend class GradientGeneratedImage;
+  friend class GraphicsContext;
 
-    ~BitmapImage() override;
+ public:
+  static PassRefPtr<BitmapImage> Create(ImageObserver* observer = 0) {
+    return AdoptRef(new BitmapImage(observer));
+  }
 
-    bool isBitmapImage() const override { return true; }
+  ~BitmapImage() override;
 
-    bool currentFrameHasSingleSecurityOrigin() const override;
+  bool IsBitmapImage() const override { return true; }
 
-    IntSize size() const override;
-    IntSize sizeRespectingOrientation() const;
-    bool getHotSpot(IntPoint&) const override;
-    String filenameExtension() const override;
+  bool CurrentFrameHasSingleSecurityOrigin() const override;
 
-    SizeAvailability setData(PassRefPtr<SharedBuffer> data, bool allDataReceived) override;
-    SizeAvailability dataChanged(bool allDataReceived) override;
+  IntSize Size() const override;
+  IntSize SizeRespectingOrientation() const;
+  bool GetHotSpot(IntPoint&) const override;
+  String FilenameExtension() const override;
 
-    bool isAllDataReceived() const { return m_allDataReceived; }
-    bool hasColorProfile() const;
+  SizeAvailability SetData(PassRefPtr<SharedBuffer> data,
+                           bool all_data_received) override;
+  SizeAvailability DataChanged(bool all_data_received) override;
 
-    void resetAnimation() override;
-    bool maybeAnimated() override;
+  bool IsAllDataReceived() const { return all_data_received_; }
+  bool HasColorProfile() const;
 
-    void setAnimationPolicy(ImageAnimationPolicy policy) override { m_animationPolicy = policy; }
-    ImageAnimationPolicy animationPolicy() override { return m_animationPolicy; }
-    void advanceTime(double deltaTimeInSeconds) override;
+  void ResetAnimation() override;
+  bool MaybeAnimated() override;
 
-    PassRefPtr<SkImage> imageForCurrentFrame() override;
-    PassRefPtr<Image> imageForDefaultFrame() override;
+  void SetAnimationPolicy(ImageAnimationPolicy policy) override {
+    animation_policy_ = policy;
+  }
+  ImageAnimationPolicy AnimationPolicy() override { return animation_policy_; }
+  void AdvanceTime(double delta_time_in_seconds) override;
 
-    bool currentFrameKnownToBeOpaque(MetadataMode = UseCurrentMetadata) override;
-    bool currentFrameIsComplete() override;
-    bool currentFrameIsLazyDecoded() override;
+  sk_sp<SkImage> ImageForCurrentFrame() override;
+  PassRefPtr<Image> ImageForDefaultFrame() override;
 
-    ImageOrientation currentFrameOrientation();
+  bool CurrentFrameKnownToBeOpaque(MetadataMode = kUseCurrentMetadata) override;
+  bool CurrentFrameIsComplete() override;
+  bool CurrentFrameIsLazyDecoded() override;
 
-    // Construct a BitmapImage with the given orientation.
-    static PassRefPtr<BitmapImage> createWithOrientationForTesting(const SkBitmap&, ImageOrientation);
-    // Advance the image animation by one frame.
-    void advanceAnimationForTesting() override { internalAdvanceAnimation(false); }
+  ImageOrientation CurrentFrameOrientation();
 
-private:
-    enum RepetitionCountStatus {
-      Unknown,    // We haven't checked the source's repetition count.
-      Uncertain,  // We have a repetition count, but it might be wrong (some GIFs have a count after the image data, and will report "loop once" until all data has been decoded).
-      Certain     // The repetition count is known to be correct.
-    };
+  // Construct a BitmapImage with the given orientation.
+  static PassRefPtr<BitmapImage> CreateWithOrientationForTesting(
+      const SkBitmap&,
+      ImageOrientation);
+  // Advance the image animation by one frame.
+  void AdvanceAnimationForTesting() override { InternalAdvanceAnimation(); }
 
-    BitmapImage(const SkBitmap &, ImageObserver* = 0);
-    BitmapImage(ImageObserver* = 0);
+ private:
+  enum RepetitionCountStatus {
+    kUnknown,    // We haven't checked the source's repetition count.
+    kUncertain,  // We have a repetition count, but it might be wrong (some GIFs
+                 // have a count after the image data, and will report "loop
+                 // once" until all data has been decoded).
+    kCertain     // The repetition count is known to be correct.
+  };
 
-    void draw(SkCanvas*, const SkPaint&, const FloatRect& dstRect, const FloatRect& srcRect, RespectImageOrientationEnum, ImageClampingMode) override;
+  BitmapImage(const SkBitmap&, ImageObserver* = 0);
+  BitmapImage(ImageObserver* = 0);
 
-    size_t currentFrame() const { return m_currentFrame; }
-    size_t frameCount();
+  void Draw(PaintCanvas*,
+            const PaintFlags&,
+            const FloatRect& dst_rect,
+            const FloatRect& src_rect,
+            RespectImageOrientationEnum,
+            ImageClampingMode) override;
 
-    PassRefPtr<SkImage> frameAtIndex(size_t);
+  size_t CurrentFrame() const { return current_frame_; }
+  size_t FrameCount();
 
-    bool frameIsCompleteAtIndex(size_t);
-    float frameDurationAtIndex(size_t);
-    bool frameHasAlphaAtIndex(size_t);
-    ImageOrientation frameOrientationAtIndex(size_t);
+  sk_sp<SkImage> FrameAtIndex(size_t);
 
-    PassRefPtr<SkImage> decodeAndCacheFrame(size_t index);
-    void updateSize() const;
+  bool FrameIsCompleteAtIndex(size_t) const;
+  float FrameDurationAtIndex(size_t) const;
+  bool FrameHasAlphaAtIndex(size_t);
+  ImageOrientation FrameOrientationAtIndex(size_t);
 
-    // Returns the total number of bytes allocated for all framebuffers, i.e.
-    // the sum of m_source.frameBytesAtIndex(...) for all frames.
-    size_t totalFrameBytes();
+  sk_sp<SkImage> DecodeAndCacheFrame(size_t index);
+  void UpdateSize() const;
 
-    // Called to wipe out the entire frame buffer cache and tell the image
-    // source to destroy everything; this is used when e.g. we want to free
-    // some room in the image cache.
-    void destroyDecodedData() override;
+  // Returns the total number of bytes allocated for all framebuffers, i.e.
+  // the sum of m_source.frameBytesAtIndex(...) for all frames.
+  size_t TotalFrameBytes();
 
-    PassRefPtr<SharedBuffer> data() override;
+  // Called to wipe out the entire frame buffer cache and tell the image
+  // source to destroy everything; this is used when e.g. we want to free
+  // some room in the image cache.
+  void DestroyDecodedData() override;
 
-    // Notifies observers that the memory footprint has changed.
-    void notifyMemoryChanged();
+  PassRefPtr<SharedBuffer> Data() override;
 
-    // Whether or not size is available yet.
-    bool isSizeAvailable();
+  // Notifies observers that the memory footprint has changed.
+  void NotifyMemoryChanged();
 
-    // Animation.
-    // We start and stop animating lazily.  Animation starts when the image is
-    // rendered, and automatically stops once no observer wants to render the
-    // image.
-    int repetitionCount(bool imageKnownToBeComplete);  // |imageKnownToBeComplete| should be set if the caller knows the entire image has been decoded.
-    bool shouldAnimate();
-    void startAnimation(CatchUpAnimation = CatchUp) override;
-    void stopAnimation();
-    void advanceAnimation(Timer<BitmapImage>*);
-    // Advance the animation and let the next frame get scheduled without
-    // catch-up logic. For large images with slow or heavily-loaded systems,
-    // throwing away data as we go (see destroyDecodedData()) means we can spend
-    // so much time re-decoding data that we are always behind. To prevent this,
-    // we force the next animation to skip the catch up logic.
-    void advanceAnimationWithoutCatchUp(Timer<BitmapImage>*);
+  // Whether or not size is available yet.
+  bool IsSizeAvailable();
 
-    // Function that does the real work of advancing the animation.  When
-    // skippingFrames is true, we're in the middle of a loop trying to skip over
-    // a bunch of animation frames, so we should not do things like decode each
-    // one or notify our observers.
-    // Returns whether the animation was advanced.
-    bool internalAdvanceAnimation(bool skippingFrames);
+  // Animation.
+  // We start and stop animating lazily.  Animation starts when the image is
+  // rendered, and automatically stops once no observer wants to render the
+  // image.
 
-    ImageSource m_source;
-    mutable IntSize m_size; // The size to use for the overall image (will just be the size of the first image).
-    mutable IntSize m_sizeRespectingOrientation;
+  // |imageKnownToBeComplete| should be set if the caller knows the entire image
+  // has been decoded.
+  int RepetitionCount(bool image_known_to_be_complete);
 
-    size_t m_currentFrame; // The index of the current frame of animation.
-    Vector<FrameData, 1> m_frames; // An array of the cached frames of the animation. We have to ref frames to pin them in the cache.
+  bool ShouldAnimate();
+  void StartAnimation(CatchUpAnimation = kCatchUp) override;
+  void StopAnimation();
+  void AdvanceAnimation(TimerBase*);
 
-    RefPtr<SkImage> m_cachedFrame; // A cached copy of the most recently-accessed frame.
-    size_t m_cachedFrameIndex; // Index of the frame that is cached.
+  // Advance the animation and let the next frame get scheduled without
+  // catch-up logic. For large images with slow or heavily-loaded systems,
+  // throwing away data as we go (see destroyDecodedData()) means we can spend
+  // so much time re-decoding data that we are always behind. To prevent this,
+  // we force the next animation to skip the catch up logic.
+  void AdvanceAnimationWithoutCatchUp(TimerBase*);
 
-    std::unique_ptr<Timer<BitmapImage>> m_frameTimer;
-    int m_repetitionCount; // How many total animation loops we should do.  This will be cAnimationNone if this image type is incapable of animation.
-    RepetitionCountStatus m_repetitionCountStatus;
-    int m_repetitionsComplete;  // How many repetitions we've finished.
-    double m_desiredFrameStartTime;  // The system time at which we hope to see the next call to startAnimation().
+  // This function does the real work of advancing the animation. When
+  // skipping frames to catch up, we're in the middle of a loop trying to skip
+  // over a bunch of animation frames, so we should not do things like decode
+  // each one or notify our observers.
+  // Returns whether the animation was advanced.
+  enum AnimationAdvancement { kNormal, kSkipFramesToCatchUp };
+  bool InternalAdvanceAnimation(AnimationAdvancement = kNormal);
 
-    size_t m_frameCount;
+  void NotifyObserversOfAnimationAdvance(TimerBase*);
 
-    ImageAnimationPolicy m_animationPolicy; // Whether or not we can play animation.
+  ImageSource source_;
+  mutable IntSize size_;  // The size to use for the overall image (will just
+                          // be the size of the first image).
+  mutable IntSize size_respecting_orientation_;
 
-    bool m_animationFinished : 1; // Whether or not we've completed the entire animation.
+  size_t current_frame_;         // The index of the current frame of animation.
+  Vector<FrameData, 1> frames_;  // An array of the cached frames of the
+                                 // animation. We have to ref frames to pin
+                                 // them in the cache.
 
-    bool m_allDataReceived : 1; // Whether or not we've received all our data.
-    mutable bool m_haveSize : 1; // Whether or not our |m_size| member variable has the final overall image size yet.
-    bool m_sizeAvailable : 1; // Whether or not we can obtain the size of the first image frame yet from ImageIO.
-    mutable bool m_haveFrameCount : 1;
+  sk_sp<SkImage>
+      cached_frame_;  // A cached copy of the most recently-accessed frame.
+  size_t cached_frame_index_;  // Index of the frame that is cached.
+
+  std::unique_ptr<Timer<BitmapImage>> frame_timer_;
+  int repetition_count_;  // How many total animation loops we should do.  This
+                          // will be cAnimationNone if this image type is
+                          // incapable of animation.
+  RepetitionCountStatus repetition_count_status_;
+  int repetitions_complete_;         // How many repetitions we've finished.
+  double desired_frame_start_time_;  // The system time at which we hope to see
+                                     // the next call to startAnimation().
+
+  size_t frame_count_;
+
+  ImageAnimationPolicy
+      animation_policy_;  // Whether or not we can play animation.
+
+  bool animation_finished_ : 1;  // Whether we've completed the entire
+                                 // animation.
+
+  bool all_data_received_ : 1;  // Whether we've received all our data.
+  mutable bool have_size_ : 1;  // Whether our |m_size| member variable has the
+                                // final overall image size yet.
+  bool size_available_ : 1;     // Whether we can obtain the size of the first
+                                // image frame from ImageIO yet.
+  mutable bool have_frame_count_ : 1;
 };
 
 DEFINE_IMAGE_TYPE_CASTS(BitmapImage);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -4,32 +4,37 @@
 
 #include "platform/animation/CompositorAnimationHost.h"
 
+#include "cc/animation/animation_host.h"
 #include "cc/animation/scroll_offset_animations.h"
+#include "platform/animation/CompositorAnimationTimeline.h"
 
 namespace blink {
 
 CompositorAnimationHost::CompositorAnimationHost(cc::AnimationHost* host)
-    : m_animationHost(host) {}
-
-bool CompositorAnimationHost::isNull() const
-{
-    return !m_animationHost;
+    : animation_host_(host) {
+  DCHECK(animation_host_);
 }
 
-void CompositorAnimationHost::adjustImplOnlyScrollOffsetAnimation(cc::ElementId elementId, const gfx::Vector2dF& adjustment)
-{
-    if (!m_animationHost)
-        return;
-
-    m_animationHost->scroll_offset_animations().AddAdjustmentUpdate(elementId, adjustment);
+void CompositorAnimationHost::AddTimeline(
+    const CompositorAnimationTimeline& timeline) {
+  animation_host_->AddAnimationTimeline(timeline.GetAnimationTimeline());
 }
 
-void CompositorAnimationHost::takeOverImplOnlyScrollOffsetAnimation(cc::ElementId elementId)
-{
-    if (!m_animationHost)
-        return;
-
-    m_animationHost->scroll_offset_animations().AddTakeoverUpdate(elementId);
+void CompositorAnimationHost::RemoveTimeline(
+    const CompositorAnimationTimeline& timeline) {
+  animation_host_->RemoveAnimationTimeline(timeline.GetAnimationTimeline());
 }
 
-} // namespace blink
+void CompositorAnimationHost::AdjustImplOnlyScrollOffsetAnimation(
+    CompositorElementId element_id,
+    const gfx::Vector2dF& adjustment) {
+  animation_host_->scroll_offset_animations().AddAdjustmentUpdate(element_id,
+                                                                  adjustment);
+}
+
+void CompositorAnimationHost::TakeOverImplOnlyScrollOffsetAnimation(
+    CompositorElementId element_id) {
+  animation_host_->scroll_offset_animations().AddTakeoverUpdate(element_id);
+}
+
+}  // namespace blink

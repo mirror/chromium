@@ -7,36 +7,44 @@ import("//mojo/public/tools/bindings/mojom.gni")
 mojom("interfaces") {
   sources = [
     "audio_decoder.mojom",
-    "audio_output.mojom",
+    "audio_output_stream.mojom",
     "audio_parameters.mojom",
     "content_decryption_module.mojom",
     "decryptor.mojom",
     "demuxer_stream.mojom",
+    "interface_factory.mojom",
+    "media_service.mojom",
     "media_types.mojom",
     "output_protection.mojom",
+    "provision_fetcher.mojom",
     "renderer.mojom",
-    "service_factory.mojom",
     "video_decoder.mojom",
   ]
+
+  if (is_android) {
+    sources += [ "media_drm_storage.mojom" ]
+  }
 
   if (is_chromeos) {
     sources += [ "platform_verification.mojom" ]
   }
 
   if (is_android) {
-    sources += [ "provision_fetcher.mojom" ]
+    sources += [ "android_overlay.mojom" ]
   }
 
   public_deps = [
+    "//gpu/ipc/common:interfaces",
+    "//mojo/common:common_custom_types",
+    "//services/service_manager/public/interfaces",
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
+    "//url/mojo:url_mojom_origin",
   ]
-
-  use_new_wrapper_types = false
 }
 
-mojom("image_capture") {
+mojom("remoting") {
   sources = [
-    "image_capture.mojom",
+    "remoting.mojom",
   ]
 }

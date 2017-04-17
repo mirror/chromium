@@ -25,7 +25,7 @@ class TestAutofillDriver : public AutofillDriver {
   ~TestAutofillDriver() override;
 
   // AutofillDriver implementation.
-  bool IsOffTheRecord() const override;
+  bool IsIncognito() const override;
   // Returns the value passed in to the last call to |SetURLRequestContext()|
   // or NULL if that method has never been called.
   net::URLRequestContextGetter* GetURLRequestContext() override;
@@ -48,6 +48,7 @@ class TestAutofillDriver : public AutofillDriver {
   void PopupHidden() override;
   gfx::RectF TransformBoundingBoxToViewportCoordinates(
       const gfx::RectF& bounding_box) override;
+  void DidInteractWithCreditCardForm() override;
 
   // Methods that tests can use to specialize functionality.
 

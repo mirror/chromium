@@ -14,7 +14,6 @@
 #include "third_party/WebKit/public/platform/WebMediaStream.h"
 #include "third_party/WebKit/public/platform/WebMediaStreamCenter.h"
 #include "third_party/WebKit/public/platform/WebMediaStreamTrack.h"
-#include "third_party/WebKit/public/platform/WebMediaStreamTrackSourcesRequest.h"
 
 namespace blink {
 class WebAudioSourceProvider;
@@ -34,29 +33,35 @@ class CONTENT_EXPORT MediaStreamCenter
   ~MediaStreamCenter() override;
 
  private:
-  void didCreateMediaStreamTrack(
+  void DidCreateMediaStreamTrack(
       const blink::WebMediaStreamTrack& track) override;
 
-  void didEnableMediaStreamTrack(
+  void DidCloneMediaStreamTrack(
+      const blink::WebMediaStreamTrack& original,
+      const blink::WebMediaStreamTrack& clone) override;
+
+  void DidSetContentHint(const blink::WebMediaStreamTrack& track) override;
+
+  void DidEnableMediaStreamTrack(
       const blink::WebMediaStreamTrack& track) override;
 
-  void didDisableMediaStreamTrack(
+  void DidDisableMediaStreamTrack(
       const blink::WebMediaStreamTrack& track) override;
 
-  void didStopLocalMediaStream(const blink::WebMediaStream& stream) override;
+  void DidStopLocalMediaStream(const blink::WebMediaStream& stream) override;
 
-  bool didStopMediaStreamTrack(
+  bool DidStopMediaStreamTrack(
       const blink::WebMediaStreamTrack& track) override;
 
-  blink::WebAudioSourceProvider* createWebAudioSourceFromMediaStreamTrack(
+  blink::WebAudioSourceProvider* CreateWebAudioSourceFromMediaStreamTrack(
       const blink::WebMediaStreamTrack& track) override;
 
-  void didCreateMediaStream(blink::WebMediaStream& stream) override;
+  void DidCreateMediaStream(blink::WebMediaStream& stream) override;
 
-  bool didAddMediaStreamTrack(const blink::WebMediaStream& stream,
+  bool DidAddMediaStreamTrack(const blink::WebMediaStream& stream,
                               const blink::WebMediaStreamTrack& track) override;
 
-  bool didRemoveMediaStreamTrack(
+  bool DidRemoveMediaStreamTrack(
       const blink::WebMediaStream& stream,
       const blink::WebMediaStreamTrack& track) override;
 

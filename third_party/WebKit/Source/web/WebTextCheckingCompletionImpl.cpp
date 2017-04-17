@@ -31,31 +31,30 @@
 #include "web/WebTextCheckingCompletionImpl.h"
 
 #include "platform/text/TextCheckerClient.h"
+#include "platform/wtf/Assertions.h"
 #include "public/platform/WebVector.h"
 #include "public/web/WebTextCheckingResult.h"
 #include "web/EditorClientImpl.h"
-#include "wtf/Assertions.h"
 
 namespace blink {
 
-static Vector<TextCheckingResult> toCoreResults(const WebVector<WebTextCheckingResult>& results)
-{
-    Vector<TextCheckingResult> coreResults;
-    for (size_t i = 0; i < results.size(); ++i)
-        coreResults.append(results[i]);
-    return coreResults;
+static Vector<TextCheckingResult> ToCoreResults(
+    const WebVector<WebTextCheckingResult>& results) {
+  Vector<TextCheckingResult> core_results;
+  for (size_t i = 0; i < results.size(); ++i)
+    core_results.push_back(results[i]);
+  return core_results;
 }
 
-void WebTextCheckingCompletionImpl::didFinishCheckingText(const WebVector<WebTextCheckingResult>& results)
-{
-    m_request->didSucceed(toCoreResults(results));
-    delete this;
+void WebTextCheckingCompletionImpl::DidFinishCheckingText(
+    const WebVector<WebTextCheckingResult>& results) {
+  request_->DidSucceed(ToCoreResults(results));
+  delete this;
 }
 
-void WebTextCheckingCompletionImpl::didCancelCheckingText()
-{
-    m_request->didCancel();
-    delete this;
+void WebTextCheckingCompletionImpl::DidCancelCheckingText() {
+  request_->DidCancel();
+  delete this;
 }
 
-} // namespace blink
+}  // namespace blink

@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2000 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2006, 2007, 2009, 2010 Apple Inc. All right reserved.
+ * Copyright (C) 2003, 2004, 2006, 2007, 2009, 2010 Apple Inc.
+ * All right reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,69 +24,81 @@
 #define BidiContext_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Assertions.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefCounted.h"
-#include "wtf/RefPtr.h"
-#include "wtf/text/Unicode.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/text/Unicode.h"
 
 namespace blink {
 
-enum BidiEmbeddingSource {
-    FromStyleOrDOM,
-    FromUnicode
-};
+enum BidiEmbeddingSource { kFromStyleOrDOM, kFromUnicode };
 
 // Used to keep track of explicit embeddings.
 class PLATFORM_EXPORT BidiContext : public RefCounted<BidiContext> {
-public:
-    static PassRefPtr<BidiContext> create(unsigned char level, WTF::Unicode::CharDirection, bool override = false, BidiEmbeddingSource = FromStyleOrDOM, BidiContext* parent = 0);
+ public:
+  static PassRefPtr<BidiContext> Create(unsigned char level,
+                                        WTF::Unicode::CharDirection,
+                                        bool override = false,
+                                        BidiEmbeddingSource = kFromStyleOrDOM,
+                                        BidiContext* parent = 0);
 
-    BidiContext* parent() const { return m_parent.get(); }
-    unsigned char level() const { return m_level; }
-    WTF::Unicode::CharDirection dir() const { return static_cast<WTF::Unicode::CharDirection>(m_direction); }
-    bool override() const { return m_override; }
-    BidiEmbeddingSource source() const { return static_cast<BidiEmbeddingSource>(m_source); }
+  BidiContext* Parent() const { return parent_.Get(); }
+  unsigned char Level() const { return level_; }
+  WTF::Unicode::CharDirection Dir() const {
+    return static_cast<WTF::Unicode::CharDirection>(direction_);
+  }
+  bool Override() const { return override_; }
+  BidiEmbeddingSource Source() const {
+    return static_cast<BidiEmbeddingSource>(source_);
+  }
 
-    PassRefPtr<BidiContext> copyStackRemovingUnicodeEmbeddingContexts();
+  PassRefPtr<BidiContext> CopyStackRemovingUnicodeEmbeddingContexts();
 
-    // http://www.unicode.org/reports/tr9/#Modifications
-    // 6.3 raised the limit from 61 to 125.
-    // http://unicode.org/reports/tr9/#BD2
-    static const unsigned char kMaxLevel = 125;
+  // http://www.unicode.org/reports/tr9/#Modifications
+  // 6.3 raised the limit from 61 to 125.
+  // http://unicode.org/reports/tr9/#BD2
+  static const unsigned char kMaxLevel = 125;
 
-private:
-    BidiContext(unsigned char level, WTF::Unicode::CharDirection direction, bool override, BidiEmbeddingSource source, BidiContext* parent)
-        : m_level(level)
-        , m_direction(direction)
-        , m_override(override)
-        , m_source(source)
-        , m_parent(parent)
-    {
-        ASSERT(level <= kMaxLevel);
-    }
+ private:
+  BidiContext(unsigned char level,
+              WTF::Unicode::CharDirection direction,
+              bool override,
+              BidiEmbeddingSource source,
+              BidiContext* parent)
+      : level_(level),
+        direction_(direction),
+        override_(override),
+        source_(source),
+        parent_(parent) {
+    DCHECK(level <= kMaxLevel);
+  }
 
-    static PassRefPtr<BidiContext> createUncached(unsigned char level, WTF::Unicode::CharDirection, bool override, BidiEmbeddingSource, BidiContext* parent);
+  static PassRefPtr<BidiContext> CreateUncached(unsigned char level,
+                                                WTF::Unicode::CharDirection,
+                                                bool override,
+                                                BidiEmbeddingSource,
+                                                BidiContext* parent);
 
-    unsigned m_level : 7; // The maximium bidi level is 125: http://unicode.org/reports/tr9/#Explicit_Levels_and_Directions
-    unsigned m_direction : 5; // Direction
-    unsigned m_override : 1;
-    unsigned m_source : 1; // BidiEmbeddingSource
-    RefPtr<BidiContext> m_parent;
+  // The maximium bidi level is 125:
+  // http://unicode.org/reports/tr9/#Explicit_Levels_and_Directions
+  unsigned level_ : 7;
+  unsigned direction_ : 5;  // Direction
+  unsigned override_ : 1;
+  unsigned source_ : 1;  // BidiEmbeddingSource
+  RefPtr<BidiContext> parent_;
 };
 
-inline unsigned char nextGreaterOddLevel(unsigned char level)
-{
-    return (level + 1) | 1;
+inline unsigned char NextGreaterOddLevel(unsigned char level) {
+  return (level + 1) | 1;
 }
 
-inline unsigned char nextGreaterEvenLevel(unsigned char level)
-{
-    return (level + 2) & ~1;
+inline unsigned char NextGreaterEvenLevel(unsigned char level) {
+  return (level + 2) & ~1;
 }
 
 PLATFORM_EXPORT bool operator==(const BidiContext&, const BidiContext&);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BidiContext_h
+#endif  // BidiContext_h

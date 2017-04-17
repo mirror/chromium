@@ -31,8 +31,8 @@
 #include "core/html/HTMLMediaElement.h"
 #include "platform/Timer.h"
 #include "platform/heap/Handle.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -40,62 +40,62 @@ class GenericEventQueue;
 class TextTrack;
 
 class CORE_EXPORT TextTrackList final : public EventTargetWithInlineData {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static TextTrackList* create(HTMLMediaElement* owner)
-    {
-        return new TextTrackList(owner);
-    }
-    ~TextTrackList() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    unsigned length() const;
-    int getTrackIndex(TextTrack*);
-    int getTrackIndexRelativeToRenderedTracks(TextTrack*);
-    bool contains(TextTrack*) const;
+ public:
+  static TextTrackList* Create(HTMLMediaElement* owner) {
+    return new TextTrackList(owner);
+  }
+  ~TextTrackList() override;
 
-    TextTrack* anonymousIndexedGetter(unsigned index);
-    TextTrack* getTrackById(const AtomicString& id);
-    void append(TextTrack*);
-    void remove(TextTrack*);
+  unsigned length() const;
+  int GetTrackIndex(TextTrack*);
+  int GetTrackIndexRelativeToRenderedTracks(TextTrack*);
+  bool Contains(TextTrack*) const;
 
-    // EventTarget
-    const AtomicString& interfaceName() const override;
-    ExecutionContext* getExecutionContext() const override;
+  TextTrack* AnonymousIndexedGetter(unsigned index);
+  TextTrack* getTrackById(const AtomicString& id);
+  void Append(TextTrack*);
+  void Remove(TextTrack*);
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(addtrack);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(change);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(removetrack);
+  // EventTarget
+  const AtomicString& InterfaceName() const override;
+  ExecutionContext* GetExecutionContext() const override;
 
-    HTMLMediaElement* owner() const;
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(addtrack);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(change);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(removetrack);
 
-    void scheduleChangeEvent();
-    void removeAllInbandTracks();
+  HTMLMediaElement* Owner() const;
 
-    bool hasShowingTracks();
+  void ScheduleChangeEvent();
+  void RemoveAllInbandTracks();
 
-    DECLARE_VIRTUAL_TRACE();
+  bool HasShowingTracks();
 
-    DECLARE_VIRTUAL_TRACE_WRAPPERS();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    explicit TextTrackList(HTMLMediaElement*);
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
-    void scheduleTrackEvent(const AtomicString& eventName, TextTrack*);
+ private:
+  explicit TextTrackList(HTMLMediaElement*);
 
-    void scheduleAddTrackEvent(TextTrack*);
-    void scheduleRemoveTrackEvent(TextTrack*);
+  void ScheduleTrackEvent(const AtomicString& event_name, TextTrack*);
 
-    void invalidateTrackIndexesAfterTrack(TextTrack*);
+  void ScheduleAddTrackEvent(TextTrack*);
+  void ScheduleRemoveTrackEvent(TextTrack*);
 
-    Member<HTMLMediaElement> m_owner;
+  void InvalidateTrackIndexesAfterTrack(TextTrack*);
 
-    Member<GenericEventQueue> m_asyncEventQueue;
+  Member<HTMLMediaElement> owner_;
 
-    HeapVector<Member<TextTrack>> m_addTrackTracks;
-    HeapVector<Member<TextTrack>> m_elementTracks;
-    HeapVector<Member<TextTrack>> m_inbandTracks;
+  Member<GenericEventQueue> async_event_queue_;
+
+  HeapVector<TraceWrapperMember<TextTrack>> add_track_tracks_;
+  HeapVector<TraceWrapperMember<TextTrack>> element_tracks_;
+  HeapVector<TraceWrapperMember<TextTrack>> inband_tracks_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TextTrackList_h
+#endif  // TextTrackList_h

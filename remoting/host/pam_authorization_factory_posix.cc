@@ -15,7 +15,7 @@
 #include "remoting/base/logging.h"
 #include "remoting/host/username.h"
 #include "remoting/protocol/channel_authenticator.h"
-#include "third_party/webrtc/libjingle/xmllite/xmlelement.h"
+#include "third_party/libjingle_xmpp/xmllite/xmlelement.h"
 
 namespace remoting {
 
@@ -173,7 +173,7 @@ PamAuthorizationFactory::CreateAuthenticator(const std::string& local_jid,
                                              const std::string& remote_jid) {
   std::unique_ptr<protocol::Authenticator> authenticator(
       underlying_->CreateAuthenticator(local_jid, remote_jid));
-  return base::WrapUnique(new PamAuthorizer(std::move(authenticator)));
+  return base::MakeUnique<PamAuthorizer>(std::move(authenticator));
 }
 
 }  // namespace remoting

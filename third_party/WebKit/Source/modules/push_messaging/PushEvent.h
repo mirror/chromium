@@ -10,45 +10,43 @@
 #include "modules/push_messaging/PushMessageData.h"
 #include "modules/serviceworkers/ExtendableEvent.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class PushEventInit;
 
 class MODULES_EXPORT PushEvent final : public ExtendableEvent {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static PushEvent* create()
-    {
-        return new PushEvent;
-    }
-    static PushEvent* create(const AtomicString& type, PushMessageData* data, WaitUntilObserver* observer)
-    {
-        return new PushEvent(type, data, observer);
-    }
-    static PushEvent* create(const AtomicString& type, const PushEventInit& initializer)
-    {
-        return new PushEvent(type, initializer);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~PushEvent() override;
+ public:
+  static PushEvent* Create(const AtomicString& type,
+                           PushMessageData* data,
+                           WaitUntilObserver* observer) {
+    return new PushEvent(type, data, observer);
+  }
+  static PushEvent* Create(const AtomicString& type,
+                           const PushEventInit& initializer) {
+    return new PushEvent(type, initializer);
+  }
 
-    const AtomicString& interfaceName() const override;
+  ~PushEvent() override;
 
-    PushMessageData* data();
+  // ExtendableEvent interface.
+  const AtomicString& InterfaceName() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  PushMessageData* data();
 
-private:
-    PushEvent();
-    PushEvent(const AtomicString& type, PushMessageData*, WaitUntilObserver*);
-    PushEvent(const AtomicString& type, const PushEventInit&);
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<PushMessageData> m_data;
+ private:
+  PushEvent(const AtomicString& type, PushMessageData*, WaitUntilObserver*);
+  PushEvent(const AtomicString& type, const PushEventInit&);
+
+  Member<PushMessageData> data_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PushEvent_h
+#endif  // PushEvent_h

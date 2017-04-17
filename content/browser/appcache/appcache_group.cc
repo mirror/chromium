@@ -176,6 +176,8 @@ void AppCacheGroup::StartUpdateWithNewMasterEntry(
 void AppCacheGroup::CancelUpdate() {
   if (update_job_) {
     delete update_job_;
+    // The update_job_ destructor calls AppCacheGroup::SetUpdateAppCacheStatus
+    // which zeroes update_job_.
     DCHECK(!update_job_);
     DCHECK_EQ(IDLE, update_status_);
   }
@@ -260,7 +262,8 @@ void AppCacheGroup::SetUpdateAppCacheStatus(UpdateAppCacheStatus status) {
     // deletion by adding an extra ref in this scope (but only if we're not
     // in our destructor).
     scoped_refptr<AppCacheGroup> protect(is_in_dtor_ ? NULL : this);
-    FOR_EACH_OBSERVER(UpdateObserver, observers_, OnUpdateComplete(this));
+    for (auto& observer : observers_)
+      observer.OnUpdateComplete(this);
     if (!queued_updates_.empty())
       ScheduleUpdateRestart(kUpdateRestartDelayMs);
   }

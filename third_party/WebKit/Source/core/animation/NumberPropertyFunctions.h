@@ -12,13 +12,13 @@ namespace blink {
 class ComputedStyle;
 
 class NumberPropertyFunctions {
-public:
-    static bool getInitialNumber(CSSPropertyID, double& result);
-    static bool getNumber(CSSPropertyID, const ComputedStyle&, double& result);
-    static double clampNumber(CSSPropertyID, double);
-    static bool setNumber(CSSPropertyID, ComputedStyle&, double);
+ public:
+  static bool GetInitialNumber(CSSPropertyID, double& result);
+  static bool GetNumber(CSSPropertyID, const ComputedStyle&, double& result);
+  static double ClampNumber(CSSPropertyID, double);
+  static bool SetNumber(CSSPropertyID, ComputedStyle&, double);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NumberPropertyFunctions_h
+#endif  // NumberPropertyFunctions_h

@@ -117,8 +117,8 @@ bool WriteXattrInt(const base::FilePath& file,
 XattrStatus ReadXattrTimeT(const base::FilePath& file,
                            const base::StringPiece& name,
                            time_t* value) {
-  // time_t on OS X is defined as a long, but it will be read into an
-  // int64_t here, since there is no string conversion method for long.
+  // time_t on macOS is defined as a long, but it will be read into an int64_t
+  // here, since there is no string conversion method for long.
   std::string tmp;
   XattrStatus status;
   if ((status = ReadXattr(file, name, &tmp)) != XattrStatus::kOK)
@@ -146,6 +146,18 @@ bool WriteXattrTimeT(const base::FilePath& file,
                      time_t value) {
   std::string tmp = base::StringPrintf("%ld", value);
   return WriteXattr(file, name, tmp);
+}
+
+XattrStatus RemoveXattr(const base::FilePath& file,
+                        const base::StringPiece& name) {
+  int rv = removexattr(file.value().c_str(), name.data(), 0);
+  if (rv != 0) {
+    if (errno == ENOATTR)
+      return XattrStatus::kNoAttribute;
+    PLOG(ERROR) << "removexattr " << name << " on file " << file.value();
+    return XattrStatus::kOtherError;
+  }
+  return XattrStatus::kOK;
 }
 
 }  // namespace crashpad

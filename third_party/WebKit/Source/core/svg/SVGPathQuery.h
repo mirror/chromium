@@ -27,17 +27,17 @@ class FloatPoint;
 class SVGPathByteStream;
 
 class SVGPathQuery {
-public:
-    explicit SVGPathQuery(const SVGPathByteStream&);
+ public:
+  explicit SVGPathQuery(const SVGPathByteStream&);
 
-    float getTotalLength() const;
-    FloatPoint getPointAtLength(float length) const;
-    unsigned getPathSegIndexAtLength(float length) const;
+  float GetTotalLength() const;
+  FloatPoint GetPointAtLength(float length) const;
+  unsigned GetPathSegIndexAtLength(float length) const;
 
-private:
-    const SVGPathByteStream& m_pathByteStream;
+ private:
+  const SVGPathByteStream& path_byte_stream_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGPathQuery_h
+#endif  // SVGPathQuery_h

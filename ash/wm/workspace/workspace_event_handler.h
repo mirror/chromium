@@ -5,25 +5,34 @@
 #ifndef ASH_WM_WORKSPACE_WORKSPACE_EVENT_HANDLER_H_
 #define ASH_WM_WORKSPACE_WORKSPACE_EVENT_HANDLER_H_
 
-#include "ash/common/wm/workspace/multi_window_resize_controller.h"
+#include "ash/ash_export.h"
+#include "ash/wm/workspace/multi_window_resize_controller.h"
 #include "base/macros.h"
-#include "ui/events/event_handler.h"
+
+namespace ui {
+class GestureEvent;
+class MouseEvent;
+}
 
 namespace ash {
+class WmWindow;
 class WorkspaceEventHandlerTestHelper;
 
 namespace wm {
 class WindowState;
 }
 
-class WorkspaceEventHandler : public ui::EventHandler {
+// ui::EventHandler like class installed on the window associated with
+// WorkspaceLayoutManager. This handles various events happening on child
+// windows and takes appropriate action. It is expected the environment specific
+// file calls OnMouseEvent()/OnGestureEvent() as appropriate.
+class ASH_EXPORT WorkspaceEventHandler {
  public:
   WorkspaceEventHandler();
-  ~WorkspaceEventHandler() override;
+  virtual ~WorkspaceEventHandler();
 
-  // ui::EventHandler:
-  void OnMouseEvent(ui::MouseEvent* event) override;
-  void OnGestureEvent(ui::GestureEvent* event) override;
+  void OnMouseEvent(ui::MouseEvent* event, WmWindow* target);
+  void OnGestureEvent(ui::GestureEvent* event, WmWindow* target);
 
  private:
   friend class WorkspaceEventHandlerTestHelper;

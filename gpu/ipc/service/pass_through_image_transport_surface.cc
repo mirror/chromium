@@ -8,8 +8,6 @@
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "build/build_config.h"
-#include "gpu/ipc/common/gpu_messages.h"
-#include "gpu/ipc/service/gpu_command_buffer_stub.h"
 #include "ui/gfx/vsync_provider.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_switches.h"
@@ -17,21 +15,18 @@
 namespace gpu {
 
 PassThroughImageTransportSurface::PassThroughImageTransportSurface(
-    GpuChannelManager* /* manager */,
-    GpuCommandBufferStub* stub,
+    base::WeakPtr<ImageTransportSurfaceDelegate> delegate,
     gl::GLSurface* surface)
     : GLSurfaceAdapter(surface),
-      stub_(stub->AsWeakPtr()),
+      delegate_(delegate),
       did_set_swap_interval_(false),
       weak_ptr_factory_(this) {}
 
 bool PassThroughImageTransportSurface::Initialize(
-    gl::GLSurface::Format format) {
+    gl::GLSurfaceFormat format) {
   // The surface is assumed to have already been initialized.
-  if (!stub_.get() || !stub_->decoder())
-    return false;
-  stub_->SetLatencyInfoCallback(
-      base::Bind(&PassThroughImageTransportSurface::SetLatencyInfo,
+  delegate_->SetLatencyInfoCallback(
+      base::Bind(&PassThroughImageTransportSurface::AddLatencyInfo,
                  base::Unretained(this)));
   return true;
 }
@@ -60,6 +55,15 @@ void PassThroughImageTransportSurface::SwapBuffersAsync(
   gl::GLSurfaceAdapter::SwapBuffersAsync(base::Bind(
       &PassThroughImageTransportSurface::FinishSwapBuffersAsync,
       weak_ptr_factory_.GetWeakPtr(), base::Passed(&latency_info), callback));
+}
+
+gfx::SwapResult PassThroughImageTransportSurface::SwapBuffersWithBounds(
+    const std::vector<gfx::Rect>& rects) {
+  std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info =
+      StartSwapBuffers();
+  gfx::SwapResult result = gl::GLSurfaceAdapter::SwapBuffersWithBounds(rects);
+  FinishSwapBuffers(std::move(latency_info), result);
+  return result;
 }
 
 gfx::SwapResult PassThroughImageTransportSurface::PostSubBuffer(int x,
@@ -119,13 +123,13 @@ bool PassThroughImageTransportSurface::OnMakeCurrent(gl::GLContext* context) {
 }
 
 PassThroughImageTransportSurface::~PassThroughImageTransportSurface() {
-  if (stub_.get()) {
-    stub_->SetLatencyInfoCallback(
+  if (delegate_) {
+    delegate_->SetLatencyInfoCallback(
         base::Callback<void(const std::vector<ui::LatencyInfo>&)>());
   }
 }
 
-void PassThroughImageTransportSurface::SetLatencyInfo(
+void PassThroughImageTransportSurface::AddLatencyInfo(
     const std::vector<ui::LatencyInfo>& latency_info) {
   latency_info_.insert(latency_info_.end(), latency_info.begin(),
                        latency_info.end());
@@ -135,7 +139,7 @@ void PassThroughImageTransportSurface::SendVSyncUpdateIfAvailable() {
   gfx::VSyncProvider* vsync_provider = GetVSyncProvider();
   if (vsync_provider) {
     vsync_provider->GetVSyncParameters(base::Bind(
-        &GpuCommandBufferStub::SendUpdateVSyncParameters, stub_->AsWeakPtr()));
+        &ImageTransportSurfaceDelegate::UpdateVSyncParameters, delegate_));
   }
 }
 
@@ -168,10 +172,12 @@ void PassThroughImageTransportSurface::FinishSwapBuffers(
         swap_ack_time, 1);
   }
 
-  GpuCommandBufferMsg_SwapBuffersCompleted_Params params;
-  params.latency_info = *latency_info;
-  params.result = result;
-  stub_->SendSwapBuffersCompleted(params);
+  if (delegate_) {
+    SwapBuffersCompleteParams params;
+    params.latency_info = std::move(*latency_info);
+    params.result = result;
+    delegate_->DidSwapBuffersComplete(std::move(params));
+  }
 }
 
 void PassThroughImageTransportSurface::FinishSwapBuffersAsync(

@@ -35,93 +35,94 @@
 #include "core/dom/MutationObserver.h"
 #include "core/dom/Node.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class MutationObserverInterestGroup;
 
-// ChildListMutationAccumulator is not meant to be used directly; ChildListMutationScope is the public interface.
+// ChildListMutationAccumulator is not meant to be used directly;
+// ChildListMutationScope is the public interface.
 //
 // One ChildListMutationAccumulator for a given Node is shared between all the
-// active ChildListMutationScopes for that Node. Once the last ChildListMutationScope
-// is destructed the accumulator enqueues a mutation record for the recorded
-// mutations and the accumulator can be garbage collected.
-class ChildListMutationAccumulator final : public GarbageCollected<ChildListMutationAccumulator> {
-public:
-    static ChildListMutationAccumulator* getOrCreate(Node&);
+// active ChildListMutationScopes for that Node. Once the last
+// ChildListMutationScope is destructed the accumulator enqueues a mutation
+// record for the recorded mutations and the accumulator can be garbage
+// collected.
+class ChildListMutationAccumulator final
+    : public GarbageCollected<ChildListMutationAccumulator> {
+ public:
+  static ChildListMutationAccumulator* GetOrCreate(Node&);
 
-    void childAdded(Node*);
-    void willRemoveChild(Node*);
+  void ChildAdded(Node*);
+  void WillRemoveChild(Node*);
 
-    bool hasObservers() const { return m_observers; }
+  bool HasObservers() const { return observers_; }
 
-    // Register and unregister mutation scopes that are using this mutation
-    // accumulator.
-    void enterMutationScope() { m_mutationScopes++; }
-    void leaveMutationScope();
+  // Register and unregister mutation scopes that are using this mutation
+  // accumulator.
+  void EnterMutationScope() { mutation_scopes_++; }
+  void LeaveMutationScope();
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    ChildListMutationAccumulator(Node*, MutationObserverInterestGroup*);
+ private:
+  ChildListMutationAccumulator(Node*, MutationObserverInterestGroup*);
 
-    void enqueueMutationRecord();
-    bool isEmpty();
-    bool isAddedNodeInOrder(Node*);
-    bool isRemovedNodeInOrder(Node*);
+  void EnqueueMutationRecord();
+  bool IsEmpty();
+  bool IsAddedNodeInOrder(Node*);
+  bool IsRemovedNodeInOrder(Node*);
 
-    Member<Node> m_target;
+  Member<Node> target_;
 
-    HeapVector<Member<Node>> m_removedNodes;
-    HeapVector<Member<Node>> m_addedNodes;
-    Member<Node> m_previousSibling;
-    Member<Node> m_nextSibling;
-    Member<Node> m_lastAdded;
+  HeapVector<Member<Node>> removed_nodes_;
+  HeapVector<Member<Node>> added_nodes_;
+  Member<Node> previous_sibling_;
+  Member<Node> next_sibling_;
+  Member<Node> last_added_;
 
-    Member<MutationObserverInterestGroup> m_observers;
+  Member<MutationObserverInterestGroup> observers_;
 
-    unsigned m_mutationScopes;
+  unsigned mutation_scopes_;
 };
 
 class ChildListMutationScope final {
-    WTF_MAKE_NONCOPYABLE(ChildListMutationScope);
-    STACK_ALLOCATED();
-public:
-    explicit ChildListMutationScope(Node& target)
-    {
-        if (target.document().hasMutationObserversOfType(MutationObserver::ChildList)) {
-            m_accumulator = ChildListMutationAccumulator::getOrCreate(target);
-            // Register another user of the accumulator.
-            m_accumulator->enterMutationScope();
-        }
-    }
+  WTF_MAKE_NONCOPYABLE(ChildListMutationScope);
+  STACK_ALLOCATED();
 
-    ~ChildListMutationScope()
-    {
-        if (m_accumulator) {
-            // Unregister a user of the accumulator. If this is the last user
-            // the accumulator will enqueue a mutation record for the mutations.
-            m_accumulator->leaveMutationScope();
-        }
+ public:
+  explicit ChildListMutationScope(Node& target) {
+    if (target.GetDocument().HasMutationObserversOfType(
+            MutationObserver::kChildList)) {
+      accumulator_ = ChildListMutationAccumulator::GetOrCreate(target);
+      // Register another user of the accumulator.
+      accumulator_->EnterMutationScope();
     }
+  }
 
-    void childAdded(Node& child)
-    {
-        if (m_accumulator && m_accumulator->hasObservers())
-            m_accumulator->childAdded(&child);
+  ~ChildListMutationScope() {
+    if (accumulator_) {
+      // Unregister a user of the accumulator. If this is the last user
+      // the accumulator will enqueue a mutation record for the mutations.
+      accumulator_->LeaveMutationScope();
     }
+  }
 
-    void willRemoveChild(Node& child)
-    {
-        if (m_accumulator && m_accumulator->hasObservers())
-            m_accumulator->willRemoveChild(&child);
-    }
+  void ChildAdded(Node& child) {
+    if (accumulator_ && accumulator_->HasObservers())
+      accumulator_->ChildAdded(&child);
+  }
 
-private:
-    Member<ChildListMutationAccumulator> m_accumulator;
+  void WillRemoveChild(Node& child) {
+    if (accumulator_ && accumulator_->HasObservers())
+      accumulator_->WillRemoveChild(&child);
+  }
+
+ private:
+  Member<ChildListMutationAccumulator> accumulator_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ChildListMutationScope_h
+#endif  // ChildListMutationScope_h

@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2000 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2006, 2007, 2009, 2010 Apple Inc. All right reserved.
+ * Copyright (C) 2003, 2004, 2006, 2007, 2009, 2010 Apple Inc.
+ * All right reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -21,92 +22,112 @@
 
 #include "platform/text/BidiContext.h"
 
-#include "wtf/StdLibExtras.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/StdLibExtras.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 using namespace WTF::Unicode;
 
 struct SameSizeAsBidiContext : public RefCounted<SameSizeAsBidiContext> {
-    uint32_t bitfields : 16;
-    void* parent;
+  uint32_t bitfields : 16;
+  void* parent;
 };
 
-static_assert(sizeof(BidiContext) == sizeof(SameSizeAsBidiContext), "BidiContext should stay small");
+static_assert(sizeof(BidiContext) == sizeof(SameSizeAsBidiContext),
+              "BidiContext should stay small");
 
-inline PassRefPtr<BidiContext> BidiContext::createUncached(unsigned char level, CharDirection direction, bool override, BidiEmbeddingSource source, BidiContext* parent)
-{
-    return adoptRef(new BidiContext(level, direction, override, source, parent));
+inline PassRefPtr<BidiContext> BidiContext::CreateUncached(
+    unsigned char level,
+    CharDirection direction,
+    bool override,
+    BidiEmbeddingSource source,
+    BidiContext* parent) {
+  return AdoptRef(new BidiContext(level, direction, override, source, parent));
 }
 
-PassRefPtr<BidiContext> BidiContext::create(unsigned char level, CharDirection direction, bool override, BidiEmbeddingSource source, BidiContext* parent)
-{
-    ASSERT(direction == (level % 2 ? RightToLeft : LeftToRight));
+PassRefPtr<BidiContext> BidiContext::Create(unsigned char level,
+                                            CharDirection direction,
+                                            bool override,
+                                            BidiEmbeddingSource source,
+                                            BidiContext* parent) {
+  DCHECK_EQ(direction, (level % 2 ? kRightToLeft : kLeftToRight));
 
-    if (parent || level >= 2)
-        return createUncached(level, direction, override, source, parent);
+  if (parent || level >= 2)
+    return CreateUncached(level, direction, override, source, parent);
 
-    ASSERT(level <= 1);
-    if (!level) {
-        if (!override) {
-            DEFINE_STATIC_REF(BidiContext, ltrContext, (createUncached(0, LeftToRight, false, FromStyleOrDOM, 0)));
-            return ltrContext;
-        }
-
-        DEFINE_STATIC_REF(BidiContext, ltrOverrideContext, (createUncached(0, LeftToRight, true, FromStyleOrDOM, 0)));
-        return ltrOverrideContext;
-    }
-
+  DCHECK_LE(level, 1);
+  if (!level) {
     if (!override) {
-        DEFINE_STATIC_REF(BidiContext, rtlContext, (createUncached(1, RightToLeft, false, FromStyleOrDOM, 0)));
-        return rtlContext;
+      DEFINE_STATIC_REF(
+          BidiContext, ltr_context,
+          (CreateUncached(0, kLeftToRight, false, kFromStyleOrDOM, 0)));
+      return ltr_context;
     }
 
-    DEFINE_STATIC_REF(BidiContext, rtlOverrideContext, (createUncached(1, RightToLeft, true, FromStyleOrDOM, 0)));
-    return rtlOverrideContext;
+    DEFINE_STATIC_REF(
+        BidiContext, ltr_override_context,
+        (CreateUncached(0, kLeftToRight, true, kFromStyleOrDOM, 0)));
+    return ltr_override_context;
+  }
+
+  if (!override) {
+    DEFINE_STATIC_REF(
+        BidiContext, rtl_context,
+        (CreateUncached(1, kRightToLeft, false, kFromStyleOrDOM, 0)));
+    return rtl_context;
+  }
+
+  DEFINE_STATIC_REF(
+      BidiContext, rtl_override_context,
+      (CreateUncached(1, kRightToLeft, true, kFromStyleOrDOM, 0)));
+  return rtl_override_context;
 }
 
-static inline PassRefPtr<BidiContext> copyContextAndRebaselineLevel(BidiContext* context, BidiContext* parent)
-{
-    ASSERT(context);
-    unsigned char newLevel = parent ? parent->level() : 0;
-    if (context->dir() == RightToLeft)
-        newLevel = nextGreaterOddLevel(newLevel);
-    else if (parent)
-        newLevel = nextGreaterEvenLevel(newLevel);
+static inline PassRefPtr<BidiContext> CopyContextAndRebaselineLevel(
+    BidiContext* context,
+    BidiContext* parent) {
+  DCHECK(context);
+  unsigned char new_level = parent ? parent->Level() : 0;
+  if (context->Dir() == kRightToLeft)
+    new_level = NextGreaterOddLevel(new_level);
+  else if (parent)
+    new_level = NextGreaterEvenLevel(new_level);
 
-    return BidiContext::create(newLevel, context->dir(), context->override(), context->source(), parent);
+  return BidiContext::Create(new_level, context->Dir(), context->Override(),
+                             context->Source(), parent);
 }
 
-// The BidiContext stack must be immutable -- they're re-used for re-layout after
-// DOM modification/editing -- so we copy all the non-unicode contexts, and
-// recalculate their levels.
-PassRefPtr<BidiContext> BidiContext::copyStackRemovingUnicodeEmbeddingContexts()
-{
-    Vector<BidiContext*, 64> contexts;
-    for (BidiContext* iter = this; iter; iter = iter->parent()) {
-        if (iter->source() != FromUnicode)
-            contexts.append(iter);
-    }
-    ASSERT(contexts.size());
+// The BidiContext stack must be immutable -- they're re-used for re-layout
+// after DOM modification/editing -- so we copy all the non-unicode contexts,
+// and recalculate their levels.
+PassRefPtr<BidiContext>
+BidiContext::CopyStackRemovingUnicodeEmbeddingContexts() {
+  Vector<BidiContext*, 64> contexts;
+  for (BidiContext* iter = this; iter; iter = iter->Parent()) {
+    if (iter->Source() != kFromUnicode)
+      contexts.push_back(iter);
+  }
+  DCHECK(contexts.size());
 
-    RefPtr<BidiContext> topContext = copyContextAndRebaselineLevel(contexts.last(), 0);
-    for (int i = contexts.size() - 1; i > 0; --i)
-        topContext = copyContextAndRebaselineLevel(contexts[i - 1], topContext.get());
+  RefPtr<BidiContext> top_context =
+      CopyContextAndRebaselineLevel(contexts.back(), 0);
+  for (int i = contexts.size() - 1; i > 0; --i)
+    top_context =
+        CopyContextAndRebaselineLevel(contexts[i - 1], top_context.Get());
 
-    return topContext.release();
+  return top_context.Release();
 }
 
-bool operator==(const BidiContext& c1, const BidiContext& c2)
-{
-    if (&c1 == &c2)
-        return true;
-    if (c1.level() != c2.level() || c1.override() != c2.override() || c1.dir() != c2.dir() || c1.source() != c2.source())
-        return false;
-    if (!c1.parent())
-        return !c2.parent();
-    return c2.parent() && *c1.parent() == *c2.parent();
+bool operator==(const BidiContext& c1, const BidiContext& c2) {
+  if (&c1 == &c2)
+    return true;
+  if (c1.Level() != c2.Level() || c1.Override() != c2.Override() ||
+      c1.Dir() != c2.Dir() || c1.Source() != c2.Source())
+    return false;
+  if (!c1.Parent())
+    return !c2.Parent();
+  return c2.Parent() && *c1.Parent() == *c2.Parent();
 }
 
-} // namespace blink
+}  // namespace blink

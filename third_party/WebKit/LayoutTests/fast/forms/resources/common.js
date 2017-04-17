@@ -9,7 +9,6 @@ function createFormControlDataSet() {
         'HTMLDataListElement',
         'HTMLFieldSetElement',
         'HTMLInputElement',
-        'HTMLKeygenElement',
         'HTMLLabelElement',
         'HTMLLegendElement',
         'HTMLMeterElement',
@@ -96,9 +95,18 @@ function getAbsoluteRect(element) {
 }
 
 function searchCancelButtonPosition(element) {
+    var offset = cumulativeOffset(element);
     var pos = {};
-    pos.x = element.offsetLeft + element.offsetWidth - 9;
-    pos.y = element.offsetTop + element.offsetHeight / 2;
+    pos.x = offset[0] + element.offsetWidth - 9;
+    pos.y = offset[1] + element.offsetHeight / 2;
+    return pos;
+}
+
+function rtlSearchCancelButtonPosition(element) {
+    var offset = cumulativeOffset(element);
+    var pos = {};
+    pos.x = offset[0] + 9;
+    pos.y = offset[1] + element.offsetHeight / 2;
     return pos;
 }
 

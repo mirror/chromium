@@ -32,70 +32,64 @@
 
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/V8ObjectBuilder.h"
+#include "core/dom/ExecutionContext.h"
+#include "core/frame/UseCounter.h"
 #include "modules/peerconnection/RTCSessionDescriptionInit.h"
 
 namespace blink {
 
-RTCSessionDescription* RTCSessionDescription::create(const RTCSessionDescriptionInit& descriptionInitDict)
-{
-    String type;
-    if (descriptionInitDict.hasType())
-        type = descriptionInitDict.type();
+RTCSessionDescription* RTCSessionDescription::Create(
+    ExecutionContext* context,
+    const RTCSessionDescriptionInit& description_init_dict) {
+  String type;
+  if (description_init_dict.hasType())
+    type = description_init_dict.type();
+  else
+    UseCounter::Count(context, UseCounter::kRTCSessionDescriptionInitNoType);
 
-    String sdp;
-    if (descriptionInitDict.hasSdp())
-        sdp = descriptionInitDict.sdp();
+  String sdp;
+  if (description_init_dict.hasSdp())
+    sdp = description_init_dict.sdp();
+  else
+    UseCounter::Count(context, UseCounter::kRTCSessionDescriptionInitNoSdp);
 
-    return new RTCSessionDescription(WebRTCSessionDescription(type, sdp));
+  return new RTCSessionDescription(WebRTCSessionDescription(type, sdp));
 }
 
-RTCSessionDescription* RTCSessionDescription::create(WebRTCSessionDescription webSessionDescription)
-{
-    return new RTCSessionDescription(webSessionDescription);
+RTCSessionDescription* RTCSessionDescription::Create(
+    WebRTCSessionDescription web_session_description) {
+  return new RTCSessionDescription(web_session_description);
 }
 
-RTCSessionDescription::RTCSessionDescription(WebRTCSessionDescription webSessionDescription)
-    : m_webSessionDescription(webSessionDescription)
-{
+RTCSessionDescription::RTCSessionDescription(
+    WebRTCSessionDescription web_session_description)
+    : web_session_description_(web_session_description) {}
+
+String RTCSessionDescription::type() {
+  return web_session_description_.GetType();
 }
 
-String RTCSessionDescription::type()
-{
-    return m_webSessionDescription.type();
+void RTCSessionDescription::setType(const String& type) {
+  web_session_description_.SetType(type);
 }
 
-void RTCSessionDescription::setType(const String& type)
-{
-    m_webSessionDescription.setType(type);
+String RTCSessionDescription::sdp() {
+  return web_session_description_.Sdp();
 }
 
-String RTCSessionDescription::sdp()
-{
-    return m_webSessionDescription.sdp();
+void RTCSessionDescription::setSdp(const String& sdp) {
+  web_session_description_.SetSDP(sdp);
 }
 
-void RTCSessionDescription::setSdp(const String& sdp)
-{
-    m_webSessionDescription.setSDP(sdp);
+ScriptValue RTCSessionDescription::toJSONForBinding(ScriptState* script_state) {
+  V8ObjectBuilder result(script_state);
+  result.AddStringOrNull("type", type());
+  result.AddStringOrNull("sdp", sdp());
+  return result.GetScriptValue();
 }
 
-ScriptValue RTCSessionDescription::toJSONForBinding(ScriptState* scriptState)
-{
-    V8ObjectBuilder result(scriptState);
-    if (type().isNull())
-        result.addNull("type");
-    else
-        result.addString("type", type());
-    if (sdp().isNull())
-        result.addNull("sdp");
-    else
-        result.addString("sdp", sdp());
-    return result.scriptValue();
+WebRTCSessionDescription RTCSessionDescription::WebSessionDescription() {
+  return web_session_description_;
 }
 
-WebRTCSessionDescription RTCSessionDescription::webSessionDescription()
-{
-    return m_webSessionDescription;
-}
-
-} // namespace blink
+}  // namespace blink

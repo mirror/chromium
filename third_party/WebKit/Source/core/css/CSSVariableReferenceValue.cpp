@@ -6,15 +6,13 @@
 
 namespace blink {
 
-DEFINE_TRACE_AFTER_DISPATCH(CSSVariableReferenceValue)
-{
-    CSSValue::traceAfterDispatch(visitor);
+DEFINE_TRACE_AFTER_DISPATCH(CSSVariableReferenceValue) {
+  CSSValue::TraceAfterDispatch(visitor);
 }
 
-String CSSVariableReferenceValue::customCSSText() const
-{
-    // We may want to consider caching this value.
-    return m_data->tokenRange().serialize();
+String CSSVariableReferenceValue::CustomCSSText() const {
+  // We may want to consider caching this value.
+  return data_->TokenRange().Serialize();
 }
 
-} // namespace blink
+}  // namespace blink

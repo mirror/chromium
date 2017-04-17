@@ -5,6 +5,7 @@
 #include "chrome/browser/themes/theme_service.h"
 
 #include "base/macros.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "chrome/browser/extensions/component_loader.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/profiles/profile.h"
@@ -64,6 +65,14 @@ IN_PROC_BROWSER_TEST_F(ThemeServiceBrowserTest, PRE_ThemeDataPackInvalid) {
             theme_provider.GetColor(ThemeProperties::COLOR_TOOLBAR));
   EXPECT_NE(base::FilePath(),
             profile->GetPrefs()->GetFilePath(prefs::kCurrentThemePackFilename));
+  // Add a vestigial .pak file that should be removed when the new one is
+  // created.
+  // TODO(estade): remove when vestigial .pak file deletion is removed.
+  EXPECT_EQ(
+      1, base::WriteFile(profile->GetPrefs()
+                             ->GetFilePath(prefs::kCurrentThemePackFilename)
+                             .AppendASCII("Cached Theme Material Design.pak"),
+                         "a", 1));
 
   // Change the theme data pack path to an invalid location such that second
   // part of the test is forced to recreate the theme pack when the theme
@@ -81,6 +90,17 @@ IN_PROC_BROWSER_TEST_F(ThemeServiceBrowserTest, ThemeDataPackInvalid) {
   EXPECT_TRUE(UsingCustomTheme(*theme_service));
   EXPECT_EQ(kThemeToolbarColor,
             theme_provider.GetColor(ThemeProperties::COLOR_TOOLBAR));
+
+  // TODO(estade): remove when vestigial .pak file deletion is removed.
+  content::BrowserThread::GetBlockingPool()->FlushForTesting();
+  base::FilePath old_path =
+      browser()
+          ->profile()
+          ->GetPrefs()
+          ->GetFilePath(prefs::kCurrentThemePackFilename)
+          .AppendASCII("Cached Theme Material Design.pak");
+  EXPECT_FALSE(base::PathExists(old_path)) << "File not deleted: "
+                                           << old_path.value();
 }
 
 }  // namespace

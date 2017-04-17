@@ -33,30 +33,36 @@
 
 #include "core/dom/custom/V0CustomElementLifecycleCallbacks.h"
 #include "core/dom/custom/V0CustomElementProcessingStep.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
 class V0CustomElementCallbackInvocation : public V0CustomElementProcessingStep {
-    WTF_MAKE_NONCOPYABLE(V0CustomElementCallbackInvocation);
-public:
-    static V0CustomElementCallbackInvocation* createInvocation(V0CustomElementLifecycleCallbacks*, V0CustomElementLifecycleCallbacks::CallbackType);
-    static V0CustomElementCallbackInvocation* createAttributeChangedInvocation(V0CustomElementLifecycleCallbacks*, const AtomicString& name, const AtomicString& oldValue, const AtomicString& newValue);
+  WTF_MAKE_NONCOPYABLE(V0CustomElementCallbackInvocation);
 
-protected:
-    V0CustomElementCallbackInvocation(V0CustomElementLifecycleCallbacks* callbacks)
-        : m_callbacks(callbacks)
-    {
-    }
+ public:
+  static V0CustomElementCallbackInvocation* CreateInvocation(
+      V0CustomElementLifecycleCallbacks*,
+      V0CustomElementLifecycleCallbacks::CallbackType);
+  static V0CustomElementCallbackInvocation* CreateAttributeChangedInvocation(
+      V0CustomElementLifecycleCallbacks*,
+      const AtomicString& name,
+      const AtomicString& old_value,
+      const AtomicString& new_value);
 
-    V0CustomElementLifecycleCallbacks* callbacks() { return m_callbacks.get(); }
+ protected:
+  V0CustomElementCallbackInvocation(
+      V0CustomElementLifecycleCallbacks* callbacks)
+      : callbacks_(callbacks) {}
 
-    DECLARE_VIRTUAL_TRACE();
+  V0CustomElementLifecycleCallbacks* Callbacks() { return callbacks_.Get(); }
 
-private:
-    Member<V0CustomElementLifecycleCallbacks> m_callbacks;
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  Member<V0CustomElementLifecycleCallbacks> callbacks_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V0CustomElementCallbackInvocation_h
+#endif  // V0CustomElementCallbackInvocation_h

@@ -3705,7 +3705,7 @@ $as_echo "$ac_cv_safe_to_define___extensions__" >&6; }
 
 LIBXSLT_MAJOR_VERSION=1
 LIBXSLT_MINOR_VERSION=1
-LIBXSLT_MICRO_VERSION=28
+LIBXSLT_MICRO_VERSION=29
 PACKAGE=libxslt
 LIBEXSLT_MAJOR_VERSION=0
 LIBEXSLT_MINOR_VERSION=8
@@ -13301,6 +13301,18 @@ fi
 
 done
 
+for ac_header in errno.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "errno.h" "ac_cv_header_errno_h" "$ac_includes_default"
+if test "x$ac_cv_header_errno_h" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_ERRNO_H 1
+_ACEOF
+
+fi
+
+done
+
 for ac_func in stat _stat
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
@@ -13472,7 +13484,7 @@ _ACEOF
 fi
 done
 
-for ac_func in mktime localtime localtime_r asctime time gmtime gmtime_r ftime
+for ac_func in localtime localtime_r time gmtime gmtime_r ftime
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"

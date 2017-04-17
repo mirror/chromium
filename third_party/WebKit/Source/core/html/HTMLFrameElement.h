@@ -29,28 +29,29 @@
 namespace blink {
 
 class HTMLFrameElement final : public HTMLFrameElementBase {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(HTMLFrameElement);
+  DEFINE_WRAPPERTYPEINFO();
 
-    bool hasFrameBorder() const { return m_frameBorder; }
+ public:
+  DECLARE_NODE_FACTORY(HTMLFrameElement);
 
-    bool noResize() const;
+  bool HasFrameBorder() const { return frame_border_; }
 
-private:
-    explicit HTMLFrameElement(Document&);
+  bool NoResize() const;
 
-    void attachLayoutTree(const AttachContext& = AttachContext()) override;
+ private:
+  explicit HTMLFrameElement(Document&);
 
-    bool layoutObjectIsNeeded(const ComputedStyle&) override;
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
+  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
+  bool LayoutObjectIsNeeded(const ComputedStyle&) override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
 
-    bool m_frameBorder;
-    bool m_frameBorderSet;
+  void ParseAttribute(const AttributeModificationParams&) override;
+
+  bool frame_border_;
+  bool frame_border_set_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLFrameElement_h
+#endif  // HTMLFrameElement_h

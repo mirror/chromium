@@ -38,23 +38,23 @@ class PolicyDetails:
   # TODO(joaodasilva): refactor the 'dict' type into a more generic 'json' type
   # that can also be used to represent lists of other JSON objects.
   TYPE_MAP = {
-    'dict':             ('TYPE_DICTIONARY',   'string',       'String',
+    'dict':             ('Type::DICTIONARY',  'string',       'String',
                         'string'),
     'external':         ('TYPE_EXTERNAL',     'string',       'String',
                         'invalid'),
-    'int':              ('TYPE_INTEGER',      'int64',        'Integer',
+    'int':              ('Type::INTEGER',     'int64',        'Integer',
                         'integer'),
-    'int-enum':         ('TYPE_INTEGER',      'int64',        'Integer',
+    'int-enum':         ('Type::INTEGER',     'int64',        'Integer',
                         'choice'),
-    'list':             ('TYPE_LIST',         'StringList',   'StringList',
+    'list':             ('Type::LIST',        'StringList',   'StringList',
                         'string'),
-    'main':             ('TYPE_BOOLEAN',      'bool',         'Boolean',
+    'main':             ('Type::BOOLEAN',     'bool',         'Boolean',
                         'bool'),
-    'string':           ('TYPE_STRING',       'string',       'String',
+    'string':           ('Type::STRING',      'string',       'String',
                         'string'),
-    'string-enum':      ('TYPE_STRING',       'string',       'String',
+    'string-enum':      ('Type::STRING',      'string',       'String',
                         'choice'),
-    'string-enum-list': ('TYPE_LIST',         'StringList',   'StringList',
+    'string-enum-list': ('Type::LIST',        'StringList',   'StringList',
                         'multi-select'),
   }
 
@@ -74,6 +74,7 @@ class PolicyDetails:
     self.can_be_mandatory = features.get('can_be_mandatory', True)
     self.is_deprecated = policy.get('deprecated', False)
     self.is_device_only = policy.get('device_only', False)
+    self.is_future = policy.get('future', False)
     self.schema = policy.get('schema', {})
     self.has_enterprise_default = 'default_for_enterprise_users' in policy
     if self.has_enterprise_default:
@@ -181,9 +182,17 @@ def main():
                     dest='cloud_policy_proto_path',
                     help='generate cloud policy protobuf file',
                     metavar='FILE')
+  parser.add_option('--cpfrp', '--cloud-policy-full-runtime-protobuf',
+                    dest='cloud_policy_full_runtime_proto_path',
+                    help='generate cloud policy full runtime protobuf',
+                    metavar='FILE')
   parser.add_option('--csp', '--chrome-settings-protobuf',
                     dest='chrome_settings_proto_path',
                     help='generate chrome settings protobuf file',
+                    metavar='FILE')
+  parser.add_option('--csfrp', '--chrome-settings-full-runtime-protobuf',
+                    dest='chrome_settings_full_runtime_proto_path',
+                    help='generate chrome settings full runtime protobuf',
                     metavar='FILE')
   parser.add_option('--cpd', '--cloud-policy-decoder',
                     dest='cloud_policy_decoder_path',
@@ -197,6 +206,16 @@ def main():
   parser.add_option('--rth', '--risk-tag-header',
                     dest='risk_header_path',
                     help='generate header file for policy risk tags',
+                    metavar='FILE')
+  parser.add_option('--crospch', '--cros-policy-constants-header',
+                    dest='cros_constants_header_path',
+                    help='generate header file of policy constants for use in '
+                         'Chrome OS',
+                    metavar='FILE')
+  parser.add_option('--crospcc', '--cros-policy-constants-source',
+                    dest='cros_constants_source_path',
+                    help='generate source file of policy constants for use in '
+                         'Chrome OS',
                     metavar='FILE')
   (opts, args) = parser.parse_args()
 
@@ -213,11 +232,11 @@ def main():
 
   major_version = ParseVersionFile(version_path)
   template_file_contents = _LoadJSONFile(template_file_name)
-  riskTags = RiskTags(template_file_contents)
+  risk_tags = RiskTags(template_file_contents)
   policy_details = [ PolicyDetails(policy, major_version, os, is_chromium_os,
-                                   riskTags.GetValidTags())
+                                   risk_tags.GetValidTags())
                      for policy in _Flatten(template_file_contents) ]
-  riskTags.ComputeMaxTags(policy_details)
+  risk_tags.ComputeMaxTags(policy_details)
   sorted_policy_details = sorted(policy_details, key=lambda policy: policy.name)
 
   def GenerateFile(path, writer, sorted=False, xml=False):
@@ -225,17 +244,37 @@ def main():
       with open(path, 'w') as f:
         _OutputGeneratedWarningHeader(f, template_file_name, xml)
         writer(sorted and sorted_policy_details or policy_details,
-               os, f, riskTags)
+               os, f, risk_tags)
 
-  GenerateFile(opts.header_path, _WritePolicyConstantHeader, sorted=True)
-  GenerateFile(opts.source_path, _WritePolicyConstantSource, sorted=True)
-  GenerateFile(opts.risk_header_path, _WritePolicyRiskTagHeader)
-  GenerateFile(opts.cloud_policy_proto_path, _WriteCloudPolicyProtobuf)
-  GenerateFile(opts.chrome_settings_proto_path, _WriteChromeSettingsProtobuf)
-  GenerateFile(opts.cloud_policy_decoder_path, _WriteCloudPolicyDecoder)
+  if opts.header_path:
+    GenerateFile(opts.header_path, _WritePolicyConstantHeader, sorted=True)
+  if opts.source_path:
+    GenerateFile(opts.source_path, _WritePolicyConstantSource, sorted=True)
+  if opts.risk_header_path:
+    GenerateFile(opts.risk_header_path, _WritePolicyRiskTagHeader)
+  if opts.cloud_policy_proto_path:
+    GenerateFile(opts.cloud_policy_proto_path, _WriteCloudPolicyProtobuf)
+  if opts.cloud_policy_full_runtime_proto_path:
+    GenerateFile(opts.cloud_policy_full_runtime_proto_path,
+        _WriteCloudPolicyFullRuntimeProtobuf)
+  if opts.chrome_settings_proto_path:
+    GenerateFile(opts.chrome_settings_proto_path, _WriteChromeSettingsProtobuf)
+  if opts.chrome_settings_full_runtime_proto_path:
+    GenerateFile(opts.chrome_settings_full_runtime_proto_path,
+        _WriteChromeSettingsFullRuntimeProtobuf)
+  if opts.cloud_policy_decoder_path:
+    GenerateFile(opts.cloud_policy_decoder_path, _WriteCloudPolicyDecoder)
 
-  if os == 'android':
+  if os == 'android' and opts.app_restrictions_path:
     GenerateFile(opts.app_restrictions_path, _WriteAppRestrictions, xml=True)
+
+  # Generated code for Chrome OS (unused in Chromium).
+  if opts.cros_constants_header_path:
+    GenerateFile(opts.cros_constants_header_path,
+        _WriteChromeOSPolicyConstantsHeader, sorted=True)
+  if opts.cros_constants_source_path:
+    GenerateFile(opts.cros_constants_source_path,
+        _WriteChromeOSPolicyConstantsSource, sorted=True)
 
   return 0
 
@@ -296,7 +335,7 @@ def _LoadJSONFile(json_file):
 
 #------------------ policy constants header ------------------------#
 
-def _WritePolicyConstantHeader(policies, os, f, riskTags):
+def _WritePolicyConstantHeader(policies, os, f, risk_tags):
   f.write('#ifndef CHROME_COMMON_POLICY_CONSTANTS_H_\n'
           '#define CHROME_COMMON_POLICY_CONSTANTS_H_\n'
           '\n'
@@ -347,11 +386,11 @@ def _WritePolicyConstantHeader(policies, os, f, riskTags):
 
 # A mapping of the simple schema types to base::Value::Types.
 SIMPLE_SCHEMA_NAME_MAP = {
-  'boolean': 'TYPE_BOOLEAN',
-  'integer': 'TYPE_INTEGER',
-  'null'   : 'TYPE_NULL',
-  'number' : 'TYPE_DOUBLE',
-  'string' : 'TYPE_STRING',
+  'boolean': 'Type::BOOLEAN',
+  'integer': 'Type::INTEGER',
+  'null'   : 'Type::NONE',
+  'number' : 'Type::DOUBLE',
+  'string' : 'Type::STRING',
 }
 
 class SchemaNodesGenerator:
@@ -411,7 +450,7 @@ class SchemaNodesGenerator:
   def GetStringList(self):
     if self.stringlist_type == None:
       self.stringlist_type = self.AppendSchema(
-          'TYPE_LIST',
+          'Type::LIST',
           self.GetSimpleType('string'),
           'simple type: stringlist')
     return self.stringlist_type
@@ -430,12 +469,12 @@ class SchemaNodesGenerator:
     possible_values = schema['enum']
     if self.IsConsecutiveInterval(possible_values):
       index = self.AppendRestriction(max(possible_values), min(possible_values))
-      return self.AppendSchema('TYPE_INTEGER', index,
+      return self.AppendSchema('Type::INTEGER', index,
           'integer with enumeration restriction (use range instead): %s' % name)
     offset_begin = len(self.int_enums)
     self.int_enums += possible_values
     offset_end = len(self.int_enums)
-    return self.AppendSchema('TYPE_INTEGER',
+    return self.AppendSchema('Type::INTEGER',
         self.AppendRestriction(offset_begin, offset_end),
         'integer with enumeration restriction: %s' % name)
 
@@ -444,7 +483,7 @@ class SchemaNodesGenerator:
     offset_begin = len(self.string_enums)
     self.string_enums += schema['enum']
     offset_end = len(self.string_enums)
-    return self.AppendSchema('TYPE_STRING',
+    return self.AppendSchema('Type::STRING',
         self.AppendRestriction(offset_begin, offset_end),
         'string with enumeration restriction: %s' % name)
 
@@ -468,7 +507,7 @@ class SchemaNodesGenerator:
     re.compile(pattern)
     index = len(self.string_enums);
     self.string_enums.append(pattern);
-    return self.AppendSchema('TYPE_STRING',
+    return self.AppendSchema('Type::STRING',
         self.AppendRestriction(index, index),
         'string with pattern restriction: %s' % name);
 
@@ -487,7 +526,7 @@ class SchemaNodesGenerator:
     index = self.AppendRestriction(
         str(max_value) if max_value_set else 'INT_MAX',
         str(min_value) if min_value_set else 'INT_MIN')
-    return self.AppendSchema('TYPE_INTEGER',
+    return self.AppendSchema('Type::INTEGER',
         index,
         'integer with ranged restriction: %s' % name)
 
@@ -518,13 +557,13 @@ class SchemaNodesGenerator:
       # The 'type' may be missing if the schema has a '$ref' attribute.
       if schema['items'].get('type', '') == 'string':
         return self.GetStringList()
-      return self.AppendSchema('TYPE_LIST',
+      return self.AppendSchema('Type::LIST',
           self.GenerateAndCollectID(schema['items'], 'items of ' + name))
     elif schema['type'] == 'object':
       # Reserve an index first, so that dictionaries come before their
       # properties. This makes sure that the root node is the first in the
       # SchemaNodes array.
-      index = self.AppendSchema('TYPE_DICTIONARY', -1)
+      index = self.AppendSchema('Type::DICTIONARY', -1)
 
       if 'additionalProperties' in schema:
         additionalProperties = self.GenerateAndCollectID(
@@ -562,7 +601,7 @@ class SchemaNodesGenerator:
           additionalProperties, name))
 
       # Set the right data at |index| now.
-      self.schema_nodes[index] = ('TYPE_DICTIONARY', extra, name)
+      self.schema_nodes[index] = ('Type::DICTIONARY', extra, name)
       return index
     else:
       assert False
@@ -659,17 +698,43 @@ class SchemaNodesGenerator:
     self.properties_nodes = map(partial(self.ResolveID, 3),
         self.properties_nodes)
 
-def _WritePolicyConstantSource(policies, os, f, riskTags):
-  f.write('#include "policy/policy_constants.h"\n'
+def _GenerateDefaultValue(value):
+  """Converts a JSON object into a base::Value entry. Returns a tuple, the first
+  entry being a list of declaration statements to define the variable, the
+  second entry being a way to access the variable.
+
+  If no definition is needed, the first return value will be an empty list. If
+  any error occurs, the second return value will be None (ie, no way to fetch
+  the value).
+
+  |value|: The deserialized value to convert to base::Value."""
+  if type(value) == bool or type(value) == int:
+    return [], 'base::MakeUnique<base::Value>(%s)' %\
+                    json.dumps(value)
+  elif type(value) == str:
+    return [], 'base::MakeUnique<base::Value>("%s")' % value
+  elif type(value) == list:
+    setup = ['auto default_value = base::MakeUnique<base::ListValue>();']
+    for entry in value:
+      decl, fetch = _GenerateDefaultValue(entry)
+      # Nested lists are not supported.
+      if decl:
+        return [], None
+      setup.append('default_value->Append(%s);' % fetch)
+    return setup, 'std::move(default_value)'
+  return [], None
+
+def _WritePolicyConstantSource(policies, os, f, risk_tags):
+  f.write('#include "components/policy/policy_constants.h"\n'
           '\n'
           '#include <algorithm>\n'
           '#include <climits>\n'
           '\n'
           '#include "base/logging.h"\n'
           '#include "base/memory/ptr_util.h"\n'
-          '#include "policy/risk_tag.h"\n'
           '#include "components/policy/core/common/policy_types.h"\n'
           '#include "components/policy/core/common/schema_internal.h"\n'
+          '#include "components/policy/risk_tag.h"\n'
           '\n'
           'namespace policy {\n'
           '\n')
@@ -700,7 +765,7 @@ def _WritePolicyConstantSource(policies, os, f, riskTags):
                   'true,' if policy.is_device_only else 'false,',
                   policy.id,
                   policy.max_size,
-                  riskTags.ToInitString(policy.tags)))
+                  risk_tags.ToInitString(policy.tags)))
   f.write('};\n\n')
 
   schema_generator = SchemaNodesGenerator(shared_strings)
@@ -736,27 +801,29 @@ def _WritePolicyConstantSource(policies, os, f, riskTags):
 
   for policy in policies:
     if policy.has_enterprise_default:
-      if policy.policy_type == 'TYPE_BOOLEAN':
-        creation_expression = 'new base::FundamentalValue(%s)' %\
-                              ('true' if policy.enterprise_default else 'false')
-      elif policy.policy_type == 'TYPE_INTEGER':
-        creation_expression = 'new base::FundamentalValue(%s)' %\
-                              policy.enterprise_default
-      elif policy.policy_type == 'TYPE_STRING':
-        creation_expression = 'new base::StringValue("%s")' %\
-                              policy.enterprise_default
-      else:
+      declare_default_stmts, fetch_default =\
+          _GenerateDefaultValue(policy.enterprise_default)
+      if not fetch_default:
         raise RuntimeError('Type %s of policy %s is not supported at '
                            'enterprise defaults' % (policy.policy_type,
                                                     policy.name))
+
+      # Convert declare_default_stmts to a string with the correct identation.
+      if declare_default_stmts:
+        declare_default = '    %s\n' % '\n    '.join(declare_default_stmts)
+      else:
+        declare_default = ''
+
       f.write('  if (!policy_map->Get(key::k%s)) {\n'
+              '%s'
               '    policy_map->Set(key::k%s,\n'
               '                    POLICY_LEVEL_MANDATORY,\n'
               '                    POLICY_SCOPE_USER,\n'
               '                    POLICY_SOURCE_ENTERPRISE_DEFAULT,\n'
-              '                    base::WrapUnique(%s),\n'
-              '                    NULL);\n'
-              '  }\n' % (policy.name, policy.name, creation_expression))
+              '                    %s,\n'
+              '                    nullptr);\n'
+              '  }\n' % (policy.name, declare_default, policy.name,
+                         fetch_default))
 
   f.write('}\n'
           '#endif\n\n')
@@ -802,7 +869,7 @@ def _WritePolicyConstantSource(policies, os, f, riskTags):
           '}  // namespace policy\n')
 
 
-#------------------ policy risk tag header ------------------------#
+#------------------ policy risk tag header -------------------------#
 
 class RiskTags(object):
   '''Generates files and strings to translate the parsed risk tags.'''
@@ -859,7 +926,7 @@ class RiskTags(object):
       self.enum_for_tag[tag['name']] = "RISK_TAG_" + \
                                        tag['name'].replace("-","_").upper()
 
-def _WritePolicyRiskTagHeader(policies, os, f, riskTags):
+def _WritePolicyRiskTagHeader(policies, os, f, risk_tags):
   f.write('#ifndef CHROME_COMMON_POLICY_RISK_TAG_H_\n'
           '#define CHROME_COMMON_POLICY_RISK_TAG_H_\n'
           '\n'
@@ -872,18 +939,18 @@ def _WritePolicyRiskTagHeader(policies, os, f, riskTags):
           '// impact.\n'
           '// The explanation of the single tags is stated in\n'
           '// policy_templates.json within the \'risk_tag_definitions\' tag.'
-          '\n' + riskTags.GenerateEnum() + '\n'
+          '\n' + risk_tags.GenerateEnum() + '\n'
           '// This constant describes how many risk tags were used by the\n'
           '// policy which uses the most risk tags. \n'
           'const size_t kMaxRiskTagCount = ' + \
-                riskTags.GetMaxTags() + ';\n'
+                risk_tags.GetMaxTags() + ';\n'
           '\n'
           '}  // namespace policy\n'
           '\n'
           '#endif  // CHROME_COMMON_POLICY_RISK_TAG_H_'
           '\n')
 
-#------------------ policy protobufs --------------------------------#
+#------------------ policy protobufs -------------------------------#
 
 CHROME_SETTINGS_PROTO_HEAD = '''
 syntax = "proto2";
@@ -954,7 +1021,7 @@ def _WritePolicyProto(f, policy, fields):
     _OutputComment(f, '\nValid values:')
     for item in policy.items:
       _OutputComment(f, '  %s: %s' % (str(item.value), item.caption))
-  if policy.policy_type == 'TYPE_DICTIONARY':
+  if policy.policy_type == 'Type::DICTIONARY':
     _OutputComment(f, '\nValue schema:\n%s' %
                    json.dumps(policy.schema, sort_keys=True, indent=4,
                               separators=(',', ': ')))
@@ -970,9 +1037,8 @@ def _WritePolicyProto(f, policy, fields):
               (policy.name, policy.name, policy.id + RESERVED_IDS) ]
 
 
-def _WriteChromeSettingsProtobuf(policies, os, f, riskTags):
+def _WriteChromeSettingsProtobuf(policies, os, f, risk_tags):
   f.write(CHROME_SETTINGS_PROTO_HEAD)
-
   fields = []
   f.write('// PBs for individual settings.\n\n')
   for policy in policies:
@@ -988,8 +1054,46 @@ def _WriteChromeSettingsProtobuf(policies, os, f, riskTags):
   f.write('}\n\n')
 
 
-def _WriteCloudPolicyProtobuf(policies, os, f, riskTags):
+def _WriteChromeSettingsFullRuntimeProtobuf(policies, os, f, risk_tags):
+  # For full runtime, disable LITE_RUNTIME switch and import full runtime
+  # version of cloud_policy.proto.
+  f.write(CHROME_SETTINGS_PROTO_HEAD.replace(
+      "option optimize_for = LITE_RUNTIME;",
+      "//option optimize_for = LITE_RUNTIME;").replace(
+          "import \"cloud_policy.proto\";",
+          "import \"cloud_policy_full_runtime.proto\";"
+      ))
+  fields = []
+  f.write('// PBs for individual settings.\n\n')
+  for policy in policies:
+    # Note: This protobuf also gets the unsupported policies, since it's an
+    # exhaustive list of all the supported user policies on any platform.
+    if not policy.is_device_only:
+      _WritePolicyProto(f, policy, fields)
+
+  f.write('// --------------------------------------------------\n'
+          '// Big wrapper PB containing the above groups.\n\n'
+          'message ChromeSettingsProto {\n')
+  f.write(''.join(fields))
+  f.write('}\n\n')
+
+
+def _WriteCloudPolicyProtobuf(policies, os, f, risk_tags):
   f.write(CLOUD_POLICY_PROTO_HEAD)
+  f.write('message CloudPolicySettings {\n')
+  for policy in policies:
+    if policy.is_supported and not policy.is_device_only:
+      f.write('  optional %sPolicyProto %s = %s;\n' %
+              (policy.policy_protobuf_type, policy.name,
+               policy.id + RESERVED_IDS))
+  f.write('}\n\n')
+
+
+def _WriteCloudPolicyFullRuntimeProtobuf(policies, os, f, risk_tags):
+  # For full runtime, disable LITE_RUNTIME switch
+  f.write(CLOUD_POLICY_PROTO_HEAD.replace(
+      "option optimize_for = LITE_RUNTIME;",
+      "//option optimize_for = LITE_RUNTIME;"))
   f.write('message CloudPolicySettings {\n')
   for policy in policies:
     if policy.is_supported and not policy.is_device_only:
@@ -1001,7 +1105,7 @@ def _WriteCloudPolicyProtobuf(policies, os, f, riskTags):
 
 #------------------ protobuf decoder -------------------------------#
 
-CPP_HEAD = '''
+CLOUD_POLICY_DECODER_CPP_HEAD = '''
 #include <limits>
 #include <memory>
 #include <utility>
@@ -1017,8 +1121,8 @@ CPP_HEAD = '''
 #include "components/policy/core/common/external_data_fetcher.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_types.h"
-#include "policy/policy_constants.h"
-#include "policy/proto/cloud_policy.pb.h"
+#include "components/policy/policy_constants.h"
+#include "components/policy/proto/cloud_policy.pb.h"
 
 using google::protobuf::RepeatedPtrField;
 
@@ -1036,7 +1140,7 @@ std::unique_ptr<base::Value> DecodeIntegerValue(
   }
 
   return base::WrapUnique(
-      new base::FundamentalValue(static_cast<int>(value)));
+      new base::Value(static_cast<int>(value)));
 }
 
 std::unique_ptr<base::ListValue> DecodeStringList(
@@ -1065,22 +1169,22 @@ void DecodePolicy(const em::CloudPolicySettings& policy,
 '''
 
 
-CPP_FOOT = '''}
+CLOUD_POLICY_DECODER_CPP_FOOT = '''}
 
 }  // namespace policy
 '''
 
 
 def _CreateValue(type, arg):
-  if type == 'TYPE_BOOLEAN':
-    return 'new base::FundamentalValue(%s)' % arg
-  elif type == 'TYPE_INTEGER':
+  if type == 'Type::BOOLEAN':
+    return 'new base::Value(%s)' % arg
+  elif type == 'Type::INTEGER':
     return 'DecodeIntegerValue(%s)' % arg
-  elif type == 'TYPE_STRING':
-    return 'new base::StringValue(%s)' % arg
-  elif type == 'TYPE_LIST':
+  elif type == 'Type::STRING':
+    return 'new base::Value(%s)' % arg
+  elif type == 'Type::LIST':
     return 'DecodeStringList(%s)' % arg
-  elif type == 'TYPE_DICTIONARY' or type == 'TYPE_EXTERNAL':
+  elif type == 'Type::DICTIONARY' or type == 'TYPE_EXTERNAL':
     return 'DecodeJson(%s)' % arg
   else:
     raise NotImplementedError('Unknown type %s' % type)
@@ -1092,7 +1196,7 @@ def _CreateExternalDataFetcher(type, name):
   return 'nullptr'
 
 
-def _WritePolicyCode(f, policy):
+def _WriteCloudPolicyDecoderCode(f, policy):
   membername = policy.name.lower()
   proto_type = '%sPolicyProto' % policy.policy_protobuf_type
   f.write('  if (policy.has_%s()) {\n' % membername)
@@ -1137,15 +1241,132 @@ def _WritePolicyCode(f, policy):
           '  }\n')
 
 
-def _WriteCloudPolicyDecoder(policies, os, f, riskTags):
-  f.write(CPP_HEAD)
+def _WriteCloudPolicyDecoder(policies, os, f, risk_tags):
+  f.write(CLOUD_POLICY_DECODER_CPP_HEAD)
   for policy in policies:
     if policy.is_supported and not policy.is_device_only:
-      _WritePolicyCode(f, policy)
-  f.write(CPP_FOOT)
+      _WriteCloudPolicyDecoderCode(f, policy)
+  f.write(CLOUD_POLICY_DECODER_CPP_FOOT)
 
 
-def _WriteAppRestrictions(policies, os, f, riskTags):
+#------------------ Chrome OS policy constants header --------------#
+
+# Returns a list of supported user policies by filtering |policies|.
+def _GetSupportedUserPolicies(policies):
+  return filter(lambda policy: policy.is_supported and
+                               not policy.is_device_only, policies)
+
+
+# Returns a list of supported device policies by filtering |policies|.
+def _GetSupportedDevicePolicies(policies):
+  return filter(lambda policy: policy.is_supported and
+                               policy.is_device_only, policies)
+
+
+# Returns the set of all policy.policy_protobuf_type strings from |policies|.
+def _GetProtobufTypes(policies):
+  return set(policy.policy_protobuf_type for policy in policies)
+
+
+# Writes the definition of an array that contains the pointers to the mutable
+# proto field for each policy in |policies| of the given |protobuf_type|.
+def _WriteChromeOSPolicyAccessHeader(f, protobuf_type):
+  f.write('// Access to the mutable protobuf function of all supported '
+          '%s user\n// policies.\n' % protobuf_type.lower())
+  f.write('struct %sPolicyAccess {\n'
+          '  const char* policy_key;\n'
+          '  enterprise_management::%sPolicyProto*\n'
+          '      (enterprise_management::CloudPolicySettings::'
+          '*mutable_proto_ptr)();\n'
+          '};\n' % (protobuf_type, protobuf_type))
+  f.write('extern const %sPolicyAccess k%sPolicyAccess[];\n\n'
+          % (protobuf_type, protobuf_type))
+
+
+# Writes policy_constants.h for use in Chrome OS.
+def _WriteChromeOSPolicyConstantsHeader(policies, os, f, risk_tags):
+  f.write('#ifndef __BINDINGS_POLICY_CONSTANTS_H_\n'
+          '#define __BINDINGS_POLICY_CONSTANTS_H_\n\n')
+
+  # Forward declarations.
+  supported_user_policies = _GetSupportedUserPolicies(policies)
+  protobuf_types = _GetProtobufTypes(supported_user_policies)
+  f.write('namespace enterprise_management {\n'
+          'class CloudPolicySettings;\n')
+  for protobuf_type in protobuf_types:
+    f.write('class %sPolicyProto;\n' % protobuf_type)
+  f.write('}  // namespace enterprise_management\n\n')
+
+  f.write('namespace policy {\n\n')
+
+  # Policy keys.
+  f.write('// Registry key names for user and device policies.\n'
+          'namespace key {\n\n')
+  for policy in policies:
+    f.write('extern const char k' + policy.name + '[];\n')
+  f.write('\n}  // namespace key\n\n')
+
+  # Device policy keys.
+  f.write('// NULL-terminated list of device policy registry key names.\n')
+  f.write('extern const char* kDevicePolicyKeys[];\n\n');
+
+  # User policy proto pointers, one struct for each protobuf type.
+  for protobuf_type in protobuf_types:
+    _WriteChromeOSPolicyAccessHeader(f, protobuf_type)
+
+  f.write('}  // namespace policy\n\n'
+          '#endif  // __BINDINGS_POLICY_CONSTANTS_H_\n')
+
+
+#------------------ Chrome OS policy constants source --------------#
+
+# Writes an array that contains the pointers to the mutable proto field for each
+# policy in |policies| of the given |protobuf_type|.
+def _WriteChromeOSPolicyAccessSource(policies, f, protobuf_type):
+  f.write('constexpr %sPolicyAccess k%sPolicyAccess[] = {\n'
+          % (protobuf_type, protobuf_type))
+  for policy in policies:
+    if policy.policy_protobuf_type == protobuf_type:
+      f.write('  {key::k%s,\n'
+              '   &em::CloudPolicySettings::mutable_%s},\n'
+              % (policy.name, policy.name.lower()))
+  # The list is nullptr-terminated.
+  f.write('  {nullptr, nullptr},\n'
+          '};\n\n')
+
+
+# Writes policy_constants.cc for use in Chrome OS.
+def _WriteChromeOSPolicyConstantsSource(policies, os, f, risk_tags):
+  f.write('#include "bindings/cloud_policy.pb.h"\n'
+          '#include "bindings/policy_constants.h"\n\n'
+          'namespace em = enterprise_management;\n\n'
+          'namespace policy {\n\n')
+
+  # Policy keys.
+  f.write('namespace key {\n\n')
+  for policy in policies:
+    f.write('const char k{name}[] = "{name}";\n'.format(name=policy.name))
+  f.write('\n}  // namespace key\n\n')
+
+  # Device policy keys.
+  supported_device_policies = _GetSupportedDevicePolicies(policies)
+  f.write('const char* kDevicePolicyKeys[] = {\n\n');
+  for policy in supported_device_policies:
+    f.write('  key::k%s,\n' % policy.name)
+  f.write('  nullptr};\n\n');
+
+  # User policy proto pointers, one struct for each protobuf type.
+  supported_user_policies = _GetSupportedUserPolicies(policies)
+  protobuf_types = _GetProtobufTypes(supported_user_policies)
+  for protobuf_type in protobuf_types:
+    _WriteChromeOSPolicyAccessSource(supported_user_policies, f, protobuf_type)
+
+  f.write('}  // namespace policy\n')
+
+
+#------------------ app restrictions -------------------------------#
+
+def _WriteAppRestrictions(policies, os, f, risk_tags):
 
   def WriteRestrictionCommon(key):
     f.write('    <restriction\n'
@@ -1171,7 +1392,8 @@ def _WriteAppRestrictions(policies, os, f, riskTags):
   f.write('<restrictions xmlns:android="'
           'http://schemas.android.com/apk/res/android">\n\n')
   for policy in policies:
-    if policy.is_supported and policy.restriction_type != 'invalid':
+    if (policy.is_supported and policy.restriction_type != 'invalid' and
+         not policy.is_deprecated and not policy.is_future):
       WriteAppRestriction(policy)
   f.write('</restrictions>')
 

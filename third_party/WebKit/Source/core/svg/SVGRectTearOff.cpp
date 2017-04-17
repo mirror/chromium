@@ -30,64 +30,57 @@
 
 #include "core/svg/SVGRectTearOff.h"
 
-#include "bindings/core/v8/ExceptionState.h"
-#include "core/dom/ExceptionCode.h"
 #include "core/svg/SVGElement.h"
 
 namespace blink {
 
-SVGRectTearOff::SVGRectTearOff(SVGRect* target, SVGElement* contextElement, PropertyIsAnimValType propertyIsAnimVal, const QualifiedName& attributeName)
-    : SVGPropertyTearOff<SVGRect>(target, contextElement, propertyIsAnimVal, attributeName)
-{
+SVGRectTearOff::SVGRectTearOff(SVGRect* target,
+                               SVGElement* context_element,
+                               PropertyIsAnimValType property_is_anim_val,
+                               const QualifiedName& attribute_name)
+    : SVGPropertyTearOff<SVGRect>(target,
+                                  context_element,
+                                  property_is_anim_val,
+                                  attribute_name) {}
+
+void SVGRectTearOff::setX(float f, ExceptionState& exception_state) {
+  if (IsImmutable()) {
+    ThrowReadOnly(exception_state);
+    return;
+  }
+  Target()->SetX(f);
+  CommitChange();
 }
 
-void SVGRectTearOff::setX(float f, ExceptionState& exceptionState)
-{
-    if (isImmutable()) {
-        exceptionState.throwDOMException(NoModificationAllowedError, "The attribute is read-only.");
-        return;
-    }
-
-    target()->setX(f);
-    commitChange();
+void SVGRectTearOff::setY(float f, ExceptionState& exception_state) {
+  if (IsImmutable()) {
+    ThrowReadOnly(exception_state);
+    return;
+  }
+  Target()->SetY(f);
+  CommitChange();
 }
 
-void SVGRectTearOff::setY(float f, ExceptionState& exceptionState)
-{
-    if (isImmutable()) {
-        exceptionState.throwDOMException(NoModificationAllowedError, "The attribute is read-only.");
-        return;
-    }
-
-    target()->setY(f);
-    commitChange();
+void SVGRectTearOff::setWidth(float f, ExceptionState& exception_state) {
+  if (IsImmutable()) {
+    ThrowReadOnly(exception_state);
+    return;
+  }
+  Target()->SetWidth(f);
+  CommitChange();
 }
 
-void SVGRectTearOff::setWidth(float f, ExceptionState& exceptionState)
-{
-    if (isImmutable()) {
-        exceptionState.throwDOMException(NoModificationAllowedError, "The attribute is read-only.");
-        return;
-    }
-
-    target()->setWidth(f);
-    commitChange();
+void SVGRectTearOff::setHeight(float f, ExceptionState& exception_state) {
+  if (IsImmutable()) {
+    ThrowReadOnly(exception_state);
+    return;
+  }
+  Target()->SetHeight(f);
+  CommitChange();
 }
 
-void SVGRectTearOff::setHeight(float f, ExceptionState& exceptionState)
-{
-    if (isImmutable()) {
-        exceptionState.throwDOMException(NoModificationAllowedError, "The attribute is read-only.");
-        return;
-    }
-
-    target()->setHeight(f);
-    commitChange();
+DEFINE_TRACE_WRAPPERS(SVGRectTearOff) {
+  visitor->TraceWrappers(contextElement());
 }
 
-DEFINE_TRACE_WRAPPERS(SVGRectTearOff)
-{
-    visitor->traceWrappers(contextElement());
-}
-
-} // namespace blink
+}  // namespace blink

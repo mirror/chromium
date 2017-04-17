@@ -6,11 +6,23 @@
 
 #include <memory>
 
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/ui/toolbar/test_toolbar_actions_bar_bubble_delegate.h"
+#include "chrome/browser/ui/toolbar/toolbar_actions_bar_bubble_delegate.h"
+#include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
+#include "chrome/grit/generated_resources.h"
+#include "components/grit/components_scaled_resources.h"
+#include "ui/base/l10n/l10n_util.h"
+#include "ui/base/resource/resource_bundle.h"
 #include "ui/events/event_utils.h"
 #include "ui/events/test/event_generator.h"
+#include "ui/gfx/color_palette.h"
+#include "ui/gfx/image/image.h"
+#include "ui/gfx/image/image_unittest_util.h"
+#include "ui/gfx/paint_vector_icon.h"
+#include "ui/vector_icons/vector_icons.h"
 #include "ui/views/controls/button/label_button.h"
 #include "ui/views/controls/link.h"
 #include "ui/views/test/test_widget_observer.h"
@@ -18,10 +30,26 @@
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/dialog_client_view.h"
 
+namespace {
+const int kIconSize = 16;
+}
+
 class ToolbarActionsBarBubbleViewsTest : public views::ViewsTestBase {
+ public:
+  views::View* TestCreateExtraView() {
+    DCHECK(bubble_);
+    return bubble_->CreateExtraView();
+  }
+
  protected:
   ToolbarActionsBarBubbleViewsTest() {}
   ~ToolbarActionsBarBubbleViewsTest() override {}
+
+  void SetUp() override {
+    views::ViewsTestBase::SetUp();
+    test_views_delegate()->set_layout_provider(
+        ChromeLayoutProvider::CreateLayoutProvider());
+  }
 
   void TearDown() override {
     anchor_widget_.reset();
@@ -42,8 +70,10 @@ class ToolbarActionsBarBubbleViewsTest : public views::ViewsTestBase {
     ASSERT_FALSE(bubble_widget_);
     ASSERT_FALSE(bubble_);
     anchor_widget_ = CreateAnchorWidget();
+    bool anchored_to_action = false;
     bubble_ = new ToolbarActionsBarBubbleViews(
-      anchor_widget_->GetContentsView(), delegate->GetDelegate());
+        anchor_widget_->GetContentsView(), gfx::Point(), anchored_to_action,
+        delegate->GetDelegate());
     bubble_widget_ = views::BubbleDialogDelegateView::CreateBubble(bubble_);
     bubble_->Show();
   }
@@ -99,12 +129,30 @@ TEST_F(ToolbarActionsBarBubbleViewsTest, TestBubbleLayoutActionButton) {
   CloseBubble();
 }
 
+TEST_F(ToolbarActionsBarBubbleViewsTest, TestBubbleLayoutNoButtons) {
+  TestToolbarActionsBarBubbleDelegate delegate(HeadingString(), BodyString(),
+                                               ActionString());
+  std::unique_ptr<ToolbarActionsBarBubbleDelegate::ExtraViewInfo>
+      extra_view_info =
+          base::MakeUnique<ToolbarActionsBarBubbleDelegate::ExtraViewInfo>();
+  delegate.set_extra_view_info(std::move(extra_view_info));
+  delegate.set_dismiss_button_text(base::string16());
+  delegate.set_action_button_text(base::string16());
+  ShowBubble(&delegate);
+
+  std::unique_ptr<views::View> extra_view(TestCreateExtraView());
+  EXPECT_FALSE(bubble()->GetDialogClientView()->ok_button());
+  EXPECT_FALSE(bubble()->GetDialogClientView()->cancel_button());
+  EXPECT_FALSE(bubble()->learn_more_button());
+
+  CloseBubble();
+}
+
 TEST_F(ToolbarActionsBarBubbleViewsTest,
        TestBubbleLayoutActionAndDismissButton) {
   TestToolbarActionsBarBubbleDelegate delegate(HeadingString(), BodyString(),
                                                ActionString());
   delegate.set_dismiss_button_text(DismissString());
-
   ShowBubble(&delegate);
 
   EXPECT_TRUE(bubble()->GetDialogClientView()->ok_button());
@@ -125,7 +173,13 @@ TEST_F(ToolbarActionsBarBubbleViewsTest,
   TestToolbarActionsBarBubbleDelegate delegate(HeadingString(), BodyString(),
                                                ActionString());
   delegate.set_dismiss_button_text(DismissString());
-  delegate.set_learn_more_button_text(LearnMoreString());
+  std::unique_ptr<ToolbarActionsBarBubbleDelegate::ExtraViewInfo>
+      extra_view_info_linked_text =
+          base::MakeUnique<ToolbarActionsBarBubbleDelegate::ExtraViewInfo>();
+  extra_view_info_linked_text->text = LearnMoreString();
+  extra_view_info_linked_text->is_text_linked = true;
+  delegate.set_extra_view_info(std::move(extra_view_info_linked_text));
+
   ShowBubble(&delegate);
 
   EXPECT_TRUE(bubble()->GetDialogClientView()->ok_button());
@@ -164,7 +218,8 @@ TEST_F(ToolbarActionsBarBubbleViewsTest, TestShowAndCloseBubble) {
                                                ActionString());
   delegate.set_dismiss_button_text(DismissString());
   ToolbarActionsBarBubbleViews* bubble = new ToolbarActionsBarBubbleViews(
-      anchor_widget->GetContentsView(), delegate.GetDelegate());
+      anchor_widget->GetContentsView(), gfx::Point(), false,
+      delegate.GetDelegate());
 
   EXPECT_FALSE(delegate.shown());
   EXPECT_FALSE(delegate.close_action());
@@ -258,5 +313,112 @@ TEST_F(ToolbarActionsBarBubbleViewsTest, TestDontCloseOnDeactivation) {
   anchor_widget()->Activate();
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(delegate.close_action());
+  CloseBubble();
+}
+
+TEST_F(ToolbarActionsBarBubbleViewsTest, TestNullExtraView) {
+  TestToolbarActionsBarBubbleDelegate delegate(HeadingString(), BodyString(),
+                                               ActionString());
+  ShowBubble(&delegate);
+  std::unique_ptr<views::View> extra_view(TestCreateExtraView());
+  ASSERT_FALSE(extra_view);
+  CloseBubble();
+}
+
+TEST_F(ToolbarActionsBarBubbleViewsTest, TestCreateExtraViewIconOnly) {
+  TestToolbarActionsBarBubbleDelegate delegate(HeadingString(), BodyString(),
+                                               ActionString());
+  std::unique_ptr<ToolbarActionsBarBubbleDelegate::ExtraViewInfo>
+      extra_view_info =
+          base::MakeUnique<ToolbarActionsBarBubbleDelegate::ExtraViewInfo>();
+  extra_view_info->resource = &ui::kBusinessIcon;
+  delegate.set_extra_view_info(std::move(extra_view_info));
+  ShowBubble(&delegate);
+  std::unique_ptr<views::View> extra_view(TestCreateExtraView());
+  ASSERT_TRUE(extra_view);
+  ASSERT_EQ("ImageView", std::string(extra_view->GetClassName()));
+  EXPECT_TRUE(gfx::test::AreImagesEqual(
+      gfx::Image(static_cast<views::ImageView*>(extra_view.get())->GetImage()),
+      gfx::Image(gfx::CreateVectorIcon(ui::kBusinessIcon, kIconSize,
+                                       gfx::kChromeIconGrey))));
+  CloseBubble();
+}
+
+TEST_F(ToolbarActionsBarBubbleViewsTest, TestCreateExtraViewLinkedTextOnly) {
+  TestToolbarActionsBarBubbleDelegate delegate(HeadingString(), BodyString(),
+                                               ActionString());
+  std::unique_ptr<ToolbarActionsBarBubbleDelegate::ExtraViewInfo>
+      extra_view_info_linked_text =
+          base::MakeUnique<ToolbarActionsBarBubbleDelegate::ExtraViewInfo>();
+  extra_view_info_linked_text->text =
+      l10n_util::GetStringUTF16(IDS_EXTENSIONS_INSTALLED_BY_ADMIN);
+  extra_view_info_linked_text->is_text_linked = true;
+  delegate.set_extra_view_info(std::move(extra_view_info_linked_text));
+
+  ShowBubble(&delegate);
+
+  std::unique_ptr<views::View> extra_view(TestCreateExtraView());
+  ASSERT_TRUE(extra_view);
+  ASSERT_EQ("Link", std::string(extra_view->GetClassName()));
+  EXPECT_EQ(l10n_util::GetStringUTF16(IDS_EXTENSIONS_INSTALLED_BY_ADMIN),
+            static_cast<views::Label*>(extra_view.get())->text());
+  CloseBubble();
+}
+
+TEST_F(ToolbarActionsBarBubbleViewsTest, TestCreateExtraViewLabelTextOnly) {
+  TestToolbarActionsBarBubbleDelegate delegate(HeadingString(), BodyString(),
+                                               ActionString());
+  std::unique_ptr<ToolbarActionsBarBubbleDelegate::ExtraViewInfo>
+      extra_view_info =
+          base::MakeUnique<ToolbarActionsBarBubbleDelegate::ExtraViewInfo>();
+  extra_view_info->text =
+      l10n_util::GetStringUTF16(IDS_EXTENSIONS_INSTALLED_BY_ADMIN);
+  extra_view_info->is_text_linked = false;
+  delegate.set_extra_view_info(std::move(extra_view_info));
+
+  ShowBubble(&delegate);
+
+  std::unique_ptr<views::View> extra_view(TestCreateExtraView());
+  ASSERT_TRUE(extra_view);
+  EXPECT_EQ("Label", std::string(extra_view->GetClassName()));
+  EXPECT_EQ(l10n_util::GetStringUTF16(IDS_EXTENSIONS_INSTALLED_BY_ADMIN),
+            static_cast<views::Label*>(extra_view.get())->text());
+  CloseBubble();
+}
+
+TEST_F(ToolbarActionsBarBubbleViewsTest, TestCreateExtraViewImageAndText) {
+  TestToolbarActionsBarBubbleDelegate delegate(HeadingString(), BodyString(),
+                                               ActionString());
+  std::unique_ptr<ToolbarActionsBarBubbleDelegate::ExtraViewInfo>
+      extra_view_info =
+          base::MakeUnique<ToolbarActionsBarBubbleDelegate::ExtraViewInfo>();
+  extra_view_info->resource = &ui::kBusinessIcon;
+  extra_view_info->text =
+      l10n_util::GetStringUTF16(IDS_EXTENSIONS_INSTALLED_BY_ADMIN);
+  extra_view_info->is_text_linked = false;
+  delegate.set_extra_view_info(std::move(extra_view_info));
+
+  ShowBubble(&delegate);
+
+  std::unique_ptr<views::View> extra_view(TestCreateExtraView());
+  ASSERT_TRUE(extra_view);
+  EXPECT_EQ("View", std::string(extra_view->GetClassName()));
+  EXPECT_EQ(2, extra_view->child_count());
+
+  for (int i = 0; i < 2; i++) {
+    const views::View* v = extra_view->child_at(i);
+    std::string class_name = v->GetClassName();
+    ASSERT_TRUE(class_name == "Label" || class_name == "ImageView");
+    if (class_name == "Label") {
+      EXPECT_EQ(l10n_util::GetStringUTF16(IDS_EXTENSIONS_INSTALLED_BY_ADMIN),
+                static_cast<const views::Label*>(v)->text());
+    } else {
+      EXPECT_TRUE(gfx::test::AreImagesEqual(
+          gfx::Image(static_cast<const views::ImageView*>(v)->GetImage()),
+          gfx::Image(gfx::CreateVectorIcon(ui::kBusinessIcon, kIconSize,
+                                           gfx::kChromeIconGrey))));
+    }
+  }
+
   CloseBubble();
 }

@@ -45,7 +45,8 @@ class CONTENT_EXPORT MediaStreamDispatcher
       int request_id,
       const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler,
       const StreamControls& controls,
-      const url::Origin& security_origin);
+      const url::Origin& security_origin,
+      bool is_processing_user_gesture);
 
   // Cancel the request for a new media stream to be created.
   virtual void CancelGenerateStream(
@@ -54,18 +55,6 @@ class CONTENT_EXPORT MediaStreamDispatcher
 
   // Stop a started device that has been requested by calling GenerateStream.
   virtual void StopStreamDevice(const StreamDeviceInfo& device_info);
-
-  // Request to enumerate devices.
-  virtual void EnumerateDevices(
-      int request_id,
-      const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler,
-      MediaStreamType type,
-      const url::Origin& security_origin);
-
-  // Request to stop enumerating devices.
-  void StopEnumerateDevices(
-      int request_id,
-      const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler);
 
   // Request to open a device.
   void OpenDevice(
@@ -83,16 +72,13 @@ class CONTENT_EXPORT MediaStreamDispatcher
   // Close a started device. |label| is provided in OnDeviceOpened.
   void CloseDevice(const std::string& label);
 
-  // Register and unregister event handlers for device-change notifications.
-  // It is an error to try to subscribe a handler that is already subscribed or
-  // to cancel the subscription of a handler that is not subscribed. Also,
-  // each subscribed handler must make sure to invoke
-  // CancelDeviceChangeNotifications() before the handler is destroyed.
-  void SubscribeToDeviceChangeNotifications(
-      const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler,
-      const url::Origin& security_origin);
-  void CancelDeviceChangeNotifications(
-      const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler);
+  // This method is called when the stream is started successfully.
+  void OnStreamStarted(const std::string& label);
+
+  // Get all the media devices of video capture, e.g. webcam. This is the set
+  // of devices that should be suspended when the content frame is no longer
+  // being shown to the user.
+  StreamDeviceInfoArray GetNonScreenCaptureDevices();
 
   // Check if the label is a valid stream.
   virtual bool IsStream(const std::string& label);
@@ -104,14 +90,13 @@ class CONTENT_EXPORT MediaStreamDispatcher
 
  protected:
   int GetNextIpcIdForTest() { return next_ipc_id_; }
-  size_t NumDeviceChangeSubscribers() const {
-    return device_change_subscribers_.size();
-  }
 
  private:
   FRIEND_TEST_ALL_PREFIXES(MediaStreamDispatcherTest, BasicVideoDevice);
   FRIEND_TEST_ALL_PREFIXES(MediaStreamDispatcherTest, TestFailure);
   FRIEND_TEST_ALL_PREFIXES(MediaStreamDispatcherTest, CancelGenerateStream);
+  FRIEND_TEST_ALL_PREFIXES(MediaStreamDispatcherTest,
+                           GetNonScreenCaptureDevices);
 
   struct Request;
 
@@ -135,15 +120,11 @@ class CONTENT_EXPORT MediaStreamDispatcher
       content::MediaStreamRequestResult result);
   void OnDeviceStopped(const std::string& label,
                        const StreamDeviceInfo& device_info);
-  void OnDevicesEnumerated(
-      int request_id,
-      const StreamDeviceInfoArray& device_array);
   void OnDeviceOpened(
       int request_id,
       const std::string& label,
       const StreamDeviceInfo& device_info);
   void OnDeviceOpenFailed(int request_id);
-  void OnDevicesChanged();
 
   // Used for DCHECKs so methods calls won't execute in the wrong thread.
   base::ThreadChecker thread_checker_;
@@ -156,9 +137,6 @@ class CONTENT_EXPORT MediaStreamDispatcher
   // been canceled.
   typedef std::list<Request> RequestList;
   RequestList requests_;
-
-  std::vector<base::WeakPtr<MediaStreamDispatcherEventHandler>>
-      device_change_subscribers_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaStreamDispatcher);
 };

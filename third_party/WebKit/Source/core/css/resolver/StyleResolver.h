@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ * All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,235 +27,300 @@
 #include "core/animation/PropertyHandle.h"
 #include "core/css/ElementRuleCollector.h"
 #include "core/css/PseudoStyleRequest.h"
-#include "core/css/RuleFeature.h"
-#include "core/css/RuleSet.h"
 #include "core/css/SelectorChecker.h"
 #include "core/css/SelectorFilter.h"
 #include "core/css/resolver/CSSPropertyPriority.h"
 #include "core/css/resolver/MatchedPropertiesCache.h"
 #include "core/css/resolver/StyleBuilder.h"
-#include "core/dom/DocumentOrderedList.h"
-#include "core/style/CachedUAStyle.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Deque.h"
-#include "wtf/HashMap.h"
-#include "wtf/HashSet.h"
-#include "wtf/ListHashSet.h"
-#include "wtf/RefPtr.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Deque.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/ListHashSet.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class AnimatableValue;
 class CSSRuleList;
-class CSSStyleSheet;
 class CSSValue;
-class ContainerNode;
 class Document;
 class Element;
 class Interpolation;
 class MatchResult;
-class MediaQueryEvaluator;
-class ScopedStyleResolver;
+class RuleSet;
 class StylePropertySet;
-class StyleRule;
-class ViewportStyleResolver;
+class StyleRuleUsageTracker;
 
 enum StyleSharingBehavior {
-    AllowStyleSharing,
-    DisallowStyleSharing,
+  kAllowStyleSharing,
+  kDisallowStyleSharing,
 };
 
-enum RuleMatchingBehavior {
-    MatchAllRules,
-    MatchAllRulesExcludingSMIL
+enum RuleMatchingBehavior { kMatchAllRules, kMatchAllRulesExcludingSMIL };
+
+const unsigned kStyleSharingListSize = 15;
+const unsigned kStyleSharingMaxDepth = 32;
+using StyleSharingList = HeapDeque<Member<Element>, kStyleSharingListSize>;
+using ActiveInterpolationsMap =
+    HashMap<PropertyHandle, Vector<RefPtr<Interpolation>, 1>>;
+
+// This class selects a ComputedStyle for a given element based on a collection
+// of stylesheets.
+class CORE_EXPORT StyleResolver final
+    : public GarbageCollectedFinalized<StyleResolver> {
+  WTF_MAKE_NONCOPYABLE(StyleResolver);
+
+ public:
+  static StyleResolver* Create(Document& document) {
+    return new StyleResolver(document);
+  }
+  ~StyleResolver();
+  void Dispose();
+
+  PassRefPtr<ComputedStyle> StyleForElement(
+      Element*,
+      const ComputedStyle* parent_style = nullptr,
+      const ComputedStyle* layout_parent_style = nullptr,
+      StyleSharingBehavior = kAllowStyleSharing,
+      RuleMatchingBehavior = kMatchAllRules);
+
+  static PassRefPtr<AnimatableValue> CreateAnimatableValueSnapshot(
+      Element&,
+      const ComputedStyle& base_style,
+      const ComputedStyle* parent_style,
+      CSSPropertyID,
+      const CSSValue*);
+
+  PassRefPtr<ComputedStyle> PseudoStyleForElement(
+      Element*,
+      const PseudoStyleRequest&,
+      const ComputedStyle* parent_style,
+      const ComputedStyle* layout_parent_style);
+
+  PassRefPtr<ComputedStyle> StyleForPage(int page_index);
+  PassRefPtr<ComputedStyle> StyleForText(Text*);
+
+  static PassRefPtr<ComputedStyle> StyleForDocument(Document&);
+
+  // TODO(esprehn): StyleResolver should probably not contain tree walking
+  // state, instead we should pass a context object during recalcStyle.
+  SelectorFilter& GetSelectorFilter() { return selector_filter_; }
+
+  StyleRuleKeyframes* FindKeyframesRule(const Element*,
+                                        const AtomicString& animation_name);
+
+  // These methods will give back the set of rules that matched for a given
+  // element (or a pseudo-element).
+  enum CSSRuleFilter {
+    kUAAndUserCSSRules = 1 << 1,
+    kAuthorCSSRules = 1 << 2,
+    kEmptyCSSRules = 1 << 3,
+    kCrossOriginCSSRules = 1 << 4,
+    kAllButEmptyCSSRules =
+        kUAAndUserCSSRules | kAuthorCSSRules | kCrossOriginCSSRules,
+    kAllCSSRules = kAllButEmptyCSSRules | kEmptyCSSRules,
+  };
+  CSSRuleList* CssRulesForElement(
+      Element*,
+      unsigned rules_to_include = kAllButEmptyCSSRules);
+  CSSRuleList* PseudoCSSRulesForElement(
+      Element*,
+      PseudoId,
+      unsigned rules_to_include = kAllButEmptyCSSRules);
+  StyleRuleList* StyleRulesForElement(Element*, unsigned rules_to_include);
+
+  void ComputeFont(ComputedStyle*, const StylePropertySet&);
+
+  // FIXME: Rename to reflect the purpose, like didChangeFontSize or something.
+  void InvalidateMatchedPropertiesCache();
+
+  void SetResizedForViewportUnits();
+  void ClearResizedForViewportUnits();
+
+  // Exposed for ComputedStyle::IsStyleAvailable().
+  static ComputedStyle* StyleNotYetAvailable() {
+    return style_not_yet_available_;
+  }
+
+  StyleSharingList& GetStyleSharingList();
+
+  void AddToStyleSharingList(Element&);
+  void ClearStyleSharingList();
+
+  void IncreaseStyleSharingDepth() { ++style_sharing_depth_; }
+  void DecreaseStyleSharingDepth() { --style_sharing_depth_; }
+
+  PseudoElement* CreatePseudoElementIfNeeded(Element& parent, PseudoId);
+
+  void SetRuleUsageTracker(StyleRuleUsageTracker*);
+  void UpdateMediaType();
+
+  DECLARE_TRACE();
+
+ private:
+  explicit StyleResolver(Document&);
+
+  PassRefPtr<ComputedStyle> InitialStyleForElement();
+
+  // FIXME: This should probably go away, folded into FontBuilder.
+  void UpdateFont(StyleResolverState&);
+
+  void AddMatchedRulesToTracker(const ElementRuleCollector&);
+
+  void LoadPendingResources(StyleResolverState&);
+  void AdjustComputedStyle(StyleResolverState&, Element*);
+
+  void CollectPseudoRulesForElement(const Element&,
+                                    ElementRuleCollector&,
+                                    PseudoId,
+                                    unsigned rules_to_include);
+  void MatchRuleSet(ElementRuleCollector&, RuleSet*);
+  void MatchUARules(ElementRuleCollector&);
+  void MatchScopedRules(const Element&, ElementRuleCollector&);
+  void MatchAuthorRules(const Element&, ElementRuleCollector&);
+  void MatchAuthorRulesV0(const Element&, ElementRuleCollector&);
+  void MatchAllRules(StyleResolverState&,
+                     ElementRuleCollector&,
+                     bool include_smil_properties);
+  void CollectTreeBoundaryCrossingRulesV0CascadeOrder(const Element&,
+                                                      ElementRuleCollector&);
+
+  struct CacheSuccess {
+    STACK_ALLOCATED();
+    bool is_inherited_cache_hit;
+    bool is_non_inherited_cache_hit;
+    unsigned cache_hash;
+    Member<const CachedMatchedProperties> cached_matched_properties;
+
+    CacheSuccess(bool is_inherited_cache_hit,
+                 bool is_non_inherited_cache_hit,
+                 unsigned cache_hash,
+                 const CachedMatchedProperties* cached_matched_properties)
+        : is_inherited_cache_hit(is_inherited_cache_hit),
+          is_non_inherited_cache_hit(is_non_inherited_cache_hit),
+          cache_hash(cache_hash),
+          cached_matched_properties(cached_matched_properties) {}
+
+    bool IsFullCacheHit() const {
+      return is_inherited_cache_hit && is_non_inherited_cache_hit;
+    }
+    bool ShouldApplyInheritedOnly() const {
+      return is_non_inherited_cache_hit && !is_inherited_cache_hit;
+    }
+    void SetFailed() {
+      is_inherited_cache_hit = false;
+      is_non_inherited_cache_hit = false;
+    }
+  };
+
+  // These flags indicate whether an apply pass for a given CSSPropertyPriority
+  // and isImportant is required.
+  class NeedsApplyPass {
+   public:
+    bool Get(CSSPropertyPriority priority, bool is_important) const {
+      return flags_[GetIndex(priority, is_important)];
+    }
+    void Set(CSSPropertyPriority priority, bool is_important) {
+      flags_[GetIndex(priority, is_important)] = true;
+    }
+
+   private:
+    static size_t GetIndex(CSSPropertyPriority priority, bool is_important) {
+      DCHECK(priority >= 0 && priority < kPropertyPriorityCount);
+      return priority * 2 + is_important;
+    }
+    bool flags_[kPropertyPriorityCount * 2] = {0};
+  };
+
+  enum ShouldUpdateNeedsApplyPass {
+    kCheckNeedsApplyPass = false,
+    kUpdateNeedsApplyPass = true,
+  };
+
+  void ApplyMatchedPropertiesAndCustomPropertyAnimations(
+      StyleResolverState&,
+      const MatchResult&,
+      const Element* animating_element);
+  CacheSuccess ApplyMatchedCache(StyleResolverState&, const MatchResult&);
+  enum ApplyAnimations { kExcludeAnimations, kIncludeAnimations };
+  void ApplyCustomProperties(StyleResolverState&,
+                             const MatchResult&,
+                             ApplyAnimations,
+                             const CacheSuccess&,
+                             NeedsApplyPass&);
+  void ApplyMatchedAnimationProperties(StyleResolverState&,
+                                       const MatchResult&,
+                                       const CacheSuccess&,
+                                       NeedsApplyPass&);
+  void ApplyMatchedStandardProperties(StyleResolverState&,
+                                      const MatchResult&,
+                                      const CacheSuccess&,
+                                      NeedsApplyPass&);
+  void CalculateAnimationUpdate(StyleResolverState&,
+                                const Element* animating_element);
+  bool ApplyAnimatedStandardProperties(StyleResolverState&, const Element*);
+
+  void ApplyCallbackSelectors(StyleResolverState&);
+
+  template <CSSPropertyPriority priority, ShouldUpdateNeedsApplyPass>
+  void ApplyMatchedProperties(StyleResolverState&,
+                              const MatchedPropertiesRange&,
+                              bool important,
+                              bool inherited_only,
+                              NeedsApplyPass&);
+  template <CSSPropertyPriority priority, ShouldUpdateNeedsApplyPass>
+  void ApplyProperties(StyleResolverState&,
+                       const StylePropertySet* properties,
+                       bool is_important,
+                       bool inherited_only,
+                       NeedsApplyPass&,
+                       PropertyWhitelistType = kPropertyWhitelistNone);
+  template <CSSPropertyPriority priority>
+  void ApplyAnimatedProperties(StyleResolverState&,
+                               const ActiveInterpolationsMap&);
+  template <CSSPropertyPriority priority>
+  void ApplyAllProperty(StyleResolverState&,
+                        const CSSValue&,
+                        bool inherited_only,
+                        PropertyWhitelistType);
+  template <CSSPropertyPriority priority, ShouldUpdateNeedsApplyPass>
+  void ApplyPropertiesForApplyAtRule(StyleResolverState&,
+                                     const CSSValue&,
+                                     bool is_important,
+                                     NeedsApplyPass&,
+                                     PropertyWhitelistType);
+
+  bool PseudoStyleForElementInternal(Element&,
+                                     const PseudoStyleRequest&,
+                                     const ComputedStyle* parent_style,
+                                     StyleResolverState&);
+  bool HasAuthorBackground(const StyleResolverState&);
+  bool HasAuthorBorder(const StyleResolverState&);
+
+  PseudoElement* CreatePseudoElement(Element* parent, PseudoId);
+
+  Document& GetDocument() const { return *document_; }
+
+  bool WasViewportResized() const { return was_viewport_resized_; }
+
+  static ComputedStyle* style_not_yet_available_;
+
+  MatchedPropertiesCache matched_properties_cache_;
+  Member<Document> document_;
+  SelectorFilter selector_filter_;
+
+  Member<StyleRuleUsageTracker> tracker_;
+
+  bool print_media_type_ = false;
+  bool was_viewport_resized_ = false;
+
+  unsigned style_sharing_depth_ = 0;
+  HeapVector<Member<StyleSharingList>, kStyleSharingMaxDepth>
+      style_sharing_lists_;
 };
 
-const unsigned styleSharingListSize = 15;
-const unsigned styleSharingMaxDepth = 32;
-using StyleSharingList = HeapDeque<Member<Element>, styleSharingListSize>;
-using ActiveInterpolationsMap = HashMap<PropertyHandle, Vector<RefPtr<Interpolation>, 1>>;
+}  // namespace blink
 
-// This class selects a ComputedStyle for a given element based on a collection of stylesheets.
-class CORE_EXPORT StyleResolver final : public GarbageCollectedFinalized<StyleResolver> {
-    WTF_MAKE_NONCOPYABLE(StyleResolver);
-public:
-    static StyleResolver* create(Document& document)
-    {
-        return new StyleResolver(document);
-    }
-    ~StyleResolver();
-    void dispose();
-
-    PassRefPtr<ComputedStyle> styleForElement(Element*, const ComputedStyle* parentStyle = 0, StyleSharingBehavior = AllowStyleSharing,
-        RuleMatchingBehavior = MatchAllRules);
-
-    static PassRefPtr<AnimatableValue> createAnimatableValueSnapshot(Element&, const ComputedStyle& baseStyle, const ComputedStyle* parentStyle, CSSPropertyID, const CSSValue*);
-
-    PassRefPtr<ComputedStyle> pseudoStyleForElement(Element*, const PseudoStyleRequest&, const ComputedStyle* parentStyle);
-
-    PassRefPtr<ComputedStyle> styleForPage(int pageIndex);
-    PassRefPtr<ComputedStyle> styleForText(Text*);
-
-    static PassRefPtr<ComputedStyle> styleForDocument(Document&);
-
-    // FIXME: It could be better to call appendAuthorStyleSheets() directly after we factor StyleResolver further.
-    // https://bugs.webkit.org/show_bug.cgi?id=108890
-    void appendAuthorStyleSheets(const HeapVector<Member<CSSStyleSheet>>&);
-    void resetAuthorStyle(TreeScope&);
-    void resetRuleFeatures();
-    void finishAppendAuthorStyleSheets();
-
-    void lazyAppendAuthorStyleSheets(unsigned firstNew, const HeapVector<Member<CSSStyleSheet>>&);
-    void removePendingAuthorStyleSheets(const HeapVector<Member<CSSStyleSheet>>&);
-    void appendPendingAuthorStyleSheets();
-    bool hasPendingAuthorStyleSheets() const { return m_pendingStyleSheets.size() > 0 || m_needCollectFeatures; }
-
-    // TODO(esprehn): StyleResolver should probably not contain tree walking
-    // state, instead we should pass a context object during recalcStyle.
-    SelectorFilter& selectorFilter() { return m_selectorFilter; }
-
-    StyleRuleKeyframes* findKeyframesRule(const Element*, const AtomicString& animationName);
-
-    // These methods will give back the set of rules that matched for a given element (or a pseudo-element).
-    enum CSSRuleFilter {
-        UAAndUserCSSRules   = 1 << 1,
-        AuthorCSSRules      = 1 << 2,
-        EmptyCSSRules       = 1 << 3,
-        CrossOriginCSSRules = 1 << 4,
-        AllButEmptyCSSRules = UAAndUserCSSRules | AuthorCSSRules | CrossOriginCSSRules,
-        AllCSSRules         = AllButEmptyCSSRules | EmptyCSSRules,
-    };
-    CSSRuleList* cssRulesForElement(Element*, unsigned rulesToInclude = AllButEmptyCSSRules);
-    CSSRuleList* pseudoCSSRulesForElement(Element*, PseudoId, unsigned rulesToInclude = AllButEmptyCSSRules);
-    StyleRuleList* styleRulesForElement(Element*, unsigned rulesToInclude);
-
-    void computeFont(ComputedStyle*, const StylePropertySet&);
-
-    ViewportStyleResolver* viewportStyleResolver() { return m_viewportStyleResolver.get(); }
-
-    void addViewportDependentMediaQueries(const MediaQueryResultList&);
-    bool hasViewportDependentMediaQueries() const { return !m_viewportDependentMediaQueryResults.isEmpty(); }
-    bool mediaQueryAffectedByViewportChange() const;
-    void addDeviceDependentMediaQueries(const MediaQueryResultList&);
-    bool mediaQueryAffectedByDeviceChange() const;
-
-    // FIXME: Rename to reflect the purpose, like didChangeFontSize or something.
-    void invalidateMatchedPropertiesCache();
-
-    void notifyResizeForViewportUnits();
-
-    // Exposed for ComputedStyle::isStyleAvilable().
-    static ComputedStyle* styleNotYetAvailable() { return s_styleNotYetAvailable; }
-
-    RuleFeatureSet& ensureUpdatedRuleFeatureSet()
-    {
-        if (hasPendingAuthorStyleSheets())
-            appendPendingAuthorStyleSheets();
-        return m_features;
-    }
-
-    RuleFeatureSet& ruleFeatureSet()
-    {
-        return m_features;
-    }
-
-    StyleSharingList& styleSharingList();
-
-    bool hasRulesForId(const AtomicString&) const;
-    bool hasFullscreenUAStyle() const { return m_hasFullscreenUAStyle; }
-
-    void addToStyleSharingList(Element&);
-    void clearStyleSharingList();
-
-    void increaseStyleSharingDepth() { ++m_styleSharingDepth; }
-    void decreaseStyleSharingDepth() { --m_styleSharingDepth; }
-
-    PseudoElement* createPseudoElementIfNeeded(Element& parent, PseudoId);
-
-    DECLARE_TRACE();
-
-    void addTreeBoundaryCrossingScope(ContainerNode& scope);
-    void initWatchedSelectorRules();
-
-private:
-    explicit StyleResolver(Document&);
-
-    PassRefPtr<ComputedStyle> initialStyleForElement();
-
-    // FIXME: This should probably go away, folded into FontBuilder.
-    void updateFont(StyleResolverState&);
-
-    void loadPendingResources(StyleResolverState&);
-    void adjustComputedStyle(StyleResolverState&, Element*);
-
-    void appendCSSStyleSheet(CSSStyleSheet&);
-
-    void collectPseudoRulesForElement(const Element&, ElementRuleCollector&, PseudoId, unsigned rulesToInclude);
-    void matchRuleSet(ElementRuleCollector&, RuleSet*);
-    void matchUARules(ElementRuleCollector&);
-    void matchScopedRules(const Element&, ElementRuleCollector&);
-    void matchAuthorRules(const Element&, ElementRuleCollector&);
-    void matchAuthorRulesV0(const Element&, ElementRuleCollector&);
-    void matchAllRules(StyleResolverState&, ElementRuleCollector&, bool includeSMILProperties);
-    void collectFeatures();
-    void collectTreeBoundaryCrossingRules(const Element&, ElementRuleCollector&);
-
-    void applyMatchedProperties(StyleResolverState&, const MatchResult&);
-    bool applyAnimatedProperties(StyleResolverState&, const Element* animatingElement);
-    void applyCallbackSelectors(StyleResolverState&);
-
-    template <CSSPropertyPriority priority>
-    void applyMatchedProperties(StyleResolverState&, const MatchedPropertiesRange&, bool important, bool inheritedOnly);
-    template <CSSPropertyPriority priority>
-    void applyProperties(StyleResolverState&, const StylePropertySet* properties, bool isImportant, bool inheritedOnly, PropertyWhitelistType = PropertyWhitelistNone);
-    template <CSSPropertyPriority priority>
-    void applyAnimatedProperties(StyleResolverState&, const ActiveInterpolationsMap&);
-    template <CSSPropertyPriority priority>
-    void applyAllProperty(StyleResolverState&, const CSSValue&, bool inheritedOnly, PropertyWhitelistType);
-    template <CSSPropertyPriority priority>
-    void applyPropertiesForApplyAtRule(StyleResolverState&, const CSSValue&, bool isImportant, bool inheritedOnly, PropertyWhitelistType);
-
-    bool pseudoStyleForElementInternal(Element&, const PseudoStyleRequest&, const ComputedStyle* parentStyle, StyleResolverState&);
-    bool hasAuthorBackground(const StyleResolverState&);
-    bool hasAuthorBorder(const StyleResolverState&);
-
-    PseudoElement* createPseudoElement(Element* parent, PseudoId);
-
-    Document& document() { return *m_document; }
-
-    static ComputedStyle* s_styleNotYetAvailable;
-
-    MatchedPropertiesCache m_matchedPropertiesCache;
-
-    Member<MediaQueryEvaluator> m_medium;
-    MediaQueryResultList m_viewportDependentMediaQueryResults;
-    MediaQueryResultList m_deviceDependentMediaQueryResults;
-
-    Member<Document> m_document;
-    SelectorFilter m_selectorFilter;
-
-    Member<ViewportStyleResolver> m_viewportStyleResolver;
-
-    HeapListHashSet<Member<CSSStyleSheet>, 16> m_pendingStyleSheets;
-
-    // FIXME: The entire logic of collecting features on StyleResolver, as well as transferring them
-    // between various parts of machinery smells wrong. This needs to be better somehow.
-    RuleFeatureSet m_features;
-    Member<RuleSet> m_siblingRuleSet;
-    Member<RuleSet> m_uncommonAttributeRuleSet;
-    Member<RuleSet> m_watchedSelectorsRules;
-
-    DocumentOrderedList m_treeBoundaryCrossingScopes;
-
-    bool m_needCollectFeatures;
-    bool m_printMediaType;
-    bool m_hasFullscreenUAStyle = false;
-
-    unsigned m_styleSharingDepth;
-    HeapVector<Member<StyleSharingList>, styleSharingMaxDepth> m_styleSharingLists;
-};
-
-} // namespace blink
-
-#endif // StyleResolver_h
+#endif  // StyleResolver_h

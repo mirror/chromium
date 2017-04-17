@@ -10,11 +10,13 @@
 #include <list>
 #include <map>
 #include <memory>
+#include <string>
+#include <utility>
 #include <vector>
 
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/threading/thread_checker.h"
+#include "base/time/time.h"
 #include "chrome/browser/predictors/resource_prefetch_common.h"
 #include "net/url_request/redirect_info.h"
 #include "net/url_request/url_request.h"
@@ -26,48 +28,43 @@ class URLRequestContext;
 
 namespace predictors {
 
-// Responsible for prefetching resources for a single navigation based on the
-// input list of resources.
+namespace internal {
+constexpr char kResourcePrefetchPredictorCachePatternHistogram[] =
+    "ResourcePrefetchPredictor.CachePattern";
+constexpr char kResourcePrefetchPredictorPrefetchedCountHistogram[] =
+    "ResourcePrefetchPredictor.PrefetchedCount";
+constexpr char kResourcePrefetchPredictorPrefetchedSizeHistogram[] =
+    "ResourcePrefetchPredictor.PrefetchedSizeKB";
+}  // namespace internal
+
+// Responsible for prefetching resources for a single main frame URL based on
+// the input list of resources.
 //  - Limits the max number of resources in flight for any host and also across
 //    hosts.
 //  - When stopped, will wait for the pending requests to finish.
 //  - Lives entirely on the IO thread.
 class ResourcePrefetcher : public net::URLRequest::Delegate {
  public:
-  // Denotes the prefetch request for a single subresource.
-  struct Request {
-    explicit Request(const GURL& i_resource_url);
-    Request(const Request& other);
-
-    enum PrefetchStatus {
-      PREFETCH_STATUS_NOT_STARTED,
-      PREFETCH_STATUS_STARTED,
-
-      // Cancellation reasons.
-      PREFETCH_STATUS_REDIRECTED,
-      PREFETCH_STATUS_AUTH_REQUIRED,
-      PREFETCH_STATUS_CERT_REQUIRED,
-      PREFETCH_STATUS_CERT_ERROR,
-      PREFETCH_STATUS_CANCELLED,
-      PREFETCH_STATUS_FAILED,
-
-      // Successful prefetch states.
-      PREFETCH_STATUS_FROM_CACHE,
-      PREFETCH_STATUS_FROM_NETWORK
-    };
-
-    enum UsageStatus {
-      USAGE_STATUS_NOT_REQUESTED,
-      USAGE_STATUS_FROM_CACHE,
-      USAGE_STATUS_FROM_NETWORK,
-      USAGE_STATUS_NAVIGATION_ABANDONED
-    };
+  struct PrefetchedRequestStats {
+    PrefetchedRequestStats(const GURL& resource_url,
+                           bool was_cached,
+                           size_t total_received_bytes);
+    ~PrefetchedRequestStats();
 
     GURL resource_url;
-    PrefetchStatus prefetch_status;
-    UsageStatus usage_status;
+    bool was_cached;
+    size_t total_received_bytes;
   };
-  typedef ScopedVector<Request> RequestVector;
+
+  struct PrefetcherStats {
+    explicit PrefetcherStats(const GURL& url);
+    ~PrefetcherStats();
+    PrefetcherStats(const PrefetcherStats& other);
+
+    GURL url;
+    base::TimeTicks start_time;
+    std::vector<PrefetchedRequestStats> requests_stats;
+  };
 
   // Used to communicate when the prefetching is done. All methods are invoked
   // on the IO thread.
@@ -76,28 +73,25 @@ class ResourcePrefetcher : public net::URLRequest::Delegate {
     virtual ~Delegate() { }
 
     // Called when the ResourcePrefetcher is finished, i.e. there is nothing
-    // pending in flight. Should take ownership of |requests|.
+    // pending in flight.
     virtual void ResourcePrefetcherFinished(
         ResourcePrefetcher* prefetcher,
-        RequestVector* requests) = 0;
+        std::unique_ptr<PrefetcherStats> stats) = 0;
 
     virtual net::URLRequestContext* GetURLRequestContext() = 0;
   };
 
-  // |delegate| has to outlive the ResourcePrefetcher. The ResourcePrefetcher
-  // takes ownership of |requests|.
+  // |delegate| has to outlive the ResourcePrefetcher.
   ResourcePrefetcher(Delegate* delegate,
                      const ResourcePrefetchPredictorConfig& config,
-                     const NavigationID& navigation_id,
-                     PrefetchKeyType key_type,
-                     std::unique_ptr<RequestVector> requests);
+                     const GURL& main_frame_url,
+                     const std::vector<GURL>& urls);
   ~ResourcePrefetcher() override;
 
   void Start();  // Kicks off the prefetching. Can only be called once.
   void Stop();   // No additional prefetches will be queued after this.
 
-  const NavigationID& navigation_id() const { return navigation_id_; }
-  PrefetchKeyType key_type() const { return key_type_; }
+  const GURL& main_frame_url() const { return main_frame_url_; }
 
  private:
   friend class ResourcePrefetcherTest;
@@ -106,23 +100,22 @@ class ResourcePrefetcher : public net::URLRequest::Delegate {
   // Launches new prefetch requests if possible.
   void TryToLaunchPrefetchRequests();
 
-  // Starts a net::URLRequest for the input |request|.
-  void SendRequest(Request* request);
+  // Starts a net::URLRequest for the input |url|.
+  void SendRequest(const GURL& url);
 
   // Called by |SendRequest| to start the |request|. This is necessary to stub
   // out the Start() call to net::URLRequest for unittesting.
   virtual void StartURLRequest(net::URLRequest* request);
 
   // Marks the request as finished, with the given status.
-  void FinishRequest(net::URLRequest* request, Request::PrefetchStatus status);
+  void FinishRequest(net::URLRequest* request);
 
   // Reads the response data from the response - required for the resource to
   // be cached correctly. Stubbed out during testing.
   virtual void ReadFullResponse(net::URLRequest* request);
 
-  // Returns true if the request has more data that needs to be read. If it
-  // returns false, the request should not be referenced again.
-  bool ShouldContinueReadingRequest(net::URLRequest* request, int bytes_read);
+  // Called after successfull reading of response to save stats for histograms.
+  void RequestComplete(net::URLRequest* request);
 
   // net::URLRequest::Delegate methods.
   void OnReceivedRedirect(net::URLRequest* request,
@@ -136,7 +129,7 @@ class ResourcePrefetcher : public net::URLRequest::Delegate {
   void OnSSLCertificateError(net::URLRequest* request,
                              const net::SSLInfo& ssl_info,
                              bool fatal) override;
-  void OnResponseStarted(net::URLRequest* request) override;
+  void OnResponseStarted(net::URLRequest* request, int net_error) override;
   void OnReadCompleted(net::URLRequest* request, int bytes_read) override;
 
   enum PrefetcherState {
@@ -150,13 +143,17 @@ class ResourcePrefetcher : public net::URLRequest::Delegate {
   PrefetcherState state_;
   Delegate* const delegate_;
   ResourcePrefetchPredictorConfig const config_;
-  NavigationID navigation_id_;
-  PrefetchKeyType key_type_;
-  std::unique_ptr<RequestVector> request_vector_;
+  GURL main_frame_url_;
 
-  std::map<net::URLRequest*, Request*> inflight_requests_;
-  std::list<Request*> request_queue_;
+  // For histogram reports.
+  size_t prefetched_count_;
+  int64_t prefetched_bytes_;
+
+  std::map<net::URLRequest*, std::unique_ptr<net::URLRequest>>
+      inflight_requests_;
+  std::list<GURL> request_queue_;
   std::map<std::string, size_t> host_inflight_counts_;
+  std::unique_ptr<PrefetcherStats> stats_;
 
   DISALLOW_COPY_AND_ASSIGN(ResourcePrefetcher);
 };

@@ -13,10 +13,10 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/common/gpu/client/context_provider_command_buffer.h"
 #include "content/public/renderer/render_thread.h"
 #include "content/renderer/pepper/pepper_video_decoder_host.h"
 #include "content/renderer/render_thread_impl.h"
@@ -24,6 +24,7 @@
 #include "media/base/cdm_context.h"
 #include "media/base/decoder_buffer.h"
 #include "media/base/limits.h"
+#include "media/base/media_log.h"
 #include "media/base/media_util.h"
 #include "media/base/video_decoder.h"
 #include "media/filters/ffmpeg_video_decoder.h"
@@ -32,6 +33,7 @@
 #include "media/video/picture.h"
 #include "media/video/video_decode_accelerator.h"
 #include "ppapi/c/pp_errors.h"
+#include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "third_party/skia/include/gpu/GrTypes.h"
 
 namespace content {
@@ -61,7 +63,7 @@ bool IsCodecSupported(media::VideoCodec codec) {
 // YUV->RGB converter class using a shader and FBO.
 class VideoDecoderShim::YUVConverter {
  public:
-  YUVConverter(scoped_refptr<ContextProviderCommandBuffer>);
+  YUVConverter(scoped_refptr<ui::ContextProviderCommandBuffer>);
   ~YUVConverter();
   bool Initialize();
   void Convert(const scoped_refptr<media::VideoFrame>& frame, GLuint tex_out);
@@ -72,7 +74,7 @@ class VideoDecoderShim::YUVConverter {
   GLuint CreateProgram(const char* name, GLuint vshader, GLuint fshader);
   GLuint CreateTexture();
 
-  scoped_refptr<ContextProviderCommandBuffer> context_provider_;
+  scoped_refptr<ui::ContextProviderCommandBuffer> context_provider_;
   gpu::gles2::GLES2Interface* gl_;
   GLuint frame_buffer_;
   GLuint vertex_buffer_;
@@ -102,7 +104,7 @@ class VideoDecoderShim::YUVConverter {
 };
 
 VideoDecoderShim::YUVConverter::YUVConverter(
-    scoped_refptr<ContextProviderCommandBuffer> context_provider)
+    scoped_refptr<ui::ContextProviderCommandBuffer> context_provider)
     : context_provider_(std::move(context_provider)),
       gl_(context_provider_->ContextGL()),
       frame_buffer_(0),
@@ -695,7 +697,8 @@ void VideoDecoderShim::DecoderImpl::Initialize(
 #if !defined(MEDIA_DISABLE_FFMPEG) && !defined(DISABLE_FFMPEG_VIDEO_DECODERS)
   {
     std::unique_ptr<media::FFmpegVideoDecoder> ffmpeg_video_decoder(
-        new media::FFmpegVideoDecoder());
+        new media::FFmpegVideoDecoder(
+            make_scoped_refptr(new media::MediaLog())));
     ffmpeg_video_decoder->set_decode_nalus(true);
     decoder_ = std::move(ffmpeg_video_decoder);
   }
@@ -869,7 +872,7 @@ bool VideoDecoderShim::Initialize(const Config& vda_config, Client* client) {
   DCHECK(RenderThreadImpl::current());
   DCHECK_EQ(state_, UNINITIALIZED);
 
-  if (vda_config.is_encrypted) {
+  if (vda_config.is_encrypted()) {
     NOTREACHED() << "Encrypted streams are not supported";
     return false;
   }
@@ -940,11 +943,11 @@ void VideoDecoderShim::AssignPictureBuffers(
   std::vector<uint32_t> local_texture_ids(num_textures);
   gpu::gles2::GLES2Interface* gles2 = context_provider_->ContextGL();
   for (uint32_t i = 0; i < num_textures; i++) {
-    DCHECK_EQ(1u, buffers[i].texture_ids().size());
+    DCHECK_EQ(1u, buffers[i].client_texture_ids().size());
     local_texture_ids[i] = gles2->CreateAndConsumeTextureCHROMIUM(
         GL_TEXTURE_2D, pending_texture_mailboxes_[i].name);
     // Map the plugin texture id to the local texture id.
-    uint32_t plugin_texture_id = buffers[i].texture_ids()[0];
+    uint32_t plugin_texture_id = buffers[i].client_texture_ids()[0];
     texture_id_map_[plugin_texture_id] = local_texture_ids[i];
     available_textures_.insert(plugin_texture_id);
   }
@@ -1064,7 +1067,7 @@ void VideoDecoderShim::SendPictures() {
 
     host_->PictureReady(media::Picture(texture_id, frame->decode_id,
                                        frame->video_frame->visible_rect(),
-                                       false));
+                                       gfx::ColorSpace(), false));
     pending_frames_.pop();
   }
 

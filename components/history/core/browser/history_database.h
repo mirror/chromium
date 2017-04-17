@@ -13,6 +13,7 @@
 #include "build/build_config.h"
 #include "components/history/core/browser/download_database.h"
 #include "components/history/core/browser/history_types.h"
+#include "components/history/core/browser/typed_url_sync_metadata_database.h"
 #include "components/history/core/browser/url_database.h"
 #include "components/history/core/browser/visit_database.h"
 #include "components/history/core/browser/visitsegment_database.h"
@@ -29,7 +30,6 @@ namespace base {
 class FilePath;
 }
 
-class HistoryQuickProviderTest;
 class InMemoryURLIndexTest;
 
 namespace history {
@@ -46,6 +46,7 @@ class HistoryDatabase : public DownloadDatabase,
                         public AndroidURLsDatabase,
                         public AndroidCacheDatabase,
 #endif
+                        public TypedURLSyncMetadataDatabase,
                         public URLDatabase,
                         public VisitDatabase,
                         public VisitSegmentDatabase {
@@ -75,7 +76,7 @@ class HistoryDatabase : public DownloadDatabase,
   // underlying database connection.
   void set_error_callback(
       const sql::Connection::ErrorCallback& error_callback) {
-    error_callback_ = error_callback;
+    db_.set_error_callback(error_callback);
   }
 
   // Must call this function to complete initialization. Will return
@@ -145,6 +146,8 @@ class HistoryDatabase : public DownloadDatabase,
   // Razes the database. Returns true if successful.
   bool Raze();
 
+  std::string GetDiagnosticInfo(int extended_error, sql::Statement* statement);
+
   // Visit table functions ----------------------------------------------------
 
   // Update the segment id of a visit. Return true on success.
@@ -166,11 +169,14 @@ class HistoryDatabase : public DownloadDatabase,
   friend class AndroidProviderBackend;
   FRIEND_TEST_ALL_PREFIXES(AndroidURLsMigrationTest, MigrateToVersion22);
 #endif
-  friend class ::HistoryQuickProviderTest;
   friend class ::InMemoryURLIndexTest;
 
-  // Overridden from URLDatabase:
+  // Overridden from URLDatabase, DownloadDatabase, VisitDatabase,
+  // VisitSegmentDatabase and TypedURLSyncMetadataDatabase.
   sql::Connection& GetDB() override;
+
+  // Overridden from TypedURLSyncMetadataDatabase.
+  sql::MetaTable& GetMetaTable() override;
 
   // Migration -----------------------------------------------------------------
 
@@ -190,7 +196,6 @@ class HistoryDatabase : public DownloadDatabase,
 
   // ---------------------------------------------------------------------------
 
-  sql::Connection::ErrorCallback error_callback_;
   sql::Connection db_;
   sql::MetaTable meta_table_;
 

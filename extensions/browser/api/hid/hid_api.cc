@@ -11,7 +11,8 @@
 #include <vector>
 
 #include "base/memory/ptr_util.h"
-#include "device/core/device_client.h"
+#include "base/values.h"
+#include "device/base/device_client.h"
 #include "device/hid/hid_connection.h"
 #include "device/hid/hid_device_filter.h"
 #include "device/hid/hid_device_info.h"
@@ -21,27 +22,6 @@
 #include "extensions/browser/api/extensions_api_client.h"
 #include "extensions/common/api/hid.h"
 #include "net/base/io_buffer.h"
-
-// The normal EXTENSION_FUNCTION_VALIDATE macro doesn't work well here. It's
-// used in functions that returns a bool. However, EXTENSION_FUNCTION_VALIDATE
-// returns a smart pointer on failure.
-//
-// With C++11, this is problematic since a smart pointer that uses explicit
-// operator bool won't allow this conversion, since it's not in a context (such
-// as a conditional) where a contextual conversion to bool would be allowed.
-// TODO(rdevlin.cronin): restructure this code to remove the need for the
-// additional macro.
-#ifdef NDEBUG
-#define EXTENSION_FUNCTION_VALIDATE_RETURN_FALSE_ON_ERROR(test) \
-  do {                                                          \
-    if (!(test)) {                                              \
-      this->bad_message_ = true;                                \
-      return false;                                             \
-    }                                                           \
-  } while (0)
-#else  // NDEBUG
-#define EXTENSION_FUNCTION_VALIDATE_RETURN_FALSE_ON_ERROR(test) CHECK(test)
-#endif  // NDEBUG
 
 namespace hid = extensions::api::hid;
 
@@ -250,9 +230,7 @@ HidConnectionIoFunction::~HidConnectionIoFunction() {
 }
 
 ExtensionFunction::ResponseAction HidConnectionIoFunction::Run() {
-  if (!ValidateParameters()) {
-    return RespondNow(Error(error_));
-  }
+  EXTENSION_FUNCTION_VALIDATE(ReadParameters());
 
   ApiResourceManager<HidConnectionResource>* connection_manager =
       ApiResourceManager<HidConnectionResource>::Get(browser_context());
@@ -272,9 +250,10 @@ HidReceiveFunction::HidReceiveFunction() {}
 
 HidReceiveFunction::~HidReceiveFunction() {}
 
-bool HidReceiveFunction::ValidateParameters() {
+bool HidReceiveFunction::ReadParameters() {
   parameters_ = hid::Receive::Params::Create(*args_);
-  EXTENSION_FUNCTION_VALIDATE_RETURN_FALSE_ON_ERROR(parameters_);
+  if (!parameters_)
+    return false;
   set_connection_id(parameters_->connection_id);
   return true;
 }
@@ -290,9 +269,9 @@ void HidReceiveFunction::OnFinished(bool success,
     DCHECK_GE(size, 1u);
     int report_id = reinterpret_cast<uint8_t*>(buffer->data())[0];
 
-    Respond(TwoArguments(base::MakeUnique<base::FundamentalValue>(report_id),
-                         base::BinaryValue::CreateWithCopiedBuffer(
-                             buffer->data() + 1, size - 1)));
+    Respond(TwoArguments(
+        base::MakeUnique<base::Value>(report_id),
+        base::Value::CreateWithCopiedBuffer(buffer->data() + 1, size - 1)));
   } else {
     Respond(Error(kErrorTransfer));
   }
@@ -302,9 +281,10 @@ HidSendFunction::HidSendFunction() {}
 
 HidSendFunction::~HidSendFunction() {}
 
-bool HidSendFunction::ValidateParameters() {
+bool HidSendFunction::ReadParameters() {
   parameters_ = hid::Send::Params::Create(*args_);
-  EXTENSION_FUNCTION_VALIDATE_RETURN_FALSE_ON_ERROR(parameters_);
+  if (!parameters_)
+    return false;
   set_connection_id(parameters_->connection_id);
   return true;
 }
@@ -331,9 +311,10 @@ HidReceiveFeatureReportFunction::HidReceiveFeatureReportFunction() {}
 
 HidReceiveFeatureReportFunction::~HidReceiveFeatureReportFunction() {}
 
-bool HidReceiveFeatureReportFunction::ValidateParameters() {
+bool HidReceiveFeatureReportFunction::ReadParameters() {
   parameters_ = hid::ReceiveFeatureReport::Params::Create(*args_);
-  EXTENSION_FUNCTION_VALIDATE_RETURN_FALSE_ON_ERROR(parameters_);
+  if (!parameters_)
+    return false;
   set_connection_id(parameters_->connection_id);
   return true;
 }
@@ -349,8 +330,8 @@ void HidReceiveFeatureReportFunction::OnFinished(
     scoped_refptr<net::IOBuffer> buffer,
     size_t size) {
   if (success) {
-    Respond(OneArgument(
-        base::BinaryValue::CreateWithCopiedBuffer(buffer->data(), size)));
+    Respond(
+        OneArgument(base::Value::CreateWithCopiedBuffer(buffer->data(), size)));
   } else {
     Respond(Error(kErrorTransfer));
   }
@@ -360,9 +341,10 @@ HidSendFeatureReportFunction::HidSendFeatureReportFunction() {}
 
 HidSendFeatureReportFunction::~HidSendFeatureReportFunction() {}
 
-bool HidSendFeatureReportFunction::ValidateParameters() {
+bool HidSendFeatureReportFunction::ReadParameters() {
   parameters_ = hid::SendFeatureReport::Params::Create(*args_);
-  EXTENSION_FUNCTION_VALIDATE_RETURN_FALSE_ON_ERROR(parameters_);
+  if (!parameters_)
+    return false;
   set_connection_id(parameters_->connection_id);
   return true;
 }

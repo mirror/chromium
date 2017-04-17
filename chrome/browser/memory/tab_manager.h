@@ -85,10 +85,10 @@ class TabManager : public TabStripModelObserver {
 
   // Returns the list of the stats for all renderers. Must be called on the UI
   // thread. The returned list is sorted by reversed importance.
-  TabStatsList GetTabStats();
+  TabStatsList GetTabStats() const;
 
   // Returns a sorted list of renderers, from most important to least important.
-  std::vector<content::RenderProcessHost*> GetOrderedRenderers();
+  std::vector<content::RenderProcessHost*> GetOrderedRenderers() const;
 
   // Returns true if |contents| is currently discarded.
   bool IsTabDiscarded(content::WebContents* contents) const;
@@ -128,7 +128,7 @@ class TabManager : public TabStripModelObserver {
 
   // Returns the list of the stats for all renderers. Must be called on the UI
   // thread.
-  TabStatsList GetUnsortedTabStats();
+  TabStatsList GetUnsortedTabStats() const;
 
   void AddObserver(TabManagerObserver* observer);
   void RemoveObserver(TabManagerObserver* observer);
@@ -147,11 +147,24 @@ class TabManager : public TabStripModelObserver {
   // Sets/clears the auto-discardable state of the tab.
   void SetTabAutoDiscardableState(content::WebContents* contents, bool state);
 
+  // Returns true when a given renderer can be purged if the specified
+  // renderer is eligible for purging.
+  // TODO(tasak): rename this to CanPurgeBackgroundedRenderer.
+  bool CanSuspendBackgroundedRenderer(int render_process_id) const;
+
   // Returns true if |first| is considered less desirable to be killed than
   // |second|.
   static bool CompareTabStats(const TabStats& first, const TabStats& second);
 
+  // Returns a unique ID for a WebContents. Do not cast back to a pointer, as
+  // the WebContents could be deleted if the user closed the tab.
+  static int64_t IdFromWebContents(content::WebContents* web_contents);
+
  private:
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, PurgeBackgroundRenderer);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ActivateTabResetPurgeState);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ShouldPurgeAtDefaultTime);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, DefaultTimeToPurgeInCorrectRange);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, AutoDiscardable);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, CanOnlyDiscardOnce);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ChildProcessNotifications);
@@ -167,8 +180,24 @@ class TabManager : public TabStripModelObserver {
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ReloadDiscardedTabContextMenu);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, TabManagerBasics);
 
-  // This is needed so WebContentsData can call OnDiscardedStateChange.
-  friend class WebContensData;
+  // The time of the first purging after a renderer is backgrounded.
+  // The initial value was chosen because most of users activate backgrounded
+  // tabs within 30 minutes. (c.f. Tabs.StateTransfer.Time_Inactive_Active)
+  static constexpr base::TimeDelta kDefaultMinTimeToPurge =
+      base::TimeDelta::FromMinutes(30);
+
+  // The min/max time to purge ratio. The max time to purge is set to be
+  // min time to purge times this value.
+  const int kMinMaxTimeToPurgeRatio = 2;
+
+  // This is needed so WebContentsData can call OnDiscardedStateChange, and
+  // can use PurgeState.
+  friend class WebContentsData;
+
+  // Finds TabStripModel which has a WebContents whose id is the given
+  // web_contents_id, and returns the WebContents index and the TabStripModel.
+  int FindTabStripModelById(int64_t target_web_contents_id,
+                            TabStripModel** model) const;
 
   // Called by WebContentsData whenever the discard state of a WebContents
   // changes, so that observers can be informed.
@@ -227,21 +256,40 @@ class TabManager : public TabStripModelObserver {
   int GetTabCount() const;
 
   // Adds all the stats of the tabs to |stats_list|.
-  void AddTabStats(TabStatsList* stats_list);
+  void AddTabStats(TabStatsList* stats_list) const;
 
   // Adds all the stats of the tabs in |tab_strip_model| into |stats_list|.
   // If |active_model| is true, consider its first tab as being active.
   void AddTabStats(const TabStripModel* model,
                    bool is_app,
                    bool active_model,
-                   TabStatsList* stats_list);
+                   TabStatsList* stats_list) const;
 
   // Callback for when |update_timer_| fires. Takes care of executing the tasks
   // that need to be run periodically (see comment in implementation).
   void UpdateTimerCallback();
 
-  // Purges and suspends renderers in backgrounded tabs.
-  void PurgeAndSuspendBackgroundedTabs();
+  // Returns WebContents whose contents id matches the given tab_contents_id.
+  content::WebContents* GetWebContentsById(int64_t tab_contents_id) const;
+
+  // Returns a random time-to-purge whose min value is min_time_to_purge and max
+  // value is min_time_to_purge * kMinMaxTimeToPurgeRatio.
+  base::TimeDelta GetTimeToPurge(base::TimeDelta min_time_to_purge) const;
+
+  // Returns true if the tab specified by |content| is now eligible to have
+  // its memory purged.
+  bool ShouldPurgeNow(content::WebContents* content) const;
+
+  // Purges renderers in backgrounded tabs if the following conditions are
+  // satisfied:
+  // - the renderers are not purged yet,
+  // - the renderers are not playing media,
+  //   (CanPurgeBackgroundedRenderer returns true)
+  // - the renderers are left inactive and background for time-to-purge.
+  // If renderers are purged, their internal states become 'purged'.
+  // The state is reset to be 'not purged' only when they are activated
+  // (=ActiveTabChanged is invoked).
+  void PurgeBackgroundedTabsIfNeeded();
 
   // Does the actual discard by destroying the WebContents in |model| at |index|
   // and replacing it by an empty one. Returns the new WebContents or NULL if
@@ -260,7 +308,8 @@ class TabManager : public TabStripModelObserver {
                         content::WebContents* new_contents,
                         int index,
                         int reason) override;
-  void TabInsertedAt(content::WebContents* contents,
+  void TabInsertedAt(TabStripModel* tab_strip_model,
+                     content::WebContents* contents,
                      int index,
                      bool foreground) override;
 
@@ -286,7 +335,7 @@ class TabManager : public TabStripModelObserver {
   content::WebContents* DiscardTabImpl();
 
   // Returns true if tabs can be discarded only once.
-  bool CanOnlyDiscardOnce();
+  bool CanOnlyDiscardOnce() const;
 
   // Timer to periodically update the stats of the renderers.
   base::RepeatingTimer update_timer_;
@@ -322,6 +371,9 @@ class TabManager : public TabStripModelObserver {
   // This allows protecting tabs for a certain amount of time after being
   // backgrounded.
   base::TimeDelta minimum_protection_time_;
+
+  // A backgrounded renderer will be purged when this time passes.
+  base::TimeDelta min_time_to_purge_;
 
 #if defined(OS_CHROMEOS)
   std::unique_ptr<TabManagerDelegate> delegate_;

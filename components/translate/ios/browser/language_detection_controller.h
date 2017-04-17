@@ -10,7 +10,6 @@
 
 #include "base/callback_list.h"
 #include "base/gtest_prod_util.h"
-#include "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
@@ -26,6 +25,7 @@ class DictionaryValue;
 }
 
 namespace web {
+class NavigationContext;
 class WebState;
 }
 
@@ -79,12 +79,11 @@ class LanguageDetectionController : public web::WebStateObserver {
   // web::WebStateObserver implementation:
   void PageLoaded(
       web::PageLoadCompletionStatus load_completion_status) override;
-  void UrlHashChanged() override;
-  void HistoryStateChanged() override;
+  void DidFinishNavigation(web::NavigationContext* navigation_context) override;
   void WebStateDestroyed() override;
 
   CallbackList language_detection_callbacks_;
-  base::scoped_nsobject<JsLanguageDetectionManager> js_manager_;
+  JsLanguageDetectionManager* js_manager_;
   BooleanPrefMember translate_enabled_;
   base::WeakPtrFactory<LanguageDetectionController> weak_method_factory_;
 

@@ -13,6 +13,7 @@
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest.h"
 #include "extensions/common/manifest_handler.h"
+#include "extensions/common/manifest_location_param_traits.h"
 #include "extensions/common/permissions/permissions_data.h"
 #include "extensions/common/permissions/permissions_info.h"
 
@@ -81,8 +82,11 @@ ExtensionMsg_Loaded_Params::ExtensionMsg_Loaded_Params(
 
 scoped_refptr<Extension> ExtensionMsg_Loaded_Params::ConvertToExtension(
     std::string* error) const {
+  // We pass in the |id| to the create call because it will save work in the
+  // normal case, and because in tests, extensions may not have paths or keys,
+  // but it's important to retain the same id.
   scoped_refptr<Extension> extension =
-      Extension::Create(path, location, *manifest, creation_flags, error);
+      Extension::Create(path, location, *manifest, creation_flags, id, error);
   if (extension.get()) {
     const extensions::PermissionsData* permissions_data =
         extension->permissions_data();
@@ -97,29 +101,6 @@ scoped_refptr<Extension> ExtensionMsg_Loaded_Params::ConvertToExtension(
 }
 
 namespace IPC {
-
-template <>
-struct ParamTraits<Manifest::Location> {
-  typedef Manifest::Location param_type;
-  static void Write(base::Pickle* m, const param_type& p) {
-    int val = static_cast<int>(p);
-    WriteParam(m, val);
-  }
-  static bool Read(const base::Pickle* m,
-                   base::PickleIterator* iter,
-                   param_type* p) {
-    int val = 0;
-    if (!ReadParam(m, iter, &val) ||
-        val < Manifest::INVALID_LOCATION ||
-        val >= Manifest::NUM_LOCATIONS)
-      return false;
-    *p = static_cast<param_type>(val);
-    return true;
-  }
-  static void Log(const param_type& p, std::string* l) {
-    ParamTraits<int>::Log(static_cast<int>(p), l);
-  }
-};
 
 void ParamTraits<URLPattern>::GetSize(base::PickleSizer* s,
                                       const param_type& p) {
@@ -374,8 +355,10 @@ void ParamTraits<ExtensionMsg_Loaded_Params>::Write(base::Pickle* m,
   WriteParam(m, p.path);
   WriteParam(m, *(p.manifest));
   WriteParam(m, p.creation_flags);
+  WriteParam(m, p.id);
   WriteParam(m, p.active_permissions);
   WriteParam(m, p.withheld_permissions);
+  WriteParam(m, p.tab_specific_permissions);
 }
 
 bool ParamTraits<ExtensionMsg_Loaded_Params>::Read(const base::Pickle* m,
@@ -384,9 +367,10 @@ bool ParamTraits<ExtensionMsg_Loaded_Params>::Read(const base::Pickle* m,
   p->manifest.reset(new base::DictionaryValue());
   return ReadParam(m, iter, &p->location) && ReadParam(m, iter, &p->path) &&
          ReadParam(m, iter, p->manifest.get()) &&
-         ReadParam(m, iter, &p->creation_flags) &&
+         ReadParam(m, iter, &p->creation_flags) && ReadParam(m, iter, &p->id) &&
          ReadParam(m, iter, &p->active_permissions) &&
-         ReadParam(m, iter, &p->withheld_permissions);
+         ReadParam(m, iter, &p->withheld_permissions) &&
+         ReadParam(m, iter, &p->tab_specific_permissions);
 }
 
 void ParamTraits<ExtensionMsg_Loaded_Params>::Log(const param_type& p,

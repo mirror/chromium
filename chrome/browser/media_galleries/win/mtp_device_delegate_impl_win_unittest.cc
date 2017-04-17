@@ -47,7 +47,7 @@ void GetGalleryInfoCallback(
     FSInfoMap* results,
     const std::vector<MediaFileSystemInfo>& file_systems) {
   for (size_t i = 0; i < file_systems.size(); ++i) {
-    ASSERT_FALSE(ContainsKey(*results, file_systems[i].pref_id));
+    ASSERT_FALSE(base::ContainsKey(*results, file_systems[i].pref_id));
     (*results)[file_systems[i].pref_id] = file_systems[i];
   }
 }
@@ -111,11 +111,13 @@ void MTPDeviceDelegateImplWinTest::SetUp() {
 }
 
 void MTPDeviceDelegateImplWinTest::TearDown() {
-  // Windows storage monitor must be destroyed on the same thread
-  // as construction.
-  TestStorageMonitor::Destroy();
-
   ChromeRenderViewHostTestHarness::TearDown();
+
+  TestingBrowserProcess::DeleteInstance();
+
+  // Windows storage monitor must be destroyed after the MediaFileSystemRegistry
+  // owned by TestingBrowserProcess because it uses it in its destructor.
+  TestStorageMonitor::Destroy();
 }
 
 void MTPDeviceDelegateImplWinTest::ProcessAttach(

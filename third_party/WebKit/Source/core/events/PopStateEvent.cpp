@@ -32,55 +32,45 @@
 namespace blink {
 
 PopStateEvent::PopStateEvent()
-    : Event(EventTypeNames::popstate, false, true)
-    , m_serializedState(nullptr)
-    , m_history(nullptr)
-{
+    : serialized_state_(nullptr), history_(nullptr) {}
+
+PopStateEvent::PopStateEvent(const AtomicString& type,
+                             const PopStateEventInit& initializer)
+    : Event(type, initializer), history_(nullptr) {
+  if (initializer.hasState())
+    state_ = initializer.state();
 }
 
-PopStateEvent::PopStateEvent(const AtomicString& type, const PopStateEventInit& initializer)
-    : Event(type, initializer)
-    , m_history(nullptr)
-{
-    if (initializer.hasState())
-        m_state = initializer.state();
+PopStateEvent::PopStateEvent(PassRefPtr<SerializedScriptValue> serialized_state,
+                             History* history)
+    : Event(EventTypeNames::popstate, false, true),
+      serialized_state_(std::move(serialized_state)),
+      history_(history) {}
+
+PopStateEvent::~PopStateEvent() {}
+
+PopStateEvent* PopStateEvent::Create() {
+  return new PopStateEvent;
 }
 
-PopStateEvent::PopStateEvent(PassRefPtr<SerializedScriptValue> serializedState, History* history)
-    : Event(EventTypeNames::popstate, false, true)
-    , m_serializedState(serializedState)
-    , m_history(history)
-{
+PopStateEvent* PopStateEvent::Create(
+    PassRefPtr<SerializedScriptValue> serialized_state,
+    History* history) {
+  return new PopStateEvent(std::move(serialized_state), history);
 }
 
-PopStateEvent::~PopStateEvent()
-{
+PopStateEvent* PopStateEvent::Create(const AtomicString& type,
+                                     const PopStateEventInit& initializer) {
+  return new PopStateEvent(type, initializer);
 }
 
-PopStateEvent* PopStateEvent::create()
-{
-    return new PopStateEvent;
+const AtomicString& PopStateEvent::InterfaceName() const {
+  return EventNames::PopStateEvent;
 }
 
-PopStateEvent* PopStateEvent::create(PassRefPtr<SerializedScriptValue> serializedState, History* history)
-{
-    return new PopStateEvent(serializedState, history);
+DEFINE_TRACE(PopStateEvent) {
+  visitor->Trace(history_);
+  Event::Trace(visitor);
 }
 
-PopStateEvent* PopStateEvent::create(const AtomicString& type, const PopStateEventInit& initializer)
-{
-    return new PopStateEvent(type, initializer);
-}
-
-const AtomicString& PopStateEvent::interfaceName() const
-{
-    return EventNames::PopStateEvent;
-}
-
-DEFINE_TRACE(PopStateEvent)
-{
-    visitor->trace(m_history);
-    Event::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -8,13 +8,18 @@
     <style>
       :host {
         --cr-toolbar-field-width: 580px;
+        --cr-toolbar-height: 56px;
+        --paper-icon-button-ink-color: white;
+        align-items: center;
         color: #fff;
         display: flex;
-        height: 56px;
+        height: var(--cr-toolbar-height);
       }
 
       h1 {
-        @apply(--layout-flex);
+        -webkit-margin-start: 6px;
+        -webkit-padding-end: 12px;
+        flex: 1;
         font-size: 123%;
         font-weight: 400;
         text-overflow: ellipsis;
@@ -23,15 +28,19 @@
       }
 
       #leftContent {
-        align-items: center;
-        display: flex;
-        position: absolute;
+        /* margin-start here must match margin-end on #rightContent. */
+        -webkit-margin-start: 12px;
+        position: relative;
         transition: opacity 100ms;
       }
 
-      #leftContent paper-icon-button {
-        -webkit-margin-end: 6px;
-        -webkit-margin-start: 18px;
+      #leftSpacer {
+        -webkit-margin-start: 6px;
+        align-items: center;
+        display: flex;
+      }
+
+      #menuButton {
         height: 32px;
         margin-bottom: 6px;
         margin-top: 6px;
@@ -41,14 +50,13 @@
       }
 
       #centeredContent {
-        -webkit-padding-end: 12px;
         display: flex;
         flex: 1 1 0;
         justify-content: center;
       }
 
-      :host(:not([narrow_])) #leftContent {
-        max-width: calc((100% - var(--cr-toolbar-field-width) - 18px) / 2);
+      #rightContent {
+        -webkit-margin-end: 12px;
       }
 
       :host([narrow_]) #centeredContent {
@@ -56,13 +64,87 @@
       }
 
       :host([narrow_][showing-search_]) #leftContent {
+        position: absolute;
         opacity: 0;
+      }
+
+      :host(:not([narrow_])) #leftContent {
+        flex: 1 1 var(--cr-toolbar-field-margin, 0);
+      }
+
+      :host(:not([narrow_])) #rightContent {
+        flex: 1 1 0;
+        text-align: end;
+      }
+
+      #menuPromo {
+        -webkit-padding-end: 12px;
+        -webkit-padding-start: 8px;
+        align-items: center;
+        background: #616161;
+        border-radius: 2px;
+        color: white;
+        display: flex;
+        font-size: 92.3%;
+        font-weight: 500;
+        opacity: 0;
+        padding-bottom: 6px;
+        padding-top: 6px;
+        position: absolute;
+        top: var(--cr-toolbar-height);
+        white-space: nowrap;
+        z-index: 2;
+      }
+
+      #menuPromo::before {
+        background: inherit;
+        /* Up arrow. 105% in Y coordinates fixes glitch at 110/125% zoom. */
+        clip-path: polygon(0 105%, 100% 105%, 50% 0);
+        content: '';
+        display: block;
+        left: 10px;
+        height: 6px;
+        position: absolute;
+        top: -6px;
+        width: 12px;
+      }
+
+      :host-context([dir=rtl]) #menuPromo::before {
+        left: auto;
+        right: 10px;
+      }
+
+      #closePromo {
+        -webkit-appearance: none;
+        -webkit-margin-start: 12px;
+        background: none;
+        border: none;
+        color: inherit;
+        font-size: 20px;  /* Shouldn't change if default font-size changes. */
+        line-height: 20px;
+        padding: 0;
+        width: 20px;
       }
     </style>
     <div id="leftContent">
-      <paper-icon-button icon="cr:menu" on-tap="onMenuTap_">
-      </paper-icon-button>
-      <h1>[[pageName]]</h1>
+      <div id="leftSpacer">
+        <!-- Note: showing #menuPromo relies on this dom-if being [restamp]. -->
+        <template is="dom-if" if="[[showMenu]]" restamp>
+          <paper-icon-button id="menuButton" icon="cr20:menu"
+              on-tap="onMenuTap_"
+              title="[[titleIfNotShowMenuPromo_(menuLabel, showMenuPromo)]]"
+              aria-label$="[[menuLabel]]">
+          </paper-icon-button>
+          <template is="dom-if" if="[[showMenuPromo]]">
+            <div id="menuPromo" role="tooltip">
+              [[menuPromo]]
+              <button id="closePromo" on-tap="onClosePromoTap_"
+                  aria-label$="[[closeMenuPromo]]">&#x2715;</button>
+            </paper-tooltip>
+          </template>
+        </template>
+        <h1>[[pageName]]</h1>
+      </div>
     </div>
 
     <div id="centeredContent">
@@ -73,6 +155,10 @@
       </cr-toolbar-search-field>
       <iron-media-query query="(max-width: 900px)" query-matches="{{narrow_}}">
       </iron-media-query>
+    </div>
+
+    <div id="rightContent">
+      <content select=".more-actions"></content>
     </div>
   </template>
   <script src="cr_toolbar.js"></script>

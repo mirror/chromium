@@ -30,34 +30,37 @@
 
 #include "core/loader/NavigationPolicy.h"
 
-#include "wtf/Assertions.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
-bool navigationPolicyFromMouseEvent(unsigned short button, bool ctrl, bool shift, bool alt, bool meta, NavigationPolicy* policy)
-{
+bool NavigationPolicyFromMouseEvent(unsigned short button,
+                                    bool ctrl,
+                                    bool shift,
+                                    bool alt,
+                                    bool meta,
+                                    NavigationPolicy* policy) {
 #if OS(MACOSX)
-    const bool newTabModifier = (button == 1) || meta;
+  const bool new_tab_modifier = (button == 1) || meta;
 #else
-    const bool newTabModifier = (button == 1) || ctrl;
+  const bool new_tab_modifier = (button == 1) || ctrl;
 #endif
-    if (!newTabModifier && !shift && !alt)
-        return false;
+  if (!new_tab_modifier && !shift && !alt)
+    return false;
 
-    ASSERT(policy);
-    if (newTabModifier) {
-        if (shift)
-            *policy = NavigationPolicyNewForegroundTab;
-        else
-            *policy = NavigationPolicyNewBackgroundTab;
-    } else {
-        if (shift)
-            *policy = NavigationPolicyNewWindow;
-        else
-            *policy = NavigationPolicyDownload;
-    }
-    return true;
+  DCHECK(policy);
+  if (new_tab_modifier) {
+    if (shift)
+      *policy = kNavigationPolicyNewForegroundTab;
+    else
+      *policy = kNavigationPolicyNewBackgroundTab;
+  } else {
+    if (shift)
+      *policy = kNavigationPolicyNewWindow;
+    else
+      *policy = kNavigationPolicyDownload;
+  }
+  return true;
 }
 
-} // namespace blink
-
+}  // namespace blink

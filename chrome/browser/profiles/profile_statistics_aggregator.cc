@@ -49,7 +49,8 @@ void ProfileStatisticsAggregator::BookmarkModelHelper::BookmarkModelLoaded(
 }
 
 void ProfileStatisticsAggregator::PasswordStoreConsumerHelper::
-    OnGetPasswordStoreResults(ScopedVector<autofill::PasswordForm> results) {
+    OnGetPasswordStoreResults(
+        std::vector<std::unique_ptr<autofill::PasswordForm>> results) {
   parent_->StatisticsCallbackSuccess(
       profiles::kProfileStatisticsPasswords, results.size());
 }
@@ -191,7 +192,7 @@ void ProfileStatisticsAggregator::WaitOrCountBookmarks() {
     return;
 
   bookmarks::BookmarkModel* bookmark_model =
-      BookmarkModelFactory::GetForProfileIfExists(profile_);
+      BookmarkModelFactory::GetForBrowserContextIfExists(profile_);
 
   if (bookmark_model) {
     if (bookmark_model->loaded()) {
@@ -224,7 +225,7 @@ ProfileStatisticsAggregator::ProfileStatValue
       const PrefService::Preference* pref = pref_service->
                                                 FindPreference(it.key());
       // Skip all dictionaries (which must be empty by the function call above).
-      if (it.value().GetType() != base::Value::TYPE_DICTIONARY &&
+      if (it.value().GetType() != base::Value::Type::DICTIONARY &&
         pref && pref->IsUserControlled() && !pref->IsDefaultValue()) {
         ++count;
       }

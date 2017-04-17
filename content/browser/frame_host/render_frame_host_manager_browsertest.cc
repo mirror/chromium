@@ -45,11 +45,11 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/test_frame_navigation_observer.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
 #include "content/test/content_browser_test_utils_internal.h"
-#include "content/test/test_frame_navigation_observer.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/request_handler_util.h"
@@ -159,8 +159,8 @@ class RenderFrameHostManagerTest : public ContentBrowserTest {
   void StartEmbeddedServer() {
     // Support multiple sites on the embedded test server.
     host_resolver()->AddRule("*", "127.0.0.1");
-    ASSERT_TRUE(embedded_test_server()->Start());
     SetupCrossSiteRedirector(embedded_test_server());
+    ASSERT_TRUE(embedded_test_server()->Start());
   }
 
   // Returns a URL on foo.com with the given path.
@@ -798,12 +798,14 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, DisownSubframeOpener) {
                             ->GetFrameTree()
                             ->root();
   EXPECT_EQ(root, root->child_at(0)->opener());
+  EXPECT_EQ(nullptr, root->child_at(0)->original_opener());
 
   // Now disown the frame's opener.  Shouldn't crash.
   EXPECT_TRUE(ExecuteScript(shell(), "window.frames[0].opener = null;"));
 
   // Check that the subframe's opener in the browser process is disowned.
   EXPECT_EQ(nullptr, root->child_at(0)->opener());
+  EXPECT_EQ(nullptr, root->child_at(0)->original_opener());
 }
 
 // Check that window.name is preserved for top frames when they navigate
@@ -1615,7 +1617,15 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
 // BrowsingInstance swap to occur on pages like view-source and extensions,
 // which broke chrome://crash and javascript: URLs.
 // See http://crbug.com/335503.
-IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, RendererDebugURLsDontSwap) {
+// The test fails on Mac OSX with ASAN.
+// See http://crbug.com/699062.
+#if defined(OS_MACOSX) && defined(ADDRESS_SANITIZER)
+#define MAYBE_RendererDebugURLsDontSwap DISABLED_RendererDebugURLsDontSwap
+#else
+#define MAYBE_RendererDebugURLsDontSwap RendererDebugURLsDontSwap
+#endif
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
+                       MAYBE_RendererDebugURLsDontSwap) {
   StartEmbeddedServer();
 
   GURL original_url(embedded_test_server()->GetURL("/title2.html"));
@@ -1830,8 +1840,6 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, WebUIGetsBindings) {
   RenderViewHost* initial_rvh = new_web_contents->
       GetRenderManagerForTesting()->GetSwappedOutRenderViewHost(site_instance1);
   ASSERT_TRUE(initial_rvh);
-  // The following condition is what was causing the bug.
-  EXPECT_EQ(0, initial_rvh->GetEnabledBindings());
 
   // Navigate to url1 and check bindings.
   NavigateToURL(new_shell, url1);
@@ -1839,7 +1847,7 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, WebUIGetsBindings) {
   // |initial_rvh| did not have a chance to be used.
   EXPECT_EQ(new_web_contents->GetSiteInstance(), site_instance1);
   EXPECT_EQ(BINDINGS_POLICY_WEB_UI,
-      new_web_contents->GetRenderViewHost()->GetEnabledBindings());
+            new_web_contents->GetMainFrame()->GetEnabledBindings());
 }
 
 // crbug.com/424526
@@ -1896,9 +1904,10 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
   WebUIImpl* web_ui = rfh->web_ui();
 
   EXPECT_TRUE(web_ui->CanCallJavascript());
-  TestWebUIMessageHandler* handler = new TestWebUIMessageHandler();
+  auto handler_owner = base::MakeUnique<TestWebUIMessageHandler>();
+  TestWebUIMessageHandler* handler = handler_owner.get();
 
-  web_ui->AddMessageHandler(handler);
+  web_ui->AddMessageHandler(std::move(handler_owner));
   EXPECT_FALSE(handler->IsJavascriptAllowed());
 
   handler->AllowJavascript();
@@ -2057,6 +2066,76 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
   // Ensure that the file access still exists in the new process ID.
   EXPECT_TRUE(ChildProcessSecurityPolicyImpl::GetInstance()->CanReadFile(
       shell()->web_contents()->GetRenderProcessHost()->GetID(), file));
+
+  // Do another in-page navigation in the child to make sure we hear a PageState
+  // with the chosen file.
+  // TODO(creis): Remove this in-page navigation once we keep track of
+  // FrameTreeNodes that are pending deletion.  See https://crbug.com/609963.
+  {
+    TestNavigationObserver nav_observer(shell()->web_contents());
+    std::string script = "location.href='#foo';";
+    EXPECT_TRUE(ExecuteScript(root->child_at(0), script));
+    nav_observer.Wait();
+  }
+
+  // Also try cloning the tab by creating a new NavigationEntry with the same
+  // PageState.  This exercises a different path, by combining the frame
+  // specific PageStates into a full-tree PageState and converting back.  There
+  // was a bug where this caused us to lose the list of referenced files.  See
+  // https://crbug.com/620261.
+  std::unique_ptr<NavigationEntryImpl> cloned_entry =
+      NavigationEntryImpl::FromNavigationEntry(
+          NavigationControllerImpl::CreateNavigationEntry(
+              url1, Referrer(), ui::PAGE_TRANSITION_RELOAD, false,
+              std::string(), shell()->web_contents()->GetBrowserContext()));
+  prev_entry = shell()->web_contents()->GetController().GetEntryAtIndex(0);
+  cloned_entry->SetPageState(prev_entry->GetPageState());
+  const std::vector<base::FilePath>& cloned_files =
+      cloned_entry->GetPageState().GetReferencedFiles();
+  ASSERT_EQ(1U, cloned_files.size());
+  EXPECT_EQ(file, cloned_files.at(0));
+
+  std::vector<std::unique_ptr<NavigationEntry>> entries;
+  entries.push_back(std::move(cloned_entry));
+  Shell* new_shell =
+      Shell::CreateNewWindow(shell()->web_contents()->GetBrowserContext(),
+                             GURL::EmptyGURL(), nullptr, gfx::Size());
+  FrameTreeNode* new_root =
+      static_cast<WebContentsImpl*>(new_shell->web_contents())
+          ->GetFrameTree()
+          ->root();
+  NavigationControllerImpl& new_controller =
+      static_cast<NavigationControllerImpl&>(
+          new_shell->web_contents()->GetController());
+  new_controller.Restore(entries.size() - 1,
+                         RestoreType::LAST_SESSION_EXITED_CLEANLY, &entries);
+  ASSERT_EQ(0u, entries.size());
+  {
+    TestNavigationObserver restore_observer(new_shell->web_contents());
+    new_controller.LoadIfNecessary();
+    restore_observer.Wait();
+  }
+  ASSERT_EQ(1U, new_root->child_count());
+  EXPECT_EQ(url1, new_root->current_url());
+
+  // Ensure that the file access exists in the new process ID.
+  EXPECT_TRUE(ChildProcessSecurityPolicyImpl::GetInstance()->CanReadFile(
+      new_root->current_frame_host()->GetProcess()->GetID(), file));
+
+  // Also, extract the file from the renderer process to ensure that the
+  // response made it over successfully and the proper filename is set.
+  std::string file_name;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      new_root->child_at(0),
+      "window.domAutomationController.send("
+      "document.getElementById('fileinput').files[0].name);",
+      &file_name));
+  EXPECT_EQ("bar", file_name);
+
+  // Navigate to a same site page to trigger a PageState update and ensure the
+  // renderer is not killed.
+  EXPECT_TRUE(
+      NavigateToURL(new_shell, embedded_test_server()->GetURL("/title2.html")));
 }
 
 // Ensures that no RenderFrameHost/RenderViewHost objects are leaked when
@@ -2202,7 +2281,9 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, UpdateOpener) {
           ->GetFrameTree()
           ->root();
   EXPECT_EQ(root, foo_root->opener());
+  EXPECT_EQ(root, foo_root->original_opener());
   EXPECT_EQ(root, bar_root->opener());
+  EXPECT_EQ(root, bar_root->original_opener());
 
   // From the bar process, use window.open to update foo's opener to point to
   // bar. This is allowed since bar is same-origin with foo's opener.  Use
@@ -2219,6 +2300,7 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, UpdateOpener) {
 
   // Check that updated opener propagated to the browser process.
   EXPECT_EQ(bar_root, foo_root->opener());
+  EXPECT_EQ(root, foo_root->original_opener());
 
   // Check that foo's opener was updated in foo's process. Send a postMessage
   // to the opener and check that the right window (bar_shell) receives it.
@@ -2236,6 +2318,7 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, UpdateOpener) {
   // in the browser process.
   EXPECT_TRUE(ExecuteScript(foo_shell, "window.opener = window;"));
   EXPECT_EQ(bar_root, foo_root->opener());
+  EXPECT_EQ(root, foo_root->original_opener());
 }
 
 // Tests that when a popup is opened, which is then navigated cross-process and
@@ -2768,7 +2851,7 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, CtrlClickSubframeLink) {
 
 // Ensure that we don't update the wrong NavigationEntry's title after an
 // ignored commit during a cross-process navigation.
-// See https://crbug.con/577449.
+// See https://crbug.com/577449.
 IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
                        UnloadPushStateOnCrossProcessNavigation) {
   StartEmbeddedServer();
@@ -2833,6 +2916,417 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
       root, "window.history.pushState({}, '', 'https://chromium.org');"));
   EXPECT_EQ(2, web_contents->GetController().GetEntryCount());
   EXPECT_TRUE(web_contents->GetMainFrame()->IsRenderFrameLive());
+}
+
+// Ensure that navigating back from a sad tab to an existing process works
+// correctly. See https://crbug.com/591984.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
+                       NavigateBackToExistingProcessFromSadTab) {
+  StartEmbeddedServer();
+  EXPECT_TRUE(NavigateToURL(
+      shell(), embedded_test_server()->GetURL("a.com", "/title1.html")));
+
+  // Open a popup and navigate it to b.com.
+  Shell* popup = OpenPopup(
+      shell(), embedded_test_server()->GetURL("a.com", "/title2.html"), "foo");
+  EXPECT_TRUE(NavigateToURL(
+      popup, embedded_test_server()->GetURL("b.com", "/title3.html")));
+
+  // Kill the b.com process.
+  RenderProcessHost* b_process =
+      popup->web_contents()->GetMainFrame()->GetProcess();
+  RenderProcessHostWatcher crash_observer(
+      b_process, RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
+  b_process->Shutdown(0, false);
+  crash_observer.Wait();
+
+  // The popup should now be showing the sad tab.  Main tab should not be.
+  EXPECT_NE(base::TERMINATION_STATUS_STILL_RUNNING,
+            popup->web_contents()->GetCrashedStatus());
+  EXPECT_EQ(base::TERMINATION_STATUS_STILL_RUNNING,
+            shell()->web_contents()->GetCrashedStatus());
+
+  // Go back in the popup from b.com to a.com/title2.html.
+  TestNavigationObserver back_observer(popup->web_contents());
+  popup->web_contents()->GetController().GoBack();
+  back_observer.Wait();
+
+  // In the bug, after the back navigation the popup was still showing
+  // the sad tab.  Ensure this is not the case.
+  EXPECT_EQ(base::TERMINATION_STATUS_STILL_RUNNING,
+            popup->web_contents()->GetCrashedStatus());
+  EXPECT_TRUE(popup->web_contents()->GetMainFrame()->IsRenderFrameLive());
+  EXPECT_EQ(popup->web_contents()->GetMainFrame()->GetSiteInstance(),
+            shell()->web_contents()->GetMainFrame()->GetSiteInstance());
+}
+
+// Verify that GetLastCommittedOrigin() is correct for the full lifetime of a
+// RenderFrameHost, including when it's pending, current, and pending deletion.
+// This is checked both for main frames and subframes.
+// See https://crbug.com/590035.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, LastCommittedOrigin) {
+  StartEmbeddedServer();
+  GURL url_a(embedded_test_server()->GetURL("a.com", "/title1.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), url_a));
+
+  WebContentsImpl* web_contents =
+      static_cast<WebContentsImpl*>(shell()->web_contents());
+  FrameTreeNode* root = web_contents->GetFrameTree()->root();
+  RenderFrameHostImpl* rfh_a = root->current_frame_host();
+  rfh_a->DisableSwapOutTimerForTesting();
+
+  EXPECT_EQ(url::Origin(url_a), rfh_a->GetLastCommittedOrigin());
+  EXPECT_EQ(rfh_a, web_contents->GetMainFrame());
+
+  // Start a navigation to a b.com URL, and don't wait for commit.
+  GURL url_b(embedded_test_server()->GetURL("b.com", "/title2.html"));
+  TestFrameNavigationObserver commit_observer(root);
+  RenderFrameDeletedObserver deleted_observer(rfh_a);
+  shell()->LoadURL(url_b);
+
+  // The pending RFH shouln't have a last committed origin (the default value
+  // is a unique origin). The current RFH shouldn't change its last committed
+  // origin before commit.
+  RenderFrameHostImpl* rfh_b =
+      IsBrowserSideNavigationEnabled()
+          ? root->render_manager()->speculative_frame_host()
+          : root->render_manager()->pending_frame_host();
+  EXPECT_EQ("null", rfh_b->GetLastCommittedOrigin().Serialize());
+  EXPECT_EQ(url::Origin(url_a), rfh_a->GetLastCommittedOrigin());
+
+  // Verify that the last committed origin is set for the b.com RHF once it
+  // commits.
+  commit_observer.WaitForCommit();
+  EXPECT_EQ(url::Origin(url_b), rfh_b->GetLastCommittedOrigin());
+  EXPECT_EQ(rfh_b, web_contents->GetMainFrame());
+
+  // The old RFH should now be pending deletion.  Verify it still has correct
+  // last committed origin.
+  EXPECT_EQ(url::Origin(url_a), rfh_a->GetLastCommittedOrigin());
+  EXPECT_FALSE(rfh_a->is_active());
+
+  // Wait for |rfh_a| to be deleted and double-check |rfh_b|'s origin.
+  deleted_observer.WaitUntilDeleted();
+  EXPECT_EQ(url::Origin(url_b), rfh_b->GetLastCommittedOrigin());
+
+  // Navigate to a same-origin page with an about:blank iframe.  The iframe
+  // should also have a b.com origin.
+  GURL url_b_with_frame(embedded_test_server()->GetURL(
+      "b.com", "/navigation_controller/page_with_iframe.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), url_b_with_frame));
+  EXPECT_EQ(rfh_b, web_contents->GetMainFrame());
+  EXPECT_EQ(url::Origin(url_b), rfh_b->GetLastCommittedOrigin());
+  FrameTreeNode* child = root->child_at(0);
+  RenderFrameHostImpl* child_rfh_b = root->child_at(0)->current_frame_host();
+  child_rfh_b->DisableSwapOutTimerForTesting();
+  EXPECT_EQ(url::Origin(url_b), child_rfh_b->GetLastCommittedOrigin());
+
+  // Navigate subframe to c.com.  Wait for commit but not full load, and then
+  // verify the subframe's origin.
+  GURL url_c(embedded_test_server()->GetURL("c.com", "/title3.html"));
+  {
+    TestFrameNavigationObserver commit_observer(root->child_at(0));
+    EXPECT_TRUE(
+        ExecuteScript(child, "location.href = '" + url_c.spec() + "';"));
+    commit_observer.WaitForCommit();
+  }
+  EXPECT_EQ(url::Origin(url_c),
+            child->current_frame_host()->GetLastCommittedOrigin());
+
+  // With OOPIFs, this navigation used a cross-process transfer.  Ensure that
+  // the iframe's old RFH still has correct origin, even though it's pending
+  // deletion.
+  if (AreAllSitesIsolatedForTesting()) {
+    EXPECT_FALSE(child_rfh_b->is_active());
+    EXPECT_NE(child_rfh_b, child->current_frame_host());
+    EXPECT_EQ(url::Origin(url_b), child_rfh_b->GetLastCommittedOrigin());
+  }
+}
+
+// Verify that with Site Isolation enabled, chrome:// pages with subframes
+// to other chrome:// URLs all stay in the same process.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
+                       ChromeSchemeSubframesStayInProcessWithParent) {
+  // Enable Site Isolation so subframes with different chrome:// URLs will be
+  // treated as cross-site.
+  IsolateAllSitesForTesting(base::CommandLine::ForCurrentProcess());
+  StartEmbeddedServer();
+
+  GURL chrome_top_url = GURL(std::string(kChromeUIScheme) + "://" +
+                             std::string(kChromeUIBlobInternalsHost));
+  GURL chrome_child_url = GURL(std::string(kChromeUIScheme) + "://" +
+                               std::string(kChromeUIHistogramHost));
+  GURL regular_web_url(embedded_test_server()->GetURL("/title1.html"));
+
+  NavigationControllerImpl& controller = static_cast<NavigationControllerImpl&>(
+      shell()->web_contents()->GetController());
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+
+  // Navigate the main frame to the top chrome:// URL.
+  NavigateToURL(shell(), chrome_top_url);
+
+  // Inject a frame in the page and navigate it to a chrome:// URL as well.
+  {
+    std::string script = base::StringPrintf(
+        "var frame = document.createElement('iframe');\n"
+        "frame.src = '%s';\n"
+        "document.body.appendChild(frame);\n",
+        chrome_child_url.spec().c_str());
+
+    TestNavigationObserver navigation_observer(shell()->web_contents());
+    EXPECT_TRUE(ExecuteScript(shell(), script));
+    navigation_observer.Wait();
+    EXPECT_EQ(1U, root->child_count());
+
+    // Ensure the subframe navigated to the expected URL and that it is in the
+    // same SiteInstance as the parent frame.
+    NavigationEntryImpl* entry = controller.GetLastCommittedEntry();
+    ASSERT_EQ(1U, entry->root_node()->children.size());
+    EXPECT_EQ(chrome_child_url,
+              entry->root_node()->children[0]->frame_entry->url());
+    EXPECT_EQ(root->current_frame_host()->GetSiteInstance(),
+              root->child_at(0)->current_frame_host()->GetSiteInstance());
+  }
+
+  // Ensure that non-chrome:// pages get a different SiteInstance and process.
+  {
+    std::string script = base::StringPrintf(
+        "var frame = document.createElement('iframe');\n"
+        "frame.src = '%s';\n"
+        "document.body.appendChild(frame);\n",
+        regular_web_url.spec().c_str());
+
+    TestNavigationObserver navigation_observer(shell()->web_contents());
+    EXPECT_TRUE(ExecuteScript(shell(), script));
+    navigation_observer.Wait();
+    EXPECT_EQ(2U, root->child_count());
+
+    // Ensure the subframe navigated to the expected URL and that it is in a
+    // different SiteInstance from the parent frame.
+    NavigationEntryImpl* entry = controller.GetLastCommittedEntry();
+    ASSERT_EQ(2U, entry->root_node()->children.size());
+    EXPECT_EQ(regular_web_url,
+              entry->root_node()->children[1]->frame_entry->url());
+    EXPECT_NE(root->current_frame_host()->GetSiteInstance(),
+              root->child_at(1)->current_frame_host()->GetSiteInstance());
+  }
+}
+
+// Ensure that loading a page with cross-site coreferencing iframes does not
+// cause an infinite number of nested iframes to be created.
+// See https://crbug.com/650332.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, CoReferencingFrames) {
+  // Load a page with a cross-site coreferencing iframe. "Coreferencing" here
+  // refers to two separate pages that contain subframes with URLs to each
+  // other.
+  StartEmbeddedServer();
+  GURL url_1(
+      embedded_test_server()->GetURL("a.com", "/coreferencingframe_1.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), url_1));
+
+  WebContentsImpl* web_contents =
+      static_cast<WebContentsImpl*>(shell()->web_contents());
+
+  FrameTreeNode* root = web_contents->GetFrameTree()->root();
+
+  // The FrameTree contains two successful instances of each site plus an
+  // unsuccessfully-navigated third instance of B with a blank URL.  When not in
+  // site-per-process mode, the FrameTreeVisualizer depicts all nodes as
+  // referencing Site A because iframes are identified with their root site.
+  if (AreAllSitesIsolatedForTesting()) {
+    EXPECT_EQ(
+        " Site A ------------ proxies for B\n"
+        "   +--Site B ------- proxies for A\n"
+        "        +--Site A -- proxies for B\n"
+        "             +--Site B -- proxies for A\n"
+        "                  +--Site B -- proxies for A\n"
+        "Where A = http://a.com/\n"
+        "      B = http://b.com/",
+        FrameTreeVisualizer().DepictFrameTree(root));
+  } else {
+    EXPECT_EQ(
+        " Site A\n"
+        "   +--Site A\n"
+        "        +--Site A\n"
+        "             +--Site A\n"
+        "                  +--Site A\n"
+        "Where A = http://a.com/",
+        FrameTreeVisualizer().DepictFrameTree(root));
+  }
+  FrameTreeNode* bottom_child =
+      root->child_at(0)->child_at(0)->child_at(0)->child_at(0);
+  EXPECT_TRUE(bottom_child->current_url().is_empty());
+  EXPECT_FALSE(bottom_child->has_committed_real_load());
+}
+
+// Ensures that nested subframes with the same URL but different fragments can
+// only be nested once.  See https://crbug.com/650332.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
+                       SelfReferencingFragmentFrames) {
+  StartEmbeddedServer();
+  GURL url(
+      embedded_test_server()->GetURL("a.com", "/page_with_iframe.html#123"));
+  EXPECT_TRUE(NavigateToURL(shell(), url));
+
+  WebContentsImpl* web_contents =
+      static_cast<WebContentsImpl*>(shell()->web_contents());
+
+  FrameTreeNode* root = web_contents->GetFrameTree()->root();
+  FrameTreeNode* child = root->child_at(0);
+
+  // ExecuteScript is used here and once more below because it is important to
+  // use renderer-initiated navigations since browser-initiated navigations are
+  // bypassed in the self-referencing navigation check.
+  TestFrameNavigationObserver observer1(child);
+  EXPECT_TRUE(
+      ExecuteScript(child, "location.href = '" + url.spec() + "456" + "';"));
+  observer1.Wait();
+
+  FrameTreeNode* grandchild = child->child_at(0);
+  GURL expected_url(embedded_test_server()->GetURL("a.com", "/title1.html"));
+  EXPECT_EQ(expected_url, grandchild->current_url());
+
+  // This navigation should be blocked.
+  GURL blocked_url(embedded_test_server()->GetURL(
+      "a.com", "/page_with_iframe.html#123456789"));
+  TestNavigationManager manager(web_contents, blocked_url);
+  EXPECT_TRUE(ExecuteScript(grandchild,
+                            "location.href = '" + blocked_url.spec() + "';"));
+  // Wait for WillStartRequest and verify that the request is aborted before
+  // starting it.
+  EXPECT_FALSE(manager.WaitForRequestStart());
+  WaitForLoadStop(web_contents);
+
+  // The FrameTree contains two successful instances of the url plus an
+  // unsuccessfully-navigated third instance with a blank URL.
+  EXPECT_EQ(
+      " Site A\n"
+      "   +--Site A\n"
+      "        +--Site A\n"
+      "Where A = http://a.com/",
+      FrameTreeVisualizer().DepictFrameTree(root));
+
+  // The URL of the grandchild has not changed.
+  EXPECT_EQ(expected_url, grandchild->current_url());
+}
+
+// Ensure that loading a page with a meta refresh iframe does not cause an
+// infinite number of nested iframes to be created.  This test loads a page with
+// an about:blank iframe where the page injects html containing a meta refresh
+// into the iframe.  This test then checks that this does not cause infinite
+// nested iframes to be created.  See https://crbug.com/527367.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
+                       SelfReferencingMetaRefreshFrames) {
+  // Load a page with a blank iframe.
+  StartEmbeddedServer();
+  GURL url(embedded_test_server()->GetURL(
+      "a.com", "/page_with_meta_refresh_frame.html"));
+  NavigateToURLBlockUntilNavigationsComplete(shell(), url, 3);
+
+  WebContentsImpl* web_contents =
+      static_cast<WebContentsImpl*>(shell()->web_contents());
+
+  FrameTreeNode* root = web_contents->GetFrameTree()->root();
+
+  // The third navigation should fail and be cancelled, leaving a FrameTree with
+  // a height of 2.
+  EXPECT_EQ(
+      " Site A\n"
+      "   +--Site A\n"
+      "        +--Site A\n"
+      "Where A = http://a.com/",
+      FrameTreeVisualizer().DepictFrameTree(root));
+
+  EXPECT_EQ(GURL(url::kAboutBlankURL),
+            root->child_at(0)->child_at(0)->current_url());
+
+  EXPECT_FALSE(root->child_at(0)->child_at(0)->has_committed_real_load());
+}
+
+// Ensure that navigating a subframe to the same URL as its parent twice in a
+// row is not blocked by the self-reference check.
+// See https://crbug.com/650332.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
+                       SelfReferencingSameURLRenavigation) {
+  StartEmbeddedServer();
+  GURL first_url(
+      embedded_test_server()->GetURL("a.com", "/page_with_iframe.html"));
+  GURL second_url(first_url.spec() + "#123");
+  EXPECT_TRUE(NavigateToURL(shell(), first_url));
+
+  WebContentsImpl* web_contents =
+      static_cast<WebContentsImpl*>(shell()->web_contents());
+
+  FrameTreeNode* root = web_contents->GetFrameTree()->root();
+  FrameTreeNode* child = root->child_at(0);
+
+  TestFrameNavigationObserver observer1(child);
+  EXPECT_TRUE(
+      ExecuteScript(child, "location.href = '" + second_url.spec() + "';"));
+  observer1.Wait();
+
+  EXPECT_EQ(child->current_url(), second_url);
+
+  TestFrameNavigationObserver observer2(child);
+  // This navigation shouldn't be blocked. Blocking should only occur when more
+  // than one ancestor has the same URL (excluding fragments), and the
+  // navigating frame's current URL shouldn't count toward that.
+  EXPECT_TRUE(
+      ExecuteScript(child, "location.href = '" + first_url.spec() + "';"));
+  observer2.Wait();
+
+  EXPECT_EQ(child->current_url(), first_url);
+}
+
+// Ensures that POST requests bypass self-referential URL checks. See
+// https://crbug.com/710008.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
+                       SelfReferencingFramesWithPOST) {
+  StartEmbeddedServer();
+  GURL url(embedded_test_server()->GetURL("a.com", "/page_with_iframe.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), url));
+
+  WebContentsImpl* web_contents =
+      static_cast<WebContentsImpl*>(shell()->web_contents());
+
+  FrameTreeNode* root = web_contents->GetFrameTree()->root();
+  FrameTreeNode* child = root->child_at(0);
+
+  GURL child_url(embedded_test_server()->GetURL("a.com", "/title1.html"));
+  EXPECT_EQ(url, root->current_url());
+  EXPECT_EQ(child_url, child->current_url());
+
+  // Navigate the child frame to the same URL as parent via POST.
+  std::string script =
+      "var f = document.createElement('form');\n"
+      "f.method = 'POST';\n"
+      "f.action = '/page_with_iframe.html';\n"
+      "document.body.appendChild(f);\n"
+      "f.submit();";
+  {
+    TestFrameNavigationObserver observer(child);
+    EXPECT_TRUE(ExecuteScript(child, script));
+    observer.Wait();
+  }
+
+  FrameTreeNode* grandchild = child->child_at(0);
+  EXPECT_EQ(url, child->current_url());
+  EXPECT_EQ(child_url, grandchild->current_url());
+
+  // Now navigate the grandchild to the same URL as its two ancestors. This
+  // should be allowed since it uses POST; it was blocked prior to
+  // fixing https://crbug.com/710008.
+  {
+    TestFrameNavigationObserver observer(grandchild);
+    EXPECT_TRUE(ExecuteScript(grandchild, script));
+    observer.Wait();
+  }
+
+  EXPECT_EQ(url, grandchild->current_url());
+  ASSERT_EQ(1U, grandchild->child_count());
+  EXPECT_EQ(child_url, grandchild->child_at(0)->current_url());
 }
 
 }  // namespace content

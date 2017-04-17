@@ -18,8 +18,8 @@ namespace {
 SupervisedUserCreationScreen* GetScreen(LoginDisplayHost* host) {
   DCHECK(host);
   DCHECK(host->GetWizardController());
-  SupervisedUserCreationScreen* result =
-      SupervisedUserCreationScreen::Get(host->GetWizardController());
+  SupervisedUserCreationScreen* result = SupervisedUserCreationScreen::Get(
+      host->GetWizardController()->screen_manager());
   DCHECK(result);
   return result;
 }
@@ -42,7 +42,15 @@ bool SupervisedUserCreationFlow::CanLockScreen() {
   return false;
 }
 
+bool SupervisedUserCreationFlow::CanStartArc() {
+  return false;
+}
+
 bool SupervisedUserCreationFlow::ShouldShowSettings() {
+  return false;
+}
+
+bool SupervisedUserCreationFlow::ShouldShowNotificationTray() {
   return false;
 }
 

@@ -13,22 +13,28 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/scoped_vector.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/system_monitor/system_monitor.h"
 #include "build/build_config.h"
+#include "media/midi/midi_service.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace media {
 namespace midi {
 
 namespace {
 
+using mojom::PortState;
+using mojom::Result;
+
 class FakeMidiManager : public MidiManager {
  public:
   FakeMidiManager()
-      : start_initialization_is_called_(false), finalize_is_called_(false) {}
+      : MidiManager(nullptr),
+        start_initialization_is_called_(false),
+        finalize_is_called_(false) {}
   ~FakeMidiManager() override {}
 
   // MidiManager implementation.
@@ -72,8 +78,8 @@ class FakeMidiManagerClient : public MidiManagerClient {
   // MidiManagerClient implementation.
   void AddInputPort(const MidiPortInfo& info) override {}
   void AddOutputPort(const MidiPortInfo& info) override {}
-  void SetInputPortState(uint32_t port_index, MidiPortState state) override {}
-  void SetOutputPortState(uint32_t port_index, MidiPortState state) override {}
+  void SetInputPortState(uint32_t port_index, PortState state) override {}
+  void SetOutputPortState(uint32_t port_index, PortState state) override {}
 
   void CompleteStartSession(Result result) override {
     EXPECT_TRUE(wait_for_result_);
@@ -109,6 +115,7 @@ class MidiManagerTest : public ::testing::Test {
  public:
   MidiManagerTest()
       : manager_(new FakeMidiManager),
+        service_(new MidiService(base::WrapUnique(manager_))),
         message_loop_(new base::MessageLoop) {}
   ~MidiManagerTest() override {
     manager_->Shutdown();
@@ -161,7 +168,8 @@ class MidiManagerTest : public ::testing::Test {
   }
 
  protected:
-  std::unique_ptr<FakeMidiManager> manager_;
+  FakeMidiManager* manager_;  // Owned by |service_|.
+  std::unique_ptr<MidiService> service_;
 
  private:
   std::unique_ptr<base::MessageLoop> message_loop_;
@@ -267,11 +275,11 @@ TEST_F(MidiManagerTest, CreateMidiManager) {
   // SystemMonitor is needed on Windows.
   base::SystemMonitor system_monitor;
 
-  std::unique_ptr<FakeMidiManagerClient> client;
-  client.reset(new FakeMidiManagerClient);
+  std::unique_ptr<FakeMidiManagerClient> client(
+      base::MakeUnique<FakeMidiManagerClient>());
 
-  std::unique_ptr<MidiManager> manager(MidiManager::Create());
-  manager->StartSession(client.get());
+  std::unique_ptr<MidiService> service(base::MakeUnique<MidiService>());
+  service->StartSession(client.get());
 
   Result result = client->WaitForResult();
   // This #ifdef needs to be identical to the one in media/midi/midi_manager.cc.
@@ -286,7 +294,7 @@ TEST_F(MidiManagerTest, CreateMidiManager) {
   EXPECT_EQ(Result::OK, result);
 #endif
 
-  manager->Shutdown();
+  service->Shutdown();
   base::RunLoop run_loop;
   run_loop.RunUntilIdle();
 }
@@ -297,4 +305,3 @@ TEST_F(MidiManagerTest, CreateMidiManager) {
 }  // namespace
 
 }  // namespace midi
-}  // namespace media

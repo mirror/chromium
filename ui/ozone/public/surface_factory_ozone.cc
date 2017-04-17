@@ -7,53 +7,21 @@
 #include <stdlib.h>
 
 #include "base/command_line.h"
-#include "ui/ozone/public/native_pixmap.h"
+#include "ui/gfx/native_pixmap.h"
 #include "ui/ozone/public/surface_ozone_canvas.h"
-#include "ui/ozone/public/surface_ozone_egl.h"
 
 namespace ui {
 
-SurfaceFactoryOzone::SurfaceFactoryOzone() {
+SurfaceFactoryOzone::SurfaceFactoryOzone() {}
+
+SurfaceFactoryOzone::~SurfaceFactoryOzone() {}
+
+std::vector<gl::GLImplementation>
+SurfaceFactoryOzone::GetAllowedGLImplementations() {
+  return std::vector<gl::GLImplementation>();
 }
 
-SurfaceFactoryOzone::~SurfaceFactoryOzone() {
-}
-
-intptr_t SurfaceFactoryOzone::GetNativeDisplay() {
-  return 0;
-}
-
-bool SurfaceFactoryOzone::UseNewSurfaceAPI() {
-  return false;
-}
-
-scoped_refptr<gl::GLSurface> SurfaceFactoryOzone::CreateViewGLSurface(
-    gl::GLImplementation implementation,
-    gfx::AcceleratedWidget widget) {
-  return nullptr;
-}
-
-scoped_refptr<gl::GLSurface>
-SurfaceFactoryOzone::CreateSurfacelessViewGLSurface(
-    gl::GLImplementation implementation,
-    gfx::AcceleratedWidget widget) {
-  return nullptr;
-}
-
-scoped_refptr<gl::GLSurface> SurfaceFactoryOzone::CreateOffscreenGLSurface(
-    gl::GLImplementation implementation,
-    const gfx::Size& size) {
-  return nullptr;
-}
-
-std::unique_ptr<SurfaceOzoneEGL> SurfaceFactoryOzone::CreateEGLSurfaceForWidget(
-    gfx::AcceleratedWidget widget) {
-  return nullptr;
-}
-
-std::unique_ptr<SurfaceOzoneEGL>
-SurfaceFactoryOzone::CreateSurfacelessEGLSurfaceForWidget(
-    gfx::AcceleratedWidget widget) {
+GLOzone* SurfaceFactoryOzone::GetGLOzone(gl::GLImplementation implementation) {
   return nullptr;
 }
 
@@ -67,7 +35,7 @@ std::vector<gfx::BufferFormat> SurfaceFactoryOzone::GetScanoutFormats(
   return std::vector<gfx::BufferFormat>();
 }
 
-scoped_refptr<ui::NativePixmap> SurfaceFactoryOzone::CreateNativePixmap(
+scoped_refptr<gfx::NativePixmap> SurfaceFactoryOzone::CreateNativePixmap(
     gfx::AcceleratedWidget widget,
     gfx::Size size,
     gfx::BufferFormat format,
@@ -75,7 +43,7 @@ scoped_refptr<ui::NativePixmap> SurfaceFactoryOzone::CreateNativePixmap(
   return nullptr;
 }
 
-scoped_refptr<ui::NativePixmap>
+scoped_refptr<gfx::NativePixmap>
 SurfaceFactoryOzone::CreateNativePixmapFromHandle(
     gfx::AcceleratedWidget widget,
     gfx::Size size,

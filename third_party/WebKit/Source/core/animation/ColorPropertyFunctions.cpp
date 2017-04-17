@@ -8,187 +8,205 @@
 
 namespace blink {
 
-StyleColor ColorPropertyFunctions::getInitialColor(CSSPropertyID property)
-{
-    return getUnvisitedColor(property, ComputedStyle::initialStyle());
+OptionalStyleColor ColorPropertyFunctions::GetInitialColor(
+    CSSPropertyID property) {
+  return GetUnvisitedColor(property, ComputedStyle::InitialStyle());
 }
 
-StyleColor ColorPropertyFunctions::getUnvisitedColor(CSSPropertyID property, const ComputedStyle& style)
-{
-    switch (property) {
+OptionalStyleColor ColorPropertyFunctions::GetUnvisitedColor(
+    CSSPropertyID property,
+    const ComputedStyle& style) {
+  switch (property) {
     case CSSPropertyBackgroundColor:
-        return style.backgroundColor();
+      return style.BackgroundColor();
     case CSSPropertyBorderLeftColor:
-        return style.borderLeftColor();
+      return style.BorderLeftColor();
     case CSSPropertyBorderRightColor:
-        return style.borderRightColor();
+      return style.BorderRightColor();
     case CSSPropertyBorderTopColor:
-        return style.borderTopColor();
+      return style.BorderTopColor();
     case CSSPropertyBorderBottomColor:
-        return style.borderBottomColor();
+      return style.BorderBottomColor();
+    case CSSPropertyCaretColor:
+      if (style.CaretColor().IsAutoColor())
+        return nullptr;
+      return style.CaretColor().ToStyleColor();
     case CSSPropertyColor:
-        return style.color();
+      return style.GetColor();
     case CSSPropertyOutlineColor:
-        return style.outlineColor();
+      return style.OutlineColor();
     case CSSPropertyColumnRuleColor:
-        return style.columnRuleColor();
+      return style.ColumnRuleColor();
     case CSSPropertyWebkitTextEmphasisColor:
-        return style.textEmphasisColor();
+      return style.TextEmphasisColor();
     case CSSPropertyWebkitTextFillColor:
-        return style.textFillColor();
+      return style.TextFillColor();
     case CSSPropertyWebkitTextStrokeColor:
-        return style.textStrokeColor();
+      return style.TextStrokeColor();
     case CSSPropertyFloodColor:
-        return style.floodColor();
+      return style.FloodColor();
     case CSSPropertyLightingColor:
-        return style.lightingColor();
+      return style.LightingColor();
     case CSSPropertyStopColor:
-        return style.stopColor();
+      return style.StopColor();
     case CSSPropertyWebkitTapHighlightColor:
-        return style.tapHighlightColor();
+      return style.TapHighlightColor();
     case CSSPropertyTextDecorationColor:
-        return style.textDecorationColor();
+      return style.TextDecorationColor();
     default:
-        NOTREACHED();
-        return StyleColor::currentColor();
-    }
+      NOTREACHED();
+      return nullptr;
+  }
 }
 
-StyleColor ColorPropertyFunctions::getVisitedColor(CSSPropertyID property, const ComputedStyle& style)
-{
-    switch (property) {
+OptionalStyleColor ColorPropertyFunctions::GetVisitedColor(
+    CSSPropertyID property,
+    const ComputedStyle& style) {
+  switch (property) {
     case CSSPropertyBackgroundColor:
-        return style.visitedLinkBackgroundColor();
+      return style.VisitedLinkBackgroundColor();
     case CSSPropertyBorderLeftColor:
-        return style.visitedLinkBorderLeftColor();
+      return style.VisitedLinkBorderLeftColor();
     case CSSPropertyBorderRightColor:
-        return style.visitedLinkBorderRightColor();
+      return style.VisitedLinkBorderRightColor();
     case CSSPropertyBorderTopColor:
-        return style.visitedLinkBorderTopColor();
+      return style.VisitedLinkBorderTopColor();
     case CSSPropertyBorderBottomColor:
-        return style.visitedLinkBorderBottomColor();
+      return style.VisitedLinkBorderBottomColor();
+    case CSSPropertyCaretColor:
+      // TODO(rego): "auto" value for caret-color should not interpolate
+      // (http://crbug.com/676295).
+      if (style.VisitedLinkCaretColor().IsAutoColor())
+        return StyleColor::CurrentColor();
+      return style.VisitedLinkCaretColor().ToStyleColor();
     case CSSPropertyColor:
-        return style.visitedLinkColor();
+      return style.VisitedLinkColor();
     case CSSPropertyOutlineColor:
-        return style.visitedLinkOutlineColor();
+      return style.VisitedLinkOutlineColor();
     case CSSPropertyColumnRuleColor:
-        return style.visitedLinkColumnRuleColor();
+      return style.VisitedLinkColumnRuleColor();
     case CSSPropertyWebkitTextEmphasisColor:
-        return style.visitedLinkTextEmphasisColor();
+      return style.VisitedLinkTextEmphasisColor();
     case CSSPropertyWebkitTextFillColor:
-        return style.visitedLinkTextFillColor();
+      return style.VisitedLinkTextFillColor();
     case CSSPropertyWebkitTextStrokeColor:
-        return style.visitedLinkTextStrokeColor();
+      return style.VisitedLinkTextStrokeColor();
     case CSSPropertyFloodColor:
-        return style.floodColor();
+      return style.FloodColor();
     case CSSPropertyLightingColor:
-        return style.lightingColor();
+      return style.LightingColor();
     case CSSPropertyStopColor:
-        return style.stopColor();
+      return style.StopColor();
     case CSSPropertyWebkitTapHighlightColor:
-        return style.tapHighlightColor();
+      return style.TapHighlightColor();
     case CSSPropertyTextDecorationColor:
-        return style.visitedLinkTextDecorationColor();
+      return style.VisitedLinkTextDecorationColor();
     default:
-        NOTREACHED();
-        return StyleColor::currentColor();
-    }
+      NOTREACHED();
+      return nullptr;
+  }
 }
 
-void ColorPropertyFunctions::setUnvisitedColor(CSSPropertyID property, ComputedStyle& style, const Color& color)
-{
-    switch (property) {
+void ColorPropertyFunctions::SetUnvisitedColor(CSSPropertyID property,
+                                               ComputedStyle& style,
+                                               const Color& color) {
+  switch (property) {
     case CSSPropertyBackgroundColor:
-        style.setBackgroundColor(color);
-        return;
+      style.SetBackgroundColor(color);
+      return;
     case CSSPropertyBorderBottomColor:
-        style.setBorderBottomColor(color);
-        return;
+      style.SetBorderBottomColor(color);
+      return;
     case CSSPropertyBorderLeftColor:
-        style.setBorderLeftColor(color);
-        return;
+      style.SetBorderLeftColor(color);
+      return;
     case CSSPropertyBorderRightColor:
-        style.setBorderRightColor(color);
-        return;
+      style.SetBorderRightColor(color);
+      return;
     case CSSPropertyBorderTopColor:
-        style.setBorderTopColor(color);
-        return;
+      style.SetBorderTopColor(color);
+      return;
+    case CSSPropertyCaretColor:
+      return style.SetCaretColor(color);
     case CSSPropertyColor:
-        style.setColor(color);
-        return;
+      style.SetColor(color);
+      return;
     case CSSPropertyFloodColor:
-        style.setFloodColor(color);
-        return;
+      style.SetFloodColor(color);
+      return;
     case CSSPropertyLightingColor:
-        style.setLightingColor(color);
-        return;
+      style.SetLightingColor(color);
+      return;
     case CSSPropertyOutlineColor:
-        style.setOutlineColor(color);
-        return;
+      style.SetOutlineColor(color);
+      return;
     case CSSPropertyStopColor:
-        style.setStopColor(color);
-        return;
+      style.SetStopColor(color);
+      return;
     case CSSPropertyTextDecorationColor:
-        style.setTextDecorationColor(color);
-        return;
+      style.SetTextDecorationColor(color);
+      return;
     case CSSPropertyColumnRuleColor:
-        style.setColumnRuleColor(color);
-        return;
+      style.SetColumnRuleColor(color);
+      return;
     case CSSPropertyWebkitTextStrokeColor:
-        style.setTextStrokeColor(color);
-        return;
+      style.SetTextStrokeColor(color);
+      return;
     default:
-        NOTREACHED();
-        return;
-    }
+      NOTREACHED();
+      return;
+  }
 }
 
-void ColorPropertyFunctions::setVisitedColor(CSSPropertyID property, ComputedStyle& style, const Color& color)
-{
-    switch (property) {
+void ColorPropertyFunctions::SetVisitedColor(CSSPropertyID property,
+                                             ComputedStyle& style,
+                                             const Color& color) {
+  switch (property) {
     case CSSPropertyBackgroundColor:
-        style.setVisitedLinkBackgroundColor(color);
-        return;
+      style.SetVisitedLinkBackgroundColor(color);
+      return;
     case CSSPropertyBorderBottomColor:
-        style.setVisitedLinkBorderBottomColor(color);
-        return;
+      style.SetVisitedLinkBorderBottomColor(color);
+      return;
     case CSSPropertyBorderLeftColor:
-        style.setVisitedLinkBorderLeftColor(color);
-        return;
+      style.SetVisitedLinkBorderLeftColor(color);
+      return;
     case CSSPropertyBorderRightColor:
-        style.setVisitedLinkBorderRightColor(color);
-        return;
+      style.SetVisitedLinkBorderRightColor(color);
+      return;
     case CSSPropertyBorderTopColor:
-        style.setVisitedLinkBorderTopColor(color);
-        return;
+      style.SetVisitedLinkBorderTopColor(color);
+      return;
+    case CSSPropertyCaretColor:
+      return style.SetVisitedLinkCaretColor(color);
     case CSSPropertyColor:
-        style.setVisitedLinkColor(color);
-        return;
+      style.SetVisitedLinkColor(color);
+      return;
     case CSSPropertyFloodColor:
-        style.setFloodColor(color);
-        return;
+      style.SetFloodColor(color);
+      return;
     case CSSPropertyLightingColor:
-        style.setLightingColor(color);
-        return;
+      style.SetLightingColor(color);
+      return;
     case CSSPropertyOutlineColor:
-        style.setVisitedLinkOutlineColor(color);
-        return;
+      style.SetVisitedLinkOutlineColor(color);
+      return;
     case CSSPropertyStopColor:
-        style.setStopColor(color);
-        return;
+      style.SetStopColor(color);
+      return;
     case CSSPropertyTextDecorationColor:
-        style.setVisitedLinkTextDecorationColor(color);
-        return;
+      style.SetVisitedLinkTextDecorationColor(color);
+      return;
     case CSSPropertyColumnRuleColor:
-        style.setVisitedLinkColumnRuleColor(color);
-        return;
+      style.SetVisitedLinkColumnRuleColor(color);
+      return;
     case CSSPropertyWebkitTextStrokeColor:
-        style.setVisitedLinkTextStrokeColor(color);
-        return;
+      style.SetVisitedLinkTextStrokeColor(color);
+      return;
     default:
-        NOTREACHED();
-        return;
-    }
+      NOTREACHED();
+      return;
+  }
 }
 
-} // namespace blink
+}  // namespace blink

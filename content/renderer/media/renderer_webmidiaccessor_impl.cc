@@ -12,23 +12,24 @@ namespace content {
 
 RendererWebMIDIAccessorImpl::RendererWebMIDIAccessorImpl(
     blink::WebMIDIAccessorClient* client)
-    : client_(client) {
+    : client_(client), is_client_added_(false) {
   DCHECK(client_);
 }
 
 RendererWebMIDIAccessorImpl::~RendererWebMIDIAccessorImpl() {
-  midi_message_filter()->RemoveClient(client_);
+  if (is_client_added_)
+    midi_message_filter()->RemoveClient(client_);
 }
 
-void RendererWebMIDIAccessorImpl::startSession() {
+void RendererWebMIDIAccessorImpl::StartSession() {
   midi_message_filter()->AddClient(client_);
+  is_client_added_ = true;
 }
 
-void RendererWebMIDIAccessorImpl::sendMIDIData(
-    unsigned port_index,
-    const unsigned char* data,
-    size_t length,
-    double timestamp) {
+void RendererWebMIDIAccessorImpl::SendMIDIData(unsigned port_index,
+                                               const unsigned char* data,
+                                               size_t length,
+                                               double timestamp) {
   midi_message_filter()->SendMidiData(
       port_index,
       data,

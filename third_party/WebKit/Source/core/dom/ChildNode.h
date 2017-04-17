@@ -10,28 +10,30 @@
 namespace blink {
 
 class ChildNode {
-public:
-    static void before(Node& node, const HeapVector<NodeOrString>& nodes, ExceptionState& exceptionState)
-    {
-        return node.before(nodes, exceptionState);
-    }
+ public:
+  static void before(Node& node,
+                     const HeapVector<NodeOrString>& nodes,
+                     ExceptionState& exception_state) {
+    return node.Before(nodes, exception_state);
+  }
 
-    static void after(Node& node, const HeapVector<NodeOrString>& nodes, ExceptionState& exceptionState)
-    {
-        return node.after(nodes, exceptionState);
-    }
+  static void after(Node& node,
+                    const HeapVector<NodeOrString>& nodes,
+                    ExceptionState& exception_state) {
+    return node.After(nodes, exception_state);
+  }
 
-    static void replaceWith(Node& node, const HeapVector<NodeOrString>& nodes, ExceptionState& exceptionState)
-    {
-        return node.replaceWith(nodes, exceptionState);
-    }
+  static void replaceWith(Node& node,
+                          const HeapVector<NodeOrString>& nodes,
+                          ExceptionState& exception_state) {
+    return node.ReplaceWith(nodes, exception_state);
+  }
 
-    static void remove(Node& node, ExceptionState& exceptionState)
-    {
-        return node.remove(exceptionState);
-    }
+  static void remove(Node& node, ExceptionState& exception_state) {
+    return node.remove(exception_state);
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ChildNode_h
+#endif  // ChildNode_h

@@ -5,6 +5,7 @@
 #ifndef COMPONENTS_SYNC_SESSIONS_SYNCED_TAB_DELEGATE_H__
 #define COMPONENTS_SYNC_SESSIONS_SYNCED_TAB_DELEGATE_H__
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -13,13 +14,13 @@
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
-class Profile;
-
 namespace sync_sessions {
 class SyncSessionsClient;
 }
 
-namespace browser_sync {
+namespace sync_sessions {
+
+enum InvalidTab { kInvalidTabID = -1 };
 
 // A SyncedTabDelegate is used to insulate the sync code from depending
 // directly on WebContents, NavigationController, and the extensions TabHelper.
@@ -31,6 +32,10 @@ class SyncedTabDelegate {
   virtual SessionID::id_type GetWindowId() const = 0;
   virtual SessionID::id_type GetSessionId() const = 0;
   virtual bool IsBeingDestroyed() const = 0;
+
+  // Get the tab id of the tab responsible for opening this tab, if applicable.
+  // Returns kUnknownTabID(-1) if no such tab relationship is known.
+  virtual SessionID::id_type GetSourceTabID() const = 0;
 
   // Method derived from extensions TabHelper.
   virtual std::string GetExtensionAppId() const = 0;
@@ -48,14 +53,14 @@ class SyncedTabDelegate {
 
   // Supervised user related methods.
   virtual bool ProfileIsSupervised() const = 0;
-  virtual const std::vector<const sessions::SerializedNavigationEntry*>*
+  virtual const std::vector<
+      std::unique_ptr<const sessions::SerializedNavigationEntry>>*
   GetBlockedNavigations() const = 0;
 
   // Session sync related methods.
   virtual int GetSyncId() const = 0;
   virtual void SetSyncId(int sync_id) = 0;
-  virtual bool ShouldSync(
-      sync_sessions::SyncSessionsClient* sessions_client) = 0;
+  virtual bool ShouldSync(SyncSessionsClient* sessions_client) = 0;
 
   // Whether this tab is a placeholder tab. On some platforms, tabs can be
   // restored without bringing all their state into memory, and are just
@@ -67,6 +72,6 @@ class SyncedTabDelegate {
   SyncedTabDelegate();
 };
 
-}  // namespace browser_sync
+}  // namespace sync_sessions
 
 #endif  // COMPONENTS_SYNC_SESSIONS_SYNCED_TAB_DELEGATE_H__

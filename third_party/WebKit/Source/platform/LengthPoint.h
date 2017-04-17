@@ -31,37 +31,36 @@
 #define LengthPoint_h
 
 #include "platform/Length.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 struct LengthPoint {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    LengthPoint()
-    {
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    LengthPoint(const Length& x, const Length& y)
-        : m_x(x)
-        , m_y(y)
-    {
-    }
+ public:
+  LengthPoint() {}
 
-    bool operator==(const LengthPoint& o) const { return m_x == o.m_x && m_y == o.m_y; }
-    bool operator!=(const LengthPoint& o) const { return m_x != o.m_x || m_y != o.m_y; }
+  LengthPoint(const Length& x, const Length& y) : x_(x), y_(y) {}
 
-    void setX(const Length& x) { m_x = x; }
-    const Length& x() const { return m_x; }
+  bool operator==(const LengthPoint& o) const {
+    return x_ == o.x_ && y_ == o.y_;
+  }
+  bool operator!=(const LengthPoint& o) const {
+    return x_ != o.x_ || y_ != o.y_;
+  }
 
-    void setY(const Length& y) { m_y = y; }
-    const Length& y() const { return m_y; }
+  void SetX(const Length& x) { x_ = x; }
+  const Length& X() const { return x_; }
 
-private:
-    Length m_x;
-    Length m_y;
+  void SetY(const Length& y) { y_ = y; }
+  const Length& Y() const { return y_; }
+
+ private:
+  Length x_;
+  Length y_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LengthPoint_h
+#endif  // LengthPoint_h

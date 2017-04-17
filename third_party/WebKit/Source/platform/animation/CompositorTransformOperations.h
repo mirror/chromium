@@ -7,45 +7,35 @@
 
 #include "cc/animation/transform_operations.h"
 #include "platform/PlatformExport.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
 
 class SkMatrix44;
 
 namespace blink {
 
 class PLATFORM_EXPORT CompositorTransformOperations {
-    WTF_MAKE_NONCOPYABLE(CompositorTransformOperations);
-public:
-    static std::unique_ptr<CompositorTransformOperations> create()
-    {
-        return wrapUnique(new CompositorTransformOperations());
-    }
+ public:
+  const cc::TransformOperations& AsCcTransformOperations() const;
+  cc::TransformOperations ReleaseCcTransformOperations();
 
-    const cc::TransformOperations& asTransformOperations() const;
+  // Returns true if these operations can be blended. It will only return
+  // false if we must resort to matrix interpolation, and matrix interpolation
+  // fails (this can happen if either matrix cannot be decomposed).
+  bool CanBlendWith(const CompositorTransformOperations& other) const;
 
-    // Returns true if these operations can be blended. It will only return
-    // false if we must resort to matrix interpolation, and matrix interpolation
-    // fails (this can happen if either matrix cannot be decomposed).
-    bool canBlendWith(const CompositorTransformOperations& other) const;
+  void AppendTranslate(double x, double y, double z);
+  void AppendRotate(double x, double y, double z, double degrees);
+  void AppendScale(double x, double y, double z);
+  void AppendSkew(double x, double y);
+  void AppendPerspective(double depth);
+  void AppendMatrix(const SkMatrix44&);
+  void AppendIdentity();
 
-    void appendTranslate(double x, double y, double z);
-    void appendRotate(double x, double y, double z, double degrees);
-    void appendScale(double x, double y, double z);
-    void appendSkew(double x, double y);
-    void appendPerspective(double depth);
-    void appendMatrix(const SkMatrix44&);
-    void appendIdentity();
+  bool IsIdentity() const;
 
-    bool isIdentity() const;
-
-private:
-    CompositorTransformOperations();
-
-    cc::TransformOperations m_transformOperations;
+ private:
+  cc::TransformOperations transform_operations_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CompositorTransformOperations_h
+#endif  // CompositorTransformOperations_h

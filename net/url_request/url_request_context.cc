@@ -4,13 +4,24 @@
 
 #include "net/url_request/url_request_context.h"
 
+#include <inttypes.h>
+
 #include "base/compiler_specific.h"
 #include "base/debug/alias.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
+#include "base/threading/thread_task_runner_handle.h"
+#include "base/trace_event/memory_allocator_dump.h"
+#include "base/trace_event/memory_dump_manager.h"
+#include "base/trace_event/memory_dump_request_args.h"
+#include "base/trace_event/process_memory_dump.h"
+#include "net/base/sdch_manager.h"
 #include "net/cookies/cookie_store.h"
 #include "net/dns/host_resolver.h"
+#include "net/http/http_cache.h"
 #include "net/http/http_transaction_factory.h"
+#include "net/socket/ssl_client_socket_impl.h"
 #include "net/url_request/http_user_agent_settings.h"
 #include "net/url_request/url_request.h"
 
@@ -36,12 +47,19 @@ URLRequestContext::URLRequestContext()
       backoff_manager_(nullptr),
       sdch_manager_(nullptr),
       network_quality_estimator_(nullptr),
+      reporting_service_(nullptr),
       url_requests_(new std::set<const URLRequest*>),
       enable_brotli_(false),
-      enable_referrer_policy_header_(false) {}
+      check_cleartext_permitted_(false),
+      name_(nullptr) {
+  base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+      this, "URLRequestContext", base::ThreadTaskRunnerHandle::Get());
+}
 
 URLRequestContext::~URLRequestContext() {
   AssertNoURLRequests();
+  base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
+      this);
 }
 
 void URLRequestContext::CopyFrom(const URLRequestContext* other) {
@@ -66,8 +84,9 @@ void URLRequestContext::CopyFrom(const URLRequestContext* other) {
   set_sdch_manager(other->sdch_manager_);
   set_http_user_agent_settings(other->http_user_agent_settings_);
   set_network_quality_estimator(other->network_quality_estimator_);
+  set_reporting_service(other->reporting_service_);
   set_enable_brotli(other->enable_brotli_);
-  set_enable_referrer_policy_header(other->enable_referrer_policy_header_);
+  set_check_cleartext_permitted(other->check_cleartext_permitted_);
 }
 
 const HttpNetworkSession::Params* URLRequestContext::GetNetworkSessionParams(
@@ -89,6 +108,16 @@ std::unique_ptr<URLRequest> URLRequestContext::CreateRequest(
       new URLRequest(url, priority, delegate, this, network_delegate_));
 }
 
+std::unique_ptr<URLRequest> URLRequestContext::CreateRequest(
+    const GURL& url,
+    RequestPriority priority,
+    URLRequest::Delegate* delegate,
+    NetworkTrafficAnnotationTag traffic_annotation) const {
+  // |traffic_annotation| is just a tag that is extracted during static
+  // code analysis and can be ignored here.
+  return CreateRequest(url, priority, delegate);
+}
+
 void URLRequestContext::set_cookie_store(CookieStore* cookie_store) {
   cookie_store_ = cookie_store;
 }
@@ -108,6 +137,36 @@ void URLRequestContext::AssertNoURLRequests() const {
     CHECK(false) << "Leaked " << num_requests << " URLRequest(s). First URL: "
                  << request->url().spec().c_str() << ".";
   }
+}
+
+bool URLRequestContext::OnMemoryDump(
+    const base::trace_event::MemoryDumpArgs& args,
+    base::trace_event::ProcessMemoryDump* pmd) {
+  if (!name_)
+    name_ = "unknown";
+
+  SSLClientSocketImpl::DumpSSLClientSessionMemoryStats(pmd);
+
+  std::string dump_name =
+      base::StringPrintf("net/url_request_context/%s/0x%" PRIxPTR, name_,
+                         reinterpret_cast<uintptr_t>(this));
+  base::trace_event::MemoryAllocatorDump* dump =
+      pmd->CreateAllocatorDump(dump_name);
+  dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameObjectCount,
+                  base::trace_event::MemoryAllocatorDump::kUnitsObjects,
+                  url_requests_->size());
+  HttpTransactionFactory* transaction_factory = http_transaction_factory();
+  if (transaction_factory) {
+    HttpNetworkSession* network_session = transaction_factory->GetSession();
+    if (network_session)
+      network_session->DumpMemoryStats(pmd, dump->absolute_name());
+    HttpCache* http_cache = transaction_factory->GetCache();
+    if (http_cache)
+      http_cache->DumpMemoryStats(pmd, dump->absolute_name());
+  }
+  if (sdch_manager_)
+    sdch_manager_->DumpMemoryStats(pmd, dump_name);
+  return true;
 }
 
 }  // namespace net

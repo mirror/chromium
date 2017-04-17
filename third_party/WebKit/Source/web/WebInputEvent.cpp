@@ -28,46 +28,57 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "public/web/WebInputEvent.h"
+#include "public/platform/WebInputEvent.h"
 
-#include "platform/KeyboardCodes.h"
-#include "wtf/ASCIICType.h"
-#include "wtf/Assertions.h"
-#include "wtf/StringExtras.h"
 #include <ctype.h>
+#include "platform/KeyboardCodes.h"
+#include "platform/wtf/ASCIICType.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/StringExtras.h"
+#include "public/platform/WebGestureEvent.h"
+#include "public/platform/WebKeyboardEvent.h"
+#include "public/platform/WebMouseWheelEvent.h"
+#include "public/platform/WebTouchEvent.h"
 
 namespace blink {
 
 struct SameSizeAsWebInputEvent {
-    int inputData[5];
+  int input_data[8];
 };
 
 struct SameSizeAsWebKeyboardEvent : public SameSizeAsWebInputEvent {
-    int keyboardData[9];
+  int keyboard_data[9];
 };
 
 struct SameSizeAsWebMouseEvent : public SameSizeAsWebInputEvent {
-    int mouseData[15];
+  int mouse_data[15];
 };
 
 struct SameSizeAsWebMouseWheelEvent : public SameSizeAsWebMouseEvent {
-    int mousewheelData[12];
+  int mousewheel_data[12];
 };
 
 struct SameSizeAsWebGestureEvent : public SameSizeAsWebInputEvent {
-    int gestureData[14];
+  int gesture_data[14];
 };
 
 struct SameSizeAsWebTouchEvent : public SameSizeAsWebInputEvent {
-    WebTouchPoint touchPoints[WebTouchEvent::kTouchesLengthCap];
-    int touchData[4];
+  WebTouchPoint touch_points[WebTouchEvent::kTouchesLengthCap];
+  int touch_data[4];
 };
 
-static_assert(sizeof(WebInputEvent) == sizeof(SameSizeAsWebInputEvent), "WebInputEvent should not have gaps");
-static_assert(sizeof(WebKeyboardEvent) == sizeof(SameSizeAsWebKeyboardEvent), "WebKeyboardEvent should not have gaps");
-static_assert(sizeof(WebMouseEvent) == sizeof(SameSizeAsWebMouseEvent), "WebMouseEvent should not have gaps");
-static_assert(sizeof(WebMouseWheelEvent) == sizeof(SameSizeAsWebMouseWheelEvent), "WebMouseWheelEvent should not have gaps");
-static_assert(sizeof(WebGestureEvent) == sizeof(SameSizeAsWebGestureEvent), "WebGestureEvent should not have gaps");
-static_assert(sizeof(WebTouchEvent) == sizeof(SameSizeAsWebTouchEvent), "WebTouchEvent should not have gaps");
+static_assert(sizeof(WebInputEvent) == sizeof(SameSizeAsWebInputEvent),
+              "WebInputEvent should not have gaps");
+static_assert(sizeof(WebKeyboardEvent) == sizeof(SameSizeAsWebKeyboardEvent),
+              "WebKeyboardEvent should not have gaps");
+static_assert(sizeof(WebMouseEvent) == sizeof(SameSizeAsWebMouseEvent),
+              "WebMouseEvent should not have gaps");
+static_assert(sizeof(WebMouseWheelEvent) ==
+                  sizeof(SameSizeAsWebMouseWheelEvent),
+              "WebMouseWheelEvent should not have gaps");
+static_assert(sizeof(WebGestureEvent) == sizeof(SameSizeAsWebGestureEvent),
+              "WebGestureEvent should not have gaps");
+static_assert(sizeof(WebTouchEvent) == sizeof(SameSizeAsWebTouchEvent),
+              "WebTouchEvent should not have gaps");
 
-} // namespace blink
+}  // namespace blink
