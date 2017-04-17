@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a8a8916_b263aa42",
+        "filename": "ash/public/interfaces/session_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-04-17T20:24:36Z",
+      "side": 1,
+      "message": "Changed this to NotifyChromeTerminating and updated observer to OnChromeTerminating.",
+      "parentUuid": "66edb3b3_b5534247",
+      "revId": "f5ff95fbc8debe27bb921d4e83e4b58387b7e043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dca25833_7ec7aab2",
         "filename": "ash/session/session_state_observer.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-04-17T19:49:24Z",
       "side": 1,
       "message": "nit: still needed?",
+      "revId": "f5ff95fbc8debe27bb921d4e83e4b58387b7e043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16da5df0_4bc22b96",
+        "filename": "ash/session/session_state_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-04-17T20:24:36Z",
+      "side": 1,
+      "message": "Removed. Forgot to update this with the renaming CL.",
+      "parentUuid": "dca25833_7ec7aab2",
       "revId": "f5ff95fbc8debe27bb921d4e83e4b58387b7e043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8dd4f37b_2d7a7dae",
+        "filename": "ash/shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-04-17T20:24:36Z",
+      "side": 1,
+      "message": "Yep, it will go away in the next CL to you. :)\n\nhttps://chromium-review.googlesource.com/c/478455/",
+      "parentUuid": "3cd6663f_da649a56",
+      "revId": "f5ff95fbc8debe27bb921d4e83e4b58387b7e043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70de747c_af9fdee1",
         "filename": "chrome/browser/ui/ash/session_controller_client.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-04-17T19:49:24Z",
       "side": 1,
       "message": "Why does this have to move? If there\u0027s code in the constructor that calls back into a partially constructed SessionControllerClient then that\u0027s scary. Maybe there should be a separate Init() method?",
+      "revId": "f5ff95fbc8debe27bb921d4e83e4b58387b7e043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c2efdd5_f33800a5",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-04-17T20:24:36Z",
+      "side": 1,
+      "message": "Moved it back to where it was. I moved it for cosmetic reason (to myself) and did not think through.",
+      "parentUuid": "70de747c_af9fdee1",
       "revId": "f5ff95fbc8debe27bb921d4e83e4b58387b7e043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
