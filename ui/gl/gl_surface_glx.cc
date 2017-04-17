@@ -51,6 +51,8 @@ bool g_glx_get_msc_rate_oml_supported = false;
 
 bool g_glx_sgi_video_sync_supported = false;
 
+bool g_glx_ext_swap_control_tear_supported = false;
+
 // A 24-bit RGB visual and colormap to use when creating offscreen surfaces.
 Visual* g_visual = nullptr;
 int g_depth = CopyFromParent;
@@ -424,6 +426,8 @@ bool GLSurfaceGLX::InitializeOneOff() {
   g_glx_oml_sync_control_supported = HasGLXExtension("GLX_OML_sync_control");
   g_glx_get_msc_rate_oml_supported = g_glx_oml_sync_control_supported;
   g_glx_sgi_video_sync_supported = HasGLXExtension("GLX_SGI_video_sync");
+  g_glx_ext_swap_control_tear_supported =
+      HasGLXExtension("GLX_EXT_swap_control_tear");
 
   const XVisualInfo& visual_info =
       gl::GLVisualPickerGLX::GetInstance()->system_visual();
@@ -593,6 +597,20 @@ bool NativeViewGLSurfaceGLX::IsOffscreen() {
 gfx::SwapResult NativeViewGLSurfaceGLX::SwapBuffers() {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceGLX:RealSwapBuffers", "width",
                GetSize().width(), "height", GetSize().height());
+
+  // Use adaptive vsync if available. Synchronizing with vsync has the advantage
+  // of not tearing but comes with two disadvantages:
+  // 1. Increased latency when we fall below the refresh rate because we have to
+  //    wait for the next vsync period.
+  // 2. Reduced throughput when multiple windows animate. All Chrome windows
+  //    share one thread (GPU main thread) for issuing swap buffers. Therefore,
+  //    if one window's swap buffers blocks the other windows' frame rates fall.
+  //
+  // Adaptive vsync disables vsync when we fall below the refresh rate. This
+  // solves both problems by reducing latency because we don't have to wait for
+  // vsync if we missed one and not blocking on subsequent swap buffers.
+  if (g_glx_ext_swap_control_tear_supported)
+    glXSwapIntervalEXT(g_display, GetDrawableHandle(), -1);
 
   glXSwapBuffers(g_display, GetDrawableHandle());
   return gfx::SwapResult::SWAP_ACK;
