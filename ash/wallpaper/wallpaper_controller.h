@@ -194,6 +194,8 @@ class ASH_EXPORT WallpaperController
 
   scoped_refptr<base::TaskRunner> task_runner_;
 
+  ScopedSessionStateObserver scoped_session_observer_;
+
   DISALLOW_COPY_AND_ASSIGN(WallpaperController);
 };
 

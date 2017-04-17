@@ -77,12 +77,10 @@ class SessionControllerTest : public testing::Test {
   // testing::Test:
   void SetUp() override {
     controller_ = base::MakeUnique<SessionController>();
-    controller_->AddSessionStateObserver(&observer_);
+    controller_->AddObserver(&observer_);
   }
 
-  void TearDown() override {
-    controller_->RemoveSessionStateObserver(&observer_);
-  }
+  void TearDown() override { controller_->RemoveObserver(&observer_); }
 
   void SetSessionInfo(const mojom::SessionInfo& info) {
     mojom::SessionInfoPtr info_ptr = mojom::SessionInfo::New();
