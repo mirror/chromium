@@ -96,6 +96,20 @@ SessionState SessionController::GetSessionState() const {
   return state_;
 }
 
+bool SessionController::ShouldShowSettings() const {
+  if (!IsActiveUserSessionStarted())
+    return true;
+
+  return user_sessions_[0]->should_show_settings;
+}
+
+bool SessionController::ShouldShowNotificationTray() const {
+  if (!IsActiveUserSessionStarted())
+    return true;
+
+  return user_sessions_[0]->should_show_notification_tray;
+}
+
 const std::vector<mojom::UserSessionPtr>& SessionController::GetUserSessions()
     const {
   return user_sessions_;
